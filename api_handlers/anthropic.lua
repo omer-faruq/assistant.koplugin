@@ -58,6 +58,7 @@ function AnthropicHandler:makeRequest(url, headers, body)
         os.remove(tmp_response)
         
         if response then
+            -- Assuming curl success implies HTTP 200 for now
             return true, response
         end
     end
@@ -75,16 +76,19 @@ function AnthropicHandler:makeRequest(url, headers, body)
         verify = "none", -- Disable SSL verification for Kindle
     })
     
-    if success then
-        return true, table.concat(responseBody)
+    if success and code < 400 then
+        return true, table.concat(responseBody) -- Success
+    elseif success and code >= 400 then
+        return false, code, table.concat(responseBody) -- HTTP error
     end
+    -- If not success (connection error), code already holds the error string
     
     logger.warn("Anthropic API request failed:", {
         error = code,
         error_type = type(code),
         error_message = tostring(code)
     })
-    return false, code
+    return false, code -- Return connection error string
 end
 
 function AnthropicHandler:query(message_history, config)
@@ -117,11 +121,33 @@ function AnthropicHandler:query(message_history, config)
         ["anthropic-version"] = (anthropic_settings.additional_parameters and anthropic_settings.additional_parameters.anthropic_version)
     }
 
-    local success, response = self:makeRequest(anthropic_settings.base_url, headers, requestBody)
+    local ok, data, err_body = self:makeRequest(anthropic_settings.base_url, headers, requestBody)
 
-    if not success then
-        return "Error: Failed to connect to Anthropic API - " .. tostring(response)
+    if not ok then
+        local error_message = "Error: Unknown error during Anthropic API request."
+        if type(data) == "number" and err_body then -- HTTP error code and body
+            local decode_ok, parsed_error = pcall(json.decode, err_body)
+            if decode_ok and parsed_error and parsed_error.error and parsed_error.error.type and parsed_error.error.message then
+                error_message = "Error: Anthropic API returned HTTP " .. data .. " (" .. parsed_error.error.type .. ") - " .. parsed_error.error.message
+            elseif decode_ok and parsed_error and parsed_error.type and parsed_error.detail then -- Handle validation errors etc.
+                 error_message = "Error: Anthropic API returned HTTP " .. data .. " (" .. parsed_error.type .. ") - " .. parsed_error.detail
+            else
+                error_message = "Error: Anthropic API request failed with HTTP status " .. data
+            end
+        elseif type(data) == "string" then -- Connection error string
+             error_message = "Error: Failed to connect to Anthropic API - " .. data
+        end
+        logger.warn("Anthropic API request failed:", {
+            error = error_message,
+            status_code = type(data) == "number" and data or nil,
+            response_body = err_body,
+            model = anthropic_settings.model,
+            base_url = anthropic_settings.base_url,
+        })
+        return error_message -- Return only the error message string
     end
+    -- If ok, data contains the successful response body
+    local response = data
 
     local success_parse, parsed = pcall(json.decode, response)
     if not success_parse then
@@ -132,7 +158,13 @@ function AnthropicHandler:query(message_history, config)
     if parsed and parsed.content and parsed.content[1] and parsed.content[1].text then
         return parsed.content[1].text
     else
-        return "Error: Unexpected response format from API"
+        -- Try to extract error from successful response if content is missing
+        if parsed and parsed.error and parsed.error.type and parsed.error.message then
+             logger.warn("Anthropic API Error in successful response:", parsed.error.message)
+             return "Error: Anthropic API (" .. parsed.error.type .. ") - " .. parsed.error.message
+        end
+        logger.warn("Unexpected Anthropic API response format:", response)
+        return "Error: Unexpected response format from Anthropic API"
     end
 end
 

@@ -11,7 +11,7 @@ local GeminiHandler = BaseHandler:new()
 -- Add fallback HTTP request function
 function GeminiHandler:makeRequest(url, headers, body)
     logger.dbg("Attempting Gemini API request:", {
-        url = url,
+        url = url:gsub("key=[^&]+", "key=***"), -- Mask API key in URL log
         headers = headers,
         body_length = #body
     })
@@ -36,7 +36,7 @@ function GeminiHandler:makeRequest(url, headers, body)
             tmp_request, url, tmp_response
         )
         
-        logger.dbg("Executing curl command:", curl_cmd)
+        logger.dbg("Executing curl command:", curl_cmd:gsub("key=[^&]+", "key=***")) -- Mask API key in curl command log
         local curl_result = os.execute(curl_cmd)
         logger.dbg("Curl execution result:", curl_result)
         
@@ -82,9 +82,12 @@ function GeminiHandler:makeRequest(url, headers, body)
         error_message = tostring(code)
     })
     
-    if success then
+    if success and code < 400 then -- Success only if HTTP status is OK
         return true, table.concat(responseBody)
+    elseif success and code >= 400 then -- HTTP error occurred
+        return false, code, table.concat(responseBody) -- Return status code and body
     end
+    -- If not success (connection error), code already holds the error string
     
     -- Log detailed error information
     local error_info = {
@@ -101,7 +104,7 @@ function GeminiHandler:makeRequest(url, headers, body)
     }
     
     logger.warn("Gemini API request failed with details:", error_info)
-    return false, code
+    return false, code -- Return connection error string
 end
 
 function GeminiHandler:query(message_history, config)
@@ -156,18 +159,33 @@ function GeminiHandler:query(message_history, config)
     local url = string.format("%s%s:generateContent?key=%s", base_url, model, config.api_key)
     logger.dbg("Making Gemini API request to model:", model)
     
-    local success, response = self:makeRequest(url, headers, requestBody)
+    local ok, data, err_body = self:makeRequest(url, headers, requestBody)
 
-    if not success then
+    if not ok then
+        local error_message = "Error: Unknown error during Gemini API request."
+        if type(data) == "number" and err_body then -- HTTP error code and body
+            local decode_ok, parsed_error = pcall(json.decode, err_body)
+            if decode_ok and parsed_error and parsed_error.error and parsed_error.error.message then
+                error_message = "Error: Gemini API returned HTTP " .. data .. " - " .. parsed_error.error.message
+            else
+                error_message = "Error: Gemini API request failed with HTTP status " .. data
+            end
+        elseif type(data) == "string" then -- Connection error string
+             error_message = "Error: Failed to connect to Gemini API - " .. data
+        end
         logger.warn("Gemini API request failed:", {
-            error = response,
+            error = error_message,
+            status_code = type(data) == "number" and data or nil,
+            response_body = err_body,
             model = model,
-            base_url = base_url:gsub(config.api_key, "***"), -- Hide API key in logs
+            base_url = base_url:gsub(config.api_key, "***"),
             request_size = #requestBody,
             message_count = #message_history
         })
-        return "Error: Failed to connect to Gemini API - " .. tostring(response)
+        return error_message
     end
+    -- If ok, data contains the successful response body
+    local response = data
 
     local success, parsed = pcall(json.decode, response)
     
@@ -176,13 +194,51 @@ function GeminiHandler:query(message_history, config)
         return "Error: Failed to parse Gemini API response"
     end
     
-    if parsed and parsed.candidates and parsed.candidates[1] and 
-       parsed.candidates[1].content and parsed.candidates[1].content.parts and
-       parsed.candidates[1].content.parts[1] then
-        return parsed.candidates[1].content.parts[1].text
-    else
-        return "Error: Unexpected response format from Gemini API"
+    -- New response handling logic from example
+    if parsed then
+        -- Check for explicit error field first
+        if parsed.error then
+            local err_msg = string.format("Gemini API Error [%s]: %s",
+                parsed.error.code or "?",
+                parsed.error.message or "Unknown error"
+            )
+            logger.warn(err_msg, parsed.error) -- Log the full error object
+            return err_msg
+        end
+
+        local response_text = nil
+
+        -- Format 1: candidates -> content -> parts (Standard)
+        if parsed.candidates and #parsed.candidates > 0 then
+            local first_candidate = parsed.candidates[1]
+            if first_candidate.content and first_candidate.content.parts then
+                for _, part in ipairs(first_candidate.content.parts) do
+                    if part.text then
+                        response_text = part.text
+                        break
+                    end
+                end
+            end
+        end
+
+        -- Format 2: raw output (alternative response type)
+        if not response_text and parsed.output and type(parsed.output) == "string" then
+            response_text = parsed.output
+        end
+
+        -- Format 3: legacy format with 'answers'
+        if not response_text and parsed.answers and #parsed.answers > 0 then
+            response_text = parsed.answers[1].content
+        end
+
+        if response_text then
+            return response_text
+        end
     end
+
+    -- If no text found and no explicit error, log and return generic error
+    logger.warn("Unexpected Gemini API response format or empty content:", parsed)
+    return "Error: Unexpected response format or empty content from Gemini API."
 end
 
 return GeminiHandler

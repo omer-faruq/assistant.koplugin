@@ -58,6 +58,7 @@ function DeepSeekHandler:makeRequest(url, headers, body)
         os.remove(tmp_response)
         
         if response then
+            -- Assuming curl success implies HTTP 200 for now
             return true, response
         end
     end
@@ -75,16 +76,19 @@ function DeepSeekHandler:makeRequest(url, headers, body)
         verify = "none", -- Disable SSL verification for Kindle
     })
     
-    if success then
-        return true, table.concat(responseBody)
+    if success and code < 400 then
+        return true, table.concat(responseBody) -- Success
+    elseif success and code >= 400 then
+        return false, code, table.concat(responseBody) -- HTTP error
     end
+    -- If not success (connection error), code already holds the error string
     
     logger.warn("DeepSeek API request failed:", {
         error = code,
         error_type = type(code),
         error_message = tostring(code)
     })
-    return false, code
+    return false, code -- Return connection error string
 end
 
 function DeepSeekHandler:query(message_history, config)
@@ -107,11 +111,32 @@ function DeepSeekHandler:query(message_history, config)
         ["Authorization"] = "Bearer " .. deepseek_settings.api_key
     }
 
-    local success, response = self:makeRequest(deepseek_settings.base_url, headers, requestBody)
+    local ok, data, err_body = self:makeRequest(deepseek_settings.base_url, headers, requestBody)
 
-    if not success then
-        return "Error: Failed to connect to DeepSeek API - " .. tostring(response)
+    if not ok then
+        local error_message = "Error: Unknown error during DeepSeek API request."
+        if type(data) == "number" and err_body then -- HTTP error code and body
+            local decode_ok, parsed_error = pcall(json.decode, err_body)
+            -- Assuming OpenAI-compatible error format
+            if decode_ok and parsed_error and parsed_error.error and parsed_error.error.message then
+                error_message = "Error: DeepSeek API returned HTTP " .. data .. " - " .. parsed_error.error.message
+            else
+                error_message = "Error: DeepSeek API request failed with HTTP status " .. data
+            end
+        elseif type(data) == "string" then -- Connection error string
+             error_message = "Error: Failed to connect to DeepSeek API - " .. data
+        end
+        logger.warn("DeepSeek API request failed:", {
+            error = error_message,
+            status_code = type(data) == "number" and data or nil,
+            response_body = err_body,
+            model = deepseek_settings.model,
+            base_url = deepseek_settings.base_url,
+        })
+        return error_message -- Return only the error message string
     end
+    -- If ok, data contains the successful response body
+    local response = data
 
     local success_parse, parsed = pcall(json.decode, response)
     if not success_parse then
@@ -122,7 +147,13 @@ function DeepSeekHandler:query(message_history, config)
     if parsed and parsed.choices and parsed.choices[1] and parsed.choices[1].message then
         return parsed.choices[1].message.content
     else
-        return "Error: Unexpected response format from API"
+        -- Try to extract error from successful response if choices are missing
+        if parsed and parsed.error and parsed.error.message then
+             logger.warn("DeepSeek API Error in successful response:", parsed.error.message)
+             return "Error: DeepSeek API - " .. parsed.error.message
+        end
+        logger.warn("Unexpected DeepSeek API response format:", response)
+        return "Error: Unexpected response format from DeepSeek API"
     end
 end
 

@@ -58,6 +58,7 @@ function OllamaHandler:makeRequest(url, headers, body)
         os.remove(tmp_response)
         
         if response then
+            -- Assuming curl success implies HTTP 200 for now
             return true, response
         end
     end
@@ -75,16 +76,19 @@ function OllamaHandler:makeRequest(url, headers, body)
         verify = "none", -- Disable SSL verification for Kindle
     })
     
-    if success then
-        return true, table.concat(responseBody)
+    if success and code < 400 then
+        return true, table.concat(responseBody) -- Success
+    elseif success and code >= 400 then
+        return false, code, table.concat(responseBody) -- HTTP error
     end
+    -- If not success (connection error), code already holds the error string
     
     logger.warn("Ollama API request failed:", {
         error = code,
         error_type = type(code),
         error_message = tostring(code)
     })
-    return false, code
+    return false, code -- Return connection error string
 end
 
 function OllamaHandler:query(message_history, config)
@@ -110,11 +114,34 @@ function OllamaHandler:query(message_history, config)
         ["Authorization"] = "Bearer " .. ollama_settings.api_key
     }
 
-    local success, response = self:makeRequest(ollama_settings.base_url, headers, requestBody)
+    local ok, data, err_body = self:makeRequest(ollama_settings.base_url, headers, requestBody)
 
-    if not success then
-        return "Error: Failed to connect to Ollama API - " .. tostring(response)
+    if not ok then
+        local error_message = "Error: Unknown error during Ollama API request."
+        if type(data) == "number" and err_body then -- HTTP error code and body
+            local decode_ok, parsed_error = pcall(json.decode, err_body)
+            -- Assuming OpenAI-compatible error format, but Ollama might use just 'error' field
+            if decode_ok and parsed_error and parsed_error.error and type(parsed_error.error) == "string" then
+                 error_message = "Error: Ollama API returned HTTP " .. data .. " - " .. parsed_error.error
+            elseif decode_ok and parsed_error and parsed_error.error and parsed_error.error.message then
+                error_message = "Error: Ollama API returned HTTP " .. data .. " - " .. parsed_error.error.message
+            else
+                error_message = "Error: Ollama API request failed with HTTP status " .. data
+            end
+        elseif type(data) == "string" then -- Connection error string
+             error_message = "Error: Failed to connect to Ollama API - " .. data
+        end
+        logger.warn("Ollama API request failed:", {
+            error = error_message,
+            status_code = type(data) == "number" and data or nil,
+            response_body = err_body,
+            model = ollama_settings.model,
+            base_url = ollama_settings.base_url,
+        })
+        return error_message -- Return only the error message string
     end
+    -- If ok, data contains the successful response body
+    local response = data
 
     local success_parse, parsed = pcall(json.decode, response)
     if not success_parse then
@@ -125,7 +152,13 @@ function OllamaHandler:query(message_history, config)
     if parsed and parsed.message then
         return parsed.message.content
     else
-        return "Error: Unexpected response format from API"
+        -- Try to extract error from successful response if message is missing
+        if parsed and parsed.error and type(parsed.error) == "string" then
+             logger.warn("Ollama API Error in successful response:", parsed.error)
+             return "Error: Ollama API - " .. parsed.error
+        end
+        logger.warn("Unexpected Ollama API response format:", response)
+        return "Error: Unexpected response format from Ollama API"
     end
 end
 

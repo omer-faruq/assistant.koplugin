@@ -1,3 +1,22 @@
+-- Determine plugin directory for dofile
+local script_path_dict = debug.getinfo(1, "S").source
+local plugin_dir_dict = ""
+if script_path_dict and script_path_dict:sub(1,1) == "@" then
+    script_path_dict = script_path_dict:sub(2)
+    plugin_dir_dict = script_path_dict:match("(.*/)") or "./"
+else
+    plugin_dir_dict = "./"
+end
+
+-- Load configuration using dofile
+local plugin_config = nil
+local config_path_dict = plugin_dir_dict .. "configuration.lua"
+local success_dict, result_dict = pcall(function() return dofile(config_path_dict) end)
+if success_dict then
+    plugin_config = result_dict
+else
+    print("DictDialog: Failed to load configuration.lua from " .. config_path_dict .. ":", result_dict)
+end
 local InputDialog = require("ui/widget/inputdialog")
 local ChatGPTViewer = require("chatgptviewer")
 local UIManager = require("ui/uimanager")
@@ -5,10 +24,11 @@ local TextBoxWidget = require("ui/widget/textboxwidget")
 local _ = require("gettext")
 local Event = require("ui/event")
 local queryChatGPT = require("gpt_query")
-local configuration = require("configuration")
+-- Configuration is loaded locally using dofile
 
 local function showDictionaryDialog(ui, highlightedText, message_history)
     local message_history = message_history or {
+    -- Removed debug log for plugin_config
         {
             role = "system",
             content = "You are a dictionary with high quality detail vocabulary definitions and examples.",
@@ -22,8 +42,8 @@ local function showDictionaryDialog(ui, highlightedText, message_history)
             "explain vocabulary or content in <<>> in above sentence with following format:\n" ..
             "⮞ Vocabulary in original conjugation if its different than the form in the sentence\n" ..
             "⮞ 3 synonyms for the word if available\n" ..
-            "⮞ Give the meaning of the expression without reference to context.Answer this part in ".. configuration.features.dictionary_translate_to .." language\n" ..
-            "⮞ Explanation of content in <<>> according to context. Answer this part in ".. configuration.features.dictionary_translate_to .." language\n" ..
+            "⮞ Give the meaning of the expression without reference to context.Answer this part in ".. plugin_config.features.dictionary_translate_to .." language\n" ..
+            "⮞ Explanation of content in <<>> according to context. Answer this part in ".. plugin_config.features.dictionary_translate_to .." language\n" ..
             "⮞ Give another example sentence. Answer this part  in the language of text in <<>>\n" ..
             "only show the replies, do not give a description"
     }
@@ -61,7 +81,7 @@ local function showDictionaryDialog(ui, highlightedText, message_history)
     }
 
     UIManager:show(chatgpt_viewer)
-    if configuration and configuration.features and configuration.features.refresh_screen_after_displaying_results then
+    if plugin_config and plugin_config.features and plugin_config.features.refresh_screen_after_displaying_results then
         UIManager:setDirty(nil, "full")
     end
 end
