@@ -1,6 +1,3 @@
--- Directory determination for dofile removed, using require now
-
--- Load configuration using dofile
 local plugin_config = nil
 -- Try loading configuration using require, fallback to nil
 local config_ok_dialogs, config_result_dialogs = pcall(require, "configuration")
@@ -314,11 +311,15 @@ end
   local function handlePredefinedPrompt(prompt_type, highlightedText, ui_ctx) -- Renamed ui to ui_ctx for clarity
     -- Reload config *inside* the function for safety
     local current_config = nil
-    local config_ok, config_result = pcall(function() return dofile(config_path_dialogs) end)
+    local config_ok, config_result = pcall(require, "configuration")
     if config_ok then
         current_config = config_result
     else
-        if logger then logger.error("handlePredefinedPrompt: Failed to reload config:", config_result) end
+        if logger then
+            local log_msg = config_result
+            if type(log_msg) == "table" then log_msg = "(table data omitted for security)" end
+            logger.error("handlePredefinedPrompt: Failed to load config via require:", log_msg)
+        end
         return nil, "Configuration error"
     end
 
@@ -480,12 +481,14 @@ local function showChatGPTDialog(ui, highlightedText, direct_prompt)
     UIManager:scheduleIn(0.1, function()
       -- Reload config inside the callback to ensure it's available
       local reloaded_config = nil
-      local success_reload, result_reload = pcall(function() return dofile(config_path_dialogs) end)
+      local success_reload, result_reload = pcall(require, "configuration")
       if success_reload then
           reloaded_config = result_reload
       else
-          print("Dialogs (callback): Failed to reload configuration.lua:", result_reload)
-          UIManager:show(InfoMessage:new{text = _("Error reloading configuration.")})
+          local log_msg = result_reload
+          if type(log_msg) == "table" then log_msg = "(table data omitted for security)" end
+          print("Dialogs (callback): Failed to load configuration via require:", log_msg)
+          UIManager:show(InfoMessage:new{text = _("Error loading configuration.")})
           return
       end
       -- Use reloaded_config from here on in this callback

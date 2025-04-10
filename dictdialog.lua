@@ -11,7 +11,6 @@ local TextBoxWidget = require("ui/widget/textboxwidget")
 local _ = require("gettext")
 local Event = require("ui/event")
 local queryChatGPT = require("gpt_query")
--- Configuration is loaded locally using dofile
 
 local function showDictionaryDialog(ui, highlightedText, message_history)
     local message_history = message_history or {

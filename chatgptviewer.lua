@@ -42,7 +42,6 @@ local DataStorage = require("datastorage") -- Ensure DataStorage is required at 
 
 -- Load configuration locally as it might be needed in helper functions
 local plugin_config = nil
--- Directory determination for dofile removed, using require now
 -- Try loading configuration using require, fallback to nil
 local config_ok_viewer, config_result_viewer = pcall(require, "configuration")
 if config_ok_viewer then

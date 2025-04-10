@@ -1,6 +1,3 @@
--- Directory determination for dofile removed, using require now
-
--- Load configuration using dofile
 local plugin_config = nil
 -- Try loading configuration using require, fallback to nil
 local config_ok_gpt, config_result_gpt = pcall(require, "configuration")
