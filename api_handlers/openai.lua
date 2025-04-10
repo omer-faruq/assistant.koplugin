@@ -58,7 +58,8 @@ function OpenAIHandler:makeRequest(url, headers, body)
         os.remove(tmp_response)
         
         if response then
-            return true, 200, response
+            -- Assuming curl success implies HTTP 200 for now, might need refinement if curl can return error bodies
+            return true, response
         end
     end
     
@@ -76,7 +77,13 @@ function OpenAIHandler:makeRequest(url, headers, body)
         timeout = 30
     }
     
-    return status, code, table.concat(response)
+    if status and code < 400 then
+        return true, table.concat(response) -- Success
+    elseif status and code >= 400 then
+        return false, code, table.concat(response) -- HTTP error
+    else
+        return false, code or "Connection failed" -- Connection error (code might be nil or error string)
+    end
 end
 
 function OpenAIHandler:query(message_history, config)
@@ -94,16 +101,45 @@ function OpenAIHandler:query(message_history, config)
         ["Authorization"] = "Bearer " .. (openai_settings.api_key)
     }
 
-    local status, code, response = self:makeRequest(openai_settings.base_url, headers, requestBody)
+    local ok, data, err_body = self:makeRequest(openai_settings.base_url, headers, requestBody)
 
-    if status and code == 200 then
-        local success, responseData = pcall(json.decode, response)
-        if success and responseData and responseData.choices and responseData.choices[1] then
-            return responseData.choices[1].message.content
+    if not ok then
+        local error_message = "Error: Unknown error during OpenAI API request."
+        if type(data) == "number" and err_body then -- HTTP error code and body
+            local decode_ok, parsed_error = pcall(json.decode, err_body)
+            if decode_ok and parsed_error and parsed_error.error and parsed_error.error.message then
+                error_message = "Error: OpenAI API returned HTTP " .. data .. " - " .. parsed_error.error.message
+            else
+                error_message = "Error: OpenAI API request failed with HTTP status " .. data
+            end
+        elseif type(data) == "string" then -- Connection error string
+             error_message = "Error: Failed to connect to OpenAI API - " .. data
+        end
+        logger.warn("OpenAI API request failed:", {
+            error = error_message,
+            status_code = type(data) == "number" and data or nil,
+            response_body = err_body,
+            model = openai_settings.model,
+            base_url = openai_settings.base_url,
+        })
+        return error_message -- Return only the error message string
+    end
+
+    -- If ok, data contains the successful response body
+    local response = data
+    local success, responseData = pcall(json.decode, response)
+    if success and responseData and responseData.choices and responseData.choices[1] then
+        return responseData.choices[1].message.content
+    else
+        -- Handle cases where JSON decoding failed or response structure is unexpected
+        if not success then
+            logger.warn("OpenAI JSON Decode Error:", responseData) -- responseData contains the error message on pcall failure
+            return "Error: Failed to parse OpenAI API response"
+        else
+            logger.warn("Unexpected OpenAI API response format:", response)
+            return "Error: Unexpected response format from OpenAI API"
         end
     end
-    
-    return nil, "Error: " .. (code or "unknown") .. " - " .. response
 end
 
 return OpenAIHandler

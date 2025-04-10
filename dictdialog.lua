@@ -1,3 +1,9 @@
+-- Load required modules
+local plugin_config = require("configuration")
+if not plugin_config then
+    print("DictDialog: Failed to load configuration.lua")
+    plugin_config = {} -- Provide empty fallback config
+end
 local InputDialog = require("ui/widget/inputdialog")
 local ChatGPTViewer = require("chatgptviewer")
 local UIManager = require("ui/uimanager")
@@ -5,10 +11,10 @@ local TextBoxWidget = require("ui/widget/textboxwidget")
 local _ = require("gettext")
 local Event = require("ui/event")
 local queryChatGPT = require("gpt_query")
-local configuration = require("configuration")
 
 local function showDictionaryDialog(ui, highlightedText, message_history)
     local message_history = message_history or {
+    -- Removed debug log for plugin_config
         {
             role = "system",
             content = "You are a dictionary with high quality detail vocabulary definitions and examples.",
@@ -22,8 +28,8 @@ local function showDictionaryDialog(ui, highlightedText, message_history)
             "explain vocabulary or content in <<>> in above sentence with following format:\n" ..
             "⮞ Vocabulary in original conjugation if its different than the form in the sentence\n" ..
             "⮞ 3 synonyms for the word if available\n" ..
-            "⮞ Give the meaning of the expression without reference to context.Answer this part in ".. configuration.features.dictionary_translate_to .." language\n" ..
-            "⮞ Explanation of content in <<>> according to context. Answer this part in ".. configuration.features.dictionary_translate_to .." language\n" ..
+            "⮞ Give the meaning of the expression without reference to context.Answer this part in ".. plugin_config.features.dictionary_translate_to .." language\n" ..
+            "⮞ Explanation of content in <<>> according to context. Answer this part in ".. plugin_config.features.dictionary_translate_to .." language\n" ..
             "⮞ Give another example sentence. Answer this part  in the language of text in <<>>\n" ..
             "only show the replies, do not give a description"
     }
@@ -61,7 +67,7 @@ local function showDictionaryDialog(ui, highlightedText, message_history)
     }
 
     UIManager:show(chatgpt_viewer)
-    if configuration and configuration.features and configuration.features.refresh_screen_after_displaying_results then
+    if plugin_config and plugin_config.features and plugin_config.features.refresh_screen_after_displaying_results then
         UIManager:setDirty(nil, "full")
     end
 end
