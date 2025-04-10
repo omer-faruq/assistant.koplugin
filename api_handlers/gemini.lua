@@ -153,7 +153,7 @@ function GeminiHandler:query(message_history, config)
     }
 
     local gemini_settings = config.provider_settings and config.provider_settings.gemini or {}
-    local model = gemini_settings.model or "gemini-1.5-pro-latest"
+    local model = gemini_settings.model or "gemini-2.5-pro-exp-03-25"
     local base_url = gemini_settings.base_url or "https://generativelanguage.googleapis.com/v1beta/models/"
     
     local url = string.format("%s%s:generateContent?key=%s", base_url, model, config.api_key)

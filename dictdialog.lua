@@ -1,21 +1,8 @@
--- Determine plugin directory for dofile
-local script_path_dict = debug.getinfo(1, "S").source
-local plugin_dir_dict = ""
-if script_path_dict and script_path_dict:sub(1,1) == "@" then
-    script_path_dict = script_path_dict:sub(2)
-    plugin_dir_dict = script_path_dict:match("(.*/)") or "./"
-else
-    plugin_dir_dict = "./"
-end
-
--- Load configuration using dofile
-local plugin_config = nil
-local config_path_dict = plugin_dir_dict .. "configuration.lua"
-local success_dict, result_dict = pcall(function() return dofile(config_path_dict) end)
-if success_dict then
-    plugin_config = result_dict
-else
-    print("DictDialog: Failed to load configuration.lua from " .. config_path_dict .. ":", result_dict)
+-- Load required modules
+local plugin_config = require("configuration")
+if not plugin_config then
+    print("DictDialog: Failed to load configuration.lua")
+    plugin_config = {} -- Provide empty fallback config
 end
 local InputDialog = require("ui/widget/inputdialog")
 local ChatGPTViewer = require("chatgptviewer")

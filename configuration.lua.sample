@@ -23,7 +23,7 @@ local CONFIGURATION = {
             }
         },
         gemini = {
-            model = "gemini-2.0-flash-001", -- model list: https://ai.google.dev/gemini-api/docs/models/gemini , ex: gemini-1.5-pro-latest , gemini-2.0-flash-001
+            model = "gemini-2.5-pro-exp-03-25", -- model list: https://ai.google.dev/gemini-api/docs/models/gemini , ex: gemini-1.5-pro-latest , gemini-2.0-flash-001
             base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
             api_key = "your-gemini-api-key",
             additional_parameters = {
@@ -66,7 +66,7 @@ local CONFIGURATION = {
         },
     },
 
-    -- Optional features, replace each "Turkish" with your desired language
+    -- Optional features, replace each "English" with your desired language
     features = {
         hide_highlighted_text = false,  -- Set to true to hide the highlighted text at the top
         hide_long_highlights = true,    -- Hide highlighted text if longer than threshold
@@ -75,7 +75,7 @@ local CONFIGURATION = {
         system_prompt = "You are a helpful assistant that provides clear explanations.", -- Custom system prompt for the AI ("Ask" button) to override the default, to disable set to nil
         refresh_screen_after_displaying_results = true, -- Set to true to refresh the screen after displaying the results
         show_dictionary_button_in_main_popup = true, -- Set to true to show the dictionary button in the main popup
-        dictionary_translate_to = "de-DE", -- Set to the desired language code for the dictionary, nil to hide it
+        dictionary_translate_to = "en-US", -- Set to the desired language code for the dictionary, nil to hide it
         show_dictionary_button_in_dictionary_popup = true, -- Set to true to show the Dictionary (AI) button in the dictionary popup
         viewer_font_size = nil, -- Font size for the result window (nil = use reader default or 20)
         show_assistant_prefix = false, -- Show "Assistant: " before AI responses (default: false)
@@ -90,7 +90,7 @@ local CONFIGURATION = {
                 text = "Translate",
                 order = 1,
                 system_prompt = "You are a helpful translation assistant. Provide direct translations without additional commentary.",
-                user_prompt = "Please translate the following text to Turkish: {highlight}",
+                user_prompt = "Please translate the following text to English: {highlight}",
                 show_on_main_popup = true -- Show the button in main popup
             },
             simplify = {
@@ -104,7 +104,7 @@ local CONFIGURATION = {
                 text = "Explain",
                 order = 3,
                 system_prompt = "You are a helpful assistant that explains complex topics clearly and concisely. Break down concepts into simple terms.",
-                user_prompt = "Please explain the following text. Answer in Turkish: {highlight}",
+                user_prompt = "Please explain the following text. Answer in English: {highlight}",
                 show_on_main_popup = false -- Show the button in main popup
             },
             summarize = {
@@ -118,28 +118,28 @@ local CONFIGURATION = {
                 text = "Historical Context",
                 order = 5,
                 system_prompt = "You are a historical context expert. Provide relevant historical background and connections.",
-                user_prompt = "Explain the historical context of this text. Answer in Turkish: {highlight}",
+                user_prompt = "Explain the historical context of this text. Answer in English: {highlight}",
                 show_on_main_popup = false -- Show the button in main popup
             },
             key_points = {
                 text = "Key Points",
                 order = 6,
                 system_prompt = "You are a key points expert. Provide a concise list of key points from the text.",
-                user_prompt = "Please provide a concise list of key points from the following text. Answer in Turkish: {highlight}",
+                user_prompt = "Please provide a concise list of key points from the following text. Answer in English: {highlight}",
                 show_on_main_popup = false -- Show the button in main popup
             },
             ELI5 = {
                 text = "ELI5",
                 order = 7,
                 system_prompt = "You are an ELI5 expert. Provide simple, concise explanations for complex terms.",
-                user_prompt = "Please provide an ELI5 explanation. Answer in Turkish: {highlight}",
+                user_prompt = "Please provide an ELI5 explanation. Answer in English: {highlight}",
                 show_on_main_popup = false -- Show the button in main popup
             },
             grammar = {
                 text = "Grammar",
                 order = 8,
                 system_prompt = "You are a grammar expert.",
-                user_prompt = "Explain the grammar of the following text. Answer in Turkish: {highlight}",
+                user_prompt = "Explain the grammar of the following text. Answer in English: {highlight}",
                 show_on_main_popup = true -- Show the button in main popup
             },
             vocabulary = {
@@ -153,7 +153,7 @@ local CONFIGURATION = {
                                     *   Correct any typos.
                                     *   Convert it to its base form (e.g., "go", "dog", "good", "kick the bucket").
                                     *   List up to 3 simple synonyms (suitable for B1+ learners). Do not reuse the original word.
-                                    *   Explain its meaning simply **in Turkish**, considering its context in the text. Do not reuse the original word in the explanation.
+                                    *   Explain its meaning simply **in English**, considering its context in the text. Do not reuse the original word in the explanation.
                                 2.  **Format:** Create a numbered list using this exact structure for each item:
                                     `index: base_form : synonym1, synonym2, synonym3 : turkish_explanation`
                                 3.  **Output Content:** **ONLY** provide the numbered list. Do not include the original text, titles, or any extra sentences.
