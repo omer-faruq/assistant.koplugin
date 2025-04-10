@@ -65,7 +65,7 @@ You'll need API keys for the AI service you want to use:
 1. Ollama doesn't use an API key. However, a placeholder API key value (ex: "ollama") is required.
 
 **For Mistral**:
-1. To get started, create a Mistral account or sign in at console.mistral.ai.
+1. To get started, create a Mistral account or sign in at [console.mistral.ai](https://console.mistral.ai).
 2. Then, navigate to "Workspace" and "Billing" to add your payment information and activate payments on your account.
 3. After that, go to the "API keys" page and make a new API key by clicking "Create new key".
 
