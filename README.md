@@ -114,7 +114,7 @@ Configuration file has this structure:
 ```lua
 local CONFIGURATION = {
     -- Choose your preferred AI provider: "anthropic", "openai", "gemini", "openrouter", "deepseek" or "ollama"
-    provider = "openai",
+    provider = "gemini",
     
     -- Provider-specific settings (override defaults in api_handlers/defaults.lua)
     provider_settings = {
@@ -133,13 +133,21 @@ local CONFIGURATION = {
     features = {
         hide_highlighted_text = false,  -- Set to true to hide the highlighted text at the top
         hide_long_highlights = true,    -- Hide highlighted text if longer than threshold
-        long_highlight_threshold = 500,  -- Number of characters considered "long",
-        system_prompt = "You are a helpful assistant that provides clear explanations and if not stated oterwise always answers in English .", -- Custom system prompt for the AI ("Ask" button) to override the default, to disable set to nil
+        long_highlight_threshold = 500,  -- Number of characters considered "long"
+        max_display_user_prompt_length = 100,  -- Maximum number of characters of user_prompt to show in result window  (0 or nil for no limit)
+        system_prompt = "You are a helpful assistant that provides clear explanations.", -- Custom system prompt for the AI ("Ask" button) to override the default, to disable set to nil
         refresh_screen_after_displaying_results = true, -- Set to true to refresh the screen after displaying the results
         show_dictionary_button_in_main_popup = true, -- Set to true to show the dictionary button in the main popup
         dictionary_translate_to = "en-US", -- Set to the desired language code for the dictionary, nil to hide it
+        show_dictionary_button_in_dictionary_popup = true, -- Set to true to show the Dictionary (AI) button in the dictionary popup
+        viewer_font_size = nil, -- Font size for the result window (nil = use reader default or 20)
+        show_assistant_prefix = false, -- Show "Assistant: " before AI responses (default: false)
+        ai_button_suffix = " (AI)", -- Suffix added to AI-powered buttons (nil or "" to disable)
 
         -- Custom prompts for the AI (text = button text in the UI). system-prompt defaults to "You are a helpful assistant." if not set.
+        --You can use {author} and {title} variables in the user_prompt,
+        --and {highlight} variable for the highlighted text otherwise its appended to the user_prompt automatically.
+
         prompts = {
             prompt_id = {
                 text = "prompt_name",
