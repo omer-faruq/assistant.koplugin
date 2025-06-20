@@ -1,3 +1,8 @@
+-- Change to your desired language
+local MY_LANGUAGE = "Turkish"
+local MY_LANGUAGE_CODE = "tr-TR"
+local MY_LANGUAGE_RECAP_CODE = "tr-TR"
+
 local CONFIGURATION = {
     -- Choose your preferred AI provider: "anthropic", "openai", "gemini", ...
     -- use one of the settings defined in provider_settings below.
@@ -138,7 +143,7 @@ local CONFIGURATION = {
         system_prompt = "You are a helpful assistant that provides clear explanations.", -- Custom system prompt for the AI ("Ask" button) to override the default, to disable set to nil
         refresh_screen_after_displaying_results = true, -- Set to true to refresh the screen after displaying the results
         show_dictionary_button_in_main_popup = true, -- Set to true to show the dictionary button in the main popup
-        dictionary_translate_to = "tr-TR", -- Set to the desired language code for the dictionary, nil to hide it
+        dictionary_translate_to = MY_LANGUAGE_CODE, -- Set to the desired language code for the dictionary, nil to hide it
         show_dictionary_button_in_dictionary_popup = true, -- Set to true to show the Dictionary (AI) button in the dictionary popup
         enable_AI_recap = true, -- Set to true to allow for a popup on a book you haven't read in a while to give you a quick AI recap
         render_markdown = true, -- Set to true to render markdown in the AI responses
@@ -155,7 +160,7 @@ local CONFIGURATION = {
                          "Use text bolding to emphasize names and locations. Use italics to emphasize major plot points. No emojis or symbols.\n" ..
                          "Answer this whole response in {language} language.\n" ..
                          "only show the replies, do not give a description.",
-            language = "tr-TR" -- Language for recap responses, uses dictionary_translate_to as fallback
+            language = MY_LANGUAGE_RECAP_CODE -- Language for recap responses, uses dictionary_translate_to as fallback
         },
 
         -- Custom prompts for the AI (text = button text in the UI). system-prompt defaults to "You are a helpful assistant." if not set.
@@ -166,7 +171,7 @@ local CONFIGURATION = {
                 text = "Translate",
                 order = 1,
                 system_prompt = "You are a helpful translation assistant. Provide direct translations without additional commentary.",
-                user_prompt = "Please translate the following text to Turkish: {highlight}",
+                user_prompt = "Please translate the following text to " .. MY_LANGUAGE .. ": {highlight}",
                 show_on_main_popup = true -- Show the button in main popup
             },
             simplify = {
@@ -180,7 +185,7 @@ local CONFIGURATION = {
                 text = "Explain",
                 order = 3,
                 system_prompt = "You are a helpful assistant that explains complex topics clearly and concisely. Break down concepts into simple terms.",
-                user_prompt = "Please explain the following text. Answer in Turkish: {highlight}",
+                user_prompt = "Please explain the following text. Answer in " .. MY_LANGUAGE .. ": {highlight}",
                 show_on_main_popup = false -- Show the button in main popup
             },
             summarize = {
@@ -194,54 +199,54 @@ local CONFIGURATION = {
                 text = "Historical Context",
                 order = 5,
                 system_prompt = "You are a historical context expert. Provide relevant historical background and connections.",
-                user_prompt = "Explain the historical context of this text. Answer in Turkish: {highlight}",
+                user_prompt = "Explain the historical context of this text. Answer in " .. MY_LANGUAGE .. ": {highlight}",
                 show_on_main_popup = false -- Show the button in main popup
             },
             key_points = {
                 text = "Key Points",
                 order = 6,
                 system_prompt = "You are a key points expert. Provide a concise list of key points from the text.",
-                user_prompt = "Please provide a concise list in markdown format of key points from the following text. Answer in Turkish: {highlight}",
+                user_prompt = "Please provide a concise list in markdown format of key points from the following text. Answer in " .. MY_LANGUAGE .. ": {highlight}",
                 show_on_main_popup = false -- Show the button in main popup
             },
             ELI5 = {
                 text = "ELI5",
                 order = 7,
                 system_prompt = "You are an ELI5 expert. Provide simple, concise explanations for complex terms.",
-                user_prompt = "Please provide an ELI5 explanation. Answer in Turkish: {highlight}",
+                user_prompt = "Please provide an ELI5 explanation. Answer in " .. MY_LANGUAGE .. ": {highlight}",
                 show_on_main_popup = false -- Show the button in main popup
             },
             grammar = {
                 text = "Grammar",
                 order = 8,
                 system_prompt = "You are a grammar expert.",
-                user_prompt = "Explain the grammar of the following text. Answer in Turkish: {highlight}",
+                user_prompt = "Explain the grammar of the following text. Answer in " .. MY_LANGUAGE .. ": {highlight}",
                 show_on_main_popup = true -- Show the button in main popup
             },
             vocabulary = {
                 text = "Vocabulary",
                 order = 9,
                 system_prompt = "You are a vocabulary expert.",
-                user_prompt = [[**Your Task:** Analyze the Input Text below. Find words/phrases that are B2 level or higher. Ignore common words (B1 level) and proper nouns.
+                user_prompt = string.format([[**Your Task:** Analyze the Input Text below. Find words/phrases that are B2 level or higher. Ignore common words (B1 level) and proper nouns.
 
                                 **Output Requirements:**
                                 1.  For each difficult word/phrase found:
                                     *   Correct any typos.
                                     *   Convert it to its base form (e.g., "go", "dog", "good", "kick the bucket").
                                     *   List up to 3 simple synonyms (suitable for B1+ learners). Do not reuse the original word.
-                                    *   Explain its meaning simply **in Turkish**, considering its context in the text. Do not reuse the original word in the explanation.
+                                    *   Explain its meaning simply **in %s**, considering its context in the text. Do not reuse the original word in the explanation.
                                 2.  **Format:** Create a numbered list using this exact structure for each item:
-                                    `index. base_form : synonym1, synonym2, synonym3 : turkish_explanation`
+                                    `index. base_form : synonym1, synonym2, synonym3 : %s explanation`
                                 3.  **Output Content:** **ONLY** provide the numbered list. Do not include the original text, titles, or any extra sentences.
 
-                                **Input Text:** {highlight} ]], 
+                                **Input Text:** {highlight} ]], MY_LANGUAGE, MY_LANGUAGE), 
                 show_on_main_popup = false -- Show the button in main popup
             },
             wikipedia = {
                 text = "Wikipedia",
                 order = 10,
                 system_prompt = "You are an informative assistant that provides wikipedia articles.",
-                user_prompt = "I want you to act as a Wikipedia page. I will give you the name of a topic, and you will provide a summary of that topic in the format of a Wikipedia page. Your summary should be informative and factual, covering the most important aspects of the topic. Start your summary with an introductory paragraph that gives an overview of the topic. I prefer the answer in Turkish. My first topic is {highlight}",
+                user_prompt = "I want you to act as a Wikipedia page. I will give you the name of a topic, and you will provide a summary of that topic in the format of a Wikipedia page. Your summary should be informative and factual, covering the most important aspects of the topic. Start your summary with an introductory paragraph that gives an overview of the topic. I prefer the answer in " .. MY_LANGUAGE .. ". My first topic is {highlight}",
                 show_on_main_popup = false -- Show the button in main popup
             }
         }
