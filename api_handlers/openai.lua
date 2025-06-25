@@ -56,6 +56,11 @@ function OpenAIHandler:query(message_history, openai_settings)
             input = user_message,
         }
 
+        -- If the first message is a system prompt, map it to `instructions`
+        if message_history and #message_history > 0 and message_history[1].role == "system" then
+            requestBodyTable.instructions = message_history[1].content
+        end
+
         -- Merge any additional parameters directly into the request body
         if openai_settings.additional_parameters then
             for k, v in pairs(openai_settings.additional_parameters) do

@@ -409,7 +409,8 @@ local function showChatGPTDialog(assitant, highlightedText)
               input_dialog = nil
             end
             Trapper:wrap(function()
-              showProcCustomPrompt(ui, highlightedText, tab.idx)
+              -- Pass the assistant instance so showProcCustomPrompt can access querier and ui
+              showProcCustomPrompt(assitant, highlightedText, tab.idx)
             end)
           end
         })
