@@ -134,8 +134,8 @@ local CONFIGURATION = {
 
     -- Optional features 
     features = {
-        dictionary_translate_to = "Turkish", -- Set language for the dictionary response, nil to disable dictionary.
-        response_language = "Turkish", --  Set language for the other responses, nil to English response. 
+        dictionary_translate_to = "English", -- Default translation target; change if desired.
+        response_language = nil, --  Nil means default to English; change to another language to localize all answers.
         hide_highlighted_text = false,  -- Set to true to hide the highlighted text at the top
         hide_long_highlights = true,    -- Hide highlighted text if longer than threshold
         long_highlight_threshold = 500,  -- Number of characters considered "long"
@@ -188,7 +188,7 @@ Answer this whole response in {language} language. Only show the replies, do not
                 text = "Explain",
                 order = 3,
                 system_prompt = "You are a helpful assistant that explains complex topics clearly and concisely. Break down concepts into simple terms.",
-                user_prompt = "Please explain the following text. Answer in {language}: {highlight}",
+                user_prompt = "Please explain the following text: {highlight}",
                 show_on_main_popup = false -- Show the button in main popup
             },
             summarize = {
@@ -202,28 +202,28 @@ Answer this whole response in {language} language. Only show the replies, do not
                 text = "Historical Context",
                 order = 5,
                 system_prompt = "You are a historical context expert. Provide relevant historical background and connections.",
-                user_prompt = "Explain the historical context of this text. Answer in {language}: {highlight}",
+                user_prompt = "Explain the historical context of this text: {highlight}",
                 show_on_main_popup = false -- Show the button in main popup
             },
             key_points = {
                 text = "Key Points",
                 order = 6,
                 system_prompt = "You are a key points expert. Provide a concise list of key points from the text.",
-                user_prompt = "Please provide a concise list in markdown format of key points from the following text. Answer in {language}: {highlight}",
+                user_prompt = "Please provide a concise list in markdown format of key points from the following text: {highlight}",
                 show_on_main_popup = false -- Show the button in main popup
             },
             ELI5 = {
                 text = "ELI5",
                 order = 7,
                 system_prompt = "You are an ELI5 expert. Provide simple, concise explanations for complex terms.",
-                user_prompt = "Please provide an ELI5 explanation. Answer in {language}: {highlight}",
+                user_prompt = "Please provide an ELI5 explanation: {highlight}",
                 show_on_main_popup = false -- Show the button in main popup
             },
             grammar = {
                 text = "Grammar",
                 order = 8,
                 system_prompt = "You are a grammar expert.",
-                user_prompt = "Explain the grammar of the following text. Answer in {language}: {highlight}",
+                user_prompt = "Explain the grammar of the following text: {highlight}",
                 show_on_main_popup = true -- Show the button in main popup
             },
             vocabulary = {
@@ -237,9 +237,9 @@ Answer this whole response in {language} language. Only show the replies, do not
                                     *   Correct any typos.
                                     *   Convert it to its base form (e.g., "go", "dog", "good", "kick the bucket").
                                     *   List up to 3 simple synonyms (suitable for B1+ learners). Do not reuse the original word.
-                                    *   Explain its meaning simply **in {language}**, considering its context in the text. Do not reuse the original word in the explanation.
+                                    *   Explain its meaning simply **in English**, considering its context in the text. Do not reuse the original word in the explanation.
                                 2.  **Format:** Create a numbered list using this exact structure for each item:
-                                    `index. base_form : synonym1, synonym2, synonym3 : {language}_explanation`
+                                    `index. base_form : synonym1, synonym2, synonym3 : English_explanation`
                                 3.  **Output Content:** **ONLY** provide the numbered list. Do not include the original text, titles, or any extra sentences.
 
                                 **Input Text:** {highlight} ]], 
