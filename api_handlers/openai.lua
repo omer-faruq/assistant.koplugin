@@ -50,10 +50,27 @@ function OpenAIHandler:query(message_history, openai_settings)
     local requestBodyTable
 
     if using_responses_api then
-        -- Build body for Responses API
+        -- Convert the conversation history (excluding the system prompt) to Responses API input items
+        local input_items = {}
+        if message_history and #message_history > 0 then
+            for _, msg in ipairs(message_history) do
+                if msg.role ~= "system" then
+                    table.insert(input_items, {
+                        role = msg.role,
+                        content = msg.content,
+                    })
+                end
+            end
+        end
+
+        -- Fallback to single user message if somehow empty
+        if #input_items == 0 then
+            input_items = user_message
+        end
+
         requestBodyTable = {
             model = openai_settings.model,
-            input = user_message,
+            input = input_items,
         }
 
         -- If the first message is a system prompt, map it to `instructions`
