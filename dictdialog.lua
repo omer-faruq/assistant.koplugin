@@ -4,7 +4,7 @@ local ChatGPTViewer = require("chatgptviewer")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local TextBoxWidget = require("ui/widget/textboxwidget")
-local _ = require("gettext")
+local t = require("i18n")
 local Event = require("ui/event")
 local configuration = require("configuration")
 local dict_prompts = require("prompts").assitant_prompts.dict
@@ -25,19 +25,19 @@ local function showDictionaryDialog(assitant, highlightedText, message_history)
     if not highlightedText or highlightedText == "" then
         -- Show a simple input dialog to ask for a word to look up
         input_dialog = InputDialog:new{
-            title = _("AI Dictionary"),
-            input_hint = _("Enter a word to look up..."),
+            title = t("ai_dictionary"),
+            input_hint = t("enter_a_word_to_look_up"),
             input_type = "text",
             buttons = {
                 {
                     {
-                        text = _("Cancel"),
+                        text = t("cancel"),
                         callback = function()
                             UIManager:close(input_dialog)
                         end,
                     },
                     {
-                        text = _("Look Up"),
+                        text = t("look_up"),
                         is_enter_default = true,
                         callback = function()
                             local word = input_dialog:getInputText()
@@ -172,7 +172,7 @@ local function showDictionaryDialog(assitant, highlightedText, message_history)
     chatgpt_viewer = ChatGPTViewer:new {
         assitant = assitant,
         ui = ui,
-        title = _("Dictionary"),
+        title = t("dictionary"),
         text = result_text,
         onAddToNote = handleAddToNote,
     }

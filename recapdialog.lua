@@ -4,7 +4,7 @@ local UIManager = require("ui/uimanager")
 local TextBoxWidget = require("ui/widget/textboxwidget")
 local InfoMessage = require("ui/widget/infomessage")
 local Event = require("ui/event")
-local _ = require("gettext")
+local t = require("i18n")
 local ChatGPTViewer = require("chatgptviewer")
 local configuration = require("configuration")
 local recap_prompts = require("prompts").assitant_prompts.recap
@@ -65,7 +65,7 @@ local function showRecapDialog(assitant, title, author, progress_percent, messag
     local chatgpt_viewer = ChatGPTViewer:new {
       assitant = assitant,
       ui = ui,
-      title = _("Recap"),
+      title = t("recap"),
       text = createResultText(answer),
     }
 

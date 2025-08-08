@@ -6,7 +6,7 @@ local InfoMessage = require("ui/widget/infomessage")
 local UIManager = require("ui/uimanager")
 local Trapper = require("ui/trapper")
 local logger = require("logger")
-local _ = require("gettext")
+local t = require("i18n")
 
 local update_url = "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest"
 
@@ -18,7 +18,7 @@ local function checkForUpdates()
   end
 
   local infomsg = InfoMessage:new{
-    text = _("Checking for updates..."),
+    text = t("checking_for_updates"),
   }
   UIManager:show(infomsg)
   local success, code, body = Trapper:dismissableRunInSubprocess(function()
@@ -52,7 +52,7 @@ local function checkForUpdates()
         if latest_number and meta.version and latest_number > meta.version then
           -- Show notification to the user if a new version is available
           local message = string.format(
-            _("A new version of the %s plugin (%s) is available. Please update!"),
+            t("new_version_available_please_update"),
             meta.fullname, latest_version
           )
           UIManager:show(InfoMessage:new{ text = message, timeout = 5}) 

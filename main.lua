@@ -11,7 +11,7 @@ local DataStorage = require("datastorage")
 local RadioButtonWidget = require("ui/widget/radiobuttonwidget")
 local ConfirmBox  = require("ui/widget/confirmbox")
 local T 		      = require("ffi/util").template
-local _ = require("gettext")
+local t = require("i18n")
 local FrontendUtil = require("util")
 local ffiutil = require("ffi/util")
 
@@ -47,7 +47,7 @@ function Assistant:onDispatcherRegisterActions()
   Dispatcher:registerAction("ai_ask_question", {
     category = "none", 
     event = "AskAIQuestion", 
-    title = _("Ask AI Question"), 
+    title = t("ask_ai_question"), 
     general = true
   })
   
@@ -56,7 +56,7 @@ function Assistant:onDispatcherRegisterActions()
     Dispatcher:registerAction("ai_recap", {
       category = "none", 
       event = "AskAIRecap", 
-      title = _("AI Recap"), 
+      title = t("ai_recap"), 
       general = true,
       separator = true
     })
@@ -65,7 +65,7 @@ end
 
 function Assistant:addToMainMenu(menu_items)
     menu_items.assitant_provider_switch = {
-        text = _("Assistant Settings"),
+        text = t("assistant_settings"),
         sorting_hint = "more_tools",
         callback = function ()
           self:showSettings()
@@ -84,7 +84,7 @@ end
 function Assistant:getModelProvider()
 
   if not (CONFIGURATION and CONFIGURATION.provider_settings) then
-    error("Configuration not found. Please set up configuration.lua first.")
+    error(t("configuration_not_found_please_set_up_first"))
   end
 
   local provider_settings = CONFIGURATION.provider_settings -- provider settings table from configuration.lua
@@ -150,13 +150,13 @@ function Assistant:init()
   -- Assistant button
   self.ui.highlight:addToHighlightDialog("assistant", function(_reader_highlight_instance)
     return {
-      text = _("Assistant"),
+      text = t("assistant"),
       enabled = Device:hasClipboard(),
       callback = function()
         if not CONFIGURATION then
           UIManager:show(InfoMessage:new{
             icon = "notice-warning",
-            text = _("Configuration not found. Please set up configuration.lua first.")
+            text = t("configuration_not_found_please_set_up_first")
           })
           return
         end
@@ -191,7 +191,7 @@ function Assistant:init()
   self.querier:load_model(self:getModelProvider())
 
   self.assitant_dialog = AssistantDialog:new(self, CONFIGURATION)
-  
+ 
   -- Recap Feature
   if CONFIGURATION and CONFIGURATION.features and CONFIGURATION.features.enable_AI_recap then
     local ReaderUI    = require("apps/reader/readerui")
@@ -224,12 +224,12 @@ function Assistant:init()
             local doc_props = doc_settings:child("doc_props")
             local title = doc_props:readSetting("title", "Unknown Title")
             local authors = doc_props:readSetting("authors", "Unknown Author")
-            local message = string.format(T(_("Do you want an AI Recap?\nFor %s by %s.\nLast read %.0f hours ago.")), title, authors, timeDiffHours) -- can add in percent_finished too
+            local message = string.format(T(t("do_you_want_ai_recap_for_book_last_read")), title, authors, timeDiffHours) -- can add in percent_finished too
     
             -- Display the request popup using ConfirmBox.
             UIManager:show(ConfirmBox:new{
               text            = message,
-              ok_text         = _("Yes"),
+              ok_text         = t("Yes"),
               ok_callback     = function()
                 NetworkMgr:runWhenOnline(function()
                   local showRecapDialog = require("recapdialog")
@@ -238,7 +238,7 @@ function Assistant:init()
                   end)
                 end)
               end,
-              cancel_text     = _("No"),
+              cancel_text     = t("No"),
             })
           end
         end
@@ -306,7 +306,7 @@ function Assistant:onDictButtonsReady(dict_popup, buttons)
   if CONFIGURATION and CONFIGURATION.features and CONFIGURATION.features.show_dictionary_button_in_dictionary_popup then
     table.insert(buttons, 1, {{
         id = "assistant_dictionary",
-        text = _("Dictionary").." (AI)",
+        text = t("dictionary").." (AI)",
         font_bold = false,
         callback = function()
             NetworkMgr:runWhenOnline(function()
@@ -325,7 +325,7 @@ function Assistant:onAskAIQuestion()
   if not CONFIGURATION then
     UIManager:show(InfoMessage:new{
       icon = "notice-warning",
-      text = _("Configuration not found. Please set up configuration.lua first.")
+      text = t("configuration_not_found_please_set_up_first")
     })
     return true
   end
@@ -347,7 +347,7 @@ function Assistant:onAskAIRecap()
   if not CONFIGURATION then
     UIManager:show(InfoMessage:new{
       icon = "notice-warning",
-      text = _("Configuration not found. Please set up configuration.lua first.")
+      text = t("configuration_not_found_please_set_up_first")
     })
     return true
   end
@@ -355,7 +355,7 @@ function Assistant:onAskAIRecap()
   if not CONFIGURATION.features or not CONFIGURATION.features.enable_AI_recap then
     UIManager:show(InfoMessage:new{
       icon = "notice-warning",
-      text = _("AI Recap feature is not enabled in configuration.")
+      text = t("ai_recap_feature_not_enabled_in_configuration")
     })
     return true
   end
@@ -371,8 +371,8 @@ function Assistant:onAskAIRecap()
     local doc_settings = DocSettings:open(self.ui.document.file)
     local percent_finished = doc_settings:readSetting("percent_finished") or 0
     local doc_props = doc_settings:child("doc_props")
-    local title = doc_props:readSetting("title") or self.ui.document:getProps().title or _("Unknown Title")
-    local authors = doc_props:readSetting("authors") or self.ui.document:getProps().authors or _("Unknown Author")
+    local title = doc_props:readSetting("title") or self.ui.document:getProps().title or t("unknown_title")
+    local authors = doc_props:readSetting("authors") or self.ui.document:getProps().authors or t("unknown_author")
     
     -- Show recap dialog
     local showRecapDialog = require("recapdialog")
@@ -402,7 +402,7 @@ function Assistant:applyOrRemoveTranslateOverride()
       if not CONFIGURATION then
         UIManager:show(InfoMessage:new{
           icon = "notice-warning",
-          text = _("Configuration not found. Please set up configuration.lua first.")
+          text = t("configuration_not_found_please_set_up_first")
         })
         return
       end

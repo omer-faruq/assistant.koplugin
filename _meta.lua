@@ -1,7 +1,7 @@
-local _ = require("gettext")
+local t = require("i18n")
 return {
     name = "assistant",
     fullname = "Assistant",
-    description = _([[Allows the user to query an AI API for answers to questions about highlighted text.]]),
+    description = t("assistant_description"),
     version = 1.07,
 }

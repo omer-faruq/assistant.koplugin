@@ -1,5 +1,5 @@
 --- Querier module for handling AI queries with dynamic provider loading
-local _ = require("gettext")
+local t = require("i18n")
 local InfoMessage = require("ui/widget/infomessage")
 local InputDialog = require("ui/widget/inputdialog")
 local InputText = require("ui/widget/inputtext")
@@ -43,7 +43,7 @@ function Querier:init(provider_name)
     if success then
         CONFIGURATION = result
     else
-        return _("No configuration found. Please set up configuration.lua")
+        return t("no_configuration_found_please_set_up_configuration")
     end
 
     if CONFIGURATION and CONFIGURATION.provider_settings then
@@ -53,7 +53,7 @@ function Querier:init(provider_name)
             self.provider_settings = CONFIGURATION.provider_settings[provider_name]
         else
             return string.format(
-                _("Provider settings not found for: %s. Please check your configuration.lua file."),
+                t("provider_settings_not_found_for_provider_check_configuration"),
                 provider_name)
         end
 
@@ -75,11 +75,11 @@ function Querier:init(provider_name)
             self.handler = handler
         else
             return string.format(
-                _("Handler not found for: %s. Please ensure the handler exists in api_handlers directory."),
+                t("handler_not_found_for_provider_ensure_handler_exists"),
                 self.handler_name)
         end
     else
-        return _("No provider set in configuration.lua. Please set the provider and provider_settings for %s.")
+        return t("no_provider_set_in_configuration_please_set_provider_and_settings")
     end
 end
 
@@ -109,7 +109,7 @@ function StreamText:onTapTextBox(arg, ges) return true end
 --- return: answer, error (if any)
 function Querier:query(message_history, title)
     if not self:is_inited() then
-        return "", "Assitant: not configured."
+        return "", "Assitant: " .. t("not_configure")
     end
 
     if self.settings:readSetting("forced_stream_mode") then
@@ -123,7 +123,7 @@ function Querier:query(message_history, title)
 
     local infomsg = InfoMessage:new{
       icon = "book.opened",
-      text = string.format("%s\n️☁️ %s\n⚡ %s", title or _("Querying AI ..."),
+      text = string.format("%s\n️☁️ %s\n⚡ %s", title or t("querying_ai"),
             self.provider_name, self.provider_settings.model),
     }
 

@@ -4,6 +4,9 @@ local CONFIGURATION = {
     -- NOTE: "openai" , "openai_grok" are different service using same handling code.
     provider = "openai",
 
+    -- Language
+    -- locale = "<code-lang>" default is auto,
+
     -- Provider-specific settings
     provider_settings = {
         openai = {

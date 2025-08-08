@@ -4,7 +4,7 @@ local ChatGPTViewer = require("chatgptviewer")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local ConfirmBox = require("ui/widget/confirmbox")
-local _ = require("gettext")
+local t = require("i18n")
 local Trapper = require("ui/trapper")
 local Prompts = require("prompts")
 local Device = require("device")
@@ -78,11 +78,11 @@ function AssitantDialog:_createResultText(highlightedText, message_history, prev
         user_message = string.format("%s\n\n", title)
       else
         -- shows user input prompt
-        user_message = string.format("\n\n%s\n\n", self:_truncateUserPrompt(message.content or _("(Empty message)")))
+        user_message = string.format("\n\n%s\n\n", self:_truncateUserPrompt(message.content or t("empty_message")))
       end
       return "### ⮞ User: " .. user_message
     elseif message.role == "assistant" then
-      local assistant_content = message.content or _("(No response)")
+      local assistant_content = message.content or t("no_response")
       return string.format("### ⮞ Assistant:\n\n%s\n\n", assistant_content)
     end
     return "" -- Should not happen for valid roles
@@ -112,7 +112,7 @@ function AssitantDialog:_createResultText(highlightedText, message_history, prev
 
     local result_parts = {}
     if show_highlighted_text then
-      table.insert(result_parts, string.format("__%s__\"%s\"\n\n", _("Highlighted text:"), highlightedText))
+      table.insert(result_parts, string.format("__%s__\"%s\"\n\n", t("highlighted_text"), highlightedText))
     end
     
     -- skips the first message (system prompt)
@@ -227,8 +227,8 @@ end
 function AssitantDialog:_getBookContext()
   local prop = self.assitant.ui.document:getProps()
   return {
-    title = prop.title or _("Unknown Title"),
-    author = prop.authors or _("Unknown Author")
+    title = prop.title or t("unknown_title"),
+    author = prop.authors or t("unknown_author")
   }
 end
 
@@ -255,20 +255,20 @@ function AssitantDialog:show(highlightedText)
   local button_rows = {}
   local all_buttons = {
     {
-      text = _("Cancel"),
+      text = t("cancel"),
       id = "close",
       callback = function()
         self:_close()
       end
     },
     {
-      text = _("Ask"),
+      text = t("ask"),
       is_enter_default = true,
       callback = function()
         local user_question = self.input_dialog and self.input_dialog:getInputText() or ""
         if not user_question or user_question == "" then
           UIManager:show(InfoMessage:new{
-            text = _("Enter a question before proceeding."),
+            text = t("enter_a_question_before_proceeding"),
             timeout = 3
           })
           return
@@ -299,7 +299,7 @@ function AssitantDialog:show(highlightedText)
           })
           
           -- Create a contextual title
-          local viewer_title = highlightedText and highlightedText ~= "" and _("Book Analysis")
+          local viewer_title = highlightedText and highlightedText ~= "" and t("book_analysis")
           self:_createAndShowViewer(highlightedText, message_history, viewer_title)
         end)
       end
@@ -308,6 +308,19 @@ function AssitantDialog:show(highlightedText)
   
   -- Only add additional buttons if there's highlighted text
   if is_highlighted then
+    -- Add Dictionary button
+    if CONFIGURATION and CONFIGURATION.features and CONFIGURATION.features.dictionary_translate_to then
+      table.insert(all_buttons, {
+        text = t("dictionary"),
+        callback = function()
+          self:_close()
+          local showDictionaryDialog = require("dictdialog")
+          Trapper:wrap(function()
+            showDictionaryDialog(self.assitant, highlightedText)
+          end)
+        end
+      })  
+    end
     local sorted_prompts = Prompts.getSortedCustomPrompts(function (prompt)
       if prompt.visible == false then
         return false
@@ -385,16 +398,16 @@ function AssitantDialog:show(highlightedText)
   end
 
   -- Show the dialog with the button rows
-  local dialog_hint = is_highlighted and 
-    _("Ask a question about the highlighted text") or 
-    string.format(_("Ask a question about this book:\n%s by %s"), book.title, book.author)
+  local dialog_title = is_highlighted and 
+    t("ask_a_question_about_the_highlighted_text") or
+    string.format(t("ask_question_about_book_by_author"), book.title, book.author)
   
   local input_hint = is_highlighted and 
-    _("Type your question here...") or 
-    _("Ask anything about this book...")
+    t("type_your_question_here") or
+    t("ask_anything_about_this_book")
   
   self.input_dialog = InputDialog:new{
-    title = _("AI Assistant"),
+    title = t("ai_assistant"),
     description = dialog_hint,
     input_hint = input_hint,
     buttons = button_rows,
@@ -432,7 +445,7 @@ function AssitantDialog:showCustomPrompt(highlightedText, prompt_index)
     }
   }
   
-  local answer, err = self.querier:query(message_history, string.format("🌐 Loading for %s ...", title or prompt_index))
+  local answer, err = self.querier:query(message_history, string.format(t("loading_for"), title or prompt_index))
   if err then
     UIManager:show(InfoMessage:new{text = err, icon = "notice-warning"})
     return
@@ -445,7 +458,7 @@ function AssitantDialog:showCustomPrompt(highlightedText, prompt_index)
   end
 
   if not message_history or #message_history < 1 then
-    UIManager:show(InfoMessage:new{text = _("Error: No response received"), icon = "notice-warning"})
+    UIManager:show(InfoMessage:new{text = t("no_response_received"), icon = "notice-warning"})
     return
   end
 
