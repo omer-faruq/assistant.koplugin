@@ -120,7 +120,7 @@ local CONFIGURATION = {
     -- Provider-specific settings (override defaults in api_handlers/defaults.lua)
     provider_settings = {
         openai = {
-            defalut = true, -- optional, if provider is not set, will try to find the one with `defalut =  true`
+            default = true, -- optional, if provider is not set, will try to find the one with `default =  true`
             visible = true, -- optional, if set to false, will not shown in the profile switch
             model = "api-model",
             base_url = "URL_to_API",

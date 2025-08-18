@@ -7,7 +7,7 @@ local CONFIGURATION = {
     -- Provider-specific settings
     provider_settings = {
         openai = {
-            defalut = true, -- optional, if provider above is not set, will try to find one with `defalut =  true`
+            default = true, -- optional, if provider above is not set, will try to find one with `default =  true`
             visible = true, -- optional, if set to false, will not shown in the provider switch
             model = "gpt-4o-mini", -- model list: https://platform.openai.com/docs/models
             base_url = "https://api.openai.com/v1/chat/completions",
