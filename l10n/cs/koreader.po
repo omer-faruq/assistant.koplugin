@@ -8,20 +8,60 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 14:30+0800\n"
-"PO-Revision-Date: 2025-08-14 10:59+0800\n"
-"Last-Translator: ChatGPT 4.0 <chatgpt@openai.com>\n"
-"Language-Team: Čeština <cs@openai.com>\n"
+"POT-Creation-Date: 2025-08-19 11:09+0800\n"
+"PO-Revision-Date: 2025-08-19 11:11+0800\n"
+"Last-Translator: AI Translator (gpt-5-nano)\n"
+"Language-Team: Czech\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ../gpt_query.lua:187
+msgid "No response received."
+msgstr "Nebyla přijata žádná odpověď."
+
+#: ../gpt_query.lua:203
+msgid "Failed to start subprocess for request"
+msgstr "Nepodařilo se spustit podproces pro požadavek."
+
+#: ../settingsdialog.lua:64
+msgid "Always enable stream response"
+msgstr "Vždy povolit streamovanou odpověď."
+
+#: ../settingsdialog.lua:83
+msgid "Show Dictionary(AI) in Dictionary Popup"
+msgstr "Zobrazit AI slovník ve vyskakovacím okně slovníku."
+
+#: ../settingsdialog.lua:92
+msgid "Show Wikipedia(AI) in Dictionary Popup"
+msgstr "Zobrazit Wikipedii (AI) ve vyskakovacím okně slovníku."
+
+#: ../settingsdialog.lua:101
+msgid "Copy entered question to the clipboard"
+msgstr "Zkopírovat zadanou otázku do schránky."
+
+#: ../settingsdialog.lua:110
+msgid "Enable AI Recap"
+msgstr "Povolit AI shrnutí."
+
+#: ../settingsdialog.lua:117
+msgid "AI Recap will be enabled the next time a book is opened."
+msgstr "AI shrnutí bude povoleno při dalším otevření knihy."
+
+#: ../_meta.lua:4 ../dialogs.lua:377 ../main.lua:198
+msgid "AI Assistant"
+msgstr "AI Asistent"
+
+#: ../_meta.lua:5
+msgid "💡 Enhance your KOReader experience with AI"
+msgstr "💡 Zlepšete svůj zážitek s KOReader pomocí AI"
+
 #: ../chatgptviewer.lua:266 ../chatgptviewer.lua:629
 msgid "Ask Another Question"
 msgstr "Zeptejte se na další otázku"
 
-#: ../chatgptviewer.lua:306
+#: ../chatgptviewer.lua:306 ../settingsdialog.lua:129
 msgid "Close"
 msgstr "Zavřít"
 
@@ -53,15 +93,15 @@ msgstr "Žádný text zbylý k přidání jako poznámka"
 msgid "Note added successfully"
 msgstr "Poznámka úspěšně přidána"
 
-#: ../chatgptviewer.lua:567 ../dialogs.lua:260 ../dictdialog.lua:34
+#: ../chatgptviewer.lua:569 ../dialogs.lua:263 ../dictdialog.lua:34
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: ../chatgptviewer.lua:577 ../dialogs.lua:267
+#: ../chatgptviewer.lua:579 ../dialogs.lua:270
 msgid "Ask"
 msgstr "Zeptat se"
 
-#: ../chatgptviewer.lua:583 ../dialogs.lua:273
+#: ../chatgptviewer.lua:585 ../dialogs.lua:276
 msgid "Enter a question before proceeding."
 msgstr "Před pokračováním zadejte otázku."
 
@@ -77,35 +117,35 @@ msgstr "Slovo zkopírováno do schránky."
 msgid "Selection copied to clipboard."
 msgstr "Výběr zkopírován do schránky."
 
-#: ../dialogs.lua:83
+#: ../dialogs.lua:86
 msgid "(Empty message)"
 msgstr "(Prázdná zpráva)"
 
-#: ../dialogs.lua:87
+#: ../dialogs.lua:90
 msgid "(No response)"
 msgstr "(Žádná odpověď)"
 
-#: ../dialogs.lua:117
+#: ../dialogs.lua:120
 msgid "Highlighted text:"
 msgstr "Zvýrazněný text:"
 
-#: ../dialogs.lua:304
+#: ../dialogs.lua:305
 msgid "Book Analysis"
 msgstr "Analýza knihy"
 
-#: ../dialogs.lua:341
+#: ../dialogs.lua:342
 msgid "Add this button to the Highlight Menu?"
 msgstr "Přidat toto tlačítko do nabídky zvýraznění?"
 
-#: ../dialogs.lua:342
+#: ../dialogs.lua:343
 msgid "Add"
 msgstr "Přidat"
 
-#: ../dialogs.lua:368
+#: ../dialogs.lua:369
 msgid "Ask a question about the highlighted text"
 msgstr "Zeptejte se na zvýrazněný text"
 
-#: ../dialogs.lua:369
+#: ../dialogs.lua:370
 #, lua-format
 msgid ""
 "Ask a question about this book:\n"
@@ -114,19 +154,15 @@ msgstr ""
 "Zeptejte se na tuto knihu:\n"
 "%s od %s"
 
-#: ../dialogs.lua:372
+#: ../dialogs.lua:373
 msgid "Type your question here..."
 msgstr "Zadejte svou otázku..."
 
-#: ../dialogs.lua:373
+#: ../dialogs.lua:374
 msgid "Ask anything about this book..."
 msgstr "Zeptat se na cokoli o této knize..."
 
-#: ../dialogs.lua:376 ../main.lua:204 ../_meta.lua:4
-msgid "AI Assistant"
-msgstr "AI Asistent"
-
-#: ../dialogs.lua:427
+#: ../dialogs.lua:430
 msgid "Error: No response received"
 msgstr "Chyba: Není žádná odpověď"
 
@@ -142,7 +178,7 @@ msgstr "Zadejte slovo k vyhledání..."
 msgid "Look Up"
 msgstr "Vyhledat"
 
-#: ../dictdialog.lua:177 ../main.lua:407 ../prompts.lua:19
+#: ../dictdialog.lua:177 ../main.lua:365 ../prompts.lua:19
 msgid "Dictionary"
 msgstr "Slovník"
 
@@ -194,23 +230,23 @@ msgstr "⏹ Zastavit"
 msgid "Response interrupted."
 msgstr "Odpověď přerušena."
 
-#: ../main.lua:73
+#: ../main.lua:74
 msgid "Ask the AI a question"
 msgstr "Zeptejte se AI otázky"
 
-#: ../main.lua:82
+#: ../main.lua:83
 msgid "AI Recaps"
 msgstr "AI Přehledy"
 
-#: ../main.lua:91 ../settingsdialog.lua:26
+#: ../main.lua:92 ../settingsdialog.lua:37
 msgid "Assistant Settings"
 msgstr "Nastavení asistenta"
 
-#: ../main.lua:174
+#: ../main.lua:168
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "V configuration.lua nebyl nalezen žádný platný poskytovatel modelu"
 
-#: ../main.lua:208
+#: ../main.lua:204
 msgid ""
 "Configuration Error.\n"
 "Please set up configuration.lua."
@@ -218,7 +254,7 @@ msgstr ""
 "Chyba konfigurace.\n"
 "Nastavte prosím configuration.lua."
 
-#: ../main.lua:232
+#: ../main.lua:229
 msgid ""
 "Useful Tips:\n"
 "\n"
@@ -245,11 +281,37 @@ msgstr ""
 "Vícenásobný přejezd (např. ⮠, ⮡, ↺):\n"
 "Na dialog výsledek zavřete (protože tlačítko Zavřít je příliš daleko).\n"
 
-#: ../main.lua:259
+#: ../main.lua:252
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: poskytovatelé modelů nejsou platní."
 
-#: ../main.lua:317
+#: ../main.lua:333
+#, lua-format
+msgid "Remove [%s] from Highlight Menu?"
+msgstr "Odebrat [%s] z nabídky zvýraznění?"
+
+#: ../main.lua:334
+msgid "Remove"
+msgstr "Odebrat"
+
+#: ../main.lua:351 ../prompts.lua:127
+msgid "Wikipedia"
+msgstr "Wikipedia"
+
+#: ../main.lua:387 ../main.lua:439
+msgid "Configuration not found. Please set up configuration.lua first."
+msgstr "Konfigurace nenalezena. Nejprve nastavte configuration.lua."
+
+#: ../main.lua:481
+msgid "Added [%1 (AI)] to Highlight Menu."
+msgstr "Přidáno [%1 (AI)] do nabídky zvýraznění."
+
+#: ../main.lua:490
+#, lua-format
+msgid "Removed [%s (AI)] from Highlight Menu."
+msgstr "Odebráno [%s (AI)] z nabídky zvýraznění."
+
+#: ../main.lua:534
 #, lua-format
 msgid ""
 "Do you want an AI Recap?\n"
@@ -260,43 +322,13 @@ msgstr ""
 "Pro %s od %s.\n"
 "Poslední čtení %.0f hodiny(y) předtím."
 
-#: ../main.lua:322
+#: ../main.lua:539
 msgid "Yes"
 msgstr "Ano"
 
-#: ../main.lua:331
+#: ../main.lua:548
 msgid "No"
 msgstr "Ne"
-
-#: ../main.lua:391
-#, lua-format
-msgid "Remove [%s] from Highlight Menu?"
-msgstr "Odebrat [%s] z nabídky zvýraznění?"
-
-#: ../main.lua:392
-msgid "Remove"
-msgstr "Odebrat"
-
-#: ../main.lua:426 ../main.lua:448 ../main.lua:501
-msgid "Configuration not found. Please set up configuration.lua first."
-msgstr "Konfigurace nenalezena. Nejprve nastavte configuration.lua."
-
-#: ../main.lua:456
-msgid "AI Recap feature is not enabled in configuration."
-msgstr "Funkce AI Přehledu není v konfiguraci povolena."
-
-#: ../main.lua:544
-msgid "Added [%1 (AI)] to Highlight Menu."
-msgstr "Přidáno [%1 (AI)] do nabídky zvýraznění."
-
-#: ../main.lua:553
-#, lua-format
-msgid "Removed [%s (AI)] from Highlight Menu."
-msgstr "Odebráno [%s (AI)] z nabídky zvýraznění."
-
-#: ../_meta.lua:5
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Zlepšete svůj zážitek s KOReader pomocí AI"
 
 #: ../prompts.lua:20
 msgid ""
@@ -404,10 +436,6 @@ msgstr ""
 "Tato výzva analyzuje slovní zásobu zvýrazněného textu, identifikuje složité "
 "slova a poskytuje definice, synonymá a příklady použití."
 
-#: ../prompts.lua:127
-msgid "Wikipedia"
-msgstr "Wikipedia"
-
 #: ../prompts.lua:129
 msgid ""
 "This prompt generates a comprehensive Wikipedia-style article based on the "
@@ -420,23 +448,11 @@ msgstr ""
 msgid "Recap"
 msgstr "Přehled"
 
-#: ../settingsdialog.lua:53
-msgid "Always use stream mode"
-msgstr "Vždy používat režim streamu"
-
-#: ../settingsdialog.lua:58
+#: ../settingsdialog.lua:73
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Používat AI Asistenta pro 'Přeložit'"
 
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is enabled."
-msgstr "Přepsání AI Asistenta je povoleno."
-
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is disabled."
-msgstr "Přepsání AI Asistenta je zakázáno."
-
-#: ../settingsdialog.lua:104
+#: ../settingsdialog.lua:136
 msgid "Select the AI Model provider."
 msgstr "Vyberte poskytovatele modelu AI."
 

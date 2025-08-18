@@ -54,8 +54,10 @@ extract-untranslated:
 import-translation:
 	@for po_file in $(PO_FILES); do \
 		dir=$$(dirname $$po_file); \
-		$(MSGCAT_BIN) --use-first $$po_file $$dir/updated_translated.po -o updated.po; \
-		mv updated.po $$po_file; \
+		if [ -f $$dir/updated_translated.po ]; then \
+			$(MSGCAT_BIN) --use-first $$dir/updated_translated.po $$po_file -o updated.po; \
+			mv updated.po $$po_file; \
+		fi; \
 	done
 
 check:
@@ -74,8 +76,14 @@ ai-translate:
 	COUNT=0; \
 	for LANG in $(LANGS); do \
 		COUNT=$$((COUNT+1)); \
-		echo "Translating language $$COUNT of $$TOTAL ($$LANG)..."; \
-		./AI_TRANSLATE.sh $$LANG && echo "... wait sometime due to API's limited" && sleep 20; \
+		echo "\n[$$COUNT/$$TOTAL] Processing language: $$LANG"; \
+		INPUT_FILE=$$LANG/untranslated.po; \
+		OUTPUT_FILE=$$LANG/updated_translated.po; \
+		if [ -s $$INPUT_FILE ]; then \
+			python3 ai_translate.py --input-file $$INPUT_FILE --output-file $$OUTPUT_FILE --language $$LANG; \
+		else \
+			echo "No untranslated strings found for $$LANG. Skipping."; \
+		fi; \
 	done
 
 template:
@@ -83,5 +91,5 @@ template:
 	$(XGETTEXT_BIN) --from-code=utf-8 \
 		--keyword=C_:1c,2 --keyword=N_:1,2 --keyword=NC_:1c,2,3 \
 		--add-comments=@translators \
-		`find .. -name "*.lua" | sort` \
+		$$(find .. -name "*.lua" | sort) \
 		-o $(TEMPLATE_DIR)/$(DOMAIN).pot

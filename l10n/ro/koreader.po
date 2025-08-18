@@ -6,20 +6,61 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 2025.08.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 14:30+0800\n"
-"PO-Revision-Date: 2025-08-14 12:09+0800\n"
-"Last-Translator: k1nky 1.0\n"
-"Language-Team: k1nky 1.0\n"
+"POT-Creation-Date: 2025-08-19 11:09+0800\n"
+"PO-Revision-Date: 2025-08-19 11:16+0800\n"
+"Last-Translator: AI Translator (gpt-5-nano)\n"
+"Language-Team: Romanian\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ../gpt_query.lua:187
+msgid "No response received."
+msgstr "Nu s-a primit niciun răspuns."
+
+#: ../gpt_query.lua:203
+msgid "Failed to start subprocess for request"
+msgstr "Nu s-a putut porni subprocesul pentru cerere."
+
+#: ../settingsdialog.lua:64
+msgid "Always enable stream response"
+msgstr "Activează întotdeauna răspunsul în flux."
+
+#: ../settingsdialog.lua:83
+msgid "Show Dictionary(AI) in Dictionary Popup"
+msgstr "Afișează Dicționar AI în pop-up-ul Dicționarului."
+
+#: ../settingsdialog.lua:92
+msgid "Show Wikipedia(AI) in Dictionary Popup"
+msgstr "Afișează Wikipedia AI în pop-up-ul Dicționarului."
+
+#: ../settingsdialog.lua:101
+msgid "Copy entered question to the clipboard"
+msgstr "Copiază întrebarea introdusă în clipboard."
+
+#: ../settingsdialog.lua:110
+msgid "Enable AI Recap"
+msgstr "Activează rezumatul AI."
+
+#: ../settingsdialog.lua:117
+msgid "AI Recap will be enabled the next time a book is opened."
+msgstr ""
+"Recapitularea AI va fi activată data viitoare când se va deschide o carte."
+
+#: ../_meta.lua:4 ../dialogs.lua:377 ../main.lua:198
+msgid "AI Assistant"
+msgstr "Asistent IA"
+
+#: ../_meta.lua:5
+msgid "💡 Enhance your KOReader experience with AI"
+msgstr "💡 Îmbunătățește experiența KOReader cu IA"
+
 #: ../chatgptviewer.lua:266 ../chatgptviewer.lua:629
 msgid "Ask Another Question"
 msgstr "Pune altă întrebare"
 
-#: ../chatgptviewer.lua:306
+#: ../chatgptviewer.lua:306 ../settingsdialog.lua:129
 msgid "Close"
 msgstr "Închide"
 
@@ -51,15 +92,15 @@ msgstr "Nu mai rămâne text de adăugat ca notă"
 msgid "Note added successfully"
 msgstr "Notă adăugată cu succes"
 
-#: ../chatgptviewer.lua:567 ../dialogs.lua:260 ../dictdialog.lua:34
+#: ../chatgptviewer.lua:569 ../dialogs.lua:263 ../dictdialog.lua:34
 msgid "Cancel"
 msgstr "Anulează"
 
-#: ../chatgptviewer.lua:577 ../dialogs.lua:267
+#: ../chatgptviewer.lua:579 ../dialogs.lua:270
 msgid "Ask"
 msgstr "Întreabă"
 
-#: ../chatgptviewer.lua:583 ../dialogs.lua:273
+#: ../chatgptviewer.lua:585 ../dialogs.lua:276
 msgid "Enter a question before proceeding."
 msgstr "Introduceți o întrebare înainte de a continua."
 
@@ -75,35 +116,35 @@ msgstr "Cuvânt copiat în clipboard."
 msgid "Selection copied to clipboard."
 msgstr "Selecție copiată în clipboard."
 
-#: ../dialogs.lua:83
+#: ../dialogs.lua:86
 msgid "(Empty message)"
 msgstr "(Mesaj gol)"
 
-#: ../dialogs.lua:87
+#: ../dialogs.lua:90
 msgid "(No response)"
 msgstr "(Fără răspuns)"
 
-#: ../dialogs.lua:117
+#: ../dialogs.lua:120
 msgid "Highlighted text:"
 msgstr "Text evidențiat:"
 
-#: ../dialogs.lua:304
+#: ../dialogs.lua:305
 msgid "Book Analysis"
 msgstr "Analiza cărții"
 
-#: ../dialogs.lua:341
+#: ../dialogs.lua:342
 msgid "Add this button to the Highlight Menu?"
 msgstr "Adăugăm acest buton în meniul de evidențiere?"
 
-#: ../dialogs.lua:342
+#: ../dialogs.lua:343
 msgid "Add"
 msgstr "Adaugă"
 
-#: ../dialogs.lua:368
+#: ../dialogs.lua:369
 msgid "Ask a question about the highlighted text"
 msgstr "Pune o întrebare despre textul evidențiat"
 
-#: ../dialogs.lua:369
+#: ../dialogs.lua:370
 #, lua-format
 msgid ""
 "Ask a question about this book:\n"
@@ -112,19 +153,15 @@ msgstr ""
 "Pune o întrebare despre cartea:\n"
 "%s de %s"
 
-#: ../dialogs.lua:372
+#: ../dialogs.lua:373
 msgid "Type your question here..."
 msgstr "Scrieți întrebarea aici..."
 
-#: ../dialogs.lua:373
+#: ../dialogs.lua:374
 msgid "Ask anything about this book..."
 msgstr "Întreabă orice despre această carte..."
 
-#: ../dialogs.lua:376 ../main.lua:204 ../_meta.lua:4
-msgid "AI Assistant"
-msgstr "Asistent IA"
-
-#: ../dialogs.lua:427
+#: ../dialogs.lua:430
 msgid "Error: No response received"
 msgstr "Eroare: nu s-a primit niciun răspuns"
 
@@ -140,7 +177,7 @@ msgstr "Introduceți un cuvânt de căutat..."
 msgid "Look Up"
 msgstr "Caută"
 
-#: ../dictdialog.lua:177 ../main.lua:407 ../prompts.lua:19
+#: ../dictdialog.lua:177 ../main.lua:365 ../prompts.lua:19
 msgid "Dictionary"
 msgstr "Dicționar"
 
@@ -192,23 +229,23 @@ msgstr "⏹ Oprește"
 msgid "Response interrupted."
 msgstr "Răspuns întrerupt."
 
-#: ../main.lua:73
+#: ../main.lua:74
 msgid "Ask the AI a question"
 msgstr "Pune o întrebare IA"
 
-#: ../main.lua:82
+#: ../main.lua:83
 msgid "AI Recaps"
 msgstr "Rezumate IA"
 
-#: ../main.lua:91 ../settingsdialog.lua:26
+#: ../main.lua:92 ../settingsdialog.lua:37
 msgid "Assistant Settings"
 msgstr "Setări asistent"
 
-#: ../main.lua:174
+#: ../main.lua:168
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "Niciun furnizor de model valid în configuration.lua"
 
-#: ../main.lua:208
+#: ../main.lua:204
 msgid ""
 "Configuration Error.\n"
 "Please set up configuration.lua."
@@ -216,7 +253,7 @@ msgstr ""
 "Eroare de configurare.\n"
 "Configurați configuration.lua."
 
-#: ../main.lua:232
+#: ../main.lua:229
 msgid ""
 "Useful Tips:\n"
 "\n"
@@ -244,11 +281,37 @@ msgstr ""
 "În dialogul de rezultate pentru a-l închide (butonul Închide e greu de "
 "atins).\n"
 
-#: ../main.lua:259
+#: ../main.lua:252
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: furnizorii de model sunt invalizi."
 
-#: ../main.lua:317
+#: ../main.lua:333
+#, lua-format
+msgid "Remove [%s] from Highlight Menu?"
+msgstr "Elimin [%s] din meniul de evidențiere?"
+
+#: ../main.lua:334
+msgid "Remove"
+msgstr "Elimină"
+
+#: ../main.lua:351 ../prompts.lua:127
+msgid "Wikipedia"
+msgstr "Wikipedia"
+
+#: ../main.lua:387 ../main.lua:439
+msgid "Configuration not found. Please set up configuration.lua first."
+msgstr "Configurarea nu a fost găsită. Setați configuration.lua mai întâi."
+
+#: ../main.lua:481
+msgid "Added [%1 (AI)] to Highlight Menu."
+msgstr "Adăugat [%1 (IA)] în meniul de evidențiere."
+
+#: ../main.lua:490
+#, lua-format
+msgid "Removed [%s (AI)] from Highlight Menu."
+msgstr "Eliminat [%s (IA)] din meniul de evidențiere."
+
+#: ../main.lua:534
 #, lua-format
 msgid ""
 "Do you want an AI Recap?\n"
@@ -259,43 +322,13 @@ msgstr ""
 "Pentru %s de %s.\n"
 "Citit ultima dată acum %.0f oră(e)."
 
-#: ../main.lua:322
+#: ../main.lua:539
 msgid "Yes"
 msgstr "Da"
 
-#: ../main.lua:331
+#: ../main.lua:548
 msgid "No"
 msgstr "Nu"
-
-#: ../main.lua:391
-#, lua-format
-msgid "Remove [%s] from Highlight Menu?"
-msgstr "Elimin [%s] din meniul de evidențiere?"
-
-#: ../main.lua:392
-msgid "Remove"
-msgstr "Elimină"
-
-#: ../main.lua:426 ../main.lua:448 ../main.lua:501
-msgid "Configuration not found. Please set up configuration.lua first."
-msgstr "Configurarea nu a fost găsită. Setați configuration.lua mai întâi."
-
-#: ../main.lua:456
-msgid "AI Recap feature is not enabled in configuration."
-msgstr "Funcția Rezumat IA nu este activată în configurare."
-
-#: ../main.lua:544
-msgid "Added [%1 (AI)] to Highlight Menu."
-msgstr "Adăugat [%1 (IA)] în meniul de evidențiere."
-
-#: ../main.lua:553
-#, lua-format
-msgid "Removed [%s (AI)] from Highlight Menu."
-msgstr "Eliminat [%s (IA)] din meniul de evidențiere."
-
-#: ../_meta.lua:5
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Îmbunătățește experiența KOReader cu IA"
 
 #: ../prompts.lua:20
 msgid ""
@@ -408,10 +441,6 @@ msgstr ""
 "Acest prompt analizează vocabularul textului evidențiat, identificând "
 "cuvinte complexe și oferind definiții, sinonime și exemple de utilizare."
 
-#: ../prompts.lua:127
-msgid "Wikipedia"
-msgstr "Wikipedia"
-
 #: ../prompts.lua:129
 msgid ""
 "This prompt generates a comprehensive Wikipedia-style article based on the "
@@ -424,23 +453,11 @@ msgstr ""
 msgid "Recap"
 msgstr "Rezumat"
 
-#: ../settingsdialog.lua:53
-msgid "Always use stream mode"
-msgstr "Folosește mereu modul flux"
-
-#: ../settingsdialog.lua:58
+#: ../settingsdialog.lua:73
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Folosește Asistentul IA pentru „Traducere”"
 
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is enabled."
-msgstr "Suprascrierea Asistentului IA este activată."
-
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is disabled."
-msgstr "Suprascrierea Asistentului IA este dezactivată."
-
-#: ../settingsdialog.lua:104
+#: ../settingsdialog.lua:136
 msgid "Select the AI Model provider."
 msgstr "Selectați furnizorul modelului IA."
 

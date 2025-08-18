@@ -8,20 +8,60 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 14:30+0800\n"
-"PO-Revision-Date: 2025-08-14 11:36+0800\n"
-"Last-Translator: AI-Model <ai@example.com>\n"
-"Language-Team: Português <pt@li.org>\n"
-"Language: pt\n"
+"POT-Creation-Date: 2025-08-19 11:09+0800\n"
+"PO-Revision-Date: 2025-08-19 11:16+0800\n"
+"Last-Translator: AI Translator (gpt-5-nano)\n"
+"Language-Team: Portuguese\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../gpt_query.lua:187
+msgid "No response received."
+msgstr "Nenhuma resposta recebida."
+
+#: ../gpt_query.lua:203
+msgid "Failed to start subprocess for request"
+msgstr "Falha ao iniciar o subprocesso da requisição."
+
+#: ../settingsdialog.lua:64
+msgid "Always enable stream response"
+msgstr "Sempre habilitar a resposta em streaming."
+
+#: ../settingsdialog.lua:83
+msgid "Show Dictionary(AI) in Dictionary Popup"
+msgstr "Mostrar Dicionário (IA) no pop-up do Dicionário."
+
+#: ../settingsdialog.lua:92
+msgid "Show Wikipedia(AI) in Dictionary Popup"
+msgstr "Mostrar a Wikipedia (IA) no pop-up do Dicionário."
+
+#: ../settingsdialog.lua:101
+msgid "Copy entered question to the clipboard"
+msgstr "Copiar a pergunta digitada para a área de transferência."
+
+#: ../settingsdialog.lua:110
+msgid "Enable AI Recap"
+msgstr "Ativar o resumo da IA."
+
+#: ../settingsdialog.lua:117
+msgid "AI Recap will be enabled the next time a book is opened."
+msgstr "O resumo da IA será ativado na próxima vez que um livro for aberto."
+
+#: ../_meta.lua:4 ../dialogs.lua:377 ../main.lua:198
+msgid "AI Assistant"
+msgstr "Assistente IA"
+
+#: ../_meta.lua:5
+msgid "💡 Enhance your KOReader experience with AI"
+msgstr "💡 Melhore sua experiência no KOReader com IA"
 
 #: ../chatgptviewer.lua:266 ../chatgptviewer.lua:629
 msgid "Ask Another Question"
 msgstr "Faça outra pergunta"
 
-#: ../chatgptviewer.lua:306
+#: ../chatgptviewer.lua:306 ../settingsdialog.lua:129
 msgid "Close"
 msgstr "Fechar"
 
@@ -53,15 +93,15 @@ msgstr "Sem texto restante para nota"
 msgid "Note added successfully"
 msgstr "Nota adicionada"
 
-#: ../chatgptviewer.lua:567 ../dialogs.lua:260 ../dictdialog.lua:34
+#: ../chatgptviewer.lua:569 ../dialogs.lua:263 ../dictdialog.lua:34
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../chatgptviewer.lua:577 ../dialogs.lua:267
+#: ../chatgptviewer.lua:579 ../dialogs.lua:270
 msgid "Ask"
 msgstr "Perguntar"
 
-#: ../chatgptviewer.lua:583 ../dialogs.lua:273
+#: ../chatgptviewer.lua:585 ../dialogs.lua:276
 msgid "Enter a question before proceeding."
 msgstr "Digite uma pergunta antes de continuar."
 
@@ -77,35 +117,35 @@ msgstr "Palavra copiada."
 msgid "Selection copied to clipboard."
 msgstr "Seleção copiada."
 
-#: ../dialogs.lua:83
+#: ../dialogs.lua:86
 msgid "(Empty message)"
 msgstr "(Mensagem vazia)"
 
-#: ../dialogs.lua:87
+#: ../dialogs.lua:90
 msgid "(No response)"
 msgstr "(Sem resposta)"
 
-#: ../dialogs.lua:117
+#: ../dialogs.lua:120
 msgid "Highlighted text:"
 msgstr "Texto destacado:"
 
-#: ../dialogs.lua:304
+#: ../dialogs.lua:305
 msgid "Book Analysis"
 msgstr "Análise do livro"
 
-#: ../dialogs.lua:341
+#: ../dialogs.lua:342
 msgid "Add this button to the Highlight Menu?"
 msgstr "Adicionar este botão ao menu de destaque?"
 
-#: ../dialogs.lua:342
+#: ../dialogs.lua:343
 msgid "Add"
 msgstr "Adicionar"
 
-#: ../dialogs.lua:368
+#: ../dialogs.lua:369
 msgid "Ask a question about the highlighted text"
 msgstr "Faça uma pergunta sobre o texto destacado"
 
-#: ../dialogs.lua:369
+#: ../dialogs.lua:370
 #, lua-format
 msgid ""
 "Ask a question about this book:\n"
@@ -114,19 +154,15 @@ msgstr ""
 "Faça uma pergunta sobre este livro:\n"
 "%s de %s"
 
-#: ../dialogs.lua:372
+#: ../dialogs.lua:373
 msgid "Type your question here..."
 msgstr "Digite sua pergunta..."
 
-#: ../dialogs.lua:373
+#: ../dialogs.lua:374
 msgid "Ask anything about this book..."
 msgstr "Pergunte qualquer coisa sobre este livro..."
 
-#: ../dialogs.lua:376 ../main.lua:204 ../_meta.lua:4
-msgid "AI Assistant"
-msgstr "Assistente IA"
-
-#: ../dialogs.lua:427
+#: ../dialogs.lua:430
 msgid "Error: No response received"
 msgstr "Erro: nenhuma resposta recebida"
 
@@ -142,7 +178,7 @@ msgstr "Digite uma palavra para pesquisar..."
 msgid "Look Up"
 msgstr "Pesquisar"
 
-#: ../dictdialog.lua:177 ../main.lua:407 ../prompts.lua:19
+#: ../dictdialog.lua:177 ../main.lua:365 ../prompts.lua:19
 msgid "Dictionary"
 msgstr "Dicionário"
 
@@ -194,23 +230,23 @@ msgstr "⏹ Parar"
 msgid "Response interrupted."
 msgstr "Resposta interrompida."
 
-#: ../main.lua:73
+#: ../main.lua:74
 msgid "Ask the AI a question"
 msgstr "Faça uma pergunta à IA"
 
-#: ../main.lua:82
+#: ../main.lua:83
 msgid "AI Recaps"
 msgstr "Resumos IA"
 
-#: ../main.lua:91 ../settingsdialog.lua:26
+#: ../main.lua:92 ../settingsdialog.lua:37
 msgid "Assistant Settings"
 msgstr "Configurações do Assistente"
 
-#: ../main.lua:174
+#: ../main.lua:168
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "Nenhum fornecedor de modelo válido foi encontrado em configuration.lua"
 
-#: ../main.lua:208
+#: ../main.lua:204
 msgid ""
 "Configuration Error.\n"
 "Please set up configuration.lua."
@@ -218,7 +254,7 @@ msgstr ""
 "Erro de Configuração.\n"
 "Configure o ficheiro configuration.lua."
 
-#: ../main.lua:232
+#: ../main.lua:229
 msgid ""
 "Useful Tips:\n"
 "\n"
@@ -246,11 +282,37 @@ msgstr ""
 "Gestos múltiplos (ex.: ⮠, ⮡, ↺):\n"
 "No diálogo de resultados para fechar (o botão Fechar pode estar distante).\n"
 
-#: ../main.lua:259
+#: ../main.lua:252
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: os fornecedores de modelo são inválidos."
 
-#: ../main.lua:317
+#: ../main.lua:333
+#, lua-format
+msgid "Remove [%s] from Highlight Menu?"
+msgstr "Remover [%s] do menu de destaque?"
+
+#: ../main.lua:334
+msgid "Remove"
+msgstr "Remover"
+
+#: ../main.lua:351 ../prompts.lua:127
+msgid "Wikipedia"
+msgstr "Wikipedia"
+
+#: ../main.lua:387 ../main.lua:439
+msgid "Configuration not found. Please set up configuration.lua first."
+msgstr "Configuração não encontrada. Configure o configuration.lua primeiro."
+
+#: ../main.lua:481
+msgid "Added [%1 (AI)] to Highlight Menu."
+msgstr "[%1 (IA)] adicionado ao menu de destaque."
+
+#: ../main.lua:490
+#, lua-format
+msgid "Removed [%s (AI)] from Highlight Menu."
+msgstr "[%s (IA)] removido do menu de destaque."
+
+#: ../main.lua:534
 #, lua-format
 msgid ""
 "Do you want an AI Recap?\n"
@@ -261,43 +323,13 @@ msgstr ""
 "Para %s de %s.\n"
 "Última leitura há %.0f h."
 
-#: ../main.lua:322
+#: ../main.lua:539
 msgid "Yes"
 msgstr "Sim"
 
-#: ../main.lua:331
+#: ../main.lua:548
 msgid "No"
 msgstr "Não"
-
-#: ../main.lua:391
-#, lua-format
-msgid "Remove [%s] from Highlight Menu?"
-msgstr "Remover [%s] do menu de destaque?"
-
-#: ../main.lua:392
-msgid "Remove"
-msgstr "Remover"
-
-#: ../main.lua:426 ../main.lua:448 ../main.lua:501
-msgid "Configuration not found. Please set up configuration.lua first."
-msgstr "Configuração não encontrada. Configure o configuration.lua primeiro."
-
-#: ../main.lua:456
-msgid "AI Recap feature is not enabled in configuration."
-msgstr "O recurso de resumo da IA não está habilitado na configuração."
-
-#: ../main.lua:544
-msgid "Added [%1 (AI)] to Highlight Menu."
-msgstr "[%1 (IA)] adicionado ao menu de destaque."
-
-#: ../main.lua:553
-#, lua-format
-msgid "Removed [%s (AI)] from Highlight Menu."
-msgstr "[%s (IA)] removido do menu de destaque."
-
-#: ../_meta.lua:5
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Melhore sua experiência no KOReader com IA"
 
 #: ../prompts.lua:20
 msgid ""
@@ -398,10 +430,6 @@ msgstr ""
 "Analisa o vocabulário do texto, identificando palavras complexas e "
 "oferecendo definições e sinônimos."
 
-#: ../prompts.lua:127
-msgid "Wikipedia"
-msgstr "Wikipedia"
-
 #: ../prompts.lua:129
 msgid ""
 "This prompt generates a comprehensive Wikipedia-style article based on the "
@@ -414,23 +442,11 @@ msgstr ""
 msgid "Recap"
 msgstr "Resumo"
 
-#: ../settingsdialog.lua:53
-msgid "Always use stream mode"
-msgstr "Sempre usar modo stream"
-
-#: ../settingsdialog.lua:58
+#: ../settingsdialog.lua:73
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Usar Assistente IA para 'Traduzir'"
 
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is enabled."
-msgstr "Substituição do Assistente IA ativada."
-
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is disabled."
-msgstr "Substituição do Assistente IA desativada."
-
-#: ../settingsdialog.lua:104
+#: ../settingsdialog.lua:136
 msgid "Select the AI Model provider."
 msgstr "Selecione o provedor do modelo IA."
 
