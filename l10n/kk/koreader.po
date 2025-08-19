@@ -4,411 +4,450 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
 #, fuzzy
-msgid   ""
-msgstr  "Project-Id-Version: assistant.koplugin 2025.08.14\n"
-        "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-08-14 14:30+0800\n"
-        "PO-Revision-Date: 2025-08-14 12:11+0800\n"
-        "Last-Translator: GPT-4o <gpt-4o@openai.com>\n"
-        "Language-Team: GPT-4o <gpt-4o@openai.com>\n"
-        "Language: kk\n"
-        "MIME-Version: 1.0\n"
-        "Content-Type: text/plain; charset=UTF-8\n"
-        "Content-Transfer-Encoding: 8bit\n"
+msgid ""
+msgstr ""
+"Project-Id-Version: assistant.koplugin 2025.08.14\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-19 11:09+0800\n"
+"PO-Revision-Date: 2025-08-19 11:15+0800\n"
+"Last-Translator: AI Translator (gpt-5-nano)\n"
+"Language-Team: Kazakh\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../gpt_query.lua:187
+msgid "No response received."
+msgstr "Жауап алынған жоқ."
+
+#: ../gpt_query.lua:203
+msgid "Failed to start subprocess for request"
+msgstr "Сұрау үшін ішкі процесті іске қосу сәтсіз аяқталды."
+
+#: ../main.lua:168
+msgid "No valid model provider is found in the configuration.lua"
+msgstr "configuration.lua файлында жарамды модель жеткізушісі табылған жоқ."
+
+#: ../main.lua:204
+msgid ""
+"Configuration Error.\n"
+"Please set up configuration.lua."
+msgstr ""
+"Конфигурациялық қате.\n"
+"configuration.lua файлын орнатыңыз."
+
+#: ../main.lua:252
+msgid "configuration.lua: model providers are invalid."
+msgstr "configuration.lua: модель жеткізушілері жарамсыз."
+
+#: ../settingsdialog.lua:64
+msgid "Always enable stream response"
+msgstr "Ағынды жауапты әрқашан қосу."
+
+#: ../settingsdialog.lua:83
+msgid "Show Dictionary(AI) in Dictionary Popup"
+msgstr "Dictionary(AI)-ді Сөздік қалқымалы терезесінде көрсету."
+
+#: ../settingsdialog.lua:92
+msgid "Show Wikipedia(AI) in Dictionary Popup"
+msgstr "Wikipedia(AI)-ді Сөздік қалқымалы терезесінде көрсету."
+
+#: ../settingsdialog.lua:101
+msgid "Copy entered question to the clipboard"
+msgstr "Енгізілген сұрақты буферге көшіріңіз."
+
+#: ../settingsdialog.lua:110
+msgid "Enable AI Recap"
+msgstr "AI қысқаша қорытындысын қосу."
+
+#: ../settingsdialog.lua:117
+msgid "AI Recap will be enabled the next time a book is opened."
+msgstr "Кітап ашылғанда AI қысқаша қорытындысы қосылады."
+
+#: ../_meta.lua:4 ../dialogs.lua:377 ../main.lua:198
+msgid "AI Assistant"
+msgstr "AI Ассистент"
+
+#: ../_meta.lua:5
+msgid "💡 Enhance your KOReader experience with AI"
+msgstr "💡 KOReader-ді AI-мен жақсартыңыз"
 
 #: ../chatgptviewer.lua:266 ../chatgptviewer.lua:629
-msgid   "Ask Another Question"
-msgstr  "Тағы сұрақ қой"
+msgid "Ask Another Question"
+msgstr "Тағы сұрақ қой"
 
-#: ../chatgptviewer.lua:306
-msgid   "Close"
-msgstr  "Жабу"
+#: ../chatgptviewer.lua:306 ../settingsdialog.lua:129
+msgid "Close"
+msgstr "Жабу"
 
 #: ../chatgptviewer.lua:321
-msgid   "Copy"
-msgstr  "Көшір"
+msgid "Copy"
+msgstr "Көшір"
 
 #: ../chatgptviewer.lua:326
-msgid   "Text copied to clipboard"
-msgstr  "Мәтін алмасу буферіне көшірілді"
+msgid "Text copied to clipboard"
+msgstr "Мәтін алмасу буферіне көшірілді"
 
 #: ../chatgptviewer.lua:340
-msgid   "Add Note"
-msgstr  "Ескерту қосу"
+msgid "Add Note"
+msgstr "Ескерту қосу"
 
 #: ../chatgptviewer.lua:347
-msgid   "Highlight functionality not available"
-msgstr  "Бөлу мүмкін емес"
+msgid "Highlight functionality not available"
+msgstr "Бөлу мүмкін емес"
 
 #: ../chatgptviewer.lua:356
-msgid   "No text to add as note"
-msgstr  "Ескерткішке қосу үшін мәтін жоқ"
+msgid "No text to add as note"
+msgstr "Ескерткішке қосу үшін мәтін жоқ"
 
 #: ../chatgptviewer.lua:385
-msgid   "No text left to add as note"
-msgstr  "Қосуға мәтін қалмады"
+msgid "No text left to add as note"
+msgstr "Қосуға мәтін қалмады"
 
 #: ../chatgptviewer.lua:398
-msgid   "Note added successfully"
-msgstr  "Ескерткіш қосылды"
+msgid "Note added successfully"
+msgstr "Ескерткіш қосылды"
 
-#: ../chatgptviewer.lua:567 ../dialogs.lua:260 ../dictdialog.lua:34
-msgid   "Cancel"
-msgstr  "Бас тарту"
+#: ../chatgptviewer.lua:569 ../dialogs.lua:263 ../dictdialog.lua:34
+msgid "Cancel"
+msgstr "Бас тарту"
 
-#: ../chatgptviewer.lua:577 ../dialogs.lua:267
-msgid   "Ask"
-msgstr  "Сұра"
+#: ../chatgptviewer.lua:579 ../dialogs.lua:270
+msgid "Ask"
+msgstr "Сұра"
 
-#: ../chatgptviewer.lua:583 ../dialogs.lua:273
-msgid   "Enter a question before proceeding."
-msgstr  "Жалғастыру үшін сұрақ енгізіңіз."
+#: ../chatgptviewer.lua:585 ../dialogs.lua:276
+msgid "Enter a question before proceeding."
+msgstr "Жалғастыру үшін сұрақ енгізіңіз."
 
 #: ../chatgptviewer.lua:631
-msgid   "Type your question here"
-msgstr  "Сұрағыңызды осында жазыңыз"
+msgid "Type your question here"
+msgstr "Сұрағыңызды осында жазыңыз"
 
 #: ../chatgptviewer.lua:782
-msgid   "Word copied to clipboard."
-msgstr  "Сөз алмасу буферіне көшірілді."
+msgid "Word copied to clipboard."
+msgstr "Сөз алмасу буферіне көшірілді."
 
 #: ../chatgptviewer.lua:783
-msgid   "Selection copied to clipboard."
-msgstr  "Таңдау алмасу буферіне көшірілді."
+msgid "Selection copied to clipboard."
+msgstr "Таңдау алмасу буферіне көшірілді."
 
-#: ../dialogs.lua:83
-msgid   "(Empty message)"
-msgstr  "(Бос хабар)"
+#: ../dialogs.lua:86
+msgid "(Empty message)"
+msgstr "(Бос хабар)"
 
-#: ../dialogs.lua:87
-msgid   "(No response)"
-msgstr  "(Жауап жоқ)"
+#: ../dialogs.lua:90
+msgid "(No response)"
+msgstr "(Жауап жоқ)"
 
-#: ../dialogs.lua:117
-msgid   "Highlighted text:"
-msgstr  "Белгіленген мәтін:"
+#: ../dialogs.lua:120
+msgid "Highlighted text:"
+msgstr "Белгіленген мәтін:"
 
-#: ../dialogs.lua:304
-msgid   "Book Analysis"
-msgstr  "Кітап талдауы"
-
-#: ../dialogs.lua:341
-msgid   "Add this button to the Highlight Menu?"
-msgstr  "Осы батырманы Белгілеу мәзіріне қосу керек пе?"
+#: ../dialogs.lua:305
+msgid "Book Analysis"
+msgstr "Кітап талдауы"
 
 #: ../dialogs.lua:342
-msgid   "Add"
-msgstr  "Қосу"
+msgid "Add this button to the Highlight Menu?"
+msgstr "Осы батырманы Белгілеу мәзіріне қосу керек пе?"
 
-#: ../dialogs.lua:368
-msgid   "Ask a question about the highlighted text"
-msgstr  "Белгіленген мәтін бойынша сұрақ қой"
+#: ../dialogs.lua:343
+msgid "Add"
+msgstr "Қосу"
 
 #: ../dialogs.lua:369
-#, lua-format
-msgid   "Ask a question about this book:\n"
-        "%s by %s"
-msgstr  "Осы кітап бойынша сұрақ қойыңыз:\n"
-        "%s (%s авторы)"
+msgid "Ask a question about the highlighted text"
+msgstr "Белгіленген мәтін бойынша сұрақ қой"
 
-#: ../dialogs.lua:372
-msgid   "Type your question here..."
-msgstr  "Сұрағыңызды осында жазыңыз..."
+#: ../dialogs.lua:370
+#, lua-format
+msgid ""
+"Ask a question about this book:\n"
+"%s by %s"
+msgstr ""
+"Осы кітап бойынша сұрақ қойыңыз:\n"
+"%s (%s авторы)"
 
 #: ../dialogs.lua:373
-msgid   "Ask anything about this book..."
-msgstr  "Кітап жайлы кез келген сұрақ..."
+msgid "Type your question here..."
+msgstr "Сұрағыңызды осында жазыңыз..."
 
-#: ../dialogs.lua:376 ../main.lua:204 ../_meta.lua:4
-msgid   "AI Assistant"
-msgstr  "AI Ассистент"
+#: ../dialogs.lua:374
+msgid "Ask anything about this book..."
+msgstr "Кітап жайлы кез келген сұрақ..."
 
-#: ../dialogs.lua:427
-msgid   "Error: No response received"
-msgstr  "Қате: Жауап келмеді"
+#: ../dialogs.lua:430
+msgid "Error: No response received"
+msgstr "Қате: Жауап келмеді"
 
 #: ../dictdialog.lua:28
-msgid   "AI Dictionary"
-msgstr  "AI Сөздік"
+msgid "AI Dictionary"
+msgstr "AI Сөздік"
 
 #: ../dictdialog.lua:29
-msgid   "Enter a word to look up..."
-msgstr  "Іздеуге сөз енгізіңіз..."
+msgid "Enter a word to look up..."
+msgstr "Іздеуге сөз енгізіңіз..."
 
 #: ../dictdialog.lua:40
-msgid   "Look Up"
-msgstr  "Іздеу"
+msgid "Look Up"
+msgstr "Іздеу"
 
-#: ../dictdialog.lua:177 ../main.lua:407 ../prompts.lua:19
-msgid   "Dictionary"
-msgstr  "Сөздік"
+#: ../dictdialog.lua:177 ../main.lua:365 ../prompts.lua:19
+msgid "Dictionary"
+msgstr "Сөздік"
 
 #: ../gpt_query.lua:52
 #, lua-format
-msgid   "Provider settings not found for: %s. Please check your configuration."
-        "lua file."
-msgstr  "Жеткізуші параметрлері табылмады: %s. configuration.lua файлын "
-        "тексеріңіз."
+msgid ""
+"Provider settings not found for: %s. Please check your configuration.lua "
+"file."
+msgstr ""
+"Жеткізуші параметрлері табылмады: %s. configuration.lua файлын тексеріңіз."
 
 #: ../gpt_query.lua:74
 #, lua-format
-msgid   "The handler for %s was not found. Please ensure the handler exists "
-        "in api_handlers directory."
-msgstr  "%s өңдегіші табылмады. api_handlers бумасында осы файл бар екенін "
-        "тексеріңіз."
+msgid ""
+"The handler for %s was not found. Please ensure the handler exists in "
+"api_handlers directory."
+msgstr ""
+"%s өңдегіші табылмады. api_handlers бумасында осы файл бар екенін тексеріңіз."
 
 #: ../gpt_query.lua:79
 #, lua-format
-msgid   "No provider set in configuration.lua. Please set the provider and "
-        "provider_settings for %s."
-msgstr  "configuration.lua-да жеткізуші көрсетілмеген. %s үшін provider және "
-        "provider_settings орнатыңыз."
+msgid ""
+"No provider set in configuration.lua. Please set the provider and "
+"provider_settings for %s."
+msgstr ""
+"configuration.lua-да жеткізуші көрсетілмеген. %s үшін provider және "
+"provider_settings орнатыңыз."
 
 #: ../gpt_query.lua:124
-msgid   "Querying AI ..."
-msgstr  "AI сұралып жатыр..."
+msgid "Querying AI ..."
+msgstr "AI сұралып жатыр..."
 
 #: ../gpt_query.lua:140
-msgid   "AI is responding"
-msgstr  "AI жауап беруде"
+msgid "AI is responding"
+msgstr "AI жауап беруде"
 
 #: ../gpt_query.lua:142
 #, lua-format
-msgid   "☁ %s/%s"
-msgstr  "☁ %s/%s"
+msgid "☁ %s/%s"
+msgstr "☁ %s/%s"
 
 #: ../gpt_query.lua:155
-msgid   "⏹ Stop"
-msgstr  "⏹ Тоқтату"
+msgid "⏹ Stop"
+msgstr "⏹ Тоқтату"
 
 #: ../gpt_query.lua:176
-msgid   "Response interrupted."
-msgstr  "Жауап үзілді."
+msgid "Response interrupted."
+msgstr "Жауап үзілді."
 
-#: ../main.lua:73
-msgid   "Ask the AI a question"
-msgstr  "AI-ға сұрақ қой"
+#: ../main.lua:74
+msgid "Ask the AI a question"
+msgstr "AI-ға сұрақ қой"
 
-#: ../main.lua:82
-msgid   "AI Recaps"
-msgstr  "AI Шолулар"
+#: ../main.lua:83
+msgid "AI Recaps"
+msgstr "AI Шолулар"
 
-#: ../main.lua:91 ../settingsdialog.lua:26
-msgid   "Assistant Settings"
-msgstr  "Ассистент баптаулары"
+#: ../main.lua:92 ../settingsdialog.lua:37
+msgid "Assistant Settings"
+msgstr "Ассистент баптаулары"
 
-#: ../main.lua:174
-msgid   "No valid model provider is found in the configuration.lua"
-msgstr  ""
+#: ../main.lua:229
+msgid ""
+"Useful Tips:\n"
+"\n"
+"Long Press:\n"
+"- On a Prompt Button: Add to the highlight menu.\n"
+"- On a highlight menu button to remove it.\n"
+"\n"
+"Very-Long Press (over 3 seconds):\n"
+"On a single word in the book to show the highlight menu (instead of the "
+"dictionary).\n"
+"\n"
+"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"On the result dialog to close (as the Close button is far to reach).\n"
+msgstr ""
+"Пайдалы кеңестер:\n"
+"\n"
+"Ұзын басу:\n"
+"- Подсказка батырмасына: Белгілеу мәзіріне қосу.\n"
+"- Мәзірден батырманы өшіру үшін.\n"
+"\n"
+"Өте ұзын басу (3 сек+):\n"
+"Кітаптағы бір сөзге басу – белгілеу мәзірін ашады (сөздік орнына).\n"
+"\n"
+"Қос жүгірту (⮠, ⮡, ↺):\n"
+"Нәтиже диалогын жабу үшін (Жабу батырмасы алыс).\n"
 
-#: ../main.lua:208
-msgid   "Configuration Error.\n"
-        "Please set up configuration.lua."
-msgstr  ""
-
-#: ../main.lua:232
-msgid   "Useful Tips:\n"
-        "\n"
-        "Long Press:\n"
-        "- On a Prompt Button: Add to the highlight menu.\n"
-        "- On a highlight menu button to remove it.\n"
-        "\n"
-        "Very-Long Press (over 3 seconds):\n"
-        "On a single word in the book to show the highlight menu (instead of "
-        "the dictionary).\n"
-        "\n"
-        "Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
-        "On the result dialog to close (as the Close button is far to "
-        "reach).\n"
-msgstr  "Пайдалы кеңестер:\n"
-        "\n"
-        "Ұзын басу:\n"
-        "- Подсказка батырмасына: Белгілеу мәзіріне қосу.\n"
-        "- Мәзірден батырманы өшіру үшін.\n"
-        "\n"
-        "Өте ұзын басу (3 сек+):\n"
-        "Кітаптағы бір сөзге басу – белгілеу мәзірін ашады (сөздік орнына).\n"
-        "\n"
-        "Қос жүгірту (⮠, ⮡, ↺):\n"
-        "Нәтиже диалогын жабу үшін (Жабу батырмасы алыс).\n"
-
-#: ../main.lua:259
-msgid   "configuration.lua: model providers are invalid."
-msgstr  ""
-
-#: ../main.lua:317
+#: ../main.lua:333
 #, lua-format
-msgid   "Do you want an AI Recap?\n"
-        "For %s by %s.\n"
-        "Last read %.0f hour(s) ago."
-msgstr  "AI Шолу керек пе?\n"
-        "%s (%s).\n"
-        "Соңғы оқу: %.0f сағат бұрын."
+msgid "Remove [%s] from Highlight Menu?"
+msgstr "Белгілеу мәзірінен [%s] өшірілсін бе?"
 
-#: ../main.lua:322
-msgid   "Yes"
-msgstr  "Иә"
+#: ../main.lua:334
+msgid "Remove"
+msgstr "Өшіру"
 
-#: ../main.lua:331
-msgid   "No"
-msgstr  "Жоқ"
+#: ../main.lua:351 ../prompts.lua:127
+msgid "Wikipedia"
+msgstr "Уикипедия"
 
-#: ../main.lua:391
+#: ../main.lua:387 ../main.lua:439
+msgid "Configuration not found. Please set up configuration.lua first."
+msgstr "Баптау табылмады. configuration.lua алдын ала орнатыңыз."
+
+#: ../main.lua:481
+msgid "Added [%1 (AI)] to Highlight Menu."
+msgstr "[%1 (AI)] Белгілеу мәзіріне қосылды."
+
+#: ../main.lua:490
 #, lua-format
-msgid   "Remove [%s] from Highlight Menu?"
-msgstr  "Белгілеу мәзірінен [%s] өшірілсін бе?"
+msgid "Removed [%s (AI)] from Highlight Menu."
+msgstr "[%s (AI)] Белгілеу мәзірінен өшірілді."
 
-#: ../main.lua:392
-msgid   "Remove"
-msgstr  "Өшіру"
-
-#: ../main.lua:426 ../main.lua:448 ../main.lua:501
-msgid   "Configuration not found. Please set up configuration.lua first."
-msgstr  "Баптау табылмады. configuration.lua алдын ала орнатыңыз."
-
-#: ../main.lua:456
-msgid   "AI Recap feature is not enabled in configuration."
-msgstr  "AI Шолу мүмкіндігі өшірілген."
-
-#: ../main.lua:544
-msgid   "Added [%1 (AI)] to Highlight Menu."
-msgstr  "[%1 (AI)] Белгілеу мәзіріне қосылды."
-
-#: ../main.lua:553
+#: ../main.lua:534
 #, lua-format
-msgid   "Removed [%s (AI)] from Highlight Menu."
-msgstr  "[%s (AI)] Белгілеу мәзірінен өшірілді."
+msgid ""
+"Do you want an AI Recap?\n"
+"For %s by %s.\n"
+"Last read %.0f hour(s) ago."
+msgstr ""
+"AI Шолу керек пе?\n"
+"%s (%s).\n"
+"Соңғы оқу: %.0f сағат бұрын."
 
-#: ../_meta.lua:5
-msgid   "💡 Enhance your KOReader experience with AI"
-msgstr  "💡 KOReader-ді AI-мен жақсартыңыз"
+#: ../main.lua:539
+msgid "Yes"
+msgstr "Иә"
+
+#: ../main.lua:548
+msgid "No"
+msgstr "Жоқ"
 
 #: ../prompts.lua:20
-msgid   "This prompt acts as a dictionary for the highlighted text, to a word "
-        "or phrase."
-msgstr  "Белгіленген мәтіннің сөз немесе тіркестерін түсіндіреді."
+msgid ""
+"This prompt acts as a dictionary for the highlighted text, to a word or "
+"phrase."
+msgstr "Белгіленген мәтіннің сөз немесе тіркестерін түсіндіреді."
 
 #: ../prompts.lua:25
-msgid   "Translate"
-msgstr  "Аудару"
+msgid "Translate"
+msgstr "Аудару"
 
 #: ../prompts.lua:26
-msgid   "This prompt translates the highlighted text to another language."
-msgstr  "Белгіленген мәтінді басқа тілге аударады."
+msgid "This prompt translates the highlighted text to another language."
+msgstr "Белгіленген мәтінді басқа тілге аударады."
 
 #: ../prompts.lua:48
-msgid   "Simplify"
-msgstr  "Жеңілдету"
+msgid "Simplify"
+msgstr "Жеңілдету"
 
 #: ../prompts.lua:50
-msgid   "This prompt simplifies the highlighted text to make it easier to "
-        "understand."
-msgstr  "Белгіленген мәтінді түсінікті етіп жеңілдетеді."
+msgid ""
+"This prompt simplifies the highlighted text to make it easier to understand."
+msgstr "Белгіленген мәтінді түсінікті етіп жеңілдетеді."
 
 #: ../prompts.lua:60
-msgid   "Explain"
-msgstr  "Түсіндіру"
+msgid "Explain"
+msgstr "Түсіндіру"
 
 #: ../prompts.lua:62
-msgid   "This prompt explains the highlighted text in detail, ensuring "
-        "clarity and understanding."
-msgstr  "Белгіленген мәтінді мұқият түсіндіріп, анықтық береді."
+msgid ""
+"This prompt explains the highlighted text in detail, ensuring clarity and "
+"understanding."
+msgstr "Белгіленген мәтінді мұқият түсіндіріп, анықтық береді."
 
 #: ../prompts.lua:73
-msgid   "Summarize"
-msgstr  "Қорытындылау"
+msgid "Summarize"
+msgstr "Қорытындылау"
 
 #: ../prompts.lua:75
-msgid   "This prompt summarizes the highlighted text, capturing its main "
-        "points and essential details."
-msgstr  "Белгіленген мәтіннің негізгі ойларын қысқаша баяндайды."
+msgid ""
+"This prompt summarizes the highlighted text, capturing its main points and "
+"essential details."
+msgstr "Белгіленген мәтіннің негізгі ойларын қысқаша баяндайды."
 
 #: ../prompts.lua:84
-msgid   "Historical Context"
-msgstr  "Тарихи контекст"
+msgid "Historical Context"
+msgstr "Тарихи контекст"
 
 #: ../prompts.lua:86
-msgid   "This prompt provides a detailed historical context for the "
-        "highlighted text, explaining its significance and background."
-msgstr  "Белгіленген мәтіннің тарихи маңызын және фонын кеңінен түсіндіреді."
+msgid ""
+"This prompt provides a detailed historical context for the highlighted text, "
+"explaining its significance and background."
+msgstr "Белгіленген мәтіннің тарихи маңызын және фонын кеңінен түсіндіреді."
 
 #: ../prompts.lua:90
-msgid   "Key Points"
-msgstr  "Негізгі нүктелер"
+msgid "Key Points"
+msgstr "Негізгі нүктелер"
 
 #: ../prompts.lua:92
-msgid   "This prompt extracts and lists the key points from the highlighted "
-        "text, ensuring clarity and organization."
-msgstr  "Белгіленген мәтіндегі маңызды нүктелерді жинақтап, жинақтап береді."
+msgid ""
+"This prompt extracts and lists the key points from the highlighted text, "
+"ensuring clarity and organization."
+msgstr "Белгіленген мәтіндегі маңызды нүктелерді жинақтап, жинақтап береді."
 
 #: ../prompts.lua:96
-msgid   "ELI5"
-msgstr  "Баланың тілімен"
+msgid "ELI5"
+msgstr "Баланың тілімен"
 
 #: ../prompts.lua:98
-msgid   "This prompt explains the highlighted text as if to a five-year-old, "
-        "simplifying complex concepts into easily understandable terms."
-msgstr  "Белгіленген мәтінді балаға түсіндіргендей жеңіл тілмен түсіндіреді."
+msgid ""
+"This prompt explains the highlighted text as if to a five-year-old, "
+"simplifying complex concepts into easily understandable terms."
+msgstr "Белгіленген мәтінді балаға түсіндіргендей жеңіл тілмен түсіндіреді."
 
 #: ../prompts.lua:102
-msgid   "Grammar"
-msgstr  "Грамматика"
+msgid "Grammar"
+msgstr "Грамматика"
 
 #: ../prompts.lua:104
-msgid   "This prompt analyzes the grammar of the highlighted text, providing "
-        "a detailed explanation of its structure and any grammatical errors."
-msgstr  "Белгіленген мәтіннің грамматикасын талдап, құрылымын және қателерін "
-        "көрсетеді."
+msgid ""
+"This prompt analyzes the grammar of the highlighted text, providing a "
+"detailed explanation of its structure and any grammatical errors."
+msgstr ""
+"Белгіленген мәтіннің грамматикасын талдап, құрылымын және қателерін "
+"көрсетеді."
 
 #: ../prompts.lua:109
-msgid   "Vocabulary"
-msgstr  "Сөздік қоры"
+msgid "Vocabulary"
+msgstr "Сөздік қоры"
 
 #: ../prompts.lua:111
-msgid   "This prompt analyzes the vocabulary of the highlighted text, "
-        "identifying complex words and providing definitions, synonyms, and "
-        "usage examples."
-msgstr  "Белгіленген мәтіндегі күрделі сөздерді анықтап, анықтамасы, синонимі "
-        "және мысалдарын береді."
-
-#: ../prompts.lua:127
-msgid   "Wikipedia"
-msgstr  "Уикипедия"
+msgid ""
+"This prompt analyzes the vocabulary of the highlighted text, identifying "
+"complex words and providing definitions, synonyms, and usage examples."
+msgstr ""
+"Белгіленген мәтіндегі күрделі сөздерді анықтап, анықтамасы, синонимі және "
+"мысалдарын береді."
 
 #: ../prompts.lua:129
-msgid   "This prompt generates a comprehensive Wikipedia-style article based "
-        "on the highlighted text, ensuring factual accuracy and neutrality."
-msgstr  "Белгіленген мәтін бойынша Уикипедия стилінде толық мақала жазады."
+msgid ""
+"This prompt generates a comprehensive Wikipedia-style article based on the "
+"highlighted text, ensuring factual accuracy and neutrality."
+msgstr "Белгіленген мәтін бойынша Уикипедия стилінде толық мақала жазады."
 
 #: ../recapdialog.lua:68
-msgid   "Recap"
-msgstr  "Шолу"
+msgid "Recap"
+msgstr "Шолу"
 
-#: ../settingsdialog.lua:53
-msgid   "Always use stream mode"
-msgstr  "Әрдайым ағын режимінде"
+#: ../settingsdialog.lua:73
+msgid "Use AI Assistant for 'Translate'"
+msgstr "'Аудару' үшін AI Ассистентті пайдалану"
 
-#: ../settingsdialog.lua:58
-msgid   "Use AI Assistant for 'Translate'"
-msgstr  "'Аудару' үшін AI Ассистентті пайдалану"
-
-#: ../settingsdialog.lua:64
-msgid   "AI Assistant override is enabled."
-msgstr  "AI Ассистентті басып-жолдау қосылған."
-
-#: ../settingsdialog.lua:64
-msgid   "AI Assistant override is disabled."
-msgstr  "AI Ассистентті басып-жолдау өшірілген."
-
-#: ../settingsdialog.lua:104
-msgid   "Select the AI Model provider."
-msgstr  "AI үлгі жеткізушісін таңдаңыз."
+#: ../settingsdialog.lua:136
+msgid "Select the AI Model provider."
+msgstr "AI үлгі жеткізушісін таңдаңыз."
 
 #: ../update_checker.lua:22
-msgid   "Checking for updates..."
-msgstr  "Жаңартулар тексерілуде..."
+msgid "Checking for updates..."
+msgstr "Жаңартулар тексерілуде..."
 
 #: ../update_checker.lua:56
 #, lua-format
-msgid   "A new version of the %s plugin (%s) is available. Please update!"
-msgstr  "%s плагинінің жаңа нұсқасы (%s) шықты. Жаңартыңыз!"
+msgid "A new version of the %s plugin (%s) is available. Please update!"
+msgstr "%s плагинінің жаңа нұсқасы (%s) шықты. Жаңартыңыз!"

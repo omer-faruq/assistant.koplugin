@@ -8,20 +8,62 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 14:30+0800\n"
-"PO-Revision-Date: 2025-08-14 11:02+0800\n"
-"Last-Translator: OpenAI ChatGPT 4.0 <noemail@openai.com>\n"
-"Language-Team: OpenAI ChatGPT 4.0 <noemail@openai.com>\n"
-"Language: Ελληνικά (el)\n"
+"POT-Creation-Date: 2025-08-19 11:09+0800\n"
+"PO-Revision-Date: 2025-08-19 11:11+0800\n"
+"Last-Translator: AI Translator (gpt-5-nano)\n"
+"Language-Team: Greek\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../gpt_query.lua:187
+msgid "No response received."
+msgstr "Δεν ελήφθη καμία απάντηση."
+
+#: ../gpt_query.lua:203
+msgid "Failed to start subprocess for request"
+msgstr "Αποτυχία εκκίνησης υποδιεργασίας για το αίτημα."
+
+#: ../settingsdialog.lua:64
+msgid "Always enable stream response"
+msgstr "Πάντα ενεργοποίησε τη ροή απόκρισης."
+
+#: ../settingsdialog.lua:83
+msgid "Show Dictionary(AI) in Dictionary Popup"
+msgstr "Εμφάνιση του Λεξικού (AI) στο Αναδυόμενο Παράθυρο Λεξικού."
+
+#: ../settingsdialog.lua:92
+msgid "Show Wikipedia(AI) in Dictionary Popup"
+msgstr "Εμφάνιση του Wikipedia (AI) στο Αναδυόμενο Παράθυρο Λεξικού."
+
+#: ../settingsdialog.lua:101
+msgid "Copy entered question to the clipboard"
+msgstr "Αντιγραφή της ερώτησης που έχετε πληκτρολογήσει στο πρόχειρο."
+
+#: ../settingsdialog.lua:110
+msgid "Enable AI Recap"
+msgstr "Ενεργοποίηση Ανακεφαλαίωσης AI."
+
+#: ../settingsdialog.lua:117
+msgid "AI Recap will be enabled the next time a book is opened."
+msgstr ""
+"Η Ανακεφαλαίωση AI θα είναι ενεργοποιημένη την επόμενη φορά που θα ανοίξετε "
+"ένα βιβλίο."
+
+#: ../_meta.lua:4 ../dialogs.lua:377 ../main.lua:198
+msgid "AI Assistant"
+msgstr "Βοηθός Τεχνητής Νοημοσύνης"
+
+#: ../_meta.lua:5
+msgid "💡 Enhance your KOReader experience with AI"
+msgstr "💡 Ενισχύστε την εμπειρία KOReader με AI"
 
 #: ../chatgptviewer.lua:266 ../chatgptviewer.lua:629
 msgid "Ask Another Question"
 msgstr "Κάντε άλλη ερώτηση"
 
-#: ../chatgptviewer.lua:306
+#: ../chatgptviewer.lua:306 ../settingsdialog.lua:129
 msgid "Close"
 msgstr "Κλείσιμο"
 
@@ -53,15 +95,15 @@ msgstr "Δεν απομένει κείμενο για προσθήκη ως ση
 msgid "Note added successfully"
 msgstr "Η σημείωση προστέθηκε με επιτυχία"
 
-#: ../chatgptviewer.lua:567 ../dialogs.lua:260 ../dictdialog.lua:34
+#: ../chatgptviewer.lua:569 ../dialogs.lua:263 ../dictdialog.lua:34
 msgid "Cancel"
 msgstr "Ακύρωση"
 
-#: ../chatgptviewer.lua:577 ../dialogs.lua:267
+#: ../chatgptviewer.lua:579 ../dialogs.lua:270
 msgid "Ask"
 msgstr "Ρώτα"
 
-#: ../chatgptviewer.lua:583 ../dialogs.lua:273
+#: ../chatgptviewer.lua:585 ../dialogs.lua:276
 msgid "Enter a question before proceeding."
 msgstr "Πληκτρολογήστε μια ερώτηση πριν προχωρήσετε."
 
@@ -77,35 +119,35 @@ msgstr "Η λέξη αντιγράφηκε στο clipboard."
 msgid "Selection copied to clipboard."
 msgstr "Η επιλογή αντιγράφηκε στο clipboard."
 
-#: ../dialogs.lua:83
+#: ../dialogs.lua:86
 msgid "(Empty message)"
 msgstr "(Κενή μηνύματος)"
 
-#: ../dialogs.lua:87
+#: ../dialogs.lua:90
 msgid "(No response)"
 msgstr "(Κανένα απόκριση)"
 
-#: ../dialogs.lua:117
+#: ../dialogs.lua:120
 msgid "Highlighted text:"
 msgstr "Επισημασμένο κείμενο:"
 
-#: ../dialogs.lua:304
+#: ../dialogs.lua:305
 msgid "Book Analysis"
 msgstr "Ανάλυση βιβλίου"
 
-#: ../dialogs.lua:341
+#: ../dialogs.lua:342
 msgid "Add this button to the Highlight Menu?"
 msgstr "Προσθήκη αυτού του κουμπιού στο μενού επισήμανσης;"
 
-#: ../dialogs.lua:342
+#: ../dialogs.lua:343
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: ../dialogs.lua:368
+#: ../dialogs.lua:369
 msgid "Ask a question about the highlighted text"
 msgstr "Ρωτήστε κάτι για το επισημασμένο κείμενο"
 
-#: ../dialogs.lua:369
+#: ../dialogs.lua:370
 #, lua-format
 msgid ""
 "Ask a question about this book:\n"
@@ -114,19 +156,15 @@ msgstr ""
 "Ρωτήστε κάτι για αυτό το βιβλίο:\n"
 "%s από %s"
 
-#: ../dialogs.lua:372
+#: ../dialogs.lua:373
 msgid "Type your question here..."
 msgstr "Πληκτρολογήστε την ερώτησή σας εδώ..."
 
-#: ../dialogs.lua:373
+#: ../dialogs.lua:374
 msgid "Ask anything about this book..."
 msgstr "Ρωτήστε οτιδήποτε για αυτό το βιβλίο..."
 
-#: ../dialogs.lua:376 ../main.lua:204 ../_meta.lua:4
-msgid "AI Assistant"
-msgstr "Βοηθός Τεχνητής Νοημοσύνης"
-
-#: ../dialogs.lua:427
+#: ../dialogs.lua:430
 msgid "Error: No response received"
 msgstr "Σφάλμα: Δεν λήφθηκε απάντηση"
 
@@ -142,7 +180,7 @@ msgstr "Εισαγάγετε μια λέξη για αναζήτηση..."
 msgid "Look Up"
 msgstr "Αναζήτηση"
 
-#: ../dictdialog.lua:177 ../main.lua:407 ../prompts.lua:19
+#: ../dictdialog.lua:177 ../main.lua:365 ../prompts.lua:19
 msgid "Dictionary"
 msgstr "Λεξικό"
 
@@ -194,23 +232,23 @@ msgstr "⏹ Διακοπή"
 msgid "Response interrupted."
 msgstr "Η απάντηση διακόπηκε."
 
-#: ../main.lua:73
+#: ../main.lua:74
 msgid "Ask the AI a question"
 msgstr "Ρωτήστε την AI μια ερώτηση"
 
-#: ../main.lua:82
+#: ../main.lua:83
 msgid "AI Recaps"
 msgstr "Σύνολα AI"
 
-#: ../main.lua:91 ../settingsdialog.lua:26
+#: ../main.lua:92 ../settingsdialog.lua:37
 msgid "Assistant Settings"
 msgstr "Ρυθμίσεις Βοηθού"
 
-#: ../main.lua:174
+#: ../main.lua:168
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "Δεν βρέθηκε έγκυρος πάροχος μοντέλου στο configuration.lua"
 
-#: ../main.lua:208
+#: ../main.lua:204
 msgid ""
 "Configuration Error.\n"
 "Please set up configuration.lua."
@@ -218,7 +256,7 @@ msgstr ""
 "Σφάλμα ρύθμισης.\n"
 "Παρακαλούμε ορίστε το configuration.lua."
 
-#: ../main.lua:232
+#: ../main.lua:229
 msgid ""
 "Useful Tips:\n"
 "\n"
@@ -247,11 +285,38 @@ msgstr ""
 "Στο διάλογο αποτελέσματος για κλείσιμο (επειδή το κουμπί Κλείσιμο είναι "
 "πρόσθετο).\n"
 
-#: ../main.lua:259
+#: ../main.lua:252
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: οι πάροχοι μοντέλων είναι άκυροι."
 
-#: ../main.lua:317
+#: ../main.lua:333
+#, lua-format
+msgid "Remove [%s] from Highlight Menu?"
+msgstr "Αφαιρέστε το [%s] από το μενού επισήμανσης;"
+
+#: ../main.lua:334
+msgid "Remove"
+msgstr "Αφαίρεση"
+
+#: ../main.lua:351 ../prompts.lua:127
+msgid "Wikipedia"
+msgstr "Βικιπαίδεια"
+
+#: ../main.lua:387 ../main.lua:439
+msgid "Configuration not found. Please set up configuration.lua first."
+msgstr ""
+"Η διαμόρφωση δεν βρέθηκε. Παρακαλώ ρυθμίστε το configuration.lua πρώτα."
+
+#: ../main.lua:481
+msgid "Added [%1 (AI)] to Highlight Menu."
+msgstr "Προστέθηκε το [%1 (AI)] στο μενού επισήμανσης."
+
+#: ../main.lua:490
+#, lua-format
+msgid "Removed [%s (AI)] from Highlight Menu."
+msgstr "Αφαιρέθηκε το [%s (AI)] από το μενού επισήμανσης."
+
+#: ../main.lua:534
 #, lua-format
 msgid ""
 "Do you want an AI Recap?\n"
@@ -262,44 +327,13 @@ msgstr ""
 "Για %s από %s.\n"
 "Δεύτερης τελευταία ανάγνωση %.0f ώρα(ες) πριν."
 
-#: ../main.lua:322
+#: ../main.lua:539
 msgid "Yes"
 msgstr "Ναι"
 
-#: ../main.lua:331
+#: ../main.lua:548
 msgid "No"
 msgstr "Όχι"
-
-#: ../main.lua:391
-#, lua-format
-msgid "Remove [%s] from Highlight Menu?"
-msgstr "Αφαιρέστε το [%s] από το μενού επισήμανσης;"
-
-#: ../main.lua:392
-msgid "Remove"
-msgstr "Αφαίρεση"
-
-#: ../main.lua:426 ../main.lua:448 ../main.lua:501
-msgid "Configuration not found. Please set up configuration.lua first."
-msgstr ""
-"Η διαμόρφωση δεν βρέθηκε. Παρακαλώ ρυθμίστε το configuration.lua πρώτα."
-
-#: ../main.lua:456
-msgid "AI Recap feature is not enabled in configuration."
-msgstr "Η λειτουργία Συνολικού AI δεν είναι ενεργοποιημένη στη διαμόρφωση."
-
-#: ../main.lua:544
-msgid "Added [%1 (AI)] to Highlight Menu."
-msgstr "Προστέθηκε το [%1 (AI)] στο μενού επισήμανσης."
-
-#: ../main.lua:553
-#, lua-format
-msgid "Removed [%s (AI)] from Highlight Menu."
-msgstr "Αφαιρέθηκε το [%s (AI)] από το μενού επισήμανσης."
-
-#: ../_meta.lua:5
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Ενισχύστε την εμπειρία KOReader με AI"
 
 #: ../prompts.lua:20
 msgid ""
@@ -413,10 +447,6 @@ msgstr ""
 "εντοπίζοντας σύνθετες λέξεις και παρέχοντας ορισμούς, συνώνυμα και "
 "παραδείγματα χρήσης."
 
-#: ../prompts.lua:127
-msgid "Wikipedia"
-msgstr "Βικιπαίδεια"
-
 #: ../prompts.lua:129
 msgid ""
 "This prompt generates a comprehensive Wikipedia-style article based on the "
@@ -430,23 +460,11 @@ msgstr ""
 msgid "Recap"
 msgstr "Ανασκόπηση"
 
-#: ../settingsdialog.lua:53
-msgid "Always use stream mode"
-msgstr "Χρήση συνεχούς λειτουργίας πάντα"
-
-#: ../settingsdialog.lua:58
+#: ../settingsdialog.lua:73
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Χρήση Βοηθού AI για τη 'Μετάφραση'"
 
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is enabled."
-msgstr "Η παρακάμπτηση Βοηθού AI είναι ενεργοποιημένη."
-
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is disabled."
-msgstr "Η παρακάμπτηση Βοηθού AI είναι απενεργοποιημένη."
-
-#: ../settingsdialog.lua:104
+#: ../settingsdialog.lua:136
 msgid "Select the AI Model provider."
 msgstr "Επιλέξτε τον πάροχο μοντέλου AI."
 

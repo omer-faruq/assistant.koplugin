@@ -8,20 +8,60 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 14:30+0800\n"
-"PO-Revision-Date: 2025-08-14 11:45+0800\n"
-"Last-Translator: Kimi <kimi@anthropic.com>\n"
-"Language-Team: Türkçe <tr@li.org>\n"
+"POT-Creation-Date: 2025-08-19 11:09+0800\n"
+"PO-Revision-Date: 2025-08-19 11:17+0800\n"
+"Last-Translator: AI Translator (gpt-5-nano)\n"
+"Language-Team: Turkish\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ../gpt_query.lua:187
+msgid "No response received."
+msgstr "Yanıt alınamadı."
+
+#: ../gpt_query.lua:203
+msgid "Failed to start subprocess for request"
+msgstr "İstek için alt işlem başlatılamadı."
+
+#: ../settingsdialog.lua:64
+msgid "Always enable stream response"
+msgstr "Akış yanıtını her zaman etkinleştir."
+
+#: ../settingsdialog.lua:83
+msgid "Show Dictionary(AI) in Dictionary Popup"
+msgstr "Sözlük açılır penceresinde Dictionary(AI)'yi göster."
+
+#: ../settingsdialog.lua:92
+msgid "Show Wikipedia(AI) in Dictionary Popup"
+msgstr "Sözlük açılır penceresinde Wikipedia(AI)'yi göster."
+
+#: ../settingsdialog.lua:101
+msgid "Copy entered question to the clipboard"
+msgstr "Girilen soruyu panoya kopyala."
+
+#: ../settingsdialog.lua:110
+msgid "Enable AI Recap"
+msgstr "AI Özeti'ni etkinleştir."
+
+#: ../settingsdialog.lua:117
+msgid "AI Recap will be enabled the next time a book is opened."
+msgstr "Bir sonraki kitap açıldığında AI Özeti etkinleştirilecek."
+
+#: ../_meta.lua:4 ../dialogs.lua:377 ../main.lua:198
+msgid "AI Assistant"
+msgstr "Yapay Zeka Asistanı"
+
+#: ../_meta.lua:5
+msgid "💡 Enhance your KOReader experience with AI"
+msgstr "💡 KOReader deneyiminizi Yapay Zeka ile geliştirin"
+
 #: ../chatgptviewer.lua:266 ../chatgptviewer.lua:629
 msgid "Ask Another Question"
 msgstr "Başka Soru Sor"
 
-#: ../chatgptviewer.lua:306
+#: ../chatgptviewer.lua:306 ../settingsdialog.lua:129
 msgid "Close"
 msgstr "Kapat"
 
@@ -53,15 +93,15 @@ msgstr "Eklenecek metin kalmadı"
 msgid "Note added successfully"
 msgstr "Not başarıyla eklendi"
 
-#: ../chatgptviewer.lua:567 ../dialogs.lua:260 ../dictdialog.lua:34
+#: ../chatgptviewer.lua:569 ../dialogs.lua:263 ../dictdialog.lua:34
 msgid "Cancel"
 msgstr "İptal"
 
-#: ../chatgptviewer.lua:577 ../dialogs.lua:267
+#: ../chatgptviewer.lua:579 ../dialogs.lua:270
 msgid "Ask"
 msgstr "Sor"
 
-#: ../chatgptviewer.lua:583 ../dialogs.lua:273
+#: ../chatgptviewer.lua:585 ../dialogs.lua:276
 msgid "Enter a question before proceeding."
 msgstr "Devam etmeden önce bir soru girin."
 
@@ -77,35 +117,35 @@ msgstr "Kelime kopyalandı."
 msgid "Selection copied to clipboard."
 msgstr "Seçim kopyalandı."
 
-#: ../dialogs.lua:83
+#: ../dialogs.lua:86
 msgid "(Empty message)"
 msgstr "(Boş mesaj)"
 
-#: ../dialogs.lua:87
+#: ../dialogs.lua:90
 msgid "(No response)"
 msgstr "(Yanıt yok)"
 
-#: ../dialogs.lua:117
+#: ../dialogs.lua:120
 msgid "Highlighted text:"
 msgstr "Vurgulanan metin:"
 
-#: ../dialogs.lua:304
+#: ../dialogs.lua:305
 msgid "Book Analysis"
 msgstr "Kitap Analizi"
 
-#: ../dialogs.lua:341
+#: ../dialogs.lua:342
 msgid "Add this button to the Highlight Menu?"
 msgstr "Bu düğmeyi Vurgulama Menüsüne eklensin mi?"
 
-#: ../dialogs.lua:342
+#: ../dialogs.lua:343
 msgid "Add"
 msgstr "Ekle"
 
-#: ../dialogs.lua:368
+#: ../dialogs.lua:369
 msgid "Ask a question about the highlighted text"
 msgstr "Vurgulanan metin hakkında soru sor"
 
-#: ../dialogs.lua:369
+#: ../dialogs.lua:370
 #, lua-format
 msgid ""
 "Ask a question about this book:\n"
@@ -114,19 +154,15 @@ msgstr ""
 "Bu kitap hakkında soru sor:\n"
 "%s - %s"
 
-#: ../dialogs.lua:372
+#: ../dialogs.lua:373
 msgid "Type your question here..."
 msgstr "Sorunuzu buraya yazın..."
 
-#: ../dialogs.lua:373
+#: ../dialogs.lua:374
 msgid "Ask anything about this book..."
 msgstr "Bu kitap hakkında herhangi bir şey sor..."
 
-#: ../dialogs.lua:376 ../main.lua:204 ../_meta.lua:4
-msgid "AI Assistant"
-msgstr "Yapay Zeka Asistanı"
-
-#: ../dialogs.lua:427
+#: ../dialogs.lua:430
 msgid "Error: No response received"
 msgstr "Hata: Yanıt alınamadı"
 
@@ -142,7 +178,7 @@ msgstr "Aramak için kelime girin..."
 msgid "Look Up"
 msgstr "Ara"
 
-#: ../dictdialog.lua:177 ../main.lua:407 ../prompts.lua:19
+#: ../dictdialog.lua:177 ../main.lua:365 ../prompts.lua:19
 msgid "Dictionary"
 msgstr "Sözlük"
 
@@ -194,23 +230,23 @@ msgstr "⏹ Durdur"
 msgid "Response interrupted."
 msgstr "Yanıt kesildi."
 
-#: ../main.lua:73
+#: ../main.lua:74
 msgid "Ask the AI a question"
 msgstr "Yapay Zekaya soru sor"
 
-#: ../main.lua:82
+#: ../main.lua:83
 msgid "AI Recaps"
 msgstr "Yapay Zeka Özetleri"
 
-#: ../main.lua:91 ../settingsdialog.lua:26
+#: ../main.lua:92 ../settingsdialog.lua:37
 msgid "Assistant Settings"
 msgstr "Asistan Ayarları"
 
-#: ../main.lua:174
+#: ../main.lua:168
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "configuration.lua içinde geçerli model sağlayıcısı bulunamadı"
 
-#: ../main.lua:208
+#: ../main.lua:204
 msgid ""
 "Configuration Error.\n"
 "Please set up configuration.lua."
@@ -218,7 +254,7 @@ msgstr ""
 "Yapılandırma Hatası.\n"
 "Lütfen configuration.lua dosyasını kurun."
 
-#: ../main.lua:232
+#: ../main.lua:229
 msgid ""
 "Useful Tips:\n"
 "\n"
@@ -245,11 +281,38 @@ msgstr ""
 "Çoklu Kaydırma (örn., ⮠, ⮡, ↺):\n"
 "Sonuç iletişim kutusunu kapatmak için (Kapat düğmesi uzakta).\n"
 
-#: ../main.lua:259
+#: ../main.lua:252
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: model sağlayıcıları geçersiz."
 
-#: ../main.lua:317
+#: ../main.lua:333
+#, lua-format
+msgid "Remove [%s] from Highlight Menu?"
+msgstr "[%s] Vurgulama Menüsünden kaldırılsın mı?"
+
+#: ../main.lua:334
+msgid "Remove"
+msgstr "Kaldır"
+
+#: ../main.lua:351 ../prompts.lua:127
+msgid "Wikipedia"
+msgstr "Vikipedi"
+
+#: ../main.lua:387 ../main.lua:439
+msgid "Configuration not found. Please set up configuration.lua first."
+msgstr ""
+"Yapılandırma bulunamadı. Lütfen önce configuration.lua dosyasını ayarlayın."
+
+#: ../main.lua:481
+msgid "Added [%1 (AI)] to Highlight Menu."
+msgstr "[%1 (AI)] Vurgulama Menüsüne eklendi."
+
+#: ../main.lua:490
+#, lua-format
+msgid "Removed [%s (AI)] from Highlight Menu."
+msgstr "[%s (AI)] Vurgulama Menüsünden kaldırıldı."
+
+#: ../main.lua:534
 #, lua-format
 msgid ""
 "Do you want an AI Recap?\n"
@@ -260,44 +323,13 @@ msgstr ""
 "%s - %s için.\n"
 "Son okuma %.0f saat önce."
 
-#: ../main.lua:322
+#: ../main.lua:539
 msgid "Yes"
 msgstr "Evet"
 
-#: ../main.lua:331
+#: ../main.lua:548
 msgid "No"
 msgstr "Hayır"
-
-#: ../main.lua:391
-#, lua-format
-msgid "Remove [%s] from Highlight Menu?"
-msgstr "[%s] Vurgulama Menüsünden kaldırılsın mı?"
-
-#: ../main.lua:392
-msgid "Remove"
-msgstr "Kaldır"
-
-#: ../main.lua:426 ../main.lua:448 ../main.lua:501
-msgid "Configuration not found. Please set up configuration.lua first."
-msgstr ""
-"Yapılandırma bulunamadı. Lütfen önce configuration.lua dosyasını ayarlayın."
-
-#: ../main.lua:456
-msgid "AI Recap feature is not enabled in configuration."
-msgstr "Yapay Zeka özeti özelliği yapılandırmada etkin değil."
-
-#: ../main.lua:544
-msgid "Added [%1 (AI)] to Highlight Menu."
-msgstr "[%1 (AI)] Vurgulama Menüsüne eklendi."
-
-#: ../main.lua:553
-#, lua-format
-msgid "Removed [%s (AI)] from Highlight Menu."
-msgstr "[%s (AI)] Vurgulama Menüsünden kaldırıldı."
-
-#: ../_meta.lua:5
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 KOReader deneyiminizi Yapay Zeka ile geliştirin"
 
 #: ../prompts.lua:20
 msgid ""
@@ -410,10 +442,6 @@ msgstr ""
 "Bu komut, vurgulanan metnin kelime dağarcığını analiz eder, karmaşık "
 "kelimeleri tanımlar, tanımlar, eş anlamlılar ve kullanım örnekleri sağlar."
 
-#: ../prompts.lua:127
-msgid "Wikipedia"
-msgstr "Vikipedi"
-
 #: ../prompts.lua:129
 msgid ""
 "This prompt generates a comprehensive Wikipedia-style article based on the "
@@ -426,23 +454,11 @@ msgstr ""
 msgid "Recap"
 msgstr "Özet"
 
-#: ../settingsdialog.lua:53
-msgid "Always use stream mode"
-msgstr "Her zaman akış modunu kullan"
-
-#: ../settingsdialog.lua:58
+#: ../settingsdialog.lua:73
 msgid "Use AI Assistant for 'Translate'"
 msgstr "'Çevir' için Yapay Zeka Asistanı kullan"
 
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is enabled."
-msgstr "Yapay Zeka Asistanı geçersiz kılması etkin."
-
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is disabled."
-msgstr "Yapay Zeka Asistanı geçersiz kılması devre dışı."
-
-#: ../settingsdialog.lua:104
+#: ../settingsdialog.lua:136
 msgid "Select the AI Model provider."
 msgstr "Yapay Zeka Modeli sağlayıcısını seçin."
 

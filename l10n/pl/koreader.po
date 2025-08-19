@@ -7,20 +7,60 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 14:30+0800\n"
-"PO-Revision-Date: 2025-08-14 12:09+0800\n"
-"Last-Translator: GPT-4.0 2025-08-14\n"
-"Language-Team: GPT-4.0 <gpt@openai.com>\n"
+"POT-Creation-Date: 2025-08-19 11:09+0800\n"
+"PO-Revision-Date: 2025-08-19 11:16+0800\n"
+"Last-Translator: AI Translator (gpt-5-nano)\n"
+"Language-Team: Polish\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ../gpt_query.lua:187
+msgid "No response received."
+msgstr "Nie otrzymano odpowiedzi."
+
+#: ../gpt_query.lua:203
+msgid "Failed to start subprocess for request"
+msgstr "Nie udało się uruchomić podprocesu dla żądania."
+
+#: ../settingsdialog.lua:64
+msgid "Always enable stream response"
+msgstr "Zawsze włączaj odpowiedź strumieniową."
+
+#: ../settingsdialog.lua:83
+msgid "Show Dictionary(AI) in Dictionary Popup"
+msgstr "Pokaż Słownik(AI) w wyskakującym oknie słownika."
+
+#: ../settingsdialog.lua:92
+msgid "Show Wikipedia(AI) in Dictionary Popup"
+msgstr "Pokaż Wikipedia(AI) w wyskakującym oknie słownika."
+
+#: ../settingsdialog.lua:101
+msgid "Copy entered question to the clipboard"
+msgstr "Skopiuj wprowadzone pytanie do schowka."
+
+#: ../settingsdialog.lua:110
+msgid "Enable AI Recap"
+msgstr "Włącz podsumowanie AI."
+
+#: ../settingsdialog.lua:117
+msgid "AI Recap will be enabled the next time a book is opened."
+msgstr "Podsumowanie AI zostanie włączone przy następnym otwarciu książki."
+
+#: ../_meta.lua:4 ../dialogs.lua:377 ../main.lua:198
+msgid "AI Assistant"
+msgstr "Asystent AI"
+
+#: ../_meta.lua:5
+msgid "💡 Enhance your KOReader experience with AI"
+msgstr "💡 Ulepsz KOReader dzięki AI"
+
 #: ../chatgptviewer.lua:266 ../chatgptviewer.lua:629
 msgid "Ask Another Question"
 msgstr "Zadaj kolejne pytanie"
 
-#: ../chatgptviewer.lua:306
+#: ../chatgptviewer.lua:306 ../settingsdialog.lua:129
 msgid "Close"
 msgstr "Zamknij"
 
@@ -52,15 +92,15 @@ msgstr "Nie pozostał tekst do notatki"
 msgid "Note added successfully"
 msgstr "Notatka dodana pomyślnie"
 
-#: ../chatgptviewer.lua:567 ../dialogs.lua:260 ../dictdialog.lua:34
+#: ../chatgptviewer.lua:569 ../dialogs.lua:263 ../dictdialog.lua:34
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: ../chatgptviewer.lua:577 ../dialogs.lua:267
+#: ../chatgptviewer.lua:579 ../dialogs.lua:270
 msgid "Ask"
 msgstr "Zapytaj"
 
-#: ../chatgptviewer.lua:583 ../dialogs.lua:273
+#: ../chatgptviewer.lua:585 ../dialogs.lua:276
 msgid "Enter a question before proceeding."
 msgstr "Wpisz pytanie, aby kontynuować."
 
@@ -76,35 +116,35 @@ msgstr "Słowo skopiowano do schowka."
 msgid "Selection copied to clipboard."
 msgstr "Zaznaczenie skopiowano do schowka."
 
-#: ../dialogs.lua:83
+#: ../dialogs.lua:86
 msgid "(Empty message)"
 msgstr "(Pusta wiadomość)"
 
-#: ../dialogs.lua:87
+#: ../dialogs.lua:90
 msgid "(No response)"
 msgstr "(Brak odpowiedzi)"
 
-#: ../dialogs.lua:117
+#: ../dialogs.lua:120
 msgid "Highlighted text:"
 msgstr "Podświetlony tekst:"
 
-#: ../dialogs.lua:304
+#: ../dialogs.lua:305
 msgid "Book Analysis"
 msgstr "Analiza książki"
 
-#: ../dialogs.lua:341
+#: ../dialogs.lua:342
 msgid "Add this button to the Highlight Menu?"
 msgstr "Dodać ten przycisk do menu podświetlania?"
 
-#: ../dialogs.lua:342
+#: ../dialogs.lua:343
 msgid "Add"
 msgstr "Dodaj"
 
-#: ../dialogs.lua:368
+#: ../dialogs.lua:369
 msgid "Ask a question about the highlighted text"
 msgstr "Zadaj pytanie o podświetlony tekst"
 
-#: ../dialogs.lua:369
+#: ../dialogs.lua:370
 #, lua-format
 msgid ""
 "Ask a question about this book:\n"
@@ -113,19 +153,15 @@ msgstr ""
 "Zadaj pytanie o tę książkę:\n"
 "%s autorstwa %s"
 
-#: ../dialogs.lua:372
+#: ../dialogs.lua:373
 msgid "Type your question here..."
 msgstr "Wpisz pytanie…"
 
-#: ../dialogs.lua:373
+#: ../dialogs.lua:374
 msgid "Ask anything about this book..."
 msgstr "Zadaj cokolwiek o tej książce…"
 
-#: ../dialogs.lua:376 ../main.lua:204 ../_meta.lua:4
-msgid "AI Assistant"
-msgstr "Asystent AI"
-
-#: ../dialogs.lua:427
+#: ../dialogs.lua:430
 msgid "Error: No response received"
 msgstr "Błąd: brak odpowiedzi"
 
@@ -141,7 +177,7 @@ msgstr "Wprowadź słowo do sprawdzenia…"
 msgid "Look Up"
 msgstr "Wyszukaj"
 
-#: ../dictdialog.lua:177 ../main.lua:407 ../prompts.lua:19
+#: ../dictdialog.lua:177 ../main.lua:365 ../prompts.lua:19
 msgid "Dictionary"
 msgstr "Słownik"
 
@@ -191,23 +227,23 @@ msgstr "⏹ Stop"
 msgid "Response interrupted."
 msgstr "Odpowiedź przerwana."
 
-#: ../main.lua:73
+#: ../main.lua:74
 msgid "Ask the AI a question"
 msgstr "Zadaj pytanie AI"
 
-#: ../main.lua:82
+#: ../main.lua:83
 msgid "AI Recaps"
 msgstr "Podsumowania AI"
 
-#: ../main.lua:91 ../settingsdialog.lua:26
+#: ../main.lua:92 ../settingsdialog.lua:37
 msgid "Assistant Settings"
 msgstr "Ustawienia asystenta"
 
-#: ../main.lua:174
+#: ../main.lua:168
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "Brak prawidłowego dostawcy modelu w configuration.lua"
 
-#: ../main.lua:208
+#: ../main.lua:204
 msgid ""
 "Configuration Error.\n"
 "Please set up configuration.lua."
@@ -215,7 +251,7 @@ msgstr ""
 "Błąd konfiguracji.\n"
 "Ustaw configuration.lua."
 
-#: ../main.lua:232
+#: ../main.lua:229
 msgid ""
 "Useful Tips:\n"
 "\n"
@@ -242,11 +278,37 @@ msgstr ""
 "Wielokrotne przesunięcie (np. ⮠, ⮡, ↺):\n"
 "Zamknięcie okna wyników (gdy przycisk Zamknij jest niedostępny).\n"
 
-#: ../main.lua:259
+#: ../main.lua:252
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: dostawcy modelu są nieprawidłowi."
 
-#: ../main.lua:317
+#: ../main.lua:333
+#, lua-format
+msgid "Remove [%s] from Highlight Menu?"
+msgstr "Usunąć [%s] z menu podświetlania?"
+
+#: ../main.lua:334
+msgid "Remove"
+msgstr "Usuń"
+
+#: ../main.lua:351 ../prompts.lua:127
+msgid "Wikipedia"
+msgstr "Wikipedia"
+
+#: ../main.lua:387 ../main.lua:439
+msgid "Configuration not found. Please set up configuration.lua first."
+msgstr "Brak konfiguracji. Najpierw ustaw configuration.lua."
+
+#: ../main.lua:481
+msgid "Added [%1 (AI)] to Highlight Menu."
+msgstr "Dodano [%1 (AI)] do menu podświetlania."
+
+#: ../main.lua:490
+#, lua-format
+msgid "Removed [%s (AI)] from Highlight Menu."
+msgstr "Usunięto [%s (AI)] z menu podświetlania."
+
+#: ../main.lua:534
 #, lua-format
 msgid ""
 "Do you want an AI Recap?\n"
@@ -257,43 +319,13 @@ msgstr ""
 "Dla %s autorstwa %s.\n"
 "Ostatnio czytano %.0f h temu."
 
-#: ../main.lua:322
+#: ../main.lua:539
 msgid "Yes"
 msgstr "Tak"
 
-#: ../main.lua:331
+#: ../main.lua:548
 msgid "No"
 msgstr "Nie"
-
-#: ../main.lua:391
-#, lua-format
-msgid "Remove [%s] from Highlight Menu?"
-msgstr "Usunąć [%s] z menu podświetlania?"
-
-#: ../main.lua:392
-msgid "Remove"
-msgstr "Usuń"
-
-#: ../main.lua:426 ../main.lua:448 ../main.lua:501
-msgid "Configuration not found. Please set up configuration.lua first."
-msgstr "Brak konfiguracji. Najpierw ustaw configuration.lua."
-
-#: ../main.lua:456
-msgid "AI Recap feature is not enabled in configuration."
-msgstr "Funkcja AI Recap nie jest włączona w konfiguracji."
-
-#: ../main.lua:544
-msgid "Added [%1 (AI)] to Highlight Menu."
-msgstr "Dodano [%1 (AI)] do menu podświetlania."
-
-#: ../main.lua:553
-#, lua-format
-msgid "Removed [%s (AI)] from Highlight Menu."
-msgstr "Usunięto [%s (AI)] z menu podświetlania."
-
-#: ../_meta.lua:5
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Ulepsz KOReader dzięki AI"
 
 #: ../prompts.lua:20
 msgid ""
@@ -403,10 +435,6 @@ msgstr ""
 "Ten prompt analizuje słownictwo podświetlonego tekstu, wskazując trudne "
 "słowa i podając definicje, synonimy i przykłady użycia."
 
-#: ../prompts.lua:127
-msgid "Wikipedia"
-msgstr "Wikipedia"
-
 #: ../prompts.lua:129
 msgid ""
 "This prompt generates a comprehensive Wikipedia-style article based on the "
@@ -419,23 +447,11 @@ msgstr ""
 msgid "Recap"
 msgstr "Podsumowanie"
 
-#: ../settingsdialog.lua:53
-msgid "Always use stream mode"
-msgstr "Zawsze używaj trybu strumienia"
-
-#: ../settingsdialog.lua:58
+#: ../settingsdialog.lua:73
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Użyj AI do tłumaczenia"
 
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is enabled."
-msgstr "Nadpisanie Asystenta AI włączone."
-
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is disabled."
-msgstr "Nadpisanie Asystenta AI wyłączone."
-
-#: ../settingsdialog.lua:104
+#: ../settingsdialog.lua:136
 msgid "Select the AI Model provider."
 msgstr "Wybierz dostawcę modelu AI."
 

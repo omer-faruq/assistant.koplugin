@@ -1,21 +1,62 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 14:30+0800\n"
-"PO-Revision-Date: Thu Aug 14 11:15:32 +08 2025\n"
-"Last-Translator: GPT-4 (OpenAI) <no-reply@openai.com>\n"
-"Language-Team: Magyar <hu@li.org>\n"
-"Language: Magyar (hu)\n"
+"POT-Creation-Date: 2025-08-19 11:09+0800\n"
+"PO-Revision-Date: 2025-08-19 11:14+0800\n"
+"Last-Translator: AI Translator (gpt-5-nano)\n"
+"Language-Team: Hungarian\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../gpt_query.lua:187
+msgid "No response received."
+msgstr "Nem érkezett válasz."
+
+#: ../gpt_query.lua:203
+msgid "Failed to start subprocess for request"
+msgstr "A kéréssel kapcsolatos alfolyamat elindítása nem sikerült."
+
+#: ../settingsdialog.lua:64
+msgid "Always enable stream response"
+msgstr "Mindig engedélyezze a folyamatos válaszadást."
+
+#: ../settingsdialog.lua:83
+msgid "Show Dictionary(AI) in Dictionary Popup"
+msgstr "AI Szótár megjelenítése a Szótár felugró ablakában."
+
+#: ../settingsdialog.lua:92
+msgid "Show Wikipedia(AI) in Dictionary Popup"
+msgstr "AI Wikipédia megjelenítése a Szótár felugró ablakában."
+
+#: ../settingsdialog.lua:101
+msgid "Copy entered question to the clipboard"
+msgstr "Másolja a beírt kérdést a vágólapra."
+
+#: ../settingsdialog.lua:110
+msgid "Enable AI Recap"
+msgstr "AI összefoglaló engedélyezése."
+
+#: ../settingsdialog.lua:117
+msgid "AI Recap will be enabled the next time a book is opened."
+msgstr "A következő könyv megnyitásakor engedélyezve lesz az AI összefoglaló."
+
+#: ../_meta.lua:4 ../dialogs.lua:377 ../main.lua:198
+msgid "AI Assistant"
+msgstr "AI Asszisztens"
+
+#: ../_meta.lua:5
+msgid "💡 Enhance your KOReader experience with AI"
+msgstr "💡 Javítsd a KOReader élményedet AI segítségével"
 
 #: ../chatgptviewer.lua:266 ../chatgptviewer.lua:629
 msgid "Ask Another Question"
 msgstr "Kérdezz egy másik kérdést"
 
-#: ../chatgptviewer.lua:306
+#: ../chatgptviewer.lua:306 ../settingsdialog.lua:129
 msgid "Close"
 msgstr "Bezár"
 
@@ -47,15 +88,15 @@ msgstr "Nincs több szöveg a jegyzethez"
 msgid "Note added successfully"
 msgstr "Jegyzet sikeresen hozzáadva"
 
-#: ../chatgptviewer.lua:567 ../dialogs.lua:260 ../dictdialog.lua:34
+#: ../chatgptviewer.lua:569 ../dialogs.lua:263 ../dictdialog.lua:34
 msgid "Cancel"
 msgstr "Mégse"
 
-#: ../chatgptviewer.lua:577 ../dialogs.lua:267
+#: ../chatgptviewer.lua:579 ../dialogs.lua:270
 msgid "Ask"
 msgstr "Kérdezz"
 
-#: ../chatgptviewer.lua:583 ../dialogs.lua:273
+#: ../chatgptviewer.lua:585 ../dialogs.lua:276
 msgid "Enter a question before proceeding."
 msgstr "Írj kérdést a folytatáshoz."
 
@@ -71,35 +112,35 @@ msgstr "Szó a vágólapra másolva."
 msgid "Selection copied to clipboard."
 msgstr "Kiválasztott szöveg a vágólapra másolva."
 
-#: ../dialogs.lua:83
+#: ../dialogs.lua:86
 msgid "(Empty message)"
 msgstr "(Üres üzenet)"
 
-#: ../dialogs.lua:87
+#: ../dialogs.lua:90
 msgid "(No response)"
 msgstr "(Nincs válasz)"
 
-#: ../dialogs.lua:117
+#: ../dialogs.lua:120
 msgid "Highlighted text:"
 msgstr "Kiemelt szöveg:"
 
-#: ../dialogs.lua:304
+#: ../dialogs.lua:305
 msgid "Book Analysis"
 msgstr "Könyv elemzés"
 
-#: ../dialogs.lua:341
+#: ../dialogs.lua:342
 msgid "Add this button to the Highlight Menu?"
 msgstr "Hozzáadod ezt a gombot a kiemelés menühöz?"
 
-#: ../dialogs.lua:342
+#: ../dialogs.lua:343
 msgid "Add"
 msgstr "Hozzáadás"
 
-#: ../dialogs.lua:368
+#: ../dialogs.lua:369
 msgid "Ask a question about the highlighted text"
 msgstr "Kérdezz a kiemelt szövegről"
 
-#: ../dialogs.lua:369
+#: ../dialogs.lua:370
 #, lua-format
 msgid ""
 "Ask a question about this book:\n"
@@ -108,19 +149,15 @@ msgstr ""
 "Kérdezz a könyvről:\n"
 "%s, író: %s"
 
-#: ../dialogs.lua:372
+#: ../dialogs.lua:373
 msgid "Type your question here..."
 msgstr "Írd be a kérdésed..."
 
-#: ../dialogs.lua:373
+#: ../dialogs.lua:374
 msgid "Ask anything about this book..."
 msgstr "Kérdezz bármit a könyvről..."
 
-#: ../dialogs.lua:376 ../main.lua:204 ../_meta.lua:4
-msgid "AI Assistant"
-msgstr "AI Asszisztens"
-
-#: ../dialogs.lua:427
+#: ../dialogs.lua:430
 msgid "Error: No response received"
 msgstr "Hiba: Nem érkezett válasz"
 
@@ -136,7 +173,7 @@ msgstr "Írj egy szót, amelyet keresni szeretnél..."
 msgid "Look Up"
 msgstr "Keresés"
 
-#: ../dictdialog.lua:177 ../main.lua:407 ../prompts.lua:19
+#: ../dictdialog.lua:177 ../main.lua:365 ../prompts.lua:19
 msgid "Dictionary"
 msgstr "Szótár"
 
@@ -188,23 +225,23 @@ msgstr "⏹ Állj"
 msgid "Response interrupted."
 msgstr "Válasz megszakítva."
 
-#: ../main.lua:73
+#: ../main.lua:74
 msgid "Ask the AI a question"
 msgstr "Kérdezz az AI-tól"
 
-#: ../main.lua:82
+#: ../main.lua:83
 msgid "AI Recaps"
 msgstr "AI összefoglalók"
 
-#: ../main.lua:91 ../settingsdialog.lua:26
+#: ../main.lua:92 ../settingsdialog.lua:37
 msgid "Assistant Settings"
 msgstr "Asszisztens beállításai"
 
-#: ../main.lua:174
+#: ../main.lua:168
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "Nincs érvényes modellszolgáltató a configuration.lua fájlban"
 
-#: ../main.lua:208
+#: ../main.lua:204
 msgid ""
 "Configuration Error.\n"
 "Please set up configuration.lua."
@@ -212,7 +249,7 @@ msgstr ""
 "Konfigurációs hiba.\n"
 "Állítsa be a configuration.lua fájlt."
 
-#: ../main.lua:232
+#: ../main.lua:229
 msgid ""
 "Useful Tips:\n"
 "\n"
@@ -239,11 +276,37 @@ msgstr ""
 "Többszöri húzás (pl. ⮠, ⮡, ↺):\n"
 "Eredmény párbeszédpanelen: Bezár (mivel a Close gomb el van távol).\n"
 
-#: ../main.lua:259
+#: ../main.lua:252
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: érvénytelen modellszolgáltatók"
 
-#: ../main.lua:317
+#: ../main.lua:333
+#, lua-format
+msgid "Remove [%s] from Highlight Menu?"
+msgstr "[%s] eltávolítása a kiemelés menüből?"
+
+#: ../main.lua:334
+msgid "Remove"
+msgstr "Eltávolítás"
+
+#: ../main.lua:351 ../prompts.lua:127
+msgid "Wikipedia"
+msgstr "Wikipedia"
+
+#: ../main.lua:387 ../main.lua:439
+msgid "Configuration not found. Please set up configuration.lua first."
+msgstr "Nem található konfiguráció. Először állítsd be a configuration.lua-t."
+
+#: ../main.lua:481
+msgid "Added [%1 (AI)] to Highlight Menu."
+msgstr "[%1 (AI)] hozzáadva a kiemelés menühöz."
+
+#: ../main.lua:490
+#, lua-format
+msgid "Removed [%s (AI)] from Highlight Menu."
+msgstr "[%s (AI)] eltávolítva a kiemelés menüből."
+
+#: ../main.lua:534
 #, lua-format
 msgid ""
 "Do you want an AI Recap?\n"
@@ -254,43 +317,13 @@ msgstr ""
 "%s, író: %s.\n"
 "Utoljára %.0f óra óta olvasva."
 
-#: ../main.lua:322
+#: ../main.lua:539
 msgid "Yes"
 msgstr "Igen"
 
-#: ../main.lua:331
+#: ../main.lua:548
 msgid "No"
 msgstr "Nem"
-
-#: ../main.lua:391
-#, lua-format
-msgid "Remove [%s] from Highlight Menu?"
-msgstr "[%s] eltávolítása a kiemelés menüből?"
-
-#: ../main.lua:392
-msgid "Remove"
-msgstr "Eltávolítás"
-
-#: ../main.lua:426 ../main.lua:448 ../main.lua:501
-msgid "Configuration not found. Please set up configuration.lua first."
-msgstr "Nem található konfiguráció. Először állítsd be a configuration.lua-t."
-
-#: ../main.lua:456
-msgid "AI Recap feature is not enabled in configuration."
-msgstr "Az AI összefoglaló funkció nincs bekapcsolva a konfigurációban."
-
-#: ../main.lua:544
-msgid "Added [%1 (AI)] to Highlight Menu."
-msgstr "[%1 (AI)] hozzáadva a kiemelés menühöz."
-
-#: ../main.lua:553
-#, lua-format
-msgid "Removed [%s (AI)] from Highlight Menu."
-msgstr "[%s (AI)] eltávolítva a kiemelés menüből."
-
-#: ../_meta.lua:5
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Javítsd a KOReader élményedet AI segítségével"
 
 #: ../prompts.lua:20
 msgid ""
@@ -403,10 +436,6 @@ msgstr ""
 "Ez a lekérdezés elemzi a kiemelt szöveg szókincsét, azonosítva a komplex "
 "szavakat és definiálva, szinonimákat, valamint példákat ad."
 
-#: ../prompts.lua:127
-msgid "Wikipedia"
-msgstr "Wikipedia"
-
 #: ../prompts.lua:129
 msgid ""
 "This prompt generates a comprehensive Wikipedia-style article based on the "
@@ -419,23 +448,11 @@ msgstr ""
 msgid "Recap"
 msgstr "Összefoglalás"
 
-#: ../settingsdialog.lua:53
-msgid "Always use stream mode"
-msgstr "Mindig használd a folyamatos módot"
-
-#: ../settingsdialog.lua:58
+#: ../settingsdialog.lua:73
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Használja az AI asszisztenst a 'Fordítás' funkcióhoz"
 
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is enabled."
-msgstr "Az AI asszisztens felülbírálása bekapcsolva."
-
-#: ../settingsdialog.lua:64
-msgid "AI Assistant override is disabled."
-msgstr "Az AI asszisztens felülbírálása kikapcsolva."
-
-#: ../settingsdialog.lua:104
+#: ../settingsdialog.lua:136
 msgid "Select the AI Model provider."
 msgstr "Válaszd ki az AI modell szolgáltatót."
 
