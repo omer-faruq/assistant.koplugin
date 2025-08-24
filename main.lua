@@ -18,7 +18,7 @@ local ButtonDialog = require("ui/widget/buttondialog")
 local ffiutil = require("ffi/util")
 
 local _ = require("owngettext")
-local AssistantDialog = require("dialogs")
+local AssistantDialog -- will be loaded after helpers; avoid module name collisions
 local UpdateChecker = require("update_checker")
 local Prompts = require("prompts")
 local SettingsDialog = require("settingsdialog")
@@ -45,7 +45,53 @@ local function loadConfigFile(filePath)
     if not chunk then return nil, err end
     local success, result = pcall(chunk) -- run the code, checks runtime errors
     if not success then return nil, result end
-    return env
+    -- configuration.lua returns the CONFIGURATION table; return that directly
+    return result
+end
+ 
+-- Load a Lua module file by absolute path and return its chunk return value.
+-- This differs from loadConfigFile by not sandboxing the environment, which some modules may rely on.
+local function loadModuleByPath(filePath)
+  local chunk, err = loadfile(filePath)
+  if not chunk then return nil, err end
+  local ok, ret = pcall(chunk)
+  if not ok then return nil, ret end
+  return ret
+end
+
+-- Determine the directory of this file (main.lua)
+local function getCurrentDir()
+  local info = debug and debug.getinfo and debug.getinfo(1, "S")
+  local src = info and info.source or nil
+  if src and src:sub(1, 1) == '@' then
+    return src:match("^@(.+)[/\\][^/\\]+$")
+  end
+  return nil
+end
+
+-- Load assistant-local modules by absolute path to avoid collisions with other plugins
+do
+  local cur_dir = getCurrentDir()
+  if cur_dir then
+    -- Preload our ChatGPTViewer so dialogs.lua resolves to the correct module
+    local viewer_mod = select(1, loadModuleByPath(cur_dir .. "/chatgptviewer.lua"))
+    if type(viewer_mod) == "table" then
+      package.loaded["chatgptviewer"] = viewer_mod
+    end
+
+    -- Load our own dialogs.lua
+    local dlg_mod, dlg_err = loadModuleByPath(cur_dir .. "/dialogs.lua")
+    if type(dlg_mod) == "table" then
+      AssistantDialog = dlg_mod
+      package.loaded["dialogs"] = dlg_mod
+    else
+      logger.warn("Assistant: failed to path-load dialogs.lua: " .. tostring(dlg_err))
+      AssistantDialog = require("dialogs")
+    end
+  else
+    -- Fallback to normal require if we cannot detect current dir
+    AssistantDialog = require("dialogs")
+  end
 end
 
 -- configuration locations
@@ -54,15 +100,31 @@ local CONFIG_FILE_PATH = string.format("%s/plugins/%s.koplugin/configuration.lua
 local CONFIG_LOAD_ERROR = nil
 local CONFIGURATION = nil
 
--- try the configuration.lua and store the error message if any
-local e, err = loadConfigFile(CONFIG_FILE_PATH)
-if e == nil then CONFIG_LOAD_ERROR = err end
+-- 1) Try user override at DataStorage path
+local user_conf, user_err = loadConfigFile(CONFIG_FILE_PATH)
+if user_conf then
+  CONFIGURATION = user_conf
+else
+  CONFIG_LOAD_ERROR = user_err
+end
 
--- Load Configuration
+-- 2) Fallback to plugin-local configuration.lua, avoiding global require collisions
+if not CONFIGURATION then
+  local cur_dir = getCurrentDir()
+  if cur_dir then
+    local plugin_conf_path = cur_dir .. "/configuration.lua"
+    local plugin_conf, plugin_err = loadConfigFile(plugin_conf_path)
+    if plugin_conf then
+      CONFIGURATION = plugin_conf
+      CONFIG_LOAD_ERROR = nil
+    else
+      -- Keep first error if present; otherwise use plugin-local error
+      CONFIG_LOAD_ERROR = CONFIG_LOAD_ERROR or plugin_err
+    end
+  end
+end
+
 if CONFIG_LOAD_ERROR then logger.warn(CONFIG_LOAD_ERROR) end
-local success, result = pcall(function() return require("configuration") end)
-if success then CONFIGURATION = result
-else logger.warn("configuration.lua not found, skipping...") end
 
 -- Flag to ensure the update message is shown only once per session
 local updateMessageShown = false
@@ -223,6 +285,11 @@ function Assistant:init()
             updateMessageShown = true
           end
           UIManager:nextTick(function()
+            -- Ensure dialog exists before showing
+            if not self.assistant_dialog then
+              UIManager:show(InfoMessage:new{ icon = "notice-warning", text = _("Assistant not initialized. Please check configuration and try again.") })
+              return
+            end
             -- Show the main AI dialog with highlighted text
             self.assistant_dialog:show(_reader_highlight_instance.selected_text.text)
           end)
@@ -288,7 +355,25 @@ configuration.lua is safe, only the settings in the dialog are purged.]]),
   end
 
   -- Load the model provider from settings or default configuration
-  self.querier = require("gpt_query"):new({
+  -- Load assistant-local gpt_query.lua to avoid collision with askgpt's gpt_query
+  local QuerierModule
+  do
+    local cur_dir = getCurrentDir()
+    if cur_dir then
+      local qpath = cur_dir .. "/gpt_query.lua"
+      local qm, qerr = loadModuleByPath(qpath)
+      if qm then
+        QuerierModule = qm
+      else
+        logger.warn("Failed to load gpt_query.lua: " .. tostring(qerr))
+      end
+    end
+  end
+  if type(QuerierModule) ~= "table" or type(QuerierModule.new) ~= "function" then
+    CONFIG_LOAD_ERROR = _("Failed to load assistant's gpt_query.lua (invalid module type)")
+    return
+  end
+  self.querier = QuerierModule:new({
     assistant = self,
     settings = self.settings,
   })
@@ -300,16 +385,21 @@ configuration.lua is safe, only the settings in the dialog are purged.]]),
     return
   end
 
-  -- store the UI language
-  local ui_locale = G_reader_settings:readSetting("language") or "en"
-  self.ui_language = Language:getLanguageName(ui_locale) or "English"
-  self.ui_language_is_rtl = Language:isLanguageRTL(ui_locale)
-
-  -- Conditionally override translate method based on user setting
-  self:syncTranslateOverride()
-
-
+  -- Create dialog as soon as core init succeeds
   self.assistant_dialog = AssistantDialog:new(self, CONFIGURATION)
+
+  -- store the UI language (non-critical; guard to avoid aborting init)
+  pcall(function()
+    local ui_locale = (G_reader_settings and G_reader_settings.readSetting and G_reader_settings:readSetting("language")) or "en"
+    self.ui_language = Language:getLanguageName(ui_locale) or "English"
+    self.ui_language_is_rtl = Language:isLanguageRTL(ui_locale)
+  end)
+
+  -- Conditionally override translate method based on user setting (guarded)
+  local ok_override, err_override = pcall(function() self:syncTranslateOverride() end)
+  if not ok_override then
+    logger.warn("Assistant: syncTranslateOverride failed: " .. tostring(err_override))
+  end
   
   -- Ensure custom prompts from configuration are merged before building menus
   -- so that `show_on_main_popup` and `visible` overrides take effect.
