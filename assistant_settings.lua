@@ -330,6 +330,31 @@ function SettingsDialog:init()
     self.layout = {self.layout[#self.layout]} -- keep bottom buttons
     self:mergeLayoutInVertical(self.radio_button_table, #self.layout) -- before bottom buttons
 
+    self.middle_button_table = ButtonTable:new{
+        width = self.element_width,
+        buttons = {{
+            {
+                id="ai_language",
+                text=T(_("AI Language: %1"), self.assistant.settings:readSetting("response_language") or self.assistant.ui_language),
+                font_bold = true,
+                font_size = 18,
+                callback=function()
+                    LanguageSetting(self)
+                end
+            },
+            {
+                id="font_size",
+                text=T(_("Font Size: %1"), self.assistant.settings:readSetting("response_font_size") or 20),
+                font_bold = true,
+                font_size = 18,
+                callback=function ()
+                    FontSizeSetting(self)
+                end
+            },
+        }},
+    }
+    self:mergeLayoutInVertical(self.middle_button_table, #self.layout)
+
     self.check_button_table = VerticalGroup:new{
         align = "left",
         HorizontalGroup:new{
@@ -364,30 +389,6 @@ function SettingsDialog:init()
         width = self.width - 2 * Size.padding.large,
         text = _("AI Model provider:"),
         face = Font:getFace("xx_smallinfofont"),
-    }
-
-    self.middle_button_table = ButtonTable:new{
-        width = self.element_width,
-        buttons = {{
-            {
-                id="ai_language",
-                text=T(_("AI Language: %1"), self.assistant.settings:readSetting("response_language") or self.assistant.ui_language),
-                font_bold = true,
-                font_size = 18,
-                callback=function()
-                    LanguageSetting(self)
-                end
-            },
-            {
-                id="font_size",
-                text=T(_("Font Size: %1"), self.assistant.settings:readSetting("response_font_size") or 20),
-                font_bold = true,
-                font_size = 18,
-                callback=function ()
-                    FontSizeSetting(self)
-                end
-            },
-        }},
     }
 
     -- main dialog widget layout table
