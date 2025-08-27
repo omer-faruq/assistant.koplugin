@@ -232,7 +232,7 @@ function Assistant:init()
         end)
       end,
       hold_callback = function()
-        local info_text = string.format("%s %s\n\n", meta.fullname, meta.version) .. _([[Useful Tips:
+        local info_text = string.format("%s %s\n\n", self.meta.fullname, self.meta.version) .. _([[Useful Tips:
 
 Long Press:
 - On a Prompt Button: Add to the highlight menu.
