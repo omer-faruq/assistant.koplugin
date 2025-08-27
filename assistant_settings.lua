@@ -30,15 +30,6 @@ local ffiutil = require("ffi/util")
 local meta = require("_meta")
 local logger = require("logger")
 
--- Custom Widget: the CheckButton callback does not include a reference to itself.
--- override to use our `xcallback` instead.
-local xCheckButton = CheckButton:extend{}
-function xCheckButton:onTapCheckButton()
-    local ret = CheckButton.onTapCheckButton(self)
-    if self.xcallback then self:xcallback() end
-    return ret
-end
-
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
 local CopyMultiInputDialog = MultiInputDialog:extend{}
@@ -224,16 +215,16 @@ function SettingsDialog:init()
         {
             text = _("Always enable stream response"),
             checked = self.settings:readSetting("forced_stream_mode", true),
-            callback = function(btn) 
-                self.settings:saveSetting("forced_stream_mode", btn.checked)
+            callback = function()
+                self.settings:toggle("forced_stream_mode")
                 self.assistant.updated = true
             end
         },
         {
             text = _("Use AI Assistant for 'Translate'"),
             checked = self.settings:readSetting("ai_translate_override", false),
-            callback = function(btn) 
-                self.settings:saveSetting("ai_translate_override", btn.checked)
+            callback = function()
+                self.settings:toggle("ai_translate_override")
                 self.assistant.updated = true
                 self.assistant:syncTranslateOverride()
             end
@@ -241,39 +232,41 @@ function SettingsDialog:init()
         {
             text = _("Show Dictionary(AI) in Dictionary Popup"),
             checked = self.settings:readSetting("dict_popup_show_dictionary", true),
-            callback = function(btn) 
-                self.settings:saveSetting("dict_popup_show_dictionary", btn.checked)
+            callback = function()
+                self.settings:toggle("dict_popup_show_dictionary")
                 self.assistant.updated = true
             end
         },
         {
             text = _("Show Wikipedia(AI) in Dictionary Popup"),
             checked = self.settings:readSetting("dict_popup_show_wikipedia", true),
-            callback = function(btn) 
-                self.settings:saveSetting("dict_popup_show_wikipedia", btn.checked)
+            callback = function()
+                self.settings:toggle("dict_popup_show_wikipedia")
                 self.assistant.updated = true
             end
         },
         {
             text = _("Copy entered question to the clipboard"),
             checked = self.settings:readSetting("auto_copy_asked_question", true),
-            callback = function(btn) 
-                self.settings:saveSetting("auto_copy_asked_question", btn.checked)
+            callback = function()
+                self.settings:toggle("auto_copy_asked_question")
                 self.assistant.updated = true
             end
         },
         {
             text = _("Enable AI Recap"),
             checked = self.settings:readSetting("enable_recap", false),
-            callback = function(btn) 
-                self.settings:saveSetting("enable_recap", btn.checked)
+            callback = function()
+                self.settings:toggle("enable_recap")
                 self.assistant.updated = true
-                local Dispatcher = require("dispatcher")
-                if btn.checked then
-                    UIManager:show(InfoMessage:new{ timeout = 3, text = _("AI Recap will be enabled the next time a book is opened.") })
-                else
-                    Dispatcher:removeAction("ai_recap")
+                if not self.settings:readSetting("enable_recap") then
+                    -- if disable, remove the action from dispatcher
+                    require("dispatcher"):removeAction("ai_recap")
+                    return
                 end
+                UIManager:show(InfoMessage:new{ timeout = 3,
+                    text = _("AI Recap will be enabled the next time a book is opened."),
+                })
             end
         },
     }
@@ -351,10 +344,10 @@ function SettingsDialog:init()
     for i, btn in ipairs(self.check_button_init_list) do
         local row =  HorizontalGroup:new{
             HorizontalSpan:new{ width = Screen:scaleBySize(15), },
-            xCheckButton:new{
+            CheckButton:new{
                 text = btn.text,
                 checked = btn.checked,
-                xcallback = btn.callback,
+                callback = btn.callback,
                 face = Font:getFace("xx_smallinfofont"),
                 parent = self,
             }
