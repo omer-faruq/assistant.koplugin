@@ -100,13 +100,6 @@ function  StreamText:onCloseWidget()
     return InputText.onCloseWidget(self)
 end
 
-function Querier:_closeStreamDialog(dialog)
-    if self.interrupt_stream then
-        self.interrupt_stream()
-    end
-    UIManager:close(dialog)
-end
-
 function Querier:showError(err)
     local dialog
     if self.stream_interrupted then
@@ -150,6 +143,12 @@ function Querier:query(message_history, title)
     if type(res) == "function" then
         self.stream_interrupted = false -- reset the stream interrupted flag
         local streamDialog 
+
+        local function _closeStreamDialog()
+            if self.interrupt_stream then self.interrupt_stream() end
+            UIManager:close(streamDialog)
+        end
+
         streamDialog = InputDialog:new{
             width = Screen:getWidth() - Screen:scaleBySize(30),
             title = _("AI is responding"),
@@ -170,14 +169,14 @@ function Querier:query(message_history, title)
                     {
                         text = _("⏹ Stop"),
                         id = "close", -- id:close response to default cancel action (esc key ...)
-                        callback = function() self:_closeStreamDialog(streamDialog) end,
+                        callback = _closeStreamDialog,
                     },
                 }
             }
         }
 
         --  adds a close button to the top right
-        streamDialog.title_bar.close_callback = function() self:_closeStreamDialog(streamDialog) end
+        streamDialog.title_bar.close_callback = _closeStreamDialog
         streamDialog.title_bar:init()
 
         UIManager:show(streamDialog)
