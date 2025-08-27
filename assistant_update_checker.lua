@@ -1,7 +1,8 @@
 local http = require("socket.http")
 local ltn12 = require("ltn12")
 local json = require("json")
-local InfoMessage = require("ui/widget/infomessage")
+local TrapWidget  = require("ui/widget/trapwidget")
+local Notification = require("ui/widget/notification")
 local UIManager = require("ui/uimanager")
 local Trapper = require("ui/trapper")
 local logger = require("logger")
@@ -19,7 +20,7 @@ local function checkForUpdates()
     return
   end
 
-  local infomsg = InfoMessage:new{
+  local infomsg = TrapWidget:new{
     text = _("Checking for updates..."),
   }
   UIManager:show(infomsg)
@@ -57,7 +58,7 @@ local function checkForUpdates()
             _("A new version of the %s plugin (%s) is available. Please update!"),
             meta.fullname, latest_version
           )
-          UIManager:show(InfoMessage:new{ text = message, timeout = 5}) 
+          Notification:notify(message, Notification.SOURCE_ALWAYS_SHOW)
         end
       end
     end

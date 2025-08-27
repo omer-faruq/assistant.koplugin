@@ -19,6 +19,7 @@ local RadioButtonTable = require("ui/widget/radiobuttontable")
 local ButtonTable = require("ui/widget/buttontable")
 local TextBoxWidget = require("ui/widget/textboxwidget")
 local SpinWidget = require("ui/widget/spinwidget")
+local Notification = require("ui/widget/notification")
 local Size = require("ui/size")
 local UIManager = require("ui/uimanager")
 local VerticalGroup = require("ui/widget/verticalgroup")
@@ -264,9 +265,7 @@ function SettingsDialog:init()
                     require("dispatcher"):removeAction("ai_recap")
                     return
                 end
-                UIManager:show(InfoMessage:new{ timeout = 3,
-                    text = _("AI Recap will be enabled the next time a book is opened."),
-                })
+                Notification:notify(_("AI Recap will be enabled the next time a book is opened."), Notification.SOURCE_ALWAYS_SHOW)
             end
         },
     }
