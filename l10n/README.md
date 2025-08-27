@@ -1,46 +1,66 @@
 # Multi-language support
 
-The plugin use the same language tranlate logic with KOReader.
+The plugin uses the same language translation logic as KOReader.
 
 ## How it Works
 
-Translate: `template/koreader.pot` -> `LANG/koreader.po`
+The localization process uses standard `gettext` tools (`.pot` template file and `.po` language files).
 
-## Contribute your language
+-   `templates/koreader.pot`: The template file containing all translatable strings from the source code.
+-   `<LANG_CODE>/koreader.po`: The translation file for a specific language.
 
-1. Determine the abbreviation code of your language based on the language list.  As `LANG_CODE`.
-2. Create a dir under this `l10n`, `mkdir LANG_CODE`
-3. copy `template/koreader.pot` to `LANG_CODE/koreader.po`
-4. Translate `LANG_CODE/koreader.po`
+The `Makefile` in this directory automates most of the translation process.
 
-## Updates
+## Updating Translations
 
-When source changes, run `make` under this dir.
+When the source code changes, new strings might be added or existing ones modified. To update all language files:
 
-`template/koreader.pot` will be regenerated, and other language translations will merge the result with the new template.
+1.  **Generate Template**: Update the `.pot` template file from the source code.
+    ```bash
+    make template
+    ```
+2.  **Update PO Files**: Merge the new template into all existing `.po` files. New strings will be added and marked as untranslated.
+    ```bash
+    make update
+    ```
+3.  **Translate Untranslated Strings**:
+    -   **With AI**: The `Makefile` is configured to use an AI translation script. You need to have an `API_KEY` environment variable set.
+        ```bash
+        # This will find all untranslated strings, translate them, and merge them back.
+        make ai-translate
+        ```
+    -   **Manually**:
+        1.  Find untranslated strings:
+            ```bash
+            make extract-untranslated
+            ```
+            This creates an `untranslated.po` file in each language directory.
+        2.  Edit the `koreader.po` file in the respective language directory and provide the translations for the new strings (they will have an empty `msgstr ""`).
 
-#### Use AI
+## Adding a New Language
 
-Use the following prompt to translate your language, attach `template/koreader.pot` 
+### Using AI Translation (Recommended)
 
-```
-Translate the following gettext .po file content to __YOUR_LANGUAGE__.
-Preserve the .po file structure, including msgid, msgstr, and other metadata.
-Ensure accurate and context-aware translation.
-The message will display on UI, keep the translation clean and short and easy understanding.
-The first message is the metadata for the PO file. Make the necessary updates to the metadata.
-The project is named `assistant.koplugin`.  Fill the Project-Id-Version attribute.
-Fill in the `Language` attribute with current translating language and the language code.
-Fill in the `Language-Team` and `Last-Translator` with your model name and versions.
-Do not modify other file structure.
-Only output the translated file content, do not use markdown format.
-```
+1.  **Add Language to Script**: Open `AI_TRANSLATE.sh` and add your language code and name to the `LANG_MAP` associative array.
+2.  **Run AI Translation**: Run the following command, replacing `<LANG_CODE>` with your language's code (e.g., `fr`). You will need an `API_KEY` for your chosen AI provider.
+    ```bash
+    make ai-translate L10N_LANG=<LANG_CODE>
+    ```
+    This will:
+    - Create the directory for your language.
+    - Create a `koreader.po` file and translate all strings from the template using the AI.
 
-Save the generated file content to `LANG_CODE/koreader.ko`
+### Manually
 
-Most translation files in the directory are generated with a script `AI_TRANSLATE.sh` with an API, which automates the above process.
+1.  **Create Directory**: Create a directory for your language code (e.g., `mkdir fr`).
+2.  **Create PO File**: Copy the template to your new language directory.
+    ```bash
+    cp templates/koreader.pot fr/koreader.po
+    ```
+3.  **Translate**: Open `fr/koreader.po` and translate all the `msgstr` fields.
+    - Remember to update the header information at the top of the file.
 
-## Language abbr TABLE
+## Language Abbreviation Table
 
 ```lua
     language_names = {
