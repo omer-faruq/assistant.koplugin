@@ -83,24 +83,20 @@ end
 -- InputText class for showing streaming responses
 -- ignores all input events
 local StreamText = InputText:extend{}
-function StreamText:initInputEvents() end
-function StreamText:initKeyboard() end
-function StreamText:onKeyPress() end
-function StreamText:onTextInput(text) end
-function StreamText:onTapTextBox(arg, ges) return true end
+function StreamText:addChars(chars)
+    self.readonly = false                           -- widget is inited with `readonly = true`
+    InputText.addChars(self, chars)                 -- can only add text by our method
+end
 function StreamText:initTextBox(text, char_added)
-    local _m = self.for_measurement_only
     self.for_measurement_only = true                -- trick the method from super class
     InputText.initTextBox(self, text, char_added)   -- skips `UIManager:setDirty`
-    self.for_measurement_only = _m
-    UIManager:setDirty(self.parent, function()      -- use our own method of refresh
-        return "fast", self.dimen                   -- `fast` is suitable for stream responding 
-    end)
+    -- use our own method of refresh, `fast` is suitable for stream responding 
+    UIManager:setDirty(self.parent, function() return "fast", self.dimen end)
+    self.for_measurement_only = false
 end
 function  StreamText:onCloseWidget()
-    UIManager:setDirty(self.parent, function()
-        return "flashui", self.dimen                -- fast mode makes scren dirty, clean it when done
-    end)
+    -- fast mode makes screen dirty, clean it with `flashui`
+    UIManager:setDirty(self.parent, function() return "flashui", self.dimen end)
     return InputText.onCloseWidget(self)
 end
 
@@ -165,9 +161,10 @@ function Querier:query(message_history, title)
                 self.assistant:showSettings()
             end,
 
-            readonly = false, skip_first_show_keyboard = true, keyboard_visible = false, fullscreen = false,
+            readonly = true,  
+            fullscreen = false, use_available_height = true,
             allow_newline = true, add_nav_bar = false, cursor_at_end = true, add_scroll_buttons = true,
-            deny_keyboard_hiding = false, use_available_height = true, condensed = true, auto_para_direction = true,
+            condensed = true, auto_para_direction = true, is_movable = false, scroll_by_pan = true, 
             buttons = {
                 {
                     {
