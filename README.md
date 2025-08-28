@@ -61,7 +61,7 @@ local CONFIGURATION = {
 
     provider_settings = {
         gemini = {
-            model = "gemini-1.5-flash-latest",
+            model = "gemini-2.5-flash",
             base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
             api_key = "your-gemini-api-key",
         },
