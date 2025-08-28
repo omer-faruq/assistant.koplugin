@@ -27,20 +27,36 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Archive the project source code into a zip file.
-      # The '--prefix' option ensures all files are inside a top-level directory named 'assistant.koplugin/'.
-      - name: Archive project source
+      # Step 2: Update version in _meta.lua based on the Git tag.
+      - name: Update version in _meta.lua
         run: |
-          git archive -o assistant.koplugin-${GITHUB_REF_NAME}.zip --prefix=assistant.koplugin/ ${GITHUB_REF_NAME} \
-            ":(exclude).github" \
-            ":(exclude).gitignore" \
-            ":(exclude).all-contributorsrc"
-      
-      # Step 2.1: List files in the created zip file for debugging purposes
-      - name: List zip file contents
+          # Extract version from tag (e.g., v1.2.3 -> 1.2.3)
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "Updating version to ${VERSION} in _meta.lua"
+          # Use sed to replace only the version number, preserving the rest of the line (like the trailing comma).
+          # This ensures the version is stored as a string, enclosed in double quotes.
+          sed -i -E "s/(version\s*=\s*)[^,]+/\1\"${VERSION}\"/" _meta.lua
+          cat _meta.lua
+
+      # Step 3: Create the directory structure and archive the project source into a zip file.
+      # We create a directory with the correct name first, copy the files into it, and then zip that directory.
+      - name: Archive project source with zip
+        run: |
+          PACKAGE_NAME="assistant.koplugin"
+          ARCHIVE_NAME="${PACKAGE_NAME}-${GITHUB_REF_NAME}.zip"
+          # Create the directory structure for zipping
+          mkdir "$PACKAGE_NAME"
+          # Copy project files into the directory using a tar pipe, excluding unwanted files.
+          # This archives the current directory and immediately extracts it into the target directory.
+          tar c --exclude='./.github' --exclude='./.gitignore' --exclude='./.all-contributorsrc' --exclude="./$PACKAGE_NAME" . | tar x -C "$PACKAGE_NAME"
+          # Create the final zip archive
+          zip -r "$ARCHIVE_NAME" "$PACKAGE_NAME"
+
+      # Step 4: List files in the created archive for debugging purposes.
+      - name: List archive contents
         run: unzip -l assistant.koplugin-${GITHUB_REF_NAME}.zip
 
-      # Step 3: Create a GitHub Release and upload the zip file as a release asset.
+      # Step 5: Create a GitHub Release and upload the archive as a release asset.
       - name: Create Release and Upload Asset
         uses: softprops/action-gh-release@v2
         with:
