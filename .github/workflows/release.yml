@@ -48,7 +48,7 @@ jobs:
           mkdir "$PACKAGE_NAME"
           # Copy project files into the directory using a tar pipe, excluding unwanted files.
           # This archives the current directory and immediately extracts it into the target directory.
-          tar c --exclude='./.github' --exclude='./.gitignore' --exclude='./.all-contributorsrc' --exclude="./$PACKAGE_NAME" . | tar x -C "$PACKAGE_NAME"
+          tar c --exclude='./.git' --exclude='./.github' --exclude='./.gitignore' --exclude='./.all-contributorsrc' --exclude="./$PACKAGE_NAME" . | tar x -C "$PACKAGE_NAME"
           # Create the final zip archive
           zip -r "$ARCHIVE_NAME" "$PACKAGE_NAME"
 
