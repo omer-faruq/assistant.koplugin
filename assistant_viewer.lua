@@ -533,6 +533,7 @@ function ChatGPTViewer:onCloseWidget()
     InputContainer.onCloseWidget(self)
   end
 
+  -- clear the text selection when plugin is called without a highlight dialog
   local ui = require("apps/reader/readerui").instance
   if not ui.highlight.highlight_dialog then
     ui.highlight:clear()

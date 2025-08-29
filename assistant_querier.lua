@@ -146,6 +146,8 @@ function Querier:query(message_history, title)
 
         local function _closeStreamDialog()
             if self.interrupt_stream then self.interrupt_stream() end
+
+            -- clear the text selection when plugin is called without a highlight dialog
             local ui = require("apps/reader/readerui").instance
             if not ui.highlight.highlight_dialog then
                 ui.highlight:clear()
