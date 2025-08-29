@@ -44,14 +44,13 @@ MSGATTRIB_BIN = msgattrib
 MSGCAT_BIN = msgcat
 XGETTEXT_BIN = xgettext
 
-LANGS_TO_INIT := en_GB ca cs de eo es eu fi fr gl hr it_IT hu lt_LT lv nl_NL nb_NO pl pt_PT pt_BR ro ro_MD sk sv vi tr vi_VN ar bg_BG el fa he hi ja ka ko_KR ru sr uk zh_CN zh_TW
+LANGS := en_GB ca cs de eo es eu fi fr gl hr it_IT hu lt_LT lv nl_NL nb_NO pl pt_PT pt_BR ro ro_MD sk sv vi tr vi_VN ar bg_BG el fa he hi ja ka ko_KR ru sr uk zh_CN zh_TW
 
 PO_FILES  := $(wildcard */$(DOMAIN).po)
-LANGS     := $(patsubst %/,%,$(filter-out templates/,$(wildcard */)))
 
 init-dirs: template
 	@echo "Ensuring language directories and initial .po files exist..."
-	@for lang in $(LANGS_TO_INIT); do \
+	@for lang in $(LANGS); do \
 		if [ ! -f "$$lang/$(DOMAIN).po" ]; then \
 			echo "Initializing language: $$lang"; \
 			mkdir -p $$lang; \
