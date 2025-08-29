@@ -146,6 +146,10 @@ function Querier:query(message_history, title)
 
         local function _closeStreamDialog()
             if self.interrupt_stream then self.interrupt_stream() end
+            local ui = require("apps/reader/readerui").instance
+            if not ui.highlight.highlight_dialog then
+                ui.highlight:clear()
+            end
             UIManager:close(streamDialog)
         end
 

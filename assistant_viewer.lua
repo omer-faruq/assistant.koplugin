@@ -532,6 +532,11 @@ function ChatGPTViewer:onCloseWidget()
   if InputContainer.onCloseWidget then
     InputContainer.onCloseWidget(self)
   end
+
+  local ui = require("apps/reader/readerui").instance
+  if not ui.highlight.highlight_dialog then
+    ui.highlight:clear()
+  end
 end
 
 function ChatGPTViewer:askAnotherQuestion()
