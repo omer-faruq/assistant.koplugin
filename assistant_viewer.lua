@@ -532,12 +532,6 @@ function ChatGPTViewer:onCloseWidget()
   if InputContainer.onCloseWidget then
     InputContainer.onCloseWidget(self)
   end
-
-  -- clear the text selection when plugin is called without a highlight dialog
-  local ui = require("apps/reader/readerui").instance
-  if not ui.highlight.highlight_dialog then
-    ui.highlight:clear()
-  end
 end
 
 function ChatGPTViewer:askAnotherQuestion()
@@ -688,19 +682,16 @@ function ChatGPTViewer:onTapClose(arg, ges_ev)
 end
 
 function ChatGPTViewer:onClose()
-  local ok, active_window = pcall(function() return UIManager:getActiveWindow() end)
   
-  pcall(function() UIManager:close(self) end)
-  
-  pcall(function() 
-    UIManager:setDirty(nil, "full") 
-    UIManager:forceRePaint()
-  end)
-  
-  if self.close_callback then
-    pcall(function() self.close_callback() end)
+  UIManager:close(self)
+  if self.close_callback then self.close_callback() end
+
+  -- clear the text selection when plugin is called without a highlight dialog
+  local ui = require("apps/reader/readerui").instance
+  if not ui.highlight.highlight_dialog then
+    ui.highlight:clear()
   end
-  
+
   return true
 end
 
