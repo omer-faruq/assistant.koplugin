@@ -131,9 +131,8 @@ function Querier:query(message_history, title)
         return nil, _("Plugin is not configured.")
     end
 
-    if self.settings:readSetting("forced_stream_mode", true) then -- defalut true
-        koutil.tableSetValue(self.provider_settings, true, "additional_parameters", "stream")
-    end
+    local use_stream_mode = self.settings:readSetting("use_stream_mode", true)
+    koutil.tableSetValue(self.provider_settings, use_stream_mode, "additional_parameters", "stream")
 
     local infomsg = InfoMessage:new{
       icon = "book.opened",

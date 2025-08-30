@@ -214,10 +214,10 @@ function SettingsDialog:init()
 
     self.check_button_init_list = {
         {
-            text = _("Always enable stream response"),
-            checked = self.settings:readSetting("forced_stream_mode", true),
+            text = _("Enable stream response"),
+            checked = self.settings:readSetting("use_stream_mode", true),
             callback = function()
-                self.settings:toggle("forced_stream_mode")
+                self.settings:toggle("use_stream_mode")
                 self.assistant.updated = true
             end
         },
