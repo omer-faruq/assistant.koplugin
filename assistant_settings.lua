@@ -269,7 +269,7 @@ function SettingsDialog:init()
             end
         },
         {
-            text = _("Auto Export Chat Conversations to File"),
+            text = _("Auto Export Conversations to File"),
             checked = self.settings:readSetting("auto_export_conversations", false),
             callback = function()
                 self.settings:toggle("auto_export_conversations")
