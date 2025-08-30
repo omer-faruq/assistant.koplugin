@@ -102,7 +102,7 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
                 return postURLContent(url, headers, body, timeout or 45, maxtime or 120)
             end, self.trap_widget)
         if not completed then
-            return false, self.CODE_CANCELLED, "Request cancelled by user."
+            return false, self.CODE_CANCELLED, self.CODE_CANCELLED
         end
     else
         -- If no trap widget is set, run the request directly

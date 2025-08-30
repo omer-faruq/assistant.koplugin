@@ -23,7 +23,7 @@ local Querier = {
     provider_settings = nil,
     provider_name = nil,
     interrupt_stream = nil,      -- function to interrupt the stream query
-    stream_interrupted = false,  -- flag to indicate if the stream was interrupted
+    user_interrupted = false,  -- flag to indicate if the stream was interrupted
 }
 
 function Querier:new(o)
@@ -102,7 +102,7 @@ end
 
 function Querier:showError(err)
     local dialog
-    if self.stream_interrupted then
+    if self.user_interrupted then
         dialog = InfoMessage:new{ timeout = 3, text = err }
     else
         dialog = ConfirmBox:new{
@@ -113,6 +113,15 @@ function Querier:showError(err)
         }
     end
     UIManager:show(dialog)
+    logger.info("Querier:showError called")
+
+    -- clear the text selection when plugin is called without a highlight dialog
+    UIManager:nextTick(function ()
+        local ui = require("apps/reader/readerui").instance
+        if not ui.highlight.highlight_dialog then
+            ui.highlight:clear()
+        end
+    end)
 end
 
 --- Query the AI with the provided message history
@@ -141,7 +150,7 @@ function Querier:query(message_history, title)
     -- when res is a function, it means we are in streaming mode
     -- open a stream dialog and run the background query in a subprocess
     if type(res) == "function" then
-        self.stream_interrupted = false -- reset the stream interrupted flag
+        self.user_interrupted = false -- reset the stream interrupted flag
         local streamDialog 
 
         local function _closeStreamDialog()
@@ -199,8 +208,8 @@ function Querier:query(message_history, title)
 
         UIManager:close(streamDialog)
 
-        if self.stream_interrupted then
-            return nil, _("Response interrupted.")
+        if self.user_interrupted then
+            return nil, _("Request cancelled by user.")
         end
 
         if err then
@@ -208,6 +217,11 @@ function Querier:query(message_history, title)
         end
 
         res = content
+    end
+
+    if err == self.handler.CODE_CANCELLED then
+        self.user_interrupted = true
+        return nil, _("Request cancelled by user.")
     end
 
     if type(res) ~= "string" or err ~= nil then
@@ -254,7 +268,7 @@ function Querier:processStream(bgQuery, trunk_callback)
         UIManager:scheduleIn(check_interval_sec, go_on_func)  
         local go_on = coroutine.yield()  -- Wait for the next check or user interruption
         if not go_on then -- User interruption  
-            self.stream_interrupted = true
+            self.user_interrupted = true
             logger.info("User interrupted the stream processing")
             UIManager:unschedule(go_on_func)  
             break  
