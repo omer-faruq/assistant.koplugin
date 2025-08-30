@@ -268,6 +268,14 @@ function SettingsDialog:init()
                 Notification:notify(_("AI Recap will be enabled the next time a book is opened."), Notification.SOURCE_ALWAYS_SHOW)
             end
         },
+        {
+            text = _("Auto Export Chat Conversations to File"),
+            checked = self.settings:readSetting("auto_export_conversations", false),
+            callback = function()
+                self.settings:toggle("auto_export_conversations")
+                self.assistant.updated = true
+            end
+        },
     }
 
     -- action buttons

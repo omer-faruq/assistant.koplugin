@@ -686,6 +686,51 @@ function ChatGPTViewer:onTapClose(arg, ges_ev)
 end
 
 function ChatGPTViewer:onClose()
+  -- Export chat log if enabled
+  if self.assistant.settings:readSetting("export_conversations", false) then
+    local success, err = pcall(function()
+      -- Get book file path
+      local book_file_path = self.assistant.ui.document.file
+      
+      if book_file_path then
+        -- Get directory and filename without extension
+        local book_dir = book_file_path:match("(.*[/\\])")
+        local book_name = book_file_path:match(".*[/\\]([^/\\]+)%..*$") or book_file_path:match("([^/\\]+)%..*$")
+        
+        if book_dir and book_name then
+          -- Create log file path
+          local log_file_path = book_dir .. book_name .. "_assistant_chat_log.txt"
+          
+          -- Get current timestamp
+          local timestamp = os.date("%Y-%m-%d %H:%M:%S")
+          
+          -- Prepare log entry with title if available
+          local title_text = self.title and (self.title .. "\n") or ""
+          local log_entry = string.format("[%s]\n%s%s\n\n", timestamp, title_text, self.text or "")
+          
+          -- Append to log file
+          local file = io.open(log_file_path, "a")
+          if file then
+            file:write(log_entry)
+            file:close()
+          else
+            logger.warn("Assistant: Could not open chat log file for writing:", log_file_path)
+          end
+        end
+      end
+    end)
+    
+    if not success then
+      logger.warn("Assistant: Error during chat log export:", err)
+      -- Show warning to user but don't crash
+      UIManager:show(InfoMessage:new{
+        icon = "notice-warning",
+        text = _("Chat log export failed. Continuing..."),
+        timeout = 3,
+      })
+    end
+  end
+  
   UIManager:close(self)
   if self.close_callback then self.close_callback() end
 
