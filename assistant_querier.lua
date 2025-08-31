@@ -113,15 +113,12 @@ function Querier:showError(err)
         }
     end
     UIManager:show(dialog)
-    logger.info("Querier:showError called")
 
     -- clear the text selection when plugin is called without a highlight dialog
-    UIManager:nextTick(function ()
-        local ui = require("apps/reader/readerui").instance
-        if not ui.highlight.highlight_dialog then
-            ui.highlight:clear()
-        end
-    end)
+    local ui = require("apps/reader/readerui").instance
+    if not ui.highlight.highlight_dialog then
+        ui.highlight:clear()
+    end
 end
 
 --- Query the AI with the provided message history
@@ -154,12 +151,6 @@ function Querier:query(message_history, title)
 
         local function _closeStreamDialog()
             if self.interrupt_stream then self.interrupt_stream() end
-
-            -- clear the text selection when plugin is called without a highlight dialog
-            local ui = require("apps/reader/readerui").instance
-            if not ui.highlight.highlight_dialog then
-                ui.highlight:clear()
-            end
             UIManager:close(streamDialog)
         end
 
