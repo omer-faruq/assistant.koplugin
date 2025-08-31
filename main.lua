@@ -454,9 +454,9 @@ function Assistant:onAskAIRecap()
     local authors = doc_props:readSetting("authors") or self.ui.document:getProps().authors or "Unknown Author"
     
     -- Show recap dialog
-    local showRecapDialog = require("assistant_recapdialog")
+    local showFeatureDialog = require("assistant_featuredialog")
     Trapper:wrap(function()
-      showRecapDialog(self, title, authors, percent_finished)
+      showFeatureDialog(self, "recap", title, authors, percent_finished)
     end)
   end)
   return true
@@ -481,9 +481,9 @@ function Assistant:onAskAIXRay()
     local authors = doc_props:readSetting("authors") or self.ui.document:getProps().authors or "Unknown Author"
 
     -- Show X-Ray dialog
-    local showXRayDialog = require("assistant_xraydialog")
+    local showFeatureDialog = require("assistant_featuredialog")
     Trapper:wrap(function()
-      showXRayDialog(self, title, authors, percent_finished)
+      showFeatureDialog(self, "xray", title, authors, percent_finished)
     end)
   end)
   return true
@@ -609,9 +609,9 @@ function Assistant:_hookRecap()
             ok_text         = _("Yes"),
             ok_callback     = function()
               NetworkMgr:runWhenOnline(function()
-                local showRecapDialog = require("assistant_recapdialog")
+                local showFeatureDialog = require("assistant_featuredialog")
                 Trapper:wrap(function()
-                  showRecapDialog(assistant, title, authors, percent_finished)
+                  showFeatureDialog(assistant, "recap", title, authors, percent_finished)
                 end)
               end)
             end,
