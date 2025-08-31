@@ -410,7 +410,7 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
       callback = function()
           NetworkMgr:runWhenOnline(function()
               Trapper:wrap(function()
-                showDictionaryDialog(self, dict_popup.word)
+                showDictionaryDialog(self, dict_popup.word, nil, dict_popup)
               end)
           end)
       end,

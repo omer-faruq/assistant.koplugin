@@ -139,7 +139,8 @@ end
 function AssistantDialog:_createAndShowViewer(highlightedText, message_history, title)
   local result_text = self:_createResultText(highlightedText, message_history, nil, title)
   
-  local chatgpt_viewer = ChatGPTViewer:new {
+  local chatgpt_viewer 
+  chatgpt_viewer = ChatGPTViewer:new {
     title = title,
     text = result_text,
     text_face = Font:getFace("infofont", self.assistant.settings:readSetting("response_font_size") or 20),
@@ -188,6 +189,10 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
     highlighted_text = highlightedText,
     message_history = message_history,
     render_markdown = koutil.tableGetValue(self.CONFIGURATION, "features", "render_markdown") or true,
+    default_hold_callback = function ()
+      chatgpt_viewer:onClose()
+      self.assistant.ui.highlight:onClose()
+    end
   }
   
   UIManager:show(chatgpt_viewer)

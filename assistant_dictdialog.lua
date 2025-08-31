@@ -3,7 +3,6 @@ local InputDialog = require("ui/widget/inputdialog")
 local ChatGPTViewer = require("assistant_viewer")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
-local ConfirmBox = require("ui/widget/confirmbox")
 local TextBoxWidget = require("ui/widget/textboxwidget")
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
@@ -11,7 +10,7 @@ local Event = require("ui/event")
 local koutil = require("util")
 local dict_prompts = require("assistant_prompts").assistant_prompts.dict
 
-local function showDictionaryDialog(assistant, highlightedText, message_history)
+local function showDictionaryDialog(assistant, highlightedText, message_history, dict_popup)
     local CONFIGURATION = assistant.CONFIGURATION
     local Querier = assistant.querier
     local ui = assistant.ui
@@ -130,7 +129,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history)
     table.insert(message_history, context_message)
 
     -- Query the AI with the message history
-    local answer, err = Querier:query(message_history, "Loading AI Dictionary ...")
+    local ret, err = Querier:query(message_history, "Loading AI Dictionary ...")
     if err ~= nil then
         assistant.querier:showError(err)
         return
@@ -138,20 +137,20 @@ local function showDictionaryDialog(assistant, highlightedText, message_history)
 
     local function createResultText(highlightedText, answer)
         local result_text
-        local render_markdown = koutil.tableGetValue(CONFIGURATION, "features", "render_markdown")
+        local render_markdown = koutil.tableGetValue(CONFIGURATION, "features", "render_markdown") or true
         if render_markdown then
             -- in markdown mode, outputs markdown formatted highlighted text
             result_text = T("... %1 **%2** %3 ...\n\n%4", prev_context, highlightedText, next_context, answer)
         else
-        -- in plain text mode, use widget controled characters.
-        result_text = T("%1... %2%3%4 ...\n\n%5", TextBoxWidget.PTF_HEADER, prev_context, 
-            TextBoxWidget.PTF_BOLD_START, highlightedText, TextBoxWidget.PTF_BOLD_END,  next_context, answer)
+            -- in plain text mode, use widget controled characters.
+            result_text = T("%1... %2%3%4 ...\n\n%5", TextBoxWidget.PTF_HEADER, prev_context, 
+                TextBoxWidget.PTF_BOLD_START, highlightedText, TextBoxWidget.PTF_BOLD_END,  next_context, answer)
         end
         return result_text
     end
 
-    local result_text = createResultText(highlightedText, answer)
-    local chatgpt_viewer = nil
+    local result = createResultText(highlightedText, ret)
+    local chatgpt_viewer
 
     local function handleAddToNote()
         if ui.highlight and ui.highlight.saveHighlight then
@@ -160,7 +159,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history)
             end)
             if success and index then
                 local a = ui.annotation.annotations[index]
-                a.note = result_text
+                a.note = result
                 ui:handleEvent(Event:new("AnnotationsModified",
                                     { a, nb_highlights_added = -1, nb_notes_added = 1 }))
             end
@@ -176,8 +175,12 @@ local function showDictionaryDialog(assistant, highlightedText, message_history)
         assistant = assistant,
         ui = ui,
         title = _("Dictionary"),
-        text = result_text,
+        text = result,
         onAddToNote = handleAddToNote,
+        default_hold_callback = function ()
+            chatgpt_viewer:onClose()
+            if dict_popup then dict_popup:onClose() end
+        end,
     }
 
     UIManager:show(chatgpt_viewer)
