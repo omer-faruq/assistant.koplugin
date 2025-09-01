@@ -91,6 +91,14 @@ function Assistant:onDispatcherRegisterActions()
     category = "none",
     event = "AskAIXRay",
     title = _("AI X-Ray"),
+    general = true
+  })
+
+  -- Register Book Information action (available for gesture binding)
+  Dispatcher:registerAction("ai_book_info", {
+    category = "none",
+    event = "AskAIBookInfo",
+    title = _("AI Book Information"),
     general = true,
     separator = true
   })
@@ -486,6 +494,33 @@ function Assistant:onAskAIXRay()
     local showFeatureDialog = require("assistant_featuredialog")
     Trapper:wrap(function()
       showFeatureDialog(self, "xray", title, authors, percent_finished)
+    end)
+  end)
+  return true
+end
+
+function Assistant:onAskAIBookInfo()
+  if not CONFIGURATION then
+    UIManager:show(InfoMessage:new{
+      icon = "notice-warning",
+      text = _("Configuration not found. Please set up configuration.lua first.")
+    })
+    return true
+  end
+
+  NetworkMgr:runWhenOnline(function()
+    -- Get current book information
+    local DocSettings = require("docsettings")
+    local doc_settings = DocSettings:open(self.ui.document.file)
+    local percent_finished = doc_settings:readSetting("percent_finished") or 0
+    local doc_props = doc_settings:child("doc_props")
+    local title = doc_props:readSetting("title") or self.ui.document:getProps().title or "Unknown Title"
+    local authors = doc_props:readSetting("authors") or self.ui.document:getProps().authors or "Unknown Author"
+
+    -- Show Book Information dialog
+    local showFeatureDialog = require("assistant_featuredialog")
+    Trapper:wrap(function()
+      showFeatureDialog(self, "book_info", title, authors, percent_finished)
     end)
   end)
   return true

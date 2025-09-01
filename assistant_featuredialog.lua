@@ -38,6 +38,12 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
             loading_message = _("Loading X-Ray..."),
             config_key = "xray_config",
             prompts_key = "xray"
+        },
+        book_info = {
+            title = _("Book Information"),
+            loading_message = _("Loading Book Information..."),
+            config_key = "book_info_config",
+            prompts_key = "book_info"
         }
     }
     

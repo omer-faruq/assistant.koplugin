@@ -190,7 +190,33 @@ Formatting rules:
         user_prompt = [[
 Generate the expanded X‑Ray for **{title}** by **{author}**, with the structure described in the previous system message.
 Reader progress: **{progress}%**.
-Language: **{language}**.]]
+Language: **{language}**.
+        ]],
+    },
+    book_info = {
+        system_prompt = "You are an expert literary assistant that provides comprehensive and accurate information about books. Always respond in Markdown format.",
+        user_prompt = [[
+Generate detailed information about the book "{title}" by {author}. Provide the information in the following sections:
+
+### Book Information
+- Provide a summary of the book's plot or main themes.
+- Mention the genre, publication date, and any notable editions.
+- Include the number of pages or chapters if known.
+
+### About the Author
+- Give a brief biography of {author}.
+- Mention their other notable works.
+- Discuss their writing style or influences.
+
+### Historical Context
+- Explain the historical or cultural context in which the book was written or set.
+- Discuss how the book's themes relate to the time period.
+
+### Similar Books
+- Recommend 3-5 similar books by other authors.
+- Explain why they are similar (e.g., theme, style, genre).
+
+Ensure all information is accurate and based on known facts. Respond entirely in {language}.]],
     },
     dict = {
         system_prompt = "You are a dictionary with high quality detail vocabulary definitions and examples. Always respond in Markdown format.",
