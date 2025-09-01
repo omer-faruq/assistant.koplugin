@@ -232,12 +232,12 @@ function Assistant:init()
         end)
       end,
       hold_callback = function()
-        local info_text = string.format("%s %s\n\n", self.meta.fullname, self.meta.version) .. _([[Useful Tips:
+        local info_text = string.format("%s %s  ", self.meta.fullname, self.meta.version) .. _([[Useful Tips
 
 Long Press:
 - On a Prompt Button: Add to the highlight menu.
 - On a highlight menu button to remove it.
-- On the Close button to go back to reading UI in 1 step.
+- On the Close button to go back to the book in 1 step.
 
 Very-Long Press (over 3 seconds):
 On a single word in the book to show the highlight menu (instead of the dictionary).
@@ -247,6 +247,7 @@ On the result dialog to close (as the Close button is far to reach).
 ]])
         UIManager:show(ConfirmBox:new{
             text = info_text,
+            face = Font:getFace("xx_smallinfofont"),
             no_ok_button = true, other_buttons_first = true,
             other_buttons = {{
               {
