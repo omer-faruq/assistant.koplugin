@@ -115,9 +115,8 @@ function Querier:showError(err)
     UIManager:show(dialog)
 
     -- clear the text selection when plugin is called without a highlight dialog
-    local ui = require("apps/reader/readerui").instance
-    if not ui.highlight.highlight_dialog then
-        ui.highlight:clear()
+    if not self.assistant.ui.highlight.highlight_dialog then
+        self.assistant.ui.highlight:clear()
     end
 end
 

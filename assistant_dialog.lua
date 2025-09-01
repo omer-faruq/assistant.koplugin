@@ -192,6 +192,9 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
     default_hold_callback = function ()
       chatgpt_viewer:onClose()
       self.assistant.ui.highlight:onClose()
+      if self.assistant.ui.dictionary.dict_window then
+        self.assistant.ui.dictionary.dict_window:onClose()
+      end
     end
   }
   
