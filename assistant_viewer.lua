@@ -697,7 +697,7 @@ end
 
 function ChatGPTViewer:onClose()
   -- Export chat log if enabled
-  if self.assistant.settings:readSetting("export_conversations", false) then
+  if self.assistant.settings:readSetting("auto_export_conversations", false) then
     local success, err = pcall(function()
       -- Get book file path
       local book_file_path = self.assistant.ui.document.file
