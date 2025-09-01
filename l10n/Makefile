@@ -17,21 +17,19 @@ translate:
 		echo "Please set it before running translation. e.g., export API_KEY=your_key"; \
 		exit 1; \
 	fi
-	@echo "[1/8] Generating POT template file..."
+	@echo "[1/7] Generating POT template file..."
 	@$(MAKE) template
-	@echo "[2/8] Merging POT file into PO files..."
+	@echo "[2/7] Merging POT file into PO files..."
 	@$(MAKE) update
-	@echo "[3/8] Generating untranslated files..."
+	@echo "[3/7] Generating untranslated files..."
 	@$(MAKE) extract-untranslated
-	@echo "[4/8] Running AI translation..."
+	@echo "[4/7] Running AI translation and verifying results..."
 	@$(MAKE) ai-translate
-	@echo "[5/8] Verifying AI translation results..."
-	@$(MAKE) check-ai-results
-	@echo "[6/8] Merging untranslated files..."
+	@echo "[5/7] Merging untranslated files..."
 	@$(MAKE) import-translation
-	@echo "[7/8] Checking PO files..."
+	@echo "[6/7] Checking PO files..."
 	@$(MAKE) check
-	@echo "[8/8] Cleaning up intermediate files..."
+	@echo "[7/7] Cleaning up intermediate files..."
 	@$(MAKE) clean
 	@echo "\nTranslation process completed successfully!"
 
@@ -67,21 +65,10 @@ update: init-dirs
 extract-untranslated:
 	@for po_file in $(PO_FILES); do \
 		dir=$$(dirname $$po_file); \
-		$(MSGATTRIB_BIN) --untranslated $$po_file -o $$dir/untranslated.po; \
-	done
-
-check-ai-results:
-	@set -e; \
-	for lang in $(LANGS); do \
-		if [ -s "$$lang/untranslated.po" ]; then \
-			if [ ! -f "$$lang/updated_translated.po" ]; then \
-				echo "\033[0;31mError: AI translation for '$$lang' failed.\033[0m"; \
-				echo "File '$$lang/updated_translated.po' was not created, but '$$lang/untranslated.po' was not empty."; \
-				echo "This might be due to an API error or network issue."; \
-				echo "Please check the output above for any error messages from the AI translation script."; \
-				echo "You can try running the translation for this language again with: make ai-translate L10N_LANG=$$lang"; \
-				exit 1; \
-			fi; \
+		if [ ! -f "$$dir/untranslated.po" ]; then \
+			$(MSGATTRIB_BIN) --untranslated $$po_file -o $$dir/untranslated.po; \
+		else \
+			echo "Skipping extraction for $$dir, untranslated.po already exists."; \
 		fi; \
 	done
 
@@ -107,8 +94,17 @@ clean:
 ai-translate:
 	@set -e; \
 	if [ -n "$(L10N_LANG)" ]; then \
-		echo "Translating language $(L10N_LANG)..."; \
-		./AI_TRANSLATE.sh $(L10N_LANG); \
+		echo "Translating single language $(L10N_LANG)..."; \
+		IS_NEW=0; if [ ! -f "$(L10N_LANG)/$(DOMAIN).po" ]; then IS_NEW=1; fi; \
+		./AI_TRANSLATE.sh $(L10N_LANG) && { \
+			if [ $$IS_NEW -eq 1 ]; then \
+				if [ ! -f "$(L10N_LANG)/$(DOMAIN).po" ]; then \
+					echo "\033[0;31mError: AI translation for new language '$(L10N_LANG)' failed. File '$(L10N_LANG)/$(DOMAIN).po' not created.\033[0m"; exit 1; \
+				fi; \
+			elif [ -s "$(L10N_LANG)/untranslated.po" ] && [ ! -f "$(L10N_LANG)/updated_translated.po" ]; then \
+				echo "\033[0;31mError: AI translation for '$(L10N_LANG)' failed. File '$(L10N_LANG)/updated_translated.po' not created.\033[0m"; exit 1; \
+			fi; \
+		} || exit 1; \
 	else \
 		TO_TRANSLATE=$$(for lang in $(LANGS); do if [ -s "$$lang/untranslated.po" ]; then echo $$lang; fi; done); \
 		TOTAL=$$(echo $$TO_TRANSLATE | wc -w); \
@@ -117,6 +113,14 @@ ai-translate:
 			COUNT=$$((COUNT+1)); \
 			echo "Translating language $$COUNT of $$TOTAL ($$lang)..."; \
 			./AI_TRANSLATE.sh $$lang && { \
+				if [ ! -f "$$lang/updated_translated.po" ]; then \
+					echo "\033[0;31mError: AI translation for '$$lang' failed.\033[0m"; \
+					echo "File '$$lang/updated_translated.po' was not created, but '$$lang/untranslated.po' was not empty."; \
+					echo "This might be due to an API error or network issue."; \
+					echo "Please check the output above for any error messages from the AI translation script."; \
+					echo "You can try running the translation for this language again with: make ai-translate L10N_LANG=$$lang"; \
+					exit 1; \
+				fi; \
 				FILE_SIZE=$$(wc -c < "$$lang/untranslated.po"); \
 				if [ $$FILE_SIZE -gt 5120 ]; then \
 					echo "... waiting 30s to avoid API rate limits (large file)"; \
@@ -125,7 +129,7 @@ ai-translate:
 					echo "... waiting 10s to avoid API rate limits"; \
 					sleep 10; \
 				fi; \
-			}; \
+			} || exit 1; \
 		done; \
 		if [ -z "$$TO_TRANSLATE" ]; then \
 			echo "All languages are up to date. Nothing to translate."; \
