@@ -49,7 +49,10 @@ jobs:
           # Copy project files into the directory using a tar pipe, excluding unwanted files.
           # This archives the current directory and immediately extracts it into the target directory.
           tar c --exclude='./.git' --exclude='./.github' --exclude='./.gitignore' --exclude='./.all-contributorsrc' --exclude="./$PACKAGE_NAME" . | tar x -C "$PACKAGE_NAME"
-          # Create the final zip archive
+          # Remove development helper files from the l10n directory (keep only .po files)
+          echo "Cleaning up l10n directory, keeping only .po files..."
+          find "$PACKAGE_NAME/l10n" -type f ! -name '*.po' -print -delete
+          # Create the final zip archive from the cleaned directory
           zip -r "$ARCHIVE_NAME" "$PACKAGE_NAME"
 
       # Step 4: List files in the created archive for debugging purposes.

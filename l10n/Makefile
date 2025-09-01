@@ -89,7 +89,7 @@ import-translation:
 	@for po_file in $(PO_FILES); do \
 		dir=$$(dirname $$po_file); \
 		if [ -f "$$dir/updated_translated.po" ]; then \
-			$(MSGCAT_BIN) --use-first $$dir/updated_translated.po $$po_file -o updated.po; \
+			$(MSGCAT_BIN) --use-first $$dir/updated_translated.po $$po_file -o updated.po && \
 			mv updated.po $$po_file; \
 		fi; \
 	done

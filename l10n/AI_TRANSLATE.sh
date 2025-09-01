@@ -1,7 +1,33 @@
 #!/bin/bash
-# translate_po.sh
-# Purpose: Translate KOReader *.po files with ChatGPT
+# AI_TRANSLATE.sh
+#
+# Purpose:
+# This script automates the translation of gettext .po files using a Large Language Model (LLM) API,
+# such as OpenAI's GPT models. It can be used to either create a new translation file for a language
+# or update an existing one with new strings.
+#
+# Workflow:
+# 1.  It takes a single argument: the language code (e.g., 'fr', 'de', 'zh_CN').
+# 2.  It validates the language code against a predefined list and checks for the API_KEY.
+# 3.  It determines the input and output files based on the state of the language directory:
+#     - For a NEW language (no 'koreader.po' or 'untranslated.po' exists):
+#       - Input:  'templates/koreader.pot' (copied to '<LANG_CODE>/untranslated.po')
+#       - Output: '<LANG_CODE>/koreader.po' (a fully translated file)
+#     - For an EXISTING language with updates (both 'koreader.po' and 'untranslated.po' exist):
+#       - Input:  '<LANG_CODE>/untranslated.po' (containing only new strings to translate)
+#       - Output: '<LANG_CODE>/updated_translated.po' (containing only the translations for the new strings)
+# 4.  It constructs a JSON payload containing the model name, a system prompt, and the content of the input file.
+# 5.  It sends the payload to the specified API endpoint using cURL.
+# 6.  It parses the JSON response to extract the translated content and saves it to the output file.
+#
+# Dependencies:
+# - curl: For making API requests.
+# - jq:   For creating and parsing JSON data.
+#
+# Environment Variables:
+# - API_KEY: (Required) Your secret API key for the translation service.
 
+# Exit immediately if a command exits with a non-zero status.
 set -euo pipefail
 
 # -------------------- Configuration --------------------
@@ -21,6 +47,7 @@ Do not modify other file structure. \
 Only output the translated file content, do not use markdown format. \
 "
 
+# Associative array mapping language codes to full language names.
 declare -A LANG_MAP=(
   ["en"]="English"
   ["en_GB"]="English (United Kingdom)"
@@ -74,6 +101,7 @@ declare -A LANG_MAP=(
 
 TEMPLATE_FILE="templates/koreader.pot"
 # -------------------- Validation --------------------
+# Check if exactly one argument (the language code) is provided.
 if [[ $# -ne 1 ]]; then
   echo "Usage: $0 <LANGUAGE_CODE>" >&2
   exit 1
@@ -81,39 +109,49 @@ fi
 
 LANG_CODE="$1"
 
+# Check if the provided language code is in our supported list.
 [[ -v LANG_MAP["$LANG_CODE"] ]] || {
   echo "Error: Language code '$LANG_CODE' not supported." >&2
   exit 1
 }
 
+# Check if the main template file exists.
 [[ -f "$TEMPLATE_FILE" ]] || {
   echo "Error: Template file '$TEMPLATE_FILE' not found." >&2
   exit 1
 }
 
+# Check if the API_KEY is set in the environment.
 [[ -v API_KEY ]] || {
   echo "Error: API_KEY environment variable not set." >&2
   exit 1
 }
 
+# Customize the prompt with the target language name.
 LANG_FULLNAME="${LANG_MAP["$LANG_CODE"]}"
 PROMPT="${PROMPT_TEMPLATE//__YOUR_LANGUAGE__/$LANG_FULLNAME}"
 echo "Translation in progress for $LANG_CODE ($LANG_FULLNAME)."
 
 # -------------------- Create directory --------------------
+# Ensure the target language directory exists.
 mkdir -p "$LANG_CODE"
 TRANSLATED_FILE="$LANG_CODE/koreader.po"
 UNTRANSLATED_FILE="$LANG_CODE/untranslated.po"
 UPDATED_TRANSLATED_FILE="$LANG_CODE/updated_translated.po"
 
+# Determine which file to use as input for translation and where to save the output.
 INPUTFILE=
 OUTPUTFILE=
 
+# Scenario 1: New language translation.
+# If neither a translated file nor an untranslated file exists, start from the template.
 if [[ ! -f "$TRANSLATED_FILE" && ! -f "$UNTRANSLATED_FILE" ]] then
   # when the target language is untranslated
   cp "$TEMPLATE_FILE" "$UNTRANSLATED_FILE"
   INPUTFILE=$UNTRANSLATED_FILE
   OUTPUTFILE=$TRANSLATED_FILE
+# Scenario 2: Updating an existing language.
+# If an untranslated file exists alongside the main translated file, translate only the new strings.
 elif [[ -f "$TRANSLATED_FILE" && -f "$UNTRANSLATED_FILE" ]] then
   # when target language is updated
   INPUTFILE=$UNTRANSLATED_FILE
@@ -124,7 +162,7 @@ else
 fi
 
 
-# -------------------- Build payload for API request --------------------
+# Build the JSON payload for the API request using jq.
 PAYLOAD=$(jq -n \
   --arg model "${API_MODEL}" \
   --arg content "$PROMPT" \
@@ -137,12 +175,13 @@ PAYLOAD=$(jq -n \
      ],
    }')
 
-# -------------------- Request translation --------------------
+# Send the request to the API endpoint using cURL.
+# -S shows errors, -f fails silently on HTTP errors.
 RESPONSE=$(curl -Sf -X POST "$API_ENDPOINT" \
   -H "$AUTH_HEADER" -H "Content-Type: application/json" \
   --data-raw "$PAYLOAD")
 
-# -------------------- Extract and save result --------------------
+# Parse the JSON response, extract the translated content, and save it to the output file.
 echo "$RESPONSE" | jq -r '.choices[0].message.content' \
   > "$OUTPUTFILE"
 

@@ -3,550 +3,598 @@
 # Овај фајл се дистрибуира под истом лиценцом као и програмски пакет.
 #
 #, fuzzy
-msgid   ""
-msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
-        "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-08-29 09:40+0800\n"
-        "PO-Revision-Date: 2025-08-21 15:23+0800\n"
-        "Last-Translator: Kimi (k1)\n"
-        "Language-Team: Kimi (k1)\n"
-        "Language: Српски (sr)\n"
-        "MIME-Version: 1.0\n"
-        "Content-Type: text/plain; charset=UTF-8\n"
-        "Content-Transfer-Encoding: 8bit\n"
+msgid ""
+msgstr ""
+"Project-Id-Version: assistant.koplugin 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-01 10:26+0800\n"
+"PO-Revision-Date: 2025-08-21 15:23+0800\n"
+"Last-Translator: Kimi (k1)\n"
+"Language-Team: Kimi (k1)\n"
+"Language: Српски (sr)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../assistant_featuredialog.lua:32
+msgid "Loading Recap..."
+msgstr "Учитавам сажетак..."
+
+#: ../assistant_featuredialog.lua:38
+msgid "Loading X-Ray..."
+msgstr "Учитавам X-Ray..."
+
+#: ../assistant_featuredialog.lua:49
+#, lua-format
+msgid "Unknown feature type: %s"
+msgstr "Непозната врста функције: %s"
+
+#: ../assistant_querier.lua:201 ../assistant_querier.lua:213
+msgid "Request cancelled by user."
+msgstr "Захтев је отказан од стране корисника."
+
+#: ../assistant_settings.lua:217
+msgid "Enable stream response"
+msgstr "Омогући стрим одговоре"
+
+#: ../assistant_settings.lua:272
+msgid "Auto Export Conversations to File"
+msgstr "Аутоматски извези разговоре у фајл"
+
+#: ../assistant_viewer.lua:738
+msgid "Chat log export failed. Continuing..."
+msgstr "Извоз разговора није успео. Настављам..."
+
+#: ../main.lua:235
+msgid ""
+"Useful Tips\n"
+"\n"
+"Long Press:\n"
+"- On a Prompt Button: Add to the highlight menu.\n"
+"- On a highlight menu button to remove it.\n"
+"- On the Close button to go back to the book in 1 step.\n"
+"\n"
+"Very-Long Press (over 3 seconds):\n"
+"On a single word in the book to show the highlight menu (instead of the "
+"dictionary).\n"
+"\n"
+"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"On the result dialog to close (as the Close button is far to reach).\n"
+msgstr ""
+"Корисни савети\n"
+"\n"
+"Дуго притисни:\n"
+"- На дугме упита: додај у мени означавања.\n"
+"- На дугме у менију означавања да га уклониш.\n"
+"- На дугме Затвори да се вратиш на књигу у једном кораку.\n"
+"\n"
+"Веома дуго притисни (преко 3 секунде):\n"
+"На реч у књизи да се прикаже мени означавања (уместо речника).\n"
+"\n"
+"Више превлачења (нпр. ⮠, ⮡, ↺):\n"
+"На дијалогу резултата да га затвориш (јер је дугме Затвори далеко).\n"
 
 #: ../assistant_dialog.lua:85
-msgid   "(Empty message)"
-msgstr  "(Празна порука)"
+msgid "(Empty message)"
+msgstr "(Празна порука)"
 
 #: ../assistant_dialog.lua:89
-msgid   "(No response)"
-msgstr  "(Нема одговора)"
+msgid "(No response)"
+msgstr "(Нема одговора)"
 
 #: ../assistant_dialog.lua:118
-msgid   "Highlighted text:"
-msgstr  "Означени текст:"
+msgid "Highlighted text:"
+msgstr "Означени текст:"
 
-#: ../assistant_dialog.lua:256 ../assistant_dictdialog.lua:37
-#: ../assistant_settings.lua:89 ../assistant_viewer.lua:572
-msgid   "Cancel"
-msgstr  "Откажи"
+#: ../assistant_dialog.lua:258 ../assistant_dictdialog.lua:36
+#: ../assistant_settings.lua:89 ../assistant_viewer.lua:577
+msgid "Cancel"
+msgstr "Откажи"
 
-#: ../assistant_dialog.lua:263 ../assistant_viewer.lua:582
-msgid   "Ask"
-msgstr  "Питај"
+#: ../assistant_dialog.lua:265 ../assistant_viewer.lua:587
+msgid "Ask"
+msgstr "Питај"
 
-#: ../assistant_dialog.lua:269 ../assistant_viewer.lua:588
-msgid   "Enter a question before proceeding."
-msgstr  "Унесите питање пре наставка."
+#: ../assistant_dialog.lua:271 ../assistant_viewer.lua:593
+msgid "Enter a question before proceeding."
+msgstr "Унесите питање пре наставка."
 
-#: ../assistant_dialog.lua:294
-msgid   "Book Analysis"
-msgstr  "Анализа књиге"
+#: ../assistant_dialog.lua:296
+msgid "Book Analysis"
+msgstr "Анализа књиге"
 
-#: ../assistant_dialog.lua:331
-msgid   "Add this button to the Highlight Menu?"
-msgstr  "Додај ово дугме у мени означавања?"
+#: ../assistant_dialog.lua:333
+msgid "Add this button to the Highlight Menu?"
+msgstr "Додај ово дугме у мени означавања?"
 
-#: ../assistant_dialog.lua:332
-msgid   "Add"
-msgstr  "Додај"
+#: ../assistant_dialog.lua:334
+msgid "Add"
+msgstr "Додај"
 
-#: ../assistant_dialog.lua:359
-msgid   "Ask a question about the highlighted text"
-msgstr  "Постави питање о означеном тексту"
+#: ../assistant_dialog.lua:361
+msgid "Ask a question about the highlighted text"
+msgstr "Постави питање о означеном тексту"
 
-#: ../assistant_dialog.lua:360
+#: ../assistant_dialog.lua:362
 #, lua-format
-msgid   "Ask a question about this book:\n"
-        "%s by %s"
-msgstr  "Постави питање о књизи:\n"
-        "%s од %s"
+msgid ""
+"Ask a question about this book:\n"
+"%s by %s"
+msgstr ""
+"Постави питање о књизи:\n"
+"%s од %s"
 
-#: ../assistant_dialog.lua:363
-msgid   "Type your question here..."
-msgstr  "Упиши питање овде..."
+#: ../assistant_dialog.lua:365
+msgid "Type your question here..."
+msgstr "Упиши питање овде..."
 
-#: ../assistant_dialog.lua:364
-msgid   "Ask anything about this book..."
-msgstr  "Питај било шта о књизи..."
+#: ../assistant_dialog.lua:366
+msgid "Ask anything about this book..."
+msgstr "Питај било шта о књизи..."
 
-#: ../assistant_dialog.lua:367 ../main.lua:208 ../_meta.lua:4
-msgid   "AI Assistant"
-msgstr  "Помоћник ВИ"
+#: ../assistant_dialog.lua:369 ../main.lua:208 ../_meta.lua:4
+msgid "AI Assistant"
+msgstr "Помоћник ВИ"
 
-#: ../assistant_dialog.lua:422
-msgid   "Error: No response received"
-msgstr  "Грешка: нема одговора"
+#: ../assistant_dialog.lua:424
+msgid "Error: No response received"
+msgstr "Грешка: нема одговора"
+
+#: ../assistant_dictdialog.lua:30
+msgid "AI Dictionary"
+msgstr "ВИ речник"
 
 #: ../assistant_dictdialog.lua:31
-msgid   "AI Dictionary"
-msgstr  "ВИ речник"
+msgid "Enter a word to look up..."
+msgstr "Унеси реч за претрагу..."
 
-#: ../assistant_dictdialog.lua:32
-msgid   "Enter a word to look up..."
-msgstr  "Унеси реч за претрагу..."
+#: ../assistant_dictdialog.lua:42
+msgid "Look Up"
+msgstr "Пронађи"
 
-#: ../assistant_dictdialog.lua:43
-msgid   "Look Up"
-msgstr  "Пронађи"
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:410
+msgid "Dictionary"
+msgstr "Речник"
 
-#: ../assistant_dictdialog.lua:178 ../assistant_prompts.lua:20 ../main.lua:408
-msgid   "Dictionary"
-msgstr  "Речник"
+#: ../assistant_featuredialog.lua:31
+msgid "Recap"
+msgstr "Преглед"
+
+#: ../assistant_featuredialog.lua:37
+msgid "X‑Ray"
+msgstr "X-Ray"
 
 #: ../assistant_prompts.lua:21
-msgid   "This prompt acts as a dictionary for the highlighted text, to a word "
-        "or phrase."
-msgstr  "Овај упит делује као речник за означени текст, реч или фразу."
+msgid ""
+"This prompt acts as a dictionary for the highlighted text, to a word or "
+"phrase."
+msgstr "Овај упит делује као речник за означени текст, реч или фразу."
 
 #: ../assistant_prompts.lua:25
-msgid   "Vocabulary"
-msgstr  "Речник"
+msgid "Vocabulary"
+msgstr "Речник"
 
 #: ../assistant_prompts.lua:27
-msgid   "This prompt analyzes the vocabulary of the highlighted text, "
-        "identifying complex words and providing definitions, synonyms, and "
-        "usage examples."
-msgstr  "Овај упит анализира речник означеног текста, дефинише тешке речи и "
-        "даје примере."
+msgid ""
+"This prompt analyzes the vocabulary of the highlighted text, identifying "
+"complex words and providing definitions, synonyms, and usage examples."
+msgstr ""
+"Овај упит анализира речник означеног текста, дефинише тешке речи и даје "
+"примере."
 
 #: ../assistant_prompts.lua:43
-msgid   "Grammar"
-msgstr  "Граматика"
+msgid "Grammar"
+msgstr "Граматика"
 
 #: ../assistant_prompts.lua:45
-msgid   "This prompt analyzes the grammar of the highlighted text, providing "
-        "a detailed explanation of its structure and any grammatical errors."
-msgstr  "Овај упит анализира граматику означеног текста и објашњава грешке."
+msgid ""
+"This prompt analyzes the grammar of the highlighted text, providing a "
+"detailed explanation of its structure and any grammatical errors."
+msgstr "Овај упит анализира граматику означеног текста и објашњава грешке."
 
 #: ../assistant_prompts.lua:51
-msgid   "Translate"
-msgstr  "Преведи"
+msgid "Translate"
+msgstr "Преведи"
 
 #: ../assistant_prompts.lua:52
-msgid   "This prompt translates the highlighted text to another language."
-msgstr  "Овај упит преводи означени текст на други језик."
+msgid "This prompt translates the highlighted text to another language."
+msgstr "Овај упит преводи означени текст на други језик."
 
 #: ../assistant_prompts.lua:74
-msgid   "Summarize"
-msgstr  "Резимирај"
+msgid "Summarize"
+msgstr "Резимирај"
 
 #: ../assistant_prompts.lua:76
-msgid   "This prompt summarizes the highlighted text, capturing its main "
-        "points and essential details."
-msgstr  "Овај упит сажима означени текст и издваја главне тачке и важне "
-        "детаље."
+msgid ""
+"This prompt summarizes the highlighted text, capturing its main points and "
+"essential details."
+msgstr "Овај упит сажима означени текст и издваја главне тачке и важне детаље."
 
 #: ../assistant_prompts.lua:85
-msgid   "Simplify"
-msgstr  "Поједностави"
+msgid "Simplify"
+msgstr "Поједностави"
 
 #: ../assistant_prompts.lua:87
-msgid   "This prompt simplifies the highlighted text to make it easier to "
-        "understand."
-msgstr  "Овај упит поједностављује означени текст ради лакшег разумевања."
+msgid ""
+"This prompt simplifies the highlighted text to make it easier to understand."
+msgstr "Овај упит поједностављује означени текст ради лакшег разумевања."
 
 #: ../assistant_prompts.lua:97
-msgid   "Key Points"
-msgstr  "Кључне тачке"
+msgid "Key Points"
+msgstr "Кључне тачке"
 
 #: ../assistant_prompts.lua:99
-msgid   "This prompt extracts and lists the key points from the highlighted "
-        "text, ensuring clarity and organization."
-msgstr  "Овај упит издваја и наводи кључне тачке означеног текста."
+msgid ""
+"This prompt extracts and lists the key points from the highlighted text, "
+"ensuring clarity and organization."
+msgstr "Овај упит издваја и наводи кључне тачке означеног текста."
 
 #: ../assistant_prompts.lua:103
-msgid   "ELI5"
-msgstr  "Објасни као петогодишњаку"
+msgid "ELI5"
+msgstr "Објасни као петогодишњаку"
 
 #: ../assistant_prompts.lua:105
-msgid   "This prompt explains the highlighted text as if to a five-year-old, "
-        "simplifying complex concepts into easily understandable terms."
-msgstr  "Овај упит објашњава означени текст као петогодишњаку, "
-        "поједностављујући сложене појмове."
+msgid ""
+"This prompt explains the highlighted text as if to a five-year-old, "
+"simplifying complex concepts into easily understandable terms."
+msgstr ""
+"Овај упит објашњава означени текст као петогодишњаку, поједностављујући "
+"сложене појмове."
 
 #: ../assistant_prompts.lua:109
-msgid   "Explain"
-msgstr  "Објасни"
+msgid "Explain"
+msgstr "Објасни"
 
 #: ../assistant_prompts.lua:111
-msgid   "This prompt explains the highlighted text in detail, ensuring "
-        "clarity and understanding."
-msgstr  "Овај упит детаљно објашњава означени текст ради јасноће и разумевања."
+msgid ""
+"This prompt explains the highlighted text in detail, ensuring clarity and "
+"understanding."
+msgstr "Овај упит детаљно објашњава означени текст ради јасноће и разумевања."
 
 #: ../assistant_prompts.lua:122
-msgid   "Historical Context"
-msgstr  "Историјски контекст"
+msgid "Historical Context"
+msgstr "Историјски контекст"
 
 #: ../assistant_prompts.lua:124
-msgid   "This prompt provides a detailed historical context for the "
-        "highlighted text, explaining its significance and background."
-msgstr  "Овај упит пружа историјски контекст означеног текста и објашњава "
-        "његов значај."
+msgid ""
+"This prompt provides a detailed historical context for the highlighted text, "
+"explaining its significance and background."
+msgstr ""
+"Овај упит пружа историјски контекст означеног текста и објашњава његов "
+"значај."
 
-#: ../assistant_prompts.lua:128 ../main.lua:394
-msgid   "Wikipedia"
-msgstr  "Википедија"
+#: ../assistant_prompts.lua:128 ../main.lua:396
+msgid "Wikipedia"
+msgstr "Википедија"
 
 #: ../assistant_prompts.lua:130
-msgid   "This prompt generates a comprehensive Wikipedia-style article based "
-        "on the highlighted text, ensuring factual accuracy and neutrality."
-msgstr  "Овај упит прави чланак у стилу Википедије на основу означеног текста."
+msgid ""
+"This prompt generates a comprehensive Wikipedia-style article based on the "
+"highlighted text, ensuring factual accuracy and neutrality."
+msgstr "Овај упит прави чланак у стилу Википедије на основу означеног текста."
 
 #. @translators used in the dictionary.
 #: ../assistant_prompts.lua:215
-msgid   "Conjugation"
-msgstr  "Конјугација"
+msgid "Conjugation"
+msgstr "Конјугација"
 
 #: ../assistant_prompts.lua:216
-msgid   "Synonyms"
-msgstr  "Синоними"
+msgid "Synonyms"
+msgstr "Синоними"
 
 #: ../assistant_prompts.lua:217
-msgid   "Meaning"
-msgstr  "Значење"
+msgid "Meaning"
+msgstr "Значење"
 
 #: ../assistant_prompts.lua:218
-msgid   "Translation"
-msgstr  "Превод"
+msgid "Translation"
+msgstr "Превод"
 
 #: ../assistant_prompts.lua:219
-msgid   "Explanation"
-msgstr  "Објашњење"
+msgid "Explanation"
+msgstr "Објашњење"
 
 #: ../assistant_prompts.lua:220
-msgid   "Example"
-msgstr  "Пример"
+msgid "Example"
+msgstr "Пример"
 
 #: ../assistant_prompts.lua:221
-msgid   "Word Origin"
-msgstr  "Порекло речи"
+msgid "Word Origin"
+msgstr "Порекло речи"
 
 #: ../assistant_querier.lua:50
-msgid   "Provider settings not found for: %1. Please check your "
-        "configuration.lua file."
-msgstr  "Подешавања провајдера нису пронађена за: %1. Проверите датотеку "
-        "configuration.lua."
+msgid ""
+"Provider settings not found for: %1. Please check your configuration.lua "
+"file."
+msgstr ""
+"Подешавања провајдера нису пронађена за: %1. Проверите датотеку "
+"configuration.lua."
 
 #: ../assistant_querier.lua:76
-msgid   "The handler for %1 was not found. Please ensure the handler exists "
-        "in api_handlers directory."
-msgstr  "Руковалац за %1 није пронађен. Проверите да ли постоји у "
-        "директоријуму api_handlers."
+msgid ""
+"The handler for %1 was not found. Please ensure the handler exists in "
+"api_handlers directory."
+msgstr ""
+"Руковалац за %1 није пронађен. Проверите да ли постоји у директоријуму "
+"api_handlers."
 
 #: ../assistant_querier.lua:109
-msgid   "API Error:\n"
-        "%1\n"
-        "\n"
-        "Try another provider in the settings dialog."
-msgstr  "Грешка API-ја:\n"
-        "%1\n"
-        "\n"
-        "Изаберите другог добављача у подешавањима."
+msgid ""
+"API Error:\n"
+"%1\n"
+"\n"
+"Try another provider in the settings dialog."
+msgstr ""
+"Грешка API-ја:\n"
+"%1\n"
+"\n"
+"Изаберите другог добављача у подешавањима."
 
 #: ../assistant_querier.lua:109
-msgid   "Unknown error"
-msgstr  "Непозната грешка"
+msgid "Unknown error"
+msgstr "Непозната грешка"
 
-#: ../assistant_querier.lua:110 ../main.lua:252
-msgid   "Settings"
-msgstr  "Подешавања"
+#: ../assistant_querier.lua:110 ../main.lua:254
+msgid "Settings"
+msgstr "Подешавања"
 
-#: ../assistant_querier.lua:112 ../assistant_settings.lua:277
-#: ../assistant_viewer.lua:313
-msgid   "Close"
-msgstr  "Затвори"
+#: ../assistant_querier.lua:112 ../assistant_settings.lua:285
+#: ../assistant_viewer.lua:314
+msgid "Close"
+msgstr "Затвори"
 
-#: ../assistant_querier.lua:122
-msgid   "Plugin is not configured."
-msgstr  "Додатак није подешен."
+#: ../assistant_querier.lua:127
+msgid "Plugin is not configured."
+msgstr "Додатак није подешен."
 
-#: ../assistant_querier.lua:131
-msgid   "Querying AI ..."
-msgstr  "Упитујем ВИ..."
+#: ../assistant_querier.lua:135
+msgid "Querying AI ..."
+msgstr "Упитујем ВИ..."
 
-#: ../assistant_querier.lua:154
-msgid   "AI is responding"
-msgstr  "ВИ одговара"
+#: ../assistant_querier.lua:158
+msgid "AI is responding"
+msgstr "ВИ одговара"
 
-#: ../assistant_querier.lua:170
-msgid   "⏹ Stop"
-msgstr  "⏹ Заустави"
+#: ../assistant_querier.lua:174
+msgid "⏹ Stop"
+msgstr "⏹ Заустави"
 
-#: ../assistant_querier.lua:197
-msgid   "Response interrupted."
-msgstr  "Одговор је прекинут."
+#: ../assistant_querier.lua:219
+msgid "No response received."
+msgstr "Нема одговора."
 
-#: ../assistant_querier.lua:210
-msgid   "No response received."
-msgstr  "Нема одговора."
+#: ../assistant_querier.lua:232
+msgid "Failed to start subprocess for request"
+msgstr "Покретање подпроцеса није успело"
 
-#: ../assistant_querier.lua:223
-msgid   "Failed to start subprocess for request"
-msgstr  "Покретање подпроцеса није успело"
-
-#: ../assistant_querier.lua:420 ../assistant_querier.lua:422
-msgid   "Deeply Thought"
-msgstr  "Дубоко промишљено"
-
-#: ../assistant_recapdialog.lua:71
-msgid   "Recap"
-msgstr  "Преглед"
+#: ../assistant_querier.lua:429 ../assistant_querier.lua:431
+msgid "Deeply Thought"
+msgstr "Дубоко промишљено"
 
 #: ../assistant_settings.lua:73
-msgid   "AI Response Language Setting"
-msgstr  "Подешавање језика AI одговора"
+msgid "AI Response Language Setting"
+msgstr "Подешавање језика AI одговора"
 
 #: ../assistant_settings.lua:76
-msgid   "AI Response Language"
-msgstr  "Језик AI одговора"
+msgid "AI Response Language"
+msgstr "Језик AI одговора"
 
 #: ../assistant_settings.lua:78 ../assistant_settings.lua:83
-msgid   "Leave blank to use: %1"
-msgstr  "Остави празно за коришћење: %1"
+msgid "Leave blank to use: %1"
+msgstr "Остави празно за коришћење: %1"
 
 #: ../assistant_settings.lua:81
-msgid   "Dictionary Language"
-msgstr  "Језик речника"
+msgid "Dictionary Language"
+msgstr "Језик речника"
 
 #: ../assistant_settings.lua:96
-msgid   "Clear"
-msgstr  "Очисти"
+msgid "Clear"
+msgstr "Очисти"
 
 #: ../assistant_settings.lua:113
-msgid   "Save"
-msgstr  "Сачувај"
+msgid "Save"
+msgstr "Сачувај"
 
-#: ../assistant_settings.lua:133 ../assistant_settings.lua:337
-msgid   "AI Language: %1"
-msgstr  "AI језик: %1"
+#: ../assistant_settings.lua:133 ../assistant_settings.lua:345
+msgid "AI Language: %1"
+msgstr "AI језик: %1"
 
 #: ../assistant_settings.lua:144
-msgid   "RTL written Language"
-msgstr  "Језик писан сдесна-налијево"
+msgid "RTL written Language"
+msgstr "Језик писан сдесна-налијево"
 
 #: ../assistant_settings.lua:164
-msgid   "Leave these fields blank to use the UI language: %1"
-msgstr  "Остави поља празна да користиш језик интерфејса: %1"
+msgid "Leave these fields blank to use the UI language: %1"
+msgstr "Остави поља празна да користиш језик интерфејса: %1"
 
 #: ../assistant_settings.lua:177
-msgid   "Response Font Size"
-msgstr  "Величина фонта одговора"
+msgid "Response Font Size"
+msgstr "Величина фонта одговора"
 
-#: ../assistant_settings.lua:185 ../assistant_settings.lua:346
-msgid   "Font Size: %1"
-msgstr  "Величина фонта: %1"
+#: ../assistant_settings.lua:185 ../assistant_settings.lua:354
+msgid "Font Size: %1"
+msgstr "Величина фонта: %1"
 
 #: ../assistant_settings.lua:193 ../main.lua:101
-msgid   "AI Assistant Settings"
-msgstr  "Подешавања AI асистената"
-
-#: ../assistant_settings.lua:217
-msgid   "Always enable stream response"
-msgstr  "Увек укључи стрим одговор"
+msgid "AI Assistant Settings"
+msgstr "Подешавања AI асистената"
 
 #: ../assistant_settings.lua:225
-msgid   "Use AI Assistant for 'Translate'"
-msgstr  "Користи ВИ помоћника за „Преведи“"
+msgid "Use AI Assistant for 'Translate'"
+msgstr "Користи ВИ помоћника за „Преведи“"
 
 #: ../assistant_settings.lua:234
-msgid   "Show Dictionary(AI) in Dictionary Popup"
-msgstr  "Прикажи Речник (AI) у искачућем прозору"
+msgid "Show Dictionary(AI) in Dictionary Popup"
+msgstr "Прикажи Речник (AI) у искачућем прозору"
 
 #: ../assistant_settings.lua:242
-msgid   "Show Wikipedia(AI) in Dictionary Popup"
-msgstr  "Прикажи Википедију (AI) у искачућем прозору"
+msgid "Show Wikipedia(AI) in Dictionary Popup"
+msgstr "Прикажи Википедију (AI) у искачућем прозору"
 
 #: ../assistant_settings.lua:250
-msgid   "Copy entered question to the clipboard"
-msgstr  "Копирај питање у привремену меморију"
+msgid "Copy entered question to the clipboard"
+msgstr "Копирај питање у привремену меморију"
 
 #: ../assistant_settings.lua:258
-msgid   "Enable AI Recap"
-msgstr  "Укључи AI преглед"
+msgid "Enable AI Recap"
+msgstr "Укључи AI преглед"
 
 #: ../assistant_settings.lua:268
-msgid   "AI Recap will be enabled the next time a book is opened."
-msgstr  "AI преглед ће бити активиран при следећем отварању књиге."
+msgid "AI Recap will be enabled the next time a book is opened."
+msgstr "AI преглед ће бити активиран при следећем отварању књиге."
 
-#: ../assistant_settings.lua:362
-msgid   "AI Assistant Features:"
-msgstr  "Функције AI асистента:"
+#: ../assistant_settings.lua:370
+msgid "AI Assistant Features:"
+msgstr "Функције AI асистента:"
 
-#: ../assistant_settings.lua:389
-msgid   "AI Model provider:"
-msgstr  "Провајдер AI модела:"
+#: ../assistant_settings.lua:397
+msgid "AI Model provider:"
+msgstr "Провајдер AI модела:"
 
 #: ../assistant_update_checker.lua:106
-msgid   "Checking for updates..."
-msgstr  "Проверавам ажурирања..."
+msgid "Checking for updates..."
+msgstr "Проверавам ажурирања..."
 
 #: ../assistant_update_checker.lua:143
 #, lua-format
-msgid   "A new version of the %s plugin (%s) is available. Please update!"
-msgstr  "Доступна је нова верзија додатка %s (%s). Надоградите!"
+msgid "A new version of the %s plugin (%s) is available. Please update!"
+msgstr "Доступна је нова верзија додатка %s (%s). Надоградите!"
 
 #. @translators this is a button text, keep short
-#: ../assistant_viewer.lua:273 ../assistant_viewer.lua:636
-msgid   "Ask Another Question"
-msgstr  "Постави још једно питање"
+#: ../assistant_viewer.lua:274 ../assistant_viewer.lua:641
+msgid "Ask Another Question"
+msgstr "Постави још једно питање"
 
-#: ../assistant_viewer.lua:328
-msgid   "Copy"
-msgstr  "Копирај"
+#: ../assistant_viewer.lua:329
+msgid "Copy"
+msgstr "Копирај"
 
-#: ../assistant_viewer.lua:333
-msgid   "Text copied to the clipboard"
-msgstr  "Текст је копиран у привремену меморију"
+#: ../assistant_viewer.lua:334
+msgid "Text copied to the clipboard"
+msgstr "Текст је копиран у привремену меморију"
 
-#: ../assistant_viewer.lua:347
-msgid   "Add Note"
-msgstr  "Додај белешку"
+#: ../assistant_viewer.lua:348
+msgid "Add Note"
+msgstr "Додај белешку"
 
-#: ../assistant_viewer.lua:354
-msgid   "Highlight functionality not available"
-msgstr  "Означавање није доступно"
+#: ../assistant_viewer.lua:355
+msgid "Highlight functionality not available"
+msgstr "Означавање није доступно"
 
-#: ../assistant_viewer.lua:363
-msgid   "No text to add as note"
-msgstr  "Нема текста за белешку"
+#: ../assistant_viewer.lua:364
+msgid "No text to add as note"
+msgstr "Нема текста за белешку"
 
-#: ../assistant_viewer.lua:392
-msgid   "No text left to add as note"
-msgstr  "Није остало текста за белешку"
+#: ../assistant_viewer.lua:393
+msgid "No text left to add as note"
+msgstr "Није остало текста за белешку"
 
-#: ../assistant_viewer.lua:405
-msgid   "Note added successfully"
-msgstr  "Белешка је додата"
+#: ../assistant_viewer.lua:406
+msgid "Note added successfully"
+msgstr "Белешка је додата"
 
-#: ../assistant_viewer.lua:638
-msgid   "Type your question here"
-msgstr  "Упишите питање овде"
+#: ../assistant_viewer.lua:643
+msgid "Type your question here"
+msgstr "Упишите питање овде"
 
-#: ../assistant_viewer.lua:789
-msgid   "Word copied to clipboard."
-msgstr  "Реч копирана."
+#: ../assistant_viewer.lua:843
+msgid "Word copied to clipboard."
+msgstr "Реч копирана."
 
-#: ../assistant_viewer.lua:790
-msgid   "Selection copied to clipboard."
-msgstr  "Избор копиран."
-
-#: ../assistant_xraydialog.lua:68
-msgid   "X‑Ray"
-msgstr  "X-Ray"
+#: ../assistant_viewer.lua:844
+msgid "Selection copied to clipboard."
+msgstr "Избор копиран."
 
 #: ../main.lua:75
-msgid   "Ask the AI a question"
-msgstr  "Постави питање ВИ"
+msgid "Ask the AI a question"
+msgstr "Постави питање ВИ"
 
 #: ../main.lua:84
-msgid   "AI Recaps"
-msgstr  "ВИ прегледи"
+msgid "AI Recaps"
+msgstr "ВИ прегледи"
 
 #: ../main.lua:93
-msgid   "AI X-Ray"
-msgstr  "AI X-Ray"
+msgid "AI X-Ray"
+msgstr "AI X-Ray"
 
 #: ../main.lua:175
-msgid   "No valid model provider is found in the configuration.lua"
-msgstr  "Нема исправног провајдера модела у configuration.lua"
+msgid "No valid model provider is found in the configuration.lua"
+msgstr "Нема исправног провајдера модела у configuration.lua"
 
 #: ../main.lua:214
-msgid   "Configuration Error.\n"
-        "Please set up configuration.lua."
-msgstr  "Грешка у конфигурацији.\n"
-        "Поставите configuration.lua."
+msgid ""
+"Configuration Error.\n"
+"Please set up configuration.lua."
+msgstr ""
+"Грешка у конфигурацији.\n"
+"Поставите configuration.lua."
 
-#: ../main.lua:235
-msgid   "Useful Tips:\n"
-        "\n"
-        "Long Press:\n"
-        "- On a Prompt Button: Add to the highlight menu.\n"
-        "- On a highlight menu button to remove it.\n"
-        "\n"
-        "Very-Long Press (over 3 seconds):\n"
-        "On a single word in the book to show the highlight menu (instead of "
-        "the dictionary).\n"
-        "\n"
-        "Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
-        "On the result dialog to close (as the Close button is far to "
-        "reach).\n"
-msgstr  "Корисни савети:\n"
-        "\n"
-        "Дуго држање:\n"
-        "- На дугме за упит: додај у мени означавања.\n"
-        "- На дугме у мениу означавања за уклањање.\n"
-        "\n"
-        "Веома дуго држање (преко 3 сек):\n"
-        "На реч у књизи за приказ менија означавања (уместо речника).\n"
-        "\n"
-        "Вишеструки свип (нпр. ⮠, ⮡, ↺):\n"
-        "На дијалог резултата за затварање (дугме Затвори је далеко).\n"
+#: ../main.lua:260
+msgid "Purge Settings"
+msgstr "Обриши подешавања"
 
-#: ../main.lua:258
-msgid   "Purge Settings"
-msgstr  "Обриши подешавања"
+#: ../main.lua:263
+msgid ""
+"Are you sure to purge the assistant plugin settings? \n"
+"This resets the assistant plugin to the status the first time you installed "
+"it.\n"
+"\n"
+"configuration.lua is safe, only the settings in the dialog are purged."
+msgstr ""
+"Желите ли да обришете сва подешавања додатка?\n"
+"Тиме ће додатак бити враћен у стање као при првој инсталацији.\n"
+"\n"
+"configuration.lua је сачувана; бришу се само дијалог подешавања."
 
-#: ../main.lua:261
-msgid   "Are you sure to purge the assistant plugin settings? \n"
-        "This resets the assistant plugin to the status the first time you "
-        "installed it.\n"
-        "\n"
-        "configuration.lua is safe, only the settings in the dialog are "
-        "purged."
-msgstr  "Желите ли да обришете сва подешавања додатка?\n"
-        "Тиме ће додатак бити враћен у стање као при првој инсталацији.\n"
-        "\n"
-        "configuration.lua је сачувана; бришу се само дијалог подешавања."
+#: ../main.lua:267
+msgid "Purge"
+msgstr "Обриши"
 
-#: ../main.lua:265
-msgid   "Purge"
-msgstr  "Обриши"
+#: ../main.lua:291
+msgid "configuration.lua: model providers are invalid."
+msgstr "configuration.lua: провајдери модела су неисправни."
 
-#: ../main.lua:289
-msgid   "configuration.lua: model providers are invalid."
-msgstr  "configuration.lua: провајдери модела су неисправни."
-
-#: ../main.lua:376
+#: ../main.lua:378
 #, lua-format
-msgid   "Remove [%s] from Highlight Menu?"
-msgstr  "Уклонити [%s] из менија означавања?"
+msgid "Remove [%s] from Highlight Menu?"
+msgstr "Уклонити [%s] из менија означавања?"
 
-#: ../main.lua:377
-msgid   "Remove"
-msgstr  "Уклони"
+#: ../main.lua:379
+msgid "Remove"
+msgstr "Уклони"
 
-#: ../main.lua:430 ../main.lua:469 ../main.lua:509
-msgid   "Configuration not found. Please set up configuration.lua first."
-msgstr  "Конфигурација није пронађена. Прво подесите configuration.lua."
+#: ../main.lua:432 ../main.lua:471 ../main.lua:511
+msgid "Configuration not found. Please set up configuration.lua first."
+msgstr "Конфигурација није пронађена. Прво подесите configuration.lua."
 
-#: ../main.lua:551
-msgid   "Added [%1 (AI)] to Highlight Menu."
-msgstr  "Додато [%1 (ВИ)] у мени означавања."
+#: ../main.lua:553
+msgid "Added [%1 (AI)] to Highlight Menu."
+msgstr "Додато [%1 (ВИ)] у мени означавања."
 
-#: ../main.lua:560
+#: ../main.lua:562
 #, lua-format
-msgid   "Removed [%s (AI)] from Highlight Menu."
-msgstr  "Уклоњено [%s (ВИ)] из менија означавања."
+msgid "Removed [%s (AI)] from Highlight Menu."
+msgstr "Уклоњено [%s (ВИ)] из менија означавања."
 
-#: ../main.lua:604
+#: ../main.lua:606
 #, lua-format
-msgid   "Do you want an AI Recap?\n"
-        "For %s by %s.\n"
-        "Last read %.0f hour(s) ago."
-msgstr  "Желите ВИ преглед?\n"
-        "За %s од %s.\n"
-        "Последње читање %.0f сат(и) раније."
+msgid ""
+"Do you want an AI Recap?\n"
+"For %s by %s.\n"
+"Last read %.0f hour(s) ago."
+msgstr ""
+"Желите ВИ преглед?\n"
+"За %s од %s.\n"
+"Последње читање %.0f сат(и) раније."
 
-#: ../main.lua:609
-msgid   "Yes"
-msgstr  "Да"
+#: ../main.lua:611
+msgid "Yes"
+msgstr "Да"
 
-#: ../main.lua:618
-msgid   "No"
-msgstr  "Не"
+#: ../main.lua:620
+msgid "No"
+msgstr "Не"
 
 #: ../_meta.lua:5
-msgid   "💡 Enhance your KOReader experience with AI"
-msgstr  "💡 Побољшајте KOReader уз помоћ ВИ"
+msgid "💡 Enhance your KOReader experience with AI"
+msgstr "💡 Побољшајте KOReader уз помоћ ВИ"
