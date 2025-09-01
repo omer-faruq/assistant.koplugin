@@ -141,6 +141,7 @@ local CONFIGURATION = {
         -- system_prompt = "You are a helpful AI assistant. Always respond in Markdown format.", -- Custom system prompt for the AI ("Ask" button) to override the default, to disable set to nil
         render_markdown = true, -- Set to true to render markdown in the AI responses
         updater_disabled = false, -- Set to true to disable update check.
+        default_folder_for_logs = nil, -- Set the default folder for auto saved logs, nil for the same folder as the book, ex: "/mnt/onboard/logs/" for Kobo , "/mnt/us/documents/logs/" for Kindle
 
         -- These are prompts defined in `prompts.lua`, can be overriden here.
         -- each prompt shown as a button in the main dialog.
