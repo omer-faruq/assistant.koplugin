@@ -189,13 +189,7 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
     highlighted_text = highlightedText,
     message_history = message_history,
     render_markdown = koutil.tableGetValue(self.CONFIGURATION, "features", "render_markdown") or true,
-    default_hold_callback = function ()
-      chatgpt_viewer:onClose()
-      self.assistant.ui.highlight:onClose()
-      if self.assistant.ui.dictionary.dict_window then
-        self.assistant.ui.dictionary.dict_window:onClose()
-      end
-    end
+    default_hold_callback = function () chatgpt_viewer:HoldClose() end
   }
   
   UIManager:show(chatgpt_viewer)

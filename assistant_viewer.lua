@@ -225,6 +225,7 @@ function ChatGPTViewer:init()
     title_multilines = self.title_multilines,
     title_shrink_font_to_fit = self.title_shrink_font_to_fit,
     close_callback = function() self:onClose() end,
+    close_hold_callback = function() self:HoldClose() end,
     left_icon = "appbar.settings",
     left_icon_tap_callback = function()
       self.assistant:showSettings()
@@ -654,6 +655,15 @@ function ChatGPTViewer:askAnotherQuestion()
 
   -- Show the dialog
   UIManager:show(self.input_dialog)
+end
+
+-- close all active dialog back to the reading UI
+function ChatGPTViewer:HoldClose()
+  self:onClose()
+  self.assistant.ui.highlight:onClose()
+  if self.assistant.ui.dictionary.dict_window then
+    self.assistant.ui.dictionary.dict_window:onClose()
+  end
 end
 
 function ChatGPTViewer:onShow()

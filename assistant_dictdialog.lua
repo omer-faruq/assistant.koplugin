@@ -10,7 +10,7 @@ local Event = require("ui/event")
 local koutil = require("util")
 local dict_prompts = require("assistant_prompts").assistant_prompts.dict
 
-local function showDictionaryDialog(assistant, highlightedText, message_history, dict_popup)
+local function showDictionaryDialog(assistant, highlightedText, message_history)
     local CONFIGURATION = assistant.CONFIGURATION
     local Querier = assistant.querier
     local ui = assistant.ui
@@ -178,8 +178,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         text = result,
         onAddToNote = handleAddToNote,
         default_hold_callback = function ()
-            chatgpt_viewer:onClose()
-            if dict_popup then dict_popup:onClose() end
+            chatgpt_viewer:HoldClose()
         end,
     }
 

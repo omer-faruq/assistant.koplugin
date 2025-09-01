@@ -237,6 +237,7 @@ function Assistant:init()
 Long Press:
 - On a Prompt Button: Add to the highlight menu.
 - On a highlight menu button to remove it.
+- On the Close button to go back to reading UI in 1 step.
 
 Very-Long Press (over 3 seconds):
 On a single word in the book to show the highlight menu (instead of the dictionary).
@@ -410,7 +411,7 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
       callback = function()
           NetworkMgr:runWhenOnline(function()
               Trapper:wrap(function()
-                showDictionaryDialog(self, dict_popup.word, nil, dict_popup)
+                showDictionaryDialog(self, dict_popup.word)
               end)
           end)
       end,
