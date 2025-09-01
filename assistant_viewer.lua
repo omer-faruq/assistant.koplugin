@@ -553,6 +553,11 @@ function ChatGPTViewer:askAnotherQuestion()
     if prompt.visible == false then
       return false
     end
+    
+    -- Exclude dictionary button if this is a follow-up question (not on initial popup)
+    if self.text and self.text ~= "" and prompt.system_id == "dictionary" then
+      return false
+    end
     return true
   end) or {}
 
@@ -718,7 +723,7 @@ function ChatGPTViewer:onClose()
               -- Show warning to user and stop logging
               UIManager:show(InfoMessage:new{
                   icon = "notice-warning",
-                  text = _("Cannot access log directory: ") .. log_dir .. ". Logging cancelled.",
+                  text = _("Cannot access log directory: ") .. log_dir .." " .. _("Logging cancelled."),
                   timeout = 3,
                 })
             end
