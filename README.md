@@ -111,6 +111,7 @@ Now, when you long-press a word, the AI Dictionary will open directly. To use th
   - On the "AI Assistant" main button to see the **settings** and **reset** buttons
   - On a prompt button to **add** it to the main highlight menu.
   - On a button in the main highlight menu to **remove** it.
+  - On the close button in the result window to instantly **close all dialogs** and return directly to your reading experience
 - Use the **Select** button on the highlight menu to use text from multiple pages
 - Draw a multiswipe to **CLOSE** the dialog (eg: swipe ⮠  or ⮡  or circle ↺)
 - Keep highlights reasonably sized for best results
