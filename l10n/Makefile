@@ -42,7 +42,7 @@ MSGATTRIB_BIN = msgattrib
 MSGCAT_BIN = msgcat
 XGETTEXT_BIN = xgettext
 
-LANGS := en_GB ca cs de eo es eu fi fr gl hr it_IT hu lt_LT lv nl_NL nb_NO pl pt_PT pt_BR ro ro_MD sk sv vi tr vi_VN ar bg_BG el fa he hi ja ka ko_KR ru sr uk zh_CN zh_TW
+LANGS :=  zh_CN zh_TW ar bg_BG bn ca cs da de el en_GB eo es eu fa fi fr gl he hi hr hu it_IT ja ka kk ko_KR lt_LT lv nb_NO nl_NL pl pt_BR pt_PT ro ro_MD ru sk sr sv th tr uk vi vi_VN
 
 PO_FILES  := $(wildcard */$(DOMAIN).po)
 
@@ -58,8 +58,8 @@ init-dirs: template
 
 update: init-dirs
 	@for po_file in $(PO_FILES); do \
-		$(MSGMERGE_BIN) --update --no-fuzzy-matching --backup=none --no-wrap $$po_file $(TEMPLATE_DIR)/$(DOMAIN).pot; \
-		$(MSGATTRIB_BIN) --no-obsolete --no-wrap --sort-output -i $$po_file -o $$po_file; \
+		$(MSGMERGE_BIN) --update --no-fuzzy-matching --backup=none --no-wrap --sort-by-file $$po_file $(TEMPLATE_DIR)/$(DOMAIN).pot; \
+		$(MSGATTRIB_BIN) --no-obsolete --no-wrap --sort-by-file -i $$po_file -o $$po_file; \
 	done
 
 extract-untranslated:
@@ -139,7 +139,7 @@ template:
 		--add-comments=@translators \
 		--package-name=assistant.koplugin \
 		--no-wrap \
-		--sort-output \
+		--sort-by-file \
 		--package-version=`grep version ../_meta.lua | grep -Eo '[0-9.]+'` \
 		`find .. -name "*.lua" | sort` \
 		-o $(TEMPLATE_DIR)/$(DOMAIN).pot

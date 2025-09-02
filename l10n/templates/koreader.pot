@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.08\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-01 10:26+0800\n"
+"POT-Creation-Date: 2025-09-02 17:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:216
+msgid "AI Assistant"
+msgstr ""
+
+#: ../_meta.lua:5
+msgid "💡 Enhance your KOReader experience with AI"
+msgstr ""
 
 #: ../assistant_dialog.lua:85
 msgid "(Empty message)"
@@ -30,15 +38,15 @@ msgid "Highlighted text:"
 msgstr ""
 
 #: ../assistant_dialog.lua:258 ../assistant_dictdialog.lua:36
-#: ../assistant_settings.lua:89 ../assistant_viewer.lua:577
+#: ../assistant_settings.lua:89 ../assistant_viewer.lua:581
 msgid "Cancel"
 msgstr ""
 
-#: ../assistant_dialog.lua:265 ../assistant_viewer.lua:587
+#: ../assistant_dialog.lua:265 ../assistant_viewer.lua:591
 msgid "Ask"
 msgstr ""
 
-#: ../assistant_dialog.lua:271 ../assistant_viewer.lua:593
+#: ../assistant_dialog.lua:271 ../assistant_viewer.lua:597
 msgid "Enter a question before proceeding."
 msgstr ""
 
@@ -73,10 +81,6 @@ msgstr ""
 msgid "Ask anything about this book..."
 msgstr ""
 
-#: ../assistant_dialog.lua:369 ../main.lua:208 ../_meta.lua:4
-msgid "AI Assistant"
-msgstr ""
-
 #: ../assistant_dialog.lua:424
 msgid "Error: No response received"
 msgstr ""
@@ -93,7 +97,7 @@ msgstr ""
 msgid "Look Up"
 msgstr ""
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:410
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:418
 msgid "Dictionary"
 msgstr ""
 
@@ -113,153 +117,138 @@ msgstr ""
 msgid "Loading X-Ray..."
 msgstr ""
 
-#: ../assistant_featuredialog.lua:49
+#: ../assistant_featuredialog.lua:43
+msgid "Book Information"
+msgstr ""
+
+#: ../assistant_featuredialog.lua:44
+msgid "Loading Book Information..."
+msgstr ""
+
+#: ../assistant_featuredialog.lua:55
 #, lua-format
 msgid "Unknown feature type: %s"
 msgstr ""
 
 #: ../assistant_prompts.lua:21
-msgid ""
-"This prompt acts as a dictionary for the highlighted text, to a word or "
-"phrase."
+msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr ""
 
-#: ../assistant_prompts.lua:25
+#: ../assistant_prompts.lua:26
 msgid "Vocabulary"
 msgstr ""
 
-#: ../assistant_prompts.lua:27
-msgid ""
-"This prompt analyzes the vocabulary of the highlighted text, identifying "
-"complex words and providing definitions, synonyms, and usage examples."
+#: ../assistant_prompts.lua:28
+msgid "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr ""
 
-#: ../assistant_prompts.lua:43
+#: ../assistant_prompts.lua:44
 msgid "Grammar"
 msgstr ""
 
-#: ../assistant_prompts.lua:45
-msgid ""
-"This prompt analyzes the grammar of the highlighted text, providing a "
-"detailed explanation of its structure and any grammatical errors."
-msgstr ""
-
-#: ../assistant_prompts.lua:51
-msgid "Translate"
+#: ../assistant_prompts.lua:46
+msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr ""
 
 #: ../assistant_prompts.lua:52
+msgid "Translate"
+msgstr ""
+
+#: ../assistant_prompts.lua:53
 msgid "This prompt translates the highlighted text to another language."
 msgstr ""
 
-#: ../assistant_prompts.lua:74
+#: ../assistant_prompts.lua:75
 msgid "Summarize"
 msgstr ""
 
-#: ../assistant_prompts.lua:76
-msgid ""
-"This prompt summarizes the highlighted text, capturing its main points and "
-"essential details."
+#: ../assistant_prompts.lua:77
+msgid "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr ""
 
-#: ../assistant_prompts.lua:85
+#: ../assistant_prompts.lua:86
 msgid "Simplify"
 msgstr ""
 
-#: ../assistant_prompts.lua:87
-msgid ""
-"This prompt simplifies the highlighted text to make it easier to understand."
+#: ../assistant_prompts.lua:88
+msgid "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr ""
 
-#: ../assistant_prompts.lua:97
+#: ../assistant_prompts.lua:98
 msgid "Key Points"
 msgstr ""
 
-#: ../assistant_prompts.lua:99
-msgid ""
-"This prompt extracts and lists the key points from the highlighted text, "
-"ensuring clarity and organization."
+#: ../assistant_prompts.lua:100
+msgid "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr ""
 
-#: ../assistant_prompts.lua:103
+#: ../assistant_prompts.lua:104
 msgid "ELI5"
 msgstr ""
 
-#: ../assistant_prompts.lua:105
-msgid ""
-"This prompt explains the highlighted text as if to a five-year-old, "
-"simplifying complex concepts into easily understandable terms."
+#: ../assistant_prompts.lua:106
+msgid "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr ""
 
-#: ../assistant_prompts.lua:109
+#: ../assistant_prompts.lua:110
 msgid "Explain"
 msgstr ""
 
-#: ../assistant_prompts.lua:111
-msgid ""
-"This prompt explains the highlighted text in detail, ensuring clarity and "
-"understanding."
+#: ../assistant_prompts.lua:112
+msgid "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr ""
 
-#: ../assistant_prompts.lua:122
+#: ../assistant_prompts.lua:123
 msgid "Historical Context"
 msgstr ""
 
-#: ../assistant_prompts.lua:124
-msgid ""
-"This prompt provides a detailed historical context for the highlighted text, "
-"explaining its significance and background."
+#: ../assistant_prompts.lua:125
+msgid "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr ""
 
-#: ../assistant_prompts.lua:128 ../main.lua:396
+#: ../assistant_prompts.lua:129 ../main.lua:404
 msgid "Wikipedia"
 msgstr ""
 
-#: ../assistant_prompts.lua:130
-msgid ""
-"This prompt generates a comprehensive Wikipedia-style article based on the "
-"highlighted text, ensuring factual accuracy and neutrality."
+#: ../assistant_prompts.lua:131
+msgid "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr ""
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:215
+#: ../assistant_prompts.lua:243
 msgid "Conjugation"
 msgstr ""
 
-#: ../assistant_prompts.lua:216
+#: ../assistant_prompts.lua:244
 msgid "Synonyms"
 msgstr ""
 
-#: ../assistant_prompts.lua:217
+#: ../assistant_prompts.lua:245
 msgid "Meaning"
 msgstr ""
 
-#: ../assistant_prompts.lua:218
+#: ../assistant_prompts.lua:246
 msgid "Translation"
 msgstr ""
 
-#: ../assistant_prompts.lua:219
+#: ../assistant_prompts.lua:247
 msgid "Explanation"
 msgstr ""
 
-#: ../assistant_prompts.lua:220
+#: ../assistant_prompts.lua:248
 msgid "Example"
 msgstr ""
 
-#: ../assistant_prompts.lua:221
+#: ../assistant_prompts.lua:249
 msgid "Word Origin"
 msgstr ""
 
 #: ../assistant_querier.lua:50
-msgid ""
-"Provider settings not found for: %1. Please check your configuration.lua "
-"file."
+msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr ""
 
 #: ../assistant_querier.lua:76
-msgid ""
-"The handler for %1 was not found. Please ensure the handler exists in "
-"api_handlers directory."
+msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr ""
 
 #: ../assistant_querier.lua:109
@@ -274,7 +263,7 @@ msgstr ""
 msgid "Unknown error"
 msgstr ""
 
-#: ../assistant_querier.lua:110 ../main.lua:254
+#: ../assistant_querier.lua:110 ../main.lua:262
 msgid "Settings"
 msgstr ""
 
@@ -359,7 +348,7 @@ msgstr ""
 msgid "Font Size: %1"
 msgstr ""
 
-#: ../assistant_settings.lua:193 ../main.lua:101
+#: ../assistant_settings.lua:193 ../main.lua:109
 msgid "AI Assistant Settings"
 msgstr ""
 
@@ -413,7 +402,7 @@ msgid "A new version of the %s plugin (%s) is available. Please update!"
 msgstr ""
 
 #. @translators this is a button text, keep short
-#: ../assistant_viewer.lua:274 ../assistant_viewer.lua:641
+#: ../assistant_viewer.lua:274 ../assistant_viewer.lua:645
 msgid "Ask Another Question"
 msgstr ""
 
@@ -445,19 +434,27 @@ msgstr ""
 msgid "Note added successfully"
 msgstr ""
 
-#: ../assistant_viewer.lua:643
+#: ../assistant_viewer.lua:647
 msgid "Type your question here"
 msgstr ""
 
-#: ../assistant_viewer.lua:738
+#: ../assistant_viewer.lua:725
+msgid "Cannot access log directory: "
+msgstr ""
+
+#: ../assistant_viewer.lua:725
+msgid "Logging cancelled."
+msgstr ""
+
+#: ../assistant_viewer.lua:769
 msgid "Chat log export failed. Continuing..."
 msgstr ""
 
-#: ../assistant_viewer.lua:843
+#: ../assistant_viewer.lua:874
 msgid "Word copied to clipboard."
 msgstr ""
 
-#: ../assistant_viewer.lua:844
+#: ../assistant_viewer.lua:875
 msgid "Selection copied to clipboard."
 msgstr ""
 
@@ -473,17 +470,21 @@ msgstr ""
 msgid "AI X-Ray"
 msgstr ""
 
-#: ../main.lua:175
+#: ../main.lua:101
+msgid "AI Book Information"
+msgstr ""
+
+#: ../main.lua:183
 msgid "No valid model provider is found in the configuration.lua"
 msgstr ""
 
-#: ../main.lua:214
+#: ../main.lua:222
 msgid ""
 "Configuration Error.\n"
 "Please set up configuration.lua."
 msgstr ""
 
-#: ../main.lua:235
+#: ../main.lua:243
 msgid ""
 "Useful Tips\n"
 "\n"
@@ -493,57 +494,55 @@ msgid ""
 "- On the Close button to go back to the book in 1 step.\n"
 "\n"
 "Very-Long Press (over 3 seconds):\n"
-"On a single word in the book to show the highlight menu (instead of the "
-"dictionary).\n"
+"On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
 "Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 
-#: ../main.lua:260
+#: ../main.lua:268
 msgid "Purge Settings"
 msgstr ""
 
-#: ../main.lua:263
+#: ../main.lua:271
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
-"This resets the assistant plugin to the status the first time you installed "
-"it.\n"
+"This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings in the dialog are purged."
 msgstr ""
 
-#: ../main.lua:267
+#: ../main.lua:275
 msgid "Purge"
 msgstr ""
 
-#: ../main.lua:291
+#: ../main.lua:299
 msgid "configuration.lua: model providers are invalid."
 msgstr ""
 
-#: ../main.lua:378
+#: ../main.lua:386
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr ""
 
-#: ../main.lua:379
+#: ../main.lua:387
 msgid "Remove"
 msgstr ""
 
-#: ../main.lua:432 ../main.lua:471 ../main.lua:511
+#: ../main.lua:440 ../main.lua:479 ../main.lua:506 ../main.lua:546
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr ""
 
-#: ../main.lua:553
+#: ../main.lua:588
 msgid "Added [%1 (AI)] to Highlight Menu."
 msgstr ""
 
-#: ../main.lua:562
+#: ../main.lua:597
 #, lua-format
 msgid "Removed [%s (AI)] from Highlight Menu."
 msgstr ""
 
-#: ../main.lua:606
+#: ../main.lua:641
 #, lua-format
 msgid ""
 "Do you want an AI Recap?\n"
@@ -551,14 +550,10 @@ msgid ""
 "Last read %.0f hour(s) ago."
 msgstr ""
 
-#: ../main.lua:611
+#: ../main.lua:646
 msgid "Yes"
 msgstr ""
 
-#: ../main.lua:620
+#: ../main.lua:655
 msgid "No"
-msgstr ""
-
-#: ../_meta.lua:5
-msgid "💡 Enhance your KOReader experience with AI"
 msgstr ""
