@@ -16,11 +16,11 @@ local T = require("ffi/util").template
 -- prompts attributes can be overridden in the configuration file.
 local custom_prompts = {
         dictionary = {
-            system_id="dictionary", -- used to exclude the dictionary button if this is a follow-up question
-            order = -10,
+            order = -10, -- negative number indicates a stub prompt
             text = _("Dictionary"),
             desc = _("This prompt acts as a dictionary for the highlighted text, to a word or phrase."),
-            -- this prompt is a stub -- it will be replaced by the actual prompt in the code below
+            -- this prompt is a stub (will not shown in follow-up questions)
+            -- it will be replaced by the actual prompt in the code below
         },
         vocabulary = {
             text = _("Vocabulary"),

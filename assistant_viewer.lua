@@ -553,9 +553,8 @@ function ChatGPTViewer:askAnotherQuestion()
     if prompt.visible == false then
       return false
     end
-    
-    -- Exclude dictionary button if this is a follow-up question (not on initial popup)
-    if self.text and self.text ~= "" and prompt.system_id == "dictionary" then
+    -- Exclude stub prompts (dictionary) button in follow up questions
+    if prompt.order < 0 then
       return false
     end
     return true
