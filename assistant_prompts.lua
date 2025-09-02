@@ -213,9 +213,10 @@ Generate detailed information about the book "{title}" by {author}. Provide the 
 - Explain the historical or cultural context in which the book was written or set.
 - Discuss how the book's themes relate to the time period.
 
-### Similar Books
-- Recommend 3-5 similar books by other authors.
-- Explain why they are similar (e.g., theme, style, genre).
+### Similar Books Recommendation
+- Recommend 3-5 similar books with the best ratings on goodreads.
+- Provide a brief description of each recommended book, highlighting the similarities. (e.g., theme, style, genre).
+- Output this part as list, not a table.
 
 Ensure all information is accurate and based on known facts. Respond entirely in {language}.]],
     },
