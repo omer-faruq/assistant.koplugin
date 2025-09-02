@@ -58,8 +58,8 @@ init-dirs: template
 
 update: init-dirs
 	@for po_file in $(PO_FILES); do \
-		$(MSGMERGE_BIN) --update --no-fuzzy-matching --backup=none $$po_file $(TEMPLATE_DIR)/$(DOMAIN).pot; \
-		$(MSGATTRIB_BIN) --no-obsolete -i $$po_file -o $$po_file; \
+		$(MSGMERGE_BIN) --update --no-fuzzy-matching --backup=none --no-wrap $$po_file $(TEMPLATE_DIR)/$(DOMAIN).pot; \
+		$(MSGATTRIB_BIN) --no-obsolete --no-wrap --sort-output -i $$po_file -o $$po_file; \
 	done
 
 extract-untranslated:
@@ -121,13 +121,9 @@ ai-translate:
 					echo "You can try running the translation for this language again with: make ai-translate L10N_LANG=$$lang"; \
 					exit 1; \
 				fi; \
-				FILE_SIZE=$$(wc -c < "$$lang/untranslated.po"); \
-				if [ $$FILE_SIZE -gt 5120 ]; then \
-					echo "... waiting 30s to avoid API rate limits (large file)"; \
-					sleep 30; \
-				else \
-					echo "... waiting 10s to avoid API rate limits"; \
-					sleep 10; \
+				if [ -n "$$API_WAIT" ]; then \
+					echo "... waiting $$API_WAIT seconds to avoid API rate limits."; \
+					sleep $$API_WAIT; \
 				fi; \
 			} || exit 1; \
 		done; \
@@ -142,6 +138,8 @@ template:
 		--keyword=C_:1c,2 --keyword=N_:1,2 --keyword=NC_:1c,2,3 \
 		--add-comments=@translators \
 		--package-name=assistant.koplugin \
+		--no-wrap \
+		--sort-output \
 		--package-version=`grep version ../_meta.lua | grep -Eo '[0-9.]+'` \
 		`find .. -name "*.lua" | sort` \
 		-o $(TEMPLATE_DIR)/$(DOMAIN).pot

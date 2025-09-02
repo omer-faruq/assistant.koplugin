@@ -150,6 +150,9 @@ if [[ ! -f "$TRANSLATED_FILE" && ! -f "$UNTRANSLATED_FILE" ]] then
   cp "$TEMPLATE_FILE" "$UNTRANSLATED_FILE"
   INPUTFILE=$UNTRANSLATED_FILE
   OUTPUTFILE=$TRANSLATED_FILE
+elif [[ -f "$TRANSLATED_FILE" && -f "$UPDATED_TRANSLATED_FILE" ]] then
+  echo "the translated file exits, skip for $LANG_CODE ($LANG_FULLNAME)"
+  exit 0
 # Scenario 2: Updating an existing language.
 # If an untranslated file exists alongside the main translated file, translate only the new strings.
 elif [[ -f "$TRANSLATED_FILE" && -f "$UNTRANSLATED_FILE" ]] then
