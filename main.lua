@@ -24,6 +24,10 @@ local Prompts = require("assistant_prompts")
 local SettingsDialog = require("assistant_settings")
 local showDictionaryDialog = require("assistant_dictdialog")
 
+-- tricky hack: make our menu be the first under tools
+local _order = require("ui/elements/reader_menu_order")
+table.insert(_order.tools, 1, "ai_assistant") -- run once only during plugin load
+
 local Assistant = InputContainer:new {
   name = "assistant",
   meta = nil,           -- reference to the _meta module
@@ -110,8 +114,7 @@ function Assistant:addToMainMenu(menu_items)
         sorting_hint = "tools",
         sub_item_table = {
           {
-            text = _("Book Summary and Recommendation"),
-            separator = true,
+            text = _("Book Summary & Recs"),
             callback = function ()
               self:onAskAIBookInfo()
             end,
@@ -141,7 +144,8 @@ function Assistant:addToMainMenu(menu_items)
               UIManager:show(InfoMessage:new{
                 text = _("A very brief, spoiler-free summary of the book up to current reading progress.")
               })
-            end
+            end,
+            separator = true,
           },
           {
             text = _("AI Assistant Settings"),
