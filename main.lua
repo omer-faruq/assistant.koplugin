@@ -77,7 +77,7 @@ function Assistant:onDispatcherRegisterActions()
   })
   
   -- Register AI recap action
-  if self.settings:readSetting("enable_recap", false) then
+  if self.settings:readSetting("enable_auto_recap", false) then
     Dispatcher:registerAction("ai_recap", {
       category = "none", 
       event = "AskAIRecap", 
@@ -105,12 +105,55 @@ function Assistant:onDispatcherRegisterActions()
 end
 
 function Assistant:addToMainMenu(menu_items)
-    menu_items.assistant_provider_switch = {
-        text = _("AI Assistant Settings"),
-        sorting_hint = "more_tools",
-        callback = function ()
-          self:showSettings()
-        end
+    menu_items.ai_assistant = {
+        text = _("AI Assistant"),
+        sorting_hint = "tools",
+        sub_item_table = {
+          {
+            text = _("Book Summary and Recommendation"),
+            separator = true,
+            callback = function ()
+              self:onAskAIBookInfo()
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions.")
+              })
+            end
+          },
+          {
+            text = _("Book X-Ray"),
+            callback = function ()
+              self:onAskAIXRay()
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion.")
+              })
+            end
+          },
+          {
+            text = _("Book Recap"),
+            callback = function ()
+              self:onAskAIRecap()
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("A very brief, spoiler-free summary of the book up to current reading progress.")
+              })
+            end
+          },
+          {
+            text = _("AI Assistant Settings"),
+            keep_menu_open = true,
+            callback = function ()
+              self:showSettings()
+            end,
+            hold_callback = function ()
+              self:_help_dialog()
+            end
+          },
+        },
     }
 end
 
@@ -207,8 +250,8 @@ function Assistant:init()
   -- Register actions with dispatcher for gesture assignment
   self:onDispatcherRegisterActions()
 
-  -- Register model switch to main menu (under "More tools")
-  self.ui.menu:registerToMainMenu(self)
+  -- Register settings dialog to main menu (under "More tools")
+  self.ui.menu:registerToMainMenu(self) -- self:addToMainMenu will be called
 
   -- Assistant button
   self.ui.highlight:addToHighlightDialog("assistant", function(_reader_highlight_instance)
@@ -240,49 +283,7 @@ function Assistant:init()
         end)
       end,
       hold_callback = function()
-        local info_text = string.format("%s %s  ", self.meta.fullname, self.meta.version) .. _([[Useful Tips
-
-Long Press:
-- On a Prompt Button: Add to the highlight menu.
-- On a highlight menu button to remove it.
-- On the Close button to go back to the book in 1 step.
-
-Very-Long Press (over 3 seconds):
-On a single word in the book to show the highlight menu (instead of the dictionary).
-
-Multi-Swipe (e.g., ⮠, ⮡, ↺):
-On the result dialog to close (as the Close button is far to reach).
-]])
-        UIManager:show(ConfirmBox:new{
-            text = info_text,
-            face = Font:getFace("xx_smallinfofont"),
-            no_ok_button = true, other_buttons_first = true,
-            other_buttons = {{
-              {
-                text = _("Settings"),
-                callback = function()
-                  self:showSettings()
-                end
-              },
-              {
-                text = _("Purge Settings"),
-                callback = function()
-                  UIManager:show(ConfirmBox:new{
-                    text = _([[Are you sure to purge the assistant plugin settings? 
-This resets the assistant plugin to the status the first time you installed it.
-
-configuration.lua is safe, only the settings in the dialog are purged.]]),
-                    ok_text = _("Purge"),
-                    ok_callback = function()
-                      self.settings:reset({})
-                      self.settings:flush()
-                      UIManager:askForRestart()
-                    end
-                  })
-                end
-              },
-            }}
-        })
+        self:_help_dialog()
       end,
     }
   end)
@@ -328,8 +329,8 @@ configuration.lua is safe, only the settings in the dialog are purged.]]),
   -- so that `show_on_main_popup` and `visible` overrides take effect.
   Prompts.getMergedCustomPrompts(FrontendUtil.tableGetValue(CONFIGURATION, "features", "prompts"))
   
-  -- Recap Feature
-  if self.settings:readSetting("enable_recap", false) then
+  -- Auto Recap Feature (hook before a book is opened)
+  if self.settings:readSetting("enable_auto_recap", false) then
     self:_hookRecap()
   end
 
@@ -358,6 +359,53 @@ configuration.lua is safe, only the settings in the dialog are purged.]]),
   for _, tab in ipairs(showOnMain) do
     self:addMainButton(tab.idx, tab)
   end
+end
+
+function Assistant:_help_dialog()
+    local info_text = string.format("%s %s  ", self.meta.fullname, self.meta.version) .. _([[Useful Tips
+
+Long Press:
+- On a Prompt Button: Add to the highlight menu.
+- On a highlight menu button to remove it.
+- On the Close button to go back to the book in 1 step.
+
+Very-Long Press (over 3 seconds):
+On a single word in the book to show the highlight menu (instead of the dictionary).
+
+Multi-Swipe (e.g., ⮠, ⮡, ↺):
+On the result dialog to close (as the Close button is far to reach).
+]])
+    UIManager:show(ConfirmBox:new{
+        text = info_text,
+        face = Font:getFace("xx_smallinfofont"),
+        no_ok_button = true, other_buttons_first = true,
+        other_buttons = {{
+          {
+            text = _("Settings"),
+            callback = function()
+              self:showSettings()
+            end
+          },
+          {
+            text = _("Purge Settings"),
+            callback = function()
+              UIManager:show(ConfirmBox:new{
+                text = _([[Are you sure to purge the assistant plugin settings? 
+This resets the assistant plugin to the status the first time you installed it.
+
+configuration.lua is safe, only the settings in the dialog are purged.]]),
+                ok_text = _("Purge"),
+                ok_callback = function()
+                  self.settings:reset({})
+                  self.settings:flush()
+                  UIManager:askForRestart()
+                end
+              })
+            end
+          },
+        }}
+    })
+
 end
 
 function Assistant:addMainButton(prompt_idx, prompt)

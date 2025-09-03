@@ -255,12 +255,12 @@ function SettingsDialog:init()
             end
         },
         {
-            text = _("Enable AI Recap"),
-            checked = self.settings:readSetting("enable_recap", false),
+            text = _("Enable Auto Recap"),
+            checked = self.settings:readSetting("enable_auto_recap", false),
             callback = function()
-                self.settings:toggle("enable_recap")
+                self.settings:toggle("enable_auto_recap")
                 self.assistant.updated = true
-                if not self.settings:readSetting("enable_recap") then
+                if not self.settings:readSetting("enable_auto_recap") then
                     -- if disable, remove the action from dispatcher
                     require("dispatcher"):removeAction("ai_recap")
                     return
