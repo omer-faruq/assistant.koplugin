@@ -108,12 +108,16 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       return
     end
 
-    local chatgpt_viewer = ChatGPTViewer:new {
+    local chatgpt_viewer
+    chatgpt_viewer = ChatGPTViewer:new {
       assistant = assistant,
       ui = ui,
       title = feature_title,
       text = createResultText(answer),
       disable_add_note = true,
+      default_hold_callback = function ()
+        chatgpt_viewer:HoldClose()
+      end,
     }
 
     UIManager:show(chatgpt_viewer)
