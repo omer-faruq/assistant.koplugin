@@ -253,9 +253,10 @@ function Assistant:onFlushSettings()
 end
 
 function Assistant:isConfigured()
+    local err_text = _("Configuration Error.\nPlease set up configuration.lua.")
+
     -- handle error message during loading
     if CONFIG_LOAD_ERROR and type(CONFIG_LOAD_ERROR) == "string" then
-      local err_text = _("Configuration Error.\nPlease set up configuration.lua.")
       -- keep the error message clean
       local cut = CONFIG_LOAD_ERROR:find("configuration.lua")
       err_text = string.format("%s\n\n%s", err_text, 
@@ -265,6 +266,7 @@ function Assistant:isConfigured()
     end
 
     if not CONFIGURATION then
+      UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err_text })
       return nil
     end
   
