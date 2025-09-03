@@ -24,10 +24,6 @@ local Prompts = require("assistant_prompts")
 local SettingsDialog = require("assistant_settings")
 local showDictionaryDialog = require("assistant_dictdialog")
 
--- tricky hack: make our menu be the first under tools
-local _order = require("ui/elements/reader_menu_order")
-table.insert(_order.tools, 1, "ai_assistant") -- run once only during plugin load
-
 local Assistant = InputContainer:new {
   name = "assistant",
   meta = nil,           -- reference to the _meta module
@@ -108,11 +104,24 @@ function Assistant:onDispatcherRegisterActions()
   })
 end
 
+-- tricky hack: make our menu be the first under tools menu
+table.insert(require("ui/elements/reader_menu_order").tools, 1, "ai_assistant")
 function Assistant:addToMainMenu(menu_items)
     menu_items.ai_assistant = {
         text = _("AI Assistant"),
         sorting_hint = "tools",
         sub_item_table = {
+          {
+            text = _("Ask AI"),
+            callback = function ()
+              self:onAskAIQuestion()
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("Enter a question to ask AI.")
+              })
+            end
+          },
           {
             text = _("Book Summary & Recs"),
             callback = function ()
@@ -274,11 +283,11 @@ function Assistant:init()
   -- Register actions with dispatcher for gesture assignment
   self:onDispatcherRegisterActions()
 
-  -- Register settings dialog to main menu (under "More tools")
-  self.ui.menu:registerToMainMenu(self) -- self:addToMainMenu will be called
+  -- Register menu to main menu (under "tools")
+  self.ui.menu:registerToMainMenu(self) -- then self:addToMainMenu will be called
 
   -- Assistant button
-  self.ui.highlight:addToHighlightDialog("assistant", function(_reader_highlight_instance)
+  self.ui.highlight:addToHighlightDialog("ai_assistant", function(_reader_highlight_instance)
     return {
       text = _("AI Assistant"),
       enabled = Device:hasClipboard(),
