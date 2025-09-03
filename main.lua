@@ -77,14 +77,12 @@ function Assistant:onDispatcherRegisterActions()
   })
   
   -- Register AI recap action
-  if self.settings:readSetting("enable_auto_recap", false) then
-    Dispatcher:registerAction("ai_recap", {
-      category = "none", 
-      event = "AskAIRecap", 
-      title = _("AI Recaps"), 
-      general = true
-    })
-  end
+  Dispatcher:registerAction("ai_recap", {
+    category = "none", 
+    event = "AskAIRecap", 
+    title = _("AI Recaps"), 
+    general = true
+  })
   
   -- Register AI X-Ray action (available for gesture binding)
   Dispatcher:registerAction("ai_xray", {
@@ -98,7 +96,7 @@ function Assistant:onDispatcherRegisterActions()
   Dispatcher:registerAction("ai_book_info", {
     category = "none",
     event = "AskAIBookInfo",
-    title = _("AI Book Information"),
+    title = _("Book Summary & Recs"),
     general = true,
     separator = true
   })
@@ -112,7 +110,7 @@ function Assistant:addToMainMenu(menu_items)
         sorting_hint = "tools",
         sub_item_table = {
           {
-            text = _("Ask AI"),
+            text = _("Ask the AI a question"),
             callback = function ()
               self:onAskAIQuestion()
             end,
@@ -134,7 +132,7 @@ function Assistant:addToMainMenu(menu_items)
             end
           },
           {
-            text = _("Book X-Ray"),
+            text = _("AI X-Ray"),
             callback = function ()
               self:onAskAIXRay()
             end,
@@ -145,7 +143,7 @@ function Assistant:addToMainMenu(menu_items)
             end
           },
           {
-            text = _("Book Recap"),
+            text = _("AI Recaps"),
             callback = function ()
               self:onAskAIRecap()
             end,
