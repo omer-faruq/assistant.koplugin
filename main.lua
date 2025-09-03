@@ -258,8 +258,8 @@ function Assistant:isConfigured()
     -- handle error message during loading
     if CONFIG_LOAD_ERROR and type(CONFIG_LOAD_ERROR) == "string" then
       -- keep the error message clean
-      local cut = CONFIG_LOAD_ERROR:find("configuration.lua")
-      err_text = string.format("%s\n\n%s", err_text, 
+      local cut = CONFIG_LOAD_ERROR:find("configuration.lua", 1, true) or 0 -- find as plain
+      err_text = string.format("%s\n\n%s", err_text,
               (cut > 0) and CONFIG_LOAD_ERROR:sub(cut) or CONFIG_LOAD_ERROR)
       UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err_text })
       return nil
