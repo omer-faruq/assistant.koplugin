@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.08\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-03 09:09+0800\n"
+"POT-Creation-Date: 2025-09-03 16:53+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:216
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:109 ../main.lua:290
 msgid "AI Assistant"
 msgstr ""
 
@@ -97,7 +97,7 @@ msgstr ""
 msgid "Look Up"
 msgstr ""
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:418
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:491
 msgid "Dictionary"
 msgstr ""
 
@@ -206,7 +206,7 @@ msgstr ""
 msgid "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr ""
 
-#: ../assistant_prompts.lua:129 ../main.lua:404
+#: ../assistant_prompts.lua:129 ../main.lua:477
 msgid "Wikipedia"
 msgstr ""
 
@@ -263,7 +263,7 @@ msgstr ""
 msgid "Unknown error"
 msgstr ""
 
-#: ../assistant_querier.lua:110 ../main.lua:262
+#: ../assistant_querier.lua:110 ../main.lua:407
 msgid "Settings"
 msgstr ""
 
@@ -348,7 +348,7 @@ msgstr ""
 msgid "Font Size: %1"
 msgstr ""
 
-#: ../assistant_settings.lua:193 ../main.lua:109
+#: ../assistant_settings.lua:193 ../main.lua:158
 msgid "AI Assistant Settings"
 msgstr ""
 
@@ -373,7 +373,7 @@ msgid "Copy entered question to the clipboard"
 msgstr ""
 
 #: ../assistant_settings.lua:258
-msgid "Enable AI Recap"
+msgid "Enable Auto Recap"
 msgstr ""
 
 #: ../assistant_settings.lua:268
@@ -458,33 +458,53 @@ msgstr ""
 msgid "Selection copied to clipboard."
 msgstr ""
 
-#: ../main.lua:75
+#: ../main.lua:75 ../main.lua:113
 msgid "Ask the AI a question"
 msgstr ""
 
-#: ../main.lua:84
+#: ../main.lua:83 ../main.lua:146
 msgid "AI Recaps"
 msgstr ""
 
-#: ../main.lua:93
+#: ../main.lua:91 ../main.lua:135
 msgid "AI X-Ray"
 msgstr ""
 
-#: ../main.lua:101
-msgid "AI Book Information"
+#: ../main.lua:99 ../main.lua:124
+msgid "Book Summary & Recs"
 msgstr ""
 
-#: ../main.lua:183
+#: ../main.lua:119
+msgid "Enter a question to ask AI."
+msgstr ""
+
+#: ../main.lua:130
+msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
+msgstr ""
+
+#: ../main.lua:141
+msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
+msgstr ""
+
+#: ../main.lua:152
+msgid "A very brief, spoiler-free summary of the book up to current reading progress."
+msgstr ""
+
+#: ../main.lua:238
 msgid "No valid model provider is found in the configuration.lua"
 msgstr ""
 
-#: ../main.lua:222
+#: ../main.lua:258
 msgid ""
 "Configuration Error.\n"
 "Please set up configuration.lua."
 msgstr ""
 
-#: ../main.lua:243
+#: ../main.lua:323
+msgid "configuration.lua: model providers are invalid."
+msgstr ""
+
+#: ../main.lua:388
 msgid ""
 "Useful Tips\n"
 "\n"
@@ -500,11 +520,11 @@ msgid ""
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 
-#: ../main.lua:268
+#: ../main.lua:413
 msgid "Purge Settings"
 msgstr ""
 
-#: ../main.lua:271
+#: ../main.lua:416
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
@@ -512,37 +532,33 @@ msgid ""
 "configuration.lua is safe, only the settings in the dialog are purged."
 msgstr ""
 
-#: ../main.lua:275
+#: ../main.lua:420
 msgid "Purge"
 msgstr ""
 
-#: ../main.lua:299
-msgid "configuration.lua: model providers are invalid."
-msgstr ""
-
-#: ../main.lua:386
+#: ../main.lua:457
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr ""
 
-#: ../main.lua:387
+#: ../main.lua:458
 msgid "Remove"
 msgstr ""
 
-#: ../main.lua:440 ../main.lua:479 ../main.lua:506 ../main.lua:546
+#: ../main.lua:610
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr ""
 
-#: ../main.lua:588
+#: ../main.lua:652
 msgid "Added [%1 (AI)] to Highlight Menu."
 msgstr ""
 
-#: ../main.lua:597
+#: ../main.lua:661
 #, lua-format
 msgid "Removed [%s (AI)] from Highlight Menu."
 msgstr ""
 
-#: ../main.lua:641
+#: ../main.lua:705
 #, lua-format
 msgid ""
 "Do you want an AI Recap?\n"
@@ -550,10 +566,10 @@ msgid ""
 "Last read %.0f hour(s) ago."
 msgstr ""
 
-#: ../main.lua:646
+#: ../main.lua:710
 msgid "Yes"
 msgstr ""
 
-#: ../main.lua:655
+#: ../main.lua:719
 msgid "No"
 msgstr ""
