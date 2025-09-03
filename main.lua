@@ -162,6 +162,7 @@ function Assistant:addToMainMenu(menu_items)
 end
 
 function Assistant:showSettings()
+  if not self:isConfigured() then return end
 
   if self._settings_dialog then
     -- If settings dialog is already open, just show it again
@@ -244,6 +245,25 @@ function Assistant:onFlushSettings()
     end
 end
 
+function Assistant:isConfigured()
+    -- handle error message during loading
+    if CONFIG_LOAD_ERROR and type(CONFIG_LOAD_ERROR) == "string" then
+      local err_text = _("Configuration Error.\nPlease set up configuration.lua.")
+      -- keep the error message clean
+      local cut = CONFIG_LOAD_ERROR:find("configuration.lua")
+      err_text = string.format("%s\n\n%s", err_text, 
+              (cut > 0) and CONFIG_LOAD_ERROR:sub(cut) or CONFIG_LOAD_ERROR)
+      UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err_text })
+      return nil
+    end
+
+    if not CONFIGURATION then
+      return nil
+    end
+  
+    return true
+end
+
 function Assistant:init()
   -- loading our own _meta.lua
   self.meta = dofile(META_FILE_PATH)
@@ -263,15 +283,7 @@ function Assistant:init()
       text = _("AI Assistant"),
       enabled = Device:hasClipboard(),
       callback = function()
-        
-        -- handle error message during loading
-        if CONFIG_LOAD_ERROR and type(CONFIG_LOAD_ERROR) == "string" then
-          local err_text = _("Configuration Error.\nPlease set up configuration.lua.")
-          -- keep the error message clean
-          local cut = CONFIG_LOAD_ERROR:find("configuration.lua")
-          err_text = string.format("%s\n\n%s", err_text, 
-                  (cut > 0) and CONFIG_LOAD_ERROR:sub(cut) or CONFIG_LOAD_ERROR)
-          UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err_text })
+        if not self:isConfigured() then
           return
         end
 
@@ -448,6 +460,8 @@ function Assistant:addMainButton(prompt_idx, prompt)
 end
 
 function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
+  if not CONFIGURATION then return end
+
   local plugin_buttons = {}
   if self.settings:readSetting("dict_popup_show_wikipedia", true) then
     table.insert(plugin_buttons, {
@@ -486,12 +500,8 @@ end
 
 -- Event handlers for gesture-triggered actions
 function Assistant:onAskAIQuestion()
-  if not CONFIGURATION then
-    UIManager:show(InfoMessage:new{
-      icon = "notice-warning",
-      text = _("Configuration not found. Please set up configuration.lua first.")
-    })
-    return true
+  if not self:isConfigured() then
+    return
   end
   
   NetworkMgr:runWhenOnline(function()
@@ -504,6 +514,9 @@ function Assistant:onAskAIQuestion()
 end
 
 function Assistant:onAskAIRecap()
+  if not self:isConfigured() then
+    return
+  end
   
   NetworkMgr:runWhenOnline(function()
     
@@ -525,12 +538,8 @@ function Assistant:onAskAIRecap()
 end
 
 function Assistant:onAskAIXRay()
-  if not CONFIGURATION then
-    UIManager:show(InfoMessage:new{
-      icon = "notice-warning",
-      text = _("Configuration not found. Please set up configuration.lua first.")
-    })
-    return true
+  if not self:isConfigured() then
+    return
   end
 
   NetworkMgr:runWhenOnline(function()
@@ -552,12 +561,8 @@ function Assistant:onAskAIXRay()
 end
 
 function Assistant:onAskAIBookInfo()
-  if not CONFIGURATION then
-    UIManager:show(InfoMessage:new{
-      icon = "notice-warning",
-      text = _("Configuration not found. Please set up configuration.lua first.")
-    })
-    return true
+  if not self:isConfigured() then
+    return
   end
 
   NetworkMgr:runWhenOnline(function()
