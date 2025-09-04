@@ -7,6 +7,7 @@ local ConfirmBox = require("ui/widget/confirmbox")
 local Event = require("ui/event")
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
+local Trapper = require("ui/trapper")
 local koutil = require("util")
 local ChatGPTViewer = require("assistant_viewer")
 local assistant_prompts = require("assistant_prompts").assistant_prompts
@@ -102,6 +103,14 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       return result_text
     end
 
+    local function prepareMessageHistoryForAdditionalQuestion(message_history, user_question, title, author)
+      local context = {
+        role = "user",
+        content = string.format("I'm reading something titled '%s' by %s. Only answer the following question, do not add any additional information or context that is not directly related to the question, the question is: %s", title, author, user_question)
+      }
+      table.insert(message_history, context)
+    end
+
     local answer, err = Querier:query(message_history, loading_message)
     if err then
       assistant.querier:showError(err)
@@ -115,6 +124,40 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       title = feature_title,
       text = createResultText(answer),
       disable_add_note = true,
+      message_history = message_history,
+      onAskQuestion = function(viewer, user_question)
+        local viewer_title = ""
+
+        if type(user_question) == "string" then
+          prepareMessageHistoryForAdditionalQuestion(message_history, user_question, title, author)
+        elseif type(user_question) == "table" then
+          viewer_title = user_question.text or "Custom Prompt"
+          table.insert(message_history, {
+            role = "user",
+            content = string.format("I'm reading something titled '%s' by %s. Only answer the following question, do not add any additional information or context that is not directly related to the question, the question is: %s", title, author, user_question.user_prompt or user_question)
+          })
+        end
+
+        Trapper:wrap(function()
+          local answer, err = Querier:query(message_history)
+          
+          if err then
+            Querier:showError(err)
+            return
+          end
+          
+          table.insert(message_history, {
+            role = "assistant",
+            content = answer
+          })
+          local additional_text = "\n\n### ⮞ User: \n" .. (type(user_question) == "string" and user_question or (user_question.text or user_question)) .. "\n\n### ⮞ Assistant:\n" .. answer
+          viewer:update(viewer.text .. additional_text)
+          
+          if viewer.scroll_text_w then
+            viewer.scroll_text_w:resetScroll()
+          end
+        end)
+      end,
       default_hold_callback = function ()
         chatgpt_viewer:HoldClose()
       end,

@@ -670,32 +670,34 @@ function ChatGPTViewer:askAnotherQuestion()
     }
   }
 
-  local prompt_buttons = {}
-
-  -- Add custom prompt buttons
-  for _, option in ipairs(default_options) do
-    table.insert(prompt_buttons, {
-      text = option.text,
-      callback = function()
-        UIManager:close(self.input_dialog)
-        self.input_dialog = nil
-        option.callback(self)
-      end
-    })
-  end
-
   local button_rows = {}
   table.insert(button_rows, first_row)
+   -- Only add custom buttons if there's highlighted text
+  if self.highlighted_text and self.highlighted_text ~= "" then 
+    local prompt_buttons = {}
 
-  -- Split buttons into rows (3 buttons per row)
-  for i = 1, #prompt_buttons, 3 do
-    local row = {}
-    for j = 0, 2 do
-      if prompt_buttons[i + j] then
-        table.insert(row, prompt_buttons[i + j])
-      end
+    -- Add custom prompt buttons
+    for _, option in ipairs(default_options) do
+      table.insert(prompt_buttons, {
+        text = option.text,
+        callback = function()
+          UIManager:close(self.input_dialog)
+          self.input_dialog = nil
+          option.callback(self)
+        end
+      })
     end
-    table.insert(button_rows, row)
+
+    -- Split buttons into rows (3 buttons per row)
+    for i = 1, #prompt_buttons, 3 do
+      local row = {}
+      for j = 0, 2 do
+        if prompt_buttons[i + j] then
+          table.insert(row, prompt_buttons[i + j])
+        end
+      end
+      table.insert(button_rows, row)
+    end
   end
 
   -- Create input dialog

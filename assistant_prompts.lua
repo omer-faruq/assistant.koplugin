@@ -139,7 +139,7 @@ local assistant_prompts = {
         system_prompt = "You are a helpful AI assistant. Always respond in Markdown format.",
     },
     recap = {
-        system_prompt = "You are a book recap giver with entertaining tone and high quality detail with a focus on summarization. You also match the tone of the book provided. Always respond in Markdown format.",
+        system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
         user_prompt = [[
 '''{title}''' by '''{author}''' that has been {progress}% read.
 Given the above title and author of a book and the positional parameter, very briefly summarize the contents of the book prior with rich text formatting.
@@ -147,11 +147,12 @@ Above all else do not give any spoilers to the book, only consider prior content
 Focus on the more recent content rather than a general summary to help the user pick up where they left off.
 Match the tone and energy of the book, for example if the book is funny match that style of humor and tone, if it's an exciting fantasy novel show it, if it's a historical or sad book reflect that.
 Use text bolding to emphasize names and locations. Use italics to emphasize major plot points. No emojis or symbols.
-Answer this whole response in {language} language. Only show the replies, do not give a description.]]
+Answer this whole response in {language} language. Only show the replies, do not give a description.
+Also answer with entertaining tone and high quality detail with a focus on summarization. You also match the tone of the book provided.]]
     },
     xray = {
-        system_prompt = [[
-You are an expert literary assistant that produces an expanded “X‑Ray” for books.
+        system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        user_prompt = [[
 Your output must be spoiler‑free beyond the reader’s current progress.
 
 Required structure (Markdown):
@@ -187,15 +188,14 @@ Formatting rules:
 * Put relationship or event strings in italic & underlined using Markdown `_` and `<u>` tags combined (e.g. _<u>ally of Frodo</u>_).
 * Do NOT reveal content past the given progress percentage.
 * Answer entirely in **{language}** and return only the X‑Ray, nothing else.
-        ]],
-        user_prompt = [[
-Generate the expanded X‑Ray for **{title}** by **{author}**, with the structure described in the previous system message.
+
+Generate the expanded X‑Ray for **{title}** by **{author}**, with the structure described above.
 Reader progress: **{progress}%**.
 Language: **{language}**.
         ]],
     },
     book_info = {
-        system_prompt = "You are an expert literary assistant that provides comprehensive and accurate information about books. Always respond in Markdown format.",
+        system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
         user_prompt = [[
 Generate detailed information about the book "{title}" by {author}. Provide the information in the following sections:
 
