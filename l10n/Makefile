@@ -59,7 +59,8 @@ init-dirs: template
 update: init-dirs
 	@for po_file in $(PO_FILES); do \
 		$(MSGMERGE_BIN) --update --no-fuzzy-matching --backup=none --no-wrap --sort-by-file $$po_file $(TEMPLATE_DIR)/$(DOMAIN).pot; \
-		$(MSGATTRIB_BIN) --no-obsolete --no-wrap --sort-by-file -i $$po_file -o $$po_file; \
+		$(MSGATTRIB_BIN) --no-obsolete --no-wrap --sort-by-file -i $$po_file -o $$po_file.updated; \
+		mv $$po_file.updated $$po_file; \
 	done
 
 extract-untranslated:
@@ -77,7 +78,7 @@ import-translation:
 		dir=$$(dirname $$po_file); \
 		if [ -f "$$dir/updated_translated.po" ]; then \
 			$(MSGCAT_BIN) --use-first $$dir/updated_translated.po $$po_file -o updated.po && \
-			mv updated.po $$po_file; \
+			$(MSGATTRIB_BIN) --no-obsolete --no-wrap --sort-by-file -i updated.po -o $$po_file; \
 		fi; \
 	done
 
