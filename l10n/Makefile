@@ -58,7 +58,7 @@ init-dirs: template
 
 update: init-dirs
 	@for po_file in $(PO_FILES); do \
-		$(MSGMERGE_BIN) --update --no-fuzzy-matching --backup=none --no-wrap --sort-by-file $$po_file $(TEMPLATE_DIR)/$(DOMAIN).pot; \
+		$(MSGMERGE_BIN) --update --backup=none --no-wrap --sort-by-file $$po_file $(TEMPLATE_DIR)/$(DOMAIN).pot; \
 		$(MSGATTRIB_BIN) --no-obsolete --no-wrap --sort-by-file -i $$po_file -o $$po_file.updated; \
 		mv $$po_file.updated $$po_file; \
 	done
