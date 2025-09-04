@@ -417,6 +417,22 @@ function ChatGPTViewer:init()
       table.insert(buttons[#buttons], #(buttons[#buttons]), add_note_button)
   end
 
+  -- Only add Save button if auto_save_to_notebook is disabled
+  if not self.assistant.settings:readSetting("auto_save_to_notebook", false) then
+      local save_button = {
+          text = _("Save"),
+          callback = function()
+              self:saveToNotebook()
+              UIManager:show(InfoMessage:new{
+                  text = _("Chat log saved to notebook"),
+                  timeout = 2
+              })
+          end
+      }
+      -- to keep close button on the right, insert into the second-to-last position
+      table.insert(buttons[#buttons], #(buttons[#buttons]), save_button)
+  end
+
   self.button_table = ButtonTable:new {
     width = self.width - 2 * self.button_padding,
     buttons = buttons,
@@ -516,6 +532,48 @@ function ChatGPTViewer:init()
     dimen = self.region,
     self.movable,
   }
+end
+
+function ChatGPTViewer:saveToNotebook()
+  local success, err = pcall(function()
+    -- Get book file path
+    local notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
+    
+    if notebookfile then
+      -- Get current timestamp
+      local timestamp = os.date("%Y-%m-%d %H:%M:%S")
+      
+      -- Prepare log entry with title if available
+      local title_text = self.title and (self.title .. "\n") or ""
+      local text_to_log = self.text or ""
+      
+      -- If text doesn't start with "Highlighted text:", add it
+      if not text_to_log:find("^__Highlighted text:__") and self.highlighted_text then
+        text_to_log = "Highlighted text: " .. self.highlighted_text .. "\n\n" .. text_to_log
+      end
+      
+      local log_entry = string.format("[%s]\n## %s\n\n%s\n\n", timestamp, title_text, text_to_log)
+      
+      -- Append to notebook file
+      local file = io.open(notebookfile, "a")
+      if file then
+        file:write(log_entry)
+        file:close()
+      else
+        logger.warn("Assistant: Could not open notebook file:", notebookfile)
+      end
+    end
+  end)
+  
+  if not success then
+    logger.warn("Assistant: Error during chat log export:", err)
+    -- Show warning to user but don't crash
+    UIManager:show(InfoMessage:new{
+      icon = "notice-warning",
+      text = _("Chat log export failed. Continuing..."),
+      timeout = 3,
+    })
+  end
 end
 
 function ChatGPTViewer:onCloseWidget()
@@ -702,45 +760,7 @@ end
 function ChatGPTViewer:onClose()
   -- Export chat log if enabled
   if self.assistant.settings:readSetting("auto_save_to_notebook", false) then
-    local success, err = pcall(function()
-      -- Get book file path
-      local notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
-      
-      if notebookfile then
-        -- Get current timestamp
-        local timestamp = os.date("%Y-%m-%d %H:%M:%S")
-        
-        -- Prepare log entry with title if available
-        local title_text = self.title and (self.title .. "\n") or ""
-        local text_to_log = self.text or ""
-        
-        -- If text doesn't start with "Highlighted text:", add it
-        if not text_to_log:find("^__Highlighted text:__") and self.highlighted_text then
-          text_to_log = "Highlighted text: " .. self.highlighted_text .. "\n\n" .. text_to_log
-        end
-        
-        local log_entry = string.format("[%s]\n## %s\n\n%s\n\n", timestamp, title_text, text_to_log)
-        
-        -- Append to notebook file
-        local file = io.open(notebookfile, "a")
-        if file then
-          file:write(log_entry)
-          file:close()
-        else
-          logger.warn("Assistant: Could not open notebook file:", notebookfile)
-        end
-      end
-    end)
-    
-    if not success then
-      logger.warn("Assistant: Error during chat log export:", err)
-      -- Show warning to user but don't crash
-      UIManager:show(InfoMessage:new{
-        icon = "notice-warning",
-        text = _("Chat log export failed. Continuing..."),
-        timeout = 3,
-      })
-    end
+    self:saveToNotebook()
   end
   
   UIManager:close(self)
