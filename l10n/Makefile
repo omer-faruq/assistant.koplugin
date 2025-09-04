@@ -85,7 +85,7 @@ import-translation:
 check:
 	@echo "Checking syntax of existing .po files..."
 	@for po_file in $(PO_FILES); do \
-		$(MSGFMT_BIN) --check -o /dev/null $$po_file; \
+		$(MSGFMT_BIN) -v --check -o /dev/null $$po_file; \
 	done
 
 clean:

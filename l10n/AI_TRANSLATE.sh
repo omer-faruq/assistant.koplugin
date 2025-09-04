@@ -35,15 +35,14 @@ API_ENDPOINT=${API_ENDPOINT:-"https://api.openai.com/v1/chat/completions"}
 API_MODEL=${API_MODEL:-"gpt-4o-mini"}
 AUTH_HEADER="Authorization: Bearer ${API_KEY}"
 PROMPT_TEMPLATE="Translate the following gettext .po file content to __YOUR_LANGUAGE__. \
-Preserve the .po file structure, including msgid, msgstr, and other metadata. \
+The first message with \`msgid ""\` is the header entry. Make necessary updates to the header entry. \
+Fill the \`Plural-Forms\` field according to the language rules. \
+Fill the \`Language\` field with the language name and the language code. \
+Fill the \`Language-Team\` and \`Last-Translator\` fields with your identifical model name and versions. \
 Ensure accurate and context-aware translation.  \
 The commented text in the first lines are descriptive text for the file, update it as necessary. \
 The message will display on UI, keep the translation clean and short and easy understanding. \
 When a line contains \`@translators\` is present, consider that as context to the message. \
-The first message is the metadata for the PO file. Make necessary updates to the metadata. \
-Fill the \`Language\` field with the language name and the language code. \
-Fill the \`Language-Team\` and \`Last-Translator\` fields with your identifical model name and versions. \
-Do not modify other file structure. \
 Only output the translated file content, do not use markdown format. \
 "
 
