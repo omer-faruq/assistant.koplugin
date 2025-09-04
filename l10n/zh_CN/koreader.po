@@ -1,13 +1,12 @@
-# 简体中文翻译 - AI Assistant 插件
+# AI Assistant 插件简体中文翻译
 # Copyright (C) 2025 THE PACKAGE'S COPYRIGHT HOLDER
-# 此文件与 PACKAGE 包使用相同的许可证。
+# 本文件与 PACKAGE 包使用相同许可证。
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
+        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
         "PO-Revision-Date: 2025-06-12 10:00+0800\n"
         "Last-Translator: GPT-4o (2024-06)\n"
         "Language-Team: GPT-4o (2024-06)\n"
@@ -15,8 +14,9 @@ msgstr  "Project-Id-Version: assistant.koplugin\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
 msgid   "AI Assistant"
 msgstr  "AI 助手"
 
@@ -96,7 +96,7 @@ msgstr  "输入要查询的单词…"
 msgid   "Look Up"
 msgstr  "查询"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
 msgid   "Dictionary"
 msgstr  "词典"
 
@@ -205,7 +205,7 @@ msgstr  "历史背景"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "该提示为高亮内容提供详尽历史背景，解释其重要性与来龙去脉。"
 
-#: ../assistant_prompts.lua:129 ../main.lua:514
+#: ../assistant_prompts.lua:129 ../main.lua:522
 msgid   "Wikipedia"
 msgstr  "维基百科"
 
@@ -264,7 +264,7 @@ msgstr  "API 错误：\n"
 msgid   "Unknown error"
 msgstr  "未知错误"
 
-#: ../assistant_querier.lua:110 ../main.lua:444
+#: ../assistant_querier.lua:110 ../main.lua:452
 msgid   "Settings"
 msgstr  "设置"
 
@@ -349,7 +349,7 @@ msgstr  "回复字体大小"
 msgid   "Font Size: %1"
 msgstr  "字体大小：%1"
 
-#: ../assistant_settings.lua:193 ../main.lua:193
+#: ../assistant_settings.lua:193 ../main.lua:201
 msgid   "AI Assistant Settings"
 msgstr  "AI 助手设置"
 
@@ -497,11 +497,19 @@ msgstr  "笔记本文件：\n"
 msgid   "View"
 msgstr  "查看"
 
-#: ../main.lua:168 ../main.lua:172
+#: ../main.lua:168
+msgid   "File does not exist.\n"
+        "\n"
+        "%1"
+msgstr  "文件不存在。\n"
+        "\n"
+        "%1"
+
+#: ../main.lua:176 ../main.lua:180
 msgid   "Delete"
 msgstr  "删除"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -509,25 +517,25 @@ msgstr  "是否删除文件？\n"
         "%1\n"
         "此操作不可撤销。"
 
-#: ../main.lua:183
+#: ../main.lua:191
 msgid   "Edit"
 msgstr  "编辑"
 
-#: ../main.lua:273
+#: ../main.lua:281
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "configuration.lua 中未找到有效的模型提供方"
 
-#: ../main.lua:291
+#: ../main.lua:299
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "配置错误。\n"
         "请设置 configuration.lua。"
 
-#: ../main.lua:360
+#: ../main.lua:368
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua：模型提供方无效"
 
-#: ../main.lua:425
+#: ../main.lua:433
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -553,11 +561,11 @@ msgstr  "使用技巧\n"
         "多手势滑动（如 ⮠, ⮡, ↺）：\n"
         "在结果对话框上执行以关闭（关闭按钮较远）。\n"
 
-#: ../main.lua:450
+#: ../main.lua:458
 msgid   "Purge Settings"
 msgstr  "重置设置"
 
-#: ../main.lua:453
+#: ../main.lua:461
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -567,33 +575,33 @@ msgstr  "确定要重置插件设置吗？\n"
         "\n"
         "configuration.lua 不受影响，仅清除对话框中的设置。"
 
-#: ../main.lua:457
+#: ../main.lua:465
 msgid   "Purge"
 msgstr  "重置"
 
-#: ../main.lua:494
+#: ../main.lua:502
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "从菜单移除 [%s]？"
 
-#: ../main.lua:495
+#: ../main.lua:503
 msgid   "Remove"
 msgstr  "移除"
 
-#: ../main.lua:647
+#: ../main.lua:655
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "未找到配置，请先设置 configuration.lua"
 
-#: ../main.lua:689
+#: ../main.lua:697
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "已添加 [%1 (AI)] 到高亮菜单"
 
-#: ../main.lua:698
+#: ../main.lua:706
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "已从高亮菜单移除 [%s (AI)]"
 
-#: ../main.lua:742
+#: ../main.lua:750
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -602,10 +610,10 @@ msgstr  "需要 AI 回顾吗？\n"
         "《%s》 作者：%s。\n"
         "距上次阅读 %.0f 小时。"
 
-#: ../main.lua:747
+#: ../main.lua:755
 msgid   "Yes"
 msgstr  "是"
 
-#: ../main.lua:756
+#: ../main.lua:764
 msgid   "No"
 msgstr  "否"

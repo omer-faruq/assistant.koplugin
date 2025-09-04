@@ -3,11 +3,10 @@
 # 此檔案與 PACKAGE 套件採用相同授權散佈。
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
+        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
         "PO-Revision-Date: 2025-08-22 15:24+0800\n"
         "Last-Translator: GPT-4o 2025-08-22\n"
         "Language-Team: GPT-4o 2025-08-22\n"
@@ -15,8 +14,9 @@ msgstr  "Project-Id-Version: assistant.koplugin\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
 msgid   "AI Assistant"
 msgstr  "AI 助理"
 
@@ -96,7 +96,7 @@ msgstr  "輸入欲查詢的字詞…"
 msgid   "Look Up"
 msgstr  "查詢"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
 msgid   "Dictionary"
 msgstr  "字典"
 
@@ -205,7 +205,7 @@ msgstr  "歷史背景"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "此提示提供劃線文字的詳細歷史背景，說明其重要與來龍去脈"
 
-#: ../assistant_prompts.lua:129 ../main.lua:514
+#: ../assistant_prompts.lua:129 ../main.lua:522
 msgid   "Wikipedia"
 msgstr  "維基百科"
 
@@ -264,7 +264,7 @@ msgstr  "API 錯誤：\n"
 msgid   "Unknown error"
 msgstr  "未知錯誤"
 
-#: ../assistant_querier.lua:110 ../main.lua:444
+#: ../assistant_querier.lua:110 ../main.lua:452
 msgid   "Settings"
 msgstr  "設定"
 
@@ -349,7 +349,7 @@ msgstr  "回應字體大小"
 msgid   "Font Size: %1"
 msgstr  "字型大小：%1"
 
-#: ../assistant_settings.lua:193 ../main.lua:193
+#: ../assistant_settings.lua:193 ../main.lua:201
 msgid   "AI Assistant Settings"
 msgstr  "AI 助手設定"
 
@@ -497,11 +497,19 @@ msgstr  "筆記本檔案：\n"
 msgid   "View"
 msgstr  "檢視"
 
-#: ../main.lua:168 ../main.lua:172
+#: ../main.lua:168
+msgid   "File does not exist.\n"
+        "\n"
+        "%1"
+msgstr  "檔案不存在。\n"
+        "\n"
+        "%1"
+
+#: ../main.lua:176 ../main.lua:180
 msgid   "Delete"
 msgstr  "刪除"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -509,25 +517,25 @@ msgstr  "確定刪除檔案？\n"
         "%1\n"
         "此操作無法復原。"
 
-#: ../main.lua:183
+#: ../main.lua:191
 msgid   "Edit"
 msgstr  "編輯"
 
-#: ../main.lua:273
+#: ../main.lua:281
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "configuration.lua 中找不到有效的模型提供者"
 
-#: ../main.lua:291
+#: ../main.lua:299
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "設定錯誤。\n"
         "請設定 configuration.lua。"
 
-#: ../main.lua:360
+#: ../main.lua:368
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua：模型提供者無效。"
 
-#: ../main.lua:425
+#: ../main.lua:433
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -553,11 +561,11 @@ msgstr  "使用提示\n"
         "多指手勢（如 ⮠、⮡、↺）：\n"
         "在結果視窗上滑動即可關閉（因「關閉」按鈕不易觸及）。\n"
 
-#: ../main.lua:450
+#: ../main.lua:458
 msgid   "Purge Settings"
 msgstr  "清除設定"
 
-#: ../main.lua:453
+#: ../main.lua:461
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -567,33 +575,33 @@ msgstr  "確定要清除外掛程式設定嗎？\n"
         "\n"
         "configuration.lua 不受影響，僅清除對話框中的設定。"
 
-#: ../main.lua:457
+#: ../main.lua:465
 msgid   "Purge"
 msgstr  "清除"
 
-#: ../main.lua:494
+#: ../main.lua:502
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "從劃線選單移除 [%s]？"
 
-#: ../main.lua:495
+#: ../main.lua:503
 msgid   "Remove"
 msgstr  "移除"
 
-#: ../main.lua:647
+#: ../main.lua:655
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "找不到設定檔，請先建立 configuration.lua"
 
-#: ../main.lua:689
+#: ../main.lua:697
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "已將 [%1 (AI)] 加入劃線選單"
 
-#: ../main.lua:698
+#: ../main.lua:706
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "已從劃線選單移除 [%s (AI)]"
 
-#: ../main.lua:742
+#: ../main.lua:750
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -602,10 +610,10 @@ msgstr  "需要 AI 回顧嗎？\n"
         "%s by %s\n"
         "上次閱讀已過 %.0f 小時"
 
-#: ../main.lua:747
+#: ../main.lua:755
 msgid   "Yes"
 msgstr  "是"
 
-#: ../main.lua:756
+#: ../main.lua:764
 msgid   "No"
 msgstr  "否"

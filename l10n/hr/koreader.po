@@ -3,11 +3,10 @@
 # Ova datoteka distribuira se pod istom licencom kao i paket.
 # GPT-4-1105-preview, 2025.
 #
-#, fuzzy
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
+        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
         "PO-Revision-Date: 2025-08-21 15:20+0800\n"
         "Last-Translator: GPT-4-1105-preview\n"
         "Language-Team: GPT-4-1105-preview\n"
@@ -15,8 +14,9 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
 msgid   "AI Assistant"
 msgstr  "AI Pomoćnik"
 
@@ -96,7 +96,7 @@ msgstr  "Unesite riječ za pretragu..."
 msgid   "Look Up"
 msgstr  "Pretraži"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
 msgid   "Dictionary"
 msgstr  "Rječnik"
 
@@ -205,7 +205,7 @@ msgstr  "Historijski kontekst"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Ovaj prompt daje detaljan historijski kontekst istaknutog teksta, objasnivši njegov značaj i pozadinu."
 
-#: ../assistant_prompts.lua:129 ../main.lua:514
+#: ../assistant_prompts.lua:129 ../main.lua:522
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -264,7 +264,7 @@ msgstr  "Greška API-ja:\n"
 msgid   "Unknown error"
 msgstr  "Nepoznata greška"
 
-#: ../assistant_querier.lua:110 ../main.lua:444
+#: ../assistant_querier.lua:110 ../main.lua:452
 msgid   "Settings"
 msgstr  "Postavke"
 
@@ -349,7 +349,7 @@ msgstr  "Veličina fonta odgovora"
 msgid   "Font Size: %1"
 msgstr  "Veličina fonta: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:193
+#: ../assistant_settings.lua:193 ../main.lua:201
 msgid   "AI Assistant Settings"
 msgstr  "Postavke AI asistenta"
 
@@ -497,11 +497,19 @@ msgstr  "Datoteka bilježnice: \n"
 msgid   "View"
 msgstr  "Pogledaj"
 
-#: ../main.lua:168 ../main.lua:172
+#: ../main.lua:168
+msgid   "File does not exist.\n"
+        "\n"
+        "%1"
+msgstr  "Datoteka ne postoji.\n"
+        "\n"
+        "%1"
+
+#: ../main.lua:176 ../main.lua:180
 msgid   "Delete"
 msgstr  "Izbriši"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -509,25 +517,25 @@ msgstr  "Izbrisati datoteku?\n"
         "%1\n"
         "Ova radnja se ne može poništiti."
 
-#: ../main.lua:183
+#: ../main.lua:191
 msgid   "Edit"
 msgstr  "Uredi"
 
-#: ../main.lua:273
+#: ../main.lua:281
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Nije pronađen valjani davatelj modela u configuration.lua"
 
-#: ../main.lua:291
+#: ../main.lua:299
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Greška konfiguracije.\n"
         "Postavite configuration.lua."
 
-#: ../main.lua:360
+#: ../main.lua:368
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: davatelji modela su neispravni."
 
-#: ../main.lua:425
+#: ../main.lua:433
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -553,11 +561,11 @@ msgstr  "Korisni savjeti\n"
         "Višestruki prstni pokret (npr. ⮠, ⮡, ↺):\n"
         "Na dijalog rezultata za zatvaranje (tipka Zatvori je predaleko).\n"
 
-#: ../main.lua:450
+#: ../main.lua:458
 msgid   "Purge Settings"
 msgstr  "Obriši postavke"
 
-#: ../main.lua:453
+#: ../main.lua:461
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -567,33 +575,33 @@ msgstr  "Sigurno želite obrisati postavke dodatka asistenta?\n"
         "\n"
         "configuration.lua je siguran – brišu se samo postavke u dijalogu."
 
-#: ../main.lua:457
+#: ../main.lua:465
 msgid   "Purge"
 msgstr  "Obriši"
 
-#: ../main.lua:494
+#: ../main.lua:502
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Ukloni [%s] iz izbornika za isticanje?"
 
-#: ../main.lua:495
+#: ../main.lua:503
 msgid   "Remove"
 msgstr  "Ukloni"
 
-#: ../main.lua:647
+#: ../main.lua:655
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Konfiguracija nije pronađena. Najprije postavite configuration.lua."
 
-#: ../main.lua:689
+#: ../main.lua:697
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Dodano [%1 (AI)] u izbornik za isticanje."
 
-#: ../main.lua:698
+#: ../main.lua:706
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Uklonjen [%s (AI)] iz izbornika za isticanje."
 
-#: ../main.lua:742
+#: ../main.lua:750
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -602,10 +610,10 @@ msgstr  "Želite li AI Sažetak?\n"
         "Za %s autora %s.\n"
         "Posljednji put pročitao %.0f sat(ova) prije."
 
-#: ../main.lua:747
+#: ../main.lua:755
 msgid   "Yes"
 msgstr  "Da"
 
-#: ../main.lua:756
+#: ../main.lua:764
 msgid   "No"
 msgstr  "Ne"

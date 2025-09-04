@@ -2,20 +2,20 @@
 # Copyright (C) 2025 assistant.koplugin
 # This file is distributed under the same license as the assistant.koplugin package.
 #
-#, fuzzy
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 2025.08.21\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
-        "PO-Revision-Date: 2025-09-03 16:53+0800\n"
+        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
+        "PO-Revision-Date: 2025-09-05 00:03+0800\n"
         "Last-Translator: ChatGPT 4.0 <chatgpt@openai.com>\n"
         "Language-Team: ChatGPT 4.0 <chatgpt@openai.com>\n"
-        "Language: lietuvių\n"
+        "Language: lietuvių (Lithuanian)\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
 msgid   "AI Assistant"
 msgstr  "AI asistentas"
 
@@ -95,7 +95,7 @@ msgstr  "Įveskite žodį paieškai..."
 msgid   "Look Up"
 msgstr  "Ieškoti"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
 msgid   "Dictionary"
 msgstr  "Žodynas"
 
@@ -204,7 +204,7 @@ msgstr  "Istorinis kontekstas"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Šis raginimas pateikia išsamų istorinį kontekstą pažymėtam tekstui."
 
-#: ../assistant_prompts.lua:129 ../main.lua:514
+#: ../assistant_prompts.lua:129 ../main.lua:522
 msgid   "Wikipedia"
 msgstr  "Vikipedija"
 
@@ -263,7 +263,7 @@ msgstr  "API klaida:\n"
 msgid   "Unknown error"
 msgstr  "Nežinoma klaida"
 
-#: ../assistant_querier.lua:110 ../main.lua:444
+#: ../assistant_querier.lua:110 ../main.lua:452
 msgid   "Settings"
 msgstr  "Nustatymai"
 
@@ -348,7 +348,7 @@ msgstr  "Atsakymo šrifto dydis"
 msgid   "Font Size: %1"
 msgstr  "Šrifto dydis: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:193
+#: ../assistant_settings.lua:193 ../main.lua:201
 msgid   "AI Assistant Settings"
 msgstr  "AI asistento nustatymai"
 
@@ -496,11 +496,19 @@ msgstr  "Užrašų knygelės failas: \n"
 msgid   "View"
 msgstr  "Žiūrėti"
 
-#: ../main.lua:168 ../main.lua:172
+#: ../main.lua:168
+msgid   "File does not exist.\n"
+        "\n"
+        "%1"
+msgstr  "Failas neegzistuoja.\n"
+        "\n"
+        "%1"
+
+#: ../main.lua:176 ../main.lua:180
 msgid   "Delete"
 msgstr  "Ištrinti"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -508,25 +516,25 @@ msgstr  "Ištrinti failą?\n"
         "%1\n"
         "Ši operacija negrįžtama."
 
-#: ../main.lua:183
+#: ../main.lua:191
 msgid   "Edit"
 msgstr  "Redaguoti"
 
-#: ../main.lua:273
+#: ../main.lua:281
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "configuration.lua nerastas tinkamas modelio teikėjas"
 
-#: ../main.lua:291
+#: ../main.lua:299
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Konfigūracijos klaida.\n"
         "Nustatykite configuration.lua."
 
-#: ../main.lua:360
+#: ../main.lua:368
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: modelio teikėjai neteisingi."
 
-#: ../main.lua:425
+#: ../main.lua:433
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -552,11 +560,11 @@ msgstr  "Naudingi patarimai\n"
         "Keli braukimai (pvz., ⮠, ⮡, ↺):\n"
         "Rezultatų lange – uždaryti (nes Uždaryti mygtukas sunkiai pasiekiamas).\n"
 
-#: ../main.lua:450
+#: ../main.lua:458
 msgid   "Purge Settings"
 msgstr  "Išvalyti nustatymus"
 
-#: ../main.lua:453
+#: ../main.lua:461
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -566,33 +574,33 @@ msgstr  "Ar tikrai norite išvalyti asistento įskiepio nustatymus?\n"
         "\n"
         "configuration.lua liks nepaliesta – ištrinami tik dialogo nustatymai."
 
-#: ../main.lua:457
+#: ../main.lua:465
 msgid   "Purge"
 msgstr  "Išvalyti"
 
-#: ../main.lua:494
+#: ../main.lua:502
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Pašalinti [%s] iš pažymėjimo meniu?"
 
-#: ../main.lua:495
+#: ../main.lua:503
 msgid   "Remove"
 msgstr  "Pašalinti"
 
-#: ../main.lua:647
+#: ../main.lua:655
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Konfigūracija nerasta. Pirmiausia nustatykite configuration.lua."
 
-#: ../main.lua:689
+#: ../main.lua:697
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Pridėta [%1 (AI)] prie pažymėjimo meniu."
 
-#: ../main.lua:698
+#: ../main.lua:706
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Pašalinta [%s (AI)] iš pažymėjimo meniu."
 
-#: ../main.lua:742
+#: ../main.lua:750
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -601,10 +609,10 @@ msgstr  "Norite AI santraukos?\n"
         "Knyga %s, autorius %s.\n"
         "Paskutinį kartą skaitėte prieš %.0f val."
 
-#: ../main.lua:747
+#: ../main.lua:755
 msgid   "Yes"
 msgstr  "Taip"
 
-#: ../main.lua:756
+#: ../main.lua:764
 msgid   "No"
 msgstr  "Ne"

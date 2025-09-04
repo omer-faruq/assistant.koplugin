@@ -1,22 +1,22 @@
 # Tradução para Português do plugin assistant.koplugin
 # Copyright (C) 2025 O TITULAR DOS DIREITOS DO PACOTE
 # Este ficheiro é distribuído sob a mesma licença que o pacote PACKAGE.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+# ChatGPT 4.0 <chatgpt@example.com>, 2025.
 #
-#, fuzzy
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
-        "PO-Revision-Date: 2025-08-21 15:22+0800\n"
+        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
+        "PO-Revision-Date: 2025-09-05 00:03+0800\n"
         "Last-Translator: ChatGPT 4.0 <chatgpt@example.com>\n"
         "Language-Team: ChatGPT 4.0 <chatgpt@example.com>\n"
         "Language: Português (pt)\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
 msgid   "AI Assistant"
 msgstr  "Assistente IA"
 
@@ -96,7 +96,7 @@ msgstr  "Digite uma palavra para pesquisar..."
 msgid   "Look Up"
 msgstr  "Pesquisar"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
 msgid   "Dictionary"
 msgstr  "Dicionário"
 
@@ -205,7 +205,7 @@ msgstr  "Contexto histórico"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Fornece contexto histórico detalhado para o texto destacado."
 
-#: ../assistant_prompts.lua:129 ../main.lua:514
+#: ../assistant_prompts.lua:129 ../main.lua:522
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -264,7 +264,7 @@ msgstr  "Erro de API:\n"
 msgid   "Unknown error"
 msgstr  "Erro desconhecido"
 
-#: ../assistant_querier.lua:110 ../main.lua:444
+#: ../assistant_querier.lua:110 ../main.lua:452
 msgid   "Settings"
 msgstr  "Definições"
 
@@ -349,7 +349,7 @@ msgstr  "Tamanho da fonte"
 msgid   "Font Size: %1"
 msgstr  "Tamanho da Fonte: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:193
+#: ../assistant_settings.lua:193 ../main.lua:201
 msgid   "AI Assistant Settings"
 msgstr  "Configurações do Assistente de IA"
 
@@ -497,11 +497,19 @@ msgstr  "Ficheiro do caderno: \n"
 msgid   "View"
 msgstr  "Ver"
 
-#: ../main.lua:168 ../main.lua:172
+#: ../main.lua:168
+msgid   "File does not exist.\n"
+        "\n"
+        "%1"
+msgstr  "Ficheiro inexistente.\n"
+        "\n"
+        "%1"
+
+#: ../main.lua:176 ../main.lua:180
 msgid   "Delete"
 msgstr  "Apagar"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -509,25 +517,25 @@ msgstr  "Apagar ficheiro?\n"
         "%1\n"
         "Esta operação é irreversível."
 
-#: ../main.lua:183
+#: ../main.lua:191
 msgid   "Edit"
 msgstr  "Editar"
 
-#: ../main.lua:273
+#: ../main.lua:281
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Nenhum fornecedor de modelo válido foi encontrado em configuration.lua"
 
-#: ../main.lua:291
+#: ../main.lua:299
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Erro de Configuração.\n"
         "Configure o ficheiro configuration.lua."
 
-#: ../main.lua:360
+#: ../main.lua:368
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: os fornecedores de modelo são inválidos."
 
-#: ../main.lua:425
+#: ../main.lua:433
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -553,11 +561,11 @@ msgstr  "Dicas úteis\n"
         "Deslize múltiplo (ex.: ⮠, ⮡, ↺):\n"
         "No diálogo de resultados para fechar (o botão Fechar está longe).\n"
 
-#: ../main.lua:450
+#: ../main.lua:458
 msgid   "Purge Settings"
 msgstr  "Limpar Definições"
 
-#: ../main.lua:453
+#: ../main.lua:461
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -567,33 +575,33 @@ msgstr  "Tem a certeza que quer limpar as definições do plugin? \n"
         "\n"
         "configuration.lua não será afetado; apenas as definições do diálogo serão removidas."
 
-#: ../main.lua:457
+#: ../main.lua:465
 msgid   "Purge"
 msgstr  "Limpar"
 
-#: ../main.lua:494
+#: ../main.lua:502
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Remover [%s] do menu de destaque?"
 
-#: ../main.lua:495
+#: ../main.lua:503
 msgid   "Remove"
 msgstr  "Remover"
 
-#: ../main.lua:647
+#: ../main.lua:655
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Configuração não encontrada. Configure o configuration.lua primeiro."
 
-#: ../main.lua:689
+#: ../main.lua:697
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "[%1 (IA)] adicionado ao menu de destaque."
 
-#: ../main.lua:698
+#: ../main.lua:706
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "[%s (IA)] removido do menu de destaque."
 
-#: ../main.lua:742
+#: ../main.lua:750
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -602,10 +610,10 @@ msgstr  "Deseja um resumo da IA?\n"
         "Para %s de %s.\n"
         "Última leitura há %.0f h."
 
-#: ../main.lua:747
+#: ../main.lua:755
 msgid   "Yes"
 msgstr  "Sim"
 
-#: ../main.lua:756
+#: ../main.lua:764
 msgid   "No"
 msgstr  "Não"

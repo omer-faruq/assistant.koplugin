@@ -2,20 +2,20 @@
 # Copyright (C) 2025 assistant.koplugin
 # Šis fails ir izplatīts ar to pašu licenci kā assistant.koplugin pakotne.
 #
-#, fuzzy
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
-        "PO-Revision-Date: 2025-09-02 17:09+0800\n"
+        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
+        "PO-Revision-Date: 2025-09-05 00:03+0800\n"
         "Last-Translator: GPT-4o <openai.com>\n"
         "Language-Team: GPT-4o <openai.com>\n"
         "Language: Latviešu (lv)\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
 msgid   "AI Assistant"
 msgstr  "AI asistents"
 
@@ -95,7 +95,7 @@ msgstr  "Ievadiet vārdu meklēšanai..."
 msgid   "Look Up"
 msgstr  "Meklēt"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
 msgid   "Dictionary"
 msgstr  "Vārdnīca"
 
@@ -204,7 +204,7 @@ msgstr  "Vēsturiskais konteksts"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Uzvedne sniedz sīku vēsturisko kontekstu izceltajam tekstam."
 
-#: ../assistant_prompts.lua:129 ../main.lua:514
+#: ../assistant_prompts.lua:129 ../main.lua:522
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -263,7 +263,7 @@ msgstr  "API kļūda:\n"
 msgid   "Unknown error"
 msgstr  "Nezināma kļūda"
 
-#: ../assistant_querier.lua:110 ../main.lua:444
+#: ../assistant_querier.lua:110 ../main.lua:452
 msgid   "Settings"
 msgstr  "Iestatījumi"
 
@@ -348,7 +348,7 @@ msgstr  "Atbildes fonta izmērs"
 msgid   "Font Size: %1"
 msgstr  "Fonta izmērs: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:193
+#: ../assistant_settings.lua:193 ../main.lua:201
 msgid   "AI Assistant Settings"
 msgstr  "AI asistenta iestatījumi"
 
@@ -496,11 +496,19 @@ msgstr  "Piezīmju grāmatiņas fails: \n"
 msgid   "View"
 msgstr  "Skatīt"
 
-#: ../main.lua:168 ../main.lua:172
+#: ../main.lua:168
+msgid   "File does not exist.\n"
+        "\n"
+        "%1"
+msgstr  "Fails neeksistē.\n"
+        "\n"
+        "%1"
+
+#: ../main.lua:176 ../main.lua:180
 msgid   "Delete"
 msgstr  "Dzēst"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -508,25 +516,25 @@ msgstr  "Dzēst failu?\n"
         "%1\n"
         "Šo darbību nevar atsaukt."
 
-#: ../main.lua:183
+#: ../main.lua:191
 msgid   "Edit"
 msgstr  "Rediģēt"
 
-#: ../main.lua:273
+#: ../main.lua:281
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "configuration.lua nav atrasts derīgs modeļa nodrošinātājs"
 
-#: ../main.lua:291
+#: ../main.lua:299
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Konfigurācijas kļūda.\n"
         "Lūdzu, iestatiet configuration.lua."
 
-#: ../main.lua:360
+#: ../main.lua:368
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: modeļa nodrošinātāji nav derīgi."
 
-#: ../main.lua:425
+#: ../main.lua:433
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -552,11 +560,11 @@ msgstr  "Noderīgi padomi\n"
         "Vairāki vilkšanas žesti (piem., ⮠, ⮡, ↺):\n"
         "Rezultātu logā, lai aizvērtu (jo Aizvērt poga ir tālu).\n"
 
-#: ../main.lua:450
+#: ../main.lua:458
 msgid   "Purge Settings"
 msgstr  "Dzēst iestatījumus"
 
-#: ../main.lua:453
+#: ../main.lua:461
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -566,33 +574,33 @@ msgstr  "Vai tiešām vēlaties dzēst asistenta spraudņa iestatījumus?\n"
         "\n"
         "configuration.lua netiks skarta, dzēsti tiks tikai dialoga iestatījumi."
 
-#: ../main.lua:457
+#: ../main.lua:465
 msgid   "Purge"
 msgstr  "Dzēst"
 
-#: ../main.lua:494
+#: ../main.lua:502
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Noņemt [%s] no Izcelšanas izvēlnes?"
 
-#: ../main.lua:495
+#: ../main.lua:503
 msgid   "Remove"
 msgstr  "Noņemt"
 
-#: ../main.lua:647
+#: ../main.lua:655
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Konfigurācija nav atrasta. Vispirms iestatiet configuration.lua."
 
-#: ../main.lua:689
+#: ../main.lua:697
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Pievienots [%1 (AI)] Izcelšanas izvēlnei."
 
-#: ../main.lua:698
+#: ../main.lua:706
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Noņemts [%s (AI)] no Izcelšanas izvēlnes."
 
-#: ../main.lua:742
+#: ../main.lua:750
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -601,10 +609,10 @@ msgstr  "Vai vēlies AI kopsavilkumu?\n"
         "%s, autors %s.\n"
         "Pēdējo reizi lasīts pirms %.0f stundām."
 
-#: ../main.lua:747
+#: ../main.lua:755
 msgid   "Yes"
 msgstr  "Jā"
 
-#: ../main.lua:756
+#: ../main.lua:764
 msgid   "No"
 msgstr  "Nē"

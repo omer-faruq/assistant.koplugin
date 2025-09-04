@@ -2,20 +2,20 @@
 # Copyright (C) 2025 assistant.koplugin
 # Fitxategi hau assistant.koplugin paketearen lizentzia berdinarekin banatzen da.
 #
-#, fuzzy
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
-        "PO-Revision-Date: 2025-08-21 15:18+0800\n"
+        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
+        "PO-Revision-Date: 2025-09-05 00:03+0800\n"
         "Last-Translator: ChatGPT 4o <chatgpt@openai.com>\n"
         "Language-Team: ChatGPT 4o <chatgpt@openai.com>\n"
         "Language: Euskara (eu)\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
 msgid   "AI Assistant"
 msgstr  "AI Laguntzailea"
 
@@ -95,7 +95,7 @@ msgstr  "Idatzi hitz bat bilatzeko..."
 msgid   "Look Up"
 msgstr  "Bilatu"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
 msgid   "Dictionary"
 msgstr  "Hiztegia"
 
@@ -204,7 +204,7 @@ msgstr  "Testuinguru Historikoa"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Galdetegi honek nabarmendutako testuaren testuinguru historiko zehatza eskaintzen du, bere garrantzia eta atze-oinarria azalduz."
 
-#: ../assistant_prompts.lua:129 ../main.lua:514
+#: ../assistant_prompts.lua:129 ../main.lua:522
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -263,7 +263,7 @@ msgstr  "API errorea:\n"
 msgid   "Unknown error"
 msgstr  "Errore ezezaguna"
 
-#: ../assistant_querier.lua:110 ../main.lua:444
+#: ../assistant_querier.lua:110 ../main.lua:452
 msgid   "Settings"
 msgstr  "Ezarpenak"
 
@@ -348,7 +348,7 @@ msgstr  "Erantzunaren letra-tamaina"
 msgid   "Font Size: %1"
 msgstr  "Letra-tamaina: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:193
+#: ../assistant_settings.lua:193 ../main.lua:201
 msgid   "AI Assistant Settings"
 msgstr  "AI Laguntzailearen Ezarpenak"
 
@@ -496,11 +496,19 @@ msgstr  "Oharrak fitxategia: \n"
 msgid   "View"
 msgstr  "Ikusi"
 
-#: ../main.lua:168 ../main.lua:172
+#: ../main.lua:168
+msgid   "File does not exist.\n"
+        "\n"
+        "%1"
+msgstr  "Fitxategia ez da existitzen.\n"
+        "\n"
+        "%1"
+
+#: ../main.lua:176 ../main.lua:180
 msgid   "Delete"
 msgstr  "Ezabatu"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -508,25 +516,25 @@ msgstr  "Fitxategia ezabatu?\n"
         "%1\n"
         "Ekintza hau ezin da desegin."
 
-#: ../main.lua:183
+#: ../main.lua:191
 msgid   "Edit"
 msgstr  "Editatu"
 
-#: ../main.lua:273
+#: ../main.lua:281
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Ez da baliozko modelo-hornitzailerik aurkitu configuration.lua-n"
 
-#: ../main.lua:291
+#: ../main.lua:299
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Konfigurazio-errorea.\n"
         "Konfiguratu configuration.lua."
 
-#: ../main.lua:360
+#: ../main.lua:368
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: modelo-hornitzaileak ez dira baliozkoak."
 
-#: ../main.lua:425
+#: ../main.lua:433
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -552,11 +560,11 @@ msgstr  "Lagungarriak diren aholkuak\n"
         "Zirrikitu anitz (adib.: ⮠, ⮡, ↺):\n"
         "Emaitzen elkarrizketan, ixteko (Itxi botoia urrun dagoelako).\n"
 
-#: ../main.lua:450
+#: ../main.lua:458
 msgid   "Purge Settings"
 msgstr  "Garbitu ezarpenak"
 
-#: ../main.lua:453
+#: ../main.lua:461
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -566,33 +574,33 @@ msgstr  "Ziur zaude laguntzaile pluginaren ezarpenak garbitu nahi dituzula?\n"
         "\n"
         "configuration.lua seguru dago; leihoko ezarpenak soilik garbituko dira."
 
-#: ../main.lua:457
+#: ../main.lua:465
 msgid   "Purge"
 msgstr  "Garbitu"
 
-#: ../main.lua:494
+#: ../main.lua:502
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Kendu [%s] Nabarmendu menutik?"
 
-#: ../main.lua:495
+#: ../main.lua:503
 msgid   "Remove"
 msgstr  "Kendu"
 
-#: ../main.lua:647
+#: ../main.lua:655
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Konfigurazioa ez da aurkitu. Lehenik konfiguratu configuration.lua."
 
-#: ../main.lua:689
+#: ../main.lua:697
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "[%1 (AI)] gehitu da Nabarmendu menuan."
 
-#: ../main.lua:698
+#: ../main.lua:706
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "[%s (AI)] kendu da Nabarmendu menutik."
 
-#: ../main.lua:742
+#: ../main.lua:750
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -601,10 +609,10 @@ msgstr  "AI Laburpena nahi duzu?\n"
         "%s (egilea: %s).\n"
         "Azken irakurketa %.0f ordu duela."
 
-#: ../main.lua:747
+#: ../main.lua:755
 msgid   "Yes"
 msgstr  "Bai"
 
-#: ../main.lua:756
+#: ../main.lua:764
 msgid   "No"
 msgstr  "Ez"

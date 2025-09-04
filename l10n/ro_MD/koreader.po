@@ -3,11 +3,10 @@
 # Acest fișier este distribuit sub aceeași licență ca și pachetul assistant.koplugin.
 # PRIMUL AUTOR <EMAIL@ADRESA>, AN.
 #
-#, fuzzy
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.08\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
+        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
         "PO-Revision-Date: 2025-06-25 15:00+0300\n"
         "Last-Translator: AI Assistant 1.0 <ai@example.com>\n"
         "Language-Team: Română (Moldova) <ai@example.com>\n"
@@ -15,8 +14,9 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.08\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || n%100>=2 && n%100<=19) ? 1 : 2);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
 msgid   "AI Assistant"
 msgstr  "Asistent AI"
 
@@ -96,7 +96,7 @@ msgstr  "Introduceți un cuvânt pentru căutare..."
 msgid   "Look Up"
 msgstr  "Caută"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
 msgid   "Dictionary"
 msgstr  "Dicționar"
 
@@ -205,7 +205,7 @@ msgstr  "Context istoric"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Oferă un context istoric detaliat pentru textul evidențiat, explicând semnificația și fundalul."
 
-#: ../assistant_prompts.lua:129 ../main.lua:514
+#: ../assistant_prompts.lua:129 ../main.lua:522
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -264,7 +264,7 @@ msgstr  "Eroare API:\n"
 msgid   "Unknown error"
 msgstr  "Eroare necunoscută"
 
-#: ../assistant_querier.lua:110 ../main.lua:444
+#: ../assistant_querier.lua:110 ../main.lua:452
 msgid   "Settings"
 msgstr  "Setări"
 
@@ -349,7 +349,7 @@ msgstr  "Dimensiunea fontului răspunsului"
 msgid   "Font Size: %1"
 msgstr  "Dimensiune font: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:193
+#: ../assistant_settings.lua:193 ../main.lua:201
 msgid   "AI Assistant Settings"
 msgstr  "Setările asistentului AI"
 
@@ -497,11 +497,19 @@ msgstr  "Fișier NoteBook: \n"
 msgid   "View"
 msgstr  "Vezi"
 
-#: ../main.lua:168 ../main.lua:172
+#: ../main.lua:168
+msgid   "File does not exist.\n"
+        "\n"
+        "%1"
+msgstr  "Fișierul nu există.\n"
+        "\n"
+        "%1"
+
+#: ../main.lua:176 ../main.lua:180
 msgid   "Delete"
 msgstr  "Șterge"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -509,25 +517,25 @@ msgstr  "Șterg fișierul?\n"
         "%1\n"
         "Operațiunea nu poate fi anulată."
 
-#: ../main.lua:183
+#: ../main.lua:191
 msgid   "Edit"
 msgstr  "Editează"
 
-#: ../main.lua:273
+#: ../main.lua:281
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Nu s-a găsit un furnizor de modele valid în configuration.lua"
 
-#: ../main.lua:291
+#: ../main.lua:299
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Eroare de configurare.\n"
         "Vă rugăm să configurați configuration.lua."
 
-#: ../main.lua:360
+#: ../main.lua:368
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: furnizorii de modele sunt invalizi."
 
-#: ../main.lua:425
+#: ../main.lua:433
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -553,11 +561,11 @@ msgstr  "Sfaturi utile\n"
         "Glisare multiplă (ex.: ⮠, ⮡, ↺):\n"
         "Pe dialogul rezultat pentru închidere (deoarece butonul Închidere este greu accesibil).\n"
 
-#: ../main.lua:450
+#: ../main.lua:458
 msgid   "Purge Settings"
 msgstr  "Resetează setările"
 
-#: ../main.lua:453
+#: ../main.lua:461
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -567,33 +575,33 @@ msgstr  "Sigur doriți să resetați setările pluginului asistent?\n"
         "\n"
         "configuration.lua rămâne intact, doar setările din dialog sunt șterse."
 
-#: ../main.lua:457
+#: ../main.lua:465
 msgid   "Purge"
 msgstr  "Resetează"
 
-#: ../main.lua:494
+#: ../main.lua:502
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Eliminați [%s] din meniul de evidențiere?"
 
-#: ../main.lua:495
+#: ../main.lua:503
 msgid   "Remove"
 msgstr  "Elimină"
 
-#: ../main.lua:647
+#: ../main.lua:655
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Configurarea nu a fost găsită. Vă rugăm să setați mai întâi configuration.lua."
 
-#: ../main.lua:689
+#: ../main.lua:697
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Adăugat [%1 (AI)] în meniul de evidențiere."
 
-#: ../main.lua:698
+#: ../main.lua:706
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Eliminat [%s (AI)] din meniul de evidențiere."
 
-#: ../main.lua:742
+#: ../main.lua:750
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -602,10 +610,10 @@ msgstr  "Doriți un rezumat AI?\n"
         "Pentru %s de %s.\n"
         "Ultima lectură acum %.0f oră(e)."
 
-#: ../main.lua:747
+#: ../main.lua:755
 msgid   "Yes"
 msgstr  "Da"
 
-#: ../main.lua:756
+#: ../main.lua:764
 msgid   "No"
 msgstr  "Nu"

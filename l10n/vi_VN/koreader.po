@@ -1,13 +1,12 @@
-# Một số mô tả.
-# Bản quyền (C) NĂM CHỦ BẢN QUYỀN CỦA GÓI
+# Mô tả gói ngôn ngữ.
+# Bản quyền (C) 2024
 # Tệp này được phân phối theo cùng giấy phép với gói assistant.koplugin.
-# TÁC GIẢ ĐẦU TIÊN <EMAIL@ADDRESS>, NĂM.
+# AI Assistant v1.0 <gpt@example.com>, 2024.
 #
-#, fuzzy
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.08\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
+        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
         "PO-Revision-Date: 2024-05-03 10:00+0700\n"
         "Last-Translator: AI Assistant v1.0 <gpt@example.com>\n"
         "Language-Team: Vietnamese <vi@li.org>\n"
@@ -15,8 +14,9 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.08\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
 msgid   "AI Assistant"
 msgstr  "Trợ lý AI"
 
@@ -96,7 +96,7 @@ msgstr  "Nhập từ cần tra..."
 msgid   "Look Up"
 msgstr  "Tra cứu"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
 msgid   "Dictionary"
 msgstr  "Từ điển"
 
@@ -205,7 +205,7 @@ msgstr  "Bối cảnh lịch sử"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Lệnh này cung cấp bối cảnh lịch sử chi tiết cho văn bản đã bôi, giải thích ý nghĩa và nền tảng."
 
-#: ../assistant_prompts.lua:129 ../main.lua:514
+#: ../assistant_prompts.lua:129 ../main.lua:522
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -264,7 +264,7 @@ msgstr  "Lỗi API:\n"
 msgid   "Unknown error"
 msgstr  "Lỗi không xác định"
 
-#: ../assistant_querier.lua:110 ../main.lua:444
+#: ../assistant_querier.lua:110 ../main.lua:452
 msgid   "Settings"
 msgstr  "Cài đặt"
 
@@ -349,7 +349,7 @@ msgstr  "Cỡ chữ phản hồi"
 msgid   "Font Size: %1"
 msgstr  "Cỡ chữ: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:193
+#: ../assistant_settings.lua:193 ../main.lua:201
 msgid   "AI Assistant Settings"
 msgstr  "Cài đặt Trợ lý AI"
 
@@ -497,11 +497,19 @@ msgstr  "Tệp sổ ghi chú: \n"
 msgid   "View"
 msgstr  "Xem"
 
-#: ../main.lua:168 ../main.lua:172
+#: ../main.lua:168
+msgid   "File does not exist.\n"
+        "\n"
+        "%1"
+msgstr  "Tệp không tồn tại.\n"
+        "\n"
+        "%1"
+
+#: ../main.lua:176 ../main.lua:180
 msgid   "Delete"
 msgstr  "Xóa"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -509,25 +517,25 @@ msgstr  "Xóa tệp?\n"
         "%1\n"
         "Thao tác này không thể hoàn tác."
 
-#: ../main.lua:183
+#: ../main.lua:191
 msgid   "Edit"
 msgstr  "Sửa"
 
-#: ../main.lua:273
+#: ../main.lua:281
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Không tìm thấy nhà cung cấp mô hình hợp lệ trong configuration.lua"
 
-#: ../main.lua:291
+#: ../main.lua:299
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Lỗi cấu hình.\n"
         "Vui lòng thiết lập configuration.lua."
 
-#: ../main.lua:360
+#: ../main.lua:368
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: nhà cung cấp mô hình không hợp lệ."
 
-#: ../main.lua:425
+#: ../main.lua:433
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -553,11 +561,11 @@ msgstr  "Mẹo hữu ích\n"
         "Vuốt đa điểm (ví dụ: ⮠, ⮡, ↺):\n"
         "Trên hộp kết quả để đóng (khi nút Đóng xa tầm tay).\n"
 
-#: ../main.lua:450
+#: ../main.lua:458
 msgid   "Purge Settings"
 msgstr  "Xóa cài đặt"
 
-#: ../main.lua:453
+#: ../main.lua:461
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -567,33 +575,33 @@ msgstr  "Bạn có chắc xóa cài đặt plugin trợ lý? \n"
         "\n"
         "configuration.lua vẫn an toàn, chỉ cài đặt trong hộp thoại bị xóa."
 
-#: ../main.lua:457
+#: ../main.lua:465
 msgid   "Purge"
 msgstr  "Xóa"
 
-#: ../main.lua:494
+#: ../main.lua:502
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Gỡ [%s] khỏi Menu Bôi?"
 
-#: ../main.lua:495
+#: ../main.lua:503
 msgid   "Remove"
 msgstr  "Gỡ"
 
-#: ../main.lua:647
+#: ../main.lua:655
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Không tìm thấy cấu hình. Vui lòng thiết lập configuration.lua trước."
 
-#: ../main.lua:689
+#: ../main.lua:697
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Đã thêm [%1 (AI)] vào Menu Bôi."
 
-#: ../main.lua:698
+#: ../main.lua:706
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Đã gỡ [%s (AI)] khỏi Menu Bôi."
 
-#: ../main.lua:742
+#: ../main.lua:750
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -602,10 +610,10 @@ msgstr  "Bạn muốn Tóm tắt AI?\n"
         "Cho %s của %s.\n"
         "Đã đọc cách đây %.0f giờ."
 
-#: ../main.lua:747
+#: ../main.lua:755
 msgid   "Yes"
 msgstr  "Có"
 
-#: ../main.lua:756
+#: ../main.lua:764
 msgid   "No"
 msgstr  "Không"

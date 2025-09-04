@@ -2,20 +2,20 @@
 # Copyright (C) 2025 KOReader Community
 # Dit bestand wordt verspreid onder dezelfde licentie als het assistant.koplugin-pakket.
 #
-#, fuzzy
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
-        "PO-Revision-Date: 2025-08-22 16:58+0800\n"
-        "Last-Translator: ChatGPT 4o (2025-08-22)\n"
+        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
+        "PO-Revision-Date: 2025-09-05 00:03+0800\n"
+        "Last-Translator: ChatGPT 4o (2025-09-05)\n"
         "Language-Team: ChatGPT 4o <gpt-4o@openai.com>\n"
         "Language: Nederlands (nl)\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
 msgid   "AI Assistant"
 msgstr  "AI-assistent"
 
@@ -95,7 +95,7 @@ msgstr  "Voer een woord in om op te zoeken..."
 msgid   "Look Up"
 msgstr  "Opzoeken"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
 msgid   "Dictionary"
 msgstr  "Woordenboek"
 
@@ -204,7 +204,7 @@ msgstr  "Historische context"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Deze prompt geeft historische context bij gemarkeerde tekst, inclusief achtergrond en betekenis."
 
-#: ../assistant_prompts.lua:129 ../main.lua:514
+#: ../assistant_prompts.lua:129 ../main.lua:522
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -263,7 +263,7 @@ msgstr  "API-fout:\n"
 msgid   "Unknown error"
 msgstr  "Onbekende fout"
 
-#: ../assistant_querier.lua:110 ../main.lua:444
+#: ../assistant_querier.lua:110 ../main.lua:452
 msgid   "Settings"
 msgstr  "Instellingen"
 
@@ -348,7 +348,7 @@ msgstr  "Antwoordlettergrootte"
 msgid   "Font Size: %1"
 msgstr  "Lettergrootte: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:193
+#: ../assistant_settings.lua:193 ../main.lua:201
 msgid   "AI Assistant Settings"
 msgstr  "AI-assistentinstellingen"
 
@@ -496,11 +496,19 @@ msgstr  "Notitieboekbestand: \n"
 msgid   "View"
 msgstr  "Bekijken"
 
-#: ../main.lua:168 ../main.lua:172
+#: ../main.lua:168
+msgid   "File does not exist.\n"
+        "\n"
+        "%1"
+msgstr  "Bestand bestaat niet.\n"
+        "\n"
+        "%1"
+
+#: ../main.lua:176 ../main.lua:180
 msgid   "Delete"
 msgstr  "Verwijderen"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -508,25 +516,25 @@ msgstr  "Bestand verwijderen?\n"
         "%1\n"
         "Deze actie kan niet ongedaan worden gemaakt."
 
-#: ../main.lua:183
+#: ../main.lua:191
 msgid   "Edit"
 msgstr  "Bewerken"
 
-#: ../main.lua:273
+#: ../main.lua:281
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Geen geldige modelprovider gevonden in configuration.lua"
 
-#: ../main.lua:291
+#: ../main.lua:299
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Configuratiefout.\n"
         "Stel configuration.lua in."
 
-#: ../main.lua:360
+#: ../main.lua:368
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: modelproviders zijn ongeldig."
 
-#: ../main.lua:425
+#: ../main.lua:433
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -552,11 +560,11 @@ msgstr  "Handige tips\n"
         "Multi-swipe (bijv. ⮠, ⮡, ↺):\n"
         "Op het resultaatvenster om te sluiten (de Sluitknop is ver weg).\n"
 
-#: ../main.lua:450
+#: ../main.lua:458
 msgid   "Purge Settings"
 msgstr  "Instellingen wissen"
 
-#: ../main.lua:453
+#: ../main.lua:461
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -566,33 +574,33 @@ msgstr  "Weet je zeker dat je de instellingen van de assistent wilt wissen?\n"
         "\n"
         "configuration.lua blijft onaangetast; alleen de instellingen in het dialoogvenster worden verwijderd."
 
-#: ../main.lua:457
+#: ../main.lua:465
 msgid   "Purge"
 msgstr  "Wissen"
 
-#: ../main.lua:494
+#: ../main.lua:502
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "[%s] uit markeermenu verwijderen?"
 
-#: ../main.lua:495
+#: ../main.lua:503
 msgid   "Remove"
 msgstr  "Verwijderen"
 
-#: ../main.lua:647
+#: ../main.lua:655
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Configuratie niet gevonden. Stel eerst configuration.lua in."
 
-#: ../main.lua:689
+#: ../main.lua:697
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "[%1 (AI)] toegevoegd aan markeermenu."
 
-#: ../main.lua:698
+#: ../main.lua:706
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "[%s (AI)] verwijderd uit markeermenu."
 
-#: ../main.lua:742
+#: ../main.lua:750
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -601,10 +609,10 @@ msgstr  "AI-samenvatting aanvragen?\n"
         "Voor %s van %s.\n"
         "Laatst %.0f uur geleden gelezen."
 
-#: ../main.lua:747
+#: ../main.lua:755
 msgid   "Yes"
 msgstr  "Ja"
 
-#: ../main.lua:756
+#: ../main.lua:764
 msgid   "No"
 msgstr  "Nee"

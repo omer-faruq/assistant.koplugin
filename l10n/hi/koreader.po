@@ -1,17 +1,21 @@
-#, fuzzy
+# KOReader Assistant plugin Hindi translation
+# Copyright (C) 2025 KOReader team
+# This file is distributed under the same license as the KOReader package.
+#
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
-        "PO-Revision-Date: 2025-08-21 15:19:57+0800\n"
+        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
+        "PO-Revision-Date: 2025-09-05 00:03+0800\n"
         "Last-Translator: GPT-4o (OpenAI) <gpt4o@example.com>\n"
         "Language-Team: GPT-4o हिन्दी <hi@example.com>\n"
-        "Language: हिन्दी (hi)\n"
+        "Language: हिन्दी\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
 msgid   "AI Assistant"
 msgstr  "एआई सहायक"
 
@@ -91,7 +95,7 @@ msgstr  "खोजने के लिए एक शब्द दर्ज क�
 msgid   "Look Up"
 msgstr  "खोजें"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
 msgid   "Dictionary"
 msgstr  "शब्दकोश"
 
@@ -200,7 +204,7 @@ msgstr  "ऐतिहासिक संदर्भ"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "यह प्रॉम्प्ट हाइलाइट किए गए पाठ के लिए विस्तृत ऐतिहासिक संदर्भ देता है, इसकी महत्ता और पृष्ठभूमि समझाते हुए।"
 
-#: ../assistant_prompts.lua:129 ../main.lua:514
+#: ../assistant_prompts.lua:129 ../main.lua:522
 msgid   "Wikipedia"
 msgstr  "विकिपीडिया"
 
@@ -259,7 +263,7 @@ msgstr  "एपीआई त्रुटि:\n"
 msgid   "Unknown error"
 msgstr  "अज्ञात त्रुटि"
 
-#: ../assistant_querier.lua:110 ../main.lua:444
+#: ../assistant_querier.lua:110 ../main.lua:452
 msgid   "Settings"
 msgstr  "सेटिंग्स"
 
@@ -344,7 +348,7 @@ msgstr  "प्रतिक्रिया फ़ॉन्ट साइज़"
 msgid   "Font Size: %1"
 msgstr  "फ़ॉन्ट आकार: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:193
+#: ../assistant_settings.lua:193 ../main.lua:201
 msgid   "AI Assistant Settings"
 msgstr  "एआई सहायक सेटिंग्स"
 
@@ -492,11 +496,19 @@ msgstr  "नोटबुक फ़ाइल: \n"
 msgid   "View"
 msgstr  "देखें"
 
-#: ../main.lua:168 ../main.lua:172
+#: ../main.lua:168
+msgid   "File does not exist.\n"
+        "\n"
+        "%1"
+msgstr  "फ़ाइल मौजूद नहीं है।\n"
+        "\n"
+        "%1"
+
+#: ../main.lua:176 ../main.lua:180
 msgid   "Delete"
 msgstr  "हटाएँ"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -504,25 +516,25 @@ msgstr  "फ़ाइल हटाएँ?\n"
         "%1\n"
         "यह क्रिया पूर्ववत नहीं की जा सकती।"
 
-#: ../main.lua:183
+#: ../main.lua:191
 msgid   "Edit"
 msgstr  "संपादित करें"
 
-#: ../main.lua:273
+#: ../main.lua:281
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "configuration.lua में कोई मान्य मॉडल प्रदाता नहीं मिला।"
 
-#: ../main.lua:291
+#: ../main.lua:299
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "विन्यास त्रुटि।\n"
         "कृपया configuration.lua सेट करें।"
 
-#: ../main.lua:360
+#: ../main.lua:368
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: मॉडल प्रदाता अमान्य हैं।"
 
-#: ../main.lua:425
+#: ../main.lua:433
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -548,11 +560,11 @@ msgstr  "उपयोगी सुझाव\n"
         "मल्टी-स्वाइप (जैसे ⮠, ⮡, ↺):\n"
         "परिणाम संवाद को बंद करने के लिए (क्लोज़ बटन दूर होने पर)।\n"
 
-#: ../main.lua:450
+#: ../main.lua:458
 msgid   "Purge Settings"
 msgstr  "सेटिंग्स हटाएँ"
 
-#: ../main.lua:453
+#: ../main.lua:461
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -562,33 +574,33 @@ msgstr  "क्या आप वाकई असिस्टेंट प्ल�
         "\n"
         "configuration.lua सुरक्षित रहेगा; केवल संवाद की सेटिंग्स हटेंगी।"
 
-#: ../main.lua:457
+#: ../main.lua:465
 msgid   "Purge"
 msgstr  "हटाएँ"
 
-#: ../main.lua:494
+#: ../main.lua:502
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "क्या आप [%s] को हाइलाइट मेनू से हटाना चाहते हैं?"
 
-#: ../main.lua:495
+#: ../main.lua:503
 msgid   "Remove"
 msgstr  "हटाएँ"
 
-#: ../main.lua:647
+#: ../main.lua:655
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "कॉन्फ़िगरेशन नहीं मिला। कृपया पहले configuration.lua सेटअप करें।"
 
-#: ../main.lua:689
+#: ../main.lua:697
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "[%1 (एआई)] को हाइलाइट मेनू में जोड़ा गया।"
 
-#: ../main.lua:698
+#: ../main.lua:706
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "[%s (एआई)] को हाइलाइट मेनू से हटाया गया।"
 
-#: ../main.lua:742
+#: ../main.lua:750
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -597,10 +609,10 @@ msgstr  "क्या आप एक एआई रीकैप चाहते �
         "%s द्वारा %s के लिए।\n"
         "अंतिम पढ़ना %.0f घंटे पहले।"
 
-#: ../main.lua:747
+#: ../main.lua:755
 msgid   "Yes"
 msgstr  "हाँ"
 
-#: ../main.lua:756
+#: ../main.lua:764
 msgid   "No"
 msgstr  "नहीं"

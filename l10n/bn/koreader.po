@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
+        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
         "PO-Revision-Date: 2025-08-21 15:17:03+0800\n"
         "Last-Translator: ChatGPT-4o <chatgpt4o@openai.com>\n"
         "Language-Team: ChatGPT-4o <chatgpt4o@openai.com>\n"
@@ -15,8 +15,9 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
 msgid   "AI Assistant"
 msgstr  "এআই সহকারী"
 
@@ -96,7 +97,7 @@ msgstr  "অনুসন্ধানের জন্য একটি শব্�
 msgid   "Look Up"
 msgstr  "অনুসন্ধান"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
 msgid   "Dictionary"
 msgstr  "অভিধান"
 
@@ -205,7 +206,7 @@ msgstr  "ঐতিহাসিক প্রেক্ষাপট"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "এই প্রম্প্টটি উল্লেখিত পাঠ্যের বিস্তারিত ঐতিহাসিক প্রেক্ষাপট দেয়, এর গুরুত্ব ও পটভূমি ব্যাখ্যা করে।"
 
-#: ../assistant_prompts.lua:129 ../main.lua:514
+#: ../assistant_prompts.lua:129 ../main.lua:522
 msgid   "Wikipedia"
 msgstr  "উইকিপিডিয়া"
 
@@ -264,7 +265,7 @@ msgstr  "API ত্রুটি:\n"
 msgid   "Unknown error"
 msgstr  "অজানা ত্রুটি"
 
-#: ../assistant_querier.lua:110 ../main.lua:444
+#: ../assistant_querier.lua:110 ../main.lua:452
 msgid   "Settings"
 msgstr  "সেটিংস"
 
@@ -349,7 +350,7 @@ msgstr  "উত্তরের ফন্ট সাইজ"
 msgid   "Font Size: %1"
 msgstr  "ফন্টের আকার: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:193
+#: ../assistant_settings.lua:193 ../main.lua:201
 msgid   "AI Assistant Settings"
 msgstr  "এআই সহকারী সেটিংস"
 
@@ -497,11 +498,19 @@ msgstr  "নোটবুক ফাইল: \n"
 msgid   "View"
 msgstr  "দেখুন"
 
-#: ../main.lua:168 ../main.lua:172
+#: ../main.lua:168
+msgid   "File does not exist.\n"
+        "\n"
+        "%1"
+msgstr  "ফাইলটি নেই।\n"
+        "\n"
+        "%1"
+
+#: ../main.lua:176 ../main.lua:180
 msgid   "Delete"
 msgstr  "মুছুন"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -509,25 +518,25 @@ msgstr  "ফাইল মুছবেন?\n"
         "%1\n"
         "এই কাজটি ফিরিয়ে আনা যাবে না।"
 
-#: ../main.lua:183
+#: ../main.lua:191
 msgid   "Edit"
 msgstr  "সম্পাদনা"
 
-#: ../main.lua:273
+#: ../main.lua:281
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "configuration.lua-তে কোনো বৈধ মডেল প্রদানকারী পাওয়া যায়নি"
 
-#: ../main.lua:291
+#: ../main.lua:299
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "কনফিগারেশন ত্রুটি।\n"
         "configuration.lua সেটআপ করুন।"
 
-#: ../main.lua:360
+#: ../main.lua:368
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: মডেল প্রদানকারীগুলো অবৈধ।"
 
-#: ../main.lua:425
+#: ../main.lua:433
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -553,11 +562,11 @@ msgstr  "দরকারি টিপস\n"
         "মাল্টি-সোয়াইপ (যেমন ⮠, ⮡, ↺):\n"
         "ফলাফল ডায়ালগ বন্ধ করতে (বন্ধ বোতাম দূরে থাকলে)।\n"
 
-#: ../main.lua:450
+#: ../main.lua:458
 msgid   "Purge Settings"
 msgstr  "সেটিংস মুছে ফেলুন"
 
-#: ../main.lua:453
+#: ../main.lua:461
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -567,33 +576,33 @@ msgstr  "আপনি কি সহায়ক প্লাগইনের স�
         "\n"
         "configuration.lua নিরাপদ, কেবল ডায়ালগের সেটিংস মুছবে।"
 
-#: ../main.lua:457
+#: ../main.lua:465
 msgid   "Purge"
 msgstr  "মুছে ফেলুন"
 
-#: ../main.lua:494
+#: ../main.lua:502
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "হাইলাইট মেনু থেকে [%s] মুছতে চান?"
 
-#: ../main.lua:495
+#: ../main.lua:503
 msgid   "Remove"
 msgstr  "মুছুন"
 
-#: ../main.lua:647
+#: ../main.lua:655
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "কনফিগারেশন পাওয়া যায়নি। প্রথমে configuration.lua সেট আপ করুন।"
 
-#: ../main.lua:689
+#: ../main.lua:697
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "হাইলাইট মেনুতে [%1 (এআই)] যোগ করা হয়েছে।"
 
-#: ../main.lua:698
+#: ../main.lua:706
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "হাইলাইট মেনু থেকে [%s (এআই)] মুছে ফেলা হয়েছে।"
 
-#: ../main.lua:742
+#: ../main.lua:750
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -602,10 +611,10 @@ msgstr  "আপনি কি একটি এআই সারসংক্ষে�
         "%s দ্বারা %s বইয়ের জন্য।\n"
         "সর্বশেষ পড়া হয়েছে %.0f ঘন্টা আগে।"
 
-#: ../main.lua:747
+#: ../main.lua:755
 msgid   "Yes"
 msgstr  "হ্যাঁ"
 
-#: ../main.lua:756
+#: ../main.lua:764
 msgid   "No"
 msgstr  "না"
