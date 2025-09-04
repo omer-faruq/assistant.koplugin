@@ -162,7 +162,15 @@ function Assistant:addToMainMenu(menu_items)
               UIManager:show(ConfirmBox:new{
                 text = _("Notebook file: \n\n") .. notebookfile,
                 ok_text = _("View"),
-                ok_callback = function() TextViewer.openFile(notebookfile) end,
+                ok_callback = function()
+                  if not FrontendUtil.pathExists(notebookfile) then
+                    UIManager:show(InfoMessage:new{
+                      text = T(_("File does not exist.\n\n%1"), notebookfile)
+                    })
+                    return
+                  end
+                  TextViewer.openFile(notebookfile)
+                end,
                 other_buttons = {{
                   {
                     text = _("Delete"),
