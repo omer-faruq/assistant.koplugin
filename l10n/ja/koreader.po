@@ -5,7 +5,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-03 17:17+0800\n"
+        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
         "PO-Revision-Date: 2025-09-01 15:20+0800\n"
         "Last-Translator: Claude-3.5-Sonnet <claude@anthropic.com>\n"
         "Language-Team: Claude-3.5-Sonnet <ja@anthropic.com>\n"
@@ -14,7 +14,7 @@ msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:109 ../main.lua:292
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
 msgid   "AI Assistant"
 msgstr  "AIアシスタント"
 
@@ -94,7 +94,7 @@ msgstr  "単語を入力..."
 msgid   "Look Up"
 msgstr  "検索"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:493
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
 msgid   "Dictionary"
 msgstr  "辞書"
 
@@ -203,7 +203,7 @@ msgstr  "歴史的背景"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "ハイライトしたテキストの歴史的背景と意義を詳しく解説します。"
 
-#: ../assistant_prompts.lua:129 ../main.lua:479
+#: ../assistant_prompts.lua:129 ../main.lua:514
 msgid   "Wikipedia"
 msgstr  "ウィキペディア"
 
@@ -262,7 +262,7 @@ msgstr  "API エラー:\n"
 msgid   "Unknown error"
 msgstr  "不明なエラー"
 
-#: ../assistant_querier.lua:110 ../main.lua:409
+#: ../assistant_querier.lua:110 ../main.lua:444
 msgid   "Settings"
 msgstr  "設定"
 
@@ -347,7 +347,7 @@ msgstr  "応答フォントサイズ"
 msgid   "Font Size: %1"
 msgstr  "フォントサイズ: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:158
+#: ../assistant_settings.lua:193 ../main.lua:193
 msgid   "AI Assistant Settings"
 msgstr  "AI アシスタント設定"
 
@@ -380,8 +380,8 @@ msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "次に本を開くと AI 要約が有効になります"
 
 #: ../assistant_settings.lua:272
-msgid   "Auto Export Conversations to File"
-msgstr  "会話を自動的にファイルにエクスポート"
+msgid   "Auto-save conversations to NoteBook."
+msgstr  "会話をノートブックに自動保存"
 
 #: ../assistant_settings.lua:370
 msgid   "AI Assistant Features:"
@@ -437,73 +437,95 @@ msgstr  "ノートを追加しました"
 msgid   "Type your question here"
 msgstr  "質問を入力"
 
-#: ../assistant_viewer.lua:725
-msgid   "Cannot access log directory: "
-msgstr  "ログディレクトリにアクセスできません: "
-
-#: ../assistant_viewer.lua:725
-msgid   "Logging cancelled."
-msgstr  "ログ記録をキャンセルしました。"
-
-#: ../assistant_viewer.lua:769
+#: ../assistant_viewer.lua:740
 msgid   "Chat log export failed. Continuing..."
 msgstr  "チャットログのエクスポートに失敗しました。続行中..."
 
-#: ../assistant_viewer.lua:874
+#: ../assistant_viewer.lua:845
 msgid   "Word copied to clipboard."
 msgstr  "単語をコピーしました"
 
-#: ../assistant_viewer.lua:875
+#: ../assistant_viewer.lua:846
 msgid   "Selection copied to clipboard."
 msgstr  "選択範囲をコピーしました"
 
-#: ../main.lua:75 ../main.lua:113
+#: ../main.lua:76 ../main.lua:114
 msgid   "Ask the AI a question"
 msgstr  "AI に質問する"
 
-#: ../main.lua:83 ../main.lua:146
+#: ../main.lua:84 ../main.lua:147
 msgid   "AI Recaps"
 msgstr  "AI要約"
 
-#: ../main.lua:91 ../main.lua:135
+#: ../main.lua:92 ../main.lua:136
 msgid   "AI X-Ray"
 msgstr  "AI X-Ray"
 
-#: ../main.lua:99 ../main.lua:124
+#: ../main.lua:100 ../main.lua:125
 msgid   "Book Summary & Recs"
 msgstr  "本の要約とおすすめ"
 
-#: ../main.lua:119
+#: ../main.lua:120
 msgid   "Enter a question to ask AI."
 msgstr  "AIに質問を入力してください"
 
-#: ../main.lua:130
+#: ../main.lua:131
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "本の要約、作者の経歴、歴史的背景、類似書籍のおすすめリストと説明"
 
-#: ../main.lua:141
+#: ../main.lua:142
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "本の「X-Ray」要約 - 登場人物、場所、テーマ、用語・概念、年表、再体験のセクションで構成"
 
-#: ../main.lua:152
+#: ../main.lua:153
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "現在の読書進行までのネタバレなし超簡潔要約"
 
-#: ../main.lua:238
+#: ../main.lua:159
+msgid   "NoteBook (Auto-Saved AI Conversations)"
+msgstr  "ノートブック (AI会話自動保存)"
+
+#: ../main.lua:163
+msgid   "Notebook file: \n"
+        "\n"
+msgstr  "ノートブックファイル: \n"
+        "\n"
+
+#: ../main.lua:164
+msgid   "View"
+msgstr  "表示"
+
+#: ../main.lua:168 ../main.lua:172
+msgid   "Delete"
+msgstr  "削除"
+
+#: ../main.lua:171
+msgid   "Delete file?\n"
+        "%1\n"
+        "This operation is not reversible."
+msgstr  "ファイルを削除しますか？\n"
+        "%1\n"
+        "この操作は元に戻せません。"
+
+#: ../main.lua:183
+msgid   "Edit"
+msgstr  "編集"
+
+#: ../main.lua:273
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "configuration.lua に有効なモデルプロバイダーが見つかりません"
 
-#: ../main.lua:256
+#: ../main.lua:291
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "設定エラー。\n"
         "configuration.lua を設定してください。"
 
-#: ../main.lua:325
+#: ../main.lua:360
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua のモデルプロバイダーが無効です"
 
-#: ../main.lua:390
+#: ../main.lua:425
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -529,11 +551,11 @@ msgstr  "便利なヒント\n"
         "マルチスワイプ（例: ⮠, ⮡, ↺）:\n"
         "結果ダイアログを閉じる（閉じるボタンが遠い時）\n"
 
-#: ../main.lua:415
+#: ../main.lua:450
 msgid   "Purge Settings"
 msgstr  "設定をリセット"
 
-#: ../main.lua:418
+#: ../main.lua:453
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -543,33 +565,33 @@ msgstr  "アシスタントプラグインの設定をリセットしてもよ�
         "\n"
         "configuration.lua は保護されており、ダイアログ内の設定のみがリセットされます。"
 
-#: ../main.lua:422
+#: ../main.lua:457
 msgid   "Purge"
 msgstr  "リセット"
 
-#: ../main.lua:459
+#: ../main.lua:494
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "ハイライトメニューから [%s] を削除しますか？"
 
-#: ../main.lua:460
+#: ../main.lua:495
 msgid   "Remove"
 msgstr  "削除"
 
-#: ../main.lua:612
+#: ../main.lua:647
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "設定が見つかりません。先に configuration.lua を設定してください。"
 
-#: ../main.lua:654
+#: ../main.lua:689
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "[%1 (AI)] をハイライトメニューに追加しました。"
 
-#: ../main.lua:663
+#: ../main.lua:698
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "[%s (AI)] をハイライトメニューから削除しました。"
 
-#: ../main.lua:707
+#: ../main.lua:742
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -578,10 +600,10 @@ msgstr  "AI要約を取得しますか？\n"
         "『%s』（著者：%s）\n"
         "最終読書 %.0f 時間前"
 
-#: ../main.lua:712
+#: ../main.lua:747
 msgid   "Yes"
 msgstr  "はい"
 
-#: ../main.lua:721
+#: ../main.lua:756
 msgid   "No"
 msgstr  "いいえ"

@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-03 17:17+0800\n"
+        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
         "PO-Revision-Date: 2025-08-21 15:24+0700\n"
         "Last-Translator: ChatGPT-4.0\n"
         "Language-Team: ChatGPT-4.0\n"
@@ -16,7 +16,7 @@ msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:109 ../main.lua:292
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
 msgid   "AI Assistant"
 msgstr  "Trợ lý AI"
 
@@ -96,7 +96,7 @@ msgstr  "Nhập từ cần tra..."
 msgid   "Look Up"
 msgstr  "Tra cứu"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:493
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
 msgid   "Dictionary"
 msgstr  "Từ điển"
 
@@ -205,7 +205,7 @@ msgstr  "Bối cảnh lịch sử"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Lệnh này cung cấp bối cảnh lịch sử và ý nghĩa của văn bản được đánh dấu."
 
-#: ../assistant_prompts.lua:129 ../main.lua:479
+#: ../assistant_prompts.lua:129 ../main.lua:514
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -264,7 +264,7 @@ msgstr  "Lỗi API:\n"
 msgid   "Unknown error"
 msgstr  "Lỗi không xác định"
 
-#: ../assistant_querier.lua:110 ../main.lua:409
+#: ../assistant_querier.lua:110 ../main.lua:444
 msgid   "Settings"
 msgstr  "Cài đặt"
 
@@ -349,7 +349,7 @@ msgstr  "Cỡ chữ phản hồi"
 msgid   "Font Size: %1"
 msgstr  "Cỡ chữ: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:158
+#: ../assistant_settings.lua:193 ../main.lua:193
 msgid   "AI Assistant Settings"
 msgstr  "Cài đặt Trợ lý AI"
 
@@ -382,8 +382,8 @@ msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "Tóm tắt AI sẽ khả dụng khi mở sách lần tới."
 
 #: ../assistant_settings.lua:272
-msgid   "Auto Export Conversations to File"
-msgstr  "Tự động xuất cuộc trò chuyện ra tệp"
+msgid   "Auto-save conversations to NoteBook."
+msgstr  "Tự động lưu cuộc trò chuyện vào Sổ ghi chú."
 
 #: ../assistant_settings.lua:370
 msgid   "AI Assistant Features:"
@@ -439,73 +439,95 @@ msgstr  "Đã thêm ghi chú"
 msgid   "Type your question here"
 msgstr  "Nhập câu hỏi tại đây"
 
-#: ../assistant_viewer.lua:725
-msgid   "Cannot access log directory: "
-msgstr  "Không truy cập được thư mục nhật ký: "
-
-#: ../assistant_viewer.lua:725
-msgid   "Logging cancelled."
-msgstr  "Đã hủy ghi nhật ký."
-
-#: ../assistant_viewer.lua:769
+#: ../assistant_viewer.lua:740
 msgid   "Chat log export failed. Continuing..."
 msgstr  "Xuất nhật ký trò chuyện thất bại. Tiếp tục..."
 
-#: ../assistant_viewer.lua:874
+#: ../assistant_viewer.lua:845
 msgid   "Word copied to clipboard."
 msgstr  "Từ đã được sao chép."
 
-#: ../assistant_viewer.lua:875
+#: ../assistant_viewer.lua:846
 msgid   "Selection copied to clipboard."
 msgstr  "Vùng chọn đã được sao chép."
 
-#: ../main.lua:75 ../main.lua:113
+#: ../main.lua:76 ../main.lua:114
 msgid   "Ask the AI a question"
 msgstr  "Đặt câu hỏi cho AI"
 
-#: ../main.lua:83 ../main.lua:146
+#: ../main.lua:84 ../main.lua:147
 msgid   "AI Recaps"
 msgstr  "Tóm tắt AI"
 
-#: ../main.lua:91 ../main.lua:135
+#: ../main.lua:92 ../main.lua:136
 msgid   "AI X-Ray"
 msgstr  "Chụp X-Quang AI"
 
-#: ../main.lua:99 ../main.lua:124
+#: ../main.lua:100 ../main.lua:125
 msgid   "Book Summary & Recs"
 msgstr  "Tóm tắt & Gợi ý sách"
 
-#: ../main.lua:119
+#: ../main.lua:120
 msgid   "Enter a question to ask AI."
 msgstr  "Nhập câu hỏi cho AI"
 
-#: ../main.lua:130
+#: ../main.lua:131
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "Tóm tắt sách, tiểu sử tác giả, bối cảnh lịch sử và danh sách sách tương tự kèm mô tả."
 
-#: ../main.lua:141
+#: ../main.lua:142
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "Tóm tắt \"X-Ray\" cho sách, chia thành Nhân vật, Bối cảnh, Chủ đề, Thuật ngữ & Khái niệm, Dòng thời gian và Hồi tưởng."
 
-#: ../main.lua:152
+#: ../main.lua:153
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "Tóm tắt ngắn gọn, không tiết lộ nội dung, tới vị trí đang đọc."
 
-#: ../main.lua:238
+#: ../main.lua:159
+msgid   "NoteBook (Auto-Saved AI Conversations)"
+msgstr  "Sổ ghi chú (Cuộc trò chuyện AI đã lưu tự động)"
+
+#: ../main.lua:163
+msgid   "Notebook file: \n"
+        "\n"
+msgstr  "Tệp sổ ghi chú: \n"
+        "\n"
+
+#: ../main.lua:164
+msgid   "View"
+msgstr  "Xem"
+
+#: ../main.lua:168 ../main.lua:172
+msgid   "Delete"
+msgstr  "Xóa"
+
+#: ../main.lua:171
+msgid   "Delete file?\n"
+        "%1\n"
+        "This operation is not reversible."
+msgstr  "Xóa tệp?\n"
+        "%1\n"
+        "Thao tác này không thể hoàn tác."
+
+#: ../main.lua:183
+msgid   "Edit"
+msgstr  "Sửa"
+
+#: ../main.lua:273
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Không tìm thấy nhà cung cấp mô hình hợp lệ trong configuration.lua"
 
-#: ../main.lua:256
+#: ../main.lua:291
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Lỗi cấu hình.\n"
         "Vui lòng thiết lập configuration.lua."
 
-#: ../main.lua:325
+#: ../main.lua:360
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: nhà cung cấp mô hình không hợp lệ."
 
-#: ../main.lua:390
+#: ../main.lua:425
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -531,11 +553,11 @@ msgstr  "Mẹo hữu ích\n"
         "Vuốt nhiều lần (ví dụ ⮠, ⮡, ↺):\n"
         "Trên hộp kết quả để đóng (do nút Đóng xa).\n"
 
-#: ../main.lua:415
+#: ../main.lua:450
 msgid   "Purge Settings"
 msgstr  "Xóa cài đặt"
 
-#: ../main.lua:418
+#: ../main.lua:453
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -545,33 +567,33 @@ msgstr  "Bạn có chắc muốn xóa cài đặt plugin trợ lý?\n"
         "\n"
         "Tệp configuration.lua được giữ nguyên, chỉ các cài đặt trong hộp thoại bị xóa."
 
-#: ../main.lua:422
+#: ../main.lua:457
 msgid   "Purge"
 msgstr  "Xóa"
 
-#: ../main.lua:459
+#: ../main.lua:494
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Xoá [%s] khỏi menu đánh dấu?"
 
-#: ../main.lua:460
+#: ../main.lua:495
 msgid   "Remove"
 msgstr  "Xoá"
 
-#: ../main.lua:612
+#: ../main.lua:647
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Không tìm thấy cấu hình. Vui lòng thiết lập configuration.lua."
 
-#: ../main.lua:654
+#: ../main.lua:689
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Đã thêm [%1 (AI)] vào menu đánh dấu."
 
-#: ../main.lua:663
+#: ../main.lua:698
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Đã xoá [%s (AI)] khỏi menu đánh dấu."
 
-#: ../main.lua:707
+#: ../main.lua:742
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -580,10 +602,10 @@ msgstr  "Bạn muốn AI tóm tắt?\n"
         "%s của %s.\n"
         "Đọc lần cuối cách đây %.0f giờ."
 
-#: ../main.lua:712
+#: ../main.lua:747
 msgid   "Yes"
 msgstr  "Có"
 
-#: ../main.lua:721
+#: ../main.lua:756
 msgid   "No"
 msgstr  "Không"

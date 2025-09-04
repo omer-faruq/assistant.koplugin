@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-03 17:17+0800\n"
+        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
         "PO-Revision-Date: 2025-08-21 15:19:32+0800\n"
         "Last-Translator: ChatGPT-4.0 <gl@chatgpt.org>\n"
         "Language-Team: ChatGPT-4.0 <gl@chatgpt.org>\n"
@@ -16,7 +16,7 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:109 ../main.lua:292
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
 msgid   "AI Assistant"
 msgstr  "Asistente de IA"
 
@@ -96,7 +96,7 @@ msgstr  "Escribe unha palabra para buscar..."
 msgid   "Look Up"
 msgstr  "Buscar"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:493
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
 msgid   "Dictionary"
 msgstr  "Diccionario"
 
@@ -205,7 +205,7 @@ msgstr  "Contexto Histórico"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Este prompt proporciona un contexto histórico detallado do texto resaltado, explicando súa importancia e fondo."
 
-#: ../assistant_prompts.lua:129 ../main.lua:479
+#: ../assistant_prompts.lua:129 ../main.lua:514
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -264,7 +264,7 @@ msgstr  "Erro da API:\n"
 msgid   "Unknown error"
 msgstr  "Erro descoñecido"
 
-#: ../assistant_querier.lua:110 ../main.lua:409
+#: ../assistant_querier.lua:110 ../main.lua:444
 msgid   "Settings"
 msgstr  "Configuración"
 
@@ -349,7 +349,7 @@ msgstr  "Tamaño da fonte da resposta"
 msgid   "Font Size: %1"
 msgstr  "Tamaño da fonte: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:158
+#: ../assistant_settings.lua:193 ../main.lua:193
 msgid   "AI Assistant Settings"
 msgstr  "Configuración do Asistente IA"
 
@@ -382,8 +382,8 @@ msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "O resumo con IA activarase ao abrir o seguinte libro."
 
 #: ../assistant_settings.lua:272
-msgid   "Auto Export Conversations to File"
-msgstr  "Exportar conversas automaticamente"
+msgid   "Auto-save conversations to NoteBook."
+msgstr  "Gardar conversas no caderno automaticamente."
 
 #: ../assistant_settings.lua:370
 msgid   "AI Assistant Features:"
@@ -439,73 +439,95 @@ msgstr  "Nota engadida correctamente"
 msgid   "Type your question here"
 msgstr  "Escribe a túa pregunta aquí"
 
-#: ../assistant_viewer.lua:725
-msgid   "Cannot access log directory: "
-msgstr  "Non se pode acceder ao cartafol de rexistro: "
-
-#: ../assistant_viewer.lua:725
-msgid   "Logging cancelled."
-msgstr  "Rexistro cancelado."
-
-#: ../assistant_viewer.lua:769
+#: ../assistant_viewer.lua:740
 msgid   "Chat log export failed. Continuing..."
 msgstr  "Erro ao exportar o rexistro. Continuando..."
 
-#: ../assistant_viewer.lua:874
+#: ../assistant_viewer.lua:845
 msgid   "Word copied to clipboard."
 msgstr  "Palabra copiada ao portapapeis."
 
-#: ../assistant_viewer.lua:875
+#: ../assistant_viewer.lua:846
 msgid   "Selection copied to clipboard."
 msgstr  "Selección copiada ao portapapeis."
 
-#: ../main.lua:75 ../main.lua:113
+#: ../main.lua:76 ../main.lua:114
 msgid   "Ask the AI a question"
 msgstr  "Fai unha pregunta á IA"
 
-#: ../main.lua:83 ../main.lua:146
+#: ../main.lua:84 ../main.lua:147
 msgid   "AI Recaps"
 msgstr  "Resumo da IA"
 
-#: ../main.lua:91 ../main.lua:135
+#: ../main.lua:92 ../main.lua:136
 msgid   "AI X-Ray"
 msgstr  "Raio X con IA"
 
-#: ../main.lua:99 ../main.lua:124
+#: ../main.lua:100 ../main.lua:125
 msgid   "Book Summary & Recs"
 msgstr  "Resumo e recomendacións"
 
-#: ../main.lua:119
+#: ../main.lua:120
 msgid   "Enter a question to ask AI."
 msgstr  "Escribe unha pregunta para a IA."
 
-#: ../main.lua:130
+#: ../main.lua:131
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "Resumo do libro, biografía do autor, contexto histórico e lista de recomendacións similares con descricións."
 
-#: ../main.lua:141
+#: ../main.lua:142
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "Resumo «X-Ray» do libro, estruturado en seccións como Personaxes, Lugares, Temas, Termos e conceptos, Cronoloxía e Re-inmersión."
 
-#: ../main.lua:152
+#: ../main.lua:153
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "Resumo breve e sen spoilers do libro ata o punto de lectura actual."
 
-#: ../main.lua:238
+#: ../main.lua:159
+msgid   "NoteBook (Auto-Saved AI Conversations)"
+msgstr  "Caderno (Conversas IA gardadas)"
+
+#: ../main.lua:163
+msgid   "Notebook file: \n"
+        "\n"
+msgstr  "Ficheiro do caderno: \n"
+        "\n"
+
+#: ../main.lua:164
+msgid   "View"
+msgstr  "Ver"
+
+#: ../main.lua:168 ../main.lua:172
+msgid   "Delete"
+msgstr  "Eliminar"
+
+#: ../main.lua:171
+msgid   "Delete file?\n"
+        "%1\n"
+        "This operation is not reversible."
+msgstr  "Eliminar ficheiro?\n"
+        "%1\n"
+        "Esta acción non se pode desfacer."
+
+#: ../main.lua:183
+msgid   "Edit"
+msgstr  "Editar"
+
+#: ../main.lua:273
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Non se atopou un provedor de modelos válido en configuration.lua"
 
-#: ../main.lua:256
+#: ../main.lua:291
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Erro de configuración.\n"
         "Configura configuration.lua."
 
-#: ../main.lua:325
+#: ../main.lua:360
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: os provedores de modelos non son válidos."
 
-#: ../main.lua:390
+#: ../main.lua:425
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -531,11 +553,11 @@ msgstr  "Consellos útiles\n"
         "Multi-gesto (p. ex., ⮠, ⮡, ↺):\n"
         "Na xanela de resultados para pechar (xa que o botón Pechar está lonxe).\n"
 
-#: ../main.lua:415
+#: ../main.lua:450
 msgid   "Purge Settings"
 msgstr  "Restablecer axustes"
 
-#: ../main.lua:418
+#: ../main.lua:453
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -545,33 +567,33 @@ msgstr  "Seguro que queres restablecer os axustes do complemento? \n"
         "\n"
         "configuration.lua está a salvo, só se borran os axustes do diálogo."
 
-#: ../main.lua:422
+#: ../main.lua:457
 msgid   "Purge"
 msgstr  "Restablecer"
 
-#: ../main.lua:459
+#: ../main.lua:494
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Eliminar [%s] do menú de realces?"
 
-#: ../main.lua:460
+#: ../main.lua:495
 msgid   "Remove"
 msgstr  "Eliminar"
 
-#: ../main.lua:612
+#: ../main.lua:647
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Configuración non atopada. Por favor, configúrea configuration.lua primeiro."
 
-#: ../main.lua:654
+#: ../main.lua:689
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Engadido [%1 (IA)] ao menú de realces."
 
-#: ../main.lua:663
+#: ../main.lua:698
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Eliminado [%s (IA)] do menú de realces."
 
-#: ../main.lua:707
+#: ../main.lua:742
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -580,10 +602,10 @@ msgstr  "¿Queres un Resumo da IA?\n"
         "Para %s por %s.\n"
         "Última lectura %.0f hora(s) atrás."
 
-#: ../main.lua:712
+#: ../main.lua:747
 msgid   "Yes"
 msgstr  "Sí"
 
-#: ../main.lua:721
+#: ../main.lua:756
 msgid   "No"
 msgstr  "Non"

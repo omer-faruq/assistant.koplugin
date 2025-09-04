@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-03 17:17+0800\n"
+        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
         "PO-Revision-Date: 2025-08-25 16:59+0300\n"
         "Last-Translator: ChatGPT 4.0 <chatgpt@openai.com>\n"
         "Language-Team: ChatGPT 4.0 <chatgpt@openai.com>\n"
@@ -17,7 +17,7 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Content-Transfer-Encoding: 8bit\n"
         "PPO-Creation-Date: 2025-08-25 16:59+0800\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:109 ../main.lua:292
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
 msgid   "AI Assistant"
 msgstr  "עוזר מלאכותי"
 
@@ -97,7 +97,7 @@ msgstr  "הכנס מילה לחיפוש..."
 msgid   "Look Up"
 msgstr  "חפש"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:493
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
 msgid   "Dictionary"
 msgstr  "מילון"
 
@@ -206,7 +206,7 @@ msgstr  "הקשר היסטורי"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "הקוד הזה מספק הקשר היסטורי מפורט לטקסט המודגש, עם הסבר על חשיבותו והרקע שלו."
 
-#: ../assistant_prompts.lua:129 ../main.lua:479
+#: ../assistant_prompts.lua:129 ../main.lua:514
 msgid   "Wikipedia"
 msgstr  "ויקיפדיה"
 
@@ -265,7 +265,7 @@ msgstr  "שגיאת API:\n"
 msgid   "Unknown error"
 msgstr  "שגיאה לא ידועה"
 
-#: ../assistant_querier.lua:110 ../main.lua:409
+#: ../assistant_querier.lua:110 ../main.lua:444
 msgid   "Settings"
 msgstr  "הגדרות"
 
@@ -350,7 +350,7 @@ msgstr  "גודל גופן התגובה"
 msgid   "Font Size: %1"
 msgstr  "גודל גופן: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:158
+#: ../assistant_settings.lua:193 ../main.lua:193
 msgid   "AI Assistant Settings"
 msgstr  "הגדרות העוזר AI"
 
@@ -383,8 +383,8 @@ msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "סיכום AI יופעל בפתיחת הספר הבאה."
 
 #: ../assistant_settings.lua:272
-msgid   "Auto Export Conversations to File"
-msgstr  "יצוא אוטומטי של שיחות לקובץ"
+msgid   "Auto-save conversations to NoteBook."
+msgstr  "שמירה אוטומטית של שיחות לפנקס."
 
 #: ../assistant_settings.lua:370
 msgid   "AI Assistant Features:"
@@ -440,73 +440,95 @@ msgstr  "ההערה נוספה בהצלחה"
 msgid   "Type your question here"
 msgstr  "הקלד שאלה כאן"
 
-#: ../assistant_viewer.lua:725
-msgid   "Cannot access log directory: "
-msgstr  "לא ניתן לגשת לתיקיית היומנים: "
-
-#: ../assistant_viewer.lua:725
-msgid   "Logging cancelled."
-msgstr  "התיעוד בוטל."
-
-#: ../assistant_viewer.lua:769
+#: ../assistant_viewer.lua:740
 msgid   "Chat log export failed. Continuing..."
 msgstr  "יצוא יומן הצ'אט נכשל. ממשיך..."
 
-#: ../assistant_viewer.lua:874
+#: ../assistant_viewer.lua:845
 msgid   "Word copied to clipboard."
 msgstr  "המילה הועתקה ללוח."
 
-#: ../assistant_viewer.lua:875
+#: ../assistant_viewer.lua:846
 msgid   "Selection copied to clipboard."
 msgstr  "הבחירה הועתקה ללוח."
 
-#: ../main.lua:75 ../main.lua:113
+#: ../main.lua:76 ../main.lua:114
 msgid   "Ask the AI a question"
 msgstr  "שאל את הבינה המלאכותית שאלה"
 
-#: ../main.lua:83 ../main.lua:146
+#: ../main.lua:84 ../main.lua:147
 msgid   "AI Recaps"
 msgstr  "סיכומי AI"
 
-#: ../main.lua:91 ../main.lua:135
+#: ../main.lua:92 ../main.lua:136
 msgid   "AI X-Ray"
 msgstr  "רנטגן AI"
 
-#: ../main.lua:99 ../main.lua:124
+#: ../main.lua:100 ../main.lua:125
 msgid   "Book Summary & Recs"
 msgstr  "סיכום ומלצות"
 
-#: ../main.lua:119
+#: ../main.lua:120
 msgid   "Enter a question to ask AI."
 msgstr  "הקלד שאלה לבינה מלאכותית"
 
-#: ../main.lua:130
+#: ../main.lua:131
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "סיכום הספר, ביוגרפיה של המחבר, הקשר היסטורי, ורשימת המלצות לספרים דומים עם תיאורים."
 
-#: ../main.lua:141
+#: ../main.lua:142
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "סיכום \"X-Ray\" לספר, מחולק לנושאים כמו דמויות, מיקומים, נושאים, מונחים ורעיונות, ציר זמן וחזרה לעלילה."
 
-#: ../main.lua:152
+#: ../main.lua:153
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "סיכום קצר וללא ספוילרים של הספר עד נקודת הקריאה הנוכחית."
 
-#: ../main.lua:238
+#: ../main.lua:159
+msgid   "NoteBook (Auto-Saved AI Conversations)"
+msgstr  "פנקס (שיחות AI שמורות אוטומטית)"
+
+#: ../main.lua:163
+msgid   "Notebook file: \n"
+        "\n"
+msgstr  "קובץ פנקס: \n"
+        "\n"
+
+#: ../main.lua:164
+msgid   "View"
+msgstr  "צפייה"
+
+#: ../main.lua:168 ../main.lua:172
+msgid   "Delete"
+msgstr  "מחיקה"
+
+#: ../main.lua:171
+msgid   "Delete file?\n"
+        "%1\n"
+        "This operation is not reversible."
+msgstr  "למחוק קובץ?\n"
+        "%1\n"
+        "לא ניתן לבטל פעולה זו."
+
+#: ../main.lua:183
+msgid   "Edit"
+msgstr  "עריכה"
+
+#: ../main.lua:273
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "לא נמצא ספק מודל תקף ב-configuration.lua"
 
-#: ../main.lua:256
+#: ../main.lua:291
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "שגיאת תצורה.\n"
         "הגדר את configuration.lua."
 
-#: ../main.lua:325
+#: ../main.lua:360
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: ספקי המודל אינם תקפים."
 
-#: ../main.lua:390
+#: ../main.lua:425
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -532,11 +554,11 @@ msgstr  "עצות שימושיות\n"
         "חליקה מרובה (למשל ⮠, ⮡, ↺):\n"
         "על דו-שיח התוצאה כדי לסגור (כיוון שכפתור הסגירה רחוק להגיע).\n"
 
-#: ../main.lua:415
+#: ../main.lua:450
 msgid   "Purge Settings"
 msgstr  "נקה הגדרות"
 
-#: ../main.lua:418
+#: ../main.lua:453
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -546,33 +568,33 @@ msgstr  "למחוק את הגדרות התוסף?\n"
         "\n"
         "configuration.lua יישאר ללא פגע, רק ההגדרות בחלון יימחקו."
 
-#: ../main.lua:422
+#: ../main.lua:457
 msgid   "Purge"
 msgstr  "נקה"
 
-#: ../main.lua:459
+#: ../main.lua:494
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "האם להסיר [%s] מתפריט הדגשה?"
 
-#: ../main.lua:460
+#: ../main.lua:495
 msgid   "Remove"
 msgstr  "הסר"
 
-#: ../main.lua:612
+#: ../main.lua:647
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "הגדרה לא נמצאה. אנא הגדר configuration.lua קודם."
 
-#: ../main.lua:654
+#: ../main.lua:689
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "התווסף [%1 (AI)] לתפריט הדגשה."
 
-#: ../main.lua:663
+#: ../main.lua:698
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "הוסר [%s (AI)] מתפריט הדגשה."
 
-#: ../main.lua:707
+#: ../main.lua:742
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -581,10 +603,10 @@ msgstr  "האם ברצונך סיכום AI?\n"
         "לספר %s מאת %s.\n"
         "קריאה אחרונה לפני %.0f שעות."
 
-#: ../main.lua:712
+#: ../main.lua:747
 msgid   "Yes"
 msgstr  "כן"
 
-#: ../main.lua:721
+#: ../main.lua:756
 msgid   "No"
 msgstr  "לא"

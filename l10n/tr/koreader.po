@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-03 17:17+0800\n"
+        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
         "PO-Revision-Date: 2025-08-21 15:24+0800\n"
         "Last-Translator: ChatGPT 4.0 <chatgpt@openai.com>\n"
         "Language-Team: ChatGPT 4.0 <chatgpt@openai.com>\n"
@@ -15,7 +15,7 @@ msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:109 ../main.lua:292
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
 msgid   "AI Assistant"
 msgstr  "Yapay Zeka Asistanı"
 
@@ -95,7 +95,7 @@ msgstr  "Aramak için kelime girin..."
 msgid   "Look Up"
 msgstr  "Ara"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:493
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
 msgid   "Dictionary"
 msgstr  "Sözlük"
 
@@ -204,7 +204,7 @@ msgstr  "Tarihsel Bağlam"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Bu komut, vurgulanan metin için ayrıntılı tarihsel bağlam sağlar, önemini ve arka planını açıklar."
 
-#: ../assistant_prompts.lua:129 ../main.lua:479
+#: ../assistant_prompts.lua:129 ../main.lua:514
 msgid   "Wikipedia"
 msgstr  "Vikipedi"
 
@@ -263,7 +263,7 @@ msgstr  "API Hatası:\n"
 msgid   "Unknown error"
 msgstr  "Bilinmeyen hata"
 
-#: ../assistant_querier.lua:110 ../main.lua:409
+#: ../assistant_querier.lua:110 ../main.lua:444
 msgid   "Settings"
 msgstr  "Ayarlar"
 
@@ -348,7 +348,7 @@ msgstr  "Yanıt Yazı Boyutu"
 msgid   "Font Size: %1"
 msgstr  "Yazı Boyutu: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:158
+#: ../assistant_settings.lua:193 ../main.lua:193
 msgid   "AI Assistant Settings"
 msgstr  "AI Asistanı Ayarları"
 
@@ -381,8 +381,8 @@ msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "AI Özeti, bir sonraki kitap açıldığında etkinleşecek."
 
 #: ../assistant_settings.lua:272
-msgid   "Auto Export Conversations to File"
-msgstr  "Konuşmaları otomatik dosyaya aktar"
+msgid   "Auto-save conversations to NoteBook."
+msgstr  "Konuşmalar NotBook’a otomatik kaydedilsin."
 
 #: ../assistant_settings.lua:370
 msgid   "AI Assistant Features:"
@@ -438,73 +438,95 @@ msgstr  "Not başarıyla eklendi"
 msgid   "Type your question here"
 msgstr  "Sorunuzu buraya yazın"
 
-#: ../assistant_viewer.lua:725
-msgid   "Cannot access log directory: "
-msgstr  "Günlük klasörüne erişilemiyor: "
-
-#: ../assistant_viewer.lua:725
-msgid   "Logging cancelled."
-msgstr  "Günlük iptal edildi."
-
-#: ../assistant_viewer.lua:769
+#: ../assistant_viewer.lua:740
 msgid   "Chat log export failed. Continuing..."
 msgstr  "Sohbet dışa aktarılamadı. Devam ediliyor..."
 
-#: ../assistant_viewer.lua:874
+#: ../assistant_viewer.lua:845
 msgid   "Word copied to clipboard."
 msgstr  "Kelime kopyalandı."
 
-#: ../assistant_viewer.lua:875
+#: ../assistant_viewer.lua:846
 msgid   "Selection copied to clipboard."
 msgstr  "Seçim kopyalandı."
 
-#: ../main.lua:75 ../main.lua:113
+#: ../main.lua:76 ../main.lua:114
 msgid   "Ask the AI a question"
 msgstr  "Yapay Zekaya soru sor"
 
-#: ../main.lua:83 ../main.lua:146
+#: ../main.lua:84 ../main.lua:147
 msgid   "AI Recaps"
 msgstr  "Yapay Zeka Özetleri"
 
-#: ../main.lua:91 ../main.lua:135
+#: ../main.lua:92 ../main.lua:136
 msgid   "AI X-Ray"
 msgstr  "AI X-Ray"
 
-#: ../main.lua:99 ../main.lua:124
+#: ../main.lua:100 ../main.lua:125
 msgid   "Book Summary & Recs"
 msgstr  "Kitap Özeti & Öneriler"
 
-#: ../main.lua:119
+#: ../main.lua:120
 msgid   "Enter a question to ask AI."
 msgstr  "Yapay zekâya soracağınız soruyu girin."
 
-#: ../main.lua:130
+#: ../main.lua:131
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "Kitabın özeti, yazar biyografisi, tarihsel bağlam ve benzer kitap önerileri ile açıklamaları."
 
-#: ../main.lua:141
+#: ../main.lua:142
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "Kitap için \"X-Ray\" özeti: Karakterler, Mekanlar, Temalar, Terimler & Kavramlar, Zaman Çizelgesi ve Yeniden Dalış bölümleriyle."
 
-#: ../main.lua:152
+#: ../main.lua:153
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "Okuma ilerlemenize kadar, kısa ve spoiler içermeyen kitap özeti."
 
-#: ../main.lua:238
+#: ../main.lua:159
+msgid   "NoteBook (Auto-Saved AI Conversations)"
+msgstr  "NoteBook (Otomatik Kaydedilen Yapay Zekâ Konuşmaları)"
+
+#: ../main.lua:163
+msgid   "Notebook file: \n"
+        "\n"
+msgstr  "Not defteri dosyası: \n"
+        "\n"
+
+#: ../main.lua:164
+msgid   "View"
+msgstr  "Görüntüle"
+
+#: ../main.lua:168 ../main.lua:172
+msgid   "Delete"
+msgstr  "Sil"
+
+#: ../main.lua:171
+msgid   "Delete file?\n"
+        "%1\n"
+        "This operation is not reversible."
+msgstr  "Dosya silinsin mi?\n"
+        "%1\n"
+        "Bu işlem geri alınamaz."
+
+#: ../main.lua:183
+msgid   "Edit"
+msgstr  "Düzenle"
+
+#: ../main.lua:273
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "configuration.lua içinde geçerli model sağlayıcısı bulunamadı"
 
-#: ../main.lua:256
+#: ../main.lua:291
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Yapılandırma Hatası.\n"
         "Lütfen configuration.lua dosyasını kurun."
 
-#: ../main.lua:325
+#: ../main.lua:360
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: model sağlayıcıları geçersiz."
 
-#: ../main.lua:390
+#: ../main.lua:425
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -530,11 +552,11 @@ msgstr  "Faydalı İpuçları\n"
         "Çoklu Kaydırma (örn. ⮠, ⮡, ↺):\n"
         "Sonuç iletişim kutusunu kapatmak için (Kapat düğmesi uzakta olduğunda).\n"
 
-#: ../main.lua:415
+#: ../main.lua:450
 msgid   "Purge Settings"
 msgstr  "Ayarları Sıfırla"
 
-#: ../main.lua:418
+#: ../main.lua:453
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -544,33 +566,33 @@ msgstr  "Eklenti ayarları sıfırlansın mı?\n"
         "\n"
         "configuration.lua dosyası etkilenmez; yalnızca diyalogdaki ayarlar temizlenir."
 
-#: ../main.lua:422
+#: ../main.lua:457
 msgid   "Purge"
 msgstr  "Sıfırla"
 
-#: ../main.lua:459
+#: ../main.lua:494
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "[%s] Vurgulama Menüsünden kaldırılsın mı?"
 
-#: ../main.lua:460
+#: ../main.lua:495
 msgid   "Remove"
 msgstr  "Kaldır"
 
-#: ../main.lua:612
+#: ../main.lua:647
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Yapılandırma bulunamadı. Lütfen önce configuration.lua dosyasını ayarlayın."
 
-#: ../main.lua:654
+#: ../main.lua:689
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "[%1 (AI)] Vurgulama Menüsüne eklendi."
 
-#: ../main.lua:663
+#: ../main.lua:698
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "[%s (AI)] Vurgulama Menüsünden kaldırıldı."
 
-#: ../main.lua:707
+#: ../main.lua:742
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -579,10 +601,10 @@ msgstr  "Yapay Zeka özeti ister misiniz?\n"
         "%s - %s için.\n"
         "Son okuma %.0f saat önce."
 
-#: ../main.lua:712
+#: ../main.lua:747
 msgid   "Yes"
 msgstr  "Evet"
 
-#: ../main.lua:721
+#: ../main.lua:756
 msgid   "No"
 msgstr  "Hayır"

@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-03 17:17+0800\n"
+        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
         "PO-Revision-Date: 2025-08-21 15:23+0800\n"
         "Last-Translator: GPT-4o <gpt-4o@openai.com>\n"
         "Language-Team: GPT-4o <gpt-4o@openai.com>\n"
@@ -15,7 +15,7 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:109 ../main.lua:292
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
 msgid   "AI Assistant"
 msgstr  "AI-assistent"
 
@@ -95,7 +95,7 @@ msgstr  "Ange ett ord att slå upp..."
 msgid   "Look Up"
 msgstr  "Slå upp"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:493
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
 msgid   "Dictionary"
 msgstr  "Ordbok"
 
@@ -204,7 +204,7 @@ msgstr  "Historiskt sammanhang"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Ger detaljerat historiskt sammanhang för markerad text."
 
-#: ../assistant_prompts.lua:129 ../main.lua:479
+#: ../assistant_prompts.lua:129 ../main.lua:514
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -263,7 +263,7 @@ msgstr  "API-fel:\n"
 msgid   "Unknown error"
 msgstr  "Okänt fel"
 
-#: ../assistant_querier.lua:110 ../main.lua:409
+#: ../assistant_querier.lua:110 ../main.lua:444
 msgid   "Settings"
 msgstr  "Inställningar"
 
@@ -348,7 +348,7 @@ msgstr  "Svarstextstorlek"
 msgid   "Font Size: %1"
 msgstr  "Teckenstorlek: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:158
+#: ../assistant_settings.lua:193 ../main.lua:193
 msgid   "AI Assistant Settings"
 msgstr  "AI-assistentinställningar"
 
@@ -381,8 +381,8 @@ msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "AI-sammanfattning aktiveras nästa gång en bok öppnas."
 
 #: ../assistant_settings.lua:272
-msgid   "Auto Export Conversations to File"
-msgstr  "Exportera konversationer automatiskt"
+msgid   "Auto-save conversations to NoteBook."
+msgstr  "Spara konversationer automatiskt i anteckningsboken."
 
 #: ../assistant_settings.lua:370
 msgid   "AI Assistant Features:"
@@ -438,73 +438,95 @@ msgstr  "Anteckning tillagd"
 msgid   "Type your question here"
 msgstr  "Skriv din fråga här"
 
-#: ../assistant_viewer.lua:725
-msgid   "Cannot access log directory: "
-msgstr  "Kan inte komma åt loggkatalog: "
-
-#: ../assistant_viewer.lua:725
-msgid   "Logging cancelled."
-msgstr  "Loggning avbruten."
-
-#: ../assistant_viewer.lua:769
+#: ../assistant_viewer.lua:740
 msgid   "Chat log export failed. Continuing..."
 msgstr  "Export av chatt misslyckades. Fortsätter..."
 
-#: ../assistant_viewer.lua:874
+#: ../assistant_viewer.lua:845
 msgid   "Word copied to clipboard."
 msgstr  "Ord kopierat till urklipp."
 
-#: ../assistant_viewer.lua:875
+#: ../assistant_viewer.lua:846
 msgid   "Selection copied to clipboard."
 msgstr  "Markering kopierad till urklipp."
 
-#: ../main.lua:75 ../main.lua:113
+#: ../main.lua:76 ../main.lua:114
 msgid   "Ask the AI a question"
 msgstr  "Ställ en fråga till AI"
 
-#: ../main.lua:83 ../main.lua:146
+#: ../main.lua:84 ../main.lua:147
 msgid   "AI Recaps"
 msgstr  "AI-sammanfattningar"
 
-#: ../main.lua:91 ../main.lua:135
+#: ../main.lua:92 ../main.lua:136
 msgid   "AI X-Ray"
 msgstr  "AI Röntgen"
 
-#: ../main.lua:99 ../main.lua:124
+#: ../main.lua:100 ../main.lua:125
 msgid   "Book Summary & Recs"
 msgstr  "Boksammanfattning & tips"
 
-#: ../main.lua:119
+#: ../main.lua:120
 msgid   "Enter a question to ask AI."
 msgstr  "Skriv en fråga till AI:n."
 
-#: ../main.lua:130
+#: ../main.lua:131
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "Boksammanfattning, författarbiografi, historisk bakgrund och liknande boktips med beskrivningar."
 
-#: ../main.lua:141
+#: ../main.lua:142
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "\"X-Ray\"-sammanfattning av boken, uppdelad i avsnitt som Figurer, Platser, Teman, Begrepp, Tidslinje och Återupptäckt."
 
-#: ../main.lua:152
+#: ../main.lua:153
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "Mycket kort spoilerfri sammanfattning av boken fram till nuvarande läsning."
 
-#: ../main.lua:238
+#: ../main.lua:159
+msgid   "NoteBook (Auto-Saved AI Conversations)"
+msgstr  "Anteckningsbok (AI-konversationer sparas automatiskt)"
+
+#: ../main.lua:163
+msgid   "Notebook file: \n"
+        "\n"
+msgstr  "Anteckningsbok-fil: \n"
+        "\n"
+
+#: ../main.lua:164
+msgid   "View"
+msgstr  "Visa"
+
+#: ../main.lua:168 ../main.lua:172
+msgid   "Delete"
+msgstr  "Ta bort"
+
+#: ../main.lua:171
+msgid   "Delete file?\n"
+        "%1\n"
+        "This operation is not reversible."
+msgstr  "Vill du ta bort filen?\n"
+        "%1\n"
+        "Åtgärden går inte att ångra."
+
+#: ../main.lua:183
+msgid   "Edit"
+msgstr  "Redigera"
+
+#: ../main.lua:273
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Ingen giltig modell-leverantör hittad i configuration.lua"
 
-#: ../main.lua:256
+#: ../main.lua:291
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Konfigurationsfel.\n"
         "Ställ in configuration.lua."
 
-#: ../main.lua:325
+#: ../main.lua:360
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: modell-leverantörer är ogiltiga."
 
-#: ../main.lua:390
+#: ../main.lua:425
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -530,11 +552,11 @@ msgstr  "Användbara tips\n"
         "Flera svep (t.ex. ⮠, ⮡, ↺):\n"
         "På resultatdialogen för att stänga (eftersom Stäng-knappen är svår att nå).\n"
 
-#: ../main.lua:415
+#: ../main.lua:450
 msgid   "Purge Settings"
 msgstr  "Återställ inställningar"
 
-#: ../main.lua:418
+#: ../main.lua:453
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -544,33 +566,33 @@ msgstr  "Vill du verkligen återställa inställningarna för tillägget?\n"
         "\n"
         "configuration.lua påverkas inte, endast inställningarna i dialogrutan tas bort."
 
-#: ../main.lua:422
+#: ../main.lua:457
 msgid   "Purge"
 msgstr  "Återställ"
 
-#: ../main.lua:459
+#: ../main.lua:494
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Ta bort [%s] från markeringsmenyn?"
 
-#: ../main.lua:460
+#: ../main.lua:495
 msgid   "Remove"
 msgstr  "Ta bort"
 
-#: ../main.lua:612
+#: ../main.lua:647
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Konfiguration saknas. Skapa configuration.lua först."
 
-#: ../main.lua:654
+#: ../main.lua:689
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Tillagt [%1 (AI)] i markeringsmenyn."
 
-#: ../main.lua:663
+#: ../main.lua:698
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Borttaget [%s (AI)] från markeringsmenyn."
 
-#: ../main.lua:707
+#: ../main.lua:742
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -579,10 +601,10 @@ msgstr  "Vill du ha en AI-sammanfattning?\n"
         "%s av %s.\n"
         "Senast läst för %.0f timme sedan."
 
-#: ../main.lua:712
+#: ../main.lua:747
 msgid   "Yes"
 msgstr  "Ja"
 
-#: ../main.lua:721
+#: ../main.lua:756
 msgid   "No"
 msgstr  "Nej"

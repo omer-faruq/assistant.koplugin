@@ -42,7 +42,7 @@ MSGATTRIB_BIN = msgattrib
 MSGCAT_BIN = msgcat
 XGETTEXT_BIN = xgettext
 
-LANGS :=  zh_CN zh_TW ar bg_BG bn ca cs da de el en_GB eo es eu fa fi fr gl he hi hr hu it_IT ja ka kk ko_KR lt_LT lv nb_NO nl_NL pl pt_BR pt_PT ro ro_MD ru sk sr sv th tr uk vi vi_VN
+LANGS :=  zh_CN zh_TW ar bg_BG bn ca cs da de el eo es eu fa fi fr gl he hi hr hu it_IT ja ka kk ko_KR lt_LT lv nb_NO nl_NL pl pt_BR pt_PT ro ro_MD ru sk sr sv th tr uk vi vi_VN
 
 PO_FILES  := $(wildcard */$(DOMAIN).po)
 

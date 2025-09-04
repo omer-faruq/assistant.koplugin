@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-03 17:17+0800\n"
+        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
         "PO-Revision-Date: 2025-08-22 15:23+0000\n"
         "Last-Translator: GPT-4o 2025-08-22\n"
         "Language-Team: GPT-4o <gpt-4o@example.com>\n"
@@ -16,7 +16,7 @@ msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:109 ../main.lua:292
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
 msgid   "AI Assistant"
 msgstr  "ผู้ช่วย AI"
 
@@ -96,7 +96,7 @@ msgstr  "ใส่คำที่ต้องการค้นหา..."
 msgid   "Look Up"
 msgstr  "ค้นหา"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:493
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
 msgid   "Dictionary"
 msgstr  "พจนานุกรม"
 
@@ -205,7 +205,7 @@ msgstr  "บริบทประวัติศาสตร์"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "อธิบายบริบททางประวัติศาสตร์ของข้อความที่ไฮไลต์"
 
-#: ../assistant_prompts.lua:129 ../main.lua:479
+#: ../assistant_prompts.lua:129 ../main.lua:514
 msgid   "Wikipedia"
 msgstr  "วิกิพีเดีย"
 
@@ -264,7 +264,7 @@ msgstr  "ข้อผิดพลาด API:\n"
 msgid   "Unknown error"
 msgstr  "ไม่ทราบข้อผิดพลาด"
 
-#: ../assistant_querier.lua:110 ../main.lua:409
+#: ../assistant_querier.lua:110 ../main.lua:444
 msgid   "Settings"
 msgstr  "ตั้งค่า"
 
@@ -349,7 +349,7 @@ msgstr  "ขนาดตัวอักษรคำตอบ"
 msgid   "Font Size: %1"
 msgstr  "ขนาดฟอนต์: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:158
+#: ../assistant_settings.lua:193 ../main.lua:193
 msgid   "AI Assistant Settings"
 msgstr  "การตั้งค่า AI ผู้ช่วย"
 
@@ -382,8 +382,8 @@ msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "สรุป AI จะทำงานเมื่อเปิดหนังสือครั้งถัดไป"
 
 #: ../assistant_settings.lua:272
-msgid   "Auto Export Conversations to File"
-msgstr  "บันทึกบทสนทนาอัตโนมัติ"
+msgid   "Auto-save conversations to NoteBook."
+msgstr  "บันทึกบทสนทนาอัตโนมัติลง NoteBook"
 
 #: ../assistant_settings.lua:370
 msgid   "AI Assistant Features:"
@@ -439,73 +439,95 @@ msgstr  "เพิ่มโน้ตสำเร็จ"
 msgid   "Type your question here"
 msgstr  "พิมพ์คำถามที่นี่"
 
-#: ../assistant_viewer.lua:725
-msgid   "Cannot access log directory: "
-msgstr  "เข้าถึงโฟลเดอร์บันทึกไม่ได้: "
-
-#: ../assistant_viewer.lua:725
-msgid   "Logging cancelled."
-msgstr  "ยกเลิกการบันทึกแล้ว"
-
-#: ../assistant_viewer.lua:769
+#: ../assistant_viewer.lua:740
 msgid   "Chat log export failed. Continuing..."
 msgstr  "ส่งออกบันทึกล้มเหลว ดำเนินการต่อ..."
 
-#: ../assistant_viewer.lua:874
+#: ../assistant_viewer.lua:845
 msgid   "Word copied to clipboard."
 msgstr  "คัดลอกคำแล้ว"
 
-#: ../assistant_viewer.lua:875
+#: ../assistant_viewer.lua:846
 msgid   "Selection copied to clipboard."
 msgstr  "คัดลอกข้อความที่เลือกแล้ว"
 
-#: ../main.lua:75 ../main.lua:113
+#: ../main.lua:76 ../main.lua:114
 msgid   "Ask the AI a question"
 msgstr  "ถาม AI"
 
-#: ../main.lua:83 ../main.lua:146
+#: ../main.lua:84 ../main.lua:147
 msgid   "AI Recaps"
 msgstr  "สรุป AI"
 
-#: ../main.lua:91 ../main.lua:135
+#: ../main.lua:92 ../main.lua:136
 msgid   "AI X-Ray"
 msgstr  "เอกซ์เรย์ AI"
 
-#: ../main.lua:99 ../main.lua:124
+#: ../main.lua:100 ../main.lua:125
 msgid   "Book Summary & Recs"
 msgstr  "สรุปหนังสือและแนะนำ"
 
-#: ../main.lua:119
+#: ../main.lua:120
 msgid   "Enter a question to ask AI."
 msgstr  "พิมพ์คำถามถาม AI"
 
-#: ../main.lua:130
+#: ../main.lua:131
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "สรุปหนังสือ ประวัติผู้เขียน บริบทประวัติศาสตร์ และรายการหนังสือที่คล้ายกัน พร้อมคำอธิบาย"
 
-#: ../main.lua:141
+#: ../main.lua:142
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "สรุป \"X-Ray\" ของหนังสือ แบ่งเป็นส่วนต่าง ๆ เช่น ตัวละคร สถานที่ ธีม คำศัพท์และแนวคิด ไทม์ไลน์ และการกลับเข้าสู่เนื้อหา"
 
-#: ../main.lua:152
+#: ../main.lua:153
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "สรุปสั้น ไม่สปอย ถึงจุดที่อ่านถึง"
 
-#: ../main.lua:238
+#: ../main.lua:159
+msgid   "NoteBook (Auto-Saved AI Conversations)"
+msgstr  "NoteBook (บทสนทนา AI ที่บันทึกอัตโนมัติ)"
+
+#: ../main.lua:163
+msgid   "Notebook file: \n"
+        "\n"
+msgstr  "ไฟล์ NoteBook: \n"
+        "\n"
+
+#: ../main.lua:164
+msgid   "View"
+msgstr  "ดู"
+
+#: ../main.lua:168 ../main.lua:172
+msgid   "Delete"
+msgstr  "ลบ"
+
+#: ../main.lua:171
+msgid   "Delete file?\n"
+        "%1\n"
+        "This operation is not reversible."
+msgstr  "ลบไฟล์?\n"
+        "%1\n"
+        "การดำเนินการนี้ไม่สามารถย้อนกลับได้"
+
+#: ../main.lua:183
+msgid   "Edit"
+msgstr  "แก้ไข"
+
+#: ../main.lua:273
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "ไม่พบโมเดลโปรไวเดอร์ที่ใช้งานได้ใน configuration.lua"
 
-#: ../main.lua:256
+#: ../main.lua:291
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "เกิดข้อผิดพลาดการตั้งค่า\n"
         "กรุณาตั้งค่า configuration.lua"
 
-#: ../main.lua:325
+#: ../main.lua:360
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: โมเดลโปรไวเดอร์ไม่ถูกต้อง"
 
-#: ../main.lua:390
+#: ../main.lua:425
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -529,13 +551,13 @@ msgstr  "เคล็ดลับ\n"
         "ที่คำเดี่ยวในหนังสือ เพื่อเปิดเมนูไฮไลต์ (แทนพจนานุกรม)\n"
         "\n"
         "ปัดหลายทิศ (เช่น ⮠, ⮡, ↺):\n"
-        "ที่หน้าต่างผลลัพธ์เพื่อปิด (ปุ่มปิดไกล)"
+        "ที่หน้าต่างผลลัพธ์เพื่อปิด (ปุ่มปิดไกล)\n"
 
-#: ../main.lua:415
+#: ../main.lua:450
 msgid   "Purge Settings"
 msgstr  "ล้างการตั้งค่า"
 
-#: ../main.lua:418
+#: ../main.lua:453
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -545,33 +567,33 @@ msgstr  "ยืนยันล้างการตั้งค่าปลั�
         "\n"
         "ไฟล์ configuration.lua ไม่ได้รับผลกระทบ ลบเฉพาะค่าตั้งค่าในหน้าต่าง"
 
-#: ../main.lua:422
+#: ../main.lua:457
 msgid   "Purge"
 msgstr  "ล้าง"
 
-#: ../main.lua:459
+#: ../main.lua:494
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "ลบ [%s] ออกจากเมนูไฮไลต์หรือไม่?"
 
-#: ../main.lua:460
+#: ../main.lua:495
 msgid   "Remove"
 msgstr  "ลบ"
 
-#: ../main.lua:612
+#: ../main.lua:647
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "ไม่พบการตั้งค่า กรุณาตั้งค่า configuration.lua ก่อน"
 
-#: ../main.lua:654
+#: ../main.lua:689
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "เพิ่ม [%1 (AI)] ลงเมนูไฮไลต์แล้ว"
 
-#: ../main.lua:663
+#: ../main.lua:698
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "ลบ [%s (AI)] ออกจากเมนูไฮไลต์แล้ว"
 
-#: ../main.lua:707
+#: ../main.lua:742
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -580,10 +602,10 @@ msgstr  "ต้องการสรุป AI?\n"
         "สำหรับ %s โดย %s\n"
         "อ่านครั้งล่าสุด %.0f ชม. ก่อน"
 
-#: ../main.lua:712
+#: ../main.lua:747
 msgid   "Yes"
 msgstr  "ใช่"
 
-#: ../main.lua:721
+#: ../main.lua:756
 msgid   "No"
 msgstr  "ไม่"

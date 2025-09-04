@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-03 17:17+0800\n"
+        "POT-Creation-Date: 2025-09-04 15:45+0800\n"
         "PO-Revision-Date: 2025-08-21 15:23+0800\n"
         "Last-Translator: ChatGPT 4.0 <chatgpt@example.com>\n"
         "Language-Team: ChatGPT 4.0 <chatgpt@example.com>\n"
@@ -15,7 +15,7 @@ msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:109 ../main.lua:292
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:327
 msgid   "AI Assistant"
 msgstr  "Asistent AI"
 
@@ -95,7 +95,7 @@ msgstr  "Zadajte slovo na vyhľadanie..."
 msgid   "Look Up"
 msgstr  "Vyhľadať"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:493
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:528
 msgid   "Dictionary"
 msgstr  "Slovník"
 
@@ -204,7 +204,7 @@ msgstr  "Historický kontext"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Táto výzva poskytne podrobný historický kontext zvýrazneného textu a vysvetlí jeho význam."
 
-#: ../assistant_prompts.lua:129 ../main.lua:479
+#: ../assistant_prompts.lua:129 ../main.lua:514
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -263,7 +263,7 @@ msgstr  "Chyba API:\n"
 msgid   "Unknown error"
 msgstr  "Neznáma chyba"
 
-#: ../assistant_querier.lua:110 ../main.lua:409
+#: ../assistant_querier.lua:110 ../main.lua:444
 msgid   "Settings"
 msgstr  "Nastavenia"
 
@@ -348,7 +348,7 @@ msgstr  "Veľkosť písma odpovede"
 msgid   "Font Size: %1"
 msgstr  "Veľkosť písma: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:158
+#: ../assistant_settings.lua:193 ../main.lua:193
 msgid   "AI Assistant Settings"
 msgstr  "Nastavenia AI asistenta"
 
@@ -381,8 +381,8 @@ msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "AI zhrnutie sa zapne pri ďalšom otvorení knihy."
 
 #: ../assistant_settings.lua:272
-msgid   "Auto Export Conversations to File"
-msgstr  "Automaticky exportovať konverzácie do súboru"
+msgid   "Auto-save conversations to NoteBook."
+msgstr  "Automaticky ukladať rozhovory do poznámkového bloku."
 
 #: ../assistant_settings.lua:370
 msgid   "AI Assistant Features:"
@@ -438,73 +438,95 @@ msgstr  "Poznámka úspešne pridaná"
 msgid   "Type your question here"
 msgstr  "Sem napíšte svoju otázku"
 
-#: ../assistant_viewer.lua:725
-msgid   "Cannot access log directory: "
-msgstr  "Nemožno pristúpiť k priečinku záznamov: "
-
-#: ../assistant_viewer.lua:725
-msgid   "Logging cancelled."
-msgstr  "Záznam bol zrušený."
-
-#: ../assistant_viewer.lua:769
+#: ../assistant_viewer.lua:740
 msgid   "Chat log export failed. Continuing..."
 msgstr  "Export histórie chatu zlyhal. Pokračuje sa..."
 
-#: ../assistant_viewer.lua:874
+#: ../assistant_viewer.lua:845
 msgid   "Word copied to clipboard."
 msgstr  "Slovo skopírované do schránky."
 
-#: ../assistant_viewer.lua:875
+#: ../assistant_viewer.lua:846
 msgid   "Selection copied to clipboard."
 msgstr  "Výber skopírovaný do schránky."
 
-#: ../main.lua:75 ../main.lua:113
+#: ../main.lua:76 ../main.lua:114
 msgid   "Ask the AI a question"
 msgstr  "Spýtať sa AI otázku"
 
-#: ../main.lua:83 ../main.lua:146
+#: ../main.lua:84 ../main.lua:147
 msgid   "AI Recaps"
 msgstr  "AI rekapitulácie"
 
-#: ../main.lua:91 ../main.lua:135
+#: ../main.lua:92 ../main.lua:136
 msgid   "AI X-Ray"
 msgstr  "AI X-Ray"
 
-#: ../main.lua:99 ../main.lua:124
+#: ../main.lua:100 ../main.lua:125
 msgid   "Book Summary & Recs"
 msgstr  "Zhrnutie knihy a odporúčania"
 
-#: ../main.lua:119
+#: ../main.lua:120
 msgid   "Enter a question to ask AI."
 msgstr  "Zadajte otázku pre AI."
 
-#: ../main.lua:130
+#: ../main.lua:131
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "Zhrnutie knihy, životopis autora, historický kontext a zoznam podobných odporúčaných kníh s popisom."
 
-#: ../main.lua:141
+#: ../main.lua:142
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "„X-Ray“ zhrnutie knihy rozdelené do sekcií: Postavy, Miesta, Témy, Pojmy a koncepty, Časová os a Opätovné ponorenie."
 
-#: ../main.lua:152
+#: ../main.lua:153
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "Veľmi stručné zhrnutie knihy bez spoilerov až po aktuálny postup čítania."
 
-#: ../main.lua:238
+#: ../main.lua:159
+msgid   "NoteBook (Auto-Saved AI Conversations)"
+msgstr  "Poznámkový blok (automaticky uložené AI rozhovory)"
+
+#: ../main.lua:163
+msgid   "Notebook file: \n"
+        "\n"
+msgstr  "Súbor poznámkového bloku: \n"
+        "\n"
+
+#: ../main.lua:164
+msgid   "View"
+msgstr  "Zobraziť"
+
+#: ../main.lua:168 ../main.lua:172
+msgid   "Delete"
+msgstr  "Odstrániť"
+
+#: ../main.lua:171
+msgid   "Delete file?\n"
+        "%1\n"
+        "This operation is not reversible."
+msgstr  "Odstrániť súbor?\n"
+        "%1\n"
+        "Táto operácia je nezvratná."
+
+#: ../main.lua:183
+msgid   "Edit"
+msgstr  "Upraviť"
+
+#: ../main.lua:273
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "V configuration.lua nebol nájdený žiadny platný poskytovateľ modelu"
 
-#: ../main.lua:256
+#: ../main.lua:291
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Chyba konfigurácie.\n"
         "Prosím, nastavte configuration.lua."
 
-#: ../main.lua:325
+#: ../main.lua:360
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: poskytovatelia modelu sú neplatní."
 
-#: ../main.lua:390
+#: ../main.lua:425
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -530,11 +552,11 @@ msgstr  "Užitočné tipy\n"
         "Viacsmerné potiahnutie (napr. ⮠, ⮡, ↺):\n"
         "Na výsledkovom okne pre zatvorenie (keď je tlačidlo Zatvoriť ďaleko).\n"
 
-#: ../main.lua:415
+#: ../main.lua:450
 msgid   "Purge Settings"
 msgstr  "Zmazať nastavenia"
 
-#: ../main.lua:418
+#: ../main.lua:453
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -544,33 +566,33 @@ msgstr  "Naozaj chcete zmazať nastavenia zásuvného modulu asistenta? \n"
         "\n"
         "Súbor configuration.lua ostane nedotknutý, vymažú sa len nastavenia v dialógu."
 
-#: ../main.lua:422
+#: ../main.lua:457
 msgid   "Purge"
 msgstr  "Zmazať"
 
-#: ../main.lua:459
+#: ../main.lua:494
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Odstrániť [%s] z menu zvýraznenia?"
 
-#: ../main.lua:460
+#: ../main.lua:495
 msgid   "Remove"
 msgstr  "Odstrániť"
 
-#: ../main.lua:612
+#: ../main.lua:647
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Konfigurácia nebola nájdená. Najskôr nastavte configuration.lua."
 
-#: ../main.lua:654
+#: ../main.lua:689
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Pridané [%1 (AI)] do menu zvýraznenia."
 
-#: ../main.lua:663
+#: ../main.lua:698
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Odstránené [%s (AI)] z menu zvýraznenia."
 
-#: ../main.lua:707
+#: ../main.lua:742
 #, lua-format
 msgid   "Do you want an AI Recap?\n"
         "For %s by %s.\n"
@@ -579,10 +601,10 @@ msgstr  "Chcete AI rekapituláciu?\n"
         "Pre %s od %s.\n"
         "Naposledy čítané pred %.0f h."
 
-#: ../main.lua:712
+#: ../main.lua:747
 msgid   "Yes"
 msgstr  "Áno"
 
-#: ../main.lua:721
+#: ../main.lua:756
 msgid   "No"
 msgstr  "Nie"
