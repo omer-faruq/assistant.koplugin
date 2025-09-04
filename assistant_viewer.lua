@@ -701,62 +701,33 @@ end
 
 function ChatGPTViewer:onClose()
   -- Export chat log if enabled
-  if self.assistant.settings:readSetting("auto_export_conversations", false) then
+  if self.assistant.settings:readSetting("auto_save_to_notebook", false) then
     local success, err = pcall(function()
       -- Get book file path
-      local book_file_path = self.assistant.ui.document.file
+      local notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
       
-      if book_file_path then
-        -- Get directory and filename without extension
-        local book_dir = book_file_path:match("(.*[/\\])")
-        local book_name = book_file_path:match(".*[/\\]([^/\\]+)%..*$") or book_file_path:match("([^/\\]+)%..*$")
+      if notebookfile then
+        -- Get current timestamp
+        local timestamp = os.date("%Y-%m-%d %H:%M:%S")
         
-        if book_dir and book_name then
-          -- Determine log directory
-          local default_folder_for_logs = util.tableGetValue(self.assistant.CONFIGURATION, "features", "default_folder_for_logs")
-          local log_dir
-          if default_folder_for_logs and default_folder_for_logs ~= "" then
-            log_dir = default_folder_for_logs
-            -- Check if we can access this directory
-            if not util.pathExists(log_dir) then
-              -- Show warning to user and stop logging
-              UIManager:show(InfoMessage:new{
-                  icon = "notice-warning",
-                  text = _("Cannot access log directory: ") .. log_dir .." " .. _("Logging cancelled."),
-                  timeout = 3,
-                })
-            end
-          else
-            log_dir = book_dir .. "/Assistan Chat Logs"
-            -- Create the log directory if it doesn't exist
-            util.makePath(log_dir)
-          end
-          
-          -- Create log file path
-          local log_file_path = log_dir .. "/" .. book_name .. "_assistant_chat_log.txt"
-          
-          -- Get current timestamp
-          local timestamp = os.date("%Y-%m-%d %H:%M:%S")
-          
-          -- Prepare log entry with title if available
-          local title_text = self.title and (self.title .. "\n") or ""
-          local text_to_log = self.text or ""
-          
-          -- If text doesn't start with "Highlighted text:", add it
-          if not text_to_log:find("^__Highlighted text:__") and self.highlighted_text then
-            text_to_log = "Highlighted text: " .. self.highlighted_text .. "\n\n" .. text_to_log
-          end
-          
-          local log_entry = string.format("[%s]\n%s%s\n\n", timestamp, title_text, text_to_log)
-          
-          -- Append to log file
-          local file = io.open(log_file_path, "a")
-          if file then
-            file:write(log_entry)
-            file:close()
-          else
-            logger.warn("Assistant: Could not open chat log file for writing:", log_file_path)
-          end
+        -- Prepare log entry with title if available
+        local title_text = self.title and (self.title .. "\n") or ""
+        local text_to_log = self.text or ""
+        
+        -- If text doesn't start with "Highlighted text:", add it
+        if not text_to_log:find("^__Highlighted text:__") and self.highlighted_text then
+          text_to_log = "Highlighted text: " .. self.highlighted_text .. "\n\n" .. text_to_log
+        end
+        
+        local log_entry = string.format("[%s]\n## %s\n\n%s\n\n", timestamp, title_text, text_to_log)
+        
+        -- Append to notebook file
+        local file = io.open(notebookfile, "a")
+        if file then
+          file:write(log_entry)
+          file:close()
+        else
+          logger.warn("Assistant: Could not open notebook file:", notebookfile)
         end
       end
     end)
