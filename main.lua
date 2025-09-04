@@ -14,6 +14,7 @@ local DataStorage = require("datastorage")
 local ConfirmBox  = require("ui/widget/confirmbox")
 local T 		      = require("ffi/util").template
 local FrontendUtil = require("util")
+local TextViewer = require("ui/widget/textviewer")
 local ButtonDialog = require("ui/widget/buttondialog")
 local ffiutil = require("ffi/util")
 
@@ -153,6 +154,40 @@ function Assistant:addToMainMenu(menu_items)
               })
             end,
             separator = true,
+          },
+          {
+            text = _("NoteBook (Auto-Saved AI Conversations)"),
+            callback = function ()
+              local notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
+              UIManager:show(ConfirmBox:new{
+                text = _("Notebook file: \n\n") .. notebookfile,
+                ok_text = _("View"),
+                ok_callback = function() TextViewer.openFile(notebookfile) end,
+                other_buttons = {{
+                  {
+                    text = _("Delete"),
+                    callback = function ()
+                      UIManager:show(ConfirmBox:new{
+                        text = T(_("Delete file?\n%1\nThis operation is not reversible."), notebookfile),
+                        ok_text = _("Delete"),
+                        ok_callback = function ()
+                          local ok, err = FrontendUtil.removeFile(notebookfile)
+                          if not ok then
+                            UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
+                          end
+                        end
+                      })
+                    end
+                  },
+                  {
+                    text = _("Edit"),
+                    callback = function ()
+                      UIManager:broadcastEvent(Event:new("ShowNotebookFile"))
+                    end
+                  },
+              }}
+              })
+            end,
           },
           {
             text = _("AI Assistant Settings"),

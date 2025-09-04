@@ -269,10 +269,10 @@ function SettingsDialog:init()
             end
         },
         {
-            text = _("Auto Export Conversations to File"),
-            checked = self.settings:readSetting("auto_export_conversations", false),
+            text = _("Auto-save conversations to NoteBook."),
+            checked = self.settings:readSetting("auto_save_to_notebook", false),
             callback = function()
-                self.settings:toggle("auto_export_conversations")
+                self.settings:toggle("auto_save_to_notebook")
                 self.assistant.updated = true
             end
         },
