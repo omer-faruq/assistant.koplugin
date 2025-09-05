@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
+        "POT-Creation-Date: 2025-09-05 16:37+0800\n"
         "PO-Revision-Date: 2025-06-25 14:30+0200\n"
         "Last-Translator: Kimi 1.5 <kimi@moonshot.cn>\n"
         "Language-Team: Kimi 1.5 <kimi@moonshot.cn>\n"
@@ -16,7 +16,7 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:111 ../main.lua:338
 msgid   "AI Assistant"
 msgstr  "AI-Assistent"
 
@@ -37,15 +37,15 @@ msgid   "Highlighted text:"
 msgstr  "Markeret tekst:"
 
 #: ../assistant_dialog.lua:258 ../assistant_dictdialog.lua:36
-#: ../assistant_settings.lua:89 ../assistant_viewer.lua:581
+#: ../assistant_settings.lua:89 ../assistant_viewer.lua:639
 msgid   "Cancel"
 msgstr  "Annuller"
 
-#: ../assistant_dialog.lua:265 ../assistant_viewer.lua:591
+#: ../assistant_dialog.lua:265 ../assistant_viewer.lua:649
 msgid   "Ask"
 msgstr  "Stil"
 
-#: ../assistant_dialog.lua:271 ../assistant_viewer.lua:597
+#: ../assistant_dialog.lua:271 ../assistant_viewer.lua:655
 msgid   "Enter a question before proceeding."
 msgstr  "Indtast et spørgsmål inden fortsættelse."
 
@@ -96,35 +96,35 @@ msgstr  "Indtast et ord at slå op..."
 msgid   "Look Up"
 msgstr  "Søg"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:539
 msgid   "Dictionary"
 msgstr  "Ordbog"
 
-#: ../assistant_featuredialog.lua:31
+#: ../assistant_featuredialog.lua:32
 msgid   "Recap"
 msgstr  "Resume"
 
-#: ../assistant_featuredialog.lua:32
+#: ../assistant_featuredialog.lua:33
 msgid   "Loading Recap..."
 msgstr  "Indlæser resumé..."
 
-#: ../assistant_featuredialog.lua:37
+#: ../assistant_featuredialog.lua:38
 msgid   "X‑Ray"
 msgstr  "X-Ray"
 
-#: ../assistant_featuredialog.lua:38
+#: ../assistant_featuredialog.lua:39
 msgid   "Loading X-Ray..."
 msgstr  "Indlæser X-Ray..."
 
-#: ../assistant_featuredialog.lua:43
+#: ../assistant_featuredialog.lua:44
 msgid   "Book Information"
 msgstr  "Boginfo"
 
-#: ../assistant_featuredialog.lua:44
+#: ../assistant_featuredialog.lua:45
 msgid   "Loading Book Information..."
 msgstr  "Indlæser boginfo..."
 
-#: ../assistant_featuredialog.lua:55
+#: ../assistant_featuredialog.lua:56
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "Ukendt funktionstype: %s"
@@ -205,7 +205,7 @@ msgstr  "Historisk kontekst"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Dette prompt giver en detaljeret historisk kontekst for den markerede tekst, og forklarer dens betydning og baggrund."
 
-#: ../assistant_prompts.lua:129 ../main.lua:522
+#: ../assistant_prompts.lua:129 ../main.lua:525
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -264,7 +264,7 @@ msgstr  "API-fejl:\n"
 msgid   "Unknown error"
 msgstr  "Ukendt fejl"
 
-#: ../assistant_querier.lua:110 ../main.lua:452
+#: ../assistant_querier.lua:110 ../main.lua:455
 msgid   "Settings"
 msgstr  "Indstillinger"
 
@@ -325,7 +325,7 @@ msgstr  "Ordbog sprog"
 msgid   "Clear"
 msgstr  "Ryd"
 
-#: ../assistant_settings.lua:113
+#: ../assistant_settings.lua:113 ../assistant_viewer.lua:423
 msgid   "Save"
 msgstr  "Gem"
 
@@ -349,7 +349,7 @@ msgstr  "Svar skriftstørrelse"
 msgid   "Font Size: %1"
 msgstr  "Skriftstørrelse: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:201
+#: ../assistant_settings.lua:193 ../main.lua:204
 msgid   "AI Assistant Settings"
 msgstr  "AI-assistentindstillinger"
 
@@ -382,8 +382,8 @@ msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "AI-opsummering aktiveres næste gang en bog åbnes."
 
 #: ../assistant_settings.lua:272
-msgid   "Auto-save conversations to NoteBook."
-msgstr  "Gem samtaler automatisk i NoteBook."
+msgid   "Auto-save conversations to NoteBook"
+msgstr  "Gem samtaler automatisk i NoteBook"
 
 #: ../assistant_settings.lua:370
 msgid   "AI Assistant Features:"
@@ -403,7 +403,7 @@ msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "En ny version af %s-plugin (%s) er tilgængelig. Opdater venligst!"
 
 #. @translators this is a button text, keep short
-#: ../assistant_viewer.lua:274 ../assistant_viewer.lua:645
+#: ../assistant_viewer.lua:274 ../assistant_viewer.lua:705
 msgid   "Ask Another Question"
 msgstr  "Stil et andet spørgsmål"
 
@@ -435,69 +435,73 @@ msgstr  "Ingen tekst tilbage at tilføje som note"
 msgid   "Note added successfully"
 msgstr  "Note tilføjet"
 
-#: ../assistant_viewer.lua:647
-msgid   "Type your question here"
-msgstr  "Skriv dit spørgsmål her"
+#: ../assistant_viewer.lua:427
+msgid   "Conversation is saved to NoteBook"
+msgstr  "Samtalen er gemt i NoteBook"
 
-#: ../assistant_viewer.lua:740
+#: ../assistant_viewer.lua:573
 msgid   "Chat log export failed. Continuing..."
 msgstr  "Eksport af chatlog mislykkedes. Fortsætter..."
 
-#: ../assistant_viewer.lua:845
+#: ../assistant_viewer.lua:707
+msgid   "Type your question here"
+msgstr  "Skriv dit spørgsmål her"
+
+#: ../assistant_viewer.lua:867
 msgid   "Word copied to clipboard."
 msgstr  "Ord kopieret til udklipsholder."
 
-#: ../assistant_viewer.lua:846
+#: ../assistant_viewer.lua:868
 msgid   "Selection copied to clipboard."
 msgstr  "Udvalgte elementer kopieret til udklipsholder."
 
-#: ../main.lua:76 ../main.lua:114
+#: ../main.lua:77 ../main.lua:115
 msgid   "Ask the AI a question"
 msgstr  "Stil AI et spørgsmål"
 
-#: ../main.lua:84 ../main.lua:147
+#: ../main.lua:85 ../main.lua:148
 msgid   "AI Recaps"
 msgstr  "AI Resume"
 
-#: ../main.lua:92 ../main.lua:136
+#: ../main.lua:93 ../main.lua:137
 msgid   "AI X-Ray"
 msgstr  "AI X-Ray"
 
-#: ../main.lua:100 ../main.lua:125
+#: ../main.lua:101 ../main.lua:126
 msgid   "Book Summary & Recs"
 msgstr  "Bogresume & anbefalinger"
 
-#: ../main.lua:120
+#: ../main.lua:121
 msgid   "Enter a question to ask AI."
 msgstr  "Skriv et spørgsmål til AI."
 
-#: ../main.lua:131
+#: ../main.lua:132
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "Resume af bogen, forfatterbiografi, historisk kontekst og en liste med lignende boganbefalinger og beskrivelser."
 
-#: ../main.lua:142
+#: ../main.lua:143
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "\"X-Ray\"-resume for en bog, opdelt i afsnit som Figurer, Steder, Temaer, Termer & Begreber, Tidslinje og Genindlevelse."
 
-#: ../main.lua:153
+#: ../main.lua:154
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "Kort, spoiler-frit resume af bogen frem til nuværende læseposition."
 
-#: ../main.lua:159
-msgid   "NoteBook (Auto-Saved AI Conversations)"
-msgstr  "NoteBook (automatisk gemte AI-samtaler)"
+#: ../main.lua:160
+msgid   "NoteBook (Saved AI Conversations)"
+msgstr  "NoteBook (Gemte AI-samtaler)"
 
-#: ../main.lua:163
+#: ../main.lua:166
 msgid   "Notebook file: \n"
         "\n"
 msgstr  "NoteBook-fil: \n"
         "\n"
 
-#: ../main.lua:164
+#: ../main.lua:167
 msgid   "View"
 msgstr  "Vis"
 
-#: ../main.lua:168
+#: ../main.lua:171
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -505,11 +509,11 @@ msgstr  "Filen findes ikke.\n"
         "\n"
         "%1"
 
-#: ../main.lua:176 ../main.lua:180
+#: ../main.lua:179 ../main.lua:183
 msgid   "Delete"
 msgstr  "Slet"
 
-#: ../main.lua:179
+#: ../main.lua:182
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -517,25 +521,25 @@ msgstr  "Slet fil?\n"
         "%1\n"
         "Handlingen kan ikke fortrydes."
 
-#: ../main.lua:191
+#: ../main.lua:194
 msgid   "Edit"
 msgstr  "Rediger"
 
-#: ../main.lua:281
+#: ../main.lua:284
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Ingen gyldig modeludbyder fundet i configuration.lua"
 
-#: ../main.lua:299
+#: ../main.lua:302
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Konfigurationsfejl.\n"
         "Opsæt venligst configuration.lua."
 
-#: ../main.lua:368
+#: ../main.lua:371
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: modeludbydere er ugyldige."
 
-#: ../main.lua:433
+#: ../main.lua:436
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -561,11 +565,11 @@ msgstr  "Nyttige tips\n"
         "Multi-swipe (f.eks. ⮠, ⮡, ↺):\n"
         "På resultatdialog for at lukke (da luk-knappen er svær at nå).\n"
 
-#: ../main.lua:458
+#: ../main.lua:461
 msgid   "Purge Settings"
 msgstr  "Nulstil indstillinger"
 
-#: ../main.lua:461
+#: ../main.lua:464
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -575,45 +579,50 @@ msgstr  "Er du sikker på at nulstille assistent-pluginets indstillinger?\n"
         "\n"
         "configuration.lua forbliver uændret; kun dialogindstillingerne slettes."
 
-#: ../main.lua:465
+#: ../main.lua:468
 msgid   "Purge"
 msgstr  "Nulstil"
 
-#: ../main.lua:502
+#: ../main.lua:505
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Fjern [%s] fra markeringsmenuen?"
 
-#: ../main.lua:503
+#: ../main.lua:506
 msgid   "Remove"
 msgstr  "Fjern"
 
-#: ../main.lua:655
+#: ../main.lua:658
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Konfiguration ikke fundet. Konfigurér venligst configuration.lua først."
 
-#: ../main.lua:697
+#: ../main.lua:700
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Tilføjet [%1 (AI)] til markeringsmenuen."
 
-#: ../main.lua:706
+#: ../main.lua:709
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Fjernet [%s (AI)] fra markeringsmenuen."
 
-#: ../main.lua:750
-#, lua-format
+#: ../main.lua:753
 msgid   "Do you want an AI Recap?\n"
-        "For %s by %s.\n"
-        "Last read %.0f hour(s) ago."
-msgstr  "Ønsker du et AI-resumé?\n"
-        "For %s af %s.\n"
-        "Sidst læst for %.0f time(e) siden."
+        "For %1 by %2.\n"
+        "\n"
+msgstr  "Vil du have et AI-resumé?\n"
+        "For %1 af %2.\n"
+        "\n"
 
-#: ../main.lua:755
+#: ../main.lua:754
+msgid   "Last read an hour ago."
+msgid_plural    "Last read %1 hours ago."
+msgstr[0]       "Læst for en time siden."
+msgstr[1]       "Læst for %1 timer siden."
+
+#: ../main.lua:759
 msgid   "Yes"
 msgstr  "Ja"
 
-#: ../main.lua:764
+#: ../main.lua:768
 msgid   "No"
 msgstr  "Nej"

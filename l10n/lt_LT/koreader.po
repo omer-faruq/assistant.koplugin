@@ -5,7 +5,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 2025.08.21\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
+        "POT-Creation-Date: 2025-09-05 16:37+0800\n"
         "PO-Revision-Date: 2025-09-05 00:03+0800\n"
         "Last-Translator: ChatGPT 4.0 <chatgpt@openai.com>\n"
         "Language-Team: ChatGPT 4.0 <chatgpt@openai.com>\n"
@@ -15,7 +15,7 @@ msgstr  "Project-Id-Version: assistant.koplugin 2025.08.21\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:111 ../main.lua:338
 msgid   "AI Assistant"
 msgstr  "AI asistentas"
 
@@ -36,15 +36,15 @@ msgid   "Highlighted text:"
 msgstr  "Pažymėtas tekstas:"
 
 #: ../assistant_dialog.lua:258 ../assistant_dictdialog.lua:36
-#: ../assistant_settings.lua:89 ../assistant_viewer.lua:581
+#: ../assistant_settings.lua:89 ../assistant_viewer.lua:639
 msgid   "Cancel"
 msgstr  "Atšaukti"
 
-#: ../assistant_dialog.lua:265 ../assistant_viewer.lua:591
+#: ../assistant_dialog.lua:265 ../assistant_viewer.lua:649
 msgid   "Ask"
 msgstr  "Klausti"
 
-#: ../assistant_dialog.lua:271 ../assistant_viewer.lua:597
+#: ../assistant_dialog.lua:271 ../assistant_viewer.lua:655
 msgid   "Enter a question before proceeding."
 msgstr  "Įveskite klausimą prieš tęsdami."
 
@@ -95,35 +95,35 @@ msgstr  "Įveskite žodį paieškai..."
 msgid   "Look Up"
 msgstr  "Ieškoti"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:539
 msgid   "Dictionary"
 msgstr  "Žodynas"
 
-#: ../assistant_featuredialog.lua:31
+#: ../assistant_featuredialog.lua:32
 msgid   "Recap"
 msgstr  "Santrauka"
 
-#: ../assistant_featuredialog.lua:32
+#: ../assistant_featuredialog.lua:33
 msgid   "Loading Recap..."
 msgstr  "Įkeliamas santrauka..."
 
-#: ../assistant_featuredialog.lua:37
+#: ../assistant_featuredialog.lua:38
 msgid   "X‑Ray"
 msgstr  "Rentgenas"
 
-#: ../assistant_featuredialog.lua:38
+#: ../assistant_featuredialog.lua:39
 msgid   "Loading X-Ray..."
 msgstr  "Įkeliamas X-Ray..."
 
-#: ../assistant_featuredialog.lua:43
+#: ../assistant_featuredialog.lua:44
 msgid   "Book Information"
 msgstr  "Knygos informacija"
 
-#: ../assistant_featuredialog.lua:44
+#: ../assistant_featuredialog.lua:45
 msgid   "Loading Book Information..."
 msgstr  "Įkeliama knygos informacija..."
 
-#: ../assistant_featuredialog.lua:55
+#: ../assistant_featuredialog.lua:56
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "Nežinomas funkcijos tipas: %s"
@@ -204,7 +204,7 @@ msgstr  "Istorinis kontekstas"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Šis raginimas pateikia išsamų istorinį kontekstą pažymėtam tekstui."
 
-#: ../assistant_prompts.lua:129 ../main.lua:522
+#: ../assistant_prompts.lua:129 ../main.lua:525
 msgid   "Wikipedia"
 msgstr  "Vikipedija"
 
@@ -263,7 +263,7 @@ msgstr  "API klaida:\n"
 msgid   "Unknown error"
 msgstr  "Nežinoma klaida"
 
-#: ../assistant_querier.lua:110 ../main.lua:452
+#: ../assistant_querier.lua:110 ../main.lua:455
 msgid   "Settings"
 msgstr  "Nustatymai"
 
@@ -324,7 +324,7 @@ msgstr  "Žodyno kalba"
 msgid   "Clear"
 msgstr  "Valyti"
 
-#: ../assistant_settings.lua:113
+#: ../assistant_settings.lua:113 ../assistant_viewer.lua:423
 msgid   "Save"
 msgstr  "Išsaugoti"
 
@@ -348,7 +348,7 @@ msgstr  "Atsakymo šrifto dydis"
 msgid   "Font Size: %1"
 msgstr  "Šrifto dydis: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:201
+#: ../assistant_settings.lua:193 ../main.lua:204
 msgid   "AI Assistant Settings"
 msgstr  "AI asistento nustatymai"
 
@@ -381,8 +381,8 @@ msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "AI santrauka įsijungs kito karto atidarius knygą."
 
 #: ../assistant_settings.lua:272
-msgid   "Auto-save conversations to NoteBook."
-msgstr  "Automatiškai išsaugoti pokalbius į užrašų knygelę."
+msgid   "Auto-save conversations to NoteBook"
+msgstr  "Automatiškai įrašyti pokalbius į užrašų knygą"
 
 #: ../assistant_settings.lua:370
 msgid   "AI Assistant Features:"
@@ -402,7 +402,7 @@ msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "Prieinama nauja %s įskiepio versija (%s). Prašome atnaujinti!"
 
 #. @translators this is a button text, keep short
-#: ../assistant_viewer.lua:274 ../assistant_viewer.lua:645
+#: ../assistant_viewer.lua:274 ../assistant_viewer.lua:705
 msgid   "Ask Another Question"
 msgstr  "Užduoti dar vieną klausimą"
 
@@ -434,69 +434,73 @@ msgstr  "Neliko teksto, kurį pridėti kaip pastabą"
 msgid   "Note added successfully"
 msgstr  "Pastaba sėkmingai pridėta"
 
-#: ../assistant_viewer.lua:647
-msgid   "Type your question here"
-msgstr  "Įveskite savo klausimą čia"
+#: ../assistant_viewer.lua:427
+msgid   "Conversation is saved to NoteBook"
+msgstr  "Pokalbis įrašytas į užrašų knygą"
 
-#: ../assistant_viewer.lua:740
+#: ../assistant_viewer.lua:573
 msgid   "Chat log export failed. Continuing..."
 msgstr  "Pokalbio eksportas nepavyko. Tęsiama..."
 
-#: ../assistant_viewer.lua:845
+#: ../assistant_viewer.lua:707
+msgid   "Type your question here"
+msgstr  "Įveskite savo klausimą čia"
+
+#: ../assistant_viewer.lua:867
 msgid   "Word copied to clipboard."
 msgstr  "Žodis nukopijuotas į iškarpinę."
 
-#: ../assistant_viewer.lua:846
+#: ../assistant_viewer.lua:868
 msgid   "Selection copied to clipboard."
 msgstr  "Pažymėjimas nukopijuotas į iškarpinę."
 
-#: ../main.lua:76 ../main.lua:114
+#: ../main.lua:77 ../main.lua:115
 msgid   "Ask the AI a question"
 msgstr  "Užduoti klausimą AI"
 
-#: ../main.lua:84 ../main.lua:147
+#: ../main.lua:85 ../main.lua:148
 msgid   "AI Recaps"
 msgstr  "AI santraukos"
 
-#: ../main.lua:92 ../main.lua:136
+#: ../main.lua:93 ../main.lua:137
 msgid   "AI X-Ray"
 msgstr  "AI rentgenas"
 
-#: ../main.lua:100 ../main.lua:125
+#: ../main.lua:101 ../main.lua:126
 msgid   "Book Summary & Recs"
 msgstr  "Knygos santrauka ir rekomendacijos"
 
-#: ../main.lua:120
+#: ../main.lua:121
 msgid   "Enter a question to ask AI."
 msgstr  "Įveskite klausimą AI."
 
-#: ../main.lua:131
+#: ../main.lua:132
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "Knygos santrauka, autoriaus biografija, istorinis kontekstas ir panašių knygų rekomendacijos su aprašymais."
 
-#: ../main.lua:142
+#: ../main.lua:143
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "„X-Ray“ knygos santrauka, suskirstyta į skyrius: veikėjai, vietovės, temos, terminai ir sąvokos, laiko juosta bei pakartotinis įsitraukimas."
 
-#: ../main.lua:153
+#: ../main.lua:154
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "Trumpa santrauka be spoilerių iki dabartinės skaitymo vietos."
 
-#: ../main.lua:159
-msgid   "NoteBook (Auto-Saved AI Conversations)"
-msgstr  "Užrašų knygelė (automatiškai išsaugoti AI pokalbiai)"
+#: ../main.lua:160
+msgid   "NoteBook (Saved AI Conversations)"
+msgstr  "Užrašų knyga (Išsaugoti AI pokalbiai)"
 
-#: ../main.lua:163
+#: ../main.lua:166
 msgid   "Notebook file: \n"
         "\n"
 msgstr  "Užrašų knygelės failas: \n"
         "\n"
 
-#: ../main.lua:164
+#: ../main.lua:167
 msgid   "View"
 msgstr  "Žiūrėti"
 
-#: ../main.lua:168
+#: ../main.lua:171
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -504,11 +508,11 @@ msgstr  "Failas neegzistuoja.\n"
         "\n"
         "%1"
 
-#: ../main.lua:176 ../main.lua:180
+#: ../main.lua:179 ../main.lua:183
 msgid   "Delete"
 msgstr  "Ištrinti"
 
-#: ../main.lua:179
+#: ../main.lua:182
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -516,25 +520,25 @@ msgstr  "Ištrinti failą?\n"
         "%1\n"
         "Ši operacija negrįžtama."
 
-#: ../main.lua:191
+#: ../main.lua:194
 msgid   "Edit"
 msgstr  "Redaguoti"
 
-#: ../main.lua:281
+#: ../main.lua:284
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "configuration.lua nerastas tinkamas modelio teikėjas"
 
-#: ../main.lua:299
+#: ../main.lua:302
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Konfigūracijos klaida.\n"
         "Nustatykite configuration.lua."
 
-#: ../main.lua:368
+#: ../main.lua:371
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: modelio teikėjai neteisingi."
 
-#: ../main.lua:433
+#: ../main.lua:436
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -560,11 +564,11 @@ msgstr  "Naudingi patarimai\n"
         "Keli braukimai (pvz., ⮠, ⮡, ↺):\n"
         "Rezultatų lange – uždaryti (nes Uždaryti mygtukas sunkiai pasiekiamas).\n"
 
-#: ../main.lua:458
+#: ../main.lua:461
 msgid   "Purge Settings"
 msgstr  "Išvalyti nustatymus"
 
-#: ../main.lua:461
+#: ../main.lua:464
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -574,45 +578,51 @@ msgstr  "Ar tikrai norite išvalyti asistento įskiepio nustatymus?\n"
         "\n"
         "configuration.lua liks nepaliesta – ištrinami tik dialogo nustatymai."
 
-#: ../main.lua:465
+#: ../main.lua:468
 msgid   "Purge"
 msgstr  "Išvalyti"
 
-#: ../main.lua:502
+#: ../main.lua:505
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Pašalinti [%s] iš pažymėjimo meniu?"
 
-#: ../main.lua:503
+#: ../main.lua:506
 msgid   "Remove"
 msgstr  "Pašalinti"
 
-#: ../main.lua:655
+#: ../main.lua:658
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Konfigūracija nerasta. Pirmiausia nustatykite configuration.lua."
 
-#: ../main.lua:697
+#: ../main.lua:700
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Pridėta [%1 (AI)] prie pažymėjimo meniu."
 
-#: ../main.lua:706
+#: ../main.lua:709
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Pašalinta [%s (AI)] iš pažymėjimo meniu."
 
-#: ../main.lua:750
-#, lua-format
+#: ../main.lua:753
 msgid   "Do you want an AI Recap?\n"
-        "For %s by %s.\n"
-        "Last read %.0f hour(s) ago."
-msgstr  "Norite AI santraukos?\n"
-        "Knyga %s, autorius %s.\n"
-        "Paskutinį kartą skaitėte prieš %.0f val."
+        "For %1 by %2.\n"
+        "\n"
+msgstr  "Ar norite AI santraukos?\n"
+        "Knygai „%1“ autoriaus %2.\n"
+        "\n"
 
-#: ../main.lua:755
+#: ../main.lua:754
+msgid   "Last read an hour ago."
+msgid_plural    "Last read %1 hours ago."
+msgstr[0]       "Paskutinį kartą skaityta prieš valandą."
+msgstr[1]       "Paskutinį kartą skaityta prieš %1 valandas."
+msgstr[2]       "Paskutinį kartą skaityta prieš %1 valandų."
+
+#: ../main.lua:759
 msgid   "Yes"
 msgstr  "Taip"
 
-#: ../main.lua:764
+#: ../main.lua:768
 msgid   "No"
 msgstr  "Ne"

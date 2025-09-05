@@ -5,7 +5,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-05 00:03+0800\n"
+        "POT-Creation-Date: 2025-09-05 16:37+0800\n"
         "PO-Revision-Date: 2025-09-05 00:03+0800\n"
         "Last-Translator: ChatGPT 4.0\n"
         "Language-Team: ChatGPT 4.0\n"
@@ -15,7 +15,7 @@ msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:110 ../main.lua:335
+#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:111 ../main.lua:338
 msgid   "AI Assistant"
 msgstr  "KI ასისტენტი"
 
@@ -36,15 +36,15 @@ msgid   "Highlighted text:"
 msgstr  "გამოკვეთილი ტექსტი:"
 
 #: ../assistant_dialog.lua:258 ../assistant_dictdialog.lua:36
-#: ../assistant_settings.lua:89 ../assistant_viewer.lua:581
+#: ../assistant_settings.lua:89 ../assistant_viewer.lua:639
 msgid   "Cancel"
 msgstr  "გაუქმება"
 
-#: ../assistant_dialog.lua:265 ../assistant_viewer.lua:591
+#: ../assistant_dialog.lua:265 ../assistant_viewer.lua:649
 msgid   "Ask"
 msgstr  "დაკითხვა"
 
-#: ../assistant_dialog.lua:271 ../assistant_viewer.lua:597
+#: ../assistant_dialog.lua:271 ../assistant_viewer.lua:655
 msgid   "Enter a question before proceeding."
 msgstr  "შეიყვანეთ კითხვა გაგრძელებამდე."
 
@@ -95,35 +95,35 @@ msgstr  "შეიყვანეთ სიტყვა მოსაძებნ
 msgid   "Look Up"
 msgstr  "ძებნა"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:536
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:539
 msgid   "Dictionary"
 msgstr  "ლექსიკონი"
 
-#: ../assistant_featuredialog.lua:31
+#: ../assistant_featuredialog.lua:32
 msgid   "Recap"
 msgstr  "შეჯამება"
 
-#: ../assistant_featuredialog.lua:32
+#: ../assistant_featuredialog.lua:33
 msgid   "Loading Recap..."
 msgstr  "რეზიუმე იტვირთება..."
 
-#: ../assistant_featuredialog.lua:37
+#: ../assistant_featuredialog.lua:38
 msgid   "X‑Ray"
 msgstr  "X‑რეი"
 
-#: ../assistant_featuredialog.lua:38
+#: ../assistant_featuredialog.lua:39
 msgid   "Loading X-Ray..."
 msgstr  "X-Ray იტვირთება..."
 
-#: ../assistant_featuredialog.lua:43
+#: ../assistant_featuredialog.lua:44
 msgid   "Book Information"
 msgstr  "წიგნის ინფორმაცია"
 
-#: ../assistant_featuredialog.lua:44
+#: ../assistant_featuredialog.lua:45
 msgid   "Loading Book Information..."
 msgstr  "იტვირთება წიგნის ინფორმაცია..."
 
-#: ../assistant_featuredialog.lua:55
+#: ../assistant_featuredialog.lua:56
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "უცნობი ფუნქციის ტიპი: %s"
@@ -204,7 +204,7 @@ msgstr  "ისტორიული კონტექსტი"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "ეს ბრძანება იძლევა დეტალურ ისტორიულ კონტექსტს გამოკვეთილი ტექსტისთვის."
 
-#: ../assistant_prompts.lua:129 ../main.lua:522
+#: ../assistant_prompts.lua:129 ../main.lua:525
 msgid   "Wikipedia"
 msgstr  "ვიკიპედია"
 
@@ -263,7 +263,7 @@ msgstr  "API შეცდომა:\n"
 msgid   "Unknown error"
 msgstr  "უცნობი შეცდომა"
 
-#: ../assistant_querier.lua:110 ../main.lua:452
+#: ../assistant_querier.lua:110 ../main.lua:455
 msgid   "Settings"
 msgstr  "პარამეტრები"
 
@@ -324,7 +324,7 @@ msgstr  "ლექსიკონის ენა"
 msgid   "Clear"
 msgstr  "გასუფთავება"
 
-#: ../assistant_settings.lua:113
+#: ../assistant_settings.lua:113 ../assistant_viewer.lua:423
 msgid   "Save"
 msgstr  "შენახვა"
 
@@ -348,7 +348,7 @@ msgstr  "პასუხის შრიფტის ზომა"
 msgid   "Font Size: %1"
 msgstr  "შრიფტის ზომა: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:201
+#: ../assistant_settings.lua:193 ../main.lua:204
 msgid   "AI Assistant Settings"
 msgstr  "AI ასისტენტის პარამეტრები"
 
@@ -381,8 +381,8 @@ msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "აი-შემაჯამებელი ჩაირთვება წიგნის შემდეგ გახსნაზე."
 
 #: ../assistant_settings.lua:272
-msgid   "Auto-save conversations to NoteBook."
-msgstr  "ავტოშენახვა საუბრების NoteBook-ში."
+msgid   "Auto-save conversations to NoteBook"
+msgstr  "ავტომატურად შენახვა NoteBook-ში"
 
 #: ../assistant_settings.lua:370
 msgid   "AI Assistant Features:"
@@ -402,7 +402,7 @@ msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "ხელმისაწვდომია %s დამატების ახალი ვერსია (%s). განაახლეთ!"
 
 #. @translators this is a button text, keep short
-#: ../assistant_viewer.lua:274 ../assistant_viewer.lua:645
+#: ../assistant_viewer.lua:274 ../assistant_viewer.lua:705
 msgid   "Ask Another Question"
 msgstr  "დაისვი კიდევ კითხვა"
 
@@ -434,69 +434,73 @@ msgstr  "დარჩენილი ტექსტი აღარაა"
 msgid   "Note added successfully"
 msgstr  "შენიშვნა დაემატა წარმატებით"
 
-#: ../assistant_viewer.lua:647
-msgid   "Type your question here"
-msgstr  "აკრიფეთ კითხვა აქ"
+#: ../assistant_viewer.lua:427
+msgid   "Conversation is saved to NoteBook"
+msgstr  "საუბარი შენახულია NoteBook-ში"
 
-#: ../assistant_viewer.lua:740
+#: ../assistant_viewer.lua:573
 msgid   "Chat log export failed. Continuing..."
 msgstr  "საუბრის ჟურნალის ექსპორტი ვერ მოხერხდა. გაგრძელება..."
 
-#: ../assistant_viewer.lua:845
+#: ../assistant_viewer.lua:707
+msgid   "Type your question here"
+msgstr  "აკრიფეთ კითხვა აქ"
+
+#: ../assistant_viewer.lua:867
 msgid   "Word copied to clipboard."
 msgstr  "სიტყვა დაკოპირებულია."
 
-#: ../assistant_viewer.lua:846
+#: ../assistant_viewer.lua:868
 msgid   "Selection copied to clipboard."
 msgstr  "მონიშნული დაკოპირებულია."
 
-#: ../main.lua:76 ../main.lua:114
+#: ../main.lua:77 ../main.lua:115
 msgid   "Ask the AI a question"
 msgstr  "დაუსვით კითხვა KI-ს"
 
-#: ../main.lua:84 ../main.lua:147
+#: ../main.lua:85 ../main.lua:148
 msgid   "AI Recaps"
 msgstr  "KI შეჯამება"
 
-#: ../main.lua:92 ../main.lua:136
+#: ../main.lua:93 ../main.lua:137
 msgid   "AI X-Ray"
 msgstr  "AI X‑რეი"
 
-#: ../main.lua:100 ../main.lua:125
+#: ../main.lua:101 ../main.lua:126
 msgid   "Book Summary & Recs"
 msgstr  "წიგნის შეჯამება & რეკომენდაციები"
 
-#: ../main.lua:120
+#: ../main.lua:121
 msgid   "Enter a question to ask AI."
 msgstr  "შეიყვანეთ კითხვა AI-სთვის."
 
-#: ../main.lua:131
+#: ../main.lua:132
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "წიგნის შეჯამება, ავტორის ბიოგრაფია, ისტორიული კონტექსტი და მსგავსი წიგნების რეკომენდაციები აღწერით."
 
-#: ../main.lua:142
+#: ../main.lua:143
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "წიგნის „X-Ray“ შეჯამება: პერსონაჟები, ადგილები, თემები, ტერმინები და კონცეფციები, ქრონოლოგია, ხელახალი შეხება."
 
-#: ../main.lua:153
+#: ../main.lua:154
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "მოკლე, სპოილერების გარეშე შეჯამება წიგნის ამჟამინდელ წაკითხულ ნაწილამდე."
 
-#: ../main.lua:159
-msgid   "NoteBook (Auto-Saved AI Conversations)"
-msgstr  "NoteBook (ავტოშენახული AI საუბრები)"
+#: ../main.lua:160
+msgid   "NoteBook (Saved AI Conversations)"
+msgstr  "NoteBook (შენახული AI საუბრები)"
 
-#: ../main.lua:163
+#: ../main.lua:166
 msgid   "Notebook file: \n"
         "\n"
 msgstr  "ჩანაწერების ფაილი: \n"
         "\n"
 
-#: ../main.lua:164
+#: ../main.lua:167
 msgid   "View"
 msgstr  "ნახვა"
 
-#: ../main.lua:168
+#: ../main.lua:171
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -504,11 +508,11 @@ msgstr  "ფაილი არ არსებობს.\n"
         "\n"
         "%1"
 
-#: ../main.lua:176 ../main.lua:180
+#: ../main.lua:179 ../main.lua:183
 msgid   "Delete"
 msgstr  "წაშლა"
 
-#: ../main.lua:179
+#: ../main.lua:182
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -516,25 +520,25 @@ msgstr  "წავშალოთ ფაილი?\n"
         "%1\n"
         "ეს ოპერაცია შეუქცევადია."
 
-#: ../main.lua:191
+#: ../main.lua:194
 msgid   "Edit"
 msgstr  "რედაქტირება"
 
-#: ../main.lua:281
+#: ../main.lua:284
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "configuration.lua-ში ვერ მოიძებნა ვალიდური მოდელის პროვაიდერი"
 
-#: ../main.lua:299
+#: ../main.lua:302
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "კონფიგურაციის შეცდომა.\n"
         "დააყენეთ configuration.lua."
 
-#: ../main.lua:368
+#: ../main.lua:371
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: მოდელის პროვაიდერები არასწორია"
 
-#: ../main.lua:433
+#: ../main.lua:436
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -560,11 +564,11 @@ msgstr  "გამოსადეგი რჩევები\n"
         "მრავალ-გადასმა (მაგ. ⮠, ⮡, ↺):\n"
         "შედეგის ფანჯარაზე დასახურად (რადგან დახურვის ღილაკი შორსაა).\n"
 
-#: ../main.lua:458
+#: ../main.lua:461
 msgid   "Purge Settings"
 msgstr  "პარამეტრების წაშლა"
 
-#: ../main.lua:461
+#: ../main.lua:464
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -574,45 +578,49 @@ msgstr  "დარწმუნებული ხართ, რომ გსუ�
         "\n"
         "configuration.lua დაცულია, წაიშლება მხოლოდ ფანჯარაში მოცემული პარამეტრები."
 
-#: ../main.lua:465
+#: ../main.lua:468
 msgid   "Purge"
 msgstr  "წაშლა"
 
-#: ../main.lua:502
+#: ../main.lua:505
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "წავშალოთ [%s] გამოკვეთის მენიუდან?"
 
-#: ../main.lua:503
+#: ../main.lua:506
 msgid   "Remove"
 msgstr  "წაშლა"
 
-#: ../main.lua:655
+#: ../main.lua:658
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "კონფიგურაცია არ მოიძებნა. ჯერ მოწყვეთ configuration.lua."
 
-#: ../main.lua:697
+#: ../main.lua:700
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "დაემატა [%1 (KI)] გამოკვეთის მენიუში."
 
-#: ../main.lua:706
+#: ../main.lua:709
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "წაიშალა [%s (KI)] გამოკვეთის მენიუდან."
 
-#: ../main.lua:750
-#, lua-format
+#: ../main.lua:753
 msgid   "Do you want an AI Recap?\n"
-        "For %s by %s.\n"
-        "Last read %.0f hour(s) ago."
-msgstr  "გინდათ KI შეჯამება?\n"
-        "%s — %s.\n"
-        "ბოლოჯერ წავიკითხე %.0f საათის წინ."
+        "For %1 by %2.\n"
+        "\n"
+msgstr  "გსურთ AI შეჯამება?\n"
+        "%1-ისთვის, ავტორი %2.\n"
 
-#: ../main.lua:755
+#: ../main.lua:754
+msgid   "Last read an hour ago."
+msgid_plural    "Last read %1 hours ago."
+msgstr[0]       "ბოლოს წაიკითხა საათის წინ."
+msgstr[1]       "ბოლოს წაიკითხა %1 საათის წინ."
+
+#: ../main.lua:759
 msgid   "Yes"
 msgstr  "დიახ"
 
-#: ../main.lua:764
+#: ../main.lua:768
 msgid   "No"
 msgstr  "არა"
