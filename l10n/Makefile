@@ -68,7 +68,7 @@ extract-untranslated:
 		dir=$$(dirname $$po_file); \
 		if [ ! -f "$$dir/untranslated.po" ]; then \
 			$(MSGATTRIB_BIN) --untranslated --force-po $$po_file -o $$dir/_untranslated.po; \
-			$(MSGATTRIB_BIN) --fuzzy --clear-fuzzy --empty $$po_file -o $$dir/_fuzzy.po; \
+			$(MSGATTRIB_BIN) --fuzzy --clear-fuzzy --empty --force-po $$po_file -o $$dir/_fuzzy.po; \
 			$(MSGCAT_BIN) --use-first $$dir/_untranslated.po $$dir/_fuzzy.po -o $$dir/untranslated.po; \
 		else \
 			echo "Skipping extraction for $$dir, untranslated.po already exists."; \

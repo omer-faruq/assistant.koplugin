@@ -19,6 +19,7 @@ local ButtonDialog = require("ui/widget/buttondialog")
 local ffiutil = require("ffi/util")
 
 local _ = require("assistant_gettext")
+local N_ = _.ngettext
 local AssistantDialog = require("assistant_dialog")
 local UpdateChecker = require("assistant_update_checker")
 local Prompts = require("assistant_prompts")
@@ -740,7 +741,7 @@ function Assistant:_hookRecap()
       if lastAccess and lastAccess > 0 then -- Has been opened
         local doc_settings = DocSettings:open(file)
         local percent_finished = doc_settings:readSetting("percent_finished") or 0
-        local timeDiffHours = (os.time() - lastAccess) / 3600.0
+        local timeDiffHours = math.floor((os.time() - lastAccess) / 3600)
   
         -- More than 28hrs since last open and less than 95% complete
         -- percent = 0 may means the book is not started yet, the docsettings maybe empty
@@ -749,7 +750,8 @@ function Assistant:_hookRecap()
           local doc_props = doc_settings:child("doc_props")
           local title = doc_props:readSetting("title", "Unknown Title")
           local authors = doc_props:readSetting("authors", "Unknown Author")
-          local message = string.format(T(_("Do you want an AI Recap?\nFor %s by %s.\nLast read %.0f hour(s) ago.")), title, authors, timeDiffHours) -- can add in percent_finished too
+          local message = T(_("Do you want an AI Recap?\nFor %1 by %2.\n\n"), title, authors)
+                    .. T(N_("Last read an hour ago.", "Last read %1 hours ago.", timeDiffHours), timeDiffHours)
   
           -- Display the request popup using ConfirmBox.
           UIManager:show(ConfirmBox:new{
