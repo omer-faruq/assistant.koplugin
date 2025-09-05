@@ -36,9 +36,11 @@ translate:
 
 DOMAIN = koreader
 TEMPLATE_DIR = templates
+MSGINIT_BIN = msginit
 MSGFMT_BIN = msgfmt
 MSGMERGE_BIN = msgmerge
 MSGATTRIB_BIN = msgattrib
+MSGFILTER_BIN = msgfilter
 MSGCAT_BIN = msgcat
 XGETTEXT_BIN = xgettext
 
@@ -52,22 +54,22 @@ init-dirs: template
 		if [ ! -f "$$lang/$(DOMAIN).po" ]; then \
 			echo "Initializing language: $$lang"; \
 			mkdir -p $$lang; \
-			cp $(TEMPLATE_DIR)/$(DOMAIN).pot $$lang/$(DOMAIN).po; \
+			$(MSGINIT_BIN) -l $$lang --no-translator -i $(TEMPLATE_DIR)/$(DOMAIN).pot -o $$lang/$(DOMAIN).po; \
 		fi; \
 	done
 
 update: init-dirs
-	@for po_file in $(PO_FILES); do \
+	@set -x;for po_file in $(PO_FILES); do \
 		$(MSGMERGE_BIN) --update --backup=none --no-wrap --sort-by-file $$po_file $(TEMPLATE_DIR)/$(DOMAIN).pot; \
-		$(MSGATTRIB_BIN) --no-obsolete --no-wrap --sort-by-file -i $$po_file -o $$po_file.updated; \
-		mv $$po_file.updated $$po_file; \
 	done
 
 extract-untranslated:
-	@for po_file in $(PO_FILES); do \
+	@set -x;for po_file in $(PO_FILES); do \
 		dir=$$(dirname $$po_file); \
 		if [ ! -f "$$dir/untranslated.po" ]; then \
-			$(MSGATTRIB_BIN) --untranslated $$po_file -o $$dir/untranslated.po; \
+			$(MSGATTRIB_BIN) --untranslated --force-po $$po_file -o $$dir/_untranslated.po; \
+			$(MSGATTRIB_BIN) --fuzzy --clear-fuzzy --empty $$po_file -o $$dir/_fuzzy.po; \
+			$(MSGCAT_BIN) --use-first $$dir/_untranslated.po $$dir/_fuzzy.po -o $$dir/untranslated.po; \
 		else \
 			echo "Skipping extraction for $$dir, untranslated.po already exists."; \
 		fi; \
@@ -90,7 +92,7 @@ check:
 
 clean:
 	@echo "Cleaning intermediate translation files..."
-	@find . -type f \( -name "untranslated.po" -o -name "updated_translated.po" -o -name "updated.po" \) -print -delete
+	@find . -type f -name "*.po" ! -name "koreader.po" -print -delete
 
 ai-translate:
 	@set -e; \
