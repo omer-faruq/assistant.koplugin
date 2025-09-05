@@ -424,7 +424,7 @@ function ChatGPTViewer:init()
           callback = function()
               self:saveToNotebook()
               UIManager:show(InfoMessage:new{
-                  text = _("Chat log saved to notebook"),
+                  text = _("Conversation is saved to NoteBook"),
                   timeout = 2
               })
           end

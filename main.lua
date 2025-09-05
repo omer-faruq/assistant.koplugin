@@ -156,10 +156,12 @@ function Assistant:addToMainMenu(menu_items)
             separator = true,
           },
           {
-            text = _("NoteBook (Auto-Saved AI Conversations)"),
+            text = _("NoteBook (Saved AI Conversations)"),
             callback = function ()
               local notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
               UIManager:show(ConfirmBox:new{
+                icon = "appbar.pageview",
+                face = Font:getFace("smallinfofont"),
                 text = _("Notebook file: \n\n") .. notebookfile,
                 ok_text = _("View"),
                 ok_callback = function()
