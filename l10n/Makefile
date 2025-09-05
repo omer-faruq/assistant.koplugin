@@ -144,5 +144,15 @@ template:
 		--no-wrap \
 		--sort-by-file \
 		--package-version=`grep version ../_meta.lua | grep -Eo '[0-9.]+'` \
-		`find .. -name "*.lua" | sort` \
+		`find .. -type f -name "*.lua" | sort` \
 		-o $(TEMPLATE_DIR)/$(DOMAIN).pot
+
+
+# Compile .po files to .mo files
+# for future use
+SELF := $(lastword $(MAKEFILE_LIST))
+MO_FILES = $(PO_FILES:%.po=%.mo)
+%.mo: %.po
+	@$(MSGFMT_BIN) --no-hash -o $@ $<
+mo:
+	$(MAKE) --file=$(SELF) $(MO_FILES)
