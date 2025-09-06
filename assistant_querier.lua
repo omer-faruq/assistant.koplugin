@@ -352,10 +352,10 @@ function Querier:processStream(bgQuery, trunk_callback)
                             -- the json was breaked into lines, just log the raw line
                             table.insert(result_buffer, line)  -- Add the raw line to the result
                         end
-                    elseif line:sub(1, #(self.handler.PROTOCAL_NON_200)) == self.handler.PROTOCAL_NON_200 then
+                    elseif line:sub(1, #(self.handler.PROTOCOL_NON_200)) == self.handler.PROTOCOL_NON_200 then
                         -- child writes a non-200 response 
                         non200 = true
-                        table.insert(result_buffer, "\n\n" .. line:sub(#(self.handler.PROTOCAL_NON_200)+1))
+                        table.insert(result_buffer, "\n\n" .. line:sub(#(self.handler.PROTOCOL_NON_200)+1))
                         break -- the request is done, no more data to read
                     else
                         if #koutil.trim(line) > 0 then
