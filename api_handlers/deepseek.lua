@@ -28,7 +28,7 @@ function DeepSeekHandler:query(message_history, deepseek_settings)
     if requestBodyTable.stream then
         -- For streaming responses, we need to handle the response differently
         headers["Accept"] = "text/event-stream"
-        return self:backgroudRequest(deepseek_settings.base_url, headers, requestBody)
+        return self:backgroundRequest(deepseek_settings.base_url, headers, requestBody)
     end
 
     local success, code, response = self:makeRequest(

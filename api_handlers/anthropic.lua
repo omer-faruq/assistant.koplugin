@@ -37,7 +37,7 @@ function AnthropicHandler:query(message_history, anthropic_settings)
     if requestBodyTable.stream then
         -- For streaming responses, we need to handle the response differently
         headers["Accept"] = "text/event-stream"
-        return self:backgroudRequest(anthropic_settings.base_url, headers, requestBody)
+        return self:backgroundRequest(anthropic_settings.base_url, headers, requestBody)
     end
 
     local success, code, response = self:makeRequest(anthropic_settings.base_url, headers, requestBody)
