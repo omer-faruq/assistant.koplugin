@@ -23,7 +23,7 @@ function OpenAIHandler:query(message_history, openai_settings)
     if requestBodyTable.stream then
         -- For streaming responses, we need to handle the response differently
         headers["Accept"] = "text/event-stream"
-        return self:backgroudRequest(openai_settings.base_url, headers, requestBody)
+        return self:backgroundRequest(openai_settings.base_url, headers, requestBody)
     end
     
 

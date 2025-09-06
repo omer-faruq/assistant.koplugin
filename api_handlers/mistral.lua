@@ -47,7 +47,7 @@ function MistralHandler:query(message_history, mistral_settings)
     if requestBodyTable.stream then
         -- For streaming responses, we need to handle the response differently
         headers["Accept"] = "text/event-stream"
-        return self:backgroudRequest(mistral_settings.base_url, headers, requestBody)
+        return self:backgroundRequest(mistral_settings.base_url, headers, requestBody)
     end
     
 

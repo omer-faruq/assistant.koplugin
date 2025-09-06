@@ -72,7 +72,7 @@ function GeminiHandler:query(message_history, gemini_settings)
     if stream then
         -- For streaming responses, we need to handle the response differently
         headers["Accept"] = "text/event-stream"
-        return self:backgroudRequest(url, headers, requestBody)
+        return self:backgroundRequest(url, headers, requestBody)
     end
     
     local success, code, response = self:makeRequest(url, headers, requestBody)

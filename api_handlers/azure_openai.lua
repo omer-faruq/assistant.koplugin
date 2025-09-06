@@ -41,7 +41,7 @@ function AzureOpenAIHandler:query(message_history, azure_settings )
     if requestBodyTable.stream then
         -- For streaming responses, we need to handle the response differently
         headers["Accept"] = "text/event-stream"
-        return self:backgroudRequest(api_url, headers, requestBody)
+        return self:backgroundRequest(api_url, headers, requestBody)
     end
     
     local status, code, response = self:makeRequest(api_url, headers, requestBody)
