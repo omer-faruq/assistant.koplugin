@@ -539,6 +539,27 @@ function ChatGPTViewer:saveToNotebook()
     -- Get book file path
     local notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
     
+    -- Check if default_folder_for_logs is configured and try to use it
+    local default_folder = util.tableGetValue(self.assistant.CONFIGURATION, "features", "default_folder_for_logs")
+    if default_folder and default_folder ~= "" then
+      if not notebookfile:find("^" .. default_folder:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")) then
+        if not util.pathExists(default_folder) then
+          UIManager:show(InfoMessage:new{
+              icon = "notice-warning",
+              text = T(_("Cannot access default folder for logs: %1\nUsing original location."), default_folder),
+              timeout = 5,
+            })
+        else
+          local original_filename = notebookfile:match("([^/\\]+)$") or "notebook.txt"
+          local new_notebookfile = default_folder .. "/" .. original_filename
+          
+          self.ui.doc_settings:saveSetting("notebook_file", new_notebookfile)
+          
+          notebookfile = new_notebookfile
+        end
+      end
+    end
+    
     if notebookfile then
       -- Get current timestamp
       local timestamp = os.date("%Y-%m-%d %H:%M:%S")
@@ -552,7 +573,7 @@ function ChatGPTViewer:saveToNotebook()
         text_to_log = "Highlighted text: " .. self.highlighted_text .. "\n\n" .. text_to_log
       end
       
-      local log_entry = string.format("[%s]\n## %s\n\n%s\n\n", timestamp, title_text, text_to_log)
+      local log_entry = string.format("# [%s]\n## %s\n\n%s\n\n", timestamp, title_text, text_to_log)
       
       -- Append to notebook file
       local file = io.open(notebookfile, "a")
