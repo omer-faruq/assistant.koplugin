@@ -565,7 +565,7 @@ function ChatGPTViewer:saveToNotebook()
       local timestamp = os.date("%Y-%m-%d %H:%M:%S")
       
       -- Prepare log entry with title if available
-      local title_text = self.title and (self.title .. "\n") or ""
+      local title_text = self.title and (self.title .. "\n") or _("Book Analysis").."\n"
       local text_to_log = self.text or ""
       
       -- If text doesn't start with "Highlighted text:", add it
@@ -727,6 +727,10 @@ function ChatGPTViewer:askAnotherQuestion()
     input = "",
     input_hint = _("Type your question here"),
     input_type = "text",
+    input_height = 6,
+    allow_newline = false,
+    input_multiline = true,
+    text_height = 300,
     width = Screen:getWidth() * 0.8,
     height = Screen:getHeight() * 0.4,
     buttons = button_rows,

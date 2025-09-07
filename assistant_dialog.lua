@@ -82,11 +82,13 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
         user_message = string.format("%s\n\n", title)
       else
         -- shows user input prompt
-        user_message = string.format("\n\n%s\n\n", self:_truncateUserPrompt(message.content or _("(Empty message)")))
+        user_message = string.format("\n\n%s\n\n", message.content or _("(Empty message)"))
       end
       return "### ⮞ User: " .. user_message
     elseif message.role == "assistant" then
       local assistant_content = message.content or _("(No response)")
+      -- Remove code block markers before displaying
+      assistant_content = assistant_content:gsub("```", "\n")
       return string.format("### ⮞ Assistant:\n\n%s\n\n", assistant_content)
     end
     return "" -- Should not happen for valid roles
@@ -292,8 +294,8 @@ function AssistantDialog:show(highlightedText)
             content = answer,
           })
           
-          -- Create a contextual title
-          local viewer_title = highlightedText and highlightedText ~= "" and _("Book Analysis")
+          -- do not have a title to display user prompt 
+          local viewer_title = nil
           self:_createAndShowViewer(highlightedText, message_history, viewer_title)
         end)
       end
@@ -369,6 +371,10 @@ function AssistantDialog:show(highlightedText)
     title = _("AI Assistant"),
     description = dialog_hint,
     input_hint = input_hint,
+    input_height = 6,
+    allow_newline = false,
+    input_multiline = true,
+    text_height = 300,
     buttons = button_rows,
     title_bar_left_icon = "appbar.settings",
     title_bar_left_icon_tap_callback = function ()
@@ -378,7 +384,7 @@ function AssistantDialog:show(highlightedText)
     close_callback = function () self:_close() end,
     dismiss_callback = function () self:_close() end
   }
-
+  
   --  adds a close button to the top right
   self.input_dialog.title_bar.close_callback = function() self:_close() end
   self.input_dialog.title_bar:init()
