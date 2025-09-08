@@ -433,6 +433,21 @@ function ChatGPTViewer:init()
       table.insert(buttons[#buttons], #(buttons[#buttons]), save_button)
   end
 
+  if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+    local suggestions = self:extractPromptSuggestions()
+    for i, suggestion in ipairs(suggestions) do
+      local suggestion_rowbtn = {{
+        id = T("suggestions_%1", i),
+        text = suggestion,
+        callback = function()
+          self:askAnotherQuestion()
+          self.input_dialog:setInputText(suggestion, nil, false)
+        end
+      }}
+      table.insert(buttons, 1, suggestion_rowbtn)
+    end
+  end
+
   self.button_table = ButtonTable:new {
     width = self.width - 2 * self.button_padding,
     buttons = buttons,
@@ -920,6 +935,32 @@ function ChatGPTViewer:trimMessageHistory()
       table.remove(self.message_history, 2)
     end
   end
+end
+
+-- Function to extract prompt suggestions from a results text
+function ChatGPTViewer:extractPromptSuggestions()
+      local suggestions = {}
+    local start_tag = "<PROMPT_SUGGESTION>"
+    local end_tag = "</PROMPT_SUGGESTION>"
+
+    -- The pattern becomes simpler as < and > do not need to be escaped.
+    -- We still use string.format and string.gsub for robustness,
+    -- but for < and > specifically, it's not strictly necessary.
+    -- However, it's a good practice for pattern generation.
+    local pattern = string.format("%s(.-)%s",
+                                  string.gsub(start_tag, "([%c%d%p%s])", "%%%1"), -- Escape special pattern chars (if any)
+                                  string.gsub(end_tag, "([%c%d%p%s])", "%%%1"))   -- Escape special pattern chars (if any)
+
+    -- If you are absolutely certain that tags will ONLY contain alphanumeric characters
+    -- and angle brackets, you could write the pattern like this:
+    -- local pattern = "<PROMPT_SUGGESTION>(.-)</PROMPT_SUGGESTION>"
+    -- But the string.gsub approach is safer for arbitrary tags.
+
+    for content in string.gmatch(self.text, pattern) do
+        table.insert(suggestions, content)
+    end
+
+    return suggestions
 end
 
 function ChatGPTViewer:update(new_text)
