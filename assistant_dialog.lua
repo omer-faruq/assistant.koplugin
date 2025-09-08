@@ -68,7 +68,12 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
         user_message = string.format("%s\n\n", title)
       else
         -- shows user input prompt
-        user_message = string.format("\n\n%s\n\n", message.content or _("(Empty message)"))
+        local content = message.content
+        local suggested_pos = content:find(Prompts.assistant_prompts.suggestions_prompt:sub(1, 20))
+        if suggested_pos > 0 then
+          content = content:sub(1, suggested_pos - 3) -- two newlines was added
+        end
+        user_message = string.format("\n\n%s\n\n", content or _("(Empty message)"))
       end
       return "### ⮞ User: " .. user_message
     elseif message.role == "assistant" then
