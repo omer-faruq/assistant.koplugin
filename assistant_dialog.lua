@@ -141,6 +141,9 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
 
         if type(user_question) == "string" then
           -- Use user entered question
+          if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+            user_question = user_question .. "\n\n" .. Prompts.assistant_prompts.suggestions_prompt
+          end
           self:_prepareMessageHistoryForUserQuery(message_history, current_highlight, user_question)
         elseif type(user_question) == "table" then
           -- Use custom prompt from configuration

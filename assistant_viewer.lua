@@ -434,7 +434,7 @@ function ChatGPTViewer:init()
   end
 
   if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
-    local suggestions = self:extractPromptSuggestions()
+    local suggestions = self:extractPromptSuggestions(self.text)
     for i, suggestion in ipairs(suggestions) do
       local suggestion_rowbtn = {{
         id = T("suggestions_%1", i),
@@ -938,8 +938,8 @@ function ChatGPTViewer:trimMessageHistory()
 end
 
 -- Function to extract prompt suggestions from a results text
-function ChatGPTViewer:extractPromptSuggestions()
-      local suggestions = {}
+function ChatGPTViewer:extractPromptSuggestions(text)
+    local suggestions = {}
     local start_tag = "<PROMPT_SUGGESTION>"
     local end_tag = "</PROMPT_SUGGESTION>"
 
@@ -956,7 +956,7 @@ function ChatGPTViewer:extractPromptSuggestions()
     -- local pattern = "<PROMPT_SUGGESTION>(.-)</PROMPT_SUGGESTION>"
     -- But the string.gsub approach is safer for arbitrary tags.
 
-    for content in string.gmatch(self.text, pattern) do
+    for content in string.gmatch(text, pattern) do
         table.insert(suggestions, content)
     end
 
@@ -966,6 +966,24 @@ end
 function ChatGPTViewer:update(new_text)
   local first_time = not self.text
   local last_page_num = nil
+
+  if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+    -- update suggestions buttons from the latest response.
+    local last_resp = self.message_history[#self.message_history].content
+    local suggestions = self:extractPromptSuggestions(last_resp)
+
+    for i, suggestion in ipairs(suggestions) do
+      local btn = self.button_table:getButtonById(T("suggestions_%1", i))
+      if btn then
+        btn:setText(suggestion)
+        -- TODO: fontsize
+        btn.callback = function()
+          self:askAnotherQuestion()
+          self.input_dialog:setInputText(suggestion, nil, false)
+        end
+      end
+    end
+  end
 
   -- Check if the new text is substantially different from the current text
   if not self.text or #new_text > #self.text then
