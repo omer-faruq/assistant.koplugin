@@ -12,6 +12,7 @@ local Trapper = require("ui/trapper")
 local Prompts = require("assistant_prompts")
 local koutil = require("util")
 local Device = require("device")
+local Screen = Device.screen
 
 -- main dialog class
 local AssistantDialog = {
@@ -361,7 +362,7 @@ function AssistantDialog:show(highlightedText)
     input_height = 6,
     allow_newline = false,
     input_multiline = true,
-    text_height = 300,
+    text_height = math.floor( 10 * Screen:scaleBySize(20) ), -- about 10 lines of text
     buttons = button_rows,
     title_bar_left_icon = "appbar.settings",
     title_bar_left_icon_tap_callback = function ()

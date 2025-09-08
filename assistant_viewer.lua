@@ -749,7 +749,7 @@ function ChatGPTViewer:askAnotherQuestion()
     input_height = 6,
     allow_newline = false,
     input_multiline = true,
-    text_height = 300,
+    text_height = math.floor( 10 * Screen:scaleBySize(20) ), -- about 10 lines of text
     width = Screen:getWidth() * 0.8,
     height = Screen:getHeight() * 0.4,
     buttons = button_rows,
