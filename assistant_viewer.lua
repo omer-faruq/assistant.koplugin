@@ -979,8 +979,8 @@ function ChatGPTViewer:update(new_text)
     for i, suggestion in ipairs(suggestions) do
       local btn = self.button_table:getButtonById(T("suggestions_%1", i))
       if btn then
+        btn.did_truncation_tweaks = true
         btn:setText(suggestion)
-        -- TODO: fontsize
         btn.callback = function()
           self:askAnotherQuestion()
           self.input_dialog:setInputText(suggestion, nil, false)
