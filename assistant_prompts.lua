@@ -297,7 +297,7 @@ Ensure all information is accurate and based on known facts. Respond entirely in
     _("Word Origin"))
     },
     suggestions_prompt = [[
-At the end of the response, generate two questions that the user might be interested in based on the response. Each Output in the format: <PROMPT_SUGGESTION></PROMPT_SUGGESTION>.
+At the end of the response, generate two questions in {language} that the user might find interesting based on your response, each output in the format: <PROMPT_SUGGESTION></PROMPT_SUGGESTION>.
 ]]
 }
 
