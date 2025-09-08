@@ -37,24 +37,6 @@ function AssistantDialog:_close()
   end
 end
 
--- Helper function to truncate text based on configuration
-function AssistantDialog:_truncateUserPrompt(text)
-  if not self.CONFIGURATION then
-    return text
-  end
-  
-  local max_length = koutil.tableGetValue(self.CONFIGURATION, "features", "max_display_user_prompt_length")
-  if not max_length then return text end
-  if max_length <= 0 then
-    return text
-  end
-  
-  if text and #text > max_length then
-    return text:sub(1, max_length) .. "..."
-  end
-  return text
-end
-
 function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText)
   local book = self:_getBookContext()
   
@@ -167,8 +149,8 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
           })
         end
 
+        viewer:trimMessageHistory()
         Trapper:wrap(function()
-          -- Use viewer's own highlighted_text value
           local answer, err = self.querier:query(message_history)
           
           -- Check if we got a valid response

@@ -138,6 +138,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
           })
         end
 
+        viewer:trimMessageHistory()
         Trapper:wrap(function()
           local answer, err = Querier:query(message_history)
           

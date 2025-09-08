@@ -895,6 +895,33 @@ function ChatGPTViewer:handleTextSelection(text, hold_duration, start_idx, end_i
   end
 end
 
+function ChatGPTViewer:trimMessageHistory()
+  if not self.message_history then return end
+
+  -- TODO: Make this configurable in the settings dialog
+  local MAX_ROUNDS = 3
+
+  local assistant_msg_indices = {}
+  -- The first message is the system prompt, so we start from index 2.
+  for i = 2, #self.message_history do
+    if self.message_history[i].role == "assistant" then
+      table.insert(assistant_msg_indices, i)
+    end
+  end
+
+  if #assistant_msg_indices > MAX_ROUNDS then
+    local num_rounds_to_remove = #assistant_msg_indices - MAX_ROUNDS
+    -- The index of the last assistant message of the last round to be removed.
+    local last_assistant_msg_index_to_remove = assistant_msg_indices[num_rounds_to_remove]
+    -- We remove all messages from the beginning (after system prompt) up to and including that assistant message.
+    -- The conversation starts at index 2.
+    local num_messages_to_remove = last_assistant_msg_index_to_remove - 1
+    for _ = 1, num_messages_to_remove do
+      table.remove(self.message_history, 2)
+    end
+  end
+end
+
 function ChatGPTViewer:update(new_text)
   local first_time = not self.text
   local last_page_num = nil
