@@ -944,15 +944,10 @@ end
 -- Function to extract prompt suggestions from a results text
 function ChatGPTViewer:extractPromptSuggestions(text)
     local suggestions = {}
-    local start_tag = "<SUGGESTION>"
-    local end_tag = "</SUGGESTION>"
-    local pattern = string.format("%s(.-)%s",
-                                  string.gsub(start_tag, "([%c%d%p%s])", "%%%1"), -- Escape special pattern chars (if any)
-                                  string.gsub(end_tag, "([%c%d%p%s])", "%%%1"))   -- Escape special pattern chars (if any)
-    for content in string.gmatch(text, pattern) do
-        table.insert(suggestions, content)
+    -- The `.-` is a non-greedy match for any characters.
+    for suggestion in string.gmatch(text, "<SUGGESTION>(.-)</SUGGESTION>") do
+        table.insert(suggestions, suggestion)
     end
-
     return suggestions
 end
 
