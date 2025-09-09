@@ -65,12 +65,11 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     
     -- Get feature CONFIGURATION with fallbacks
     local file_config = koutil.tableGetValue(CONFIGURATION, "features", config_key) or {}
-    local feature_prompts = assistant_prompts and assistant_prompts[prompts_key] or nil
     local language = assistant.settings:readSetting("response_language") or assistant.ui_language
     
     -- Prompts for feature (from config or prompts.lua)
     local system_prompt = koutil.tableGetValue(file_config, "system_prompt")
-        or (feature_prompts and feature_prompts.system_prompt)
+        or koutil.tableGetValue(assistant_prompts, prompts_key, "system_prompt")
 
     if assistant.settings:readSetting("auto_prompt_suggest", false) then
       local suggestions_prompt = assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
@@ -78,7 +77,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     end
 
     local user_prompt_template = koutil.tableGetValue(file_config, "user_prompt")
-        or (feature_prompts and feature_prompts.user_prompt)
+        or koutil.tableGetValue(assistant_prompts, prompts_key, "user_prompt")
 
     local message_history = message_history or {
         {
@@ -170,11 +169,6 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     }
 
     UIManager:show(chatgpt_viewer)
-
-    -- Optional: force refresh screen if enabled in configuration
-    if koutil.tableGetValue(CONFIGURATION, "features", "refresh_screen_after_displaying_results") then
-        UIManager:setDirty(nil, "full")
-    end
 end
 
 return showFeatureDialog
