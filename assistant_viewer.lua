@@ -85,6 +85,10 @@ table td, table th {
     border: 1px solid black;
     padding: 0;
 }
+
+SUGGESTION {
+    display: none;
+}
 ]]
 
 local RTL_CSS = [[
@@ -270,7 +274,7 @@ function ChatGPTViewer:init()
   -- Only add Ask Another Question button if showAskQuestion is true
   if self.onAskQuestion then
     table.insert(default_buttons, {
-      -- @translators this is a button text, keep short
+      -- @translators button text, keep it short, like: Ask Another
       text = _("Ask Another Question"),
       id = "ask_another_question",
       callback = function()
@@ -431,6 +435,22 @@ function ChatGPTViewer:init()
       }
       -- to keep close button on the right, insert into the second-to-last position
       table.insert(buttons[#buttons], #(buttons[#buttons]), save_button)
+  end
+
+  -- Parse and extract prompt suggested from responses
+  if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+    local suggestions = self:extractPromptSuggestions(self.text)
+    for i, suggestion in ipairs(suggestions) do
+      local suggestion_btn_row = {{
+        id = T("suggestion_%1", i),
+        text = suggestion,
+        callback = function()
+          self:askAnotherQuestion(true)
+          self.input_dialog:setInputText(suggestion, nil, false) -- move cursor to the end
+        end
+      }}
+      table.insert(buttons, i, suggestion_btn_row)
+    end
   end
 
   self.button_table = ButtonTable:new {
@@ -618,7 +638,7 @@ function ChatGPTViewer:onCloseWidget()
   end)
 end
 
-function ChatGPTViewer:askAnotherQuestion()
+function ChatGPTViewer:askAnotherQuestion(simple_mode)
   -- Prevent multiple dialogs
   if self.input_dialog and self.input_dialog.dialog_open then
     return
@@ -694,7 +714,7 @@ function ChatGPTViewer:askAnotherQuestion()
   local button_rows = {}
   table.insert(button_rows, first_row)
    -- Only add custom buttons if there's highlighted text
-  if self.highlighted_text and self.highlighted_text ~= "" then 
+  if self.highlighted_text and self.highlighted_text ~= "" and not simple_mode then 
     local prompt_buttons = {}
 
     -- Add custom prompt buttons
@@ -730,7 +750,7 @@ function ChatGPTViewer:askAnotherQuestion()
     input_height = 6,
     allow_newline = false,
     input_multiline = true,
-    text_height = 300,
+    text_height = math.floor( 10 * Screen:scaleBySize(20) ), -- about 10 lines of text
     width = Screen:getWidth() * 0.8,
     height = Screen:getHeight() * 0.4,
     buttons = button_rows,
@@ -922,9 +942,37 @@ function ChatGPTViewer:trimMessageHistory()
   end
 end
 
+-- Function to extract prompt suggestions from a results text
+function ChatGPTViewer:extractPromptSuggestions(text)
+    local suggestions = {}
+    -- The `.-` is a non-greedy match for any characters.
+    for suggestion in string.gmatch(text, "<SUGGESTION>(.-)</SUGGESTION>") do
+        table.insert(suggestions, suggestion)
+    end
+    return suggestions
+end
+
 function ChatGPTViewer:update(new_text)
   local first_time = not self.text
   local last_page_num = nil
+
+  if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+    -- update suggestions buttons from the latest response.
+    local last_resp = self.message_history[#self.message_history].content
+    local suggestions = self:extractPromptSuggestions(last_resp)
+
+    for i, suggestion in ipairs(suggestions) do
+      local btn = self.button_table:getButtonById(T("suggestion_%1", i))
+      if btn then
+        btn.did_truncation_tweaks = true
+        btn:setText(suggestion, self.width - 2 * self.button_padding)
+        btn.callback = function()
+          self:askAnotherQuestion(true)
+          self.input_dialog:setInputText(suggestion, nil, false)
+        end
+      end
+    end
+  end
 
   -- Check if the new text is substantially different from the current text
   if not self.text or #new_text > #self.text then

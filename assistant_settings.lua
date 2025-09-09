@@ -222,6 +222,14 @@ function SettingsDialog:init()
             end
         },
         {
+            text = _("Enable Suggested Questions from AI"),
+            checked = self.settings:readSetting("auto_prompt_suggest", false),
+            callback = function()
+                self.settings:toggle("auto_prompt_suggest")
+                self.assistant.updated = true
+            end
+        },
+        {
             text = _("Use AI Assistant for 'Translate'"),
             checked = self.settings:readSetting("ai_translate_override", false),
             callback = function()

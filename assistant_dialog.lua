@@ -12,6 +12,7 @@ local Trapper = require("ui/trapper")
 local Prompts = require("assistant_prompts")
 local koutil = require("util")
 local Device = require("device")
+local Screen = Device.screen
 
 -- main dialog class
 local AssistantDialog = {
@@ -43,7 +44,7 @@ function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText)
   -- Handle case where no text is highlighted (gesture-triggered)
   local text_to_use = highlightedText and highlightedText ~= "" and highlightedText or ""
   local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
-  
+
   -- replace placeholders in the user prompt
   return user_prompt:gsub("{(%w+)}", {
     title = book.title,
@@ -229,6 +230,12 @@ function AssistantDialog:show(highlightedText)
   -- Handle regular dialog (user input prompt, other buttons)
   local book = self:_getBookContext()
   local system_prompt = koutil.tableGetValue(self.CONFIGURATION, "features", "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
+  if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+    local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
+    local suggestions_prompt = Prompts.assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
+    system_prompt = system_prompt .. suggestions_prompt
+  end
+
   local message_history = {{
     role = "system",
     content = system_prompt
@@ -356,7 +363,7 @@ function AssistantDialog:show(highlightedText)
     input_height = 6,
     allow_newline = false,
     input_multiline = true,
-    text_height = 300,
+    text_height = math.floor( 10 * Screen:scaleBySize(20) ), -- about 10 lines of text
     buttons = button_rows,
     title_bar_left_icon = "appbar.settings",
     title_bar_left_icon_tap_callback = function ()
@@ -383,11 +390,20 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index)
   local title = koutil.tableGetValue(prompt_config, "text") or prompt_index
 
   highlightedText = highlightedText:gsub("\n", "\n\n") -- ensure newlines are doubled (LLM presumes markdown input)
+
   local user_content = self:_formatUserPrompt(koutil.tableGetValue(prompt_config, "user_prompt"), highlightedText)
+  local system_prompt = koutil.tableGetValue(prompt_config, "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
+
+  if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+    local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
+    local suggestions_prompt = Prompts.assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
+    system_prompt = system_prompt .. suggestions_prompt
+  end
+
   local message_history = {
     {
       role = "system",
-      content = koutil.tableGetValue(prompt_config, "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt"),
+      content = system_prompt,
     },
     {
       role = "user",
