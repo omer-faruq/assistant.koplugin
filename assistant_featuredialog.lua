@@ -72,6 +72,11 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     local system_prompt = koutil.tableGetValue(file_config, "system_prompt")
         or (feature_prompts and feature_prompts.system_prompt)
 
+    if assistant.settings:readSetting("auto_prompt_suggest", false) then
+      local suggestions_prompt = assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
+      system_prompt = system_prompt .. suggestions_prompt
+    end
+
     local user_prompt_template = koutil.tableGetValue(file_config, "user_prompt")
         or (feature_prompts and feature_prompts.user_prompt)
 
