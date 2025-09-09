@@ -112,6 +112,7 @@ function Assistant:addToMainMenu(menu_items)
         sorting_hint = "tools",
         sub_item_table = {
           {
+            separator = true,
             text = _("Ask the AI a question"),
             callback = function ()
               self:onAskAIQuestion()
@@ -568,71 +569,51 @@ function Assistant:onAskAIQuestion()
   return true
 end
 
-function Assistant:onAskAIRecap()
-  if not self:isConfigured() then
-    return
-  end
-  
-  NetworkMgr:runWhenOnline(function()
-    
-    -- Get current book information
+local function getDocumentInfo(document)
     local DocSettings = require("docsettings")
-    local doc_settings = DocSettings:open(self.ui.document.file)
+    local doc_settings = DocSettings:open(document.file)
     local percent_finished = doc_settings:readSetting("percent_finished") or 0
     local doc_props = doc_settings:child("doc_props")
-    local title = doc_props:readSetting("title") or self.ui.document:getProps().title or "Unknown Title"
-    local authors = doc_props:readSetting("authors") or self.ui.document:getProps().authors or "Unknown Author"
-    
-    -- Show recap dialog
+    local title = doc_props:readSetting("title") or document:getProps().title or "Unknown Title"
+    local authors = doc_props:readSetting("authors") or document:getProps().authors or "Unknown Author"
+    return {
+      title = title,
+      authors = authors,
+      percent_finished = percent_finished,
+    }
+end
+
+function Assistant:onAskAIRecap()
+  if not self:isConfigured() then return end
+  NetworkMgr:runWhenOnline(function()
+    local book = getDocumentInfo(self.ui.document)
     local showFeatureDialog = require("assistant_featuredialog")
     Trapper:wrap(function()
-      showFeatureDialog(self, "recap", title, authors, percent_finished)
+      showFeatureDialog(self, "recap", book.title, book.authors, book.percent_finished)
     end)
   end)
   return true
 end
 
 function Assistant:onAskAIXRay()
-  if not self:isConfigured() then
-    return
-  end
-
+  if not self:isConfigured() then return end
   NetworkMgr:runWhenOnline(function()
-    -- Get current book information
-    local DocSettings = require("docsettings")
-    local doc_settings = DocSettings:open(self.ui.document.file)
-    local percent_finished = doc_settings:readSetting("percent_finished") or 0
-    local doc_props = doc_settings:child("doc_props")
-    local title = doc_props:readSetting("title") or self.ui.document:getProps().title or "Unknown Title"
-    local authors = doc_props:readSetting("authors") or self.ui.document:getProps().authors or "Unknown Author"
-
-    -- Show X-Ray dialog
+    local book = getDocumentInfo(self.ui.document)
     local showFeatureDialog = require("assistant_featuredialog")
     Trapper:wrap(function()
-      showFeatureDialog(self, "xray", title, authors, percent_finished)
+      showFeatureDialog(self, "xray", book.title, book.authors, book.percent_finished)
     end)
   end)
   return true
 end
 
 function Assistant:onAskAIBookInfo()
-  if not self:isConfigured() then
-    return
-  end
-
+  if not self:isConfigured() then return end
   NetworkMgr:runWhenOnline(function()
-    -- Get current book information
-    local DocSettings = require("docsettings")
-    local doc_settings = DocSettings:open(self.ui.document.file)
-    local percent_finished = doc_settings:readSetting("percent_finished") or 0
-    local doc_props = doc_settings:child("doc_props")
-    local title = doc_props:readSetting("title") or self.ui.document:getProps().title or "Unknown Title"
-    local authors = doc_props:readSetting("authors") or self.ui.document:getProps().authors or "Unknown Author"
-
-    -- Show Book Information dialog
+    local book = getDocumentInfo(self.ui.document)
     local showFeatureDialog = require("assistant_featuredialog")
     Trapper:wrap(function()
-      showFeatureDialog(self, "book_info", title, authors, percent_finished)
+      showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished)
     end)
   end)
   return true
