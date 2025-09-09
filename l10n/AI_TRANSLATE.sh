@@ -34,17 +34,52 @@ set -euo pipefail
 API_ENDPOINT=${API_ENDPOINT:-"https://api.openai.com/v1/chat/completions"}
 API_MODEL=${API_MODEL:-"gpt-4o-mini"}
 AUTH_HEADER="Authorization: Bearer ${API_KEY}"
-PROMPT_TEMPLATE="Translate the following gettext .po file content to __YOUR_LANGUAGE__. \
-The first message with \`msgid ""\` is the header entry. Make necessary updates to the header entry. \
-Fill the \`Plural-Forms\` field according to the language rules. \
-Fill the \`Language\` field with the language name and the language code. \
-Fill the \`Language-Team\` and \`Last-Translator\` fields with your identifical model name and versions. \
-Ensure accurate and context-aware translation.  \
-The commented text in the first lines are descriptive text for the file, update it as necessary. \
-The message will display on UI, keep the translation clean and short and easy understanding. \
-When a line contains \`@translators\` is present, consider that as context to the message. \
-Only output the translated file content, do not use markdown format. \
-"
+PROMPT_TEMPLATE=$(cat <<'EOF'
+You are an expert localization specialist tasked with translating a gettext `.po` file from English to __YOUR_LANGUAGE__.
+
+<metadata-handling>
+1. Header Entry Modifications:
+   - Update file header with current translation metadata
+   - Populate `Plural-Forms` field according to __YOUR_LANGUAGE__ language rules
+   - Set `Language` field to "__YOUR_LANGUAGE__" with language code
+   - Fill `Language-Team` with "[AI Translation Model Name]"
+   - Fill `Last-Translator` with "[AI Model Version]"
+
+2. Special Annotation Handling:
+   - When `@translators` comment is present, use it as additional context for translation
+   - Pay extra attention to technical or contextual hints provided in comments
+</metadata-handling>
+
+<translation-context>
+- Carefully analyze the source text's context, technical terminology, and intended meaning
+- Prioritize clarity, conciseness, and natural-sounding translation
+- Maintain the original message's intent and technical precision
+</translation-context>
+
+<translation-guidelines>
+- Ensure UI-friendly translation: clear, concise, and easily understandable
+- Preserve original formatting and placeholders
+- Handle technical terms consistently
+- Adapt translation to __YOUR_LANGUAGE__ linguistic conventions
+</translation-guidelines>
+
+<output-requirements>
+- Provide only the translated PO file content
+- Do not use markdown formatting
+- Maintain the original file structure
+</output-requirements>
+
+<pre-translation-process>
+1. Analyze source text thoroughly
+2. Identify key terminology and context
+3. Develop translation strategy
+4. Perform translation
+5. Review for accuracy, naturalness, and technical precision
+</pre-translation-process>
+
+Proceed with the translation, ensuring high-quality, context-aware localization of the provided gettext PO file.
+EOF
+)
 
 # Associative array mapping language codes to full language names.
 declare -A LANG_MAP=(
@@ -128,7 +163,7 @@ LANG_CODE="$1"
 
 # Customize the prompt with the target language name.
 LANG_FULLNAME="${LANG_MAP["$LANG_CODE"]}"
-PROMPT="${PROMPT_TEMPLATE//__YOUR_LANGUAGE__/$LANG_FULLNAME}"
+PROMPT=$(sed "s|__YOUR_LANGUAGE__|$LANG_FULLNAME|g" <<< "$PROMPT_TEMPLATE")
 echo "Translation in progress for $LANG_CODE ($LANG_FULLNAME)."
 
 # -------------------- Create directory --------------------
