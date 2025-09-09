@@ -947,7 +947,7 @@ function ChatGPTViewer:extractPromptSuggestions(text)
     local suggestions = {}
     -- The `.-` is a non-greedy match for any characters.
     for suggestion in string.gmatch(text, "<SUGGESTION>(.-)</SUGGESTION>") do
-        table.insert(suggestions, suggestion)
+        table.insert(suggestions, util.cleanupSelectedText(suggestion)) -- trim newline or spaces around
     end
     return suggestions
 end
