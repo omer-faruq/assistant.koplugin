@@ -270,7 +270,7 @@ function ChatGPTViewer:init()
   -- Only add Ask Another Question button if showAskQuestion is true
   if self.onAskQuestion then
     table.insert(default_buttons, {
-      -- @translators this is a button text, keep short
+      -- @translators button text, keep it short, like: Ask Another
       text = _("Ask Another Question"),
       id = "ask_another_question",
       callback = function()
@@ -433,18 +433,19 @@ function ChatGPTViewer:init()
       table.insert(buttons[#buttons], #(buttons[#buttons]), save_button)
   end
 
+  -- Parse and extract prompt suggested from responses
   if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
     local suggestions = self:extractPromptSuggestions(self.text)
     for i, suggestion in ipairs(suggestions) do
-      local suggestion_rowbtn = {{
-        id = T("suggestions_%1", i),
+      local suggestion_btn_row = {{
+        id = T("suggestion_%1", i),
         text = suggestion,
         callback = function()
           self:askAnotherQuestion()
-          self.input_dialog:setInputText(suggestion, nil, false)
+          self.input_dialog:setInputText(suggestion, nil, false) -- move cursor to the end
         end
       }}
-      table.insert(buttons, 1, suggestion_rowbtn)
+      table.insert(buttons, i, suggestion_btn_row)
     end
   end
 
@@ -957,10 +958,10 @@ function ChatGPTViewer:update(new_text)
     local suggestions = self:extractPromptSuggestions(last_resp)
 
     for i, suggestion in ipairs(suggestions) do
-      local btn = self.button_table:getButtonById(T("suggestions_%1", i))
+      local btn = self.button_table:getButtonById(T("suggestion_%1", i))
       if btn then
         btn.did_truncation_tweaks = true
-        btn:setText(suggestion, self.width - 2 * self.text_padding - 2 * self.text_margin)
+        btn:setText(suggestion, self.width - 2 * self.button_padding)
         btn.callback = function()
           self:askAnotherQuestion()
           self.input_dialog:setInputText(suggestion, nil, false)
