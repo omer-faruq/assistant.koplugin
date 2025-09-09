@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-05 16:37+0800\n"
+        "POT-Creation-Date: 2025-09-09 14:18+0800\n"
         "PO-Revision-Date: 2025-08-21 15:20+0800\n"
         "Last-Translator: GPT-4-1105-preview\n"
         "Language-Team: GPT-4-1105-preview\n"
@@ -16,7 +16,7 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:111 ../main.lua:338
+#: ../_meta.lua:4 ../assistant_dialog.lua:360 ../main.lua:111 ../main.lua:338
 msgid   "AI Assistant"
 msgstr  "AI Pomoćnik"
 
@@ -24,63 +24,59 @@ msgstr  "AI Pomoćnik"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 Poboljšajte KOReader iskustvo s AI"
 
-#: ../assistant_dialog.lua:85
+#: ../assistant_dialog.lua:68
 msgid   "(Empty message)"
 msgstr  "(Prazna poruka)"
 
-#: ../assistant_dialog.lua:89
+#: ../assistant_dialog.lua:72
 msgid   "(No response)"
 msgstr  "(Bez odgovora)"
 
-#: ../assistant_dialog.lua:118
+#: ../assistant_dialog.lua:103
 msgid   "Highlighted text:"
 msgstr  "Istaknuti tekst:"
 
-#: ../assistant_dialog.lua:258 ../assistant_dictdialog.lua:36
-#: ../assistant_settings.lua:89 ../assistant_viewer.lua:639
+#: ../assistant_dialog.lua:249 ../assistant_dictdialog.lua:36
+#: ../assistant_settings.lua:89 ../assistant_viewer.lua:680
 msgid   "Cancel"
 msgstr  "Otkaži"
 
-#: ../assistant_dialog.lua:265 ../assistant_viewer.lua:649
+#: ../assistant_dialog.lua:256 ../assistant_viewer.lua:690
 msgid   "Ask"
 msgstr  "Pitaj"
 
-#: ../assistant_dialog.lua:271 ../assistant_viewer.lua:655
+#: ../assistant_dialog.lua:262 ../assistant_viewer.lua:696
 msgid   "Enter a question before proceeding."
 msgstr  "Unesite pitanje prije nastavka."
 
-#: ../assistant_dialog.lua:296
-msgid   "Book Analysis"
-msgstr  "Analiza knjige"
-
-#: ../assistant_dialog.lua:333
+#: ../assistant_dialog.lua:324
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Dodati ovaj gumb u izbornik za isticanje?"
 
-#: ../assistant_dialog.lua:334
+#: ../assistant_dialog.lua:325
 msgid   "Add"
 msgstr  "Dodaj"
 
-#: ../assistant_dialog.lua:361
+#: ../assistant_dialog.lua:352
 msgid   "Ask a question about the highlighted text"
 msgstr  "Postavite pitanje o istaknutom tekstu"
 
-#: ../assistant_dialog.lua:362
+#: ../assistant_dialog.lua:353
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Postavite pitanje o ovoj knjizi:\n"
         "%s autora %s"
 
-#: ../assistant_dialog.lua:365
+#: ../assistant_dialog.lua:356
 msgid   "Type your question here..."
 msgstr  "Upišite pitanje ovdje..."
 
-#: ../assistant_dialog.lua:366
+#: ../assistant_dialog.lua:357
 msgid   "Ask anything about this book..."
 msgstr  "Postavite bilo što o ovoj knjizi..."
 
-#: ../assistant_dialog.lua:424
+#: ../assistant_dialog.lua:428
 msgid   "Error: No response received"
 msgstr  "Greška: Nema odgovora"
 
@@ -149,96 +145,96 @@ msgstr  "Gramatika"
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "Ovaj prompt analizira gramatiku istaknutog teksta, pružajući detaljno objašnjenje njegove strukture i bilo kakvih gramatičkih grešaka."
 
-#: ../assistant_prompts.lua:52
+#: ../assistant_prompts.lua:60
 msgid   "Translate"
 msgstr  "Prevedi"
 
-#: ../assistant_prompts.lua:53
+#: ../assistant_prompts.lua:61
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "Ovaj prompt prevede istaknuti tekst u drugi jezik."
 
-#: ../assistant_prompts.lua:75
+#: ../assistant_prompts.lua:82
 msgid   "Summarize"
 msgstr  "Sažmi"
 
-#: ../assistant_prompts.lua:77
+#: ../assistant_prompts.lua:84
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "Ovaj prompt sažima istaknuti tekst, hvatajući glavne točke i bitne detalje."
 
-#: ../assistant_prompts.lua:86
+#: ../assistant_prompts.lua:93
 msgid   "Simplify"
 msgstr  "Pojednostavnji"
 
-#: ../assistant_prompts.lua:88
+#: ../assistant_prompts.lua:95
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "Ovaj prompt pojednostavljuje istaknuti tekst, osiguravajući lakše sprovođenje."
 
-#: ../assistant_prompts.lua:98
+#: ../assistant_prompts.lua:105
 msgid   "Key Points"
 msgstr  "Ključne točke"
 
-#: ../assistant_prompts.lua:100
+#: ../assistant_prompts.lua:107
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "Ovaj prompt izvlači i navodi ključne točke iz istaknutog teksta, osiguravajući jasnoću i organizaciju."
 
-#: ../assistant_prompts.lua:104
+#: ../assistant_prompts.lua:118
 msgid   "ELI5"
 msgstr  "ELI5"
 
-#: ../assistant_prompts.lua:106
+#: ../assistant_prompts.lua:120
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "Ovaj prompt objašnjava istaknuti tekst kao da je za petogodišnjaka, podatkama pojednostavljujući složene pojmove u lako razumljive pojmove."
 
-#: ../assistant_prompts.lua:110
+#: ../assistant_prompts.lua:132
 msgid   "Explain"
 msgstr  "Objasni"
 
-#: ../assistant_prompts.lua:112
+#: ../assistant_prompts.lua:134
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Ovaj prompt detaljno objasni istaknuti tekst, osiguravajući jasnoću i razumijevanje."
 
-#: ../assistant_prompts.lua:123
+#: ../assistant_prompts.lua:145
 msgid   "Historical Context"
 msgstr  "Historijski kontekst"
 
-#: ../assistant_prompts.lua:125
+#: ../assistant_prompts.lua:147
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Ovaj prompt daje detaljan historijski kontekst istaknutog teksta, objasnivši njegov značaj i pozadinu."
 
-#: ../assistant_prompts.lua:129 ../main.lua:525
+#: ../assistant_prompts.lua:158 ../main.lua:525
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
-#: ../assistant_prompts.lua:131
+#: ../assistant_prompts.lua:160
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "Ovaj prompt generira sveobuhvatni Wikipedia-ov stil članka na temelju istaknutog teksta, osiguravajući faktualnu točnost i neutralnost."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:243
+#: ../assistant_prompts.lua:281
 msgid   "Conjugation"
 msgstr  "Konjugacija"
 
-#: ../assistant_prompts.lua:244
+#: ../assistant_prompts.lua:282
 msgid   "Synonyms"
 msgstr  "Sinonimi"
 
-#: ../assistant_prompts.lua:245
+#: ../assistant_prompts.lua:283
 msgid   "Meaning"
 msgstr  "Značenje"
 
-#: ../assistant_prompts.lua:246
+#: ../assistant_prompts.lua:284
 msgid   "Translation"
 msgstr  "Prijevod"
 
-#: ../assistant_prompts.lua:247
+#: ../assistant_prompts.lua:285
 msgid   "Explanation"
 msgstr  "Objašnjenje"
 
-#: ../assistant_prompts.lua:248
+#: ../assistant_prompts.lua:286
 msgid   "Example"
 msgstr  "Primjer"
 
-#: ../assistant_prompts.lua:249
+#: ../assistant_prompts.lua:287
 msgid   "Word Origin"
 msgstr  "Porijeklo riječi"
 
@@ -268,8 +264,8 @@ msgstr  "Nepoznata greška"
 msgid   "Settings"
 msgstr  "Postavke"
 
-#: ../assistant_querier.lua:112 ../assistant_settings.lua:285
-#: ../assistant_viewer.lua:314
+#: ../assistant_querier.lua:112 ../assistant_settings.lua:293
+#: ../assistant_viewer.lua:318
 msgid   "Close"
 msgstr  "Zatvori"
 
@@ -325,11 +321,11 @@ msgstr  "Jezik rječnika"
 msgid   "Clear"
 msgstr  "Očisti"
 
-#: ../assistant_settings.lua:113 ../assistant_viewer.lua:423
+#: ../assistant_settings.lua:113 ../assistant_viewer.lua:427
 msgid   "Save"
 msgstr  "Spremi"
 
-#: ../assistant_settings.lua:133 ../assistant_settings.lua:345
+#: ../assistant_settings.lua:133 ../assistant_settings.lua:353
 msgid   "AI Language: %1"
 msgstr  "Jezik AI: %1"
 
@@ -345,7 +341,7 @@ msgstr  "Ostavi ova polja prazna za korištenje jezika sučelja: %1"
 msgid   "Response Font Size"
 msgstr  "Veličina fonta odgovora"
 
-#: ../assistant_settings.lua:185 ../assistant_settings.lua:354
+#: ../assistant_settings.lua:185 ../assistant_settings.lua:362
 msgid   "Font Size: %1"
 msgstr  "Veličina fonta: %1"
 
@@ -358,38 +354,42 @@ msgid   "Enable stream response"
 msgstr  "Omogući tok odgovora"
 
 #: ../assistant_settings.lua:225
+msgid   "Enable Suggested Questions from AI"
+msgstr  "Omogući predložena pitanja od AI-a"
+
+#: ../assistant_settings.lua:233
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Koristi AI Pomoćnika za 'Prevedi'"
 
-#: ../assistant_settings.lua:234
+#: ../assistant_settings.lua:242
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Prikaži Rječnik(AI) u skočnom rječniku"
 
-#: ../assistant_settings.lua:242
+#: ../assistant_settings.lua:250
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Prikaži Wikipedia(AI) u skočnom rječniku"
 
-#: ../assistant_settings.lua:250
+#: ../assistant_settings.lua:258
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kopiraj upit u međuspremnik"
 
-#: ../assistant_settings.lua:258
+#: ../assistant_settings.lua:266
 msgid   "Enable Auto Recap"
 msgstr  "Aktiviraj auto-podsjetnik"
 
-#: ../assistant_settings.lua:268
+#: ../assistant_settings.lua:276
 msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "AI sažetak će biti omogućen pri sljedećem otvaranju knjige."
 
-#: ../assistant_settings.lua:272
+#: ../assistant_settings.lua:280
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Automatski spremi razgovore u Bilježnicu"
 
-#: ../assistant_settings.lua:370
+#: ../assistant_settings.lua:378
 msgid   "AI Assistant Features:"
 msgstr  "Značajke AI asistenta:"
 
-#: ../assistant_settings.lua:397
+#: ../assistant_settings.lua:405
 msgid   "AI Model provider:"
 msgstr  "Pružatelj AI modela:"
 
@@ -402,56 +402,66 @@ msgstr  "Provjeravanje ažuriranja..."
 msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "Nova verzija %s dodatka (%s) dostupna je. Molim ažurirajte!"
 
-#. @translators this is a button text, keep short
-#: ../assistant_viewer.lua:274 ../assistant_viewer.lua:705
+#. @translators button text, keep it short, like: Ask Another
+#: ../assistant_viewer.lua:278 ../assistant_viewer.lua:746
 msgid   "Ask Another Question"
 msgstr  "Postavi drugo pitanje"
 
-#: ../assistant_viewer.lua:329
+#: ../assistant_viewer.lua:333
 msgid   "Copy"
 msgstr  "Kopiraj"
 
-#: ../assistant_viewer.lua:334
+#: ../assistant_viewer.lua:338
 msgid   "Text copied to the clipboard"
 msgstr  "Tekst je kopiran u međuspremnik"
 
-#: ../assistant_viewer.lua:348
+#: ../assistant_viewer.lua:352
 msgid   "Add Note"
 msgstr  "Dodaj bilješku"
 
-#: ../assistant_viewer.lua:355
+#: ../assistant_viewer.lua:359
 msgid   "Highlight functionality not available"
 msgstr  "Funkcija isticanja nije dostupna"
 
-#: ../assistant_viewer.lua:364
+#: ../assistant_viewer.lua:368
 msgid   "No text to add as note"
 msgstr  "Nema teksta za bilješku"
 
-#: ../assistant_viewer.lua:393
+#: ../assistant_viewer.lua:397
 msgid   "No text left to add as note"
 msgstr  "Nema preostalog teksta za bilješku"
 
-#: ../assistant_viewer.lua:406
+#: ../assistant_viewer.lua:410
 msgid   "Note added successfully"
 msgstr  "Bilješka dodana"
 
-#: ../assistant_viewer.lua:427
+#: ../assistant_viewer.lua:431
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Razgovor je spremljen u Bilježnicu"
 
-#: ../assistant_viewer.lua:573
+#: ../assistant_viewer.lua:569
+msgid   "Cannot access default folder for logs: %1\n"
+        "Using original location."
+msgstr  "Ne mogu pristupiti zadanoj mapi za zapise: %1\n"
+        "Koristim izvornu lokaciju."
+
+#: ../assistant_viewer.lua:588
+msgid   "Book Analysis"
+msgstr  "Analiza knjige"
+
+#: ../assistant_viewer.lua:614
 msgid   "Chat log export failed. Continuing..."
 msgstr  "Izvoz zapisa razgovora nije uspio. Nastavljam..."
 
-#: ../assistant_viewer.lua:707
+#: ../assistant_viewer.lua:748
 msgid   "Type your question here"
 msgstr  "Upišite pitanje ovdje"
 
-#: ../assistant_viewer.lua:867
+#: ../assistant_viewer.lua:912
 msgid   "Word copied to clipboard."
 msgstr  "Riječ kopirana u međuspremnik."
 
-#: ../assistant_viewer.lua:868
+#: ../assistant_viewer.lua:913
 msgid   "Selection copied to clipboard."
 msgstr  "Selektiran tekst kopiran u međuspremnik."
 

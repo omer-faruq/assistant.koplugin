@@ -5,8 +5,8 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-05 16:37+0800\n"
-        "PO-Revision-Date: 2025-09-05 00:03+0800\n"
+        "POT-Creation-Date: 2025-09-09 14:18+0800\n"
+        "PO-Revision-Date: 2025-09-09 14:18+0800\n"
         "Last-Translator: ChatGPT-4 <chatgpt-4@example.com>\n"
         "Language-Team: ChatGPT Russian Translators <team@example.com>\n"
         "Language: Русский (ru_RU)\n"
@@ -15,7 +15,7 @@ msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:111 ../main.lua:338
+#: ../_meta.lua:4 ../assistant_dialog.lua:360 ../main.lua:111 ../main.lua:338
 msgid   "AI Assistant"
 msgstr  "Ассистент ИИ"
 
@@ -23,63 +23,59 @@ msgstr  "Ассистент ИИ"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 Улучшите KOReader с ИИ"
 
-#: ../assistant_dialog.lua:85
+#: ../assistant_dialog.lua:68
 msgid   "(Empty message)"
 msgstr  "(Пусто)"
 
-#: ../assistant_dialog.lua:89
+#: ../assistant_dialog.lua:72
 msgid   "(No response)"
 msgstr  "(Нет ответа)"
 
-#: ../assistant_dialog.lua:118
+#: ../assistant_dialog.lua:103
 msgid   "Highlighted text:"
 msgstr  "Выделенный текст:"
 
-#: ../assistant_dialog.lua:258 ../assistant_dictdialog.lua:36
-#: ../assistant_settings.lua:89 ../assistant_viewer.lua:639
+#: ../assistant_dialog.lua:249 ../assistant_dictdialog.lua:36
+#: ../assistant_settings.lua:89 ../assistant_viewer.lua:680
 msgid   "Cancel"
 msgstr  "Отмена"
 
-#: ../assistant_dialog.lua:265 ../assistant_viewer.lua:649
+#: ../assistant_dialog.lua:256 ../assistant_viewer.lua:690
 msgid   "Ask"
 msgstr  "Спросить"
 
-#: ../assistant_dialog.lua:271 ../assistant_viewer.lua:655
+#: ../assistant_dialog.lua:262 ../assistant_viewer.lua:696
 msgid   "Enter a question before proceeding."
 msgstr  "Введите вопрос"
 
-#: ../assistant_dialog.lua:296
-msgid   "Book Analysis"
-msgstr  "Анализ книги"
-
-#: ../assistant_dialog.lua:333
+#: ../assistant_dialog.lua:324
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Добавить в меню выделения?"
 
-#: ../assistant_dialog.lua:334
+#: ../assistant_dialog.lua:325
 msgid   "Add"
 msgstr  "Добавить"
 
-#: ../assistant_dialog.lua:361
+#: ../assistant_dialog.lua:352
 msgid   "Ask a question about the highlighted text"
 msgstr  "Спросить про выделенное"
 
-#: ../assistant_dialog.lua:362
+#: ../assistant_dialog.lua:353
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Спросить про книгу:\n"
         "%s автора %s"
 
-#: ../assistant_dialog.lua:365
+#: ../assistant_dialog.lua:356
 msgid   "Type your question here..."
 msgstr  "Ваш вопрос..."
 
-#: ../assistant_dialog.lua:366
+#: ../assistant_dialog.lua:357
 msgid   "Ask anything about this book..."
 msgstr  "Всё о книге…"
 
-#: ../assistant_dialog.lua:424
+#: ../assistant_dialog.lua:428
 msgid   "Error: No response received"
 msgstr  "Ошибка: нет ответа"
 
@@ -148,96 +144,96 @@ msgstr  "Грамматика"
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "Анализ грамматики выделенного"
 
-#: ../assistant_prompts.lua:52
+#: ../assistant_prompts.lua:60
 msgid   "Translate"
 msgstr  "Перевести"
 
-#: ../assistant_prompts.lua:53
+#: ../assistant_prompts.lua:61
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "Перевод выделенного текста"
 
-#: ../assistant_prompts.lua:75
+#: ../assistant_prompts.lua:82
 msgid   "Summarize"
 msgstr  "Суммировать"
 
-#: ../assistant_prompts.lua:77
+#: ../assistant_prompts.lua:84
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "Краткое содержание выделенного"
 
-#: ../assistant_prompts.lua:86
+#: ../assistant_prompts.lua:93
 msgid   "Simplify"
 msgstr  "Упростить"
 
-#: ../assistant_prompts.lua:88
+#: ../assistant_prompts.lua:95
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "Упрощает выделенный текст"
 
-#: ../assistant_prompts.lua:98
+#: ../assistant_prompts.lua:105
 msgid   "Key Points"
 msgstr  "Ключевые моменты"
 
-#: ../assistant_prompts.lua:100
+#: ../assistant_prompts.lua:107
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "Основные моменты выделенного"
 
-#: ../assistant_prompts.lua:104
+#: ../assistant_prompts.lua:118
 msgid   "ELI5"
 msgstr  "Простым языком"
 
-#: ../assistant_prompts.lua:106
+#: ../assistant_prompts.lua:120
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "Объясняет «как пятилетнему»"
 
-#: ../assistant_prompts.lua:110
+#: ../assistant_prompts.lua:132
 msgid   "Explain"
 msgstr  "Объяснить"
 
-#: ../assistant_prompts.lua:112
+#: ../assistant_prompts.lua:134
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Подробно объясняет выделенное"
 
-#: ../assistant_prompts.lua:123
+#: ../assistant_prompts.lua:145
 msgid   "Historical Context"
 msgstr  "Исторический контекст"
 
-#: ../assistant_prompts.lua:125
+#: ../assistant_prompts.lua:147
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Исторический контекст выделенного"
 
-#: ../assistant_prompts.lua:129 ../main.lua:525
+#: ../assistant_prompts.lua:158 ../main.lua:525
 msgid   "Wikipedia"
 msgstr  "Википедия"
 
-#: ../assistant_prompts.lua:131
+#: ../assistant_prompts.lua:160
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "Создаёт статью в стиле Википедии"
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:243
+#: ../assistant_prompts.lua:281
 msgid   "Conjugation"
 msgstr  "Спряжение"
 
-#: ../assistant_prompts.lua:244
+#: ../assistant_prompts.lua:282
 msgid   "Synonyms"
 msgstr  "Синонимы"
 
-#: ../assistant_prompts.lua:245
+#: ../assistant_prompts.lua:283
 msgid   "Meaning"
 msgstr  "Значение"
 
-#: ../assistant_prompts.lua:246
+#: ../assistant_prompts.lua:284
 msgid   "Translation"
 msgstr  "Перевод"
 
-#: ../assistant_prompts.lua:247
+#: ../assistant_prompts.lua:285
 msgid   "Explanation"
 msgstr  "Объяснение"
 
-#: ../assistant_prompts.lua:248
+#: ../assistant_prompts.lua:286
 msgid   "Example"
 msgstr  "Пример"
 
-#: ../assistant_prompts.lua:249
+#: ../assistant_prompts.lua:287
 msgid   "Word Origin"
 msgstr  "Этимология"
 
@@ -267,8 +263,8 @@ msgstr  "Неизвестная ошибка"
 msgid   "Settings"
 msgstr  "Настройки"
 
-#: ../assistant_querier.lua:112 ../assistant_settings.lua:285
-#: ../assistant_viewer.lua:314
+#: ../assistant_querier.lua:112 ../assistant_settings.lua:293
+#: ../assistant_viewer.lua:318
 msgid   "Close"
 msgstr  "Закрыть"
 
@@ -324,11 +320,11 @@ msgstr  "Язык словаря"
 msgid   "Clear"
 msgstr  "Очистить"
 
-#: ../assistant_settings.lua:113 ../assistant_viewer.lua:423
+#: ../assistant_settings.lua:113 ../assistant_viewer.lua:427
 msgid   "Save"
 msgstr  "Сохранить"
 
-#: ../assistant_settings.lua:133 ../assistant_settings.lua:345
+#: ../assistant_settings.lua:133 ../assistant_settings.lua:353
 msgid   "AI Language: %1"
 msgstr  "Язык ИИ: %1"
 
@@ -344,7 +340,7 @@ msgstr  "Оставьте поля пустыми для использован�
 msgid   "Response Font Size"
 msgstr  "Размер шрифта ответа"
 
-#: ../assistant_settings.lua:185 ../assistant_settings.lua:354
+#: ../assistant_settings.lua:185 ../assistant_settings.lua:362
 msgid   "Font Size: %1"
 msgstr  "Размер шрифта: %1"
 
@@ -357,38 +353,42 @@ msgid   "Enable stream response"
 msgstr  "Включить потоковый ответ"
 
 #: ../assistant_settings.lua:225
+msgid   "Enable Suggested Questions from AI"
+msgstr  "Включить предлагаемые ИИ вопросы"
+
+#: ../assistant_settings.lua:233
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "ИИ для перевода"
 
-#: ../assistant_settings.lua:234
+#: ../assistant_settings.lua:242
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Показать «Словарь (ИИ)» во всплывающем словаре"
 
-#: ../assistant_settings.lua:242
+#: ../assistant_settings.lua:250
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Показать «Википедия (ИИ)» во всплывающем словаре"
 
-#: ../assistant_settings.lua:250
+#: ../assistant_settings.lua:258
 msgid   "Copy entered question to the clipboard"
 msgstr  "Копировать введённый вопрос в буфер"
 
-#: ../assistant_settings.lua:258
+#: ../assistant_settings.lua:266
 msgid   "Enable Auto Recap"
 msgstr  "Авто-рекап"
 
-#: ../assistant_settings.lua:268
+#: ../assistant_settings.lua:276
 msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "ИИ-резюме активируется при следующем открытии книги."
 
-#: ../assistant_settings.lua:272
+#: ../assistant_settings.lua:280
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Автосохранять диалоги в NoteBook"
 
-#: ../assistant_settings.lua:370
+#: ../assistant_settings.lua:378
 msgid   "AI Assistant Features:"
 msgstr  "Функции AI‑ассистента:"
 
-#: ../assistant_settings.lua:397
+#: ../assistant_settings.lua:405
 msgid   "AI Model provider:"
 msgstr  "Поставщик модели ИИ:"
 
@@ -401,56 +401,66 @@ msgstr  "Проверка обновлений…"
 msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "Доступна новая версия плагина %s (%s). Обновитесь!"
 
-#. @translators this is a button text, keep short
-#: ../assistant_viewer.lua:274 ../assistant_viewer.lua:705
+#. @translators button text, keep it short, like: Ask Another
+#: ../assistant_viewer.lua:278 ../assistant_viewer.lua:746
 msgid   "Ask Another Question"
 msgstr  "Задать ещё вопрос"
 
-#: ../assistant_viewer.lua:329
+#: ../assistant_viewer.lua:333
 msgid   "Copy"
 msgstr  "Копировать"
 
-#: ../assistant_viewer.lua:334
+#: ../assistant_viewer.lua:338
 msgid   "Text copied to the clipboard"
 msgstr  "Текст скопирован в буфер обмена"
 
-#: ../assistant_viewer.lua:348
+#: ../assistant_viewer.lua:352
 msgid   "Add Note"
 msgstr  "Добавить заметку"
 
-#: ../assistant_viewer.lua:355
+#: ../assistant_viewer.lua:359
 msgid   "Highlight functionality not available"
 msgstr  "Выделение недоступно"
 
-#: ../assistant_viewer.lua:364
+#: ../assistant_viewer.lua:368
 msgid   "No text to add as note"
 msgstr  "Нет текста для заметки"
 
-#: ../assistant_viewer.lua:393
+#: ../assistant_viewer.lua:397
 msgid   "No text left to add as note"
 msgstr  "Больше нет текста для заметки"
 
-#: ../assistant_viewer.lua:406
+#: ../assistant_viewer.lua:410
 msgid   "Note added successfully"
 msgstr  "Заметка добавлена"
 
-#: ../assistant_viewer.lua:427
+#: ../assistant_viewer.lua:431
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Диалог сохранён в NoteBook"
 
-#: ../assistant_viewer.lua:573
+#: ../assistant_viewer.lua:569
+msgid   "Cannot access default folder for logs: %1\n"
+        "Using original location."
+msgstr  "Не удалось получить доступ к папке журналов по умолчанию: %1\n"
+        "Используется исходное расположение."
+
+#: ../assistant_viewer.lua:588
+msgid   "Book Analysis"
+msgstr  "Анализ книги"
+
+#: ../assistant_viewer.lua:614
 msgid   "Chat log export failed. Continuing..."
 msgstr  "Ошибка экспорта чата. Продолжаем…"
 
-#: ../assistant_viewer.lua:707
+#: ../assistant_viewer.lua:748
 msgid   "Type your question here"
 msgstr  "Введите вопрос"
 
-#: ../assistant_viewer.lua:867
+#: ../assistant_viewer.lua:912
 msgid   "Word copied to clipboard."
 msgstr  "Слово скопировано"
 
-#: ../assistant_viewer.lua:868
+#: ../assistant_viewer.lua:913
 msgid   "Selection copied to clipboard."
 msgstr  "Выделение скопировано"
 

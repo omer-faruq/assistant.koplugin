@@ -5,8 +5,8 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-05 16:37+0800\n"
-        "PO-Revision-Date: 2025-09-05 00:03+0800\n"
+        "POT-Creation-Date: 2025-09-09 14:18+0800\n"
+        "PO-Revision-Date: 2025-09-09 14:18+0800\n"
         "Last-Translator: GPT-4o <openai.com>\n"
         "Language-Team: GPT-4o <openai.com>\n"
         "Language: Latviešu (lv)\n"
@@ -15,7 +15,7 @@ msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:369 ../main.lua:111 ../main.lua:338
+#: ../_meta.lua:4 ../assistant_dialog.lua:360 ../main.lua:111 ../main.lua:338
 msgid   "AI Assistant"
 msgstr  "AI asistents"
 
@@ -23,63 +23,59 @@ msgstr  "AI asistents"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 Uzlabo savu KOReader pieredzi ar AI"
 
-#: ../assistant_dialog.lua:85
+#: ../assistant_dialog.lua:68
 msgid   "(Empty message)"
 msgstr  "(Tukšs ziņojums)"
 
-#: ../assistant_dialog.lua:89
+#: ../assistant_dialog.lua:72
 msgid   "(No response)"
 msgstr  "(Nav atbildes)"
 
-#: ../assistant_dialog.lua:118
+#: ../assistant_dialog.lua:103
 msgid   "Highlighted text:"
 msgstr  "Izceltais teksts:"
 
-#: ../assistant_dialog.lua:258 ../assistant_dictdialog.lua:36
-#: ../assistant_settings.lua:89 ../assistant_viewer.lua:639
+#: ../assistant_dialog.lua:249 ../assistant_dictdialog.lua:36
+#: ../assistant_settings.lua:89 ../assistant_viewer.lua:680
 msgid   "Cancel"
 msgstr  "Atcelt"
 
-#: ../assistant_dialog.lua:265 ../assistant_viewer.lua:649
+#: ../assistant_dialog.lua:256 ../assistant_viewer.lua:690
 msgid   "Ask"
 msgstr  "Jautāt"
 
-#: ../assistant_dialog.lua:271 ../assistant_viewer.lua:655
+#: ../assistant_dialog.lua:262 ../assistant_viewer.lua:696
 msgid   "Enter a question before proceeding."
 msgstr  "Ievadiet jautājumu, lai turpinātu."
 
-#: ../assistant_dialog.lua:296
-msgid   "Book Analysis"
-msgstr  "Grāmatas analīze"
-
-#: ../assistant_dialog.lua:333
+#: ../assistant_dialog.lua:324
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Pievienot šo pogu izvēlnei “Izcelt”?"
 
-#: ../assistant_dialog.lua:334
+#: ../assistant_dialog.lua:325
 msgid   "Add"
 msgstr  "Pievienot"
 
-#: ../assistant_dialog.lua:361
+#: ../assistant_dialog.lua:352
 msgid   "Ask a question about the highlighted text"
 msgstr  "Uzdod jautājumu par izcelto tekstu"
 
-#: ../assistant_dialog.lua:362
+#: ../assistant_dialog.lua:353
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Uzdod jautājumu par šo grāmatu:\n"
         "%s, autors %s"
 
-#: ../assistant_dialog.lua:365
+#: ../assistant_dialog.lua:356
 msgid   "Type your question here..."
 msgstr  "Ierakstiet jautājumu šeit..."
 
-#: ../assistant_dialog.lua:366
+#: ../assistant_dialog.lua:357
 msgid   "Ask anything about this book..."
 msgstr  "Uzdod jebko par šo grāmatu..."
 
-#: ../assistant_dialog.lua:424
+#: ../assistant_dialog.lua:428
 msgid   "Error: No response received"
 msgstr  "Kļūda: nav saņemta atbilde"
 
@@ -148,96 +144,96 @@ msgstr  "Gramatika"
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "Uzvedne analizē izceltā teksta gramatiku un norāda kļūdas."
 
-#: ../assistant_prompts.lua:52
+#: ../assistant_prompts.lua:60
 msgid   "Translate"
 msgstr  "Tulkot"
 
-#: ../assistant_prompts.lua:53
+#: ../assistant_prompts.lua:61
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "Uzvedne iztulko izcelto tekstu citā valodā."
 
-#: ../assistant_prompts.lua:75
+#: ../assistant_prompts.lua:82
 msgid   "Summarize"
 msgstr  "Kopsavilkums"
 
-#: ../assistant_prompts.lua:77
+#: ../assistant_prompts.lua:84
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "Uzvedne izveido izceltā teksta kopsavilkumu, iekļaujot galvenos punktus."
 
-#: ../assistant_prompts.lua:86
+#: ../assistant_prompts.lua:93
 msgid   "Simplify"
 msgstr  "Vienkāršot"
 
-#: ../assistant_prompts.lua:88
+#: ../assistant_prompts.lua:95
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "Uzvedne vienkāršo izcelto tekstu, lai būtu vieglāk saprotams."
 
-#: ../assistant_prompts.lua:98
+#: ../assistant_prompts.lua:105
 msgid   "Key Points"
 msgstr  "Galvenie punkti"
 
-#: ../assistant_prompts.lua:100
+#: ../assistant_prompts.lua:107
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "Uzvedne izdala un uzskaita izceltā teksta galvenos punktus."
 
-#: ../assistant_prompts.lua:104
+#: ../assistant_prompts.lua:118
 msgid   "ELI5"
 msgstr  "Paskaidro kā 5-gadniekam"
 
-#: ../assistant_prompts.lua:106
+#: ../assistant_prompts.lua:120
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "Uzvedne izskaidro izcelto tekstu, it kā runātu ar piecgadnieku."
 
-#: ../assistant_prompts.lua:110
+#: ../assistant_prompts.lua:132
 msgid   "Explain"
 msgstr  "Izpētīt"
 
-#: ../assistant_prompts.lua:112
+#: ../assistant_prompts.lua:134
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Uzvedne sīki izskaidro izcelto tekstu, nodrošinot skaidrību un izpratni."
 
-#: ../assistant_prompts.lua:123
+#: ../assistant_prompts.lua:145
 msgid   "Historical Context"
 msgstr  "Vēsturiskais konteksts"
 
-#: ../assistant_prompts.lua:125
+#: ../assistant_prompts.lua:147
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Uzvedne sniedz sīku vēsturisko kontekstu izceltajam tekstam."
 
-#: ../assistant_prompts.lua:129 ../main.lua:525
+#: ../assistant_prompts.lua:158 ../main.lua:525
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
-#: ../assistant_prompts.lua:131
+#: ../assistant_prompts.lua:160
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "Uzvedne izveido pilnu Wikipedia stila rakstu par izcelto tēmu."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:243
+#: ../assistant_prompts.lua:281
 msgid   "Conjugation"
 msgstr  "Locījums"
 
-#: ../assistant_prompts.lua:244
+#: ../assistant_prompts.lua:282
 msgid   "Synonyms"
 msgstr  "Sinonīmi"
 
-#: ../assistant_prompts.lua:245
+#: ../assistant_prompts.lua:283
 msgid   "Meaning"
 msgstr  "Nozīme"
 
-#: ../assistant_prompts.lua:246
+#: ../assistant_prompts.lua:284
 msgid   "Translation"
 msgstr  "Tulkojums"
 
-#: ../assistant_prompts.lua:247
+#: ../assistant_prompts.lua:285
 msgid   "Explanation"
 msgstr  "Paskaidrojums"
 
-#: ../assistant_prompts.lua:248
+#: ../assistant_prompts.lua:286
 msgid   "Example"
 msgstr  "Piemērs"
 
-#: ../assistant_prompts.lua:249
+#: ../assistant_prompts.lua:287
 msgid   "Word Origin"
 msgstr  "Vārda izcelsme"
 
@@ -267,8 +263,8 @@ msgstr  "Nezināma kļūda"
 msgid   "Settings"
 msgstr  "Iestatījumi"
 
-#: ../assistant_querier.lua:112 ../assistant_settings.lua:285
-#: ../assistant_viewer.lua:314
+#: ../assistant_querier.lua:112 ../assistant_settings.lua:293
+#: ../assistant_viewer.lua:318
 msgid   "Close"
 msgstr  "Aizvērt"
 
@@ -324,11 +320,11 @@ msgstr  "Vārdnīcas valoda"
 msgid   "Clear"
 msgstr  "Notīrīt"
 
-#: ../assistant_settings.lua:113 ../assistant_viewer.lua:423
+#: ../assistant_settings.lua:113 ../assistant_viewer.lua:427
 msgid   "Save"
 msgstr  "Saglabāt"
 
-#: ../assistant_settings.lua:133 ../assistant_settings.lua:345
+#: ../assistant_settings.lua:133 ../assistant_settings.lua:353
 msgid   "AI Language: %1"
 msgstr  "AI valoda: %1"
 
@@ -344,7 +340,7 @@ msgstr  "Atstāj šos laukus tukšus, lai izmantotu saskarnes valodu: %1"
 msgid   "Response Font Size"
 msgstr  "Atbildes fonta izmērs"
 
-#: ../assistant_settings.lua:185 ../assistant_settings.lua:354
+#: ../assistant_settings.lua:185 ../assistant_settings.lua:362
 msgid   "Font Size: %1"
 msgstr  "Fonta izmērs: %1"
 
@@ -357,38 +353,42 @@ msgid   "Enable stream response"
 msgstr  "Ieslēgt straumēšanas atbildi"
 
 #: ../assistant_settings.lua:225
+msgid   "Enable Suggested Questions from AI"
+msgstr  "Iespējot AI ieteiktos jautājumus"
+
+#: ../assistant_settings.lua:233
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Lietot AI asistentu tulkošanai"
 
-#: ../assistant_settings.lua:234
+#: ../assistant_settings.lua:242
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Rādīt Vārdnīcu(AI) vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:242
+#: ../assistant_settings.lua:250
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Rādīt Wikipedia(AI) vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:250
+#: ../assistant_settings.lua:258
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kopēt ievadīto jautājumu starpliktuvē"
 
-#: ../assistant_settings.lua:258
+#: ../assistant_settings.lua:266
 msgid   "Enable Auto Recap"
 msgstr  "Ieslēgt automātisko kopsavilkumu"
 
-#: ../assistant_settings.lua:268
+#: ../assistant_settings.lua:276
 msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "AI kopsavilkums būs pieejams nākamreiz, atverot grāmatu."
 
-#: ../assistant_settings.lua:272
+#: ../assistant_settings.lua:280
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Automātiski saglabāt sarunas piezīmju grāmatā"
 
-#: ../assistant_settings.lua:370
+#: ../assistant_settings.lua:378
 msgid   "AI Assistant Features:"
 msgstr  "AI asistenta iespējas:"
 
-#: ../assistant_settings.lua:397
+#: ../assistant_settings.lua:405
 msgid   "AI Model provider:"
 msgstr  "AI modeļa pakalpojuma sniedzējs:"
 
@@ -401,56 +401,66 @@ msgstr  "Pārbauda atjauninājumus..."
 msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "Pieejama jauna %s spraudņa versija (%s). Lūdzu, atjauniniet!"
 
-#. @translators this is a button text, keep short
-#: ../assistant_viewer.lua:274 ../assistant_viewer.lua:705
+#. @translators button text, keep it short, like: Ask Another
+#: ../assistant_viewer.lua:278 ../assistant_viewer.lua:746
 msgid   "Ask Another Question"
 msgstr  "Uzdod vēl kādu jautājumu"
 
-#: ../assistant_viewer.lua:329
+#: ../assistant_viewer.lua:333
 msgid   "Copy"
 msgstr  "Kopēt"
 
-#: ../assistant_viewer.lua:334
+#: ../assistant_viewer.lua:338
 msgid   "Text copied to the clipboard"
 msgstr  "Teksts nokopēts starpliktuvē"
 
-#: ../assistant_viewer.lua:348
+#: ../assistant_viewer.lua:352
 msgid   "Add Note"
 msgstr  "Pievienot piezīmi"
 
-#: ../assistant_viewer.lua:355
+#: ../assistant_viewer.lua:359
 msgid   "Highlight functionality not available"
 msgstr  "Izcelšana nav pieejama"
 
-#: ../assistant_viewer.lua:364
+#: ../assistant_viewer.lua:368
 msgid   "No text to add as note"
 msgstr  "Nav teksta, ko pievienot kā piezīmi"
 
-#: ../assistant_viewer.lua:393
+#: ../assistant_viewer.lua:397
 msgid   "No text left to add as note"
 msgstr  "Nav palicis teksta pievienošanai kā piezīme"
 
-#: ../assistant_viewer.lua:406
+#: ../assistant_viewer.lua:410
 msgid   "Note added successfully"
 msgstr  "Piezīme veiksmīgi pievienota"
 
-#: ../assistant_viewer.lua:427
+#: ../assistant_viewer.lua:431
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Saruna saglabāta piezīmju grāmatā"
 
-#: ../assistant_viewer.lua:573
+#: ../assistant_viewer.lua:569
+msgid   "Cannot access default folder for logs: %1\n"
+        "Using original location."
+msgstr  "Nevar piekļūt noklusējuma žurnālu mapei: %1\n"
+        "Izmanto sākotnējo atrašanās vietu."
+
+#: ../assistant_viewer.lua:588
+msgid   "Book Analysis"
+msgstr  "Grāmatas analīze"
+
+#: ../assistant_viewer.lua:614
 msgid   "Chat log export failed. Continuing..."
 msgstr  "Čata žurnāla eksportēšana neizdevās. Turpinām..."
 
-#: ../assistant_viewer.lua:707
+#: ../assistant_viewer.lua:748
 msgid   "Type your question here"
 msgstr  "Ierakstiet savu jautājumu šeit"
 
-#: ../assistant_viewer.lua:867
+#: ../assistant_viewer.lua:912
 msgid   "Word copied to clipboard."
 msgstr  "Vārds nokopēts starpliktuvē."
 
-#: ../assistant_viewer.lua:868
+#: ../assistant_viewer.lua:913
 msgid   "Selection copied to clipboard."
 msgstr  "Atlase nokopēta starpliktuvē."
 
