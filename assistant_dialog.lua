@@ -44,8 +44,6 @@ function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText)
   -- Handle case where no text is highlighted (gesture-triggered)
   local text_to_use = highlightedText and highlightedText ~= "" and highlightedText or ""
   local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
-  local suggestions_prompt = self.assistant.settings:readSetting("auto_prompt_suggest", false) and 
-            Prompts.assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language}) or ""
 
   -- replace placeholders in the user prompt
   return user_prompt:gsub("{(%w+)}", {
@@ -53,7 +51,6 @@ function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText)
     author = book.author,
     language = language,
     highlight = text_to_use,
-    suggestions = suggestions_prompt,
   })
 end
 
@@ -68,12 +65,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
         user_message = string.format("%s\n\n", title)
       else
         -- shows user input prompt
-        local content = message.content
-        local suggested_pos = content:find(Prompts.assistant_prompts.suggestions_prompt:sub(1, 20))
-        if suggested_pos > 0 then
-          content = content:sub(1, suggested_pos - 3) -- two newlines was added
-        end
-        user_message = string.format("\n\n%s\n\n", content or _("(Empty message)"))
+        user_message = string.format("\n\n%s\n\n", message.content or _("(Empty message)"))
       end
       return "### ⮞ User: " .. user_message
     elseif message.role == "assistant" then
@@ -210,12 +202,6 @@ I have a question about this book.]], book.title, book.author),
     }
   end
 
-  if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
-    local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
-    local suggestions_prompt = Prompts.assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
-    user_question = string.format("%s\n\n%s", user_question, suggestions_prompt)
-  end
-
   table.insert(message_history, context)
   local question_message = {
     role = "user",
@@ -244,6 +230,12 @@ function AssistantDialog:show(highlightedText)
   -- Handle regular dialog (user input prompt, other buttons)
   local book = self:_getBookContext()
   local system_prompt = koutil.tableGetValue(self.CONFIGURATION, "features", "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
+  if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+    local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
+    local suggestions_prompt = Prompts.assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
+    system_prompt = system_prompt .. suggestions_prompt
+  end
+
   local message_history = {{
     role = "system",
     content = system_prompt
@@ -398,11 +390,19 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index)
   local title = koutil.tableGetValue(prompt_config, "text") or prompt_index
 
   highlightedText = highlightedText:gsub("\n", "\n\n") -- ensure newlines are doubled (LLM presumes markdown input)
+
   local user_content = self:_formatUserPrompt(koutil.tableGetValue(prompt_config, "user_prompt"), highlightedText)
+  local system_prompt = koutil.tableGetValue(self.CONFIGURATION, "features", "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
+  if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+    local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
+    local suggestions_prompt = Prompts.assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
+    system_prompt = system_prompt .. suggestions_prompt
+  end
+
   local message_history = {
     {
       role = "system",
-      content = koutil.tableGetValue(prompt_config, "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt"),
+      content = system_prompt,
     },
     {
       role = "user",

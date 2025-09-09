@@ -37,7 +37,6 @@ local custom_prompts = {
                             2.  Format: Create a numbered list using this exact structure for each item:
                                 `index. __base form__: synonym1, synonym2, synonym3 : {language} explanation`
                             3.  Output Content: **ONLY** provide the numbered list. Do not include the original text, titles, or any extra sentences.
-                            {suggestions}
 
                             **Input Text:** {highlight} ]], 
         },
@@ -53,7 +52,6 @@ If present, you should also identify and clearly explain any grammatical errors,
 Your explanation should be didactic, detailed, and easy to understand, formatted clearly to highlight specific points. 
 All explanations must be rendered exclusively in the language I specify. 
 Please provide a detailed and comprehensive explanation of the grammar of the following text, rendered entirely in {language}.
-{suggestions}
 
 {highlight}]],
         },
@@ -78,7 +76,6 @@ Follow these steps to complete the translation:
 6. If you encounter any terms or concepts that are difficult to translate directly, provide the best equivalent in the target language and include a brief explanation in parentheses if necessary.
 7. Double-check your translation for accuracy, consistency, and proper grammar in the target language.
 8. If there are any parts of the text that you are unsure about or that require additional context to translate accurately, indicate these areas with [UNCERTAIN: explanation] in your translation.
-{suggestions}
 
 Output only the translated text without any further explanation.]],
         },
@@ -102,7 +99,6 @@ I have a piece of text that I need you to simplify using its original language.
 Please ensure that during the simplification process, you do not alter the text's original meaning or omit any critical information. 
 Instead, make it significantly easier to understand and read, removing unnecessary jargon and verbose phrasing. 
 Your goal is to enhance the text's readability and clarity, making it accessible to a broader audience. 
-{suggestions}
 
 {highlight}]],
         },
@@ -116,7 +112,6 @@ Your goal is to produce a summary that is not just concise but also remarkably c
 You must then present these key points in a meticulously organized and easy-to-read list, ensuring each point is clear, independent, and directly addresses a central idea of the original text.
 All output must be exclusively in the language I specify.
 Provide a concise and clear list of key points from the following text, and rendered entirely in {language}.
-{suggestions}
  
 {highlight}]],
         },
@@ -131,7 +126,6 @@ You must use only plain, everyday language, simple analogies, and concise senten
 Your explanation should be direct, clear, and perfectly accessible.
 All output must be delivered exclusively in the language I specify.
 Provide a concise, simple, and crystal-clear ELI5 explanation of the following, rendered entirely in {language}.
-{suggestions}
 
 {highlight}.]],
         },
@@ -145,7 +139,6 @@ When I provide you with text, regardless of its original language, your primary 
 You must then provide a clear, detailed, and easy-to-understand explanation of the entire text. 
 It is crucial that your *entire explanation* is delivered exclusively in **{language}**. 
 Ensure your {language} explanation is precise, captures all nuances of the original text, and is formatted for maximum clarity, potentially using prose or structured points as needed.
-{suggestions}
 
 {highlight}]],
         },
@@ -159,7 +152,6 @@ When I provide you with a text, your primary task is to meticulously uncover and
 Beyond merely listing facts, you must forge clear, insightful connections between these historical elements and the text's content, themes, and underlying messages.
 Furthermore, your comprehensive explanation must be delivered entirely in the language specified by me.
 Please provide a detailed and insightful explanation of the historical context of the following text, rendered completely in {language}. 
-{suggestions}
 
 {highlight}]],
         },
@@ -175,7 +167,6 @@ Begin with a concise, overview introductory paragraph that defines the topic and
 Subsequently, elaborate on the most important facets, key historical events, fundamental concepts, or significant applications, ensuring every piece of information is factual, neutral, and devoid of opinion.
 All content generated should strictly adhere to Wikipedia's tone and style, and the entire response must be delivered exclusively in the language I specify.
 Please act as a Wikipedia page for the following topic, starting with an introductory paragraph and thoroughly covering its most important aspects, delivered entirely in {language}. 
-{suggestions}
 
 {highlight}]],
         },
@@ -296,9 +287,7 @@ Ensure all information is accurate and based on known facts. Respond entirely in
     _("Example"),
     _("Word Origin"))
     },
-    suggestions_prompt = [[
-At the end of the response, generate two questions in {language} that the user might find interesting based on your response, each output in the format: <PROMPT_SUGGESTION></PROMPT_SUGGESTION>.
-]]
+    suggestions_prompt = [[ At the end of the response, generate two questions in {language} that the user might find interesting based on your response, each output in the format: <SUGGESTION></SUGGESTION>.]]
 }
 
 
@@ -329,7 +318,6 @@ end
 
 
 local M = {
-    suggestions_prompt = suggestions_prompt, -- Suggestions prompt for the AI
     custom_prompts = custom_prompts, -- Custom prompts for the AI
     assistant_prompts = assistant_prompts, -- Preconfigured prompts for the AI
     merged_prompts = nil, -- Merged prompts from custom and configuration

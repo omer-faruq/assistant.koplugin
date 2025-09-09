@@ -86,7 +86,7 @@ table td, table th {
     padding: 0;
 }
 
-PROMPT_SUGGESTION {
+SUGGESTION {
     display: none;
 }
 ]]
@@ -944,22 +944,11 @@ end
 -- Function to extract prompt suggestions from a results text
 function ChatGPTViewer:extractPromptSuggestions(text)
     local suggestions = {}
-    local start_tag = "<PROMPT_SUGGESTION>"
-    local end_tag = "</PROMPT_SUGGESTION>"
-
-    -- The pattern becomes simpler as < and > do not need to be escaped.
-    -- We still use string.format and string.gsub for robustness,
-    -- but for < and > specifically, it's not strictly necessary.
-    -- However, it's a good practice for pattern generation.
+    local start_tag = "<SUGGESTION>"
+    local end_tag = "</SUGGESTION>"
     local pattern = string.format("%s(.-)%s",
                                   string.gsub(start_tag, "([%c%d%p%s])", "%%%1"), -- Escape special pattern chars (if any)
                                   string.gsub(end_tag, "([%c%d%p%s])", "%%%1"))   -- Escape special pattern chars (if any)
-
-    -- If you are absolutely certain that tags will ONLY contain alphanumeric characters
-    -- and angle brackets, you could write the pattern like this:
-    -- local pattern = "<PROMPT_SUGGESTION>(.-)</PROMPT_SUGGESTION>"
-    -- But the string.gsub approach is safer for arbitrary tags.
-
     for content in string.gmatch(text, pattern) do
         table.insert(suggestions, content)
     end
