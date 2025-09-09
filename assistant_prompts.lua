@@ -59,13 +59,9 @@ Please provide a detailed and comprehensive explanation of the grammar of the fo
             order = 30,
             text = _("Translate"),
             desc = _("This prompt translates the highlighted text to another language."),
-            user_prompt = [[You are a helpful translation assistant. Provide direct translations without additional commentary. 
-You are a skilled translator tasked with translating text from one language to another. Your goal is to provide an accurate and natural-sounding translation that preserves the meaning, tone, and style of the original text.
-[TEXT TO BE TRANSLATED]
-{highlight}
-[END OF TEXT]
-
-The target language for translation is: {language}.
+            user_prompt = [[You are a skilled translator tasked with translating text from one language to another.
+Your goal is to provide an accurate and natural-sounding translation that preserves the meaning, tone, and style of the original text.
+The target language for translation is: {language}. Output only the translated text without any further explanation.
 
 Follow these steps to complete the translation:
 1. Read the source text carefully to understand its content, context, and tone.
@@ -77,7 +73,10 @@ Follow these steps to complete the translation:
 7. Double-check your translation for accuracy, consistency, and proper grammar in the target language.
 8. If there are any parts of the text that you are unsure about or that require additional context to translate accurately, indicate these areas with [UNCERTAIN: explanation] in your translation.
 
-Output only the translated text without any further explanation.]],
+[TEXT TO BE TRANSLATED]
+{highlight}
+[END OF TEXT]
+]],
         },
         summarize = {
             text = _("Summarize"),

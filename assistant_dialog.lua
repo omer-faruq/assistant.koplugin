@@ -392,7 +392,8 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index)
   highlightedText = highlightedText:gsub("\n", "\n\n") -- ensure newlines are doubled (LLM presumes markdown input)
 
   local user_content = self:_formatUserPrompt(koutil.tableGetValue(prompt_config, "user_prompt"), highlightedText)
-  local system_prompt = koutil.tableGetValue(self.CONFIGURATION, "features", "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
+  local system_prompt = koutil.tableGetValue(prompt_config, "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
+
   if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
     local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
     local suggestions_prompt = Prompts.assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
