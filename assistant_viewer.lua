@@ -85,6 +85,10 @@ table td, table th {
     border: 1px solid black;
     padding: 0;
 }
+
+SUGGESTION {
+    display: none;
+}
 ]]
 
 local RTL_CSS = [[
@@ -441,7 +445,7 @@ function ChatGPTViewer:init()
         id = T("suggestion_%1", i),
         text = suggestion,
         callback = function()
-          self:askAnotherQuestion()
+          self:askAnotherQuestion(true)
           self.input_dialog:setInputText(suggestion, nil, false) -- move cursor to the end
         end
       }}
@@ -634,7 +638,7 @@ function ChatGPTViewer:onCloseWidget()
   end)
 end
 
-function ChatGPTViewer:askAnotherQuestion()
+function ChatGPTViewer:askAnotherQuestion(simple_mode)
   -- Prevent multiple dialogs
   if self.input_dialog and self.input_dialog.dialog_open then
     return
@@ -710,7 +714,7 @@ function ChatGPTViewer:askAnotherQuestion()
   local button_rows = {}
   table.insert(button_rows, first_row)
    -- Only add custom buttons if there's highlighted text
-  if self.highlighted_text and self.highlighted_text ~= "" then 
+  if self.highlighted_text and self.highlighted_text ~= "" and not simple_mode then 
     local prompt_buttons = {}
 
     -- Add custom prompt buttons
@@ -963,7 +967,7 @@ function ChatGPTViewer:update(new_text)
         btn.did_truncation_tweaks = true
         btn:setText(suggestion, self.width - 2 * self.button_padding)
         btn.callback = function()
-          self:askAnotherQuestion()
+          self:askAnotherQuestion(true)
           self.input_dialog:setInputText(suggestion, nil, false)
         end
       end
