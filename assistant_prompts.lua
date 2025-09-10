@@ -287,11 +287,23 @@ Ensure all information is accurate and based on known facts. Respond entirely in
     _("Word Origin"))
     },
     suggestions_prompt = [[  
-At the end of the response, generate two questions in {language} that the user might find interesting based on your response.
-Each suggestion must:  
-1. Be enclosed in XML tags `<SUGGESTION></SUGGESTION>`.  
-2. **Stand alone on a separate line** (do not merge with other text).  
-3. Avoid adding prefixes like `##`, `###`, or any heading symbols.  
+At the end of your response, generate **two questions in {language} language** that the user might find interesting based on your answer. 
+Display them as a **Markdown unordered list** with this exact format:  
+```
+---
+
+{short_headline_in_language}
+
+- [Question 1](#suggested-question:Question 1)  
+- [Question 2](#suggested-question:Question 2)  
+```  
+
+**Rules:**  
+1. Replace `{short_headline_in_language}` with a **natural phrase**: `You may find these topics interesting`, using {language} language.
+2. Leave an empty line before the list to follow strict markdown syntax.
+3. Use `-` as bullet points; never `*` or `+`.  
+4. Link syntax must be `[TEXT](#suggested-question:TEXT)` (colon `:` is required).  
+5. No markdown headers (`##`) are allowed.  
 ]]
 }
 

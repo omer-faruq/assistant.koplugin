@@ -437,22 +437,6 @@ function ChatGPTViewer:init()
       table.insert(buttons[#buttons], #(buttons[#buttons]), save_button)
   end
 
-  -- Parse and extract prompt suggested from responses
-  if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
-    local suggestions = self:extractPromptSuggestions(self.text)
-    for i, suggestion in ipairs(suggestions) do
-      local suggestion_btn_row = {{
-        id = T("suggestion_%1", i),
-        text = suggestion,
-        callback = function()
-          self:askAnotherQuestion(true)
-          self.input_dialog:setInputText(suggestion, nil, false) -- move cursor to the end
-        end
-      }}
-      table.insert(buttons, i, suggestion_btn_row)
-    end
-  end
-
   self.button_table = ButtonTable:new {
     width = self.width - 2 * self.button_padding,
     buttons = buttons,
@@ -483,6 +467,9 @@ function ChatGPTViewer:init()
       width = self.width - 2 * self.text_padding - 2 * self.text_margin,
       height = textw_height - 2 * self.text_padding - 2 * self.text_margin,
       dialog = self,
+      html_link_tapped_callback = function(link)
+        self:html_link_tapped_callback(link)
+      end
     }
   else
     -- If not rendering Markdown, use the text as is
@@ -942,37 +929,17 @@ function ChatGPTViewer:trimMessageHistory()
   end
 end
 
--- Function to extract prompt suggestions from a results text
-function ChatGPTViewer:extractPromptSuggestions(text)
-    local suggestions = {}
-    -- The `.-` is a non-greedy match for any characters.
-    for suggestion in string.gmatch(text, "<SUGGESTION>(.-)</SUGGESTION>") do
-        table.insert(suggestions, util.cleanupSelectedText(suggestion)) -- trim newline or spaces around
-    end
-    return suggestions
+function ChatGPTViewer:html_link_tapped_callback(link)
+  if util.stringStartsWith(link.uri, "#suggested-question:") then
+    local question = link.uri:sub(21) -- remove prefix `#suggested-question:`
+    self:askAnotherQuestion(true)
+    self.input_dialog:setInputText(question, nil, false)
+  end
 end
 
 function ChatGPTViewer:update(new_text)
   local first_time = not self.text
   local last_page_num = nil
-
-  if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
-    -- update suggestions buttons from the latest response.
-    local last_resp = self.message_history[#self.message_history].content
-    local suggestions = self:extractPromptSuggestions(last_resp)
-
-    for i, suggestion in ipairs(suggestions) do
-      local btn = self.button_table:getButtonById(T("suggestion_%1", i))
-      if btn then
-        btn.did_truncation_tweaks = true
-        btn:setText(suggestion, self.width - 2 * self.button_padding)
-        btn.callback = function()
-          self:askAnotherQuestion(true)
-          self.input_dialog:setInputText(suggestion, nil, false)
-        end
-      end
-    end
-  end
 
   -- Check if the new text is substantially different from the current text
   if not self.text or #new_text > #self.text then
@@ -1000,6 +967,9 @@ function ChatGPTViewer:update(new_text)
         width = self.width - 2 * self.text_padding - 2 * self.text_margin,
         height = self.textw:getSize().h - 2 * self.text_padding - 2 * self.text_margin,
         dialog = self,
+        html_link_tapped_callback = function(link)
+          self:html_link_tapped_callback(link)
+        end
       }
     else
       -- Create a new ScrollTextWidget with the updated text
