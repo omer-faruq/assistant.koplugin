@@ -303,7 +303,7 @@ Display them as a **Markdown unordered list** with this exact format:
 2. Leave an empty line before the list to follow strict markdown syntax.
 3. Use `-` as bullet points; never `*` or `+`.  
 4. Link syntax must be `[TEXT](#suggested-question:TEXT)` (colon `:` is required).  
-5. No markdown headers (`##`) are allowed.  
+5. Avoid using parentheses `()` within the question text.
 ]]
 }
 
