@@ -557,7 +557,22 @@ function ChatGPTViewer:saveToNotebook()
               timeout = 5,
             })
         else
-          local original_filename = notebookfile:match("([^/\\]+)$") or "notebook.txt"
+          local original_filename = notebookfile:match("([^/\\]+)$")
+          if original_filename then
+            original_filename = original_filename:gsub("%.[^.]*$", ".md")
+          else
+            local doc_path = self.ui.document.file
+            if doc_path then
+              local doc_filename = doc_path:match("([^/\\]+)$")
+              if doc_filename then
+                original_filename = doc_filename..".md"
+              else
+                original_filename = "notebook.md"
+              end
+            else
+              original_filename = "notebook.md"
+            end
+          end
           local new_notebookfile = default_folder .. "/" .. original_filename
           
           self.ui.doc_settings:saveSetting("notebook_file", new_notebookfile)
@@ -565,6 +580,15 @@ function ChatGPTViewer:saveToNotebook()
           notebookfile = new_notebookfile
         end
       end
+    end
+    
+    -- Ensure the notebook file has .md extension
+    if notebookfile and not notebookfile:find("%.md$") then
+      notebookfile = notebookfile:gsub("%.[^.]*$", ".md")
+      if not notebookfile:find("%.md$") then
+        notebookfile = notebookfile .. ".md"
+      end
+      self.ui.doc_settings:saveSetting("notebook_file", notebookfile)
     end
     
     if notebookfile then
