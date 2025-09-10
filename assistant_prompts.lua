@@ -287,7 +287,7 @@ Ensure all information is accurate and based on known facts. Respond entirely in
     _("Word Origin"))
     },
     suggestions_prompt = [[  
-At the end of your response, generate **2-3 questions in {language} language** that the user might find interesting based on your answer.  
+At the end of your response, generate 2-3 questions in {language} language that the user might find interesting based on your answer.  
 Display them as a **Markdown unordered list** with this exact format:  
 
 ```
@@ -299,11 +299,10 @@ Display them as a **Markdown unordered list** with this exact format:
 ```  
 
 **Rules:**  
-1. Replace `{short_headline}` with a natural phrase in {language}: `You may find these topics interesting:`. Leave another line empty after this line.
-2. Avoid using parentheses `()` within the question text.
-3. Replace `Question` in the link with the actual question.
-4. The link syntax must be `[TEXT](#suggested-question:TEXT)` — the colon `:` is required.
-5. The TEXT inside the brackets and the TEXT in the link must be the same, including punctuation.
+1. Replace `{short_headline}` with a natural phrase in {language} language: `You may find these topics interesting:`. Leave another line empty after this line.
+2. Avoid using parentheses `()` within the question text. 
+3. The link syntax must be `[TEXT](#suggested-question:TEXT)` — the colon `:` is required. The link parentheses `()` must remain in Markdown format, strictly prohibit replacing them with l10n language punctuation (e.g., `（）`).
+4. The TEXT inside the brackets `[]` and the TEXT in the link must be identical, including punctuations.
 ```
 ]],
 }

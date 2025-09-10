@@ -62,15 +62,19 @@ ol, ul, menu {
 }
 
 ul {
-    list-style-type: square;
+    list-style-type: circle;
 }
 
 ul ul {
-    list-style-type: circle;
+    list-style-type: square;
 }
 
 ul ul ul {
     list-style-type: disc;
+}
+
+ul li a {
+    display: inline-block;
 }
 
 table {
