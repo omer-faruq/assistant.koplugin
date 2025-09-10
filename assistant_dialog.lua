@@ -13,6 +13,7 @@ local Prompts = require("assistant_prompts")
 local koutil = require("util")
 local Device = require("device")
 local Screen = Device.screen
+local NetworkMgr = require("ui/network/manager")
 
 -- main dialog class
 local AssistantDialog = {
@@ -171,24 +172,26 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
         end
 
         viewer:trimMessageHistory()
-        Trapper:wrap(function()
-          local answer, err = self.querier:query(message_history)
-          
-          -- Check if we got a valid response
-          if err then
-            self.querier:showError(err)
-            return
-          end
-          
-          table.insert(message_history, {
-            role = "assistant",
-            content = answer
-          })
-          viewer:update(self:_createResultText(current_highlight, message_history, viewer.text, viewer_title))
-          
-          if viewer.scroll_text_w then
-            viewer.scroll_text_w:resetScroll()
-          end
+        NetworkMgr:runWhenOnline(function()
+          Trapper:wrap(function()
+            local answer, err = self.querier:query(message_history)
+            
+            -- Check if we got a valid response
+            if err then
+              self.querier:showError(err)
+              return
+            end
+            
+            table.insert(message_history, {
+              role = "assistant",
+              content = answer
+            })
+            viewer:update(self:_createResultText(current_highlight, message_history, viewer.text, viewer_title))
+            
+            if viewer.scroll_text_w then
+              viewer.scroll_text_w:resetScroll()
+            end
+          end)
         end)
       end,
     highlighted_text = highlightedText,

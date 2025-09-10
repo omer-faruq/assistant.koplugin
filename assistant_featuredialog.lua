@@ -11,6 +11,7 @@ local Trapper = require("ui/trapper")
 local koutil = require("util")
 local ChatGPTViewer = require("assistant_viewer")
 local assistant_prompts = require("assistant_prompts").assistant_prompts
+local NetworkMgr = require("ui/network/manager")
 
 local function showFeatureDialog(assistant, feature_type, title, author, progress_percent, message_history)
     local CONFIGURATION = assistant.CONFIGURATION
@@ -143,24 +144,26 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         end
 
         viewer:trimMessageHistory()
-        Trapper:wrap(function()
-          local answer, err = Querier:query(message_history)
-          
-          if err then
-            Querier:showError(err)
-            return
-          end
-          
-          table.insert(message_history, {
-            role = "assistant",
-            content = answer
-          })
-          local additional_text = "\n\n### ⮞ User: \n" .. (type(user_question) == "string" and user_question or (user_question.text or user_question)) .. "\n\n### ⮞ Assistant:\n" .. answer
-          viewer:update(viewer.text .. additional_text)
-          
-          if viewer.scroll_text_w then
-            viewer.scroll_text_w:resetScroll()
-          end
+        NetworkMgr:runWhenOnline(function()
+          Trapper:wrap(function()
+            local answer, err = Querier:query(message_history)
+            
+            if err then
+              Querier:showError(err)
+              return
+            end
+            
+            table.insert(message_history, {
+              role = "assistant",
+              content = answer
+            })
+            local additional_text = "\n\n### ⮞ User: \n" .. (type(user_question) == "string" and user_question or (user_question.text or user_question)) .. "\n\n### ⮞ Assistant:\n" .. answer
+            viewer:update(viewer.text .. additional_text)
+            
+            if viewer.scroll_text_w then
+              viewer.scroll_text_w:resetScroll()
+            end
+          end)
         end)
       end,
       default_hold_callback = function ()
