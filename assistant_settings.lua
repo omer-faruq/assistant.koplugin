@@ -222,7 +222,7 @@ function SettingsDialog:init()
             end
         },
         {
-            text = _("Enable Suggested Questions from AI"),
+            text = _("Show Related Questions from AI"),
             checked = self.settings:readSetting("auto_prompt_suggest", false),
             callback = function()
                 self.settings:toggle("auto_prompt_suggest")
