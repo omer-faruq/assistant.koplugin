@@ -82,8 +82,11 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
     if message.role == "user" then
       local user_message
       if title and title ~= "" then
-        -- shows "User: <title>" if title is provided
         user_message = string.format("%s\n\n", title)
+        -- Check if user input is available
+        if message.user_input and message.user_input ~= "" then
+          user_message = user_message .. message.user_input .. "\n\n"
+        end
       else
         -- shows user input prompt
         user_message = string.format("\n\n%s\n\n", message.content or _("(Empty message)"))
@@ -167,7 +170,8 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
           viewer_title = user_question.text or "Custom Prompt"
           table.insert(message_history, {
             role = "user",
-            content = self:_formatUserPrompt(user_question.user_prompt, current_highlight, user_question.user_input or "")
+            content = self:_formatUserPrompt(user_question.user_prompt, current_highlight, user_question.user_input or ""),
+            user_input = user_question.user_input,
           })
         end
 
@@ -432,7 +436,7 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index, user_in
     {
       role = "user",
       content = user_content,
-      is_context = true
+      user_input = user_input,
     }
   }
   
