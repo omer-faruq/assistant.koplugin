@@ -930,10 +930,10 @@ function ChatGPTViewer:trimMessageHistory()
 end
 
 function ChatGPTViewer:html_link_tapped_callback(link)
-  if util.stringStartsWith(link.uri, "#suggested-question:") then
-    local question = link.uri:sub(21) -- remove prefix `#suggested-question:`
-    self:askAnotherQuestion(true)
-    self.input_dialog:setInputText(question, nil, false)
+  local SUGGESTION_PREFIX = "#suggested-question:"
+  if link.uri and util.stringStartsWith(link.uri, SUGGESTION_PREFIX) then
+    self:askAnotherQuestion(true) -- simple_mode
+    self.input_dialog:setInputText(link.uri:sub(#SUGGESTION_PREFIX+1), nil, false)
   end
 end
 
