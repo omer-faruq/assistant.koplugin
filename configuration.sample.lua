@@ -148,6 +148,7 @@ local CONFIGURATION = {
         -- The `order` determines the position in the main popup.
         -- The `show_on_main_popup` determines if the prompt is shown in the main popup
         -- Set `visible = false` to hide the prompt from all popups.
+        -- Available placeholders to use in the prompts: {user_input},{highlight},{title},{author},{language},{progress}
         prompts = {
 
             -- hide some prompts to keep the UI clean
@@ -155,7 +156,7 @@ local CONFIGURATION = {
 
             --
             -- example of adding a custom prompt:
-            -- myprompt = { system_prompt = "you are a helpful assistant.", user_prompt = "...", order = 50, show_on_main_popup = true, },
+            -- myprompt = { text ="Prompt Title", system_prompt = "you are a helpful assistant.", user_prompt = "describe the following text in detail: {highlight}", order = 50, show_on_main_popup = true, },
 
         },
 

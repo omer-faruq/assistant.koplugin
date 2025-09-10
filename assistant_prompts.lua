@@ -8,6 +8,8 @@ local T = require("ffi/util").template
 -- {author} : book author from metadata
 -- {highlight}  : selected texts
 -- {language}   : the `response_language` variable defined above
+-- {user_input} : user input from the input dialog
+-- {progress}   : the progress percentage of the book
 --
 -- text: text to display on the button in the UI.
 -- order: order of the button in the UI, higher number means later in the list.

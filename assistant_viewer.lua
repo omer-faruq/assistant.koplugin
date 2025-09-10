@@ -653,9 +653,14 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
   for _, tab in ipairs(sorted_prompts) do
     table.insert(default_options, {
       text = tab.text,
-      callback = function(self)
+      callback = function(dialog)
+        if not dialog then return end
+        local input_text = dialog:getInputText()
+        UIManager:close(dialog)
+        local prompt_config = merged_prompts[tab.idx]
+        prompt_config.user_input = input_text
         if self.onAskQuestion then
-          self.onAskQuestion(self, merged_prompts[tab.idx]) -- question is table (custom prompt)
+          self.onAskQuestion(self, prompt_config)
         end
       end
     })
@@ -709,9 +714,10 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
       table.insert(prompt_buttons, {
         text = option.text,
         callback = function()
-          UIManager:close(self.input_dialog)
+          local dialog = self.input_dialog
+          UIManager:close(dialog)
           self.input_dialog = nil
-          option.callback(self)
+          option.callback(dialog)
         end
       })
     end

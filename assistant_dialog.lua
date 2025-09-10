@@ -38,20 +38,40 @@ function AssistantDialog:_close()
   end
 end
 
-function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText)
+function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText, user_input)
   local book = self:_getBookContext()
   
   -- Handle case where no text is highlighted (gesture-triggered)
   local text_to_use = highlightedText and highlightedText ~= "" and highlightedText or ""
   local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
+  
+  -- Calculate progress if placeholder is present  
+  local formatted_progress = nil
+  if user_prompt:find("{progress}", 1, true) then
+      local success, doc_settings = pcall(function() 
+          return require("docsettings"):open(self.assistant.ui.document.file) 
+      end)
+      if success and doc_settings then
+          local percent_finished = doc_settings:readSetting("percent_finished") or 0
+          formatted_progress = string.format("%.2f", percent_finished * 100)
+      end
+  end
+
+  -- Add user input if placeholder is not present
+  if user_input and user_input ~= "" and not user_prompt:find("{user_input}", 1, true) then
+    user_prompt = user_prompt.."\n\n[Additional user input]: \n"..user_input
+  end
 
   -- replace placeholders in the user prompt
-  return user_prompt:gsub("{(%w+)}", {
+  return user_prompt:gsub("{([%w%_]+)}", {
     title = book.title,
     author = book.author,
     language = language,
     highlight = text_to_use,
+    user_input = user_input,
+    progress = formatted_progress,
   })
+
 end
 
 function AssistantDialog:_createResultText(highlightedText, message_history, previous_text, title)
@@ -146,7 +166,7 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
           viewer_title = user_question.text or "Custom Prompt"
           table.insert(message_history, {
             role = "user",
-            content = self:_formatUserPrompt(user_question.user_prompt, current_highlight)
+            content = self:_formatUserPrompt(user_question.user_prompt, current_highlight, user_question.user_input or "")
           })
         end
 
@@ -306,6 +326,7 @@ function AssistantDialog:show(highlightedText)
       table.insert(prompt_buttons, {
         text = tab.text,
         callback = function()
+          local user_question = self.input_dialog and self.input_dialog:getInputText() or ""
           self:_close()
           Trapper:wrap(function()
             if tab.order == -10 and tab.idx == "dictionary" then
@@ -313,7 +334,7 @@ function AssistantDialog:show(highlightedText)
               local showDictionaryDialog = require("assistant_dictdialog")
               showDictionaryDialog(self.assistant, highlightedText)
             else
-              self:showCustomPrompt(highlightedText, tab.idx)
+              self:showCustomPrompt(highlightedText, tab.idx, user_question)
             end
           end)
         end,
@@ -382,7 +403,7 @@ end
 
 -- Process main select popup buttons
 -- ( custom prompts from configuration )
-function AssistantDialog:showCustomPrompt(highlightedText, prompt_index)
+function AssistantDialog:showCustomPrompt(highlightedText, prompt_index, user_input)
 
   local user_prompts = koutil.tableGetValue(self.CONFIGURATION, "features", "prompts")
   local prompt_config = Prompts.getMergedCustomPrompts(user_prompts)[prompt_index]
@@ -391,7 +412,7 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index)
 
   highlightedText = highlightedText:gsub("\n", "\n\n") -- ensure newlines are doubled (LLM presumes markdown input)
 
-  local user_content = self:_formatUserPrompt(koutil.tableGetValue(prompt_config, "user_prompt"), highlightedText)
+  local user_content = self:_formatUserPrompt(koutil.tableGetValue(prompt_config, "user_prompt"), highlightedText, user_input or "")
   local system_prompt = koutil.tableGetValue(prompt_config, "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
 
   if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
