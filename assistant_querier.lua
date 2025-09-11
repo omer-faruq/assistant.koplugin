@@ -306,21 +306,20 @@ function Querier:processStream(bgQuery, trunk_callback)
                             local reasoning_content, content
 
                             local choice = koutil.tableGetValue(event, "choices", 1)
-                            if choice then
-                                -- OpenAI (compatiable) API
+                            if choice then -- OpenAI (compatiable) API
                                 if koutil.tableGetValue(choice, "finish_reason") then content="\n" end
                                 local delta = koutil.tableGetValue(choice, "delta")
                                 if delta then
                                     reasoning_content = koutil.tableGetValue(delta, "reasoning_content")
                                     content = koutil.tableGetValue(delta, "content")
+                                    -- gork4 ouputs empty reasoning messages, logs '.' here to indicate the process works
                                     if not content and not reasoning_content then reasoning_content = "." end
                                 end
                             else
                                 content =
                                     koutil.tableGetValue(event, "candidates", 1, "content", "parts", 1, "text") or  -- Genmini API
-                                    koutil.tableGetValue(event, "content", 1, "text") or -- Anthropic non-stream message event
-                                    koutil.tableGetValue(event, "delta", "text") or -- Anthropic streaming (content_block_delta)
-                                    nil
+                                    koutil.tableGetValue(event, "delta", "text") or   -- Anthropic streaming (content_block_delta)
+                                    koutil.tableGetValue(event, "content", 1, "text") -- Anthropic non-stream message event
                             end
                                 
                             if type(content) == "string" and #content > 0 then
