@@ -182,12 +182,17 @@ function Querier:query(message_history, title)
         --  adds a close button to the top right
         streamDialog.title_bar.close_callback = _closeStreamDialog
         streamDialog.title_bar:init()
-
         UIManager:show(streamDialog)
-        local ok, content, err = pcall(self.processStream, self, res, function (content)
+
+        local stream_mode_auto_scroll = self.settings:readSetting("stream_mode_auto_scroll", true)
+        local ok, content, err = pcall(self.processStream, self, res, function (content, buffer)
             UIManager:nextTick(function ()
                 -- schedule the text update in the UIManager task queue
-                streamDialog:addTextToInput(content)
+                if stream_mode_auto_scroll then
+                    streamDialog:addTextToInput(content)
+                else
+                    streamDialog._input_widget:setText(table.concat(buffer), true)
+                end
             end)
         end)
         if not ok then
@@ -320,10 +325,10 @@ function Querier:processStream(bgQuery, trunk_callback)
                                 
                             if type(content) == "string" and #content > 0 then
                                 table.insert(result_buffer, content)
-                                if trunk_callback then trunk_callback(content) end
+                                if trunk_callback then trunk_callback(content, result_buffer) end
                             elseif type(reasoning_content) == "string" and #reasoning_content > 0 then
                                 table.insert(reasoning_content_buffer, reasoning_content)
-                                if trunk_callback then trunk_callback(reasoning_content) end
+                                if trunk_callback then trunk_callback(reasoning_content, reasoning_content_buffer) end
                             elseif content == nil and reasoning_content == nil then
                                 logger.warn("Unexpected SSE data:", json_str)
                             end

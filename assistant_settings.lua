@@ -222,6 +222,14 @@ function SettingsDialog:init()
             end
         },
         {
+            text = _("Auto scroll stream response text"),
+            checked = self.settings:readSetting("stream_mode_auto_scroll", true),
+            callback = function()
+                self.settings:toggle("stream_mode_auto_scroll")
+                self.assistant.updated = true
+            end
+        },
+        {
             text = _("Show Related Questions from AI"),
             checked = self.settings:readSetting("auto_prompt_suggest", false),
             callback = function()
