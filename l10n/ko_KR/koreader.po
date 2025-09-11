@@ -5,7 +5,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-09 14:18+0800\n"
+        "POT-Creation-Date: 2025-09-11 10:53+0800\n"
         "PO-Revision-Date: 2025-06-25 10:00+0900\n"
         "Last-Translator: ChatGPT 4.0 <chatgpt@openai.com>\n"
         "Language-Team: ChatGPT 4.0 <chatgpt@openai.com>\n"
@@ -15,7 +15,7 @@ msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:360 ../main.lua:111 ../main.lua:338
+#: ../_meta.lua:4 ../assistant_dialog.lua:388 ../main.lua:111 ../main.lua:339
 msgid   "AI Assistant"
 msgstr  "AI 어시스턴트"
 
@@ -23,59 +23,59 @@ msgstr  "AI 어시스턴트"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 AI로 KOReader 경험 향상하기"
 
-#: ../assistant_dialog.lua:68
+#: ../assistant_dialog.lua:92
 msgid   "(Empty message)"
 msgstr  "(빈 메시지)"
 
-#: ../assistant_dialog.lua:72
+#: ../assistant_dialog.lua:96
 msgid   "(No response)"
 msgstr  "(응답 없음)"
 
-#: ../assistant_dialog.lua:103
+#: ../assistant_dialog.lua:127
 msgid   "Highlighted text:"
 msgstr  "하이라이트한 텍스트:"
 
-#: ../assistant_dialog.lua:249 ../assistant_dictdialog.lua:36
-#: ../assistant_settings.lua:89 ../assistant_viewer.lua:680
+#: ../assistant_dialog.lua:276 ../assistant_dictdialog.lua:36
+#: ../assistant_settings.lua:89 ../assistant_viewer.lua:696
 msgid   "Cancel"
 msgstr  "취소"
 
-#: ../assistant_dialog.lua:256 ../assistant_viewer.lua:690
+#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:706
 msgid   "Ask"
 msgstr  "질문"
 
-#: ../assistant_dialog.lua:262 ../assistant_viewer.lua:696
+#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:712
 msgid   "Enter a question before proceeding."
 msgstr  "질문을 입력하세요."
 
-#: ../assistant_dialog.lua:324
+#: ../assistant_dialog.lua:352
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "이 버튼을 하이라이트 메뉴에 추가할까요?"
 
-#: ../assistant_dialog.lua:325
+#: ../assistant_dialog.lua:353
 msgid   "Add"
 msgstr  "추가"
 
-#: ../assistant_dialog.lua:352
+#: ../assistant_dialog.lua:380
 msgid   "Ask a question about the highlighted text"
 msgstr  "하이라이트한 텍스트에 대해 질문"
 
-#: ../assistant_dialog.lua:353
+#: ../assistant_dialog.lua:381
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "이 책에 대해 질문하세요:\n"
         "%s (저자: %s)"
 
-#: ../assistant_dialog.lua:356
+#: ../assistant_dialog.lua:384
 msgid   "Type your question here..."
 msgstr  "질문을 입력하세요..."
 
-#: ../assistant_dialog.lua:357
+#: ../assistant_dialog.lua:385
 msgid   "Ask anything about this book..."
 msgstr  "이 책에 대해 무엇이든 질문하세요..."
 
-#: ../assistant_dialog.lua:428
+#: ../assistant_dialog.lua:456
 msgid   "Error: No response received"
 msgstr  "오류: 응답을 받지 못했습니다"
 
@@ -91,149 +91,149 @@ msgstr  "단어를 입력하세요..."
 msgid   "Look Up"
 msgstr  "찾기"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:20 ../main.lua:539
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:22 ../main.lua:540
 msgid   "Dictionary"
 msgstr  "사전"
 
-#: ../assistant_featuredialog.lua:32
+#: ../assistant_featuredialog.lua:33
 msgid   "Recap"
 msgstr  "요약"
 
-#: ../assistant_featuredialog.lua:33
+#: ../assistant_featuredialog.lua:34
 msgid   "Loading Recap..."
 msgstr  "요약 불러오는 중..."
 
-#: ../assistant_featuredialog.lua:38
+#: ../assistant_featuredialog.lua:39
 msgid   "X‑Ray"
 msgstr  "X-Ray"
 
-#: ../assistant_featuredialog.lua:39
+#: ../assistant_featuredialog.lua:40
 msgid   "Loading X-Ray..."
 msgstr  "X-Ray 불러오는 중..."
 
-#: ../assistant_featuredialog.lua:44
+#: ../assistant_featuredialog.lua:45
 msgid   "Book Information"
 msgstr  "도서 정보"
 
-#: ../assistant_featuredialog.lua:45
+#: ../assistant_featuredialog.lua:46
 msgid   "Loading Book Information..."
 msgstr  "도서 정보 불러오는 중..."
 
-#: ../assistant_featuredialog.lua:56
+#: ../assistant_featuredialog.lua:57
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "알 수 없는 기능 유형: %s"
 
-#: ../assistant_prompts.lua:21
+#: ../assistant_prompts.lua:23
 msgid   "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr  "이 프롬프트는 하이라이트한 단어나 구문에 대한 사전 역할을 합니다."
 
-#: ../assistant_prompts.lua:26
+#: ../assistant_prompts.lua:28
 msgid   "Vocabulary"
 msgstr  "어휘"
 
-#: ../assistant_prompts.lua:28
+#: ../assistant_prompts.lua:30
 msgid   "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr  "이 프롬프트는 하이라이트한 텍스트의 어려운 단어를 분석하여 정의, 동의어, 사용 예시를 제공합니다."
 
-#: ../assistant_prompts.lua:44
+#: ../assistant_prompts.lua:46
 msgid   "Grammar"
 msgstr  "문법"
 
-#: ../assistant_prompts.lua:46
+#: ../assistant_prompts.lua:48
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "이 프롬프트는 하이라이트한 텍스트의 문법을 분석하여 구조와 문법 오류를 설명합니다."
 
-#: ../assistant_prompts.lua:60
+#: ../assistant_prompts.lua:62
 msgid   "Translate"
 msgstr  "번역"
 
-#: ../assistant_prompts.lua:61
+#: ../assistant_prompts.lua:63
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "이 프롬프트는 하이라이트한 텍스트를 다른 언어로 번역합니다."
 
-#: ../assistant_prompts.lua:82
+#: ../assistant_prompts.lua:84
 msgid   "Summarize"
 msgstr  "요약"
 
-#: ../assistant_prompts.lua:84
+#: ../assistant_prompts.lua:86
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "이 프롬프트는 하이라이트한 텍스트의 주요 포인트와 핵심 내용을 요약합니다."
 
-#: ../assistant_prompts.lua:93
+#: ../assistant_prompts.lua:95
 msgid   "Simplify"
 msgstr  "간단히"
 
-#: ../assistant_prompts.lua:95
+#: ../assistant_prompts.lua:97
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "이 프롬프트는 하이라이트한 텍스트를 더 쉽게 이해할 수 있도록 간단히 설명합니다."
 
-#: ../assistant_prompts.lua:105
+#: ../assistant_prompts.lua:107
 msgid   "Key Points"
 msgstr  "핵심 포인트"
 
-#: ../assistant_prompts.lua:107
+#: ../assistant_prompts.lua:109
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "이 프롬프트는 하이라이트한 텍스트에서 핵심 포인트를 추출하여 정리합니다."
 
-#: ../assistant_prompts.lua:118
+#: ../assistant_prompts.lua:120
 msgid   "ELI5"
 msgstr  "5살에게 설명"
 
-#: ../assistant_prompts.lua:120
+#: ../assistant_prompts.lua:122
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "이 프롬프트는 복잡한 개념을 5살 아이도 이해할 수 있도록 간단히 설명합니다."
 
-#: ../assistant_prompts.lua:132
+#: ../assistant_prompts.lua:134
 msgid   "Explain"
 msgstr  "설명"
 
-#: ../assistant_prompts.lua:134
+#: ../assistant_prompts.lua:136
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "이 프롬프트는 하이라이트한 텍스트를 자세히 설명하여 명확하게 이해할 수 있도록 합니다."
 
-#: ../assistant_prompts.lua:145
+#: ../assistant_prompts.lua:147
 msgid   "Historical Context"
 msgstr  "역사적 배경"
 
-#: ../assistant_prompts.lua:147
+#: ../assistant_prompts.lua:149
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "이 프롬프트는 하이라이트한 텍스트의 역사적 배경과 중요성을 자세히 설명합니다."
 
-#: ../assistant_prompts.lua:158 ../main.lua:525
+#: ../assistant_prompts.lua:160 ../main.lua:526
 msgid   "Wikipedia"
 msgstr  "위키피디아"
 
-#: ../assistant_prompts.lua:160
+#: ../assistant_prompts.lua:162
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "이 프롬프트는 하이라이트한 텍스트를 바탕으로 위키피디아 스타일의 포괄적 문서를 생성합니다."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:281
+#: ../assistant_prompts.lua:283
 msgid   "Conjugation"
 msgstr  "활용"
 
-#: ../assistant_prompts.lua:282
+#: ../assistant_prompts.lua:284
 msgid   "Synonyms"
 msgstr  "동의어"
 
-#: ../assistant_prompts.lua:283
+#: ../assistant_prompts.lua:285
 msgid   "Meaning"
 msgstr  "뜻"
 
-#: ../assistant_prompts.lua:284
+#: ../assistant_prompts.lua:286
 msgid   "Translation"
 msgstr  "번역"
 
-#: ../assistant_prompts.lua:285
+#: ../assistant_prompts.lua:287
 msgid   "Explanation"
 msgstr  "설명"
 
-#: ../assistant_prompts.lua:286
+#: ../assistant_prompts.lua:288
 msgid   "Example"
 msgstr  "예시"
 
-#: ../assistant_prompts.lua:287
+#: ../assistant_prompts.lua:289
 msgid   "Word Origin"
 msgstr  "어원"
 
@@ -259,11 +259,11 @@ msgstr  "API 오류:\n"
 msgid   "Unknown error"
 msgstr  "알 수 없는 오류"
 
-#: ../assistant_querier.lua:110 ../main.lua:455
+#: ../assistant_querier.lua:110 ../main.lua:456
 msgid   "Settings"
 msgstr  "설정"
 
-#: ../assistant_querier.lua:112 ../assistant_settings.lua:293
+#: ../assistant_querier.lua:112 ../assistant_settings.lua:301
 #: ../assistant_viewer.lua:318
 msgid   "Close"
 msgstr  "닫기"
@@ -284,19 +284,19 @@ msgstr  "AI 응답 중"
 msgid   "⏹ Stop"
 msgstr  "⏹ 중지"
 
-#: ../assistant_querier.lua:201 ../assistant_querier.lua:213
+#: ../assistant_querier.lua:206 ../assistant_querier.lua:218
 msgid   "Request cancelled by user."
 msgstr  "사용자가 요청을 취소했습니다."
 
-#: ../assistant_querier.lua:219
+#: ../assistant_querier.lua:224
 msgid   "No response received."
 msgstr  "응답이 없습니다."
 
-#: ../assistant_querier.lua:232
+#: ../assistant_querier.lua:237
 msgid   "Failed to start subprocess for request"
 msgstr  "요청을 위한 하위 프로세스 시작 실패"
 
-#: ../assistant_querier.lua:429 ../assistant_querier.lua:431
+#: ../assistant_querier.lua:434 ../assistant_querier.lua:436
 msgid   "Deeply Thought"
 msgstr  "Deeply Thought"
 
@@ -324,7 +324,7 @@ msgstr  "지우기"
 msgid   "Save"
 msgstr  "저장"
 
-#: ../assistant_settings.lua:133 ../assistant_settings.lua:353
+#: ../assistant_settings.lua:133 ../assistant_settings.lua:361
 msgid   "AI Language: %1"
 msgstr  "AI 언어: %1"
 
@@ -340,11 +340,11 @@ msgstr  "비워두면 UI 언어로 사용: %1"
 msgid   "Response Font Size"
 msgstr  "응답 글꼴 크기"
 
-#: ../assistant_settings.lua:185 ../assistant_settings.lua:362
+#: ../assistant_settings.lua:185 ../assistant_settings.lua:370
 msgid   "Font Size: %1"
 msgstr  "글꼴 크기: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:204
+#: ../assistant_settings.lua:193 ../main.lua:205
 msgid   "AI Assistant Settings"
 msgstr  "AI 어시스턴트 설정"
 
@@ -353,42 +353,46 @@ msgid   "Enable stream response"
 msgstr  "스트림 응답 활성화"
 
 #: ../assistant_settings.lua:225
-msgid   "Enable Suggested Questions from AI"
-msgstr  "AI 추천 질문 활성화"
+msgid   "Auto scroll stream response text"
+msgstr  "스트림 응답 텍스트 자동 스크롤"
 
 #: ../assistant_settings.lua:233
+msgid   "Show Related Questions from AI"
+msgstr  "AI 관련 질문 표시"
+
+#: ../assistant_settings.lua:241
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "'번역'에 AI 어시스턴트 사용"
 
-#: ../assistant_settings.lua:242
+#: ../assistant_settings.lua:250
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "사전 팝업에 AI 사전 표시"
 
-#: ../assistant_settings.lua:250
+#: ../assistant_settings.lua:258
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "사전 팝업에 AI 위키백과 표시"
 
-#: ../assistant_settings.lua:258
+#: ../assistant_settings.lua:266
 msgid   "Copy entered question to the clipboard"
 msgstr  "입력한 질문을 클립보드에 복사"
 
-#: ../assistant_settings.lua:266
+#: ../assistant_settings.lua:274
 msgid   "Enable Auto Recap"
 msgstr  "자동 요약 활성화"
 
-#: ../assistant_settings.lua:276
+#: ../assistant_settings.lua:284
 msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "책을 다음번에 열면 AI 요약이 활성화됩니다."
 
-#: ../assistant_settings.lua:280
+#: ../assistant_settings.lua:288
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "대화를 노트북에 자동 저장"
 
-#: ../assistant_settings.lua:378
+#: ../assistant_settings.lua:386
 msgid   "AI Assistant Features:"
 msgstr  "AI 어시스턴트 기능:"
 
-#: ../assistant_settings.lua:405
+#: ../assistant_settings.lua:413
 msgid   "AI Model provider:"
 msgstr  "AI 모델 제공자:"
 
@@ -402,7 +406,7 @@ msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "새 버전의 %s 플러그인 (%s)이 있습니다. 업데이트하세요!"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:278 ../assistant_viewer.lua:746
+#: ../assistant_viewer.lua:278 ../assistant_viewer.lua:763
 msgid   "Ask Another Question"
 msgstr  "다른 질문하기"
 
@@ -438,79 +442,79 @@ msgstr  "노트 추가 완료"
 msgid   "Conversation is saved to NoteBook"
 msgstr  "대화가 노트북에 저장됨"
 
-#: ../assistant_viewer.lua:569
+#: ../assistant_viewer.lua:556
 msgid   "Cannot access default folder for logs: %1\n"
         "Using original location."
 msgstr  "기본 로그 폴더에 접근할 수 없습니다: %1\n"
         "원래 위치를 사용합니다."
 
-#: ../assistant_viewer.lua:588
+#: ../assistant_viewer.lua:599
 msgid   "Book Analysis"
 msgstr  "책 분석"
 
-#: ../assistant_viewer.lua:614
+#: ../assistant_viewer.lua:625
 msgid   "Chat log export failed. Continuing..."
 msgstr  "채팅 로그 내보내기 실패. 계속 진행 중..."
 
-#: ../assistant_viewer.lua:748
+#: ../assistant_viewer.lua:765
 msgid   "Type your question here"
 msgstr  "질문을 입력하세요"
 
-#: ../assistant_viewer.lua:912
+#: ../assistant_viewer.lua:929
 msgid   "Word copied to clipboard."
 msgstr  "단어 복사됨"
 
-#: ../assistant_viewer.lua:913
+#: ../assistant_viewer.lua:930
 msgid   "Selection copied to clipboard."
 msgstr  "선택 영역 복사됨"
 
-#: ../main.lua:77 ../main.lua:115
+#: ../main.lua:77 ../main.lua:116
 msgid   "Ask the AI a question"
 msgstr  "AI에게 질문하기"
 
-#: ../main.lua:85 ../main.lua:148
+#: ../main.lua:85 ../main.lua:149
 msgid   "AI Recaps"
 msgstr  "AI 요약"
 
-#: ../main.lua:93 ../main.lua:137
+#: ../main.lua:93 ../main.lua:138
 msgid   "AI X-Ray"
 msgstr  "AI X-Ray"
 
-#: ../main.lua:101 ../main.lua:126
+#: ../main.lua:101 ../main.lua:127
 msgid   "Book Summary & Recs"
 msgstr  "책 요약 & 추천"
 
-#: ../main.lua:121
+#: ../main.lua:122
 msgid   "Enter a question to ask AI."
 msgstr  "AI에게 질문을 입력하세요."
 
-#: ../main.lua:132
+#: ../main.lua:133
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "책 요약, 작가 소개, 역사적 배경, 유사 도서 추천 및 설명이 포함됩니다."
 
-#: ../main.lua:143
+#: ../main.lua:144
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "책의 'X-Ray' 요약: 인물, 장소, 주제, 용어·개념, 타임라인, 재몰입 섹션으로 구성됩니다."
 
-#: ../main.lua:154
+#: ../main.lua:155
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "현재까지 읽은 부분까지 스포일러 없이 간단히 요약합니다."
 
-#: ../main.lua:160
+#: ../main.lua:161
 msgid   "NoteBook (Saved AI Conversations)"
 msgstr  "노트북 (저장된 AI 대화)"
 
-#: ../main.lua:166
+#: ../main.lua:167
 msgid   "Notebook file: \n"
         "\n"
 msgstr  "노트북 파일: \n"
         "\n"
 
-#: ../main.lua:167
+#: ../main.lua:168
 msgid   "View"
 msgstr  "보기"
 
-#: ../main.lua:171
+#: ../main.lua:172
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -518,11 +522,11 @@ msgstr  "파일이 존재하지 않습니다.\n"
         "\n"
         "%1"
 
-#: ../main.lua:179 ../main.lua:183
+#: ../main.lua:180 ../main.lua:184
 msgid   "Delete"
 msgstr  "삭제"
 
-#: ../main.lua:182
+#: ../main.lua:183
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -530,25 +534,25 @@ msgstr  "파일을 삭제하시겠습니까?\n"
         "%1\n"
         "이 작업은 되돌릴 수 없습니다."
 
-#: ../main.lua:194
+#: ../main.lua:195
 msgid   "Edit"
 msgstr  "편집"
 
-#: ../main.lua:284
+#: ../main.lua:285
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "configuration.lua에 유효한 모델 제공자가 없습니다"
 
-#: ../main.lua:302
+#: ../main.lua:303
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "설정 오류입니다.\n"
         "configuration.lua를 설정해 주세요."
 
-#: ../main.lua:371
+#: ../main.lua:372
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua의 모델 제공자가 유효하지 않습니다"
 
-#: ../main.lua:436
+#: ../main.lua:437
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -574,11 +578,11 @@ msgstr  "유용한 팁\n"
         "멀티 스와이프 (예: ⮠, ⮡, ↺):\n"
         "결과 대화 상자에서 닫기 (닫기 버튼이 멀 때).\n"
 
-#: ../main.lua:461
+#: ../main.lua:462
 msgid   "Purge Settings"
 msgstr  "설정 초기화"
 
-#: ../main.lua:464
+#: ../main.lua:465
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -588,33 +592,33 @@ msgstr  "Assistant 플러그인 설정을 초기화하시겠습니까?\n"
         "\n"
         "configuration.lua는 그대로 유지되며, 대화 상자의 설정만 초기화됩니다."
 
-#: ../main.lua:468
+#: ../main.lua:469
 msgid   "Purge"
 msgstr  "초기화"
 
-#: ../main.lua:505
+#: ../main.lua:506
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "[%s]를 하이라이트 메뉴에서 제거할까요?"
 
-#: ../main.lua:506
+#: ../main.lua:507
 msgid   "Remove"
 msgstr  "제거"
 
-#: ../main.lua:658
+#: ../main.lua:639
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "설정을 찾을 수 없습니다. 먼저 configuration.lua를 설정하세요."
 
-#: ../main.lua:700
+#: ../main.lua:681
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "[%1 (AI)]를 하이라이트 메뉴에 추가했습니다."
 
-#: ../main.lua:709
+#: ../main.lua:690
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "[%s (AI)]를 하이라이트 메뉴에서 제거했습니다."
 
-#: ../main.lua:753
+#: ../main.lua:734
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -622,15 +626,15 @@ msgstr  "AI 요약을 보시겠습니까?\n"
         "%2의 %1에 대한 내용입니다.\n"
         "\n"
 
-#: ../main.lua:754
+#: ../main.lua:735
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "마지막으로 읽은 지 %1시간 전"
 
-#: ../main.lua:759
+#: ../main.lua:740
 msgid   "Yes"
 msgstr  "예"
 
-#: ../main.lua:768
+#: ../main.lua:749
 msgid   "No"
 msgstr  "아니오"
