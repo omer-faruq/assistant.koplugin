@@ -681,6 +681,17 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
         if not dialog then return end
         local input_text = dialog:getInputText()
         UIManager:close(dialog)
+
+        -- Special case for Quick Note - save directly instead of asking AI
+        if tab.idx == "quick_note" then
+          if not self.assistant.quicknote then
+            local QuickNote = require("assistant_quicknote")
+            self.assistant.quicknote = QuickNote:new(self.assistant)
+          end
+          self.assistant.quicknote:saveNote(input_text, self.highlighted_text)
+          return
+        end
+
         local prompt_config = merged_prompts[tab.idx]
         prompt_config.user_input = input_text
         if self.onAskQuestion then
@@ -689,7 +700,6 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
       end
     })
   end
-
   -- Prepare buttons
   local first_row = {
     {
@@ -765,7 +775,7 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
     input_hint = _("Type your question here"),
     input_type = "text",
     input_height = 6,
-    allow_newline = false,
+    allow_newline = true,
     input_multiline = true,
     text_height = math.floor( 10 * Screen:scaleBySize(20) ), -- about 10 lines of text
     width = Screen:getWidth() * 0.8,

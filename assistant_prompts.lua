@@ -24,6 +24,13 @@ local custom_prompts = {
             -- this prompt is a stub (will not shown in follow-up questions)
             -- it will be replaced by the actual prompt in the code below
         },
+        quick_note = {
+            order = 5, --should be visible on additional questions dialog
+            text = _("Quick Note"),
+            desc = _("This prompt creates a quick note with highlighted text."),
+            user_prompt = "Save this as a quick note.", --dummy prompt
+            -- this prompt is a stub 
+        },
         vocabulary = {
             text = _("Vocabulary"),
             order = 10,

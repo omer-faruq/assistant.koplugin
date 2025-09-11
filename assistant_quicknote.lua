@@ -80,7 +80,7 @@ function QuickNote:show()
   UIManager:show(self.input_dialog)
 end
 
-function QuickNote:saveNote(note_text)
+function QuickNote:saveNote(note_text, highlighted_text)
   local success, err = pcall(function()
     -- Get notebook file path
     local notebookfile = self.assistant.ui.bookinfo:getNotebookFile(self.assistant.ui.doc_settings)
@@ -137,8 +137,21 @@ function QuickNote:saveNote(note_text)
       -- Process note_text to ensure proper line breaks in Markdown
       local processed_note = note_text:gsub("\n", "\n\n")
 
-      -- Prepare log entry with specific structure for quick notes
-      local log_entry = string.format("# [%s]\n## Quick Note\n\n### ⮞ User: \n\n%s\n\n", timestamp, processed_note)
+      -- Process highlighted_text to ensure proper line breaks in Markdown
+      local processed_highlighted = ""
+      if highlighted_text and highlighted_text ~= "" then
+        processed_highlighted = highlighted_text:gsub("\n", "\n\n")
+      end
+
+      -- Prepare log entry with highlighted text
+      local log_entry
+      if processed_highlighted ~= "" and processed_note ~= "" then
+        log_entry = string.format("# [%s]\n## Quick Note\n\n**Highlighted text:** %s\n\n### ⮞ User: \n\n%s\n\n", timestamp, processed_highlighted, processed_note)
+      elseif processed_note == "" then
+        log_entry = string.format("# [%s]\n## Quick Note\n\n**Highlighted text:** %s\n\n", timestamp, processed_highlighted)
+      else
+        log_entry = string.format("# [%s]\n## Quick Note\n\n### ⮞ User: \n\n%s\n\n", timestamp, processed_note)
+      end
 
       -- Append to notebook file
       local file = io.open(notebookfile, "a")

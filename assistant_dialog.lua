@@ -340,6 +340,14 @@ function AssistantDialog:show(highlightedText)
               -- Special case for dictionary prompt
               local showDictionaryDialog = require("assistant_dictdialog")
               showDictionaryDialog(self.assistant, highlightedText)
+            elseif tab.idx == "quick_note" then
+              -- Special case for quick note prompt
+              if not self.assistant.quicknote then
+                local QuickNote = require("assistant_quicknote")
+                self.assistant.quicknote = QuickNote:new(self.assistant)
+              end
+              -- Save note with highlighted text
+              self.assistant.quicknote:saveNote(user_question, highlightedText)
             else
               self:showCustomPrompt(highlightedText, tab.idx, user_question)
             end
@@ -389,7 +397,7 @@ function AssistantDialog:show(highlightedText)
     description = dialog_hint,
     input_hint = input_hint,
     input_height = 6,
-    allow_newline = false,
+    allow_newline = true,
     input_multiline = true,
     text_height = math.floor( 10 * Screen:scaleBySize(20) ), -- about 10 lines of text
     buttons = button_rows,

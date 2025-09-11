@@ -512,6 +512,13 @@ function Assistant:addMainButton(prompt_idx, prompt)
             if prompt.order == -10 and prompt_idx == "dictionary" then
               -- Dictionary prompt, show dictionary dialog
               showDictionaryDialog(self, _reader_highlight_instance.selected_text.text)
+            elseif prompt_idx == "quick_note" then
+              -- Quick Note prompt, save directly without showing AI dialog
+              if not self.quicknote then
+                local QuickNote = require("assistant_quicknote")
+                self.quicknote = QuickNote:new(self)
+              end
+              self.quicknote:saveNote("", _reader_highlight_instance.selected_text.text)
             else
               -- For other prompts, show the custom prompt dialog
               self.assistant_dialog:showCustomPrompt(_reader_highlight_instance.selected_text.text, prompt_idx)
