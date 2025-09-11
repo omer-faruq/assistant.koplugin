@@ -94,6 +94,14 @@ function Assistant:onDispatcherRegisterActions()
     general = true
   })
 
+  -- Register Quick Notes action (available for gesture binding)
+  Dispatcher:registerAction("ai_quick_note", {
+    category = "none", 
+    event = "AskAIQuickNote", 
+    title = _("Take Quick Notes"), 
+    general = true
+  })
+
   -- Register Book Information action (available for gesture binding)
   Dispatcher:registerAction("ai_book_info", {
     category = "none",
@@ -156,6 +164,17 @@ function Assistant:addToMainMenu(menu_items)
               })
             end,
             separator = true,
+          },
+          {
+            text = _("Take Quick Notes"),
+            callback = function ()
+              self:onAskAIQuickNote()
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("Take quick notes that will be saved to your notebook.")
+              })
+            end,
           },
           {
             text = _("NoteBook (Saved AI Conversations)"),
@@ -554,22 +573,22 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
   end
 end
 
--- Event handlers for gesture-triggered actions
-function Assistant:onAskAIQuestion()
-  if not self:isConfigured() then
-    return
-  end
-  
-  NetworkMgr:runWhenOnline(function()
-    -- Show dialog without highlighted text
-    Trapper:wrap(function()
-      self.assistant_dialog:show()
+  -- Event handlers for gesture-triggered actions
+  function Assistant:onAskAIQuestion()
+    if not self:isConfigured() then
+      return
+    end
+    
+    NetworkMgr:runWhenOnline(function()
+      -- Show dialog without highlighted text
+      Trapper:wrap(function()
+        self.assistant_dialog:show()
+      end)
     end)
-  end)
-  return true
-end
+    return true
+  end
 
-local function getDocumentInfo(document)
+  local function getDocumentInfo(document)
     local DocSettings = require("docsettings")
     local doc_settings = DocSettings:open(document.file)
     local percent_finished = doc_settings:readSetting("percent_finished") or 0
@@ -581,43 +600,54 @@ local function getDocumentInfo(document)
       authors = authors,
       percent_finished = percent_finished,
     }
-end
+  end
 
-function Assistant:onAskAIRecap()
-  if not self:isConfigured() then return end
-  NetworkMgr:runWhenOnline(function()
-    local book = getDocumentInfo(self.ui.document)
-    local showFeatureDialog = require("assistant_featuredialog")
-    Trapper:wrap(function()
-      showFeatureDialog(self, "recap", book.title, book.authors, book.percent_finished)
+  function Assistant:onAskAIRecap()
+    if not self:isConfigured() then return end
+    NetworkMgr:runWhenOnline(function()
+      local book = getDocumentInfo(self.ui.document)
+      local showFeatureDialog = require("assistant_featuredialog")
+      Trapper:wrap(function()
+        showFeatureDialog(self, "recap", book.title, book.authors, book.percent_finished)
+      end)
     end)
-  end)
-  return true
-end
+    return true
+  end
 
-function Assistant:onAskAIXRay()
-  if not self:isConfigured() then return end
-  NetworkMgr:runWhenOnline(function()
-    local book = getDocumentInfo(self.ui.document)
-    local showFeatureDialog = require("assistant_featuredialog")
-    Trapper:wrap(function()
-      showFeatureDialog(self, "xray", book.title, book.authors, book.percent_finished)
+  function Assistant:onAskAIXRay()
+    if not self:isConfigured() then return end
+    NetworkMgr:runWhenOnline(function()
+      local book = getDocumentInfo(self.ui.document)
+      local showFeatureDialog = require("assistant_featuredialog")
+      Trapper:wrap(function()
+        showFeatureDialog(self, "xray", book.title, book.authors, book.percent_finished)
+      end)
     end)
-  end)
-  return true
-end
+    return true
+  end
 
-function Assistant:onAskAIBookInfo()
-  if not self:isConfigured() then return end
-  NetworkMgr:runWhenOnline(function()
-    local book = getDocumentInfo(self.ui.document)
-    local showFeatureDialog = require("assistant_featuredialog")
-    Trapper:wrap(function()
-      showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished)
+  function Assistant:onAskAIBookInfo()
+    if not self:isConfigured() then return end
+    NetworkMgr:runWhenOnline(function()
+      local book = getDocumentInfo(self.ui.document)
+      local showFeatureDialog = require("assistant_featuredialog")
+      Trapper:wrap(function()
+        showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished)
+      end)
     end)
-  end)
-  return true
-end
+    return true
+  end
+
+  function Assistant:onAskAIQuickNote()
+    if not self:isConfigured() then return end
+    -- Initialize quicknote if not already done
+    if not self.quicknote then
+      local QuickNote = require("assistant_quicknote")
+      self.quicknote = QuickNote:new(self)
+    end
+    self.quicknote:show()
+    return true
+  end
 
 -- Sync Overriding translate method with setting
 function Assistant:syncTranslateOverride()
