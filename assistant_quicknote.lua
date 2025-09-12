@@ -21,13 +21,7 @@ function QuickNote:new(assistant)
   return o
 end
 
-function QuickNote:show()
-  -- Prevent multiple dialogs
-  if self.input_dialog and self.input_dialog.dialog_open then
-    return
-  end
-
-  -- Create input dialog
+function QuickNote:createNoteInputDialog(callback, highlighted_text)
   self.input_dialog = InputDialog:new {
     title = _("Take Quick Notes"),
     input = "",
@@ -36,7 +30,7 @@ function QuickNote:show()
     input_height = 6,
     allow_newline = true,
     input_multiline = true,
-    text_height = math.floor(10 * Device.screen:scaleBySize(20)), -- about 10 lines of text
+    text_height = math.floor(10 * Device.screen:scaleBySize(20)),
     width = Device.screen:getWidth() * 0.8,
     height = Device.screen:getHeight() * 0.4,
     buttons = {{
@@ -55,20 +49,26 @@ function QuickNote:show()
         is_enter_default = true,
         callback = function()
           local note_text = self.input_dialog:getInputText()
-          if not note_text or note_text == "" then
+          if not note_text or (note_text == "" and not (highlighted_text and highlighted_text ~= "")) then
             UIManager:show(InfoMessage:new{
               text = _("Please enter a note before saving."),
               timeout = 3
             })
             return
           end
-          self:saveNote(note_text)
+          callback(note_text)
           UIManager:close(self.input_dialog)
           self.input_dialog = nil
         end
       }
     }},
     close_callback = function()
+      if self.input_dialog then
+        UIManager:close(self.input_dialog)
+        self.input_dialog = nil
+      end
+    end,
+    dismiss_callback = function()
       if self.input_dialog then
         UIManager:close(self.input_dialog)
         self.input_dialog = nil
@@ -80,7 +80,20 @@ function QuickNote:show()
   UIManager:show(self.input_dialog)
 end
 
+function QuickNote:show()
+  self:createNoteInputDialog(function(note_text)
+    self:saveNote(note_text)
+  end, nil)
+end
+
 function QuickNote:saveNote(note_text, highlighted_text)
+  if not note_text then
+    self:createNoteInputDialog(function(input_note)
+      self:saveNote(input_note, highlighted_text)
+    end, highlighted_text)
+    return
+  end
+
   local success, err = pcall(function()
     -- Get notebook file path
     local notebookfile = self.assistant.ui.bookinfo:getNotebookFile(self.assistant.ui.doc_settings)
