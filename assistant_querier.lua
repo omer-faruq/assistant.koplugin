@@ -189,9 +189,9 @@ function Querier:query(message_history, title)
             UIManager:nextTick(function ()
                 -- schedule the text update in the UIManager task queue
                 if stream_mode_auto_scroll then
-                    streamDialog:addTextToInput(content)
+                    streamDialog:addTextToInput(content or "")
                 else
-                    streamDialog._input_widget:setText(table.concat(buffer), true)
+                    streamDialog._input_widget:setText(table.concat(buffer or {}), true)
                 end
             end)
         end)
