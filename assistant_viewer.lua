@@ -1053,17 +1053,16 @@ function ChatGPTViewer:update(new_text)
     self.textw:clear()
     self.textw[1] = self.scroll_text_w
     
-    -- Always scroll to the new text except first time
     if self.render_markdown then
       self.scroll_text_w:scrollToPage(1)
       UIManager:scheduleIn(0.25, function ()
-        -- a delay scroll make the scroll bar in correct position
+        -- a delay scroll makes the scroll bar in correct position
         self.scroll_text_w:scrollToPage(last_page_num)
       end)
     else
       self.scroll_text_w:scrollToBottom()
+      UIManager:setDirty(self.frame, "partial")
     end
-    UIManager:setDirty(self.frame, "partial")
   end
 end
 
