@@ -622,7 +622,7 @@ function ChatGPTViewer:saveToNotebook()
       
       -- If text doesn't start with "Highlighted text:", add it
       if not text_to_log:find("^__Highlighted text:__") and self.highlighted_text then
-        text_to_log = "Highlighted text: " .. self.highlighted_text .. "\n\n" .. text_to_log
+        text_to_log = "__Highlighted text:__ " .. self.highlighted_text .. "\n\n" .. text_to_log
       end
       
       local log_entry = string.format("# [%s]\n## %s\n\n%s\n\n", timestamp, title_text, text_to_log)

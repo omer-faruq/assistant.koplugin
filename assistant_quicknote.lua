@@ -159,9 +159,9 @@ function QuickNote:saveNote(note_text, highlighted_text)
       -- Prepare log entry with highlighted text
       local log_entry
       if processed_highlighted ~= "" and processed_note ~= "" then
-        log_entry = string.format("# [%s]\n## Quick Note\n\n**Highlighted text:** %s\n\n### ⮞ User: \n\n%s\n\n", timestamp, processed_highlighted, processed_note)
+        log_entry = string.format("# [%s]\n## Quick Note\n\n__Highlighted text:__ %s\n\n### ⮞ User: \n\n%s\n\n", timestamp, processed_highlighted, processed_note)
       elseif processed_note == "" then
-        log_entry = string.format("# [%s]\n## Quick Note\n\n**Highlighted text:** %s\n\n", timestamp, processed_highlighted)
+        log_entry = string.format("# [%s]\n## Quick Note\n\n__Highlighted text:__ %s\n\n", timestamp, processed_highlighted)
       else
         log_entry = string.format("# [%s]\n## Quick Note\n\n### ⮞ User: \n\n%s\n\n", timestamp, processed_note)
       end
