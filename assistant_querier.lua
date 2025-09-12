@@ -191,6 +191,7 @@ function Querier:query(message_history, title)
                 if stream_mode_auto_scroll then
                     streamDialog:addTextToInput(content or "")
                 else
+                    streamDialog._input_widget:resyncPos()
                     streamDialog._input_widget:setText(table.concat(buffer or {}), true)
                 end
             end)
