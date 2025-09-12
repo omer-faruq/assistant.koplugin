@@ -39,6 +39,27 @@ local MD = require("assistant_mdparser")
 
 local Prompts = require("assistant_prompts")
 
+-- Inject scroll page method for ScrollHtmlWidget
+ScrollHtmlWidget.scrollToPage = function(self, page_num)
+  if page_num > self.htmlbox_widget.page_count then
+    page_num = self.htmlbox_widget.page_count 
+  end
+  self.htmlbox_widget:setPageNumber(page_num)
+  self:_updateScrollBar()
+  self.htmlbox_widget:freeBb()
+  self.htmlbox_widget:_render()
+  if self.dialog.movable and self.dialog.movable.alpha then
+      self.dialog.movable.alpha = nil
+      UIManager:setDirty(self.dialog, function()
+          return "partial", self.dialog.movable.dimen
+      end)
+  else
+      UIManager:setDirty(self.dialog, function()
+          return "partial", self.dimen
+      end)
+  end
+end
+
 -- Undo default margins and padding in ScrollHtmlWidget.
 -- Based on ui/widget/dictquicklookup.
 local VIEWER_CSS = [[
@@ -452,7 +473,7 @@ function ChatGPTViewer:init()
 
   if self.render_markdown then
     -- Convert Markdown to HTML and render in a ScrollHtmlWidget
-    local html_body, err = MD(self.text, {})
+    local html_body, err = MD(self.text)
     if err then
       logger.warn("ChatGPTViewer: could not generate HTML", err)
       -- Fallback to plain text if HTML generation fails
@@ -978,8 +999,7 @@ function ChatGPTViewer:html_link_tapped_callback(link)
 end
 
 function ChatGPTViewer:update(new_text)
-  local first_time = not self.text
-  local last_page_num = nil
+  local last_page_num = 1
 
   -- Check if the new text is substantially different from the current text
   if not self.text or #new_text > #self.text then
@@ -992,7 +1012,7 @@ function ChatGPTViewer:update(new_text)
       last_page_num = self.scroll_text_w.htmlbox_widget.page_count
 
       -- Convert Markdown to HTML and recreate the ScrollHtmlWidget with the new text
-      local html_body, err = MD(self.text, {})
+      local html_body, err = MD(self.text)
       if err then
         logger.warn("ChatGPTViewer: could not generate HTML", err)
         -- Fallback to plain text if HTML generation fails
@@ -1034,17 +1054,14 @@ function ChatGPTViewer:update(new_text)
     self.textw[1] = self.scroll_text_w
     
     -- Always scroll to the new text except first time
-    if not first_time then
-      if self.render_markdown then
-        -- ScrollHtmlWidget only supports scroll by ratio
-        -- Scroll to the last page if it exists
-        local current_page_num = self.scroll_text_w.htmlbox_widget.page_count
-        if last_page_num and last_page_num > 0 and current_page_num > 0 then
-          self.scroll_text_w:scrollToRatio((last_page_num - 1) / current_page_num)
-        end
-      else
-        self.scroll_text_w:scrollToBottom()
-      end
+    if self.render_markdown then
+      self.scroll_text_w:scrollToPage(1)
+      UIManager:scheduleIn(0.25, function ()
+        -- a delay scroll make the scroll bar in correct position
+        self.scroll_text_w:scrollToPage(last_page_num)
+      end)
+    else
+      self.scroll_text_w:scrollToBottom()
     end
     UIManager:setDirty(self.frame, "partial")
   end
