@@ -147,6 +147,17 @@ function QuickNote:saveNote(note_text, highlighted_text)
       -- Get current timestamp
       local timestamp = os.date("%Y-%m-%d %H:%M:%S")
 
+      -- Get page number from highlighted text selection
+      local page_number = nil
+      if self.assistant.ui.highlight.selected_text and self.assistant.ui.highlight.selected_text.pos0 then
+        if self.assistant.ui.paging then
+          page_number = self.assistant.ui.highlight.selected_text.pos0.page
+        else
+          -- For rolling mode, we could get page number using document:getPageFromXPointer
+          page_number = self.assistant.ui.document:getPageFromXPointer(self.assistant.ui.highlight.selected_text.pos0)
+        end
+      end
+
       -- Process note_text to ensure proper line breaks in Markdown
       local processed_note = note_text:gsub("\n", "\n\n")
 
@@ -156,12 +167,16 @@ function QuickNote:saveNote(note_text, highlighted_text)
         processed_highlighted = highlighted_text:gsub("\n", "\n\n")
       end
 
-      -- Prepare log entry with highlighted text
+      -- Prepare log entry with highlighted text and page number
       local log_entry
+      local page_info = ""
+      if page_number then
+        page_info = string.format(" (Page %s)", page_number)
+      end
       if processed_highlighted ~= "" and processed_note ~= "" then
-        log_entry = string.format("# [%s]\n## Quick Note\n\n__Highlighted text:__ %s\n\n### ⮞ User: \n\n%s\n\n", timestamp, processed_highlighted, processed_note)
+        log_entry = string.format("# [%s]%s\n## Quick Note\n\n__Highlighted text:__ %s\n\n### ⮞ User: \n\n%s\n\n", timestamp, page_info, processed_highlighted, processed_note)
       elseif processed_note == "" then
-        log_entry = string.format("# [%s]\n## Quick Note\n\n__Highlighted text:__ %s\n\n", timestamp, processed_highlighted)
+        log_entry = string.format("# [%s]%s\n## Quick Note\n\n__Highlighted text:__ %s\n\n", timestamp, page_info, processed_highlighted)
       else
         log_entry = string.format("# [%s]\n## Quick Note\n\n### ⮞ User: \n\n%s\n\n", timestamp, processed_note)
       end

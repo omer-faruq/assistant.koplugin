@@ -616,8 +616,23 @@ function ChatGPTViewer:saveToNotebook()
       -- Get current timestamp
       local timestamp = os.date("%Y-%m-%d %H:%M:%S")
       
+      -- Get page number from highlighted text selection
+      local page_number = nil
+      if self.ui.highlight.selected_text and self.ui.highlight.selected_text.pos0 then
+        if self.ui.paging then
+          page_number = self.ui.highlight.selected_text.pos0.page
+        else
+          -- For rolling mode, we could get page number using document:getPageFromXPointer
+          page_number = self.ui.document:getPageFromXPointer(self.ui.highlight.selected_text.pos0)
+        end
+      end
+      
       -- Prepare log entry with title if available
-      local title_text = self.title and (self.title .. "\n") or _("Book Analysis").."\n"
+      local page_info = ""
+      if page_number then
+        page_info = " (Page " .. page_number .. ")"
+      end
+      local title_text = (self.title and self.title or _("Book Analysis")) .. "\n"
       local text_to_log = self.text or ""
       
       -- If text doesn't start with "Highlighted text:", add it
@@ -625,7 +640,7 @@ function ChatGPTViewer:saveToNotebook()
         text_to_log = "__Highlighted text:__ " .. self.highlighted_text .. "\n\n" .. text_to_log
       end
       
-      local log_entry = string.format("# [%s]\n## %s\n\n%s\n\n", timestamp, title_text, text_to_log)
+      local log_entry = string.format("# [%s]%s\n## %s\n\n%s\n\n", timestamp, page_info, title_text, text_to_log)
       
       -- Append to notebook file
       local file = io.open(notebookfile, "a")
