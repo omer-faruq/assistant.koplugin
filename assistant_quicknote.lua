@@ -164,7 +164,7 @@ function QuickNote:saveNote(note_text, highlighted_text)
       -- Process highlighted_text to ensure proper line breaks in Markdown
       local processed_highlighted = ""
       if highlighted_text and highlighted_text ~= "" then
-        processed_highlighted = highlighted_text:gsub("\n", "\n\n")
+        processed_highlighted = "> " .. highlighted_text:gsub("\n", "\n> ")
       end
 
       -- Prepare log entry with highlighted text and page number
@@ -174,9 +174,9 @@ function QuickNote:saveNote(note_text, highlighted_text)
         page_info = string.format(" (Page %s)", page_number)
       end
       if processed_highlighted ~= "" and processed_note ~= "" then
-        log_entry = string.format("# [%s]%s\n## Quick Note\n\n__Highlighted text:__ %s\n\n### ⮞ User: \n\n%s\n\n", timestamp, page_info, processed_highlighted, processed_note)
+        log_entry = string.format("# [%s]%s\n## Quick Note\n\n__Highlighted text:__ \n%s\n\n### ⮞ User: \n\n%s\n\n", timestamp, page_info, processed_highlighted, processed_note)
       elseif processed_note == "" then
-        log_entry = string.format("# [%s]%s\n## Quick Note\n\n__Highlighted text:__ %s\n\n", timestamp, page_info, processed_highlighted)
+        log_entry = string.format("# [%s]%s\n## Quick Note\n\n__Highlighted text:__ \n%s\n\n", timestamp, page_info, processed_highlighted)
       else
         log_entry = string.format("# [%s]\n## Quick Note\n\n### ⮞ User: \n\n%s\n\n", timestamp, processed_note)
       end

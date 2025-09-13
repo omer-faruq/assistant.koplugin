@@ -635,10 +635,21 @@ function ChatGPTViewer:saveToNotebook()
       local title_text = (self.title and self.title or _("Book Analysis")) .. "\n"
       local text_to_log = self.text or ""
       
-      -- If text doesn't start with "Highlighted text:", add it
-      if not text_to_log:find("^__Highlighted text:__") and self.highlighted_text then
-        text_to_log = "__Highlighted text:__ " .. self.highlighted_text .. "\n\n" .. text_to_log
+      -- If there's existing highlighted text in the note, remove it first (but keep the separator)
+      local highlighted_pattern = "__Highlighted text:__(.-)\n### ⮞"
+      text_to_log = text_to_log:gsub(highlighted_pattern, "\n### ⮞", 1)
+      
+      -- Add our own highlighted text if available
+      if self.highlighted_text then
+        local processed_highlighted = ""
+        if self.highlighted_text and self.highlighted_text ~= "" then
+          processed_highlighted = "> " .. self.highlighted_text:gsub("\n", "\n> ")
+        end
+        text_to_log = "__Highlighted text:__ \n" .. processed_highlighted .. "\n\n" .. text_to_log
       end
+      
+      -- Remove suggested question links from text_to_log
+      text_to_log = text_to_log:gsub("%[(.-)%]%(%#suggested%-question:.-%)", "%1")
       
       local log_entry = string.format("# [%s]%s\n## %s\n\n%s\n\n", timestamp, page_info, title_text, text_to_log)
       
