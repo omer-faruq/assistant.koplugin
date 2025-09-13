@@ -149,12 +149,24 @@ function QuickNote:saveNote(note_text, highlighted_text)
 
       -- Get page number from highlighted text selection
       local page_number = nil
+      local percentage = 0
+      local total_pages = nil
+      local chapter_title = nil
       if self.assistant.ui.highlight.selected_text and self.assistant.ui.highlight.selected_text.pos0 then
         if self.assistant.ui.paging then
           page_number = self.assistant.ui.highlight.selected_text.pos0.page
         else
           -- For rolling mode, we could get page number using document:getPageFromXPointer
           page_number = self.assistant.ui.document:getPageFromXPointer(self.assistant.ui.highlight.selected_text.pos0)
+        end
+        
+        total_pages = self.assistant.ui.document.info.number_of_pages
+        if page_number and total_pages and total_pages ~= 0 then
+          percentage = math.floor((page_number / total_pages) * 100 + 0.5)
+        end
+        
+        if self.assistant.ui.toc and page_number then
+          chapter_title = self.assistant.ui.toc:getTocTitleByPage(page_number)
         end
       end
 
@@ -164,14 +176,17 @@ function QuickNote:saveNote(note_text, highlighted_text)
       -- Process highlighted_text to ensure proper line breaks in Markdown
       local processed_highlighted = ""
       if highlighted_text and highlighted_text ~= "" then
-        processed_highlighted = "> " .. highlighted_text:gsub("\n", "\n> ")
+        processed_highlighted = "> " .. highlighted_text:gsub("\n", "\n\n> ")
       end
 
       -- Prepare log entry with highlighted text and page number
       local log_entry
       local page_info = ""
       if page_number then
-        page_info = string.format(" (Page %s)", page_number)
+        page_info = string.format(" (Page %s - %s%%)", page_number, percentage)
+      end
+      if chapter_title then
+        page_info = page_info .. " - " .. chapter_title
       end
       if processed_highlighted ~= "" and processed_note ~= "" then
         log_entry = string.format("# [%s]%s\n## Quick Note\n\n__Highlighted text:__ \n%s\n\n### ⮞ User: \n\n%s\n\n", timestamp, page_info, processed_highlighted, processed_note)

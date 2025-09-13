@@ -618,6 +618,9 @@ function ChatGPTViewer:saveToNotebook()
       
       -- Get page number from highlighted text selection
       local page_number = nil
+      local percentage = 0
+      local total_pages = nil
+      local chapter_title = nil
       if self.ui.highlight.selected_text and self.ui.highlight.selected_text.pos0 then
         if self.ui.paging then
           page_number = self.ui.highlight.selected_text.pos0.page
@@ -625,13 +628,29 @@ function ChatGPTViewer:saveToNotebook()
           -- For rolling mode, we could get page number using document:getPageFromXPointer
           page_number = self.ui.document:getPageFromXPointer(self.ui.highlight.selected_text.pos0)
         end
+
+        total_pages = self.ui.document.info.number_of_pages
+        if page_number and total_pages and total_pages ~= 0 then
+          percentage = math.floor((page_number / total_pages) * 100 + 0.5)
+        end
+
+        if self.ui.toc and page_number then
+          chapter_title = self.ui.toc:getTocTitleByPage(page_number)
+        end
       end
       
       -- Prepare log entry with title if available
       local page_info = ""
-      if page_number then
+      if page_number and total_pages then
+        page_info = " (Page " .. page_number .. " - " .. percentage .. "%)"
+      elseif page_number then
         page_info = " (Page " .. page_number .. ")"
       end
+
+      if chapter_title then
+        page_info = page_info .. " - " .. chapter_title
+      end
+
       local title_text = (self.title and self.title or _("Book Analysis")) .. "\n"
       local text_to_log = self.text or ""
       
@@ -643,7 +662,7 @@ function ChatGPTViewer:saveToNotebook()
       if self.highlighted_text then
         local processed_highlighted = ""
         if self.highlighted_text and self.highlighted_text ~= "" then
-          processed_highlighted = "> " .. self.highlighted_text:gsub("\n", "\n> ")
+          processed_highlighted = "> " .. self.highlighted_text:gsub("\n", "\n\n> ")
         end
         text_to_log = "__Highlighted text:__ \n" .. processed_highlighted .. "\n\n" .. text_to_log
       end
