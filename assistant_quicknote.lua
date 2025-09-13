@@ -86,19 +86,46 @@ function QuickNote:show()
   end, nil)
 end
 
-function QuickNote:saveNote(note_text, highlighted_text)
-  if not note_text then
-    self:createNoteInputDialog(function(input_note)
-      self:saveNote(input_note, highlighted_text)
-    end, highlighted_text)
-    return
+function QuickNote:getPageInfo(ui)
+  local page_number = nil
+  local percentage = 0
+  local total_pages = nil
+  local chapter_title = nil
+  if ui.highlight.selected_text and ui.highlight.selected_text.pos0 then
+    if ui.paging then
+      page_number = ui.highlight.selected_text.pos0.page
+    else
+      -- For rolling mode, we could get page number using document:getPageFromXPointer
+      page_number = ui.document:getPageFromXPointer(ui.highlight.selected_text.pos0)
+    end
+    
+    total_pages = ui.document.info.number_of_pages
+    if page_number and total_pages and total_pages ~= 0 then
+      percentage = math.floor((page_number / total_pages) * 100 + 0.5)
+    end
+    
+    if ui.toc and page_number then
+      chapter_title = ui.toc:getTocTitleByPage(page_number)
+    end
   end
 
-  local success, err = pcall(function()
-    -- Get notebook file path
-    local notebookfile = self.assistant.ui.bookinfo:getNotebookFile(self.assistant.ui.doc_settings)
+  local page_info = ""
+  if page_number and total_pages then
+    page_info = string.format(" (Page %s - %s%%)", page_number, percentage)
+  elseif page_number then
+    page_info = string.format(" (Page %s)", page_number)
+  end
 
-    -- Check if default_folder_for_logs is configured and try to use it
+  if chapter_title then
+    page_info = page_info .. " - " .. chapter_title
+  end
+
+  return page_info
+end
+
+function QuickNote:saveToNotebookFile(log_entry)
+  local success, err = pcall(function()
+    local notebookfile = self.assistant.ui.bookinfo:getNotebookFile(self.assistant.ui.doc_settings)
     local default_folder = util.tableGetValue(self.assistant.CONFIGURATION, "features", "default_folder_for_logs")
     if default_folder and default_folder ~= "" then
       if not notebookfile:find("^" .. default_folder:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")) then
@@ -134,7 +161,6 @@ function QuickNote:saveNote(note_text, highlighted_text)
       end
     end
 
-    -- Ensure the notebook file has .md extension
     if notebookfile and not notebookfile:find("%.md$") then
       notebookfile = notebookfile:gsub("%.[^.]*$", ".md")
       if not notebookfile:find("%.md$") then
@@ -144,59 +170,6 @@ function QuickNote:saveNote(note_text, highlighted_text)
     end
 
     if notebookfile then
-      -- Get current timestamp
-      local timestamp = os.date("%Y-%m-%d %H:%M:%S")
-
-      -- Get page number from highlighted text selection
-      local page_number = nil
-      local percentage = 0
-      local total_pages = nil
-      local chapter_title = nil
-      if self.assistant.ui.highlight.selected_text and self.assistant.ui.highlight.selected_text.pos0 then
-        if self.assistant.ui.paging then
-          page_number = self.assistant.ui.highlight.selected_text.pos0.page
-        else
-          -- For rolling mode, we could get page number using document:getPageFromXPointer
-          page_number = self.assistant.ui.document:getPageFromXPointer(self.assistant.ui.highlight.selected_text.pos0)
-        end
-        
-        total_pages = self.assistant.ui.document.info.number_of_pages
-        if page_number and total_pages and total_pages ~= 0 then
-          percentage = math.floor((page_number / total_pages) * 100 + 0.5)
-        end
-        
-        if self.assistant.ui.toc and page_number then
-          chapter_title = self.assistant.ui.toc:getTocTitleByPage(page_number)
-        end
-      end
-
-      -- Process note_text to ensure proper line breaks in Markdown
-      local processed_note = note_text:gsub("\n", "\n\n")
-
-      -- Process highlighted_text to ensure proper line breaks in Markdown
-      local processed_highlighted = ""
-      if highlighted_text and highlighted_text ~= "" then
-        processed_highlighted = "> " .. highlighted_text:gsub("\n", "\n\n> ")
-      end
-
-      -- Prepare log entry with highlighted text and page number
-      local log_entry
-      local page_info = ""
-      if page_number then
-        page_info = string.format(" (Page %s - %s%%)", page_number, percentage)
-      end
-      if chapter_title then
-        page_info = page_info .. " - " .. chapter_title
-      end
-      if processed_highlighted ~= "" and processed_note ~= "" then
-        log_entry = string.format("# [%s]%s\n## Quick Note\n\n__Highlighted text:__ \n%s\n\n### ⮞ User: \n\n%s\n\n", timestamp, page_info, processed_highlighted, processed_note)
-      elseif processed_note == "" then
-        log_entry = string.format("# [%s]%s\n## Quick Note\n\n__Highlighted text:__ \n%s\n\n", timestamp, page_info, processed_highlighted)
-      else
-        log_entry = string.format("# [%s]\n## Quick Note\n\n### ⮞ User: \n\n%s\n\n", timestamp, processed_note)
-      end
-
-      -- Append to notebook file
       local file = io.open(notebookfile, "a")
       if file then
         file:write(log_entry)
@@ -208,19 +181,47 @@ function QuickNote:saveNote(note_text, highlighted_text)
   end)
 
   if not success then
-    logger.warn("Assistant: Error during quick note save:", err)
-    -- Show warning to user but don't crash
+    logger.warn("Assistant: Error during notebook save:", err)
     UIManager:show(InfoMessage:new{
       icon = "notice-warning",
-      text = _("Quick note save failed. Continuing..."),
+      text = _("Notebook save failed. Continuing..."),
       timeout = 3,
     })
-  else
-    UIManager:show(InfoMessage:new{
-      text = _("Quick note saved successfully"),
-      timeout = 2
-    })
   end
+end
+
+function QuickNote:saveNote(note_text, highlighted_text)
+  if not note_text then
+    self:createNoteInputDialog(function(input_note)
+      self:saveNote(input_note, highlighted_text)
+    end, highlighted_text)
+    return
+  end
+
+  local timestamp = os.date("%Y-%m-%d %H:%M:%S")
+
+  local page_info = self:getPageInfo(self.assistant.ui)
+  local processed_note = note_text:gsub("\n", "\n\n")
+
+  local processed_highlighted = ""
+  if highlighted_text and highlighted_text ~= "" then
+    processed_highlighted = "> " .. highlighted_text:gsub("\n", "\n\n> ")
+  end
+  local log_entry
+  if processed_highlighted ~= "" and processed_note ~= "" then
+    log_entry = string.format("# [%s]%s\n## Quick Note\n\n__Highlighted text:__ \n%s\n\n### ⮞ User: \n\n%s\n\n", timestamp, page_info, processed_highlighted, processed_note)
+  elseif processed_note == "" then
+    log_entry = string.format("# [%s]%s\n## Quick Note\n\n__Highlighted text:__ \n%s\n\n", timestamp, page_info, processed_highlighted)
+  else
+    log_entry = string.format("# [%s]\n## Quick Note\n\n### ⮞ User: \n\n%s\n\n", timestamp, processed_note)
+  end
+
+  self:saveToNotebookFile(log_entry)
+
+  UIManager:show(InfoMessage:new{
+    text = _("Quick note saved successfully"),
+    timeout = 2
+  })
 end
 
 return QuickNote

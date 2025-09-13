@@ -563,135 +563,34 @@ function ChatGPTViewer:init()
 end
 
 function ChatGPTViewer:saveToNotebook()
-  local success, err = pcall(function()
-    -- Get book file path
-    local notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
-    
-    -- Check if default_folder_for_logs is configured and try to use it
-    local default_folder = util.tableGetValue(self.assistant.CONFIGURATION, "features", "default_folder_for_logs")
-    if default_folder and default_folder ~= "" then
-      if not notebookfile:find("^" .. default_folder:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")) then
-        if not util.pathExists(default_folder) then
-          UIManager:show(InfoMessage:new{
-              icon = "notice-warning",
-              text = T(_("Cannot access default folder for logs: %1\nUsing original location."), default_folder),
-              timeout = 5,
-            })
-        else
-          local original_filename = notebookfile:match("([^/\\]+)$")
-          if original_filename then
-            original_filename = original_filename:gsub("%.[^.]*$", ".md")
-          else
-            local doc_path = self.ui.document.file
-            if doc_path then
-              local doc_filename = doc_path:match("([^/\\]+)$")
-              if doc_filename then
-                original_filename = doc_filename..".md"
-              else
-                original_filename = "notebook.md"
-              end
-            else
-              original_filename = "notebook.md"
-            end
-          end
-          local new_notebookfile = default_folder .. "/" .. original_filename
-          
-          self.ui.doc_settings:saveSetting("notebook_file", new_notebookfile)
-          
-          notebookfile = new_notebookfile
-        end
-      end
-    end
-    
-    -- Ensure the notebook file has .md extension
-    if notebookfile and not notebookfile:find("%.md$") then
-      notebookfile = notebookfile:gsub("%.[^.]*$", ".md")
-      if not notebookfile:find("%.md$") then
-        notebookfile = notebookfile .. ".md"
-      end
-      self.ui.doc_settings:saveSetting("notebook_file", notebookfile)
-    end
-    
-    if notebookfile then
-      -- Get current timestamp
-      local timestamp = os.date("%Y-%m-%d %H:%M:%S")
-      
-      -- Get page number from highlighted text selection
-      local page_number = nil
-      local percentage = 0
-      local total_pages = nil
-      local chapter_title = nil
-      if self.ui.highlight.selected_text and self.ui.highlight.selected_text.pos0 then
-        if self.ui.paging then
-          page_number = self.ui.highlight.selected_text.pos0.page
-        else
-          -- For rolling mode, we could get page number using document:getPageFromXPointer
-          page_number = self.ui.document:getPageFromXPointer(self.ui.highlight.selected_text.pos0)
-        end
-
-        total_pages = self.ui.document.info.number_of_pages
-        if page_number and total_pages and total_pages ~= 0 then
-          percentage = math.floor((page_number / total_pages) * 100 + 0.5)
-        end
-
-        if self.ui.toc and page_number then
-          chapter_title = self.ui.toc:getTocTitleByPage(page_number)
-        end
-      end
-      
-      -- Prepare log entry with title if available
-      local page_info = ""
-      if page_number and total_pages then
-        page_info = " (Page " .. page_number .. " - " .. percentage .. "%)"
-      elseif page_number then
-        page_info = " (Page " .. page_number .. ")"
-      end
-
-      if chapter_title then
-        page_info = page_info .. " - " .. chapter_title
-      end
-
-      local title_text = (self.title and self.title or _("Book Analysis")) .. "\n"
-      local text_to_log = self.text or ""
-      
-      -- If there's existing highlighted text in the note, remove it first (but keep the separator)
-      local highlighted_pattern = "__Highlighted text:__(.-)\n### ⮞"
-      text_to_log = text_to_log:gsub(highlighted_pattern, "\n### ⮞", 1)
-      
-      -- Add our own highlighted text if available
-      if self.highlighted_text then
-        local processed_highlighted = ""
-        if self.highlighted_text and self.highlighted_text ~= "" then
-          processed_highlighted = "> " .. self.highlighted_text:gsub("\n", "\n\n> ")
-        end
-        text_to_log = "__Highlighted text:__ \n" .. processed_highlighted .. "\n\n" .. text_to_log
-      end
-      
-      -- Remove suggested question links from text_to_log
-      text_to_log = text_to_log:gsub("%[(.-)%]%(%#suggested%-question:.-%)", "%1")
-      
-      local log_entry = string.format("# [%s]%s\n## %s\n\n%s\n\n", timestamp, page_info, title_text, text_to_log)
-      
-      -- Append to notebook file
-      local file = io.open(notebookfile, "a")
-      if file then
-        file:write(log_entry)
-        file:close()
-      else
-        logger.warn("Assistant: Could not open notebook file:", notebookfile)
-      end
-    end
-  end)
-  
-  if not success then
-    logger.warn("Assistant: Error during chat log export:", err)
-    -- Show warning to user but don't crash
-    UIManager:show(InfoMessage:new{
-      icon = "notice-warning",
-      text = _("Chat log export failed. Continuing..."),
-      timeout = 3,
-    })
+  if not self.assistant.quicknote then
+    local QuickNote = require("assistant_quicknote")
+    self.assistant.quicknote = QuickNote:new(self.assistant)
   end
+
+  local timestamp = os.date("%Y-%m-%d %H:%M:%S")
+  
+  local page_info = self.assistant.quicknote:getPageInfo(self.ui)
+
+  local title_text = (self.title and self.title or _("Book Analysis")) .. "\n"
+  local text_to_log = self.text or ""
+  
+  local highlighted_pattern = "__Highlighted text:__(.-)\n### ⮞"
+  text_to_log = text_to_log:gsub(highlighted_pattern, "\n### ⮞", 1)
+  
+  if self.highlighted_text then
+    local processed_highlighted = ""
+    if self.highlighted_text and self.highlighted_text ~= "" then
+      processed_highlighted = "> " .. self.highlighted_text:gsub("\n", "\n\n> ")
+    end
+    text_to_log = "__Highlighted text:__ \n" .. processed_highlighted .. "\n\n" .. text_to_log
+  end
+  
+  text_to_log = text_to_log:gsub("%[(.-)%]%(%#suggested%-question:.-%)", "%1")
+  
+  local log_entry = string.format("# [%s]%s\n## %s\n\n%s\n\n", timestamp, page_info, title_text, text_to_log)
+  
+  self.assistant.quicknote:saveToNotebookFile(log_entry)
 end
 
 function ChatGPTViewer:onCloseWidget()
