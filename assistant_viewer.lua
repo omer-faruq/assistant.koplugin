@@ -569,21 +569,23 @@ function ChatGPTViewer:saveToNotebook()
   end
 
   local timestamp = os.date("%Y-%m-%d %H:%M:%S")
+  local highlighted_text_lbl = _("Highlighted text:")
   
   local page_info = self.assistant.quicknote:getPageInfo(self.ui)
 
   local title_text = (self.title and self.title or _("Book Analysis")) .. "\n"
   local text_to_log = self.text or ""
   
-  local highlighted_pattern = "__Highlighted text:__(.-)\n### ⮞"
-  text_to_log = text_to_log:gsub(highlighted_pattern, "\n### ⮞", 1)
   
   if self.highlighted_text then
+    local highlighted_pattern = "^__([^⮞]-)__.-(\n?### ⮞)"
+    text_to_log = text_to_log:gsub(highlighted_pattern, "%2", 1)
+    
     local processed_highlighted = ""
     if self.highlighted_text and self.highlighted_text ~= "" then
       processed_highlighted = "> " .. self.highlighted_text:gsub("\n", "\n\n> ")
     end
-    text_to_log = "__Highlighted text:__ \n" .. processed_highlighted .. "\n\n" .. text_to_log
+    text_to_log = string.format("__%s__ \n%s\n\n%s\n\n", highlighted_text_lbl, processed_highlighted, text_to_log)
   end
   
   text_to_log = text_to_log:gsub("%[(.-)%]%(%#suggested%-question:.-%)", "%1")
