@@ -41,8 +41,6 @@ function groqHandler:query(message_history, groq_settings)
         ["Authorization"] = "Bearer " .. (groq_settings.api_key)
     }
 
-    logger.info("requestBody", requestBody)
-
     if requestBodyTable.stream then
         -- For streaming responses, we need to handle the response differently
         headers["Accept"] = "text/event-stream"
