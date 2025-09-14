@@ -7,20 +7,16 @@ local groqHandler = BaseHandler:new()
 
 function groqHandler:query(message_history, groq_settings)
 
-    -- Remove is_context from body, which causes an error in groq API
-    -- Need to clone the history so that we don't affect the actual message history which gets displayed
+    -- Groq API accepts only 'role' and 'content' fields in messages
+    -- Doc: https://console.groq.com/docs/api-reference
     local cloned_history = {}
-
     for i, message in ipairs(message_history) do
-      local new_message = {}
-      for k, v in pairs(message) do
-        new_message[k] = v
-      end
-
-      -- Remove the is_context field in the clone
-      new_message.is_context = nil
-
-      cloned_history[i] = new_message
+      cloned_history[i] = {
+        role = message.role,
+        content = message.content,
+      }
+      if message.name then cloned_history[i].name = message.name end
+      if message.reasoning then cloned_history[i].reasoning = message.reasoning end
     end
     
     local requestBodyTable = {
@@ -44,6 +40,8 @@ function groqHandler:query(message_history, groq_settings)
         ["Content-Type"] = "application/json",
         ["Authorization"] = "Bearer " .. (groq_settings.api_key)
     }
+
+    logger.info("requestBody", requestBody)
 
     if requestBodyTable.stream then
         -- For streaming responses, we need to handle the response differently
