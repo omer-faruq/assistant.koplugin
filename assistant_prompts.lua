@@ -301,15 +301,15 @@ Display them as a **Markdown unordered list** with this exact format:
 
 ```
 ---
-{short_headline}
+{follow_up_headline}
 
 - [Question 1](#suggested-question:Question 1)  
 - [Question 2](#suggested-question:Question 2)  
 ```  
 
 **Rules:**  
-1. Replace `{short_headline}` with a natural phrase in {language} language: `You may find these topics interesting:`. Leave another line empty after this line.
-2. Avoid using parentheses `()` within the question text. 
+1. Replace `{follow_up_headline}` with a translated single sentence in {language} language meaning `You may find these topics interesting:`. Leave another line empty after this line.
+2. Avoid using parentheses `()` within the question text; rephrase if necessary.
 3. The link syntax must be `[TEXT](#suggested-question:TEXT)` — the colon `:` is required. The link parentheses `()` must remain in Markdown format, strictly prohibit replacing them with l10n language punctuation (e.g., `（）`).
 4. The TEXT inside the brackets `[]` and the TEXT in the link must be identical, including punctuations.
 ```
