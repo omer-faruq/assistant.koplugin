@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-11 10:53+0800\n"
+        "POT-Creation-Date: 2025-09-15 17:07+0800\n"
         "PO-Revision-Date: 2025-09-11 10:53+0800\n"
         "Last-Translator: AI Translation Model\n"
         "Language-Team: AI Translation Model\n"
@@ -16,7 +16,7 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:388 ../main.lua:111 ../main.lua:339
+#: ../_meta.lua:4 ../assistant_dialog.lua:396 ../main.lua:119 ../main.lua:358
 msgid   "AI Assistant"
 msgstr  "AI Асистент"
 
@@ -32,51 +32,53 @@ msgstr  "(Празно съобщение)"
 msgid   "(No response)"
 msgstr  "(Няма отговор)"
 
-#: ../assistant_dialog.lua:127
+#: ../assistant_dialog.lua:127 ../assistant_quicknote.lua:202
+#: ../assistant_viewer.lua:572
 msgid   "Highlighted text:"
 msgstr  "Подчертан текст:"
 
 #: ../assistant_dialog.lua:276 ../assistant_dictdialog.lua:36
-#: ../assistant_settings.lua:89 ../assistant_viewer.lua:696
+#: ../assistant_quicknote.lua:38 ../assistant_settings.lua:89
+#: ../assistant_viewer.lua:673
 msgid   "Cancel"
 msgstr  "Откажи"
 
-#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:706
+#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:683
 msgid   "Ask"
 msgstr  "Попитай"
 
-#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:712
+#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:689
 msgid   "Enter a question before proceeding."
 msgstr  "Въведи въпрос, преди продължение."
 
-#: ../assistant_dialog.lua:352
+#: ../assistant_dialog.lua:360
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Добави тази бутона към менюто за маркиране?"
 
-#: ../assistant_dialog.lua:353
+#: ../assistant_dialog.lua:361
 msgid   "Add"
 msgstr  "Добави"
 
-#: ../assistant_dialog.lua:380
+#: ../assistant_dialog.lua:388
 msgid   "Ask a question about the highlighted text"
 msgstr  "Задайте въпрос за подчертаното"
 
-#: ../assistant_dialog.lua:381
+#: ../assistant_dialog.lua:389
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Задайте въпрос за тази книга:\n"
         "%s от %s"
 
-#: ../assistant_dialog.lua:384
+#: ../assistant_dialog.lua:392
 msgid   "Type your question here..."
 msgstr  "Въведете въпроса си тук..."
 
-#: ../assistant_dialog.lua:385
+#: ../assistant_dialog.lua:393
 msgid   "Ask anything about this book..."
 msgstr  "Попитайте за всичко за тази книга..."
 
-#: ../assistant_dialog.lua:456
+#: ../assistant_dialog.lua:464
 msgid   "Error: No response received"
 msgstr  "Грешка: Не е получен отговор"
 
@@ -92,7 +94,7 @@ msgstr  "Въведете дума за търсене..."
 msgid   "Look Up"
 msgstr  "Търси"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:22 ../main.lua:540
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:22 ../main.lua:569
 msgid   "Dictionary"
 msgstr  "Дикция"
 
@@ -129,124 +131,132 @@ msgstr  "Непознат тип функция: %s"
 msgid   "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr  "Това запитване действа като речник за подчертаното, за дума или фраза."
 
-#: ../assistant_prompts.lua:28
+#: ../assistant_prompts.lua:29 ../assistant_quicknote.lua:204
+msgid   "Quick Note"
+msgstr  "Бърза бележка"
+
+#: ../assistant_prompts.lua:30
+msgid   "This button creates a quick note with highlighted text."
+msgstr  "Този бутон създава бърза бележка с подчертан текст."
+
+#: ../assistant_prompts.lua:35
 msgid   "Vocabulary"
 msgstr  "Лексика"
 
-#: ../assistant_prompts.lua:30
+#: ../assistant_prompts.lua:37
 msgid   "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr  "Това запитване анализира лексиката на подчертаното, идентифицирайки сложни думи и предоставяйки дефиниции, синониме и примери за употреба."
 
-#: ../assistant_prompts.lua:46
+#: ../assistant_prompts.lua:53
 msgid   "Grammar"
 msgstr  "Граматика"
 
-#: ../assistant_prompts.lua:48
+#: ../assistant_prompts.lua:55
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "Това запитване анализира граматиката на подчертаното, предоставяйки подробен анализ на структурата и граматически грешки."
 
-#: ../assistant_prompts.lua:62
+#: ../assistant_prompts.lua:69
 msgid   "Translate"
 msgstr  "Преведи"
 
-#: ../assistant_prompts.lua:63
+#: ../assistant_prompts.lua:70
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "Това запитване превежда подчертаното в друг език."
 
-#: ../assistant_prompts.lua:84
+#: ../assistant_prompts.lua:91
 msgid   "Summarize"
 msgstr  "Резюмира"
 
-#: ../assistant_prompts.lua:86
+#: ../assistant_prompts.lua:93
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "Това запитване резюмира подчертаното, захващайки основните точки и важни детайли."
 
-#: ../assistant_prompts.lua:95
+#: ../assistant_prompts.lua:102
 msgid   "Simplify"
 msgstr  "Упрощи"
 
-#: ../assistant_prompts.lua:97
+#: ../assistant_prompts.lua:104
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "Това запитване упрощава подчертаното, за да бъде по-лесно разбрано."
 
-#: ../assistant_prompts.lua:107
+#: ../assistant_prompts.lua:114
 msgid   "Key Points"
 msgstr  "Ключови точки"
 
-#: ../assistant_prompts.lua:109
+#: ../assistant_prompts.lua:116
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "Това запитване извлича и изброява ключовите точки от подчертаното, осигурявайки яснота и организация."
 
-#: ../assistant_prompts.lua:120
+#: ../assistant_prompts.lua:127
 msgid   "ELI5"
 msgstr  "ELI5"
 
-#: ../assistant_prompts.lua:122
+#: ../assistant_prompts.lua:129
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "Това запитване обяснява подчертаното, сякаш на петгодишен, опростявайки сложни концепции до лесно разбрани термини."
 
-#: ../assistant_prompts.lua:134
+#: ../assistant_prompts.lua:141
 msgid   "Explain"
 msgstr  "Обясни"
 
-#: ../assistant_prompts.lua:136
+#: ../assistant_prompts.lua:143
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Това запитване обяснява подчертаното подробно, осигурявайки яснота и разбиране."
 
-#: ../assistant_prompts.lua:147
+#: ../assistant_prompts.lua:154
 msgid   "Historical Context"
 msgstr  "Исторически контекст"
 
-#: ../assistant_prompts.lua:149
+#: ../assistant_prompts.lua:156
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Това запитване предоставя подробен исторически контекст за подчертаното, обяснявайки неговото значение и фон."
 
-#: ../assistant_prompts.lua:160 ../main.lua:526
+#: ../assistant_prompts.lua:167 ../main.lua:555
 msgid   "Wikipedia"
 msgstr  "Уикипедия"
 
-#: ../assistant_prompts.lua:162
+#: ../assistant_prompts.lua:169
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "Това запитване генерира обстоен статия във стил Уикипедия, базирана на подчертаното, осигурявайки фактическа точност и неутралитет."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:283
+#: ../assistant_prompts.lua:290
 msgid   "Conjugation"
 msgstr  "Спрежение"
 
-#: ../assistant_prompts.lua:284
+#: ../assistant_prompts.lua:291
 msgid   "Synonyms"
 msgstr  "Синоними"
 
-#: ../assistant_prompts.lua:285
+#: ../assistant_prompts.lua:292
 msgid   "Meaning"
 msgstr  "Значение"
 
-#: ../assistant_prompts.lua:286
+#: ../assistant_prompts.lua:293
 msgid   "Translation"
 msgstr  "Превод"
 
-#: ../assistant_prompts.lua:287
+#: ../assistant_prompts.lua:294
 msgid   "Explanation"
 msgstr  "Обяснение"
 
-#: ../assistant_prompts.lua:288
+#: ../assistant_prompts.lua:295
 msgid   "Example"
 msgstr  "Пример"
 
-#: ../assistant_prompts.lua:289
+#: ../assistant_prompts.lua:296
 msgid   "Word Origin"
 msgstr  "Етимология"
 
-#: ../assistant_querier.lua:50
+#: ../assistant_querier.lua:51
 msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr  "Настройките на доставчика не са намерени за: %1. Моля, проверете вашия файл configuration.lua."
 
-#: ../assistant_querier.lua:76
+#: ../assistant_querier.lua:77
 msgid   "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr  "Не е намерен обработчик за %1. Уверете се, че обработчикът съществува в директорията api_handlers."
 
-#: ../assistant_querier.lua:109
+#: ../assistant_querier.lua:110
 msgid   "API Error:\n"
         "%1\n"
         "\n"
@@ -256,50 +266,85 @@ msgstr  "API грешка:\n"
         "\n"
         "Избери друг доставчик от настройките."
 
-#: ../assistant_querier.lua:109
+#: ../assistant_querier.lua:110
 msgid   "Unknown error"
 msgstr  "Неизвестна грешка"
 
-#: ../assistant_querier.lua:110 ../main.lua:456
+#: ../assistant_querier.lua:111 ../main.lua:475
 msgid   "Settings"
 msgstr  "Настройки"
 
-#: ../assistant_querier.lua:112 ../assistant_settings.lua:301
-#: ../assistant_viewer.lua:318
+#: ../assistant_querier.lua:113 ../assistant_settings.lua:309
+#: ../assistant_viewer.lua:339
 msgid   "Close"
 msgstr  "Затвори"
 
-#: ../assistant_querier.lua:127
+#: ../assistant_querier.lua:137
 msgid   "Plugin is not configured."
 msgstr  "Плъгинът не е конфигуриран."
 
-#: ../assistant_querier.lua:135
+#: ../assistant_querier.lua:145
 msgid   "Querying AI ..."
 msgstr  "Заявка към AI …"
 
-#: ../assistant_querier.lua:158
+#: ../assistant_querier.lua:181
 msgid   "AI is responding"
 msgstr  "AI отговаря"
 
-#: ../assistant_querier.lua:174
+#: ../assistant_querier.lua:200
 msgid   "⏹ Stop"
 msgstr  "⏹ Стоп"
 
-#: ../assistant_querier.lua:206 ../assistant_querier.lua:218
+#: ../assistant_querier.lua:233 ../assistant_querier.lua:245
 msgid   "Request cancelled by user."
 msgstr  "Заявката е отказана от потребителя."
 
-#: ../assistant_querier.lua:224
+#: ../assistant_querier.lua:251
 msgid   "No response received."
 msgstr  "Няма получен отговор."
 
-#: ../assistant_querier.lua:237
+#: ../assistant_querier.lua:264
 msgid   "Failed to start subprocess for request"
 msgstr  "Неуспешно стартиране на процеса за заявката"
 
-#: ../assistant_querier.lua:434 ../assistant_querier.lua:436
+#: ../assistant_querier.lua:460 ../assistant_querier.lua:462
 msgid   "Deeply Thought"
 msgstr  "Дълбоко размишление"
+
+#: ../assistant_quicknote.lua:26 ../main.lua:101 ../main.lua:169
+msgid   "Take Quick Notes"
+msgstr  "Правете бързи бележки"
+
+#: ../assistant_quicknote.lua:28
+msgid   "Write quick notes here"
+msgstr  "Пишете бързи бележки тук"
+
+#: ../assistant_quicknote.lua:48 ../assistant_settings.lua:113
+#: ../assistant_viewer.lua:448
+msgid   "Save"
+msgstr  "Запази"
+
+#: ../assistant_quicknote.lua:54
+msgid   "Please enter a note before saving."
+msgstr  "Моля, въведете бележка преди запазване."
+
+#: ../assistant_quicknote.lua:135
+msgid   "Cannot access default folder for logs: %1\n"
+        "Using original location."
+msgstr  "Не може да се достъпи папката за дневници по подразбиране: %1\n"
+        "Използва се първоначалното местоположение."
+
+#: ../assistant_quicknote.lua:187
+msgid   "Notebook save failed. Continuing..."
+msgstr  "Запазването в бележника неуспешно. Продължавам..."
+
+#: ../assistant_quicknote.lua:203
+msgid   "User:"
+msgstr  "Потребител:"
+
+#: ../assistant_quicknote.lua:225
+msgid   "Quick note saved successfully"
+msgstr  "Бързата бележка е запазена успешно"
 
 #: ../assistant_settings.lua:73
 msgid   "AI Response Language Setting"
@@ -321,11 +366,7 @@ msgstr  "Език на речника"
 msgid   "Clear"
 msgstr  "Изчисти"
 
-#: ../assistant_settings.lua:113 ../assistant_viewer.lua:427
-msgid   "Save"
-msgstr  "Запази"
-
-#: ../assistant_settings.lua:133 ../assistant_settings.lua:361
+#: ../assistant_settings.lua:133 ../assistant_settings.lua:369
 msgid   "AI Language: %1"
 msgstr  "Език на AI: %1"
 
@@ -341,11 +382,11 @@ msgstr  "Остави тези полета празни, за да ползва
 msgid   "Response Font Size"
 msgstr  "Размер на шрифта на отговора"
 
-#: ../assistant_settings.lua:185 ../assistant_settings.lua:370
+#: ../assistant_settings.lua:185 ../assistant_settings.lua:378
 msgid   "Font Size: %1"
 msgstr  "Размер на шрифта: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:205
+#: ../assistant_settings.lua:193 ../main.lua:224
 msgid   "AI Assistant Settings"
 msgstr  "Настройки на AI асистент"
 
@@ -358,42 +399,46 @@ msgid   "Auto scroll stream response text"
 msgstr  "Автоматично превъртане на текста от поточния отговор"
 
 #: ../assistant_settings.lua:233
+msgid   "Smaller Stream dialog"
+msgstr  "По-малък прозорец за поток"
+
+#: ../assistant_settings.lua:241
 msgid   "Show Related Questions from AI"
 msgstr  "Показване на свързани въпроси от ИИ"
 
-#: ../assistant_settings.lua:241
+#: ../assistant_settings.lua:249
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Използвай AI Асистент за 'Преведи'"
 
-#: ../assistant_settings.lua:250
+#: ../assistant_settings.lua:258
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Покажи Речник (ИИ) в изскачащия прозорец"
 
-#: ../assistant_settings.lua:258
+#: ../assistant_settings.lua:266
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Покажи Wikipedia (ИИ) в изскачащия прозорец"
 
-#: ../assistant_settings.lua:266
+#: ../assistant_settings.lua:274
 msgid   "Copy entered question to the clipboard"
 msgstr  "Копирай въведения въпрос в клипборда"
 
-#: ../assistant_settings.lua:274
+#: ../assistant_settings.lua:282
 msgid   "Enable Auto Recap"
 msgstr  "Автоматично резюме"
 
-#: ../assistant_settings.lua:284
+#: ../assistant_settings.lua:292
 msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "ИИ резюмето ще се включи при следващо отваряне на книга."
 
-#: ../assistant_settings.lua:288
+#: ../assistant_settings.lua:296
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Автоматично запазване на разговорите в бележника"
 
-#: ../assistant_settings.lua:386
+#: ../assistant_settings.lua:394
 msgid   "AI Assistant Features:"
 msgstr  "Функции на AI асистент:"
 
-#: ../assistant_settings.lua:413
+#: ../assistant_settings.lua:421
 msgid   "AI Model provider:"
 msgstr  "Доставчик на AI модел:"
 
@@ -407,115 +452,109 @@ msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "Нова версия на приставката %s (%s) е налична. Моля, обновете!"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:278 ../assistant_viewer.lua:763
+#: ../assistant_viewer.lua:299 ../assistant_viewer.lua:740
 msgid   "Ask Another Question"
 msgstr  "Задай друг въпрос"
 
-#: ../assistant_viewer.lua:333
+#: ../assistant_viewer.lua:354
 msgid   "Copy"
 msgstr  "Копирай"
 
-#: ../assistant_viewer.lua:338
+#: ../assistant_viewer.lua:359
 msgid   "Text copied to the clipboard"
 msgstr  "Текстът е копиран в системния буфер"
 
-#: ../assistant_viewer.lua:352
+#: ../assistant_viewer.lua:373
 msgid   "Add Note"
 msgstr  "Добави бележка"
 
-#: ../assistant_viewer.lua:359
+#: ../assistant_viewer.lua:380
 msgid   "Highlight functionality not available"
 msgstr  "Функцията за маркиране не е налична"
 
-#: ../assistant_viewer.lua:368
+#: ../assistant_viewer.lua:389
 msgid   "No text to add as note"
 msgstr  "Няма текст за бележка"
 
-#: ../assistant_viewer.lua:397
+#: ../assistant_viewer.lua:418
 msgid   "No text left to add as note"
 msgstr  "Няма останал текст за бележка"
 
-#: ../assistant_viewer.lua:410
+#: ../assistant_viewer.lua:431
 msgid   "Note added successfully"
 msgstr  "Бележката е добавена успешно"
 
-#: ../assistant_viewer.lua:431
+#: ../assistant_viewer.lua:452
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Разговорът е запазен в бележника"
 
-#: ../assistant_viewer.lua:556
-msgid   "Cannot access default folder for logs: %1\n"
-        "Using original location."
-msgstr  "Не може да се достъпи папката за дневници по подразбиране: %1\n"
-        "Използва се първоначалното местоположение."
-
-#: ../assistant_viewer.lua:599
+#: ../assistant_viewer.lua:576
 msgid   "Book Analysis"
 msgstr  "Анализ на книгата"
 
-#: ../assistant_viewer.lua:625
-msgid   "Chat log export failed. Continuing..."
-msgstr  "Неуспешно запазване на чата. Продължаване..."
-
-#: ../assistant_viewer.lua:765
+#: ../assistant_viewer.lua:742
 msgid   "Type your question here"
 msgstr  "Въведете въпроса си тук"
 
-#: ../assistant_viewer.lua:929
+#: ../assistant_viewer.lua:906
 msgid   "Word copied to clipboard."
 msgstr  "Думата е копирана в клипборда."
 
-#: ../assistant_viewer.lua:930
+#: ../assistant_viewer.lua:907
 msgid   "Selection copied to clipboard."
 msgstr  "Изборът е копиран в клипборда."
 
-#: ../main.lua:77 ../main.lua:116
+#: ../main.lua:77 ../main.lua:124
 msgid   "Ask the AI a question"
 msgstr  "Попитайте AI"
 
-#: ../main.lua:85 ../main.lua:149
+#: ../main.lua:85 ../main.lua:157
 msgid   "AI Recaps"
 msgstr  "AI Резюмета"
 
-#: ../main.lua:93 ../main.lua:138
+#: ../main.lua:93 ../main.lua:146
 msgid   "AI X-Ray"
 msgstr  "AI X-Ray"
 
-#: ../main.lua:101 ../main.lua:127
+#: ../main.lua:109 ../main.lua:135
 msgid   "Book Summary & Recs"
 msgstr  "Резюме и препоръки"
 
-#: ../main.lua:122
+#: ../main.lua:130
 msgid   "Enter a question to ask AI."
 msgstr  "Въведи въпрос към ИИ"
 
-#: ../main.lua:133
+#: ../main.lua:141
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "Резюме на книгата, биография на автора, исторически контекст и списък с подобни препоръки с описания."
 
-#: ../main.lua:144
+#: ../main.lua:152
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "\"X-Ray\" резюме на книгата, структурирано в секции: Персонажи, Места, Теми, Понятия, Времева линия и Повторно потапяне."
 
-#: ../main.lua:155
+#: ../main.lua:163
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "Кратко резюме без спойлери до текущия прогрес на четене."
 
-#: ../main.lua:161
+#: ../main.lua:175
+msgid   "Take quick notes that will be saved to your notebook."
+msgstr  "Правете бързи бележки, които ще бъдат запазени в бележника ви."
+
+#: ../main.lua:180
 msgid   "NoteBook (Saved AI Conversations)"
 msgstr  "Бележник (запазени AI разговори)"
 
-#: ../main.lua:167
+#: ../main.lua:186
 msgid   "Notebook file: \n"
         "\n"
 msgstr  "Файл на бележника: \n"
         "\n"
 
-#: ../main.lua:168
+#: ../main.lua:187
 msgid   "View"
 msgstr  "Преглед"
 
-#: ../main.lua:172
+#: ../main.lua:191
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -523,11 +562,11 @@ msgstr  "Файлът не съществува.\n"
         "\n"
         "%1"
 
-#: ../main.lua:180 ../main.lua:184
+#: ../main.lua:199 ../main.lua:203
 msgid   "Delete"
 msgstr  "Изтриване"
 
-#: ../main.lua:183
+#: ../main.lua:202
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -535,25 +574,25 @@ msgstr  "Изтриване на файл?\n"
         "%1\n"
         "Действието е необратимо."
 
-#: ../main.lua:195
+#: ../main.lua:214
 msgid   "Edit"
 msgstr  "Редактиране"
 
-#: ../main.lua:285
+#: ../main.lua:304
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "В configuration.lua няма валиден доставчик на модел"
 
-#: ../main.lua:303
+#: ../main.lua:322
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Грешка в конфигурацията.\n"
         "Моля, настройте configuration.lua."
 
-#: ../main.lua:372
+#: ../main.lua:391
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: доставчиците на модели са невалидни."
 
-#: ../main.lua:437
+#: ../main.lua:456
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -579,11 +618,11 @@ msgstr  "Полезни съвети\n"
         "Множество плъзгания (напр. ⮠, ⮡, ↺):\n"
         "Върху прозореца с резултат – затваря го (когато бутонът за затваряне е далеч).\n"
 
-#: ../main.lua:462
+#: ../main.lua:481
 msgid   "Purge Settings"
 msgstr  "Изтрий настройките"
 
-#: ../main.lua:465
+#: ../main.lua:484
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -593,33 +632,33 @@ msgstr  "Наистина ли искаш да изтриеш настройки
         "\n"
         "configuration.lua остава непокътнат; изтриват се само настройките в прозореца."
 
-#: ../main.lua:469
+#: ../main.lua:488
 msgid   "Purge"
 msgstr  "Изтрий"
 
-#: ../main.lua:506
+#: ../main.lua:535
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Премахнете [%s] от менюто за маркиране?"
 
-#: ../main.lua:507
+#: ../main.lua:536
 msgid   "Remove"
 msgstr  "Премахни"
 
-#: ../main.lua:639
+#: ../main.lua:679
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Конфигурацията не е намерена. Настройте configuration.lua първо."
 
-#: ../main.lua:681
+#: ../main.lua:721
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Добавено [%1 (AI)] към менюто за маркиране."
 
-#: ../main.lua:690
+#: ../main.lua:730
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Премахнато [%s (AI)] от менюто за маркиране."
 
-#: ../main.lua:734
+#: ../main.lua:774
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -627,16 +666,16 @@ msgstr  "Желаете ли резюме от ИИ?\n"
         "За %1 от %2.\n"
         "\n"
 
-#: ../main.lua:735
+#: ../main.lua:775
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Последно прочетено преди час."
 msgstr[1]       "Последно прочетено преди %1 часа."
 
-#: ../main.lua:740
+#: ../main.lua:780
 msgid   "Yes"
 msgstr  "Да"
 
-#: ../main.lua:749
+#: ../main.lua:789
 msgid   "No"
 msgstr  "Не"

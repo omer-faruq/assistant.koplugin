@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-11 10:53+0800\n"
+        "POT-Creation-Date: 2025-09-15 17:07+0800\n"
         "PO-Revision-Date: 2025-06-25 12:00+0300\n"
         "Last-Translator: OpenAI ChatGPT 4.0 <noemail@openai.com>\n"
         "Language-Team: OpenAI ChatGPT 4.0 <noemail@openai.com>\n"
@@ -16,7 +16,7 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:388 ../main.lua:111 ../main.lua:339
+#: ../_meta.lua:4 ../assistant_dialog.lua:396 ../main.lua:119 ../main.lua:358
 msgid   "AI Assistant"
 msgstr  "Βοηθός Τεχνητής Νοημοσύνης"
 
@@ -32,51 +32,53 @@ msgstr  "(Κενή μηνύματος)"
 msgid   "(No response)"
 msgstr  "(Κανένα απόκριση)"
 
-#: ../assistant_dialog.lua:127
+#: ../assistant_dialog.lua:127 ../assistant_quicknote.lua:202
+#: ../assistant_viewer.lua:572
 msgid   "Highlighted text:"
 msgstr  "Επισημασμένο κείμενο:"
 
 #: ../assistant_dialog.lua:276 ../assistant_dictdialog.lua:36
-#: ../assistant_settings.lua:89 ../assistant_viewer.lua:696
+#: ../assistant_quicknote.lua:38 ../assistant_settings.lua:89
+#: ../assistant_viewer.lua:673
 msgid   "Cancel"
 msgstr  "Ακύρωση"
 
-#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:706
+#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:683
 msgid   "Ask"
 msgstr  "Ρώτα"
 
-#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:712
+#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:689
 msgid   "Enter a question before proceeding."
 msgstr  "Πληκτρολογήστε μια ερώτηση πριν προχωρήσετε."
 
-#: ../assistant_dialog.lua:352
+#: ../assistant_dialog.lua:360
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Προσθήκη αυτού του κουμπιού στο μενού επισήμανσης;"
 
-#: ../assistant_dialog.lua:353
+#: ../assistant_dialog.lua:361
 msgid   "Add"
 msgstr  "Προσθήκη"
 
-#: ../assistant_dialog.lua:380
+#: ../assistant_dialog.lua:388
 msgid   "Ask a question about the highlighted text"
 msgstr  "Ρωτήστε κάτι για το επισημασμένο κείμενο"
 
-#: ../assistant_dialog.lua:381
+#: ../assistant_dialog.lua:389
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Ρωτήστε κάτι για αυτό το βιβλίο:\n"
         "%s από %s"
 
-#: ../assistant_dialog.lua:384
+#: ../assistant_dialog.lua:392
 msgid   "Type your question here..."
 msgstr  "Πληκτρολογήστε την ερώτησή σας εδώ..."
 
-#: ../assistant_dialog.lua:385
+#: ../assistant_dialog.lua:393
 msgid   "Ask anything about this book..."
 msgstr  "Ρωτήστε οτιδήποτε για αυτό το βιβλίο..."
 
-#: ../assistant_dialog.lua:456
+#: ../assistant_dialog.lua:464
 msgid   "Error: No response received"
 msgstr  "Σφάλμα: Δεν λήφθηκε απάντηση"
 
@@ -92,7 +94,7 @@ msgstr  "Εισαγάγετε μια λέξη για αναζήτηση..."
 msgid   "Look Up"
 msgstr  "Αναζήτηση"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:22 ../main.lua:540
+#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:22 ../main.lua:569
 msgid   "Dictionary"
 msgstr  "Λεξικό"
 
@@ -129,124 +131,132 @@ msgstr  "Άγνωστος τύπος λειτουργίας: %s"
 msgid   "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr  "Αυτό το προτροπή λειτουργεί ως λεξικό για το επισημασμένο κείμενο, σε λέξη ή φράση."
 
-#: ../assistant_prompts.lua:28
+#: ../assistant_prompts.lua:29 ../assistant_quicknote.lua:204
+msgid   "Quick Note"
+msgstr  "Γρήγορο Σημείωμα"
+
+#: ../assistant_prompts.lua:30
+msgid   "This button creates a quick note with highlighted text."
+msgstr  "Αυτό το κουμπί δημιουργεί ένα γρήγορο σημείωμα με επισημασμένο κείμενο."
+
+#: ../assistant_prompts.lua:35
 msgid   "Vocabulary"
 msgstr  "Λεξιλόγιο"
 
-#: ../assistant_prompts.lua:30
+#: ../assistant_prompts.lua:37
 msgid   "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr  "Αυτή η προτροπή αναλύει το λεξιλόγιο του επισημασμένου κειμένου, εντοπίζοντας σύνθετες λέξεις και παρέχοντας ορισμούς, συνώνυμα και παραδείγματα χρήσης."
 
-#: ../assistant_prompts.lua:46
+#: ../assistant_prompts.lua:53
 msgid   "Grammar"
 msgstr  "Γραμματική"
 
-#: ../assistant_prompts.lua:48
+#: ../assistant_prompts.lua:55
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "Αυτή η προτροπή αναλύει τη γραμματική του επισημασμένου κειμένου, προσφέροντας λεπτομερή εξήγηση της δομής και τυχόν γραμματικών λαθών."
 
-#: ../assistant_prompts.lua:62
+#: ../assistant_prompts.lua:69
 msgid   "Translate"
 msgstr  "Μετάφραση"
 
-#: ../assistant_prompts.lua:63
+#: ../assistant_prompts.lua:70
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "Αυτή η προτροπή μεταφράζει το επισημασμένο κείμενο σε άλλη γλώσσα."
 
-#: ../assistant_prompts.lua:84
+#: ../assistant_prompts.lua:91
 msgid   "Summarize"
 msgstr  "Περίληψη"
 
-#: ../assistant_prompts.lua:86
+#: ../assistant_prompts.lua:93
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "Αυτή η προτροπή συνοψίζει το επισημασμένο κείμενο, αποτυπώνοντας τα κύρια σημεία και βασικές λεπτομέρειες."
 
-#: ../assistant_prompts.lua:95
+#: ../assistant_prompts.lua:102
 msgid   "Simplify"
 msgstr  "Απλοποίηση"
 
-#: ../assistant_prompts.lua:97
+#: ../assistant_prompts.lua:104
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "Αυτή η προτροπή απλοποιεί το επισημασμένο κείμενο ώστε να είναι πιο εύκολα κατανοητό."
 
-#: ../assistant_prompts.lua:107
+#: ../assistant_prompts.lua:114
 msgid   "Key Points"
 msgstr  "Κύρια Σημεία"
 
-#: ../assistant_prompts.lua:109
+#: ../assistant_prompts.lua:116
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "Αυτή η προτροπή εξάγει και απαριθμεί τα βασικά σημεία από το επισημασμένο κείμενο, εξασφαλίζοντας σαφήνεια και οργάνωση."
 
-#: ../assistant_prompts.lua:120
+#: ../assistant_prompts.lua:127
 msgid   "ELI5"
 msgstr  "ELI5"
 
-#: ../assistant_prompts.lua:122
+#: ../assistant_prompts.lua:129
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "Αυτή η προτροπή εξηγεί το επισημασμένο κείμενο σαν να το εξηγείτε σε ένα πενταχρόνιο, απλοποιώντας σύνθετα θέματα σε εύκολα κατανοητά όρο."
 
-#: ../assistant_prompts.lua:134
+#: ../assistant_prompts.lua:141
 msgid   "Explain"
 msgstr  "Εξήγηση"
 
-#: ../assistant_prompts.lua:136
+#: ../assistant_prompts.lua:143
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Αυτή η προτροπή εξηγεί λεπτομερώς το επισημασμένο κείμενο, εξασφαλίζοντας σαφήνεια και κατανόηση."
 
-#: ../assistant_prompts.lua:147
+#: ../assistant_prompts.lua:154
 msgid   "Historical Context"
 msgstr  "Ιστορικό Πλαίσιο"
 
-#: ../assistant_prompts.lua:149
+#: ../assistant_prompts.lua:156
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Αυτή η προτροπή παρέχει αναλυτικό ιστορικό πλαίσιο για το επισημασμένο κείμενο, εξηγώντας τη σημασία και το υπόβαθρο του."
 
-#: ../assistant_prompts.lua:160 ../main.lua:526
+#: ../assistant_prompts.lua:167 ../main.lua:555
 msgid   "Wikipedia"
 msgstr  "Βικιπαίδεια"
 
-#: ../assistant_prompts.lua:162
+#: ../assistant_prompts.lua:169
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "Αυτή η προτροπή δημιουργεί μια ολοκληρωμένη άρθρο σε στυλ Βικιπαίδεια βασισμένο στο επισημασμένο κείμενο, εξασφαλίζοντας αληθοφανή ακρίβεια και ουδετερότητα."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:283
+#: ../assistant_prompts.lua:290
 msgid   "Conjugation"
 msgstr  "Κλίση"
 
-#: ../assistant_prompts.lua:284
+#: ../assistant_prompts.lua:291
 msgid   "Synonyms"
 msgstr  "Συνώνυμα"
 
-#: ../assistant_prompts.lua:285
+#: ../assistant_prompts.lua:292
 msgid   "Meaning"
 msgstr  "Σημασία"
 
-#: ../assistant_prompts.lua:286
+#: ../assistant_prompts.lua:293
 msgid   "Translation"
 msgstr  "Μετάφραση"
 
-#: ../assistant_prompts.lua:287
+#: ../assistant_prompts.lua:294
 msgid   "Explanation"
 msgstr  "Εξήγηση"
 
-#: ../assistant_prompts.lua:288
+#: ../assistant_prompts.lua:295
 msgid   "Example"
 msgstr  "Παράδειγμα"
 
-#: ../assistant_prompts.lua:289
+#: ../assistant_prompts.lua:296
 msgid   "Word Origin"
 msgstr  "Καταγωγή Λέξης"
 
-#: ../assistant_querier.lua:50
+#: ../assistant_querier.lua:51
 msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr  "Δεν βρέθηκαν ρυθμίσεις παρόχου για: %1. Ελέγξτε το αρχείο configuration.lua."
 
-#: ../assistant_querier.lua:76
+#: ../assistant_querier.lua:77
 msgid   "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr  "Δεν βρέθηκε ο χειριστής για %1. Βεβαιωθείτε ότι ο χειριστής υπάρχει στον φάκελο api_handlers."
 
-#: ../assistant_querier.lua:109
+#: ../assistant_querier.lua:110
 msgid   "API Error:\n"
         "%1\n"
         "\n"
@@ -256,50 +266,85 @@ msgstr  "Σφάλμα API:\n"
         "\n"
         "Δοκιμάστε άλλον πάροχο από τις ρυθμίσεις."
 
-#: ../assistant_querier.lua:109
+#: ../assistant_querier.lua:110
 msgid   "Unknown error"
 msgstr  "Άγνωστο σφάλμα"
 
-#: ../assistant_querier.lua:110 ../main.lua:456
+#: ../assistant_querier.lua:111 ../main.lua:475
 msgid   "Settings"
 msgstr  "Ρυθμίσεις"
 
-#: ../assistant_querier.lua:112 ../assistant_settings.lua:301
-#: ../assistant_viewer.lua:318
+#: ../assistant_querier.lua:113 ../assistant_settings.lua:309
+#: ../assistant_viewer.lua:339
 msgid   "Close"
 msgstr  "Κλείσιμο"
 
-#: ../assistant_querier.lua:127
+#: ../assistant_querier.lua:137
 msgid   "Plugin is not configured."
 msgstr  "Το πρόσθετο δεν είναι διαμορφωμένο."
 
-#: ../assistant_querier.lua:135
+#: ../assistant_querier.lua:145
 msgid   "Querying AI ..."
 msgstr  "Ερώτηση στην AI ..."
 
-#: ../assistant_querier.lua:158
+#: ../assistant_querier.lua:181
 msgid   "AI is responding"
 msgstr  "Η AI απαντά"
 
-#: ../assistant_querier.lua:174
+#: ../assistant_querier.lua:200
 msgid   "⏹ Stop"
 msgstr  "⏹ Διακοπή"
 
-#: ../assistant_querier.lua:206 ../assistant_querier.lua:218
+#: ../assistant_querier.lua:233 ../assistant_querier.lua:245
 msgid   "Request cancelled by user."
 msgstr  "Το αίτημα ακυρώθηκε από τον χρήστη."
 
-#: ../assistant_querier.lua:224
+#: ../assistant_querier.lua:251
 msgid   "No response received."
 msgstr  "Δεν ελήφθη απάντηση."
 
-#: ../assistant_querier.lua:237
+#: ../assistant_querier.lua:264
 msgid   "Failed to start subprocess for request"
 msgstr  "Αποτυχία έναρξης υποδιεργασίας για το αίτημα"
 
-#: ../assistant_querier.lua:434 ../assistant_querier.lua:436
+#: ../assistant_querier.lua:460 ../assistant_querier.lua:462
 msgid   "Deeply Thought"
 msgstr  "Deeply Thought"
+
+#: ../assistant_quicknote.lua:26 ../main.lua:101 ../main.lua:169
+msgid   "Take Quick Notes"
+msgstr  "Λήψη Γρήγορων Σημειωμάτων"
+
+#: ../assistant_quicknote.lua:28
+msgid   "Write quick notes here"
+msgstr  "Γράψτε γρήγορα σημειώματα εδώ"
+
+#: ../assistant_quicknote.lua:48 ../assistant_settings.lua:113
+#: ../assistant_viewer.lua:448
+msgid   "Save"
+msgstr  "Αποθήκευση"
+
+#: ../assistant_quicknote.lua:54
+msgid   "Please enter a note before saving."
+msgstr  "Παρακαλώ εισάγετε ένα σημείωμα πριν την αποθήκευση."
+
+#: ../assistant_quicknote.lua:135
+msgid   "Cannot access default folder for logs: %1\n"
+        "Using original location."
+msgstr  "Αδυναμία πρόσβασης στον προεπιλεγμένο φάκελο καταγραφών: %1\n"
+        "Χρήση αρχικής τοποθεσίας."
+
+#: ../assistant_quicknote.lua:187
+msgid   "Notebook save failed. Continuing..."
+msgstr  "Η αποθήκευση στο σημειωματάριο απέτυχε. Συνέχεια..."
+
+#: ../assistant_quicknote.lua:203
+msgid   "User:"
+msgstr  "Χρήστης:"
+
+#: ../assistant_quicknote.lua:225
+msgid   "Quick note saved successfully"
+msgstr  "Το γρήγορο σημείωμα αποθηκεύτηκε με επιτυχία"
 
 #: ../assistant_settings.lua:73
 msgid   "AI Response Language Setting"
@@ -321,11 +366,7 @@ msgstr  "Γλώσσα λεξικού"
 msgid   "Clear"
 msgstr  "Καθαρισμός"
 
-#: ../assistant_settings.lua:113 ../assistant_viewer.lua:427
-msgid   "Save"
-msgstr  "Αποθήκευση"
-
-#: ../assistant_settings.lua:133 ../assistant_settings.lua:361
+#: ../assistant_settings.lua:133 ../assistant_settings.lua:369
 msgid   "AI Language: %1"
 msgstr  "Γλώσσα AI: %1"
 
@@ -341,11 +382,11 @@ msgstr  "Αφήστε κενά για χρήση γλώσσας διεπαφής
 msgid   "Response Font Size"
 msgstr  "Μέγεθος γραμματοσειράς απάντησης"
 
-#: ../assistant_settings.lua:185 ../assistant_settings.lua:370
+#: ../assistant_settings.lua:185 ../assistant_settings.lua:378
 msgid   "Font Size: %1"
 msgstr  "Μέγεθος γραμματοσειράς: %1"
 
-#: ../assistant_settings.lua:193 ../main.lua:205
+#: ../assistant_settings.lua:193 ../main.lua:224
 msgid   "AI Assistant Settings"
 msgstr  "Ρυθμίσεις Βοηθού AI"
 
@@ -358,42 +399,46 @@ msgid   "Auto scroll stream response text"
 msgstr  "Αυτόματη κύλιση κειμένου απόκρισης ροής"
 
 #: ../assistant_settings.lua:233
+msgid   "Smaller Stream dialog"
+msgstr  "Μικρότερο παράθυρο ροής"
+
+#: ../assistant_settings.lua:241
 msgid   "Show Related Questions from AI"
 msgstr  "Εμφάνιση σχετικών ερωτήσεων από την ΤΝ"
 
-#: ../assistant_settings.lua:241
+#: ../assistant_settings.lua:249
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Χρήση Βοηθού AI για τη 'Μετάφραση'"
 
-#: ../assistant_settings.lua:250
+#: ../assistant_settings.lua:258
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Εμφάνιση Λεξικού(ΜΤ) στο αναδυόμενο λεξικό"
 
-#: ../assistant_settings.lua:258
+#: ../assistant_settings.lua:266
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Εμφάνιση Wikipedia(ΜΤ) στο αναδυόμενο λεξικό"
 
-#: ../assistant_settings.lua:266
+#: ../assistant_settings.lua:274
 msgid   "Copy entered question to the clipboard"
 msgstr  "Αντιγραφή ερώτησης στο πρόχειρο"
 
-#: ../assistant_settings.lua:274
+#: ../assistant_settings.lua:282
 msgid   "Enable Auto Recap"
 msgstr  "Ενεργοποίηση Αυτόματης Ανακεφαλαίωσης"
 
-#: ../assistant_settings.lua:284
+#: ../assistant_settings.lua:292
 msgid   "AI Recap will be enabled the next time a book is opened."
 msgstr  "Η Ανακεφαλαίωση ΜΤ θα ενεργοποιηθεί στο επόμενο άνοιγμα βιβλίου."
 
-#: ../assistant_settings.lua:288
+#: ../assistant_settings.lua:296
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Αυτόματη αποθήκευση συνομιλιών στο Σημειωματάριο"
 
-#: ../assistant_settings.lua:386
+#: ../assistant_settings.lua:394
 msgid   "AI Assistant Features:"
 msgstr  "Δυνατότητες βοηθού AI:"
 
-#: ../assistant_settings.lua:413
+#: ../assistant_settings.lua:421
 msgid   "AI Model provider:"
 msgstr  "Πάροχος μοντέλου AI:"
 
@@ -407,115 +452,109 @@ msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "Μία νέα έκδοση του πρόσθετου %s (%s) είναι διαθέσιμη. Παρακαλώ ενημερώστε!"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:278 ../assistant_viewer.lua:763
+#: ../assistant_viewer.lua:299 ../assistant_viewer.lua:740
 msgid   "Ask Another Question"
 msgstr  "Κάντε άλλη ερώτηση"
 
-#: ../assistant_viewer.lua:333
+#: ../assistant_viewer.lua:354
 msgid   "Copy"
 msgstr  "Αντιγραφή"
 
-#: ../assistant_viewer.lua:338
+#: ../assistant_viewer.lua:359
 msgid   "Text copied to the clipboard"
 msgstr  "Το κείμενο αντιγράφηκε στο πρόχειρο"
 
-#: ../assistant_viewer.lua:352
+#: ../assistant_viewer.lua:373
 msgid   "Add Note"
 msgstr  "Προσθήκη σημείωσης"
 
-#: ../assistant_viewer.lua:359
+#: ../assistant_viewer.lua:380
 msgid   "Highlight functionality not available"
 msgstr  "Η λειτουργία επισήμανσης δεν είναι διαθέσιμη"
 
-#: ../assistant_viewer.lua:368
+#: ../assistant_viewer.lua:389
 msgid   "No text to add as note"
 msgstr  "Δεν υπάρχει κείμενο για προσθήκη ως σημείωση"
 
-#: ../assistant_viewer.lua:397
+#: ../assistant_viewer.lua:418
 msgid   "No text left to add as note"
 msgstr  "Δεν απομένει κείμενο για προσθήκη ως σημείωση"
 
-#: ../assistant_viewer.lua:410
+#: ../assistant_viewer.lua:431
 msgid   "Note added successfully"
 msgstr  "Η σημείωση προστέθηκε με επιτυχία"
 
-#: ../assistant_viewer.lua:431
+#: ../assistant_viewer.lua:452
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Η συνομιλία αποθηκεύτηκε στο Σημειωματάριο"
 
-#: ../assistant_viewer.lua:556
-msgid   "Cannot access default folder for logs: %1\n"
-        "Using original location."
-msgstr  "Αδυναμία πρόσβασης στον προεπιλεγμένο φάκελο καταγραφών: %1\n"
-        "Χρήση αρχικής τοποθεσίας."
-
-#: ../assistant_viewer.lua:599
+#: ../assistant_viewer.lua:576
 msgid   "Book Analysis"
 msgstr  "Ανάλυση βιβλίου"
 
-#: ../assistant_viewer.lua:625
-msgid   "Chat log export failed. Continuing..."
-msgstr  "Αποτυχία εξαγωγής συνομιλίας. Συνέχεια..."
-
-#: ../assistant_viewer.lua:765
+#: ../assistant_viewer.lua:742
 msgid   "Type your question here"
 msgstr  "Πληκτρολογήστε την ερώτησή σας εδώ"
 
-#: ../assistant_viewer.lua:929
+#: ../assistant_viewer.lua:906
 msgid   "Word copied to clipboard."
 msgstr  "Η λέξη αντιγράφηκε στο clipboard."
 
-#: ../assistant_viewer.lua:930
+#: ../assistant_viewer.lua:907
 msgid   "Selection copied to clipboard."
 msgstr  "Η επιλογή αντιγράφηκε στο clipboard."
 
-#: ../main.lua:77 ../main.lua:116
+#: ../main.lua:77 ../main.lua:124
 msgid   "Ask the AI a question"
 msgstr  "Ρωτήστε την AI μια ερώτηση"
 
-#: ../main.lua:85 ../main.lua:149
+#: ../main.lua:85 ../main.lua:157
 msgid   "AI Recaps"
 msgstr  "Σύνολα AI"
 
-#: ../main.lua:93 ../main.lua:138
+#: ../main.lua:93 ../main.lua:146
 msgid   "AI X-Ray"
 msgstr  "AI Ακτίνες-Χ"
 
-#: ../main.lua:101 ../main.lua:127
+#: ../main.lua:109 ../main.lua:135
 msgid   "Book Summary & Recs"
 msgstr  "Περίληψη & Προτάσεις Βιβλίων"
 
-#: ../main.lua:122
+#: ../main.lua:130
 msgid   "Enter a question to ask AI."
 msgstr  "Γράψτε μια ερώτηση για την ΤΝ."
 
-#: ../main.lua:133
+#: ../main.lua:141
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "Περίληψη του βιβλίου, βιογραφία του συγγραφέα, ιστορικό πλαίσιο και λίστα με παρόμοιες προτάσεις βιβλίων με περιγραφές."
 
-#: ../main.lua:144
+#: ../main.lua:152
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "Περίληψη «X-Ray» για το βιβλίο, οργανωμένη σε ενότητες όπως Χαρακτήρες, Τοποθεσίες, Θέματα, Όροι & Έννοιες, Χρονοδιάγραμμα και Επανασύνδεση."
 
-#: ../main.lua:155
+#: ../main.lua:163
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "Πολύ σύντομη περίληψη χωρίς spoilers μέχρι το σημείο ανάγνωσης."
 
-#: ../main.lua:161
+#: ../main.lua:175
+msgid   "Take quick notes that will be saved to your notebook."
+msgstr  "Λάβετε γρήγορα σημειώματα που θα αποθηκευτούν στο σημειωματάριό σας."
+
+#: ../main.lua:180
 msgid   "NoteBook (Saved AI Conversations)"
 msgstr  "Σημειωματάριο (Αποθηκευμένες Συνομιλίες AI)"
 
-#: ../main.lua:167
+#: ../main.lua:186
 msgid   "Notebook file: \n"
         "\n"
 msgstr  "Αρχείο σημειωματάριου: \n"
         "\n"
 
-#: ../main.lua:168
+#: ../main.lua:187
 msgid   "View"
 msgstr  "Προβολή"
 
-#: ../main.lua:172
+#: ../main.lua:191
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -523,11 +562,11 @@ msgstr  "Το αρχείο δεν υπάρχει.\n"
         "\n"
         "%1"
 
-#: ../main.lua:180 ../main.lua:184
+#: ../main.lua:199 ../main.lua:203
 msgid   "Delete"
 msgstr  "Διαγραφή"
 
-#: ../main.lua:183
+#: ../main.lua:202
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -535,25 +574,25 @@ msgstr  "Διαγραφή αρχείου;\n"
         "%1\n"
         "Η ενέργεια δεν αναιρείται."
 
-#: ../main.lua:195
+#: ../main.lua:214
 msgid   "Edit"
 msgstr  "Επεξεργασία"
 
-#: ../main.lua:285
+#: ../main.lua:304
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Δεν βρέθηκε έγκυρος πάροχος μοντέλου στο configuration.lua"
 
-#: ../main.lua:303
+#: ../main.lua:322
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Σφάλμα ρύθμισης.\n"
         "Παρακαλούμε ορίστε το configuration.lua."
 
-#: ../main.lua:372
+#: ../main.lua:391
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: οι πάροχοι μοντέλων είναι άκυροι."
 
-#: ../main.lua:437
+#: ../main.lua:456
 msgid   "Useful Tips\n"
         "\n"
         "Long Press:\n"
@@ -579,11 +618,11 @@ msgstr  "Χρήσιμες Συμβουλές\n"
         "Πολλαπλό σάρωμα (π.χ. ⮠, ⮡, ↺):\n"
         "Στο παράθυρο αποτελεσμάτων για κλείσιμο (καθώς το κουμπί Κλείσιμο είναι μακριά).\n"
 
-#: ../main.lua:462
+#: ../main.lua:481
 msgid   "Purge Settings"
 msgstr  "Επαναφορά ρυθμίσεων"
 
-#: ../main.lua:465
+#: ../main.lua:484
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -593,33 +632,33 @@ msgstr  "Θέλετε σίγουρα να διαγράψετε τις ρυθμί
         "\n"
         "Το configuration.lua παραμένει άθικτο· διαγράφονται μόνο οι ρυθμίσεις των παραθύρων."
 
-#: ../main.lua:469
+#: ../main.lua:488
 msgid   "Purge"
 msgstr  "Διαγραφή"
 
-#: ../main.lua:506
+#: ../main.lua:535
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Αφαιρέστε το [%s] από το μενού επισήμανσης;"
 
-#: ../main.lua:507
+#: ../main.lua:536
 msgid   "Remove"
 msgstr  "Αφαίρεση"
 
-#: ../main.lua:639
+#: ../main.lua:679
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Η διαμόρφωση δεν βρέθηκε. Παρακαλώ ρυθμίστε το configuration.lua πρώτα."
 
-#: ../main.lua:681
+#: ../main.lua:721
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Προστέθηκε το [%1 (AI)] στο μενού επισήμανσης."
 
-#: ../main.lua:690
+#: ../main.lua:730
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Αφαιρέθηκε το [%s (AI)] από το μενού επισήμανσης."
 
-#: ../main.lua:734
+#: ../main.lua:774
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -627,16 +666,16 @@ msgstr  "Θέλετε περίληψη από την AI;\n"
         "Για %1 από %2.\n"
         "\n"
 
-#: ../main.lua:735
+#: ../main.lua:775
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Τελευταία ανάγνωση πριν από μία ώρα."
 msgstr[1]       "Τελευταία ανάγνωση πριν από %1 ώρες."
 
-#: ../main.lua:740
+#: ../main.lua:780
 msgid   "Yes"
 msgstr  "Ναι"
 
-#: ../main.lua:749
+#: ../main.lua:789
 msgid   "No"
 msgstr  "Όχι"
