@@ -5,28 +5,44 @@ local logger = require("logger")
 
 local AnthropicHandler = BaseHandler:new()
 
-function AnthropicHandler:query(message_history, anthropic_settings)
-
-    if not anthropic_settings or not anthropic_settings.api_key then
-        return "Error: Missing API key in configuration"
+local function prepare_anthropic_messages(message_history)
+    local anthropic_messages = {}
+    local system_content = ""
+    
+    -- Extract and concatenate all system prompts
+    for i, msg in ipairs(message_history) do
+        if msg.role == "system" then
+            system_content = system_content .. msg.content .. "\n\n"
+        end
     end
     
-    local messages = {}
-    for _, msg in ipairs(message_history) do
+    -- Remove trailing newlines
+    system_content = system_content:gsub("\n\n$", "")
+    
+    -- Process non-system messages (user and assistant)
+    for i, msg in ipairs(message_history) do
         if msg.role ~= "system" then
-            table.insert(messages, {
-                role = msg.role == "assistant" and "assistant" or "user",
+            table.insert(anthropic_messages, {
+                role = msg.role,
                 content = msg.content
             })
         end
     end
-
-    local requestBodyTable = {
-        model = anthropic_settings.model,
-        messages = messages,
-        max_tokens = koutil.tableGetValue(anthropic_settings, "additional_parameters", "max_tokens"),
-        stream = koutil.tableGetValue(anthropic_settings, "additional_parameters", "stream") or false,
+    
+    -- Return structured data for Anthropic API
+    return {
+        messages = anthropic_messages,
+        system = system_content
     }
+end
+
+
+function AnthropicHandler:query(message_history, anthropic_settings)
+    
+    local requestBodyTable = prepare_anthropic_messages(message_history)
+    requestBodyTable.model = anthropic_settings.model
+    requestBodyTable.max_tokens = koutil.tableGetValue(anthropic_settings, "additional_parameters", "max_tokens")
+    requestBodyTable.stream = koutil.tableGetValue(anthropic_settings, "additional_parameters", "stream") or false
 
     local requestBody = json.encode(requestBodyTable)
     local headers = {

@@ -6,26 +6,10 @@ local logger = require("logger")
 local MistralHandler = BaseHandler:new()
 
 function MistralHandler:query(message_history, mistral_settings)
-
-    -- Remove is_context from body, which causes an error in Mistral API
-    -- Need to clone the history so that we don't affect the actual message history which gets displayed
-    local cloned_history = {}
-
-    for i, message in ipairs(message_history) do
-      local new_message = {}
-      for k, v in pairs(message) do
-        new_message[k] = v
-      end
-      
-      -- Remove the is_context field in the clone
-      new_message.is_context = nil
-
-      cloned_history[i] = new_message
-    end
     
     local requestBodyTable = {
         model = mistral_settings.model,
-        messages = cloned_history,
+        messages = message_history,
     }
 
     -- Handle configuration

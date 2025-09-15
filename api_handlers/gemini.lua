@@ -13,40 +13,39 @@ function GeminiHandler:query(message_history, gemini_settings)
 
     -- Gemini API requires messages with explicit roles
     local contents = {}
-    local systemMessage = nil
+    local system_content = ""
     local generationConfig = nil
 
     for i, msg in ipairs(message_history) do
-        -- First message is treated as system message
-        if i == 1 and msg.role ~= "user" then
-            systemMessage = {
-                role = "user",
-                parts = {{ text = msg.content }}
-            }
+        if msg.role == "system" then
+            system_content = system_content .. msg.content .. "\n"
+        elseif msg.role == "user" then
+            table.insert(contents, { role = "user", parts = {{ text = msg.content }} })
+        elseif msg.role == "assistant" then
+            table.insert(contents, { role = "model", parts = {{ text = msg.content }} })
         else
-            table.insert(contents, {
-                role = "user",
-                parts = {{ text = msg.content }}
-            })
+            -- Fallback for any other roles, mapping to 'user'
+            table.insert(contents, { role = "user", parts = {{ text = msg.content }} })
         end
     end
 
-    -- If a system message exists, insert it at the beginning
-    if systemMessage then
-        table.insert(contents, 1, systemMessage)
+    local system_instruction = nil
+    if system_content ~= "" then
+        system_instruction = { parts = {{ text = system_content:gsub("\n$", "") }} }
     end
 
     local thinking_budget = koutil.tableGetValue(gemini_settings, "additional_parameters", "thinking_budget")
     if thinking_budget ~= nil then
-        generationConfig = generationConfig or { thinkingConfig = {} }
-        generationConfig.thinkingConfig.thinkingBudget = thinking_budget
+        generationConfig = generationConfig or {}
+        generationConfig.thinking_config = { thinking_budget = thinking_budget }
     end
 
     local stream = koutil.tableGetValue(gemini_settings, "additional_parameters", "stream") or false
 
     local requestBodyTable = {
         contents = contents,
-        safety_settings = {
+        system_instruction = system_instruction,
+        safetySettings = {
             { category = "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold = "BLOCK_NONE" },
             { category = "HARM_CATEGORY_HATE_SPEECH", threshold = "BLOCK_NONE" },
             { category = "HARM_CATEGORY_HARASSMENT", threshold = "BLOCK_NONE" },
@@ -54,6 +53,15 @@ function GeminiHandler:query(message_history, gemini_settings)
         },
         generationConfig = generationConfig
     }
+    -- a few more snake_case fields
+    if gemini_settings.additional_parameters then
+        for _, option in ipairs({"maxOutputTokens", "temperature", "topP", "topK"}) do
+            if gemini_settings.additional_parameters[option] then
+                generationConfig = generationConfig or {}
+                generationConfig[option] = gemini_settings.additional_parameters[option]
+            end
+        end
+    end
 
     local requestBody = json.encode(requestBodyTable)
     

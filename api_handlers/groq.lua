@@ -6,22 +6,9 @@ local logger = require("logger")
 local groqHandler = BaseHandler:new()
 
 function groqHandler:query(message_history, groq_settings)
-
-    -- Groq API accepts only 'role' and 'content' fields in messages
-    -- Doc: https://console.groq.com/docs/api-reference
-    local cloned_history = {}
-    for i, message in ipairs(message_history) do
-      cloned_history[i] = {
-        role = message.role,
-        content = message.content,
-      }
-      if message.name then cloned_history[i].name = message.name end
-      if message.reasoning then cloned_history[i].reasoning = message.reasoning end
-    end
-    
     local requestBodyTable = {
         model = groq_settings.model,
-        messages = cloned_history,
+        messages = message_history,
     }
 
     -- Handle reasoning tokens configuration

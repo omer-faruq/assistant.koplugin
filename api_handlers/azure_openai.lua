@@ -1,4 +1,3 @@
--- filepath: /Users/Q620675/Code/assistant.koplugin/api_handlers/azure_openai.lua
 local BaseHandler = require("api_handlers.base")
 local koutil = require("util")
 local json = require("json")

@@ -120,6 +120,15 @@ function Querier:showError(err)
     end
 end
 
+
+local function trimMessageHistory(message_history)
+    local trimed_history = {}
+    for i, message in ipairs(message_history) do
+        trimed_history[i] = { role = message.role, content = message.content, }
+    end
+    return trimed_history
+end
+
 --- Query the AI with the provided message history
 --- return: answer, error (if any)
 function Querier:query(message_history, title)
@@ -138,7 +147,7 @@ function Querier:query(message_history, title)
 
     UIManager:show(infomsg)
     self.handler:setTrapWidget(infomsg)
-    local res, err = self.handler:query(message_history, self.provider_settings)
+    local res, err = self.handler:query(trimMessageHistory(message_history), self.provider_settings)
     self.handler:resetTrapWidget()
     UIManager:close(infomsg)
 
