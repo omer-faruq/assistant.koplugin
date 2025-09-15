@@ -230,6 +230,14 @@ function SettingsDialog:init()
             end
         },
         {
+            text = _("Smaller Stream dialog"),
+            checked = self.settings:readSetting("smaller_stream_dialog", false),
+            callback = function()
+                self.settings:toggle("smaller_stream_dialog")
+                self.assistant.updated = true
+            end
+        },
+        {
             text = _("Show Related Questions from AI"),
             checked = self.settings:readSetting("auto_prompt_suggest", false),
             callback = function()

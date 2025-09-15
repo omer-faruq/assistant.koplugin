@@ -7,6 +7,7 @@ local InputDialog = require("ui/widget/inputdialog")
 local InputText = require("ui/widget/inputtext")
 local UIManager = require("ui/uimanager")
 local Font = require("ui/font")
+local Size = require("ui/size")
 local koutil = require("util")
 local logger = require("logger")
 local rapidjson = require('rapidjson')
@@ -162,8 +163,21 @@ function Querier:query(message_history, title)
             UIManager:close(streamDialog)
         end
 
+        -- user may perfer smaller stream dialog on big screen device 
+        local width, use_available_height, text_height, is_movable
+        if self.settings:readSetting("smaller_stream_dialog", false) then
+            width = Screen:getWidth() - Screen:scaleBySize(80) 
+            text_height = math.floor(Screen:getHeight() * 0.35)
+            use_available_height = false
+            is_movable = true
+        else
+            width = Screen:getWidth() - 2*Size.margin.default
+            text_height = nil
+            use_available_height = true
+            is_movable = false
+        end
+
         streamDialog = InputDialog:new{
-            width = Screen:getWidth() - Screen:scaleBySize(30),
             title = _("AI is responding"),
             description = T("☁ %1/%2", self.provider_name, koutil.tableGetValue(self.provider_settings, "model")),
             inputtext_class = StreamText, -- use our custom InputText class
@@ -173,10 +187,13 @@ function Querier:query(message_history, title)
                 self.assistant:showSettings()
             end,
 
-            readonly = true,  
-            fullscreen = false, use_available_height = true,
+            -- size parameters
+            width = width, use_available_height = use_available_height, text_height = text_height, is_movable = is_movable,
+
+            -- other behavior parameters
+            readonly = true, fullscreen = false, 
             allow_newline = true, add_nav_bar = false, cursor_at_end = true, add_scroll_buttons = true,
-            condensed = true, auto_para_direction = true, is_movable = false, scroll_by_pan = true, 
+            condensed = true, auto_para_direction = true,  scroll_by_pan = true, 
             buttons = {
                 {
                     {
