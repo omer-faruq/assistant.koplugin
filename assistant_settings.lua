@@ -301,7 +301,7 @@ function SettingsDialog:init()
             end
         },
         {
-            text = _("Use book text for analysis"),
+            text = _("Use book text for x-ray and recap"),
             checked = self.settings:readSetting("use_book_text_for_analysis", false),
             callback = function()
                 self.settings:toggle("use_book_text_for_analysis")
