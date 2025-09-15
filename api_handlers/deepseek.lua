@@ -30,13 +30,22 @@ function DeepSeekHandler:query(message_history, deepseek_settings)
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(deepseek_settings.base_url, headers, requestBody)
     end
+    
+    local request_timeout, request_maxtime
+    if requestBody and #requestBody > 10000 then -- large book analysis
+        request_timeout = 500
+        request_maxtime = 500
+    else
+        request_timeout = 45 -- block_timeout, API is slow sometimes, need longer timeout
+        request_maxtime = 90 -- maxtime: total response finished max time
+    end
 
     local success, code, response = self:makeRequest(
         deepseek_settings.base_url,
         headers,
         requestBody,
-        45,  -- block_timeout, API is slow sometimes, need longer timeout
-        90   -- maxtime: total response finished max time
+        request_timeout,
+        request_maxtime
     )
 
     if not success then
