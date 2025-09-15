@@ -97,9 +97,18 @@ end
 function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
     local completed, success, code, content
     if self.trap_widget then
+        -- Use larger timeout and maxtime when running a large book analysis
+        local request_timeout, request_maxtime
+        if body and #body > 10000 then
+            request_timeout = timeout or 300
+            request_maxtime = maxtime or 120
+        else
+            request_timeout = timeout or 45
+            request_maxtime = maxtime or 120
+        end
         -- If a trap widget is set, run the request in a subprocess
         completed, success, code, content = Trapper:dismissableRunInSubprocess(function()
-                return postURLContent(url, headers, body, timeout or 45, maxtime or 120)
+                return postURLContent(url, headers, body, request_timeout, request_maxtime)
             end, self.trap_widget)
         if not completed then
             return false, self.CODE_CANCELLED, self.CODE_CANCELLED
@@ -161,4 +170,3 @@ function BaseHandler:backgroundRequest(url, headers, body)
 end
 
 return BaseHandler
-

@@ -300,6 +300,14 @@ function SettingsDialog:init()
                 self.assistant.updated = true
             end
         },
+        {
+            text = _("Use book text for analysis"),
+            checked = self.settings:readSetting("use_book_text_for_analysis", false),
+            callback = function()
+                self.settings:toggle("use_book_text_for_analysis")
+                self.assistant.updated = true
+            end
+        },
     }
 
     -- action buttons

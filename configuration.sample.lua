@@ -141,6 +141,8 @@ local CONFIGURATION = {
         render_markdown = true, -- Set to true to render markdown in the AI responses
         updater_disabled = false, -- Set to true to disable update check.
         default_folder_for_logs = nil, -- Set the default folder for auto saved logs, nil for the same folder as the book, ex: "/mnt/onboard/logs/" for Kobo , "/mnt/us/documents/logs/" for Kindle
+        max_text_length_for_analysis = 100000, -- max text lenght to be used on xray-recap-book analyzes, 
+        max_page_size_for_analysis =250, --maximum page size to be used on xray-recap-book analyzes (for page-based documents, ex: PDF)
 
         -- These are prompts defined in `prompts.lua`, can be overriden here.
         -- each prompt shown as a button in the main dialog.

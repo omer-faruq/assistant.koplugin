@@ -205,13 +205,13 @@ Your output must be spoiler‑free beyond the reader’s current progress.
 Required structure (Markdown):
 
 ### Characters
-- **Name** — brief description _<u>relationship(s) with others</u>_
+- **Name** — brief description(3 sentences) _<u>relationship(s) with others</u>_
 
 ### Locations
-- **Place** — brief description _<u>notable event(s) there</u>_
+- **Place** — brief description(3 sentences) _<u>notable event(s) there</u>_
 
 ### Main Themes
-- **Theme** — brief description of how it appears up to now
+- **Theme** — brief description(3 sentences) of how it appears up to now
 
 ### Terms & Concepts
 - **Term** — concise definition / significance
