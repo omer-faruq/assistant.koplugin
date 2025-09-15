@@ -27,8 +27,8 @@ local custom_prompts = {
         quick_note = {
             order = 5, --should be visible on additional questions dialog
             text = _("Quick Note"),
-            desc = _("This prompt creates a quick note with highlighted text."),
-            user_prompt = "Save this as a quick note.", --dummy prompt
+            desc = _("This button creates a quick note with highlighted text."),
+            user_prompt = "", --dummy prompt
             -- this prompt is a stub 
         },
         vocabulary = {
