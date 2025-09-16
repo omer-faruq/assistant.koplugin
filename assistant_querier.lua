@@ -165,16 +165,16 @@ function Querier:query(message_history, title)
 
         -- user may perfer smaller stream dialog on big screen device 
         local width, use_available_height, text_height, is_movable
-        if self.settings:readSetting("smaller_stream_dialog", false) then
-            width = Screen:getWidth() - Screen:scaleBySize(80) 
-            text_height = math.floor(Screen:getHeight() * 0.35)
-            use_available_height = false
-            is_movable = true
-        else
+        if self.settings:readSetting("large_stream_dialog", true) then
             width = Screen:getWidth() - 2*Size.margin.default
             text_height = nil
             use_available_height = true
             is_movable = false
+        else
+            width = Screen:getWidth() - Screen:scaleBySize(80) 
+            text_height = math.floor(Screen:getHeight() * 0.35)
+            use_available_height = false
+            is_movable = true
         end
 
         streamDialog = InputDialog:new{

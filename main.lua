@@ -118,6 +118,9 @@ function Assistant:addToMainMenu(menu_items)
     menu_items.ai_assistant = {
         text = _("AI Assistant"),
         sorting_hint = "tools",
+        hold_callback = function ()
+          self:_help_dialog()
+        end,
         sub_item_table = {
           {
             separator = true,
@@ -219,22 +222,30 @@ function Assistant:addToMainMenu(menu_items)
               }}
               })
             end,
+            separator = true,
+          },
+          {
+            text_func = function ()
+              return T(_("AI Provider: %1"), self:getModelProvider())
+            end,
+            keep_menu_open = true,
+            callback = function (touchmenu_instance)
+              self:showSettings(function ()
+                touchmenu_instance:updateItems()
+              end)
+            end,
           },
           {
             text = _("AI Assistant Settings"),
-            keep_menu_open = true,
-            callback = function ()
-              self:showSettings()
-            end,
-            hold_callback = function ()
-              self:_help_dialog()
+            sub_item_table_func = function ()
+              return SettingsDialog.genMenuSettings(self)
             end
-          },
+          }
         },
     }
 end
 
-function Assistant:showSettings()
+function Assistant:showSettings(close_callback)
   if not self:isConfigured() then return end
 
   if self._settings_dialog then
@@ -247,6 +258,7 @@ function Assistant:showSettings()
       assistant = self,
       CONFIGURATION = CONFIGURATION,
       settings = self.settings,
+      close_callback = close_callback,
   }
 
   self._settings_dialog = settingDlg -- store reference to the dialog
@@ -453,7 +465,10 @@ function Assistant:init()
 end
 
 function Assistant:_help_dialog()
-    local info_text = string.format("%s %s  ", self.meta.fullname, self.meta.version) .. _([[Useful Tips
+    local info_text = string.format("%s %s  ", self.meta.fullname, self.meta.version) .. _([[Usage Tips
+
+Select:
+Highlight text (or a word) in the book, then press [AI assistant] in the poped up menu.
 
 Long Press:
 - On a Prompt Button: Add to the highlight menu.
@@ -469,34 +484,22 @@ On the result dialog to close (as the Close button is far to reach).
     UIManager:show(ConfirmBox:new{
         text = info_text,
         face = Font:getFace("xx_smallinfofont"),
-        no_ok_button = true, other_buttons_first = true,
-        other_buttons = {{
-          {
-            text = _("Settings"),
-            callback = function()
-              self:showSettings()
-            end
-          },
-          {
-            text = _("Purge Settings"),
-            callback = function()
-              UIManager:show(ConfirmBox:new{
-                text = _([[Are you sure to purge the assistant plugin settings? 
+        ok_text = _("Purge Settings"),
+        ok_callback = function()
+          UIManager:show(ConfirmBox:new{
+            text = _([[Are you sure to purge the assistant plugin settings? 
 This resets the assistant plugin to the status the first time you installed it.
 
-configuration.lua is safe, only the settings in the dialog are purged.]]),
-                ok_text = _("Purge"),
-                ok_callback = function()
-                  self.settings:reset({})
-                  self.settings:flush()
-                  UIManager:askForRestart()
-                end
-              })
+configuration.lua is safe, only the settings are purged.]]),
+            ok_text = _("Purge"),
+            ok_callback = function()
+              self.settings:reset({})
+              self.settings:flush()
+              UIManager:askForRestart()
             end
-          },
-        }}
+          })
+        end
     })
-
 end
 
 function Assistant:addMainButton(prompt_idx, prompt)
