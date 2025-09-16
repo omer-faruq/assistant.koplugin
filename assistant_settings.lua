@@ -64,7 +64,7 @@ function CopyMultiInputDialog:onTap(arg, ges)  -- fix: tap outside to close
 end
 
 
-local function LanguageSetting(dlg)
+local function LanguageSetting(assistant, close_callback)
     local langsetting
     local chkbtn_is_rtl
     langsetting = CopyMultiInputDialog:new{
@@ -74,13 +74,13 @@ local function LanguageSetting(dlg)
         fields = {
             {
                 description = _("AI Response Language"),
-                text = dlg.assistant.settings:readSetting("response_language") or "",
-                hint = T(_("Leave blank to use: %1"), dlg.assistant.ui_language),
+                text = assistant.settings:readSetting("response_language") or "",
+                hint = T(_("Leave blank to use: %1"), assistant.ui_language),
             },
             {
                 description = _("Dictionary Language"),
-                text = dlg.assistant.settings:readSetting("dict_language") or "",
-                hint = T(_("Leave blank to use: %1"), dlg.assistant.ui_language),
+                text = assistant.settings:readSetting("dict_language") or "",
+                hint = T(_("Leave blank to use: %1"), assistant.ui_language),
             },
         },
         buttons = {
@@ -99,7 +99,7 @@ local function LanguageSetting(dlg)
                             f:setText("")
                         end
                         if chkbtn_is_rtl then
-                            chkbtn_is_rtl.checked = dlg.assistant.ui_language_is_rtl
+                            chkbtn_is_rtl.checked = assistant.ui_language_is_rtl
                             chkbtn_is_rtl:init()
                         end
 
@@ -115,24 +115,23 @@ local function LanguageSetting(dlg)
                         local fields = langsetting:getFields()
                         for i, key in ipairs({"response_language", "dict_language"}) do
                             if fields[i] == "" then
-                                dlg.assistant.settings:delSetting(key)
+                                assistant.settings:delSetting(key)
                             else
-                                dlg.assistant.settings:saveSetting(key, fields[i])
+                                assistant.settings:saveSetting(key, fields[i])
                             end
                         end
 
                         if chkbtn_is_rtl then
                             local checked = chkbtn_is_rtl.checked
-                            if checked ~= (dlg.assistant.settings:readSetting("response_is_rtl") or false) then
-                                dlg.assistant.settings:saveSetting("response_is_rtl", checked)
+                            if checked ~= (assistant.settings:readSetting("response_is_rtl") or false) then
+                                assistant.settings:saveSetting("response_is_rtl", checked)
                             end
                         end
-
-                        dlg.assistant.updated = true
-                        local button = dlg.middle_button_table.button_by_id["ai_language"]
-                        button:setText(T(_("AI Language: %1"),
-                                        fields[1] ~= "" and fields[1] or dlg.assistant.ui_language), button.width)
+                        assistant.updated = true
                         UIManager:close(langsetting)
+                        if close_callback then
+                            close_callback()
+                        end
                     end
                 },
             },
@@ -143,7 +142,7 @@ local function LanguageSetting(dlg)
     chkbtn_is_rtl = CheckButton:new{
         text = _("RTL written Language"),
         face = Font:getFace("xx_smallinfofont"),  
-        checked = dlg.assistant.settings:readSetting("response_is_rtl") or dlg.assistant.ui_language_is_rtl,
+        checked = assistant.settings:readSetting("response_is_rtl") or assistant.ui_language_is_rtl,
         parent = langsetting,
     }
     langsetting:addWidget(FrameContainer:new{
@@ -153,15 +152,15 @@ local function LanguageSetting(dlg)
         chkbtn_is_rtl
     })
 
-    if dlg.assistant.settings:has("dict_language") or
-        dlg.assistant.settings:has("response_language") then
+    if assistant.settings:has("dict_language") or
+        assistant.settings:has("response_language") then
         -- show a notice when fields filled
         langsetting:addWidget(FrameContainer:new{  
             padding = Size.padding.default,  
             margin = Size.margin.small,  
             bordersize = 0,  
             TextBoxWidget:new{  
-                text = T(_("Leave these fields blank to use the UI language: %1"),  dlg.assistant.ui_language),
+                text = T(_("Leave these fields blank to use the UI language: %1"),  assistant.ui_language),
                 face = Font:getFace("x_smallinfofont"),  
                 width = math.floor(langsetting.width * 0.95),  
             }
@@ -169,24 +168,6 @@ local function LanguageSetting(dlg)
     end
     UIManager:show(langsetting)
     return langsetting
-end
-
-local function FontSizeSetting(dlg)
-    local fontsize = dlg.assistant.settings:readSetting("response_font_size") or 20
-    local widget = SpinWidget:new{
-        title_text = _("Response Font Size"),
-        value = fontsize,
-        value_min = 12, value_max = 30, default_value = 20,
-        keep_shown_on_apply = true,
-        callback = function(spin)
-            dlg.assistant.settings:saveSetting("response_font_size", spin.value)
-            dlg.assistant.updated = true
-            local button = dlg.middle_button_table.button_by_id["font_size"]
-            button:setText(T(_("Font Size: %1"), spin.value), button.width)
-        end,
-    }
-    UIManager:show(widget)
-    return widget
 end
 
 local SettingsDialog = InputDialog:extend{
@@ -271,35 +252,6 @@ function SettingsDialog:init()
     self.layout = {self.layout[#self.layout]} -- keep bottom buttons
     self:mergeLayoutInVertical(self.radio_button_table, #self.layout) -- before bottom buttons
 
-    self.middle_button_table = ButtonTable:new{
-        width = self.element_width,
-        buttons = {{
-            {
-                id="ai_language",
-                text=T(_("AI Language: %1"), self.assistant.settings:readSetting("response_language") or self.assistant.ui_language),
-                font_bold = true,
-                font_size = 18,
-                callback=function()
-                    LanguageSetting(self)
-                end
-            },
-            {
-                id="font_size",
-                text=T(_("Font Size: %1"), self.assistant.settings:readSetting("response_font_size") or 20),
-                font_bold = true,
-                font_size = 18,
-                callback=function ()
-                    FontSizeSetting(self)
-                end
-            },
-        }},
-    }
-    self:mergeLayoutInVertical(self.middle_button_table, #self.layout)
-
-    local vertical_span = VerticalSpan:new{
-        width = Size.padding.large,
-    }
-
     local radio_desc = TextBoxWidget:new{
         width = self.width - 2 * Size.padding.large,
         text = _("AI Model provider:"),
@@ -340,27 +292,6 @@ function SettingsDialog:init()
                 }
             },
         },
-        CenterContainer:new{    -- -- Middle Buttons
-            dimen = Geom:new{
-                w = self.width,
-                h = self.middle_button_table:getSize().h,
-            },
-            self.middle_button_table,
-        },
-        CenterContainer:new{    -- -- Seperating line
-            dimen = Geom:new{
-                w = self.width,
-                h = Size.padding.large,
-            },
-            LineWidget:new{
-                background = Blitbuffer.COLOR_DARK_GRAY,
-                dimen = Geom:new{
-                    w = self.element_width,
-                    h = Size.line.medium,
-                }
-            },
-        },
-        vertical_span,          -- -- Seperating space
         CenterContainer:new{    -- -- Button at the bottom
             dimen = Geom:new{
                 w = self.title_bar:getSize().w,
@@ -398,6 +329,39 @@ end
 
 SettingsDialog.genMenuSettings = function (assistant)
     local sub_item_table = {
+        {
+            text_func = function ()
+                return _("AI Language: ") .. 
+                    (assistant.settings:readSetting("response_language") or assistant.ui_language)
+            end,
+            callback = function (touchmenu_instance)
+                LanguageSetting(assistant, function ()
+                    touchmenu_instance:updateItems()
+                end)
+            end,
+            keep_menu_open = true,
+        },
+        {
+            text_func = function ()
+                return T(_("AI Text Size: %1"), assistant.settings:readSetting("response_font_size") or 20)
+            end,
+            callback = function (touchmenu_instance)
+                local widget = SpinWidget:new{
+                    title_text = _("AI Response Text Font Size"),
+                    value = assistant.settings:readSetting("response_font_size") or 20,
+                    value_min = 12, value_max = 30, default_value = 20,
+                    callback = function(spin)
+                        assistant.settings:saveSetting("response_font_size", spin.value)
+                        assistant.updated = true
+                    end,
+                    close_callback = function ()
+                        touchmenu_instance:updateItems()
+                    end
+                }
+                UIManager:show(widget)
+            end,
+            keep_menu_open = true,
+        },
         {
             text = _("Stream Mode Settings"),
             sub_item_table = {
