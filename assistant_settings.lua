@@ -373,11 +373,11 @@ SettingsDialog.genMenuSettings = function (assistant)
                     end
                 },
                 {
-                    text = _("Smaller Stream dialog"),
+                    text = _("Large Streaming Window"),
                     enabled_func = function () return assistant.settings:readSetting("use_stream_mode") end,
-                    checked_func = function () assistant.settings:readSetting("smaller_stream_dialog", false) end,
+                    checked_func = function () return assistant.settings:readSetting("large_stream_dialog", true) end,
                     callback = function()
-                        assistant.settings:toggle("smaller_stream_dialog")
+                        assistant.settings:toggle("large_stream_dialog")
                         assistant.updated = true
                     end
                 },
