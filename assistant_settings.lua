@@ -205,7 +205,9 @@ function SettingsDialog:init()
     -- init radio buttons for selecting AI Model provider
     self.radio_buttons = {} -- init radio buttons table
 
-    local columns = FrontendUtil.tableSize(self.CONFIGURATION.provider_settings) > 4 and 2 or 1 -- 2 columns if more than 4 providers, otherwise 1 column
+    local MAX_FOR_SINGLE_COLUMN = 12
+    -- 2 columns if more than MAX_FOR_SINGLE_COLUMN providers, otherwise 1 column
+    local columns = FrontendUtil.tableSize(self.CONFIGURATION.provider_settings) > MAX_FOR_SINGLE_COLUMN and 2 or 1
     local buttonrow = {}
     for key, tab in ffiutil.orderedPairs(self.CONFIGURATION.provider_settings) do
         if not (FrontendUtil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
