@@ -171,7 +171,7 @@ local function LanguageSetting(assistant, close_callback)
 end
 
 local SettingsDialog = InputDialog:extend{
-    title = _("AI Assistant Settings"),
+    title = _("AI Provider Settings"),
 
     -- inited variables
     assistant = nil, -- reference to the main assistant object
@@ -279,19 +279,6 @@ function SettingsDialog:init()
             },
             self.radio_button_table,
         },
-        CenterContainer:new{    -- -- Seperating line
-            dimen = Geom:new{
-                w = self.width,
-                h = Size.padding.large,
-            },
-            LineWidget:new{
-                background = Blitbuffer.COLOR_DARK_GRAY,
-                dimen = Geom:new{
-                    w = self.element_width,
-                    h = Size.line.medium,
-                }
-            },
-        },
         CenterContainer:new{    -- -- Button at the bottom
             dimen = Geom:new{
                 w = self.title_bar:getSize().w,
@@ -324,6 +311,9 @@ end
 
 function SettingsDialog:onCloseWidget()
     InputDialog.onCloseWidget(self)
+    if self.close_callback then
+        self.close_callback()
+    end
     self.assistant._settings_dialog = nil
 end
 
