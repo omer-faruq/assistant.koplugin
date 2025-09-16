@@ -212,104 +212,6 @@ function SettingsDialog:init()
         })
     end
 
-    self.check_button_init_list = {
-        {
-            text = _("Enable stream response"),
-            checked = self.settings:readSetting("use_stream_mode", true),
-            callback = function()
-                self.settings:toggle("use_stream_mode")
-                self.assistant.updated = true
-            end
-        },
-        {
-            text = _("Auto scroll stream response text"),
-            checked = self.settings:readSetting("stream_mode_auto_scroll", true),
-            callback = function()
-                self.settings:toggle("stream_mode_auto_scroll")
-                self.assistant.updated = true
-            end
-        },
-        {
-            text = _("Smaller Stream dialog"),
-            checked = self.settings:readSetting("smaller_stream_dialog", false),
-            callback = function()
-                self.settings:toggle("smaller_stream_dialog")
-                self.assistant.updated = true
-            end
-        },
-        {
-            text = _("Show Related Questions from AI"),
-            checked = self.settings:readSetting("auto_prompt_suggest", false),
-            callback = function()
-                self.settings:toggle("auto_prompt_suggest")
-                self.assistant.updated = true
-            end
-        },
-        {
-            text = _("Use AI Assistant for 'Translate'"),
-            checked = self.settings:readSetting("ai_translate_override", false),
-            callback = function()
-                self.settings:toggle("ai_translate_override")
-                self.assistant.updated = true
-                self.assistant:syncTranslateOverride()
-            end
-        },
-        {
-            text = _("Show Dictionary(AI) in Dictionary Popup"),
-            checked = self.settings:readSetting("dict_popup_show_dictionary", true),
-            callback = function()
-                self.settings:toggle("dict_popup_show_dictionary")
-                self.assistant.updated = true
-            end
-        },
-        {
-            text = _("Show Wikipedia(AI) in Dictionary Popup"),
-            checked = self.settings:readSetting("dict_popup_show_wikipedia", true),
-            callback = function()
-                self.settings:toggle("dict_popup_show_wikipedia")
-                self.assistant.updated = true
-            end
-        },
-        {
-            text = _("Copy entered question to the clipboard"),
-            checked = self.settings:readSetting("auto_copy_asked_question", true),
-            callback = function()
-                self.settings:toggle("auto_copy_asked_question")
-                self.assistant.updated = true
-            end
-        },
-        {
-            text = _("Enable Auto Recap"),
-            checked = self.settings:readSetting("enable_auto_recap", false),
-            callback = function()
-                self.settings:toggle("enable_auto_recap")
-                self.assistant.updated = true
-                if not self.settings:readSetting("enable_auto_recap") then
-                    -- if disable, remove the action from dispatcher
-                    require("dispatcher"):removeAction("ai_recap")
-                    return
-                end
-                Notification:notify(_("AI Recap will be enabled the next time a book is opened."), Notification.SOURCE_ALWAYS_SHOW)
-            end
-        },
-        {
-            text = _("Auto-save conversations to NoteBook"),
-            checked = self.settings:readSetting("auto_save_to_notebook", false),
-            callback = function()
-                self.settings:toggle("auto_save_to_notebook")
-                self.assistant.updated = true
-            end
-        },
-        {
-            text = _("Use book text for x-ray and recap"),
-            checked = self.settings:readSetting("use_book_text_for_analysis", false),
-            callback = function()
-                self.settings:toggle("use_book_text_for_analysis")
-                self.assistant.updated = true
-            end
-        },
-    }
-
     -- action buttons
     self.buttons = {{
         {
@@ -394,32 +296,6 @@ function SettingsDialog:init()
     }
     self:mergeLayoutInVertical(self.middle_button_table, #self.layout)
 
-    self.check_button_table = VerticalGroup:new{
-        align = "left",
-        HorizontalGroup:new{
-            HorizontalSpan:new{ width = Size.padding.tiny },
-            TextBoxWidget:new{
-                text = _("AI Assistant Features:"),
-                face = Font:getFace("xx_smallinfofont"),
-                width = self.width - 2 * Size.padding.large,
-            }
-        }
-    }
-    for i, btn in ipairs(self.check_button_init_list) do
-        local row =  HorizontalGroup:new{
-            HorizontalSpan:new{ width = Screen:scaleBySize(15), },
-            CheckButton:new{
-                text = btn.text,
-                checked = btn.checked,
-                callback = btn.callback,
-                face = Font:getFace("xx_smallinfofont"),
-                parent = self,
-            }
-        }
-        table.insert(self.check_button_table, row)
-        table.insert(self.layout, #self.layout, {row[2]}) -- add to focus layout
-    end
-
     local vertical_span = VerticalSpan:new{
         width = Size.padding.large,
     }
@@ -484,13 +360,6 @@ function SettingsDialog:init()
                 }
             },
         },
-        CenterContainer:new{    -- -- Features Check buttons
-            dimen = Geom:new{
-                w = self.width,
-                h = self.check_button_table:getSize().h,
-            },
-            self.check_button_table,
-        },
         vertical_span,          -- -- Seperating space
         CenterContainer:new{    -- -- Button at the bottom
             dimen = Geom:new{
@@ -526,5 +395,121 @@ function SettingsDialog:onCloseWidget()
     InputDialog.onCloseWidget(self)
     self.assistant._settings_dialog = nil
 end
+
+SettingsDialog.genMenuSettings = function (assistant)
+    local sub_item_table = {
+        {
+            text = _("Stream Mode Settings"),
+            sub_item_table = {
+                {
+                    text = _("Enable stream response"),
+                    checked_func = function () return assistant.settings:readSetting("use_stream_mode", true) end,
+                    callback = function ()
+                        assistant.settings:toggle("use_stream_mode")
+                        assistant.updated = true
+                    end
+                },
+                {
+                    text = _("Auto scroll stream response text"),
+                    enabled_func = function () return assistant.settings:readSetting("use_stream_mode") end,
+                    checked_func = function () return assistant.settings:readSetting("stream_mode_auto_scroll", true) end,
+                    callback = function()
+                        assistant.settings:toggle("stream_mode_auto_scroll")
+                        assistant.updated = true
+                    end
+                },
+                {
+                    text = _("Smaller Stream dialog"),
+                    enabled_func = function () return assistant.settings:readSetting("use_stream_mode") end,
+                    checked_func = function () assistant.settings:readSetting("smaller_stream_dialog", false) end,
+                    callback = function()
+                        assistant.settings:toggle("smaller_stream_dialog")
+                        assistant.updated = true
+                    end
+                },
+            }
+        },
+        {
+            text = _("KOReader Tweaks & Overrides"),
+            sub_item_table = {
+                {
+                    text = _("Use AI Assistant for 'Translate'"),
+                    checked_func = function () return assistant.settings:readSetting("ai_translate_override", false) end,
+                    callback = function()
+                        assistant.settings:toggle("ai_translate_override")
+                        assistant.updated = true
+                        UIManager:nextTick(function ()
+                            assistant:syncTranslateOverride()
+                        end)
+                    end
+                },
+                {
+                    text = _("Auto-recap on opening long-unread books"),
+                    checked_func = function () return assistant.settings:readSetting("enable_auto_recap", false) end,
+                    callback = function()
+                        assistant.settings:toggle("enable_auto_recap")
+                        assistant.updated = true
+                        if not assistant.settings:readSetting("enable_auto_recap") then
+                            -- if disable, remove the action from dispatcher
+                            require("dispatcher"):removeAction("ai_recap")
+                            return
+                        end
+                        Notification:notify(_("AI Recap will be enabled the next time a long-unread book is opened."), Notification.SOURCE_ALWAYS_SHOW)
+                    end
+                },
+                {
+                    text = _("Show Dictionary(AI) in Dictionary Popup"),
+                    checked_func = function () return assistant.settings:readSetting("dict_popup_show_dictionary", true) end,
+                    callback = function()
+                        assistant.settings:toggle("dict_popup_show_dictionary")
+                        assistant.updated = true
+                    end
+                },
+                {
+                    text = _("Show Wikipedia(AI) in Dictionary Popup"),
+                    checked_func = function () return assistant.settings:readSetting("dict_popup_show_wikipedia", true) end,
+                    callback = function()
+                        assistant.settings:toggle("dict_popup_show_wikipedia")
+                        assistant.updated = true
+                    end
+                },
+            }
+        },
+        {
+            text = _("Show Follow-up Questions from AI"),
+            checked_func = function () return assistant.settings:readSetting("auto_prompt_suggest", false) end,
+            callback = function()
+                assistant.settings:toggle("auto_prompt_suggest")
+                assistant.updated = true
+            end
+        },
+        {
+            text = _("Copy entered question to the clipboard"),
+            checked_func = function () return assistant.settings:readSetting("auto_copy_asked_question", true) end,
+            callback = function()
+                assistant.settings:toggle("auto_copy_asked_question")
+                assistant.updated = true
+            end
+        },
+        {
+            text = _("Auto-save conversations to NoteBook"),
+            checked_func = function () return assistant.settings:readSetting("auto_save_to_notebook", false) end,
+            callback = function()
+                assistant.settings:toggle("auto_save_to_notebook")
+                assistant.updated = true
+            end
+        },
+        {
+            text = _("Use book text for x-ray and recap"),
+            checked_func = function () return assistant.settings:readSetting("use_book_text_for_analysis", false) end,
+            callback = function()
+                assistant.settings:toggle("use_book_text_for_analysis")
+                assistant.updated = true
+            end
+        },
+    }
+    return sub_item_table
+end
+
 
 return SettingsDialog

@@ -230,6 +230,12 @@ function Assistant:addToMainMenu(menu_items)
               self:_help_dialog()
             end
           },
+          {
+            text = _("Feature Settings"),
+            sub_item_table_func = function ()
+              return SettingsDialog.genMenuSettings(self)
+            end
+          }
         },
     }
 end
