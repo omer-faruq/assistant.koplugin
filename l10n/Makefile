@@ -87,6 +87,7 @@ import-translation:
 check:
 	@echo "Checking syntax of existing .po files..."
 	@for po_file in $(PO_FILES); do \
+		dir=$$(dirname $$po_file); printf "%-8s" "$$dir"; \
 		$(MSGFMT_BIN) -v --check -o /dev/null $$po_file; \
 	done
 
