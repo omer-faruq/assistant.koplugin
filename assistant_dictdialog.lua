@@ -91,7 +91,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history)
                     local next_part = string.sub(sentence, word_end + 1)
 
                     -- Check if the sentence context is too short on both sides.
-                    if countWords(prev_part) < 10 and countWords(next_part) < 10 then
+                    if countWords(prev_part) < 50 and countWords(next_part) < 50 then
                         -- The sentence is short, so we'll use the fallback to get more context.
                         use_fallback_context = true
                     else
@@ -107,7 +107,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history)
         -- Use the fallback method (word count) if we couldn't get a good sentence context.
         if use_fallback_context then
             local success, prev, next = pcall(function()
-                return ui.highlight:getSelectedWordContext(10)
+                return ui.highlight:getSelectedWordContext(50)
             end)
             if success then
                 prev_context = prev or ""
@@ -138,13 +138,16 @@ local function showDictionaryDialog(assistant, highlightedText, message_history)
     local function createResultText(highlightedText, answer)
         local result_text
         local render_markdown = koutil.tableGetValue(CONFIGURATION, "features", "render_markdown") or true
+        -- Limit prev_context to last 100 characters and next_context to first 100 characters
+        local prev_context_limited = string.sub(prev_context, -100)
+        local next_context_limited = string.sub(next_context, 1, 100)
         if render_markdown then
             -- in markdown mode, outputs markdown formatted highlighted text
-            result_text = T("... %1 **%2** %3 ...\n\n%4", prev_context, highlightedText, next_context, answer)
+            result_text = T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, highlightedText, next_context_limited, answer)
         else
             -- in plain text mode, use widget controled characters.
-            result_text = T("%1... %2%3%4 ...\n\n%5", TextBoxWidget.PTF_HEADER, prev_context, 
-                TextBoxWidget.PTF_BOLD_START, highlightedText, TextBoxWidget.PTF_BOLD_END,  next_context, answer)
+            result_text = T("%1... %2%3%4 ...\n\n%5", TextBoxWidget.PTF_HEADER, prev_context_limited, 
+                TextBoxWidget.PTF_BOLD_START, highlightedText, TextBoxWidget.PTF_BOLD_END,  next_context_limited, answer)
         end
         return result_text
     end
