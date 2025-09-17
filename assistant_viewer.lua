@@ -939,7 +939,7 @@ function ChatGPTViewer:trimMessageHistory()
 end
 
 function ChatGPTViewer:html_link_tapped_callback(link)
-  local SUGGESTION_PREFIX = "#suggested-question:"
+  local SUGGESTION_PREFIX = "#q:"
   if link.uri and util.stringStartsWith(link.uri, SUGGESTION_PREFIX) then
     self:askAnotherQuestion(true) -- simple_mode
     self.input_dialog:setInputText(link.uri:sub(#SUGGESTION_PREFIX+1), nil, false)

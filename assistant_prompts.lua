@@ -303,16 +303,19 @@ Display them as a **Markdown unordered list** with this exact format:
 ---
 {follow_up_headline}
 
-- [Question 1](#suggested-question:Question 1)  
-- [Question 2](#suggested-question:Question 2)  
+- [Question 1](#q:Question 1)
+- [Question 2](#q:Question 2)
 ```  
 
-**Rules:**  
-1. Replace `{follow_up_headline}` with a translated single sentence in {language} language meaning `You may find these topics interesting:`. Leave another line empty after this line.
+**Please strictly follow these rules:**
+1. Replace `{follow_up_headline}` with a translated single sentence in {language} language meaning `You may find these topics interesting:`. 
+    - Leave another line empty after this line.
 2. Avoid using parentheses `()` within the question text; rephrase if necessary.
-3. The link syntax must be `[TEXT](#suggested-question:TEXT)` — the colon `:` is required. The link parentheses `()` must remain in Markdown format, strictly prohibit replacing them with l10n language punctuation (e.g., `（）`).
-4. The TEXT inside the brackets `[]` and the TEXT in the link must be identical, including punctuations.
-```
+3. The link syntax **MUST** be `[TEXT](#q:TEXT)`
+    - The colon `:` is **required**.
+    - The link parentheses `()` **MUST** remain in Markdown format, **strictly prohibit replacing them with l10n language punctuation** (e.g., `（）`). 
+    - The TEXT inside the brackets `[]` and the TEXT in the link **MUST** be identical, including punctuations.
+    - **CRITICAL: You MUST strictly adhere to the Markdown link format for follow-up questions, especially the colon and parentheses.**
 ]],
 }
 
