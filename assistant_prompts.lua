@@ -177,7 +177,20 @@ All content generated should strictly adhere to Wikipedia's tone and style, and 
 Please act as a Wikipedia page for the following topic, starting with an introductory paragraph and thoroughly covering its most important aspects, delivered entirely in {language}. 
 
 {highlight}]],
-        },
+        }, 
+        term_xray = {
+            text = _("Term X-Ray"),
+            order = 110,
+            desc = _("This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."),
+            system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+            user_prompt = [[
+You are a literary analysis expert specializing in contextual interpretation and comprehensive explanations of textual elements. Given the highlighted word or phrase "{highlight}" from the provided text context below, create a precise, nuanced explanation that captures both the literal meaning and the specific contextual significance within this particular work. Tailor your response based on the type of element being defined: for characters, include physical descriptions, personality traits, relationships, and their impact on the story's progression; for places, describe the physical setting, cultural atmosphere, economic conditions, power structures, and symbolic significance; for concepts or themes, explain the abstract idea and its manifestation within the narrative; for historical references, provide background context and relevance to the work; for technical terms, define the concept and its application within the text; for symbolic objects, describe both literal appearance and metaphorical meaning; and for unfamiliar vocabulary, explain the definition while considering any specialized usage by the author.
+Provide a clear, comprehensive explanation in 2-4 sentences that addresses: (1) the basic meaning or nature of the element, (2) how the surrounding context shapes or reveals its significance, and (3) its broader role or importance within the work. Consider any additional user guidance provided in "{user_input}" to tailor your explanation to their specific needs, reading level, or areas of interest. If the element has multiple layers of meaning or interpretation, acknowledge this complexity while identifying the most relevant aspects based on the surrounding text and the work's overall themes.
+
+Context to consider:
+
+{context}
+]],}
 }
 
 
