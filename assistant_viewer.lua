@@ -62,9 +62,11 @@ end
 
 -- Undo default margins and padding in ScrollHtmlWidget.
 -- Based on ui/widget/dictquicklookup.
+-- font-family order: https://github.com/koreader/koreader/blob/19f3278d6b2c4677ced5358b83dc9157a8210d33/frontend/document/credocument.lua#L59
 local VIEWER_CSS = [[
 @page {
     margin: 0;
+    font-family: 'Noto Sans CJK TC', 'Noto Sans Arabic', 'Noto Sans Devanagari UI', 'Noto Sans Bengali UI', 'FreeSans', 'Noto Sans', sans-serif;
 }
 
 body {
