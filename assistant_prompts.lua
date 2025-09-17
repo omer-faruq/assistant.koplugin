@@ -295,28 +295,35 @@ Ensure all information is accurate and based on known facts. Respond entirely in
     _("Example"),
     _("Word Origin"))
     },
-    suggestions_prompt = [[  
+    suggestions_prompt = T([[  
 At the end of your response, generate 2-3 questions in {language} language that the user might find interesting based on your answer.  
 Display them as a **Markdown unordered list** with this exact format:  
 
 ```
 ---
-{follow_up_headline}
+__%1__
 
 - [Question 1](#q:Question 1)
 - [Question 2](#q:Question 2)
 ```  
 
-**Please strictly follow these rules:**
-1. Replace `{follow_up_headline}` with a translated single sentence in {language} language meaning `You may find these topics interesting:`. 
-    - Leave another line empty after this line.
-2. Avoid using parentheses `()` within the question text; rephrase if necessary.
-3. The link syntax **MUST** be `[TEXT](#q:TEXT)`
-    - The colon `:` is **required**.
-    - The link parentheses `()` **MUST** remain in Markdown format, **strictly prohibit replacing them with l10n language punctuation** (e.g., `（）`). 
-    - The TEXT inside the brackets `[]` and the TEXT in the link **MUST** be identical, including punctuations.
-    - **CRITICAL: You MUST strictly adhere to the Markdown link format for follow-up questions, especially the colon and parentheses.**
-]],
+**Critical rules to avoid Markdown parsing errors:**  
+1. **Correct symbols only:**  
+   - **MUST** use English parentheses `()` strictly required for markdown  
+   - **WRONG (non-ASCII symbols):** `（）`  
+   - **WRONG (other variants):** `［］` or `【】`  
+   
+2. **Strict link format:** `[TEXT](#q:TEXT)` with:  
+   - Colons **required** after `#q:`  
+   - Identical text inside `[]` and `()`  
+   - **ZERO tolerance for symbol variants** (e.g. `（）` will break parsing)  
+
+3. **Double-check mechanism:**  
+   - Use English keyboard to input symbols  
+   - Verify parentheses at **both link parts**:  
+     - Example ✅: `[Topic A](#q:Topic A)`  
+     - Counterexample 🚫: `[Topic A](#q:Topic A）`  
+]], _("You may find these topics interesting:")),
 }
 
 
