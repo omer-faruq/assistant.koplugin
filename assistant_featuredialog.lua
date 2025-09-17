@@ -12,6 +12,7 @@ local koutil = require("util")
 local ChatGPTViewer = require("assistant_viewer")
 local assistant_prompts = require("assistant_prompts").assistant_prompts
 local NetworkMgr = require("ui/network/manager")
+local extractBookTextForAnalysis = require("assistant_utils").extractBookTextForAnalysis
 
 local function showFeatureDialog(assistant, feature_type, title, author, progress_percent, message_history)
     local CONFIGURATION = assistant.CONFIGURATION
@@ -81,53 +82,12 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         or koutil.tableGetValue(assistant_prompts, prompts_key, "user_prompt")
 
     local book_text = nil
-    
     if feature_type == "xray" or feature_type == "recap" then
-        if assistant.settings:readSetting("use_book_text_for_analysis", false) then
-          if not ui.document.info.has_pages then
-              -- Only extract text for EPUB documents
-              local current_xp = ui.document:getXPointer()
-              ui.document:gotoPos(0)
-              local start_xp = ui.document:getXPointer()
-              ui.document:gotoXPointer(current_xp)
-              book_text = ui.document:getTextFromXPointers(start_xp, current_xp) or ""
-              local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
-              if #book_text > max_text_length_for_analysis then
-                  book_text = book_text:sub(-max_text_length_for_analysis)
-              end
-          else
-            -- Extract text from the last n pages up to current reading position for page-based documents
-            local current_page = ui.view.state.page
-            local total_pages = ui.document:getPageCount()
-            local max_page_size_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_page_size_for_analysis") or 250
-            local start_page = math.max(1, current_page - max_page_size_for_analysis)
-            book_text = ""
-            for page = start_page, current_page do
-                local page_text = ui.document:getPageText(page) or ""
-                if type(page_text) == "table" then
-                    local texts = {}
-                    for _, block in ipairs(page_text) do
-                        if type(block) == "table" then
-                            for i = 1, #block do
-                                local span = block[i]
-                                if type(span) == "table" and span.word then
-                                    table.insert(texts, span.word)
-                                end
-                            end
-                        end
-                    end
-                    page_text = table.concat(texts, " ")
-                end
-                book_text = book_text .. page_text .. "\n"
-            end
-            local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
-            if #book_text > max_text_length_for_analysis then
-                book_text = book_text:sub(-max_text_length_for_analysis)
-            end
-          end
-        end
+      if assistant.settings:readSetting("use_book_text_for_analysis", false) then
+        book_text = extractBookTextForAnalysis(CONFIGURATION, ui)
+      end
     end
-    
+
     local book_text_prompt = ""
     if book_text then
         book_text_prompt = string.format("\n\n[! IMPORTANT !] Here is the book text up to my current position, only consider this text for your response:\n [BOOK TEXT BEGIN]\n%s\n[BOOK TEXT END]", book_text)

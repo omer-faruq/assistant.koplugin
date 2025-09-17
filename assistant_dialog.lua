@@ -13,6 +13,8 @@ local Prompts = require("assistant_prompts")
 local koutil = require("util")
 local Device = require("device")
 local Screen = Device.screen
+local CheckButton = require("ui/widget/checkbutton")
+local extractBookTextForAnalysis = require("assistant_utils").extractBookTextForAnalysis
 local NetworkMgr = require("ui/network/manager")
 
 -- main dialog class
@@ -85,11 +87,18 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
         user_message = string.format("%s\n\n", title)
         -- Check if user input is available
         if message.user_input and message.user_input ~= "" then
+          if message.user_input:find("%[BOOK TEXT BEGIN%]") then
+            message.user_input = message.user_input:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
+          end
           user_message = user_message .. message.user_input .. "\n\n"
         end
       else
         -- shows user input prompt
-        user_message = string.format("\n\n%s\n\n", message.content or _("(Empty message)"))
+        local content = message.content or _("(Empty message)")
+        if content:find("%[BOOK TEXT BEGIN%]") then
+          content = content:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
+        end
+        user_message = string.format("\n\n%s\n\n", content)
       end
       return "### ⮞ User: " .. user_message
     elseif message.role == "assistant" then
@@ -271,6 +280,11 @@ function AssistantDialog:show(highlightedText)
   -- Create button rows (3 buttons per row)
   local button_rows = {}
   local prompt_buttons = {}
+  local use_book_text_checkbox = CheckButton:new{
+    text = _("Use book text"), -- add spaces for indentation
+    checked = false, -- default to false
+    width = math.floor((Screen:getWidth() - 250) * 0.9), -- match input dialog content width
+  }
   local first_row = {
     {
       text = _("Cancel"),
@@ -284,6 +298,13 @@ function AssistantDialog:show(highlightedText)
       is_enter_default = true,
       callback = function()
         local user_question = self.input_dialog and self.input_dialog:getInputText() or ""
+        local book_text_prompt = ""
+        if use_book_text_checkbox.checked then
+          local book_text = extractBookTextForAnalysis(self.CONFIGURATION, self.assistant.ui)
+          if book_text then
+            book_text_prompt = string.format("\n\n [! IMPORTANT !] Here is the book text up to my current position, only consider this text for your response, and answer in language of previous part of the question:\n [BOOK TEXT BEGIN]\n%s\n[BOOK TEXT END]", book_text)
+          end
+        end
         if not user_question or user_question == "" then
           UIManager:show(InfoMessage:new{
             text = _("Enter a question before proceeding."),
@@ -295,6 +316,7 @@ function AssistantDialog:show(highlightedText)
           Device.input.setClipboardText(user_question)
         end
         self:_close()
+        user_question = user_question .. book_text_prompt
         self:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question)
         Trapper:wrap(function()
           local answer, err = self.querier:query(message_history)
@@ -349,6 +371,14 @@ function AssistantDialog:show(highlightedText)
               -- Save note with highlighted text
               self.assistant.quicknote:saveNote(user_question, highlightedText)
             else
+              local book_text_prompt = ""
+              if use_book_text_checkbox.checked then
+                local book_text = extractBookTextForAnalysis(self.CONFIGURATION, self.assistant.ui)
+                if book_text then
+                  book_text_prompt = string.format("\n\n[! IMPORTANT !] Here is the book text up to my current position, only consider this text for your response:\n [BOOK TEXT BEGIN]\n%s\n[BOOK TEXT END]", book_text)
+                end
+              end
+              user_question = user_question .. book_text_prompt
               self:showCustomPrompt(highlightedText, tab.idx, user_question)
             end
           end)
@@ -409,6 +439,12 @@ function AssistantDialog:show(highlightedText)
     close_callback = function () self:_close() end,
     dismiss_callback = function () self:_close() end
   }
+  
+  -- Add checkbox above the input field
+  local vgroup = self.input_dialog.dialog_frame[1]
+  table.insert(vgroup, 2, use_book_text_checkbox) -- insert after title_bar
+  use_book_text_checkbox.parent = self.input_dialog -- set parent for proper UI updates
+  UIManager:setDirty(self.input_dialog, "ui")
   
   --  adds a close button to the top right
   self.input_dialog.title_bar.close_callback = function() self:_close() end
