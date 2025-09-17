@@ -6,8 +6,8 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-16 16:16+0800\n"
-        "PO-Revision-Date: 2025-09-05 00:03+0800\n"
+        "POT-Creation-Date: 2025-09-17 15:17+0800\n"
+        "PO-Revision-Date: 2025-09-17 15:17+0800\n"
         "Last-Translator: ChatGPT 4.0 <chatgpt@openai.com>\n"
         "Language-Team: Čeština <cs@openai.com>\n"
         "Language: Čeština (cs)\n"
@@ -33,21 +33,21 @@ msgid   "(No response)"
 msgstr  "(Žádná odpověď)"
 
 #: ../assistant_dialog.lua:127 ../assistant_quicknote.lua:202
-#: ../assistant_viewer.lua:572
+#: ../assistant_viewer.lua:574
 msgid   "Highlighted text:"
 msgstr  "Zvýrazněný text:"
 
 #: ../assistant_dialog.lua:276 ../assistant_dictdialog.lua:36
 #: ../assistant_quicknote.lua:38 ../assistant_settings.lua:89
-#: ../assistant_viewer.lua:673
+#: ../assistant_viewer.lua:675
 msgid   "Cancel"
 msgstr  "Zrušit"
 
-#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:683
+#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:685
 msgid   "Ask"
 msgstr  "Zeptat se"
 
-#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:689
+#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:691
 msgid   "Enter a question before proceeding."
 msgstr  "Před pokračováním zadejte otázku."
 
@@ -248,6 +248,10 @@ msgstr  "Příklad"
 msgid   "Word Origin"
 msgstr  "Původ slova"
 
+#: ../assistant_prompts.lua:326
+msgid   "You may find these topics interesting:"
+msgstr  "Mohly by vás zajímat následující témata:"
+
 #: ../assistant_querier.lua:51
 msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr  "Nastavení poskytovatele pro %1 nebylo nalezeno. Zkontrolujte soubor configuration.lua."
@@ -275,7 +279,7 @@ msgid   "Settings"
 msgstr  "Nastavení"
 
 #: ../assistant_querier.lua:113 ../assistant_settings.lua:200
-#: ../assistant_viewer.lua:339
+#: ../assistant_viewer.lua:341
 msgid   "Close"
 msgstr  "Zavřít"
 
@@ -320,7 +324,7 @@ msgid   "Write quick notes here"
 msgstr  "Zde napište rychlé poznámky"
 
 #: ../assistant_quicknote.lua:48 ../assistant_settings.lua:113
-#: ../assistant_viewer.lua:448
+#: ../assistant_viewer.lua:450
 msgid   "Save"
 msgstr  "Uložit"
 
@@ -378,75 +382,75 @@ msgstr  "Ponechte prázdné pro použití jazyka rozhraní: %1"
 msgid   "AI Provider Settings"
 msgstr  "Nastavení poskytovatele AI"
 
-#: ../assistant_settings.lua:257
+#: ../assistant_settings.lua:259
 msgid   "AI Model provider:"
 msgstr  "Poskytovatel modelu AI:"
 
-#: ../assistant_settings.lua:324
+#: ../assistant_settings.lua:326
 msgid   "AI Language: "
 msgstr  "Jazyk AI: "
 
-#: ../assistant_settings.lua:336
+#: ../assistant_settings.lua:338
 msgid   "AI Text Size: %1"
 msgstr  "Velikost textu AI: %1"
 
-#: ../assistant_settings.lua:340
+#: ../assistant_settings.lua:342
 msgid   "AI Response Text Font Size"
 msgstr  "Velikost písma odpovědi AI"
 
-#: ../assistant_settings.lua:356
+#: ../assistant_settings.lua:358
 msgid   "Stream Mode Settings"
 msgstr  "Nastavení streamovacího režimu"
 
-#: ../assistant_settings.lua:359
+#: ../assistant_settings.lua:361
 msgid   "Enable stream response"
 msgstr  "Povolit streamovanou odpověď"
 
-#: ../assistant_settings.lua:367
+#: ../assistant_settings.lua:369
 msgid   "Auto scroll stream response text"
 msgstr  "Automaticky posouvat text odpovědi AI"
 
-#: ../assistant_settings.lua:376
+#: ../assistant_settings.lua:378
 msgid   "Large Streaming Window"
 msgstr  "Velké streamovací okno"
 
-#: ../assistant_settings.lua:387
+#: ../assistant_settings.lua:389
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "Úpravy a přepsání KOReaderu"
 
-#: ../assistant_settings.lua:390
+#: ../assistant_settings.lua:392
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Používat AI Asistenta pro 'Přeložit'"
 
-#: ../assistant_settings.lua:401
+#: ../assistant_settings.lua:403
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Automatické shrnutí při otevření dlouho nečtených knih"
 
-#: ../assistant_settings.lua:411
+#: ../assistant_settings.lua:413
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "Shrnutí AI bude aktivováno při příštím otevření dlouho nečtené knihy."
 
-#: ../assistant_settings.lua:415
+#: ../assistant_settings.lua:417
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Zobrazit AI slovník ve vyskakovacím slovníku"
 
-#: ../assistant_settings.lua:423
+#: ../assistant_settings.lua:425
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Zobrazit AI Wikipedii ve vyskakovacím slovníku"
 
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:435
 msgid   "Show Follow-up Questions from AI"
 msgstr  "Zobrazit navazující otázky od AI"
 
-#: ../assistant_settings.lua:441
+#: ../assistant_settings.lua:443
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kopírovat zadanou otázku do schránky"
 
-#: ../assistant_settings.lua:449
+#: ../assistant_settings.lua:451
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Automaticky ukládat konverzace do Poznámkového bloku"
 
-#: ../assistant_settings.lua:457
+#: ../assistant_settings.lua:459
 msgid   "Use book text for x-ray and recap"
 msgstr  "Použít text knihy pro rentgen a shrnutí"
 
@@ -460,55 +464,55 @@ msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "Je k dispozici nová verze pluginu %s (%s). Aktualizujte prosím!"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:299 ../assistant_viewer.lua:740
+#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:742
 msgid   "Ask Another Question"
 msgstr  "Zeptejte se na další otázku"
 
-#: ../assistant_viewer.lua:354
+#: ../assistant_viewer.lua:356
 msgid   "Copy"
 msgstr  "Kopírovat"
 
-#: ../assistant_viewer.lua:359
+#: ../assistant_viewer.lua:361
 msgid   "Text copied to the clipboard"
 msgstr  "Text zkopírován do schránky"
 
-#: ../assistant_viewer.lua:373
+#: ../assistant_viewer.lua:375
 msgid   "Add Note"
 msgstr  "Přidat poznámku"
 
-#: ../assistant_viewer.lua:380
+#: ../assistant_viewer.lua:382
 msgid   "Highlight functionality not available"
 msgstr  "Funkce zvýraznění není dostupná"
 
-#: ../assistant_viewer.lua:389
+#: ../assistant_viewer.lua:391
 msgid   "No text to add as note"
 msgstr  "Žádný text k přidání jako poznámku"
 
-#: ../assistant_viewer.lua:418
+#: ../assistant_viewer.lua:420
 msgid   "No text left to add as note"
 msgstr  "Žádný text zbylý k přidání jako poznámka"
 
-#: ../assistant_viewer.lua:431
+#: ../assistant_viewer.lua:433
 msgid   "Note added successfully"
 msgstr  "Poznámka úspěšně přidána"
 
-#: ../assistant_viewer.lua:452
+#: ../assistant_viewer.lua:454
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Konverzace uložena do Poznámkového bloku"
 
-#: ../assistant_viewer.lua:576
+#: ../assistant_viewer.lua:578
 msgid   "Book Analysis"
 msgstr  "Analýza knihy"
 
-#: ../assistant_viewer.lua:742
+#: ../assistant_viewer.lua:744
 msgid   "Type your question here"
 msgstr  "Zadejte svou otázku zde"
 
-#: ../assistant_viewer.lua:906
+#: ../assistant_viewer.lua:908
 msgid   "Word copied to clipboard."
 msgstr  "Slovo zkopírováno do schránky."
 
-#: ../assistant_viewer.lua:907
+#: ../assistant_viewer.lua:909
 msgid   "Selection copied to clipboard."
 msgstr  "Výběr zkopírován do schránky."
 

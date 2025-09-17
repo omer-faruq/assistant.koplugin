@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-16 16:16+0800\n"
+        "POT-Creation-Date: 2025-09-17 15:17+0800\n"
         "PO-Revision-Date: 2025-09-16 16:16+0800\n"
         "Last-Translator: ChatGPT 4.0 <chatgpt@example.com>\n"
         "Language-Team: ChatGPT 4.0 <chatgpt@example.com>\n"
@@ -33,21 +33,21 @@ msgid   "(No response)"
 msgstr  "(Sem resposta)"
 
 #: ../assistant_dialog.lua:127 ../assistant_quicknote.lua:202
-#: ../assistant_viewer.lua:572
+#: ../assistant_viewer.lua:574
 msgid   "Highlighted text:"
 msgstr  "Texto destacado:"
 
 #: ../assistant_dialog.lua:276 ../assistant_dictdialog.lua:36
 #: ../assistant_quicknote.lua:38 ../assistant_settings.lua:89
-#: ../assistant_viewer.lua:673
+#: ../assistant_viewer.lua:675
 msgid   "Cancel"
 msgstr  "Cancelar"
 
-#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:683
+#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:685
 msgid   "Ask"
 msgstr  "Perguntar"
 
-#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:689
+#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:691
 msgid   "Enter a question before proceeding."
 msgstr  "Digite uma pergunta antes de continuar."
 
@@ -248,6 +248,10 @@ msgstr  "Exemplo"
 msgid   "Word Origin"
 msgstr  "Origem da palavra"
 
+#: ../assistant_prompts.lua:326
+msgid   "You may find these topics interesting:"
+msgstr  "Pode achar estes tópicos interessantes:"
+
 #: ../assistant_querier.lua:51
 msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr  "Configurações do provedor não encontradas para: %1. Verifique seu arquivo configuration.lua."
@@ -275,7 +279,7 @@ msgid   "Settings"
 msgstr  "Definições"
 
 #: ../assistant_querier.lua:113 ../assistant_settings.lua:200
-#: ../assistant_viewer.lua:339
+#: ../assistant_viewer.lua:341
 msgid   "Close"
 msgstr  "Fechar"
 
@@ -320,7 +324,7 @@ msgid   "Write quick notes here"
 msgstr  "Escreva notas rápidas aqui"
 
 #: ../assistant_quicknote.lua:48 ../assistant_settings.lua:113
-#: ../assistant_viewer.lua:448
+#: ../assistant_viewer.lua:450
 msgid   "Save"
 msgstr  "Guardar"
 
@@ -378,75 +382,75 @@ msgstr  "Deixe vazio para usar idioma da interface: %1"
 msgid   "AI Provider Settings"
 msgstr  "Configurações do Provedor de IA"
 
-#: ../assistant_settings.lua:257
+#: ../assistant_settings.lua:259
 msgid   "AI Model provider:"
 msgstr  "Provedor do Modelo de IA:"
 
-#: ../assistant_settings.lua:324
+#: ../assistant_settings.lua:326
 msgid   "AI Language: "
 msgstr  "Idioma da IA: "
 
-#: ../assistant_settings.lua:336
+#: ../assistant_settings.lua:338
 msgid   "AI Text Size: %1"
 msgstr  "Tamanho do Texto da IA: %1"
 
-#: ../assistant_settings.lua:340
+#: ../assistant_settings.lua:342
 msgid   "AI Response Text Font Size"
 msgstr  "Tamanho da Fonte do Texto de Resposta da IA"
 
-#: ../assistant_settings.lua:356
+#: ../assistant_settings.lua:358
 msgid   "Stream Mode Settings"
 msgstr  "Configurações do Modo de Transmissão"
 
-#: ../assistant_settings.lua:359
+#: ../assistant_settings.lua:361
 msgid   "Enable stream response"
 msgstr  "Ativar resposta em fluxo"
 
-#: ../assistant_settings.lua:367
+#: ../assistant_settings.lua:369
 msgid   "Auto scroll stream response text"
 msgstr  "Deslocamento automático do texto de resposta em fluxo"
 
-#: ../assistant_settings.lua:376
+#: ../assistant_settings.lua:378
 msgid   "Large Streaming Window"
 msgstr  "Janela de Transmissão Grande"
 
-#: ../assistant_settings.lua:387
+#: ../assistant_settings.lua:389
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "Ajustes e Substituições do KOReader"
 
-#: ../assistant_settings.lua:390
+#: ../assistant_settings.lua:392
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Usar Assistente IA para 'Traduzir'"
 
-#: ../assistant_settings.lua:401
+#: ../assistant_settings.lua:403
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Recapitulação automática ao abrir livros há muito não lidos"
 
-#: ../assistant_settings.lua:411
+#: ../assistant_settings.lua:413
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "A Recapitulação por IA será ativada na próxima vez que um livro há muito não lido for aberto."
 
-#: ../assistant_settings.lua:415
+#: ../assistant_settings.lua:417
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Mostrar Dicionário(IA) no popup"
 
-#: ../assistant_settings.lua:423
+#: ../assistant_settings.lua:425
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Mostrar Wikipedia(IA) no popup"
 
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:435
 msgid   "Show Follow-up Questions from AI"
 msgstr  "Mostrar Perguntas de Acompanhamento da IA"
 
-#: ../assistant_settings.lua:441
+#: ../assistant_settings.lua:443
 msgid   "Copy entered question to the clipboard"
 msgstr  "Copiar pergunta para área de transferência"
 
-#: ../assistant_settings.lua:449
+#: ../assistant_settings.lua:451
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Guardar conversas automaticamente no Caderno"
 
-#: ../assistant_settings.lua:457
+#: ../assistant_settings.lua:459
 msgid   "Use book text for x-ray and recap"
 msgstr  "Usar texto do livro para raio-x e recapitulação"
 
@@ -460,55 +464,55 @@ msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "Uma nova versão do plugin %s (%s) está disponível. Atualize!"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:299 ../assistant_viewer.lua:740
+#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:742
 msgid   "Ask Another Question"
 msgstr  "Faça outra pergunta"
 
-#: ../assistant_viewer.lua:354
+#: ../assistant_viewer.lua:356
 msgid   "Copy"
 msgstr  "Copiar"
 
-#: ../assistant_viewer.lua:359
+#: ../assistant_viewer.lua:361
 msgid   "Text copied to the clipboard"
 msgstr  "Texto copiado para a área de transferência"
 
-#: ../assistant_viewer.lua:373
+#: ../assistant_viewer.lua:375
 msgid   "Add Note"
 msgstr  "Adicionar nota"
 
-#: ../assistant_viewer.lua:380
+#: ../assistant_viewer.lua:382
 msgid   "Highlight functionality not available"
 msgstr  "Destaque indisponível"
 
-#: ../assistant_viewer.lua:389
+#: ../assistant_viewer.lua:391
 msgid   "No text to add as note"
 msgstr  "Nenhum texto para adicionar como nota"
 
-#: ../assistant_viewer.lua:418
+#: ../assistant_viewer.lua:420
 msgid   "No text left to add as note"
 msgstr  "Sem texto restante para nota"
 
-#: ../assistant_viewer.lua:431
+#: ../assistant_viewer.lua:433
 msgid   "Note added successfully"
 msgstr  "Nota adicionada"
 
-#: ../assistant_viewer.lua:452
+#: ../assistant_viewer.lua:454
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Conversa guardada no Caderno"
 
-#: ../assistant_viewer.lua:576
+#: ../assistant_viewer.lua:578
 msgid   "Book Analysis"
 msgstr  "Análise do livro"
 
-#: ../assistant_viewer.lua:742
+#: ../assistant_viewer.lua:744
 msgid   "Type your question here"
 msgstr  "Digite sua pergunta"
 
-#: ../assistant_viewer.lua:906
+#: ../assistant_viewer.lua:908
 msgid   "Word copied to clipboard."
 msgstr  "Palavra copiada."
 
-#: ../assistant_viewer.lua:907
+#: ../assistant_viewer.lua:909
 msgid   "Selection copied to clipboard."
 msgstr  "Seleção copiada."
 

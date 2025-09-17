@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-16 16:16+0800\n"
+        "POT-Creation-Date: 2025-09-17 15:17+0800\n"
         "PO-Revision-Date: 2025-08-22 15:24+0800\n"
         "Last-Translator: GPT-4o 2025-08-22\n"
         "Language-Team: GPT-4o 2025-08-22\n"
@@ -33,21 +33,21 @@ msgid   "(No response)"
 msgstr  "（無回應）"
 
 #: ../assistant_dialog.lua:127 ../assistant_quicknote.lua:202
-#: ../assistant_viewer.lua:572
+#: ../assistant_viewer.lua:574
 msgid   "Highlighted text:"
 msgstr  "劃線文字："
 
 #: ../assistant_dialog.lua:276 ../assistant_dictdialog.lua:36
 #: ../assistant_quicknote.lua:38 ../assistant_settings.lua:89
-#: ../assistant_viewer.lua:673
+#: ../assistant_viewer.lua:675
 msgid   "Cancel"
 msgstr  "取消"
 
-#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:683
+#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:685
 msgid   "Ask"
 msgstr  "提問"
 
-#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:689
+#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:691
 msgid   "Enter a question before proceeding."
 msgstr  "請先輸入問題"
 
@@ -248,6 +248,10 @@ msgstr  "範例"
 msgid   "Word Origin"
 msgstr  "字源"
 
+#: ../assistant_prompts.lua:326
+msgid   "You may find these topics interesting:"
+msgstr  "您可能會對這些主題感興趣："
+
 #: ../assistant_querier.lua:51
 msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr  "找不到 %1 的提供者設定。請檢查您的 configuration.lua 檔案。"
@@ -275,7 +279,7 @@ msgid   "Settings"
 msgstr  "設定"
 
 #: ../assistant_querier.lua:113 ../assistant_settings.lua:200
-#: ../assistant_viewer.lua:339
+#: ../assistant_viewer.lua:341
 msgid   "Close"
 msgstr  "關閉"
 
@@ -320,7 +324,7 @@ msgid   "Write quick notes here"
 msgstr  "在此處撰寫快速筆記"
 
 #: ../assistant_quicknote.lua:48 ../assistant_settings.lua:113
-#: ../assistant_viewer.lua:448
+#: ../assistant_viewer.lua:450
 msgid   "Save"
 msgstr  "儲存"
 
@@ -378,75 +382,75 @@ msgstr  "留空將使用介面語言：%1"
 msgid   "AI Provider Settings"
 msgstr  "AI 供應商設定"
 
-#: ../assistant_settings.lua:257
+#: ../assistant_settings.lua:259
 msgid   "AI Model provider:"
 msgstr  "AI 模型提供者："
 
-#: ../assistant_settings.lua:324
+#: ../assistant_settings.lua:326
 msgid   "AI Language: "
 msgstr  "AI 語言："
 
-#: ../assistant_settings.lua:336
+#: ../assistant_settings.lua:338
 msgid   "AI Text Size: %1"
 msgstr  "AI 文字大小：%1"
 
-#: ../assistant_settings.lua:340
+#: ../assistant_settings.lua:342
 msgid   "AI Response Text Font Size"
 msgstr  "AI 回應文字字型大小"
 
-#: ../assistant_settings.lua:356
+#: ../assistant_settings.lua:358
 msgid   "Stream Mode Settings"
 msgstr  "串流模式設定"
 
-#: ../assistant_settings.lua:359
+#: ../assistant_settings.lua:361
 msgid   "Enable stream response"
 msgstr  "啟用即時回應"
 
-#: ../assistant_settings.lua:367
+#: ../assistant_settings.lua:369
 msgid   "Auto scroll stream response text"
 msgstr  "自動捲動串流回應文字"
 
-#: ../assistant_settings.lua:376
+#: ../assistant_settings.lua:378
 msgid   "Large Streaming Window"
 msgstr  "大型串流視窗"
 
-#: ../assistant_settings.lua:387
+#: ../assistant_settings.lua:389
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader 調整與覆寫"
 
-#: ../assistant_settings.lua:390
+#: ../assistant_settings.lua:392
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "在「翻譯」中使用 AI 助理"
 
-#: ../assistant_settings.lua:401
+#: ../assistant_settings.lua:403
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "開啟久未閱讀的書籍時自動摘要"
 
-#: ../assistant_settings.lua:411
+#: ../assistant_settings.lua:413
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "下次開啟久未閱讀的書籍時將啟用 AI 摘要功能。"
 
-#: ../assistant_settings.lua:415
+#: ../assistant_settings.lua:417
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "在辭典彈窗顯示 AI 辭典"
 
-#: ../assistant_settings.lua:423
+#: ../assistant_settings.lua:425
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "在辭典彈窗顯示 AI 維基百科"
 
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:435
 msgid   "Show Follow-up Questions from AI"
 msgstr  "顯示 AI 的後續問題"
 
-#: ../assistant_settings.lua:441
+#: ../assistant_settings.lua:443
 msgid   "Copy entered question to the clipboard"
 msgstr  "複製輸入問題到剪貼簿"
 
-#: ../assistant_settings.lua:449
+#: ../assistant_settings.lua:451
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "自動儲存對話至筆記本"
 
-#: ../assistant_settings.lua:457
+#: ../assistant_settings.lua:459
 msgid   "Use book text for x-ray and recap"
 msgstr  "使用書籍內容進行透視與摘要"
 
@@ -460,55 +464,55 @@ msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "外掛 %s 有新版本 (%s)，請更新！"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:299 ../assistant_viewer.lua:740
+#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:742
 msgid   "Ask Another Question"
 msgstr  "再問一題"
 
-#: ../assistant_viewer.lua:354
+#: ../assistant_viewer.lua:356
 msgid   "Copy"
 msgstr  "複製"
 
-#: ../assistant_viewer.lua:359
+#: ../assistant_viewer.lua:361
 msgid   "Text copied to the clipboard"
 msgstr  "文字已複製至剪貼簿"
 
-#: ../assistant_viewer.lua:373
+#: ../assistant_viewer.lua:375
 msgid   "Add Note"
 msgstr  "加入筆記"
 
-#: ../assistant_viewer.lua:380
+#: ../assistant_viewer.lua:382
 msgid   "Highlight functionality not available"
 msgstr  "無法使用劃線功能"
 
-#: ../assistant_viewer.lua:389
+#: ../assistant_viewer.lua:391
 msgid   "No text to add as note"
 msgstr  "沒有可加入筆記的文字"
 
-#: ../assistant_viewer.lua:418
+#: ../assistant_viewer.lua:420
 msgid   "No text left to add as note"
 msgstr  "已無文字可加入筆記"
 
-#: ../assistant_viewer.lua:431
+#: ../assistant_viewer.lua:433
 msgid   "Note added successfully"
 msgstr  "筆記已新增"
 
-#: ../assistant_viewer.lua:452
+#: ../assistant_viewer.lua:454
 msgid   "Conversation is saved to NoteBook"
 msgstr  "對話已儲存至筆記本"
 
-#: ../assistant_viewer.lua:576
+#: ../assistant_viewer.lua:578
 msgid   "Book Analysis"
 msgstr  "書籍分析"
 
-#: ../assistant_viewer.lua:742
+#: ../assistant_viewer.lua:744
 msgid   "Type your question here"
 msgstr  "在此輸入問題"
 
-#: ../assistant_viewer.lua:906
+#: ../assistant_viewer.lua:908
 msgid   "Word copied to clipboard."
 msgstr  "單字已複製"
 
-#: ../assistant_viewer.lua:907
+#: ../assistant_viewer.lua:909
 msgid   "Selection copied to clipboard."
 msgstr  "選取內容已複製"
 

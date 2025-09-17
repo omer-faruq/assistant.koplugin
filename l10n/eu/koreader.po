@@ -1,7 +1,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.10\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-16 17:07+0800\n"
+        "POT-Creation-Date: 2025-09-17 15:17+0800\n"
         "PO-Revision-Date: 2025-09-16 16:50+0800\n"
         "Last-Translator: [AI Model Version]\n"
         "Language-Team: [AI Translation Model Name]\n"
@@ -28,21 +28,21 @@ msgid   "(No response)"
 msgstr  "(Ez da erantzunik izan)"
 
 #: ../assistant_dialog.lua:127 ../assistant_quicknote.lua:202
-#: ../assistant_viewer.lua:572
+#: ../assistant_viewer.lua:574
 msgid   "Highlighted text:"
 msgstr  "Textua altzarapenarekin:"
 
 #: ../assistant_dialog.lua:276 ../assistant_dictdialog.lua:36
 #: ../assistant_quicknote.lua:38 ../assistant_settings.lua:89
-#: ../assistant_viewer.lua:673
+#: ../assistant_viewer.lua:675
 msgid   "Cancel"
 msgstr  "Ezeztatu"
 
-#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:683
+#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:685
 msgid   "Ask"
 msgstr  "Eskatu"
 
-#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:689
+#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:691
 msgid   "Enter a question before proceeding."
 msgstr  "Idatzi galdera aurrera ezeztu aurretik."
 
@@ -243,6 +243,10 @@ msgstr  "Adibidea"
 msgid   "Word Origin"
 msgstr  "Hitzaren jatorria"
 
+#: ../assistant_prompts.lua:326
+msgid   "You may find these topics interesting:"
+msgstr  "Gai hauek interesgarriak izan daitezke:"
+
 #: ../assistant_querier.lua:51
 msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr  "%1-erako hornitzailearen ezarpenak ez da aurkitu. Mesedez baitezazu zure configuration.lua fitxategia."
@@ -270,7 +274,7 @@ msgid   "Settings"
 msgstr  "Ezarpenak"
 
 #: ../assistant_querier.lua:113 ../assistant_settings.lua:200
-#: ../assistant_viewer.lua:339
+#: ../assistant_viewer.lua:341
 msgid   "Close"
 msgstr  "Itxi"
 
@@ -315,7 +319,7 @@ msgid   "Write quick notes here"
 msgstr  "Idatzi azkar oharrak hemen"
 
 #: ../assistant_quicknote.lua:48 ../assistant_settings.lua:113
-#: ../assistant_viewer.lua:448
+#: ../assistant_viewer.lua:450
 msgid   "Save"
 msgstr  "Gorde"
 
@@ -373,75 +377,75 @@ msgstr  "Hutsik utzi oinarri horiek UI hizkuntza erabiltzea: %1"
 msgid   "AI Provider Settings"
 msgstr  "AI Hornitzaileen Ezarpenak"
 
-#: ../assistant_settings.lua:257
+#: ../assistant_settings.lua:259
 msgid   "AI Model provider:"
 msgstr  "AI Modelaren hornitzailea:"
 
-#: ../assistant_settings.lua:324
+#: ../assistant_settings.lua:326
 msgid   "AI Language: "
 msgstr  "AI Hizkuntza: "
 
-#: ../assistant_settings.lua:336
+#: ../assistant_settings.lua:338
 msgid   "AI Text Size: %1"
 msgstr  "AI Testuaren Tamaina: %1"
 
-#: ../assistant_settings.lua:340
+#: ../assistant_settings.lua:342
 msgid   "AI Response Text Font Size"
 msgstr  "AI Erantzun Testuraren Leta-tamaina"
 
-#: ../assistant_settings.lua:356
+#: ../assistant_settings.lua:358
 msgid   "Stream Mode Settings"
 msgstr  "Igorketa Moduen Ezarpena"
 
-#: ../assistant_settings.lua:359
+#: ../assistant_settings.lua:361
 msgid   "Enable stream response"
 msgstr  "Gaitu gorputza erantzuna"
 
-#: ../assistant_settings.lua:367
+#: ../assistant_settings.lua:369
 msgid   "Auto scroll stream response text"
 msgstr  "Gidatu automatikoki gorputze erantzun testua"
 
-#: ../assistant_settings.lua:376
+#: ../assistant_settings.lua:378
 msgid   "Large Streaming Window"
 msgstr  "Bideoa handitzea"
 
-#: ../assistant_settings.lua:387
+#: ../assistant_settings.lua:389
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader Errealizazio eta Gaiak"
 
-#: ../assistant_settings.lua:390
+#: ../assistant_settings.lua:392
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Erabili AI Laguntzailea 'Itzuli'ren bidez"
 
-#: ../assistant_settings.lua:401
+#: ../assistant_settings.lua:403
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Laburpen automatikoa irekita daunen liburuak irekitzean"
 
-#: ../assistant_settings.lua:411
+#: ../assistant_settings.lua:413
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "AI Laburpena aktibatuko da beste ez duzun liburua ireki aurretik."
 
-#: ../assistant_settings.lua:415
+#: ../assistant_settings.lua:417
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Erakutsi Hiztegia (AI) Hiztegiaren Popup-ean"
 
-#: ../assistant_settings.lua:423
+#: ../assistant_settings.lua:425
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Erakutsi Wikipedia (AI) Hiztegiaren Popup-ean"
 
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:435
 msgid   "Show Follow-up Questions from AI"
 msgstr  "Erakutsi jarraitzen dauen galdera AI"
 
-#: ../assistant_settings.lua:441
+#: ../assistant_settings.lua:443
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kopiatu sartutako galdera arbelan"
 
-#: ../assistant_settings.lua:449
+#: ../assistant_settings.lua:451
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Gorde automatikoki elkarteak Ohartegian"
 
-#: ../assistant_settings.lua:457
+#: ../assistant_settings.lua:459
 msgid   "Use book text for x-ray and recap"
 msgstr  "Erabili liburuaren testua X-ray eta laburpenetarako"
 
@@ -455,55 +459,55 @@ msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "%s pluginaren bertsio berria dago (%s) eskuragarri. Mesedez, eguneratu!"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:299 ../assistant_viewer.lua:740
+#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:742
 msgid   "Ask Another Question"
 msgstr  "Beste Galdera Bat"
 
-#: ../assistant_viewer.lua:354
+#: ../assistant_viewer.lua:356
 msgid   "Copy"
 msgstr  "Kopiatu"
 
-#: ../assistant_viewer.lua:359
+#: ../assistant_viewer.lua:361
 msgid   "Text copied to the clipboard"
 msgstr  "Testua arbelan kopiatu da"
 
-#: ../assistant_viewer.lua:373
+#: ../assistant_viewer.lua:375
 msgid   "Add Note"
 msgstr  "Gehitu ohartza"
 
-#: ../assistant_viewer.lua:380
+#: ../assistant_viewer.lua:382
 msgid   "Highlight functionality not available"
 msgstr  "Altzarpeta ez da eskuragarri"
 
-#: ../assistant_viewer.lua:389
+#: ../assistant_viewer.lua:391
 msgid   "No text to add as note"
 msgstr  "Ez dago testurik gehitzeko azkar ohartza gisa"
 
-#: ../assistant_viewer.lua:418
+#: ../assistant_viewer.lua:420
 msgid   "No text left to add as note"
 msgstr  "Ez dago texto gehiagorik nota gisa"
 
-#: ../assistant_viewer.lua:431
+#: ../assistant_viewer.lua:433
 msgid   "Note added successfully"
 msgstr  "Ohartza ongi gehitua"
 
-#: ../assistant_viewer.lua:452
+#: ../assistant_viewer.lua:454
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Elkarlana ongi gorde da Ohartegian"
 
-#: ../assistant_viewer.lua:576
+#: ../assistant_viewer.lua:578
 msgid   "Book Analysis"
 msgstr  "Liburuaren Analisi"
 
-#: ../assistant_viewer.lua:742
+#: ../assistant_viewer.lua:744
 msgid   "Type your question here"
 msgstr  "Idatzi zure galdera hemen"
 
-#: ../assistant_viewer.lua:906
+#: ../assistant_viewer.lua:908
 msgid   "Word copied to clipboard."
 msgstr  "Hitzaren kopia arbelan."
 
-#: ../assistant_viewer.lua:907
+#: ../assistant_viewer.lua:909
 msgid   "Selection copied to clipboard."
 msgstr  "Aukera kopia arbelan."
 

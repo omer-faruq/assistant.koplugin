@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-16 16:16+0800\n"
+        "POT-Creation-Date: 2025-09-17 15:17+0800\n"
         "PO-Revision-Date: 2025-08-21 15:17:03+0800\n"
         "Last-Translator: ChatGPT-4o <chatgpt4o@openai.com>\n"
         "Language-Team: ChatGPT-4o <chatgpt4o@openai.com>\n"
@@ -33,21 +33,21 @@ msgid   "(No response)"
 msgstr  "(কোনও প্রতিক্রিয়া নেই)"
 
 #: ../assistant_dialog.lua:127 ../assistant_quicknote.lua:202
-#: ../assistant_viewer.lua:572
+#: ../assistant_viewer.lua:574
 msgid   "Highlighted text:"
 msgstr  "উল্লেখিত পাঠ্য:"
 
 #: ../assistant_dialog.lua:276 ../assistant_dictdialog.lua:36
 #: ../assistant_quicknote.lua:38 ../assistant_settings.lua:89
-#: ../assistant_viewer.lua:673
+#: ../assistant_viewer.lua:675
 msgid   "Cancel"
 msgstr  "বাতিল"
 
-#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:683
+#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:685
 msgid   "Ask"
 msgstr  "জিজ্ঞাসা করুন"
 
-#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:689
+#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:691
 msgid   "Enter a question before proceeding."
 msgstr  "অগ্রসর হওয়ার আগে একটি প্রশ্ন লিখুন"
 
@@ -248,6 +248,10 @@ msgstr  "উদাহরণ"
 msgid   "Word Origin"
 msgstr  "শব্দের উৎস"
 
+#: ../assistant_prompts.lua:326
+msgid   "You may find these topics interesting:"
+msgstr  "এই বিষয়গুলো আপনার কাছে আকর্ষণীয় মনে হতে পারে:"
+
 #: ../assistant_querier.lua:51
 msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr  "%1-এর জন্য প্রদানকারীর সেটিংস খুঁজে পাওয়া যায়নি। অনুগ্রহ করে আপনার configuration.lua ফাইলটি যাচাই করুন।"
@@ -275,7 +279,7 @@ msgid   "Settings"
 msgstr  "সেটিংস"
 
 #: ../assistant_querier.lua:113 ../assistant_settings.lua:200
-#: ../assistant_viewer.lua:339
+#: ../assistant_viewer.lua:341
 msgid   "Close"
 msgstr  "বন্ধ করুন"
 
@@ -320,7 +324,7 @@ msgid   "Write quick notes here"
 msgstr  "এখানে দ্রুত নোট লিখুন"
 
 #: ../assistant_quicknote.lua:48 ../assistant_settings.lua:113
-#: ../assistant_viewer.lua:448
+#: ../assistant_viewer.lua:450
 msgid   "Save"
 msgstr  "সংরক্ষণ"
 
@@ -378,75 +382,75 @@ msgstr  "UI ভাষা ব্যবহার করতে এই ঘরগু�
 msgid   "AI Provider Settings"
 msgstr  "এআই প্রদানকারীর সেটিংস"
 
-#: ../assistant_settings.lua:257
+#: ../assistant_settings.lua:259
 msgid   "AI Model provider:"
 msgstr  "এআই মডেল প্রদানকারী:"
 
-#: ../assistant_settings.lua:324
+#: ../assistant_settings.lua:326
 msgid   "AI Language: "
 msgstr  "এআই ভাষা: "
 
-#: ../assistant_settings.lua:336
+#: ../assistant_settings.lua:338
 msgid   "AI Text Size: %1"
 msgstr  "এআই টেক্সটের আকার: %1"
 
-#: ../assistant_settings.lua:340
+#: ../assistant_settings.lua:342
 msgid   "AI Response Text Font Size"
 msgstr  "এআই প্রতিক্রিয়ার টেক্সট ফন্টের আকার"
 
-#: ../assistant_settings.lua:356
+#: ../assistant_settings.lua:358
 msgid   "Stream Mode Settings"
 msgstr  "স্ট্রিম মোড সেটিংস"
 
-#: ../assistant_settings.lua:359
+#: ../assistant_settings.lua:361
 msgid   "Enable stream response"
 msgstr  "স্ট্রিম উত্তর চালু করুন"
 
-#: ../assistant_settings.lua:367
+#: ../assistant_settings.lua:369
 msgid   "Auto scroll stream response text"
 msgstr  "স্ট্রিম প্রতিক্রিয়া লেখা স্বয়ংক্রিয়ভাবে স্ক্রোল করুন"
 
-#: ../assistant_settings.lua:376
+#: ../assistant_settings.lua:378
 msgid   "Large Streaming Window"
 msgstr  "বড় স্ট্রিমিং উইন্ডো"
 
-#: ../assistant_settings.lua:387
+#: ../assistant_settings.lua:389
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader টুইক এবং ওভাররাইড"
 
-#: ../assistant_settings.lua:390
+#: ../assistant_settings.lua:392
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "'অনুবাদ' জন্য এআই সহকারী ব্যবহার করুন"
 
-#: ../assistant_settings.lua:401
+#: ../assistant_settings.lua:403
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "দীর্ঘদিন না পড়া বই খোলার সময় স্বয়ংক্রিয় রিক্যাপ"
 
-#: ../assistant_settings.lua:411
+#: ../assistant_settings.lua:413
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "পরবর্তীবার কোনো দীর্ঘদিন না পড়া বই খোলা হলে এআই রিক্যাপ সক্রিয় হবে।"
 
-#: ../assistant_settings.lua:415
+#: ../assistant_settings.lua:417
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "ডিকশনারি পপআপে Dictionary(AI) দেখাও"
 
-#: ../assistant_settings.lua:423
+#: ../assistant_settings.lua:425
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "ডিকশনারি পপআপে Wikipedia(AI) দেখাও"
 
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:435
 msgid   "Show Follow-up Questions from AI"
 msgstr  "এআই-এর অনুসরণ প্রশ্নগুলো দেখান"
 
-#: ../assistant_settings.lua:441
+#: ../assistant_settings.lua:443
 msgid   "Copy entered question to the clipboard"
 msgstr  "প্রশ্ন ক্লিপবোর্ডে কপি করো"
 
-#: ../assistant_settings.lua:449
+#: ../assistant_settings.lua:451
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "আলাপচারিতা স্বয়ংক্রিয়ভাবে নোটবুকে সংরক্ষণ করুন"
 
-#: ../assistant_settings.lua:457
+#: ../assistant_settings.lua:459
 msgid   "Use book text for x-ray and recap"
 msgstr  "এক্স-রে এবং রিক্যাপের জন্য বইয়ের পাঠ্য ব্যবহার করুন"
 
@@ -460,55 +464,55 @@ msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "নতুন সংস্করণ পাওয়া গেছে %s প্লাগইন (%s)। অনুগ্রহ করে আপডেট করুন!"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:299 ../assistant_viewer.lua:740
+#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:742
 msgid   "Ask Another Question"
 msgstr  "আরও একটি প্রশ্ন করুন"
 
-#: ../assistant_viewer.lua:354
+#: ../assistant_viewer.lua:356
 msgid   "Copy"
 msgstr  "কপি করুন"
 
-#: ../assistant_viewer.lua:359
+#: ../assistant_viewer.lua:361
 msgid   "Text copied to the clipboard"
 msgstr  "টেক্সট ক্লিপবোর্ডে কপি করা হয়েছে"
 
-#: ../assistant_viewer.lua:373
+#: ../assistant_viewer.lua:375
 msgid   "Add Note"
 msgstr  "নোট যোগ করুন"
 
-#: ../assistant_viewer.lua:380
+#: ../assistant_viewer.lua:382
 msgid   "Highlight functionality not available"
 msgstr  "হাইলাইট ফাংশনালিটি উপলব্ধ নয়"
 
-#: ../assistant_viewer.lua:389
+#: ../assistant_viewer.lua:391
 msgid   "No text to add as note"
 msgstr  "নোট যোগ করার জন্য কোনও পাঠ্য নেই"
 
-#: ../assistant_viewer.lua:418
+#: ../assistant_viewer.lua:420
 msgid   "No text left to add as note"
 msgstr  "অতিরিক্ত নোট যোগ করার জন্য কোনও পাঠ্য নেই"
 
-#: ../assistant_viewer.lua:431
+#: ../assistant_viewer.lua:433
 msgid   "Note added successfully"
 msgstr  "নোট সফলভাবে যোগ করা হয়েছে"
 
-#: ../assistant_viewer.lua:452
+#: ../assistant_viewer.lua:454
 msgid   "Conversation is saved to NoteBook"
 msgstr  "আলাপটি নোটবুকে সংরক্ষিত হয়েছে"
 
-#: ../assistant_viewer.lua:576
+#: ../assistant_viewer.lua:578
 msgid   "Book Analysis"
 msgstr  "বই বিশ্লেষণ"
 
-#: ../assistant_viewer.lua:742
+#: ../assistant_viewer.lua:744
 msgid   "Type your question here"
 msgstr  "এখানে আপনার প্রশ্ন লিখুন"
 
-#: ../assistant_viewer.lua:906
+#: ../assistant_viewer.lua:908
 msgid   "Word copied to clipboard."
 msgstr  "শব্দ কপি করা হয়েছে ক্লিপবোর্ডে।"
 
-#: ../assistant_viewer.lua:907
+#: ../assistant_viewer.lua:909
 msgid   "Selection copied to clipboard."
 msgstr  "নির্বাচন কপি করা হয়েছে ক্লিপবোর্ডে।"
 

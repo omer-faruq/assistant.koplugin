@@ -6,8 +6,8 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 2025.08.21\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-16 16:16+0800\n"
-        "PO-Revision-Date: 2025-08-21 15:21+0500\n"
+        "POT-Creation-Date: 2025-09-17 15:17+0800\n"
+        "PO-Revision-Date: 2025-09-17 15:17+0800\n"
         "Last-Translator: ChatGPT-4o <chatgpt-4o@openai.com>\n"
         "Language-Team: ChatGPT-4o <chatgpt-4o@openai.com>\n"
         "Language: Қазақ (kk)\n"
@@ -33,21 +33,21 @@ msgid   "(No response)"
 msgstr  "(Жауап жоқ)"
 
 #: ../assistant_dialog.lua:127 ../assistant_quicknote.lua:202
-#: ../assistant_viewer.lua:572
+#: ../assistant_viewer.lua:574
 msgid   "Highlighted text:"
 msgstr  "Белгіленген мәтін:"
 
 #: ../assistant_dialog.lua:276 ../assistant_dictdialog.lua:36
 #: ../assistant_quicknote.lua:38 ../assistant_settings.lua:89
-#: ../assistant_viewer.lua:673
+#: ../assistant_viewer.lua:675
 msgid   "Cancel"
 msgstr  "Бас тарту"
 
-#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:683
+#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:685
 msgid   "Ask"
 msgstr  "Сұра"
 
-#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:689
+#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:691
 msgid   "Enter a question before proceeding."
 msgstr  "Жалғастыру үшін сұрақ енгізіңіз."
 
@@ -248,6 +248,10 @@ msgstr  "Мысал"
 msgid   "Word Origin"
 msgstr  "Сөздің шығу тегі"
 
+#: ../assistant_prompts.lua:326
+msgid   "You may find these topics interesting:"
+msgstr  "Бұл тақырыптар сізге қызықты болуы мүмкін:"
+
 #: ../assistant_querier.lua:51
 msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr  "Провайдер параметрлері табылмады: %1. configuration.lua файлын тексеріңіз."
@@ -275,7 +279,7 @@ msgid   "Settings"
 msgstr  "Баптаулар"
 
 #: ../assistant_querier.lua:113 ../assistant_settings.lua:200
-#: ../assistant_viewer.lua:339
+#: ../assistant_viewer.lua:341
 msgid   "Close"
 msgstr  "Жабу"
 
@@ -320,7 +324,7 @@ msgid   "Write quick notes here"
 msgstr  "Жылдам ескертпелерді осында жазыңыз"
 
 #: ../assistant_quicknote.lua:48 ../assistant_settings.lua:113
-#: ../assistant_viewer.lua:448
+#: ../assistant_viewer.lua:450
 msgid   "Save"
 msgstr  "Сақтау"
 
@@ -378,75 +382,75 @@ msgstr  "Осы өрістерді бос қалдырыңыз, %1 тілі қо
 msgid   "AI Provider Settings"
 msgstr  "AI провайдері баптаулары"
 
-#: ../assistant_settings.lua:257
+#: ../assistant_settings.lua:259
 msgid   "AI Model provider:"
 msgstr  "AI модель жеткізушісі:"
 
-#: ../assistant_settings.lua:324
+#: ../assistant_settings.lua:326
 msgid   "AI Language: "
 msgstr  "AI тілі: "
 
-#: ../assistant_settings.lua:336
+#: ../assistant_settings.lua:338
 msgid   "AI Text Size: %1"
 msgstr  "AI мәтін өлшемі: %1"
 
-#: ../assistant_settings.lua:340
+#: ../assistant_settings.lua:342
 msgid   "AI Response Text Font Size"
 msgstr  "AI жауап мәтінінің қаріп өлшемі"
 
-#: ../assistant_settings.lua:356
+#: ../assistant_settings.lua:358
 msgid   "Stream Mode Settings"
 msgstr  "Ағын режимі баптаулары"
 
-#: ../assistant_settings.lua:359
+#: ../assistant_settings.lua:361
 msgid   "Enable stream response"
 msgstr  "Ағын жауабын қосу"
 
-#: ../assistant_settings.lua:367
+#: ../assistant_settings.lua:369
 msgid   "Auto scroll stream response text"
 msgstr  "Автоматты түрде ағын жауап мәтінін айналдыру"
 
-#: ../assistant_settings.lua:376
+#: ../assistant_settings.lua:378
 msgid   "Large Streaming Window"
 msgstr  "Үлкен ағындық терезе"
 
-#: ../assistant_settings.lua:387
+#: ../assistant_settings.lua:389
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader баптаулары мен үстемеліктері"
 
-#: ../assistant_settings.lua:390
+#: ../assistant_settings.lua:392
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "'Аудару' үшін AI Ассистентті пайдалану"
 
-#: ../assistant_settings.lua:401
+#: ../assistant_settings.lua:403
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Ұзақ уақыт оқылмаған кітаптарды ашқанда автоматты түрде шолу"
 
-#: ../assistant_settings.lua:411
+#: ../assistant_settings.lua:413
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "AI шолуы келесі ұзақ уақыт оқылмаған кітап ашылғанда қосылады."
 
-#: ../assistant_settings.lua:415
+#: ../assistant_settings.lua:417
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Сөздік терезесінде Dictionary(AI) көрсету"
 
-#: ../assistant_settings.lua:423
+#: ../assistant_settings.lua:425
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Сөздік терезесінде Wikipedia(AI) көрсету"
 
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:435
 msgid   "Show Follow-up Questions from AI"
 msgstr  "AI-дан қосымша сұрақтарды көрсету"
 
-#: ../assistant_settings.lua:441
+#: ../assistant_settings.lua:443
 msgid   "Copy entered question to the clipboard"
 msgstr  "Енгізілген сұрақты алмасу буферіне көшіру"
 
-#: ../assistant_settings.lua:449
+#: ../assistant_settings.lua:451
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Әңгімелерді автоматты түрде NoteBook-қа сақтау"
 
-#: ../assistant_settings.lua:457
+#: ../assistant_settings.lua:459
 msgid   "Use book text for x-ray and recap"
 msgstr  "X-ray және шолу үшін кітап мәтінін пайдалану"
 
@@ -460,55 +464,55 @@ msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "%s плагинінің жаңа нұсқасы (%s) шықты. Жаңартыңыз!"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:299 ../assistant_viewer.lua:740
+#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:742
 msgid   "Ask Another Question"
 msgstr  "Тағы сұрақ қой"
 
-#: ../assistant_viewer.lua:354
+#: ../assistant_viewer.lua:356
 msgid   "Copy"
 msgstr  "Көшір"
 
-#: ../assistant_viewer.lua:359
+#: ../assistant_viewer.lua:361
 msgid   "Text copied to the clipboard"
 msgstr  "Мәтін алмасу буферіне көшірілді"
 
-#: ../assistant_viewer.lua:373
+#: ../assistant_viewer.lua:375
 msgid   "Add Note"
 msgstr  "Ескерту қосу"
 
-#: ../assistant_viewer.lua:380
+#: ../assistant_viewer.lua:382
 msgid   "Highlight functionality not available"
 msgstr  "Бөлу мүмкін емес"
 
-#: ../assistant_viewer.lua:389
+#: ../assistant_viewer.lua:391
 msgid   "No text to add as note"
 msgstr  "Ескерткішке қосу үшін мәтін жоқ"
 
-#: ../assistant_viewer.lua:418
+#: ../assistant_viewer.lua:420
 msgid   "No text left to add as note"
 msgstr  "Қосуға мәтін қалмады"
 
-#: ../assistant_viewer.lua:431
+#: ../assistant_viewer.lua:433
 msgid   "Note added successfully"
 msgstr  "Ескерткіш қосылды"
 
-#: ../assistant_viewer.lua:452
+#: ../assistant_viewer.lua:454
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Әңгіме NoteBook-қа сақталды"
 
-#: ../assistant_viewer.lua:576
+#: ../assistant_viewer.lua:578
 msgid   "Book Analysis"
 msgstr  "Кітап талдауы"
 
-#: ../assistant_viewer.lua:742
+#: ../assistant_viewer.lua:744
 msgid   "Type your question here"
 msgstr  "Сұрағыңызды осында жазыңыз"
 
-#: ../assistant_viewer.lua:906
+#: ../assistant_viewer.lua:908
 msgid   "Word copied to clipboard."
 msgstr  "Сөз алмасу буферіне көшірілді."
 
-#: ../assistant_viewer.lua:907
+#: ../assistant_viewer.lua:909
 msgid   "Selection copied to clipboard."
 msgstr  "Таңдау алмасу буферіне көшірілді."
 
