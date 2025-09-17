@@ -763,10 +763,10 @@ end
 -- close all active dialog back to the reading UI
 function ChatGPTViewer:HoldClose()
   self:onClose()
-  self.assistant.ui.highlight:onClose()
   if self.assistant.ui.dictionary.dict_window then
     self.assistant.ui.dictionary.dict_window:onClose()
   end
+  self.assistant.ui.highlight:onClose()
 end
 
 function ChatGPTViewer:onShow()
