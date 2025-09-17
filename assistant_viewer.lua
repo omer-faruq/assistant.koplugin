@@ -590,7 +590,8 @@ function ChatGPTViewer:saveToNotebook()
     text_to_log = string.format("__%s__ \n%s\n\n%s\n\n", highlighted_text_lbl, processed_highlighted, text_to_log)
   end
   
-  text_to_log = text_to_log:gsub("%[(.-)%]%(%#suggested%-question:.-%)", "%1")
+  -- Remove suggested question link
+  text_to_log = text_to_log:gsub("%[(.-)%]%(%#q:.-%)", "%1") 
   
   local log_entry = string.format("# [%s]%s\n## %s\n\n%s\n\n", timestamp, page_info, title_text, text_to_log)
   
