@@ -115,8 +115,8 @@ function Querier:showError(err)
     end
     UIManager:show(dialog)
 
-    -- clear the text selection when plugin is called without a highlight dialog
-    if not self.assistant.ui.highlight.highlight_dialog then
+    -- clear the text selection when plugin is called without a highlight or dict dialog
+    if not (self.assistant.ui.highlight.highlight_dialog or self.assistant.ui.dictionary.dict_window) then
         self.assistant.ui.highlight:clear()
     end
 end
