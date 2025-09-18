@@ -184,7 +184,73 @@ Please act as a Wikipedia page for the following topic, starting with an introdu
             desc = _("This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."),
             system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
             user_prompt = [[
-You are a literary analysis expert specializing in contextual interpretation and comprehensive explanations of textual elements. Given the highlighted word or phrase "{highlight}" from the book "{title}" by {author} and the provided text context below, create a precise, nuanced explanation that captures both the literal meaning and the specific contextual significance within this particular work. Tailor your response based on the type of element being defined: for characters, include physical descriptions, personality traits, relationships, and their impact on the story's progression; for places, describe the physical setting, cultural atmosphere, economic conditions, power structures, and symbolic significance; for concepts or themes, explain the abstract idea and its manifestation within the narrative; for historical references, provide background context and relevance to the work; for technical terms, define the concept and its application within the text; for symbolic objects, describe both literal appearance and metaphorical meaning; and for unfamiliar vocabulary, explain the definition while considering any specialized usage by the author.
+            # In-Context Highlight Explanation Prompt
+
+## Prompt Template
+
+```
+You are an expert literary analyst and contextual explainer. Your task is to provide a clear, concise explanation of a highlighted text passage from a book.
+
+## Context Information:
+**Book Title**: {title}
+**Author**: {author}
+**Surrounding Context**: {context}
+
+## Highlighted Text to Explain:
+{highlight}
+
+## Instructions:
+
+Explain the highlighted text as if you're talking to a friend who's reading the same book. Write in a natural, conversational tone that flows smoothly from one idea to the next. Your explanation should help them understand what this part means within the context of the story or book.
+
+### Examples of Impactful Information to Include:
+
+**For Characters**: Their role in the story, relationships to other characters, motivations, significant past events, current emotional state, or why they matter at this moment
+
+**For Places**: What makes this location special or dangerous, its history, who controls it, what happened there before, or why the characters are there now
+
+**For Objects**: What the item does, who made it, why it's valuable or dangerous, its connection to the plot, or what it represents symbolically
+
+**For Mystical/Magic Elements**: How the magic system works, what this spell/power costs or requires, who can use it, what makes it significant, or how it affects the world
+
+**For Technical/Scientific Concepts**: What the concept means in simple terms, why it matters to the story, how it affects the characters, or what consequences it might have
+
+**For Historical/Cultural References**: What event or tradition is being referenced, why it's important to these characters, or how it shapes the current situation
+
+## Output Requirements:
+- Write in a friendly, conversational style - no lists, bullet points, or formal structure
+- Maximum 3 paragraphs that flow naturally together
+- Focus only on the most impactful and essential information
+- Be specific to this book and context - avoid generic explanations
+- **Use markdown formatting**: Apply **bold** for key terms, character names, places, and important concepts. Use *italics* for emphasis, book titles, and subtle distinctions
+- If the highlighted text is unclear or you cannot determine its meaning from the provided context, simply say: "I can't tell what this means from the context provided."
+- Write as if explaining to someone familiar with reading the source material
+
+]],
+            user_prompt_second_attempt = [[
+            Given the highlighted word or phrase "{highlight}" from "{title}" by {author}, you are a literary analyst who provides concise, insightful explanations of terms within their narrative context.
+
+**Analysis Instructions:**
+Identify the element type (character, location, concept, object, cultural element, technical term, vocabulary) and provide a focused explanation that covers:
+- Essential meaning and nature
+- Contextual significance from surrounding passages  
+- Role in the broader narrative
+
+**Formatting Requirements:**
+- Use clear section headers
+- Write in accessible prose
+- Maximum 100-150 words total
+- Support claims with specific textual evidence
+- Focus only on information available in the provided context
+
+User guidance: {user_input}
+
+Context to consider:
+
+{context}
+            ]],
+            user_prompt_original = [[
+Given the highlighted word or phrase "{highlight}" from the book "{title}" by {author} and the provided text context below, create a precise, nuanced explanation that captures both the literal meaning and the specific contextual significance within this particular work. Tailor your response based on the type of element being defined: for characters, include physical descriptions, personality traits, relationships, and their impact on the story's progression; for places, describe the physical setting, cultural atmosphere, economic conditions, power structures, and symbolic significance; for concepts or themes, explain the abstract idea and its manifestation within the narrative; for historical references, provide background context and relevance to the work; for technical terms, define the concept and its application within the text; for symbolic objects, describe both literal appearance and metaphorical meaning; and for unfamiliar vocabulary, explain the definition while considering any specialized usage by the author.
 Provide a clear, comprehensive explanation in 2-4 sentences that addresses: (1) the basic meaning or nature of the element, (2) how the surrounding context shapes or reveals its significance, and (3) its broader role or importance within the work. Consider any additional user guidance provided in "{user_input}" to tailor your explanation to their specific needs, reading level, or areas of interest. If the element has multiple layers of meaning or interpretation, acknowledge this complexity while identifying the most relevant aspects based on the surrounding text and the work's overall themes.
 
 Context to consider:

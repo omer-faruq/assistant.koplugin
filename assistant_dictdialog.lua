@@ -204,8 +204,8 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
             end
 
             if contains_term then
-                -- Extract context around this sentence (3-5 sentences on each side)
-                local context_size = math.min(4, math.floor(#sentences / 50)) -- Adaptive context size
+                -- Extract context around this sentence (5-10 sentences on each side)
+                local context_size = math.min(10, math.max(5, math.floor(#sentences / 30))) -- Adaptive context size: 5-10 sentences
                 local start_idx = math.max(1, i - context_size)
                 local end_idx = math.min(#sentences, i + context_size)
 
@@ -387,7 +387,7 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
         local selected_contexts = {}
         local used_positions = {}
         local min_distance = math.max(8, math.floor(#sentences / 20)) -- Minimum distance between selections
-        local target_contexts = 6 -- Target number of contexts
+        local target_contexts = 8 -- Target number of contexts
         local current_length = 0
 
         for _, context in ipairs(all_contexts) do
