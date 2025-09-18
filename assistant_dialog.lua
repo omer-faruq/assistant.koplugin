@@ -90,6 +90,9 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
           if message.user_input:find("%[BOOK TEXT BEGIN%]") then
             message.user_input = message.user_input:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
           end
+          if message.user_input:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
+            message.user_input = message.user_input:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
+          end
           user_message = user_message .. message.user_input .. "\n\n"
         end
       else
@@ -97,6 +100,9 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
         local content = message.content or _("(Empty message)")
         if content:find("%[BOOK TEXT BEGIN%]") then
           content = content:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
+        end
+        if content:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
+          content = content:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
         end
         user_message = string.format("\n\n%s\n\n", content)
       end

@@ -267,6 +267,33 @@ Generate detailed information about the book "{title}" by {author}. Provide the 
 
 Ensure all information is accurate and based on known facts. Respond entirely in {language}.]],
     },
+    annotations = {
+        system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        user_prompt = [[
+You are given  my notes and highlights. 
+Your task is to carefully analyze this content and produce a structured summary that includes:
+
+1. **Key Takeaways**  
+   - Summarize the most important insights, lessons, or narrative developments.  
+   - Highlight recurring themes, turning points, or critical information.  
+
+2. **To-Do / Action Items**  
+   - Based on the content and my notes, suggest practical actions, reflections, or follow-ups I should consider.  
+   - If the text is fictional, focus on intellectual or emotional takeaways (e.g., themes to reflect on, characters to analyze, related readings).  
+   - If the text is non-fiction, focus on actionable steps (e.g., habits to adopt, ideas to research, concepts to apply).  
+
+3. **Contextual Notes**  
+   - Clarify connections between my highlights/notes and the broader narrative or arguments.  
+   - Point out any open questions or areas I may want to revisit in the earlier chapters.  
+
+Output format:  
+- Start with a concise **executive summary** (3–5 sentences).  
+- Then provide a **detailed list** under “Key Takeaways” and “To-Do / Action Items.”  
+- End with **Contextual Notes / Reflections** in bullet points.  
+
+Keep the tone clear, thoughtful, and practical. 
+- Always respond in {language}.]],
+    },
     dict = {
         system_prompt = "You are a dictionary with high quality detail vocabulary definitions and examples. Always respond in Markdown format.",
         user_prompt = T([[

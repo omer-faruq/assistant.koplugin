@@ -52,6 +52,62 @@ local function extractBookTextForAnalysis(CONFIGURATION, ui)
     return book_text
 end
 
+local function extractHighlightsNotesAndNotebook(CONFIGURATION, ui)
+    local highlights_and_notes = ""
+    if ui.annotation and ui.annotation.annotations then
+        for _, annotation in ipairs(ui.annotation.annotations) do
+            if annotation.text and annotation.text ~= "" then
+                highlights_and_notes = highlights_and_notes .. "Highlight: " .. annotation.text .. "\n"
+            end
+            if annotation.note and annotation.note ~= "" then
+                highlights_and_notes = highlights_and_notes .. "Note: " .. annotation.note .. "\n"
+            end
+            if annotation.chapter then
+                highlights_and_notes = highlights_and_notes .. "Chapter: " .. annotation.chapter .. "\n"
+            end
+            if annotation.pageno then
+                highlights_and_notes = highlights_and_notes .. "Page: " .. annotation.pageno .. "\n"
+            end
+            highlights_and_notes = highlights_and_notes .. "\n"
+        end
+    end
+    
+    local notebook_content = ""
+    pcall(function()
+        local notebookfile = ui.bookinfo:getNotebookFile(ui.doc_settings)
+        if notebookfile then
+            local json = require("json")
+            local file = io.open(notebookfile, "r")
+            if file then
+                local content = file:read("*all")
+                file:close()
+                local success, data = pcall(json.decode, content)
+                if success and data then
+                    notebook_content = "Notebook Data:\n" .. json.encode(data)
+                else
+                    notebook_content = "Notebook Content (raw):\n" .. content
+                end
+            end
+        end
+    end)
+    
+    local combined = highlights_and_notes
+    if notebook_content ~= "" then
+        if combined ~= "" then
+            combined = combined .. "\n--- Notebook Content ---\n" .. notebook_content
+        else
+            combined = notebook_content
+        end
+    end
+    
+    local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
+    if #combined > max_text_length_for_analysis then
+        combined = combined:sub(-max_text_length_for_analysis)
+    end
+    
+    return combined
+end
+
 local function getPageInfo(ui)
   local page_number = nil
   local percentage = 0
@@ -159,6 +215,7 @@ end
 
 return {
     extractBookTextForAnalysis = extractBookTextForAnalysis,
+    extractHighlightsNotesAndNotebook = extractHighlightsNotesAndNotebook,
     getPageInfo = getPageInfo,
     saveToNotebookFile = saveToNotebookFile
 }

@@ -13,6 +13,7 @@ local ChatGPTViewer = require("assistant_viewer")
 local assistant_prompts = require("assistant_prompts").assistant_prompts
 local NetworkMgr = require("ui/network/manager")
 local extractBookTextForAnalysis = require("assistant_utils").extractBookTextForAnalysis
+local extractHighlightsNotesAndNotebook = require("assistant_utils").extractHighlightsNotesAndNotebook
 
 local function showFeatureDialog(assistant, feature_type, title, author, progress_percent, message_history)
     local CONFIGURATION = assistant.CONFIGURATION
@@ -47,6 +48,12 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
             loading_message = _("Loading Book Information..."),
             config_key = "book_info_config",
             prompts_key = "book_info"
+        },
+        annotations = {
+            title = _("Highlight & Note Analysis"),
+            loading_message = _("Loading Highlight & Note Analysis..."),
+            config_key = "annotations_config",
+            prompts_key = "annotations"
         }
     }
     
@@ -82,15 +89,23 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         or koutil.tableGetValue(assistant_prompts, prompts_key, "user_prompt")
 
     local book_text = nil
+    local highlights_notes = nil
     if feature_type == "xray" or feature_type == "recap" then
       if assistant.settings:readSetting("use_book_text_for_analysis", false) then
         book_text = extractBookTextForAnalysis(CONFIGURATION, ui)
       end
+    elseif feature_type == "annotations" then
+      highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui)
     end
 
     local book_text_prompt = ""
     if book_text then
         book_text_prompt = string.format("\n\n[! IMPORTANT !] Here is the book text up to my current position, only consider this text for your response:\n [BOOK TEXT BEGIN]\n%s\n[BOOK TEXT END]", book_text)
+    end
+
+    local highlights_notes_prompt = ""
+    if highlights_notes and highlights_notes ~= "" then
+        highlights_notes_prompt = string.format("\n\n[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN]\n%s\n[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END]", highlights_notes)
     end
 
     local message_history = message_history or {
@@ -108,7 +123,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       language = language
     })
 
-    user_content = user_content .. book_text_prompt 
+    user_content = user_content .. book_text_prompt .. highlights_notes_prompt
     
     local context_message = {
         role = "user",
