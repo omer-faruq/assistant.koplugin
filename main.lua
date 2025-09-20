@@ -185,6 +185,17 @@ function Assistant:addToMainMenu(menu_items)
                 text = _("Analysis of your highlights, notes, and notebook content from the book.")
               })
             end,
+          },
+          {
+            text = _("Summary Using Highlights & Notes"),
+            callback = function ()
+              self:onAskAIFeature("summary_using_annotations")
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("Summary of the book using your highlights and notes.")
+              })
+            end,
             separator = true,
           },
           {
@@ -677,6 +688,18 @@ end
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
         showFeatureDialog(self, "annotations", book.title, book.authors, book.percent_finished)
+      end)
+    end)
+    return true
+  end
+  
+  function Assistant:onAskAIFeature(prompt_idx)
+    if not self:isConfigured() then return end
+    NetworkMgr:runWhenOnline(function()
+      local book = getDocumentInfo(self.ui.document)
+      local showFeatureDialog = require("assistant_featuredialog")
+      Trapper:wrap(function()
+        showFeatureDialog(self, prompt_idx, book.title, book.authors, book.percent_finished)
       end)
     end)
     return true

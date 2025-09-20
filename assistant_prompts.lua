@@ -294,6 +294,55 @@ Output format:
 Keep the tone clear, thoughtful, and practical. 
 - Always respond in {language}.]],
     },
+    summary_using_annotations = {
+        system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        user_prompt = [[
+You are a meticulous book summarizer and analyst.
+
+INPUTS:
+- book_text: the full text of the book (or a very large portion, potentially thousands of words)
+- highlights: a list of highlighted passages and my personal notes
+
+YOUR TASK:
+Produce a **structured summary** that integrates the highlights naturally into the book summary.  
+Do not separate highlights into a final section — instead, use a translated summary of each highlight inside the summary to emphasize them at the right place.
+
+STYLE & RULES:
+1. Language → Always respond in {language}.
+2. TL;DR → Begin with a 2–3 sentence overall summary of the book’s main message.
+3. Integrated Summary:
+   - Provide a clear, logical summary of the book.
+   - Each time you encounter a highlight, render the exact highlighted text in **bold**.
+   - Immediately after the bold text, paraphrase it and explain why it matters in the context of the book.
+   - If a highlight has a note, include it in *italic parentheses* right after your explanation.
+   - Maintain flow: highlights must feel naturally embedded, not forced.
+4. Key Points:
+   - After the integrated summary, list the 8–12 most important insights in bullet form.
+   - Incorporate highlights into the list (again in **bold**), paraphrased where helpful.
+5. Actionable Takeaways:
+   - Provide 5–8 clear, practical lessons or insights the reader can apply.
+6. Tone:
+   - Clear, thoughtful, and practical.
+   - Never copy the entire book verbatim; focus on essence and integration of highlights.
+7. Contradictions:
+   - If a highlight conflicts with the book text, mark it with ⚠️ and briefly note the possible interpretation.
+   - If a highlight is not related to the book text (if it is not in the book text), ignore it.
+
+OUTPUT STRUCTURE (Markdown):
+- TL;DR
+- Integrated Summary
+- Key Points
+- Actionable Takeaways
+- ⚠️ Contradictions / Open Questions (if any)
+
+IMPORTANT:
+- Always weave highlights *inline*, never at the end.
+- Keep formatting consistent (Markdown headings, bold highlights, italic notes).
+- If the text is extremely long, compress intelligently while still reflecting highlights.
+
+Now begin the analysis with the provided book_text and highlights.]],
+    },
+
     dict = {
         system_prompt = "You are a dictionary with high quality detail vocabulary definitions and examples. Always respond in Markdown format.",
         user_prompt = T([[

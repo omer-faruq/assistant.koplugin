@@ -52,7 +52,7 @@ local function extractBookTextForAnalysis(CONFIGURATION, ui)
     return book_text
 end
 
-local function extractHighlightsNotesAndNotebook(CONFIGURATION, ui)
+local function extractHighlightsNotesAndNotebook(CONFIGURATION, ui, include_notebook)
     local highlights_and_notes = ""
     if ui.annotation and ui.annotation.annotations then
         for _, annotation in ipairs(ui.annotation.annotations) do
@@ -73,23 +73,25 @@ local function extractHighlightsNotesAndNotebook(CONFIGURATION, ui)
     end
     
     local notebook_content = ""
-    pcall(function()
-        local notebookfile = ui.bookinfo:getNotebookFile(ui.doc_settings)
-        if notebookfile then
-            local json = require("json")
-            local file = io.open(notebookfile, "r")
-            if file then
-                local content = file:read("*all")
-                file:close()
-                local success, data = pcall(json.decode, content)
-                if success and data then
-                    notebook_content = "Notebook Data:\n" .. json.encode(data)
-                else
-                    notebook_content = "Notebook Content (raw):\n" .. content
-                end
-            end
-        end
-    end)
+    if include_notebook then
+      pcall(function()
+          local notebookfile = ui.bookinfo:getNotebookFile(ui.doc_settings)
+          if notebookfile then
+              local json = require("json")
+              local file = io.open(notebookfile, "r")
+              if file then
+                  local content = file:read("*all")
+                  file:close()
+                  local success, data = pcall(json.decode, content)
+                  if success and data then
+                      notebook_content = "Notebook Data:\n" .. json.encode(data)
+                  else
+                      notebook_content = "Notebook Content (raw):\n" .. content
+                  end
+              end
+          end
+      end)
+    end
     
     local combined = highlights_and_notes
     if notebook_content ~= "" then

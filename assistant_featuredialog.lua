@@ -54,6 +54,12 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
             loading_message = _("Loading Highlight & Note Analysis..."),
             config_key = "annotations_config",
             prompts_key = "annotations"
+        },
+        summary_using_annotations = {
+            title = _("Summary Using Highlights & Notes"),
+            loading_message = _("Loading Summary Using Highlights & Notes..."),
+            config_key = "summary_using_annotations_config",
+            prompts_key = "summary_using_annotations"
         }
     }
     
@@ -95,7 +101,10 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         book_text = extractBookTextForAnalysis(CONFIGURATION, ui)
       end
     elseif feature_type == "annotations" then
-      highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui)
+      highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui,true)
+    elseif feature_type == "summary_using_annotations" then
+      book_text = extractBookTextForAnalysis(CONFIGURATION, ui)
+      highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui,false)
     end
 
     local book_text_prompt = ""
