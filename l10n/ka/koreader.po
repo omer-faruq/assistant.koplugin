@@ -5,7 +5,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-16 16:16+0800\n"
+        "POT-Creation-Date: 2025-09-17 15:17+0800\n"
         "PO-Revision-Date: 2025-09-09 14:18+0800\n"
         "Last-Translator: ChatGPT 4.0\n"
         "Language-Team: ChatGPT 4.0\n"
@@ -32,21 +32,21 @@ msgid   "(No response)"
 msgstr  "(პასუხი არაა)"
 
 #: ../assistant_dialog.lua:127 ../assistant_quicknote.lua:202
-#: ../assistant_viewer.lua:572
+#: ../assistant_viewer.lua:574
 msgid   "Highlighted text:"
 msgstr  "გამოკვეთილი ტექსტი:"
 
 #: ../assistant_dialog.lua:276 ../assistant_dictdialog.lua:36
 #: ../assistant_quicknote.lua:38 ../assistant_settings.lua:89
-#: ../assistant_viewer.lua:673
+#: ../assistant_viewer.lua:675
 msgid   "Cancel"
 msgstr  "გაუქმება"
 
-#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:683
+#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:685
 msgid   "Ask"
 msgstr  "დაკითხვა"
 
-#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:689
+#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:691
 msgid   "Enter a question before proceeding."
 msgstr  "შეიყვანეთ კითხვა გაგრძელებამდე."
 
@@ -247,6 +247,10 @@ msgstr  "მაგალითი"
 msgid   "Word Origin"
 msgstr  "სიტყვის წარმოშობა"
 
+#: ../assistant_prompts.lua:326
+msgid   "You may find these topics interesting:"
+msgstr  "ეს თემები შეიძლება დაგაინტერესოთ:"
+
 #: ../assistant_querier.lua:51
 msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr  "მომწოდებლის პარამეტრები არ აღმოჩნდება: %1. გთხოვთ, გადაამოწმეთ configuration.lua ფაილი."
@@ -274,7 +278,7 @@ msgid   "Settings"
 msgstr  "პარამეტრები"
 
 #: ../assistant_querier.lua:113 ../assistant_settings.lua:200
-#: ../assistant_viewer.lua:339
+#: ../assistant_viewer.lua:341
 msgid   "Close"
 msgstr  "დახურვა"
 
@@ -319,7 +323,7 @@ msgid   "Write quick notes here"
 msgstr  "აქ დაწერე სწრაფი შენიშვნები"
 
 #: ../assistant_quicknote.lua:48 ../assistant_settings.lua:113
-#: ../assistant_viewer.lua:448
+#: ../assistant_viewer.lua:450
 msgid   "Save"
 msgstr  "შენახვა"
 
@@ -377,75 +381,75 @@ msgstr  "დატოვეთ ცარიელი ინტერფეის
 msgid   "AI Provider Settings"
 msgstr  "AI პროვაიდერის პარამეტრები"
 
-#: ../assistant_settings.lua:257
+#: ../assistant_settings.lua:259
 msgid   "AI Model provider:"
 msgstr  "AI მოდელის პროვაიდერი:"
 
-#: ../assistant_settings.lua:324
+#: ../assistant_settings.lua:326
 msgid   "AI Language: "
 msgstr  "AI ენა: "
 
-#: ../assistant_settings.lua:336
+#: ../assistant_settings.lua:338
 msgid   "AI Text Size: %1"
 msgstr  "AI ტექსტის ზომა: %1"
 
-#: ../assistant_settings.lua:340
+#: ../assistant_settings.lua:342
 msgid   "AI Response Text Font Size"
 msgstr  "AI პასუხის ტექსტის შრიფტის ზომა"
 
-#: ../assistant_settings.lua:356
+#: ../assistant_settings.lua:358
 msgid   "Stream Mode Settings"
 msgstr  "სტრიმინგ რეჟიმის პარამეტრები"
 
-#: ../assistant_settings.lua:359
+#: ../assistant_settings.lua:361
 msgid   "Enable stream response"
 msgstr  "პასუხის ნაკადის ჩართვა"
 
-#: ../assistant_settings.lua:367
+#: ../assistant_settings.lua:369
 msgid   "Auto scroll stream response text"
 msgstr  "ავტომატური გადახვევა პასუხის ტექსტზე"
 
-#: ../assistant_settings.lua:376
+#: ../assistant_settings.lua:378
 msgid   "Large Streaming Window"
 msgstr  "დიდი სტრიმინგის ფანჯარა"
 
-#: ../assistant_settings.lua:387
+#: ../assistant_settings.lua:389
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader-ის ტვიკები და გადაფარვები"
 
-#: ../assistant_settings.lua:390
+#: ../assistant_settings.lua:392
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "გამოიყენე KI ასისტენტი \"თარგმნა\"-თვის"
 
-#: ../assistant_settings.lua:401
+#: ../assistant_settings.lua:403
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "ავტომატური რეზიუმე დიდი ხნის წაუკითხავი წიგნების გახსნისას"
 
-#: ../assistant_settings.lua:411
+#: ../assistant_settings.lua:413
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "AI რეზიუმე ჩაირთვება შემდეგში, როცა დიდი ხნის წაუკითხავ წიგნს გახსნით."
 
-#: ../assistant_settings.lua:415
+#: ../assistant_settings.lua:417
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "აჩვენე ლექსიკონი(აი) ლექსიკონის ფანჯარაში"
 
-#: ../assistant_settings.lua:423
+#: ../assistant_settings.lua:425
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "აჩვენე ვიკიპედია(აი) ლექსიკონის ფანჯარაში"
 
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:435
 msgid   "Show Follow-up Questions from AI"
 msgstr  "AI-ის მიერ შემოთავაზებული გაგრძელების კითხვების ჩვენება"
 
-#: ../assistant_settings.lua:441
+#: ../assistant_settings.lua:443
 msgid   "Copy entered question to the clipboard"
 msgstr  "შეყვანილი კითხვის დაკოპირება"
 
-#: ../assistant_settings.lua:449
+#: ../assistant_settings.lua:451
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "ავტომატურად შენახვა NoteBook-ში"
 
-#: ../assistant_settings.lua:457
+#: ../assistant_settings.lua:459
 msgid   "Use book text for x-ray and recap"
 msgstr  "წიგნის ტექსტის გამოყენება x-ray-ისა და რეზიუმესთვის"
 
@@ -459,55 +463,55 @@ msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "ხელმისაწვდომია %s დამატების ახალი ვერსია (%s). განაახლეთ!"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:299 ../assistant_viewer.lua:740
+#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:742
 msgid   "Ask Another Question"
 msgstr  "დაისვი კიდევ კითხვა"
 
-#: ../assistant_viewer.lua:354
+#: ../assistant_viewer.lua:356
 msgid   "Copy"
 msgstr  "კოპირება"
 
-#: ../assistant_viewer.lua:359
+#: ../assistant_viewer.lua:361
 msgid   "Text copied to the clipboard"
 msgstr  "ტექსტი დაკოპირდა ბუფერში"
 
-#: ../assistant_viewer.lua:373
+#: ../assistant_viewer.lua:375
 msgid   "Add Note"
 msgstr  "დაამატე შენიშვნა"
 
-#: ../assistant_viewer.lua:380
+#: ../assistant_viewer.lua:382
 msgid   "Highlight functionality not available"
 msgstr  "გამოკვეთის ფუნქცია არაა ხელმისაწვდომი"
 
-#: ../assistant_viewer.lua:389
+#: ../assistant_viewer.lua:391
 msgid   "No text to add as note"
 msgstr  "არ არის ტექსტი შენიშვნად დასამატებლად"
 
-#: ../assistant_viewer.lua:418
+#: ../assistant_viewer.lua:420
 msgid   "No text left to add as note"
 msgstr  "დარჩენილი ტექსტი აღარაა"
 
-#: ../assistant_viewer.lua:431
+#: ../assistant_viewer.lua:433
 msgid   "Note added successfully"
 msgstr  "შენიშვნა დაემატა წარმატებით"
 
-#: ../assistant_viewer.lua:452
+#: ../assistant_viewer.lua:454
 msgid   "Conversation is saved to NoteBook"
 msgstr  "საუბარი შენახულია NoteBook-ში"
 
-#: ../assistant_viewer.lua:576
+#: ../assistant_viewer.lua:578
 msgid   "Book Analysis"
 msgstr  "წიგნის ანალიზი"
 
-#: ../assistant_viewer.lua:742
+#: ../assistant_viewer.lua:744
 msgid   "Type your question here"
 msgstr  "აკრიფეთ კითხვა აქ"
 
-#: ../assistant_viewer.lua:906
+#: ../assistant_viewer.lua:908
 msgid   "Word copied to clipboard."
 msgstr  "სიტყვა დაკოპირებულია."
 
-#: ../assistant_viewer.lua:907
+#: ../assistant_viewer.lua:909
 msgid   "Selection copied to clipboard."
 msgstr  "მონიშნული დაკოპირებულია."
 

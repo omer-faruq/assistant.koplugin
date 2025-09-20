@@ -9,6 +9,7 @@ local logger = require("logger")
 local T = require("ffi/util").template
 local util = require("util")
 local _ = require("assistant_gettext")
+local assistant_utils = require("assistant_utils")
 
 local QuickNote = {}
 
@@ -82,112 +83,8 @@ end
 
 function QuickNote:show()
   self:createNoteInputDialog(function(note_text)
-    self:saveNote(note_text)
+    self:saveNote(note_text, nil)
   end, nil)
-end
-
-function QuickNote:getPageInfo(ui)
-  local page_number = nil
-  local percentage = 0
-  local total_pages = nil
-  local chapter_title = nil
-  if ui.highlight.selected_text and ui.highlight.selected_text.pos0 then
-    if ui.paging then
-      page_number = ui.highlight.selected_text.pos0.page
-    else
-      -- For rolling mode, we could get page number using document:getPageFromXPointer
-      page_number = ui.document:getPageFromXPointer(ui.highlight.selected_text.pos0)
-    end
-    
-    total_pages = ui.document.info.number_of_pages
-    if page_number and total_pages and total_pages ~= 0 then
-      percentage = math.floor((page_number / total_pages) * 100 + 0.5)
-    end
-    
-    if ui.toc and page_number then
-      chapter_title = ui.toc:getTocTitleByPage(page_number)
-    end
-  end
-
-  local page_info = ""
-  if page_number and total_pages then
-    page_info = string.format(" (Page %s - %s%%)", page_number, percentage)
-  elseif page_number then
-    page_info = string.format(" (Page %s)", page_number)
-  end
-
-  if chapter_title then
-    page_info = page_info .. " - " .. chapter_title
-  end
-
-  return page_info
-end
-
-function QuickNote:saveToNotebookFile(log_entry)
-  local success, err = pcall(function()
-    local notebookfile = self.assistant.ui.bookinfo:getNotebookFile(self.assistant.ui.doc_settings)
-    local default_folder = util.tableGetValue(self.assistant.CONFIGURATION, "features", "default_folder_for_logs")
-    if default_folder and default_folder ~= "" then
-      if not notebookfile:find("^" .. default_folder:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")) then
-        if not util.pathExists(default_folder) then
-          UIManager:show(InfoMessage:new{
-              icon = "notice-warning",
-              text = T(_("Cannot access default folder for logs: %1\nUsing original location."), default_folder),
-              timeout = 5,
-            })
-        else
-          local original_filename = notebookfile:match("([^/\\]+)$")
-          if original_filename then
-            original_filename = original_filename:gsub("%.[^.]*$", ".md")
-          else
-            local doc_path = self.assistant.ui.document.file
-            if doc_path then
-              local doc_filename = doc_path:match("([^/\\]+)$")
-              if doc_filename then
-                original_filename = doc_filename..".md"
-              else
-                original_filename = "notebook.md"
-              end
-            else
-              original_filename = "notebook.md"
-            end
-          end
-          local new_notebookfile = default_folder .. "/" .. original_filename
-
-          self.assistant.ui.doc_settings:saveSetting("notebook_file", new_notebookfile)
-
-          notebookfile = new_notebookfile
-        end
-      end
-    end
-
-    if notebookfile and not notebookfile:find("%.md$") then
-      notebookfile = notebookfile:gsub("%.[^.]*$", ".md")
-      if not notebookfile:find("%.md$") then
-        notebookfile = notebookfile .. ".md"
-      end
-      self.assistant.ui.doc_settings:saveSetting("notebook_file", notebookfile)
-    end
-
-    if notebookfile then
-      local file = io.open(notebookfile, "a")
-      if file then
-        file:write(log_entry)
-        file:close()
-      else
-        logger.warn("Assistant: Could not open notebook file:", notebookfile)
-      end
-    end
-  end)
-
-  if not success then
-    logger.warn("Assistant: Error during notebook save:", err)
-    UIManager:show(InfoMessage:new{
-      icon = "notice-warning",
-      text = _("Notebook save failed. Continuing..."),
-      timeout = 3,
-    })
-  end
 end
 
 function QuickNote:saveNote(note_text, highlighted_text)
@@ -203,7 +100,7 @@ function QuickNote:saveNote(note_text, highlighted_text)
   local user_lbl = _("User:")
   local quick_note_lbl = _("Quick Note")
 
-  local page_info = self:getPageInfo(self.assistant.ui)
+  local page_info = assistant_utils.getPageInfo(self.assistant.ui)
   local processed_note = note_text:gsub("\n", "\n\n")
 
   local processed_highlighted = ""
@@ -219,7 +116,7 @@ function QuickNote:saveNote(note_text, highlighted_text)
     log_entry = string.format("# [%s]\n## %s\n\n### ⮞ %s \n\n%s\n\n", timestamp, quick_note_lbl, user_lbl, processed_note)
   end
 
-  self:saveToNotebookFile(log_entry)
+  assistant_utils.saveToNotebookFile(self.assistant, log_entry)
 
   UIManager:show(InfoMessage:new{
     text = _("Quick note saved successfully"),

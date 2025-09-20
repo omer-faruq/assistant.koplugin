@@ -107,6 +107,14 @@ function Assistant:onDispatcherRegisterActions()
     category = "none",
     event = "AskAIBookInfo",
     title = _("Book Summary & Recs"),
+    general = true
+  })
+
+  -- Register Annotations Analysis action (available for gesture binding)
+  Dispatcher:registerAction("ai_annotations", {
+    category = "none",
+    event = "AskAIAnnotations",
+    title = _("Highlight & Note Analysis"),
     general = true,
     separator = true
   })
@@ -164,6 +172,28 @@ function Assistant:addToMainMenu(menu_items)
             hold_callback = function ()
               UIManager:show(InfoMessage:new{
                 text = _("A very brief, spoiler-free summary of the book up to current reading progress.")
+              })
+            end,
+          },
+          {
+            text = _("Highlight & Note Analysis"),
+            callback = function ()
+              self:onAskAIAnnotations()
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("Analysis of your highlights, notes, and notebook content from the book.")
+              })
+            end,
+          },
+          {
+            text = _("Summary Using Highlights & Notes"),
+            callback = function ()
+              self:onAskAIFeature("summary_using_annotations")
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("Summary of the book using your highlights and notes.")
               })
             end,
             separator = true,
@@ -646,6 +676,30 @@ end
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
         showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished)
+      end)
+    end)
+    return true
+  end
+
+  function Assistant:onAskAIAnnotations()
+    if not self:isConfigured() then return end
+    NetworkMgr:runWhenOnline(function()
+      local book = getDocumentInfo(self.ui.document)
+      local showFeatureDialog = require("assistant_featuredialog")
+      Trapper:wrap(function()
+        showFeatureDialog(self, "annotations", book.title, book.authors, book.percent_finished)
+      end)
+    end)
+    return true
+  end
+  
+  function Assistant:onAskAIFeature(prompt_idx)
+    if not self:isConfigured() then return end
+    NetworkMgr:runWhenOnline(function()
+      local book = getDocumentInfo(self.ui.document)
+      local showFeatureDialog = require("assistant_featuredialog")
+      Trapper:wrap(function()
+        showFeatureDialog(self, prompt_idx, book.title, book.authors, book.percent_finished)
       end)
     end)
     return true

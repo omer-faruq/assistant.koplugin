@@ -346,6 +346,82 @@ Generate detailed information about the book "{title}" by {author}. Provide the 
 
 Ensure all information is accurate and based on known facts. Respond entirely in {language}.]],
     },
+    annotations = {
+        system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        user_prompt = [[
+You are given  my notes and highlights. 
+Your task is to carefully analyze this content and produce a structured summary that includes:
+
+1. **Key Takeaways**  
+   - Summarize the most important insights, lessons, or narrative developments.  
+   - Highlight recurring themes, turning points, or critical information.  
+
+2. **To-Do / Action Items**  
+   - Based on the content and my notes, suggest practical actions, reflections, or follow-ups I should consider.  
+   - If the text is fictional, focus on intellectual or emotional takeaways (e.g., themes to reflect on, characters to analyze, related readings).  
+   - If the text is non-fiction, focus on actionable steps (e.g., habits to adopt, ideas to research, concepts to apply).  
+
+3. **Contextual Notes**  
+   - Clarify connections between my highlights/notes and the broader narrative or arguments.  
+   - Point out any open questions or areas I may want to revisit in the earlier chapters.  
+
+Output format:  
+- Start with a concise **executive summary** (3–5 sentences).  
+- Then provide a **detailed list** under “Key Takeaways” and “To-Do / Action Items.”  
+- End with **Contextual Notes / Reflections** in bullet points.  
+
+Keep the tone clear, thoughtful, and practical. 
+- Always respond in {language}.]],
+    },
+    summary_using_annotations = {
+        system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        user_prompt = [[
+You are a meticulous book summarizer and analyst.
+
+INPUTS:
+- book_text: the full text of the book (or a very large portion, potentially thousands of words)
+- highlights: a list of highlighted passages and my personal notes
+
+YOUR TASK:
+Produce a **structured summary** that integrates the highlights naturally into the book summary.  
+Do not separate highlights into a final section — instead, use a translated summary of each highlight inside the summary to emphasize them at the right place.
+
+STYLE & RULES:
+1. Language → Always respond in {language}.
+2. TL;DR → Begin with a 2–3 sentence overall summary of the book’s main message.
+3. Integrated Summary:
+   - Provide a clear, logical summary of the book.
+   - Each time you encounter a highlight, render the exact highlighted text in **bold**.
+   - Immediately after the bold text, paraphrase it and explain why it matters in the context of the book.
+   - If a highlight has a note, include it in *italic parentheses* right after your explanation.
+   - Maintain flow: highlights must feel naturally embedded, not forced.
+4. Key Points:
+   - After the integrated summary, list the 8–12 most important insights in bullet form.
+   - Incorporate highlights into the list (again in **bold**), paraphrased where helpful.
+5. Actionable Takeaways:
+   - Provide 5–8 clear, practical lessons or insights the reader can apply.
+6. Tone:
+   - Clear, thoughtful, and practical.
+   - Never copy the entire book verbatim; focus on essence and integration of highlights.
+7. Contradictions:
+   - If a highlight conflicts with the book text, mark it with ⚠️ and briefly note the possible interpretation.
+   - If a highlight is not related to the book text (if it is not in the book text), ignore it.
+
+OUTPUT STRUCTURE (Markdown):
+- TL;DR
+- Integrated Summary
+- Key Points
+- Actionable Takeaways
+- ⚠️ Contradictions / Open Questions (if any)
+
+IMPORTANT:
+- Always weave highlights *inline*, never at the end.
+- Keep formatting consistent (Markdown headings, bold highlights, italic notes).
+- If the text is extremely long, compress intelligently while still reflecting highlights.
+
+Now begin the analysis with the provided book_text and highlights.]],
+    },
+
     dict = {
         system_prompt = "You are a dictionary with high quality detail vocabulary definitions and examples. Always respond in Markdown format.",
         user_prompt = T([[
@@ -374,25 +450,35 @@ Ensure all information is accurate and based on known facts. Respond entirely in
     _("Example"),
     _("Word Origin"))
     },
-    suggestions_prompt = [[  
+    suggestions_prompt = T([[  
 At the end of your response, generate 2-3 questions in {language} language that the user might find interesting based on your answer.  
 Display them as a **Markdown unordered list** with this exact format:  
 
 ```
 ---
-{follow_up_headline}
+__%1__
 
-- [Question 1](#suggested-question:Question 1)  
-- [Question 2](#suggested-question:Question 2)  
+- [Question 1](#q:Question 1)
+- [Question 2](#q:Question 2)
 ```  
 
-**Rules:**  
-1. Replace `{follow_up_headline}` with a translated single sentence in {language} language meaning `You may find these topics interesting:`. Leave another line empty after this line.
-2. Avoid using parentheses `()` within the question text; rephrase if necessary.
-3. The link syntax must be `[TEXT](#suggested-question:TEXT)` — the colon `:` is required. The link parentheses `()` must remain in Markdown format, strictly prohibit replacing them with l10n language punctuation (e.g., `（）`).
-4. The TEXT inside the brackets `[]` and the TEXT in the link must be identical, including punctuations.
-```
-]],
+**Critical rules to avoid Markdown parsing errors:**  
+1. **Correct symbols only:**  
+   - **MUST** use English parentheses `()` strictly required for markdown  
+   - **WRONG (non-ASCII symbols):** `（）`  
+   - **WRONG (other variants):** `［］` or `【】`  
+   
+2. **Strict link format:** `[TEXT](#q:TEXT)` with:  
+   - Colons **required** after `#q:`  
+   - Identical text inside `[]` and `()`  
+   - **ZERO tolerance for symbol variants** (e.g. `（）` will break parsing)  
+
+3. **Double-check mechanism:**  
+   - Use English keyboard to input symbols  
+   - Verify parentheses at **both link parts**:  
+     - Example ✅: `[Topic A](#q:Topic A)`  
+     - Counterexample 🚫: `[Topic A](#q:Topic A）`  
+]], _("You may find these topics interesting:")),
 }
 
 

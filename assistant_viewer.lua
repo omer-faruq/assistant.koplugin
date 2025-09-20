@@ -36,8 +36,8 @@ local _ = require("assistant_gettext")
 local InfoMessage = require("ui/widget/infomessage")
 local Screen = Device.screen
 local MD = require("assistant_mdparser")
-
 local Prompts = require("assistant_prompts")
+local assistant_utils = require("assistant_utils")
 
 -- Inject scroll page method for ScrollHtmlWidget
 ScrollHtmlWidget.scrollToPage = function(self, page_num)
@@ -62,9 +62,11 @@ end
 
 -- Undo default margins and padding in ScrollHtmlWidget.
 -- Based on ui/widget/dictquicklookup.
+-- font-family order: https://github.com/koreader/koreader/blob/19f3278d6b2c4677ced5358b83dc9157a8210d33/frontend/document/credocument.lua#L59
 local VIEWER_CSS = [[
 @page {
     margin: 0;
+    font-family: 'Noto Sans CJK TC', 'Noto Sans Arabic', 'Noto Sans Devanagari UI', 'Noto Sans Bengali UI', 'FreeSans', 'Noto Sans', sans-serif;
 }
 
 body {
@@ -563,15 +565,10 @@ function ChatGPTViewer:init()
 end
 
 function ChatGPTViewer:saveToNotebook()
-  if not self.assistant.quicknote then
-    local QuickNote = require("assistant_quicknote")
-    self.assistant.quicknote = QuickNote:new(self.assistant)
-  end
-
   local timestamp = os.date("%Y-%m-%d %H:%M:%S")
   local highlighted_text_lbl = _("Highlighted text:")
   
-  local page_info = self.assistant.quicknote:getPageInfo(self.ui)
+  local page_info = assistant_utils.getPageInfo(self.ui)
 
   local title_text = (self.title and self.title or _("Book Analysis")) .. "\n"
   local text_to_log = self.text or ""
@@ -588,11 +585,12 @@ function ChatGPTViewer:saveToNotebook()
     text_to_log = string.format("__%s__ \n%s\n\n%s\n\n", highlighted_text_lbl, processed_highlighted, text_to_log)
   end
   
-  text_to_log = text_to_log:gsub("%[(.-)%]%(%#suggested%-question:.-%)", "%1")
+  -- Remove suggested question link
+  text_to_log = text_to_log:gsub("%[(.-)%]%(%#q:.-%)", "%1") 
   
   local log_entry = string.format("# [%s]%s\n## %s\n\n%s\n\n", timestamp, page_info, title_text, text_to_log)
   
-  self.assistant.quicknote:saveToNotebookFile(log_entry)
+  assistant_utils.saveToNotebookFile(self.assistant, log_entry)
 end
 
 function ChatGPTViewer:onCloseWidget()
@@ -763,10 +761,10 @@ end
 -- close all active dialog back to the reading UI
 function ChatGPTViewer:HoldClose()
   self:onClose()
-  self.assistant.ui.highlight:onClose()
   if self.assistant.ui.dictionary.dict_window then
     self.assistant.ui.dictionary.dict_window:onClose()
   end
+  self.assistant.ui.highlight:onClose()
 end
 
 function ChatGPTViewer:onShow()
@@ -807,8 +805,8 @@ function ChatGPTViewer:onClose()
   UIManager:close(self)
   if self.close_callback then self.close_callback() end
 
-  -- clear the text selection when plugin is called without a highlight dialog
-  if not self.assistant.ui.highlight.highlight_dialog then
+  -- clear the text selection when plugin is called without a highlight or dict dialog
+  if not (self.assistant.ui.highlight.highlight_dialog or self.assistant.ui.dictionary.dict_window) then
     self.assistant.ui.highlight:clear()
   end
 
@@ -916,28 +914,29 @@ function ChatGPTViewer:trimMessageHistory()
   local MAX_ROUNDS = 3
 
   local assistant_msg_indices = {}
-  -- The first message is the system prompt, so we start from index 2.
-  for i = 2, #self.message_history do
+  -- Preserve the first round: System prompt (1), User1 (2), Assistant1 (3)
+  -- Start collecting assistant messages from index 4 to skip the first assistant response
+  for i = 4, #self.message_history do
     if self.message_history[i].role == "assistant" then
       table.insert(assistant_msg_indices, i)
     end
   end
 
-  if #assistant_msg_indices > MAX_ROUNDS then
-    local num_rounds_to_remove = #assistant_msg_indices - MAX_ROUNDS
+  -- Adjust for the first round already preserved: keep MAX_ROUNDS - 1 additional rounds
+  if #assistant_msg_indices > (MAX_ROUNDS - 1) then
+    local num_rounds_to_remove = #assistant_msg_indices - (MAX_ROUNDS - 1)
     -- The index of the last assistant message of the last round to be removed.
     local last_assistant_msg_index_to_remove = assistant_msg_indices[num_rounds_to_remove]
-    -- We remove all messages from the beginning (after system prompt) up to and including that assistant message.
-    -- The conversation starts at index 2.
-    local num_messages_to_remove = last_assistant_msg_index_to_remove - 1
+    -- Preserve first round (indices 1-3), remove from index 4 onwards
+    local num_messages_to_remove = last_assistant_msg_index_to_remove - 3
     for _ = 1, num_messages_to_remove do
-      table.remove(self.message_history, 2)
+      table.remove(self.message_history, 4)
     end
   end
 end
 
 function ChatGPTViewer:html_link_tapped_callback(link)
-  local SUGGESTION_PREFIX = "#suggested-question:"
+  local SUGGESTION_PREFIX = "#q:"
   if link.uri and util.stringStartsWith(link.uri, SUGGESTION_PREFIX) then
     self:askAnotherQuestion(true) -- simple_mode
     self.input_dialog:setInputText(link.uri:sub(#SUGGESTION_PREFIX+1), nil, false)
