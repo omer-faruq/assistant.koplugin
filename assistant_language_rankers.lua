@@ -1,3 +1,45 @@
+--[[
+LanguageRankers documentation
+===============================
+This module centralises all ranking logic that the dictionary and other AI surfaces rely on.
+It is intentionally data-driven so contributors can tweak behaviour without touching the core
+Lua code. The key ideas are:
+
+1. Feature-based scoring
+   - Each context (paragraph/sentence) is scored by a set of small feature functions defined
+     in FEATURE_IMPLEMENTATIONS. Examples: raw term frequency, preferred length ranges,
+     descriptor word hits, proximity to the current reading position.
+   - `_default_features` lists every feature. Language configs can explicitly enable/disable
+     any of them via the `enabled_features` table (see assistant_language_descriptors.lua).
+   - Adding a new feature only requires providing an implementation and toggling it in the
+     descriptor file.
+
+2. Language-specific descriptors
+   - Per-language configuration lives in assistant_language_descriptors.lua. Each entry can
+     declare word lists, regex patterns, custom scoring callbacks, and feature flags.
+   - The descriptors file is purely data, so localisers can maintain language assets without
+     editing logic. LanguageRankers automatically registers every descriptor on load.
+
+3. Metadata inputs
+   - `rankContexts` accepts an optional metadata table with fields such as `total_units`,
+     `current_paragraph_index`, or `current_index`. Features that need this information (e.g.
+     position diversity, proximity) read it to adjust scores. Callers should send whichever
+     fields they can compute; missing values simply disable dependent features.
+
+Extending the system
+--------------------
+* To add a new language: copy one of the descriptor tables in assistant_language_descriptors.lua,
+  adjust `enabled_features`, `word_groups`, and `patterns`, and (optionally) supply a `custom`
+  function for bespoke logic. The module will register it automatically when required.
+* To introduce a new scoring feature: add a function to FEATURE_IMPLEMENTATIONS, set a sane
+  default flag in `_default_features`, and toggle it per-language in the descriptors file.
+* To call the ranker from new code: pass a language tag, a list of contexts (with `text`,
+  `position`, and optional precomputed metrics), plus metadata that includes any relevant
+  totals or the user's current location.
+
+This comment intentionally avoids locale-specific strings so it can remain English reference
+material for the project.
+]]
 local LanguageRankers = {
     _languages = {},
     _default_language = "en",

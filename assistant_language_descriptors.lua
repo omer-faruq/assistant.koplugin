@@ -1,3 +1,34 @@
+--[[
+Language descriptor guidance
+============================
+This file stores language-specific knobs for the ranking pipeline. Each top-level key (e.g.
+`en`, `es`) defines a descriptor table consumed by LanguageRankers. The structure is:
+
+{
+    enabled_features = { ... },   -- optional overrides; unspecified items fall back to the
+                                  -- defaults declared in LanguageRankers._default_features
+    word_groups = { ... },        -- optional list of word buckets used by the descriptor_words
+                                  -- feature. Each entry takes the form { weight = <number>,
+                                  -- words = { "token", ... } }.
+    patterns = { ... },           -- optional regex patterns for descriptor_patterns feature.
+    custom = function(context, metadata)
+        -- optional bespoke scoring hook. Return a numeric bonus. If omitted, the custom
+        -- feature should be disabled in `enabled_features`.
+    end,
+}
+
+Tips for contributors
+---------------------
+* Keep word lists ASCII when possible so the repository stays portable. If you need diacritics,
+  ensure the file encoding remains UTF-8.
+* Use lower-case tokens; the ranker lowercases input before matching.
+* Weights are additive. Doubling a weight doubles the contribution of matching tokens.
+* To disable an entire feature for a language, set `enabled_features.feature_name = false`.
+* When designing descriptors for a new language, start small (core colours/body words) and
+  iteratively expand based on real book samples.
+
+The module simply returns this table; no additional logic should live here.
+]]
 return {
     en = {
         enabled_features = {
@@ -12,29 +43,29 @@ return {
         word_groups = {
             { weight = 3, words = {
                 'red', 'blue', 'green', 'yellow', 'black', 'white', 'brown', 'gray', 'grey', 'golden', 'silver', 'dark', 'light', 'pale', 'bright',
-                'tall', 'short', 'large', 'small', 'huge', 'tiny', 'wide', 'narrow', 'thick', 'thin', 'broad', 'slender', 'massive', 'enormous',
+                'tall', 'short', 'large', 'small', 'huge', 'tiny', 'wide', 'narrow', 'thick', 'thin', 'broad', 'slender', 'massive', 'enormous', 'crimson', 'scarlet', 'ivory', 'azure', 'violet', 'amber', 'bronze', 'charcoal', 'indigo', 'emerald', 'cobalt', 'ochre', 'pastel', 'glossy', 'neon', 'matte', 'translucent', 'luminous', 'holographic', 'chrome',
             }},
             { weight = 4, words = {
                 'eyes', 'hair', 'face', 'hands', 'arms', 'legs', 'nose', 'mouth', 'lips', 'chin', 'forehead', 'cheeks', 'beard', 'mustache',
-                'shoulders', 'chest', 'back', 'skin', 'complexion', 'build', 'figure', 'stature', 'posture', 'gait', 'voice',
+                'shoulders', 'chest', 'back', 'skin', 'complexion', 'build', 'figure', 'stature', 'posture', 'gait', 'voice', 'eyebrows', 'eyelashes', 'jaw', 'jawline', 'torso', 'waist', 'hips', 'ankles', 'wrists', 'fingers', 'toes', 'freckles', 'tattoo', 'scar', 'piercing', 'cybernetic', 'prosthetic', 'augmented',
             }},
             { weight = 3, words = {
                 'building', 'house', 'castle', 'tower', 'room', 'hall', 'chamber', 'garden', 'courtyard', 'street', 'road', 'path', 'bridge',
                 'mountain', 'hill', 'valley', 'river', 'lake', 'forest', 'field', 'meadow', 'desert', 'ocean', 'sea', 'shore', 'cliff',
-                'walls', 'ceiling', 'floor', 'windows', 'doors', 'columns', 'stairs', 'roof', 'basement', 'attic',
+                'walls', 'ceiling', 'floor', 'windows', 'doors', 'columns', 'stairs', 'roof', 'basement', 'attic', 'village', 'hamlet', 'harbor', 'port', 'market', 'plaza', 'alley', 'archway', 'balcony', 'terrace', 'veranda', 'hallway', 'corridor', 'doorway', 'arch', 'skyscraper', 'arcology', 'spaceport', 'starship', 'shuttle', 'airlock', 'hangar', 'laboratory', 'lab', 'factory', 'warehouse', 'apartment', 'loft', 'studio', 'cafeteria', 'diner', 'bar', 'club', 'observatory', 'colony', 'outpost', 'station',
             }},
             { weight = 3, words = {
                 'dress', 'shirt', 'coat', 'cloak', 'robe', 'hat', 'cap', 'boots', 'shoes', 'gloves', 'ring', 'necklace', 'bracelet',
-                'sword', 'dagger', 'staff', 'crown', 'helmet', 'armor', 'shield', 'belt', 'buckle', 'jewel', 'gem',
+                'sword', 'dagger', 'staff', 'crown', 'helmet', 'armor', 'shield', 'belt', 'buckle', 'jewel', 'gem', 'tunic', 'vest', 'scarf', 'glasses', 'spectacles', 'brooch', 'gauntlet', 'satchel', 'sash', 'mantle', 'uniform', 'jumpsuit', 'hoodie', 'jeans', 'sneakers', 'trainers', 'loafers', 'heels', 'sandals', 'blazer', 'bodysuit', 'spacesuit', 'visor', 'utility belt', 'utility vest', 'lab coat', 'overalls', 'cardigan',
             }},
             { weight = 2, words = {
                 'gleaming', 'glowing', 'sparkling', 'shimmering', 'glittering', 'blazing', 'flickering', 'shadowy', 'misty', 'clear',
                 'cold', 'warm', 'hot', 'cool', 'freezing', 'burning', 'wet', 'dry', 'damp', 'moist', 'sticky', 'slippery',
                 'loud', 'quiet', 'silent', 'echoing', 'ringing', 'whispering', 'thundering', 'creaking', 'rustling',
-                'fragrant', 'sweet', 'bitter', 'sour', 'musty', 'fresh', 'stale', 'perfumed', 'smoky',
+                'fragrant', 'sweet', 'bitter', 'sour', 'musty', 'fresh', 'stale', 'perfumed', 'smoky', 'hazy', 'murky', 'soothing', 'pungent', 'earthy', 'spicy', 'metallic', 'breezy', 'tingling', 'vivid', 'sterile', 'clinical', 'synthetic', 'ozonic', 'acrid', 'electric', 'humid', 'arid', 'resonant', 'radiant',
             }},
             { weight = 2, words = {
-                'feet', 'inches', 'meters', 'miles', 'pounds', 'dozen', 'hundred', 'thousand', 'several', 'many', 'few', 'numerous',
+                'feet', 'inches', 'meters', 'miles', 'pounds', 'dozen', 'hundred', 'thousand', 'several', 'many', 'few', 'numerous', 'handful', 'pair', 'dozens', 'scores', 'multitude', 'plenty', 'countless', 'kilometers', 'liters', 'grams', 'gigabyte', 'terabyte', 'nanosecond', 'lightyear', 'parsec', 'megaton', 'percentage', 'ratio',
             }},
         },
         patterns = {
