@@ -9,12 +9,106 @@ local T = require("ffi/util").template
 local Event = require("ui/event")
 local koutil = require("util")
 local dict_prompts = require("assistant_prompts").assistant_prompts.dict
+local LanguageRankers = require("assistant_language_rankers")
+
+local LANGUAGE_ALIASES = {
+    en = "en",
+    english = "en",
+    eng = "en",
+    es = "es",
+    spa = "es",
+    spanish = "es",
+    fr = "fr",
+    fra = "fr",
+    fre = "fr",
+    french = "fr",
+    de = "de",
+    deu = "de",
+    ger = "de",
+    german = "de",
+}
+
+local function extractParagraphs(text)
+    local paragraphs = {}
+    local buffer = {}
+    for line in (text .. "\n"):gmatch("([^\n]*)\n") do
+        if line:match("^%s*$") then
+            if #buffer > 0 then
+                local paragraph = table.concat(buffer, " ")
+                paragraph = paragraph:gsub("^%s+", ""):gsub("%s+$", "")
+                paragraph = paragraph:gsub("%s+", " ")
+                table.insert(paragraphs, paragraph)
+                buffer = {}
+            end
+        else
+            table.insert(buffer, line)
+        end
+    end
+    if #buffer > 0 then
+        local paragraph = table.concat(buffer, " ")
+        paragraph = paragraph:gsub("^%s+", ""):gsub("%s+$", "")
+        paragraph = paragraph:gsub("%s+", " ")
+        table.insert(paragraphs, paragraph)
+    end
+    if #paragraphs == 0 and text:match("%S") then
+        local trimmed = text:gsub("^%s+", ""):gsub("%s+$", "")
+        if trimmed ~= "" then
+            table.insert(paragraphs, trimmed)
+        end
+    end
+    return paragraphs
+end
+
+local function normalizeLanguageCode(language_value)
+    if type(language_value) ~= "string" then
+        return nil
+    end
+    local normalized = language_value:lower()
+    normalized = normalized:gsub("%s+", "")
+    normalized = normalized:gsub("_", "-")
+    if normalized == "" then
+        return nil
+    end
+    local alias = LANGUAGE_ALIASES[normalized]
+    if alias then
+        return alias
+    end
+    local first_segment = normalized:match("^(%a+)")
+    if first_segment then
+        alias = LANGUAGE_ALIASES[first_segment]
+        if alias then
+            return alias
+        end
+    end
+    local two_letter = normalized:match("^(%a%a)")
+    if two_letter then
+        alias = LANGUAGE_ALIASES[two_letter]
+        if alias then
+            return alias
+        end
+        return two_letter
+    end
+    return normalized
+end
+
+local function detectDocumentLanguage(ui)
+    if not ui or not ui.document then
+        return nil
+    end
+    local info = ui.document.info or {}
+    local language_value = info.language or info.Language
+    if (not language_value or language_value == "") and ui.document.getProps then
+        local props = ui.document:getProps() or {}
+        language_value = props.language or props.Language
+    end
+    return normalizeLanguageCode(language_value)
+end
 
 local function searchWordInBook(assistant, searchWord, page_or_sentence)
     local ui = assistant.ui
     local CONFIGURATION = assistant.CONFIGURATION
     local book_text = ""
-    local instances = {}
+    local language_code = detectDocumentLanguage(ui) or "unknown"
 
     -- Auto-detect mode based on document type if not specified
     if not page_or_sentence then
@@ -115,7 +209,7 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
             end
 
             if found_on_page then
-                table.insert(pages_with_term, {page = page, text = page_text})
+                table.insert(pages_with_term, { page = page, text = page_text })
             end
         end
 
@@ -147,7 +241,8 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
             combined_context = table.concat(selected_pages, "\n\n---\n\n")
 
             -- Apply max length limit from configuration
-            local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
+            local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features",
+                "max_text_length_for_analysis") or 100000
             if #combined_context > max_text_length_for_analysis then
                 combined_context = combined_context:sub(1, max_text_length_for_analysis)
                 -- Try to end at a complete page separator
@@ -161,286 +256,158 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
         else
             return ""
         end
-
     else
-        -- INTELLIGENT SENTENCE-based approach - analyze all instances and select the best
-        local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
+        -- Paragraph-based approach - analyze paragraph windows and expand context size
+        local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features",
+            "max_text_length_for_analysis") or 100000
 
-        -- Split text into sentences
-        local sentences = {}
-        for sentence in book_text:gmatch("[^.!?]+[.!?]*") do
-            sentence = sentence:gsub("^%s+", ""):gsub("%s+$", "")
-            if sentence ~= "" and #sentence > 15 then -- Filter very short sentences
-                table.insert(sentences, sentence)
-            end
-        end
-
-        if #sentences == 0 then
+        local paragraphs = extractParagraphs(book_text)
+        if #paragraphs == 0 then
             return ""
         end
 
-        -- Find all instances and extract context with quality scoring
-        local all_contexts = {}
+        local paragraph_contexts = {}
 
-        for i, sentence in ipairs(sentences) do
-            local sentence_lower = sentence:lower()
+        for index, paragraph in ipairs(paragraphs) do
+            local paragraph_lower = paragraph:lower()
             local contains_term = false
             local term_frequency = 0
 
-            -- Check if sentence contains any search pattern
             for _, pattern in ipairs(unique_patterns) do
-                if sentence_lower:find("%f[%w]" .. pattern:gsub("([^%w])", "%%%1") .. "%f[%W]") then
+                local boundary_pattern = "%f[%w]" .. pattern:gsub("([^%w])", "%%%1") .. "%f[%W]"
+                if paragraph_lower:find(boundary_pattern) then
                     contains_term = true
-                    -- Count term frequency in this sentence
-                    local start = 1
+                    local start_pos = 1
                     while true do
-                        local pos = sentence_lower:find(pattern, start, true)
+                        local pos = paragraph_lower:find(pattern, start_pos, true)
                         if not pos then break end
                         term_frequency = term_frequency + 1
-                        start = pos + 1
+                        start_pos = pos + 1
                     end
                     break
                 end
             end
 
             if contains_term then
-                -- Extract context around this sentence (5-10 sentences on each side)
-                local context_size = math.min(10, math.max(5, math.floor(#sentences / 30))) -- Adaptive context size: 5-10 sentences
-                local start_idx = math.max(1, i - context_size)
-                local end_idx = math.min(#sentences, i + context_size)
-
-                local context_sentences = {}
-                for j = start_idx, end_idx do
-                    table.insert(context_sentences, sentences[j])
-                end
-
-                local context_text = table.concat(context_sentences, " ")
-
-                -- Calculate quality score for this context
-                local quality_score = 0
-
-                -- 1. Term frequency bonus (more mentions = higher relevance)
-                quality_score = quality_score + (term_frequency * 10)
-
-                -- 2. Context length bonus (moderate length is preferred)
                 local word_count = 0
-                for word in context_text:gmatch("%S+") do
+                for _ in paragraph:gmatch("%S+") do
                     word_count = word_count + 1
                 end
-                if word_count >= 30 and word_count <= 150 then
-                    quality_score = quality_score + 5
-                elseif word_count >= 15 and word_count <= 200 then
-                    quality_score = quality_score + 3
-                end
 
-                -- 3. Position diversity bonus (prefer spread across document)
-                local position_ratio = i / #sentences
-                if position_ratio < 0.2 then -- Early in document
-                    quality_score = quality_score + 3
-                elseif position_ratio > 0.8 then -- Late in document
-                    quality_score = quality_score + 3
-                else -- Middle sections
-                    quality_score = quality_score + 1
-                end
-
-                -- 4. Physical description detection bonus (valuable for X-Ray analysis)
-                local description_score = 0
-
-                -- Physical appearance descriptors
-                local appearance_words = {
-                    -- Colors
-                    "red", "blue", "green", "yellow", "black", "white", "brown", "gray", "grey", "golden", "silver", "dark", "light", "pale", "bright",
-                    -- Size/shape
-                    "tall", "short", "large", "small", "huge", "tiny", "wide", "narrow", "thick", "thin", "broad", "slender", "massive", "enormous",
-                    -- Texture/material
-                    "rough", "smooth", "soft", "hard", "wooden", "stone", "metal", "cloth", "silk", "leather", "fur", "glass", "crystal",
-                    -- Age/condition
-                    "old", "young", "ancient", "new", "worn", "fresh", "weathered", "polished", "rusty", "shiny", "dull", "cracked", "broken"
-                }
-
-                -- Body parts and facial features (for character descriptions)
-                local physical_features = {
-                    "eyes", "hair", "face", "hands", "arms", "legs", "nose", "mouth", "lips", "chin", "forehead", "cheeks", "beard", "mustache",
-                    "shoulders", "chest", "back", "skin", "complexion", "build", "figure", "stature", "posture", "gait", "voice"
-                }
-
-                -- Architecture and place descriptors
-                local place_descriptors = {
-                    "building", "house", "castle", "tower", "room", "hall", "chamber", "garden", "courtyard", "street", "road", "path", "bridge",
-                    "mountain", "hill", "valley", "river", "lake", "forest", "field", "meadow", "desert", "ocean", "sea", "shore", "cliff",
-                    "walls", "ceiling", "floor", "windows", "doors", "columns", "stairs", "roof", "basement", "attic"
-                }
-
-                -- Clothing and accessories
-                local clothing_items = {
-                    "dress", "shirt", "coat", "cloak", "robe", "hat", "cap", "boots", "shoes", "gloves", "ring", "necklace", "bracelet",
-                    "sword", "dagger", "staff", "crown", "helmet", "armor", "shield", "belt", "buckle", "jewel", "gem"
-                }
-
-                -- Sensory descriptors
-                local sensory_words = {
-                    -- Visual
-                    "gleaming", "glowing", "sparkling", "shimmering", "glittering", "blazing", "flickering", "shadowy", "misty", "clear",
-                    -- Touch/feel
-                    "cold", "warm", "hot", "cool", "freezing", "burning", "wet", "dry", "damp", "moist", "sticky", "slippery",
-                    -- Sound
-                    "loud", "quiet", "silent", "echoing", "ringing", "whispering", "thundering", "creaking", "rustling",
-                    -- Smell
-                    "fragrant", "sweet", "bitter", "sour", "musty", "fresh", "stale", "perfumed", "smoky"
-                }
-
-                local context_lower = context_text:lower()
-
-                -- Count appearance descriptors
-                for _, word in ipairs(appearance_words) do
-                    if context_lower:find("%f[%w]" .. word .. "%f[%W]") then
-                        description_score = description_score + 3
-                    end
-                end
-
-                -- Count physical features (high value for character descriptions)
-                for _, feature in ipairs(physical_features) do
-                    if context_lower:find("%f[%w]" .. feature .. "%f[%W]") then
-                        description_score = description_score + 4
-                    end
-                end
-
-                -- Count place descriptors
-                for _, place in ipairs(place_descriptors) do
-                    if context_lower:find("%f[%w]" .. place .. "%f[%W]") then
-                        description_score = description_score + 3
-                    end
-                end
-
-                -- Count clothing/accessories (good for character identification)
-                for _, item in ipairs(clothing_items) do
-                    if context_lower:find("%f[%w]" .. item .. "%f[%W]") then
-                        description_score = description_score + 3
-                    end
-                end
-
-                -- Count sensory descriptors
-                for _, sensory in ipairs(sensory_words) do
-                    if context_lower:find("%f[%w]" .. sensory .. "%f[%W]") then
-                        description_score = description_score + 2
-                    end
-                end
-
-                -- Bonus for comparative language (helps with relative descriptions)
-                local comparative_patterns = {
-                    "like", "as.*as", "than", "similar to", "resembled", "reminded.*of", "looked like", "appeared to be"
-                }
-                for _, pattern in ipairs(comparative_patterns) do
-                    if context_lower:find(pattern) then
-                        description_score = description_score + 2
-                    end
-                end
-
-                -- Bonus for measurement/quantity words (specific descriptions)
-                local measurement_words = {
-                    "feet", "inches", "meters", "miles", "pounds", "dozen", "hundred", "thousand", "several", "many", "few", "numerous"
-                }
-                for _, measure in ipairs(measurement_words) do
-                    if context_lower:find("%f[%w]" .. measure .. "%f[%W]") then
-                        description_score = description_score + 2
-                    end
-                end
-
-                quality_score = quality_score + description_score
-
-                -- 5. Additional contextual richness bonus
-                local richness_indicators = {
-                    '"[^"]*"', -- Dialogue
-                    "[A-Z][a-z]+ [A-Z][a-z]+", -- Proper names
-                    "said", "asked", "replied", "thought", -- Speech verbs
-                    "because", "however", "therefore", "although", -- Reasoning words
-                    "suddenly", "finally", "meanwhile" -- Narrative markers
-                }
-
-                for _, indicator in ipairs(richness_indicators) do
-                    if context_text:find(indicator) then
-                        quality_score = quality_score + 2
-                    end
-                end
-
-                table.insert(all_contexts, {
-                    text = context_text,
-                    position = i,
-                    sentence_index = i,
-                    quality_score = quality_score,
+                table.insert(paragraph_contexts, {
+                    text = paragraph,
+                    position = index,
+                    paragraph_index = index,
                     term_frequency = term_frequency,
-                    word_count = word_count
+                    word_count = word_count,
                 })
             end
         end
 
-        if #all_contexts == 0 then
+        if #paragraph_contexts == 0 then
             return ""
         end
 
-        -- Sort by quality score (highest first)
-        table.sort(all_contexts, function(a, b)
-            return a.quality_score > b.quality_score
-        end)
+        local ranked_contexts = LanguageRankers.rankContexts(language_code, paragraph_contexts, {
+            total_units = #paragraphs,
+            total_paragraphs = #paragraphs,
+            current_paragraph_index = #paragraphs,
+            current_index = #paragraphs,
+        })
 
-        -- Select the best contexts while avoiding overlap and ensuring diversity
-        local selected_contexts = {}
-        local used_positions = {}
-        local min_distance = math.max(8, math.floor(#sentences / 20)) -- Minimum distance between selections
-        local target_contexts = 8 -- Target number of contexts
+        local min_paragraphs = math.min(15, #paragraphs)
+        local max_paragraphs = math.min(25, #paragraphs)
+        local selected_indices = {}
+        local ordered_indices = {}
+
+        local function add_index(idx)
+            if idx < 1 or idx > #paragraphs or selected_indices[idx] or #ordered_indices >= max_paragraphs then
+                return false
+            end
+            selected_indices[idx] = true
+            table.insert(ordered_indices, idx)
+            return true
+        end
+
+        for _, context in ipairs(ranked_contexts) do
+            add_index(context.paragraph_index)
+            if #ordered_indices >= max_paragraphs then
+                break
+            end
+        end
+
+        if #ordered_indices == 0 then
+            return ""
+        end
+
+        if #ordered_indices < min_paragraphs then
+            local candidates = {}
+            for idx = 1, #paragraphs do
+                if not selected_indices[idx] then
+                    local nearest = math.huge
+                    for _, selected_idx in ipairs(ordered_indices) do
+                        local distance = math.abs(idx - selected_idx)
+                        if distance < nearest then
+                            nearest = distance
+                        end
+                    end
+                    table.insert(candidates, { index = idx, distance = nearest })
+                end
+            end
+
+            table.sort(candidates, function(a, b)
+                if a.distance == b.distance then
+                    return a.index < b.index
+                end
+                return a.distance < b.distance
+            end)
+
+            for _, candidate in ipairs(candidates) do
+                if #ordered_indices >= min_paragraphs or #ordered_indices >= max_paragraphs then
+                    break
+                end
+                add_index(candidate.index)
+            end
+        end
+
+        if #ordered_indices < min_paragraphs then
+            for idx = 1, #paragraphs do
+                if #ordered_indices >= min_paragraphs or #ordered_indices >= max_paragraphs then
+                    break
+                end
+                add_index(idx)
+            end
+        end
+
+        table.sort(ordered_indices)
+
+        local combined_parts = {}
         local current_length = 0
+        local separator = "\n\n---\n\n"
 
-        for _, context in ipairs(all_contexts) do
-            -- Check if this context is too close to already selected ones
-            local too_close = false
-            for pos in pairs(used_positions) do
-                if math.abs(context.position - pos) < min_distance then
-                    too_close = true
+        for _, idx in ipairs(ordered_indices) do
+            local paragraph_text = paragraphs[idx]
+            if paragraph_text and paragraph_text ~= "" then
+                local separator_length = (#combined_parts > 0) and #separator or 0
+                local part_length = #paragraph_text
+                if current_length + separator_length + part_length > max_text_length_for_analysis then
                     break
                 end
-            end
-
-            if not too_close then
-                -- Check if adding this context would exceed length limit
-                local estimated_length = current_length + #context.text + 20 -- +20 for separator
-                if estimated_length <= max_text_length_for_analysis and #selected_contexts < target_contexts then
-                    table.insert(selected_contexts, context)
-                    used_positions[context.position] = true
-                    current_length = estimated_length
-                elseif #selected_contexts >= target_contexts then
-                    break
+                if separator_length > 0 then
+                    table.insert(combined_parts, separator)
+                    current_length = current_length + separator_length
                 end
+                table.insert(combined_parts, paragraph_text)
+                current_length = current_length + part_length
             end
         end
 
-        -- Sort selected contexts by document order for chronological reading
-        table.sort(selected_contexts, function(a, b)
-            return a.position < b.position
-        end)
-
-        -- Combine selected contexts
-        if #selected_contexts > 0 then
-            local context_texts = {}
-            for _, context in ipairs(selected_contexts) do
-                table.insert(context_texts, context.text)
-            end
-
-            local combined_context = table.concat(context_texts, "\n\n---\n\n")
-
-            -- Final length check
-            if #combined_context > max_text_length_for_analysis then
-                combined_context = combined_context:sub(1, max_text_length_for_analysis)
-                -- Try to end at a complete separator
-                local last_separator = combined_context:reverse():find("---")
-                if last_separator and last_separator < 1000 then
-                    combined_context = combined_context:sub(1, #combined_context - last_separator + 3)
-                end
-            end
-
+        local combined_context = table.concat(combined_parts)
+        if combined_context ~= "" then
             return combined_context
-        else
-            return ""
         end
+
+        return ""
     end
 end
 
@@ -452,7 +419,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     -- Check if Querier is initialized
     local ok, err = Querier:load_model(assistant:getModelProvider())
     if not ok then
-        UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
+        UIManager:show(InfoMessage:new { icon = "notice-warning", text = err })
         return
     end
 
@@ -460,7 +427,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     local input_dialog
     if not highlightedText or highlightedText == "" then
         -- Show a simple input dialog to ask for a word to look up
-        input_dialog = InputDialog:new{
+        input_dialog = InputDialog:new {
             title = _("AI Dictionary"),
             input_hint = _("Enter a word to look up..."),
             input_type = "text",
@@ -508,7 +475,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             content = default_system_prompt,
         },
     }
-    
+
     -- Try to get context for the selected word.
     -- By default, we prefer the full sentence as context.
     -- If the sentence provides less than 10 words of context on both sides of the word,
@@ -559,7 +526,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             end
         end
     end
-    
+
     local dict_language = assistant.settings:readSetting("response_language") or assistant.ui_language
     local final_context = ""
     local prompt_config = dict_prompts
@@ -572,7 +539,8 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
 
         if book_context and book_context ~= "" then
             -- Combine current context with book context, ensuring current context is included
-            final_context = "**Current Context:**\n" .. current_context .. "\n\n**Additional Context from Book:**\n" .. book_context
+            final_context = "**Current Context:**\n" ..
+                current_context .. "\n\n**Additional Context from Book:**\n" .. book_context
         else
             -- Fallback to local context if no book context found
             final_context = current_context
@@ -589,11 +557,11 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     local context_message = {
         role = "user",
         content = string.gsub(prompt_config.user_prompt, "{(%w+)}", {
-                language = dict_language,
-                context = final_context,
-                word = highlightedText,
-                highlight = highlightedText,
-                user_input = ""
+            language = dict_language,
+            context = final_context,
+            word = highlightedText,
+            highlight = highlightedText,
+            user_input = ""
         })
     }
 
@@ -614,11 +582,12 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         local next_context_limited = string.sub(next_context, 1, 100)
         if render_markdown then
             -- in markdown mode, outputs markdown formatted highlighted text
-            result_text = T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, highlightedText, next_context_limited, answer)
+            result_text = T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, highlightedText, next_context_limited,
+                answer)
         else
             -- in plain text mode, use widget controled characters.
-            result_text = T("%1... %2%3%4 ...\n\n%5", TextBoxWidget.PTF_HEADER, prev_context_limited, 
-                TextBoxWidget.PTF_BOLD_START, highlightedText, TextBoxWidget.PTF_BOLD_END,  next_context_limited, answer)
+            result_text = T("%1... %2%3%4 ...\n\n%5", TextBoxWidget.PTF_HEADER, prev_context_limited,
+                TextBoxWidget.PTF_BOLD_START, highlightedText, TextBoxWidget.PTF_BOLD_END, next_context_limited, answer)
         end
         return result_text
     end
@@ -635,7 +604,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
                 local a = ui.annotation.annotations[index]
                 a.note = result
                 ui:handleEvent(Event:new("AnnotationsModified",
-                                    { a, nb_highlights_added = -1, nb_notes_added = 1 }))
+                    { a, nb_highlights_added = -1, nb_notes_added = 1 }))
             end
         end
 
@@ -651,7 +620,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         title = _("Dictionary"),
         text = result,
         onAddToNote = handleAddToNote,
-        default_hold_callback = function ()
+        default_hold_callback = function()
             chatgpt_viewer:HoldClose()
         end,
     }

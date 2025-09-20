@@ -636,11 +636,18 @@ end
     local doc_settings = DocSettings:open(document.file)
     local percent_finished = doc_settings:readSetting("percent_finished") or 0
     local doc_props = doc_settings:child("doc_props")
-    local title = doc_props:readSetting("title") or document:getProps().title or "Unknown Title"
-    local authors = doc_props:readSetting("authors") or document:getProps().authors or "Unknown Author"
+    local props = document:getProps() or {}
+    local title = doc_props:readSetting("title") or props.title or "Unknown Title"
+    local authors = doc_props:readSetting("authors") or props.authors or "Unknown Author"
+    local language_code = doc_props:readSetting("language") or props.language or props.Language
+    local language
+    if type(language_code) == "string" and language_code ~= "" then
+      language = Language:getLanguageName(language_code) or language_code
+    end
     return {
       title = title,
       authors = authors,
+      language = language or "Unknown Language",
       percent_finished = percent_finished,
     }
   end

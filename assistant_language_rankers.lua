@@ -1,0 +1,257 @@
+local LanguageRankers = {
+    _languages = {},
+    _default_language = "en",
+    _default_features = {
+        term_frequency = true,
+        preferred_length = true,
+        position_diversity = true,
+        descriptor_words = true,
+        descriptor_patterns = true,
+        dialogue = true,
+        proximity = true,
+        custom = true,
+    },
+}
+
+local descriptors = require("assistant_language_descriptors")
+
+local function cloneFeatureFlags(flags)
+    local merged = {}
+    for feature, enabled in pairs(LanguageRankers._default_features) do
+        merged[feature] = enabled and true or false
+    end
+    if type(flags) == "table" then
+        for feature, enabled in pairs(flags) do
+            merged[feature] = not not enabled
+        end
+    end
+    return merged
+end
+
+local function normalizeForMatch(text)
+    local normalized = (text or ""):lower()
+    normalized = normalized:gsub('\195\161', 'a')
+    normalized = normalized:gsub('\195\160', 'a')
+    normalized = normalized:gsub('\195\162', 'a')
+    normalized = normalized:gsub('\195\164', 'a')
+    normalized = normalized:gsub('\195\163', 'a')
+    normalized = normalized:gsub('\195\165', 'a')
+    normalized = normalized:gsub('\195\169', 'e')
+    normalized = normalized:gsub('\195\168', 'e')
+    normalized = normalized:gsub('\195\170', 'e')
+    normalized = normalized:gsub('\195\171', 'e')
+    normalized = normalized:gsub('\195\173', 'i')
+    normalized = normalized:gsub('\195\172', 'i')
+    normalized = normalized:gsub('\195\174', 'i')
+    normalized = normalized:gsub('\195\175', 'i')
+    normalized = normalized:gsub('\195\179', 'o')
+    normalized = normalized:gsub('\195\178', 'o')
+    normalized = normalized:gsub('\195\180', 'o')
+    normalized = normalized:gsub('\195\182', 'o')
+    normalized = normalized:gsub('\195\181', 'o')
+    normalized = normalized:gsub('\195\186', 'u')
+    normalized = normalized:gsub('\195\185', 'u')
+    normalized = normalized:gsub('\195\187', 'u')
+    normalized = normalized:gsub('\195\188', 'u')
+    normalized = normalized:gsub('\195\177', 'n')
+    normalized = normalized:gsub('\195\167', 'c')
+    normalized = normalized:gsub('\195\159', 'ss')
+    normalized = normalized:gsub('\197\147', 'oe')
+    normalized = normalized:gsub('\197\146', 'oe')
+    normalized = normalized:gsub('\195\184', 'o')
+    return normalized
+end
+
+local FEATURE_IMPLEMENTATIONS = {}
+
+FEATURE_IMPLEMENTATIONS.term_frequency = function(context)
+    return (context.term_frequency or 0) * 10
+end
+
+FEATURE_IMPLEMENTATIONS.preferred_length = function(context)
+    local word_count = context.word_count or 0
+    if word_count >= 30 and word_count <= 150 then
+        return 5
+    elseif word_count >= 15 and word_count <= 200 then
+        return 3
+    end
+    return 0
+end
+
+FEATURE_IMPLEMENTATIONS.position_diversity = function(context, metadata)
+    local total_units = metadata.total_units or metadata.total_paragraphs or metadata.total_sentences or 0
+    if total_units > 0 and context.position then
+        local ratio = context.position / total_units
+        if ratio < 0.2 then
+            return 3
+        elseif ratio > 0.8 then
+            return 3
+        end
+        return 1
+    end
+    return 1
+end
+
+FEATURE_IMPLEMENTATIONS.dialogue = function(_, _, _, raw_text)
+    if raw_text:find('"[^"]+"') then
+        return 2
+    end
+    return 0
+end
+
+FEATURE_IMPLEMENTATIONS.descriptor_words = function(context, _, config, _, normalized_text)
+    local score = 0
+    if type(config.word_groups) ~= "table" then
+        return score
+    end
+    for _, group in ipairs(config.word_groups) do
+        local weight = group.weight or 1
+        for _, word in ipairs(group.words or {}) do
+            local pattern = "%f[%w]" .. word .. "%f[%W]"
+            if normalized_text:find(pattern) then
+                score = score + weight
+            end
+        end
+    end
+    return score
+end
+
+FEATURE_IMPLEMENTATIONS.descriptor_patterns = function(_, _, config, raw_text, normalized_text)
+    local score = 0
+    if type(config.patterns) ~= "table" then
+        return score
+    end
+    for _, pattern_config in ipairs(config.patterns) do
+        local target = pattern_config.target or "normalized"
+        local haystack = target == "raw" and raw_text or normalized_text
+        if haystack:find(pattern_config.pattern) then
+            score = score + (pattern_config.weight or 1)
+        end
+    end
+    return score
+end
+
+FEATURE_IMPLEMENTATIONS.custom = function(context, metadata, config)
+    if type(config.custom) == "function" then
+        return config.custom(context, metadata) or 0
+    end
+    return 0
+end
+
+FEATURE_IMPLEMENTATIONS.proximity = function(context, metadata)
+    local current = metadata.current_index or metadata.current_paragraph_index
+    if not current or not context.position then
+        return 0
+    end
+    local distance = math.abs(current - context.position)
+    if distance == 0 then
+        return 6
+    elseif distance == 1 then
+        return 4
+    elseif distance == 2 then
+        return 3
+    elseif distance <= 4 then
+        return 2
+    elseif distance <= 6 then
+        return 1
+    end
+    return 0
+end
+
+local function resolveLanguage(language_code)
+    if type(language_code) ~= "string" then
+        return LanguageRankers._languages[LanguageRankers._default_language], LanguageRankers._default_language
+    end
+    local code = language_code:lower()
+    if LanguageRankers._languages[code] then
+        return LanguageRankers._languages[code], code
+    end
+    local prefix = code:match("^(%a%a)")
+    if prefix and LanguageRankers._languages[prefix] then
+        return LanguageRankers._languages[prefix], prefix
+    end
+    return LanguageRankers._languages[LanguageRankers._default_language], LanguageRankers._default_language
+end
+
+function LanguageRankers.register(language_code, config)
+    if type(language_code) ~= "string" or type(config) ~= "table" then
+        return
+    end
+    local normalized_code = language_code:lower()
+    local stored = {
+        word_groups = config.word_groups,
+        patterns = config.patterns,
+        custom = config.custom,
+        enabled_features = cloneFeatureFlags(config.enabled_features),
+    }
+    if type(stored.custom) ~= "function" then
+        stored.custom = nil
+        stored.enabled_features.custom = false
+    end
+    if stored.word_groups == nil then
+        stored.enabled_features.descriptor_words = false
+    end
+    if stored.patterns == nil then
+        stored.enabled_features.descriptor_patterns = false
+    end
+    LanguageRankers._languages[normalized_code] = stored
+end
+
+function LanguageRankers.getRegisteredLanguages()
+    local list = {}
+    for code in pairs(LanguageRankers._languages) do
+        table.insert(list, code)
+    end
+    table.sort(list)
+    return list
+end
+
+function LanguageRankers.rankContexts(language_code, contexts, metadata)
+    if type(contexts) ~= "table" then
+        return {}
+    end
+    local config = resolveLanguage(language_code)
+    if not config then
+        return contexts
+    end
+    metadata = metadata or {}
+
+    local features = cloneFeatureFlags(config.enabled_features)
+    if not metadata.current_index and not metadata.current_paragraph_index then
+        features.proximity = false
+    end
+
+    for _, context in ipairs(contexts) do
+        local raw_text = context.text or ""
+        local normalized_text = normalizeForMatch(raw_text)
+        local score = 0
+        for feature, enabled in pairs(features) do
+            if enabled then
+                local impl = FEATURE_IMPLEMENTATIONS[feature]
+                if impl then
+                    score = score + impl(context, metadata, config, raw_text, normalized_text)
+                end
+            end
+        end
+        context.rank_score = score
+    end
+
+    table.sort(contexts, function(a, b)
+        if a.rank_score == b.rank_score then
+            return (a.position or 0) < (b.position or 0)
+        end
+        return a.rank_score > b.rank_score
+    end)
+
+    return contexts
+end
+
+function LanguageRankers.resolve(language_code)
+    return resolveLanguage(language_code)
+end
+
+for code, descriptor in pairs(descriptors) do
+    LanguageRankers.register(code, descriptor)
+end
+
+return LanguageRankers
