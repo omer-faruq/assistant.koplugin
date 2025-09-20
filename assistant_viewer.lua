@@ -914,22 +914,23 @@ function ChatGPTViewer:trimMessageHistory()
   local MAX_ROUNDS = 3
 
   local assistant_msg_indices = {}
-  -- The first message is the system prompt, so we start from index 2.
-  for i = 2, #self.message_history do
+  -- Preserve the first round: System prompt (1), User1 (2), Assistant1 (3)
+  -- Start collecting assistant messages from index 4 to skip the first assistant response
+  for i = 4, #self.message_history do
     if self.message_history[i].role == "assistant" then
       table.insert(assistant_msg_indices, i)
     end
   end
 
-  if #assistant_msg_indices > MAX_ROUNDS then
-    local num_rounds_to_remove = #assistant_msg_indices - MAX_ROUNDS
+  -- Adjust for the first round already preserved: keep MAX_ROUNDS - 1 additional rounds
+  if #assistant_msg_indices > (MAX_ROUNDS - 1) then
+    local num_rounds_to_remove = #assistant_msg_indices - (MAX_ROUNDS - 1)
     -- The index of the last assistant message of the last round to be removed.
     local last_assistant_msg_index_to_remove = assistant_msg_indices[num_rounds_to_remove]
-    -- We remove all messages from the beginning (after system prompt) up to and including that assistant message.
-    -- The conversation starts at index 2.
-    local num_messages_to_remove = last_assistant_msg_index_to_remove - 1
+    -- Preserve first round (indices 1-3), remove from index 4 onwards
+    local num_messages_to_remove = last_assistant_msg_index_to_remove - 3
     for _ = 1, num_messages_to_remove do
-      table.remove(self.message_history, 2)
+      table.remove(self.message_history, 4)
     end
   end
 end
