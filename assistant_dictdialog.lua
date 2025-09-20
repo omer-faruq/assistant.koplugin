@@ -315,8 +315,8 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
             current_index = #paragraphs,
         })
 
-        local min_paragraphs = math.min(15, #paragraphs)
-        local max_paragraphs = math.min(25, #paragraphs)
+        local min_paragraphs = math.min(6, #paragraphs)
+        local max_paragraphs = math.min(20, #paragraphs)
         local selected_indices = {}
         local ordered_indices = {}
 
@@ -383,7 +383,7 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
 
         local combined_parts = {}
         local current_length = 0
-        local separator = "\n\n---\n\n"
+        local separator = "\n\n---\n\n\n"
 
         for _, idx in ipairs(ordered_indices) do
             local paragraph_text = paragraphs[idx]
@@ -393,17 +393,13 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
                 if current_length + separator_length + part_length > max_text_length_for_analysis then
                     break
                 end
-                if separator_length > 0 then
-                    table.insert(combined_parts, separator)
-                    current_length = current_length + separator_length
-                end
+                current_length = current_length + separator_length + part_length
                 table.insert(combined_parts, paragraph_text)
-                current_length = current_length + part_length
             end
         end
 
-        local combined_context = table.concat(combined_parts)
-        if combined_context ~= "" then
+        if #combined_parts > 0 then
+            local combined_context = table.concat(combined_parts, separator)
             return combined_context
         end
 

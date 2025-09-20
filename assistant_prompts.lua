@@ -17,25 +17,27 @@ local T = require("ffi/util").template
 
 -- prompts attributes can be overridden in the configuration file.
 local custom_prompts = {
-        dictionary = {
-            order = -10, -- negative number indicates a stub prompt
-            text = _("Dictionary"),
-            desc = _("This prompt acts as a dictionary for the highlighted text, to a word or phrase."),
-            -- this prompt is a stub (will not shown in follow-up questions)
-            -- it will be replaced by the actual prompt in the code below
-        },
-        quick_note = {
-            order = 5, --should be visible on additional questions dialog
-            text = _("Quick Note"),
-            desc = _("This button creates a quick note with highlighted text."),
-            user_prompt = "", --dummy prompt
-            -- this prompt is a stub 
-        },
-        vocabulary = {
-            text = _("Vocabulary"),
-            order = 10,
-            desc = _("This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."),
-            user_prompt = [[**Your Task:** Analyze the Input Text below. Find words/phrases that are B2 level or higher. Ignore common words (B1 level) and proper nouns.
+    dictionary = {
+        order = -10, -- negative number indicates a stub prompt
+        text = _("Dictionary"),
+        desc = _("This prompt acts as a dictionary for the highlighted text, to a word or phrase."),
+        -- this prompt is a stub (will not shown in follow-up questions)
+        -- it will be replaced by the actual prompt in the code below
+    },
+    quick_note = {
+        order = 5, --should be visible on additional questions dialog
+        text = _("Quick Note"),
+        desc = _("This button creates a quick note with highlighted text."),
+        user_prompt = "", --dummy prompt
+        -- this prompt is a stub
+    },
+    vocabulary = {
+        text = _("Vocabulary"),
+        order = 10,
+        desc = _(
+            "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."),
+        user_prompt =
+        [[**Your Task:** Analyze the Input Text below. Find words/phrases that are B2 level or higher. Ignore common words (B1 level) and proper nouns.
 
                             **Output Requirements:**
                             1.  For each difficult word/phrase found:
@@ -47,28 +49,31 @@ local custom_prompts = {
                                 `index. __base form__: synonym1, synonym2, synonym3 : {language} explanation`
                             3.  Output Content: **ONLY** provide the numbered list. Do not include the original text, titles, or any extra sentences.
 
-                            **Input Text:** {highlight} ]], 
-        },
-        grammar = {
-            text = _("Grammar"),
-            order = 20,
-            desc = _("This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."),
-            system_prompt = "You are a helpful AI assistant. Always respond in Markdown format, but use markdown lists to present comparisons instead of tables.",
-            user_prompt = [[You are a meticulous and highly knowledgeable Grammar Expert with an encyclopedic understanding of syntax, morphology, punctuation, and linguistic structures across various languages.
-When presented with a text, your expertise lies in thoroughly dissecting its grammatical composition and providing a comprehensive, insightful explanation. 
-Your task is to analyze the provided text, elucidating its sentence structures, parts of speech, verb tenses, clause relationships, and any other relevant grammatical elements. 
-If present, you should also identify and clearly explain any grammatical errors, along with their corrections and the underlying rules. 
-Your explanation should be didactic, detailed, and easy to understand, formatted clearly to highlight specific points. 
-All explanations must be rendered exclusively in the language I specify. 
+                            **Input Text:** {highlight} ]],
+    },
+    grammar = {
+        text = _("Grammar"),
+        order = 20,
+        desc = _(
+            "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."),
+        system_prompt =
+        "You are a helpful AI assistant. Always respond in Markdown format, but use markdown lists to present comparisons instead of tables.",
+        user_prompt =
+        [[You are a meticulous and highly knowledgeable Grammar Expert with an encyclopedic understanding of syntax, morphology, punctuation, and linguistic structures across various languages.
+When presented with a text, your expertise lies in thoroughly dissecting its grammatical composition and providing a comprehensive, insightful explanation.
+Your task is to analyze the provided text, elucidating its sentence structures, parts of speech, verb tenses, clause relationships, and any other relevant grammatical elements.
+If present, you should also identify and clearly explain any grammatical errors, along with their corrections and the underlying rules.
+Your explanation should be didactic, detailed, and easy to understand, formatted clearly to highlight specific points.
+All explanations must be rendered exclusively in the language I specify.
 Please provide a detailed and comprehensive explanation of the grammar of the following text, rendered entirely in {language}.
 
 {highlight}]],
-        },
-        translate = {
-            order = 30,
-            text = _("Translate"),
-            desc = _("This prompt translates the highlighted text to another language."),
-            user_prompt = [[You are a skilled translator tasked with translating text from one language to another.
+    },
+    translate = {
+        order = 30,
+        text = _("Translate"),
+        desc = _("This prompt translates the highlighted text to another language."),
+        user_prompt = [[You are a skilled translator tasked with translating text from one language to another.
 Your goal is to provide an accurate and natural-sounding translation that preserves the meaning, tone, and style of the original text.
 The target language for translation is: {language}. Output only the translated text without any further explanation.
 
@@ -86,48 +91,53 @@ Follow these steps to complete the translation:
 {highlight}
 [END OF TEXT]
 ]],
-        },
-        summarize = {
-            text = _("Summarize"),
-            order = 40,
-            desc = _("This prompt summarizes the highlighted text, capturing its main points and essential details."),
-            user_prompt = [[
-You are an exceptionally skilled summarization expert and a master of linguistic precision. 
-Your core competency is to distill extensive information into its most essential form while rigorously adhering to the original language of the input text. 
-Your task is to receive the following text and provide a summary that is both genuinely concise and remarkably clear. 
+    },
+    summarize = {
+        text = _("Summarize"),
+        order = 40,
+        desc = _("This prompt summarizes the highlighted text, capturing its main points and essential details."),
+        user_prompt = [[
+You are an exceptionally skilled summarization expert and a master of linguistic precision.
+Your core competency is to distill extensive information into its most essential form while rigorously adhering to the original language of the input text.
+Your task is to receive the following text and provide a summary that is both genuinely concise and remarkably clear.
 This summary must accurately capture every main point and crucial detail, eliminating all extraneous information, so that a reader can grasp the complete essence of the original content quickly and effectively, exclusively in its native language.
 Please provide a concise and clear summary of the following text in its own language: {highlight}]],
-        },
-        simplify = {
-            text = _("Simplify"),
-            order = 50,
-            desc = _("This prompt simplifies the highlighted text to make it easier to understand."),
-            user_prompt = [[You are an experienced linguistic expert and an effective communicator, skilled at transforming complex content into clear, easily understandable expressions.
-I have a piece of text that I need you to simplify using its original language. 
-Please ensure that during the simplification process, you do not alter the text's original meaning or omit any critical information. 
-Instead, make it significantly easier to understand and read, removing unnecessary jargon and verbose phrasing. 
-Your goal is to enhance the text's readability and clarity, making it accessible to a broader audience. 
+    },
+    simplify = {
+        text = _("Simplify"),
+        order = 50,
+        desc = _("This prompt simplifies the highlighted text to make it easier to understand."),
+        user_prompt =
+        [[You are an experienced linguistic expert and an effective communicator, skilled at transforming complex content into clear, easily understandable expressions.
+I have a piece of text that I need you to simplify using its original language.
+Please ensure that during the simplification process, you do not alter the text's original meaning or omit any critical information.
+Instead, make it significantly easier to understand and read, removing unnecessary jargon and verbose phrasing.
+Your goal is to enhance the text's readability and clarity, making it accessible to a broader audience.
 
 {highlight}]],
-        },
-        key_points = {
-            text = _("Key Points"),
-            order = 60,
-            desc = _("This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."),
-            user_prompt = [[You are a highly analytical and extremely efficient Key Points Expert, adept at distilling any given text into its fundamental essence.
+    },
+    key_points = {
+        text = _("Key Points"),
+        order = 60,
+        desc = _(
+            "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."),
+        user_prompt =
+        [[You are a highly analytical and extremely efficient Key Points Expert, adept at distilling any given text into its fundamental essence.
 Your primary function is to meticulously identify and extract all the critical insights, core arguments, essential facts, and conclusive statements from the provided content.
 Your goal is to produce a summary that is not just concise but also remarkably comprehensive in its coverage of the main points, leaving out all superfluous information.
 You must then present these key points in a meticulously organized and easy-to-read list, ensuring each point is clear, independent, and directly addresses a central idea of the original text.
 All output must be exclusively in the language I specify.
 Provide a concise and clear list of key points from the following text, and rendered entirely in {language}.
- 
+
 {highlight}]],
-        },
-        ELI5 = {
-            text = _("ELI5"),
-            order = 70,
-            desc = _("This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."),
-            user_prompt = [[You are an exceptional ELI5 (Explain Like I'm 5) Expert, mastering the art of simplifying the most intricate concepts.
+    },
+    ELI5 = {
+        text = _("ELI5"),
+        order = 70,
+        desc = _(
+            "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."),
+        user_prompt =
+        [[You are an exceptional ELI5 (Explain Like I'm 5) Expert, mastering the art of simplifying the most intricate concepts.
 Your unique talent lies in transforming complex terms or ideas into effortlessly understandable explanations, as if speaking to a curious five-year-old.
 When I provide you with a concept, your task is to strip away all jargon, technicalities, and unnecessary complexities, focusing solely on the fundamental essence.
 You must use only plain, everyday language, simple analogies, and concise sentences to ensure immediate comprehension for anyone, regardless of their background knowledge.
@@ -136,104 +146,120 @@ All output must be delivered exclusively in the language I specify.
 Provide a concise, simple, and crystal-clear ELI5 explanation of the following, rendered entirely in {language}.
 
 {highlight}.]],
-        },
-        explain = {
-            text = _("Explain"),
-            order = 80,
-            desc = _("This prompt explains the highlighted text in detail, ensuring clarity and understanding."),
-            user_prompt = [[You are an expert Explainer and a highly skilled Cross-Cultural Communicator.
-Your task is to accurately and comprehensively explain any given text. 
-When I provide you with text, regardless of its original language, your primary goal is to fully grasp its meaning, including all complex terms, underlying concepts, and implicit details. 
-You must then provide a clear, detailed, and easy-to-understand explanation of the entire text. 
-It is crucial that your *entire explanation* is delivered exclusively in **{language}**. 
+    },
+    explain = {
+        text = _("Explain"),
+        order = 80,
+        desc = _("This prompt explains the highlighted text in detail, ensuring clarity and understanding."),
+        user_prompt = [[You are an expert Explainer and a highly skilled Cross-Cultural Communicator.
+Your task is to accurately and comprehensively explain any given text.
+When I provide you with text, regardless of its original language, your primary goal is to fully grasp its meaning, including all complex terms, underlying concepts, and implicit details.
+You must then provide a clear, detailed, and easy-to-understand explanation of the entire text.
+It is crucial that your *entire explanation* is delivered exclusively in **{language}**.
 Ensure your {language} explanation is precise, captures all nuances of the original text, and is formatted for maximum clarity, potentially using prose or structured points as needed.
 
 {highlight}]],
-        },
-        historical_context = {
-            text = _("Historical Context"),
-            order = 90,
-            desc = _("This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."),
-            user_prompt = [[You are a distinguished Historical Context Expert with profound knowledge of global history, socio-political movements, and cultural evolution.
+    },
+    historical_context = {
+        text = _("Historical Context"),
+        order = 90,
+        desc = _(
+            "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."),
+        user_prompt =
+        [[You are a distinguished Historical Context Expert with profound knowledge of global history, socio-political movements, and cultural evolution.
 You possess an exceptional ability to place any given text within its precise historical framework.
 When I provide you with a text, your primary task is to meticulously uncover and articulate its relevant historical background, including the significant events, prevailing ideologies, societal structures, scientific advancements, and cultural environment that shaped its creation and meaning.
 Beyond merely listing facts, you must forge clear, insightful connections between these historical elements and the text's content, themes, and underlying messages.
 Furthermore, your comprehensive explanation must be delivered entirely in the language specified by me.
-Please provide a detailed and insightful explanation of the historical context of the following text, rendered completely in {language}. 
+Please provide a detailed and insightful explanation of the historical context of the following text, rendered completely in {language}.
 
 {highlight}]],
-        },
-        wikipedia = {
-            text = _("Wikipedia"),
-            order = 100,
-            desc = _("This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."),
-            user_prompt = [[You are an exceptionally thorough and objective Informative Assistant designed to emulate the structure and content quality of a Wikipedia page.
+    },
+    wikipedia = {
+        text = _("Wikipedia"),
+        order = 100,
+        desc = _(
+            "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."),
+        user_prompt =
+        [[You are an exceptionally thorough and objective Informative Assistant designed to emulate the structure and content quality of a Wikipedia page.
 Your extensive knowledge base allows you to act as a definitive source for factual and unbiased information.
 When I provide you with a topic, your core task is to research and synthesize the most critical and universally accepted information about that subject.
 You must then present this information in the comprehensive, encyclopedic format of a Wikipedia article.
 Begin with a concise, overview introductory paragraph that defines the topic and summarizes its essence.
 Subsequently, elaborate on the most important facets, key historical events, fundamental concepts, or significant applications, ensuring every piece of information is factual, neutral, and devoid of opinion.
 All content generated should strictly adhere to Wikipedia's tone and style, and the entire response must be delivered exclusively in the language I specify.
-Please act as a Wikipedia page for the following topic, starting with an introductory paragraph and thoroughly covering its most important aspects, delivered entirely in {language}. 
+Please act as a Wikipedia page for the following topic, starting with an introductory paragraph and thoroughly covering its most important aspects, delivered entirely in {language}.
 
 {highlight}]],
-        }, 
-        term_xray = {
-            text = _("Term X-Ray"),
-            order = 110,
-            desc = _("This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."),
-            system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
-            user_prompt = [[
-            # In-Context Highlight Explanation Prompt
+    },
+    term_xray = {
+        text = _("Term X-Ray"),
+        order = 110,
+        desc = _(
+            "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."),
+        system_prompt =
+        "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        user_prompt = [[
+            You are an expert literary analyst and contextual refresher. Your role is to help a reader who is returning to a book after time away quickly recall the important details behind a highlighted passage. Go beyond what’s happening in the immediate scene—resurface earlier context from the book that the author may not restate but is essential for understanding. Handle different noun types (people, places, things, ideas, unique terms) with tailored context.
 
-## Prompt Template
-
-```
-You are an expert literary analyst and contextual explainer. Your task is to provide a clear, concise explanation of a highlighted text passage from a book.
-
-## Context Information:
-**Book Title**: {title}
-**Author**: {author}
-**Surrounding Context**: {context}
-
-## Highlighted Text to Explain:
+## Highlighted Text
 {highlight}
 
-## Instructions:
+## Objectives
+- Provide a friendly, conversational explanation that does two things:
+  1. **Immediate Clarity**: Explain what this passage means in the current moment of the story.
+  2. **Refresher Context**: Recall earlier details (descriptions, histories, definitions, first appearances) that matter to the reader when trying to recall the highlighted passage.
 
-Explain the highlighted text as if you're talking to a friend who's reading the same book. Write in a natural, conversational tone that flows smoothly from one idea to the next. Your explanation should help them understand what this part means within the context of the story or book.
+## Method
+1. **Identify Focus Type**:
+   - **Person** → a character.
+   - **Place** → a location, realm, or setting.
+   - **Thing** → an object, artifact, or tangible item.
+   - **Idea** → an abstract concept, value, belief, cultural/historical theme.
+   - **Unique Term** → a book-specific word, invented vocabulary, or cultural practice not self-explanatory.
 
-### Examples of Impactful Information to Include:
+2. **Anchor in the Scene**: Briefly describe what’s happening around the highlight.
 
-**For Characters**: Their role in the story, relationships to other characters, motivations, significant past events, current emotional state, or why they matter at this moment
+3. **Refresher Layer**: Add essential earlier details the reader might have forgotten. Tailor by focus type:
+   - **People**: physical description, role, key relationships, values/motivations, shaping past events, alliances/conflicts.
+   - **Places**: history, who rules or is from there, major past events, cultural meaning, dangers or atmosphere.
+   - **Things (Objects)**: origin/creator, purpose, symbolic meaning, ownership history, earlier appearances.
+   - **Ideas**: book-specific meaning, who supports/rejects it, earlier mentions, thematic impact.
+   - **Unique Terms**: define it in this world’s context (not a dictionary sense), note where it first appeared, who uses it, and how it functions in culture/plot.
 
-**For Places**: What makes this location special or dangerous, its history, who controls it, what happened there before, or why the characters are there now
+4. **Why It Matters Now**: Tie refresher details back to this highlighted moment.
 
-**For Objects**: What the item does, who made it, why it's valuable or dangerous, its connection to the plot, or what it represents symbolically
+## Output Requirements
+- **Section 1 — Conversational Explanation**: ≤3 short paragraphs, friendly and natural. Combine immediate clarity with refresher context.
+- **Section 2 — Key Traits & Context**: Use a concise **markdown bullet list** based on the focus type. Each list should include 3–6 bullets of the most relevant traits/details.
+- **Styling**:
+  - **Bold** for names, places, items, unique terms, and ideas.
+  - *Italics* for emphasis and subtle distinctions.
+  - Use quotation marks for recalled short phrases (<5 words) from earlier in the book.
+- **Grounding**: Base everything only on the context and what the book has already covered. Flag light inference (*likely because…*). No inventing facts.
+- **If unclear**: If meaning cannot be determined from the context, output exactly: **"I can't tell what this means from the context provided."**
 
-**For Mystical/Magic Elements**: How the magic system works, what this spell/power costs or requires, who can use it, what makes it significant, or how it affects the world
+## Success Check (internal)
+- Did you explain what the passage means right now?
+- Did you resurface earlier details that matter but may not be restated?
+- Did you tailor the refresher according to whether it’s a person, place, thing, idea, or unique term?
+- Is the output structured: ≤2 conversational paragraphs + focused bullet list?
 
-**For Technical/Scientific Concepts**: What the concept means in simple terms, why it matters to the story, how it affects the characters, or what consequences it might have
 
-**For Historical/Cultural References**: What event or tradition is being referenced, why it's important to these characters, or how it shapes the current situation
-
-## Output Requirements:
-- Write in a friendly, conversational style - no lists, bullet points, or formal structure
-- Maximum 3 paragraphs that flow naturally together
-- Focus only on the most impactful and essential information
-- Be specific to this book and context - avoid generic explanations
-- **Use markdown formatting**: Apply **bold** for key terms, character names, places, and important concepts. Use *italics* for emphasis, book titles, and subtle distinctions
-- If the highlighted text is unclear or you cannot determine its meaning from the provided context, simply say: "I can't tell what this means from the context provided."
-- Write as if explaining to someone familiar with reading the source material
+## Context
+**Book Title**: {title}
+**Author**: {author}
+**Surrounding Context**:
+{context}
 
 ]],
-            user_prompt_second_attempt = [[
+        user_prompt_second_attempt = [[
             Given the highlighted word or phrase "{highlight}" from "{title}" by {author}, you are a literary analyst who provides concise, insightful explanations of terms within their narrative context.
 
 **Analysis Instructions:**
 Identify the element type (character, location, concept, object, cultural element, technical term, vocabulary) and provide a focused explanation that covers:
 - Essential meaning and nature
-- Contextual significance from surrounding passages  
+- Contextual significance from surrounding passages
 - Role in the broader narrative
 
 **Formatting Requirements:**
@@ -249,14 +275,15 @@ Context to consider:
 
 {context}
             ]],
-            user_prompt_original = [[
+        user_prompt_original = [[
 Given the highlighted word or phrase "{highlight}" from the book "{title}" by {author} and the provided text context below, create a precise, nuanced explanation that captures both the literal meaning and the specific contextual significance within this particular work. Tailor your response based on the type of element being defined: for characters, include physical descriptions, personality traits, relationships, and their impact on the story's progression; for places, describe the physical setting, cultural atmosphere, economic conditions, power structures, and symbolic significance; for concepts or themes, explain the abstract idea and its manifestation within the narrative; for historical references, provide background context and relevance to the work; for technical terms, define the concept and its application within the text; for symbolic objects, describe both literal appearance and metaphorical meaning; and for unfamiliar vocabulary, explain the definition while considering any specialized usage by the author.
 Provide a clear, comprehensive explanation in 2-4 sentences that addresses: (1) the basic meaning or nature of the element, (2) how the surrounding context shapes or reveals its significance, and (3) its broader role or importance within the work. Consider any additional user guidance provided in "{user_input}" to tailor your explanation to their specific needs, reading level, or areas of interest. If the element has multiple layers of meaning or interpretation, acknowledge this complexity while identifying the most relevant aspects based on the surrounding text and the work's overall themes.
 
 Context to consider:
 
 {context}
-]],}
+]],
+    }
 }
 
 
@@ -265,7 +292,8 @@ local assistant_prompts = {
         system_prompt = "You are a helpful AI assistant. Always respond in Markdown format.",
     },
     recap = {
-        system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        system_prompt =
+        "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
         user_prompt = [[
 '''{title}''' by '''{author}''' that has been {progress}% read.
 Given the above title and author of a book and the positional parameter, very briefly summarize the contents of the book prior with rich text formatting.
@@ -277,7 +305,8 @@ Answer this whole response in {language} language. Only show the replies, do not
 Also answer with entertaining tone and high quality detail with a focus on summarization. You also match the tone of the book provided.]]
     },
     xray = {
-        system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        system_prompt =
+        "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
         user_prompt = [[
 Your output must be spoiler‑free beyond the reader’s current progress.
 
@@ -321,7 +350,8 @@ Language: **{language}**.
         ]],
     },
     book_info = {
-        system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        system_prompt =
+        "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
         user_prompt = [[
 Generate detailed information about the book "{title}" by {author}. Provide the information in the following sections:
 
@@ -347,34 +377,36 @@ Generate detailed information about the book "{title}" by {author}. Provide the 
 Ensure all information is accurate and based on known facts. Respond entirely in {language}.]],
     },
     annotations = {
-        system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        system_prompt =
+        "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
         user_prompt = [[
-You are given  my notes and highlights. 
+You are given  my notes and highlights.
 Your task is to carefully analyze this content and produce a structured summary that includes:
 
-1. **Key Takeaways**  
-   - Summarize the most important insights, lessons, or narrative developments.  
-   - Highlight recurring themes, turning points, or critical information.  
+1. **Key Takeaways**
+   - Summarize the most important insights, lessons, or narrative developments.
+   - Highlight recurring themes, turning points, or critical information.
 
-2. **To-Do / Action Items**  
-   - Based on the content and my notes, suggest practical actions, reflections, or follow-ups I should consider.  
-   - If the text is fictional, focus on intellectual or emotional takeaways (e.g., themes to reflect on, characters to analyze, related readings).  
-   - If the text is non-fiction, focus on actionable steps (e.g., habits to adopt, ideas to research, concepts to apply).  
+2. **To-Do / Action Items**
+   - Based on the content and my notes, suggest practical actions, reflections, or follow-ups I should consider.
+   - If the text is fictional, focus on intellectual or emotional takeaways (e.g., themes to reflect on, characters to analyze, related readings).
+   - If the text is non-fiction, focus on actionable steps (e.g., habits to adopt, ideas to research, concepts to apply).
 
-3. **Contextual Notes**  
-   - Clarify connections between my highlights/notes and the broader narrative or arguments.  
-   - Point out any open questions or areas I may want to revisit in the earlier chapters.  
+3. **Contextual Notes**
+   - Clarify connections between my highlights/notes and the broader narrative or arguments.
+   - Point out any open questions or areas I may want to revisit in the earlier chapters.
 
-Output format:  
-- Start with a concise **executive summary** (3–5 sentences).  
-- Then provide a **detailed list** under “Key Takeaways” and “To-Do / Action Items.”  
-- End with **Contextual Notes / Reflections** in bullet points.  
+Output format:
+- Start with a concise **executive summary** (3–5 sentences).
+- Then provide a **detailed list** under “Key Takeaways” and “To-Do / Action Items.”
+- End with **Contextual Notes / Reflections** in bullet points.
 
-Keep the tone clear, thoughtful, and practical. 
+Keep the tone clear, thoughtful, and practical.
 - Always respond in {language}.]],
     },
     summary_using_annotations = {
-        system_prompt = "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        system_prompt =
+        "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
         user_prompt = [[
 You are a meticulous book summarizer and analyst.
 
@@ -383,7 +415,7 @@ INPUTS:
 - highlights: a list of highlighted passages and my personal notes
 
 YOUR TASK:
-Produce a **structured summary** that integrates the highlights naturally into the book summary.  
+Produce a **structured summary** that integrates the highlights naturally into the book summary.
 Do not separate highlights into a final section — instead, use a translated summary of each highlight inside the summary to emphasize them at the right place.
 
 STYLE & RULES:
@@ -423,7 +455,8 @@ Now begin the analysis with the provided book_text and highlights.]],
     },
 
     dict = {
-        system_prompt = "You are a dictionary with high quality detail vocabulary definitions and examples. Always respond in Markdown format.",
+        system_prompt =
+        "You are a dictionary with high quality detail vocabulary definitions and examples. Always respond in Markdown format.",
         user_prompt = T([[
 "Explain vocabulary or content with the focus text with following information:"
 "- *%1*: Vocabulary in original conjugation if its different than the form in the sentence."
@@ -441,18 +474,18 @@ Now begin the analysis with the provided book_text and highlights.]],
 
 [FOCUS TEXT]
 {word}]],
-    -- @translators used in the dictionary.
-    _("Conjugation"), 
-    _("Synonyms"),
-    _("Meaning"),
-    _("Translation"),
-    _("Explanation"),
-    _("Example"),
-    _("Word Origin"))
+            -- @translators used in the dictionary.
+            _("Conjugation"),
+            _("Synonyms"),
+            _("Meaning"),
+            _("Translation"),
+            _("Explanation"),
+            _("Example"),
+            _("Word Origin"))
     },
-    suggestions_prompt = T([[  
-At the end of your response, generate 2-3 questions in {language} language that the user might find interesting based on your answer.  
-Display them as a **Markdown unordered list** with this exact format:  
+    suggestions_prompt = T([[
+At the end of your response, generate 2-3 questions in {language} language that the user might find interesting based on your answer.
+Display them as a **Markdown unordered list** with this exact format:
 
 ```
 ---
@@ -460,24 +493,24 @@ __%1__
 
 - [Question 1](#q:Question 1)
 - [Question 2](#q:Question 2)
-```  
+```
 
-**Critical rules to avoid Markdown parsing errors:**  
-1. **Correct symbols only:**  
-   - **MUST** use English parentheses `()` strictly required for markdown  
-   - **WRONG (non-ASCII symbols):** `（）`  
-   - **WRONG (other variants):** `［］` or `【】`  
-   
-2. **Strict link format:** `[TEXT](#q:TEXT)` with:  
-   - Colons **required** after `#q:`  
-   - Identical text inside `[]` and `()`  
-   - **ZERO tolerance for symbol variants** (e.g. `（）` will break parsing)  
+**Critical rules to avoid Markdown parsing errors:**
+1. **Correct symbols only:**
+   - **MUST** use English parentheses `()` strictly required for markdown
+   - **WRONG (non-ASCII symbols):** `（）`
+   - **WRONG (other variants):** `［］` or `【】`
 
-3. **Double-check mechanism:**  
-   - Use English keyboard to input symbols  
-   - Verify parentheses at **both link parts**:  
-     - Example ✅: `[Topic A](#q:Topic A)`  
-     - Counterexample 🚫: `[Topic A](#q:Topic A）`  
+2. **Strict link format:** `[TEXT](#q:TEXT)` with:
+   - Colons **required** after `#q:`
+   - Identical text inside `[]` and `()`
+   - **ZERO tolerance for symbol variants** (e.g. `（）` will break parsing)
+
+3. **Double-check mechanism:**
+   - Use English keyboard to input symbols
+   - Verify parentheses at **both link parts**:
+     - Example ✅: `[Topic A](#q:Topic A)`
+     - Counterexample 🚫: `[Topic A](#q:Topic A）`
 ]], _("You may find these topics interesting:")),
 }
 
@@ -498,7 +531,7 @@ local function table_merge(t1, t2)
 end
 
 
-local function table_sort (t, key)
+local function table_sort(t, key)
     table.sort(t, function(a, b)
         if a[key] == nil or b[key] == nil then
             return false
@@ -509,11 +542,11 @@ end
 
 
 local M = {
-    custom_prompts = custom_prompts, -- Custom prompts for the AI
+    custom_prompts = custom_prompts,       -- Custom prompts for the AI
     assistant_prompts = assistant_prompts, -- Preconfigured prompts for the AI
-    merged_prompts = nil, -- Merged prompts from custom and configuration
-    sorted_custom_prompts = nil, -- Sorted custom prompts
-    show_on_main_popup_prompts = nil, -- Prompts that should be shown on the main popup
+    merged_prompts = nil,                  -- Merged prompts from custom and configuration
+    sorted_custom_prompts = nil,           -- Sorted custom prompts
+    show_on_main_popup_prompts = nil,      -- Prompts that should be shown on the main popup
 }
 
 -- Func description:
@@ -544,17 +577,24 @@ M.getSortedCustomPrompts = function(filter_func)
     if M.sorted_custom_prompts then
         return M.sorted_custom_prompts
     end
-    
+
     -- Sort the merged prompts by order
     local sorted_prompts = {}
     for prompt_index, prompt in pairs(M.merged_prompts or custom_prompts) do
         -- Only add the prompt if there is no filter, or if the filter function returns true.
         if not filter_func or filter_func(prompt, prompt_index) == true then
-            table.insert(sorted_prompts, {idx = prompt_index, order = prompt.order or 1000, text = prompt.text or prompt_index, desc = prompt.desc or ""})
+            table.insert(sorted_prompts,
+                {
+                    idx = prompt_index,
+                    order = prompt.order or 1000,
+                    text = prompt.text or prompt_index,
+                    desc = prompt
+                        .desc or ""
+                })
         end
     end
     table_sort(sorted_prompts, "order")
-    
+
     return sorted_prompts
 end
 

@@ -41,32 +41,76 @@ return {
             proximity = true,
         },
         word_groups = {
-            { weight = 3, words = {
-                'red', 'blue', 'green', 'yellow', 'black', 'white', 'brown', 'gray', 'grey', 'golden', 'silver', 'dark', 'light', 'pale', 'bright',
-                'tall', 'short', 'large', 'small', 'huge', 'tiny', 'wide', 'narrow', 'thick', 'thin', 'broad', 'slender', 'massive', 'enormous', 'crimson', 'scarlet', 'ivory', 'azure', 'violet', 'amber', 'bronze', 'charcoal', 'indigo', 'emerald', 'cobalt', 'ochre', 'pastel', 'glossy', 'neon', 'matte', 'translucent', 'luminous', 'holographic', 'chrome',
-            }},
-            { weight = 4, words = {
-                'eyes', 'hair', 'face', 'hands', 'arms', 'legs', 'nose', 'mouth', 'lips', 'chin', 'forehead', 'cheeks', 'beard', 'mustache',
-                'shoulders', 'chest', 'back', 'skin', 'complexion', 'build', 'figure', 'stature', 'posture', 'gait', 'voice', 'eyebrows', 'eyelashes', 'jaw', 'jawline', 'torso', 'waist', 'hips', 'ankles', 'wrists', 'fingers', 'toes', 'freckles', 'tattoo', 'scar', 'piercing', 'cybernetic', 'prosthetic', 'augmented',
-            }},
-            { weight = 3, words = {
-                'building', 'house', 'castle', 'tower', 'room', 'hall', 'chamber', 'garden', 'courtyard', 'street', 'road', 'path', 'bridge',
-                'mountain', 'hill', 'valley', 'river', 'lake', 'forest', 'field', 'meadow', 'desert', 'ocean', 'sea', 'shore', 'cliff',
-                'walls', 'ceiling', 'floor', 'windows', 'doors', 'columns', 'stairs', 'roof', 'basement', 'attic', 'village', 'hamlet', 'harbor', 'port', 'market', 'plaza', 'alley', 'archway', 'balcony', 'terrace', 'veranda', 'hallway', 'corridor', 'doorway', 'arch', 'skyscraper', 'arcology', 'spaceport', 'starship', 'shuttle', 'airlock', 'hangar', 'laboratory', 'lab', 'factory', 'warehouse', 'apartment', 'loft', 'studio', 'cafeteria', 'diner', 'bar', 'club', 'observatory', 'colony', 'outpost', 'station',
-            }},
-            { weight = 3, words = {
-                'dress', 'shirt', 'coat', 'cloak', 'robe', 'hat', 'cap', 'boots', 'shoes', 'gloves', 'ring', 'necklace', 'bracelet',
-                'sword', 'dagger', 'staff', 'crown', 'helmet', 'armor', 'shield', 'belt', 'buckle', 'jewel', 'gem', 'tunic', 'vest', 'scarf', 'glasses', 'spectacles', 'brooch', 'gauntlet', 'satchel', 'sash', 'mantle', 'uniform', 'jumpsuit', 'hoodie', 'jeans', 'sneakers', 'trainers', 'loafers', 'heels', 'sandals', 'blazer', 'bodysuit', 'spacesuit', 'visor', 'utility belt', 'utility vest', 'lab coat', 'overalls', 'cardigan',
-            }},
-            { weight = 2, words = {
-                'gleaming', 'glowing', 'sparkling', 'shimmering', 'glittering', 'blazing', 'flickering', 'shadowy', 'misty', 'clear',
-                'cold', 'warm', 'hot', 'cool', 'freezing', 'burning', 'wet', 'dry', 'damp', 'moist', 'sticky', 'slippery',
-                'loud', 'quiet', 'silent', 'echoing', 'ringing', 'whispering', 'thundering', 'creaking', 'rustling',
-                'fragrant', 'sweet', 'bitter', 'sour', 'musty', 'fresh', 'stale', 'perfumed', 'smoky', 'hazy', 'murky', 'soothing', 'pungent', 'earthy', 'spicy', 'metallic', 'breezy', 'tingling', 'vivid', 'sterile', 'clinical', 'synthetic', 'ozonic', 'acrid', 'electric', 'humid', 'arid', 'resonant', 'radiant',
-            }},
-            { weight = 2, words = {
-                'feet', 'inches', 'meters', 'miles', 'pounds', 'dozen', 'hundred', 'thousand', 'several', 'many', 'few', 'numerous', 'handful', 'pair', 'dozens', 'scores', 'multitude', 'plenty', 'countless', 'kilometers', 'liters', 'grams', 'gigabyte', 'terabyte', 'nanosecond', 'lightyear', 'parsec', 'megaton', 'percentage', 'ratio',
-            }},
+            {
+                weight = 3,
+                words = {
+                    'red', 'blue', 'green', 'yellow', 'black', 'white', 'brown', 'gray', 'grey', 'golden', 'silver',
+                    'dark', 'light', 'pale', 'bright',
+                    'tall', 'short', 'large', 'small', 'huge', 'tiny', 'wide', 'narrow', 'thick', 'thin', 'broad',
+                    'slender', 'massive', 'enormous', 'crimson', 'scarlet', 'ivory', 'azure', 'violet', 'amber', 'bronze',
+                    'charcoal', 'indigo', 'emerald', 'cobalt', 'ochre', 'pastel', 'glossy', 'neon', 'matte',
+                    'translucent', 'luminous', 'holographic', 'chrome',
+                }
+            },
+            {
+                weight = 4,
+                words = {
+                    'eyes', 'hair', 'face', 'hands', 'arms', 'legs', 'nose', 'mouth', 'lips', 'chin', 'forehead',
+                    'cheeks', 'beard', 'mustache',
+                    'shoulders', 'chest', 'back', 'skin', 'complexion', 'build', 'figure', 'stature', 'posture', 'gait',
+                    'voice', 'eyebrows', 'eyelashes', 'jaw', 'jawline', 'torso', 'waist', 'hips', 'ankles', 'wrists',
+                    'fingers', 'toes', 'freckles', 'tattoo', 'scar', 'piercing', 'cybernetic', 'prosthetic', 'augmented',
+                }
+            },
+            {
+                weight = 3,
+                words = {
+                    'building', 'house', 'castle', 'tower', 'room', 'hall', 'chamber', 'garden', 'courtyard', 'street',
+                    'road', 'path', 'bridge',
+                    'mountain', 'hill', 'valley', 'river', 'lake', 'forest', 'field', 'meadow', 'desert', 'ocean', 'sea',
+                    'shore', 'cliff',
+                    'walls', 'ceiling', 'floor', 'windows', 'doors', 'columns', 'stairs', 'roof', 'basement', 'attic',
+                    'village', 'hamlet', 'harbor', 'port', 'market', 'plaza', 'alley', 'archway', 'balcony', 'terrace',
+                    'veranda', 'hallway', 'corridor', 'doorway', 'arch', 'skyscraper', 'arcology', 'spaceport',
+                    'starship', 'shuttle', 'airlock', 'hangar', 'laboratory', 'lab', 'factory', 'warehouse', 'apartment',
+                    'loft', 'studio', 'cafeteria', 'diner', 'bar', 'club', 'observatory', 'colony', 'outpost', 'station',
+                }
+            },
+            {
+                weight = 3,
+                words = {
+                    'dress', 'shirt', 'coat', 'cloak', 'robe', 'hat', 'cap', 'boots', 'shoes', 'gloves', 'ring',
+                    'necklace', 'bracelet',
+                    'sword', 'dagger', 'staff', 'crown', 'helmet', 'armor', 'shield', 'belt', 'buckle', 'jewel', 'gem',
+                    'tunic', 'vest', 'scarf', 'glasses', 'spectacles', 'brooch', 'gauntlet', 'satchel', 'sash', 'mantle',
+                    'uniform', 'jumpsuit', 'hoodie', 'jeans', 'sneakers', 'trainers', 'loafers', 'heels', 'sandals',
+                    'blazer', 'bodysuit', 'spacesuit', 'visor', 'utility belt', 'utility vest', 'lab coat', 'overalls',
+                    'cardigan',
+                }
+            },
+            {
+                weight = 2,
+                words = {
+                    'gleaming', 'glowing', 'sparkling', 'shimmering', 'glittering', 'blazing', 'flickering', 'shadowy',
+                    'misty', 'clear',
+                    'cold', 'warm', 'hot', 'cool', 'freezing', 'burning', 'wet', 'dry', 'damp', 'moist', 'sticky',
+                    'slippery',
+                    'loud', 'quiet', 'silent', 'echoing', 'ringing', 'whispering', 'thundering', 'creaking', 'rustling',
+                    'fragrant', 'sweet', 'bitter', 'sour', 'musty', 'fresh', 'stale', 'perfumed', 'smoky', 'hazy',
+                    'murky', 'soothing', 'pungent', 'earthy', 'spicy', 'metallic', 'breezy', 'tingling', 'vivid',
+                    'sterile', 'clinical', 'synthetic', 'ozonic', 'acrid', 'electric', 'humid', 'arid', 'resonant',
+                    'radiant',
+                }
+            },
+            {
+                weight = 2,
+                words = {
+                    'feet', 'inches', 'meters', 'miles', 'pounds', 'dozen', 'hundred', 'thousand', 'several', 'many',
+                    'few', 'numerous', 'handful', 'pair', 'dozens', 'scores', 'multitude', 'plenty', 'countless',
+                    'kilometers', 'liters', 'grams', 'gigabyte', 'terabyte', 'nanosecond', 'lightyear', 'parsec',
+                    'megaton', 'percentage', 'ratio',
+                }
+            },
         },
         patterns = {
             { weight = 2, pattern = '%f[%a]like%f[%A]' },
@@ -102,29 +146,54 @@ return {
             proximity = true,
         },
         word_groups = {
-            { weight = 3, words = {
-                'rojo', 'azul', 'verde', 'amarillo', 'negro', 'blanco', 'marron', 'gris', 'dorado', 'plateado', 'oscuro', 'claro', 'palido', 'brillante',
-                'alto', 'alta', 'bajo', 'baja', 'grande', 'pequeno', 'pequena', 'enorme', 'diminuto', 'ancho', 'estrecho',
-            }},
-            { weight = 4, words = {
-                'ojos', 'pelo', 'cabello', 'cara', 'manos', 'brazos', 'piernas', 'nariz', 'boca', 'labios', 'barba', 'bigote',
-                'hombros', 'pecho', 'espalda', 'piel', 'figura', 'cuerpo', 'estatura', 'voz',
-            }},
-            { weight = 3, words = {
-                'edificio', 'casa', 'castillo', 'torre', 'habitacion', 'sala', 'jardin', 'patio', 'calle', 'camino', 'puente',
-                'montana', 'colina', 'valle', 'rio', 'lago', 'bosque', 'campo', 'desierto', 'mar',
-            }},
-            { weight = 3, words = {
-                'vestido', 'camisa', 'abrigo', 'capa', 'tunica', 'sombrero', 'botas', 'zapatos', 'guantes', 'anillo', 'collar', 'pulsera',
-                'espada', 'daga', 'cetro', 'corona', 'armadura', 'escudo', 'cinturon',
-            }},
-            { weight = 2, words = {
-                'reluciente', 'resplandeciente', 'brillo', 'sombrio', 'claro', 'calido', 'frio', 'caliente', 'helado', 'ardiente',
-                'humedo', 'seco', 'suave', 'aspero', 'silencioso', 'ruidoso', 'fragante', 'dulce', 'amargo', 'fresco',
-            }},
-            { weight = 2, words = {
-                'metros', 'kilometros', 'pies', 'pulgadas', 'kilos', 'docena', 'centena', 'miles', 'varios', 'muchos', 'pocos', 'numerosos',
-            }},
+            {
+                weight = 3,
+                words = {
+                    'rojo', 'azul', 'verde', 'amarillo', 'negro', 'blanco', 'marron', 'gris', 'dorado', 'plateado',
+                    'oscuro', 'claro', 'palido', 'brillante',
+                    'alto', 'alta', 'bajo', 'baja', 'grande', 'pequeno', 'pequena', 'enorme', 'diminuto', 'ancho',
+                    'estrecho',
+                }
+            },
+            {
+                weight = 4,
+                words = {
+                    'ojos', 'pelo', 'cabello', 'cara', 'manos', 'brazos', 'piernas', 'nariz', 'boca', 'labios', 'barba',
+                    'bigote',
+                    'hombros', 'pecho', 'espalda', 'piel', 'figura', 'cuerpo', 'estatura', 'voz',
+                }
+            },
+            {
+                weight = 3,
+                words = {
+                    'edificio', 'casa', 'castillo', 'torre', 'habitacion', 'sala', 'jardin', 'patio', 'calle', 'camino',
+                    'puente',
+                    'montana', 'colina', 'valle', 'rio', 'lago', 'bosque', 'campo', 'desierto', 'mar',
+                }
+            },
+            {
+                weight = 3,
+                words = {
+                    'vestido', 'camisa', 'abrigo', 'capa', 'tunica', 'sombrero', 'botas', 'zapatos', 'guantes', 'anillo',
+                    'collar', 'pulsera',
+                    'espada', 'daga', 'cetro', 'corona', 'armadura', 'escudo', 'cinturon',
+                }
+            },
+            {
+                weight = 2,
+                words = {
+                    'reluciente', 'resplandeciente', 'brillo', 'sombrio', 'claro', 'calido', 'frio', 'caliente', 'helado',
+                    'ardiente',
+                    'humedo', 'seco', 'suave', 'aspero', 'silencioso', 'ruidoso', 'fragante', 'dulce', 'amargo', 'fresco',
+                }
+            },
+            {
+                weight = 2,
+                words = {
+                    'metros', 'kilometros', 'pies', 'pulgadas', 'kilos', 'docena', 'centena', 'miles', 'varios', 'muchos',
+                    'pocos', 'numerosos',
+                }
+            },
         },
         patterns = {
             { weight = 2, pattern = '%f[%a]como%f[%A]' },
@@ -157,36 +226,58 @@ return {
             proximity = true,
         },
         word_groups = {
-            { weight = 3, words = {
-                'rouge', 'bleu', 'vert', 'jaune', 'noir', 'blanc', 'brun', 'gris', 'dore', 'argent', 'sombre', 'clair', 'pale', 'brillant',
-                'grand', 'grande', 'petit', 'petite', 'large', 'etroite', 'immense', 'mince',
-            }},
-            { weight = 4, words = {
-                'yeux', 'cheveux', 'visage', 'mains', 'bras', 'jambes', 'nez', 'bouche', 'levres', 'barbe', 'moustache',
-                'epaules', 'poitrine', 'dos', 'peau', 'silhouette', 'corps', 'taille', 'voix',
-            }},
-            { weight = 3, words = {
-                'batiment', 'maison', 'chateau', 'tour', 'salle', 'chambre', 'jardin', 'cour', 'rue', 'route', 'pont',
-                'montagne', 'colline', 'vallee', 'riviere', 'lac', 'foret', 'champ', 'desert', 'mer',
-            }},
-            { weight = 3, words = {
-                'robe', 'chemise', 'manteau', 'cape', 'chapeau', 'bottes', 'souliers', 'gants', 'bague', 'collier', 'bracelet',
-                'epee', 'dague', 'sceptre', 'couronne', 'armure', 'bouclier', 'ceinture',
-            }},
-            { weight = 2, words = {
-                'brillant', 'etincelant', 'lumineux', 'ombre', 'clair', 'chaud', 'froid', 'glacial', 'brulant',
-                'humide', 'sec', 'doux', 'rugueux', 'silencieux', 'bruyant', 'parfume', 'sucre', 'amer', 'frais',
-            }},
-            { weight = 2, words = {
-                'metres', 'kilometres', 'pieds', 'pouces', 'kilos', 'douzaine', 'centaine', 'mille', 'plusieurs', 'nombreux', 'quelques', 'divers',
-            }},
+            {
+                weight = 3,
+                words = {
+                    'rouge', 'bleu', 'vert', 'jaune', 'noir', 'blanc', 'brun', 'gris', 'dore', 'argent', 'sombre',
+                    'clair', 'pale', 'brillant',
+                    'grand', 'grande', 'petit', 'petite', 'large', 'etroite', 'immense', 'mince',
+                }
+            },
+            {
+                weight = 4,
+                words = {
+                    'yeux', 'cheveux', 'visage', 'mains', 'bras', 'jambes', 'nez', 'bouche', 'levres', 'barbe',
+                    'moustache',
+                    'epaules', 'poitrine', 'dos', 'peau', 'silhouette', 'corps', 'taille', 'voix',
+                }
+            },
+            {
+                weight = 3,
+                words = {
+                    'batiment', 'maison', 'chateau', 'tour', 'salle', 'chambre', 'jardin', 'cour', 'rue', 'route', 'pont',
+                    'montagne', 'colline', 'vallee', 'riviere', 'lac', 'foret', 'champ', 'desert', 'mer',
+                }
+            },
+            {
+                weight = 3,
+                words = {
+                    'robe', 'chemise', 'manteau', 'cape', 'chapeau', 'bottes', 'souliers', 'gants', 'bague', 'collier',
+                    'bracelet',
+                    'epee', 'dague', 'sceptre', 'couronne', 'armure', 'bouclier', 'ceinture',
+                }
+            },
+            {
+                weight = 2,
+                words = {
+                    'brillant', 'etincelant', 'lumineux', 'ombre', 'clair', 'chaud', 'froid', 'glacial', 'brulant',
+                    'humide', 'sec', 'doux', 'rugueux', 'silencieux', 'bruyant', 'parfume', 'sucre', 'amer', 'frais',
+                }
+            },
+            {
+                weight = 2,
+                words = {
+                    'metres', 'kilometres', 'pieds', 'pouces', 'kilos', 'douzaine', 'centaine', 'mille', 'plusieurs',
+                    'nombreux', 'quelques', 'divers',
+                }
+            },
         },
         patterns = {
             { weight = 2, pattern = '%f[%a]comme%f[%A]' },
             { weight = 2, pattern = 'plus%s+%w+%s+que' },
             { weight = 2, pattern = 'semblable a' },
             { weight = 2, pattern = 'ressemblait' },
-            { weight = 2, pattern = 'avait l'air' },
+            { weight = 2, pattern = 'avait l\'air' },
             { weight = 2, pattern = '%f[%a][A-Z][a-z]+%s+[A-Z][a-z]+%f[%A]', target = 'raw' },
             { weight = 2, pattern = '%f[%a]dit%f[%A]' },
             { weight = 2, pattern = '%f[%a]demanda%f[%A]' },
@@ -212,29 +303,53 @@ return {
             proximity = true,
         },
         word_groups = {
-            { weight = 3, words = {
-                'rot', 'blau', 'grun', 'gruen', 'gelb', 'schwarz', 'weiss', 'braun', 'grau', 'golden', 'silbern', 'dunkel', 'hell', 'blass', 'leuchtend',
-                'gross', 'klein', 'breit', 'schmal', 'riesig', 'winzig',
-            }},
-            { weight = 4, words = {
-                'augen', 'haare', 'gesicht', 'hand', 'haende', 'arm', 'arme', 'bein', 'beine', 'nase', 'mund', 'lippen', 'bart', 'schnurrbart',
-                'schultern', 'brust', 'rucken', 'haut', 'gestalt', 'korper', 'statur', 'stimme',
-            }},
-            { weight = 3, words = {
-                'gebaude', 'haus', 'schloss', 'turm', 'raum', 'halle', 'kammer', 'garten', 'hof', 'strasse', 'weg', 'brucke',
-                'berg', 'hugel', 'tal', 'fluss', 'see', 'wald', 'feld', 'wuste', 'meer',
-            }},
-            { weight = 3, words = {
-                'kleid', 'hemd', 'mantel', 'umhang', 'robe', 'hut', 'stiefel', 'schuhe', 'handschuhe', 'ring', 'kette', 'armband',
-                'schwert', 'dolch', 'stab', 'krone', 'helm', 'rustung', 'schild', 'gurtel',
-            }},
-            { weight = 2, words = {
-                'glanzend', 'leuchtend', 'funkelnd', 'schimmernd', 'strahlend', 'warm', 'heiss', 'kalt', 'frostig', 'brennend',
-                'nass', 'trocken', 'weich', 'rau', 'leise', 'laut', 'duftend', 'suss', 'bitter', 'frisch',
-            }},
-            { weight = 2, words = {
-                'meter', 'kilometer', 'fuss', 'zoll', 'pfund', 'dutzend', 'hundert', 'tausend', 'mehrere', 'viele', 'wenige', 'zahlreiche',
-            }},
+            {
+                weight = 3,
+                words = {
+                    'rot', 'blau', 'grun', 'gruen', 'gelb', 'schwarz', 'weiss', 'braun', 'grau', 'golden', 'silbern',
+                    'dunkel', 'hell', 'blass', 'leuchtend',
+                    'gross', 'klein', 'breit', 'schmal', 'riesig', 'winzig',
+                }
+            },
+            {
+                weight = 4,
+                words = {
+                    'augen', 'haare', 'gesicht', 'hand', 'haende', 'arm', 'arme', 'bein', 'beine', 'nase', 'mund',
+                    'lippen', 'bart', 'schnurrbart',
+                    'schultern', 'brust', 'rucken', 'haut', 'gestalt', 'korper', 'statur', 'stimme',
+                }
+            },
+            {
+                weight = 3,
+                words = {
+                    'gebaude', 'haus', 'schloss', 'turm', 'raum', 'halle', 'kammer', 'garten', 'hof', 'strasse', 'weg',
+                    'brucke',
+                    'berg', 'hugel', 'tal', 'fluss', 'see', 'wald', 'feld', 'wuste', 'meer',
+                }
+            },
+            {
+                weight = 3,
+                words = {
+                    'kleid', 'hemd', 'mantel', 'umhang', 'robe', 'hut', 'stiefel', 'schuhe', 'handschuhe', 'ring',
+                    'kette', 'armband',
+                    'schwert', 'dolch', 'stab', 'krone', 'helm', 'rustung', 'schild', 'gurtel',
+                }
+            },
+            {
+                weight = 2,
+                words = {
+                    'glanzend', 'leuchtend', 'funkelnd', 'schimmernd', 'strahlend', 'warm', 'heiss', 'kalt', 'frostig',
+                    'brennend',
+                    'nass', 'trocken', 'weich', 'rau', 'leise', 'laut', 'duftend', 'suss', 'bitter', 'frisch',
+                }
+            },
+            {
+                weight = 2,
+                words = {
+                    'meter', 'kilometer', 'fuss', 'zoll', 'pfund', 'dutzend', 'hundert', 'tausend', 'mehrere', 'viele',
+                    'wenige', 'zahlreiche',
+                }
+            },
         },
         patterns = {
             { weight = 2, pattern = '%f[%a]wie%f[%A]' },
