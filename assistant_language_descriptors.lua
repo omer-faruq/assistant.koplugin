@@ -45,11 +45,12 @@ return {
                 weight = 3,
                 words = {
                     'red', 'blue', 'green', 'yellow', 'black', 'white', 'brown', 'gray', 'grey', 'golden', 'silver',
-                    'dark', 'light', 'pale', 'bright',
+                    'dark', 'light', 'pale', 'bright', 'dusky', 'ashen', 'gleaming',
                     'tall', 'short', 'large', 'small', 'huge', 'tiny', 'wide', 'narrow', 'thick', 'thin', 'broad',
                     'slender', 'massive', 'enormous', 'crimson', 'scarlet', 'ivory', 'azure', 'violet', 'amber', 'bronze',
-                    'charcoal', 'indigo', 'emerald', 'cobalt', 'ochre', 'pastel', 'glossy', 'neon', 'matte',
-                    'translucent', 'luminous', 'holographic', 'chrome',
+                    'charcoal', 'indigo', 'emerald', 'cobalt', 'ochre', 'pastel', 'glossy', 'neon', 'matte', 'obsidian',
+                    'sapphire', 'ruby', 'pearl', 'opal', 'cerulean', 'auburn', 'teal', 'vermilion', 'umber', 'sepia',
+                    'translucent', 'luminous', 'holographic', 'chrome', 'iridescent', 'prismatic',
                 }
             },
             {
@@ -63,17 +64,34 @@ return {
                 }
             },
             {
+                weight = 5,
+                words = {
+                    'muscular', 'lean', 'athletic', 'wiry', 'stocky', 'burly', 'brawny', 'sinewy', 'toned', 'trim',
+                    'fit', 'sturdy', 'broad shouldered', 'broad-shouldered', 'narrow shouldered', 'narrow-shouldered',
+                    'slim', 'lithe', 'graceful', 'nimble', 'supple', 'agile', 'curvy', 'hourglass', 'full figured',
+                    'full-figured', 'voluptuous', 'buxom', 'petite', 'gaunt', 'hollow eyed', 'hollow-eyed', 'sunken',
+                    'weathered', 'wrinkled', 'lined', 'scarred', 'calloused', 'rugged', 'handsome', 'pretty',
+                    'beautiful', 'striking', 'elegant', 'regal', 'dignified', 'imposing', 'towering', 'youthful',
+                    'middle aged', 'middle-aged', 'elderly', 'aged', 'boyish', 'girlish', 'masculine', 'feminine',
+                    'androgynous', 'delicate', 'frail', 'robust', 'hearty', 'powerful', 'commanding', 'chiseled',
+                    'angular', 'sharp featured', 'sharp-featured', 'soft featured', 'soft-featured', 'willowy',
+                    'statuesque', 'broad chested', 'broad-chested', 'soft bodied', 'soft-bodied',
+                }
+            },
+            {
                 weight = 3,
                 words = {
                     'building', 'house', 'castle', 'tower', 'room', 'hall', 'chamber', 'garden', 'courtyard', 'street',
-                    'road', 'path', 'bridge',
+                    'road', 'path', 'bridge', 'trail', 'lane', 'avenue', 'boulevard', 'causeway', 'boardwalk',
                     'mountain', 'hill', 'valley', 'river', 'lake', 'forest', 'field', 'meadow', 'desert', 'ocean', 'sea',
-                    'shore', 'cliff',
+                    'shore', 'cliff', 'shoreline', 'waterfall', 'grove', 'glade', 'quarry', 'cavern', 'cave',
                     'walls', 'ceiling', 'floor', 'windows', 'doors', 'columns', 'stairs', 'roof', 'basement', 'attic',
                     'village', 'hamlet', 'harbor', 'port', 'market', 'plaza', 'alley', 'archway', 'balcony', 'terrace',
                     'veranda', 'hallway', 'corridor', 'doorway', 'arch', 'skyscraper', 'arcology', 'spaceport',
                     'starship', 'shuttle', 'airlock', 'hangar', 'laboratory', 'lab', 'factory', 'warehouse', 'apartment',
                     'loft', 'studio', 'cafeteria', 'diner', 'bar', 'club', 'observatory', 'colony', 'outpost', 'station',
+                    'dock', 'pier', 'wharf', 'jetty', 'harborfront', 'quay', 'promenade', 'concourse', 'atrium',
+                    'camp', 'encampment', 'courthouse', 'parlor', 'salon', 'drawing room', 'drawing-room',
                 }
             },
             {
@@ -85,30 +103,44 @@ return {
                     'tunic', 'vest', 'scarf', 'glasses', 'spectacles', 'brooch', 'gauntlet', 'satchel', 'sash', 'mantle',
                     'uniform', 'jumpsuit', 'hoodie', 'jeans', 'sneakers', 'trainers', 'loafers', 'heels', 'sandals',
                     'blazer', 'bodysuit', 'spacesuit', 'visor', 'utility belt', 'utility vest', 'lab coat', 'overalls',
-                    'cardigan',
+                    'cardigan', 'kimono', 'sari', 'poncho', 'tabard', 'breastplate', 'greaves', 'bracers', 'pauldrons',
+                    'gauntlets', 'leggings', 'hood', 'mask', 'veil', 'gloves', 'mittens', 'cloak', 'cape', 'tunic dress',
+                    'tunic-dress', 'doublet', 'jerkin', 'frock', 'petticoat', 'corset', 'bodice', 'girdle',
                 }
             },
             {
                 weight = 2,
                 words = {
                     'gleaming', 'glowing', 'sparkling', 'shimmering', 'glittering', 'blazing', 'flickering', 'shadowy',
-                    'misty', 'clear',
+                    'misty', 'clear', 'dappled', 'luminous', 'incandescent',
                     'cold', 'warm', 'hot', 'cool', 'freezing', 'burning', 'wet', 'dry', 'damp', 'moist', 'sticky',
-                    'slippery',
+                    'slippery', 'clammy', 'slick',
                     'loud', 'quiet', 'silent', 'echoing', 'ringing', 'whispering', 'thundering', 'creaking', 'rustling',
                     'fragrant', 'sweet', 'bitter', 'sour', 'musty', 'fresh', 'stale', 'perfumed', 'smoky', 'hazy',
                     'murky', 'soothing', 'pungent', 'earthy', 'spicy', 'metallic', 'breezy', 'tingling', 'vivid',
                     'sterile', 'clinical', 'synthetic', 'ozonic', 'acrid', 'electric', 'humid', 'arid', 'resonant',
-                    'radiant',
+                    'radiant', 'scented', 'musky', 'salty', 'briny', 'peppery', 'aromatic', 'woodsy', 'coppery',
+                    'smoldering', 'sultry', 'crisp', 'stifling',
                 }
             },
             {
                 weight = 2,
                 words = {
-                    'feet', 'inches', 'meters', 'miles', 'pounds', 'dozen', 'hundred', 'thousand', 'several', 'many',
-                    'few', 'numerous', 'handful', 'pair', 'dozens', 'scores', 'multitude', 'plenty', 'countless',
-                    'kilometers', 'liters', 'grams', 'gigabyte', 'terabyte', 'nanosecond', 'lightyear', 'parsec',
-                    'megaton', 'percentage', 'ratio',
+                    'feet', 'inches', 'yards', 'meters', 'centimeters', 'millimeters', 'miles', 'kilometers', 'pounds',
+                    'ounces', 'stone', 'tons', 'grams', 'kilograms', 'liters', 'milliliters', 'gallons', 'pints',
+                    'dozen', 'hundred', 'thousand', 'several', 'many', 'few', 'numerous', 'handful', 'pair', 'dozens',
+                    'scores', 'multitude', 'plenty', 'countless', 'acre', 'hectare', 'percentage', 'ratio', 'fraction',
+                    'nanosecond', 'microsecond', 'lightyear', 'parsec', 'megaton', 'gigabyte', 'terabyte',
+                }
+            },
+            {
+                weight = 3,
+                words = {
+                    'woman', 'women', 'man', 'men', 'female', 'male', 'girl', 'boy', 'lad', 'lass', 'lady',
+                    'gentleman', 'sir', 'maam', 'madam', 'miss', 'mrs', 'mr', 'prince', 'princess', 'queen', 'king',
+                    'duke', 'duchess', 'lord', 'ladyship', 'brother', 'sister', 'mother', 'father', 'daughter', 'son',
+                    'aunt', 'uncle', 'wife', 'husband', 'widow', 'widower', 'heiress', 'heir', 'captain', 'commander',
+                    'maid', 'matron', 'patriarch', 'matriarch', 'patron', 'patroness', 'consort', 'courtesan',
                 }
             },
         },
@@ -126,6 +158,18 @@ return {
             { weight = 2, pattern = '%f[%a]asked%f[%A]' },
             { weight = 2, pattern = '%f[%a]replied%f[%A]' },
             { weight = 2, pattern = '%f[%a]thought%f[%A]' },
+            { weight = 3, pattern = '%f[%a]her%s+(eyes|voice|face|hands|arms|skin|hair|smile)%f[%A]' },
+            { weight = 3, pattern = '%f[%a]his%s+(eyes|voice|face|hands|arms|skin|hair|smile)%f[%A]' },
+            { weight = 3, pattern = '%f[%a]their%s+(eyes|voice|face|hands|arms|skin|hair|smile)%f[%A]' },
+            { weight = 2, pattern = '%f[%a]she%s+was%f[%A]' },
+            { weight = 2, pattern = '%f[%a]he%s+was%f[%A]' },
+            { weight = 2, pattern = '%f[%a]they%s+were%f[%A]' },
+            { weight = 2, pattern = '%f[%a]she%s+had%f[%A]' },
+            { weight = 2, pattern = '%f[%a]he%s+had%f[%A]' },
+            { weight = 2, pattern = '%f[%a]they%s+had%f[%A]' },
+            { weight = 2, pattern = '%f[%a]her%s+(dress|gown|cloak|coat)%f[%A]' },
+            { weight = 2, pattern = '%f[%a]his%s+(coat|cloak|armor|boots)%f[%A]' },
+            { weight = 2, pattern = '%f[%a]their%s+(clothes|uniform|armor)%f[%A]' },
             { weight = 1, pattern = '%f[%a]because%f[%A]' },
             { weight = 1, pattern = '%f[%a]however%f[%A]' },
             { weight = 1, pattern = '%f[%a]therefore%f[%A]' },
@@ -164,6 +208,18 @@ return {
                 }
             },
             {
+                weight = 5,
+                words = {
+                    'musculoso', 'musculosa', 'atletico', 'atletica', 'fuerte', 'robusto', 'robusta', 'corpulento',
+                    'corpulenta', 'esbelto', 'esbelta', 'delgado', 'delgada', 'flaco', 'flaca', 'fornido', 'fornida',
+                    'fibroso', 'fibrosa', 'tonificado', 'tonificada', 'atractivo', 'atractiva', 'guapo', 'guapa',
+                    'hermoso', 'hermosa', 'bonito', 'bonita', 'elegante', 'imponente', 'majestuoso', 'majestuosa',
+                    'curvilineo', 'curvilinea', 'voluptuoso', 'voluptuosa', 'gracil', 'agil', 'ligero', 'ligera',
+                    'fragil', 'delicado', 'delicada', 'anciano', 'anciana', 'joven', 'juvenil', 'avejentado',
+                    'avejentada', 'barbudo', 'barbuda', 'marcado', 'marcada', 'cicatrizado', 'cicatrizada',
+                }
+            },
+            {
                 weight = 3,
                 words = {
                     'edificio', 'casa', 'castillo', 'torre', 'habitacion', 'sala', 'jardin', 'patio', 'calle', 'camino',
@@ -194,6 +250,16 @@ return {
                     'pocos', 'numerosos',
                 }
             },
+            {
+                weight = 3,
+                words = {
+                    'mujer', 'hombre', 'femenina', 'masculino', 'chica', 'chico', 'nina', 'nino', 'senor', 'senora',
+                    'senorita', 'caballero', 'dama', 'don', 'dona', 'princesa', 'principe', 'reina', 'rey', 'duque',
+                    'duquesa', 'hermano', 'hermana', 'madre', 'padre', 'hija', 'hijo', 'tia', 'tio', 'esposa', 'esposo',
+                    'viuda', 'viudo', 'capitan', 'comandante', 'patriarca', 'matriarca', 'sacerdote', 'sacerdotisa',
+                    'gobernante',
+                }
+            },
         },
         patterns = {
             { weight = 2, pattern = '%f[%a]como%f[%A]' },
@@ -206,6 +272,12 @@ return {
             { weight = 2, pattern = '%f[%a]pregunto%f[%A]' },
             { weight = 2, pattern = '%f[%a]respondio%f[%A]' },
             { weight = 2, pattern = '%f[%a]penso%f[%A]' },
+            { weight = 3, pattern = '%f[%a]sus%s+(ojos|manos|brazos|cabellos|labios|rasgos)%f[%A]' },
+            { weight = 3, pattern = '%f[%a]su%s+(rostro|piel|voz|sonrisa)%f[%A]' },
+            { weight = 2, pattern = '%f[%a]ella%s+era%f[%A]' },
+            { weight = 2, pattern = '%f[%a]el%s+era%f[%A]' },
+            { weight = 2, pattern = '%f[%a]ella%s+tenia%f[%A]' },
+            { weight = 2, pattern = '%f[%a]el%s+tenia%f[%A]' },
             { weight = 1, pattern = '%f[%a]porque%f[%A]' },
             { weight = 1, pattern = 'sin embargo' },
             { weight = 1, pattern = 'por tanto' },
@@ -243,6 +315,17 @@ return {
                 }
             },
             {
+                weight = 5,
+                words = {
+                    'muscle', 'musclee', 'athletique', 'mince', 'svelte', 'maigre', 'fort', 'forte', 'robuste',
+                    'massif', 'massive', 'trapu', 'trapue', 'gracile', 'souple', 'agile', 'elance', 'elancee', 'fluet',
+                    'fluette', 'puissant', 'puissante', 'imposant', 'imposante', 'majestueux', 'majestueuse', 'raffine',
+                    'raffinee', 'elegant', 'elegante', 'seduisant', 'seduisante', 'charismatique', 'charmant',
+                    'charmante', 'androgyne', 'delicat', 'delicate', 'fragile', 'juvenile', 'age', 'agee', 'vieilli',
+                    'vieillie', 'ride', 'ridee', 'balafre', 'balafree', 'marque', 'marquee',
+                }
+            },
+            {
                 weight = 3,
                 words = {
                     'batiment', 'maison', 'chateau', 'tour', 'salle', 'chambre', 'jardin', 'cour', 'rue', 'route', 'pont',
@@ -271,6 +354,15 @@ return {
                     'nombreux', 'quelques', 'divers',
                 }
             },
+            {
+                weight = 3,
+                words = {
+                    'femme', 'homme', 'fille', 'garcon', 'dame', 'monsieur', 'madame', 'mademoiselle', 'princesse',
+                    'prince', 'reine', 'roi', 'duc', 'duchesse', 'soeur', 'frere', 'mere', 'pere', 'filleule', 'fils',
+                    'tante', 'oncle', 'epouse', 'epoux', 'veuve', 'veuf', 'capitaine', 'commandant', 'patriarche',
+                    'matriarche', 'chevalier', 'damoiselle',
+                }
+            },
         },
         patterns = {
             { weight = 2, pattern = '%f[%a]comme%f[%A]' },
@@ -283,6 +375,12 @@ return {
             { weight = 2, pattern = '%f[%a]demanda%f[%A]' },
             { weight = 2, pattern = '%f[%a]repondit%f[%A]' },
             { weight = 2, pattern = '%f[%a]pensa%f[%A]' },
+            { weight = 3, pattern = '%f[%a]ses%s+(yeux|mains|bras|cheveux|levres)%f[%A]' },
+            { weight = 3, pattern = '%f[%a]son%s+(visage|teint|corps|sourire|regard)%f[%A]' },
+            { weight = 2, pattern = '%f[%a]elle%s+etait%f[%A]' },
+            { weight = 2, pattern = '%f[%a]il%s+etait%f[%A]' },
+            { weight = 2, pattern = '%f[%a]elle%s+avait%f[%A]' },
+            { weight = 2, pattern = '%f[%a]il%s+avait%f[%A]' },
             { weight = 1, pattern = 'parce que' },
             { weight = 1, pattern = 'cependant' },
             { weight = 1, pattern = '%f[%a]donc%f[%A]' },
@@ -320,6 +418,16 @@ return {
                 }
             },
             {
+                weight = 5,
+                words = {
+                    'muskuloes', 'athletisch', 'schlank', 'zierlich', 'drahtig', 'sehnig', 'breitschultrig',
+                    'schmalgebaut', 'robust', 'kraeftig', 'kraftvoll', 'stark', 'feminin', 'maskulin', 'anmutig',
+                    'geschmeidig', 'gewandt', 'grazil', 'kurvig', 'vollschlank', 'ueppig', 'wohlgeformt', 'stattlich',
+                    'imposant', 'maechtig', 'edel', 'huebsch', 'schoen', 'reizvoll', 'zart', 'fragil', 'schwach',
+                    'hager', 'mager', 'gealtert', 'runzlig', 'verwittert', 'narbig', 'gepraegt',
+                }
+            },
+            {
                 weight = 3,
                 words = {
                     'gebaude', 'haus', 'schloss', 'turm', 'raum', 'halle', 'kammer', 'garten', 'hof', 'strasse', 'weg',
@@ -350,6 +458,15 @@ return {
                     'wenige', 'zahlreiche',
                 }
             },
+            {
+                weight = 3,
+                words = {
+                    'frau', 'mann', 'maedchen', 'junge', 'herr', 'dame', 'fraeulein', 'koenig', 'koenigin', 'prinz',
+                    'prinzessin', 'herzog', 'herzogin', 'bruder', 'schwester', 'mutter', 'vater', 'tochter', 'sohn',
+                    'tante', 'onkel', 'ehefrau', 'ehemann', 'witwe', 'witwer', 'hauptmann', 'kommandant', 'patriarch',
+                    'matriarch', 'herrscher', 'herrscherin',
+                }
+            },
         },
         patterns = {
             { weight = 2, pattern = '%f[%a]wie%f[%A]' },
@@ -362,6 +479,12 @@ return {
             { weight = 2, pattern = '%f[%a]fragte%f[%A]' },
             { weight = 2, pattern = '%f[%a]antwortete%f[%A]' },
             { weight = 2, pattern = '%f[%a]dachte%f[%A]' },
+            { weight = 3, pattern = '%f[%a]ihre%s+(augen|haende|arme|haare|lippen)%f[%A]' },
+            { weight = 3, pattern = '%f[%a]sein%s+(gesicht|blick|koerper|laecheln)%f[%A]' },
+            { weight = 2, pattern = '%f[%a]sie%s+war%f[%A]' },
+            { weight = 2, pattern = '%f[%a]er%s+war%f[%A]' },
+            { weight = 2, pattern = '%f[%a]sie%s+hatte%f[%A]' },
+            { weight = 2, pattern = '%f[%a]er%s+hatte%f[%A]' },
             { weight = 1, pattern = '%f[%a]weil%f[%A]' },
             { weight = 1, pattern = '%f[%a]jedoch%f[%A]' },
             { weight = 1, pattern = '%f[%a]deshalb%f[%A]' },

@@ -267,15 +267,26 @@ function LanguageRankers.rankContexts(language_code, contexts, metadata)
         local raw_text = context.text or ""
         local normalized_text = normalizeForMatch(raw_text)
         local score = 0
+        local contributions = {
+            descriptor = 0,
+            term_frequency = 0,
+        }
         for feature, enabled in pairs(features) do
             if enabled then
                 local impl = FEATURE_IMPLEMENTATIONS[feature]
                 if impl then
-                    score = score + impl(context, metadata, config, raw_text, normalized_text)
+                    local delta = impl(context, metadata, config, raw_text, normalized_text) or 0
+                    score = score + delta
+                    if feature == "descriptor_words" or feature == "descriptor_patterns" then
+                        contributions.descriptor = contributions.descriptor + delta
+                    elseif feature == "term_frequency" then
+                        contributions.term_frequency = contributions.term_frequency + delta
+                    end
                 end
             end
         end
         context.rank_score = score
+        context.feature_contributions = contributions
     end
 
     table.sort(contexts, function(a, b)
@@ -284,6 +295,17 @@ function LanguageRankers.rankContexts(language_code, contexts, metadata)
         end
         return a.rank_score > b.rank_score
     end)
+
+    local total_contexts = #contexts
+    if total_contexts > 0 then
+        for index, context in ipairs(contexts) do
+            context.rank_order = index
+            context.rank_weight = (total_contexts - index + 1) / total_contexts
+            local contributions = context.feature_contributions or {}
+            context.descriptor_score = contributions.descriptor or 0
+            context.term_frequency_score = contributions.term_frequency or 0
+        end
+    end
 
     return contexts
 end

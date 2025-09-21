@@ -268,7 +268,10 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
 
         local paragraph_contexts = {}
 
-        for index, paragraph in ipairs(paragraphs) do
+        local function register_paragraph(paragraph, index)
+            if type(paragraph) ~= "string" or paragraph == "" then
+                return
+            end
             local paragraph_lower = paragraph:lower()
             local contains_term = false
             local term_frequency = 0
@@ -304,6 +307,42 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
             end
         end
 
+        for index, paragraph in ipairs(paragraphs) do
+            register_paragraph(paragraph, index)
+        end
+
+        if #paragraph_contexts == 0 and ui.highlight then
+            local fallback_text
+
+            if ui.highlight.getSelectedSentence then
+                local ok, sentence = pcall(function()
+                    return ui.highlight:getSelectedSentence()
+                end)
+                if ok and type(sentence) == "string" then
+                    fallback_text = sentence
+                end
+            end
+
+            if (not fallback_text or not fallback_text:match("%S")) and ui.highlight.getSelectedWordContext then
+                local ok, prev, next = pcall(function()
+                    return ui.highlight:getSelectedWordContext(60)
+                end)
+                if ok then
+                    fallback_text = (prev or "") .. searchWord .. (next or "")
+                end
+            end
+
+            if type(fallback_text) == "string" then
+                fallback_text = fallback_text:gsub("^%s+", ""):gsub("%s+$", "")
+            end
+
+            if fallback_text and fallback_text ~= "" then
+                local fallback_index = #paragraphs + 1
+                table.insert(paragraphs, fallback_text)
+                register_paragraph(fallback_text, fallback_index)
+            end
+        end
+
         if #paragraph_contexts == 0 then
             return ""
         end
@@ -315,13 +354,18 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
             current_index = #paragraphs,
         })
 
-        local min_paragraphs = math.min(6, #paragraphs)
-        local max_paragraphs = math.min(20, #paragraphs)
+        local total_contexts = #ranked_contexts
+        if total_contexts == 0 then
+            return ""
+        end
+
+        local min_paragraphs = math.min(6, total_contexts)
+        local max_paragraphs = math.min(20, total_contexts)
         local selected_indices = {}
         local ordered_indices = {}
 
         local function add_index(idx)
-            if idx < 1 or idx > #paragraphs or selected_indices[idx] or #ordered_indices >= max_paragraphs then
+            if not idx or selected_indices[idx] or #ordered_indices >= max_paragraphs then
                 return false
             end
             selected_indices[idx] = true
@@ -329,20 +373,113 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
             return true
         end
 
+        local rank_position_by_index = {}
+        local context_index_set = {}
+        local sorted_context_indices = {}
+        for order, context in ipairs(ranked_contexts) do
+            if context.paragraph_index then
+                rank_position_by_index[context.paragraph_index] = order
+                if not context_index_set[context.paragraph_index] then
+                    context_index_set[context.paragraph_index] = true
+                    table.insert(sorted_context_indices, context.paragraph_index)
+                end
+            end
+        end
+
+        table.sort(sorted_context_indices)
+
+        local neighbor_distances = {}
+        for idx_pos, paragraph_index in ipairs(sorted_context_indices) do
+            local prev_index = sorted_context_indices[idx_pos - 1]
+            local next_index = sorted_context_indices[idx_pos + 1]
+            local nearest = math.huge
+            if prev_index then
+                nearest = math.min(nearest, math.abs(paragraph_index - prev_index))
+            end
+            if next_index then
+                nearest = math.min(nearest, math.abs(paragraph_index - next_index))
+            end
+            neighbor_distances[paragraph_index] = nearest
+        end
+
+        local paragraph_weights = {}
+        local function accumulate_weight(idx, weight)
+            if not idx or weight <= 0 or not context_index_set[idx] then
+                return
+            end
+            paragraph_weights[idx] = (paragraph_weights[idx] or 0) + weight
+        end
+
         for _, context in ipairs(ranked_contexts) do
-            add_index(context.paragraph_index)
+            local idx = context.paragraph_index
+            if idx then
+                local base_weight = context.rank_weight or 0
+                if base_weight > 0 then
+                    local descriptor_score = context.descriptor_score or 0
+                    local term_frequency = context.term_frequency or 0
+                    local descriptor_bonus
+                    if descriptor_score > 0 then
+                        descriptor_bonus = 1 + math.min(0.75, descriptor_score / 12)
+                    elseif term_frequency <= 1 then
+                        descriptor_bonus = 0.6
+                    else
+                        descriptor_bonus = 1
+                    end
+                    local nearest_distance = neighbor_distances[idx] or math.huge
+                    local grouping_bonus = 1
+                    if nearest_distance <= 1 then
+                        grouping_bonus = grouping_bonus + 0.6
+                    elseif nearest_distance <= 2 then
+                        grouping_bonus = grouping_bonus + 0.4
+                    elseif nearest_distance <= 3 then
+                        grouping_bonus = grouping_bonus + 0.2
+                    end
+                    local weighted = math.max(0, base_weight * descriptor_bonus * grouping_bonus)
+                    accumulate_weight(idx, weighted)
+                end
+            end
+        end
+
+        local weighted_candidates = {}
+        for idx, weight in pairs(paragraph_weights) do
+            table.insert(weighted_candidates, {
+                index = idx,
+                weight = weight,
+                rank = rank_position_by_index[idx] or math.huge,
+            })
+        end
+
+        table.sort(weighted_candidates, function(a, b)
+            if a.weight ~= b.weight then
+                return a.weight > b.weight
+            end
+            if a.rank ~= b.rank then
+                return a.rank < b.rank
+            end
+            return a.index < b.index
+        end)
+
+        for _, entry in ipairs(weighted_candidates) do
+            add_index(entry.index)
             if #ordered_indices >= max_paragraphs then
                 break
             end
         end
 
         if #ordered_indices == 0 then
-            return ""
+            for _, context in ipairs(ranked_contexts) do
+                if add_index(context.paragraph_index) and #ordered_indices >= max_paragraphs then
+                    break
+                end
+            end
+            if #ordered_indices == 0 then
+                return ""
+            end
         end
 
         if #ordered_indices < min_paragraphs then
             local candidates = {}
-            for idx = 1, #paragraphs do
+            for _, idx in ipairs(sorted_context_indices) do
                 if not selected_indices[idx] then
                     local nearest = math.huge
                     for _, selected_idx in ipairs(ordered_indices) do
@@ -351,15 +488,22 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
                             nearest = distance
                         end
                     end
-                    table.insert(candidates, { index = idx, distance = nearest })
+                    table.insert(candidates, {
+                        index = idx,
+                        distance = nearest,
+                        weight = paragraph_weights[idx] or 0,
+                    })
                 end
             end
 
             table.sort(candidates, function(a, b)
-                if a.distance == b.distance then
-                    return a.index < b.index
+                if a.weight ~= b.weight then
+                    return a.weight > b.weight
                 end
-                return a.distance < b.distance
+                if a.distance ~= b.distance then
+                    return a.distance < b.distance
+                end
+                return a.index < b.index
             end)
 
             for _, candidate in ipairs(candidates) do
@@ -371,7 +515,7 @@ local function searchWordInBook(assistant, searchWord, page_or_sentence)
         end
 
         if #ordered_indices < min_paragraphs then
-            for idx = 1, #paragraphs do
+            for _, idx in ipairs(sorted_context_indices) do
                 if #ordered_indices >= min_paragraphs or #ordered_indices >= max_paragraphs then
                     break
                 end

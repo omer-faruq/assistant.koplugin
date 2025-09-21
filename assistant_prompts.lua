@@ -200,61 +200,29 @@ Please act as a Wikipedia page for the following topic, starting with an introdu
         system_prompt =
         "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
         user_prompt = [[
-            You are an expert literary analyst and contextual refresher. Your role is to help a reader who is returning to a book after time away quickly recall the important details behind a highlighted passage. Go beyond what’s happening in the immediate scene—resurface earlier context from the book that the author may not restate but is essential for understanding. Handle different noun types (people, places, things, ideas, unique terms) with tailored context.
+Given the highlighted word or phrase "{highlight}" from "{title}" by {author}, you are a literary analyst who provides concise, insightful explanations of terms within their narrative context.
 
-## Highlighted Text
-{highlight}
+**Analysis Instructions:**
+Identify the element type (character, location, concept, object, cultural element, technical term, vocabulary) and provide a focused explanation that covers:
+- Essential meaning and nature
+- Contextual significance from surrounding passages
+- Role in the broader narrative
 
-## Objectives
-- Provide a friendly, conversational explanation that does two things:
-  1. **Immediate Clarity**: Explain what this passage means in the current moment of the story.
-  2. **Refresher Context**: Recall earlier details (descriptions, histories, definitions, first appearances) that matter to the reader when trying to recall the highlighted passage.
+**Formatting Requirements:**
+- Use clear section headers
+- Write in accessible prose
+- Maximum 100-150 words total
+- Support claims with specific textual evidence
+- Focus only on information available in the provided context
 
-## Method
-1. **Identify Focus Type**:
-   - **Person** → a character.
-   - **Place** → a location, realm, or setting.
-   - **Thing** → an object, artifact, or tangible item.
-   - **Idea** → an abstract concept, value, belief, cultural/historical theme.
-   - **Unique Term** → a book-specific word, invented vocabulary, or cultural practice not self-explanatory.
+User guidance: {user_input}
 
-2. **Anchor in the Scene**: Briefly describe what’s happening around the highlight.
+Context to consider:
 
-3. **Refresher Layer**: Add essential earlier details the reader might have forgotten. Tailor by focus type:
-   - **People**: physical description, role, key relationships, values/motivations, shaping past events, alliances/conflicts.
-   - **Places**: history, who rules or is from there, major past events, cultural meaning, dangers or atmosphere.
-   - **Things (Objects)**: origin/creator, purpose, symbolic meaning, ownership history, earlier appearances.
-   - **Ideas**: book-specific meaning, who supports/rejects it, earlier mentions, thematic impact.
-   - **Unique Terms**: define it in this world’s context (not a dictionary sense), note where it first appeared, who uses it, and how it functions in culture/plot.
-
-4. **Why It Matters Now**: Tie refresher details back to this highlighted moment.
-
-## Output Requirements
-- **Section 1 — Conversational Explanation**: ≤3 short paragraphs, friendly and natural. Combine immediate clarity with refresher context.
-- **Section 2 — Key Traits & Context**: Use a concise **markdown bullet list** based on the focus type. Each list should include 3–6 bullets of the most relevant traits/details.
-- **Styling**:
-  - **Bold** for names, places, items, unique terms, and ideas.
-  - *Italics* for emphasis and subtle distinctions.
-  - Use quotation marks for recalled short phrases (<5 words) from earlier in the book.
-- **Grounding**: Base everything only on the context and what the book has already covered. Flag light inference (*likely because…*). No inventing facts.
-- **If unclear**: If meaning cannot be determined from the context, output exactly: **"I can't tell what this means from the context provided."**
-
-## Success Check (internal)
-- Did you explain what the passage means right now?
-- Did you resurface earlier details that matter but may not be restated?
-- Did you tailor the refresher according to whether it’s a person, place, thing, idea, or unique term?
-- Is the output structured: ≤2 conversational paragraphs + focused bullet list?
-
-
-## Context
-**Book Title**: {title}
-**Author**: {author}
-**Surrounding Context**:
 {context}
-
 ]],
         user_prompt_second_attempt = [[
-            Given the highlighted word or phrase "{highlight}" from "{title}" by {author}, you are a literary analyst who provides concise, insightful explanations of terms within their narrative context.
+Given the highlighted word or phrase "{highlight}" from "{title}" by {author}, you are a literary analyst who provides concise, insightful explanations of terms within their narrative context.
 
 **Analysis Instructions:**
 Identify the element type (character, location, concept, object, cultural element, technical term, vocabulary) and provide a focused explanation that covers:
