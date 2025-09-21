@@ -1,34 +1,17 @@
 local logger = require("logger")
+local LexRankLanguages = require("assistant_lexrank_languages")
 
 -- Lua implementation of the LexRank algorithm for sentence ranking
 local LexRank = {}
 
--- Set of English stop words (using array for space efficiency, will convert to hash for speed)
-local stop_words_array = {
-    "a", "an", "and", "are", "as", "at", "be", "by", "for", "from", "has", "he",
-    "in", "is", "it", "its", "of", "on", "that", "the", "to", "was", "were", "will",
-    "with", "would", "i", "you", "your", "we", "they", "them", "this", "these", "those",
-    "have", "had", "do", "does", "did", "can", "could", "should", "may", "might",
-    "must", "shall", "am", "been", "being", "into", "through", "during", "before",
-    "after", "above", "below", "up", "down", "out", "off", "over", "under", "again",
-    "further", "then", "once", "here", "there", "when", "where", "why", "how", "all",
-    "any", "both", "each", "few", "more", "most", "other", "some", "such", "no",
-    "nor", "not", "only", "own", "same", "so", "than", "too", "very", "just", "now"
-}
-
--- Convert array to hash table for O(1) lookup
-local stop_words = {}
-for _, word in ipairs(stop_words_array) do
-    stop_words[word] = true
-end
-
--- Simple sentence tokenization
-local function tokenize_sentences(text)
+-- Language-aware sentence tokenization
+local function tokenize_sentences(text, language_module)
     if not text or text == "" then
         return {}
     end
 
-    -- Split on sentence delimiters (., !, ?, ;)
+    -- Build pattern for sentence delimiters
+    local delim_pattern = "[" .. table.concat(language_module.sentence_delimiters, "") .. "]"
     local sentences = {}
     local current_sentence = ""
 
@@ -36,10 +19,10 @@ local function tokenize_sentences(text)
         local char = text:sub(i, i)
         current_sentence = current_sentence .. char
 
-        if char:match("[.!?;]") then
+        if char:match(delim_pattern) then
             -- Check if this is end of sentence (not in abbreviation)
             local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
-            if #trimmed > 10 then -- Minimum sentence length
+            if #trimmed >= language_module.min_sentence_length then
                 table.insert(sentences, trimmed)
             end
             current_sentence = ""
@@ -48,28 +31,29 @@ local function tokenize_sentences(text)
 
     -- Add remaining text as sentence if it's long enough
     local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
-    if #trimmed > 10 then
+    if #trimmed >= language_module.min_sentence_length then
         table.insert(sentences, trimmed)
     end
 
     return sentences
 end
 
--- Simple word tokenization
-local function tokenize_words(sentence)
-    if not sentence then
-        return {}
-    end
-
-    local words = {}
-    -- Split on whitespace and punctuation, then clean
-    for word in sentence:gmatch("%w+") do
-        local clean_word = word:lower()
-        if #clean_word > 2 and not stop_words[clean_word] then
-            table.insert(words, clean_word)
+-- Language-aware word tokenization
+local function tokenize_words(sentence, language_module)
+    if language_module.tokenize_words then
+        return language_module:tokenize_words(sentence)
+    else
+        -- Fallback to basic tokenization
+        if not sentence then return {} end
+        local words = {}
+        for word in sentence:gmatch("%w+") do
+            local clean_word = word:lower()
+            if #clean_word >= language_module.min_word_length and not language_module.stop_words_set[clean_word] then
+                table.insert(words, clean_word)
+            end
         end
+        return words
     end
-    return words
 end
 
 -- Calculate term frequency for a sentence
@@ -149,16 +133,20 @@ local function cosine_similarity(tf1, tf2, idf)
 end
 
 -- Main LexRank function
-function LexRank.rank_sentences(text, threshold, epsilon)
+function LexRank.rank_sentences(text, threshold, epsilon, language_code)
     threshold = threshold or 0.1
     epsilon = epsilon or 0.1
+    language_code = language_code or "en"
 
     if not text or text == "" then
         return {}
     end
 
+    -- Get language-specific module
+    local language_module = LexRankLanguages.get_language_module(language_code)
+
     -- Tokenize sentences
-    local sentences = tokenize_sentences(text)
+    local sentences = tokenize_sentences(text, language_module)
     local total_sentences = #sentences
 
     if total_sentences == 0 then
@@ -174,7 +162,7 @@ function LexRank.rank_sentences(text, threshold, epsilon)
     local tf_matrix = {}
 
     for i, sentence in ipairs(sentences) do
-        local words = tokenize_words(sentence)
+        local words = tokenize_words(sentence, language_module)
         sentences_words[i] = words
         tf_matrix[i] = calculate_tf(words)
     end

@@ -79,6 +79,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     -- Get context for the selected word
     local prev_context, next_context = "", ""
     local context_text = ""
+    local dict_language = assistant.settings:readSetting("response_language") or assistant.ui_language
 
     if prompt_type == "term_xray" then
         -- For term_xray, use LexRank to extract relevant context from book text
@@ -89,8 +90,8 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         local book_text = assistant_utils.extractBookTextForAnalysis(CONFIGURATION, ui)
 
         if book_text and #book_text > 100 then
-            -- Use LexRank to get relevant sentences
-            local ranked_sentences = LexRank.rank_sentences(book_text, 0.1, 0.1)
+            -- Use LexRank to get relevant sentences with language-specific processing
+            local ranked_sentences = LexRank.rank_sentences(book_text, 0.1, 0.1, dict_language)
             context_text = table.concat(ranked_sentences, " ")
         else
             -- Fallback to standard context if book text is too short
@@ -145,8 +146,6 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         end
         context_text = prev_context .. highlightedText .. next_context
     end
-    
-    local dict_language = assistant.settings:readSetting("response_language") or assistant.ui_language
 
     -- Choose the appropriate prompt and context based on prompt type
     local user_prompt, context_content
@@ -166,7 +165,6 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
                     language = dict_language,
                     context = context_content,
                     word = highlightedText,
-                    highlight = highlightedText,
                     title = book_title,
                     author = book_author,
                     user_input = ""
