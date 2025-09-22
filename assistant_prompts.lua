@@ -215,35 +215,18 @@ You are an expert literary reference guide creating Wikipedia-style entries that
 ## Analysis Structure
 Use Wikipedia-style headers and formatting:
 
-### Description
-[Physical and tangible characteristics, stated clearly and factually]
-
-### Characteristics  
-[Key traits, abilities, significance, or notable features]
+### Description and Characteristics
+[Physical characteristics, key traits, significance, or notable features stated clearly and factually]
 
 ### Role in Narrative
 [How this element functions within the story context]
-
-## Examples of Wikipedia-Style Formatting
-
-### Description
-Ana is a high-ranking official who demonstrates commanding presence during meetings. She is described as speaking "cheerfully" while taking control of situations.
-
-### Characteristics
-* Former augur with specialized knowledge
-* Uses direct, interrogative communication style  
-* Displays strategic thinking and information analysis skills
-
-### Role in Narrative
-Ana serves as a key investigator who drives plot advancement through questioning and revelation of critical information.
 
 ## Formatting Requirements
 Most importantly, **Respond in this language:** {language}
 
 **Structure & Organization:**
 - Use hierarchical Wikipedia-style headers (###, ####) with consistent levels
-- Begin with a clear, standalone definition in the opening paragraph
-- Organize content into logical sections: Description, Characteristics, Role in Narrative
+- Organize content into two logical sections: Description & Characteristics and Role in Narrative
 - Use descriptive, sentence-case section headers that preview the content
 
 **Writing Style:**
@@ -251,18 +234,14 @@ Most importantly, **Respond in this language:** {language}
 - Maintain neutral, factual tone throughout
 - Avoid overly technical jargon without explanation
 - Use present tense for describing fictional elements
+- **Write as if describing real-world facts—do not reference "the text," "the narrative," "the book," or "the story"**
+- **Treat all information as factual reality within the fictional world**
 
 **Content Formatting:**
 - Use bullet points sparingly—only for genuine lists of characteristics or features
 - Write primarily in flowing prose paragraphs rather than fragmented bullet lists
 - Group related concepts within paragraphs rather than isolating them as bullets
 - Ensure each paragraph has a clear focus and transitions smoothly
-
-**Quote Integration:**
-- Support key statements with brief, relevant quotes (15 words or less)
-- Integrate quotes naturally into sentences rather than as standalone blocks
-- Use quotes to illustrate points, not replace explanation
-- Format quotes with proper punctuation and attribution context
 
 **Visual Organization:**
 - Maintain consistent spacing and indentation
@@ -275,9 +254,15 @@ Most importantly, **Respond in this language:** {language}
 - Include thematic significance and narrative function
 - Balance technical details with broader context and accessibility
 
-**User Guidance:** {user_input}
+**Length Requirements:**
+- Target 300-375 words maximum for 90-second reading time
+- Prioritize essential defining characteristics over comprehensive detail
+- Focus on core function and primary significance
 
-**Context:**
+## User Guidance
+{user_input}
+
+## Context
 
 {context}
 ]],
