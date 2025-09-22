@@ -238,12 +238,42 @@ Ana is a high-ranking official who demonstrates commanding presence during meeti
 Ana serves as a key investigator who drives plot advancement through questioning and revelation of critical information.
 
 ## Formatting Requirements
-- Use Wikipedia-style headers and formatting
-- Write in simple, clear, encyclopedic language
-- Use bullet points for lists of characteristics
-- Support statements with brief quotes when relevant
-- Focus on factual, observable information
-- **Respond in this language:** {language}
+Most importantly, **Respond in this language:** {language}
+
+**Structure & Organization:**
+- Use hierarchical Wikipedia-style headers (###, ####) with consistent levels
+- Begin with a clear, standalone definition in the opening paragraph
+- Organize content into logical sections: Description, Characteristics, Role in Narrative
+- Use descriptive, sentence-case section headers that preview the content
+
+**Writing Style:**
+- Write in simple, clear, encyclopedic language accessible to general readers
+- Maintain neutral, factual tone throughout
+- Avoid overly technical jargon without explanation
+- Use present tense for describing fictional elements
+
+**Content Formatting:**
+- Use bullet points sparingly—only for genuine lists of characteristics or features
+- Write primarily in flowing prose paragraphs rather than fragmented bullet lists
+- Group related concepts within paragraphs rather than isolating them as bullets
+- Ensure each paragraph has a clear focus and transitions smoothly
+
+**Quote Integration:**
+- Support key statements with brief, relevant quotes (15 words or less)
+- Integrate quotes naturally into sentences rather than as standalone blocks
+- Use quotes to illustrate points, not replace explanation
+- Format quotes with proper punctuation and attribution context
+
+**Visual Organization:**
+- Maintain consistent spacing and indentation
+- Use bold text sparingly for emphasis on key terms only
+- Ensure clean, scannable layout with clear section breaks
+- Balance white space for readability
+
+**Content Focus:**
+- Prioritize factual, observable information over speculation
+- Include thematic significance and narrative function
+- Balance technical details with broader context and accessibility
 
 **User Guidance:** {user_input}
 
