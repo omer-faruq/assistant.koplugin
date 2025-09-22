@@ -196,7 +196,18 @@ function Assistant:addToMainMenu(menu_items)
                 text = _("Summary of the book using your highlights and notes.")
               })
             end,
+          },
+          {
+            text = _("Custom Prompts"),
             separator = true,
+            sub_item_table_func = function ()
+              return CustomPrompts(self)
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("Includes user defined book level prompts from Config file")
+              })
+            end,
           },
           {
             text = _("Take Quick Notes"),
@@ -273,6 +284,59 @@ function Assistant:addToMainMenu(menu_items)
           }
         },
     }
+end
+
+local function getDocumentInfo(document)
+  local DocSettings = require("docsettings")
+  local doc_settings = DocSettings:open(document.file)
+  local percent_finished = doc_settings:readSetting("percent_finished") or 0
+  local doc_props = doc_settings:child("doc_props")
+  local title = doc_props:readSetting("title") or document:getProps().title or "Unknown Title"
+  local authors = doc_props:readSetting("authors") or document:getProps().authors or "Unknown Author"
+  return {
+    title = title,
+    authors = authors,
+    percent_finished = percent_finished,
+  }
+end
+
+function CustomPrompts(assistant)
+  local sub_item_table = {}
+
+  -- Read book_level_prompts from configuration
+  local book_level_prompts = CONFIGURATION and CONFIGURATION.features and CONFIGURATION.features.book_level_prompts or {}
+
+  for key, prompt_config in pairs(book_level_prompts) do
+    if prompt_config.visible == true and prompt_config.type == "feature" then
+      local button = {
+        text = prompt_config.text or key,
+        callback = function()
+          if not assistant:isConfigured() then return end
+          NetworkMgr:runWhenOnline(function()
+            local book = getDocumentInfo(assistant.ui.document)
+            local showFeatureDialog = require("assistant_featuredialog")
+            Trapper:wrap(function()
+              showFeatureDialog(assistant, prompt_config, book.title, book.authors, book.percent_finished)
+            end)
+          end)
+        end,
+        hold_callback = function()
+          UIManager:show(InfoMessage:new{
+            text = prompt_config.description or _("This is a custom prompt")
+          })
+        end,
+      }
+      table.insert(sub_item_table, button)
+    end
+  end
+
+  if #sub_item_table == 0 then
+    UIManager:show(InfoMessage:new{
+      text = _("No custom prompts found. To create one, visit the wiki page on github.")
+    })
+    return
+  end
+  return sub_item_table
 end
 
 function Assistant:showSettings(close_callback)
@@ -629,20 +693,6 @@ end
       end)
     end)
     return true
-  end
-
-  local function getDocumentInfo(document)
-    local DocSettings = require("docsettings")
-    local doc_settings = DocSettings:open(document.file)
-    local percent_finished = doc_settings:readSetting("percent_finished") or 0
-    local doc_props = doc_settings:child("doc_props")
-    local title = doc_props:readSetting("title") or document:getProps().title or "Unknown Title"
-    local authors = doc_props:readSetting("authors") or document:getProps().authors or "Unknown Author"
-    return {
-      title = title,
-      authors = authors,
-      percent_finished = percent_finished,
-    }
   end
 
   function Assistant:onAskAIRecap()

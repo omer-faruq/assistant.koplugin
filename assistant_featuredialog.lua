@@ -28,85 +28,109 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     end
 
     local formatted_progress_percent = string.format("%.2f", progress_percent * 100)
-    
-    -- Feature type configurations for easy extension
-    local feature_configurations = {
-        recap = {
-            title = _("Recap"),
-            loading_message = _("Loading Recap..."),
-            config_key = "recap_config",
-            prompts_key = "recap"
-        },
-        xray = {
-            title = _("X‑Ray"),
-            loading_message = _("Loading X-Ray..."),
-            config_key = "xray_config",
-            prompts_key = "xray"
-        },
-        book_info = {
-            title = _("Book Information"),
-            loading_message = _("Loading Book Information..."),
-            config_key = "book_info_config",
-            prompts_key = "book_info"
-        },
-        annotations = {
-            title = _("Highlight & Note Analysis"),
-            loading_message = _("Loading Highlight & Note Analysis..."),
-            config_key = "annotations_config",
-            prompts_key = "annotations"
-        },
-        summary_using_annotations = {
-            title = _("Summary Using Highlights & Notes"),
-            loading_message = _("Loading Summary Using Highlights & Notes..."),
-            config_key = "summary_using_annotations_config",
-            prompts_key = "summary_using_annotations"
-        }
-    }
-    
-    -- Get feature configuration
-    local feature_config = feature_configurations[feature_type]
-    if not feature_config then
-        UIManager:show(InfoMessage:new{ 
-            icon = "notice-warning", 
-            text = string.format(_("Unknown feature type: %s"), feature_type) 
-        })
-        return
-    end
-    
-    local feature_title = feature_config.title
-    local loading_message = feature_config.loading_message
-    local config_key = feature_config.config_key
-    local prompts_key = feature_config.prompts_key
-    
-    -- Get feature CONFIGURATION with fallbacks
-    local file_config = koutil.tableGetValue(CONFIGURATION, "features", config_key) or {}
+    local feature_title, loading_message, system_prompt, user_prompt_template, book_text, highlights_notes
+
     local language = assistant.settings:readSetting("response_language") or assistant.ui_language
-    
-    -- Prompts for feature (from config or prompts.lua)
-    local system_prompt = koutil.tableGetValue(file_config, "system_prompt")
-        or koutil.tableGetValue(assistant_prompts, prompts_key, "system_prompt")
+
+    if type(feature_type) == "table" then
+        -- Custom feature from configuration
+        local custom_config = feature_type
+        feature_title = custom_config.text or _("Custom Prompt")
+        loading_message = custom_config.loading_message or _("Loading...")
+        system_prompt = custom_config.system_prompt
+        user_prompt_template = custom_config.user_prompt
+
+        -- Handle use flags
+        book_text = nil
+        highlights_notes = nil
+        if custom_config.use_book_text and custom_config.use_book_text == true then
+            book_text = extractBookTextForAnalysis(CONFIGURATION, ui)
+        end
+        if custom_config.use_highlight_with_notebook and custom_config.use_highlight_with_notebook == true then
+            highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui, true)
+        elseif custom_config.use_highlight_without_notebook and custom_config.use_highlight_without_notebook == true then
+            highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui, false)
+        end
+    else
+        -- Original feature type handling
+        -- Feature type configurations for easy extension
+        local feature_configurations = {
+            recap = {
+                title = _("Recap"),
+                loading_message = _("Loading Recap..."),
+                config_key = "recap_config",
+                prompts_key = "recap"
+            },
+            xray = {
+                title = _("X‑Ray"),
+                loading_message = _("Loading X-Ray..."),
+                config_key = "xray_config",
+                prompts_key = "xray"
+            },
+            book_info = {
+                title = _("Book Information"),
+                loading_message = _("Loading Book Information..."),
+                config_key = "book_info_config",
+                prompts_key = "book_info"
+            },
+            annotations = {
+                title = _("Highlight & Note Analysis"),
+                loading_message = _("Loading Highlight & Note Analysis..."),
+                config_key = "annotations_config",
+                prompts_key = "annotations"
+            },
+            summary_using_annotations = {
+                title = _("Summary Using Highlights & Notes"),
+                loading_message = _("Loading Summary Using Highlights & Notes..."),
+                config_key = "summary_using_annotations_config",
+                prompts_key = "summary_using_annotations"
+            }
+        }
+        
+        -- Get feature configuration
+        local feature_config = feature_configurations[feature_type]
+        if not feature_config then
+            UIManager:show(InfoMessage:new{ 
+                icon = "notice-warning", 
+                text = string.format(_("Unknown feature type: %s"), feature_type) 
+            })
+            return
+        end
+        
+        feature_title = feature_config.title
+        loading_message = feature_config.loading_message
+        local config_key = feature_config.config_key
+        local prompts_key = feature_config.prompts_key
+        
+        -- Get feature CONFIGURATION with fallbacks
+        local file_config = koutil.tableGetValue(CONFIGURATION, "features", config_key) or {}
+        
+        -- Prompts for feature (from config or prompts.lua)
+        system_prompt = koutil.tableGetValue(file_config, "system_prompt")
+            or koutil.tableGetValue(assistant_prompts, prompts_key, "system_prompt")
+
+        user_prompt_template = koutil.tableGetValue(file_config, "user_prompt")
+            or koutil.tableGetValue(assistant_prompts, prompts_key, "user_prompt")
+
+        book_text = nil
+        highlights_notes = nil
+        if feature_type == "xray" or feature_type == "recap" then
+          if assistant.settings:readSetting("use_book_text_for_analysis", false) then
+            book_text = extractBookTextForAnalysis(CONFIGURATION, ui)
+          end
+        elseif feature_type == "annotations" then
+          highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui,true)
+        elseif feature_type == "summary_using_annotations" then
+          book_text = extractBookTextForAnalysis(CONFIGURATION, ui)
+          highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui,false)
+        end
+    end
 
     if assistant.settings:readSetting("auto_prompt_suggest", false) then
       local suggestions_prompt = assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
       system_prompt = system_prompt .. suggestions_prompt
     end
-
-    local user_prompt_template = koutil.tableGetValue(file_config, "user_prompt")
-        or koutil.tableGetValue(assistant_prompts, prompts_key, "user_prompt")
-
-    local book_text = nil
-    local highlights_notes = nil
-    if feature_type == "xray" or feature_type == "recap" then
-      if assistant.settings:readSetting("use_book_text_for_analysis", false) then
-        book_text = extractBookTextForAnalysis(CONFIGURATION, ui)
-      end
-    elseif feature_type == "annotations" then
-      highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui,true)
-    elseif feature_type == "summary_using_annotations" then
-      book_text = extractBookTextForAnalysis(CONFIGURATION, ui)
-      highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui,false)
-    end
-
+    
     local book_text_prompt = ""
     if book_text then
         book_text_prompt = string.format("\n\n[! IMPORTANT !] Here is the book text up to my current position, only consider this text for your response:\n [BOOK TEXT BEGIN]\n%s\n[BOOK TEXT END]", book_text)
