@@ -164,7 +164,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             content = string.gsub(user_prompt, "{(%w+)}", {
                     language = dict_language,
                     context = context_content,
-                    word = highlightedText,
+                    highlight = highlightedText,
                     title = book_title,
                     author = book_author,
                     user_input = ""
