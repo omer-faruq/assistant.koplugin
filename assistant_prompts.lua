@@ -392,8 +392,9 @@ __%1__
 2. **Strict link format:** `[TEXT](#q:TEXT)` with:  
    - Colons **required** after `#q:`  
    - Identical text inside `[]` and `()`  
-   - **ZERO tolerance for symbol variants** (e.g. `（）` will break parsing)  
-
+   - **ZERO tolerance for symbol variants** (e.g. `（）` will break parsing)
+   - Do not use the quotation mark `"` or `"`
+   
 3. **Double-check mechanism:**  
    - Use English keyboard to input symbols  
    - Verify parentheses at **both link parts**:  
