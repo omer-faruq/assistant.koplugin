@@ -115,6 +115,14 @@ function Assistant:onDispatcherRegisterActions()
     category = "none",
     event = "AskAIAnnotations",
     title = _("Highlight & Note Analysis"),
+    general = true
+  })
+
+  -- Register Annotations Analysis action (available for gesture binding)
+  Dispatcher:registerAction("ai_summary_using_annotations", {
+    category = "none",
+    event = "AskSummaryUsingAnnotations",
+    title = _("Summary Using Highlights & Notes"),
     general = true,
     separator = true
   })
@@ -189,7 +197,7 @@ function Assistant:addToMainMenu(menu_items)
           {
             text = _("Summary Using Highlights & Notes"),
             callback = function ()
-              self:onAskAIFeature("summary_using_annotations")
+              self:onAskSummaryUsingAnnotations()
             end,
             hold_callback = function ()
               UIManager:show(InfoMessage:new{
@@ -201,7 +209,7 @@ function Assistant:addToMainMenu(menu_items)
             text = _("Custom Prompts"),
             separator = true,
             sub_item_table_func = function ()
-              return CustomPrompts(self)
+              return BookLevelCustomPrompts(self)
             end,
             hold_callback = function ()
               UIManager:show(InfoMessage:new{
@@ -300,7 +308,7 @@ local function getDocumentInfo(document)
   }
 end
 
-function CustomPrompts(assistant)
+function BookLevelCustomPrompts(assistant)
   local sub_item_table = {}
 
   -- Read book_level_prompts from configuration
@@ -742,14 +750,14 @@ end
     end)
     return true
   end
-  
-  function Assistant:onAskAIFeature(prompt_idx)
+
+  function Assistant:onAskSummaryUsingAnnotations()
     if not self:isConfigured() then return end
     NetworkMgr:runWhenOnline(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
-        showFeatureDialog(self, prompt_idx, book.title, book.authors, book.percent_finished)
+        showFeatureDialog(self, "summary_using_annotations", book.title, book.authors, book.percent_finished)
       end)
     end)
     return true
