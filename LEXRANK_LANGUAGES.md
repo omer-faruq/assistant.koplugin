@@ -113,6 +113,26 @@ Each language module must include:
 ### Optional Fields
 
 - **`tokenize_words`** (function): Custom word tokenization for language-specific needs
+- **`stemming_patterns`** (array): Patterns for basic stemming to improve term matching
+
+### Stemming Patterns
+
+Stemming patterns help find related words when searching for the highlighted term. Each pattern should remove common suffixes:
+
+```lua
+stemming_patterns = {
+    { pattern = "ing$", replacement = "" },   -- English gerund
+    { pattern = "ed$", replacement = "" },    -- English past tense
+    { pattern = "ción$", replacement = "" },  -- Spanish noun suffix
+    { pattern = "ment$", replacement = "" },  -- French adverb suffix
+    { pattern = "ung$", replacement = "" }    -- German noun suffix
+}
+```
+
+**Benefits:**
+- **Better matching**: "running" finds "run", "runner", "runs"
+- **Language-specific**: Each language has appropriate suffix patterns
+- **Fallback search**: Used only when direct term search fails
 
 ### Language-Specific Considerations
 

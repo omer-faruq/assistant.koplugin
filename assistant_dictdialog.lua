@@ -10,6 +10,90 @@ local Event = require("ui/event")
 local koutil = require("util")
 local dict_prompts = require("assistant_prompts").assistant_prompts.dict
 
+-- Filter text to find sentences containing the highlighted term with surrounding context
+local function filterTextForTerm(text, highlighted_term, language_code)
+    if not text or not highlighted_term or highlighted_term == "" then
+        return nil
+    end
+
+    local LexRankLanguages = require("assistant_lexrank_languages")
+
+    -- Simple sentence splitting (same logic as LexRank)
+    local sentences = {}
+    local current_sentence = ""
+
+    for i = 1, #text do
+        local char = text:sub(i, i)
+        current_sentence = current_sentence .. char
+
+        if char:match("[.!?;]") then
+            local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
+            if #trimmed > 10 then -- Minimum sentence length
+                table.insert(sentences, trimmed)
+            end
+            current_sentence = ""
+        end
+    end
+
+    -- Add remaining text as sentence if it's long enough
+    local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
+    if #trimmed > 10 then
+        table.insert(sentences, trimmed)
+    end
+
+    -- Find sentences containing the term (case-insensitive)
+    local matching_indices = {}
+    local term_lower = highlighted_term:lower()
+
+    for i, sentence in ipairs(sentences) do
+        if sentence:lower():find(term_lower, 1, true) then -- true = plain text search
+            table.insert(matching_indices, i)
+        end
+    end
+
+    -- If no direct matches, try language-aware stemming
+    if #matching_indices == 0 then
+        local stemmed_term = LexRankLanguages.stem_word(highlighted_term, language_code)
+        if stemmed_term ~= term_lower then -- Only if stemming actually changed the word
+            for i, sentence in ipairs(sentences) do
+                if sentence:lower():find(stemmed_term, 1, true) then
+                    table.insert(matching_indices, i)
+                end
+            end
+        end
+    end
+
+    -- If still no matches, return nil (will trigger fallback)
+    if #matching_indices == 0 then
+        return nil
+    end
+
+    -- Include larger context sentences around matches for better coverage
+    local context_window = 5 -- sentences before and after (increased from 2)
+    local selected_indices = {}
+
+    for _, idx in ipairs(matching_indices) do
+        for context_idx = math.max(1, idx - context_window), math.min(#sentences, idx + context_window) do
+            selected_indices[context_idx] = true
+        end
+    end
+
+    -- Build filtered text from selected sentences
+    local filtered_sentences = {}
+    for i = 1, #sentences do
+        if selected_indices[i] then
+            table.insert(filtered_sentences, sentences[i])
+        end
+    end
+
+    -- Require minimum amount of text to make LexRank worthwhile
+    if #filtered_sentences < 3 then
+        return nil
+    end
+
+    return table.concat(filtered_sentences, " ")
+end
+
 local function showDictionaryDialog(assistant, highlightedText, message_history, prompt_type)
     local CONFIGURATION = assistant.CONFIGURATION
     local Querier = assistant.querier
@@ -90,9 +174,55 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         local book_text = assistant_utils.extractBookTextForAnalysis(CONFIGURATION, ui)
 
         if book_text and #book_text > 100 then
-            -- Use LexRank to get relevant sentences with language-specific processing
-            local ranked_sentences = LexRank.rank_sentences(book_text, 0.1, 0.1, dict_language)
-            context_text = table.concat(ranked_sentences, " ")
+            -- Two-stage ranking approach for comprehensive context
+            local context_sentences = {}
+
+            -- Stage 1: Search for sentences containing the highlighted term
+            local filtered_text = filterTextForTerm(book_text, highlightedText, dict_language)
+
+            if filtered_text and #filtered_text > 100 then
+                -- Get relevant sentences using LexRank on term-specific text
+                local term_ranked_sentences = LexRank.rank_sentences(filtered_text, 0.05, 0.1, dict_language) -- Lower threshold
+
+                -- Add these high-relevance sentences
+                for _, sentence in ipairs(term_ranked_sentences) do
+                    table.insert(context_sentences, sentence)
+                end
+            end
+
+            -- Stage 2: Get additional general context from the full book text
+            -- Use more aggressive parameters to get more sentences
+            local general_ranked_sentences = LexRank.rank_sentences(book_text, 0.05, 0.1, dict_language) -- Lower threshold
+
+            -- Add general context sentences, avoiding duplicates
+            local seen_sentences = {}
+            for _, sentence in ipairs(context_sentences) do
+                seen_sentences[sentence] = true
+            end
+
+            local additional_count = 0
+            local max_additional = math.floor(#context_sentences * 1.5) -- Add up to 150% more context
+
+            for _, sentence in ipairs(general_ranked_sentences) do
+                if not seen_sentences[sentence] and additional_count < max_additional then
+                    table.insert(context_sentences, sentence)
+                    additional_count = additional_count + 1
+                end
+            end
+
+            -- If we still don't have enough context, lower the bar even more
+            if #context_sentences < 150 then -- Target at least 150 sentences for rich context
+                local very_inclusive_sentences = LexRank.rank_sentences(book_text, 0.02, 0.1, dict_language) -- Very low threshold
+
+                for _, sentence in ipairs(very_inclusive_sentences) do
+                    if not seen_sentences[sentence] and #context_sentences < 200 then -- Cap at 200 sentences
+                        table.insert(context_sentences, sentence)
+                        seen_sentences[sentence] = true
+                    end
+                end
+            end
+
+            context_text = table.concat(context_sentences, " ")
         else
             -- Fallback to standard context if book text is too short
             context_text = prev_context .. highlightedText .. next_context

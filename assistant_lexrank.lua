@@ -1,4 +1,3 @@
-local logger = require("logger")
 local LexRankLanguages = require("assistant_lexrank_languages")
 
 -- Lua implementation of the LexRank algorithm for sentence ranking
@@ -157,6 +156,29 @@ function LexRank.rank_sentences(text, threshold, epsilon, language_code)
         return {sentences[1]}
     end
 
+    -- Performance optimization for very long texts
+    -- If we have too many sentences, do intelligent pre-filtering
+    local max_sentences_for_full_analysis = 200 -- Reasonable limit for performance
+    local original_sentences = sentences
+
+    if total_sentences > max_sentences_for_full_analysis then
+        -- For very long texts, use a sampling strategy
+        -- Take sentences from throughout the text to maintain coverage
+        local sample_sentences = {}
+        local step = math.floor(total_sentences / max_sentences_for_full_analysis)
+
+        for i = 1, total_sentences, step do
+            table.insert(sample_sentences, sentences[i])
+            -- Also include next sentence to maintain some context
+            if i + 1 <= total_sentences then
+                table.insert(sample_sentences, sentences[i + 1])
+            end
+        end
+
+        sentences = sample_sentences
+        total_sentences = #sentences
+    end
+
     -- Tokenize words for each sentence
     local sentences_words = {}
     local tf_matrix = {}
@@ -170,13 +192,16 @@ function LexRank.rank_sentences(text, threshold, epsilon, language_code)
     -- Calculate IDF
     local idf = calculate_idf(sentences_words, total_sentences)
 
-    -- Build similarity matrix
+    -- Build similarity matrix with optimization
     local similarity_matrix = {}
     for i = 1, total_sentences do
         similarity_matrix[i] = {}
         for j = 1, total_sentences do
             if i == j then
                 similarity_matrix[i][j] = 0
+            elseif i > j then
+                -- Use symmetry to avoid duplicate calculations
+                similarity_matrix[i][j] = similarity_matrix[j][i]
             else
                 similarity_matrix[i][j] = cosine_similarity(tf_matrix[i], tf_matrix[j], idf)
             end
@@ -215,10 +240,11 @@ function LexRank.rank_sentences(text, threshold, epsilon, language_code)
         p_vector[i] = 1.0 / total_sentences
     end
 
-    -- Power iteration
+    -- Power iteration with early convergence optimization
     local lambda_val = 1.0
-    local max_iterations = 100
+    local max_iterations = math.min(100, total_sentences * 2) -- Adaptive max iterations
     local iteration = 0
+    local convergence_check_frequency = 5 -- Check convergence every 5 iterations for performance
 
     while lambda_val > epsilon and iteration < max_iterations do
         local next_p = {}
@@ -231,33 +257,48 @@ function LexRank.rank_sentences(text, threshold, epsilon, language_code)
             end
         end
 
-        -- Calculate convergence measure
-        lambda_val = 0
-        for i = 1, total_sentences do
-            lambda_val = lambda_val + math.abs(next_p[i] - p_vector[i])
+        iteration = iteration + 1
+
+        -- Check convergence less frequently for better performance
+        if iteration % convergence_check_frequency == 0 then
+            -- Calculate convergence measure
+            lambda_val = 0
+            for i = 1, total_sentences do
+                lambda_val = lambda_val + math.abs(next_p[i] - p_vector[i])
+            end
         end
 
         p_vector = next_p
-        iteration = iteration + 1
     end
 
-    -- Calculate average score
+    -- Calculate score statistics for better selection
     local total_score = 0
     for i = 1, total_sentences do
         total_score = total_score + p_vector[i]
     end
     local avg_score = total_score / total_sentences
 
-    -- Select sentences above average
+    -- Calculate standard deviation for more nuanced selection
+    local variance = 0
+    for i = 1, total_sentences do
+        variance = variance + (p_vector[i] - avg_score) ^ 2
+    end
+    local std_dev = math.sqrt(variance / total_sentences)
+
+    -- Use a more inclusive selection threshold: average minus half standard deviation
+    -- This captures more sentences while still filtering out very low-scoring ones
+    local selection_threshold = math.max(avg_score - (std_dev * 0.5), avg_score * 0.6)
+
+    -- Select sentences above the more inclusive threshold
     local selected_sentences = {}
     for i = 1, total_sentences do
-        if p_vector[i] >= avg_score then
+        if p_vector[i] >= selection_threshold then
             table.insert(selected_sentences, sentences[i])
         end
     end
 
-    -- If no sentences are above average, return top half
-    if #selected_sentences == 0 then
+    -- If still too few sentences, ensure we get at least 60-80% of sentences
+    if #selected_sentences < math.floor(total_sentences * 0.6) then
         local sentence_scores = {}
         for i = 1, total_sentences do
             table.insert(sentence_scores, {sentence = sentences[i], score = p_vector[i], index = i})
@@ -266,8 +307,17 @@ function LexRank.rank_sentences(text, threshold, epsilon, language_code)
         -- Sort by score descending
         table.sort(sentence_scores, function(a, b) return a.score > b.score end)
 
-        local half_count = math.max(1, math.floor(total_sentences / 2))
-        for i = 1, half_count do
+        -- Take top 60-80% of sentences (more inclusive than before)
+        local target_count = math.max(
+            math.floor(total_sentences * 0.6),  -- At least 60%
+            math.min(
+                math.floor(total_sentences * 0.8),  -- At most 80%
+                math.max(5, total_sentences)  -- But at least 5 sentences if available
+            )
+        )
+
+        selected_sentences = {}
+        for i = 1, math.min(target_count, total_sentences) do
             table.insert(selected_sentences, sentence_scores[i].sentence)
         end
     end

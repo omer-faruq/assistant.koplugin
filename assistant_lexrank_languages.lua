@@ -57,6 +57,17 @@ local EnglishLanguage = {
     min_sentence_length = 10,
     min_word_length = 2,
 
+    -- Simple stemming patterns for English
+    stemming_patterns = {
+        { pattern = "ing$", replacement = "" },
+        { pattern = "ed$", replacement = "" },
+        { pattern = "es$", replacement = "" },
+        { pattern = "s$", replacement = "" },
+        { pattern = "ly$", replacement = "" },
+        { pattern = "er$", replacement = "" },
+        { pattern = "est$", replacement = "" }
+    },
+
     tokenize_words = function(self, sentence)
         if not sentence then return {} end
         local words = {}
@@ -82,6 +93,21 @@ local SpanishLanguage = {
     sentence_delimiters = { ".", "!", "?", ";" },
     min_sentence_length = 10,
     min_word_length = 2,
+
+    -- Simple stemming patterns for Spanish
+    stemming_patterns = {
+        { pattern = "ando$", replacement = "" },   -- gerund -ando
+        { pattern = "iendo$", replacement = "" },  -- gerund -iendo
+        { pattern = "ado$", replacement = "" },    -- past participle -ado
+        { pattern = "ida$", replacement = "" },    -- past participle -ida
+        { pattern = "mente$", replacement = "" },  -- adverb -mente
+        { pattern = "ción$", replacement = "" },   -- noun -ción
+        { pattern = "sión$", replacement = "" },   -- noun -sión
+        { pattern = "os$", replacement = "" },     -- plural masculine
+        { pattern = "as$", replacement = "" },     -- plural feminine
+        { pattern = "es$", replacement = "" },     -- plural
+        { pattern = "s$", replacement = "" }       -- plural
+    },
 
     tokenize_words = function(self, sentence)
         if not sentence then return {} end
@@ -109,6 +135,23 @@ local FrenchLanguage = {
     min_sentence_length = 10,
     min_word_length = 2,
 
+    -- Simple stemming patterns for French
+    stemming_patterns = {
+        { pattern = "ment$", replacement = "" },   -- adverb -ment
+        { pattern = "ation$", replacement = "" },  -- noun -ation
+        { pattern = "tion$", replacement = "" },   -- noun -tion
+        { pattern = "sion$", replacement = "" },   -- noun -sion
+        { pattern = "eur$", replacement = "" },    -- agent noun -eur
+        { pattern = "euse$", replacement = "" },   -- agent noun -euse
+        { pattern = "ant$", replacement = "" },    -- present participle -ant
+        { pattern = "ent$", replacement = "" },    -- present participle -ent
+        { pattern = "és$", replacement = "" },     -- past participle plural
+        { pattern = "ées$", replacement = "" },    -- past participle feminine plural
+        { pattern = "é$", replacement = "" },      -- past participle
+        { pattern = "ée$", replacement = "" },     -- past participle feminine
+        { pattern = "s$", replacement = "" }       -- plural
+    },
+
     tokenize_words = function(self, sentence)
         if not sentence then return {} end
         local words = {}
@@ -135,6 +178,22 @@ local GermanLanguage = {
     sentence_delimiters = { ".", "!", "?", ";" },
     min_sentence_length = 10,
     min_word_length = 2,
+
+    -- Simple stemming patterns for German
+    stemming_patterns = {
+        { pattern = "ung$", replacement = "" },    -- noun -ung
+        { pattern = "heit$", replacement = "" },   -- noun -heit
+        { pattern = "keit$", replacement = "" },   -- noun -keit
+        { pattern = "lich$", replacement = "" },   -- adjective/adverb -lich
+        { pattern = "isch$", replacement = "" },   -- adjective -isch
+        { pattern = "end$", replacement = "" },    -- present participle -end
+        { pattern = "ern$", replacement = "" },    -- verb -ern
+        { pattern = "en$", replacement = "" },     -- verb infinitive/plural -en
+        { pattern = "er$", replacement = "" },     -- comparative/agent -er
+        { pattern = "st$", replacement = "" },     -- superlative/2nd person -st
+        { pattern = "te$", replacement = "" },     -- past tense -te
+        { pattern = "s$", replacement = "" }       -- genitive/plural -s
+    },
 
     tokenize_words = function(self, sentence)
         if not sentence then return {} end
@@ -167,6 +226,28 @@ local language_registry = {
     ["fr"] = FrenchLanguage,
     ["de"] = GermanLanguage
 }
+
+-- Apply stemming patterns to a word for fuzzy matching
+function LexRankLanguages.stem_word(word, language_code)
+    local language_module = LexRankLanguages.get_language_module(language_code)
+
+    if not language_module.stemming_patterns then
+        return word -- No stemming patterns available
+    end
+
+    local stemmed_word = word:lower()
+
+    -- Apply stemming patterns in order (longest first for better results)
+    for _, pattern_info in ipairs(language_module.stemming_patterns) do
+        local new_word = stemmed_word:gsub(pattern_info.pattern, pattern_info.replacement)
+        if new_word ~= stemmed_word and #new_word >= 3 then -- Ensure minimum root length
+            stemmed_word = new_word
+            break -- Apply only the first matching pattern
+        end
+    end
+
+    return stemmed_word
+end
 
 -- Get language module for a given language code
 function LexRankLanguages.get_language_module(language_code)

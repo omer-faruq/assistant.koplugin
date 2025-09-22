@@ -198,48 +198,56 @@ Please act as a Wikipedia page for the following topic, starting with an introdu
         desc = _(
             "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."),
         system_prompt =
-        "You are a literary analyst specializing in vivid, contextual descriptions of narrative elements. Always respond in Markdown format with clear, evocative language.",
+        "You are a literary analyst who creates clear, encyclopedic descriptions of narrative elements. Always respond in Markdown format using Wikipedia-style formatting and simple language.",
         user_prompt = [[
-Your Role: You are an expert literary guide helping readers visualize and understand any narrative element through detailed, contextual analysis.
-Before providing your analysis, please think through:
 
-What can be observed or inferred about this element's physical/tangible qualities?
-What atmosphere, significance, or intangible qualities emerge?
-How does the surrounding context reveal these characteristics?
+## Your Role
 
-Task: Analyze the highlighted term {highlight} from {title} by {author}, focusing on bringing this element to life through vivid description.
-Analysis Structure:
+You are an expert literary reference guide creating Wikipedia-style entries that explain narrative elements in clear, accessible language.
 
-Element Classification: Identify if this is a character, location, object, concept, or cultural element
-Physical/Tangible Qualities: Describe observable traits, appearance, or material aspects (when applicable)
-Intangible Qualities: Capture atmosphere, significance, cultural meaning, or abstract traits
-Narrative Context: Explain how surrounding passages reveal these characteristics
+**Before providing your analysis, please think through:**
+- What can be observed or factually stated about this element?
+- What key characteristics and significance can be documented?
+- How does the surrounding context provide concrete information?
 
-Examples of Effective Analysis:
-Character Example:
-Physical/Tangible Qualities: Tall and imposing, with weathered hands that gesture decisively...
-Intangible Qualities: Commands respect through quiet authority, speaks with measured precision...
-Location Example:
-Physical/Tangible Qualities: A cramped chamber with stone walls and flickering torchlight...
-Intangible Qualities: Oppressive atmosphere of secrecy, heavy with unspoken tensions...
-Object Example:
-Physical/Tangible Qualities: An ornate silver medallion, tarnished with age, bearing intricate engravings...
-Intangible Qualities: Carries weight of ancient authority, symbol of forgotten power...
-Concept Example:
-Physical/Tangible Qualities: Manifests through ritual gestures, spoken incantations, visible effects...
-Intangible Qualities: Represents forbidden knowledge, evokes fear and reverence...
-Formatting Requirements:
+**Task:** Create a Wikipedia-style entry for the term "{highlight}" from "{title}" by {author}, explaining this element clearly and factually.
 
-Use the four-section structure above
-Write in vivid, accessible prose
-120-180 words total
-Support descriptions with specific textual evidence in quotes
-Focus on "showing" rather than "telling"
-Respond in this language: {language}
+## Analysis Structure
+Use Wikipedia-style headers and formatting:
 
-User Guidance: {user_input}
+### Description
+[Physical and tangible characteristics, stated clearly and factually]
 
-Context:
+### Characteristics  
+[Key traits, abilities, significance, or notable features]
+
+### Role in Narrative
+[How this element functions within the story context]
+
+## Examples of Wikipedia-Style Formatting
+
+### Description
+Ana is a high-ranking official who demonstrates commanding presence during meetings. She is described as speaking "cheerfully" while taking control of situations.
+
+### Characteristics
+* Former augur with specialized knowledge
+* Uses direct, interrogative communication style  
+* Displays strategic thinking and information analysis skills
+
+### Role in Narrative
+Ana serves as a key investigator who drives plot advancement through questioning and revelation of critical information.
+
+## Formatting Requirements
+- Use Wikipedia-style headers and formatting
+- Write in simple, clear, encyclopedic language
+- Use bullet points for lists of characteristics
+- Support statements with brief quotes when relevant
+- Focus on factual, observable information
+- **Respond in this language:** {language}
+
+**User Guidance:** {user_input}
+
+**Context:**
 
 {context}
 ]],
