@@ -278,7 +278,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     end
 
     -- Choose the appropriate prompt and context based on prompt type
-    local user_prompt, context_content
+    local user_prompt, context_content, title, loading_message
     if prompt_type == "term_xray" then
         local term_xray_prompts = require("assistant_prompts").custom_prompts.term_xray
         user_prompt = term_xray_prompts.user_prompt
@@ -288,7 +288,8 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         local prop = ui.document:getProps()
         local book_title = prop.title or "Unknown Title"
         local book_author = prop.authors or "Unknown Author"
-
+        title = _("Term X-Ray")
+        loading_message = _("Loading Term X-Ray ...")
         local context_message = {
             role = "user",
             content = string.gsub(user_prompt, "{(%w+)}", {
@@ -304,7 +305,8 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     else
         user_prompt = dict_prompts.user_prompt
         context_content = prev_context .. highlightedText .. next_context
-
+        title = _("Dictionary")
+        loading_message = _("Loading AI Dictionary ...")
         local context_message = {
             role = "user",
             content = string.gsub(user_prompt, "{(%w+)}", {
@@ -317,7 +319,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     end
 
     -- Query the AI with the message history
-    local ret, err = Querier:query(message_history, "Loading AI Dictionary ...")
+    local ret, err = Querier:query(message_history, loading_message)
     if err ~= nil then
         assistant.querier:showError(err)
         return
@@ -365,7 +367,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     chatgpt_viewer = ChatGPTViewer:new {
         assistant = assistant,
         ui = ui,
-        title = _("Dictionary"),
+        title = title,
         text = result,
         onAddToNote = handleAddToNote,
         default_hold_callback = function ()
