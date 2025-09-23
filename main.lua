@@ -1,53 +1,53 @@
-local Device               = require("device")
-local logger               = require("logger")
-local Event                = require("ui/event")
-local InputContainer       = require("ui/widget/container/inputcontainer")
-local NetworkMgr           = require("ui/network/manager")
-local Dispatcher           = require("dispatcher")
-local UIManager            = require("ui/uimanager")
-local InfoMessage          = require("ui/widget/infomessage")
-local Font                 = require("ui/font")
-local Trapper              = require("ui/trapper")
-local Language             = require("ui/language")
-local LuaSettings          = require("luasettings")
-local DataStorage          = require("datastorage")
-local ConfirmBox           = require("ui/widget/confirmbox")
-local T                    = require("ffi/util").template
-local FrontendUtil         = require("util")
-local TextViewer           = require("ui/widget/textviewer")
-local ButtonDialog         = require("ui/widget/buttondialog")
-local ffiutil              = require("ffi/util")
+local Device = require("device")
+local logger = require("logger")
+local Event = require("ui/event")
+local InputContainer = require("ui/widget/container/inputcontainer")
+local NetworkMgr = require("ui/network/manager")
+local Dispatcher = require("dispatcher")
+local UIManager = require("ui/uimanager")
+local InfoMessage = require("ui/widget/infomessage")
+local Font = require("ui/font")
+local Trapper = require("ui/trapper")
+local Language = require("ui/language")
+local LuaSettings = require("luasettings")
+local DataStorage = require("datastorage")
+local ConfirmBox  = require("ui/widget/confirmbox")
+local T 		      = require("ffi/util").template
+local FrontendUtil = require("util")
+local TextViewer = require("ui/widget/textviewer")
+local ButtonDialog = require("ui/widget/buttondialog")
+local ffiutil = require("ffi/util")
 
-local _                    = require("assistant_gettext")
-local N_                   = _.ngettext
-local AssistantDialog      = require("assistant_dialog")
-local UpdateChecker        = require("assistant_update_checker")
-local Prompts              = require("assistant_prompts")
-local SettingsDialog       = require("assistant_settings")
+local _ = require("assistant_gettext")
+local N_ = _.ngettext
+local AssistantDialog = require("assistant_dialog")
+local UpdateChecker = require("assistant_update_checker")
+local Prompts = require("assistant_prompts")
+local SettingsDialog = require("assistant_settings")
 local showDictionaryDialog = require("assistant_dictdialog")
 
-local Assistant            = InputContainer:new {
+local Assistant = InputContainer:new {
   name = "assistant",
-  meta = nil,         -- reference to the _meta module
-  is_doc_only = true, -- only available in doc model
+  meta = nil,           -- reference to the _meta module
+  is_doc_only = true,   -- only available in doc model
   settings_file = DataStorage:getSettingsDir() .. "/assistant.lua",
   settings = nil,
   querier = nil,
-  updated = false,        -- flag to track if settings were updated
+  updated = false, -- flag to track if settings were updated
   assistant_dialog = nil, -- reference to the main dialog instance
   ui_language = nil,
   ui_language_is_rtl = nil,
-  CONFIGURATION = nil, -- reference to the main configuration
+  CONFIGURATION = nil,  -- reference to the main configuration
 }
 
 local function testConfigFile(filePath)
-  local env = {}
-  setmetatable(env, { __index = _G })
-  local chunk, err = loadfile(filePath, "t", env) -- test mode to loadfile, check syntax errors
-  if not chunk then return false, err end
-  local success, result = pcall(chunk)            -- run the code, checks runtime errors
-  if not success then return false, result end
-  return true, nil
+    local env = {}
+    setmetatable(env, {__index = _G})
+    local chunk, err = loadfile(filePath, "t", env) -- test mode to loadfile, check syntax errors
+    if not chunk then return false, err end
+    local success, result = pcall(chunk) -- run the code, checks runtime errors
+    if not success then return false, result end
+    return true, nil
 end
 
 -- configuration locations
@@ -63,11 +63,8 @@ if not ok then CONFIG_LOAD_ERROR = err end
 
 -- Load Configuration
 local success, result = pcall(function() return dofile(CONFIG_FILE_PATH) end)
-if success then
-  CONFIGURATION = result
-else
-  logger.warn(result)
-end
+if success then CONFIGURATION = result
+else logger.warn(result) end
 
 -- Flag to ensure the update message is shown only once per session
 local updateMessageShown = false
@@ -75,20 +72,20 @@ local updateMessageShown = false
 function Assistant:onDispatcherRegisterActions()
   -- Register main AI ask action
   Dispatcher:registerAction("ai_ask_question", {
-    category = "none",
-    event = "AskAIQuestion",
-    title = _("Ask the AI a question"),
+    category = "none", 
+    event = "AskAIQuestion", 
+    title = _("Ask the AI a question"), 
     general = true
   })
-
+  
   -- Register AI recap action
   Dispatcher:registerAction("ai_recap", {
-    category = "none",
-    event = "AskAIRecap",
-    title = _("AI Recaps"),
+    category = "none", 
+    event = "AskAIRecap", 
+    title = _("AI Recaps"), 
     general = true
   })
-
+  
   -- Register AI X-Ray action (available for gesture binding)
   Dispatcher:registerAction("ai_xray", {
     category = "none",
@@ -99,9 +96,9 @@ function Assistant:onDispatcherRegisterActions()
 
   -- Register Quick Notes action (available for gesture binding)
   Dispatcher:registerAction("ai_quick_note", {
-    category = "none",
-    event = "AskAIQuickNote",
-    title = _("Take Quick Notes"),
+    category = "none", 
+    event = "AskAIQuickNote", 
+    title = _("Take Quick Notes"), 
     general = true
   })
 
@@ -359,11 +356,11 @@ function Assistant:showSettings(close_callback)
     return
   end
 
-  local settingDlg = SettingsDialog:new {
-    assistant = self,
-    CONFIGURATION = CONFIGURATION,
-    settings = self.settings,
-    close_callback = close_callback,
+  local settingDlg = SettingsDialog:new{
+      assistant = self,
+      CONFIGURATION = CONFIGURATION,
+      settings = self.settings,
+      close_callback = close_callback,
   }
 
   self._settings_dialog = settingDlg -- store reference to the dialog
@@ -371,10 +368,7 @@ function Assistant:showSettings(close_callback)
 end
 
 function Assistant:getModelProvider()
-  if not CONFIGURATION then
-    logger.warn("CONFIGURATION is nil in getModelProvider")
-    return nil
-  end
+
   local provider_settings = CONFIGURATION.provider_settings -- provider settings table from configuration.lua
   local setting_provider = self.settings:readSetting("provider")
 
@@ -412,7 +406,7 @@ function Assistant:getModelProvider()
       setting_provider = find_setting_provider(function(key, tab)
         return FrontendUtil.tableGetValue(tab, "default") == true
       end)
-
+      
       -- still invalid (none of them defined `default`)
       if not setting_provider then
         setting_provider = find_setting_provider()
@@ -423,7 +417,7 @@ function Assistant:getModelProvider()
     if not setting_provider then
       CONFIG_LOAD_ERROR = _("No valid model provider is found in the configuration.lua")
       return nil
-    end                 -- if still not found, the configuration is wrong
+    end -- if still not found, the configuration is wrong
     self.settings:saveSetting("provider", setting_provider)
     self.updated = true -- mark settings as updated
   end
@@ -432,31 +426,31 @@ end
 
 -- Flush settings to disk, triggered by koreader
 function Assistant:onFlushSettings()
-  if self.updated then
-    self.settings:flush()
-    self.updated = nil
-  end
+    if self.updated then
+        self.settings:flush()
+        self.updated = nil
+    end
 end
 
 function Assistant:isConfigured()
-  local err_text = _("Configuration Error.\nPlease set up configuration.lua.")
+    local err_text = _("Configuration Error.\nPlease set up configuration.lua.")
 
-  -- handle error message during loading
-  if CONFIG_LOAD_ERROR and type(CONFIG_LOAD_ERROR) == "string" then
-    -- keep the error message clean
-    local cut = CONFIG_LOAD_ERROR:find("configuration.lua", 1, true) or 0 -- find as plain
-    err_text = string.format("%s\n\n%s", err_text,
-      (cut > 0) and CONFIG_LOAD_ERROR:sub(cut) or CONFIG_LOAD_ERROR)
-    UIManager:show(InfoMessage:new { icon = "notice-warning", text = err_text })
-    return nil
-  end
+    -- handle error message during loading
+    if CONFIG_LOAD_ERROR and type(CONFIG_LOAD_ERROR) == "string" then
+      -- keep the error message clean
+      local cut = CONFIG_LOAD_ERROR:find("configuration.lua", 1, true) or 0 -- find as plain
+      err_text = string.format("%s\n\n%s", err_text,
+              (cut > 0) and CONFIG_LOAD_ERROR:sub(cut) or CONFIG_LOAD_ERROR)
+      UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err_text })
+      return nil
+    end
 
-  if not CONFIGURATION then
-    UIManager:show(InfoMessage:new { icon = "notice-warning", text = err_text })
-    return nil
-  end
-
-  return true
+    if not CONFIGURATION then
+      UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err_text })
+      return nil
+    end
+  
+    return true
 end
 
 function Assistant:init()
@@ -521,7 +515,7 @@ function Assistant:init()
   local ok, err = self.querier:load_model(model_provider)
   if not ok then
     CONFIG_LOAD_ERROR = err
-    UIManager:show(InfoMessage:new { icon = "notice-warning", text = err })
+    UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
     return
   end
 
@@ -535,18 +529,18 @@ function Assistant:init()
 
 
   self.assistant_dialog = AssistantDialog:new(self, CONFIGURATION)
-
+  
   -- Ensure custom prompts from configuration are merged before building menus
   -- so that `show_on_main_popup` and `visible` overrides take effect.
   Prompts.getMergedCustomPrompts(FrontendUtil.tableGetValue(CONFIGURATION, "features", "prompts"))
-
+  
   -- Auto Recap Feature (hook before a book is opened)
   if self.settings:readSetting("enable_auto_recap", false) then
     self:_hookRecap()
   end
 
   -- Add Custom buttons to main select popup menu
-  local showOnMain = Prompts.getSortedCustomPrompts(function(prompt, idx)
+  local showOnMain = Prompts.getSortedCustomPrompts(function (prompt, idx)
     if prompt.visible == false then
       return false
     end
@@ -573,7 +567,7 @@ function Assistant:init()
 end
 
 function Assistant:_help_dialog()
-  local info_text = string.format("%s %s  ", self.meta.fullname, self.meta.version) .. _([[Usage Tips
+    local info_text = string.format("%s %s  ", self.meta.fullname, self.meta.version) .. _([[Usage Tips
 
 Select:
 Highlight text (or a word) in the book, then press [AI assistant] in the poped up menu.
@@ -589,32 +583,32 @@ On a single word in the book to show the highlight menu (instead of the dictiona
 Multi-Swipe (e.g., ⮠, ⮡, ↺):
 On the result dialog to close (as the Close button is far to reach).
 ]])
-  UIManager:show(ConfirmBox:new {
-    text = info_text,
-    face = Font:getFace("xx_smallinfofont"),
-    ok_text = _("Purge Settings"),
-    ok_callback = function()
-      UIManager:show(ConfirmBox:new {
-        text = _([[Are you sure to purge the assistant plugin settings?
+    UIManager:show(ConfirmBox:new{
+        text = info_text,
+        face = Font:getFace("xx_smallinfofont"),
+        ok_text = _("Purge Settings"),
+        ok_callback = function()
+          UIManager:show(ConfirmBox:new{
+            text = _([[Are you sure to purge the assistant plugin settings? 
 This resets the assistant plugin to the status the first time you installed it.
 
 configuration.lua is safe, only the settings are purged.]]),
-        ok_text = _("Purge"),
-        ok_callback = function()
-          self.settings:reset({})
-          self.settings:flush()
-          UIManager:askForRestart()
+            ok_text = _("Purge"),
+            ok_callback = function()
+              self.settings:reset({})
+              self.settings:flush()
+              UIManager:askForRestart()
+            end
+          })
         end
-      })
-    end
-  })
+    })
 end
 
 function Assistant:addMainButton(prompt_idx, prompt)
   local menukey = string.format("assistant_%02d_%s", prompt.order, prompt_idx)
   self.ui.highlight:removeFromHighlightDialog(menukey) -- avoid duplication
   self.ui.highlight:addToHighlightDialog(menukey, function(_reader_highlight_instance)
-    local btntext = prompt.text .. " (AI)"             -- append "(AI)" to identify as our function
+    local btntext = prompt.text .. " (AI)"  -- append "(AI)" to identify as our function
     return {
       text = btntext,
       callback = function()
@@ -642,11 +636,11 @@ function Assistant:addMainButton(prompt_idx, prompt)
       end,
       hold_callback = function() -- hold to remove
         UIManager:nextTick(function()
-          UIManager:show(ConfirmBox:new {
+          UIManager:show(ConfirmBox:new{
             text = string.format(_("Remove [%s] from Highlight Menu?"), btntext),
             ok_text = _("Remove"),
             ok_callback = function()
-              self:handleEvent(Event:new("AssistantSetButton", { order = prompt.order, idx = prompt_idx }, "remove"))
+              self:handleEvent(Event:new("AssistantSetButton", {order=prompt.order, idx=prompt_idx}, "remove"))
             end
           })
         end)
@@ -665,11 +659,11 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
       font_bold = true,
       text = _("Wikipedia") .. " (AI)",
       callback = function()
-        NetworkMgr:runWhenOnline(function()
-          Trapper:wrap(function()
-            self.assistant_dialog:showCustomPrompt(dict_popup.word, "wikipedia")
+          NetworkMgr:runWhenOnline(function()
+              Trapper:wrap(function()
+                self.assistant_dialog:showCustomPrompt(dict_popup.word, "wikipedia")
+              end)
           end)
-        end)
       end,
     })
   end
@@ -680,11 +674,11 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
       text = _("Dictionary") .. " (AI)",
       font_bold = true,
       callback = function()
-        NetworkMgr:runWhenOnline(function()
-          Trapper:wrap(function()
-            showDictionaryDialog(self, dict_popup.word)
+          NetworkMgr:runWhenOnline(function()
+              Trapper:wrap(function()
+                showDictionaryDialog(self, dict_popup.word)
+              end)
           end)
-        end)
       end,
     })
   end
@@ -694,77 +688,56 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
   end
 end
 
--- Event handlers for gesture-triggered actions
-function Assistant:onAskAIQuestion()
-  if not self:isConfigured() then
-    return
+  -- Event handlers for gesture-triggered actions
+  function Assistant:onAskAIQuestion()
+    if not self:isConfigured() then
+      return
+    end
+    
+    NetworkMgr:runWhenOnline(function()
+      -- Show dialog without highlighted text
+      Trapper:wrap(function()
+        self.assistant_dialog:show()
+      end)
+    end)
+    return true
   end
 
-  NetworkMgr:runWhenOnline(function()
-    -- Show dialog without highlighted text
-    Trapper:wrap(function()
-      self.assistant_dialog:show()
+  function Assistant:onAskAIRecap()
+    if not self:isConfigured() then return end
+    NetworkMgr:runWhenOnline(function()
+      local book = getDocumentInfo(self.ui.document)
+      local showFeatureDialog = require("assistant_featuredialog")
+      Trapper:wrap(function()
+        showFeatureDialog(self, "recap", book.title, book.authors, book.percent_finished)
+      end)
     end)
-  end)
-  return true
-end
-
-local function getDocumentInfo(document)
-  local DocSettings = require("docsettings")
-  local doc_settings = DocSettings:open(document.file)
-  local percent_finished = doc_settings:readSetting("percent_finished") or 0
-  local doc_props = doc_settings:child("doc_props")
-  local props = document:getProps() or {}
-  local title = doc_props:readSetting("title") or props.title or "Unknown Title"
-  local authors = doc_props:readSetting("authors") or props.authors or "Unknown Author"
-  local language_code = doc_props:readSetting("language") or props.language or props.Language
-  local language
-  if type(language_code) == "string" and language_code ~= "" then
-    language = Language:getLanguageName(language_code) or language_code
+    return true
   end
-  return {
-    title = title,
-    authors = authors,
-    language = language or "Unknown Language",
-    percent_finished = percent_finished,
-  }
-end
 
-function Assistant:onAskAIRecap()
-  if not self:isConfigured() then return end
-  NetworkMgr:runWhenOnline(function()
-    local book = getDocumentInfo(self.ui.document)
-    local showFeatureDialog = require("assistant_featuredialog")
-    Trapper:wrap(function()
-      showFeatureDialog(self, "recap", book.title, book.authors, book.percent_finished)
+  function Assistant:onAskAIXRay()
+    if not self:isConfigured() then return end
+    NetworkMgr:runWhenOnline(function()
+      local book = getDocumentInfo(self.ui.document)
+      local showFeatureDialog = require("assistant_featuredialog")
+      Trapper:wrap(function()
+        showFeatureDialog(self, "xray", book.title, book.authors, book.percent_finished)
+      end)
     end)
-  end)
-  return true
-end
+    return true
+  end
 
-function Assistant:onAskAIXRay()
-  if not self:isConfigured() then return end
-  NetworkMgr:runWhenOnline(function()
-    local book = getDocumentInfo(self.ui.document)
-    local showFeatureDialog = require("assistant_featuredialog")
-    Trapper:wrap(function()
-      showFeatureDialog(self, "xray", book.title, book.authors, book.percent_finished)
+  function Assistant:onAskAIBookInfo()
+    if not self:isConfigured() then return end
+    NetworkMgr:runWhenOnline(function()
+      local book = getDocumentInfo(self.ui.document)
+      local showFeatureDialog = require("assistant_featuredialog")
+      Trapper:wrap(function()
+        showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished)
+      end)
     end)
-  end)
-  return true
-end
-
-function Assistant:onAskAIBookInfo()
-  if not self:isConfigured() then return end
-  NetworkMgr:runWhenOnline(function()
-    local book = getDocumentInfo(self.ui.document)
-    local showFeatureDialog = require("assistant_featuredialog")
-    Trapper:wrap(function()
-      showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished)
-    end)
-  end)
-  return true
-end
+    return true
+  end
 
   function Assistant:onAskAIAnnotations()
     if not self:isConfigured() then return end
@@ -790,19 +763,20 @@ end
     return true
   end
 
-function Assistant:onAskAIQuickNote()
-  if not self:isConfigured() then return end
-  -- Initialize quicknote if not already done
-  if not self.quicknote then
-    local QuickNote = require("assistant_quicknote")
-    self.quicknote = QuickNote:new(self)
+  function Assistant:onAskAIQuickNote()
+    if not self:isConfigured() then return end
+    -- Initialize quicknote if not already done
+    if not self.quicknote then
+      local QuickNote = require("assistant_quicknote")
+      self.quicknote = QuickNote:new(self)
+    end
+    self.quicknote:show()
+    return true
   end
-  self.quicknote:show()
-  return true
-end
 
 -- Sync Overriding translate method with setting
 function Assistant:syncTranslateOverride()
+
   local Translator = require("ui/translator")
   local should_override = self.settings:readSetting("ai_translate_override", false) -- default to false
 
@@ -815,7 +789,7 @@ function Assistant:syncTranslateOverride()
     -- Override translate method with AI Assistant
     Translator.showTranslation = function(ts_self, text, detailed_view, source_lang, target_lang, from_highlight, index)
       if not CONFIGURATION then
-        UIManager:show(InfoMessage:new {
+        UIManager:show(InfoMessage:new{
           icon = "notice-warning",
           text = _("Configuration not found. Please set up configuration.lua first.")
         })
@@ -827,7 +801,7 @@ function Assistant:syncTranslateOverride()
         Trapper:wrap(function()
           -- splitToWords result like this: { "The", " ", "good", " ", "news" }
           if #words > 5 then
-            self.assistant_dialog:showCustomPrompt(text, "translate")
+              self.assistant_dialog:showCustomPrompt(text, "translate")
           else
             -- Show AI Dictionary dialog
             showDictionaryDialog(self, text)
@@ -858,7 +832,7 @@ function Assistant:onAssistantSetButton(btnconf, action)
     self.settings:makeTrue(settingkey)
     self.updated = true
     self:addMainButton(idx, prompt)
-    UIManager:show(InfoMessage:new {
+    UIManager:show(InfoMessage:new{
       text = T(_("Added [%1 (AI)] to Highlight Menu."), prompt.text),
       icon = "notice-info",
       timeout = 3
@@ -867,7 +841,7 @@ function Assistant:onAssistantSetButton(btnconf, action)
     self.settings:makeFalse(settingkey)
     self.updated = true
     self.ui.highlight:removeFromHighlightDialog(menukey)
-    UIManager:show(InfoMessage:new {
+    UIManager:show(InfoMessage:new{
       text = string.format(_("Removed [%s (AI)] from Highlight Menu."), prompt.text),
       icon = "notice-info",
       timeout = 3
@@ -881,43 +855,45 @@ end
 
 -- Adds hook on opening a book, the recap feature
 function Assistant:_hookRecap()
-  local ReaderUI = require("apps/reader/readerui")
+  local ReaderUI    = require("apps/reader/readerui")
   -- avoid recurive overrides here
   -- pulgin is loaded on every time file opened
-  if not ReaderUI._original_doShowReader then
+  if not ReaderUI._original_doShowReader then 
+
     -- Save a reference to the original doShowReader method.
     ReaderUI._original_doShowReader = ReaderUI.doShowReader
 
-    local assistant                 = self                            -- reference to the Assistant instance
-    local lfs                       = require("libs/libkoreader-lfs") -- for file attributes
-    local DocSettings               = require("docsettings")          -- for document progress
-
+    local assistant = self -- reference to the Assistant instance
+    local lfs         = require("libs/libkoreader-lfs")   -- for file attributes
+    local DocSettings = require("docsettings")			      -- for document progress
+  
     -- Override to hook into the reader's doShowReader method.
     function ReaderUI:doShowReader(file, provider, seamless)
+
       -- Get file metadata; here we use the file's "access" attribute.
       local attr = lfs.attributes(file)
       local lastAccess = attr and attr.access or nil
-
+  
       if lastAccess and lastAccess > 0 then -- Has been opened
         local doc_settings = DocSettings:open(file)
         local percent_finished = doc_settings:readSetting("percent_finished") or 0
         local timeDiffHours = math.floor((os.time() - lastAccess) / 3600)
-
+  
         -- More than 28hrs since last open and less than 95% complete
         -- percent = 0 may means the book is not started yet, the docsettings maybe empty
-        if timeDiffHours >= 28 and percent_finished > 0 and percent_finished <= 0.95 then
+        if timeDiffHours >= 28 and percent_finished > 0 and percent_finished <= 0.95 then 
           -- Construct the message to display.
           local doc_props = doc_settings:child("doc_props")
           local title = doc_props:readSetting("title", "Unknown Title")
           local authors = doc_props:readSetting("authors", "Unknown Author")
           local message = T(_("Do you want an AI Recap?\nFor %1 by %2.\n\n"), title, authors)
-              .. T(N_("Last read an hour ago.", "Last read %1 hours ago.", timeDiffHours), timeDiffHours)
-
+                    .. T(N_("Last read an hour ago.", "Last read %1 hours ago.", timeDiffHours), timeDiffHours)
+  
           -- Display the request popup using ConfirmBox.
-          UIManager:show(ConfirmBox:new {
-            text        = message,
-            ok_text     = _("Yes"),
-            ok_callback = function()
+          UIManager:show(ConfirmBox:new{
+            text            = message,
+            ok_text         = _("Yes"),
+            ok_callback     = function()
               NetworkMgr:runWhenOnline(function()
                 local showFeatureDialog = require("assistant_featuredialog")
                 Trapper:wrap(function()
@@ -925,7 +901,7 @@ function Assistant:_hookRecap()
                 end)
               end)
             end,
-            cancel_text = _("No"),
+            cancel_text     = _("No"),
           })
         end
       end
