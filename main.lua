@@ -139,7 +139,6 @@ function Assistant:addToMainMenu(menu_items)
         end,
         sub_item_table = {
           {
-            separator = true,
             text = _("Ask the AI a question"),
             callback = function ()
               self:onAskAIQuestion()
@@ -151,59 +150,64 @@ function Assistant:addToMainMenu(menu_items)
             end
           },
           {
-            text = _("Book Summary & Recs"),
-            callback = function ()
-              self:onAskAIBookInfo()
-            end,
-            hold_callback = function ()
-              UIManager:show(InfoMessage:new{
-                text = _("Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions.")
-              })
-            end
-          },
-          {
-            text = _("AI X-Ray"),
-            callback = function ()
-              self:onAskAIXRay()
-            end,
-            hold_callback = function ()
-              UIManager:show(InfoMessage:new{
-                text = _("\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion.")
-              })
-            end
-          },
-          {
-            text = _("AI Recaps"),
-            callback = function ()
-              self:onAskAIRecap()
-            end,
-            hold_callback = function ()
-              UIManager:show(InfoMessage:new{
-                text = _("A very brief, spoiler-free summary of the book up to current reading progress.")
-              })
-            end,
-          },
-          {
-            text = _("Highlight & Note Analysis"),
-            callback = function ()
-              self:onAskAIAnnotations()
-            end,
-            hold_callback = function ()
-              UIManager:show(InfoMessage:new{
-                text = _("Analysis of your highlights, notes, and notebook content from the book.")
-              })
-            end,
-          },
-          {
-            text = _("Summary Using Highlights & Notes"),
-            callback = function ()
-              self:onAskSummaryUsingAnnotations()
-            end,
-            hold_callback = function ()
-              UIManager:show(InfoMessage:new{
-                text = _("Summary of the book using your highlights and notes.")
-              })
-            end,
+            text = _("Built-in Prompts"),
+            sub_item_table = {
+              {
+                text = _("Book Summary & Recs"),
+                callback = function ()
+                  self:onAskAIBookInfo()
+                end,
+                hold_callback = function ()
+                  UIManager:show(InfoMessage:new{
+                    text = _("Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions.")
+                  })
+                end
+              },
+              {
+                text = _("AI X-Ray"),
+                callback = function ()
+                  self:onAskAIXRay()
+                end,
+                hold_callback = function ()
+                  UIManager:show(InfoMessage:new{
+                    text = _("\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion.")
+                  })
+                end
+              },
+              {
+                text = _("AI Recaps"),
+                callback = function ()
+                  self:onAskAIRecap()
+                end,
+                hold_callback = function ()
+                  UIManager:show(InfoMessage:new{
+                    text = _("A very brief, spoiler-free summary of the book up to current reading progress.")
+                  })
+                end,
+              },
+              {
+                text = _("Highlight & Note Analysis"),
+                callback = function ()
+                  self:onAskAIAnnotations()
+                end,
+                hold_callback = function ()
+                  UIManager:show(InfoMessage:new{
+                    text = _("Analysis of your highlights, notes, and notebook content from the book.")
+                  })
+                end,
+              },
+              {
+                text = _("Summary Using Highlights & Notes"),
+                callback = function ()
+                  self:onAskSummaryUsingAnnotations()
+                end,
+                hold_callback = function ()
+                  UIManager:show(InfoMessage:new{
+                    text = _("Summary of the book using your highlights and notes.")
+                  })
+                end,
+              },
+            }
           },
           {
             text = _("Custom Prompts"),
@@ -626,6 +630,9 @@ function Assistant:addMainButton(prompt_idx, prompt)
               if prompt.order == -10 and prompt_idx == "dictionary" then
                 -- Dictionary prompt, show dictionary dialog
                 showDictionaryDialog(self, _reader_highlight_instance.selected_text.text)
+              elseif prompt_idx == "term_xray" then
+                -- Special case for term_xray prompt - use dictionary dialog with enhanced context
+                showDictionaryDialog(self, _reader_highlight_instance.selected_text.text, nil, "term_xray")
               else
                 -- For other prompts, show the custom prompt dialog
                 self.assistant_dialog:showCustomPrompt(_reader_highlight_instance.selected_text.text, prompt_idx)
