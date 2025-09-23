@@ -3,6 +3,21 @@ local LexRankLanguages = require("assistant_lexrank_languages")
 -- Lua implementation of the LexRank algorithm for sentence ranking
 local LexRank = {}
 
+-- Configuration constants
+local CONFIG = {
+    DEFAULT_THRESHOLD = 0.1,
+    DEFAULT_EPSILON = 0.1,
+    DEFAULT_LANGUAGE = "en",
+    MAX_SENTENCES_FOR_FULL_ANALYSIS = 200,
+    MAX_ITERATIONS = 100,
+    CONVERGENCE_CHECK_FREQUENCY = 5,
+    MIN_SELECTION_PERCENTAGE = 0.6,
+    MAX_SELECTION_PERCENTAGE = 0.8,
+    SELECTION_THRESHOLD_FACTOR = 0.5,
+    ALTERNATIVE_THRESHOLD_FACTOR = 0.6,
+    MIN_SENTENCES_TARGET = 5
+}
+
 -- Language-aware sentence tokenization
 local function tokenize_sentences(text, language_module)
     if not text or text == "" then
@@ -131,66 +146,45 @@ local function cosine_similarity(tf1, tf2, idf)
     end
 end
 
--- Main LexRank function
-function LexRank.rank_sentences(text, threshold, epsilon, language_code)
-    threshold = threshold or 0.1
-    epsilon = epsilon or 0.1
-    language_code = language_code or "en"
+-- Initialize and validate LexRank parameters
+local function initialize_parameters(threshold, epsilon, language_code)
+    return {
+        threshold = threshold or CONFIG.DEFAULT_THRESHOLD,
+        epsilon = epsilon or CONFIG.DEFAULT_EPSILON,
+        language_code = language_code or CONFIG.DEFAULT_LANGUAGE
+    }
+end
 
-    if not text or text == "" then
-        return {}
+-- Sample sentences for performance when dealing with very long texts
+local function sample_large_text(sentences, max_sentences)
+    if #sentences <= max_sentences then
+        return sentences, sentences
     end
 
-    -- Get language-specific module
-    local language_module = LexRankLanguages.get_language_module(language_code)
+    local sample_sentences = {}
+    local step = math.floor(#sentences / max_sentences)
 
-    -- Tokenize sentences
-    local sentences = tokenize_sentences(text, language_module)
-    local total_sentences = #sentences
-
-    if total_sentences == 0 then
-        return {}
-    end
-
-    if total_sentences == 1 then
-        return {sentences[1]}
-    end
-
-    -- Performance optimization for very long texts
-    -- If we have too many sentences, do intelligent pre-filtering
-    local max_sentences_for_full_analysis = 200 -- Reasonable limit for performance
-    local original_sentences = sentences
-
-    if total_sentences > max_sentences_for_full_analysis then
-        -- For very long texts, use a sampling strategy
-        -- Take sentences from throughout the text to maintain coverage
-        local sample_sentences = {}
-        local step = math.floor(total_sentences / max_sentences_for_full_analysis)
-
-        for i = 1, total_sentences, step do
-            table.insert(sample_sentences, sentences[i])
-            -- Also include next sentence to maintain some context
-            if i + 1 <= total_sentences then
-                table.insert(sample_sentences, sentences[i + 1])
-            end
+    for i = 1, #sentences, step do
+        table.insert(sample_sentences, sentences[i])
+        -- Include next sentence to maintain some context
+        if i + 1 <= #sentences then
+            table.insert(sample_sentences, sentences[i + 1])
         end
-
-        sentences = sample_sentences
-        total_sentences = #sentences
     end
 
-    -- Tokenize words for each sentence
-    local sentences_words = {}
-    local tf_matrix = {}
+    return sample_sentences, sentences
+end
 
-    for i, sentence in ipairs(sentences) do
-        local words = tokenize_words(sentence, language_module)
-        sentences_words[i] = words
-        tf_matrix[i] = calculate_tf(words)
-    end
-
+-- Build TF-IDF weighted similarity matrix between sentences
+local function build_similarity_matrix(sentences_words, total_sentences)
     -- Calculate IDF
     local idf = calculate_idf(sentences_words, total_sentences)
+
+    -- Calculate TF for each sentence
+    local tf_matrix = {}
+    for i, words in ipairs(sentences_words) do
+        tf_matrix[i] = calculate_tf(words)
+    end
 
     -- Build similarity matrix with optimization
     local similarity_matrix = {}
@@ -208,8 +202,15 @@ function LexRank.rank_sentences(text, threshold, epsilon, language_code)
         end
     end
 
-    -- Apply threshold and calculate degrees
+    return similarity_matrix
+end
+
+-- Apply threshold and normalize similarity matrix by degrees
+local function normalize_similarity_matrix(similarity_matrix, threshold)
+    local total_sentences = #similarity_matrix
     local degrees = {}
+
+    -- Apply threshold and calculate degrees
     for i = 1, total_sentences do
         degrees[i] = 0
         for j = 1, total_sentences do
@@ -234,85 +235,103 @@ function LexRank.rank_sentences(text, threshold, epsilon, language_code)
         end
     end
 
+    return similarity_matrix
+end
+
+-- Run PageRank power iteration algorithm
+local function run_power_iteration(similarity_matrix, epsilon)
+    local total_sentences = #similarity_matrix
+
     -- Initialize PageRank vector
-    local p_vector = {}
+    local score_vector = {}
     for i = 1, total_sentences do
-        p_vector[i] = 1.0 / total_sentences
+        score_vector[i] = 1.0 / total_sentences
     end
 
     -- Power iteration with early convergence optimization
-    local lambda_val = 1.0
-    local max_iterations = math.min(100, total_sentences * 2) -- Adaptive max iterations
+    local convergence_measure = 1.0
+    local max_iterations = math.min(CONFIG.MAX_ITERATIONS, total_sentences * 2)
     local iteration = 0
-    local convergence_check_frequency = 5 -- Check convergence every 5 iterations for performance
 
-    while lambda_val > epsilon and iteration < max_iterations do
-        local next_p = {}
+    while convergence_measure > epsilon and iteration < max_iterations do
+        local next_scores = {}
 
-        -- Matrix multiplication: next_p = similarity_matrix^T * p_vector
+        -- Matrix multiplication: next_scores = similarity_matrix^T * score_vector
         for i = 1, total_sentences do
-            next_p[i] = 0
+            next_scores[i] = 0
             for j = 1, total_sentences do
-                next_p[i] = next_p[i] + similarity_matrix[j][i] * p_vector[j]
+                next_scores[i] = next_scores[i] + similarity_matrix[j][i] * score_vector[j]
             end
         end
 
         iteration = iteration + 1
 
         -- Check convergence less frequently for better performance
-        if iteration % convergence_check_frequency == 0 then
-            -- Calculate convergence measure
-            lambda_val = 0
+        if iteration % CONFIG.CONVERGENCE_CHECK_FREQUENCY == 0 then
+            convergence_measure = 0
             for i = 1, total_sentences do
-                lambda_val = lambda_val + math.abs(next_p[i] - p_vector[i])
+                convergence_measure = convergence_measure + math.abs(next_scores[i] - score_vector[i])
             end
         end
 
-        p_vector = next_p
+        score_vector = next_scores
     end
+
+    return score_vector
+end
+
+-- Select sentences based on scores using statistical thresholds
+local function select_sentences_by_score(sentences, score_vector)
+    local total_sentences = #sentences
 
     -- Calculate score statistics for better selection
     local total_score = 0
     for i = 1, total_sentences do
-        total_score = total_score + p_vector[i]
+        total_score = total_score + score_vector[i]
     end
     local avg_score = total_score / total_sentences
 
     -- Calculate standard deviation for more nuanced selection
     local variance = 0
     for i = 1, total_sentences do
-        variance = variance + (p_vector[i] - avg_score) ^ 2
+        variance = variance + (score_vector[i] - avg_score) ^ 2
     end
     local std_dev = math.sqrt(variance / total_sentences)
 
-    -- Use a more inclusive selection threshold: average minus half standard deviation
-    -- This captures more sentences while still filtering out very low-scoring ones
-    local selection_threshold = math.max(avg_score - (std_dev * 0.5), avg_score * 0.6)
+    -- Use a more inclusive selection threshold
+    local selection_threshold = math.max(
+        avg_score - (std_dev * CONFIG.SELECTION_THRESHOLD_FACTOR),
+        avg_score * CONFIG.ALTERNATIVE_THRESHOLD_FACTOR
+    )
 
-    -- Select sentences above the more inclusive threshold
+    -- Select sentences above the threshold
     local selected_sentences = {}
     for i = 1, total_sentences do
-        if p_vector[i] >= selection_threshold then
+        if score_vector[i] >= selection_threshold then
             table.insert(selected_sentences, sentences[i])
         end
     end
 
-    -- If still too few sentences, ensure we get at least 60-80% of sentences
-    if #selected_sentences < math.floor(total_sentences * 0.6) then
+    -- If too few sentences, ensure we get at least 60-80% of sentences
+    if #selected_sentences < math.floor(total_sentences * CONFIG.MIN_SELECTION_PERCENTAGE) then
         local sentence_scores = {}
         for i = 1, total_sentences do
-            table.insert(sentence_scores, {sentence = sentences[i], score = p_vector[i], index = i})
+            table.insert(sentence_scores, {
+                sentence = sentences[i],
+                score = score_vector[i],
+                index = i
+            })
         end
 
         -- Sort by score descending
         table.sort(sentence_scores, function(a, b) return a.score > b.score end)
 
-        -- Take top 60-80% of sentences (more inclusive than before)
+        -- Take top 60-80% of sentences
         local target_count = math.max(
-            math.floor(total_sentences * 0.6),  -- At least 60%
+            math.floor(total_sentences * CONFIG.MIN_SELECTION_PERCENTAGE),
             math.min(
-                math.floor(total_sentences * 0.8),  -- At most 80%
-                math.max(5, total_sentences)  -- But at least 5 sentences if available
+                math.floor(total_sentences * CONFIG.MAX_SELECTION_PERCENTAGE),
+                math.max(CONFIG.MIN_SENTENCES_TARGET, total_sentences)
             )
         )
 
@@ -323,6 +342,55 @@ function LexRank.rank_sentences(text, threshold, epsilon, language_code)
     end
 
     return selected_sentences
+end
+
+-- Main LexRank function
+function LexRank.rank_sentences(text, threshold, epsilon, language_code)
+    -- Initialize parameters with defaults
+    local params = initialize_parameters(threshold, epsilon, language_code)
+
+    if not text or text == "" then
+        return {}
+    end
+
+    -- Get language-specific module
+    local language_module = LexRankLanguages.get_language_module(params.language_code)
+
+    -- Tokenize sentences
+    local sentences = tokenize_sentences(text, language_module)
+    local total_sentences = #sentences
+
+    if total_sentences == 0 then
+        return {}
+    end
+
+    if total_sentences == 1 then
+        return {sentences[1]}
+    end
+
+    -- Performance optimization for very long texts
+    local sampled_sentences, _ = sample_large_text(sentences, CONFIG.MAX_SENTENCES_FOR_FULL_ANALYSIS)
+    sentences = sampled_sentences
+    total_sentences = #sentences
+
+    -- Tokenize words for each sentence
+    local sentences_words = {}
+    for i, sentence in ipairs(sentences) do
+        local words = tokenize_words(sentence, language_module)
+        sentences_words[i] = words
+    end
+
+    -- Build TF-IDF weighted similarity matrix
+    local similarity_matrix = build_similarity_matrix(sentences_words, total_sentences)
+
+    -- Apply threshold and normalize matrix
+    similarity_matrix = normalize_similarity_matrix(similarity_matrix, params.threshold)
+
+    -- Run PageRank power iteration
+    local score_vector = run_power_iteration(similarity_matrix, params.epsilon)
+
+    -- Select sentences based on scores
+    return select_sentences_by_score(sentences, score_vector)
 end
 
 return LexRank
