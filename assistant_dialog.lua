@@ -372,6 +372,10 @@ function AssistantDialog:show(highlightedText)
               -- Special case for dictionary prompt
               local showDictionaryDialog = require("assistant_dictdialog")
               showDictionaryDialog(self.assistant, highlightedText)
+            elseif tab.idx == "term_xray" then
+              -- Special case for term_xray prompt - use dictionary dialog with enhanced context
+              local showDictionaryDialog = require("assistant_dictdialog")
+              showDictionaryDialog(self.assistant, highlightedText, nil, "term_xray")
             elseif tab.idx == "quick_note" then
               -- Special case for quick note prompt
               if not self.assistant.quicknote then
