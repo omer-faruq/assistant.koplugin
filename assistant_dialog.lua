@@ -1,4 +1,7 @@
 local logger = require("logger")
+local HorizontalGroup = require("ui/widget/horizontalgroup")
+local HorizontalSpan = require("ui/widget/horizontalspan")
+local Size = require("ui/size")
 local InputDialog = require("ui/widget/inputdialog")
 local ChatGPTViewer = require("assistant_viewer")
 local UIManager = require("ui/uimanager")
@@ -287,6 +290,7 @@ function AssistantDialog:show(highlightedText)
   local button_rows = {}
   local prompt_buttons = {}
   local use_book_text_checkbox = CheckButton:new{
+    face = Font:getFace("xx_smallinfofont"),
     text = _("Use book text"), -- add spaces for indentation
     checked = false, -- default to false
     width = math.floor((Screen:getWidth() - 250) * 0.9), -- match input dialog content width
@@ -449,10 +453,13 @@ function AssistantDialog:show(highlightedText)
     close_callback = function () self:_close() end,
     dismiss_callback = function () self:_close() end
   }
-  
   -- Add checkbox above the input field
   local vgroup = self.input_dialog.dialog_frame[1]
-  table.insert(vgroup, 2, use_book_text_checkbox) -- insert after title_bar
+  table.insert(vgroup, 2, HorizontalGroup:new{
+    HorizontalSpan:new{ width = Size.padding.large },
+    use_book_text_checkbox,
+  }) -- insert after title_bar
+
   use_book_text_checkbox.parent = self.input_dialog -- set parent for proper UI updates
   UIManager:setDirty(self.input_dialog, "ui")
   

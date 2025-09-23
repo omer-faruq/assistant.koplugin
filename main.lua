@@ -118,6 +118,14 @@ function Assistant:onDispatcherRegisterActions()
     category = "none",
     event = "AskAIAnnotations",
     title = _("Highlight & Note Analysis"),
+    general = true
+  })
+
+  -- Register Annotations Analysis action (available for gesture binding)
+  Dispatcher:registerAction("ai_summary_using_annotations", {
+    category = "none",
+    event = "AskSummaryUsingAnnotations",
+    title = _("Summary Using Highlights & Notes"),
     general = true,
     separator = true
   })
@@ -126,156 +134,220 @@ end
 -- tricky hack: make our menu be the first under tools menu
 table.insert(require("ui/elements/reader_menu_order").tools, 1, "ai_assistant")
 function Assistant:addToMainMenu(menu_items)
-  menu_items.ai_assistant = {
-    text = _("AI Assistant"),
-    sorting_hint = "tools",
-    hold_callback = function()
-      self:_help_dialog()
-    end,
-    sub_item_table = {
-      {
-        separator = true,
-        text = _("Ask the AI a question"),
-        callback = function()
-          self:onAskAIQuestion()
+    menu_items.ai_assistant = {
+        text = _("AI Assistant"),
+        sorting_hint = "tools",
+        hold_callback = function ()
+          self:_help_dialog()
         end,
-        hold_callback = function()
-          UIManager:show(InfoMessage:new {
-            text = _("Enter a question to ask AI.")
-          })
-        end
-      },
-      {
-        text = _("Book Summary & Recs"),
-        callback = function()
-          self:onAskAIBookInfo()
-        end,
-        hold_callback = function()
-          UIManager:show(InfoMessage:new {
-            text = _("Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions.")
-          })
-        end
-      },
-      {
-        text = _("AI X-Ray"),
-        callback = function()
-          self:onAskAIXRay()
-        end,
-        hold_callback = function()
-          UIManager:show(InfoMessage:new {
-            text = _("\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion.")
-          })
-        end
-      },
-      {
-        text = _("AI Recaps"),
-        callback = function()
-          self:onAskAIRecap()
-        end,
-        hold_callback = function()
-          UIManager:show(InfoMessage:new {
-            text = _("A very brief, spoiler-free summary of the book up to current reading progress.")
-          })
-        end,
-      },
-      {
-        text = _("Highlight & Note Analysis"),
-        callback = function()
-          self:onAskAIAnnotations()
-        end,
-        hold_callback = function()
-          UIManager:show(InfoMessage:new {
-            text = _("Analysis of your highlights, notes, and notebook content from the book.")
-          })
-        end,
-      },
-      {
-        text = _("Summary Using Highlights & Notes"),
-        callback = function()
-          self:onAskAIFeature("summary_using_annotations")
-        end,
-        hold_callback = function()
-          UIManager:show(InfoMessage:new {
-            text = _("Summary of the book using your highlights and notes.")
-          })
-        end,
-        separator = true,
-      },
-      {
-        text = _("Take Quick Notes"),
-        callback = function()
-          self:onAskAIQuickNote()
-        end,
-        hold_callback = function()
-          UIManager:show(InfoMessage:new {
-            text = _("Take quick notes that will be saved to your notebook.")
-          })
-        end,
-      },
-      {
-        text = _("NoteBook (Saved AI Conversations)"),
-        callback = function()
-          local notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
-          UIManager:show(ConfirmBox:new {
-            icon = "appbar.pageview",
-            face = Font:getFace("smallinfofont"),
-            text = _("Notebook file: \n\n") .. notebookfile,
-            ok_text = _("View"),
-            ok_callback = function()
-              if not FrontendUtil.pathExists(notebookfile) then
-                UIManager:show(InfoMessage:new {
-                  text = T(_("File does not exist.\n\n%1"), notebookfile)
-                })
-                return
-              end
-              TextViewer.openFile(notebookfile)
+        sub_item_table = {
+          {
+            separator = true,
+            text = _("Ask the AI a question"),
+            callback = function ()
+              self:onAskAIQuestion()
             end,
-            other_buttons = { {
-              {
-                text = _("Delete"),
-                callback = function()
-                  UIManager:show(ConfirmBox:new {
-                    text = T(_("Delete file?\n%1\nThis operation is not reversible."), notebookfile),
-                    ok_text = _("Delete"),
-                    ok_callback = function()
-                      local ok, err = FrontendUtil.removeFile(notebookfile)
-                      if not ok then
-                        UIManager:show(InfoMessage:new { icon = "notice-warning", text = err })
-                      end
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("Enter a question to ask AI.")
+              })
+            end
+          },
+          {
+            text = _("Book Summary & Recs"),
+            callback = function ()
+              self:onAskAIBookInfo()
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions.")
+              })
+            end
+          },
+          {
+            text = _("AI X-Ray"),
+            callback = function ()
+              self:onAskAIXRay()
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion.")
+              })
+            end
+          },
+          {
+            text = _("AI Recaps"),
+            callback = function ()
+              self:onAskAIRecap()
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("A very brief, spoiler-free summary of the book up to current reading progress.")
+              })
+            end,
+          },
+          {
+            text = _("Highlight & Note Analysis"),
+            callback = function ()
+              self:onAskAIAnnotations()
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("Analysis of your highlights, notes, and notebook content from the book.")
+              })
+            end,
+          },
+          {
+            text = _("Summary Using Highlights & Notes"),
+            callback = function ()
+              self:onAskSummaryUsingAnnotations()
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("Summary of the book using your highlights and notes.")
+              })
+            end,
+          },
+          {
+            text = _("Custom Prompts"),
+            separator = true,
+            sub_item_table_func = function ()
+              return BookLevelCustomPrompts(self)
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("Includes user defined book level prompts from Config file")
+              })
+            end,
+          },
+          {
+            text = _("Take Quick Notes"),
+            callback = function ()
+              self:onAskAIQuickNote()
+            end,
+            hold_callback = function ()
+              UIManager:show(InfoMessage:new{
+                text = _("Take quick notes that will be saved to your notebook.")
+              })
+            end,
+          },
+          {
+            text = _("NoteBook (Saved AI Conversations)"),
+            callback = function ()
+              local notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
+              UIManager:show(ConfirmBox:new{
+                icon = "appbar.pageview",
+                face = Font:getFace("smallinfofont"),
+                text = _("Notebook file: \n\n") .. notebookfile,
+                ok_text = _("View"),
+                ok_callback = function()
+                  if not FrontendUtil.pathExists(notebookfile) then
+                    UIManager:show(InfoMessage:new{
+                      text = T(_("File does not exist.\n\n%1"), notebookfile)
+                    })
+                    return
+                  end
+                  TextViewer.openFile(notebookfile)
+                end,
+                other_buttons = {{
+                  {
+                    text = _("Delete"),
+                    callback = function ()
+                      UIManager:show(ConfirmBox:new{
+                        text = T(_("Delete file?\n%1\nThis operation is not reversible."), notebookfile),
+                        ok_text = _("Delete"),
+                        ok_callback = function ()
+                          local ok, err = FrontendUtil.removeFile(notebookfile)
+                          if not ok then
+                            UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
+                          end
+                        end
+                      })
                     end
-                  })
-                end
-              },
-              {
-                text = _("Edit"),
-                callback = function()
-                  UIManager:broadcastEvent(Event:new("ShowNotebookFile"))
-                end
-              },
-            } }
-          })
-        end,
-        separator = true,
-      },
-      {
-        text_func = function()
-          return T(_("AI Provider: %1"), self:getModelProvider())
-        end,
-        keep_menu_open = true,
-        callback = function(touchmenu_instance)
-          self:showSettings(function()
-            touchmenu_instance:updateItems()
+                  },
+                  {
+                    text = _("Edit"),
+                    callback = function ()
+                      UIManager:broadcastEvent(Event:new("ShowNotebookFile"))
+                    end
+                  },
+              }}
+              })
+            end,
+            separator = true,
+          },
+          {
+            text_func = function ()
+              return T(_("AI Provider: %1"), self:getModelProvider())
+            end,
+            keep_menu_open = true,
+            callback = function (touchmenu_instance)
+              self:showSettings(function ()
+                touchmenu_instance:updateItems()
+              end)
+            end,
+          },
+          {
+            text = _("AI Assistant Settings"),
+            sub_item_table_func = function ()
+              return SettingsDialog.genMenuSettings(self)
+            end
+          }
+        },
+    }
+end
+
+local function getDocumentInfo(document)
+  local DocSettings = require("docsettings")
+  local doc_settings = DocSettings:open(document.file)
+  local percent_finished = doc_settings:readSetting("percent_finished") or 0
+  local doc_props = doc_settings:child("doc_props")
+  local title = doc_props:readSetting("title") or document:getProps().title or "Unknown Title"
+  local authors = doc_props:readSetting("authors") or document:getProps().authors or "Unknown Author"
+  return {
+    title = title,
+    authors = authors,
+    percent_finished = percent_finished,
+  }
+end
+
+function BookLevelCustomPrompts(assistant)
+  local sub_item_table = {}
+
+  -- Read book_level_prompts from configuration
+  local book_level_prompts = CONFIGURATION and CONFIGURATION.features and CONFIGURATION.features.book_level_prompts or {}
+
+  for key, prompt_config in pairs(book_level_prompts) do
+    if prompt_config.visible == true and prompt_config.type == "feature" then
+      local button = {
+        text = prompt_config.text or key,
+        callback = function()
+          if not assistant:isConfigured() then return end
+          NetworkMgr:runWhenOnline(function()
+            local book = getDocumentInfo(assistant.ui.document)
+            local showFeatureDialog = require("assistant_featuredialog")
+            Trapper:wrap(function()
+              showFeatureDialog(assistant, prompt_config, book.title, book.authors, book.percent_finished)
+            end)
           end)
         end,
-      },
-      {
-        text = _("AI Assistant Settings"),
-        sub_item_table_func = function()
-          return SettingsDialog.genMenuSettings(self)
-        end
+        hold_callback = function()
+          UIManager:show(InfoMessage:new{
+            text = prompt_config.description or _("This is a custom prompt")
+          })
+        end,
       }
-    },
-  }
+      table.insert(sub_item_table, button)
+    end
+  end
+
+  if #sub_item_table == 0 then
+    UIManager:show(InfoMessage:new{
+      text = _("No custom prompts found. To create one, visit the wiki page on github.")
+    })
+    return
+  end
+  return sub_item_table
 end
 
 function Assistant:showSettings(close_callback)
@@ -694,29 +766,29 @@ function Assistant:onAskAIBookInfo()
   return true
 end
 
-function Assistant:onAskAIAnnotations()
-  if not self:isConfigured() then return end
-  NetworkMgr:runWhenOnline(function()
-    local book = getDocumentInfo(self.ui.document)
-    local showFeatureDialog = require("assistant_featuredialog")
-    Trapper:wrap(function()
-      showFeatureDialog(self, "annotations", book.title, book.authors, book.percent_finished)
+  function Assistant:onAskAIAnnotations()
+    if not self:isConfigured() then return end
+    NetworkMgr:runWhenOnline(function()
+      local book = getDocumentInfo(self.ui.document)
+      local showFeatureDialog = require("assistant_featuredialog")
+      Trapper:wrap(function()
+        showFeatureDialog(self, "annotations", book.title, book.authors, book.percent_finished)
+      end)
     end)
-  end)
-  return true
-end
+    return true
+  end
 
-function Assistant:onAskAIFeature(prompt_idx)
-  if not self:isConfigured() then return end
-  NetworkMgr:runWhenOnline(function()
-    local book = getDocumentInfo(self.ui.document)
-    local showFeatureDialog = require("assistant_featuredialog")
-    Trapper:wrap(function()
-      showFeatureDialog(self, prompt_idx, book.title, book.authors, book.percent_finished)
+  function Assistant:onAskSummaryUsingAnnotations()
+    if not self:isConfigured() then return end
+    NetworkMgr:runWhenOnline(function()
+      local book = getDocumentInfo(self.ui.document)
+      local showFeatureDialog = require("assistant_featuredialog")
+      Trapper:wrap(function()
+        showFeatureDialog(self, "summary_using_annotations", book.title, book.authors, book.percent_finished)
+      end)
     end)
-  end)
-  return true
-end
+    return true
+  end
 
 function Assistant:onAskAIQuickNote()
   if not self:isConfigured() then return end
