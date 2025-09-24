@@ -148,6 +148,7 @@ local CONFIGURATION = {
         -- each prompt shown as a button in the main dialog.
         -- The `order` determines the position in the main popup.
         -- The `show_on_main_popup` determines if the prompt is shown in the main popup
+        -- The `show_on_dictionary_popup` determines if the prompt is shown in the dictionary popup ( max 3 including the built-in ones)
         -- Set `visible = false` to hide the prompt from all popups.
         -- Available placeholders to use in the prompts: {user_input},{highlight},{title},{author},{language},{progress}
         prompts = {

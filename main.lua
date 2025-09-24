@@ -550,7 +550,7 @@ function Assistant:init()
     end
 
     --  set in runtime settings (by holding the prompt button)
-    local menukey = string.format("assistant_%02d_%s", prompt.order, idx)
+    local menukey = string.format("assistant_%02d_%s", prompt.order or 1000, idx)
     local settingkey = "showOnMain_" .. menukey
     if self.settings:has(settingkey) then
       return self.settings:isTrue(settingkey)
@@ -703,6 +703,42 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
           end)
       end,
     })
+  end
+
+  if self.settings:readSetting("dict_popup_show_custom_prompts", true) then
+    -- Collect custom prompts with show_on_dictionary_popup = true
+    local custom_prompts = {}
+    if CONFIGURATION and CONFIGURATION.features and CONFIGURATION.features.prompts then
+      for prompt_key, prompt_config in pairs(CONFIGURATION.features.prompts) do
+        if prompt_config.show_on_dictionary_popup == true and prompt_config.visible ~= false then
+          table.insert(custom_prompts, {
+            id = prompt_key,
+            config = prompt_config
+          })
+        end
+      end
+    end
+
+    -- Calculate how many custom prompts to add (max 3 total buttons)
+    local max_custom_to_add = math.max(0, 3 - #plugin_buttons)
+    local custom_to_add = math.min(#custom_prompts, max_custom_to_add)
+
+    -- Add custom prompts as buttons
+    for i = 1, custom_to_add do
+      local prompt = custom_prompts[i]
+      table.insert(plugin_buttons, {
+        id = "assistant_" .. prompt.id,
+        font_bold = true,
+        text = (prompt.config.text or prompt.id) .. " (AI)",
+        callback = function()
+            NetworkMgr:runWhenOnline(function()
+                Trapper:wrap(function()
+                  self.assistant_dialog:showCustomPrompt(dict_popup.word, prompt.id)
+                end)
+            end)
+        end,
+      })
+    end
   end
 
   if #plugin_buttons > 0 and #dict_buttons > 1 then
