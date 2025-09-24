@@ -162,6 +162,10 @@ local CONFIGURATION = {
 
         },
 
+        book_level_prompts = {    
+            -- for an example of a custom book-level prompt, see: https://github.com/omer-faruq/assistant.koplugin/wiki/configuration#5-book-level-custom-prompts
+        },    
+
         -- AI Recap configuration
         -- If you want to override the default prompts, you can uncomment and modify the following lines:
         -- recap_config = {

@@ -150,7 +150,7 @@ function Assistant:addToMainMenu(menu_items)
             end
           },
           {
-            text = _("Built-in Prompts"),
+            text = _("Book-Level Built-in Prompts"),
             sub_item_table = {
               {
                 text = _("Book Summary & Recs"),
@@ -210,7 +210,7 @@ function Assistant:addToMainMenu(menu_items)
             }
           },
           {
-            text = _("Custom Prompts"),
+            text = _("Book-Level Custom Prompts"),
             separator = true,
             sub_item_table_func = function ()
               return BookLevelCustomPrompts(self)
