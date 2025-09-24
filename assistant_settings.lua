@@ -212,8 +212,13 @@ function SettingsDialog:init()
     for key, tab in ffiutil.orderedPairs(self.CONFIGURATION.provider_settings) do
         if not (FrontendUtil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
             if #buttonrow < columns then
+                local model_name = FrontendUtil.tableGetValue(tab, "model")
+                local button_text = key
+                if columns == 1 and model_name and model_name ~= "" then
+                    button_text = string.format("%s (%s)", key, model_name)
+                end
                 table.insert(buttonrow, {
-                    text = columns == 1 and string.format("%s (%s)", key, FrontendUtil.tableGetValue(tab, "model")) or key,
+                    text = button_text,
                     provider = key, -- note: this `provider` field belongs to the RadioButton, not our AI Model provider.
                     checked = (key == self.assistant.querier.provider_name),
                 })
