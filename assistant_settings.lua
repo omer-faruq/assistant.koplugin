@@ -429,6 +429,14 @@ SettingsDialog.genMenuSettings = function (assistant)
                         assistant.updated = true
                     end
                 },
+                {
+                    text = _("Show Term X-Ray in Dictionary Popup"),
+                    checked_func = function () return assistant.settings:readSetting("dict_popup_show_term_xray", true) end,
+                    callback = function()
+                        assistant.settings:toggle("dict_popup_show_term_xray")
+                        assistant.updated = true
+                    end
+                },
             }
         },
         {

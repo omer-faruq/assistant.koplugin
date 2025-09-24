@@ -17,6 +17,111 @@ local T = require("ffi/util").template
 
 -- prompts attributes can be overridden in the configuration file.
 local custom_prompts = {
+    term_xray = {
+        text = _("Term X-Ray"),
+        order = -20, -- negative number to not show on additional questions dialog
+        desc = _(
+            "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."),
+        system_prompt =
+        "You are a literary analyst who creates clear, encyclopedic descriptions of narrative elements. Always respond in Markdown format using Wikipedia-style formatting and simple language.",
+        user_prompt = [[
+
+## Your Role
+
+You are an expert literary reference guide creating Wikipedia-style entries that explain narrative elements in clear, accessible language.
+
+**Before providing your analysis, please think through:**
+- What can be observed or factually stated about this element?
+- What key characteristics and significance can be documented?
+- How does the surrounding context provide concrete information?
+
+**Task:** Create a Wikipedia-style entry for the term "{highlight}" from "{title}" by {author}, explaining this element clearly and factually.
+
+## Analysis Structure
+Use Wikipedia-style headers and formatting:
+
+### Description and Characteristics
+[Physical characteristics, key traits, significance, or notable features stated clearly and factually]
+
+### Role in Narrative
+[How this element functions within the story context]
+
+## Formatting Requirements
+Most importantly, **Respond in this language:** {language}
+
+**Structure & Organization:**
+- Use hierarchical Wikipedia-style headers (###, ####) with consistent levels
+- Organize content into two logical sections: Description & Characteristics and Role in Narrative
+- Use descriptive, sentence-case section headers that preview the content
+
+**Writing Style:**
+- Write in simple, clear, encyclopedic language accessible to general readers
+- Maintain neutral, factual tone throughout
+- Avoid overly technical jargon without explanation
+- Use present tense for describing fictional elements
+- **Write as if describing real-world facts—do not reference "the text," "the narrative," "the book," or "the story"**
+- **Treat all information as factual reality within the fictional world**
+
+**Content Formatting:**
+- Use bullet points sparingly—only for genuine lists of characteristics or features
+- Write primarily in flowing prose paragraphs rather than fragmented bullet lists
+- Group related concepts within paragraphs rather than isolating them as bullets
+- Ensure each paragraph has a clear focus and transitions smoothly
+
+**Visual Organization:**
+- Maintain consistent spacing and indentation
+- Use bold text sparingly for emphasis on key terms only
+- Ensure clean, scannable layout with clear section breaks
+- Balance white space for readability
+
+**Content Focus:**
+- Prioritize factual, observable information over speculation
+- Include thematic significance and narrative function
+- Balance technical details with broader context and accessibility
+
+**Length Requirements:**
+- Target 300-375 words maximum for 90-second reading time
+- Prioritize essential defining characteristics over comprehensive detail
+- Focus on core function and primary significance
+
+## User Guidance
+{user_input}
+
+## Context
+
+{context}
+]],
+        user_prompt_second_attempt = [[
+Given the highlighted word or phrase "{highlight}" from "{title}" by {author}, you are a literary analyst who provides concise, insightful explanations of terms within their narrative context.
+
+**Analysis Instructions:**
+Identify the element type (character, location, concept, object, cultural element, technical term, vocabulary) and provide a focused explanation that covers:
+- Essential meaning and nature
+- Contextual significance from surrounding passages
+- Role in the broader narrative
+
+**Formatting Requirements:**
+- Use clear section headers
+- Write in accessible prose
+- Maximum 100-150 words total
+- Support claims with specific textual evidence
+- Focus only on information available in the provided context
+
+User guidance: {user_input}
+
+Context to consider:
+
+{context}
+            ]],
+        user_prompt_original = [[
+Given the highlighted word or phrase "{highlight}" from the book "{title}" by {author} and the provided text context below, create a precise, nuanced explanation that captures both the literal meaning and the specific contextual significance within this particular work. Tailor your response based on the type of element being defined: for characters, include physical descriptions, personality traits, relationships, and their impact on the story's progression; for places, describe the physical setting, cultural atmosphere, economic conditions, power structures, and symbolic significance; for concepts or themes, explain the abstract idea and its manifestation within the narrative; for historical references, provide background context and relevance to the work; for technical terms, define the concept and its application within the text; for symbolic objects, describe both literal appearance and metaphorical meaning; and for unfamiliar vocabulary, explain the definition while considering any specialized usage by the author.
+Provide a clear, comprehensive explanation in 2-4 sentences that addresses: (1) the basic meaning or nature of the element, (2) how the surrounding context shapes or reveals its significance, and (3) its broader role or importance within the work. Consider any additional user guidance provided in "{user_input}" to tailor your explanation to their specific needs, reading level, or areas of interest. If the element has multiple layers of meaning or interpretation, acknowledge this complexity while identifying the most relevant aspects based on the surrounding text and the work's overall themes.
+
+Context to consider:
+
+{context}
+]],
+    },
     dictionary = {
         order = -10, -- negative number indicates a stub prompt
         text = _("Dictionary"),
@@ -192,111 +297,6 @@ Please act as a Wikipedia page for the following topic, starting with an introdu
 
 {highlight}]],
     },
-    term_xray = {
-        text = _("Term X-Ray"),
-        order = 110,
-        desc = _(
-            "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."),
-        system_prompt =
-        "You are a literary analyst who creates clear, encyclopedic descriptions of narrative elements. Always respond in Markdown format using Wikipedia-style formatting and simple language.",
-        user_prompt = [[
-
-## Your Role
-
-You are an expert literary reference guide creating Wikipedia-style entries that explain narrative elements in clear, accessible language.
-
-**Before providing your analysis, please think through:**
-- What can be observed or factually stated about this element?
-- What key characteristics and significance can be documented?
-- How does the surrounding context provide concrete information?
-
-**Task:** Create a Wikipedia-style entry for the term "{highlight}" from "{title}" by {author}, explaining this element clearly and factually.
-
-## Analysis Structure
-Use Wikipedia-style headers and formatting:
-
-### Description and Characteristics
-[Physical characteristics, key traits, significance, or notable features stated clearly and factually]
-
-### Role in Narrative
-[How this element functions within the story context]
-
-## Formatting Requirements
-Most importantly, **Respond in this language:** {language}
-
-**Structure & Organization:**
-- Use hierarchical Wikipedia-style headers (###, ####) with consistent levels
-- Organize content into two logical sections: Description & Characteristics and Role in Narrative
-- Use descriptive, sentence-case section headers that preview the content
-
-**Writing Style:**
-- Write in simple, clear, encyclopedic language accessible to general readers
-- Maintain neutral, factual tone throughout
-- Avoid overly technical jargon without explanation
-- Use present tense for describing fictional elements
-- **Write as if describing real-world facts—do not reference "the text," "the narrative," "the book," or "the story"**
-- **Treat all information as factual reality within the fictional world**
-
-**Content Formatting:**
-- Use bullet points sparingly—only for genuine lists of characteristics or features
-- Write primarily in flowing prose paragraphs rather than fragmented bullet lists
-- Group related concepts within paragraphs rather than isolating them as bullets
-- Ensure each paragraph has a clear focus and transitions smoothly
-
-**Visual Organization:**
-- Maintain consistent spacing and indentation
-- Use bold text sparingly for emphasis on key terms only
-- Ensure clean, scannable layout with clear section breaks
-- Balance white space for readability
-
-**Content Focus:**
-- Prioritize factual, observable information over speculation
-- Include thematic significance and narrative function
-- Balance technical details with broader context and accessibility
-
-**Length Requirements:**
-- Target 300-375 words maximum for 90-second reading time
-- Prioritize essential defining characteristics over comprehensive detail
-- Focus on core function and primary significance
-
-## User Guidance
-{user_input}
-
-## Context
-
-{context}
-]],
-        user_prompt_second_attempt = [[
-Given the highlighted word or phrase "{highlight}" from "{title}" by {author}, you are a literary analyst who provides concise, insightful explanations of terms within their narrative context.
-
-**Analysis Instructions:**
-Identify the element type (character, location, concept, object, cultural element, technical term, vocabulary) and provide a focused explanation that covers:
-- Essential meaning and nature
-- Contextual significance from surrounding passages
-- Role in the broader narrative
-
-**Formatting Requirements:**
-- Use clear section headers
-- Write in accessible prose
-- Maximum 100-150 words total
-- Support claims with specific textual evidence
-- Focus only on information available in the provided context
-
-User guidance: {user_input}
-
-Context to consider:
-
-{context}
-            ]],
-        user_prompt_original = [[
-Given the highlighted word or phrase "{highlight}" from the book "{title}" by {author} and the provided text context below, create a precise, nuanced explanation that captures both the literal meaning and the specific contextual significance within this particular work. Tailor your response based on the type of element being defined: for characters, include physical descriptions, personality traits, relationships, and their impact on the story's progression; for places, describe the physical setting, cultural atmosphere, economic conditions, power structures, and symbolic significance; for concepts or themes, explain the abstract idea and its manifestation within the narrative; for historical references, provide background context and relevance to the work; for technical terms, define the concept and its application within the text; for symbolic objects, describe both literal appearance and metaphorical meaning; and for unfamiliar vocabulary, explain the definition while considering any specialized usage by the author.
-Provide a clear, comprehensive explanation in 2-4 sentences that addresses: (1) the basic meaning or nature of the element, (2) how the surrounding context shapes or reveals its significance, and (3) its broader role or importance within the work. Consider any additional user guidance provided in "{user_input}" to tailor your explanation to their specific needs, reading level, or areas of interest. If the element has multiple layers of meaning or interpretation, acknowledge this complexity while identifying the most relevant aspects based on the surrounding text and the work's overall themes.
-
-Context to consider:
-
-{context}
-]],
-    }
 }
 
 

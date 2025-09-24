@@ -675,6 +675,21 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
     })
   end
 
+  if self.settings:readSetting("dict_popup_show_term_xray", true) then
+    table.insert(plugin_buttons, {
+      id = "assistant_term_xray",
+      font_bold = true,
+      text = _("Term X-Ray") .. " (AI)",
+      callback = function()
+          NetworkMgr:runWhenOnline(function()
+              Trapper:wrap(function()
+                showDictionaryDialog(self, dict_popup.word, nil, "term_xray")
+              end)
+          end)
+      end,
+    })
+  end
+
   if self.settings:readSetting("dict_popup_show_dictionary", true) then
     table.insert(plugin_buttons, {
       id = "assistant_dictionary",
