@@ -18,7 +18,8 @@ local function normalize_language_code(lang_code)
         en = { "english", "en", "en_us", "en_gb", "en-us", "en-gb" },
         es = { "spanish", "español", "es", "es_es", "es_mx", "es_ar", "es_co", "es-es", "es-mx" },
         fr = { "french", "français", "francais", "fr", "fr_fr", "fr_ca", "fr_be", "fr_ch", "fr-fr", "fr-ca" },
-        de = { "german", "deutsch", "de", "de_de", "de_at", "de_ch", "de-de", "de-at" }
+        de = { "german", "deutsch", "de", "de_de", "de_at", "de_ch", "de-de", "de-at" },
+        tr = { "turkish", "türkçe", "turkce", "tr", "tr_tr", "tr-tr" }
     }
 
     -- Build the lookup table from the mappings
@@ -208,6 +209,41 @@ local GermanLanguage = {
     end
 }
 
+-- Turkish language module
+local TurkishLanguage = {
+    stop_words = {
+        "acaba", "acep", "acıkça", "acıkçası", "adeta", "ama", "amma", "anca", "ancak", "aslında",
+        "az", "bana", "bazen", "bazı", "belki", "ben", "beni", "beriki", "bile", "biri",
+        "birileri", "birisi", "birkaç", "birşey", "biz", "bizim", "bizimki", "bu", "buna", "bunda",
+        "bundan", "bunlar", "bunu", "bunun", "burası", "cümlesi", "çünkü", "çoğu", "çok", "da",
+        "daha", "dahi", "de", "defa", "değil", "denli", "diye", "düşünce", "eğer", "elbette",
+        "en", "fakat", "gerek", "gibi", "gibisinden", "hem", "hep", "hepsi", "her", "hiç",
+        "için", "ile", "ilen", "ise", "işte", "kadar", "kah", "kez", "ki", "kim", "kimi",
+        "kimisi", "kimse", "lakin", "madem", "mademki", "mamafih", "meğer", "meğerse", "mu", "mü",
+        "nasıl", "neden", "nedeniyle", "nerde", "nerede", "nereye", "niçin", "niye", "o", "onca",
+        "ona", "onda", "ondan", "onlar", "onu", "onun", "oysa", "oysaki", "pek", "peki",
+        "rağmen", "sadece", "sanki", "sen", "siz", "sonra", "şayet", "şey", "şöyle", "şu",
+        "tam", "tüm", "ve", "veya", "veyahut", "ya", "yani", "yok", "yoksa", "zaten", "zira"
+    },
+    sentence_delimiters = { ".", "!", "?", ";" },
+    min_sentence_length = 10,
+    min_word_length = 2,
+
+    tokenize_words = function(self, sentence)
+        if not sentence then
+            return {}
+        end
+        local words = {}
+        for word in sentence:gmatch("[%w%%çğıöşüÇĞİÖŞÜ]+") do
+            local clean_word = word:lower()
+            if #clean_word >= self.min_word_length and not self.stop_words_set[clean_word] then
+                table.insert(words, clean_word)
+            end
+        end
+        return words
+    end
+}
+
 -- Convert stop words arrays to hash sets for O(1) lookup
 local function prepare_language_module(module)
     if not module.stop_words_set then
@@ -224,7 +260,8 @@ local language_registry = {
     ["en"] = EnglishLanguage,
     ["es"] = SpanishLanguage,
     ["fr"] = FrenchLanguage,
-    ["de"] = GermanLanguage
+    ["de"] = GermanLanguage,
+    ["tr"] = TurkishLanguage
 }
 
 -- Apply stemming patterns to a word for fuzzy matching

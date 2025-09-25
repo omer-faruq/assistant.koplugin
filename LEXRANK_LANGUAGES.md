@@ -8,6 +8,7 @@ The LexRank implementation supports multiple languages for text analysis and sen
 - **Spanish** (`es`) - Full support with Spanish-specific tokenization
 - **French** (`fr`) - Full support with accented character handling
 - **German** (`de`) - Full support with umlauts and ß character
+- **Turkish** (`tr`) - Full support with Turkish-specific tokenization
 
 ## Language Detection
 
