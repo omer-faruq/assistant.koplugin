@@ -467,9 +467,8 @@ Now begin the analysis with the provided book_text and highlights.]],
             _("Word Origin"))
     },
     suggestions_prompt = T([[
-At the end of your response, generate 2-3 questions in {language} language that the user might find interesting based on your answer.
-Display them as a **Markdown unordered list** with this exact format:
-
+At the end of your response, first generate 2-3 plain English questions based on your answer. Critically, these questions **must not contain any quotation marks and parentheses, or any other punctuation whatsoever**. Only use letters and spaces.
+Then, display these questions as hyperlinks in a **Markdown unordered list** using the following exact format:
 ```
 ---
 __%1__
@@ -477,24 +476,6 @@ __%1__
 - [Question 1](#q:Question 1)
 - [Question 2](#q:Question 2)
 ```
-
-**Critical rules to avoid Markdown parsing errors:**  
-1. **Correct symbols only:**  
-   - **MUST** use English parentheses `()` strictly required for markdown  
-   - **WRONG (non-ASCII symbols):** `（）`  
-   - **WRONG (other variants):** `［］` or `【】`  
-   
-2. **Strict link format:** `[TEXT](#q:TEXT)` with:  
-   - Colons **required** after `#q:`  
-   - Identical text inside `[]` and `()`  
-   - **ZERO tolerance for symbol variants** (e.g. `（）` will break parsing)
-   - Do not use the quotation mark `"` or `"`
-   
-3. **Double-check mechanism:**  
-   - Use English keyboard to input symbols  
-   - Verify parentheses at **both link parts**:  
-     - Example ✅: `[Topic A](#q:Topic A)`  
-     - Counterexample 🚫: `[Topic A](#q:Topic A）`  
 ]], _("You may find these topics interesting:")),
 }
 
