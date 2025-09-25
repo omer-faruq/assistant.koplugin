@@ -467,7 +467,7 @@ Now begin the analysis with the provided book_text and highlights.]],
             _("Word Origin"))
     },
     suggestions_prompt = T([[
-At the end of your response, first generate 2-3 plain English questions based on your answer. Critically, these questions **must not contain any quotation marks and parentheses, or any other punctuation whatsoever**. Only use letters and spaces.
+At the end of your response, first generate 2-3 questions in {language} language based on your answer. Critically, these questions **must not contain any quotation marks and parentheses, or any other punctuation whatsoever**. Only use letters and spaces.
 Then, display these questions as hyperlinks in a **Markdown unordered list** using the following exact format:
 ```
 ---
