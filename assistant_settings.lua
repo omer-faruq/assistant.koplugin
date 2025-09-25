@@ -24,6 +24,7 @@ local Size = require("ui/size")
 local UIManager = require("ui/uimanager")
 local VerticalGroup = require("ui/widget/verticalgroup")
 local VerticalSpan = require("ui/widget/verticalspan")
+local ConfirmBox = require("ui/widget/confirmbox")
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local Screen = require("device").screen
@@ -482,6 +483,23 @@ SettingsDialog.genMenuSettings = function (assistant)
             callback = function()
                 assistant.settings:toggle("use_book_text_for_analysis")
                 assistant.updated = true
+            end
+        },
+        {
+            text = _("Purge the settings"),
+            callback = function()
+                UIManager:show(ConfirmBox:new{
+                    text = _([[Are you sure to purge the assistant plugin settings? 
+This resets the assistant plugin to the status the first time you installed it.
+
+configuration.lua is safe, only the settings are purged.]]),
+                    ok_text = _("Purge"),
+                    ok_callback = function()
+                        assistant.settings:reset({})
+                        assistant.settings:flush()
+                        UIManager:askForRestart()
+                    end
+                })
             end
         },
     }
