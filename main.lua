@@ -212,7 +212,7 @@ function Assistant:addToMainMenu(menu_items)
           {
             text = _("Book-Level Custom Prompts"),
             separator = true,
-            enabled = FrontendUtil.tableGetValue(CONFIGURATION, "features", "book_level_prompts") ~= nil,
+            enabled = FrontendUtil.tableGetValue(CONFIGURATION, "features", "book_level_prompts") and (next(FrontendUtil.tableGetValue(CONFIGURATION, "features", "book_level_prompts")) ~= nil),
             sub_item_table_func = function ()
               return BookLevelCustomPrompts(self)
             end,
@@ -345,7 +345,7 @@ function BookLevelCustomPrompts(assistant)
 
   if #sub_item_table == 0 then
     UIManager:show(InfoMessage:new{
-      text = _("No custom prompts found. To create one, visit the wiki page on github.")
+      text = _("No active custom prompt found. For details, visit the 'Configuration' wiki page on github.")
     })
     return
   end
