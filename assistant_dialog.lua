@@ -289,12 +289,7 @@ function AssistantDialog:show(highlightedText)
   -- Create button rows (3 buttons per row)
   local button_rows = {}
   local prompt_buttons = {}
-  local use_book_text_checkbox = CheckButton:new{
-    face = Font:getFace("xx_smallinfofont"),
-    text = _("Use book text"), -- add spaces for indentation
-    checked = false, -- default to false
-    width = math.floor((Screen:getWidth() - 250) * 0.9), -- match input dialog content width
-  }
+  local use_book_text_checkbox -- ref to the CheckButton widget
   local first_row = {
     {
       text = _("Cancel"),
@@ -453,19 +448,24 @@ function AssistantDialog:show(highlightedText)
     close_callback = function () self:_close() end,
     dismiss_callback = function () self:_close() end
   }
-  -- Add checkbox above the input field
+
+  -- Add checkbox below the input field
+  use_book_text_checkbox = CheckButton:new{
+    face = Font:getFace("xx_smallinfofont"),
+    text = _("Use book text as context"),
+    parent = self.input_dialog,
+  }
   local vgroup = self.input_dialog.dialog_frame[1]
   table.insert(vgroup, 2, HorizontalGroup:new{
     HorizontalSpan:new{ width = Size.padding.large },
     use_book_text_checkbox,
-  }) -- insert after title_bar
-
-  use_book_text_checkbox.parent = self.input_dialog -- set parent for proper UI updates
-  UIManager:setDirty(self.input_dialog, "ui")
+  })
   
   --  adds a close button to the top right
   self.input_dialog.title_bar.close_callback = function() self:_close() end
   self.input_dialog.title_bar:init()
+
+  -- Show the dialog
   UIManager:show(self.input_dialog)
 end
 
