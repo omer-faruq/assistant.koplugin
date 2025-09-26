@@ -234,7 +234,7 @@ function Assistant:addToMainMenu(menu_items)
             end,
           },
           {
-            text = _("NoteBook (Saved AI Conversations)"),
+            text = _("NoteBook (AI Conversation Log)"),
             callback = function ()
               local notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
               UIManager:show(ConfirmBox:new{

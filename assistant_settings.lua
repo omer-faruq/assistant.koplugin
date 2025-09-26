@@ -392,9 +392,11 @@ SettingsDialog.genMenuSettings = function (assistant)
             }
         },
         {
+            -- @translators: functional overriding
             text = _("KOReader Tweaks & Overrides"),
             sub_item_table = {
                 {
+                    -- @translators: 'Translate' is a built-in function
                     text = _("Use AI Assistant for 'Translate'"),
                     checked_func = function () return assistant.settings:readSetting("ai_translate_override", false) end,
                     callback = function()
