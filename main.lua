@@ -676,7 +676,7 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
     })
   end
 
-  if self.settings:readSetting("dict_popup_show_term_xray", true) then
+  if self.settings:readSetting("dict_popup_show_term_xray", false) then
     table.insert(plugin_buttons, {
       id = "assistant_term_xray",
       font_bold = true,
@@ -706,7 +706,7 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
     })
   end
 
-  if self.settings:readSetting("dict_popup_show_custom_prompts", true) then
+  if self.settings:readSetting("dict_popup_show_custom_prompts", false) then
     -- Collect custom prompts with show_on_dictionary_popup = true
     local custom_prompts = {}
     if CONFIGURATION and CONFIGURATION.features and CONFIGURATION.features.prompts then

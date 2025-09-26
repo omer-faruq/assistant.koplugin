@@ -439,7 +439,7 @@ SettingsDialog.genMenuSettings = function (assistant)
                 },
                 {
                     text = _("Show Term X-Ray(AI) in Dictionary Popup"),
-                    checked_func = function () return assistant.settings:readSetting("dict_popup_show_term_xray", true) end,
+                    checked_func = function () return assistant.settings:readSetting("dict_popup_show_term_xray", false) end,
                     callback = function()
                         assistant.settings:toggle("dict_popup_show_term_xray")
                         assistant.updated = true
@@ -447,7 +447,7 @@ SettingsDialog.genMenuSettings = function (assistant)
                 },
                 {
                     text = _("Show Custom Prompts in Dictionary Popup"),
-                    checked_func = function () return assistant.settings:readSetting("dict_popup_show_custom_prompts", true) end,
+                    checked_func = function () return assistant.settings:readSetting("dict_popup_show_custom_prompts", false) end,
                     callback = function()
                         assistant.settings:toggle("dict_popup_show_custom_prompts")
                         assistant.updated = true
