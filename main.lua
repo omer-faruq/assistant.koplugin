@@ -211,8 +211,7 @@ function Assistant:addToMainMenu(menu_items)
           },
           {
             text = _("Book-Level Custom Prompts"),
-            separator = true,
-            enabled = FrontendUtil.tableGetValue(CONFIGURATION, "features", "book_level_prompts") and (next(FrontendUtil.tableGetValue(CONFIGURATION, "features", "book_level_prompts")) ~= nil),
+            enabled = not not FrontendUtil.tableGetValue(CONFIGURATION, "features", "book_level_prompts"),
             sub_item_table_func = function ()
               return BookLevelCustomPrompts(self)
             end,
@@ -221,6 +220,7 @@ function Assistant:addToMainMenu(menu_items)
                 text = _("Includes user defined book level prompts from Config file")
               })
             end,
+            separator = true,
           },
           {
             text = _("Take Quick Notes"),
@@ -319,7 +319,7 @@ function BookLevelCustomPrompts(assistant)
   -- Read book_level_prompts from configuration
   local book_level_prompts = FrontendUtil.tableGetValue(CONFIGURATION, "features", "book_level_prompts") or {}
 
-  for key, prompt_config in pairs(book_level_prompts) do
+  for key, prompt_config in ffiutil.orderedPairs(book_level_prompts) do
     if prompt_config.visible == true and prompt_config.type == "feature" then
       local button = {
         text = prompt_config.text or key,
