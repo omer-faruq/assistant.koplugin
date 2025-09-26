@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-17 15:17+0800\n"
+        "POT-Creation-Date: 2025-09-26 10:22+0800\n"
         "PO-Revision-Date: 2025-08-22 15:23+0000\n"
         "Last-Translator: GPT-4o 2025-08-22\n"
         "Language-Team: GPT-4o <gpt-4o@example.com>\n"
@@ -16,7 +16,7 @@ msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:396 ../main.lua:119 ../main.lua:370
+#: ../_meta.lua:4 ../assistant_dialog.lua:435 ../main.lua:135 ../main.lua:477
 msgid   "AI Assistant"
 msgstr  "ผู้ช่วย AI"
 
@@ -24,231 +24,275 @@ msgstr  "ผู้ช่วย AI"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 ยกระดับ KOReader ด้วย AI"
 
-#: ../assistant_dialog.lua:92
+#: ../assistant_dialog.lua:103
 msgid   "(Empty message)"
 msgstr  "(ข้อความว่าง)"
 
-#: ../assistant_dialog.lua:96
+#: ../assistant_dialog.lua:114
 msgid   "(No response)"
 msgstr  "(ไม่มีคำตอบ)"
 
-#: ../assistant_dialog.lua:127 ../assistant_quicknote.lua:202
-#: ../assistant_viewer.lua:574
+#: ../assistant_dialog.lua:145 ../assistant_quicknote.lua:99
+#: ../assistant_viewer.lua:569
 msgid   "Highlighted text:"
 msgstr  "ข้อความที่ไฮไลต์:"
 
-#: ../assistant_dialog.lua:276 ../assistant_dictdialog.lua:36
-#: ../assistant_quicknote.lua:38 ../assistant_settings.lua:89
-#: ../assistant_viewer.lua:675
+#: ../assistant_dialog.lua:295 ../assistant_dictdialog.lua:120
+#: ../assistant_quicknote.lua:39 ../assistant_settings.lua:90
+#: ../assistant_viewer.lua:671
 msgid   "Cancel"
 msgstr  "ยกเลิก"
 
-#: ../assistant_dialog.lua:283 ../assistant_viewer.lua:685
+#: ../assistant_dialog.lua:302 ../assistant_viewer.lua:681
 msgid   "Ask"
 msgstr  "ถาม"
 
-#: ../assistant_dialog.lua:289 ../assistant_viewer.lua:691
+#: ../assistant_dialog.lua:315 ../assistant_viewer.lua:687
 msgid   "Enter a question before proceeding."
 msgstr  "กรุณาใส่คำถามก่อน"
 
-#: ../assistant_dialog.lua:360
+#: ../assistant_dialog.lua:399
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "เพิ่มปุ่มนี้ในเมนูไฮไลต์หรือไม่?"
 
-#: ../assistant_dialog.lua:361
+#: ../assistant_dialog.lua:400
 msgid   "Add"
 msgstr  "เพิ่ม"
 
-#: ../assistant_dialog.lua:388
+#: ../assistant_dialog.lua:427
 msgid   "Ask a question about the highlighted text"
 msgstr  "ถามเกี่ยวกับข้อความที่ไฮไลต์"
 
-#: ../assistant_dialog.lua:389
+#: ../assistant_dialog.lua:428
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "ถามเกี่ยวกับหนังสือเล่มนี้:\n"
         "%s โดย %s"
 
-#: ../assistant_dialog.lua:392
+#: ../assistant_dialog.lua:431
 msgid   "Type your question here..."
 msgstr  "พิมพ์คำถามที่นี่..."
 
-#: ../assistant_dialog.lua:393
+#: ../assistant_dialog.lua:432
 msgid   "Ask anything about this book..."
 msgstr  "ถามอะไรก็ได้เกี่ยวกับหนังสือ..."
 
-#: ../assistant_dialog.lua:464
+#: ../assistant_dialog.lua:455
+msgid   "Use book text as context"
+msgstr  "ใช้ข้อความในหนังสือเป็นบริบท"
+
+#: ../assistant_dialog.lua:517
 msgid   "Error: No response received"
 msgstr  "ข้อผิดพลาด: ไม่ได้รับคำตอบ"
 
-#: ../assistant_dictdialog.lua:30
+#: ../assistant_dictdialog.lua:114
 msgid   "AI Dictionary"
 msgstr  "พจนานุกรม AI"
 
-#: ../assistant_dictdialog.lua:31
+#: ../assistant_dictdialog.lua:115
 msgid   "Enter a word to look up..."
 msgstr  "ใส่คำที่ต้องการค้นหา..."
 
-#: ../assistant_dictdialog.lua:42
+#: ../assistant_dictdialog.lua:126
 msgid   "Look Up"
 msgstr  "ค้นหา"
 
-#: ../assistant_dictdialog.lua:177 ../assistant_prompts.lua:22 ../main.lua:572
+#: ../assistant_dictdialog.lua:291 ../assistant_prompts.lua:21 ../main.lua:683
+msgid   "Term X-Ray"
+msgstr  "เอกซ์เรย์คำ"
+
+#: ../assistant_dictdialog.lua:292
+msgid   "Loading Term X-Ray ..."
+msgstr  "กำลังโหลดเอกซ์เรย์คำ..."
+
+#: ../assistant_dictdialog.lua:308 ../assistant_prompts.lua:97 ../main.lua:697
 msgid   "Dictionary"
 msgstr  "พจนานุกรม"
 
-#: ../assistant_featuredialog.lua:33
+#: ../assistant_dictdialog.lua:309
+msgid   "Loading AI Dictionary ..."
+msgstr  "กำลังโหลดพจนานุกรม AI..."
+
+#: ../assistant_featuredialog.lua:38
+msgid   "Custom Prompt"
+msgstr  "ข้อความแนะนำแบบกำหนดเอง"
+
+#: ../assistant_featuredialog.lua:39
+msgid   "Loading..."
+msgstr  "กำลังโหลด..."
+
+#: ../assistant_featuredialog.lua:59
 msgid   "Recap"
 msgstr  "สรุป"
 
-#: ../assistant_featuredialog.lua:34
+#: ../assistant_featuredialog.lua:60
 msgid   "Loading Recap..."
 msgstr  "กำลังโหลดสรุป..."
 
-#: ../assistant_featuredialog.lua:39
+#: ../assistant_featuredialog.lua:65
 msgid   "X‑Ray"
 msgstr  "เอกซ์เรย์"
 
-#: ../assistant_featuredialog.lua:40
+#: ../assistant_featuredialog.lua:66
 msgid   "Loading X-Ray..."
 msgstr  "กำลังโหลด X-Ray..."
 
-#: ../assistant_featuredialog.lua:45
+#: ../assistant_featuredialog.lua:71
 msgid   "Book Information"
 msgstr  "ข้อมูลหนังสือ"
 
-#: ../assistant_featuredialog.lua:46
+#: ../assistant_featuredialog.lua:72
 msgid   "Loading Book Information..."
 msgstr  "กำลังโหลดข้อมูลหนังสือ..."
 
-#: ../assistant_featuredialog.lua:57
+#: ../assistant_featuredialog.lua:77 ../main.lua:117 ../main.lua:189
+msgid   "Highlight & Note Analysis"
+msgstr  "วิเคราะห์ไฮไลต์และโน้ต"
+
+#: ../assistant_featuredialog.lua:78
+msgid   "Loading Highlight & Note Analysis..."
+msgstr  "กำลังโหลดการวิเคราะห์ไฮไลต์และโน้ต..."
+
+#: ../assistant_featuredialog.lua:83 ../main.lua:125 ../main.lua:200
+msgid   "Summary Using Highlights & Notes"
+msgstr  "สรุปโดยใช้ไฮไลต์และโน้ต"
+
+#: ../assistant_featuredialog.lua:84
+msgid   "Loading Summary Using Highlights & Notes..."
+msgstr  "กำลังโหลดสรุปโดยใช้ไฮไลต์และโน้ต..."
+
+#: ../assistant_featuredialog.lua:95
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "ไม่รู้จักฟีเจอร์: %s"
 
-#: ../assistant_prompts.lua:23
+#: ../assistant_prompts.lua:24
+msgid   "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
+msgstr  "ข้อความแนะนำนี้สร้างระบบโครงสร้างสำหรับสร้างคำจำกัดความที่ตระหนักในบริบทของคำหรือวลีจากวรรณกรรม โดยวิเคราะห์คำที่ไฮไลต์ในบริบทข้อความรอบข้าง เพื่อให้คำอธิบายเชิงละเอียดที่ครอบคลุมทั้งความหมายตามตัวอักษรและความสำคัญในบริบท"
+
+#: ../assistant_prompts.lua:98
 msgid   "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr  "ใช้เป็นพจนานุกรมสำหรับข้อความที่ไฮไลต์"
 
-#: ../assistant_prompts.lua:29 ../assistant_quicknote.lua:204
+#: ../assistant_prompts.lua:104 ../assistant_quicknote.lua:101
 msgid   "Quick Note"
 msgstr  "บันทึกด่วน"
 
-#: ../assistant_prompts.lua:30
+#: ../assistant_prompts.lua:105
 msgid   "This button creates a quick note with highlighted text."
 msgstr  "ปุ่มนี้สร้างบันทึกด่วนพร้อมข้อความที่ไฮไลต์"
 
-#: ../assistant_prompts.lua:35
+#: ../assistant_prompts.lua:110
 msgid   "Vocabulary"
 msgstr  "คำศัพท์"
 
-#: ../assistant_prompts.lua:37
+#: ../assistant_prompts.lua:113
 msgid   "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr  "วิเคราะห์คำศัพท์ในข้อความที่ไฮไลต์"
 
-#: ../assistant_prompts.lua:53
+#: ../assistant_prompts.lua:130
 msgid   "Grammar"
 msgstr  "ไวยากรณ์"
 
-#: ../assistant_prompts.lua:55
+#: ../assistant_prompts.lua:133
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "วิเคราะห์ไวยากรณ์ของข้อความที่ไฮไลต์"
 
-#: ../assistant_prompts.lua:69
+#: ../assistant_prompts.lua:149
 msgid   "Translate"
 msgstr  "แปล"
 
-#: ../assistant_prompts.lua:70
+#: ../assistant_prompts.lua:150
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "แปลข้อความที่ไฮไลต์เป็นภาษาอื่น"
 
-#: ../assistant_prompts.lua:91
+#: ../assistant_prompts.lua:171
 msgid   "Summarize"
 msgstr  "สรุป"
 
-#: ../assistant_prompts.lua:93
+#: ../assistant_prompts.lua:173
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "สรุปข้อความที่ไฮไลต์ให้กระชับ"
 
-#: ../assistant_prompts.lua:102
+#: ../assistant_prompts.lua:182
 msgid   "Simplify"
 msgstr  "ทำให้ง่าย"
 
-#: ../assistant_prompts.lua:104
+#: ../assistant_prompts.lua:184
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "ทำให้ข้อความที่ไฮไลต์เข้าใจง่ายขึ้น"
 
-#: ../assistant_prompts.lua:114
+#: ../assistant_prompts.lua:195
 msgid   "Key Points"
 msgstr  "ประเด็นสำคัญ"
 
-#: ../assistant_prompts.lua:116
+#: ../assistant_prompts.lua:198
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "สกัดประเด็นสำคัญจากข้อความที่ไฮไลต์"
 
-#: ../assistant_prompts.lua:127
+#: ../assistant_prompts.lua:210
 msgid   "ELI5"
 msgstr  "อธิบายแบบเด็ก 5 ขวบ"
 
-#: ../assistant_prompts.lua:129
+#: ../assistant_prompts.lua:213
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "อธิบายข้อความให้เด็กเข้าใจได้ง่าย"
 
-#: ../assistant_prompts.lua:141
+#: ../assistant_prompts.lua:226
 msgid   "Explain"
 msgstr  "อธิบาย"
 
-#: ../assistant_prompts.lua:143
+#: ../assistant_prompts.lua:228
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "อธิบายข้อความที่ไฮไลต์อย่างละเอียด"
 
-#: ../assistant_prompts.lua:154
+#: ../assistant_prompts.lua:239
 msgid   "Historical Context"
 msgstr  "บริบทประวัติศาสตร์"
 
-#: ../assistant_prompts.lua:156
+#: ../assistant_prompts.lua:242
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "อธิบายบริบททางประวัติศาสตร์ของข้อความที่ไฮไลต์"
 
-#: ../assistant_prompts.lua:167 ../main.lua:558
+#: ../assistant_prompts.lua:254 ../main.lua:668
 msgid   "Wikipedia"
 msgstr  "วิกิพีเดีย"
 
-#: ../assistant_prompts.lua:169
+#: ../assistant_prompts.lua:257
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "สร้างบทความสไตล์วิกิพีเดียจากข้อความที่ไฮไลต์"
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:290
+#: ../assistant_prompts.lua:461
 msgid   "Conjugation"
 msgstr  "การผันรูป"
 
-#: ../assistant_prompts.lua:291
+#: ../assistant_prompts.lua:462
 msgid   "Synonyms"
 msgstr  "คำพ้องความหมาย"
 
-#: ../assistant_prompts.lua:292
+#: ../assistant_prompts.lua:463
 msgid   "Meaning"
 msgstr  "ความหมาย"
 
-#: ../assistant_prompts.lua:293
+#: ../assistant_prompts.lua:464
 msgid   "Translation"
 msgstr  "การแปล"
 
-#: ../assistant_prompts.lua:294
+#: ../assistant_prompts.lua:465
 msgid   "Explanation"
 msgstr  "คำอธิบาย"
 
-#: ../assistant_prompts.lua:295
+#: ../assistant_prompts.lua:466
 msgid   "Example"
 msgstr  "ตัวอย่าง"
 
-#: ../assistant_prompts.lua:296
+#: ../assistant_prompts.lua:467
 msgid   "Word Origin"
 msgstr  "ที่มาของคำ"
 
-#: ../assistant_prompts.lua:326
+#: ../assistant_prompts.lua:479
 msgid   "You may find these topics interesting:"
 msgstr  "คุณอาจสนใจหัวข้อเหล่านี้:"
 
@@ -278,7 +322,7 @@ msgstr  "ไม่ทราบข้อผิดพลาด"
 msgid   "Settings"
 msgstr  "ตั้งค่า"
 
-#: ../assistant_querier.lua:113 ../assistant_settings.lua:200
+#: ../assistant_querier.lua:113 ../assistant_settings.lua:201
 #: ../assistant_viewer.lua:341
 msgid   "Close"
 msgstr  "ปิด"
@@ -315,144 +359,162 @@ msgstr  "ไม่สามารถเริ่มกระบวนการ�
 msgid   "Deeply Thought"
 msgstr  "คิดลึก"
 
-#: ../assistant_quicknote.lua:26 ../main.lua:101 ../main.lua:172
+#: ../assistant_quicknote.lua:27 ../main.lua:101 ../main.lua:226
 msgid   "Take Quick Notes"
 msgstr  "จดบันทึกด่วน"
 
-#: ../assistant_quicknote.lua:28
+#: ../assistant_quicknote.lua:29
 msgid   "Write quick notes here"
 msgstr  "พิมพ์บันทึกด่วนที่นี่"
 
-#: ../assistant_quicknote.lua:48 ../assistant_settings.lua:113
+#: ../assistant_quicknote.lua:49 ../assistant_settings.lua:114
 #: ../assistant_viewer.lua:450
 msgid   "Save"
 msgstr  "บันทึก"
 
-#: ../assistant_quicknote.lua:54
+#: ../assistant_quicknote.lua:55
 msgid   "Please enter a note before saving."
 msgstr  "กรุณาป้อนข้อความก่อนบันทึก"
 
-#: ../assistant_quicknote.lua:135
-msgid   "Cannot access default folder for logs: %1\n"
-        "Using original location."
-msgstr  "ไม่สามารถเข้าถึงโฟลเดอร์เริ่มต้นสำหรับบันทึกไฟล์: %1\n"
-        "กำลังใช้ตำแหน่งเดิม"
-
-#: ../assistant_quicknote.lua:187
-msgid   "Notebook save failed. Continuing..."
-msgstr  "บันทึกสมุดบันทึกล้มเหลว กำลังดำเนินการต่อ..."
-
-#: ../assistant_quicknote.lua:203
+#: ../assistant_quicknote.lua:100
 msgid   "User:"
 msgstr  "ผู้ใช้:"
 
-#: ../assistant_quicknote.lua:225
+#: ../assistant_quicknote.lua:122
 msgid   "Quick note saved successfully"
 msgstr  "บันทึกด่วนสำเร็จแล้ว"
 
-#: ../assistant_settings.lua:73
+#: ../assistant_settings.lua:74
 msgid   "AI Response Language Setting"
 msgstr  "การตั้งค่าภาษาในการตอบของ AI"
 
-#: ../assistant_settings.lua:76
+#: ../assistant_settings.lua:77
 msgid   "AI Response Language"
 msgstr  "ภาษาคำตอบ AI"
 
-#: ../assistant_settings.lua:78 ../assistant_settings.lua:83
+#: ../assistant_settings.lua:79 ../assistant_settings.lua:84
 msgid   "Leave blank to use: %1"
 msgstr  "เว้นว่างเพื่อใช้: %1"
 
-#: ../assistant_settings.lua:81
+#: ../assistant_settings.lua:82
 msgid   "Dictionary Language"
 msgstr  "ภาษาพจนานุกรม"
 
-#: ../assistant_settings.lua:96
+#: ../assistant_settings.lua:97
 msgid   "Clear"
 msgstr  "ล้าง"
 
-#: ../assistant_settings.lua:143
+#: ../assistant_settings.lua:144
 msgid   "RTL written Language"
 msgstr  "ภาษาเขียนจากขวาไปซ้าย"
 
-#: ../assistant_settings.lua:163
+#: ../assistant_settings.lua:164
 msgid   "Leave these fields blank to use the UI language: %1"
 msgstr  "เว้นว่างเพื่อใช้ภาษาอินเทอร์เฟซ: %1"
 
-#: ../assistant_settings.lua:174
+#: ../assistant_settings.lua:175
 msgid   "AI Provider Settings"
 msgstr  "การตั้งค่าผู้ให้บริการ AI"
 
-#: ../assistant_settings.lua:259
+#: ../assistant_settings.lua:265
 msgid   "AI Model provider:"
 msgstr  "ผู้ให้บริการโมเดล AI:"
 
-#: ../assistant_settings.lua:326
+#: ../assistant_settings.lua:332
 msgid   "AI Language: "
 msgstr  "ภาษาของ AI: "
 
-#: ../assistant_settings.lua:338
+#: ../assistant_settings.lua:344
 msgid   "AI Text Size: %1"
 msgstr  "ขนาดข้อความ AI: %1"
 
-#: ../assistant_settings.lua:342
+#: ../assistant_settings.lua:348
 msgid   "AI Response Text Font Size"
 msgstr  "ขนาดตัวอักษรของข้อความตอบกลับ AI"
 
-#: ../assistant_settings.lua:358
+#: ../assistant_settings.lua:364
 msgid   "Stream Mode Settings"
 msgstr  "การตั้งค่าโหมดสตรีม"
 
-#: ../assistant_settings.lua:361
+#: ../assistant_settings.lua:367
 msgid   "Enable stream response"
 msgstr  "เปิดตอบแบบสตรีม"
 
-#: ../assistant_settings.lua:369
+#: ../assistant_settings.lua:375
 msgid   "Auto scroll stream response text"
 msgstr  "เลื่อนข้อความคำตอบแบบสตรีมอัตโนมัติ"
 
-#: ../assistant_settings.lua:378
+#: ../assistant_settings.lua:384
 msgid   "Large Streaming Window"
 msgstr  "หน้าต่างสตรีมขนาดใหญ่"
 
-#: ../assistant_settings.lua:389
+#. @translators: functional overriding
+#: ../assistant_settings.lua:396
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "การปรับแต่งและแทนที่ KOReader"
 
-#: ../assistant_settings.lua:392
+#. @translators: 'Translate' is a built-in function
+#: ../assistant_settings.lua:400
 msgid   "Use AI Assistant for 'Translate'"
-msgstr  "ใช้ผู้ช่วย AI สำหรับ \"แปล\""
+msgstr  "ใช้ AI Assistant สำหรับ 'แปล'"
 
-#: ../assistant_settings.lua:403
+#: ../assistant_settings.lua:411
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "สรุปอัตโนมัติเมื่อเปิดหนังสือที่ไม่ได้อ่านนาน"
 
-#: ../assistant_settings.lua:413
+#: ../assistant_settings.lua:421
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "AI จะสรุปให้อัตโนมัติในครั้งถัดไปที่เปิดหนังสือที่ไม่ได้อ่านนาน"
 
-#: ../assistant_settings.lua:417
+#: ../assistant_settings.lua:425
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "แสดงพจนานุกรม AI ในป็อปอัพ"
 
-#: ../assistant_settings.lua:425
+#: ../assistant_settings.lua:433
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "แสดงวิกิพีเดีย AI ในป็อปอัพ"
 
-#: ../assistant_settings.lua:435
+#: ../assistant_settings.lua:441
+msgid   "Show Term X-Ray(AI) in Dictionary Popup"
+msgstr  "แสดงเอกซ์เรย์คำ (AI) ในป๊อปอัพพจนานุกรม"
+
+#: ../assistant_settings.lua:449
+msgid   "Show Custom Prompts in Dictionary Popup"
+msgstr  "แสดงข้อความแนะนำแบบกำหนดเองในป๊อปอัพพจนานุกรม"
+
+#: ../assistant_settings.lua:459
 msgid   "Show Follow-up Questions from AI"
 msgstr  "แสดงคำถามต่อเนื่องจาก AI"
 
-#: ../assistant_settings.lua:443
+#: ../assistant_settings.lua:467
 msgid   "Copy entered question to the clipboard"
 msgstr  "คัดลอกคำถามไปคลิปบอร์ด"
 
-#: ../assistant_settings.lua:451
+#: ../assistant_settings.lua:475
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "บันทึกบทสนทนาอัตโนมัติลง NoteBook"
 
-#: ../assistant_settings.lua:459
+#: ../assistant_settings.lua:483
 msgid   "Use book text for x-ray and recap"
 msgstr  "ใช้ข้อความในหนังสือสำหรับเอ็กซ์เรย์และสรุป"
+
+#: ../assistant_settings.lua:491
+msgid   "Purge the settings"
+msgstr  "ล้างการตั้งค่า"
+
+#: ../assistant_settings.lua:494 ../main.lua:597
+msgid   "Are you sure to purge the assistant plugin settings? \n"
+        "This resets the assistant plugin to the status the first time you installed it.\n"
+        "\n"
+        "configuration.lua is safe, only the settings are purged."
+msgstr  "คุณแน่ใจหรือไม่ว่าต้องการล้างการตั้งค่าปลั๊กอินผู้ช่วย?\n"
+        "การดำเนินการนี้จะรีเซ็ตปลั๊กอินผู้ช่วยกลับไปสู่สถานะเมื่อครั้งแรกที่คุณติดตั้ง\n"
+        "\n"
+        "configuration.lua จะไม่ได้รับผลกระทบ มีเพียงการตั้งค่าที่ถูกล้างเท่านั้น"
+
+#: ../assistant_settings.lua:498 ../main.lua:601
+msgid   "Purge"
+msgstr  "ล้าง"
 
 #: ../assistant_update_checker.lua:106
 msgid   "Checking for updates..."
@@ -463,10 +525,24 @@ msgstr  "กำลังตรวจสอบอัปเดต..."
 msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "มีเวอร์ชันใหม่ของปลั๊กอิน %s (%s) กรุณาอัปเดต!"
 
+#: ../assistant_utils.lua:136
+msgid   "Page"
+msgstr  "หน้า"
+
+#: ../assistant_utils.lua:160
+msgid   "Cannot access default folder for logs: %1\n"
+        "Using original location."
+msgstr  "ไม่สามารถเข้าถึงโฟลเดอร์เริ่มต้นสำหรับบันทึกไฟล์: %1\n"
+        "กำลังใช้ตำแหน่งเดิม"
+
+#: ../assistant_utils.lua:212
+msgid   "Notebook save failed. Continuing..."
+msgstr  "บันทึกสมุดบันทึกล้มเหลว กำลังดำเนินการต่อ..."
+
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:742
+#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:738
 msgid   "Ask Another Question"
-msgstr  "ถามคำถามต่อไป"
+msgstr  "ถามใหม่"
 
 #: ../assistant_viewer.lua:356
 msgid   "Copy"
@@ -500,73 +576,93 @@ msgstr  "เพิ่มโน้ตสำเร็จ"
 msgid   "Conversation is saved to NoteBook"
 msgstr  "บันทึกบทสนทนาไว้ใน NoteBook แล้ว"
 
-#: ../assistant_viewer.lua:578
+#: ../assistant_viewer.lua:573
 msgid   "Book Analysis"
 msgstr  "วิเคราะห์หนังสือ"
 
-#: ../assistant_viewer.lua:744
+#: ../assistant_viewer.lua:740
 msgid   "Type your question here"
 msgstr  "พิมพ์คำถามที่นี่"
 
-#: ../assistant_viewer.lua:908
+#: ../assistant_viewer.lua:904
 msgid   "Word copied to clipboard."
 msgstr  "คัดลอกคำแล้ว"
 
-#: ../assistant_viewer.lua:909
+#: ../assistant_viewer.lua:905
 msgid   "Selection copied to clipboard."
 msgstr  "คัดลอกข้อความที่เลือกแล้ว"
 
-#: ../main.lua:77 ../main.lua:127
+#: ../main.lua:77 ../main.lua:142
 msgid   "Ask the AI a question"
 msgstr  "ถาม AI"
 
-#: ../main.lua:85 ../main.lua:160
+#: ../main.lua:85 ../main.lua:178
 msgid   "AI Recaps"
 msgstr  "สรุป AI"
 
-#: ../main.lua:93 ../main.lua:149
+#: ../main.lua:93 ../main.lua:167
 msgid   "AI X-Ray"
 msgstr  "เอกซ์เรย์ AI"
 
-#: ../main.lua:109 ../main.lua:138
+#: ../main.lua:109 ../main.lua:156
 msgid   "Book Summary & Recs"
 msgstr  "สรุปหนังสือและแนะนำ"
 
-#: ../main.lua:133
+#: ../main.lua:148
 msgid   "Enter a question to ask AI."
 msgstr  "พิมพ์คำถามถาม AI"
 
-#: ../main.lua:144
+#: ../main.lua:153
+msgid   "Book-Level Built-in Prompts"
+msgstr  "ข้อความแนะนำในตัวระดับหนังสือ"
+
+#: ../main.lua:162
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "สรุปหนังสือ ประวัติผู้เขียน บริบทประวัติศาสตร์ และรายการหนังสือที่คล้ายกัน พร้อมคำอธิบาย"
 
-#: ../main.lua:155
+#: ../main.lua:173
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "สรุป \"X-Ray\" ของหนังสือ แบ่งเป็นส่วนต่าง ๆ เช่น ตัวละคร สถานที่ ธีม คำศัพท์และแนวคิด ไทม์ไลน์ และการกลับเข้าสู่เนื้อหา"
 
-#: ../main.lua:166
+#: ../main.lua:184
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "สรุปสั้น ไม่สปอย ถึงจุดที่อ่านถึง"
 
-#: ../main.lua:178
+#: ../main.lua:195
+msgid   "Analysis of your highlights, notes, and notebook content from the book."
+msgstr  "วิเคราะห์ไฮไลต์ โน้ต และเนื้อหาสมุดบันทึกของคุณจากหนังสือ"
+
+#: ../main.lua:206
+msgid   "Summary of the book using your highlights and notes."
+msgstr  "สรุปหนังสือโดยใช้ไฮไลต์และโน้ตของคุณ"
+
+#: ../main.lua:213
+msgid   "Book-Level Custom Prompts"
+msgstr  "ข้อความแนะนำแบบกำหนดเองระดับหนังสือ"
+
+#: ../main.lua:220
+msgid   "Includes user defined book level prompts from Config file"
+msgstr  "รวมถึงข้อความแนะนำระดับหนังสือที่ผู้ใช้กำหนดจากไฟล์ Config"
+
+#: ../main.lua:232
 msgid   "Take quick notes that will be saved to your notebook."
 msgstr  "จดบันทึกด่วนที่จะถูกเก็บไว้ในสมุดบันทึกของคุณ"
 
-#: ../main.lua:183
-msgid   "NoteBook (Saved AI Conversations)"
-msgstr  "NoteBook (บทสนทนา AI ที่บันทึก)"
+#: ../main.lua:237
+msgid   "NoteBook (AI Conversation Log)"
+msgstr  "สมุดบันทึก (บันทึกการสนทนากับ AI)"
 
-#: ../main.lua:189
+#: ../main.lua:243
 msgid   "Notebook file: \n"
         "\n"
 msgstr  "ไฟล์ NoteBook: \n"
         "\n"
 
-#: ../main.lua:190
+#: ../main.lua:244
 msgid   "View"
 msgstr  "ดู"
 
-#: ../main.lua:194
+#: ../main.lua:248
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -574,11 +670,11 @@ msgstr  "ไม่พบไฟล์\n"
         "\n"
         "%1"
 
-#: ../main.lua:202 ../main.lua:206
+#: ../main.lua:256 ../main.lua:260
 msgid   "Delete"
 msgstr  "ลบ"
 
-#: ../main.lua:205
+#: ../main.lua:259
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -586,33 +682,41 @@ msgstr  "ลบไฟล์?\n"
         "%1\n"
         "การดำเนินการนี้ไม่สามารถย้อนกลับได้"
 
-#: ../main.lua:217
+#: ../main.lua:271
 msgid   "Edit"
 msgstr  "แก้ไข"
 
-#: ../main.lua:229
+#: ../main.lua:283
 msgid   "AI Provider: %1"
 msgstr  "ผู้ให้บริการ AI: %1"
 
-#: ../main.lua:239
+#: ../main.lua:293
 msgid   "AI Assistant Settings"
 msgstr  "การตั้งค่า AI ผู้ช่วย"
 
-#: ../main.lua:316
+#: ../main.lua:338
+msgid   "This is a custom prompt"
+msgstr  "นี่คือข้อความแนะนำแบบกำหนดเอง"
+
+#: ../main.lua:348
+msgid   "No active custom prompt found. For details, visit the 'Configuration' wiki page on github."
+msgstr  "ไม่พบข้อความแนะนำแบบกำหนดเองที่ใช้งานอยู่ สำหรับรายละเอียด โปรดไปที่หน้า wiki 'Configuration' บน github"
+
+#: ../main.lua:423
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "ไม่พบโมเดลโปรไวเดอร์ที่ใช้งานได้ใน configuration.lua"
 
-#: ../main.lua:334
+#: ../main.lua:441
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "เกิดข้อผิดพลาดการตั้งค่า\n"
         "กรุณาตั้งค่า configuration.lua"
 
-#: ../main.lua:403
+#: ../main.lua:510
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: โมเดลโปรไวเดอร์ไม่ถูกต้อง"
 
-#: ../main.lua:468
+#: ../main.lua:575
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -644,47 +748,33 @@ msgstr  "เคล็ดลับการใช้งาน\n"
         "ปัดหลายครั้ง (เช่น ⮠, ⮡, ↺):\n"
         "ที่กล่องผลลัพธ์เพื่อปิด (เนื่องจากปุ่มปิดอยู่ไกล)\n"
 
-#: ../main.lua:487
+#: ../main.lua:594
 msgid   "Purge Settings"
 msgstr  "ล้างการตั้งค่า"
 
-#: ../main.lua:490
-msgid   "Are you sure to purge the assistant plugin settings? \n"
-        "This resets the assistant plugin to the status the first time you installed it.\n"
-        "\n"
-        "configuration.lua is safe, only the settings are purged."
-msgstr  "คุณแน่ใจหรือไม่ว่าต้องการล้างการตั้งค่าปลั๊กอินผู้ช่วย?\n"
-        "การดำเนินการนี้จะรีเซ็ตปลั๊กอินผู้ช่วยกลับไปสู่สถานะเมื่อครั้งแรกที่คุณติดตั้ง\n"
-        "\n"
-        "configuration.lua จะไม่ได้รับผลกระทบ มีเพียงการตั้งค่าที่ถูกล้างเท่านั้น"
-
-#: ../main.lua:494
-msgid   "Purge"
-msgstr  "ล้าง"
-
-#: ../main.lua:538
+#: ../main.lua:648
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "ลบ [%s] ออกจากเมนูไฮไลต์หรือไม่?"
 
-#: ../main.lua:539
+#: ../main.lua:649
 msgid   "Remove"
 msgstr  "ลบ"
 
-#: ../main.lua:682
+#: ../main.lua:853
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "ไม่พบการตั้งค่า กรุณาตั้งค่า configuration.lua ก่อน"
 
-#: ../main.lua:724
+#: ../main.lua:895
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "เพิ่ม [%1 (AI)] ลงเมนูไฮไลต์แล้ว"
 
-#: ../main.lua:733
+#: ../main.lua:904
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "ลบ [%s (AI)] ออกจากเมนูไฮไลต์แล้ว"
 
-#: ../main.lua:777
+#: ../main.lua:948
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -692,15 +782,15 @@ msgstr  "ต้องการสรุปจาก AI ไหม?\n"
         "สำหรับ %1 โดย %2\n"
         "\n"
 
-#: ../main.lua:778
+#: ../main.lua:949
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "อ่านล่าสุดเมื่อ %1 ชั่วโมงที่แล้ว"
 
-#: ../main.lua:783
+#: ../main.lua:954
 msgid   "Yes"
 msgstr  "ใช่"
 
-#: ../main.lua:792
+#: ../main.lua:963
 msgid   "No"
 msgstr  "ไม่"
