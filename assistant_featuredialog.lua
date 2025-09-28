@@ -188,6 +188,11 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       return
     end
 
+    table.insert(message_history, {
+      role = "assistant",
+      content = answer
+    })
+
     local chatgpt_viewer
     chatgpt_viewer = ChatGPTViewer:new {
       assistant = assistant,
