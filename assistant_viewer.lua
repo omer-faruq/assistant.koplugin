@@ -746,13 +746,16 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
     width = Screen:getWidth() * 0.8,
     height = Screen:getHeight() * 0.4,
     buttons = button_rows,
-    close_callback = function()
-      if self.input_dialog then
-        UIManager:close(self.input_dialog)
-        self.input_dialog = nil
-      end
-    end
   }
+
+  -- add close button (top right cross) to input dialog
+  self.input_dialog.title_bar.close_callback = function()
+    if self.input_dialog then
+      UIManager:close(self.input_dialog)
+      self.input_dialog = nil
+    end
+  end
+  self.input_dialog.title_bar:init()
 
   -- Show the dialog
   UIManager:show(self.input_dialog)
