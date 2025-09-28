@@ -17,7 +17,9 @@ local koutil = require("util")
 local Device = require("device")
 local Screen = Device.screen
 local CheckButton = require("ui/widget/checkbutton")
-local extractBookTextForAnalysis = require("assistant_utils").extractBookTextForAnalysis
+local assistant_utils = require("assistant_utils")
+local extractBookTextForAnalysis = assistant_utils.extractBookTextForAnalysis
+local normalizeMarkdownHeadings = assistant_utils.normalizeMarkdownHeadings
 local NetworkMgr = require("ui/network/manager")
 
 -- main dialog class
@@ -114,6 +116,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
       local assistant_content = message.content or _("(No response)")
       -- Remove code block markers before displaying
       assistant_content = assistant_content:gsub("```", "\n")
+      assistant_content = normalizeMarkdownHeadings(assistant_content, 3, 6) or assistant_content
       return string.format("### ⮞ Assistant:\n\n%s\n\n", assistant_content)
     end
     return "" -- Should not happen for valid roles

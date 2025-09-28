@@ -215,9 +215,98 @@ local function saveToNotebookFile(assistant, log_entry)
   end
 end
 
+local function normalizeMarkdownHeadings(content, heading_offset, max_heading_level)
+  if type(content) ~= "string" or content == "" then
+    return content
+  end
+
+  heading_offset = tonumber(heading_offset) or 0
+  max_heading_level = tonumber(max_heading_level) or 6
+
+  if heading_offset <= 0 then
+    return content
+  end
+
+  local max_heading_level_found = nil
+  for line in content:gmatch("[^\n]+") do
+    local hashes = line:match("^%s*(#+)")
+    if hashes then
+      local level = #hashes
+      if not max_heading_level_found or level > max_heading_level_found then
+        max_heading_level_found = level
+      end
+    end
+  end
+
+  if not max_heading_level_found then
+    return content
+  end
+
+  local target_max_level = heading_offset + 1
+  local heading_shift = target_max_level - max_heading_level_found
+  if heading_shift <= 0 then
+    return content
+  end
+
+  local normalized_lines = {}
+  local start_index = 1
+  local content_length = #content
+  local has_trailing_newline = content:sub(-1) == "\n"
+
+  local function processLine(line)
+    local leading_spaces, hashes, spacing_after_hashes, heading_text = line:match("^(%s*)(#+)(%s*)(.*)$")
+    if not hashes then
+      return line
+    end
+
+    local adjusted_heading_text = heading_text or ""
+    if spacing_after_hashes then
+      adjusted_heading_text = spacing_after_hashes .. adjusted_heading_text
+    end
+    adjusted_heading_text = adjusted_heading_text:gsub("^%s*", "")
+    adjusted_heading_text = adjusted_heading_text:gsub("%s*$", "")
+
+    local new_level = #hashes + heading_shift
+    if new_level > max_heading_level then
+      if adjusted_heading_text ~= "" then
+        return leading_spaces .. "**" .. adjusted_heading_text .. "**"
+      end
+      return leading_spaces .. "**" .. "**"
+    end
+
+    local new_hashes = string.rep("#", new_level)
+    if adjusted_heading_text == "" then
+      return leading_spaces .. new_hashes
+    end
+    return leading_spaces .. new_hashes .. " " .. adjusted_heading_text
+  end
+
+  while start_index <= content_length do
+    local newline_index = content:find("\n", start_index, true)
+    if newline_index then
+      local line = content:sub(start_index, newline_index - 1)
+      table.insert(normalized_lines, processLine(line))
+      start_index = newline_index + 1
+    else
+      local line = content:sub(start_index)
+      if line ~= "" or not has_trailing_newline then
+        table.insert(normalized_lines, processLine(line))
+      end
+      break
+    end
+  end
+
+  local normalized_content = table.concat(normalized_lines, "\n")
+  if has_trailing_newline then
+    normalized_content = normalized_content .. "\n"
+  end
+  return normalized_content
+end
+
 return {
     extractBookTextForAnalysis = extractBookTextForAnalysis,
     extractHighlightsNotesAndNotebook = extractHighlightsNotesAndNotebook,
     getPageInfo = getPageInfo,
-    saveToNotebookFile = saveToNotebookFile
+    saveToNotebookFile = saveToNotebookFile,
+    normalizeMarkdownHeadings = normalizeMarkdownHeadings
 }

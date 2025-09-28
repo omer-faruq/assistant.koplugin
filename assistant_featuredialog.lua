@@ -12,8 +12,10 @@ local koutil = require("util")
 local ChatGPTViewer = require("assistant_viewer")
 local assistant_prompts = require("assistant_prompts").assistant_prompts
 local NetworkMgr = require("ui/network/manager")
-local extractBookTextForAnalysis = require("assistant_utils").extractBookTextForAnalysis
-local extractHighlightsNotesAndNotebook = require("assistant_utils").extractHighlightsNotesAndNotebook
+local assistant_utils = require("assistant_utils")
+local extractBookTextForAnalysis = assistant_utils.extractBookTextForAnalysis
+local extractHighlightsNotesAndNotebook = assistant_utils.extractHighlightsNotesAndNotebook
+local normalizeMarkdownHeadings = assistant_utils.normalizeMarkdownHeadings
 
 local function showFeatureDialog(assistant, feature_type, title, author, progress_percent, message_history)
     local CONFIGURATION = assistant.CONFIGURATION
@@ -165,9 +167,10 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     table.insert(message_history, context_message)
 
     local function createResultText(answer)
+      local normalized_answer = normalizeMarkdownHeadings(answer, 2, 6) or answer
       local result_text = 
         TextBoxWidget.PTF_HEADER ..
-        TextBoxWidget.PTF_BOLD_START .. title .. TextBoxWidget.PTF_BOLD_END .. " by " .. author .. " is " .. formatted_progress_percent .. "% complete.\n\n" ..  answer
+        TextBoxWidget.PTF_BOLD_START .. title .. TextBoxWidget.PTF_BOLD_END .. " by " .. author .. " is " .. formatted_progress_percent .. "% complete.\n\n" ..  normalized_answer
       return result_text
     end
 
@@ -220,7 +223,8 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
               role = "assistant",
               content = answer
             })
-            local additional_text = "\n\n### ⮞ User: \n" .. (type(user_question) == "string" and user_question or (user_question.text or user_question)) .. "\n\n### ⮞ Assistant:\n" .. answer
+            local normalized_answer = normalizeMarkdownHeadings(answer, 3, 6) or answer
+            local additional_text = "\n\n### ⮞ User: \n" .. (type(user_question) == "string" and user_question or (user_question.text or user_question)) .. "\n\n### ⮞ Assistant:\n" .. normalized_answer
             viewer:update(viewer.text .. additional_text)
             
             if viewer.scroll_text_w then

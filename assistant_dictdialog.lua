@@ -8,6 +8,7 @@ local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local Event = require("ui/event")
 local koutil = require("util")
+local assistant_utils = require("assistant_utils")
 local dict_prompts = require("assistant_prompts").assistant_prompts.dict
 
 -- Filter text to find sentences containing the highlighted term with surrounding context
@@ -167,7 +168,6 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
 
     if prompt_type == "term_xray" then
         -- For term_xray, use LexRank to extract relevant context from book text
-        local assistant_utils = require("assistant_utils")
         local LexRank = require("assistant_lexrank")
 
         -- Get book text up to current reading position
@@ -331,13 +331,14 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         -- Limit prev_context to last 100 characters and next_context to first 100 characters
         local prev_context_limited = string.sub(prev_context, -100)
         local next_context_limited = string.sub(next_context, 1, 100)
+        local normalized_answer = assistant_utils.normalizeMarkdownHeadings(answer, 2, 6) or answer
         if render_markdown then
             -- in markdown mode, outputs markdown formatted highlighted text
-            result_text = T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, highlightedText, next_context_limited, answer)
+            result_text = T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, highlightedText, next_context_limited, normalized_answer)
         else
-            -- in plain text mode, use widget controled characters.
+            -- in plain text mode, use widget controlled characters.
             result_text = T("%1... %2%3%4 ...\n\n%5", TextBoxWidget.PTF_HEADER, prev_context_limited, 
-                TextBoxWidget.PTF_BOLD_START, highlightedText, TextBoxWidget.PTF_BOLD_END,  next_context_limited, answer)
+                TextBoxWidget.PTF_BOLD_START, highlightedText, TextBoxWidget.PTF_BOLD_END,  next_context_limited, normalized_answer)
         end
         return result_text
     end
