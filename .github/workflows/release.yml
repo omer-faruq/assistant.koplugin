@@ -48,7 +48,7 @@ jobs:
           mkdir "$PACKAGE_NAME"
           # Copy project files into the directory using a tar pipe, excluding unwanted files.
           # This archives the current directory and immediately extracts it into the target directory.
-          tar c --exclude='./.git' --exclude='./.github' --exclude='./.gitignore' --exclude='./.all-contributorsrc' --exclude="./$PACKAGE_NAME" . | tar x -C "$PACKAGE_NAME"
+          tar c --exclude='./.*' --exclude='./*.md' --exclude="./$PACKAGE_NAME" . | tar x -C "$PACKAGE_NAME"
           # Remove development helper files from the l10n directory (keep only .po files)
           echo "Cleaning up l10n directory, keeping only .po files..."
           find "$PACKAGE_NAME/l10n" -type f ! -name '*.po' -print -delete
