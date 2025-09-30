@@ -280,7 +280,7 @@ function Assistant:addToMainMenu(menu_items)
           },
           {
             text_func = function ()
-              return T(_("AI Provider: %1"), self:getModelProvider())
+              return T(_("AI Provider: %1"), self:getModelProvider() or _("Not configured"))
             end,
             keep_menu_open = true,
             callback = function (touchmenu_instance)
@@ -374,7 +374,14 @@ end
 
 function Assistant:getModelProvider()
 
+  if type(CONFIGURATION) ~= "table" then
+    return nil
+  end
+
   local provider_settings = CONFIGURATION.provider_settings -- provider settings table from configuration.lua
+  if type(provider_settings) ~= "table" then
+    return nil
+  end
   local setting_provider = self.settings:readSetting("provider")
 
   local function is_provider_valid(key)
