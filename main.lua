@@ -344,10 +344,16 @@ function BookLevelCustomPrompts(assistant)
   end
 
   if #sub_item_table == 0 then
-    UIManager:show(InfoMessage:new{
-      text = _("No active custom prompt found. For details, visit the 'Configuration' wiki page on github.")
-    })
-    return
+    local button = {
+      text = _("No valid book-level custom prompt found"),
+      enabled = false,
+    }
+    table.insert(sub_item_table, button)
+    local button = {
+      text = _("For details, visit the 'Configuration' wiki page on github."),
+      enabled = false,
+    }
+    table.insert(sub_item_table, button)
   end
   return sub_item_table
 end
