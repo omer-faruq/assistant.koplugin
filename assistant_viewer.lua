@@ -714,6 +714,10 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
         text = option.text,
         callback = function()
           local dialog = self.input_dialog
+          local user_question = dialog:getInputText()
+          if user_question ~= "" and self.assistant.settings:readSetting("auto_copy_asked_question", true) and Device:hasClipboard() then
+            Device.input.setClipboardText(user_question)
+          end
           UIManager:close(dialog)
           self.input_dialog = nil
           option.callback(dialog)

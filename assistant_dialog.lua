@@ -364,6 +364,9 @@ function AssistantDialog:show(highlightedText)
         text = tab.text,
         callback = function()
           local user_question = self.input_dialog and self.input_dialog:getInputText() or ""
+          if user_question ~= "" and self.assistant.settings:readSetting("auto_copy_asked_question", true) and Device:hasClipboard() then
+            Device.input.setClipboardText(user_question)
+          end
           self:_close()
           Trapper:wrap(function()
             if tab.order == -10 and tab.idx == "dictionary" then
