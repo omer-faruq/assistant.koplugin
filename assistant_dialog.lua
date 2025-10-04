@@ -241,12 +241,18 @@ I have a question about the following highlighted text: ```%s```.
 If the question is not clear enough, analyze the highlighted text.]],
       book.title, book.author, highlightedText),
     }
-  else
+  elseif book.title and book.author then
     context = {
       role = "user",
       is_context = true,
       content = string.format([[I'm reading something titled '%s' by %s.
 I have a question about this book.]], book.title, book.author),
+    }
+  else
+    context = {
+      role = "user",
+      is_context = true,
+      content = string.format([[You are a helpful assistant. I have a question.]]),
     }
   end
 
@@ -259,10 +265,19 @@ I have a question about this book.]], book.title, book.author),
 end
 
 function AssistantDialog:_getBookContext()
-  local prop = self.assistant.ui.document:getProps()
+  local ui = self.assistant and self.assistant.ui
+  if not ui or not ui.document then
+    return { title = nil, author = nil }
+  end
+
+  local ok, props = pcall(function() return ui.document:getProps() end)
+  if not ok or not props then
+    return { title = nil, author = nil }
+  end
+
   return {
-    title = prop.title or "Unknown Title",
-    author = prop.authors or "Unknown Author"
+    title = props.title or "Unknown Title",
+    author = props.authors or "Unknown Author",
   }
 end
 
@@ -307,7 +322,7 @@ function AssistantDialog:show(highlightedText)
       callback = function()
         local user_question = self.input_dialog and self.input_dialog:getInputText() or ""
         local book_text_prompt = ""
-        if use_book_text_checkbox.checked then
+        if use_book_text_checkbox and use_book_text_checkbox.checked then
           local book_text = extractBookTextForAnalysis(self.CONFIGURATION, self.assistant.ui)
           if book_text then
             book_text_prompt = string.format("\n\n [! IMPORTANT !] Here is the book text up to my current position, only consider this text for your response, and answer in language of previous part of the question:\n [BOOK TEXT BEGIN]\n%s\n[BOOK TEXT END]", book_text)
@@ -430,12 +445,13 @@ function AssistantDialog:show(highlightedText)
 
   -- Show the dialog with the button rows
   local dialog_hint = is_highlighted and 
-    _("Ask a question about the highlighted text") or 
-    string.format(_("Ask a question about this book:\n%s by %s"), book.title, book.author)
-  
+      _("Ask a question about the highlighted text") or 
+      book.title and string.format(_("Ask a question about this book:\n%s by %s"), book.title, book.author)
+      or _("Ask a general question")
   local input_hint = is_highlighted and 
-    _("Type your question here...") or 
-    _("Ask anything about this book...")
+      _("Type your question here...") or 
+      book.title and _("Ask anything about this book...")
+      or _("Ask anything...")  
   
   self.input_dialog = InputDialog:new{
     title = _("AI Assistant"),
@@ -456,16 +472,18 @@ function AssistantDialog:show(highlightedText)
   }
 
   -- Add checkbox below the input field
-  use_book_text_checkbox = CheckButton:new{
-    face = Font:getFace("xx_smallinfofont"),
-    text = _("Use book text as context"),
-    parent = self.input_dialog,
-  }
-  local vgroup = self.input_dialog.dialog_frame[1]
-  table.insert(vgroup, 2, HorizontalGroup:new{
-    HorizontalSpan:new{ width = Size.padding.large },
-    use_book_text_checkbox,
-  })
+  if book.title then
+    use_book_text_checkbox = CheckButton:new{
+      face = Font:getFace("xx_smallinfofont"),
+      text = _("Use book text as context"),
+      parent = self.input_dialog,
+    }
+    local vgroup = self.input_dialog.dialog_frame[1]
+    table.insert(vgroup, 2, HorizontalGroup:new{
+      HorizontalSpan:new{ width = Size.padding.large },
+      use_book_text_checkbox,
+    })
+  end
   
   --  adds a close button to the top right
   self.input_dialog.title_bar.close_callback = function() self:_close() end

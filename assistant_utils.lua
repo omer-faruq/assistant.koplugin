@@ -6,6 +6,19 @@ local T = require("ffi/util").template
 local koutil = require("util")
 local _ = require("assistant_gettext")
 
+local function getGeneralNotebookFilePath(assistant)
+  local notebookfile = nil
+  local default_folder = util.tableGetValue(assistant.CONFIGURATION, "features", "default_folder_for_logs")
+  local home_dir = G_reader_settings:readSetting("home_dir")
+  local current_dir = assistant.ui.file_chooser and assistant.ui.file_chooser.path or assistant.ui:getLastDirFile()
+  local target_dir = default_folder and default_folder ~= "" and util.pathExists(default_folder) and default_folder or (home_dir or current_dir)
+  if target_dir then
+    local notebookfile_path = target_dir .. "/general_notebook.md"
+    notebookfile = notebookfile_path
+  end
+  return notebookfile
+end
+
 local function extractBookTextForAnalysis(CONFIGURATION, ui)
     local book_text = nil
       if not ui.document.info.has_pages then
@@ -115,7 +128,7 @@ local function getPageInfo(ui)
   local percentage = 0
   local total_pages = nil
   local chapter_title = nil
-  if ui.highlight.selected_text and ui.highlight.selected_text.pos0 then
+  if ui.highlight and ui.highlight.selected_text and ui.highlight.selected_text.pos0 then
     if ui.paging then
       page_number = ui.highlight.selected_text.pos0.page
     else
@@ -152,46 +165,50 @@ local function saveToNotebookFile(assistant, log_entry)
   local success, err = pcall(function()
     local notebookfile = assistant.ui.bookinfo:getNotebookFile(assistant.ui.doc_settings)
     local default_folder = util.tableGetValue(assistant.CONFIGURATION, "features", "default_folder_for_logs")
-    if default_folder and default_folder ~= "" then
-      if not notebookfile:find("^" .. default_folder:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")) then
-        if not util.pathExists(default_folder) then
-          UIManager:show(InfoMessage:new{
-              icon = "notice-warning",
-              text = T(_("Cannot access default folder for logs: %1\nUsing original location."), default_folder),
-              timeout = 5,
-            })
-        else
-          local original_filename = notebookfile:match("([^/\\]+)$")
-          if original_filename then
-            original_filename = original_filename:gsub("%.[^.]*$", ".md")
+    if assistant.ui.doc_settings then
+      if default_folder and default_folder ~= "" then
+        if not notebookfile:find("^" .. default_folder:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")) then
+          if not util.pathExists(default_folder) then
+            UIManager:show(InfoMessage:new{
+                icon = "notice-warning",
+                text = T(_("Cannot access default folder for logs: %1\nUsing original location."), default_folder),
+                timeout = 5,
+              })
           else
-            local doc_path = assistant.ui.document.file
-            if doc_path then
-              local doc_filename = doc_path:match("([^/\\]+)$")
-              if doc_filename then
-                original_filename = doc_filename..".md"
+            local original_filename = notebookfile:match("([^/\\]+)$")
+            if original_filename then
+              original_filename = original_filename:gsub("%.[^.]*$", ".md")
+            else
+              local doc_path = assistant.ui.document.file
+              if doc_path then
+                local doc_filename = doc_path:match("([^/\\]+)$")
+                if doc_filename then
+                  original_filename = doc_filename..".md"
+                else
+                  original_filename = "notebook.md"
+                end
               else
                 original_filename = "notebook.md"
               end
-            else
-              original_filename = "notebook.md"
             end
+            local new_notebookfile = default_folder .. "/" .. original_filename
+
+            assistant.ui.doc_settings:saveSetting("notebook_file", new_notebookfile)
+
+            notebookfile = new_notebookfile
           end
-          local new_notebookfile = default_folder .. "/" .. original_filename
-
-          assistant.ui.doc_settings:saveSetting("notebook_file", new_notebookfile)
-
-          notebookfile = new_notebookfile
         end
       end
-    end
 
-    if notebookfile and not notebookfile:find("%.md$") then
-      notebookfile = notebookfile:gsub("%.[^.]*$", ".md")
-      if not notebookfile:find("%.md$") then
-        notebookfile = notebookfile .. ".md"
+      if notebookfile and not notebookfile:find("%.md$") then
+        notebookfile = notebookfile:gsub("%.[^.]*$", ".md")
+        if not notebookfile:find("%.md$") then
+          notebookfile = notebookfile .. ".md"
+        end
+        assistant.ui.doc_settings:saveSetting("notebook_file", notebookfile)
       end
-      assistant.ui.doc_settings:saveSetting("notebook_file", notebookfile)
+    else
+      notebookfile = getGeneralNotebookFilePath(assistant)
     end
 
     if notebookfile then
@@ -304,6 +321,7 @@ local function normalizeMarkdownHeadings(content, heading_offset, max_heading_le
 end
 
 return {
+    getGeneralNotebookFilePath = getGeneralNotebookFilePath,
     extractBookTextForAnalysis = extractBookTextForAnalysis,
     extractHighlightsNotesAndNotebook = extractHighlightsNotesAndNotebook,
     getPageInfo = getPageInfo,

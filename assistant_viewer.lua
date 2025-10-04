@@ -570,10 +570,9 @@ function ChatGPTViewer:saveToNotebook()
   
   local page_info = assistant_utils.getPageInfo(self.ui)
 
-  local title_text = (self.title and self.title or _("Book Analysis")) .. "\n"
+  local title_text = (self.title and self.title or self.ui.document and _("Book Analysis") or _("General Conversation")) .. "\n"
   local text_to_log = self.text or ""
-  
-  
+    
   if self.highlighted_text then
     local highlighted_pattern = "^__([^⮞]-)__.-(\n?### ⮞)"
     text_to_log = text_to_log:gsub(highlighted_pattern, "%2", 1)
@@ -813,8 +812,10 @@ function ChatGPTViewer:onClose()
   if self.close_callback then self.close_callback() end
 
   -- clear the text selection when plugin is called without a highlight or dict dialog
-  if not (self.assistant.ui.highlight.highlight_dialog or self.assistant.ui.dictionary.dict_window) then
-    self.assistant.ui.highlight:clear()
+  if self.assistant.ui.highlight then
+    if not (self.assistant.ui.highlight.highlight_dialog or self.assistant.ui.dictionary.dict_window) then
+      self.assistant.ui.highlight:clear()
+    end
   end
 
   return true
