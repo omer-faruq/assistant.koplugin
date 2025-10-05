@@ -15,7 +15,7 @@ local function prepare_anthropic_messages(message_history)
             system_content = system_content .. msg.content .. "\n\n"
         end
     end
-    
+
     -- Remove trailing newlines
     system_content = system_content:gsub("\n\n$", "")
     
@@ -36,6 +36,23 @@ local function prepare_anthropic_messages(message_history)
     }
 end
 
+local function extract_text_from_content(content_blocks)
+    if type(content_blocks) ~= "table" then
+        return nil
+    end
+
+    local text_chunks = {}
+    for _, block in ipairs(content_blocks) do
+        if type(block) == "table" and block.type == "text" and type(block.text) == "string" then
+            table.insert(text_chunks, block.text)
+        end
+    end
+
+    if #text_chunks > 0 then
+        return table.concat(text_chunks, "\n\n")
+    end
+end
+
 
 function AnthropicHandler:query(message_history, anthropic_settings)
     
@@ -43,6 +60,10 @@ function AnthropicHandler:query(message_history, anthropic_settings)
     requestBodyTable.model = anthropic_settings.model
     requestBodyTable.max_tokens = koutil.tableGetValue(anthropic_settings, "additional_parameters", "max_tokens")
     requestBodyTable.stream = koutil.tableGetValue(anthropic_settings, "additional_parameters", "stream") or false
+    local tools = koutil.tableGetValue(anthropic_settings, "additional_parameters", "tools")
+    if type(tools) == "table" and next(tools) ~= nil then
+        requestBodyTable.tools = tools
+    end
 
     local requestBody = json.encode(requestBodyTable)
     local headers = {
@@ -70,9 +91,14 @@ function AnthropicHandler:query(message_history, anthropic_settings)
         logger.warn("JSON Decode Error:", parsed)
         return nil, "Error: Failed to parse Anthropic API response"
     end
-    
-    local content = koutil.tableGetValue(parsed, "content", 1, "text")
-    if content then return content end
+
+    local content = extract_text_from_content(parsed.content)
+    if type(content) ~= "string" or #content == 0 then
+        content = koutil.tableGetValue(parsed, "content", 1, "text")
+    end
+    if type(content) == "string" and #content > 0 then
+        return content
+    end
 
     local err_msg = koutil.tableGetValue(parsed, "error", "message")
     if err_msg then

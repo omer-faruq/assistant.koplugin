@@ -37,6 +37,24 @@ local CONFIGURATION = {
                 max_tokens = 4096
             }
         },
+        -- Anthropic with web search
+        anthropic_websearch = {
+            visible = false, -- optional, if set to false, will not shown in the profile switch
+            model = "claude-3-5-haiku-latest", -- model list: https://docs.anthropic.com/en/docs/about-claude/models
+            base_url = "https://api.anthropic.com/v1/messages",
+            api_key = "your-anthropic-api-key",
+            additional_parameters = {
+                anthropic_version = "2023-06-01", -- api version list: https://docs.anthropic.com/en/api/versioning
+                max_tokens = 4096,
+                tools = {
+                    {   -- enable web search
+                        type = "web_search_20250305",
+                        name = "web_search",
+                        max_uses = 5,
+                    },
+                }
+            }
+        },
         gemini = {
             model = "gemini-2.5-flash", -- model list: https://ai.google.dev/gemini-api/docs/models , ex: gemini-2.5-pro , gemini-2.5-flash
             base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
