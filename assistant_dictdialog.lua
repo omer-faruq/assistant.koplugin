@@ -256,8 +256,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             local all_candidates = LexRank.rank_sentences(book_text, threshold_very_inclusive, 0.1, dict_language, CONFIGURATION.features, true)
 
             -- Filter candidates at different levels using their scores (no re-tokenization needed!)
-            local min_sentences = koutil.tableGetValue(CONFIGURATION, "features", "term_xray_min_sentences") or 1000
-            local max_sentences = koutil.tableGetValue(CONFIGURATION, "features", "term_xray_max_sentences") or 1500
+            local max_characters = koutil.tableGetValue(CONFIGURATION, "features", "term_xray_max_characters") or 100000
             local selected_indices = {}
             local seen_indices = {}
 
@@ -282,23 +281,18 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
 
                 -- Stage 2: Add high-scoring general context sentences
                 for _, candidate in ipairs(all_candidates) do
-                    if not seen_indices[candidate.index] and #selected_indices < (min_sentences * 0.8) and candidate.score >= threshold_general then
+                    if not seen_indices[candidate.index] and candidate.score >= threshold_general then
                         table.insert(selected_indices, candidate.index)
                         seen_indices[candidate.index] = true
                     end
                 end
 
-                -- Stage 3: Add more candidates until we reach min_sentences
+                -- Stage 3: Add remaining candidates for comprehensive coverage
                 for _, candidate in ipairs(all_candidates) do
-                    if not seen_indices[candidate.index] and #selected_indices < min_sentences then
+                    if not seen_indices[candidate.index] then
                         table.insert(selected_indices, candidate.index)
                         seen_indices[candidate.index] = true
                     end
-                end
-
-                -- Stage 4: Cap at max_sentences
-                while #selected_indices > max_sentences do
-                    table.remove(selected_indices)
                 end
             end
 
@@ -318,6 +312,12 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             -- Concatenate context sentences without numbering
             -- Sentences are sent in chronological order from the book, which the LLM is instructed to consider
             context_text = table.concat(context_sentences, " ")
+
+            -- Truncate context to max_characters limit
+            if #context_text > max_characters then
+                context_text = context_text:sub(1, max_characters)
+            end
+
             context_sentence_count = #context_sentences
         else
             -- Fallback to standard context if book text is too short

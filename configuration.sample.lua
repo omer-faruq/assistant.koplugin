@@ -172,20 +172,50 @@ local CONFIGURATION = {
         -- Example: For "the Ring", before context captures "The Dark Lord had created..." and after captures "...His mind began to cloud"
 
         -- LexRank algorithm configuration for intelligent context selection
-        -- LexRank scores sentences based on importance and relevance. These settings control how much text is sent to the LLM.
-        lexrank_max_sentences = 2500,            -- Maximum number of sentences to extract (default: 2500, was: 200). Increase for fuller context, decrease for faster processing.
-        lexrank_min_selection_percentage = 0.99, -- Minimum percentage of top-ranked sentences to include (default: 0.99 = 99%, was: 0.70). Higher = more inclusive.
-        lexrank_max_selection_percentage = 1.0,  -- Maximum percentage of top-ranked sentences to include (default: 1.0 = 100%, was: 0.85). Higher = more comprehensive.
+        -- LexRank scores sentences based on importance and relevance to identify key content.
+        -- Suggested values: 1000-2000 (process quickly), 2500 (recommended), 5000+ (exhaustive analysis)
+        lexrank_max_sentences = 2500,
 
-        -- LexRank filtering thresholds (lower threshold = more sentences included)
-        lexrank_threshold_term_specific = 0.01,   -- Threshold for sentences containing the searched term (default: 0.01, was: 0.05). Lower = include weaker matches.
-        lexrank_threshold_general = 0.01,         -- Threshold for general context sentences (default: 0.01, was: 0.05). Lower = more context sentences.
-        lexrank_threshold_very_inclusive = 0.005, -- Threshold for fallback when not enough sentences found (default: 0.005, was: 0.02). Very low threshold.
+        -- What percentage of high-ranking sentences should be selected? Higher = more inclusive.
+        -- 0.70 (70%): Conservative, quality-focused sentences only
+        -- 0.90 (90%): Balanced, includes most important content
+        -- 0.99 (99%): Comprehensive, nearly all ranked content included
+        lexrank_min_selection_percentage = 0.99,
+
+        -- Upper bound on sentence selection. Prevents over-selection in smaller texts.
+        -- 0.85 (85%): Conservative approach, focuses on best matches
+        -- 1.0 (100%): Includes all available context material
+        lexrank_max_selection_percentage = 1.0,
+
+        -- Relevance threshold for sentences containing the searched term. Lower = more inclusive.
+        -- 0.05: Strict filtering, only very relevant term matches
+        -- 0.01: Inclusive, captures weaker term relevance
+        -- 0.005: Exhaustive, includes tangential mentions
+        lexrank_threshold_term_specific = 0.01,
+
+        -- Relevance threshold for general context sentences. Lower = more inclusive.
+        -- 0.05: Strict filtering, high-relevance background context only
+        -- 0.01: Balanced, includes good supporting content
+        -- 0.005: Comprehensive, captures all contextual material
+        lexrank_threshold_general = 0.01,
+
+        -- Fallback threshold when not enough sentences are found. Very permissive.
+        -- 0.02: More selective fallback
+        -- 0.005: Very inclusive fallback
+        lexrank_threshold_very_inclusive = 0.005,
 
         -- Term-specific context settings
-        term_filter_context_window = 15, -- Sentences to capture around term mentions (default: 15, was: 5). Higher = more surrounding context.
-        term_xray_min_sentences = 1600,  -- Target minimum sentences to extract (default: 1600, was: 150). Increase for more comprehensive coverage.
-        term_xray_max_sentences = 2400,  -- Hard cap on sentences sent to LLM (default: 2400, was: 200). Provides ~40k input tokens for rich fantasy book analysis.
+        -- How many surrounding sentences to include around term mentions?
+        -- 5: Minimal context (focuses on term itself)
+        -- 10: Moderate context (includes narrative details)
+        -- 15+: Extensive context (shows full scene/paragraph)
+        term_filter_context_window = 15,
+
+        -- Hard character limit for total context sent to LLM. Controls token usage.
+        -- 50000 chars (~12k tokens): Quick lookups, lighter processing
+        -- 100000 chars (~25k tokens): Balanced context for rich analysis (recommended)
+        -- 200000 chars (~50k tokens): Comprehensive context, uses more of context window
+        term_xray_max_characters = 100000,
 
         -- These are prompts defined in `prompts.lua`, can be overriden here.
         -- each prompt shown as a button in the main dialog.
