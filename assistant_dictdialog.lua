@@ -208,6 +208,14 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     local dict_language = assistant.settings:readSetting("response_language") or assistant.ui_language
 
     if prompt_type == "term_xray" then
+        -- Show loading dialog immediately to avoid app appearing frozen during LexRank processing
+        local context_loading_msg = InfoMessage:new{
+            icon = "book.opened",
+            text = _("Analyzing book context for Term X-Ray...")
+        }
+        UIManager:show(context_loading_msg)
+        UIManager:forceRePaint()  -- Force immediate display before blocking LexRank operation
+
         -- For term_xray, use LexRank to extract relevant context from book text
         -- OPTIMIZED: Single LexRank call with score-based filtering (instead of 3 separate calls)
         local LexRank = require("assistant_lexrank")
@@ -315,6 +323,9 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             -- Fallback to standard context if book text is too short
             context_text = prev_context .. highlightedText .. next_context
         end
+
+        -- Close the context loading dialog (LexRank processing is complete)
+        UIManager:close(context_loading_msg)
     else
         -- Standard dictionary context extraction
         if ui.highlight and ui.highlight.getSelectedWordContext then
