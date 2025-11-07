@@ -3,23 +3,50 @@ local LexRankLanguages = require("assistant_lexrank_languages")
 -- Lua implementation of the LexRank algorithm for sentence ranking
 local LexRank = {}
 
--- Configuration constants
-local CONFIG = {
-    DEFAULT_THRESHOLD = 0.1,
-    DEFAULT_EPSILON = 0.1,
-    DEFAULT_LANGUAGE = "en",
-    MAX_SENTENCES_FOR_FULL_ANALYSIS = 200,
-    MAX_ITERATIONS = 100,
-    CONVERGENCE_CHECK_FREQUENCY = 5,
-    MIN_SELECTION_PERCENTAGE = 0.7,        -- Increased from 0.6 to 70%
-    MAX_SELECTION_PERCENTAGE = 0.85,       -- Increased from 0.8 to 85%
-    SELECTION_THRESHOLD_FACTOR = 0.4,      -- Lowered from 0.5 (more inclusive)
-    ALTERNATIVE_THRESHOLD_FACTOR = 0.5,    -- Lowered from 0.6 (more inclusive)
-    MIN_SENTENCES_TARGET = 5,
-    ENTITY_BOOST_FACTOR = 0.2,             -- 20% boost for sentences with named entities
-    FIRST_MENTION_BOOST_FACTOR = 0.35,     -- 35% boost for first mention of entities
-    POSITION_BOOST_FACTOR = 0.1             -- 10% boost for early sentences (intro content)
-}
+-- Default configuration constants (can be overridden by CONFIGURATION.features from user config)
+local function get_default_config()
+    return {
+        DEFAULT_THRESHOLD = 0.1,
+        DEFAULT_EPSILON = 0.1,
+        DEFAULT_LANGUAGE = "en",
+        MAX_SENTENCES_FOR_FULL_ANALYSIS = 200,
+        MAX_ITERATIONS = 100,
+        CONVERGENCE_CHECK_FREQUENCY = 5,
+        MIN_SELECTION_PERCENTAGE = 0.7,        -- Increased from 0.6 to 70%
+        MAX_SELECTION_PERCENTAGE = 0.85,       -- Increased from 0.8 to 85%
+        SELECTION_THRESHOLD_FACTOR = 0.4,      -- Lowered from 0.5 (more inclusive)
+        ALTERNATIVE_THRESHOLD_FACTOR = 0.5,    -- Lowered from 0.6 (more inclusive)
+        MIN_SENTENCES_TARGET = 5,
+        ENTITY_BOOST_FACTOR = 0.2,             -- 20% boost for sentences with named entities
+        FIRST_MENTION_BOOST_FACTOR = 0.35,     -- 35% boost for first mention of entities
+        POSITION_BOOST_FACTOR = 0.1             -- 10% boost for early sentences (intro content)
+    }
+end
+
+-- Initialize CONFIG with defaults, will be merged with user config overrides
+local CONFIG = get_default_config()
+
+-- Merge user configuration overrides with defaults
+local function merge_config_overrides(user_config)
+    if not user_config then
+        return CONFIG
+    end
+
+    local merged = get_default_config()
+
+    -- Map user-provided keys to CONFIG keys
+    if user_config.lexrank_max_sentences then
+        merged.MAX_SENTENCES_FOR_FULL_ANALYSIS = user_config.lexrank_max_sentences
+    end
+    if user_config.lexrank_min_selection_percentage then
+        merged.MIN_SELECTION_PERCENTAGE = user_config.lexrank_min_selection_percentage
+    end
+    if user_config.lexrank_max_selection_percentage then
+        merged.MAX_SELECTION_PERCENTAGE = user_config.lexrank_max_selection_percentage
+    end
+
+    return merged
+end
 
 -- Language-aware sentence tokenization (optimized for performance)
 local function tokenize_sentences(text, language_module)
@@ -448,7 +475,8 @@ end
 
 -- Select sentences based on scores using statistical thresholds
 -- Applies entity boost to prioritize context about characters and places
-local function select_sentences_by_score(sentences, score_vector, entity_tracker)
+-- Returns table of {sentence, index, score} objects to avoid re-tokenization and enable threshold filtering
+local function select_sentences_by_score(sentences, score_vector, entity_tracker, return_with_metadata)
     local total_sentences = #sentences
 
     -- Apply entity boosting to scores using cached entity data
@@ -481,7 +509,20 @@ local function select_sentences_by_score(sentences, score_vector, entity_tracker
         avg_score * CONFIG.ALTERNATIVE_THRESHOLD_FACTOR
     )
 
-    -- Select sentences above the threshold
+    -- Build candidate list with metadata
+    local candidates = {}
+    for i = 1, total_sentences do
+        table.insert(candidates, {sentence = sentences[i], score = boosted_scores[i], index = i})
+    end
+
+    -- If return_with_metadata is true, return all candidates with their scores for filtering
+    if return_with_metadata then
+        -- Sort by document order (maintain coherence)
+        table.sort(candidates, function(a, b) return a.index < b.index end)
+        return candidates
+    end
+
+    -- Otherwise, apply selection threshold and return just sentences
     local selected_sentences = {}
     for i = 1, total_sentences do
         if boosted_scores[i] >= selection_threshold then
@@ -500,21 +541,13 @@ local function select_sentences_by_score(sentences, score_vector, entity_tracker
             )
         )
 
-        -- Use partial selection (finding top K) instead of full sort (O(n log n) -> O(n) avg)
-        -- Maintain a list of top candidates as we scan through
-        local top_candidates = {}
-
-        for i = 1, total_sentences do
-            table.insert(top_candidates, {sentence = sentences[i], score = boosted_scores[i], index = i})
-        end
-
-        -- Sort by score descending (still O(n log n) but now we know it's necessary)
-        table.sort(top_candidates, function(a, b) return a.score > b.score end)
+        -- Sort by score descending to get top candidates
+        table.sort(candidates, function(a, b) return a.score > b.score end)
 
         -- Extract just the top target_count sentences, then re-sort by document order
         local selected_with_indices = {}
-        for i = 1, math.min(target_count, #top_candidates) do
-            table.insert(selected_with_indices, top_candidates[i])
+        for i = 1, math.min(target_count, #candidates) do
+            table.insert(selected_with_indices, candidates[i])
         end
 
         -- Sort by original document order to maintain coherence
@@ -530,7 +563,13 @@ local function select_sentences_by_score(sentences, score_vector, entity_tracker
 end
 
 -- Main LexRank function
-function LexRank.rank_sentences(text, threshold, epsilon, language_code)
+-- Optional user_config parameter to override default configuration values
+-- Optional return_with_metadata: if true, returns {sentence, index, score} objects instead of just sentences
+-- This allows the caller to filter results at different thresholds without re-running LexRank
+function LexRank.rank_sentences(text, threshold, epsilon, language_code, user_config, return_with_metadata)
+    -- Merge user configuration overrides with defaults
+    CONFIG = merge_config_overrides(user_config)
+
     -- Initialize parameters with defaults
     local params = initialize_parameters(threshold, epsilon, language_code)
 
@@ -581,7 +620,7 @@ function LexRank.rank_sentences(text, threshold, epsilon, language_code)
     local score_vector = run_power_iteration(similarity_matrix, params.epsilon)
 
     -- Select sentences based on scores with entity boosting
-    return select_sentences_by_score(sentences, score_vector, entity_tracker)
+    return select_sentences_by_score(sentences, score_vector, entity_tracker, return_with_metadata)
 end
 
 return LexRank

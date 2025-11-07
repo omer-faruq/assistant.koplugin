@@ -163,11 +163,29 @@ local CONFIGURATION = {
         max_page_size_for_analysis = 250, -- maximum page size to be used on xray-recap-book analyzes (for page-based documents, ex: PDF)
 
         -- Term X-Ray context expansion settings (for analyzing characters, objects, places, concepts, magic)
-        term_xray_context_sentences_before = 2, -- Number of sentences to include BEFORE matching sentences for context (captures descriptions, setup)
-        term_xray_context_sentences_after = 2, -- Number of sentences to include AFTER matching sentences for context (captures effects, consequences)
+        -- NOTE: The following settings are optimized to provide ~40k input tokens per term x-ray lookup, using ~10% of a 400k token context window.
+        -- This allows rich analysis of characters, magic systems, plot elements, and relationships in fantasy books.
+        term_xray_context_sentences_before = 5, -- Number of sentences to include BEFORE matching sentences for context (captures descriptions, setup)
+        term_xray_context_sentences_after = 5, -- Number of sentences to include AFTER matching sentences for context (captures effects, consequences)
         -- These settings help capture pronouns (he/she/it/that) and narrative context that the LLM needs for complete analysis
         -- Increase to 3+ for complex magic systems or concepts; decrease to 1 for quick summaries
         -- Example: For "the Ring", before context captures "The Dark Lord had created..." and after captures "...His mind began to cloud"
+
+        -- LexRank algorithm configuration for intelligent context selection
+        -- LexRank scores sentences based on importance and relevance. These settings control how much text is sent to the LLM.
+        lexrank_max_sentences = 2500, -- Maximum number of sentences to extract (default: 2500, was: 200). Increase for fuller context, decrease for faster processing.
+        lexrank_min_selection_percentage = 0.99, -- Minimum percentage of top-ranked sentences to include (default: 0.99 = 99%, was: 0.70). Higher = more inclusive.
+        lexrank_max_selection_percentage = 1.0, -- Maximum percentage of top-ranked sentences to include (default: 1.0 = 100%, was: 0.85). Higher = more comprehensive.
+
+        -- LexRank filtering thresholds (lower threshold = more sentences included)
+        lexrank_threshold_term_specific = 0.01, -- Threshold for sentences containing the searched term (default: 0.01, was: 0.05). Lower = include weaker matches.
+        lexrank_threshold_general = 0.01, -- Threshold for general context sentences (default: 0.01, was: 0.05). Lower = more context sentences.
+        lexrank_threshold_very_inclusive = 0.005, -- Threshold for fallback when not enough sentences found (default: 0.005, was: 0.02). Very low threshold.
+
+        -- Term-specific context settings
+        term_filter_context_window = 15, -- Sentences to capture around term mentions (default: 15, was: 5). Higher = more surrounding context.
+        term_xray_min_sentences = 1600, -- Target minimum sentences to extract (default: 1600, was: 150). Increase for more comprehensive coverage.
+        term_xray_max_sentences = 2400, -- Hard cap on sentences sent to LLM (default: 2400, was: 200). Provides ~40k input tokens for rich fantasy book analysis.
 
         -- These are prompts defined in `prompts.lua`, can be overriden here.
         -- each prompt shown as a button in the main dialog.

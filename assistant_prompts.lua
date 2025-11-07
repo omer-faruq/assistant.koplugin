@@ -45,9 +45,7 @@ The context includes not only sentences explicitly mentioning "{highlight}" but 
 **For concepts/magic:** How they work, limitations, consequences, symbolic meaning
 **For abstract elements:** Definition through usage, effects, relationships to other story elements
 
-Nearby actions, events, character interactions, dialogue, and environmental details are included to show the term in context. Each sentence is numbered [1], [2], etc. for easy reference.
-
-{context}
+**Important:** The context sentences are presented in chronological order as they appear in the book. Use this ordering to understand how the term develops and its context throughout the narrative. Nearby actions, events, character interactions, dialogue, and environmental details are included to show the term in context.
 
 **You must:**
 1. Ground your analysis in the provided context—do not use general knowledge beyond what's shown
@@ -58,7 +56,7 @@ Nearby actions, events, character interactions, dialogue, and environmental deta
 4. For objects/things: Note descriptions, properties, physical characteristics, and how the thing is used
 5. For places: Note location, geography, significance, and events that occur there
 6. For concepts/magic: Note how they work, their rules/limitations, consequences, and symbolic meaning
-7. Consider the narrative flow shown by the numbered sequence to see how the term develops
+7. Consider the chronological progression of the context sentences as they appear in the book to understand how the term develops and changes
 8. Note if the context is limited and what important information may be missing
 9. Distinguish between how the term is used in this book versus typical usage
 
@@ -81,10 +79,10 @@ Nearby actions, events, character interactions, dialogue, and environmental deta
 - **If an element/force:** What does it do? What are its effects on other story elements? Who uses it and how?
 
 ### Evolution & Development (if applicable)
-[How the term's meaning, perception, or role changes as the story progresses. Use the numbered sequence to show development.]
-- Track how understanding of the term deepens or changes through the context provided
+[How the term's meaning, perception, or role changes as the story progresses. Consider the chronological flow of the provided context.]
+- Track how understanding of the term deepens or changes as you progress through the context
 - Note early vs. late references and what new information appears
-- Show how the term's importance or usage shifts
+- Show how the term's importance or usage shifts over time
 
 ### Connections to Other Elements (if apparent from context)
 [How the term relates to other characters, places, themes, or story elements mentioned in the provided context.]
