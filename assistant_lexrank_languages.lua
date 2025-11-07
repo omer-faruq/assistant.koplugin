@@ -3,34 +3,32 @@
 
 local LexRankLanguages = {}
 
--- Language code mapping and normalization
+-- Build language code mapping once at module initialization (cached for performance)
+local language_mappings = {
+    en = { "english", "en", "en_us", "en_gb", "en-us", "en-gb" },
+    es = { "spanish", "español", "es", "es_es", "es_mx", "es_ar", "es_co", "es-es", "es-mx" },
+    fr = { "french", "français", "francais", "fr", "fr_fr", "fr_ca", "fr_be", "fr_ch", "fr-fr", "fr-ca" },
+    de = { "german", "deutsch", "de", "de_de", "de_at", "de_ch", "de-de", "de-at" },
+    tr = { "turkish", "türkçe", "turkce", "tr", "tr_tr", "tr-tr" }
+}
+
+-- Build the lookup table once at initialization
+local language_map_cache = {}
+for base_lang, variants in pairs(language_mappings) do
+    for _, variant in ipairs(variants) do
+        language_map_cache[variant] = base_lang
+    end
+end
+
+-- Language code mapping and normalization (uses cached mapping)
 local function normalize_language_code(lang_code)
     if not lang_code then
         return "en"
     end
 
-    -- Convert to lowercase and keep the full code for lookup
+    -- Convert to lowercase and lookup in cached table (O(1) instead of rebuilding)
     local normalized = lang_code:lower()
-
-    -- Define language mappings in an easier-to-maintain format
-    -- Each entry maps multiple variants to a single base language
-    local language_mappings = {
-        en = { "english", "en", "en_us", "en_gb", "en-us", "en-gb" },
-        es = { "spanish", "español", "es", "es_es", "es_mx", "es_ar", "es_co", "es-es", "es-mx" },
-        fr = { "french", "français", "francais", "fr", "fr_fr", "fr_ca", "fr_be", "fr_ch", "fr-fr", "fr-ca" },
-        de = { "german", "deutsch", "de", "de_de", "de_at", "de_ch", "de-de", "de-at" },
-        tr = { "turkish", "türkçe", "turkce", "tr", "tr_tr", "tr-tr" }
-    }
-
-    -- Build the lookup table from the mappings
-    local language_map = {}
-    for base_lang, variants in pairs(language_mappings) do
-        for _, variant in ipairs(variants) do
-            language_map[variant] = base_lang
-        end
-    end
-
-    return language_map[normalized] or "en"  -- Default to English
+    return language_map_cache[normalized] or "en"  -- Default to English
 end
 
 -- Base language module template (for documentation/reference)
@@ -57,6 +55,7 @@ local EnglishLanguage = {
     sentence_delimiters = { ".", "!", "?", ";" },
     min_sentence_length = 10,
     min_word_length = 2,
+    entity_pattern = "^[A-Z]",  -- Detect proper nouns starting with uppercase
 
     -- Simple stemming patterns for English
     stemming_patterns = {
@@ -94,6 +93,7 @@ local SpanishLanguage = {
     sentence_delimiters = { ".", "!", "?", ";" },
     min_sentence_length = 10,
     min_word_length = 2,
+    entity_pattern = "^[A-ZÁÉÍÓÚÑ]",  -- Detect proper nouns starting with uppercase (including accented chars)
 
     -- Simple stemming patterns for Spanish
     stemming_patterns = {
@@ -135,6 +135,7 @@ local FrenchLanguage = {
     sentence_delimiters = { ".", "!", "?", ";" },
     min_sentence_length = 10,
     min_word_length = 2,
+    entity_pattern = "^[A-ZÀÂÄÉÈÊËÏÎÔÖÙÛÜÇ]",  -- Detect proper nouns starting with uppercase (including accented/special chars)
 
     -- Simple stemming patterns for French
     stemming_patterns = {
@@ -179,6 +180,7 @@ local GermanLanguage = {
     sentence_delimiters = { ".", "!", "?", ";" },
     min_sentence_length = 10,
     min_word_length = 2,
+    entity_pattern = "^[A-ZÄÖÜ]",  -- Detect proper nouns starting with uppercase (including umlauts)
 
     -- Simple stemming patterns for German
     stemming_patterns = {
@@ -228,6 +230,7 @@ local TurkishLanguage = {
     sentence_delimiters = { ".", "!", "?", ";" },
     min_sentence_length = 10,
     min_word_length = 2,
+    entity_pattern = "^[A-ZÇĞİÖŞÜÇĞİÖŞÜ]",  -- Detect proper nouns starting with uppercase (including Turkish special chars)
 
     tokenize_words = function(self, sentence)
         if not sentence then

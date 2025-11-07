@@ -11,6 +11,80 @@ local koutil = require("util")
 local assistant_utils = require("assistant_utils")
 local dict_prompts = require("assistant_prompts").assistant_prompts.dict
 
+-- Expand context sentences to include surrounding sentences for pronouns and related narrative
+-- This captures "he", "she", "they" and nearby actions that provide important context
+local function expandContextWithSurroundings(selected_sentences, full_text, language_module, context_window_before, context_window_after)
+    if not selected_sentences or #selected_sentences == 0 then
+        return selected_sentences
+    end
+
+    context_window_before = context_window_before or 1  -- Include 1 sentence before
+    context_window_after = context_window_after or 1    -- Include 1 sentence after
+
+    -- Tokenize the full text into sentences using the same logic as LexRank
+    local all_sentences = {}
+    local current_sentence = ""
+    local delim_pattern = "[" .. table.concat(language_module.sentence_delimiters, "") .. "]"
+
+    for i = 1, #full_text do
+        local char = full_text:sub(i, i)
+        current_sentence = current_sentence .. char
+
+        if char:match(delim_pattern) then
+            local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
+            if #trimmed >= language_module.min_sentence_length then
+                table.insert(all_sentences, trimmed)
+            end
+            current_sentence = ""
+        end
+    end
+
+    -- Add remaining text as sentence if it's long enough
+    local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
+    if #trimmed >= language_module.min_sentence_length then
+        table.insert(all_sentences, trimmed)
+    end
+
+    -- Build a map of selected sentences to their indices in the full text
+    local selected_indices = {}
+    local seen_indices = {}
+
+    for _, selected_sentence in ipairs(selected_sentences) do
+        for idx, sentence in ipairs(all_sentences) do
+            if sentence == selected_sentence and not seen_indices[idx] then
+                table.insert(selected_indices, idx)
+                seen_indices[idx] = true
+                break
+            end
+        end
+    end
+
+    -- Expand the indices to include surrounding context
+    local expanded_indices = {}
+    local expanded_set = {}
+
+    for _, idx in ipairs(selected_indices) do
+        -- Include context_window_before sentences before and context_window_after after
+        for neighbor_idx = math.max(1, idx - context_window_before), math.min(#all_sentences, idx + context_window_after) do
+            if not expanded_set[neighbor_idx] then
+                table.insert(expanded_indices, neighbor_idx)
+                expanded_set[neighbor_idx] = true
+            end
+        end
+    end
+
+    -- Sort by document order
+    table.sort(expanded_indices)
+
+    -- Build the expanded context from the expanded indices
+    local expanded_sentences = {}
+    for _, idx in ipairs(expanded_indices) do
+        table.insert(expanded_sentences, all_sentences[idx])
+    end
+
+    return expanded_sentences
+end
+
 -- Filter text to find sentences containing the highlighted term with surrounding context
 local function filterTextForTerm(text, highlighted_term, language_code)
     if not text or not highlighted_term or highlighted_term == "" then
@@ -164,6 +238,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     -- Get context for the selected word
     local prev_context, next_context = "", ""
     local context_text = ""
+    local context_sentence_count = 0
     local dict_language = assistant.settings:readSetting("response_language") or assistant.ui_language
 
     if prompt_type == "term_xray" then
@@ -222,7 +297,31 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
                 end
             end
 
-            context_text = table.concat(context_sentences, " ")
+            -- EXPAND CONTEXT: Include surrounding sentences for pronouns, pronouns referring to things, and related narrative
+            -- This captures:
+            -- - Character pronouns: "he", "she", "they" referring to people
+            -- - Thing pronouns: "it", "that", "this" referring to objects, places, concepts, magic
+            -- - Actions and events that provide narrative context about the term
+            -- Read context window sizes from configuration (user can customize in configuration.lua)
+            local context_before = koutil.tableGetValue(CONFIGURATION, "features", "term_xray_context_sentences_before") or 2
+            local context_after = koutil.tableGetValue(CONFIGURATION, "features", "term_xray_context_sentences_after") or 2
+            local LexRankLanguages = require("assistant_lexrank_languages")
+            local language_module = LexRankLanguages.get_language_module(dict_language)
+            context_sentences = expandContextWithSurroundings(
+                context_sentences,
+                book_text,
+                language_module,
+                context_before,  -- Configurable: sentences before for describing objects/concepts/places
+                context_after    -- Configurable: sentences after for showing effects/consequences
+            )
+
+            -- Number the context sentences for clarity and reference
+            local numbered_sentences = {}
+            for i, sentence in ipairs(context_sentences) do
+                table.insert(numbered_sentences, string.format("[%d] %s", i, sentence))
+            end
+            context_text = table.concat(numbered_sentences, " ")
+            context_sentence_count = #context_sentences
         else
             -- Fallback to standard context if book text is too short
             context_text = prev_context .. highlightedText .. next_context
@@ -295,6 +394,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             content = string.gsub(user_prompt, "{(%w+)}", {
                     language = dict_language,
                     context = context_content,
+                    context_sentence_count = context_sentence_count,
                     highlight = highlightedText,
                     title = book_title,
                     author = book_author,

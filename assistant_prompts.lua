@@ -25,70 +25,102 @@ local custom_prompts = {
         system_prompt =
         "You are a literary analyst who creates clear, encyclopedic descriptions of narrative elements. Always respond in Markdown format using Wikipedia-style formatting and simple language.",
         user_prompt = [[
-
 ## Your Role
 
-You are an expert literary reference guide creating Wikipedia-style entries that explain narrative elements in clear, accessible language.
+You are a literary analyst creating context-aware entries that explain how narrative elements are presented and used in this specific book.
 
-**Before providing your analysis, please think through:**
-- What can be observed or factually stated about this element?
-- What key characteristics and significance can be documented?
-- How does the surrounding context provide concrete information?
+**Your primary task:** Analyze the highlighted term "{highlight}" specifically as it appears in "{title}" by {author}—not as a generic concept, but as a story element.
 
-**Task:** Create a Wikipedia-style entry for the term "{highlight}" from "{title}" by {author}, explaining this element clearly and factually.
+**Context Quality Note:** You have been provided with {context_sentence_count} relevant sentences from the book selected by AI analysis of similarity to this term.
+
+## How to Use the Context Provided
+
+**The following text is from the book, selected for relevance to "{highlight}":**
+
+The context includes not only sentences explicitly mentioning "{highlight}" but also surrounding sentences. This captures important related context such as:
+
+**For character terms:** Pronouns (he, she, they) and actions showing what they do
+**For objects/things:** Descriptions, properties, how they're used, effects ("it", "that" references)
+**For places/locations:** Geography, significance, events that occur there
+**For concepts/magic:** How they work, limitations, consequences, symbolic meaning
+**For abstract elements:** Definition through usage, effects, relationships to other story elements
+
+Nearby actions, events, character interactions, dialogue, and environmental details are included to show the term in context. Each sentence is numbered [1], [2], etc. for easy reference.
+
+{context}
+
+**You must:**
+1. Ground your analysis in the provided context—do not use general knowledge beyond what's shown
+2. Identify specific examples from the context that illustrate the term's meaning and function
+3. Pay special attention to **all pronouns and implied references** to "{highlight}":
+   - Character pronouns: he, she, they → for people and creatures
+   - Thing pronouns: it, that, this → for objects, places, concepts, magic, elements
+4. For objects/things: Note descriptions, properties, physical characteristics, and how the thing is used
+5. For places: Note location, geography, significance, and events that occur there
+6. For concepts/magic: Note how they work, their rules/limitations, consequences, and symbolic meaning
+7. Consider the narrative flow shown by the numbered sequence to see how the term develops
+8. Note if the context is limited and what important information may be missing
+9. Distinguish between how the term is used in this book versus typical usage
 
 ## Analysis Structure
-Use Wikipedia-style headers and formatting:
 
-### Description and Characteristics
-[Physical characteristics, key traits, significance, or notable features stated clearly and factually]
+### What It Is
+[How the term is defined/described in the book, based on the provided context. Include specific examples.]
+- **If a character:** Note pronouns and descriptions that clarify their identity, appearance, and basic traits
+- **If an object/thing:** Describe its physical properties, materials, appearance, and purpose
+- **If a place/location:** Describe its geography, scale, distinctive features, and atmosphere
+- **If a concept/magic:** Explain how it works, what makes it unique in this world, its fundamental nature
+- **If an element/force:** Describe its composition, behavior, effects, and properties
 
-### Role in Narrative
-[How this element functions within the story context]
+### Role & Function in This Story
+[How the term functions in the narrative. What does it reveal about the story? Ground in the context provided.]
+- **If a character:** What do they do? What motivations and relationships are shown? What is their significance?
+- **If an object/thing:** How is it used? What does it enable or prevent? What consequences does it have?
+- **If a place/location:** What happens there? Why is it significant? What role does it play in the story?
+- **If a concept/magic:** How does it affect the plot? What are its limitations? What can and cannot be done with it?
+- **If an element/force:** What does it do? What are its effects on other story elements? Who uses it and how?
+
+### Evolution & Development (if applicable)
+[How the term's meaning, perception, or role changes as the story progresses. Use the numbered sequence to show development.]
+- Track how understanding of the term deepens or changes through the context provided
+- Note early vs. late references and what new information appears
+- Show how the term's importance or usage shifts
+
+### Connections to Other Elements (if apparent from context)
+[How the term relates to other characters, places, themes, or story elements mentioned in the provided context.]
+- Note all pronouns and implied relationships ("it was used by...", "it affected...", "they created it...")
+- For objects: Who uses it? What do they use it for?
+- For places: Who lives there? What events happen there? Who goes there?
+- For concepts: Who understands it? Who is affected by it?
+- For magic/elements: What interactions does it have with other elements? Who can use it?
+
+### Context Limitations
+[If the provided context seems insufficient to fully explain this term, note what important information appears to be missing.]
+- What aspects are underexplained?
+- What questions does the context leave unanswered?
+- What related information would help explain this term better?
 
 ## Formatting Requirements
-Most importantly, **Respond in this language:** {language}
 
-**Structure & Organization:**
-- Use hierarchical Wikipedia-style headers (###, ####) with consistent levels
-- Organize content into two logical sections: Description & Characteristics and Role in Narrative
-- Use descriptive, sentence-case section headers that preview the content
+**Language:** {language}
 
 **Writing Style:**
-- Write in simple, clear, encyclopedic language accessible to general readers
-- Maintain neutral, factual tone throughout
-- Avoid overly technical jargon without explanation
-- Use present tense for describing fictional elements
-- **Write as if describing real-world facts—do not reference "the text," "the narrative," "the book," or "the story"**
-- **Treat all information as factual reality within the fictional world**
+- Write in clear, accessible language—avoid jargon
+- Use present tense when describing the fictional world
+- Ground every claim in the provided context (cite implicitly: "As shown in the context..." is unnecessary unless context is unclear)
+- If making inferences beyond the context, explicitly state: "Based on the context provided..." or "Inferred from..."
+- Do NOT use general knowledge about this book if not shown in the context
 
-**Content Formatting:**
-- Use bullet points sparingly—only for genuine lists of characteristics or features
-- Write primarily in flowing prose paragraphs rather than fragmented bullet lists
-- Group related concepts within paragraphs rather than isolating them as bullets
-- Ensure each paragraph has a clear focus and transitions smoothly
+**Structure:**
+- Use headers (###) to organize sections
+- Write in flowing prose; use bullet points only for genuine lists
+- Keep total length to 300-400 words
+- Prioritize understanding over encyclopedic completeness
 
-**Visual Organization:**
-- Maintain consistent spacing and indentation
-- Use bold text sparingly for emphasis on key terms only
-- Ensure clean, scannable layout with clear section breaks
-- Balance white space for readability
-
-**Content Focus:**
-- Prioritize factual, observable information over speculation
-- Include thematic significance and narrative function
-- Balance technical details with broader context and accessibility
-
-**Length Requirements:**
-- Target 300-375 words maximum for 90-second reading time
-- Prioritize essential defining characteristics over comprehensive detail
-- Focus on core function and primary significance
-
-## User Guidance
+## User Input
 {user_input}
 
-## Context
-
+## Context from the Book
 {context}
 ]],
     },
@@ -439,30 +471,47 @@ Now begin the analysis with the provided book_text and highlights.]],
 
     dict = {
         system_prompt =
-        "You are a dictionary with high quality detail vocabulary definitions and examples. Always respond in Markdown format.",
+        "You are a literary dictionary that explains words in their book context. Always respond in Markdown format.",
         user_prompt = T([[
-"Explain vocabulary or content with the focus text with following information:"
-"- *%1*: Vocabulary in original conjugation if its different than the form in the sentence."
-"- *%2*: three synonyms for the word if available."
-"- *%3*: Meaning of the expression without reference to context. Answer this part in {language} language."
-"- *%4*: Translation of the the whole sentence with word. Highlight in bold the word that is being translated. Answer this part in {language} language."
-"- *%5*: Explanation of the content according to context. Answer this part in {language} language."
-"- *%6*: Another example sentence. Answer this part in the original language of the sentence."
-"- *%7*: Origin of that word, tracing it back to its ancient roots. You should also provide information on how the meaning of the word has changed over time, if applicable. Answer this part in {language} language." ..
+## Task: Book-Aware Word Analysis
 
-"Only show the requested replies, do not give a description."
+Explain the highlighted term "{word}" specifically as used in "{title}" by {author}, using the provided context from the book.
 
-[CONTEXT]
+## Context from the Book
+The following sentences from the book contain or relate to "{word}":
 {context}
 
-[FOCUS TEXT]
-{word}]],
+## Analysis: Provide these sections
+
+- *%1*: Vocabulary in original conjugation if different from the form in the sentence.
+- *%2*: Up to three synonyms for the word, noting which are most relevant to the book's usage (if context shows a specific usage).
+- *%3*: Literal meaning of the expression without any context. Answer in {language} language.
+- *%4*: Translation of the whole sentence containing the word. Highlight in bold the word being translated. Answer in {language} language.
+- *%5*: How "{word}" is specifically used in THIS BOOK, based on the context provided. Does the book use it in a standard way or differently? What does this usage suggest about characters, tone, or themes? Answer in {language} language.
+- *%6*: Another example sentence showing the word's use. Prefer examples from literature in the same genre as "{title}" if possible. Answer in the original language.
+- *%7*: Origins and etymology of the word, including how its meaning has evolved over time (for modern languages) or its significance in its original language (for constructed/archaic words). Answer in {language} language.
+
+## Important Guidelines
+
+**Context Usage:**
+- Ground your analysis in the provided context whenever possible
+- If the context clearly shows how the word is used in the book, emphasize that usage in section 5
+- If the context appears incomplete or insufficient, note what additional context would be helpful
+
+**Book-Awareness:**
+- In section 5, identify if the book uses this word in a non-standard, poetic, archaic, or specialized way
+- Note if the word has special significance to character, plot, or worldbuilding
+- Avoid explaining only the dictionary definition—explain its use in THIS book
+
+**Format:**
+Only show the requested sections. Do not add introduction, conclusion, or additional commentary unless essential to understanding the word's usage in the book.
+]],
             -- @translators used in the dictionary.
             _("Conjugation"),
             _("Synonyms"),
             _("Meaning"),
             _("Translation"),
-            _("Explanation"),
+            _("Book Usage"),
             _("Example"),
             _("Word Origin"))
     },

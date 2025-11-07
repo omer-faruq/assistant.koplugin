@@ -159,8 +159,15 @@ local CONFIGURATION = {
         render_markdown = true, -- Set to true to render markdown in the AI responses
         updater_disabled = false, -- Set to true to disable update check.
         default_folder_for_logs = nil, -- Set the default folder for auto saved logs, nil for the same folder as the book, ex: "/mnt/onboard/logs/" for Kobo , "/mnt/us/documents/logs/" for Kindle
-        max_text_length_for_analysis = 100000, -- max text lenght to be used on xray-recap-book analyzes, 
-        max_page_size_for_analysis =250, --maximum page size to be used on xray-recap-book analyzes (for page-based documents, ex: PDF)
+        max_text_length_for_analysis = 100000, -- max text lenght to be used on xray-recap-book analyzes,
+        max_page_size_for_analysis = 250, -- maximum page size to be used on xray-recap-book analyzes (for page-based documents, ex: PDF)
+
+        -- Term X-Ray context expansion settings (for analyzing characters, objects, places, concepts, magic)
+        term_xray_context_sentences_before = 2, -- Number of sentences to include BEFORE matching sentences for context (captures descriptions, setup)
+        term_xray_context_sentences_after = 2, -- Number of sentences to include AFTER matching sentences for context (captures effects, consequences)
+        -- These settings help capture pronouns (he/she/it/that) and narrative context that the LLM needs for complete analysis
+        -- Increase to 3+ for complex magic systems or concepts; decrease to 1 for quick summaries
+        -- Example: For "the Ring", before context captures "The Dark Lord had created..." and after captures "...His mind began to cloud"
 
         -- These are prompts defined in `prompts.lua`, can be overriden here.
         -- each prompt shown as a button in the main dialog.
