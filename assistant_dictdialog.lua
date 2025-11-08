@@ -11,8 +11,48 @@ local koutil = require("util")
 local assistant_utils = require("assistant_utils")
 local dict_prompts = require("assistant_prompts").assistant_prompts.dict
 
+-- Expand context sentences to include surrounding sentences for pronouns and related narrative
+-- This captures "he", "she", "they" and nearby actions that provide important context
+-- OPTIMIZED: Now accepts pre-tokenized sentences and indices to avoid re-tokenization
+-- all_sentences: array of all sentences in the text (pre-tokenized)
+-- selected_indices: array of indices of selected sentences in all_sentences
+-- context_window_before/after: number of surrounding sentences to include
+local function expandContextWithSurroundings(all_sentences, selected_indices, context_window_before, context_window_after)
+    if not selected_indices or #selected_indices == 0 then
+        return {}
+    end
+
+    context_window_before = context_window_before or 1  -- Include 1 sentence before
+    context_window_after = context_window_after or 1    -- Include 1 sentence after
+
+    -- Expand the indices to include surrounding context
+    local expanded_indices = {}
+    local expanded_set = {}
+
+    for _, idx in ipairs(selected_indices) do
+        -- Include context_window_before sentences before and context_window_after after
+        for neighbor_idx = math.max(1, idx - context_window_before), math.min(#all_sentences, idx + context_window_after) do
+            if not expanded_set[neighbor_idx] then
+                table.insert(expanded_indices, neighbor_idx)
+                expanded_set[neighbor_idx] = true
+            end
+        end
+    end
+
+    -- Sort by document order
+    table.sort(expanded_indices)
+
+    -- Build the expanded context from the expanded indices
+    local expanded_sentences = {}
+    for _, idx in ipairs(expanded_indices) do
+        table.insert(expanded_sentences, all_sentences[idx])
+    end
+
+    return expanded_sentences
+end
+
 -- Filter text to find sentences containing the highlighted term with surrounding context
-local function filterTextForTerm(text, highlighted_term, language_code)
+local function filterTextForTerm(text, highlighted_term, language_code, configuration)
     if not text or not highlighted_term or highlighted_term == "" then
         return nil
     end
@@ -70,7 +110,7 @@ local function filterTextForTerm(text, highlighted_term, language_code)
     end
 
     -- Include larger context sentences around matches for better coverage
-    local context_window = 5 -- sentences before and after (increased from 2)
+    local context_window = koutil.tableGetValue(CONFIGURATION, "features", "term_filter_context_window") or 5 -- sentences before and after
     local selected_indices = {}
 
     for _, idx in ipairs(matching_indices) do
@@ -164,69 +204,128 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     -- Get context for the selected word
     local prev_context, next_context = "", ""
     local context_text = ""
+    local context_sentence_count = 0
     local dict_language = assistant.settings:readSetting("response_language") or assistant.ui_language
 
     if prompt_type == "term_xray" then
+        -- Show loading dialog immediately to avoid app appearing frozen during LexRank processing
+        local context_loading_msg = InfoMessage:new{
+            icon = "book.opened",
+            text = _("Analyzing book context for Term X-Ray...")
+        }
+        UIManager:show(context_loading_msg)
+        UIManager:forceRePaint()  -- Force immediate display before blocking LexRank operation
+
         -- For term_xray, use LexRank to extract relevant context from book text
+        -- OPTIMIZED: Single LexRank call with score-based filtering (instead of 3 separate calls)
         local LexRank = require("assistant_lexrank")
+        local LexRankLanguages = require("assistant_lexrank_languages")
 
         -- Get book text up to current reading position
         local book_text = assistant_utils.extractBookTextForAnalysis(CONFIGURATION, ui)
 
         if book_text and #book_text > 100 then
-            -- Two-stage ranking approach for comprehensive context
-            local context_sentences = {}
+            -- Tokenize sentences once (will be reused for all filtering and context expansion)
+            local language_module = LexRankLanguages.get_language_module(dict_language)
+            local all_sentences = {}
+            local current_sentence = ""
+            local delim_pattern = "[" .. table.concat(language_module.sentence_delimiters, "") .. "]"
 
-            -- Stage 1: Search for sentences containing the highlighted term
-            local filtered_text = filterTextForTerm(book_text, highlightedText, dict_language)
+            for i = 1, #book_text do
+                local char = book_text:sub(i, i)
+                current_sentence = current_sentence .. char
 
-            if filtered_text and #filtered_text > 100 then
-                -- Get relevant sentences using LexRank on term-specific text
-                local term_ranked_sentences = LexRank.rank_sentences(filtered_text, 0.05, 0.1, dict_language) -- Lower threshold
-
-                -- Add these high-relevance sentences
-                for _, sentence in ipairs(term_ranked_sentences) do
-                    table.insert(context_sentences, sentence)
+                if char:match(delim_pattern) then
+                    local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
+                    if #trimmed >= language_module.min_sentence_length then
+                        table.insert(all_sentences, trimmed)
+                    end
+                    current_sentence = ""
                 end
             end
 
-            -- Stage 2: Get additional general context from the full book text
-            -- Use more aggressive parameters to get more sentences
-            local general_ranked_sentences = LexRank.rank_sentences(book_text, 0.05, 0.1, dict_language) -- Lower threshold
-
-            -- Add general context sentences, avoiding duplicates
-            local seen_sentences = {}
-            for _, sentence in ipairs(context_sentences) do
-                seen_sentences[sentence] = true
+            -- Add remaining text as sentence if it's long enough
+            local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
+            if #trimmed >= language_module.min_sentence_length then
+                table.insert(all_sentences, trimmed)
             end
 
-            local additional_count = 0
-            local max_additional = math.floor(#context_sentences * 1.5) -- Add up to 150% more context
+            -- OPTIMIZED: Single LexRank call with return_with_metadata=true
+            -- Run with the lowest threshold to get all candidates with scores
+            local threshold_very_inclusive = koutil.tableGetValue(CONFIGURATION, "features", "lexrank_threshold_very_inclusive") or 0.005
+            local all_candidates = LexRank.rank_sentences(book_text, threshold_very_inclusive, 0.1, dict_language, CONFIGURATION.features, true)
 
-            for _, sentence in ipairs(general_ranked_sentences) do
-                if not seen_sentences[sentence] and additional_count < max_additional then
-                    table.insert(context_sentences, sentence)
-                    additional_count = additional_count + 1
+            -- Filter candidates at different levels using their scores (no re-tokenization needed!)
+            local max_characters = koutil.tableGetValue(CONFIGURATION, "features", "term_xray_max_characters") or 100000
+            local selected_indices = {}
+            local seen_indices = {}
+
+            if all_candidates and #all_candidates > 0 then
+                -- Calculate score threshold for term-specific sentences
+                local threshold_term_specific = koutil.tableGetValue(CONFIGURATION, "features", "lexrank_threshold_term_specific") or 0.01
+                local threshold_general = koutil.tableGetValue(CONFIGURATION, "features", "lexrank_threshold_general") or 0.01
+
+                -- Stage 1: Find term-specific matches and add high-scoring sentence around them
+                local filtered_text = filterTextForTerm(book_text, highlightedText, dict_language, CONFIGURATION)
+                if filtered_text and #filtered_text > 100 then
+                    for _, candidate in ipairs(all_candidates) do
+                        -- Check if sentence appears in filtered (term-specific) text
+                        if filtered_text:find(candidate.sentence, 1, true) and candidate.score >= threshold_term_specific then
+                            if not seen_indices[candidate.index] then
+                                table.insert(selected_indices, candidate.index)
+                                seen_indices[candidate.index] = true
+                            end
+                        end
+                    end
                 end
-            end
 
-            -- If we still don't have enough context, lower the bar even more
-            if #context_sentences < 150 then -- Target at least 150 sentences for rich context
-                local very_inclusive_sentences = LexRank.rank_sentences(book_text, 0.02, 0.1, dict_language) -- Very low threshold
+                -- Stage 2: Add high-scoring general context sentences
+                for _, candidate in ipairs(all_candidates) do
+                    if not seen_indices[candidate.index] and candidate.score >= threshold_general then
+                        table.insert(selected_indices, candidate.index)
+                        seen_indices[candidate.index] = true
+                    end
+                end
 
-                for _, sentence in ipairs(very_inclusive_sentences) do
-                    if not seen_sentences[sentence] and #context_sentences < 200 then -- Cap at 200 sentences
-                        table.insert(context_sentences, sentence)
-                        seen_sentences[sentence] = true
+                -- Stage 3: Add remaining candidates for comprehensive coverage
+                for _, candidate in ipairs(all_candidates) do
+                    if not seen_indices[candidate.index] then
+                        table.insert(selected_indices, candidate.index)
+                        seen_indices[candidate.index] = true
                     end
                 end
             end
 
+            -- Sort indices to maintain document order
+            table.sort(selected_indices)
+
+            -- OPTIMIZED: Expand context using indices (no re-tokenization!)
+            local context_before = koutil.tableGetValue(CONFIGURATION, "features", "term_xray_context_sentences_before") or 5
+            local context_after = koutil.tableGetValue(CONFIGURATION, "features", "term_xray_context_sentences_after") or 5
+            local context_sentences = expandContextWithSurroundings(
+                all_sentences,
+                selected_indices,
+                context_before,
+                context_after
+            )
+
+            -- Concatenate context sentences without numbering
+            -- Sentences are sent in chronological order from the book, which the LLM is instructed to consider
             context_text = table.concat(context_sentences, " ")
+
+            -- Truncate context to max_characters limit
+            if #context_text > max_characters then
+                context_text = context_text:sub(1, max_characters)
+            end
+
+            context_sentence_count = #context_sentences
         else
             -- Fallback to standard context if book text is too short
             context_text = prev_context .. highlightedText .. next_context
         end
+
+        -- Close the context loading dialog (LexRank processing is complete)
+        UIManager:close(context_loading_msg)
     else
         -- Standard dictionary context extraction
         if ui.highlight and ui.highlight.getSelectedWordContext then
@@ -295,6 +394,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             content = string.gsub(user_prompt, "{(%w+)}", {
                     language = dict_language,
                     context = context_content,
+                    context_sentence_count = context_sentence_count,
                     highlight = highlightedText,
                     title = book_title,
                     author = book_author,
