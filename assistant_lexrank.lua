@@ -3,22 +3,52 @@ local LexRankLanguages = require("assistant_lexrank_languages")
 -- Lua implementation of the LexRank algorithm for sentence ranking
 local LexRank = {}
 
--- Configuration constants
-local CONFIG = {
-    DEFAULT_THRESHOLD = 0.1,
-    DEFAULT_EPSILON = 0.1,
-    DEFAULT_LANGUAGE = "en",
-    MAX_SENTENCES_FOR_FULL_ANALYSIS = 200,
-    MAX_ITERATIONS = 100,
-    CONVERGENCE_CHECK_FREQUENCY = 5,
-    MIN_SELECTION_PERCENTAGE = 0.6,
-    MAX_SELECTION_PERCENTAGE = 0.8,
-    SELECTION_THRESHOLD_FACTOR = 0.5,
-    ALTERNATIVE_THRESHOLD_FACTOR = 0.6,
-    MIN_SENTENCES_TARGET = 5
-}
+-- Default configuration constants (can be overridden by CONFIGURATION.features from user config)
+local function get_default_config()
+    return {
+        DEFAULT_THRESHOLD = 0.1,
+        DEFAULT_EPSILON = 0.1,
+        DEFAULT_LANGUAGE = "en",
+        MAX_SENTENCES_FOR_FULL_ANALYSIS = 200,
+        MAX_ITERATIONS = 100,
+        CONVERGENCE_CHECK_FREQUENCY = 5,
+        MIN_SELECTION_PERCENTAGE = 0.7,        -- Increased from 0.6 to 70%
+        MAX_SELECTION_PERCENTAGE = 0.85,       -- Increased from 0.8 to 85%
+        SELECTION_THRESHOLD_FACTOR = 0.4,      -- Lowered from 0.5 (more inclusive)
+        ALTERNATIVE_THRESHOLD_FACTOR = 0.5,    -- Lowered from 0.6 (more inclusive)
+        MIN_SENTENCES_TARGET = 5,
+        ENTITY_BOOST_FACTOR = 0.2,             -- 20% boost for sentences with named entities
+        FIRST_MENTION_BOOST_FACTOR = 0.35,     -- 35% boost for first mention of entities
+        POSITION_BOOST_FACTOR = 0.1             -- 10% boost for early sentences (intro content)
+    }
+end
 
--- Language-aware sentence tokenization
+-- Initialize CONFIG with defaults, will be merged with user config overrides
+local CONFIG = get_default_config()
+
+-- Merge user configuration overrides with defaults
+local function merge_config_overrides(user_config)
+    if not user_config then
+        return CONFIG
+    end
+
+    local merged = get_default_config()
+
+    -- Map user-provided keys to CONFIG keys
+    if user_config.lexrank_max_sentences then
+        merged.MAX_SENTENCES_FOR_FULL_ANALYSIS = user_config.lexrank_max_sentences
+    end
+    if user_config.lexrank_min_selection_percentage then
+        merged.MIN_SELECTION_PERCENTAGE = user_config.lexrank_min_selection_percentage
+    end
+    if user_config.lexrank_max_selection_percentage then
+        merged.MAX_SELECTION_PERCENTAGE = user_config.lexrank_max_selection_percentage
+    end
+
+    return merged
+end
+
+-- Language-aware sentence tokenization (optimized for performance)
 local function tokenize_sentences(text, language_module)
     if not text or text == "" then
         return {}
@@ -27,26 +57,31 @@ local function tokenize_sentences(text, language_module)
     -- Build pattern for sentence delimiters
     local delim_pattern = "[" .. table.concat(language_module.sentence_delimiters, "") .. "]"
     local sentences = {}
-    local current_sentence = ""
+    local sentence_start = 1
 
+    -- Scan through text looking for sentence delimiters
     for i = 1, #text do
         local char = text:sub(i, i)
-        current_sentence = current_sentence .. char
 
         if char:match(delim_pattern) then
-            -- Check if this is end of sentence (not in abbreviation)
-            local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
+            -- Extract sentence from start to current position
+            local sentence = text:sub(sentence_start, i)
+            -- Trim whitespace
+            local trimmed = sentence:gsub("^%s*(.-)%s*$", "%1")
             if #trimmed >= language_module.min_sentence_length then
                 table.insert(sentences, trimmed)
             end
-            current_sentence = ""
+            sentence_start = i + 1
         end
     end
 
     -- Add remaining text as sentence if it's long enough
-    local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
-    if #trimmed >= language_module.min_sentence_length then
-        table.insert(sentences, trimmed)
+    if sentence_start <= #text then
+        local sentence = text:sub(sentence_start)
+        local trimmed = sentence:gsub("^%s*(.-)%s*$", "%1")
+        if #trimmed >= language_module.min_sentence_length then
+            table.insert(sentences, trimmed)
+        end
     end
 
     return sentences
@@ -68,6 +103,42 @@ local function tokenize_words(sentence, language_module)
         end
         return words
     end
+end
+
+-- Extract named entities (proper nouns) from a sentence (optimized)
+-- Returns a table of capitalized words that are likely proper nouns
+-- Uses language-specific entity pattern for proper noun detection
+local function extract_named_entities(sentence, language_module)
+    if not sentence or sentence == "" then
+        return {}
+    end
+
+    local entities = {}
+    local entity_map = {}  -- Track unique entities
+    local word_index = 0
+
+    -- Get entity pattern from language module, fallback to English if not specified
+    local entity_pattern = (language_module and language_module.entity_pattern) or "^[A-Z]"
+
+    -- Find capitalized words (potential proper nouns) without intermediate table
+    for word in sentence:gmatch("%w+") do
+        word_index = word_index + 1
+
+        -- Check if word starts with capital letter (pattern from language) and is not common abbreviations
+        if word:match(entity_pattern) and #word >= 2 then
+            -- Skip if first word in sentence (could be capitalized just for grammar)
+            -- unless it's part of a multi-word entity or all caps
+            if word_index > 1 or word:match("^[A-Z][A-Z]+") or (word_index == 1 and #word > 2 and word:match("[A-Z][a-z]")) then
+                local normalized = word:lower()
+                if not entity_map[normalized] then
+                    entity_map[normalized] = word
+                    table.insert(entities, word)
+                end
+            end
+        end
+    end
+
+    return entities
 end
 
 -- Calculate term frequency for a sentence
@@ -115,28 +186,86 @@ local function calculate_idf(sentences_words, total_sentences)
     return idf
 end
 
--- Calculate cosine similarity between two sentences
+-- Track entities and their first occurrences across sentences
+-- Also caches entity results for each sentence to avoid re-extraction
+local function track_entities(sentences, language_module)
+    local entity_tracker = {
+        entities = {},           -- Map of normalized entity -> original form
+        first_occurrence = {},   -- Map of normalized entity -> sentence index
+        sentence_entities = {}   -- Cache of entities for each sentence [index] = {entities}
+    }
+
+    for i, sentence in ipairs(sentences) do
+        local entities = extract_named_entities(sentence, language_module)
+        entity_tracker.sentence_entities[i] = entities  -- Cache results
+
+        for _, entity in ipairs(entities) do
+            local normalized = entity:lower()
+            if not entity_tracker.entities[normalized] then
+                entity_tracker.entities[normalized] = entity
+                entity_tracker.first_occurrence[normalized] = i
+            end
+        end
+    end
+
+    return entity_tracker
+end
+
+-- Calculate entity boost for a sentence based on named entities it contains
+-- Uses cached entity results to avoid re-extraction
+local function calculate_entity_boost(entity_tracker, sentence_index, total_sentences)
+    local boost = 0
+    local entities = entity_tracker.sentence_entities[sentence_index] or {}
+
+    if #entities > 0 then
+        -- Base boost for containing any entity
+        boost = CONFIG.ENTITY_BOOST_FACTOR
+    end
+
+    -- Additional boost for first mention of entities
+    for _, entity in ipairs(entities) do
+        local normalized = entity:lower()
+        if entity_tracker.first_occurrence[normalized] == sentence_index then
+            boost = boost + CONFIG.FIRST_MENTION_BOOST_FACTOR
+        end
+    end
+
+    -- Small position-based boost for early sentences (likely intro/context)
+    if sentence_index <= math.ceil(total_sentences * 0.15) then
+        boost = boost + CONFIG.POSITION_BOOST_FACTOR
+    end
+
+    return boost
+end
+
+-- Calculate cosine similarity between two sentences (optimized for memory)
 local function cosine_similarity(tf1, tf2, idf)
     local dot_product = 0
     local norm1 = 0
     local norm2 = 0
 
-    -- Get all unique words from both sentences
-    local all_words = {}
-    for word, _ in pairs(tf1) do
-        all_words[word] = true
-    end
-    for word, _ in pairs(tf2) do
-        all_words[word] = true
-    end
-
-    for word, _ in pairs(all_words) do
-        local tfidf1 = (tf1[word] or 0) * (idf[word] or 0)
-        local tfidf2 = (tf2[word] or 0) * (idf[word] or 0)
-
-        dot_product = dot_product + (tfidf1 * tfidf2)
+    -- Process tf1 entries and compute their contribution
+    for word, tf_val in pairs(tf1) do
+        local idf_val = idf[word] or 0
+        local tfidf1 = tf_val * idf_val
         norm1 = norm1 + (tfidf1 * tfidf1)
-        norm2 = norm2 + (tfidf2 * tfidf2)
+
+        -- Check if word exists in tf2
+        local tf2_val = tf2[word]
+        if tf2_val then
+            local tfidf2 = tf2_val * idf_val
+            dot_product = dot_product + (tfidf1 * tfidf2)
+            norm2 = norm2 + (tfidf2 * tfidf2)
+        end
+    end
+
+    -- Process tf2 entries that weren't in tf1
+    for word, tf_val in pairs(tf2) do
+        if not tf1[word] then
+            local idf_val = idf[word] or 0
+            local tfidf2 = tf_val * idf_val
+            norm2 = norm2 + (tfidf2 * tfidf2)
+        end
     end
 
     if norm1 > 0 and norm2 > 0 then
@@ -156,23 +285,64 @@ local function initialize_parameters(threshold, epsilon, language_code)
 end
 
 -- Sample sentences for performance when dealing with very long texts
-local function sample_large_text(sentences, max_sentences)
+-- Prioritizes keeping sentences with named entities to preserve context
+-- Uses pre-cached entity information from entity_tracker
+-- Maintains document order in output
+local function sample_large_text(sentences, entity_tracker, max_sentences)
     if #sentences <= max_sentences then
-        return sentences, sentences
+        return sentences
     end
 
-    local sample_sentences = {}
-    local step = math.floor(#sentences / max_sentences)
+    -- First pass: identify sentences with entities using cached results
+    local entity_indices = {}
 
-    for i = 1, #sentences, step do
-        table.insert(sample_sentences, sentences[i])
-        -- Include next sentence to maintain some context
-        if i + 1 <= #sentences then
-            table.insert(sample_sentences, sentences[i + 1])
+    for i = 1, #sentences do
+        local entities = entity_tracker.sentence_entities[i]
+        if entities and #entities > 0 then
+            table.insert(entity_indices, i)
         end
     end
 
-    return sample_sentences, sentences
+    -- Calculate how many non-entity sentences we can include
+    local max_entity_to_keep = math.floor(max_sentences * 0.6)
+    local max_non_entity = max_sentences - math.min(#entity_indices, max_entity_to_keep)
+
+    -- Use a set to track which sentence indices to keep (for O(1) lookup)
+    local sampled_set = {}  -- Hash set: sampled_set[original_index] = true
+    local sampled_count = 0
+
+    -- Mark entity sentences for inclusion (up to 60% of max)
+    local entity_count = 0
+    for _, idx in ipairs(entity_indices) do
+        if entity_count < max_entity_to_keep then
+            sampled_set[idx] = true
+            sampled_count = sampled_count + 1
+            entity_count = entity_count + 1
+        end
+    end
+
+    -- Sample remaining sentences with step pattern, avoiding duplicates
+    local non_entity_sampled = 0
+    local step = math.floor(#sentences / max_non_entity)
+    if step < 1 then step = 1 end
+
+    for i = 1, #sentences, step do
+        if non_entity_sampled < max_non_entity and not sampled_set[i] then
+            sampled_set[i] = true
+            sampled_count = sampled_count + 1
+            non_entity_sampled = non_entity_sampled + 1
+        end
+    end
+
+    -- Build output preserving original document order
+    local sampled = {}
+    for i = 1, #sentences do
+        if sampled_set[i] then
+            table.insert(sampled, sentences[i])
+        end
+    end
+
+    return sampled
 end
 
 -- Build TF-IDF weighted similarity matrix between sentences
@@ -205,14 +375,16 @@ local function build_similarity_matrix(sentences_words, total_sentences)
     return similarity_matrix
 end
 
--- Apply threshold and normalize similarity matrix by degrees
+-- Apply threshold and normalize similarity matrix by degrees (optimized single pass)
 local function normalize_similarity_matrix(similarity_matrix, threshold)
     local total_sentences = #similarity_matrix
     local degrees = {}
 
-    -- Apply threshold and calculate degrees
+    -- Combined pass: threshold, count degrees, and normalize in one loop
     for i = 1, total_sentences do
         degrees[i] = 0
+
+        -- First, count edges > threshold
         for j = 1, total_sentences do
             if similarity_matrix[i][j] > threshold then
                 similarity_matrix[i][j] = 1.0
@@ -228,17 +400,18 @@ local function normalize_similarity_matrix(similarity_matrix, threshold)
         end
     end
 
-    -- Normalize similarity matrix by degrees
+    -- Normalize by degree (separate pass - must calculate all degrees first)
     for i = 1, total_sentences do
+        local degree_inv = 1.0 / degrees[i]  -- Pre-compute inverse to avoid division in loop
         for j = 1, total_sentences do
-            similarity_matrix[i][j] = similarity_matrix[i][j] / degrees[i]
+            similarity_matrix[i][j] = similarity_matrix[i][j] * degree_inv
         end
     end
 
     return similarity_matrix
 end
 
--- Run PageRank power iteration algorithm
+-- Run PageRank power iteration algorithm with optimized convergence detection
 local function run_power_iteration(similarity_matrix, epsilon)
     local total_sentences = #similarity_matrix
 
@@ -253,6 +426,14 @@ local function run_power_iteration(similarity_matrix, epsilon)
     local max_iterations = math.min(CONFIG.MAX_ITERATIONS, total_sentences * 2)
     local iteration = 0
 
+    -- Adaptive convergence check frequency: check every iteration for small texts, less often for large texts
+    local check_frequency = CONFIG.CONVERGENCE_CHECK_FREQUENCY
+    if total_sentences < 50 then
+        check_frequency = 1  -- Check every iteration for small texts
+    elseif total_sentences < 100 then
+        check_frequency = 2  -- Check every 2 iterations for medium texts
+    end
+
     while convergence_measure > epsilon and iteration < max_iterations do
         local next_scores = {}
 
@@ -266,11 +447,23 @@ local function run_power_iteration(similarity_matrix, epsilon)
 
         iteration = iteration + 1
 
-        -- Check convergence less frequently for better performance
-        if iteration % CONFIG.CONVERGENCE_CHECK_FREQUENCY == 0 then
+        -- Check convergence with adaptive frequency
+        if iteration % check_frequency == 0 then
             convergence_measure = 0
+            local total_score = 0
+
             for i = 1, total_sentences do
                 convergence_measure = convergence_measure + math.abs(next_scores[i] - score_vector[i])
+                total_score = total_score + next_scores[i]
+            end
+
+            -- Use relative convergence for better early stopping
+            -- Stop if absolute change is small relative to total score (prevents oscillation)
+            if total_score > 0 then
+                local relative_convergence = convergence_measure / total_score
+                if relative_convergence < epsilon * 0.1 then
+                    convergence_measure = 0  -- Force exit
+                end
             end
         end
 
@@ -281,20 +474,32 @@ local function run_power_iteration(similarity_matrix, epsilon)
 end
 
 -- Select sentences based on scores using statistical thresholds
-local function select_sentences_by_score(sentences, score_vector)
+-- Applies entity boost to prioritize context about characters and places
+-- Returns table of {sentence, index, score} objects to avoid re-tokenization and enable threshold filtering
+local function select_sentences_by_score(sentences, score_vector, entity_tracker, return_with_metadata)
     local total_sentences = #sentences
 
-    -- Calculate score statistics for better selection
+    -- Apply entity boosting to scores using cached entity data
+    local boosted_scores = {}
+    for i = 1, total_sentences do
+        local boost = 0
+        if entity_tracker then
+            boost = calculate_entity_boost(entity_tracker, i, total_sentences)
+        end
+        boosted_scores[i] = score_vector[i] + boost
+    end
+
+    -- Calculate score statistics for better selection using boosted scores
     local total_score = 0
     for i = 1, total_sentences do
-        total_score = total_score + score_vector[i]
+        total_score = total_score + boosted_scores[i]
     end
     local avg_score = total_score / total_sentences
 
     -- Calculate standard deviation for more nuanced selection
     local variance = 0
     for i = 1, total_sentences do
-        variance = variance + (score_vector[i] - avg_score) ^ 2
+        variance = variance + (boosted_scores[i] - avg_score) ^ 2
     end
     local std_dev = math.sqrt(variance / total_sentences)
 
@@ -304,29 +509,30 @@ local function select_sentences_by_score(sentences, score_vector)
         avg_score * CONFIG.ALTERNATIVE_THRESHOLD_FACTOR
     )
 
-    -- Select sentences above the threshold
+    -- Build candidate list with metadata
+    local candidates = {}
+    for i = 1, total_sentences do
+        table.insert(candidates, {sentence = sentences[i], score = boosted_scores[i], index = i})
+    end
+
+    -- If return_with_metadata is true, return all candidates with their scores for filtering
+    if return_with_metadata then
+        -- Sort by document order (maintain coherence)
+        table.sort(candidates, function(a, b) return a.index < b.index end)
+        return candidates
+    end
+
+    -- Otherwise, apply selection threshold and return just sentences
     local selected_sentences = {}
     for i = 1, total_sentences do
-        if score_vector[i] >= selection_threshold then
+        if boosted_scores[i] >= selection_threshold then
             table.insert(selected_sentences, sentences[i])
         end
     end
 
-    -- If too few sentences, ensure we get at least 60-80% of sentences
+    -- If too few sentences, ensure we get at least 70-85% of sentences
     if #selected_sentences < math.floor(total_sentences * CONFIG.MIN_SELECTION_PERCENTAGE) then
-        local sentence_scores = {}
-        for i = 1, total_sentences do
-            table.insert(sentence_scores, {
-                sentence = sentences[i],
-                score = score_vector[i],
-                index = i
-            })
-        end
-
-        -- Sort by score descending
-        table.sort(sentence_scores, function(a, b) return a.score > b.score end)
-
-        -- Take top 60-80% of sentences
+        -- Calculate target count first
         local target_count = math.max(
             math.floor(total_sentences * CONFIG.MIN_SELECTION_PERCENTAGE),
             math.min(
@@ -335,9 +541,21 @@ local function select_sentences_by_score(sentences, score_vector)
             )
         )
 
+        -- Sort by score descending to get top candidates
+        table.sort(candidates, function(a, b) return a.score > b.score end)
+
+        -- Extract just the top target_count sentences, then re-sort by document order
+        local selected_with_indices = {}
+        for i = 1, math.min(target_count, #candidates) do
+            table.insert(selected_with_indices, candidates[i])
+        end
+
+        -- Sort by original document order to maintain coherence
+        table.sort(selected_with_indices, function(a, b) return a.index < b.index end)
+
         selected_sentences = {}
-        for i = 1, math.min(target_count, total_sentences) do
-            table.insert(selected_sentences, sentence_scores[i].sentence)
+        for _, item in ipairs(selected_with_indices) do
+            table.insert(selected_sentences, item.sentence)
         end
     end
 
@@ -345,7 +563,13 @@ local function select_sentences_by_score(sentences, score_vector)
 end
 
 -- Main LexRank function
-function LexRank.rank_sentences(text, threshold, epsilon, language_code)
+-- Optional user_config parameter to override default configuration values
+-- Optional return_with_metadata: if true, returns {sentence, index, score} objects instead of just sentences
+-- This allows the caller to filter results at different thresholds without re-running LexRank
+function LexRank.rank_sentences(text, threshold, epsilon, language_code, user_config, return_with_metadata)
+    -- Merge user configuration overrides with defaults
+    CONFIG = merge_config_overrides(user_config)
+
     -- Initialize parameters with defaults
     local params = initialize_parameters(threshold, epsilon, language_code)
 
@@ -368,10 +592,16 @@ function LexRank.rank_sentences(text, threshold, epsilon, language_code)
         return {sentences[1]}
     end
 
-    -- Performance optimization for very long texts
-    local sampled_sentences, _ = sample_large_text(sentences, CONFIG.MAX_SENTENCES_FOR_FULL_ANALYSIS)
-    sentences = sampled_sentences
+    -- Track entities before sampling to ensure important entities are preserved
+    local entity_tracker = track_entities(sentences, language_module)
+
+    -- Performance optimization for very long texts (pass entity_tracker to use cached entities)
+    sentences = sample_large_text(sentences, entity_tracker, CONFIG.MAX_SENTENCES_FOR_FULL_ANALYSIS)
     total_sentences = #sentences
+
+    -- CRITICAL: Rebuild entity tracker after sampling because indices have changed
+    -- The original entity_tracker indices referred to pre-sampled sentence positions
+    entity_tracker = track_entities(sentences, language_module)
 
     -- Tokenize words for each sentence
     local sentences_words = {}
@@ -389,8 +619,8 @@ function LexRank.rank_sentences(text, threshold, epsilon, language_code)
     -- Run PageRank power iteration
     local score_vector = run_power_iteration(similarity_matrix, params.epsilon)
 
-    -- Select sentences based on scores
-    return select_sentences_by_score(sentences, score_vector)
+    -- Select sentences based on scores with entity boosting
+    return select_sentences_by_score(sentences, score_vector, entity_tracker, return_with_metadata)
 end
 
 return LexRank
