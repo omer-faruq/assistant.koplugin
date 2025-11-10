@@ -100,7 +100,7 @@ The context includes not only sentences explicitly mentioning "{highlight}" but 
 
 ## Formatting Requirements
 
-**Language:** {language}
+Most importantly, **Respond in this language:** {language}
 
 **Writing Style:**
 - Write in clear, accessible language—avoid jargon
@@ -108,6 +108,7 @@ The context includes not only sentences explicitly mentioning "{highlight}" but 
 - Ground every claim in the provided context (cite implicitly: "As shown in the context..." is unnecessary unless context is unclear)
 - If making inferences beyond the context, explicitly state: "Based on the context provided..." or "Inferred from..."
 - Do NOT use general knowledge about this book if not shown in the context
+- **Respond in this language:** {language}
 
 **Structure:**
 - Use headers (###) to organize sections
