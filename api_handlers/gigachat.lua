@@ -3,13 +3,16 @@ local json = require("json")
 local koutil = require("util")
 local logger = require("logger")
 
-local GigaChatHandler = BaseHandler:new()
 local DEFAULT_UPDATE_INTERVAL = 3
 local DEFAULT_TOKEN_EXPIRY = 1800 -- 30 minutes
+-- GigaChat API requires UUID in RqUID header, but accepts an empty UUID
+local UUID_EMPTY = "00000000-0000-0000-0000-000000000000"
+
+local GigaChatHandler = BaseHandler:new()
 
 function GigaChatHandler:query(message_history, gigachat_settings)
-    if not gigachat_settings or not (gigachat_settings.api_key or gigachat_settings.authorizationKey) then
-        return "Error: Missing API key/authorizationKey in configuration"
+    if not gigachat_settings or not gigachat_settings.base_url then
+        return "Error: Missing base_url in configuration"
     end
 
     local token, err = self:getAccessToken(gigachat_settings)
@@ -30,6 +33,7 @@ function GigaChatHandler:query(message_history, gigachat_settings)
     local headers = {
         ["Content-Type"] = "application/json",
         ["Authorization"] = "Bearer " .. token,
+        ["RqUID"] = UUID_EMPTY,
     }
 
     if requestBodyTable.stream then
@@ -108,23 +112,23 @@ end
 --- @param gigachat_settings table: GigaChat settings
 --- @return table? response, string? error
 function GigaChatHandler:authorize(gigachat_settings)
-    if gigachat_settings.authUrl then
-        return nil, "Missing authUrl in gigachat settings"
+    if not gigachat_settings or not gigachat_settings.auth_url then
+        return nil, "Missing auth_url in gigachat settings"
     end
 
-    local authKey = gigachat_settings.authorizationKey
-    if not authKey then
-        return nil, "Missing authorizationKey in gigachat settings"
+    if not gigachat_settings.api_key then
+        return nil, "Missing authorizationKey (or api_key) in gigachat settings"
     end
 
     local headers = {
         ["Content-Type"] = "application/x-www-form-urlencoded",
-        ["Authorization"] = "Bearer " .. authKey,
+        ["Authorization"] = "Basic " .. gigachat_settings.api_key,
+        ["RqUID"] = UUID_EMPTY,
     }
 
     local body = "scope=GIGACHAT_API_PERS"
 
-    local success, code, response = self:makeRequest(gigachat_settings.authUrl, headers, body, 20, 45)
+    local success, code, response = self:makeRequest(gigachat_settings.auth_url, headers, body, 20, 45)
     if not success then
         return nil, string.format("Auth request failed (%s): %s", tostring(code), tostring(response))
     end
@@ -134,13 +138,15 @@ function GigaChatHandler:authorize(gigachat_settings)
         return nil, "Failed to parse auth response: " .. tostring(response)
     end
 
-    if not parsed.access_token then
+    if not parsed.access_token or type(parsed.access_token) ~= "string" then
         return nil, "Auth response missing access_token"
     end
 
+    local expiresAt = parsed.expires_at and math.floor(parsed.expires_at / 1000) or os.time() + DEFAULT_TOKEN_EXPIRY
+
     return {
         accessToken = parsed.access_token,
-        expiresAt = parsed.expires_at or os.time() + DEFAULT_TOKEN_EXPIRY
+        expiresAt = expiresAt,
     }
 end
 
