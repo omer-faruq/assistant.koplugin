@@ -66,6 +66,13 @@ local CONFIGURATION = {
                 thinking_budget = 0
             }
         },
+        gigachat = {
+            model = "GigaChat-2",
+            base_url = "https://gigachat.devices.sberbank.ru/api/v1/chat/completions",
+            auth_url = "https://ngw.devices.sberbank.ru:9443/api/v2/oauth",
+            api_key = "your-authorization-key",
+            additional_parameters = {}
+        },
         openrouter = {
             model = "google/gemini-2.0-flash-exp:free", -- model list: https://openrouter.ai/models?order=top-weekly
             base_url = "https://openrouter.ai/api/v1/chat/completions",
