@@ -482,13 +482,13 @@ The following sentences from the book contain or relate to "{word}":
 
 ## Analysis: Provide these sections
 
-- *%1*: Vocabulary in original conjugation if different from the form in the sentence.
-- *%2*: Up to three synonyms for the word, noting which are most relevant to the book's usage (if context shows a specific usage).
-- *%3*: Literal meaning of the expression without any context. Answer in {language} language.
-- *%4*: Translation of the whole sentence containing the word. Highlight in bold the word being translated. Answer in {language} language.
-- *%5*: How "{word}" is specifically used in THIS BOOK, based on the context provided. Does the book use it in a standard way or differently? What does this usage suggest about characters, tone, or themes? Answer in {language} language.
-- *%6*: Another example sentence showing the word's use. Prefer examples from literature in the same genre as "{title}" if possible. Answer in the original language.
-- *%7*: Origins and etymology of the word, including how its meaning has evolved over time (for modern languages) or its significance in its original language (for constructed/archaic words). Answer in {language} language.
+- **%1**: Vocabulary in original conjugation if different from the form in the sentence.
+- **%2**: Up to three synonyms for the word, noting which are most relevant to the book's usage (if context shows a specific usage).
+- **%3**: Literal meaning of the expression without any context. Answer in {language} language.
+- **%4**: Translation of the whole sentence containing the word. Highlight in bold the word being translated. Answer in {language} language.
+- **%5**: How "{word}" is specifically used in THIS BOOK, based on the context provided. Does the book use it in a standard way or differently? What does this usage suggest about characters, tone, or themes? Answer in {language} language.
+- **%6**: Another example sentence showing the word's use. Prefer examples from literature in the same genre as "{title}" if possible. Answer in the original language.
+- **%7**: Origins and etymology of the word, including how its meaning has evolved over time (for modern languages) or its significance in its original language (for constructed/archaic words). Answer in {language} language.
 
 ## Important Guidelines
 
