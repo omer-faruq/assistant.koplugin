@@ -70,8 +70,19 @@ function Querier:load_model(provider_name)
     if success then
         self.handler = handler
         self.handler_name = handler_name
-        self.provider_settings = provider_settings
+        -- Shallow copy to avoid mutating CONFIGURATION
+        self.provider_settings = {}
+        for k, v in pairs(provider_settings) do
+            self.provider_settings[k] = v
+        end
         self.provider_name = provider_name
+        -- Apply saved OpenRouter model override
+        if handler_name == "openrouter" then
+            local saved_model = self.settings:readSetting("openrouter_model_" .. provider_name)
+            if saved_model and saved_model ~= "" then
+                self.provider_settings.model = saved_model
+            end
+        end
         return true
     else
         local err = T(_("The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."),

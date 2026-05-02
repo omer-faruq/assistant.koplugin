@@ -197,11 +197,17 @@ function SettingsDialog:init()
     -- action buttons
     self.buttons = {{
         {
+            id = "select_model",
+            text = _("Select Model"),
+            enabled = self.assistant.querier.handler_name == "openrouter",
+            callback = function() self:onSelectModel() end,
+        },
+        {
             id = "close",
             text = _("Close"),
             callback = function() UIManager:close(self) end
         }
-    }}  
+    }}
 
     -- init radio buttons for selecting AI Model provider
     self.radio_buttons = {} -- init radio buttons table
@@ -213,7 +219,13 @@ function SettingsDialog:init()
     for key, tab in ffiutil.orderedPairs(self.CONFIGURATION.provider_settings) do
         if not (FrontendUtil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
             if #buttonrow < columns then
-                local model_name = FrontendUtil.tableGetValue(tab, "model") or FrontendUtil.tableGetValue(tab, "deployment_name") 
+                local model_name
+                if key == self.assistant.querier.provider_name then
+                    model_name = self.assistant.querier.provider_settings.model
+                else
+                    model_name = FrontendUtil.tableGetValue(tab, "model")
+                        or FrontendUtil.tableGetValue(tab, "deployment_name")
+                end
                 local button_text = key
                 if columns == 1 and model_name and model_name ~= "" then
                     button_text = string.format("%s (%s)", key, model_name)
@@ -255,6 +267,7 @@ function SettingsDialog:init()
             self.settings:saveSetting("provider", btn.provider)
             self.assistant.updated = true
             self.assistant.querier:load_model(btn.provider)
+            self:updateSelectModelButton()
         end
     }
     self.layout = {self.layout[#self.layout]} -- keep bottom buttons
@@ -315,6 +328,30 @@ function SettingsDialog:init()
         self.movable,
     }
     self:refocusWidget()
+end
+
+function SettingsDialog:updateSelectModelButton()
+    local btn = self.button_table:getButtonById("select_model")
+    if btn then
+        if self.assistant.querier.handler_name == "openrouter" then
+            btn:enable()
+        else
+            btn:disable()
+        end
+        UIManager:setDirty(self, "ui")
+    end
+end
+
+function SettingsDialog:onSelectModel()
+    UIManager:close(self)
+    local NetworkMgr = require("ui/network/manager")
+    NetworkMgr:runWhenOnline(function()
+        local Trapper = require("ui/trapper")
+        Trapper:wrap(function()
+            local showModelPicker = require("assistant_model_picker")
+            showModelPicker(self.assistant, self.close_callback)
+        end)
+    end)
 end
 
 function SettingsDialog:onCloseWidget()
@@ -505,6 +542,7 @@ configuration.lua is safe, only the settings are purged.]]),
             end
         },
     }
+
     return sub_item_table
 end
 
