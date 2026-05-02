@@ -161,6 +161,29 @@ local CONFIGURATION = {
             --     maxOutputTokens = 500  -- Use "maxOutputTokens" for native Gemini format
             -- }
         },
+        openai_perplexity = {
+            visible = false,                   -- optional, if set to false, will not shown in the profile switch
+            -- Perplexity API is OpenAI-compatible, uses openai handler
+            -- Model list: https://docs.perplexity.ai/guides/model-cards
+            model = "sonar-pro",
+            base_url = "https://api.perplexity.ai/chat/completions",
+            api_key = "pplx-your-api-key",
+            additional_parameters = {
+                temperature = 0.7,
+                max_tokens = 4096
+            }
+        },
+        openai_perplexity_reasoning = {
+            visible = false,                   -- optional, if set to false, will not shown in the profile switch
+            -- Perplexity reasoning models for complex tasks
+            model = "sonar-reasoning-pro",
+            base_url = "https://api.perplexity.ai/chat/completions",
+            api_key = "pplx-your-api-key",
+            additional_parameters = {
+                temperature = 0.7,
+                max_tokens = 8192
+            }
+        },
         ollama = {
             model = "your-preferred-model",        -- model list: https://ollama.com/library
             base_url = "your-ollama-api-endpoint", -- ex: "https://ollama.example.com/api/chat"
