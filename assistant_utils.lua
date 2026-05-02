@@ -31,6 +31,8 @@ local function extractBookTextForAnalysis(CONFIGURATION, ui)
           local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
           if #book_text > max_text_length_for_analysis then
               book_text = book_text:sub(-max_text_length_for_analysis)
+              book_text = book_text:gsub("^[\128-\191]+", "")
+              book_text = util.fixUtf8(book_text, "_")
           end
       else
         -- Extract text from the last n pages up to current reading position for page-based documents
@@ -60,6 +62,8 @@ local function extractBookTextForAnalysis(CONFIGURATION, ui)
         local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
         if #book_text > max_text_length_for_analysis then
             book_text = book_text:sub(-max_text_length_for_analysis)
+            book_text = book_text:gsub("^[\128-\191]+", "")
+            book_text = util.fixUtf8(book_text, "_")
         end
     end
     return book_text
@@ -118,6 +122,8 @@ local function extractHighlightsNotesAndNotebook(CONFIGURATION, ui, include_note
     local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
     if #combined > max_text_length_for_analysis then
         combined = combined:sub(-max_text_length_for_analysis)
+        combined = combined:gsub("^[\128-\191]+", "")
+        combined = util.fixUtf8(combined, "_")
     end
     
     return combined
