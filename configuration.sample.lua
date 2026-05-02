@@ -102,12 +102,28 @@ local CONFIGURATION = {
             }
         },
         deepseek = {
-            model = "deepseek-chat",
+            model = "deepseek-v4-flash",
             base_url = "https://api.deepseek.com/v1/chat/completions",
             api_key = "your-deepseek-api-key",
             additional_parameters = {
                 temperature = 0.7,
-                max_tokens = 4096
+                max_tokens = 4096,
+                -- Thinking mode configuration (optional)
+                -- For DeepSeek-v4, disable thinking mode for faster responses:
+                -- thinking = { type = "disabled" },
+                -- Or enable thinking mode with budget control:
+                -- thinking = { type = "enabled", budget_tokens = 2000 },
+            }
+        },
+        deepseek_fast = {
+            -- DeepSeek with thinking mode disabled for faster responses
+            model = "deepseek-v4-flash",
+            base_url = "https://api.deepseek.com/v1/chat/completions",
+            api_key = "your-deepseek-api-key",
+            additional_parameters = {
+                temperature = 0.7,
+                max_tokens = 4096,
+                thinking = { type = "disabled" }
             }
         },
         ollama = {

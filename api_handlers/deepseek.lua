@@ -15,9 +15,24 @@ function DeepSeekHandler:query(message_history, deepseek_settings)
     local requestBodyTable = {
         model = deepseek_settings.model,
         messages = message_history,
-        stream = koutil.tableGetValue(deepseek_settings, "additional_parameters", "stream") or false,
-        max_tokens = koutil.tableGetValue(deepseek_settings, "additional_parameters", "max_tokens")
     }
+
+    -- Handle additional parameters flexibly
+    if deepseek_settings.additional_parameters then
+        -- Available request body args: https://api-docs.deepseek.com/api/create-chat-completion
+        for _, option in ipairs({"temperature", "top_p", "max_tokens", "max_completion_tokens",
+                                    "frequency_penalty", "presence_penalty", "stop", "stream",
+                                    "thinking", "logprobs", "top_logprobs", "response_format", "tools"}) do
+            if deepseek_settings.additional_parameters[option] then
+                requestBodyTable[option] = deepseek_settings.additional_parameters[option]
+            end
+        end
+    end
+
+    -- Default stream to false if not specified
+    if requestBodyTable.stream == nil then
+        requestBodyTable.stream = false
+    end
 
     local requestBody = json.encode(requestBodyTable)
     local headers = {
