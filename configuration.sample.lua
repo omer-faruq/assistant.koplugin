@@ -102,6 +102,7 @@ local CONFIGURATION = {
             }
         },
         deepseek = {
+            visible = false,                   -- optional, if set to false, will not shown in the profile switch
             model = "deepseek-v4-flash",
             base_url = "https://api.deepseek.com/v1/chat/completions",
             api_key = "your-deepseek-api-key",
@@ -125,6 +126,40 @@ local CONFIGURATION = {
                 max_tokens = 4096,
                 thinking = { type = "disabled" }
             }
+        },
+        gemma = {
+            -- Gemma models via Google's OpenAI-compatible API or other providers
+            -- Automatically detects API type and filters out <thought> tags from Gemma 4 models
+            -- (Gemma 2 models don't have this issue, but handler is safe for both)
+            
+            -- Option 1: Google's OpenAI-compatible API (Recommended for Gemma 4)
+            -- Note: Both endpoints work: /v1beta/openai/ or /v1beta/chat/completions
+            visible = false,                   -- optional, if set to false, will not shown in the profile switch
+            model = "gemma-4-31b-it",
+            base_url = "https://generativelanguage.googleapis.com/v1beta/openai/",   -- Alternative: base_url = "https://generativelanguage.googleapis.com/v1beta/chat/completions",
+            api_key = "your-gemini-api-key",
+            additional_parameters = {
+                temperature = 0.3,
+                max_tokens = 500  -- Use "max_tokens" for OpenAI-compatible format
+            }
+            
+            -- Option 2: Ollama or other OpenAI-compatible API (for Gemma 2)
+            -- model = "gemma-2-9b-it",
+            -- base_url = "http://localhost:11434/v1/chat/completions",
+            -- api_key = "gemma",
+            -- additional_parameters = {
+            --     temperature = 0.7,
+            --     max_tokens = 4096
+            -- }
+            
+            -- Option 3: Native Gemini API format (alternative)
+            -- model = "gemma-4-31b-it",
+            -- base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
+            -- api_key = "your-gemini-api-key",
+            -- additional_parameters = {
+            --     temperature = 0.3,
+            --     maxOutputTokens = 500  -- Use "maxOutputTokens" for native Gemini format
+            -- }
         },
         ollama = {
             model = "your-preferred-model",        -- model list: https://ollama.com/library
