@@ -55,6 +55,19 @@ Create/modify `configuration.lua` as needed.
     - Set your API keys in `provider_settings`.
     - For more advanced configuration, see the Wiki Configuration.lua.
 
+#### Using OpenAI-Compatible APIs
+
+The plugin supports any OpenAI-compatible API through a flexible naming pattern. Configuration keys follow the format `{handler}_{description}`, where:
+- **handler**: The API handler to use (e.g., `openai`, `anthropic`, `gemini`)
+- **description**: Any descriptive name for your configuration (e.g., `perplexity`, `grok`, `local`)
+
+**Examples:**
+- `openai_perplexity` → uses the `openai` handler for Perplexity API
+- `openai_grok` → uses the `openai` handler for Grok API
+- `anthropic_websearch` → uses the `anthropic` handler with web search enabled
+
+You can create multiple configurations using the same handler with different settings. The part before the first underscore determines which handler is used.
+
 Here's the minimum working example:
 
 ```lua

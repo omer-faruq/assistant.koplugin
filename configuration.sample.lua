@@ -5,6 +5,19 @@ local CONFIGURATION = {
     provider = "openai",
 
     -- Provider-specific settings
+    --
+    -- NAMING PATTERN: Configuration keys follow the format {handler}_{description}
+    -- - The part BEFORE the first underscore determines which API handler is used
+    -- - The part AFTER the underscore is just a descriptive name (can be anything)
+    --
+    -- Examples:
+    --   openai_perplexity  → uses 'openai' handler for Perplexity API
+    --   openai_grok        → uses 'openai' handler for Grok API
+    --   anthropic_websearch → uses 'anthropic' handler with custom settings
+    --
+    -- This allows you to create multiple configurations using the same handler
+    -- with different models, endpoints, or parameters.
+    --
     provider_settings = {
         openai = {
             default = true,        -- optional, if provider above is not set, will try to find one with `default =  true`
