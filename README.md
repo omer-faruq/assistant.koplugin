@@ -118,6 +118,12 @@ You can set up a long-press gesture to open the AI Dictionary instantly, bypassi
 
 Now, when you long-press a word, the AI Dictionary will open directly. To use the standard translation feature again, simply uncheck the override option in the Assistant plugin's menu.
 
+#### Dictionary Popup Buttons
+
+The Assistant plugin adds AI-powered buttons (Wikipedia, Term X-Ray, Dictionary, and custom prompts) to the dictionary popup when you look up words.
+
+**Note**: In newer KOReader versions (2026.05+), dictionary popup buttons can be customized via **Dictionary settings → Customize buttons → Max buttons in row**. Increase this value to display multiple plugin buttons on the same row.
+
 ### Tips
 
 - Use **Long-tap** (tap & hold for 3+ secs) on a single word to pop up the highlight menu

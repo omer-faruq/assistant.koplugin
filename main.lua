@@ -646,6 +646,16 @@ function Assistant:init()
   -- Conditionally override translate method based on user setting
   self:syncTranslateOverride()
 
+  -- Register Assistant buttons with new KOReader dict API (PR #15184+)
+  -- Safe no-op on older versions where addToDictButtons doesn't exist.
+  if self.ui and self.ui.dictionary
+      and type(self.ui.dictionary.addToDictButtons) == "function" then
+    local buttons = self:_buildAssistantDictButtons(nil)
+    for _, button in ipairs(buttons) do
+      self.ui.dictionary:addToDictButtons(button)
+    end
+  end
+
 
   self.assistant_dialog = AssistantDialog:new(self, CONFIGURATION)
   
@@ -774,19 +784,25 @@ function Assistant:addMainButton(prompt_idx, prompt)
   end)
 end
 
-function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
-  if not CONFIGURATION then return end
+-- Builds the Assistant button specs for the dict popup.
+-- Used by both the new addToDictButtons API and the legacy onDictButtonsReady hook.
+-- Returns an array of button specs.
+function Assistant:_buildAssistantDictButtons(dict_popup_arg)
+  if not CONFIGURATION then return {} end
 
   local plugin_buttons = {}
+  
   if self.settings:readSetting("dict_popup_show_wikipedia", true) then
     table.insert(plugin_buttons, {
       id = "assistant_wikipedia",
       font_bold = true,
       text = _("Wikipedia") .. " (AI)",
-      callback = function()
+      callback = function(widget_instance)
+          local popup = widget_instance or dict_popup_arg
+          local word = popup and popup.word
           NetworkMgr:runWhenOnline(function()
               Trapper:wrap(function()
-                self.assistant_dialog:showCustomPrompt(dict_popup.word, "wikipedia")
+                self.assistant_dialog:showCustomPrompt(word, "wikipedia")
               end)
           end)
       end,
@@ -798,10 +814,12 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
       id = "assistant_term_xray",
       font_bold = true,
       text = _("Term X-Ray") .. " (AI)",
-      callback = function()
+      callback = function(widget_instance)
+          local popup = widget_instance or dict_popup_arg
+          local word = popup and popup.word
           NetworkMgr:runWhenOnline(function()
               Trapper:wrap(function()
-                showDictionaryDialog(self, dict_popup.word, nil, "term_xray")
+                showDictionaryDialog(self, word, nil, "term_xray")
               end)
           end)
       end,
@@ -813,10 +831,12 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
       id = "assistant_dictionary",
       text = _("Dictionary") .. " (AI)",
       font_bold = true,
-      callback = function()
+      callback = function(widget_instance)
+          local popup = widget_instance or dict_popup_arg
+          local word = popup and popup.word
           NetworkMgr:runWhenOnline(function()
               Trapper:wrap(function()
-                showDictionaryDialog(self, dict_popup.word)
+                showDictionaryDialog(self, word)
               end)
           end)
       end,
@@ -848,10 +868,12 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
         id = "assistant_" .. prompt.id,
         font_bold = true,
         text = (prompt.config.text or prompt.id) .. " (AI)",
-        callback = function()
+        callback = function(widget_instance)
+            local popup = widget_instance or dict_popup_arg
+            local word = popup and popup.word
             NetworkMgr:runWhenOnline(function()
                 Trapper:wrap(function()
-                  self.assistant_dialog:showCustomPrompt(dict_popup.word, prompt.id)
+                  self.assistant_dialog:showCustomPrompt(word, prompt.id)
                 end)
             end)
         end,
@@ -859,8 +881,31 @@ function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
     end
   end
 
+  return plugin_buttons
+end
+
+function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
+  if not CONFIGURATION then return end
+  -- If new KOReader API is present, we already registered at init() time.
+  -- This hook won't be called on new KOReader anyway, but guard for safety.
+  if self.ui and self.ui.dictionary
+      and type(self.ui.dictionary.addToDictButtons) == "function" then
+    return
+  end
+
+  local plugin_buttons = {}
+  local buttons = self:_buildAssistantDictButtons(dict_popup)
+  for _, btn in ipairs(buttons) do
+    table.insert(plugin_buttons, {
+      id = btn.id,
+      font_bold = btn.font_bold,
+      text = btn.text,
+      callback = function() btn.callback(nil) end,
+    })
+  end
+
   if #plugin_buttons > 0 and #dict_buttons > 1 then
-    table.insert(dict_buttons, 2, plugin_buttons) -- add to the last second row of buttons
+    table.insert(dict_buttons, 2, plugin_buttons)
   end
 end
 
