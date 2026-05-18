@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-26 10:22+0800\n"
+        "POT-Creation-Date: 2026-05-18 15:34+0800\n"
         "PO-Revision-Date: 2025-08-22 15:24+0800\n"
         "Last-Translator: GPT-4o 2025-08-22\n"
         "Language-Team: GPT-4o 2025-08-22\n"
@@ -16,7 +16,8 @@ msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:435 ../main.lua:135 ../main.lua:477
+#: ../_meta.lua:4 ../assistant_dialog.lua:457 ../main.lua:138 ../main.lua:306
+#: ../main.lua:590
 msgid   "AI Assistant"
 msgstr  "AI 助理"
 
@@ -24,77 +25,86 @@ msgstr  "AI 助理"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 用 AI 強化你的 KOReader 體驗"
 
-#: ../assistant_dialog.lua:103
+#: ../assistant_dialog.lua:105
 msgid   "(Empty message)"
 msgstr  "（空白訊息）"
 
-#: ../assistant_dialog.lua:114
+#: ../assistant_dialog.lua:116
 msgid   "(No response)"
 msgstr  "（無回應）"
 
-#: ../assistant_dialog.lua:145 ../assistant_quicknote.lua:99
+#: ../assistant_dialog.lua:148 ../assistant_quicknote.lua:99
 #: ../assistant_viewer.lua:569
 msgid   "Highlighted text:"
 msgstr  "劃線文字："
 
-#: ../assistant_dialog.lua:295 ../assistant_dictdialog.lua:120
-#: ../assistant_quicknote.lua:39 ../assistant_settings.lua:90
-#: ../assistant_viewer.lua:671
+#: ../assistant_dialog.lua:313 ../assistant_dictdialog.lua:161
+#: ../assistant_model_picker.lua:164 ../assistant_model_picker.lua:289
+#: ../assistant_model_picker.lua:381 ../assistant_quicknote.lua:39
+#: ../assistant_settings.lua:90 ../assistant_viewer.lua:670
 msgid   "Cancel"
 msgstr  "取消"
 
-#: ../assistant_dialog.lua:302 ../assistant_viewer.lua:681
+#: ../assistant_dialog.lua:320 ../assistant_viewer.lua:680
 msgid   "Ask"
 msgstr  "提問"
 
-#: ../assistant_dialog.lua:315 ../assistant_viewer.lua:687
+#: ../assistant_dialog.lua:333 ../assistant_viewer.lua:686
 msgid   "Enter a question before proceeding."
 msgstr  "請先輸入問題"
 
-#: ../assistant_dialog.lua:399
+#: ../assistant_dialog.lua:420
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "將此按鈕加入劃線選單？"
 
-#: ../assistant_dialog.lua:400
+#: ../assistant_dialog.lua:421
 msgid   "Add"
 msgstr  "加入"
 
-#: ../assistant_dialog.lua:427
+#: ../assistant_dialog.lua:448
 msgid   "Ask a question about the highlighted text"
 msgstr  "針對劃線文字提問"
 
-#: ../assistant_dialog.lua:428
+#: ../assistant_dialog.lua:449
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "關於本書提問：\n"
         "%s by %s"
 
-#: ../assistant_dialog.lua:431
+#: ../assistant_dialog.lua:450
+msgid   "Ask a general question"
+msgstr  "提出一般問題"
+
+#: ../assistant_dialog.lua:452
 msgid   "Type your question here..."
 msgstr  "在此輸入問題…"
 
-#: ../assistant_dialog.lua:432
+#: ../assistant_dialog.lua:453
 msgid   "Ask anything about this book..."
 msgstr  "詢問本書相關問題…"
 
-#: ../assistant_dialog.lua:455
+#: ../assistant_dialog.lua:454
+msgid   "Ask anything..."
+msgstr  "問任何問題..."
+
+#: ../assistant_dialog.lua:478
 msgid   "Use book text as context"
 msgstr  "使用書籍文字作為情境"
 
-#: ../assistant_dialog.lua:517
+#: ../assistant_dialog.lua:541
 msgid   "Error: No response received"
 msgstr  "錯誤：未收到回應"
 
-#: ../assistant_dictdialog.lua:114
+#: ../assistant_dictdialog.lua:155
 msgid   "AI Dictionary"
 msgstr  "AI 字典"
 
-#: ../assistant_dictdialog.lua:115
+#: ../assistant_dictdialog.lua:156
 msgid   "Enter a word to look up..."
 msgstr  "輸入欲查詢的字詞…"
 
-#: ../assistant_dictdialog.lua:126
+#: ../assistant_dictdialog.lua:167
 msgid   "Look Up"
 msgstr  "查詢"
 
@@ -102,201 +112,290 @@ msgstr  "查詢"
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "正在分析書籍脈絡以進行詞彙 X 光..."
 
-#: ../assistant_dictdialog.lua:291 ../assistant_prompts.lua:21 ../main.lua:683
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:800
 msgid   "Term X-Ray"
 msgstr  "詞彙 X 光"
 
-#: ../assistant_dictdialog.lua:292
+#: ../assistant_dictdialog.lua:391
 msgid   "Loading Term X-Ray ..."
 msgstr  "正在載入詞彙 X 光…"
 
-#: ../assistant_dictdialog.lua:308 ../assistant_prompts.lua:97 ../main.lua:697
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:814
 msgid   "Dictionary"
 msgstr  "字典"
 
-#: ../assistant_dictdialog.lua:309
+#: ../assistant_dictdialog.lua:409
 msgid   "Loading AI Dictionary ..."
 msgstr  "正在載入 AI 字典…"
 
-#: ../assistant_featuredialog.lua:38
+#: ../assistant_featuredialog.lua:40
 msgid   "Custom Prompt"
 msgstr  "自訂提示"
 
-#: ../assistant_featuredialog.lua:39
+#: ../assistant_featuredialog.lua:41
 msgid   "Loading..."
 msgstr  "載入中…"
 
-#: ../assistant_featuredialog.lua:59
+#: ../assistant_featuredialog.lua:61
 msgid   "Recap"
 msgstr  "回顧"
 
-#: ../assistant_featuredialog.lua:60
+#: ../assistant_featuredialog.lua:62
 msgid   "Loading Recap..."
 msgstr  "正在載入摘要…"
 
-#: ../assistant_featuredialog.lua:65
+#: ../assistant_featuredialog.lua:67
 msgid   "X‑Ray"
 msgstr  "X-Ray"
 
-#: ../assistant_featuredialog.lua:66
+#: ../assistant_featuredialog.lua:68
 msgid   "Loading X-Ray..."
 msgstr  "正在載入 X-Ray…"
 
-#: ../assistant_featuredialog.lua:71
+#: ../assistant_featuredialog.lua:73
 msgid   "Book Information"
 msgstr  "書籍資訊"
 
-#: ../assistant_featuredialog.lua:72
+#: ../assistant_featuredialog.lua:74
 msgid   "Loading Book Information..."
 msgstr  "載入書籍資訊中…"
 
-#: ../assistant_featuredialog.lua:77 ../main.lua:117 ../main.lua:189
+#: ../assistant_featuredialog.lua:79 ../main.lua:117 ../main.lua:192
 msgid   "Highlight & Note Analysis"
 msgstr  "劃線與筆記分析"
 
-#: ../assistant_featuredialog.lua:78
+#: ../assistant_featuredialog.lua:80
 msgid   "Loading Highlight & Note Analysis..."
 msgstr  "正在載入劃線與筆記分析…"
 
-#: ../assistant_featuredialog.lua:83 ../main.lua:125 ../main.lua:200
+#: ../assistant_featuredialog.lua:85 ../main.lua:125 ../main.lua:203
 msgid   "Summary Using Highlights & Notes"
 msgstr  "使用劃線與筆記的摘要"
 
-#: ../assistant_featuredialog.lua:84
+#: ../assistant_featuredialog.lua:86
 msgid   "Loading Summary Using Highlights & Notes..."
 msgstr  "正在載入使用劃線與筆記的摘要…"
 
-#: ../assistant_featuredialog.lua:95
+#: ../assistant_featuredialog.lua:97
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "未知的類型：%s"
+
+#: ../assistant_model_picker.lua:36
+msgid   "Fetching models..."
+msgstr  "正在取得模型..."
+
+#: ../assistant_model_picker.lua:59
+msgid   "Failed to fetch models (HTTP %1)."
+msgstr  "取得模型失敗（HTTP %1）。"
+
+#: ../assistant_model_picker.lua:64
+msgid   "Failed to parse model list."
+msgstr  "解析模型清單失敗。"
+
+#: ../assistant_model_picker.lua:119
+msgid   "Models: %1 (filtered)"
+msgstr  "模型：%1（已篩選）"
+
+#: ../assistant_model_picker.lua:121
+msgid   "Models: %1"
+msgstr  "模型：%1"
+
+#: ../assistant_model_picker.lua:124
+msgid   " — p. %1/%2"
+msgstr  " — 第 %1/%2 頁"
+
+#: ../assistant_model_picker.lua:135
+msgid   "◂ Prev"
+msgstr  "◂ 上一頁"
+
+#: ../assistant_model_picker.lua:142 ../assistant_model_picker.lua:298
+msgid   "Search"
+msgstr  "搜尋"
+
+#: ../assistant_model_picker.lua:146
+msgid   "Next ▸"
+msgstr  "下一頁 ▸"
+
+#: ../assistant_model_picker.lua:155
+msgid   "Manual"
+msgstr  "手動"
+
+#: ../assistant_model_picker.lua:159
+msgid   "Reset"
+msgstr  "重設"
+
+#: ../assistant_model_picker.lua:202 ../assistant_model_picker.lua:394
+msgid   "Model: %1"
+msgstr  "模型：%1"
+
+#: ../assistant_model_picker.lua:214
+msgid   "Filter: \"%1\""
+msgstr  "篩選：「%1」"
+
+#: ../assistant_model_picker.lua:216
+msgid   "Select a model:"
+msgstr  "選擇模型："
+
+#: ../assistant_model_picker.lua:284
+msgid   "Search Models"
+msgstr  "搜尋模型"
+
+#: ../assistant_model_picker.lua:286
+msgid   "e.g. claude, gemini, llama..."
+msgstr  "例如：claude、gemini、llama..."
+
+#: ../assistant_model_picker.lua:323
+msgid   "Model reset: %1"
+msgstr  "模型重設：%1"
+
+#: ../assistant_model_picker.lua:353
+msgid   "No models matching \"%1\"."
+msgstr  "沒有符合「%1」的模型。"
+
+#: ../assistant_model_picker.lua:376
+msgid   "Enter Model ID"
+msgstr  "輸入模型 ID"
+
+#: ../assistant_model_picker.lua:378
+msgid   "e.g. google/gemini-3.0-flash-exp:free"
+msgstr  "例如：google/gemini-3.0-flash-exp:free"
+
+#: ../assistant_model_picker.lua:386 ../assistant_quicknote.lua:49
+#: ../assistant_settings.lua:114 ../assistant_viewer.lua:450
+msgid   "Save"
+msgstr  "儲存"
+
+#: ../assistant_model_picker.lua:419
+msgid   "No models available."
+msgstr  "沒有可用的模型。"
 
 #: ../assistant_prompts.lua:24
 msgid   "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr  "此提示建立一套結構化系統，透過分析劃線詞彙及其前後文，為文學中的單字或片語產生符合情境的定義，提供兼顧字面與脈絡意義的細膩說明。"
 
-#: ../assistant_prompts.lua:98
+#: ../assistant_prompts.lua:129
 msgid   "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr  "此提示將劃線文字當成單字或片語進行字典查詢"
 
-#: ../assistant_prompts.lua:104 ../assistant_quicknote.lua:101
+#: ../assistant_prompts.lua:135 ../assistant_quicknote.lua:101
 msgid   "Quick Note"
 msgstr  "快速筆記"
 
-#: ../assistant_prompts.lua:105
+#: ../assistant_prompts.lua:136
 msgid   "This button creates a quick note with highlighted text."
 msgstr  "此按鈕會以反白文字建立快速筆記。"
 
-#: ../assistant_prompts.lua:110
+#: ../assistant_prompts.lua:141
 msgid   "Vocabulary"
 msgstr  "詞彙"
 
-#: ../assistant_prompts.lua:113
+#: ../assistant_prompts.lua:144
 msgid   "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr  "此提示分析劃線文字的詞彙，找出難詞並提供定義、同義詞與例句"
 
-#: ../assistant_prompts.lua:130
+#: ../assistant_prompts.lua:161
 msgid   "Grammar"
 msgstr  "文法"
 
-#: ../assistant_prompts.lua:133
+#: ../assistant_prompts.lua:164
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "此提示分析劃線文字的文法，詳細說明結構與錯誤"
 
-#: ../assistant_prompts.lua:149
+#: ../assistant_prompts.lua:180
 msgid   "Translate"
 msgstr  "翻譯"
 
-#: ../assistant_prompts.lua:150
+#: ../assistant_prompts.lua:181
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "此提示將劃線文字翻譯成其他語言"
 
-#: ../assistant_prompts.lua:171
+#: ../assistant_prompts.lua:202
 msgid   "Summarize"
 msgstr  "摘要"
 
-#: ../assistant_prompts.lua:173
+#: ../assistant_prompts.lua:204
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "此提示摘要劃線文字，擷取重點與細節"
 
-#: ../assistant_prompts.lua:182
+#: ../assistant_prompts.lua:213
 msgid   "Simplify"
 msgstr  "簡化"
 
-#: ../assistant_prompts.lua:184
+#: ../assistant_prompts.lua:215
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "此提示簡化劃線文字，使其更易理解"
 
-#: ../assistant_prompts.lua:195
+#: ../assistant_prompts.lua:226
 msgid   "Key Points"
 msgstr  "重點整理"
 
-#: ../assistant_prompts.lua:198
+#: ../assistant_prompts.lua:229
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "此提示提取並列出劃線文字的重點，確保清晰有條理"
 
-#: ../assistant_prompts.lua:210
+#: ../assistant_prompts.lua:241
 msgid   "ELI5"
 msgstr  "五歲版"
 
-#: ../assistant_prompts.lua:213
+#: ../assistant_prompts.lua:244
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "此提示用五歲孩童也能懂的語言解釋劃線文字"
 
-#: ../assistant_prompts.lua:226
+#: ../assistant_prompts.lua:257
 msgid   "Explain"
 msgstr  "解釋"
 
-#: ../assistant_prompts.lua:228
+#: ../assistant_prompts.lua:259
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "此提示詳細解釋劃線文字，確保清晰易懂"
 
-#: ../assistant_prompts.lua:239
+#: ../assistant_prompts.lua:270
 msgid   "Historical Context"
 msgstr  "歷史背景"
 
-#: ../assistant_prompts.lua:242
+#: ../assistant_prompts.lua:273
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "此提示提供劃線文字的詳細歷史背景，說明其重要與來龍去脈"
 
-#: ../assistant_prompts.lua:254 ../main.lua:668
+#: ../assistant_prompts.lua:285 ../main.lua:785
 msgid   "Wikipedia"
 msgstr  "維基百科"
 
-#: ../assistant_prompts.lua:257
+#: ../assistant_prompts.lua:288
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "此提示根據劃線文字生成完整的維基百科風格條目，確保事實準確且中立"
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:461
+#: ../assistant_prompts.lua:509
 msgid   "Conjugation"
 msgstr  "變位"
 
-#: ../assistant_prompts.lua:462
+#: ../assistant_prompts.lua:510
 msgid   "Synonyms"
 msgstr  "同義詞"
 
-#: ../assistant_prompts.lua:463
+#: ../assistant_prompts.lua:511
 msgid   "Meaning"
 msgstr  "意義"
 
-#: ../assistant_prompts.lua:464
+#: ../assistant_prompts.lua:512
 msgid   "Translation"
 msgstr  "翻譯"
 
-#: ../assistant_prompts.lua:465
-msgid   "Explanation"
-msgstr  "說明"
+#: ../assistant_prompts.lua:513
+msgid   "Book Usage"
+msgstr  "書籍使用"
 
-#: ../assistant_prompts.lua:466
+#: ../assistant_prompts.lua:514
 msgid   "Example"
 msgstr  "範例"
 
-#: ../assistant_prompts.lua:467
+#: ../assistant_prompts.lua:515
 msgid   "Word Origin"
 msgstr  "字源"
 
-#: ../assistant_prompts.lua:479
+#: ../assistant_prompts.lua:527
 msgid   "You may find these topics interesting:"
 msgstr  "您可能會對這些主題感興趣："
 
@@ -304,11 +403,11 @@ msgstr  "您可能會對這些主題感興趣："
 msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr  "找不到 %1 的提供者設定。請檢查您的 configuration.lua 檔案。"
 
-#: ../assistant_querier.lua:77
+#: ../assistant_querier.lua:88
 msgid   "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr  "找不到 %1 的處理程序。請確認該處理程序已存在於 api_handlers 目錄中。"
 
-#: ../assistant_querier.lua:110
+#: ../assistant_querier.lua:121
 msgid   "API Error:\n"
         "%1\n"
         "\n"
@@ -318,63 +417,59 @@ msgstr  "API 錯誤：\n"
         "\n"
         "請在設定中改用其他服務供應商。"
 
-#: ../assistant_querier.lua:110
+#: ../assistant_querier.lua:121
 msgid   "Unknown error"
 msgstr  "未知錯誤"
 
-#: ../assistant_querier.lua:111
+#: ../assistant_querier.lua:122
 msgid   "Settings"
 msgstr  "設定"
 
-#: ../assistant_querier.lua:113 ../assistant_settings.lua:201
+#: ../assistant_querier.lua:124 ../assistant_settings.lua:207
 #: ../assistant_viewer.lua:341
 msgid   "Close"
 msgstr  "關閉"
 
-#: ../assistant_querier.lua:137
+#: ../assistant_querier.lua:171
 msgid   "Plugin is not configured."
 msgstr  "外掛未設定。"
 
-#: ../assistant_querier.lua:145
+#: ../assistant_querier.lua:184
 msgid   "Querying AI ..."
 msgstr  "AI 查詢中…"
 
-#: ../assistant_querier.lua:181
+#: ../assistant_querier.lua:245
 msgid   "AI is responding"
 msgstr  "AI 回應中"
 
-#: ../assistant_querier.lua:200
+#: ../assistant_querier.lua:264
 msgid   "⏹ Stop"
 msgstr  "⏹ 停止"
 
-#: ../assistant_querier.lua:233 ../assistant_querier.lua:245
+#: ../assistant_querier.lua:323 ../assistant_querier.lua:335
 msgid   "Request cancelled by user."
 msgstr  "使用者已取消請求。"
 
-#: ../assistant_querier.lua:251
+#: ../assistant_querier.lua:341
 msgid   "No response received."
 msgstr  "未收到回應。"
 
-#: ../assistant_querier.lua:264
+#: ../assistant_querier.lua:354
 msgid   "Failed to start subprocess for request"
 msgstr  "無法啟動子程序進行請求"
 
-#: ../assistant_querier.lua:460 ../assistant_querier.lua:462
+#: ../assistant_querier.lua:550 ../assistant_querier.lua:552
 msgid   "Deeply Thought"
 msgstr  "深度思考"
 
-#: ../assistant_quicknote.lua:27 ../main.lua:101 ../main.lua:226
+#: ../assistant_quicknote.lua:27 ../main.lua:101 ../main.lua:229
+#: ../main.lua:321
 msgid   "Take Quick Notes"
 msgstr  "快速記筆記"
 
 #: ../assistant_quicknote.lua:29
 msgid   "Write quick notes here"
 msgstr  "在此處撰寫快速筆記"
-
-#: ../assistant_quicknote.lua:49 ../assistant_settings.lua:114
-#: ../assistant_viewer.lua:450
-msgid   "Save"
-msgstr  "儲存"
 
 #: ../assistant_quicknote.lua:55
 msgid   "Please enter a note before saving."
@@ -420,93 +515,97 @@ msgstr  "留空將使用介面語言：%1"
 msgid   "AI Provider Settings"
 msgstr  "AI 供應商設定"
 
-#: ../assistant_settings.lua:265
+#: ../assistant_settings.lua:201
+msgid   "Select Model"
+msgstr  "選擇模型"
+
+#: ../assistant_settings.lua:278
 msgid   "AI Model provider:"
 msgstr  "AI 模型提供者："
 
-#: ../assistant_settings.lua:332
+#: ../assistant_settings.lua:369
 msgid   "AI Language: "
 msgstr  "AI 語言："
 
-#: ../assistant_settings.lua:344
+#: ../assistant_settings.lua:381
 msgid   "AI Text Size: %1"
 msgstr  "AI 文字大小：%1"
 
-#: ../assistant_settings.lua:348
+#: ../assistant_settings.lua:385
 msgid   "AI Response Text Font Size"
 msgstr  "AI 回應文字字型大小"
 
-#: ../assistant_settings.lua:364
+#: ../assistant_settings.lua:401
 msgid   "Stream Mode Settings"
 msgstr  "串流模式設定"
 
-#: ../assistant_settings.lua:367
+#: ../assistant_settings.lua:404
 msgid   "Enable stream response"
 msgstr  "啟用即時回應"
 
-#: ../assistant_settings.lua:375
+#: ../assistant_settings.lua:412
 msgid   "Auto scroll stream response text"
 msgstr  "自動捲動串流回應文字"
 
-#: ../assistant_settings.lua:384
+#: ../assistant_settings.lua:421
 msgid   "Large Streaming Window"
 msgstr  "大型串流視窗"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:396
+#: ../assistant_settings.lua:433
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader 微調與覆寫"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:400
+#: ../assistant_settings.lua:437
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "使用 AI 助理進行「翻譯」"
 
-#: ../assistant_settings.lua:411
+#: ../assistant_settings.lua:448
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "開啟久未閱讀的書籍時自動摘要"
 
-#: ../assistant_settings.lua:421
+#: ../assistant_settings.lua:458
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "下次開啟久未閱讀的書籍時將啟用 AI 摘要功能。"
 
-#: ../assistant_settings.lua:425
+#: ../assistant_settings.lua:462
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "在辭典彈窗顯示 AI 辭典"
 
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:470
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "在辭典彈窗顯示 AI 維基百科"
 
-#: ../assistant_settings.lua:441
+#: ../assistant_settings.lua:478
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "在字典彈窗顯示詞彙 X 光（AI）"
 
-#: ../assistant_settings.lua:449
+#: ../assistant_settings.lua:486
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "在字典彈窗顯示自訂提示"
 
-#: ../assistant_settings.lua:459
+#: ../assistant_settings.lua:496
 msgid   "Show Follow-up Questions from AI"
 msgstr  "顯示 AI 的後續問題"
 
-#: ../assistant_settings.lua:467
+#: ../assistant_settings.lua:504
 msgid   "Copy entered question to the clipboard"
 msgstr  "複製輸入問題到剪貼簿"
 
-#: ../assistant_settings.lua:475
+#: ../assistant_settings.lua:512
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "自動儲存對話至筆記本"
 
-#: ../assistant_settings.lua:483
+#: ../assistant_settings.lua:520
 msgid   "Use book text for x-ray and recap"
 msgstr  "使用書籍內容進行透視與摘要"
 
-#: ../assistant_settings.lua:491
+#: ../assistant_settings.lua:528
 msgid   "Purge the settings"
 msgstr  "清除設定"
 
-#: ../assistant_settings.lua:494 ../main.lua:597
+#: ../assistant_settings.lua:531 ../main.lua:714
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -516,7 +615,7 @@ msgstr  "確定要清除助理外掛的設定嗎？\n"
         "\n"
         "configuration.lua 不受影響，僅清除設定。"
 
-#: ../assistant_settings.lua:498 ../main.lua:601
+#: ../assistant_settings.lua:535 ../main.lua:718
 msgid   "Purge"
 msgstr  "清除"
 
@@ -529,22 +628,22 @@ msgstr  "檢查更新中…"
 msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "外掛 %s 有新版本 (%s)，請更新！"
 
-#: ../assistant_utils.lua:136
+#: ../assistant_utils.lua:155
 msgid   "Page"
 msgstr  "頁面"
 
-#: ../assistant_utils.lua:160
+#: ../assistant_utils.lua:180
 msgid   "Cannot access default folder for logs: %1\n"
         "Using original location."
 msgstr  "無法存取預設日誌資料夾：%1\n"
         "使用原始位置。"
 
-#: ../assistant_utils.lua:212
+#: ../assistant_utils.lua:235
 msgid   "Notebook save failed. Continuing..."
 msgstr  "筆記本儲存失敗，繼續進行…"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:738
+#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:741
 msgid   "Ask Another Question"
 msgstr  "再問一題"
 
@@ -584,89 +683,93 @@ msgstr  "對話已儲存至筆記本"
 msgid   "Book Analysis"
 msgstr  "書籍分析"
 
-#: ../assistant_viewer.lua:740
+#: ../assistant_viewer.lua:573
+msgid   "General Conversation"
+msgstr  "一般對話"
+
+#: ../assistant_viewer.lua:743
 msgid   "Type your question here"
 msgstr  "在此輸入問題"
 
-#: ../assistant_viewer.lua:904
+#: ../assistant_viewer.lua:912
 msgid   "Word copied to clipboard."
 msgstr  "單字已複製"
 
-#: ../assistant_viewer.lua:905
+#: ../assistant_viewer.lua:913
 msgid   "Selection copied to clipboard."
 msgstr  "選取內容已複製"
 
-#: ../main.lua:77 ../main.lua:142
+#: ../main.lua:77 ../main.lua:145
 msgid   "Ask the AI a question"
 msgstr  "詢問 AI"
 
-#: ../main.lua:85 ../main.lua:178
+#: ../main.lua:85 ../main.lua:181
 msgid   "AI Recaps"
 msgstr  "AI 回顧"
 
-#: ../main.lua:93 ../main.lua:167
+#: ../main.lua:93 ../main.lua:170
 msgid   "AI X-Ray"
 msgstr  "AI X-Ray"
 
-#: ../main.lua:109 ../main.lua:156
+#: ../main.lua:109 ../main.lua:159
 msgid   "Book Summary & Recs"
 msgstr  "書籍摘要與推薦"
 
-#: ../main.lua:148
+#: ../main.lua:151
 msgid   "Enter a question to ask AI."
 msgstr  "輸入想問 AI 的問題"
 
-#: ../main.lua:153
+#: ../main.lua:156
 msgid   "Book-Level Built-in Prompts"
 msgstr  "書籍層級內建提示"
 
-#: ../main.lua:162
+#: ../main.lua:165
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "書籍摘要、作者介紹、歷史背景與相似書籍推薦清單（含說明）"
 
-#: ../main.lua:173
+#: ../main.lua:176
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "書籍「X-Ray」摘要，依角色、地點、主題、術語概念、時間軸與重溫導讀分類"
 
-#: ../main.lua:184
+#: ../main.lua:187
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "截至目前閱讀進度的無劇透簡短摘要"
 
-#: ../main.lua:195
+#: ../main.lua:198
 msgid   "Analysis of your highlights, notes, and notebook content from the book."
 msgstr  "分析您在本書中的劃線、筆記與筆記本內容。"
 
-#: ../main.lua:206
+#: ../main.lua:209
 msgid   "Summary of the book using your highlights and notes."
 msgstr  "利用您的劃線與筆記產生書籍摘要。"
 
-#: ../main.lua:213
+#: ../main.lua:216
 msgid   "Book-Level Custom Prompts"
 msgstr  "書籍層級自訂提示"
 
-#: ../main.lua:220
+#: ../main.lua:223
 msgid   "Includes user defined book level prompts from Config file"
 msgstr  "包含來自設定檔的使用者自訂書籍層級提示"
 
-#: ../main.lua:232
+#: ../main.lua:235 ../main.lua:327
 msgid   "Take quick notes that will be saved to your notebook."
 msgstr  "快速記下筆記，內容將儲存至您的筆記本。"
 
-#: ../main.lua:237
+#: ../main.lua:240 ../main.lua:332
 msgid   "NoteBook (AI Conversation Log)"
 msgstr  "筆記本（AI 對話紀錄）"
 
-#: ../main.lua:243
+#: ../main.lua:246 ../main.lua:339
 msgid   "Notebook file: \n"
         "\n"
 msgstr  "筆記本檔案：\n"
         "\n"
 
-#: ../main.lua:244
+#: ../main.lua:247 ../main.lua:340
 msgid   "View"
 msgstr  "檢視"
 
-#: ../main.lua:248
+#: ../main.lua:251 ../main.lua:344
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -674,11 +777,11 @@ msgstr  "檔案不存在。\n"
         "\n"
         "%1"
 
-#: ../main.lua:256 ../main.lua:260
+#: ../main.lua:259 ../main.lua:263 ../main.lua:352 ../main.lua:356
 msgid   "Delete"
 msgstr  "刪除"
 
-#: ../main.lua:259
+#: ../main.lua:262 ../main.lua:355
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -686,41 +789,57 @@ msgstr  "確定刪除檔案？\n"
         "%1\n"
         "此操作無法復原。"
 
-#: ../main.lua:271
+#: ../main.lua:274 ../main.lua:367
 msgid   "Edit"
 msgstr  "編輯"
 
-#: ../main.lua:283
+#: ../main.lua:286 ../main.lua:380
 msgid   "AI Provider: %1"
 msgstr  "AI 供應商：%1"
 
-#: ../main.lua:293
+#: ../main.lua:286 ../main.lua:380
+msgid   "Not configured"
+msgstr  "未設定"
+
+#: ../main.lua:296 ../main.lua:390
 msgid   "AI Assistant Settings"
 msgstr  "AI 助手設定"
 
-#: ../main.lua:338
+#: ../main.lua:310
+msgid   "Ask a Question"
+msgstr  "提出問題"
+
+#: ../main.lua:316
+msgid   "Ask a general question to the AI (not book-related)."
+msgstr  "向 AI 提問一般問題（與書籍無關）。"
+
+#: ../main.lua:436
 msgid   "This is a custom prompt"
 msgstr  "這是自訂提示"
 
-#: ../main.lua:348
-msgid   "No active custom prompt found. For details, visit the 'Configuration' wiki page on github."
-msgstr  "未找到作用中的自訂提示。詳情請參閱 GitHub 上的「設定」維基頁面。"
+#: ../main.lua:446
+msgid   "No valid book-level custom prompt found"
+msgstr  "找不到有效的書籍層級自訂提示"
 
-#: ../main.lua:423
+#: ../main.lua:451
+msgid   "For details, visit the 'Configuration' wiki page on github."
+msgstr  "詳細資訊請參閱 GitHub 上的「Configuration」Wiki 頁面。"
+
+#: ../main.lua:534
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "configuration.lua 中找不到有效的模型提供者"
 
-#: ../main.lua:441
+#: ../main.lua:552
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "設定錯誤。\n"
         "請設定 configuration.lua。"
 
-#: ../main.lua:510
+#: ../main.lua:624
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua：模型提供者無效。"
 
-#: ../main.lua:575
+#: ../main.lua:692
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -752,33 +871,33 @@ msgstr  "使用提示\n"
         "多指手勢（例如 ⮠、⮡、↺）：\n"
         "在結果對話框上滑動即可關閉（因為關閉按鈕太遠）。\n"
 
-#: ../main.lua:594
+#: ../main.lua:711
 msgid   "Purge Settings"
 msgstr  "清除設定"
 
-#: ../main.lua:648
+#: ../main.lua:765
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "從劃線選單移除 [%s]？"
 
-#: ../main.lua:649
+#: ../main.lua:766
 msgid   "Remove"
 msgstr  "移除"
 
-#: ../main.lua:853
+#: ../main.lua:970
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "找不到設定檔，請先建立 configuration.lua"
 
-#: ../main.lua:895
+#: ../main.lua:1012
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "已將 [%1 (AI)] 加入劃線選單"
 
-#: ../main.lua:904
+#: ../main.lua:1021
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "已從劃線選單移除 [%s (AI)]"
 
-#: ../main.lua:948
+#: ../main.lua:1065
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -786,15 +905,15 @@ msgstr  "需要 AI 摘要嗎？\n"
         "《%1》 by %2。\n"
         "\n"
 
-#: ../main.lua:949
+#: ../main.lua:1066
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "上次閱讀於 %1 小時前。"
 
-#: ../main.lua:954
+#: ../main.lua:1071
 msgid   "Yes"
 msgstr  "是"
 
-#: ../main.lua:963
+#: ../main.lua:1080
 msgid   "No"
 msgstr  "否"

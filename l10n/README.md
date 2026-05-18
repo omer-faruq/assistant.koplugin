@@ -9,56 +9,35 @@ The localization process uses standard `gettext` tools (`.pot` template file and
 -   `templates/koreader.pot`: The template file containing all translatable strings from the source code.
 -   `<LANG_CODE>/koreader.po`: The translation file for a specific language.
 
-The `Makefile` in this directory automates most of the translation process.
+The `Makefile` in this directory automates most of the translation process using gettext tools.
+
+The `AI_TRANSLATE.sh` bash script calls curl / jq to process the request for a LLM translate.
+
+## Env and Tools
+
+Get tools ready for the process.
+
+```bash
+apt install gettext make curl jq 
+```
+
+Create an `.env` as in the following format for LLM access.
+
+```
+API_ENDPOINT=https://api.openai.com/v1/chat/completions
+API_MODEL=...MODEL...
+API_KEY=...KEY...
+```
 
 ## Updating Translations
 
-When the source code changes, new strings might be added or existing ones modified. To update all language files:
 
-1.  **Generate Template**: Update the `.pot` template file from the source code.
-    ```bash
-    make template
-    ```
-2.  **Update PO Files**: Merge the new template into all existing `.po` files. New strings will be added and marked as untranslated.
-    ```bash
-    make update
-    ```
-3.  **Translate Untranslated Strings**:
-    -   **With AI**: The `Makefile` is configured to use an AI translation script. You need to have an `API_KEY` environment variable set.
-        ```bash
-        # This will find all untranslated strings, translate them, and merge them back.
-        make ai-translate
-        ```
-    -   **Manually**:
-        1.  Find untranslated strings:
-            ```bash
-            make extract-untranslated
-            ```
-            This creates an `untranslated.po` file in each language directory.
-        2.  Edit the `koreader.po` file in the respective language directory and provide the translations for the new strings (they will have an empty `msgstr ""`).
+When the source code changes, new strings might be added or modified. To update all language files:
 
-## Adding a New Language
+```
+make
+```
 
-### Using AI Translation (Recommended)
-
-1.  **Add Language to Script**: Open `AI_TRANSLATE.sh` and add your language code and name to the `LANG_MAP` associative array.
-2.  **Run AI Translation**: Run the following command, replacing `<LANG_CODE>` with your language's code (e.g., `fr`). You will need an `API_KEY` for your chosen AI provider.
-    ```bash
-    make ai-translate L10N_LANG=<LANG_CODE>
-    ```
-    This will:
-    - Create the directory for your language.
-    - Create a `koreader.po` file and translate all strings from the template using the AI.
-
-### Manually
-
-1.  **Create Directory**: Create a directory for your language code (e.g., `mkdir fr`).
-2.  **Create PO File**: Copy the template to your new language directory.
-    ```bash
-    cp templates/koreader.pot fr/koreader.po
-    ```
-3.  **Translate**: Open `fr/koreader.po` and translate all the `msgstr` fields.
-    - Remember to update the header information at the top of the file.
 
 ## Language Abbreviation Table
 

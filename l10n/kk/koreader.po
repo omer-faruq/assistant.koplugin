@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 2025.08.21\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2025-09-26 10:22+0800\n"
+        "POT-Creation-Date: 2026-05-18 15:34+0800\n"
         "PO-Revision-Date: 2025-09-17 15:17+0800\n"
         "Last-Translator: ChatGPT-4o <chatgpt-4o@openai.com>\n"
         "Language-Team: ChatGPT-4o <chatgpt-4o@openai.com>\n"
@@ -16,7 +16,8 @@ msgstr  "Project-Id-Version: assistant.koplugin 2025.08.21\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:435 ../main.lua:135 ../main.lua:477
+#: ../_meta.lua:4 ../assistant_dialog.lua:457 ../main.lua:138 ../main.lua:306
+#: ../main.lua:590
 msgid   "AI Assistant"
 msgstr  "AI Ассистент"
 
@@ -24,275 +25,377 @@ msgstr  "AI Ассистент"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 KOReader-ді AI-мен жақсартыңыз"
 
-#: ../assistant_dialog.lua:103
+#: ../assistant_dialog.lua:105
 msgid   "(Empty message)"
 msgstr  "(Бос хабар)"
 
-#: ../assistant_dialog.lua:114
+#: ../assistant_dialog.lua:116
 msgid   "(No response)"
 msgstr  "(Жауап жоқ)"
 
-#: ../assistant_dialog.lua:145 ../assistant_quicknote.lua:99
+#: ../assistant_dialog.lua:148 ../assistant_quicknote.lua:99
 #: ../assistant_viewer.lua:569
 msgid   "Highlighted text:"
 msgstr  "Белгіленген мәтін:"
 
-#: ../assistant_dialog.lua:295 ../assistant_dictdialog.lua:120
-#: ../assistant_quicknote.lua:39 ../assistant_settings.lua:90
-#: ../assistant_viewer.lua:671
+#: ../assistant_dialog.lua:313 ../assistant_dictdialog.lua:161
+#: ../assistant_model_picker.lua:164 ../assistant_model_picker.lua:289
+#: ../assistant_model_picker.lua:381 ../assistant_quicknote.lua:39
+#: ../assistant_settings.lua:90 ../assistant_viewer.lua:670
 msgid   "Cancel"
 msgstr  "Бас тарту"
 
-#: ../assistant_dialog.lua:302 ../assistant_viewer.lua:681
+#: ../assistant_dialog.lua:320 ../assistant_viewer.lua:680
 msgid   "Ask"
 msgstr  "Сұра"
 
-#: ../assistant_dialog.lua:315 ../assistant_viewer.lua:687
+#: ../assistant_dialog.lua:333 ../assistant_viewer.lua:686
 msgid   "Enter a question before proceeding."
 msgstr  "Жалғастыру үшін сұрақ енгізіңіз."
 
-#: ../assistant_dialog.lua:399
+#: ../assistant_dialog.lua:420
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Осы батырманы Белгілеу мәзіріне қосу керек пе?"
 
-#: ../assistant_dialog.lua:400
+#: ../assistant_dialog.lua:421
 msgid   "Add"
 msgstr  "Қосу"
 
-#: ../assistant_dialog.lua:427
+#: ../assistant_dialog.lua:448
 msgid   "Ask a question about the highlighted text"
 msgstr  "Белгіленген мәтін бойынша сұрақ қой"
 
-#: ../assistant_dialog.lua:428
+#: ../assistant_dialog.lua:449
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Осы кітап бойынша сұрақ қойыңыз:\n"
         "%s (%s авторы)"
 
-#: ../assistant_dialog.lua:431
+#: ../assistant_dialog.lua:450
+msgid   "Ask a general question"
+msgstr  "Жалпы сұрақ қою"
+
+#: ../assistant_dialog.lua:452
 msgid   "Type your question here..."
 msgstr  "Сұрағыңызды осында жазыңыз..."
 
-#: ../assistant_dialog.lua:432
+#: ../assistant_dialog.lua:453
 msgid   "Ask anything about this book..."
 msgstr  "Кітап жайлы кез келген сұрақ..."
 
-#: ../assistant_dialog.lua:455
+#: ../assistant_dialog.lua:454
+msgid   "Ask anything..."
+msgstr  "Кез келген нәрсені сұраңыз..."
+
+#: ../assistant_dialog.lua:478
 msgid   "Use book text as context"
 msgstr  "Кітап мәтінін контекст ретінде пайдалану"
 
-#: ../assistant_dialog.lua:517
+#: ../assistant_dialog.lua:541
 msgid   "Error: No response received"
 msgstr  "Қате: Жауап келмеді"
 
-#: ../assistant_dictdialog.lua:114
+#: ../assistant_dictdialog.lua:155
 msgid   "AI Dictionary"
 msgstr  "AI Сөздік"
 
-#: ../assistant_dictdialog.lua:115
+#: ../assistant_dictdialog.lua:156
 msgid   "Enter a word to look up..."
 msgstr  "Іздеуге сөз енгізіңіз..."
 
-#: ../assistant_dictdialog.lua:126
+#: ../assistant_dictdialog.lua:167
 msgid   "Look Up"
 msgstr  "Іздеу"
 
-#: ../assistant_dictdialog.lua:291 ../assistant_prompts.lua:21 ../main.lua:683
+#: ../assistant_dictdialog.lua:214
+msgid   "Analyzing book context for Term X-Ray..."
+msgstr  "Кітап контекстін Term X-Ray үшін талдау..."
+
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:800
 msgid   "Term X-Ray"
 msgstr  "Термин рентгені"
 
-#: ../assistant_dictdialog.lua:292
+#: ../assistant_dictdialog.lua:391
 msgid   "Loading Term X-Ray ..."
 msgstr  "Термин рентгені жүктелуде..."
 
-#: ../assistant_dictdialog.lua:308 ../assistant_prompts.lua:97 ../main.lua:697
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:814
 msgid   "Dictionary"
 msgstr  "Сөздік"
 
-#: ../assistant_dictdialog.lua:309
+#: ../assistant_dictdialog.lua:409
 msgid   "Loading AI Dictionary ..."
 msgstr  "AI сөздігі жүктелуде..."
 
-#: ../assistant_featuredialog.lua:38
+#: ../assistant_featuredialog.lua:40
 msgid   "Custom Prompt"
 msgstr  "Өңделген сұрақ"
 
-#: ../assistant_featuredialog.lua:39
+#: ../assistant_featuredialog.lua:41
 msgid   "Loading..."
 msgstr  "Жүктелуде..."
 
-#: ../assistant_featuredialog.lua:59
+#: ../assistant_featuredialog.lua:61
 msgid   "Recap"
 msgstr  "Шолу"
 
-#: ../assistant_featuredialog.lua:60
+#: ../assistant_featuredialog.lua:62
 msgid   "Loading Recap..."
 msgstr  "Қысқаша жүктелуде..."
 
-#: ../assistant_featuredialog.lua:65
+#: ../assistant_featuredialog.lua:67
 msgid   "X‑Ray"
 msgstr  "X‑Ray"
 
-#: ../assistant_featuredialog.lua:66
+#: ../assistant_featuredialog.lua:68
 msgid   "Loading X-Ray..."
 msgstr  "X-Ray жүктелуде..."
 
-#: ../assistant_featuredialog.lua:71
+#: ../assistant_featuredialog.lua:73
 msgid   "Book Information"
 msgstr  "Кітап туралы ақпарат"
 
-#: ../assistant_featuredialog.lua:72
+#: ../assistant_featuredialog.lua:74
 msgid   "Loading Book Information..."
 msgstr  "Кітап ақпараты жүктелуде..."
 
-#: ../assistant_featuredialog.lua:77 ../main.lua:117 ../main.lua:189
+#: ../assistant_featuredialog.lua:79 ../main.lua:117 ../main.lua:192
 msgid   "Highlight & Note Analysis"
 msgstr  "Таңбалау мен жазбаларды талдау"
 
-#: ../assistant_featuredialog.lua:78
+#: ../assistant_featuredialog.lua:80
 msgid   "Loading Highlight & Note Analysis..."
 msgstr  "Таңбалау мен жазбаларды талдау жүктелуде..."
 
-#: ../assistant_featuredialog.lua:83 ../main.lua:125 ../main.lua:200
+#: ../assistant_featuredialog.lua:85 ../main.lua:125 ../main.lua:203
 msgid   "Summary Using Highlights & Notes"
 msgstr  "Таңбалау мен жазбаларды пайдаланып қорытынды"
 
-#: ../assistant_featuredialog.lua:84
+#: ../assistant_featuredialog.lua:86
 msgid   "Loading Summary Using Highlights & Notes..."
 msgstr  "Таңбалау мен жазбаларды пайдаланып қорытынды жүктелуде..."
 
-#: ../assistant_featuredialog.lua:95
+#: ../assistant_featuredialog.lua:97
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "Белгісіз мүмкіндік түрі: %s"
+
+#: ../assistant_model_picker.lua:36
+msgid   "Fetching models..."
+msgstr  "Модельдер алынуда..."
+
+#: ../assistant_model_picker.lua:59
+msgid   "Failed to fetch models (HTTP %1)."
+msgstr  "Модельдерді алу сәтсіз аяқталды (HTTP %1)."
+
+#: ../assistant_model_picker.lua:64
+msgid   "Failed to parse model list."
+msgstr  "Модельдер тізімін талдау сәтсіз аяқталды."
+
+#: ../assistant_model_picker.lua:119
+msgid   "Models: %1 (filtered)"
+msgstr  "Модельдер: %1 (сүзгіленген)"
+
+#: ../assistant_model_picker.lua:121
+msgid   "Models: %1"
+msgstr  "Модельдер: %1"
+
+#: ../assistant_model_picker.lua:124
+msgid   " — p. %1/%2"
+msgstr  " — б. %1/%2"
+
+#: ../assistant_model_picker.lua:135
+msgid   "◂ Prev"
+msgstr  "◂ Алдыңғы"
+
+#: ../assistant_model_picker.lua:142 ../assistant_model_picker.lua:298
+msgid   "Search"
+msgstr  "Іздеу"
+
+#: ../assistant_model_picker.lua:146
+msgid   "Next ▸"
+msgstr  "Келесі ▸"
+
+#: ../assistant_model_picker.lua:155
+msgid   "Manual"
+msgstr  "Қолмен"
+
+#: ../assistant_model_picker.lua:159
+msgid   "Reset"
+msgstr  "Қалпына келтіру"
+
+#: ../assistant_model_picker.lua:202 ../assistant_model_picker.lua:394
+msgid   "Model: %1"
+msgstr  "Модель: %1"
+
+#: ../assistant_model_picker.lua:214
+msgid   "Filter: \"%1\""
+msgstr  "Сүзгі: \"%1\""
+
+#: ../assistant_model_picker.lua:216
+msgid   "Select a model:"
+msgstr  "Модельді таңдаңыз:"
+
+#: ../assistant_model_picker.lua:284
+msgid   "Search Models"
+msgstr  "Модельдерді іздеу"
+
+#: ../assistant_model_picker.lua:286
+msgid   "e.g. claude, gemini, llama..."
+msgstr  "мысалы, claude, gemini, llama..."
+
+#: ../assistant_model_picker.lua:323
+msgid   "Model reset: %1"
+msgstr  "Модель қалпына келтірілді: %1"
+
+#: ../assistant_model_picker.lua:353
+msgid   "No models matching \"%1\"."
+msgstr  "\"%1\" сәйкес модельдер жоқ."
+
+#: ../assistant_model_picker.lua:376
+msgid   "Enter Model ID"
+msgstr  "Модель идентификаторын енгізіңіз"
+
+#: ../assistant_model_picker.lua:378
+msgid   "e.g. google/gemini-3.0-flash-exp:free"
+msgstr  "мысалы, google/gemini-3.0-flash-exp:free"
+
+#: ../assistant_model_picker.lua:386 ../assistant_quicknote.lua:49
+#: ../assistant_settings.lua:114 ../assistant_viewer.lua:450
+msgid   "Save"
+msgstr  "Сақтау"
+
+#: ../assistant_model_picker.lua:419
+msgid   "No models available."
+msgstr  "Қолжетімді модельдер жоқ."
 
 #: ../assistant_prompts.lua:24
 msgid   "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr  "Бұл сұрақ әдебиеттен алынған сөздер немесе сөз тіркестері үшін контекстке сәйкес анықтамалар жасауға арналған құрылымдалған жүйе құрады: таңбаланған терминді айналасындағы мәтінмен талдап, буквалық мағынасын да, контекстік маңызын да қамтитын нюансты түсіндірмелер береді."
 
-#: ../assistant_prompts.lua:98
+#: ../assistant_prompts.lua:129
 msgid   "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr  "Белгіленген мәтіннің сөз немесе тіркестерін түсіндіреді."
 
-#: ../assistant_prompts.lua:104 ../assistant_quicknote.lua:101
+#: ../assistant_prompts.lua:135 ../assistant_quicknote.lua:101
 msgid   "Quick Note"
 msgstr  "Жылдам Ескертпе"
 
-#: ../assistant_prompts.lua:105
+#: ../assistant_prompts.lua:136
 msgid   "This button creates a quick note with highlighted text."
 msgstr  "Бұл батырма ерекшеленген мәтінмен жылдам ескертпе жасайды."
 
-#: ../assistant_prompts.lua:110
+#: ../assistant_prompts.lua:141
 msgid   "Vocabulary"
 msgstr  "Сөздік қоры"
 
-#: ../assistant_prompts.lua:113
+#: ../assistant_prompts.lua:144
 msgid   "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr  "Белгіленген мәтіндегі күрделі сөздерді анықтап, анықтамасы, синонимі және мысалдарын береді."
 
-#: ../assistant_prompts.lua:130
+#: ../assistant_prompts.lua:161
 msgid   "Grammar"
 msgstr  "Грамматика"
 
-#: ../assistant_prompts.lua:133
+#: ../assistant_prompts.lua:164
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "Белгіленген мәтіннің грамматикасын талдап, құрылымын және қателерін көрсетеді."
 
-#: ../assistant_prompts.lua:149
+#: ../assistant_prompts.lua:180
 msgid   "Translate"
 msgstr  "Аудару"
 
-#: ../assistant_prompts.lua:150
+#: ../assistant_prompts.lua:181
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "Белгіленген мәтінді басқа тілге аударады."
 
-#: ../assistant_prompts.lua:171
+#: ../assistant_prompts.lua:202
 msgid   "Summarize"
 msgstr  "Қорытындылау"
 
-#: ../assistant_prompts.lua:173
+#: ../assistant_prompts.lua:204
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "Белгіленген мәтіннің негізгі ойларын қысқаша баяндайды."
 
-#: ../assistant_prompts.lua:182
+#: ../assistant_prompts.lua:213
 msgid   "Simplify"
 msgstr  "Жеңілдету"
 
-#: ../assistant_prompts.lua:184
+#: ../assistant_prompts.lua:215
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "Белгіленген мәтінді түсінікті етіп жеңілдетеді."
 
-#: ../assistant_prompts.lua:195
+#: ../assistant_prompts.lua:226
 msgid   "Key Points"
 msgstr  "Негізгі нүктелер"
 
-#: ../assistant_prompts.lua:198
+#: ../assistant_prompts.lua:229
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "Белгіленген мәтіндегі маңызды нүктелерді жинақтап, жинақтап береді."
 
-#: ../assistant_prompts.lua:210
+#: ../assistant_prompts.lua:241
 msgid   "ELI5"
 msgstr  "Баланың тілімен"
 
-#: ../assistant_prompts.lua:213
+#: ../assistant_prompts.lua:244
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "Белгіленген мәтінді балаға түсіндіргендей жеңіл тілмен түсіндіреді."
 
-#: ../assistant_prompts.lua:226
+#: ../assistant_prompts.lua:257
 msgid   "Explain"
 msgstr  "Түсіндіру"
 
-#: ../assistant_prompts.lua:228
+#: ../assistant_prompts.lua:259
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Белгіленген мәтінді мұқият түсіндіріп, анықтық береді."
 
-#: ../assistant_prompts.lua:239
+#: ../assistant_prompts.lua:270
 msgid   "Historical Context"
 msgstr  "Тарихи контекст"
 
-#: ../assistant_prompts.lua:242
+#: ../assistant_prompts.lua:273
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Белгіленген мәтіннің тарихи маңызын және фонын кеңінен түсіндіреді."
 
-#: ../assistant_prompts.lua:254 ../main.lua:668
+#: ../assistant_prompts.lua:285 ../main.lua:785
 msgid   "Wikipedia"
 msgstr  "Уикипедия"
 
-#: ../assistant_prompts.lua:257
+#: ../assistant_prompts.lua:288
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "Белгіленген мәтін бойынша Уикипедия стилінде толық мақала жазады."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:461
+#: ../assistant_prompts.lua:509
 msgid   "Conjugation"
 msgstr  "Сөзжасау"
 
-#: ../assistant_prompts.lua:462
+#: ../assistant_prompts.lua:510
 msgid   "Synonyms"
 msgstr  "Синонимдер"
 
-#: ../assistant_prompts.lua:463
+#: ../assistant_prompts.lua:511
 msgid   "Meaning"
 msgstr  "Мағына"
 
-#: ../assistant_prompts.lua:464
+#: ../assistant_prompts.lua:512
 msgid   "Translation"
 msgstr  "Аударма"
 
-#: ../assistant_prompts.lua:465
-msgid   "Explanation"
-msgstr  "Түсініктеме"
+#: ../assistant_prompts.lua:513
+msgid   "Book Usage"
+msgstr  "Кітапты пайдалану"
 
-#: ../assistant_prompts.lua:466
+#: ../assistant_prompts.lua:514
 msgid   "Example"
 msgstr  "Мысал"
 
-#: ../assistant_prompts.lua:467
+#: ../assistant_prompts.lua:515
 msgid   "Word Origin"
 msgstr  "Сөздің шығу тегі"
 
-#: ../assistant_prompts.lua:479
+#: ../assistant_prompts.lua:527
 msgid   "You may find these topics interesting:"
 msgstr  "Бұл тақырыптар сізге қызықты болуы мүмкін:"
 
@@ -300,11 +403,11 @@ msgstr  "Бұл тақырыптар сізге қызықты болуы мүм
 msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr  "Провайдер параметрлері табылмады: %1. configuration.lua файлын тексеріңіз."
 
-#: ../assistant_querier.lua:77
+#: ../assistant_querier.lua:88
 msgid   "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr  "%1 үшін өңдегіш табылмады. Ол api_handlers бумасында бар екеніне көз жеткізіңіз."
 
-#: ../assistant_querier.lua:110
+#: ../assistant_querier.lua:121
 msgid   "API Error:\n"
         "%1\n"
         "\n"
@@ -314,63 +417,59 @@ msgstr  "API қатесі:\n"
         "\n"
         "Басқа жеткізушіні баптаулар бөлімінен көріңіз."
 
-#: ../assistant_querier.lua:110
+#: ../assistant_querier.lua:121
 msgid   "Unknown error"
 msgstr  "Белгісіз қате"
 
-#: ../assistant_querier.lua:111
+#: ../assistant_querier.lua:122
 msgid   "Settings"
 msgstr  "Баптаулар"
 
-#: ../assistant_querier.lua:113 ../assistant_settings.lua:201
+#: ../assistant_querier.lua:124 ../assistant_settings.lua:207
 #: ../assistant_viewer.lua:341
 msgid   "Close"
 msgstr  "Жабу"
 
-#: ../assistant_querier.lua:137
+#: ../assistant_querier.lua:171
 msgid   "Plugin is not configured."
 msgstr  "Плагин бапталмаған."
 
-#: ../assistant_querier.lua:145
+#: ../assistant_querier.lua:184
 msgid   "Querying AI ..."
 msgstr  "AI сұралып жатыр..."
 
-#: ../assistant_querier.lua:181
+#: ../assistant_querier.lua:245
 msgid   "AI is responding"
 msgstr  "AI жауап беруде"
 
-#: ../assistant_querier.lua:200
+#: ../assistant_querier.lua:264
 msgid   "⏹ Stop"
 msgstr  "⏹ Тоқтату"
 
-#: ../assistant_querier.lua:233 ../assistant_querier.lua:245
+#: ../assistant_querier.lua:323 ../assistant_querier.lua:335
 msgid   "Request cancelled by user."
 msgstr  "Сұрау пайдаланушымен тоқтатылды."
 
-#: ../assistant_querier.lua:251
+#: ../assistant_querier.lua:341
 msgid   "No response received."
 msgstr  "Жауап келмеді."
 
-#: ../assistant_querier.lua:264
+#: ../assistant_querier.lua:354
 msgid   "Failed to start subprocess for request"
 msgstr  "Сұрау үшін қосымша процесті іске қосу мүмкін болмады"
 
-#: ../assistant_querier.lua:460 ../assistant_querier.lua:462
+#: ../assistant_querier.lua:550 ../assistant_querier.lua:552
 msgid   "Deeply Thought"
 msgstr  "Терең Ойлау"
 
-#: ../assistant_quicknote.lua:27 ../main.lua:101 ../main.lua:226
+#: ../assistant_quicknote.lua:27 ../main.lua:101 ../main.lua:229
+#: ../main.lua:321
 msgid   "Take Quick Notes"
 msgstr  "Жылдам Ескертпелер Қою"
 
 #: ../assistant_quicknote.lua:29
 msgid   "Write quick notes here"
 msgstr  "Жылдам ескертпелерді осында жазыңыз"
-
-#: ../assistant_quicknote.lua:49 ../assistant_settings.lua:114
-#: ../assistant_viewer.lua:450
-msgid   "Save"
-msgstr  "Сақтау"
 
 #: ../assistant_quicknote.lua:55
 msgid   "Please enter a note before saving."
@@ -416,93 +515,97 @@ msgstr  "Осы өрістерді бос қалдырыңыз, %1 тілі қо
 msgid   "AI Provider Settings"
 msgstr  "AI провайдері баптаулары"
 
-#: ../assistant_settings.lua:265
+#: ../assistant_settings.lua:201
+msgid   "Select Model"
+msgstr  "Модельді таңдау"
+
+#: ../assistant_settings.lua:278
 msgid   "AI Model provider:"
 msgstr  "AI модель жеткізушісі:"
 
-#: ../assistant_settings.lua:332
+#: ../assistant_settings.lua:369
 msgid   "AI Language: "
 msgstr  "AI тілі: "
 
-#: ../assistant_settings.lua:344
+#: ../assistant_settings.lua:381
 msgid   "AI Text Size: %1"
 msgstr  "AI мәтін өлшемі: %1"
 
-#: ../assistant_settings.lua:348
+#: ../assistant_settings.lua:385
 msgid   "AI Response Text Font Size"
 msgstr  "AI жауап мәтінінің қаріп өлшемі"
 
-#: ../assistant_settings.lua:364
+#: ../assistant_settings.lua:401
 msgid   "Stream Mode Settings"
 msgstr  "Ағын режимі баптаулары"
 
-#: ../assistant_settings.lua:367
+#: ../assistant_settings.lua:404
 msgid   "Enable stream response"
 msgstr  "Ағын жауабын қосу"
 
-#: ../assistant_settings.lua:375
+#: ../assistant_settings.lua:412
 msgid   "Auto scroll stream response text"
 msgstr  "Автоматты түрде ағын жауап мәтінін айналдыру"
 
-#: ../assistant_settings.lua:384
+#: ../assistant_settings.lua:421
 msgid   "Large Streaming Window"
 msgstr  "Үлкен ағындық терезе"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:396
+#: ../assistant_settings.lua:433
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader баптаулары мен ауыстырулары"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:400
+#: ../assistant_settings.lua:437
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "'Аударма' функциясы үшін AI Assistant пайдалану"
 
-#: ../assistant_settings.lua:411
+#: ../assistant_settings.lua:448
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Ұзақ уақыт оқылмаған кітаптарды ашқанда автоматты түрде шолу"
 
-#: ../assistant_settings.lua:421
+#: ../assistant_settings.lua:458
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "AI шолуы келесі ұзақ уақыт оқылмаған кітап ашылғанда қосылады."
 
-#: ../assistant_settings.lua:425
+#: ../assistant_settings.lua:462
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Сөздік терезесінде Dictionary(AI) көрсету"
 
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:470
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Сөздік терезесінде Wikipedia(AI) көрсету"
 
-#: ../assistant_settings.lua:441
+#: ../assistant_settings.lua:478
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Сөздік терезесінде Term X-Ray(AI) көрсету"
 
-#: ../assistant_settings.lua:449
+#: ../assistant_settings.lua:486
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Сөздік терезесінде өңделген сұрақтарды көрсету"
 
-#: ../assistant_settings.lua:459
+#: ../assistant_settings.lua:496
 msgid   "Show Follow-up Questions from AI"
 msgstr  "AI-дан қосымша сұрақтарды көрсету"
 
-#: ../assistant_settings.lua:467
+#: ../assistant_settings.lua:504
 msgid   "Copy entered question to the clipboard"
 msgstr  "Енгізілген сұрақты алмасу буферіне көшіру"
 
-#: ../assistant_settings.lua:475
+#: ../assistant_settings.lua:512
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Әңгімелерді автоматты түрде NoteBook-қа сақтау"
 
-#: ../assistant_settings.lua:483
+#: ../assistant_settings.lua:520
 msgid   "Use book text for x-ray and recap"
 msgstr  "X-ray және шолу үшін кітап мәтінін пайдалану"
 
-#: ../assistant_settings.lua:491
+#: ../assistant_settings.lua:528
 msgid   "Purge the settings"
 msgstr  "Баптауларды тазалау"
 
-#: ../assistant_settings.lua:494 ../main.lua:597
+#: ../assistant_settings.lua:531 ../main.lua:714
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -512,7 +615,7 @@ msgstr  "Ассистент плагинінің баптауларын толы
         "\n"
         "configuration.lua қауіпсіз, тек баптаулар ғана өшіріледі."
 
-#: ../assistant_settings.lua:498 ../main.lua:601
+#: ../assistant_settings.lua:535 ../main.lua:718
 msgid   "Purge"
 msgstr  "Өшіру"
 
@@ -525,22 +628,22 @@ msgstr  "Жаңартулар тексерілуде..."
 msgid   "A new version of the %s plugin (%s) is available. Please update!"
 msgstr  "%s плагинінің жаңа нұсқасы (%s) шықты. Жаңартыңыз!"
 
-#: ../assistant_utils.lua:136
+#: ../assistant_utils.lua:155
 msgid   "Page"
 msgstr  "Бет"
 
-#: ../assistant_utils.lua:160
+#: ../assistant_utils.lua:180
 msgid   "Cannot access default folder for logs: %1\n"
         "Using original location."
 msgstr  "Журналдар үшін әдепкі қалтаны ашу мүмкін емес: %1\n"
         "Бастапқы орын қолданылады."
 
-#: ../assistant_utils.lua:212
+#: ../assistant_utils.lua:235
 msgid   "Notebook save failed. Continuing..."
 msgstr  "Жазба кітапшаны сақтау сәтсіз аяқталды. Жалғастырылады..."
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:738
+#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:741
 msgid   "Ask Another Question"
 msgstr  "Тағы сұрау"
 
@@ -580,89 +683,93 @@ msgstr  "Әңгіме NoteBook-қа сақталды"
 msgid   "Book Analysis"
 msgstr  "Кітап талдауы"
 
-#: ../assistant_viewer.lua:740
+#: ../assistant_viewer.lua:573
+msgid   "General Conversation"
+msgstr  "Жалпы әңгіме"
+
+#: ../assistant_viewer.lua:743
 msgid   "Type your question here"
 msgstr  "Сұрағыңызды осында жазыңыз"
 
-#: ../assistant_viewer.lua:904
+#: ../assistant_viewer.lua:912
 msgid   "Word copied to clipboard."
 msgstr  "Сөз алмасу буферіне көшірілді."
 
-#: ../assistant_viewer.lua:905
+#: ../assistant_viewer.lua:913
 msgid   "Selection copied to clipboard."
 msgstr  "Таңдау алмасу буферіне көшірілді."
 
-#: ../main.lua:77 ../main.lua:142
+#: ../main.lua:77 ../main.lua:145
 msgid   "Ask the AI a question"
 msgstr  "AI-ға сұрақ қой"
 
-#: ../main.lua:85 ../main.lua:178
+#: ../main.lua:85 ../main.lua:181
 msgid   "AI Recaps"
 msgstr  "AI Шолулар"
 
-#: ../main.lua:93 ../main.lua:167
+#: ../main.lua:93 ../main.lua:170
 msgid   "AI X-Ray"
 msgstr  "AI X‑Ray"
 
-#: ../main.lua:109 ../main.lua:156
+#: ../main.lua:109 ../main.lua:159
 msgid   "Book Summary & Recs"
 msgstr  "Кітап қорытындысы мен ұсыныстар"
 
-#: ../main.lua:148
+#: ../main.lua:151
 msgid   "Enter a question to ask AI."
 msgstr  "AI-ға сұрақ енгізіңіз."
 
-#: ../main.lua:153
+#: ../main.lua:156
 msgid   "Book-Level Built-in Prompts"
 msgstr  "Кітап деңгейіндегі ішкі сұрақтар"
 
-#: ../main.lua:162
+#: ../main.lua:165
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "Кітаптың қорытындысы, автор өмірбаяны, тарихи контекст және ұқсас кітаптар туралы сипаттамалармен тізімі."
 
-#: ../main.lua:173
+#: ../main.lua:176
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "Кітапқа арналған \"X-Ray\" қорытындысы: кейіпкерлер, орындар, тақырыптар, түсініктер мен ұғымдар, уақыт сызығы және қайта ену бөлімдерімен."
 
-#: ../main.lua:184
+#: ../main.lua:187
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "Оқу барысына дейінгі қысқа, спойлерсіз кітап қорытындысы."
 
-#: ../main.lua:195
+#: ../main.lua:198
 msgid   "Analysis of your highlights, notes, and notebook content from the book."
 msgstr  "Кітаптағы таңбалауларыңыз, жазбаларыңыз және жазбалар дәптеріңіздің талдауы."
 
-#: ../main.lua:206
+#: ../main.lua:209
 msgid   "Summary of the book using your highlights and notes."
 msgstr  "Сіздің таңбалауларыңыз бен жазбаларыңызды пайдаланып кітаптың қорытындысы."
 
-#: ../main.lua:213
+#: ../main.lua:216
 msgid   "Book-Level Custom Prompts"
 msgstr  "Кітап деңгейіндегі өңделген сұрақтар"
 
-#: ../main.lua:220
+#: ../main.lua:223
 msgid   "Includes user defined book level prompts from Config file"
 msgstr  "Пайдаланушы анықтаған кітап деңгейіндегі сұрақтарды конфигурация файлына қосады"
 
-#: ../main.lua:232
+#: ../main.lua:235 ../main.lua:327
 msgid   "Take quick notes that will be saved to your notebook."
 msgstr  "Жылдам ескертпелерді жазып, оларды жазба кітапшаңызға сақтаңыз."
 
-#: ../main.lua:237
+#: ../main.lua:240 ../main.lua:332
 msgid   "NoteBook (AI Conversation Log)"
 msgstr  "Жазбалар дәптері (AI сөйлесу журналы)"
 
-#: ../main.lua:243
+#: ../main.lua:246 ../main.lua:339
 msgid   "Notebook file: \n"
         "\n"
 msgstr  "NoteBook файлы: \n"
         "\n"
 
-#: ../main.lua:244
+#: ../main.lua:247 ../main.lua:340
 msgid   "View"
 msgstr  "Қарау"
 
-#: ../main.lua:248
+#: ../main.lua:251 ../main.lua:344
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -670,11 +777,11 @@ msgstr  "Файл жоқ.\n"
         "\n"
         "%1"
 
-#: ../main.lua:256 ../main.lua:260
+#: ../main.lua:259 ../main.lua:263 ../main.lua:352 ../main.lua:356
 msgid   "Delete"
 msgstr  "Жою"
 
-#: ../main.lua:259
+#: ../main.lua:262 ../main.lua:355
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -682,41 +789,57 @@ msgstr  "Файлды жою керек пе?\n"
         "%1\n"
         "Бұл әрекетті қайтару мүмкін емес."
 
-#: ../main.lua:271
+#: ../main.lua:274 ../main.lua:367
 msgid   "Edit"
 msgstr  "Өзгерту"
 
-#: ../main.lua:283
+#: ../main.lua:286 ../main.lua:380
 msgid   "AI Provider: %1"
 msgstr  "AI провайдері: %1"
 
-#: ../main.lua:293
+#: ../main.lua:286 ../main.lua:380
+msgid   "Not configured"
+msgstr  "Конфигурацияланбаған"
+
+#: ../main.lua:296 ../main.lua:390
 msgid   "AI Assistant Settings"
 msgstr  "AI көмекшісі баптаулары"
 
-#: ../main.lua:338
+#: ../main.lua:310
+msgid   "Ask a Question"
+msgstr  "Сұрақ қою"
+
+#: ../main.lua:316
+msgid   "Ask a general question to the AI (not book-related)."
+msgstr  "ЖИ-ге жалпы сұрақ қойыңыз (кітапқа қатысты емес)."
+
+#: ../main.lua:436
 msgid   "This is a custom prompt"
 msgstr  "Бұл өңделген сұрақ"
 
-#: ../main.lua:348
-msgid   "No active custom prompt found. For details, visit the 'Configuration' wiki page on github."
-msgstr  "Белсенді өңделген сұрақ табылмады. Толығырақ ақпарат үшін github-тегі 'Configuration' вики-бетін қараңыз."
+#: ../main.lua:446
+msgid   "No valid book-level custom prompt found"
+msgstr  "Кітап деңгейіндегі жарамды теңшелетін нұсқау табылмады"
 
-#: ../main.lua:423
+#: ../main.lua:451
+msgid   "For details, visit the 'Configuration' wiki page on github."
+msgstr  "Толық ақпарат алу үшін github-тағы 'Configuration' wiki бетіне кіріңіз."
+
+#: ../main.lua:534
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "configuration.lua ішінде жарамды провайдер табылмады"
 
-#: ../main.lua:441
+#: ../main.lua:552
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Баптау қатесі.\n"
         "configuration.lua орнатыңыз."
 
-#: ../main.lua:510
+#: ../main.lua:624
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: модель провайдерлері жарамсыз."
 
-#: ../main.lua:575
+#: ../main.lua:692
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -748,33 +871,33 @@ msgstr  "Пайдалану кеңестері\n"
         "Көп серпу (мысалы, ⮠, ⮡, ↺):\n"
         "Нәтиже терезесін жабу үшін (Жабу батырмасы алыс жатқанда).\n"
 
-#: ../main.lua:594
+#: ../main.lua:711
 msgid   "Purge Settings"
 msgstr  "Баптауларды өшіру"
 
-#: ../main.lua:648
+#: ../main.lua:765
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Белгілеу мәзірінен [%s] өшірілсін бе?"
 
-#: ../main.lua:649
+#: ../main.lua:766
 msgid   "Remove"
 msgstr  "Өшіру"
 
-#: ../main.lua:853
+#: ../main.lua:970
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Баптау табылмады. configuration.lua алдын ала орнатыңыз."
 
-#: ../main.lua:895
+#: ../main.lua:1012
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "[%1 (AI)] Белгілеу мәзіріне қосылды."
 
-#: ../main.lua:904
+#: ../main.lua:1021
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "[%s (AI)] Белгілеу мәзірінен өшірілді."
 
-#: ../main.lua:948
+#: ../main.lua:1065
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -782,16 +905,16 @@ msgstr  "AI қысқаша мазмұн керек пе?\n"
         "%2 жазған «%1» үшін.\n"
         "\n"
 
-#: ../main.lua:949
+#: ../main.lua:1066
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Соңғы рет бір сағат бұрын оқылған."
 msgstr[1]       "Соңғы рет %1 сағат бұрын оқылған."
 
-#: ../main.lua:954
+#: ../main.lua:1071
 msgid   "Yes"
 msgstr  "Иә"
 
-#: ../main.lua:963
+#: ../main.lua:1080
 msgid   "No"
 msgstr  "Жоқ"

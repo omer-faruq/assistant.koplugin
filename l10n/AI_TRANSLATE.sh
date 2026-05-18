@@ -30,6 +30,8 @@
 # Exit immediately if a command exits with a non-zero status.
 set -euo pipefail
 
+[[ -f ./.env ]] && source ./.env 
+
 # -------------------- Configuration --------------------
 API_ENDPOINT=${API_ENDPOINT:-"https://api.openai.com/v1/chat/completions"}
 API_MODEL=${API_MODEL:-"gpt-4o-mini"}
