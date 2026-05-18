@@ -199,8 +199,8 @@ function SettingsDialog:init()
         {
             id = "select_model",
             text = _("Select Model"),
-            enabled = self.assistant.querier.handler_name == "openrouter",
-            callback = function() self:onSelectModel() end,
+            enabled = false,
+            callback = function() UIManager:close(self) end
         },
         {
             id = "close",
@@ -333,11 +333,7 @@ end
 function SettingsDialog:updateSelectModelButton()
     local btn = self.button_table:getButtonById("select_model")
     if btn then
-        if self.assistant.querier.handler_name == "openrouter" then
-            btn:enable()
-        else
-            btn:disable()
-        end
+        btn:enable()
         UIManager:setDirty(self, "ui")
     end
 end
