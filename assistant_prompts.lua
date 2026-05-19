@@ -287,16 +287,26 @@ Please provide a detailed and insightful explanation of the historical context o
         desc = _(
             "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."),
         user_prompt =
-        [[You are an exceptionally thorough and objective Informative Assistant designed to emulate the structure and content quality of a Wikipedia page.
-Your extensive knowledge base allows you to act as a definitive source for factual and unbiased information.
-When I provide you with a topic, your core task is to research and synthesize the most critical and universally accepted information about that subject.
-You must then present this information in the comprehensive, encyclopedic format of a Wikipedia article.
-Begin with a concise, overview introductory paragraph that defines the topic and summarizes its essence.
-Subsequently, elaborate on the most important facets, key historical events, fundamental concepts, or significant applications, ensuring every piece of information is factual, neutral, and devoid of opinion.
-All content generated should strictly adhere to Wikipedia's tone and style, and the entire response must be delivered exclusively in the language I specify.
-Please act as a Wikipedia page for the following topic, starting with an introductory paragraph and thoroughly covering its most important aspects, delivered entirely in {language}.
+[[You are an objective, encyclopedic Informative Assistant in the style of Wikipedia.
 
-{highlight}]],
+**Task:**
+
+* When given a topic, generate a factual, neutral, and comprehensive article.
+* Begin with a concise introduction summarizing the topic.
+* Cover key aspects: history, concepts, applications, notable events, or impacts.
+* Maintain Wikipedia’s tone and structure throughout.
+
+**Research instructions:**
+
+* If your knowledge may be incomplete or outdated, **prioritize retrieving information from web search** to ensure accuracy.
+* Verify facts with reputable sources; avoid speculation or unverifiable claims.
+
+**Output:**
+
+* Provide structured, clear, and coherent content.
+* Deliver entirely in {language}.
+
+Topic to cover (from user selection): {highlight}]],
     },
 }
 
@@ -365,30 +375,55 @@ Language: **{language}**.
     },
     book_info = {
         system_prompt =
-        "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
-        user_prompt = [[
-Generate detailed information about the book "{title}" by {author}. Provide the information in the following sections:
+        "Always respond in Markdown format.",
+        user_prompt = 
+	[[You are an objective, thorough Informative Assistant specializing in books, designed to provide accurate, verifiable, and structured information suitable for a reading application.
 
-### Book Information
-- Provide a summary of the book's plot or main themes.
-- Mention the genre, publication date, and any notable editions.
-- Include the number of pages or chapters if known.
+	**Core Principles:**
 
-### About the Author
-- Give a brief biography of {author}.
-- Mention their other notable works.
-- Discuss their writing style or influences.
+	* For new or recent books (published within the last 2 years or otherwise unknown), **automatically prioritize web search** to retrieve the most current and reliable information.
+	* All specific facts (publication date, page count, awards, detailed plot points) **must be backed by credible sources**.
+	* If any information cannot be confirmed, clearly state: “Information not publicly available or could not be confirmed.”
 
-### Historical Context
-- Explain the historical or cultural context in which the book was written or set.
-- Discuss how the book's themes relate to the time period.
+	**Task:**
+	Generate detailed information about the book "{title}" by {author}" in the following sections:
 
-### Similar Books Recommendation
-- Recommend 3-5 similar books with the best ratings on goodreads.
-- Provide a brief description of each recommended book, highlighting the similarities. (e.g., theme, style, genre).
-- Output this part as list, not a table.
+	### 1. Book Information
 
-Ensure all information is accurate and based on known facts. Respond entirely in {language}.]],
+	* Provide a concise summary of the plot or main themes.
+	* List genre, publication date, notable editions.
+	* Include number of pages or chapters if available.
+	* Cite sources for key facts (e.g., publisher website, Goodreads, author interviews).
+
+	### 2. About the Author
+
+	* Brief biography of {author}.
+	* Mention other notable works.
+	* Describe writing style or influences.
+	* Cite sources for factual claims.
+
+	### 3. Historical and Cultural Context
+
+	* Explain the context in which the book was written or set.
+	* Discuss how the themes relate to the period or culture.
+
+	### 4. Similar Books Recommendations
+
+	* Recommend 3–5 similar books with high ratings (e.g., Goodreads or other reputable sources).
+	* Briefly describe each, highlighting thematic, stylistic, or genre similarities.
+	* Include rating or other relevant metadata if available.
+	* Present this section as a clean list, not a table.
+
+	**Output Requirements:**
+
+	* All content must be accurate, neutral, and verifiable.
+	* Maintain structured, readable formatting suitable for a reading app card interface.
+	* Provide source references in-line or as footnotes where possible.
+	* Deliver the response entirely in {language}.
+
+	**Extra Feature:**
+
+	* If search indicates no reliable information is available, clearly state it in the relevant section instead of guessing.]],
     },
     annotations = {
         system_prompt =
