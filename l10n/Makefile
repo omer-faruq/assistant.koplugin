@@ -12,9 +12,9 @@ all: translate
 # 7. Checks the syntax of the final .po files.
 # 8. Cleans up all intermediate files.
 translate:
-	@if [ -z "$(API_KEY)" ]; then \
-		echo "\033[0;31mError: API_KEY environment variable is not set.\033[0m"; \
-		echo "Please set it before running translation. e.g., export API_KEY=your_key"; \
+	@if [ ! -f .env ]; then \
+		echo "\033[0;31mError: AI access environment file \`.env' is not found.\033[0m"; \
+		echo "Please set it before running translation. See: README.md"; \
 		exit 1; \
 	fi
 	@echo "[1/7] Generating POT template file..."

@@ -21,7 +21,7 @@ Get tools ready for the process.
 apt install gettext make curl jq 
 ```
 
-Create an `.env` as in the following format for LLM access.
+Create an `.env` file in the following format for LLM access.
 
 ```
 API_ENDPOINT=https://api.openai.com/v1/chat/completions
@@ -31,13 +31,11 @@ API_KEY=...KEY...
 
 ## Updating Translations
 
-
 When the source code changes, new strings might be added or modified. To update all language files:
 
 ```
 make
 ```
-
 
 ## Language Abbreviation Table
 
