@@ -716,6 +716,7 @@ Multi-Swipe (e.g., ⮠, ⮡, ↺):
 On the result dialog to close (as the Close button is far to reach).
 ]])
     UIManager:show(ConfirmBox:new{
+        icon = "info",
         text = info_text,
         face = Font:getFace("xx_smallinfofont"),
         ok_text = _("Purge Settings"),
