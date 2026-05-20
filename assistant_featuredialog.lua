@@ -168,10 +168,15 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
 
     local function createResultText(answer)
       local normalized_answer = normalizeMarkdownHeadings(answer, 2, 6) or answer
-      local result_text = 
-        TextBoxWidget.PTF_HEADER ..
-        TextBoxWidget.PTF_BOLD_START .. title .. TextBoxWidget.PTF_BOLD_END .. " by " .. author .. " is " .. formatted_progress_percent .. "% complete.\n\n" ..  normalized_answer
-      return result_text
+      local header_text = T(_([[
+ - Title : %1
+ - Author: %2
+ - Reading progress: %3%
+
+-----
+
+]]), title, author, formatted_progress_percent)
+      return header_text .. normalized_answer
     end
 
     local function prepareMessageHistoryForAdditionalQuestion(message_history, user_question, title, author)
