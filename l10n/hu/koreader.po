@@ -1,7 +1,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-05-18 15:34+0800\n"
+        "POT-Creation-Date: 2026-05-20 13:37+0800\n"
         "PO-Revision-Date: 2025-09-17 15:17+0800\n"
         "Last-Translator: [AI Model Version]\n"
         "Language-Team: [AI Translation Model Name]\n"
@@ -107,7 +107,7 @@ msgstr  "Keresés"
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Könyv szövegkörnyezetének elemzése a Term X-Ray funkcióhoz..."
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:800
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:816
 msgid   "Term X-Ray"
 msgstr  "Kifejezés-röntgen"
 
@@ -115,7 +115,7 @@ msgstr  "Kifejezés-röntgen"
 msgid   "Loading Term X-Ray ..."
 msgstr  "Kifejezés-röntgen betöltése…"
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:814
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:832
 msgid   "Dictionary"
 msgstr  "Szótár"
 
@@ -175,6 +175,20 @@ msgstr  "Összefoglaló betöltése kijelölések és jegyzetek alapján…"
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "Ismeretlen funkciótípus: %s"
+
+#: ../assistant_featuredialog.lua:171
+msgid   " - Title : %1\n"
+        " - Author: %2\n"
+        " - Reading progress: %3%\n"
+        "\n"
+        "-----\n"
+        "\n"
+msgstr  " - Cím: %1\n"
+        " - Szerző: %2\n"
+        " - Olvasási előrehaladás: %3%\n"
+        "\n"
+        "-----\n"
+        "\n"
 
 #: ../assistant_model_picker.lua:36
 msgid   "Fetching models..."
@@ -353,7 +367,7 @@ msgstr  "Történelmi háttér"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Ez a lekérdezés részletes történelmi kontextust ad a kiemelt szöveghez, megmagyarázva jelentőségét és hátterét."
 
-#: ../assistant_prompts.lua:285 ../main.lua:785
+#: ../assistant_prompts.lua:285 ../main.lua:799
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -362,35 +376,35 @@ msgid   "This prompt generates a comprehensive Wikipedia-style article based on 
 msgstr  "Ez a lekérdezés egy átfogó Wikipedia-stílusú cikket generál a kiemelt szöveg alapján, biztosítva a tények pontosságát és semlegességét."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:509
+#: ../assistant_prompts.lua:544
 msgid   "Conjugation"
 msgstr  "Ragozás"
 
-#: ../assistant_prompts.lua:510
+#: ../assistant_prompts.lua:545
 msgid   "Synonyms"
 msgstr  "Szinonimák"
 
-#: ../assistant_prompts.lua:511
+#: ../assistant_prompts.lua:546
 msgid   "Meaning"
 msgstr  "Jelentés"
 
-#: ../assistant_prompts.lua:512
+#: ../assistant_prompts.lua:547
 msgid   "Translation"
 msgstr  "Fordítás"
 
-#: ../assistant_prompts.lua:513
+#: ../assistant_prompts.lua:548
 msgid   "Book Usage"
 msgstr  "Könyv használata"
 
-#: ../assistant_prompts.lua:514
+#: ../assistant_prompts.lua:549
 msgid   "Example"
 msgstr  "Példa"
 
-#: ../assistant_prompts.lua:515
+#: ../assistant_prompts.lua:550
 msgid   "Word Origin"
 msgstr  "Szó eredete"
 
-#: ../assistant_prompts.lua:527
+#: ../assistant_prompts.lua:562
 msgid   "You may find these topics interesting:"
 msgstr  "Ezek a témák érdekesek lehetnek:"
 
@@ -518,89 +532,89 @@ msgstr  "Modell kiválasztása"
 msgid   "AI Model provider:"
 msgstr  "AI Modell Szolgáltató:"
 
-#: ../assistant_settings.lua:369
+#: ../assistant_settings.lua:365
 msgid   "AI Language: "
 msgstr  "AI nyelv: "
 
-#: ../assistant_settings.lua:381
+#: ../assistant_settings.lua:377
 msgid   "AI Text Size: %1"
 msgstr  "AI szövegméret: %1"
 
-#: ../assistant_settings.lua:385
+#: ../assistant_settings.lua:381
 msgid   "AI Response Text Font Size"
 msgstr  "AI válasz szöveg betűmérete"
 
-#: ../assistant_settings.lua:401
+#: ../assistant_settings.lua:397
 msgid   "Stream Mode Settings"
 msgstr  "Stream mód beállítások"
 
-#: ../assistant_settings.lua:404
+#: ../assistant_settings.lua:400
 msgid   "Enable stream response"
 msgstr  "Folyamatos válasz engedélyezése"
 
-#: ../assistant_settings.lua:412
+#: ../assistant_settings.lua:408
 msgid   "Auto scroll stream response text"
 msgstr  "Válaszszöveg automatikus görgetése"
 
-#: ../assistant_settings.lua:421
+#: ../assistant_settings.lua:417
 msgid   "Large Streaming Window"
 msgstr  "Nagy méretű streaming ablak"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:429
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader finomhangolások és felülbírálások"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:437
+#: ../assistant_settings.lua:433
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "AI-asszisztens használata a „Fordítás” funkcióhoz"
 
-#: ../assistant_settings.lua:448
+#: ../assistant_settings.lua:444
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Automatikus összefoglaló régen olvasott könyvek megnyitásakor"
 
-#: ../assistant_settings.lua:458
+#: ../assistant_settings.lua:454
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "Az AI összefoglaló aktiválódik legközelebb, amikor régen olvasott könyvet nyit meg."
 
-#: ../assistant_settings.lua:462
+#: ../assistant_settings.lua:458
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Szótár(AI) megjelenítése a szótár felugróban"
 
-#: ../assistant_settings.lua:470
+#: ../assistant_settings.lua:466
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Wikipedia(AI) megjelenítése a szótár felugróban"
 
-#: ../assistant_settings.lua:478
+#: ../assistant_settings.lua:474
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Kifejezés-röntgen (AI) megjelenítése a szótár-felugró ablakban"
 
-#: ../assistant_settings.lua:486
+#: ../assistant_settings.lua:482
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Egyéni kérdések megjelenítése a szótár-felugró ablakban"
 
-#: ../assistant_settings.lua:496
+#: ../assistant_settings.lua:492
 msgid   "Show Follow-up Questions from AI"
 msgstr  "AI további kérdéseinek megjelenítése"
 
-#: ../assistant_settings.lua:504
+#: ../assistant_settings.lua:500
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kérdés másolása vágólapra"
 
-#: ../assistant_settings.lua:512
+#: ../assistant_settings.lua:508
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Beszélgetések automatikus mentése a Jegyzetfüzetbe"
 
-#: ../assistant_settings.lua:520
+#: ../assistant_settings.lua:516
 msgid   "Use book text for x-ray and recap"
 msgstr  "Könyv szövegének használata x-ray-hez és összefoglalóhoz"
 
-#: ../assistant_settings.lua:528
+#: ../assistant_settings.lua:524
 msgid   "Purge the settings"
 msgstr  "Beállítások törlése"
 
-#: ../assistant_settings.lua:531 ../main.lua:714
+#: ../assistant_settings.lua:527 ../main.lua:724
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -610,7 +624,7 @@ msgstr  "Biztosan törli az asszisztent bővítmény beállításait?\n"
         "\n"
         "A configuration.lua biztonságban van, csak a beállítások törlődnek."
 
-#: ../assistant_settings.lua:535 ../main.lua:718
+#: ../assistant_settings.lua:531 ../main.lua:728
 msgid   "Purge"
 msgstr  "Törlés"
 
@@ -834,7 +848,7 @@ msgstr  "Konfigurációs hiba.\n"
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: érvénytelen modellszolgáltatók"
 
-#: ../main.lua:692
+#: ../main.lua:702
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -866,33 +880,33 @@ msgstr  "Használati tippek\n"
         "Többujjas csúsztatás (pl. ⮠, ⮡, ↺):\n"
         "Az eredmény ablak bezárásához (mivel a Bezárás gomb túl messze van).\n"
 
-#: ../main.lua:711
+#: ../main.lua:721
 msgid   "Purge Settings"
 msgstr  "Beállítások törlése"
 
-#: ../main.lua:765
+#: ../main.lua:775
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "[%s] eltávolítása a kiemelés menüből?"
 
-#: ../main.lua:766
+#: ../main.lua:776
 msgid   "Remove"
 msgstr  "Eltávolítás"
 
-#: ../main.lua:970
+#: ../main.lua:1015
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Nem található konfiguráció. Először állítsd be a configuration.lua-t."
 
-#: ../main.lua:1012
+#: ../main.lua:1057
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "[%1 (AI)] hozzáadva a kiemelés menühöz."
 
-#: ../main.lua:1021
+#: ../main.lua:1066
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "[%s (AI)] eltávolítva a kiemelés menüből."
 
-#: ../main.lua:1065
+#: ../main.lua:1110
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -900,16 +914,16 @@ msgstr  "Szeretnél egy AI-összefoglalót?\n"
         "%1 szerző: %2.\n"
         "\n"
 
-#: ../main.lua:1066
+#: ../main.lua:1111
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Legutóbb egy órája olvastad."
 msgstr[1]       "Legutóbb %1 órája olvastad."
 
-#: ../main.lua:1071
+#: ../main.lua:1116
 msgid   "Yes"
 msgstr  "Igen"
 
-#: ../main.lua:1080
+#: ../main.lua:1125
 msgid   "No"
 msgstr  "Nem"

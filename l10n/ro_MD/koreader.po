@@ -1,11 +1,11 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.08\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-05-18 15:34+0800\n"
+        "POT-Creation-Date: 2026-05-20 13:37+0800\n"
         "PO-Revision-Date: 2025-06-25 15:00+0300\n"
         "Last-Translator: AI Model 1.0 <ai@example.com>\n"
         "Language-Team: Română (Moldova) <ai@example.com>\n"
-        "Language: Română (Moldova) ro_MD\n"
+        "Language: ro_MD\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
@@ -107,7 +107,7 @@ msgstr  "Caută"
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Se analizează contextul cărții pentru Termen X-Ray..."
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:800
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:816
 msgid   "Term X-Ray"
 msgstr  "Radiografie terminologică"
 
@@ -115,7 +115,7 @@ msgstr  "Radiografie terminologică"
 msgid   "Loading Term X-Ray ..."
 msgstr  "Se încarcă radiografia terminologică..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:814
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:832
 msgid   "Dictionary"
 msgstr  "Dicționar"
 
@@ -175,6 +175,20 @@ msgstr  "Se încarcă rezumatul folosind evidențierile și notițele..."
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "Tip de funcție necunoscut: %s"
+
+#: ../assistant_featuredialog.lua:171
+msgid   " - Title : %1\n"
+        " - Author: %2\n"
+        " - Reading progress: %3%\n"
+        "\n"
+        "-----\n"
+        "\n"
+msgstr  " - Titlu : %1\n"
+        " - Autor: %2\n"
+        " - Progresul lecturii: %3%\n"
+        "\n"
+        "-----\n"
+        "\n"
 
 #: ../assistant_model_picker.lua:36
 msgid   "Fetching models..."
@@ -353,7 +367,7 @@ msgstr  "Context istoric"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Oferă un context istoric detaliat pentru textul evidențiat, explicând semnificația și fundalul."
 
-#: ../assistant_prompts.lua:285 ../main.lua:785
+#: ../assistant_prompts.lua:285 ../main.lua:799
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -362,35 +376,35 @@ msgid   "This prompt generates a comprehensive Wikipedia-style article based on 
 msgstr  "Generează un articol complet în stil Wikipedia bazat pe textul evidențiat, asigurând acuratețea și neutralitatea."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:509
+#: ../assistant_prompts.lua:544
 msgid   "Conjugation"
 msgstr  "Conjugare"
 
-#: ../assistant_prompts.lua:510
+#: ../assistant_prompts.lua:545
 msgid   "Synonyms"
 msgstr  "Sinonime"
 
-#: ../assistant_prompts.lua:511
+#: ../assistant_prompts.lua:546
 msgid   "Meaning"
 msgstr  "Sens"
 
-#: ../assistant_prompts.lua:512
+#: ../assistant_prompts.lua:547
 msgid   "Translation"
 msgstr  "Traducere"
 
-#: ../assistant_prompts.lua:513
+#: ../assistant_prompts.lua:548
 msgid   "Book Usage"
 msgstr  "Utilizare carte"
 
-#: ../assistant_prompts.lua:514
+#: ../assistant_prompts.lua:549
 msgid   "Example"
 msgstr  "Exemplu"
 
-#: ../assistant_prompts.lua:515
+#: ../assistant_prompts.lua:550
 msgid   "Word Origin"
 msgstr  "Originea cuvântului"
 
-#: ../assistant_prompts.lua:527
+#: ../assistant_prompts.lua:562
 msgid   "You may find these topics interesting:"
 msgstr  "Este posibil să vă intereseze aceste subiecte:"
 
@@ -518,89 +532,89 @@ msgstr  "Selectați modelul"
 msgid   "AI Model provider:"
 msgstr  "Furnizor model AI:"
 
-#: ../assistant_settings.lua:369
+#: ../assistant_settings.lua:365
 msgid   "AI Language: "
 msgstr  "Limba IA: "
 
-#: ../assistant_settings.lua:381
+#: ../assistant_settings.lua:377
 msgid   "AI Text Size: %1"
 msgstr  "Mărime text IA: %1"
 
-#: ../assistant_settings.lua:385
+#: ../assistant_settings.lua:381
 msgid   "AI Response Text Font Size"
 msgstr  "Mărime font pentru textul răspunsului IA"
 
-#: ../assistant_settings.lua:401
+#: ../assistant_settings.lua:397
 msgid   "Stream Mode Settings"
 msgstr  "Setări mod streaming"
 
-#: ../assistant_settings.lua:404
+#: ../assistant_settings.lua:400
 msgid   "Enable stream response"
 msgstr  "Activează răspuns în flux"
 
-#: ../assistant_settings.lua:412
+#: ../assistant_settings.lua:408
 msgid   "Auto scroll stream response text"
 msgstr  "Derulare automată a textului răspunsului în flux"
 
-#: ../assistant_settings.lua:421
+#: ../assistant_settings.lua:417
 msgid   "Large Streaming Window"
 msgstr  "Fereastră mare de streaming"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:429
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "Ajustări și suprascrieri KOReader"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:437
+#: ../assistant_settings.lua:433
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Folosește Asistentul AI pentru 'Traducere'"
 
-#: ../assistant_settings.lua:448
+#: ../assistant_settings.lua:444
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Rezumat automat la deschiderea cărților necitite de mult"
 
-#: ../assistant_settings.lua:458
+#: ../assistant_settings.lua:454
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "Rezumatul IA va fi activat la următoarea deschidere a unei cărți necitite de mult."
 
-#: ../assistant_settings.lua:462
+#: ../assistant_settings.lua:458
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Afișează Dicționar(AI) în fereastra pop-up"
 
-#: ../assistant_settings.lua:470
+#: ../assistant_settings.lua:466
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Afișează Wikipedia(AI) în fereastra pop-up"
 
-#: ../assistant_settings.lua:478
+#: ../assistant_settings.lua:474
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Afișează Radiografia terminologică(AI) în fereastra pop-up a dicționarului"
 
-#: ../assistant_settings.lua:486
+#: ../assistant_settings.lua:482
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Afișează solicitările personalizate în fereastra pop-up a dicționarului"
 
-#: ../assistant_settings.lua:496
+#: ../assistant_settings.lua:492
 msgid   "Show Follow-up Questions from AI"
 msgstr  "Afișează întrebări de urmărire de la IA"
 
-#: ../assistant_settings.lua:504
+#: ../assistant_settings.lua:500
 msgid   "Copy entered question to the clipboard"
 msgstr  "Copiază întrebarea introdusă în clipboard"
 
-#: ../assistant_settings.lua:512
+#: ../assistant_settings.lua:508
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Salvează automat conversațiile în NoteBook"
 
-#: ../assistant_settings.lua:520
+#: ../assistant_settings.lua:516
 msgid   "Use book text for x-ray and recap"
 msgstr  "Folosește textul cărții pentru x-ray și rezumat"
 
-#: ../assistant_settings.lua:528
+#: ../assistant_settings.lua:524
 msgid   "Purge the settings"
 msgstr  "Șterge setările"
 
-#: ../assistant_settings.lua:531 ../main.lua:714
+#: ../assistant_settings.lua:527 ../main.lua:724
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -610,7 +624,7 @@ msgstr  "Sigur doriți să ștergeți setările plugin-ului asistent? \n"
         "\n"
         "configuration.lua este în siguranță, doar setările sunt șterse."
 
-#: ../assistant_settings.lua:535 ../main.lua:718
+#: ../assistant_settings.lua:531 ../main.lua:728
 msgid   "Purge"
 msgstr  "Resetează"
 
@@ -834,7 +848,7 @@ msgstr  "Eroare de configurare.\n"
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: furnizorii de modele sunt invalizi."
 
-#: ../main.lua:692
+#: ../main.lua:702
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -866,33 +880,33 @@ msgstr  "Sfaturi de utilizare\n"
         "Glisare multiplă (ex: ⮠, ⮡, ↺):\n"
         "Pe dialogul cu rezultatele pentru a închide (deoarece butonul Închidere este greu de atins).\n"
 
-#: ../main.lua:711
+#: ../main.lua:721
 msgid   "Purge Settings"
 msgstr  "Resetează setările"
 
-#: ../main.lua:765
+#: ../main.lua:775
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Eliminați [%s] din meniul de evidențiere?"
 
-#: ../main.lua:766
+#: ../main.lua:776
 msgid   "Remove"
 msgstr  "Elimină"
 
-#: ../main.lua:970
+#: ../main.lua:1015
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Configurarea nu a fost găsită. Vă rugăm să setați mai întâi configuration.lua."
 
-#: ../main.lua:1012
+#: ../main.lua:1057
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Adăugat [%1 (AI)] în meniul de evidențiere."
 
-#: ../main.lua:1021
+#: ../main.lua:1066
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Eliminat [%s (AI)] din meniul de evidențiere."
 
-#: ../main.lua:1065
+#: ../main.lua:1110
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -900,17 +914,17 @@ msgstr  "Doriți un rezumat AI?\n"
         "Pentru %1 de %2.\n"
         "\n"
 
-#: ../main.lua:1066
+#: ../main.lua:1111
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Ultima dată citit acum o oră."
 msgstr[1]       "Ultima dată citit acum %1 ore."
 msgstr[2]       "Ultima dată citit acum %1 de ore."
 
-#: ../main.lua:1071
+#: ../main.lua:1116
 msgid   "Yes"
 msgstr  "Da"
 
-#: ../main.lua:1080
+#: ../main.lua:1125
 msgid   "No"
 msgstr  "Nu"

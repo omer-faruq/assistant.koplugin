@@ -1,10 +1,10 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-05-18 15:34+0800\n"
+        "POT-Creation-Date: 2026-05-20 13:37+0800\n"
         "PO-Revision-Date: 2025-09-11 10:53+0800\n"
-        "Last-Translator: GPT-4o <openai.com>\n"
-        "Language-Team: GPT-4o <openai.com>\n"
+        "Last-Translator: AI Model v1.0\n"
+        "Language-Team: AI Translation Model\n"
         "Language: Latviešu (lv)\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
@@ -107,7 +107,7 @@ msgstr  "Meklēt"
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Analizē grāmatas kontekstu Term X-Ray..."
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:800
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:816
 msgid   "Term X-Ray"
 msgstr  "Termina rentgena skats"
 
@@ -115,7 +115,7 @@ msgstr  "Termina rentgena skats"
 msgid   "Loading Term X-Ray ..."
 msgstr  "Ielādē termina rentgena skatu..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:814
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:832
 msgid   "Dictionary"
 msgstr  "Vārdnīca"
 
@@ -175,6 +175,20 @@ msgstr  "Ielādē kopsavilkumu, izmantojot iezīmējumus un piezīmes..."
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "Nezināms funkcijas veids: %s"
+
+#: ../assistant_featuredialog.lua:171
+msgid   " - Title : %1\n"
+        " - Author: %2\n"
+        " - Reading progress: %3%\n"
+        "\n"
+        "-----\n"
+        "\n"
+msgstr  " - Nosaukums : %1\n"
+        " - Autors: %2\n"
+        " - Lasīšanas progress: %3%\n"
+        "\n"
+        "-----\n"
+        "\n"
 
 #: ../assistant_model_picker.lua:36
 msgid   "Fetching models..."
@@ -353,7 +367,7 @@ msgstr  "Vēsturiskais konteksts"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Uzvedne sniedz sīku vēsturisko kontekstu izceltajam tekstam."
 
-#: ../assistant_prompts.lua:285 ../main.lua:785
+#: ../assistant_prompts.lua:285 ../main.lua:799
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -362,35 +376,35 @@ msgid   "This prompt generates a comprehensive Wikipedia-style article based on 
 msgstr  "Uzvedne izveido pilnu Wikipedia stila rakstu par izcelto tēmu."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:509
+#: ../assistant_prompts.lua:544
 msgid   "Conjugation"
 msgstr  "Locījums"
 
-#: ../assistant_prompts.lua:510
+#: ../assistant_prompts.lua:545
 msgid   "Synonyms"
 msgstr  "Sinonīmi"
 
-#: ../assistant_prompts.lua:511
+#: ../assistant_prompts.lua:546
 msgid   "Meaning"
 msgstr  "Nozīme"
 
-#: ../assistant_prompts.lua:512
+#: ../assistant_prompts.lua:547
 msgid   "Translation"
 msgstr  "Tulkojums"
 
-#: ../assistant_prompts.lua:513
+#: ../assistant_prompts.lua:548
 msgid   "Book Usage"
 msgstr  "Grāmatas lietojums"
 
-#: ../assistant_prompts.lua:514
+#: ../assistant_prompts.lua:549
 msgid   "Example"
 msgstr  "Piemērs"
 
-#: ../assistant_prompts.lua:515
+#: ../assistant_prompts.lua:550
 msgid   "Word Origin"
 msgstr  "Vārda izcelsme"
 
-#: ../assistant_prompts.lua:527
+#: ../assistant_prompts.lua:562
 msgid   "You may find these topics interesting:"
 msgstr  "Šīs tēmas varētu jūs interesēt:"
 
@@ -518,89 +532,89 @@ msgstr  "Izvēlieties modeli"
 msgid   "AI Model provider:"
 msgstr  "AI modeļa pakalpojuma sniedzējs:"
 
-#: ../assistant_settings.lua:369
+#: ../assistant_settings.lua:365
 msgid   "AI Language: "
 msgstr  "AI valoda: "
 
-#: ../assistant_settings.lua:381
+#: ../assistant_settings.lua:377
 msgid   "AI Text Size: %1"
 msgstr  "AI teksta lielums: %1"
 
-#: ../assistant_settings.lua:385
+#: ../assistant_settings.lua:381
 msgid   "AI Response Text Font Size"
 msgstr  "AI atbildes teksta fonta lielums"
 
-#: ../assistant_settings.lua:401
+#: ../assistant_settings.lua:397
 msgid   "Stream Mode Settings"
 msgstr  "Straumēšanas režīma iestatījumi"
 
-#: ../assistant_settings.lua:404
+#: ../assistant_settings.lua:400
 msgid   "Enable stream response"
 msgstr  "Ieslēgt straumēšanas atbildi"
 
-#: ../assistant_settings.lua:412
+#: ../assistant_settings.lua:408
 msgid   "Auto scroll stream response text"
 msgstr  "Automātiski ritināt straumes atbildes tekstu"
 
-#: ../assistant_settings.lua:421
+#: ../assistant_settings.lua:417
 msgid   "Large Streaming Window"
 msgstr  "Liels straumēšanas logs"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:429
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader uzlabojumi un pārrakstījumi"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:437
+#: ../assistant_settings.lua:433
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Izmantot AI asistentu 'Tulkot'"
 
-#: ../assistant_settings.lua:448
+#: ../assistant_settings.lua:444
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Automātisks kopsavilkums, atverot sen nelasītas grāmatas"
 
-#: ../assistant_settings.lua:458
+#: ../assistant_settings.lua:454
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "AI kopsavilkums tiks ieslēgts nākamreiz, atverot sen nelasītu grāmatu."
 
-#: ../assistant_settings.lua:462
+#: ../assistant_settings.lua:458
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Rādīt Vārdnīcu(AI) vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:470
+#: ../assistant_settings.lua:466
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Rādīt Wikipedia(AI) vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:478
+#: ../assistant_settings.lua:474
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Rādīt Termina rentgena skatu (AI) vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:486
+#: ../assistant_settings.lua:482
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Rādīt lietotāja uzvednes vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:496
+#: ../assistant_settings.lua:492
 msgid   "Show Follow-up Questions from AI"
 msgstr  "Rādīt AI turpmākos jautājumus"
 
-#: ../assistant_settings.lua:504
+#: ../assistant_settings.lua:500
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kopēt ievadīto jautājumu starpliktuvē"
 
-#: ../assistant_settings.lua:512
+#: ../assistant_settings.lua:508
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Automātiski saglabāt sarunas piezīmju grāmatā"
 
-#: ../assistant_settings.lua:520
+#: ../assistant_settings.lua:516
 msgid   "Use book text for x-ray and recap"
 msgstr  "Izmantot grāmatas tekstu rentgena un kopsavilkumam"
 
-#: ../assistant_settings.lua:528
+#: ../assistant_settings.lua:524
 msgid   "Purge the settings"
 msgstr  "Dzēst iestatījumus"
 
-#: ../assistant_settings.lua:531 ../main.lua:714
+#: ../assistant_settings.lua:527 ../main.lua:724
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -610,7 +624,7 @@ msgstr  "Vai tiešām vēlaties izdzēst asistenta spraudņa iestatījumus?\n"
         "\n"
         "configuration.lua ir drošs — tiek izdzēsti tikai iestatījumi."
 
-#: ../assistant_settings.lua:535 ../main.lua:718
+#: ../assistant_settings.lua:531 ../main.lua:728
 msgid   "Purge"
 msgstr  "Dzēst"
 
@@ -834,7 +848,7 @@ msgstr  "Konfigurācijas kļūda.\n"
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: modeļa nodrošinātāji nav derīgi."
 
-#: ../main.lua:692
+#: ../main.lua:702
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -866,33 +880,33 @@ msgstr  "Lietošanas padomi\n"
         "Vairāki vilkšanas žesti (piem., ⮠, ⮡, ↺):\n"
         "Uz rezultātu dialoga, lai aizvērtu (jo Aizvērt poga ir grūti sasniedzama).\n"
 
-#: ../main.lua:711
+#: ../main.lua:721
 msgid   "Purge Settings"
 msgstr  "Dzēst iestatījumus"
 
-#: ../main.lua:765
+#: ../main.lua:775
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Noņemt [%s] no Izcelšanas izvēlnes?"
 
-#: ../main.lua:766
+#: ../main.lua:776
 msgid   "Remove"
 msgstr  "Noņemt"
 
-#: ../main.lua:970
+#: ../main.lua:1015
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Konfigurācija nav atrasta. Vispirms iestatiet configuration.lua."
 
-#: ../main.lua:1012
+#: ../main.lua:1057
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Pievienots [%1 (AI)] Izcelšanas izvēlnei."
 
-#: ../main.lua:1021
+#: ../main.lua:1066
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Noņemts [%s (AI)] no Izcelšanas izvēlnes."
 
-#: ../main.lua:1065
+#: ../main.lua:1110
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -900,17 +914,17 @@ msgstr  "Vai vēlies AI kopsavilkumu?\n"
         "Priekš %1 no %2.\n"
         "\n"
 
-#: ../main.lua:1066
+#: ../main.lua:1111
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Pēdējo reizi lasīts pirms stundas."
 msgstr[1]       "Pēdējo reizi lasīts pirms %1 stundām."
 msgstr[2]       "Pēdējo reizi lasīts pirms %1 stundas."
 
-#: ../main.lua:1071
+#: ../main.lua:1116
 msgid   "Yes"
 msgstr  "Jā"
 
-#: ../main.lua:1080
+#: ../main.lua:1125
 msgid   "No"
 msgstr  "Nē"

@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-05-18 15:34+0800\n"
+        "POT-Creation-Date: 2026-05-20 13:37+0800\n"
         "PO-Revision-Date: 2025-09-26 10:22+0800\n"
         "Last-Translator: ChatGPT 4.0\n"
         "Language-Team: ChatGPT 4.0\n"
@@ -112,7 +112,7 @@ msgstr  "Serĉi"
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Analizas librokuntekston por Term X-Ray..."
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:800
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:816
 msgid   "Term X-Ray"
 msgstr  "Termina R-X"
 
@@ -120,7 +120,7 @@ msgstr  "Termina R-X"
 msgid   "Loading Term X-Ray ..."
 msgstr  "Ŝarĝante Terminan R-X ..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:814
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:832
 msgid   "Dictionary"
 msgstr  "Vortaro"
 
@@ -180,6 +180,20 @@ msgstr  "Ŝarĝante Resumon Uzante Emfazojn kaj Notojn..."
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "Nekonata funkcio: %s"
+
+#: ../assistant_featuredialog.lua:171
+msgid   " - Title : %1\n"
+        " - Author: %2\n"
+        " - Reading progress: %3%\n"
+        "\n"
+        "-----\n"
+        "\n"
+msgstr  " - Titolo : %1\n"
+        " - Aŭtoro: %2\n"
+        " - Legprogreso: %3%\n"
+        "\n"
+        "-----\n"
+        "\n"
 
 #: ../assistant_model_picker.lua:36
 msgid   "Fetching models..."
@@ -358,7 +372,7 @@ msgstr  "Historio"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Ĉi tiu prompto provizas detalan historian kuntekston por la enŝovita teksto, klarigante ĝian signifon kaj fonon."
 
-#: ../assistant_prompts.lua:285 ../main.lua:785
+#: ../assistant_prompts.lua:285 ../main.lua:799
 msgid   "Wikipedia"
 msgstr  "Vikipedio"
 
@@ -367,35 +381,35 @@ msgid   "This prompt generates a comprehensive Wikipedia-style article based on 
 msgstr  "Ĉi tiu prompto generas kompletan Vikipedio-stilan artikolon bazitan sur la enŝovita teksto, certigante fakturnaĵon kaj neutralon."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:509
+#: ../assistant_prompts.lua:544
 msgid   "Conjugation"
 msgstr  "Konjugado"
 
-#: ../assistant_prompts.lua:510
+#: ../assistant_prompts.lua:545
 msgid   "Synonyms"
 msgstr  "Sinonimoj"
 
-#: ../assistant_prompts.lua:511
+#: ../assistant_prompts.lua:546
 msgid   "Meaning"
 msgstr  "Signifo"
 
-#: ../assistant_prompts.lua:512
+#: ../assistant_prompts.lua:547
 msgid   "Translation"
 msgstr  "Traduko"
 
-#: ../assistant_prompts.lua:513
+#: ../assistant_prompts.lua:548
 msgid   "Book Usage"
 msgstr  "Libro-Uzo"
 
-#: ../assistant_prompts.lua:514
+#: ../assistant_prompts.lua:549
 msgid   "Example"
 msgstr  "Ekzemplo"
 
-#: ../assistant_prompts.lua:515
+#: ../assistant_prompts.lua:550
 msgid   "Word Origin"
 msgstr  "Vortorigino"
 
-#: ../assistant_prompts.lua:527
+#: ../assistant_prompts.lua:562
 msgid   "You may find these topics interesting:"
 msgstr  "Vi eble trovos ĉi tiujn temojn interesaj:"
 
@@ -523,89 +537,89 @@ msgstr  "Elekti Modelon"
 msgid   "AI Model provider:"
 msgstr  "Provizanto de AI-modelo:"
 
-#: ../assistant_settings.lua:369
+#: ../assistant_settings.lua:365
 msgid   "AI Language: "
 msgstr  "AI-Lingvo: "
 
-#: ../assistant_settings.lua:381
+#: ../assistant_settings.lua:377
 msgid   "AI Text Size: %1"
 msgstr  "AI-Teksta Grandeco: %1"
 
-#: ../assistant_settings.lua:385
+#: ../assistant_settings.lua:381
 msgid   "AI Response Text Font Size"
 msgstr  "Tipara Grandeco de AI-Responda Teksto"
 
-#: ../assistant_settings.lua:401
+#: ../assistant_settings.lua:397
 msgid   "Stream Mode Settings"
 msgstr  "Agordoj de Flua Reĝimo"
 
-#: ../assistant_settings.lua:404
+#: ../assistant_settings.lua:400
 msgid   "Enable stream response"
 msgstr  "Ŝalti fluantan respondon"
 
-#: ../assistant_settings.lua:412
+#: ../assistant_settings.lua:408
 msgid   "Auto scroll stream response text"
 msgstr  "Aŭtomate rulumi fluantan respondan tekston"
 
-#: ../assistant_settings.lua:421
+#: ../assistant_settings.lua:417
 msgid   "Large Streaming Window"
 msgstr  "Granda Flua Fenestro"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:429
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "Modifoj kaj Anstataŭigoj de KOReader"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:437
+#: ../assistant_settings.lua:433
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Uzi AI-Asistanton por 'Traduki'"
 
-#: ../assistant_settings.lua:448
+#: ../assistant_settings.lua:444
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Aŭtomata resumo ĉe malfermo de longe nelikitaj libroj"
 
-#: ../assistant_settings.lua:458
+#: ../assistant_settings.lua:454
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "AI-Resumo eblos la sekvan fojon kiam malfermiĝos longe nelikita libro."
 
-#: ../assistant_settings.lua:462
+#: ../assistant_settings.lua:458
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Montri Vortaron(IA) en la vortara ŝprucfenestro"
 
-#: ../assistant_settings.lua:470
+#: ../assistant_settings.lua:466
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Montri Vikipedion(IA) en la vortara ŝprucfenestro"
 
-#: ../assistant_settings.lua:478
+#: ../assistant_settings.lua:474
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Montri Terminan R-X(AI) en Vortara Ŝprucfenestro"
 
-#: ../assistant_settings.lua:486
+#: ../assistant_settings.lua:482
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Montri Proprajn Demandosignojn en Vortara Ŝprucfenestro"
 
-#: ../assistant_settings.lua:496
+#: ../assistant_settings.lua:492
 msgid   "Show Follow-up Questions from AI"
 msgstr  "Montri Postsekvajn Demandojn de AI"
 
-#: ../assistant_settings.lua:504
+#: ../assistant_settings.lua:500
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kopii la demandon al la tondujo"
 
-#: ../assistant_settings.lua:512
+#: ../assistant_settings.lua:508
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Aŭtomate konservi konversaciojn en Notlibro"
 
-#: ../assistant_settings.lua:520
+#: ../assistant_settings.lua:516
 msgid   "Use book text for x-ray and recap"
 msgstr  "Uzi libran tekston por rentgeno kaj resumo"
 
-#: ../assistant_settings.lua:528
+#: ../assistant_settings.lua:524
 msgid   "Purge the settings"
 msgstr  "Forviŝi la agordojn"
 
-#: ../assistant_settings.lua:531 ../main.lua:714
+#: ../assistant_settings.lua:527 ../main.lua:724
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -615,7 +629,7 @@ msgstr  "Ĉu vi certas, ke vi volas forviŝi la agordojn de la asistanto-krompro
         "\n"
         "configuration.lua estas sekura, nur la agordoj estas forviŝitaj."
 
-#: ../assistant_settings.lua:535 ../main.lua:718
+#: ../assistant_settings.lua:531 ../main.lua:728
 msgid   "Purge"
 msgstr  "Forviŝi"
 
@@ -839,7 +853,7 @@ msgstr  "Agordo-erlato.\n"
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: la modelo-provizoroj nevalidas."
 
-#: ../main.lua:692
+#: ../main.lua:702
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -871,33 +885,33 @@ msgstr  "Uzkonsiloj\n"
         "Plurŝovo (ekz., ⮠, ⮡, ↺):\n"
         "Sur la rezulta dialogo por fermi (ĉar la Fermi-butono estas malproksima).\n"
 
-#: ../main.lua:711
+#: ../main.lua:721
 msgid   "Purge Settings"
 msgstr  "Forviŝu agordojn"
 
-#: ../main.lua:765
+#: ../main.lua:775
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Ĉu forigi [%s] de la menuo de enŝovado?"
 
-#: ../main.lua:766
+#: ../main.lua:776
 msgid   "Remove"
 msgstr  "Forigi"
 
-#: ../main.lua:970
+#: ../main.lua:1015
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Agordo ne trovita. Bonvolu antaŭe agordi configuration.lua."
 
-#: ../main.lua:1012
+#: ../main.lua:1057
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Aldonita [%1 (AI)] al menuo de enŝovado."
 
-#: ../main.lua:1021
+#: ../main.lua:1066
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Forigita [%s (AI)] de menuo de enŝovado."
 
-#: ../main.lua:1065
+#: ../main.lua:1110
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -905,16 +919,16 @@ msgstr  "Ĉu vi volas AI-resumon?\n"
         "Por %1 de %2.\n"
         "\n"
 
-#: ../main.lua:1066
+#: ../main.lua:1111
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Legita antaŭ horo."
 msgstr[1]       "Legita antaŭ %1 horoj."
 
-#: ../main.lua:1071
+#: ../main.lua:1116
 msgid   "Yes"
 msgstr  "Jes"
 
-#: ../main.lua:1080
+#: ../main.lua:1125
 msgid   "No"
 msgstr  "Ne"

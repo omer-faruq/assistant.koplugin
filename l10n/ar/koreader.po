@@ -2,7 +2,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-05-18 15:34+0800\n"
+        "POT-Creation-Date: 2026-05-20 13:37+0800\n"
         "PO-Revision-Date: 2025-09-11 10:53+0800\n"
         "Last-Translator: AI Model v1.0\n"
         "Language-Team: AI Translation Model\n"
@@ -108,7 +108,7 @@ msgstr  "البحث"
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "جارٍ تحليل سياق الكتاب لميزة Term X-Ray..."
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:800
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:816
 msgid   "Term X-Ray"
 msgstr  "أشعة إكس للمصطلح"
 
@@ -116,7 +116,7 @@ msgstr  "أشعة إكس للمصطلح"
 msgid   "Loading Term X-Ray ..."
 msgstr  "جارٍ تحميل أشعة إكس للمصطلح..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:814
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:832
 msgid   "Dictionary"
 msgstr  "القاموس"
 
@@ -176,6 +176,20 @@ msgstr  "جارٍ تحميل الملخص باستخدام التمييز وال
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "نوع ميزة غير معروف: %s"
+
+#: ../assistant_featuredialog.lua:171
+msgid   " - Title : %1\n"
+        " - Author: %2\n"
+        " - Reading progress: %3%\n"
+        "\n"
+        "-----\n"
+        "\n"
+msgstr  " - العنوان : %1\n"
+        " - المؤلف: %2\n"
+        " - تقدم القراءة: %3%\n"
+        "\n"
+        "-----\n"
+        "\n"
 
 #: ../assistant_model_picker.lua:36
 msgid   "Fetching models..."
@@ -354,7 +368,7 @@ msgstr  "السياق التاريخي"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "يُقدّم هذا الموجه سياقًا تاريخيًا تفصيليًا للنص المميز، موضحًا أهميته وخلفيته."
 
-#: ../assistant_prompts.lua:285 ../main.lua:785
+#: ../assistant_prompts.lua:285 ../main.lua:799
 msgid   "Wikipedia"
 msgstr  "ويكيبيديا"
 
@@ -363,35 +377,35 @@ msgid   "This prompt generates a comprehensive Wikipedia-style article based on 
 msgstr  "يولد هذا الموجه مقالًا شاملة بنمط ويكيبيديا استنادًا إلى النص المميز، مع التأكد من الدقة والحيادية."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:509
+#: ../assistant_prompts.lua:544
 msgid   "Conjugation"
 msgstr  "تصريف"
 
-#: ../assistant_prompts.lua:510
+#: ../assistant_prompts.lua:545
 msgid   "Synonyms"
 msgstr  "مرادفات"
 
-#: ../assistant_prompts.lua:511
+#: ../assistant_prompts.lua:546
 msgid   "Meaning"
 msgstr  "معنى"
 
-#: ../assistant_prompts.lua:512
+#: ../assistant_prompts.lua:547
 msgid   "Translation"
 msgstr  "ترجمة"
 
-#: ../assistant_prompts.lua:513
+#: ../assistant_prompts.lua:548
 msgid   "Book Usage"
 msgstr  "استخدام الكتاب"
 
-#: ../assistant_prompts.lua:514
+#: ../assistant_prompts.lua:549
 msgid   "Example"
 msgstr  "مثال"
 
-#: ../assistant_prompts.lua:515
+#: ../assistant_prompts.lua:550
 msgid   "Word Origin"
 msgstr  "أصل الكلمة"
 
-#: ../assistant_prompts.lua:527
+#: ../assistant_prompts.lua:562
 msgid   "You may find these topics interesting:"
 msgstr  "قد تجد هذه المواضيع مثيرة للاهتمام:"
 
@@ -519,89 +533,89 @@ msgstr  "اختيار النموذج"
 msgid   "AI Model provider:"
 msgstr  "مزوِّد نموذج الذكاء الاصطناعي:"
 
-#: ../assistant_settings.lua:369
+#: ../assistant_settings.lua:365
 msgid   "AI Language: "
 msgstr  "لغة الذكاء الاصطناعي: "
 
-#: ../assistant_settings.lua:381
+#: ../assistant_settings.lua:377
 msgid   "AI Text Size: %1"
 msgstr  "حجم نص الذكاء الاصطناعي: %1"
 
-#: ../assistant_settings.lua:385
+#: ../assistant_settings.lua:381
 msgid   "AI Response Text Font Size"
 msgstr  "حجم خط نص رد الذكاء الاصطناعي"
 
-#: ../assistant_settings.lua:401
+#: ../assistant_settings.lua:397
 msgid   "Stream Mode Settings"
 msgstr  "إعدادات وضع البث"
 
-#: ../assistant_settings.lua:404
+#: ../assistant_settings.lua:400
 msgid   "Enable stream response"
 msgstr  "تفعيل الاستجابة التدفقية"
 
-#: ../assistant_settings.lua:412
+#: ../assistant_settings.lua:408
 msgid   "Auto scroll stream response text"
 msgstr  "تمرير تلقائي لنص الرد المتدفق"
 
-#: ../assistant_settings.lua:421
+#: ../assistant_settings.lua:417
 msgid   "Large Streaming Window"
 msgstr  "نافذة البث الكبيرة"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:429
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "تعديلات وتجاوزات KOReader"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:437
+#: ../assistant_settings.lua:433
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "استخدم المساعد الذكي لـ 'الترجمة'"
 
-#: ../assistant_settings.lua:448
+#: ../assistant_settings.lua:444
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "تلخيص تلقائي عند فتح الكتب غير المقروءة منذ مدة"
 
-#: ../assistant_settings.lua:458
+#: ../assistant_settings.lua:454
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "سيتم تمكين التلخيص بالذكاء الاصطناعي في المرة التالية التي يتم فيها فتح كتاب لم يُقرأ منذ مدة."
 
-#: ../assistant_settings.lua:462
+#: ../assistant_settings.lua:458
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "إظهار القاموس (AI) في المنبثقة"
 
-#: ../assistant_settings.lua:470
+#: ../assistant_settings.lua:466
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "إظهار ويكيبيديا (AI) في المنبثقة"
 
-#: ../assistant_settings.lua:478
+#: ../assistant_settings.lua:474
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "إظهار أشعة إكس للمصطلح (ذكاء اصطناعي) في منبثق القاموس"
 
-#: ../assistant_settings.lua:486
+#: ../assistant_settings.lua:482
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "إظهار الموجهات المخصصة في منبثق القاموس"
 
-#: ../assistant_settings.lua:496
+#: ../assistant_settings.lua:492
 msgid   "Show Follow-up Questions from AI"
 msgstr  "عرض الأسئلة التالية من الذكاء الاصطناعي"
 
-#: ../assistant_settings.lua:504
+#: ../assistant_settings.lua:500
 msgid   "Copy entered question to the clipboard"
 msgstr  "نسخ السؤال إلى الحافظة"
 
-#: ../assistant_settings.lua:512
+#: ../assistant_settings.lua:508
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "حفظ المحادثات تلقائيًا في دفتر الملاحظات"
 
-#: ../assistant_settings.lua:520
+#: ../assistant_settings.lua:516
 msgid   "Use book text for x-ray and recap"
 msgstr  "استخدام نص الكتاب للتحليل والتلخيص"
 
-#: ../assistant_settings.lua:528
+#: ../assistant_settings.lua:524
 msgid   "Purge the settings"
 msgstr  "حذف الإعدادات"
 
-#: ../assistant_settings.lua:531 ../main.lua:714
+#: ../assistant_settings.lua:527 ../main.lua:724
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -611,7 +625,7 @@ msgstr  "هل أنت متأكد من حذف إعدادات المساعد؟\n"
         "\n"
         "ملف configuration.lua آمن، سيتم حذف الإعدادات فقط."
 
-#: ../assistant_settings.lua:535 ../main.lua:718
+#: ../assistant_settings.lua:531 ../main.lua:728
 msgid   "Purge"
 msgstr  "مسح"
 
@@ -835,7 +849,7 @@ msgstr  "خطأ في الإعداد.\n"
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: مزوّدو النماذج غير صالحين."
 
-#: ../main.lua:692
+#: ../main.lua:702
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -867,33 +881,33 @@ msgstr  "نصائح الاستخدام\n"
         "السحب المتعدد (مثلاً: ⮠، ⮡، ↺):\n"
         "على مربع النتائج لإغلاقه (لأن زر الإغلاق بعيد المنال).\n"
 
-#: ../main.lua:711
+#: ../main.lua:721
 msgid   "Purge Settings"
 msgstr  "مسح الإعدادات"
 
-#: ../main.lua:765
+#: ../main.lua:775
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "إزالة [%s] من قائمة التحديد؟"
 
-#: ../main.lua:766
+#: ../main.lua:776
 msgid   "Remove"
 msgstr  "إزالة"
 
-#: ../main.lua:970
+#: ../main.lua:1015
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "التكوين غير موجود. يرجى إعداد configuration.lua أولًا."
 
-#: ../main.lua:1012
+#: ../main.lua:1057
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "تمت إضافة [%1 (الذكاء الاصطناعي)] إلى قائمة التحديد."
 
-#: ../main.lua:1021
+#: ../main.lua:1066
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "تمت إزالة [%s (الذكاء الاصطناعي)] من قائمة التحديد."
 
-#: ../main.lua:1065
+#: ../main.lua:1110
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -901,7 +915,7 @@ msgstr  "هل ترغب في ملخص من الذكاء الاصطناعي؟\n"
         "لـ %1 بقلم %2.\n"
         "\n"
 
-#: ../main.lua:1066
+#: ../main.lua:1111
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "آخر قراءة قبل أقل من ساعة."
@@ -911,10 +925,10 @@ msgstr[3]       "آخر قراءة قبل %1 ساعات."
 msgstr[4]       "آخر قراءة قبل %1 ساعة."
 msgstr[5]       "آخر قراءة قبل %1 ساعة."
 
-#: ../main.lua:1071
+#: ../main.lua:1116
 msgid   "Yes"
 msgstr  "نعم"
 
-#: ../main.lua:1080
+#: ../main.lua:1125
 msgid   "No"
 msgstr  "لا"

@@ -1,12 +1,7 @@
-# Mô tả gói ngôn ngữ.
-# Bản quyền (C) 2024
-# Tệp này được phân phối theo cùng giấy phép với gói assistant.koplugin.
-# AI Assistant v1.0 <gpt@example.com>, 2024.
-#
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.08\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-05-18 15:34+0800\n"
+        "POT-Creation-Date: 2026-05-20 13:37+0800\n"
         "PO-Revision-Date: 2024-05-03 10:00+0700\n"
         "Last-Translator: AI Assistant v1.0 <gpt@example.com>\n"
         "Language-Team: Vietnamese <vi@li.org>\n"
@@ -112,7 +107,7 @@ msgstr  "Tra cứu"
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Đang phân tích ngữ cảnh sách cho Term X-Ray..."
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:800
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:816
 msgid   "Term X-Ray"
 msgstr  "X-Quang Thuật ngữ"
 
@@ -120,7 +115,7 @@ msgstr  "X-Quang Thuật ngữ"
 msgid   "Loading Term X-Ray ..."
 msgstr  "Đang tải X-Quang Thuật ngữ..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:814
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:832
 msgid   "Dictionary"
 msgstr  "Từ điển"
 
@@ -180,6 +175,20 @@ msgstr  "Đang tải Tóm tắt bằng Đánh dấu & Ghi chú..."
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "Loại tính năng không rõ: %s"
+
+#: ../assistant_featuredialog.lua:171
+msgid   " - Title : %1\n"
+        " - Author: %2\n"
+        " - Reading progress: %3%\n"
+        "\n"
+        "-----\n"
+        "\n"
+msgstr  " - Tiêu đề : %1\n"
+        " - Tác giả: %2\n"
+        " - Tiến độ đọc: %3%\n"
+        "\n"
+        "-----\n"
+        "\n"
 
 #: ../assistant_model_picker.lua:36
 msgid   "Fetching models..."
@@ -358,7 +367,7 @@ msgstr  "Bối cảnh lịch sử"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Lệnh này cung cấp bối cảnh lịch sử chi tiết cho văn bản đã bôi, giải thích ý nghĩa và nền tảng."
 
-#: ../assistant_prompts.lua:285 ../main.lua:785
+#: ../assistant_prompts.lua:285 ../main.lua:799
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -367,35 +376,35 @@ msgid   "This prompt generates a comprehensive Wikipedia-style article based on 
 msgstr  "Lệnh này tạo bài viết dạng Wikipedia toàn diện dựa trên văn bản đã bôi, đảm bảo chính xác và trung lập."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:509
+#: ../assistant_prompts.lua:544
 msgid   "Conjugation"
 msgstr  "Cách chia"
 
-#: ../assistant_prompts.lua:510
+#: ../assistant_prompts.lua:545
 msgid   "Synonyms"
 msgstr  "Từ đồng nghĩa"
 
-#: ../assistant_prompts.lua:511
+#: ../assistant_prompts.lua:546
 msgid   "Meaning"
 msgstr  "Nghĩa"
 
-#: ../assistant_prompts.lua:512
+#: ../assistant_prompts.lua:547
 msgid   "Translation"
 msgstr  "Bản dịch"
 
-#: ../assistant_prompts.lua:513
+#: ../assistant_prompts.lua:548
 msgid   "Book Usage"
 msgstr  "Sử dụng sách"
 
-#: ../assistant_prompts.lua:514
+#: ../assistant_prompts.lua:549
 msgid   "Example"
 msgstr  "Ví dụ"
 
-#: ../assistant_prompts.lua:515
+#: ../assistant_prompts.lua:550
 msgid   "Word Origin"
 msgstr  "Nguồn gốc từ"
 
-#: ../assistant_prompts.lua:527
+#: ../assistant_prompts.lua:562
 msgid   "You may find these topics interesting:"
 msgstr  "Bạn có thể thấy những chủ đề này thú vị:"
 
@@ -523,89 +532,89 @@ msgstr  "Chọn mô hình"
 msgid   "AI Model provider:"
 msgstr  "Nhà cung cấp mô hình AI:"
 
-#: ../assistant_settings.lua:369
+#: ../assistant_settings.lua:365
 msgid   "AI Language: "
 msgstr  "Ngôn ngữ AI: "
 
-#: ../assistant_settings.lua:381
+#: ../assistant_settings.lua:377
 msgid   "AI Text Size: %1"
 msgstr  "Cỡ chữ AI: %1"
 
-#: ../assistant_settings.lua:385
+#: ../assistant_settings.lua:381
 msgid   "AI Response Text Font Size"
 msgstr  "Cỡ phông chữ phản hồi AI"
 
-#: ../assistant_settings.lua:401
+#: ../assistant_settings.lua:397
 msgid   "Stream Mode Settings"
 msgstr  "Cài đặt chế độ truyền dữ liệu"
 
-#: ../assistant_settings.lua:404
+#: ../assistant_settings.lua:400
 msgid   "Enable stream response"
 msgstr  "Bật trả lời theo luồng"
 
-#: ../assistant_settings.lua:412
+#: ../assistant_settings.lua:408
 msgid   "Auto scroll stream response text"
 msgstr  "Tự động cuộn văn bản phản hồi"
 
-#: ../assistant_settings.lua:421
+#: ../assistant_settings.lua:417
 msgid   "Large Streaming Window"
 msgstr  "Cửa sổ truyền dữ liệu lớn"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:429
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "Tinh chỉnh & Ghi đè KOReader"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:437
+#: ../assistant_settings.lua:433
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Dùng Trợ lý AI cho 'Dịch'"
 
-#: ../assistant_settings.lua:448
+#: ../assistant_settings.lua:444
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Tự động tóm tắt khi mở sách đã lâu chưa đọc"
 
-#: ../assistant_settings.lua:458
+#: ../assistant_settings.lua:454
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "Tóm tắt AI sẽ được bật lần tới khi mở sách đã lâu chưa đọc."
 
-#: ../assistant_settings.lua:462
+#: ../assistant_settings.lua:458
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Hiện Từ điển(AI) trong cửa sổ Từ điển"
 
-#: ../assistant_settings.lua:470
+#: ../assistant_settings.lua:466
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Hiện Wikipedia(AI) trong cửa sổ Từ điển"
 
-#: ../assistant_settings.lua:478
+#: ../assistant_settings.lua:474
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Hiện X-Quang Thuật ngữ(AI) trong popup Từ điển"
 
-#: ../assistant_settings.lua:486
+#: ../assistant_settings.lua:482
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Hiện Lệnh tùy chỉnh trong popup Từ điển"
 
-#: ../assistant_settings.lua:496
+#: ../assistant_settings.lua:492
 msgid   "Show Follow-up Questions from AI"
 msgstr  "Hiện câu hỏi tiếp theo từ AI"
 
-#: ../assistant_settings.lua:504
+#: ../assistant_settings.lua:500
 msgid   "Copy entered question to the clipboard"
 msgstr  "Sao chép câu hỏi vào bộ nhớ tạm"
 
-#: ../assistant_settings.lua:512
+#: ../assistant_settings.lua:508
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Tự động lưu cuộc trò chuyện vào Sổ tay"
 
-#: ../assistant_settings.lua:520
+#: ../assistant_settings.lua:516
 msgid   "Use book text for x-ray and recap"
 msgstr  "Dùng nội dung sách cho x-ray và tóm tắt"
 
-#: ../assistant_settings.lua:528
+#: ../assistant_settings.lua:524
 msgid   "Purge the settings"
 msgstr  "Xóa sạch cài đặt"
 
-#: ../assistant_settings.lua:531 ../main.lua:714
+#: ../assistant_settings.lua:527 ../main.lua:724
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -615,7 +624,7 @@ msgstr  "Bạn có chắc xóa sạch cài đặt plugin trợ lý? \n"
         "\n"
         "configuration.lua vẫn an toàn, chỉ có cài đặt bị xóa."
 
-#: ../assistant_settings.lua:535 ../main.lua:718
+#: ../assistant_settings.lua:531 ../main.lua:728
 msgid   "Purge"
 msgstr  "Xóa"
 
@@ -839,7 +848,7 @@ msgstr  "Lỗi cấu hình.\n"
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: nhà cung cấp mô hình không hợp lệ."
 
-#: ../main.lua:692
+#: ../main.lua:702
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -871,33 +880,33 @@ msgstr  "Mẹo sử dụng\n"
         "Vuốt nhiều lần (ví dụ: ⮠, ⮡, ↺):\n"
         "Trên hộp kết quả để đóng (vì nút Đóng xa quá).\n"
 
-#: ../main.lua:711
+#: ../main.lua:721
 msgid   "Purge Settings"
 msgstr  "Xóa cài đặt"
 
-#: ../main.lua:765
+#: ../main.lua:775
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Gỡ [%s] khỏi Menu Bôi?"
 
-#: ../main.lua:766
+#: ../main.lua:776
 msgid   "Remove"
 msgstr  "Gỡ"
 
-#: ../main.lua:970
+#: ../main.lua:1015
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Không tìm thấy cấu hình. Vui lòng thiết lập configuration.lua trước."
 
-#: ../main.lua:1012
+#: ../main.lua:1057
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Đã thêm [%1 (AI)] vào Menu Bôi."
 
-#: ../main.lua:1021
+#: ../main.lua:1066
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Đã gỡ [%s (AI)] khỏi Menu Bôi."
 
-#: ../main.lua:1065
+#: ../main.lua:1110
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -905,15 +914,15 @@ msgstr  "Bạn muốn AI tóm tắt?\n"
         "Dành cho %1 của %2.\n"
         "\n"
 
-#: ../main.lua:1066
+#: ../main.lua:1111
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Đọc lần cuối cách đây %1 giờ."
 
-#: ../main.lua:1071
+#: ../main.lua:1116
 msgid   "Yes"
 msgstr  "Có"
 
-#: ../main.lua:1080
+#: ../main.lua:1125
 msgid   "No"
 msgstr  "Không"
