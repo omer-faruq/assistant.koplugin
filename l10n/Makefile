@@ -79,7 +79,7 @@ import-translation:
 	@for po_file in $(PO_FILES); do \
 		dir=$$(dirname $$po_file); \
 		if [ -f "$$dir/updated_translated.po" ]; then \
-			$(MSGCAT_BIN) --use-first $$dir/updated_translated.po $$po_file -o updated.po && \
+			$(MSGCAT_BIN) --use-first --sort-output $$dir/updated_translated.po $$po_file -o updated.po && \
 			$(MSGATTRIB_BIN) --no-obsolete --no-wrap --sort-by-file -i updated.po -o $$po_file; \
 		fi; \
 	done
