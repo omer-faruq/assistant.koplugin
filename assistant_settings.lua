@@ -31,6 +31,7 @@ local Screen = require("device").screen
 local ffiutil = require("ffi/util")
 local meta = require("_meta")
 local logger = require("logger")
+local koutil = require("util")
 
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
@@ -352,13 +353,22 @@ end
 function SettingsDialog:onSelectModel()
     UIManager:close(self)
     local NetworkMgr = require("ui/network/manager")
-    NetworkMgr:runWhenOnline(function()
-        local Trapper = require("ui/trapper")
-        Trapper:wrap(function()
-            local showModelPicker = require("assistant_model_picker")
-            showModelPicker(self.assistant, self.close_callback)
+    local url = koutil.tableGetValue(self.assistant.querier, "provider_settings", "base_url")
+    if url ~= "" then
+        url = url:gsub("/chat/.*$", "/models")
+        NetworkMgr:runWhenOnline(function()
+            local Trapper = require("ui/trapper")
+            Trapper:wrap(function()
+                local showModelPicker = require("assistant_model_picker")
+                showModelPicker(self.assistant, self.close_callback, url)
+            end)
         end)
-    end)
+    else
+        UIManager:show(InfoMessage:new{
+            icon = "notice-warning",
+            text = _("Config Error: base_url")
+        })
+    end
 end
 
 function SettingsDialog:onCloseWidget()

@@ -25,13 +25,11 @@ local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local Screen = require("device").screen
 
-local OPENROUTER_MODELS_URL = "https://openrouter.ai/api/v1/models"
-
 -- Forward declarations
 local showPickerDialog, showManualInput
 
 --- Fetch models list from OpenRouter API (runs in dismissable subprocess)
-local function fetchOpenRouterModels()
+local function fetchOpenRouterModels(list_url)
     local infomsg = TrapWidget:new{
         text = _("Fetching models..."),
     }
@@ -40,7 +38,7 @@ local function fetchOpenRouterModels()
     local success, code, body = Trapper:dismissableRunInSubprocess(function()
         local response_body = {}
         local _, rcode = http.request{
-            url = OPENROUTER_MODELS_URL,
+            url = list_url,
             headers = {
                 ["Accept"] = "application/json",
             },
@@ -402,8 +400,8 @@ showManualInput = function(assistant, close_callback)
 end
 
 --- Main entry point: fetch OpenRouter models and show picker
-local function showOpenRouterModelPicker(assistant, close_callback)
-    local models, err = fetchOpenRouterModels()
+local function showOpenRouterModelPicker(assistant, close_callback, list_url)
+    local models, err = fetchOpenRouterModels(list_url)
     if not models then
         if err then
             UIManager:show(InfoMessage:new{
