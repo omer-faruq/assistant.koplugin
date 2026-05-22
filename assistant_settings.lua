@@ -229,6 +229,8 @@ function SettingsDialog:init()
                 local model_name
                 if key == self.assistant.querier.provider_name then
                     model_name = self.assistant.querier.provider_settings.model
+                elseif key == "openrouter" then
+                    model_name = self.settings:readSetting("openrouter_model_" .. key)
                 else
                     model_name = FrontendUtil.tableGetValue(tab, "model")
                         or FrontendUtil.tableGetValue(tab, "deployment_name")
