@@ -198,9 +198,15 @@ function SettingsDialog:init()
     self.buttons = {{
         {
             id = "select_model",
-            text = _("Select Model"),
+            text = _("Browse Models"),
             enabled = self.assistant.querier.handler_name == "openrouter",
             callback = function() self:onSelectModel() end,
+            hold_callback = function ()
+                UIManager:show(InfoMessage:new{
+                    alignment = "center",
+                    text = _("Browse available models on OpenRouter")
+                })
+            end
         },
         {
             id = "close",
@@ -232,6 +238,7 @@ function SettingsDialog:init()
                 end
                 table.insert(buttonrow, {
                     text = button_text,
+                    bold = (key == "openrouter"),
                     provider = key, -- note: this `provider` field belongs to the RadioButton, not our AI Model provider.
                     checked = (key == self.assistant.querier.provider_name),
                 })
