@@ -24,6 +24,7 @@ local koutil = require("util")
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local Screen = require("device").screen
+local logger = require("logger")
 
 -- Forward declarations
 local showPickerDialog, showManualInput
@@ -90,7 +91,11 @@ local function resetModelSelection(assistant)
     assistant.updated = true
 end
 
-local MODELS_PER_PAGE = 20
+-- dynamic calculate lines PER PAGE
+local item_height = Screen:scaleBySize(30) + 2*Size.padding.default -- radiobutton item_height
+local fixed_height = Screen:scaleBySize(135) + 2*Size.margin.default -- title bar, buttons row, etc
+local available_height = Screen:getHeight() - fixed_height
+local MODELS_PER_PAGE = math.max(5, math.floor(available_height / item_height))
 
 -- Model picker dialog (extends InputDialog following SettingsDialog pattern)
 local ModelPickerDialog = InputDialog:extend{
