@@ -138,7 +138,7 @@ end
 --- Create a bouncing period animation
 -- Returns a table with animation frames and current frame index
 local function createWaitingAnimation()
-    local frames = { ".", " .", "  .", "   .", "  .", " ." }
+    local frames = { "◐  ", "◓  ", "◑  ", "◒  " }
     local currentIndex = 1
 
     return {
