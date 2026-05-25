@@ -30,7 +30,7 @@ local showPickerDialog, showManualInput
 
 --- Fetch models list from OpenRouter API (runs in dismissable subprocess)
 local function fetchOpenRouterModels(list_url)
-    local infomsg = TrapWidget:new{
+    local infomsg = InfoMessage:new{
         text = _("Fetching models..."),
     }
     UIManager:show(infomsg)
@@ -130,7 +130,7 @@ function ModelPickerDialog:init()
     self.buttons = {
         {
             {
-                text = has_prev and _("◂ Prev") or "",
+                text = _("◂ Prev"), 
                 enabled = has_prev,
                 callback = function()
                     if has_prev then self:changePage(self.page - 1) end
@@ -141,7 +141,7 @@ function ModelPickerDialog:init()
                 callback = function() self:onSearch() end,
             },
             {
-                text = has_next and _("Next ▸") or "",
+                text = _("Next ▸"),
                 enabled = has_next,
                 callback = function()
                     if has_next then self:changePage(self.page + 1) end
