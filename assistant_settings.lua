@@ -229,8 +229,11 @@ function SettingsDialog:init()
                 local model_name
                 if key == self.assistant.querier.provider_name then
                     model_name = self.assistant.querier.provider_settings.model
-                elseif key == "openrouter" then
+                elseif key:sub(1, 10) == "openrouter" then
                     model_name = self.settings:readSetting("openrouter_model_" .. key)
+                    if model_name == "" then
+                        model_name = self.assistant.querier.provider_settings.model
+                    end
                 else
                     model_name = FrontendUtil.tableGetValue(tab, "model")
                         or FrontendUtil.tableGetValue(tab, "deployment_name")
@@ -241,7 +244,7 @@ function SettingsDialog:init()
                 end
                 table.insert(buttonrow, {
                     text = button_text,
-                    bold = (key == "openrouter"),
+                    bold = (key:sub(1, 10) == "openrouter"),
                     provider = key, -- note: this `provider` field belongs to the RadioButton, not our AI Model provider.
                     checked = (key == self.assistant.querier.provider_name),
                 })

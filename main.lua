@@ -484,8 +484,10 @@ end
 
 function Assistant:getModelId()
   local key = self:getModelProvider()
-  if key == "openrouter" then
-      return self.settings:readSetting("openrouter_model_" .. key)
+  if key == nil then return nil end
+  if key:sub(1, 10) == "openrouter" then
+      local model = self.settings:readSetting("openrouter_model_" .. key)
+      if model then return model end
   end
   return FrontendUtil.tableGetValue(CONFIGURATION, "provider_settings", key, "model")
 end
