@@ -174,11 +174,6 @@ function Querier:query(message_history, title)
     local use_stream_mode = self.settings:readSetting("use_stream_mode", true)
     koutil.tableSetValue(self.provider_settings, use_stream_mode, "additional_parameters", "stream")
 
-    -- Set up waiting animation for non-streaming mode
-    local animation = createWaitingAnimation()
-    local animation_task = nil
-    local response_received = false
-
     local infomsg = InfoMessage:new{
       icon = "book.opened",
       text = string.format("%s\n️☁️ %s\n⚡ %s", title or _("Querying AI ..."), self.provider_name,
@@ -187,27 +182,9 @@ function Querier:query(message_history, title)
 
     UIManager:show(infomsg)
 
-    -- Start animation for non-streaming mode
-    local initial_text = infomsg.text
-    local function updateInfoMessage()
-        if not response_received then
-            infomsg.text = initial_text .. "\n" .. animation:getNextFrame()
-            UIManager:setDirty(infomsg)
-            animation_task = UIManager:scheduleIn(0.4, updateInfoMessage)
-        end
-    end
-    animation_task = UIManager:scheduleIn(0.4, updateInfoMessage)
-
     self.handler:setTrapWidget(infomsg)
     local res, err = self.handler:query(trimMessageHistory(message_history), self.provider_settings)
     self.handler:resetTrapWidget()
-
-    -- Stop animation
-    response_received = true
-    if animation_task then
-        UIManager:unschedule(animation_task)
-        animation_task = nil
-    end
 
     UIManager:close(infomsg)
 
