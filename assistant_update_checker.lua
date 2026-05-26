@@ -1,6 +1,6 @@
 local http = require("socket.http")
 local ltn12 = require("ltn12")
-local json = require("json")
+local json = require("rapidjson")
 local TrapWidget  = require("ui/widget/trapwidget")
 local Notification = require("ui/widget/notification")
 local UIManager = require("ui/uimanager")
@@ -8,6 +8,7 @@ local Trapper = require("ui/trapper")
 local logger = require("logger")
 local _ = require("assistant_gettext")
 local koutil = require("util")
+local assistant_utils = require("assistant_utils")
 
 local update_url = "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest"
 
@@ -106,17 +107,18 @@ local function checkForUpdates()
     text = _("Checking for updates..."),
   }
   UIManager:show(infomsg)
-  local success, code, body = Trapper:dismissableRunInSubprocess(function()
+  local success, code, body, response_headers = Trapper:dismissableRunInSubprocess(function()
     local response_body = {}
-    local _, code = http.request {
+    local _, code, header = http.request {
       url = update_url,
       headers = {
+          ["Accept-Encoding"] = "gzip",
           ["Accept"] = "application/vnd.github.v3+json"
       },
       sink = ltn12.sink.table(response_body)
     }
 
-    return code, table.concat(response_body)
+    return code, table.concat(response_body), header
   end, infomsg)
   UIManager:close(infomsg)
 
@@ -124,30 +126,47 @@ local function checkForUpdates()
     logger.warn("user interrupted the update check.")
     return
   end
-
-  if code == 200 then
-    local ok, parsed_data = pcall(json.decode, body)
-    if not ok then
-      logger.warn("Failed to parse update check response:", parsed_data) -- parsed_data contains the error
-      return
-    end
-
-    local latest_version_tag = parsed_data and parsed_data.tag_name -- e.g., "v1.08-rc2"
-    if latest_version_tag and meta and meta.version then
-      -- Strip optional leading 'v'
-      local latest_version_str = latest_version_tag:match("^v?(.*)$")
-      local current_version_str = tostring(meta.version)
-
-      if isVersionNewer(latest_version_str, current_version_str) then
-        local message = string.format(
-          _("A new version of the %s plugin (%s) is available. Please update!"),
-          meta.fullname, latest_version_tag
-        )
-        Notification:notify(message, Notification.SOURCE_ALWAYS_SHOW)
-      end
-    end
-  else
+  if code ~= 200 then
     logger.warn("Failed to check for updates. HTTP code:", code)
+    return
+  end
+
+  local is_gzipped = false
+  if response_headers then
+      for k, v in pairs(response_headers) do
+          if k:lower() == "content-encoding" and v:lower():find("gzip") then
+              is_gzipped = true
+              break
+          end
+      end
+  end
+  if is_gzipped then
+      local decompressed, err = assistant_utils.decompressGzipMemory(body)
+      if not decompressed then
+          logger.warn("Failed to decompress data:", err)
+          return
+      end
+      body = decompressed
+  end
+  local ok, parsed_data = pcall(json.decode, body)
+  if not ok then
+    logger.warn("Failed to parse update check response:", parsed_data) -- parsed_data contains the error
+    return
+  end
+
+  local latest_version_tag = parsed_data and parsed_data.tag_name -- e.g., "v1.08-rc2"
+  if latest_version_tag and meta and meta.version then
+    -- Strip optional leading 'v'
+    local latest_version_str = latest_version_tag:match("^v?(.*)$")
+    local current_version_str = tostring(meta.version)
+
+    if isVersionNewer(latest_version_str, current_version_str) then
+      local message = string.format(
+        _("A new version of the %s plugin (%s) is available. Please update!"),
+        meta.fullname, latest_version_tag
+      )
+      Notification:notify(message, Notification.SOURCE_ALWAYS_SHOW)
+    end
   end
 end
 
