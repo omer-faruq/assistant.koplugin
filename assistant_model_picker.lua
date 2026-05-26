@@ -1,7 +1,7 @@
 --- OpenRouter model picker — fetch and select models from UI
 local http = require("socket.http")
 local ltn12 = require("ltn12")
-local json = require("json")
+local json = require("rapidjson")
 local Blitbuffer = require("ffi/blitbuffer")
 local CenterContainer = require("ui/widget/container/centercontainer")
 local FrameContainer = require("ui/widget/container/framecontainer")
@@ -25,6 +25,7 @@ local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local Screen = require("device").screen
 local logger = require("logger")
+local assistant_utils = require("assistant_utils")
 
 -- Forward declarations
 local showPickerDialog, showManualInput
@@ -36,16 +37,17 @@ local function fetchOpenRouterModels(list_url)
     }
     UIManager:show(infomsg)
 
-    local success, code, body = Trapper:dismissableRunInSubprocess(function()
+    local success, code, body, response_headers = Trapper:dismissableRunInSubprocess(function()
         local response_body = {}
-        local _, rcode = http.request{
+        local _, rcode, rheaders = http.request{
             url = list_url,
             headers = {
                 ["Accept"] = "application/json",
+                ["Accept-Encoding"] = "gzip",
             },
             sink = ltn12.sink.table(response_body),
         }
-        return rcode, table.concat(response_body)
+        return rcode, table.concat(response_body), rheaders
     end, infomsg)
 
     UIManager:close(infomsg)
@@ -58,6 +60,22 @@ local function fetchOpenRouterModels(list_url)
         return nil, T(_("Failed to fetch models (HTTP %1)."), code or "?")
     end
 
+    local is_gzipped = false
+    if response_headers then
+        for k, v in pairs(response_headers) do
+            if k:lower() == "content-encoding" and v:lower():find("gzip") then
+                is_gzipped = true
+                break
+            end
+        end
+    end
+    if is_gzipped then
+        local decompressed, err = assistant_utils.decompressGzipMemory(body)
+        if not decompressed then
+            return nil, _("Failed to decompress data: ") .. tostring(err)
+        end
+        body = decompressed
+    end
     local ok, parsed = pcall(json.decode, body)
     if not ok or not parsed or not parsed.data then
         return nil, _("Failed to parse model list.")
@@ -291,7 +309,7 @@ function ModelPickerDialog:onSearch()
     search_dialog = InputDialog:new{
         title = _("Search Models"),
         input = self.search_query,
-        input_hint = _("e.g. claude, gemini, llama..."),
+        input_hint = "claude, gemini, free ...",
         buttons = {{
             {
                 text = _("Cancel"),

@@ -2,6 +2,7 @@ local util = require("util")
 local logger = require("logger")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
+local ffi = require("ffi")
 local T = require("ffi/util").template
 local koutil = require("util")
 local _ = require("assistant_gettext")
@@ -326,11 +327,77 @@ local function normalizeMarkdownHeadings(content, heading_offset, max_heading_le
   return normalized_content
 end
 
+local libz = ffi.loadlib("z", 1)
+
+-- 1. Dynamically declare the mini-zlib stream interface needed for raw Gzip
+ffi.cdef[[
+    typedef struct z_stream_s {
+        const unsigned char *next_in;
+        unsigned int     avail_in;
+        unsigned long    total_in;
+        unsigned char   *next_out;
+        unsigned int     avail_out;
+        unsigned long    total_out;
+        const char      *msg;
+        struct internal_state *state;
+        void            *zalloc;
+        void            *zfree;
+        void            *opaque;
+        int              data_type;
+        unsigned long    adler;
+        unsigned long    reserved;
+    } z_stream;
+
+    int inflateInit2_(z_stream *strm, int windowBits, const char *version, int stream_size);
+    int inflate(z_stream *strm, int flush);
+    int inflateEnd(z_stream *strm);
+]]
+
+-- Helper function: Pure memory decompression for Gzip payloads
+local function decompressGzipMemory(compressed_str)
+    local strm = ffi.new("z_stream")
+    strm.next_in = ffi.cast("const unsigned char*", compressed_str)
+    strm.avail_in = #compressed_str
+
+    -- 15 + 32 or 15 + 16 tells zlib to automatically decode the Gzip wrapper wrapper safely
+    local res = libz.inflateInit2_(strm, 15 + 32, "1.2.11", ffi.sizeof(strm))
+    if res ~= 0 then
+        return nil, "Initialization failed"
+    end
+
+    local chunks = {}
+    local block_size = 16384
+    local out_buf = ffi.new("unsigned char[?]", block_size)
+
+    while true do
+        strm.next_out = out_buf
+        strm.avail_out = block_size
+
+        res = libz.inflate(strm, 0) -- Z_NO_FLUSH
+        
+        local written = block_size - strm.avail_out
+        if written > 0 then
+            table.insert(chunks, ffi.string(out_buf, written))
+        end
+
+        if res == 1 then -- Z_STREAM_END
+            break
+        elseif res < 0 then -- Error
+            libz.inflateEnd(strm)
+            return nil, "Decompression error code: " .. tostring(res)
+        end
+    end
+
+    libz.inflateEnd(strm)
+    return table.concat(chunks)
+end
+
 return {
     getGeneralNotebookFilePath = getGeneralNotebookFilePath,
     extractBookTextForAnalysis = extractBookTextForAnalysis,
     extractHighlightsNotesAndNotebook = extractHighlightsNotesAndNotebook,
     getPageInfo = getPageInfo,
     saveToNotebookFile = saveToNotebookFile,
-    normalizeMarkdownHeadings = normalizeMarkdownHeadings
+    normalizeMarkdownHeadings = normalizeMarkdownHeadings,
+    decompressGzipMemory = decompressGzipMemory,
 }
