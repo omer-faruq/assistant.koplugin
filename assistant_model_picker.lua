@@ -91,12 +91,6 @@ local function resetModelSelection(assistant)
     assistant.updated = true
 end
 
--- dynamic calculate lines PER PAGE
-local item_height = Screen:scaleBySize(30) + 2*Size.padding.default -- radiobutton item_height
-local fixed_height = Screen:scaleBySize(135) + 2*Size.margin.default -- title bar, buttons row, etc
-local available_height = Screen:getHeight() - fixed_height
-local MODELS_PER_PAGE = math.max(5, math.floor(available_height / item_height))
-
 -- Model picker dialog (extends InputDialog following SettingsDialog pattern)
 local ModelPickerDialog = InputDialog:extend{
     title = "",
@@ -109,6 +103,11 @@ local ModelPickerDialog = InputDialog:extend{
 }
 
 function ModelPickerDialog:init()
+    -- dynamic calculate lines PER PAGE
+    local item_height = Screen:scaleBySize(30) + 2*Size.padding.default -- radiobutton item_height
+    local fixed_height = Screen:scaleBySize(135) + 2*Size.margin.default -- title bar, buttons row, etc
+    local MODELS_PER_PAGE = math.max(5, math.floor((Screen:getHeight() - fixed_height) / item_height))
+
     local current_model = koutil.tableGetValue(
         self.assistant, "querier", "provider_settings", "model") or ""
 
@@ -135,21 +134,27 @@ function ModelPickerDialog:init()
     self.buttons = {
         {
             {
-                text = _("◂ Prev"), 
+                text = "◁◁",
                 enabled = has_prev,
                 callback = function()
                     if has_prev then self:changePage(self.page - 1) end
                 end,
+                hold_callback =function () -- hold to first page
+                    self:changePage(1)
+                end
             },
             {
                 text = _("Search"),
                 callback = function() self:onSearch() end,
             },
             {
-                text = _("Next ▸"),
+                text = "▷▷",
                 enabled = has_next,
                 callback = function()
                     if has_next then self:changePage(self.page + 1) end
+                end,
+                hold_callback = function () -- hold to last page
+                    self:changePage(total_pages)
                 end,
             },
         },
