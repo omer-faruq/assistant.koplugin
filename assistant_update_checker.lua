@@ -7,6 +7,7 @@ local UIManager = require("ui/uimanager")
 local Trapper = require("ui/trapper")
 local logger = require("logger")
 local _ = require("assistant_gettext")
+local T = require("ffi/util").template
 local koutil = require("util")
 local assistant_utils = require("assistant_utils")
 
@@ -123,26 +124,17 @@ local function checkForUpdates()
   UIManager:close(infomsg)
 
   if not success then
-    logger.warn("user interrupted the update check.")
+    Notification:notify(_("Update check canceled."))
     return
   end
   if code ~= 200 then
-    logger.warn("Failed to check for updates. HTTP code:", code)
+    logger.warn()
+    Notification:notify(T(_("Failed to check for updates. HTTP code: %1"), code))
     return
   end
 
-  local is_gzipped = false
-  if response_headers then
-      for k, v in pairs(response_headers) do
-          if k:lower() == "content-encoding" and v:lower():find("gzip") then
-              is_gzipped = true
-              break
-          end
-      end
-  end
-  if is_gzipped then
-      local max_size = 1024 * 1024
-      local decompressed, err = assistant_utils.zlib_uncompress_gzip(body, max_size)
+  if assistant_utils.http_is_encoded(response_headers, "gzip") then
+      local decompressed, err = assistant_utils.zlib_uncompress_gzip(body, 2*1024*1024)
       if not decompressed then
           logger.warn("Failed to decompress data:", err)
           return
@@ -151,7 +143,7 @@ local function checkForUpdates()
   end
   local ok, parsed_data = pcall(json.decode, body)
   if not ok then
-    logger.warn("Failed to parse update check response:", parsed_data) -- parsed_data contains the error
+    Notification:notify(T(_("Failed to parse update check response: %1"), parsed_data))
     return
   end
 
@@ -162,10 +154,8 @@ local function checkForUpdates()
     local current_version_str = tostring(meta.version)
 
     if isVersionNewer(latest_version_str, current_version_str) then
-      local message = string.format(
-        _("A new version of the %s plugin (%s) is available. Please update!"),
-        meta.fullname, latest_version_tag
-      )
+      local message = T(_("A new version of the %1 plugin (%2) is available. Please update!"),
+        meta.fullname, latest_version_tag)
       Notification:notify(message, Notification.SOURCE_ALWAYS_SHOW)
     end
   end

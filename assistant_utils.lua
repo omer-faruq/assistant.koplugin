@@ -342,11 +342,11 @@ local function zlib_uncompress_gzip(gzip_data, max_datalen)
     local zlib_header = string.char(0x78, 0x9C)
     local hybrid_payload = zlib_header .. raw_deflate
 
-    -- 3. Prepare the memory buffers exactly like your original working code
+    -- 3. Prepare the memory buffers
     local buf = ffi.new("uint8_t[?]", max_datalen)
     local buflen = ffi.new("unsigned long[1]", max_datalen)
     
-    -- 4. Invoke the ONLY guaranteed symbol: uncompress
+    -- 4. Invoke the low-level libz
     local res = libz.uncompress(buf, buflen, ffi.cast("const unsigned char*", hybrid_payload), #hybrid_payload)
     
     -- res == 0 means perfect zlib format
@@ -362,6 +362,29 @@ local function zlib_uncompress_gzip(gzip_data, max_datalen)
     return nil, "Zlib core uncompress failed with severe code: " .. tostring(res)
 end
 
+--- GET HTTP HEADER VALUE
+--- @param headers table
+--- @param header_name string
+--- @return string|nil
+local function http_get_header(headers, header_name)
+    if not headers then return nil end
+    local lower_name = header_name:lower()
+
+    for k, v in pairs(headers) do
+        if k:lower() == lower_name then
+            return v
+        end
+    end
+    return nil
+end
+
+--- Checks content-encoding
+local function http_is_encoded(headers, encoding)
+    local value = http_get_header(headers, "content-encoding")
+    if not value then return false end
+    return value:lower():find((encoding or "gzip"):lower()) ~= nil
+end
+
 return {
     getGeneralNotebookFilePath = getGeneralNotebookFilePath,
     extractBookTextForAnalysis = extractBookTextForAnalysis,
@@ -370,4 +393,6 @@ return {
     saveToNotebookFile = saveToNotebookFile,
     normalizeMarkdownHeadings = normalizeMarkdownHeadings,
     zlib_uncompress_gzip = zlib_uncompress_gzip,
+    http_get_header = http_get_header,
+    http_is_encoded = http_is_encoded,
 }

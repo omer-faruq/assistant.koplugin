@@ -60,16 +60,7 @@ local function fetchOpenRouterModels(list_url)
         return nil, T(_("Failed to fetch models (HTTP %1)."), code or "?")
     end
 
-    local is_gzipped = false
-    if response_headers then
-        for k, v in pairs(response_headers) do
-            if k:lower() == "content-encoding" and v:lower():find("gzip") then
-                is_gzipped = true
-                break
-            end
-        end
-    end
-    if is_gzipped then
+    if assistant_utils.http_is_encoded(response_headers, "gzip") then
         local max_size = 5 * 1024 * 1024
         local decompressed, err = assistant_utils.zlib_uncompress_gzip(body, max_size)
         if not decompressed then
