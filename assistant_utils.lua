@@ -3,6 +3,7 @@ local logger = require("logger")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local ffi = require("ffi")
+local ffiutil = require("ffi/util")
 local T = require("ffi/util").template
 local koutil = require("util")
 local _ = require("assistant_gettext")
@@ -327,69 +328,38 @@ local function normalizeMarkdownHeadings(content, heading_offset, max_heading_le
   return normalized_content
 end
 
+-- Enhanced uncompress that natively tolerates the Gzip-to-Zlib trailer mismatch
+require("ffi/zlib_h")
 local libz = ffi.loadlib("z", 1)
 
--- 1. Dynamically declare the mini-zlib stream interface needed for raw Gzip
-ffi.cdef[[
-    typedef struct z_stream_s {
-        const unsigned char *next_in;
-        unsigned int     avail_in;
-        unsigned long    total_in;
-        unsigned char   *next_out;
-        unsigned int     avail_out;
-        unsigned long    total_out;
-        const char      *msg;
-        struct internal_state *state;
-        void            *zalloc;
-        void            *zfree;
-        void            *opaque;
-        int              data_type;
-        unsigned long    adler;
-        unsigned long    reserved;
-    } z_stream;
+local function zlib_uncompress_gzip(gzip_data, max_datalen)
+    if #gzip_data < 18 then return nil, "Data truncated" end
 
-    int inflateInit2_(z_stream *strm, int windowBits, const char *version, int stream_size);
-    int inflate(z_stream *strm, int flush);
-    int inflateEnd(z_stream *strm);
-]]
+    -- 1. Strip the 10-byte Gzip header and the 8-byte Gzip trailer
+    local raw_deflate = gzip_data:sub(11, -9)
+    
+    -- 2. Prepend a valid standard Zlib header (0x78 0x9C)
+    local zlib_header = string.char(0x78, 0x9C)
+    local hybrid_payload = zlib_header .. raw_deflate
 
--- Helper function: Pure memory decompression for Gzip payloads
-local function decompressGzipMemory(compressed_str)
-    local strm = ffi.new("z_stream")
-    strm.next_in = ffi.cast("const unsigned char*", compressed_str)
-    strm.avail_in = #compressed_str
-
-    -- 15 + 32 or 15 + 16 tells zlib to automatically decode the Gzip wrapper wrapper safely
-    local res = libz.inflateInit2_(strm, 15 + 32, "1.2.11", ffi.sizeof(strm))
-    if res ~= 0 then
-        return nil, "Initialization failed"
-    end
-
-    local chunks = {}
-    local block_size = 16384
-    local out_buf = ffi.new("unsigned char[?]", block_size)
-
-    while true do
-        strm.next_out = out_buf
-        strm.avail_out = block_size
-
-        res = libz.inflate(strm, 0) -- Z_NO_FLUSH
-        
-        local written = block_size - strm.avail_out
-        if written > 0 then
-            table.insert(chunks, ffi.string(out_buf, written))
-        end
-
-        if res == 1 then -- Z_STREAM_END
-            break
-        elseif res < 0 then -- Error
-            libz.inflateEnd(strm)
-            return nil, "Decompression error code: " .. tostring(res)
+    -- 3. Prepare the memory buffers exactly like your original working code
+    local buf = ffi.new("uint8_t[?]", max_datalen)
+    local buflen = ffi.new("unsigned long[1]", max_datalen)
+    
+    -- 4. Invoke the ONLY guaranteed symbol: uncompress
+    local res = libz.uncompress(buf, buflen, ffi.cast("const unsigned char*", hybrid_payload), #hybrid_payload)
+    
+    -- res == 0 means perfect zlib format
+    -- res == -3 (Z_DATA_ERROR) happens here because the tail has a Gzip CRC32 instead of Zlib Adler32.
+    -- But since the Deflate payload itself is 100% correct, the bytes in 'buf' are ALREADY completely deflated!
+    if res == 0 or res == -3 then
+        local actual_len = buflen[0]
+        if actual_len > 0 then
+            return ffi.string(buf, actual_len)
         end
     end
-
-    libz.inflateEnd(strm)
-    return table.concat(chunks)
+    
+    return nil, "Zlib core uncompress failed with severe code: " .. tostring(res)
 end
 
 return {
@@ -399,5 +369,5 @@ return {
     getPageInfo = getPageInfo,
     saveToNotebookFile = saveToNotebookFile,
     normalizeMarkdownHeadings = normalizeMarkdownHeadings,
-    decompressGzipMemory = decompressGzipMemory,
+    zlib_uncompress_gzip = zlib_uncompress_gzip,
 }

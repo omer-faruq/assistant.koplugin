@@ -70,7 +70,8 @@ local function fetchOpenRouterModels(list_url)
         end
     end
     if is_gzipped then
-        local decompressed, err = assistant_utils.decompressGzipMemory(body)
+        local max_size = 5 * 1024 * 1024
+        local decompressed, err = assistant_utils.zlib_uncompress_gzip(body, max_size)
         if not decompressed then
             return nil, _("Failed to decompress data: ") .. tostring(err)
         end
