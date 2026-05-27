@@ -1,4 +1,5 @@
 --- OpenRouter model picker — fetch and select models from UI
+local socket = require("socket")
 local http = require("socket.http")
 local ltn12 = require("ltn12")
 local json = require("rapidjson")
@@ -37,16 +38,16 @@ local function fetchOpenRouterModels(list_url)
     }
     UIManager:show(infomsg)
 
-    local success, code, body, response_headers = Trapper:dismissableRunInSubprocess(function()
+    local success, code, body, headers = Trapper:dismissableRunInSubprocess(function()
         local response_body = {}
-        local _, rcode, rheaders = http.request{
+        local rcode, rheaders = socket.skip(1, http.request{
             url = list_url,
             headers = {
                 ["Accept"] = "application/json",
                 ["Accept-Encoding"] = "gzip",
             },
             sink = ltn12.sink.table(response_body),
-        }
+        })
         return rcode, table.concat(response_body), rheaders
     end, infomsg)
 
@@ -60,7 +61,7 @@ local function fetchOpenRouterModels(list_url)
         return nil, T(_("Failed to fetch models (HTTP %1)."), code or "?")
     end
 
-    if assistant_utils.http_is_encoded(response_headers, "gzip") then
+    if assistant_utils.http_is_encoded(headers, "gzip") then
         local max_size = 5 * 1024 * 1024
         local decompressed, err = assistant_utils.zlib_uncompress_gzip(body, max_size)
         if not decompressed then
