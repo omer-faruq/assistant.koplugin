@@ -1,7 +1,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-05-20 13:37+0800\n"
+        "POT-Creation-Date: 2026-05-28 17:24+0800\n"
         "PO-Revision-Date: 2025-09-17 15:17+0800\n"
         "Last-Translator: [AI Model Version]\n"
         "Language-Team: [AI Translation Model Name]\n"
@@ -11,8 +11,8 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:457 ../main.lua:138 ../main.lua:306
-#: ../main.lua:590
+#: ../_meta.lua:4 ../assistant_dialog.lua:457 ../main.lua:138 ../main.lua:309
+#: ../main.lua:606
 msgid   "AI Assistant"
 msgstr  "AI Asszisztens"
 
@@ -34,9 +34,9 @@ msgid   "Highlighted text:"
 msgstr  "Kiemelt szöveg:"
 
 #: ../assistant_dialog.lua:313 ../assistant_dictdialog.lua:161
-#: ../assistant_model_picker.lua:164 ../assistant_model_picker.lua:289
-#: ../assistant_model_picker.lua:381 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:90 ../assistant_viewer.lua:670
+#: ../assistant_model_picker.lua:183 ../assistant_model_picker.lua:308
+#: ../assistant_model_picker.lua:400 ../assistant_quicknote.lua:39
+#: ../assistant_settings.lua:91 ../assistant_viewer.lua:670
 msgid   "Cancel"
 msgstr  "Mégse"
 
@@ -107,7 +107,7 @@ msgstr  "Keresés"
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Könyv szövegkörnyezetének elemzése a Term X-Ray funkcióhoz..."
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:816
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:833
 msgid   "Term X-Ray"
 msgstr  "Kifejezés-röntgen"
 
@@ -115,7 +115,7 @@ msgstr  "Kifejezés-röntgen"
 msgid   "Loading Term X-Ray ..."
 msgstr  "Kifejezés-röntgen betöltése…"
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:832
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:849
 msgid   "Dictionary"
 msgstr  "Szótár"
 
@@ -190,92 +190,84 @@ msgstr  " - Cím: %1\n"
         "-----\n"
         "\n"
 
-#: ../assistant_model_picker.lua:36
+#: ../assistant_model_picker.lua:37
 msgid   "Fetching models..."
 msgstr  "Modellek lekérése..."
 
-#: ../assistant_model_picker.lua:59
+#: ../assistant_model_picker.lua:61
 msgid   "Failed to fetch models (HTTP %1)."
 msgstr  "Nem sikerült lekérni a modelleket (HTTP %1)."
 
-#: ../assistant_model_picker.lua:64
+#: ../assistant_model_picker.lua:68
+msgid   "Failed to decompress data: "
+msgstr  "Nem sikerült kicsomagolni az adatot: "
+
+#: ../assistant_model_picker.lua:74
 msgid   "Failed to parse model list."
 msgstr  "Nem sikerült feldolgozni a modelllistát."
 
-#: ../assistant_model_picker.lua:119
+#: ../assistant_model_picker.lua:132
 msgid   "Models: %1 (filtered)"
 msgstr  "Modellek: %1 (szűrt)"
 
-#: ../assistant_model_picker.lua:121
+#: ../assistant_model_picker.lua:134
 msgid   "Models: %1"
 msgstr  "Modellek: %1"
 
-#: ../assistant_model_picker.lua:124
+#: ../assistant_model_picker.lua:137
 msgid   " — p. %1/%2"
 msgstr  " — o. %1/%2"
 
-#: ../assistant_model_picker.lua:135
-msgid   "◂ Prev"
-msgstr  "◂ Előző"
-
-#: ../assistant_model_picker.lua:142 ../assistant_model_picker.lua:298
+#: ../assistant_model_picker.lua:158 ../assistant_model_picker.lua:317
 msgid   "Search"
 msgstr  "Keresés"
 
-#: ../assistant_model_picker.lua:146
-msgid   "Next ▸"
-msgstr  "Következő ▸"
-
-#: ../assistant_model_picker.lua:155
+#: ../assistant_model_picker.lua:174
 msgid   "Manual"
 msgstr  "Kézi"
 
-#: ../assistant_model_picker.lua:159
+#: ../assistant_model_picker.lua:178
 msgid   "Reset"
 msgstr  "Visszaállítás"
 
-#: ../assistant_model_picker.lua:202 ../assistant_model_picker.lua:394
+#: ../assistant_model_picker.lua:221 ../assistant_model_picker.lua:413
 msgid   "Model: %1"
 msgstr  "Modell: %1"
 
-#: ../assistant_model_picker.lua:214
+#: ../assistant_model_picker.lua:233
 msgid   "Filter: \"%1\""
 msgstr  "Szűrő: \"%1\""
 
-#: ../assistant_model_picker.lua:216
+#: ../assistant_model_picker.lua:235
 msgid   "Select a model:"
 msgstr  "Válasszon egy modellt:"
 
-#: ../assistant_model_picker.lua:284
+#: ../assistant_model_picker.lua:303
 msgid   "Search Models"
 msgstr  "Modellek keresése"
 
-#: ../assistant_model_picker.lua:286
-msgid   "e.g. claude, gemini, llama..."
-msgstr  "pl. claude, gemini, llama..."
-
-#: ../assistant_model_picker.lua:323
+#: ../assistant_model_picker.lua:342
 msgid   "Model reset: %1"
 msgstr  "Modell visszaállítva: %1"
 
-#: ../assistant_model_picker.lua:353
+#: ../assistant_model_picker.lua:372
 msgid   "No models matching \"%1\"."
 msgstr  "Nincs a(z) \"%1\" kifejezésre illő modell."
 
-#: ../assistant_model_picker.lua:376
+#: ../assistant_model_picker.lua:395
 msgid   "Enter Model ID"
 msgstr  "Adja meg a modell azonosítót"
 
-#: ../assistant_model_picker.lua:378
+#: ../assistant_model_picker.lua:397
 msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "pl. google/gemini-3.0-flash-exp:free"
 
-#: ../assistant_model_picker.lua:386 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:114 ../assistant_viewer.lua:450
+#: ../assistant_model_picker.lua:405 ../assistant_quicknote.lua:49
+#: ../assistant_settings.lua:115 ../assistant_viewer.lua:450
 msgid   "Save"
 msgstr  "Mentés"
 
-#: ../assistant_model_picker.lua:419
+#: ../assistant_model_picker.lua:438
 msgid   "No models available."
 msgstr  "Nincsenek elérhető modellek."
 
@@ -367,7 +359,7 @@ msgstr  "Történelmi háttér"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Ez a lekérdezés részletes történelmi kontextust ad a kiemelt szöveghez, megmagyarázva jelentőségét és hátterét."
 
-#: ../assistant_prompts.lua:285 ../main.lua:799
+#: ../assistant_prompts.lua:285 ../main.lua:816
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -434,7 +426,7 @@ msgstr  "Ismeretlen hiba"
 msgid   "Settings"
 msgstr  "Beállítások"
 
-#: ../assistant_querier.lua:124 ../assistant_settings.lua:207
+#: ../assistant_querier.lua:124 ../assistant_settings.lua:214
 #: ../assistant_viewer.lua:341
 msgid   "Close"
 msgstr  "Bezár"
@@ -443,36 +435,36 @@ msgstr  "Bezár"
 msgid   "Plugin is not configured."
 msgstr  "A bővítmény nincs beállítva."
 
-#: ../assistant_querier.lua:184
+#: ../assistant_querier.lua:179
 msgid   "Querying AI ..."
 msgstr  "AI lekérdezése..."
 
-#: ../assistant_querier.lua:245
+#: ../assistant_querier.lua:222
 msgid   "AI is responding"
 msgstr  "AI válaszol"
 
-#: ../assistant_querier.lua:264
+#: ../assistant_querier.lua:241
 msgid   "⏹ Stop"
 msgstr  "⏹ Állj"
 
-#: ../assistant_querier.lua:323 ../assistant_querier.lua:335
+#: ../assistant_querier.lua:300 ../assistant_querier.lua:312
 msgid   "Request cancelled by user."
 msgstr  "Kérés megszakítva a felhasználó által."
 
-#: ../assistant_querier.lua:341
+#: ../assistant_querier.lua:318
 msgid   "No response received."
 msgstr  "Nem érkezett válasz."
 
-#: ../assistant_querier.lua:354
+#: ../assistant_querier.lua:331
 msgid   "Failed to start subprocess for request"
 msgstr  "Nem sikerült elindítani az alfeldolgozót."
 
-#: ../assistant_querier.lua:550 ../assistant_querier.lua:552
+#: ../assistant_querier.lua:527 ../assistant_querier.lua:529
 msgid   "Deeply Thought"
 msgstr  "Mélyen Gondolkodó"
 
 #: ../assistant_quicknote.lua:27 ../main.lua:101 ../main.lua:229
-#: ../main.lua:321
+#: ../main.lua:324
 msgid   "Take Quick Notes"
 msgstr  "Gyors jegyzet készítése"
 
@@ -492,129 +484,137 @@ msgstr  "Felhasználó:"
 msgid   "Quick note saved successfully"
 msgstr  "Gyors jegyzet sikeresen mentve"
 
-#: ../assistant_settings.lua:74
+#: ../assistant_settings.lua:75
 msgid   "AI Response Language Setting"
 msgstr  "AI Válasznyelv Beállítás"
 
-#: ../assistant_settings.lua:77
+#: ../assistant_settings.lua:78
 msgid   "AI Response Language"
 msgstr  "AI válasz nyelve"
 
-#: ../assistant_settings.lua:79 ../assistant_settings.lua:84
+#: ../assistant_settings.lua:80 ../assistant_settings.lua:85
 msgid   "Leave blank to use: %1"
 msgstr  "Hagyja üresen, ha használni kívánja: %1"
 
-#: ../assistant_settings.lua:82
+#: ../assistant_settings.lua:83
 msgid   "Dictionary Language"
 msgstr  "Szótár nyelve"
 
-#: ../assistant_settings.lua:97
+#: ../assistant_settings.lua:98
 msgid   "Clear"
 msgstr  "Törlés"
 
-#: ../assistant_settings.lua:144
+#: ../assistant_settings.lua:145
 msgid   "RTL written Language"
 msgstr  "Jobbról-balra írott nyelv"
 
-#: ../assistant_settings.lua:164
+#: ../assistant_settings.lua:165
 msgid   "Leave these fields blank to use the UI language: %1"
 msgstr  "Hagyja üresen ezeket a mezőket, ha a felület nyelvét szeretné használni: %1"
 
-#: ../assistant_settings.lua:175
+#: ../assistant_settings.lua:176
 msgid   "AI Provider Settings"
 msgstr  "AI szolgáltató beállítások"
 
-#: ../assistant_settings.lua:201
-msgid   "Select Model"
-msgstr  "Modell kiválasztása"
+#: ../assistant_settings.lua:202
+msgid   "Browse Models"
+msgstr  "Tallózás modellek között"
 
-#: ../assistant_settings.lua:278
+#: ../assistant_settings.lua:208
+msgid   "Browse available models on OpenRouter"
+msgstr  "Tallózás az elérhető modellek között az OpenRouteren"
+
+#: ../assistant_settings.lua:291
 msgid   "AI Model provider:"
 msgstr  "AI Modell Szolgáltató:"
 
-#: ../assistant_settings.lua:365
+#: ../assistant_settings.lua:374
+msgid   "Config Error: base_url"
+msgstr  "Konfigurációs hiba: base_url"
+
+#: ../assistant_settings.lua:391
 msgid   "AI Language: "
 msgstr  "AI nyelv: "
 
-#: ../assistant_settings.lua:377
+#: ../assistant_settings.lua:403
 msgid   "AI Text Size: %1"
 msgstr  "AI szövegméret: %1"
 
-#: ../assistant_settings.lua:381
+#: ../assistant_settings.lua:407
 msgid   "AI Response Text Font Size"
 msgstr  "AI válasz szöveg betűmérete"
 
-#: ../assistant_settings.lua:397
+#: ../assistant_settings.lua:423
 msgid   "Stream Mode Settings"
 msgstr  "Stream mód beállítások"
 
-#: ../assistant_settings.lua:400
+#: ../assistant_settings.lua:426
 msgid   "Enable stream response"
 msgstr  "Folyamatos válasz engedélyezése"
 
-#: ../assistant_settings.lua:408
+#: ../assistant_settings.lua:434
 msgid   "Auto scroll stream response text"
 msgstr  "Válaszszöveg automatikus görgetése"
 
-#: ../assistant_settings.lua:417
+#: ../assistant_settings.lua:443
 msgid   "Large Streaming Window"
 msgstr  "Nagy méretű streaming ablak"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:429
+#: ../assistant_settings.lua:455
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader finomhangolások és felülbírálások"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:459
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "AI-asszisztens használata a „Fordítás” funkcióhoz"
 
-#: ../assistant_settings.lua:444
+#: ../assistant_settings.lua:470
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Automatikus összefoglaló régen olvasott könyvek megnyitásakor"
 
-#: ../assistant_settings.lua:454
+#: ../assistant_settings.lua:480
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "Az AI összefoglaló aktiválódik legközelebb, amikor régen olvasott könyvet nyit meg."
 
-#: ../assistant_settings.lua:458
+#: ../assistant_settings.lua:484
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Szótár(AI) megjelenítése a szótár felugróban"
 
-#: ../assistant_settings.lua:466
+#: ../assistant_settings.lua:492
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Wikipedia(AI) megjelenítése a szótár felugróban"
 
-#: ../assistant_settings.lua:474
+#: ../assistant_settings.lua:500
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Kifejezés-röntgen (AI) megjelenítése a szótár-felugró ablakban"
 
-#: ../assistant_settings.lua:482
+#: ../assistant_settings.lua:508
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Egyéni kérdések megjelenítése a szótár-felugró ablakban"
 
-#: ../assistant_settings.lua:492
+#: ../assistant_settings.lua:518
 msgid   "Show Follow-up Questions from AI"
 msgstr  "AI további kérdéseinek megjelenítése"
 
-#: ../assistant_settings.lua:500
+#: ../assistant_settings.lua:526
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kérdés másolása vágólapra"
 
-#: ../assistant_settings.lua:508
+#: ../assistant_settings.lua:534
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Beszélgetések automatikus mentése a Jegyzetfüzetbe"
 
-#: ../assistant_settings.lua:516
+#: ../assistant_settings.lua:542
 msgid   "Use book text for x-ray and recap"
 msgstr  "Könyv szövegének használata x-ray-hez és összefoglalóhoz"
 
-#: ../assistant_settings.lua:524
+#: ../assistant_settings.lua:550
 msgid   "Purge the settings"
 msgstr  "Beállítások törlése"
 
-#: ../assistant_settings.lua:527 ../main.lua:724
+#: ../assistant_settings.lua:553 ../main.lua:741
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -624,30 +624,41 @@ msgstr  "Biztosan törli az asszisztent bővítmény beállításait?\n"
         "\n"
         "A configuration.lua biztonságban van, csak a beállítások törlődnek."
 
-#: ../assistant_settings.lua:531 ../main.lua:728
+#: ../assistant_settings.lua:557 ../main.lua:745
 msgid   "Purge"
 msgstr  "Törlés"
 
-#: ../assistant_update_checker.lua:106
+#: ../assistant_update_checker.lua:108
 msgid   "Checking for updates..."
 msgstr  "Frissítések keresése..."
 
-#: ../assistant_update_checker.lua:143
-#, lua-format
-msgid   "A new version of the %s plugin (%s) is available. Please update!"
-msgstr  "Új %s bővítmény verzió (%s) érhető el. Kérlek frissíts!"
+#: ../assistant_update_checker.lua:127
+msgid   "Update check canceled."
+msgstr  "Frissítésellenőrzés megszakítva."
 
-#: ../assistant_utils.lua:155
+#: ../assistant_update_checker.lua:132
+msgid   "Failed to check for updates. HTTP code: %1"
+msgstr  "Nem sikerült ellenőrizni a frissítéseket. HTTP kód: %1"
+
+#: ../assistant_update_checker.lua:146
+msgid   "Failed to parse update check response: %1"
+msgstr  "Nem sikerült feldolgozni a frissítésellenőrzés válaszát: %1"
+
+#: ../assistant_update_checker.lua:157
+msgid   "A new version of the %1 plugin (%2) is available. Please update!"
+msgstr  "A(z) %1 bővítmény új verziója (%2) elérhető. Kérjük, frissítsen!"
+
+#: ../assistant_utils.lua:157
 msgid   "Page"
 msgstr  "Oldal"
 
-#: ../assistant_utils.lua:180
+#: ../assistant_utils.lua:182
 msgid   "Cannot access default folder for logs: %1\n"
         "Using original location."
 msgstr  "Nem lehet elérni a naplók alapértelmezett mappáját: %1\n"
         "Az eredeti hely használata."
 
-#: ../assistant_utils.lua:235
+#: ../assistant_utils.lua:237
 msgid   "Notebook save failed. Continuing..."
 msgstr  "A jegyzetfüzet mentése nem sikerült. Folytatás..."
 
@@ -760,25 +771,25 @@ msgstr  "Könyvszintű egyéni kérdések"
 msgid   "Includes user defined book level prompts from Config file"
 msgstr  "Tartalmazza a felhasználó által definiált könyvszintű kérdéseket a konfigurációs fájlból"
 
-#: ../main.lua:235 ../main.lua:327
+#: ../main.lua:235 ../main.lua:330
 msgid   "Take quick notes that will be saved to your notebook."
 msgstr  "Készítsen gyors jegyzeteket, amelyek elmentésre kerülnek a jegyzetfüzetébe."
 
-#: ../main.lua:240 ../main.lua:332
+#: ../main.lua:240 ../main.lua:335
 msgid   "NoteBook (AI Conversation Log)"
 msgstr  "Füzet (AI-beszélgetési napló)"
 
-#: ../main.lua:246 ../main.lua:339
+#: ../main.lua:246 ../main.lua:342
 msgid   "Notebook file: \n"
         "\n"
 msgstr  "Jegyzetfüzet-fájl: \n"
         "\n"
 
-#: ../main.lua:247 ../main.lua:340
+#: ../main.lua:247 ../main.lua:343
 msgid   "View"
 msgstr  "Megnyitás"
 
-#: ../main.lua:251 ../main.lua:344
+#: ../main.lua:251 ../main.lua:347
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -786,11 +797,11 @@ msgstr  "A fájl nem létezik.\n"
         "\n"
         "%1"
 
-#: ../main.lua:259 ../main.lua:263 ../main.lua:352 ../main.lua:356
+#: ../main.lua:259 ../main.lua:263 ../main.lua:355 ../main.lua:359
 msgid   "Delete"
 msgstr  "Törlés"
 
-#: ../main.lua:262 ../main.lua:355
+#: ../main.lua:262 ../main.lua:358
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -798,57 +809,57 @@ msgstr  "Töröljük a fájlt?\n"
         "%1\n"
         "A művelet nem visszavonható."
 
-#: ../main.lua:274 ../main.lua:367
+#: ../main.lua:274 ../main.lua:370
 msgid   "Edit"
 msgstr  "Szerkesztés"
 
-#: ../main.lua:286 ../main.lua:380
-msgid   "AI Provider: %1"
-msgstr  "AI szolgáltató: %1"
+#: ../main.lua:286 ../main.lua:383
+msgid   "AI Provider: %1(%2)"
+msgstr  "AI Szolgáltató: %1(%2)"
 
-#: ../main.lua:286 ../main.lua:380
+#: ../main.lua:287 ../main.lua:288 ../main.lua:384 ../main.lua:385
 msgid   "Not configured"
 msgstr  "Nincs beállítva"
 
-#: ../main.lua:296 ../main.lua:390
+#: ../main.lua:299 ../main.lua:396
 msgid   "AI Assistant Settings"
 msgstr  "AI Asszisztens beállításai"
 
-#: ../main.lua:310
+#: ../main.lua:313
 msgid   "Ask a Question"
 msgstr  "Tegyen fel egy kérdést"
 
-#: ../main.lua:316
+#: ../main.lua:319
 msgid   "Ask a general question to the AI (not book-related)."
 msgstr  "Tegyen fel egy általános kérdést az AI-nak (nem könyvvel kapcsolatos)."
 
-#: ../main.lua:436
+#: ../main.lua:442
 msgid   "This is a custom prompt"
 msgstr  "Ez egy egyéni kérdés"
 
-#: ../main.lua:446
+#: ../main.lua:452
 msgid   "No valid book-level custom prompt found"
 msgstr  "Nem található érvényes könyvszintű egyéni prompt"
 
-#: ../main.lua:451
+#: ../main.lua:457
 msgid   "For details, visit the 'Configuration' wiki page on github."
 msgstr  "Részletekért látogassa meg a 'Configuration' wiki oldalt a github-on."
 
-#: ../main.lua:534
+#: ../main.lua:550
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Nincs érvényes modellszolgáltató a configuration.lua fájlban"
 
-#: ../main.lua:552
+#: ../main.lua:568
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Konfigurációs hiba.\n"
         "Állítsa be a configuration.lua fájlt."
 
-#: ../main.lua:624
+#: ../main.lua:640
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: érvénytelen modellszolgáltatók"
 
-#: ../main.lua:702
+#: ../main.lua:718
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -880,33 +891,33 @@ msgstr  "Használati tippek\n"
         "Többujjas csúsztatás (pl. ⮠, ⮡, ↺):\n"
         "Az eredmény ablak bezárásához (mivel a Bezárás gomb túl messze van).\n"
 
-#: ../main.lua:721
+#: ../main.lua:738
 msgid   "Purge Settings"
 msgstr  "Beállítások törlése"
 
-#: ../main.lua:775
+#: ../main.lua:792
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "[%s] eltávolítása a kiemelés menüből?"
 
-#: ../main.lua:776
+#: ../main.lua:793
 msgid   "Remove"
 msgstr  "Eltávolítás"
 
-#: ../main.lua:1015
+#: ../main.lua:1032
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Nem található konfiguráció. Először állítsd be a configuration.lua-t."
 
-#: ../main.lua:1057
+#: ../main.lua:1074
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "[%1 (AI)] hozzáadva a kiemelés menühöz."
 
-#: ../main.lua:1066
+#: ../main.lua:1083
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "[%s (AI)] eltávolítva a kiemelés menüből."
 
-#: ../main.lua:1110
+#: ../main.lua:1127
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -914,16 +925,16 @@ msgstr  "Szeretnél egy AI-összefoglalót?\n"
         "%1 szerző: %2.\n"
         "\n"
 
-#: ../main.lua:1111
+#: ../main.lua:1128
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Legutóbb egy órája olvastad."
 msgstr[1]       "Legutóbb %1 órája olvastad."
 
-#: ../main.lua:1116
+#: ../main.lua:1133
 msgid   "Yes"
 msgstr  "Igen"
 
-#: ../main.lua:1125
+#: ../main.lua:1142
 msgid   "No"
 msgstr  "Nem"

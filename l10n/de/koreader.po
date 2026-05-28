@@ -1,18 +1,18 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-05-20 13:37+0800\n"
+        "POT-Creation-Date: 2026-05-28 17:24+0800\n"
         "PO-Revision-Date: 2025-09-17 15:17+0800\n"
-        "Last-Translator: OpenAI ChatGPT-4.0\n"
-        "Language-Team: OpenAI ChatGPT-4.0\n"
+        "Last-Translator: [AI Model Version]\n"
+        "Language-Team: [AI Translation Model Name]\n"
         "Language: de\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:457 ../main.lua:138 ../main.lua:306
-#: ../main.lua:590
+#: ../_meta.lua:4 ../assistant_dialog.lua:457 ../main.lua:138 ../main.lua:309
+#: ../main.lua:606
 msgid   "AI Assistant"
 msgstr  "KI-Assistent"
 
@@ -34,9 +34,9 @@ msgid   "Highlighted text:"
 msgstr  "Hervorgehobener Text:"
 
 #: ../assistant_dialog.lua:313 ../assistant_dictdialog.lua:161
-#: ../assistant_model_picker.lua:164 ../assistant_model_picker.lua:289
-#: ../assistant_model_picker.lua:381 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:90 ../assistant_viewer.lua:670
+#: ../assistant_model_picker.lua:183 ../assistant_model_picker.lua:308
+#: ../assistant_model_picker.lua:400 ../assistant_quicknote.lua:39
+#: ../assistant_settings.lua:91 ../assistant_viewer.lua:670
 msgid   "Cancel"
 msgstr  "Abbrechen"
 
@@ -107,7 +107,7 @@ msgstr  "Nachschlagen"
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Analysiere Buchkontext für Begriffs-Röntgen..."
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:816
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:833
 msgid   "Term X-Ray"
 msgstr  "Begriffs-Röntgen"
 
@@ -115,7 +115,7 @@ msgstr  "Begriffs-Röntgen"
 msgid   "Loading Term X-Ray ..."
 msgstr  "Begriffs-Röntgen wird geladen..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:832
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:849
 msgid   "Dictionary"
 msgstr  "Wörterbuch"
 
@@ -190,92 +190,84 @@ msgstr  " - Titel : %1\n"
         "-----\n"
         "\n"
 
-#: ../assistant_model_picker.lua:36
+#: ../assistant_model_picker.lua:37
 msgid   "Fetching models..."
 msgstr  "Modelle werden abgerufen..."
 
-#: ../assistant_model_picker.lua:59
+#: ../assistant_model_picker.lua:61
 msgid   "Failed to fetch models (HTTP %1)."
 msgstr  "Fehler beim Abrufen der Modelle (HTTP %1)."
 
-#: ../assistant_model_picker.lua:64
+#: ../assistant_model_picker.lua:68
+msgid   "Failed to decompress data: "
+msgstr  "Fehler beim Dekomprimieren der Daten: "
+
+#: ../assistant_model_picker.lua:74
 msgid   "Failed to parse model list."
 msgstr  "Fehler beim Parsen der Modellliste."
 
-#: ../assistant_model_picker.lua:119
+#: ../assistant_model_picker.lua:132
 msgid   "Models: %1 (filtered)"
 msgstr  "Modelle: %1 (gefiltert)"
 
-#: ../assistant_model_picker.lua:121
+#: ../assistant_model_picker.lua:134
 msgid   "Models: %1"
 msgstr  "Modelle: %1"
 
-#: ../assistant_model_picker.lua:124
+#: ../assistant_model_picker.lua:137
 msgid   " — p. %1/%2"
 msgstr  " — S. %1/%2"
 
-#: ../assistant_model_picker.lua:135
-msgid   "◂ Prev"
-msgstr  "◂ Zurück"
-
-#: ../assistant_model_picker.lua:142 ../assistant_model_picker.lua:298
+#: ../assistant_model_picker.lua:158 ../assistant_model_picker.lua:317
 msgid   "Search"
 msgstr  "Suchen"
 
-#: ../assistant_model_picker.lua:146
-msgid   "Next ▸"
-msgstr  "Weiter ▸"
-
-#: ../assistant_model_picker.lua:155
+#: ../assistant_model_picker.lua:174
 msgid   "Manual"
 msgstr  "Manuell"
 
-#: ../assistant_model_picker.lua:159
+#: ../assistant_model_picker.lua:178
 msgid   "Reset"
 msgstr  "Zurücksetzen"
 
-#: ../assistant_model_picker.lua:202 ../assistant_model_picker.lua:394
+#: ../assistant_model_picker.lua:221 ../assistant_model_picker.lua:413
 msgid   "Model: %1"
 msgstr  "Modell: %1"
 
-#: ../assistant_model_picker.lua:214
+#: ../assistant_model_picker.lua:233
 msgid   "Filter: \"%1\""
 msgstr  "Filter: \"%1\""
 
-#: ../assistant_model_picker.lua:216
+#: ../assistant_model_picker.lua:235
 msgid   "Select a model:"
 msgstr  "Modell auswählen:"
 
-#: ../assistant_model_picker.lua:284
+#: ../assistant_model_picker.lua:303
 msgid   "Search Models"
 msgstr  "Modelle durchsuchen"
 
-#: ../assistant_model_picker.lua:286
-msgid   "e.g. claude, gemini, llama..."
-msgstr  "z.B. claude, gemini, llama..."
-
-#: ../assistant_model_picker.lua:323
+#: ../assistant_model_picker.lua:342
 msgid   "Model reset: %1"
 msgstr  "Modell zurückgesetzt: %1"
 
-#: ../assistant_model_picker.lua:353
+#: ../assistant_model_picker.lua:372
 msgid   "No models matching \"%1\"."
 msgstr  "Keine Modelle gefunden, die \"%1\" entsprechen."
 
-#: ../assistant_model_picker.lua:376
+#: ../assistant_model_picker.lua:395
 msgid   "Enter Model ID"
 msgstr  "Modell-ID eingeben"
 
-#: ../assistant_model_picker.lua:378
+#: ../assistant_model_picker.lua:397
 msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "z.B. google/gemini-3.0-flash-exp:free"
 
-#: ../assistant_model_picker.lua:386 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:114 ../assistant_viewer.lua:450
+#: ../assistant_model_picker.lua:405 ../assistant_quicknote.lua:49
+#: ../assistant_settings.lua:115 ../assistant_viewer.lua:450
 msgid   "Save"
 msgstr  "Speichern"
 
-#: ../assistant_model_picker.lua:419
+#: ../assistant_model_picker.lua:438
 msgid   "No models available."
 msgstr  "Keine Modelle verfügbar."
 
@@ -367,7 +359,7 @@ msgstr  "Historischer Kontext"
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Dieser Prompt liefert einen detaillierten historischen Kontext für den hervorgehobenen Text, erklärt seine Bedeutung und Hintergründe."
 
-#: ../assistant_prompts.lua:285 ../main.lua:799
+#: ../assistant_prompts.lua:285 ../main.lua:816
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
@@ -434,7 +426,7 @@ msgstr  "Unbekannter Fehler"
 msgid   "Settings"
 msgstr  "Einstellungen"
 
-#: ../assistant_querier.lua:124 ../assistant_settings.lua:207
+#: ../assistant_querier.lua:124 ../assistant_settings.lua:214
 #: ../assistant_viewer.lua:341
 msgid   "Close"
 msgstr  "Schließen"
@@ -443,36 +435,36 @@ msgstr  "Schließen"
 msgid   "Plugin is not configured."
 msgstr  "Plugin ist nicht konfiguriert."
 
-#: ../assistant_querier.lua:184
+#: ../assistant_querier.lua:179
 msgid   "Querying AI ..."
 msgstr  "KI wird abgefragt..."
 
-#: ../assistant_querier.lua:245
+#: ../assistant_querier.lua:222
 msgid   "AI is responding"
 msgstr  "KI antwortet"
 
-#: ../assistant_querier.lua:264
+#: ../assistant_querier.lua:241
 msgid   "⏹ Stop"
 msgstr  "⏹ Stopp"
 
-#: ../assistant_querier.lua:323 ../assistant_querier.lua:335
+#: ../assistant_querier.lua:300 ../assistant_querier.lua:312
 msgid   "Request cancelled by user."
 msgstr  "Anfrage vom Benutzer abgebrochen."
 
-#: ../assistant_querier.lua:341
+#: ../assistant_querier.lua:318
 msgid   "No response received."
 msgstr  "Keine Antwort erhalten."
 
-#: ../assistant_querier.lua:354
+#: ../assistant_querier.lua:331
 msgid   "Failed to start subprocess for request"
 msgstr  "Unterprozess zur Anfrage konnte nicht gestartet werden"
 
-#: ../assistant_querier.lua:550 ../assistant_querier.lua:552
+#: ../assistant_querier.lua:527 ../assistant_querier.lua:529
 msgid   "Deeply Thought"
 msgstr  "Tiefes Denken"
 
 #: ../assistant_quicknote.lua:27 ../main.lua:101 ../main.lua:229
-#: ../main.lua:321
+#: ../main.lua:324
 msgid   "Take Quick Notes"
 msgstr  "Schnelle Notizen erstellen"
 
@@ -492,129 +484,137 @@ msgstr  "Benutzer:"
 msgid   "Quick note saved successfully"
 msgstr  "Schnelle Notiz erfolgreich gespeichert"
 
-#: ../assistant_settings.lua:74
+#: ../assistant_settings.lua:75
 msgid   "AI Response Language Setting"
 msgstr  "KI‑Antwortsprache"
 
-#: ../assistant_settings.lua:77
+#: ../assistant_settings.lua:78
 msgid   "AI Response Language"
 msgstr  "KI-Antwortsprache"
 
-#: ../assistant_settings.lua:79 ../assistant_settings.lua:84
+#: ../assistant_settings.lua:80 ../assistant_settings.lua:85
 msgid   "Leave blank to use: %1"
 msgstr  "Leer lassen für: %1"
 
-#: ../assistant_settings.lua:82
+#: ../assistant_settings.lua:83
 msgid   "Dictionary Language"
 msgstr  "Wörterbuchsprache"
 
-#: ../assistant_settings.lua:97
+#: ../assistant_settings.lua:98
 msgid   "Clear"
 msgstr  "Löschen"
 
-#: ../assistant_settings.lua:144
+#: ../assistant_settings.lua:145
 msgid   "RTL written Language"
 msgstr  "Rechts-nach-links Sprache"
 
-#: ../assistant_settings.lua:164
+#: ../assistant_settings.lua:165
 msgid   "Leave these fields blank to use the UI language: %1"
 msgstr  "Felder leer lassen für Verwendung der UI-Sprache: %1"
 
-#: ../assistant_settings.lua:175
+#: ../assistant_settings.lua:176
 msgid   "AI Provider Settings"
 msgstr  "KI-Anbieter-Einstellungen"
 
-#: ../assistant_settings.lua:201
-msgid   "Select Model"
-msgstr  "Modell auswählen"
+#: ../assistant_settings.lua:202
+msgid   "Browse Models"
+msgstr  "Modelle durchsuchen"
 
-#: ../assistant_settings.lua:278
+#: ../assistant_settings.lua:208
+msgid   "Browse available models on OpenRouter"
+msgstr  "Verfügbare Modelle auf OpenRouter durchsuchen"
+
+#: ../assistant_settings.lua:291
 msgid   "AI Model provider:"
 msgstr  "KI‑Modellanbieter:"
 
-#: ../assistant_settings.lua:365
+#: ../assistant_settings.lua:374
+msgid   "Config Error: base_url"
+msgstr  "Konfigurationsfehler: base_url"
+
+#: ../assistant_settings.lua:391
 msgid   "AI Language: "
 msgstr  "KI-Sprache: "
 
-#: ../assistant_settings.lua:377
+#: ../assistant_settings.lua:403
 msgid   "AI Text Size: %1"
 msgstr  "KI-Textgröße: %1"
 
-#: ../assistant_settings.lua:381
+#: ../assistant_settings.lua:407
 msgid   "AI Response Text Font Size"
 msgstr  "Schriftgröße der KI-Antwort"
 
-#: ../assistant_settings.lua:397
+#: ../assistant_settings.lua:423
 msgid   "Stream Mode Settings"
 msgstr  "Streaming-Modus-Einstellungen"
 
-#: ../assistant_settings.lua:400
+#: ../assistant_settings.lua:426
 msgid   "Enable stream response"
 msgstr  "Streaming-Antwort aktivieren"
 
-#: ../assistant_settings.lua:408
+#: ../assistant_settings.lua:434
 msgid   "Auto scroll stream response text"
 msgstr  "Antwort-Text automatisch scrollen"
 
-#: ../assistant_settings.lua:417
+#: ../assistant_settings.lua:443
 msgid   "Large Streaming Window"
 msgstr  "Großes Streaming-Fenster"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:429
+#: ../assistant_settings.lua:455
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader-Anpassungen & Überschreibungen"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:459
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "KI-Assistent für 'Übersetzen' verwenden"
 
-#: ../assistant_settings.lua:444
+#: ../assistant_settings.lua:470
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Automatische Zusammenfassung beim Öffnen lange ungelesener Bücher"
 
-#: ../assistant_settings.lua:454
+#: ../assistant_settings.lua:480
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "KI-Zusammenfassung wird beim nächsten Öffnen eines lange ungelesenen Buches aktiviert."
 
-#: ../assistant_settings.lua:458
+#: ../assistant_settings.lua:484
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Wörterbuch (KI) im Pop-up anzeigen"
 
-#: ../assistant_settings.lua:466
+#: ../assistant_settings.lua:492
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Wikipedia (KI) im Pop-up anzeigen"
 
-#: ../assistant_settings.lua:474
+#: ../assistant_settings.lua:500
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Begriffs-Röntgen (KI) im Wörterbuch-Popup anzeigen"
 
-#: ../assistant_settings.lua:482
+#: ../assistant_settings.lua:508
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Benutzerdefinierte Prompts im Wörterbuch-Popup anzeigen"
 
-#: ../assistant_settings.lua:492
+#: ../assistant_settings.lua:518
 msgid   "Show Follow-up Questions from AI"
 msgstr  "Folgefragen der KI anzeigen"
 
-#: ../assistant_settings.lua:500
+#: ../assistant_settings.lua:526
 msgid   "Copy entered question to the clipboard"
 msgstr  "Eingegebene Frage in Zwischenablage kopieren"
 
-#: ../assistant_settings.lua:508
+#: ../assistant_settings.lua:534
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Gespräche automatisch im Notizbuch speichern"
 
-#: ../assistant_settings.lua:516
+#: ../assistant_settings.lua:542
 msgid   "Use book text for x-ray and recap"
 msgstr  "Buchtext für X-Ray und Zusammenfassung verwenden"
 
-#: ../assistant_settings.lua:524
+#: ../assistant_settings.lua:550
 msgid   "Purge the settings"
 msgstr  "Einstellungen zurücksetzen"
 
-#: ../assistant_settings.lua:527 ../main.lua:724
+#: ../assistant_settings.lua:553 ../main.lua:741
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -624,30 +624,41 @@ msgstr  "Sind Sie sicher, dass Sie die Einstellungen des Assistenten-Plugins lö
         "\n"
         "configuration.lua bleibt unberührt, nur die Einstellungen werden gelöscht."
 
-#: ../assistant_settings.lua:531 ../main.lua:728
+#: ../assistant_settings.lua:557 ../main.lua:745
 msgid   "Purge"
 msgstr  "Zurücksetzen"
 
-#: ../assistant_update_checker.lua:106
+#: ../assistant_update_checker.lua:108
 msgid   "Checking for updates..."
 msgstr  "Suche nach Updates..."
 
-#: ../assistant_update_checker.lua:143
-#, lua-format
-msgid   "A new version of the %s plugin (%s) is available. Please update!"
-msgstr  "Eine neue Version des %s-Plugins (%s) ist verfügbar. Bitte aktualisieren Sie!"
+#: ../assistant_update_checker.lua:127
+msgid   "Update check canceled."
+msgstr  "Update-Prüfung abgebrochen."
 
-#: ../assistant_utils.lua:155
+#: ../assistant_update_checker.lua:132
+msgid   "Failed to check for updates. HTTP code: %1"
+msgstr  "Fehler beim Prüfen auf Updates. HTTP-Code: %1"
+
+#: ../assistant_update_checker.lua:146
+msgid   "Failed to parse update check response: %1"
+msgstr  "Fehler beim Parsen der Update-Prüfungsantwort: %1"
+
+#: ../assistant_update_checker.lua:157
+msgid   "A new version of the %1 plugin (%2) is available. Please update!"
+msgstr  "Eine neue Version des %1-Plugins (%2) ist verfügbar. Bitte aktualisieren!"
+
+#: ../assistant_utils.lua:157
 msgid   "Page"
 msgstr  "Seite"
 
-#: ../assistant_utils.lua:180
+#: ../assistant_utils.lua:182
 msgid   "Cannot access default folder for logs: %1\n"
         "Using original location."
 msgstr  "Standard-Ordner für Logs nicht erreichbar: %1\n"
         "Verwende ursprünglichen Speicherort."
 
-#: ../assistant_utils.lua:235
+#: ../assistant_utils.lua:237
 msgid   "Notebook save failed. Continuing..."
 msgstr  "Speichern des Notizbuchs fehlgeschlagen. Fortfahren..."
 
@@ -760,25 +771,25 @@ msgstr  "Benutzerdefinierte Prompts auf Buchebene"
 msgid   "Includes user defined book level prompts from Config file"
 msgstr  "Enthält benutzerdefinierte Prompts auf Buchebene aus der Konfigurationsdatei"
 
-#: ../main.lua:235 ../main.lua:327
+#: ../main.lua:235 ../main.lua:330
 msgid   "Take quick notes that will be saved to your notebook."
 msgstr  "Erstellen Sie schnelle Notizen, die in Ihrem Notizbuch gespeichert werden."
 
-#: ../main.lua:240 ../main.lua:332
+#: ../main.lua:240 ../main.lua:335
 msgid   "NoteBook (AI Conversation Log)"
 msgstr  "Notizbuch (KI-Gesprächsprotokoll)"
 
-#: ../main.lua:246 ../main.lua:339
+#: ../main.lua:246 ../main.lua:342
 msgid   "Notebook file: \n"
         "\n"
 msgstr  "Notizbuch-Datei: \n"
         "\n"
 
-#: ../main.lua:247 ../main.lua:340
+#: ../main.lua:247 ../main.lua:343
 msgid   "View"
 msgstr  "Anzeigen"
 
-#: ../main.lua:251 ../main.lua:344
+#: ../main.lua:251 ../main.lua:347
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -786,11 +797,11 @@ msgstr  "Datei existiert nicht.\n"
         "\n"
         "%1"
 
-#: ../main.lua:259 ../main.lua:263 ../main.lua:352 ../main.lua:356
+#: ../main.lua:259 ../main.lua:263 ../main.lua:355 ../main.lua:359
 msgid   "Delete"
 msgstr  "Löschen"
 
-#: ../main.lua:262 ../main.lua:355
+#: ../main.lua:262 ../main.lua:358
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -798,57 +809,57 @@ msgstr  "Datei löschen?\n"
         "%1\n"
         "Diese Aktion kann nicht rückgängig gemacht werden."
 
-#: ../main.lua:274 ../main.lua:367
+#: ../main.lua:274 ../main.lua:370
 msgid   "Edit"
 msgstr  "Bearbeiten"
 
-#: ../main.lua:286 ../main.lua:380
-msgid   "AI Provider: %1"
-msgstr  "KI-Anbieter: %1"
+#: ../main.lua:286 ../main.lua:383
+msgid   "AI Provider: %1(%2)"
+msgstr  "KI-Anbieter: %1(%2)"
 
-#: ../main.lua:286 ../main.lua:380
+#: ../main.lua:287 ../main.lua:288 ../main.lua:384 ../main.lua:385
 msgid   "Not configured"
 msgstr  "Nicht konfiguriert"
 
-#: ../main.lua:296 ../main.lua:390
+#: ../main.lua:299 ../main.lua:396
 msgid   "AI Assistant Settings"
 msgstr  "KI-Assistent-Einstellungen"
 
-#: ../main.lua:310
+#: ../main.lua:313
 msgid   "Ask a Question"
 msgstr  "Eine Frage stellen"
 
-#: ../main.lua:316
+#: ../main.lua:319
 msgid   "Ask a general question to the AI (not book-related)."
 msgstr  "Stelle der KI eine allgemeine Frage (nicht buchbezogen)."
 
-#: ../main.lua:436
+#: ../main.lua:442
 msgid   "This is a custom prompt"
 msgstr  "Dies ist ein benutzerdefinierter Prompt"
 
-#: ../main.lua:446
+#: ../main.lua:452
 msgid   "No valid book-level custom prompt found"
 msgstr  "Kein gültiges benutzerdefiniertes Prompt auf Buchebene gefunden"
 
-#: ../main.lua:451
+#: ../main.lua:457
 msgid   "For details, visit the 'Configuration' wiki page on github."
 msgstr  "Weitere Informationen findest du auf der Wiki-Seite „Configuration“ auf GitHub."
 
-#: ../main.lua:534
+#: ../main.lua:550
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Kein gültiger Modell-Anbieter in configuration.lua gefunden"
 
-#: ../main.lua:552
+#: ../main.lua:568
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Konfigurationsfehler.\n"
         "Bitte richten Sie configuration.lua ein."
 
-#: ../main.lua:624
+#: ../main.lua:640
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: Modell-Anbieter ungültig."
 
-#: ../main.lua:702
+#: ../main.lua:718
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -880,33 +891,33 @@ msgstr  "Nutzungstipps\n"
         "Mehrfach-Wischen (z. B. ⮠, ⮡, ↺):\n"
         "Auf den Ergebnisdialog, um ihn zu schließen (da die Schließen-Taste schwer erreichbar ist).\n"
 
-#: ../main.lua:721
+#: ../main.lua:738
 msgid   "Purge Settings"
 msgstr  "Einstellungen zurücksetzen"
 
-#: ../main.lua:775
+#: ../main.lua:792
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Entfernen [%s] aus dem Hervorhebungsmenü?"
 
-#: ../main.lua:776
+#: ../main.lua:793
 msgid   "Remove"
 msgstr  "Entfernen"
 
-#: ../main.lua:1015
+#: ../main.lua:1032
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Konfiguration nicht gefunden. Bitte konfigurieren Sie zuerst configuration.lua."
 
-#: ../main.lua:1057
+#: ../main.lua:1074
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "[%1 (KI)] wurde zum Hervorhebungsmenü hinzugefügt."
 
-#: ../main.lua:1066
+#: ../main.lua:1083
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "[%s (KI)] wurde aus dem Hervorhebungsmenü entfernt."
 
-#: ../main.lua:1110
+#: ../main.lua:1127
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -914,16 +925,16 @@ msgstr  "Möchtest du eine KI-Zusammenfassung?\n"
         "Für %1 von %2.\n"
         "\n"
 
-#: ../main.lua:1111
+#: ../main.lua:1128
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Zuletzt vor einer Stunde gelesen."
 msgstr[1]       "Zuletzt vor %1 Stunden gelesen."
 
-#: ../main.lua:1116
+#: ../main.lua:1133
 msgid   "Yes"
 msgstr  "Ja"
 
-#: ../main.lua:1125
+#: ../main.lua:1142
 msgid   "No"
 msgstr  "Nein"

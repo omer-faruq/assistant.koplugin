@@ -99,42 +99,31 @@ ai-translate:
 	@set -e; \
 	if [ -n "$(L10N_LANG)" ]; then \
 		echo "Translating single language $(L10N_LANG)..."; \
-		IS_NEW=0; if [ ! -f "$(L10N_LANG)/$(DOMAIN).po" ]; then IS_NEW=1; fi; \
-		./AI_TRANSLATE.sh $(L10N_LANG) && { \
-			if [ $$IS_NEW -eq 1 ]; then \
-				if [ ! -f "$(L10N_LANG)/$(DOMAIN).po" ]; then \
-					echo "\033[0;31mError: AI translation for new language '$(L10N_LANG)' failed. File '$(L10N_LANG)/$(DOMAIN).po' not created.\033[0m"; exit 1; \
-				fi; \
-			elif [ -s "$(L10N_LANG)/untranslated.po" ] && [ ! -f "$(L10N_LANG)/updated_translated.po" ]; then \
-				echo "\033[0;31mError: AI translation for '$(L10N_LANG)' failed. File '$(L10N_LANG)/updated_translated.po' not created.\033[0m"; exit 1; \
-			fi; \
-		} || exit 1; \
+		$(MAKE) ai-translate-$(L10N_LANG); \
 	else \
 		TO_TRANSLATE=$$(for lang in $(LANGS); do if [ -s "$$lang/untranslated.po" ]; then echo $$lang; fi; done); \
-		TOTAL=$$(echo $$TO_TRANSLATE | wc -w); \
-		COUNT=0; \
-		for lang in $$TO_TRANSLATE; do \
-			COUNT=$$((COUNT+1)); \
-			echo "Translating language $$COUNT of $$TOTAL ($$lang)..."; \
-			./AI_TRANSLATE.sh $$lang && { \
-				if [ ! -f "$$lang/updated_translated.po" ]; then \
-					echo "\033[0;31mError: AI translation for '$$lang' failed.\033[0m"; \
-					echo "File '$$lang/updated_translated.po' was not created, but '$$lang/untranslated.po' was not empty."; \
-					echo "This might be due to an API error or network issue."; \
-					echo "Please check the output above for any error messages from the AI translation script."; \
-					echo "You can try running the translation for this language again with: make ai-translate L10N_LANG=$$lang"; \
-					exit 1; \
-				fi; \
-				if [ -n "$$API_WAIT" ]; then \
-					echo "... waiting $$API_WAIT seconds to avoid API rate limits."; \
-					sleep $$API_WAIT; \
-				fi; \
-			} || exit 1; \
-		done; \
 		if [ -z "$$TO_TRANSLATE" ]; then \
 			echo "All languages are up to date. Nothing to translate."; \
+		else \
+			TO_TRANSLATE_TARGETS=$$(for lang in $$TO_TRANSLATE; do echo "ai-translate-$$lang"; done); \
+			echo "Starting parallel translation for targets: $$TO_TRANSLATE_TARGETS"; \
+			$(MAKE) -j 4 $$TO_TRANSLATE_TARGETS; \
 		fi; \
 	fi
+
+ai-translate-%:
+	@set -e; \
+	lang=$*; \
+	IS_NEW=0; if [ ! -f "$$lang/$(DOMAIN).po" ]; then IS_NEW=1; fi; \
+	./AI_TRANSLATE.sh $$lang && { \
+		if [ $$IS_NEW -eq 1 ]; then \
+			if [ ! -f "$$lang/$(DOMAIN).po" ]; then \
+				echo "\033[0;31mError: AI translation for new language '$$lang' failed. File '$$lang/$(DOMAIN).po' not created.\033[0m"; exit 1; \
+			fi; \
+		elif [ -s "$$lang/untranslated.po" ] && [ ! -f "$$lang/updated_translated.po" ]; then \
+			echo "\033[0;31mError: AI translation for '$$lang' failed. File '$$lang/updated_translated.po' not created.\033[0m"; exit 1; \
+		fi; \
+	} || exit 1
 
 template:
 	mkdir -p $(TEMPLATE_DIR)
