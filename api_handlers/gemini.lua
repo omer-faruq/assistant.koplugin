@@ -15,6 +15,7 @@ function GeminiHandler:query(message_history, gemini_settings)
     local contents = {}
     local system_content = ""
     local generationConfig = nil
+    local gemini_tools = nil
 
     for i, msg in ipairs(message_history) do
         if msg.role == "system" then
@@ -40,6 +41,13 @@ function GeminiHandler:query(message_history, gemini_settings)
         generationConfig.thinking_config = { thinking_budget = thinking_budget }
     end
 
+    local google_search = koutil.tableGetValue(gemini_settings, "additional_parameters", "google_search") or false
+    if google_search ~= nil then
+        gemini_tools = {
+            google_search = {}
+        }
+    end
+
     local stream = koutil.tableGetValue(gemini_settings, "additional_parameters", "stream") or false
 
     local requestBodyTable = {
@@ -51,7 +59,8 @@ function GeminiHandler:query(message_history, gemini_settings)
             { category = "HARM_CATEGORY_HARASSMENT", threshold = "BLOCK_NONE" },
             { category = "HARM_CATEGORY_DANGEROUS_CONTENT", threshold = "BLOCK_NONE" }
         },
-        generationConfig = generationConfig
+        generationConfig = generationConfig,
+        tools = gemini_tools,
     }
     -- a few more snake_case fields
     if gemini_settings.additional_parameters then

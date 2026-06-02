@@ -409,9 +409,23 @@ function Querier:processStream(bgQuery, trunk_callback)
                                     -- gork4 ouputs empty reasoning messages, logs '.' here to indicate the process works
                                     if not content and not reasoning_content then reasoning_content = "." end
                                 end
-                            else
+                            end
+
+                            local candidates = koutil.tableGetValue(event, "candidates", 1)
+                            if candidates then -- Genmini API
+                                content = koutil.tableGetValue(candidates, "content", "parts", 1, "text") or ""
+                                if koutil.tableGetValue(candidates, "finishReason") == "STOP" then -- Genmini STOP Respond
+                                        local groundingMetadata = koutil.tableGetValue(candidates, "groundingMetadata")
+                                        if groundingMetadata ~= nil then -- Genmini Search Tool
+                                            -- list search queries
+                                            content = content .. "\n\n" .. 
+                                                _("#### Web Search keywords:") .. "\n\n- " .. table.concat(koutil.tableGetValue(event, "candidates", 1, "groundingMetadata", "webSearchQueries"), "\n- ")
+                                        end
+                                end
+                            end
+
+                            if content == nil and reasoning_content == nil then
                                 content =
-                                    koutil.tableGetValue(event, "candidates", 1, "content", "parts", 1, "text") or  -- Genmini API
                                     koutil.tableGetValue(event, "delta", "text") or   -- Anthropic streaming (content_block_delta)
                                     koutil.tableGetValue(event, "content", 1, "text") -- Anthropic non-stream message event
                             end
