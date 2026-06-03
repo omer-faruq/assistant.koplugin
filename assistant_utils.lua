@@ -384,7 +384,172 @@ local function http_is_encoded(headers, encoding)
     if not value then return false end
     return value:lower():find((encoding or "gzip"):lower()) ~= nil
 end
+local ffi = require("ffi")
 
+require("ffi/posix_h")
+require("ffi/utf8proc_h")
+
+local libutf8proc = ffi.loadlib("utf8proc", "3")
+
+
+local function gemini_inject_grounding_citations(full_text, grounding_metadata)
+
+    if not grounding_metadata
+        or not grounding_metadata.groundingSupports
+        or not grounding_metadata.groundingChunks
+    then
+        return full_text
+    end
+
+    local supports = grounding_metadata.groundingSupports
+    local chunks = grounding_metadata.groundingChunks
+
+
+    --------------------------------------------------
+    -- character index -> byte offset
+    --------------------------------------------------
+    local char_to_byte = {}
+
+    local ptr = ffi.cast("const uint8_t *", full_text)
+
+    local pos = 0
+    local char_index = 0
+
+    while pos < #full_text do
+
+        char_to_byte[char_index] = pos
+
+        local codepoint = ffi.new("int32_t[1]")
+
+        local bytes = libutf8proc.utf8proc_iterate(
+            ptr + pos,
+            -1,
+            codepoint
+        )
+
+        if bytes <= 0 then
+            bytes = 1
+        end
+
+        pos = pos + bytes
+        char_index = char_index + 1
+    end
+
+    char_to_byte[char_index] = #full_text
+
+
+    --------------------------------------------------
+    -- collect citations
+    --------------------------------------------------
+    local citation_map = {}
+    local ordered_positions = {}
+
+    for i = #supports, 1, -1 do
+
+        local support = supports[i]
+        local end_char = support.segment and support.segment.endIndex
+
+        if end_char then
+
+            local byte_pos = char_to_byte[end_char]
+
+            if byte_pos then
+
+                local entry = citation_map[byte_pos]
+
+                if not entry then
+                    entry = {
+                        seen = {},
+                        text = {},
+                    }
+
+                    citation_map[byte_pos] = entry
+
+                    ordered_positions[#ordered_positions + 1] = byte_pos
+                end
+
+                for _, idx in ipairs(
+                    support.groundingChunkIndices or {}
+                ) do
+
+                    local ref_num = idx + 1
+
+                    if not entry.seen[ref_num] then
+                        entry.seen[ref_num] = true
+
+                        entry.text[#entry.text + 1] =
+                            string.format(" [%d]", ref_num)
+                    end
+                end
+            end
+        end
+    end
+
+
+    --------------------------------------------------
+    -- build from tail
+    --------------------------------------------------
+    local pieces = {}
+
+    local tail = #full_text + 1
+
+    for _, pos in ipairs(ordered_positions) do
+
+        pieces[#pieces + 1] =
+            full_text:sub(
+                tonumber(pos + 1),
+                tonumber(tail - 1)
+            )
+
+        pieces[#pieces + 1] =
+            table.concat(citation_map[pos].text)
+
+        tail = pos + 1
+    end
+
+    pieces[#pieces + 1] =
+        full_text:sub(
+            1,
+            tonumber(tail - 1)
+        )
+
+
+    --------------------------------------------------
+    -- reverse pieces
+    --------------------------------------------------
+    local result = {}
+
+    for i = #pieces, 1, -1 do
+        result[#result + 1] = pieces[i]
+    end
+
+
+    --------------------------------------------------
+    -- footer
+    --------------------------------------------------
+    result[#result + 1] = "\n\n<small>\n"
+    result[#result + 1] = "### Web References\n\n"
+
+    for i, chunk in ipairs(chunks) do
+
+        local web = chunk.web
+
+        if web and web.uri then
+
+            result[#result + 1] =
+                string.format(
+                    "[%d] [%s](%s)\n",
+                    i,
+                    web.title or web.uri,
+                    web.uri
+                )
+        end
+    end
+
+    result[#result + 1] = "</small>"
+
+    return table.concat(result)
+end
 return {
     getGeneralNotebookFilePath = getGeneralNotebookFilePath,
     extractBookTextForAnalysis = extractBookTextForAnalysis,
@@ -395,4 +560,5 @@ return {
     zlib_uncompress_gzip = zlib_uncompress_gzip,
     http_get_header = http_get_header,
     http_is_encoded = http_is_encoded,
+    gemini_inject_grounding_citations = gemini_inject_grounding_citations,
 }

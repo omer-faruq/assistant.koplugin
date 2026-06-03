@@ -14,6 +14,7 @@ local rapidjson = require('rapidjson')
 local ffi = require("ffi")
 local ffiutil = require("ffi/util")
 local Device = require("device")
+local assistant_utils = require("assistant_utils")
 local Screen = Device.screen
 
 local Querier = {
@@ -399,49 +400,65 @@ function Querier:processStream(bgQuery, trunk_callback)
                         -- Safely parse the JSON
                         local ok, event = pcall(rapidjson.decode, json_str, {null = nil})
                         if ok and event then
-                        
-                            local reasoning_content, content
+                            local reasoning_content, result_content
+                            local choices    = event.choices
+                            local candidates = event.candidates
+                            local delta      = event.delta
+                            local content    = event.content
 
-                            local choice = koutil.tableGetValue(event, "choices", 1)
-                            if choice then -- OpenAI (compatiable) API
-                                if koutil.tableGetValue(choice, "finish_reason") then content="\n" end
-                                local delta = koutil.tableGetValue(choice, "delta")
-                                if delta then
-                                    reasoning_content = koutil.tableGetValue(delta, "reasoning_content")
-                                    content = koutil.tableGetValue(delta, "content")
-                                    -- gork4 ouputs empty reasoning messages, logs '.' here to indicate the process works
-                                    if not content and not reasoning_content then reasoning_content = "." end
+                            -- 1. OpenAI Handles
+                            if choices then
+                                local choice = choices[1]
+                                if choice then
+                                    if choice.finish_reason then result_content = "\n" end -- finished
+
+                                    local c_delta = choice.delta
+                                    if c_delta then
+                                        reasoning_content = c_delta.reasoning_content
+                                        result_content = c_delta.content
+
+                                        -- thinking responses (grok-4)
+                                        if not result_content and not reasoning_content then reasoning_content = "." end
+                                    end
                                 end
-                            end
 
-                            local candidates = koutil.tableGetValue(event, "candidates", 1)
-                            if candidates then -- Genmini API
-                                content = koutil.tableGetValue(candidates, "content", "parts", 1, "text") or ""
-                            end
+                            -- 2. Gemini Handles
+                            elseif candidates then
+                                result_content = koutil.tableGetValue(candidates, 1, "content", "parts", 1, "text") or ""
 
-                            if content == nil and reasoning_content == nil then
-                                content =
-                                    koutil.tableGetValue(event, "delta", "text") or   -- Anthropic streaming (content_block_delta)
-                                    koutil.tableGetValue(event, "content", 1, "text") -- Anthropic non-stream message event
-                            end
-                                
-                            if type(content) == "string" and #content > 0 then
-                                table.insert(result_buffer, content)
-                                if trunk_callback then trunk_callback(content, result_buffer) end
+                            -- 3. Anthropic Handles
+                            elseif delta then
+                                result_content = delta.text
+
+                            -- 4. Anthropic Handles 2 (non stream?)
+                            elseif content then
+                                result_content = koutil.tableGetValue(content, 1, "text")
+                            end 
+
+                            if type(result_content) == "string" and #result_content > 0 then
+                                table.insert(result_buffer, result_content)
+                                if trunk_callback then trunk_callback(result_content, result_buffer) end
                             elseif type(reasoning_content) == "string" and #reasoning_content > 0 then
                                 table.insert(reasoning_content_buffer, reasoning_content)
                                 if trunk_callback then trunk_callback(reasoning_content, reasoning_content_buffer) end
-                            elseif content == nil and reasoning_content == nil then
-                                logger.warn("Unexpected SSE data:", json_str)
+                            elseif result_content == nil and reasoning_content == nil and candidates == nil then
+                                logger.warn("Unexpected JSON:", json_str)
                             end
 
                             -- Genmini STOP Respond
-                            if candidates and candidates.finishReason == "STOP" then
-                                    local groundingMetadata = candidates.groundingMetadata
-                                    if groundingMetadata ~= nil then -- Genmini Search Tool
-                                        -- list search queries
-                                        logger.info(groundingMetadata)
-                                    end
+                            if candidates and candidates[1].finishReason == "STOP" then
+                                logger.info("Stream finished. Injecting grounding citations...")
+                                local groundingMetadata = candidates[1].groundingMetadata
+                                if groundingMetadata ~= nil then -- Genmini Search Tool
+                                    local full_text = assistant_utils.gemini_inject_grounding_citations(
+                                        table.concat(result_buffer),
+                                        groundingMetadata
+                                    )
+                                    logger.info(full_text)
+                                    logger.info(groundingMetadata)
+                                    for k in pairs(result_buffer) do result_buffer[k] = nil end
+                                    table.insert(result_buffer, full_text)
+                                end
                             end
                         else
                             logger.warn("Failed to parse JSON from SSE data:", json_str)
