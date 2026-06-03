@@ -447,16 +447,14 @@ function Querier:processStream(bgQuery, trunk_callback)
 
                             -- Genmini STOP Respond
                             if candidates and candidates[1].finishReason == "STOP" then
-                                logger.info("Stream finished. Injecting grounding citations...")
                                 local groundingMetadata = candidates[1].groundingMetadata
                                 if groundingMetadata ~= nil then -- Genmini Search Tool
-                                    local full_text = assistant_utils.gemini_inject_grounding_citations(
-                                        table.concat(result_buffer),
+                                    local full_text = table.concat(result_buffer)
+                                    koutil.clearTable(result_buffer)
+                                    full_text = assistant_utils.gemini_inject_grounding_citations(
+                                        full_text,
                                         groundingMetadata
                                     )
-                                    logger.info(full_text)
-                                    logger.info(groundingMetadata)
-                                    for k in pairs(result_buffer) do result_buffer[k] = nil end
                                     table.insert(result_buffer, full_text)
                                 end
                             end

@@ -384,172 +384,123 @@ local function http_is_encoded(headers, encoding)
     if not value then return false end
     return value:lower():find((encoding or "gzip"):lower()) ~= nil
 end
-local ffi = require("ffi")
 
-require("ffi/posix_h")
-require("ffi/utf8proc_h")
+--- Escapes special magic characters to make a string safe for Lua pattern matching
+-- @string str The raw text fragment to be escaped
+-- @return string The sanitized pattern string
+local function escape_pattern(str)
+    return string.gsub(str, "([%^%$%%%.%*%+%-%?%[%]%^])", "%%%1")
+end
 
-local libutf8proc = ffi.loadlib("utf8proc", "3")
+--- Strips markdown bullets, bold symbols, and structural padding to isolate the raw sentence anchor
+-- @string text The segment text block provided by the API
+-- @return string The cleaned text used for precise string location lookups
+local function get_clean_anchor(text)
+    if not text then return "" end
+    -- Remove leading markdown bullet structures (*, -, +) and surrounding whitespaces
+    text = string.gsub(text, "^[%s%*%-%+]*", "")
+    -- Remove bold text markers (**)
+    text = string.gsub(text, "%*%*", "")
+    -- Strip trailing and leading white spaces
+    text = string.gsub(text, "^%s*(.-)%s*$", "%1")
+    return text
+end
 
+--- Injects inline citation tags into the text based on anchor text matching rather than volatile indices
+-- @string full_text The complete concatenated stream markdown text response
+-- @table metadata The groundingMetadata container returned from the Gemini API
+-- @return string The finalized markdown string with sorted inline citations and standard references footer
+local function gemini_inject_grounding_citations(full_text, metadata)
+    local supports = metadata.groundingSupports
+    local chunks = metadata.groundingChunks
+    if not supports or #supports == 0 then return full_text end
 
-local function gemini_inject_grounding_citations(full_text, grounding_metadata)
-
-    if not grounding_metadata
-        or not grounding_metadata.groundingSupports
-        or not grounding_metadata.groundingChunks
-    then
-        return full_text
+    -- 1. Clone the array to protect the original API response object from mutation shifts
+    local sorted_supports = {}
+    for _, v in ipairs(supports) do 
+        table.insert(sorted_supports, v) 
     end
+    
+    -- 2. Sort support entries by endIndex in descending order
+    -- Processing text modifications from back to front prevents character slicing from altering upstream indices
+    table.sort(sorted_supports, function(a, b)
+        local a_end = (a.segment and a.segment.endIndex) or 0
+        local b_end = (b.segment and b.segment.endIndex) or 0
+        return a_end > b_end
+    end)
 
-    local supports = grounding_metadata.groundingSupports
-    local chunks = grounding_metadata.groundingChunks
+    -- Track unique placement positions to avoid stacking duplicate citations over identical text blocks
+    local seen_positions = {}
 
+    -- 3. Core matching sequence: Locate anchors using physical string search boundaries
+    for i = 1, #sorted_supports do
+        local support = sorted_supports[i]
+        local segment = support.segment
+        local seg_text = segment and segment.text
 
-    --------------------------------------------------
-    -- character index -> byte offset
-    --------------------------------------------------
-    local char_to_byte = {}
+        if seg_text and string.match(seg_text, "%S") then
+            local anchor_text = get_clean_anchor(seg_text)
 
-    local ptr = ffi.cast("const uint8_t *", full_text)
+            if #anchor_text > 0 then
+                -- Convert target phrase into a clean regex-safe literal pattern
+                local safe_pattern = escape_pattern(anchor_text)
+                local _, end_pos = string.find(full_text, safe_pattern)
 
-    local pos = 0
-    local char_index = 0
-
-    while pos < #full_text do
-
-        char_to_byte[char_index] = pos
-
-        local codepoint = ffi.new("int32_t[1]")
-
-        local bytes = libutf8proc.utf8proc_iterate(
-            ptr + pos,
-            -1,
-            codepoint
-        )
-
-        if bytes <= 0 then
-            bytes = 1
-        end
-
-        pos = pos + bytes
-        char_index = char_index + 1
-    end
-
-    char_to_byte[char_index] = #full_text
-
-
-    --------------------------------------------------
-    -- collect citations
-    --------------------------------------------------
-    local citation_map = {}
-    local ordered_positions = {}
-
-    for i = #supports, 1, -1 do
-
-        local support = supports[i]
-        local end_char = support.segment and support.segment.endIndex
-
-        if end_char then
-
-            local byte_pos = char_to_byte[end_char]
-
-            if byte_pos then
-
-                local entry = citation_map[byte_pos]
-
-                if not entry then
-                    entry = {
-                        seen = {},
-                        text = {},
-                    }
-
-                    citation_map[byte_pos] = entry
-
-                    ordered_positions[#ordered_positions + 1] = byte_pos
+                -- Fallback mitigation: If paragraphs match incorrectly due to mid-sentence newlines (\n),
+                -- use a safe UTF-8 pattern to pull the first 6 tokens/characters without slicing bytes.
+                if not end_pos then
+                    -- This pattern safely captures the first 6 UTF-8 characters or words without breaking bytes
+                    local short_anchor = string.match(anchor_text, "^([%z%s%c%c%x%a%d%p].-.-.-.-.-.-)")
+                    if short_anchor then
+                        local _, partial_end = string.find(full_text, escape_pattern(short_anchor))
+                        if partial_end then
+                            -- Find where the next primary punctuation or space boundary sits after our partial match
+                            -- to ensure we insert the citation smoothly at a word boundary instead of using broken byte math
+                            local next_boundary = string.find(full_text, "[%s%p\n]", partial_end)
+                            end_pos = next_boundary or partial_end
+                        end
+                    end
                 end
 
-                for _, idx in ipairs(
-                    support.groundingChunkIndices or {}
-                ) do
+                -- 4. Perform structured tag splicing if a valid boundary index within limits is established
+                if end_pos and end_pos < #full_text then
+                    if not seen_positions[end_pos] then
+                        seen_positions[end_pos] = true
 
-                    local ref_num = idx + 1
+                        -- Generate clustered citation tags string, e.g., "[1][2][3]"
+                        local citation_tags = ""
+                        for _, chunk_idx in ipairs(support.groundingChunkIndices) do
+                            citation_tags = citation_tags .. "[" .. (chunk_idx + 1) .. "]"
+                        end
 
-                    if not entry.seen[ref_num] then
-                        entry.seen[ref_num] = true
-
-                        entry.text[#entry.text + 1] =
-                            string.format(" [%d]", ref_num)
+                        local before = string.sub(full_text, 1, end_pos)
+                        local after = string.sub(full_text, end_pos + 1)
+                        
+                        -- Recompose string with a clean space padding transition
+                        full_text = before .. " " .. citation_tags .. after
                     end
                 end
             end
         end
     end
 
-
-    --------------------------------------------------
-    -- build from tail
-    --------------------------------------------------
-    local pieces = {}
-
-    local tail = #full_text + 1
-
-    for _, pos in ipairs(ordered_positions) do
-
-        pieces[#pieces + 1] =
-            full_text:sub(
-                tonumber(pos + 1),
-                tonumber(tail - 1)
-            )
-
-        pieces[#pieces + 1] =
-            table.concat(citation_map[pos].text)
-
-        tail = pos + 1
-    end
-
-    pieces[#pieces + 1] =
-        full_text:sub(
-            1,
-            tonumber(tail - 1)
-        )
-
-
-    --------------------------------------------------
-    -- reverse pieces
-    --------------------------------------------------
-    local result = {}
-
-    for i = #pieces, 1, -1 do
-        result[#result + 1] = pieces[i]
-    end
-
-
-    --------------------------------------------------
-    -- footer
-    --------------------------------------------------
-    result[#result + 1] = "\n\n<small>\n"
-    result[#result + 1] = "### Web References\n\n"
-
-    for i, chunk in ipairs(chunks) do
-
-        local web = chunk.web
-
-        if web and web.uri then
-
-            result[#result + 1] =
-                string.format(
-                    "[%d] [%s](%s)\n",
-                    i,
-                    web.title or web.uri,
-                    web.uri
-                )
+    -- 5. Append structured layout references to the footer using an efficient array buffer allocation
+    if chunks and #chunks > 0 then
+        local footer_buffer = {}
+        table.insert(footer_buffer, "\n\n### Web References\n<small>\n")
+        for i, chunk in ipairs(chunks) do
+            if chunk.web then
+                table.insert(footer_buffer, string.format("%d. [%s](%s)\n", i, chunk.web.title, chunk.web.uri))
+            end
         end
+        table.insert(footer_buffer, "</small>")
+        
+        full_text = full_text .. table.concat(footer_buffer, "")
     end
 
-    result[#result + 1] = "</small>"
-
-    return table.concat(result)
+    return full_text
 end
+
 return {
     getGeneralNotebookFilePath = getGeneralNotebookFilePath,
     extractBookTextForAnalysis = extractBookTextForAnalysis,
