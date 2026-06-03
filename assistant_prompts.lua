@@ -19,6 +19,7 @@ local T = require("ffi/util").template
 local custom_prompts = {
     term_xray = {
         text = _("Term X-Ray"),
+        use_websearch = true,
         order = -20, -- negative number to not show on additional questions dialog
         desc = _(
             "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."),
@@ -126,6 +127,7 @@ Most importantly, **Respond in this language:** {language}
     dictionary = {
         order = -10, -- negative number indicates a stub prompt
         text = _("Dictionary"),
+        use_websearch = false,
         desc = _("This prompt acts as a dictionary for the highlighted text, to a word or phrase."),
         -- this prompt is a stub (will not shown in follow-up questions)
         -- it will be replaced by the actual prompt in the code below
@@ -139,6 +141,7 @@ Most importantly, **Respond in this language:** {language}
     },
     vocabulary = {
         text = _("Vocabulary"),
+        use_websearch = false,
         order = 10,
         desc = _(
             "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."),
@@ -159,6 +162,7 @@ Most importantly, **Respond in this language:** {language}
     },
     grammar = {
         text = _("Grammar"),
+        use_websearch = false,
         order = 20,
         desc = _(
             "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."),
@@ -178,6 +182,7 @@ Please provide a detailed and comprehensive explanation of the grammar of the fo
     translate = {
         order = 30,
         text = _("Translate"),
+        use_websearch = false,
         desc = _("This prompt translates the highlighted text to another language."),
         user_prompt = [[You are a skilled translator tasked with translating text from one language to another.
 Your goal is to provide an accurate and natural-sounding translation that preserves the meaning, tone, and style of the original text.
@@ -200,6 +205,7 @@ Follow these steps to complete the translation:
     },
     summarize = {
         text = _("Summarize"),
+        use_websearch = false,
         order = 40,
         desc = _("This prompt summarizes the highlighted text, capturing its main points and essential details."),
         user_prompt = [[
@@ -211,6 +217,7 @@ Please provide a concise and clear summary of the following text in its own lang
     },
     simplify = {
         text = _("Simplify"),
+        use_websearch = false,
         order = 50,
         desc = _("This prompt simplifies the highlighted text to make it easier to understand."),
         user_prompt =
@@ -224,6 +231,7 @@ Your goal is to enhance the text's readability and clarity, making it accessible
     },
     key_points = {
         text = _("Key Points"),
+        use_websearch = false,
         order = 60,
         desc = _(
             "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."),
@@ -239,6 +247,7 @@ Provide a concise and clear list of key points from the following text, and rend
     },
     ELI5 = {
         text = _("ELI5"),
+        use_websearch = false,
         order = 70,
         desc = _(
             "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."),
@@ -255,6 +264,7 @@ Provide a concise, simple, and crystal-clear ELI5 explanation of the following, 
     },
     explain = {
         text = _("Explain"),
+        use_websearch = true,
         order = 80,
         desc = _("This prompt explains the highlighted text in detail, ensuring clarity and understanding."),
         user_prompt = [[You are an expert Explainer and a highly skilled Cross-Cultural Communicator.
@@ -268,6 +278,7 @@ Ensure your {language} explanation is precise, captures all nuances of the origi
     },
     historical_context = {
         text = _("Historical Context"),
+        use_websearch = true,
         order = 90,
         desc = _(
             "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."),
@@ -283,6 +294,7 @@ Please provide a detailed and insightful explanation of the historical context o
     },
     wikipedia = {
         text = _("Wikipedia"),
+        use_websearch = true,
         order = 100,
         desc = _(
             "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."),
@@ -316,6 +328,7 @@ local assistant_prompts = {
         system_prompt = "You are a helpful AI assistant. Always respond in Markdown format.",
     },
     recap = {
+        use_websearch = true,
         system_prompt =
         "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
         user_prompt = [[
@@ -329,6 +342,7 @@ Answer this whole response in {language} language. Only show the replies, do not
 Also answer with entertaining tone and high quality detail with a focus on summarization. You also match the tone of the book provided.]]
     },
     xray = {
+        use_websearch = true,
         system_prompt =
         "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
         user_prompt = [[
@@ -374,6 +388,7 @@ Language: **{language}**.
         ]],
     },
     book_info = {
+        use_websearch = true,
         system_prompt =
         "Always respond in Markdown format.",
         user_prompt = 
@@ -426,6 +441,7 @@ Language: **{language}**.
 	* If search indicates no reliable information is available, clearly state it in the relevant section instead of guessing.]],
     },
     annotations = {
+        use_websearch = false,
         system_prompt =
         "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
         user_prompt = [[
@@ -454,6 +470,7 @@ Keep the tone clear, thoughtful, and practical.
 - Always respond in {language}.]],
     },
     summary_using_annotations = {
+        use_websearch = true,
         system_prompt =
         "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
         user_prompt = [[
@@ -504,6 +521,7 @@ Now begin the analysis with the provided book_text and highlights.]],
     },
 
     dict = {
+        use_websearch = true,
         system_prompt =
         "You are a literary dictionary that explains words in their book context. Always respond in Markdown format.",
         user_prompt = T([[

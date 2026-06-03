@@ -193,6 +193,7 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
             role = "user",
             content = self:_formatUserPrompt(user_question.user_prompt, current_highlight, user_question.user_input or ""),
             user_input = user_question.user_input,
+            use_websearch = user_question.use_websearch,
           })
         end
 
@@ -522,10 +523,11 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index, user_in
       role = "user",
       content = user_content,
       user_input = user_input,
+      use_websearch = koutil.tableGetValue(prompt_config, "use_websearch") or false,
     }
   }
   
-  local answer, err = self.querier:query(message_history, string.format("🌐 Loading for %s ...", title or prompt_index))
+  local answer, err = self.querier:query(message_history, T(_("Loading for %1 ..."), title or prompt_index))
   if err then
     self.querier:showError(err)
     return

@@ -171,9 +171,10 @@ function Querier:query(message_history, title)
         return nil, _("Plugin is not configured.")
     end
 
+    local prompt_websearch = message_history[#message_history].use_websearch or false
     local query_option = {
         use_stream_mode = self.settings:readSetting("use_stream_mode", true),
-        use_websearch = self.settings:readSetting("use_websearch", false),
+        use_websearch = self.settings:readSetting("use_websearch", false) == true and prompt_websearch == true,
     }
 
     local infomsg = InfoMessage:new{
@@ -221,8 +222,8 @@ function Querier:query(message_history, title)
         end
 
         streamDialog = InputDialog:new{
-            title = _("AI is responding"),
-            description = T("☁ %1/%2", self.provider_name, koutil.tableGetValue(self.provider_settings, "model")),
+            title = (query_option.use_websearch and " 🌐 " or "") .. _("AI is responding") ,
+            description = T("☁ %1/%2 %3", self.provider_name, self.provider_settings.model, (query_option.use_websearch and _("+ Web Search") or "")),
             inputtext_class = StreamText, -- use our custom InputText class
             input_face = Font:getFace("infofont", self.settings:readSetting("response_font_size") or 20),
             title_bar_left_icon = "appbar.settings",
@@ -416,14 +417,6 @@ function Querier:processStream(bgQuery, trunk_callback)
                             local candidates = koutil.tableGetValue(event, "candidates", 1)
                             if candidates then -- Genmini API
                                 content = koutil.tableGetValue(candidates, "content", "parts", 1, "text") or ""
-                                if koutil.tableGetValue(candidates, "finishReason") == "STOP" then -- Genmini STOP Respond
-                                        local groundingMetadata = koutil.tableGetValue(candidates, "groundingMetadata")
-                                        if groundingMetadata ~= nil then -- Genmini Search Tool
-                                            -- list search queries
-                                            content = content .. "\n\n" .. 
-                                                _("#### Web Search keywords:") .. "\n\n- " .. table.concat(koutil.tableGetValue(event, "candidates", 1, "groundingMetadata", "webSearchQueries"), "\n- ")
-                                        end
-                                end
                             end
 
                             if content == nil and reasoning_content == nil then
@@ -440,6 +433,15 @@ function Querier:processStream(bgQuery, trunk_callback)
                                 if trunk_callback then trunk_callback(reasoning_content, reasoning_content_buffer) end
                             elseif content == nil and reasoning_content == nil then
                                 logger.warn("Unexpected SSE data:", json_str)
+                            end
+
+                            -- Genmini STOP Respond
+                            if candidates and candidates.finishReason == "STOP" then
+                                    local groundingMetadata = candidates.groundingMetadata
+                                    if groundingMetadata ~= nil then -- Genmini Search Tool
+                                        -- list search queries
+                                        logger.info(groundingMetadata)
+                                    end
                             end
                         else
                             logger.warn("Failed to parse JSON from SSE data:", json_str)

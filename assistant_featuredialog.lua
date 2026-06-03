@@ -30,7 +30,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     end
 
     local formatted_progress_percent = string.format("%.2f", progress_percent * 100)
-    local feature_title, loading_message, system_prompt, user_prompt_template, book_text, highlights_notes
+    local feature_title, loading_message, system_prompt, user_prompt_template, user_prompt_use_websearch, book_text, highlights_notes
 
     local language = assistant.settings:readSetting("response_language") or assistant.ui_language
 
@@ -41,6 +41,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         loading_message = custom_config.loading_message or _("Loading...")
         system_prompt = custom_config.system_prompt
         user_prompt_template = custom_config.user_prompt
+        user_prompt_use_websearch = koutil.tableGetValue(custom_config, "use_websearch") or false
 
         -- Handle use flags
         book_text = nil
@@ -114,6 +115,9 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         user_prompt_template = koutil.tableGetValue(file_config, "user_prompt")
             or koutil.tableGetValue(assistant_prompts, prompts_key, "user_prompt")
 
+        user_prompt_use_websearch = koutil.tableGetValue(file_config, "use_websearch")
+            or koutil.tableGetValue(assistant_prompts, prompts_key, "use_websearch")
+
         book_text = nil
         highlights_notes = nil
         if feature_type == "xray" or feature_type == "recap" then
@@ -162,7 +166,8 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     
     local context_message = {
         role = "user",
-        content = user_content
+        content = user_content,
+        use_websearch = user_prompt_use_websearch,
     }
     table.insert(message_history, context_message)
 
