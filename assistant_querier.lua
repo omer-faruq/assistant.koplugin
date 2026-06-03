@@ -173,6 +173,7 @@ function Querier:query(message_history, title)
 
     local query_option = {
         use_stream_mode = self.settings:readSetting("use_stream_mode", true),
+        use_websearch = self.settings:readSetting("use_websearch", false),
     }
 
     local infomsg = InfoMessage:new{

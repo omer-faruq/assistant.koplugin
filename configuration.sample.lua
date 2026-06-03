@@ -77,7 +77,6 @@ local CONFIGURATION = {
                 max_tokens = 1048576,
                 -- Set to 0 to disable thinking. Recommended for gemini-2.5-* and newer, where thinking is enabled by default.
                 thinking_budget = 0,
-                google_search = true,
             }
         },
         gigachat = {

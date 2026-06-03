@@ -451,6 +451,19 @@ SettingsDialog.genMenuSettings = function (assistant)
             }
         },
         {
+            text = _("Enable Web Search"),
+            checked_func = function () return assistant.settings:readSetting("use_websearch", false) end,
+            callback = function ()
+                assistant.settings:toggle("use_websearch")
+                assistant.updated = true
+            end,
+            hold_callback = function ()
+                UIManager:show(InfoMessage:new{
+                    text = _("Improves response accuracy with real-time web results. \nNote: Higher token usage and additional API charges apply.")
+                })
+            end
+        },
+        {
             -- @translators: functional overriding
             text = _("KOReader Tweaks & Overrides"),
             sub_item_table = {

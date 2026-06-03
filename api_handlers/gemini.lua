@@ -15,7 +15,6 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
     local contents = {}
     local system_content = ""
     local generationConfig = nil
-    local use_websearch = false
 
     for i, msg in ipairs(message_history) do
         if msg.role == "system" then
@@ -42,7 +41,7 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
     end
 
     local gemini_tools
-    if use_websearch then
+    if query_option.use_websearch then
         gemini_tools = {
             google_search = {}
         }
