@@ -420,10 +420,10 @@ SettingsDialog.genMenuSettings = function (assistant)
             keep_menu_open = true,
         },
         {
-            text = _("Stream Mode Settings"),
+            text = _("AI Response Settings"),
             sub_item_table = {
                 {
-                    text = _("Enable stream response"),
+                    text = _("Enable Stream Response"),
                     checked_func = function () return assistant.settings:readSetting("use_stream_mode", true) end,
                     callback = function ()
                         assistant.settings:toggle("use_stream_mode")
@@ -431,7 +431,7 @@ SettingsDialog.genMenuSettings = function (assistant)
                     end
                 },
                 {
-                    text = _("Auto scroll stream response text"),
+                    text = _("Stream Text Auto Scroll"),
                     enabled_func = function () return assistant.settings:readSetting("use_stream_mode") end,
                     checked_func = function () return assistant.settings:readSetting("stream_mode_auto_scroll", true) end,
                     callback = function()
@@ -446,22 +446,37 @@ SettingsDialog.genMenuSettings = function (assistant)
                     callback = function()
                         assistant.settings:toggle("large_stream_dialog")
                         assistant.updated = true
+                    end,
+                    separator = true,
+                },
+                {
+                    text = _("Enable Web Search"),
+                    checked_func = function () return assistant.settings:readSetting("use_websearch", false) end,
+                    callback = function ()
+                        assistant.settings:toggle("use_websearch")
+                        assistant.updated = true
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Improves response accuracy with real-time web results. \nNote: Higher token usage and additional API charges apply.")
+                        })
+                    end
+                },
+                {
+                    text = _("Include Source Citations"),
+                    checked_func = function () return assistant.settings:readSetting("use_citations", false) end,
+                    enabled_func = function () return assistant.settings:readSetting("use_websearch") end,
+                    callback = function ()
+                        assistant.settings:toggle("use_citations")
+                        assistant.updated = true
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Injects source citations and grounding links directly into the response for easy fact-checking.")
+                        })
                     end
                 },
             }
-        },
-        {
-            text = _("Enable Web Search"),
-            checked_func = function () return assistant.settings:readSetting("use_websearch", false) end,
-            callback = function ()
-                assistant.settings:toggle("use_websearch")
-                assistant.updated = true
-            end,
-            hold_callback = function ()
-                UIManager:show(InfoMessage:new{
-                    text = _("Improves response accuracy with real-time web results. \nNote: Higher token usage and additional API charges apply.")
-                })
-            end
         },
         {
             -- @translators: functional overriding

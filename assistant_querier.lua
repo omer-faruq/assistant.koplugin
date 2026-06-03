@@ -447,8 +447,9 @@ function Querier:processStream(bgQuery, trunk_callback)
 
                             -- Genmini STOP Respond
                             if candidates and candidates[1].finishReason == "STOP" then
+                                local use_citations = self.settings:readSetting("use_citations", false)
                                 local groundingMetadata = candidates[1].groundingMetadata
-                                if groundingMetadata ~= nil then -- Genmini Search Tool
+                                if use_citations and (groundingMetadata ~= nil) then -- Genmini Search Tool
                                     local full_text = table.concat(result_buffer)
                                     koutil.clearTable(result_buffer)
                                     full_text = assistant_utils.gemini_inject_grounding_citations(
