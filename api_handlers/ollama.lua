@@ -18,7 +18,7 @@ function OllamaHandler:query(message_history, ollama_settings, query_option)
     local requestBodyTable = {
         model = ollama_settings.model,
         messages = message_history,
-        stream = koutil.tableGetValue(ollama_settings, "additional_parameters", "stream") or false,
+        stream = query_option.use_stream_mode
     }
 
     local requestBody = json.encode(requestBodyTable)

@@ -5,7 +5,7 @@ local logger = require("logger")
 
 local GeminiHandler = BaseHandler:new()
 
-function GeminiHandler:query(message_history, gemini_settings)
+function GeminiHandler:query(message_history, gemini_settings, query_option)
 
     if not gemini_settings or not gemini_settings.api_key then
         return "Error: Missing API key in configuration"
@@ -48,7 +48,7 @@ function GeminiHandler:query(message_history, gemini_settings)
         }
     end
 
-    local stream = koutil.tableGetValue(gemini_settings, "additional_parameters", "stream") or false
+    local stream = query_option.use_stream_mode
 
     local requestBodyTable = {
         contents = contents,

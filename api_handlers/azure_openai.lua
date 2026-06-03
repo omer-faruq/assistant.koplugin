@@ -26,8 +26,8 @@ function AzureOpenAIHandler:query(message_history, azure_settings, query_option)
     local requestBodyTable = {
         messages = message_history,
         max_tokens = azure_settings.max_tokens,
-        stream = azure_settings.stream or false,
-        temperature = azure_settings.temperature or 0.7
+        temperature = azure_settings.temperature or 0.7,
+        stream = query_option.use_stream_mode,
     }
     
     local requestBody = json.encode(requestBodyTable)

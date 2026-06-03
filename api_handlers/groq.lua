@@ -15,12 +15,13 @@ function groqHandler:query(message_history, groq_settings, query_option)
     if groq_settings.additional_parameters then
         --- available req body args: https://console.groq.com/docs/api-reference
         for _, option in ipairs({"temperature", "top_p", "max_completion_tokens", "max_tokens", 
-                                    "reasoning_effort", "reasoning_format", "search_settings", "stream"}) do
+                                    "reasoning_effort", "reasoning_format", "search_settings"}) do
             if groq_settings.additional_parameters[option] then
                 requestBodyTable[option] = groq_settings.additional_parameters[option]
             end
         end
     end
+    requestBodyTable.stream = query_option.use_stream_mode
 
     local requestBody = json.encode(requestBodyTable)
     local headers = {

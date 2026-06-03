@@ -34,12 +34,12 @@ function GemmaHandler:query(message_history, gemma_settings, query_option)
        not (base_url:match("/openai/") or base_url:match("/chat/completions")) then
         -- Use Gemini handler for native Gemini API format
         -- (e.g., https://generativelanguage.googleapis.com/v1beta/models/)
-        content, err = GeminiHandler:query(message_history, gemma_settings)
+        content, err = GeminiHandler:query(message_history, gemma_settings, query_option)
     else
         -- Use OpenAI handler for OpenAI-compatible APIs:
         -- - Google's OpenAI-compatible endpoint (v1beta/openai/ or v1beta/chat/completions)
         -- - Ollama, LM Studio, etc.
-        content, err = OpenAIHandler.query(self, message_history, gemma_settings)
+        content, err = OpenAIHandler.query(self, message_history, gemma_settings, query_option)
     end
     
     -- Filter thought tags from response

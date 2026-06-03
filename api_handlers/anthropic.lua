@@ -59,7 +59,7 @@ function AnthropicHandler:query(message_history, anthropic_settings, query_optio
     local requestBodyTable = prepare_anthropic_messages(message_history)
     requestBodyTable.model = anthropic_settings.model
     requestBodyTable.max_tokens = koutil.tableGetValue(anthropic_settings, "additional_parameters", "max_tokens")
-    requestBodyTable.stream = koutil.tableGetValue(anthropic_settings, "additional_parameters", "stream") or false
+    requestBodyTable.stream = query_option.use_stream_mode
     local tools = koutil.tableGetValue(anthropic_settings, "additional_parameters", "tools")
     if type(tools) == "table" and next(tools) ~= nil then
         requestBodyTable.tools = tools

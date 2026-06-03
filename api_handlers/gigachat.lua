@@ -23,7 +23,7 @@ function GigaChatHandler:query(message_history, gigachat_settings, query_option)
     local requestBodyTable = {
         model = gigachat_settings.model,
         messages = message_history,
-        stream = koutil.tableGetValue(gigachat_settings, "additional_parameters", "stream") or false,
+        stream = query_option.use_stream_mode,
         update_interval = koutil.tableGetValue(gigachat_settings, "additional_parameters", "update_interval") or
             DEFAULT_UPDATE_INTERVAL,
         max_tokens = koutil.tableGetValue(gigachat_settings, "additional_parameters", "max_tokens")

@@ -171,8 +171,9 @@ function Querier:query(message_history, title)
         return nil, _("Plugin is not configured.")
     end
 
-    local use_stream_mode = self.settings:readSetting("use_stream_mode", true)
-    koutil.tableSetValue(self.provider_settings, use_stream_mode, "additional_parameters", "stream")
+    local query_option = {
+        use_stream_mode = self.settings:readSetting("use_stream_mode", true),
+    }
 
     local infomsg = InfoMessage:new{
       icon = "book.opened",
@@ -181,7 +182,6 @@ function Querier:query(message_history, title)
     }
 
     UIManager:show(infomsg)
-    local query_option = {}
 
     self.handler:setTrapWidget(infomsg)
     local res, err = self.handler:query(trimMessageHistory(message_history), self.provider_settings, query_option)

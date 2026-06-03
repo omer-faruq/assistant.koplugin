@@ -15,12 +15,13 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
     -- Handle configuration
     if mistral_settings.additional_parameters then
         --- available req body args: https://docs.mistral.ai/api/
-        for _, option in ipairs({"temperature", "top_p", "n", "max_tokens", "stream"}) do
+        for _, option in ipairs({"temperature", "top_p", "n", "max_tokens",}) do
             if mistral_settings.additional_parameters[option] then
                 requestBodyTable[option] = mistral_settings.additional_parameters[option]
             end
         end
     end
+    requestBodyTable.stream = query_option.use_stream_mode
 
     local requestBody = json.encode(requestBodyTable)
     local headers = {

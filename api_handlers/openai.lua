@@ -11,7 +11,7 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
         model = openai_settings.model,
         messages = message_history,
         max_tokens = openai_settings.max_tokens,
-        stream = koutil.tableGetValue(openai_settings, "additional_parameters", "stream") or false,
+        stream = query_option.use_stream_mode
     }
 
     local requestBody = json.encode(requestBodyTable)

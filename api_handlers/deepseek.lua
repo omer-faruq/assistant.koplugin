@@ -28,11 +28,7 @@ function DeepSeekHandler:query(message_history, deepseek_settings, query_option)
             end
         end
     end
-
-    -- Default stream to false if not specified
-    if requestBodyTable.stream == nil then
-        requestBodyTable.stream = false
-    end
+    requestBodyTable.stream = query_option.use_stream_mode
 
     local requestBody = json.encode(requestBodyTable)
     local headers = {

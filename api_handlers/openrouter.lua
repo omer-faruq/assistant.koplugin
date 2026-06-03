@@ -12,7 +12,7 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
         messages = message_history,
         max_tokens = openrouter_settings.max_tokens,
         temperature = openrouter_settings.temperature,
-        stream = koutil.tableGetValue(openrouter_settings, "additional_parameters", "stream") or false,
+        stream = query_option.use_stream_mode
     }
     
     -- Handle reasoning tokens configuration
