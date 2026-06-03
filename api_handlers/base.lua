@@ -37,7 +37,7 @@ end
 --- @param message_history table: conversation history, a list of messages
 --- @param provider_setting table: settings for the specific provider
 --- @return string response_content, string error_message
-function BaseHandler:query(message_history, provider_setting)
+function BaseHandler:query(message_history, provider_setting, query_option)
     -- To be implemented by specific handlers
     error("query method must be implemented")
 end

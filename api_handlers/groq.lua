@@ -5,7 +5,7 @@ local logger = require("logger")
 
 local groqHandler = BaseHandler:new()
 
-function groqHandler:query(message_history, groq_settings)
+function groqHandler:query(message_history, groq_settings, query_option)
     local requestBodyTable = {
         model = groq_settings.model,
         messages = message_history,

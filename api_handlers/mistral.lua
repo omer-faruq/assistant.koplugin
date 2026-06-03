@@ -5,7 +5,7 @@ local logger = require("logger")
 
 local MistralHandler = BaseHandler:new()
 
-function MistralHandler:query(message_history, mistral_settings)
+function MistralHandler:query(message_history, mistral_settings, query_option)
     
     local requestBodyTable = {
         model = mistral_settings.model,

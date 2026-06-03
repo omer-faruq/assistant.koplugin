@@ -5,7 +5,7 @@ local logger = require("logger")
 
 local AzureOpenAIHandler = BaseHandler:new()
 
-function AzureOpenAIHandler:query(message_history, azure_settings )
+function AzureOpenAIHandler:query(message_history, azure_settings, query_option)
     
     -- Check required settings
     for _, setting in ipairs({"api_key", "endpoint", "deployment_name", "api_version"}) do

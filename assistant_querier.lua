@@ -181,9 +181,10 @@ function Querier:query(message_history, title)
     }
 
     UIManager:show(infomsg)
+    local query_option = {}
 
     self.handler:setTrapWidget(infomsg)
-    local res, err = self.handler:query(trimMessageHistory(message_history), self.provider_settings)
+    local res, err = self.handler:query(trimMessageHistory(message_history), self.provider_settings, query_option)
     self.handler:resetTrapWidget()
 
     UIManager:close(infomsg)

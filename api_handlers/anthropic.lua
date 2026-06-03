@@ -54,7 +54,7 @@ local function extract_text_from_content(content_blocks)
 end
 
 
-function AnthropicHandler:query(message_history, anthropic_settings)
+function AnthropicHandler:query(message_history, anthropic_settings, query_option)
     
     local requestBodyTable = prepare_anthropic_messages(message_history)
     requestBodyTable.model = anthropic_settings.model

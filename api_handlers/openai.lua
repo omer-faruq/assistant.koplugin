@@ -5,7 +5,7 @@ local logger = require("logger")
 
 local OpenAIHandler = BaseHandler:new()
 
-function OpenAIHandler:query(message_history, openai_settings)
+function OpenAIHandler:query(message_history, openai_settings, query_option)
     
     local requestBodyTable = {
         model = openai_settings.model,

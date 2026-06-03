@@ -10,7 +10,7 @@ local UUID_EMPTY = "00000000-0000-0000-0000-000000000000"
 
 local GigaChatHandler = BaseHandler:new()
 
-function GigaChatHandler:query(message_history, gigachat_settings)
+function GigaChatHandler:query(message_history, gigachat_settings, query_option)
     if not gigachat_settings or not gigachat_settings.base_url then
         return "Error: Missing base_url in configuration"
     end

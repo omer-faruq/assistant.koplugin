@@ -5,7 +5,7 @@ local logger = require("logger")
 
 local OllamaHandler = BaseHandler:new()
 
-function OllamaHandler:query(message_history, ollama_settings)
+function OllamaHandler:query(message_history, ollama_settings, query_option)
 
     local required_settings = {"base_url", "model", "api_key"}
     for _, setting in ipairs(required_settings) do

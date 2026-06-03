@@ -23,7 +23,7 @@ local function filterThoughtTags(content)
     return content
 end
 
-function GemmaHandler:query(message_history, gemma_settings)
+function GemmaHandler:query(message_history, gemma_settings, query_option)
     local content, err
     
     -- Detect API type based on base_url
