@@ -420,7 +420,7 @@ SettingsDialog.genMenuSettings = function (assistant)
             keep_menu_open = true,
         },
         {
-            text = _("AI Response Settings"),
+            text = _("Response Settings"),
             sub_item_table = {
                 {
                     text = _("Enable Stream Response"),
@@ -460,7 +460,8 @@ SettingsDialog.genMenuSettings = function (assistant)
                         UIManager:show(InfoMessage:new{
                             text = _("Improves response accuracy with real-time web results. \nNote: Higher token usage and additional API charges apply.")
                         })
-                    end
+                    end,
+                    separator = true,
                 },
                 {
                     text = _("Include Source Citations"),
@@ -473,6 +474,32 @@ SettingsDialog.genMenuSettings = function (assistant)
                     hold_callback = function ()
                         UIManager:show(InfoMessage:new{
                             text = _("Injects source citations and grounding links directly into the response for easy fact-checking.")
+                        })
+                    end
+                },
+                {
+                    text = _("Show Reasoning Text"),
+                    checked_func = function () return assistant.settings:readSetting("show_reasoning", false) end,
+                    callback = function ()
+                        assistant.settings:toggle("show_reasoning")
+                        assistant.updated = true
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Show deeply thought process (reasoning) from the AI response if exists.")
+                        })
+                    end
+                },
+                {
+                    text = _("Show Follow-up Questions"),
+                    checked_func = function () return assistant.settings:readSetting("auto_prompt_suggest", false) end,
+                    callback = function()
+                        assistant.settings:toggle("auto_prompt_suggest")
+                        assistant.updated = true
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Show follow up questions related to the response content.")
                         })
                     end
                 },
@@ -541,14 +568,6 @@ SettingsDialog.genMenuSettings = function (assistant)
                     end
                 },
             }
-        },
-        {
-            text = _("Show Follow-up Questions from AI"),
-            checked_func = function () return assistant.settings:readSetting("auto_prompt_suggest", false) end,
-            callback = function()
-                assistant.settings:toggle("auto_prompt_suggest")
-                assistant.updated = true
-            end
         },
         {
             text = _("Copy entered question to the clipboard"),

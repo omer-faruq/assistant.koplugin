@@ -424,7 +424,19 @@ function Querier:processStream(bgQuery, trunk_callback)
 
                             -- 2. Gemini Handles
                             elseif candidates then
-                                result_content = koutil.tableGetValue(candidates, 1, "content", "parts", 1, "text") or ""
+
+                                if reasoning_content == nil then reasoning_content = "" end
+                                if result_content == nil then result_content = "" end
+
+                                for _, part in ipairs(koutil.tableGetValue(candidates, 1, "content", "parts")) do
+                                    if part.text then
+                                        if part.thought then
+                                            reasoning_content = reasoning_content .. part.text
+                                        else
+                                            result_content = result_content .. part.text
+                                        end
+                                    end
+                                end
 
                             -- 3. Anthropic Handles
                             elseif delta then
@@ -555,12 +567,25 @@ function Querier:processStream(bgQuery, trunk_callback)
 
         -- return all received content as error message
         return nil, ret
-    else
+    end
+
+    local show_reasoning = self.settings:readSetting("show_reasoning", false)
+    local is_reasoning_in_ret = ret:sub(1, 7) == "<think>"
+
+    if show_reasoning then
         local reasoning = table.concat(reasoning_content_buffer):gsub("^%.+", "", 1)
         if #reasoning > 0 then
-            ret = T("<dl><dt>%1</dt><dd>%2</dd></dl>\n\n%3", _("Deeply Thought"), reasoning, ret)
-        elseif ret:sub(1, 7) == "<think>" then
-            ret = ret:gsub("<think>", T("<dl><dt>%1</dt><dd>", _("Deeply Thought")), 1):gsub("</think>", "</dd></dl>", 1)
+            ret = T("<dl><dt>%1</dt><dd><div style=\"font-size: 0.9em;\">%2</div></dd></dl>\n\n%3",
+                _("Deeply Thought"), reasoning, ret)
+        elseif is_reasoning_in_ret then
+            ret = ret
+                :gsub("<think>",  T("<dl><dt>%1</dt><dd><div style=\"font-size: 0.9em;\">", _("Deeply Thought")), 1)
+                :gsub("</think>", "</div></dd></dl>\n\n", 1)
+        end
+    elseif is_reasoning_in_ret then
+        local close_pos = ret:find("</think>", 8, true)  -- plain=true
+        if close_pos then
+            ret = ret:sub(close_pos + 8):gsub("^%s+", "", 1)
         end
     end
     return ret, nil
