@@ -385,28 +385,7 @@ local function http_is_encoded(headers, encoding)
     return value:lower():find((encoding or "gzip"):lower()) ~= nil
 end
 
---- Escapes special magic characters to make a string safe for Lua pattern matching
--- @string str The raw text fragment to be escaped
--- @return string The sanitized pattern string
-local function escape_pattern(str)
-    return string.gsub(str, "([%^%$%%%.%*%+%-%?%[%]%^])", "%%%1")
-end
-
---- Strips markdown bullets, bold symbols, and structural padding to isolate the raw sentence anchor
--- @string text The segment text block provided by the API
--- @return string The cleaned text used for precise string location lookups
-local function get_clean_anchor(text)
-    if not text then return "" end
-    -- Remove leading markdown bullet structures (*, -, +) and surrounding whitespaces
-    text = string.gsub(text, "^[%s%*%-%+]*", "")
-    -- Remove bold text markers (**)
-    text = string.gsub(text, "%*%*", "")
-    -- Strip trailing and leading white spaces
-    text = string.gsub(text, "^%s*(.-)%s*$", "%1")
-    return text
-end
-
---- Injects inline citation tags into the text based on anchor text matching rather than volatile indices
+--- Injects inline citation tags into the text based on raw anchor text matching
 -- @string full_text The complete concatenated stream markdown text response
 -- @table metadata The groundingMetadata container returned from the Gemini API
 -- @return string The finalized markdown string with sorted inline citations and standard references footer
@@ -422,14 +401,13 @@ local function gemini_inject_grounding_citations(full_text, metadata)
     end
     
     -- 2. Sort support entries by endIndex in descending order
-    -- Processing text modifications from back to front prevents character slicing from altering upstream indices
     table.sort(sorted_supports, function(a, b)
         local a_end = (a.segment and a.segment.endIndex) or 0
         local b_end = (b.segment and b.segment.endIndex) or 0
         return a_end > b_end
     end)
 
-    -- Track unique placement positions to avoid stacking duplicate citations over identical text blocks
+    -- Track unique placement positions to avoid stacking duplicate citations
     local seen_positions = {}
 
     -- 3. Core matching sequence: Locate anchors using physical string search boundaries
@@ -439,55 +417,49 @@ local function gemini_inject_grounding_citations(full_text, metadata)
         local seg_text = segment and segment.text
 
         if seg_text and string.match(seg_text, "%S") then
-            local anchor_text = get_clean_anchor(seg_text)
+            -- CRITICAL OPTIMIZATION: Use plain text search (the 4th argument 'true' acts as plain=true)
+            -- This bypasses magic characters completely and executes at maximum C-speed.
+            local _, end_pos = string.find(full_text, seg_text, 1, true)
 
-            if #anchor_text > 0 then
-                -- Convert target phrase into a clean regex-safe literal pattern
-                local safe_pattern = escape_pattern(anchor_text)
-                local _, end_pos = string.find(full_text, safe_pattern)
-
-                -- Fallback mitigation: If paragraphs match incorrectly due to mid-sentence newlines (\n),
-                -- use a safe UTF-8 pattern to pull the first 6 tokens/characters without slicing bytes.
-                if not end_pos then
-                    -- This pattern safely captures the first 6 UTF-8 characters or words without breaking bytes
-                    local short_anchor = string.match(anchor_text, "^([%z%s%c%c%x%a%d%p].-.-.-.-.-.-)")
-                    if short_anchor then
-                        local _, partial_end = string.find(full_text, escape_pattern(short_anchor))
-                        if partial_end then
-                            -- Find where the next primary punctuation or space boundary sits after our partial match
-                            -- to ensure we insert the citation smoothly at a word boundary instead of using broken byte math
-                            local next_boundary = string.find(full_text, "[%s%p\n]", partial_end)
-                            end_pos = next_boundary or partial_end
-                        end
+            -- Fallback mitigation: If text fails to match strictly due to line breaks,
+            -- extract a tiny prefix. Note: we use regular string.find here, so we must escape it.
+            if not end_pos then
+                local short_anchor = string.match(seg_text, "^([%z%s%c%c%x%a%d%p].-.-.-.-.-.-)")
+                if short_anchor then
+                    -- Escape only for the fallback pattern matcher
+                    local safe_short = string.gsub(short_anchor, "([%^%$%%%.%*%+%-%?%[%]%^])", "%%%1")
+                    local _, partial_end = string.find(full_text, safe_short)
+                    if partial_end then
+                        local next_boundary = string.find(full_text, "[%s%p\n]", partial_end)
+                        end_pos = next_boundary or partial_end
                     end
                 end
+            end
 
-                -- 4. Perform structured tag splicing if a valid boundary index within limits is established
-                if end_pos and end_pos < #full_text then
-                    if not seen_positions[end_pos] then
-                        seen_positions[end_pos] = true
+            -- 4. Perform structured tag splicing
+            if end_pos and end_pos < #full_text then
+                if not seen_positions[end_pos] then
+                    seen_positions[end_pos] = true
 
-                        -- Generate clustered citation tags string, e.g., "[1][2][3]"
-                        local citation_tags = ""
-                        for _, chunk_idx in ipairs(support.groundingChunkIndices) do
-                            citation_tags = citation_tags .. "[" .. (chunk_idx + 1) .. "]"
-                        end
-
-                        local before = string.sub(full_text, 1, end_pos)
-                        local after = string.sub(full_text, end_pos + 1)
-                        
-                        -- Recompose string with a clean space padding transition
-                        full_text = before .. " " .. citation_tags .. after
+                    -- Generate clustered citation tags string, e.g., "[1][2][3]"
+                    local citation_tags = ""
+                    for _, chunk_idx in ipairs(support.groundingChunkIndices) do
+                        citation_tags = citation_tags .. "[" .. (chunk_idx + 1) .. "]"
                     end
+
+                    local before = string.sub(full_text, 1, end_pos)
+                    local after = string.sub(full_text, end_pos + 1)
+                    
+                    full_text = before .. " " .. citation_tags .. after
                 end
             end
         end
     end
 
-    -- 5. Append structured layout references to the footer using an efficient array buffer allocation
+    -- 5. Append structured layout references to the footer
     if chunks and #chunks > 0 then
         local footer_buffer = {}
-        table.insert(footer_buffer, "\n\n### Web References\n<small>\n")
+        table.insert(footer_buffer, T("\n\n%1\n<small>\n", _("### Web References")))
         for i, chunk in ipairs(chunks) do
             if chunk.web then
                 table.insert(footer_buffer, string.format("%d. [%s](%s)\n", i, chunk.web.title, chunk.web.uri))

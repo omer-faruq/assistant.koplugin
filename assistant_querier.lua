@@ -445,7 +445,7 @@ function Querier:processStream(bgQuery, trunk_callback)
                                 logger.warn("Unexpected JSON:", json_str)
                             end
 
-                            -- Genmini STOP Respond
+                            -- Genmini Citation (grounding)
                             if candidates and candidates[1].finishReason == "STOP" then
                                 local use_citations = self.settings:readSetting("use_citations", false)
                                 local groundingMetadata = candidates[1].groundingMetadata
