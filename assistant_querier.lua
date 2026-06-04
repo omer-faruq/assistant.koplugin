@@ -400,11 +400,12 @@ function Querier:processStream(bgQuery, trunk_callback)
                         -- Safely parse the JSON
                         local ok, event = pcall(rapidjson.decode, json_str, {null = nil})
                         if ok and event then
-                            local reasoning_content, result_content
+                            local reasoning_content = ""
+                            local result_content = ""
+
                             local choices    = event.choices
                             local candidates = event.candidates
                             local delta      = event.delta
-                            local content    = event.content
 
                             -- 1. OpenAI Handles
                             if choices then
@@ -424,10 +425,6 @@ function Querier:processStream(bgQuery, trunk_callback)
 
                             -- 2. Gemini Handles
                             elseif candidates then
-
-                                if reasoning_content == nil then reasoning_content = "" end
-                                if result_content == nil then result_content = "" end
-
                                 for _, part in ipairs(koutil.tableGetValue(candidates, 1, "content", "parts")) do
                                     if part.text then
                                         if part.thought then
@@ -441,19 +438,16 @@ function Querier:processStream(bgQuery, trunk_callback)
                             -- 3. Anthropic Handles
                             elseif delta then
                                 result_content = delta.text
-
-                            -- 4. Anthropic Handles 2 (non stream?)
-                            elseif content then
-                                result_content = koutil.tableGetValue(content, 1, "text")
+                                reasoning_content = delta.thinking
                             end 
 
-                            if type(result_content) == "string" and #result_content > 0 then
+                            if #result_content > 0 then
                                 table.insert(result_buffer, result_content)
                                 if trunk_callback then trunk_callback(result_content, result_buffer) end
-                            elseif type(reasoning_content) == "string" and #reasoning_content > 0 then
+                            elseif #reasoning_content > 0 then
                                 table.insert(reasoning_content_buffer, reasoning_content)
                                 if trunk_callback then trunk_callback(reasoning_content, reasoning_content_buffer) end
-                            elseif result_content == nil and reasoning_content == nil and candidates == nil then
+                            elseif #result_content+#reasoning_content == 0 then
                                 logger.warn("Unexpected JSON:", json_str)
                             end
 
