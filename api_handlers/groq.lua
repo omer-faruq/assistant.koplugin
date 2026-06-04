@@ -21,6 +21,17 @@ function groqHandler:query(message_history, groq_settings, query_option)
             end
         end
     end
+
+    -- Enable web search for groq/compound* models when use_websearch is set
+    -- https://console.groq.com/docs/tool-use/built-in-tools/web-search
+    if query_option.use_websearch and groq_settings.model:find("^groq/compound") then
+        requestBodyTable.compound_custom = {
+            tools = {
+                enabled_tools = { "web_search", "visit_website" }
+            }
+        }
+    end
+
     requestBodyTable.stream = query_option.use_stream_mode
 
     local requestBody = json.encode(requestBodyTable)

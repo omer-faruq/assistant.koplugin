@@ -118,6 +118,12 @@ table td, table th {
     font-size: 0.75em;
     color: gray;
 }
+
+.reasoningtext {
+    font-size: 0.8em;
+    color: gray;
+    margin: 1em 1.5em;
+}
 ]]
 
 local RTL_CSS = [[
