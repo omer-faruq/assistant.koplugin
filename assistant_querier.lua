@@ -573,14 +573,13 @@ function Querier:processStream(bgQuery, trunk_callback)
     local is_reasoning_in_ret = ret:sub(1, 7) == "<think>"
 
     if show_reasoning then
-        local reasoning = table.concat(reasoning_content_buffer):gsub("^%.+", "", 1)
+        local reasoning = table.concat(reasoning_content_buffer):gsub("^%.+", "", 1):gsub("\n", "<br>")
         if #reasoning > 0 then
-            ret = T("<dl><dt>%1</dt><dd><div style=\"font-size: 0.9em;\">%2</div></dd></dl>\n\n%3",
-                _("Deeply Thought"), reasoning, ret)
+            ret = T("#### %1\n\n<blockquote>%2</blockquote>\n\n---\n\n", _("Deeply Thought"), reasoning) .. ret
         elseif is_reasoning_in_ret then
             ret = ret
-                :gsub("<think>",  T("<dl><dt>%1</dt><dd><div style=\"font-size: 0.9em;\">", _("Deeply Thought")), 1)
-                :gsub("</think>", "</div></dd></dl>\n\n", 1)
+                :gsub("<think>",  T("#### %1\n\n<blockquote>", _("Deeply Thought")), 1)
+                :gsub("</think>", "</blockquote>\n\n---\n\n", 1)
         end
     elseif is_reasoning_in_ret then
         local close_pos = ret:find("</think>", 8, true)  -- plain=true

@@ -77,6 +77,7 @@ body {
 
 blockquote, dd, pre {
     margin: 0 1em;
+    font-size: 0.8em;
 }
 
 ol, ul, menu {
