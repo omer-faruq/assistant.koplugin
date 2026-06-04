@@ -458,16 +458,14 @@ local function gemini_inject_grounding_citations(full_text, metadata)
 
     -- 5. Append structured layout references to the footer
     if chunks and #chunks > 0 then
-        local footer_buffer = {}
-        table.insert(footer_buffer, T("\n\n%1\n<small>\n", _("### Web References")))
+        local footer_buffer = {"\n\n", _("#### Web References"), "\n"}
         for i, chunk in ipairs(chunks) do
             if chunk.web then
-                table.insert(footer_buffer, string.format("%d. [%s](%s)\n", i, chunk.web.title, chunk.web.uri))
+              table.insert(footer_buffer, string.format("%d. [<small>%s</small>](%s)\n", i, chunk.web.title, chunk.web.uri))
             end
         end
-        table.insert(footer_buffer, "</small>")
         
-        full_text = full_text .. table.concat(footer_buffer, "")
+        full_text = full_text .. table.concat(footer_buffer)
     end
 
     return full_text

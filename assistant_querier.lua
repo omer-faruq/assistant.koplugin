@@ -448,21 +448,40 @@ function Querier:processStream(bgQuery, trunk_callback)
                                 table.insert(reasoning_content_buffer, reasoning_content)
                                 if trunk_callback then trunk_callback(reasoning_content, reasoning_content_buffer) end
                             elseif #result_content+#reasoning_content == 0 then
-                                logger.warn("Unexpected JSON:", json_str)
+                                if not (choices or candidates or delta) then
+                                    logger.warn("Unexpected JSON:", json_str)
+                                end
                             end
 
-                            -- Genmini Citation (grounding)
+                            -- Genmini Last Chunk
                             if candidates and candidates[1].finishReason == "STOP" then
-                                local use_citations = self.settings:readSetting("use_citations", false)
                                 local groundingMetadata = candidates[1].groundingMetadata
-                                if use_citations and (groundingMetadata ~= nil) then -- Genmini Search Tool
-                                    local full_text = table.concat(result_buffer)
-                                    koutil.clearTable(result_buffer)
-                                    full_text = assistant_utils.gemini_inject_grounding_citations(
-                                        full_text,
-                                        groundingMetadata
-                                    )
-                                    table.insert(result_buffer, full_text)
+                                if groundingMetadata then
+                                    local use_citations = self.settings:readSetting("use_citations", false)
+                                    if use_citations then -- Genmini Search Tool
+                                        local full_text = table.concat(result_buffer)
+                                        koutil.clearTable(result_buffer)
+                                        full_text = assistant_utils.gemini_inject_grounding_citations(full_text, groundingMetadata)
+                                        table.insert(result_buffer, full_text)
+                                    end
+
+                                    if groundingMetadata.webSearchQueries then
+                                        -- Adds websearch_footer
+                                        local items = {}
+                                        for i, q in ipairs(groundingMetadata.webSearchQueries) do
+                                            items[i] = string.format("<u>%s</u>", q)
+                                        end
+                                        local webquery_footer = "\n\n" .. _("#### Search Keywords") .. '\n<ul class="subtext"><li>' .. 
+                                                table.concat(items, '</li><li>') .. '</li></ul>\n\n'
+                                        table.insert(result_buffer, webquery_footer)
+                                    end
+                                end
+
+                                -- Add usage footer
+                                if event.usageMetadata and event.modelVersion then
+                                    local usage_footer = T('<div class="subtext" style="margin-top: 1.5em;">%1: %2 (%3)</div>', _("Token Usage"),
+                                                    event.usageMetadata.totalTokenCount, event.modelVersion)
+                                    table.insert(result_buffer, usage_footer)
                                 end
                             end
                         else
@@ -569,11 +588,11 @@ function Querier:processStream(bgQuery, trunk_callback)
     if show_reasoning then
         local reasoning = table.concat(reasoning_content_buffer):gsub("^%.+", "", 1):gsub("\n", "<br>")
         if #reasoning > 0 then
-            ret = T("#### %1\n\n<blockquote>%2</blockquote>\n\n---\n\n", _("Deeply Thought"), reasoning) .. ret
+            ret = T("#### %1\n\n<pre>%2</pre>\n\n---\n\n", _("Deeply Thought"), reasoning) .. ret
         elseif is_reasoning_in_ret then
             ret = ret
-                :gsub("<think>",  T("#### %1\n\n<blockquote>", _("Deeply Thought")), 1)
-                :gsub("</think>", "</blockquote>\n\n---\n\n", 1)
+                :gsub("<think>",  T("#### %1\n\n<pre>", _("Deeply Thought")), 1)
+                :gsub("</think>", "</pre>\n\n---\n\n", 1)
         end
     elseif is_reasoning_in_ret then
         local close_pos = ret:find("</think>", 8, true)  -- plain=true

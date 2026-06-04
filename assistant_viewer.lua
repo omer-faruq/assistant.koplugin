@@ -113,6 +113,11 @@ table td, table th {
     border: 1px solid black;
     padding: 0;
 }
+
+.subtext {
+    font-size: 0.75em;
+    color: gray;
+}
 ]]
 
 local RTL_CSS = [[
