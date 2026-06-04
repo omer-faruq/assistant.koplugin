@@ -5,6 +5,31 @@ local logger = require("logger")
 
 local OpenRouterProvider = BaseHandler:new()
 
+-- Build the openrouter:web_search server tool entry.
+-- Merges any caller-supplied options (engine, max_results, etc.)
+-- from additional_parameters.web_search into the tool parameters.
+local function buildWebSearchTool(additional_parameters)
+    local tool = { type = "openrouter:web_search" }
+
+    local ws_opts = koutil.tableGetValue(additional_parameters or {}, "web_search")
+    if ws_opts then
+        local params = {}
+        for _, key in ipairs({
+            "engine", "max_results", "max_total_results",
+            "search_context_size", "allowed_domains", "excluded_domains"
+        }) do
+            if ws_opts[key] ~= nil then
+                params[key] = ws_opts[key]
+            end
+        end
+        if next(params) then
+            tool.parameters = params
+        end
+    end
+
+    return tool
+end
+
 function OpenRouterProvider:query(message_history, openrouter_settings, query_option)
     
     local requestBodyTable = {
@@ -28,6 +53,14 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
         if requestBodyTable.reasoning.exclude == nil then
             requestBodyTable.reasoning.exclude = true
         end
+    end
+
+    -- Enable web search via the openrouter:web_search server tool when requested.
+    -- Supports optional configuration through additional_parameters.web_search:
+    --   { engine, max_results, max_total_results, search_context_size,
+    --     allowed_domains, excluded_domains }
+    if query_option.use_websearch then
+        requestBodyTable.tools = { buildWebSearchTool(openrouter_settings.additional_parameters) }
     end
 
     local requestBody = json.encode(requestBodyTable)
