@@ -400,97 +400,7 @@ function Querier:processStream(bgQuery, trunk_callback)
                         -- Safely parse the JSON
                         local ok, event = pcall(rapidjson.decode, json_str, {null = nil})
                         if ok and event then
-                            local reasoning_content, result_content, stop_reason
-
-                            local choices    = event.choices
-                            local candidates = event.candidates
-                            local delta      = event.delta
-
-                            -- 1. OpenAI Handles
-                            if choices then
-                                for _, choice in ipairs(choices) do
-                                    stop_reason = choice.finish_reason
-                                    local cdelta = choice.delta
-                                    if cdelta then
-                                        reasoning_content = cdelta.reasoning or cdelta.reasoning_content or ""
-                                        result_content = cdelta.content or ""
-                                    end
-                                    -- reasoning responses without text(grok-4)
-                                    if not result_content and not reasoning_content then reasoning_content = "." end
-                                end
-
-                            -- 2. Gemini Handles
-                            elseif candidates then
-                                stop_reason = candidates[1].finishReason
-                                for _, part in ipairs(koutil.tableGetValue(candidates, 1, "content", "parts")) do
-                                    if part.text then
-                                        if part.thought then
-                                            reasoning_content = reasoning_content .. part.text
-                                        else
-                                            result_content = result_content .. part.text
-                                        end
-                                    end
-                                end
-
-                            -- 3. Anthropic Handles
-                            elseif delta then
-                                result_content = delta.text or ""
-                                reasoning_content = delta.thinking or ""
-                                stop_reason = event.stop_reason
-                            end 
-
-                            if type(result_content) == "string" and #result_content > 0 then
-                                table.insert(result_buffer, result_content)
-                                if trunk_callback then trunk_callback(result_content, result_buffer) end
-                            elseif type(reasoning_content) == "string" and #reasoning_content > 0 then
-                                table.insert(reasoning_content_buffer, reasoning_content)
-                                if trunk_callback then trunk_callback(reasoning_content, reasoning_content_buffer) end
-                            elseif type(stop_reason) == "string" and stop_reason:lower() ~= "stop" then
-                                logger.info("abnormal stop:", stop_reason)
-                                table.insert(result_buffer, _("Stopped: ") .. stop_reason)
-                            else
-                                if result_content or reasoning_content or stop_reason then
-                                    if choices or candidates or delta then
-                                        -- reconized struct, but nothing needed (stream ended)
-                                        -- logger.info("Unprocessed JSON:", json_str)
-                                        break
-                                    end
-                                    logger.warn("Unexpected JSON:", json_str)
-                                end
-                                logger.warn("PROBLEM JSON:", json_str)
-                            end
-
-                            -- Genmini Last Chunk
-                            if candidates and stop_reason then
-                                local groundingMetadata = candidates[1].groundingMetadata
-                                if groundingMetadata then
-                                    local use_citations = self.settings:readSetting("use_citations", false)
-                                    if use_citations then -- Genmini Search Tool
-                                        local full_text = table.concat(result_buffer)
-                                        koutil.clearTable(result_buffer)
-                                        full_text = assistant_utils.gemini_inject_grounding_citations(full_text, groundingMetadata)
-                                        table.insert(result_buffer, full_text)
-                                    end
-
-                                    if groundingMetadata.webSearchQueries then
-                                        -- Adds websearch_footer
-                                        local items = {}
-                                        for i, q in ipairs(groundingMetadata.webSearchQueries) do
-                                            items[i] = string.format("<u>%s</u>", q)
-                                        end
-                                        local webquery_footer = "\n\n" .. _("#### Search Keywords") .. '\n<ul class="subtext"><li>' .. 
-                                                table.concat(items, '</li><li>') .. '</li></ul>\n\n'
-                                        table.insert(result_buffer, webquery_footer)
-                                    end
-                                end
-
-                                -- Add usage footer
-                                if event.usageMetadata and event.modelVersion then
-                                    local usage_footer = T('<div class="subtext" style="margin-top: 1.5em;">%1: %2 (%3)</div>', _("Token Usage"),
-                                                    event.usageMetadata.totalTokenCount, event.modelVersion)
-                                    table.insert(result_buffer, usage_footer)
-                                end
-                            end
+                            self:processChunk(event, trunk_callback, result_buffer, reasoning_content_buffer)
                         else
                             logger.warn("Failed to parse JSON from SSE data:", json_str)
                         end
@@ -608,6 +518,101 @@ function Querier:processStream(bgQuery, trunk_callback)
         end
     end
     return ret, nil
+end
+
+function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_content_buffer)
+    
+    local reasoning_content, result_content, stop_reason
+
+    local choices    = event.choices
+    local candidates = event.candidates
+    local delta      = event.delta
+
+    -- 1. OpenAI Handles
+    if choices then
+        for _, choice in ipairs(choices) do
+            stop_reason = choice.finish_reason
+            local cdelta = choice.delta
+            if cdelta then
+                reasoning_content = cdelta.reasoning or cdelta.reasoning_content or ""
+                result_content = cdelta.content or ""
+            end
+            -- reasoning responses without text(grok-4)
+            if not result_content and not reasoning_content then reasoning_content = "." end
+        end
+
+    -- 2. Gemini Handles
+    elseif candidates then
+        stop_reason = candidates[1].finishReason
+        for _, part in ipairs(koutil.tableGetValue(candidates, 1, "content", "parts")) do
+            if part.text then
+                if part.thought then
+                    reasoning_content = reasoning_content .. part.text
+                else
+                    result_content = result_content .. part.text
+                end
+            end
+        end
+
+    -- 3. Anthropic Handles
+    elseif delta then
+        result_content = delta.text or ""
+        reasoning_content = delta.thinking or ""
+        stop_reason = event.stop_reason
+    end 
+
+    if type(result_content) == "string" and #result_content > 0 then
+        table.insert(result_buffer, result_content)
+        if trunk_callback then trunk_callback(result_content, result_buffer) end
+    elseif type(reasoning_content) == "string" and #reasoning_content > 0 then
+        table.insert(reasoning_content_buffer, reasoning_content)
+        if trunk_callback then trunk_callback(reasoning_content, reasoning_content_buffer) end
+    elseif type(stop_reason) == "string" and stop_reason:lower() ~= "stop" then
+        logger.info("abnormal stop:", stop_reason)
+        table.insert(result_buffer, _("Stopped: ") .. stop_reason)
+    else
+        if result_content or reasoning_content or stop_reason then
+            if choices or candidates or delta then
+                -- reconized struct, but nothing needed (stream ended)
+                -- logger.info("Unprocessed JSON:", json_str)
+                return
+            end
+            logger.warn("Unexpected JSON:", event)
+        end
+        logger.warn("PROBLEM JSON:", event)
+    end
+
+    -- Genmini Last Chunk
+    if candidates and stop_reason then
+        local groundingMetadata = candidates[1].groundingMetadata
+        if groundingMetadata then
+            local use_citations = self.settings:readSetting("use_citations", false)
+            if use_citations then -- Genmini Search Tool
+                local full_text = table.concat(result_buffer)
+                koutil.clearTable(result_buffer)
+                full_text = assistant_utils.gemini_inject_grounding_citations(full_text, groundingMetadata)
+                table.insert(result_buffer, full_text)
+            end
+
+            if groundingMetadata.webSearchQueries then
+                -- Adds websearch_footer
+                local items = {}
+                for i, q in ipairs(groundingMetadata.webSearchQueries) do
+                    items[i] = string.format("<u>%s</u>", q)
+                end
+                local webquery_footer = "\n\n" .. _("#### Search Keywords") .. '\n<ul class="subtext"><li>' .. 
+                        table.concat(items, '</li><li>') .. '</li></ul>\n\n'
+                table.insert(result_buffer, webquery_footer)
+            end
+        end
+
+        -- Add usage footer
+        if event.usageMetadata and event.modelVersion then
+            local usage_footer = T('<div class="subtext" style="margin-top: 1.5em;">%1: %2 (%3)</div>', _("Token Usage"),
+                            event.usageMetadata.totalTokenCount, event.modelVersion)
+            table.insert(result_buffer, usage_footer)
+        end
+    end
 end
 
 return Querier
