@@ -35,9 +35,11 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
             local content = koutil.tableGetValue(responseData, "choices", 1, "message", "content")
             if content then return content end
         end
-        
-        -- server response error message
-        logger.warn("API Error", code, response)
+    end
+
+    -- server response error message
+    if type(code) == "number" then
+        local success, responseData = pcall(json.decode, response)
         if success then
             local err_msg = koutil.tableGetValue(responseData, "error", "message")
             if err_msg then return nil, err_msg end
@@ -47,7 +49,7 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
     if code == BaseHandler.CODE_CANCELLED then
         return nil, response
     end
-    return nil, "Error: " .. (code or "unknown") .. " - " .. response
+    return nil, "Error: " .. tostring(code or "unknown") .. " - " .. tostring(response)
 end
 
 return OpenAIHandler

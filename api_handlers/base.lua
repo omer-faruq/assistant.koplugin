@@ -18,8 +18,13 @@ local BaseHandler = {
     trap_widget = nil,  -- widget to trap the request
 }
 
-BaseHandler.CODE_CANCELLED = "USER_CANCELED"
-BaseHandler.CODE_NETWORK_ERROR = "NETWORK_ERROR"
+BaseHandler.CODE_CANCELLED          = "USER_CANCELED"
+BaseHandler.CODE_NETWORK_ERROR      = "NETWORK_ERROR"
+BaseHandler.CODE_TIMEOUT            = "REQUEST_TIMEOUT"
+BaseHandler.CODE_UNSUPPORTED_PROTO  = "UNSUPPORTED_PROTOCOL"
+BaseHandler.CODE_INCOMPLETE         = "INCOMPLETE_CONTENT"
+BaseHandler.CODE_DECOMPRESS_ERROR   = "DECOMPRESS_ERROR"
+BaseHandler.CODE_SERVER_ERROR       = "SERVER_ERROR"
 BaseHandler.PROTOCOL_NON_200 = "X-NON-200-STATUS:"
 
 function BaseHandler:new(o)
@@ -49,7 +54,7 @@ end
 local function httpRequest(url, timeout, maxtime, post_body, post_content_type, headers)
     local parsed = socket_url.parse(url)
     if parsed.scheme ~= "http" and parsed.scheme ~= "https" then
-        return false, "Unsupported protocol"
+        return false, BaseHandler.CODE_UNSUPPORTED_PROTO, "Unsupported protocol"
     end
     if parsed.scheme == "https" then
         https.cert_verify = false
@@ -57,7 +62,9 @@ local function httpRequest(url, timeout, maxtime, post_body, post_content_type, 
     if not timeout then timeout = 10 end
     socketutil:set_timeout(timeout, maxtime or 30)
 
-    if not headers then headers = {} end
+    if not headers then
+        headers = {}
+    end
     headers["Accept-Encoding"] = "gzip"
 
     local sink = {}
@@ -83,22 +90,22 @@ local function httpRequest(url, timeout, maxtime, post_body, post_content_type, 
        code == socketutil.SINK_TIMEOUT_CODE
     then
         logger.warn("request interrupted:", code)
-        return false, code
+        return false, BaseHandler.CODE_TIMEOUT, "Request interrupted/timed out"
     end
     if resp_headers == nil then
         logger.warn("No HTTP headers:", status or code or "network unreachable")
-        return false, "Network or remote server unavailable" .. tostring(status or code)
+        return false, BaseHandler.CODE_NETWORK_ERROR, "Network Error: " .. (status or code)
     end
-    if not code or code < 200 or code > 299 then
+    if not code then
         logger.warn("HTTP status not okay:", status or code or "network unreachable")
-        logger.dbg("Response headers:", resp_headers)
-        return false, "Remote server error or unavailable: " .. tostring(status or code)
+        logger.dgb("Response headers:", resp_headers)
+        return false, code, content or "Remote server error or unavailable"
     end
 
     local http_len = assistant_utils.http_get_header(resp_headers, "content-length")
     if http_len then
         if #content ~= tonumber(http_len) then
-            return false, "Incomplete content received"
+            return false, BaseHandler.CODE_INCOMPLETE, "Incomplete content received"
         end
     end
 
@@ -106,13 +113,12 @@ local function httpRequest(url, timeout, maxtime, post_body, post_content_type, 
         local decompressed, err = assistant_utils.zlib_uncompress_gzip(content, 8*1024*1024)
         if not decompressed then
             logger.warn("Failed to decompress data:", err)
-            return false, "Failed to decompress data:" .. tostring(err)
+            return false, BaseHandler.CODE_DECOMPRESS_ERROR, "Failed to decompress data: " .. tostring(err)
         end
-        logger.info("content gzipped")
         content = decompressed
     end
 
-    return true, content
+    return true, code, content
 end
 
 --- func description: Make a request to the specified URL with headers and body.
@@ -129,7 +135,7 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
             request_maxtime = maxtime or 120
         end
         -- If a trap widget is set, run the request in a subprocess
-        completed, success, content = Trapper:dismissableRunInSubprocess(function()
+        completed, success, code, content = Trapper:dismissableRunInSubprocess(function()
                 return httpRequest(url, request_timeout, request_maxtime, body, nil, headers)
             end, self.trap_widget)
         if not completed then
@@ -139,9 +145,6 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
         -- If no trap widget is set, run the request directly
         -- use smaller timeout because we are blocking the UI
         success, content = httpRequest(url, timeout or 20, maxtime or 45, body, nil, headers)
-    end
-    if not success then
-        code = self.CODE_NETWORK_ERROR
     end
 
     return success, code, content
@@ -197,18 +200,18 @@ end
 
 function BaseHandler:serpAPISearchRequest(serpconfig, keywords)
 
-    local base_url = serpconfig.serpapi_url or "https://serpapi.com/search"
-    local key = serpconfig.serpapi_key
+    local base_url = serpconfig.base_url or "https://serpapi.com/search"
+    local key = serpconfig.api_key
     local q = koutil.urlEncode(keywords)
     local url = T("%1?engine=google_ai_mode&api_key=%2&q=%3", base_url, key, q)
 
     local completed, success, content
 
-    local request_timeout = 45
-    local request_maxtime = 120
+    local timeout = 45
+    local maxtime = 120
 
     completed, success, content = Trapper:dismissableRunInSubprocess(function()
-            return httpRequest(url, request_timeout, request_maxtime, nil, nil, nil)
+            return httpRequest(url, timeout, maxtime, nil, nil, nil)
         end, self.trap_widget)
 
     if not completed then
@@ -225,6 +228,48 @@ function BaseHandler:serpAPISearchRequest(serpconfig, keywords)
 
     if parsed.reconstructed_markdown then
         return true, parsed.reconstructed_markdown
+    end
+
+    return false, "Unrecognized SerpAPI result"
+end
+
+function BaseHandler:tavilyAPISearchRequest(tavilyconfig, keywords)
+
+    local base_url = tavilyconfig.base_url or "https://api.tavily.com/search"
+    local key = tavilyconfig.api_key
+
+    local requestBodyTable = {
+        ["api_key"] = key,
+        ["max_results"] = 1,
+        ["search_depth"] = "basic",
+        ["chunks_per_source"] = 3,
+        ["include_raw_content"] = true,
+        ["query"] = keywords,
+    }
+    local requestBody = json.encode(requestBodyTable)
+
+    local completed, success, content
+    local timeout = 45
+    local maxtime = 120
+
+    completed, success, content = Trapper:dismissableRunInSubprocess(function()
+            return httpRequest(base_url, timeout, maxtime, requestBody, "application/json", nil)
+        end, self.trap_widget)
+
+    if not completed then
+        return false, self.CODE_CANCELLED
+    end
+    if not success then
+        return false, content
+    end
+
+    local ok, parsed = pcall(json.decode, content)
+    if not ok or not parsed then
+        return false, "fail to parse serpapi return"
+    end
+
+    if parsed.results and parsed.results.raw_content then
+        return true, parsed.results.raw_content
     end
 
     return false, "Unrecognized SerpAPI result"
