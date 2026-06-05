@@ -385,92 +385,6 @@ local function http_is_encoded(headers, encoding)
     return value:lower():find((encoding or "gzip"):lower()) ~= nil
 end
 
---- Injects inline citation tags into the text based on raw anchor text matching
--- @string full_text The complete concatenated stream markdown text response
--- @table metadata The groundingMetadata container returned from the Gemini API
--- @return string The finalized markdown string with sorted inline citations and standard references footer
-local function gemini_inject_grounding_citations(full_text, metadata)
-    local supports = metadata.groundingSupports
-    local chunks = metadata.groundingChunks
-    if not supports or #supports == 0 then return full_text end
-
-    -- 1. Clone the array to protect the original API response object from mutation shifts
-    local sorted_supports = {}
-    for _, v in ipairs(supports) do 
-        table.insert(sorted_supports, v) 
-    end
-    
-    -- 2. Sort support entries by endIndex in descending order
-    table.sort(sorted_supports, function(a, b)
-        local a_end = (a.segment and a.segment.endIndex) or 0
-        local b_end = (b.segment and b.segment.endIndex) or 0
-        return a_end > b_end
-    end)
-
-    -- Track unique placement positions to avoid stacking duplicate citations
-    local seen_positions = {}
-
-    -- 3. Core matching sequence: Locate anchors using physical string search boundaries
-    for i = 1, #sorted_supports do
-        local support = sorted_supports[i]
-        local segment = support.segment
-        local seg_text = segment and segment.text
-
-        if seg_text and string.match(seg_text, "%S") then
-            -- CRITICAL OPTIMIZATION: Use plain text search (the 4th argument 'true' acts as plain=true)
-            -- This bypasses magic characters completely and executes at maximum C-speed.
-            local _, end_pos = string.find(full_text, seg_text, 1, true)
-
-            -- Fallback mitigation: If text fails to match strictly due to line breaks,
-            -- extract a tiny prefix. Note: we use regular string.find here, so we must escape it.
-            if not end_pos then
-                local short_anchor = string.match(seg_text, "^([%z%s%c%c%x%a%d%p].-.-.-.-.-.-)")
-                if short_anchor then
-                    -- Escape only for the fallback pattern matcher
-                    local safe_short = string.gsub(short_anchor, "([%^%$%%%.%*%+%-%?%[%]%^])", "%%%1")
-                    local _, partial_end = string.find(full_text, safe_short)
-                    if partial_end then
-                        local next_boundary = string.find(full_text, "[%s%p\n]", partial_end)
-                        end_pos = next_boundary or partial_end
-                    end
-                end
-            end
-
-            -- 4. Perform structured tag splicing
-            if end_pos and end_pos < #full_text then
-                if not seen_positions[end_pos] then
-                    seen_positions[end_pos] = true
-
-                    -- Generate clustered citation tags string, e.g., "[1][2][3]"
-                    local citation_tags = ""
-                    for _, chunk_idx in ipairs(support.groundingChunkIndices) do
-                        citation_tags = citation_tags .. "[" .. (chunk_idx + 1) .. "]"
-                    end
-
-                    local before = string.sub(full_text, 1, end_pos)
-                    local after = string.sub(full_text, end_pos + 1)
-                    
-                    full_text = before .. " " .. citation_tags .. after
-                end
-            end
-        end
-    end
-
-    -- 5. Append structured layout references to the footer
-    if chunks and #chunks > 0 then
-        local footer_buffer = {"\n\n", _("#### Web References"), "\n"}
-        for i, chunk in ipairs(chunks) do
-            if chunk.web then
-              table.insert(footer_buffer, string.format("%d. [<small>%s</small>](%s)\n", i, chunk.web.title, chunk.web.uri))
-            end
-        end
-        
-        full_text = full_text .. table.concat(footer_buffer)
-    end
-
-    return full_text
-end
-
 return {
     getGeneralNotebookFilePath = getGeneralNotebookFilePath,
     extractBookTextForAnalysis = extractBookTextForAnalysis,
@@ -481,5 +395,4 @@ return {
     zlib_uncompress_gzip = zlib_uncompress_gzip,
     http_get_header = http_get_header,
     http_is_encoded = http_is_encoded,
-    gemini_inject_grounding_citations = gemini_inject_grounding_citations,
 }

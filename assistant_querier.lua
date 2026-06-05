@@ -608,14 +608,6 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
     if candidates and stop_reason then
         local groundingMetadata = candidates[1].groundingMetadata
         if groundingMetadata then
-            local use_citations = self.settings:readSetting("use_citations", false)
-            if use_citations then -- Genmini Search Tool
-                local full_text = table.concat(result_buffer)
-                koutil.clearTable(result_buffer)
-                full_text = assistant_utils.gemini_inject_grounding_citations(full_text, groundingMetadata)
-                table.insert(result_buffer, full_text)
-            end
-
             if groundingMetadata.webSearchQueries then
                 -- Adds websearch_footer
                 local items = {}

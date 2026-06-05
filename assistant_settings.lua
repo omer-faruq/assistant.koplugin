@@ -386,6 +386,26 @@ function SettingsDialog:onCloseWidget()
     self.assistant._settings_dialog = nil
 end
 
+local webSearchMenuText = { 
+    ["none"] = _("None"),
+    ["builtin"] = _("Model Built-In"),
+    ["serpapi"] = "SerpAPI",
+    ["tavilyapi"] = "TavilyAPI"
+}
+local function genWebSearchSubMenuItem(assistant, key)
+    return {
+        text = webSearchMenuText[key],
+        radio = true,
+        checked_func = function ()
+            return assistant.settings:readSetting("use_websearch", "none") == key
+        end,
+        callback = function ()
+            assistant.settings:saveSetting("use_websearch", key)
+            assistant.updated = true
+        end,
+    }
+end
+
 SettingsDialog.genMenuSettings = function (assistant)
     local sub_item_table = {
         {
@@ -422,6 +442,23 @@ SettingsDialog.genMenuSettings = function (assistant)
             keep_menu_open = true,
         },
         {
+            text_func = function ()
+                return T(_("Web Search: %1"), 
+                    webSearchMenuText[assistant.settings:readSetting("use_websearch", "none")])
+            end,
+            hold_callback = function ()
+                UIManager:show(InfoMessage:new{
+                    text = _("Improves response accuracy with real-time web results. \nNote: Higher token usage and additional API charges apply.")
+                })
+            end,
+            sub_item_table = {
+                genWebSearchSubMenuItem(assistant, "none"),
+                genWebSearchSubMenuItem(assistant, "builtin"),
+                genWebSearchSubMenuItem(assistant, "serpapi"),
+                genWebSearchSubMenuItem(assistant, "tavilyapi"),
+            },
+        },
+        {
             text = _("Response Settings"),
             sub_item_table = {
                 {
@@ -450,34 +487,6 @@ SettingsDialog.genMenuSettings = function (assistant)
                         assistant.updated = true
                     end,
                     separator = true,
-                },
-                {
-                    text = _("Enable Web Search"),
-                    checked_func = function () return assistant.settings:readSetting("use_websearch", false) end,
-                    callback = function ()
-                        assistant.settings:toggle("use_websearch")
-                        assistant.updated = true
-                    end,
-                    hold_callback = function ()
-                        UIManager:show(InfoMessage:new{
-                            text = _("Improves response accuracy with real-time web results. \nNote: Higher token usage and additional API charges apply.")
-                        })
-                    end,
-                    separator = true,
-                },
-                {
-                    text = _("Include Source Citations"),
-                    checked_func = function () return assistant.settings:readSetting("use_citations", false) end,
-                    enabled_func = function () return assistant.settings:readSetting("use_websearch") end,
-                    callback = function ()
-                        assistant.settings:toggle("use_citations")
-                        assistant.updated = true
-                    end,
-                    hold_callback = function ()
-                        UIManager:show(InfoMessage:new{
-                            text = _("Injects source citations and grounding links directly into the response for easy fact-checking.")
-                        })
-                    end
                 },
                 {
                     text = _("Show Reasoning Text"),
