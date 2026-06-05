@@ -17,6 +17,9 @@ local Device = require("device")
 local assistant_utils = require("assistant_utils")
 local Screen = Device.screen
 
+local API_HANDLERS = {}
+
+
 local Querier = {
     assistant = nil, -- reference to the main assistant object
     settings = nil,
@@ -32,11 +35,30 @@ function Querier:new(o)
     o = o or {}
     setmetatable(o, self)
     self.__index = self
+    -- init handlers names
+    if next(API_HANDLERS) == nil then
+        koutil.findFiles(o.assistant.path .. "/api_handlers", function (path, f, attr)
+            if f == "base" then return end
+            local h = f:gsub("%.lua$", "", 1)
+            API_HANDLERS[h] = true
+        end, false)
+    end
     return o
 end
 
 function Querier:is_inited()
     return self.handler ~= nil
+end
+
+function Querier:is_handler(provider_name)
+    if API_HANDLERS[provider_name] then return true end
+    
+    local handler_name
+    local underscore_pos = provider_name:find("_")
+    if underscore_pos and underscore_pos > 0 then
+        handler_name = provider_name:sub(1, underscore_pos - 1)
+    end
+    return handler_name and API_HANDLERS[handler_name]
 end
 
 --- Load provider model for the Querier
