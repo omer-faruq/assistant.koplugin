@@ -226,11 +226,34 @@ function BaseHandler:serpAPISearchRequest(serpconfig, keywords)
         return false, "fail to parse serpapi return"
     end
 
-    if parsed.reconstructed_markdown then
-        return true, parsed.reconstructed_markdown
+    if not parsed.reconstructed_markdown and not parsed.references then
+        return false, "No relevant search or AI summary results found."
     end
 
-    return false, "Unrecognized SerpAPI result"
+    local segments = {}
+
+    if parsed.reconstructed_markdown and parsed.reconstructed_markdown ~= "" then
+        table.insert(segments, "## Google AI Summary:\n")
+        table.insert(segments, parsed.reconstructed_markdown)
+        table.insert(segments, "\n")
+    end
+
+    if parsed.references and #parsed.references > 0 then
+        table.insert(segments, "## Verified Sources (References):")
+        table.insert(segments, "LLM Note: Please use these indexes and URLs to generate precise citations if needed.\n")
+        
+        for _, ref in ipairs(parsed.references) do
+            local idx = ref.index or 0
+            local title = ref.title or "Untitled Source"
+            local link = ref.link or "N/A"
+            local source_name = ref.source or "Web"
+
+            local ref_line = string.format("[%d] %s (%s) - URL: %s", idx, title, source_name, link)
+            table.insert(segments, ref_line)
+        end
+    end
+
+    return true, table.concat(segments, "\n")
 end
 
 function BaseHandler:tavilyAPISearchRequest(tavilyconfig, keywords)
@@ -264,15 +287,28 @@ function BaseHandler:tavilyAPISearchRequest(tavilyconfig, keywords)
     end
 
     local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed then
+    if not ok or not parsed or not parsed.results then
         return false, "fail to parse serpapi return"
     end
 
-    if parsed.results and parsed.results.raw_content then
-        return true, parsed.results.raw_content
+    local segments = { "Here are the verified search results from Tavily:\n" }
+
+    for i, item in ipairs(parsed.results) do
+        table.insert(segments, "---")
+        table.insert(segments, string.format("### Source %d: %s", i, item.title or "Untitled"))
+        table.insert(segments, string.format("* URL: %s", item.url or "N/A"))
+        table.insert(segments, string.format("* Summary: %s", item.content or ""))
+        if item.raw_content and item.raw_content ~= "" then
+            local raw = item.raw_content
+            if string.len(raw) > 3000 then
+                raw = string.sub(raw, 1, 3000) .. "\n... [Content Truncated for Length] ..."
+            end
+            table.insert(segments, "* Full Document Content:\n" .. raw)
+        end
+        table.insert(segments, "\n")
     end
 
-    return false, "Unrecognized SerpAPI result"
+    return true, table.concat(segments, "\n")
 end
 
 return BaseHandler
