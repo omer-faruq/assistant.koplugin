@@ -31,52 +31,79 @@ local function buildWebSearchTool(additional_parameters)
 end
 
 function OpenRouterProvider:query(message_history, openrouter_settings, query_option)
-    
-    local requestBodyTable = {
-        model = openrouter_settings.model,
-        messages = message_history,
-        max_tokens = openrouter_settings.max_tokens,
-        temperature = openrouter_settings.temperature,
-        stream = query_option.use_stream_mode
-    }
-    
-    -- Handle reasoning tokens configuration
-    local reasoning = koutil.tableGetValue(openrouter_settings, "additional_parameters", "reasoning")
-    if reasoning then
-        -- Create a copy of the reasoning configuration to avoid modifying the original settings
-        requestBodyTable.reasoning = {}
-        for k, v in pairs(reasoning) do
-            requestBodyTable.reasoning[k] = v
+
+    -- Build an OpenRouter request body table from messages, with an optional tools list.
+    -- Used both for normal requests and for the external-search stage-1 request.
+    local function buildRequestBody(messages, tools)
+        local body = {
+            model       = openrouter_settings.model,
+            messages    = messages,
+            max_tokens  = openrouter_settings.max_tokens,
+            temperature = openrouter_settings.temperature,
+        }
+
+        -- Handle reasoning tokens configuration
+        local reasoning = koutil.tableGetValue(openrouter_settings, "additional_parameters", "reasoning")
+        if reasoning then
+            body.reasoning = {}
+            for k, v in pairs(reasoning) do
+                body.reasoning[k] = v
+            end
+            if body.reasoning.exclude == nil then
+                body.reasoning.exclude = true
+            end
         end
 
-        -- Set exclude to true by default if not explicitly set
-        if requestBodyTable.reasoning.exclude == nil then
-            requestBodyTable.reasoning.exclude = true
+        if tools then
+            body.tools       = tools
+            body.tool_choice = "auto"
         end
+
+        return json.encode(body)
     end
 
-    -- Enable web search via the openrouter:web_search server tool when requested.
-    -- Supports optional configuration through additional_parameters.web_search:
-    --   { engine, max_results, max_total_results, search_context_size,
-    --     allowed_domains, excluded_domains }
-    if query_option.use_websearch then
+    local headers = {
+        ["Content-Type"]  = "application/json",
+        ["Authorization"] = "Bearer " .. openrouter_settings.api_key,
+        ["HTTP-Referer"]  = "https://github.com/omer-faruq/assistant.koplugin",
+        ["X-Title"]       = "assistant.koplugin",
+    }
+
+    local ws_mode = query_option.use_websearch or "none"
+
+    -- External search modes: two-stage tool-call flow, always non-streaming for stage 1
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        local augmented, err = self:resolveExternalSearch(
+            message_history, openrouter_settings, query_option, buildRequestBody, headers)
+        if not augmented then
+            return nil, err
+        end
+        -- Model answered directly without issuing a tool_call
+        if augmented.__direct_content then
+            return augmented.__direct_content
+        end
+        -- Replace message_history with the augmented messages for the final request
+        message_history = augmented
+    end
+
+    -- Assemble the final request body
+    local requestBodyTable = json.decode(buildRequestBody(message_history, nil))
+
+    -- Built-in OpenRouter web search server tool
+    -- https://openrouter.ai/docs/guides/features/tool-calling
+    if ws_mode == "builtin" then
         requestBodyTable.tools = { buildWebSearchTool(openrouter_settings.additional_parameters) }
     end
 
+    requestBodyTable.stream = query_option.use_stream_mode
+
     local requestBody = json.encode(requestBodyTable)
-    local headers = {
-        ["Content-Type"] = "application/json",
-        ["Authorization"] = "Bearer " .. openrouter_settings.api_key,
-        ["HTTP-Referer"] = "https://github.com/omer-faruq/assistant.koplugin",
-        ["X-Title"] = "assistant.koplugin"
-    }
 
     if requestBodyTable.stream then
-        -- For streaming responses, we need to handle the response differently
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(openrouter_settings.base_url, headers, requestBody)
     end
-    
+
     local status, code, response = self:makeRequest(openrouter_settings.base_url, headers, requestBody)
 
     if status then
@@ -85,7 +112,7 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
             local content = koutil.tableGetValue(responseData, "choices", 1, "message", "content")
             if content then return content end
         end
-        
+
         -- server response error message
         logger.warn("API Error", code, response)
         if success then
@@ -93,7 +120,7 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
             if err_msg then return nil, err_msg end
         end
     end
-    
+
     if code == BaseHandler.CODE_CANCELLED then
         return nil, response
     end

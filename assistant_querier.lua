@@ -76,6 +76,8 @@ function Querier:load_model(provider_name)
         logger.warn("Querier initialization failed: " .. err)
         return false, err
     end
+    local serpapi = koutil.tableGetValue(CONFIGURATION, "provider_settings", "serpapi")
+    local tavilyapi = koutil.tableGetValue(CONFIGURATION, "provider_settings", "tavilyapi")
 
     local handler_name
     local underscore_pos = provider_name:find("_")
@@ -98,6 +100,8 @@ function Querier:load_model(provider_name)
         for k, v in pairs(provider_settings) do
             self.provider_settings[k] = v
         end
+        self.provider_settings.serpapi = serpapi
+        self.provider_settings.tavilyapi = tavilyapi
         self.provider_name = provider_name
         -- Apply saved OpenRouter model override
         if handler_name == "openrouter" then
@@ -197,14 +201,16 @@ function Querier:query(message_history, title)
     local prompt_websearch = message_history[#message_history].use_websearch or false
     local query_option = {
         use_stream_mode = self.settings:readSetting("use_stream_mode", true),
-        use_websearch = self.settings:readSetting("use_websearch", false) == true and prompt_websearch == true,
+        use_websearch = prompt_websearch and self.settings:readSetting("use_websearch", "none")
     }
 
-    local infomsg = InfoMessage:new{
-      icon = "book.opened",
-      text = string.format("%s\n️☁️ %s\n⚡ %s", title or _("Querying AI ..."), self.provider_name,
-            koutil.tableGetValue(self.provider_settings, "model")),
-    }
+    local notify = string.format("%s\n️☁️ %s\n⚡ %s", title or _("Querying AI ..."),
+        self.provider_name, koutil.tableGetValue(self.provider_settings, "model"))
+
+    if query_option.use_websearch ~= "none" then
+        notify = notify .. "\n" .. _("With Search: ") .. query_option.use_websearch 
+    end
+    local infomsg = InfoMessage:new{ icon = "book.opened", text = notify }
 
     UIManager:show(infomsg)
 
@@ -246,7 +252,7 @@ function Querier:query(message_history, title)
 
         streamDialog = InputDialog:new{
             title = (query_option.use_websearch and " 🌐 " or "") .. _("AI is responding") ,
-            description = T("☁ %1/%2 %3", self.provider_name, self.provider_settings.model, (query_option.use_websearch and _("+ Web Search") or "")),
+            description = T("☁ %1/%2 %3", self.provider_name, self.provider_settings.model, (query_option.use_websearch or "")),
             inputtext_class = StreamText, -- use our custom InputText class
             input_face = Font:getFace("infofont", self.settings:readSetting("response_font_size") or 20),
             title_bar_left_icon = "appbar.settings",

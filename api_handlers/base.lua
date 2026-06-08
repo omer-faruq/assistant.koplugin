@@ -144,7 +144,7 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
     else
         -- If no trap widget is set, run the request directly
         -- use smaller timeout because we are blocking the UI
-        success, content = httpRequest(url, timeout or 20, maxtime or 45, body, nil, headers)
+        success, code, content = httpRequest(url, timeout or 20, maxtime or 45, body, nil, headers)
     end
 
     return success, code, content
@@ -198,6 +198,131 @@ function BaseHandler:backgroundRequest(url, headers, body)
 end
 
 
+--- Build the standard OpenAI-format tool definition for external web search.
+--- The tool instructs the LLM to extract a search keyword from the conversation.
+--- @return table tool definition
+function BaseHandler:buildExternalSearchToolDef()
+    return {
+        type = "function",
+        ["function"] = {
+            name = "web_search",
+            description = "Search the web for up-to-date information. Use this when the user's question requires current or recent information.",
+            parameters = {
+                type = "object",
+                properties = {
+                    keywords = {
+                        type = "string",
+                        description = "Concise search query keywords extracted from the user's question",
+                    },
+                },
+                required = { "keywords" },
+            },
+        },
+    }
+end
+
+--- Two-stage external search flow (serpapi or tavilyapi).
+--- Stage 1: send a non-streaming request with the web_search tool definition so
+---           the LLM can extract search keywords via a tool_call.
+--- Stage 2: execute the appropriate search API with those keywords, then return
+---           an augmented message list (original history + assistant tool_call
+---           message + tool result message) ready for the caller to send as the
+---           final LLM request.
+---
+--- @param message_history table   original conversation history
+--- @param provider_setting table  provider config; must contain .serpapi or .tavilyapi sub-table
+--- @param query_option     table  must contain .use_websearch ("serpapi" | "tavilyapi")
+--- @param build_request_fn function(messages, tools)  returns requestBody string for stage-1
+--- @param headers          table  HTTP headers to use for the stage-1 request
+--- @return table|nil augmented_messages, string|nil error_message
+function BaseHandler:resolveExternalSearch(message_history, provider_setting, query_option, build_request_fn, headers)
+
+    -- Stage 1: ask the LLM to produce a tool_call with search keywords
+    local tool_def = self:buildExternalSearchToolDef()
+    local stage1_body = build_request_fn(message_history, { tool_def })
+
+    local status, code, response = self:makeRequest(
+        provider_setting.base_url, headers, stage1_body)
+
+    if not status then
+        if code == self.CODE_CANCELLED then
+            return nil, response
+        end
+        return nil, "External search stage-1 request failed: " .. (code or "unknown") .. " - " .. tostring(response)
+    end
+
+    local ok, responseData = pcall(json.decode, response)
+    if not ok or not responseData then
+        return nil, "External search stage-1: failed to parse LLM response"
+    end
+
+    -- Extract the tool_call from choices[0].message.tool_calls[1]
+    local assistant_message = koutil.tableGetValue(responseData, "choices", 1, "message")
+    if not assistant_message then
+        return nil, "External search stage-1: no message in LLM response"
+    end
+
+    local tool_calls = assistant_message.tool_calls
+    if not tool_calls or not tool_calls[1] then
+        -- Model chose not to call the tool; treat the text response as final answer
+        local content = koutil.tableGetValue(responseData, "choices", 1, "message", "content")
+        if content then
+            -- Return a sentinel table so the caller knows to use this text directly
+            return { __direct_content = content }, nil
+        end
+        return nil, "External search stage-1: LLM did not produce a tool_call"
+    end
+
+    local tool_call   = tool_calls[1]
+    local tool_call_id = tool_call.id or "call_0"
+    local arguments_str = koutil.tableGetValue(tool_call, "function", "arguments") or "{}"
+    local arg_ok, args = pcall(json.decode, arguments_str)
+    if not arg_ok or not args or not args.keywords then
+        return nil, "External search stage-1: failed to parse tool_call arguments"
+    end
+    local keywords = args.keywords
+
+    -- Stage 2: run the external search API
+    local search_ok, search_result
+    local ws_mode = query_option.use_websearch
+    if ws_mode == "serpapi" then
+        search_ok, search_result = self:serpAPISearchRequest(provider_setting.serpapi, keywords)
+    elseif ws_mode == "tavilyapi" then
+        search_ok, search_result = self:tavilyAPISearchRequest(provider_setting.tavilyapi, keywords)
+    else
+        return nil, "resolveExternalSearch: unknown use_websearch value: " .. tostring(ws_mode)
+    end
+
+    if not search_ok then
+        return nil, "External search API failed: " .. tostring(search_result)
+    end
+
+    -- Build the augmented message history:
+    --   original messages
+    --   + assistant message carrying the tool_call
+    --   + tool result message
+    local augmented = {}
+    for _, msg in ipairs(message_history) do
+        table.insert(augmented, msg)
+    end
+
+    -- Assistant message: must preserve tool_calls array as returned by the model
+    table.insert(augmented, {
+        role       = "assistant",
+        content    = assistant_message.content,  -- may be nil/null; that is correct per spec
+        tool_calls = tool_calls,
+    })
+
+    -- Tool result message
+    table.insert(augmented, {
+        role         = "tool",
+        tool_call_id = tool_call_id,
+        content      = search_result,
+    })
+
+    return augmented, nil
+end
+
 function BaseHandler:serpAPISearchRequest(serpconfig, keywords)
 
     local base_url = serpconfig.base_url or "https://serpapi.com/search"
@@ -205,19 +330,19 @@ function BaseHandler:serpAPISearchRequest(serpconfig, keywords)
     local q = koutil.urlEncode(keywords)
     local url = T("%1?engine=google_ai_mode&api_key=%2&q=%3", base_url, key, q)
 
-    local completed, success, content
+    local completed, success, code, content
 
     local timeout = 45
     local maxtime = 120
 
-    completed, success, content = Trapper:dismissableRunInSubprocess(function()
+    completed, success, code, content = Trapper:dismissableRunInSubprocess(function()
             return httpRequest(url, timeout, maxtime, nil, nil, nil)
         end, self.trap_widget)
 
     if not completed then
         return false, self.CODE_CANCELLED
     end
-    if not success then
+    if not success or code ~= 200 then
         return false, content
     end
 
@@ -242,7 +367,8 @@ function BaseHandler:serpAPISearchRequest(serpconfig, keywords)
         table.insert(segments, "## Verified Sources (References):")
         table.insert(segments, "LLM Note: Please use these indexes and URLs to generate precise citations if needed.\n")
         
-        for _, ref in ipairs(parsed.references) do
+        for i, ref in ipairs(parsed.references) do
+            if i > 3 then break end -- too much references cause the context too large
             local idx = ref.index or 0
             local title = ref.title or "Untitled Source"
             local link = ref.link or "N/A"
@@ -271,18 +397,18 @@ function BaseHandler:tavilyAPISearchRequest(tavilyconfig, keywords)
     }
     local requestBody = json.encode(requestBodyTable)
 
-    local completed, success, content
+    local completed, success, code, content
     local timeout = 45
     local maxtime = 120
 
-    completed, success, content = Trapper:dismissableRunInSubprocess(function()
+    completed, success, code, content = Trapper:dismissableRunInSubprocess(function()
             return httpRequest(base_url, timeout, maxtime, requestBody, "application/json", nil)
         end, self.trap_widget)
 
     if not completed then
         return false, self.CODE_CANCELLED
     end
-    if not success then
+    if not success or code ~= 200 then
         return false, content
     end
 
