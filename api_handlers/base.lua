@@ -10,7 +10,10 @@ local json = require("rapidjson")
 local ffi = require("ffi")
 local ffiutil = require("ffi/util")
 local koutil = require("util")
+local _ = require("assistant_gettext")
 local T = ffiutil.template
+local UIManager = require("ui/uimanager")
+local InfoMessage = require("ui/widget/infomessage")
 
 local assistant_utils = require("assistant_utils")
 
@@ -39,7 +42,9 @@ function BaseHandler:setTrapWidget(trap_widget)
 end
 
 function BaseHandler:resetTrapWidget()
+    local widget = self.trap_widget
     self.trap_widget = nil
+    return widget
 end
 
 --- Query method to be implemented by specific handlers
@@ -282,6 +287,13 @@ function BaseHandler:resolveExternalSearch(message_history, provider_setting, qu
     end
     local keywords = args.keywords
 
+    if self.trap_widget then
+        UIManager:close(self.trap_widget)
+        local infomsg = InfoMessage:new{ icon = "book.opened", text = _("Searching for ...\n") .. keywords }
+        UIManager:show(infomsg)
+        self:setTrapWidget(infomsg)
+    end
+
     -- Stage 2: run the external search API
     local search_ok, search_result
     local ws_mode = query_option.use_websearch
@@ -425,7 +437,7 @@ function BaseHandler:tavilyAPISearchRequest(tavilyconfig, keywords)
         table.insert(segments, string.format("* URL: %s", item.url or "N/A"))
         table.insert(segments, string.format("* Summary: %s", item.content or ""))
         if item.raw_content and item.raw_content ~= "" then
-            local raw = item.raw_content
+            local raw = tostring(item.raw_content)
             if string.len(raw) > 3000 then
                 raw = string.sub(raw, 1, 3000) .. "\n... [Content Truncated for Length] ..."
             end

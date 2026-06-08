@@ -216,9 +216,7 @@ function Querier:query(message_history, title)
 
     self.handler:setTrapWidget(infomsg)
     local res, err = self.handler:query(trimMessageHistory(message_history), self.provider_settings, query_option)
-    self.handler:resetTrapWidget()
-
-    UIManager:close(infomsg)
+    UIManager:close(self.handler:resetTrapWidget()) --  the widget may not be the same as infomsg
 
     -- when res is a function, it means we are in streaming mode
     -- open a stream dialog and run the background query in a subprocess
