@@ -55,24 +55,54 @@ end
 
 
 function AnthropicHandler:query(message_history, anthropic_settings, query_option)
-    
-    local requestBodyTable = prepare_anthropic_messages(message_history)
-    requestBodyTable.model = anthropic_settings.model
-    requestBodyTable.max_tokens = koutil.tableGetValue(anthropic_settings, "additional_parameters", "max_tokens")
-    requestBodyTable.stream = query_option.use_stream_mode
-    local tools = koutil.tableGetValue(anthropic_settings, "additional_parameters", "tools")
-    if type(tools) == "table" and next(tools) ~= nil then
-        requestBodyTable.tools = tools
+
+    local headers = {
+        ["Content-Type"]     = "application/json",
+        ["x-api-key"]        = anthropic_settings.api_key,
+        ["anthropic-version"] = koutil.tableGetValue(anthropic_settings, "additional_parameters", "anthropic_version"),
+    }
+
+    -- build_request_fn for Anthropic.
+    -- tools is a list of tool definitions (or nil); assigned to body.tools directly.
+    local function buildRequestBody(messages, tools)
+        local prepared = prepare_anthropic_messages(messages)
+        local body = {
+            model      = anthropic_settings.model,
+            system     = prepared.system,
+            messages   = prepared.messages,
+            max_tokens = koutil.tableGetValue(anthropic_settings, "additional_parameters", "max_tokens"),
+        }
+        -- tools is a list passed from resolveExternalSearch, or nil for the final request
+        if tools then
+            body.tools       = tools
+            body.tool_choice = { type = "auto" }
+        else
+            -- Carry over any user-configured tools when not injecting search tool
+            local user_tools = koutil.tableGetValue(anthropic_settings, "additional_parameters", "tools")
+            if type(user_tools) == "table" and next(user_tools) ~= nil then
+                body.tools = user_tools
+            end
+        end
+        return json.encode(body)
     end
 
+    local ws_mode = query_option.use_websearch or "none"
+
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        local augmented, err = self:resolveExternalSearch(
+            message_history, anthropic_settings, query_option, buildRequestBody, headers,
+            anthropic_settings.base_url, "anthropic")
+        if not augmented then return nil, err end
+        if augmented.__direct_content then return augmented.__direct_content end
+        message_history = augmented
+    end
+
+    -- Final request (no search tool injection)
+    local requestBodyTable = json.decode(buildRequestBody(message_history, nil))
+    requestBodyTable.stream = query_option.use_stream_mode
     local requestBody = json.encode(requestBodyTable)
-    local headers = {
-        ["Content-Type"] = "application/json",
-        ["x-api-key"] = anthropic_settings.api_key,
-        ["anthropic-version"] = koutil.tableGetValue(anthropic_settings, "additional_parameters", "anthropic_version")
-    }
+
     if requestBodyTable.stream then
-        -- For streaming responses, we need to handle the response differently
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(anthropic_settings.base_url, headers, requestBody)
     end
@@ -83,7 +113,7 @@ function AnthropicHandler:query(message_history, anthropic_settings, query_optio
         if code == BaseHandler.CODE_CANCELLED then
             return nil, response
         end
-        return nil,"Error: Failed to connect to Anthropic API - " .. tostring(response)
+        return nil, "Error: Failed to connect to Anthropic API - " .. tostring(response)
     end
 
     local success_parse, parsed = pcall(json.decode, response)

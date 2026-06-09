@@ -20,30 +20,49 @@ function GigaChatHandler:query(message_history, gigachat_settings, query_option)
         return nil, "Error obtaining access token: " .. tostring(err)
     end
 
-    local requestBodyTable = {
-        model = gigachat_settings.model,
-        messages = message_history,
-        stream = query_option.use_stream_mode,
-        update_interval = koutil.tableGetValue(gigachat_settings, "additional_parameters", "update_interval") or
-            DEFAULT_UPDATE_INTERVAL,
-        max_tokens = koutil.tableGetValue(gigachat_settings, "additional_parameters", "max_tokens")
+    local function buildRequestBody(messages, tools)
+        local body = {
+            model           = gigachat_settings.model,
+            messages        = messages,
+            update_interval = koutil.tableGetValue(gigachat_settings, "additional_parameters", "update_interval") or
+                                DEFAULT_UPDATE_INTERVAL,
+            max_tokens      = koutil.tableGetValue(gigachat_settings, "additional_parameters", "max_tokens"),
+        }
+        if tools then
+            body.tools       = tools
+            body.tool_choice = "auto"
+        end
+        return json.encode(body)
+    end
+
+    local headers = {
+        ["Content-Type"]  = "application/json",
+        ["Authorization"] = "Bearer " .. token,
+        ["RqUID"]         = UUID_EMPTY,
     }
 
+    local ws_mode = query_option.use_websearch or "none"
+
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        local augmented, search_err = self:resolveExternalSearch(
+            message_history, gigachat_settings, query_option, buildRequestBody, headers,
+            gigachat_settings.base_url, "openai")
+        if not augmented then return nil, search_err end
+        if augmented.__direct_content then return augmented.__direct_content end
+        message_history = augmented
+    end
+
+    local requestBodyTable = json.decode(buildRequestBody(message_history, nil))
+    requestBodyTable.stream = query_option.use_stream_mode
     local requestBody = json.encode(requestBodyTable)
-    local headers = {
-        ["Content-Type"] = "application/json",
-        ["Authorization"] = "Bearer " .. token,
-        ["RqUID"] = UUID_EMPTY,
-    }
 
     if requestBodyTable.stream then
-        -- For streaming responses, we need to handle the response differently
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(gigachat_settings.base_url, headers, requestBody)
     end
 
     local request_timeout, request_maxtime
-    if requestBody and #requestBody > 10000 then -- large book analysis
+    if #requestBody > 10000 then
         request_timeout = 500
         request_maxtime = 500
     else
@@ -52,12 +71,7 @@ function GigaChatHandler:query(message_history, gigachat_settings, query_option)
     end
 
     local success, code, response = self:makeRequest(
-        gigachat_settings.base_url,
-        headers,
-        requestBody,
-        request_timeout,
-        request_maxtime
-    )
+        gigachat_settings.base_url, headers, requestBody, request_timeout, request_maxtime)
 
     if not success then
         if code == BaseHandler.CODE_CANCELLED then
@@ -75,7 +89,6 @@ function GigaChatHandler:query(message_history, gigachat_settings, query_option)
     if content then return content end
 
     local apiError = koutil.tableGetValue(parsed, "error")
-
     if apiError and apiError.message then
         logger.warn("API Error:", code, response)
         return nil, "GigaChat API Error: [" .. (apiError.code or "unknown") .. "]: " .. apiError.message

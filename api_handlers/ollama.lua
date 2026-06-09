@@ -9,30 +9,47 @@ function OllamaHandler:query(message_history, ollama_settings, query_option)
 
     local required_settings = {"base_url", "model", "api_key"}
     for _, setting in ipairs(required_settings) do
-      if not ollama_settings[setting] then
-        return "Error: Missing " .. setting .. " in configuration"
-      end
+        if not ollama_settings[setting] then
+            return "Error: Missing " .. setting .. " in configuration"
+        end
     end
 
-    -- Ollama uses OpenAI-compatible API format
-    local requestBodyTable = {
-        model = ollama_settings.model,
-        messages = message_history,
-        stream = query_option.use_stream_mode
+    local function buildRequestBody(messages, tools)
+        local body = {
+            model    = ollama_settings.model,
+            messages = messages,
+        }
+        if tools then
+            body.tools = tools
+        end
+        return json.encode(body)
+    end
+
+    local headers = {
+        ["Content-Type"]  = "application/json",
+        ["Authorization"] = "Bearer " .. ollama_settings.api_key,
     }
 
+    local ws_mode = query_option.use_websearch or "none"
+
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        local augmented, err = self:resolveExternalSearch(
+            message_history, ollama_settings, query_option, buildRequestBody, headers,
+            ollama_settings.base_url, "openai")
+        if not augmented then return nil, err end
+        if augmented.__direct_content then return augmented.__direct_content end
+        message_history = augmented
+    end
+
+    local requestBodyTable = json.decode(buildRequestBody(message_history, nil))
+    requestBodyTable.stream = query_option.use_stream_mode
     local requestBody = json.encode(requestBodyTable)
-    local headers = {
-        ["Content-Type"] = "application/json",
-        ["Authorization"] = "Bearer " .. ollama_settings.api_key
-    }
 
     if requestBodyTable.stream then
-        -- For streaming responses, we need to handle the response differently
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(ollama_settings.base_url, headers, requestBody)
     end
-    
+
     local success, code, response = self:makeRequest(ollama_settings.base_url, headers, requestBody)
     if not success then
         if code == BaseHandler.CODE_CANCELLED then
@@ -47,6 +64,7 @@ function OllamaHandler:query(message_history, ollama_settings, query_option)
         return nil, "Error: Failed to parse Ollama API response"
     end
 
+    -- Ollama uses message.content (not choices[].message.content)
     local content = koutil.tableGetValue(parsed, "message", "content")
     if content then return content end
 

@@ -10,8 +10,8 @@ local json = require("rapidjson")
 local ffi = require("ffi")
 local ffiutil = require("ffi/util")
 local koutil = require("util")
-local _ = require("assistant_gettext")
 local T = ffiutil.template
+local _ = require("assistant_gettext")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 
@@ -42,9 +42,9 @@ function BaseHandler:setTrapWidget(trap_widget)
 end
 
 function BaseHandler:resetTrapWidget()
-    local widget = self.trap_widget
+    local w = self.trap_widget
     self.trap_widget = nil
-    return widget
+    return w
 end
 
 --- Query method to be implemented by specific handlers
@@ -149,7 +149,7 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
     else
         -- If no trap widget is set, run the request directly
         -- use smaller timeout because we are blocking the UI
-        success, code, content = httpRequest(url, timeout or 20, maxtime or 45, body, nil, headers)
+        success, content = httpRequest(url, timeout or 20, maxtime or 45, body, nil, headers)
     end
 
     return success, code, content
@@ -203,57 +203,246 @@ function BaseHandler:backgroundRequest(url, headers, body)
 end
 
 
---- Build the standard OpenAI-format tool definition for external web search.
---- The tool instructs the LLM to extract a search keyword from the conversation.
---- @return table tool definition
-function BaseHandler:buildExternalSearchToolDef()
-    return {
-        type = "function",
-        ["function"] = {
-            name = "web_search",
-            description = "Search the web for up-to-date information. Use this when the user's question requires current or recent information.",
-            parameters = {
-                type = "object",
-                properties = {
-                    keywords = {
-                        type = "string",
-                        description = "Concise search query keywords extracted from the user's question",
-                    },
-                },
-                required = { "keywords" },
+--- Build the web_search tool definition in the format required by a given platform.
+---
+--- format = "openai"     → OpenAI function calling shape (groq/openrouter/openai/azure/
+---                          mistral/deepseek/gigachat/ollama all speak this dialect)
+--- format = "anthropic"  → Anthropic tool shape (name + description + input_schema)
+--- format = "gemini"     → Gemini function_declarations shape
+---
+--- @param format string  "openai" | "anthropic" | "gemini"
+--- @return table tool definition ready to embed in the request body
+function BaseHandler:buildExternalSearchToolDef(format)
+    -- Shared parameter schema (OpenAPI subset, accepted by all three platforms)
+    local param_schema = {
+        type = "object",
+        properties = {
+            keywords = {
+                type = "string",
+                description = "Concise search query keywords extracted from the user's question",
             },
         },
+        required = { "keywords" },
     }
+    local description = "Search the web for up-to-date information. Use this when the user's question requires current or recent information."
+
+    if format == "anthropic" then
+        return {
+            name        = "web_search",
+            description = description,
+            input_schema = param_schema,
+        }
+    elseif format == "gemini" then
+        -- Gemini wraps all functions inside a function_declarations list
+        return {
+            function_declarations = {
+                {
+                    name        = "web_search",
+                    description = description,
+                    parameters  = param_schema,
+                },
+            },
+        }
+    else
+        -- "openai" (default) — used by all OpenAI-compatible handlers
+        return {
+            type = "function",
+            ["function"] = {
+                name        = "web_search",
+                description = description,
+                parameters  = param_schema,
+            },
+        }
+    end
+end
+
+--- Parse the stage-1 LLM response and extract (tool_call_id, keywords, raw_assistant_data).
+--- Returns platform-specific raw assistant data needed to reconstruct the message history.
+---
+--- @param responseData table  decoded JSON response from the LLM
+--- @param format string       "openai" | "anthropic" | "gemini"
+--- @return string|nil tool_call_id
+--- @return string|nil keywords
+--- @return table|nil  raw assistant payload (format-specific)
+--- @return string|nil direct_content (set when model replied without a tool call)
+--- @return string|nil error
+local function parseStage1Response(responseData, format)
+    if format == "anthropic" then
+        -- Anthropic: stop_reason == "tool_use", content is an array of blocks
+        local content_blocks = responseData.content
+        if type(content_blocks) ~= "table" then
+            return nil, nil, nil, nil, "Anthropic stage-1: missing content array"
+        end
+        local tool_use_block = nil
+        local text_block     = nil
+        for _, block in ipairs(content_blocks) do
+            if type(block) == "table" then
+                if block.type == "tool_use"  then tool_use_block = block end
+                if block.type == "text"      then text_block     = block end
+            end
+        end
+        if not tool_use_block then
+            -- Model answered directly
+            local direct = text_block and tostring(text_block.text) or nil
+            return nil, nil, nil, direct, nil
+        end
+        local tool_id = tostring(tool_use_block.id or "toolu_0")
+        local input   = tool_use_block.input or {}
+        local kw      = input.keywords
+        if not kw then
+            return nil, nil, nil, nil, "Anthropic stage-1: tool_use block missing keywords input"
+        end
+        -- raw assistant payload = original content blocks array (including the tool_use block)
+        return tool_id, tostring(kw), content_blocks, nil, nil
+
+    elseif format == "gemini" then
+        -- Gemini: candidates[1].content.parts contains functionCall objects
+        local parts = koutil.tableGetValue(responseData, "candidates", 1, "content", "parts")
+        if type(parts) ~= "table" then
+            return nil, nil, nil, nil, "Gemini stage-1: missing content parts"
+        end
+        local fn_call  = nil
+        local text_part = nil
+        for _, part in ipairs(parts) do
+            if type(part) == "table" then
+                if part.functionCall  then fn_call   = part.functionCall  end
+                if part.text          then text_part  = part               end
+            end
+        end
+        if not fn_call then
+            local direct = text_part and tostring(text_part.text) or nil
+            return nil, nil, nil, direct, nil
+        end
+        -- fn_call.id may be nil on older Gemini models; fall back to fn_call.name
+        local call_id = fn_call.id or fn_call.name or "fc_0"
+        local args    = fn_call.args or {}
+        local kw      = args.keywords
+        if not kw then
+            return nil, nil, nil, nil, "Gemini stage-1: functionCall missing keywords arg"
+        end
+        -- raw assistant payload = the model content object (role + parts) to replay
+        local model_content = koutil.tableGetValue(responseData, "candidates", 1, "content")
+        return tostring(call_id), tostring(kw), model_content, nil, nil
+
+    else
+        -- "openai" (default)
+        logger.info("stage1", responseData)
+        local assistant_message = koutil.tableGetValue(responseData, "choices", 1, "message")
+        if not assistant_message then
+            return nil, nil, nil, nil, "OpenAI stage-1: no message in response"
+        end
+        local tool_calls = assistant_message.tool_calls
+        if not tool_calls or not tool_calls[1] then
+            -- Model answered directly
+            local direct = assistant_message.content
+            return nil, nil, nil, direct and tostring(direct) or nil, nil
+        end
+        local tc           = tool_calls[1]
+        local tool_call_id = tostring(tc.id or "call_0")
+        local arguments_str = koutil.tableGetValue(tc, "function", "arguments") or "{}"
+        local arg_ok, args  = pcall(json.decode, arguments_str)
+        if not arg_ok or not args or not args.keywords then
+            return nil, nil, nil, nil, "OpenAI stage-1: failed to parse tool_call arguments"
+        end
+        -- raw assistant payload = the full assistant message (preserves tool_calls array)
+        return tool_call_id, tostring(args.keywords), assistant_message, nil, nil
+    end
+end
+
+--- Append the stage-1 assistant turn and the tool result to message_history,
+--- using the correct format for the target platform.
+---
+--- @param augmented      table   the list to append to (copy of original message_history)
+--- @param raw_assistant  table   platform-specific assistant payload from parseStage1Response
+--- @param tool_call_id   string
+--- @param search_result  string  markdown text from the search API
+--- @param format         string  "openai" | "anthropic" | "gemini"
+local function appendToolResult(augmented, raw_assistant, tool_call_id, search_result, format)
+    if format == "anthropic" then
+        -- Assistant turn: role="assistant", content=<original content blocks array>
+        table.insert(augmented, {
+            role    = "assistant",
+            content = raw_assistant,  -- the full content blocks array (includes tool_use block)
+        })
+        -- Tool result turn: role="user", content=[{type="tool_result", ...}]
+        table.insert(augmented, {
+            role    = "user",
+            content = {
+                {
+                    type        = "tool_result",
+                    tool_use_id = tool_call_id,
+                    content     = search_result,
+                },
+            },
+        })
+
+    elseif format == "gemini" then
+        -- Model turn: replay the original model content (role="model", parts=[functionCall...])
+        table.insert(augmented, raw_assistant)
+        -- Function response turn: role="user", parts=[{functionResponse={name, response, id}}]
+        table.insert(augmented, {
+            role  = "user",
+            parts = {
+                {
+                    functionResponse = {
+                        name     = "web_search",
+                        id       = tool_call_id,
+                        response = { result = search_result },
+                    },
+                },
+            },
+        })
+
+    else
+        -- "openai"
+        -- Assistant turn: preserve tool_calls array exactly as returned
+        table.insert(augmented, {
+            role       = "assistant",
+            content    = raw_assistant.content,   -- may be nil; correct per spec
+            tool_calls = raw_assistant.tool_calls,
+        })
+        -- Tool result turn
+        table.insert(augmented, {
+            role         = "tool",
+            tool_call_id = tool_call_id,
+            content      = search_result,
+        })
+    end
 end
 
 --- Two-stage external search flow (serpapi or tavilyapi).
---- Stage 1: send a non-streaming request with the web_search tool definition so
----           the LLM can extract search keywords via a tool_call.
---- Stage 2: execute the appropriate search API with those keywords, then return
----           an augmented message list (original history + assistant tool_call
----           message + tool result message) ready for the caller to send as the
----           final LLM request.
 ---
---- @param message_history table   original conversation history
---- @param provider_setting table  provider config; must contain .serpapi or .tavilyapi sub-table
---- @param query_option     table  must contain .use_websearch ("serpapi" | "tavilyapi")
---- @param build_request_fn function(messages, tools)  returns requestBody string for stage-1
---- @param headers          table  HTTP headers to use for the stage-1 request
+--- Stage 1: send a non-streaming request with the web_search tool definition so
+---          the LLM can extract search keywords via a tool call.
+--- Stage 2: execute the appropriate search API with those keywords, then return
+---          an augmented message list ready for the caller's final LLM request.
+---
+--- @param message_history  table    original conversation history
+--- @param provider_setting table    provider config; must contain .serpapi or .tavilyapi
+--- @param query_option     table    must contain .use_websearch ("serpapi" | "tavilyapi")
+--- @param build_request_fn function(messages, tools) → requestBody string
+--- @param headers          table    HTTP headers for the stage-1 request
+--- @param url              string   endpoint URL for the stage-1 request
+--- @param format           string   "openai" | "anthropic" | "gemini"
 --- @return table|nil augmented_messages, string|nil error_message
-function BaseHandler:resolveExternalSearch(message_history, provider_setting, query_option, build_request_fn, headers)
+function BaseHandler:resolveExternalSearch(message_history, provider_setting, query_option,
+                                           build_request_fn, headers, url, format)
+    format = format or "openai"
 
-    -- Stage 1: ask the LLM to produce a tool_call with search keywords
-    local tool_def = self:buildExternalSearchToolDef()
+    -- Stage 1: ask the LLM to produce a tool call with search keywords.
+    -- Wrap tool_def into the shape each platform expects for body.tools:
+    --   openai / anthropic → { tool_def }  (an array with one entry)
+    --   gemini             → { tool_def }  (tool_def is {function_declarations=[...]},
+    --                                       body.tools is an array of such objects)
+    local tool_def    = self:buildExternalSearchToolDef(format)
     local stage1_body = build_request_fn(message_history, { tool_def })
 
-    local status, code, response = self:makeRequest(
-        provider_setting.base_url, headers, stage1_body)
-
+    local status, code, response = self:makeRequest(url, headers, stage1_body)
     if not status then
         if code == self.CODE_CANCELLED then
             return nil, response
         end
-        return nil, "External search stage-1 request failed: " .. (code or "unknown") .. " - " .. tostring(response)
+        return nil, "External search stage-1 request failed: " .. tostring(code) .. " - " .. tostring(response)
     end
 
     local ok, responseData = pcall(json.decode, response)
@@ -261,42 +450,30 @@ function BaseHandler:resolveExternalSearch(message_history, provider_setting, qu
         return nil, "External search stage-1: failed to parse LLM response"
     end
 
-    -- Extract the tool_call from choices[0].message.tool_calls[1]
-    local assistant_message = koutil.tableGetValue(responseData, "choices", 1, "message")
-    if not assistant_message then
-        return nil, "External search stage-1: no message in LLM response"
+    local tool_call_id, keywords, raw_assistant, direct_content, parse_err =
+        parseStage1Response(responseData, format)
+
+    if parse_err then
+        return nil, parse_err
     end
 
-    local tool_calls = assistant_message.tool_calls
-    if not tool_calls or not tool_calls[1] then
-        -- Model chose not to call the tool; treat the text response as final answer
-        local content = koutil.tableGetValue(responseData, "choices", 1, "message", "content")
-        if content then
-            -- Return a sentinel table so the caller knows to use this text directly
-            return { __direct_content = content }, nil
-        end
-        return nil, "External search stage-1: LLM did not produce a tool_call"
+    -- Model chose not to call the tool → return sentinel with the direct text answer
+    if direct_content then
+        return { __direct_content = direct_content }, nil
     end
 
-    local tool_call   = tool_calls[1]
-    local tool_call_id = tool_call.id or "call_0"
-    local arguments_str = koutil.tableGetValue(tool_call, "function", "arguments") or "{}"
-    local arg_ok, args = pcall(json.decode, arguments_str)
-    if not arg_ok or not args or not args.keywords then
-        return nil, "External search stage-1: failed to parse tool_call arguments"
+    if not keywords then
+        return nil, "External search stage-1: LLM did not produce a tool call and gave no text"
     end
-    local keywords = args.keywords
 
-    if self.trap_widget then
-        UIManager:close(self.trap_widget)
-        local infomsg = InfoMessage:new{ icon = "book.opened", text = _("Searching for ...\n") .. keywords }
-        UIManager:show(infomsg)
-        self:setTrapWidget(infomsg)
-    end
+    UIManager:close(self:resetTrapWidget())
+    local keywordmsg = InfoMessage:new({text = _("Searching for ...\n" .. keywords)})
+    UIManager:show(keywordmsg)
+    self:setTrapWidget(keywordmsg)
 
     -- Stage 2: run the external search API
-    local search_ok, search_result
     local ws_mode = query_option.use_websearch
+    local search_ok, search_result
     if ws_mode == "serpapi" then
         search_ok, search_result = self:serpAPISearchRequest(provider_setting.serpapi, keywords)
     elseif ws_mode == "tavilyapi" then
@@ -309,28 +486,12 @@ function BaseHandler:resolveExternalSearch(message_history, provider_setting, qu
         return nil, "External search API failed: " .. tostring(search_result)
     end
 
-    -- Build the augmented message history:
-    --   original messages
-    --   + assistant message carrying the tool_call
-    --   + tool result message
+    -- Build augmented message history
     local augmented = {}
     for _, msg in ipairs(message_history) do
         table.insert(augmented, msg)
     end
-
-    -- Assistant message: must preserve tool_calls array as returned by the model
-    table.insert(augmented, {
-        role       = "assistant",
-        content    = assistant_message.content,  -- may be nil/null; that is correct per spec
-        tool_calls = tool_calls,
-    })
-
-    -- Tool result message
-    table.insert(augmented, {
-        role         = "tool",
-        tool_call_id = tool_call_id,
-        content      = search_result,
-    })
+    appendToolResult(augmented, raw_assistant, tool_call_id, search_result, format)
 
     return augmented, nil
 end
@@ -371,7 +532,7 @@ function BaseHandler:serpAPISearchRequest(serpconfig, keywords)
 
     if parsed.reconstructed_markdown and parsed.reconstructed_markdown ~= "" then
         table.insert(segments, "## Google AI Summary:\n")
-        table.insert(segments, parsed.reconstructed_markdown)
+        table.insert(segments, tostring(parsed.reconstructed_markdown))
         table.insert(segments, "\n")
     end
 
@@ -379,12 +540,11 @@ function BaseHandler:serpAPISearchRequest(serpconfig, keywords)
         table.insert(segments, "## Verified Sources (References):")
         table.insert(segments, "LLM Note: Please use these indexes and URLs to generate precise citations if needed.\n")
         
-        for i, ref in ipairs(parsed.references) do
-            if i > 3 then break end -- too much references cause the context too large
+        for _, ref in ipairs(parsed.references) do
             local idx = ref.index or 0
-            local title = ref.title or "Untitled Source"
-            local link = ref.link or "N/A"
-            local source_name = ref.source or "Web"
+            local title = tostring(ref.title or "Untitled Source")
+            local link = tostring(ref.link or "N/A")
+            local source_name = tostring(ref.source or "Web")
 
             local ref_line = string.format("[%d] %s (%s) - URL: %s", idx, title, source_name, link)
             table.insert(segments, ref_line)
@@ -426,20 +586,20 @@ function BaseHandler:tavilyAPISearchRequest(tavilyconfig, keywords)
 
     local ok, parsed = pcall(json.decode, content)
     if not ok or not parsed or not parsed.results then
-        return false, "fail to parse serpapi return"
+        return false, "fail to parse tavily return"
     end
 
     local segments = { "Here are the verified search results from Tavily:\n" }
 
     for i, item in ipairs(parsed.results) do
         table.insert(segments, "---")
-        table.insert(segments, string.format("### Source %d: %s", i, item.title or "Untitled"))
-        table.insert(segments, string.format("* URL: %s", item.url or "N/A"))
-        table.insert(segments, string.format("* Summary: %s", item.content or ""))
+        table.insert(segments, string.format("### Source %d: %s", i, tostring(item.title or "Untitled")))
+        table.insert(segments, string.format("* URL: %s", tostring(item.url or "N/A")))
+        table.insert(segments, string.format("* Summary: %s", tostring(item.content or "")))
         if item.raw_content and item.raw_content ~= "" then
             local raw = tostring(item.raw_content)
-            if string.len(raw) > 3000 then
-                raw = string.sub(raw, 1, 3000) .. "\n... [Content Truncated for Length] ..."
+            if #raw > 3000 then
+                raw = raw:sub(1, 3000) .. "\n... [Content Truncated for Length] ..."
             end
             table.insert(segments, "* Full Document Content:\n" .. raw)
         end

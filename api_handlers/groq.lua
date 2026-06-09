@@ -40,7 +40,8 @@ function groqHandler:query(message_history, groq_settings, query_option)
     -- External search modes: two-stage tool-call flow, always non-streaming for stage 1
     if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
         local augmented, err = self:resolveExternalSearch(
-            message_history, groq_settings, query_option, buildRequestBody, headers)
+            message_history, groq_settings, query_option, buildRequestBody, headers,
+            groq_settings.base_url, "openai")
         if not augmented then
             return nil, err
         end

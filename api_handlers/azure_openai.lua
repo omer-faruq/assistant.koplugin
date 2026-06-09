@@ -6,45 +6,64 @@ local logger = require("logger")
 local AzureOpenAIHandler = BaseHandler:new()
 
 function AzureOpenAIHandler:query(message_history, azure_settings, query_option)
-    
+
     -- Check required settings
     for _, setting in ipairs({"api_key", "endpoint", "deployment_name", "api_version"}) do
         if not azure_settings or not azure_settings[setting] then
             return nil, "Error: Missing " .. setting .. " in configuration"
         end
     end
-    
+
     -- Construct the Azure OpenAI API URL
     local api_url = string.format(
         "%s/openai/deployments/%s/chat/completions?api-version=%s",
-        azure_settings.endpoint:gsub("/$", ""),  -- Remove trailing slash if present
+        azure_settings.endpoint:gsub("/$", ""),
         azure_settings.deployment_name,
         azure_settings.api_version
     )
-    
-    -- Prepare request body
-    local requestBodyTable = {
-        messages = message_history,
-        max_tokens = azure_settings.max_tokens,
-        temperature = azure_settings.temperature or 0.7,
-        stream = query_option.use_stream_mode,
-    }
-    
-    local requestBody = json.encode(requestBodyTable)
+
+    local function buildRequestBody(messages, tools)
+        local body = {
+            messages    = messages,
+            max_tokens  = azure_settings.max_tokens,
+            temperature = azure_settings.temperature or 0.7,
+        }
+        if tools then
+            body.tools       = tools
+            body.tool_choice = "auto"
+        end
+        return json.encode(body)
+    end
+
     local headers = {
-        ["Content-Type"] = "application/json",
-        ["api-key"] = azure_settings.api_key,
-        ["HTTP-Referer"] = "https://github.com/omer-faruq/assistant.koplugin",
-        ["X-Title"] = "assistant.koplugin"
+        ["Content-Type"]  = "application/json",
+        ["api-key"]       = azure_settings.api_key,
+        ["HTTP-Referer"]  = "https://github.com/omer-faruq/assistant.koplugin",
+        ["X-Title"]       = "assistant.koplugin",
     }
+
+    local ws_mode = query_option.use_websearch or "none"
+
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        local augmented, err = self:resolveExternalSearch(
+            message_history, azure_settings, query_option, buildRequestBody, headers,
+            api_url, "openai")
+        if not augmented then return nil, err end
+        if augmented.__direct_content then return augmented.__direct_content end
+        message_history = augmented
+    end
+
+    local requestBodyTable = json.decode(buildRequestBody(message_history, nil))
+    requestBodyTable.stream = query_option.use_stream_mode
+    local requestBody = json.encode(requestBodyTable)
+
     if requestBodyTable.stream then
-        -- For streaming responses, we need to handle the response differently
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(api_url, headers, requestBody)
     end
-    
+
     local status, code, response = self:makeRequest(api_url, headers, requestBody)
-    
+
     if status then
         local success, responseData = pcall(json.decode, response)
         if success then
@@ -52,7 +71,6 @@ function AzureOpenAIHandler:query(message_history, azure_settings, query_option)
             if content then return content end
         end
 
-        -- server response error message
         logger.warn("API Error", code, response)
         if success then
             local err_msg = koutil.tableGetValue(responseData, "error", "message")
@@ -63,7 +81,6 @@ function AzureOpenAIHandler:query(message_history, azure_settings, query_option)
     if code == BaseHandler.CODE_CANCELLED then
         return nil, response
     end
-    
     return nil, "Error: " .. (code or "unknown") .. " - " .. response
 end
 
