@@ -328,7 +328,13 @@ local function parseStage1Response(responseData, format)
         -- "openai" (default)
         local assistant_message = koutil.tableGetValue(responseData, "choices", 1, "message")
         if not assistant_message then
-            return nil, nil, nil, nil, "OpenAI stage-1: no message in response"
+            local err_msg = koutil.tableGetValue(responseData, "error", "message") or -- OpenAI error
+                            koutil.tableGetValue(responseData, "message") -- mistrial error
+            if not err_msg then 
+                err_msg = "OpenAI stage-1: no message in response"
+            end
+            logger.warn("stage1_body", responseData)
+            return nil, nil, nil, nil, err_msg
         end
         local tool_calls = assistant_message.tool_calls
         if not tool_calls or not tool_calls[1] then

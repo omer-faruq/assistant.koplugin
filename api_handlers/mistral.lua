@@ -64,10 +64,8 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
         end
 
         logger.warn("API Error", code, response)
-        if success then
-            local err_msg = koutil.tableGetValue(responseData, "message")
-            if err_msg then return nil, "API Error: " .. err_msg end
-        end
+        local err_msg = koutil.tableGetValue(responseData, "message") or ""
+        if err_msg then return nil, "API Error: " .. err_msg end
     end
 
     if code == BaseHandler.CODE_CANCELLED then

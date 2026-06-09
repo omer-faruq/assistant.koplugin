@@ -573,9 +573,9 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         for _, part in ipairs(koutil.tableGetValue(candidates, 1, "content", "parts")) do
             if part.text then
                 if part.thought then
-                    reasoning_content = reasoning_content .. part.text
+                    reasoning_content = (reasoning_content or "") .. part.text
                 else
-                    result_content = result_content .. part.text
+                    result_content = (result_content or "") .. part.text
                 end
             end
         end
