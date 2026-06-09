@@ -326,7 +326,6 @@ local function parseStage1Response(responseData, format)
 
     else
         -- "openai" (default)
-        logger.info("stage1", responseData)
         local assistant_message = koutil.tableGetValue(responseData, "choices", 1, "message")
         if not assistant_message then
             return nil, nil, nil, nil, "OpenAI stage-1: no message in response"
@@ -399,7 +398,7 @@ local function appendToolResult(augmented, raw_assistant, tool_call_id, search_r
         table.insert(augmented, {
             role       = "assistant",
             content    = raw_assistant.content,   -- may be nil; correct per spec
-            tool_calls = raw_assistant.tool_calls,
+            tool_calls = { raw_assistant.tool_calls[1] }, -- only answered the first call
         })
         -- Tool result turn
         table.insert(augmented, {
@@ -467,7 +466,7 @@ function BaseHandler:resolveExternalSearch(message_history, provider_setting, qu
     end
 
     UIManager:close(self:resetTrapWidget())
-    local keywordmsg = InfoMessage:new({text = _("Searching for ...\n" .. keywords)})
+    local keywordmsg = InfoMessage:new({icon = "appbar.search", text = _("Searching for ...\n\n" .. keywords)})
     UIManager:show(keywordmsg)
     self:setTrapWidget(keywordmsg)
 
