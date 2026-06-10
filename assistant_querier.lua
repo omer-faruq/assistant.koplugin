@@ -207,9 +207,10 @@ function Querier:query(message_history, title)
     end
 
     local prompt_websearch = message_history[#message_history].use_websearch or false
+    local user_setting_websearch = self.settings:readSetting("use_websearch", "none")
     local query_option = {
         use_stream_mode = self.settings:readSetting("use_stream_mode", true),
-        use_websearch = prompt_websearch and self.settings:readSetting("use_websearch", "none")
+        use_websearch = (prompt_websearch and user_setting_websearch ~= "none") and user_setting_websearch or "none"
     }
 
     local notify = string.format("%s\n️☁️ %s\n⚡ %s", title or _("Querying AI ..."),
