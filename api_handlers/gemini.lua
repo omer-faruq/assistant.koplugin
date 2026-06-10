@@ -57,9 +57,9 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
     local function buildRequestBody(messages, tool_def)
         local contents, system_content = toGeminiContents(messages)
 
-        local system_instruction = nil
+        local system_instruction = { parts = {}}
         if system_content ~= "" then
-            system_instruction = { parts = {{ text = system_content:gsub("\n$", "") }} }
+            table.insert(system_instruction.parts, { text = system_content:gsub("\n$", "") })
         end
 
         local generationConfig = nil
@@ -78,9 +78,10 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
         end
 
         -- tools: prefer injected search tool_def; fall back to builtin google_search
-        local gemini_tools = nil
+        local gemini_tools
         if tool_def then
             gemini_tools = { tool_def }
+            table.insert(system_instruction.parts, {text = " CRITICAL CONSTRAINT: You have a maximum allowance of ONE single call to the `web_search` tool for the entire interaction. Never output multiple search calls in parallel, and never plan for a multi-turn reasoning loop. Consolidate your informational needs into one precise search query. If no search is needed for common knowledge, answer directly without calling the tool."})
         end
 
         local body = {
@@ -99,6 +100,7 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
     end
 
     local ws_mode = query_option.use_websearch or "none"
+    local tool_called = false
 
     if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
         local augmented, err = self:resolveExternalSearch(
@@ -107,13 +109,21 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
         if not augmented then return nil, err end
         if augmented.__direct_content then return augmented.__direct_content end
         message_history = augmented
+        tool_called = true
     end
 
     -- Final request body
-    local final_tools = nil
+    local final_tools, final_tool_config
     if ws_mode == "builtin" then
         -- Gemini built-in Google Search grounding
         final_tools = { { google_search = {} } }
+    end
+    if tool_called then
+        final_tool_config = {
+                function_calling_config = {
+                    mode                   = "NONE",
+                }
+            }
     end
 
     local final_contents, final_system = toGeminiContents(message_history)
@@ -148,6 +158,7 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
         },
         generationConfig  = generationConfig,
         tools             = final_tools,
+        tool_config       = final_tool_config,
     }
     local requestBody = json.encode(requestBodyTable)
     local url = stream and url_stream or url_non_stream

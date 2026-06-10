@@ -424,7 +424,7 @@ function Querier:processStream(bgQuery, trunk_callback)
                         if json_str == '[DONE]' then break end -- end of SSE stream
 
                         -- Safely parse the JSON
-                        local ok, event = pcall(rapidjson.decode, json_str, {null = nil})
+                        local ok, event = pcall(rapidjson.decode, json_str)
                         if ok and event then
                             self:processChunk(event, trunk_callback, result_buffer, reasoning_content_buffer)
                         else

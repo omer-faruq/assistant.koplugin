@@ -130,12 +130,8 @@ function AnthropicHandler:query(message_history, anthropic_settings, query_optio
         return content
     end
 
-    local err_msg = koutil.tableGetValue(parsed, "error", "message")
-    if err_msg then
-        return nil, err_msg
-    else
-        return nil, "Error: Unexpected response format from API"
-    end
+    local err_msg = koutil.tableGetValue(parsed, "error", "message") or "Error: Unexpected response format from API"
+    return nil, err_msg
 end
 
 return AnthropicHandler

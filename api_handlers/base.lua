@@ -17,6 +17,14 @@ local InfoMessage = require("ui/widget/infomessage")
 
 local assistant_utils = require("assistant_utils")
 
+-- default_value for rapidjson decoded object
+local function json_default(value, default_value)
+    if value == nil or value == json.null then
+        return default_value
+    end
+    return value
+end
+
 local BaseHandler = {
     trap_widget = nil,  -- widget to trap the request
 }
@@ -271,7 +279,8 @@ local function parseStage1Response(responseData, format)
         -- Anthropic: stop_reason == "tool_use", content is an array of blocks
         local content_blocks = responseData.content
         if type(content_blocks) ~= "table" then
-            return nil, nil, nil, nil, "Anthropic stage-1: missing content array"
+            local errmsg = koutil.tableGetValue(responseData, "error", "message") or "Anthropic stage-1: missing content array"
+            return nil, nil, nil, nil, errmsg
         end
         local tool_use_block = nil
         local text_block     = nil
@@ -299,7 +308,8 @@ local function parseStage1Response(responseData, format)
         -- Gemini: candidates[1].content.parts contains functionCall objects
         local parts = koutil.tableGetValue(responseData, "candidates", 1, "content", "parts")
         if type(parts) ~= "table" then
-            return nil, nil, nil, nil, "Gemini stage-1: missing content parts"
+            local errmsg = koutil.tableGetValue(responseData, "error", "message") or "Gemini stage-1: missing content parts"
+            return nil, nil, nil, nil, errmsg
         end
         local fn_call  = nil
         local text_part = nil
@@ -329,10 +339,8 @@ local function parseStage1Response(responseData, format)
         local assistant_message = koutil.tableGetValue(responseData, "choices", 1, "message")
         if not assistant_message then
             local err_msg = koutil.tableGetValue(responseData, "error", "message") or -- OpenAI error
-                            koutil.tableGetValue(responseData, "message") -- mistrial error
-            if not err_msg then 
-                err_msg = "OpenAI stage-1: no message in response"
-            end
+                            koutil.tableGetValue(responseData, "message") or -- mistrial error
+                            "OpenAI stage-1: no message in response"
             logger.warn("stage1_body", responseData)
             return nil, nil, nil, nil, err_msg
         end
@@ -343,14 +351,14 @@ local function parseStage1Response(responseData, format)
             return nil, nil, nil, direct and tostring(direct) or nil, nil
         end
         local tc           = tool_calls[1]
-        local tool_call_id = tostring(tc.id or "call_0")
+        local tool_call_id = json_default(tc.id, "call_0")
         local arguments_str = koutil.tableGetValue(tc, "function", "arguments") or "{}"
         local arg_ok, args  = pcall(json.decode, arguments_str)
-        if not arg_ok or not args or not args.keywords then
-            return nil, nil, nil, nil, "OpenAI stage-1: failed to parse tool_call arguments"
+        if not arg_ok or not args or not json_default(args.keywords) then
+            return nil, nil, nil, nil, "OpenAI stage-1: failed to parse tool_call arguments: " .. arguments_str
         end
         -- raw assistant payload = the full assistant message (preserves tool_calls array)
-        return tool_call_id, tostring(args.keywords), assistant_message, nil, nil
+        return tool_call_id, args.keywords, assistant_message, nil, nil
     end
 end
 
@@ -472,7 +480,7 @@ function BaseHandler:resolveExternalSearch(message_history, provider_setting, qu
     end
 
     UIManager:close(self:resetTrapWidget())
-    local keywordmsg = InfoMessage:new({icon = "appbar.search", text = _("Searching for ...\n\n" .. keywords)})
+    local keywordmsg = InfoMessage:new({icon = "appbar.search", text = _("Searching with Keywords:\n\n" .. keywords)})
     UIManager:show(keywordmsg)
     self:setTrapWidget(keywordmsg)
 
@@ -535,9 +543,9 @@ function BaseHandler:serpAPISearchRequest(serpconfig, keywords)
 
     local segments = {}
 
-    if parsed.reconstructed_markdown and parsed.reconstructed_markdown ~= "" then
+    if json_default(parsed.reconstructed_markdown) then
         table.insert(segments, "## Google AI Summary:\n")
-        table.insert(segments, tostring(parsed.reconstructed_markdown))
+        table.insert(segments, parsed.reconstructed_markdown)
         table.insert(segments, "\n")
     end
 
@@ -546,10 +554,10 @@ function BaseHandler:serpAPISearchRequest(serpconfig, keywords)
         table.insert(segments, "LLM Note: Please use these indexes and URLs to generate precise citations if needed.\n")
         
         for _, ref in ipairs(parsed.references) do
-            local idx = ref.index or 0
-            local title = tostring(ref.title or "Untitled Source")
-            local link = tostring(ref.link or "N/A")
-            local source_name = tostring(ref.source or "Web")
+            local idx = json_default(ref.index, 0)
+            local title = json_default(ref.title, "Untitled Source")
+            local link = json_default(ref.link, "N/A")
+            local source_name = json_default(ref.source, "Web")
 
             local ref_line = string.format("[%d] %s (%s) - URL: %s", idx, title, source_name, link)
             table.insert(segments, ref_line)
@@ -566,10 +574,11 @@ function BaseHandler:tavilyAPISearchRequest(tavilyconfig, keywords)
 
     local requestBodyTable = {
         ["api_key"] = key,
-        ["max_results"] = 1,
+        ["auto_parameters"] = true,
+        ["max_results"] = 3,
         ["search_depth"] = "basic",
-        ["chunks_per_source"] = 3,
-        ["include_raw_content"] = true,
+        ["include_answer"] = true,
+        ["include_raw_content"] = false,
         ["query"] = keywords,
     }
     local requestBody = json.encode(requestBodyTable)
@@ -594,20 +603,20 @@ function BaseHandler:tavilyAPISearchRequest(tavilyconfig, keywords)
         return false, "fail to parse tavily return"
     end
 
-    local segments = { "Here are the verified search results from Tavily:\n" }
+    local segments = {}
+    if json_default(parsed.answer) then
+        table.insert(segments, "## Summary\n")
+        table.insert(segments, parsed.answer)
+        table.insert(segments, "\n")
+    end
+    table.insert(segments, "Here are the verified search results from Tavily:\n")
+    table.insert(segments, "LLM Note: Use these indexes and URLs to generate precise citations if needed.\n")
 
     for i, item in ipairs(parsed.results) do
         table.insert(segments, "---")
-        table.insert(segments, string.format("### Source %d: %s", i, tostring(item.title or "Untitled")))
-        table.insert(segments, string.format("* URL: %s", tostring(item.url or "N/A")))
-        table.insert(segments, string.format("* Summary: %s", tostring(item.content or "")))
-        if item.raw_content and item.raw_content ~= "" then
-            local raw = tostring(item.raw_content)
-            if #raw > 3000 then
-                raw = raw:sub(1, 3000) .. "\n... [Content Truncated for Length] ..."
-            end
-            table.insert(segments, "* Full Document Content:\n" .. raw)
-        end
+        table.insert(segments, string.format("### Source %d: %s", i, json_default(item.title, "Untitled")))
+        table.insert(segments, string.format("* URL: %s", json_default(item.url, "N/A")))
+        table.insert(segments, string.format("* Summary: %s", json_default(item.content, "")))
         table.insert(segments, "\n")
     end
 
