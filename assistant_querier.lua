@@ -378,10 +378,8 @@ function Querier:processStream(bgQuery, trunk_callback)
     local non200 = false -- flag to indicate if we received a non-200 response
     local check_interval_sec = 0.125 -- loop check interval: 125ms  
     local chunksize = 1024 * 16 -- buffer size for reading data
-    local buffer = ffi.new('char[?]', chunksize, {0}) -- Buffer for reading data
-    local buffer_ptr = ffi.cast('void*', buffer)
     local completed = false   -- Flag to indicate if the reading is completed
-    local partial_data = strbuf.new()   -- Buffer for incomplete line data
+    local partial_data = strbuf.new(chunksize) -- Buffer for incomplete line data
     local result_buffer = strbuf.new()  -- Buffer for storing results
     local reasoning_content_buffer = strbuf.new()  -- Buffer for storing reasoning content
 
@@ -402,7 +400,9 @@ function Querier:processStream(bgQuery, trunk_callback)
 
         local readsize = ffiutil.getNonBlockingReadSize(parent_read_fd) 
         if readsize > 0 then
-            local bytes_read = tonumber(ffi.C.read(parent_read_fd, buffer_ptr, chunksize))
+            -- Reserve space inside partial_data directly, read into it, then commit
+            local ptr, _ = partial_data:reserve(chunksize)
+            local bytes_read = tonumber(ffi.C.read(parent_read_fd, ptr, chunksize))
             if bytes_read < 0 then
                 local err = ffi.errno()
                 logger.warn("readAllFromFD() error: " .. ffi.string(ffi.C.strerror(err)))
@@ -411,21 +411,18 @@ function Querier:processStream(bgQuery, trunk_callback)
                 completed = true
                 break
             else
-                -- Convert binary data to string and append to partial buffer
-                local data_chunk = ffi.string(buffer, bytes_read)
-                partial_data:put(data_chunk)
-                
+                partial_data:commit(bytes_read)
+
                 -- Process complete lines
                 while true do
-                    -- Find the next newline character
+                    -- Serialize once per iteration to scan for newline
                     local pd_str = partial_data:tostring()
                     local line_end = pd_str:find("[\r\n]")
                     if not line_end then break end  -- No complete line yet, continue reading
-                    
-                    -- Extract the complete line
+
+                    -- Extract the complete line; advance past it with skip()
                     local line = pd_str:sub(1, line_end - 1)
-                    partial_data:reset()
-                    partial_data:put(pd_str:sub(line_end + 1))
+                    partial_data:skip(line_end)
                     
                     -- Check if this is an Server-Sent-Event (SSE) data line
                     if line:sub(1, 6) == "data: " then
@@ -516,23 +513,24 @@ function Querier:processStream(bgQuery, trunk_callback)
 
     local ret = koutil.trim(result_buffer:tostring())
     if non200 then
+        local err = _("API Error: ")
+
         -- try to parse the json, returns only message from the API.
         if ret:sub(1, 1) == '{' then
-            local endPos = ret:reverse():find("}")
+            local endPos = ret:reverse():find("}") -- find the last '}'
             if endPos and endPos > 0 then
-                local ok, j = pcall(rapidjson.decode, ret:sub(1, #ret - endPos + 1), {null=nil})
+                local ok, j = pcall(rapidjson.decode, ret:sub(1, #ret - endPos + 1))
                 if ok then
-                    local err
-                    err = koutil.tableGetValue(j, "error", "message") -- OpenAI / Anthropic / Gemini 
-                    if err then return nil, err end
-                    err = koutil.tableGetValue(j, "message") -- Mistral / Cohere
-                    if err then return nil, err end
+                    err = koutil.tableGetValue(j, "error", "message") or -- OpenAI / Anthropic / Gemini 
+                          koutil.tableGetValue(j, "message") -- Mistral / Cohere
+                else
+                    err = err .. ret
                 end
             end
         end
 
         -- return all received content as error message
-        return nil, ret
+        return nil, err
     end
 
     local show_reasoning = self.settings:readSetting("show_reasoning", false)
