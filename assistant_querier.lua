@@ -376,7 +376,7 @@ function Querier:processStream(bgQuery, trunk_callback)
         coroutine.resume(_coroutine, false)  
     end  
   
-    local non200 = false -- flag to indicate if we received a non-200 response
+    local non200_start = nil -- byte offset in result_buffer when non-200 line was received
     local check_interval_sec = 0.125 -- loop check interval: 125ms  
     local chunksize = 1024 * 16 -- buffer size for reading data
     local completed = false   -- Flag to indicate if the reading is completed
@@ -461,15 +461,15 @@ function Querier:processStream(bgQuery, trunk_callback)
                             result_buffer:put(line)  -- Add the raw line to the result
                         end
                     elseif line:sub(1, #(self.handler.PROTOCOL_NON_200)) == self.handler.PROTOCOL_NON_200 then
-                        -- child writes a non-200 response 
-                        non200 = true
-                        result_buffer:put("\n\n" .. line:sub(#(self.handler.PROTOCOL_NON_200)+1))
+                        -- child writes a non-200 response; record the current buffer length as the
+                        -- start offset so we can slice the error body precisely later
+                        non200_start = #result_buffer:tostring()
+                        result_buffer:put(line:sub(#(self.handler.PROTOCOL_NON_200)+1))
                         break -- the request is done, no more data to read
                     else
                         if #koutil.trim(line) > 0 then
-                            -- If the line is not empty, log it as a warning
                             result_buffer:put(line)  -- Add the raw line to the result
-                            logger.warn("Unrecognized line format:", line)
+                            -- logger.warn("Unrecognized line format:", line)
                         end
                     end
                 end
@@ -513,25 +513,20 @@ function Querier:processStream(bgQuery, trunk_callback)
     UIManager:scheduleIn(collect_interval_sec, collect_and_clean)
 
     local ret = koutil.trim(result_buffer:tostring())
-    if non200 then
-        local err = _("API Error: ")
-
-        -- try to parse the json, returns only message from the API.
-        if ret:sub(1, 1) == '{' then
-            local endPos = ret:reverse():find("}") -- find the last '}'
-            if endPos and endPos > 0 then
-                local ok, j = pcall(rapidjson.decode, ret:sub(1, #ret - endPos + 1))
-                if ok then
-                    err = koutil.tableGetValue(j, "error", "message") or -- OpenAI / Anthropic / Gemini 
-                          koutil.tableGetValue(j, "message") -- Mistral / Cohere
-                else
-                    err = err .. ret
-                end
+    if non200_start then
+        -- Slice out only the error body before the non-200 mark
+        local err_body = koutil.trim(ret:sub(1, non200_start))
+        -- Try to parse the JSON and extract a human-readable message
+        if err_body:sub(1, 1) == '{' then
+            local ok, j = pcall(rapidjson.decode, err_body)
+            if ok then
+                local err = koutil.tableGetValue(j, "error", "message") or -- OpenAI / Anthropic / Gemini
+                      koutil.tableGetValue(j, "message") -- Mistral / Cohere
+                if err then return nil, err end
             end
         end
-
-        -- return all received content as error message
-        return nil, err
+        -- return the raw error body as error message
+        return nil, ret
     end
 
     local show_reasoning = self.settings:readSetting("show_reasoning", false)

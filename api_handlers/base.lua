@@ -200,7 +200,7 @@ function BaseHandler:backgroundRequest(url, headers, body)
             source = ltn12.source.string(body or ""),
             sink = ltn12.sink.file(pipe_w),  -- response body write to pipe
         }
-        local code, headers, status = socket.skip(1, http.request(request)) -- skip the first return value
+        local code, resp_headers, status = socket.skip(1, http.request(request)) -- skip the first return value
         if code ~= 200 then -- non-200 response code, write error to pipe
             logger.warn("Background request non-200:", code, "status:", status, "url:", url)
             ffiutil.writeToFD(child_write_fd, string.format("\r\n%s [%s %s] URL:%s\n\n", self.PROTOCOL_NON_200, status or "", code or "", url))  -- write end of response
