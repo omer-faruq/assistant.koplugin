@@ -11,6 +11,7 @@ local Size = require("ui/size")
 local koutil = require("util")
 local logger = require("logger")
 local rapidjson = require('rapidjson')
+local strbuf = require("string.buffer")
 local ffi = require("ffi")
 local ffiutil = require("ffi/util")
 local Device = require("device")
@@ -321,7 +322,7 @@ function Querier:query(message_history, title)
                         streamDialog:addTextToInput(content or "")
                     else
                         streamDialog._input_widget:resyncPos()
-                        streamDialog._input_widget:setText(table.concat(buffer or {}), true)
+                        streamDialog._input_widget:setText(buffer and buffer:tostring() or "", true)
                     end
                 end
             end)
@@ -380,9 +381,9 @@ function Querier:processStream(bgQuery, trunk_callback)
     local buffer = ffi.new('char[?]', chunksize, {0}) -- Buffer for reading data
     local buffer_ptr = ffi.cast('void*', buffer)
     local completed = false   -- Flag to indicate if the reading is completed
-    local partial_data = ""   -- Buffer for incomplete line data
-    local result_buffer = {}  -- Buffer for storing results
-    local reasoning_content_buffer = {}  -- Buffer for storing results
+    local partial_data = strbuf.new()   -- Buffer for incomplete line data
+    local result_buffer = strbuf.new()  -- Buffer for storing results
+    local reasoning_content_buffer = strbuf.new()  -- Buffer for storing reasoning content
 
     while true do  
 
@@ -412,17 +413,19 @@ function Querier:processStream(bgQuery, trunk_callback)
             else
                 -- Convert binary data to string and append to partial buffer
                 local data_chunk = ffi.string(buffer, bytes_read)
-                partial_data = partial_data .. data_chunk
+                partial_data:put(data_chunk)
                 
                 -- Process complete lines
                 while true do
                     -- Find the next newline character
-                    local line_end = partial_data:find("[\r\n]")
+                    local pd_str = partial_data:tostring()
+                    local line_end = pd_str:find("[\r\n]")
                     if not line_end then break end  -- No complete line yet, continue reading
                     
                     -- Extract the complete line
-                    local line = partial_data:sub(1, line_end - 1)
-                    partial_data = partial_data:sub(line_end + 1)
+                    local line = pd_str:sub(1, line_end - 1)
+                    partial_data:reset()
+                    partial_data:put(pd_str:sub(line_end + 1))
                     
                     -- Check if this is an Server-Sent-Event (SSE) data line
                     if line:sub(1, 6) == "data: " then
@@ -448,7 +451,7 @@ function Querier:processStream(bgQuery, trunk_callback)
                             -- log the json
                             local err_message = koutil.tableGetValue(j, "error", "message")
                             if err_message then
-                                table.insert(result_buffer, err_message)
+                                result_buffer:put(err_message)
                             end
 
                             if trunk_callback then
@@ -457,17 +460,17 @@ function Querier:processStream(bgQuery, trunk_callback)
                             end
                         else
                             -- the json was breaked into lines, just log the raw line
-                            table.insert(result_buffer, line)  -- Add the raw line to the result
+                            result_buffer:put(line)  -- Add the raw line to the result
                         end
                     elseif line:sub(1, #(self.handler.PROTOCOL_NON_200)) == self.handler.PROTOCOL_NON_200 then
                         -- child writes a non-200 response 
                         non200 = true
-                        table.insert(result_buffer, "\n\n" .. line:sub(#(self.handler.PROTOCOL_NON_200)+1))
+                        result_buffer:put("\n\n" .. line:sub(#(self.handler.PROTOCOL_NON_200)+1))
                         break -- the request is done, no more data to read
                     else
                         if #koutil.trim(line) > 0 then
                             -- If the line is not empty, log it as a warning
-                            table.insert(result_buffer, line)  -- Add the raw line to the result
+                            result_buffer:put(line)  -- Add the raw line to the result
                             logger.warn("Unrecognized line format:", line)
                         end
                     end
@@ -511,7 +514,7 @@ function Querier:processStream(bgQuery, trunk_callback)
     end
     UIManager:scheduleIn(collect_interval_sec, collect_and_clean)
 
-    local ret = koutil.trim(table.concat(result_buffer))
+    local ret = koutil.trim(result_buffer:tostring())
     if non200 then
         -- try to parse the json, returns only message from the API.
         if ret:sub(1, 1) == '{' then
@@ -536,7 +539,7 @@ function Querier:processStream(bgQuery, trunk_callback)
     local is_reasoning_in_ret = ret:sub(1, 7) == "<think>"
 
     if show_reasoning then
-        local reasoning = table.concat(reasoning_content_buffer):gsub("^%.+", "", 1):gsub("\n", "<br>")
+        local reasoning = reasoning_content_buffer:tostring():gsub("^%.+", "", 1):gsub("\n", "<br>")
         if #reasoning > 0 then
             ret = T('#### %1\n\n<div class="reasoningtext">%2</div>\n\n---\n\n', _("Deeply Thought"), reasoning) .. ret
         elseif is_reasoning_in_ret then
@@ -595,14 +598,14 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
     end 
 
     if type(result_content) == "string" and #result_content > 0 then
-        table.insert(result_buffer, result_content)
+        result_buffer:put(result_content)
         if trunk_callback then trunk_callback(result_content, result_buffer) end
     elseif type(reasoning_content) == "string" and #reasoning_content > 0 then
-        table.insert(reasoning_content_buffer, reasoning_content)
+        reasoning_content_buffer:put(reasoning_content)
         if trunk_callback then trunk_callback(reasoning_content, reasoning_content_buffer) end
     elseif type(stop_reason) == "string" and stop_reason:lower() ~= "stop" then
         -- logger.warn("abnormal stop:", stop_reason)
-        table.insert(result_buffer, _("Stopped Reason: ") .. stop_reason)
+        result_buffer:put(_("Stopped Reason: ") .. stop_reason)
     else
         if result_content or reasoning_content or stop_reason then
             if choices or candidates or delta then
@@ -627,7 +630,7 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                 end
                 local webquery_footer = "\n\n" .. _("#### Search Keywords") .. '\n<ul class="subtext"><li>' .. 
                         table.concat(items, '</li><li>') .. '</li></ul>\n\n'
-                table.insert(result_buffer, webquery_footer)
+                result_buffer:put(webquery_footer)
             end
         end
 
@@ -635,7 +638,7 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         if event.usageMetadata and event.modelVersion then
             local usage_footer = T('<div class="subtext" style="margin-top: 1.5em;">%1: %2 (%3)</div>', _("Token Usage"),
                             event.usageMetadata.totalTokenCount, event.modelVersion)
-            table.insert(result_buffer, usage_footer)
+            result_buffer:put(usage_footer)
         end
     end
 end
