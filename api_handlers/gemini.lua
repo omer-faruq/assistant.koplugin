@@ -81,7 +81,6 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
         local gemini_tools
         if tool_def then
             gemini_tools = { tool_def }
-            table.insert(system_instruction.parts, {text = " CRITICAL CONSTRAINT: You have a maximum allowance of ONE single call to the `web_search` tool for the entire interaction. Never output multiple search calls in parallel, and never plan for a multi-turn reasoning loop. Consolidate your informational needs into one precise search query. If no search is needed for common knowledge, answer directly without calling the tool."})
         end
 
         local body = {

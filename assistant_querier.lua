@@ -20,6 +20,13 @@ local Screen = Device.screen
 local API_HANDLERS = {}
 
 
+-- default_value for rapidjson decoded object
+local function json_default(value, default_value)
+    if value == nil or value == rapidjson.null then
+        return default_value
+    end
+    return value
+end
 local Querier = {
     assistant = nil, -- reference to the main assistant object
     settings = nil,
@@ -557,11 +564,11 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
     -- 1. OpenAI Handles
     if choices then
         for _, choice in ipairs(choices) do
-            stop_reason = choice.finish_reason
+            stop_reason = json_default(choice.finish_reason)
             local cdelta = choice.delta
             if cdelta then
-                reasoning_content = cdelta.reasoning or cdelta.reasoning_content or ""
-                result_content = cdelta.content or ""
+                reasoning_content = json_default(cdelta.reasoning) or json_default(cdelta.reasoning_content, "")
+                result_content = json_default(cdelta.content, "")
             end
             -- reasoning responses without text(grok-4)
             if not result_content and not reasoning_content then reasoning_content = "." end
@@ -569,10 +576,10 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
 
     -- 2. Gemini Handles
     elseif candidates then
-        stop_reason = candidates[1].finishReason
+        stop_reason = json_default(candidates[1].finishReason)
         for _, part in ipairs(koutil.tableGetValue(candidates, 1, "content", "parts")) do
             if part.text then
-                if part.thought then
+                if json_default(part.thought) then
                     reasoning_content = (reasoning_content or "") .. part.text
                 else
                     result_content = (result_content or "") .. part.text
@@ -582,9 +589,9 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
 
     -- 3. Anthropic Handles
     elseif delta then
-        result_content = delta.text or ""
-        reasoning_content = delta.thinking or ""
-        stop_reason = event.stop_reason
+        result_content = json_default(delta.text, "")
+        reasoning_content = json_default(delta.thinking, "")
+        stop_reason = json_default(event.stop_reason)
     end 
 
     if type(result_content) == "string" and #result_content > 0 then
@@ -594,8 +601,8 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         table.insert(reasoning_content_buffer, reasoning_content)
         if trunk_callback then trunk_callback(reasoning_content, reasoning_content_buffer) end
     elseif type(stop_reason) == "string" and stop_reason:lower() ~= "stop" then
-        logger.info("abnormal stop:", stop_reason)
-        table.insert(result_buffer, _("Stopped: ") .. stop_reason)
+        -- logger.warn("abnormal stop:", stop_reason)
+        table.insert(result_buffer, _("Stopped Reason: ") .. stop_reason)
     else
         if result_content or reasoning_content or stop_reason then
             if choices or candidates or delta then

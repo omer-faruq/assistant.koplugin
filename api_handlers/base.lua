@@ -163,30 +163,29 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
     return success, code, content
 end
 
---- Wrap a file descriptor into a Lua file-like object
---- that has :write() and :close() methods, suitable for ltn12.
---- @param fd integer file descriptor
---- @return table file-like object
-local function wrap_fd(fd)
-    local file_object = {}
-    function file_object:write(chunk)
-        ffiutil.writeToFD(fd, chunk)
-        return self
-    end
-
-    function file_object:close()
-        -- null close op,
-        -- we need to use the fd later, then close manually
-        return true
-    end
-
-    return file_object
-end
-
 -- Background request function
 --- This function is used to make a request in the background,
 --- typically in a subprocess, and write the response to a pipe.
 function BaseHandler:backgroundRequest(url, headers, body)
+    
+    --- Wrap a file descriptor into a Lua file-like object
+    --- that has :write() and :close() methods, suitable for ltn12.
+    local function wrap_fd(fd)
+        local file_object = {}
+        function file_object:write(chunk)
+            ffiutil.writeToFD(fd, chunk)
+            return self
+        end
+
+        function file_object:close()
+            -- null close op,
+            -- we need to use the fd later, then close manually
+            return true
+        end
+
+        return file_object
+    end
+
     return function(pid, child_write_fd)
         if not pid or not child_write_fd then
             logger.warn("Invalid parameters for background request")
@@ -441,6 +440,12 @@ end
 function BaseHandler:resolveExternalSearch(message_history, provider_setting, query_option,
                                            build_request_fn, headers, url, format)
     format = format or "openai"
+
+    -- Patch the system prompt
+    if message_history[1].role == "system" then
+        message_history[1].content = message_history[1].content .. 
+            "\n\n CRITICAL CONSTRAINT: You have a maximum allowance of ONE single call to the `web_search` tool for the entire interaction. Never output multiple search calls in parallel, and never plan for a multi-turn reasoning loop. Consolidate your informational needs into one precise search query. If no search is needed for common knowledge, answer directly without calling the tool."
+    end
 
     -- Stage 1: ask the LLM to produce a tool call with search keywords.
     -- Wrap tool_def into the shape each platform expects for body.tools:
