@@ -199,164 +199,284 @@ local function trimMessageHistory(message_history)
     return trimed_history
 end
 
---- Query the AI with the provided message history
---- return: answer, error (if any)
+--- Query the AI with the provided message history.
+--- Handles both stream and non-stream modes, including multi-turn tool-call loops.
+---
+--- Non-stream tool-call loop:
+---   handler:query() returns a table { __is_tool_call=true, keywords=..., ... }
+---   → Querier executes the appropriate search API
+---   → appends the tool result messages via handler:buildToolResultMessages()
+---   → repeats until a plain-string answer or an error
+---
+--- Stream tool-call loop (TODO: not fully shown here; stream does not support
+--- tool calls in the current architecture — use non-stream for websearch).
+---
 function Querier:query(message_history, title)
     if not self:is_inited() then
         return nil, _("Plugin is not configured.")
     end
 
-    local prompt_websearch = message_history[#message_history].use_websearch or false
-    local user_setting_websearch = self.settings:readSetting("use_websearch", "none")
+    local prompt_websearch   = message_history[#message_history].use_websearch or false
+    local user_setting_ws    = self.settings:readSetting("use_websearch", "none")
     local query_option = {
         use_stream_mode = self.settings:readSetting("use_stream_mode", true),
-        use_websearch = (prompt_websearch and user_setting_websearch ~= "none") and user_setting_websearch or "none"
+        use_websearch   = (prompt_websearch and user_setting_ws ~= "none")
+                          and user_setting_ws or "none",
     }
 
-    local notify = string.format("%s\n️☁️ %s\n⚡ %s", title or _("Querying AI ..."),
-        self.provider_name, koutil.tableGetValue(self.provider_settings, "model"))
+    local res, err
 
-    if query_option.use_websearch ~= "none" then
-        notify = notify .. "\n" .. _("With Search: ") .. query_option.use_websearch 
-    end
-    local infomsg = InfoMessage:new{ icon = "book.opened", text = notify }
+    if query_option.use_stream_mode then
+        -- ---------------------------------------------------------------
+        -- STREAM PATH
+        -- handler:query() returns a background function immediately.
+        -- We pass it to showStreamDialog which runs processStream.
+        -- If the model issued a tool call inside the streamed response
+        -- (currently only possible with native built-in tools), the
+        -- stream dialog surfaces final text anyway, so no loop needed.
+        -- ---------------------------------------------------------------
+        res, err = self.handler:query(
+            trimMessageHistory(message_history),
+            self.provider_settings,
+            query_option)
 
-    UIManager:show(infomsg)
-
-    self.handler:setTrapWidget(infomsg)
-    local res, err = self.handler:query(trimMessageHistory(message_history), self.provider_settings, query_option)
-    UIManager:close(self.handler:resetTrapWidget()) --  the widget may not be the same as infomsg
-
-    -- when res is a function, it means we are in streaming mode
-    -- open a stream dialog and run the background query in a subprocess
-    if type(res) == "function" then
-        self.user_interrupted = false -- reset the stream interrupted flag
-        local streamDialog
-        local animation_task = nil -- Will be set during animation setup
-
-        local function _closeStreamDialog()
-            if self.interrupt_stream then self.interrupt_stream() end
-            if animation_task then
-                UIManager:unschedule(animation_task)
-                animation_task = nil
+        if type(res) == "function" then
+            -- processStream returns the accumulated content string (or nil+err)
+            local ok, content = self:showStreamDialog(res)
+            if ok and type(content) == "string" then
+                res = content
+            elseif type(content) == "table" then
+                -- A streamed tool call result table (future extension).
+                -- For now treat it as an error; external search uses non-stream.
+                res = nil
+                err = _("Tool calls in stream mode are not yet supported. "
+                      .. "Disable stream mode when using web search.")
+            else
+                res = nil
+                err = content or _("Stream failed with no error message.")
             end
-            UIManager:close(streamDialog)
         end
 
-        -- user may perfer smaller stream dialog on big screen device 
-        local width, use_available_height, text_height, is_movable
-        if self.settings:readSetting("large_stream_dialog", true) then
-            width = Screen:getWidth() - 2*Size.margin.default
-            text_height = nil
-            use_available_height = true
-            is_movable = false
-        else
-            width = Screen:getWidth() - Screen:scaleBySize(80) 
-            text_height = math.floor(Screen:getHeight() * 0.35)
-            use_available_height = false
-            is_movable = true
+    else
+        -- ---------------------------------------------------------------
+        -- NON-STREAM PATH  — may loop for tool calls
+        -- ---------------------------------------------------------------
+        local notify = string.format("%s\n️☁️ %s\n⚡ %s",
+            title or _("Querying AI ..."),
+            self.provider_name,
+            koutil.tableGetValue(self.provider_settings, "model"))
+        if query_option.use_websearch ~= "none" then
+            notify = notify .. "\n" .. _("With Search: ") .. query_option.use_websearch
         end
+        local infomsg = InfoMessage:new{ icon = "book.opened", text = notify }
+        UIManager:show(infomsg)
+        self.handler:setTrapWidget(infomsg)
 
-        streamDialog = InputDialog:new{
-            title = (query_option.use_websearch and " 🌐 " or "") .. _("AI is responding") ,
-            description = T("☁ %1/%2 %3", self.provider_name, self.provider_settings.model, (query_option.use_websearch or "")),
-            inputtext_class = StreamText, -- use our custom InputText class
-            input_face = Font:getFace("infofont", self.settings:readSetting("response_font_size") or 20),
-            title_bar_left_icon = "appbar.settings",
-            title_bar_left_icon_tap_callback = function ()
-                self.assistant:showSettings()
-            end,
+        -- Tool-call loop: keep calling the LLM until it returns a string answer.
+        -- Bounded to a small iteration count to prevent runaway loops.
+        local MAX_TOOL_ROUNDS = 3
+        local tool_rounds = 0
 
-            -- size parameters
-            width = width, use_available_height = use_available_height, text_height = text_height, is_movable = is_movable,
+        repeat
+            res, err = self.handler:query(
+                trimMessageHistory(message_history),
+                self.provider_settings,
+                query_option)
 
-            -- other behavior parameters
-            readonly = true, fullscreen = false, 
-            allow_newline = true, add_nav_bar = false, cursor_at_end = true, add_scroll_buttons = true,
-            condensed = true, auto_para_direction = true,  scroll_by_pan = true, 
-            buttons = {
-                {
-                    {
-                        text = _("⏹ Stop"),
-                        id = "close", -- id:close response to default cancel action (esc key ...)
-                        callback = _closeStreamDialog,
-                    },
+            if type(res) == "table" and res.__is_tool_call then
+                -- The LLM requested a tool call (web_search).
+                if tool_rounds >= MAX_TOOL_ROUNDS then
+                    res = nil
+                    err = _("Too many tool-call rounds; aborting.")
+                    break
+                end
+                tool_rounds = tool_rounds + 1
+
+                -- Execute the search
+                local keywords     = res.keywords
+                local provider_cfg = self.provider_settings
+                local ws_mode      = query_option.use_websearch
+
+                UIManager:close(self.handler:resetTrapWidget())
+                local keywordmsg = InfoMessage:new({
+                    icon = "appbar.search",
+                    text = _("Searching with Keywords:\n\n" .. keywords),
+                })
+                UIManager:show(keywordmsg)
+                self.handler:setTrapWidget(keywordmsg)
+
+                local search_ok, search_result
+                if ws_mode == "serpapi" then
+                    search_ok, search_result =
+                        self.handler:serpAPISearchRequest(provider_cfg.serpapi, keywords)
+                elseif ws_mode == "tavilyapi" then
+                    search_ok, search_result =
+                        self.handler:tavilyAPISearchRequest(provider_cfg.tavilyapi, keywords)
+                else
+                    search_ok    = false
+                    search_result = "Unknown websearch mode: " .. tostring(ws_mode)
+                end
+
+                if not search_ok then
+                    res = nil
+                    err = "Search API failed: " .. tostring(search_result)
+                    break
+                end
+
+                -- Append tool result messages to history and loop
+                local tool_msgs = self.handler:buildToolResultMessages(res, search_result)
+                for _, m in ipairs(tool_msgs) do
+                    table.insert(message_history, m)
+                end
+
+                -- Refresh the loading indicator for the follow-up request
+                UIManager:close(self.handler:resetTrapWidget())
+                local follow_msg = InfoMessage:new{
+                    icon = "book.opened",
+                    text = string.format("%s\n️☁️ %s\n⚡ %s",
+                        _("Synthesising answer ..."),
+                        self.provider_name,
+                        koutil.tableGetValue(self.provider_settings, "model")),
                 }
-            }
-        }
+                UIManager:show(follow_msg)
+                self.handler:setTrapWidget(follow_msg)
 
-        --  adds a close button to the top right
-        streamDialog.title_bar.close_callback = _closeStreamDialog
-        streamDialog.title_bar:init()
-        UIManager:show(streamDialog)
-
-        -- Set up waiting animation
-        local animation = createWaitingAnimation()
-        local first_content_received = false
-
-        -- Start animation
-        streamDialog._input_widget:setText(animation:getNextFrame(), true)
-        local function updateAnimation()
-            if not first_content_received then
-                streamDialog._input_widget:setText(animation:getNextFrame(), true)
-                animation_task = UIManager:scheduleIn(0.4, updateAnimation)
+                res = nil  -- ensure loop continues
             end
-        end
-        animation_task = UIManager:scheduleIn(0.4, updateAnimation)
 
-        local stream_mode_auto_scroll = self.settings:readSetting("stream_mode_auto_scroll", true)
-        local ok, content, err = pcall(self.processStream, self, res, function (content, buffer)
-            UIManager:nextTick(function ()
-                -- Stop animation on first content
-                if not first_content_received and content and #tostring(content) > 0 then
-                    first_content_received = true
-                    if animation_task then
-                        UIManager:unschedule(animation_task)
-                        animation_task = nil
-                    end
-                    streamDialog._input_widget:setText("", true) -- Clear the animation
-                end
+        until type(res) == "string" or err ~= nil
 
-                -- schedule the text update in the UIManager task queue
-                if first_content_received then
-                    if stream_mode_auto_scroll then
-                        streamDialog:addTextToInput(content or "")
-                    else
-                        streamDialog._input_widget:resyncPos()
-                        streamDialog._input_widget:setText(buffer and buffer:tostring() or "", true)
-                    end
-                end
-            end)
-        end)
-        if not ok then
-            logger.warn("Error processing stream: " .. tostring(content))
-            err = content -- content contains the error message
-        end
+        UIManager:close(self.handler:resetTrapWidget())
 
-        UIManager:close(streamDialog)
-
-        if self.user_interrupted then
+        if err == self.handler.CODE_CANCELLED then
+            self.user_interrupted = true
             return nil, _("Request cancelled by user.")
         end
-
-        if err then
-            return nil, err:gsub("^[\n%s]*", "") -- clean leading spaces and newlines
-        end
-
-        res = content
     end
 
-    if err == self.handler.CODE_CANCELLED then
-        self.user_interrupted = true
-        return nil, _("Request cancelled by user.")
-    end
-
+    -- Final validation
     if type(res) ~= "string" or err ~= nil then
         return nil, tostring(err)
     elseif #res == 0 then
         return nil, _("No response received.") .. (err and tostring(err) or "")
     end
     return res
+end
+function Querier:showStremDialog(res)
+
+    self.user_interrupted = false -- reset the stream interrupted flag
+    local streamDialog
+    local animation_task = nil -- Will be set during animation setup
+
+    local function _closeStreamDialog()
+        if self.interrupt_stream then self.interrupt_stream() end
+        if animation_task then
+            UIManager:unschedule(animation_task)
+            animation_task = nil
+        end
+        UIManager:close(streamDialog)
+    end
+
+    -- user may perfer smaller stream dialog on big screen device 
+    local width, use_available_height, text_height, is_movable
+    if self.settings:readSetting("large_stream_dialog", true) then
+        width = Screen:getWidth() - 2*Size.margin.default
+        text_height = nil
+        use_available_height = true
+        is_movable = false
+    else
+        width = Screen:getWidth() - Screen:scaleBySize(80) 
+        text_height = math.floor(Screen:getHeight() * 0.35)
+        use_available_height = false
+        is_movable = true
+    end
+
+    streamDialog = InputDialog:new{
+        title = _("AI is responding") ,
+        description = T("☁ %1/%2", self.provider_name, self.provider_settings.model),
+        inputtext_class = StreamText, -- use our custom InputText class
+        input_face = Font:getFace("infofont", self.settings:readSetting("response_font_size") or 20),
+        title_bar_left_icon = "appbar.settings",
+        title_bar_left_icon_tap_callback = function ()
+            self.assistant:showSettings()
+        end,
+
+        -- size parameters
+        width = width, use_available_height = use_available_height, text_height = text_height, is_movable = is_movable,
+
+        -- other behavior parameters
+        readonly = true, fullscreen = false, 
+        allow_newline = true, add_nav_bar = false, cursor_at_end = true, add_scroll_buttons = true,
+        condensed = true, auto_para_direction = true,  scroll_by_pan = true, 
+        buttons = {
+            {
+                {
+                    text = _("⏹ Stop"),
+                    id = "close", -- id:close response to default cancel action (esc key ...)
+                    callback = _closeStreamDialog,
+                },
+            }
+        }
+    }
+
+    --  adds a close button to the top right
+    streamDialog.title_bar.close_callback = _closeStreamDialog
+    streamDialog.title_bar:init()
+    UIManager:show(streamDialog)
+
+    -- Set up waiting animation
+    local animation = createWaitingAnimation()
+    local first_content_received = false
+
+    -- Start animation
+    streamDialog._input_widget:setText(animation:getNextFrame(), true)
+    local function updateAnimation()
+        if not first_content_received then
+            streamDialog._input_widget:setText(animation:getNextFrame(), true)
+            animation_task = UIManager:scheduleIn(0.4, updateAnimation)
+        end
+    end
+    animation_task = UIManager:scheduleIn(0.4, updateAnimation)
+
+    local stream_mode_auto_scroll = self.settings:readSetting("stream_mode_auto_scroll", true)
+    local ok, content, err = pcall(self.processStream, self, res, function (content, buffer)
+        UIManager:nextTick(function ()
+            -- Stop animation on first content
+            if not first_content_received and content and #tostring(content) > 0 then
+                first_content_received = true
+                if animation_task then
+                    UIManager:unschedule(animation_task)
+                    animation_task = nil
+                end
+                streamDialog._input_widget:setText("", true) -- Clear the animation
+            end
+
+            -- schedule the text update in the UIManager task queue
+            if first_content_received then
+                if stream_mode_auto_scroll then
+                    streamDialog:addTextToInput(content or "")
+                else
+                    streamDialog._input_widget:resyncPos()
+                    streamDialog._input_widget:setText(buffer and buffer:tostring() or "", true)
+                end
+            end
+        end)
+    end)
+    if not ok then
+        logger.warn("Error processing stream: " .. tostring(content))
+        err = content -- content contains the error message
+    end
+
+    UIManager:close(streamDialog)
+
+    if self.user_interrupted then
+        return nil, _("Request cancelled by user.")
+    end
+    if err then
+        return nil, err:gsub("^[\n%s]*", "") -- clean leading spaces and newlines
+    end
+
+    return true, content
 end
 
 --- func description: run the stream request in the background 
@@ -376,7 +496,8 @@ function Querier:processStream(bgQuery, trunk_callback)
         coroutine.resume(_coroutine, false)  
     end  
   
-    local non200_start = nil -- byte offset in result_buffer when non-200 line was received
+    local tool_calls   -- set to the object when LLM request a tool_calls
+    local non200_start -- byte offset in result_buffer when non-200 line was received
     local check_interval_sec = 0.125 -- loop check interval: 125ms  
     local chunksize = 1024 * 16 -- buffer size for reading data
     local completed = false   -- Flag to indicate if the reading is completed
@@ -434,7 +555,12 @@ function Querier:processStream(bgQuery, trunk_callback)
                         -- Safely parse the JSON
                         local ok, event = pcall(rapidjson.decode, json_str)
                         if ok and event then
-                            self:processChunk(event, trunk_callback, result_buffer, reasoning_content_buffer)
+                            local tool_calls_acc = {}
+                            self:processChunk(event, trunk_callback, result_buffer, reasoning_content_buffer, tool_calls_acc)
+                            if tool_calls.arguments_parts then
+                                tool_calls = tool_calls_acc
+                                break
+                            end
                         else
                             logger.warn("Failed to parse JSON from SSE data:", json_str)
                         end
@@ -529,6 +655,10 @@ function Querier:processStream(bgQuery, trunk_callback)
         return nil, ret
     end
 
+    if tool_calls then
+        return tool_calls, "TOOLCALLS"
+    end
+
     local show_reasoning = self.settings:readSetting("show_reasoning", false)
     local is_reasoning_in_ret = ret:sub(1, 7) == "<think>"
 
@@ -550,31 +680,66 @@ function Querier:processStream(bgQuery, trunk_callback)
     return ret, nil
 end
 
-function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_content_buffer)
-    
+--- processChunk: parse one SSE event and update the running buffers.
+---
+--- @param event              table   decoded JSON of one SSE chunk
+--- @param trunk_callback     func    called with each new text fragment (may be nil)
+--- @param result_buffer      strbuf  accumulates final answer text
+--- @param reasoning_content_buffer strbuf  accumulates reasoning/thinking text
+--- @param tool_call_acc      table   mutable accumulator for tool-call state across chunks
+---                                   shape: { id, name, arguments_parts[] }
+---                                   caller must pre-init as {} before the first chunk.
+--- @return string|nil  "TOOLCALLS" when the model has finished issuing a tool call,
+---                     nil otherwise.
+function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_content_buffer, tool_call_acc)
+
     local reasoning_content, result_content, stop_reason
 
     local choices    = event.choices
     local candidates = event.candidates
     local delta      = event.delta
 
-    -- 1. OpenAI Handles
+    -- 1. OpenAI-compatible handles (openai / groq / openrouter / deepseek / mistral …)
     if choices then
         for _, choice in ipairs(choices) do
             stop_reason = json_default(choice.finish_reason)
             local cdelta = choice.delta
             if cdelta then
+                -- Accumulate tool_calls deltas: arguments arrive in pieces across chunks.
+                -- While we are receiving tool_call deltas, do NOT treat empty content
+                -- as a reasoning placeholder (the old '.' hack) — it confuses the UI.
+                local tc_deltas = json_default(cdelta.tool_calls)
+                if tc_deltas then
+                    for _, tc in ipairs(tc_deltas) do
+                        -- id / name arrive only in the first delta for this call
+                        if json_default(tc.id)   then tool_call_acc.id   = tc.id   end
+                        if json_default(tc.name) then tool_call_acc.name = tc.name end
+                        local fn = json_default(tc["function"])
+                        if fn then
+                            if json_default(fn.name)      then tool_call_acc.name = fn.name end
+                            if json_default(fn.arguments) then
+                                tool_call_acc.arguments_parts = tool_call_acc.arguments_parts or {}
+                                table.insert(tool_call_acc.arguments_parts, fn.arguments)
+                            end
+                        end
+                    end
+                    -- While accumulating a tool call, suppress the reasoning '.' placeholder
+                    return nil
+                end
+
                 reasoning_content = json_default(cdelta.reasoning) or json_default(cdelta.reasoning_content, "")
-                result_content = json_default(cdelta.content, "")
+                result_content    = json_default(cdelta.content, "")
+
+                -- Reasoning-only responses with no text (e.g. grok-4 thinking phase)
+                if not result_content and not reasoning_content then reasoning_content = "." end
             end
-            -- reasoning responses without text(grok-4)
-            if not result_content and not reasoning_content then reasoning_content = "." end
         end
 
-    -- 2. Gemini Handles
+    -- 2. Gemini handles
     elseif candidates then
         stop_reason = json_default(candidates[1].finishReason)
-        for _, part in ipairs(koutil.tableGetValue(candidates, 1, "content", "parts")) do
+        local parts = koutil.tableGetValue(candidates, 1, "content", "parts") or {}
+        for _, part in ipairs(parts) do
             if part.text then
                 if json_default(part.thought) then
                     reasoning_content = (reasoning_content or "") .. part.text
@@ -582,59 +747,84 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                     result_content = (result_content or "") .. part.text
                 end
             end
+            -- Gemini delivers a complete functionCall object in a single part
+            local fc = json_default(part.functionCall)
+            if fc then
+                tool_call_acc.id   = json_default(fc.id)   or json_default(fc.name) or "fc_0"
+                tool_call_acc.name = json_default(fc.name) or "web_search"
+                -- Gemini args is already a table, not a JSON string
+                tool_call_acc.args = json_default(fc.args) or {}
+                stop_reason = "tool_calls"
+            end
         end
 
-    -- 3. Anthropic Handles
+    -- 3. Anthropic handles
     elseif delta then
-        result_content = json_default(delta.text, "")
+        local dtype = json_default(delta.type, "")
+        if dtype == "input_json_delta" then
+            -- Tool-call argument fragment (content_block_delta for tool_use blocks)
+            tool_call_acc.arguments_parts = tool_call_acc.arguments_parts or {}
+            table.insert(tool_call_acc.arguments_parts, json_default(delta.partial_json, ""))
+            return nil  -- suppress '.' placeholder while accumulating
+        end
+        result_content    = json_default(delta.text, "")
         reasoning_content = json_default(delta.thinking, "")
-        stop_reason = json_default(event.stop_reason)
-    end 
+        stop_reason       = json_default(event.stop_reason)
 
+        -- Anthropic signals the start of a tool_use content block
+        if json_default(event.type) == "content_block_start" then
+            local cb = json_default(event.content_block)
+            if cb and json_default(cb.type) == "tool_use" then
+                tool_call_acc.id   = json_default(cb.id)   or "toolu_0"
+                tool_call_acc.name = json_default(cb.name) or "web_search"
+            end
+        end
+    end
+
+    -- Flush text content to buffers / UI
     if type(result_content) == "string" and #result_content > 0 then
         result_buffer:put(result_content)
         if trunk_callback then trunk_callback(result_content, result_buffer) end
     elseif type(reasoning_content) == "string" and #reasoning_content > 0 then
         reasoning_content_buffer:put(reasoning_content)
         if trunk_callback then trunk_callback(reasoning_content, reasoning_content_buffer) end
-    elseif type(stop_reason) == "string" and stop_reason:lower() ~= "stop" then
-        -- logger.warn("abnormal stop:", stop_reason)
+    elseif type(stop_reason) == "string" and stop_reason:lower() ~= "stop" and stop_reason ~= "tool_calls" and stop_reason ~= "tool_use" then
         result_buffer:put(_("Stopped Reason: ") .. stop_reason)
     else
         if result_content or reasoning_content or stop_reason then
             if choices or candidates or delta then
-                -- reconized struct, but nothing needed (stream ended)
-                -- logger.info("Unprocessed JSON:", json_str)
-                return
+                -- Recognised structure but nothing to render (stream ended normally)
+                return nil
             end
             logger.warn("Unexpected JSON:", event)
+        else
+            logger.warn("PROBLEM JSON:", event)
         end
-        logger.warn("PROBLEM JSON:", event)
     end
 
     -- Genmini Last Chunk
-    if candidates and stop_reason then
-        local groundingMetadata = candidates[1].groundingMetadata
-        if groundingMetadata then
-            if groundingMetadata.webSearchQueries then
-                -- Adds websearch_footer
-                local items = {}
-                for i, q in ipairs(groundingMetadata.webSearchQueries) do
-                    items[i] = string.format("<u>%s</u>", q)
-                end
-                local webquery_footer = "\n\n" .. _("#### Search Keywords") .. '\n<ul class="subtext"><li>' .. 
-                        table.concat(items, '</li><li>') .. '</li></ul>\n\n'
-                result_buffer:put(webquery_footer)
-            end
-        end
+    -- if candidates and stop_reason then
+    --     local groundingMetadata = candidates[1].groundingMetadata
+    --     if groundingMetadata then
+    --         if groundingMetadata.webSearchQueries then
+    --             -- Adds websearch_footer
+    --             local items = {}
+    --             for i, q in ipairs(groundingMetadata.webSearchQueries) do
+    --                 items[i] = string.format("<u>%s</u>", q)
+    --             end
+    --             local webquery_footer = "\n\n" .. _("#### Search Keywords") .. '\n<ul class="subtext"><li>' .. 
+    --                     table.concat(items, '</li><li>') .. '</li></ul>\n\n'
+    --             result_buffer:put(webquery_footer)
+    --         end
+    --     end
 
-        -- Add usage footer
-        if event.usageMetadata and event.modelVersion then
-            local usage_footer = T('<div class="subtext" style="margin-top: 1.5em;">%1: %2 (%3)</div>', _("Token Usage"),
-                            event.usageMetadata.totalTokenCount, event.modelVersion)
-            result_buffer:put(usage_footer)
-        end
-    end
+    --     -- Add usage footer
+    --     if event.usageMetadata and event.modelVersion then
+    --         local usage_footer = T('<div class="subtext" style="margin-top: 1.5em;">%1: %2 (%3)</div>', _("Token Usage"),
+    --                         event.usageMetadata.totalTokenCount, event.modelVersion)
+    --         result_buffer:put(usage_footer)
+    --     end
+    -- end
 end
 
 return Querier

@@ -5,109 +5,110 @@ local logger = require("logger")
 
 local AnthropicHandler = BaseHandler:new()
 
-local function prepare_anthropic_messages(message_history)
+--- Convert OpenAI-style message_history into Anthropic's wire format.
+--- Returns { messages = [...], system = "..." }
+local function prepareAnthropicMessages(message_history)
     local anthropic_messages = {}
     local system_content = ""
-    
-    -- Extract and concatenate all system prompts
-    for i, msg in ipairs(message_history) do
+
+    for _, msg in ipairs(message_history) do
         if msg.role == "system" then
             system_content = system_content .. msg.content .. "\n\n"
         end
     end
-
-    -- Remove trailing newlines
     system_content = system_content:gsub("\n\n$", "")
-    
-    -- Process non-system messages (user and assistant)
-    for i, msg in ipairs(message_history) do
+
+    for _, msg in ipairs(message_history) do
         if msg.role ~= "system" then
-            table.insert(anthropic_messages, {
-                role = msg.role,
-                content = msg.content
-            })
+            table.insert(anthropic_messages, { role = msg.role, content = msg.content })
         end
     end
-    
-    -- Return structured data for Anthropic API
-    return {
-        messages = anthropic_messages,
-        system = system_content
-    }
+
+    return { messages = anthropic_messages, system = system_content }
 end
 
-local function extract_text_from_content(content_blocks)
-    if type(content_blocks) ~= "table" then
-        return nil
-    end
-
-    local text_chunks = {}
+--- Extract plain text from Anthropic content-blocks array.
+local function extractTextFromContent(content_blocks)
+    if type(content_blocks) ~= "table" then return nil end
+    local chunks = {}
     for _, block in ipairs(content_blocks) do
         if type(block) == "table" and block.type == "text" and type(block.text) == "string" then
-            table.insert(text_chunks, block.text)
+            table.insert(chunks, block.text)
+        end
+    end
+    return #chunks > 0 and table.concat(chunks, "\n\n") or nil
+end
+
+--- Build a JSON request body for the Anthropic API.
+--- @param messages  table       message history (OpenAI style; will be converted)
+--- @param settings  table       provider settings
+--- @param tools     table|nil   tool definitions to inject (nil → use settings.tools or none)
+--- @param stream    bool|nil
+--- @return string   JSON-encoded body
+local function buildRequestBody(messages, settings, tools, stream)
+    local prepared = prepareAnthropicMessages(messages)
+    local body = {
+        model      = settings.model,
+        system     = prepared.system,
+        messages   = prepared.messages,
+        max_tokens = koutil.tableGetValue(settings, "additional_parameters", "max_tokens"),
+        stream     = stream or false,
+    }
+
+    if tools then
+        -- Injected tools (e.g. from resolveExternalSearch)
+        body.tools       = tools
+        body.tool_choice = { type = "auto" }
+    else
+        -- Carry over any user-configured tools (e.g. native web_search_20250305)
+        local user_tools = koutil.tableGetValue(settings, "additional_parameters", "tools")
+        if type(user_tools) == "table" and next(user_tools) ~= nil then
+            body.tools = user_tools
         end
     end
 
-    if #text_chunks > 0 then
-        return table.concat(text_chunks, "\n\n")
-    end
+    return json.encode(body)
 end
-
 
 function AnthropicHandler:query(message_history, anthropic_settings, query_option)
 
     local headers = {
-        ["Content-Type"]     = "application/json",
-        ["x-api-key"]        = anthropic_settings.api_key,
-        ["anthropic-version"] = koutil.tableGetValue(anthropic_settings, "additional_parameters", "anthropic_version"),
+        ["Content-Type"]      = "application/json",
+        ["x-api-key"]         = anthropic_settings.api_key,
+        ["anthropic-version"] = koutil.tableGetValue(
+            anthropic_settings, "additional_parameters", "anthropic_version"),
     }
-
-    -- build_request_fn for Anthropic.
-    -- tools is a list of tool definitions (or nil); assigned to body.tools directly.
-    local function buildRequestBody(messages, tools)
-        local prepared = prepare_anthropic_messages(messages)
-        local body = {
-            model      = anthropic_settings.model,
-            system     = prepared.system,
-            messages   = prepared.messages,
-            max_tokens = koutil.tableGetValue(anthropic_settings, "additional_parameters", "max_tokens"),
-        }
-        -- tools is a list passed from resolveExternalSearch, or nil for the final request
-        if tools then
-            body.tools       = tools
-            body.tool_choice = { type = "auto" }
-        else
-            -- Carry over any user-configured tools when not injecting search tool
-            local user_tools = koutil.tableGetValue(anthropic_settings, "additional_parameters", "tools")
-            if type(user_tools) == "table" and next(user_tools) ~= nil then
-                body.tools = user_tools
-            end
-        end
-        return json.encode(body)
-    end
 
     local ws_mode = query_option.use_websearch or "none"
 
+    -- External search: always non-streaming stage-1.
     if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
         local augmented, err = self:resolveExternalSearch(
-            message_history, anthropic_settings, query_option, buildRequestBody, headers,
-            anthropic_settings.base_url, "anthropic")
+            message_history, anthropic_settings, query_option,
+            function(msgs, tools)
+                return buildRequestBody(msgs, anthropic_settings, tools, false)
+            end,
+            headers, anthropic_settings.base_url, "anthropic")
         if not augmented then return nil, err end
         if augmented.__direct_content then return augmented.__direct_content end
         message_history = augmented
     end
 
-    -- Final request (no search tool injection)
-    local requestBodyTable = json.decode(buildRequestBody(message_history, nil))
-    requestBodyTable.stream = query_option.use_stream_mode
-    local requestBody = json.encode(requestBodyTable)
-
-    if requestBodyTable.stream then
+    -- -----------------------------------------------------------------------
+    -- STREAM path
+    -- -----------------------------------------------------------------------
+    if query_option.use_stream_mode then
+        local requestBody = buildRequestBody(message_history, anthropic_settings, nil, true)
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(anthropic_settings.base_url, headers, requestBody)
     end
 
-    local success, code, response = self:makeRequest(anthropic_settings.base_url, headers, requestBody)
+    -- -----------------------------------------------------------------------
+    -- NON-STREAM path
+    -- -----------------------------------------------------------------------
+    local requestBody = buildRequestBody(message_history, anthropic_settings, nil, false)
+    local success, code, response = self:makeRequest(
+        anthropic_settings.base_url, headers, requestBody)
 
     if not success then
         if code == BaseHandler.CODE_CANCELLED then
@@ -116,22 +117,25 @@ function AnthropicHandler:query(message_history, anthropic_settings, query_optio
         return nil, "Error: Failed to connect to Anthropic API - " .. tostring(response)
     end
 
-    local success_parse, parsed = pcall(json.decode, response)
-    if not success_parse then
-        logger.warn("JSON Decode Error:", parsed)
+    local ok, parsed = pcall(json.decode, response)
+    if not ok or not parsed then
+        logger.warn("Anthropic: JSON decode error:", response)
         return nil, "Error: Failed to parse Anthropic API response"
     end
 
-    local content = extract_text_from_content(parsed.content)
-    if type(content) ~= "string" or #content == 0 then
-        content = koutil.tableGetValue(parsed, "content", 1, "text")
-    end
+    -- Fast-path: plain text answer (no tool calls)
+    local content = extractTextFromContent(parsed.content)
     if type(content) == "string" and #content > 0 then
         return content
     end
+    -- Fallback scalar
+    local scalar = koutil.tableGetValue(parsed, "content", 1, "text")
+    if type(scalar) == "string" and #scalar > 0 then
+        return scalar
+    end
 
-    local err_msg = koutil.tableGetValue(parsed, "error", "message") or "Error: Unexpected response format from API"
-    return nil, err_msg
+    -- Delegate tool-call / error detection to the unified base method
+    return self:parseToolCalls(parsed, "anthropic")
 end
 
 return AnthropicHandler

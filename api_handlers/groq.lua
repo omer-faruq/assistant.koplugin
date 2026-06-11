@@ -5,30 +5,35 @@ local logger = require("logger")
 
 local groqHandler = BaseHandler:new()
 
-function groqHandler:query(message_history, groq_settings, query_option)
-
-    -- Build a Groq request body table from messages, with an optional tools list.
-    -- Used both for normal requests and for the external-search stage-1 request.
-    local function buildRequestBody(messages, tools)
-        local body = {
-            model    = groq_settings.model,
-            messages = messages,
-        }
-        if groq_settings.additional_parameters then
-            --- available req body args: https://console.groq.com/docs/api-reference
-            for _, option in ipairs({"temperature", "top_p", "max_completion_tokens", "max_tokens",
-                                        "reasoning_effort", "reasoning_format", "search_settings"}) do
-                if groq_settings.additional_parameters[option] then
-                    body[option] = groq_settings.additional_parameters[option]
-                end
+--- Build the Groq request body.
+--- @param messages  table
+--- @param settings  table
+--- @param tools     table|nil
+--- @param stream    bool|nil
+--- @return string  JSON body
+local function buildRequestBody(messages, settings, tools, stream)
+    local body = {
+        model    = settings.model,
+        messages = messages,
+        stream   = stream or false,
+    }
+    if settings.additional_parameters then
+        for _, option in ipairs({
+                "temperature", "top_p", "max_completion_tokens", "max_tokens",
+                "reasoning_effort", "reasoning_format", "search_settings" }) do
+            if settings.additional_parameters[option] then
+                body[option] = settings.additional_parameters[option]
             end
         end
-        if tools then
-            body.tools       = tools
-            body.tool_choice = "auto"
-        end
-        return json.encode(body)
     end
+    if tools then
+        body.tools       = tools
+        body.tool_choice = "auto"
+    end
+    return json.encode(body)
+end
+
+function groqHandler:query(message_history, groq_settings, query_option)
 
     local headers = {
         ["Content-Type"]  = "application/json",
@@ -37,65 +42,73 @@ function groqHandler:query(message_history, groq_settings, query_option)
 
     local ws_mode = query_option.use_websearch or "none"
 
-    -- External search modes: two-stage tool-call flow, always non-streaming for stage 1
+    -- External search: always non-streaming stage-1.
     if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
         local augmented, err = self:resolveExternalSearch(
-            message_history, groq_settings, query_option, buildRequestBody, headers,
-            groq_settings.base_url, "openai")
-        if not augmented then
-            return nil, err
-        end
-        -- Model answered directly without issuing a tool_call
-        if augmented.__direct_content then
-            return augmented.__direct_content
-        end
-        -- Replace message_history with the augmented messages for the final request
+            message_history, groq_settings, query_option,
+            function(msgs, tools)
+                return buildRequestBody(msgs, groq_settings, tools, false)
+            end,
+            headers, groq_settings.base_url, "openai")
+        if not augmented then return nil, err end
+        if augmented.__direct_content then return augmented.__direct_content end
         message_history = augmented
     end
 
-    -- Assemble the final request body (no tools for the final / non-search request)
-    local requestBodyTable = json.decode(buildRequestBody(message_history, nil))
+    -- -----------------------------------------------------------------------
+    -- STREAM path
+    -- -----------------------------------------------------------------------
+    if query_option.use_stream_mode then
+        local body = json.decode(buildRequestBody(message_history, groq_settings, nil, true))
 
-    -- Built-in web search: only for groq/compound* models
-    -- https://console.groq.com/docs/tool-use/built-in-tools/web-search
-    if ws_mode == "builtin" and groq_settings.model:find("^groq/compound") then
-        requestBodyTable.compound_custom = {
-            tools = {
-                enabled_tools = { "web_search", "visit_website" }
+        -- Built-in web search for groq/compound* models
+        if ws_mode == "builtin" and groq_settings.model:find("^groq/compound") then
+            body.compound_custom = {
+                tools = { enabled_tools = { "web_search", "visit_website" } }
             }
-        }
-    end
+        end
 
-    requestBodyTable.stream = query_option.use_stream_mode
-
-    local requestBody = json.encode(requestBodyTable)
-
-    if requestBodyTable.stream then
+        local requestBody = json.encode(body)
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(groq_settings.base_url, headers, requestBody)
     end
 
+    -- -----------------------------------------------------------------------
+    -- NON-STREAM path
+    -- -----------------------------------------------------------------------
+    local body = json.decode(buildRequestBody(message_history, groq_settings, nil, false))
+
+    if ws_mode == "builtin" and groq_settings.model:find("^groq/compound") then
+        body.compound_custom = {
+            tools = { enabled_tools = { "web_search", "visit_website" } }
+        }
+    end
+
+    local requestBody = json.encode(body)
     local status, code, response = self:makeRequest(groq_settings.base_url, headers, requestBody)
-    if status then
-        local success, responseData = pcall(json.decode, response)
-        if success then
-            local content = koutil.tableGetValue(responseData, "choices", 1, "message", "content")
-            if content then return content end
-        end
 
-        -- server response error message
-        logger.warn("API Error", code, response)
-        if success then
-            local err_msg = koutil.tableGetValue(responseData, "error", "message")
-            if err_msg then return nil, err_msg end
+    if not status then
+        if code == BaseHandler.CODE_CANCELLED then
+            return nil, response
         end
+        if response and #response > 0 then
+            local ok, rd = pcall(json.decode, response)
+            if ok then
+                local err_msg = koutil.tableGetValue(rd, "error", "message")
+                if err_msg then return nil, err_msg end
+            end
+        end
+        logger.warn("Groq API error:", code, response)
+        return nil, "Error: " .. (code or "unknown") .. " - " .. tostring(response)
     end
 
-    if code == BaseHandler.CODE_CANCELLED then
-        return nil, response
+    local ok, responseData = pcall(json.decode, response)
+    if not ok or not responseData then
+        logger.warn("Groq: failed to parse response:", response)
+        return nil, "Error: failed to parse API response"
     end
-    logger.warn("groq API Error", response)
-    return nil, "Error: " .. (code or "unknown") .. " - " .. response
+
+    return self:parseToolCalls(responseData, "openai")
 end
 
 return groqHandler
