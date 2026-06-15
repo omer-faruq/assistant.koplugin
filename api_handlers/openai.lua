@@ -9,8 +9,8 @@ local OpenAIHandler = BaseHandler:new()
 --- @param messages  table   message history
 --- @param settings  table   provider settings
 --- @param tools     table|nil  tool definitions (nil → no tool_calls)
---- @param stream    bool|nil
---- @return string   JSON-encoded request body
+--- @param stream    boolean|nil
+--- @return table    requestBody 
 local function buildRequestBody(messages, settings, tools, stream)
     local body = {
         model      = settings.model,
@@ -22,7 +22,7 @@ local function buildRequestBody(messages, settings, tools, stream)
         body.tools       = tools
         body.tool_choice = "auto"
     end
-    return json.encode(body)
+    return body
 end
 
 function OpenAIHandler:query(message_history, openai_settings, query_option)
@@ -34,6 +34,24 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
 
     local ws_mode = query_option.use_websearch or "none"
 
+    -- -----------------------------------------------------------------------
+    -- STREAM path: build body and return a background function immediately.
+    -- -----------------------------------------------------------------------
+    if query_option.use_stream_mode then
+        local tools
+        if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+            tools = { self:buildExternalSearchToolDef("openai") }
+        end
+        local body = buildRequestBody(message_history, openai_settings, tools, true)
+
+        local requestBody = json.encode(body)
+        headers["Accept"] = "text/event-stream"
+        return self:backgroundRequest(openai_settings.base_url, headers, requestBody)
+    end
+
+    -- -----------------------------------------------------------------------
+    -- NON-STREAM path: synchronous makeRequest, may return tool_call table.
+    -- -----------------------------------------------------------------------
     -- External search: resolve before deciding on stream/non-stream.
     -- resolveExternalSearch is always non-streaming (stage-1 synchronous request).
     if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
@@ -48,18 +66,6 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
         message_history = augmented
     end
 
-    -- -----------------------------------------------------------------------
-    -- STREAM path: build body and return a background function immediately.
-    -- -----------------------------------------------------------------------
-    if query_option.use_stream_mode then
-        local requestBody = buildRequestBody(message_history, openai_settings, nil, true)
-        headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(openai_settings.base_url, headers, requestBody)
-    end
-
-    -- -----------------------------------------------------------------------
-    -- NON-STREAM path: synchronous makeRequest, may return tool_call table.
-    -- -----------------------------------------------------------------------
     local requestBody = buildRequestBody(message_history, openai_settings, nil, false)
     local status, code, response = self:makeRequest(openai_settings.base_url, headers, requestBody)
 

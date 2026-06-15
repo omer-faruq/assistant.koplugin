@@ -109,22 +109,6 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
     local ws_mode = query_option.use_websearch or "none"
     local tool_called = false
 
-    -- External search: always non-streaming stage-1.
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
-        local augmented, err = self:resolveExternalSearch(
-            message_history, gemini_settings, query_option,
-            function(msgs, tools)
-                -- tools here is { tool_def } from resolveExternalSearch
-                local td = (tools and tools[1]) or nil
-                return buildRequestBody(msgs, gemini_settings, td, false)
-            end,
-            headers, url_sync, "gemini")
-        if not augmented then return nil, err end
-        if augmented.__direct_content then return augmented.__direct_content end
-        message_history = augmented
-        tool_called = true
-    end
-
     -- -----------------------------------------------------------------------
     -- STREAM path: return background function immediately.
     -- -----------------------------------------------------------------------
@@ -133,6 +117,8 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
         local builtin_tools = nil
         if ws_mode == "builtin" then
             builtin_tools = { google_search = {} }
+        elseif ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+            builtin_tools = self:buildExternalSearchToolDef("gemini")
         end
 
         local contents, system_content = toGeminiContents(message_history)
@@ -161,6 +147,21 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
     -- -----------------------------------------------------------------------
     -- NON-STREAM path
     -- -----------------------------------------------------------------------
+    -- External search: always non-streaming stage-1.
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        local augmented, err = self:resolveExternalSearch(
+            message_history, gemini_settings, query_option,
+            function(msgs, tools)
+                -- tools here is { tool_def } from resolveExternalSearch
+                local td = (tools and tools[1]) or nil
+                return buildRequestBody(msgs, gemini_settings, td, false)
+            end,
+            headers, url_sync, "gemini")
+        if not augmented then return nil, err end
+        if augmented.__direct_content then return augmented.__direct_content end
+        message_history = augmented
+        tool_called = true
+    end
 
     -- When tool was already called (after external search), disable further
     -- function-calling so the model synthesises a final answer.

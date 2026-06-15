@@ -9,8 +9,8 @@ local groqHandler = BaseHandler:new()
 --- @param messages  table
 --- @param settings  table
 --- @param tools     table|nil
---- @param stream    bool|nil
---- @return string  JSON body
+--- @param stream    boolean|nil
+--- @return table    requestBody 
 local function buildRequestBody(messages, settings, tools, stream)
     local body = {
         model    = settings.model,
@@ -30,7 +30,7 @@ local function buildRequestBody(messages, settings, tools, stream)
         body.tools       = tools
         body.tool_choice = "auto"
     end
-    return json.encode(body)
+    return body
 end
 
 function groqHandler:query(message_history, groq_settings, query_option)
@@ -42,7 +42,24 @@ function groqHandler:query(message_history, groq_settings, query_option)
 
     local ws_mode = query_option.use_websearch or "none"
 
-    -- External search: always non-streaming stage-1.
+    -- -----------------------------------------------------------------------
+    -- STREAM path
+    -- -----------------------------------------------------------------------
+    if query_option.use_stream_mode then
+        local body = buildRequestBody(message_history, groq_settings, nil, true)
+
+        -- Built-in web search for groq/compound* models
+        if ws_mode == "builtin" and groq_settings.model:find("^groq/compound") then
+            body.compound_custom = { tools = { enabled_tools = { "web_search", "visit_website" } } }
+        elseif ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+            body.tools = { self:buildExternalSearchToolDef("openai") }
+        end
+        local requestBody = json.encode(body)
+
+        headers["Accept"] = "text/event-stream"
+        return self:backgroundRequest(groq_settings.base_url, headers, requestBody)
+    end
+
     if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
         local augmented, err = self:resolveExternalSearch(
             message_history, groq_settings, query_option,
@@ -53,24 +70,6 @@ function groqHandler:query(message_history, groq_settings, query_option)
         if not augmented then return nil, err end
         if augmented.__direct_content then return augmented.__direct_content end
         message_history = augmented
-    end
-
-    -- -----------------------------------------------------------------------
-    -- STREAM path
-    -- -----------------------------------------------------------------------
-    if query_option.use_stream_mode then
-        local body = json.decode(buildRequestBody(message_history, groq_settings, nil, true))
-
-        -- Built-in web search for groq/compound* models
-        if ws_mode == "builtin" and groq_settings.model:find("^groq/compound") then
-            body.compound_custom = {
-                tools = { enabled_tools = { "web_search", "visit_website" } }
-            }
-        end
-
-        local requestBody = json.encode(body)
-        headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(groq_settings.base_url, headers, requestBody)
     end
 
     -- -----------------------------------------------------------------------

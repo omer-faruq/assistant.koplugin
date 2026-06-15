@@ -43,7 +43,7 @@ end
 --- @param messages  table       message history (OpenAI style; will be converted)
 --- @param settings  table       provider settings
 --- @param tools     table|nil   tool definitions to inject (nil → use settings.tools or none)
---- @param stream    bool|nil
+--- @param stream    boolean|nil
 --- @return string   JSON-encoded body
 local function buildRequestBody(messages, settings, tools, stream)
     local prepared = prepareAnthropicMessages(messages)
@@ -81,6 +81,22 @@ function AnthropicHandler:query(message_history, anthropic_settings, query_optio
 
     local ws_mode = query_option.use_websearch or "none"
 
+    -- -----------------------------------------------------------------------
+    -- STREAM path
+    -- -----------------------------------------------------------------------
+    if query_option.use_stream_mode then
+        local stream_tools = nil
+        if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+            stream_tools = { self:buildExternalSearchToolDef("anthropic") }
+        end
+        local requestBody = buildRequestBody(message_history, anthropic_settings, stream_tools, true)
+        headers["Accept"] = "text/event-stream"
+        return self:backgroundRequest(anthropic_settings.base_url, headers, requestBody)
+    end
+
+    -- -----------------------------------------------------------------------
+    -- NON-STREAM path
+    -- -----------------------------------------------------------------------
     -- External search: always non-streaming stage-1.
     if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
         local augmented, err = self:resolveExternalSearch(
@@ -94,18 +110,6 @@ function AnthropicHandler:query(message_history, anthropic_settings, query_optio
         message_history = augmented
     end
 
-    -- -----------------------------------------------------------------------
-    -- STREAM path
-    -- -----------------------------------------------------------------------
-    if query_option.use_stream_mode then
-        local requestBody = buildRequestBody(message_history, anthropic_settings, nil, true)
-        headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(anthropic_settings.base_url, headers, requestBody)
-    end
-
-    -- -----------------------------------------------------------------------
-    -- NON-STREAM path
-    -- -----------------------------------------------------------------------
     local requestBody = buildRequestBody(message_history, anthropic_settings, nil, false)
     local success, code, response = self:makeRequest(
         anthropic_settings.base_url, headers, requestBody)

@@ -34,7 +34,32 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
 
     local ws_mode = query_option.use_websearch or "none"
 
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+    -- -----------------------------------------------------------------------
+    -- STREAM path
+    -- -----------------------------------------------------------------------
+    if query_option.use_stream_mode then
+        -- Inject tool definition so the LLM can issue a tool_call in the stream.
+        -- The Querier's stream tool-call loop will detect it and execute the search.
+        local stream_tools = nil
+        if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+            stream_tools = { self:buildExternalSearchToolDef("openai") }
+        end
+        local requestBodyTable = json.decode(buildRequestBody(message_history, stream_tools))
+        requestBodyTable.stream = true
+        local requestBody = json.encode(requestBodyTable)
+        -- Mistral requires Content-Length
+        headers["Content-Length"] = tostring(#requestBody)
+        headers["Accept"] = "text/event-stream"
+        return self:backgroundRequest(mistral_settings.base_url, headers, requestBody)
+    end
+
+    -- -----------------------------------------------------------------------
+    -- NON-STREAM path
+    -- -----------------------------------------------------------------------
+    -- External search two-stage flow: only in non-stream mode.
+    -- In stream mode the Querier's tool-call loop handles search execution.
+    if not query_option.use_stream_mode
+       and (ws_mode == "serpapi" or ws_mode == "tavilyapi") then
         local augmented, err = self:resolveExternalSearch(
             message_history, mistral_settings, query_option, buildRequestBody, headers,
             mistral_settings.base_url, "openai")
@@ -42,36 +67,33 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
         if augmented.__direct_content then return augmented.__direct_content end
         message_history = augmented
     end
-
     local requestBodyTable = json.decode(buildRequestBody(message_history, nil))
-    requestBodyTable.stream = query_option.use_stream_mode
+    requestBodyTable.stream = false
     local requestBody = json.encode(requestBodyTable)
     -- Mistral requires Content-Length
     headers["Content-Length"] = tostring(#requestBody)
 
-    if requestBodyTable.stream then
-        headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(mistral_settings.base_url, headers, requestBody)
-    end
-
     local status, code, response = self:makeRequest(mistral_settings.base_url, headers, requestBody)
 
-    if status then
-        local success, responseData = pcall(json.decode, response)
-        if success then
-            local content = koutil.tableGetValue(responseData, "choices", 1, "message", "content")
-            if content then return content end
+    if not status then
+        if code == BaseHandler.CODE_CANCELLED then
+            return nil, response
         end
+        return nil, "Error: " .. (code or "unknown") .. " - " .. response
+    end
 
+    local success, responseData = pcall(json.decode, response)
+    if not success or not responseData then
         logger.warn("API Error", code, response)
-        local err_msg = koutil.tableGetValue(responseData, "message") or ""
-        if err_msg then return nil, "API Error: " .. err_msg end
+        return nil, "Error: Failed to parse Mistral API response"
     end
 
-    if code == BaseHandler.CODE_CANCELLED then
-        return nil, response
-    end
-    return nil, "Error: " .. (code or "unknown") .. " - " .. response
+    -- Fast-path: plain text answer (no tool calls)
+    local content = koutil.tableGetValue(responseData, "choices", 1, "message", "content")
+    if content then return content end
+
+    -- Delegate tool-call / error detection to the unified base method
+    return self:parseToolCalls(responseData, "openai")
 end
 
 return MistralHandler

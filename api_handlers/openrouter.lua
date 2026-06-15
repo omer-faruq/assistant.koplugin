@@ -71,8 +71,35 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
 
     local ws_mode = query_option.use_websearch or "none"
 
-    -- External search modes: two-stage tool-call flow, always non-streaming for stage 1
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+    -- -----------------------------------------------------------------------
+    -- STREAM path
+    -- -----------------------------------------------------------------------
+    if query_option.use_stream_mode then
+        -- Determine which tools to inject for this stream request.
+        local stream_tools = nil
+        if ws_mode == "builtin" then
+            -- OpenRouter native web-search server tool
+            stream_tools = { buildWebSearchTool(openrouter_settings.additional_parameters) }
+        elseif ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+            -- Inject standard tool definition so the LLM can issue a tool_call in the stream.
+            -- The Querier's stream tool-call loop will detect it and execute the search.
+            stream_tools = { self:buildExternalSearchToolDef("openai") }
+        end
+
+        local requestBodyTable = json.decode(buildRequestBody(message_history, stream_tools))
+        requestBodyTable.stream = true
+        local requestBody = json.encode(requestBodyTable)
+        headers["Accept"] = "text/event-stream"
+        return self:backgroundRequest(openrouter_settings.base_url, headers, requestBody)
+    end
+
+    -- -----------------------------------------------------------------------
+    -- NON-STREAM path
+    -- -----------------------------------------------------------------------
+    -- External search two-stage flow: only in non-stream mode.
+    -- In stream mode the Querier's tool-call loop handles search execution.
+    if not query_option.use_stream_mode
+       and (ws_mode == "serpapi" or ws_mode == "tavilyapi") then
         local augmented, err = self:resolveExternalSearch(
             message_history, openrouter_settings, query_option, buildRequestBody, headers,
             openrouter_settings.base_url, "openai")
@@ -87,45 +114,38 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
         message_history = augmented
     end
 
-    -- Assemble the final request body
     local requestBodyTable = json.decode(buildRequestBody(message_history, nil))
 
-    -- Built-in OpenRouter web search server tool
+    -- Built-in OpenRouter web search server tool (non-stream)
     -- https://openrouter.ai/docs/guides/features/tool-calling
     if ws_mode == "builtin" then
         requestBodyTable.tools = { buildWebSearchTool(openrouter_settings.additional_parameters) }
     end
 
-    requestBodyTable.stream = query_option.use_stream_mode
-
+    requestBodyTable.stream = false
     local requestBody = json.encode(requestBodyTable)
-
-    if requestBodyTable.stream then
-        headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(openrouter_settings.base_url, headers, requestBody)
-    end
 
     local status, code, response = self:makeRequest(openrouter_settings.base_url, headers, requestBody)
 
-    if status then
-        local success, responseData = pcall(json.decode, response)
-        if success then
-            local content = koutil.tableGetValue(responseData, "choices", 1, "message", "content")
-            if content then return content end
+    if not status then
+        if code == BaseHandler.CODE_CANCELLED then
+            return nil, response
         end
+        return nil, "Error: " .. (code or "unknown") .. " - " .. response
+    end
 
-        -- server response error message
+    local success, responseData = pcall(json.decode, response)
+    if not success or not responseData then
         logger.warn("API Error", code, response)
-        if success then
-            local err_msg = koutil.tableGetValue(responseData, "error", "message")
-            if err_msg then return nil, err_msg end
-        end
+        return nil, "Error: Failed to parse OpenRouter API response"
     end
 
-    if code == BaseHandler.CODE_CANCELLED then
-        return nil, response
-    end
-    return nil, "Error: " .. (code or "unknown") .. " - " .. response
+    -- Fast-path: plain text answer (no tool calls)
+    local content = koutil.tableGetValue(responseData, "choices", 1, "message", "content")
+    if content then return content end
+
+    -- Delegate tool-call / error detection to the unified base method
+    return self:parseToolCalls(responseData, "openai")
 end
 
 return OpenRouterProvider

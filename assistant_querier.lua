@@ -228,33 +228,190 @@ function Querier:query(message_history, title)
 
     if query_option.use_stream_mode then
         -- ---------------------------------------------------------------
-        -- STREAM PATH
-        -- handler:query() returns a background function immediately.
-        -- We pass it to showStreamDialog which runs processStream.
-        -- If the model issued a tool call inside the streamed response
-        -- (currently only possible with native built-in tools), the
-        -- stream dialog surfaces final text anyway, so no loop needed.
+        -- STREAM PATH  — supports multi-turn tool-call loop
+        --
+        -- handler:query() returns a background function; showStremDialog
+        -- drives processStream and returns:
+        --   ok=true,  content=string,  nil          → plain text answer
+        --   ok=true,  content=nil,     tool_call={}  → LLM wants a tool
+        --   ok=nil,   err=string                     → cancelled / error
         -- ---------------------------------------------------------------
-        res, err = self.handler:query(
-            trimMessageHistory(message_history),
-            self.provider_settings,
-            query_option)
+        local MAX_TOOL_ROUNDS = 3
+        local tool_rounds = 0
 
-        if type(res) == "function" then
-            -- processStream returns the accumulated content string (or nil+err)
-            local ok, content = self:showStreamDialog(res)
-            if ok and type(content) == "string" then
-                res = content
-            elseif type(content) == "table" then
-                -- A streamed tool call result table (future extension).
-                -- For now treat it as an error; external search uses non-stream.
+        repeat
+            local bg_fn
+            bg_fn, err = self.handler:query(
+                trimMessageHistory(message_history),
+                self.provider_settings,
+                query_option)
+
+            if type(bg_fn) ~= "function" then
+                -- handler returned an error before even starting the stream
                 res = nil
-                err = _("Tool calls in stream mode are not yet supported. "
-                      .. "Disable stream mode when using web search.")
-            else
+                break
+            end
+
+            local ok, content, tool_call = self:showStremDialog(bg_fn)
+
+            if not ok then
+                -- cancelled or stream error
                 res = nil
                 err = content or _("Stream failed with no error message.")
+                break
             end
+
+            if type(content) == "string" then
+                -- Normal text answer — done
+                res = content
+                err = nil
+                break
+            end
+
+            -- Tool call detected in stream
+            if type(tool_call) ~= "table" then
+                res = nil
+                err = _("Stream ended with no content and no tool call.")
+                break
+            end
+
+            if tool_rounds >= MAX_TOOL_ROUNDS then
+                res = nil
+                err = _("Too many tool-call rounds; aborting.")
+                break
+            end
+            tool_rounds = tool_rounds + 1
+
+            -- Decode keywords from tool call arguments
+            local keywords
+            if tool_call.args then
+                -- Gemini: args is already a table
+                keywords = tool_call.args.query or tool_call.args.keywords
+            elseif tool_call.arguments then
+                -- OpenAI / Anthropic: arguments is a JSON string
+                local ok_j, args = pcall(rapidjson.decode, tool_call.arguments)
+                if ok_j and type(args) == "table" then
+                    keywords = args.query or args.keywords
+                end
+            end
+
+            if not keywords or #keywords == 0 then
+                res = nil
+                err = _("Tool call did not include search keywords.")
+                break
+            end
+
+            -- Show keyword search indicator
+            local keywordmsg = InfoMessage:new({
+                icon = "appbar.search",
+                text = _("Searching with Keywords:\n\n" .. keywords),
+            })
+            UIManager:show(keywordmsg)
+            self.handler:setTrapWidget(keywordmsg)
+
+            local ws_mode = query_option.use_websearch
+            local search_ok, search_result
+            if ws_mode == "serpapi" then
+                search_ok, search_result =
+                    self.handler:serpAPISearchRequest(self.provider_settings.serpapi, keywords)
+            elseif ws_mode == "tavilyapi" then
+                search_ok, search_result =
+                    self.handler:tavilyAPISearchRequest(self.provider_settings.tavilyapi, keywords)
+            else
+                -- Native built-in tool or unknown — shouldn't normally reach here
+                res = nil
+                err = "Unsupported web-search mode in stream tool-call loop: " .. tostring(ws_mode)
+                UIManager:close(self.handler:resetTrapWidget())
+                break
+            end
+
+            UIManager:close(self.handler:resetTrapWidget())
+
+            if not search_ok then
+                res = nil
+                err = "Search API failed: " .. tostring(search_result)
+                break
+            end
+
+            -- Build a synthetic tool_call table compatible with buildToolResultMessages.
+            -- The stream path never receives a full serialised assistant response, so we
+            -- reconstruct a minimal raw_assistant appropriate for each provider format.
+            local hn = self.handler_name
+            local format
+            if hn == "anthropic" then
+                format = "anthropic"
+            elseif hn == "gemini" then
+                format = "gemini"
+            else
+                format = "openai"  -- openai / groq / openrouter / deepseek / mistral …
+            end
+
+            local tc_id   = tool_call.id   or "call_stream_0"
+            local tc_name = tool_call.name or "web_search"
+
+            local raw_assistant
+            if format == "anthropic" then
+                -- Anthropic expects the assistant turn to be the full content_blocks array
+                raw_assistant = {
+                    {
+                        type  = "tool_use",
+                        id    = tc_id,
+                        name  = tc_name,
+                        input = { keywords = keywords },
+                    },
+                }
+            elseif format == "gemini" then
+                -- Gemini expects a model-turn message (role="model")
+                raw_assistant = {
+                    role  = "model",
+                    parts = {
+                        {
+                            functionCall = {
+                                name = tc_name,
+                                id   = tc_id,
+                                args = { keywords = keywords },
+                            },
+                        },
+                    },
+                }
+            else  -- openai
+                -- OpenAI expects { content, tool_calls = [{id, type, function={name, arguments}}] }
+                raw_assistant = {
+                    content    = nil,
+                    tool_calls = {
+                        {
+                            id       = tc_id,
+                            type     = "function",
+                            ["function"] = {
+                                name      = tc_name,
+                                arguments = rapidjson.encode({ keywords = keywords }),
+                            },
+                        },
+                    },
+                }
+            end
+
+            local tool_call_result_proxy = {
+                __is_tool_call = true,
+                tool_call_id   = tc_id,
+                keywords       = keywords,
+                raw_assistant  = raw_assistant,
+                format         = format,
+            }
+
+            local tool_msgs = self.handler:buildToolResultMessages(tool_call_result_proxy, search_result)
+            for _, m in ipairs(tool_msgs) do
+                table.insert(message_history, m)
+            end
+
+            -- query_option stays unchanged; loop will call handler:query again with augmented history
+            res = nil
+            err = nil
+
+        until type(res) == "string" or (err ~= nil)
+
+        if self.user_interrupted then
+            return nil, _("Request cancelled by user.")
         end
 
     else
@@ -439,7 +596,7 @@ function Querier:showStremDialog(res)
     animation_task = UIManager:scheduleIn(0.4, updateAnimation)
 
     local stream_mode_auto_scroll = self.settings:readSetting("stream_mode_auto_scroll", true)
-    local ok, content, err = pcall(self.processStream, self, res, function (content, buffer)
+    local ok, content, tool_calls_or_err = pcall(self.processStream, self, res, function (content, buffer)
         UIManager:nextTick(function ()
             -- Stop animation on first content
             if not first_content_received and content and #tostring(content) > 0 then
@@ -462,9 +619,18 @@ function Querier:showStremDialog(res)
             end
         end)
     end)
+    local err
     if not ok then
+        -- pcall failure: content holds the Lua error, tool_calls_or_err is nil
         logger.warn("Error processing stream: " .. tostring(content))
-        err = content -- content contains the error message
+        err = content
+    elseif content == nil and type(tool_calls_or_err) == "table" then
+        -- processStream detected a tool call; tool_calls_or_err is the accumulated tool_call table
+        UIManager:close(streamDialog)
+        return true, nil, tool_calls_or_err  -- third value carries tool call data
+    else
+        -- Normal text response; tool_calls_or_err may be a trailing error string or nil
+        err = tool_calls_or_err
     end
 
     UIManager:close(streamDialog)
@@ -496,7 +662,8 @@ function Querier:processStream(bgQuery, trunk_callback)
         coroutine.resume(_coroutine, false)  
     end  
   
-    local tool_calls   -- set to the object when LLM request a tool_calls
+    local tool_calls   -- set to the accumulated table when LLM issues a tool call
+    local tool_call_acc = {}  -- persistent accumulator across ALL chunks (id, name, arguments_parts[])
     local non200_start -- byte offset in result_buffer when non-200 line was received
     local check_interval_sec = 0.125 -- loop check interval: 125ms  
     local chunksize = 1024 * 16 -- buffer size for reading data
@@ -555,10 +722,9 @@ function Querier:processStream(bgQuery, trunk_callback)
                         -- Safely parse the JSON
                         local ok, event = pcall(rapidjson.decode, json_str)
                         if ok and event then
-                            local tool_calls_acc = {}
-                            self:processChunk(event, trunk_callback, result_buffer, reasoning_content_buffer, tool_calls_acc)
-                            if tool_calls.arguments_parts then
-                                tool_calls = tool_calls_acc
+                            local signal = self:processChunk(event, trunk_callback, result_buffer, reasoning_content_buffer, tool_call_acc)
+                            if signal == "TOOLCALLS" then
+                                tool_calls = tool_call_acc
                                 break
                             end
                         else
@@ -656,7 +822,12 @@ function Querier:processStream(bgQuery, trunk_callback)
     end
 
     if tool_calls then
-        return tool_calls, "TOOLCALLS"
+        -- Assemble arguments from accumulated parts into a single string (OpenAI-style)
+        -- Gemini already stores args as a table in tool_calls.args
+        if not tool_calls.args and tool_calls.arguments_parts then
+            tool_calls.arguments = table.concat(tool_calls.arguments_parts)
+        end
+        return nil, tool_calls  -- nil content, tool_calls table as second return
     end
 
     local show_reasoning = self.settings:readSetting("show_reasoning", false)
@@ -788,18 +959,27 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
     elseif type(reasoning_content) == "string" and #reasoning_content > 0 then
         reasoning_content_buffer:put(reasoning_content)
         if trunk_callback then trunk_callback(reasoning_content, reasoning_content_buffer) end
-    elseif type(stop_reason) == "string" and stop_reason:lower() ~= "stop" and stop_reason ~= "tool_calls" and stop_reason ~= "tool_use" then
+    elseif type(stop_reason) == "string" and stop_reason ~= "tool_calls" and stop_reason ~= "tool_use" and stop_reason:lower() ~= "stop" then
         result_buffer:put(_("Stopped Reason: ") .. stop_reason)
     else
         if result_content or reasoning_content or stop_reason then
             if choices or candidates or delta then
                 -- Recognised structure but nothing to render (stream ended normally)
+                -- Check if this is a tool-call completion signal
+                if stop_reason == "tool_calls" or stop_reason == "tool_use" then
+                    return "TOOLCALLS"
+                end
                 return nil
             end
             logger.warn("Unexpected JSON:", event)
         else
             logger.warn("PROBLEM JSON:", event)
         end
+    end
+
+    -- Return TOOLCALLS signal if this chunk completed a tool call
+    if stop_reason == "tool_calls" or stop_reason == "tool_use" then
+        return "TOOLCALLS"
     end
 
     -- Genmini Last Chunk
