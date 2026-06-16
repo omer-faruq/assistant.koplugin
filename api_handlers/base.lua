@@ -67,7 +67,7 @@ end
 ---
 --- @param message_history  table   conversation history
 --- @param provider_setting table   provider-specific config
---- @param query_option     table   { use_stream_mode=bool, use_websearch=string }
+--- @param query_option     table   { use_stream_mode=boolean, use_websearch=string }
 --- @return string|function|table result, string|nil error
 function BaseHandler:query(message_history, provider_setting, query_option)
     -- To be implemented by specific handlers
@@ -515,16 +515,6 @@ end
 function BaseHandler:resolveExternalSearch(message_history, provider_setting, query_option,
                                            build_request_fn, headers, url, format)
     format = format or "openai"
-
-    -- Patch the system prompt to constrain to a single tool call
-    if message_history[1] and message_history[1].role == "system" then
-        message_history[1].content = message_history[1].content ..
-            "\n\n CRITICAL CONSTRAINT: You have a maximum allowance of ONE single call to the " ..
-            "`web_search` tool for the entire interaction. Never output multiple search calls in " ..
-            "parallel, and never plan for a multi-turn reasoning loop. Consolidate your informational " ..
-            "needs into one precise search query. If no search is needed for common knowledge, " ..
-            "answer directly without calling the tool."
-    end
 
     -- Stage 1: ask the LLM to produce a tool call with search keywords
     local tool_def    = self:buildExternalSearchToolDef(format)

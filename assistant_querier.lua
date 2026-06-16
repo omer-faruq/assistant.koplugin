@@ -194,7 +194,11 @@ end
 local function trimMessageHistory(message_history)
     local trimed_history = {}
     for i, message in ipairs(message_history) do
-        trimed_history[i] = { role = message.role, content = message.content, }
+        trimed_history[i] = {
+            role = message.role,
+            content = message.content,
+            parts = message.parts,
+         }
     end
     return trimed_history
 end

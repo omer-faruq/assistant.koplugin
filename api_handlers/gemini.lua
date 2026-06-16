@@ -61,7 +61,7 @@ end
 --- @param messages  table       message history
 --- @param settings  table       provider settings
 --- @param tool_def  table|nil   Gemini-format tool object (or nil)
---- @param stream    bool|nil
+--- @param stream    boolean|nil
 --- @return string   JSON-encoded body
 local function buildRequestBody(messages, settings, tool_def, stream)
     local contents, system_content = toGeminiContents(messages)
