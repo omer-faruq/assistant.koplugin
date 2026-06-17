@@ -197,7 +197,9 @@ local function trimMessageHistory(message_history)
         trimed_history[i] = {
             role = message.role,
             content = message.content,
-            parts = message.parts,
+            parts = message.parts, -- gemini format
+            tool_call_id = message.tool_call_id, -- openai format
+            tool_calls = message.tool_calls,     -- openai format
          }
     end
     return trimed_history
