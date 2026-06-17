@@ -205,6 +205,8 @@ local function trimMessageHistory(message_history)
     return trimed_history
 end
 
+local TAG_PARALLELCALLS = "##KO##"
+
 --- Query the AI with the provided message history.
 --- Handles both stream and non-stream modes, including multi-turn tool-call loops.
 ---
@@ -298,6 +300,19 @@ function Querier:query(message_history, title)
                 local ok_j, args = pcall(rapidjson.decode, tool_call.arguments)
                 if ok_j and type(args) == "table" then
                     keywords = args.query or args.keywords
+                else
+                    -- parallel tool_calls, combind the keywords together
+                    if string.match(tool_call.arguments, TAG_PARALLELCALLS) then
+                        local args_parts = koutil.splitToArray(tool_call.arguments, TAG_PARALLELCALLS, false)
+                        local sbuf = strbuf.new()
+                        for _, kparts in ipairs(args_parts) do
+                            local ok_k, jargs = pcall(rapidjson.decode, kparts)
+                            if ok_k and type(jargs) == "table" and jargs.keywords then
+                                sbuf:put(jargs.keywords, " ")
+                            end
+                        end
+                        keywords = sbuf:tostring()
+                    end
                 end
             end
 
@@ -893,7 +908,13 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                         if json_default(tc.name) then tool_call_acc.name = tc.name end
                         local fn = json_default(tc["function"])
                         if fn then
-                            if json_default(fn.name)      then tool_call_acc.name = fn.name end
+                            if json_default(fn.name)      then
+                                tool_call_acc.name = fn.name
+                                if tool_call_acc.arguments_parts and #tool_call_acc.arguments_parts > 0 then
+                                    -- parallel tool_calls
+                                    table.insert(tool_call_acc.arguments_parts, TAG_PARALLELCALLS)
+                                end
+                            end
                             if json_default(fn.arguments) then
                                 tool_call_acc.arguments_parts = tool_call_acc.arguments_parts or {}
                                 table.insert(tool_call_acc.arguments_parts, fn.arguments)
