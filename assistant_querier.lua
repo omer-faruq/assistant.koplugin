@@ -244,7 +244,7 @@ function Querier:query(message_history, title)
         --   ok=true,  content=nil,     tool_call={}  → LLM wants a tool
         --   ok=nil,   err=string                     → cancelled / error
         -- ---------------------------------------------------------------
-        local MAX_TOOL_ROUNDS = 3
+        local MAX_TOOL_ROUNDS = 5
         local tool_rounds = 0
 
         repeat

@@ -29,6 +29,13 @@ function DeepSeekHandler:query(message_history, deepseek_settings, query_option)
         if tools then
             body.tools       = tools
             body.tool_choice = "auto"
+            if message_history[1].role == "system" then
+                message_history[1].content = message_history[1].content .. [[You are an AI assistant with a 'web_search' tool. Your goal: answer accurately in MINIMAL tool-call rounds.
+
+1. SEARCH SMART: Plan ahead and batch multiple search queries into ONE round whenever possible. Stop once you have enough info.
+2. NO EXTRA: Do not ask the user for more details or perform redundant searches.
+]]
+            end
         end
         return json.encode(body)
     end

@@ -15,6 +15,10 @@ local T = require("ffi/util").template
 -- order: order of the button in the UI, higher number means later in the list.
 -- show_on_main_popup: if true, the button will be shown in the main popup dialog.
 
+local markdown_format_prompt = [[ You are a helpful AI assistant. 
+Always respond in basic Markdown (#, lists, *bold/italic*, code, links, quotes). No tables, footnotes, nested lists, strikethrough, HTML, superscript/subscript, citations, or math.
+]]
+
 -- prompts attributes can be overridden in the configuration file.
 local custom_prompts = {
     term_xray = {
@@ -166,8 +170,7 @@ Most importantly, **Respond in this language:** {language}
         order = 20,
         desc = _(
             "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."),
-        system_prompt =
-        "You are a helpful AI assistant. Always respond in Markdown format, but use markdown lists to present comparisons instead of tables.",
+        system_prompt = markdown_format_prompt,
         user_prompt =
         [[You are a meticulous and highly knowledgeable Grammar Expert with an encyclopedic understanding of syntax, morphology, punctuation, and linguistic structures across various languages.
 When presented with a text, your expertise lies in thoroughly dissecting its grammatical composition and providing a comprehensive, insightful explanation.
@@ -325,12 +328,12 @@ Topic to cover (from user selection): {highlight}]],
 
 local assistant_prompts = {
     default = {
-        system_prompt = "You are a helpful AI assistant. Always respond in Markdown format.",
+        system_prompt = markdown_format_prompt,
     },
     recap = {
         use_websearch = true,
         system_prompt =
-        "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        "You are an expert literary assistant that provides accurate information about books. " .. markdown_format_prompt,
         user_prompt = [[
 '''{title}''' by '''{author}''' that has been {progress}% read.
 Given the above title and author of a book and the positional parameter, very briefly summarize the contents of the book prior with rich text formatting.
@@ -344,11 +347,11 @@ Also answer with entertaining tone and high quality detail with a focus on summa
     xray = {
         use_websearch = true,
         system_prompt =
-        "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        "You are an expert literary assistant that provides accurate information about books. " .. markdown_format_prompt,
         user_prompt = [[
 Your output must be spoiler‑free beyond the reader’s current progress.
 
-Required structure (Markdown):
+Required structure:
 
 ### Characters
 - **Name** — brief description(3 sentences) _<u>relationship(s) with others</u>_
@@ -389,8 +392,7 @@ Language: **{language}**.
     },
     book_info = {
         use_websearch = true,
-        system_prompt =
-        "Always respond in Markdown format.",
+        system_prompt = markdown_format_prompt,
         user_prompt = 
 	[[You are an objective, thorough Informative Assistant specializing in books, designed to provide accurate, verifiable, and structured information suitable for a reading application.
 
@@ -443,7 +445,7 @@ Language: **{language}**.
     annotations = {
         use_websearch = false,
         system_prompt =
-        "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        "You are an expert literary assistant that provides accurate information about books. " .. markdown_format_prompt,
         user_prompt = [[
 You are given  my notes and highlights.
 Your task is to carefully analyze this content and produce a structured summary that includes:
@@ -472,7 +474,7 @@ Keep the tone clear, thoughtful, and practical.
     summary_using_annotations = {
         use_websearch = true,
         system_prompt =
-        "You are an expert literary assistant that provides accurate information about books. Always respond in Markdown format.",
+        "You are an expert literary assistant that provides accurate information about books. " .. markdown_format_prompt,
         user_prompt = [[
 You are a meticulous book summarizer and analyst.
 
@@ -505,7 +507,7 @@ STYLE & RULES:
    - If a highlight conflicts with the book text, mark it with ⚠️ and briefly note the possible interpretation.
    - If a highlight is not related to the book text (if it is not in the book text), ignore it.
 
-OUTPUT STRUCTURE (Markdown):
+OUTPUT STRUCTURE:
 - TL;DR
 - Integrated Summary
 - Key Points
@@ -523,7 +525,7 @@ Now begin the analysis with the provided book_text and highlights.]],
     dict = {
         use_websearch = true,
         system_prompt =
-        "You are a literary dictionary that explains words in their book context. Always respond in Markdown format.",
+        "You are a literary dictionary that explains words in their book context. " .. markdown_format_prompt,
         user_prompt = T([[
 ## Task: Book-Aware Word Analysis
 
