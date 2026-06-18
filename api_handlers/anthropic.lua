@@ -44,7 +44,7 @@ end
 --- @param settings  table       provider settings
 --- @param tools     table|nil   tool definitions to inject (nil → use settings.tools or none)
 --- @param stream    boolean|nil
---- @return string   JSON-encoded body
+--- @return table    body
 local function buildRequestBody(messages, settings, tools, stream)
     local prepared = prepareAnthropicMessages(messages)
     local body = {
@@ -67,7 +67,7 @@ local function buildRequestBody(messages, settings, tools, stream)
         end
     end
 
-    return json.encode(body)
+    return body
 end
 
 function AnthropicHandler:query(message_history, anthropic_settings, query_option)
@@ -89,7 +89,8 @@ function AnthropicHandler:query(message_history, anthropic_settings, query_optio
         if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
             stream_tools = { self:buildExternalSearchToolDef("anthropic") }
         end
-        local requestBody = buildRequestBody(message_history, anthropic_settings, stream_tools, true)
+        local body = buildRequestBody(message_history, anthropic_settings, stream_tools, true)
+        local requestBody = json.encode(body)
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(anthropic_settings.base_url, headers, requestBody)
     end
@@ -108,7 +109,7 @@ function AnthropicHandler:query(message_history, anthropic_settings, query_optio
     end
 
     local success, code, response = self:makeRequest(
-        anthropic_settings.base_url, headers, requestBody)
+        anthropic_settings.base_url, headers, json.encode(requestBody))
 
     if not success then
         if code == BaseHandler.CODE_CANCELLED then

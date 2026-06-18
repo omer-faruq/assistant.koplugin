@@ -1,5 +1,5 @@
 local BaseHandler = require("api_handlers.base")
-local json = require("json")
+local json = require("rapidjson")
 local koutil = require("util")
 local logger = require("logger")
 
@@ -69,7 +69,7 @@ function groqHandler:query(message_history, groq_settings, query_option)
     if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
         tools = { self:buildExternalSearchToolDef("openai") }
     end
-    local body = json.decode(buildRequestBody(message_history, groq_settings, tools, false))
+    local body = buildRequestBody(message_history, groq_settings, tools, false)
 
     if ws_mode == "builtin" and groq_settings.model:find("^groq/compound") then
         body.compound_custom = {

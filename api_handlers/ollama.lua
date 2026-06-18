@@ -22,7 +22,7 @@ function OllamaHandler:query(message_history, ollama_settings, query_option)
         if tools then
             body.tools = tools
         end
-        return json.encode(body)
+        return body
     end
 
     local headers = {
@@ -44,7 +44,7 @@ function OllamaHandler:query(message_history, ollama_settings, query_option)
         if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
             stream_tools = { self:buildExternalSearchToolDef("openai") }
         end
-        local requestBodyTable = json.decode(buildRequestBody(message_history, stream_tools))
+        local requestBodyTable = buildRequestBody(message_history, stream_tools)
         requestBodyTable.stream = true
         local requestBody = json.encode(requestBodyTable)
         headers["Accept"] = "text/event-stream"
@@ -60,7 +60,7 @@ function OllamaHandler:query(message_history, ollama_settings, query_option)
     if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
         tools = { self:buildExternalSearchToolDef("openai") }
     end
-    local requestBodyTable = json.decode(buildRequestBody(message_history, tools))
+    local requestBodyTable = buildRequestBody(message_history, tools)
     requestBodyTable.stream = false
     local requestBody = json.encode(requestBodyTable)
 

@@ -59,7 +59,7 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
             body.tool_choice = "auto"
         end
 
-        return json.encode(body)
+        return body
     end
 
     local headers = {
@@ -86,7 +86,7 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
             stream_tools = { self:buildExternalSearchToolDef("openai") }
         end
 
-        local requestBodyTable = json.decode(buildRequestBody(message_history, stream_tools))
+        local requestBodyTable = buildRequestBody(message_history, stream_tools)
         requestBodyTable.stream = true
         local requestBody = json.encode(requestBodyTable)
         headers["Accept"] = "text/event-stream"
@@ -107,7 +107,7 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
         tools = { self:buildExternalSearchToolDef("openai") }
     end
 
-    local requestBodyTable = json.decode(buildRequestBody(message_history, tools))
+    local requestBodyTable = buildRequestBody(message_history, tools)
 
     -- Built-in OpenRouter web search server tool (non-stream)
     -- https://openrouter.ai/docs/guides/features/tool-calling

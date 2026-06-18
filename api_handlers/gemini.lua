@@ -62,7 +62,7 @@ end
 --- @param settings  table       provider settings
 --- @param tool_def  table|nil   Gemini-format tool object (or nil)
 --- @param stream    boolean|nil
---- @return string   JSON-encoded body
+--- @return table    body
 local function buildRequestBody(messages, settings, tool_def, stream)
     local contents, system_content = toGeminiContents(messages)
 
@@ -85,7 +85,7 @@ local function buildRequestBody(messages, settings, tool_def, stream)
         generationConfig   = buildGenerationConfig(settings),
         tools              = tools,
     }
-    return json.encode(body)
+    return body
 end
 
 function GeminiHandler:query(message_history, gemini_settings, query_option)
@@ -121,7 +121,7 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
         end
         local requestBody = buildRequestBody(message_history, gemini_settings, tools, true)
         headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(url_stream, headers, requestBody)
+        return self:backgroundRequest(url_stream, headers, json.encode(requestBody))
     end
 
     -- -----------------------------------------------------------------------

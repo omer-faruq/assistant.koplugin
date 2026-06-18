@@ -37,7 +37,7 @@ function DeepSeekHandler:query(message_history, deepseek_settings, query_option)
 ]]
             end
         end
-        return json.encode(body)
+        return body
     end
 
     local headers = {
@@ -57,7 +57,7 @@ function DeepSeekHandler:query(message_history, deepseek_settings, query_option)
         if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
             stream_tools = { self:buildExternalSearchToolDef("openai") }
         end
-        local requestBodyTable = json.decode(buildRequestBody(message_history, stream_tools))
+        local requestBodyTable = buildRequestBody(message_history, stream_tools)
         requestBodyTable.stream = true
         local requestBody = json.encode(requestBodyTable)
         headers["Accept"] = "text/event-stream"
@@ -73,7 +73,7 @@ function DeepSeekHandler:query(message_history, deepseek_settings, query_option)
     if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
         tools = { self:buildExternalSearchToolDef("openai") }
     end
-    local requestBodyTable = json.decode(buildRequestBody(message_history, tools))
+    local requestBodyTable = buildRequestBody(message_history, tools)
     requestBodyTable.stream = false
     local requestBody = json.encode(requestBodyTable)
 

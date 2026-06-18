@@ -24,7 +24,7 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
             body.tools       = tools
             body.tool_choice = "auto"
         end
-        return json.encode(body)
+        return body
     end
 
     local headers = {
@@ -44,7 +44,7 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
         if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
             stream_tools = { self:buildExternalSearchToolDef("openai") }
         end
-        local requestBodyTable = json.decode(buildRequestBody(message_history, stream_tools))
+        local requestBodyTable = buildRequestBody(message_history, stream_tools)
         requestBodyTable.stream = true
         local requestBody = json.encode(requestBodyTable)
         -- Mistral requires Content-Length
@@ -66,7 +66,7 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
     if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
         tools = { self:buildExternalSearchToolDef("openai") }
     end
-    local requestBodyTable = json.decode(buildRequestBody(message_history, tools))
+    local requestBodyTable = buildRequestBody(message_history, tools)
     requestBodyTable.stream = false
     local requestBody = json.encode(requestBodyTable)
     -- Mistral requires Content-Length

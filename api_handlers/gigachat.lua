@@ -32,7 +32,7 @@ function GigaChatHandler:query(message_history, gigachat_settings, query_option)
             body.tools       = tools
             body.tool_choice = "auto"
         end
-        return json.encode(body)
+        return body
     end
 
     local headers = {
@@ -50,7 +50,7 @@ function GigaChatHandler:query(message_history, gigachat_settings, query_option)
         tools = { self:buildExternalSearchToolDef("openai") }
     end
 
-    local requestBodyTable = json.decode(buildRequestBody(message_history, tools))
+    local requestBodyTable = buildRequestBody(message_history, tools)
     requestBodyTable.stream = query_option.use_stream_mode
     local requestBody = json.encode(requestBodyTable)
 
