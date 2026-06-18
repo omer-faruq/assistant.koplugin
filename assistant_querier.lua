@@ -148,6 +148,7 @@ function  StreamText:onCloseWidget()
 end
 
 function Querier:showError(err)
+    logger.warn("API Error", err)
     local dialog
     if self.user_interrupted then
         dialog = InfoMessage:new{ timeout = 3, text = err }

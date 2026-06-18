@@ -114,32 +114,13 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
     -- -----------------------------------------------------------------------
     if query_option.use_stream_mode then
         -- Apply built-in Google Search grounding if requested
-        local builtin_tools = nil
+        local tools = nil
         if ws_mode == "builtin" then
-            builtin_tools = { google_search = {} }
+            tools = { google_search = {} }
         elseif ws_mode == "serpapi" or ws_mode == "tavilyapi" then
-            builtin_tools = self:buildExternalSearchToolDef("gemini")
+            tools = self:buildExternalSearchToolDef("gemini")
         end
-
-        local contents, system_content = toGeminiContents(message_history)
-        local system_instruction = nil
-        if system_content ~= "" then
-            system_instruction = { parts = {{ text = system_content:gsub("\n$", "") }} }
-        end
-
-        local requestBodyTable = {
-            contents           = contents,
-            system_instruction = system_instruction,
-            safetySettings     = {
-                { category = "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold = "BLOCK_NONE" },
-                { category = "HARM_CATEGORY_HATE_SPEECH",       threshold = "BLOCK_NONE" },
-                { category = "HARM_CATEGORY_HARASSMENT",        threshold = "BLOCK_NONE" },
-                { category = "HARM_CATEGORY_DANGEROUS_CONTENT", threshold = "BLOCK_NONE" },
-            },
-            generationConfig   = buildGenerationConfig(gemini_settings),
-            tools              = builtin_tools and { builtin_tools } or nil,
-        }
-        local requestBody = json.encode(requestBodyTable)
+        local requestBody = buildRequestBody(message_history, gemini_settings, tools, true)
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(url_stream, headers, requestBody)
     end
@@ -163,41 +144,16 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
         tool_called = true
     end
 
-    -- When tool was already called (after external search), disable further
-    -- function-calling so the model synthesises a final answer.
-    local final_tool_config = tool_called and {
-        function_calling_config = { mode = "NONE" }
-    } or nil
-
     -- Built-in Google Search grounding for non-stream
     local final_tools = nil
     if ws_mode == "builtin" then
         final_tools = { { google_search = {} } }
     end
 
-    local contents, system_content = toGeminiContents(message_history)
-    local system_instruction = nil
-    if system_content ~= "" then
-        system_instruction = { parts = {{ text = system_content:gsub("\n$", "") }} }
-    end
-
-    local requestBodyTable = {
-        contents           = contents,
-        system_instruction = system_instruction,
-        safetySettings     = {
-            { category = "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold = "BLOCK_NONE" },
-            { category = "HARM_CATEGORY_HATE_SPEECH",       threshold = "BLOCK_NONE" },
-            { category = "HARM_CATEGORY_HARASSMENT",        threshold = "BLOCK_NONE" },
-            { category = "HARM_CATEGORY_DANGEROUS_CONTENT", threshold = "BLOCK_NONE" },
-        },
-        generationConfig   = buildGenerationConfig(gemini_settings),
-        tools              = final_tools,
-        tool_config        = final_tool_config,
-    }
+    local requestBodyTable = buildRequestBody(message_history, gemini_settings, final_tools, false)
     local requestBody = json.encode(requestBodyTable)
 
     logger.dbg("Gemini API request to model:", model)
-
     local success, code, response = self:makeRequest(url_sync, headers, requestBody)
     if not success then
         if code == BaseHandler.CODE_CANCELLED then
