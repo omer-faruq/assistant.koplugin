@@ -16,6 +16,7 @@ local ffi = require("ffi")
 local ffiutil = require("ffi/util")
 local Device = require("device")
 local assistant_utils = require("assistant_utils")
+local ToolExecutor = require("assistant_tool_executor")
 local Screen = Device.screen
 
 local API_HANDLERS = {}
@@ -292,86 +293,29 @@ function Querier:query(message_history, title)
             tool_rounds = tool_rounds + 1
 
             -- Decode keywords from tool call arguments
-            local keywords
-            if tool_call.args then
-                -- Gemini: args is already a table
-                keywords = tool_call.args.query or tool_call.args.keywords
-            elseif tool_call.arguments then
-                -- OpenAI / Anthropic: arguments is a JSON string
-                local ok_j, args = pcall(rapidjson.decode, tool_call.arguments)
-                if ok_j and type(args) == "table" then
-                    keywords = args.query or args.keywords
-                else
-                    -- parallel tool_calls, combind the keywords together
-                    if string.match(tool_call.arguments, TAG_PARALLELCALLS) then
-                        local args_parts = koutil.splitToArray(tool_call.arguments, TAG_PARALLELCALLS, false)
-                        local sbuf = strbuf.new()
-                        for _, kparts in ipairs(args_parts) do
-                            local ok_k, jargs = pcall(rapidjson.decode, kparts)
-                            if ok_k and type(jargs) == "table" and jargs.keywords then
-                                sbuf:put(jargs.keywords, " ")
-                            end
-                        end
-                        keywords = sbuf:tostring()
-                    end
-                end
-            end
-
-            if not keywords or #keywords == 0 then
+            local keywords, extract_err = ToolExecutor.extractKeywords(tool_call, TAG_PARALLELCALLS)
+            if not keywords then
                 res = nil
-                err = _("Tool call did not include search keywords.")
+                err = extract_err
                 break
             end
 
-            -- Show keyword search indicator
-            local keywordmsg = InfoMessage:new({
-                icon = "appbar.search",
-                text = _("Searching with Keywords:\n\n" .. keywords),
-            })
-            UIManager:show(keywordmsg)
-            self.handler:setTrapWidget(keywordmsg)
-
-            local ws_mode = query_option.use_websearch
-            local search_ok, search_result
-            if ws_mode == "serpapi" then
-                search_ok, search_result =
-                    self.handler:serpAPISearchRequest(self.provider_settings.serpapi, keywords)
-            elseif ws_mode == "tavilyapi" then
-                search_ok, search_result =
-                    self.handler:tavilyAPISearchRequest(self.provider_settings.tavilyapi, keywords)
-            else
-                -- Native built-in tool or unknown — shouldn't normally reach here
-                res = nil
-                err = "Unsupported web-search mode in stream tool-call loop: " .. tostring(ws_mode)
-                UIManager:close(self.handler:resetTrapWidget())
-                break
-            end
-
-            UIManager:close(self.handler:resetTrapWidget())
+            -- Execute web search via ToolExecutor
+            local search_ok, search_result = ToolExecutor.executeWebSearch(
+                keywords,
+                query_option.use_websearch,
+                self.provider_settings,
+                self.handler)
 
             if not search_ok then
                 res = nil
-                err = "Search API failed: " .. tostring(search_result)
+                err = search_result
                 break
             end
 
-            -- Build a synthetic tool_call table compatible with buildToolResultMessages.
-            -- The stream path never receives a full serialised assistant response, so we
-            -- reconstruct a minimal raw_assistant appropriate for each provider format.
-            local hn = self.handler_name
-            local format
-            if hn == "anthropic" then
-                format = "anthropic"
-            elseif hn == "gemini" then
-                format = "gemini"
-            else
-                format = "openai"  -- openai / groq / openrouter / deepseek / mistral …
-            end
-
-            local tc_id   = tool_call.id   or "call_stream_0"
-            local tc_name = tool_call.name or "web_search"
-
-            -- Use the unified builder to construct raw_assistant
+            -- Build tool result and append to history
+            local format = ToolExecutor.getHandlerFormat(self.handler_name)
+            local tc_id = tool_call.id or "call_stream_0"
             local raw_assistant = self.handler:buildRawAssistantForToolCall(tc_id, keywords, format)
 
             local tool_call_result_proxy = {
@@ -382,9 +326,16 @@ function Querier:query(message_history, title)
                 format         = format,
             }
 
-            local tool_msgs = self.handler:buildToolResultMessages(tool_call_result_proxy, search_result)
-            for _, m in ipairs(tool_msgs) do
-                table.insert(message_history, m)
+            local append_ok, append_err = ToolExecutor.appendToolResult(
+                message_history,
+                tool_call_result_proxy,
+                search_result,
+                self.handler)
+
+            if not append_ok then
+                res = nil
+                err = append_err
+                break
             end
 
             -- query_option stays unchanged; loop will call handler:query again with augmented history
@@ -432,41 +383,30 @@ function Querier:query(message_history, title)
                 end
                 tool_rounds = tool_rounds + 1
 
-                -- Execute the search
-                local keywords     = res.keywords
-                local provider_cfg = self.provider_settings
-                local ws_mode      = query_option.use_websearch
-
-                UIManager:close(self.handler:resetTrapWidget())
-                local keywordmsg = InfoMessage:new({
-                    icon = "appbar.search",
-                    text = _("Searching with Keywords:\n\n" .. keywords),
-                })
-                UIManager:show(keywordmsg)
-                self.handler:setTrapWidget(keywordmsg)
-
-                local search_ok, search_result
-                if ws_mode == "serpapi" then
-                    search_ok, search_result =
-                        self.handler:serpAPISearchRequest(provider_cfg.serpapi, keywords)
-                elseif ws_mode == "tavilyapi" then
-                    search_ok, search_result =
-                        self.handler:tavilyAPISearchRequest(provider_cfg.tavilyapi, keywords)
-                else
-                    search_ok    = false
-                    search_result = "Unknown websearch mode: " .. tostring(ws_mode)
-                end
+                -- Execute web search via ToolExecutor
+                local search_ok, search_result = ToolExecutor.executeWebSearch(
+                    res.keywords,
+                    query_option.use_websearch,
+                    self.provider_settings,
+                    self.handler)
 
                 if not search_ok then
                     res = nil
-                    err = "Search API failed: " .. tostring(search_result)
+                    err = search_result
                     break
                 end
 
                 -- Append tool result messages to history and loop
-                local tool_msgs = self.handler:buildToolResultMessages(res, search_result)
-                for _, m in ipairs(tool_msgs) do
-                    table.insert(message_history, m)
+                local append_ok, append_err = ToolExecutor.appendToolResult(
+                    message_history,
+                    res,
+                    search_result,
+                    self.handler)
+
+                if not append_ok then
+                    res = nil
+                    err = append_err
+                    break
                 end
 
                 -- Refresh the loading indicator for the follow-up request
@@ -474,7 +414,7 @@ function Querier:query(message_history, title)
                 local follow_msg = InfoMessage:new{
                     icon = "book.opened",
                     text = string.format("%s\n️☁️ %s\n⚡ %s",
-                        _("Synthesising answer ..."),
+                        _("Composing answer ..."),
                         self.provider_name,
                         koutil.tableGetValue(self.provider_settings, "model")),
                 }
