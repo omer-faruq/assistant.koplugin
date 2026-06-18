@@ -167,8 +167,10 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     local context_message = {
         role = "user",
         content = user_content,
-        use_websearch = user_prompt_use_websearch,
     }
+    setmetatable(context_message, { __attr = {
+      use_websearch = user_prompt_use_websearch,
+    }})
     table.insert(message_history, context_message)
 
     local function createResultText(answer)

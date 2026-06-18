@@ -90,15 +90,16 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
       local user_message
       if title and title ~= "" then
         user_message = string.format("%s\n\n", title)
+        local user_input = assistant_utils.get_attr(message, "user_input", "")
         -- Check if user input is available
-        if message.user_input and message.user_input ~= "" then
-          if message.user_input:find("%[BOOK TEXT BEGIN%]") then
-            message.user_input = message.user_input:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
+        if user_input and user_input ~= "" then
+          if user_input:find("%[BOOK TEXT BEGIN%]") then
+            user_input = user_input:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
           end
-          if message.user_input:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
-            message.user_input = message.user_input:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
+          if user_input:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
+            user_input = user_input:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
           end
-          user_message = user_message .. message.user_input .. "\n\n"
+          user_message = user_message .. user_input .. "\n\n"
         end
       else
         -- shows user input prompt
@@ -189,12 +190,16 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
         elseif type(user_question) == "table" then
           -- Use custom prompt from configuration
           viewer_title = user_question.text or "Custom Prompt"
-          table.insert(message_history, {
+          local _user = {
             role = "user",
             content = self:_formatUserPrompt(user_question.user_prompt, current_highlight, user_question.user_input or ""),
+          }
+          -- set these attributes in metatable (won't be encoded to API calls)
+          setmetatable(_user, { __attr = {
             user_input = user_question.user_input,
             use_websearch = user_question.use_websearch,
-          })
+          }})
+          table.insert(message_history, _user)
         end
 
         viewer:trimMessageHistory()
@@ -514,18 +519,21 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index, user_in
     system_prompt = system_prompt .. suggestions_prompt
   end
 
-  local message_history = {
-    {
-      role = "system",
-      content = system_prompt,
-    },
-    {
-      role = "user",
-      content = user_content,
-      user_input = user_input,
-      use_websearch = koutil.tableGetValue(prompt_config, "use_websearch") or false,
-    }
+  local message_history = {{
+    role = "system",
+    content = system_prompt,
+  }}
+
+  local _user = {
+    role = "user",
+    content = user_content,
   }
+  -- set attributes in metatable (won't be encoded to API calls)
+  setmetatable(_user, { __attr = {
+    user_input = user_input,
+    use_websearch = koutil.tableGetValue(prompt_config, "use_websearch") or false,
+  }})
+  table.insert(message_history, _user)
   
   local answer, err = self.querier:query(message_history, T(_("Loading for %1 ..."), title or prompt_index))
   if err then

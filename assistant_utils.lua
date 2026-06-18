@@ -8,7 +8,8 @@ local T = require("ffi/util").template
 local koutil = require("util")
 local _ = require("assistant_gettext")
 
-local function getGeneralNotebookFilePath(assistant)
+local M = {}
+function M.getGeneralNotebookFilePath(assistant)
   local notebookfile = nil
   local default_folder = util.tableGetValue(assistant.CONFIGURATION, "features", "default_folder_for_logs")
   local home_dir = G_reader_settings:readSetting("home_dir")
@@ -21,7 +22,7 @@ local function getGeneralNotebookFilePath(assistant)
   return notebookfile
 end
 
-local function extractBookTextForAnalysis(CONFIGURATION, ui)
+function M.extractBookTextForAnalysis(CONFIGURATION, ui)
     local book_text = nil
       if not ui.document.info.has_pages then
           -- Only extract text for EPUB documents
@@ -71,7 +72,7 @@ local function extractBookTextForAnalysis(CONFIGURATION, ui)
     return book_text
 end
 
-local function extractHighlightsNotesAndNotebook(CONFIGURATION, ui, include_notebook)
+function M.extractHighlightsNotesAndNotebook(CONFIGURATION, ui, include_notebook)
     local highlights_and_notes = ""
     if ui.annotation and ui.annotation.annotations then
         for _, annotation in ipairs(ui.annotation.annotations) do
@@ -131,7 +132,7 @@ local function extractHighlightsNotesAndNotebook(CONFIGURATION, ui, include_note
     return combined
 end
 
-local function getPageInfo(ui)
+function M.getPageInfo(ui)
   local page_number = nil
   local percentage = 0
   local total_pages = nil
@@ -169,7 +170,7 @@ local function getPageInfo(ui)
   return page_info
 end
 
-local function saveToNotebookFile(assistant, log_entry)
+function M.saveToNotebookFile(assistant, log_entry)
   local success, err = pcall(function()
     local notebookfile = assistant.ui.bookinfo:getNotebookFile(assistant.ui.doc_settings)
     local default_folder = util.tableGetValue(assistant.CONFIGURATION, "features", "default_folder_for_logs")
@@ -216,7 +217,7 @@ local function saveToNotebookFile(assistant, log_entry)
         assistant.ui.doc_settings:saveSetting("notebook_file", notebookfile)
       end
     else
-      notebookfile = getGeneralNotebookFilePath(assistant)
+      notebookfile = M.getGeneralNotebookFilePath(assistant)
     end
 
     if notebookfile then
@@ -240,7 +241,7 @@ local function saveToNotebookFile(assistant, log_entry)
   end
 end
 
-local function normalizeMarkdownHeadings(content, heading_offset, max_heading_level)
+function M.normalizeMarkdownHeadings(content, heading_offset, max_heading_level)
   if type(content) ~= "string" or content == "" then
     return content
   end
@@ -332,7 +333,7 @@ end
 require("ffi/zlib_h")
 local libz = ffi.loadlib("z", 1)
 
-local function zlib_uncompress_gzip(gzip_data, max_datalen)
+function M.zlib_uncompress_gzip(gzip_data, max_datalen)
     if #gzip_data < 18 then return nil, "Data truncated" end
 
     -- 1. Strip the 10-byte Gzip header and the 8-byte Gzip trailer
@@ -366,7 +367,7 @@ end
 --- @param headers table
 --- @param header_name string
 --- @return string|nil
-local function http_get_header(headers, header_name)
+function M.http_get_header(headers, header_name)
     if not headers then return nil end
     local lower_name = header_name:lower()
 
@@ -379,20 +380,68 @@ local function http_get_header(headers, header_name)
 end
 
 --- Checks content-encoding
-local function http_is_encoded(headers, encoding)
-    local value = http_get_header(headers, "content-encoding")
+function M.http_is_encoded(headers, encoding)
+    local value = M.http_get_header(headers, "content-encoding")
     if not value then return false end
     return value:lower():find((encoding or "gzip"):lower()) ~= nil
 end
 
-return {
-    getGeneralNotebookFilePath = getGeneralNotebookFilePath,
-    extractBookTextForAnalysis = extractBookTextForAnalysis,
-    extractHighlightsNotesAndNotebook = extractHighlightsNotesAndNotebook,
-    getPageInfo = getPageInfo,
-    saveToNotebookFile = saveToNotebookFile,
-    normalizeMarkdownHeadings = normalizeMarkdownHeadings,
-    zlib_uncompress_gzip = zlib_uncompress_gzip,
-    http_get_header = http_get_header,
-    http_is_encoded = http_is_encoded,
-}
+--- Sets a metadata attribute on an object
+--- The attribute is stored in the object's metatable under the __attr field
+--- This keeps metadata separate from the object's own data fields
+--- 
+--- @param obj table The object to attach metadata to
+--- @param key string The attribute key name
+--- @param value any The attribute value (can be any Lua type)
+--- @throws Error if obj is not a table
+function M.set_attr(obj, key, value)
+    -- Validate that we're working with a table
+    if type(obj) ~= "table" then
+        error("obj must be a table")
+    end
+    
+    -- Get or create the metatable
+    local mt = getmetatable(obj)
+    if not mt then
+        mt = {}
+        setmetatable(obj, mt)
+    end
+    
+    -- Get or create the __attr sub-table within the metatable
+    if not mt.__attr then
+        mt.__attr = {}
+    end
+    
+    -- Store the key-value pair in the __attr table
+    mt.__attr[key] = value
+end
+
+--- Retrieves a metadata attribute from an object
+--- Looks up the attribute in the object's metatable __attr field
+--- Returns nil if the object has no metatable, no __attr field, or the key doesn't exist
+---
+--- @param obj table The object to query
+--- @param key string The attribute key name
+--- @param default any Optional default value to return if attribute doesn't exist
+--- @return any The attribute value, or the default value if provided, or nil
+function M.get_attr(obj, key, default)
+    -- Safety check: ensure we're working with a table
+    if type(obj) ~= "table" then
+        return default
+    end
+    
+    -- Attempt to retrieve the metatable and __attr field
+    local mt = getmetatable(obj)
+    if mt and mt.__attr then
+        local value = mt.__attr[key]
+        -- Explicitly check for nil to distinguish between nil and false
+        if value ~= nil then
+            return value
+        end
+    end
+    
+    -- Return default if attribute doesn't exist or is nil
+    return default
+end
+
+return M

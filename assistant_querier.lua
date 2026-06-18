@@ -193,20 +193,6 @@ local function createWaitingAnimation()
     }
 end
 
-local function trimMessageHistory(message_history)
-    local trimed_history = {}
-    for i, message in ipairs(message_history) do
-        trimed_history[i] = {
-            role = message.role,
-            content = message.content,
-            parts = message.parts, -- gemini format
-            tool_call_id = message.tool_call_id, -- openai format
-            tool_calls = message.tool_calls,     -- openai format
-         }
-    end
-    return trimed_history
-end
-
 local TAG_PARALLELCALLS = "##KO##"
 
 --- Query the AI with the provided message history.
@@ -226,7 +212,7 @@ function Querier:query(message_history, title)
         return nil, _("Plugin is not configured.")
     end
 
-    local prompt_websearch   = message_history[#message_history].use_websearch or false
+    local prompt_websearch   = assistant_utils.get_attr(message_history[#message_history], "use_websearch", false)
     local user_setting_ws    = self.settings:readSetting("use_websearch", "none")
     local query_option = {
         use_stream_mode = self.settings:readSetting("use_stream_mode", true),
@@ -251,10 +237,7 @@ function Querier:query(message_history, title)
 
         repeat
             local bg_fn
-            bg_fn, err = self.handler:query(
-                trimMessageHistory(message_history),
-                self.provider_settings,
-                query_option)
+            bg_fn, err = self.handler:query(message_history, self.provider_settings, query_option)
 
             if type(bg_fn) ~= "function" then
                 -- handler returned an error before even starting the stream
@@ -369,10 +352,7 @@ function Querier:query(message_history, title)
         local tool_rounds = 0
 
         repeat
-            res, err = self.handler:query(
-                trimMessageHistory(message_history),
-                self.provider_settings,
-                query_option)
+            res, err = self.handler:query(message_history, self.provider_settings, query_option)
 
             if type(res) == "table" and res.__is_tool_call then
                 -- The LLM requested a tool call (web_search).
