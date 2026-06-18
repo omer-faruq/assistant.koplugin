@@ -371,47 +371,8 @@ function Querier:query(message_history, title)
             local tc_id   = tool_call.id   or "call_stream_0"
             local tc_name = tool_call.name or "web_search"
 
-            local raw_assistant
-            if format == "anthropic" then
-                -- Anthropic expects the assistant turn to be the full content_blocks array
-                raw_assistant = {
-                    {
-                        type  = "tool_use",
-                        id    = tc_id,
-                        name  = tc_name,
-                        input = { keywords = keywords },
-                    },
-                }
-            elseif format == "gemini" then
-                -- Gemini expects a model-turn message (role="model")
-                raw_assistant = {
-                    role  = "model",
-                    parts = {
-                        {
-                            functionCall = {
-                                name = tc_name,
-                                id   = tc_id,
-                                args = { keywords = keywords },
-                            },
-                        },
-                    },
-                }
-            else  -- openai
-                -- OpenAI expects { content, tool_calls = [{id, type, function={name, arguments}}] }
-                raw_assistant = {
-                    content    = nil,
-                    tool_calls = {
-                        {
-                            id       = tc_id,
-                            type     = "function",
-                            ["function"] = {
-                                name      = tc_name,
-                                arguments = rapidjson.encode({ keywords = keywords }),
-                            },
-                        },
-                    },
-                }
-            end
+            -- Use the unified builder to construct raw_assistant
+            local raw_assistant = self.handler:buildRawAssistantForToolCall(tc_id, keywords, format)
 
             local tool_call_result_proxy = {
                 __is_tool_call = true,
@@ -453,7 +414,7 @@ function Querier:query(message_history, title)
 
         -- Tool-call loop: keep calling the LLM until it returns a string answer.
         -- Bounded to a small iteration count to prevent runaway loops.
-        local MAX_TOOL_ROUNDS = 3
+        local MAX_TOOL_ROUNDS = 5
         local tool_rounds = 0
 
         repeat

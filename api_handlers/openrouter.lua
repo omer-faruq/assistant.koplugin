@@ -97,24 +97,17 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
     -- NON-STREAM path
     -- -----------------------------------------------------------------------
     -- External search two-stage flow: only in non-stream mode.
-    -- In stream mode the Querier's tool-call loop handles search execution.
-    if not query_option.use_stream_mode
-       and (ws_mode == "serpapi" or ws_mode == "tavilyapi") then
-        local augmented, err = self:resolveExternalSearch(
-            message_history, openrouter_settings, query_option, buildRequestBody, headers,
-            openrouter_settings.base_url, "openai")
-        if not augmented then
-            return nil, err
-        end
-        -- Model answered directly without issuing a tool_call
-        if augmented.__direct_content then
-            return augmented.__direct_content
-        end
-        -- Replace message_history with the augmented messages for the final request
-        message_history = augmented
+    -- -----------------------------------------------------------------------
+    -- NON-STREAM path
+    -- -----------------------------------------------------------------------
+    -- In non-stream mode, inject tool definitions if web_search is enabled.
+    -- Let the Querier handle the tool-call loop and search execution.
+    local tools
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        tools = { self:buildExternalSearchToolDef("openai") }
     end
 
-    local requestBodyTable = json.decode(buildRequestBody(message_history, nil))
+    local requestBodyTable = json.decode(buildRequestBody(message_history, tools))
 
     -- Built-in OpenRouter web search server tool (non-stream)
     -- https://openrouter.ai/docs/guides/features/tool-calling

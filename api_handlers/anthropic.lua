@@ -56,7 +56,7 @@ local function buildRequestBody(messages, settings, tools, stream)
     }
 
     if tools then
-        -- Injected tools (e.g. from resolveExternalSearch)
+        -- Injected tools (e.g. from Querier's web_search support)
         body.tools       = tools
         body.tool_choice = { type = "auto" }
     else
@@ -97,20 +97,16 @@ function AnthropicHandler:query(message_history, anthropic_settings, query_optio
     -- -----------------------------------------------------------------------
     -- NON-STREAM path
     -- -----------------------------------------------------------------------
-    -- External search: always non-streaming stage-1.
+    -- In non-stream mode, inject tool definitions if web_search is enabled.
+    -- Let the Querier handle the tool-call loop and search execution.
+    local requestBody
     if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
-        local augmented, err = self:resolveExternalSearch(
-            message_history, anthropic_settings, query_option,
-            function(msgs, tools)
-                return buildRequestBody(msgs, anthropic_settings, tools, false)
-            end,
-            headers, anthropic_settings.base_url, "anthropic")
-        if not augmented then return nil, err end
-        if augmented.__direct_content then return augmented.__direct_content end
-        message_history = augmented
+        local search_tool = { self:buildExternalSearchToolDef("anthropic") }
+        requestBody = buildRequestBody(message_history, anthropic_settings, search_tool, false)
+    else
+        requestBody = buildRequestBody(message_history, anthropic_settings, nil, false)
     end
 
-    local requestBody = buildRequestBody(message_history, anthropic_settings, nil, false)
     local success, code, response = self:makeRequest(
         anthropic_settings.base_url, headers, requestBody)
 

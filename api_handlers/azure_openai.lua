@@ -44,16 +44,14 @@ function AzureOpenAIHandler:query(message_history, azure_settings, query_option)
 
     local ws_mode = query_option.use_websearch or "none"
 
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
-        local augmented, err = self:resolveExternalSearch(
-            message_history, azure_settings, query_option, buildRequestBody, headers,
-            api_url, "openai")
-        if not augmented then return nil, err end
-        if augmented.__direct_content then return augmented.__direct_content end
-        message_history = augmented
+    -- In non-stream mode, inject tool definitions if web_search is enabled.
+    -- Let the Querier handle the tool-call loop and search execution.
+    local tools
+    if not query_option.use_stream_mode and (ws_mode == "serpapi" or ws_mode == "tavilyapi") then
+        tools = { self:buildExternalSearchToolDef("openai") }
     end
 
-    local requestBodyTable = json.decode(buildRequestBody(message_history, nil))
+    local requestBodyTable = json.decode(buildRequestBody(message_history, tools))
     requestBodyTable.stream = query_option.use_stream_mode
     local requestBody = json.encode(requestBodyTable)
 

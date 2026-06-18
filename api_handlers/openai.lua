@@ -52,21 +52,16 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
     -- -----------------------------------------------------------------------
     -- NON-STREAM path: synchronous makeRequest, may return tool_call table.
     -- -----------------------------------------------------------------------
-    -- External search: resolve before deciding on stream/non-stream.
-    -- resolveExternalSearch is always non-streaming (stage-1 synchronous request).
+    -- In non-stream mode, inject tool definitions if web_search is enabled.
+    -- Let the Querier handle the tool-call loop and search execution.
+    local requestBody
     if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
-        local augmented, err = self:resolveExternalSearch(
-            message_history, openai_settings, query_option,
-            function(msgs, tools)
-                return buildRequestBody(msgs, openai_settings, tools, false)
-            end,
-            headers, openai_settings.base_url, "openai")
-        if not augmented then return nil, err end
-        if augmented.__direct_content then return augmented.__direct_content end
-        message_history = augmented
+        local search_tool = { self:buildExternalSearchToolDef("openai") }
+        requestBody = buildRequestBody(message_history, openai_settings, search_tool, false)
+    else
+        requestBody = buildRequestBody(message_history, openai_settings, nil, false)
     end
 
-    local requestBody = buildRequestBody(message_history, openai_settings, nil, false)
     local status, code, response = self:makeRequest(openai_settings.base_url, headers, requestBody)
 
     if not status then

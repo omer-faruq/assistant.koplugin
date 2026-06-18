@@ -57,17 +57,16 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
     -- NON-STREAM path
     -- -----------------------------------------------------------------------
     -- External search two-stage flow: only in non-stream mode.
-    -- In stream mode the Querier's tool-call loop handles search execution.
-    if not query_option.use_stream_mode
-       and (ws_mode == "serpapi" or ws_mode == "tavilyapi") then
-        local augmented, err = self:resolveExternalSearch(
-            message_history, mistral_settings, query_option, buildRequestBody, headers,
-            mistral_settings.base_url, "openai")
-        if not augmented then return nil, err end
-        if augmented.__direct_content then return augmented.__direct_content end
-        message_history = augmented
+    -- -----------------------------------------------------------------------
+    -- NON-STREAM path
+    -- -----------------------------------------------------------------------
+    -- In non-stream mode, inject tool definitions if web_search is enabled.
+    -- Let the Querier handle the tool-call loop and search execution.
+    local tools
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        tools = { self:buildExternalSearchToolDef("openai") }
     end
-    local requestBodyTable = json.decode(buildRequestBody(message_history, nil))
+    local requestBodyTable = json.decode(buildRequestBody(message_history, tools))
     requestBodyTable.stream = false
     local requestBody = json.encode(requestBodyTable)
     -- Mistral requires Content-Length

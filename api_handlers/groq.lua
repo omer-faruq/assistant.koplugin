@@ -60,22 +60,16 @@ function groqHandler:query(message_history, groq_settings, query_option)
         return self:backgroundRequest(groq_settings.base_url, headers, requestBody)
     end
 
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
-        local augmented, err = self:resolveExternalSearch(
-            message_history, groq_settings, query_option,
-            function(msgs, tools)
-                return buildRequestBody(msgs, groq_settings, tools, false)
-            end,
-            headers, groq_settings.base_url, "openai")
-        if not augmented then return nil, err end
-        if augmented.__direct_content then return augmented.__direct_content end
-        message_history = augmented
-    end
-
     -- -----------------------------------------------------------------------
     -- NON-STREAM path
     -- -----------------------------------------------------------------------
-    local body = json.decode(buildRequestBody(message_history, groq_settings, nil, false))
+    -- In non-stream mode, inject tool definitions if web_search is enabled.
+    -- Let the Querier handle the tool-call loop and search execution.
+    local tools
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        tools = { self:buildExternalSearchToolDef("openai") }
+    end
+    local body = json.decode(buildRequestBody(message_history, groq_settings, tools, false))
 
     if ws_mode == "builtin" and groq_settings.model:find("^groq/compound") then
         body.compound_custom = {

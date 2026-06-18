@@ -107,7 +107,6 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
     }
 
     local ws_mode = query_option.use_websearch or "none"
-    local tool_called = false
 
     -- -----------------------------------------------------------------------
     -- STREAM path: return background function immediately.
@@ -128,25 +127,13 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
     -- -----------------------------------------------------------------------
     -- NON-STREAM path
     -- -----------------------------------------------------------------------
-    -- External search: always non-streaming stage-1.
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
-        local augmented, err = self:resolveExternalSearch(
-            message_history, gemini_settings, query_option,
-            function(msgs, tools)
-                -- tools here is { tool_def } from resolveExternalSearch
-                local td = (tools and tools[1]) or nil
-                return buildRequestBody(msgs, gemini_settings, td, false)
-            end,
-            headers, url_sync, "gemini")
-        if not augmented then return nil, err end
-        if augmented.__direct_content then return augmented.__direct_content end
-        message_history = augmented
-        tool_called = true
-    end
-
-    -- Built-in Google Search grounding for non-stream
+    -- In non-stream mode, inject tool definitions if web_search is enabled.
+    -- Let the Querier handle the tool-call loop and search execution.
     local final_tools = nil
-    if ws_mode == "builtin" then
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        final_tools = self:buildExternalSearchToolDef("gemini")
+    elseif ws_mode == "builtin" then
+        -- Built-in Google Search grounding for non-stream
         final_tools = { { google_search = {} } }
     end
 

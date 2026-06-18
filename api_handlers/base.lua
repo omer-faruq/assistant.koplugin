@@ -363,6 +363,61 @@ local function appendToolResult(augmented, raw_assistant, tool_call_id, search_r
 end
 
 -- ---------------------------------------------------------------------------
+-- Public interface: buildRawAssistantForToolCall
+-- ---------------------------------------------------------------------------
+
+--- Build a raw_assistant structure for a tool call.
+--- This factory method ensures all providers format tool calls consistently.
+---
+--- @param tool_call_id  string  The unique ID for this tool call
+--- @param keywords      string  The search keywords extracted
+--- @param format        string  "openai" | "anthropic" | "gemini"
+--- @return table       raw_assistant structure ready for buildToolResultMessages
+function BaseHandler:buildRawAssistantForToolCall(tool_call_id, keywords, format)
+    format = format or "openai"
+    
+    if format == "anthropic" then
+        -- Anthropic expects content_blocks array
+        return {
+            {
+                type  = "tool_use",
+                id    = tool_call_id,
+                name  = "web_search",
+                input = { keywords = keywords },
+            },
+        }
+    elseif format == "gemini" then
+        -- Gemini expects a model turn (role="model")
+        return {
+            role  = "model",
+            parts = {
+                {
+                    functionCall = {
+                        name = "web_search",
+                        id   = tool_call_id,
+                        args = { keywords = keywords },
+                    },
+                },
+            },
+        }
+    else  -- "openai" (and compatible: groq, openrouter, deepseek, mistral, etc.)
+        return {
+            content    = nil,
+            tool_calls = {
+                {
+                    id       = tool_call_id,
+                    type     = "function",
+                    ["function"] = {
+                        name      = "web_search",
+                        arguments = json.encode({ keywords = keywords }),
+                    },
+                },
+            },
+        }
+    end
+end
+
+-- ---------------------------------------------------------------------------
 -- Public interface: parseToolCalls
 -- ---------------------------------------------------------------------------
 
@@ -496,92 +551,6 @@ end
 -- External-search two-stage flow (used by handlers that don't natively
 -- support web search but want serpapi / tavilyapi integration).
 -- ---------------------------------------------------------------------------
-
---- Two-stage external search flow (serpapi or tavilyapi).
----
---- Stage 1: send a non-streaming request with the web_search tool definition so
----          the LLM can extract search keywords via a tool call.
---- Stage 2: execute the appropriate search API with those keywords, then return
----          an augmented message list ready for the caller's final LLM request.
----
---- @param message_history  table    original conversation history
---- @param provider_setting table    provider config; must contain .serpapi or .tavilyapi
---- @param query_option     table    must contain .use_websearch ("serpapi" | "tavilyapi")
---- @param build_request_fn function(messages, tools) → requestBody string
---- @param headers          table    HTTP headers for the stage-1 request
---- @param url              string   endpoint URL for the stage-1 request
---- @param format           string   "openai" | "anthropic" | "gemini"
---- @return table|nil augmented_messages, string|nil error_message
-function BaseHandler:resolveExternalSearch(message_history, provider_setting, query_option,
-                                           build_request_fn, headers, url, format)
-    format = format or "openai"
-
-    -- Stage 1: ask the LLM to produce a tool call with search keywords
-    local tool_def    = self:buildExternalSearchToolDef(format)
-    local stage1_body = build_request_fn(message_history, { tool_def })
-
-    local status, code, response = self:makeRequest(url, headers, stage1_body)
-    if not status then
-        if code == self.CODE_CANCELLED then
-            return nil, response
-        end
-        return nil, "External search stage-1 request failed: " .. tostring(code) .. " - " .. tostring(response)
-    end
-
-    local ok, responseData = pcall(json.decode, response)
-    if not ok or not responseData then
-        return nil, "External search stage-1: failed to parse LLM response"
-    end
-
-    local tool_call_id, keywords, raw_assistant, direct_content, parse_err =
-        parseStage1Response(responseData, format)
-
-    if parse_err then
-        return nil, parse_err
-    end
-
-    -- Model chose not to call the tool → return sentinel with the direct text answer
-    if direct_content then
-        return { __direct_content = direct_content }, nil
-    end
-
-    if not keywords then
-        return nil, "External search stage-1: LLM did not produce a tool call and gave no text"
-    end
-
-    UIManager:close(self:resetTrapWidget())
-    local keywordmsg = InfoMessage:new({
-        icon = "appbar.search",
-        text = _("Searching with Keywords:\n\n" .. keywords),
-    })
-    UIManager:show(keywordmsg)
-    self:setTrapWidget(keywordmsg)
-
-    -- Stage 2: run the external search API
-    local ws_mode = query_option.use_websearch
-    local search_ok, search_result
-    if ws_mode == "serpapi" then
-        search_ok, search_result = self:serpAPISearchRequest(provider_setting.serpapi, keywords)
-    elseif ws_mode == "tavilyapi" then
-        search_ok, search_result = self:tavilyAPISearchRequest(provider_setting.tavilyapi, keywords)
-    else
-        return nil, "resolveExternalSearch: unknown use_websearch value: " .. tostring(ws_mode)
-    end
-
-    if not search_ok then
-        return nil, "External search API failed: " .. tostring(search_result)
-    end
-
-    -- Build augmented message history
-    local augmented = {}
-    for _, msg in ipairs(message_history) do
-        table.insert(augmented, msg)
-    end
-    appendToolResult(augmented, raw_assistant, tool_call_id, search_result, format)
-
-    return augmented, nil
-end
-
 
 -- ---------------------------------------------------------------------------
 -- Search API helpers
