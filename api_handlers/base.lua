@@ -98,10 +98,10 @@ local function httpRequest(url, timeout, maxtime, post_body, post_content_type, 
         sink    = maxtime and socketutil.table_sink(sink) or ltn12.sink.table(sink),
     }
     if post_body then
-        local body = type(post_body) == "table" and socketutil.form_encode(post_body) or post_body
-        request.source = ltn12.source.string(body)
-        headers["Content-Type"]   = headers["Content-Type"] or post_content_type or "application/x-www-form-urlencoded"
-        headers["Content-Length"] = headers["Content-Length"] or tostring(#body)
+        if type(post_body) ~= "string" then post_body = json.encode(post_body) end
+        request.source = ltn12.source.string(post_body)
+        headers["Content-Type"]   = headers["Content-Type"] or post_content_type or "application/json"
+        headers["Content-Length"] = headers["Content-Length"] or tostring(#post_body)
     end
 
     local code, resp_headers, status = socket.skip(1, http.request(request))
