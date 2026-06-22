@@ -40,6 +40,18 @@ local Querier = {
     user_interrupted = false,  -- flag to indicate if the stream was interrupted
 }
 
+--- Normalize tool call: merge arguments_parts into a single arguments string
+--- @param tool_call table  { id, name, arguments_parts or arguments or args }
+--- @return table normalized tool call
+local function normalizeToolCall(tool_call)
+    if tool_call.arguments_parts and #tool_call.arguments_parts > 0 then
+        -- OpenAI/Anthropic format: merge arguments_parts into arguments
+        tool_call.arguments = table.concat(tool_call.arguments_parts, "")
+        tool_call.arguments_parts = nil
+    end
+    return tool_call
+end
+
 function Querier:new(o)
     o = o or {}
     setmetatable(o, self)
@@ -193,8 +205,6 @@ local function createWaitingAnimation()
     }
 end
 
-local TAG_PARALLELCALLS = "##KO##"
-
 --- Query the AI with the provided message history.
 --- Handles both stream and non-stream modes, including multi-turn tool-call loops.
 ---
@@ -229,11 +239,12 @@ function Querier:query(message_history, title)
         -- handler:query() returns a background function; showStremDialog
         -- drives processStream and returns:
         --   ok=true,  content=string,  nil          → plain text answer
-        --   ok=true,  content=nil,     tool_call={}  → LLM wants a tool
+        --   ok=true,  content=nil,     tool_calls=[] → LLM wants tool(s)
         --   ok=nil,   err=string                     → cancelled / error
         -- ---------------------------------------------------------------
         local MAX_TOOL_ROUNDS = 5
         local tool_rounds = 0
+        local tool_call_index = 0  -- which tool call in the array we're processing
 
         repeat
             local bg_fn
@@ -245,7 +256,7 @@ function Querier:query(message_history, title)
                 break
             end
 
-            local ok, content, tool_call = self:showStremDialog(bg_fn)
+            local ok, content, tool_calls_array = self:showStremDialog(bg_fn)
 
             if not ok then
                 -- cancelled or stream error
@@ -261,10 +272,10 @@ function Querier:query(message_history, title)
                 break
             end
 
-            -- Tool call detected in stream
-            if type(tool_call) ~= "table" then
+            -- Tool calls detected in stream
+            if type(tool_calls_array) ~= "table" or #tool_calls_array == 0 then
                 res = nil
-                err = _("Stream ended with no content and no tool call.")
+                err = _("Stream ended with no content and no tool calls.")
                 break
             end
 
@@ -275,8 +286,18 @@ function Querier:query(message_history, title)
             end
             tool_rounds = tool_rounds + 1
 
+            -- Process each tool call in sequence (for now, one per round)
+            tool_call_index = tool_call_index + 1
+            if tool_call_index > #tool_calls_array then
+                res = nil
+                err = _("All tool calls processed but no final response.")
+                break
+            end
+
+            local tool_call = tool_calls_array[tool_call_index]
+
             -- Decode keywords from tool call arguments
-            local keywords, extract_err = ToolExecutor.extractKeywords(tool_call, TAG_PARALLELCALLS)
+            local keywords, extract_err = ToolExecutor.extractKeywords(tool_call)
             if not keywords then
                 res = nil
                 err = extract_err
@@ -565,8 +586,8 @@ function Querier:processStream(bgQuery, trunk_callback)
         coroutine.resume(_coroutine, false)  
     end  
   
-    local tool_calls   -- set to the accumulated table when LLM issues a tool call
-    local tool_call_acc = {}  -- persistent accumulator across ALL chunks (id, name, arguments_parts[])
+    local tool_calls   -- set to the accumulated array when LLM issues tool calls
+    local tool_call_acc = { current = {}, tools = {} }  -- persistent accumulator: { current={...}, tools={...} }
     local non200_start -- byte offset in result_buffer when non-200 line was received
     local check_interval_sec = 0.125 -- loop check interval: 125ms  
     local chunksize = 1024 * 16 -- buffer size for reading data
@@ -627,7 +648,11 @@ function Querier:processStream(bgQuery, trunk_callback)
                         if ok and event then
                             local signal = self:processChunk(event, trunk_callback, result_buffer, reasoning_content_buffer, tool_call_acc)
                             if signal == "TOOLCALLS" then
-                                tool_calls = tool_call_acc
+                                -- Normalize tool calls: merge arguments_parts into arguments
+                                tool_calls = {}
+                                for _, tc in ipairs(tool_call_acc.tools) do
+                                    table.insert(tool_calls, normalizeToolCall(tc))
+                                end
                                 break
                             end
                         else
@@ -760,9 +785,11 @@ end
 --- @param trunk_callback     func    called with each new text fragment (may be nil)
 --- @param result_buffer      strbuf  accumulates final answer text
 --- @param reasoning_content_buffer strbuf  accumulates reasoning/thinking text
---- @param tool_call_acc      table   mutable accumulator for tool-call state across chunks
----                                   shape: { id, name, arguments_parts[] }
----                                   caller must pre-init as {} before the first chunk.
+--- @param tool_call_acc      table   mutable state containing:
+---                                   { current={id, name, arguments_parts[]}, tools=[] }
+---                                   - current: the tool_call being accumulated in this chunk stream
+---                                   - tools: array of completed tool_calls
+---                                   caller must pre-init as { current={}, tools={} } before the first chunk.
 --- @return string|nil  "TOOLCALLS" when the model has finished issuing a tool call,
 ---                     nil otherwise.
 function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_content_buffer, tool_call_acc)
@@ -786,20 +813,28 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                 if tc_deltas then
                     for _, tc in ipairs(tc_deltas) do
                         -- id / name arrive only in the first delta for this call
-                        if json_default(tc.id)   then tool_call_acc.id   = tc.id   end
-                        if json_default(tc.name) then tool_call_acc.name = tc.name end
+                        if json_default(tc.id)   then tool_call_acc.current.id   = tc.id   end
+                        if json_default(tc.name) then tool_call_acc.current.name = tc.name end
                         local fn = json_default(tc["function"])
                         if fn then
-                            if json_default(fn.name)      then
-                                tool_call_acc.name = fn.name
-                                if tool_call_acc.arguments_parts and #tool_call_acc.arguments_parts > 0 then
-                                    -- parallel tool_calls
-                                    table.insert(tool_call_acc.arguments_parts, TAG_PARALLELCALLS)
+                            if json_default(fn.name) then
+                                -- New function encountered: if current has data, push it and start fresh
+                                if tool_call_acc.current.name and tool_call_acc.current.name ~= fn.name then
+                                    if tool_call_acc.current.arguments_parts and #tool_call_acc.current.arguments_parts > 0 then
+                                        table.insert(tool_call_acc.tools, {
+                                            id = tool_call_acc.current.id,
+                                            name = tool_call_acc.current.name,
+                                            arguments_parts = tool_call_acc.current.arguments_parts
+                                        })
+                                    end
+                                    tool_call_acc.current = { id = tc.id, name = fn.name, arguments_parts = {} }
+                                else
+                                    tool_call_acc.current.name = fn.name
                                 end
                             end
                             if json_default(fn.arguments) then
-                                tool_call_acc.arguments_parts = tool_call_acc.arguments_parts or {}
-                                table.insert(tool_call_acc.arguments_parts, fn.arguments)
+                                tool_call_acc.current.arguments_parts = tool_call_acc.current.arguments_parts or {}
+                                table.insert(tool_call_acc.current.arguments_parts, fn.arguments)
                             end
                         end
                     end
@@ -830,10 +865,15 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
             -- Gemini delivers a complete functionCall object in a single part
             local fc = json_default(part.functionCall)
             if fc then
-                tool_call_acc.id   = json_default(fc.id)   or json_default(fc.name) or "fc_0"
-                tool_call_acc.name = json_default(fc.name) or "web_search"
-                -- Gemini args is already a table, not a JSON string
-                tool_call_acc.args = json_default(fc.args) or {}
+                -- Push current if any, then create new one for Gemini
+                if tool_call_acc.current.name then
+                    table.insert(tool_call_acc.tools, tool_call_acc.current)
+                end
+                tool_call_acc.current = {
+                    id = json_default(fc.id) or json_default(fc.name) or "fc_0",
+                    name = json_default(fc.name) or "web_search",
+                    args = json_default(fc.args) or {}
+                }
                 stop_reason = "tool_calls"
             end
         end
@@ -843,8 +883,8 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         local dtype = json_default(delta.type, "")
         if dtype == "input_json_delta" then
             -- Tool-call argument fragment (content_block_delta for tool_use blocks)
-            tool_call_acc.arguments_parts = tool_call_acc.arguments_parts or {}
-            table.insert(tool_call_acc.arguments_parts, json_default(delta.partial_json, ""))
+            tool_call_acc.current.arguments_parts = tool_call_acc.current.arguments_parts or {}
+            table.insert(tool_call_acc.current.arguments_parts, json_default(delta.partial_json, ""))
             return nil  -- suppress '.' placeholder while accumulating
         end
         result_content    = json_default(delta.text, "")
@@ -855,8 +895,15 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         if json_default(event.type) == "content_block_start" then
             local cb = json_default(event.content_block)
             if cb and json_default(cb.type) == "tool_use" then
-                tool_call_acc.id   = json_default(cb.id)   or "toolu_0"
-                tool_call_acc.name = json_default(cb.name) or "web_search"
+                -- Push current tool if any, then start new one
+                if tool_call_acc.current.name then
+                    table.insert(tool_call_acc.tools, tool_call_acc.current)
+                end
+                tool_call_acc.current = {
+                    id = json_default(cb.id) or "toolu_0",
+                    name = json_default(cb.name) or "web_search",
+                    arguments_parts = {}
+                }
             end
         end
     end
@@ -876,6 +923,10 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                 -- Recognised structure but nothing to render (stream ended normally)
                 -- Check if this is a tool-call completion signal
                 if stop_reason == "tool_calls" or stop_reason == "tool_use" then
+                    -- Push the current tool_call if it has data
+                    if tool_call_acc.current.name then
+                        table.insert(tool_call_acc.tools, tool_call_acc.current)
+                    end
                     return "TOOLCALLS"
                 end
                 return nil
@@ -888,6 +939,10 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
 
     -- Return TOOLCALLS signal if this chunk completed a tool call
     if stop_reason == "tool_calls" or stop_reason == "tool_use" then
+        -- Push the current tool_call if it has data
+        if tool_call_acc.current.name then
+            table.insert(tool_call_acc.tools, tool_call_acc.current)
+        end
         return "TOOLCALLS"
     end
 

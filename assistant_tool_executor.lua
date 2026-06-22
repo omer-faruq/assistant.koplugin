@@ -83,15 +83,12 @@ end
 --- Supports:
 --- - Gemini: args is already a table
 --- - OpenAI/Anthropic: arguments is a JSON string
---- - Parallel tool calls: arguments with TAG_PARALLELCALLS separator
 ---
---- @param tool_call       table   tool call object
---- @param TAG_PARALLELCALLS string optional tag for combining parallel calls
+--- @param tool_call       table   single tool call object
 --- @return string|nil keywords, string|nil error
-function ToolExecutor.extractKeywords(tool_call, TAG_PARALLELCALLS)
+function ToolExecutor.extractKeywords(tool_call)
     local keywords = nil
     local rapidjson = require('rapidjson')
-    local strbuf = require("string.buffer")
 
     if tool_call.args then
         -- Gemini: args is already a table
@@ -101,19 +98,6 @@ function ToolExecutor.extractKeywords(tool_call, TAG_PARALLELCALLS)
         local ok_j, args = pcall(rapidjson.decode, tool_call.arguments)
         if ok_j and type(args) == "table" then
             keywords = args.query or args.keywords
-        else
-            -- Check for parallel tool_calls
-            if TAG_PARALLELCALLS and string.match(tool_call.arguments, TAG_PARALLELCALLS) then
-                local args_parts = koutil.splitToArray(tool_call.arguments, TAG_PARALLELCALLS, false)
-                local sbuf = strbuf.new()
-                for _, kparts in ipairs(args_parts) do
-                    local ok_k, jargs = pcall(rapidjson.decode, kparts)
-                    if ok_k and type(jargs) == "table" and jargs.keywords then
-                        sbuf:put(jargs.keywords, " ")
-                    end
-                end
-                keywords = sbuf:tostring()
-            end
         end
     end
 
