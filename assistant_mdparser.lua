@@ -46,12 +46,6 @@ if LibHoedown then
     end
 end
 
--- fallback to pure Lua implementation
-if not Parser then
-    Parser = require("apps/filemanager/lib/md")
-    logger.info("Using markdown.lua (pure Lua) for markdown parsing")
-end
-
 -- Post-processor: convert pipe-table <p> blocks that luamd passes through
 -- verbatim into proper <table> HTML that CRE can render.
 -- Safe for hoedown too: hoedown already emits <table> tags, so no <p>|...|</p>
@@ -98,9 +92,13 @@ local function render_tables(html)
     end))
 end
 
-local raw_parser = Parser
-Parser = function(text)
-    return render_tables(raw_parser(text))
+-- fallback to pure Lua implementation
+if not Parser then
+    local puremd = require("apps/filemanager/lib/md")
+    Parser = function(text)
+        return render_tables(puremd(text))
+    end
+    logger.info("Using markdown.lua (puremd) for markdown parsing")
 end
 
 return Parser
