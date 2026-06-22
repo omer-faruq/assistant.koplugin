@@ -102,6 +102,7 @@ function ToolExecutor.extractKeywords(tool_call)
     end
 
     if not keywords or #keywords == 0 then
+        logger.warn("extractKeywords", tool_call)
         return nil, _("Tool call did not include search keywords.")
     end
 

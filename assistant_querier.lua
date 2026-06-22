@@ -818,8 +818,8 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                         local fn = json_default(tc["function"])
                         if fn then
                             if json_default(fn.name) then
-                                -- New function encountered: if current has data, push it and start fresh
-                                if tool_call_acc.current.name and tool_call_acc.current.name ~= fn.name then
+                                -- New tool_call encountered: if current has a different id, push it and start fresh
+                                if tool_call_acc.current.id and tool_call_acc.current.id ~= tc.id then
                                     if tool_call_acc.current.arguments_parts and #tool_call_acc.current.arguments_parts > 0 then
                                         table.insert(tool_call_acc.tools, {
                                             id = tool_call_acc.current.id,
@@ -866,7 +866,7 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
             local fc = json_default(part.functionCall)
             if fc then
                 -- Push current if any, then create new one for Gemini
-                if tool_call_acc.current.name then
+                if tool_call_acc.current.id then
                     table.insert(tool_call_acc.tools, tool_call_acc.current)
                 end
                 tool_call_acc.current = {
@@ -895,12 +895,13 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         if json_default(event.type) == "content_block_start" then
             local cb = json_default(event.content_block)
             if cb and json_default(cb.type) == "tool_use" then
-                -- Push current tool if any, then start new one
-                if tool_call_acc.current.name then
+                -- Push current tool if any with different id, then start new one
+                local new_id = json_default(cb.id) or "toolu_0"
+                if tool_call_acc.current.id and tool_call_acc.current.id ~= new_id then
                     table.insert(tool_call_acc.tools, tool_call_acc.current)
                 end
                 tool_call_acc.current = {
-                    id = json_default(cb.id) or "toolu_0",
+                    id = new_id,
                     name = json_default(cb.name) or "web_search",
                     arguments_parts = {}
                 }
@@ -924,7 +925,7 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                 -- Check if this is a tool-call completion signal
                 if stop_reason == "tool_calls" or stop_reason == "tool_use" then
                     -- Push the current tool_call if it has data
-                    if tool_call_acc.current.name then
+                    if tool_call_acc.current.id then
                         table.insert(tool_call_acc.tools, tool_call_acc.current)
                     end
                     return "TOOLCALLS"
@@ -940,7 +941,7 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
     -- Return TOOLCALLS signal if this chunk completed a tool call
     if stop_reason == "tool_calls" or stop_reason == "tool_use" then
         -- Push the current tool_call if it has data
-        if tool_call_acc.current.name then
+        if tool_call_acc.current.id then
             table.insert(tool_call_acc.tools, tool_call_acc.current)
         end
         return "TOOLCALLS"
