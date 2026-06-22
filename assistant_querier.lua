@@ -244,7 +244,6 @@ function Querier:query(message_history, title)
         -- ---------------------------------------------------------------
         local MAX_TOOL_ROUNDS = 5
         local tool_rounds = 0
-        local tool_call_index = 0  -- which tool call in the array we're processing
 
         repeat
             local bg_fn
@@ -279,22 +278,7 @@ function Querier:query(message_history, title)
                 break
             end
 
-            if tool_rounds >= MAX_TOOL_ROUNDS then
-                res = nil
-                err = _("Too many tool-call rounds; aborting.")
-                break
-            end
-            tool_rounds = tool_rounds + 1
-
-            -- Process each tool call in sequence (for now, one per round)
-            tool_call_index = tool_call_index + 1
-            if tool_call_index > #tool_calls_array then
-                res = nil
-                err = _("All tool calls processed but no final response.")
-                break
-            end
-
-            local tool_call = tool_calls_array[tool_call_index]
+            local tool_call = tool_calls_array[1] -- TODO: only process the first tool_call
 
             -- Decode keywords from tool call arguments
             local keywords, extract_err = ToolExecutor.extractKeywords(tool_call)
@@ -304,12 +288,20 @@ function Querier:query(message_history, title)
                 break
             end
 
-            -- Execute web search via ToolExecutor
-            local search_ok, search_result = ToolExecutor.executeWebSearch(
-                keywords,
-                query_option.use_websearch,
-                self.provider_settings,
-                self.handler)
+            tool_rounds = tool_rounds + 1
+            local search_ok, search_result
+            if tool_rounds < MAX_TOOL_ROUNDS then
+                -- Execute web search via ToolExecutor
+                search_ok, search_result = ToolExecutor.executeWebSearch(
+                    keywords,
+                    query_option.use_websearch,
+                    self.provider_settings,
+                    self.handler)
+            else
+                -- Maximum call reached.
+                -- include instruction prompt let LLM dract the answer immediately
+                search_ok, search_result = ToolExecutor.maximumToolRoundReached()
+            end
 
             if not search_ok then
                 res = nil
@@ -653,6 +645,7 @@ function Querier:processStream(bgQuery, trunk_callback)
                                 for _, tc in ipairs(tool_call_acc.tools) do
                                     table.insert(tool_calls, normalizeToolCall(tc))
                                 end
+                                logger.info("tool_calls", tool_calls)
                                 break
                             end
                         else
@@ -750,11 +743,6 @@ function Querier:processStream(bgQuery, trunk_callback)
     end
 
     if tool_calls then
-        -- Assemble arguments from accumulated parts into a single string (OpenAI-style)
-        -- Gemini already stores args as a table in tool_calls.args
-        if not tool_calls.args and tool_calls.arguments_parts then
-            tool_calls.arguments = table.concat(tool_calls.arguments_parts)
-        end
         return nil, tool_calls  -- nil content, tool_calls table as second return
     end
 
@@ -819,21 +807,22 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                         if fn then
                             if json_default(fn.name) then
                                 -- New tool_call encountered: if current has a different id, push it and start fresh
-                                if tool_call_acc.current.id and tool_call_acc.current.id ~= tc.id then
-                                    if tool_call_acc.current.arguments_parts and #tool_call_acc.current.arguments_parts > 0 then
-                                        table.insert(tool_call_acc.tools, {
-                                            id = tool_call_acc.current.id,
-                                            name = tool_call_acc.current.name,
-                                            arguments_parts = tool_call_acc.current.arguments_parts
-                                        })
-                                    end
-                                    tool_call_acc.current = { id = tc.id, name = fn.name, arguments_parts = {} }
+                                if tool_call_acc.current.index ~= nil and tool_call_acc.current.index ~= tc.index then
+                                    table.insert(tool_call_acc.tools, {
+                                        index = tool_call_acc.current.index,
+                                        id = tool_call_acc.current.id,
+                                        name = tool_call_acc.current.name,
+                                        arguments_parts = tool_call_acc.current.arguments_parts
+                                    })
+                                    tool_call_acc.current = { id = tc.id, index = tc.index, name = fn.name, arguments_parts = {} }
                                 else
                                     tool_call_acc.current.name = fn.name
+                                    tool_call_acc.current.id = tc.id
+                                    tool_call_acc.current.index = tc.index
                                 end
                             end
                             if json_default(fn.arguments) then
-                                tool_call_acc.current.arguments_parts = tool_call_acc.current.arguments_parts or {}
+                                tool_call_acc.current.arguments_parts = tool_call_acc.current.arguments_parts or {} -- init parts
                                 table.insert(tool_call_acc.current.arguments_parts, fn.arguments)
                             end
                         end
