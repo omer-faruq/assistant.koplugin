@@ -195,10 +195,8 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
             content = self:_formatUserPrompt(user_question.user_prompt, current_highlight, user_question.user_input or ""),
           }
           -- set these attributes in metatable (won't be encoded to API calls)
-          setmetatable(_user, { __attr = {
-            user_input = user_question.user_input,
-            use_websearch = user_question.use_websearch,
-          }})
+          assistant_utils.set_attr(_user, "user_input", user_question.user_input)
+          assistant_utils.set_attr(_user, "use_websearch", user_question.use_websearch)
           table.insert(message_history, _user)
         end
 
@@ -529,10 +527,8 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index, user_in
     content = user_content,
   }
   -- set attributes in metatable (won't be encoded to API calls)
-  setmetatable(_user, { __attr = {
-    user_input = user_input,
-    use_websearch = koutil.tableGetValue(prompt_config, "use_websearch") or false,
-  }})
+  assistant_utils.set_attr(_user, "user_input", user_input)
+  assistant_utils.set_attr(_user, "use_websearch", koutil.tableGetValue(prompt_config, "use_websearch") or false)
   table.insert(message_history, _user)
   
   local answer, err = self.querier:query(message_history, T(_("Loading for %1 ..."), title or prompt_index))
