@@ -16,14 +16,7 @@ local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 
 local assistant_utils = require("assistant_utils")
-
--- default_value for rapidjson decoded object
-local function json_default(value, default_value)
-    if value == nil or value == json.null then
-        return default_value
-    end
-    return value
-end
+local json_default = assistant_utils.json_default
 
 local BaseHandler = {
     trap_widget = nil,  -- widget to trap the request
@@ -74,74 +67,6 @@ function BaseHandler:query(message_history, provider_setting, query_option)
     error("query method must be implemented")
 end
 
-local function httpRequest(url, timeout, maxtime, post_body, post_content_type, headers)
-    local parsed = socket_url.parse(url)
-    if parsed.scheme ~= "http" and parsed.scheme ~= "https" then
-        return false, BaseHandler.CODE_UNSUPPORTED_PROTO, "Unsupported protocol"
-    end
-    if parsed.scheme == "https" then
-        https.cert_verify = false
-    end
-    if not timeout then timeout = 10 end
-    socketutil:set_timeout(timeout, maxtime or 30)
-
-    if not headers then
-        headers = {}
-    end
-    headers["Accept-Encoding"] = "gzip"
-
-    local sink = {}
-    local request = {
-        url     = url,
-        method  = post_body and "POST" or "GET",
-        headers = headers,
-        sink    = maxtime and socketutil.table_sink(sink) or ltn12.sink.table(sink),
-    }
-    if post_body then
-        if type(post_body) ~= "string" then post_body = json.encode(post_body) end
-        request.source = ltn12.source.string(post_body)
-        headers["Content-Type"]   = headers["Content-Type"] or post_content_type or "application/json"
-        headers["Content-Length"] = headers["Content-Length"] or tostring(#post_body)
-    end
-
-    local code, resp_headers, status = socket.skip(1, http.request(request))
-    local content = table.concat(sink)
-    socketutil:reset_timeout()
-
-    if code == socketutil.TIMEOUT_CODE or
-       code == socketutil.SSL_HANDSHAKE_CODE or
-       code == socketutil.SINK_TIMEOUT_CODE
-    then
-        logger.warn("request interrupted:", code)
-        return false, BaseHandler.CODE_TIMEOUT, "Request interrupted/timed out"
-    end
-    if resp_headers == nil then
-        logger.warn("No HTTP headers:", status or code or "network unreachable")
-        return false, BaseHandler.CODE_NETWORK_ERROR, "Network Error: " .. (status or code)
-    end
-    if not code then
-        logger.warn("HTTP status not okay:", status or code or "network unreachable")
-        return false, code, content or "Remote server error or unavailable"
-    end
-
-    local http_len = assistant_utils.http_get_header(resp_headers, "content-length")
-    if http_len then
-        if #content ~= tonumber(http_len) then
-            return false, BaseHandler.CODE_INCOMPLETE, "Incomplete content received"
-        end
-    end
-
-    if assistant_utils.http_is_encoded(resp_headers, "gzip") then
-        local decompressed, err = assistant_utils.zlib_uncompress_gzip(content, 8*1024*1024)
-        if not decompressed then
-            logger.warn("Failed to decompress data:", err)
-            return false, BaseHandler.CODE_DECOMPRESS_ERROR, "Failed to decompress data: " .. tostring(err)
-        end
-        content = decompressed
-    end
-
-    return true, code, content
-end
 
 --- Make a synchronous HTTP POST request, optionally through a dismissable subprocess.
 function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
@@ -156,13 +81,13 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
             request_maxtime = maxtime or 120
         end
         completed, success, code, content = Trapper:dismissableRunInSubprocess(function()
-                return httpRequest(url, request_timeout, request_maxtime, body, nil, headers)
+                return assistant_utils.httpRequest(url, request_timeout, request_maxtime, body, nil, headers)
             end, self.trap_widget)
         if not completed then
             return false, self.CODE_CANCELLED, content
         end
     else
-        success, code, content = httpRequest(url, timeout or 20, maxtime or 45, body, nil, headers)
+        success, code, content = assistant_utils.httpRequest(url, timeout or 20, maxtime or 45, body, nil, headers)
     end
 
     return success, code, content
@@ -544,115 +469,6 @@ function BaseHandler:buildExternalSearchToolDef(format)
             },
         }
     end
-end
-
-
--- ---------------------------------------------------------------------------
--- External-search two-stage flow (used by handlers that don't natively
--- support web search but want serpapi / tavilyapi integration).
--- ---------------------------------------------------------------------------
-
--- ---------------------------------------------------------------------------
--- Search API helpers
--- ---------------------------------------------------------------------------
-
-function BaseHandler:serpAPISearchRequest(serpconfig, keywords)
-    local base_url = serpconfig.base_url or "https://serpapi.com/search"
-    local key      = serpconfig.api_key
-    local q        = koutil.urlEncode(keywords)
-    local url      = T("%1?engine=google_ai_mode&api_key=%2&q=%3", base_url, key, q)
-
-    local timeout = 45
-    local maxtime = 120
-
-    local completed, success, code, content =
-        Trapper:dismissableRunInSubprocess(function()
-            return httpRequest(url, timeout, maxtime, nil, nil, nil)
-        end, self.trap_widget)
-
-    if not completed then return false, self.CODE_CANCELLED end
-    if not success or code ~= 200 then return false, content end
-
-    local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed then
-        return false, "fail to parse serpapi return"
-    end
-
-    if not parsed.reconstructed_markdown and not parsed.references then
-        return false, "No relevant search or AI summary results found."
-    end
-
-    local segments = {}
-    if json_default(parsed.reconstructed_markdown) then
-        table.insert(segments, "## Google AI Summary:\n")
-        table.insert(segments, parsed.reconstructed_markdown)
-        table.insert(segments, "\n")
-    end
-    if parsed.references and #parsed.references > 0 then
-        table.insert(segments, "## Verified Sources (References):")
-        table.insert(segments, "LLM Note: Please use these indexes and URLs to generate precise citations if needed.\n")
-        for _, ref in ipairs(parsed.references) do
-            local idx         = json_default(ref.index, 0)
-            local title       = json_default(ref.title, "Untitled Source")
-            local link        = json_default(ref.link, "N/A")
-            local source_name = json_default(ref.source, "Web")
-            table.insert(segments,
-                string.format("[%d] %s (%s) - URL: %s", idx, title, source_name, link))
-        end
-    end
-
-    return true, table.concat(segments, "\n")
-end
-
-function BaseHandler:tavilyAPISearchRequest(tavilyconfig, keywords)
-    local base_url = tavilyconfig.base_url or "https://api.tavily.com/search"
-    local key      = tavilyconfig.api_key
-
-    local requestBodyTable = {
-        api_key              = key,
-        auto_parameters      = true,
-        max_results          = 3,
-        search_depth         = "basic",
-        include_answer       = true,
-        include_raw_content  = false,
-        query                = keywords,
-    }
-    local requestBody = json.encode(requestBodyTable)
-
-    local timeout = 45
-    local maxtime = 120
-
-    local completed, success, code, content =
-        Trapper:dismissableRunInSubprocess(function()
-            return httpRequest(base_url, timeout, maxtime, requestBody, "application/json", nil)
-        end, self.trap_widget)
-
-    if not completed then return false, self.CODE_CANCELLED end
-    if not success or code ~= 200 then return false, content end
-
-    local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed or not parsed.results then
-        return false, "fail to parse tavily return"
-    end
-
-    local segments = {}
-    if json_default(parsed.answer) then
-        table.insert(segments, "## Summary\n")
-        table.insert(segments, parsed.answer)
-        table.insert(segments, "\n")
-    end
-    table.insert(segments, "Here are the verified search results from Tavily:\n")
-    table.insert(segments, "LLM Note: Use these indexes and URLs to generate precise citations if needed.\n")
-    for i, item in ipairs(parsed.results) do
-        table.insert(segments, "---")
-        table.insert(segments, string.format("### Source %d: %s", i,
-            json_default(item.title, "Untitled")))
-        table.insert(segments, string.format("* URL: %s", json_default(item.url, "N/A")))
-        table.insert(segments, string.format("* Summary: %s", json_default(item.content, "")))
-        table.insert(segments, "\n")
-    end
-
-    return true, table.concat(segments, "\n")
 end
 
 return BaseHandler

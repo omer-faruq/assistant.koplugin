@@ -645,7 +645,6 @@ function Querier:processStream(bgQuery, trunk_callback)
                                 for _, tc in ipairs(tool_call_acc.tools) do
                                     table.insert(tool_calls, normalizeToolCall(tc))
                                 end
-                                logger.info("tool_calls", tool_calls)
                                 break
                             end
                         else

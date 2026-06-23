@@ -7,6 +7,22 @@ local ffiutil = require("ffi/util")
 local T = require("ffi/util").template
 local koutil = require("util")
 local _ = require("assistant_gettext")
+local http = require("socket.http")
+local ltn12 = require("ltn12")
+local socket = require("socket")
+local socket_url = require("socket.url")
+local socketutil = require("socketutil")
+local https = require("ssl.https")
+local json = require("rapidjson")
+
+local BaseHandler = {}
+BaseHandler.CODE_CANCELLED          = "USER_CANCELED"
+BaseHandler.CODE_NETWORK_ERROR      = "NETWORK_ERROR"
+BaseHandler.CODE_TIMEOUT            = "REQUEST_TIMEOUT"
+BaseHandler.CODE_UNSUPPORTED_PROTO  = "UNSUPPORTED_PROTOCOL"
+BaseHandler.CODE_INCOMPLETE         = "INCOMPLETE_CONTENT"
+BaseHandler.CODE_DECOMPRESS_ERROR   = "DECOMPRESS_ERROR"
+BaseHandler.CODE_SERVER_ERROR       = "SERVER_ERROR"
 
 local M = {}
 function M.getGeneralNotebookFilePath(assistant)
@@ -367,7 +383,7 @@ end
 --- @param headers table
 --- @param header_name string
 --- @return string|nil
-function M.http_get_header(headers, header_name)
+local function http_get_header(headers, header_name)
     if not headers then return nil end
     local lower_name = header_name:lower()
 
@@ -380,8 +396,8 @@ function M.http_get_header(headers, header_name)
 end
 
 --- Checks content-encoding
-function M.http_is_encoded(headers, encoding)
-    local value = M.http_get_header(headers, "content-encoding")
+local function http_is_encoded(headers, encoding)
+    local value = http_get_header(headers, "content-encoding")
     if not value then return false end
     return value:lower():find((encoding or "gzip"):lower()) ~= nil
 end
@@ -442,6 +458,84 @@ function M.get_attr(obj, key, default)
     
     -- Return default if attribute doesn't exist or is nil
     return default
+end
+
+-- default_value for rapidjson decoded object
+function M.json_default(value, default_value)
+    if value == nil or value == json.null then
+        return default_value
+    end
+    return value
+end
+
+-- httpRequest with gzip compress support, GET/POST method only
+function M.httpRequest(url, timeout, maxtime, post_body, post_content_type, headers)
+    local parsed = socket_url.parse(url)
+    if parsed.scheme ~= "http" and parsed.scheme ~= "https" then
+        return false, BaseHandler.CODE_UNSUPPORTED_PROTO, "Unsupported protocol"
+    end
+    if parsed.scheme == "https" then
+        https.cert_verify = false
+    end
+    if not timeout then timeout = 10 end
+    socketutil:set_timeout(timeout, maxtime or 30)
+
+    if not headers then
+        headers = {}
+    end
+    headers["Accept-Encoding"] = "gzip"
+
+    local sink = {}
+    local request = {
+        url     = url,
+        method  = post_body and "POST" or "GET",
+        headers = headers,
+        sink    = maxtime and socketutil.table_sink(sink) or ltn12.sink.table(sink),
+    }
+    if post_body then
+        if type(post_body) ~= "string" then post_body = json.encode(post_body) end
+        request.source = ltn12.source.string(post_body)
+        headers["Content-Type"]   = headers["Content-Type"] or post_content_type or "application/json"
+        headers["Content-Length"] = headers["Content-Length"] or tostring(#post_body)
+    end
+
+    local code, resp_headers, status = socket.skip(1, http.request(request))
+    local content = table.concat(sink)
+    socketutil:reset_timeout()
+
+    if code == socketutil.TIMEOUT_CODE or
+       code == socketutil.SSL_HANDSHAKE_CODE or
+       code == socketutil.SINK_TIMEOUT_CODE
+    then
+        logger.warn("request interrupted:", code)
+        return false, BaseHandler.CODE_TIMEOUT, "Request interrupted/timed out"
+    end
+    if resp_headers == nil then
+        logger.warn("No HTTP headers:", status or code or "network unreachable")
+        return false, BaseHandler.CODE_NETWORK_ERROR, "Network Error: " .. (status or code)
+    end
+    if not code then
+        logger.warn("HTTP status not okay:", status or code or "network unreachable")
+        return false, code, content or "Remote server error or unavailable"
+    end
+
+    local http_len = http_get_header(resp_headers, "content-length")
+    if http_len then
+        if #content ~= tonumber(http_len) then
+            return false, BaseHandler.CODE_INCOMPLETE, "Incomplete content received"
+        end
+    end
+
+    if http_is_encoded(resp_headers, "gzip") then
+        local decompressed, err = M.zlib_uncompress_gzip(content, 8*1024*1024)
+        if not decompressed then
+            logger.warn("Failed to decompress data:", err)
+            return false, BaseHandler.CODE_DECOMPRESS_ERROR, "Failed to decompress data: " .. tostring(err)
+        end
+        content = decompressed
+    end
+
+    return true, code, content
 end
 
 return M

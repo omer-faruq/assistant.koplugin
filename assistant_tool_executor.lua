@@ -8,6 +8,119 @@ local koutil = require("util")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local _ = require("assistant_gettext")
+local T = require("ffi/util").template
+local Trapper = require("ui/trapper")
+local json = require("rapidjson")
+local assistant_utils = require("assistant_utils")
+local json_default = assistant_utils.json_default
+
+-- ---------------------------------------------------------------------------
+-- External-search two-stage flow (used by handlers that don't natively
+-- support web search but want serpapi / tavilyapi integration).
+-- ---------------------------------------------------------------------------
+
+-- ---------------------------------------------------------------------------
+-- Search API helpers
+-- ---------------------------------------------------------------------------
+
+local function serpAPISearchRequest(handler, serpconfig, keywords)
+    local base_url = serpconfig.base_url or "https://serpapi.com/search"
+    local key      = serpconfig.api_key
+    local q        = koutil.urlEncode(keywords)
+    local url      = T("%1?engine=google_ai_mode&api_key=%2&q=%3", base_url, key, q)
+
+    local timeout = 45
+    local maxtime = 120
+
+    local completed, success, code, content =
+        Trapper:dismissableRunInSubprocess(function()
+            return assistant_utils.httpRequest(url, timeout, maxtime, nil, nil, nil)
+        end, handler.trap_widget)
+
+    if not completed then return false, handler.CODE_CANCELLED end
+    if not success or code ~= 200 then return false, content end
+
+    local ok, parsed = pcall(json.decode, content)
+    if not ok or not parsed then
+        return false, "fail to parse serpapi return"
+    end
+
+    if not parsed.reconstructed_markdown and not parsed.references then
+        return false, "No relevant search or AI summary results found."
+    end
+
+    local segments = {}
+    if json_default(parsed.reconstructed_markdown) then
+        table.insert(segments, "## Google AI Summary:\n")
+        table.insert(segments, parsed.reconstructed_markdown)
+        table.insert(segments, "\n")
+    end
+    if parsed.references and #parsed.references > 0 then
+        table.insert(segments, "## Verified Sources (References):")
+        table.insert(segments, "LLM Note: Please use these indexes and URLs to generate precise citations if needed.\n")
+        for _, ref in ipairs(parsed.references) do
+            local idx         = json_default(ref.index, 0)
+            local title       = json_default(ref.title, "Untitled Source")
+            local link        = json_default(ref.link, "N/A")
+            local source_name = json_default(ref.source, "Web")
+            table.insert(segments,
+                string.format("[%d] %s (%s) - URL: %s", idx, title, source_name, link))
+        end
+    end
+
+    return true, table.concat(segments, "\n")
+end
+
+local function tavilyAPISearchRequest(handler, tavilyconfig, keywords)
+    local base_url = tavilyconfig.base_url or "https://api.tavily.com/search"
+    local key      = tavilyconfig.api_key
+
+    local requestBodyTable = {
+        api_key              = key,
+        auto_parameters      = true,
+        max_results          = 3,
+        search_depth         = "basic",
+        include_answer       = true,
+        include_raw_content  = false,
+        query                = keywords,
+    }
+    local requestBody = json.encode(requestBodyTable)
+
+    local timeout = 45
+    local maxtime = 120
+
+    local completed, success, code, content =
+        Trapper:dismissableRunInSubprocess(function()
+            return assistant_utils.httpRequest(base_url, timeout, maxtime, requestBody, "application/json", nil)
+        end, handler.trap_widget)
+
+    if not completed then return false, handler.CODE_CANCELLED end
+    if not success or code ~= 200 then return false, content end
+
+    local ok, parsed = pcall(json.decode, content)
+    if not ok or not parsed or not parsed.results then
+        return false, "fail to parse tavily return"
+    end
+
+    local segments = {}
+    if json_default(parsed.answer) then
+        table.insert(segments, "## Summary\n")
+        table.insert(segments, parsed.answer)
+        table.insert(segments, "\n")
+    end
+    table.insert(segments, "Here are the verified search results from Tavily:\n")
+    table.insert(segments, "LLM Note: Use these indexes and URLs to generate precise citations if needed.\n")
+    for i, item in ipairs(parsed.results) do
+        table.insert(segments, "---")
+        table.insert(segments, string.format("### Source %d: %s", i,
+            json_default(item.title, "Untitled")))
+        table.insert(segments, string.format("* URL: %s", json_default(item.url, "N/A")))
+        table.insert(segments, string.format("* Summary: %s", json_default(item.content, "")))
+        table.insert(segments, "\n")
+    end
+
+    return true, table.concat(segments, "\n")
+end
 
 local ToolExecutor = {}
 
@@ -37,9 +150,9 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, provider_config, handl
     -- Execute search API based on mode
     local search_ok, search_result
     if ws_mode == "serpapi" then
-        search_ok, search_result = handler:serpAPISearchRequest(provider_config.serpapi, keywords)
+        search_ok, search_result = serpAPISearchRequest(handler, provider_config.serpapi, keywords)
     elseif ws_mode == "tavilyapi" then
-        search_ok, search_result = handler:tavilyAPISearchRequest(provider_config.tavilyapi, keywords)
+        search_ok, search_result = tavilyAPISearchRequest(handler, provider_config.tavilyapi, keywords)
     else
         UIManager:close(handler:resetTrapWidget())
         return false, "Unknown web-search mode: " .. tostring(ws_mode)
@@ -125,7 +238,8 @@ function ToolExecutor.getHandlerFormat(handler_name)
 end
 
 function ToolExecutor.maximumToolRoundReached()
-    local prompt = [[## Maximum tool_calls Reached
+    local prompt = [[## Force Final Answer After Max Web Search Limit
+
 You have already used the web_search tool the maximum allowed times. You must now STOP making any further web_search calls or any other tool calls that would require additional external searches.
 
 Synthesize a complete, helpful, and well-structured final answer using ONLY the information you have already gathered from previous searches and your internal knowledge. 
