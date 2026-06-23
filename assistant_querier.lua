@@ -151,12 +151,12 @@ function StreamText:initTextBox(text, char_added)
     self.for_measurement_only = true                -- trick the method from super class
     InputText.initTextBox(self, text, char_added)   -- skips `UIManager:setDirty`
     -- use our own method of refresh, `fast` is suitable for stream responding 
-    UIManager:setDirty(self.parent, function() return "fast", self.dimen end)
+    -- UIManager:setDirty(self.parent, function() return "fast", self.dimen end)
     self.for_measurement_only = false
 end
 function  StreamText:onCloseWidget()
     -- fast mode makes screen dirty, clean it with `flashui`
-    UIManager:setDirty(self.parent, function() return "flashui", self.dimen end)
+    -- UIManager:setDirty(self.parent, function() return "ui", self.dimen end)
     return InputText.onCloseWidget(self)
 end
 
