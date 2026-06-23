@@ -87,12 +87,12 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
         return nil, "Error: Failed to parse Mistral API response"
     end
 
-    -- Fast-path: plain text answer (no tool calls)
-    local content = koutil.tableGetValue(responseData, "choices", 1, "message", "content")
-    if content then return content end
-
     -- Delegate tool-call / error detection to the unified base method
-    return self:parseToolCalls(responseData, "openai")
+    if koutil.tableGetValue(responseData, "choices", 1, "message", "tool_calls") then
+        return self:parseToolCalls(responseData, "openai")
+    end
+
+    return koutil.tableGetValue(responseData, "choices", 1, "message", "content")
 end
 
 return MistralHandler

@@ -78,14 +78,13 @@ function OllamaHandler:query(message_history, ollama_settings, query_option)
         return nil, "Error: Failed to parse Ollama API response"
     end
 
-    -- Ollama uses message.content (not choices[].message.content)
-    -- Fast-path: plain text answer (no tool calls)
-    local content = koutil.tableGetValue(parsed, "message", "content")
-    if content then return content end
+    -- Delegate tool-call / error detection to the unified base method
+    if koutil.tableGetValue(parsed, "choices", 1, "message", "tool_calls") then
+        return self:parseToolCalls(parsed, "openai")
+    end
 
-    -- Delegate tool-call / error detection to the unified base method.
-    -- Ollama follows the OpenAI wire format for tool calls.
-    return self:parseToolCalls(parsed, "openai")
+    -- Ollama uses message.content (not choices[].message.content)
+    return koutil.tableGetValue(parsed, "choices", 1, "message", "content")
 end
 
 return OllamaHandler

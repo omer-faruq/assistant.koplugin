@@ -254,6 +254,12 @@ function Querier:query(message_history, title)
                 res = nil
                 break
             end
+            if tool_rounds > MAX_TOOL_ROUNDS then
+                res = nil
+                err = _("Too many tool-call rounds; aborting.")
+                break
+            end
+            tool_rounds = tool_rounds + 1
 
             local ok, content, tool_calls_array = self:showStremDialog(bg_fn)
 
@@ -288,7 +294,6 @@ function Querier:query(message_history, title)
                 break
             end
 
-            tool_rounds = tool_rounds + 1
             local search_ok, search_result
             if tool_rounds < MAX_TOOL_ROUNDS then
                 -- Execute web search via ToolExecutor
@@ -298,7 +303,7 @@ function Querier:query(message_history, title)
                     self.provider_settings,
                     self.handler)
             else
-                -- Maximum call reached.
+                -- Maximum call reached. (tool_rounds == MAX_TOOL_ROUNDS)
                 -- include instruction prompt let LLM dract the answer immediately
                 search_ok, search_result = ToolExecutor.maximumToolRoundReached()
             end
@@ -369,7 +374,7 @@ function Querier:query(message_history, title)
 
             if type(res) == "table" and res.__is_tool_call then
                 -- The LLM requested a tool call (web_search).
-                if tool_rounds >= MAX_TOOL_ROUNDS then
+                if tool_rounds >= MAX_TOOL_ROUNDS + 1 then -- the hard stop for MAX_TOOL_ROUNDS
                     res = nil
                     err = _("Too many tool-call rounds; aborting.")
                     break
@@ -377,11 +382,16 @@ function Querier:query(message_history, title)
                 tool_rounds = tool_rounds + 1
 
                 -- Execute web search via ToolExecutor
-                local search_ok, search_result = ToolExecutor.executeWebSearch(
-                    res.keywords,
-                    query_option.use_websearch,
-                    self.provider_settings,
-                    self.handler)
+                local search_ok, search_result
+                if tool_rounds < MAX_TOOL_ROUNDS then
+                    search_ok, search_result = ToolExecutor.executeWebSearch(
+                        res.keywords,
+                        query_option.use_websearch,
+                        self.provider_settings,
+                        self.handler)
+                else
+                    search_ok, search_result = ToolExecutor.maximumToolRoundReached()
+                end
 
                 if not search_ok then
                     res = nil

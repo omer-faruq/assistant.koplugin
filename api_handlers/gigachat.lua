@@ -83,6 +83,11 @@ function GigaChatHandler:query(message_history, gigachat_settings, query_option)
         return nil, "Error: Failed to parse GigaChat API response: " .. response
     end
 
+    -- Delegate tool-call / error detection to the unified base method
+    if koutil.tableGetValue(parsed, "choices", 1, "message", "tool_calls") then
+        return self:parseToolCalls(parsed, "openai")
+    end
+
     local content = koutil.tableGetValue(parsed, "choices", 1, "message", "content")
     if content then return content end
 

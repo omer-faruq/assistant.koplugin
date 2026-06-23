@@ -29,13 +29,6 @@ function DeepSeekHandler:query(message_history, deepseek_settings, query_option)
         if tools then
             body.tools       = tools
             body.tool_choice = "auto"
-            if message_history[1].role == "system" then
-                message_history[1].content = message_history[1].content .. [[You are an AI assistant with a 'web_search' tool. Your goal: answer accurately in MINIMAL tool-call rounds.
-
-1. SEARCH SMART: Plan ahead and batch multiple search queries into ONE round whenever possible. Stop once you have enough info.
-2. NO EXTRA: Do not ask the user for more details or perform redundant searches.
-]]
-            end
         end
         return body
     end
@@ -101,12 +94,12 @@ function DeepSeekHandler:query(message_history, deepseek_settings, query_option)
         return nil, "Error: Failed to parse DeepSeek API response: " .. response
     end
 
-    -- Fast-path: plain text answer (no tool calls)
-    local content = koutil.tableGetValue(parsed, "choices", 1, "message", "content")
-    if content then return content end
-
     -- Delegate tool-call / error detection to the unified base method
-    return self:parseToolCalls(parsed, "openai")
+    if koutil.tableGetValue(parsed, "choices", 1, "message", "tool_calls") then
+        return self:parseToolCalls(parsed, "openai")
+    end
+
+    return koutil.tableGetValue(parsed, "choices", 1, "message", "content")
 end
 
 return DeepSeekHandler

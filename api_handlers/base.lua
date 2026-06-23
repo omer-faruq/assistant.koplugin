@@ -276,14 +276,6 @@ local function buildToolResultMessages(raw_assistant, tool_call_id, search_resul
     return msgs
 end
 
---- Append tool result messages to an existing list.
-local function appendToolResult(augmented, raw_assistant, tool_call_id, search_result, format)
-    local msgs = buildToolResultMessages(raw_assistant, tool_call_id, search_result, format)
-    for _, m in ipairs(msgs) do
-        table.insert(augmented, m)
-    end
-end
-
 -- ---------------------------------------------------------------------------
 -- Public interface: buildRawAssistantForToolCall
 -- ---------------------------------------------------------------------------

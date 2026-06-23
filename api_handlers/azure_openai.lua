@@ -62,24 +62,25 @@ function AzureOpenAIHandler:query(message_history, azure_settings, query_option)
 
     local status, code, response = self:makeRequest(api_url, headers, requestBody)
 
-    if status then
-        local success, responseData = pcall(json.decode, response)
-        if success then
-            local content = koutil.tableGetValue(responseData, "choices", 1, "message", "content")
-            if content then return content end
+    if not status or code ~= 200 then
+        if code == BaseHandler.CODE_CANCELLED then
+            return nil, response
         end
+        return nil, "Error: " .. (code or "unknown") .. " - " .. response
+    end
 
+    local success, responseData = pcall(json.decode, response)
+    if not success or not responseData then
         logger.warn("API Error", code, response)
-        if success then
-            local err_msg = koutil.tableGetValue(responseData, "error", "message")
-            if err_msg then return nil, err_msg end
-        end
+        return nil, "Error: Failed to parse Mistral API response"
     end
 
-    if code == BaseHandler.CODE_CANCELLED then
-        return nil, response
+    -- Delegate tool-call / error detection to the unified base method
+    if koutil.tableGetValue(responseData, "choices", 1, "message", "tool_calls") then
+        return self:parseToolCalls(responseData, "openai")
     end
-    return nil, "Error: " .. (code or "unknown") .. " - " .. response
+
+    return koutil.tableGetValue(responseData, "choices", 1, "message", "content")
 end
 
 return AzureOpenAIHandler
