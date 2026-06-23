@@ -794,23 +794,19 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
             local cdelta = choice.delta
             if cdelta then
                 -- Accumulate tool_calls deltas: arguments arrive in pieces across chunks.
-                -- While we are receiving tool_call deltas, do NOT treat empty content
-                -- as a reasoning placeholder (the old '.' hack) — it confuses the UI.
                 local tc_deltas = json_default(cdelta.tool_calls)
                 if tc_deltas then
                     for _, tc in ipairs(tc_deltas) do
+                        -- New tool_call encountered: if current has a different index, push it and start fresh
+                        if tool_call_acc.current.index and tool_call_acc.current.index ~= tc.index then
+                            table.insert(tool_call_acc.tools, tool_call_acc.current)
+                            tool_call_acc.current = {}
+                        end
                         local fn = json_default(tc["function"])
                         if fn then
-                            -- id / name arrive only in the first delta for this call
+                            -- id / function name arrive only in the first delta for this call
                             if json_default(fn.name) then
-                                -- New tool_call encountered: if current has a different index, push it and start fresh
-                                if tool_call_acc.current.index and tool_call_acc.current.index ~= tc.index then
-                                    table.insert(tool_call_acc.tools, tool_call_acc.current)
-                                    tool_call_acc.current = {}
-                                end
-                                tool_call_acc.current.name = fn.name
-                                tool_call_acc.current.id = tc.id
-                                tool_call_acc.current.index = tc.index
+                                tool_call_acc.current = { name = fn.name, id = tc.id, index = tc.index, }
                             end
                             if json_default(fn.arguments) then
                                 if not tool_call_acc.current.arguments_parts then
@@ -820,7 +816,6 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                             end
                         end
                     end
-                    -- While accumulating a tool call, suppress the reasoning '.' placeholder
                     return nil
                 end
 
