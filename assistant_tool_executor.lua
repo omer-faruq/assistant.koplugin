@@ -124,6 +124,11 @@ end
 
 local ToolExecutor = {}
 
+local apitext = {
+    ["serpapi"] = "Serp",
+    ["tavilyapi"] = "Tavily",
+}
+
 --- Execute a web search using the configured search service.
 ---
 --- Handles UI feedback (keyword search indicator) internally.
@@ -142,7 +147,7 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, provider_config, handl
     UIManager:close(handler:resetTrapWidget())
     local keywordmsg = InfoMessage:new({
         icon = "appbar.search",
-        text = _("Searching with Keywords:\n\n" .. keywords),
+        text = T(_("Searching with %1:\n\n%2"), apitext[ws_mode], keywords),
     })
     UIManager:show(keywordmsg)
     handler:setTrapWidget(keywordmsg)

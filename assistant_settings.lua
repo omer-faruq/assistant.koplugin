@@ -389,8 +389,8 @@ end
 local webSearchMenuText = { 
     ["none"] = _("None"),
     ["builtin"] = _("Model Built-In"),
-    ["serpapi"] = "SerpAPI",
-    ["tavilyapi"] = "TavilyAPI"
+    ["serpapi"] = "Serp API",
+    ["tavilyapi"] = "Tavily API"
 }
 local function genWebSearchSubMenuItem(assistant, key)
     return {
