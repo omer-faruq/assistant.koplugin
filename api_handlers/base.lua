@@ -2,8 +2,6 @@ local logger = require("logger")
 local http = require("socket.http")
 local ltn12 = require("ltn12")
 local socket = require("socket")
-local socket_url = require("socket.url")
-local socketutil = require("socketutil")
 local https = require("ssl.https")
 local Trapper = require("ui/trapper")
 local json = require("rapidjson")
@@ -12,8 +10,6 @@ local ffiutil = require("ffi/util")
 local koutil = require("util")
 local T = ffiutil.template
 local _ = require("assistant_gettext")
-local UIManager = require("ui/uimanager")
-local InfoMessage = require("ui/widget/infomessage")
 
 local assistant_utils = require("assistant_utils")
 local json_default = assistant_utils.json_default
@@ -98,15 +94,13 @@ end
 function BaseHandler:backgroundRequest(url, headers, body)
 
     local function wrap_fd(fd)
-        local file_object = {}
-        function file_object:write(chunk)
+        local fo = {}
+        function fo:write(chunk)
             ffiutil.writeToFD(fd, chunk)
             return self
         end
-        function file_object:close()
-            return true
-        end
-        return file_object
+        function fo:close() return true end -- mock close method
+        return fo
     end
 
     return function(pid, child_write_fd)
@@ -115,13 +109,16 @@ function BaseHandler:backgroundRequest(url, headers, body)
             return
         end
 
-        local pipe_w = wrap_fd(child_write_fd)
+        if url:sub(1, 5) == "https" then
+            https.cert_verify = false -- old devices cannot verify ssl certs
+        end
+
         local request = {
             url    = url,
             method = "POST",
             headers = headers or {},
             source  = ltn12.source.string(body or ""),
-            sink    = ltn12.sink.file(pipe_w),
+            sink    = ltn12.sink.file(wrap_fd(child_write_fd)),
         }
         local code, resp_headers, status = socket.skip(1, http.request(request))
         if code ~= 200 then

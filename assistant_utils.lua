@@ -15,15 +15,6 @@ local socketutil = require("socketutil")
 local https = require("ssl.https")
 local json = require("rapidjson")
 
-local BaseHandler = {}
-BaseHandler.CODE_CANCELLED          = "USER_CANCELED"
-BaseHandler.CODE_NETWORK_ERROR      = "NETWORK_ERROR"
-BaseHandler.CODE_TIMEOUT            = "REQUEST_TIMEOUT"
-BaseHandler.CODE_UNSUPPORTED_PROTO  = "UNSUPPORTED_PROTOCOL"
-BaseHandler.CODE_INCOMPLETE         = "INCOMPLETE_CONTENT"
-BaseHandler.CODE_DECOMPRESS_ERROR   = "DECOMPRESS_ERROR"
-BaseHandler.CODE_SERVER_ERROR       = "SERVER_ERROR"
-
 local M = {}
 function M.getGeneralNotebookFilePath(assistant)
   local notebookfile = nil
@@ -345,62 +336,6 @@ function M.normalizeMarkdownHeadings(content, heading_offset, max_heading_level)
   return normalized_content
 end
 
--- Enhanced uncompress that natively tolerates the Gzip-to-Zlib trailer mismatch
-require("ffi/zlib_h")
-local libz = ffi.loadlib("z", 1)
-
-function M.zlib_uncompress_gzip(gzip_data, max_datalen)
-    if #gzip_data < 18 then return nil, "Data truncated" end
-
-    -- 1. Strip the 10-byte Gzip header and the 8-byte Gzip trailer
-    local raw_deflate = gzip_data:sub(11, -9)
-    
-    -- 2. Prepend a valid standard Zlib header (0x78 0x9C)
-    local zlib_header = string.char(0x78, 0x9C)
-    local hybrid_payload = zlib_header .. raw_deflate
-
-    -- 3. Prepare the memory buffers
-    local buf = ffi.new("uint8_t[?]", max_datalen)
-    local buflen = ffi.new("unsigned long[1]", max_datalen)
-    
-    -- 4. Invoke the low-level libz
-    local res = libz.uncompress(buf, buflen, ffi.cast("const unsigned char*", hybrid_payload), #hybrid_payload)
-    
-    -- res == 0 means perfect zlib format
-    -- res == -3 (Z_DATA_ERROR) happens here because the tail has a Gzip CRC32 instead of Zlib Adler32.
-    -- But since the Deflate payload itself is 100% correct, the bytes in 'buf' are ALREADY completely deflated!
-    if res == 0 or res == -3 then
-        local actual_len = buflen[0]
-        if actual_len > 0 then
-            return ffi.string(buf, actual_len)
-        end
-    end
-    
-    return nil, "Zlib core uncompress failed with severe code: " .. tostring(res)
-end
-
---- GET HTTP HEADER VALUE
---- @param headers table
---- @param header_name string
---- @return string|nil
-local function http_get_header(headers, header_name)
-    if not headers then return nil end
-    local lower_name = header_name:lower()
-
-    for k, v in pairs(headers) do
-        if k:lower() == lower_name then
-            return v
-        end
-    end
-    return nil
-end
-
---- Checks content-encoding
-local function http_is_encoded(headers, encoding)
-    local value = http_get_header(headers, "content-encoding")
-    if not value then return false end
-    return value:lower():find((encoding or "gzip"):lower()) ~= nil
-end
 
 --- Sets a metadata attribute on an object
 --- The attribute is stored in the object's metatable under the __attr field
@@ -468,6 +403,75 @@ function M.json_default(value, default_value)
     return value
 end
 
+-- Enhanced uncompress that natively tolerates the Gzip-to-Zlib trailer mismatch
+require("ffi/zlib_h")
+local libz = ffi.loadlib("z", 1)
+
+local function zlib_uncompress_gzip(gzip_data, max_datalen)
+    if #gzip_data < 18 then return nil, "Data truncated" end
+
+    -- 1. Strip the 10-byte Gzip header and the 8-byte Gzip trailer
+    local raw_deflate = gzip_data:sub(11, -9)
+    
+    -- 2. Prepend a valid standard Zlib header (0x78 0x9C)
+    local zlib_header = string.char(0x78, 0x9C)
+    local hybrid_payload = zlib_header .. raw_deflate
+
+    -- 3. Prepare the memory buffers
+    local buf = ffi.new("uint8_t[?]", max_datalen)
+    local buflen = ffi.new("unsigned long[1]", max_datalen)
+    
+    -- 4. Invoke the low-level libz
+    local res = libz.uncompress(buf, buflen, ffi.cast("const unsigned char*", hybrid_payload), #hybrid_payload)
+    
+    -- res == 0 means perfect zlib format
+    -- res == -3 (Z_DATA_ERROR) happens here because the tail has a Gzip CRC32 instead of Zlib Adler32.
+    -- But since the Deflate payload itself is 100% correct, the bytes in 'buf' are ALREADY completely deflated!
+    if res == 0 or res == -3 then
+        local actual_len = buflen[0]
+        if actual_len > 0 then
+            return ffi.string(buf, actual_len)
+        end
+    end
+    
+    return nil, "Zlib core uncompress failed with severe code: " .. tostring(res)
+end
+
+--- GET HTTP HEADER VALUE
+--- @param headers table
+--- @param header_name string
+--- @return string|nil
+local function http_get_header(headers, header_name)
+    if not headers then return nil end
+    local lower_name = header_name:lower()
+
+    for k, v in pairs(headers) do
+        if k:lower() == lower_name then
+            return v
+        end
+    end
+    return nil
+end
+
+--- 
+--- Checks content-encoding
+local function http_is_encoded(headers, encoding)
+    local value = http_get_header(headers, "content-encoding")
+    if not value then return false end
+    return value:lower():find((encoding or "gzip"):lower()) ~= nil
+end
+
+--- 
+--- these codes are first defined in api_handlers/base.lua
+local BaseHandler = {}
+BaseHandler.CODE_CANCELLED          = "USER_CANCELED"
+BaseHandler.CODE_NETWORK_ERROR      = "NETWORK_ERROR"
+BaseHandler.CODE_TIMEOUT            = "REQUEST_TIMEOUT"
+BaseHandler.CODE_UNSUPPORTED_PROTO  = "UNSUPPORTED_PROTOCOL"
+BaseHandler.CODE_INCOMPLETE         = "INCOMPLETE_CONTENT"
+BaseHandler.CODE_DECOMPRESS_ERROR   = "DECOMPRESS_ERROR"
+BaseHandler.CODE_SERVER_ERROR       = "SERVER_ERROR"
+
 -- httpRequest with gzip compress support, GET/POST method only
 function M.httpRequest(url, timeout, maxtime, post_body, post_content_type, headers)
     local parsed = socket_url.parse(url)
@@ -527,7 +531,7 @@ function M.httpRequest(url, timeout, maxtime, post_body, post_content_type, head
     end
 
     if http_is_encoded(resp_headers, "gzip") then
-        local decompressed, err = M.zlib_uncompress_gzip(content, 8*1024*1024)
+        local decompressed, err = zlib_uncompress_gzip(content, 8*1024*1024)
         if not decompressed then
             logger.warn("Failed to decompress data:", err)
             return false, BaseHandler.CODE_DECOMPRESS_ERROR, "Failed to decompress data: " .. tostring(err)
