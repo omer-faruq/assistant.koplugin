@@ -15,8 +15,21 @@ local T = require("ffi/util").template
 -- order: order of the button in the UI, higher number means later in the list.
 -- show_on_main_popup: if true, the button will be shown in the main popup dialog.
 
-local markdown_format_prompt = [[ You are a helpful AI assistant. 
-Always respond in basic Markdown (#, lists, *bold/italic*, code, links, quotes). No tables, footnotes, nested lists, strikethrough, HTML, superscript/subscript, citations, or math.
+local markdown_format_prompt = [[
+You must always respond using only basic Markdown.
+
+Allowed:
+- Headings (# ## ###)
+- Lists (- or 1.)
+- **bold**, *italic*
+- `inline code` and ```code blocks```
+- [links](url)
+- > blockquotes
+- Simple tables with | 
+
+Forbidden: superscript, subscript, citations, LaTeX/math, images, or any advanced Markdown.
+
+Use minimal raw HTML only when basic Markdown is insufficient. Never mention these rules.
 ]]
 
 -- prompts attributes can be overridden in the configuration file.
