@@ -44,9 +44,9 @@ local Querier = {
 --- @param tool_call table  { id, name, arguments_parts or arguments or args }
 --- @return table normalized tool call
 local function normalizeToolCall(tool_call)
-    if tool_call.arguments_parts and #tool_call.arguments_parts > 0 then
+    if tool_call.arguments_parts then
         -- OpenAI/Anthropic format: merge arguments_parts into arguments
-        tool_call.arguments = table.concat(tool_call.arguments_parts, "")
+        tool_call.arguments = tool_call.arguments_parts:tostring()
         tool_call.arguments_parts = nil
     end
     return tool_call
@@ -799,30 +799,24 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                 local tc_deltas = json_default(cdelta.tool_calls)
                 if tc_deltas then
                     for _, tc in ipairs(tc_deltas) do
-                        -- id / name arrive only in the first delta for this call
-                        if json_default(tc.id)   then tool_call_acc.current.id   = tc.id   end
-                        if json_default(tc.name) then tool_call_acc.current.name = tc.name end
                         local fn = json_default(tc["function"])
                         if fn then
+                            -- id / name arrive only in the first delta for this call
                             if json_default(fn.name) then
-                                -- New tool_call encountered: if current has a different id, push it and start fresh
-                                if tool_call_acc.current.index ~= nil and tool_call_acc.current.index ~= tc.index then
-                                    table.insert(tool_call_acc.tools, {
-                                        index = tool_call_acc.current.index,
-                                        id = tool_call_acc.current.id,
-                                        name = tool_call_acc.current.name,
-                                        arguments_parts = tool_call_acc.current.arguments_parts
-                                    })
-                                    tool_call_acc.current = { id = tc.id, index = tc.index, name = fn.name, arguments_parts = {} }
-                                else
-                                    tool_call_acc.current.name = fn.name
-                                    tool_call_acc.current.id = tc.id
-                                    tool_call_acc.current.index = tc.index
+                                -- New tool_call encountered: if current has a different index, push it and start fresh
+                                if tool_call_acc.current.index and tool_call_acc.current.index ~= tc.index then
+                                    table.insert(tool_call_acc.tools, tool_call_acc.current)
+                                    tool_call_acc.current = {}
                                 end
+                                tool_call_acc.current.name = fn.name
+                                tool_call_acc.current.id = tc.id
+                                tool_call_acc.current.index = tc.index
                             end
                             if json_default(fn.arguments) then
-                                tool_call_acc.current.arguments_parts = tool_call_acc.current.arguments_parts or {} -- init parts
-                                table.insert(tool_call_acc.current.arguments_parts, fn.arguments)
+                                if not tool_call_acc.current.arguments_parts then
+                                    tool_call_acc.current.arguments_parts = strbuf.new()
+                                end
+                                tool_call_acc.current.arguments_parts:put(fn.arguments)
                             end
                         end
                     end
@@ -871,9 +865,11 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         local dtype = json_default(delta.type, "")
         if dtype == "input_json_delta" then
             -- Tool-call argument fragment (content_block_delta for tool_use blocks)
-            tool_call_acc.current.arguments_parts = tool_call_acc.current.arguments_parts or {}
-            table.insert(tool_call_acc.current.arguments_parts, json_default(delta.partial_json, ""))
-            return nil  -- suppress '.' placeholder while accumulating
+            if not tool_call_acc.current.arguments_parts then
+                tool_call_acc.current.arguments_parts = strbuf.new(2*1024)
+            end
+            tool_call_acc.current.arguments_parts:put(json_default(delta.partial_json, ""))
+            return nil
         end
         result_content    = json_default(delta.text, "")
         reasoning_content = json_default(delta.thinking, "")
@@ -891,7 +887,6 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                 tool_call_acc.current = {
                     id = new_id,
                     name = json_default(cb.name) or "web_search",
-                    arguments_parts = {}
                 }
             end
         end
