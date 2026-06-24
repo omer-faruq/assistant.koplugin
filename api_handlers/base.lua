@@ -11,6 +11,7 @@ local koutil = require("util")
 local T = ffiutil.template
 local _ = require("assistant_gettext")
 
+local ToolExecutor = require("assistant_tool_executor")
 local assistant_utils = require("assistant_utils")
 local json_default = assistant_utils.json_default
 
@@ -131,147 +132,6 @@ function BaseHandler:backgroundRequest(url, headers, body)
     end
 end
 
-
--- ---------------------------------------------------------------------------
--- Tool-call parsing helpers (module-local, shared by all handlers via base)
--- ---------------------------------------------------------------------------
-
---- Parse a stage-1 LLM response and extract tool call details.
---- This is an internal helper called by parseToolCalls().
----
---- Returns: tool_call_id, keywords, raw_assistant, direct_content, error
-local function parseStage1Response(responseData, format)
-    if format == "anthropic" then
-        local content_blocks = responseData.content
-        if type(content_blocks) ~= "table" then
-            local errmsg = koutil.tableGetValue(responseData, "error", "message")
-                        or "Anthropic stage-1: missing content array"
-            return nil, nil, nil, nil, errmsg
-        end
-        local tool_use_block, text_block
-        for _, block in ipairs(content_blocks) do
-            if type(block) == "table" then
-                if block.type == "tool_use" then tool_use_block = block end
-                if block.type == "text"     then text_block     = block end
-            end
-        end
-        if not tool_use_block then
-            local direct = text_block and tostring(text_block.text) or nil
-            return nil, nil, nil, direct, nil
-        end
-        local tool_id = tostring(tool_use_block.id or "toolu_0")
-        local input   = tool_use_block.input or {}
-        local kw      = input.keywords
-        if not kw then
-            return nil, nil, nil, nil, "Anthropic stage-1: tool_use block missing keywords input"
-        end
-        return tool_id, tostring(kw), content_blocks, nil, nil
-
-    elseif format == "gemini" then
-        local parts = koutil.tableGetValue(responseData, "candidates", 1, "content", "parts")
-        if type(parts) ~= "table" then
-            local errmsg = koutil.tableGetValue(responseData, "error", "message")
-                        or "Gemini stage-1: missing content parts"
-            return nil, nil, nil, nil, errmsg
-        end
-        local fn_call, text_part
-        for _, part in ipairs(parts) do
-            if type(part) == "table" then
-                if part.functionCall then fn_call   = part.functionCall end
-                if part.text         then text_part  = part              end
-            end
-        end
-        if not fn_call then
-            local direct = text_part and tostring(text_part.text) or nil
-            return nil, nil, nil, direct, nil
-        end
-        local call_id = fn_call.id or fn_call.name or "fc_0"
-        local args    = fn_call.args or {}
-        local kw      = args.keywords
-        if not kw then
-            return nil, nil, nil, nil, "Gemini stage-1: functionCall missing keywords arg"
-        end
-        local model_content = koutil.tableGetValue(responseData, "candidates", 1, "content")
-        return tostring(call_id), tostring(kw), model_content, nil, nil
-
-    else  -- "openai" (default — shared by groq / openrouter / deepseek / mistral / etc.)
-        local assistant_message = koutil.tableGetValue(responseData, "choices", 1, "message")
-        if not assistant_message then
-            local err_msg = koutil.tableGetValue(responseData, "error", "message")
-                         or koutil.tableGetValue(responseData, "message")
-                         or "OpenAI stage-1: no message in response"
-            logger.warn("stage1 parse, responseData:", responseData)
-            return nil, nil, nil, nil, err_msg
-        end
-        local tool_calls = assistant_message.tool_calls
-        if not tool_calls or not tool_calls[1] then
-            local direct = assistant_message.content
-            return nil, nil, nil, direct and tostring(direct) or nil, nil
-        end
-        local tc            = tool_calls[1]
-        local tool_call_id  = json_default(tc.id, "call_0")
-        local arguments_str = koutil.tableGetValue(tc, "function", "arguments") or "{}"
-        local arg_ok, args  = pcall(json.decode, arguments_str)
-        if not arg_ok or not args or not json_default(args.keywords) then
-            return nil, nil, nil, nil,
-                "OpenAI stage-1: failed to parse tool_call arguments: " .. arguments_str
-        end
-        return tool_call_id, args.keywords, assistant_message, nil, nil
-    end
-end
-
---- Build the list of messages that must be appended to message_history after a tool call,
---- in the correct wire format for each platform.
----
---- @param raw_assistant  table   platform-specific assistant payload from parseStage1Response
---- @param tool_call_id   string
---- @param search_result  string  markdown text from the search API
---- @param format         string  "openai" | "anthropic" | "gemini"
---- @return table  list of message objects ready to be appended
-local function buildToolResultMessages(raw_assistant, tool_call_id, search_result, format)
-    local msgs = {}
-    if format == "anthropic" then
-        table.insert(msgs, {
-            role    = "assistant",
-            content = raw_assistant,
-        })
-        table.insert(msgs, {
-            role    = "user",
-            content = {
-                {
-                    type        = "tool_result",
-                    tool_use_id = tool_call_id,
-                    content     = search_result,
-                },
-            },
-        })
-
-    elseif format == "gemini" then
-        table.insert(msgs, raw_assistant)   -- model turn (role="model", parts=[functionCall…])
-        table.insert(msgs, {
-            role  = "user",
-            parts = {
-                {
-                    functionResponse = {
-                        name     = "web_search",
-                        id       = tool_call_id,
-                        response = { result = search_result },
-                    },
-                },
-            },
-        })
-
-    else  -- "openai"
-        table.insert(msgs, raw_assistant)
-        table.insert(msgs, {
-            role         = "tool",
-            tool_call_id = tool_call_id,
-            content      = search_result,
-        })
-    end
-    return msgs
-end
-
 -- ---------------------------------------------------------------------------
 -- Public interface: parseToolCalls
 -- ---------------------------------------------------------------------------
@@ -302,7 +162,7 @@ end
 --- @return string|table result, string|nil error
 function BaseHandler:parseToolCalls(responseData, format)
     local tool_call_id, keywords, raw_assistant, direct_content, parse_err =
-        parseStage1Response(responseData, format)
+        ToolExecutor.parseToolCallsResponse(responseData, format)
 
     if parse_err then
         return nil, parse_err
@@ -330,75 +190,8 @@ function BaseHandler:parseToolCalls(responseData, format)
     return nil, "parseToolCalls: unexpected response (no content, no tool call)"
 end
 
---- Build the messages_to_append list once a search result is available.
---- Called by Querier after it has executed the search API.
----
---- @param tool_call_result  table   the table returned by parseToolCalls (with __is_tool_call)
---- @param search_result     string  markdown text from the search API
---- @return table  list of messages to append to message_history
-function BaseHandler:buildToolResultMessages(tool_call_result, search_result)
-    return buildToolResultMessages(
-        tool_call_result.raw_assistant,
-        tool_call_result.tool_call_id,
-        search_result,
-        tool_call_result.format
-    )
-end
-
-
--- ---------------------------------------------------------------------------
--- Tool definition builders
--- ---------------------------------------------------------------------------
-
---- Build the web_search tool definition in the format required by a given platform.
----
---- format = "openai"     → OpenAI function calling shape
---- format = "anthropic"  → Anthropic tool shape
---- format = "gemini"     → Gemini function_declarations shape
----
---- @param format string  "openai" | "anthropic" | "gemini"
---- @return table tool definition
 function BaseHandler:buildExternalSearchToolDef(format)
-    local param_schema = {
-        type = "object",
-        properties = {
-            keywords = {
-                type = "string",
-                description = "Concise search query keywords extracted from the user's question",
-            },
-        },
-        required = { "keywords" },
-    }
-    local description =
-        "Search the web for up-to-date information. " ..
-        "Use this when the user's question requires current or recent information."
-
-    if format == "anthropic" then
-        return {
-            name         = "web_search",
-            description  = description,
-            input_schema = param_schema,
-        }
-    elseif format == "gemini" then
-        return {
-            function_declarations = {
-                {
-                    name        = "web_search",
-                    description = description,
-                    parameters  = param_schema,
-                },
-            },
-        }
-    else  -- "openai"
-        return {
-            type = "function",
-            ["function"] = {
-                name        = "web_search",
-                description = description,
-                parameters  = param_schema,
-            },
-        }
-    end
+    return ToolExecutor.buildExternalSearchToolDef(format)
 end
 
 return BaseHandler

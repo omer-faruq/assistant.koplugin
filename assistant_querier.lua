@@ -205,7 +205,7 @@ end
 --- Non-stream tool-call loop:
 ---   handler:query() returns a table { __is_tool_call=true, keywords=..., ... }
 ---   → Querier executes the appropriate search API
----   → appends the tool result messages via handler:buildToolResultMessages()
+---   → appends the tool result messages via ToolExecutor.appendToolResult()
 ---   → repeats until a plain-string answer or an error
 ---
 --- Stream tool-call loop (TODO: not fully shown here; stream does not support
