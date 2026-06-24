@@ -114,7 +114,7 @@ local function tavilyAPISearchRequest(handler, tavilyconfig, keywords)
         table.insert(segments, "---")
         table.insert(segments, string.format("### Source %d: %s", i,
             json_default(item.title, "Untitled")))
-        table.insert(segments, string.format("* URL: %s", json_default(item.url, "N/A")))
+        -- table.insert(segments, string.format("* URL: %s", json_default(item.url, "N/A")))
         table.insert(segments, string.format("* Summary: %s", json_default(item.content, "")))
         table.insert(segments, "\n")
     end
@@ -136,6 +136,16 @@ local function buildToolResultMessages(tool_call_result, search_result)
 
     local msgs = {}
     if format == "anthropic" then
+
+        if raw_assistant.content and next(raw_assistant.content) then
+            -- we only did once search, remove other parallel calls
+            for i, msg in ipairs(raw_assistant.content) do
+                if msg.type == "tool_use" and msg.id ~= tool_call_id then
+                    table.remove(raw_assistant.content, i)
+                end
+            end
+        end
+
         table.insert(msgs, {
             role    = "assistant",
             content = raw_assistant,
@@ -331,14 +341,13 @@ end
 --- @return string|nil keywords, string|nil error
 function ToolExecutor.extractKeywords(tool_call)
     local keywords = nil
-    local rapidjson = require('rapidjson')
 
     if tool_call.args then
         -- Gemini: args is already a table
         keywords = tool_call.args.query or tool_call.args.keywords
     elseif tool_call.arguments then
         -- OpenAI / Anthropic: arguments is a JSON string
-        local ok_j, args = pcall(rapidjson.decode, tool_call.arguments)
+        local ok_j, args = pcall(json.decode, tool_call.arguments)
         if ok_j and type(args) == "table" then
             keywords = args.query or args.keywords
         end
@@ -402,8 +411,8 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
         local tool_use_block, text_block
         for _, block in ipairs(content_blocks) do
             if type(block) == "table" then
-                if block.type == "tool_use" then tool_use_block = block end
-                if block.type == "text"     then text_block     = block end
+                if block.type == "tool_use" then tool_use_block = block break end
+                if block.type == "text"     then text_block     = block break end
             end
         end
         if not tool_use_block then
