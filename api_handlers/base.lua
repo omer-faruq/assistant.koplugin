@@ -265,6 +265,7 @@ local function buildToolResultMessages(raw_assistant, tool_call_id, search_resul
         table.insert(msgs, {
             role       = "assistant",
             content    = raw_assistant.content,
+            reasoning_content = raw_assistant.reasoning_content,
             tool_calls = { raw_assistant.tool_calls[1] },
         })
         table.insert(msgs, {
