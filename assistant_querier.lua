@@ -20,7 +20,7 @@ local ToolExecutor = require("assistant_tool_executor")
 local Screen = Device.screen
 
 local API_HANDLERS = {}
-
+local MAX_TOOL_ROUNDS = 3
 
 -- default_value for rapidjson decoded object
 local function json_default(value, default_value)
@@ -236,7 +236,6 @@ function Querier:query(message_history, title)
         --   ok=true,  content=nil,     tool_calls=[] → LLM wants tool(s)
         --   ok=nil,   err=string                     → cancelled / error
         -- ---------------------------------------------------------------
-        local MAX_TOOL_ROUNDS = 5
         local tool_rounds = 0
 
         repeat
@@ -359,7 +358,6 @@ function Querier:query(message_history, title)
 
         -- Tool-call loop: keep calling the LLM until it returns a string answer.
         -- Bounded to a small iteration count to prevent runaway loops.
-        local MAX_TOOL_ROUNDS = 5
         local tool_rounds = 0
 
         repeat
@@ -748,10 +746,12 @@ function Querier:processStream(bgQuery, trunk_callback)
         if #reasoning_content_buffer > 0 then
             tc_content.reasoning_content = reasoning_content_buffer:tostring()
         end
+        if tool_call_acc.reasoning_key then
+            tc_content.reasoning_key = tool_call_acc.reasoning_key
+        end
         if #result_buffer > 0 then
             tc_content.content = result_buffer:tostring()
         end
-
         return tc_content, tool_calls
     end
 
@@ -791,7 +791,7 @@ end
 ---                     nil otherwise.
 function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_content_buffer, tool_call_acc)
 
-    local reasoning_content, result_content, stop_reason
+    local reasoning_content, reasoning_key, result_content, stop_reason
 
     local choices    = event.choices
     local candidates = event.candidates
@@ -829,10 +829,13 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                     return nil
                 end
 
-                reasoning_content = json_default(cdelta.reasoning) or
-                        json_default(cdelta.reasoning_content) or
-                        json_default(cdelta.reasoning_details, "")
                 result_content    = json_default(cdelta.content, "")
+                if not reasoning_key then
+                    -- find the key starts with "reason", "reasoning/reasoning_content/reasoning_details"
+                    for k, _ in pairs(cdelta) do if k:sub(1, 6) == "reason" then reasoning_key = k break end end
+                else
+                    reasoning_content = json_default(cdelta[reasoning_key], "")
+                end
 
             end
         end
@@ -931,6 +934,9 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         -- Push the current tool_call if it has data
         if tool_call_acc.current.id then
             table.insert(tool_call_acc.tools, tool_call_acc.current)
+        end
+        if reasoning_key then
+            tool_call_acc.reasoning_key = reasoning_key
         end
         return "TOOLCALLS"
     end

@@ -421,6 +421,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     -- Query the AI with the message history
     local ret, err = Querier:query(message_history, loading_message)
     if err ~= nil then
+        logger.dbg("assistant message_history", message_history)
         assistant.querier:showError(err)
         return
     end

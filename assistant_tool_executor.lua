@@ -212,9 +212,9 @@ function ToolExecutor.buildRawAssistantForToolCall(tool_call_id, keywords, forma
             },
         }
     else  -- "openai" (and compatible: groq, openrouter, deepseek, mistral, etc.)
-        return {
+        local raw = {
+            role       = "assistant",
             content    = contents and contents.content,
-            reasoning_content = contents and contents.reasoning_content,
             tool_calls = {
                 {
                     id       = tool_call_id,
@@ -226,6 +226,10 @@ function ToolExecutor.buildRawAssistantForToolCall(tool_call_id, keywords, forma
                 },
             },
         }
+        if contents and contents.reasoning_key and contents.reasoning_content then
+            raw[contents.reasoning_key] = contents.reasoning_content
+        end
+        return raw
     end
 end
 
