@@ -872,7 +872,6 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
     elseif anthropic_type then
 
         if anthropic_type == "content_block_start" then
-            logger.info("Anthropic", anthropic_type)
             local cb = json_default(event.content_block)
             if cb.type == "tool_use" then
                 if not (tool_call_acc.current and tool_call_acc.current.id) then
@@ -895,12 +894,10 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                 tool_call_acc.current.arguments_parts:put(delta.partial_json)
                 return
             elseif delta.type == "signature_delta" then
-                logger.info("signature_delta", event)
                 tool_call_acc.signature = delta.signature
                 return
             end
         elseif anthropic_type == "content_block_stop" then
-            logger.info("content_block_stop, index", event.index)
             if tool_call_acc.current and tool_call_acc.current.index == event.index then
                 table.insert(tool_call_acc.tools, tool_call_acc.current)
                 tool_call_acc.current = nil
