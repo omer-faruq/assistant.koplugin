@@ -256,7 +256,6 @@ function Querier:query(message_history, title)
             tool_rounds = tool_rounds + 1
 
             local ok, content, tool_calls_array = self:showStremDialog(bg_fn)
-
             if not ok then
                 -- cancelled or stream error
                 res = nil
@@ -278,7 +277,7 @@ function Querier:query(message_history, title)
                 break
             end
 
-            local tool_call = tool_calls_array[1] -- TODO: only process the first tool_call
+            local tool_call = tool_calls_array[1] -- only process the first tool_call
 
             -- Decode keywords from tool call arguments
             local keywords, extract_err = ToolExecutor.extractKeywords(tool_call)
@@ -311,7 +310,7 @@ function Querier:query(message_history, title)
             -- Build tool result and append to history
             local format = ToolExecutor.getHandlerFormat(self.handler_name)
             local tc_id = tool_call.id or "call_stream_0"
-            local raw_assistant = self.handler:buildRawAssistantForToolCall(tc_id, keywords, format)
+            local raw_assistant = ToolExecutor.buildRawAssistantForToolCall(tc_id, keywords, format, content)
 
             local tool_call_result_proxy = {
                 __is_tool_call = true,
@@ -544,15 +543,14 @@ function Querier:showStremDialog(res)
         -- pcall failure: content holds the Lua error, tool_calls_or_err is nil
         logger.warn("Error processing stream: " .. tostring(content))
         err = content
-    elseif content == nil and type(tool_calls_or_err) == "table" then
+    elseif type(tool_calls_or_err) == "table" then
         -- processStream detected a tool call; tool_calls_or_err is the accumulated tool_call table
         UIManager:close(streamDialog)
-        return true, nil, tool_calls_or_err  -- third value carries tool call data
+        return true, content, tool_calls_or_err  -- third value carries tool call data
     else
         -- Normal text response; tool_calls_or_err may be a trailing error string or nil
         err = tool_calls_or_err
     end
-
     UIManager:close(streamDialog)
 
     if self.user_interrupted then
@@ -746,7 +744,15 @@ function Querier:processStream(bgQuery, trunk_callback)
     end
 
     if tool_calls then
-        return nil, tool_calls  -- nil content, tool_calls table as second return
+        local tc_content = {}
+        if #reasoning_content_buffer > 0 then
+            tc_content.reasoning_content = reasoning_content_buffer:tostring()
+        end
+        if #result_buffer > 0 then
+            tc_content.content = result_buffer:tostring()
+        end
+
+        return tc_content, tool_calls
     end
 
     local show_reasoning = self.settings:readSetting("show_reasoning", false)
@@ -823,11 +829,11 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                     return nil
                 end
 
-                reasoning_content = json_default(cdelta.reasoning) or json_default(cdelta.reasoning_content, "")
+                reasoning_content = json_default(cdelta.reasoning) or
+                        json_default(cdelta.reasoning_content) or
+                        json_default(cdelta.reasoning_details, "")
                 result_content    = json_default(cdelta.content, "")
 
-                -- Reasoning-only responses with no text (e.g. grok-4 thinking phase)
-                if not result_content and not reasoning_content then reasoning_content = "." end
             end
         end
 
@@ -838,9 +844,9 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         for _, part in ipairs(parts) do
             if part.text then
                 if json_default(part.thought) then
-                    reasoning_content = (reasoning_content or "") .. part.text
+                    reasoning_content = part.text
                 else
-                    result_content = (result_content or "") .. part.text
+                    result_content = part.text
                 end
             end
             -- Gemini delivers a complete functionCall object in a single part

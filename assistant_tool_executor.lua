@@ -172,6 +172,64 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, provider_config, handl
     return true, search_result
 end
 
+-- ---------------------------------------------------------------------------
+-- Public interface: buildRawAssistantForToolCall
+-- ---------------------------------------------------------------------------
+
+--- Build a raw_assistant structure for a tool call.
+--- This factory method ensures all providers format tool calls consistently.
+---
+--- @param tool_call_id  string  The unique ID for this tool call
+--- @param keywords      string  The search keywords extracted
+--- @param format        string  "openai" | "anthropic" | "gemini"
+--- @param contents      table|nil   table contains "content", "reasoning_content"
+--- @return table       raw_assistant structure ready for buildToolResultMessages
+function ToolExecutor.buildRawAssistantForToolCall(tool_call_id, keywords, format, contents)
+    format = format or "openai"
+    
+    if format == "anthropic" then
+        -- Anthropic expects content_blocks array
+        return {
+            {
+                type  = "tool_use",
+                id    = tool_call_id,
+                name  = "web_search",
+                input = { keywords = keywords },
+            },
+        }
+    elseif format == "gemini" then
+        -- Gemini expects a model turn (role="model")
+        return {
+            role  = "model",
+            parts = {
+                {
+                    functionCall = {
+                        name = "web_search",
+                        id   = tool_call_id,
+                        args = { keywords = keywords },
+                    },
+                },
+            },
+        }
+    else  -- "openai" (and compatible: groq, openrouter, deepseek, mistral, etc.)
+        return {
+            content    = contents and contents.content,
+            reasoning_content = contents and contents.reasoning_content,
+            tool_calls = {
+                {
+                    id       = tool_call_id,
+                    type     = "function",
+                    ["function"] = {
+                        name      = "web_search",
+                        arguments = json.encode({ keywords = keywords }),
+                    },
+                },
+            },
+        }
+    end
+end
+
+
 --- Build tool result messages and append them to message history.
 ---
 --- @param message_history    table   conversation history (modified in place)
