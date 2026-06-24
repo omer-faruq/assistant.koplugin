@@ -148,14 +148,10 @@ function StreamText:addChars(chars)
     InputText.addChars(self, chars)                 -- can only add text by our method
 end
 function StreamText:initTextBox(text, char_added)
-    self.for_measurement_only = true                -- trick the method from super class
-    InputText.initTextBox(self, text, char_added)   -- skips `UIManager:setDirty`
+    self.for_measurement_only = true                -- trick super class method avoiding showing cursor
+    InputText.initTextBox(self, text, char_added)
     UIManager:setDirty(self.parent, function() return "ui", self.dimen end)
     self.for_measurement_only = false
-end
-function  StreamText:onCloseWidget()
-    UIManager:setDirty(self.parent, function() return "partial", self.dimen end)
-    return InputText.onCloseWidget(self)
 end
 
 function Querier:showError(err)
