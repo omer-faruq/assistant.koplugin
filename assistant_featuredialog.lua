@@ -194,7 +194,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
 
     local answer, err = Querier:query(message_history, loading_message)
     if err then
-      logger.dbg("assistant message_history", message_history)
+      logger.warn("assistant message_history", message_history)
       assistant.querier:showError(err)
       return
     end
@@ -231,7 +231,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
             local answer, err = Querier:query(message_history)
             
             if err then
-              logger.dbg("assistant message_history", message_history)
+              logger.warn("assistant message_history", message_history)
               Querier:showError(err)
               return
             end

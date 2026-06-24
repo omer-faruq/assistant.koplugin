@@ -189,14 +189,21 @@ function ToolExecutor.buildRawAssistantForToolCall(tool_call_id, keywords, forma
     
     if format == "anthropic" then
         -- Anthropic expects content_blocks array
-        return {
-            {
+        local ret = {}
+        if contents and contents.reasoning_content and contents.signature then
+            table.insert(ret, {
+                type = "thinking",
+                thinking = contents.reasoning_content,
+                signature = contents.signature,
+            })
+        end
+        table.insert(ret, {
                 type  = "tool_use",
                 id    = tool_call_id,
                 name  = "web_search",
                 input = { keywords = keywords },
-            },
-        }
+        })
+        return ret
     elseif format == "gemini" then
         -- Gemini expects a model turn (role="model")
         return {

@@ -742,12 +742,12 @@ function Querier:processStream(bgQuery, trunk_callback)
     end
 
     if tool_calls then
-        local tc_content = {}
+        local tc_content = {
+            reasoning_key = tool_call_acc.reasoning_key, -- openai dialets
+            signature = tool_call_acc.signature,         -- anthropic signatures
+        }
         if #reasoning_content_buffer > 0 then
             tc_content.reasoning_content = reasoning_content_buffer:tostring()
-        end
-        if tool_call_acc.reasoning_key then
-            tc_content.reasoning_key = tool_call_acc.reasoning_key
         end
         if #result_buffer > 0 then
             tc_content.content = result_buffer:tostring()
@@ -795,7 +795,7 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
 
     local choices    = event.choices
     local candidates = event.candidates
-    local delta      = event.delta
+    local anthropic_type = event.type
 
     -- 1. OpenAI-compatible handles (openai / groq / openrouter / deepseek / mistral …)
     if choices then
@@ -869,34 +869,50 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         end
 
     -- 3. Anthropic handles
-    elseif delta then
-        local dtype = json_default(delta.type, "")
-        if dtype == "input_json_delta" then
-            -- Tool-call argument fragment (content_block_delta for tool_use blocks)
-            if not tool_call_acc.current.arguments_parts then
-                tool_call_acc.current.arguments_parts = strbuf.new(2*1024)
-            end
-            tool_call_acc.current.arguments_parts:put(json_default(delta.partial_json, ""))
-            return nil
-        end
-        result_content    = json_default(delta.text, "")
-        reasoning_content = json_default(delta.thinking, "")
-        stop_reason       = json_default(event.stop_reason)
+    elseif anthropic_type then
 
-        -- Anthropic signals the start of a tool_use content block
-        if json_default(event.type) == "content_block_start" then
+        if anthropic_type == "content_block_start" then
+            logger.info("Anthropic", anthropic_type)
             local cb = json_default(event.content_block)
-            if cb and json_default(cb.type) == "tool_use" then
-                -- Push current tool if any with different id, then start new one
-                local new_id = json_default(cb.id) or "toolu_0"
-                if tool_call_acc.current.id and tool_call_acc.current.id ~= new_id then
-                    table.insert(tool_call_acc.tools, tool_call_acc.current)
+            if cb.type == "tool_use" then
+                if not (tool_call_acc.current and tool_call_acc.current.id) then
+                    tool_call_acc.current = { id = cb.id, name = cb.name, index = event.index }
                 end
-                tool_call_acc.current = {
-                    id = new_id,
-                    name = json_default(cb.name) or "web_search",
-                }
             end
+            return
+        elseif anthropic_type == "content_block_delta" then
+            local delta = event.delta
+            if delta.type == "text_delta" then
+                result_content    = json_default(delta.text, "")
+            elseif delta.type == "thinking_delta" then
+                reasoning_content = json_default(delta.thinking, "")
+            elseif delta.type == "input_json_delta" then
+                -- logger.info("input_json_delta", event)
+                -- Tool-call argument fragment (content_block_delta for tool_use blocks)
+                if not tool_call_acc.current.arguments_parts then
+                    tool_call_acc.current.arguments_parts = strbuf.new()
+                end
+                tool_call_acc.current.arguments_parts:put(delta.partial_json)
+                return
+            elseif delta.type == "signature_delta" then
+                logger.info("signature_delta", event)
+                tool_call_acc.signature = delta.signature
+                return
+            end
+        elseif anthropic_type == "content_block_stop" then
+            logger.info("content_block_stop, index", event.index)
+            if tool_call_acc.current and tool_call_acc.current.index == event.index then
+                table.insert(tool_call_acc.tools, tool_call_acc.current)
+                tool_call_acc.current = nil
+            end
+            return
+        elseif anthropic_type == "message_delta" then
+            -- logger.info("message_delta", event)
+            stop_reason = event.delta.stop_reason
+        elseif anthropic_type == "message_stop" or
+               anthropic_type == "message_start" or
+               anthropic_type == "ping" then
+            return
         end
     end
 
@@ -911,12 +927,12 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         result_buffer:put(_("Stopped Reason: ") .. stop_reason)
     else
         if result_content or reasoning_content or stop_reason then
-            if choices or candidates or delta then
+            if choices or candidates or anthropic_type then
                 -- Recognised structure but nothing to render (stream ended normally)
                 -- Check if this is a tool-call completion signal
                 if stop_reason == "tool_calls" or stop_reason == "tool_use" then
                     -- Push the current tool_call if it has data
-                    if tool_call_acc.current.id then
+                    if tool_call_acc.current and tool_call_acc.current.id then
                         table.insert(tool_call_acc.tools, tool_call_acc.current)
                     end
                     return "TOOLCALLS"
