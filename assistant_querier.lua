@@ -870,7 +870,6 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
 
     -- 3. Anthropic handles
     elseif anthropic_type then
-
         if anthropic_type == "content_block_start" then
             local cb = json_default(event.content_block)
             if cb.type == "tool_use" then
@@ -886,8 +885,6 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
             elseif delta.type == "thinking_delta" then
                 reasoning_content = json_default(delta.thinking, "")
             elseif delta.type == "input_json_delta" then
-                -- logger.info("input_json_delta", event)
-                -- Tool-call argument fragment (content_block_delta for tool_use blocks)
                 if not tool_call_acc.current.arguments_parts then
                     tool_call_acc.current.arguments_parts = strbuf.new()
                 end
@@ -904,7 +901,6 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
             end
             return
         elseif anthropic_type == "message_delta" then
-            -- logger.info("message_delta", event)
             stop_reason = event.delta.stop_reason
         elseif anthropic_type == "message_stop" or
                anthropic_type == "message_start" or
