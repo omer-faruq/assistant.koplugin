@@ -94,7 +94,7 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
         return nil, "Error: Missing API key in configuration"
     end
 
-    local model    = gemini_settings.model or "gemini-2.0-flash"
+    local model    = gemini_settings.model or "gemini-flash-latest"
     local base_url = gemini_settings.base_url
                   or "https://generativelanguage.googleapis.com/v1beta/models/"
 
@@ -160,10 +160,6 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
         logger.warn("Gemini: JSON decode error:", response)
         return nil, "Error: Failed to parse Gemini API response"
     end
-
-    -- Fast-path: plain text answer
-    local content = koutil.tableGetValue(parsed, "candidates", 1, "content", "parts", 1, "text")
-    if content then return content end
 
     -- Delegate tool-call / error detection to the unified base method
     return self:parseToolCalls(parsed, "gemini")

@@ -181,6 +181,18 @@ local function buildToolResultMessages(tool_call_result, search_result)
         })
 
     else  -- "openai"
+        if raw_assistant.tool_calls then
+            local trimmed_tc = {}
+            for _, tc in ipairs(raw_assistant.tool_calls) do
+                if tc.id == tool_call_id then
+                    table.insert(trimmed_tc, tc)
+                    break
+                end
+            end
+            if #trimmed_tc == 1 then
+                raw_assistant.tool_calls = trimmed_tc
+            end
+        end
         table.insert(msgs, raw_assistant)
         table.insert(msgs, {
             role         = "tool",
