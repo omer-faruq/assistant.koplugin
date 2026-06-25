@@ -540,4 +540,14 @@ function ToolExecutor.buildExternalSearchToolDef(format)
     end
 end
 
+function ToolExecutor.SettingkeyToText(key)
+    local ToolText = { 
+        ["none"] = _("None"),
+        ["builtin"] = _("Model Built-In"),
+        ["serpapi"] = "Serp API",
+        ["tavilyapi"] = "Tavily API"
+    }
+    return ToolText[key]
+end
+
 return ToolExecutor

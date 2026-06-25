@@ -34,7 +34,7 @@ local Querier = {
     settings = nil,
     handler = nil,
     handler_name = nil,
-    provider_settings = nil,
+    provider_setting = nil,        -- setting of a single api config from provider_settings
     provider_name = nil,
     interrupt_stream = nil,      -- function to interrupt the stream query
     user_interrupted = false,  -- flag to indicate if the stream was interrupted
@@ -90,8 +90,8 @@ function Querier:load_model(provider_name)
     end
 
     local CONFIGURATION = self.assistant.CONFIGURATION
-    local provider_settings = koutil.tableGetValue(CONFIGURATION, "provider_settings", provider_name)
-    if not provider_settings then
+    local provider_setting = koutil.tableGetValue(CONFIGURATION, "provider_settings", provider_name)
+    if not provider_setting then
         local err = T(_("Provider settings not found for: %1. Please check your configuration.lua file."),
          provider_name)
         logger.warn("Querier initialization failed: " .. err)
@@ -117,18 +117,15 @@ function Querier:load_model(provider_name)
         self.handler = handler
         self.handler_name = handler_name
         -- Shallow copy to avoid mutating CONFIGURATION
-        self.provider_settings = {}
-        for k, v in pairs(provider_settings) do
-            self.provider_settings[k] = v
-        end
-        self.provider_settings.serpapi = serpapi
-        self.provider_settings.tavilyapi = tavilyapi
+        self.provider_setting = koutil.tableDeepCopy(provider_setting)
+        self.provider_setting.serpapi = serpapi
+        self.provider_setting.tavilyapi = tavilyapi
         self.provider_name = provider_name
         -- Apply saved OpenRouter model override
         if handler_name == "openrouter" then
             local saved_model = self.settings:readSetting("openrouter_model_" .. provider_name)
             if saved_model and saved_model ~= "" then
-                self.provider_settings.model = saved_model
+                self.provider_setting.model = saved_model
             end
         end
         return true
@@ -240,7 +237,7 @@ function Querier:query(message_history, title)
 
         repeat
             local bg_fn
-            bg_fn, err = self.handler:query(message_history, self.provider_settings, query_option)
+            bg_fn, err = self.handler:query(message_history, self.provider_setting, query_option)
 
             if type(bg_fn) ~= "function" then
                 -- handler returned an error before even starting the stream
@@ -292,7 +289,7 @@ function Querier:query(message_history, title)
                 search_ok, search_result = ToolExecutor.executeWebSearch(
                     keywords,
                     query_option.use_websearch,
-                    self.provider_settings,
+                    self.provider_setting,
                     self.handler)
             else
                 -- Maximum call reached. (tool_rounds == MAX_TOOL_ROUNDS)
@@ -348,7 +345,7 @@ function Querier:query(message_history, title)
         local notify = string.format("%s\n️☁️ %s\n⚡ %s",
             title or _("Querying AI ..."),
             self.provider_name,
-            koutil.tableGetValue(self.provider_settings, "model"))
+            koutil.tableGetValue(self.provider_setting, "model"))
         if query_option.use_websearch ~= "none" then
             notify = notify .. "\n" .. _("With Search: ") .. query_option.use_websearch
         end
@@ -361,7 +358,7 @@ function Querier:query(message_history, title)
         local tool_rounds = 0
 
         repeat
-            res, err = self.handler:query(message_history, self.provider_settings, query_option)
+            res, err = self.handler:query(message_history, self.provider_setting, query_option)
 
             if type(res) == "table" and res.__is_tool_call then
                 -- The LLM requested a tool call (web_search).
@@ -378,7 +375,7 @@ function Querier:query(message_history, title)
                     search_ok, search_result = ToolExecutor.executeWebSearch(
                         res.keywords,
                         query_option.use_websearch,
-                        self.provider_settings,
+                        self.provider_setting,
                         self.handler)
                 else
                     search_ok, search_result = ToolExecutor.maximumToolRoundReached()
@@ -410,7 +407,7 @@ function Querier:query(message_history, title)
                     text = string.format("%s\n️☁️ %s\n⚡ %s",
                         _("Composing answer ..."),
                         self.provider_name,
-                        koutil.tableGetValue(self.provider_settings, "model")),
+                        koutil.tableGetValue(self.provider_setting, "model")),
                 }
                 UIManager:show(follow_msg)
                 self.handler:setTrapWidget(follow_msg)
@@ -467,7 +464,7 @@ function Querier:showStremDialog(res)
 
     streamDialog = InputDialog:new{
         title = _("AI is responding") ,
-        description = T("☁ %1/%2", self.provider_name, self.provider_settings.model),
+        description = T("☁ %1/%2", self.provider_name, self.provider_setting.model),
         inputtext_class = StreamText, -- use our custom InputText class
         input_face = Font:getFace("infofont", self.settings:readSetting("response_font_size") or 20),
         title_bar_left_icon = "appbar.settings",

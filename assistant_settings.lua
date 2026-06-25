@@ -32,6 +32,7 @@ local ffiutil = require("ffi/util")
 local meta = require("_meta")
 local logger = require("logger")
 local koutil = require("util")
+local ToolExecutor = require("assistant_tool_executor")
 
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
@@ -360,7 +361,7 @@ end
 function SettingsDialog:onSelectModel()
     UIManager:close(self)
     local NetworkMgr = require("ui/network/manager")
-    local url = koutil.tableGetValue(self.assistant.querier, "provider_settings", "base_url")
+    local url = koutil.tableGetValue(self.assistant.querier, "provider_setting", "base_url")
     if url ~= "" then
         url = url:gsub("/chat/.*$", "/models")
         NetworkMgr:runWhenOnline(function()
@@ -394,7 +395,7 @@ local webSearchMenuText = {
 }
 local function genWebSearchSubMenuItem(assistant, key)
     return {
-        text = webSearchMenuText[key],
+        text = ToolExecutor.SettingkeyToText(key),
         radio = true,
         checked_func = function ()
             return assistant.settings:readSetting("use_websearch", "none") == key
@@ -403,6 +404,17 @@ local function genWebSearchSubMenuItem(assistant, key)
             assistant.settings:saveSetting("use_websearch", key)
             assistant.updated = true
         end,
+        enabled_func = function ()
+            if key == "none" or key == "builtin" then
+                return true
+            end
+            if key == "serpapi" then
+                return koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", "serpapi", "api_key") ~= nil
+            elseif key == "tavilyapi" then
+                return koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", "tavilyapi", "api_key") ~= nil
+            end
+            return false --
+        end
     }
 end
 

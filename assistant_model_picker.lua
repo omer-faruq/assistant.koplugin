@@ -67,7 +67,7 @@ end
 local function saveModelSelection(assistant, model_id)
     local provider_name = assistant.querier.provider_name
     assistant.settings:saveSetting("openrouter_model_" .. provider_name, model_id)
-    assistant.querier.provider_settings.model = model_id
+    assistant.querier.provider_setting.model = model_id
     assistant.updated = true
 end
 
@@ -369,7 +369,7 @@ end
 --- Show manual model input dialog
 showManualInput = function(assistant, close_callback)
     local current_model = koutil.tableGetValue(
-        assistant, "querier", "provider_settings", "model") or ""
+        assistant, "querier", "provider_setting", "model") or ""
     local dialog
     dialog = InputDialog:new{
         title = _("Enter Model ID"),
