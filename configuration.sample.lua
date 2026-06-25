@@ -50,7 +50,7 @@ local CONFIGURATION = {
                 max_tokens = 4096
             }
         },
-        -- Anthropic with web search
+        -- Anthropic with built-in web search
         anthropic_websearch = {
             visible = false,                   -- optional, if set to false, will not shown in the profile switch
             model = "claude-3-5-haiku-latest", -- model list: https://docs.anthropic.com/en/docs/about-claude/models
@@ -69,7 +69,7 @@ local CONFIGURATION = {
             }
         },
         gemini = {
-            model = "gemini-2.5-flash", -- model list: https://ai.google.dev/gemini-api/docs/models , ex: gemini-2.5-pro , gemini-2.5-flash
+            model = "gemini-flash-latest", -- model list: https://ai.google.dev/gemini-api/docs/models , ex: gemini-2.5-pro , gemini-2.5-flash
             base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
             api_key = "your-gemini-api-key",
             additional_parameters = {
@@ -106,7 +106,7 @@ local CONFIGURATION = {
         },
         openrouter_free = {
             --- use another free model with defferent configuration
-            model = "deepseek/deepseek-chat-v3-0324:free", -- model list: https://openrouter.ai/models?order=top-weekly
+            model = "openrouter/free", -- model list: https://openrouter.ai/models?order=top-weekly
             base_url = "https://openrouter.ai/api/v1/chat/completions",
             api_key = "your-openrouter-api-key",
             additional_parameters = {
@@ -241,6 +241,12 @@ local CONFIGURATION = {
             api_key = "your-azure-api-key",                           -- Your Azure OpenAI API key
             temperature = 0.7,
             max_tokens = 4096
+        },
+        serpapi = {
+            api_key = "your-serp-api-key"
+        },
+        tavilyapi = {
+            api_key = "your-tavily-api-key"
         },
     },
 
