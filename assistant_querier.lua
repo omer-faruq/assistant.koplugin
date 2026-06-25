@@ -829,10 +829,8 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                 if not reasoning_key then
                     -- find the key starts with "reason", "reasoning/reasoning_content/reasoning_details"
                     for k, _ in pairs(cdelta) do if k:sub(1, 6) == "reason" then reasoning_key = k break end end
-                else
-                    reasoning_content = json_default(cdelta[reasoning_key], "")
                 end
-
+                reasoning_content = json_default(cdelta[reasoning_key], "")
             end
         end
 
@@ -931,13 +929,10 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
             end
             return "TOOLCALLS"
         end
-    else
-        if not (result_content or reasoning_content or stop_reason or
-            choices or candidates or anthropic_type) then
-            logger.warn("Unexpected JSON:", event)
-        else
-            logger.warn("PROBLEM JSON:", event)
-        end
+    end
+    if not (result_content == nil or reasoning_content == nil or stop_reason == nil or
+        choices == nil or candidates == nil or anthropic_type == nil) then
+        logger.warn("Unexpected JSON:", event)
     end
 end
 
