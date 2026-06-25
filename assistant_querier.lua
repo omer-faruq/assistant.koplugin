@@ -912,8 +912,13 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
     elseif type(reasoning_content) == "string" and #reasoning_content > 0 then
         reasoning_content_buffer:put(reasoning_content)
         if trunk_callback then trunk_callback(reasoning_content, reasoning_content_buffer) end
-    elseif type(stop_reason) == "string" and stop_reason ~= "tool_calls" and stop_reason ~= "tool_use" and stop_reason:lower() ~= "stop" then
-        result_buffer:put(_("Stopped Reason: ") .. stop_reason)
+    elseif type(stop_reason) == "string" then
+        local prefix = stop_reason:sub(1, 3):lower()
+        if prefix ~= "too" and              -- tool_call/tool_use
+            prefix ~= "sto" and             -- stop
+            prefix ~= "end" then            -- end_turn
+            result_buffer:put(_("Stopped Reason: ") .. stop_reason) -- log the abnormal stop reason
+        end
     else
         if result_content or reasoning_content or stop_reason then
             if choices or candidates or anthropic_type then
@@ -945,30 +950,6 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         end
         return "TOOLCALLS"
     end
-
-    -- Genmini Last Chunk
-    -- if candidates and stop_reason then
-    --     local groundingMetadata = candidates[1].groundingMetadata
-    --     if groundingMetadata then
-    --         if groundingMetadata.webSearchQueries then
-    --             -- Adds websearch_footer
-    --             local items = {}
-    --             for i, q in ipairs(groundingMetadata.webSearchQueries) do
-    --                 items[i] = string.format("<u>%s</u>", q)
-    --             end
-    --             local webquery_footer = "\n\n" .. _("#### Search Keywords") .. '\n<ul class="subtext"><li>' .. 
-    --                     table.concat(items, '</li><li>') .. '</li></ul>\n\n'
-    --             result_buffer:put(webquery_footer)
-    --         end
-    --     end
-
-    --     -- Add usage footer
-    --     if event.usageMetadata and event.modelVersion then
-    --         local usage_footer = T('<div class="subtext" style="margin-top: 1.5em;">%1: %2 (%3)</div>', _("Token Usage"),
-    --                         event.usageMetadata.totalTokenCount, event.modelVersion)
-    --         result_buffer:put(usage_footer)
-    --     end
-    -- end
 end
 
 return Querier
