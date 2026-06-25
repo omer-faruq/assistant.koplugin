@@ -22,7 +22,7 @@ local CONFIGURATION = {
         openai = {
             default = true,        -- optional, if provider above is not set, will try to find one with `default =  true`
             visible = true,        -- optional, if set to false, will not shown in the provider switch
-            model = "gpt-4o-mini", -- model list: https://platform.openai.com/docs/models
+            model = "gpt-5.4-mini", -- model list: https://platform.openai.com/docs/models
             base_url = "https://api.openai.com/v1/chat/completions",
             api_key = "your-openai-api-key",
             additional_parameters = {
@@ -32,7 +32,7 @@ local CONFIGURATION = {
         },
         openai_grok = {
             --- use grok model via openai handler
-            model = "grok-3-mini-fast", -- model list: https://docs.x.ai/docs/models
+            model = "grok", -- model list: https://docs.x.ai/developers/models
             base_url = "https://api.x.ai/v1/chat/completions",
             api_key = "your-grok-api-key",
             additional_parameters = {
@@ -127,17 +127,6 @@ local CONFIGURATION = {
                 -- thinking = { type = "disabled" },
                 -- Or enable thinking mode with budget control:
                 -- thinking = { type = "enabled", budget_tokens = 2000 },
-            }
-        },
-        deepseek_fast = {
-            -- DeepSeek with thinking mode disabled for faster responses
-            model = "deepseek-v4-flash",
-            base_url = "https://api.deepseek.com/v1/chat/completions",
-            api_key = "your-deepseek-api-key",
-            additional_parameters = {
-                temperature = 0.7,
-                max_tokens = 4096,
-                thinking = { type = "disabled" }
             }
         },
         gemma = {
