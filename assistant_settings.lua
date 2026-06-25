@@ -230,11 +230,11 @@ function SettingsDialog:init()
                 if #buttonrow < columns then
                     local model_name
                     if key == self.assistant.querier.provider_name then
-                        model_name = self.assistant.querier.provider_settings.model
+                        model_name = self.assistant.querier.provider_setting.model
                     elseif key:sub(1, 10) == "openrouter" then
                         model_name = self.settings:readSetting("openrouter_model_" .. key)
                         if model_name == "" then
-                            model_name = self.assistant.querier.provider_settings.model
+                            model_name = self.assistant.querier.provider_setting.model
                         end
                     else
                         model_name = FrontendUtil.tableGetValue(tab, "model")
