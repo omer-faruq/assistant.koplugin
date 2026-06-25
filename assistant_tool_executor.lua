@@ -136,20 +136,6 @@ local function buildToolResultMessages(tool_call_result, search_result)
 
     local msgs = {}
     if format == "anthropic" then
-
-        if raw_assistant.content then
-            local trimmed_content = {}
-            for _, msg in ipairs(raw_assistant.content) do
-                -- we only did once search, remove other parallel calls doen't match the call_id
-                if not (msg.type == "tool_use" and msg.id ~= tool_call_id) then
-                    table.insert(trimmed_content, msg)
-                end
-            end
-            if #trimmed_content < #raw_assistant.content then
-                raw_assistant.content = trimmed_content
-            end
-        end
-
         table.insert(msgs, {
             role    = "assistant",
             content = raw_assistant,
@@ -181,18 +167,6 @@ local function buildToolResultMessages(tool_call_result, search_result)
         })
 
     else  -- "openai"
-        if raw_assistant.tool_calls then
-            local trimmed_tc = {}
-            for _, tc in ipairs(raw_assistant.tool_calls) do
-                if tc.id == tool_call_id then
-                    table.insert(trimmed_tc, tc)
-                    break
-                end
-            end
-            if #trimmed_tc == 1 then
-                raw_assistant.tool_calls = trimmed_tc
-            end
-        end
         table.insert(msgs, raw_assistant)
         table.insert(msgs, {
             role         = "tool",
@@ -412,8 +386,7 @@ end
 -- Tool-call parsing helpers
 -- ---------------------------------------------------------------------------
 
---- Parse a stage-1 LLM response and extract tool call details.
---- This is an internal helper called by parseToolCalls().
+--- Parse a LLM response and extract tool call details. (for NON-STREAM response)
 ---
 --- Returns: tool_call_id, keywords, raw_assistant, direct_content, error
 function ToolExecutor.parseToolCallsResponse(responseData, format)
@@ -424,24 +397,38 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
                         or "Anthropic stage-1: missing content array"
             return nil, nil, nil, nil, errmsg
         end
+
+        local trimmed_blocks = {}
+        local found_tool = false
         local tool_use_block, text_block
         for _, block in ipairs(content_blocks) do
             if type(block) == "table" then
-                if block.type == "tool_use" then tool_use_block = block break end
-                if block.type == "text"     then text_block     = block break end
+                if block.type == "text" then
+                    text_block = block
+                end
+                
+                if block.type == "tool_use" and not tool_use_block then
+                    tool_use_block = block
+                    found_tool = true
+                    table.insert(trimmed_blocks, block)
+                elseif not found_tool then
+                    if block.type == "thinking" then
+                        table.insert(trimmed_blocks, block)
+                    end
+                end
             end
         end
         if not tool_use_block then
-            local direct = text_block and tostring(text_block.text) or nil
+            local direct = text_block and text_block.text or nil
             return nil, nil, nil, direct, nil
         end
-        local tool_id = tostring(tool_use_block.id or "toolu_0")
+        local tool_id = tool_use_block.id
         local input   = tool_use_block.input or {}
         local kw      = input.keywords
         if not kw then
             return nil, nil, nil, nil, "Anthropic stage-1: tool_use block missing keywords input"
         end
-        return tool_id, tostring(kw), content_blocks, nil, nil
+        return tool_id, kw, trimmed_blocks, nil, nil
 
     elseif format == "gemini" then
         local parts = koutil.tableGetValue(responseData, "candidates", 1, "content", "parts")
@@ -492,7 +479,9 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
             return nil, nil, nil, nil,
                 "OpenAI stage-1: failed to parse tool_call arguments: " .. arguments_str
         end
-        return tool_call_id, args.keywords, assistant_message, nil, nil
+        local trimmed_message = assistant_message
+        trimmed_message.tool_calls = { tool_calls[1] }
+        return tool_call_id, args.keywords, trimmed_message, nil, nil
     end
 end
 
