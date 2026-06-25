@@ -335,7 +335,7 @@ function Querier:query(message_history, title)
         until type(res) == "string" or (err ~= nil)
 
         if self.user_interrupted then
-            return nil, _("Request cancelled by user.")
+            return nil, _("Request Cancelled by user.")
         end
 
     else
@@ -347,7 +347,7 @@ function Querier:query(message_history, title)
             self.provider_name,
             koutil.tableGetValue(self.provider_setting, "model"))
         if query_option.use_websearch ~= "none" then
-            notify = notify .. "\n" .. _("With Search: ") .. query_option.use_websearch
+            notify = notify .. "\n" .. _("With Search: ") .. ToolExecutor.SettingkeyToText(query_option.use_websearch)
         end
         local infomsg = InfoMessage:new{ icon = "book.opened", text = notify }
         UIManager:show(infomsg)
@@ -416,13 +416,12 @@ function Querier:query(message_history, title)
             end
 
         until type(res) == "string" or err ~= nil
-
         UIManager:close(self.handler:resetTrapWidget())
+    end
 
-        if err == self.handler.CODE_CANCELLED then
-            self.user_interrupted = true
-            return nil, _("Request cancelled by user.")
-        end
+    if err == self.handler.CODE_CANCELLED then
+        self.user_interrupted = true
+        return nil, _("Request cancelled by user.")
     end
 
     -- Final validation

@@ -214,14 +214,8 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, provider_config, handl
         UIManager:close(handler:resetTrapWidget())
         return false, "Unknown web-search mode: " .. tostring(ws_mode)
     end
-
     UIManager:close(handler:resetTrapWidget())
-
-    if not search_ok then
-        return false, "Search API failed: " .. tostring(search_result)
-    end
-
-    return true, search_result
+    return search_ok, search_result
 end
 
 -- ---------------------------------------------------------------------------
