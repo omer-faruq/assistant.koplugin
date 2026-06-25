@@ -917,38 +917,27 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         if prefix ~= "too" and              -- tool_call/tool_use
             prefix ~= "sto" and             -- stop
             prefix ~= "end" then            -- end_turn
-            result_buffer:put(_("Stopped Reason: ") .. stop_reason) -- log the abnormal stop reason
+            result_buffer:put(_("Stopped Reason: "))
+            result_buffer:put(stop_reason) -- log the abnormal stop reason
+        end
+
+        -- Return TOOLCALLS signal if this chunk completed a tool call
+        if prefix == "too" then
+            if tool_call_acc.current and tool_call_acc.current.id then
+                table.insert(tool_call_acc.tools, tool_call_acc.current)
+            end
+            if reasoning_key then
+                tool_call_acc.reasoning_key = reasoning_key
+            end
+            return "TOOLCALLS"
         end
     else
-        if result_content or reasoning_content or stop_reason then
-            if choices or candidates or anthropic_type then
-                -- Recognised structure but nothing to render (stream ended normally)
-                -- Check if this is a tool-call completion signal
-                if stop_reason == "tool_calls" or stop_reason == "tool_use" then
-                    -- Push the current tool_call if it has data
-                    if tool_call_acc.current and tool_call_acc.current.id then
-                        table.insert(tool_call_acc.tools, tool_call_acc.current)
-                    end
-                    return "TOOLCALLS"
-                end
-                return nil
-            end
+        if not (result_content or reasoning_content or stop_reason or
+            choices or candidates or anthropic_type) then
             logger.warn("Unexpected JSON:", event)
         else
             logger.warn("PROBLEM JSON:", event)
         end
-    end
-
-    -- Return TOOLCALLS signal if this chunk completed a tool call
-    if stop_reason == "tool_calls" or stop_reason == "tool_use" then
-        -- Push the current tool_call if it has data
-        if tool_call_acc.current.id then
-            table.insert(tool_call_acc.tools, tool_call_acc.current)
-        end
-        if reasoning_key then
-            tool_call_acc.reasoning_key = reasoning_key
-        end
-        return "TOOLCALLS"
     end
 end
 
