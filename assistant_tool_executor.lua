@@ -180,11 +180,6 @@ end
 
 local ToolExecutor = {}
 
-local apitext = {
-    ["serpapi"] = "Serp",
-    ["tavilyapi"] = "Tavily",
-}
-
 --- Execute a web search using the configured search service.
 ---
 --- Handles UI feedback (keyword search indicator) internally.
@@ -203,17 +198,18 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, provider_config, handl
     UIManager:close(handler:resetTrapWidget())
     local keywordmsg = InfoMessage:new({
         icon = "appbar.search",
-        text = T(_("Searching with %1:\n\n%2"), apitext[ws_mode], keywords),
+        text = T(_("Searching with %1:\n\n%2"), ToolExecutor.SettingkeyToText(ws_mode), keywords),
     })
     UIManager:show(keywordmsg)
     handler:setTrapWidget(keywordmsg)
 
     -- Execute search API based on mode
+    local api_config = assistant_utils.get_attr(provider_config, ws_mode)
     local search_ok, search_result
     if ws_mode == "serpapi" then
-        search_ok, search_result = serpAPISearchRequest(handler, provider_config.serpapi, keywords)
+        search_ok, search_result = serpAPISearchRequest(handler, api_config, keywords)
     elseif ws_mode == "tavilyapi" then
-        search_ok, search_result = tavilyAPISearchRequest(handler, provider_config.tavilyapi, keywords)
+        search_ok, search_result = tavilyAPISearchRequest(handler, api_config, keywords)
     else
         UIManager:close(handler:resetTrapWidget())
         return false, "Unknown web-search mode: " .. tostring(ws_mode)

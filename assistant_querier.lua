@@ -118,8 +118,8 @@ function Querier:load_model(provider_name)
         self.handler_name = handler_name
         -- Shallow copy to avoid mutating CONFIGURATION
         self.provider_setting = koutil.tableDeepCopy(provider_setting)
-        self.provider_setting.serpapi = serpapi
-        self.provider_setting.tavilyapi = tavilyapi
+        assistant_utils.set_attr(self.provider_setting, "serpapi", serpapi)
+        assistant_utils.set_attr(self.provider_setting, "tavilyapi", tavilyapi)
         self.provider_name = provider_name
         -- Apply saved OpenRouter model override
         if handler_name == "openrouter" then
