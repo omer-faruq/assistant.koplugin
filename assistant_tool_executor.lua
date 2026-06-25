@@ -137,12 +137,16 @@ local function buildToolResultMessages(tool_call_result, search_result)
     local msgs = {}
     if format == "anthropic" then
 
-        if raw_assistant.content and next(raw_assistant.content) then
-            -- we only did once search, remove other parallel calls
-            for i, msg in ipairs(raw_assistant.content) do
-                if msg.type == "tool_use" and msg.id ~= tool_call_id then
-                    table.remove(raw_assistant.content, i)
+        if raw_assistant.content then
+            local trimmed_content = {}
+            for _, msg in ipairs(raw_assistant.content) do
+                -- we only did once search, remove other parallel calls doen't match the call_id
+                if not (msg.type == "tool_use" and msg.id ~= tool_call_id) then
+                    table.insert(trimmed_content, msg)
                 end
+            end
+            if #trimmed_content < #raw_assistant.content then
+                raw_assistant.content = trimmed_content
             end
         end
 
