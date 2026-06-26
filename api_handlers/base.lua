@@ -161,7 +161,7 @@ end
 --- @param format        string  "openai" | "anthropic" | "gemini"
 --- @return string|table result, string|nil error
 function BaseHandler:parseToolCalls(responseData, format)
-    local tool_call_id, keywords, raw_assistant, direct_content, parse_err =
+    local tool_calls, raw_assistant, direct_content, parse_err =
         ToolExecutor.parseToolCallsResponse(responseData, format)
 
     if parse_err then
@@ -175,15 +175,14 @@ function BaseHandler:parseToolCalls(responseData, format)
 
     -- Model issued a tool call but we have no search result yet.
     -- Return a descriptor; the Querier will execute the search and loop.
-    if keywords then
+    if tool_calls and #tool_calls > 0 then
         -- Build placeholder messages_to_append (search result will be filled in by Querier).
         -- We expose raw_assistant so the Querier can call buildToolResult() once it has results.
         return {
             __is_tool_call  = true,
-            tool_call_id    = tool_call_id,
-            keywords        = keywords,
             raw_assistant   = raw_assistant,  -- opaque; pass back to buildToolResultMessages
             format          = format,
+            tool_calls      = tool_calls,
         }, nil
     end
 

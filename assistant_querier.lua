@@ -196,6 +196,54 @@ local function createWaitingAnimation()
     }
 end
 
+local function ExecuteResearch(tool_calls_array, tool_rounds, ws_mode, provider_setting, handler)
+    local res, err
+    local all_search_ok = true
+    local search_results = {}
+    for _, tool_call in ipairs(tool_calls_array) do
+
+        -- Decode keywords from tool call arguments
+        local tool_call_id, keywords, extract_err = ToolExecutor.extractKeywords(tool_call)
+        if not keywords then
+            res = nil
+            err = extract_err
+            break
+        end
+
+        tool_rounds = tool_rounds + 1
+        local search_ok, search_result
+        if tool_rounds < MAX_TOOL_ROUNDS then
+            -- Execute web search via ToolExecutor
+            search_ok, search_result = ToolExecutor.executeWebSearch(
+                keywords,
+                ws_mode,
+                provider_setting,
+                handler)
+        else
+            -- Maximum call reached. (tool_rounds == MAX_TOOL_ROUNDS)
+            -- include instruction prompt let LLM dract the answer immediately
+            search_ok, search_result = ToolExecutor.maximumToolRoundReached()
+        end
+        if search_ok then
+            table.insert(search_results, {
+                search_result = search_result,
+                tool_call_id = tool_call_id,
+            })
+        else
+            logger.warn("search err", search_result)
+            all_search_ok = false
+        end
+    end
+
+
+    if not all_search_ok then
+        err = "Not all search succeeds"
+        return nil, err
+    end
+
+    return true, search_results
+end
+
 --- Query the AI with the provided message history.
 --- Handles both stream and non-stream modes, including multi-turn tool-call loops.
 ---
@@ -249,7 +297,6 @@ function Querier:query(message_history, title)
                 err = _("Too many tool-call rounds; aborting.")
                 break
             end
-            tool_rounds = tool_rounds + 1
 
             local ok, content, tool_calls_array = self:showStremDialog(bg_fn)
             if not ok then
@@ -273,54 +320,30 @@ function Querier:query(message_history, title)
                 break
             end
 
-            local tool_call = tool_calls_array[1] -- only process the first tool_call
-
-            -- Decode keywords from tool call arguments
-            local keywords, extract_err = ToolExecutor.extractKeywords(tool_call)
-            if not keywords then
-                res = nil
-                err = extract_err
-                break
-            end
-
-            local search_ok, search_result
-            if tool_rounds < MAX_TOOL_ROUNDS then
-                -- Execute web search via ToolExecutor
-                search_ok, search_result = ToolExecutor.executeWebSearch(
-                    keywords,
-                    query_option.use_websearch,
-                    self.provider_setting,
-                    self.handler)
-            else
-                -- Maximum call reached. (tool_rounds == MAX_TOOL_ROUNDS)
-                -- include instruction prompt let LLM dract the answer immediately
-                search_ok, search_result = ToolExecutor.maximumToolRoundReached()
-            end
-
-            if not search_ok then
-                res = nil
-                err = search_result
-                break
-            end
-
             -- Build tool result and append to history
             local format = ToolExecutor.getHandlerFormat(self.handler_name)
-            local tc_id = tool_call.id or "call_stream_0"
-            local raw_assistant = ToolExecutor.buildRawAssistantForToolCall(tc_id, keywords, format, content)
+            local build_ok, raw_assistant = ToolExecutor.buildRawAssistantForToolCall(tool_calls_array, format, content)
+            if not build_ok then
+                res = nil
+                err = raw_assistant
+                break
+            end
+            local search_ok, search_results = ExecuteResearch(tool_calls_array, tool_rounds,
+                                                query_option.use_websearch,
+                                                self.provider_setting,
+                                                self.handler)
+            if not search_ok then
+                res = nil
+                err = search_results
+                break
+            end
+            tool_rounds = tool_rounds + #search_results
 
-            local tool_call_result_proxy = {
-                __is_tool_call = true,
-                tool_call_id   = tc_id,
-                keywords       = keywords,
-                raw_assistant  = raw_assistant,
-                format         = format,
-            }
-
-            local append_ok, append_err = ToolExecutor.appendToolResult(
-                message_history,
-                tool_call_result_proxy,
-                search_result,
-                self.handler)
+            local append_ok, append_err = ToolExecutor.appendToolResult(message_history, {
+                    raw_assistant  = raw_assistant,
+                    format         = format,
+                    search_results = search_results,
+            })
 
             if not append_ok then
                 res = nil
@@ -367,32 +390,24 @@ function Querier:query(message_history, title)
                     err = _("Too many tool-call rounds; aborting.")
                     break
                 end
-                tool_rounds = tool_rounds + 1
 
-                -- Execute web search via ToolExecutor
-                local search_ok, search_result
-                if tool_rounds < MAX_TOOL_ROUNDS then
-                    search_ok, search_result = ToolExecutor.executeWebSearch(
-                        res.keywords,
-                        query_option.use_websearch,
-                        self.provider_setting,
-                        self.handler)
-                else
-                    search_ok, search_result = ToolExecutor.maximumToolRoundReached()
-                end
-
+                -- Build tool result and append to history
+                local format = ToolExecutor.getHandlerFormat(self.handler_name)
+                local search_ok, search_results = ExecuteResearch(res.tool_calls, tool_rounds,
+                                                query_option.use_websearch,
+                                                self.provider_setting,
+                                                self.handler)
                 if not search_ok then
                     res = nil
-                    err = search_result
+                    err = search_results
                     break
                 end
-
-                -- Append tool result messages to history and loop
-                local append_ok, append_err = ToolExecutor.appendToolResult(
-                    message_history,
-                    res,
-                    search_result,
-                    self.handler)
+                tool_rounds = tool_rounds + #search_results
+                local append_ok, append_err = ToolExecutor.appendToolResult(message_history, {
+                        raw_assistant  = res.raw_assistant,
+                        format         = format,
+                        search_results = search_results,
+                })
 
                 if not append_ok then
                     res = nil

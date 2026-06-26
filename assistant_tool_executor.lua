@@ -128,11 +128,11 @@ end
 ---- @param tool_call_result  table   the table returned by parseToolCalls (with __is_tool_call)
 ---- @param search_result     string  markdown text from the search API
 ---- @return table  list of messages to append to message_history
-local function buildToolResultMessages(tool_call_result, search_result)
+local function buildToolResultMessages(tool_call_result)
 
     local raw_assistant = tool_call_result.raw_assistant
-    local tool_call_id = tool_call_result.tool_call_id
     local format = tool_call_result.format
+    local results = tool_call_result.search_results
 
     local msgs = {}
     if format == "anthropic" then
@@ -140,39 +140,42 @@ local function buildToolResultMessages(tool_call_result, search_result)
             role    = "assistant",
             content = raw_assistant,
         })
+        local contents = {}
+        for _, result in ipairs(results) do
+            table.insert(contents, {
+                    type        = "tool_result",
+                    tool_use_id = result.tool_call_id,
+                    content     = result.search_result,
+                })
+        end
         table.insert(msgs, {
             role    = "user",
-            content = {
-                {
-                    type        = "tool_result",
-                    tool_use_id = tool_call_id,
-                    content     = search_result,
-                },
-            },
+            content = contents,
         })
-
     elseif format == "gemini" then
         table.insert(msgs, raw_assistant)   -- model turn (role="model", parts=[functionCall…])
-        table.insert(msgs, {
-            role  = "user",
-            parts = {
-                {
+
+        local parts = {}
+        for _, result in ipairs(results) do
+            table.insert(parts, {
                     functionResponse = {
                         name     = "web_search",
-                        id       = tool_call_id,
-                        response = { result = search_result },
+                        id       = result.tool_call_id,
+                        response = { result = result.search_result },
                     },
-                },
-            },
-        })
+                })
+        end
+        table.insert(msgs, { role  = "user", parts = parts, })
 
     else  -- "openai"
         table.insert(msgs, raw_assistant)
-        table.insert(msgs, {
-            role         = "tool",
-            tool_call_id = tool_call_id,
-            content      = search_result,
-        })
+        for _, result in ipairs(results) do
+            table.insert(msgs, {
+                role         = "tool",
+                tool_call_id = result.tool_call_id,
+                content      = result.search_result,
+            })
+        end
     end
     return msgs
 end
@@ -225,12 +228,11 @@ end
 --- Build a raw_assistant structure for a tool call.
 --- This factory method ensures all providers format tool calls consistently.
 ---
---- @param tool_call_id  string  The unique ID for this tool call
---- @param keywords      string  The search keywords extracted
+--- @param tool_calls    table  The search tool_call_array
 --- @param format        string  "openai" | "anthropic" | "gemini"
 --- @param contents      table|nil   table contains "content", "reasoning_content"
---- @return table       raw_assistant structure ready for buildToolResultMessages
-function ToolExecutor.buildRawAssistantForToolCall(tool_call_id, keywords, format, contents)
+--- @return boolean ok, table|string raw_assistant structure ready for buildToolResultMessages
+function ToolExecutor.buildRawAssistantForToolCall(tool_calls, format, contents)
     format = format or "openai"
     
     if format == "anthropic" then
@@ -243,46 +245,53 @@ function ToolExecutor.buildRawAssistantForToolCall(tool_call_id, keywords, forma
                 signature = contents.signature,
             })
         end
-        table.insert(ret, {
-                type  = "tool_use",
-                id    = tool_call_id,
-                name  = "web_search",
-                input = { keywords = keywords },
-        })
-        return ret
+        for _, tc in ipairs(tool_calls) do
+            local id, kw, err = ToolExecutor.extractKeywords(tc)
+            if err then
+                return false, err
+            end
+            table.insert(ret, {
+                    type  = "tool_use",
+                    id    = id,
+                    name  = "web_search",
+                    input = { keywords = kw },
+            })
+        end
+        return true, ret
     elseif format == "gemini" then
         -- Gemini expects a model turn (role="model")
-        return {
-            role  = "model",
-            parts = {
-                {
+        local parts = {}
+        for _, tc in ipairs(tool_calls) do
+            table.insert(parts, {
                     functionCall = {
                         name = "web_search",
-                        id   = tool_call_id,
-                        args = { keywords = keywords },
+                        id   = tc.tool_call_id,
+                        args = { keywords = tc.keywords },
                     },
-                },
-            },
-        }
+                })
+        end
+        return true, { role  = "model", parts = parts, }
     else  -- "openai" (and compatible: groq, openrouter, deepseek, mistral, etc.)
+        local raw_tool_calls = {}
+        for _, tc in ipairs(tool_calls) do
+            table.insert(raw_tool_calls, {
+                    id        = tc.id,
+                    type     = "function",
+                    ["function"] = {
+                        name      = tc.name,
+                        arguments = tc.arguments,
+                    },
+                })
+        end
         local raw = {
             role       = "assistant",
             content    = contents and contents.content,
-            tool_calls = {
-                {
-                    id       = tool_call_id,
-                    type     = "function",
-                    ["function"] = {
-                        name      = "web_search",
-                        arguments = json.encode({ keywords = keywords }),
-                    },
-                },
-            },
+            tool_calls = raw_tool_calls,
         }
         if contents and contents.reasoning_key and contents.reasoning_content then
             raw[contents.reasoning_key] = contents.reasoning_content
         end
-        return raw
+        return true, raw
     end
 end
 
@@ -294,12 +303,13 @@ end
 --- @param search_result      string  search API result markdown
 --- @param handler            table   BaseHandler instance
 --- @return boolean success, string|nil error
-function ToolExecutor.appendToolResult(message_history, tool_call_result, search_result, handler)
-    if not tool_call_result or not tool_call_result.__is_tool_call then
+function ToolExecutor.appendToolResult(message_history, tool_call_result)
+
+    if not tool_call_result then
         return false, "Invalid tool_call_result structure"
     end
 
-    local tool_msgs = buildToolResultMessages(tool_call_result, search_result)
+    local tool_msgs = buildToolResultMessages(tool_call_result)
     if not tool_msgs then
         return false, "Failed to build tool result messages"
     end
@@ -318,27 +328,36 @@ end
 --- - OpenAI/Anthropic: arguments is a JSON string
 ---
 --- @param tool_call       table   single tool call object
---- @return string|nil keywords, string|nil error
+--- @return string|nil id, string|nil keywords, string|nil error
 function ToolExecutor.extractKeywords(tool_call)
     local keywords = nil
+    local id = nil
 
     if tool_call.args then
         -- Gemini: args is already a table
-        keywords = tool_call.args.query or tool_call.args.keywords
+        id = tool_call.id
+        keywords = tool_call.args.keywords
     elseif tool_call.arguments then
-        -- OpenAI / Anthropic: arguments is a JSON string
+        -- OpenAI: arguments is a JSON string
         local ok_j, args = pcall(json.decode, tool_call.arguments)
         if ok_j and type(args) == "table" then
             keywords = args.query or args.keywords
         end
+        id = tool_call.tool_call_id or tool_call.id
+    elseif tool_call.input then
+        -- Anthropic
+        id = tool_call.id
+        keywords = tool_call.input.keywords 
     end
 
+    if not id then
+        return nil, nil, _("Tool call did not include id.")
+    end
     if not keywords or #keywords == 0 then
-        logger.warn("extractKeywords", tool_call)
-        return nil, _("Tool call did not include search keywords.")
+        return nil, nil, _("Tool call did not include search keywords.")
     end
 
-    return keywords, nil
+    return id, keywords, nil
 end
 
 --- Get the handler format based on handler name.
@@ -378,74 +397,58 @@ end
 
 --- Parse a LLM response and extract tool call details. (for NON-STREAM response)
 ---
---- Returns: tool_call_id, keywords, raw_assistant, direct_content, error
+--- Returns: {tool_calls_array}, raw_assistant, direct_content, error
 function ToolExecutor.parseToolCallsResponse(responseData, format)
     if format == "anthropic" then
         local content_blocks = responseData.content
         if type(content_blocks) ~= "table" then
             local errmsg = koutil.tableGetValue(responseData, "error", "message")
                         or "Anthropic stage-1: missing content array"
-            return nil, nil, nil, nil, errmsg
+            return nil, nil, nil, errmsg
         end
 
-        local trimmed_blocks = {}
-        local found_tool = false
-        local tool_use_block, text_block
+        local text_block
+        local toolcall_blocks = {}
         for _, block in ipairs(content_blocks) do
             if type(block) == "table" then
                 if block.type == "text" then
                     text_block = block
                 end
-                
-                if block.type == "tool_use" and not tool_use_block then
-                    tool_use_block = block
-                    found_tool = true
-                    table.insert(trimmed_blocks, block)
-                elseif not found_tool then
-                    if block.type == "thinking" then
-                        table.insert(trimmed_blocks, block)
-                    end
+                if block.type == "tool_use" and block.input and block.input.keywords then
+                    table.insert(toolcall_blocks, block)
                 end
             end
         end
-        if not tool_use_block then
+        if text_block and #toolcall_blocks == 0 then
             local direct = text_block and text_block.text or nil
-            return nil, nil, nil, direct, nil
+            return nil, nil, direct, nil
         end
-        local tool_id = tool_use_block.id
-        local input   = tool_use_block.input or {}
-        local kw      = input.keywords
-        if not kw then
-            return nil, nil, nil, nil, "Anthropic stage-1: tool_use block missing keywords input"
-        end
-        return tool_id, kw, trimmed_blocks, nil, nil
+        return toolcall_blocks, content_blocks, nil, nil
 
     elseif format == "gemini" then
-        local parts = koutil.tableGetValue(responseData, "candidates", 1, "content", "parts")
-        if type(parts) ~= "table" then
-            local errmsg = koutil.tableGetValue(responseData, "error", "message")
-                        or "Gemini stage-1: missing content parts"
-            return nil, nil, nil, nil, errmsg
-        end
-        local fn_call, text_part
-        for _, part in ipairs(parts) do
+        local model_content = koutil.tableGetValue(responseData, "candidates", 1, "content")
+        local tool_calls = {}
+        local text_part
+        for _, part in ipairs(model_content.parts) do
             if type(part) == "table" then
-                if part.functionCall then fn_call   = part.functionCall end
+                if part.functionCall then 
+                    local fn_call   = part.functionCall 
+                    table.insert(tool_calls, {
+                        tool_call_id = fn_call.id or fn_call.name,
+                        args = fn_call.args
+                    })
+                end
                 if part.text         then text_part  = part              end
             end
         end
-        if not fn_call then
-            local direct = text_part and tostring(text_part.text) or nil
+
+        if #tool_calls == 0 then
+            local direct = text_part and text_part.text or nil
             return nil, nil, nil, direct, nil
         end
-        local call_id = fn_call.id or fn_call.name or "fc_0"
-        local args    = fn_call.args or {}
-        local kw      = args.keywords
-        if not kw then
-            return nil, nil, nil, nil, "Gemini stage-1: functionCall missing keywords arg"
-        end
+
         local model_content = koutil.tableGetValue(responseData, "candidates", 1, "content")
-        return tostring(call_id), tostring(kw), model_content, nil, nil
+        return tool_calls, model_content, nil, nil
 
     else  -- "openai" (default — shared by groq / openrouter / deepseek / mistral / etc.)
         local assistant_message = koutil.tableGetValue(responseData, "choices", 1, "message")
@@ -453,25 +456,26 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
             local err_msg = koutil.tableGetValue(responseData, "error", "message")
                          or koutil.tableGetValue(responseData, "message")
                          or "OpenAI stage-1: no message in response"
-            logger.warn("stage1 parse, responseData:", responseData)
-            return nil, nil, nil, nil, err_msg
+            logger.warn("parse, responseData:", responseData)
+            return nil, nil, nil, err_msg
         end
-        local tool_calls = assistant_message.tool_calls
-        if not tool_calls or not tool_calls[1] then
+        local raw_calls = assistant_message.tool_calls
+        if not raw_calls then
             local direct = assistant_message.content
-            return nil, nil, nil, direct and tostring(direct) or nil, nil
+            return nil, nil, direct, nil
         end
-        local tc            = tool_calls[1]
-        local tool_call_id  = json_default(tc.id, "call_0")
-        local arguments_str = koutil.tableGetValue(tc, "function", "arguments") or "{}"
-        local arg_ok, args  = pcall(json.decode, arguments_str)
-        if not arg_ok or not args or not json_default(args.keywords) then
-            return nil, nil, nil, nil,
-                "OpenAI stage-1: failed to parse tool_call arguments: " .. arguments_str
+
+        local tool_calls = {}
+        for _, tc in ipairs(raw_calls) do
+            local arguments_str = koutil.tableGetValue(tc, "function", "arguments") or "{}"
+            table.insert(tool_calls, {
+                tool_call_id = tc.id,
+                name = koutil.tableGetValue(tc, "function", "name"),
+                arguments = arguments_str,
+            })
         end
-        local trimmed_message = assistant_message
-        trimmed_message.tool_calls = { tool_calls[1] }
-        return tool_call_id, args.keywords, trimmed_message, nil, nil
+
+        return tool_calls, assistant_message, nil, nil
     end
 end
 
