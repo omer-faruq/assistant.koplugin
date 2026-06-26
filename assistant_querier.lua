@@ -222,7 +222,6 @@ function Querier:query(message_history, title)
     -- reuseable function for both strem mode / non-strem mode
     local function executeResearch(tool_calls_array, tool_rounds)
         local err
-        local all_search_ok = true
         local search_results = {}
         for _, tool_call in ipairs(tool_calls_array) do
 
@@ -243,8 +242,7 @@ function Querier:query(message_history, title)
                 -- Execute web search via ToolExecutor
                 search_ok, search_result = ToolExecutor.executeWebSearch(keywords,
                     query_option.use_websearch,
-                    self.provider_setting,
-                    self.handler)
+                    self.handler, tool_rounds)
             else
                 -- Maximum call reached. (tool_rounds == MAX_TOOL_ROUNDS)
                 -- include instruction prompt let LLM dract the answer immediately
@@ -291,7 +289,7 @@ function Querier:query(message_history, title)
                 res = nil
                 break
             end
-            if tool_rounds > MAX_TOOL_ROUNDS then
+            if tool_rounds > MAX_TOOL_ROUNDS + 1 then
                 res = nil
                 err = _("Too many tool-call rounds; aborting.")
                 break

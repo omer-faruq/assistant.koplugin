@@ -7,6 +7,7 @@ local logger = require("logger")
 local koutil = require("util")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
+local Font = require("ui/font")
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local strbuf = require("string.buffer")
@@ -210,7 +211,7 @@ end
 --- @param provider_config    table   provider settings with .serpapi or .tavilyapi
 --- @param handler            table   BaseHandler instance with search methods
 --- @return boolean success, string result
-function ToolExecutor.executeWebSearch(keywords, ws_mode, provider_config, handler)
+function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round)
     if not keywords or #keywords == 0 then
         return false, _("Search keywords are empty.")
     end
@@ -218,8 +219,9 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, provider_config, handl
     -- Show search indicator
     UIManager:close(handler:resetTrapWidget())
     local keywordmsg = InfoMessage:new({
+        face = Font:getFace("smallinfofont"),
         icon = "appbar.search",
-        text = T(_("Searching with %1:\n\n%2"), ToolExecutor.SettingkeyToText(ws_mode), keywords),
+        text = T(_("Searching with %1 ... [%2]\n\n%3"), ToolExecutor.SettingkeyToText(ws_mode), tool_round, keywords),
     })
     UIManager:show(keywordmsg)
     handler:setTrapWidget(keywordmsg)
