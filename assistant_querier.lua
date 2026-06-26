@@ -223,16 +223,19 @@ function Querier:query(message_history, title)
 
     -- reuseable function for both strem mode / non-strem mode
     local function executeResearch(tool_calls_array, tool_rounds)
-        local res, err
+        local err
         local all_search_ok = true
         local search_results = {}
         for _, tool_call in ipairs(tool_calls_array) do
 
             -- Decode keywords from tool call arguments
             local tool_call_id, keywords, extract_err = ToolExecutor.extractKeywords(tool_call)
-            if not keywords then
-                res = nil
+            if extract_err then
                 err = extract_err
+                break
+            end
+            if not tool_call_id or not keywords then
+                err = "executeResearch: Keyword extraction error"
                 break
             end
 
@@ -249,23 +252,20 @@ function Querier:query(message_history, title)
                 -- include instruction prompt let LLM dract the answer immediately
                 search_ok, search_result = ToolExecutor.maximumToolRoundReached()
             end
-            if search_ok then
-                table.insert(search_results, {
-                    search_result = search_result,
-                    tool_call_id = tool_call_id,
-                })
-            else
+            if not search_ok then
                 logger.warn("search err", search_result)
-                all_search_ok = false
+                err = search_result or "Not all search succeeds"
+                break
             end
+            table.insert(search_results, {
+                search_result = search_result,
+                tool_call_id = tool_call_id,
+            })
         end
 
-
-        if not all_search_ok then
-            err = "Not all search succeeds"
-            return nil, err
+        if err then
+            return false, err
         end
-
         return true, search_results
     end
 
