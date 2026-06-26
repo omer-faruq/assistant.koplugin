@@ -9,6 +9,7 @@ local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
+local strbuf = require("string.buffer")
 local Trapper = require("ui/trapper")
 local json = require("rapidjson")
 local assistant_utils = require("assistant_utils")
@@ -49,26 +50,23 @@ local function serpAPISearchRequest(handler, serpconfig, keywords)
         return false, "No relevant search or AI summary results found."
     end
 
-    local segments = {}
+    local segments = strbuf.new()
     if json_default(parsed.reconstructed_markdown) then
-        table.insert(segments, "## Google AI Summary:\n")
-        table.insert(segments, parsed.reconstructed_markdown)
-        table.insert(segments, "\n")
+        segments:put("## Google AI Summary:\n")
+        segments:put(parsed.reconstructed_markdown)
+        segments:put("\n")
     end
     if parsed.references and #parsed.references > 0 then
-        table.insert(segments, "## Verified Sources (References):")
-        table.insert(segments, "LLM Note: Please use these indexes and URLs to generate precise citations if needed.\n")
+        segments:put( "## Verified Sources (References):")
         for _, ref in ipairs(parsed.references) do
             local idx         = json_default(ref.index, 0)
             local title       = json_default(ref.title, "Untitled Source")
-            local link        = json_default(ref.link, "N/A")
             local source_name = json_default(ref.source, "Web")
-            table.insert(segments,
-                string.format("[%d] %s (%s) - URL: %s", idx, title, source_name, link))
+            segments:putf("[%d] %s (%s)", idx, title, source_name)
         end
     end
-
-    return true, table.concat(segments, "\n")
+    segments:put("\n")
+    return true, segments:tostring()
 end
 
 local function tavilyAPISearchRequest(handler, tavilyconfig, keywords)
@@ -102,24 +100,23 @@ local function tavilyAPISearchRequest(handler, tavilyconfig, keywords)
         return false, "fail to parse tavily return"
     end
 
-    local segments = {}
+    local segments = strbuf.new()
     if json_default(parsed.answer) then
-        table.insert(segments, "## Summary\n")
-        table.insert(segments, parsed.answer)
-        table.insert(segments, "\n")
+        segments:put("## Summary\n")
+        segments:put(parsed.answer)
+        segments:put("\n")
     end
-    table.insert(segments, "Here are the verified search results from Tavily:\n")
-    table.insert(segments, "LLM Note: Use these indexes and URLs to generate precise citations if needed.\n")
+    segments:put("Here are the verified search results:\n")
     for i, item in ipairs(parsed.results) do
-        table.insert(segments, "---")
-        table.insert(segments, string.format("### Source %d: %s", i,
-            json_default(item.title, "Untitled")))
-        -- table.insert(segments, string.format("* URL: %s", json_default(item.url, "N/A")))
-        table.insert(segments, string.format("* Summary: %s", json_default(item.content, "")))
-        table.insert(segments, "\n")
+        segments:put("---")
+        segments:putf("### Source %d: %s", i, json_default(item.title, "Untitled"))
+        -- segments:put( string.format("* URL: %s", json_default(item.url, "N/A")))
+        segments:put("* Summary: ")
+        segments:put(json_default(item.content, ""))
+        segments:put("\n")
     end
-
-    return true, table.concat(segments, "\n")
+    segments:put("\n")
+    return true, segments:tostring()
 end
 
 ---- Build the messages_to_append list once a search result is available.
