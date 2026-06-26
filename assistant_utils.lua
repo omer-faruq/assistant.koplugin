@@ -475,6 +475,9 @@ BaseHandler.CODE_SERVER_ERROR       = "SERVER_ERROR"
 -- httpRequest with gzip compress support, GET/POST method only
 function M.httpRequest(url, timeout, maxtime, post_body, post_content_type, headers)
     local parsed = socket_url.parse(url)
+    if not parsed then
+        return false, BaseHandler.CODE_UNSUPPORTED_PROTO, "URL cannot reconized" .. tostring(url)
+    end
     if parsed.scheme ~= "http" and parsed.scheme ~= "https" then
         return false, BaseHandler.CODE_UNSUPPORTED_PROTO, "Unsupported protocol"
     end

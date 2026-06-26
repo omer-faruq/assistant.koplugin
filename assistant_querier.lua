@@ -97,8 +97,8 @@ function Querier:load_model(provider_name)
         logger.warn("Querier initialization failed: " .. err)
         return false, err
     end
-    local serpapi = koutil.tableGetValue(CONFIGURATION, "provider_settings", "serpapi")
-    local tavilyapi = koutil.tableGetValue(CONFIGURATION, "provider_settings", "tavilyapi")
+    ToolExecutor.setSearchAPIConfig("serpapi", koutil.tableGetValue(CONFIGURATION, "provider_settings", "serpapi"))
+    ToolExecutor.setSearchAPIConfig("tavilyapi", koutil.tableGetValue(CONFIGURATION, "provider_settings", "tavilyapi"))
 
     local handler_name
     local underscore_pos = provider_name:find("_")
@@ -118,8 +118,6 @@ function Querier:load_model(provider_name)
         self.handler_name = handler_name
         -- Shallow copy to avoid mutating CONFIGURATION
         self.provider_setting = koutil.tableDeepCopy(provider_setting)
-        assistant_utils.set_attr(self.provider_setting, "serpapi", serpapi)
-        assistant_utils.set_attr(self.provider_setting, "tavilyapi", tavilyapi)
         self.provider_name = provider_name
         -- Apply saved OpenRouter model override
         if handler_name == "openrouter" then
