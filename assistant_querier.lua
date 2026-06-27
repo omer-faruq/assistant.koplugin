@@ -666,6 +666,10 @@ function Querier:processStream(bgQuery, trunk_callback)
                             local err_message = koutil.tableGetValue(j, "error", "message")
                             if err_message then
                                 result_buffer:put(err_message)
+                            elseif j.error then
+                                result_buffer:put(tostring(j.error))
+                            else
+                                result_buffer:put(line)
                             end
 
                             if trunk_callback then
