@@ -2,7 +2,7 @@
 This widget displays a setting dialog.
 ]]
 
-local FrontendUtil = require("util")
+local koutil = require("util")
 local Blitbuffer = require("ffi/blitbuffer")
 local CenterContainer = require("ui/widget/container/centercontainer")
 local CheckButton = require("ui/widget/checkbutton")
@@ -222,11 +222,11 @@ function SettingsDialog:init()
 
     local MAX_FOR_SINGLE_COLUMN = 12
     -- 2 columns if more than MAX_FOR_SINGLE_COLUMN providers, otherwise 1 column
-    local columns = FrontendUtil.tableSize(self.CONFIGURATION.provider_settings) > MAX_FOR_SINGLE_COLUMN and 2 or 1
+    local columns = koutil.tableSize(self.CONFIGURATION.provider_settings) > MAX_FOR_SINGLE_COLUMN and 2 or 1
     local buttonrow = {}
     for key, tab in ffiutil.orderedPairs(self.CONFIGURATION.provider_settings) do
         if self.assistant.querier:is_handler(key) then
-            if not (FrontendUtil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
+            if not (koutil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
                 if #buttonrow < columns then
                     local model_name
                     if key == self.assistant.querier.provider_name then
@@ -237,8 +237,8 @@ function SettingsDialog:init()
                             model_name = self.assistant.querier.provider_setting.model
                         end
                     else
-                        model_name = FrontendUtil.tableGetValue(tab, "model")
-                            or FrontendUtil.tableGetValue(tab, "deployment_name")
+                        model_name = koutil.tableGetValue(tab, "model")
+                            or koutil.tableGetValue(tab, "deployment_name")
                     end
                     local button_text = key
                     if columns == 1 and model_name and model_name ~= "" then
@@ -387,13 +387,7 @@ function SettingsDialog:onCloseWidget()
     self.assistant._settings_dialog = nil
 end
 
-local webSearchMenuText = { 
-    ["none"] = _("None"),
-    ["builtin"] = _("Model Built-In"),
-    ["serpapi"] = "Serp API",
-    ["tavilyapi"] = "Tavily API"
-}
-local function genWebSearchSubMenuItem(assistant, key)
+SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
     return {
         text = ToolExecutor.SettingkeyToText(key),
         radio = true,
@@ -452,23 +446,6 @@ SettingsDialog.genMenuSettings = function (assistant)
                 UIManager:show(widget)
             end,
             keep_menu_open = true,
-        },
-        {
-            text_func = function ()
-                return T(_("Web Search: %1"), 
-                    webSearchMenuText[assistant.settings:readSetting("use_websearch", "none")])
-            end,
-            hold_callback = function ()
-                UIManager:show(InfoMessage:new{
-                    text = _("Improves response accuracy with real-time web results. \nNote: Higher token usage and additional API charges apply.")
-                })
-            end,
-            sub_item_table = {
-                genWebSearchSubMenuItem(assistant, "none"),
-                genWebSearchSubMenuItem(assistant, "builtin"),
-                genWebSearchSubMenuItem(assistant, "serpapi"),
-                genWebSearchSubMenuItem(assistant, "tavilyapi"),
-            },
         },
         {
             text = _("Response Settings"),

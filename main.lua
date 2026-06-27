@@ -13,10 +13,11 @@ local LuaSettings = require("luasettings")
 local DataStorage = require("datastorage")
 local ConfirmBox  = require("ui/widget/confirmbox")
 local T 		      = require("ffi/util").template
-local FrontendUtil = require("util")
+local koutil = require("util")
 local TextViewer = require("ui/widget/textviewer")
 local ButtonDialog = require("ui/widget/buttondialog")
 local ffiutil = require("ffi/util")
+local ToolExecutor = require("assistant_tool_executor")
 
 local _ = require("assistant_gettext")
 local N_ = _.ngettext
@@ -132,17 +133,11 @@ end
 table.insert(require("ui/elements/reader_menu_order").tools, 1, "ai_assistant")
 table.insert(require("ui/elements/filemanager_menu_order").tools, 1, "ai_assistant")
 function Assistant:addToMainMenu(menu_items)
-    if self.ui.document then
-        -- Reader menu
-        menu_items.ai_assistant = {
-            text = _("AI Assistant"),
-            sorting_hint = "tools",
-            hold_callback = function ()
-              self:_help_dialog()
-            end,
-            sub_item_table = {
+
+  local common_items_table = {
               {
                 text = _("Ask the AI a question"),
+                separator = true,
                 callback = function ()
                   self:onAskAIQuestion()
                 end,
@@ -152,6 +147,103 @@ function Assistant:addToMainMenu(menu_items)
                   })
                 end
               },
+              {
+                text = _("Take Quick Notes"),
+                callback = function ()
+                  self:onAskAIQuickNote()
+                end,
+                hold_callback = function ()
+                  UIManager:show(InfoMessage:new{
+                    text = _("Take quick notes that will be saved to your notebook.")
+                  })
+                end,
+              },
+              {
+                text = _("NoteBook (AI Conversation Log)"),
+                callback = function ()
+                  local notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
+                  UIManager:show(ConfirmBox:new{
+                    icon = "appbar.pageview",
+                    face = Font:getFace("smallinfofont"),
+                    text = _("Notebook file: \n\n") .. notebookfile,
+                    ok_text = _("View"),
+                    ok_callback = function()
+                      if not koutil.pathExists(notebookfile) then
+                        UIManager:show(InfoMessage:new{
+                          text = T(_("File does not exist.\n\n%1"), notebookfile)
+                        })
+                        return
+                      end
+                      TextViewer.openFile(notebookfile)
+                    end,
+                    other_buttons = {{
+                      {
+                        text = _("Delete"),
+                        callback = function ()
+                          UIManager:show(ConfirmBox:new{
+                            text = T(_("Delete file?\n%1\nThis operation is not reversible."), notebookfile),
+                            ok_text = _("Delete"),
+                            ok_callback = function ()
+                              local ok, err = koutil.removeFile(notebookfile)
+                              if not ok then
+                                UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
+                              end
+                            end
+                          })
+                        end
+                      },
+                      {
+                        text = _("Edit"),
+                        callback = function ()
+                          UIManager:broadcastEvent(Event:new("ShowNotebookFile"))
+                        end
+                      },
+                    }}
+                  })
+                end,
+                separator = true,
+              },
+              {
+                text_func = function ()
+                  return T(_("AI Provider: %1(%2)"),
+                    self:getModelProvider() or _("Not configured"),
+                    self:getModelId() or _("Not configured")
+                  )
+                end,
+                keep_menu_open = true,
+                callback = function (touchmenu_instance)
+                  self:showSettings(function ()
+                    touchmenu_instance:updateItems()
+                  end)
+                end,
+              },
+              {
+                  text_func = function ()
+                    local key = self.settings:readSetting("use_websearch", "none")
+                    local text = ToolExecutor.SettingkeyToText(key)
+                      return T(_("Smart Web Search: %1"), text)
+                  end,
+                  hold_callback = function ()
+                      UIManager:show(InfoMessage:new{
+                          text = _("Improves response accuracy with real-time web results. \nNote: Higher token usage and additional API charges apply.")
+                      })
+                  end,
+                  sub_item_table = {
+                      SettingsDialog.genWebSearchSubMenuItem(self, "none"),
+                      SettingsDialog.genWebSearchSubMenuItem(self, "builtin"),
+                      SettingsDialog.genWebSearchSubMenuItem(self, "serpapi"),
+                      SettingsDialog.genWebSearchSubMenuItem(self, "tavilyapi"),
+                  },
+              },
+              {
+                text = _("AI Assistant Settings"),
+                sub_item_table_func = function ()
+                  return SettingsDialog.genMenuSettings(self)
+                end
+              }
+            }
+
+  local book_level_items = {
               {
                 text = _("Book-Level Built-in Prompts"),
                 sub_item_table = {
@@ -214,7 +306,7 @@ function Assistant:addToMainMenu(menu_items)
               },
               {
                 text = _("Book-Level Custom Prompts"),
-                enabled = not not FrontendUtil.tableGetValue(CONFIGURATION, "features", "book_level_prompts"),
+                enabled = not not koutil.tableGetValue(CONFIGURATION, "features", "book_level_prompts"),
                 sub_item_table_func = function ()
                   return BookLevelCustomPrompts(self)
                 end,
@@ -225,180 +317,34 @@ function Assistant:addToMainMenu(menu_items)
                 end,
                 separator = true,
               },
-              {
-                text = _("Take Quick Notes"),
-                callback = function ()
-                  self:onAskAIQuickNote()
-                end,
-                hold_callback = function ()
-                  UIManager:show(InfoMessage:new{
-                    text = _("Take quick notes that will be saved to your notebook.")
-                  })
-                end,
-              },
-              {
-                text = _("NoteBook (AI Conversation Log)"),
-                callback = function ()
-                  local notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
-                  UIManager:show(ConfirmBox:new{
-                    icon = "appbar.pageview",
-                    face = Font:getFace("smallinfofont"),
-                    text = _("Notebook file: \n\n") .. notebookfile,
-                    ok_text = _("View"),
-                    ok_callback = function()
-                      if not FrontendUtil.pathExists(notebookfile) then
-                        UIManager:show(InfoMessage:new{
-                          text = T(_("File does not exist.\n\n%1"), notebookfile)
-                        })
-                        return
-                      end
-                      TextViewer.openFile(notebookfile)
-                    end,
-                    other_buttons = {{
-                      {
-                        text = _("Delete"),
-                        callback = function ()
-                          UIManager:show(ConfirmBox:new{
-                            text = T(_("Delete file?\n%1\nThis operation is not reversible."), notebookfile),
-                            ok_text = _("Delete"),
-                            ok_callback = function ()
-                              local ok, err = FrontendUtil.removeFile(notebookfile)
-                              if not ok then
-                                UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
-                              end
-                            end
-                          })
-                        end
-                      },
-                      {
-                        text = _("Edit"),
-                        callback = function ()
-                          UIManager:broadcastEvent(Event:new("ShowNotebookFile"))
-                        end
-                      },
-                    }}
-                  })
-                end,
-                separator = true,
-              },
-              {
-                text_func = function ()
-                  return T(_("AI Provider: %1(%2)"),
-                    self:getModelProvider() or _("Not configured"),
-                    self:getModelId() or _("Not configured")
-                  )
-                end,
-                keep_menu_open = true,
-                callback = function (touchmenu_instance)
-                  self:showSettings(function ()
-                    touchmenu_instance:updateItems()
-                  end)
-                end,
-              },
-              {
-                text = _("AI Assistant Settings"),
-                sub_item_table_func = function ()
-                  return SettingsDialog.genMenuSettings(self)
-                end
-              }
-            },
-        }
+            }
+
+    local reader_items_table = {}
+    -- shallow copy of the common_items_table
+    table.move(common_items_table, 1, #common_items_table, 1, reader_items_table)
+    for i = #book_level_items,1,-1 do
+      table.insert(reader_items_table, 2, book_level_items[i])
+    end
+
+    if self.ui.document then
+        -- Reader menu
+        menu_items.ai_assistant = {
+            text = _("AI Assistant"),
+            sorting_hint = "tools",
+            hold_callback = function ()
+              self:_help_dialog()
+            end,
+            sub_item_table = reader_items_table
+          }
     else
         -- Filemanager menu
         menu_items.ai_assistant = {
             text = _("AI Assistant"),
             sorting_hint = "tools",
-            sub_item_table = {
-                {
-                    text = _("Ask a Question"),
-                    callback = function ()
-                      self:onAskAIQuestion()
-                    end,
-                    hold_callback = function ()
-                      UIManager:show(InfoMessage:new{
-                        text = _("Ask a general question to the AI (not book-related).")
-                      })
-                    end
-                },
-                {
-                  text = _("Take Quick Notes"),
-                  callback = function ()
-                    self:onAskAIQuickNote()
-                  end,
-                  hold_callback = function ()
-                    UIManager:show(InfoMessage:new{
-                      text = _("Take quick notes that will be saved to your notebook.")
-                    })
-                  end,
-                },
-                {
-                  text = _("NoteBook (AI Conversation Log)"),
-                  callback = function ()
-                    local assistant_utils = require("assistant_utils")
-                    local notebookfile = assistant_utils.getGeneralNotebookFilePath(self)
-                    UIManager:show(ConfirmBox:new{
-                      icon = "appbar.pageview",
-                      face = Font:getFace("smallinfofont"),
-                      text = _("Notebook file: \n\n") .. notebookfile,
-                      ok_text = _("View"),
-                      ok_callback = function()
-                        if not FrontendUtil.pathExists(notebookfile) then
-                          UIManager:show(InfoMessage:new{
-                            text = T(_("File does not exist.\n\n%1"), notebookfile)
-                          })
-                          return
-                        end
-                        TextViewer.openFile(notebookfile)
-                      end,
-                      other_buttons = {{
-                        {
-                          text = _("Delete"),
-                          callback = function ()
-                            UIManager:show(ConfirmBox:new{
-                              text = T(_("Delete file?\n%1\nThis operation is not reversible."), notebookfile),
-                              ok_text = _("Delete"),
-                              ok_callback = function ()
-                                local ok, err = FrontendUtil.removeFile(notebookfile)
-                                if not ok then
-                                  UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
-                                end
-                              end
-                            })
-                          end
-                        },
-                        {
-                          text = _("Edit"),
-                          enabled = self.ui.texteditor,
-                          callback = function ()
-                            self.ui.texteditor:openFile(notebookfile)
-                          end
-                        },
-                      }}
-                    })
-                  end,
-                  separator = true,
-                },
-                {
-                    text_func = function ()
-                      return T(_("AI Provider: %1(%2)"),
-                        self:getModelProvider() or _("Not configured"),
-                        self:getModelId() or _("Not configured")
-                      )
-                    end,
-                    keep_menu_open = true,
-                    callback = function (touchmenu_instance)
-                      self:showSettings(function ()
-                        touchmenu_instance:updateItems()
-                      end)
-                    end,
-                },
-                {
-                    text = _("AI Assistant Settings"),
-                    sub_item_table_func = function ()
-                      return SettingsDialog.genMenuSettings(self)
-                    end
-                }
-            }
+            hold_callback = function ()
+              self:_help_dialog()
+            end,
+            sub_item_table = common_items_table
         }
     end
 end
@@ -421,7 +367,7 @@ function BookLevelCustomPrompts(assistant)
   local sub_item_table = {}
 
   -- Read book_level_prompts from configuration
-  local book_level_prompts = FrontendUtil.tableGetValue(CONFIGURATION, "features", "book_level_prompts") or {}
+  local book_level_prompts = koutil.tableGetValue(CONFIGURATION, "features", "book_level_prompts") or {}
 
   for key, prompt_config in ffiutil.orderedPairs(book_level_prompts) do
     if prompt_config.visible == true and prompt_config.type == "feature" then
@@ -489,7 +435,7 @@ function Assistant:getModelId()
       local model = self.settings:readSetting("openrouter_model_" .. key)
       if model then return model end
   end
-  return FrontendUtil.tableGetValue(CONFIGURATION, "provider_settings", key, "model")
+  return koutil.tableGetValue(CONFIGURATION, "provider_settings", key, "model")
 end
 
 function Assistant:getModelProvider()
@@ -506,10 +452,10 @@ function Assistant:getModelProvider()
 
   local function is_provider_valid(key)
     if not key then return false end
-    local provider = FrontendUtil.tableGetValue(CONFIGURATION, "provider_settings", key)
-    return provider and FrontendUtil.tableGetValue(provider, "model") and
-        FrontendUtil.tableGetValue(provider, "base_url") and
-        FrontendUtil.tableGetValue(provider, "api_key")
+    local provider = koutil.tableGetValue(CONFIGURATION, "provider_settings", key)
+    return provider and koutil.tableGetValue(provider, "model") and
+        koutil.tableGetValue(provider, "base_url") and
+        koutil.tableGetValue(provider, "api_key")
   end
 
   local function find_setting_provider(filter_func)
@@ -536,7 +482,7 @@ function Assistant:getModelProvider()
     else
       -- try to find the one defined with `default = true`
       setting_provider = find_setting_provider(function(key, tab)
-        return FrontendUtil.tableGetValue(tab, "default") == true
+        return koutil.tableGetValue(tab, "default") == true
       end)
       
       -- still invalid (none of them defined `default`)
@@ -677,7 +623,7 @@ function Assistant:init()
   
   -- Ensure custom prompts from configuration are merged before building menus
   -- so that `show_on_main_popup` and `visible` overrides take effect.
-  Prompts.getMergedCustomPrompts(FrontendUtil.tableGetValue(CONFIGURATION, "features", "prompts"))
+  Prompts.getMergedCustomPrompts(koutil.tableGetValue(CONFIGURATION, "features", "prompts"))
   
   if self.ui.document then
     -- Reader specific
@@ -1034,7 +980,7 @@ function Assistant:syncTranslateOverride()
         return
       end
 
-      local words = FrontendUtil.splitToWords(text)
+      local words = koutil.splitToWords(text)
       NetworkMgr:runWhenOnline(function()
         Trapper:wrap(function()
           -- splitToWords result like this: { "The", " ", "good", " ", "news" }
@@ -1155,7 +1101,7 @@ function Assistant:syncProviderSelectionFromConfig()
   local conf = self.CONFIGURATION
   if not conf then return end
 
-  local config_provider = FrontendUtil.tableGetValue(conf, "provider")
+  local config_provider = koutil.tableGetValue(conf, "provider")
   if not config_provider or config_provider == "" then return end
 
   local previous_config_ai_provider = self.settings:readSetting("previous_config_ai_provider")
