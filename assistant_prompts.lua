@@ -16,8 +16,9 @@ local T = require("ffi/util").template
 -- show_on_main_popup: if true, the button will be shown in the main popup dialog.
 
 local markdown_format_prompt = [[
-You must respond using basic Markdown structure, including simple tables with `|`. 
-Do NOT use: citations, LaTeX/math, images, or any advanced Markdown.
+### Formatting Constraint
+- DO NOT use any LaTeX or mathematical formula syntax (e.g., avoid $...$, $...$, \begin{...}, \frac, etc.).  Write all mathematical or technical content in plain text.
+- Standard Markdown formatting (including quotes, tables, lists, and indentations) is fully supported and encouraged where appropriate.
 ]]
 
 -- prompts attributes can be overridden in the configuration file.
