@@ -217,7 +217,6 @@ end
 ---
 --- @param keywords           string  search query keywords
 --- @param ws_mode            string  "serpapi" | "tavilyapi"
---- @param provider_config    table   provider settings with .serpapi or .tavilyapi
 --- @param handler            table   BaseHandler instance with search methods
 --- @param tool_round         integer  Notice for the number of rounds the tool called
 --- @return boolean success, string result
@@ -267,12 +266,12 @@ function ToolExecutor.buildRawAssistantForToolCall(tool_calls, format, contents)
     if format == "anthropic" then
         -- Anthropic expects content_blocks array
         local ret = {}
-        if contents and contents.reasoning_content and contents.signature then
-            table.insert(ret, {
-                type = "thinking",
-                thinking = contents.reasoning_content,
-                signature = contents.signature,
-            })
+        if contents and contents.reasoning_content then
+            local tc = { type = "thinking", thinking = contents.reasoning_content, }
+            if contents.signature then
+                tc.signature = contents.signature
+            end
+            table.insert(ret, tc)
         end
         for _, tc in ipairs(tool_calls) do
             local id, kw, err = ToolExecutor.extractKeywords(tc)
@@ -298,6 +297,9 @@ function ToolExecutor.buildRawAssistantForToolCall(tool_calls, format, contents)
                         args = { keywords = tc.keywords },
                     },
                 })
+            if contents and contents.signature then
+                parts[#parts].thoughtSignature = contents.signature
+            end
         end
         return true, { role  = "model", parts = parts, }
     else  -- "openai" (and compatible: groq, openrouter, deepseek, mistral, etc.)
@@ -366,6 +368,9 @@ function ToolExecutor.extractKeywords(tool_call)
         -- Gemini: args is already a table
         id = tool_call.id
         keywords = tool_call.args.keywords
+        if type(keywords) == "table" and #keywords > 0 then
+            keywords = keywords[1] -- needs to be a string
+        end
     elseif tool_call.arguments then
         -- OpenAI: arguments is a JSON string
         local ok_j, args = pcall(json.decode, tool_call.arguments)
@@ -531,9 +536,9 @@ function ToolExecutor.buildExternalSearchToolDef(format)
         },
         required = { "keywords" },
     }
-    local description =
-        "Search the web for up-to-date information. " ..
-        "Use this when the user's question requires current or recent information."
+    local description = [[Search the web for up-to-date information. 
+Use this when the user's question requires current or recent information. 
+Return exactly one concise search query string.]]
 
     if format == "anthropic" then
         return {

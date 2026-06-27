@@ -883,6 +883,11 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                 }
                 stop_reason = "tool_calls"
             end
+
+            local signature = json_default(part.thoughtSignature)
+            if signature then
+                tool_call_acc.signature = signature
+            end
         end
 
     -- 3. Anthropic handles
