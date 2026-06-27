@@ -46,7 +46,7 @@ local Querier = {
 local function normalizeToolCall(tool_call)
     if tool_call.arguments_parts then
         -- OpenAI/Anthropic format: merge arguments_parts into arguments
-        tool_call.arguments = tool_call.arguments_parts:tostring()
+        tool_call.arguments = tool_call.arguments_parts:get()
         tool_call.arguments_parts = nil
     end
     return tool_call
@@ -237,7 +237,7 @@ function Querier:query(message_history, title)
             end
 
             local search_ok, search_result
-            if isMaxinum then
+            if isMaxinum or (tool_rounds+i > MAX_TOOL_ROUNDS) then
                 search_ok, search_result = ToolExecutor.maximumToolRoundReached()
             else
                 -- Execute web search via ToolExecutor
@@ -251,6 +251,7 @@ function Querier:query(message_history, title)
                 break
             end
             table.insert(search_results, {
+                search_keywords = keywords,
                 search_result = search_result,
                 tool_call_id = tool_call_id,
             })
@@ -286,7 +287,7 @@ function Querier:query(message_history, title)
                 res = nil
                 break
             end
-            if tool_rounds > MAX_TOOL_ROUNDS + 1 then
+            if tool_rounds > MAX_TOOL_ROUNDS*2 then
                 res = nil
                 err = _("Too many tool-call rounds; aborting.")
                 break
@@ -382,7 +383,7 @@ function Querier:query(message_history, title)
 
             if type(res) == "table" and res.__is_tool_call then
                 -- The LLM requested a tool call (web_search).
-                if tool_rounds >= MAX_TOOL_ROUNDS + 1 then -- the hard stop for MAX_TOOL_ROUNDS
+                if tool_rounds >= MAX_TOOL_ROUNDS*2 then -- the hard stop for MAX_TOOL_ROUNDS
                     res = nil
                     err = _("Too many tool-call rounds; aborting.")
                     break
@@ -543,7 +544,7 @@ function Querier:showStremDialog(res)
                     streamDialog:addTextToInput(content or "")
                 else
                     streamDialog._input_widget:resyncPos()
-                    streamDialog._input_widget:setText(buffer and buffer:tostring() or "", true)
+                    streamDialog._input_widget:setText(buffer:tostring(), true)
                 end
             end
         end)
@@ -691,7 +692,7 @@ function Querier:processStream(bgQuery, trunk_callback)
                     elseif line:sub(1, #(self.handler.PROTOCOL_NON_200)) == self.handler.PROTOCOL_NON_200 then
                         -- child writes a non-200 response; record the current buffer length as the
                         -- start offset so we can slice the error body precisely later
-                        non200_start = #result_buffer:tostring()
+                        non200_start = #result_buffer
                         result_buffer:put(line:sub(#(self.handler.PROTOCOL_NON_200)+1))
                         break -- the request is done, no more data to read
                     else
@@ -740,7 +741,7 @@ function Querier:processStream(bgQuery, trunk_callback)
     end
     UIManager:scheduleIn(collect_interval_sec, collect_and_clean)
 
-    local ret = koutil.trim(result_buffer:tostring())
+    local ret = koutil.trim(result_buffer:get())
     if non200_start then
         -- Slice out only the error body before the non-200 mark
         local err_body = koutil.trim(ret:sub(1, non200_start))
@@ -763,10 +764,10 @@ function Querier:processStream(bgQuery, trunk_callback)
             signature = tool_call_acc.signature,         -- anthropic signatures
         }
         if #reasoning_content_buffer > 0 then
-            tc_content.reasoning_content = reasoning_content_buffer:tostring()
+            tc_content.reasoning_content = reasoning_content_buffer:get()
         end
-        if #result_buffer > 0 then
-            tc_content.content = result_buffer:tostring()
+        if ret then
+            tc_content.content = ret
         end
         return tc_content, tool_calls
     end
@@ -775,12 +776,12 @@ function Querier:processStream(bgQuery, trunk_callback)
     local is_reasoning_in_ret = ret:sub(1, 7) == "<think>"
 
     if show_reasoning then
-        local reasoning = reasoning_content_buffer:tostring():gsub("^%.+", "", 1):gsub("\n", "<br>")
+        local reasoning = reasoning_content_buffer:get():gsub("^%.+", "", 1):gsub("\n", "<br>")
         if #reasoning > 0 then
-            ret = T('#### %1\n\n<div class="reasoningtext">%2</div>\n\n---\n\n', _("Deeply Thought"), reasoning) .. ret
+            ret = T('#### ※%1\n\n<div class="reasoningtext">%2</div>\n\n---\n\n', _("Deeply Thought"), reasoning) .. ret
         elseif is_reasoning_in_ret then
             ret = ret
-                :gsub("<think>",  T("#### %1\n\n<pre>", _("Deeply Thought")), 1)
+                :gsub("<think>",  T("#### ※%1\n\n<pre>", _("Deeply Thought")), 1)
                 :gsub("</think>", "</pre>\n\n---\n\n", 1)
         end
     elseif is_reasoning_in_ret then

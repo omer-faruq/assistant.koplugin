@@ -72,7 +72,7 @@ local function serpAPISearchRequest(handler, keywords)
         end
     end
     segments:put("\n")
-    return true, segments:tostring()
+    return true, segments:get()
 end
 
 local function tavilyAPISearchRequest(handler, keywords)
@@ -123,7 +123,7 @@ local function tavilyAPISearchRequest(handler, keywords)
         segments:put("\n")
     end
     segments:put("\n")
-    return true, segments:tostring()
+    return true, segments:get()
 end
 
 ---- Build the messages_to_append list once a search result is available.
@@ -138,6 +138,7 @@ local function buildToolResultMessages(tool_call_result)
     local format = tool_call_result.format
     local results = tool_call_result.search_results
 
+    local keywords = strbuf.new()
     local msgs = {}
     if format == "anthropic" then
         table.insert(msgs, {
@@ -151,7 +152,10 @@ local function buildToolResultMessages(tool_call_result)
                     tool_use_id = result.tool_call_id,
                     content     = result.search_result,
                 })
+            keywords:putf("⌗ %s\n\n", result.search_keywords)
         end
+
+        assistant_utils.set_attr(msgs[#msgs], "search_keywords", keywords:get())
         table.insert(msgs, {
             role    = "user",
             content = contents,
@@ -168,18 +172,23 @@ local function buildToolResultMessages(tool_call_result)
                         response = { result = result.search_result },
                     },
                 })
+            keywords:putf("⌗ %s\n\n", result.search_keywords)
         end
+        assistant_utils.set_attr(msgs[#msgs], "search_keywords", keywords:get())
         table.insert(msgs, { role  = "user", parts = parts, })
 
     else  -- "openai"
         table.insert(msgs, raw_assistant)
+        local pos = #msgs
         for _, result in ipairs(results) do
             table.insert(msgs, {
                 role         = "tool",
                 tool_call_id = result.tool_call_id,
                 content      = result.search_result,
             })
+            keywords:putf("⌗ %s\n\n", result.search_keywords)
         end
+        assistant_utils.set_attr(msgs[pos], "search_keywords", keywords:get())
     end
     return msgs
 end

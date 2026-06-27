@@ -14,6 +14,7 @@ local T = require("ffi/util").template
 local Trapper = require("ui/trapper")
 local Prompts = require("assistant_prompts")
 local koutil = require("util")
+local strbuf = require("string.buffer")
 local Device = require("device")
 local Screen = Device.screen
 local CheckButton = require("ui/widget/checkbutton")
@@ -87,38 +88,59 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
   local function formatSingleMessage(message, title)
     if not message then return "" end
     if message.role == "user" then
-      local user_message
+      local user_message = strbuf.new()
+      user_message:put("### ☺ ")
+
       if title and title ~= "" then
-        user_message = string.format("%s\n\n", title)
+        user_message:putf("%s\n\n", title)
+
         local user_input = assistant_utils.get_attr(message, "user_input", "")
+
         -- Check if user input is available
         if user_input and user_input ~= "" then
+
           if user_input:find("%[BOOK TEXT BEGIN%]") then
             user_input = user_input:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
           end
+
           if user_input:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
             user_input = user_input:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
           end
-          user_message = user_message .. user_input .. "\n\n"
+
+          user_message:put(user_input)
+          user_message:put("\n\n")
         end
-      else
+      elseif message.content then
         -- shows user input prompt
-        local content = message.content or _("(Empty message)")
+        local content = message.content
+
         if content:find("%[BOOK TEXT BEGIN%]") then
           content = content:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
         end
+
         if content:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
           content = content:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
         end
-        user_message = string.format("\n\n%s\n\n", content)
+
+        user_message:putf("\n\n%s\n\n", content)
       end
-      return "### ⮞ User: " .. user_message
+
+      return user_message:get()
     elseif message.role == "assistant" then
-      local assistant_content = message.content or _("(No response)")
-      -- Remove code block markers before displaying
-      assistant_content = assistant_content:gsub("```", "\n")
-      assistant_content = normalizeMarkdownHeadings(assistant_content, 3, 6) or assistant_content
-      return string.format("### ⮞ Assistant:\n\n%s\n\n", assistant_content)
+      local assistant_content, answer_type
+      local kw = assistant_utils.get_attr(message, "search_keywords")
+      if kw then
+        answer_type = _("Search")
+        assistant_content = string.format("%s\n\n", kw)
+      else
+        answer_type =  _("Response")
+        assistant_content = message.content or _("(No response)")
+        -- Remove code block markers before displaying
+        assistant_content = assistant_content:gsub("```", "\n")
+        assistant_content = normalizeMarkdownHeadings(assistant_content, 3, 6) or assistant_content
+      end
+
+      return string.format("### ✦ %s\n\n%s\n\n", answer_type,assistant_content)
     end
     return "" -- Should not happen for valid roles
   end

@@ -4,6 +4,7 @@ local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local ffi = require("ffi")
 local ffiutil = require("ffi/util")
+local strbuf = require("string.buffer")
 local T = require("ffi/util").template
 local koutil = require("util")
 local _ = require("assistant_gettext")
@@ -260,14 +261,22 @@ function M.normalizeMarkdownHeadings(content, heading_offset, max_heading_level)
     return content
   end
 
+  -- Phase 1: Find the maximum heading level found in the content.
+  -- Use a lightweight gmatch pattern that only captures hashes to avoid slicing full lines.
   local max_heading_level_found = nil
-  for line in content:gmatch("[^\n]+") do
-    local hashes = line:match("^%s*(#+)")
-    if hashes then
-      local level = #hashes
-      if not max_heading_level_found or level > max_heading_level_found then
-        max_heading_level_found = level
-      end
+  for hashes in content:gmatch("\n%s*(#+)") do
+    local level = #hashes
+    if not max_heading_level_found or level > max_heading_level_found then
+      max_heading_level_found = level
+    end
+  end
+  
+  -- Handle the first line separately since the gmatch pattern above relies on a leading newline.
+  local first_hashes = content:match("^%s*(#+)")
+  if first_hashes then
+    local level = #first_hashes
+    if not max_heading_level_found or level > max_heading_level_found then
+      max_heading_level_found = level
     end
   end
 
@@ -281,61 +290,56 @@ function M.normalizeMarkdownHeadings(content, heading_offset, max_heading_level)
     return content
   end
 
-  local normalized_lines = {}
+  -- Phase 2: Process and rebuild content using LuaJIT's string.buffer.
+  -- Pre-allocate buffer size close to content length to prevent frequent reallocations.
+  local buf = strbuf.new(#content + 64) 
+  
   local start_index = 1
   local content_length = #content
-  local has_trailing_newline = content:sub(-1) == "\n"
-
-  local function processLine(line)
-    local leading_spaces, hashes, spacing_after_hashes, heading_text = line:match("^(%s*)(#+)(%s*)(.*)$")
-    if not hashes then
-      return line
-    end
-
-    local adjusted_heading_text = heading_text or ""
-    if spacing_after_hashes then
-      adjusted_heading_text = spacing_after_hashes .. adjusted_heading_text
-    end
-    adjusted_heading_text = adjusted_heading_text:gsub("^%s*", "")
-    adjusted_heading_text = adjusted_heading_text:gsub("%s*$", "")
-
-    local new_level = #hashes + heading_shift
-    if new_level > max_heading_level then
-      if adjusted_heading_text ~= "" then
-        return leading_spaces .. "**" .. adjusted_heading_text .. "**"
-      end
-      return leading_spaces .. "**" .. "**"
-    end
-
-    local new_hashes = string.rep("#", new_level)
-    if adjusted_heading_text == "" then
-      return leading_spaces .. new_hashes
-    end
-    return leading_spaces .. new_hashes .. " " .. adjusted_heading_text
-  end
 
   while start_index <= content_length do
     local newline_index = content:find("\n", start_index, true)
+    local line_end = newline_index and (newline_index - 1) or content_length
+    
+    local line = content:sub(start_index, line_end)
+    
+    -- Optimized pattern: %s* automatically strips spaces after the hashes.
+    local leading_spaces, hashes, heading_text = line:match("^(%s*)(#+)%s*(.*)$")
+    
+    if hashes then
+      -- Trim trailing spaces only, as leading spaces are already handled by the match pattern.
+      heading_text = heading_text:gsub("%s*$", "")
+      local new_level = #hashes + heading_shift
+      
+      buf:put(leading_spaces)
+      if new_level > max_heading_level then
+        if heading_text ~= "" then
+          buf:put("**", heading_text, "**")
+        else
+          buf:put("**", "**")
+        end
+      else
+        buf:put(string.rep("#", new_level)) 
+        if heading_text ~= "" then
+          buf:put(" ", heading_text)
+        end
+      end
+    else
+      -- Regular line, write directly to the buffer.
+      buf:put(line)
+    end
+
     if newline_index then
-      local line = content:sub(start_index, newline_index - 1)
-      table.insert(normalized_lines, processLine(line))
+      buf:put("\n")
       start_index = newline_index + 1
     else
-      local line = content:sub(start_index)
-      if line ~= "" or not has_trailing_newline then
-        table.insert(normalized_lines, processLine(line))
-      end
       break
     end
   end
 
-  local normalized_content = table.concat(normalized_lines, "\n")
-  if has_trailing_newline then
-    normalized_content = normalized_content .. "\n"
-  end
-  return normalized_content
+  -- Extract the final consolidated string from continuous memory.
+  return buf:get()
 end
-
 
 --- Sets a metadata attribute on an object
 --- The attribute is stored in the object's metatable under the __attr field
