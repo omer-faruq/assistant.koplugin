@@ -220,10 +220,10 @@ function Querier:query(message_history, title)
     }
 
     -- reuseable function for both strem mode / non-strem mode
-    local function executeResearch(tool_calls_array, tool_rounds)
+    local function executeResearch(tool_calls_array, tool_rounds, isMaxinum)
         local err
         local search_results = {}
-        for _, tool_call in ipairs(tool_calls_array) do
+        for i, tool_call in ipairs(tool_calls_array) do
 
             -- Decode keywords from tool call arguments
             local tool_call_id, keywords, extract_err = ToolExecutor.extractKeywords(tool_call)
@@ -236,17 +236,14 @@ function Querier:query(message_history, title)
                 break
             end
 
-            tool_rounds = tool_rounds + 1
             local search_ok, search_result
-            if tool_rounds < MAX_TOOL_ROUNDS then
+            if isMaxinum then
+                search_ok, search_result = ToolExecutor.maximumToolRoundReached()
+            else
                 -- Execute web search via ToolExecutor
                 search_ok, search_result = ToolExecutor.executeWebSearch(keywords,
                     query_option.use_websearch,
-                    self.handler, tool_rounds)
-            else
-                -- Maximum call reached. (tool_rounds == MAX_TOOL_ROUNDS)
-                -- include instruction prompt let LLM dract the answer immediately
-                search_ok, search_result = ToolExecutor.maximumToolRoundReached()
+                    self.handler, tool_rounds+i)
             end
             if not search_ok then
                 logger.warn("search err", search_result)
@@ -326,13 +323,18 @@ function Querier:query(message_history, title)
                 break
             end
 
-            local search_ok, search_results = executeResearch(tool_calls_array, tool_rounds)
+            local search_ok, search_results
+            if tool_rounds < MAX_TOOL_ROUNDS then
+                search_ok, search_results = executeResearch(tool_calls_array, tool_rounds, false)
+                tool_rounds = tool_rounds + #search_results
+            else
+                search_ok, search_results = executeResearch(tool_calls_array, tool_rounds, true)
+            end
             if not search_ok then
                 res = nil
                 err = search_results
                 break
             end
-            tool_rounds = tool_rounds + #search_results
 
             local append_ok, append_err = ToolExecutor.appendToolResult(message_history, {
                     raw_assistant  = raw_assistant,
@@ -387,7 +389,13 @@ function Querier:query(message_history, title)
                 end
 
                 -- Build tool result and append to history
-                local search_ok, search_results = executeResearch(res.tool_calls, tool_rounds)
+                local search_ok, search_results
+                if tool_rounds < MAX_TOOL_ROUNDS then
+                    search_ok, search_results = executeResearch(res.tool_calls, tool_rounds, false)
+                    tool_rounds = tool_rounds + #search_results
+                else
+                    search_ok, search_results = executeResearch(res.tool_calls, tool_rounds, true)
+                end
                 if not search_ok then
                     res = nil
                     err = search_results

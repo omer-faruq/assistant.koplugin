@@ -210,6 +210,7 @@ end
 --- @param ws_mode            string  "serpapi" | "tavilyapi"
 --- @param provider_config    table   provider settings with .serpapi or .tavilyapi
 --- @param handler            table   BaseHandler instance with search methods
+--- @param tool_round         integer  Notice for the number of rounds the tool called
 --- @return boolean success, string result
 function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round)
     if not keywords or #keywords == 0 then
