@@ -835,8 +835,10 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
 
                 result_content    = json_default(cdelta.content, "")
                 if not reasoning_key then
-                    -- find the key starts with "reason", "reasoning/reasoning_content/reasoning_details"
-                    for k, _ in pairs(cdelta) do if k:sub(1, 6) == "reason" then reasoning_key = k break end end
+                    -- find the key starts with "reason", "reasoning/reasoning_content/reasoning_details(table)"
+                    -- the reasoning_key will be needed when build a tool_calls response
+                    for k, _ in pairs(cdelta) do if k:sub(1, 6) == "reason" and type(cdelta[k]) == "string"
+                        then reasoning_key = k break end end
                 end
                 reasoning_content = json_default(cdelta[reasoning_key], "")
             end
