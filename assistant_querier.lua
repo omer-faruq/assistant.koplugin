@@ -99,6 +99,7 @@ function Querier:load_model(provider_name)
     end
     ToolExecutor.setSearchAPIConfig("serpapi", koutil.tableGetValue(CONFIGURATION, "provider_settings", "serpapi"))
     ToolExecutor.setSearchAPIConfig("tavilyapi", koutil.tableGetValue(CONFIGURATION, "provider_settings", "tavilyapi"))
+    ToolExecutor.setSearchAPIConfig("searxng", koutil.tableGetValue(CONFIGURATION, "provider_settings", "searxng"))
 
     local handler_name
     local underscore_pos = provider_name:find("_")

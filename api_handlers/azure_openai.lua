@@ -47,7 +47,7 @@ function AzureOpenAIHandler:query(message_history, azure_settings, query_option)
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
     local tools
-    if not query_option.use_stream_mode and (ws_mode == "serpapi" or ws_mode == "tavilyapi") then
+    if not query_option.use_stream_mode and (ws_mode == "serpapi" or ws_mode == "tavilyapi" or ws_mode == "searxng") then
         tools = { self:buildExternalSearchToolDef("openai") }
     end
 

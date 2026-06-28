@@ -116,7 +116,7 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
         local tools = nil
         if ws_mode == "builtin" then
             tools = { google_search = {} }
-        elseif ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        elseif ws_mode == "serpapi" or ws_mode == "tavilyapi" or ws_mode == "searxng" then
             tools = self:buildExternalSearchToolDef("gemini")
         end
         local requestBody = buildRequestBody(message_history, gemini_settings, tools, true)
@@ -130,7 +130,7 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
     local final_tools = nil
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" or ws_mode == "searxng" then
         final_tools = self:buildExternalSearchToolDef("gemini")
     elseif ws_mode == "builtin" then
         -- Built-in Google Search grounding for non-stream

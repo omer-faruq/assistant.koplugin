@@ -46,7 +46,7 @@ function GigaChatHandler:query(message_history, gigachat_settings, query_option)
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
     local tools
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" or ws_mode == "searxng" then
         tools = { self:buildExternalSearchToolDef("openai") }
     end
 

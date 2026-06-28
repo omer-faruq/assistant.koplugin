@@ -19,6 +19,7 @@ local json_default = assistant_utils.json_default
 local SEARCH_API_CONF = {
     serpapi   = { base_url = nil, api_key = ""},
     tavilyapi = { base_url = nil, api_key = ""},
+    searxng   = { base_url = nil, api_key = ""},
 }
 -- ---------------------------------------------------------------------------
 -- External-search two-stage flow (used by handlers that don't natively
@@ -118,6 +119,45 @@ local function tavilyAPISearchRequest(handler, keywords)
         segments:put("---")
         segments:putf("### Source %d: %s", i, json_default(item.title, "Untitled"))
         -- segments:put( string.format("* URL: %s", json_default(item.url, "N/A")))
+        segments:put("* Summary: ")
+        segments:put(json_default(item.content, ""))
+        segments:put("\n")
+    end
+    segments:put("\n")
+    return true, segments:get()
+end
+
+local function searxngAPISearchRequest(handler, keywords)
+    local searxngconfig = SEARCH_API_CONF.searxng
+    local base_url = searxngconfig.base_url or "http://localhost:8888/search"
+    local key      = searxngconfig.api_key
+    local q        = koutil.urlEncode(keywords)
+    local url      = T("%1?q=%2&format=json", base_url, q)
+
+    local timeout = 45
+    local maxtime = 120
+
+    local completed, success, code, content =
+        Trapper:dismissableRunInSubprocess(function()
+            return assistant_utils.httpRequest(url, timeout, maxtime, nil, nil, nil)
+        end, handler.trap_widget)
+
+    if not completed then return false, handler.CODE_CANCELLED end
+    if not success or code ~= 200 then return false, content end
+
+    local ok, parsed = pcall(json.decode, content)
+    if not ok or not parsed or not parsed.results then
+        return false, "fail to parse searxng return"
+    end
+
+    local segments = strbuf.new()
+    segments:put("## Web Search Results:\n")
+    for i, item in ipairs(parsed.results) do
+        segments:put("---")
+        segments:putf("### Source %d: %s", i, json_default(item.title, "Untitled"))
+        segments:put("* URL: ")
+        segments:put(json_default(item.url, "N/A"))
+        segments:put("\n")
         segments:put("* Summary: ")
         segments:put(json_default(item.content, ""))
         segments:put("\n")
@@ -241,6 +281,8 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round)
         search_ok, search_result = serpAPISearchRequest(handler, keywords)
     elseif ws_mode == "tavilyapi" then
         search_ok, search_result = tavilyAPISearchRequest(handler, keywords)
+    elseif ws_mode == "searxng" then
+        search_ok, search_result = searxngAPISearchRequest(handler, keywords)
     else
         UIManager:close(handler:resetTrapWidget())
         return false, "Unknown web-search mode: " .. tostring(ws_mode)
@@ -573,7 +615,8 @@ function ToolExecutor.SettingkeyToText(key)
         ["none"] = _("None"),
         ["builtin"] = _("Model Built-In"),
         ["serpapi"] = "Serp API",
-        ["tavilyapi"] = "Tavily API"
+        ["tavilyapi"] = "Tavily API",
+        ["searxng"] = "SearXNG"
     }
     return ToolText[key]
 end

@@ -237,6 +237,9 @@ local CONFIGURATION = {
         tavilyapi = {
             api_key = "your-tavily-api-key"
         },
+        searxng = {
+            base_url = "http://localhost:8888/search",
+        },
     },
 
     -- Optional features

@@ -41,7 +41,7 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
         -- Inject tool definition so the LLM can issue a tool_call in the stream.
         -- The Querier's stream tool-call loop will detect it and execute the search.
         local stream_tools = nil
-        if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        if ws_mode == "serpapi" or ws_mode == "tavilyapi" or ws_mode == "searxng" then
             stream_tools = { self:buildExternalSearchToolDef("openai") }
         end
         local requestBodyTable = buildRequestBody(message_history, stream_tools)
@@ -63,7 +63,7 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
     local tools
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" or ws_mode == "searxng" then
         tools = { self:buildExternalSearchToolDef("openai") }
     end
     local requestBodyTable = buildRequestBody(message_history, tools)

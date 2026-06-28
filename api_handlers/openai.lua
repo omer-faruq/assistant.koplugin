@@ -39,7 +39,7 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
     -- -----------------------------------------------------------------------
     if query_option.use_stream_mode then
         local tools
-        if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        if ws_mode == "serpapi" or ws_mode == "tavilyapi" or ws_mode == "searxng" then
             tools = { self:buildExternalSearchToolDef("openai") }
         end
         local body = buildRequestBody(message_history, openai_settings, tools, true)
@@ -55,7 +55,7 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
     local requestBody
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" or ws_mode == "searxng" then
         local search_tool = { self:buildExternalSearchToolDef("openai") }
         requestBody = buildRequestBody(message_history, openai_settings, search_tool, false)
     else

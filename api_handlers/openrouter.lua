@@ -80,7 +80,7 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
         if ws_mode == "builtin" then
             -- OpenRouter native web-search server tool
             stream_tools = { buildWebSearchTool(openrouter_settings.additional_parameters) }
-        elseif ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        elseif ws_mode == "serpapi" or ws_mode == "tavilyapi" or ws_mode == "searxng" then
             -- Inject standard tool definition so the LLM can issue a tool_call in the stream.
             -- The Querier's stream tool-call loop will detect it and execute the search.
             stream_tools = { self:buildExternalSearchToolDef("openai") }
@@ -103,7 +103,7 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
     local tools
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" or ws_mode == "searxng" then
         tools = { self:buildExternalSearchToolDef("openai") }
     end
 

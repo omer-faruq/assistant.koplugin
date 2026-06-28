@@ -406,6 +406,8 @@ SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
                 return koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", "serpapi", "api_key") ~= nil
             elseif key == "tavilyapi" then
                 return koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", "tavilyapi", "api_key") ~= nil
+            elseif key == "searxng" then
+                return koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", "searxng", "base_url") ~= nil
             end
             return false --
         end

@@ -51,7 +51,7 @@ function groqHandler:query(message_history, groq_settings, query_option)
         -- Built-in web search for groq/compound* models
         if ws_mode == "builtin" and groq_settings.model:find("^groq/compound") then
             body.compound_custom = { tools = { enabled_tools = { "web_search", "visit_website" } } }
-        elseif ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        elseif ws_mode == "serpapi" or ws_mode == "tavilyapi" or ws_mode == "searxng" then
             body.tools = { self:buildExternalSearchToolDef("openai") }
         end
         local requestBody = json.encode(body)
@@ -66,7 +66,7 @@ function groqHandler:query(message_history, groq_settings, query_option)
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
     local tools
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+    if ws_mode == "serpapi" or ws_mode == "tavilyapi" or ws_mode == "searxng" then
         tools = { self:buildExternalSearchToolDef("openai") }
     end
     local body = buildRequestBody(message_history, groq_settings, tools, false)

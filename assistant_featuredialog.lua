@@ -59,7 +59,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         -- Feature type configurations for easy extension
         local feature_configurations = {
             recap = {
-                title = _("Recap"),
+                title = _("🌐Recap"),
                 loading_message = _("Loading Recap..."),
                 config_key = "recap_config",
                 prompts_key = "recap"
@@ -71,7 +71,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
                 prompts_key = "xray"
             },
             book_info = {
-                title = _("Book Information"),
+                title = _("🌐Book Information"),
                 loading_message = _("Loading Book Information..."),
                 config_key = "book_info_config",
                 prompts_key = "book_info"
