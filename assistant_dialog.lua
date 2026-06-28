@@ -232,8 +232,7 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
             
             -- Check if we got a valid response
             if err then
-              logger.dbg("assistant message_history", message_history)
-              self.querier:showError(err)
+              self.querier:showError(err, message_history)
               return
             end
             
@@ -375,8 +374,7 @@ function AssistantDialog:show(highlightedText)
           
           -- Check if we got a valid response
           if err then
-            logger.dbg("assistant message_history", message_history)
-            self.querier:showError(err)
+            self.querier:showError(err, message_history)
             return
           end
           
@@ -557,8 +555,7 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index, user_in
   
   local answer, err = self.querier:query(message_history, T(_("Loading for %1 ..."), title or prompt_index))
   if err then
-    logger.dbg("assistant message_history", message_history)
-    self.querier:showError(err)
+    self.querier:showError(err, message_history)
     return
   end
   if answer then

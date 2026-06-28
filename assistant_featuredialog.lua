@@ -199,8 +199,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
 
     local answer, err = Querier:query(message_history, loading_message)
     if err then
-      logger.dbg("assistant message_history", message_history)
-      assistant.querier:showError(err)
+      assistant.querier:showError(err, message_history)
       return
     end
 
@@ -236,8 +235,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
             local answer, err = Querier:query(message_history)
             
             if err then
-              logger.dbg("assistant message_history", message_history)
-              Querier:showError(err)
+              Querier:showError(err, message_history)
               return
             end
             
@@ -245,6 +243,9 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
               role = "assistant",
               content = answer
             })
+            if assistant.settings:readSetting("auto_prompt_suggest", false) then
+              answer = assistant_utils.process_suggestions(answer)
+            end
             local normalized_answer = normalizeMarkdownHeadings(answer, 3, 6) or answer
             local additional_text = "\n\n### ⮞ User: \n" .. (type(user_question) == "string" and user_question or (user_question.text or user_question)) .. "\n\n### ⮞ Assistant:\n" .. normalized_answer
             viewer:update(viewer.text .. additional_text)

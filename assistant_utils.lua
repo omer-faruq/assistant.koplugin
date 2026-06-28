@@ -345,57 +345,49 @@ function M.normalizeMarkdownHeadings(content, heading_offset, max_heading_level)
 end
 
 --[[
-    Processes the model content, converting custom question tags into Markdown links.
-    Expects a shared 'shared_buf' object initialized in the upper/global scope.
+    Processes the model content, converting everything after the <suggestions> tag
+    into Markdown links. It safely handles cases where the closing </suggestions> tag is missing.
     
     @param content string: The raw LLM response text.
     @param shared_buf table: The reusable string.buffer instance.
     @return string: The processed Markdown text.
 --]]
 function M.process_suggestions(content)
-    -- Early exit if content is empty or invalid
     if type(content) ~= "string" or content == "" then
         return content
     end
 
-    -- Locate the opening and closing tags of the suggestions block
-    local tag_start, tag_end = string.find(content, "<suggestions>.-</suggestions>")
-    
-    -- If no tags are found, return the original content directly
-    if not tag_start or not tag_end then
+    -- Find only the start position of the opening tag
+    local tag_start = string.find(content, "<suggestions>")
+    if not tag_start then
         return content
     end
 
-    -- Extract the raw lines inside the tags
-    -- <suggestions> length is 13, </suggestions> length is 14
-    local suggestions_block = string.sub(content, tag_start + 13, tag_end - 14)
+    -- Extract the main text before the tag
+    local main_body = string.sub(content, 1, tag_start - 1)
     
-    -- Reset the shared buffer to reuse its pre-allocated memory without reallocating
+    -- Extract everything after the "<suggestions>" tag (length is 13)
+    local suggestions_block = string.sub(content, tag_start + 13)
+
+    -- Reset the shared buffer to reuse its memory pool
     shared_buf:reset()
     
-    -- Append the leading content before the <suggestions> tag
-    if tag_start > 1 then
-        shared_buf:put(string.sub(content, 1, tag_start - 1))
-    end
-
+    -- Append the clean main body first
+    shared_buf:put(main_body)
     shared_buf:putf("\n\n%s\n\n", _("##### You may find these topics interesting:"))
-    
-    -- Iterate through each line to extract questions and compile links dynamically
-    -- [^\r\n]+ matches non-newline characters, making it cross-platform compatible
+
+    -- Iterate through each line after the opening tag
     for line in string.gmatch(suggestions_block, "[^\r\n]+") do
+        -- Extract the question text. If a line is just "</suggestions>", 
+        -- it lacks a leading hyphen and will fail this match automatically.
         local question = string.match(line, "^%s*-%s*(.-)%s*$")
         if question and question ~= "" then
-            -- Append directly to C memory pool using putf to avoid intermediate Lua strings
+            -- Append formatted links into C memory
             shared_buf:putf("- [%s](#q:%s)\n", question, question)
         end
     end
-    
-    -- Append the remaining trailing content after the </suggestions> tag
-    if tag_end < #content then
-        shared_buf:put(string.sub(content, tag_end + 1))
-    end
-    
-    -- Serialize the buffer content into a single final Lua string
+
+    -- Serialize and return the final string
     return shared_buf:get()
 end
 

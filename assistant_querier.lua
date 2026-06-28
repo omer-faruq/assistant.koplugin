@@ -149,8 +149,8 @@ function StreamText:initTextBox(text, char_added)
     self.for_measurement_only = false
 end
 
-function Querier:showError(err)
-    logger.warn("API Error", err)
+function Querier:showError(err, message_history)
+    logger.warn("API Error", err, "message_history", message_history)
     local dialog
     if self.user_interrupted then
         dialog = InfoMessage:new{ timeout = 3, text = err }
