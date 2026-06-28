@@ -571,7 +571,7 @@ Only show the requested sections. Do not add introduction, conclusion, or additi
     suggestions_prompt = [[
 
 ### Suggested Questions
-At the very end of your response, you MUST provide exactly 3 brief, engaging follow-up questions that the user might want to ask next.
+At the very end of your response, provide 2-3 follow-up questions based on your answer that the user might want to ask next.
 Wrap this entire section inside a `<suggestions>` tag, with each question on a new line starting with a dash (-).
 
 <suggestions>
@@ -579,6 +579,7 @@ Wrap this entire section inside a `<suggestions>` tag, with each question on a n
 - [Question 2]
 - [Question 3]
 </suggestions>
+
 ]]
 }
 
