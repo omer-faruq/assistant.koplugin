@@ -135,6 +135,9 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
       else
         answer_type =  _("Response")
         assistant_content = message.content or _("(No response)")
+        if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+          assistant_content = assistant_utils.process_suggestions(assistant_content)
+        end
         -- Remove code block markers before displaying
         assistant_content = assistant_content:gsub("```", "\n")
         assistant_content = normalizeMarkdownHeadings(assistant_content, 3, 6) or assistant_content
@@ -322,8 +325,7 @@ function AssistantDialog:show(highlightedText)
   local system_prompt = koutil.tableGetValue(self.CONFIGURATION, "features", "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
   if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
     local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
-    local suggestions_prompt = Prompts.assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
-    system_prompt = system_prompt .. suggestions_prompt
+    system_prompt = system_prompt .. Prompts.assistant_prompts.suggestions_prompt
   end
 
   local message_history = {{
@@ -536,9 +538,7 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index, user_in
   local system_prompt = koutil.tableGetValue(prompt_config, "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
 
   if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
-    local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
-    local suggestions_prompt = Prompts.assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
-    system_prompt = system_prompt .. suggestions_prompt
+    system_prompt = system_prompt .. Prompts.assistant_prompts.suggestions_prompt
   end
 
   local message_history = {{

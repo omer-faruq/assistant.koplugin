@@ -568,17 +568,18 @@ Only show the requested sections. Do not add introduction, conclusion, or additi
             _("Example"),
             _("Word Origin"))
     },
-    suggestions_prompt = T([[
-At the end of your response, first generate 2-3 questions in {language} language based on your answer. Critically, these questions **must not contain any quotation marks and parentheses, or any other punctuation whatsoever**. Only use letters and spaces.
-Then, display these questions as hyperlinks in a **Markdown unordered list** using the following exact format:
-```
----
-__%1__
+    suggestions_prompt = [[
 
-- [Question 1](#q:Question 1)
-- [Question 2](#q:Question 2)
-```
-]], _("You may find these topics interesting:")),
+### Suggested Questions
+At the very end of your response, you MUST provide exactly 3 brief, engaging follow-up questions that the user might want to ask next.
+Wrap this entire section inside a `<suggestions>` tag, with each question on a new line starting with a dash (-).
+
+<suggestions>
+- [Question 1]
+- [Question 2]
+- [Question 3]
+</suggestions>
+]]
 }
 
 

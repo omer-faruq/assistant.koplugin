@@ -133,8 +133,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     end
 
     if assistant.settings:readSetting("auto_prompt_suggest", false) then
-      local suggestions_prompt = assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
-      system_prompt = system_prompt .. suggestions_prompt
+      system_prompt = system_prompt .. assistant_prompts.suggestions_prompt
     end
     
     local book_text_prompt = ""
@@ -172,7 +171,13 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     table.insert(message_history, context_message)
 
     local function createResultText(answer)
-      local normalized_answer = normalizeMarkdownHeadings(answer, 2, 6) or answer
+
+      local normalized_answer = answer
+      if assistant.settings:readSetting("auto_prompt_suggest", false) then
+        normalized_answer = assistant_utils.process_suggestions(normalized_answer)
+      end
+      normalized_answer = normalizeMarkdownHeadings(normalized_answer, 2, 6) or answer
+
       local header_text = T(_([[
  - Title : %1
  - Author: %2
