@@ -24,7 +24,7 @@ local markdown_format_prompt = [[
 -- prompts attributes can be overridden in the configuration file.
 local custom_prompts = {
     term_xray = {
-        text = _("Term X-Ray"),
+        text = _("🌐Term X-Ray"),
         use_websearch = true,
         order = -20, -- negative number to not show on additional questions dialog
         desc = _(
@@ -268,7 +268,7 @@ Provide a concise, simple, and crystal-clear ELI5 explanation of the following, 
 {highlight}.]],
     },
     explain = {
-        text = _("Explain"),
+        text = _("🌐Explain"),
         use_websearch = true,
         order = 80,
         desc = _("This prompt explains the highlighted text in detail, ensuring clarity and understanding."),
@@ -282,7 +282,7 @@ Ensure your {language} explanation is precise, captures all nuances of the origi
 {highlight}]],
     },
     historical_context = {
-        text = _("Historical Context"),
+        text = _("🌐Historical Context"),
         use_websearch = true,
         order = 90,
         desc = _(
@@ -298,7 +298,7 @@ Please provide a detailed and insightful explanation of the historical context o
 {highlight}]],
     },
     wikipedia = {
-        text = _("Wikipedia"),
+        text = _("🌐Wikipedia"),
         use_websearch = true,
         order = 100,
         desc = _(

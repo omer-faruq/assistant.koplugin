@@ -248,7 +248,7 @@ function Assistant:addToMainMenu(menu_items)
                 text = _("Book-Level Built-in Prompts"),
                 sub_item_table = {
                   {
-                    text = _("Book Summary & Recs"),
+                    text = _("🌐Book Summary & Recs"),
                     callback = function ()
                       self:onAskAIBookInfo()
                     end,
@@ -259,7 +259,7 @@ function Assistant:addToMainMenu(menu_items)
                     end
                   },
                   {
-                    text = _("AI X-Ray"),
+                    text = _("🌐AI X-Ray"),
                     callback = function ()
                       self:onAskAIXRay()
                     end,
@@ -270,7 +270,7 @@ function Assistant:addToMainMenu(menu_items)
                     end
                   },
                   {
-                    text = _("AI Recaps"),
+                    text = _("🌐AI Recaps"),
                     callback = function ()
                       self:onAskAIRecap()
                     end,
@@ -292,7 +292,7 @@ function Assistant:addToMainMenu(menu_items)
                     end,
                   },
                   {
-                    text = _("Summary Using Highlights & Notes"),
+                    text = _("🌐Summary Using Highlights & Notes"),
                     callback = function ()
                       self:onAskSummaryUsingAnnotations()
                     end,
