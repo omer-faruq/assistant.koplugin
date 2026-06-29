@@ -2,8 +2,28 @@ local BaseHandler = require("api_handlers.base")
 local json = require("rapidjson")
 local koutil = require("util")
 local logger = require("logger")
+local UIManager = require("ui/uimanager")  
+local Trapper = require("ui/trapper")
+local time = require("ui/time")  
 
 local groqHandler = BaseHandler:new()
+local LAST_CALLED = 0
+local API_CALL_DEBOUNCE_DELAY = time.s(30)
+
+local function sleepWithInfo(seconds, info_text)
+    local _coroutine = coroutine.running()
+    local go_on = Trapper:info(info_text)
+    if not go_on then
+        return false
+    end
+    local resume_func = function() coroutine.resume(_coroutine, true) end
+    UIManager:scheduleIn(seconds, resume_func)
+    local result = coroutine.yield()
+    UIManager:unschedule(resume_func)
+    Trapper:clear()
+    return result
+end
+
 
 --- Build the Groq request body.
 --- @param messages  table
@@ -41,6 +61,19 @@ function groqHandler:query(message_history, groq_settings, query_option)
     }
 
     local ws_mode = query_option.use_websearch or "none"
+
+    if ws_mode ~= "none" and ws_mode ~= "builtin" then
+        -- TOOL CALLS are likely trigger groq API Free-tier rate limits (8k tokens/minutes)
+        local current_time = UIManager:getElapsedTimeSinceBoot()
+        if current_time - LAST_CALLED < API_CALL_DEBOUNCE_DELAY then
+            local time_since_last_request = current_time - LAST_CALLED
+            local delay_secs = time.to_number(API_CALL_DEBOUNCE_DELAY - time_since_last_request)
+            if not sleepWithInfo(delay_secs, string.format("API wait %d seconds", delay_secs)) then
+                return nil, self.CODE_CANCELLED
+            end
+        end
+        LAST_CALLED = UIManager:getElapsedTimeSinceBoot()
+    end
 
     -- -----------------------------------------------------------------------
     -- STREAM path
