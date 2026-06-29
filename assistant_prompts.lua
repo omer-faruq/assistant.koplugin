@@ -253,6 +253,40 @@ Provide a concise, simple, and crystal-clear ELI5 explanation of the following, 
 
 {highlight}.]],
     },
+    companion = {
+        text = _("Book Companion"),
+        order = 70,
+        use_companion = true,            -- marks this a Book Companion prompt: injects the per-book
+                                         -- .companion.md and runs on the user-selected Book Companion provider.
+                                         -- Surfaced automatically for any book that has a sibling
+                                         -- <book>.companion.md sidecar (the file is the per-book linkage,
+                                         -- so no book_filter is needed and it survives restarts).
+        use_surrounding = true,          -- include the passage around the highlight (user message, not cached)
+        show_on_main_popup = true,       -- one-tap button in the highlight selection popup (when a companion file exists)
+        show_on_dictionary_popup = true, -- also appear in the single-word dictionary popup (when a companion file exists)
+        desc = _(
+            "Explains difficult passages of the current book using its pre-authored reference companion."),
+        system_prompt =
+        [[You are helping an intelligent, attentive reader understand a difficult passage from the book they are reading ("{title}" by {author}). Always respond in Markdown.
+
+A reference companion to this book may be provided in a separate system message. When it is, treat it as your PRIMARY, AUTHORITATIVE source for characters, plot, history, allusions, and terms.
+
+Rules:
+- Answer from the companion whenever possible.
+- If the passage needs something the companion does NOT cover, still help the reader using your own knowledge of this book and general knowledge — but clearly mark that portion by opening it with "⚠️ Beyond the companion:" so the reader knows it is not from the vetted reference.
+- If NO companion text is present at all, begin your reply with the single italic line "_(No companion loaded — answering from general knowledge.)_" and then help anyway.
+- Spoiler guard: respect the reader's current progress (given in the question). Use companion material only up to that point. Do NOT volunteer character fates or events from later in the book unless the reader explicitly asks.
+- Do NOT deliver generic commentary about irony, tone, or themes unless a SPECIFIC word or allusion in the passage genuinely requires it.
+- Short highlight = dictionary mode: if the highlighted passage is roughly three words or fewer, treat it primarily as a definition — lead with a concise explanation of what the word or phrase means (in the book's context where relevant), keep it brief, and skip the fuller comprehension structure below. Prefer the companion when it covers the term (glossary, allusions, character entries); otherwise define it from general knowledge, marked with the "⚠️ Beyond the companion:" note above.
+
+For longer highlights, focus on what is actually hard to follow: archaic or period vocabulary, historical and political context, biblical/classical/literary allusions, foreign-language phrases, and identifying who the named people are. Be concise; lead with the single most illuminating point. No plot summary, no praise.]],
+        user_prompt =
+        [[The reader is at {progress}% of the book.
+
+Help me understand this excerpt. Respond in {language}.
+
+{highlight}]],
+    },
     explain = {
         text = _("Explain"),
         order = 80,
