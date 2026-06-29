@@ -66,12 +66,21 @@ end
 local function buildRequestBody(messages, settings, tool_def, stream)
     local contents, system_content = toGeminiContents(messages)
 
-    local system_instruction = nil
+    local system_instruction = { parts = {}}
     if system_content ~= "" then
-        system_instruction = { parts = {{ text = system_content:gsub("\n$", "") }} }
+        table.insert(system_instruction.parts, { text = system_content:gsub("\n$", "") })
     end
 
     local tools = tool_def and { tool_def } or nil
+    local gc = buildGenerationConfig(settings)
+    if settings.model:find("gemma-4", 1, true) then
+        if gc and gc.thinking_config and gc.thinking_config.thinking_budget then
+            -- gemma-4 does not support thinking_budget config
+            gc.thinking_config.thinking_budget = nil
+            gc.thinking_config.include_thoughts = false
+            table.insert(system_instruction.parts, { text = "**DIRECT RESPONSE**: Respond directly to the user without generating any internal thinking, chain of thought, or reasoning channels." })
+        end
+    end
 
     local body = {
         contents           = contents,
@@ -82,7 +91,7 @@ local function buildRequestBody(messages, settings, tool_def, stream)
             { category = "HARM_CATEGORY_HARASSMENT",        threshold = "BLOCK_NONE" },
             { category = "HARM_CATEGORY_DANGEROUS_CONTENT", threshold = "BLOCK_NONE" },
         },
-        generationConfig   = buildGenerationConfig(settings),
+        generationConfig   = gc,
         tools              = tools,
     }
     return body

@@ -17,8 +17,8 @@ local T = require("ffi/util").template
 
 local markdown_format_prompt = [[
 ### Formatting Constraint
-- DO NOT use any LaTeX or mathematical formula syntax (e.g., avoid $...$, $...$, \begin{...}, \frac, etc.).  Write all mathematical or technical content in plain text.
-- Standard Markdown formatting (including quotes, tables, lists, and indentations) is fully supported and encouraged where appropriate.
+Do not use LaTeX math blocks (like $...$) for standard text or emphasis. Never wrap plain words in $\\textit{...}$ or $\\texttt{...}$. 
+Standard Markdown formatting (including quotes, tables, lists) is fully supported and encouraged where appropriate.
 ]]
 
 -- prompts attributes can be overridden in the configuration file.

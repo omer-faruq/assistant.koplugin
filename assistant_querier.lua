@@ -151,7 +151,6 @@ function StreamText:initTextBox(text, char_added)
 end
 
 function Querier:showError(err, message_history)
-    logger.warn("API Error", err, "message_history", message_history)
     local dialog
     if self.user_interrupted then
         dialog = InfoMessage:new{ timeout = 3, text = err }
@@ -162,6 +161,7 @@ function Querier:showError(err, message_history)
             ok_callback = function() self.assistant:showSettings() end,
             cancel_text = _("Close"),
         }
+        logger.warn("API Error", err, "message_history", message_history)
     end
     UIManager:show(dialog)
 
@@ -288,6 +288,7 @@ function Querier:query(message_history, title)
             if type(bg_fn) ~= "function" then
                 -- handler returned an error before even starting the stream
                 res = nil
+                logger.warn("bg_fn is not func", bg_fn, err)
                 break
             end
             if tool_rounds > MAX_TOOL_ROUNDS*2 then
@@ -301,6 +302,7 @@ function Querier:query(message_history, title)
                 -- cancelled or stream error
                 res = nil
                 err = content or _("Stream failed with no error message.")
+                logger.warn("cancelled/strem error", content, tool_calls_array)
                 break
             end
 
@@ -324,6 +326,7 @@ function Querier:query(message_history, title)
             if not build_ok then
                 res = nil
                 err = raw_assistant
+                logger.warn("failed to buildRawAssistantForToolCall", content, tool_calls_array)
                 break
             end
 
@@ -335,6 +338,7 @@ function Querier:query(message_history, title)
             if not search_ok then
                 res = nil
                 err = search_results
+                logger.warn("failed to executeResearch", content, tool_calls_array)
                 break
             end
 
@@ -347,6 +351,7 @@ function Querier:query(message_history, title)
             if not append_ok then
                 res = nil
                 err = append_err
+                logger.warn("failed to appendToolResult", content, tool_calls_array, append_err)
                 break
             end
 
@@ -399,6 +404,7 @@ function Querier:query(message_history, title)
                 if not search_ok then
                     res = nil
                     err = search_results
+                    logger.warn("failed to executeResearch", res)
                     break
                 end
                 tool_rounds = tool_rounds + #search_results
@@ -413,6 +419,7 @@ function Querier:query(message_history, title)
                 if not append_ok then
                     res = nil
                     err = append_err
+                    logger.warn("failed to appendToolResult", res, append_err)
                     break
                 end
 
