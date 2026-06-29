@@ -457,27 +457,34 @@ function M.json_default(value, default_value)
     return value
 end
 
--- Enhanced uncompress that natively tolerates the Gzip-to-Zlib trailer mismatch
 require("ffi/zlib_h")
 local libz = ffi.loadlib("z", 1)
-
+local ZLIB_HEADER = "\x78\x9c"
+local scratch = strbuf.new()
+-- Enhanced uncompress that natively tolerates the Gzip-to-Zlib trailer mismatch
 local function zlib_uncompress_gzip(gzip_data, max_datalen)
-    if #gzip_data < 18 then return nil, "Data truncated" end
+    local total_len = #gzip_data
+    if total_len < 18 then return nil, "Data truncated" end
 
-    -- 1. Strip the 10-byte Gzip header and the 8-byte Gzip trailer
-    local raw_deflate = gzip_data:sub(11, -9)
-    
-    -- 2. Prepend a valid standard Zlib header (0x78 0x9C)
-    local zlib_header = string.char(0x78, 0x9C)
-    local hybrid_payload = zlib_header .. raw_deflate
+    local deflate_len = total_len - 18
+    local src_ptr = ffi.cast("const uint8_t*", gzip_data)
+
+    -- reused buffer
+    scratch:reset()
+    -- 1. Prepend a valid standard Zlib header (0x78 0x9C)
+    scratch:put(ZLIB_HEADER)
+    -- 2. Strip the 10-byte Gzip header
+    scratch:putcdata(src_ptr + 10, deflate_len)
+    local payload_ptr, payload_len = scratch:ref()
 
     -- 3. Prepare the memory buffers
     local buf = ffi.new("uint8_t[?]", max_datalen)
     local buflen = ffi.new("unsigned long[1]", max_datalen)
-    
+
     -- 4. Invoke the low-level libz
-    local res = libz.uncompress(buf, buflen, ffi.cast("const unsigned char*", hybrid_payload), #hybrid_payload)
-    
+    local res = libz.uncompress(buf, buflen,
+        ffi.cast("const unsigned char*", payload_ptr), payload_len)
+
     -- res == 0 means perfect zlib format
     -- res == -3 (Z_DATA_ERROR) happens here because the tail has a Gzip CRC32 instead of Zlib Adler32.
     -- But since the Deflate payload itself is 100% correct, the bytes in 'buf' are ALREADY completely deflated!
