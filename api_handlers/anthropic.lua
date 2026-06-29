@@ -2,39 +2,9 @@ local BaseHandler = require("api_handlers.base")
 local json = require("json")
 local koutil = require("util")
 local logger = require("logger")
+local AnthropicMessages = require("api_handlers.anthropic_messages")
 
 local AnthropicHandler = BaseHandler:new()
-
-local function prepare_anthropic_messages(message_history)
-    local anthropic_messages = {}
-    local system_content = ""
-    
-    -- Extract and concatenate all system prompts
-    for i, msg in ipairs(message_history) do
-        if msg.role == "system" then
-            system_content = system_content .. msg.content .. "\n\n"
-        end
-    end
-
-    -- Remove trailing newlines
-    system_content = system_content:gsub("\n\n$", "")
-    
-    -- Process non-system messages (user and assistant)
-    for i, msg in ipairs(message_history) do
-        if msg.role ~= "system" then
-            table.insert(anthropic_messages, {
-                role = msg.role,
-                content = msg.content
-            })
-        end
-    end
-    
-    -- Return structured data for Anthropic API
-    return {
-        messages = anthropic_messages,
-        system = system_content
-    }
-end
 
 local function extract_text_from_content(content_blocks)
     if type(content_blocks) ~= "table" then
@@ -56,7 +26,7 @@ end
 
 function AnthropicHandler:query(message_history, anthropic_settings)
     
-    local requestBodyTable = prepare_anthropic_messages(message_history)
+    local requestBodyTable = AnthropicMessages.prepare(message_history)
     requestBodyTable.model = anthropic_settings.model
     requestBodyTable.max_tokens = koutil.tableGetValue(anthropic_settings, "additional_parameters", "max_tokens")
     requestBodyTable.stream = koutil.tableGetValue(anthropic_settings, "additional_parameters", "stream") or false
