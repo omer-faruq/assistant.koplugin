@@ -31,7 +31,7 @@ local UIManager = require("ui/uimanager")
 local VerticalGroup = require("ui/widget/verticalgroup")
 local WidgetContainer = require("ui/widget/container/widgetcontainer")
 local T = require("ffi/util").template
-local util = require("util")
+local koutil = require("util")
 local _ = require("assistant_gettext")
 local InfoMessage = require("ui/widget/infomessage")
 local Screen = Device.screen
@@ -483,7 +483,7 @@ function ChatGPTViewer:init()
 
 
   -- load configuration
-  self.render_markdown = util.tableGetValue(self.assistant.CONFIGURATION, "features", "render_markdown") or true
+  self.render_markdown = koutil.tableGetValue(self.assistant.CONFIGURATION, "features", "render_markdown") or true
 
   if self.render_markdown then
     -- Convert Markdown to HTML and render in a ScrollHtmlWidget
@@ -646,7 +646,7 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
     return true
   end) or {}
 
-  local user_prompts = util.tableGetValue(self.assistant.CONFIGURATION, "features", "prompts")
+  local user_prompts = koutil.tableGetValue(self.assistant.CONFIGURATION, "features", "prompts")
   local merged_prompts = Prompts.getMergedCustomPrompts(user_prompts) or {}
     
   -- Add buttons in sorted order
@@ -937,9 +937,10 @@ end
 
 function ChatGPTViewer:html_link_tapped_callback(link)
   local SUGGESTION_PREFIX = "#q:"
-  if link.uri and util.stringStartsWith(link.uri, SUGGESTION_PREFIX) then
+  if link.uri and koutil.stringStartsWith(link.uri, SUGGESTION_PREFIX) then
     self:askAnotherQuestion(true) -- simple_mode
-    self.input_dialog:setInputText(link.uri:sub(#SUGGESTION_PREFIX+1), nil, false)
+    local question = koutil.urlDecode(link.uri:sub(4)) or ""
+    self.input_dialog:setInputText(question, nil, false)
   end
 end
 

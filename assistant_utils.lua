@@ -382,11 +382,8 @@ function M.process_suggestions(content)
         -- it lacks a leading hyphen and will fail this match automatically.
         local question = string.match(line, "^%s*-%s*(.-)%s*$")
         if question and question ~= "" and question:find("[^%-]") then
-            -- avoid double quotes in the link
-            question = question:gsub('"', '&quot;')
-
             -- Append formatted links into C memory
-            shared_buf:putf("- [%s](#q:%s)\n", question, question)
+            shared_buf:putf("- [%s](#q:%s)\n", question, koutil.urlEncode(question))
         end
     end
 
