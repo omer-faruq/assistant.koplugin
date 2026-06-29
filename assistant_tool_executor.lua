@@ -245,6 +245,10 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round)
         UIManager:close(handler:resetTrapWidget())
         return false, "Unknown web-search mode: " .. tostring(ws_mode)
     end
+
+    -- remove URLs saving context length
+    search_result = search_result:gsub("https?://[%w%-%.%?%&%=%/%~_#:;+,@!$%'()*]+", "")
+
     UIManager:close(handler:resetTrapWidget())
     return search_ok, search_result
 end
