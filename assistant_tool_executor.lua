@@ -409,22 +409,6 @@ function ToolExecutor.getHandlerFormat(handler_name)
     end
 end
 
-function ToolExecutor.maximumToolRoundReached()
-    local prompt = [[## Force Final Answer After Max Web Search Limit
-
-You have already used the web_search tool the maximum allowed times. You must now STOP making any further web_search calls or any other tool calls that would require additional external searches.
-
-Synthesize a complete, helpful, and well-structured final answer using ONLY the information you have already gathered from previous searches and your internal knowledge. 
-
-Do not mention tool limits, search counts, or the fact that you stopped searching. Present the response naturally as a confident, comprehensive answer to the user's original question. If some aspects remain uncertain due to limited search results, briefly acknowledge that and provide the best possible response based on available data.
-
-Begin writing the final answer now.
-]]
-
-    return true, prompt
-end
-
-
 -- ---------------------------------------------------------------------------
 -- Tool-call parsing helpers
 -- ---------------------------------------------------------------------------

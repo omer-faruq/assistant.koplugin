@@ -18,6 +18,7 @@ local Device = require("device")
 local assistant_utils = require("assistant_utils")
 local ToolExecutor = require("assistant_tool_executor")
 local Screen = Device.screen
+local Prompts = require("assistant_prompts").assistant_prompts
 
 local API_HANDLERS = {}
 local MAX_TOOL_ROUNDS = 3
@@ -220,7 +221,7 @@ function Querier:query(message_history, title)
     }
 
     -- reuseable function for both strem mode / non-strem mode
-    local function executeResearch(tool_calls_array, tool_rounds, isMaxinum)
+    local function executeResearch(tool_calls_array, tool_rounds)
         local err
         local search_results = {}
         for i, tool_call in ipairs(tool_calls_array) do
@@ -236,15 +237,10 @@ function Querier:query(message_history, title)
                 break
             end
 
-            local search_ok, search_result
-            if isMaxinum or (tool_rounds+i > MAX_TOOL_ROUNDS) then
-                search_ok, search_result = ToolExecutor.maximumToolRoundReached()
-            else
-                -- Execute web search via ToolExecutor
-                search_ok, search_result = ToolExecutor.executeWebSearch(keywords,
+            -- Execute web search via ToolExecutor
+            local search_ok, search_result = ToolExecutor.executeWebSearch(keywords,
                     query_option.use_websearch,
                     self.handler, tool_rounds+i)
-            end
             if not search_ok then
                 logger.warn("search err", search_result)
                 err = search_result or "Not all search succeeds"
@@ -255,6 +251,13 @@ function Querier:query(message_history, title)
                 search_result = search_result,
                 tool_call_id = tool_call_id,
             })
+        end
+
+        -- Append a "maximum tool used" result notice to the LLM
+        -- should be stop calling tools the next round
+        if tool_rounds + #search_results >= MAX_TOOL_ROUNDS then
+            search_results[#search_results].search_result =
+                search_results[#search_results].search_result .. Prompts.maximum_tool_use_prompt
         end
 
         if err then
@@ -326,10 +329,8 @@ function Querier:query(message_history, title)
 
             local search_ok, search_results
             if tool_rounds < MAX_TOOL_ROUNDS then
-                search_ok, search_results = executeResearch(tool_calls_array, tool_rounds, false)
+                search_ok, search_results = executeResearch(tool_calls_array, tool_rounds)
                 tool_rounds = tool_rounds + #search_results
-            else
-                search_ok, search_results = executeResearch(tool_calls_array, tool_rounds, true)
             end
             if not search_ok then
                 res = nil
@@ -392,10 +393,8 @@ function Querier:query(message_history, title)
                 -- Build tool result and append to history
                 local search_ok, search_results
                 if tool_rounds < MAX_TOOL_ROUNDS then
-                    search_ok, search_results = executeResearch(res.tool_calls, tool_rounds, false)
+                    search_ok, search_results = executeResearch(res.tool_calls, tool_rounds)
                     tool_rounds = tool_rounds + #search_results
-                else
-                    search_ok, search_results = executeResearch(res.tool_calls, tool_rounds, true)
                 end
                 if not search_ok then
                     res = nil
