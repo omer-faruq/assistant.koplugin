@@ -381,7 +381,7 @@ function M.process_suggestions(content)
         -- Extract the question text. If a line is just "</suggestions>", 
         -- it lacks a leading hyphen and will fail this match automatically.
         local question = string.match(line, "^%s*-%s*(.-)%s*$")
-        if question and question ~= "" then
+        if question and question ~= "" and question:find("[^%-]") then
             -- Append formatted links into C memory
             shared_buf:putf("- [%s](#q:%s)\n", question, question)
         end
