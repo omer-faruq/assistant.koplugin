@@ -27,6 +27,7 @@ local T = require("ffi/util").template
 local Screen = require("device").screen
 local logger = require("logger")
 local assistant_utils = require("assistant_utils")
+local ProviderContext = require("assistant_provider_context")
 
 -- Forward declarations
 local showPickerDialog, showManualInput
@@ -83,23 +84,14 @@ local function fetchOpenRouterModels(list_url)
     return models
 end
 
---- Save selected model to settings and apply to current session
-local function saveModelSelection(assistant, model_id)
-    local provider_name = assistant.querier.provider_name
-    assistant.settings:saveSetting("openrouter_model_" .. provider_name, model_id)
-    assistant.querier.provider_settings.model = model_id
-    assistant.updated = true
+--- Save selected model to settings via the active selection context.
+local function saveModelSelection(context, model_id)
+    context:saveModel(context:selectedProvider(), model_id)
 end
 
---- Reset model override — revert to configuration.lua default
-local function resetModelSelection(assistant)
-    local provider_name = assistant.querier.provider_name
-    assistant.settings:delSetting("openrouter_model_" .. provider_name)
-    -- Restore from CONFIGURATION
-    local config_model = koutil.tableGetValue(
-        assistant.CONFIGURATION, "provider_settings", provider_name, "model")
-    assistant.querier.provider_settings.model = config_model
-    assistant.updated = true
+--- Reset model override — revert to configuration.lua default.
+local function resetModelSelection(context)
+    context:resetModel(context:selectedProvider())
 end
 
 -- Model picker dialog (extends InputDialog following SettingsDialog pattern)
@@ -111,6 +103,7 @@ local ModelPickerDialog = InputDialog:extend{
     close_callback = nil,
     search_query = "",
     page = 1,
+    context = nil,
 }
 
 function ModelPickerDialog:init()
@@ -119,8 +112,7 @@ function ModelPickerDialog:init()
     local fixed_height = Screen:scaleBySize(135) + 2*Size.margin.default -- title bar, buttons row, etc
     local MODELS_PER_PAGE = math.max(5, math.floor((Screen:getHeight() - fixed_height) / item_height))
 
-    local current_model = koutil.tableGetValue(
-        self.assistant, "querier", "provider_settings", "model") or ""
+    local current_model = self.context:selectedModel() or ""
 
     local model_count = #self.models
     local total_pages = math.max(1, math.ceil(model_count / MODELS_PER_PAGE))
@@ -216,7 +208,7 @@ function ModelPickerDialog:init()
         focused = true,
         parent = self,
         button_select_callback = function(btn)
-            saveModelSelection(self.assistant, btn.model_id)
+            saveModelSelection(self.context, btn.model_id)
             UIManager:close(self)
             Notification:notify(T(_("Model: %1"), btn.model_id))
             if self.close_callback then self.close_callback() end
@@ -293,7 +285,7 @@ end
 function ModelPickerDialog:changePage(new_page)
     UIManager:close(self)
     showPickerDialog(self.assistant, self.all_models,
-        self.close_callback, self.search_query, new_page)
+        self.close_callback, self.search_query, new_page, self.context)
 end
 
 function ModelPickerDialog:onSearch()
@@ -310,7 +302,7 @@ function ModelPickerDialog:onSearch()
                 callback = function()
                     UIManager:close(search_dialog)
                     showPickerDialog(self.assistant, self.all_models,
-                        self.close_callback, self.search_query, self.page)
+                        self.close_callback, self.search_query, self.page, self.context)
                 end,
             },
             {
@@ -320,7 +312,7 @@ function ModelPickerDialog:onSearch()
                     local query = search_dialog:getInputText()
                     UIManager:close(search_dialog)
                     showPickerDialog(self.assistant, self.all_models,
-                        self.close_callback, query)
+                        self.close_callback, query, nil, self.context)
                 end,
             },
         }},
@@ -330,15 +322,15 @@ end
 
 function ModelPickerDialog:onManualInput()
     UIManager:close(self)
-    showManualInput(self.assistant, self.close_callback)
+    showManualInput(self.assistant, self.close_callback, self.context)
 end
 
 function ModelPickerDialog:onReset()
-    resetModelSelection(self.assistant)
+    resetModelSelection(self.context)
     UIManager:close(self)
     local config_model = koutil.tableGetValue(
         self.assistant.CONFIGURATION, "provider_settings",
-        self.assistant.querier.provider_name, "model") or "?"
+        self.context:selectedProvider(), "model") or "?"
     Notification:notify(T(_("Model reset: %1"), config_model))
     if self.close_callback then self.close_callback() end
 end
@@ -348,7 +340,7 @@ function ModelPickerDialog:onCloseWidget()
 end
 
 --- Show the model picker dialog with optional search filter and page
-showPickerDialog = function(assistant, all_models, close_callback, search_query, page)
+showPickerDialog = function(assistant, all_models, close_callback, search_query, page, context)
     search_query = search_query or ""
     page = page or 1
     local models = all_models
@@ -372,7 +364,7 @@ showPickerDialog = function(assistant, all_models, close_callback, search_query,
             text = T(_("No models matching \"%1\"."), search_query),
         })
         -- Reopen without filter
-        showPickerDialog(assistant, all_models, close_callback, "")
+        showPickerDialog(assistant, all_models, close_callback, "", nil, context)
         return
     end
 
@@ -383,13 +375,13 @@ showPickerDialog = function(assistant, all_models, close_callback, search_query,
         close_callback = close_callback,
         search_query = search_query,
         page = page,
+        context = context,
     })
 end
 
 --- Show manual model input dialog
-showManualInput = function(assistant, close_callback)
-    local current_model = koutil.tableGetValue(
-        assistant, "querier", "provider_settings", "model") or ""
+showManualInput = function(assistant, close_callback, context)
+    local current_model = context:selectedModel() or ""
     local dialog
     dialog = InputDialog:new{
         title = _("Enter Model ID"),
@@ -408,7 +400,7 @@ showManualInput = function(assistant, close_callback)
                     local model_id = dialog:getInputText()
                     if model_id and koutil.trim(model_id) ~= "" then
                         model_id = koutil.trim(model_id)
-                        saveModelSelection(assistant, model_id)
+                        saveModelSelection(context, model_id)
                         UIManager:close(dialog)
                         Notification:notify(T(_("Model: %1"), model_id))
                         if close_callback then close_callback() end
@@ -421,7 +413,8 @@ showManualInput = function(assistant, close_callback)
 end
 
 --- Main entry point: fetch OpenRouter models and show picker
-local function showOpenRouterModelPicker(assistant, close_callback, list_url)
+local function showOpenRouterModelPicker(assistant, close_callback, list_url, context)
+    context = context or ProviderContext.main(assistant)
     local models, err = fetchOpenRouterModels(list_url)
     if not models then
         if err then
@@ -440,7 +433,7 @@ local function showOpenRouterModelPicker(assistant, close_callback, list_url)
         return
     end
 
-    showPickerDialog(assistant, models, close_callback)
+    showPickerDialog(assistant, models, close_callback, nil, nil, context)
 end
 
 return showOpenRouterModelPicker

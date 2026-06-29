@@ -4,6 +4,12 @@ local CONFIGURATION = {
     -- NOTE: "openai" , "openai_grok" are different service using same handling code.
     provider = "openai",
 
+    -- Book companion files:
+    -- A prompt with `use_companion = true` (e.g. the "Middlemarch" button) looks for a
+    -- sidecar Markdown file next to the book: for "/Books/Middlemarch.epub" it loads
+    -- "/Books/Middlemarch.companion.md" if present, and injects it as authoritative
+    -- context (cached on Anthropic providers). Name the file to match the book's stem.
+
     -- Provider-specific settings
     --
     -- NAMING PATTERN: Configuration keys follow the format {handler}_{description}
@@ -66,6 +72,19 @@ local CONFIGURATION = {
                         max_uses = 5,
                     },
                 }
+            }
+        },
+        -- Anthropic Sonnet — one option selectable as the "Book Companion Provider"
+        -- in the AI Assistant menu. (No longer wired to any prompt by a `provider` field.)
+        -- The handler is determined by the part before the first underscore: "anthropic".
+        anthropic_sonnet = {
+            visible = false,                   -- optional, if set to false, will not shown in the profile switch
+            model = "claude-sonnet-4-6",       -- model list: https://docs.anthropic.com/en/docs/about-claude/models
+            base_url = "https://api.anthropic.com/v1/messages",
+            api_key = "your-anthropic-api-key",
+            additional_parameters = {
+                anthropic_version = "2023-06-01", -- api version list: https://docs.anthropic.com/en/api/versioning
+                max_tokens = 4096
             }
         },
         gemini = {
@@ -254,6 +273,7 @@ local CONFIGURATION = {
         updater_disabled = false,              -- Set to true to disable update check.
         default_folder_for_logs = nil,         -- Set the default folder for auto saved logs, nil for the same folder as the book, ex: "/mnt/onboard/logs/" for Kobo , "/mnt/us/documents/logs/" for Kindle
         max_text_length_for_analysis = 100000, -- max text length to be used on xray-recap-book analyzes,
+        -- surrounding_context_words = 90, -- words of context each side of the highlight for use_surrounding prompts
         max_page_size_for_analysis = 250,      -- maximum page size to be used on xray-recap-book analyzes (for page-based documents, ex: PDF)
 
         -- Term X-Ray context expansion settings (for analyzing characters, objects, places, concepts, magic)
@@ -318,6 +338,24 @@ local CONFIGURATION = {
         -- The `show_on_dictionary_popup` determines if the prompt is shown in the dictionary popup ( max 3 including the built-in ones)
         -- Set `visible = false` to hide the prompt from all popups.
         -- Available placeholders to use in the prompts: {user_input},{highlight},{title},{author},{language},{progress}
+        -- Book Companion prompts: set `use_companion = true`. The built-in `companion`
+        -- prompt ("Book Companion") works for any book; add more with keys like
+        -- `companion_<slug>` only if you want a book-specific system prompt. `use_companion`
+        -- is the behavioral marker (injects <book>.companion.md and uses the user's
+        -- "Book Companion Provider" choice); the key is identity only. Placeholders such
+        -- as {title} and {author} let one generic prompt serve every book.
+        -- Companion prompts are surfaced automatically for any book that has a sibling
+        -- <book>.companion.md sidecar -- the file's presence is the per-book linkage,
+        -- so they do NOT need (and ignore) book_filter, and the button persists across
+        -- restarts because it depends on the file rather than a saved menu toggle.
+        -- book_filter = { title_contains = "Middlemarch", author_contains = "Eliot" }
+        --   Restrict a NON-companion prompt's popup buttons to matching books (case-insensitive
+        --   substring of the book's title/authors). Prompts without a book_filter appear for all books.
+        -- use_surrounding = true
+        --   Prepend the passage around the highlight (ui.highlight:getSelectedWordContext) so the
+        --   model can resolve local references. Window: features.surrounding_context_words (default 90).
+        -- Note: to show prompts in the single-word dictionary popup, enable the
+        --   "show custom prompts in dictionary popup" setting (dict_popup_show_custom_prompts).
         prompts = {
 
             -- hide some prompts to keep the UI clean

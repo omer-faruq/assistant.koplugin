@@ -14,6 +14,9 @@ local T = require("ffi/util").template
 local Trapper = require("ui/trapper")
 local Prompts = require("assistant_prompts")
 local koutil = require("util")
+local Companion = require("assistant_companion")
+local ProviderOverride = require("assistant_provider_override")
+local ProviderContext = require("assistant_provider_context")
 local Device = require("device")
 local Screen = Device.screen
 local CheckButton = require("ui/widget/checkbutton")
@@ -56,8 +59,10 @@ function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText, user_in
   -- Calculate progress if placeholder is present  
   local formatted_progress = nil
   if user_prompt:find("{progress}", 1, true) then
-      local success, doc_settings = pcall(function() 
-          return require("docsettings"):open(self.assistant.ui.document.file) 
+      -- Fallback so {progress} is never left literal if the setting can't be read.
+      formatted_progress = "0"
+      local success, doc_settings = pcall(function()
+          return require("docsettings"):open(self.assistant.ui.document.file)
       end)
       if success and doc_settings then
           local percent_finished = doc_settings:readSetting("percent_finished") or 0
@@ -505,6 +510,26 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index, user_in
   highlightedText = highlightedText:gsub("\n", "\n\n") -- ensure newlines are doubled (LLM presumes markdown input)
 
   local user_content = self:_formatUserPrompt(koutil.tableGetValue(prompt_config, "user_prompt"), highlightedText, user_input or "")
+
+  -- For opted-in prompts, prepend the passage around the highlight so the model can
+  -- resolve local references. Kept in the user message (variable, never cached).
+  if koutil.tableGetValue(prompt_config, "use_surrounding")
+     and self.assistant.ui and self.assistant.ui.highlight
+     and self.assistant.ui.highlight.getSelectedWordContext then
+    local words = koutil.tableGetValue(self.CONFIGURATION, "features", "surrounding_context_words") or 90
+    local ok, prev, after = pcall(function()
+      return self.assistant.ui.highlight:getSelectedWordContext(words)
+    end)
+    if ok and ((prev and prev ~= "") or (after and after ~= "")) then
+      local passage = (prev or "") .. " «" .. highlightedText .. "» " .. (after or "")
+      local surrounding = "Passage around the highlight (the highlighted part is between « and »):\n\n"
+        .. passage
+        .. "\n\nUse the surrounding text only to understand context; focus your explanation on the highlighted text: \""
+        .. highlightedText .. "\".\n\n"
+      user_content = surrounding .. user_content
+    end
+  end
+
   local system_prompt = koutil.tableGetValue(prompt_config, "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
 
   if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
@@ -518,14 +543,35 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index, user_in
       role = "system",
       content = system_prompt,
     },
-    {
-      role = "user",
-      content = user_content,
-      user_input = user_input,
-    }
   }
-  
-  local answer, err = self.querier:query(message_history, string.format("🌐 Loading for %s ...", title or prompt_index))
+
+  -- Inject the per-book reference companion as a cacheable system block (opt-in per prompt).
+  -- The cache breakpoint sits on this block, so it also caches the instructions block above it;
+  -- keep both stable per session and keep variable content (highlight, progress) in the user block.
+  if koutil.tableGetValue(prompt_config, "use_companion") then
+    local doc = self.assistant.ui and self.assistant.ui.document
+    local book_file = doc and doc.file
+    local companion = book_file and Companion.loadCompanion(book_file) or nil
+    if companion then
+      table.insert(message_history, {
+        role = "system",
+        content = companion,
+        cache = true,
+      })
+    end
+  end
+
+  table.insert(message_history, {
+    role = "user",
+    content = user_content,
+    user_input = user_input,
+  })
+
+  local prompt_provider, prompt_model =
+    ProviderContext.resolveForPrompt(self.assistant.settings, prompt_config, self.assistant.CONFIGURATION)
+  local answer, err = ProviderOverride.runWithProvider(self.querier, prompt_provider, prompt_model, function()
+    return self.querier:query(message_history, string.format("🌐 Loading for %s ...", title or prompt_index))
+  end)
   if err then
     self.querier:showError(err)
     return

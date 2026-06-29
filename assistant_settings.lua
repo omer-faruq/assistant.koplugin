@@ -32,6 +32,7 @@ local ffiutil = require("ffi/util")
 local meta = require("_meta")
 local logger = require("logger")
 local koutil = require("util")
+local ProviderContext = require("assistant_provider_context")
 
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
@@ -179,6 +180,7 @@ local SettingsDialog = InputDialog:extend{
     assistant = nil, -- reference to the main assistant object
     CONFIGURATION = nil,
     settings = nil,
+    context = nil,
 
     -- widgets
     buttons = nil,
@@ -186,6 +188,8 @@ local SettingsDialog = InputDialog:extend{
 }
 
 function SettingsDialog:init()
+    self.context = self.context or ProviderContext.main(self.assistant)
+    self.title = self.context.is_companion and _("Book Companion Provider") or _("AI Provider Settings")
 
     self.title_bar_left_icon = "notice-info"
     self.title_bar_left_icon_tap_callback = function ()
@@ -196,11 +200,11 @@ function SettingsDialog:init()
     end
 
     -- action buttons
-    self.buttons = {{
+    local action_buttons = {
         {
             id = "select_model",
             text = _("Browse Models"),
-            enabled = self.assistant.querier.handler_name == "openrouter",
+            enabled = self.context:handlerNameFor(self.context:selectedProvider()) == "openrouter",
             callback = function() self:onSelectModel() end,
             hold_callback = function ()
                 UIManager:show(InfoMessage:new{
@@ -214,7 +218,15 @@ function SettingsDialog:init()
             text = _("Close"),
             callback = function() UIManager:close(self) end
         }
-    }}
+    }
+    if self.context.is_companion then
+        table.insert(action_buttons, 2, {
+            id = "reset_companion",
+            text = _("Use main provider"),
+            callback = function() self:onResetCompanion() end,
+        })
+    end
+    self.buttons = {action_buttons}
 
     -- init radio buttons for selecting AI Model provider
     self.radio_buttons = {} -- init radio buttons table
@@ -226,18 +238,7 @@ function SettingsDialog:init()
     for key, tab in ffiutil.orderedPairs(self.CONFIGURATION.provider_settings) do
         if not (FrontendUtil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
             if #buttonrow < columns then
-                local model_name
-                if key == self.assistant.querier.provider_name then
-                    model_name = self.assistant.querier.provider_settings.model
-                elseif key:sub(1, 10) == "openrouter" then
-                    model_name = self.settings:readSetting("openrouter_model_" .. key)
-                    if model_name == "" then
-                        model_name = self.assistant.querier.provider_settings.model
-                    end
-                else
-                    model_name = FrontendUtil.tableGetValue(tab, "model")
-                        or FrontendUtil.tableGetValue(tab, "deployment_name")
-                end
+                local model_name = self.context:modelLabelFor(key)
                 local button_text = key
                 if columns == 1 and model_name and model_name ~= "" then
                     button_text = string.format("%s (%s)", key, model_name)
@@ -246,7 +247,7 @@ function SettingsDialog:init()
                     text = button_text,
                     bold = (key:sub(1, 10) == "openrouter"),
                     provider = key, -- note: this `provider` field belongs to the RadioButton, not our AI Model provider.
-                    checked = (key == self.assistant.querier.provider_name),
+                    checked = self.context:isSelected(key),
                 })
             end
             if #buttonrow == columns then
@@ -277,9 +278,7 @@ function SettingsDialog:init()
         scroll = false,
         parent = self,
         button_select_callback = function(btn)
-            self.settings:saveSetting("provider", btn.provider)
-            self.assistant.updated = true
-            self.assistant.querier:load_model(btn.provider)
+            self.context:onSelect(btn.provider)
             self:updateSelectModelButton()
         end
     }
@@ -346,7 +345,7 @@ end
 function SettingsDialog:updateSelectModelButton()
     local btn = self.button_table:getButtonById("select_model")
     if btn then
-        if self.assistant.querier.handler_name == "openrouter" then
+        if self.context:handlerNameFor(self.context:selectedProvider()) == "openrouter" then
             btn:enable()
         else
             btn:disable()
@@ -358,14 +357,14 @@ end
 function SettingsDialog:onSelectModel()
     UIManager:close(self)
     local NetworkMgr = require("ui/network/manager")
-    local url = koutil.tableGetValue(self.assistant.querier, "provider_settings", "base_url")
-    if url ~= "" then
+    local url = self.context:baseUrlFor(self.context:selectedProvider())
+    if url and url ~= "" then
         url = url:gsub("/chat/.*$", "/models")
         NetworkMgr:runWhenOnline(function()
             local Trapper = require("ui/trapper")
             Trapper:wrap(function()
                 local showModelPicker = require("assistant_model_picker")
-                showModelPicker(self.assistant, self.close_callback, url)
+                showModelPicker(self.assistant, self.close_callback, url, self.context)
             end)
         end)
     else
@@ -376,12 +375,22 @@ function SettingsDialog:onSelectModel()
     end
 end
 
+function SettingsDialog:onResetCompanion()
+    -- UIManager:close triggers onCloseWidget, which fires close_callback (matches onSelectModel).
+    self.context:clearSelection()
+    UIManager:close(self)
+end
+
 function SettingsDialog:onCloseWidget()
     InputDialog.onCloseWidget(self)
     if self.close_callback then
         self.close_callback()
     end
-    self.assistant._settings_dialog = nil
+    if self.context and self.context.is_companion then
+        self.assistant._book_companion_dialog = nil
+    else
+        self.assistant._settings_dialog = nil
+    end
 end
 
 SettingsDialog.genMenuSettings = function (assistant)
