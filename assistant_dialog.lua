@@ -177,7 +177,8 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
     -- skips the first message (system prompt)
     for i = 2, #message_history do
       local message = message_history[i]
-      if not message.is_context then
+      local is_context = assistant_utils.get_attr(message, "is_context")
+      if not is_context then
         table.insert(result_parts, formatSingleMessage(message, title))
       end
     end
@@ -260,32 +261,26 @@ end
 
 function AssistantDialog:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question)
   local book = self:_getBookContext()
-  local context = {}
+  local content
   if highlightedText and highlightedText ~= "" then
-    context = {
-      role = "user",
-      is_context = true,
-      content = string.format([[I'm reading something titled '%s' by %s.
+    content = string.format([[I'm reading something titled '%s' by %s.
 I have a question about the following highlighted text: ```%s```.
 If the question is not clear enough, analyze the highlighted text.]],
-      book.title, book.author, highlightedText),
-    }
+      book.title, book.author, highlightedText)
   elseif book.title and book.author then
-    context = {
-      role = "user",
-      is_context = true,
-      content = string.format([[I'm reading something titled '%s' by %s.
-I have a question about this book.]], book.title, book.author),
-    }
+    content = string.format([[I'm reading something titled '%s' by %s.
+I have a question about this book.]], book.title, book.author)
   else
-    context = {
-      role = "user",
-      is_context = true,
-      content = string.format([[You are a helpful assistant. I have a question.]]),
-    }
+    content = string.format([[You are a helpful assistant. I have a question.]])
   end
 
+  local context = {
+      role = "user",
+      content = content,
+  }
+  assistant_utils.set_attr(context, "is_context", true)
   table.insert(message_history, context)
+
   local question_message = {
     role = "user",
     content = user_question
