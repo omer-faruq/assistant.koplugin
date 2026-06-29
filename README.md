@@ -140,6 +140,12 @@ The Assistant plugin adds AI-powered buttons (Wikipedia, Term X-Ray, Dictionary,
 - Try the pre-made buttons for quick analysis
 - Add your own custom prompts for specialized tasks
 
+## Book Companion
+
+The Book Companion feature lets you attach a pre-authored, comprehension-first reference to any book. When a `.companion.md` sidecar file is placed beside a book on the device, a **Book Companion** button appears in the highlight and dictionary popups for that book. Tapping it asks the AI to explain the highlighted passage using the companion as its primary, authoritative source — prioritizing characters, allusions, historical context, and untranslated phrases — while respecting your current reading progress so nothing ahead is spoiled.
+
+Companions are generated from a Calibre library, an ePub, or a plain-text source using the `book-companion` skill included in this repository. The generator runs an `ingest → harvest → write → verify` pipeline of stdlib-only Python scripts and produces a `<book-stem>.companion.md` file that is written both to the repository's `companions/` folder and beside the source book. You can also configure a dedicated provider and model for companion queries, separate from the plugin's global AI Provider. For the full details — sidecar naming and placement, prompt behavior, provider selection, and how to run the generator — see [docs/book-companion.md](docs/book-companion.md).
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):

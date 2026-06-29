@@ -23,7 +23,10 @@ local N_ = _.ngettext
 local AssistantDialog = require("assistant_dialog")
 local UpdateChecker = require("assistant_update_checker")
 local Prompts = require("assistant_prompts")
+local BookFilter = require("assistant_book_filter")
+local Companion = require("assistant_companion")
 local SettingsDialog = require("assistant_settings")
+local ProviderContext = require("assistant_provider_context")
 local showDictionaryDialog = require("assistant_dictdialog")
 
 local Assistant = InputContainer:new {
@@ -296,6 +299,20 @@ function Assistant:addToMainMenu(menu_items)
                 end,
               },
               {
+                text_func = function ()
+                  local p = self.settings:readSetting("book_companion_provider")
+                  if not p or p == "" then return _("Book Companion Provider: Not set") end
+                  local m = self.settings:readSetting("book_companion_model_" .. p)
+                  return T(_("Book Companion Provider: %1(%2)"), p, m or _("default"))
+                end,
+                keep_menu_open = true,
+                callback = function (touchmenu_instance)
+                  self:showBookCompanionSettings(function ()
+                    touchmenu_instance:updateItems()
+                  end)
+                end,
+              },
+              {
                 text = _("AI Assistant Settings"),
                 sub_item_table_func = function ()
                   return SettingsDialog.genMenuSettings(self)
@@ -393,6 +410,20 @@ function Assistant:addToMainMenu(menu_items)
                     end,
                 },
                 {
+                    text_func = function ()
+                      local p = self.settings:readSetting("book_companion_provider")
+                      if not p or p == "" then return _("Book Companion Provider: Not set") end
+                      local m = self.settings:readSetting("book_companion_model_" .. p)
+                      return T(_("Book Companion Provider: %1(%2)"), p, m or _("default"))
+                    end,
+                    keep_menu_open = true,
+                    callback = function (touchmenu_instance)
+                      self:showBookCompanionSettings(function ()
+                        touchmenu_instance:updateItems()
+                      end)
+                    end,
+                },
+                {
                     text = _("AI Assistant Settings"),
                     sub_item_table_func = function ()
                       return SettingsDialog.genMenuSettings(self)
@@ -480,6 +511,26 @@ function Assistant:showSettings(close_callback)
 
   self._settings_dialog = settingDlg -- store reference to the dialog
   UIManager:show(settingDlg)
+end
+
+function Assistant:showBookCompanionSettings(close_callback)
+  if not self:isConfigured() then return end
+
+  if self._book_companion_dialog then
+    UIManager:show(self._book_companion_dialog)
+    return
+  end
+
+  local dlg = SettingsDialog:new{
+      assistant = self,
+      CONFIGURATION = CONFIGURATION,
+      settings = self.settings,
+      close_callback = close_callback,
+      context = ProviderContext.bookCompanion(self),
+  }
+
+  self._book_companion_dialog = dlg
+  UIManager:show(dlg)
 end
 
 function Assistant:getModelId()
@@ -687,8 +738,25 @@ function Assistant:init()
     end
 
     -- Add Custom buttons to main select popup menu
+    -- (already inside `if self.ui.document then`, so only getProps needs guarding)
+    local book_props = self.ui.document.getProps and self.ui.document:getProps() or {}
+    local has_companion = Companion.hasCompanion(self.ui.document.file)
     local showOnMain = Prompts.getSortedCustomPrompts(function (prompt, idx)
       if prompt.visible == false then
+        return false
+      end
+
+      -- Companion prompts surface whenever the current book has a sibling
+      -- <book>.companion.md sidecar. The file's presence is the per-book
+      -- linkage (instead of book_filter), so the button auto-appears and
+      -- persists across restarts by construction -- it depends on the file,
+      -- not a saved toggle or the book's (possibly missing) title metadata.
+      if prompt.use_companion then
+        return has_companion and prompt.show_on_main_popup == true
+      end
+
+      -- Book-scoped prompts only appear for matching books (nil filter matches all).
+      if not BookFilter.matches(prompt.book_filter, book_props) then
         return false
       end
 
@@ -861,16 +929,29 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg)
   end
 
   if self.settings:readSetting("dict_popup_show_custom_prompts", false) then
-    -- Collect custom prompts with show_on_dictionary_popup = true
+    -- Collect prompts (built-in + configured) flagged for the dictionary popup,
+    -- honoring per-prompt book_filter so book-scoped prompts only show for their book.
     local custom_prompts = {}
-    if CONFIGURATION and CONFIGURATION.features and CONFIGURATION.features.prompts then
-      for prompt_key, prompt_config in pairs(CONFIGURATION.features.prompts) do
-        if prompt_config.show_on_dictionary_popup == true and prompt_config.visible ~= false then
-          table.insert(custom_prompts, {
-            id = prompt_key,
-            config = prompt_config
-          })
-        end
+    local book_props = (self.ui and self.ui.document and self.ui.document.getProps)
+      and self.ui.document:getProps() or {}
+    local book_filepath = self.ui and self.ui.document and self.ui.document.file
+    local has_companion = Companion.hasCompanion(book_filepath)
+    local merged = Prompts.getMergedCustomPrompts(FrontendUtil.tableGetValue(CONFIGURATION, "features", "prompts"))
+    for prompt_key, prompt_config in pairs(merged) do
+      -- Companion prompts are gated by the presence of the book's .companion.md
+      -- sidecar; other book-scoped prompts use book_filter.
+      local book_ok
+      if prompt_config.use_companion then
+        book_ok = has_companion
+      else
+        book_ok = BookFilter.matches(prompt_config.book_filter, book_props)
+      end
+      if prompt_config.show_on_dictionary_popup == true and prompt_config.visible ~= false
+         and book_ok then
+        table.insert(custom_prompts, {
+          id = prompt_key,
+          config = prompt_config
+        })
       end
     end
 

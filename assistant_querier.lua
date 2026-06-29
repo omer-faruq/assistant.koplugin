@@ -159,7 +159,8 @@ end
 local function trimMessageHistory(message_history)
     local trimed_history = {}
     for i, message in ipairs(message_history) do
-        trimed_history[i] = { role = message.role, content = message.content, }
+        -- Preserve `cache` so Anthropic prompt-caching flags survive to the handler.
+        trimed_history[i] = { role = message.role, content = message.content, cache = message.cache, }
     end
     return trimed_history
 end
