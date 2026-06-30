@@ -220,6 +220,8 @@ function Querier:query(message_history, title)
                           and user_setting_ws or "none",
     }
 
+    local is_added_maximum_prompt = false
+
     -- reuseable function for both strem mode / non-strem mode
     local function executeSearch(tool_calls_array, tool_rounds)
         local err
@@ -235,9 +237,16 @@ function Querier:query(message_history, title)
             end
 
             -- Execute web search via ToolExecutor
-            local search_ok, search_result = ToolExecutor.executeWebSearch(keywords,
-                    query_option.use_websearch,
-                    self.handler, tool_rounds+i)
+            local search_ok, search_result
+            if tool_rounds+i <= MAX_TOOL_ROUNDS then
+                search_ok, search_result = ToolExecutor.executeWebSearch(keywords,
+                            query_option.use_websearch,
+                            self.handler, tool_rounds+i)
+            else
+                is_added_maximum_prompt = true
+                search_ok = true
+                search_result = Prompts.maximum_tool_use_prompt
+            end
             if not search_ok then
                 err = search_result or "Not all search succeeds"
                 logger.warn("search err", err)
@@ -252,7 +261,7 @@ function Querier:query(message_history, title)
 
         -- Append a "maximum tool used" result notice to the LLM
         -- should be stop calling tools the next round
-        if tool_rounds + #search_results >= MAX_TOOL_ROUNDS then
+        if not is_added_maximum_prompt and (tool_rounds + #search_results >= MAX_TOOL_ROUNDS) then
             search_results[#search_results].search_result =
                 search_results[#search_results].search_result .. Prompts.maximum_tool_use_prompt
         end
@@ -328,17 +337,15 @@ function Querier:query(message_history, title)
             end
 
             local search_ok, search_results
-            if tool_rounds < MAX_TOOL_ROUNDS then
-                search_ok, search_results = executeSearch(tool_calls_array, tool_rounds)
-                tool_rounds = tool_rounds + #search_results
-            end
+            search_ok, search_results = executeSearch(tool_calls_array, tool_rounds)
             if not search_ok then
                 res = nil
                 err = search_results
-                logger.warn("failed to executeSearch", search_results,
+                logger.warn("failed to executeSearch at round", tool_rounds, "DETAIL", search_results,
                                         content, tool_calls_array)
                 break
             end
+            tool_rounds = tool_rounds + #search_results
 
             local append_ok, append_err = ToolExecutor.appendToolResult(message_history, {
                     raw_assistant  = raw_assistant,
