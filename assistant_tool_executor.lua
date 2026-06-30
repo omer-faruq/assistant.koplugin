@@ -16,7 +16,7 @@ local json = require("rapidjson")
 local assistant_utils = require("assistant_utils")
 local json_default = assistant_utils.json_default
 
-local SEARCH_API_CONF = {
+local EXT_SEARCH_API_CONF = {
     serpapi   = { base_url = nil, api_key = ""},
     tavilyapi = { base_url = nil, api_key = ""},
 }
@@ -30,7 +30,7 @@ local SEARCH_API_CONF = {
 -- ---------------------------------------------------------------------------
 
 local function serpAPISearchRequest(handler, keywords)
-    local serpconfig = SEARCH_API_CONF.serpapi
+    local serpconfig = EXT_SEARCH_API_CONF.serpapi
     local base_url = serpconfig.base_url or "https://serpapi.com/search"
     local key      = serpconfig.api_key
     local q        = koutil.urlEncode(keywords)
@@ -76,7 +76,7 @@ local function serpAPISearchRequest(handler, keywords)
 end
 
 local function tavilyAPISearchRequest(handler, keywords)
-    local tavilyconfig = SEARCH_API_CONF.tavilyapi
+    local tavilyconfig = EXT_SEARCH_API_CONF.tavilyapi
     local base_url = tavilyconfig.base_url or "https://api.tavily.com/search"
     local key      = tavilyconfig.api_key
 
@@ -197,18 +197,19 @@ end
 local ToolExecutor = {}
 
 --- Exposed func to set module variable
-function ToolExecutor.setSearchAPIConfig(key, config)
-    if config then
-        local conf = SEARCH_API_CONF[key]
-
-        -- avoid table referance
-        if config.api_key and config.api_key ~= "" then
-            conf.api_key = config.api_key
-        end
-        if config.base_url and config.base_url ~= "" then
-            conf.base_url = config.base_url
+function ToolExecutor.setSearchAPIConfig(CONFIGURATION)
+    for api, config in pairs(EXT_SEARCH_API_CONF) do
+        local c = koutil.tableGetValue(CONFIGURATION, "provider_settings", api)
+        if c then
+            if c.api_key then config.api_key = c.api_key end
+            if c.base_url then config.base_url = c.base_url end
         end
     end
+end
+
+--- Exposed func to verify API key variable
+function ToolExecutor.IsExtSearch(key)
+    return EXT_SEARCH_API_CONF[key] ~= nil
 end
 
 --- Execute a web search using the configured search service.

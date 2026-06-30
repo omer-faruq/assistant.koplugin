@@ -2,6 +2,7 @@ local BaseHandler = require("api_handlers.base")
 local json = require("json")
 local koutil = require("util")
 local logger = require("logger")
+local ToolExecutor = require("assistant_tool_executor")
 
 local AnthropicHandler = BaseHandler:new()
 
@@ -86,7 +87,7 @@ function AnthropicHandler:query(message_history, anthropic_settings, query_optio
     -- -----------------------------------------------------------------------
     if query_option.use_stream_mode then
         local stream_tools = nil
-        if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        if ToolExecutor.IsExtSearch(ws_mode) then
             stream_tools = { self:buildExternalSearchToolDef("anthropic") }
         end
         local body = buildRequestBody(message_history, anthropic_settings, stream_tools, true)
@@ -101,7 +102,7 @@ function AnthropicHandler:query(message_history, anthropic_settings, query_optio
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
     local requestBody
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+    if ToolExecutor.IsExtSearch(ws_mode) then
         local search_tool = { self:buildExternalSearchToolDef("anthropic") }
         requestBody = buildRequestBody(message_history, anthropic_settings, search_tool, false)
     else

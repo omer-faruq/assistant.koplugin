@@ -402,10 +402,10 @@ SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
             if key == "none" or key == "builtin" then
                 return true
             end
-            if key == "serpapi" then
-                return koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", "serpapi", "api_key") ~= nil
-            elseif key == "tavilyapi" then
-                return koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", "tavilyapi", "api_key") ~= nil
+            if ToolExecutor.IsExtSearch(key) then
+                return 
+                    (koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", key, "api_key") ~= nil) or
+                    (koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", key, "base_url") ~= nil)
             end
             return false --
         end

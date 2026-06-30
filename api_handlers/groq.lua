@@ -5,6 +5,7 @@ local logger = require("logger")
 local UIManager = require("ui/uimanager")  
 local Trapper = require("ui/trapper")
 local time = require("ui/time")  
+local ToolExecutor = require("assistant_tool_executor")
 
 local groqHandler = BaseHandler:new()
 local LAST_CALLED = 0
@@ -95,7 +96,7 @@ function groqHandler:query(message_history, groq_settings, query_option)
         -- Built-in web search for groq/compound* models
         if ws_mode == "builtin" and groq_settings.model:find("^groq/compound") then
             body.compound_custom = { tools = { enabled_tools = { "web_search", "visit_website" } } }
-        elseif ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        elseif ToolExecutor.IsExtSearch(ws_mode) then
             body.tools = { self:buildExternalSearchToolDef("openai") }
         end
         local requestBody = json.encode(body)
@@ -110,7 +111,7 @@ function groqHandler:query(message_history, groq_settings, query_option)
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
     local tools
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+    if ToolExecutor.IsExtSearch(ws_mode) then
         tools = { self:buildExternalSearchToolDef("openai") }
     end
     local body = buildRequestBody(message_history, groq_settings, tools, false)

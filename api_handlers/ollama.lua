@@ -2,6 +2,7 @@ local BaseHandler = require("api_handlers.base")
 local json = require("json")
 local koutil = require("util")
 local logger = require("logger")
+local ToolExecutor = require("assistant_tool_executor")
 
 local OllamaHandler = BaseHandler:new()
 
@@ -41,7 +42,7 @@ function OllamaHandler:query(message_history, ollama_settings, query_option)
         -- The Querier's stream tool-call loop will detect it and execute the search.
         -- Note: tool-call support depends on the specific Ollama model in use.
         local stream_tools = nil
-        if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+        if ToolExecutor.IsExtSearch(ws_mode) then
             stream_tools = { self:buildExternalSearchToolDef("openai") }
         end
         local requestBodyTable = buildRequestBody(message_history, stream_tools)
@@ -57,7 +58,7 @@ function OllamaHandler:query(message_history, ollama_settings, query_option)
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
     local tools
-    if ws_mode == "serpapi" or ws_mode == "tavilyapi" then
+    if ToolExecutor.IsExtSearch(ws_mode) then
         tools = { self:buildExternalSearchToolDef("openai") }
     end
     local requestBodyTable = buildRequestBody(message_history, tools)

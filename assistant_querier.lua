@@ -91,6 +91,8 @@ function Querier:load_model(provider_name)
     end
 
     local CONFIGURATION = self.assistant.CONFIGURATION
+
+    ToolExecutor.setSearchAPIConfig(CONFIGURATION)
     local provider_setting = koutil.tableGetValue(CONFIGURATION, "provider_settings", provider_name)
     if not provider_setting then
         local err = T(_("Provider settings not found for: %1. Please check your configuration.lua file."),
@@ -98,8 +100,6 @@ function Querier:load_model(provider_name)
         logger.warn("Querier initialization failed: " .. err)
         return false, err
     end
-    ToolExecutor.setSearchAPIConfig("serpapi", koutil.tableGetValue(CONFIGURATION, "provider_settings", "serpapi"))
-    ToolExecutor.setSearchAPIConfig("tavilyapi", koutil.tableGetValue(CONFIGURATION, "provider_settings", "tavilyapi"))
 
     local handler_name
     local underscore_pos = provider_name:find("_")
