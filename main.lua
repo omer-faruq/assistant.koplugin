@@ -220,7 +220,7 @@ function Assistant:addToMainMenu(menu_items)
               {
                   text_func = function ()
                     local key = self.settings:readSetting("use_websearch", "none")
-                    local text = ToolExecutor.SettingkeyToText(key)
+                    local text = ToolExecutor.ToolToText(key)
                       return T(_("Smart Web Search: %1"), text)
                   end,
                   hold_callback = function ()
@@ -228,12 +228,7 @@ function Assistant:addToMainMenu(menu_items)
                           text = _("Improves response accuracy with real-time web results. \nNote: Higher token usage and additional API charges apply.")
                       })
                   end,
-                  sub_item_table = {
-                      SettingsDialog.genWebSearchSubMenuItem(self, "none"),
-                      SettingsDialog.genWebSearchSubMenuItem(self, "builtin"),
-                      SettingsDialog.genWebSearchSubMenuItem(self, "serpapi"),
-                      SettingsDialog.genWebSearchSubMenuItem(self, "tavilyapi"),
-                  },
+                  sub_item_table = {},
               },
               {
                 text = _("AI Assistant Settings"),
@@ -242,6 +237,12 @@ function Assistant:addToMainMenu(menu_items)
                 end
               }
             }
+          
+  -- append External Search tools menu item
+  for _, n in ipairs(ToolExecutor.SEARCH_API_NAMES) do
+    table.insert(common_items_table[5].sub_item_table,
+      SettingsDialog.genWebSearchSubMenuItem(self, n))
+  end
 
   local book_level_items = {
               {

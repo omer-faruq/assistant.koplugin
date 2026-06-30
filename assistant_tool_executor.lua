@@ -16,9 +16,21 @@ local json = require("rapidjson")
 local assistant_utils = require("assistant_utils")
 local json_default = assistant_utils.json_default
 
+-- Tool Config
 local EXT_SEARCH_API_CONF = {
     serpapi   = { base_url = nil, api_key = ""},
     tavilyapi = { base_url = nil, api_key = ""},
+}
+
+-- MENU loads items order
+local SEARCH_API_NAMES = { "none", "builtin", "serpapi", "tavilyapi" }
+
+--- This define tools to be display on UI
+local TOOLToTEXT = {
+        ["none"] = _("None"),
+        ["builtin"] = _("Model Built-In"),
+        ["serpapi"] = "Serp API",
+        ["tavilyapi"] = "Tavily API"
 }
 -- ---------------------------------------------------------------------------
 -- External-search two-stage flow (used by handlers that don't natively
@@ -195,6 +207,7 @@ end
 
 
 local ToolExecutor = {}
+ToolExecutor.SEARCH_API_NAMES = SEARCH_API_NAMES
 
 --- Exposed func to set module variable
 function ToolExecutor.setSearchAPIConfig(CONFIGURATION)
@@ -231,7 +244,7 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round)
     local keywordmsg = InfoMessage:new({
         face = Font:getFace("smallinfofont"),
         icon = "appbar.search",
-        text = T(_("Searching with %1 ... [%2]\n\n%3"), ToolExecutor.SettingkeyToText(ws_mode), tool_round, keywords),
+        text = T(_("Searching with %1 ... [%2]\n\n%3"), ToolExecutor.ToolToText(ws_mode), tool_round, keywords),
     })
     UIManager:show(keywordmsg)
     handler:setTrapWidget(keywordmsg)
@@ -559,14 +572,8 @@ Return exactly one concise search query string.]]
     end
 end
 
-function ToolExecutor.SettingkeyToText(key)
-    local ToolText = { 
-        ["none"] = _("None"),
-        ["builtin"] = _("Model Built-In"),
-        ["serpapi"] = "Serp API",
-        ["tavilyapi"] = "Tavily API"
-    }
-    return ToolText[key]
+function ToolExecutor.ToolToText(key)
+    return TOOLToTEXT[key] or ""
 end
 
 return ToolExecutor

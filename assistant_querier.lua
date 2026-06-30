@@ -379,7 +379,7 @@ function Querier:query(message_history, title)
             self.provider_name,
             koutil.tableGetValue(self.provider_setting, "model"))
         if query_option.use_websearch ~= "none" then
-            notify = notify .. "\n" .. _("With Search: ") .. ToolExecutor.SettingkeyToText(query_option.use_websearch)
+            notify = notify .. "\n" .. _("With Search: ") .. ToolExecutor.ToolToText(query_option.use_websearch)
         end
         local infomsg = InfoMessage:new{ icon = "book.opened", text = notify }
         UIManager:show(infomsg)
@@ -787,9 +787,9 @@ function Querier:processStream(bgQuery, trunk_callback)
     local is_reasoning_in_ret = ret:sub(1, 7) == "<think>"
 
     if show_reasoning then
-        local reasoning = reasoning_content_buffer:get():gsub("^%.+", "", 1):gsub("\n", "<br>")
-        if #reasoning > 0 then
-            ret = T('#### ※%1\n\n<div class="reasoningtext">%2</div>\n\n---\n\n', _("Deeply Thought"), reasoning) .. ret
+        if #reasoning_content_buffer > 0 then
+            local reasoning = reasoning_content_buffer:get():gsub("\n", "<br>"):gsub("<suggestions>", "")
+            ret = T('#### ※ %1\n\n<div class="reasoningtext">%2</div>\n\n---\n\n%3', _("Deeply Thought"), reasoning, ret)
         elseif is_reasoning_in_ret then
             ret = ret
                 :gsub("<think>",  T("#### ※%1\n\n<pre>", _("Deeply Thought")), 1)

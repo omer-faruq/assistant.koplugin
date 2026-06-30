@@ -389,7 +389,7 @@ end
 
 SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
     return {
-        text = ToolExecutor.SettingkeyToText(key),
+        text = ToolExecutor.ToolToText(key),
         radio = true,
         checked_func = function ()
             return assistant.settings:readSetting("use_websearch", "none") == key
