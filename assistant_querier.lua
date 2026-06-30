@@ -221,19 +221,16 @@ function Querier:query(message_history, title)
     }
 
     -- reuseable function for both strem mode / non-strem mode
-    local function executeResearch(tool_calls_array, tool_rounds)
+    local function executeSearch(tool_calls_array, tool_rounds)
         local err
         local search_results = {}
         for i, tool_call in ipairs(tool_calls_array) do
 
             -- Decode keywords from tool call arguments
             local tool_call_id, keywords, extract_err = ToolExecutor.extractKeywords(tool_call)
-            if extract_err then
+            if extract_err or not tool_call_id or not keywords then
                 err = extract_err
-                break
-            end
-            if not tool_call_id or not keywords then
-                err = "executeResearch: Keyword extraction error"
+                logger.warn("executeSearch", err, "tool_call", tool_call)
                 break
             end
 
@@ -242,8 +239,8 @@ function Querier:query(message_history, title)
                     query_option.use_websearch,
                     self.handler, tool_rounds+i)
             if not search_ok then
-                logger.warn("search err", search_result)
                 err = search_result or "Not all search succeeds"
+                logger.warn("search err", err)
                 break
             end
             table.insert(search_results, {
@@ -332,13 +329,14 @@ function Querier:query(message_history, title)
 
             local search_ok, search_results
             if tool_rounds < MAX_TOOL_ROUNDS then
-                search_ok, search_results = executeResearch(tool_calls_array, tool_rounds)
+                search_ok, search_results = executeSearch(tool_calls_array, tool_rounds)
                 tool_rounds = tool_rounds + #search_results
             end
             if not search_ok then
                 res = nil
                 err = search_results
-                logger.warn("failed to executeResearch", content, tool_calls_array)
+                logger.warn("failed to executeSearch", search_results,
+                                        content, tool_calls_array)
                 break
             end
 
@@ -398,13 +396,13 @@ function Querier:query(message_history, title)
                 -- Build tool result and append to history
                 local search_ok, search_results
                 if tool_rounds < MAX_TOOL_ROUNDS then
-                    search_ok, search_results = executeResearch(res.tool_calls, tool_rounds)
+                    search_ok, search_results = executeSearch(res.tool_calls, tool_rounds)
                     tool_rounds = tool_rounds + #search_results
                 end
                 if not search_ok then
                     res = nil
                     err = search_results
-                    logger.warn("failed to executeResearch", res)
+                    logger.warn("failed to executeSearch", res)
                     break
                 end
                 tool_rounds = tool_rounds + #search_results
