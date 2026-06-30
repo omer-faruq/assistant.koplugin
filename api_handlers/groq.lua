@@ -8,22 +8,33 @@ local time = require("ui/time")
 
 local groqHandler = BaseHandler:new()
 local LAST_CALLED = 0
-local API_CALL_DEBOUNCE_DELAY = time.s(30)
+local API_CALL_DEBOUNCE_DELAY = time.s(15)
 
 local function sleepWithInfo(seconds, info_text)
     local _coroutine = coroutine.running()
-    local go_on = Trapper:info(info_text)
-    if not go_on then
-        return false
+    local refresh_interval = 1
+    local remaining = seconds
+    while remaining > 0 do
+        local wait_time = math.min(remaining, refresh_interval)
+        local display_text = string.format("%s (%d seconds)", info_text, math.ceil(remaining))
+        local go_on = Trapper:info(display_text, remaining < seconds)
+        if not go_on then
+            Trapper:clear()
+            return false
+        end
+        local resume_func = function() coroutine.resume(_coroutine, true) end
+        UIManager:scheduleIn(wait_time, resume_func)
+        local result = coroutine.yield()
+        UIManager:unschedule(resume_func)
+        if not result then
+            Trapper:clear()
+            return false
+        end
+        remaining = remaining - wait_time
     end
-    local resume_func = function() coroutine.resume(_coroutine, true) end
-    UIManager:scheduleIn(seconds, resume_func)
-    local result = coroutine.yield()
-    UIManager:unschedule(resume_func)
     Trapper:clear()
-    return result
+    return true
 end
-
 
 --- Build the Groq request body.
 --- @param messages  table
@@ -68,7 +79,7 @@ function groqHandler:query(message_history, groq_settings, query_option)
         if current_time - LAST_CALLED < API_CALL_DEBOUNCE_DELAY then
             local time_since_last_request = current_time - LAST_CALLED
             local delay_secs = time.to_number(API_CALL_DEBOUNCE_DELAY - time_since_last_request)
-            if not sleepWithInfo(delay_secs, string.format("API wait %d seconds", delay_secs)) then
+            if not sleepWithInfo(delay_secs, string.format("Groq API Wait", delay_secs)) then
                 return nil, self.CODE_CANCELLED
             end
         end
