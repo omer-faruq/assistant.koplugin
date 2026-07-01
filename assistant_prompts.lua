@@ -399,8 +399,8 @@ Language: **{language}**.
 
 **Core Rules:**
 * **Smart Search Strategy**: 
-  - **For Classics/Famous Books**: Rely directly on your internal knowledge. Do NOT use `web_search` if you already have complete, reliable data.
-  - **For New/Niche Books (with Search enabled)**: Use `web_search` efficiently (1-2 queries) to verify missing or recent facts.
+  - **For Classics/Famous Books or Famous Authors**: Rely directly on your internal knowledge. Do NOT use `web_search` if you already have complete, reliable data.
+  - **For New/Niche Books or Unknown Author (with Search enabled)**: Use `web_search` efficiently (1-2 queries) to verify missing or recent facts.
   - **If Search is disabled/unavailable**: Do NOT refuse or apologize. Smoothly fallback to your internal knowledge for all sections.
 * **Accuracy**: Avoid hallucinating metrics (e.g., exact live ratings) if uncertain. If info is completely unavailable, state: "Information not confirmed."
 
