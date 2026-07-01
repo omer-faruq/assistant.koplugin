@@ -17,15 +17,22 @@ local assistant_utils = require("assistant_utils")
 local json_default = assistant_utils.json_default
 
 
--- MENU loads items order
-local SEARCH_API_NAMES = { "none", "builtin", "serpapi", "tavilyapi" }
+-- MENU order of search tools
+local SEARCH_API_NAMES = { 
+    "none",
+    "builtin",
+    "serpapi",
+    "tavilyapi",
+    "searxngapi"
+ }
 
---- This define tools to be display on UI
+--- This define the text of Tools being display on UI
 local TOOLToTEXT = {
         ["none"] = _("None"),
         ["builtin"] = _("Model Built-In"),
         ["serpapi"] = "Serp API",
-        ["tavilyapi"] = "Tavily API"
+        ["tavilyapi"] = "Tavily API",
+        ["searxngapi"] = "SearXNG API",
 }
 -- ---------------------------------------------------------------------------
 -- External-search two-stage flow (used by handlers that don't natively
@@ -190,11 +197,53 @@ function tarvily:AccoutInfo()
     return true, ret
 end
 
+local searxng = SearchToolBase:new({ base_url = "http://localhost" })
+function searxng:SearchKeywords(handler, keywords)
+    local search_url = self.base_url .. "/search"
+    local q        = koutil.urlEncode(keywords)
+    local url      = T("%1?q=%2&format=json", search_url, q)
 
--- Tool Config
+    local timeout = 45
+    local maxtime = 120
+
+    local completed, success, code, content =
+        Trapper:dismissableRunInSubprocess(function()
+            return assistant_utils.httpRequest(url, timeout, maxtime, nil, nil, nil)
+        end, handler.trap_widget)
+
+    if not completed then return false, handler.CODE_CANCELLED end
+    if not success or code ~= 200 then return false, content end
+
+    local ok, parsed = pcall(json.decode, content)
+    if not ok or not parsed or not parsed.results then
+        return false, "fail to parse searxng return"
+    end
+
+    local segments = strbuf.new()
+    segments:put("## Web Search Results:\n")
+    for i, item in ipairs(parsed.results) do
+        segments:put("---")
+        segments:putf("### Source %d: %s", i, json_default(item.title, "Untitled"))
+        segments:put("* URL: ")
+        segments:put(json_default(item.url, "N/A"))
+        segments:put("\n")
+        segments:put("* Summary: ")
+        segments:put(json_default(item.content, ""))
+        segments:put("\n")
+    end
+    segments:put("\n")
+    return true, segments:get()
+end
+function searxng:AccoutInfo()
+    return true, "SearXNG Service"
+end
+
+
+-- Tools Object Config
 local EXT_SEARCH_API_CONF = {
     serpapi   = serp,
     tavilyapi = tarvily,
+    searxngapi = searxng,
 }
 
 ---- Build the messages_to_append list once a search result is available.
@@ -274,7 +323,7 @@ function ToolExecutor.SetSearchAPIConfig(CONFIGURATION)
         local c = koutil.tableGetValue(CONFIGURATION, "provider_settings", api)
         if c then
             if c.api_key then tool.api_key = c.api_key end
-            if c.base_url then tool.base_url = c.base_url end
+            if c.base_url then tool.base_url = c.base_url:gsub("/+$", "") end
         end
     end
 end
