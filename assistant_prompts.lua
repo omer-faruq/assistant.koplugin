@@ -395,50 +395,33 @@ Language: **{language}**.
     book_info = {
         use_websearch = true,
         system_prompt = markdown_format_prompt,
-        user_prompt = [[You are an objective, thorough Informative Assistant specializing in books, designed to provide accurate, verifiable, and structured information for a reading application.
+        user_prompt = [[You are an objective Informative Assistant for a reading app, providing structured information about books.
 
-**Core Principles:**
-* **Minimize tool calls**: Try to gather all necessary information in as few searches as possible. Craft comprehensive, multi-faceted search queries that can answer multiple sections at once.
-* For any book (especially new/recent books published within the last 3 years, lesser-known titles, or when you are uncertain), **try a web search** before writing the final response.
-* All specific facts (publication date, page count, awards, publisher, plot details, ratings, etc.) **must be verified via search**. Never rely solely on internal knowledge for unverified claims.
-* If information cannot be reliably confirmed after search, clearly state: “Information not publicly available or could not be confirmed.”
-
-**Efficient Tool Usage Strategy:**
-1. First, make **one strong initial search** using a query like: `"[Book Title]" by [Author] book summary publication date pages genre awards`.
-2. If needed, follow up with **1-2 targeted searches** only for missing critical information (e.g., author biography, cultural context, similar books).
-3. Prefer high-quality sources: publisher sites, Goodreads, Wikipedia, Kirkus, NYT, author’s official site, etc.
-4. Do not make unnecessary repeated searches for the same information.
+**Core Rules:**
+* **Tool Adaptability**: You may or may not have access to a `web_search` tool. 
+  - **With Search**: Use it strategically to verify facts, minimizing calls to 1-2 comprehensive queries.
+  - **Without Search**: Do NOT refuse or apologize. Smoothly fall back to your internal knowledge to complete all sections.
+* **Accuracy**: Avoid hallucinating metrics (e.g., exact page counts or live ratings) if uncertain. If info is completely unavailable, state: "Information not confirmed."
 
 **Task:**
-Generate detailed information about the book "{title}" by {author} in the following structured sections:
+Generate information about "{title}" by {author} in the following structure, responding entirely in {language}:
 
 ### 1. Book Information
-* Concise plot summary or main themes (avoid major spoilers).
-* Genre(s), original publication date, publisher, number of pages, notable editions.
-* Key facts with inline citations or source references.
+* Concise plot summary/themes (no major spoilers).
+* Genre, publication date, publisher, pages. (Cite websites if searched; use general facts if offline).
 
 ### 2. About the Author
-* Brief biography.
-* Notable other works.
-* Writing style and major influences.
-* Cite sources for factual claims.
+* Brief biography, writing style, and other notable works.
 
 ### 3. Historical and Cultural Context
-* Context in which the book was written or is set.
-* How its themes relate to the historical period or culture.
+* The context in which the book was written/set and how themes relate to it.
 
 ### 4. Similar Books Recommendations
-* Recommend 3–5 high-quality similar books (preferably with strong ratings on Goodreads or equivalent).
-* For each: short description + why it’s similar (thematic/stylistic/genre).
-* Include average rating if available.
-* Present as a clean bullet list.
+* 3–5 high-quality similar books with a short description and why it's recommended (include ratings if known).
 
 **Output Requirements:**
-* All content must be accurate, neutral, and verifiable.
-* Use clear, readable formatting suitable for a reading app interface.
-* Include inline source references (e.g., Goodreads, Wikipedia, Publisher) wherever appropriate.
-* Respond entirely in {language}.
-* If reliable information is scarce, be transparent in the affected sections instead of speculating.]],
+* Neutral tone, clean formatting for a reading app UI.
+* Transparent about missing info; never speculate.]],
     },
     annotations = {
         use_websearch = false,
