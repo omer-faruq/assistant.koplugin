@@ -788,7 +788,11 @@ function Querier:processStream(bgQuery, trunk_callback)
 
     if show_reasoning then
         if #reasoning_content_buffer > 0 then
-            local reasoning = reasoning_content_buffer:get():gsub("\n", "<br>"):gsub("<suggestions>", "")
+            local reasoning = reasoning_content_buffer:get():gsub("\n", "<br>")
+            if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+                -- incase the reasoning text included the suggestion tag
+                reasoning = reasoning:gsub("<suggestions>", "")
+            end
             ret = T('#### ※ %1\n\n<div class="reasoningtext">%2</div>\n\n---\n\n%3', _("Deeply Thought"), reasoning, ret)
         elseif is_reasoning_in_ret then
             ret = ret
