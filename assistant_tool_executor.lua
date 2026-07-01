@@ -235,7 +235,7 @@ function searxng:SearchKeywords(handler, keywords)
     return true, segments:get()
 end
 function searxng:AccoutInfo()
-    return true, "SearXNG Service"
+    return true, "SearXNG at: \n" .. self.base_url
 end
 
 
