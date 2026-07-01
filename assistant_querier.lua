@@ -117,7 +117,13 @@ function Querier:load_model(provider_name)
     if success then
         self.handler = handler
         self.handler_name = handler_name
-        -- Shallow copy to avoid mutating CONFIGURATION
+        
+        if ToolExecutor.getHandlerFormat(handler_name) == "openai" then
+            -- needed to be found on the first query
+            self.reasoning_key = nil
+        end
+
+        -- Deep copy to avoid mutating CONFIGURATION
         self.provider_setting = koutil.tableDeepCopy(provider_setting)
         self.provider_name = provider_name
         -- Apply saved OpenRouter model override
@@ -862,11 +868,15 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                 end
 
                 result_content    = json_default(cdelta.content, "")
+                if self.reasoning_key then
+                    reasoning_key = self.reasoning_key
+                end
                 if not reasoning_key then
                     -- find the key starts with "reason", "reasoning/reasoning_content/reasoning_details(table)"
                     -- the reasoning_key will be needed when build a tool_calls response
                     for k, _ in pairs(cdelta) do if k:sub(1, 6) == "reason" and type(cdelta[k]) == "string"
                         then reasoning_key = k break end end
+                    self.reasoning_key = reasoning_key
                 end
                 reasoning_content = json_default(cdelta[reasoning_key], "")
             end
