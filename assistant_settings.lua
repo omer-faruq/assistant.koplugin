@@ -2,6 +2,7 @@
 This widget displays a setting dialog.
 ]]
 
+local Trapper = require("ui/trapper")
 local koutil = require("util")
 local Blitbuffer = require("ffi/blitbuffer")
 local CenterContainer = require("ui/widget/container/centercontainer")
@@ -365,7 +366,6 @@ function SettingsDialog:onSelectModel()
     if url ~= "" then
         url = url:gsub("/chat/.*$", "/models")
         NetworkMgr:runWhenOnline(function()
-            local Trapper = require("ui/trapper")
             Trapper:wrap(function()
                 local showModelPicker = require("assistant_model_picker")
                 showModelPicker(self.assistant, self.close_callback, url)
@@ -408,6 +408,19 @@ SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
                     (koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", key, "base_url") ~= nil)
             end
             return false --
+        end,
+        hold_callback = function ()
+            if ToolExecutor.IsExtSearch(key) then
+                Trapper:wrap(function()
+                    local API = ToolExecutor.GetExtSerchTool(key)
+                    local ok, info = API:AccoutInfo()
+                    if ok then
+                        UIManager:show(InfoMessage:new{ text = info })
+                    else
+                        logger.warn("info err", info)
+                    end
+                end)
+            end
         end
     }
 end

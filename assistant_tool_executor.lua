@@ -16,11 +16,6 @@ local json = require("rapidjson")
 local assistant_utils = require("assistant_utils")
 local json_default = assistant_utils.json_default
 
--- Tool Config
-local EXT_SEARCH_API_CONF = {
-    serpapi   = { base_url = nil, api_key = ""},
-    tavilyapi = { base_url = nil, api_key = ""},
-}
 
 -- MENU loads items order
 local SEARCH_API_NAMES = { "none", "builtin", "serpapi", "tavilyapi" }
@@ -41,12 +36,30 @@ local TOOLToTEXT = {
 -- Search API helpers
 -- ---------------------------------------------------------------------------
 
-local function serpAPISearchRequest(handler, keywords)
-    local serpconfig = EXT_SEARCH_API_CONF.serpapi
-    local base_url = serpconfig.base_url or "https://serpapi.com/search"
-    local key      = serpconfig.api_key
+local SearchToolBase = {
+    base_url = "",
+    api_key = ""
+}
+function SearchToolBase:new(o)
+    o = o or {}
+    setmetatable(o, self)
+    self.__index = self
+    return o
+end
+function SearchToolBase:SearchKeywords(handler, keywords)
+    return true, ""
+end
+function SearchToolBase:AccoutInfo()
+    return true, ""
+end
+
+
+local serp = SearchToolBase:new({ base_url = "https://serpapi.com" })
+function serp:SearchKeywords(handler, keywords)
+    local search_url = self.base_url .. "/search"
+    local key      = self.api_key
     local q        = koutil.urlEncode(keywords)
-    local url      = T("%1?engine=google_ai_mode&api_key=%2&q=%3", base_url, key, q)
+    local url      = T("%1?engine=google_ai_mode&api_key=%2&q=%3", search_url, key, q)
 
     local timeout = 45
     local maxtime = 120
@@ -86,14 +99,33 @@ local function serpAPISearchRequest(handler, keywords)
     segments:put("\n")
     return true, segments:get()
 end
+function serp:AccoutInfo()
+    local acc_url  = self.base_url .. "/account"
+    local key      = self.api_key
+    local url      = T("%1?api_key=%2", acc_url, key)
+    local completed, success, code, content =
+        Trapper:dismissableRunInSubprocess(function()
+            return assistant_utils.httpRequest(url, 30, 60, nil, nil, nil)
+        end, "loading...")
+    if not completed then return false, assistant_utils.HANDLERCODE.CODE_CANCELLED end
+    if not success or code ~= 200 then return false, content end
+    local ok, parsed = pcall(json.decode, content)
+    if not ok or not parsed then
+        return false, "fail to parse serpapi return"
+    end
+    local ret = T("SerpAPI\n\n%1/%2\nUsed: %3\nLeft: %4",
+        json_default(parsed.plan_name, ""),
+        json_default(parsed.account_email, ""),
+        json_default(parsed.this_month_usage, ""),
+        json_default(parsed.plan_searches_left), "")
+    return true, ret
+end
 
-local function tavilyAPISearchRequest(handler, keywords)
-    local tavilyconfig = EXT_SEARCH_API_CONF.tavilyapi
-    local base_url = tavilyconfig.base_url or "https://api.tavily.com/search"
-    local key      = tavilyconfig.api_key
-
+local tarvily = SearchToolBase:new({ base_url = "https://api.tavily.com" })
+function tarvily:SearchKeywords(handler, keywords)
+    local search_url = self.base_url .. "/search"
     local requestBodyTable = {
-        api_key              = key,
+        api_key              = self.api_key,
         auto_parameters      = true,
         max_results          = 3,
         search_depth         = "basic",
@@ -108,7 +140,7 @@ local function tavilyAPISearchRequest(handler, keywords)
 
     local completed, success, code, content =
         Trapper:dismissableRunInSubprocess(function()
-            return assistant_utils.httpRequest(base_url, timeout, maxtime, requestBody, "application/json", nil)
+            return assistant_utils.httpRequest(search_url, timeout, maxtime, requestBody, "application/json", nil)
         end, handler.trap_widget)
 
     if not completed then return false, handler.CODE_CANCELLED end
@@ -137,6 +169,33 @@ local function tavilyAPISearchRequest(handler, keywords)
     segments:put("\n")
     return true, segments:get()
 end
+
+function tarvily:AccoutInfo()
+    local acc_url  = self.base_url .. "/usage"
+    local reqHeaders = { ["Authorization"]="Bearer " .. self.api_key }
+    local completed, success, code, content =
+        Trapper:dismissableRunInSubprocess(function()
+            return assistant_utils.httpRequest(acc_url, 30, 60, nil, nil, reqHeaders)
+        end, "loading...")
+    if not completed then return false, assistant_utils.HANDLERCODE.CODE_CANCELLED end
+    if not success or code ~= 200 then return false, content end
+    local ok, parsed = pcall(json.decode, content)
+    if not ok or not parsed then
+        return false, "fail to parse serpapi return"
+    end
+    local ret = T("Tarvily API\n\nPlan: %1\nUsed: %2\nLeft: %3", 
+        json_default(parsed.account.current_plan, ""),
+        json_default(parsed.account.plan_usage, ""),
+        json_default(parsed.account.plan_limit), "")
+    return true, ret
+end
+
+
+-- Tool Config
+local EXT_SEARCH_API_CONF = {
+    serpapi   = serp,
+    tavilyapi = tarvily,
+}
 
 ---- Build the messages_to_append list once a search result is available.
 ---- Called by Querier after it has executed the search API.
@@ -210,12 +269,12 @@ local ToolExecutor = {}
 ToolExecutor.SEARCH_API_NAMES = SEARCH_API_NAMES
 
 --- Exposed func to set module variable
-function ToolExecutor.setSearchAPIConfig(CONFIGURATION)
-    for api, config in pairs(EXT_SEARCH_API_CONF) do
+function ToolExecutor.SetSearchAPIConfig(CONFIGURATION)
+    for api, tool in pairs(EXT_SEARCH_API_CONF) do
         local c = koutil.tableGetValue(CONFIGURATION, "provider_settings", api)
         if c then
-            if c.api_key then config.api_key = c.api_key end
-            if c.base_url then config.base_url = c.base_url end
+            if c.api_key then tool.api_key = c.api_key end
+            if c.base_url then tool.base_url = c.base_url end
         end
     end
 end
@@ -223,6 +282,11 @@ end
 --- Exposed func to verify API key variable
 function ToolExecutor.IsExtSearch(key)
     return EXT_SEARCH_API_CONF[key] ~= nil
+end
+
+--- Exposed func to verify API key variable
+function ToolExecutor.GetExtSerchTool(key)
+    return EXT_SEARCH_API_CONF[key]
 end
 
 --- Execute a web search using the configured search service.
@@ -251,15 +315,12 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round)
 
     -- Execute search API based on mode
     local search_ok, search_result
-    if ws_mode == "serpapi" then
-        search_ok, search_result = serpAPISearchRequest(handler, keywords)
-    elseif ws_mode == "tavilyapi" then
-        search_ok, search_result = tavilyAPISearchRequest(handler, keywords)
-    else
+    local API = EXT_SEARCH_API_CONF[ws_mode]
+    if not API then
         UIManager:close(handler:resetTrapWidget())
         return false, "Unknown web-search mode: " .. tostring(ws_mode)
     end
-
+    search_ok, search_result = API:SearchKeywords(handler, keywords)
     if search_ok and type(search_result) == "string" then
         -- remove URLs saving context length
         search_result = search_result:gsub("https?://[%w%-%.%?%&%=%/%~_#:;+,@!$%'()*]+", "")

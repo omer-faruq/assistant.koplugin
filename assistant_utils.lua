@@ -532,6 +532,7 @@ BaseHandler.CODE_UNSUPPORTED_PROTO  = "UNSUPPORTED_PROTOCOL"
 BaseHandler.CODE_INCOMPLETE         = "INCOMPLETE_CONTENT"
 BaseHandler.CODE_DECOMPRESS_ERROR   = "DECOMPRESS_ERROR"
 BaseHandler.CODE_SERVER_ERROR       = "SERVER_ERROR"
+M.HANDLERCODE = BaseHandler
 
 -- httpRequest with gzip compress support, GET/POST method only
 function M.httpRequest(url, timeout, maxtime, post_body, post_content_type, headers)

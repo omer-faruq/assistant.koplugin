@@ -92,7 +92,7 @@ function Querier:load_model(provider_name)
 
     local CONFIGURATION = self.assistant.CONFIGURATION
 
-    ToolExecutor.setSearchAPIConfig(CONFIGURATION)
+    ToolExecutor.SetSearchAPIConfig(CONFIGURATION)
     local provider_setting = koutil.tableGetValue(CONFIGURATION, "provider_settings", provider_name)
     if not provider_setting then
         local err = T(_("Provider settings not found for: %1. Please check your configuration.lua file."),
