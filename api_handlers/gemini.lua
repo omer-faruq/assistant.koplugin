@@ -155,7 +155,11 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
     end
 
     local ok, parsed = pcall(json.decode, response)
-    if not ok or not parsed then
+    if not ok or not parsed or not parsed.candidates then
+        local err = koutil.tableGetValue(parsed, "error", "message")
+        if err then
+            return nil, err
+        end
         logger.warn("Gemini: JSON decode error:", response)
         return nil, "Error: Failed to parse Gemini API response"
     end
