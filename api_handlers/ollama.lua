@@ -32,7 +32,11 @@ function OllamaHandler:query(message_history, ollama_settings, query_option)
     }
 
     local ws_mode = query_option.use_websearch or "none"
-
+    local tools
+    if ToolExecutor.IsExtSearch(ws_mode) then
+        tools = { self:buildExternalSearchToolDef("openai") }
+    end
+    local requestBodyTable = buildRequestBody(message_history, tools)
 
     -- -----------------------------------------------------------------------
     -- STREAM path
@@ -41,11 +45,6 @@ function OllamaHandler:query(message_history, ollama_settings, query_option)
         -- Inject tool definition so the LLM can issue a tool_call in the stream.
         -- The Querier's stream tool-call loop will detect it and execute the search.
         -- Note: tool-call support depends on the specific Ollama model in use.
-        local stream_tools = nil
-        if ToolExecutor.IsExtSearch(ws_mode) then
-            stream_tools = { self:buildExternalSearchToolDef("openai") }
-        end
-        local requestBodyTable = buildRequestBody(message_history, stream_tools)
         requestBodyTable.stream = true
         local requestBody = json.encode(requestBodyTable)
         headers["Accept"] = "text/event-stream"
@@ -57,11 +56,6 @@ function OllamaHandler:query(message_history, ollama_settings, query_option)
     -- -----------------------------------------------------------------------
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
-    local tools
-    if ToolExecutor.IsExtSearch(ws_mode) then
-        tools = { self:buildExternalSearchToolDef("openai") }
-    end
-    local requestBodyTable = buildRequestBody(message_history, tools)
     requestBodyTable.stream = false
     local requestBody = json.encode(requestBodyTable)
 

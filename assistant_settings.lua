@@ -412,7 +412,7 @@ SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
         end,
         hold_callback = function ()
             if key == "builtin" then
-                local info = _("Builtin Tools Works ONLY with these models:\n- Gemini-2.5/3\n- OpenAI/gpt-4o-search\n- groq-compound")
+                local info = _("Builtin Tools Works ONLY with these models:\n- Gemini-2.5/3\n- OpenAI/gpt-4o-search\n- groq-compound\n- openrouter")
                 UIManager:show(InfoMessage:new{ face = Font:getFace("smallinfofont"),
                     text = info
                 })

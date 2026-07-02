@@ -71,23 +71,22 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
     }
 
     local ws_mode = query_option.use_websearch or "none"
+    local tools = nil
+    if ws_mode == "builtin" then
+        -- OpenRouter native web-search server tool
+        tools = { buildWebSearchTool(openrouter_settings.additional_parameters) }
+    elseif ToolExecutor.IsExtSearch(ws_mode) then
+        -- Inject standard tool definition so the LLM can issue a tool_call in the stream.
+        -- The Querier's stream tool-call loop will detect it and execute the search.
+        tools = { self:buildExternalSearchToolDef("openai") }
+    end
 
+    local requestBodyTable = buildRequestBody(message_history, tools)
     -- -----------------------------------------------------------------------
     -- STREAM path
     -- -----------------------------------------------------------------------
     if query_option.use_stream_mode then
         -- Determine which tools to inject for this stream request.
-        local stream_tools = nil
-        if ws_mode == "builtin" then
-            -- OpenRouter native web-search server tool
-            stream_tools = { buildWebSearchTool(openrouter_settings.additional_parameters) }
-        elseif ToolExecutor.IsExtSearch(ws_mode) then
-            -- Inject standard tool definition so the LLM can issue a tool_call in the stream.
-            -- The Querier's stream tool-call loop will detect it and execute the search.
-            stream_tools = { self:buildExternalSearchToolDef("openai") }
-        end
-
-        local requestBodyTable = buildRequestBody(message_history, stream_tools)
         requestBodyTable.stream = true
         local requestBody = json.encode(requestBodyTable)
         headers["Accept"] = "text/event-stream"
@@ -97,25 +96,6 @@ function OpenRouterProvider:query(message_history, openrouter_settings, query_op
     -- -----------------------------------------------------------------------
     -- NON-STREAM path
     -- -----------------------------------------------------------------------
-    -- External search two-stage flow: only in non-stream mode.
-    -- -----------------------------------------------------------------------
-    -- NON-STREAM path
-    -- -----------------------------------------------------------------------
-    -- In non-stream mode, inject tool definitions if web_search is enabled.
-    -- Let the Querier handle the tool-call loop and search execution.
-    local tools
-    if ToolExecutor.IsExtSearch(ws_mode) then
-        tools = { self:buildExternalSearchToolDef("openai") }
-    end
-
-    local requestBodyTable = buildRequestBody(message_history, tools)
-
-    -- Built-in OpenRouter web search server tool (non-stream)
-    -- https://openrouter.ai/docs/guides/features/tool-calling
-    if ws_mode == "builtin" then
-        requestBodyTable.tools = { buildWebSearchTool(openrouter_settings.additional_parameters) }
-    end
-
     requestBodyTable.stream = false
     local requestBody = json.encode(requestBodyTable)
 

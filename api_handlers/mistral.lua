@@ -34,6 +34,11 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
     }
 
     local ws_mode = query_option.use_websearch or "none"
+    local tools
+    if ToolExecutor.IsExtSearch(ws_mode) then
+        tools = { self:buildExternalSearchToolDef("openai") }
+    end
+    local requestBodyTable = buildRequestBody(message_history, tools)
 
     -- -----------------------------------------------------------------------
     -- STREAM path
@@ -41,11 +46,6 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
     if query_option.use_stream_mode then
         -- Inject tool definition so the LLM can issue a tool_call in the stream.
         -- The Querier's stream tool-call loop will detect it and execute the search.
-        local stream_tools = nil
-        if ToolExecutor.IsExtSearch(ws_mode) then
-            stream_tools = { self:buildExternalSearchToolDef("openai") }
-        end
-        local requestBodyTable = buildRequestBody(message_history, stream_tools)
         requestBodyTable.stream = true
         local requestBody = json.encode(requestBodyTable)
         -- Mistral requires Content-Length
@@ -63,11 +63,6 @@ function MistralHandler:query(message_history, mistral_settings, query_option)
     -- -----------------------------------------------------------------------
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
-    local tools
-    if ToolExecutor.IsExtSearch(ws_mode) then
-        tools = { self:buildExternalSearchToolDef("openai") }
-    end
-    local requestBodyTable = buildRequestBody(message_history, tools)
     requestBodyTable.stream = false
     local requestBody = json.encode(requestBodyTable)
     -- Mistral requires Content-Length

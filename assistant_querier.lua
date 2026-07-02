@@ -385,7 +385,7 @@ function Querier:query(message_history, title)
             self.provider_name,
             koutil.tableGetValue(self.provider_setting, "model"))
         if query_option.use_websearch ~= "none" then
-            notify = T("%1\n🌐 %2: ", notify, ToolExecutor.ToolToText(query_option.use_websearch))
+            notify = T("%1\n🌐 %2 ", notify, ToolExecutor.ToolToText(query_option.use_websearch))
         end
         local infomsg = InfoMessage:new{ icon = "book.opened", text = notify }
         UIManager:show(infomsg)

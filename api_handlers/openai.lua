@@ -10,14 +10,12 @@ local OpenAIHandler = BaseHandler:new()
 --- @param messages  table   message history
 --- @param settings  table   provider settings
 --- @param tools     table|nil  tool definitions (nil → no tool_calls)
---- @param stream    boolean|nil
 --- @return table    requestBody 
-local function buildRequestBody(messages, settings, tools, stream)
+local function buildRequestBody(messages, settings, tools)
     local body = {
         model      = settings.model,
         messages   = messages,
         max_tokens = settings.max_tokens,
-        stream     = stream or false,
     }
     if tools then
         body.tools       = tools
@@ -34,17 +32,17 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
     }
 
     local ws_mode = query_option.use_websearch or "none"
+    local tools
+    if ToolExecutor.IsExtSearch(ws_mode) then
+        tools = { self:buildExternalSearchToolDef("openai") }
+    end
+    local body = buildRequestBody(message_history, openai_settings, tools)
 
     -- -----------------------------------------------------------------------
     -- STREAM path: build body and return a background function immediately.
     -- -----------------------------------------------------------------------
     if query_option.use_stream_mode then
-        local tools
-        if ToolExecutor.IsExtSearch(ws_mode) then
-            tools = { self:buildExternalSearchToolDef("openai") }
-        end
-        local body = buildRequestBody(message_history, openai_settings, tools, true)
-
+        body.stream = true
         local requestBody = json.encode(body)
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(openai_settings.base_url, headers, requestBody)
@@ -53,16 +51,8 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
     -- -----------------------------------------------------------------------
     -- NON-STREAM path: synchronous makeRequest, may return tool_call table.
     -- -----------------------------------------------------------------------
-    -- In non-stream mode, inject tool definitions if web_search is enabled.
-    -- Let the Querier handle the tool-call loop and search execution.
-    local requestBody
-    if ToolExecutor.IsExtSearch(ws_mode) then
-        local search_tool = { self:buildExternalSearchToolDef("openai") }
-        requestBody = buildRequestBody(message_history, openai_settings, search_tool, false)
-    else
-        requestBody = buildRequestBody(message_history, openai_settings, nil, false)
-    end
-
+    body.stream = false
+    local requestBody = json.encode(body)
     local status, code, response = self:makeRequest(openai_settings.base_url, headers, requestBody)
 
     if not status then
