@@ -62,9 +62,8 @@ end
 --- @param messages  table       message history
 --- @param settings  table       provider settings
 --- @param tool_def  table|nil   Gemini-format tool object (or nil)
---- @param stream    boolean|nil
 --- @return table    body
-local function buildRequestBody(messages, settings, tool_def, stream)
+local function buildRequestBody(messages, settings, tool_def)
     local contents, system_content = toGeminiContents(messages)
 
     local system_instruction = { parts = {}}
@@ -118,18 +117,19 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
 
     local ws_mode = query_option.use_websearch or "none"
 
+    -- Apply built-in Google Search grounding if requested
+    local tools = nil
+    if ws_mode == "builtin" then
+        tools = { google_search = {} }
+    elseif ToolExecutor.IsExtSearch(ws_mode) then
+        tools = self:buildExternalSearchToolDef("gemini")
+    end
+    local requestBody = buildRequestBody(message_history, gemini_settings, tools)
+
     -- -----------------------------------------------------------------------
     -- STREAM path: return background function immediately.
     -- -----------------------------------------------------------------------
     if query_option.use_stream_mode then
-        -- Apply built-in Google Search grounding if requested
-        local tools = nil
-        if ws_mode == "builtin" then
-            tools = { google_search = {} }
-        elseif ToolExecutor.IsExtSearch(ws_mode) then
-            tools = self:buildExternalSearchToolDef("gemini")
-        end
-        local requestBody = buildRequestBody(message_history, gemini_settings, tools, true)
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(url_stream, headers, json.encode(requestBody))
     end
@@ -139,19 +139,8 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
     -- -----------------------------------------------------------------------
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
-    local final_tools = nil
-    if ToolExecutor.IsExtSearch(ws_mode) then
-        final_tools = self:buildExternalSearchToolDef("gemini")
-    elseif ws_mode == "builtin" then
-        -- Built-in Google Search grounding for non-stream
-        final_tools = { { google_search = {} } }
-    end
-
-    local requestBodyTable = buildRequestBody(message_history, gemini_settings, final_tools, false)
-    local requestBody = json.encode(requestBodyTable)
-
     logger.dbg("Gemini API request to model:", model)
-    local success, code, response = self:makeRequest(url_sync, headers, requestBody)
+    local success, code, response = self:makeRequest(url_sync, headers, json.encode(requestBody))
     if not success then
         if code == BaseHandler.CODE_CANCELLED then
             return nil, response

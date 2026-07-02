@@ -40,34 +40,25 @@ function DeepSeekHandler:query(message_history, deepseek_settings, query_option)
     }
 
     local ws_mode = query_option.use_websearch or "none"
+    local tools
+    if ToolExecutor.IsExtSearch(ws_mode) then
+        tools = { self:buildExternalSearchToolDef("openai") }
+    end -- deepseek has no builtin tools
+    local requestBodyTable = buildRequestBody(message_history, tools)
 
     -- -----------------------------------------------------------------------
     -- STREAM path
     -- -----------------------------------------------------------------------
     if query_option.use_stream_mode then
-        -- Inject tool definition so the LLM can issue a tool_call in the stream.
-        -- The Querier's stream tool-call loop will detect it and execute the search.
-        local stream_tools = nil
-        if ToolExecutor.IsExtSearch(ws_mode) then
-            stream_tools = { self:buildExternalSearchToolDef("openai") }
-        end
-        local requestBodyTable = buildRequestBody(message_history, stream_tools)
+        headers["Accept"] = "text/event-stream"
         requestBodyTable.stream = true
         local requestBody = json.encode(requestBodyTable)
-        headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(deepseek_settings.base_url, headers, requestBody)
     end
 
     -- -----------------------------------------------------------------------
     -- NON-STREAM path
     -- -----------------------------------------------------------------------
-    -- In non-stream mode, inject tool definitions if web_search is enabled.
-    -- Let the Querier handle the tool-call loop and search execution.
-    local tools
-    if ToolExecutor.IsExtSearch(ws_mode) then
-        tools = { self:buildExternalSearchToolDef("openai") }
-    end
-    local requestBodyTable = buildRequestBody(message_history, tools)
     requestBodyTable.stream = false
     local requestBody = json.encode(requestBodyTable)
 

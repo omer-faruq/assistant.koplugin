@@ -26,15 +26,6 @@ local SEARCH_API_NAMES = {
     "searxngapi"
  }
 
---- This define the text of Tools being display on UI
-local TOOLToTEXT = {
-        ["none"] = _("None"),
-        ["builtin"] = _("Model Built-In"),
-        ["serpapi"] = "Serp API",
-        ["tavilyapi"] = "Tavily API",
-        ["searxngapi"] = "SearXNG API",
-}
-
 ---- Build the messages_to_append list once a search result is available.
 ---- Called by Querier after it has executed the search API.
 ----
@@ -117,13 +108,12 @@ function ToolExecutor.SetSearchAPIConfig(CONFIGURATION)
     end
 end
 
---- Exposed func to verify API key variable
 function ToolExecutor.IsExtSearch(key)
-    return ExtTools[key] ~= nil
+    return ExtTools[key].is_external
 end
 
 function ToolExecutor.ToolToText(key)
-    return TOOLToTEXT[key] or ""
+    return ExtTools[key].name
 end
 
 
@@ -282,7 +272,7 @@ function ToolExecutor.extractKeywords(tool_call)
 
     if tool_call.args then
         -- Gemini: args is already a table
-        id = tool_call.id
+        id = tool_call.tool_call_id or tool_call.id
         keywords = tool_call.args.keywords
         if type(keywords) == "table" and #keywords > 0 then
             keywords = keywords[1] -- needs to be a string
@@ -378,10 +368,8 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
 
         if #tool_calls == 0 then
             local direct = text_part and text_part.text or nil
-            return nil, nil, nil, direct, nil
+            return nil, model_content, direct, nil
         end
-
-        local model_content = koutil.tableGetValue(responseData, "candidates", 1, "content")
         return tool_calls, model_content, nil, nil
 
     else  -- "openai" (default — shared by groq / openrouter / deepseek / mistral / etc.)

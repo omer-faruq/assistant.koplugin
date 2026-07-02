@@ -13,9 +13,8 @@ local json_default = ASUtils.json_default
 -- ---------------------------------------------------------------------------
 
 local SearchToolBase = {
-    name = "",
-    base_url = "",
-    api_key = ""
+    name = "", base_url = "", api_key = "",
+    is_external = false,
 }
 function SearchToolBase:new(o)
     o = o or {}
@@ -32,8 +31,8 @@ end
 
 
 local serpapi = SearchToolBase:new({ 
-    name = "SerpAPI",
-    base_url = "https://serpapi.com",
+    name = "SerpAPI", base_url = "https://serpapi.com",
+    is_external = true,
 })
 function serpapi:SearchKeywords(keywords, trap_widget)
     local search_url = self.base_url .. "/search"
@@ -102,8 +101,8 @@ function serpapi:AccoutInfo()
 end
 
 local tarvily = SearchToolBase:new({ 
-    name = "Tarvily",
-    base_url = "https://api.tavily.com",
+    name = "Tarvily", base_url = "https://api.tavily.com",
+    is_external = true,
 })
 function tarvily:SearchKeywords(keywords, trap_widget)
     local search_url = self.base_url .. "/search"
@@ -174,8 +173,8 @@ function tarvily:AccoutInfo()
 end
 
 local searxng = SearchToolBase:new({ 
-    name = "SearXNG",
-    base_url = "http://localhost"
+    name = "SearXNG", base_url = "http://localhost",
+    is_external = true,
 })
 function searxng:SearchKeywords(keywords, trap_widget)
     local search_url = self.base_url .. "/search"
@@ -216,6 +215,8 @@ end
 
 
 return {
+    none = SearchToolBase:new{name = _("None")},
+    builtin = SearchToolBase:new{name = _("Model Built-In")},
     serpapi   = serpapi,
     tavilyapi = tarvily,
     searxngapi = searxng,

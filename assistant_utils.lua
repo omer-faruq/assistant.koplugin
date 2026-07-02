@@ -15,6 +15,7 @@ local socket_url = require("socket.url")
 local socketutil = require("socketutil")
 local https = require("ssl.https")
 local json = require("rapidjson")
+local Trapper = require("ui/trapper")
 
 local M = {}
 local shared_buf = strbuf.new()
@@ -607,4 +608,33 @@ function M.httpRequest(url, timeout, maxtime, post_body, post_content_type, head
     return true, code, content
 end
 
+--- Display a count down (seconds) InfoMessage while waiting
+--- for coroutine only (Trapper wrapped functions)
+--- returns false when user pressed to cancel,
+---         true when count down finished
+function M.sleepWithInfo(seconds, info_text)
+    local _coroutine = coroutine.running()
+    local refresh_interval = 1
+    local remaining = seconds
+    while remaining > 0 do
+        local wait_time = math.min(remaining, refresh_interval)
+        local display_text = string.format("%s (%d)", info_text, math.ceil(remaining))
+        local go_on = Trapper:info(display_text, remaining < seconds)
+        if not go_on then
+            Trapper:clear()
+            return false
+        end
+        local resume_func = function() coroutine.resume(_coroutine, true) end
+        UIManager:scheduleIn(wait_time, resume_func)
+        local result = coroutine.yield()
+        UIManager:unschedule(resume_func)
+        if not result then
+            Trapper:clear()
+            return false
+        end
+        remaining = remaining - wait_time
+    end
+    Trapper:clear()
+    return true
+end
 return M
