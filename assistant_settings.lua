@@ -411,6 +411,12 @@ SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
             return false --
         end,
         hold_callback = function ()
+            if key == "builtin" then
+                local info = _("Builtin Tools Works ONLY with these models:\n- Gemini-2.5/3\n- OpenAI/gpt-4o-search\n- groq-compound")
+                UIManager:show(InfoMessage:new{ face = Font:getFace("smallinfofont"),
+                    text = info
+                })
+            end
             if ToolExecutor.IsExtSearch(key) then
                 Trapper:wrap(function()
                     local API = ExtTools[key]
