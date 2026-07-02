@@ -351,6 +351,13 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
 
     elseif format == "gemini" then
         local model_content = koutil.tableGetValue(responseData, "candidates", 1, "content")
+        if not model_content then
+            local err_msg = koutil.tableGetValue(responseData, "error", "message")
+                         or koutil.tableGetValue(responseData, "message")
+                         or "Gemini: missing content"
+            logger.warn("Gemini parse, responseData:", responseData)
+            return nil, nil, nil, err_msg
+        end
         local tool_calls = {}
         local text_part
         for _, part in ipairs(model_content.parts) do
