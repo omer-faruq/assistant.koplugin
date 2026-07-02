@@ -11,14 +11,14 @@ local Font = require("ui/font")
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local strbuf = require("string.buffer")
-local Trapper = require("ui/trapper")
 local json = require("rapidjson")
-local assistant_utils = require("assistant_utils")
-local json_default = assistant_utils.json_default
+local ExtTools = require("assistant_exttools")
+local ASUtils = require("assistant_utils")
+local json_default = ASUtils.json_default
 
 
 -- MENU order of search tools
-local SEARCH_API_NAMES = { 
+local SEARCH_API_NAMES = {
     "none",
     "builtin",
     "serpapi",
@@ -33,217 +33,6 @@ local TOOLToTEXT = {
         ["serpapi"] = "Serp API",
         ["tavilyapi"] = "Tavily API",
         ["searxngapi"] = "SearXNG API",
-}
--- ---------------------------------------------------------------------------
--- External-search two-stage flow (used by handlers that don't natively
--- support web search but want serpapi / tavilyapi integration).
--- ---------------------------------------------------------------------------
-
--- ---------------------------------------------------------------------------
--- Search API helpers
--- ---------------------------------------------------------------------------
-
-local SearchToolBase = {
-    base_url = "",
-    api_key = ""
-}
-function SearchToolBase:new(o)
-    o = o or {}
-    setmetatable(o, self)
-    self.__index = self
-    return o
-end
-function SearchToolBase:SearchKeywords(handler, keywords)
-    return true, ""
-end
-function SearchToolBase:AccoutInfo()
-    return true, ""
-end
-
-
-local serp = SearchToolBase:new({ base_url = "https://serpapi.com" })
-function serp:SearchKeywords(handler, keywords)
-    local search_url = self.base_url .. "/search"
-    local key      = self.api_key
-    local q        = koutil.urlEncode(keywords)
-    local url      = T("%1?engine=google_ai_mode&api_key=%2&q=%3", search_url, key, q)
-
-    local timeout = 45
-    local maxtime = 120
-
-    local completed, success, code, content =
-        Trapper:dismissableRunInSubprocess(function()
-            return assistant_utils.httpRequest(url, timeout, maxtime, nil, nil, nil)
-        end, handler.trap_widget)
-
-    if not completed then return false, handler.CODE_CANCELLED end
-    if not success or code ~= 200 then return false, content end
-
-    local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed then
-        return false, "fail to parse serpapi return"
-    end
-
-    if not parsed.reconstructed_markdown and not parsed.references then
-        return false, "No relevant search or AI summary results found."
-    end
-
-    local segments = strbuf.new()
-    if json_default(parsed.reconstructed_markdown) then
-        segments:put("## Google AI Summary:\n")
-        segments:put(parsed.reconstructed_markdown)
-        segments:put("\n")
-    end
-    if parsed.references and #parsed.references > 0 then
-        segments:put( "## Verified Sources (References):")
-        for _, ref in ipairs(parsed.references) do
-            local idx         = json_default(ref.index, 0)
-            local title       = json_default(ref.title, "Untitled Source")
-            local source_name = json_default(ref.source, "Web")
-            segments:putf("[%d] %s (%s)", idx, title, source_name)
-        end
-    end
-    segments:put("\n")
-    return true, segments:get()
-end
-function serp:AccoutInfo()
-    local acc_url  = self.base_url .. "/account"
-    local key      = self.api_key
-    local url      = T("%1?api_key=%2", acc_url, key)
-    local completed, success, code, content =
-        Trapper:dismissableRunInSubprocess(function()
-            return assistant_utils.httpRequest(url, 30, 60, nil, nil, nil)
-        end, "loading...")
-    if not completed then return false, assistant_utils.HANDLERCODE.CODE_CANCELLED end
-    if not success or code ~= 200 then return false, content end
-    local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed then
-        return false, "fail to parse serpapi return"
-    end
-    local ret = T("SerpAPI\n\n%1/%2\nUsed: %3\nLeft: %4",
-        json_default(parsed.plan_name, ""),
-        json_default(parsed.account_email, ""),
-        json_default(parsed.this_month_usage, ""),
-        json_default(parsed.plan_searches_left), "")
-    return true, ret
-end
-
-local tarvily = SearchToolBase:new({ base_url = "https://api.tavily.com" })
-function tarvily:SearchKeywords(handler, keywords)
-    local search_url = self.base_url .. "/search"
-    local requestBodyTable = {
-        api_key              = self.api_key,
-        auto_parameters      = true,
-        max_results          = 3,
-        search_depth         = "basic",
-        include_answer       = true,
-        include_raw_content  = false,
-        query                = keywords,
-    }
-    local requestBody = json.encode(requestBodyTable)
-
-    local timeout = 45
-    local maxtime = 120
-
-    local completed, success, code, content =
-        Trapper:dismissableRunInSubprocess(function()
-            return assistant_utils.httpRequest(search_url, timeout, maxtime, requestBody, "application/json", nil)
-        end, handler.trap_widget)
-
-    if not completed then return false, handler.CODE_CANCELLED end
-    if not success or code ~= 200 then return false, content end
-
-    local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed or not parsed.results then
-        return false, "fail to parse tavily return"
-    end
-
-    local segments = strbuf.new()
-    if json_default(parsed.answer) then
-        segments:put("## Summary\n")
-        segments:put(parsed.answer)
-        segments:put("\n")
-    end
-    segments:put("Here are the verified search results:\n")
-    for i, item in ipairs(parsed.results) do
-        segments:put("---")
-        segments:putf("### Source %d: %s", i, json_default(item.title, "Untitled"))
-        -- segments:put( string.format("* URL: %s", json_default(item.url, "N/A")))
-        segments:put("* Summary: ")
-        segments:put(json_default(item.content, ""))
-        segments:put("\n")
-    end
-    segments:put("\n")
-    return true, segments:get()
-end
-
-function tarvily:AccoutInfo()
-    local acc_url  = self.base_url .. "/usage"
-    local reqHeaders = { ["Authorization"]="Bearer " .. self.api_key }
-    local completed, success, code, content =
-        Trapper:dismissableRunInSubprocess(function()
-            return assistant_utils.httpRequest(acc_url, 30, 60, nil, nil, reqHeaders)
-        end, "loading...")
-    if not completed then return false, assistant_utils.HANDLERCODE.CODE_CANCELLED end
-    if not success or code ~= 200 then return false, content end
-    local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed then
-        return false, "fail to parse serpapi return"
-    end
-    local ret = T("Tarvily API\n\nPlan: %1\nUsed: %2\nLeft: %3", 
-        json_default(parsed.account.current_plan, ""),
-        json_default(parsed.account.plan_usage, ""),
-        json_default(parsed.account.plan_limit), "")
-    return true, ret
-end
-
-local searxng = SearchToolBase:new({ base_url = "http://localhost" })
-function searxng:SearchKeywords(handler, keywords)
-    local search_url = self.base_url .. "/search"
-    local q        = koutil.urlEncode(keywords)
-    local url      = T("%1?q=%2&format=json", search_url, q)
-
-    local timeout = 45
-    local maxtime = 120
-
-    local completed, success, code, content =
-        Trapper:dismissableRunInSubprocess(function()
-            return assistant_utils.httpRequest(url, timeout, maxtime, nil, nil, nil)
-        end, handler.trap_widget)
-
-    if not completed then return false, handler.CODE_CANCELLED end
-    if not success or code ~= 200 then return false, content end
-
-    local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed or not parsed.results then
-        return false, "fail to parse searxng return"
-    end
-
-    local segments = strbuf.new()
-    segments:put("## Web Search Results:\n")
-    for i, item in ipairs(parsed.results) do
-        segments:put("---")
-        segments:putf("### Source %d: %s", i, json_default(item.title, "Untitled"))
-        segments:put("* URL: ")
-        segments:put(json_default(item.url, "N/A"))
-        segments:put("\n")
-        segments:put("* Summary: ")
-        segments:put(json_default(item.content, ""))
-        segments:put("\n")
-    end
-    segments:put("\n")
-    return true, segments:get()
-end
-function searxng:AccoutInfo()
-    return true, "SearXNG at: \n" .. self.base_url
-end
-
-
--- Tools Object Config
-local EXT_SEARCH_API_CONF = {
-    serpapi   = serp,
-    tavilyapi = tarvily,
-    searxngapi = searxng,
 }
 
 ---- Build the messages_to_append list once a search result is available.
@@ -275,7 +64,7 @@ local function buildToolResultMessages(tool_call_result)
             keywords:putf("⌗ %s\n\n", result.search_keywords)
         end
 
-        assistant_utils.set_attr(msgs[#msgs], "search_keywords", keywords:get())
+        ASUtils.set_attr(msgs[#msgs], "search_keywords", keywords:get())
         table.insert(msgs, {
             role    = "user",
             content = contents,
@@ -294,7 +83,7 @@ local function buildToolResultMessages(tool_call_result)
                 })
             keywords:putf("⌗ %s\n\n", result.search_keywords)
         end
-        assistant_utils.set_attr(msgs[#msgs], "search_keywords", keywords:get())
+        ASUtils.set_attr(msgs[#msgs], "search_keywords", keywords:get())
         table.insert(msgs, { role  = "user", parts = parts, })
 
     else  -- "openai"
@@ -308,7 +97,7 @@ local function buildToolResultMessages(tool_call_result)
             })
             keywords:putf("⌗ %s\n\n", result.search_keywords)
         end
-        assistant_utils.set_attr(msgs[pos], "search_keywords", keywords:get())
+        ASUtils.set_attr(msgs[pos], "search_keywords", keywords:get())
     end
     return msgs
 end
@@ -319,7 +108,7 @@ ToolExecutor.SEARCH_API_NAMES = SEARCH_API_NAMES
 
 --- Exposed func to set module variable
 function ToolExecutor.SetSearchAPIConfig(CONFIGURATION)
-    for api, tool in pairs(EXT_SEARCH_API_CONF) do
+    for api, tool in pairs(ExtTools) do
         local c = koutil.tableGetValue(CONFIGURATION, "provider_settings", api)
         if c then
             if c.api_key then tool.api_key = c.api_key end
@@ -330,12 +119,12 @@ end
 
 --- Exposed func to verify API key variable
 function ToolExecutor.IsExtSearch(key)
-    return EXT_SEARCH_API_CONF[key] ~= nil
+    return ExtTools[key] ~= nil
 end
 
 --- Exposed func to verify API key variable
 function ToolExecutor.GetExtSerchTool(key)
-    return EXT_SEARCH_API_CONF[key]
+    return ExtTools[key]
 end
 
 --- Execute a web search using the configured search service.
@@ -360,22 +149,21 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round)
         text = T(_("Searching with %1 ... [%2]\n\n%3"), ToolExecutor.ToolToText(ws_mode), tool_round, keywords),
     })
     UIManager:show(keywordmsg)
-    handler:setTrapWidget(keywordmsg)
 
     -- Execute search API based on mode
     local search_ok, search_result
-    local API = EXT_SEARCH_API_CONF[ws_mode]
+    local API = ExtTools[ws_mode]
     if not API then
-        UIManager:close(handler:resetTrapWidget())
+        UIManager:close(keywordmsg)
         return false, "Unknown web-search mode: " .. tostring(ws_mode)
     end
-    search_ok, search_result = API:SearchKeywords(handler, keywords)
+    search_ok, search_result = API:SearchKeywords(keywords, keywordmsg)
     if search_ok and type(search_result) == "string" then
         -- remove URLs saving context length
         search_result = search_result:gsub("https?://[%w%-%.%?%&%=%/%~_#:;+,@!$%'()*]+", "")
     end
 
-    UIManager:close(handler:resetTrapWidget())
+    UIManager:close(keywordmsg)
     return search_ok, search_result
 end
 
@@ -461,8 +249,6 @@ end
 ---
 --- @param message_history    table   conversation history (modified in place)
 --- @param tool_call_result   table   tool call descriptor with keywords, raw_assistant, format
---- @param search_result      string  search API result markdown
---- @param handler            table   BaseHandler instance
 --- @return boolean success, string|nil error
 function ToolExecutor.appendToolResult(message_history, tool_call_result)
 
