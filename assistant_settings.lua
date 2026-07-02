@@ -34,6 +34,7 @@ local meta = require("_meta")
 local logger = require("logger")
 local koutil = require("util")
 local ToolExecutor = require("assistant_tool_executor")
+local ExtTools = require("assistant_exttools")
 
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
@@ -412,11 +413,12 @@ SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
         hold_callback = function ()
             if ToolExecutor.IsExtSearch(key) then
                 Trapper:wrap(function()
-                    local API = ToolExecutor.GetExtSerchTool(key)
+                    local API = ExtTools[key]
                     local ok, info = API:AccoutInfo()
-                    if ok then
-                        UIManager:show(InfoMessage:new{ text = info })
-                    else
+                    UIManager:show(InfoMessage:new{ face = Font:getFace("smallinfofont"),
+                        text = info
+                    })
+                    if not ok then
                         logger.warn("info err", info)
                     end
                 end)
@@ -425,7 +427,7 @@ SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
     }
 end
 
-SettingsDialog.genMenuSettings = function (assistant)
+SettingsDialog.genMenuSettings = function(assistant)
     local sub_item_table = {
         {
             text_func = function ()

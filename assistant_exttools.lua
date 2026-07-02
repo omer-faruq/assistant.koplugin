@@ -166,7 +166,7 @@ function tarvily:AccoutInfo()
     if not ok or not parsed then
         return false, "fail to parse serpapi return"
     end
-    local ret = T("Tarvily API\n\nPlan: %1\nUsed: %2\nLeft: %3", 
+    local ret = T("Tarvily API\n\nPlan: %1\nUsed: %2\nLimits: %3",
         json_default(parsed.account.current_plan, ""),
         json_default(parsed.account.plan_usage, ""),
         json_default(parsed.account.plan_limit), "")

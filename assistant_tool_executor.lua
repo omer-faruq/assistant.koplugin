@@ -112,7 +112,7 @@ function ToolExecutor.SetSearchAPIConfig(CONFIGURATION)
         local c = koutil.tableGetValue(CONFIGURATION, "provider_settings", api)
         if c then
             if c.api_key then tool.api_key = c.api_key end
-            if c.base_url then tool.base_url = c.base_url:gsub("/+$", "") end
+            if c.base_url then tool.base_url = c.base_url:gsub("/+$", "") end -- trim the ending `/`
         end
     end
 end
@@ -122,10 +122,10 @@ function ToolExecutor.IsExtSearch(key)
     return ExtTools[key] ~= nil
 end
 
---- Exposed func to verify API key variable
-function ToolExecutor.GetExtSerchTool(key)
-    return ExtTools[key]
+function ToolExecutor.ToolToText(key)
+    return TOOLToTEXT[key] or ""
 end
+
 
 --- Execute a web search using the configured search service.
 ---
@@ -291,13 +291,13 @@ function ToolExecutor.extractKeywords(tool_call)
         -- OpenAI: arguments is a JSON string
         local ok_j, args = pcall(json.decode, tool_call.arguments)
         if ok_j and type(args) == "table" then
-            keywords = args.query or args.keywords
+            keywords = json_default(args.keywords) or json_default(args.query)
         end
         id = tool_call.tool_call_id or tool_call.id
     elseif tool_call.input then
         -- Anthropic
         id = tool_call.id
-        keywords = tool_call.input.keywords 
+        keywords = tool_call.input.keywords
     end
 
     if not id then
@@ -466,10 +466,6 @@ Return exactly one concise search query string.]]
             },
         }
     end
-end
-
-function ToolExecutor.ToolToText(key)
-    return TOOLToTEXT[key] or ""
 end
 
 return ToolExecutor
