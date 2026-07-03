@@ -2,7 +2,7 @@ local UIManager = require("ui/uimanager")
 local time = require("ui/time")
 local ToolExecutor = require("assistant_tool_executor")
 local ASUtils = require("assistant_utils")
-local OpenAIHandler = require("api_handlers/openai")
+local OpenAIHandler = require("api_handlers.openai")
 local groqHandler = OpenAIHandler:new({
     name = "GroqHandler",
 })

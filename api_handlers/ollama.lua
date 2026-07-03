@@ -1,3 +1,2 @@
-local OllamaHandler = require("api_handlers/openai")
-OllamaHandler.name = "Ollama"
+local OllamaHandler = require("api_handlers.openai"):new{ name = "Ollama" }
 return OllamaHandler
