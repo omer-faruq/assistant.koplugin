@@ -185,6 +185,13 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 * **Language**: Render the entire output exclusively in {language}.
 * **Output**: Return only the bulleted list without any introductory text.
 
+**Output Structure:**
+### 📌 Core Arguments
+* (Key insights and main arguments of the text...)
+
+### 📊 Essential Facts & Conclusions
+* (Crucial data, facts, or final statements...)
+
 ---
 **Text to Extract:**
 {highlight}
@@ -203,6 +210,13 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 * **Analogy**: Use a simple, relatable real-world analogy to make the core idea instantly clear.
 * **Language**: Render the entire output exclusively in {language}.
 * **Output**: Be direct and concise. Return only the explanation without any conversational filler.
+
+**Output Structure:**
+### 💡 Core Idea
+(Explain the concept in 1-2 very simple, jargon-free sentences.)
+
+### 🍎 Fun Analogy
+(Provide a relatable, real-world analogy to make the concept instantly clear.)
 
 ---
 **Concept to Explain:**
@@ -231,17 +245,25 @@ You are a summarization expert. Provide a concise and clear summary of the text 
         order = 90,
         desc = _(
             "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."),
-        user_prompt = [[ You are a Historical Context Expert. Analyze the text below and explain its precise historical framework.
+        user_prompt = [[You are a Historical Context Expert. Analyze the text below and explain its precise historical framework.
 
 **Rules:**
-* **Context**: Articulate the relevant historical background, including major events, prevailing ideologies, societal structures, and the cultural environment of that era.
-* **Connections**: Do not just list facts; explicitly connect these historical elements to the text's content, themes, or underlying messages.
 * **Language**: Render the entire response completely in {language}.
 * **Output**: Start directly with the analysis. Avoid introductory phrases or meta-commentary.
 
+**Output Structure:**
+### 1. Era & Background
+(Identify the historical period, major global/local events, and the societal structures or prevailing ideologies of that time.)
+
+### 2. Contextual Connections
+(Explicitly connect these historical elements to the text's content, characters, themes, or underlying messages.)
+
+### 3. Cultural Significance
+(Explain the cultural environment or evolution that shaped this text and how the text reflects or challenges it.)
+
 ---
 **Text to Analyze:**
-{highlight} ]],
+{highlight}]],
     },
     wikipedia = {
         text = _("🌐Wikipedia"),
@@ -356,8 +378,10 @@ Language: **{language}**.
 Generate information about "{title}" by {author} in the following structure, responding entirely in {language}:
 
 ### 1. Book Information
-* Concise plot summary/themes (no major spoilers).
-* Genre, publication date, publisher, pages. (Cite sources if searched).
+* **Genre**: 
+* **Publication Date**: 
+* **Publisher**: 
+* **Plot Summary**:
 
 ### 2. About the Author
 * Brief biography, writing style, and other notable works.
