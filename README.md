@@ -43,11 +43,11 @@ A powerful plugin that lets you interact with AI language models (Claude, GPT-4,
 
 ### 1. Get API Keys
 
-See [Obtaining API Keys](wiki/Obtaining-API-Keys) from the wiki page.
+See [Obtaining API Keys](../../wiki/Obtaining-API-Keys) from the wiki page.
 
 ### 2. Installation:
 
-[Installation Guide](wiki/Installation)
+[Installation Guide](../../wiki/Installation)
 
 Create/modify `configuration.lua` as needed.
 
