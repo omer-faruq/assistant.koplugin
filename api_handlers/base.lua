@@ -2,20 +2,31 @@ local logger = require("logger")
 local http = require("socket.http")
 local ltn12 = require("ltn12")
 local socket = require("socket")
-local socketutil = require("socketutil")
 local https = require("ssl.https")
-local Device = require("device")
 local Trapper = require("ui/trapper")
-
+local json = require("rapidjson")
 local ffi = require("ffi")
 local ffiutil = require("ffi/util")
+local koutil = require("util")
+local T = ffiutil.template
+local _ = require("assistant_gettext")
+
+local ToolExecutor = require("assistant_tool_executor")
+local assistant_utils = require("assistant_utils")
+local json_default = assistant_utils.json_default
 
 local BaseHandler = {
+    name = "BASE",
     trap_widget = nil,  -- widget to trap the request
 }
 
-BaseHandler.CODE_CANCELLED = "USER_CANCELED"
-BaseHandler.CODE_NETWORK_ERROR = "NETWORK_ERROR"
+BaseHandler.CODE_CANCELLED          = "USER_CANCELED"
+BaseHandler.CODE_NETWORK_ERROR      = "NETWORK_ERROR"
+BaseHandler.CODE_TIMEOUT            = "REQUEST_TIMEOUT"
+BaseHandler.CODE_UNSUPPORTED_PROTO  = "UNSUPPORTED_PROTOCOL"
+BaseHandler.CODE_INCOMPLETE         = "INCOMPLETE_CONTENT"
+BaseHandler.CODE_DECOMPRESS_ERROR   = "DECOMPRESS_ERROR"
+BaseHandler.CODE_SERVER_ERROR       = "SERVER_ERROR"
 BaseHandler.PROTOCOL_NON_200 = "X-NON-200-STATUS:"
 
 function BaseHandler:new(o)
@@ -30,74 +41,35 @@ function BaseHandler:setTrapWidget(trap_widget)
 end
 
 function BaseHandler:resetTrapWidget()
+    local w = self.trap_widget
     self.trap_widget = nil
+    return w
 end
 
---- Query method to be implemented by specific handlers
---- @param message_history table: conversation history, a list of messages
---- @param provider_setting table: settings for the specific provider
---- @return string response_content, string error_message
-function BaseHandler:query(message_history, provider_setting)
+--- Query method to be implemented by specific handlers.
+---
+--- Behaviour depends on query_option.use_stream_mode:
+---   stream=true  → build request body and return self:backgroundRequest(...) immediately
+---                  (a function); never call makeRequest.
+---   stream=false → call makeRequest; if LLM returned tool_calls return a table
+---                  { tool_calls=<parsed>, messages_to_append=<list> } for the Querier
+---                  to merge into message_history and loop; otherwise return the content
+---                  string (or nil, err).
+---
+--- @param message_history  table   conversation history
+--- @param provider_setting table   provider-specific config
+--- @param query_option     table   { use_stream_mode=boolean, use_websearch=string }
+--- @return string|function|table result, string|nil error
+function BaseHandler:query(message_history, provider_setting, query_option)
     -- To be implemented by specific handlers
     error("query method must be implemented")
 end
 
---- Post URL content with optional headers and body with timeout setting
---- code references: KOReader/frontend/ui/wikipedia.lua `getURLContent`
---- @param url any
---- @param headers any
---- @param body any
---- @param timeout any blocking timtout
---- @param maxtime any total response finished max time
---- @return boolean success, string status_code, string content
-local function postURLContent(url, headers, body, timeout, maxtime)
-    if string.sub(url, 1, 8) == "https://" then
-        https.cert_verify = false  -- disable CA verify
-    end
 
-    local sink = {}
-    socketutil:set_timeout(timeout, maxtime)
-    local request = {
-        url = url,
-        method = "POST",
-        headers = headers or {},
-        source = ltn12.source.string(body or ""),
-        sink = maxtime and socketutil.table_sink(sink) or ltn12.sink.table(sink),
-    }
-    local code, headers, status = socket.skip(1, http.request(request)) -- skip the first return value, not needed
-    socketutil:reset_timeout()
-    local content = table.concat(sink)  -- response body
-
-    -- check for timeouts
-    if code == socketutil.TIMEOUT_CODE or
-       code == socketutil.SSL_HANDSHAKE_CODE or
-       code == socketutil.SINK_TIMEOUT_CODE then
-        logger.warn("request interrupted/timed out:", code)
-        return false, code, "Request interrupted/timed out"
-    end
-
-    -- check for network errors
-    if headers == nil then
-        logger.warn("No HTTP headers:", status or code or "network unreachable")
-        return false, BaseHandler.CODE_NETWORK_ERROR, "Network Error: " .. status or code
-    end
-
-    -- check response length
-    if headers and headers["content-length"] then
-        -- Check we really got the announced content size
-        local content_length = tonumber(headers["content-length"])
-        if #content ~= content_length then
-            return false, code, "Incomplete content received"
-        end
-    end
-    return true, code, content
-end
-
---- func description: Make a request to the specified URL with headers and body.
+--- Make a synchronous HTTP POST request, optionally through a dismissable subprocess.
 function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
     local completed, success, code, content
     if self.trap_widget then
-        -- Use larger timeout and maxtime when running a large book analysis
         local request_timeout, request_maxtime
         if body and #body > 10000 then
             request_timeout = timeout or 300
@@ -106,67 +78,120 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
             request_timeout = timeout or 45
             request_maxtime = maxtime or 120
         end
-        -- If a trap widget is set, run the request in a subprocess
         completed, success, code, content = Trapper:dismissableRunInSubprocess(function()
-                return postURLContent(url, headers, body, request_timeout, request_maxtime)
+                return assistant_utils.httpRequest(url, request_timeout, request_maxtime, body, nil, headers)
             end, self.trap_widget)
         if not completed then
-            return false, self.CODE_CANCELLED, self.CODE_CANCELLED
+            return false, self.CODE_CANCELLED, content
         end
     else
-        -- If no trap widget is set, run the request directly
-        -- use smaller timeout because we are blocking the UI
-        success, code, content = postURLContent(url, headers, body, timeout or 20, maxtime or 45)
+        success, code, content = assistant_utils.httpRequest(url, timeout or 20, maxtime or 45, body, nil, headers)
     end
 
     return success, code, content
 end
 
---- Wrap a file descriptor into a Lua file-like object
---- that has :write() and :close() methods, suitable for ltn12.
---- @param fd integer file descriptor
---- @return table file-like object
-local function wrap_fd(fd)
-    local file_object = {}
-    function file_object:write(chunk)
-        ffiutil.writeToFD(fd, chunk)
-        return self
-    end
-
-    function file_object:close()
-        -- null close op,
-        -- we need to use the fd later, then close manually
-        return true
-    end
-
-    return file_object
-end
-
--- Background request function
---- This function is used to make a request in the background,
---- typically in a subprocess, and write the response to a pipe.
+--- Return a background-process function suitable for streaming (subprocess + pipe).
+--- The returned function is passed to Querier:processStream via runInSubProcess.
 function BaseHandler:backgroundRequest(url, headers, body)
+
+    local function wrap_fd(fd)
+        local fo = {}
+        function fo:write(chunk)
+            ffiutil.writeToFD(fd, chunk)
+            return self
+        end
+        function fo:close() return true end -- mock close method
+        return fo
+    end
+
     return function(pid, child_write_fd)
         if not pid or not child_write_fd then
             logger.warn("Invalid parameters for background request")
             return
         end
 
-        local pipe_w = wrap_fd(child_write_fd)  -- wrap the write end of the pipe
+        if url:sub(1, 5) == "https" then
+            https.cert_verify = false -- old devices cannot verify ssl certs
+        end
+
         local request = {
-            url = url,
+            url    = url,
             method = "POST",
             headers = headers or {},
-            source = ltn12.source.string(body or ""),
-            sink = ltn12.sink.file(pipe_w),  -- response body write to pipe
+            source  = ltn12.source.string(body or ""),
+            sink    = ltn12.sink.file(wrap_fd(child_write_fd)),
         }
-        local code, headers, status = socket.skip(1, http.request(request)) -- skip the first return value
-        if code ~= 200 then -- non-200 response code, write error to pipe
+        local code, resp_headers, status = socket.skip(1, http.request(request))
+        if code ~= 200 then
             logger.warn("Background request non-200:", code, "status:", status, "url:", url)
-            ffiutil.writeToFD(child_write_fd, string.format("\r\n%s [%s %s] URL:%s\n\n", self.PROTOCOL_NON_200, status or "", code or "", url))  -- write end of response
+            ffiutil.writeToFD(child_write_fd,
+                string.format("\r\n%s [%s %s] URL:%s\n\n",
+                    self.PROTOCOL_NON_200, status or "", code or "", url))
         end
-        ffi.C.close(child_write_fd)  -- close the write end of the pipe
+        ffi.C.close(child_write_fd)
     end
+end
+
+-- ---------------------------------------------------------------------------
+-- Public interface: parseToolCalls
+-- ---------------------------------------------------------------------------
+
+--- Parse a non-streaming LLM response and determine what to do next.
+---
+--- This is the unified interface called by Querier after every non-stream makeRequest.
+--- It inspects the decoded JSON from the LLM and returns one of three outcomes:
+---
+---   1. The model returned a normal text answer:
+---        returns  content_string, nil
+---
+---   2. The model issued a tool call (web_search):
+---        returns  table {
+---                   tool_call_id       = string,
+---                   keywords           = string,
+---                   messages_to_append = list-of-message-objects,  -- append to history
+---                 }, nil
+---      After appending messages_to_append the caller should repeat the LLM request.
+---      The table also carries a  __is_tool_call = true  sentinel so Querier can
+---      branch without inspecting the full structure.
+---
+---   3. An error occurred:
+---        returns  nil, error_string
+---
+--- @param responseData  table   decoded JSON from the LLM (non-stream response)
+--- @param format        string  "openai" | "anthropic" | "gemini"
+--- @return string|table result, string|nil error
+function BaseHandler:parseToolCalls(responseData, format)
+    local tool_calls, raw_assistant, direct_content, parse_err =
+        ToolExecutor.parseToolCallsResponse(responseData, format)
+
+    if parse_err then
+        return nil, parse_err
+    end
+
+    -- Model answered without a tool call
+    if direct_content then
+        return direct_content, nil
+    end
+
+    -- Model issued a tool call but we have no search result yet.
+    -- Return a descriptor; the Querier will execute the search and loop.
+    if tool_calls and #tool_calls > 0 then
+        -- Build placeholder messages_to_append (search result will be filled in by Querier).
+        -- We expose raw_assistant so the Querier can call buildToolResult() once it has results.
+        return {
+            __is_tool_call  = true,
+            raw_assistant   = raw_assistant,  -- opaque; pass back to buildToolResultMessages
+            format          = format,
+            tool_calls      = tool_calls,
+        }, nil
+    end
+
+    return nil, "parseToolCalls: unexpected response (no content, no tool call)"
+end
+
+function BaseHandler:buildExternalSearchToolDef(format)
+    return ToolExecutor.buildExternalSearchToolDef(format)
 end
 
 return BaseHandler

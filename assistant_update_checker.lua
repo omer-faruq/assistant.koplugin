@@ -1,5 +1,3 @@
-local http = require("socket.http")
-local ltn12 = require("ltn12")
 local json = require("rapidjson")
 local TrapWidget  = require("ui/widget/trapwidget")
 local Notification = require("ui/widget/notification")
@@ -104,43 +102,23 @@ local function checkForUpdates()
     return
   end
 
-  local infomsg = TrapWidget:new{
-    text = _("Checking for updates..."),
-  }
+  local infomsg = TrapWidget:new{ text = _("Checking for updates...") }
   UIManager:show(infomsg)
-  local success, code, body, response_headers = Trapper:dismissableRunInSubprocess(function()
-    local response_body = {}
-    local _, code, header = http.request {
-      url = update_url,
-      headers = {
-          ["Accept-Encoding"] = "gzip",
-          ["Accept"] = "application/vnd.github.v3+json"
-      },
-      sink = ltn12.sink.table(response_body)
-    }
 
-    return code, table.concat(response_body), header
+  local completed, success, code, body = Trapper:dismissableRunInSubprocess(function()
+    return assistant_utils.httpRequest(update_url, nil, nil, nil, nil, { ["Accept"] = "application/vnd.github.v3+json" })
   end, infomsg)
   UIManager:close(infomsg)
 
-  if not success then
+  if not completed then
     Notification:notify(_("Update check canceled."))
     return
   end
-  if code ~= 200 then
-    logger.warn()
+  if not success or code ~= 200 then
     Notification:notify(T(_("Failed to check for updates. HTTP code: %1"), code))
     return
   end
 
-  if assistant_utils.http_is_encoded(response_headers, "gzip") then
-      local decompressed, err = assistant_utils.zlib_uncompress_gzip(body, 2*1024*1024)
-      if not decompressed then
-          logger.warn("Failed to decompress data:", err)
-          return
-      end
-      body = decompressed
-  end
   local ok, parsed_data = pcall(json.decode, body)
   if not ok then
     Notification:notify(T(_("Failed to parse update check response: %1"), parsed_data))

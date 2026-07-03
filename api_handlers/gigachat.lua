@@ -2,6 +2,7 @@ local BaseHandler = require("api_handlers.base")
 local json = require("json")
 local koutil = require("util")
 local logger = require("logger")
+local ToolExecutor = require("assistant_tool_executor")
 
 local DEFAULT_UPDATE_INTERVAL = 3
 local DEFAULT_TOKEN_EXPIRY = 1800 -- 30 minutes
@@ -10,7 +11,7 @@ local UUID_EMPTY = "00000000-0000-0000-0000-000000000000"
 
 local GigaChatHandler = BaseHandler:new()
 
-function GigaChatHandler:query(message_history, gigachat_settings)
+function GigaChatHandler:query(message_history, gigachat_settings, query_option)
     if not gigachat_settings or not gigachat_settings.base_url then
         return "Error: Missing base_url in configuration"
     end
@@ -20,30 +21,47 @@ function GigaChatHandler:query(message_history, gigachat_settings)
         return nil, "Error obtaining access token: " .. tostring(err)
     end
 
-    local requestBodyTable = {
-        model = gigachat_settings.model,
-        messages = message_history,
-        stream = koutil.tableGetValue(gigachat_settings, "additional_parameters", "stream") or false,
-        update_interval = koutil.tableGetValue(gigachat_settings, "additional_parameters", "update_interval") or
-            DEFAULT_UPDATE_INTERVAL,
-        max_tokens = koutil.tableGetValue(gigachat_settings, "additional_parameters", "max_tokens")
+    local function buildRequestBody(messages, tools)
+        local body = {
+            model           = gigachat_settings.model,
+            messages        = messages,
+            update_interval = koutil.tableGetValue(gigachat_settings, "additional_parameters", "update_interval") or
+                                DEFAULT_UPDATE_INTERVAL,
+            max_tokens      = koutil.tableGetValue(gigachat_settings, "additional_parameters", "max_tokens"),
+        }
+        if tools then
+            body.tools       = tools
+            body.tool_choice = "auto"
+        end
+        return body
+    end
+
+    local headers = {
+        ["Content-Type"]  = "application/json",
+        ["Authorization"] = "Bearer " .. token,
+        ["RqUID"]         = UUID_EMPTY,
     }
 
+    local ws_mode = query_option.use_websearch or "none"
+
+    -- In non-stream mode, inject tool definitions if web_search is enabled.
+    -- Let the Querier handle the tool-call loop and search execution.
+    local tools
+    if ToolExecutor.IsExtSearch(ws_mode) then
+        tools = { self:buildExternalSearchToolDef("openai") }
+    end
+
+    local requestBodyTable = buildRequestBody(message_history, tools)
+    requestBodyTable.stream = query_option.use_stream_mode
     local requestBody = json.encode(requestBodyTable)
-    local headers = {
-        ["Content-Type"] = "application/json",
-        ["Authorization"] = "Bearer " .. token,
-        ["RqUID"] = UUID_EMPTY,
-    }
 
     if requestBodyTable.stream then
-        -- For streaming responses, we need to handle the response differently
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(gigachat_settings.base_url, headers, requestBody)
     end
 
     local request_timeout, request_maxtime
-    if requestBody and #requestBody > 10000 then -- large book analysis
+    if #requestBody > 10000 then
         request_timeout = 500
         request_maxtime = 500
     else
@@ -52,12 +70,7 @@ function GigaChatHandler:query(message_history, gigachat_settings)
     end
 
     local success, code, response = self:makeRequest(
-        gigachat_settings.base_url,
-        headers,
-        requestBody,
-        request_timeout,
-        request_maxtime
-    )
+        gigachat_settings.base_url, headers, requestBody, request_timeout, request_maxtime)
 
     if not success then
         if code == BaseHandler.CODE_CANCELLED then
@@ -71,11 +84,15 @@ function GigaChatHandler:query(message_history, gigachat_settings)
         return nil, "Error: Failed to parse GigaChat API response: " .. response
     end
 
+    -- Delegate tool-call / error detection to the unified base method
+    if koutil.tableGetValue(parsed, "choices", 1, "message", "tool_calls") then
+        return self:parseToolCalls(parsed, "openai")
+    end
+
     local content = koutil.tableGetValue(parsed, "choices", 1, "message", "content")
     if content then return content end
 
     local apiError = koutil.tableGetValue(parsed, "error")
-
     if apiError and apiError.message then
         logger.warn("API Error:", code, response)
         return nil, "GigaChat API Error: [" .. (apiError.code or "unknown") .. "]: " .. apiError.message

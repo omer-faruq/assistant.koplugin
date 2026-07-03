@@ -1,60 +1,31 @@
-local BaseHandler = require("api_handlers.base")
-local json = require("json")
-local koutil = require("util")
-local logger = require("logger")
+local UIManager = require("ui/uimanager")  
+local time = require("ui/time")
+local ToolExecutor = require("assistant_tool_executor")
+local ASUtils = require("assistant_utils")
+local OpenAIHandler = require("api_handlers.openai")
+local groqHandler = OpenAIHandler:new({
+    name = "GroqHandler",
+})
 
-local groqHandler = BaseHandler:new()
+local LAST_CALLED = 0
+local API_CALL_DEBOUNCE_DELAY = time.s(15)
 
-function groqHandler:query(message_history, groq_settings)
-    local requestBodyTable = {
-        model = groq_settings.model,
-        messages = message_history,
-    }
-
-    -- Handle reasoning tokens configuration
-    if groq_settings.additional_parameters then
-        --- available req body args: https://console.groq.com/docs/api-reference
-        for _, option in ipairs({"temperature", "top_p", "max_completion_tokens", "max_tokens", 
-                                    "reasoning_effort", "reasoning_format", "search_settings", "stream"}) do
-            if groq_settings.additional_parameters[option] then
-                requestBodyTable[option] = groq_settings.additional_parameters[option]
+function groqHandler:query(message_history, groq_settings, query_option)
+    local ws_mode = query_option.use_websearch or "none"
+    if ToolExecutor.IsExtSearch(ws_mode) then
+        -- Ext TOOL CALLS are likely triggering groq API Free-tier rate limits (8k tokens/minutes)
+        local current_time = UIManager:getElapsedTimeSinceBoot()
+        if current_time - LAST_CALLED < API_CALL_DEBOUNCE_DELAY then
+            local time_since_last_request = current_time - LAST_CALLED
+            local delay_secs = time.to_number(API_CALL_DEBOUNCE_DELAY - time_since_last_request)
+            if not ASUtils.sleepWithInfo(delay_secs, "Groq API Wait") then
+                return nil, self.CODE_CANCELLED
             end
         end
+        LAST_CALLED = UIManager:getElapsedTimeSinceBoot()
     end
 
-    local requestBody = json.encode(requestBodyTable)
-    local headers = {
-        ["Content-Type"] = "application/json",
-        ["Authorization"] = "Bearer " .. (groq_settings.api_key)
-    }
-
-    if requestBodyTable.stream then
-        -- For streaming responses, we need to handle the response differently
-        headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(groq_settings.base_url, headers, requestBody)
-    end
-    
-    local status, code, response = self:makeRequest(groq_settings.base_url, headers, requestBody)
-    if status then
-        local success, responseData = pcall(json.decode, response)
-        if success then
-            local content = koutil.tableGetValue(responseData, "choices", 1, "message", "content")
-            if content then return content end
-        end
-        
-        -- server response error message
-        logger.warn("API Error", code, response)
-        if success then
-            local err_msg = koutil.tableGetValue(responseData, "error", "message")
-            if err_msg then return nil, err_msg end
-        end
-    end
-    
-    if code == BaseHandler.CODE_CANCELLED then
-        return nil, response
-    end
-    logger.warn("groq API Error", response)
-    return nil, "Error: " .. (code or "unknown") .. " - " .. response
+    return OpenAIHandler.query(self, message_history, groq_settings, query_option)
 end
 
 return groqHandler

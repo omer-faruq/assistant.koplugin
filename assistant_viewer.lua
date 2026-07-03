@@ -31,7 +31,7 @@ local UIManager = require("ui/uimanager")
 local VerticalGroup = require("ui/widget/verticalgroup")
 local WidgetContainer = require("ui/widget/container/widgetcontainer")
 local T = require("ffi/util").template
-local util = require("util")
+local koutil = require("util")
 local _ = require("assistant_gettext")
 local InfoMessage = require("ui/widget/infomessage")
 local Screen = Device.screen
@@ -77,6 +77,7 @@ body {
 
 blockquote, dd, pre {
     margin: 0 1em;
+    font-size: 0.8em;
 }
 
 ol, ul, menu {
@@ -111,6 +112,17 @@ table {
 table td, table th {
     border: 1px solid black;
     padding: 0;
+}
+
+.subtext {
+    font-size: 0.75em;
+    color: gray;
+}
+
+.reasoningtext {
+    font-size: 0.8em;
+    color: gray;
+    margin: 1em 1.5em;
 }
 ]]
 
@@ -471,7 +483,7 @@ function ChatGPTViewer:init()
 
 
   -- load configuration
-  self.render_markdown = util.tableGetValue(self.assistant.CONFIGURATION, "features", "render_markdown") or true
+  self.render_markdown = koutil.tableGetValue(self.assistant.CONFIGURATION, "features", "render_markdown") or true
 
   if self.render_markdown then
     -- Convert Markdown to HTML and render in a ScrollHtmlWidget
@@ -634,7 +646,7 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
     return true
   end) or {}
 
-  local user_prompts = util.tableGetValue(self.assistant.CONFIGURATION, "features", "prompts")
+  local user_prompts = koutil.tableGetValue(self.assistant.CONFIGURATION, "features", "prompts")
   local merged_prompts = Prompts.getMergedCustomPrompts(user_prompts) or {}
     
   -- Add buttons in sorted order
@@ -918,36 +930,17 @@ end
 function ChatGPTViewer:trimMessageHistory()
   if not self.message_history then return end
 
-  -- TODO: Make this configurable in the settings dialog
-  local MAX_ROUNDS = 3
-
-  local assistant_msg_indices = {}
-  -- Preserve the first round: System prompt (1), User1 (2), Assistant1 (3)
-  -- Start collecting assistant messages from index 4 to skip the first assistant response
-  for i = 4, #self.message_history do
-    if self.message_history[i].role == "assistant" then
-      table.insert(assistant_msg_indices, i)
-    end
-  end
-
-  -- Adjust for the first round already preserved: keep MAX_ROUNDS - 1 additional rounds
-  if #assistant_msg_indices > (MAX_ROUNDS - 1) then
-    local num_rounds_to_remove = #assistant_msg_indices - (MAX_ROUNDS - 1)
-    -- The index of the last assistant message of the last round to be removed.
-    local last_assistant_msg_index_to_remove = assistant_msg_indices[num_rounds_to_remove]
-    -- Preserve first round (indices 1-3), remove from index 4 onwards
-    local num_messages_to_remove = last_assistant_msg_index_to_remove - 3
-    for _ = 1, num_messages_to_remove do
-      table.remove(self.message_history, 4)
-    end
-  end
+  --- TODO: context should be compressed, not trimmed
+  --- 
+  return
 end
 
 function ChatGPTViewer:html_link_tapped_callback(link)
   local SUGGESTION_PREFIX = "#q:"
-  if link.uri and util.stringStartsWith(link.uri, SUGGESTION_PREFIX) then
+  if link.uri and koutil.stringStartsWith(link.uri, SUGGESTION_PREFIX) then
     self:askAnotherQuestion(true) -- simple_mode
-    self.input_dialog:setInputText(link.uri:sub(#SUGGESTION_PREFIX+1), nil, false)
+    local question = koutil.urlDecode(link.uri:sub(4)) or ""
+    self.input_dialog:setInputText(question, nil, false)
   end
 end
 

@@ -14,6 +14,7 @@ local T = require("ffi/util").template
 local Trapper = require("ui/trapper")
 local Prompts = require("assistant_prompts")
 local koutil = require("util")
+local strbuf = require("string.buffer")
 local Device = require("device")
 local Screen = Device.screen
 local CheckButton = require("ui/widget/checkbutton")
@@ -87,37 +88,63 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
   local function formatSingleMessage(message, title)
     if not message then return "" end
     if message.role == "user" then
-      local user_message
+      local user_message = strbuf.new()
+      user_message:put(_("### ☺ Question\n"))
+
       if title and title ~= "" then
-        user_message = string.format("%s\n\n", title)
+        user_message:putf("➤ ‹ %s ›\n", title)
+
+        local user_input = assistant_utils.get_attr(message, "user_input", "")
+
         -- Check if user input is available
-        if message.user_input and message.user_input ~= "" then
-          if message.user_input:find("%[BOOK TEXT BEGIN%]") then
-            message.user_input = message.user_input:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
+        if user_input and user_input ~= "" then
+
+          if user_input:find("%[BOOK TEXT BEGIN%]") then
+            user_input = user_input:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
           end
-          if message.user_input:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
-            message.user_input = message.user_input:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
+
+          if user_input:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
+            user_input = user_input:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
           end
-          user_message = user_message .. message.user_input .. "\n\n"
+
+          user_message:put("➤")
+          user_message:put(user_input)
+          user_message:put("\n\n")
         end
-      else
+      elseif message.content then
         -- shows user input prompt
-        local content = message.content or _("(Empty message)")
+        local content = message.content
+
         if content:find("%[BOOK TEXT BEGIN%]") then
           content = content:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
         end
+
         if content:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
           content = content:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
         end
-        user_message = string.format("\n\n%s\n\n", content)
+
+        user_message:putf("\n➤ %s\n\n", content)
       end
-      return "### ⮞ User: " .. user_message
+
+      return user_message:get()
     elseif message.role == "assistant" then
-      local assistant_content = message.content or _("(No response)")
-      -- Remove code block markers before displaying
-      assistant_content = assistant_content:gsub("```", "\n")
-      assistant_content = normalizeMarkdownHeadings(assistant_content, 3, 6) or assistant_content
-      return string.format("### ⮞ Assistant:\n\n%s\n\n", assistant_content)
+      local assistant_content, answer_type
+      local kw = assistant_utils.get_attr(message, "search_keywords")
+      if kw then
+        answer_type = _("Search")
+        assistant_content = string.format("%s\n\n", kw)
+      else
+        answer_type =  _("Response")
+        assistant_content = message.content or _("(No response)")
+        if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+          assistant_content = assistant_utils.process_suggestions(assistant_content)
+        end
+        -- Remove code block markers before displaying
+        assistant_content = assistant_content:gsub("```", "\n")
+        assistant_content = normalizeMarkdownHeadings(assistant_content, 3, 6) or assistant_content
+      end
+
+      return string.format("### ✦ %s\n\n%s\n\n", answer_type,assistant_content)
     end
     return "" -- Should not happen for valid roles
   end
@@ -151,7 +178,8 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
     -- skips the first message (system prompt)
     for i = 2, #message_history do
       local message = message_history[i]
-      if not message.is_context then
+      local is_context = assistant_utils.get_attr(message, "is_context")
+      if not is_context then
         table.insert(result_parts, formatSingleMessage(message, title))
       end
     end
@@ -189,11 +217,14 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
         elseif type(user_question) == "table" then
           -- Use custom prompt from configuration
           viewer_title = user_question.text or "Custom Prompt"
-          table.insert(message_history, {
+          local _user = {
             role = "user",
             content = self:_formatUserPrompt(user_question.user_prompt, current_highlight, user_question.user_input or ""),
-            user_input = user_question.user_input,
-          })
+          }
+          -- set these attributes in metatable (won't be encoded to API calls)
+          assistant_utils.set_attr(_user, "user_input", user_question.user_input)
+          assistant_utils.set_attr(_user, "use_websearch", user_question.use_websearch)
+          table.insert(message_history, _user)
         end
 
         viewer:trimMessageHistory()
@@ -203,7 +234,7 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
             
             -- Check if we got a valid response
             if err then
-              self.querier:showError(err)
+              self.querier:showError(err, message_history)
               return
             end
             
@@ -231,32 +262,26 @@ end
 
 function AssistantDialog:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question)
   local book = self:_getBookContext()
-  local context = {}
+  local content
   if highlightedText and highlightedText ~= "" then
-    context = {
-      role = "user",
-      is_context = true,
-      content = string.format([[I'm reading something titled '%s' by %s.
+    content = string.format([[I'm reading something titled '%s' by %s.
 I have a question about the following highlighted text: ```%s```.
 If the question is not clear enough, analyze the highlighted text.]],
-      book.title, book.author, highlightedText),
-    }
+      book.title, book.author, highlightedText)
   elseif book.title and book.author then
-    context = {
-      role = "user",
-      is_context = true,
-      content = string.format([[I'm reading something titled '%s' by %s.
-I have a question about this book.]], book.title, book.author),
-    }
+    content = string.format([[I'm reading something titled '%s' by %s.
+I have a question about this book.]], book.title, book.author)
   else
-    context = {
-      role = "user",
-      is_context = true,
-      content = string.format([[You are a helpful assistant. I have a question.]]),
-    }
+    content = string.format([[You are a helpful assistant. I have a question.]])
   end
 
+  local context = {
+      role = "user",
+      content = content,
+  }
+  assistant_utils.set_attr(context, "is_context", true)
   table.insert(message_history, context)
+
   local question_message = {
     role = "user",
     content = user_question
@@ -295,8 +320,7 @@ function AssistantDialog:show(highlightedText)
   local system_prompt = koutil.tableGetValue(self.CONFIGURATION, "features", "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
   if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
     local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
-    local suggestions_prompt = Prompts.assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
-    system_prompt = system_prompt .. suggestions_prompt
+    system_prompt = system_prompt .. Prompts.assistant_prompts.suggestions_prompt
   end
 
   local message_history = {{
@@ -346,7 +370,7 @@ function AssistantDialog:show(highlightedText)
           
           -- Check if we got a valid response
           if err then
-            self.querier:showError(err)
+            self.querier:showError(err, message_history)
             return
           end
           
@@ -508,26 +532,26 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index, user_in
   local system_prompt = koutil.tableGetValue(prompt_config, "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
 
   if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
-    local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
-    local suggestions_prompt = Prompts.assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
-    system_prompt = system_prompt .. suggestions_prompt
+    system_prompt = system_prompt .. Prompts.assistant_prompts.suggestions_prompt
   end
 
-  local message_history = {
-    {
-      role = "system",
-      content = system_prompt,
-    },
-    {
-      role = "user",
-      content = user_content,
-      user_input = user_input,
-    }
+  local message_history = {{
+    role = "system",
+    content = system_prompt,
+  }}
+
+  local _user = {
+    role = "user",
+    content = user_content,
   }
+  -- set attributes in metatable (won't be encoded to API calls)
+  assistant_utils.set_attr(_user, "user_input", user_input)
+  assistant_utils.set_attr(_user, "use_websearch", koutil.tableGetValue(prompt_config, "use_websearch") or false)
+  table.insert(message_history, _user)
   
-  local answer, err = self.querier:query(message_history, string.format("🌐 Loading for %s ...", title or prompt_index))
+  local answer, err = self.querier:query(message_history, T(_("Loading for %1 ..."), title or prompt_index))
   if err then
-    self.querier:showError(err)
+    self.querier:showError(err, message_history)
     return
   end
   if answer then

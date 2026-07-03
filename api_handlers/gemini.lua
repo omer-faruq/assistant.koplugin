@@ -2,119 +2,170 @@ local BaseHandler = require("api_handlers.base")
 local json = require("json")
 local koutil = require("util")
 local logger = require("logger")
+local ToolExecutor = require("assistant_tool_executor")
 
 local GeminiHandler = BaseHandler:new()
 
-function GeminiHandler:query(message_history, gemini_settings)
-
-    if not gemini_settings or not gemini_settings.api_key then
-        return "Error: Missing API key in configuration"
-    end
-
-    -- Gemini API requires messages with explicit roles
-    local contents = {}
+--- Convert OpenAI-style message_history to Gemini contents + system_instruction.
+--- Handles augmented messages that may already contain Gemini-native model turns
+--- (role="model") or functionResponse user turns (role="user", .parts set).
+---
+--- @param messages table
+--- @return table contents, string system_content
+local function toGeminiContents(messages)
+    local contents      = {}
     local system_content = ""
-    local generationConfig = nil
 
-    for i, msg in ipairs(message_history) do
+    for _, msg in ipairs(messages) do
         if msg.role == "system" then
             system_content = system_content .. msg.content .. "\n"
         elseif msg.role == "user" then
-            table.insert(contents, { role = "user", parts = {{ text = msg.content }} })
+            if msg.parts then
+                -- Already a Gemini-native turn (e.g. functionResponse from augmented history)
+                table.insert(contents, msg)
+            else
+                table.insert(contents, { role = "user", parts = {{ text = msg.content }} })
+            end
         elseif msg.role == "assistant" then
             table.insert(contents, { role = "model", parts = {{ text = msg.content }} })
+        elseif msg.role == "model" then
+            -- Gemini model turn replayed from augmented history
+            table.insert(contents, msg)
         else
-            -- Fallback for any other roles, mapping to 'user'
             table.insert(contents, { role = "user", parts = {{ text = msg.content }} })
         end
     end
 
-    local system_instruction = nil
-    if system_content ~= "" then
-        system_instruction = { parts = {{ text = system_content:gsub("\n$", "") }} }
-    end
+    return contents, system_content
+end
 
-    local thinking_budget = koutil.tableGetValue(gemini_settings, "additional_parameters", "thinking_budget")
+--- Collect Gemini generationConfig from provider settings.
+local function buildGenerationConfig(settings)
+    local gc = nil
+    local thinking_budget = koutil.tableGetValue(settings, "additional_parameters", "thinking_budget")
     if thinking_budget ~= nil then
-        generationConfig = generationConfig or {}
-        generationConfig.thinking_config = { thinking_budget = thinking_budget }
+        gc = gc or {}
+        gc.thinking_config = { thinking_budget = thinking_budget }
     end
-
-    local stream = koutil.tableGetValue(gemini_settings, "additional_parameters", "stream") or false
-
-    local requestBodyTable = {
-        contents = contents,
-        system_instruction = system_instruction,
-        safetySettings = {
-            { category = "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold = "BLOCK_NONE" },
-            { category = "HARM_CATEGORY_HATE_SPEECH", threshold = "BLOCK_NONE" },
-            { category = "HARM_CATEGORY_HARASSMENT", threshold = "BLOCK_NONE" },
-            { category = "HARM_CATEGORY_DANGEROUS_CONTENT", threshold = "BLOCK_NONE" }
-        },
-        generationConfig = generationConfig
-    }
-    -- a few more snake_case fields
-    if gemini_settings.additional_parameters then
-        for _, option in ipairs({"maxOutputTokens", "temperature", "topP", "topK"}) do
-            if gemini_settings.additional_parameters[option] then
-                generationConfig = generationConfig or {}
-                generationConfig[option] = gemini_settings.additional_parameters[option]
+    if settings.additional_parameters then
+        for _, opt in ipairs({ "maxOutputTokens", "temperature", "topP", "topK" }) do
+            if settings.additional_parameters[opt] then
+                gc = gc or {}
+                gc[opt] = settings.additional_parameters[opt]
             end
         end
     end
+    return gc
+end
 
-    local requestBody = json.encode(requestBodyTable)
-    
+--- Build a JSON request body for the Gemini API.
+--- @param messages  table       message history
+--- @param settings  table       provider settings
+--- @param tool_def  table|nil   Gemini-format tool object (or nil)
+--- @return table    body
+local function buildRequestBody(messages, settings, tool_def)
+    local contents, system_content = toGeminiContents(messages)
+
+    local system_instruction = { parts = {}}
+    if system_content ~= "" then
+        table.insert(system_instruction.parts, { text = system_content:gsub("\n$", "") })
+    end
+
+    local tools = tool_def and { tool_def } or nil
+    local gc = buildGenerationConfig(settings)
+    if settings.model:find("gemma-4", 1, true) then
+        if gc and gc.thinking_config and gc.thinking_config.thinking_budget then
+            -- gemma-4 does not support thinking_budget config
+            gc.thinking_config.thinking_budget = nil
+            gc.thinking_config.include_thoughts = false
+            table.insert(system_instruction.parts, { text = "**DIRECT RESPONSE**: Respond directly to the user without generating any internal thinking, chain of thought, or reasoning channels." })
+        end
+    end
+
+    local body = {
+        contents           = contents,
+        system_instruction = system_instruction,
+        safetySettings     = {
+            { category = "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold = "BLOCK_NONE" },
+            { category = "HARM_CATEGORY_HATE_SPEECH",       threshold = "BLOCK_NONE" },
+            { category = "HARM_CATEGORY_HARASSMENT",        threshold = "BLOCK_NONE" },
+            { category = "HARM_CATEGORY_DANGEROUS_CONTENT", threshold = "BLOCK_NONE" },
+        },
+        generationConfig   = gc,
+        tools              = tools,
+    }
+    return body
+end
+
+function GeminiHandler:query(message_history, gemini_settings, query_option)
+
+    if not gemini_settings or not gemini_settings.api_key then
+        return nil, "Error: Missing API key in configuration"
+    end
+
+    local model    = gemini_settings.model or "gemini-flash-latest"
+    local base_url = gemini_settings.base_url
+                  or "https://generativelanguage.googleapis.com/v1beta/models/"
+
+    local url_sync   = string.format("%s%s:generateContent",            base_url, model)
+    local url_stream = string.format("%s%s:streamGenerateContent?alt=sse", base_url, model)
+
     local headers = {
-        ["Content-Type"] = "application/json",
+        ["Content-Type"]   = "application/json",
         ["x-goog-api-key"] = gemini_settings.api_key,
     }
 
-    local model = gemini_settings.model or "gemini-2.0-flash"
-    local base_url = gemini_settings.base_url or "https://generativelanguage.googleapis.com/v1beta/models/"
-    
-    local url = string.format(stream and "%s%s:streamGenerateContent?alt=sse" or "%s%s:generateContent",
-                base_url, model)
-    logger.dbg("Making Gemini API request to model:", model)
+    local ws_mode = query_option.use_websearch or "none"
 
-    if stream then
-        -- For streaming responses, we need to handle the response differently
-        headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(url, headers, requestBody)
+    -- Apply built-in Google Search grounding if requested
+    local tools = nil
+    if ws_mode == "builtin" then
+        tools = { google_search = {} }
+    elseif ToolExecutor.IsExtSearch(ws_mode) then
+        tools = self:buildExternalSearchToolDef("gemini")
     end
-    
-    local success, code, response = self:makeRequest(url, headers, requestBody)
+    local requestBody = buildRequestBody(message_history, gemini_settings, tools)
+
+    -- -----------------------------------------------------------------------
+    -- STREAM path: return background function immediately.
+    -- -----------------------------------------------------------------------
+    if query_option.use_stream_mode then
+        headers["Accept"] = "text/event-stream"
+        return self:backgroundRequest(url_stream, headers, json.encode(requestBody))
+    end
+
+    -- -----------------------------------------------------------------------
+    -- NON-STREAM path
+    -- -----------------------------------------------------------------------
+    -- In non-stream mode, inject tool definitions if web_search is enabled.
+    -- Let the Querier handle the tool-call loop and search execution.
+    logger.dbg("Gemini API request to model:", model)
+    local success, code, response = self:makeRequest(url_sync, headers, json.encode(requestBody))
     if not success then
-        -- Handle user abort case
         if code == BaseHandler.CODE_CANCELLED then
             return nil, response
         end
-
         logger.warn("Gemini API request failed:", {
-            error = response,
-            model = model,
-            base_url = base_url:gsub(gemini_settings.api_key, "***"), -- Hide API key in logs
-            request_size = #requestBody,
-            message_count = #message_history
+            error         = response,
+            model         = model,
+            request_size  = #requestBody,
+            message_count = #message_history,
         })
-        return nil,"Error: Failed to connect to Gemini API - " .. tostring(response)
+        return nil, "Error: Failed to connect to Gemini API - " .. tostring(response)
     end
 
-    local success, parsed = pcall(json.decode, response)
-    if not success then
-        logger.warn("JSON Decode Error:", parsed)
-        return nil,"Error: Failed to parse Gemini API response"
+    local ok, parsed = pcall(json.decode, response)
+    if not ok or not parsed or not parsed.candidates then
+        local err = koutil.tableGetValue(parsed, "error", "message")
+        if err then
+            return nil, err
+        end
+        logger.warn("Gemini: JSON decode error:", response)
+        return nil, "Error: Failed to parse Gemini API response"
     end
-    
-    local content = koutil.tableGetValue(parsed, "candidates", 1, "content", "parts", 1, "text")
-    if content then return content end
 
-    local err_msg = koutil.tableGetValue(parsed, "error", "message")
-    if err_msg then
-        return nil, err_msg
-    else
-        return nil,"Error: Unexpected response format from Gemini API"
-    end
+    -- Delegate tool-call / error detection to the unified base method
+    return self:parseToolCalls(parsed, "gemini")
 end
 
 return GeminiHandler

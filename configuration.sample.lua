@@ -22,7 +22,7 @@ local CONFIGURATION = {
         openai = {
             default = true,        -- optional, if provider above is not set, will try to find one with `default =  true`
             visible = true,        -- optional, if set to false, will not shown in the provider switch
-            model = "gpt-4o-mini", -- model list: https://platform.openai.com/docs/models
+            model = "gpt-5.4-mini", -- model list: https://platform.openai.com/docs/models
             base_url = "https://api.openai.com/v1/chat/completions",
             api_key = "your-openai-api-key",
             additional_parameters = {
@@ -32,7 +32,7 @@ local CONFIGURATION = {
         },
         openai_grok = {
             --- use grok model via openai handler
-            model = "grok-3-mini-fast", -- model list: https://docs.x.ai/docs/models
+            model = "grok", -- model list: https://docs.x.ai/developers/models
             base_url = "https://api.x.ai/v1/chat/completions",
             api_key = "your-grok-api-key",
             additional_parameters = {
@@ -50,7 +50,7 @@ local CONFIGURATION = {
                 max_tokens = 4096
             }
         },
-        -- Anthropic with web search
+        -- Anthropic with built-in web search
         anthropic_websearch = {
             visible = false,                   -- optional, if set to false, will not shown in the profile switch
             model = "claude-3-5-haiku-latest", -- model list: https://docs.anthropic.com/en/docs/about-claude/models
@@ -69,14 +69,14 @@ local CONFIGURATION = {
             }
         },
         gemini = {
-            model = "gemini-2.5-flash", -- model list: https://ai.google.dev/gemini-api/docs/models , ex: gemini-2.5-pro , gemini-2.5-flash
+            model = "gemini-flash-latest", -- model list: https://ai.google.dev/gemini-api/docs/models , ex: gemini-2.5-pro , gemini-2.5-flash
             base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
             api_key = "your-gemini-api-key",
             additional_parameters = {
                 temperature = 0.7,
                 max_tokens = 1048576,
                 -- Set to 0 to disable thinking. Recommended for gemini-2.5-* and newer, where thinking is enabled by default.
-                thinking_budget = 0
+                thinking_budget = 0,
             }
         },
         gigachat = {
@@ -97,7 +97,7 @@ local CONFIGURATION = {
                 -- reference: https://openrouter.ai/docs/use-cases/reasoning-tokens
                 -- reasoning = {
                 --     -- One of the following (not both):
-                --     effort = "high", -- Can be "high", "medium", or "low" (OpenAI-style)
+                --     effort = "high", -- Can be "high", "medium", "low", or "none" (OpenAI-style)
                 --     -- max_tokens = 2000, -- Specific token limit (Anthropic-style)
                 --     -- Or enable reasoning with the default parameters:
                 --     -- enabled = true -- Default: inferred from effort or max_tokens
@@ -106,7 +106,7 @@ local CONFIGURATION = {
         },
         openrouter_free = {
             --- use another free model with defferent configuration
-            model = "deepseek/deepseek-chat-v3-0324:free", -- model list: https://openrouter.ai/models?order=top-weekly
+            model = "openrouter/free", -- model list: https://openrouter.ai/models?order=top-weekly
             base_url = "https://openrouter.ai/api/v1/chat/completions",
             api_key = "your-openrouter-api-key",
             additional_parameters = {
@@ -127,17 +127,6 @@ local CONFIGURATION = {
                 -- thinking = { type = "disabled" },
                 -- Or enable thinking mode with budget control:
                 -- thinking = { type = "enabled", budget_tokens = 2000 },
-            }
-        },
-        deepseek_fast = {
-            -- DeepSeek with thinking mode disabled for faster responses
-            model = "deepseek-v4-flash",
-            base_url = "https://api.deepseek.com/v1/chat/completions",
-            api_key = "your-deepseek-api-key",
-            additional_parameters = {
-                temperature = 0.7,
-                max_tokens = 4096,
-                thinking = { type = "disabled" }
             }
         },
         gemma = {
@@ -234,14 +223,29 @@ local CONFIGURATION = {
                 reasoning_effort = "none"
             }
         },
-        azure_openai = {
-            endpoint = "https://your-resource-name.openai.azure.com", -- Your Azure OpenAI resource endpoint
+        openai_azure = {
+            endpoint = "https://your-resource-name.openai.azure.com/your-deployment-name/chat/completions?api-version=2024-02-15-preview", -- Your Azure OpenAI resource endpoint
             deployment_name = "your-deployment-name",                 -- Your model deployment name
-            api_version = "2024-02-15-preview",                       -- Azure OpenAI API version
             api_key = "your-azure-api-key",                           -- Your Azure OpenAI API key
             temperature = 0.7,
             max_tokens = 4096
         },
+        serpapi = {
+            -- External Search Tool API: SerpAPI, free tier: 250 searchs / month
+            -- https://serpapi.com/
+            api_key = "your-serp-api-key"
+        },
+        tavilyapi = {
+            -- External Search Tool API: Tavily, free tier: 1000 searchs / month
+            -- https://www.tavily.com/ 
+            api_key = "your-tavily-api-key"
+        },
+        searxngapi = {
+            -- External Search Tool API: SearXNG, opensource and free, hosted on you own server.
+            -- https://github.com/searxng/searxng
+            base_url = "https://you-searxng-address"
+            -- keys not needed
+        }
     },
 
     -- Optional features

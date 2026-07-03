@@ -38,37 +38,17 @@ local function fetchOpenRouterModels(list_url)
     }
     UIManager:show(infomsg)
 
-    local success, code, body, headers = Trapper:dismissableRunInSubprocess(function()
-        local response_body = {}
-        local rcode, rheaders = socket.skip(1, http.request{
-            url = list_url,
-            headers = {
-                ["Accept"] = "application/json",
-                ["Accept-Encoding"] = "gzip",
-            },
-            sink = ltn12.sink.table(response_body),
-        })
-        return rcode, table.concat(response_body), rheaders
+    local completed, success, code, body = Trapper:dismissableRunInSubprocess(function()
+        return assistant_utils.httpRequest(list_url)
     end, infomsg)
-
     UIManager:close(infomsg)
-
-    if not success then
+    if not completed or not success then
         return nil
     end
-
     if code ~= 200 then
         return nil, T(_("Failed to fetch models (HTTP %1)."), code or "?")
     end
 
-    if assistant_utils.http_is_encoded(headers, "gzip") then
-        local max_size = 5 * 1024 * 1024
-        local decompressed, err = assistant_utils.zlib_uncompress_gzip(body, max_size)
-        if not decompressed then
-            return nil, _("Failed to decompress data: ") .. tostring(err)
-        end
-        body = decompressed
-    end
     local ok, parsed = pcall(json.decode, body)
     if not ok or not parsed or not parsed.data then
         return nil, _("Failed to parse model list.")
@@ -87,7 +67,7 @@ end
 local function saveModelSelection(assistant, model_id)
     local provider_name = assistant.querier.provider_name
     assistant.settings:saveSetting("openrouter_model_" .. provider_name, model_id)
-    assistant.querier.provider_settings.model = model_id
+    assistant.querier.provider_setting.model = model_id
     assistant.updated = true
 end
 
@@ -389,7 +369,7 @@ end
 --- Show manual model input dialog
 showManualInput = function(assistant, close_callback)
     local current_model = koutil.tableGetValue(
-        assistant, "querier", "provider_settings", "model") or ""
+        assistant, "querier", "provider_setting", "model") or ""
     local dialog
     dialog = InputDialog:new{
         title = _("Enter Model ID"),

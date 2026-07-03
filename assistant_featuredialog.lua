@@ -30,7 +30,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     end
 
     local formatted_progress_percent = string.format("%.2f", progress_percent * 100)
-    local feature_title, loading_message, system_prompt, user_prompt_template, book_text, highlights_notes
+    local feature_title, loading_message, system_prompt, user_prompt_template, user_prompt_use_websearch, book_text, highlights_notes
 
     local language = assistant.settings:readSetting("response_language") or assistant.ui_language
 
@@ -41,6 +41,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         loading_message = custom_config.loading_message or _("Loading...")
         system_prompt = custom_config.system_prompt
         user_prompt_template = custom_config.user_prompt
+        user_prompt_use_websearch = koutil.tableGetValue(custom_config, "use_websearch") or false
 
         -- Handle use flags
         book_text = nil
@@ -58,7 +59,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         -- Feature type configurations for easy extension
         local feature_configurations = {
             recap = {
-                title = _("Recap"),
+                title = _("🌐Recap"),
                 loading_message = _("Loading Recap..."),
                 config_key = "recap_config",
                 prompts_key = "recap"
@@ -70,7 +71,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
                 prompts_key = "xray"
             },
             book_info = {
-                title = _("Book Information"),
+                title = _("🌐Book Information"),
                 loading_message = _("Loading Book Information..."),
                 config_key = "book_info_config",
                 prompts_key = "book_info"
@@ -114,6 +115,9 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         user_prompt_template = koutil.tableGetValue(file_config, "user_prompt")
             or koutil.tableGetValue(assistant_prompts, prompts_key, "user_prompt")
 
+        user_prompt_use_websearch = koutil.tableGetValue(file_config, "use_websearch")
+            or koutil.tableGetValue(assistant_prompts, prompts_key, "use_websearch")
+
         book_text = nil
         highlights_notes = nil
         if feature_type == "xray" or feature_type == "recap" then
@@ -129,8 +133,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     end
 
     if assistant.settings:readSetting("auto_prompt_suggest", false) then
-      local suggestions_prompt = assistant_prompts.suggestions_prompt:gsub("{(%w+)}", {language = language})
-      system_prompt = system_prompt .. suggestions_prompt
+      system_prompt = system_prompt .. assistant_prompts.suggestions_prompt
     end
     
     local book_text_prompt = ""
@@ -162,12 +165,19 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     
     local context_message = {
         role = "user",
-        content = user_content
+        content = user_content,
     }
+    assistant_utils.set_attr(context_message, "use_websearch", user_prompt_use_websearch)
     table.insert(message_history, context_message)
 
     local function createResultText(answer)
-      local normalized_answer = normalizeMarkdownHeadings(answer, 2, 6) or answer
+
+      local normalized_answer = answer
+      if assistant.settings:readSetting("auto_prompt_suggest", false) then
+        normalized_answer = assistant_utils.process_suggestions(normalized_answer)
+      end
+      normalized_answer = normalizeMarkdownHeadings(normalized_answer, 2, 6) or answer
+
       local header_text = T(_([[
  - Title : %1
  - Author: %2
@@ -189,7 +199,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
 
     local answer, err = Querier:query(message_history, loading_message)
     if err then
-      assistant.querier:showError(err)
+      assistant.querier:showError(err, message_history)
       return
     end
 
@@ -225,7 +235,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
             local answer, err = Querier:query(message_history)
             
             if err then
-              Querier:showError(err)
+              Querier:showError(err, message_history)
               return
             end
             
@@ -233,6 +243,9 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
               role = "assistant",
               content = answer
             })
+            if assistant.settings:readSetting("auto_prompt_suggest", false) then
+              answer = assistant_utils.process_suggestions(answer)
+            end
             local normalized_answer = normalizeMarkdownHeadings(answer, 3, 6) or answer
             local additional_text = "\n\n### ⮞ User: \n" .. (type(user_question) == "string" and user_question or (user_question.text or user_question)) .. "\n\n### ⮞ Assistant:\n" .. normalized_answer
             viewer:update(viewer.text .. additional_text)

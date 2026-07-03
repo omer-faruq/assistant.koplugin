@@ -2,7 +2,8 @@
 This widget displays a setting dialog.
 ]]
 
-local FrontendUtil = require("util")
+local Trapper = require("ui/trapper")
+local koutil = require("util")
 local Blitbuffer = require("ffi/blitbuffer")
 local CenterContainer = require("ui/widget/container/centercontainer")
 local CheckButton = require("ui/widget/checkbutton")
@@ -32,6 +33,8 @@ local ffiutil = require("ffi/util")
 local meta = require("_meta")
 local logger = require("logger")
 local koutil = require("util")
+local ToolExecutor = require("assistant_tool_executor")
+local ExtTools = require("assistant_exttools")
 
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
@@ -221,37 +224,39 @@ function SettingsDialog:init()
 
     local MAX_FOR_SINGLE_COLUMN = 12
     -- 2 columns if more than MAX_FOR_SINGLE_COLUMN providers, otherwise 1 column
-    local columns = FrontendUtil.tableSize(self.CONFIGURATION.provider_settings) > MAX_FOR_SINGLE_COLUMN and 2 or 1
+    local columns = koutil.tableSize(self.CONFIGURATION.provider_settings) > MAX_FOR_SINGLE_COLUMN and 2 or 1
     local buttonrow = {}
     for key, tab in ffiutil.orderedPairs(self.CONFIGURATION.provider_settings) do
-        if not (FrontendUtil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
-            if #buttonrow < columns then
-                local model_name
-                if key == self.assistant.querier.provider_name then
-                    model_name = self.assistant.querier.provider_settings.model
-                elseif key:sub(1, 10) == "openrouter" then
-                    model_name = self.settings:readSetting("openrouter_model_" .. key)
-                    if model_name == "" then
-                        model_name = self.assistant.querier.provider_settings.model
+        if self.assistant.querier:is_handler(key) then
+            if not (koutil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
+                if #buttonrow < columns then
+                    local model_name
+                    if key == self.assistant.querier.provider_name then
+                        model_name = self.assistant.querier.provider_setting.model
+                    elseif key:sub(1, 10) == "openrouter" then
+                        model_name = self.settings:readSetting("openrouter_model_" .. key)
+                        if model_name == "" then
+                            model_name = self.assistant.querier.provider_setting.model
+                        end
+                    else
+                        model_name = koutil.tableGetValue(tab, "model")
+                            or koutil.tableGetValue(tab, "deployment_name")
                     end
-                else
-                    model_name = FrontendUtil.tableGetValue(tab, "model")
-                        or FrontendUtil.tableGetValue(tab, "deployment_name")
+                    local button_text = key
+                    if columns == 1 and model_name and model_name ~= "" then
+                        button_text = string.format("%s (%s)", key, model_name)
+                    end
+                    table.insert(buttonrow, {
+                        text = button_text,
+                        bold = (key:sub(1, 10) == "openrouter"),
+                        provider = key, -- note: this `provider` field belongs to the RadioButton, not our AI Model provider.
+                        checked = (key == self.assistant.querier.provider_name),
+                    })
                 end
-                local button_text = key
-                if columns == 1 and model_name and model_name ~= "" then
-                    button_text = string.format("%s (%s)", key, model_name)
+                if #buttonrow == columns then
+                    table.insert(self.radio_buttons, buttonrow)
+                    buttonrow = {}
                 end
-                table.insert(buttonrow, {
-                    text = button_text,
-                    bold = (key:sub(1, 10) == "openrouter"),
-                    provider = key, -- note: this `provider` field belongs to the RadioButton, not our AI Model provider.
-                    checked = (key == self.assistant.querier.provider_name),
-                })
-            end
-            if #buttonrow == columns then
-                table.insert(self.radio_buttons, buttonrow)
-                buttonrow = {}
             end
         end
     end
@@ -358,11 +363,10 @@ end
 function SettingsDialog:onSelectModel()
     UIManager:close(self)
     local NetworkMgr = require("ui/network/manager")
-    local url = koutil.tableGetValue(self.assistant.querier, "provider_settings", "base_url")
+    local url = koutil.tableGetValue(self.assistant.querier, "provider_setting", "base_url")
     if url ~= "" then
         url = url:gsub("/chat/.*$", "/models")
         NetworkMgr:runWhenOnline(function()
-            local Trapper = require("ui/trapper")
             Trapper:wrap(function()
                 local showModelPicker = require("assistant_model_picker")
                 showModelPicker(self.assistant, self.close_callback, url)
@@ -384,7 +388,52 @@ function SettingsDialog:onCloseWidget()
     self.assistant._settings_dialog = nil
 end
 
-SettingsDialog.genMenuSettings = function (assistant)
+SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
+    return {
+        text = ToolExecutor.ToolToText(key),
+        radio = true,
+        checked_func = function ()
+            return assistant.settings:readSetting("use_websearch", "none") == key
+        end,
+        callback = function ()
+            assistant.settings:saveSetting("use_websearch", key)
+            assistant.updated = true
+        end,
+        enabled_func = function ()
+            if key == "none" or key == "builtin" then
+                return true
+            end
+            if ToolExecutor.IsExtSearch(key) then
+                return 
+                    (koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", key, "api_key") ~= nil) or
+                    (koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", key, "base_url") ~= nil)
+            end
+            return false --
+        end,
+        hold_callback = function ()
+            if key == "builtin" then
+                local info = _("Builtin Tools Works ONLY with these models:\n- Gemini-2.5/3\n- OpenAI/gpt-4o-search\n")
+                UIManager:show(InfoMessage:new{ face = Font:getFace("smallinfofont"),
+                    text = info
+                })
+            end
+            if ToolExecutor.IsExtSearch(key) then
+                Trapper:wrap(function()
+                    local API = ExtTools[key]
+                    local ok, info = API:AccoutInfo()
+                    UIManager:show(InfoMessage:new{ face = Font:getFace("smallinfofont"),
+                        text = info
+                    })
+                    if not ok then
+                        logger.warn("info err", info)
+                    end
+                end)
+            end
+        end
+    }
+end
+
+SettingsDialog.genMenuSettings = function(assistant)
     local sub_item_table = {
         {
             text_func = function ()
@@ -420,10 +469,10 @@ SettingsDialog.genMenuSettings = function (assistant)
             keep_menu_open = true,
         },
         {
-            text = _("Stream Mode Settings"),
+            text = _("Response Settings"),
             sub_item_table = {
                 {
-                    text = _("Enable stream response"),
+                    text = _("Enable Stream Response"),
                     checked_func = function () return assistant.settings:readSetting("use_stream_mode", true) end,
                     callback = function ()
                         assistant.settings:toggle("use_stream_mode")
@@ -431,7 +480,7 @@ SettingsDialog.genMenuSettings = function (assistant)
                     end
                 },
                 {
-                    text = _("Auto scroll stream response text"),
+                    text = _("Stream Text Auto Scroll"),
                     enabled_func = function () return assistant.settings:readSetting("use_stream_mode") end,
                     checked_func = function () return assistant.settings:readSetting("stream_mode_auto_scroll", true) end,
                     callback = function()
@@ -446,6 +495,33 @@ SettingsDialog.genMenuSettings = function (assistant)
                     callback = function()
                         assistant.settings:toggle("large_stream_dialog")
                         assistant.updated = true
+                    end,
+                    separator = true,
+                },
+                {
+                    text = _("Show Reasoning Text"),
+                    checked_func = function () return assistant.settings:readSetting("show_reasoning", false) end,
+                    callback = function ()
+                        assistant.settings:toggle("show_reasoning")
+                        assistant.updated = true
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Show deeply thought process (reasoning) from the AI response if exists.")
+                        })
+                    end
+                },
+                {
+                    text = _("Show Follow-up Questions"),
+                    checked_func = function () return assistant.settings:readSetting("auto_prompt_suggest", false) end,
+                    callback = function()
+                        assistant.settings:toggle("auto_prompt_suggest")
+                        assistant.updated = true
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Show follow up questions related to the response content.")
+                        })
                     end
                 },
             }
@@ -513,14 +589,6 @@ SettingsDialog.genMenuSettings = function (assistant)
                     end
                 },
             }
-        },
-        {
-            text = _("Show Follow-up Questions from AI"),
-            checked_func = function () return assistant.settings:readSetting("auto_prompt_suggest", false) end,
-            callback = function()
-                assistant.settings:toggle("auto_prompt_suggest")
-                assistant.updated = true
-            end
         },
         {
             text = _("Copy entered question to the clipboard"),
