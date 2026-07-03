@@ -6,20 +6,37 @@ local ToolExecutor = require("assistant_tool_executor")
 
 local OpenAIHandler = BaseHandler:new()
 
+local SupportedOptions = {
+    ["temperature"] = true,
+    ["top_p"] = true,
+    ["max_completion_tokens"] = true,
+    ["max_tokens"] = true,
+    ["reasoning_effort"] = true,
+    ["reasoning_format"] = true,
+    ["search_settings" ] = true,
+}
+
 --- Build a JSON request body for the OpenAI-compatible API.
 --- @param messages  table   message history
 --- @param settings  table   provider settings
 --- @param tools     table|nil  tool definitions (nil → no tool_calls)
 --- @return table    requestBody 
-local function buildRequestBody(messages, settings, tools)
+function OpenAIHandler:buildRequestBody(messages, settings, query_option, tools)
     local body = {
         model      = settings.model,
         messages   = messages,
-        max_tokens = settings.max_tokens,
     }
+    if type(settings.additional_parameters) == "table" and next(settings.additional_parameters) then
+        for o, v in pairs(settings.additional_parameters) do
+            if SupportedOptions[o] then body[o] = v end
+        end
+    end
     if tools then
         body.tools       = tools
         body.tool_choice = "auto"
+    end
+    if query_option.use_stream_mode then
+        body.stream = true
     end
     return body
 end
@@ -36,13 +53,12 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
     if ToolExecutor.IsExtSearch(ws_mode) then
         tools = { self:buildExternalSearchToolDef("openai") }
     end
-    local body = buildRequestBody(message_history, openai_settings, tools)
+    local body = self:buildRequestBody(message_history, openai_settings, query_option, tools)
 
     -- -----------------------------------------------------------------------
     -- STREAM path: build body and return a background function immediately.
     -- -----------------------------------------------------------------------
     if query_option.use_stream_mode then
-        body.stream = true
         local requestBody = json.encode(body)
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(openai_settings.base_url, headers, requestBody)
@@ -51,7 +67,6 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
     -- -----------------------------------------------------------------------
     -- NON-STREAM path: synchronous makeRequest, may return tool_call table.
     -- -----------------------------------------------------------------------
-    body.stream = false
     local requestBody = json.encode(body)
     local status, code, response = self:makeRequest(openai_settings.base_url, headers, requestBody)
 
@@ -72,7 +87,7 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
 
     local ok, responseData = pcall(json.decode, response)
     if not ok or not responseData then
-        logger.warn("OpenAI: failed to parse response:", response)
+        logger.warn(self.name, "failed to parse response:", response)
         return nil, "Error: failed to parse API response"
     end
 

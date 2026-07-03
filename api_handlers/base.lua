@@ -16,6 +16,7 @@ local assistant_utils = require("assistant_utils")
 local json_default = assistant_utils.json_default
 
 local BaseHandler = {
+    name = "BASE",
     trap_widget = nil,  -- widget to trap the request
 }
 
