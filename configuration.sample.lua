@@ -231,11 +231,21 @@ local CONFIGURATION = {
             max_tokens = 4096
         },
         serpapi = {
+            -- External Search Tool API: SerpAPI, free tier: 250 searchs / month
+            -- https://serpapi.com/
             api_key = "your-serp-api-key"
         },
         tavilyapi = {
+            -- External Search Tool API: Tavily, free tier: 1000 searchs / month
+            -- https://www.tavily.com/ 
             api_key = "your-tavily-api-key"
         },
+        searxngapi = {
+            -- External Search Tool API: SearXNG, opensource and free, hosted on you own server.
+            -- https://github.com/searxng/searxng
+            base_url = "https://you-searxng-address"
+            -- keys not needed
+        }
     },
 
     -- Optional features
