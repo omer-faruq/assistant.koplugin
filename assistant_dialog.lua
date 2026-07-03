@@ -89,10 +89,10 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
     if not message then return "" end
     if message.role == "user" then
       local user_message = strbuf.new()
-      user_message:put("### ☺ ")
+      user_message:put(_("### ☺ Question "))
 
       if title and title ~= "" then
-        user_message:putf("%s\n\n", title)
+        user_message:putf("%s\n", title)
 
         local user_input = assistant_utils.get_attr(message, "user_input", "")
 
