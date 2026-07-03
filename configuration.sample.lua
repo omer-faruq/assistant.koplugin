@@ -97,7 +97,7 @@ local CONFIGURATION = {
                 -- reference: https://openrouter.ai/docs/use-cases/reasoning-tokens
                 -- reasoning = {
                 --     -- One of the following (not both):
-                --     effort = "high", -- Can be "high", "medium", or "low" (OpenAI-style)
+                --     effort = "high", -- Can be "high", "medium", "low", or "none" (OpenAI-style)
                 --     -- max_tokens = 2000, -- Specific token limit (Anthropic-style)
                 --     -- Or enable reasoning with the default parameters:
                 --     -- enabled = true -- Default: inferred from effort or max_tokens

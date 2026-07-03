@@ -5,8 +5,7 @@ local logger = require("logger")
 local ToolExecutor = require("assistant_tool_executor")
 
 local OpenAIHandler = BaseHandler:new()
-
-local SupportedOptions = {
+OpenAIHandler.SupportedOptions = {
     ["temperature"] = true,
     ["top_p"] = true,
     ["max_completion_tokens"] = true,
@@ -28,7 +27,7 @@ function OpenAIHandler:buildRequestBody(messages, settings, query_option, tools)
     }
     if type(settings.additional_parameters) == "table" and next(settings.additional_parameters) then
         for o, v in pairs(settings.additional_parameters) do
-            if SupportedOptions[o] then body[o] = v end
+            if self.SupportedOptions[o] then body[o] = v end
         end
     end
     if tools then
