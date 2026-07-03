@@ -89,10 +89,10 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
     if not message then return "" end
     if message.role == "user" then
       local user_message = strbuf.new()
-      user_message:put(_("### ☺ Question "))
+      user_message:put(_("### ☺ Question\n"))
 
       if title and title ~= "" then
-        user_message:putf("%s\n", title)
+        user_message:putf("➤ ‹ %s ›\n", title)
 
         local user_input = assistant_utils.get_attr(message, "user_input", "")
 
@@ -107,6 +107,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
             user_input = user_input:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
           end
 
+          user_message:put("➤")
           user_message:put(user_input)
           user_message:put("\n\n")
         end
@@ -122,7 +123,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
           content = content:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
         end
 
-        user_message:putf("\n\n%s\n\n", content)
+        user_message:putf("\n➤ %s\n\n", content)
       end
 
       return user_message:get()
