@@ -144,6 +144,10 @@ The Assistant plugin adds AI-powered buttons (Wikipedia, Term X-Ray, Dictionary,
 
 ## Contributors ✨
 
+<a href="https://github.com/omer-faruq/assistant.koplugin/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=omer-faruq/assistant.koplugin" />
+</a>
+
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
