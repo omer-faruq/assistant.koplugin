@@ -16,6 +16,7 @@ A powerful plugin that lets you interact with AI language models (Claude, GPT-4,
   - Other OpenAI-compatible API services (Groq, NVIDIA, etc.)
 - **Stream Mode**: Real-time responses from the API. Get the full LLM experience on e-ink devices.
 - **Multiple Providers/Models**: Select different models or AI provider platforms in the UI.
+- **Web Search Tool Calling**: LLMs search the web and improve the the answer with real and updated infomation.
 - **Built-in Prompts**:
   - **Translation**: Instantly translate highlighted text to any language
   - **Quick Actions**: One-click buttons for common tasks like summarizing or explaining
@@ -35,17 +36,18 @@ A powerful plugin that lets you interact with AI language models (Claude, GPT-4,
 ## Basic Requirements
 
 - [KOReader](https://github.com/koreader/koreader) installed on your device
-- API key from your preferred provider (Anthropic, OpenAI, Gemini, OpenRouter, DeepSeek, Ollama, etc.)
+- API key from a LLM provider (Anthropic, OpenAI, Gemini, OpenRouter, DeepSeek, Ollama, etc.)
+- (Optional) API key from a search api provider (Tavily, SerpAPI, SearXNG ...)
 
 ## Getting Started 
 
 ### 1. Get API Keys
 
-See [Obtaining API Keys](https://github.com/omer-faruq/assistant.koplugin/wiki/Obtaining-API-Keys) from the wiki page.
+See [Obtaining API Keys](wiki/Obtaining-API-Keys) from the wiki page.
 
 ### 2. Installation:
 
-[Installation Guide](https://github.com/omer-faruq/assistant.koplugin/wiki/Installation)
+[Installation Guide](wiki/Installation)
 
 Create/modify `configuration.lua` as needed.
 
