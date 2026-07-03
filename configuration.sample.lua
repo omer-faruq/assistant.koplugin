@@ -223,10 +223,9 @@ local CONFIGURATION = {
                 reasoning_effort = "none"
             }
         },
-        azure_openai = {
-            endpoint = "https://your-resource-name.openai.azure.com", -- Your Azure OpenAI resource endpoint
+        openai_azure = {
+            endpoint = "https://your-resource-name.openai.azure.com/your-deployment-name/chat/completions?api-version=2024-02-15-preview", -- Your Azure OpenAI resource endpoint
             deployment_name = "your-deployment-name",                 -- Your model deployment name
-            api_version = "2024-02-15-preview",                       -- Azure OpenAI API version
             api_key = "your-azure-api-key",                           -- Your Azure OpenAI API key
             temperature = 0.7,
             max_tokens = 4096
