@@ -37,8 +37,9 @@ You are a context-aware literary assistant for a reading app's "X-Ray" feature. 
 1. **Strictly Context-Bound**: Rely *only* on the provided context. Do not use external general knowledge. If information is missing or limited, explicitly state it in the final section.
 2. **Pronoun Resolution**: Pay close attention to pronouns (he/she/it/they/this) in the context to correctly trace the identity, actions, and relationships of "{highlight}".
 3. **Chronological Tracking**: Use the chronological order of the sentences to track how the term develops or how understanding of it deepens over time.
+4. **Language**: Render the *entire* response (including headers) completely in {language}.
 
-## Analysis Structure (Respond entirely in {language})
+## Analysis Structure
 Generate a clear, accessible analysis (approx. 300-400 words, present tense, fluid prose) using these headers:
 
 ### What It Is
@@ -102,7 +103,9 @@ Briefly note what important information appears to be missing or what questions 
         desc = _(
             "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."),
         system_prompt = markdown_format_prompt,
-        user_prompt = [[You are a Grammar Expert. Analyze the text below and output strictly in the following structure. Entire response must be in {language}.
+        user_prompt = [[You are a Grammar Expert. Analyze the text below and output strictly in the following structure. 
+        
+* **Language**: Render the *entire* response (including headers) completely in {language}.
 
 ### 1. Structure & Clauses
 * **Sentence Type**: (e.g., Simple, Compound, Complex)
@@ -145,7 +148,7 @@ Briefly note what important information appears to be missing or what questions 
 You are a summarization expert. Provide a concise and clear summary of the text below.
 
 **Rules:**
-* **Language**: Respond EXCLUSIVELY in the native language of the source text.
+* **Language**: Render the *entire* response (including headers) completely in {language}.
 * **Content**: Capture all main points and essential details while eliminating all fluff and redundant info.
 * **Output**: Deliver only the direct summary without any introductory phrases or meta-commentary.
 
@@ -162,7 +165,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
         user_prompt = [[ You are a linguistic expert. Simplify the text below to maximize readability and clarity.
 
 **Rules:**
-* **Language**: Respond strictly in the native language of the source text.
+* **Language**: Render the *entire* response (including headers) completely in {language}.
 * **Content**: Retain the exact original meaning and all critical info. Do NOT omit key facts.
 * **Style**: Remove verbose phrasing and unnecessary jargon. Make it highly accessible, clear, and easy to read.
 * **Output**: Return only the simplified text.
@@ -182,7 +185,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 **Rules:**
 * **Content**: Capture all critical arguments, essential facts, and conclusions. Eliminate all fluff.
 * **Format**: Present as a well-organized, easy-to-read bulleted list. Each point must be concise and independent.
-* **Language**: Render the entire output exclusively in {language}.
+* **Language**: Render the *entire* response (including headers) completely in {language}.
 * **Output**: Return only the bulleted list without any introductory text.
 
 **Output Structure:**
@@ -208,7 +211,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 **Rules:**
 * **Simplicity**: Strip away all jargon and technicalities. Use plain, everyday language and short sentences.
 * **Analogy**: Use a simple, relatable real-world analogy to make the core idea instantly clear.
-* **Language**: Render the entire output exclusively in {language}.
+* **Language**: Render the *entire* response (including headers) completely in {language}.
 * **Output**: Be direct and concise. Return only the explanation without any conversational filler.
 
 **Output Structure:**
@@ -231,7 +234,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 
 **Rules:**
 * **Depth**: Fully break down the meaning, including complex terms, underlying concepts, and implicit nuances. 
-* **Language**: Deliver the *entire* explanation exclusively in {language}.
+* **Language**: Render the *entire* response (including headers) completely in {language}.
 * **Format**: Use a mix of fluid prose and clean Markdown structure (like bullet points) for maximum clarity.
 * **Output**: Start directly with the explanation; do not include introductory text or meta-commentary.
 
@@ -248,7 +251,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
         user_prompt = [[You are a Historical Context Expert. Analyze the text below and explain its precise historical framework.
 
 **Rules:**
-* **Language**: Render the entire response completely in {language}.
+* **Language**: Render the *entire* response (including headers) completely in {language}.
 * **Output**: Start directly with the analysis. Avoid introductory phrases or meta-commentary.
 
 **Output Structure:**
@@ -289,7 +292,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 **Output:**
 
 * Provide structured, clear, and coherent content.
-* Deliver entirely in {language}.
+* Deliver entirely in {language} (including headers).
 
 Topic to cover (from user selection): {highlight}]],
     },
@@ -314,7 +317,7 @@ You are a literary assistant helping a reader resume their book. They have read 
 * **Strict No Spoilers**: Summarize *only* the content leading up to the {progress}% mark. Never reveal future plot points.
 * **Style & Tone**: Focus on recent plot developments before this point to refresh their memory. Match the book's exact tone (e.g., humorous, dramatic, eerie, or adventurous). No emojis.
 * **Formatting**: Bold (**name/location**) key entities. Italicize (*major plot points*) critical events.
-* **Output**: Respond entirely in {language}. Return only the direct summary without introductory or meta-text.
+* **Output**: Respond entirely in {language} (including headers). Return only the direct summary without introductory or meta-text.
 ]]
     },
     xray = {
@@ -355,7 +358,7 @@ Formatting rules:
 * Show at least 8–15 characters, 6–10 locations, 5–8 themes, 5–10 terms/concepts, and every major chapter reached so far in Timeline.
 * Put relationship or event strings in italic & underlined using Markdown `_` and `<u>` tags combined (e.g. _<u>ally of Frodo</u>_).
 * Do NOT reveal content past the given progress percentage.
-* Answer entirely in **{language}** and return only the X‑Ray, nothing else.
+* Answer entirely in **{language}** (including headers) and return only the X‑Ray, nothing else.
 
 Generate the expanded X‑Ray for **{title}** by **{author}**, with the structure described above.
 Reader progress: **{progress}%**.
@@ -375,7 +378,8 @@ Language: **{language}**.
 * **Accuracy**: Avoid hallucinating metrics (e.g., exact live ratings) if uncertain. If info is completely unavailable, state: "Information not confirmed."
 
 **Task:**
-Generate information about "{title}" by {author} in the following structure, responding entirely in {language}:
+Generate information about "{title}" by {author} in the following structure,
+Render the *entire* response (including headers) completely in {language}.
 
 ### 1. Book Information
 * **Genre**: 
@@ -400,7 +404,7 @@ Generate information about "{title}" by {author} in the following structure, res
         use_websearch = false,
         system_prompt = markdown_format_prompt,
         user_prompt = [[
-You are given  my notes and highlights.
+You are given my notes and highlights.
 Your task is to carefully analyze this content and produce a structured summary that includes:
 
 1. **Key Takeaways**
@@ -422,7 +426,8 @@ Output format:
 - End with **Contextual Notes / Reflections** in bullet points.
 
 Keep the tone clear, thoughtful, and practical.
-- Always respond in {language}.]],
+Render the *entire* response (including headers) completely in {language}.
+]],
     },
     summary_using_annotations = {
         use_websearch = true,
@@ -479,37 +484,24 @@ Now begin the analysis with the provided book_text and highlights.]],
         system_prompt = markdown_format_prompt,
         user_prompt = T([[
 ## Task: Book-Aware Word Analysis
-
-Explain the highlighted term "{word}" specifically as used in "{title}" by {author}, using the provided context from the book.
+Explain "{word}" as used in "{title}" by {author}, strictly based on the context below.
 
 ## Context from the Book
-The following sentences from the book contain or relate to "{word}":
 {context}
 
-## Analysis: Provide these sections
+## Execution Rules
+1. **Language**: The entire response, including all headers and labels, must be strictly rendered in {language}. (Except for the "%6" sentence itself).
+2. **Book-Awareness**: Focus heavily on how "{word}" functions in this specific book. Contrast its dictionary definition with its narrative, thematic, or worldbuilding usage.
+3. **Output**: Start directly with the structured analysis. Do NOT include any introductory or concluding commentary.
 
-- *%1*: Vocabulary in original conjugation if different from the form in the sentence.
-- *%2*: Up to three synonyms for the word, noting which are most relevant to the book's usage (if context shows a specific usage).
-- *%3*: Literal meaning of the expression without any context. Answer in {language} language.
-- *%4*: Translation of the whole sentence containing the word. Highlight in bold the word being translated. Answer in {language} language.
-- *%5*: How "{word}" is specifically used in THIS BOOK, based on the context provided. Does the book use it in a standard way or differently? What does this usage suggest about characters, tone, or themes? Answer in {language} language.
-- *%6*: Another example sentence showing the word's use. Prefer examples from literature in the same genre as "{title}" if possible. Answer in the original language.
-- *%7*: Origins and etymology of the word, including how its meaning has evolved over time (for modern languages) or its significance in its original language (for constructed/archaic words). Answer in {language} language.
-
-## Important Guidelines
-
-**Context Usage:**
-- Ground your analysis in the provided context whenever possible
-- If the context clearly shows how the word is used in the book, emphasize that usage in section 5
-- If the context appears incomplete or insufficient, note what additional context would be helpful
-
-**Book-Awareness:**
-- In section 5, identify if the book uses this word in a non-standard, poetic, archaic, or specialized way
-- Note if the word has special significance to character, plot, or worldbuilding
-- Avoid explaining only the dictionary definition—explain its use in THIS book
-
-**Format:**
-Only show the requested sections. Do not add introduction, conclusion, or additional commentary unless essential to understanding the word's usage in the book.
+## Output Structure
+* ** %1 **: Vocabulary in original conjugation if different from the form in the sentence.
+* ** %2 **: Up to 3 synonyms, noting which are most relevant to the book's usage.
+* ** %3 **: Literal meaning of the expression without any context.
+* ** %4 **: Translation of the whole sentence containing the word. Highlight **{word}** in bold.
+* ** %5 **: How "{word}" is specifically used in THIS BOOK. Explain what it suggests about characters, tone, or themes.
+* ** %6 **: Another example sentence showing the word's use, preferably from the same literary genre.
+* ** %7 **: Origins, etymology, or significance of the word.
 ]],
             -- @translators used in the dictionary.
             _("Conjugation"),
