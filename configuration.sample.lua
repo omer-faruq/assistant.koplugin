@@ -210,6 +210,9 @@ local CONFIGURATION = {
                 -- config options, see: https://console.groq.com/docs/api-reference
                 -- eg: disable reasoning for model qwen3, set:
                 -- reasoning_effort = "none"
+                -- 
+                -- groq free API limit waits (default 15 secs)
+                groq_wait_seconds = 15,
             }
         },
         groq_qwen = {

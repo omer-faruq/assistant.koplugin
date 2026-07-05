@@ -46,6 +46,10 @@ function BaseHandler:resetTrapWidget()
     return w
 end
 
+function BaseHandler:setHandlerOption(settings)
+    -- called on handler loads
+end
+
 --- Query method to be implemented by specific handlers.
 ---
 --- Behaviour depends on query_option.use_stream_mode:

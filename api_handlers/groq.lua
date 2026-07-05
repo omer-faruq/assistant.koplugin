@@ -1,6 +1,8 @@
+local logger = require("logger")
 local UIManager = require("ui/uimanager")  
 local time = require("ui/time")
 local ToolExecutor = require("assistant_tool_executor")
+local koutil = require("util")
 local ASUtils = require("assistant_utils")
 local OpenAIHandler = require("api_handlers.openai")
 local groqHandler = OpenAIHandler:new({
@@ -9,6 +11,13 @@ local groqHandler = OpenAIHandler:new({
 
 local LAST_CALLED = 0
 local API_CALL_DEBOUNCE_DELAY = time.s(15)
+
+function groqHandler:setHandlerOption(groq_settings)
+    local groq_wait_seconds = koutil.tableGetValue(groq_settings, "additional_parameters", "groq_wait_seconds")
+    if groq_wait_seconds then
+        API_CALL_DEBOUNCE_DELAY = time.s(groq_wait_seconds)
+    end
+end
 
 function groqHandler:query(message_history, groq_settings, query_option)
     local ws_mode = query_option.use_websearch or "none"

@@ -133,6 +133,8 @@ function Querier:load_model(provider_name)
                 self.provider_setting.model = saved_model
             end
         end
+
+        self.handler:setHandlerOption(self.provider_setting)
         return true
     else
         local err = T(_("The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."),
