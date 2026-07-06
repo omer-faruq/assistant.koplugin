@@ -12,14 +12,14 @@ local groqHandler = OpenAIHandler:new({
 local LAST_CALLED = 0
 local API_CALL_DEBOUNCE_DELAY = time.s(15)
 
-function groqHandler:setHandlerOption(groq_settings)
-    local groq_wait_seconds = koutil.tableGetValue(groq_settings, "additional_parameters", "groq_wait_seconds")
-    if groq_wait_seconds then
-        API_CALL_DEBOUNCE_DELAY = time.s(groq_wait_seconds)
+function groqHandler:SetHandlerOption(querier)
+    OpenAIHandler.SetHandlerOption(self, querier)
+    if self.additional_parameters.groq_wait_seconds then
+        API_CALL_DEBOUNCE_DELAY = time.s(self.additional_parameters.groq_wait_seconds)
     end
 end
 
-function groqHandler:query(message_history, groq_settings, query_option)
+function groqHandler:query(message_history, query_option)
     local ws_mode = query_option.use_websearch or "none"
     if ToolExecutor.IsExtSearch(ws_mode) then
         -- Ext TOOL CALLS are likely triggering groq API Free-tier rate limits (8k tokens/minutes)
@@ -34,7 +34,7 @@ function groqHandler:query(message_history, groq_settings, query_option)
         LAST_CALLED = UIManager:getElapsedTimeSinceBoot()
     end
 
-    return OpenAIHandler.query(self, message_history, groq_settings, query_option)
+    return OpenAIHandler.query(self, message_history, query_option)
 end
 
 return groqHandler

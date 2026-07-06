@@ -15,18 +15,22 @@ OpenAIHandler.SupportedOptions = {
     ["search_settings" ] = true,
 }
 
+function OpenAIHandler:SetHandlerOption(querier)
+    BaseHandler.SetHandlerOption(self, querier)
+    self.reasoning_key = nil
+end
+
 --- Build a JSON request body for the OpenAI-compatible API.
 --- @param messages  table   message history
---- @param settings  table   provider settings
 --- @param tools     table|nil  tool definitions (nil → no tool_calls)
 --- @return table    requestBody 
-function OpenAIHandler:buildRequestBody(messages, settings, query_option, tools)
+function OpenAIHandler:buildRequestBody(messages, query_option, tools)
     local body = {
-        model      = settings.model,
+        model      = self.model,
         messages   = messages,
     }
-    if type(settings.additional_parameters) == "table" and next(settings.additional_parameters) then
-        for o, v in pairs(settings.additional_parameters) do
+    if type(self.additional_parameters) == "table" and next(self.additional_parameters) then
+        for o, v in pairs(self.additional_parameters) do
             if self.SupportedOptions[o] then body[o] = v end
         end
     end
@@ -40,11 +44,11 @@ function OpenAIHandler:buildRequestBody(messages, settings, query_option, tools)
     return body
 end
 
-function OpenAIHandler:query(message_history, openai_settings, query_option)
+function OpenAIHandler:query(message_history, query_option)
 
     local headers = {
         ["Content-Type"]  = "application/json",
-        ["Authorization"] = "Bearer " .. openai_settings.api_key,
+        ["Authorization"] = "Bearer " .. self.api_key,
     }
 
     local ws_mode = query_option.use_websearch or "none"
@@ -52,7 +56,7 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
     if ToolExecutor.IsExtSearch(ws_mode) then
         tools = { self:buildExternalSearchToolDef("openai") }
     end
-    local body = self:buildRequestBody(message_history, openai_settings, query_option, tools)
+    local body = self:buildRequestBody(message_history, query_option, tools)
 
     -- -----------------------------------------------------------------------
     -- STREAM path: build body and return a background function immediately.
@@ -60,14 +64,14 @@ function OpenAIHandler:query(message_history, openai_settings, query_option)
     if query_option.use_stream_mode then
         local requestBody = json.encode(body)
         headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(openai_settings.base_url, headers, requestBody)
+        return self:backgroundRequest(self.base_url, headers, requestBody)
     end
 
     -- -----------------------------------------------------------------------
     -- NON-STREAM path: synchronous makeRequest, may return tool_call table.
     -- -----------------------------------------------------------------------
     local requestBody = json.encode(body)
-    local status, code, response = self:makeRequest(openai_settings.base_url, headers, requestBody)
+    local status, code, response = self:makeRequest(self.base_url, headers, requestBody)
 
     if not status then
         if code == BaseHandler.CODE_CANCELLED then

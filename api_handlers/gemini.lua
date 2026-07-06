@@ -5,6 +5,13 @@ local logger = require("logger")
 local ToolExecutor = require("assistant_tool_executor")
 
 local GeminiHandler = BaseHandler:new()
+GeminiHandler.SupportedOptions = {
+    ["maxOutputTokens"] = true,
+    ["temperature"] = true,
+    ["topP"] = true,
+    ["topK"] =true,
+    ["thinking_config"]=true,
+}
 
 --- Convert OpenAI-style message_history to Gemini contents + system_instruction.
 --- Handles augmented messages that may already contain Gemini-native model turns
@@ -40,19 +47,19 @@ local function toGeminiContents(messages)
 end
 
 --- Collect Gemini generationConfig from provider settings.
-local function buildGenerationConfig(settings)
+local function buildGenerationConfig(additional_parameters)
     local gc = nil
-    local thinking_budget = koutil.tableGetValue(settings, "additional_parameters", "thinking_budget")
-    if thinking_budget ~= nil then
-        gc = gc or {}
-        gc.thinking_config = { thinking_budget = thinking_budget }
-    end
-    if settings.additional_parameters then
-        for _, opt in ipairs({ "maxOutputTokens", "temperature", "topP", "topK" }) do
-            if settings.additional_parameters[opt] then
-                gc = gc or {}
-                gc[opt] = settings.additional_parameters[opt]
+    if additional_parameters then
+        if type(additional_parameters) == "table" and next(additional_parameters) then
+            gc = gc or {}
+            for o, v in pairs(additional_parameters) do
+                if GeminiHandler.SupportedOptions[o] then gc[o] = v end
             end
+        end
+        
+        if additional_parameters.thinking_budget then
+            gc = gc or {}
+            gc.thinking_config = { thinking_budget = additional_parameters.thinking_budget }
         end
     end
     return gc
@@ -60,10 +67,9 @@ end
 
 --- Build a JSON request body for the Gemini API.
 --- @param messages  table       message history
---- @param settings  table       provider settings
 --- @param tool_def  table|nil   Gemini-format tool object (or nil)
 --- @return table    body
-local function buildRequestBody(messages, settings, tool_def)
+function GeminiHandler:buildRequestBody(messages, tool_def)
     local contents, system_content = toGeminiContents(messages)
 
     local system_instruction = { parts = {}}
@@ -72,8 +78,8 @@ local function buildRequestBody(messages, settings, tool_def)
     end
 
     local tools = tool_def and { tool_def } or nil
-    local gc = buildGenerationConfig(settings)
-    if settings.model:find("gemma-4", 1, true) then
+    local gc = buildGenerationConfig(self.additional_parameters)
+    if self.model:find("gemma-4", 1, true) then
         if gc and gc.thinking_config and gc.thinking_config.thinking_budget then
             -- gemma-4 does not support thinking_budget config
             gc.thinking_config.thinking_budget = nil
@@ -97,14 +103,10 @@ local function buildRequestBody(messages, settings, tool_def)
     return body
 end
 
-function GeminiHandler:query(message_history, gemini_settings, query_option)
+function GeminiHandler:query(message_history, query_option)
 
-    if not gemini_settings or not gemini_settings.api_key then
-        return nil, "Error: Missing API key in configuration"
-    end
-
-    local model    = gemini_settings.model or "gemini-flash-latest"
-    local base_url = gemini_settings.base_url
+    local model    = self.model
+    local base_url = self.base_url
                   or "https://generativelanguage.googleapis.com/v1beta/models/"
 
     local url_sync   = string.format("%s%s:generateContent",            base_url, model)
@@ -112,7 +114,7 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
 
     local headers = {
         ["Content-Type"]   = "application/json",
-        ["x-goog-api-key"] = gemini_settings.api_key,
+        ["x-goog-api-key"] = self.api_key,
     }
 
     local ws_mode = query_option.use_websearch or "none"
@@ -124,7 +126,7 @@ function GeminiHandler:query(message_history, gemini_settings, query_option)
     elseif ToolExecutor.IsExtSearch(ws_mode) then
         tools = self:buildExternalSearchToolDef("gemini")
     end
-    local requestBody = buildRequestBody(message_history, gemini_settings, tools)
+    local requestBody = self:buildRequestBody(message_history, tools)
 
     -- -----------------------------------------------------------------------
     -- STREAM path: return background function immediately.

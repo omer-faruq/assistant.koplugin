@@ -1,4 +1,4 @@
-local BaseHandler = require("api_handlers.base")
+local OpenAIHandler = require("api_handlers.openai")
 local json = require("json")
 local koutil = require("util")
 local logger = require("logger")
@@ -9,25 +9,26 @@ local DEFAULT_TOKEN_EXPIRY = 1800 -- 30 minutes
 -- GigaChat API requires UUID in RqUID header, but accepts an empty UUID
 local UUID_EMPTY = "00000000-0000-0000-0000-000000000000"
 
-local GigaChatHandler = BaseHandler:new()
+local GigaChatHandler = OpenAIHandler:new({ name = "GigaChatHandler", })
 
-function GigaChatHandler:query(message_history, gigachat_settings, query_option)
-    if not gigachat_settings or not gigachat_settings.base_url then
-        return "Error: Missing base_url in configuration"
-    end
+function GigaChatHandler:SetHandlerOption(querier)
+    OpenAIHandler.SetHandlerOption(self, querier)
+    self.auth_url = querier.provider_setting.auth_url
+end
 
-    local token, err = self:getAccessToken(gigachat_settings)
+function GigaChatHandler:query(message_history, query_option)
+    local token, err = self:getAccessToken()
     if not token then
         return nil, "Error obtaining access token: " .. tostring(err)
     end
 
     local function buildRequestBody(messages, tools)
         local body = {
-            model           = gigachat_settings.model,
+            model           = self.model,
             messages        = messages,
-            update_interval = koutil.tableGetValue(gigachat_settings, "additional_parameters", "update_interval") or
+            update_interval = koutil.tableGetValue(self.additional_parameters, "update_interval") or
                                 DEFAULT_UPDATE_INTERVAL,
-            max_tokens      = koutil.tableGetValue(gigachat_settings, "additional_parameters", "max_tokens"),
+            max_tokens      = koutil.tableGetValue(self.additional_parameters, "max_tokens"),
         }
         if tools then
             body.tools       = tools
@@ -57,7 +58,7 @@ function GigaChatHandler:query(message_history, gigachat_settings, query_option)
 
     if requestBodyTable.stream then
         headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(gigachat_settings.base_url, headers, requestBody)
+        return self:backgroundRequest(self.base_url, headers, requestBody)
     end
 
     local request_timeout, request_maxtime
@@ -70,7 +71,7 @@ function GigaChatHandler:query(message_history, gigachat_settings, query_option)
     end
 
     local success, code, response = self:makeRequest(
-        gigachat_settings.base_url, headers, requestBody, request_timeout, request_maxtime)
+        self.base_url, headers, requestBody, request_timeout, request_maxtime)
 
     if not success then
         if code == BaseHandler.CODE_CANCELLED then
@@ -103,16 +104,15 @@ function GigaChatHandler:query(message_history, gigachat_settings, query_option)
 end
 
 --- Get access token for GigaChat API
---- @param gigachat_settings table: GigaChat settings
 --- @return string? accessToken, string? error
-function GigaChatHandler:getAccessToken(gigachat_settings)
+function GigaChatHandler:getAccessToken()
     -- Return cached token if valid
     if self.tokenInfo and self.tokenInfo.accessToken and self.tokenInfo.expiresAt and self.tokenInfo.expiresAt > os.time() then
         return self.tokenInfo.accessToken
     end
 
     -- Obtain a new token via authorize
-    local newToken, err = self:authorize(gigachat_settings)
+    local newToken, err = self:authorize()
     if not newToken then
         return nil, err
     end
@@ -126,26 +126,21 @@ function GigaChatHandler:getAccessToken(gigachat_settings)
 end
 
 --- Authorize with GigaChat to obtain an access token
---- @param gigachat_settings table: GigaChat settings
 --- @return table? response, string? error
-function GigaChatHandler:authorize(gigachat_settings)
-    if not gigachat_settings or not gigachat_settings.auth_url then
-        return nil, "Missing auth_url in gigachat settings"
-    end
-
-    if not gigachat_settings.api_key then
+function GigaChatHandler:authorize()
+    if not self.api_key then
         return nil, "Missing authorizationKey (or api_key) in gigachat settings"
     end
 
     local headers = {
         ["Content-Type"] = "application/x-www-form-urlencoded",
-        ["Authorization"] = "Basic " .. gigachat_settings.api_key,
+        ["Authorization"] = "Basic " .. self.api_key,
         ["RqUID"] = UUID_EMPTY,
     }
 
     local body = "scope=GIGACHAT_API_PERS"
 
-    local success, code, response = self:makeRequest(gigachat_settings.auth_url, headers, body, 20, 45)
+    local success, code, response = self:makeRequest(self.auth_url, headers, body, 20, 45)
     if not success then
         return nil, string.format("Auth request failed (%s): %s", tostring(code), tostring(response))
     end

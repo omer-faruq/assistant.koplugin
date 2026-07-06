@@ -5,6 +5,9 @@ local logger = require("logger")
 local ToolExecutor = require("assistant_tool_executor")
 
 local AnthropicHandler = BaseHandler:new()
+AnthropicHandler.SupportedOptions = {
+    ["max_tokens"] = true,
+}
 
 --- Convert OpenAI-style message_history into Anthropic's wire format.
 --- Returns { messages = [...], system = "..." }
@@ -46,15 +49,19 @@ end
 --- @param tools     table|nil   tool definitions to inject (nil → use settings.tools or none)
 --- @param stream    boolean|nil
 --- @return table    body
-local function buildRequestBody(messages, settings, tools, stream)
+function AnthropicHandler:buildRequestBody(messages, tools, stream)
     local prepared = prepareAnthropicMessages(messages)
     local body = {
-        model      = settings.model,
+        model      = self.model,
         system     = prepared.system,
         messages   = prepared.messages,
-        max_tokens = koutil.tableGetValue(settings, "additional_parameters", "max_tokens"),
         stream     = stream or false,
     }
+    if type(self.additional_parameters) == "table" and next(self.additional_parameters) then
+        for o, v in pairs(self.additional_parameters) do
+            if self.SupportedOptions[o] then body[o] = v end
+        end
+    end
 
     if tools then
         -- Injected tools (e.g. from Querier's web_search support)
@@ -62,23 +69,24 @@ local function buildRequestBody(messages, settings, tools, stream)
         body.tool_choice = { type = "auto" }
     else
         -- Carry over any user-configured tools (e.g. native web_search_20250305)
-        local user_tools = koutil.tableGetValue(settings, "additional_parameters", "tools")
-        if type(user_tools) == "table" and next(user_tools) ~= nil then
-            body.tools = user_tools
+        if self.additional_parameters.tools and type(self.additional_parameters.tools) == "table" and next(self.additional_parameters.tools) ~= nil then
+            body.tools = self.additional_parameters.tools 
         end
     end
 
     return body
 end
 
-function AnthropicHandler:query(message_history, anthropic_settings, query_option)
+function AnthropicHandler:query(message_history, query_option)
 
     local headers = {
         ["Content-Type"]      = "application/json",
-        ["x-api-key"]         = anthropic_settings.api_key,
-        ["anthropic-version"] = koutil.tableGetValue(
-            anthropic_settings, "additional_parameters", "anthropic_version"),
+        ["x-api-key"]         = self.api_key,
     }
+
+    if self.additional_parameters.anthropic_version then
+        headers["anthropic-version"] = self.additional_parameters.anthropic_version
+    end
 
     local ws_mode = query_option.use_websearch or "none"
 
@@ -90,10 +98,10 @@ function AnthropicHandler:query(message_history, anthropic_settings, query_optio
         if ToolExecutor.IsExtSearch(ws_mode) then
             stream_tools = { self:buildExternalSearchToolDef("anthropic") }
         end
-        local body = buildRequestBody(message_history, anthropic_settings, stream_tools, true)
+        local body = self:buildRequestBody(message_history, stream_tools, true)
         local requestBody = json.encode(body)
         headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(anthropic_settings.base_url, headers, requestBody)
+        return self:backgroundRequest(self.base_url, headers, requestBody)
     end
 
     -- -----------------------------------------------------------------------
@@ -104,13 +112,13 @@ function AnthropicHandler:query(message_history, anthropic_settings, query_optio
     local requestBody
     if ToolExecutor.IsExtSearch(ws_mode) then
         local search_tool = { self:buildExternalSearchToolDef("anthropic") }
-        requestBody = buildRequestBody(message_history, anthropic_settings, search_tool, false)
+        requestBody = self:buildRequestBody(message_history, search_tool, false)
     else
-        requestBody = buildRequestBody(message_history, anthropic_settings, nil, false)
+        requestBody = self:buildRequestBody(message_history, nil, false)
     end
 
     local success, code, response = self:makeRequest(
-        anthropic_settings.base_url, headers, json.encode(requestBody))
+        self.base_url, headers, json.encode(requestBody))
 
     if not success then
         if code == BaseHandler.CODE_CANCELLED then

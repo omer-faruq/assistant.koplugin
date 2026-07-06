@@ -117,24 +117,11 @@ function Querier:load_model(provider_name)
     if success then
         self.handler = handler
         self.handler_name = handler_name
-        
-        if ToolExecutor.getHandlerFormat(handler_name) == "openai" then
-            -- needed to be found on the first query
-            self.reasoning_key = nil
-        end
 
         -- Deep copy to avoid mutating CONFIGURATION
         self.provider_setting = koutil.tableDeepCopy(provider_setting)
         self.provider_name = provider_name
-        -- Apply saved OpenRouter model override
-        if handler_name == "openrouter" then
-            local saved_model = self.settings:readSetting("openrouter_model_" .. provider_name)
-            if saved_model and saved_model ~= "" then
-                self.provider_setting.model = saved_model
-            end
-        end
-
-        self.handler:setHandlerOption(self.provider_setting)
+        self.handler:SetHandlerOption(self)
         return true
     else
         local err = T(_("The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."),
@@ -297,7 +284,7 @@ function Querier:query(message_history, title)
 
         repeat
             local bg_fn
-            bg_fn, err = self.handler:query(message_history, self.provider_setting, query_option)
+            bg_fn, err = self.handler:query(message_history, query_option)
 
             if type(bg_fn) ~= "function" then
                 -- handler returned an error before even starting the stream
@@ -398,7 +385,7 @@ function Querier:query(message_history, title)
         local tool_rounds = 0
 
         repeat
-            res, err = self.handler:query(message_history, self.provider_setting, query_option)
+            res, err = self.handler:query(message_history, query_option)
 
             if type(res) == "table" and res.__is_tool_call then
                 -- The LLM requested a tool call (web_search).

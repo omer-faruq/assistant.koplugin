@@ -17,6 +17,8 @@ local json_default = assistant_utils.json_default
 
 local BaseHandler = {
     name = "BASE",
+    base_url = "", model = "", api_key = "",
+    additional_parameters = {},
     trap_widget = nil,  -- widget to trap the request
 }
 
@@ -46,8 +48,15 @@ function BaseHandler:resetTrapWidget()
     return w
 end
 
-function BaseHandler:setHandlerOption(settings)
-    -- called on handler loads
+function BaseHandler:SetHandlerOption(querier)
+    self.provider_name = querier.provider_name
+    self.handler_name = querier.handler_name
+
+    local s = querier.provider_setting
+    self.api_key = s.api_key
+    self.base_url = s.base_url
+    self.model = s.model
+    self.additional_parameters = s.additional_parameters
 end
 
 --- Query method to be implemented by specific handlers.
@@ -61,10 +70,9 @@ end
 ---                  string (or nil, err).
 ---
 --- @param message_history  table   conversation history
---- @param provider_setting table   provider-specific config
 --- @param query_option     table   { use_stream_mode=boolean, use_websearch=string }
 --- @return string|function|table result, string|nil error
-function BaseHandler:query(message_history, provider_setting, query_option)
+function BaseHandler:query(message_history, query_option)
     -- To be implemented by specific handlers
     error("query method must be implemented")
 end

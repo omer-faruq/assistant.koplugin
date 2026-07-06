@@ -73,10 +73,19 @@ local CONFIGURATION = {
             base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
             api_key = "your-gemini-api-key",
             additional_parameters = {
-                temperature = 0.7,
-                max_tokens = 1048576,
+                -- temperature = 0.7,
+                -- max_tokens = 1048576,
                 -- Set to 0 to disable thinking. Recommended for gemini-2.5-* and newer, where thinking is enabled by default.
                 thinking_budget = 0,
+            }
+        },
+        gemini_gemma4 = {
+            model = "gemma-4-31b-it", -- model list: https://ai.google.dev/gemini-api/docs/models , ex: gemini-2.5-pro , gemini-2.5-flash
+            base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
+            api_key = "your-gemini-api-key",
+            additional_parameters = {
+                -- Note: gemma does NOT support thinking_budget option
+                thinking_config = { thinking_level = "minimal" }, -- minimum the reasoning level
             }
         },
         gigachat = {
@@ -141,8 +150,9 @@ local CONFIGURATION = {
             base_url = "https://generativelanguage.googleapis.com/v1beta/openai/",   -- Alternative: base_url = "https://generativelanguage.googleapis.com/v1beta/chat/completions",
             api_key = "your-gemini-api-key",
             additional_parameters = {
-                temperature = 0.3,
-                max_tokens = 500  -- Use "max_tokens" for OpenAI-compatible format
+                thinking_config = { thinking_level = "minimal" }, -- minimum the reasoning level
+                -- temperature = 0.3,
+                -- max_tokens = 500,  -- Use "max_tokens" for OpenAI-compatible format
             }
             
             -- Option 2: Ollama or other OpenAI-compatible API (for Gemma 2)
