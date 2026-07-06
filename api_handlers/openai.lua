@@ -14,6 +14,8 @@ OpenAIHandler.SupportedOptions = {
     ["thinking_budget"] = true,
     ["reasoning_format"] = true,
     ["search_settings" ] = true,
+    ["enable_thinking"] = true,
+    ["thinking_budget"] = true,
 }
 
 function OpenAIHandler:SetHandlerOption(querier)
