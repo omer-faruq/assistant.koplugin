@@ -5,7 +5,7 @@ local GeminiHandler = require("api_handlers.gemini")
 
 local GemmaHandler = BaseHandler:new({ name = "GemmaHandler" })
 function GemmaHandler:SetHandlerOption(querier)
-    local base_url = self.base_url
+    local base_url = querier.provider_setting.base_url
     if base_url:match("generativelanguage%.googleapis%.com") and 
             not (base_url:match("/openai/") or base_url:match("/chat/completions")) then
 
