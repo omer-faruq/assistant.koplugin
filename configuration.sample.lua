@@ -236,6 +236,20 @@ local CONFIGURATION = {
                 reasoning_effort = "none"
             }
         },
+        openai_modelstudio = {
+            -- Alibaba Cloud Model Studio (Qwen) via OpenAI-compatible endpoint
+            model = "qwen3.6-flash",
+            base_url = "https://{WorkspaceId}.{Region}.maas.aliyuncs.com/compatible-mode/v1/chat/completions",
+            api_key = "your-modelstudio-api-key",
+            additional_parameters = {
+                temperature = 0.7,
+                max_tokens = 4096,
+                -- Set to false to disable reasoning/thinking for low latency
+                enable_thinking = false,
+                -- Alternatively, if enable_thinking is true, set a budget for thinking tokens (e.g. 512 or 1024)
+                -- thinking_budget = 1024,
+            }
+        },
         openai_azure = {
             endpoint = "https://your-resource-name.openai.azure.com/your-deployment-name/chat/completions?api-version=2024-02-15-preview", -- Your Azure OpenAI resource endpoint
             deployment_name = "your-deployment-name",                 -- Your model deployment name
