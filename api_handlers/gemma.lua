@@ -1,13 +1,23 @@
+local logger = require("logger")
+local BaseHandler = require("api_handlers.base")
 local OpenAIHandler = require("api_handlers.openai")
 local GeminiHandler = require("api_handlers.gemini")
 
-local GemmaHandler = {}
+local GemmaHandler = BaseHandler:new({ name = "GemmaHandler" })
+function GemmaHandler:SetHandlerOption(querier)
+    local base_url = self.base_url
+    if base_url:match("generativelanguage%.googleapis%.com") and 
+            not (base_url:match("/openai/") or base_url:match("/chat/completions")) then
 
-function GemmaHandler:new()
-    local o = {}
-    setmetatable(o, self)
-    self.__index = self
-    return o
+        local handler = GeminiHandler:new{}
+        self.__parent_handler = handler
+        setmetatable(self, { __index = handler } )
+    else
+        local handler = OpenAIHandler:new{}
+        self.__parent_handler = handler
+        setmetatable(self, { __index = handler } )
+    end
+    self.__parent_handler.SetHandlerOption(self, querier)
 end
 
 local function filterThoughtTags(content)
@@ -23,29 +33,13 @@ local function filterThoughtTags(content)
     return content
 end
 
-function GemmaHandler:query(message_history, gemma_settings, query_option)
-    local content, err
-    
-    -- Detect API type based on base_url
-    local base_url = gemma_settings.base_url or ""
-    
-    -- Check if using Google's OpenAI-compatible endpoint or native Gemini API
-    if base_url:match("generativelanguage%.googleapis%.com") and 
-       not (base_url:match("/openai/") or base_url:match("/chat/completions")) then
-        -- Use Gemini handler for native Gemini API format
-        -- (e.g., https://generativelanguage.googleapis.com/v1beta/models/)
-        content, err = GeminiHandler:query(message_history, gemma_settings, query_option)
-    else
-        -- Use OpenAI handler for OpenAI-compatible APIs:
-        -- - Google's OpenAI-compatible endpoint (v1beta/openai/ or v1beta/chat/completions)
-        -- - Ollama, LM Studio, etc.
-        content, err = OpenAIHandler.query(self, message_history, gemma_settings, query_option)
-    end
-    
+function GemmaHandler:query(message_history, query_option)
+    local content, err = self.__parent_handler.query(self, message_history, query_option)
     -- Filter thought tags from response
-    content = filterThoughtTags(content)
-    
+    if type(content) == "string" then
+        content = filterThoughtTags(content)
+    end
     return content, err
 end
 
-return GemmaHandler:new()
+return GemmaHandler
