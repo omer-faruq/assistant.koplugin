@@ -92,7 +92,6 @@ function Querier:load_model(provider_name)
 
     local CONFIGURATION = self.assistant.CONFIGURATION
 
-    ToolExecutor.SetSearchAPIConfig(CONFIGURATION)
     local provider_setting = koutil.tableGetValue(CONFIGURATION, "provider_settings", provider_name)
     if not provider_setting then
         local err = T(_("Provider settings not found for: %1. Please check your configuration.lua file."),
@@ -101,34 +100,37 @@ function Querier:load_model(provider_name)
         return false, err
     end
 
-    local handler_name
-    local underscore_pos = provider_name:find("_")
-    if underscore_pos and underscore_pos > 0 then
-        -- Extract `openai` from `openai_o4mimi`
-        handler_name = provider_name:sub(1, underscore_pos - 1)
-    else
-        handler_name = provider_name -- original name
+    local handler_name = string.match(provider_name, "^([^_]+)")
+    if not handler_name then
+        local err = T(_("Handler not found for: %1. Please check your configuration.lua file."), provider_name)
+        logger.warn("Querier initialization failed: " .. err)
+        return false, err
     end
 
     -- Load the handler based on the provider name
     local success, handler = pcall(function()
         return require("api_handlers." .. handler_name)
     end)
-    if success then
-        self.handler = handler
-        self.handler_name = handler_name
-
-        -- Deep copy to avoid mutating CONFIGURATION
-        self.provider_setting = koutil.tableDeepCopy(provider_setting)
-        self.provider_name = provider_name
-        self.handler:SetHandlerOption(self)
-        return true
-    else
+    if not success then
         local err = T(_("The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."),
                 handler_name)
         logger.warn("Querier initialization failed: " .. err)
         return false, err
     end
+
+    self.handler = handler
+    self.handler_name = handler_name
+
+    -- Deep copy to avoid mutating CONFIGURATION
+    self.provider_setting = koutil.tableDeepCopy(provider_setting)
+    self.provider_name = provider_name
+
+    -- register hook to the handler module
+    self.handler:SetHandlerOption(self)
+
+    -- register to the ToolExecutor module
+    ToolExecutor.SetSearchAPIConfig(CONFIGURATION)
+    return true
 end
 
 -- InputText class for showing streaming responses
