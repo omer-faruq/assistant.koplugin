@@ -369,13 +369,11 @@ function Querier:query(message_history, title)
         -- ---------------------------------------------------------------
         -- NON-STREAM PATH  — may loop for tool calls
         -- ---------------------------------------------------------------
-        local notify = string.format("%s\n️☁️ %s\n⚡ %s",
+        local tool_notice = T("\n🌐 %1", ToolExecutor.ToolToText(query_option.use_websearch))
+        local notify = T("%1\n️☁️ %2\n⚡ %3%4",
             title or _("Querying AI ..."),
-            self.provider_name,
-            koutil.tableGetValue(self.provider_setting, "model"))
-        if query_option.use_websearch ~= "none" then
-            notify = T("%1\n🌐 %2 ", notify, ToolExecutor.ToolToText(query_option.use_websearch))
-        end
+            self.provider_name, self.handler.model,
+            query_option.use_websearch ~= "none" and tool_notice or "")
         local infomsg = InfoMessage:new{ icon = "book.opened", text = notify }
         UIManager:show(infomsg)
         self.handler:setTrapWidget(infomsg)
@@ -426,10 +424,8 @@ function Querier:query(message_history, title)
                 UIManager:close(self.handler:resetTrapWidget())
                 local follow_msg = InfoMessage:new{
                     icon = "book.opened",
-                    text = string.format("%s\n️☁️ %s\n⚡ %s",
-                        _("Composing answer ..."),
-                        self.provider_name,
-                        koutil.tableGetValue(self.provider_setting, "model")),
+                    text = T("%1\n️☁️ %2\n⚡ %3",
+                        _("Composing answer ..."), self.provider_name, self.handler.model),
                 }
                 UIManager:show(follow_msg)
                 self.handler:setTrapWidget(follow_msg)
