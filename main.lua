@@ -205,10 +205,9 @@ function Assistant:addToMainMenu(menu_items)
               },
               {
                 text_func = function ()
-                  return T(_("AI Provider: %1(%2)"),
-                    self:getModelProvider() or _("Not configured"),
-                    self:getModelId() or _("Not configured")
-                  )
+                  local provider = self.querier.provider_name
+                  local model = self.querier.handler.model
+                  return T(_("AI Provider: %1(%2)"), provider, model)
                 end,
                 keep_menu_open = true,
                 callback = function (touchmenu_instance)
@@ -427,16 +426,6 @@ function Assistant:showSettings(close_callback)
 
   self._settings_dialog = settingDlg -- store reference to the dialog
   UIManager:show(settingDlg)
-end
-
-function Assistant:getModelId()
-  local key = self:getModelProvider()
-  if key == nil then return nil end
-  if key:sub(1, 10) == "openrouter" then
-      local model = self.settings:readSetting("openrouter_model_" .. key)
-      if model then return model end
-  end
-  return koutil.tableGetValue(CONFIGURATION, "provider_settings", key, "model")
 end
 
 function Assistant:getModelProvider()
