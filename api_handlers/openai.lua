@@ -10,12 +10,11 @@ OpenAIHandler.SupportedOptions = {
     ["top_p"] = true,
     ["max_completion_tokens"] = true,
     ["max_tokens"] = true,
+    ["search_settings" ] = true,
+    ["reasoning_format"] = true,
     ["reasoning_effort"] = true,
     ["thinking_budget"] = true,
-    ["reasoning_format"] = true,
-    ["search_settings" ] = true,
     ["enable_thinking"] = true,
-    ["thinking_budget"] = true,
 }
 
 function OpenAIHandler:SetHandlerOption(querier)
