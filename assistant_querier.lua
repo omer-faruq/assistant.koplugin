@@ -830,23 +830,44 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                 -- Accumulate tool_calls deltas: arguments arrive in pieces across chunks.
                 local tc_deltas = json_default(cdelta.tool_calls)
                 if tc_deltas then
+
+                    if tool_call_acc.current == nil then
+                        tool_call_acc.current = {}
+                    end
+
                     for _, tc in ipairs(tc_deltas) do
+
                         -- New tool_call encountered: if current has a different index, push it and start fresh
                         if tool_call_acc.current.index and tool_call_acc.current.index ~= tc.index then
                             table.insert(tool_call_acc.tools, tool_call_acc.current)
                             tool_call_acc.current = {}
                         end
+
+                        local tc_idx = json_default(tc.index)
+                        if not tool_call_acc.current.index and tc_idx then
+                            tool_call_acc.current.index = tc_idx
+                        end
+
+                        local tc_id = json_default(tc.id)
+                        if not tool_call_acc.current.id and tc_id then
+                            tool_call_acc.current.id = tc_id
+                        end
+
                         local fn = json_default(tc["function"])
                         if fn then
                             -- id / function name arrive only in the first delta for this call
-                            if json_default(fn.name) then
-                                tool_call_acc.current = { name = fn.name, id = tc.id, index = tc.index, }
+                            local fn_name = json_default(fn.name)
+                            if not tool_call_acc.current.name and fn_name then
+                                tool_call_acc.current.name = fn_name
                             end
-                            if json_default(fn.arguments) then
+
+                            local fn_args = json_default(fn.arguments)
+                            if fn_args then
                                 if not tool_call_acc.current.arguments_parts then
                                     tool_call_acc.current.arguments_parts = strbuf.new()
                                 end
-                                tool_call_acc.current.arguments_parts:put(fn.arguments)
+
+                                tool_call_acc.current.arguments_parts:put(fn_args)
                             end
                         end
                     end

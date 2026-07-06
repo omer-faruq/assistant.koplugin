@@ -11,6 +11,7 @@ OpenAIHandler.SupportedOptions = {
     ["max_completion_tokens"] = true,
     ["max_tokens"] = true,
     ["reasoning_effort"] = true,
+    ["thinking_budget"] = true,
     ["reasoning_format"] = true,
     ["search_settings" ] = true,
 }
