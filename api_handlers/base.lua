@@ -51,12 +51,7 @@ end
 function BaseHandler:SetHandlerOption(querier)
     self.provider_name = querier.provider_name
     self.handler_name = querier.handler_name
-
-    local s = querier.provider_setting
-    self.api_key = s.api_key
-    self.base_url = s.base_url
-    self.model = s.model
-    self.additional_parameters = s.additional_parameters
+    koutil.tableMerge(self, querier.provider_setting)
 end
 
 --- Query method to be implemented by specific handlers.
