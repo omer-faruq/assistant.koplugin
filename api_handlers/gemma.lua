@@ -1,23 +1,22 @@
 local logger = require("logger")
 local BaseHandler = require("api_handlers.base")
-local OpenAIHandler = require("api_handlers.openai")
-local GeminiHandler = require("api_handlers.gemini")
 
 local GemmaHandler = BaseHandler:new({ name = "GemmaHandler" })
-function GemmaHandler:SetHandlerOption(querier)
-    local base_url = querier.provider_setting.base_url
+
+local function HandlerByURL(base_url)
     if base_url:match("generativelanguage%.googleapis%.com") and 
             not (base_url:match("/openai/") or base_url:match("/chat/completions")) then
-
-        local handler = GeminiHandler:new{}
-        self.__parent_handler = handler
-        setmetatable(self, { __index = handler } )
-    else
-        local handler = OpenAIHandler:new{}
-        self.__parent_handler = handler
-        setmetatable(self, { __index = handler } )
+        return require("api_handlers.gemini"):new{}
     end
-    self.__parent_handler.SetHandlerOption(self, querier)
+    return require("api_handlers.openai"):new{}
+end
+
+function GemmaHandler:SetHandlerOption(querier)
+    local base_url = querier.provider_setting.base_url
+    local handler = HandlerByURL(base_url)
+    self.__parent_handler = handler
+    setmetatable(self, { __index = handler } )
+    handler.SetHandlerOption(self, querier)
 end
 
 local function filterThoughtTags(content)

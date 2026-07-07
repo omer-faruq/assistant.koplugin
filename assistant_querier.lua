@@ -246,7 +246,9 @@ function Querier:query(message_history, title)
             end
             if not search_ok then
                 err = search_result or "Not all search succeeds"
-                logger.warn("search err", err)
+                if err ~= self.handler.CODE_CANCELLED then
+                    logger.warn("search err", err)
+                end
                 break
             end
             table.insert(search_results, {
@@ -305,7 +307,9 @@ function Querier:query(message_history, title)
                 -- cancelled or stream error
                 res = nil
                 err = content or _("Stream failed with no error message.")
-                logger.warn("cancelled/strem error", content, tool_calls_array)
+                if err ~= self.handler.CODE_CANCELLED then
+                    logger.warn("cancelled/strem error", content, tool_calls_array)
+                end
                 break
             end
 
@@ -338,8 +342,10 @@ function Querier:query(message_history, title)
             if not search_ok then
                 res = nil
                 err = search_results
-                logger.warn("failed to executeSearch at round", tool_rounds, "DETAIL", search_results,
+                if err ~= self.handler.CODE_CANCELLED then
+                    logger.warn("failed to executeSearch at round", tool_rounds, "DETAIL", search_results,
                                         content, tool_calls_array)
+                end
                 break
             end
             tool_rounds = tool_rounds + #search_results
@@ -403,7 +409,9 @@ function Querier:query(message_history, title)
                 if not search_ok then
                     res = nil
                     err = search_results
-                    logger.warn("failed to executeSearch", res)
+                    if err ~= self.handler.CODE_CANCELLED then
+                        logger.warn("failed to executeSearch", res)
+                    end
                     break
                 end
                 tool_rounds = tool_rounds + #search_results
