@@ -74,7 +74,7 @@ function GigaChatHandler:query(message_history, query_option)
         self.base_url, headers, requestBody, request_timeout, request_maxtime)
 
     if not success then
-        if code == BaseHandler.CODE_CANCELLED then
+        if code == self.CODE_CANCELLED then
             return nil, response
         end
         return nil, "Error: Failed to connect to GigaChat API - " .. tostring(response)
