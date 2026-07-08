@@ -232,17 +232,8 @@ function SettingsDialog:init()
         if self.assistant.querier:is_handler(key) then
             if not (koutil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
                 if #buttonrow < columns then
-                    local model_name
                     local seleted_model = self.settings:readSetting("seleted_model_" .. key)
-                    if seleted_model then
-                        model_name = seleted_model
-                    else
-                        if key == self.assistant.querier.provider_name then
-                            model_name = self.assistant.querier.provider_setting.model
-                        else
-                            model_name = koutil.tableGetValue(tab, "model")
-                        end
-                    end
+                    local model_name = seleted_model or koutil.tableGetValue(tab, "model")
 
                     local button_text = key
                     if columns == 1 and model_name and model_name ~= "" then

@@ -56,7 +56,7 @@ function BaseHandler:SetHandlerOption(querier)
 
     -- Apply user selected model override
     local selected_model = querier.settings:readSetting("seleted_model_" .. self.provider_name)
-    if selected_model and selected_model ~= self.model then
+    if selected_model then
         self.model = selected_model
     end
 end

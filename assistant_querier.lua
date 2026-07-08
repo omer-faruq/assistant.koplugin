@@ -491,7 +491,7 @@ function Querier:showStremDialog(res)
 
     streamDialog = InputDialog:new{
         title = _("AI is responding") ,
-        description = T("☁ %1/%2", self.provider_name, self.provider_setting.model),
+        description = T("☁ %1/%2", self.provider_name, self.handler.model),
         inputtext_class = StreamText, -- use our custom InputText class
         input_face = Font:getFace("infofont", self.settings:readSetting("response_font_size") or 20),
         title_bar_left_icon = "appbar.settings",
