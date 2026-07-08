@@ -230,7 +230,7 @@ function Assistant:addToMainMenu(menu_items)
                   sub_item_table = {},
               },
               {
-                text = _("AI Assistant Settings"),
+                text = _("Other Settings"),
                 sub_item_table_func = function ()
                   return SettingsDialog.genMenuSettings(self)
                 end

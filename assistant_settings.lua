@@ -588,10 +588,10 @@ SettingsDialog.genMenuSettings = function(assistant)
             text = _("Purge the settings"),
             callback = function()
                 UIManager:show(ConfirmBox:new{
-                    text = _([[Are you sure to purge the assistant plugin settings? 
-This resets the assistant plugin to the status the first time you installed it.
+                    text = _([[Purge assistant.koplugin settings?
 
-configuration.lua is safe, only the settings are purged.]]),
+This restores the plugin to its factory defaults. Only settings will be removed; 
+File configuration.lua will be preserved.]]),
                     ok_text = _("Purge"),
                     ok_callback = function()
                         assistant.settings:reset({})
