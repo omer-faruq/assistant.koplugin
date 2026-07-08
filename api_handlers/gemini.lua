@@ -3,8 +3,15 @@ local json = require("json")
 local koutil = require("util")
 local logger = require("logger")
 local ToolExecutor = require("assistant_tool_executor")
+local ASUtils = require("assistant_utils")
+local UIManager = require("ui/uimanager")
+local _ = require("assistant_gettext")
+local InfoMessage = require("ui/widget/infomessage")
 
-local GeminiHandler = BaseHandler:new()
+local GeminiHandler = BaseHandler:new({
+    name = "Gemini",
+    can_fetch_models = true,
+})
 GeminiHandler.SupportedOptions = {
     ["maxOutputTokens"] = true,
     ["temperature"] = true,
@@ -12,6 +19,40 @@ GeminiHandler.SupportedOptions = {
     ["topK"] =true,
     ["thinking_config"]=true,
 }
+
+function GeminiHandler:FetchModels()
+    local model_url = self.base_url:gsub("v1beta/models/", "v1beta/models")
+
+    logger.info("fetch", model_url)
+    local infomsg = InfoMessage:new{
+        text = _("Fetching models..."),
+    }
+    UIManager:show(infomsg)
+    local models, err = ASUtils.fetchJSON(model_url, {
+        ["Content-Type"]  = "application/json",
+        ["x-goog-api-key"] = self.api_key,
+    }, infomsg)
+
+    -- logger.info("ret", models, err)
+
+    if err then return nil, err end
+    if not models or not models.models or #models.models == 0 then
+        return nil, _("Failed to fetch models")
+    end
+
+    local model_list = {}
+    for _, m in ipairs(models.models) do
+        if koutil.arrayContains(m.supportedGenerationMethods, "generateContent") then
+            table.insert(model_list, { id = m.name:gsub("^models/", "") })
+        end
+    end
+
+    if #model_list == 0 then return nil, _("Failed to fetch models") end
+    table.sort(model_list, function(a, b)
+        return a.id < b.id -- sort by id's alphabeta
+    end)
+    return model_list, nil
+end
 
 --- Convert OpenAI-style message_history to Gemini contents + system_instruction.
 --- Handles augmented messages that may already contain Gemini-native model turns

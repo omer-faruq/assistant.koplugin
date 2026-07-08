@@ -649,17 +649,29 @@ function M.fetchJSON(url, header, string_or_widget)
     UIManager:close(string_or_widget)
   end
 
-  if not completed or not success then
+  if not completed then
     return nil, BaseHandler.CODE_CANCELLED
   end
 
+  if not success then
+    return nil, BaseHandler.CODE_NETWORK_ERROR
+  end
+
   if code ~= 200 then
-    return nil, T(_("Failed to fetch models (HTTP %1)."), code or "?")
+    if body then
+      local ok, parsed = pcall(json.decode, body)
+      if ok and parsed then
+        local err_msg = koutil.tableGetValue(parsed, "error", "message")
+        if err_msg then return nil, err_msg end
+      end
+      return nil, body
+    end
+    return nil, T("HTTP Status %1", code)
   end
 
   local ok, parsed = pcall(json.decode, body)
-  if not ok or not parsed or not parsed.data then
-    return nil, _("Failed to parse model list.")
+  if not ok or not parsed then
+    return nil, _("fetchJSON: failed to parse returned data")
   end
 
   return parsed, nil
