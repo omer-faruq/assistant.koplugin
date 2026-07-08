@@ -637,4 +637,32 @@ function M.sleepWithInfo(seconds, info_text)
     Trapper:clear()
     return true
 end
+
+
+function M.fetchJSON(url, header, string_or_widget)
+  
+  local completed, success, code, body = Trapper:dismissableRunInSubprocess(function()
+    return M.httpRequest(url, nil, nil, nil, "application/json", header or {})
+  end, string_or_widget)
+
+  if type(string_or_widget) == "table" then
+    UIManager:close(string_or_widget)
+  end
+
+  if not completed or not success then
+    return nil, BaseHandler.CODE_CANCELLED
+  end
+
+  if code ~= 200 then
+    return nil, T(_("Failed to fetch models (HTTP %1)."), code or "?")
+  end
+
+  local ok, parsed = pcall(json.decode, body)
+  if not ok or not parsed or not parsed.data then
+    return nil, _("Failed to parse model list.")
+  end
+
+  return parsed, nil
+end
+
 return M

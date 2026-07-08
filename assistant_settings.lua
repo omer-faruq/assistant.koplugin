@@ -203,8 +203,10 @@ function SettingsDialog:init()
         {
             id = "select_model",
             text = _("Browse Models"),
-            enabled = self.assistant.querier.handler_name == "openrouter",
-            callback = function() self:onSelectModel() end,
+            enabled_func = function ()
+                return self.assistant.querier.handler.can_fetch_models
+            end,
+            callback = function() self:onBrowseModel() end,
             hold_callback = function ()
                 UIManager:show(InfoMessage:new{
                     alignment = "center",
@@ -231,24 +233,24 @@ function SettingsDialog:init()
             if not (koutil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
                 if #buttonrow < columns then
                     local model_name
-                    if key == self.assistant.querier.provider_name then
-                        model_name = self.assistant.querier.provider_setting.model
-                    elseif key:sub(1, 10) == "openrouter" then
-                        model_name = self.settings:readSetting("openrouter_model_" .. key)
-                        if model_name == "" then
-                            model_name = self.assistant.querier.provider_setting.model
-                        end
+                    local seleted_model = self.settings:readSetting("seleted_model_" .. key)
+                    if seleted_model then
+                        model_name = seleted_model
                     else
-                        model_name = koutil.tableGetValue(tab, "model")
-                            or koutil.tableGetValue(tab, "deployment_name")
+                        if key == self.assistant.querier.provider_name then
+                            model_name = self.assistant.querier.provider_setting.model
+                        else
+                            model_name = koutil.tableGetValue(tab, "model")
+                        end
                     end
+
                     local button_text = key
                     if columns == 1 and model_name and model_name ~= "" then
                         button_text = string.format("%s (%s)", key, model_name)
                     end
                     table.insert(buttonrow, {
                         text = button_text,
-                        bold = (key:sub(1, 10) == "openrouter"),
+                        -- bold = (key:sub(1, 10) == "openrouter"),
                         provider = key, -- note: this `provider` field belongs to the RadioButton, not our AI Model provider.
                         checked = (key == self.assistant.querier.provider_name),
                     })
@@ -351,7 +353,7 @@ end
 function SettingsDialog:updateSelectModelButton()
     local btn = self.button_table:getButtonById("select_model")
     if btn then
-        if self.assistant.querier.handler_name == "openrouter" then
+        if self.assistant.querier.handler.can_fetch_models then
             btn:enable()
         else
             btn:disable()
@@ -360,24 +362,21 @@ function SettingsDialog:updateSelectModelButton()
     end
 end
 
-function SettingsDialog:onSelectModel()
+function SettingsDialog:onBrowseModel()
     UIManager:close(self)
-    local NetworkMgr = require("ui/network/manager")
-    local url = koutil.tableGetValue(self.assistant.querier, "provider_setting", "base_url")
-    if url ~= "" then
-        url = url:gsub("/chat/.*$", "/models")
-        NetworkMgr:runWhenOnline(function()
-            Trapper:wrap(function()
-                local showModelPicker = require("assistant_model_picker")
-                showModelPicker(self.assistant, self.close_callback, url)
-            end)
-        end)
-    else
-        UIManager:show(InfoMessage:new{
-            icon = "notice-warning",
-            text = _("Config Error: base_url")
-        })
+    
+    -- final check
+    if not self.assistant.querier.handler.can_fetch_models then
+        return
     end
+
+    local NetworkMgr = require("ui/network/manager")
+    NetworkMgr:runWhenOnline(function()
+        Trapper:wrap(function()
+            local showModelPicker = require("assistant_model_picker")
+            showModelPicker(self.assistant, self.close_callback)
+        end)
+    end)
 end
 
 function SettingsDialog:onCloseWidget()

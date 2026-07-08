@@ -20,6 +20,7 @@ local BaseHandler = {
     base_url = "", model = "", api_key = "",
     additional_parameters = {},
     trap_widget = nil,  -- widget to trap the request
+    can_fetch_models = false,
 }
 
 BaseHandler.CODE_CANCELLED          = "USER_CANCELED"
@@ -52,6 +53,15 @@ function BaseHandler:SetHandlerOption(querier)
     self.provider_name = querier.provider_name
     self.handler_name = querier.handler_name
     koutil.tableMerge(self, querier.provider_setting)
+
+    -- Apply user selected model override
+    local selected_model = querier.settings:readSetting("seleted_model_" .. self.provider_name)
+    if selected_model and selected_model ~= self.model then
+        self.model = selected_model
+    end
+end
+
+function BaseHandler:FetchModels()
 end
 
 --- Query method to be implemented by specific handlers.

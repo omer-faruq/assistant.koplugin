@@ -1,7 +1,4 @@
---- OpenRouter model picker — fetch and select models from UI
-local socket = require("socket")
-local http = require("socket.http")
-local ltn12 = require("ltn12")
+---  model picker — fetch and select models from UI
 local json = require("rapidjson")
 local Blitbuffer = require("ffi/blitbuffer")
 local CenterContainer = require("ui/widget/container/centercontainer")
@@ -17,7 +14,6 @@ local Notification = require("ui/widget/notification")
 local RadioButtonTable = require("ui/widget/radiobuttontable")
 local Size = require("ui/size")
 local TextBoxWidget = require("ui/widget/textboxwidget")
-local TrapWidget = require("ui/widget/trapwidget")
 local Trapper = require("ui/trapper")
 local UIManager = require("ui/uimanager")
 local VerticalGroup = require("ui/widget/verticalgroup")
@@ -31,55 +27,23 @@ local assistant_utils = require("assistant_utils")
 -- Forward declarations
 local showPickerDialog, showManualInput
 
---- Fetch models list from OpenRouter API (runs in dismissable subprocess)
-local function fetchOpenRouterModels(list_url)
-    local infomsg = InfoMessage:new{
-        text = _("Fetching models..."),
-    }
-    UIManager:show(infomsg)
-
-    local completed, success, code, body = Trapper:dismissableRunInSubprocess(function()
-        return assistant_utils.httpRequest(list_url)
-    end, infomsg)
-    UIManager:close(infomsg)
-    if not completed or not success then
-        return nil
-    end
-    if code ~= 200 then
-        return nil, T(_("Failed to fetch models (HTTP %1)."), code or "?")
-    end
-
-    local ok, parsed = pcall(json.decode, body)
-    if not ok or not parsed or not parsed.data then
-        return nil, _("Failed to parse model list.")
-    end
-
-    -- Sort newest first
-    local models = parsed.data
-    table.sort(models, function(a, b)
-        return (a.created or 0) > (b.created or 0)
-    end)
-
-    return models
-end
-
 --- Save selected model to settings and apply to current session
 local function saveModelSelection(assistant, model_id)
     local provider_name = assistant.querier.provider_name
-    assistant.settings:saveSetting("openrouter_model_" .. provider_name, model_id)
-    assistant.querier.provider_setting.model = model_id
+    assistant.settings:saveSetting("seleted_model_" .. provider_name, model_id)
     assistant.updated = true
+
+    assistant.querier.handler:SetHandlerOption(assistant.querier)
 end
 
 --- Reset model override — revert to configuration.lua default
 local function resetModelSelection(assistant)
     local provider_name = assistant.querier.provider_name
-    assistant.settings:delSetting("openrouter_model_" .. provider_name)
-    -- Restore from CONFIGURATION
-    local config_model = koutil.tableGetValue(
-        assistant.CONFIGURATION, "provider_settings", provider_name, "model")
-    assistant.querier.provider_settings.model = config_model
+    assistant.settings:delSetting("seleted_model_" .. provider_name)
     assistant.updated = true
+
+    -- Restore from CONFIGURATION
+    assistant.querier.handler:SetHandlerOption(assistant.querier)
 end
 
 -- Model picker dialog (extends InputDialog following SettingsDialog pattern)
@@ -400,27 +364,22 @@ showManualInput = function(assistant, close_callback)
     UIManager:show(dialog)
 end
 
---- Main entry point: fetch OpenRouter models and show picker
-local function showOpenRouterModelPicker(assistant, close_callback, list_url)
-    local models, err = fetchOpenRouterModels(list_url)
-    if not models then
-        if err then
-            UIManager:show(InfoMessage:new{
-                icon = "notice-warning",
-                text = err,
-            })
-        end
+--- Main entry point: fetch  models and show picker
+local function showModelPicker(assistant, close_callback)
+    local models, err = assistant.querier.handler:FetchModels()
+    if err then
+        UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err, })
         return
     end
 
-    if #models == 0 then
+    if not models or #models == 0 then
         UIManager:show(InfoMessage:new{
             text = _("No models available."),
         })
         return
     end
-
+   
     showPickerDialog(assistant, models, close_callback)
 end
 
-return showOpenRouterModelPicker
+return showModelPicker

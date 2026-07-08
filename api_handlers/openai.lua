@@ -3,8 +3,16 @@ local json = require("json")
 local koutil = require("util")
 local logger = require("logger")
 local ToolExecutor = require("assistant_tool_executor")
+local ASUtils = require("assistant_utils")
+local UIManager = require("ui/uimanager")
+local _ = require("assistant_gettext")
+local InfoMessage = require("ui/widget/infomessage")
 
-local OpenAIHandler = BaseHandler:new()
+local OpenAIHandler = BaseHandler:new({
+    name = "openai",
+    can_fetch_models = true,
+})
+
 OpenAIHandler.SupportedOptions = {
     ["temperature"] = true,
     ["top_p"] = true,
@@ -13,6 +21,7 @@ OpenAIHandler.SupportedOptions = {
     ["search_settings" ] = true,
     ["reasoning_format"] = true,
     ["reasoning_effort"] = true,
+    ["reasoning"] = true,
     ["thinking_budget"] = true,
     ["enable_thinking"] = true,
 }
@@ -20,6 +29,28 @@ OpenAIHandler.SupportedOptions = {
 function OpenAIHandler:SetHandlerOption(querier)
     BaseHandler.SetHandlerOption(self, querier)
     self.reasoning_key = nil
+end
+
+function OpenAIHandler:FetchModels()
+    local model_url = self.base_url:gsub("/chat/.*$", "/models")
+    local infomsg = InfoMessage:new{
+        text = _("Fetching models..."),
+    }
+    UIManager:show(infomsg)
+    local models, err = ASUtils.fetchJSON(model_url, {
+        ["Content-Type"]  = "application/json",
+        ["Authorization"] = "Bearer " .. self.api_key,
+    }, infomsg)
+
+    if err then return nil, err end
+    if models and models.data then
+        local model_list = models.data
+        table.sort(model_list, function(a, b)
+            return a.id < b.id -- sort by id's alphabeta
+        end)
+        return model_list, nil
+    end
+    return nil, _("Failed to fetch models")
 end
 
 --- Build a JSON request body for the OpenAI-compatible API.
