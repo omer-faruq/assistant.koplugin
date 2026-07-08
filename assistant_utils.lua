@@ -658,13 +658,13 @@ function M.fetchJSON(url, header, string_or_widget)
   end
 
   if code ~= 200 then
-    if body then
+    if body and #body > 0 then
       local ok, parsed = pcall(json.decode, body)
       if ok and parsed then
         local err_msg = koutil.tableGetValue(parsed, "error", "message")
         if err_msg then return nil, err_msg end
       end
-      return nil, body
+      return nil, T("HTTP Status %1: %2", code, body)
     end
     return nil, T("HTTP Status %1", code)
   end

@@ -3,11 +3,43 @@ local json = require("json")
 local koutil = require("util")
 local logger = require("logger")
 local ToolExecutor = require("assistant_tool_executor")
+local ASUtils = require("assistant_utils")
+local UIManager = require("ui/uimanager")
+local _ = require("assistant_gettext")
+local InfoMessage = require("ui/widget/infomessage")
 
-local AnthropicHandler = BaseHandler:new()
+local AnthropicHandler = BaseHandler:new({
+    name = "Anthropic",
+    can_fetch_models = true,
+})
 AnthropicHandler.SupportedOptions = {
     ["max_tokens"] = true,
 }
+
+function AnthropicHandler:FetchModels()
+
+    local model_url = self.base_url:gsub("/v1/.*$", "/v1/models")
+    local infomsg = InfoMessage:new{
+        text = _("Fetching models..."),
+    }
+    UIManager:show(infomsg)
+    local models, err = ASUtils.fetchJSON(model_url, {
+        ["Content-Type"]  = "application/json",
+        ["anthropic-version"] = "2023-06-01",
+        ["x-api-key"]         = self.api_key,
+    }, infomsg)
+
+    if err then return nil, err end
+    if models and models.data then
+        local model_list = models.data
+        table.sort(model_list, function(a, b)
+            return a.id < b.id -- sort by id's alphabeta
+        end)
+        return model_list, nil
+    end
+    return nil, _("Failed to fetch models")
+    
+end
 
 --- Convert OpenAI-style message_history into Anthropic's wire format.
 --- Returns { messages = [...], system = "..." }
@@ -45,7 +77,6 @@ end
 
 --- Build a JSON request body for the Anthropic API.
 --- @param messages  table       message history (OpenAI style; will be converted)
---- @param settings  table       provider settings
 --- @param tools     table|nil   tool definitions to inject (nil → use settings.tools or none)
 --- @param stream    boolean|nil
 --- @return table    body
