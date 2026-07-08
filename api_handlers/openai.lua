@@ -26,8 +26,8 @@ OpenAIHandler.SupportedOptions = {
     ["enable_thinking"] = true,
 }
 
-function OpenAIHandler:SetHandlerOption(querier)
-    BaseHandler.SetHandlerOption(self, querier)
+function OpenAIHandler:SyncOptions(querier)
+    BaseHandler.SyncOptions(self, querier)
     self.reasoning_key = nil
 end
 

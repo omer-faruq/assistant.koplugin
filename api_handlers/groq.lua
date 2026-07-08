@@ -12,8 +12,8 @@ local groqHandler = OpenAIHandler:new({
 local LAST_CALLED = 0
 local API_CALL_DEBOUNCE_DELAY = time.s(15)
 
-function groqHandler:SetHandlerOption(querier)
-    OpenAIHandler.SetHandlerOption(self, querier)
+function groqHandler:SyncOptions(querier)
+    OpenAIHandler.SyncOptions(self, querier)
     if self.additional_parameters.groq_wait_seconds then
         API_CALL_DEBOUNCE_DELAY = time.s(self.additional_parameters.groq_wait_seconds)
     end

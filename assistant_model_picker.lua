@@ -33,7 +33,7 @@ local function saveModelSelection(assistant, model_id)
     assistant.settings:saveSetting("seleted_model_" .. provider_name, model_id)
     assistant.updated = true
 
-    assistant.querier.handler:SetHandlerOption(assistant.querier)
+    assistant.querier.handler:SyncOptions(assistant.querier)
 end
 
 --- Reset model override — revert to configuration.lua default
@@ -43,7 +43,7 @@ local function resetModelSelection(assistant)
     assistant.updated = true
 
     -- Restore from CONFIGURATION
-    assistant.querier.handler:SetHandlerOption(assistant.querier)
+    assistant.querier.handler:SyncOptions(assistant.querier)
 end
 
 -- Model picker dialog (extends InputDialog following SettingsDialog pattern)

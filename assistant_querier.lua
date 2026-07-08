@@ -126,7 +126,7 @@ function Querier:load_model(provider_name)
     self.provider_name = provider_name
 
     -- register hook to the handler module
-    self.handler:SetHandlerOption(self)
+    self.handler:SyncOptions(self)
 
     -- register to the ToolExecutor module
     ToolExecutor.SetSearchAPIConfig(CONFIGURATION)

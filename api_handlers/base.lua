@@ -49,7 +49,9 @@ function BaseHandler:resetTrapWidget()
     return w
 end
 
-function BaseHandler:SetHandlerOption(querier)
+-- Sync Options from the querier (provider_setting)
+--  and the settings for models
+function BaseHandler:SyncOptions(querier)
     self.provider_name = querier.provider_name
     self.handler_name = querier.handler_name
     koutil.tableMerge(self, querier.provider_setting)

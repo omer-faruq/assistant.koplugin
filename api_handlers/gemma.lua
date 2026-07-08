@@ -11,12 +11,12 @@ local function HandlerByURL(base_url)
     return require("api_handlers.openai"):new{}
 end
 
-function GemmaHandler:SetHandlerOption(querier)
+function GemmaHandler:SyncOptions(querier)
     local base_url = querier.provider_setting.base_url
     local handler = HandlerByURL(base_url)
     self.__parent_handler = handler
     setmetatable(self, { __index = handler } )
-    handler.SetHandlerOption(self, querier)
+    handler.SyncOptions(self, querier)
 end
 
 local function filterThoughtTags(content)

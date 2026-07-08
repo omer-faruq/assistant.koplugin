@@ -11,8 +11,8 @@ local UUID_EMPTY = "00000000-0000-0000-0000-000000000000"
 
 local GigaChatHandler = OpenAIHandler:new({ name = "GigaChatHandler", })
 
-function GigaChatHandler:SetHandlerOption(querier)
-    OpenAIHandler.SetHandlerOption(self, querier)
+function GigaChatHandler:SyncOptions(querier)
+    OpenAIHandler.SyncOptions(self, querier)
     self.auth_url = querier.provider_setting.auth_url
 end
 
