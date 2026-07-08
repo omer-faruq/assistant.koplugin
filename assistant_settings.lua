@@ -176,7 +176,7 @@ local function LanguageSetting(assistant, close_callback)
 end
 
 local SettingsDialog = InputDialog:extend{
-    title = _("AI Provider Settings"),
+    title = _("AI Provider and Models"),
 
     -- inited variables
     assistant = nil, -- reference to the main assistant object
@@ -234,14 +234,9 @@ function SettingsDialog:init()
                 if #buttonrow < columns then
                     local seleted_model = self.settings:readSetting("seleted_model_" .. key)
                     local model_name = seleted_model or koutil.tableGetValue(tab, "model")
-
-                    local button_text = key
-                    if columns == 1 and model_name and model_name ~= "" then
-                        button_text = string.format("%s (%s)", key, model_name)
-                    end
+                    local button_text = string.format("%s (%s)", key, model_name)
                     table.insert(buttonrow, {
                         text = button_text,
-                        -- bold = (key:sub(1, 10) == "openrouter"),
                         provider = key, -- note: this `provider` field belongs to the RadioButton, not our AI Model provider.
                         checked = (key == self.assistant.querier.provider_name),
                     })
@@ -270,6 +265,7 @@ function SettingsDialog:init()
         radio_buttons = self.radio_buttons,
         width = self.element_width,
         face = Font:getFace("cfont", 18),
+        zero_sep = true,
         sep_width = 0,
         focused = true,
         scroll = false,
@@ -284,26 +280,10 @@ function SettingsDialog:init()
     self.layout = {self.layout[#self.layout]} -- keep bottom buttons
     self:mergeLayoutInVertical(self.radio_button_table, #self.layout) -- before bottom buttons
 
-    local radio_desc = TextBoxWidget:new{
-        width = self.width - 2 * Size.padding.large,
-        text = _("AI Model provider:"),
-        face = Font:getFace("xx_smallinfofont"),
-    }
-
     -- main dialog widget layout table
     self.vgroup = VerticalGroup:new{
         align = "left",
         self.title_bar,         -- -- Title Bar
-        CenterContainer:new{    -- -- Description text for provider radio
-            dimen = Geom:new{
-                w = self.width,
-                h = radio_desc:getLineHeight() + Size.padding.tiny
-            },
-            HorizontalGroup:new{
-                HorizontalSpan:new{ width = Size.padding.tiny },
-                radio_desc,
-            },
-        },
         CenterContainer:new{    -- -- Provider radio buttons
             dimen = Geom:new{
                 w = self.width,

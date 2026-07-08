@@ -21,9 +21,8 @@ GeminiHandler.SupportedOptions = {
 }
 
 function GeminiHandler:FetchModels()
-    local model_url = self.base_url:gsub("v1beta/models/", "v1beta/models")
+    local model_url = self.base_url:gsub("v1beta/.+$", "v1beta/models")
 
-    logger.info("fetch", model_url)
     local infomsg = InfoMessage:new{
         text = _("Fetching models..."),
     }
@@ -32,8 +31,6 @@ function GeminiHandler:FetchModels()
         ["Content-Type"]  = "application/json",
         ["x-goog-api-key"] = self.api_key,
     }, infomsg)
-
-    -- logger.info("ret", models, err)
 
     if err then return nil, err end
     if not models or not models.models or #models.models == 0 then
