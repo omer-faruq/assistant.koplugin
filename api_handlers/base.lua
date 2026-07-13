@@ -57,7 +57,7 @@ function BaseHandler:SyncOptions(querier)
     koutil.tableMerge(self, querier.provider_setting)
 
     -- Apply user selected model override
-    local selected_model = querier.settings:readSetting("seleted_model_" .. self.provider_name)
+    local selected_model = querier.settings:readSetting("selected_model_" .. self.provider_name)
     if selected_model then
         self.model = selected_model
     end

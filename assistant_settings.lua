@@ -232,7 +232,7 @@ function SettingsDialog:init()
         if self.assistant.querier:is_handler(key) then
             if not (koutil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
                 if #buttonrow < columns then
-                    local seleted_model = self.settings:readSetting("seleted_model_" .. key)
+                    local seleted_model = self.settings:readSetting("selected_model_" .. key)
                     local model_name = seleted_model or koutil.tableGetValue(tab, "model")
                     local button_text = string.format("%s (%s)", key, model_name)
                     table.insert(buttonrow, {
