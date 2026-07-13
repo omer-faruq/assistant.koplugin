@@ -2,21 +2,28 @@ local logger = require("logger")
 local BaseHandler = require("api_handlers.base")
 
 local GemmaHandler = BaseHandler:new({ name = "GemmaHandler" })
+local openai_hdl = require("api_handlers.openai"):new{}
+local gemini_hdl = require("api_handlers.gemini"):new{}
 
-local function HandlerByURL(base_url)
-    if base_url:match("generativelanguage%.googleapis%.com") and 
+local PARENT_METATABLES = {
+    openai = { __index = openai_hdl },
+    gemini = { __index = gemini_hdl },
+}
+
+local function FormatByURL(base_url)
+    if base_url:match("generativelanguage%.googleapis%.com") and
             not (base_url:match("/openai/") or base_url:match("/chat/completions")) then
-        return require("api_handlers.gemini"):new{}
+        return "gemini"
     end
-    return require("api_handlers.openai"):new{}
+    return "openai"
 end
 
 function GemmaHandler:SyncOptions(querier)
     local base_url = querier.provider_setting.base_url
-    local handler = HandlerByURL(base_url)
-    self.__parent_handler = handler
-    setmetatable(self, { __index = handler } )
-    handler.SyncOptions(self, querier)
+    local metatab = PARENT_METATABLES[FormatByURL(base_url)]
+    setmetatable(self, metatab)
+    self.__parent_handler = metatab.__index
+    self.__parent_handler.SyncOptions(self, querier)
 end
 
 local function filterThoughtTags(content)
