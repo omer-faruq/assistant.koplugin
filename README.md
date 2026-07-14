@@ -16,7 +16,7 @@ A powerful plugin that lets you interact with AI language models (Claude, GPT-4,
   - Other OpenAI-compatible API services (Groq, NVIDIA, etc.)
 - **Stream Mode**: Real-time responses from the API. Get the full LLM experience on e-ink devices.
 - **Multiple Providers/Models**: Select different models or AI provider platforms in the UI.
-- **Web Search Tool Calling**: LLMs search the web and improve the the answer with real and updated infomation.
+- **Web Search Tool Calling**: LLMs search the web and improve the answer with real and updated information.
 - **Built-in Prompts**:
   - **Translation**: Instantly translate highlighted text to any language
   - **Quick Actions**: One-click buttons for common tasks like summarizing or explaining

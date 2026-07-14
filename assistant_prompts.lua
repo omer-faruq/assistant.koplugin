@@ -572,7 +572,6 @@ local M = {
     assistant_prompts = assistant_prompts, -- Preconfigured prompts for the AI
     merged_prompts = nil,                  -- Merged prompts from custom and configuration
     sorted_custom_prompts = nil,           -- Sorted custom prompts
-    show_on_main_popup_prompts = nil,      -- Prompts that should be shown on the main popup
 }
 
 -- Func description:

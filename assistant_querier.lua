@@ -475,7 +475,7 @@ function Querier:showStremDialog(res)
         UIManager:close(streamDialog)
     end
 
-    -- user may perfer smaller stream dialog on big screen device 
+    -- user may prefer smaller stream dialog on big screen device 
     local width, use_available_height, text_height, is_movable
     if self.settings:readSetting("large_stream_dialog", true) then
         width = Screen:getWidth() - 2*Size.margin.default
