@@ -267,6 +267,22 @@ function exaai:SearchKeywords(keywords, trap_widget)
                 segments:putf("  - %s", hl)
             end
         end
+        if item.subpages and #item.subpages > 0 then
+            segments:put("* Subpages:\n")
+            for j, sub in ipairs(item.subpages) do
+                segments:putf("    %d. **%s**", j, json_default(sub.title, "Untitled"))
+                segments:put("\n")
+                if sub.summary then
+                    segments:putf("       Summary: %s\n", sub.summary)
+                end
+                if sub.highlights and #sub.highlights > 0 then
+                    segments:put("       Excerpts:\n")
+                    for _, hl in ipairs(sub.highlights) do
+                        segments:putf("         - %s\n", hl)
+                    end
+                end
+            end
+        end
         segments:put("\n")
     end
     segments:put("\n")
