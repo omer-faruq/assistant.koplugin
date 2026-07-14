@@ -205,7 +205,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     local prev_context, next_context = "", ""
     local context_text = ""
     local context_sentence_count = 0
-    local dict_language = assistant.settings:readSetting("response_language") or assistant.ui_language
+    local dict_language = assistant.settings:readSetting("dict_language") or assistant.ui_language
 
     if prompt_type == "term_xray" then
         -- Show loading dialog immediately to avoid app appearing frozen during LexRank processing
