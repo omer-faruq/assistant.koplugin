@@ -272,6 +272,12 @@ local CONFIGURATION = {
             -- https://github.com/searxng/searxng
             base_url = "https://you-searxng-address"
             -- keys not needed
+        },
+        exaapi = {
+            -- External Search Tool API: Exa.ai, semantic search for AI agents.
+            -- Free tier: 100 searches/month. Get key at https://dashboard.exa.ai/api-keys
+            -- Docs: https://exa.ai/docs/reference/search-api-guide-for-coding-agents
+            api_key = "your-exa-api-key"
         }
     },
 

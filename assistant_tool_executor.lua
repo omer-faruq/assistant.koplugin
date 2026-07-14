@@ -23,7 +23,8 @@ local SEARCH_API_NAMES = {
     "builtin",
     "serpapi",
     "tavilyapi",
-    "searxngapi"
+    "exaapi",
+    "searxngapi",
  }
 
 ---- Build the messages_to_append list once a search result is available.
@@ -113,7 +114,9 @@ function ToolExecutor.IsExtSearch(key)
 end
 
 function ToolExecutor.ToolToText(key)
-    return ExtTools[key].name
+    local tool = ExtTools[key]
+    if not tool then return "" end
+    return tool.name
 end
 
 

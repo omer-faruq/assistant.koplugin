@@ -214,10 +214,70 @@ function searxng:SearchKeywords(keywords, trap_widget)
 end
 
 
+local exaai = SearchToolBase:new({ 
+    name = "Exa.ai", base_url = "https://api.exa.ai",
+    is_external = true,
+})
+function exaai:SearchKeywords(keywords, trap_widget)
+    local search_url = self.base_url .. "/search"
+    local requestBodyTable = {
+        query      = keywords,
+        type       = "auto",
+        numResults = 5,
+        contents   = {
+            highlights = true,
+            summary    = true,
+        },
+    }
+    local requestBody = json.encode(requestBodyTable)
+    local reqHeaders = { ["x-api-key"] = self.api_key }
+
+    local timeout = 45
+    local maxtime = 120
+
+    local completed, success, code, content =
+        Trapper:dismissableRunInSubprocess(function()
+            return ASUtils.httpRequest(search_url, timeout, maxtime, requestBody, "application/json", reqHeaders)
+        end, trap_widget)
+
+    if not completed then return false, ASUtils.HANDLERCODE.CODE_CANCELLED end
+    if not success or code ~= 200 then return false, content end
+
+    local ok, parsed = pcall(json.decode, content)
+    if not ok or not parsed or not parsed.results then
+        return false, "fail to parse exa.ai return"
+    end
+
+    local segments = strbuf.new()
+    segments:put("## Exa.ai Search Results:\n\n")
+    for i, item in ipairs(parsed.results) do
+        segments:put("---")
+        segments:putf("### Source %d: %s", i, json_default(item.title, "Untitled"))
+        -- segments:put("* URL: ")
+        -- segments:put(json_default(item.url, "N/A"))
+        segments:put("\n")
+        if item.summary then
+            segments:put("* Summary: ")
+            segments:put(item.summary)
+            segments:put("\n")
+        end
+        if item.highlights and #item.highlights > 0 then
+            segments:put("* Key Excerpts:\n")
+            for _, hl in ipairs(item.highlights) do
+                segments:putf("  - %s", hl)
+            end
+        end
+        segments:put("\n")
+    end
+    segments:put("\n")
+    return true, segments:get()
+end
+
 return {
     none = SearchToolBase:new{name = _("None")},
     builtin = SearchToolBase:new{name = _("Model Built-In")},
     serpapi   = serpapi,
     tavilyapi = tarvily,
     searxngapi = searxng,
+    exaapi    = exaai,
 }
