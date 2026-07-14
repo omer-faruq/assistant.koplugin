@@ -1,9 +1,7 @@
-local logger = require("logger")
 local koutil = require("util")
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local strbuf = require("string.buffer")
-local Trapper = require("ui/trapper")
 local json = require("rapidjson")
 local ASUtils = require("assistant_utils")
 local json_default = ASUtils.json_default
@@ -40,20 +38,12 @@ function serpapi:SearchKeywords(keywords, trap_widget)
     local q        = koutil.urlEncode(keywords)
     local url      = T("%1?engine=google_ai_mode&api_key=%2&q=%3", search_url, key, q)
 
-    local timeout = 45
-    local maxtime = 120
-
-    local completed, success, code, content =
-        Trapper:dismissableRunInSubprocess(function()
-            return ASUtils.httpRequest(url, timeout, maxtime, nil, nil, nil)
-        end, trap_widget)
-
-    if not completed then return false, ASUtils.HANDLERCODE.CODE_CANCELLED end
-    if not success or code ~= 200 then return false, content end
-
-    local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed then
-        return false, "fail to parse serpapi return"
+    local parsed, err = ASUtils.fetchJSON(url, nil, trap_widget, 45, 120)
+    if not parsed then
+        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
+            return false, ASUtils.HANDLERCODE.CODE_CANCELLED
+        end
+        return false, err
     end
 
     if not parsed.reconstructed_markdown and not parsed.references then
@@ -82,15 +72,12 @@ function serpapi:AccoutInfo()
     local acc_url  = self.base_url .. "/account"
     local key      = self.api_key
     local url      = T("%1?api_key=%2", acc_url, key)
-    local completed, success, code, content =
-        Trapper:dismissableRunInSubprocess(function()
-            return ASUtils.httpRequest(url, 30, 60, nil, nil, nil)
-        end, "loading...")
-    if not completed then return false, ASUtils.HANDLERCODE.CODE_CANCELLED end
-    if not success or code ~= 200 then return false, content end
-    local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed then
-        return false, "fail to parse serpapi return"
+    local parsed, err = ASUtils.fetchJSON(url, nil, "loading...", 30, 60)
+    if not parsed then
+        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
+            return false, ASUtils.HANDLERCODE.CODE_CANCELLED
+        end
+        return false, err
     end
     local ret = T("SerpAPI\n\n%1/%2\nUsed: %3\nLeft: %4",
         json_default(parsed.plan_name, ""),
@@ -117,19 +104,14 @@ function tarvily:SearchKeywords(keywords, trap_widget)
     }
     local requestBody = json.encode(requestBodyTable)
 
-    local timeout = 45
-    local maxtime = 120
-
-    local completed, success, code, content =
-        Trapper:dismissableRunInSubprocess(function()
-            return ASUtils.httpRequest(search_url, timeout, maxtime, requestBody, "application/json", nil)
-        end, trap_widget)
-
-    if not completed then return false, ASUtils.HANDLERCODE.CODE_CANCELLED end
-    if not success or code ~= 200 then return false, content end
-
-    local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed or not parsed.results then
+    local parsed, err = ASUtils.fetchJSON(search_url, nil, trap_widget, 45, 120, requestBody)
+    if not parsed then
+        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
+            return false, ASUtils.HANDLERCODE.CODE_CANCELLED
+        end
+        return false, err
+    end
+    if not parsed.results then
         return false, "fail to parse tavily return"
     end
 
@@ -155,15 +137,12 @@ end
 function tarvily:AccoutInfo()
     local acc_url  = self.base_url .. "/usage"
     local reqHeaders = { ["Authorization"]="Bearer " .. self.api_key }
-    local completed, success, code, content =
-        Trapper:dismissableRunInSubprocess(function()
-            return ASUtils.httpRequest(acc_url, 30, 60, nil, nil, reqHeaders)
-        end, "loading...")
-    if not completed then return false, ASUtils.HANDLERCODE.CODE_CANCELLED end
-    if not success or code ~= 200 then return false, content end
-    local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed then
-        return false, "fail to parse serpapi return"
+    local parsed, err = ASUtils.fetchJSON(acc_url, reqHeaders, "loading...", 30, 60)
+    if not parsed then
+        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
+            return false, ASUtils.HANDLERCODE.CODE_CANCELLED
+        end
+        return false, err
     end
     local ret = T("Tarvily API\n\nPlan: %1\nUsed: %2\nLimits: %3",
         json_default(parsed.account.current_plan, ""),
@@ -181,19 +160,14 @@ function searxng:SearchKeywords(keywords, trap_widget)
     local q        = koutil.urlEncode(keywords)
     local url      = T("%1?q=%2&format=json", search_url, q)
 
-    local timeout = 45
-    local maxtime = 120
-
-    local completed, success, code, content =
-        Trapper:dismissableRunInSubprocess(function()
-            return ASUtils.httpRequest(url, timeout, maxtime, nil, nil, nil)
-        end, trap_widget)
-
-    if not completed then return false, ASUtils.HANDLERCODE.CODE_CANCELLED end
-    if not success or code ~= 200 then return false, content end
-
-    local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed or not parsed.results then
+    local parsed, err = ASUtils.fetchJSON(url, nil, trap_widget, 45, 120)
+    if not parsed then
+        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
+            return false, ASUtils.HANDLERCODE.CODE_CANCELLED
+        end
+        return false, err
+    end
+    if not parsed.results then
         return false, "fail to parse searxng return"
     end
 
@@ -232,19 +206,14 @@ function exaai:SearchKeywords(keywords, trap_widget)
     local requestBody = json.encode(requestBodyTable)
     local reqHeaders = { ["x-api-key"] = self.api_key }
 
-    local timeout = 45
-    local maxtime = 120
-
-    local completed, success, code, content =
-        Trapper:dismissableRunInSubprocess(function()
-            return ASUtils.httpRequest(search_url, timeout, maxtime, requestBody, "application/json", reqHeaders)
-        end, trap_widget)
-
-    if not completed then return false, ASUtils.HANDLERCODE.CODE_CANCELLED end
-    if not success or code ~= 200 then return false, content end
-
-    local ok, parsed = pcall(json.decode, content)
-    if not ok or not parsed or not parsed.results then
+    local parsed, err = ASUtils.fetchJSON(search_url, reqHeaders, trap_widget, 45, 120, requestBody)
+    if not parsed then
+        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
+            return false, ASUtils.HANDLERCODE.CODE_CANCELLED
+        end
+        return false, err
+    end
+    if not parsed.results then
         return false, "fail to parse exa.ai return"
     end
 

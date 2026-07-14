@@ -639,10 +639,10 @@ function M.sleepWithInfo(seconds, info_text)
 end
 
 
-function M.fetchJSON(url, header, string_or_widget)
+function M.fetchJSON(url, header, string_or_widget, timeout, maxtime, post_body)
   
   local completed, success, code, body = Trapper:dismissableRunInSubprocess(function()
-    return M.httpRequest(url, nil, nil, nil, "application/json", header or {})
+    return M.httpRequest(url, timeout, maxtime, post_body, "application/json", header or {})
   end, string_or_widget)
 
   if type(string_or_widget) == "table" then
