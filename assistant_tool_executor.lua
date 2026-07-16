@@ -312,6 +312,9 @@ function ToolExecutor.getHandlerFormat(handler_name)
         return "anthropic"
     elseif handler_name == "gemini" then
         return "gemini"
+    elseif handler_name == "responses" then
+        -- Responses API uses OpenAI-format messages internally for tool-call loop
+        return "openai"
     else
         -- openai / groq / openrouter / deepseek / mistral / etc.
         return "openai"
@@ -381,6 +384,65 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
             return nil, model_content, direct, nil
         end
         return tool_calls, model_content, nil, nil
+
+    elseif format == "responses" then
+        -- OpenAI Responses API format: parse response.output array
+        local output_items = responseData.output
+        if type(output_items) ~= "table" then
+            local err_msg = koutil.tableGetValue(responseData, "error", "message")
+                         or "Responses API stage-1: missing output array"
+            return nil, nil, nil, err_msg
+        end
+
+        local tool_calls = {}
+        local text_parts = {}
+        for _, item in ipairs(output_items) do
+            if type(item) == "table" then
+                if item.type == "function_call" then
+                    table.insert(tool_calls, {
+                        tool_call_id = item.call_id,
+                        name         = item.name,
+                        arguments    = item.arguments or "{}",
+                    })
+                elseif item.type == "message" then
+                    local content = item.content
+                    if type(content) == "table" then
+                        for _, block in ipairs(content) do
+                            if block.type == "output_text" and block.text then
+                                table.insert(text_parts, block.text)
+                            end
+                        end
+                    elseif type(content) == "string" then
+                        table.insert(text_parts, content)
+                    end
+                end
+            end
+        end
+
+        -- Build a raw_assistant in OpenAI format for tool-call loop compatibility
+        local raw_text = #text_parts > 0 and table.concat(text_parts, "\n\n") or nil
+        if #tool_calls == 0 then
+            return nil, nil, raw_text, nil
+        end
+
+        -- Build raw_assistant in OpenAI format
+        local raw_tool_calls = {}
+        for _, tc in ipairs(tool_calls) do
+            table.insert(raw_tool_calls, {
+                id        = tc.tool_call_id,
+                type      = "function",
+                ["function"] = {
+                    name      = tc.name,
+                    arguments = tc.arguments,
+                },
+            })
+        end
+        local raw_assistant = {
+            role       = "assistant",
+            content    = raw_text,
+            tool_calls = raw_tool_calls,
+        }
+        return tool_calls, raw_assistant, nil, nil
 
     else  -- "openai" (default — shared by groq / openrouter / deepseek / mistral / etc.)
         local assistant_message = koutil.tableGetValue(responseData, "choices", 1, "message")

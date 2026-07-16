@@ -40,6 +40,21 @@ local CONFIGURATION = {
                 max_tokens = 4096
             }
         },
+        -- OpenAI Responses API — newer /v1/responses endpoint with built-in tools
+        -- Prefix "responses" loads the api_handlers/responses.lua handler.
+        -- Built-in web_search: set use_websearch = "builtin" in plugin settings
+        -- (no external search API key needed).
+        responses_openai = {
+            visible = false,       -- optional, set to true to show in provider switch
+            model = "gpt-4o-mini", -- model list: https://platform.openai.com/docs/models
+            base_url = "https://api.openai.com/v1/responses",
+            api_key = "your-openai-api-key",
+            additional_parameters = {
+                -- temperature = 0.7,
+                -- max_output_tokens = 4096,  -- use max_output_tokens instead of max_tokens
+                -- reasoning_effort = "low",    -- for reasoning models (o1, o3, etc.)
+            }
+        },
         anthropic = {
             visible = true,                    -- optional, if set to false, will not shown in the profile switch
             model = "claude-3-5-haiku-latest", -- model list: https://docs.anthropic.com/en/docs/about-claude/models
