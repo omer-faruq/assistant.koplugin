@@ -16,6 +16,7 @@ local socket = require("socket")
 local socket_url = require("socket.url")
 local ffi = require("ffi")
 local ffiutil = require("ffi/util")
+local strbuf = require("string.buffer")
 
 --- OpenAI Responses API handler.
 --- Supports the /v1/responses endpoint with built-in web_search,
@@ -301,7 +302,7 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
         end
 
         -- Make the HTTP request with a custom sink that processes chunks
-        local buf = {}
+        local buf = strbuf.new()
         local function processLine(line)
             line = line:gsub("\r$", "")
 
@@ -390,15 +391,16 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
 
         local function sink(chunk, err)
             if chunk then
-                -- Accumulate in buffer, process complete lines
-                buf[#buf + 1] = chunk
-                local full = table.concat(buf)
-                local last_nl = full:find("\n[^\r\n]*$") or 0
-                if last_nl > 0 then
-                    -- Process complete lines
-                    local complete = full:sub(1, last_nl)
-                    local remainder = full:sub(last_nl + 1)
-                    buf = {remainder}
+                -- Accumulate chunks into strbuf (avoids repeated table.concat string copies)
+                buf:put(chunk)
+                local full = buf:tostring()
+                -- Find the last newline: keep unprocessed trailing data in the buffer
+                local last_nl_pos = full:find("\n[^\r\n]*$") or 0
+                if last_nl_pos > 0 then
+                    -- Extract complete lines (everything up to and including last \n)
+                    local complete = full:sub(1, last_nl_pos)
+                    -- Advance strbuf read cursor past the processed bytes
+                    buf:skip(last_nl_pos)
 
                     for line in complete:gmatch("[^\r\n]+") do
                         if not processLine(line) then break end
@@ -407,11 +409,10 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
             else
                 -- End of stream: process any remaining data
                 if #buf > 0 then
-                    local remaining = table.concat(buf)
+                    local remaining = buf:tostring()
                     if #remaining > 0 then
                         processLine(remaining)
                     end
-                    buf = {}
                 end
                 -- Ensure [DONE] is emitted
                 ffiutil.writeToFD(child_write_fd, "data: [DONE]\n\n")
@@ -430,9 +431,9 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
 
         local code, resp_headers, status = socket.skip(1, http.request(request))
 
-        -- Snapshot the remaining buffer before sink(nil) clears it
+        -- Snapshot the remaining buffer before sink(nil) flushes it
         -- (in case of a non-200 response, the body may be JSON error, not SSE)
-        local raw_body_snapshot = table.concat(buf)
+        local raw_body_snapshot = buf:tostring()
 
         -- Signal end of stream to flush any remaining SSE data
         sink(nil)
