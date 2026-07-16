@@ -1,18 +1,18 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-05-28 17:24+0800\n"
+        "POT-Creation-Date: 2026-07-16 16:47+0800\n"
         "PO-Revision-Date: 2025-09-26 10:22+0800\n"
         "Last-Translator: ChatGPT 4.0\n"
         "Language-Team: ChatGPT 4.0\n"
-        "Language: Esperanto (eo)\n"
+        "Language: eo\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:457 ../main.lua:138 ../main.lua:309
-#: ../main.lua:606
+#: ../_meta.lua:4 ../assistant_dialog.lua:481 ../main.lua:332 ../main.lua:342
+#: ../main.lua:542
 msgid   "AI Assistant"
 msgstr  "AI-Assistanto"
 
@@ -20,74 +20,97 @@ msgstr  "AI-Assistanto"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 Plibonigu vian KOReader-efikon per AI"
 
-#: ../assistant_dialog.lua:105
-msgid   "(Empty message)"
-msgstr  "(Malplena mesaĝo)"
+#: ../api_handlers/anthropic.lua:23 ../api_handlers/gemini.lua:27
+#: ../api_handlers/openai.lua:37
+msgid   "Fetching models..."
+msgstr  "Akirante modelojn..."
 
-#: ../assistant_dialog.lua:116
+#: ../api_handlers/anthropic.lua:40 ../api_handlers/gemini.lua:37
+#: ../api_handlers/gemini.lua:47 ../api_handlers/openai.lua:53
+msgid   "Failed to fetch models"
+msgstr  "Malsukcesis akiri modelojn"
+
+#: ../assistant_dialog.lua:92
+msgid   "### ☺ Question\n"
+msgstr  "### ☺ Demando\n"
+
+#: ../assistant_dialog.lua:134 ../assistant_model_picker.lua:102
+#: ../assistant_model_picker.lua:261
+msgid   "Search"
+msgstr  "Serĉi"
+
+#: ../assistant_dialog.lua:137
+msgid   "Response"
+msgstr  "Respondo"
+
+#: ../assistant_dialog.lua:138
 msgid   "(No response)"
 msgstr  "(Neniu respondo)"
 
-#: ../assistant_dialog.lua:148 ../assistant_quicknote.lua:99
-#: ../assistant_viewer.lua:569
+#: ../assistant_dialog.lua:175 ../assistant_quicknote.lua:99
+#: ../assistant_viewer.lua:581
 msgid   "Highlighted text:"
 msgstr  "Enŝovita teksto:"
 
-#: ../assistant_dialog.lua:313 ../assistant_dictdialog.lua:161
-#: ../assistant_model_picker.lua:183 ../assistant_model_picker.lua:308
-#: ../assistant_model_picker.lua:400 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:91 ../assistant_viewer.lua:670
+#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
+#: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
+#: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
+#: ../assistant_settings.lua:94 ../assistant_viewer.lua:682
 msgid   "Cancel"
 msgstr  "Nuligi"
 
-#: ../assistant_dialog.lua:320 ../assistant_viewer.lua:680
+#: ../assistant_dialog.lua:344 ../assistant_viewer.lua:692
 msgid   "Ask"
 msgstr  "Demandi"
 
-#: ../assistant_dialog.lua:333 ../assistant_viewer.lua:686
+#: ../assistant_dialog.lua:357 ../assistant_viewer.lua:698
 msgid   "Enter a question before proceeding."
 msgstr  "Enigu demandon antaŭ ol daŭrigi."
 
-#: ../assistant_dialog.lua:420
+#: ../assistant_dialog.lua:444
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Ĉu aldoni ĉi tiun butonon al Enŝovada menuo?"
 
-#: ../assistant_dialog.lua:421
+#: ../assistant_dialog.lua:445
 msgid   "Add"
 msgstr  "Aldoni"
 
-#: ../assistant_dialog.lua:448
+#: ../assistant_dialog.lua:472
 msgid   "Ask a question about the highlighted text"
 msgstr  "Demandi pri la enŝovita teksto"
 
-#: ../assistant_dialog.lua:449
+#: ../assistant_dialog.lua:473
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Demandi pri ĉi tiu libro:\n"
         "%s de %s"
 
-#: ../assistant_dialog.lua:450
+#: ../assistant_dialog.lua:474
 msgid   "Ask a general question"
 msgstr  "Demandu ĝeneralan demandon"
 
-#: ../assistant_dialog.lua:452
+#: ../assistant_dialog.lua:476
 msgid   "Type your question here..."
 msgstr  "Tajpu vian demandon ĉi tie..."
 
-#: ../assistant_dialog.lua:453
+#: ../assistant_dialog.lua:477
 msgid   "Ask anything about this book..."
 msgstr  "Demandu ĉion pri ĉi tiu libro..."
 
-#: ../assistant_dialog.lua:454
+#: ../assistant_dialog.lua:478
 msgid   "Ask anything..."
 msgstr  "Demandu ion ajn..."
 
-#: ../assistant_dialog.lua:478
+#: ../assistant_dialog.lua:502
 msgid   "Use book text as context"
 msgstr  "Uzi libro-tekston kiel kuntekston"
 
-#: ../assistant_dialog.lua:541
+#: ../assistant_dialog.lua:552
+msgid   "Loading for %1 ..."
+msgstr  "Ŝargante por %1 ..."
+
+#: ../assistant_dialog.lua:565
 msgid   "Error: No response received"
 msgstr  "Eraro: Neniu respondo ricevata"
 
@@ -107,7 +130,7 @@ msgstr  "Serĉi"
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Analizas librokuntekston por Term X-Ray..."
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:833
+#: ../assistant_dictdialog.lua:390 ../main.lua:769
 msgid   "Term X-Ray"
 msgstr  "Termina R-X"
 
@@ -115,13 +138,21 @@ msgstr  "Termina R-X"
 msgid   "Loading Term X-Ray ..."
 msgstr  "Ŝarĝante Terminan R-X ..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:849
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:65 ../main.lua:785
 msgid   "Dictionary"
 msgstr  "Vortaro"
 
 #: ../assistant_dictdialog.lua:409
 msgid   "Loading AI Dictionary ..."
 msgstr  "Ŝarĝante AI-Vortaron ..."
+
+#: ../assistant_exttools.lua:262
+msgid   "None"
+msgstr  "Neniu"
+
+#: ../assistant_exttools.lua:263
+msgid   "Model Built-In"
+msgstr  "Enkonstruita Modelo"
 
 #: ../assistant_featuredialog.lua:40
 msgid   "Custom Prompt"
@@ -131,52 +162,52 @@ msgstr  "Propra Demandosigno"
 msgid   "Loading..."
 msgstr  "Ŝarĝante..."
 
-#: ../assistant_featuredialog.lua:61
-msgid   "Recap"
-msgstr  "Resumo"
-
 #: ../assistant_featuredialog.lua:62
+msgid   "🌐Recap"
+msgstr  "🌐Resumo"
+
+#: ../assistant_featuredialog.lua:63
 msgid   "Loading Recap..."
 msgstr  "Ŝargante resumon..."
 
-#: ../assistant_featuredialog.lua:67
+#: ../assistant_featuredialog.lua:68
 msgid   "X‑Ray"
 msgstr  "X‑Ray"
 
-#: ../assistant_featuredialog.lua:68
+#: ../assistant_featuredialog.lua:69
 msgid   "Loading X-Ray..."
 msgstr  "Ŝargante X-Ray..."
 
-#: ../assistant_featuredialog.lua:73
-msgid   "Book Information"
-msgstr  "Informoj pri libro"
-
 #: ../assistant_featuredialog.lua:74
+msgid   "🌐Book Information"
+msgstr  "🌐Libro-Informoj"
+
+#: ../assistant_featuredialog.lua:75
 msgid   "Loading Book Information..."
 msgstr  "Ŝargas informojn pri libro…"
 
-#: ../assistant_featuredialog.lua:79 ../main.lua:117 ../main.lua:192
+#: ../assistant_featuredialog.lua:80 ../main.lua:118 ../main.lua:284
 msgid   "Highlight & Note Analysis"
 msgstr  "Analizo de Emfazoj kaj Notoj"
 
-#: ../assistant_featuredialog.lua:80
+#: ../assistant_featuredialog.lua:81
 msgid   "Loading Highlight & Note Analysis..."
 msgstr  "Ŝarĝante Analizon de Emfazoj kaj Notoj..."
 
-#: ../assistant_featuredialog.lua:85 ../main.lua:125 ../main.lua:203
+#: ../assistant_featuredialog.lua:86 ../main.lua:126
 msgid   "Summary Using Highlights & Notes"
 msgstr  "Resumo Uzante Emfazojn kaj Notojn"
 
-#: ../assistant_featuredialog.lua:86
+#: ../assistant_featuredialog.lua:87
 msgid   "Loading Summary Using Highlights & Notes..."
 msgstr  "Ŝarĝante Resumon Uzante Emfazojn kaj Notojn..."
 
-#: ../assistant_featuredialog.lua:97
+#: ../assistant_featuredialog.lua:98
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "Nekonata funkcio: %s"
 
-#: ../assistant_featuredialog.lua:171
+#: ../assistant_featuredialog.lua:181
 msgid   " - Title : %1\n"
         " - Author: %2\n"
         " - Reading progress: %3%\n"
@@ -190,225 +221,209 @@ msgstr  " - Titolo : %1\n"
         "-----\n"
         "\n"
 
-#: ../assistant_model_picker.lua:37
-msgid   "Fetching models..."
-msgstr  "Akirante modelojn..."
-
-#: ../assistant_model_picker.lua:61
-msgid   "Failed to fetch models (HTTP %1)."
-msgstr  "Malsukcesis akiri modelojn (HTTP %1)."
-
-#: ../assistant_model_picker.lua:68
-msgid   "Failed to decompress data: "
-msgstr  "Malsukcesis malpremi datumojn: "
-
-#: ../assistant_model_picker.lua:74
-msgid   "Failed to parse model list."
-msgstr  "Malsukcesis analizi modeloliston."
-
-#: ../assistant_model_picker.lua:132
+#: ../assistant_model_picker.lua:76
 msgid   "Models: %1 (filtered)"
 msgstr  "Modeloj: %1 (filtritaj)"
 
-#: ../assistant_model_picker.lua:134
+#: ../assistant_model_picker.lua:78
 msgid   "Models: %1"
 msgstr  "Modeloj: %1"
 
-#: ../assistant_model_picker.lua:137
+#: ../assistant_model_picker.lua:81
 msgid   " — p. %1/%2"
 msgstr  " — p. %1/%2"
 
-#: ../assistant_model_picker.lua:158 ../assistant_model_picker.lua:317
-msgid   "Search"
-msgstr  "Serĉi"
-
-#: ../assistant_model_picker.lua:174
+#: ../assistant_model_picker.lua:118
 msgid   "Manual"
 msgstr  "Manuala"
 
-#: ../assistant_model_picker.lua:178
+#: ../assistant_model_picker.lua:122
 msgid   "Reset"
 msgstr  "Restarigi"
 
-#: ../assistant_model_picker.lua:221 ../assistant_model_picker.lua:413
+#: ../assistant_model_picker.lua:165 ../assistant_model_picker.lua:357
 msgid   "Model: %1"
 msgstr  "Modelo: %1"
 
-#: ../assistant_model_picker.lua:233
+#: ../assistant_model_picker.lua:177
 msgid   "Filter: \"%1\""
 msgstr  "Filtrilo: \"%1\""
 
-#: ../assistant_model_picker.lua:235
+#: ../assistant_model_picker.lua:179
 msgid   "Select a model:"
 msgstr  "Elektu modelon:"
 
-#: ../assistant_model_picker.lua:303
+#: ../assistant_model_picker.lua:247
 msgid   "Search Models"
 msgstr  "Serĉi modelojn"
 
-#: ../assistant_model_picker.lua:342
+#: ../assistant_model_picker.lua:286
 msgid   "Model reset: %1"
 msgstr  "Modelo restarigita: %1"
 
-#: ../assistant_model_picker.lua:372
+#: ../assistant_model_picker.lua:316
 msgid   "No models matching \"%1\"."
 msgstr  "Neniuj modeloj kongruas kun \"%1\"."
 
-#: ../assistant_model_picker.lua:395
+#: ../assistant_model_picker.lua:339
 msgid   "Enter Model ID"
 msgstr  "Enigu Modelo-ID"
 
-#: ../assistant_model_picker.lua:397
+#: ../assistant_model_picker.lua:341
 msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "ekz. google/gemini-3.0-flash-exp:free"
 
-#: ../assistant_model_picker.lua:405 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:115 ../assistant_viewer.lua:450
+#: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
+#: ../assistant_settings.lua:118 ../assistant_viewer.lua:462
 msgid   "Save"
 msgstr  "Konservi"
 
-#: ../assistant_model_picker.lua:438
+#: ../assistant_model_picker.lua:377
 msgid   "No models available."
 msgstr  "Neniuj modeloj haveblaj."
 
-#: ../assistant_prompts.lua:24
+#: ../assistant_prompts.lua:27
+msgid   "🌐Term X-Ray"
+msgstr  "🌐Termo-Rentgenado"
+
+#: ../assistant_prompts.lua:30
 msgid   "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr  "Ĉi tiu demandosigno kreas strukturan sistemon por generi kuntekst-sentemajn difinojn de vortoj aŭ frazoj el literaturo, analizante la emfazitan terminon en ĝia ĉirkaŭa teksto por provizi nuancitajn klarigojn, kiuj kaptas kaj la laŭvortan signifon kaj la kuntekstan gravecon."
 
-#: ../assistant_prompts.lua:129
+#: ../assistant_prompts.lua:67
 msgid   "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr  "Ĉi tiu prompto agas kiel vortaro por la enŝovita teksto, al vorto aŭ frazo."
 
-#: ../assistant_prompts.lua:135 ../assistant_quicknote.lua:101
+#: ../assistant_prompts.lua:73 ../assistant_quicknote.lua:101
 msgid   "Quick Note"
 msgstr  "Rapida Noto"
 
-#: ../assistant_prompts.lua:136
+#: ../assistant_prompts.lua:74
 msgid   "This button creates a quick note with highlighted text."
 msgstr  "Ĉi tiu butono kreas rapidan noton kun emfazita teksto."
 
-#: ../assistant_prompts.lua:141
+#: ../assistant_prompts.lua:79
 msgid   "Vocabulary"
 msgstr  "Vokabularo"
 
-#: ../assistant_prompts.lua:144
+#: ../assistant_prompts.lua:83
 msgid   "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr  "Ĉi tiu prompto analiziĝas la vokabularon de la enŝovita teksto, identigante kompleksajn vortojn kaj provizante difinojn, sinonimojn kaj uzajn ekzemplojn."
 
-#: ../assistant_prompts.lua:161
+#: ../assistant_prompts.lua:100
 msgid   "Grammar"
 msgstr  "Gramatiko"
 
-#: ../assistant_prompts.lua:164
+#: ../assistant_prompts.lua:104
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "Ĉi tiu prompto analiziĝas la gramatikon de la enŝovita teksto, provizante detalajn klarigojn pri ĝia strukturo kaj eventuaj grammatika eraroj."
 
-#: ../assistant_prompts.lua:180
+#: ../assistant_prompts.lua:129
 msgid   "Translate"
 msgstr  "Traduki"
 
-#: ../assistant_prompts.lua:181
+#: ../assistant_prompts.lua:131
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "Ĉi tiu prompto tradukas la enŝovitan tekston al alia lingvo."
 
-#: ../assistant_prompts.lua:202
+#: ../assistant_prompts.lua:143
 msgid   "Summarize"
 msgstr  "Resumo"
 
-#: ../assistant_prompts.lua:204
+#: ../assistant_prompts.lua:146
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "Ĉi tiu prompto summarizas la enŝovitan tekston, kapte la ĉefajn punktojn kaj esencajn detalojn."
 
-#: ../assistant_prompts.lua:213
+#: ../assistant_prompts.lua:161
 msgid   "Simplify"
 msgstr  "Simpligi"
 
-#: ../assistant_prompts.lua:215
+#: ../assistant_prompts.lua:164
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "Ĉi tiu prompto simpligas la enŝovitan tekston por faciliĝi kompreneble."
 
-#: ../assistant_prompts.lua:226
+#: ../assistant_prompts.lua:178
 msgid   "Key Points"
 msgstr  "Ĉefpunktoj"
 
-#: ../assistant_prompts.lua:229
+#: ../assistant_prompts.lua:182
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "Ĉi tiu prompto ekstraktas kaj listigas la ĉefajn punktojn de la enŝovita teksto, certigante klaron kaj organizon."
 
-#: ../assistant_prompts.lua:241
+#: ../assistant_prompts.lua:204
 msgid   "ELI5"
 msgstr  "ELI5"
 
-#: ../assistant_prompts.lua:244
+#: ../assistant_prompts.lua:208
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "Ĉi tiu prompto klarigas la enŝovitan tekston kiel al kvinjarlingvo, simpligante kompleksajn konceptojn al facile kompreneblaj terminoj."
 
-#: ../assistant_prompts.lua:257
-msgid   "Explain"
-msgstr  "Ekplain"
+#: ../assistant_prompts.lua:229
+msgid   "🌐Explain"
+msgstr  "🌐Klarigi"
 
-#: ../assistant_prompts.lua:259
+#: ../assistant_prompts.lua:232
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Ĉi tiu prompto klarigas la enŝovitan tekston detalie, certigante klaron kaj komprenon."
 
-#: ../assistant_prompts.lua:270
-msgid   "Historical Context"
-msgstr  "Historio"
+#: ../assistant_prompts.lua:246
+msgid   "🌐Historical Context"
+msgstr  "🌐Historia Kunteksto"
 
-#: ../assistant_prompts.lua:273
+#: ../assistant_prompts.lua:250
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Ĉi tiu prompto provizas detalan historian kuntekston por la enŝovita teksto, klarigante ĝian signifon kaj fonon."
 
-#: ../assistant_prompts.lua:285 ../main.lua:816
-msgid   "Wikipedia"
-msgstr  "Vikipedio"
+#: ../assistant_prompts.lua:272
+msgid   "🌐Wikipedia"
+msgstr  "🌐Vikipedio"
 
-#: ../assistant_prompts.lua:288
+#: ../assistant_prompts.lua:276
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "Ĉi tiu prompto generas kompletan Vikipedio-stilan artikolon bazitan sur la enŝovita teksto, certigante fakturnaĵon kaj neutralon."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:544
+#: ../assistant_prompts.lua:507
 msgid   "Conjugation"
 msgstr  "Konjugado"
 
-#: ../assistant_prompts.lua:545
+#: ../assistant_prompts.lua:508
 msgid   "Synonyms"
 msgstr  "Sinonimoj"
 
-#: ../assistant_prompts.lua:546
+#: ../assistant_prompts.lua:509
 msgid   "Meaning"
 msgstr  "Signifo"
 
-#: ../assistant_prompts.lua:547
+#: ../assistant_prompts.lua:510
 msgid   "Translation"
 msgstr  "Traduko"
 
-#: ../assistant_prompts.lua:548
+#: ../assistant_prompts.lua:511
 msgid   "Book Usage"
 msgstr  "Libro-Uzo"
 
-#: ../assistant_prompts.lua:549
+#: ../assistant_prompts.lua:512
 msgid   "Example"
 msgstr  "Ekzemplo"
 
-#: ../assistant_prompts.lua:550
+#: ../assistant_prompts.lua:513
 msgid   "Word Origin"
 msgstr  "Vortorigino"
 
-#: ../assistant_prompts.lua:562
-msgid   "You may find these topics interesting:"
-msgstr  "Vi eble trovos ĉi tiujn temojn interesaj:"
-
-#: ../assistant_querier.lua:51
+#: ../assistant_querier.lua:97
 msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr  "Provizantaj agordoj ne trovitaj por: %1. Bonvolu kontroli vian dosieron configuration.lua."
 
-#: ../assistant_querier.lua:88
+#: ../assistant_querier.lua:105
+msgid   "Handler not found for: %1. Please check your configuration.lua file."
+msgstr  "Prilaborilo ne trovita por: %1. Bonvolu kontroli vian dosieron configuration.lua."
+
+#: ../assistant_querier.lua:115
 msgid   "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr  "Traktanto por %1 ne trovita. Certigu ke la traktanto ekzistas en la dosierujo api_handlers."
 
-#: ../assistant_querier.lua:121
+#: ../assistant_querier.lua:156
 msgid   "API Error:\n"
         "%1\n"
         "\n"
@@ -418,53 +433,76 @@ msgstr  "API-eraro:\n"
         "\n"
         "Provu alian provizanton en la agorda dialogo."
 
-#: ../assistant_querier.lua:121
+#: ../assistant_querier.lua:156
 msgid   "Unknown error"
 msgstr  "Nekonata eraro"
 
-#: ../assistant_querier.lua:122
+#: ../assistant_querier.lua:157
 msgid   "Settings"
 msgstr  "Agordoj"
 
-#: ../assistant_querier.lua:124 ../assistant_settings.lua:214
-#: ../assistant_viewer.lua:341
+#: ../assistant_querier.lua:159 ../assistant_settings.lua:219
+#: ../assistant_viewer.lua:353
 msgid   "Close"
 msgstr  "Fermi"
 
-#: ../assistant_querier.lua:171
+#: ../assistant_querier.lua:209
 msgid   "Plugin is not configured."
 msgstr  "Kromaĵo ne agordita."
 
-#: ../assistant_querier.lua:179
+#: ../assistant_querier.lua:301 ../assistant_querier.lua:400
+msgid   "Too many tool-call rounds; aborting."
+msgstr  "Tro da il-vokoj; oni ĉesigas."
+
+#: ../assistant_querier.lua:309
+msgid   "Stream failed with no error message."
+msgstr  "Fluo malsukcesis sen erarmesaĝo."
+
+#: ../assistant_querier.lua:326
+msgid   "Stream ended with no content and no tool calls."
+msgstr  "Fluo finiĝis sen enhavo kaj sen ilvokoj."
+
+#: ../assistant_querier.lua:373
+msgid   "Request Cancelled by user."
+msgstr  "Peto Nuligita de uzanto."
+
+#: ../assistant_querier.lua:382
 msgid   "Querying AI ..."
 msgstr  "Demando al AI..."
 
-#: ../assistant_querier.lua:222
-msgid   "AI is responding"
-msgstr  "AI respondu"
+#: ../assistant_querier.lua:438
+msgid   "Composing answer ..."
+msgstr  "Kompilanta respondon ..."
 
-#: ../assistant_querier.lua:241
-msgid   "⏹ Stop"
-msgstr  "⏹ Halti"
-
-#: ../assistant_querier.lua:300 ../assistant_querier.lua:312
+#: ../assistant_querier.lua:452 ../assistant_querier.lua:579
 msgid   "Request cancelled by user."
 msgstr  "Peto nuligita de uzanto."
 
-#: ../assistant_querier.lua:318
+#: ../assistant_querier.lua:459
 msgid   "No response received."
 msgstr  "Neniu respondo ricevita."
 
-#: ../assistant_querier.lua:331
+#: ../assistant_querier.lua:493
+msgid   "AI is responding"
+msgstr  "AI respondu"
+
+#: ../assistant_querier.lua:512
+msgid   "⏹ Stop"
+msgstr  "⏹ Halti"
+
+#: ../assistant_querier.lua:596
 msgid   "Failed to start subprocess for request"
 msgstr  "Malsukcesis lanĉi subprocezon por la peto"
 
-#: ../assistant_querier.lua:527 ../assistant_querier.lua:529
+#: ../assistant_querier.lua:796 ../assistant_querier.lua:799
 msgid   "Deeply Thought"
 msgstr  "Profunda Pensado"
 
-#: ../assistant_quicknote.lua:27 ../main.lua:101 ../main.lua:229
-#: ../main.lua:324
+#: ../assistant_querier.lua:986
+msgid   "Stopped Reason: "
+msgstr  "Ceso-kialo: "
+
+#: ../assistant_quicknote.lua:27 ../main.lua:102 ../main.lua:151
 msgid   "Take Quick Notes"
 msgstr  "Preni Rapidajn Notojn"
 
@@ -484,312 +522,320 @@ msgstr  "Uzanto:"
 msgid   "Quick note saved successfully"
 msgstr  "Rapida noto sukcese konserviĝis"
 
-#: ../assistant_settings.lua:75
+#: ../assistant_settings.lua:78
 msgid   "AI Response Language Setting"
 msgstr  "Agordo de lingvo de AI-respondo"
 
-#: ../assistant_settings.lua:78
+#: ../assistant_settings.lua:81
 msgid   "AI Response Language"
 msgstr  "IA-responda lingvo"
 
-#: ../assistant_settings.lua:80 ../assistant_settings.lua:85
+#: ../assistant_settings.lua:83 ../assistant_settings.lua:88
 msgid   "Leave blank to use: %1"
 msgstr  "Lasu malplena por uzi: %1"
 
-#: ../assistant_settings.lua:83
+#: ../assistant_settings.lua:86
 msgid   "Dictionary Language"
 msgstr  "Vortara lingvo"
 
-#: ../assistant_settings.lua:98
+#: ../assistant_settings.lua:101
 msgid   "Clear"
 msgstr  "Viŝi"
 
-#: ../assistant_settings.lua:145
+#: ../assistant_settings.lua:148
 msgid   "RTL written Language"
 msgstr  "Lingvo skribata dekstre-maldekstren"
 
-#: ../assistant_settings.lua:165
+#: ../assistant_settings.lua:168
 msgid   "Leave these fields blank to use the UI language: %1"
 msgstr  "Lasu ĉi tiujn kampojn malplenaj por uzi la interfacan lingvon: %1"
 
-#: ../assistant_settings.lua:176
-msgid   "AI Provider Settings"
-msgstr  "Agordoj de AI-Provizanto"
+#: ../assistant_settings.lua:179
+msgid   "AI Provider and Models"
+msgstr  "AI Provizanto kaj Modeloj"
 
-#: ../assistant_settings.lua:202
+#: ../assistant_settings.lua:205
 msgid   "Browse Models"
 msgstr  "Foliumi Modelojn"
 
-#: ../assistant_settings.lua:208
+#: ../assistant_settings.lua:213
 msgid   "Browse available models on OpenRouter"
 msgstr  "Foliumi disponeblajn modelojn ĉe OpenRouter"
 
-#: ../assistant_settings.lua:291
-msgid   "AI Model provider:"
-msgstr  "Provizanto de AI-modelo:"
+#: ../assistant_settings.lua:385
+msgid   "Builtin Tools Works ONLY with these models:\n"
+        "- Gemini-2.5/3\n"
+        "- OpenAI/gpt-4o-search\n"
+msgstr  "Enkonstruitaj Iloj Funkcias NUR kun ĉi tiuj modeloj:\n"
+        "- Gemini-2.5/3\n"
+        "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:374
-msgid   "Config Error: base_url"
-msgstr  "Agorda Eraro: base_url"
-
-#: ../assistant_settings.lua:391
+#: ../assistant_settings.lua:410
 msgid   "AI Language: "
 msgstr  "AI-Lingvo: "
 
-#: ../assistant_settings.lua:403
+#: ../assistant_settings.lua:422
 msgid   "AI Text Size: %1"
 msgstr  "AI-Teksta Grandeco: %1"
 
-#: ../assistant_settings.lua:407
+#: ../assistant_settings.lua:426
 msgid   "AI Response Text Font Size"
 msgstr  "Tipara Grandeco de AI-Responda Teksto"
 
-#: ../assistant_settings.lua:423
-msgid   "Stream Mode Settings"
-msgstr  "Agordoj de Flua Reĝimo"
+#: ../assistant_settings.lua:442
+msgid   "Response Settings"
+msgstr  "Respondo-Agordoj"
 
-#: ../assistant_settings.lua:426
-msgid   "Enable stream response"
-msgstr  "Ŝalti fluantan respondon"
+#: ../assistant_settings.lua:445
+msgid   "Enable Stream Response"
+msgstr  "Ebligi Fluan Respondon"
 
-#: ../assistant_settings.lua:434
-msgid   "Auto scroll stream response text"
-msgstr  "Aŭtomate rulumi fluantan respondan tekston"
+#: ../assistant_settings.lua:453
+msgid   "Stream Text Auto Scroll"
+msgstr  "Aŭtomata Rulumado de Flua Teksto"
 
-#: ../assistant_settings.lua:443
+#: ../assistant_settings.lua:462
 msgid   "Large Streaming Window"
 msgstr  "Granda Flua Fenestro"
 
+#: ../assistant_settings.lua:472
+msgid   "Show Reasoning Text"
+msgstr  "Montri Rezonan Tekston"
+
+#: ../assistant_settings.lua:480
+msgid   "Show deeply thought process (reasoning) from the AI response if exists."
+msgstr  "Montri profundan pensprocezon (rezonon) el la AI respondo, se ekzistas."
+
+#: ../assistant_settings.lua:485
+msgid   "Show Follow-up Questions"
+msgstr  "Montri Sekvajn Demandojn"
+
+#: ../assistant_settings.lua:493
+msgid   "Show follow up questions related to the response content."
+msgstr  "Montri sekvajn demandojn rilatajn al la respondo."
+
 #. @translators: functional overriding
-#: ../assistant_settings.lua:455
+#: ../assistant_settings.lua:501
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "Modifoj kaj Anstataŭigoj de KOReader"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:459
+#: ../assistant_settings.lua:505
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Uzi AI-Asistanton por 'Traduki'"
 
-#: ../assistant_settings.lua:470
+#: ../assistant_settings.lua:516
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Aŭtomata resumo ĉe malfermo de longe nelikitaj libroj"
 
-#: ../assistant_settings.lua:480
+#: ../assistant_settings.lua:526
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "AI-Resumo eblos la sekvan fojon kiam malfermiĝos longe nelikita libro."
 
-#: ../assistant_settings.lua:484
+#: ../assistant_settings.lua:530
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Montri Vortaron(IA) en la vortara ŝprucfenestro"
 
-#: ../assistant_settings.lua:492
+#: ../assistant_settings.lua:538
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Montri Vikipedion(IA) en la vortara ŝprucfenestro"
 
-#: ../assistant_settings.lua:500
+#: ../assistant_settings.lua:546
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Montri Terminan R-X(AI) en Vortara Ŝprucfenestro"
 
-#: ../assistant_settings.lua:508
+#: ../assistant_settings.lua:554
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Montri Proprajn Demandosignojn en Vortara Ŝprucfenestro"
 
-#: ../assistant_settings.lua:518
-msgid   "Show Follow-up Questions from AI"
-msgstr  "Montri Postsekvajn Demandojn de AI"
-
-#: ../assistant_settings.lua:526
+#: ../assistant_settings.lua:564
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kopii la demandon al la tondujo"
 
-#: ../assistant_settings.lua:534
+#: ../assistant_settings.lua:572
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Aŭtomate konservi konversaciojn en Notlibro"
 
-#: ../assistant_settings.lua:542
+#: ../assistant_settings.lua:580
 msgid   "Use book text for x-ray and recap"
 msgstr  "Uzi libran tekston por rentgeno kaj resumo"
 
-#: ../assistant_settings.lua:550
+#: ../assistant_settings.lua:588
 msgid   "Purge the settings"
 msgstr  "Forviŝi la agordojn"
 
-#: ../assistant_settings.lua:553 ../main.lua:741
-msgid   "Are you sure to purge the assistant plugin settings? \n"
-        "This resets the assistant plugin to the status the first time you installed it.\n"
+#: ../assistant_settings.lua:591
+msgid   "Purge assistant.koplugin settings?\n"
         "\n"
-        "configuration.lua is safe, only the settings are purged."
-msgstr  "Ĉu vi certas, ke vi volas forviŝi la agordojn de la asistanto-kromprogramo?\n"
-        "Tio reagordos la asistanto-kromprogramon al la stato de kiam vi unue instalis ĝin.\n"
+        "This restores the plugin to its factory defaults. Only settings will be removed; \n"
+        "File configuration.lua will be preserved."
+msgstr  "Ĉu forviŝi agordojn de assistant.koplugin?\n"
         "\n"
-        "configuration.lua estas sekura, nur la agordoj estas forviŝitaj."
+        "Tio restarigas la kromprogramon al ĝiaj fabrikaj defaŭltoj. Nur agordoj estos forigitaj; \n"
+        "Dosiero configuration.lua estos konservita."
 
-#: ../assistant_settings.lua:557 ../main.lua:745
+#: ../assistant_settings.lua:595 ../main.lua:681
 msgid   "Purge"
 msgstr  "Forviŝi"
 
-#: ../assistant_update_checker.lua:108
+#: ../assistant_tool_executor.lua:134
+msgid   "Search keywords are empty."
+msgstr  "Serĉvortoj estas malplenaj."
+
+#: ../assistant_tool_executor.lua:142
+msgid   "Searching with %1 ... [%2]\n"
+        "\n"
+        "%3"
+msgstr  "Serĉante per %1 ... [%2]\n"
+        "\n"
+        "%3"
+
+#: ../assistant_tool_executor.lua:297
+msgid   "Tool call did not include id."
+msgstr  "Ilvoko ne inkluzivis identigilon."
+
+#: ../assistant_tool_executor.lua:300
+msgid   "Tool call did not include search keywords."
+msgstr  "Ilvoko ne inkluzivis serĉvortojn."
+
+#: ../assistant_update_checker.lua:105
 msgid   "Checking for updates..."
 msgstr  "Kontrolas ĝisdatigojn..."
 
-#: ../assistant_update_checker.lua:127
+#: ../assistant_update_checker.lua:114
 msgid   "Update check canceled."
 msgstr  "Ĝisdatiga kontrolo nuligita."
 
-#: ../assistant_update_checker.lua:132
+#: ../assistant_update_checker.lua:118
 msgid   "Failed to check for updates. HTTP code: %1"
 msgstr  "Malsukcesis kontroli ĝisdatigojn. HTTP-kodo: %1"
 
-#: ../assistant_update_checker.lua:146
+#: ../assistant_update_checker.lua:124
 msgid   "Failed to parse update check response: %1"
 msgstr  "Malsukcesis analizi ĝisdatigan kontrolan respondon: %1"
 
-#: ../assistant_update_checker.lua:157
+#: ../assistant_update_checker.lua:135
 msgid   "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr  "Nova versio de la %1 kromaĵo (%2) estas disponebla. Bonvolu ĝisdatigi!"
 
-#: ../assistant_utils.lua:157
+#: ../assistant_utils.lua:169
 msgid   "Page"
 msgstr  "Paĝo"
 
-#: ../assistant_utils.lua:182
+#: ../assistant_utils.lua:194
 msgid   "Cannot access default folder for logs: %1\n"
         "Using original location."
 msgstr  "Ne eblas atingi la aprioran protokolan dosierujon: %1\n"
         "Uziĝas la originala loko."
 
-#: ../assistant_utils.lua:237
+#: ../assistant_utils.lua:249
 msgid   "Notebook save failed. Continuing..."
 msgstr  "Konservo de notlibro malsukcesis. Daŭrigante..."
 
+#: ../assistant_utils.lua:378
+msgid   "##### You may find these topics interesting:"
+msgstr  "##### Vi eble trovos ĉi tiujn temojn interesaj:"
+
+#: ../assistant_utils.lua:674
+msgid   "fetchJSON: failed to parse returned data"
+msgstr  "fetchJSON: malsukcesis analizi revenintajn datumojn"
+
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:741
+#: ../assistant_viewer.lua:313 ../assistant_viewer.lua:753
 msgid   "Ask Another Question"
 msgstr  "Demandu Alian"
 
-#: ../assistant_viewer.lua:356
+#: ../assistant_viewer.lua:368
 msgid   "Copy"
 msgstr  "Kopii"
 
-#: ../assistant_viewer.lua:361
+#: ../assistant_viewer.lua:373
 msgid   "Text copied to the clipboard"
 msgstr  "Teksto kopiita al tondejo"
 
-#: ../assistant_viewer.lua:375
+#: ../assistant_viewer.lua:387
 msgid   "Add Note"
 msgstr  "Aldoni noton"
 
-#: ../assistant_viewer.lua:382
+#: ../assistant_viewer.lua:394
 msgid   "Highlight functionality not available"
 msgstr  "Enŝovado ne disponebla"
 
-#: ../assistant_viewer.lua:391
+#: ../assistant_viewer.lua:403
 msgid   "No text to add as note"
 msgstr  "Neniu teksto por noti"
 
-#: ../assistant_viewer.lua:420
+#: ../assistant_viewer.lua:432
 msgid   "No text left to add as note"
 msgstr  "Neniu teksto pli por noti"
 
-#: ../assistant_viewer.lua:433
+#: ../assistant_viewer.lua:445
 msgid   "Note added successfully"
 msgstr  "Noto aldonita sukcese"
 
-#: ../assistant_viewer.lua:454
+#: ../assistant_viewer.lua:466
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Konversacio konservita en Notlibro"
 
-#: ../assistant_viewer.lua:573
+#: ../assistant_viewer.lua:585
 msgid   "Book Analysis"
 msgstr  "Libroanalizo"
 
-#: ../assistant_viewer.lua:573
+#: ../assistant_viewer.lua:585
 msgid   "General Conversation"
 msgstr  "Ĝenerala Konversacio"
 
-#: ../assistant_viewer.lua:743
+#: ../assistant_viewer.lua:755
 msgid   "Type your question here"
 msgstr  "Tajpu vian demandon ĉi tie"
 
-#: ../assistant_viewer.lua:912
+#: ../assistant_viewer.lua:924
 msgid   "Word copied to clipboard."
 msgstr  "Vorto kopita al tondejo."
 
-#: ../assistant_viewer.lua:913
+#: ../assistant_viewer.lua:925
 msgid   "Selection copied to clipboard."
 msgstr  "Selektita kopita al tondejo."
 
-#: ../main.lua:77 ../main.lua:145
+#: ../main.lua:78 ../main.lua:139
 msgid   "Ask the AI a question"
 msgstr  "Demandu la AI por demando"
 
-#: ../main.lua:85 ../main.lua:181
+#: ../main.lua:86
 msgid   "AI Recaps"
 msgstr  "AI-Recapŝo"
 
-#: ../main.lua:93 ../main.lua:170
+#: ../main.lua:94
 msgid   "AI X-Ray"
 msgstr  "AI X-Ray"
 
-#: ../main.lua:109 ../main.lua:159
+#: ../main.lua:110
 msgid   "Book Summary & Recs"
 msgstr  "Resumo kaj rekomendoj"
 
-#: ../main.lua:151
+#: ../main.lua:146
 msgid   "Enter a question to ask AI."
 msgstr  "Entajpu demandon por la AI."
 
-#: ../main.lua:156
-msgid   "Book-Level Built-in Prompts"
-msgstr  "Libro-Nivelaj Enkonstruitaj Demandosignoj"
-
-#: ../main.lua:165
-msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
-msgstr  "Resumo de la libro, biografio de la aŭtoro, historia kunteksto kaj listo de similaj rekomenditaj libroj kun priskriboj."
-
-#: ../main.lua:176
-msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
-msgstr  "„X-Ray”-resumo de la libro, dividita en sekciojn kiel Roluloj, Lokoj, Temoj, Terminoj & Konceptoj, Kronologio kaj Re-immersio."
-
-#: ../main.lua:187
-msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
-msgstr  "Mallonga, sen-spoiler-resumo de la libro ĝis la aktuala legoprogreso."
-
-#: ../main.lua:198
-msgid   "Analysis of your highlights, notes, and notebook content from the book."
-msgstr  "Analizo de viaj emfazoj, notoj kaj kajiera enhavo el la libro."
-
-#: ../main.lua:209
-msgid   "Summary of the book using your highlights and notes."
-msgstr  "Resumo de la libro uzante viajn emfazojn kaj notojn."
-
-#: ../main.lua:216
-msgid   "Book-Level Custom Prompts"
-msgstr  "Libro-Nivelaj Propraj Demandosignoj"
-
-#: ../main.lua:223
-msgid   "Includes user defined book level prompts from Config file"
-msgstr  "Inkluzivas uzante difinitajn libro-nivelajn demandosignojn el la agorda dosiero"
-
-#: ../main.lua:235 ../main.lua:330
+#: ../main.lua:157
 msgid   "Take quick notes that will be saved to your notebook."
 msgstr  "Prenu rapidajn notojn, kiuj konserviĝos en via notlibro."
 
-#: ../main.lua:240 ../main.lua:335
+#: ../main.lua:162
 msgid   "NoteBook (AI Conversation Log)"
 msgstr  "Kajiero (AI-Konversacia Protokolo)"
 
-#: ../main.lua:246 ../main.lua:342
+#: ../main.lua:168
 msgid   "Notebook file: \n"
         "\n"
 msgstr  "Notlibro-dosiero: \n"
         "\n"
 
-#: ../main.lua:247 ../main.lua:343
+#: ../main.lua:169
 msgid   "View"
 msgstr  "Vidi"
 
-#: ../main.lua:251 ../main.lua:347
+#: ../main.lua:173
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -797,11 +843,11 @@ msgstr  "Dosiero ne ekzistas.\n"
         "\n"
         "%1"
 
-#: ../main.lua:259 ../main.lua:263 ../main.lua:355 ../main.lua:359
+#: ../main.lua:181 ../main.lua:185
 msgid   "Delete"
 msgstr  "Forigi"
 
-#: ../main.lua:262 ../main.lua:358
+#: ../main.lua:184
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -809,57 +855,103 @@ msgstr  "Ĉu forigi dosieron?\n"
         "%1\n"
         "Ĉi tiu operacio ne estas malfarebla."
 
-#: ../main.lua:274 ../main.lua:370
+#: ../main.lua:196
 msgid   "Edit"
 msgstr  "Redakti"
 
-#: ../main.lua:286 ../main.lua:383
+#: ../main.lua:210
 msgid   "AI Provider: %1(%2)"
 msgstr  "AI Provizanto: %1(%2)"
 
-#: ../main.lua:287 ../main.lua:288 ../main.lua:384 ../main.lua:385
-msgid   "Not configured"
-msgstr  "Ne agordita"
+#: ../main.lua:223
+msgid   "Smart Web Search: %1"
+msgstr  "Inteligenta Reta Serĉo: %1"
 
-#: ../main.lua:299 ../main.lua:396
-msgid   "AI Assistant Settings"
-msgstr  "Agordoj de AI-Asistanto"
+#: ../main.lua:227
+msgid   "Improves response accuracy with real-time web results. \n"
+        "Note: Higher token usage and additional API charges apply."
+msgstr  "Plibonigas respondon-precizecon per realtempaj retaj rezultoj. \n"
+        "Notu: Pli alta uzado de ĵetonoj kaj aldonaj API-kostoj validas."
 
-#: ../main.lua:313
-msgid   "Ask a Question"
-msgstr  "Demandu demandon"
+#: ../main.lua:233
+msgid   "Other Settings"
+msgstr  "Aliaj Agordoj"
 
-#: ../main.lua:319
-msgid   "Ask a general question to the AI (not book-related)."
-msgstr  "Demandu ĝeneralan demandon al la AI (ne libro-rilatan)."
+#: ../main.lua:248
+msgid   "Book-Level Built-in Prompts"
+msgstr  "Libro-Nivelaj Enkonstruitaj Demandosignoj"
 
-#: ../main.lua:442
+#: ../main.lua:251
+msgid   "🌐Book Summary & Recs"
+msgstr  "🌐Libro-Resumo kaj Rekomendoj"
+
+#: ../main.lua:257
+msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
+msgstr  "Resumo de la libro, biografio de la aŭtoro, historia kunteksto kaj listo de similaj rekomenditaj libroj kun priskriboj."
+
+#: ../main.lua:262
+msgid   "🌐AI X-Ray"
+msgstr  "🌐AI Rentgenado"
+
+#: ../main.lua:268
+msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
+msgstr  "„X-Ray”-resumo de la libro, dividita en sekciojn kiel Roluloj, Lokoj, Temoj, Terminoj & Konceptoj, Kronologio kaj Re-immersio."
+
+#: ../main.lua:273
+msgid   "🌐AI Recaps"
+msgstr  "🌐AI Resumoj"
+
+#: ../main.lua:279
+msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
+msgstr  "Mallonga, sen-spoiler-resumo de la libro ĝis la aktuala legoprogreso."
+
+#: ../main.lua:290
+msgid   "Analysis of your highlights, notes, and notebook content from the book."
+msgstr  "Analizo de viaj emfazoj, notoj kaj kajiera enhavo el la libro."
+
+#: ../main.lua:295
+msgid   "🌐Summary Using Highlights & Notes"
+msgstr  "🌐Resumo Uzante Elstarigojn kaj Notojn"
+
+#: ../main.lua:301
+msgid   "Summary of the book using your highlights and notes."
+msgstr  "Resumo de la libro uzante viajn emfazojn kaj notojn."
+
+#: ../main.lua:308
+msgid   "Book-Level Custom Prompts"
+msgstr  "Libro-Nivelaj Propraj Demandosignoj"
+
+#: ../main.lua:315
+msgid   "Includes user defined book level prompts from Config file"
+msgstr  "Inkluzivas uzante difinitajn libro-nivelajn demandosignojn el la agorda dosiero"
+
+#: ../main.lua:388
 msgid   "This is a custom prompt"
 msgstr  "Ĉi tiu estas propra demandosigno"
 
-#: ../main.lua:452
+#: ../main.lua:398
 msgid   "No valid book-level custom prompt found"
 msgstr  "Neniu valida kutima instigilo por libro trovita"
 
-#: ../main.lua:457
+#: ../main.lua:403
 msgid   "For details, visit the 'Configuration' wiki page on github."
 msgstr  "Por detaloj, vizitu la 'Configuration' vikian paĝon en github."
 
-#: ../main.lua:550
+#: ../main.lua:486
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Ne troviĝis valida modelo-provizoro en configuration.lua"
 
-#: ../main.lua:568
+#: ../main.lua:504
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Agordo-erlato.\n"
         "Bonvolu agordi configuration.lua."
 
-#: ../main.lua:640
+#: ../main.lua:576
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: la modelo-provizoroj nevalidas."
 
-#: ../main.lua:718
+#: ../main.lua:654
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -891,33 +983,47 @@ msgstr  "Uzkonsiloj\n"
         "Plurŝovo (ekz., ⮠, ⮡, ↺):\n"
         "Sur la rezulta dialogo por fermi (ĉar la Fermi-butono estas malproksima).\n"
 
-#: ../main.lua:738
+#: ../main.lua:674
 msgid   "Purge Settings"
 msgstr  "Forviŝu agordojn"
 
-#: ../main.lua:792
+#: ../main.lua:677
+msgid   "Are you sure to purge the assistant plugin settings? \n"
+        "This resets the assistant plugin to the status the first time you installed it.\n"
+        "\n"
+        "configuration.lua is safe, only the settings are purged."
+msgstr  "Ĉu vi certas, ke vi volas forviŝi la agordojn de la asistanto-kromprogramo?\n"
+        "Tio reagordos la asistanto-kromprogramon al la stato de kiam vi unue instalis ĝin.\n"
+        "\n"
+        "configuration.lua estas sekura, nur la agordoj estas forviŝitaj."
+
+#: ../main.lua:728
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Ĉu forigi [%s] de la menuo de enŝovado?"
 
-#: ../main.lua:793
+#: ../main.lua:729
 msgid   "Remove"
 msgstr  "Forigi"
 
-#: ../main.lua:1032
+#: ../main.lua:752
+msgid   "Wikipedia"
+msgstr  "Vikipedio"
+
+#: ../main.lua:968
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Agordo ne trovita. Bonvolu antaŭe agordi configuration.lua."
 
-#: ../main.lua:1074
+#: ../main.lua:1010
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Aldonita [%1 (AI)] al menuo de enŝovado."
 
-#: ../main.lua:1083
+#: ../main.lua:1019
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Forigita [%s (AI)] de menuo de enŝovado."
 
-#: ../main.lua:1127
+#: ../main.lua:1063
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -925,16 +1031,16 @@ msgstr  "Ĉu vi volas AI-resumon?\n"
         "Por %1 de %2.\n"
         "\n"
 
-#: ../main.lua:1128
+#: ../main.lua:1064
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Legita antaŭ horo."
 msgstr[1]       "Legita antaŭ %1 horoj."
 
-#: ../main.lua:1133
+#: ../main.lua:1069
 msgid   "Yes"
 msgstr  "Jes"
 
-#: ../main.lua:1142
+#: ../main.lua:1078
 msgid   "No"
 msgstr  "Ne"

@@ -1,18 +1,18 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.08\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-05-28 17:24+0800\n"
+        "POT-Creation-Date: 2026-07-16 16:47+0800\n"
         "PO-Revision-Date: 2024-05-03 10:00+0700\n"
         "Last-Translator: [AI Model Version]\n"
         "Language-Team: [AI Translation Model Name]\n"
-        "Language: Vietnamese (vi)\n"
+        "Language: vi\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:457 ../main.lua:138 ../main.lua:309
-#: ../main.lua:606
+#: ../_meta.lua:4 ../assistant_dialog.lua:481 ../main.lua:332 ../main.lua:342
+#: ../main.lua:542
 msgid   "AI Assistant"
 msgstr  "Trợ lý AI"
 
@@ -20,74 +20,97 @@ msgstr  "Trợ lý AI"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 Nâng cao trải nghiệm KOReader với AI"
 
-#: ../assistant_dialog.lua:105
-msgid   "(Empty message)"
-msgstr  "(Tin nhắn trống)"
+#: ../api_handlers/anthropic.lua:23 ../api_handlers/gemini.lua:27
+#: ../api_handlers/openai.lua:37
+msgid   "Fetching models..."
+msgstr  "Đang tải mô hình..."
 
-#: ../assistant_dialog.lua:116
+#: ../api_handlers/anthropic.lua:40 ../api_handlers/gemini.lua:37
+#: ../api_handlers/gemini.lua:47 ../api_handlers/openai.lua:53
+msgid   "Failed to fetch models"
+msgstr  "Không thể tải danh sách mô hình"
+
+#: ../assistant_dialog.lua:92
+msgid   "### ☺ Question\n"
+msgstr  "### ☺ Câu hỏi\n"
+
+#: ../assistant_dialog.lua:134 ../assistant_model_picker.lua:102
+#: ../assistant_model_picker.lua:261
+msgid   "Search"
+msgstr  "Tìm kiếm"
+
+#: ../assistant_dialog.lua:137
+msgid   "Response"
+msgstr  "Phản hồi"
+
+#: ../assistant_dialog.lua:138
 msgid   "(No response)"
 msgstr  "(Không phản hồi)"
 
-#: ../assistant_dialog.lua:148 ../assistant_quicknote.lua:99
-#: ../assistant_viewer.lua:569
+#: ../assistant_dialog.lua:175 ../assistant_quicknote.lua:99
+#: ../assistant_viewer.lua:581
 msgid   "Highlighted text:"
 msgstr  "Văn bản đã bôi:"
 
-#: ../assistant_dialog.lua:313 ../assistant_dictdialog.lua:161
-#: ../assistant_model_picker.lua:183 ../assistant_model_picker.lua:308
-#: ../assistant_model_picker.lua:400 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:91 ../assistant_viewer.lua:670
+#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
+#: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
+#: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
+#: ../assistant_settings.lua:94 ../assistant_viewer.lua:682
 msgid   "Cancel"
 msgstr  "Hủy"
 
-#: ../assistant_dialog.lua:320 ../assistant_viewer.lua:680
+#: ../assistant_dialog.lua:344 ../assistant_viewer.lua:692
 msgid   "Ask"
 msgstr  "Hỏi"
 
-#: ../assistant_dialog.lua:333 ../assistant_viewer.lua:686
+#: ../assistant_dialog.lua:357 ../assistant_viewer.lua:698
 msgid   "Enter a question before proceeding."
 msgstr  "Nhập câu hỏi trước khi tiếp tục."
 
-#: ../assistant_dialog.lua:420
+#: ../assistant_dialog.lua:444
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Thêm nút này vào Menu Bôi?"
 
-#: ../assistant_dialog.lua:421
+#: ../assistant_dialog.lua:445
 msgid   "Add"
 msgstr  "Thêm"
 
-#: ../assistant_dialog.lua:448
+#: ../assistant_dialog.lua:472
 msgid   "Ask a question about the highlighted text"
 msgstr  "Đặt câu hỏi về văn bản đã bôi"
 
-#: ../assistant_dialog.lua:449
+#: ../assistant_dialog.lua:473
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Đặt câu hỏi về cuốn sách này:\n"
         "%s của %s"
 
-#: ../assistant_dialog.lua:450
+#: ../assistant_dialog.lua:474
 msgid   "Ask a general question"
 msgstr  "Đặt câu hỏi chung"
 
-#: ../assistant_dialog.lua:452
+#: ../assistant_dialog.lua:476
 msgid   "Type your question here..."
 msgstr  "Nhập câu hỏi tại đây..."
 
-#: ../assistant_dialog.lua:453
+#: ../assistant_dialog.lua:477
 msgid   "Ask anything about this book..."
 msgstr  "Hỏi bất kỳ điều gì về cuốn sách này..."
 
-#: ../assistant_dialog.lua:454
+#: ../assistant_dialog.lua:478
 msgid   "Ask anything..."
 msgstr  "Hỏi bất cứ điều gì..."
 
-#: ../assistant_dialog.lua:478
+#: ../assistant_dialog.lua:502
 msgid   "Use book text as context"
 msgstr  "Dùng văn bản sách làm ngữ cảnh"
 
-#: ../assistant_dialog.lua:541
+#: ../assistant_dialog.lua:552
+msgid   "Loading for %1 ..."
+msgstr  "Đang tải cho %1 ..."
+
+#: ../assistant_dialog.lua:565
 msgid   "Error: No response received"
 msgstr  "Lỗi: Không nhận được phản hồi"
 
@@ -107,7 +130,7 @@ msgstr  "Tra cứu"
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Đang phân tích ngữ cảnh sách cho Term X-Ray..."
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:21 ../main.lua:833
+#: ../assistant_dictdialog.lua:390 ../main.lua:769
 msgid   "Term X-Ray"
 msgstr  "X-Quang Thuật ngữ"
 
@@ -115,13 +138,21 @@ msgstr  "X-Quang Thuật ngữ"
 msgid   "Loading Term X-Ray ..."
 msgstr  "Đang tải X-Quang Thuật ngữ..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:128 ../main.lua:849
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:65 ../main.lua:785
 msgid   "Dictionary"
 msgstr  "Từ điển"
 
 #: ../assistant_dictdialog.lua:409
 msgid   "Loading AI Dictionary ..."
 msgstr  "Đang tải Từ điển AI..."
+
+#: ../assistant_exttools.lua:262
+msgid   "None"
+msgstr  "Không"
+
+#: ../assistant_exttools.lua:263
+msgid   "Model Built-In"
+msgstr  "Mô hình tích hợp sẵn"
 
 #: ../assistant_featuredialog.lua:40
 msgid   "Custom Prompt"
@@ -131,52 +162,52 @@ msgstr  "Lệnh tùy chỉnh"
 msgid   "Loading..."
 msgstr  "Đang tải..."
 
-#: ../assistant_featuredialog.lua:61
-msgid   "Recap"
-msgstr  "Tóm tắt"
-
 #: ../assistant_featuredialog.lua:62
+msgid   "🌐Recap"
+msgstr  "🌐Tóm tắt"
+
+#: ../assistant_featuredialog.lua:63
 msgid   "Loading Recap..."
 msgstr  "Đang tải Tóm tắt..."
 
-#: ../assistant_featuredialog.lua:67
+#: ../assistant_featuredialog.lua:68
 msgid   "X‑Ray"
 msgstr  "X‑Ray"
 
-#: ../assistant_featuredialog.lua:68
+#: ../assistant_featuredialog.lua:69
 msgid   "Loading X-Ray..."
 msgstr  "Đang tải X-Ray..."
 
-#: ../assistant_featuredialog.lua:73
-msgid   "Book Information"
-msgstr  "Thông tin sách"
-
 #: ../assistant_featuredialog.lua:74
+msgid   "🌐Book Information"
+msgstr  "🌐Thông tin sách"
+
+#: ../assistant_featuredialog.lua:75
 msgid   "Loading Book Information..."
 msgstr  "Đang tải thông tin sách..."
 
-#: ../assistant_featuredialog.lua:79 ../main.lua:117 ../main.lua:192
+#: ../assistant_featuredialog.lua:80 ../main.lua:118 ../main.lua:284
 msgid   "Highlight & Note Analysis"
 msgstr  "Phân tích Đánh dấu & Ghi chú"
 
-#: ../assistant_featuredialog.lua:80
+#: ../assistant_featuredialog.lua:81
 msgid   "Loading Highlight & Note Analysis..."
 msgstr  "Đang tải Phân tích Đánh dấu & Ghi chú..."
 
-#: ../assistant_featuredialog.lua:85 ../main.lua:125 ../main.lua:203
+#: ../assistant_featuredialog.lua:86 ../main.lua:126
 msgid   "Summary Using Highlights & Notes"
 msgstr  "Tóm tắt bằng Đánh dấu & Ghi chú"
 
-#: ../assistant_featuredialog.lua:86
+#: ../assistant_featuredialog.lua:87
 msgid   "Loading Summary Using Highlights & Notes..."
 msgstr  "Đang tải Tóm tắt bằng Đánh dấu & Ghi chú..."
 
-#: ../assistant_featuredialog.lua:97
+#: ../assistant_featuredialog.lua:98
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "Loại tính năng không rõ: %s"
 
-#: ../assistant_featuredialog.lua:171
+#: ../assistant_featuredialog.lua:181
 msgid   " - Title : %1\n"
         " - Author: %2\n"
         " - Reading progress: %3%\n"
@@ -190,225 +221,209 @@ msgstr  " - Tiêu đề : %1\n"
         "-----\n"
         "\n"
 
-#: ../assistant_model_picker.lua:37
-msgid   "Fetching models..."
-msgstr  "Đang tải mô hình..."
-
-#: ../assistant_model_picker.lua:61
-msgid   "Failed to fetch models (HTTP %1)."
-msgstr  "Không thể tải mô hình (HTTP %1)."
-
-#: ../assistant_model_picker.lua:68
-msgid   "Failed to decompress data: "
-msgstr  "Không thể giải nén dữ liệu: "
-
-#: ../assistant_model_picker.lua:74
-msgid   "Failed to parse model list."
-msgstr  "Không thể phân tích danh sách mô hình."
-
-#: ../assistant_model_picker.lua:132
+#: ../assistant_model_picker.lua:76
 msgid   "Models: %1 (filtered)"
 msgstr  "Mô hình: %1 (đã lọc)"
 
-#: ../assistant_model_picker.lua:134
+#: ../assistant_model_picker.lua:78
 msgid   "Models: %1"
 msgstr  "Mô hình: %1"
 
-#: ../assistant_model_picker.lua:137
+#: ../assistant_model_picker.lua:81
 msgid   " — p. %1/%2"
 msgstr  " — tr. %1/%2"
 
-#: ../assistant_model_picker.lua:158 ../assistant_model_picker.lua:317
-msgid   "Search"
-msgstr  "Tìm kiếm"
-
-#: ../assistant_model_picker.lua:174
+#: ../assistant_model_picker.lua:118
 msgid   "Manual"
 msgstr  "Hướng dẫn"
 
-#: ../assistant_model_picker.lua:178
+#: ../assistant_model_picker.lua:122
 msgid   "Reset"
 msgstr  "Đặt lại"
 
-#: ../assistant_model_picker.lua:221 ../assistant_model_picker.lua:413
+#: ../assistant_model_picker.lua:165 ../assistant_model_picker.lua:357
 msgid   "Model: %1"
 msgstr  "Mô hình: %1"
 
-#: ../assistant_model_picker.lua:233
+#: ../assistant_model_picker.lua:177
 msgid   "Filter: \"%1\""
 msgstr  "Bộ lọc: \"%1\""
 
-#: ../assistant_model_picker.lua:235
+#: ../assistant_model_picker.lua:179
 msgid   "Select a model:"
 msgstr  "Chọn một mô hình:"
 
-#: ../assistant_model_picker.lua:303
+#: ../assistant_model_picker.lua:247
 msgid   "Search Models"
 msgstr  "Tìm kiếm mô hình"
 
-#: ../assistant_model_picker.lua:342
+#: ../assistant_model_picker.lua:286
 msgid   "Model reset: %1"
 msgstr  "Đã đặt lại mô hình: %1"
 
-#: ../assistant_model_picker.lua:372
+#: ../assistant_model_picker.lua:316
 msgid   "No models matching \"%1\"."
 msgstr  "Không có mô hình phù hợp \"%1\"."
 
-#: ../assistant_model_picker.lua:395
+#: ../assistant_model_picker.lua:339
 msgid   "Enter Model ID"
 msgstr  "Nhập ID mô hình"
 
-#: ../assistant_model_picker.lua:397
+#: ../assistant_model_picker.lua:341
 msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "vd: google/gemini-3.0-flash-exp:free"
 
-#: ../assistant_model_picker.lua:405 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:115 ../assistant_viewer.lua:450
+#: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
+#: ../assistant_settings.lua:118 ../assistant_viewer.lua:462
 msgid   "Save"
 msgstr  "Lưu"
 
-#: ../assistant_model_picker.lua:438
+#: ../assistant_model_picker.lua:377
 msgid   "No models available."
 msgstr  "Không có mô hình khả dụng."
 
-#: ../assistant_prompts.lua:24
+#: ../assistant_prompts.lua:27
+msgid   "🌐Term X-Ray"
+msgstr  "🌐Thuật ngữ X-Ray"
+
+#: ../assistant_prompts.lua:30
 msgid   "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr  "Lệnh này tạo hệ thống có cấu trúc để sinh định nghĩa theo ngữ cảnh cho từ hoặc cụm từ trong văn học, bằng cách phân tích thuật ngữ được đánh dấu trong văn bản xung quanh nhằm đưa ra lời giải thích tinh tế, thể hiện cả nghĩa đen lẫn ý nghĩa ngữ cảnh."
 
-#: ../assistant_prompts.lua:129
+#: ../assistant_prompts.lua:67
 msgid   "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr  "Lệnh này hoạt động như từ điển cho văn bản đã bôi, cho từ hoặc cụm từ."
 
-#: ../assistant_prompts.lua:135 ../assistant_quicknote.lua:101
+#: ../assistant_prompts.lua:73 ../assistant_quicknote.lua:101
 msgid   "Quick Note"
 msgstr  "Ghi chú nhanh"
 
-#: ../assistant_prompts.lua:136
+#: ../assistant_prompts.lua:74
 msgid   "This button creates a quick note with highlighted text."
 msgstr  "Nút này tạo ghi chú nhanh với văn bản được đánh dấu."
 
-#: ../assistant_prompts.lua:141
+#: ../assistant_prompts.lua:79
 msgid   "Vocabulary"
 msgstr  "Từ vựng"
 
-#: ../assistant_prompts.lua:144
+#: ../assistant_prompts.lua:83
 msgid   "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr  "Lệnh này phân tích từ vựng trong văn bản đã bôi, xác định từ khó và cung cấp định nghĩa, từ đồng nghĩa và ví dụ sử dụng."
 
-#: ../assistant_prompts.lua:161
+#: ../assistant_prompts.lua:100
 msgid   "Grammar"
 msgstr  "Ngữ pháp"
 
-#: ../assistant_prompts.lua:164
+#: ../assistant_prompts.lua:104
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "Lệnh này phân tích ngữ pháp của văn bản đã bôi, cung cấp giải thích chi tiết về cấu trúc và lỗi ngữ pháp nếu có."
 
-#: ../assistant_prompts.lua:180
+#: ../assistant_prompts.lua:129
 msgid   "Translate"
 msgstr  "Dịch"
 
-#: ../assistant_prompts.lua:181
+#: ../assistant_prompts.lua:131
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "Lệnh này dịch văn bản đã bôi sang ngôn ngữ khác."
 
-#: ../assistant_prompts.lua:202
+#: ../assistant_prompts.lua:143
 msgid   "Summarize"
 msgstr  "Tóm tắt"
 
-#: ../assistant_prompts.lua:204
+#: ../assistant_prompts.lua:146
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "Lệnh này tóm tắt văn bản đã bôi, nắm bắt ý chính và chi tiết quan trọng."
 
-#: ../assistant_prompts.lua:213
+#: ../assistant_prompts.lua:161
 msgid   "Simplify"
 msgstr  "Đơn giản hóa"
 
-#: ../assistant_prompts.lua:215
+#: ../assistant_prompts.lua:164
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "Lệnh này đơn giản hóa văn bản đã bôi để dễ hiểu hơn."
 
-#: ../assistant_prompts.lua:226
+#: ../assistant_prompts.lua:178
 msgid   "Key Points"
 msgstr  "Ý chính"
 
-#: ../assistant_prompts.lua:229
+#: ../assistant_prompts.lua:182
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "Lệnh này trích xuất và liệt kê ý chính từ văn bản đã bôi, đảm bảo rõ ràng và có tổ chức."
 
-#: ../assistant_prompts.lua:241
+#: ../assistant_prompts.lua:204
 msgid   "ELI5"
 msgstr  "Giải thích như cho trẻ 5 tuổi"
 
-#: ../assistant_prompts.lua:244
+#: ../assistant_prompts.lua:208
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "Lệnh này giải thích văn bản đã bôi như cho trẻ 5 tuổi, đơn giản hóa khái niệm phức tạp thành dễ hiểu."
 
-#: ../assistant_prompts.lua:257
-msgid   "Explain"
-msgstr  "Giải thích"
+#: ../assistant_prompts.lua:229
+msgid   "🌐Explain"
+msgstr  "🌐Giải thích"
 
-#: ../assistant_prompts.lua:259
+#: ../assistant_prompts.lua:232
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Lệnh này giải thích chi tiết văn bản đã bôi, đảm bảo rõ ràng và dễ hiểu."
 
-#: ../assistant_prompts.lua:270
-msgid   "Historical Context"
-msgstr  "Bối cảnh lịch sử"
+#: ../assistant_prompts.lua:246
+msgid   "🌐Historical Context"
+msgstr  "🌐Bối cảnh lịch sử"
 
-#: ../assistant_prompts.lua:273
+#: ../assistant_prompts.lua:250
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Lệnh này cung cấp bối cảnh lịch sử chi tiết cho văn bản đã bôi, giải thích ý nghĩa và nền tảng."
 
-#: ../assistant_prompts.lua:285 ../main.lua:816
-msgid   "Wikipedia"
-msgstr  "Wikipedia"
+#: ../assistant_prompts.lua:272
+msgid   "🌐Wikipedia"
+msgstr  "🌐Wikipedia"
 
-#: ../assistant_prompts.lua:288
+#: ../assistant_prompts.lua:276
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "Lệnh này tạo bài viết dạng Wikipedia toàn diện dựa trên văn bản đã bôi, đảm bảo chính xác và trung lập."
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:544
+#: ../assistant_prompts.lua:507
 msgid   "Conjugation"
 msgstr  "Cách chia"
 
-#: ../assistant_prompts.lua:545
+#: ../assistant_prompts.lua:508
 msgid   "Synonyms"
 msgstr  "Từ đồng nghĩa"
 
-#: ../assistant_prompts.lua:546
+#: ../assistant_prompts.lua:509
 msgid   "Meaning"
 msgstr  "Nghĩa"
 
-#: ../assistant_prompts.lua:547
+#: ../assistant_prompts.lua:510
 msgid   "Translation"
 msgstr  "Bản dịch"
 
-#: ../assistant_prompts.lua:548
+#: ../assistant_prompts.lua:511
 msgid   "Book Usage"
 msgstr  "Sử dụng sách"
 
-#: ../assistant_prompts.lua:549
+#: ../assistant_prompts.lua:512
 msgid   "Example"
 msgstr  "Ví dụ"
 
-#: ../assistant_prompts.lua:550
+#: ../assistant_prompts.lua:513
 msgid   "Word Origin"
 msgstr  "Nguồn gốc từ"
 
-#: ../assistant_prompts.lua:562
-msgid   "You may find these topics interesting:"
-msgstr  "Bạn có thể thấy những chủ đề này thú vị:"
-
-#: ../assistant_querier.lua:51
+#: ../assistant_querier.lua:97
 msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr  "Không tìm thấy cài đặt nhà cung cấp cho: %1. Vui lòng kiểm tra file configuration.lua."
 
-#: ../assistant_querier.lua:88
+#: ../assistant_querier.lua:105
+msgid   "Handler not found for: %1. Please check your configuration.lua file."
+msgstr  "Không tìm thấy trình xử lý cho: %1. Vui lòng kiểm tra tệp configuration.lua của bạn."
+
+#: ../assistant_querier.lua:115
 msgid   "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr  "Không tìm thấy trình xử lý cho %1. Vui lòng đảm bảo trình xử lý tồn tại trong thư mục api_handlers."
 
-#: ../assistant_querier.lua:121
+#: ../assistant_querier.lua:156
 msgid   "API Error:\n"
         "%1\n"
         "\n"
@@ -418,53 +433,76 @@ msgstr  "Lỗi API:\n"
         "\n"
         "Thử nhà cung cấp khác trong hộp thoại cài đặt."
 
-#: ../assistant_querier.lua:121
+#: ../assistant_querier.lua:156
 msgid   "Unknown error"
 msgstr  "Lỗi không xác định"
 
-#: ../assistant_querier.lua:122
+#: ../assistant_querier.lua:157
 msgid   "Settings"
 msgstr  "Cài đặt"
 
-#: ../assistant_querier.lua:124 ../assistant_settings.lua:214
-#: ../assistant_viewer.lua:341
+#: ../assistant_querier.lua:159 ../assistant_settings.lua:219
+#: ../assistant_viewer.lua:353
 msgid   "Close"
 msgstr  "Đóng"
 
-#: ../assistant_querier.lua:171
+#: ../assistant_querier.lua:209
 msgid   "Plugin is not configured."
 msgstr  "Plugin chưa được cấu hình."
 
-#: ../assistant_querier.lua:179
+#: ../assistant_querier.lua:301 ../assistant_querier.lua:400
+msgid   "Too many tool-call rounds; aborting."
+msgstr  "Quá nhiều vòng gọi công cụ; đang hủy bỏ."
+
+#: ../assistant_querier.lua:309
+msgid   "Stream failed with no error message."
+msgstr  "Luồng thất bại mà không có thông báo lỗi."
+
+#: ../assistant_querier.lua:326
+msgid   "Stream ended with no content and no tool calls."
+msgstr  "Luồng kết thúc mà không có nội dung và không có lệnh gọi công cụ."
+
+#: ../assistant_querier.lua:373
+msgid   "Request Cancelled by user."
+msgstr  "Yêu cầu đã bị người dùng hủy."
+
+#: ../assistant_querier.lua:382
 msgid   "Querying AI ..."
 msgstr  "Đang truy vấn AI..."
 
-#: ../assistant_querier.lua:222
-msgid   "AI is responding"
-msgstr  "AI đang trả lời"
+#: ../assistant_querier.lua:438
+msgid   "Composing answer ..."
+msgstr  "Đang soạn câu trả lời ..."
 
-#: ../assistant_querier.lua:241
-msgid   "⏹ Stop"
-msgstr  "⏹ Dừng"
-
-#: ../assistant_querier.lua:300 ../assistant_querier.lua:312
+#: ../assistant_querier.lua:452 ../assistant_querier.lua:579
 msgid   "Request cancelled by user."
 msgstr  "Yêu cầu đã bị người dùng hủy."
 
-#: ../assistant_querier.lua:318
+#: ../assistant_querier.lua:459
 msgid   "No response received."
 msgstr  "Không nhận được phản hồi."
 
-#: ../assistant_querier.lua:331
+#: ../assistant_querier.lua:493
+msgid   "AI is responding"
+msgstr  "AI đang trả lời"
+
+#: ../assistant_querier.lua:512
+msgid   "⏹ Stop"
+msgstr  "⏹ Dừng"
+
+#: ../assistant_querier.lua:596
 msgid   "Failed to start subprocess for request"
 msgstr  "Không thể khởi động tiến trình cho yêu cầu"
 
-#: ../assistant_querier.lua:527 ../assistant_querier.lua:529
+#: ../assistant_querier.lua:796 ../assistant_querier.lua:799
 msgid   "Deeply Thought"
 msgstr  "Suy nghĩ kỹ"
 
-#: ../assistant_quicknote.lua:27 ../main.lua:101 ../main.lua:229
-#: ../main.lua:324
+#: ../assistant_querier.lua:986
+msgid   "Stopped Reason: "
+msgstr  "Lý do dừng: "
+
+#: ../assistant_quicknote.lua:27 ../main.lua:102 ../main.lua:151
 msgid   "Take Quick Notes"
 msgstr  "Tạo ghi chú nhanh"
 
@@ -484,312 +522,320 @@ msgstr  "Người dùng:"
 msgid   "Quick note saved successfully"
 msgstr  "Đã lưu ghi chú nhanh thành công"
 
-#: ../assistant_settings.lua:75
+#: ../assistant_settings.lua:78
 msgid   "AI Response Language Setting"
 msgstr  "Cài đặt ngôn ngữ phản hồi AI"
 
-#: ../assistant_settings.lua:78
+#: ../assistant_settings.lua:81
 msgid   "AI Response Language"
 msgstr  "Ngôn ngữ phản hồi AI"
 
-#: ../assistant_settings.lua:80 ../assistant_settings.lua:85
+#: ../assistant_settings.lua:83 ../assistant_settings.lua:88
 msgid   "Leave blank to use: %1"
 msgstr  "Để trống để dùng: %1"
 
-#: ../assistant_settings.lua:83
+#: ../assistant_settings.lua:86
 msgid   "Dictionary Language"
 msgstr  "Ngôn ngữ từ điển"
 
-#: ../assistant_settings.lua:98
+#: ../assistant_settings.lua:101
 msgid   "Clear"
 msgstr  "Xóa"
 
-#: ../assistant_settings.lua:145
+#: ../assistant_settings.lua:148
 msgid   "RTL written Language"
 msgstr  "Ngôn ngữ viết RTL"
 
-#: ../assistant_settings.lua:165
+#: ../assistant_settings.lua:168
 msgid   "Leave these fields blank to use the UI language: %1"
 msgstr  "Để trống các trường này để dùng ngôn ngữ giao diện: %1"
 
-#: ../assistant_settings.lua:176
-msgid   "AI Provider Settings"
-msgstr  "Cài đặt nhà cung cấp AI"
+#: ../assistant_settings.lua:179
+msgid   "AI Provider and Models"
+msgstr  "Nhà cung cấp AI và Mô hình"
 
-#: ../assistant_settings.lua:202
+#: ../assistant_settings.lua:205
 msgid   "Browse Models"
 msgstr  "Duyệt Mô hình"
 
-#: ../assistant_settings.lua:208
+#: ../assistant_settings.lua:213
 msgid   "Browse available models on OpenRouter"
 msgstr  "Duyệt các mô hình khả dụng trên OpenRouter"
 
-#: ../assistant_settings.lua:291
-msgid   "AI Model provider:"
-msgstr  "Nhà cung cấp mô hình AI:"
+#: ../assistant_settings.lua:385
+msgid   "Builtin Tools Works ONLY with these models:\n"
+        "- Gemini-2.5/3\n"
+        "- OpenAI/gpt-4o-search\n"
+msgstr  "Công cụ tích hợp CHỈ hoạt động với các mô hình sau:\n"
+        "- Gemini-2.5/3\n"
+        "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:374
-msgid   "Config Error: base_url"
-msgstr  "Lỗi cấu hình: base_url"
-
-#: ../assistant_settings.lua:391
+#: ../assistant_settings.lua:410
 msgid   "AI Language: "
 msgstr  "Ngôn ngữ AI: "
 
-#: ../assistant_settings.lua:403
+#: ../assistant_settings.lua:422
 msgid   "AI Text Size: %1"
 msgstr  "Cỡ chữ AI: %1"
 
-#: ../assistant_settings.lua:407
+#: ../assistant_settings.lua:426
 msgid   "AI Response Text Font Size"
 msgstr  "Cỡ phông chữ phản hồi AI"
 
-#: ../assistant_settings.lua:423
-msgid   "Stream Mode Settings"
-msgstr  "Cài đặt chế độ truyền dữ liệu"
+#: ../assistant_settings.lua:442
+msgid   "Response Settings"
+msgstr  "Cài đặt phản hồi"
 
-#: ../assistant_settings.lua:426
-msgid   "Enable stream response"
-msgstr  "Bật trả lời theo luồng"
+#: ../assistant_settings.lua:445
+msgid   "Enable Stream Response"
+msgstr  "Bật phản hồi luồng"
 
-#: ../assistant_settings.lua:434
-msgid   "Auto scroll stream response text"
-msgstr  "Tự động cuộn văn bản phản hồi"
+#: ../assistant_settings.lua:453
+msgid   "Stream Text Auto Scroll"
+msgstr  "Tự động cuộn văn bản luồng"
 
-#: ../assistant_settings.lua:443
+#: ../assistant_settings.lua:462
 msgid   "Large Streaming Window"
 msgstr  "Cửa sổ truyền dữ liệu lớn"
 
+#: ../assistant_settings.lua:472
+msgid   "Show Reasoning Text"
+msgstr  "Hiển thị văn bản lý luận"
+
+#: ../assistant_settings.lua:480
+msgid   "Show deeply thought process (reasoning) from the AI response if exists."
+msgstr  "Hiển thị quy trình suy nghĩ sâu (lý luận) từ phản hồi AI nếu có."
+
+#: ../assistant_settings.lua:485
+msgid   "Show Follow-up Questions"
+msgstr  "Hiển thị câu hỏi tiếp theo"
+
+#: ../assistant_settings.lua:493
+msgid   "Show follow up questions related to the response content."
+msgstr  "Hiển thị các câu hỏi tiếp theo liên quan đến nội dung phản hồi."
+
 #. @translators: functional overriding
-#: ../assistant_settings.lua:455
+#: ../assistant_settings.lua:501
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "Tinh chỉnh & Ghi đè KOReader"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:459
+#: ../assistant_settings.lua:505
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Dùng Trợ lý AI cho 'Dịch'"
 
-#: ../assistant_settings.lua:470
+#: ../assistant_settings.lua:516
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Tự động tóm tắt khi mở sách đã lâu chưa đọc"
 
-#: ../assistant_settings.lua:480
+#: ../assistant_settings.lua:526
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "Tóm tắt AI sẽ được bật lần tới khi mở sách đã lâu chưa đọc."
 
-#: ../assistant_settings.lua:484
+#: ../assistant_settings.lua:530
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Hiện Từ điển(AI) trong cửa sổ Từ điển"
 
-#: ../assistant_settings.lua:492
+#: ../assistant_settings.lua:538
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Hiện Wikipedia(AI) trong cửa sổ Từ điển"
 
-#: ../assistant_settings.lua:500
+#: ../assistant_settings.lua:546
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Hiện X-Quang Thuật ngữ(AI) trong popup Từ điển"
 
-#: ../assistant_settings.lua:508
+#: ../assistant_settings.lua:554
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Hiện Lệnh tùy chỉnh trong popup Từ điển"
 
-#: ../assistant_settings.lua:518
-msgid   "Show Follow-up Questions from AI"
-msgstr  "Hiện câu hỏi tiếp theo từ AI"
-
-#: ../assistant_settings.lua:526
+#: ../assistant_settings.lua:564
 msgid   "Copy entered question to the clipboard"
 msgstr  "Sao chép câu hỏi vào bộ nhớ tạm"
 
-#: ../assistant_settings.lua:534
+#: ../assistant_settings.lua:572
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Tự động lưu cuộc trò chuyện vào Sổ tay"
 
-#: ../assistant_settings.lua:542
+#: ../assistant_settings.lua:580
 msgid   "Use book text for x-ray and recap"
 msgstr  "Dùng nội dung sách cho x-ray và tóm tắt"
 
-#: ../assistant_settings.lua:550
+#: ../assistant_settings.lua:588
 msgid   "Purge the settings"
 msgstr  "Xóa sạch cài đặt"
 
-#: ../assistant_settings.lua:553 ../main.lua:741
-msgid   "Are you sure to purge the assistant plugin settings? \n"
-        "This resets the assistant plugin to the status the first time you installed it.\n"
+#: ../assistant_settings.lua:591
+msgid   "Purge assistant.koplugin settings?\n"
         "\n"
-        "configuration.lua is safe, only the settings are purged."
-msgstr  "Bạn có chắc xóa sạch cài đặt plugin trợ lý? \n"
-        "Thao tác này đưa plugin trợ lý về trạng thái lần đầu bạn cài đặt.\n"
+        "This restores the plugin to its factory defaults. Only settings will be removed; \n"
+        "File configuration.lua will be preserved."
+msgstr  "Xóa cài đặt assistant.koplugin?\n"
         "\n"
-        "configuration.lua vẫn an toàn, chỉ có cài đặt bị xóa."
+        "Thao tác này khôi phục plugin về cài đặt gốc. Chỉ các cài đặt sẽ bị xóa;\n"
+        "Tệp configuration.lua sẽ được giữ nguyên."
 
-#: ../assistant_settings.lua:557 ../main.lua:745
+#: ../assistant_settings.lua:595 ../main.lua:681
 msgid   "Purge"
 msgstr  "Xóa"
 
-#: ../assistant_update_checker.lua:108
+#: ../assistant_tool_executor.lua:134
+msgid   "Search keywords are empty."
+msgstr  "Từ khóa tìm kiếm trống."
+
+#: ../assistant_tool_executor.lua:142
+msgid   "Searching with %1 ... [%2]\n"
+        "\n"
+        "%3"
+msgstr  "Đang tìm kiếm với %1 ... [%2]\n"
+        "\n"
+        "%3"
+
+#: ../assistant_tool_executor.lua:297
+msgid   "Tool call did not include id."
+msgstr  "Lệnh gọi công cụ không bao gồm id."
+
+#: ../assistant_tool_executor.lua:300
+msgid   "Tool call did not include search keywords."
+msgstr  "Lệnh gọi công cụ không bao gồm từ khóa tìm kiếm."
+
+#: ../assistant_update_checker.lua:105
 msgid   "Checking for updates..."
 msgstr  "Đang kiểm tra cập nhật..."
 
-#: ../assistant_update_checker.lua:127
+#: ../assistant_update_checker.lua:114
 msgid   "Update check canceled."
 msgstr  "Đã hủy kiểm tra cập nhật."
 
-#: ../assistant_update_checker.lua:132
+#: ../assistant_update_checker.lua:118
 msgid   "Failed to check for updates. HTTP code: %1"
 msgstr  "Không thể kiểm tra cập nhật. Mã HTTP: %1"
 
-#: ../assistant_update_checker.lua:146
+#: ../assistant_update_checker.lua:124
 msgid   "Failed to parse update check response: %1"
 msgstr  "Không thể phân tích phản hồi kiểm tra cập nhật: %1"
 
-#: ../assistant_update_checker.lua:157
+#: ../assistant_update_checker.lua:135
 msgid   "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr  "Phiên bản mới của plugin %1 (%2) đã có sẵn. Vui lòng cập nhật!"
 
-#: ../assistant_utils.lua:157
+#: ../assistant_utils.lua:169
 msgid   "Page"
 msgstr  "Trang"
 
-#: ../assistant_utils.lua:182
+#: ../assistant_utils.lua:194
 msgid   "Cannot access default folder for logs: %1\n"
         "Using original location."
 msgstr  "Không thể truy cập thư mục mặc định cho nhật ký: %1\n"
         "Đang sử dụng vị trí ban đầu."
 
-#: ../assistant_utils.lua:237
+#: ../assistant_utils.lua:249
 msgid   "Notebook save failed. Continuing..."
 msgstr  "Lưu sổ tay thất bại. Tiếp tục..."
 
+#: ../assistant_utils.lua:378
+msgid   "##### You may find these topics interesting:"
+msgstr  "##### Bạn có thể thấy các chủ đề này thú vị:"
+
+#: ../assistant_utils.lua:674
+msgid   "fetchJSON: failed to parse returned data"
+msgstr  "fetchJSON: không thể phân tích dữ liệu trả về"
+
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:301 ../assistant_viewer.lua:741
+#: ../assistant_viewer.lua:313 ../assistant_viewer.lua:753
 msgid   "Ask Another Question"
 msgstr  "Hỏi thêm"
 
-#: ../assistant_viewer.lua:356
+#: ../assistant_viewer.lua:368
 msgid   "Copy"
 msgstr  "Sao chép"
 
-#: ../assistant_viewer.lua:361
+#: ../assistant_viewer.lua:373
 msgid   "Text copied to the clipboard"
 msgstr  "Đã sao chép văn bản vào bộ nhớ tạm"
 
-#: ../assistant_viewer.lua:375
+#: ../assistant_viewer.lua:387
 msgid   "Add Note"
 msgstr  "Thêm ghi chú"
 
-#: ../assistant_viewer.lua:382
+#: ../assistant_viewer.lua:394
 msgid   "Highlight functionality not available"
 msgstr  "Chức năng bôi không khả dụng"
 
-#: ../assistant_viewer.lua:391
+#: ../assistant_viewer.lua:403
 msgid   "No text to add as note"
 msgstr  "Không có văn bản để thêm ghi chú"
 
-#: ../assistant_viewer.lua:420
+#: ../assistant_viewer.lua:432
 msgid   "No text left to add as note"
 msgstr  "Không còn văn bản để thêm ghi chú"
 
-#: ../assistant_viewer.lua:433
+#: ../assistant_viewer.lua:445
 msgid   "Note added successfully"
 msgstr  "Đã thêm ghi chú thành công"
 
-#: ../assistant_viewer.lua:454
+#: ../assistant_viewer.lua:466
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Cuộc trò chuyện đã được lưu vào Sổ tay"
 
-#: ../assistant_viewer.lua:573
+#: ../assistant_viewer.lua:585
 msgid   "Book Analysis"
 msgstr  "Phân tích sách"
 
-#: ../assistant_viewer.lua:573
+#: ../assistant_viewer.lua:585
 msgid   "General Conversation"
 msgstr  "Trò chuyện chung"
 
-#: ../assistant_viewer.lua:743
+#: ../assistant_viewer.lua:755
 msgid   "Type your question here"
 msgstr  "Nhập câu hỏi tại đây"
 
-#: ../assistant_viewer.lua:912
+#: ../assistant_viewer.lua:924
 msgid   "Word copied to clipboard."
 msgstr  "Đã sao chép từ vào bộ nhớ tạm."
 
-#: ../assistant_viewer.lua:913
+#: ../assistant_viewer.lua:925
 msgid   "Selection copied to clipboard."
 msgstr  "Đã sao chép lựa chọn vào bộ nhớ tạm."
 
-#: ../main.lua:77 ../main.lua:145
+#: ../main.lua:78 ../main.lua:139
 msgid   "Ask the AI a question"
 msgstr  "Hỏi AI"
 
-#: ../main.lua:85 ../main.lua:181
+#: ../main.lua:86
 msgid   "AI Recaps"
 msgstr  "Tóm tắt AI"
 
-#: ../main.lua:93 ../main.lua:170
+#: ../main.lua:94
 msgid   "AI X-Ray"
 msgstr  "X-Ray AI"
 
-#: ../main.lua:109 ../main.lua:159
+#: ../main.lua:110
 msgid   "Book Summary & Recs"
 msgstr  "Tóm tắt & Gợi ý sách"
 
-#: ../main.lua:151
+#: ../main.lua:146
 msgid   "Enter a question to ask AI."
 msgstr  "Nhập câu hỏi cho AI."
 
-#: ../main.lua:156
-msgid   "Book-Level Built-in Prompts"
-msgstr  "Lệnh tích hợp cấp Sách"
-
-#: ../main.lua:165
-msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
-msgstr  "Tóm tắt sách, tiểu sử tác giả, bối cảnh lịch sử và danh sách sách tương tự có mô tả."
-
-#: ../main.lua:176
-msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
-msgstr  "Tóm tắt \"X-Ray\" cho sách, chia thành các mục: Nhân vật, Bối cảnh, Chủ đề, Thuật ngữ & Khái niệm, Dòng thời gian và Tái nhập cuộc."
-
-#: ../main.lua:187
-msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
-msgstr  "Tóm tắt ngắn gọn, không tiết lộ nội dung, đến trang hiện tại."
-
-#: ../main.lua:198
-msgid   "Analysis of your highlights, notes, and notebook content from the book."
-msgstr  "Phân tích đánh dấu, ghi chú và nội dung sổ tay của bạn từ cuốn sách."
-
-#: ../main.lua:209
-msgid   "Summary of the book using your highlights and notes."
-msgstr  "Tóm tắt cuốn sách dựa trên đánh dấu và ghi chú của bạn."
-
-#: ../main.lua:216
-msgid   "Book-Level Custom Prompts"
-msgstr  "Lệnh tùy chỉnh cấp Sách"
-
-#: ../main.lua:223
-msgid   "Includes user defined book level prompts from Config file"
-msgstr  "Bao gồm lệnh cấp sách do người dùng định nghĩa trong tệp Cấu hình"
-
-#: ../main.lua:235 ../main.lua:330
+#: ../main.lua:157
 msgid   "Take quick notes that will be saved to your notebook."
 msgstr  "Tạo ghi chú nhanh sẽ được lưu vào sổ tay của bạn."
 
-#: ../main.lua:240 ../main.lua:335
+#: ../main.lua:162
 msgid   "NoteBook (AI Conversation Log)"
 msgstr  "Sổ tay (Nhật ký trò chuyện AI)"
 
-#: ../main.lua:246 ../main.lua:342
+#: ../main.lua:168
 msgid   "Notebook file: \n"
         "\n"
 msgstr  "Tệp sổ ghi chú: \n"
         "\n"
 
-#: ../main.lua:247 ../main.lua:343
+#: ../main.lua:169
 msgid   "View"
 msgstr  "Xem"
 
-#: ../main.lua:251 ../main.lua:347
+#: ../main.lua:173
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -797,11 +843,11 @@ msgstr  "Tệp không tồn tại.\n"
         "\n"
         "%1"
 
-#: ../main.lua:259 ../main.lua:263 ../main.lua:355 ../main.lua:359
+#: ../main.lua:181 ../main.lua:185
 msgid   "Delete"
 msgstr  "Xóa"
 
-#: ../main.lua:262 ../main.lua:358
+#: ../main.lua:184
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -809,57 +855,103 @@ msgstr  "Xóa tệp?\n"
         "%1\n"
         "Thao tác này không thể hoàn tác."
 
-#: ../main.lua:274 ../main.lua:370
+#: ../main.lua:196
 msgid   "Edit"
 msgstr  "Sửa"
 
-#: ../main.lua:286 ../main.lua:383
+#: ../main.lua:210
 msgid   "AI Provider: %1(%2)"
 msgstr  "Nhà cung cấp AI: %1(%2)"
 
-#: ../main.lua:287 ../main.lua:288 ../main.lua:384 ../main.lua:385
-msgid   "Not configured"
-msgstr  "Chưa được cấu hình"
+#: ../main.lua:223
+msgid   "Smart Web Search: %1"
+msgstr  "Tìm kiếm web thông minh: %1"
 
-#: ../main.lua:299 ../main.lua:396
-msgid   "AI Assistant Settings"
-msgstr  "Cài đặt Trợ lý AI"
+#: ../main.lua:227
+msgid   "Improves response accuracy with real-time web results. \n"
+        "Note: Higher token usage and additional API charges apply."
+msgstr  "Cải thiện độ chính xác của phản hồi với kết quả web thời gian thực. \n"
+        "Lưu ý: Sử dụng token cao hơn và phí API bổ sung."
 
-#: ../main.lua:313
-msgid   "Ask a Question"
-msgstr  "Đặt câu hỏi"
+#: ../main.lua:233
+msgid   "Other Settings"
+msgstr  "Cài đặt khác"
 
-#: ../main.lua:319
-msgid   "Ask a general question to the AI (not book-related)."
-msgstr  "Đặt câu hỏi chung cho AI (không liên quan đến sách)."
+#: ../main.lua:248
+msgid   "Book-Level Built-in Prompts"
+msgstr  "Lệnh tích hợp cấp Sách"
 
-#: ../main.lua:442
+#: ../main.lua:251
+msgid   "🌐Book Summary & Recs"
+msgstr  "🌐Tóm tắt sách & Đề xuất"
+
+#: ../main.lua:257
+msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
+msgstr  "Tóm tắt sách, tiểu sử tác giả, bối cảnh lịch sử và danh sách sách tương tự có mô tả."
+
+#: ../main.lua:262
+msgid   "🌐AI X-Ray"
+msgstr  "🌐AI X-Ray"
+
+#: ../main.lua:268
+msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
+msgstr  "Tóm tắt \"X-Ray\" cho sách, chia thành các mục: Nhân vật, Bối cảnh, Chủ đề, Thuật ngữ & Khái niệm, Dòng thời gian và Tái nhập cuộc."
+
+#: ../main.lua:273
+msgid   "🌐AI Recaps"
+msgstr  "🌐Tóm tắt AI"
+
+#: ../main.lua:279
+msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
+msgstr  "Tóm tắt ngắn gọn, không tiết lộ nội dung, đến trang hiện tại."
+
+#: ../main.lua:290
+msgid   "Analysis of your highlights, notes, and notebook content from the book."
+msgstr  "Phân tích đánh dấu, ghi chú và nội dung sổ tay của bạn từ cuốn sách."
+
+#: ../main.lua:295
+msgid   "🌐Summary Using Highlights & Notes"
+msgstr  "🌐Tóm tắt bằng Highlight & Ghi chú"
+
+#: ../main.lua:301
+msgid   "Summary of the book using your highlights and notes."
+msgstr  "Tóm tắt cuốn sách dựa trên đánh dấu và ghi chú của bạn."
+
+#: ../main.lua:308
+msgid   "Book-Level Custom Prompts"
+msgstr  "Lệnh tùy chỉnh cấp Sách"
+
+#: ../main.lua:315
+msgid   "Includes user defined book level prompts from Config file"
+msgstr  "Bao gồm lệnh cấp sách do người dùng định nghĩa trong tệp Cấu hình"
+
+#: ../main.lua:388
 msgid   "This is a custom prompt"
 msgstr  "Đây là lệnh tùy chỉnh"
 
-#: ../main.lua:452
+#: ../main.lua:398
 msgid   "No valid book-level custom prompt found"
 msgstr  "Không tìm thấy lời nhắc tùy chỉnh hợp lệ cho cấp sách"
 
-#: ../main.lua:457
+#: ../main.lua:403
 msgid   "For details, visit the 'Configuration' wiki page on github."
 msgstr  "Để biết chi tiết, hãy truy cập trang wiki 'Cấu hình' trên github."
 
-#: ../main.lua:550
+#: ../main.lua:486
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Không tìm thấy nhà cung cấp mô hình hợp lệ trong configuration.lua"
 
-#: ../main.lua:568
+#: ../main.lua:504
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Lỗi cấu hình.\n"
         "Vui lòng thiết lập configuration.lua."
 
-#: ../main.lua:640
+#: ../main.lua:576
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: nhà cung cấp mô hình không hợp lệ."
 
-#: ../main.lua:718
+#: ../main.lua:654
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -891,33 +983,47 @@ msgstr  "Mẹo sử dụng\n"
         "Vuốt nhiều lần (ví dụ: ⮠, ⮡, ↺):\n"
         "Trên hộp kết quả để đóng (vì nút Đóng xa quá).\n"
 
-#: ../main.lua:738
+#: ../main.lua:674
 msgid   "Purge Settings"
 msgstr  "Xóa cài đặt"
 
-#: ../main.lua:792
+#: ../main.lua:677
+msgid   "Are you sure to purge the assistant plugin settings? \n"
+        "This resets the assistant plugin to the status the first time you installed it.\n"
+        "\n"
+        "configuration.lua is safe, only the settings are purged."
+msgstr  "Bạn có chắc xóa sạch cài đặt plugin trợ lý? \n"
+        "Thao tác này đưa plugin trợ lý về trạng thái lần đầu bạn cài đặt.\n"
+        "\n"
+        "configuration.lua vẫn an toàn, chỉ có cài đặt bị xóa."
+
+#: ../main.lua:728
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Gỡ [%s] khỏi Menu Bôi?"
 
-#: ../main.lua:793
+#: ../main.lua:729
 msgid   "Remove"
 msgstr  "Gỡ"
 
-#: ../main.lua:1032
+#: ../main.lua:752
+msgid   "Wikipedia"
+msgstr  "Wikipedia"
+
+#: ../main.lua:968
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Không tìm thấy cấu hình. Vui lòng thiết lập configuration.lua trước."
 
-#: ../main.lua:1074
+#: ../main.lua:1010
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Đã thêm [%1 (AI)] vào Menu Bôi."
 
-#: ../main.lua:1083
+#: ../main.lua:1019
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Đã gỡ [%s (AI)] khỏi Menu Bôi."
 
-#: ../main.lua:1127
+#: ../main.lua:1063
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -925,15 +1031,15 @@ msgstr  "Bạn muốn AI tóm tắt?\n"
         "Dành cho %1 của %2.\n"
         "\n"
 
-#: ../main.lua:1128
+#: ../main.lua:1064
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Đọc lần cuối cách đây %1 giờ."
 
-#: ../main.lua:1133
+#: ../main.lua:1069
 msgid   "Yes"
 msgstr  "Có"
 
-#: ../main.lua:1142
+#: ../main.lua:1078
 msgid   "No"
 msgstr  "Không"
