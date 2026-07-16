@@ -1,15 +1,17 @@
+local BaseHandler = require("api_handlers.base")
 local OpenAIHandler = require("api_handlers.openai")
 local json = require("json")
 local koutil = require("util")
-local logger = require("logger")
-local ToolExecutor = require("assistant_tool_executor")
 
 local DEFAULT_UPDATE_INTERVAL = 3
 local DEFAULT_TOKEN_EXPIRY = 1800 -- 30 minutes
 -- GigaChat API requires UUID in RqUID header, but accepts an empty UUID
 local UUID_EMPTY = "00000000-0000-0000-0000-000000000000"
 
-local GigaChatHandler = OpenAIHandler:new({ name = "GigaChatHandler", })
+local GigaChatHandler = OpenAIHandler:new({
+    name = "GigaChatHandler",
+    can_fetch_models = false,
+})
 
 function GigaChatHandler:SyncOptions(querier)
     OpenAIHandler.SyncOptions(self, querier)
@@ -17,90 +19,70 @@ function GigaChatHandler:SyncOptions(querier)
 end
 
 function GigaChatHandler:query(message_history, query_option)
+    -- Pre-fetch the token so that authorization failures are surfaced cleanly
+    -- before entering the OpenAI request flow.
     local token, err = self:getAccessToken()
     if not token then
         return nil, "Error obtaining access token: " .. tostring(err)
     end
 
-    local function buildRequestBody(messages, tools)
-        local body = {
-            model           = self.model,
-            messages        = messages,
-            update_interval = koutil.tableGetValue(self.additional_parameters, "update_interval") or
-                                DEFAULT_UPDATE_INTERVAL,
-            max_tokens      = koutil.tableGetValue(self.additional_parameters, "max_tokens"),
-        }
-        if tools then
-            body.tools       = tools
-            body.tool_choice = "auto"
+    return OpenAIHandler.query(self, message_history, query_option)
+end
+
+function GigaChatHandler:buildRequestBody(messages, query_option, tools)
+    local body = OpenAIHandler.buildRequestBody(self, messages, query_option, tools)
+    if body.update_interval == nil then
+        body.update_interval = koutil.tableGetValue(self.additional_parameters, "update_interval") or
+                                DEFAULT_UPDATE_INTERVAL
+    end
+    return body
+end
+
+function GigaChatHandler:makeRequest(url, headers, body, timeout, maxtime)
+    -- Preserve GigaChat-specific timeout defaults when the caller does not pass them.
+    if not timeout then
+        if body and #body > 10000 then
+            timeout = 500
+            maxtime = 500
+        else
+            timeout = 45
+            maxtime = 90
         end
-        return body
     end
 
-    local headers = {
-        ["Content-Type"]  = "application/json",
-        ["Authorization"] = "Bearer " .. token,
-        ["RqUID"]         = UUID_EMPTY,
-    }
-
-    local ws_mode = query_option.use_websearch or "none"
-
-    -- In non-stream mode, inject tool definitions if web_search is enabled.
-    -- Let the Querier handle the tool-call loop and search execution.
-    local tools
-    if ToolExecutor.IsExtSearch(ws_mode) then
-        tools = { self:buildExternalSearchToolDef("openai") }
+    local token, err = self:getAccessToken()
+    if not token then
+        return false, nil, "Error obtaining access token: " .. tostring(err)
     end
 
-    local requestBodyTable = buildRequestBody(message_history, tools)
-    requestBodyTable.stream = query_option.use_stream_mode
-    local requestBody = json.encode(requestBodyTable)
-
-    if requestBodyTable.stream then
-        headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(self.base_url, headers, requestBody)
-    end
-
-    local request_timeout, request_maxtime
-    if #requestBody > 10000 then
-        request_timeout = 500
-        request_maxtime = 500
-    else
-        request_timeout = 45
-        request_maxtime = 90
-    end
-
-    local success, code, response = self:makeRequest(
-        self.base_url, headers, requestBody, request_timeout, request_maxtime)
-
-    if not success then
-        if code == self.CODE_CANCELLED then
-            return nil, response
+    local giga_headers = {}
+    if headers then
+        for k, v in pairs(headers) do
+            giga_headers[k] = v
         end
-        return nil, "Error: Failed to connect to GigaChat API - " .. tostring(response)
+    end
+    giga_headers["Authorization"] = "Bearer " .. token
+    giga_headers["RqUID"] = UUID_EMPTY
+
+    return BaseHandler.makeRequest(self, url, giga_headers, body, timeout, maxtime)
+end
+
+function GigaChatHandler:backgroundRequest(url, headers, body)
+    local token, err = self:getAccessToken()
+    if not token then
+        return nil, "Error obtaining access token: " .. tostring(err)
     end
 
-    local success_parse, parsed = pcall(json.decode, response)
-    if not success_parse then
-        return nil, "Error: Failed to parse GigaChat API response: " .. response
+    local giga_headers = {}
+    if headers then
+        for k, v in pairs(headers) do
+            giga_headers[k] = v
+        end
     end
+    giga_headers["Authorization"] = "Bearer " .. token
+    giga_headers["RqUID"] = UUID_EMPTY
 
-    -- Delegate tool-call / error detection to the unified base method
-    if koutil.tableGetValue(parsed, "choices", 1, "message", "tool_calls") then
-        return self:parseToolCalls(parsed, "openai")
-    end
-
-    local content = koutil.tableGetValue(parsed, "choices", 1, "message", "content")
-    if content then return content end
-
-    local apiError = koutil.tableGetValue(parsed, "error")
-    if apiError and apiError.message then
-        logger.warn("API Error:", code, response)
-        return nil, "GigaChat API Error: [" .. (apiError.code or "unknown") .. "]: " .. apiError.message
-    else
-        logger.warn("API Error:", code, response)
-        return nil, "GigaChat API Error: Unexpected response format from API: " .. response
-    end
+    return BaseHandler.backgroundRequest(self, url, giga_headers, body)
 end
 
 --- Get access token for GigaChat API
@@ -140,7 +122,9 @@ function GigaChatHandler:authorize()
 
     local body = "scope=GIGACHAT_API_PERS"
 
-    local success, code, response = self:makeRequest(self.auth_url, headers, body, 20, 45)
+    -- Use BaseHandler.makeRequest directly to avoid recursive token injection
+    -- (the overridden makeRequest adds Bearer Authorization/RqUID headers).
+    local success, code, response = BaseHandler.makeRequest(self, self.auth_url, headers, body, 20, 45)
     if not success then
         return nil, string.format("Auth request failed (%s): %s", tostring(code), tostring(response))
     end
