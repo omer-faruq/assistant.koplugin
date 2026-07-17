@@ -144,9 +144,16 @@ function BaseHandler:backgroundRequest(url, headers, body)
         local code, resp_headers, status = socket.skip(1, http.request(request))
         if code ~= 200 then
             logger.warn("Background request non-200:", code, "status:", status, "url:", url)
-            ffiutil.writeToFD(child_write_fd,
-                string.format("\r\n%s [%s %s] URL:%s\n\n",
-                    self.PROTOCOL_NON_200, status or "", code or "", url))
+            local err_struct = {
+                code = code,
+                resp_headers = resp_headers,
+                status = status,
+                raw_body = "",
+            }
+            ffiutil.writeToFD(child_write_fd, "\r\n")
+            ffiutil.writeToFD(child_write_fd, self.PROTOCOL_NON_200)
+            ffiutil.writeToFD(child_write_fd, json.encode(err_struct))
+            ffiutil.writeToFD(child_write_fd, "\r\n")
         end
         ffi.C.close(child_write_fd)
     end

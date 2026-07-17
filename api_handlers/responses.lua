@@ -303,6 +303,11 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
 
         -- Make the HTTP request with a custom sink that processes chunks
         local buf = strbuf.new()
+        -- Separate buffer for the full raw response body (never consumed by processLine).
+        -- When the request fails with a non-200 status, the server returns plain JSON
+        -- instead of SSE, and processLine silently drops non-"data:" lines.  We snapshot
+        -- raw_body instead of buf so the error body is preserved for error reporting.
+        local raw_body = strbuf.new()
         local function processLine(line)
             line = line:gsub("\r$", "")
 
@@ -391,6 +396,8 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
 
         local function sink(chunk, err)
             if chunk then
+                -- Accumulate raw response for error reporting (never consumed)
+                raw_body:put(chunk)
                 -- Accumulate chunks into strbuf (avoids repeated table.concat string copies)
                 buf:put(chunk)
                 local full = buf:tostring()
@@ -414,8 +421,10 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
                         processLine(remaining)
                     end
                 end
-                -- Ensure [DONE] is emitted
-                ffiutil.writeToFD(child_write_fd, "data: [DONE]\n\n")
+                -- [DONE] is emitted by the caller after http.request() returns,
+                -- only on success.  Emitting it here in sink(nil) would race
+                -- ahead of the error path: the frontend sees [DONE] and breaks
+                -- before the X-NON-200-STATUS error line arrives.
             end
             return 1 -- return non-nil to continue
         end
@@ -431,38 +440,36 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
 
         local code, resp_headers, status = socket.skip(1, http.request(request))
 
-        -- Snapshot the remaining buffer before sink(nil) flushes it
-        -- (in case of a non-200 response, the body may be JSON error, not SSE)
-        local raw_body_snapshot = buf:tostring()
+        -- Snapshot the full raw response body before sink(nil) flushes it.
+        -- We use raw_body (not buf) because buf is consumed by processLine,
+        -- which silently drops non-"data:" lines like plain JSON error bodies.
+        local raw_body_snapshot = raw_body:tostring()
 
-        -- Signal end of stream to flush any remaining SSE data
-        sink(nil)
 
         if code ~= 200 then
-            -- Try to extract a structured error from the raw response body
-            local err_detail = ""
-            if #raw_body_snapshot > 0 then
-                local ok, rd = pcall(json.decode, raw_body_snapshot)
-                if ok then
-                    local err_msg = extractErrorMessage(rd)
-                    if err_msg then
-                        err_detail = err_msg
-                    end
-                end
-                if err_detail == "" then
-                    err_detail = raw_body_snapshot:sub(1, 500)
-                end
-            end
+            -- Error path: write the non-200 status marker followed by a JSON
+            -- structure containing code, status, headers, and raw_body.
+            -- Do NOT emit [DONE] — the frontend breaks on [DONE] and would
+            -- never see the error line.
             logger.warn("ResponsesHandler background request non-200:",
-                code, "status:", status, "url:", url, "body:", err_detail)
-            ffiutil.writeToFD(child_write_fd,
-                string.format("\r\n%s [%s %s] URL:%s\n%s\n\n",
-                    self.PROTOCOL_NON_200, status or "", code or "",
-                    url, err_detail))
+                code, "status:", status, "url:", url, "body:", raw_body_snapshot)
+            local err_struct = {
+                code = code,
+                resp_headers = resp_headers,
+                status = status,
+                raw_body = raw_body_snapshot,
+            }
+            ffiutil.writeToFD(child_write_fd, "\r\n")
+            ffiutil.writeToFD(child_write_fd, self.PROTOCOL_NON_200)
+            ffiutil.writeToFD(child_write_fd, json.encode(err_struct))
+            ffiutil.writeToFD(child_write_fd, "\r\n")
+        else
+            -- Success path: flush any remaining buffered SSE data, then emit
+            -- [DONE] so the frontend knows the stream is complete.
+            sink(nil)
+            ffiutil.writeToFD(child_write_fd, "data: [DONE]\n\n")
         end
 
-        -- Always emit [DONE] if not already done
-        -- (handled by response.completed event above, but fail-safe)
         ffi.C.close(child_write_fd)
     end
 end

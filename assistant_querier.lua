@@ -754,18 +754,28 @@ function Querier:processStream(bgQuery, trunk_callback)
 
     local ret = koutil.trim(result_buffer:get())
     if non200_start then
-        -- Slice out only the error body before the non-200 mark
-        local err_body = koutil.trim(ret:sub(1, non200_start))
-        -- Try to parse the JSON and extract a human-readable message
-        if err_body:sub(1, 1) == '{' then
-            local ok, j = pcall(rapidjson.decode, err_body)
-            if ok then
-                local err = koutil.tableGetValue(j, "error", "message") or -- OpenAI / Anthropic / Gemini
-                      koutil.tableGetValue(j, "message") -- Mistral / Cohere
-                if err then return nil, err end
+        -- The JSON structure was appended after non200_start.
+        -- Format: {"code":..., "resp_headers":..., "status":..., "raw_body":"..."}
+        local err_json = koutil.trim(ret:sub(non200_start + 1))
+        local ok, err_struct = pcall(rapidjson.decode, err_json)
+        if ok and err_struct then
+            local raw_body = err_struct.raw_body or ""
+            -- Try to extract a human-readable error from the raw_body JSON
+            if #raw_body > 0 then
+                local ok2, j = pcall(rapidjson.decode, raw_body)
+                if ok2 then
+                    local err_msg = koutil.tableGetValue(j, "error", "message")
+                        or koutil.tableGetValue(j, "message")
+                    if err_msg then return nil, err_msg end
+                    if type(j.error) == "string" then return nil, j.error end
+                end
             end
+            -- Fallback: use status info from the structure
+            local code = err_struct.code or ""
+            local status = err_struct.status or ""
+            return nil, T(_("HTTP %1: %2"), tostring(code), status ~= "" and status or _("Unknown error"))
         end
-        -- return the raw error body as error message
+        -- If JSON parsing failed, return the raw content
         return nil, ret
     end
 
