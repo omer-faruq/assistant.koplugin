@@ -766,14 +766,14 @@ function Querier:processStream(bgQuery, trunk_callback)
                 if ok2 then
                     local err_msg = koutil.tableGetValue(j, "error", "message")
                         or koutil.tableGetValue(j, "message")
-                    if err_msg then return nil, err_msg end
+                    if err_msg then return nil, T("HTTP %1: %2", err_struct.code, err_msg) end
                     if type(j.error) == "string" then return nil, j.error end
                 end
             end
             -- Fallback: use status info from the structure
             local code = err_struct.code or ""
             local status = err_struct.status or ""
-            return nil, T(_("HTTP %1: %2"), tostring(code), status ~= "" and status or _("Unknown error"))
+            return nil, T("HTTP %1: %2", tostring(code), status ~= "" and status or _("Unknown error"))
         end
         -- If JSON parsing failed, return the raw content
         return nil, ret
