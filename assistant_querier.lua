@@ -642,22 +642,34 @@ function Querier:processStream(bgQuery, trunk_callback)
             else
                 partial_data:commit(bytes_read)
 
-                -- Process complete lines
+                -- Process complete lines: serialize once, then split in a single pass.
+                -- This avoids the O(n²) cost of calling tostring() per line; get()
+                -- consumes the buffer in one shot and we manage the read position manually.
+                local data = partial_data:get()
+                local pos = 1
                 while true do
-                    -- Serialize once per iteration to scan for newline
-                    local pd_str = partial_data:tostring()
-                    local line_end = pd_str:find("[\r\n]")
-                    if not line_end then break end  -- No complete line yet, continue reading
+                    local nl = data:find("\n", pos, true)  -- plain search, fast
+                    if not nl then
+                        -- No complete line yet; put back the incomplete remainder
+                        if pos <= #data then
+                            partial_data:put(data:sub(pos))
+                        end
+                        break
+                    end
 
-                    -- Extract the complete line; advance past it with skip()
-                    local line = pd_str:sub(1, line_end - 1)
-                    partial_data:skip(line_end)
-                    
+                    -- Extract the line; strip a trailing \r for CRLF endings
+                    local line = data:sub(pos, nl - 1)
+                    if line:sub(-1) == "\r" then line = line:sub(1, -2) end
+                    pos = nl + 1
+
                     -- Check if this is an Server-Sent-Event (SSE) data line
                     if line:sub(1, 6) == "data: " then
                         -- Clean up the JSON string (remove "data:" prefix and trim whitespace)
                         local json_str = koutil.trim(line:sub(7))
-                        if json_str == '[DONE]' then break end -- end of SSE stream
+                        if json_str == '[DONE]' then -- end of SSE stream
+                            partial_data:put(data:sub(pos))  -- preserve remaining data
+                            break
+                        end
 
                         -- Safely parse the JSON
                         local ok, event = pcall(rapidjson.decode, json_str)
@@ -669,6 +681,7 @@ function Querier:processStream(bgQuery, trunk_callback)
                                 for _, tc in ipairs(tool_call_acc.tools) do
                                     table.insert(tool_calls, normalizeToolCall(tc))
                                 end
+                                partial_data:put(data:sub(pos))  -- preserve remaining data
                                 break
                             end
                         else
@@ -705,6 +718,7 @@ function Querier:processStream(bgQuery, trunk_callback)
                         -- start offset so we can slice the error body precisely later
                         non200_start = #result_buffer
                         result_buffer:put(line:sub(#(self.handler.PROTOCOL_NON_200)+1))
+                        partial_data:put(data:sub(pos))  -- preserve remaining data
                         break -- the request is done, no more data to read
                     else
                         if #koutil.trim(line) > 0 then

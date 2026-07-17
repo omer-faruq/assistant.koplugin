@@ -76,6 +76,11 @@ cd l10n && make check
 - No formal test framework — manual testing in a KOReader environment.
 - Configuration testing: copy `configuration.sample.lua` to `configuration.lua` and modify.
 - API testing requires valid API keys for the target provider(s).
+- Syntax checking: use KOReader's bundled LuaJIT to validate Lua files without a full KOReader environment:
+  ```bash
+  /usr/lib/koreader/luajit -e "assert(loadfile('assistant_querier.lua'))"
+  ```
+  Do NOT use `luajit -bl` (bytecode listing) — KOReader's stripped LuaJIT lacks the `jit.*` modules it requires. `luac -p` (standard Lua 5.4) also works for pure syntax checks but will not catch LuaJIT-specific constructs.
 
 ## Key Files & Patterns
 
@@ -98,7 +103,7 @@ cd l10n && make check
 
 - This is a KOReader plugin, not a standalone application.
 - All code must be compatible with KOReader's Lua environment.
-- KOReader runs on **LuaJIT 2.1.1772619647**. Write code optimized for the LuaJIT runtime where applicable (e.g. use LuaJIT-specific modules like `string.buffer` instead of standard string concatenation for performance-sensitive string building), and avoid relying on features unsupported by LuaJIT (e.g. standard Lua 5.2+/5.3+/5.4-only syntax or libraries).
+- KOReader runs on **LuaJIT 2.1.1772619647**, bundled at `/usr/lib/koreader/luajit`. Write code optimized for the LuaJIT runtime where applicable (e.g. use LuaJIT-specific modules like `string.buffer` instead of standard string concatenation for performance-sensitive string building), and avoid relying on features unsupported by LuaJIT (e.g. standard Lua 5.2+/5.3+/5.4-only syntax or libraries).
 - No external dependencies beyond standard KOReader libraries (the optional native `hoedown` markdown library, loaded from a `lib/` dir if present, is the one exception, with a pure-Lua fallback).
 - Configuration is user-managed via `configuration.lua`.
 - **Do not read or modify `configuration.lua`.** This file is user-managed and may contain private configuration (e.g. API keys). If the configuration format needs to change or a new config option needs to be added, make that change only in `configuration.sample.lua`, never in `configuration.lua`.
