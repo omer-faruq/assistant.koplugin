@@ -387,6 +387,42 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
                     -- Handle completed event: emit [DONE]
                     elseif ev_type == "response.completed" then
                         ffiutil.writeToFD(child_write_fd, "data: [DONE]\n\n")
+
+                    -- Lifecycle events (no content to emit)
+                    elseif ev_type == "response.created" then
+                        -- Response created; no content to emit
+                    elseif ev_type == "response.in_progress" then
+                        -- Response generation in progress; no content to emit
+
+                    -- Content part lifecycle (metadata only; deltas carry the actual text)
+                    elseif ev_type == "response.content_part.added" then
+                        -- Part metadata (type: output_text|refusal|reasoning_text).
+                        -- Actual text arrives via output_text.delta or reasoning_text.delta.
+                    elseif ev_type == "response.content_part.done" then
+                        -- Content part completed; no content to emit
+
+                    -- Reasoning text streaming (e.g. o-series models)
+                    elseif ev_type == "response.reasoning_text.delta" then
+                        local delta = event.delta or ""
+                        logger.info("delta", delta)
+                        emitJSON({
+                            id = "resp_stream",
+                            object = "chat.completion.chunk",
+                            choices = {{
+                                index = 0,
+                                delta = { reasoning_content = delta },
+                                finish_reason = nil,
+                            }},
+                        })
+                    elseif ev_type == "response.reasoning_text.done" then
+                        -- Reasoning text completed; no extra content to emit
+
+                    -- Output item lifecycle
+                    elseif ev_type == "response.output_item.done" then
+                        -- Output item completed; no content to emit
+
+                    else
+                        logger.info("unprocessed", ev_type)
                     end
                 end
             end
@@ -395,6 +431,7 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
         end
 
         local function sink(chunk, err)
+            -- logger.info("chunk", chunk)
             if chunk then
                 -- Accumulate raw response for error reporting (never consumed)
                 raw_body:put(chunk)
