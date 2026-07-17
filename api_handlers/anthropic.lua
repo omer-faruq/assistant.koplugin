@@ -11,10 +11,10 @@ local InfoMessage = require("ui/widget/infomessage")
 local AnthropicHandler = BaseHandler:new({
     name = "Anthropic",
     can_fetch_models = true,
-    has_builtin_websearch = false,
+    has_builtin_websearch = true,
 })
 AnthropicHandler.SupportedOptions = {
-    ["max_tokens"]= true,
+    ["max_tokens"] = true,
 }
 
 --- Return the full API endpoint URL by appending the messages path.
