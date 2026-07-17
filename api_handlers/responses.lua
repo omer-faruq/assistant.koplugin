@@ -359,9 +359,9 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
                             if event.arguments then
                                 pending.arguments = event.arguments
                             end
-                            -- Emit tool_call in Chat Completions format
                             local tc_index = tool_call_index
                             tool_call_index = tool_call_index + 1
+                            -- 1) Emit tool_call delta (accumulated by processChunk; early return)
                             emitJSON({
                                 id = "resp_stream",
                                 object = "chat.completion.chunk",
@@ -378,6 +378,15 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
                                             },
                                         }},
                                     },
+                                }},
+                            })
+                            -- 2) Emit a separate finish_reason chunk to trigger TOOLCALLS
+                            emitJSON({
+                                id = "resp_stream",
+                                object = "chat.completion.chunk",
+                                choices = {{
+                                    index = 0,
+                                    delta = {},
                                     finish_reason = "tool_calls",
                                 }},
                             })
@@ -404,7 +413,6 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
                     -- Reasoning text streaming (e.g. o-series models)
                     elseif ev_type == "response.reasoning_text.delta" then
                         local delta = event.delta or ""
-                        logger.info("delta", delta)
                         emitJSON({
                             id = "resp_stream",
                             object = "chat.completion.chunk",
@@ -530,8 +538,8 @@ function ResponsesHandler:query(message_history, query_option)
         -- Responses API native web_search tool — no external search needed
         tools = { { type = "web_search" } }
     elseif ToolExecutor.IsExtSearch(ws_mode) then
-        -- External search via function calling — use the same tool def format as OpenAI
-        tools = { self:buildExternalSearchToolDef("openai") }
+        -- External search via function calling — Responses API flattened format
+        tools = { self:buildExternalSearchToolDef("responses") }
     end
 
     local body = self:buildRequestBody(message_history, query_option, tools)

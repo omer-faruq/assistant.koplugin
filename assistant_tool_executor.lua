@@ -516,6 +516,13 @@ Return exactly one concise search query string.]]
                 },
             },
         }
+    elseif format == "responses" then
+        return {
+            type        = "function",
+            name        = "web_search",
+            description = description,
+            parameters  = param_schema,
+        }
     else  -- "openai"
         return {
             type = "function",
