@@ -23,7 +23,7 @@ local CONFIGURATION = {
             default = true,        -- optional, if provider above is not set, will try to find one with `default =  true`
             visible = true,        -- optional, if set to false, will not shown in the provider switch
             model = "gpt-5.4-mini", -- model list: https://platform.openai.com/docs/models
-            base_url = "https://api.openai.com/v1/chat/completions",
+            base_url = "https://api.openai.com/v1",
             api_key = "your-openai-api-key",
             additional_parameters = {
                 temperature = 0.7,
@@ -33,7 +33,7 @@ local CONFIGURATION = {
         openai_grok = {
             --- use grok model via openai handler
             model = "grok", -- model list: https://docs.x.ai/developers/models
-            base_url = "https://api.x.ai/v1/chat/completions",
+            base_url = "https://api.x.ai/v1",
             api_key = "your-grok-api-key",
             additional_parameters = {
                 temperature = 0.7,
@@ -47,7 +47,7 @@ local CONFIGURATION = {
         responses_openai = {
             visible = false,       -- optional, set to true to show in provider switch
             model = "gpt-4o-mini", -- model list: https://platform.openai.com/docs/models
-            base_url = "https://api.openai.com/v1/responses",
+            base_url = "https://api.openai.com/v1",
             api_key = "your-openai-api-key",
             additional_parameters = {
                 -- temperature = 0.7,
@@ -58,7 +58,7 @@ local CONFIGURATION = {
         anthropic = {
             visible = true,                    -- optional, if set to false, will not shown in the profile switch
             model = "claude-3-5-haiku-latest", -- model list: https://docs.anthropic.com/en/docs/about-claude/models
-            base_url = "https://api.anthropic.com/v1/messages",
+            base_url = "https://api.anthropic.com/v1",
             api_key = "your-anthropic-api-key",
             additional_parameters = {
                 anthropic_version = "2023-06-01", -- api version list: https://docs.anthropic.com/en/api/versioning
@@ -69,7 +69,7 @@ local CONFIGURATION = {
         anthropic_websearch = {
             visible = false,                   -- optional, if set to false, will not shown in the profile switch
             model = "claude-3-5-haiku-latest", -- model list: https://docs.anthropic.com/en/docs/about-claude/models
-            base_url = "https://api.anthropic.com/v1/messages",
+            base_url = "https://api.anthropic.com/v1",
             api_key = "your-anthropic-api-key",
             additional_parameters = {
                 anthropic_version = "2023-06-01", -- api version list: https://docs.anthropic.com/en/api/versioning
@@ -105,14 +105,14 @@ local CONFIGURATION = {
         },
         gigachat = {
             model = "GigaChat-2",
-            base_url = "https://gigachat.devices.sberbank.ru/api/v1/chat/completions",
+            base_url = "https://gigachat.devices.sberbank.ru/api/v1",
             auth_url = "https://ngw.devices.sberbank.ru:9443/api/v2/oauth",
             api_key = "your-authorization-key",
             additional_parameters = {}
         },
         openrouter = {
             model = "google/gemini-2.0-flash-exp:free", -- model list: https://openrouter.ai/models?order=top-weekly
-            base_url = "https://openrouter.ai/api/v1/chat/completions",
+            base_url = "https://openrouter.ai/api/v1",
             api_key = "your-openrouter-api-key",
             additional_parameters = {
                 temperature = 0.7,
@@ -131,7 +131,7 @@ local CONFIGURATION = {
         openrouter_free = {
             --- use another free model with defferent configuration
             model = "openrouter/free", -- model list: https://openrouter.ai/models?order=top-weekly
-            base_url = "https://openrouter.ai/api/v1/chat/completions",
+            base_url = "https://openrouter.ai/api/v1",
             api_key = "your-openrouter-api-key",
             additional_parameters = {
                 temperature = 0.7,
@@ -141,7 +141,7 @@ local CONFIGURATION = {
         deepseek = {
             visible = false,                   -- optional, if set to false, will not shown in the profile switch
             model = "deepseek-v4-flash",
-            base_url = "https://api.deepseek.com/v1/chat/completions",
+            base_url = "https://api.deepseek.com/v1",
             api_key = "your-deepseek-api-key",
             additional_parameters = {
                 temperature = 0.7,
@@ -162,7 +162,7 @@ local CONFIGURATION = {
             -- Note: Both endpoints work: /v1beta/openai/ or /v1beta/chat/completions
             visible = false,                   -- optional, if set to false, will not shown in the profile switch
             model = "gemma-4-31b-it",
-            base_url = "https://generativelanguage.googleapis.com/v1beta/openai/",   -- Alternative: base_url = "https://generativelanguage.googleapis.com/v1beta/chat/completions",
+            base_url = "https://generativelanguage.googleapis.com/v1beta/openai",   -- Alternative: base_url = "https://generativelanguage.googleapis.com/v1beta/chat/completions",
             api_key = "your-gemini-api-key",
             additional_parameters = {
                 thinking_config = { thinking_level = "minimal" }, -- minimum the reasoning level
@@ -172,7 +172,7 @@ local CONFIGURATION = {
             
             -- Option 2: Ollama or other OpenAI-compatible API (for Gemma 2)
             -- model = "gemma-2-9b-it",
-            -- base_url = "http://localhost:11434/v1/chat/completions",
+            -- base_url = "http://localhost:11434/v1",
             -- api_key = "gemma",
             -- additional_parameters = {
             --     temperature = 0.7,
@@ -193,7 +193,7 @@ local CONFIGURATION = {
             -- Perplexity API is OpenAI-compatible, uses openai handler
             -- Model list: https://docs.perplexity.ai/guides/model-cards
             model = "sonar-pro",
-            base_url = "https://api.perplexity.ai/chat/completions",
+            base_url = "https://api.perplexity.ai",
             api_key = "pplx-your-api-key",
             additional_parameters = {
                 temperature = 0.7,
@@ -204,7 +204,7 @@ local CONFIGURATION = {
             visible = false,                   -- optional, if set to false, will not shown in the profile switch
             -- Perplexity reasoning models for complex tasks
             model = "sonar-reasoning-pro",
-            base_url = "https://api.perplexity.ai/chat/completions",
+            base_url = "https://api.perplexity.ai",
             api_key = "pplx-your-api-key",
             additional_parameters = {
                 temperature = 0.7,
@@ -213,13 +213,13 @@ local CONFIGURATION = {
         },
         ollama = {
             model = "your-preferred-model",        -- model list: https://ollama.com/library
-            base_url = "your-ollama-api-endpoint", -- ex: "https://ollama.example.com/api/chat"
+            base_url = "your-ollama-api-endpoint", -- ex: "https://ollama.example.com/v1"
             api_key = "ollama",
             additional_parameters = {}
         },
         mistral = {
             model = "mistral-small-latest", -- model list: https://docs.mistral.ai/getting-started/models/models_overview/
-            base_url = "https://api.mistral.ai/v1/chat/completions",
+            base_url = "https://api.mistral.ai/v1",
             api_key = "your-mistral-api-key",
             additional_parameters = {
                 temperature = 0.7,
@@ -228,7 +228,7 @@ local CONFIGURATION = {
         },
         groq = {
             model = "llama-3.3-70b-versatile", -- model list: https://console.groq.com/docs/models
-            base_url = "https://api.groq.com/openai/v1/chat/completions",
+            base_url = "https://api.groq.com/openai/v1",
             api_key = "your-groq-api-key",
             additional_parameters = {
                 temperature = 0.7,
@@ -244,7 +244,7 @@ local CONFIGURATION = {
             --- Recommended setting
             --- qwen3 without reasoning
             model = "qwen/qwen3-32b",
-            base_url = "https://api.groq.com/openai/v1/chat/completions",
+            base_url = "https://api.groq.com/openai/v1",
             api_key = "your-groq-api-key",
             additional_parameters = {
                 temperature = 0.7,
@@ -254,7 +254,7 @@ local CONFIGURATION = {
         openai_modelstudio = {
             -- Alibaba Cloud Model Studio (Qwen) via OpenAI-compatible endpoint
             model = "qwen3.6-flash",
-            base_url = "https://{WorkspaceId}.{Region}.maas.aliyuncs.com/compatible-mode/v1/chat/completions",
+            base_url = "https://{WorkspaceId}.{Region}.maas.aliyuncs.com/compatible-mode/v1",
             api_key = "your-modelstudio-api-key",
             additional_parameters = {
                 temperature = 0.7,

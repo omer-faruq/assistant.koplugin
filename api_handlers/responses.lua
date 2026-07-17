@@ -41,16 +41,12 @@ ResponsesHandler.SupportedOptions = {
 
 function ResponsesHandler:SyncOptions(querier)
     BaseHandler.SyncOptions(self, querier)
-    -- Normalize base_url: strip trailing /responses if present, we'll append it
-    self.responses_url = self.base_url
-    if not self.responses_url:match("/responses$") then
-        self.responses_url = self.responses_url:gsub("/+$", "") .. "/responses"
-    end
+    self.responses_url = self.base_url .. "/responses"
 end
 
 function ResponsesHandler:FetchModels()
     -- Use the standard /v1/models endpoint (same as Chat Completions)
-    local model_url = self.base_url:gsub("/responses.*$", "/models")
+    local model_url = self.base_url .. "/models"
     local infomsg = InfoMessage:new{
         text = _("Fetching models..."),
     }

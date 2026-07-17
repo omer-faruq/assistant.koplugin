@@ -57,6 +57,9 @@ function BaseHandler:SyncOptions(querier)
     self.handler_name = querier.handler_name
     koutil.tableMerge(self, querier.provider_setting)
 
+    -- Normalize base_url: strip known API path suffixes for backward compatibility
+    self:normalizeBaseUrl()
+
     -- Apply user selected model override
     local selected_model = querier.settings:readSetting("selected_model_" .. self.provider_name)
     if selected_model then
@@ -65,6 +68,25 @@ function BaseHandler:SyncOptions(querier)
 end
 
 function BaseHandler:FetchModels()
+end
+
+--- Normalize base_url to a true base URL by stripping known API path suffixes.
+--- Handles backward compatibility with old configs that included the full API path
+--- (e.g. /chat/completions, /messages, /responses).
+--- Each handler is expected to call this during SyncOptions, then append its own
+--- API path suffix when constructing request URLs.
+function BaseHandler:normalizeBaseUrl()
+    if not self.base_url or self.base_url == "" then return end
+    -- Strip trailing slashes
+    self.base_url = self.base_url:gsub("/+$", "")
+    -- Strip known API path suffixes (order matters: longer patterns first)
+    self.base_url = self.base_url:gsub("/chat/completions$", "")
+    self.base_url = self.base_url:gsub("/messages$", "")
+    self.base_url = self.base_url:gsub("/responses$", "")
+    -- For Gemini: strip model:generateContent suffix
+    self.base_url = self.base_url:gsub("/models/[^/]+:generateContent$", "")
+    -- Strip trailing slashes again
+    self.base_url = self.base_url:gsub("/+$", "")
 end
 
 --- Query method to be implemented by specific handlers.

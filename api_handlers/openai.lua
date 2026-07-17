@@ -31,8 +31,13 @@ function OpenAIHandler:SyncOptions(querier)
     self.reasoning_key = nil
 end
 
+--- Return the full API endpoint URL by appending the chat completions path.
+function OpenAIHandler:getApiUrl()
+    return self.base_url .. "/chat/completions"
+end
+
 function OpenAIHandler:FetchModels()
-    local model_url = self.base_url:gsub("/chat/.*$", "/models")
+    local model_url = self.base_url .. "/models"
     local infomsg = InfoMessage:new{
         text = _("Fetching models..."),
     }
@@ -97,14 +102,14 @@ function OpenAIHandler:query(message_history, query_option)
     if query_option.use_stream_mode then
         local requestBody = json.encode(body)
         headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(self.base_url, headers, requestBody)
+        return self:backgroundRequest(self:getApiUrl(), headers, requestBody)
     end
 
     -- -----------------------------------------------------------------------
     -- NON-STREAM path: synchronous makeRequest, may return tool_call table.
     -- -----------------------------------------------------------------------
     local requestBody = json.encode(body)
-    local status, code, response = self:makeRequest(self.base_url, headers, requestBody)
+    local status, code, response = self:makeRequest(self:getApiUrl(), headers, requestBody)
 
     if not status then
         if code == BaseHandler.CODE_CANCELLED then

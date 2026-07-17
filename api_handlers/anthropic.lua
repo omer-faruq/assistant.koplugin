@@ -14,12 +14,17 @@ local AnthropicHandler = BaseHandler:new({
     has_builtin_websearch = false,
 })
 AnthropicHandler.SupportedOptions = {
-    ["max_tokens"] = true,
+    ["max_tokens"]= true,
 }
+
+--- Return the full API endpoint URL by appending the messages path.
+function AnthropicHandler:getApiUrl()
+    return self.base_url .. "/messages"
+end
 
 function AnthropicHandler:FetchModels()
 
-    local model_url = self.base_url:gsub("/v1/.*$", "/v1/models")
+    local model_url = self.base_url .. "/models"
     local infomsg = InfoMessage:new{
         text = _("Fetching models..."),
     }
@@ -133,7 +138,7 @@ function AnthropicHandler:query(message_history, query_option)
         local body = self:buildRequestBody(message_history, stream_tools, true)
         local requestBody = json.encode(body)
         headers["Accept"] = "text/event-stream"
-        return self:backgroundRequest(self.base_url, headers, requestBody)
+        return self:backgroundRequest(self:getApiUrl(), headers, requestBody)
     end
 
     -- -----------------------------------------------------------------------
@@ -150,7 +155,7 @@ function AnthropicHandler:query(message_history, query_option)
     end
 
     local success, code, response = self:makeRequest(
-        self.base_url, headers, json.encode(requestBody))
+        self:getApiUrl(), headers, json.encode(requestBody))
 
     if not success then
         if code == BaseHandler.CODE_CANCELLED then

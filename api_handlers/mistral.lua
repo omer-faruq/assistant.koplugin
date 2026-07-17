@@ -1,4 +1,4 @@
-local MistrialHandler = require("api_handlers.openai"):new({
-    name = "Ollama",
+local MistralHandler = require("api_handlers.openai"):new({
+    name = "Mistral",
 })
-return MistrialHandler
+return MistralHandler

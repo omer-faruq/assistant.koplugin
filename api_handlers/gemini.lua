@@ -22,7 +22,9 @@ GeminiHandler.SupportedOptions = {
 }
 
 function GeminiHandler:FetchModels()
-    local model_url = self.base_url:gsub("v1beta/.+$", "v1beta/models")
+    -- Gemini base_url already ends with /models/ (e.g. .../v1beta/models/)
+    -- The models listing endpoint is the base_url itself
+    local model_url = self.base_url
 
     local infomsg = InfoMessage:new{
         text = _("Fetching models..."),
@@ -146,10 +148,10 @@ function GeminiHandler:query(message_history, query_option)
 
     local model    = self.model
     local base_url = self.base_url
-                  or "https://generativelanguage.googleapis.com/v1beta/models/"
+                  or "https://generativelanguage.googleapis.com/v1beta/models"
 
-    local url_sync   = string.format("%s%s:generateContent",            base_url, model)
-    local url_stream = string.format("%s%s:streamGenerateContent?alt=sse", base_url, model)
+    local url_sync   = string.format("%s/%s:generateContent",            base_url, model)
+    local url_stream = string.format("%s/%s:streamGenerateContent?alt=sse", base_url, model)
 
     local headers = {
         ["Content-Type"]   = "application/json",
