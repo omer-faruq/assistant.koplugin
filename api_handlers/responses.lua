@@ -26,6 +26,7 @@ local strbuf = require("string.buffer")
 local ResponsesHandler = BaseHandler:new({
     name = "responses",
     can_fetch_models = true,
+    has_builtin_websearch = true,
 })
 
 ResponsesHandler.SupportedOptions = {

@@ -11,6 +11,7 @@ local InfoMessage = require("ui/widget/infomessage")
 local AnthropicHandler = BaseHandler:new({
     name = "Anthropic",
     can_fetch_models = true,
+    has_builtin_websearch = false,
 })
 AnthropicHandler.SupportedOptions = {
     ["max_tokens"] = true,

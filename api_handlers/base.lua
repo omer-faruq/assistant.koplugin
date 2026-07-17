@@ -21,6 +21,7 @@ local BaseHandler = {
     additional_parameters = {},
     trap_widget = nil,  -- widget to trap the request
     can_fetch_models = false,
+    has_builtin_websearch = false,
 }
 
 BaseHandler.CODE_CANCELLED          = "USER_CANCELED"

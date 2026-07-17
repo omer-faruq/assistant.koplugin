@@ -370,10 +370,11 @@ SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
             assistant.updated = true
         end,
         enabled_func = function ()
-            if key == "none" or key == "builtin" then
+            if key == "none" then
                 return true
-            end
-            if ToolExecutor.IsExtSearch(key) then
+            elseif key == "builtin" then
+                return koutil.tableGetValue(assistant, "querier", "handler", "has_builtin_websearch")
+            elseif ToolExecutor.IsExtSearch(key) then
                 return 
                     (koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", key, "api_key") ~= nil) or
                     (koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", key, "base_url") ~= nil)

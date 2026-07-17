@@ -11,6 +11,7 @@ local InfoMessage = require("ui/widget/infomessage")
 local GeminiHandler = BaseHandler:new({
     name = "Gemini",
     can_fetch_models = true,
+    has_builtin_websearch = true,
 })
 GeminiHandler.SupportedOptions = {
     ["maxOutputTokens"] = true,
