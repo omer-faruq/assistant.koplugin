@@ -106,8 +106,8 @@ local function checkForUpdates()
       { ["Accept"] = "application/vnd.github.v3+json" },
       _("Checking for updates..."))
 
-  if err or not parsed_data then
-    Notification:notify(T(_("AI Assistant: Failed to check updates: %2"), err), Notification.SOURCE_ALWAYS_SHOW)
+  if not parsed_data then
+    Notification:notify(T(_("AI Assistant: Failed to check updates: %2"), err or _("Empty Error")), Notification.SOURCE_ALWAYS_SHOW)
     return
   end
 
