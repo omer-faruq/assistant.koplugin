@@ -22,7 +22,7 @@ local ToolExecutor = require("assistant_tool_executor")
 local _ = require("assistant_gettext")
 local N_ = _.ngettext
 local AssistantDialog = require("assistant_dialog")
-local UpdateChecker = require("assistant_update_checker")
+local Updater = require("assistant_updater")
 local Prompts = require("assistant_prompts")
 local SettingsDialog = require("assistant_settings")
 local showDictionaryDialog = require("assistant_dictdialog")
@@ -548,7 +548,7 @@ function Assistant:init()
 
           NetworkMgr:runWhenOnline(function()
             if not updateMessageShown then
-              UpdateChecker.checkForUpdates(self)
+              Updater.checkForUpdates(self)
               updateMessageShown = true
             end
             UIManager:nextTick(function()

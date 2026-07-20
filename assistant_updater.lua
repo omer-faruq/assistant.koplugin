@@ -1,6 +1,7 @@
 local json = require("rapidjson")
 local TrapWidget  = require("ui/widget/trapwidget")
 local Notification = require("ui/widget/notification")
+local InfoMessage = require("ui/widget/infomessage")
 local UIManager = require("ui/uimanager")
 local Trapper = require("ui/trapper")
 local logger = require("logger")
@@ -139,10 +140,164 @@ local function checkForUpdates()
   end
 end
 
+local function otaUpgrade(assistant, version)
+  local PLUGIN_NAME = "assistant.koplugin"
+
+  local GITHUB_BASE = koutil.tableGetValue(CONFIGURATION, "features", "ota_github_base")
+    or "https://ghfast.top/https://github.com"
+  local GITHUB_REPO = koutil.tableGetValue(CONFIGURATION, "features", "ota_github_repo")
+    or "omer-faruq/assistant.koplugin"
+
+  local REPO_REF = version:sub(1, 1) == "v" and "tags" or "heads"
+  local RELEASE_URL = string.format("%s/%s/archive/refs/%s/%s.zip", GITHUB_BASE, GITHUB_REPO, REPO_REF, version)
+
+  local infomsg = InfoMessage:new{ text = T(_("Updating %1 to %2..."), PLUGIN_NAME, version) }
+  UIManager:show(infomsg)
+  -- UIManager:forceRePaint()
+
+  local completed, result, err_msg = Trapper:dismissableRunInSubprocess(function()
+    local DataStorage = require("datastorage")
+    local lfs = require("libs/libkoreader-lfs")
+    local Archiver = require("ffi/archiver")
+    local FFIUtil = require("ffi/util")
+    local socket = require("socket")
+    local http = require("socket.http")
+    local ltn12 = require("ltn12")
+    local util = require("util")
+    local ASUtils = require("assistant_utils")
+
+    local KOREADER_DIR = DataStorage:getFullDataDir()
+    local PLUGIN_DIR = KOREADER_DIR .. "/plugins"
+    local ASSISTANT_DIR = PLUGIN_DIR .. "/" .. PLUGIN_NAME
+    local UPDATE_TMPDIR = KOREADER_DIR .. "/ota/" .. PLUGIN_NAME .. ".update"
+    local UPDATE_BAKDIR = UPDATE_TMPDIR .. "/backup"
+    local TARGET_PLUGIN_PATH = ASSISTANT_DIR
+    local BACKUP_PLUGIN_PATH = UPDATE_BAKDIR .. "/" .. PLUGIN_NAME
+    local DL_TAR = string.format("%s/SOURCE-%s-%s.zip", UPDATE_TMPDIR, PLUGIN_NAME, version)
+
+
+    local function is_excluded(path)
+      if path:find("/%.") or path:sub(1,1) == "." then
+        return true
+      end
+      if path:find(".+%.md$")
+         or path:find("l10n/templates")
+         or path:find("l10n/AI_TRANSLATE%.sh$")
+         or path:find("l10n/Makefile$")
+      then
+        return true
+      end
+      return false
+    end
+
+    util.makePath(UPDATE_BAKDIR)
+
+    local file_handle = io.open(DL_TAR, "wb")
+    if not file_handle then
+      return false, "Could not create temp file"
+    end
+
+    local sink = ltn12.sink.file(file_handle)
+    local status_code = socket.skip(1, http.request{
+      url = RELEASE_URL,
+      method = "GET",
+      sink = sink,
+    })
+
+    if status_code ~= 200 then
+      FFIUtil.purgeDir(UPDATE_TMPDIR)
+      return false, "Download failed: HTTP " .. tostring(status_code)
+    end
+
+    local arc = Archiver.Reader:new()
+    if not arc:open(DL_TAR) then
+      FFIUtil.purgeDir(UPDATE_TMPDIR)
+      return false, "Failed to open archive"
+    end
+
+    for entry in arc:iterate() do
+      if not is_excluded(entry.path) then
+        local dest_path = UPDATE_TMPDIR .. "/" .. entry.path
+        local parent_dir = dest_path:match("(.*)" .. package.config:sub(1,1))
+        if parent_dir and not util.pathExists(parent_dir) then
+          util.makePath(parent_dir)
+        end
+        if not arc:extractToPath(entry.path, dest_path) then
+          arc:close()
+          FFIUtil.purgeDir(UPDATE_TMPDIR)
+          return false, "Failed to extract: " .. entry.path
+        end
+      end
+    end
+    arc:close()
+
+    if util.pathExists(TARGET_PLUGIN_PATH) then
+      if util.pathExists(BACKUP_PLUGIN_PATH) then
+        FFIUtil.purgeDir(BACKUP_PLUGIN_PATH)
+      end
+      os.rename(TARGET_PLUGIN_PATH, BACKUP_PLUGIN_PATH)
+    end
+
+    local found_extracted_dir = nil
+    for file in lfs.dir(UPDATE_TMPDIR) do
+      if file:sub(1, #PLUGIN_NAME) == PLUGIN_NAME then
+        if util.directoryExists(UPDATE_TMPDIR .. "/" .. file) then
+          found_extracted_dir = UPDATE_TMPDIR .. "/" .. file
+          break
+        end
+      end
+    end
+
+    if found_extracted_dir then
+      os.rename(found_extracted_dir, TARGET_PLUGIN_PATH)
+    else
+      if util.pathExists(BACKUP_PLUGIN_PATH) then
+        os.rename(BACKUP_PLUGIN_PATH, TARGET_PLUGIN_PATH)
+      end
+      FFIUtil.purgeDir(UPDATE_TMPDIR)
+      return false, "Could not find extracted plugin directory"
+    end
+
+    if util.pathExists(BACKUP_PLUGIN_PATH) then
+      local restore_targets = {"configuration.lua", "lib"}
+      for _, filename in ipairs(restore_targets) do
+        local old_file = BACKUP_PLUGIN_PATH .. "/" .. filename
+        local new_file = TARGET_PLUGIN_PATH .. "/" .. filename
+        if util.pathExists(old_file) then
+          if util.pathExists(new_file) then FFIUtil.purgeDir(new_file) end
+          os.rename(old_file, new_file)
+        end
+      end
+    end
+
+    FFIUtil.purgeDir(UPDATE_TMPDIR)
+
+    return true, nil
+  end, infomsg)
+
+  UIManager:close(infomsg)
+
+  if not completed then
+    Notification:notify(_("OTA update canceled."))
+    return
+  end
+
+  if not result then
+    Notification:notify(T(_("OTA update failed: %1"), tostring(err_msg)))
+    return
+  end
+
+  UIManager:askForRestart()
+end
+
 return {
   checkForUpdates = function(assistant)
     CONFIGURATION = assistant.CONFIGURATION
     meta = assistant.meta
     return Trapper:wrap(checkForUpdates)
-  end
+  end,
+  otaUpgrade = function(assistant, version)
+    CONFIGURATION = assistant.CONFIGURATION
+    return Trapper:wrap(function() otaUpgrade(assistant, version) end)
+  end,
 }

@@ -35,6 +35,7 @@ local logger = require("logger")
 local koutil = require("util")
 local ToolExecutor = require("assistant_tool_executor")
 local ExtTools = require("assistant_exttools")
+local Updater = require("assistant_updater")
 
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
@@ -584,6 +585,46 @@ SettingsDialog.genMenuSettings = function(assistant)
                 assistant.settings:toggle("use_book_text_for_analysis")
                 assistant.updated = true
             end
+        },
+        {
+            text = _("OTA Update"),
+            callback = function(touchmenu_instance)
+                local version_input
+                version_input = InputDialog:new{
+                    title = _("OTA Update"),
+                    input = "main",
+                    input_hint = _("branch or tag name"),
+                    description = T(_([[
+Enter a branch or tag name to update the AI Assistant plugin from the main repository.
+
+Default: "main" (latest development version)
+Examples: "main", "v1.12", "v1.11-rc2"
+
+The current plugin will be backed up and replaced. Configuration and lib files will be preserved.]]), meta.fullname),
+                    buttons = {
+                        {
+                            {
+                                text = _("Cancel"),
+                                callback = function()
+                                    UIManager:close(version_input)
+                                end,
+                            },
+                            {
+                                text = _("Update"),
+                                callback = function()
+                                    local version = version_input:getInputText()
+                                    if version == "" then version = "main" end
+                                    UIManager:close(version_input)
+                                    touchmenu_instance:closeMenu()
+                                    Updater.otaUpgrade(assistant, version)
+                                end,
+                            },
+                        },
+                    },
+                }
+                UIManager:show(version_input)
+            end,
+            keep_menu_open = true,
         },
         {
             text = _("Purge the settings"),
