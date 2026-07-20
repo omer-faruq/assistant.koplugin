@@ -206,8 +206,13 @@ local function otaUpgrade(assistant, version)
 
     if status_code ~= 200 then
       FFIUtil.purgeDir(UPDATE_TMPDIR)
+      if status_code == 404 then
+        return false, T(_("Version/Branch/Tag %1 was not found."), version)
+      end
       return false, "Download failed: HTTP " .. tostring(status_code)
     end
+
+    Notification:notify(_("Download finished. Extracting ..."), Notification.SOURCE_ALWAYS_SHOW)
 
     local arc = Archiver.Reader:new()
     if not arc:open(DL_TAR) then
@@ -278,15 +283,16 @@ local function otaUpgrade(assistant, version)
   UIManager:close(infomsg)
 
   if not completed then
-    Notification:notify(_("OTA update canceled."))
+    Notification:notify(_("OTA update canceled."), Notification.SOURCE_ALWAYS_SHOW)
     return
   end
 
   if not result then
-    Notification:notify(T(_("OTA update failed: %1"), tostring(err_msg)))
+    Notification:notify(T(_("OTA update failed: %1"), tostring(err_msg)), Notification.SOURCE_ALWAYS_SHOW)
     return
   end
 
+  Notification:notify(T(_("OTA UPDATE OK.\n Restart is required.")), Notification.SOURCE_ALWAYS_SHOW)
   UIManager:askForRestart()
 end
 
