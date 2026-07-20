@@ -304,6 +304,7 @@ local CONFIGURATION = {
         -- system_prompt = "You are a helpful AI assistant. Always respond in Markdown format.", -- Custom system prompt for the AI ("Ask" button) to override the default, to disable set to nil
         render_markdown = true,                -- Set to true to render markdown in the AI responses
         updater_disabled = false,              -- Set to true to disable update check.
+        update_check_url = "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest", -- URL for checking latest release
         ota_github_base = "https://github.com", -- GitHub proxy base URL for OTA updates
         ota_github_repo = "omer-faruq/assistant.koplugin", -- GitHub repository for OTA updates
         default_folder_for_logs = nil,         -- Set the default folder for auto saved logs, nil for the same folder as the book, ex: "/mnt/onboard/logs/" for Kobo , "/mnt/us/documents/logs/" for Kindle

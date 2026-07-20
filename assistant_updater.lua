@@ -1,4 +1,3 @@
-local json = require("rapidjson")
 local TrapWidget  = require("ui/widget/trapwidget")
 local Notification = require("ui/widget/notification")
 local InfoMessage = require("ui/widget/infomessage")
@@ -9,8 +8,6 @@ local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local koutil = require("util")
 local assistant_utils = require("assistant_utils")
-
-local update_url = "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest"
 
 local CONFIGURATION = nil
 local meta = nil
@@ -98,37 +95,24 @@ local function isVersionNewer(v1_str, v2_str)
 end
 
 local function checkForUpdates()
-  
   if koutil.tableGetValue(CONFIGURATION, "features", "updater_disabled") then
     return
   end
 
-  local infomsg = TrapWidget:new{ text = _("Checking for updates...") }
-  UIManager:show(infomsg)
+  local update_url = koutil.tableGetValue(CONFIGURATION, "features", "update_check_url")
+    or "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest"
 
-  local completed, success, code, body = Trapper:dismissableRunInSubprocess(function()
-    return assistant_utils.httpRequest(update_url, nil, nil, nil, nil, { ["Accept"] = "application/vnd.github.v3+json" })
-  end, infomsg)
-  UIManager:close(infomsg)
+  local parsed_data, err = assistant_utils.fetchJSON(update_url,
+      { ["Accept"] = "application/vnd.github.v3+json" },
+      _("Checking for updates..."))
 
-  if not completed then
-    Notification:notify(_("Update check canceled."))
-    return
-  end
-  if not success or code ~= 200 then
-    Notification:notify(T(_("Failed to check for updates. HTTP code: %1"), code))
+  if err or not parsed_data then
+    Notification:notify(T(_("AI Assistant: Failed to check updates: %2"), err), Notification.SOURCE_ALWAYS_SHOW)
     return
   end
 
-  local ok, parsed_data = pcall(json.decode, body)
-  if not ok then
-    Notification:notify(T(_("Failed to parse update check response: %1"), parsed_data))
-    return
-  end
-
-  local latest_version_tag = parsed_data and parsed_data.tag_name -- e.g., "v1.08-rc2"
+  local latest_version_tag = parsed_data.tag_name
   if latest_version_tag and meta and meta.version then
-    -- Strip optional leading 'v'
     local latest_version_str = latest_version_tag:match("^v?(.*)$")
     local current_version_str = tostring(meta.version)
 
