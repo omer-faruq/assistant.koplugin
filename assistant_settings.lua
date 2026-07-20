@@ -614,6 +614,16 @@ The current plugin will be backed up and replaced. Configuration and lib files w
                                 end,
                             },
                             {
+                                text = _("Check"),
+                                callback = function()
+                                    Updater.checkForUpdates(assistant)
+                                    UIManager:show(InfoMessage:new{
+                                        alignment = "center", show_icon = false,
+                                        text = T("%1 - %2", meta.fullname, meta.version)
+                                    })
+                                end,
+                            },
+                            {
                                 text = _("Cancel"),
                                 callback = function()
                                     UIManager:close(version_input)
