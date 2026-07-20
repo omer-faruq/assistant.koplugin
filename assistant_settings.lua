@@ -591,7 +591,7 @@ SettingsDialog.genMenuSettings = function(assistant)
             callback = function(touchmenu_instance)
                 local version_input
                 version_input = InputDialog:new{
-                    title = _("OTA Update"),
+                    title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, meta.version),
                     input = "main",
                     input_hint = _("branch or tag name"),
                     description = T(_([[
@@ -616,10 +616,6 @@ The current plugin will be backed up and replaced. Configuration and lib files w
                                 callback = function()
                                     NetworkMgr:runWhenOnline(function()
                                         Updater.checkForUpdates(assistant)
-                                        UIManager:show(InfoMessage:new{
-                                            alignment = "center", show_icon = false,
-                                            text = T("%1 - %2", meta.fullname, meta.version)
-                                        })
                                     end)
                                 end,
                             },
