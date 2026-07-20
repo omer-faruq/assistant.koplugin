@@ -604,12 +604,6 @@ The current plugin will be backed up and replaced. Configuration and lib files w
                     buttons = {
                         {
                             {
-                                text = _("Cancel"),
-                                callback = function()
-                                    UIManager:close(version_input)
-                                end,
-                            },
-                            {
                                 text = _("Update"),
                                 callback = function()
                                     local version = version_input:getInputText()
@@ -617,6 +611,12 @@ The current plugin will be backed up and replaced. Configuration and lib files w
                                     UIManager:close(version_input)
                                     touchmenu_instance:closeMenu()
                                     Updater.otaUpgrade(assistant, version)
+                                end,
+                            },
+                            {
+                                text = _("Cancel"),
+                                callback = function()
+                                    UIManager:close(version_input)
                                 end,
                             },
                         },
