@@ -3,6 +3,7 @@ This widget displays a setting dialog.
 ]]
 
 local Trapper = require("ui/trapper")
+local NetworkMgr = require("ui/network/manager")
 local koutil = require("util")
 local Blitbuffer = require("ffi/blitbuffer")
 local CenterContainer = require("ui/widget/container/centercontainer")
@@ -342,7 +343,6 @@ function SettingsDialog:onBrowseModel()
         return
     end
 
-    local NetworkMgr = require("ui/network/manager")
     NetworkMgr:runWhenOnline(function()
         Trapper:wrap(function()
             local showModelPicker = require("assistant_model_picker")
@@ -614,21 +614,25 @@ The current plugin will be backed up and replaced. Configuration and lib files w
                             {
                                 text = _("Check"),
                                 callback = function()
-                                    Updater.checkForUpdates(assistant)
-                                    UIManager:show(InfoMessage:new{
-                                        alignment = "center", show_icon = false,
-                                        text = T("%1 - %2", meta.fullname, meta.version)
-                                    })
+                                    NetworkMgr:runWhenOnline(function()
+                                        Updater.checkForUpdates(assistant)
+                                        UIManager:show(InfoMessage:new{
+                                            alignment = "center", show_icon = false,
+                                            text = T("%1 - %2", meta.fullname, meta.version)
+                                        })
+                                    end)
                                 end,
                             },
                             {
                                 text = _("Update"),
                                 callback = function()
-                                    local version = version_input:getInputText()
-                                    if version == "" then version = "main" end
-                                    UIManager:close(version_input)
-                                    touchmenu_instance:closeMenu()
-                                    Updater.otaUpgrade(assistant, version)
+                                    NetworkMgr:runWhenOnline(function()
+                                        local version = version_input:getInputText()
+                                        if version == "" then version = "main" end
+                                        UIManager:close(version_input)
+                                        touchmenu_instance:closeMenu()
+                                        Updater.otaUpgrade(assistant, version)
+                                    end)
                                 end,
                             },
                         },

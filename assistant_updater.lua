@@ -191,7 +191,7 @@ local function otaUpgrade(assistant, version)
     if status_code ~= 200 then
       FFIUtil.purgeDir(UPDATE_TMPDIR)
       if status_code == 404 then
-        return false, T(_("Version/Branch/Tag %1 was not found."), version)
+        return false, T(_("Branch/Tag \"%1\" was not found."), version)
       end
       return false, "Download failed: HTTP " .. tostring(status_code)
     end
