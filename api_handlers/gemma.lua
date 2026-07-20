@@ -11,8 +11,7 @@ local PARENT_METATABLES = {
 }
 
 local function FormatByURL(base_url)
-    if base_url:match("generativelanguage%.googleapis%.com") and
-            not (base_url:match("/openai") or base_url:match("/chat/completions")) then
+    if base_url:match("generativelanguage%.googleapis%.com") and not (base_url:match("/openai")) then
         return "gemini"
     end
     return "openai"
