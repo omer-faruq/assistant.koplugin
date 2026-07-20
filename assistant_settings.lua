@@ -602,15 +602,13 @@ Examples: "main", "v1.12", "v1.11-rc2"
 
 The current plugin will be backed up and replaced. Configuration and lib files will be preserved.]]), meta.fullname),
                     buttons = {
+                        -- The cancellation button should be kept on the left 
+                        -- and the button executing the action on the right.
                         {
                             {
-                                text = _("Update"),
+                                text = _("Cancel"),
                                 callback = function()
-                                    local version = version_input:getInputText()
-                                    if version == "" then version = "main" end
                                     UIManager:close(version_input)
-                                    touchmenu_instance:closeMenu()
-                                    Updater.otaUpgrade(assistant, version)
                                 end,
                             },
                             {
@@ -624,9 +622,13 @@ The current plugin will be backed up and replaced. Configuration and lib files w
                                 end,
                             },
                             {
-                                text = _("Cancel"),
+                                text = _("Update"),
                                 callback = function()
+                                    local version = version_input:getInputText()
+                                    if version == "" then version = "main" end
                                     UIManager:close(version_input)
+                                    touchmenu_instance:closeMenu()
+                                    Updater.otaUpgrade(assistant, version)
                                 end,
                             },
                         },
