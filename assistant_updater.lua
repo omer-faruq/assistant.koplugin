@@ -167,7 +167,7 @@ local function otaUpgrade(assistant, version)
   util.makePath(UPDATE_BAKDIR)
 
   -- Phase 1: Download the archive (dismissable by user)
-  local download_msg = TrapWidget:new{
+  local download_msg = InfoMessage:new{
     text = T(_("Downloading ... \nGithub: %1\nRepo: %2\nBranch/Tag: %3"), GITHUB_BASE, GITHUB_REPO, version),
   }
   UIManager:show(download_msg)
