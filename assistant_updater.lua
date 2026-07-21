@@ -3,6 +3,7 @@ local Notification = require("ui/widget/notification")
 local InfoMessage = require("ui/widget/infomessage")
 local UIManager = require("ui/uimanager")
 local Trapper = require("ui/trapper")
+local Font = require("ui/font")
 local logger = require("logger")
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
@@ -124,7 +125,7 @@ local function checkForUpdates()
   end
 end
 
-local function otaUpgrade(assistant, version)
+local function otaUpgrade(version)
   local PLUGIN_NAME = "assistant.koplugin"
 
   local GITHUB_BASE = koutil.tableGetValue(CONFIGURATION, "features", "ota_github_base")
@@ -168,6 +169,7 @@ local function otaUpgrade(assistant, version)
 
   -- Phase 1: Download the archive (dismissable by user)
   local download_msg = InfoMessage:new{
+    face = Font:getFace("xx_smallinfofont"),
     text = T(_("Downloading ... \nGithub: %1\nRepo: %2\nBranch/Tag: %3"), GITHUB_BASE, GITHUB_REPO, version),
   }
   UIManager:show(download_msg)
@@ -308,6 +310,7 @@ return {
   end,
   otaUpgrade = function(assistant, version)
     CONFIGURATION = assistant.CONFIGURATION
-    return Trapper:wrap(function() otaUpgrade(assistant, version) end)
+    meta = assistant.meta
+    return Trapper:wrap(function() otaUpgrade(version) end)
   end,
 }
