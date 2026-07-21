@@ -168,7 +168,7 @@ local function otaUpgrade(assistant, version)
 
   -- Phase 1: Download the archive (dismissable by user)
   local download_msg = TrapWidget:new{
-    text = T(_("Downloading %1 %2..."), PLUGIN_NAME, version),
+    text = T(_("Downloading ... \nGithub: %1\nRepo: %2\nBranch/Tag: %3"), GITHUB_BASE, GITHUB_REPO, version),
   }
   UIManager:show(download_msg)
 
@@ -214,17 +214,19 @@ local function otaUpgrade(assistant, version)
   end
 
   -- Phase 2: Extract and install (NOT dismissable)
-  local extract_msg = InfoMessage:new{ text = T(_("Installing %1 %2..."), PLUGIN_NAME, version) }
+  local extract_msg = InfoMessage:new{ text = T(_("Installing %1..."), version) }
   UIManager:show(extract_msg)
   UIManager:forceRePaint()
 
   local function do_install()
+    -- Open the downloaded archive for reading
     local arc = Archiver.Reader:new()
     if not arc:open(DL_TAR) then
       FFIUtil.purgeDir(UPDATE_TMPDIR)
       return false, "Failed to open archive"
     end
 
+    -- Extract entries from the archive into UPDATE_TMPDIR, skipping excluded paths
     for entry in arc:iterate() do
       if not is_excluded(entry.path) then
         local dest_path = UPDATE_TMPDIR .. "/" .. entry.path
@@ -241,13 +243,8 @@ local function otaUpgrade(assistant, version)
     end
     arc:close()
 
-    if util.pathExists(TARGET_PLUGIN_PATH) then
-      if util.pathExists(BACKUP_PLUGIN_PATH) then
-        FFIUtil.purgeDir(BACKUP_PLUGIN_PATH)
-      end
-      os.rename(TARGET_PLUGIN_PATH, BACKUP_PLUGIN_PATH)
-    end
-
+    -- Locate the extracted top-level plugin directory (e.g. assistant.koplugin-<ver>)
+    -- Fail early before touching the existing installation so we don't have to roll back.
     local found_extracted_dir = nil
     for file in lfs.dir(UPDATE_TMPDIR) do
       if file:sub(1, #PLUGIN_NAME) == PLUGIN_NAME then
@@ -257,17 +254,23 @@ local function otaUpgrade(assistant, version)
         end
       end
     end
-
-    if found_extracted_dir then
-      os.rename(found_extracted_dir, TARGET_PLUGIN_PATH)
-    else
-      if util.pathExists(BACKUP_PLUGIN_PATH) then
-        os.rename(BACKUP_PLUGIN_PATH, TARGET_PLUGIN_PATH)
-      end
+    if not found_extracted_dir then
       FFIUtil.purgeDir(UPDATE_TMPDIR)
       return false, "Could not find extracted plugin directory"
     end
 
+    -- Move the currently installed plugin aside as a backup
+    if util.pathExists(TARGET_PLUGIN_PATH) then
+      if util.pathExists(BACKUP_PLUGIN_PATH) then
+        FFIUtil.purgeDir(BACKUP_PLUGIN_PATH)
+      end
+      os.rename(TARGET_PLUGIN_PATH, BACKUP_PLUGIN_PATH)
+    end
+
+    -- Install the freshly extracted plugin into its target location
+    os.rename(found_extracted_dir, TARGET_PLUGIN_PATH)
+
+    -- Restore user-owned files (configuration and native libraries) from the backup
     if util.pathExists(BACKUP_PLUGIN_PATH) then
       local restore_targets = {"configuration.lua", "lib"}
       for _, filename in ipairs(restore_targets) do
@@ -280,6 +283,7 @@ local function otaUpgrade(assistant, version)
       end
     end
 
+    -- Clean up temp/backup directory
     FFIUtil.purgeDir(UPDATE_TMPDIR)
     return true, nil
   end
