@@ -216,7 +216,7 @@ PAYLOAD=$(jq -n \
 
 # Send the request to the API endpoint using cURL.
 # -S shows errors, -f fails silently on HTTP errors.
-RESPONSE=$(curl -Sf --retry 5 --retry-delay 2 --retry-connrefused --max-time 30 -X POST "$API_ENDPOINT" \
+RESPONSE=$(curl -Sf --retry 5 --retry-delay 2 --retry-connrefused --max-time 90 -X POST "$API_ENDPOINT" \
   -H "$AUTH_HEADER" -H "Content-Type: application/json" \
   --data-raw "$PAYLOAD")
 

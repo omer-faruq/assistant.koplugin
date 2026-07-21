@@ -1,7 +1,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-16 16:47+0800\n"
+        "POT-Creation-Date: 2026-07-21 09:50+0800\n"
         "PO-Revision-Date: 2025-09-11 10:53+0800\n"
         "Last-Translator: AI Translation Model\n"
         "Language-Team: AI Translation Model\n"
@@ -20,13 +20,14 @@ msgstr  "AI Асистент"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 Подобрете KOReader с AI"
 
-#: ../api_handlers/anthropic.lua:23 ../api_handlers/gemini.lua:27
-#: ../api_handlers/openai.lua:37
+#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:30
+#: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
 msgid   "Fetching models..."
 msgstr  "Извличане на модели..."
 
-#: ../api_handlers/anthropic.lua:40 ../api_handlers/gemini.lua:37
-#: ../api_handlers/gemini.lua:47 ../api_handlers/openai.lua:53
+#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:40
+#: ../api_handlers/gemini.lua:50 ../api_handlers/openai.lua:58
+#: ../api_handlers/responses.lua:67
 msgid   "Failed to fetch models"
 msgstr  "Неуспешно извличане на модели"
 
@@ -55,7 +56,8 @@ msgstr  "Подчертан текст:"
 #: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:94 ../assistant_viewer.lua:682
+#: ../assistant_settings.lua:96 ../assistant_settings.lua:609
+#: ../assistant_viewer.lua:682
 msgid   "Cancel"
 msgstr  "Откажи"
 
@@ -274,7 +276,7 @@ msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "напр. google/gemini-3.0-flash-exp:free"
 
 #: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:118 ../assistant_viewer.lua:462
+#: ../assistant_settings.lua:120 ../assistant_viewer.lua:462
 msgid   "Save"
 msgstr  "Запази"
 
@@ -433,7 +435,7 @@ msgstr  "API грешка:\n"
         "\n"
         "Избери друг доставчик от настройките."
 
-#: ../assistant_querier.lua:156
+#: ../assistant_querier.lua:156 ../assistant_querier.lua:790
 msgid   "Unknown error"
 msgstr  "Неизвестна грешка"
 
@@ -441,7 +443,7 @@ msgstr  "Неизвестна грешка"
 msgid   "Settings"
 msgstr  "Настройки"
 
-#: ../assistant_querier.lua:159 ../assistant_settings.lua:219
+#: ../assistant_querier.lua:159 ../assistant_settings.lua:221
 #: ../assistant_viewer.lua:353
 msgid   "Close"
 msgstr  "Затвори"
@@ -494,11 +496,11 @@ msgstr  "⏹ Стоп"
 msgid   "Failed to start subprocess for request"
 msgstr  "Неуспешно стартиране на процеса за заявката"
 
-#: ../assistant_querier.lua:796 ../assistant_querier.lua:799
+#: ../assistant_querier.lua:820 ../assistant_querier.lua:823
 msgid   "Deeply Thought"
 msgstr  "Дълбоко размишление"
 
-#: ../assistant_querier.lua:986
+#: ../assistant_querier.lua:1010
 msgid   "Stopped Reason: "
 msgstr  "Причина за спиране: "
 
@@ -522,47 +524,47 @@ msgstr  "Потребител:"
 msgid   "Quick note saved successfully"
 msgstr  "Бързата бележка е запазена успешно"
 
-#: ../assistant_settings.lua:78
+#: ../assistant_settings.lua:80
 msgid   "AI Response Language Setting"
 msgstr  "Настройка на езика за отговор от ИИ"
 
-#: ../assistant_settings.lua:81
+#: ../assistant_settings.lua:83
 msgid   "AI Response Language"
 msgstr  "Език на ИИ отговора"
 
-#: ../assistant_settings.lua:83 ../assistant_settings.lua:88
+#: ../assistant_settings.lua:85 ../assistant_settings.lua:90
 msgid   "Leave blank to use: %1"
 msgstr  "Остави празно, за да ползваш: %1"
 
-#: ../assistant_settings.lua:86
+#: ../assistant_settings.lua:88
 msgid   "Dictionary Language"
 msgstr  "Език на речника"
 
-#: ../assistant_settings.lua:101
+#: ../assistant_settings.lua:103
 msgid   "Clear"
 msgstr  "Изчисти"
 
-#: ../assistant_settings.lua:148
+#: ../assistant_settings.lua:150
 msgid   "RTL written Language"
 msgstr  "Език с писане отдясно наляво"
 
-#: ../assistant_settings.lua:168
+#: ../assistant_settings.lua:170
 msgid   "Leave these fields blank to use the UI language: %1"
 msgstr  "Остави тези полета празни, за да ползваш езика на интерфейса: %1"
 
-#: ../assistant_settings.lua:179
+#: ../assistant_settings.lua:181
 msgid   "AI Provider and Models"
 msgstr  "AI доставчик и модели"
 
-#: ../assistant_settings.lua:205
+#: ../assistant_settings.lua:207
 msgid   "Browse Models"
 msgstr  "Разгледайте модели"
 
-#: ../assistant_settings.lua:213
+#: ../assistant_settings.lua:215
 msgid   "Browse available models on OpenRouter"
 msgstr  "Разгледайте наличните модели в OpenRouter"
 
-#: ../assistant_settings.lua:385
+#: ../assistant_settings.lua:387
 msgid   "Builtin Tools Works ONLY with these models:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
@@ -570,101 +572,127 @@ msgstr  "Вградените инструменти работят САМО с 
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:410
+#: ../assistant_settings.lua:412
 msgid   "AI Language: "
 msgstr  "Език на AI: "
 
-#: ../assistant_settings.lua:422
+#: ../assistant_settings.lua:424
 msgid   "AI Text Size: %1"
 msgstr  "Размер на AI текста: %1"
 
-#: ../assistant_settings.lua:426
+#: ../assistant_settings.lua:428
 msgid   "AI Response Text Font Size"
 msgstr  "Размер на шрифта на AI отговора"
 
-#: ../assistant_settings.lua:442
+#: ../assistant_settings.lua:444
 msgid   "Response Settings"
 msgstr  "Настройки на отговора"
 
-#: ../assistant_settings.lua:445
+#: ../assistant_settings.lua:447
 msgid   "Enable Stream Response"
 msgstr  "Активиране на потоков отговор"
 
-#: ../assistant_settings.lua:453
+#: ../assistant_settings.lua:455
 msgid   "Stream Text Auto Scroll"
 msgstr  "Автоматично превъртане на текстовия поток"
 
-#: ../assistant_settings.lua:462
+#: ../assistant_settings.lua:464
 msgid   "Large Streaming Window"
 msgstr  "Голям прозорец за поточно предаване"
 
-#: ../assistant_settings.lua:472
+#: ../assistant_settings.lua:474
 msgid   "Show Reasoning Text"
 msgstr  "Показване на текст за разсъждение"
 
-#: ../assistant_settings.lua:480
+#: ../assistant_settings.lua:482
 msgid   "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr  "Показване на задълбочения мисловен процес (разсъждение) от отговора на AI, ако съществува."
 
-#: ../assistant_settings.lua:485
+#: ../assistant_settings.lua:487
 msgid   "Show Follow-up Questions"
 msgstr  "Показване на последващи въпроси"
 
-#: ../assistant_settings.lua:493
+#: ../assistant_settings.lua:495
 msgid   "Show follow up questions related to the response content."
 msgstr  "Показване на последващи въпроси, свързани със съдържанието на отговора."
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:501
+#: ../assistant_settings.lua:503
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader настройки и замествания"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:505
+#: ../assistant_settings.lua:507
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Използвай AI асистент за 'Превод'"
 
-#: ../assistant_settings.lua:516
+#: ../assistant_settings.lua:518
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Автоматично резюме при отваряне на дълго нечетени книги"
 
-#: ../assistant_settings.lua:526
+#: ../assistant_settings.lua:528
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "AI резюмето ще бъде активирано при следващото отваряне на дълго нечетена книга."
 
-#: ../assistant_settings.lua:530
+#: ../assistant_settings.lua:532
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Покажи Речник (ИИ) в изскачащия прозорец"
 
-#: ../assistant_settings.lua:538
+#: ../assistant_settings.lua:540
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Покажи Wikipedia (ИИ) в изскачащия прозорец"
 
-#: ../assistant_settings.lua:546
+#: ../assistant_settings.lua:548
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Покажи рентген на термин (AI) в изскачащия речник"
 
-#: ../assistant_settings.lua:554
+#: ../assistant_settings.lua:556
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Покажи персонализирани подками в изскачащия речник"
 
-#: ../assistant_settings.lua:564
+#: ../assistant_settings.lua:566
 msgid   "Copy entered question to the clipboard"
 msgstr  "Копирай въведения въпрос в клипборда"
 
-#: ../assistant_settings.lua:572
+#: ../assistant_settings.lua:574
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Автоматично запазване на разговорите в бележника"
 
-#: ../assistant_settings.lua:580
+#: ../assistant_settings.lua:582
 msgid   "Use book text for x-ray and recap"
 msgstr  "Използвай текста на книгата за x-ray и резюме"
 
-#: ../assistant_settings.lua:588
+#: ../assistant_settings.lua:590 ../assistant_settings.lua:594
+msgid   "OTA Update"
+msgstr  "OTA актуализация"
+
+#: ../assistant_settings.lua:596
+msgid   "branch or tag name"
+msgstr  "име на клон или таг"
+
+#: ../assistant_settings.lua:597
+msgid   "Enter a branch or tag name to update the AI Assistant plugin from the main repository.\n"
+        "\n"
+        "Default: \"main\" (latest development version)\n"
+        "Examples: \"main\", \"v1.12\", \"v1.11-rc2\"\n"
+        "\n"
+        "The current plugin will be backed up and replaced. Configuration and lib files will be preserved."
+msgstr  "Въведете име на клон или таг, за да актуализирате плъгина AI Assistant от основното хранилище.\n"
+        "\n"
+        "По подразбиране: \"main\" (последна версия в разработка)\n"
+        "Примери: \"main\", \"v1.12\", \"v1.11-rc2\"\n"
+        "\n"
+        "Текущият плъгин ще бъде архивиран и заменен. Конфигурационните и библиотечните файлове ще бъдат запазени."
+
+#: ../assistant_settings.lua:615
+msgid   "Update"
+msgstr  "Актуализирай"
+
+#: ../assistant_settings.lua:634
 msgid   "Purge the settings"
 msgstr  "Изчисти настройките"
 
-#: ../assistant_settings.lua:591
+#: ../assistant_settings.lua:637
 msgid   "Purge assistant.koplugin settings?\n"
         "\n"
         "This restores the plugin to its factory defaults. Only settings will be removed; \n"
@@ -674,7 +702,7 @@ msgstr  "Да се изчистят настройките на assistant.koplug
         "Това възстановява плъгина до фабричните настройки. Ще бъдат премахнати само настройките;\n"
         "Файлът configuration.lua ще бъде запазен."
 
-#: ../assistant_settings.lua:595 ../main.lua:681
+#: ../assistant_settings.lua:641 ../main.lua:681
 msgid   "Purge"
 msgstr  "Изтрий"
 
@@ -698,25 +726,53 @@ msgstr  "Извикването на инструмент не включва и
 msgid   "Tool call did not include search keywords."
 msgstr  "Извикването на инструмент не включва ключови думи за търсене."
 
-#: ../assistant_update_checker.lua:105
+#: ../assistant_updater.lua:108
 msgid   "Checking for updates..."
 msgstr  "Проверка за актуализации..."
 
-#: ../assistant_update_checker.lua:114
-msgid   "Update check canceled."
-msgstr  "Проверката за обновления е отменена."
+#: ../assistant_updater.lua:111
+msgid   "AI Assistant: Failed to check updates: %2"
+msgstr  "AI Assistant: Неуспешна проверка за актуализации: %2"
 
-#: ../assistant_update_checker.lua:118
-msgid   "Failed to check for updates. HTTP code: %1"
-msgstr  "Неуспешна проверка за обновления. HTTP код: %1"
+#: ../assistant_updater.lua:111
+msgid   "Empty Error"
+msgstr  "Грешка: празно"
 
-#: ../assistant_update_checker.lua:124
-msgid   "Failed to parse update check response: %1"
-msgstr  "Неуспешен анализ на отговора от проверката за обновления: %1"
-
-#: ../assistant_update_checker.lua:135
+#: ../assistant_updater.lua:121
 msgid   "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr  "Налична е нова версия на плъгина %1 (%2). Моля, обновете!"
+
+#: ../assistant_updater.lua:173
+msgid   "Downloading ... \n"
+        "Github: %1\n"
+        "Repo: %2\n"
+        "Branch/Tag: %3"
+msgstr  "Изтегляне ... \n"
+        "GitHub: %1\n"
+        "Хранилище: %2\n"
+        "Клон/Таг: %3"
+
+#: ../assistant_updater.lua:196
+msgid   "Branch/Tag \"%1\" was not found."
+msgstr  "Клон/Таг \"%1\" не е намерен."
+
+#: ../assistant_updater.lua:208
+msgid   "OTA update canceled."
+msgstr  "OTA актуализацията е отказана."
+
+#: ../assistant_updater.lua:214 ../assistant_updater.lua:297
+msgid   "OTA update failed: %1"
+msgstr  "OTA актуализацията не успя: %1"
+
+#: ../assistant_updater.lua:219
+msgid   "Installing %1..."
+msgstr  "Инсталиране на %1..."
+
+#: ../assistant_updater.lua:301
+msgid   "OTA UPDATE OK.\n"
+        " Restart is required."
+msgstr  "OTA АКТУАЛИЗАЦИЯТА Е УСПЕШНА.\n"
+        " Необходимо е рестартиране."
 
 #: ../assistant_utils.lua:169
 msgid   "Page"

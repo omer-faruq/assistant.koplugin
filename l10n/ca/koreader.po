@@ -1,7 +1,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-16 16:47+0800\n"
+        "POT-Creation-Date: 2026-07-21 09:50+0800\n"
         "PO-Revision-Date: 2025-08-22 16:59+0200\n"
         "Last-Translator: AI Model (gpt-4o)\n"
         "Language-Team: AI Translation Team\n"
@@ -20,13 +20,14 @@ msgstr  "Assistent IA"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 Millora l’experiència KOReader amb IA"
 
-#: ../api_handlers/anthropic.lua:23 ../api_handlers/gemini.lua:27
-#: ../api_handlers/openai.lua:37
+#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:30
+#: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
 msgid   "Fetching models..."
 msgstr  "S'estan obtenint els models..."
 
-#: ../api_handlers/anthropic.lua:40 ../api_handlers/gemini.lua:37
-#: ../api_handlers/gemini.lua:47 ../api_handlers/openai.lua:53
+#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:40
+#: ../api_handlers/gemini.lua:50 ../api_handlers/openai.lua:58
+#: ../api_handlers/responses.lua:67
 msgid   "Failed to fetch models"
 msgstr  "Error en obtenir models"
 
@@ -55,7 +56,8 @@ msgstr  "Text ressaltat:"
 #: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:94 ../assistant_viewer.lua:682
+#: ../assistant_settings.lua:96 ../assistant_settings.lua:609
+#: ../assistant_viewer.lua:682
 msgid   "Cancel"
 msgstr  "Cancel·lar"
 
@@ -274,7 +276,7 @@ msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "p. ex. google/gemini-3.0-flash-exp:free"
 
 #: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:118 ../assistant_viewer.lua:462
+#: ../assistant_settings.lua:120 ../assistant_viewer.lua:462
 msgid   "Save"
 msgstr  "Desa"
 
@@ -433,7 +435,7 @@ msgstr  "Error d’API:\n"
         "\n"
         "Prova amb un altre proveïdor al diàleg de configuració."
 
-#: ../assistant_querier.lua:156
+#: ../assistant_querier.lua:156 ../assistant_querier.lua:790
 msgid   "Unknown error"
 msgstr  "Error desconegut"
 
@@ -441,7 +443,7 @@ msgstr  "Error desconegut"
 msgid   "Settings"
 msgstr  "Configuració"
 
-#: ../assistant_querier.lua:159 ../assistant_settings.lua:219
+#: ../assistant_querier.lua:159 ../assistant_settings.lua:221
 #: ../assistant_viewer.lua:353
 msgid   "Close"
 msgstr  "Tancar"
@@ -494,11 +496,11 @@ msgstr  "⏹ Aturar"
 msgid   "Failed to start subprocess for request"
 msgstr  "Error en iniciar el subprocess per a la petició"
 
-#: ../assistant_querier.lua:796 ../assistant_querier.lua:799
+#: ../assistant_querier.lua:820 ../assistant_querier.lua:823
 msgid   "Deeply Thought"
 msgstr  "Pensament Profund"
 
-#: ../assistant_querier.lua:986
+#: ../assistant_querier.lua:1010
 msgid   "Stopped Reason: "
 msgstr  "Raó d'aturada: "
 
@@ -522,47 +524,47 @@ msgstr  "Usuari:"
 msgid   "Quick note saved successfully"
 msgstr  "Nota ràpida desada correctament"
 
-#: ../assistant_settings.lua:78
+#: ../assistant_settings.lua:80
 msgid   "AI Response Language Setting"
 msgstr  "Configuració d'idioma de resposta d'IA"
 
-#: ../assistant_settings.lua:81
+#: ../assistant_settings.lua:83
 msgid   "AI Response Language"
 msgstr  "Idioma resposta IA"
 
-#: ../assistant_settings.lua:83 ../assistant_settings.lua:88
+#: ../assistant_settings.lua:85 ../assistant_settings.lua:90
 msgid   "Leave blank to use: %1"
 msgstr  "Deixeu en blanc per usar: %1"
 
-#: ../assistant_settings.lua:86
+#: ../assistant_settings.lua:88
 msgid   "Dictionary Language"
 msgstr  "Idioma diccionari"
 
-#: ../assistant_settings.lua:101
+#: ../assistant_settings.lua:103
 msgid   "Clear"
 msgstr  "Neteja"
 
-#: ../assistant_settings.lua:148
+#: ../assistant_settings.lua:150
 msgid   "RTL written Language"
 msgstr  "Idioma d’escriptura dreta-esquerra"
 
-#: ../assistant_settings.lua:168
+#: ../assistant_settings.lua:170
 msgid   "Leave these fields blank to use the UI language: %1"
 msgstr  "Deixeu aquests camps buits per usar l’idioma de la interfície: %1"
 
-#: ../assistant_settings.lua:179
+#: ../assistant_settings.lua:181
 msgid   "AI Provider and Models"
 msgstr  "Proveïdor d'IA i models"
 
-#: ../assistant_settings.lua:205
+#: ../assistant_settings.lua:207
 msgid   "Browse Models"
 msgstr  "Navega pels models"
 
-#: ../assistant_settings.lua:213
+#: ../assistant_settings.lua:215
 msgid   "Browse available models on OpenRouter"
 msgstr  "Navega pels models disponibles a OpenRouter"
 
-#: ../assistant_settings.lua:385
+#: ../assistant_settings.lua:387
 msgid   "Builtin Tools Works ONLY with these models:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
@@ -570,101 +572,127 @@ msgstr  "Les eines integrades funcionen NOMÉS amb aquests models:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:410
+#: ../assistant_settings.lua:412
 msgid   "AI Language: "
 msgstr  "Idioma de l’IA: "
 
-#: ../assistant_settings.lua:422
+#: ../assistant_settings.lua:424
 msgid   "AI Text Size: %1"
 msgstr  "Mida del text de l’IA: %1"
 
-#: ../assistant_settings.lua:426
+#: ../assistant_settings.lua:428
 msgid   "AI Response Text Font Size"
 msgstr  "Mida de la lletra del text de resposta de l’IA"
 
-#: ../assistant_settings.lua:442
+#: ../assistant_settings.lua:444
 msgid   "Response Settings"
 msgstr  "Configuració de resposta"
 
-#: ../assistant_settings.lua:445
+#: ../assistant_settings.lua:447
 msgid   "Enable Stream Response"
 msgstr  "Activar resposta en transmissió"
 
-#: ../assistant_settings.lua:453
+#: ../assistant_settings.lua:455
 msgid   "Stream Text Auto Scroll"
 msgstr  "Desplaçament automàtic del text de transmissió"
 
-#: ../assistant_settings.lua:462
+#: ../assistant_settings.lua:464
 msgid   "Large Streaming Window"
 msgstr  "Finestra d’emissió gran"
 
-#: ../assistant_settings.lua:472
+#: ../assistant_settings.lua:474
 msgid   "Show Reasoning Text"
 msgstr  "Mostrar text de raonament"
 
-#: ../assistant_settings.lua:480
+#: ../assistant_settings.lua:482
 msgid   "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr  "Mostrar el procés de pensament profund (raonament) de la resposta de la IA, si existeix."
 
-#: ../assistant_settings.lua:485
+#: ../assistant_settings.lua:487
 msgid   "Show Follow-up Questions"
 msgstr  "Mostrar preguntes de seguiment"
 
-#: ../assistant_settings.lua:493
+#: ../assistant_settings.lua:495
 msgid   "Show follow up questions related to the response content."
 msgstr  "Mostrar preguntes de seguiment relacionades amb el contingut de la resposta."
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:501
+#: ../assistant_settings.lua:503
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "Ajustos i substitucions de KOReader"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:505
+#: ../assistant_settings.lua:507
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Utilitza l'assistent IA per a 'Traduir'"
 
-#: ../assistant_settings.lua:516
+#: ../assistant_settings.lua:518
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Resum automàtic en obrir llibres sense llegir des de fa temps"
 
-#: ../assistant_settings.lua:526
+#: ../assistant_settings.lua:528
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "El resum de l’IA s’activarà la propera vegada que s’obri un llibre sense llegir des de fa temps."
 
-#: ../assistant_settings.lua:530
+#: ../assistant_settings.lua:532
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Mostra Diccionari(IA) al quadre emergent"
 
-#: ../assistant_settings.lua:538
+#: ../assistant_settings.lua:540
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Mostra Wikipedia(IA) al quadre emergent"
 
-#: ../assistant_settings.lua:546
+#: ../assistant_settings.lua:548
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Mostra el Raig X del terme (IA) al quadre emergent del diccionari"
 
-#: ../assistant_settings.lua:554
+#: ../assistant_settings.lua:556
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Mostra ordres personalitzades al quadre emergent del diccionari"
 
-#: ../assistant_settings.lua:564
+#: ../assistant_settings.lua:566
 msgid   "Copy entered question to the clipboard"
 msgstr  "Copia la pregunta al porta-retalls"
 
-#: ../assistant_settings.lua:572
+#: ../assistant_settings.lua:574
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Desa automàticament les converses al Quadern"
 
-#: ../assistant_settings.lua:580
+#: ../assistant_settings.lua:582
 msgid   "Use book text for x-ray and recap"
 msgstr  "Utilitzar el text del llibre per a l’explicació i el resum"
 
-#: ../assistant_settings.lua:588
+#: ../assistant_settings.lua:590 ../assistant_settings.lua:594
+msgid   "OTA Update"
+msgstr  "Actualització OTA"
+
+#: ../assistant_settings.lua:596
+msgid   "branch or tag name"
+msgstr  "nom de branca o etiqueta"
+
+#: ../assistant_settings.lua:597
+msgid   "Enter a branch or tag name to update the AI Assistant plugin from the main repository.\n"
+        "\n"
+        "Default: \"main\" (latest development version)\n"
+        "Examples: \"main\", \"v1.12\", \"v1.11-rc2\"\n"
+        "\n"
+        "The current plugin will be backed up and replaced. Configuration and lib files will be preserved."
+msgstr  "Introduïu un nom de branca o etiqueta per actualitzar el connector de l'Assistent AI des del repositori principal.\n"
+        "\n"
+        "Per defecte: \"main\" (última versió de desenvolupament)\n"
+        "Exemples: \"main\", \"v1.12\", \"v1.11-rc2\"\n"
+        "\n"
+        "El connector actual es desarà en còpia de seguretat i es substituirà. Els fitxers de configuració i de biblioteca es conservaran."
+
+#: ../assistant_settings.lua:615
+msgid   "Update"
+msgstr  "Actualitza"
+
+#: ../assistant_settings.lua:634
 msgid   "Purge the settings"
 msgstr  "Esborra la configuració"
 
-#: ../assistant_settings.lua:591
+#: ../assistant_settings.lua:637
 msgid   "Purge assistant.koplugin settings?\n"
         "\n"
         "This restores the plugin to its factory defaults. Only settings will be removed; \n"
@@ -674,7 +702,7 @@ msgstr  "Voleu esborrar la configuració d'assistant.koplugin?\n"
         "Això restaura el connector als valors per defecte de fàbrica. Només se suprimiran els paràmetres; \n"
         "El fitxer configuration.lua es conservarà."
 
-#: ../assistant_settings.lua:595 ../main.lua:681
+#: ../assistant_settings.lua:641 ../main.lua:681
 msgid   "Purge"
 msgstr  "Restablir"
 
@@ -698,25 +726,53 @@ msgstr  "La crida d'eina no incloïa identificador."
 msgid   "Tool call did not include search keywords."
 msgstr  "La crida d'eina no incloïa paraules clau de cerca."
 
-#: ../assistant_update_checker.lua:105
+#: ../assistant_updater.lua:108
 msgid   "Checking for updates..."
 msgstr  "Comprovant actualitzacions..."
 
-#: ../assistant_update_checker.lua:114
-msgid   "Update check canceled."
-msgstr  "Comprovació d'actualització cancel·lada."
+#: ../assistant_updater.lua:111
+msgid   "AI Assistant: Failed to check updates: %2"
+msgstr  "Assistent AI: No s'han pogut comprovar les actualitzacions: %2"
 
-#: ../assistant_update_checker.lua:118
-msgid   "Failed to check for updates. HTTP code: %1"
-msgstr  "No s'ha pogut comprovar les actualitzacions. Codi HTTP: %1"
+#: ../assistant_updater.lua:111
+msgid   "Empty Error"
+msgstr  "Error buit"
 
-#: ../assistant_update_checker.lua:124
-msgid   "Failed to parse update check response: %1"
-msgstr  "No s'ha pogut analitzar la resposta de comprovació d'actualització: %1"
-
-#: ../assistant_update_checker.lua:135
+#: ../assistant_updater.lua:121
 msgid   "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr  "Una nova versió del complement %1 (%2) està disponible. Si us plau, actualitzeu!"
+
+#: ../assistant_updater.lua:173
+msgid   "Downloading ... \n"
+        "Github: %1\n"
+        "Repo: %2\n"
+        "Branch/Tag: %3"
+msgstr  "Descarregant... \n"
+        "Github: %1\n"
+        "Repositori: %2\n"
+        "Branca/Etiqueta: %3"
+
+#: ../assistant_updater.lua:196
+msgid   "Branch/Tag \"%1\" was not found."
+msgstr  "No s'ha trobat la branca/etiqueta \"%1\"."
+
+#: ../assistant_updater.lua:208
+msgid   "OTA update canceled."
+msgstr  "Actualització OTA cancel·lada."
+
+#: ../assistant_updater.lua:214 ../assistant_updater.lua:297
+msgid   "OTA update failed: %1"
+msgstr  "L'actualització OTA ha fallat: %1"
+
+#: ../assistant_updater.lua:219
+msgid   "Installing %1..."
+msgstr  "Instal·lant %1..."
+
+#: ../assistant_updater.lua:301
+msgid   "OTA UPDATE OK.\n"
+        " Restart is required."
+msgstr  "ACTUALITZACIÓ OTA CORRECTA.\n"
+        " Cal reiniciar."
 
 #: ../assistant_utils.lua:169
 msgid   "Page"

@@ -1,7 +1,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-16 16:47+0800\n"
+        "POT-Creation-Date: 2026-07-21 09:50+0800\n"
         "PO-Revision-Date: 2025-09-11 10:53+0800\n"
         "Last-Translator: AI Model v1.0\n"
         "Language-Team: AI Translation Model\n"
@@ -20,13 +20,14 @@ msgstr  "AI asistents"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 Uzlabo savu KOReader pieredzi ar AI"
 
-#: ../api_handlers/anthropic.lua:23 ../api_handlers/gemini.lua:27
-#: ../api_handlers/openai.lua:37
+#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:30
+#: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
 msgid   "Fetching models..."
 msgstr  "Notiek modeļu ielāde..."
 
-#: ../api_handlers/anthropic.lua:40 ../api_handlers/gemini.lua:37
-#: ../api_handlers/gemini.lua:47 ../api_handlers/openai.lua:53
+#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:40
+#: ../api_handlers/gemini.lua:50 ../api_handlers/openai.lua:58
+#: ../api_handlers/responses.lua:67
 msgid   "Failed to fetch models"
 msgstr  "Neizdevās iegūt modeļus"
 
@@ -55,7 +56,8 @@ msgstr  "Izceltais teksts:"
 #: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:94 ../assistant_viewer.lua:682
+#: ../assistant_settings.lua:96 ../assistant_settings.lua:609
+#: ../assistant_viewer.lua:682
 msgid   "Cancel"
 msgstr  "Atcelt"
 
@@ -274,7 +276,7 @@ msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "piem., google/gemini-3.0-flash-exp:free"
 
 #: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:118 ../assistant_viewer.lua:462
+#: ../assistant_settings.lua:120 ../assistant_viewer.lua:462
 msgid   "Save"
 msgstr  "Saglabāt"
 
@@ -433,7 +435,7 @@ msgstr  "API kļūda:\n"
         "\n"
         "Mēģiniet citu pakalpojumu iestatījumos."
 
-#: ../assistant_querier.lua:156
+#: ../assistant_querier.lua:156 ../assistant_querier.lua:790
 msgid   "Unknown error"
 msgstr  "Nezināma kļūda"
 
@@ -441,7 +443,7 @@ msgstr  "Nezināma kļūda"
 msgid   "Settings"
 msgstr  "Iestatījumi"
 
-#: ../assistant_querier.lua:159 ../assistant_settings.lua:219
+#: ../assistant_querier.lua:159 ../assistant_settings.lua:221
 #: ../assistant_viewer.lua:353
 msgid   "Close"
 msgstr  "Aizvērt"
@@ -494,11 +496,11 @@ msgstr  "⏹ Apturēt"
 msgid   "Failed to start subprocess for request"
 msgstr  "Neizdevās startēt apakšprocesu pieprasījumam"
 
-#: ../assistant_querier.lua:796 ../assistant_querier.lua:799
+#: ../assistant_querier.lua:820 ../assistant_querier.lua:823
 msgid   "Deeply Thought"
 msgstr  "Dziļi pārdomāts"
 
-#: ../assistant_querier.lua:986
+#: ../assistant_querier.lua:1010
 msgid   "Stopped Reason: "
 msgstr  "Apstādināšanas iemesls: "
 
@@ -522,47 +524,47 @@ msgstr  "Lietotājs:"
 msgid   "Quick note saved successfully"
 msgstr  "Ātrā piezīme veiksmīgi saglabāta"
 
-#: ../assistant_settings.lua:78
+#: ../assistant_settings.lua:80
 msgid   "AI Response Language Setting"
 msgstr  "AI atbildes valodas iestatījums"
 
-#: ../assistant_settings.lua:81
+#: ../assistant_settings.lua:83
 msgid   "AI Response Language"
 msgstr  "AI atbildes valoda"
 
-#: ../assistant_settings.lua:83 ../assistant_settings.lua:88
+#: ../assistant_settings.lua:85 ../assistant_settings.lua:90
 msgid   "Leave blank to use: %1"
 msgstr  "Atstāj tukšu, lai izmantotu: %1"
 
-#: ../assistant_settings.lua:86
+#: ../assistant_settings.lua:88
 msgid   "Dictionary Language"
 msgstr  "Vārdnīcas valoda"
 
-#: ../assistant_settings.lua:101
+#: ../assistant_settings.lua:103
 msgid   "Clear"
 msgstr  "Notīrīt"
 
-#: ../assistant_settings.lua:148
+#: ../assistant_settings.lua:150
 msgid   "RTL written Language"
 msgstr  "No labās uz kreiso rakstības valoda"
 
-#: ../assistant_settings.lua:168
+#: ../assistant_settings.lua:170
 msgid   "Leave these fields blank to use the UI language: %1"
 msgstr  "Atstāj šos laukus tukšus, lai izmantotu saskarnes valodu: %1"
 
-#: ../assistant_settings.lua:179
+#: ../assistant_settings.lua:181
 msgid   "AI Provider and Models"
 msgstr  "AI sniedzējs un modeļi"
 
-#: ../assistant_settings.lua:205
+#: ../assistant_settings.lua:207
 msgid   "Browse Models"
 msgstr  "Pārlūkot modeļus"
 
-#: ../assistant_settings.lua:213
+#: ../assistant_settings.lua:215
 msgid   "Browse available models on OpenRouter"
 msgstr  "Pārlūkot pieejamos modeļus OpenRouter"
 
-#: ../assistant_settings.lua:385
+#: ../assistant_settings.lua:387
 msgid   "Builtin Tools Works ONLY with these models:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
@@ -570,101 +572,127 @@ msgstr  "Iebūvētie rīki DARBOJAS TIKAI ar šiem modeļiem:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:410
+#: ../assistant_settings.lua:412
 msgid   "AI Language: "
 msgstr  "AI valoda: "
 
-#: ../assistant_settings.lua:422
+#: ../assistant_settings.lua:424
 msgid   "AI Text Size: %1"
 msgstr  "AI teksta lielums: %1"
 
-#: ../assistant_settings.lua:426
+#: ../assistant_settings.lua:428
 msgid   "AI Response Text Font Size"
 msgstr  "AI atbildes teksta fonta lielums"
 
-#: ../assistant_settings.lua:442
+#: ../assistant_settings.lua:444
 msgid   "Response Settings"
 msgstr  "Atbildes iestatījumi"
 
-#: ../assistant_settings.lua:445
+#: ../assistant_settings.lua:447
 msgid   "Enable Stream Response"
 msgstr  "Iespējot plūsmas atbildi"
 
-#: ../assistant_settings.lua:453
+#: ../assistant_settings.lua:455
 msgid   "Stream Text Auto Scroll"
 msgstr  "Plūsmas teksta automātiskā ritināšana"
 
-#: ../assistant_settings.lua:462
+#: ../assistant_settings.lua:464
 msgid   "Large Streaming Window"
 msgstr  "Liels straumēšanas logs"
 
-#: ../assistant_settings.lua:472
+#: ../assistant_settings.lua:474
 msgid   "Show Reasoning Text"
 msgstr  "Rādīt argumentācijas tekstu"
 
-#: ../assistant_settings.lua:480
+#: ../assistant_settings.lua:482
 msgid   "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr  "Rādīt dziļi pārdomātu procesu (argumentāciju) no AI atbildes, ja tāda ir."
 
-#: ../assistant_settings.lua:485
+#: ../assistant_settings.lua:487
 msgid   "Show Follow-up Questions"
 msgstr  "Rādīt papildu jautājumus"
 
-#: ../assistant_settings.lua:493
+#: ../assistant_settings.lua:495
 msgid   "Show follow up questions related to the response content."
 msgstr  "Rādīt papildu jautājumus, kas saistīti ar atbildes saturu."
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:501
+#: ../assistant_settings.lua:503
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader uzlabojumi un pārrakstījumi"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:505
+#: ../assistant_settings.lua:507
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Izmantot AI asistentu 'Tulkot'"
 
-#: ../assistant_settings.lua:516
+#: ../assistant_settings.lua:518
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Automātisks kopsavilkums, atverot sen nelasītas grāmatas"
 
-#: ../assistant_settings.lua:526
+#: ../assistant_settings.lua:528
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "AI kopsavilkums tiks ieslēgts nākamreiz, atverot sen nelasītu grāmatu."
 
-#: ../assistant_settings.lua:530
+#: ../assistant_settings.lua:532
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Rādīt Vārdnīcu(AI) vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:538
+#: ../assistant_settings.lua:540
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Rādīt Wikipedia(AI) vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:546
+#: ../assistant_settings.lua:548
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Rādīt Termina rentgena skatu (AI) vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:554
+#: ../assistant_settings.lua:556
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Rādīt lietotāja uzvednes vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:564
+#: ../assistant_settings.lua:566
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kopēt ievadīto jautājumu starpliktuvē"
 
-#: ../assistant_settings.lua:572
+#: ../assistant_settings.lua:574
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Automātiski saglabāt sarunas piezīmju grāmatā"
 
-#: ../assistant_settings.lua:580
+#: ../assistant_settings.lua:582
 msgid   "Use book text for x-ray and recap"
 msgstr  "Izmantot grāmatas tekstu rentgena un kopsavilkumam"
 
-#: ../assistant_settings.lua:588
+#: ../assistant_settings.lua:590 ../assistant_settings.lua:594
+msgid   "OTA Update"
+msgstr  "OTA atjauninājums"
+
+#: ../assistant_settings.lua:596
+msgid   "branch or tag name"
+msgstr  "zara vai atzīmes nosaukums"
+
+#: ../assistant_settings.lua:597
+msgid   "Enter a branch or tag name to update the AI Assistant plugin from the main repository.\n"
+        "\n"
+        "Default: \"main\" (latest development version)\n"
+        "Examples: \"main\", \"v1.12\", \"v1.11-rc2\"\n"
+        "\n"
+        "The current plugin will be backed up and replaced. Configuration and lib files will be preserved."
+msgstr  "Ievadiet zara vai atzīmes nosaukumu, lai atjauninātu AI asistenta spraudni no galvenā repozitorija.\n"
+        "\n"
+        "Noklusējums: \"main\" (jaunākā izstrādes versija)\n"
+        "Piemēri: \"main\", \"v1.12\", \"v1.11-rc2\"\n"
+        "\n"
+        "Pašreizējais spraudnis tiks dublēts un aizstāts. Konfigurācijas un lib faili tiks saglabāti."
+
+#: ../assistant_settings.lua:615
+msgid   "Update"
+msgstr  "Atjaunināt"
+
+#: ../assistant_settings.lua:634
 msgid   "Purge the settings"
 msgstr  "Dzēst iestatījumus"
 
-#: ../assistant_settings.lua:591
+#: ../assistant_settings.lua:637
 msgid   "Purge assistant.koplugin settings?\n"
         "\n"
         "This restores the plugin to its factory defaults. Only settings will be removed; \n"
@@ -674,7 +702,7 @@ msgstr  "Iztīrīt assistant.koplugin iestatījumus?\n"
         "Tas atjauno spraudni uz rūpnīcas noklusējuma iestatījumiem. Tiks noņemti tikai iestatījumi; \n"
         "Fails configuration.lua tiks saglabāts."
 
-#: ../assistant_settings.lua:595 ../main.lua:681
+#: ../assistant_settings.lua:641 ../main.lua:681
 msgid   "Purge"
 msgstr  "Dzēst"
 
@@ -698,25 +726,53 @@ msgstr  "Rīka izsaukumā nav iekļauts id."
 msgid   "Tool call did not include search keywords."
 msgstr  "Rīka izsaukumā nav iekļauti meklēšanas atslēgvārdi."
 
-#: ../assistant_update_checker.lua:105
+#: ../assistant_updater.lua:108
 msgid   "Checking for updates..."
 msgstr  "Pārbauda atjauninājumus..."
 
-#: ../assistant_update_checker.lua:114
-msgid   "Update check canceled."
-msgstr  "Atjauninājumu pārbaude atcelta."
+#: ../assistant_updater.lua:111
+msgid   "AI Assistant: Failed to check updates: %2"
+msgstr  "AI Asistents: Neizdevās pārbaudīt atjauninājumus: %2"
 
-#: ../assistant_update_checker.lua:118
-msgid   "Failed to check for updates. HTTP code: %1"
-msgstr  "Neizdevās pārbaudīt atjauninājumus. HTTP kods: %1"
+#: ../assistant_updater.lua:111
+msgid   "Empty Error"
+msgstr  "Tukša kļūda"
 
-#: ../assistant_update_checker.lua:124
-msgid   "Failed to parse update check response: %1"
-msgstr  "Neizdevās apstrādāt atjauninājumu pārbaudes atbildi: %1"
-
-#: ../assistant_update_checker.lua:135
+#: ../assistant_updater.lua:121
 msgid   "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr  "Ir pieejama jauna %1 spraudņa versija (%2). Lūdzu, atjauniniet!"
+
+#: ../assistant_updater.lua:173
+msgid   "Downloading ... \n"
+        "Github: %1\n"
+        "Repo: %2\n"
+        "Branch/Tag: %3"
+msgstr  "Lejupielādē ... \n"
+        "Github: %1\n"
+        "Repo: %2\n"
+        "Zars/Atzīme: %3"
+
+#: ../assistant_updater.lua:196
+msgid   "Branch/Tag \"%1\" was not found."
+msgstr  "Zars/Atzīme \"%1\" netika atrasts."
+
+#: ../assistant_updater.lua:208
+msgid   "OTA update canceled."
+msgstr  "OTA atjauninājums atcelts."
+
+#: ../assistant_updater.lua:214 ../assistant_updater.lua:297
+msgid   "OTA update failed: %1"
+msgstr  "OTA atjauninājums neizdevās: %1"
+
+#: ../assistant_updater.lua:219
+msgid   "Installing %1..."
+msgstr  "Instalē %1..."
+
+#: ../assistant_updater.lua:301
+msgid   "OTA UPDATE OK.\n"
+        " Restart is required."
+msgstr  "OTA ATJAUNINĀJUMS OK.\n"
+        " Nepieciešama restartēšana."
 
 #: ../assistant_utils.lua:169
 msgid   "Page"

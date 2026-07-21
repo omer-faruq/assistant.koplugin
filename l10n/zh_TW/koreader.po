@@ -1,7 +1,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-16 16:47+0800\n"
+        "POT-Creation-Date: 2026-07-21 09:50+0800\n"
         "PO-Revision-Date: 2025-08-22 15:24+0800\n"
         "Last-Translator: GPT-4o 2025-08-22\n"
         "Language-Team: GPT-4o 2025-08-22\n"
@@ -20,13 +20,14 @@ msgstr  "AI 助理"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 用 AI 強化你的 KOReader 體驗"
 
-#: ../api_handlers/anthropic.lua:23 ../api_handlers/gemini.lua:27
-#: ../api_handlers/openai.lua:37
+#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:30
+#: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
 msgid   "Fetching models..."
 msgstr  "正在取得模型..."
 
-#: ../api_handlers/anthropic.lua:40 ../api_handlers/gemini.lua:37
-#: ../api_handlers/gemini.lua:47 ../api_handlers/openai.lua:53
+#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:40
+#: ../api_handlers/gemini.lua:50 ../api_handlers/openai.lua:58
+#: ../api_handlers/responses.lua:67
 msgid   "Failed to fetch models"
 msgstr  "取得模型失敗"
 
@@ -55,7 +56,8 @@ msgstr  "劃線文字："
 #: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:94 ../assistant_viewer.lua:682
+#: ../assistant_settings.lua:96 ../assistant_settings.lua:609
+#: ../assistant_viewer.lua:682
 msgid   "Cancel"
 msgstr  "取消"
 
@@ -274,7 +276,7 @@ msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "例如：google/gemini-3.0-flash-exp:free"
 
 #: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:118 ../assistant_viewer.lua:462
+#: ../assistant_settings.lua:120 ../assistant_viewer.lua:462
 msgid   "Save"
 msgstr  "儲存"
 
@@ -433,7 +435,7 @@ msgstr  "API 錯誤：\n"
         "\n"
         "請在設定中改用其他服務供應商。"
 
-#: ../assistant_querier.lua:156
+#: ../assistant_querier.lua:156 ../assistant_querier.lua:790
 msgid   "Unknown error"
 msgstr  "未知錯誤"
 
@@ -441,7 +443,7 @@ msgstr  "未知錯誤"
 msgid   "Settings"
 msgstr  "設定"
 
-#: ../assistant_querier.lua:159 ../assistant_settings.lua:219
+#: ../assistant_querier.lua:159 ../assistant_settings.lua:221
 #: ../assistant_viewer.lua:353
 msgid   "Close"
 msgstr  "關閉"
@@ -494,11 +496,11 @@ msgstr  "⏹ 停止"
 msgid   "Failed to start subprocess for request"
 msgstr  "無法啟動子程序進行請求"
 
-#: ../assistant_querier.lua:796 ../assistant_querier.lua:799
+#: ../assistant_querier.lua:820 ../assistant_querier.lua:823
 msgid   "Deeply Thought"
 msgstr  "深度思考"
 
-#: ../assistant_querier.lua:986
+#: ../assistant_querier.lua:1010
 msgid   "Stopped Reason: "
 msgstr  "停止原因："
 
@@ -522,47 +524,47 @@ msgstr  "使用者："
 msgid   "Quick note saved successfully"
 msgstr  "快速筆記已成功儲存"
 
-#: ../assistant_settings.lua:78
+#: ../assistant_settings.lua:80
 msgid   "AI Response Language Setting"
 msgstr  "AI 回應語言設定"
 
-#: ../assistant_settings.lua:81
+#: ../assistant_settings.lua:83
 msgid   "AI Response Language"
 msgstr  "AI 回應語言"
 
-#: ../assistant_settings.lua:83 ../assistant_settings.lua:88
+#: ../assistant_settings.lua:85 ../assistant_settings.lua:90
 msgid   "Leave blank to use: %1"
 msgstr  "留空以使用：%1"
 
-#: ../assistant_settings.lua:86
+#: ../assistant_settings.lua:88
 msgid   "Dictionary Language"
 msgstr  "辭典語言"
 
-#: ../assistant_settings.lua:101
+#: ../assistant_settings.lua:103
 msgid   "Clear"
 msgstr  "清除"
 
-#: ../assistant_settings.lua:148
+#: ../assistant_settings.lua:150
 msgid   "RTL written Language"
 msgstr  "由右至左書寫語言"
 
-#: ../assistant_settings.lua:168
+#: ../assistant_settings.lua:170
 msgid   "Leave these fields blank to use the UI language: %1"
 msgstr  "留空將使用介面語言：%1"
 
-#: ../assistant_settings.lua:179
+#: ../assistant_settings.lua:181
 msgid   "AI Provider and Models"
 msgstr  "AI 提供者與模型"
 
-#: ../assistant_settings.lua:205
+#: ../assistant_settings.lua:207
 msgid   "Browse Models"
 msgstr  "瀏覽模型"
 
-#: ../assistant_settings.lua:213
+#: ../assistant_settings.lua:215
 msgid   "Browse available models on OpenRouter"
 msgstr  "瀏覽OpenRouter上的可用模型"
 
-#: ../assistant_settings.lua:385
+#: ../assistant_settings.lua:387
 msgid   "Builtin Tools Works ONLY with these models:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
@@ -570,101 +572,127 @@ msgstr  "內建工具僅適用於以下模型：\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:410
+#: ../assistant_settings.lua:412
 msgid   "AI Language: "
 msgstr  "AI 語言："
 
-#: ../assistant_settings.lua:422
+#: ../assistant_settings.lua:424
 msgid   "AI Text Size: %1"
 msgstr  "AI 文字大小：%1"
 
-#: ../assistant_settings.lua:426
+#: ../assistant_settings.lua:428
 msgid   "AI Response Text Font Size"
 msgstr  "AI 回應文字字型大小"
 
-#: ../assistant_settings.lua:442
+#: ../assistant_settings.lua:444
 msgid   "Response Settings"
 msgstr  "回應設定"
 
-#: ../assistant_settings.lua:445
+#: ../assistant_settings.lua:447
 msgid   "Enable Stream Response"
 msgstr  "啟用串流回應"
 
-#: ../assistant_settings.lua:453
+#: ../assistant_settings.lua:455
 msgid   "Stream Text Auto Scroll"
 msgstr  "串流文字自動滾動"
 
-#: ../assistant_settings.lua:462
+#: ../assistant_settings.lua:464
 msgid   "Large Streaming Window"
 msgstr  "大型串流視窗"
 
-#: ../assistant_settings.lua:472
+#: ../assistant_settings.lua:474
 msgid   "Show Reasoning Text"
 msgstr  "顯示推理文字"
 
-#: ../assistant_settings.lua:480
+#: ../assistant_settings.lua:482
 msgid   "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr  "顯示 AI 回應中的深度思考過程（推理）（若有的話）。"
 
-#: ../assistant_settings.lua:485
+#: ../assistant_settings.lua:487
 msgid   "Show Follow-up Questions"
 msgstr  "顯示後續問題"
 
-#: ../assistant_settings.lua:493
+#: ../assistant_settings.lua:495
 msgid   "Show follow up questions related to the response content."
 msgstr  "顯示與回應內容相關的後續問題。"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:501
+#: ../assistant_settings.lua:503
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader 微調與覆寫"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:505
+#: ../assistant_settings.lua:507
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "使用 AI 助理進行「翻譯」"
 
-#: ../assistant_settings.lua:516
+#: ../assistant_settings.lua:518
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "開啟久未閱讀的書籍時自動摘要"
 
-#: ../assistant_settings.lua:526
+#: ../assistant_settings.lua:528
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "下次開啟久未閱讀的書籍時將啟用 AI 摘要功能。"
 
-#: ../assistant_settings.lua:530
+#: ../assistant_settings.lua:532
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "在辭典彈窗顯示 AI 辭典"
 
-#: ../assistant_settings.lua:538
+#: ../assistant_settings.lua:540
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "在辭典彈窗顯示 AI 維基百科"
 
-#: ../assistant_settings.lua:546
+#: ../assistant_settings.lua:548
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "在字典彈窗顯示詞彙 X 光（AI）"
 
-#: ../assistant_settings.lua:554
+#: ../assistant_settings.lua:556
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "在字典彈窗顯示自訂提示"
 
-#: ../assistant_settings.lua:564
+#: ../assistant_settings.lua:566
 msgid   "Copy entered question to the clipboard"
 msgstr  "複製輸入問題到剪貼簿"
 
-#: ../assistant_settings.lua:572
+#: ../assistant_settings.lua:574
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "自動儲存對話至筆記本"
 
-#: ../assistant_settings.lua:580
+#: ../assistant_settings.lua:582
 msgid   "Use book text for x-ray and recap"
 msgstr  "使用書籍內容進行透視與摘要"
 
-#: ../assistant_settings.lua:588
+#: ../assistant_settings.lua:590 ../assistant_settings.lua:594
+msgid   "OTA Update"
+msgstr  "OTA 更新"
+
+#: ../assistant_settings.lua:596
+msgid   "branch or tag name"
+msgstr  "分支或標籤名稱"
+
+#: ../assistant_settings.lua:597
+msgid   "Enter a branch or tag name to update the AI Assistant plugin from the main repository.\n"
+        "\n"
+        "Default: \"main\" (latest development version)\n"
+        "Examples: \"main\", \"v1.12\", \"v1.11-rc2\"\n"
+        "\n"
+        "The current plugin will be backed up and replaced. Configuration and lib files will be preserved."
+msgstr  "輸入分支或標籤名稱以從主儲存庫更新 AI Assistant 插件。\n"
+        "\n"
+        "預設值：\"main\"（最新開發版本）\n"
+        "範例：\"main\"、\"v1.12\"、\"v1.11-rc2\"\n"
+        "\n"
+        "當前插件將會被備份並取代。配置與函式庫檔案將會保留。"
+
+#: ../assistant_settings.lua:615
+msgid   "Update"
+msgstr  "更新"
+
+#: ../assistant_settings.lua:634
 msgid   "Purge the settings"
 msgstr  "清除設定"
 
-#: ../assistant_settings.lua:591
+#: ../assistant_settings.lua:637
 msgid   "Purge assistant.koplugin settings?\n"
         "\n"
         "This restores the plugin to its factory defaults. Only settings will be removed; \n"
@@ -674,7 +702,7 @@ msgstr  "清除 assistant.koplugin 設定？\n"
         "這會將外掛還原為原廠預設值。僅會移除設定；\n"
         "configuration.lua 檔案將會保留。"
 
-#: ../assistant_settings.lua:595 ../main.lua:681
+#: ../assistant_settings.lua:641 ../main.lua:681
 msgid   "Purge"
 msgstr  "清除"
 
@@ -698,25 +726,53 @@ msgstr  "工具呼叫未包含ID。"
 msgid   "Tool call did not include search keywords."
 msgstr  "工具呼叫未包含搜尋關鍵字。"
 
-#: ../assistant_update_checker.lua:105
+#: ../assistant_updater.lua:108
 msgid   "Checking for updates..."
 msgstr  "檢查更新中…"
 
-#: ../assistant_update_checker.lua:114
-msgid   "Update check canceled."
-msgstr  "更新檢查已取消。"
+#: ../assistant_updater.lua:111
+msgid   "AI Assistant: Failed to check updates: %2"
+msgstr  "AI Assistant：檢查更新失敗：%2"
 
-#: ../assistant_update_checker.lua:118
-msgid   "Failed to check for updates. HTTP code: %1"
-msgstr  "檢查更新失敗。HTTP 狀態碼：%1"
+#: ../assistant_updater.lua:111
+msgid   "Empty Error"
+msgstr  "空錯誤"
 
-#: ../assistant_update_checker.lua:124
-msgid   "Failed to parse update check response: %1"
-msgstr  "解析更新檢查回應失敗：%1"
-
-#: ../assistant_update_checker.lua:135
+#: ../assistant_updater.lua:121
 msgid   "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr  "有 %1 插件的新版本 (%2) 可用。請更新！"
+
+#: ../assistant_updater.lua:173
+msgid   "Downloading ... \n"
+        "Github: %1\n"
+        "Repo: %2\n"
+        "Branch/Tag: %3"
+msgstr  "正在下載... \n"
+        "Github: %1\n"
+        "倉庫: %2\n"
+        "分支/標籤: %3"
+
+#: ../assistant_updater.lua:196
+msgid   "Branch/Tag \"%1\" was not found."
+msgstr  "未找到分支/標籤 \"%1\"。"
+
+#: ../assistant_updater.lua:208
+msgid   "OTA update canceled."
+msgstr  "OTA 更新已取消。"
+
+#: ../assistant_updater.lua:214 ../assistant_updater.lua:297
+msgid   "OTA update failed: %1"
+msgstr  "OTA 更新失敗：%1"
+
+#: ../assistant_updater.lua:219
+msgid   "Installing %1..."
+msgstr  "正在安裝 %1..."
+
+#: ../assistant_updater.lua:301
+msgid   "OTA UPDATE OK.\n"
+        " Restart is required."
+msgstr  "OTA 更新成功。\n"
+        " 需要重新啟動。"
 
 #: ../assistant_utils.lua:169
 msgid   "Page"

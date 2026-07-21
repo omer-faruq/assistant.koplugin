@@ -1,7 +1,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.10\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-16 16:47+0800\n"
+        "POT-Creation-Date: 2026-07-21 09:50+0800\n"
         "PO-Revision-Date: 2025-09-16 16:50+0800\n"
         "Last-Translator: [AI Model Version]\n"
         "Language-Team: [AI Translation Model Name]\n"
@@ -20,13 +20,14 @@ msgstr  "AI Laguntzailea"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 KOReade-ren esperientzia hobetzen lagunduko dizu AIekin"
 
-#: ../api_handlers/anthropic.lua:23 ../api_handlers/gemini.lua:27
-#: ../api_handlers/openai.lua:37
+#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:30
+#: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
 msgid   "Fetching models..."
 msgstr  "Ereduak eskuratzen..."
 
-#: ../api_handlers/anthropic.lua:40 ../api_handlers/gemini.lua:37
-#: ../api_handlers/gemini.lua:47 ../api_handlers/openai.lua:53
+#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:40
+#: ../api_handlers/gemini.lua:50 ../api_handlers/openai.lua:58
+#: ../api_handlers/responses.lua:67
 msgid   "Failed to fetch models"
 msgstr  "Ezin izan dira modeloak eskuratu"
 
@@ -55,7 +56,8 @@ msgstr  "Textua altzarapenarekin:"
 #: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:94 ../assistant_viewer.lua:682
+#: ../assistant_settings.lua:96 ../assistant_settings.lua:609
+#: ../assistant_viewer.lua:682
 msgid   "Cancel"
 msgstr  "Ezeztatu"
 
@@ -274,7 +276,7 @@ msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "adibidez, google/gemini-3.0-flash-exp:free"
 
 #: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:118 ../assistant_viewer.lua:462
+#: ../assistant_settings.lua:120 ../assistant_viewer.lua:462
 msgid   "Save"
 msgstr  "Gorde"
 
@@ -433,7 +435,7 @@ msgstr  "API errorea:\n"
         "\n"
         "Mesedez ezarpenetan beste hornitzaile bat aukeratu."
 
-#: ../assistant_querier.lua:156
+#: ../assistant_querier.lua:156 ../assistant_querier.lua:790
 msgid   "Unknown error"
 msgstr  "Errorea ezezaguna"
 
@@ -441,7 +443,7 @@ msgstr  "Errorea ezezaguna"
 msgid   "Settings"
 msgstr  "Ezarpenak"
 
-#: ../assistant_querier.lua:159 ../assistant_settings.lua:219
+#: ../assistant_querier.lua:159 ../assistant_settings.lua:221
 #: ../assistant_viewer.lua:353
 msgid   "Close"
 msgstr  "Itxi"
@@ -494,11 +496,11 @@ msgstr  "⏹ Galtzea"
 msgid   "Failed to start subprocess for request"
 msgstr  "Hitzordua hasi gabe gelditu da."
 
-#: ../assistant_querier.lua:796 ../assistant_querier.lua:799
+#: ../assistant_querier.lua:820 ../assistant_querier.lua:823
 msgid   "Deeply Thought"
 msgstr  "Denboran ustea"
 
-#: ../assistant_querier.lua:986
+#: ../assistant_querier.lua:1010
 msgid   "Stopped Reason: "
 msgstr  "Gelditzeko arrazoia: "
 
@@ -522,47 +524,47 @@ msgstr  "Erabiltzailea:"
 msgid   "Quick note saved successfully"
 msgstr  "Ohartz azkarra ondo gorde da"
 
-#: ../assistant_settings.lua:78
+#: ../assistant_settings.lua:80
 msgid   "AI Response Language Setting"
 msgstr  "AIren Erantzun Hizkuntza Ezarpena"
 
-#: ../assistant_settings.lua:81
+#: ../assistant_settings.lua:83
 msgid   "AI Response Language"
 msgstr  "AI Erantzun Hizkuntza"
 
-#: ../assistant_settings.lua:83 ../assistant_settings.lua:88
+#: ../assistant_settings.lua:85 ../assistant_settings.lua:90
 msgid   "Leave blank to use: %1"
 msgstr  "Hutsik utzi hau erabiltzeko: %1"
 
-#: ../assistant_settings.lua:86
+#: ../assistant_settings.lua:88
 msgid   "Dictionary Language"
 msgstr  "Hiztegia Hizkuntza"
 
-#: ../assistant_settings.lua:101
+#: ../assistant_settings.lua:103
 msgid   "Clear"
 msgstr  "Garbitu"
 
-#: ../assistant_settings.lua:148
+#: ../assistant_settings.lua:150
 msgid   "RTL written Language"
 msgstr  "LTR idatzitako Hizkuntza"
 
-#: ../assistant_settings.lua:168
+#: ../assistant_settings.lua:170
 msgid   "Leave these fields blank to use the UI language: %1"
 msgstr  "Hutsik utzi oinarri horiek UI hizkuntza erabiltzea: %1"
 
-#: ../assistant_settings.lua:179
+#: ../assistant_settings.lua:181
 msgid   "AI Provider and Models"
 msgstr  "AI hornitzailea eta modeloak"
 
-#: ../assistant_settings.lua:205
+#: ../assistant_settings.lua:207
 msgid   "Browse Models"
 msgstr  "Arakatu modeloak"
 
-#: ../assistant_settings.lua:213
+#: ../assistant_settings.lua:215
 msgid   "Browse available models on OpenRouter"
 msgstr  "Arakatu eskuragarri dauden modeloak OpenRouter-en"
 
-#: ../assistant_settings.lua:385
+#: ../assistant_settings.lua:387
 msgid   "Builtin Tools Works ONLY with these models:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
@@ -570,101 +572,127 @@ msgstr  "Barneko tresnek modelo hauekin soilik funtzionatzen dute:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:410
+#: ../assistant_settings.lua:412
 msgid   "AI Language: "
 msgstr  "AI Hizkuntza: "
 
-#: ../assistant_settings.lua:422
+#: ../assistant_settings.lua:424
 msgid   "AI Text Size: %1"
 msgstr  "AI Testuaren Tamaina: %1"
 
-#: ../assistant_settings.lua:426
+#: ../assistant_settings.lua:428
 msgid   "AI Response Text Font Size"
 msgstr  "AI Erantzun Testuraren Leta-tamaina"
 
-#: ../assistant_settings.lua:442
+#: ../assistant_settings.lua:444
 msgid   "Response Settings"
 msgstr  "Erantzun ezarpenak"
 
-#: ../assistant_settings.lua:445
+#: ../assistant_settings.lua:447
 msgid   "Enable Stream Response"
 msgstr  "Gaitu stream erantzuna"
 
-#: ../assistant_settings.lua:453
+#: ../assistant_settings.lua:455
 msgid   "Stream Text Auto Scroll"
 msgstr  "Testu-korrontearen auto-korritzea"
 
-#: ../assistant_settings.lua:462
+#: ../assistant_settings.lua:464
 msgid   "Large Streaming Window"
 msgstr  "Bideoa handitzea"
 
-#: ../assistant_settings.lua:472
+#: ../assistant_settings.lua:474
 msgid   "Show Reasoning Text"
 msgstr  "Erakutsi arrazoibide testua"
 
-#: ../assistant_settings.lua:480
+#: ../assistant_settings.lua:482
 msgid   "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr  "Erakutsi AI erantzunaren pentsamendu sakona (arrazoibidea) badago."
 
-#: ../assistant_settings.lua:485
+#: ../assistant_settings.lua:487
 msgid   "Show Follow-up Questions"
 msgstr  "Erakutsi jarraipen galderak"
 
-#: ../assistant_settings.lua:493
+#: ../assistant_settings.lua:495
 msgid   "Show follow up questions related to the response content."
 msgstr  "Erakutsi erantzunaren edukiarekin lotutako jarraipen galderak."
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:501
+#: ../assistant_settings.lua:503
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader doikuntzak eta gainidazketak"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:505
+#: ../assistant_settings.lua:507
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Erabili AI laguntzailea 'Itzuli' funtziorako"
 
-#: ../assistant_settings.lua:516
+#: ../assistant_settings.lua:518
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Laburpen automatikoa irekita daunen liburuak irekitzean"
 
-#: ../assistant_settings.lua:526
+#: ../assistant_settings.lua:528
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "AI Laburpena aktibatuko da beste ez duzun liburua ireki aurretik."
 
-#: ../assistant_settings.lua:530
+#: ../assistant_settings.lua:532
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Erakutsi Hiztegia (AI) Hiztegiaren Popup-ean"
 
-#: ../assistant_settings.lua:538
+#: ../assistant_settings.lua:540
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Erakutsi Wikipedia (AI) Hiztegiaren Popup-ean"
 
-#: ../assistant_settings.lua:546
+#: ../assistant_settings.lua:548
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Erakutsi Terminoaren X izpiak (AI) hiztegiaren leihoan"
 
-#: ../assistant_settings.lua:554
+#: ../assistant_settings.lua:556
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Erakutsi pertsonalizatutako galdetegiak hiztegiaren leihoan"
 
-#: ../assistant_settings.lua:564
+#: ../assistant_settings.lua:566
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kopiatu sartutako galdera arbelan"
 
-#: ../assistant_settings.lua:572
+#: ../assistant_settings.lua:574
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Gorde automatikoki elkarteak Ohartegian"
 
-#: ../assistant_settings.lua:580
+#: ../assistant_settings.lua:582
 msgid   "Use book text for x-ray and recap"
 msgstr  "Erabili liburuaren testua X-ray eta laburpenetarako"
 
-#: ../assistant_settings.lua:588
+#: ../assistant_settings.lua:590 ../assistant_settings.lua:594
+msgid   "OTA Update"
+msgstr  "OTA Eguneraketa"
+
+#: ../assistant_settings.lua:596
+msgid   "branch or tag name"
+msgstr  "adar edo etiketa izena"
+
+#: ../assistant_settings.lua:597
+msgid   "Enter a branch or tag name to update the AI Assistant plugin from the main repository.\n"
+        "\n"
+        "Default: \"main\" (latest development version)\n"
+        "Examples: \"main\", \"v1.12\", \"v1.11-rc2\"\n"
+        "\n"
+        "The current plugin will be backed up and replaced. Configuration and lib files will be preserved."
+msgstr  "Sartu adar edo etiketa izen bat AI Laguntzailea plugina biltegi nagusitik eguneratzeko.\n"
+        "\n"
+        "Lehenetsia: \"main\" (azken garapen bertsioa)\n"
+        "Adibideak: \"main\", \"v1.12\", \"v1.11-rc2\"\n"
+        "\n"
+        "Oraingo plugina babeskopiatu eta ordeztuko da. Konfigurazioa eta lib fitxategiak gorde egingo dira."
+
+#: ../assistant_settings.lua:615
+msgid   "Update"
+msgstr  "Eguneratu"
+
+#: ../assistant_settings.lua:634
 msgid   "Purge the settings"
 msgstr  "Ezabatu ezarpenak"
 
-#: ../assistant_settings.lua:591
+#: ../assistant_settings.lua:637
 msgid   "Purge assistant.koplugin settings?\n"
         "\n"
         "This restores the plugin to its factory defaults. Only settings will be removed; \n"
@@ -674,7 +702,7 @@ msgstr  "Purge assistant.koplugin ezarpenak?\n"
         "Honek plugina fabrikako lehenetsietara berrezartzen du. Ezarpenak bakarrik kenduko dira; \n"
         "configuration.lua fitxategia gordeko da."
 
-#: ../assistant_settings.lua:595 ../main.lua:681
+#: ../assistant_settings.lua:641 ../main.lua:681
 msgid   "Purge"
 msgstr  "Ezabatu"
 
@@ -698,25 +726,53 @@ msgstr  "Tresna-deiak ez du id-rik barne hartzen."
 msgid   "Tool call did not include search keywords."
 msgstr  "Tresna-deiak ez du bilaketa hitz gakoik barne hartzen."
 
-#: ../assistant_update_checker.lua:105
+#: ../assistant_updater.lua:108
 msgid   "Checking for updates..."
 msgstr  "Eguneraketa jartzen ari naiz..."
 
-#: ../assistant_update_checker.lua:114
-msgid   "Update check canceled."
-msgstr  "Eguneratze egiaztapena bertan behera utzi da."
+#: ../assistant_updater.lua:111
+msgid   "AI Assistant: Failed to check updates: %2"
+msgstr  "AI Laguntzailea: Ezin izan dira eguneraketak egiaztatu: %2"
 
-#: ../assistant_update_checker.lua:118
-msgid   "Failed to check for updates. HTTP code: %1"
-msgstr  "Eguneratzeak egiaztatzeko huts egin du. HTTP kodea: %1"
+#: ../assistant_updater.lua:111
+msgid   "Empty Error"
+msgstr  "Errore hutsa"
 
-#: ../assistant_update_checker.lua:124
-msgid   "Failed to parse update check response: %1"
-msgstr  "Eguneratze egiaztapenaren erantzuna analizatzeko huts egin du: %1"
-
-#: ../assistant_update_checker.lua:135
+#: ../assistant_updater.lua:121
 msgid   "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr  "Plugin-aren %1 bertsio berria (%2) eskuragarri dago. Mesedez, eguneratu!"
+
+#: ../assistant_updater.lua:173
+msgid   "Downloading ... \n"
+        "Github: %1\n"
+        "Repo: %2\n"
+        "Branch/Tag: %3"
+msgstr  "Deskargatzen ... \n"
+        "Github: %1\n"
+        "Biltegia: %2\n"
+        "Adarra/Etiketa: %3"
+
+#: ../assistant_updater.lua:196
+msgid   "Branch/Tag \"%1\" was not found."
+msgstr  "Adarra/Etiketa \"%1\" ez da aurkitu."
+
+#: ../assistant_updater.lua:208
+msgid   "OTA update canceled."
+msgstr  "OTA eguneraketa bertan behera utzita."
+
+#: ../assistant_updater.lua:214 ../assistant_updater.lua:297
+msgid   "OTA update failed: %1"
+msgstr  "OTA eguneraketak huts egin du: %1"
+
+#: ../assistant_updater.lua:219
+msgid   "Installing %1..."
+msgstr  "%1 instalatzen..."
+
+#: ../assistant_updater.lua:301
+msgid   "OTA UPDATE OK.\n"
+        " Restart is required."
+msgstr  "OTA EGUNERAKETA ONGI.\n"
+        " Berrabiarazi behar da."
 
 #: ../assistant_utils.lua:169
 msgid   "Page"

@@ -1,7 +1,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.08\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-16 16:47+0800\n"
+        "POT-Creation-Date: 2026-07-21 09:50+0800\n"
         "PO-Revision-Date: 2024-05-03 10:00+0700\n"
         "Last-Translator: [AI Model Version]\n"
         "Language-Team: [AI Translation Model Name]\n"
@@ -20,13 +20,14 @@ msgstr  "Trợ lý AI"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 Nâng cao trải nghiệm KOReader với AI"
 
-#: ../api_handlers/anthropic.lua:23 ../api_handlers/gemini.lua:27
-#: ../api_handlers/openai.lua:37
+#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:30
+#: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
 msgid   "Fetching models..."
 msgstr  "Đang tải mô hình..."
 
-#: ../api_handlers/anthropic.lua:40 ../api_handlers/gemini.lua:37
-#: ../api_handlers/gemini.lua:47 ../api_handlers/openai.lua:53
+#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:40
+#: ../api_handlers/gemini.lua:50 ../api_handlers/openai.lua:58
+#: ../api_handlers/responses.lua:67
 msgid   "Failed to fetch models"
 msgstr  "Không thể tải danh sách mô hình"
 
@@ -55,7 +56,8 @@ msgstr  "Văn bản đã bôi:"
 #: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:94 ../assistant_viewer.lua:682
+#: ../assistant_settings.lua:96 ../assistant_settings.lua:609
+#: ../assistant_viewer.lua:682
 msgid   "Cancel"
 msgstr  "Hủy"
 
@@ -274,7 +276,7 @@ msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "vd: google/gemini-3.0-flash-exp:free"
 
 #: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:118 ../assistant_viewer.lua:462
+#: ../assistant_settings.lua:120 ../assistant_viewer.lua:462
 msgid   "Save"
 msgstr  "Lưu"
 
@@ -433,7 +435,7 @@ msgstr  "Lỗi API:\n"
         "\n"
         "Thử nhà cung cấp khác trong hộp thoại cài đặt."
 
-#: ../assistant_querier.lua:156
+#: ../assistant_querier.lua:156 ../assistant_querier.lua:790
 msgid   "Unknown error"
 msgstr  "Lỗi không xác định"
 
@@ -441,7 +443,7 @@ msgstr  "Lỗi không xác định"
 msgid   "Settings"
 msgstr  "Cài đặt"
 
-#: ../assistant_querier.lua:159 ../assistant_settings.lua:219
+#: ../assistant_querier.lua:159 ../assistant_settings.lua:221
 #: ../assistant_viewer.lua:353
 msgid   "Close"
 msgstr  "Đóng"
@@ -494,11 +496,11 @@ msgstr  "⏹ Dừng"
 msgid   "Failed to start subprocess for request"
 msgstr  "Không thể khởi động tiến trình cho yêu cầu"
 
-#: ../assistant_querier.lua:796 ../assistant_querier.lua:799
+#: ../assistant_querier.lua:820 ../assistant_querier.lua:823
 msgid   "Deeply Thought"
 msgstr  "Suy nghĩ kỹ"
 
-#: ../assistant_querier.lua:986
+#: ../assistant_querier.lua:1010
 msgid   "Stopped Reason: "
 msgstr  "Lý do dừng: "
 
@@ -522,47 +524,47 @@ msgstr  "Người dùng:"
 msgid   "Quick note saved successfully"
 msgstr  "Đã lưu ghi chú nhanh thành công"
 
-#: ../assistant_settings.lua:78
+#: ../assistant_settings.lua:80
 msgid   "AI Response Language Setting"
 msgstr  "Cài đặt ngôn ngữ phản hồi AI"
 
-#: ../assistant_settings.lua:81
+#: ../assistant_settings.lua:83
 msgid   "AI Response Language"
 msgstr  "Ngôn ngữ phản hồi AI"
 
-#: ../assistant_settings.lua:83 ../assistant_settings.lua:88
+#: ../assistant_settings.lua:85 ../assistant_settings.lua:90
 msgid   "Leave blank to use: %1"
 msgstr  "Để trống để dùng: %1"
 
-#: ../assistant_settings.lua:86
+#: ../assistant_settings.lua:88
 msgid   "Dictionary Language"
 msgstr  "Ngôn ngữ từ điển"
 
-#: ../assistant_settings.lua:101
+#: ../assistant_settings.lua:103
 msgid   "Clear"
 msgstr  "Xóa"
 
-#: ../assistant_settings.lua:148
+#: ../assistant_settings.lua:150
 msgid   "RTL written Language"
 msgstr  "Ngôn ngữ viết RTL"
 
-#: ../assistant_settings.lua:168
+#: ../assistant_settings.lua:170
 msgid   "Leave these fields blank to use the UI language: %1"
 msgstr  "Để trống các trường này để dùng ngôn ngữ giao diện: %1"
 
-#: ../assistant_settings.lua:179
+#: ../assistant_settings.lua:181
 msgid   "AI Provider and Models"
 msgstr  "Nhà cung cấp AI và Mô hình"
 
-#: ../assistant_settings.lua:205
+#: ../assistant_settings.lua:207
 msgid   "Browse Models"
 msgstr  "Duyệt Mô hình"
 
-#: ../assistant_settings.lua:213
+#: ../assistant_settings.lua:215
 msgid   "Browse available models on OpenRouter"
 msgstr  "Duyệt các mô hình khả dụng trên OpenRouter"
 
-#: ../assistant_settings.lua:385
+#: ../assistant_settings.lua:387
 msgid   "Builtin Tools Works ONLY with these models:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
@@ -570,101 +572,127 @@ msgstr  "Công cụ tích hợp CHỈ hoạt động với các mô hình sau:\n
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:410
+#: ../assistant_settings.lua:412
 msgid   "AI Language: "
 msgstr  "Ngôn ngữ AI: "
 
-#: ../assistant_settings.lua:422
+#: ../assistant_settings.lua:424
 msgid   "AI Text Size: %1"
 msgstr  "Cỡ chữ AI: %1"
 
-#: ../assistant_settings.lua:426
+#: ../assistant_settings.lua:428
 msgid   "AI Response Text Font Size"
 msgstr  "Cỡ phông chữ phản hồi AI"
 
-#: ../assistant_settings.lua:442
+#: ../assistant_settings.lua:444
 msgid   "Response Settings"
 msgstr  "Cài đặt phản hồi"
 
-#: ../assistant_settings.lua:445
+#: ../assistant_settings.lua:447
 msgid   "Enable Stream Response"
 msgstr  "Bật phản hồi luồng"
 
-#: ../assistant_settings.lua:453
+#: ../assistant_settings.lua:455
 msgid   "Stream Text Auto Scroll"
 msgstr  "Tự động cuộn văn bản luồng"
 
-#: ../assistant_settings.lua:462
+#: ../assistant_settings.lua:464
 msgid   "Large Streaming Window"
 msgstr  "Cửa sổ truyền dữ liệu lớn"
 
-#: ../assistant_settings.lua:472
+#: ../assistant_settings.lua:474
 msgid   "Show Reasoning Text"
 msgstr  "Hiển thị văn bản lý luận"
 
-#: ../assistant_settings.lua:480
+#: ../assistant_settings.lua:482
 msgid   "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr  "Hiển thị quy trình suy nghĩ sâu (lý luận) từ phản hồi AI nếu có."
 
-#: ../assistant_settings.lua:485
+#: ../assistant_settings.lua:487
 msgid   "Show Follow-up Questions"
 msgstr  "Hiển thị câu hỏi tiếp theo"
 
-#: ../assistant_settings.lua:493
+#: ../assistant_settings.lua:495
 msgid   "Show follow up questions related to the response content."
 msgstr  "Hiển thị các câu hỏi tiếp theo liên quan đến nội dung phản hồi."
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:501
+#: ../assistant_settings.lua:503
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "Tinh chỉnh & Ghi đè KOReader"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:505
+#: ../assistant_settings.lua:507
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Dùng Trợ lý AI cho 'Dịch'"
 
-#: ../assistant_settings.lua:516
+#: ../assistant_settings.lua:518
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Tự động tóm tắt khi mở sách đã lâu chưa đọc"
 
-#: ../assistant_settings.lua:526
+#: ../assistant_settings.lua:528
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "Tóm tắt AI sẽ được bật lần tới khi mở sách đã lâu chưa đọc."
 
-#: ../assistant_settings.lua:530
+#: ../assistant_settings.lua:532
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Hiện Từ điển(AI) trong cửa sổ Từ điển"
 
-#: ../assistant_settings.lua:538
+#: ../assistant_settings.lua:540
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Hiện Wikipedia(AI) trong cửa sổ Từ điển"
 
-#: ../assistant_settings.lua:546
+#: ../assistant_settings.lua:548
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Hiện X-Quang Thuật ngữ(AI) trong popup Từ điển"
 
-#: ../assistant_settings.lua:554
+#: ../assistant_settings.lua:556
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Hiện Lệnh tùy chỉnh trong popup Từ điển"
 
-#: ../assistant_settings.lua:564
+#: ../assistant_settings.lua:566
 msgid   "Copy entered question to the clipboard"
 msgstr  "Sao chép câu hỏi vào bộ nhớ tạm"
 
-#: ../assistant_settings.lua:572
+#: ../assistant_settings.lua:574
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Tự động lưu cuộc trò chuyện vào Sổ tay"
 
-#: ../assistant_settings.lua:580
+#: ../assistant_settings.lua:582
 msgid   "Use book text for x-ray and recap"
 msgstr  "Dùng nội dung sách cho x-ray và tóm tắt"
 
-#: ../assistant_settings.lua:588
+#: ../assistant_settings.lua:590 ../assistant_settings.lua:594
+msgid   "OTA Update"
+msgstr  "Cập nhật OTA"
+
+#: ../assistant_settings.lua:596
+msgid   "branch or tag name"
+msgstr  "tên nhánh hoặc thẻ"
+
+#: ../assistant_settings.lua:597
+msgid   "Enter a branch or tag name to update the AI Assistant plugin from the main repository.\n"
+        "\n"
+        "Default: \"main\" (latest development version)\n"
+        "Examples: \"main\", \"v1.12\", \"v1.11-rc2\"\n"
+        "\n"
+        "The current plugin will be backed up and replaced. Configuration and lib files will be preserved."
+msgstr  "Nhập tên nhánh hoặc thẻ để cập nhật plugin AI Assistant từ kho chính.\n"
+        "\n"
+        "Mặc định: \"main\" (phiên bản phát triển mới nhất)\n"
+        "Ví dụ: \"main\", \"v1.12\", \"v1.11-rc2\"\n"
+        "\n"
+        "Plugin hiện tại sẽ được sao lưu và thay thế. Các tệp cấu hình và thư viện sẽ được giữ nguyên."
+
+#: ../assistant_settings.lua:615
+msgid   "Update"
+msgstr  "Cập nhật"
+
+#: ../assistant_settings.lua:634
 msgid   "Purge the settings"
 msgstr  "Xóa sạch cài đặt"
 
-#: ../assistant_settings.lua:591
+#: ../assistant_settings.lua:637
 msgid   "Purge assistant.koplugin settings?\n"
         "\n"
         "This restores the plugin to its factory defaults. Only settings will be removed; \n"
@@ -674,7 +702,7 @@ msgstr  "Xóa cài đặt assistant.koplugin?\n"
         "Thao tác này khôi phục plugin về cài đặt gốc. Chỉ các cài đặt sẽ bị xóa;\n"
         "Tệp configuration.lua sẽ được giữ nguyên."
 
-#: ../assistant_settings.lua:595 ../main.lua:681
+#: ../assistant_settings.lua:641 ../main.lua:681
 msgid   "Purge"
 msgstr  "Xóa"
 
@@ -698,25 +726,53 @@ msgstr  "Lệnh gọi công cụ không bao gồm id."
 msgid   "Tool call did not include search keywords."
 msgstr  "Lệnh gọi công cụ không bao gồm từ khóa tìm kiếm."
 
-#: ../assistant_update_checker.lua:105
+#: ../assistant_updater.lua:108
 msgid   "Checking for updates..."
 msgstr  "Đang kiểm tra cập nhật..."
 
-#: ../assistant_update_checker.lua:114
-msgid   "Update check canceled."
-msgstr  "Đã hủy kiểm tra cập nhật."
+#: ../assistant_updater.lua:111
+msgid   "AI Assistant: Failed to check updates: %2"
+msgstr  "Trợ lý AI: Kiểm tra cập nhật thất bại: %2"
 
-#: ../assistant_update_checker.lua:118
-msgid   "Failed to check for updates. HTTP code: %1"
-msgstr  "Không thể kiểm tra cập nhật. Mã HTTP: %1"
+#: ../assistant_updater.lua:111
+msgid   "Empty Error"
+msgstr  "Lỗi trống"
 
-#: ../assistant_update_checker.lua:124
-msgid   "Failed to parse update check response: %1"
-msgstr  "Không thể phân tích phản hồi kiểm tra cập nhật: %1"
-
-#: ../assistant_update_checker.lua:135
+#: ../assistant_updater.lua:121
 msgid   "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr  "Phiên bản mới của plugin %1 (%2) đã có sẵn. Vui lòng cập nhật!"
+
+#: ../assistant_updater.lua:173
+msgid   "Downloading ... \n"
+        "Github: %1\n"
+        "Repo: %2\n"
+        "Branch/Tag: %3"
+msgstr  "Đang tải xuống ... \n"
+        "Github: %1\n"
+        "Kho: %2\n"
+        "Nhánh/Thẻ: %3"
+
+#: ../assistant_updater.lua:196
+msgid   "Branch/Tag \"%1\" was not found."
+msgstr  "Nhánh/Thẻ \"%1\" không được tìm thấy."
+
+#: ../assistant_updater.lua:208
+msgid   "OTA update canceled."
+msgstr  "Đã hủy cập nhật OTA."
+
+#: ../assistant_updater.lua:214 ../assistant_updater.lua:297
+msgid   "OTA update failed: %1"
+msgstr  "Cập nhật OTA thất bại: %1"
+
+#: ../assistant_updater.lua:219
+msgid   "Installing %1..."
+msgstr  "Đang cài đặt %1..."
+
+#: ../assistant_updater.lua:301
+msgid   "OTA UPDATE OK.\n"
+        " Restart is required."
+msgstr  "CẬP NHẬT OTA THÀNH CÔNG.\n"
+        " Cần khởi động lại."
 
 #: ../assistant_utils.lua:169
 msgid   "Page"

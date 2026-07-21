@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-16 16:47+0800\n"
+        "POT-Creation-Date: 2026-07-21 09:50+0800\n"
         "PO-Revision-Date: 2025-08-21 15:17:03+0800\n"
         "Last-Translator: [AI Model Version]\n"
         "Language-Team: [AI Translation Model Name]\n"
@@ -25,13 +25,14 @@ msgstr  "এআই সহকারী"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 এআই দিয়ে আপনার KOReader অভিজ্ঞতা উন্নত করুন"
 
-#: ../api_handlers/anthropic.lua:23 ../api_handlers/gemini.lua:27
-#: ../api_handlers/openai.lua:37
+#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:30
+#: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
 msgid   "Fetching models..."
 msgstr  "মডেল আনা হচ্ছে..."
 
-#: ../api_handlers/anthropic.lua:40 ../api_handlers/gemini.lua:37
-#: ../api_handlers/gemini.lua:47 ../api_handlers/openai.lua:53
+#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:40
+#: ../api_handlers/gemini.lua:50 ../api_handlers/openai.lua:58
+#: ../api_handlers/responses.lua:67
 msgid   "Failed to fetch models"
 msgstr  "মডেল ফেচ করতে ব্যর্থ"
 
@@ -60,7 +61,8 @@ msgstr  "উল্লেখিত পাঠ্য:"
 #: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:94 ../assistant_viewer.lua:682
+#: ../assistant_settings.lua:96 ../assistant_settings.lua:609
+#: ../assistant_viewer.lua:682
 msgid   "Cancel"
 msgstr  "বাতিল"
 
@@ -279,7 +281,7 @@ msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "যেমন: google/gemini-3.0-flash-exp:free"
 
 #: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:118 ../assistant_viewer.lua:462
+#: ../assistant_settings.lua:120 ../assistant_viewer.lua:462
 msgid   "Save"
 msgstr  "সংরক্ষণ"
 
@@ -438,7 +440,7 @@ msgstr  "API ত্রুটি:\n"
         "\n"
         "সেটিংস ডায়ালগে অন্য প্রোভাইডার চেষ্টা করুন।"
 
-#: ../assistant_querier.lua:156
+#: ../assistant_querier.lua:156 ../assistant_querier.lua:790
 msgid   "Unknown error"
 msgstr  "অজানা ত্রুটি"
 
@@ -446,7 +448,7 @@ msgstr  "অজানা ত্রুটি"
 msgid   "Settings"
 msgstr  "সেটিংস"
 
-#: ../assistant_querier.lua:159 ../assistant_settings.lua:219
+#: ../assistant_querier.lua:159 ../assistant_settings.lua:221
 #: ../assistant_viewer.lua:353
 msgid   "Close"
 msgstr  "বন্ধ করুন"
@@ -499,11 +501,11 @@ msgstr  "⏹ বন্ধ করুন"
 msgid   "Failed to start subprocess for request"
 msgstr  "অনুরোধের জন্য সাবপ্রসেস শুরু করতে ব্যর্থ"
 
-#: ../assistant_querier.lua:796 ../assistant_querier.lua:799
+#: ../assistant_querier.lua:820 ../assistant_querier.lua:823
 msgid   "Deeply Thought"
 msgstr  "গভীর চিন্তা"
 
-#: ../assistant_querier.lua:986
+#: ../assistant_querier.lua:1010
 msgid   "Stopped Reason: "
 msgstr  "থামানোর কারণ: "
 
@@ -527,47 +529,47 @@ msgstr  "ব্যবহারকারী:"
 msgid   "Quick note saved successfully"
 msgstr  "দ্রুত নোট সফলভাবে সংরক্ষিত হয়েছে"
 
-#: ../assistant_settings.lua:78
+#: ../assistant_settings.lua:80
 msgid   "AI Response Language Setting"
 msgstr  "এআই প্রতিক্রিয়া ভাষা সেটিং"
 
-#: ../assistant_settings.lua:81
+#: ../assistant_settings.lua:83
 msgid   "AI Response Language"
 msgstr  "AI উত্তরের ভাষা"
 
-#: ../assistant_settings.lua:83 ../assistant_settings.lua:88
+#: ../assistant_settings.lua:85 ../assistant_settings.lua:90
 msgid   "Leave blank to use: %1"
 msgstr  "খালি রাখলে ব্যবহৃত হবে: %1"
 
-#: ../assistant_settings.lua:86
+#: ../assistant_settings.lua:88
 msgid   "Dictionary Language"
 msgstr  "ডিকশনারি ভাষা"
 
-#: ../assistant_settings.lua:101
+#: ../assistant_settings.lua:103
 msgid   "Clear"
 msgstr  "মুছে ফেলো"
 
-#: ../assistant_settings.lua:148
+#: ../assistant_settings.lua:150
 msgid   "RTL written Language"
 msgstr  "ডান-থেকে-বাম লেখা ভাষা"
 
-#: ../assistant_settings.lua:168
+#: ../assistant_settings.lua:170
 msgid   "Leave these fields blank to use the UI language: %1"
 msgstr  "UI ভাষা ব্যবহার করতে এই ঘরগুলো খালি রাখুন: %1"
 
-#: ../assistant_settings.lua:179
+#: ../assistant_settings.lua:181
 msgid   "AI Provider and Models"
 msgstr  "AI প্রদানকারী এবং মডেলসমূহ"
 
-#: ../assistant_settings.lua:205
+#: ../assistant_settings.lua:207
 msgid   "Browse Models"
 msgstr  "মডেল ব্রাউজ করুন"
 
-#: ../assistant_settings.lua:213
+#: ../assistant_settings.lua:215
 msgid   "Browse available models on OpenRouter"
 msgstr  "OpenRouter-এ উপলব্ধ মডেলগুলি ব্রাউজ করুন"
 
-#: ../assistant_settings.lua:385
+#: ../assistant_settings.lua:387
 msgid   "Builtin Tools Works ONLY with these models:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
@@ -575,101 +577,127 @@ msgstr  "বিল্ট-ইন টুল শুধুমাত্র এই ম
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:410
+#: ../assistant_settings.lua:412
 msgid   "AI Language: "
 msgstr  "এআই ভাষা: "
 
-#: ../assistant_settings.lua:422
+#: ../assistant_settings.lua:424
 msgid   "AI Text Size: %1"
 msgstr  "এআই টেক্সটের আকার: %1"
 
-#: ../assistant_settings.lua:426
+#: ../assistant_settings.lua:428
 msgid   "AI Response Text Font Size"
 msgstr  "এআই প্রতিক্রিয়ার টেক্সট ফন্টের আকার"
 
-#: ../assistant_settings.lua:442
+#: ../assistant_settings.lua:444
 msgid   "Response Settings"
 msgstr  "প্রতিক্রিয়া সেটিংস"
 
-#: ../assistant_settings.lua:445
+#: ../assistant_settings.lua:447
 msgid   "Enable Stream Response"
 msgstr  "স্ট্রিম প্রতিক্রিয়া সক্রিয় করুন"
 
-#: ../assistant_settings.lua:453
+#: ../assistant_settings.lua:455
 msgid   "Stream Text Auto Scroll"
 msgstr  "স্ট্রিম টেক্সট স্বয়ংক্রিয় স্ক্রোল"
 
-#: ../assistant_settings.lua:462
+#: ../assistant_settings.lua:464
 msgid   "Large Streaming Window"
 msgstr  "বড় স্ট্রিমিং উইন্ডো"
 
-#: ../assistant_settings.lua:472
+#: ../assistant_settings.lua:474
 msgid   "Show Reasoning Text"
 msgstr  "যুক্তির টেক্সট দেখান"
 
-#: ../assistant_settings.lua:480
+#: ../assistant_settings.lua:482
 msgid   "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr  "এআই প্রতিক্রিয়া থেকে গভীর চিন্তা প্রক্রিয়া (যুক্তি) থাকলে তা দেখান।"
 
-#: ../assistant_settings.lua:485
+#: ../assistant_settings.lua:487
 msgid   "Show Follow-up Questions"
 msgstr  "অনুসরণীয় প্রশ্ন দেখান"
 
-#: ../assistant_settings.lua:493
+#: ../assistant_settings.lua:495
 msgid   "Show follow up questions related to the response content."
 msgstr  "প্রতিক্রিয়ার বিষয়বস্তু সম্পর্কিত অনুসরণীয় প্রশ্ন দেখান।"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:501
+#: ../assistant_settings.lua:503
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader টুইক ও ওভাররাইড"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:505
+#: ../assistant_settings.lua:507
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "'অনুবাদ'-এর জন্য এআই সহায়ক ব্যবহার করুন"
 
-#: ../assistant_settings.lua:516
+#: ../assistant_settings.lua:518
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "দীর্ঘদিন না পড়া বই খোলার সময় স্বয়ংক্রিয় রিক্যাপ"
 
-#: ../assistant_settings.lua:526
+#: ../assistant_settings.lua:528
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "পরবর্তীবার কোনো দীর্ঘদিন না পড়া বই খোলা হলে এআই রিক্যাপ সক্রিয় হবে।"
 
-#: ../assistant_settings.lua:530
+#: ../assistant_settings.lua:532
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "ডিকশনারি পপআপে Dictionary(AI) দেখাও"
 
-#: ../assistant_settings.lua:538
+#: ../assistant_settings.lua:540
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "ডিকশনারি পপআপে Wikipedia(AI) দেখাও"
 
-#: ../assistant_settings.lua:546
+#: ../assistant_settings.lua:548
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "অভিধান পপআপে টার্ম এক্স-রে(এআই) দেখান"
 
-#: ../assistant_settings.lua:554
+#: ../assistant_settings.lua:556
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "অভিধান পপআপে কাস্টম প্রম্পট দেখান"
 
-#: ../assistant_settings.lua:564
+#: ../assistant_settings.lua:566
 msgid   "Copy entered question to the clipboard"
 msgstr  "প্রশ্ন ক্লিপবোর্ডে কপি করো"
 
-#: ../assistant_settings.lua:572
+#: ../assistant_settings.lua:574
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "আলাপচারিতা স্বয়ংক্রিয়ভাবে নোটবুকে সংরক্ষণ করুন"
 
-#: ../assistant_settings.lua:580
+#: ../assistant_settings.lua:582
 msgid   "Use book text for x-ray and recap"
 msgstr  "এক্স-রে এবং রিক্যাপের জন্য বইয়ের পাঠ্য ব্যবহার করুন"
 
-#: ../assistant_settings.lua:588
+#: ../assistant_settings.lua:590 ../assistant_settings.lua:594
+msgid   "OTA Update"
+msgstr  "ওটিএ হালনাগাদ"
+
+#: ../assistant_settings.lua:596
+msgid   "branch or tag name"
+msgstr  "শাখা বা ট্যাগের নাম"
+
+#: ../assistant_settings.lua:597
+msgid   "Enter a branch or tag name to update the AI Assistant plugin from the main repository.\n"
+        "\n"
+        "Default: \"main\" (latest development version)\n"
+        "Examples: \"main\", \"v1.12\", \"v1.11-rc2\"\n"
+        "\n"
+        "The current plugin will be backed up and replaced. Configuration and lib files will be preserved."
+msgstr  "প্রধান রিপোজিটরি থেকে এআই সহকারী প্লাগইন হালনাগাদ করতে একটি শাখা বা ট্যাগের নাম লিখুন।\n"
+        "\n"
+        "ডিফল্ট: \"main\" (সর্বশেষ উন্নয়ন সংস্করণ)\n"
+        "উদাহরণ: \"main\", \"v1.12\", \"v1.11-rc2\"\n"
+        "\n"
+        "বর্তমান প্লাগইনটি ব্যাকআপ নিয়ে প্রতিস্থাপন করা হবে। কনফিগারেশন এবং লিব ফাইলগুলি সংরক্ষিত থাকবে।"
+
+#: ../assistant_settings.lua:615
+msgid   "Update"
+msgstr  "হালনাগাদ"
+
+#: ../assistant_settings.lua:634
 msgid   "Purge the settings"
 msgstr  "সেটিংস মুছে ফেলুন"
 
-#: ../assistant_settings.lua:591
+#: ../assistant_settings.lua:637
 msgid   "Purge assistant.koplugin settings?\n"
         "\n"
         "This restores the plugin to its factory defaults. Only settings will be removed; \n"
@@ -679,7 +707,7 @@ msgstr  "assistant.koplugin সেটিংস মুছে ফেলবেন?\
         "এটি প্লাগইনটিকে তার কারখানা ডিফল্টে পুনরুদ্ধার করবে। শুধুমাত্র সেটিংস সরানো হবে;\n"
         "configuration.lua ফাইলটি সংরক্ষিত থাকবে।"
 
-#: ../assistant_settings.lua:595 ../main.lua:681
+#: ../assistant_settings.lua:641 ../main.lua:681
 msgid   "Purge"
 msgstr  "মুছে ফেলুন"
 
@@ -703,25 +731,53 @@ msgstr  "টুল কলটিতে আইডি অন্তর্ভুক�
 msgid   "Tool call did not include search keywords."
 msgstr  "টুল কলটিতে অনুসন্ধান কীওয়ার্ড অন্তর্ভুক্ত ছিল না।"
 
-#: ../assistant_update_checker.lua:105
+#: ../assistant_updater.lua:108
 msgid   "Checking for updates..."
 msgstr  "আপডেট যাচাই করা হচ্ছে..."
 
-#: ../assistant_update_checker.lua:114
-msgid   "Update check canceled."
-msgstr  "আপডেট চেক বাতিল করা হয়েছে।"
+#: ../assistant_updater.lua:111
+msgid   "AI Assistant: Failed to check updates: %2"
+msgstr  "এআই সহকারী: হালনাগাদ পরীক্ষা করতে ব্যর্থ হয়েছে: %2"
 
-#: ../assistant_update_checker.lua:118
-msgid   "Failed to check for updates. HTTP code: %1"
-msgstr  "আপডেট চেক করতে ব্যর্থ। HTTP কোড: %1"
+#: ../assistant_updater.lua:111
+msgid   "Empty Error"
+msgstr  "খালি ত্রুটি"
 
-#: ../assistant_update_checker.lua:124
-msgid   "Failed to parse update check response: %1"
-msgstr  "আপডেট চেক প্রতিক্রিয়া পার্স করতে ব্যর্থ: %1"
-
-#: ../assistant_update_checker.lua:135
+#: ../assistant_updater.lua:121
 msgid   "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr  "%1 প্লাগইনের একটি নতুন সংস্করণ (%2) উপলব্ধ। অনুগ্রহ করে আপডেট করুন!"
+
+#: ../assistant_updater.lua:173
+msgid   "Downloading ... \n"
+        "Github: %1\n"
+        "Repo: %2\n"
+        "Branch/Tag: %3"
+msgstr  "ডাউনলোড হচ্ছে ... \n"
+        "গিটহাব: %1\n"
+        "রিপো: %2\n"
+        "শাখা/ট্যাগ: %3"
+
+#: ../assistant_updater.lua:196
+msgid   "Branch/Tag \"%1\" was not found."
+msgstr  "\"%1\" শাখা/ট্যাগ পাওয়া যায়নি।"
+
+#: ../assistant_updater.lua:208
+msgid   "OTA update canceled."
+msgstr  "ওটিএ হালনাগাদ বাতিল করা হয়েছে।"
+
+#: ../assistant_updater.lua:214 ../assistant_updater.lua:297
+msgid   "OTA update failed: %1"
+msgstr  "ওটিএ হালনাগাদ ব্যর্থ হয়েছে: %1"
+
+#: ../assistant_updater.lua:219
+msgid   "Installing %1..."
+msgstr  "%1 ইনস্টল করা হচ্ছে..."
+
+#: ../assistant_updater.lua:301
+msgid   "OTA UPDATE OK.\n"
+        " Restart is required."
+msgstr  "ওটিএ হালনাগাদ ঠিক আছে।\n"
+        " পুনরায় চালু করা প্রয়োজন।"
 
 #: ../assistant_utils.lua:169
 msgid   "Page"
