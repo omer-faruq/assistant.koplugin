@@ -612,14 +612,6 @@ The current plugin will be backed up and replaced. Configuration and lib files w
                                 end,
                             },
                             {
-                                text = _("Check"),
-                                callback = function()
-                                    NetworkMgr:runWhenOnline(function()
-                                        Updater.checkForUpdates(assistant)
-                                    end)
-                                end,
-                            },
-                            {
                                 text = _("Update"),
                                 callback = function()
                                     NetworkMgr:runWhenOnline(function()

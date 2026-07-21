@@ -128,53 +128,54 @@ local function otaUpgrade(assistant, version)
   local PLUGIN_NAME = "assistant.koplugin"
 
   local GITHUB_BASE = koutil.tableGetValue(CONFIGURATION, "features", "ota_github_base")
-    or "https://ghfast.top/https://github.com"
+    or "https://github.com"
   local GITHUB_REPO = koutil.tableGetValue(CONFIGURATION, "features", "ota_github_repo")
     or "omer-faruq/assistant.koplugin"
 
   local REPO_REF = version:sub(1, 1) == "v" and "tags" or "heads"
   local RELEASE_URL = string.format("%s/%s/archive/refs/%s/%s.zip", GITHUB_BASE, GITHUB_REPO, REPO_REF, version)
 
-  local infomsg = InfoMessage:new{ text = T(_("Updating %1 to %2..."), PLUGIN_NAME, version) }
-  UIManager:show(infomsg)
-  -- UIManager:forceRePaint()
+  local DataStorage = require("datastorage")
+  local lfs = require("libs/libkoreader-lfs")
+  local Archiver = require("ffi/archiver")
+  local FFIUtil = require("ffi/util")
+  local util = require("util")
 
-  local completed, result, err_msg = Trapper:dismissableRunInSubprocess(function()
-    local DataStorage = require("datastorage")
-    local lfs = require("libs/libkoreader-lfs")
-    local Archiver = require("ffi/archiver")
-    local FFIUtil = require("ffi/util")
+  local KOREADER_DIR = DataStorage:getFullDataDir()
+  local PLUGIN_DIR = KOREADER_DIR .. "/plugins"
+  local ASSISTANT_DIR = PLUGIN_DIR .. "/" .. PLUGIN_NAME
+  local UPDATE_TMPDIR = KOREADER_DIR .. "/ota/" .. PLUGIN_NAME .. ".update"
+  local UPDATE_BAKDIR = UPDATE_TMPDIR .. "/backup"
+  local TARGET_PLUGIN_PATH = ASSISTANT_DIR
+  local BACKUP_PLUGIN_PATH = UPDATE_BAKDIR .. "/" .. PLUGIN_NAME
+  local DL_TAR = string.format("%s/SOURCE-%s-%s.zip", UPDATE_TMPDIR, PLUGIN_NAME, version)
+
+  local function is_excluded(path)
+    if path:find("/%.") or path:sub(1,1) == "." then
+      return true
+    end
+    if path:find(".+%.md$")
+       or path:find("l10n/templates")
+       or path:find("l10n/AI_TRANSLATE%.sh$")
+       or path:find("l10n/Makefile$")
+    then
+      return true
+    end
+    return false
+  end
+
+  util.makePath(UPDATE_BAKDIR)
+
+  -- Phase 1: Download the archive (dismissable by user)
+  local download_msg = TrapWidget:new{
+    text = T(_("Downloading %1 %2..."), PLUGIN_NAME, version),
+  }
+  UIManager:show(download_msg)
+
+  local completed, dl_result, dl_err = Trapper:dismissableRunInSubprocess(function()
     local socket = require("socket")
     local http = require("socket.http")
     local ltn12 = require("ltn12")
-    local util = require("util")
-    local ASUtils = require("assistant_utils")
-
-    local KOREADER_DIR = DataStorage:getFullDataDir()
-    local PLUGIN_DIR = KOREADER_DIR .. "/plugins"
-    local ASSISTANT_DIR = PLUGIN_DIR .. "/" .. PLUGIN_NAME
-    local UPDATE_TMPDIR = KOREADER_DIR .. "/ota/" .. PLUGIN_NAME .. ".update"
-    local UPDATE_BAKDIR = UPDATE_TMPDIR .. "/backup"
-    local TARGET_PLUGIN_PATH = ASSISTANT_DIR
-    local BACKUP_PLUGIN_PATH = UPDATE_BAKDIR .. "/" .. PLUGIN_NAME
-    local DL_TAR = string.format("%s/SOURCE-%s-%s.zip", UPDATE_TMPDIR, PLUGIN_NAME, version)
-
-
-    local function is_excluded(path)
-      if path:find("/%.") or path:sub(1,1) == "." then
-        return true
-      end
-      if path:find(".+%.md$")
-         or path:find("l10n/templates")
-         or path:find("l10n/AI_TRANSLATE%.sh$")
-         or path:find("l10n/Makefile$")
-      then
-        return true
-      end
-      return false
-    end
-
-    util.makePath(UPDATE_BAKDIR)
 
     local file_handle = io.open(DL_TAR, "wb")
     if not file_handle then
@@ -189,15 +190,35 @@ local function otaUpgrade(assistant, version)
     })
 
     if status_code ~= 200 then
-      FFIUtil.purgeDir(UPDATE_TMPDIR)
       if status_code == 404 then
         return false, T(_("Branch/Tag \"%1\" was not found."), version)
       end
       return false, "Download failed: HTTP " .. tostring(status_code)
     end
 
-    Notification:notify(_("Download finished. Extracting ..."), Notification.SOURCE_ALWAYS_SHOW)
+    return true, nil
+  end, download_msg)
 
+  UIManager:close(download_msg)
+
+  if not completed then
+    FFIUtil.purgeDir(UPDATE_TMPDIR)
+    Notification:notify(_("OTA update canceled."), Notification.SOURCE_ALWAYS_SHOW)
+    return
+  end
+
+  if not dl_result then
+    FFIUtil.purgeDir(UPDATE_TMPDIR)
+    Notification:notify(T(_("OTA update failed: %1"), tostring(dl_err)), Notification.SOURCE_ALWAYS_SHOW)
+    return
+  end
+
+  -- Phase 2: Extract and install (NOT dismissable)
+  local extract_msg = InfoMessage:new{ text = T(_("Installing %1 %2..."), PLUGIN_NAME, version) }
+  UIManager:show(extract_msg)
+  UIManager:forceRePaint()
+
+  local function do_install()
     local arc = Archiver.Reader:new()
     if not arc:open(DL_TAR) then
       FFIUtil.purgeDir(UPDATE_TMPDIR)
@@ -260,18 +281,13 @@ local function otaUpgrade(assistant, version)
     end
 
     FFIUtil.purgeDir(UPDATE_TMPDIR)
-
     return true, nil
-  end, infomsg)
-
-  UIManager:close(infomsg)
-
-  if not completed then
-    Notification:notify(_("OTA update canceled."), Notification.SOURCE_ALWAYS_SHOW)
-    return
   end
 
-  if not result then
+  local ok, err_msg = do_install()
+  UIManager:close(extract_msg)
+
+  if not ok then
     Notification:notify(T(_("OTA update failed: %1"), tostring(err_msg)), Notification.SOURCE_ALWAYS_SHOW)
     return
   end
