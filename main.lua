@@ -133,7 +133,6 @@ end
 table.insert(require("ui/elements/reader_menu_order").tools, 1, "ai_assistant")
 table.insert(require("ui/elements/filemanager_menu_order").tools, 1, "ai_assistant")
 function Assistant:addToMainMenu(menu_items)
-
   local common_items_table = {
               {
                 text = _("Ask the AI a question"),
@@ -233,6 +232,9 @@ function Assistant:addToMainMenu(menu_items)
                 text = _("Other Settings"),
                 sub_item_table_func = function ()
                   return SettingsDialog.genMenuSettings(self)
+                end,
+                hold_callback = function ()
+                  self:showAboutDialog()
                 end
               }
             }
@@ -1101,6 +1103,23 @@ function Assistant:syncProviderSelectionFromConfig()
     self.settings:saveSetting("previous_config_ai_provider", config_provider)
     self.updated = true
   end
+end
+
+function Assistant:showAboutDialog()
+  local md_renderer = "Pure MD"
+  if package.preload["resty.hoedown.library"] then
+    md_renderer = "libhoedown"
+  end
+
+  UIManager:show(InfoMessage:new{
+      alignment = "center", show_icon = false,
+      text = string.format([[%s %s
+
+%s
+
+Markdown Engine: %s
+]], self.meta.fullname, self.meta.version, self.meta.description, md_renderer)
+  })
 end
 
 return Assistant

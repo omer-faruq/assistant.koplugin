@@ -194,10 +194,7 @@ function SettingsDialog:init()
 
     self.title_bar_left_icon = "notice-info"
     self.title_bar_left_icon_tap_callback = function ()
-        UIManager:show(InfoMessage:new{
-            alignment = "center", show_icon = false,
-            text = string.format("%s %s\n\n%s", meta.fullname, meta.version, meta.description)
-        })
+        self.assistant:showAboutDialog()
     end
 
     -- action buttons
