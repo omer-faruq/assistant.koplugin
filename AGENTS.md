@@ -98,6 +98,10 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 
 ## Translation Management
 
+Translation scripts in `l10n/` are run manually by developers. **AI agents should not run them or create translation-update tasks** — do not invoke `make template`, `make update`, `make translate`, or `make ai-translate` as part of code changes. Only `make check` may be used to validate `.po` syntax when explicitly requested.
+
+For reference, the developer-facing commands are:
+
 ```bash
 cd l10n && make template      # Generate .pot from source
 cd l10n && make update        # Merge .pot into all .po files
