@@ -586,18 +586,25 @@ SettingsDialog.genMenuSettings = function(assistant)
         {
             text = _("OTA Update"),
             callback = function(touchmenu_instance)
+                local ota_github_base = koutil.tableGetValue(assistant.CONFIGURATION, "features", "ota_github_base")
+                    or "https://github.com"
+                local ota_github_repo = koutil.tableGetValue(assistant.CONFIGURATION, "features", "ota_github_repo")
+                    or "omer-faruq/assistant.koplugin"
                 local version_input
                 version_input = InputDialog:new{
                     title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, meta.version),
                     input = "main",
                     input_hint = _("branch or tag name"),
                     description = T(_([[
-Enter a branch or tag name to update the AI Assistant plugin from the main repository.
+Enter a branch or tag name to update the AI Assistant plugin from the source repository.
+
+Github URL:  %1
+Source REPO: %2
 
 Default: "main" (latest development version)
-Examples: "main", "v1.12", "v1.11-rc2"
+Examples: "main", "v1.12", "v1.11"
 
-The current plugin will be backed up and replaced. Only configuration.lua will be preserved.]]), meta.fullname),
+The current plugin will be backed up and replaced. The configuration.lua will be preserved.]]), ota_github_base, ota_github_repo),
                     buttons = {
                         -- The cancellation button should be kept on the left 
                         -- and the button executing the action on the right.
