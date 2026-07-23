@@ -600,7 +600,7 @@ Enter a branch or tag name to update the AI Assistant plugin from the main repos
 Default: "main" (latest development version)
 Examples: "main", "v1.12", "v1.11-rc2"
 
-The current plugin will be backed up and replaced. Configuration and lib files will be preserved.]]), meta.fullname),
+The current plugin will be backed up and replaced. Only configuration.lua will be preserved.]]), meta.fullname),
                     buttons = {
                         -- The cancellation button should be kept on the left 
                         -- and the button executing the action on the right.

@@ -272,9 +272,9 @@ local function otaUpgrade(version)
     -- Install the freshly extracted plugin into its target location
     os.rename(found_extracted_dir, TARGET_PLUGIN_PATH)
 
-    -- Restore user-owned files (configuration and native libraries) from the backup
+    -- Restore user-owned files from the backup
     if util.pathExists(BACKUP_PLUGIN_PATH) then
-      local restore_targets = {"configuration.lua", "lib"}
+      local restore_targets = {"configuration.lua"}
       for _, filename in ipairs(restore_targets) do
         local old_file = BACKUP_PLUGIN_PATH .. "/" .. filename
         local new_file = TARGET_PLUGIN_PATH .. "/" .. filename
