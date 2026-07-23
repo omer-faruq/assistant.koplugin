@@ -673,6 +673,14 @@ On the result dialog to close (as the Close button is far to reach).
         icon = "info",
         text = info_text,
         face = Font:getFace("xx_smallinfofont"),
+        other_buttons = {{
+          {
+            text = _("Version Info"),
+            callback = function()
+              self:showAboutDialog()
+            end,
+          },
+        }},
         ok_text = _("Purge Settings"),
         ok_callback = function()
           UIManager:show(ConfirmBox:new{
@@ -1111,14 +1119,23 @@ function Assistant:showAboutDialog()
     md_renderer = "libhoedown"
   end
 
+  local Version = require("version")
+
   UIManager:show(InfoMessage:new{
-      alignment = "center", show_icon = false,
+      show_icon = false,
       text = string.format([[%s %s
-
-%s
-
-Markdown Engine: %s
-]], self.meta.fullname, self.meta.version, self.meta.description, md_renderer)
+――――――――――――――――
+%s: %s
+KOReader: %s
+%s: %s
+%s: %s/%s
+%s: %s]],
+        self.meta.fullname, self.meta.version,
+        _("Markdown Engine"), md_renderer,
+        Version:getShortVersion(),
+        _("Device"), Device.model or "?",
+        _("Platform"), jit.os, jit.arch,
+        _("Runtime"), jit.version)
   })
 end
 
