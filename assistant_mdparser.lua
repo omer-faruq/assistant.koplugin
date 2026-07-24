@@ -21,18 +21,18 @@ local function isHardFP()
 end
 
 -- Map the running device to a subdirectory of lib/ containing a compatible
--- libhoedown.so.3. libhoedown has very few dependencies, so a single ARM
--- soft-float build (arm_kindle) works on virtually any EABI5 environment,
--- and the arm_kobo (hardfp) build loads on aarch64-linux hosts too.
+-- libhoedown.so.3. libhoedown has very few dependencies, so a single ARMv7
+-- soft-float build works on virtually any EABI5 environment, and the ARMv7
+-- hard-float build loads on aarch64-linux hosts too.
 local function get_platform_libdir()
     if Device:isDesktop() or Device:isEmulator() then
         return "x86_64"
     elseif Device:isKobo() then
-        return "arm_kobo"
+        return "armv7_hardfp"
     elseif Device:isKindle() then
-        return isHardFP() and "arm_kobo" or "arm_kindle"
+        return isHardFP() and "armv7_hardfp" or "armv7_softfp"
     elseif Device:isPocketBook() then
-        return "arm_kindle"
+        return "armv7_softfp"
     elseif Device:isAndroid() and util.stringStartsWith(jit.arch, "arm") then
         return (jit.arch == "arm64") and "android_arm64" or "android_armv7a"
     end
