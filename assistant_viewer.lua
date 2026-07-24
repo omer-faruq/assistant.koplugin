@@ -640,7 +640,8 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
       return false
     end
     -- Exclude stub prompts (dictionary) button in follow up questions
-    if prompt.order < 0 then
+    -- (prompts defined only in configuration.lua may have no `order`)
+    if (prompt.order or 1000) < 0 then
       return false
     end
     return true
