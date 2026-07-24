@@ -11,6 +11,7 @@ local Trapper = require("ui/trapper")
 local koutil = require("util")
 local ChatGPTViewer = require("assistant_viewer")
 local assistant_prompts = require("assistant_prompts").assistant_prompts
+local Prompts = require("assistant_prompts")
 local NetworkMgr = require("ui/network/manager")
 local assistant_utils = require("assistant_utils")
 local extractBookTextForAnalysis = assistant_utils.extractBookTextForAnalysis
@@ -59,7 +60,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         -- Feature type configurations for easy extension
         local feature_configurations = {
             recap = {
-                title = _("🌐Recap"),
+                title = _("Recap"),
                 loading_message = _("Loading Recap..."),
                 config_key = "recap_config",
                 prompts_key = "recap"
@@ -71,7 +72,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
                 prompts_key = "xray"
             },
             book_info = {
-                title = _("🌐Book Information"),
+                title = _("Book Information"),
                 loading_message = _("Loading Book Information..."),
                 config_key = "book_info_config",
                 prompts_key = "book_info"
@@ -131,6 +132,9 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
           highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui,false)
         end
     end
+
+    local ws_enabled = Prompts.isWebSearchEnabled(assistant.settings)
+    feature_title = Prompts.getDisplayText(feature_title, user_prompt_use_websearch or false, ws_enabled)
 
     if assistant.settings:readSetting("auto_prompt_suggest", false) then
       system_prompt = system_prompt .. assistant_prompts.suggestions_prompt

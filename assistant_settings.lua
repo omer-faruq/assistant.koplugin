@@ -364,8 +364,15 @@ SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
             return assistant.settings:readSetting("use_websearch", "none") == key
         end,
         callback = function ()
+            local old_key = assistant.settings:readSetting("use_websearch", "none")
             assistant.settings:saveSetting("use_websearch", key)
             assistant.updated = true
+            -- Only rebuild highlight-menu buttons when crossing the None/Non-None
+            -- boundary: the 🌐 icon visibility depends solely on whether web
+            -- search is enabled at all, not on which specific tool is selected.
+            if (old_key == "none") ~= (key == "none") then
+                assistant:_rebuildShowOnMainButtons()
+            end
         end,
         enabled_func = function ()
             if key == "none" then

@@ -1,7 +1,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-23 17:00+0800\n"
+        "POT-Creation-Date: 2026-07-24 18:31+0800\n"
         "PO-Revision-Date: 2025-09-11 10:53+0800\n"
         "Last-Translator: AI Model Version\n"
         "Language-Team: AI Translation Model Name\n"
@@ -11,8 +11,8 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:481 ../main.lua:334 ../main.lua:344
-#: ../main.lua:544
+#: ../_meta.lua:4 ../assistant_dialog.lua:483 ../main.lua:350 ../main.lua:360
+#: ../main.lua:562
 msgid   "AI Assistant"
 msgstr  "AI-avustaja"
 
@@ -53,98 +53,98 @@ msgstr  "(Ei vastausta)"
 msgid   "Highlighted text:"
 msgstr  "Korostettu teksti:"
 
-#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
+#: ../assistant_dialog.lua:339 ../assistant_dictdialog.lua:162
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:96 ../assistant_settings.lua:613
+#: ../assistant_settings.lua:96 ../assistant_settings.lua:620
 #: ../assistant_viewer.lua:682
 msgid   "Cancel"
 msgstr  "Peruuta"
 
-#: ../assistant_dialog.lua:344 ../assistant_viewer.lua:692
+#: ../assistant_dialog.lua:346 ../assistant_viewer.lua:692
 msgid   "Ask"
 msgstr  "Kysy"
 
-#: ../assistant_dialog.lua:357 ../assistant_viewer.lua:698
+#: ../assistant_dialog.lua:359 ../assistant_viewer.lua:698
 msgid   "Enter a question before proceeding."
 msgstr  "Kirjoita kysymys ennen jatkamista."
 
-#: ../assistant_dialog.lua:444
+#: ../assistant_dialog.lua:446
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Lisätäänkö tämä painike korostusvalikkoon?"
 
-#: ../assistant_dialog.lua:445
+#: ../assistant_dialog.lua:447
 msgid   "Add"
 msgstr  "Lisää"
 
-#: ../assistant_dialog.lua:472
+#: ../assistant_dialog.lua:474
 msgid   "Ask a question about the highlighted text"
 msgstr  "Kysy kysymys korostetusta tekstiä koskien"
 
-#: ../assistant_dialog.lua:473
+#: ../assistant_dialog.lua:475
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Kysy kysymys tästä kirjasta:\n"
         "%s kirjailija: %s"
 
-#: ../assistant_dialog.lua:474
+#: ../assistant_dialog.lua:476
 msgid   "Ask a general question"
 msgstr  "Kysy yleinen kysymys"
 
-#: ../assistant_dialog.lua:476
+#: ../assistant_dialog.lua:478
 msgid   "Type your question here..."
 msgstr  "Kirjoita kysymyksesi tähän..."
 
-#: ../assistant_dialog.lua:477
+#: ../assistant_dialog.lua:479
 msgid   "Ask anything about this book..."
 msgstr  "Kysy mitä tahansa tästä kirjasta..."
 
-#: ../assistant_dialog.lua:478
+#: ../assistant_dialog.lua:480
 msgid   "Ask anything..."
 msgstr  "Kysy mitä tahansa..."
 
-#: ../assistant_dialog.lua:502
+#: ../assistant_dialog.lua:504
 msgid   "Use book text as context"
 msgstr  "Käytä kirjan tekstiä kontekstina"
 
-#: ../assistant_dialog.lua:552
+#: ../assistant_dialog.lua:557
 msgid   "Loading for %1 ..."
 msgstr  "Ladataan kohdetta %1 ..."
 
-#: ../assistant_dialog.lua:565
+#: ../assistant_dialog.lua:570
 msgid   "Error: No response received"
 msgstr  "Virhe: vastausta ei vastaanotettu"
 
-#: ../assistant_dictdialog.lua:155
+#: ../assistant_dictdialog.lua:156
 msgid   "AI Dictionary"
 msgstr  "AI-sanasto"
 
-#: ../assistant_dictdialog.lua:156
+#: ../assistant_dictdialog.lua:157
 msgid   "Enter a word to look up..."
 msgstr  "Kirjoita sana etsimiseksi..."
 
-#: ../assistant_dictdialog.lua:167
+#: ../assistant_dictdialog.lua:168
 msgid   "Look Up"
 msgstr  "Etsi"
 
-#: ../assistant_dictdialog.lua:214
+#: ../assistant_dictdialog.lua:215
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Analysoidaan kirjan kontekstia Term X-Ray -toimintoa varten..."
 
-#: ../assistant_dictdialog.lua:390 ../main.lua:779
+#: ../assistant_dictdialog.lua:391 ../assistant_prompts.lua:27 ../main.lua:808
 msgid   "Term X-Ray"
 msgstr  "Termin röntgenkuva"
 
-#: ../assistant_dictdialog.lua:391
+#: ../assistant_dictdialog.lua:394
 msgid   "Loading Term X-Ray ..."
 msgstr  "Ladataan termin röntgenkuvaa..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:65 ../main.lua:795
+#: ../assistant_dictdialog.lua:411 ../assistant_prompts.lua:65 ../main.lua:826
 msgid   "Dictionary"
 msgstr  "Sanasto"
 
-#: ../assistant_dictdialog.lua:409
+#: ../assistant_dictdialog.lua:412
 msgid   "Loading AI Dictionary ..."
 msgstr  "Ladataan tekoälysanakirjaa..."
 
@@ -156,60 +156,60 @@ msgstr  "Ei mitään"
 msgid   "Model Built-In"
 msgstr  "Sisäänrakennettu"
 
-#: ../assistant_featuredialog.lua:40
+#: ../assistant_featuredialog.lua:41
 msgid   "Custom Prompt"
 msgstr  "Mukautettu kehote"
 
-#: ../assistant_featuredialog.lua:41
+#: ../assistant_featuredialog.lua:42
 msgid   "Loading..."
 msgstr  "Ladataan..."
 
-#: ../assistant_featuredialog.lua:62
-msgid   "🌐Recap"
-msgstr  "🌐Yhteenveto"
-
 #: ../assistant_featuredialog.lua:63
+msgid   "Recap"
+msgstr  "Yhteenveto"
+
+#: ../assistant_featuredialog.lua:64
 msgid   "Loading Recap..."
 msgstr  "Ladataan yhteenvetoa…"
 
-#: ../assistant_featuredialog.lua:68
+#: ../assistant_featuredialog.lua:69
 msgid   "X‑Ray"
 msgstr  "Röntgen"
 
-#: ../assistant_featuredialog.lua:69
+#: ../assistant_featuredialog.lua:70
 msgid   "Loading X-Ray..."
 msgstr  "Ladataan X-Ray…"
 
-#: ../assistant_featuredialog.lua:74
-msgid   "🌐Book Information"
-msgstr  "🌐Kirjan tiedot"
-
 #: ../assistant_featuredialog.lua:75
+msgid   "Book Information"
+msgstr  "Kirjan tiedot"
+
+#: ../assistant_featuredialog.lua:76
 msgid   "Loading Book Information..."
 msgstr  "Ladataan kirjatietoja…"
 
-#: ../assistant_featuredialog.lua:80 ../main.lua:118 ../main.lua:286
+#: ../assistant_featuredialog.lua:81 ../main.lua:118 ../main.lua:298
 msgid   "Highlight & Note Analysis"
 msgstr  "Korostus- ja muistimpanalyysi"
 
-#: ../assistant_featuredialog.lua:81
+#: ../assistant_featuredialog.lua:82
 msgid   "Loading Highlight & Note Analysis..."
 msgstr  "Ladataan korostus- ja muistimpanalyysiä..."
 
-#: ../assistant_featuredialog.lua:86 ../main.lua:126
+#: ../assistant_featuredialog.lua:87 ../main.lua:126 ../main.lua:310
 msgid   "Summary Using Highlights & Notes"
 msgstr  "Yhteenveto korostuksista ja muistiinpanoista"
 
-#: ../assistant_featuredialog.lua:87
+#: ../assistant_featuredialog.lua:88
 msgid   "Loading Summary Using Highlights & Notes..."
 msgstr  "Ladataan yhteenvetoa korostuksista ja muistiinpanoista..."
 
-#: ../assistant_featuredialog.lua:98
+#: ../assistant_featuredialog.lua:99
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "Tuntematon toiminto: %s"
 
-#: ../assistant_featuredialog.lua:181
+#: ../assistant_featuredialog.lua:185
 msgid   " - Title : %1\n"
         " - Author: %2\n"
         " - Reading progress: %3%\n"
@@ -284,10 +284,6 @@ msgstr  "Tallenna"
 msgid   "No models available."
 msgstr  "Malleja ei saatavilla."
 
-#: ../assistant_prompts.lua:27
-msgid   "🌐Term X-Ray"
-msgstr  "🌐Termin röntgen"
-
 #: ../assistant_prompts.lua:30
 msgid   "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr  "Tämä kehote luo rakenteellisen järjestelmän kirjallisuudesta poimittujen sanojen tai ilmausten kontekstitietoisten määritelmien tuottamiseen analysoimalla korostetun termin ympäröivää tekstiä ja tarjoamalla vivahteikkaita selityksiä, jotka tavoittavat sekä kirjaimellisen merkityksen että kontekstuaalisen merkityksellisyyden."
@@ -361,24 +357,24 @@ msgid   "This prompt explains the highlighted text as if to a five-year-old, sim
 msgstr  "Tämä prompt selittää korostetun tekstin viiden vuoden ikäiselle, yksinkertaistaa monimutkaiset käsitteet helposti ymmärrettäviksi."
 
 #: ../assistant_prompts.lua:229
-msgid   "🌐Explain"
-msgstr  "🌐Selitä"
+msgid   "Explain"
+msgstr  "Selitä"
 
 #: ../assistant_prompts.lua:232
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Tämä prompt selittää korostetun tekstin yksityiskohtaisesti, varmistaa selkeyden ja ymmärryksen."
 
 #: ../assistant_prompts.lua:246
-msgid   "🌐Historical Context"
-msgstr  "🌐Historiallinen konteksti"
+msgid   "Historical Context"
+msgstr  "Historiallinen konteksti"
 
 #: ../assistant_prompts.lua:250
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Tämä prompt antaa yksityiskohtaisen historiallisten kontekstit korostetulle tekstille, selittää sen merkityksen ja taustan."
 
-#: ../assistant_prompts.lua:272
-msgid   "🌐Wikipedia"
-msgstr  "🌐Wikipedia"
+#: ../assistant_prompts.lua:272 ../main.lua:789
+msgid   "Wikipedia"
+msgstr  "Wikipedia"
 
 #: ../assistant_prompts.lua:276
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
@@ -564,7 +560,7 @@ msgstr  "Selaa malleja"
 msgid   "Browse available models on OpenRouter"
 msgstr  "Selaa saatavilla olevia malleja OpenRouterissa"
 
-#: ../assistant_settings.lua:384
+#: ../assistant_settings.lua:391
 msgid   "Builtin Tools Works ONLY with these models:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
@@ -572,105 +568,105 @@ msgstr  "Sisäänrakennetut työkalut toimivat VAIN näiden mallien kanssa:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:409
+#: ../assistant_settings.lua:416
 msgid   "AI Language: "
 msgstr  "Tekoälyn kieli: "
 
-#: ../assistant_settings.lua:421
+#: ../assistant_settings.lua:428
 msgid   "AI Text Size: %1"
 msgstr  "Tekoälyn tekstikoko: %1"
 
-#: ../assistant_settings.lua:425
+#: ../assistant_settings.lua:432
 msgid   "AI Response Text Font Size"
 msgstr  "Tekoälyn vastauksen fonttikoko"
 
-#: ../assistant_settings.lua:441
+#: ../assistant_settings.lua:448
 msgid   "Response Settings"
 msgstr  "Vastausasetukset"
 
-#: ../assistant_settings.lua:444
+#: ../assistant_settings.lua:451
 msgid   "Enable Stream Response"
 msgstr  "Ota suoratoistovastaus käyttöön"
 
-#: ../assistant_settings.lua:452
+#: ../assistant_settings.lua:459
 msgid   "Stream Text Auto Scroll"
 msgstr  "Tekstin automaattinen vieritys suoratoistossa"
 
-#: ../assistant_settings.lua:461
+#: ../assistant_settings.lua:468
 msgid   "Large Streaming Window"
 msgstr  "Suoratoistoikkuna (laaja)"
 
-#: ../assistant_settings.lua:471
+#: ../assistant_settings.lua:478
 msgid   "Show Reasoning Text"
 msgstr  "Näytä päättelyteksti"
 
-#: ../assistant_settings.lua:479
+#: ../assistant_settings.lua:486
 msgid   "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr  "Näytä AI-vastauksen syvällinen ajatteluprosessi (päättely), jos se on olemassa."
 
-#: ../assistant_settings.lua:484
+#: ../assistant_settings.lua:491
 msgid   "Show Follow-up Questions"
 msgstr  "Näytä jatkokysymykset"
 
-#: ../assistant_settings.lua:492
+#: ../assistant_settings.lua:499
 msgid   "Show follow up questions related to the response content."
 msgstr  "Näytä vastauksen sisältöön liittyvät jatkokysymykset."
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:500
+#: ../assistant_settings.lua:507
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReaderin hienosäädöt ja ohitukset"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:504
+#: ../assistant_settings.lua:511
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Käytä tekoälyavustajaa 'Käännä'-toiminnossa"
 
-#: ../assistant_settings.lua:515
+#: ../assistant_settings.lua:522
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Automaattiyhteenveto pitkään lukemattomille kirjoille avattaessa"
 
-#: ../assistant_settings.lua:525
+#: ../assistant_settings.lua:532
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "Tekoälyn yhteenveto otetaan käyttöön seuraavan kerran, kun avataan pitkään lukematon kirja."
 
-#: ../assistant_settings.lua:529
+#: ../assistant_settings.lua:536
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Näytä sanakirja (tekoäly) ponnahdusikkunassa"
 
-#: ../assistant_settings.lua:537
+#: ../assistant_settings.lua:544
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Näytä Wikipedia (tekoäly) ponnahdusikkunassa"
 
-#: ../assistant_settings.lua:545
+#: ../assistant_settings.lua:552
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Näytä termin röntgenkuva (tekoäly) sanakirjaponnahdusikkunassa"
 
-#: ../assistant_settings.lua:553
+#: ../assistant_settings.lua:560
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Näytä mukautetut kehotteet sanakirjaponnahdusikkunassa"
 
-#: ../assistant_settings.lua:563
+#: ../assistant_settings.lua:570
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kopioi kysymys leikepöydälle"
 
-#: ../assistant_settings.lua:571
+#: ../assistant_settings.lua:578
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Tallenna keskustelut automaattisesti Vihkoon"
 
-#: ../assistant_settings.lua:579
+#: ../assistant_settings.lua:586
 msgid   "Use book text for x-ray and recap"
 msgstr  "Käytä kirjan tekstiä röntgen- ja yhteenvetotoimintoihin"
 
-#: ../assistant_settings.lua:587 ../assistant_settings.lua:595
+#: ../assistant_settings.lua:594 ../assistant_settings.lua:602
 msgid   "OTA Update"
 msgstr  "OTA-päivitys"
 
-#: ../assistant_settings.lua:597
+#: ../assistant_settings.lua:604
 msgid   "branch or tag name"
 msgstr  "haaran tai tagin nimi"
 
-#: ../assistant_settings.lua:598
+#: ../assistant_settings.lua:605
 msgid   "Enter a branch or tag name to update the AI Assistant plugin from the source repository.\n"
         "\n"
         "Github URL:  %1\n"
@@ -690,15 +686,15 @@ msgstr  "Anna haaran tai tagin nimi päivittääksesi AI Assistant -pluginin lä
         "\n"
         "Nykyinen plugin varmuuskopioidaan ja korvataan. Tiedosto configuration.lua säilytetään."
 
-#: ../assistant_settings.lua:619
+#: ../assistant_settings.lua:626
 msgid   "Update"
 msgstr  "Päivitä"
 
-#: ../assistant_settings.lua:638
+#: ../assistant_settings.lua:645
 msgid   "Purge the settings"
 msgstr  "Tyhjennä asetukset"
 
-#: ../assistant_settings.lua:641
+#: ../assistant_settings.lua:648
 msgid   "Purge assistant.koplugin settings?\n"
         "\n"
         "This restores the plugin to its factory defaults. Only settings will be removed; \n"
@@ -708,7 +704,7 @@ msgstr  "Poistetaanko assistant.koplugin-asetukset?\n"
         "Tämä palauttaa liitännäisen tehdasasetuksiin. Vain asetukset poistetaan;\n"
         "tiedosto configuration.lua säilyy."
 
-#: ../assistant_settings.lua:645 ../main.lua:691
+#: ../assistant_settings.lua:652 ../main.lua:716
 msgid   "Purge"
 msgstr  "Tyhjennä"
 
@@ -863,15 +859,15 @@ msgstr  "Valinta kopioitiin leikepöydälle."
 msgid   "Ask the AI a question"
 msgstr  "Kysy AI:ltä kysymys"
 
-#: ../main.lua:86
+#: ../main.lua:86 ../main.lua:284
 msgid   "AI Recaps"
 msgstr  "AI-kertaukset"
 
-#: ../main.lua:94
+#: ../main.lua:94 ../main.lua:269
 msgid   "AI X-Ray"
 msgstr  "Teköly-Röntgen"
 
-#: ../main.lua:110
+#: ../main.lua:110 ../main.lua:254
 msgid   "Book Summary & Recs"
 msgstr  "Kirjan yhteenveto & suositukset"
 
@@ -943,77 +939,61 @@ msgstr  "Muut asetukset"
 msgid   "Book-Level Built-in Prompts"
 msgstr  "Kirjatasoiset sisäänrakennetut kehotteet"
 
-#: ../main.lua:253
-msgid   "🌐Book Summary & Recs"
-msgstr  "🌐Kirjan yhteenveto ja suositukset"
-
-#: ../main.lua:259
+#: ../main.lua:263
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "Kirjan yhteenveto, kirjailijan elämäkerta, historiallinen tausta ja kuvaukset samankaltaisista kirjasuosituksista."
 
-#: ../main.lua:264
-msgid   "🌐AI X-Ray"
-msgstr  "🌐AI-röntgen"
-
-#: ../main.lua:270
+#: ../main.lua:278
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "Kirjan \"X-Ray”-yhteenveto jaettuna osioihin: henkilöt, paikat, teemat, käsitteet, aikajana ja paluu tarinaan."
 
-#: ../main.lua:275
-msgid   "🌐AI Recaps"
-msgstr  "🌐AI-yhteenvedot"
-
-#: ../main.lua:281
+#: ../main.lua:293
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "Hyvin lyhyt, juonipaljastukseton yhteenveto kirjasta tähän asti luetusta."
 
-#: ../main.lua:292
+#: ../main.lua:304
 msgid   "Analysis of your highlights, notes, and notebook content from the book."
 msgstr  "Analyysi kirjan korostuksistasi, muistiinpanoistasi ja muistikirjan sisällöstä."
 
-#: ../main.lua:297
-msgid   "🌐Summary Using Highlights & Notes"
-msgstr  "🌐Yhteenveto korostuksista ja muistiinpanoista"
-
-#: ../main.lua:303
+#: ../main.lua:319
 msgid   "Summary of the book using your highlights and notes."
 msgstr  "Kirjan yhteenveto käyttäen korostuksiasi ja muistiinpanoitasi."
 
-#: ../main.lua:310
+#: ../main.lua:326
 msgid   "Book-Level Custom Prompts"
 msgstr  "Kirjatasoiset mukautetut kehotteet"
 
-#: ../main.lua:317
+#: ../main.lua:333
 msgid   "Includes user defined book level prompts from Config file"
 msgstr  "Sisältää käyttäjän määrittämät kirjatasoiset kehotteet asetustiedostosta"
 
-#: ../main.lua:390
+#: ../main.lua:408
 msgid   "This is a custom prompt"
 msgstr  "Tämä on mukautettu kehote"
 
-#: ../main.lua:400
+#: ../main.lua:418
 msgid   "No valid book-level custom prompt found"
 msgstr  "Ei löytynyt kelvollista kirjakohtaista mukautettua kehotetta"
 
-#: ../main.lua:405
+#: ../main.lua:423
 msgid   "For details, visit the 'Configuration' wiki page on github."
 msgstr  "Lisätietoja saat githubin 'Configuration' wiki-sivulta."
 
-#: ../main.lua:488
+#: ../main.lua:506
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Kelvollista mallintarjoajaa ei löytynyt configuration.lua-tiedostosta"
 
-#: ../main.lua:506
+#: ../main.lua:524
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Asetusvirhe.\n"
         "Aseta configuration.lua."
 
-#: ../main.lua:578
+#: ../main.lua:596
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: mallintarjoajat ovat virheellisiä."
 
-#: ../main.lua:656
+#: ../main.lua:681
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -1045,15 +1025,15 @@ msgstr  "Käyttövinkkejä\n"
         "Monikosketus (esim. ⮠, ⮡, ↺):\n"
         "Tulosikkunassa sulkeaksesi sen (koska Sulje-painike on kaukana).\n"
 
-#: ../main.lua:678
+#: ../main.lua:703
 msgid   "Version Info"
 msgstr  "Versiotiedot"
 
-#: ../main.lua:684
+#: ../main.lua:709
 msgid   "Purge Settings"
 msgstr  "Tyhjennä asetukset"
 
-#: ../main.lua:687
+#: ../main.lua:712
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -1063,33 +1043,29 @@ msgstr  "Haluatko varmasti tyhjentää avustajalisäosan asetukset?\n"
         "\n"
         "configuration.lua on turvassa; vain asetukset poistetaan."
 
-#: ../main.lua:738
+#: ../main.lua:765
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Poistetaanko [%s] korostusvalikosta?"
 
-#: ../main.lua:739
+#: ../main.lua:766
 msgid   "Remove"
 msgstr  "Poista"
 
-#: ../main.lua:762
-msgid   "Wikipedia"
-msgstr  "Wikipedia"
-
-#: ../main.lua:978
+#: ../main.lua:1011
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Määritystä ei löytynyt. Määritä ensin configuration.lua."
 
-#: ../main.lua:1020
+#: ../main.lua:1055
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "[%1 (AI)] lisätty korostusvalikkoon."
 
-#: ../main.lua:1029
+#: ../main.lua:1064
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "[%s (AI)] poistettu korostusvalikosta."
 
-#: ../main.lua:1073
+#: ../main.lua:1108
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -1097,32 +1073,32 @@ msgstr  "Haluatko AI-yhteenvedon?\n"
         "Kirjasta %1 tekijältä %2.\n"
         "\n"
 
-#: ../main.lua:1074
+#: ../main.lua:1109
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Luettu tunti sitten."
 msgstr[1]       "Luettu %1 tuntia sitten."
 
-#: ../main.lua:1079
+#: ../main.lua:1114
 msgid   "Yes"
 msgstr  "Kyllä"
 
-#: ../main.lua:1088
+#: ../main.lua:1123
 msgid   "No"
 msgstr  "Ei"
 
-#: ../main.lua:1134
+#: ../main.lua:1169
 msgid   "Markdown Engine"
 msgstr  "Markdown-moottori"
 
-#: ../main.lua:1136
+#: ../main.lua:1171
 msgid   "Device"
 msgstr  "Laite"
 
-#: ../main.lua:1137
+#: ../main.lua:1172
 msgid   "Platform"
 msgstr  "Alusta"
 
-#: ../main.lua:1138
+#: ../main.lua:1173
 msgid   "Runtime"
 msgstr  "Suoritusympäristö"

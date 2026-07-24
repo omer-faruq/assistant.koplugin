@@ -1,7 +1,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.10\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-23 17:00+0800\n"
+        "POT-Creation-Date: 2026-07-24 18:31+0800\n"
         "PO-Revision-Date: 2025-09-16 16:50+0800\n"
         "Last-Translator: [AI Model Version]\n"
         "Language-Team: [AI Translation Model Name]\n"
@@ -11,8 +11,8 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.10\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:481 ../main.lua:334 ../main.lua:344
-#: ../main.lua:544
+#: ../_meta.lua:4 ../assistant_dialog.lua:483 ../main.lua:350 ../main.lua:360
+#: ../main.lua:562
 msgid   "AI Assistant"
 msgstr  "AI Laguntzailea"
 
@@ -53,98 +53,98 @@ msgstr  "(Ez da erantzunik izan)"
 msgid   "Highlighted text:"
 msgstr  "Textua altzarapenarekin:"
 
-#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
+#: ../assistant_dialog.lua:339 ../assistant_dictdialog.lua:162
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:96 ../assistant_settings.lua:613
+#: ../assistant_settings.lua:96 ../assistant_settings.lua:620
 #: ../assistant_viewer.lua:682
 msgid   "Cancel"
 msgstr  "Ezeztatu"
 
-#: ../assistant_dialog.lua:344 ../assistant_viewer.lua:692
+#: ../assistant_dialog.lua:346 ../assistant_viewer.lua:692
 msgid   "Ask"
 msgstr  "Eskatu"
 
-#: ../assistant_dialog.lua:357 ../assistant_viewer.lua:698
+#: ../assistant_dialog.lua:359 ../assistant_viewer.lua:698
 msgid   "Enter a question before proceeding."
 msgstr  "Idatzi galdera aurrera ezeztu aurretik."
 
-#: ../assistant_dialog.lua:444
+#: ../assistant_dialog.lua:446
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Gehitu botoi hau Altzarpakiko menuan?"
 
-#: ../assistant_dialog.lua:445
+#: ../assistant_dialog.lua:447
 msgid   "Add"
 msgstr  "Gehitu"
 
-#: ../assistant_dialog.lua:472
+#: ../assistant_dialog.lua:474
 msgid   "Ask a question about the highlighted text"
 msgstr  "Eskatu galdera altzarapenarekin lotutako testuari buruz"
 
-#: ../assistant_dialog.lua:473
+#: ../assistant_dialog.lua:475
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Eskatu galdera hau honi buruzko liburuari:\n"
         "%s %s eginez"
 
-#: ../assistant_dialog.lua:474
+#: ../assistant_dialog.lua:476
 msgid   "Ask a general question"
 msgstr  "Galdera orokor bat egin"
 
-#: ../assistant_dialog.lua:476
+#: ../assistant_dialog.lua:478
 msgid   "Type your question here..."
 msgstr  "Idatzi zure galdera hemen..."
 
-#: ../assistant_dialog.lua:477
+#: ../assistant_dialog.lua:479
 msgid   "Ask anything about this book..."
 msgstr  "Galdezatu batzuk liburuari buruz..."
 
-#: ../assistant_dialog.lua:478
+#: ../assistant_dialog.lua:480
 msgid   "Ask anything..."
 msgstr  "Galdetu edozer..."
 
-#: ../assistant_dialog.lua:502
+#: ../assistant_dialog.lua:504
 msgid   "Use book text as context"
 msgstr  "Erabili liburuaren testua testuinguru gisa"
 
-#: ../assistant_dialog.lua:552
+#: ../assistant_dialog.lua:557
 msgid   "Loading for %1 ..."
 msgstr  "Kargatzen %1 ..."
 
-#: ../assistant_dialog.lua:565
+#: ../assistant_dialog.lua:570
 msgid   "Error: No response received"
 msgstr  "Errorea: Erantzunik ez jaso"
 
-#: ../assistant_dictdialog.lua:155
+#: ../assistant_dictdialog.lua:156
 msgid   "AI Dictionary"
 msgstr  "AI Hiztegia"
 
-#: ../assistant_dictdialog.lua:156
+#: ../assistant_dictdialog.lua:157
 msgid   "Enter a word to look up..."
 msgstr  "Idatzi hizki bat begiratzen hasierakoan..."
 
-#: ../assistant_dictdialog.lua:167
+#: ../assistant_dictdialog.lua:168
 msgid   "Look Up"
 msgstr  "Begiratu"
 
-#: ../assistant_dictdialog.lua:214
+#: ../assistant_dictdialog.lua:215
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Liburuaren testuingurua aztertzen Term X-Ray-rako..."
 
-#: ../assistant_dictdialog.lua:390 ../main.lua:779
+#: ../assistant_dictdialog.lua:391 ../assistant_prompts.lua:27 ../main.lua:808
 msgid   "Term X-Ray"
 msgstr  "Terminoaren X izpiak"
 
-#: ../assistant_dictdialog.lua:391
+#: ../assistant_dictdialog.lua:394
 msgid   "Loading Term X-Ray ..."
 msgstr  "Terminoaren X izpiak kargatzen..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:65 ../main.lua:795
+#: ../assistant_dictdialog.lua:411 ../assistant_prompts.lua:65 ../main.lua:826
 msgid   "Dictionary"
 msgstr  "Hiztegia"
 
-#: ../assistant_dictdialog.lua:409
+#: ../assistant_dictdialog.lua:412
 msgid   "Loading AI Dictionary ..."
 msgstr  "AI hiztegia kargatzen..."
 
@@ -156,60 +156,60 @@ msgstr  "Bat ere ez"
 msgid   "Model Built-In"
 msgstr  "Ereduan integratua"
 
-#: ../assistant_featuredialog.lua:40
+#: ../assistant_featuredialog.lua:41
 msgid   "Custom Prompt"
 msgstr  "Pertsonalizatutako galdetegia"
 
-#: ../assistant_featuredialog.lua:41
+#: ../assistant_featuredialog.lua:42
 msgid   "Loading..."
 msgstr  "Kargatzen..."
 
-#: ../assistant_featuredialog.lua:62
-msgid   "🌐Recap"
-msgstr  "🌐Laburpena"
-
 #: ../assistant_featuredialog.lua:63
+msgid   "Recap"
+msgstr  "Laburpena"
+
+#: ../assistant_featuredialog.lua:64
 msgid   "Loading Recap..."
 msgstr  "Laburpena kargatzen..."
 
-#: ../assistant_featuredialog.lua:68
+#: ../assistant_featuredialog.lua:69
 msgid   "X‑Ray"
 msgstr  "Xeratoki"
 
-#: ../assistant_featuredialog.lua:69
+#: ../assistant_featuredialog.lua:70
 msgid   "Loading X-Ray..."
 msgstr  "X-erradiografia kargatzen..."
 
-#: ../assistant_featuredialog.lua:74
-msgid   "🌐Book Information"
-msgstr  "🌐Liburuaren informazioa"
-
 #: ../assistant_featuredialog.lua:75
+msgid   "Book Information"
+msgstr  "Liburuaren Informazioa"
+
+#: ../assistant_featuredialog.lua:76
 msgid   "Loading Book Information..."
 msgstr  "Liburuaren Informazioa Kargatzen..."
 
-#: ../assistant_featuredialog.lua:80 ../main.lua:118 ../main.lua:286
+#: ../assistant_featuredialog.lua:81 ../main.lua:118 ../main.lua:298
 msgid   "Highlight & Note Analysis"
 msgstr  "Nabarmendu eta oharrak aztertzea"
 
-#: ../assistant_featuredialog.lua:81
+#: ../assistant_featuredialog.lua:82
 msgid   "Loading Highlight & Note Analysis..."
 msgstr  "Nabarmendu eta oharrak aztertzen..."
 
-#: ../assistant_featuredialog.lua:86 ../main.lua:126
+#: ../assistant_featuredialog.lua:87 ../main.lua:126 ../main.lua:310
 msgid   "Summary Using Highlights & Notes"
 msgstr  "Laburpena nabarmendu eta oharrak erabiliz"
 
-#: ../assistant_featuredialog.lua:87
+#: ../assistant_featuredialog.lua:88
 msgid   "Loading Summary Using Highlights & Notes..."
 msgstr  "Laburpena kargatzen nabarmendu eta oharrak erabiliz..."
 
-#: ../assistant_featuredialog.lua:98
+#: ../assistant_featuredialog.lua:99
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "Karakteristikaren mota ezezaguna: %s"
 
-#: ../assistant_featuredialog.lua:181
+#: ../assistant_featuredialog.lua:185
 msgid   " - Title : %1\n"
         " - Author: %2\n"
         " - Reading progress: %3%\n"
@@ -284,10 +284,6 @@ msgstr  "Gorde"
 msgid   "No models available."
 msgstr  "Ez dago eredu eskuragarririk."
 
-#: ../assistant_prompts.lua:27
-msgid   "🌐Term X-Ray"
-msgstr  "🌐Terminoen X izpiak"
-
 #: ../assistant_prompts.lua:30
 msgid   "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr  "Galdetegiak egituratutako sistema bat sortzen du literaturako hitz edo esaldi baten testuinguru-kontzientziazko definizioak sortzeko, nabarmendutako terminoa inguruko testuan aztertuz esanahi literala eta testuinguruaren esangura harrapatzen dituzten azalpen finak emateko."
@@ -361,24 +357,24 @@ msgid   "This prompt explains the highlighted text as if to a five-year-old, sim
 msgstr  "Prompt hau altzarpeten testua 5 urteko batzuekin frogatzen du, kontzeptu konplexuak azaltzen erraza izateko."
 
 #: ../assistant_prompts.lua:229
-msgid   "🌐Explain"
-msgstr  "🌐Azaldu"
+msgid   "Explain"
+msgstr  "Azaldu"
 
 #: ../assistant_prompts.lua:232
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Prompt hau altzarpeten testua beharko da azalduko du, argutasun eta ulertzea izateko."
 
 #: ../assistant_prompts.lua:246
-msgid   "🌐Historical Context"
-msgstr  "🌐Testuinguru historikoa"
+msgid   "Historical Context"
+msgstr  "Testuinguru Historikoa"
 
 #: ../assistant_prompts.lua:250
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Prompt hau altzarpeten testuaren historia kontextualaren azalpena emango du, garrakortasun eta historia aurkeztuz."
 
-#: ../assistant_prompts.lua:272
-msgid   "🌐Wikipedia"
-msgstr  "🌐Wikipedia"
+#: ../assistant_prompts.lua:272 ../main.lua:789
+msgid   "Wikipedia"
+msgstr  "Wikipedia"
 
 #: ../assistant_prompts.lua:276
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
@@ -564,7 +560,7 @@ msgstr  "Arakatu modeloak"
 msgid   "Browse available models on OpenRouter"
 msgstr  "Arakatu eskuragarri dauden modeloak OpenRouter-en"
 
-#: ../assistant_settings.lua:384
+#: ../assistant_settings.lua:391
 msgid   "Builtin Tools Works ONLY with these models:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
@@ -572,105 +568,105 @@ msgstr  "Barneko tresnek modelo hauekin soilik funtzionatzen dute:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:409
+#: ../assistant_settings.lua:416
 msgid   "AI Language: "
 msgstr  "AI Hizkuntza: "
 
-#: ../assistant_settings.lua:421
+#: ../assistant_settings.lua:428
 msgid   "AI Text Size: %1"
 msgstr  "AI Testuaren Tamaina: %1"
 
-#: ../assistant_settings.lua:425
+#: ../assistant_settings.lua:432
 msgid   "AI Response Text Font Size"
 msgstr  "AI Erantzun Testuraren Leta-tamaina"
 
-#: ../assistant_settings.lua:441
+#: ../assistant_settings.lua:448
 msgid   "Response Settings"
 msgstr  "Erantzun ezarpenak"
 
-#: ../assistant_settings.lua:444
+#: ../assistant_settings.lua:451
 msgid   "Enable Stream Response"
 msgstr  "Gaitu stream erantzuna"
 
-#: ../assistant_settings.lua:452
+#: ../assistant_settings.lua:459
 msgid   "Stream Text Auto Scroll"
 msgstr  "Testu-korrontearen auto-korritzea"
 
-#: ../assistant_settings.lua:461
+#: ../assistant_settings.lua:468
 msgid   "Large Streaming Window"
 msgstr  "Bideoa handitzea"
 
-#: ../assistant_settings.lua:471
+#: ../assistant_settings.lua:478
 msgid   "Show Reasoning Text"
 msgstr  "Erakutsi arrazoibide testua"
 
-#: ../assistant_settings.lua:479
+#: ../assistant_settings.lua:486
 msgid   "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr  "Erakutsi AI erantzunaren pentsamendu sakona (arrazoibidea) badago."
 
-#: ../assistant_settings.lua:484
+#: ../assistant_settings.lua:491
 msgid   "Show Follow-up Questions"
 msgstr  "Erakutsi jarraipen galderak"
 
-#: ../assistant_settings.lua:492
+#: ../assistant_settings.lua:499
 msgid   "Show follow up questions related to the response content."
 msgstr  "Erakutsi erantzunaren edukiarekin lotutako jarraipen galderak."
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:500
+#: ../assistant_settings.lua:507
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader doikuntzak eta gainidazketak"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:504
+#: ../assistant_settings.lua:511
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Erabili AI laguntzailea 'Itzuli' funtziorako"
 
-#: ../assistant_settings.lua:515
+#: ../assistant_settings.lua:522
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Laburpen automatikoa irekita daunen liburuak irekitzean"
 
-#: ../assistant_settings.lua:525
+#: ../assistant_settings.lua:532
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "AI Laburpena aktibatuko da beste ez duzun liburua ireki aurretik."
 
-#: ../assistant_settings.lua:529
+#: ../assistant_settings.lua:536
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Erakutsi Hiztegia (AI) Hiztegiaren Popup-ean"
 
-#: ../assistant_settings.lua:537
+#: ../assistant_settings.lua:544
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Erakutsi Wikipedia (AI) Hiztegiaren Popup-ean"
 
-#: ../assistant_settings.lua:545
+#: ../assistant_settings.lua:552
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Erakutsi Terminoaren X izpiak (AI) hiztegiaren leihoan"
 
-#: ../assistant_settings.lua:553
+#: ../assistant_settings.lua:560
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Erakutsi pertsonalizatutako galdetegiak hiztegiaren leihoan"
 
-#: ../assistant_settings.lua:563
+#: ../assistant_settings.lua:570
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kopiatu sartutako galdera arbelan"
 
-#: ../assistant_settings.lua:571
+#: ../assistant_settings.lua:578
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Gorde automatikoki elkarteak Ohartegian"
 
-#: ../assistant_settings.lua:579
+#: ../assistant_settings.lua:586
 msgid   "Use book text for x-ray and recap"
 msgstr  "Erabili liburuaren testua X-ray eta laburpenetarako"
 
-#: ../assistant_settings.lua:587 ../assistant_settings.lua:595
+#: ../assistant_settings.lua:594 ../assistant_settings.lua:602
 msgid   "OTA Update"
 msgstr  "OTA Eguneraketa"
 
-#: ../assistant_settings.lua:597
+#: ../assistant_settings.lua:604
 msgid   "branch or tag name"
 msgstr  "adar edo etiketa izena"
 
-#: ../assistant_settings.lua:598
+#: ../assistant_settings.lua:605
 msgid   "Enter a branch or tag name to update the AI Assistant plugin from the source repository.\n"
         "\n"
         "Github URL:  %1\n"
@@ -690,15 +686,15 @@ msgstr  "Sartu adar edo etiketa izen bat AI Assistant plugina iturburu biltegiat
         "\n"
         "Oraingo plugina babeskopiatu eta ordezkatuko da. configuration.lua gorde egingo da."
 
-#: ../assistant_settings.lua:619
+#: ../assistant_settings.lua:626
 msgid   "Update"
 msgstr  "Eguneratu"
 
-#: ../assistant_settings.lua:638
+#: ../assistant_settings.lua:645
 msgid   "Purge the settings"
 msgstr  "Ezabatu ezarpenak"
 
-#: ../assistant_settings.lua:641
+#: ../assistant_settings.lua:648
 msgid   "Purge assistant.koplugin settings?\n"
         "\n"
         "This restores the plugin to its factory defaults. Only settings will be removed; \n"
@@ -708,7 +704,7 @@ msgstr  "Purge assistant.koplugin ezarpenak?\n"
         "Honek plugina fabrikako lehenetsietara berrezartzen du. Ezarpenak bakarrik kenduko dira; \n"
         "configuration.lua fitxategia gordeko da."
 
-#: ../assistant_settings.lua:645 ../main.lua:691
+#: ../assistant_settings.lua:652 ../main.lua:716
 msgid   "Purge"
 msgstr  "Ezabatu"
 
@@ -863,15 +859,15 @@ msgstr  "Aukera kopia arbelan."
 msgid   "Ask the AI a question"
 msgstr  "Eskatu galdera AIri"
 
-#: ../main.lua:86
+#: ../main.lua:86 ../main.lua:284
 msgid   "AI Recaps"
 msgstr  "AI Laburpenak"
 
-#: ../main.lua:94
+#: ../main.lua:94 ../main.lua:269
 msgid   "AI X-Ray"
 msgstr  "AI X-Erradiografia"
 
-#: ../main.lua:110
+#: ../main.lua:110 ../main.lua:254
 msgid   "Book Summary & Recs"
 msgstr  "Liburuaren Laburpen eta Hertsien"
 
@@ -943,77 +939,61 @@ msgstr  "Beste ezarpenak"
 msgid   "Book-Level Built-in Prompts"
 msgstr  "Liburu-mailako barne-galdetegiak"
 
-#: ../main.lua:253
-msgid   "🌐Book Summary & Recs"
-msgstr  "🌐Liburuaren laburpena eta gomendioak"
-
-#: ../main.lua:259
+#: ../main.lua:263
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "Liburuaren laburpena, autoraren biografia, historiko kontektuak eta zenbait liburu berdinen aholkuz egin den zerrenda deskribatzailearekin."
 
-#: ../main.lua:264
-msgid   "🌐AI X-Ray"
-msgstr  "🌐AI X izpiak"
-
-#: ../main.lua:270
+#: ../main.lua:278
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "\"X-Erradiografia\" liburuen laburketa, karakteristikak, kokapenak, gaiek, terminoak eta kontzeptuak, garaia eta berrerautatzea bezalako parte konkretuetan "
 
-#: ../main.lua:275
-msgid   "🌐AI Recaps"
-msgstr  "🌐AI laburpenak"
-
-#: ../main.lua:281
+#: ../main.lua:293
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "Laburpen laburrik, ezkutatzailea ez duelako, liburuaren hasierako iraketa progresuko."
 
-#: ../main.lua:292
+#: ../main.lua:304
 msgid   "Analysis of your highlights, notes, and notebook content from the book."
 msgstr  "Liburuko zure nabarmenduak, oharrak eta koaderno-edukien azterketa."
 
-#: ../main.lua:297
-msgid   "🌐Summary Using Highlights & Notes"
-msgstr  "🌐Laburpena nabarmentze eta oharrak erabiliz"
-
-#: ../main.lua:303
+#: ../main.lua:319
 msgid   "Summary of the book using your highlights and notes."
 msgstr  "Liburuaren laburpena zure nabarmendu eta oharrak erabiliz."
 
-#: ../main.lua:310
+#: ../main.lua:326
 msgid   "Book-Level Custom Prompts"
 msgstr  "Liburu-mailako pertsonalizatutako galdetegiak"
 
-#: ../main.lua:317
+#: ../main.lua:333
 msgid   "Includes user defined book level prompts from Config file"
 msgstr  "Erabiltzaileak definitutako liburu-mailako galdetegiak ditu Config fitxategitik"
 
-#: ../main.lua:390
+#: ../main.lua:408
 msgid   "This is a custom prompt"
 msgstr  "Hau pertsonalizatutako galdetegia da"
 
-#: ../main.lua:400
+#: ../main.lua:418
 msgid   "No valid book-level custom prompt found"
 msgstr  "Ez da liburu-mailako ohiko gonbidapen baliozkorik aurkitu"
 
-#: ../main.lua:405
+#: ../main.lua:423
 msgid   "For details, visit the 'Configuration' wiki page on github."
 msgstr  "Xehetasunetarako, bisitatu github-ko 'Configuration' wiki orria."
 
-#: ../main.lua:488
+#: ../main.lua:506
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Konfigurazio.lua fitxategien hornitzaile baliozorik ez da aurkitu"
 
-#: ../main.lua:506
+#: ../main.lua:524
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Konfigurazio errorea.\n"
         "Mesedez ezarri konfigurazio.lua"
 
-#: ../main.lua:578
+#: ../main.lua:596
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "konfigurazio.lua: modeloen hornitzaileak ez dira zuzen."
 
-#: ../main.lua:656
+#: ../main.lua:681
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -1045,15 +1025,15 @@ msgstr  "Sarrerako aholkuak\n"
         "Multi-Eskaia (nola: ⮠, ⮡, ↺):\n"
         "Erantzuneko elkarteetan itxi (Itxi botoia aholku ezinezkoa den kasutan).\n"
 
-#: ../main.lua:678
+#: ../main.lua:703
 msgid   "Version Info"
 msgstr  "Bertsioaren informazioa"
 
-#: ../main.lua:684
+#: ../main.lua:709
 msgid   "Purge Settings"
 msgstr  "Garbitu Ezarpenak"
 
-#: ../main.lua:687
+#: ../main.lua:712
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -1063,33 +1043,29 @@ msgstr  "Ziur al zaude laguntzaile pluginaren ezarpenak ezabatu nahi dituzula? \
         "\n"
         "konfigurazio.lua segurua da, ezarpenak bakarrik ezabaturik daude."
 
-#: ../main.lua:738
+#: ../main.lua:765
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "[%s] kendu Altzarpakiko menu-tik?"
 
-#: ../main.lua:739
+#: ../main.lua:766
 msgid   "Remove"
 msgstr  "Ezabatu"
 
-#: ../main.lua:762
-msgid   "Wikipedia"
-msgstr  "Wikipedia"
-
-#: ../main.lua:978
+#: ../main.lua:1011
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Konfigurazioa ez da aurkitu. Mesedez konfigurazioa ezarri lehen."
 
-#: ../main.lua:1020
+#: ../main.lua:1055
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "[%1 (AI)] Altzarpakiko menuan gehitua."
 
-#: ../main.lua:1029
+#: ../main.lua:1064
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "[%s (AI)] Altzarpakiko menu-tik kendua."
 
-#: ../main.lua:1073
+#: ../main.lua:1108
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -1097,32 +1073,32 @@ msgstr  "AI Laburpena duzu nahi?\n"
         "%1 %2-ren liburutan.\n"
         "\n"
 
-#: ../main.lua:1074
+#: ../main.lua:1109
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Azkena ordu bat aurretik."
 msgstr[1]       "Azkena %1 ordu aurretik."
 
-#: ../main.lua:1079
+#: ../main.lua:1114
 msgid   "Yes"
 msgstr  "Bai"
 
-#: ../main.lua:1088
+#: ../main.lua:1123
 msgid   "No"
 msgstr  "Ez"
 
-#: ../main.lua:1134
+#: ../main.lua:1169
 msgid   "Markdown Engine"
 msgstr  "Markdown motorra"
 
-#: ../main.lua:1136
+#: ../main.lua:1171
 msgid   "Device"
 msgstr  "Gailua"
 
-#: ../main.lua:1137
+#: ../main.lua:1172
 msgid   "Platform"
 msgstr  "Plataforma"
 
-#: ../main.lua:1138
+#: ../main.lua:1173
 msgid   "Runtime"
 msgstr  "Exekuzio-denbora"

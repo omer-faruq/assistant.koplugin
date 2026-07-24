@@ -1,7 +1,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-23 17:00+0800\n"
+        "POT-Creation-Date: 2026-07-24 18:31+0800\n"
         "PO-Revision-Date: 2025-08-21 15:20+0800\n"
         "Last-Translator: [AI Model Version]\n"
         "Language-Team: [AI Translation Model Name]\n"
@@ -11,8 +11,8 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:481 ../main.lua:334 ../main.lua:344
-#: ../main.lua:544
+#: ../_meta.lua:4 ../assistant_dialog.lua:483 ../main.lua:350 ../main.lua:360
+#: ../main.lua:562
 msgid   "AI Assistant"
 msgstr  "AI Pomoćnik"
 
@@ -53,98 +53,98 @@ msgstr  "(Bez odgovora)"
 msgid   "Highlighted text:"
 msgstr  "Istaknuti tekst:"
 
-#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
+#: ../assistant_dialog.lua:339 ../assistant_dictdialog.lua:162
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:96 ../assistant_settings.lua:613
+#: ../assistant_settings.lua:96 ../assistant_settings.lua:620
 #: ../assistant_viewer.lua:682
 msgid   "Cancel"
 msgstr  "Otkaži"
 
-#: ../assistant_dialog.lua:344 ../assistant_viewer.lua:692
+#: ../assistant_dialog.lua:346 ../assistant_viewer.lua:692
 msgid   "Ask"
 msgstr  "Pitaj"
 
-#: ../assistant_dialog.lua:357 ../assistant_viewer.lua:698
+#: ../assistant_dialog.lua:359 ../assistant_viewer.lua:698
 msgid   "Enter a question before proceeding."
 msgstr  "Unesite pitanje prije nastavka."
 
-#: ../assistant_dialog.lua:444
+#: ../assistant_dialog.lua:446
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Dodati ovaj gumb u izbornik za isticanje?"
 
-#: ../assistant_dialog.lua:445
+#: ../assistant_dialog.lua:447
 msgid   "Add"
 msgstr  "Dodaj"
 
-#: ../assistant_dialog.lua:472
+#: ../assistant_dialog.lua:474
 msgid   "Ask a question about the highlighted text"
 msgstr  "Postavite pitanje o istaknutom tekstu"
 
-#: ../assistant_dialog.lua:473
+#: ../assistant_dialog.lua:475
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Postavite pitanje o ovoj knjizi:\n"
         "%s autora %s"
 
-#: ../assistant_dialog.lua:474
+#: ../assistant_dialog.lua:476
 msgid   "Ask a general question"
 msgstr  "Postavite općenito pitanje"
 
-#: ../assistant_dialog.lua:476
+#: ../assistant_dialog.lua:478
 msgid   "Type your question here..."
 msgstr  "Upišite pitanje ovdje..."
 
-#: ../assistant_dialog.lua:477
+#: ../assistant_dialog.lua:479
 msgid   "Ask anything about this book..."
 msgstr  "Postavite bilo što o ovoj knjizi..."
 
-#: ../assistant_dialog.lua:478
+#: ../assistant_dialog.lua:480
 msgid   "Ask anything..."
 msgstr  "Pitajte bilo što..."
 
-#: ../assistant_dialog.lua:502
+#: ../assistant_dialog.lua:504
 msgid   "Use book text as context"
 msgstr  "Koristi tekst knjige kao kontekst"
 
-#: ../assistant_dialog.lua:552
+#: ../assistant_dialog.lua:557
 msgid   "Loading for %1 ..."
 msgstr  "Učitavanje za %1 ..."
 
-#: ../assistant_dialog.lua:565
+#: ../assistant_dialog.lua:570
 msgid   "Error: No response received"
 msgstr  "Greška: Nema odgovora"
 
-#: ../assistant_dictdialog.lua:155
+#: ../assistant_dictdialog.lua:156
 msgid   "AI Dictionary"
 msgstr  "AI Riječnik"
 
-#: ../assistant_dictdialog.lua:156
+#: ../assistant_dictdialog.lua:157
 msgid   "Enter a word to look up..."
 msgstr  "Unesite riječ za pretragu..."
 
-#: ../assistant_dictdialog.lua:167
+#: ../assistant_dictdialog.lua:168
 msgid   "Look Up"
 msgstr  "Pretraži"
 
-#: ../assistant_dictdialog.lua:214
+#: ../assistant_dictdialog.lua:215
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Analiziram kontekst knjige za Term X-Ray..."
 
-#: ../assistant_dictdialog.lua:390 ../main.lua:779
+#: ../assistant_dictdialog.lua:391 ../assistant_prompts.lua:27 ../main.lua:808
 msgid   "Term X-Ray"
 msgstr  "Rentgenski pregled pojma"
 
-#: ../assistant_dictdialog.lua:391
+#: ../assistant_dictdialog.lua:394
 msgid   "Loading Term X-Ray ..."
 msgstr  "Učitavanje rentgenskog pregleda pojma..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:65 ../main.lua:795
+#: ../assistant_dictdialog.lua:411 ../assistant_prompts.lua:65 ../main.lua:826
 msgid   "Dictionary"
 msgstr  "Rječnik"
 
-#: ../assistant_dictdialog.lua:409
+#: ../assistant_dictdialog.lua:412
 msgid   "Loading AI Dictionary ..."
 msgstr  "Učitavanje AI rječnika..."
 
@@ -156,60 +156,60 @@ msgstr  "Nema"
 msgid   "Model Built-In"
 msgstr  "Ugrađeni model"
 
-#: ../assistant_featuredialog.lua:40
+#: ../assistant_featuredialog.lua:41
 msgid   "Custom Prompt"
 msgstr  "Prilagođeni upit"
 
-#: ../assistant_featuredialog.lua:41
+#: ../assistant_featuredialog.lua:42
 msgid   "Loading..."
 msgstr  "Učitavanje..."
 
-#: ../assistant_featuredialog.lua:62
-msgid   "🌐Recap"
-msgstr  "🌐Sažetak"
-
 #: ../assistant_featuredialog.lua:63
+msgid   "Recap"
+msgstr  "Sažetak"
+
+#: ../assistant_featuredialog.lua:64
 msgid   "Loading Recap..."
 msgstr  "Učitavanje sažetka..."
 
-#: ../assistant_featuredialog.lua:68
+#: ../assistant_featuredialog.lua:69
 msgid   "X‑Ray"
 msgstr  "X-Ray"
 
-#: ../assistant_featuredialog.lua:69
+#: ../assistant_featuredialog.lua:70
 msgid   "Loading X-Ray..."
 msgstr  "Učitavanje X-Ray..."
 
-#: ../assistant_featuredialog.lua:74
-msgid   "🌐Book Information"
-msgstr  "🌐Informacije o knjizi"
-
 #: ../assistant_featuredialog.lua:75
+msgid   "Book Information"
+msgstr  "Informacije o knjizi"
+
+#: ../assistant_featuredialog.lua:76
 msgid   "Loading Book Information..."
 msgstr  "Učitavanje informacija o knjizi..."
 
-#: ../assistant_featuredialog.lua:80 ../main.lua:118 ../main.lua:286
+#: ../assistant_featuredialog.lua:81 ../main.lua:118 ../main.lua:298
 msgid   "Highlight & Note Analysis"
 msgstr  "Analiza istaknutih dijelova i bilježaka"
 
-#: ../assistant_featuredialog.lua:81
+#: ../assistant_featuredialog.lua:82
 msgid   "Loading Highlight & Note Analysis..."
 msgstr  "Učitavanje analize istaknutih dijelova i bilježaka..."
 
-#: ../assistant_featuredialog.lua:86 ../main.lua:126
+#: ../assistant_featuredialog.lua:87 ../main.lua:126 ../main.lua:310
 msgid   "Summary Using Highlights & Notes"
 msgstr  "Sažetak pomoću istaknutih dijelova i bilježaka"
 
-#: ../assistant_featuredialog.lua:87
+#: ../assistant_featuredialog.lua:88
 msgid   "Loading Summary Using Highlights & Notes..."
 msgstr  "Učitavanje sažetka pomoću istaknutih dijelova i bilježaka..."
 
-#: ../assistant_featuredialog.lua:98
+#: ../assistant_featuredialog.lua:99
 #, lua-format
 msgid   "Unknown feature type: %s"
 msgstr  "Nepoznata vrsta značajke: %s"
 
-#: ../assistant_featuredialog.lua:181
+#: ../assistant_featuredialog.lua:185
 msgid   " - Title : %1\n"
         " - Author: %2\n"
         " - Reading progress: %3%\n"
@@ -284,10 +284,6 @@ msgstr  "Spremi"
 msgid   "No models available."
 msgstr  "Nema dostupnih modela."
 
-#: ../assistant_prompts.lua:27
-msgid   "🌐Term X-Ray"
-msgstr  "🌐Pojmovni rendgen"
-
 #: ../assistant_prompts.lua:30
 msgid   "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr  "Ovaj upit stvara strukturiran sustav za generiranje kontekstualno osviještenih definicija riječi ili fraza iz književnosti analizirajući istaknuti pojam unutar okolnog teksta kako bi pružio nijansirana objašnjenja koja obuhvaćaju i doslovno značenje i kontekstualnu važnost."
@@ -361,24 +357,24 @@ msgid   "This prompt explains the highlighted text as if to a five-year-old, sim
 msgstr  "Ovaj prompt objašnjava istaknuti tekst kao da je za petogodišnjaka, podatkama pojednostavljujući složene pojmove u lako razumljive pojmove."
 
 #: ../assistant_prompts.lua:229
-msgid   "🌐Explain"
-msgstr  "🌐Objasni"
+msgid   "Explain"
+msgstr  "Objasni"
 
 #: ../assistant_prompts.lua:232
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Ovaj prompt detaljno objasni istaknuti tekst, osiguravajući jasnoću i razumijevanje."
 
 #: ../assistant_prompts.lua:246
-msgid   "🌐Historical Context"
-msgstr  "🌐Povijesni kontekst"
+msgid   "Historical Context"
+msgstr  "Povijesni kontekst"
 
 #: ../assistant_prompts.lua:250
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Ovaj prompt daje detaljan historijski kontekst istaknutog teksta, objasnivši njegov značaj i pozadinu."
 
-#: ../assistant_prompts.lua:272
-msgid   "🌐Wikipedia"
-msgstr  "🌐Wikipedia"
+#: ../assistant_prompts.lua:272 ../main.lua:789
+msgid   "Wikipedia"
+msgstr  "Wikipedia"
 
 #: ../assistant_prompts.lua:276
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
@@ -564,7 +560,7 @@ msgstr  "Pregledaj modele"
 msgid   "Browse available models on OpenRouter"
 msgstr  "Pregledaj dostupne modele na OpenRouteru"
 
-#: ../assistant_settings.lua:384
+#: ../assistant_settings.lua:391
 msgid   "Builtin Tools Works ONLY with these models:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
@@ -572,105 +568,105 @@ msgstr  "Ugrađeni alati rade SAMO s ovim modelima:\n"
         "- Gemini-2.5/3\n"
         "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:409
+#: ../assistant_settings.lua:416
 msgid   "AI Language: "
 msgstr  "Jezik AI-a: "
 
-#: ../assistant_settings.lua:421
+#: ../assistant_settings.lua:428
 msgid   "AI Text Size: %1"
 msgstr  "Veličina teksta AI-a: %1"
 
-#: ../assistant_settings.lua:425
+#: ../assistant_settings.lua:432
 msgid   "AI Response Text Font Size"
 msgstr  "Veličina fonta odgovora AI-a"
 
-#: ../assistant_settings.lua:441
+#: ../assistant_settings.lua:448
 msgid   "Response Settings"
 msgstr  "Postavke odgovora"
 
-#: ../assistant_settings.lua:444
+#: ../assistant_settings.lua:451
 msgid   "Enable Stream Response"
 msgstr  "Omogući strujni odgovor"
 
-#: ../assistant_settings.lua:452
+#: ../assistant_settings.lua:459
 msgid   "Stream Text Auto Scroll"
 msgstr  "Automatsko pomicanje teksta strujanja"
 
-#: ../assistant_settings.lua:461
+#: ../assistant_settings.lua:468
 msgid   "Large Streaming Window"
 msgstr  "Veliki prozor za prikaz tokom učitavanja"
 
-#: ../assistant_settings.lua:471
+#: ../assistant_settings.lua:478
 msgid   "Show Reasoning Text"
 msgstr  "Prikaži tekst rasuđivanja"
 
-#: ../assistant_settings.lua:479
+#: ../assistant_settings.lua:486
 msgid   "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr  "Prikaži dubinski proces razmišljanja (rasuđivanje) iz AI odgovora ako postoji."
 
-#: ../assistant_settings.lua:484
+#: ../assistant_settings.lua:491
 msgid   "Show Follow-up Questions"
 msgstr  "Prikaži dodatna pitanja"
 
-#: ../assistant_settings.lua:492
+#: ../assistant_settings.lua:499
 msgid   "Show follow up questions related to the response content."
 msgstr  "Prikaži dodatna pitanja povezana sa sadržajem odgovora."
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:500
+#: ../assistant_settings.lua:507
 msgid   "KOReader Tweaks & Overrides"
 msgstr  "KOReader prilagodbe i nadjačavanja"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:504
+#: ../assistant_settings.lua:511
 msgid   "Use AI Assistant for 'Translate'"
 msgstr  "Koristi AI asistenta za 'Prevedi'"
 
-#: ../assistant_settings.lua:515
+#: ../assistant_settings.lua:522
 msgid   "Auto-recap on opening long-unread books"
 msgstr  "Automatski sažetak pri otvaranju knjiga koje nisu čitane dugo"
 
-#: ../assistant_settings.lua:525
+#: ../assistant_settings.lua:532
 msgid   "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr  "AI sažetak će biti omogućen sljedeći put kada se otvori knjiga koja nije čitana dugo."
 
-#: ../assistant_settings.lua:529
+#: ../assistant_settings.lua:536
 msgid   "Show Dictionary(AI) in Dictionary Popup"
 msgstr  "Prikaži Rječnik(AI) u skočnom rječniku"
 
-#: ../assistant_settings.lua:537
+#: ../assistant_settings.lua:544
 msgid   "Show Wikipedia(AI) in Dictionary Popup"
 msgstr  "Prikaži Wikipedia(AI) u skočnom rječniku"
 
-#: ../assistant_settings.lua:545
+#: ../assistant_settings.lua:552
 msgid   "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr  "Prikaži rentgenski pregled pojma (AI) u skočnom rječniku"
 
-#: ../assistant_settings.lua:553
+#: ../assistant_settings.lua:560
 msgid   "Show Custom Prompts in Dictionary Popup"
 msgstr  "Prikaži prilagođene upite u skočnom rječniku"
 
-#: ../assistant_settings.lua:563
+#: ../assistant_settings.lua:570
 msgid   "Copy entered question to the clipboard"
 msgstr  "Kopiraj upit u međuspremnik"
 
-#: ../assistant_settings.lua:571
+#: ../assistant_settings.lua:578
 msgid   "Auto-save conversations to NoteBook"
 msgstr  "Automatski spremi razgovore u Bilježnicu"
 
-#: ../assistant_settings.lua:579
+#: ../assistant_settings.lua:586
 msgid   "Use book text for x-ray and recap"
 msgstr  "Koristi tekst knjige za x-ray i sažetak"
 
-#: ../assistant_settings.lua:587 ../assistant_settings.lua:595
+#: ../assistant_settings.lua:594 ../assistant_settings.lua:602
 msgid   "OTA Update"
 msgstr  "OTA ažuriranje"
 
-#: ../assistant_settings.lua:597
+#: ../assistant_settings.lua:604
 msgid   "branch or tag name"
 msgstr  "naziv grane ili oznake"
 
-#: ../assistant_settings.lua:598
+#: ../assistant_settings.lua:605
 msgid   "Enter a branch or tag name to update the AI Assistant plugin from the source repository.\n"
         "\n"
         "Github URL:  %1\n"
@@ -690,15 +686,15 @@ msgstr  "Unesite naziv grane ili oznake za ažuriranje dodatka AI Assistant iz i
         "\n"
         "Trenutni dodatak bit će sigurnosno kopiran i zamijenjen. Datoteka configuration.lua bit će sačuvana."
 
-#: ../assistant_settings.lua:619
+#: ../assistant_settings.lua:626
 msgid   "Update"
 msgstr  "Ažuriraj"
 
-#: ../assistant_settings.lua:638
+#: ../assistant_settings.lua:645
 msgid   "Purge the settings"
 msgstr  "Izbriši postavke"
 
-#: ../assistant_settings.lua:641
+#: ../assistant_settings.lua:648
 msgid   "Purge assistant.koplugin settings?\n"
         "\n"
         "This restores the plugin to its factory defaults. Only settings will be removed; \n"
@@ -708,7 +704,7 @@ msgstr  "Očistiti postavke assistant.koplugin?\n"
         "Ovo vraća dodatak na tvorničke postavke. Samo će postavke biti uklonjene;\n"
         "Datoteka configuration.lua bit će sačuvana."
 
-#: ../assistant_settings.lua:645 ../main.lua:691
+#: ../assistant_settings.lua:652 ../main.lua:716
 msgid   "Purge"
 msgstr  "Obriši"
 
@@ -863,15 +859,15 @@ msgstr  "Selektiran tekst kopiran u međuspremnik."
 msgid   "Ask the AI a question"
 msgstr  "Postavite pitanje AI-ju"
 
-#: ../main.lua:86
+#: ../main.lua:86 ../main.lua:284
 msgid   "AI Recaps"
 msgstr  "AI Sažeci"
 
-#: ../main.lua:94
+#: ../main.lua:94 ../main.lua:269
 msgid   "AI X-Ray"
 msgstr  "AI X-Ray"
 
-#: ../main.lua:110
+#: ../main.lua:110 ../main.lua:254
 msgid   "Book Summary & Recs"
 msgstr  "Sažetak knjige i preporuke"
 
@@ -943,77 +939,61 @@ msgstr  "Ostale postavke"
 msgid   "Book-Level Built-in Prompts"
 msgstr  "Ugrađeni upiti na razini knjige"
 
-#: ../main.lua:253
-msgid   "🌐Book Summary & Recs"
-msgstr  "🌐Sažetak knjige i preporuke"
-
-#: ../main.lua:259
+#: ../main.lua:263
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "Sažetak knjige, biografija autora, povijesni kontekst i popis sličnih preporuka s opisima."
 
-#: ../main.lua:264
-msgid   "🌐AI X-Ray"
-msgstr  "🌐AI rendgen"
-
-#: ../main.lua:270
+#: ../main.lua:278
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "„X-Ray” sažetak knjige u odjeljcima: likovi, lokacije, teme, pojmovi, vremenska crta i ponovno uranjanje."
 
-#: ../main.lua:275
-msgid   "🌐AI Recaps"
-msgstr  "🌐AI sažeci"
-
-#: ../main.lua:281
+#: ../main.lua:293
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "Kratki sažetak bez spojlera do trenutne stranice."
 
-#: ../main.lua:292
+#: ../main.lua:304
 msgid   "Analysis of your highlights, notes, and notebook content from the book."
 msgstr  "Analiza vaših istaknutih dijelova, bilježaka i sadržaja bilježnice iz knjige."
 
-#: ../main.lua:297
-msgid   "🌐Summary Using Highlights & Notes"
-msgstr  "🌐Sažetak koristeći istaknute dijelove i bilješke"
-
-#: ../main.lua:303
+#: ../main.lua:319
 msgid   "Summary of the book using your highlights and notes."
 msgstr  "Sažetak knjige pomoću vaših istaknutih dijelova i bilježaka."
 
-#: ../main.lua:310
+#: ../main.lua:326
 msgid   "Book-Level Custom Prompts"
 msgstr  "Prilagođeni upiti na razini knjige"
 
-#: ../main.lua:317
+#: ../main.lua:333
 msgid   "Includes user defined book level prompts from Config file"
 msgstr  "Uključuje korisnički definirane upite na razini knjige iz konfiguracijske datoteke"
 
-#: ../main.lua:390
+#: ../main.lua:408
 msgid   "This is a custom prompt"
 msgstr  "Ovo je prilagođeni upit"
 
-#: ../main.lua:400
+#: ../main.lua:418
 msgid   "No valid book-level custom prompt found"
 msgstr  "Nije pronađen valjani prilagođeni upit na razini knjige"
 
-#: ../main.lua:405
+#: ../main.lua:423
 msgid   "For details, visit the 'Configuration' wiki page on github."
 msgstr  "Za detalje, posjetite wiki stranicu 'Configuration' na githubu."
 
-#: ../main.lua:488
+#: ../main.lua:506
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "Nije pronađen valjani davatelj modela u configuration.lua"
 
-#: ../main.lua:506
+#: ../main.lua:524
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "Greška konfiguracije.\n"
         "Postavite configuration.lua."
 
-#: ../main.lua:578
+#: ../main.lua:596
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: davatelji modela su neispravni."
 
-#: ../main.lua:656
+#: ../main.lua:681
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -1045,15 +1025,15 @@ msgstr  "Naputci za korištenje\n"
         "Višestruko povlačenje (npr. ⮠, ⮡, ↺):\n"
         "Na dijalogu s rezultatima za zatvaranje (jer je gumb Zatvori daleko).\n"
 
-#: ../main.lua:678
+#: ../main.lua:703
 msgid   "Version Info"
 msgstr  "Informacije o verziji"
 
-#: ../main.lua:684
+#: ../main.lua:709
 msgid   "Purge Settings"
 msgstr  "Obriši postavke"
 
-#: ../main.lua:687
+#: ../main.lua:712
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -1063,33 +1043,29 @@ msgstr  "Jeste li sigurni da želite očistiti postavke dodatka pomoćnika? \n"
         "\n"
         "configuration.lua je siguran, samo se postavke brišu."
 
-#: ../main.lua:738
+#: ../main.lua:765
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "Ukloni [%s] iz izbornika za isticanje?"
 
-#: ../main.lua:739
+#: ../main.lua:766
 msgid   "Remove"
 msgstr  "Ukloni"
 
-#: ../main.lua:762
-msgid   "Wikipedia"
-msgstr  "Wikipedia"
-
-#: ../main.lua:978
+#: ../main.lua:1011
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "Konfiguracija nije pronađena. Najprije postavite configuration.lua."
 
-#: ../main.lua:1020
+#: ../main.lua:1055
 msgid   "Added [%1 (AI)] to Highlight Menu."
 msgstr  "Dodano [%1 (AI)] u izbornik za isticanje."
 
-#: ../main.lua:1029
+#: ../main.lua:1064
 #, lua-format
 msgid   "Removed [%s (AI)] from Highlight Menu."
 msgstr  "Uklonjen [%s (AI)] iz izbornika za isticanje."
 
-#: ../main.lua:1073
+#: ../main.lua:1108
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -1097,33 +1073,33 @@ msgstr  "Želite li AI sažetak?\n"
         "Za %1 od %2.\n"
         "\n"
 
-#: ../main.lua:1074
+#: ../main.lua:1109
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "Zadnji put pročitano prije sat vremena."
 msgstr[1]       "Zadnji put pročitano prije %1 sata."
 msgstr[2]       "Zadnji put pročitano prije %1 sati."
 
-#: ../main.lua:1079
+#: ../main.lua:1114
 msgid   "Yes"
 msgstr  "Da"
 
-#: ../main.lua:1088
+#: ../main.lua:1123
 msgid   "No"
 msgstr  "Ne"
 
-#: ../main.lua:1134
+#: ../main.lua:1169
 msgid   "Markdown Engine"
 msgstr  "Markdown pogon"
 
-#: ../main.lua:1136
+#: ../main.lua:1171
 msgid   "Device"
 msgstr  "Uređaj"
 
-#: ../main.lua:1137
+#: ../main.lua:1172
 msgid   "Platform"
 msgstr  "Platforma"
 
-#: ../main.lua:1138
+#: ../main.lua:1173
 msgid   "Runtime"
 msgstr  "Izvođenje"
