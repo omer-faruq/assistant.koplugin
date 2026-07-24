@@ -630,11 +630,7 @@ function Assistant:init()
 
 
   self.assistant_dialog = AssistantDialog:new(self, CONFIGURATION)
-  
-  -- Ensure custom prompts from configuration are merged before building menus
-  -- so that `show_on_main_popup` and `visible` overrides take effect.
-  Prompts.getMergedCustomPrompts(koutil.tableGetValue(CONFIGURATION, "features", "prompts"))
-  
+
   if self.ui.document then
     -- Reader specific
     -- Auto Recap Feature (hook before a book is opened)
@@ -642,31 +638,42 @@ function Assistant:init()
       self:_hookRecap()
     end
 
-    -- Add Custom buttons to main select popup menu
-    local showOnMain = Prompts.getSortedCustomPrompts(function (prompt, idx)
-      if prompt.visible == false then
-        return false
-      end
+    self:_rebuildShowOnMainButtons()
+  end
+end
 
-      --  set in runtime settings (by holding the prompt button)
-      local menukey = string.format("assistant_%02d_%s", prompt.order or 1000, idx)
-      local settingkey = "showOnMain_" .. menukey
-      if self.settings:has(settingkey) then
-        return self.settings:isTrue(settingkey)
-      end
+-- Rebuild the highlight-menu buttons from the current showOnMain settings.
+-- Called at init() and whenever web search setting changes (so the 🌐 icon
+-- stays in sync).  addMainButton already calls removeFromHighlightDialog
+-- before re-adding, so re-registering existing keys is safe.
+function Assistant:_rebuildShowOnMainButtons()
+  if not self.ui.document then return end
 
-      -- set in configure file
-      if prompt.show_on_main_popup then
-        return true
-      end
+  Prompts.invalidateCache()
+  Prompts.getMergedCustomPrompts(koutil.tableGetValue(CONFIGURATION, "features", "prompts"))
 
-      return false -- only show if `show_on_main_popup` is true
-    end, Prompts.isWebSearchEnabled(self.settings)) or {}
-
-    -- Add buttons in sorted order
-    for _, tab in ipairs(showOnMain) do
-      self:addMainButton(tab.idx, tab)
+  local showOnMain = Prompts.getSortedCustomPrompts(function (prompt, idx)
+    if prompt.visible == false then
+      return false
     end
+
+    --  set in runtime settings (by holding the prompt button)
+    local menukey = string.format("assistant_%02d_%s", prompt.order or 1000, idx)
+    local settingkey = "showOnMain_" .. menukey
+    if self.settings:has(settingkey) then
+      return self.settings:isTrue(settingkey)
+    end
+
+    -- set in configure file
+    if prompt.show_on_main_popup then
+      return true
+    end
+
+    return false -- only show if `show_on_main_popup` is true
+  end, Prompts.isWebSearchEnabled(self.settings)) or {}
+
+  for _, tab in ipairs(showOnMain) do
+    self:addMainButton(tab.idx, tab)
   end
 end
 

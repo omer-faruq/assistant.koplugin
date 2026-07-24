@@ -588,6 +588,11 @@ M.getDisplayText = function(text, use_websearch, web_search_enabled)
     return text
 end
 
+M.invalidateCache = function()
+    M.merged_prompts = nil
+    M.sorted_custom_prompts = nil
+end
+
 -- Func description:
 -- This function returns the merged custom prompts from the configuration and custom prompts.
 -- It merges the custom prompts with the configuration prompts, if available.
