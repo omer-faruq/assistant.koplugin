@@ -10,6 +10,7 @@ local Event = require("ui/event")
 local koutil = require("util")
 local assistant_utils = require("assistant_utils")
 local dict_prompts = require("assistant_prompts").assistant_prompts.dict
+local Prompts = require("assistant_prompts")
 
 -- Expand context sentences to include surrounding sentences for pronouns and related narrative
 -- This captures "he", "she", "they" and nearby actions that provide important context
@@ -387,7 +388,9 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         local prop = ui.document:getProps()
         local book_title = prop.title or "Unknown Title"
         local book_author = prop.authors or "Unknown Author"
-        title = _("Term X-Ray")
+        title = Prompts.getDisplayText(_("Term X-Ray"),
+            term_xray_prompts.use_websearch or false,
+            Prompts.isWebSearchEnabled(assistant.settings))
         loading_message = _("Loading Term X-Ray ...")
         local context_message = {
             role = "user",

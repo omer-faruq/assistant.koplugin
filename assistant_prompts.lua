@@ -24,7 +24,7 @@ Standard Markdown formatting (including quotes, tables, lists) is fully supporte
 -- prompts attributes can be overridden in the configuration file.
 local custom_prompts = {
     term_xray = {
-        text = _("🌐Term X-Ray"),
+        text = _("Term X-Ray"),
         use_websearch = true,
         order = -20, -- negative number to not show on additional questions dialog
         desc = _("This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."),
@@ -226,7 +226,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 {highlight} ]],
     },
     explain = {
-        text = _("🌐Explain"),
+        text = _("Explain"),
         use_websearch = true,
         order = 80,
         desc = _("This prompt explains the highlighted text in detail, ensuring clarity and understanding."),
@@ -243,7 +243,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 {highlight} ]],
     },
     historical_context = {
-        text = _("🌐Historical Context"),
+        text = _("Historical Context"),
         use_websearch = true,
         order = 90,
         desc = _(
@@ -269,7 +269,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 {highlight}]],
     },
     wikipedia = {
-        text = _("🌐Wikipedia"),
+        text = _("Wikipedia"),
         use_websearch = true,
         order = 100,
         desc = _(
@@ -567,12 +567,26 @@ local function table_sort(t, key)
 end
 
 
+local WEBSEARCH_ICON = "🌐"
+
 local M = {
     custom_prompts = custom_prompts,       -- Custom prompts for the AI
     assistant_prompts = assistant_prompts, -- Preconfigured prompts for the AI
     merged_prompts = nil,                  -- Merged prompts from custom and configuration
     sorted_custom_prompts = nil,           -- Sorted custom prompts
+    WEBSEARCH_ICON = WEBSEARCH_ICON,
 }
+
+M.isWebSearchEnabled = function(settings)
+    return settings:readSetting("use_websearch", "none") ~= "none"
+end
+
+M.getDisplayText = function(text, use_websearch, web_search_enabled)
+    if use_websearch and web_search_enabled then
+        return WEBSEARCH_ICON .. text
+    end
+    return text
+end
 
 -- Func description:
 -- This function returns the merged custom prompts from the configuration and custom prompts.
@@ -597,8 +611,10 @@ end
 -- Func description:
 -- This function returns a list of custom prompts sorted by their order.
 -- filter_func: optional function to filter prompts, if it returns false, the prompt will be skipped.
+-- web_search_enabled: optional boolean, if true and a prompt has use_websearch=true,
+--                     the 🌐 icon is prepended to the display text.
 -- return list item: {idx, order, text}
-M.getSortedCustomPrompts = function(filter_func)
+M.getSortedCustomPrompts = function(filter_func, web_search_enabled)
     if M.sorted_custom_prompts then
         return M.sorted_custom_prompts
     end
@@ -608,11 +624,15 @@ M.getSortedCustomPrompts = function(filter_func)
     for prompt_index, prompt in pairs(M.merged_prompts or custom_prompts) do
         -- Only add the prompt if there is no filter, or if the filter function returns true.
         if not filter_func or filter_func(prompt, prompt_index) == true then
+            local display_text = prompt.text or prompt_index
+            if web_search_enabled and prompt.use_websearch then
+                display_text = WEBSEARCH_ICON .. display_text
+            end
             table.insert(sorted_prompts,
                 {
                     idx = prompt_index,
                     order = prompt.order or 1000,
-                    text = prompt.text or prompt_index,
+                    text = display_text,
                     desc = prompt
                         .desc or ""
                 })

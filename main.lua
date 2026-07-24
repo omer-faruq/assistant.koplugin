@@ -250,7 +250,11 @@ function Assistant:addToMainMenu(menu_items)
                 text = _("Book-Level Built-in Prompts"),
                 sub_item_table = {
                   {
-                    text = _("🌐Book Summary & Recs"),
+                    text_func = function()
+                      return Prompts.getDisplayText(_("Book Summary & Recs"),
+                        koutil.tableGetValue(Prompts.assistant_prompts, "book_info", "use_websearch") or false,
+                        Prompts.isWebSearchEnabled(self.settings))
+                    end,
                     callback = function ()
                       self:onAskAIBookInfo()
                     end,
@@ -261,7 +265,11 @@ function Assistant:addToMainMenu(menu_items)
                     end
                   },
                   {
-                    text = _("🌐AI X-Ray"),
+                    text_func = function()
+                      return Prompts.getDisplayText(_("AI X-Ray"),
+                        koutil.tableGetValue(Prompts.assistant_prompts, "xray", "use_websearch") or false,
+                        Prompts.isWebSearchEnabled(self.settings))
+                    end,
                     callback = function ()
                       self:onAskAIXRay()
                     end,
@@ -272,7 +280,11 @@ function Assistant:addToMainMenu(menu_items)
                     end
                   },
                   {
-                    text = _("🌐AI Recaps"),
+                    text_func = function()
+                      return Prompts.getDisplayText(_("AI Recaps"),
+                        koutil.tableGetValue(Prompts.assistant_prompts, "recap", "use_websearch") or false,
+                        Prompts.isWebSearchEnabled(self.settings))
+                    end,
                     callback = function ()
                       self:onAskAIRecap()
                     end,
@@ -294,7 +306,11 @@ function Assistant:addToMainMenu(menu_items)
                     end,
                   },
                   {
-                    text = _("🌐Summary Using Highlights & Notes"),
+                    text_func = function()
+                      return Prompts.getDisplayText(_("Summary Using Highlights & Notes"),
+                        koutil.tableGetValue(Prompts.assistant_prompts, "summary_using_annotations", "use_websearch") or false,
+                        Prompts.isWebSearchEnabled(self.settings))
+                    end,
                     callback = function ()
                       self:onAskSummaryUsingAnnotations()
                     end,
@@ -374,7 +390,9 @@ function BookLevelCustomPrompts(assistant)
   for key, prompt_config in ffiutil.orderedPairs(book_level_prompts) do
     if prompt_config.visible == true and prompt_config.type == "feature" then
       local button = {
-        text = prompt_config.text or key,
+        text = Prompts.getDisplayText(prompt_config.text or key,
+          koutil.tableGetValue(prompt_config, "use_websearch") or false,
+          Prompts.isWebSearchEnabled(assistant.settings)),
         callback = function()
           if not assistant:isConfigured() then return end
           NetworkMgr:runWhenOnline(function()
@@ -643,7 +661,7 @@ function Assistant:init()
       end
 
       return false -- only show if `show_on_main_popup` is true
-    end) or {}
+    end, Prompts.isWebSearchEnabled(self.settings)) or {}
 
     -- Add buttons in sorted order
     for _, tab in ipairs(showOnMain) do
@@ -703,7 +721,9 @@ function Assistant:addMainButton(prompt_idx, prompt)
   local menukey = string.format("assistant_%02d_%s", prompt.order, prompt_idx)
   self.ui.highlight:removeFromHighlightDialog(menukey) -- avoid duplication
   self.ui.highlight:addToHighlightDialog(menukey, function(_reader_highlight_instance)
-    local btntext = prompt.text .. " (AI)"  -- append "(AI)" to identify as our function
+    local ws_enabled = Prompts.isWebSearchEnabled(self.settings)
+    local btntext = Prompts.getDisplayText(prompt.text or prompt_idx,
+      prompt.use_websearch or false, ws_enabled) .. " (AI)"  -- append "(AI)" to identify as our function
     return {
       text = btntext,
       callback = function()
@@ -759,7 +779,9 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg)
     table.insert(plugin_buttons, {
       id = "assistant_wikipedia",
       font_bold = true,
-      text = _("Wikipedia") .. " (AI)",
+      text = Prompts.getDisplayText(_("Wikipedia"),
+        koutil.tableGetValue(Prompts.custom_prompts, "wikipedia", "use_websearch") or false,
+        Prompts.isWebSearchEnabled(self.settings)) .. " (AI)",
       callback = function(widget_instance)
           local popup = widget_instance or dict_popup_arg
           local word = popup and popup.word
@@ -776,7 +798,9 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg)
     table.insert(plugin_buttons, {
       id = "assistant_term_xray",
       font_bold = true,
-      text = _("Term X-Ray") .. " (AI)",
+      text = Prompts.getDisplayText(_("Term X-Ray"),
+        koutil.tableGetValue(Prompts.custom_prompts, "term_xray", "use_websearch") or false,
+        Prompts.isWebSearchEnabled(self.settings)) .. " (AI)",
       callback = function(widget_instance)
           local popup = widget_instance or dict_popup_arg
           local word = popup and popup.word
@@ -830,7 +854,9 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg)
       table.insert(plugin_buttons, {
         id = "assistant_" .. prompt.id,
         font_bold = true,
-        text = (prompt.config.text or prompt.id) .. " (AI)",
+        text = Prompts.getDisplayText(prompt.config.text or prompt.id,
+          prompt.config.use_websearch or false,
+          Prompts.isWebSearchEnabled(self.settings)) .. " (AI)",
         callback = function(widget_instance)
             local popup = widget_instance or dict_popup_arg
             local word = popup and popup.word
@@ -1011,13 +1037,15 @@ function Assistant:onAssistantSetButton(btnconf, action)
 
   local idx = btnconf.idx
   local prompt = Prompts.custom_prompts[idx]
+  local ws_enabled = Prompts.isWebSearchEnabled(self.settings)
+  local display_text = Prompts.getDisplayText(prompt.text or idx, prompt.use_websearch or false, ws_enabled)
 
   if action == "add" then
     self.settings:makeTrue(settingkey)
     self.updated = true
     self:addMainButton(idx, prompt)
     UIManager:show(InfoMessage:new{
-      text = T(_("Added [%1 (AI)] to Highlight Menu."), prompt.text),
+      text = T(_("Added [%1 (AI)] to Highlight Menu."), display_text),
       icon = "notice-info",
       timeout = 3
     })
@@ -1026,7 +1054,7 @@ function Assistant:onAssistantSetButton(btnconf, action)
     self.updated = true
     self.ui.highlight:removeFromHighlightDialog(menukey)
     UIManager:show(InfoMessage:new{
-      text = string.format(_("Removed [%s (AI)] from Highlight Menu."), prompt.text),
+      text = string.format(_("Removed [%s (AI)] from Highlight Menu."), display_text),
       icon = "notice-info",
       timeout = 3
     })

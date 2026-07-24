@@ -216,7 +216,9 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
           self:_prepareMessageHistoryForUserQuery(message_history, current_highlight, user_question)
         elseif type(user_question) == "table" then
           -- Use custom prompt from configuration
-          viewer_title = user_question.text or "Custom Prompt"
+          viewer_title = Prompts.getDisplayText(user_question.text or "Custom Prompt",
+            user_question.use_websearch or false,
+            Prompts.isWebSearchEnabled(self.assistant.settings))
           local _user = {
             role = "user",
             content = self:_formatUserPrompt(user_question.user_prompt, current_highlight, user_question.user_input or ""),
@@ -394,7 +396,7 @@ function AssistantDialog:show(highlightedText)
         return false
       end
       return true
-    end) or {}
+    end, Prompts.isWebSearchEnabled(self.assistant.settings)) or {}
 
     -- logger.warn("Sorted prompts: ", sorted_prompts)
     -- Add buttons in sorted order
@@ -524,7 +526,10 @@ function AssistantDialog:showCustomPrompt(highlightedText, prompt_index, user_in
   local user_prompts = koutil.tableGetValue(self.CONFIGURATION, "features", "prompts")
   local prompt_config = Prompts.getMergedCustomPrompts(user_prompts)[prompt_index]
 
-  local title = koutil.tableGetValue(prompt_config, "text") or prompt_index
+  local raw_title = koutil.tableGetValue(prompt_config, "text") or prompt_index
+  local title = Prompts.getDisplayText(raw_title,
+    koutil.tableGetValue(prompt_config, "use_websearch") or false,
+    Prompts.isWebSearchEnabled(self.assistant.settings))
 
   highlightedText = highlightedText:gsub("\n", "\n\n") -- ensure newlines are doubled (LLM presumes markdown input)
 

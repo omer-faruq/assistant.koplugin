@@ -644,7 +644,7 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
       return false
     end
     return true
-  end) or {}
+  end, Prompts.isWebSearchEnabled(self.assistant.settings)) or {}
 
   local user_prompts = koutil.tableGetValue(self.assistant.CONFIGURATION, "features", "prompts")
   local merged_prompts = Prompts.getMergedCustomPrompts(user_prompts) or {}
