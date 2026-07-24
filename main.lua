@@ -1010,7 +1010,10 @@ function Assistant:onAssistantSetButton(btnconf, action)
   local settingkey = "showOnMain_" .. menukey
 
   local idx = btnconf.idx
-  local prompt = Prompts.custom_prompts[idx]
+  -- use merged prompts: prompts defined only in configuration.lua
+  -- are absent from the built-in `custom_prompts` table
+  local prompt = Prompts.getMergedCustomPrompts(
+    koutil.tableGetValue(CONFIGURATION, "features", "prompts"))[idx]
 
   if action == "add" then
     self.settings:makeTrue(settingkey)
