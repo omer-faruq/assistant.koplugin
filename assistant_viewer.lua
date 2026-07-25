@@ -85,16 +85,28 @@ ol, ul, menu {
     padding-left: 1.5em;
 }
 
+/* Use a small filled disc at every nesting level.
+   This viewer renders through MuPDF (ScrollHtmlWidget), whose built-in
+   stylesheet assigns list markers by depth (level 2 = hollow "circle",
+   level 3 = "square") and draws the hollow "circle" noticeably larger than
+   the text -- an oversized bullet. MuPDF applies these per-depth markers in a
+   way a plain author rule does not override, so !important is required. It
+   also does not support ::before/generated content, so a native
+   list-style-type is the only option. */
 ul {
-    list-style-type: circle;
+    list-style-type: disc;
 }
 
 ul ul {
-    list-style-type: square;
+    list-style-type: disc !important;
 }
 
 ul ul ul {
-    list-style-type: disc;
+    list-style-type: disc !important;
+}
+
+li {
+    list-style-type: disc !important;
 }
 
 ul li a {
