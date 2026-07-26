@@ -24,17 +24,22 @@ end
 -- libhoedown.so.3. libhoedown has very few dependencies, so a single ARMv7
 -- soft-float build works on virtually any EABI5 environment, and the ARMv7
 -- hard-float build loads on aarch64-linux hosts too.
+-- ARM Linux float ABI is detected at runtime via /lib/ld-linux-armhf.so.3,
+-- so any ARM e-reader (Kobo, Kindle, PocketBook, Remarkable, etc.) is handled
+-- generically without per-device branches.
 local function get_platform_libdir()
     if Device:isDesktop() or Device:isEmulator() then
         return "x86_64"
-    elseif Device:isKobo() then
-        return "armv7_hardfp"
-    elseif Device:isKindle() then
+    end
+    if Device:isAndroid() then
+        if util.stringStartsWith(jit.arch, "arm") then
+            return (jit.arch == "arm64") and "android_arm64" or "android_armv7a"
+        end
+        return nil
+    end
+    -- Generic ARM Linux: any e-reader with an ARM CPU picks the right float ABI.
+    if util.stringStartsWith(jit.arch, "arm") then
         return isHardFP() and "armv7_hardfp" or "armv7_softfp"
-    elseif Device:isPocketBook() then
-        return "armv7_softfp"
-    elseif Device:isAndroid() and util.stringStartsWith(jit.arch, "arm") then
-        return (jit.arch == "arm64") and "android_arm64" or "android_armv7a"
     end
     return nil
 end
