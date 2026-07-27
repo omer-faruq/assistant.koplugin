@@ -202,12 +202,17 @@ fi
 
 
 # Build the JSON payload for the API request using jq.
+# - temperature: 0.2 for reproducible output
+# - max_tokens: allow long .po files (some providers cap much lower by default)
+# - response_format: force plain text so providers don't wrap in JSON
 PAYLOAD=$(jq -n \
   --arg model "${API_MODEL}" \
   --arg content "$PROMPT" \
   --rawfile file_content "$INPUTFILE" \
   '{
      model: $model,
+     temperature: 0.2,
+     max_tokens: 16384,
      messages: [
        {role: "system", content: $content},
        {role: "user",    content: $file_content}
@@ -215,13 +220,69 @@ PAYLOAD=$(jq -n \
    }')
 
 # Send the request to the API endpoint using cURL.
-# -S shows errors, -f fails silently on HTTP errors.
-RESPONSE=$(curl -Sf --retry 5 --retry-delay 2 --retry-connrefused --max-time 90 -X POST "$API_ENDPOINT" \
-  -H "$AUTH_HEADER" -H "Content-Type: application/json" \
-  --data-raw "$PAYLOAD")
+# Write response to a temp file rather than a shell variable (safer for large payloads).
+# --retry-all-errors: retry on --max-time timeouts and any HTTP error (requires curl >= 7.71)
+# --max-time 300: allow long generations for large .po files
+# --retry-max-time 900: cap total time spent across retries
+RESPONSE_FILE=$(mktemp -t ai_translate_${LANG_CODE}_XXXXXX.json)
+CURL_LOG=$(mktemp -t ai_translate_${LANG_CODE}_XXXXXX.log)
+trap 'rm -f "$RESPONSE_FILE" "$CURL_LOG"' EXIT
 
-# Parse the JSON response, extract the translated content, and save it to the output file.
-echo "$RESPONSE" | jq -r '.choices[0].message.content' \
-  > "$OUTPUTFILE"
+HTTP_CODE=$(curl -sS --retry 5 --retry-delay 5 --retry-all-errors \
+  --max-time 300 --retry-max-time 900 \
+  -o "$RESPONSE_FILE" -w "%{http_code}" \
+  -X POST "$API_ENDPOINT" \
+  -H "$AUTH_HEADER" -H "Content-Type: application/json" \
+  --data-raw "$PAYLOAD" 2> "$CURL_LOG") || {
+    echo "Error: curl failed for $LANG_CODE ($LANG_FULLNAME):" >&2
+    cat "$CURL_LOG" >&2
+    exit 1
+  }
+
+if [[ "$HTTP_CODE" != 2* ]]; then
+  echo "Error: HTTP $HTTP_CODE from API for $LANG_CODE ($LANG_FULLNAME)." >&2
+  echo "Response body:" >&2
+  head -c 2000 "$RESPONSE_FILE" >&2
+  echo >&2
+  exit 1
+fi
+
+# Validate the JSON response strictly. Any of these conditions cause a hard fail
+# WITHOUT creating OUTPUTFILE, so a re-run correctly resumes this language:
+#   - JSON parse error
+#   - .error field present
+#   - finish_reason is not "stop" (e.g. "length" -> truncated output)
+#   - empty content
+CONTENT=$(jq -er '
+  if type != "object" then error("response is not a JSON object")
+  elif has("error") then
+    error("API error: " + (.error.message // (.error|tostring)))
+  elif (.choices | length) == 0 then
+    error("no choices in response")
+  else
+    (.choices[0]) as $c
+    | ($c.finish_reason // "stop") as $reason
+    | ($c.message.content // "") as $text
+    | if $reason != "stop" and $reason != "end_turn" then
+        error("truncated response: finish_reason=" + $reason)
+      elif $text == "" then
+        error("empty content in response")
+      else
+        $text
+      end
+  end
+' "$RESPONSE_FILE") || {
+    echo "Error: invalid API response for $LANG_CODE ($LANG_FULLNAME)." >&2
+    echo "Response body (first 2KB):" >&2
+    head -c 2000 "$RESPONSE_FILE" >&2
+    echo >&2
+    exit 1
+  }
+
+# Atomically write the translated content to the output file.
+# Using a .tmp + mv ensures a partial/interrupted write never leaves a
+# half-written OUTPUTFILE that would confuse subsequent re-runs.
+printf '%s' "$CONTENT" > "$OUTPUTFILE.tmp"
+mv "$OUTPUTFILE.tmp" "$OUTPUTFILE"
 
 echo "Translation completed for $LANG_CODE ($LANG_FULLNAME)."

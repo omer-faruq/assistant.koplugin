@@ -107,7 +107,18 @@ ai-translate:
 		else \
 			TO_TRANSLATE_TARGETS=$$(for lang in $$TO_TRANSLATE; do echo "ai-translate-$$lang"; done); \
 			echo "Starting parallel translation for targets: $$TO_TRANSLATE_TARGETS"; \
-			$(MAKE) -j 4 $$TO_TRANSLATE_TARGETS; \
+			if ! $(MAKE) -k -j 4 $$TO_TRANSLATE_TARGETS; then \
+				FAILED=$$(for lang in $$TO_TRANSLATE; do \
+					if [ -s "$$lang/untranslated.po" ] && [ ! -f "$$lang/updated_translated.po" ] && [ ! -f "$$lang/$(DOMAIN).po.new" ]; then \
+						if [ ! -f "$$lang/$(DOMAIN).po" ] || [ "$$lang/untranslated.po" -nt "$$lang/$(DOMAIN).po" ]; then \
+							echo $$lang; \
+						fi; \
+					fi; \
+				done); \
+				echo "\033[0;33mSome languages failed to translate. Re-run 'make translate' (or 'make ai-translate') to resume.\033[0m"; \
+				if [ -n "$$FAILED" ]; then echo "Failed languages: $$FAILED"; fi; \
+				exit 1; \
+			fi; \
 		fi; \
 	fi
 
