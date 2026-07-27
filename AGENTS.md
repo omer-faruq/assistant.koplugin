@@ -2,6 +2,16 @@
 
 This file provides guidance to AI agents when working with code in this repository.
 
+## Development Environment
+
+- **Recommended OS**: Debian or Ubuntu.
+- **Install KOReader from the official `.deb`** — this places the KOReader runtime at `/usr/lib/koreader/`, so agents can freely read the full KOReader source (Lua frontend, plugins, and bundled libraries) for reference when investigating APIs, widget patterns, or bundled utilities.
+- Useful paths under `/usr/lib/koreader/`:
+  - `frontend/` — KOReader's Lua frontend modules (widgets, dispatcher, gettext, util, etc.).
+  - `plugins/` — Bundled plugins (useful as reference implementations).
+  - `luajit` — The exact LuaJIT binary KOReader uses; ideal for syntax checks.
+- Agents are encouraged to read files under `/usr/lib/koreader/` to understand upstream APIs before writing plugin code, but must **never modify** anything there.
+
 ## Build / Test / Lint
 
 - **No build step** — Lua files are executed directly by KOReader.
