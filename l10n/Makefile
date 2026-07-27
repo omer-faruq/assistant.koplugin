@@ -1,4 +1,15 @@
-.PHONY: all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs clean init-dirs
+.PHONY: all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-api clean init-dirs
+
+# Effective parallelism for ai-translate.
+# Priority: explicit -jN / --jobs=N on the command line > bare -j (nproc) > 4.
+# GNU Make 4.4's .MAKEFLAGS directive does not actually inject a default
+# -jN into MAKEFLAGS when the user didn't pass one, so we extract the
+# effective value from MAKEFLAGS ourselves and pass it explicitly to the
+# sub-make.
+JOBS := $(shell echo '$(MAKEFLAGS)' | sed -nE 's/.*-j ?([0-9]+).*/\1/p' | head -1)
+ifeq ($(JOBS),)
+JOBS := $(shell if echo '$(MAKEFLAGS)' | grep -qE ' (-j|--jobs)( |$$)'; then nproc; else echo 4; fi)
+endif
 
 all: translate
 
@@ -91,17 +102,23 @@ check:
 		$(MSGFMT_BIN) -v --check -o /dev/null $$po_file; \
 	done
 
+# Send a minimal ping to the configured API endpoint to verify connectivity,
+# authentication, and model availability. Useful for debugging before running
+# a full translation batch.
+check-api:
+	@./ai_translate.py --check-api
+
 # Detect drift between this project's supported languages and KOReader's.
 # - Set KOREADER_L10N_DIR to override the default reference path.
-# - Also verifies LANGS (Makefile) is consistent with LANG_MAP (AI_TRANSLATE.sh).
+# - Also verifies LANGS (Makefile) is consistent with LANG_MAP (ai_translate.py).
 # Read-only: this target never modifies any files.
 check-langs:
 	@ref="$(KOREADER_L10N_DIR)"; \
 	[ -z "$$ref" ] && ref=/usr/lib/koreader/l10n; \
 	tmp=$$(mktemp -d) && trap "rm -rf $$tmp" EXIT; \
 	echo "$(LANGS)" | tr ' ' '\n' | sort -u > "$$tmp/langs"; \
-	awk '/^declare -A LANG_MAP=/{flag=1;next} /^\)/{flag=0} flag' AI_TRANSLATE.sh \
-		| grep -oP '\["\K[^"]+' | sort -u > "$$tmp/map"; \
+	python3 -c "from ai_translate import LANG_MAP; [print(k) for k in LANG_MAP]" \
+		| sort -u > "$$tmp/map"; \
 	rc=0; \
 	if [ ! -d "$$ref" ]; then \
 		echo "\033[0;33mKOReader l10n dir '$$ref' not found; skipping KOReader comparison.\033[0m"; \
@@ -124,7 +141,7 @@ check-langs:
 	only_map=$$(comm -23 "$$tmp/map" "$$tmp/langs"); \
 	only_langs=$$(comm -13 "$$tmp/map" "$$tmp/langs"); \
 	if [ -n "$$only_map" ] || [ -n "$$only_langs" ]; then \
-		echo "\033[0;31mLANG_MAP (AI_TRANSLATE.sh) is out of sync with LANGS (Makefile):\033[0m"; \
+		echo "\033[0;31mLANG_MAP (ai_translate.py) is out of sync with LANGS (Makefile):\033[0m"; \
 		[ -n "$$only_map" ]   && { echo "  Only in LANG_MAP:"; echo "$$only_map"   | sed 's/^/    /'; }; \
 		[ -n "$$only_langs" ] && { echo "  Only in LANGS:";    echo "$$only_langs" | sed 's/^/    /'; }; \
 		rc=1; \
@@ -149,7 +166,7 @@ ai-translate:
 		else \
 			TO_TRANSLATE_TARGETS=$$(for lang in $$TO_TRANSLATE; do echo "ai-translate-$$lang"; done); \
 			echo "Starting parallel translation for targets: $$TO_TRANSLATE_TARGETS"; \
-			if ! $(MAKE) -k -j 4 $$TO_TRANSLATE_TARGETS; then \
+			if ! $(MAKE) -k -j $(JOBS) $$TO_TRANSLATE_TARGETS; then \
 				FAILED=$$(for lang in $$TO_TRANSLATE; do \
 					if [ -s "$$lang/untranslated.po" ] && [ ! -f "$$lang/updated_translated.po" ] && [ ! -f "$$lang/$(DOMAIN).po.new" ]; then \
 						if [ ! -f "$$lang/$(DOMAIN).po" ] || [ "$$lang/untranslated.po" -nt "$$lang/$(DOMAIN).po" ]; then \
@@ -168,7 +185,7 @@ ai-translate-%:
 	@set -e; \
 	lang=$*; \
 	IS_NEW=0; if [ ! -f "$$lang/$(DOMAIN).po" ]; then IS_NEW=1; fi; \
-	./AI_TRANSLATE.sh $$lang && { \
+	./ai_translate.py $$lang && { \
 		if [ $$IS_NEW -eq 1 ]; then \
 			if [ ! -f "$$lang/$(DOMAIN).po" ]; then \
 				echo "\033[0;31mError: AI translation for new language '$$lang' failed. File '$$lang/$(DOMAIN).po' not created.\033[0m"; exit 1; \

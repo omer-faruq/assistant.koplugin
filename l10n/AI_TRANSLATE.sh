@@ -35,7 +35,7 @@ set -euo pipefail
 # -------------------- Configuration --------------------
 API_ENDPOINT=${API_ENDPOINT:-"https://api.openai.com/v1/chat/completions"}
 API_MODEL=${API_MODEL:-"gpt-4o-mini"}
-AUTH_HEADER="Authorization: Bearer ${API_KEY}"
+AUTH_HEADER="Authorization: Bearer ${API_KEY:-}"
 PROMPT_TEMPLATE=$(cat <<'EOF'
 You are an expert localization specialist tasked with translating a gettext `.po` file from English to __YOUR_LANGUAGE__.
 
@@ -153,12 +153,101 @@ declare -A LANG_MAP=(
 )
 
 TEMPLATE_FILE="templates/koreader.pot"
-# -------------------- Validation --------------------
-# Check if exactly one argument (the language code) is provided.
-if [[ $# -ne 1 ]]; then
-  echo "Usage: $0 <LANGUAGE_CODE>" >&2
+# -------------------- Argument parsing --------------------
+usage() {
+  cat <<USAGE >&2
+Usage:
+  $0 <LANGUAGE_CODE>     Translate the given language.
+  $0 --check-api         Send a minimal request to verify API connectivity.
+  $0 -h | --help         Show this help.
+USAGE
+}
+
+CHECK_API_ONLY=0
+if [[ $# -eq 1 ]]; then
+  case "$1" in
+    -h|--help)      usage; exit 0 ;;
+    --check-api|--ping|-t) CHECK_API_ONLY=1 ;;
+  esac
+elif [[ $# -ne 1 ]]; then
+  usage
   exit 1
 fi
+
+# -------------------- Shared API-key check --------------------
+[[ -v API_KEY && -n "${API_KEY:-}" ]] || {
+  echo "Error: API_KEY environment variable not set." >&2
+  exit 1
+}
+
+# -------------------- Connectivity check mode --------------------
+if [[ $CHECK_API_ONLY -eq 1 ]]; then
+  echo "Checking API connectivity..."
+  echo "  Endpoint: $API_ENDPOINT"
+  echo "  Model:    $API_MODEL"
+
+  PING_PAYLOAD=$(jq -n --arg model "$API_MODEL" \
+    '{
+       model: $model,
+       temperature: 0,
+       max_tokens: 8,
+       messages: [
+         {role: "system", content: "You are a connectivity test. Reply with exactly the word OK."},
+         {role: "user",   content: "ping"}
+       ]
+     }')
+
+  RESPONSE_FILE=$(mktemp -t ai_translate_ping_XXXXXX.json)
+  CURL_LOG=$(mktemp -t ai_translate_ping_XXXXXX.log)
+  trap 'rm -f "$RESPONSE_FILE" "$CURL_LOG"' EXIT
+
+  # Shorter timeouts here: a health check should not hang for minutes.
+  START_TS=$(date +%s)
+  HTTP_CODE=$(curl -sS --retry 2 --retry-delay 2 --retry-all-errors \
+    --max-time 30 --retry-max-time 90 \
+    -o "$RESPONSE_FILE" -w "%{http_code}" \
+    -X POST "$API_ENDPOINT" \
+    -H "$AUTH_HEADER" -H "Content-Type: application/json" \
+    --data-raw "$PING_PAYLOAD" 2> "$CURL_LOG") || {
+      echo "FAIL: curl error." >&2
+      cat "$CURL_LOG" >&2
+      exit 1
+    }
+  ELAPSED=$(( $(date +%s) - START_TS ))
+
+  if [[ "$HTTP_CODE" != 2* ]]; then
+    echo "FAIL: HTTP $HTTP_CODE (${ELAPSED}s)" >&2
+    echo "Response body (first 2KB):" >&2
+    head -c 2000 "$RESPONSE_FILE" >&2
+    echo >&2
+    exit 1
+  fi
+
+  REPLY=$(jq -er '
+    if type != "object" then error("response is not a JSON object")
+    elif has("error") then
+      error("API error: " + (.error.message // (.error|tostring)))
+    elif (.choices | length) == 0 then
+      error("no choices in response")
+    else
+      (.choices[0].message.content // "")
+    end
+  ' "$RESPONSE_FILE") || {
+      echo "FAIL: invalid API response (${ELAPSED}s)" >&2
+      echo "Response body (first 2KB):" >&2
+      head -c 2000 "$RESPONSE_FILE" >&2
+      echo >&2
+      exit 1
+    }
+
+  # Print a compact one-line summary of the reply (whitespace-collapsed, trimmed).
+  REPLY_SUMMARY=$(printf '%s' "$REPLY" | tr '\n' ' ' | sed 's/  */ /g' | cut -c1-120)
+  echo "OK: HTTP $HTTP_CODE in ${ELAPSED}s"
+  echo "  Reply: $REPLY_SUMMARY"
+  exit 0
+fi
+
+# -------------------- Validation (translation mode) --------------------
 
 LANG_CODE="$1"
 
@@ -171,12 +260,6 @@ LANG_CODE="$1"
 # Check if the main template file exists.
 [[ -f "$TEMPLATE_FILE" ]] || {
   echo "Error: Template file '$TEMPLATE_FILE' not found." >&2
-  exit 1
-}
-
-# Check if the API_KEY is set in the environment.
-[[ -v API_KEY ]] || {
-  echo "Error: API_KEY environment variable not set." >&2
   exit 1
 }
 
