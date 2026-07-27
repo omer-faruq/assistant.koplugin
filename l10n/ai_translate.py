@@ -59,7 +59,6 @@ log_translate = logging.getLogger("ai_translate.translate")
 # Keep in sync with Makefile's LANGS variable and KOReader's l10n directory.
 # Run `make check-langs` to detect drift.
 LANG_MAP: dict[str, str] = {
-    "en_GB": "English (United Kingdom)",
     "af_ZA": "Afrikaans",
     "ar": "عربى",
     "be": "Беларуская",
@@ -126,7 +125,6 @@ LANG_MAP: dict[str, str] = {
 # under /usr/lib/koreader/l10n/<lang>/koreader.po headers. Used when the
 # Python script generates a fresh koreader.po from a .pot (scenario 1).
 PLURAL_FORMS: dict[str, str] = {
-    "en_GB": "nplurals=2; plural=n != 1;",
     "af_ZA": "nplurals=2; plural=(n != 1);",
     "ar": "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;",
     "be": "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);",

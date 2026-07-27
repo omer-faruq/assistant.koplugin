@@ -55,7 +55,7 @@ MSGFILTER_BIN = msgfilter
 MSGCAT_BIN = msgcat
 XGETTEXT_BIN = xgettext
 
-LANGS :=  af_ZA ar be bg_BG bn ca cs cy da de el en_GB eo es et eu fa fi fr ga gl he hi hr hu ia id ie it_IT ja ka kab kn ko_KR lt_LT lv mk ms nb_NO nl_NL nn or pl pt_BR pt_PT ro ro_MD ru si sk sl sr sv th tr uk ur uz vi zh_CN zh_TW
+LANGS :=  af_ZA ar be bg_BG bn ca cs cy da de el eo es et eu fa fi fr ga gl he hi hr hu ia id ie it_IT ja ka kab kn ko_KR lt_LT lv mk ms nb_NO nl_NL nn or pl pt_BR pt_PT ro ro_MD ru si sk sl sr sv th tr uk ur uz vi zh_CN zh_TW
 
 PO_FILES  := $(wildcard */$(DOMAIN).po)
 
