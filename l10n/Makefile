@@ -1,4 +1,4 @@
-.PHONY: all translate template update extract-untranslated ai-translate check-ai-results import-translation check clean init-dirs
+.PHONY: all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs clean init-dirs
 
 all: translate
 
@@ -44,7 +44,7 @@ MSGFILTER_BIN = msgfilter
 MSGCAT_BIN = msgcat
 XGETTEXT_BIN = xgettext
 
-LANGS :=  zh_CN zh_TW ar bg_BG bn ca cs da de el eo es eu fa fi fr gl he hi hr hu it_IT ja ka kk ko_KR lt_LT lv nb_NO nl_NL pl pt_BR pt_PT ro ro_MD ru sk sr sv th tr uk vi vi_VN
+LANGS :=  af_ZA ar be bg_BG bn ca cs cy da de el en_GB eo es et eu fa fi fr ga gl he hi hr hu ia id ie it_IT ja ka kab kn ko_KR lt_LT lv mk ms nb_NO nl_NL nn or pl pt_BR pt_PT ro ro_MD ru si sk sl sr sv th tr uk ur uz vi zh_CN zh_TW
 
 PO_FILES  := $(wildcard */$(DOMAIN).po)
 
@@ -90,6 +90,48 @@ check:
 		dir=$$(dirname $$po_file); printf "%-8s" "$$dir"; \
 		$(MSGFMT_BIN) -v --check -o /dev/null $$po_file; \
 	done
+
+# Detect drift between this project's supported languages and KOReader's.
+# - Set KOREADER_L10N_DIR to override the default reference path.
+# - Also verifies LANGS (Makefile) is consistent with LANG_MAP (AI_TRANSLATE.sh).
+# Read-only: this target never modifies any files.
+check-langs:
+	@ref="$(KOREADER_L10N_DIR)"; \
+	[ -z "$$ref" ] && ref=/usr/lib/koreader/l10n; \
+	tmp=$$(mktemp -d) && trap "rm -rf $$tmp" EXIT; \
+	echo "$(LANGS)" | tr ' ' '\n' | sort -u > "$$tmp/langs"; \
+	awk '/^declare -A LANG_MAP=/{flag=1;next} /^\)/{flag=0} flag' AI_TRANSLATE.sh \
+		| grep -oP '\["\K[^"]+' | sort -u > "$$tmp/map"; \
+	rc=0; \
+	if [ ! -d "$$ref" ]; then \
+		echo "\033[0;33mKOReader l10n dir '$$ref' not found; skipping KOReader comparison.\033[0m"; \
+	else \
+		ls "$$ref" | sort -u > "$$tmp/kor"; \
+		missing=$$(comm -23 "$$tmp/kor" "$$tmp/langs"); \
+		extra=$$(comm -13 "$$tmp/kor" "$$tmp/langs"); \
+		if [ -n "$$missing" ]; then \
+			echo "\033[0;33mLanguages in KOReader but NOT in this project:\033[0m"; \
+			echo "$$missing" | sed 's/^/  /'; \
+		fi; \
+		if [ -n "$$extra" ]; then \
+			echo "\033[0;33mLanguages in this project but NOT in KOReader:\033[0m"; \
+			echo "$$extra" | sed 's/^/  /'; \
+		fi; \
+		if [ -z "$$missing" ] && [ -z "$$extra" ]; then \
+			echo "LANGS is in sync with KOReader ($$ref)."; \
+		fi; \
+	fi; \
+	only_map=$$(comm -23 "$$tmp/map" "$$tmp/langs"); \
+	only_langs=$$(comm -13 "$$tmp/map" "$$tmp/langs"); \
+	if [ -n "$$only_map" ] || [ -n "$$only_langs" ]; then \
+		echo "\033[0;31mLANG_MAP (AI_TRANSLATE.sh) is out of sync with LANGS (Makefile):\033[0m"; \
+		[ -n "$$only_map" ]   && { echo "  Only in LANG_MAP:"; echo "$$only_map"   | sed 's/^/    /'; }; \
+		[ -n "$$only_langs" ] && { echo "  Only in LANGS:";    echo "$$only_langs" | sed 's/^/    /'; }; \
+		rc=1; \
+	else \
+		echo "LANG_MAP and LANGS are consistent."; \
+	fi; \
+	exit $$rc
 
 clean:
 	@echo "Cleaning intermediate translation files..."
