@@ -155,11 +155,11 @@ local function otaUpgrade(version)
     if path:find("/%.") or path:sub(1,1) == "." then
       return true
     end
-    if path:find(".+%.md$")
-       or path:find("l10n/templates")
-       or path:find("l10n/AI_TRANSLATE%.sh$")
-       or path:find("l10n/Makefile$")
-    then
+    if path:find(".+%.md$") then
+      return true
+    end
+    -- l10n: only keep .po files (exclude .py, .sh, Makefile, .pot, etc.)
+    if path:find("l10n/.+") and not path:find("%.po$") then
       return true
     end
     return false
