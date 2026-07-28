@@ -539,6 +539,7 @@ function Querier:showStremDialog(res)
     local stream_mode_auto_scroll = self.settings:readSetting("stream_mode_auto_scroll", true)
     local pending_delta = strbuf.new()
     local flush_scheduled = false
+    local reasoning_was_ended = false
     local function flush_to_ui()
         flush_scheduled = false
         local delta = pending_delta:get()
@@ -560,6 +561,16 @@ function Querier:showStremDialog(res)
             streamDialog._input_widget:setText("", true) -- Clear the animation
         end
         if first_content_received then
+            if self.reasoning_phase_ended and not reasoning_was_ended then
+                reasoning_was_ended = true
+                if flush_scheduled then
+                    UIManager:unschedule(flush_to_ui)
+                    flush_to_ui()
+                end
+                streamDialog._input_widget.charlist = {}
+                streamDialog._input_widget.charpos = 1
+                streamDialog._input_widget:initTextBox("", true)
+            end
             pending_delta:put(content or "")
             if not flush_scheduled then
                 flush_scheduled = true
@@ -1010,7 +1021,6 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
     -- Flush text content to buffers / UI
     if type(result_content) == "string" and #result_content > 0 then
         if not self.reasoning_phase_ended and #reasoning_content_buffer > 0 then
-            result_buffer:put("\n\n---\n\n")
             self.reasoning_phase_ended = true
         end
         result_buffer:put(result_content)
