@@ -537,30 +537,41 @@ function Querier:showStremDialog(res)
     animation_task = UIManager:scheduleIn(0.4, updateAnimation)
 
     local stream_mode_auto_scroll = self.settings:readSetting("stream_mode_auto_scroll", true)
+    local pending_delta = strbuf.new()
+    local flush_scheduled = false
+    local function flush_to_ui()
+        flush_scheduled = false
+        local delta = pending_delta:get()
+        if #delta == 0 then return end
+        if stream_mode_auto_scroll then
+            streamDialog:addTextToInput(delta)
+        else
+            streamDialog._input_widget:resyncPos()
+            streamDialog:addTextToInput(delta)
+        end
+    end
     local ok, content, tool_calls_or_err = pcall(self.processStream, self, res, function (content, buffer)
-        UIManager:nextTick(function ()
-            -- Stop animation on first content
-            if not first_content_received and content and #tostring(content) > 0 then
-                first_content_received = true
-                if animation_task then
-                    UIManager:unschedule(animation_task)
-                    animation_task = nil
-                end
-                streamDialog._input_widget:setText("", true) -- Clear the animation
+        if not first_content_received and content and #content > 0 then
+            first_content_received = true
+            if animation_task then
+                UIManager:unschedule(animation_task)
+                animation_task = nil
             end
-
-            -- schedule the text update in the UIManager task queue
-            if first_content_received then
-                if stream_mode_auto_scroll then
-                    streamDialog:addTextToInput(content or "")
-                else
-                    streamDialog._input_widget:resyncPos()
-                    streamDialog._input_widget:setText(buffer:tostring(), true)
-                end
+            streamDialog._input_widget:setText("", true) -- Clear the animation
+        end
+        if first_content_received then
+            pending_delta:put(content or "")
+            if not flush_scheduled then
+                flush_scheduled = true
+                UIManager:scheduleIn(0.5, flush_to_ui)
             end
-        end)
+        end
     end)
     local err
+    if flush_scheduled then
+        UIManager:unschedule(flush_to_ui)
+        flush_to_ui()
+    end
     if not ok then
         -- pcall failure: content holds the Lua error, tool_calls_or_err is nil
         logger.warn("Error processing stream: " .. tostring(content))
@@ -611,6 +622,7 @@ function Querier:processStream(bgQuery, trunk_callback)
     local partial_data = strbuf.new(chunksize) -- Buffer for incomplete line data
     local result_buffer = strbuf.new()  -- Buffer for storing results
     local reasoning_content_buffer = strbuf.new()  -- Buffer for storing reasoning content
+    self.reasoning_phase_ended = false
 
     while true do  
 
@@ -997,6 +1009,10 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
 
     -- Flush text content to buffers / UI
     if type(result_content) == "string" and #result_content > 0 then
+        if not self.reasoning_phase_ended and #reasoning_content_buffer > 0 then
+            result_buffer:put("\n\n---\n\n")
+            self.reasoning_phase_ended = true
+        end
         result_buffer:put(result_content)
         if trunk_callback then trunk_callback(result_content, result_buffer) end
     elseif type(reasoning_content) == "string" and #reasoning_content > 0 then
