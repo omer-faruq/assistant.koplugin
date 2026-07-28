@@ -302,7 +302,6 @@ local CONFIGURATION = {
         hide_long_highlights = true,           -- Hide highlighted text if longer than threshold
         long_highlight_threshold = 500,        -- Number of characters considered "long"
         -- system_prompt = "You are a helpful AI assistant. Always respond in Markdown format.", -- Custom system prompt for the AI ("Ask" button) to override the default, to disable set to nil
-        render_markdown = true,                -- Set to true to render markdown in the AI responses
         updater_disabled = false,              -- Set to true to disable update check.
         update_check_url = "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest", -- URL for checking latest release
         ota_github_base = "https://github.com", -- GitHub proxy base URL for OTA updates

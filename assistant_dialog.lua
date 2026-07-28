@@ -201,7 +201,6 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
   chatgpt_viewer = ChatGPTViewer:new {
     title = title,
     text = result_text,
-    text_face = Font:getFace("infofont", self.assistant.settings:readSetting("response_font_size") or 20),
     assistant = self.assistant,
     ui = self.assistant.ui,
     -- Hide Add Note button when invoked via gesture (no highlighted text)
@@ -254,7 +253,6 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
       end,
     highlighted_text = highlightedText,
     message_history = message_history,
-    render_markdown = koutil.tableGetValue(self.CONFIGURATION, "features", "render_markdown") or true,
     default_hold_callback = function () chatgpt_viewer:HoldClose() end
   }
   

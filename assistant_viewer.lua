@@ -16,14 +16,12 @@ local Device = require("device")
 local logger = require("logger")
 local Event = require("ui/event")
 local Geom = require("ui/geometry")
-local Font = require("ui/font")
 local FrameContainer = require("ui/widget/container/framecontainer")
 local GestureRange = require("ui/gesturerange")
 local InputContainer = require("ui/widget/container/inputcontainer")
 local InputDialog = require("ui/widget/inputdialog")
 local MovableContainer = require("ui/widget/container/movablecontainer")
 local Notification = require("ui/widget/notification")
-local ScrollTextWidget = require("ui/widget/scrolltextwidget")
 local ScrollHtmlWidget = require("ui/widget/scrollhtmlwidget")
 local Size = require("ui/size")
 local TitleBar = require("ui/widget/titlebar")
@@ -151,25 +149,10 @@ local ChatGPTViewer = InputContainer:extend {
   width = nil,
   height = nil,
   buttons_table = nil,
-  -- See TextBoxWidget for details about these options
-  -- We default to justified and auto_para_direction to adapt
-  -- to any kind of text we are given (book descriptions,
-  -- bookmarks' text, translation results...).
-  -- When used to display more technical text (HTML, CSS,
-  -- application logs...), it's best to reset them to false.
-  alignment = "left",
-  justified = true,
-  lang = nil,
-  para_direction_rtl = nil,
-  auto_para_direction = true,
-  alignment_strict = false,
-  render_markdown = true, -- converts markdown to HTML and displays the HTML
 
   title_face = nil,               -- use default from TitleBar
   title_multilines = nil,         -- see TitleBar for details
   title_shrink_font_to_fit = nil, -- see TitleBar for details
-  text_face = Font:getFace("x_smallinfofont"),
-  fgcolor = Blitbuffer.COLOR_BLACK,
   text_padding = Size.padding.large,
   text_margin = Size.margin.small,
   button_padding = Size.padding.default,
@@ -335,12 +318,7 @@ function ChatGPTViewer:init()
     text = "⇱",
     id = "top",
     callback = function()
-      if self.render_markdown then
-        -- If rendering in a ScrollHtmlWidget, use scrollToRatio
-        self.scroll_text_w:scrollToRatio(0)
-      else
-        self.scroll_text_w:scrollToTop()
-      end
+      self.scroll_text_w:scrollToRatio(0)
     end,
     hold_callback = self.default_hold_callback,
     allow_hold_when_disabled = true,
@@ -350,12 +328,7 @@ function ChatGPTViewer:init()
     text = "⇲",
     id = "bottom",
     callback = function()
-      if self.render_markdown then
-        -- If rendering in a ScrollHtmlWidget, use scrollToRatio
-        self.scroll_text_w:scrollToRatio(1)
-      else
-        self.scroll_text_w:scrollToBottom()
-      end
+      self.scroll_text_w:scrollToRatio(1)
     end,
     hold_callback = self.default_hold_callback,
     allow_hold_when_disabled = true,
@@ -494,48 +467,26 @@ function ChatGPTViewer:init()
   local textw_height = self.height - titlebar:getHeight() - self.button_table:getSize().h
 
 
-  -- load configuration
-  self.render_markdown = koutil.tableGetValue(self.assistant.CONFIGURATION, "features", "render_markdown") or true
-
-  if self.render_markdown then
-    -- Convert Markdown to HTML and render in a ScrollHtmlWidget
-    local html_body, err = MD(self.text)
-    if err then
-      logger.warn("ChatGPTViewer: could not generate HTML", err)
-      -- Fallback to plain text if HTML generation fails
-      html_body = self.text or "Missing text."
-    end
-    local css = VIEWER_CSS .. ((self.assistant.settings:readSetting("response_is_rtl") 
-                                or self.assistant.ui_language_is_rtl) and RTL_CSS or "")
-    self.scroll_text_w = ScrollHtmlWidget:new {
-      html_body = html_body,
-      css = css,
-      default_font_size = Screen:scaleBySize(self.assistant.settings:readSetting("response_font_size") or 20),
-      width = self.width - 2 * self.text_padding - 2 * self.text_margin,
-      height = textw_height - 2 * self.text_padding - 2 * self.text_margin,
-      dialog = self,
-      html_link_tapped_callback = function(link)
-        self:html_link_tapped_callback(link)
-      end
-    }
-  else
-    -- If not rendering Markdown, use the text as is
-    self.scroll_text_w = ScrollTextWidget:new {
-      text = self.text,
-      face = self.text_face,
-      fgcolor = self.fgcolor,
-      width = self.width - 2 * self.text_padding - 2 * self.text_margin,
-      height = textw_height - 2 * self.text_padding - 2 * self.text_margin,
-      dialog = self,
-      alignment = self.alignment,
-      justified = self.justified,
-      lang = self.lang,
-      para_direction_rtl = self.para_direction_rtl,
-      auto_para_direction = self.auto_para_direction,
-      alignment_strict = self.alignment_strict,
-      scroll_callback = self._buttons_scroll_callback,
-    }
+  -- Convert Markdown to HTML and render in a ScrollHtmlWidget
+  local html_body, err = MD(self.text)
+  if err then
+    logger.warn("ChatGPTViewer: could not generate HTML", err)
+    -- Fallback to plain text if HTML generation fails
+    html_body = self.text or "Missing text."
   end
+  local css = VIEWER_CSS .. ((self.assistant.settings:readSetting("response_is_rtl")
+                              or self.assistant.ui_language_is_rtl) and RTL_CSS or "")
+  self.scroll_text_w = ScrollHtmlWidget:new {
+    html_body = html_body,
+    css = css,
+    default_font_size = Screen:scaleBySize(self.assistant.settings:readSetting("response_font_size") or 20),
+    width = self.width - 2 * self.text_padding - 2 * self.text_margin,
+    height = textw_height - 2 * self.text_padding - 2 * self.text_margin,
+    dialog = self,
+    html_link_tapped_callback = function(link)
+      self:html_link_tapped_callback(link)
+    end
+  }
 
   self.textw = FrameContainer:new {
     padding = self.text_padding,
@@ -958,70 +909,44 @@ function ChatGPTViewer:html_link_tapped_callback(link)
 end
 
 function ChatGPTViewer:update(new_text)
-  local last_page_num = 1
-
   -- Check if the new text is substantially different from the current text
   if not self.text or #new_text > #self.text then
     -- Update the text
     self.text = new_text
 
-    if self.render_markdown then
+    -- remenber the last page number
+    local last_page_num = self.scroll_text_w.htmlbox_widget.page_count
 
-      -- remenber the last page number
-      last_page_num = self.scroll_text_w.htmlbox_widget.page_count
-
-      -- Convert Markdown to HTML and recreate the ScrollHtmlWidget with the new text
-      local html_body, err = MD(self.text)
-      if err then
-        logger.warn("ChatGPTViewer: could not generate HTML", err)
-        -- Fallback to plain text if HTML generation fails
-        html_body = self.text or "Missing text."
-      end
-      local css = VIEWER_CSS .. ((self.assistant.settings:readSetting("response_is_rtl") 
-                                or self.assistant.ui_language_is_rtl) and RTL_CSS or "")
-      self.scroll_text_w = ScrollHtmlWidget:new {
-        html_body = html_body,
-        css = css,
-        default_font_size = Screen:scaleBySize(self.assistant.settings:readSetting("response_font_size") or 20),
-        width = self.width - 2 * self.text_padding - 2 * self.text_margin,
-        height = self.textw:getSize().h - 2 * self.text_padding - 2 * self.text_margin,
-        dialog = self,
-        html_link_tapped_callback = function(link)
-          self:html_link_tapped_callback(link)
-        end
-      }
-    else
-      -- Create a new ScrollTextWidget with the updated text
-      self.scroll_text_w = ScrollTextWidget:new{
-        text = new_text,
-        face = self.text_face,
-        fgcolor = self.fgcolor,
-        width = self.width - 2 * self.text_padding - 2 * self.text_margin,
-        height = self.textw:getSize().h - 2 * self.text_padding - 2 * self.text_margin,
-        dialog = self,
-        alignment = self.alignment,
-        justified = self.justified,
-        lang = self.lang,
-        para_direction_rtl = self.para_direction_rtl,
-        auto_para_direction = self.auto_para_direction,
-        alignment_strict = self.alignment_strict,
-      }
+    -- Convert Markdown to HTML and recreate the ScrollHtmlWidget with the new text
+    local html_body, err = MD(self.text)
+    if err then
+      logger.warn("ChatGPTViewer: could not generate HTML", err)
+      -- Fallback to plain text if HTML generation fails
+      html_body = self.text or "Missing text."
     end
-    
+    local css = VIEWER_CSS .. ((self.assistant.settings:readSetting("response_is_rtl")
+                              or self.assistant.ui_language_is_rtl) and RTL_CSS or "")
+    self.scroll_text_w = ScrollHtmlWidget:new {
+      html_body = html_body,
+      css = css,
+      default_font_size = Screen:scaleBySize(self.assistant.settings:readSetting("response_font_size") or 20),
+      width = self.width - 2 * self.text_padding - 2 * self.text_margin,
+      height = self.textw:getSize().h - 2 * self.text_padding - 2 * self.text_margin,
+      dialog = self,
+      html_link_tapped_callback = function(link)
+        self:html_link_tapped_callback(link)
+      end
+    }
+
     -- Update the frame container with the new scroll widget
     self.textw:clear()
     self.textw[1] = self.scroll_text_w
-    
-    if self.render_markdown then
-      self.scroll_text_w:scrollToPage(1)
-      UIManager:scheduleIn(0.25, function ()
-        -- a delay scroll makes the scroll bar in correct position
-        self.scroll_text_w:scrollToPage(last_page_num)
-      end)
-    else
-      self.scroll_text_w:scrollToBottom()
-      UIManager:setDirty(self.frame, "partial")
-    end
+
+    self.scroll_text_w:scrollToPage(1)
+    UIManager:scheduleIn(0.25, function ()
+      -- a delay scroll makes the scroll bar in correct position
+      self.scroll_text_w:scrollToPage(last_page_num)
+    end)
   end
 end
 
