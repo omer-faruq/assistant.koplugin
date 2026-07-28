@@ -647,7 +647,7 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
   local default_options = {}
   
   -- Load additional prompts from configuration if available
-  local sorted_prompts = Prompts.getSortedCustomPrompts(function (prompt)
+  local sorted_prompts = Prompts.getSortedPrompts(function (prompt)
     if prompt.visible == false then
       return false
     end
@@ -660,7 +660,7 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
   end, Prompts.isWebSearchEnabled(self.assistant.settings)) or {}
 
   local user_prompts = koutil.tableGetValue(self.assistant.CONFIGURATION, "features", "prompts")
-  local merged_prompts = Prompts.getMergedCustomPrompts(user_prompts) or {}
+  local merged_prompts = Prompts.getMergedPrompts(user_prompts) or {}
     
   -- Add buttons in sorted order
   for _, tab in ipairs(sorted_prompts) do

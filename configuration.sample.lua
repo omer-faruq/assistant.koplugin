@@ -366,7 +366,7 @@ local CONFIGURATION = {
         -- 200000 chars (~50k tokens): Comprehensive context, uses more of context window
         term_xray_max_characters = 100000,
 
-        -- These are prompts defined in `prompts.lua`, can be overriden here.
+        -- These are prompts defined in `assistant_prompts.lua`, can be overriden here.
         -- each prompt shown as a button in the main dialog.
         -- The `order` determines the position in the main popup.
         -- The `show_on_main_popup` determines if the prompt is shown in the main popup
@@ -379,13 +379,13 @@ local CONFIGURATION = {
             -- simplify           = { visible = false, }, -- hide from everywhere
 
             --
-            -- example of adding a custom prompt:
+            -- example of adding a user-defined prompt:
             -- myprompt = { text ="Prompt Title", system_prompt = "you are a helpful assistant.", user_prompt = "describe the following text in detail: {highlight}", order = 50, show_on_main_popup = true, },
 
         },
 
         book_level_prompts = {
-            -- for an example of a custom book-level prompt, see: https://github.com/omer-faruq/assistant.koplugin/wiki/configuration#5-book-level-custom-prompts
+            -- for an example of a user-defined book-level prompt, see: https://github.com/omer-faruq/assistant.koplugin/wiki/configuration#5-book-level-custom-prompts
         },
 
         -- AI Recap configuration

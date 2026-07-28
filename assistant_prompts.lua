@@ -22,7 +22,7 @@ Standard Markdown formatting (including quotes, tables, lists) is fully supporte
 ]]
 
 -- prompts attributes can be overridden in the configuration file.
-local custom_prompts = {
+local builtin_prompts = {
     term_xray = {
         text = _("Term X-Ray"),
         use_websearch = true,
@@ -570,10 +570,10 @@ end
 local WEBSEARCH_ICON = "🌐"
 
 local M = {
-    custom_prompts = custom_prompts,       -- Custom prompts for the AI
+    builtin_prompts = builtin_prompts,       -- Built-in prompts for the AI
     assistant_prompts = assistant_prompts, -- Preconfigured prompts for the AI
-    merged_prompts = nil,                  -- Merged prompts from custom and configuration
-    sorted_custom_prompts = nil,           -- Sorted custom prompts
+    merged_prompts = nil,                  -- Merged prompts from builtin and configuration
+    sorted_prompts = nil,                  -- Sorted merged prompts
     WEBSEARCH_ICON = WEBSEARCH_ICON,
 }
 
@@ -590,43 +590,43 @@ end
 
 M.invalidateCache = function()
     M.merged_prompts = nil
-    M.sorted_custom_prompts = nil
+    M.sorted_prompts = nil
 end
 
 -- Func description:
--- This function returns the merged custom prompts from the configuration and custom prompts.
--- It merges the custom prompts with the configuration prompts, if available.
+-- This function returns the merged prompts from the configuration and builtin prompts.
+-- It merges the builtin prompts with the configuration prompts, if available.
 -- return table of merged prompts
 -- Example: { translate = { text = "Translate", user_prompt = "...", order = 1, show_on_main_popup = true }, ... }
-M.getMergedCustomPrompts = function(conf_prompts)
+M.getMergedPrompts = function(conf_prompts)
     if M.merged_prompts then
         return M.merged_prompts
     end
 
-    -- Merge custom prompts with configuration prompts
+    -- Merge builtin prompts with configuration prompts
     if conf_prompts then
-        M.merged_prompts = table_merge(custom_prompts, conf_prompts)
+        M.merged_prompts = table_merge(builtin_prompts, conf_prompts)
     else
-        M.merged_prompts = custom_prompts
+        M.merged_prompts = builtin_prompts
     end
 
     return M.merged_prompts
 end
 
 -- Func description:
--- This function returns a list of custom prompts sorted by their order.
+-- This function returns a list of merged prompts sorted by their order.
 -- filter_func: optional function to filter prompts, if it returns false, the prompt will be skipped.
 -- web_search_enabled: optional boolean, if true and a prompt has use_websearch=true,
 --                     the 🌐 icon is prepended to the display text.
 -- return list item: {idx, order, text}
-M.getSortedCustomPrompts = function(filter_func, web_search_enabled)
-    if M.sorted_custom_prompts then
-        return M.sorted_custom_prompts
+M.getSortedPrompts = function(filter_func, web_search_enabled)
+    if M.sorted_prompts then
+        return M.sorted_prompts
     end
 
     -- Sort the merged prompts by order
     local sorted_prompts = {}
-    for prompt_index, prompt in pairs(M.merged_prompts or custom_prompts) do
+    for prompt_index, prompt in pairs(M.merged_prompts or builtin_prompts) do
         -- Only add the prompt if there is no filter, or if the filter function returns true.
         if not filter_func or filter_func(prompt, prompt_index) == true then
             local display_text = prompt.text or prompt_index

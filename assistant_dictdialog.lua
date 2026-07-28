@@ -190,7 +190,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     if #message_history == 0 then
         local system_prompt
         if prompt_type == "term_xray" then
-            local term_xray_prompts = require("assistant_prompts").custom_prompts.term_xray
+local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
             system_prompt = term_xray_prompts.system_prompt
         else
             system_prompt = dict_prompts.system_prompt
@@ -380,7 +380,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     -- Choose the appropriate prompt and context based on prompt type
     local user_prompt, context_content, title, loading_message
     if prompt_type == "term_xray" then
-        local term_xray_prompts = require("assistant_prompts").custom_prompts.term_xray
+        local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
         user_prompt = term_xray_prompts.user_prompt
         context_content = context_text
 

@@ -650,9 +650,9 @@ function Assistant:_rebuildShowOnMainButtons()
   if not self.ui.document then return end
 
   Prompts.invalidateCache()
-  Prompts.getMergedCustomPrompts(koutil.tableGetValue(CONFIGURATION, "features", "prompts"))
+  Prompts.getMergedPrompts(koutil.tableGetValue(CONFIGURATION, "features", "prompts"))
 
-  local showOnMain = Prompts.getSortedCustomPrompts(function (prompt, idx)
+  local showOnMain = Prompts.getSortedPrompts(function (prompt, idx)
     if prompt.visible == false then
       return false
     end
@@ -753,7 +753,7 @@ function Assistant:addMainButton(prompt_idx, prompt)
                 showDictionaryDialog(self, _reader_highlight_instance.selected_text.text, nil, "term_xray")
               else
                 -- For other prompts, show the custom prompt dialog
-                self.assistant_dialog:showCustomPrompt(_reader_highlight_instance.selected_text.text, prompt_idx)
+                self.assistant_dialog:showPrompt(_reader_highlight_instance.selected_text.text, prompt_idx)
               end
             end)
           end)
@@ -787,14 +787,14 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg)
       id = "assistant_wikipedia",
       font_bold = true,
       text = Prompts.getDisplayText(_("Wikipedia"),
-        koutil.tableGetValue(Prompts.custom_prompts, "wikipedia", "use_websearch") or false,
+        koutil.tableGetValue(Prompts.builtin_prompts, "wikipedia", "use_websearch") or false,
         Prompts.isWebSearchEnabled(self.settings)) .. " (AI)",
       callback = function(widget_instance)
           local popup = widget_instance or dict_popup_arg
           local word = popup and popup.word
           NetworkMgr:runWhenOnline(function()
               Trapper:wrap(function()
-                self.assistant_dialog:showCustomPrompt(word, "wikipedia")
+                self.assistant_dialog:showPrompt(word, "wikipedia")
               end)
           end)
       end,
@@ -806,7 +806,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg)
       id = "assistant_term_xray",
       font_bold = true,
       text = Prompts.getDisplayText(_("Term X-Ray"),
-        koutil.tableGetValue(Prompts.custom_prompts, "term_xray", "use_websearch") or false,
+        koutil.tableGetValue(Prompts.builtin_prompts, "term_xray", "use_websearch") or false,
         Prompts.isWebSearchEnabled(self.settings)) .. " (AI)",
       callback = function(widget_instance)
           local popup = widget_instance or dict_popup_arg
@@ -869,7 +869,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg)
             local word = popup and popup.word
             NetworkMgr:runWhenOnline(function()
                 Trapper:wrap(function()
-                  self.assistant_dialog:showCustomPrompt(word, prompt.id)
+                  self.assistant_dialog:showPrompt(word, prompt.id)
                 end)
             end)
         end,
@@ -1018,7 +1018,7 @@ function Assistant:syncTranslateOverride()
         Trapper:wrap(function()
           -- splitToWords result like this: { "The", " ", "good", " ", "news" }
           if #words > 5 then
-              self.assistant_dialog:showCustomPrompt(text, "translate")
+              self.assistant_dialog:showPrompt(text, "translate")
           else
             -- Show AI Dictionary dialog
             showDictionaryDialog(self, text)
@@ -1044,8 +1044,8 @@ function Assistant:onAssistantSetButton(btnconf, action)
 
   local idx = btnconf.idx
   -- use merged prompts: prompts defined only in configuration.lua
-  -- are absent from the built-in `custom_prompts` table
-  local prompt = Prompts.getMergedCustomPrompts(
+  -- are absent from the built-in `builtin_prompts` table
+  local prompt = Prompts.getMergedPrompts(
     koutil.tableGetValue(CONFIGURATION, "features", "prompts"))[idx]
   local ws_enabled = Prompts.isWebSearchEnabled(self.settings)
   local display_text = Prompts.getDisplayText(prompt.text or idx, prompt.use_websearch or false, ws_enabled)

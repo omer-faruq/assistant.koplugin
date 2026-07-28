@@ -391,7 +391,7 @@ function AssistantDialog:show(highlightedText)
   
   -- Only add additional buttons if there's highlighted text
   if is_highlighted then
-    local sorted_prompts = Prompts.getSortedCustomPrompts(function (prompt)
+    local sorted_prompts = Prompts.getSortedPrompts(function (prompt)
       if prompt.visible == false then
         return false
       end
@@ -435,7 +435,7 @@ function AssistantDialog:show(highlightedText)
                 end
               end
               user_question = user_question .. book_text_prompt
-              self:showCustomPrompt(highlightedText, tab.idx, user_question)
+              self:showPrompt(highlightedText, tab.idx, user_question)
             end
           end)
         end,
@@ -520,11 +520,11 @@ function AssistantDialog:show(highlightedText)
 end
 
 -- Process main select popup buttons
--- ( custom prompts from configuration )
-function AssistantDialog:showCustomPrompt(highlightedText, prompt_index, user_input)
+-- ( prompts from configuration )
+function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
 
   local user_prompts = koutil.tableGetValue(self.CONFIGURATION, "features", "prompts")
-  local prompt_config = Prompts.getMergedCustomPrompts(user_prompts)[prompt_index]
+  local prompt_config = Prompts.getMergedPrompts(user_prompts)[prompt_index]
 
   local raw_title = koutil.tableGetValue(prompt_config, "text") or prompt_index
   local title = Prompts.getDisplayText(raw_title,
