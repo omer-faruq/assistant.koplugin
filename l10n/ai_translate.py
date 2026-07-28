@@ -589,6 +589,11 @@ def _extract_json(content: str) -> dict[str, Any]:
         return json.loads(match.group(0))
 
 
+def _normalize_newlines(s: str) -> str:
+    """Fix double-escaped newlines that some LLMs emit in JSON responses."""
+    return s.replace("\\n", "\n")
+
+
 def _validate_translations(
     items: list[dict[str, Any]],
     payload: dict[str, Any],
@@ -629,14 +634,14 @@ def _validate_translations(
                 raise RuntimeError(f"id {item['id']}: msgstr_plural has non-string forms")
             if any(not x.strip() for x in forms):
                 raise RuntimeError(f"id {item['id']}: msgstr_plural has empty form")
-            out.append({"id": item["id"], "msgstr_plural": forms})
+            out.append({"id": item["id"], "msgstr_plural": [_normalize_newlines(f) for f in forms]})
         else:
             msgstr = t.get("msgstr", "")
             if not isinstance(msgstr, str):
                 raise RuntimeError(f"id {item['id']}: msgstr must be a string")
             if not msgstr.strip():
                 raise RuntimeError(f"id {item['id']}: msgstr is empty")
-            out.append({"id": item["id"], "msgstr": msgstr})
+            out.append({"id": item["id"], "msgstr": _normalize_newlines(msgstr)})
     return out
 
 
@@ -866,6 +871,9 @@ def main(argv: list[str] | None = None) -> int:
 
     cfg = Config()
     cfg.require_api_key()
+
+    log.info("API endpoint: %s", cfg.api_endpoint)
+    log.info("API model:    %s", cfg.api_model)
 
     if args.check_api:
         return check_api(cfg)
