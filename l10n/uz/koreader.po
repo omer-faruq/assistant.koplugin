@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.12\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-27 10:47+0800\n"
+        "POT-Creation-Date: 2026-07-29 15:45+0800\n"
         "PO-Revision-Date: 2026-07-27 10:47+0800\n"
         "Last-Translator: AI (auto)\n"
         "Language-Team: Oʻzbekcha (AI translation)\n"
@@ -16,7 +16,7 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.12\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:483 ../main.lua:350 ../main.lua:360
+#: ../_meta.lua:4 ../assistant_dialog.lua:481 ../main.lua:350 ../main.lua:360
 #: ../main.lua:562
 msgid   "AI Assistant"
 msgstr  "AI Yordamchi"
@@ -54,102 +54,102 @@ msgid   "(No response)"
 msgstr  "(Javob yo'q)"
 
 #: ../assistant_dialog.lua:175 ../assistant_quicknote.lua:99
-#: ../assistant_viewer.lua:593
+#: ../assistant_viewer.lua:524
 msgid   "Highlighted text:"
 msgstr  "Ajratilgan matn:"
 
-#: ../assistant_dialog.lua:339 ../assistant_dictdialog.lua:162
+#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
 #: ../assistant_settings.lua:96 ../assistant_settings.lua:620
-#: ../assistant_viewer.lua:695
+#: ../assistant_viewer.lua:626
 msgid   "Cancel"
 msgstr  "Bekor qilish"
 
-#: ../assistant_dialog.lua:346 ../assistant_viewer.lua:705
+#: ../assistant_dialog.lua:344 ../assistant_viewer.lua:636
 msgid   "Ask"
 msgstr  "So'rang"
 
-#: ../assistant_dialog.lua:359 ../assistant_viewer.lua:711
+#: ../assistant_dialog.lua:357 ../assistant_viewer.lua:642
 msgid   "Enter a question before proceeding."
 msgstr  "Davom etishdan oldin savol kiriting."
 
-#: ../assistant_dialog.lua:446
+#: ../assistant_dialog.lua:444
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Ushbu tugmani Ajratish menyusiga qo'shish kerakmi?"
 
-#: ../assistant_dialog.lua:447
+#: ../assistant_dialog.lua:445
 msgid   "Add"
 msgstr  "Qo'shish"
 
-#: ../assistant_dialog.lua:474
+#: ../assistant_dialog.lua:472
 msgid   "Ask a question about the highlighted text"
 msgstr  "Ajratilgan matn haqida savol bering"
 
-#: ../assistant_dialog.lua:475
+#: ../assistant_dialog.lua:473
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Ushbu kitob haqida savol bering:\n"
         "%s, %s tomonidan"
 
-#: ../assistant_dialog.lua:476
+#: ../assistant_dialog.lua:474
 msgid   "Ask a general question"
 msgstr  "Umumiy savol bering"
 
-#: ../assistant_dialog.lua:478
+#: ../assistant_dialog.lua:476
 msgid   "Type your question here..."
 msgstr  "Savolingizni shu yerga yozing..."
 
-#: ../assistant_dialog.lua:479
+#: ../assistant_dialog.lua:477
 msgid   "Ask anything about this book..."
 msgstr  "Ushbu kitob haqida istalgan narsani so'rang..."
 
-#: ../assistant_dialog.lua:480
+#: ../assistant_dialog.lua:478
 msgid   "Ask anything..."
 msgstr  "Istalgan narsani so'rang..."
 
-#: ../assistant_dialog.lua:504
+#: ../assistant_dialog.lua:502
 msgid   "Use book text as context"
 msgstr  "Kitob matnini kontekst sifatida ishlatish"
 
-#: ../assistant_dialog.lua:557
+#: ../assistant_dialog.lua:555
 msgid   "Loading for %1 ..."
 msgstr  "%1 uchun yuklanmoqda ..."
 
-#: ../assistant_dialog.lua:570
+#: ../assistant_dialog.lua:568
 msgid   "Error: No response received"
 msgstr  "Xato: Javob olinmadi"
 
-#: ../assistant_dictdialog.lua:156
+#: ../assistant_dictdialog.lua:155
 msgid   "AI Dictionary"
 msgstr  "AI Lugʻat"
 
-#: ../assistant_dictdialog.lua:157
+#: ../assistant_dictdialog.lua:156
 msgid   "Enter a word to look up..."
 msgstr  "Qidirish uchun soʻz kiriting..."
 
-#: ../assistant_dictdialog.lua:168
+#: ../assistant_dictdialog.lua:167
 msgid   "Look Up"
 msgstr  "Qidirish"
 
-#: ../assistant_dictdialog.lua:215
+#: ../assistant_dictdialog.lua:214
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Term X-Ray uchun kitob konteksti tahlil qilinmoqda..."
 
-#: ../assistant_dictdialog.lua:391 ../assistant_prompts.lua:27 ../main.lua:808
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:808
 msgid   "Term X-Ray"
 msgstr  "Term X-Ray"
 
-#: ../assistant_dictdialog.lua:394
+#: ../assistant_dictdialog.lua:393
 msgid   "Loading Term X-Ray ..."
 msgstr  "Term X-Ray yuklanmoqda ..."
 
-#: ../assistant_dictdialog.lua:411 ../assistant_prompts.lua:65 ../main.lua:826
+#: ../assistant_dictdialog.lua:410 ../assistant_prompts.lua:74 ../main.lua:826
 msgid   "Dictionary"
 msgstr  "Lugʻat"
 
-#: ../assistant_dictdialog.lua:412
+#: ../assistant_dictdialog.lua:411
 msgid   "Loading AI Dictionary ..."
 msgstr  "AI Lugʻat yuklanmoqda ..."
 
@@ -185,7 +185,8 @@ msgstr  "X-Ray"
 msgid   "Loading X-Ray..."
 msgstr  "X-Ray yuklanmoqda..."
 
-#: ../assistant_featuredialog.lua:75
+#. @translators book_info section headers and sub-fields
+#: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
 msgid   "Book Information"
 msgstr  "Kitob maʼlumoti"
 
@@ -281,7 +282,7 @@ msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "masalan, google/gemini-3.0-flash-exp:free"
 
 #: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:120 ../assistant_viewer.lua:474
+#: ../assistant_settings.lua:120 ../assistant_viewer.lua:447
 msgid   "Save"
 msgstr  "Saqlash"
 
@@ -293,124 +294,301 @@ msgstr  "Modellar mavjud emas."
 msgid   "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr  "Ushbu so'rov adabiyotdagi so'z yoki iboralarning kontekstga mos ta'riflarini yaratish uchun tuzilgan tizimni yaratadi, bunda ajratilgan atama uning atrofidagi matn ichida tahlil qilinib, ham to'g'ridan-to'g'ri ma'noni, ham kontekstual ahamiyatni qamrab oluvchi nozik tushuntirishlar beriladi."
 
-#: ../assistant_prompts.lua:67
+#. @translators term_xray section headers
+#. @translators term_xray: "What It Is" section header
+#: ../assistant_prompts.lua:64
+msgid   "What It Is"
+msgstr  "Bu nima"
+
+#. @translators term_xray: "Role & Function" section header
+#: ../assistant_prompts.lua:66
+msgid   "Role & Function"
+msgstr  "Rol va funksiya"
+
+#. @translators term_xray: "Evolution & Connections" section header
+#: ../assistant_prompts.lua:68
+msgid   "Evolution & Connections"
+msgstr  "Evolyutsiya va aloqalar"
+
+#. @translators term_xray: "Context Limitations" section header
+#: ../assistant_prompts.lua:70
+msgid   "Context Limitations"
+msgstr  "Kontekst cheklovlari"
+
+#: ../assistant_prompts.lua:76
 msgid   "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr  "Ushbu so'rov ajratilgan matn uchun lug'at vazifasini bajaradi, so'z yoki iboraga ta'rif beradi."
 
-#: ../assistant_prompts.lua:73 ../assistant_quicknote.lua:101
+#: ../assistant_prompts.lua:82 ../assistant_quicknote.lua:101
 msgid   "Quick Note"
 msgstr  "Tezkor eslatma"
 
-#: ../assistant_prompts.lua:74
+#: ../assistant_prompts.lua:83
 msgid   "This button creates a quick note with highlighted text."
 msgstr  "Ushbu tugma ajratilgan matn bilan tezkor eslatma yaratadi."
 
-#: ../assistant_prompts.lua:79
+#: ../assistant_prompts.lua:88
 msgid   "Vocabulary"
 msgstr  "Lug'at"
 
-#: ../assistant_prompts.lua:83
+#: ../assistant_prompts.lua:92
 msgid   "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr  "Ushbu so'rov ajratilgan matnning lug'atini tahlil qiladi, murakkab so'zlarni aniqlaydi va ta'riflar, sinonimlar hamda qo'llanish misollarini beradi."
 
-#: ../assistant_prompts.lua:100
+#: ../assistant_prompts.lua:109
 msgid   "Grammar"
 msgstr  "Grammatika"
 
-#: ../assistant_prompts.lua:104
+#: ../assistant_prompts.lua:113
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "Ushbu so'rov ajratilgan matnning grammatikasini tahlil qiladi, uning tuzilishi va har qanday grammatik xatolar haqida batafsil tushuntirish beradi."
 
-#: ../assistant_prompts.lua:129
+#. @translators grammar section headers
+#: ../assistant_prompts.lua:136
+msgid   "Structure & Clauses"
+msgstr  "Tuzilma va jumlalar"
+
+#: ../assistant_prompts.lua:137
+msgid   "Parts of Speech & Tenses"
+msgstr  "So'z turkumlari va zamonlar"
+
+#: ../assistant_prompts.lua:138
+msgid   "Error Correction (If Applicable)"
+msgstr  "Xatolarni tuzatish (agar mavjud bo'lsa)"
+
+#: ../assistant_prompts.lua:142
 msgid   "Translate"
 msgstr  "Tarjima"
 
-#: ../assistant_prompts.lua:131
+#: ../assistant_prompts.lua:144
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "Ushbu so'rov ajratilgan matnni boshqa tilga tarjima qiladi."
 
-#: ../assistant_prompts.lua:143
+#: ../assistant_prompts.lua:156
 msgid   "Summarize"
 msgstr  "Xulosa"
 
-#: ../assistant_prompts.lua:146
+#: ../assistant_prompts.lua:159
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "Ushbu so'rov ajratilgan matnni umumlashtiradi, uning asosiy fikrlari va muhim tafsilotlarini qamrab oladi."
 
-#: ../assistant_prompts.lua:161
+#: ../assistant_prompts.lua:174
 msgid   "Simplify"
 msgstr  "Soddalashtirish"
 
-#: ../assistant_prompts.lua:164
+#: ../assistant_prompts.lua:177
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "Ushbu so'rov ajratilgan matnni tushunishni osonlashtirish uchun soddalashtiradi."
 
-#: ../assistant_prompts.lua:178
+#: ../assistant_prompts.lua:191 ../assistant_prompts.lua:534
 msgid   "Key Points"
 msgstr  "Asosiy fikrlar"
 
-#: ../assistant_prompts.lua:182
+#: ../assistant_prompts.lua:195
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "Ushbu so'rov ajratilgan matndan asosiy fikrlarni ajratib oladi va ularni ro'yxatga kiritadi, aniqlik va tartibni ta'minlaydi."
 
-#: ../assistant_prompts.lua:204
+#. @translators key_points section headers
+#: ../assistant_prompts.lua:216
+msgid   "Core Arguments"
+msgstr  "Asosiy argumentlar"
+
+#: ../assistant_prompts.lua:217
+msgid   "Essential Facts & Conclusions"
+msgstr  "Muhim faktlar va xulosalar"
+
+#: ../assistant_prompts.lua:220
 msgid   "ELI5"
 msgstr  "ELI5"
 
-#: ../assistant_prompts.lua:208
+#: ../assistant_prompts.lua:224
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "Ushbu so'rov ajratilgan matnni besh yoshli bolaga tushuntirgandek, murakkab tushunchalarni oson tushuniladigan atamalarga soddalashtirib tushuntiradi."
 
-#: ../assistant_prompts.lua:229
+#. @translators ELI5 section headers
+#: ../assistant_prompts.lua:244
+msgid   "Core Idea"
+msgstr  "Asosiy g'oya"
+
+#: ../assistant_prompts.lua:245
+msgid   "Fun Analogy"
+msgstr  "Qiziqarli o'xshatish"
+
+#: ../assistant_prompts.lua:248
 msgid   "Explain"
 msgstr  "Tushuntirish"
 
-#: ../assistant_prompts.lua:232
+#: ../assistant_prompts.lua:251
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Bu soʻrov ajratilgan matnni batafsil tushuntirib, aniqlik va tushunishni taʼminlaydi."
 
-#: ../assistant_prompts.lua:246
+#: ../assistant_prompts.lua:265
 msgid   "Historical Context"
 msgstr  "Tarixiy kontekst"
 
-#: ../assistant_prompts.lua:250
+#: ../assistant_prompts.lua:269
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Bu soʻrov ajratilgan matn uchun batafsil tarixiy kontekstni taqdim etadi, uning ahamiyati va kelib chiqishini tushuntiradi."
 
-#: ../assistant_prompts.lua:272 ../main.lua:789
+#. @translators historical_context section headers
+#: ../assistant_prompts.lua:290
+msgid   "Era & Background"
+msgstr  "Davr va fon"
+
+#: ../assistant_prompts.lua:291
+msgid   "Contextual Connections"
+msgstr  "Kontekstual bog‘lanishlar"
+
+#: ../assistant_prompts.lua:292
+msgid   "Cultural Significance"
+msgstr  "Madaniy ahamiyat"
+
+#: ../assistant_prompts.lua:295 ../main.lua:789
 msgid   "Wikipedia"
 msgstr  "Vikipediya"
 
-#: ../assistant_prompts.lua:276
+#: ../assistant_prompts.lua:299
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "Bu soʻrov ajratilgan matn asosida keng qamrovli Vikipediya uslubidagi maqola yaratadi, faktlarning toʻgʻriligi va betaraflikni taʼminlaydi."
 
+#. @translators xray section headers
+#: ../assistant_prompts.lua:391
+msgid   "Characters"
+msgstr  "Qahramonlar"
+
+#: ../assistant_prompts.lua:392
+msgid   "Locations"
+msgstr  "Joylar"
+
+#: ../assistant_prompts.lua:393
+msgid   "Main Themes"
+msgstr  "Asosiy mavzular"
+
+#: ../assistant_prompts.lua:394
+msgid   "Terms & Concepts"
+msgstr  "Atamalar va tushunchalar"
+
+#: ../assistant_prompts.lua:395
+msgid   "Timeline"
+msgstr  "Vaqt chizig'i"
+
+#: ../assistant_prompts.lua:396
+msgid   "Re-immersion"
+msgstr  "Qayta sho'ng'ish"
+
+#. @translators xray Re-immersion sub-fields
+#: ../assistant_prompts.lua:398
+msgid   "Where the action stopped:"
+msgstr  "Voqea to'xtagan joy:"
+
+#: ../assistant_prompts.lua:399
+msgid   "Protagonist's current objective:"
+msgstr  "Bosh qahramonning hozirgi maqsadi:"
+
+#: ../assistant_prompts.lua:400
+msgid   "Open conflict or mystery:"
+msgstr  "Ochiq mojaro yoki sir:"
+
+#: ../assistant_prompts.lua:401
+msgid   "Narrative element in focus:"
+msgstr  "Diqqat markazidagi hikoya elementi:"
+
+#: ../assistant_prompts.lua:402
+msgid   "Prevailing emotional state/tone:"
+msgstr  "Hukmron hissiy holat/ohang:"
+
+#: ../assistant_prompts.lua:403
+msgid   "Outstanding questions:"
+msgstr  "Hal qilinmagan savollar:"
+
+#: ../assistant_prompts.lua:441
+msgid   "Genre"
+msgstr  "Janr"
+
+#: ../assistant_prompts.lua:442
+msgid   "Publication Date"
+msgstr  "Nashr sanasi"
+
+#: ../assistant_prompts.lua:443
+msgid   "Publisher"
+msgstr  "Nashriyot"
+
+#: ../assistant_prompts.lua:444
+msgid   "Plot Summary"
+msgstr  "Syujet xulosasi"
+
+#: ../assistant_prompts.lua:445
+msgid   "About the Author"
+msgstr  "Muallif haqida"
+
+#: ../assistant_prompts.lua:446
+msgid   "Historical and Cultural Context"
+msgstr  "Tarixiy va Madaniy Kontekst"
+
+#: ../assistant_prompts.lua:447
+msgid   "Similar Books Recommendations"
+msgstr  "Oʻxshash kitoblar tavsiyalari"
+
+#. @translators annotations section headers
+#: ../assistant_prompts.lua:478
+msgid   "Key Takeaways"
+msgstr  "Asosiy xulosalar"
+
+#: ../assistant_prompts.lua:479
+msgid   "To-Do / Action Items"
+msgstr  "Bajariladigan ishlar / Harakatlar"
+
+#: ../assistant_prompts.lua:480
+msgid   "Contextual Notes"
+msgstr  "Kontekstual eslatmalar"
+
+#: ../assistant_prompts.lua:481
+msgid   "Contextual Notes / Reflections"
+msgstr  "Kontekstual eslatmalar / Mulohazalar"
+
+#. @translators summary_using_annotations output structure sections
+#: ../assistant_prompts.lua:532
+msgid   "TL;DR"
+msgstr  "Qisqacha xulosa"
+
+#: ../assistant_prompts.lua:533
+msgid   "Integrated Summary"
+msgstr  "Integratsiyalangan xulosa"
+
+#: ../assistant_prompts.lua:535
+msgid   "Actionable Takeaways"
+msgstr  "Amalda qo‘llaniladigan xulosalar"
+
+#: ../assistant_prompts.lua:536
+msgid   "Contradictions / Open Questions"
+msgstr  "Qarama-qarshiliklar / Ochiq savollar"
+
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:507
+#: ../assistant_prompts.lua:564
 msgid   "Conjugation"
 msgstr  "Tuslanish"
 
-#: ../assistant_prompts.lua:508
+#: ../assistant_prompts.lua:565
 msgid   "Synonyms"
 msgstr  "Sinonimlar"
 
-#: ../assistant_prompts.lua:509
+#: ../assistant_prompts.lua:566
 msgid   "Meaning"
 msgstr  "Maʼno"
 
-#: ../assistant_prompts.lua:510
+#: ../assistant_prompts.lua:567
 msgid   "Translation"
 msgstr  "Tarjima"
 
-#: ../assistant_prompts.lua:511
+#: ../assistant_prompts.lua:568
 msgid   "Book Usage"
 msgstr  "Kitobda qoʻllanishi"
 
-#: ../assistant_prompts.lua:512
+#: ../assistant_prompts.lua:569
 msgid   "Example"
 msgstr  "Misol"
 
-#: ../assistant_prompts.lua:513
+#: ../assistant_prompts.lua:570
 msgid   "Word Origin"
 msgstr  "Soʻzning kelib chiqishi"
 
@@ -436,7 +614,7 @@ msgstr  "API xatosi:\n"
         "\n"
         "Sozlamalar oynasida boshqa provayderni sinab koʻring."
 
-#: ../assistant_querier.lua:156 ../assistant_querier.lua:790
+#: ../assistant_querier.lua:156 ../assistant_querier.lua:813
 msgid   "Unknown error"
 msgstr  "Nomaʼlum xato"
 
@@ -445,7 +623,7 @@ msgid   "Settings"
 msgstr  "Sozlamalar"
 
 #: ../assistant_querier.lua:159 ../assistant_settings.lua:218
-#: ../assistant_viewer.lua:365
+#: ../assistant_viewer.lua:338
 msgid   "Close"
 msgstr  "Yopish"
 
@@ -477,7 +655,7 @@ msgstr  "AI so'ralmoqda ..."
 msgid   "Composing answer ..."
 msgstr  "Javob tuzilmoqda ..."
 
-#: ../assistant_querier.lua:452 ../assistant_querier.lua:579
+#: ../assistant_querier.lua:452 ../assistant_querier.lua:601
 msgid   "Request cancelled by user."
 msgstr  "So'rov foydalanuvchi tomonidan bekor qilindi."
 
@@ -493,15 +671,15 @@ msgstr  "AI javob bermoqda"
 msgid   "⏹ Stop"
 msgstr  "⏹ To'xtatish"
 
-#: ../assistant_querier.lua:596
+#: ../assistant_querier.lua:618
 msgid   "Failed to start subprocess for request"
 msgstr  "So'rov uchun quyi jarayonni ishga tushirish muvaffaqiyatsiz tugadi."
 
-#: ../assistant_querier.lua:820 ../assistant_querier.lua:823
+#: ../assistant_querier.lua:843 ../assistant_querier.lua:846
 msgid   "Deeply Thought"
 msgstr  "Chuqur fikr"
 
-#: ../assistant_querier.lua:1010
+#: ../assistant_querier.lua:1036
 msgid   "Stopped Reason: "
 msgstr  "To'xtatish sababi: "
 
@@ -804,59 +982,59 @@ msgid   "fetchJSON: failed to parse returned data"
 msgstr  "fetchJSON: qaytarilgan ma'lumotlarni tahlil qilish muvaffaqiyatsiz tugadi"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:325 ../assistant_viewer.lua:766
+#: ../assistant_viewer.lua:308 ../assistant_viewer.lua:697
 msgid   "Ask Another Question"
 msgstr  "Boshqa savol berish"
 
-#: ../assistant_viewer.lua:380
+#: ../assistant_viewer.lua:353
 msgid   "Copy"
 msgstr  "Nusxalash"
 
-#: ../assistant_viewer.lua:385
+#: ../assistant_viewer.lua:358
 msgid   "Text copied to the clipboard"
 msgstr  "Matn buferga nusxalandi"
 
-#: ../assistant_viewer.lua:399
+#: ../assistant_viewer.lua:372
 msgid   "Add Note"
 msgstr  "Eslatma qo'shish"
 
-#: ../assistant_viewer.lua:406
+#: ../assistant_viewer.lua:379
 msgid   "Highlight functionality not available"
 msgstr  "Ajratib ko'rsatish funksiyasi mavjud emas"
 
-#: ../assistant_viewer.lua:415
+#: ../assistant_viewer.lua:388
 msgid   "No text to add as note"
 msgstr  "Eslatma sifatida qo'shish uchun matn yo'q"
 
-#: ../assistant_viewer.lua:444
+#: ../assistant_viewer.lua:417
 msgid   "No text left to add as note"
 msgstr  "Eslatma sifatida qo'shish uchun matn qolmadi"
 
-#: ../assistant_viewer.lua:457
+#: ../assistant_viewer.lua:430
 msgid   "Note added successfully"
 msgstr  "Eslatma muvaffaqiyatli qo'shildi"
 
-#: ../assistant_viewer.lua:478
+#: ../assistant_viewer.lua:451
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Suhbat NoteBook ga saqlandi"
 
-#: ../assistant_viewer.lua:597
+#: ../assistant_viewer.lua:528
 msgid   "Book Analysis"
 msgstr  "Kitob tahlili"
 
-#: ../assistant_viewer.lua:597
+#: ../assistant_viewer.lua:528
 msgid   "General Conversation"
 msgstr  "Umumiy suhbat"
 
-#: ../assistant_viewer.lua:768
+#: ../assistant_viewer.lua:699
 msgid   "Type your question here"
 msgstr  "Savolingizni shu yerga yozing"
 
-#: ../assistant_viewer.lua:937
+#: ../assistant_viewer.lua:868
 msgid   "Word copied to clipboard."
 msgstr  "So'z buferga nusxalandi."
 
-#: ../assistant_viewer.lua:938
+#: ../assistant_viewer.lua:869
 msgid   "Selection copied to clipboard."
 msgstr  "Tanlangan qism buferga nusxalandi."
 

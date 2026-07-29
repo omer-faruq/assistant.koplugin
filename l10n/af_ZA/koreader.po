@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.12\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-27 10:47+0800\n"
+        "POT-Creation-Date: 2026-07-29 15:45+0800\n"
         "PO-Revision-Date: 2026-07-27 10:47+0800\n"
         "Last-Translator: AI (auto)\n"
         "Language-Team: Afrikaans (AI translation)\n"
@@ -16,7 +16,7 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.12\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:483 ../main.lua:350 ../main.lua:360
+#: ../_meta.lua:4 ../assistant_dialog.lua:481 ../main.lua:350 ../main.lua:360
 #: ../main.lua:562
 msgid   "AI Assistant"
 msgstr  "AI-assistent"
@@ -54,102 +54,102 @@ msgid   "(No response)"
 msgstr  "(Geen antwoord)"
 
 #: ../assistant_dialog.lua:175 ../assistant_quicknote.lua:99
-#: ../assistant_viewer.lua:593
+#: ../assistant_viewer.lua:524
 msgid   "Highlighted text:"
 msgstr  "Uitgeligte teks:"
 
-#: ../assistant_dialog.lua:339 ../assistant_dictdialog.lua:162
+#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
 #: ../assistant_settings.lua:96 ../assistant_settings.lua:620
-#: ../assistant_viewer.lua:695
+#: ../assistant_viewer.lua:626
 msgid   "Cancel"
 msgstr  "Kanselleer"
 
-#: ../assistant_dialog.lua:346 ../assistant_viewer.lua:705
+#: ../assistant_dialog.lua:344 ../assistant_viewer.lua:636
 msgid   "Ask"
 msgstr  "Vra"
 
-#: ../assistant_dialog.lua:359 ../assistant_viewer.lua:711
+#: ../assistant_dialog.lua:357 ../assistant_viewer.lua:642
 msgid   "Enter a question before proceeding."
 msgstr  "Voer 'n vraag in voordat jy voortgaan."
 
-#: ../assistant_dialog.lua:446
+#: ../assistant_dialog.lua:444
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Voeg hierdie knoppie by die Uitlig-kieslys?"
 
-#: ../assistant_dialog.lua:447
+#: ../assistant_dialog.lua:445
 msgid   "Add"
 msgstr  "Voeg by"
 
-#: ../assistant_dialog.lua:474
+#: ../assistant_dialog.lua:472
 msgid   "Ask a question about the highlighted text"
 msgstr  "Vra 'n vraag oor die uitgeligte teks"
 
-#: ../assistant_dialog.lua:475
+#: ../assistant_dialog.lua:473
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Vra 'n vraag oor hierdie boek:\n"
         "%s deur %s"
 
-#: ../assistant_dialog.lua:476
+#: ../assistant_dialog.lua:474
 msgid   "Ask a general question"
 msgstr  "Vra 'n algemene vraag"
 
-#: ../assistant_dialog.lua:478
+#: ../assistant_dialog.lua:476
 msgid   "Type your question here..."
 msgstr  "Tik jou vraag hier..."
 
-#: ../assistant_dialog.lua:479
+#: ../assistant_dialog.lua:477
 msgid   "Ask anything about this book..."
 msgstr  "Vra enigiets oor hierdie boek..."
 
-#: ../assistant_dialog.lua:480
+#: ../assistant_dialog.lua:478
 msgid   "Ask anything..."
 msgstr  "Vra enigiets..."
 
-#: ../assistant_dialog.lua:504
+#: ../assistant_dialog.lua:502
 msgid   "Use book text as context"
 msgstr  "Gebruik boekteks as konteks"
 
-#: ../assistant_dialog.lua:557
+#: ../assistant_dialog.lua:555
 msgid   "Loading for %1 ..."
 msgstr  "Laai vir %1 ..."
 
-#: ../assistant_dialog.lua:570
+#: ../assistant_dialog.lua:568
 msgid   "Error: No response received"
 msgstr  "Fout: Geen antwoord ontvang nie"
 
-#: ../assistant_dictdialog.lua:156
+#: ../assistant_dictdialog.lua:155
 msgid   "AI Dictionary"
 msgstr  "AI Woordeboek"
 
-#: ../assistant_dictdialog.lua:157
+#: ../assistant_dictdialog.lua:156
 msgid   "Enter a word to look up..."
 msgstr  "Voer 'n woord in om na te slaan..."
 
-#: ../assistant_dictdialog.lua:168
+#: ../assistant_dictdialog.lua:167
 msgid   "Look Up"
 msgstr  "Soek op"
 
-#: ../assistant_dictdialog.lua:215
+#: ../assistant_dictdialog.lua:214
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Ontleed boekkonteks vir Term X-Ray..."
 
-#: ../assistant_dictdialog.lua:391 ../assistant_prompts.lua:27 ../main.lua:808
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:808
 msgid   "Term X-Ray"
 msgstr  "Term X-Ray"
 
-#: ../assistant_dictdialog.lua:394
+#: ../assistant_dictdialog.lua:393
 msgid   "Loading Term X-Ray ..."
 msgstr  "Laai Term X-Ray ..."
 
-#: ../assistant_dictdialog.lua:411 ../assistant_prompts.lua:65 ../main.lua:826
+#: ../assistant_dictdialog.lua:410 ../assistant_prompts.lua:74 ../main.lua:826
 msgid   "Dictionary"
 msgstr  "Woordeboek"
 
-#: ../assistant_dictdialog.lua:412
+#: ../assistant_dictdialog.lua:411
 msgid   "Loading AI Dictionary ..."
 msgstr  "Laai AI Woordeboek ..."
 
@@ -185,7 +185,8 @@ msgstr  "X‑Ray"
 msgid   "Loading X-Ray..."
 msgstr  "Laai X-Ray..."
 
-#: ../assistant_featuredialog.lua:75
+#. @translators book_info section headers and sub-fields
+#: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
 msgid   "Book Information"
 msgstr  "Boekinligting"
 
@@ -281,7 +282,7 @@ msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "bv. google/gemini-3.0-flash-exp:free"
 
 #: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:120 ../assistant_viewer.lua:474
+#: ../assistant_settings.lua:120 ../assistant_viewer.lua:447
 msgid   "Save"
 msgstr  "Stoor"
 
@@ -293,124 +294,301 @@ msgstr  "Geen modelle beskikbaar nie."
 msgid   "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr  "Hierdie opdrag skep 'n gestruktureerde stelsel vir die generering van konteksbewuste definisies van woorde of frases uit literatuur deur die gemerkte term binne sy omliggende teks te ontleed om genuanseerde verduidelikings te bied wat beide letterlike betekenis en kontekstuele betekenis vasvang."
 
-#: ../assistant_prompts.lua:67
+#. @translators term_xray section headers
+#. @translators term_xray: "What It Is" section header
+#: ../assistant_prompts.lua:64
+msgid   "What It Is"
+msgstr  "Wat Dit Is"
+
+#. @translators term_xray: "Role & Function" section header
+#: ../assistant_prompts.lua:66
+msgid   "Role & Function"
+msgstr  "Rol & Funksie"
+
+#. @translators term_xray: "Evolution & Connections" section header
+#: ../assistant_prompts.lua:68
+msgid   "Evolution & Connections"
+msgstr  "Evolusie & Verbindings"
+
+#. @translators term_xray: "Context Limitations" section header
+#: ../assistant_prompts.lua:70
+msgid   "Context Limitations"
+msgstr  "Kontekse Beperkings"
+
+#: ../assistant_prompts.lua:76
 msgid   "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr  "Hierdie opdrag dien as 'n woordeboek vir die gemerkte teks, vir 'n woord of frase."
 
-#: ../assistant_prompts.lua:73 ../assistant_quicknote.lua:101
+#: ../assistant_prompts.lua:82 ../assistant_quicknote.lua:101
 msgid   "Quick Note"
 msgstr  "Vinnige Nota"
 
-#: ../assistant_prompts.lua:74
+#: ../assistant_prompts.lua:83
 msgid   "This button creates a quick note with highlighted text."
 msgstr  "Hierdie knoppie skep 'n vinnige nota met gemerkte teks."
 
-#: ../assistant_prompts.lua:79
+#: ../assistant_prompts.lua:88
 msgid   "Vocabulary"
 msgstr  "Woordeskat"
 
-#: ../assistant_prompts.lua:83
+#: ../assistant_prompts.lua:92
 msgid   "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr  "Hierdie opdrag ontleed die woordeskat van die gemerkte teks, identifiseer komplekse woorde en verskaf definisies, sinonieme en gebruiksvoorbeelde."
 
-#: ../assistant_prompts.lua:100
+#: ../assistant_prompts.lua:109
 msgid   "Grammar"
 msgstr  "Grammatika"
 
-#: ../assistant_prompts.lua:104
+#: ../assistant_prompts.lua:113
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "Hierdie opdrag ontleed die grammatika van die gemerkte teks, en verskaf 'n gedetailleerde verduideliking van sy struktuur en enige grammatikale foute."
 
-#: ../assistant_prompts.lua:129
+#. @translators grammar section headers
+#: ../assistant_prompts.lua:136
+msgid   "Structure & Clauses"
+msgstr  "Struktuur & Klousules"
+
+#: ../assistant_prompts.lua:137
+msgid   "Parts of Speech & Tenses"
+msgstr  "Woordsoorte & Tye"
+
+#: ../assistant_prompts.lua:138
+msgid   "Error Correction (If Applicable)"
+msgstr  "Foutkorreksie (Indien van toepassing)"
+
+#: ../assistant_prompts.lua:142
 msgid   "Translate"
 msgstr  "Vertaal"
 
-#: ../assistant_prompts.lua:131
+#: ../assistant_prompts.lua:144
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "Hierdie opdrag vertaal die gemerkte teks na 'n ander taal."
 
-#: ../assistant_prompts.lua:143
+#: ../assistant_prompts.lua:156
 msgid   "Summarize"
 msgstr  "Opsom"
 
-#: ../assistant_prompts.lua:146
+#: ../assistant_prompts.lua:159
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "Hierdie opdrag som die gemerkte teks op, en vang die hoofpunte en noodsaaklike besonderhede vas."
 
-#: ../assistant_prompts.lua:161
+#: ../assistant_prompts.lua:174
 msgid   "Simplify"
 msgstr  "Vereenvoudig"
 
-#: ../assistant_prompts.lua:164
+#: ../assistant_prompts.lua:177
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "Hierdie opdrag vereenvoudig die gemerkte teks om dit makliker te maak om te verstaan."
 
-#: ../assistant_prompts.lua:178
+#: ../assistant_prompts.lua:191 ../assistant_prompts.lua:534
 msgid   "Key Points"
 msgstr  "Sleutelpunte"
 
-#: ../assistant_prompts.lua:182
+#: ../assistant_prompts.lua:195
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "Hierdie opdrag onttrek en lys die sleutelpunte uit die gemerkte teks, wat duidelikheid en organisasie verseker."
 
-#: ../assistant_prompts.lua:204
+#. @translators key_points section headers
+#: ../assistant_prompts.lua:216
+msgid   "Core Arguments"
+msgstr  "Kernargumente"
+
+#: ../assistant_prompts.lua:217
+msgid   "Essential Facts & Conclusions"
+msgstr  "Wesenlike Feite & Gevolgtrekkings"
+
+#: ../assistant_prompts.lua:220
 msgid   "ELI5"
 msgstr  "ELI5"
 
-#: ../assistant_prompts.lua:208
+#: ../assistant_prompts.lua:224
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "Hierdie opdrag verduidelik die gemerkte teks asof aan 'n vyfjarige, en vereenvoudig komplekse konsepte in maklik verstaanbare terme."
 
-#: ../assistant_prompts.lua:229
+#. @translators ELI5 section headers
+#: ../assistant_prompts.lua:244
+msgid   "Core Idea"
+msgstr  "Kernidee"
+
+#: ../assistant_prompts.lua:245
+msgid   "Fun Analogy"
+msgstr  "Pretanalogie"
+
+#: ../assistant_prompts.lua:248
 msgid   "Explain"
 msgstr  "Verduidelik"
 
-#: ../assistant_prompts.lua:232
+#: ../assistant_prompts.lua:251
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Hierdie opdrag verduidelik die uitgeligte teks in detail, wat duidelikheid en begrip verseker."
 
-#: ../assistant_prompts.lua:246
+#: ../assistant_prompts.lua:265
 msgid   "Historical Context"
 msgstr  "Historiese Konteks"
 
-#: ../assistant_prompts.lua:250
+#: ../assistant_prompts.lua:269
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Hierdie opdrag verskaf 'n gedetailleerde historiese konteks vir die uitgeligte teks, en verduidelik die betekenis en agtergrond daarvan."
 
-#: ../assistant_prompts.lua:272 ../main.lua:789
+#. @translators historical_context section headers
+#: ../assistant_prompts.lua:290
+msgid   "Era & Background"
+msgstr  "Tydperk & Agtergrond"
+
+#: ../assistant_prompts.lua:291
+msgid   "Contextual Connections"
+msgstr  "Kontekstuele Verbindings"
+
+#: ../assistant_prompts.lua:292
+msgid   "Cultural Significance"
+msgstr  "Kulturele Betekenis"
+
+#: ../assistant_prompts.lua:295 ../main.lua:789
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
-#: ../assistant_prompts.lua:276
+#: ../assistant_prompts.lua:299
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "Hierdie opdrag genereer 'n omvattende Wikipedia-styl artikel gebaseer op die uitgeligte teks, wat feitelike akkuraatheid en neutraliteit verseker."
 
+#. @translators xray section headers
+#: ../assistant_prompts.lua:391
+msgid   "Characters"
+msgstr  "Karakters"
+
+#: ../assistant_prompts.lua:392
+msgid   "Locations"
+msgstr  "Liggings"
+
+#: ../assistant_prompts.lua:393
+msgid   "Main Themes"
+msgstr  "Hooftemas"
+
+#: ../assistant_prompts.lua:394
+msgid   "Terms & Concepts"
+msgstr  "Terme & Konsepte"
+
+#: ../assistant_prompts.lua:395
+msgid   "Timeline"
+msgstr  "Tydlyn"
+
+#: ../assistant_prompts.lua:396
+msgid   "Re-immersion"
+msgstr  "Herindompeling"
+
+#. @translators xray Re-immersion sub-fields
+#: ../assistant_prompts.lua:398
+msgid   "Where the action stopped:"
+msgstr  "Waar die aksie opgehou het:"
+
+#: ../assistant_prompts.lua:399
+msgid   "Protagonist's current objective:"
+msgstr  "Protagonis se huidige doelwit:"
+
+#: ../assistant_prompts.lua:400
+msgid   "Open conflict or mystery:"
+msgstr  "Oop konflik of misterie:"
+
+#: ../assistant_prompts.lua:401
+msgid   "Narrative element in focus:"
+msgstr  "Narratiewe element in fokus:"
+
+#: ../assistant_prompts.lua:402
+msgid   "Prevailing emotional state/tone:"
+msgstr  "Heersende emosionele toestand/tonaal:"
+
+#: ../assistant_prompts.lua:403
+msgid   "Outstanding questions:"
+msgstr  "Uitstaande vrae:"
+
+#: ../assistant_prompts.lua:441
+msgid   "Genre"
+msgstr  "Genre"
+
+#: ../assistant_prompts.lua:442
+msgid   "Publication Date"
+msgstr  "Publikasiedatum"
+
+#: ../assistant_prompts.lua:443
+msgid   "Publisher"
+msgstr  "Uitgewer"
+
+#: ../assistant_prompts.lua:444
+msgid   "Plot Summary"
+msgstr  "Plotopsomming"
+
+#: ../assistant_prompts.lua:445
+msgid   "About the Author"
+msgstr  "Oor die skrywer"
+
+#: ../assistant_prompts.lua:446
+msgid   "Historical and Cultural Context"
+msgstr  "Historiese en Kulturele Konteks"
+
+#: ../assistant_prompts.lua:447
+msgid   "Similar Books Recommendations"
+msgstr  "Aanbevelings vir soortgelyke boeke"
+
+#. @translators annotations section headers
+#: ../assistant_prompts.lua:478
+msgid   "Key Takeaways"
+msgstr  "Sleutelafleidings"
+
+#: ../assistant_prompts.lua:479
+msgid   "To-Do / Action Items"
+msgstr  "Doenlys / Aksie-items"
+
+#: ../assistant_prompts.lua:480
+msgid   "Contextual Notes"
+msgstr  "Kontekstuele Notas"
+
+#: ../assistant_prompts.lua:481
+msgid   "Contextual Notes / Reflections"
+msgstr  "Kontekstuele Notas / Refleksies"
+
+#. @translators summary_using_annotations output structure sections
+#: ../assistant_prompts.lua:532
+msgid   "TL;DR"
+msgstr  "TL;DR"
+
+#: ../assistant_prompts.lua:533
+msgid   "Integrated Summary"
+msgstr  "Geïntegreerde Opsomming"
+
+#: ../assistant_prompts.lua:535
+msgid   "Actionable Takeaways"
+msgstr  "Uitvoerbare Afleidings"
+
+#: ../assistant_prompts.lua:536
+msgid   "Contradictions / Open Questions"
+msgstr  "Teenstrydighede / Oop Vrae"
+
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:507
+#: ../assistant_prompts.lua:564
 msgid   "Conjugation"
 msgstr  "Vervoeging"
 
-#: ../assistant_prompts.lua:508
+#: ../assistant_prompts.lua:565
 msgid   "Synonyms"
 msgstr  "Sinonieme"
 
-#: ../assistant_prompts.lua:509
+#: ../assistant_prompts.lua:566
 msgid   "Meaning"
 msgstr  "Betekenis"
 
-#: ../assistant_prompts.lua:510
+#: ../assistant_prompts.lua:567
 msgid   "Translation"
 msgstr  "Vertaling"
 
-#: ../assistant_prompts.lua:511
+#: ../assistant_prompts.lua:568
 msgid   "Book Usage"
 msgstr  "Boekgebruik"
 
-#: ../assistant_prompts.lua:512
+#: ../assistant_prompts.lua:569
 msgid   "Example"
 msgstr  "Voorbeeld"
 
-#: ../assistant_prompts.lua:513
+#: ../assistant_prompts.lua:570
 msgid   "Word Origin"
 msgstr  "Woordherkoms"
 
@@ -436,7 +614,7 @@ msgstr  "API-fout:\n"
         "\n"
         "Probeer 'n ander verskaffer in die instellingsdialoog."
 
-#: ../assistant_querier.lua:156 ../assistant_querier.lua:790
+#: ../assistant_querier.lua:156 ../assistant_querier.lua:813
 msgid   "Unknown error"
 msgstr  "Onbekende fout"
 
@@ -445,7 +623,7 @@ msgid   "Settings"
 msgstr  "Instellings"
 
 #: ../assistant_querier.lua:159 ../assistant_settings.lua:218
-#: ../assistant_viewer.lua:365
+#: ../assistant_viewer.lua:338
 msgid   "Close"
 msgstr  "Sluit"
 
@@ -477,7 +655,7 @@ msgstr  "Navraag aan KI ..."
 msgid   "Composing answer ..."
 msgstr  "Stel antwoord saam ..."
 
-#: ../assistant_querier.lua:452 ../assistant_querier.lua:579
+#: ../assistant_querier.lua:452 ../assistant_querier.lua:601
 msgid   "Request cancelled by user."
 msgstr  "Versoek gekanselleer deur gebruiker."
 
@@ -493,15 +671,15 @@ msgstr  "KI is besig om te antwoord"
 msgid   "⏹ Stop"
 msgstr  "⏹ Stop"
 
-#: ../assistant_querier.lua:596
+#: ../assistant_querier.lua:618
 msgid   "Failed to start subprocess for request"
 msgstr  "Kon nie subproses vir versoek begin nie"
 
-#: ../assistant_querier.lua:820 ../assistant_querier.lua:823
+#: ../assistant_querier.lua:843 ../assistant_querier.lua:846
 msgid   "Deeply Thought"
 msgstr  "Diep Gedink"
 
-#: ../assistant_querier.lua:1010
+#: ../assistant_querier.lua:1036
 msgid   "Stopped Reason: "
 msgstr  "Stop rede: "
 
@@ -804,59 +982,59 @@ msgid   "fetchJSON: failed to parse returned data"
 msgstr  "fetchJSON: kon nie teruggekeerde data ontleed nie"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:325 ../assistant_viewer.lua:766
+#: ../assistant_viewer.lua:308 ../assistant_viewer.lua:697
 msgid   "Ask Another Question"
 msgstr  "Vra Nog 'n Vraag"
 
-#: ../assistant_viewer.lua:380
+#: ../assistant_viewer.lua:353
 msgid   "Copy"
 msgstr  "Kopieer"
 
-#: ../assistant_viewer.lua:385
+#: ../assistant_viewer.lua:358
 msgid   "Text copied to the clipboard"
 msgstr  "Teks na die knipbord gekopieer"
 
-#: ../assistant_viewer.lua:399
+#: ../assistant_viewer.lua:372
 msgid   "Add Note"
 msgstr  "Voeg Nota by"
 
-#: ../assistant_viewer.lua:406
+#: ../assistant_viewer.lua:379
 msgid   "Highlight functionality not available"
 msgstr  "Hooglig-funksionaliteit nie beskikbaar nie"
 
-#: ../assistant_viewer.lua:415
+#: ../assistant_viewer.lua:388
 msgid   "No text to add as note"
 msgstr  "Geen teks om as nota by te voeg nie"
 
-#: ../assistant_viewer.lua:444
+#: ../assistant_viewer.lua:417
 msgid   "No text left to add as note"
 msgstr  "Geen teks oor om as nota by te voeg nie"
 
-#: ../assistant_viewer.lua:457
+#: ../assistant_viewer.lua:430
 msgid   "Note added successfully"
 msgstr  "Nota suksesvol bygevoeg"
 
-#: ../assistant_viewer.lua:478
+#: ../assistant_viewer.lua:451
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Gesprek is na NoteBook gestoor"
 
-#: ../assistant_viewer.lua:597
+#: ../assistant_viewer.lua:528
 msgid   "Book Analysis"
 msgstr  "Boekanalise"
 
-#: ../assistant_viewer.lua:597
+#: ../assistant_viewer.lua:528
 msgid   "General Conversation"
 msgstr  "Algemene Gesprek"
 
-#: ../assistant_viewer.lua:768
+#: ../assistant_viewer.lua:699
 msgid   "Type your question here"
 msgstr  "Tik jou vraag hier"
 
-#: ../assistant_viewer.lua:937
+#: ../assistant_viewer.lua:868
 msgid   "Word copied to clipboard."
 msgstr  "Woord na knipbord gekopieer."
 
-#: ../assistant_viewer.lua:938
+#: ../assistant_viewer.lua:869
 msgid   "Selection copied to clipboard."
 msgstr  "Seleksie na knipbord gekopieer."
 

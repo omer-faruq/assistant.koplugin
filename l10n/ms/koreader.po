@@ -6,7 +6,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.12\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-27 10:47+0800\n"
+        "POT-Creation-Date: 2026-07-29 15:45+0800\n"
         "PO-Revision-Date: 2026-07-27 10:47+0800\n"
         "Last-Translator: AI (auto)\n"
         "Language-Team: Bahasa Melayu (AI translation)\n"
@@ -16,7 +16,7 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.12\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:483 ../main.lua:350 ../main.lua:360
+#: ../_meta.lua:4 ../assistant_dialog.lua:481 ../main.lua:350 ../main.lua:360
 #: ../main.lua:562
 msgid   "AI Assistant"
 msgstr  "Pembantu AI"
@@ -54,102 +54,102 @@ msgid   "(No response)"
 msgstr  "(Tiada respons)"
 
 #: ../assistant_dialog.lua:175 ../assistant_quicknote.lua:99
-#: ../assistant_viewer.lua:593
+#: ../assistant_viewer.lua:524
 msgid   "Highlighted text:"
 msgstr  "Teks yang diserlahkan:"
 
-#: ../assistant_dialog.lua:339 ../assistant_dictdialog.lua:162
+#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
 #: ../assistant_settings.lua:96 ../assistant_settings.lua:620
-#: ../assistant_viewer.lua:695
+#: ../assistant_viewer.lua:626
 msgid   "Cancel"
 msgstr  "Batal"
 
-#: ../assistant_dialog.lua:346 ../assistant_viewer.lua:705
+#: ../assistant_dialog.lua:344 ../assistant_viewer.lua:636
 msgid   "Ask"
 msgstr  "Tanya"
 
-#: ../assistant_dialog.lua:359 ../assistant_viewer.lua:711
+#: ../assistant_dialog.lua:357 ../assistant_viewer.lua:642
 msgid   "Enter a question before proceeding."
 msgstr  "Masukkan soalan sebelum meneruskan."
 
-#: ../assistant_dialog.lua:446
+#: ../assistant_dialog.lua:444
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "Tambah butang ini ke Menu Serlahan?"
 
-#: ../assistant_dialog.lua:447
+#: ../assistant_dialog.lua:445
 msgid   "Add"
 msgstr  "Tambah"
 
-#: ../assistant_dialog.lua:474
+#: ../assistant_dialog.lua:472
 msgid   "Ask a question about the highlighted text"
 msgstr  "Tanya soalan tentang teks yang diserlahkan"
 
-#: ../assistant_dialog.lua:475
+#: ../assistant_dialog.lua:473
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "Tanya soalan tentang buku ini:\n"
         "%s oleh %s"
 
-#: ../assistant_dialog.lua:476
+#: ../assistant_dialog.lua:474
 msgid   "Ask a general question"
 msgstr  "Tanya soalan umum"
 
-#: ../assistant_dialog.lua:478
+#: ../assistant_dialog.lua:476
 msgid   "Type your question here..."
 msgstr  "Taip soalan anda di sini..."
 
-#: ../assistant_dialog.lua:479
+#: ../assistant_dialog.lua:477
 msgid   "Ask anything about this book..."
 msgstr  "Tanya apa-apa tentang buku ini..."
 
-#: ../assistant_dialog.lua:480
+#: ../assistant_dialog.lua:478
 msgid   "Ask anything..."
 msgstr  "Tanya apa-apa..."
 
-#: ../assistant_dialog.lua:504
+#: ../assistant_dialog.lua:502
 msgid   "Use book text as context"
 msgstr  "Gunakan teks buku sebagai konteks"
 
-#: ../assistant_dialog.lua:557
+#: ../assistant_dialog.lua:555
 msgid   "Loading for %1 ..."
 msgstr  "Memuatkan untuk %1 ..."
 
-#: ../assistant_dialog.lua:570
+#: ../assistant_dialog.lua:568
 msgid   "Error: No response received"
 msgstr  "Ralat: Tiada respons diterima"
 
-#: ../assistant_dictdialog.lua:156
+#: ../assistant_dictdialog.lua:155
 msgid   "AI Dictionary"
 msgstr  "Kamus AI"
 
-#: ../assistant_dictdialog.lua:157
+#: ../assistant_dictdialog.lua:156
 msgid   "Enter a word to look up..."
 msgstr  "Masukkan perkataan untuk dicari..."
 
-#: ../assistant_dictdialog.lua:168
+#: ../assistant_dictdialog.lua:167
 msgid   "Look Up"
 msgstr  "Cari"
 
-#: ../assistant_dictdialog.lua:215
+#: ../assistant_dictdialog.lua:214
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "Menganalisis konteks buku untuk Term X-Ray..."
 
-#: ../assistant_dictdialog.lua:391 ../assistant_prompts.lua:27 ../main.lua:808
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:808
 msgid   "Term X-Ray"
 msgstr  "Term X-Ray"
 
-#: ../assistant_dictdialog.lua:394
+#: ../assistant_dictdialog.lua:393
 msgid   "Loading Term X-Ray ..."
 msgstr  "Memuatkan Term X-Ray ..."
 
-#: ../assistant_dictdialog.lua:411 ../assistant_prompts.lua:65 ../main.lua:826
+#: ../assistant_dictdialog.lua:410 ../assistant_prompts.lua:74 ../main.lua:826
 msgid   "Dictionary"
 msgstr  "Kamus"
 
-#: ../assistant_dictdialog.lua:412
+#: ../assistant_dictdialog.lua:411
 msgid   "Loading AI Dictionary ..."
 msgstr  "Memuatkan Kamus AI ..."
 
@@ -185,7 +185,8 @@ msgstr  "X‑Ray"
 msgid   "Loading X-Ray..."
 msgstr  "Memuatkan X-Ray..."
 
-#: ../assistant_featuredialog.lua:75
+#. @translators book_info section headers and sub-fields
+#: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
 msgid   "Book Information"
 msgstr  "Maklumat Buku"
 
@@ -281,7 +282,7 @@ msgid   "e.g. google/gemini-3.0-flash-exp:free"
 msgstr  "cth. google/gemini-3.0-flash-exp:free"
 
 #: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:120 ../assistant_viewer.lua:474
+#: ../assistant_settings.lua:120 ../assistant_viewer.lua:447
 msgid   "Save"
 msgstr  "Simpan"
 
@@ -293,124 +294,301 @@ msgstr  "Tiada model tersedia."
 msgid   "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr  "Arahan ini mencipta sistem berstruktur untuk menjana definisi perkataan atau frasa daripada kesusasteraan yang peka konteks dengan menganalisis istilah yang diserlahkan dalam teks sekelilingnya untuk memberikan penjelasan bernuansa yang menangkap kedua-dua makna literal dan kepentingan kontekstual."
 
-#: ../assistant_prompts.lua:67
+#. @translators term_xray section headers
+#. @translators term_xray: "What It Is" section header
+#: ../assistant_prompts.lua:64
+msgid   "What It Is"
+msgstr  "Apa Itu"
+
+#. @translators term_xray: "Role & Function" section header
+#: ../assistant_prompts.lua:66
+msgid   "Role & Function"
+msgstr  "Peranan & Fungsi"
+
+#. @translators term_xray: "Evolution & Connections" section header
+#: ../assistant_prompts.lua:68
+msgid   "Evolution & Connections"
+msgstr  "Evolusi & Hubungan"
+
+#. @translators term_xray: "Context Limitations" section header
+#: ../assistant_prompts.lua:70
+msgid   "Context Limitations"
+msgstr  "Batasan Konteks"
+
+#: ../assistant_prompts.lua:76
 msgid   "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr  "Arahan ini bertindak sebagai kamus untuk teks yang diserlahkan, kepada perkataan atau frasa."
 
-#: ../assistant_prompts.lua:73 ../assistant_quicknote.lua:101
+#: ../assistant_prompts.lua:82 ../assistant_quicknote.lua:101
 msgid   "Quick Note"
 msgstr  "Nota Pantas"
 
-#: ../assistant_prompts.lua:74
+#: ../assistant_prompts.lua:83
 msgid   "This button creates a quick note with highlighted text."
 msgstr  "Butang ini mencipta nota pantas dengan teks yang diserlahkan."
 
-#: ../assistant_prompts.lua:79
+#: ../assistant_prompts.lua:88
 msgid   "Vocabulary"
 msgstr  "Kosa Kata"
 
-#: ../assistant_prompts.lua:83
+#: ../assistant_prompts.lua:92
 msgid   "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr  "Arahan ini menganalisis kosa kata teks yang diserlahkan, mengenal pasti perkataan kompleks dan memberikan definisi, sinonim, dan contoh penggunaan."
 
-#: ../assistant_prompts.lua:100
+#: ../assistant_prompts.lua:109
 msgid   "Grammar"
 msgstr  "Tatabahasa"
 
-#: ../assistant_prompts.lua:104
+#: ../assistant_prompts.lua:113
 msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr  "Arahan ini menganalisis tatabahasa teks yang diserlahkan, memberikan penjelasan terperinci tentang strukturnya dan sebarang kesalahan tatabahasa."
 
-#: ../assistant_prompts.lua:129
+#. @translators grammar section headers
+#: ../assistant_prompts.lua:136
+msgid   "Structure & Clauses"
+msgstr  "Struktur & Klausa"
+
+#: ../assistant_prompts.lua:137
+msgid   "Parts of Speech & Tenses"
+msgstr  "Bahagian Pertuturan & Kala"
+
+#: ../assistant_prompts.lua:138
+msgid   "Error Correction (If Applicable)"
+msgstr  "Pembetulan Ralat (Jika Berkenaan)"
+
+#: ../assistant_prompts.lua:142
 msgid   "Translate"
 msgstr  "Terjemah"
 
-#: ../assistant_prompts.lua:131
+#: ../assistant_prompts.lua:144
 msgid   "This prompt translates the highlighted text to another language."
 msgstr  "Arahan ini menterjemah teks yang diserlahkan ke bahasa lain."
 
-#: ../assistant_prompts.lua:143
+#: ../assistant_prompts.lua:156
 msgid   "Summarize"
 msgstr  "Ringkaskan"
 
-#: ../assistant_prompts.lua:146
+#: ../assistant_prompts.lua:159
 msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr  "Arahan ini meringkaskan teks yang diserlahkan, menangkap perkara utama dan butiran pentingnya."
 
-#: ../assistant_prompts.lua:161
+#: ../assistant_prompts.lua:174
 msgid   "Simplify"
 msgstr  "Permudahkan"
 
-#: ../assistant_prompts.lua:164
+#: ../assistant_prompts.lua:177
 msgid   "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr  "Arahan ini memudahkan teks yang diserlahkan untuk menjadikannya lebih mudah difahami."
 
-#: ../assistant_prompts.lua:178
+#: ../assistant_prompts.lua:191 ../assistant_prompts.lua:534
 msgid   "Key Points"
 msgstr  "Perkara Utama"
 
-#: ../assistant_prompts.lua:182
+#: ../assistant_prompts.lua:195
 msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr  "Arahan ini mengekstrak dan menyenaraikan perkara utama daripada teks yang diserlahkan, memastikan kejelasan dan organisasi."
 
-#: ../assistant_prompts.lua:204
+#. @translators key_points section headers
+#: ../assistant_prompts.lua:216
+msgid   "Core Arguments"
+msgstr  "Hujah Utama"
+
+#: ../assistant_prompts.lua:217
+msgid   "Essential Facts & Conclusions"
+msgstr  "Fakta Penting & Kesimpulan"
+
+#: ../assistant_prompts.lua:220
 msgid   "ELI5"
 msgstr  "ELI5"
 
-#: ../assistant_prompts.lua:208
+#: ../assistant_prompts.lua:224
 msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr  "Arahan ini menerangkan teks yang diserlahkan seolah-olah kepada kanak-kanak berumur lima tahun, memudahkan konsep kompleks menjadi istilah yang mudah difahami."
 
-#: ../assistant_prompts.lua:229
+#. @translators ELI5 section headers
+#: ../assistant_prompts.lua:244
+msgid   "Core Idea"
+msgstr  "Idea Utama"
+
+#: ../assistant_prompts.lua:245
+msgid   "Fun Analogy"
+msgstr  "Analogi Menarik"
+
+#: ../assistant_prompts.lua:248
 msgid   "Explain"
 msgstr  "Terangkan"
 
-#: ../assistant_prompts.lua:232
+#: ../assistant_prompts.lua:251
 msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr  "Prompt ini menerangkan teks yang diserlahkan secara terperinci, memastikan kejelasan dan pemahaman."
 
-#: ../assistant_prompts.lua:246
+#: ../assistant_prompts.lua:265
 msgid   "Historical Context"
 msgstr  "Konteks Sejarah"
 
-#: ../assistant_prompts.lua:250
+#: ../assistant_prompts.lua:269
 msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr  "Prompt ini menyediakan konteks sejarah yang terperinci untuk teks yang diserlahkan, menerangkan kepentingan dan latar belakangnya."
 
-#: ../assistant_prompts.lua:272 ../main.lua:789
+#. @translators historical_context section headers
+#: ../assistant_prompts.lua:290
+msgid   "Era & Background"
+msgstr  "Era & Latar Belakang"
+
+#: ../assistant_prompts.lua:291
+msgid   "Contextual Connections"
+msgstr  "Sambungan Kontekstual"
+
+#: ../assistant_prompts.lua:292
+msgid   "Cultural Significance"
+msgstr  "Kepentingan Budaya"
+
+#: ../assistant_prompts.lua:295 ../main.lua:789
 msgid   "Wikipedia"
 msgstr  "Wikipedia"
 
-#: ../assistant_prompts.lua:276
+#: ../assistant_prompts.lua:299
 msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr  "Prompt ini menghasilkan artikel gaya Wikipedia yang komprehensif berdasarkan teks yang diserlahkan, memastikan ketepatan fakta dan neutraliti."
 
+#. @translators xray section headers
+#: ../assistant_prompts.lua:391
+msgid   "Characters"
+msgstr  "Watak"
+
+#: ../assistant_prompts.lua:392
+msgid   "Locations"
+msgstr  "Lokasi"
+
+#: ../assistant_prompts.lua:393
+msgid   "Main Themes"
+msgstr  "Tema Utama"
+
+#: ../assistant_prompts.lua:394
+msgid   "Terms & Concepts"
+msgstr  "Istilah & Konsep"
+
+#: ../assistant_prompts.lua:395
+msgid   "Timeline"
+msgstr  "Garis Masa"
+
+#: ../assistant_prompts.lua:396
+msgid   "Re-immersion"
+msgstr  "Imersi Semula"
+
+#. @translators xray Re-immersion sub-fields
+#: ../assistant_prompts.lua:398
+msgid   "Where the action stopped:"
+msgstr  "Di mana aksi berhenti:"
+
+#: ../assistant_prompts.lua:399
+msgid   "Protagonist's current objective:"
+msgstr  "Objektif semasa protagonis:"
+
+#: ../assistant_prompts.lua:400
+msgid   "Open conflict or mystery:"
+msgstr  "Konflik terbuka atau misteri:"
+
+#: ../assistant_prompts.lua:401
+msgid   "Narrative element in focus:"
+msgstr  "Elemen naratif yang menjadi fokus:"
+
+#: ../assistant_prompts.lua:402
+msgid   "Prevailing emotional state/tone:"
+msgstr  "Keadaan emosi/nada yang lazim:"
+
+#: ../assistant_prompts.lua:403
+msgid   "Outstanding questions:"
+msgstr  "Soalan yang belum terjawab:"
+
+#: ../assistant_prompts.lua:441
+msgid   "Genre"
+msgstr  "Genre"
+
+#: ../assistant_prompts.lua:442
+msgid   "Publication Date"
+msgstr  "Tarikh Penerbitan"
+
+#: ../assistant_prompts.lua:443
+msgid   "Publisher"
+msgstr  "Penerbit"
+
+#: ../assistant_prompts.lua:444
+msgid   "Plot Summary"
+msgstr  "Ringkasan Plot"
+
+#: ../assistant_prompts.lua:445
+msgid   "About the Author"
+msgstr  "Mengenai Penulis"
+
+#: ../assistant_prompts.lua:446
+msgid   "Historical and Cultural Context"
+msgstr  "Konteks Sejarah dan Budaya"
+
+#: ../assistant_prompts.lua:447
+msgid   "Similar Books Recommendations"
+msgstr  "Cadangan Buku Serupa"
+
+#. @translators annotations section headers
+#: ../assistant_prompts.lua:478
+msgid   "Key Takeaways"
+msgstr  "Pengambilan Utama"
+
+#: ../assistant_prompts.lua:479
+msgid   "To-Do / Action Items"
+msgstr  "Tugasan / Item Tindakan"
+
+#: ../assistant_prompts.lua:480
+msgid   "Contextual Notes"
+msgstr  "Nota Kontekstual"
+
+#: ../assistant_prompts.lua:481
+msgid   "Contextual Notes / Reflections"
+msgstr  "Nota Kontekstual / Refleksi"
+
+#. @translators summary_using_annotations output structure sections
+#: ../assistant_prompts.lua:532
+msgid   "TL;DR"
+msgstr  "TL;DR"
+
+#: ../assistant_prompts.lua:533
+msgid   "Integrated Summary"
+msgstr  "Ringkasan Bersepadu"
+
+#: ../assistant_prompts.lua:535
+msgid   "Actionable Takeaways"
+msgstr  "Pengambilan Boleh Tindakan"
+
+#: ../assistant_prompts.lua:536
+msgid   "Contradictions / Open Questions"
+msgstr  "Percanggahan / Soalan Terbuka"
+
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:507
+#: ../assistant_prompts.lua:564
 msgid   "Conjugation"
 msgstr  "Konjugasi"
 
-#: ../assistant_prompts.lua:508
+#: ../assistant_prompts.lua:565
 msgid   "Synonyms"
 msgstr  "Sinonim"
 
-#: ../assistant_prompts.lua:509
+#: ../assistant_prompts.lua:566
 msgid   "Meaning"
 msgstr  "Maksud"
 
-#: ../assistant_prompts.lua:510
+#: ../assistant_prompts.lua:567
 msgid   "Translation"
 msgstr  "Terjemahan"
 
-#: ../assistant_prompts.lua:511
+#: ../assistant_prompts.lua:568
 msgid   "Book Usage"
 msgstr  "Penggunaan Buku"
 
-#: ../assistant_prompts.lua:512
+#: ../assistant_prompts.lua:569
 msgid   "Example"
 msgstr  "Contoh"
 
-#: ../assistant_prompts.lua:513
+#: ../assistant_prompts.lua:570
 msgid   "Word Origin"
 msgstr  "Asal Kata"
 
@@ -436,7 +614,7 @@ msgstr  "Ralat API:\n"
         "\n"
         "Cuba pembekal lain dalam dialog tetapan."
 
-#: ../assistant_querier.lua:156 ../assistant_querier.lua:790
+#: ../assistant_querier.lua:156 ../assistant_querier.lua:813
 msgid   "Unknown error"
 msgstr  "Ralat tidak diketahui"
 
@@ -445,7 +623,7 @@ msgid   "Settings"
 msgstr  "Tetapan"
 
 #: ../assistant_querier.lua:159 ../assistant_settings.lua:218
-#: ../assistant_viewer.lua:365
+#: ../assistant_viewer.lua:338
 msgid   "Close"
 msgstr  "Tutup"
 
@@ -477,7 +655,7 @@ msgstr  "Menyoal AI ..."
 msgid   "Composing answer ..."
 msgstr  "Menyusun jawapan ..."
 
-#: ../assistant_querier.lua:452 ../assistant_querier.lua:579
+#: ../assistant_querier.lua:452 ../assistant_querier.lua:601
 msgid   "Request cancelled by user."
 msgstr  "Permintaan dibatalkan oleh pengguna."
 
@@ -493,15 +671,15 @@ msgstr  "AI sedang merespon."
 msgid   "⏹ Stop"
 msgstr  "⏹ Berhenti"
 
-#: ../assistant_querier.lua:596
+#: ../assistant_querier.lua:618
 msgid   "Failed to start subprocess for request"
 msgstr  "Gagal memulakan subproses untuk permintaan"
 
-#: ../assistant_querier.lua:820 ../assistant_querier.lua:823
+#: ../assistant_querier.lua:843 ../assistant_querier.lua:846
 msgid   "Deeply Thought"
 msgstr  "Pemikiran Mendalam"
 
-#: ../assistant_querier.lua:1010
+#: ../assistant_querier.lua:1036
 msgid   "Stopped Reason: "
 msgstr  "Sebab Berhenti: "
 
@@ -804,59 +982,59 @@ msgid   "fetchJSON: failed to parse returned data"
 msgstr  "fetchJSON: gagal menghuraikan data yang dikembalikan"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:325 ../assistant_viewer.lua:766
+#: ../assistant_viewer.lua:308 ../assistant_viewer.lua:697
 msgid   "Ask Another Question"
 msgstr  "Tanya Soalan Lain"
 
-#: ../assistant_viewer.lua:380
+#: ../assistant_viewer.lua:353
 msgid   "Copy"
 msgstr  "Salin"
 
-#: ../assistant_viewer.lua:385
+#: ../assistant_viewer.lua:358
 msgid   "Text copied to the clipboard"
 msgstr  "Teks disalin ke papan klip"
 
-#: ../assistant_viewer.lua:399
+#: ../assistant_viewer.lua:372
 msgid   "Add Note"
 msgstr  "Tambah Nota"
 
-#: ../assistant_viewer.lua:406
+#: ../assistant_viewer.lua:379
 msgid   "Highlight functionality not available"
 msgstr  "Fungsi sorotan tidak tersedia"
 
-#: ../assistant_viewer.lua:415
+#: ../assistant_viewer.lua:388
 msgid   "No text to add as note"
 msgstr  "Tiada teks untuk ditambah sebagai nota"
 
-#: ../assistant_viewer.lua:444
+#: ../assistant_viewer.lua:417
 msgid   "No text left to add as note"
 msgstr  "Tiada teks yang tinggal untuk ditambah sebagai nota"
 
-#: ../assistant_viewer.lua:457
+#: ../assistant_viewer.lua:430
 msgid   "Note added successfully"
 msgstr  "Nota berjaya ditambah"
 
-#: ../assistant_viewer.lua:478
+#: ../assistant_viewer.lua:451
 msgid   "Conversation is saved to NoteBook"
 msgstr  "Perbualan disimpan ke NoteBook"
 
-#: ../assistant_viewer.lua:597
+#: ../assistant_viewer.lua:528
 msgid   "Book Analysis"
 msgstr  "Analisis Buku"
 
-#: ../assistant_viewer.lua:597
+#: ../assistant_viewer.lua:528
 msgid   "General Conversation"
 msgstr  "Perbualan Umum"
 
-#: ../assistant_viewer.lua:768
+#: ../assistant_viewer.lua:699
 msgid   "Type your question here"
 msgstr  "Taip soalan anda di sini"
 
-#: ../assistant_viewer.lua:937
+#: ../assistant_viewer.lua:868
 msgid   "Word copied to clipboard."
 msgstr  "Perkataan disalin ke papan klip."
 
-#: ../assistant_viewer.lua:938
+#: ../assistant_viewer.lua:869
 msgid   "Selection copied to clipboard."
 msgstr  "Pilihan disalin ke papan klip."
 
