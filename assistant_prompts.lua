@@ -29,7 +29,7 @@ local builtin_prompts = {
         order = -20, -- negative number to not show on additional questions dialog
         desc = _("This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."),
         system_prompt = markdown_format_prompt,
-        user_prompt = [[
+        user_prompt = T([[
 ## Your Role
 You are a context-aware literary assistant for a reading app's "X-Ray" feature. Your task is to explain the highlighted term "{highlight}" specifically as it functions in "{title}" by {author}, strictly using the provided {context_sentence_count} chronological context sentences.
 
@@ -42,16 +42,16 @@ You are a context-aware literary assistant for a reading app's "X-Ray" feature. 
 ## Analysis Structure
 Generate a clear, accessible analysis (approx. 300-400 words, present tense, fluid prose) using these headers:
 
-### What It Is
+### %1
 Define/describe "{highlight}" based on the context. Identify its nature (whether it is a character, object, location, or concept) and its core traits, physical descriptions, or basic rules.
 
-### Role & Function
+### %2
 Explain how this term functions in the narrative. What do they/it do? What are the motivations, uses, effects, or relationships shown in the context?
 
-### Evolution & Connections
+### %3
 Track how understanding of this term changes from the early to late context sentences. Detail how it connects to other characters, places, or elements mentioned.
 
-### Context Limitations
+### %4
 Briefly note what important information appears to be missing or what questions are left unanswered due to the limited context provided.
 
 ## Inputs
@@ -59,6 +59,15 @@ Briefly note what important information appears to be missing or what questions 
 * **Context from the Book**: 
 {context}
 ]],
+        -- @translators term_xray section headers
+            -- @translators term_xray: "What It Is" section header
+            _("What It Is"),
+            -- @translators term_xray: "Role & Function" section header
+            _("Role & Function"),
+            -- @translators term_xray: "Evolution & Connections" section header
+            _("Evolution & Connections"),
+            -- @translators term_xray: "Context Limitations" section header
+            _("Context Limitations"))
     },
     dictionary = {
         order = -10, -- negative number indicates a stub prompt
@@ -103,18 +112,18 @@ Briefly note what important information appears to be missing or what questions 
         desc = _(
             "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."),
         system_prompt = markdown_format_prompt,
-        user_prompt = [[You are a Grammar Expert. Analyze the text below and output strictly in the following structure. 
+        user_prompt = T([[You are a Grammar Expert. Analyze the text below and output strictly in the following structure. 
         
 * **Language**: Render the *entire* response (including headers) completely in {language}.
 
-### 1. Structure & Clauses
+### 1. %1
 * **Sentence Type**: (e.g., Simple, Compound, Complex)
 * **Analysis**: Explain the clause relationships and main syntax framework.
 
-### 2. Parts of Speech & Tenses
+### 2. %2
 * Break down key phrases, identifying word classes, verb tenses, and morphology.
 
-### 3. Error Correction (If Applicable)
+### 3. %3
 * **Error**: "[Incorrect segment]"
 * **Correction**: "[Corrected version]"
 * **Rule**: Explain the violated grammar rule. *(If flawless, state: "No errors detected.")*
@@ -123,6 +132,10 @@ Briefly note what important information appears to be missing or what questions 
 **Text to Analyze:**
 {highlight}
 ]],
+            -- @translators grammar section headers
+            _("Structure & Clauses"),
+            _("Parts of Speech & Tenses"),
+            _("Error Correction (If Applicable)"))
     },
     translate = {
         order = 30,
@@ -180,7 +193,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
         order = 60,
         desc = _(
             "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."),
-        user_prompt = [[ You are a Key Points Expert. Extract the core insights from the text below into a clean list.
+        user_prompt = T([[ You are a Key Points Expert. Extract the core insights from the text below into a clean list.
 
 **Rules:**
 * **Content**: Capture all critical arguments, essential facts, and conclusions. Eliminate all fluff.
@@ -189,16 +202,19 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 * **Output**: Return only the bulleted list without any introductory text.
 
 **Output Structure:**
-### 📌 Core Arguments
+### 📌 %1
 * (Key insights and main arguments of the text...)
 
-### 📊 Essential Facts & Conclusions
+### 📊 %2
 * (Crucial data, facts, or final statements...)
 
 ---
 **Text to Extract:**
 {highlight}
 ]],
+            -- @translators key_points section headers
+            _("Core Arguments"),
+            _("Essential Facts & Conclusions"))
     },
     ELI5 = {
         text = _("ELI5"),
@@ -206,7 +222,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
         order = 70,
         desc = _(
             "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."),
-        user_prompt = [[ You are an ELI5 (Explain Like I'm 5) Expert. Explain the concept below as if speaking to a curious child.
+        user_prompt = T([[ You are an ELI5 (Explain Like I'm 5) Expert. Explain the concept below as if speaking to a curious child.
 
 **Rules:**
 * **Simplicity**: Strip away all jargon and technicalities. Use plain, everyday language and short sentences.
@@ -215,15 +231,18 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 * **Output**: Be direct and concise. Return only the explanation without any conversational filler.
 
 **Output Structure:**
-### 💡 Core Idea
+### 💡 %1
 (Explain the concept in 1-2 very simple, jargon-free sentences.)
 
-### 🍎 Fun Analogy
+### 🍎 %2
 (Provide a relatable, real-world analogy to make the concept instantly clear.)
 
 ---
 **Concept to Explain:**
 {highlight} ]],
+            -- @translators ELI5 section headers
+            _("Core Idea"),
+            _("Fun Analogy"))
     },
     explain = {
         text = _("Explain"),
@@ -248,25 +267,29 @@ You are a summarization expert. Provide a concise and clear summary of the text 
         order = 90,
         desc = _(
             "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."),
-        user_prompt = [[You are a Historical Context Expert. Analyze the text below and explain its precise historical framework.
+        user_prompt = T([[You are a Historical Context Expert. Analyze the text below and explain its precise historical framework.
 
 **Rules:**
 * **Language**: Render the *entire* response (including headers) completely in {language}.
 * **Output**: Start directly with the analysis. Avoid introductory phrases or meta-commentary.
 
 **Output Structure:**
-### 1. Era & Background
+### 1. %1
 (Identify the historical period, major global/local events, and the societal structures or prevailing ideologies of that time.)
 
-### 2. Contextual Connections
+### 2. %2
 (Explicitly connect these historical elements to the text's content, characters, themes, or underlying messages.)
 
-### 3. Cultural Significance
+### 3. %3
 (Explain the cultural environment or evolution that shaped this text and how the text reflects or challenges it.)
 
 ---
 **Text to Analyze:**
 {highlight}]],
+            -- @translators historical_context section headers
+            _("Era & Background"),
+            _("Contextual Connections"),
+            _("Cultural Significance"))
     },
     wikipedia = {
         text = _("Wikipedia"),
@@ -323,35 +346,35 @@ You are a literary assistant helping a reader resume their book. They have read 
     xray = {
         use_websearch = true,
         system_prompt = markdown_format_prompt,
-        user_prompt = [[
+        user_prompt = T([[
 Your output must be spoiler‑free beyond the reader’s current progress.
 
 Required structure:
 
-### Characters
+### %1
 - **Name** — brief description(3 sentences) _<u>relationship(s) with others</u>_
 
-### Locations
+### %2
 - **Place** — brief description(3 sentences) _<u>notable event(s) there</u>_
 
-### Main Themes
+### %3
 - **Theme** — brief description(3 sentences) of how it appears up to now
 
-### Terms & Concepts
+### %4
 - **Term** — concise definition / significance
 
-### Timeline
+### %5
 List around 8 to 12 **key chapters or scenes** that were most important to the plot up to the current point.  Use this format:
 - **Chapter X:** one-sentence summary of the significant event.
 Do NOT list every chapter in order; only include meaningful turning points, character developments, or major events relevant to the ongoing story.
 
-### Re-immersion
-* **Where the action stopped:** *2 sentences*
-* **Protagonist’s current objective:** *1 sentence*
-* **Open conflict or mystery:** *1 sentence*
-* **Narrative element in focus:** *1 sentence* (object, place, or symbol)
-* **Prevailing emotional state/tone:** *1 sentence*
-* **Outstanding questions:** *1 sentence*
+### %6
+* **%7** *2 sentences*
+* **%8** *1 sentence*
+* **%9** *1 sentence*
+* **%10** *1 sentence* (object, place, or symbol)
+* **%11** *1 sentence*
+* **%12** *1 sentence*
 
 Formatting rules:
 * Use bullet (–) or ordered list as shown.
@@ -364,11 +387,25 @@ Generate the expanded X‑Ray for **{title}** by **{author}**, with the structur
 Reader progress: **{progress}%**.
 Language: **{language}**.
         ]],
+            -- @translators xray section headers
+            _("Characters"),
+            _("Locations"),
+            _("Main Themes"),
+            _("Terms & Concepts"),
+            _("Timeline"),
+            _("Re-immersion"),
+            -- @translators xray Re-immersion sub-fields
+            _("Where the action stopped:"),
+            _("Protagonist's current objective:"),
+            _("Open conflict or mystery:"),
+            _("Narrative element in focus:"),
+            _("Prevailing emotional state/tone:"),
+            _("Outstanding questions:"))
     },
     book_info = {
         use_websearch = true,
         system_prompt = markdown_format_prompt,
-        user_prompt = [[You are an objective Informative Assistant for a reading app, providing structured information about books.
+        user_prompt = T([[You are an objective Informative Assistant for a reading app, providing structured information about books.
 
 **Core Rules:**
 * **Smart Search Strategy**: 
@@ -381,58 +418,72 @@ Language: **{language}**.
 Generate information about "{title}" by {author} in the following structure,
 Render the *entire* response (including headers) completely in {language}.
 
-### 1. Book Information
-* **Genre**: 
-* **Publication Date**: 
-* **Publisher**: 
-* **Plot Summary**:
+### 1. %1
+* **%2**: 
+* **%3**: 
+* **%4**: 
+* **%5**:
 
-### 2. About the Author
+### 2. %6
 * Brief biography, writing style, and other notable works.
 
-### 3. Historical and Cultural Context
+### 3. %7
 * The context in which the book was written/set and how themes relate to it.
 
-### 4. Similar Books Recommendations
+### 4. %8
 * 3–5 high-quality similar books with a short description and why it's recommended.
 
 **Output Requirements:**
 * Neutral tone, clean formatting for a reading app UI.
 * Transparent about missing info; never speculate.]],
+            -- @translators book_info section headers and sub-fields
+            _("Book Information"),
+            _("Genre"),
+            _("Publication Date"),
+            _("Publisher"),
+            _("Plot Summary"),
+            _("About the Author"),
+            _("Historical and Cultural Context"),
+            _("Similar Books Recommendations"))
     },
     annotations = {
         use_websearch = false,
         system_prompt = markdown_format_prompt,
-        user_prompt = [[
+        user_prompt = T([[
 You are given my notes and highlights.
 Your task is to carefully analyze this content and produce a structured summary that includes:
 
-1. **Key Takeaways**
+1. **%1**
    - Summarize the most important insights, lessons, or narrative developments.
    - Highlight recurring themes, turning points, or critical information.
 
-2. **To-Do / Action Items**
+2. **%2**
    - Based on the content and my notes, suggest practical actions, reflections, or follow-ups I should consider.
    - If the text is fictional, focus on intellectual or emotional takeaways (e.g., themes to reflect on, characters to analyze, related readings).
    - If the text is non-fiction, focus on actionable steps (e.g., habits to adopt, ideas to research, concepts to apply).
 
-3. **Contextual Notes**
+3. **%3**
    - Clarify connections between my highlights/notes and the broader narrative or arguments.
    - Point out any open questions or areas I may want to revisit in the earlier chapters.
 
 Output format:
 - Start with a concise **executive summary** (3–5 sentences).
-- Then provide a **detailed list** under “Key Takeaways” and “To-Do / Action Items.”
-- End with **Contextual Notes / Reflections** in bullet points.
+- Then provide a **detailed list** under "%1" and "%2."
+- End with **%4** in bullet points.
 
 Keep the tone clear, thoughtful, and practical.
 Render the *entire* response (including headers) completely in {language}.
 ]],
+            -- @translators annotations section headers
+            _("Key Takeaways"),
+            _("To-Do / Action Items"),
+            _("Contextual Notes"),
+            _("Contextual Notes / Reflections"))
     },
     summary_using_annotations = {
         use_websearch = true,
         system_prompt = markdown_format_prompt,
-        user_prompt = [[
+        user_prompt = T([[
 You are a meticulous book summarizer and analyst.
 
 INPUTS:
@@ -465,11 +516,11 @@ STYLE & RULES:
    - If a highlight is not related to the book text (if it is not in the book text), ignore it.
 
 OUTPUT STRUCTURE:
-- TL;DR
-- Integrated Summary
-- Key Points
-- Actionable Takeaways
-- ⚠️ Contradictions / Open Questions (if any)
+- %1
+- %2
+- %3
+- %4
+- ⚠️ %5 (if any)
 
 IMPORTANT:
 - Always weave highlights *inline*, never at the end.
@@ -477,6 +528,12 @@ IMPORTANT:
 - If the text is extremely long, compress intelligently while still reflecting highlights.
 
 Now begin the analysis with the provided book_text and highlights.]],
+            -- @translators summary_using_annotations output structure sections
+            _("TL;DR"),
+            _("Integrated Summary"),
+            _("Key Points"),
+            _("Actionable Takeaways"),
+            _("Contradictions / Open Questions"))
     },
 
     dict = {
