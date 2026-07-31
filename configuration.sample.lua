@@ -43,7 +43,10 @@ local CONFIGURATION = {
         -- OpenAI Responses API — newer /v1/responses endpoint with built-in tools
         -- Prefix "responses" loads the api_handlers/responses.lua handler.
         -- Built-in web_search: set use_websearch = "builtin" in plugin settings
-        -- (no external search API key needed).
+        -- (no external search API key needed). The API handles search directly —
+        -- no SerpAPI/Tavily/SearXNG/Exa configuration required.
+        -- Supported additional_parameters: temperature, top_p, max_output_tokens,
+        -- max_tokens, reasoning, reasoning_effort, store.
         responses_openai = {
             visible = false,       -- optional, set to true to show in provider switch
             model = "gpt-4o-mini", -- model list: https://platform.openai.com/docs/models
@@ -52,9 +55,22 @@ local CONFIGURATION = {
             additional_parameters = {
                 -- temperature = 0.7,
                 -- max_output_tokens = 4096,  -- use max_output_tokens instead of max_tokens
-                -- reasoning_effort = "low",    -- for reasoning models (o1, o3, etc.)
+                -- reasoning = { effort = "medium" }, -- for reasoning models (o1, o3, etc.)
+                -- store = true,  -- store the response for use in the OpenAI dashboard
             }
         },
+        -- Example: Responses API via OpenRouter (OpenAI-compatible)
+        -- OpenRouter also supports the /v1/responses endpoint.
+        -- See: https://openrouter.ai/docs/api_reference/responses/overview
+        -- responses_openrouter = {
+        --     visible = false,
+        --     model = "openai/gpt-oss-20b",
+        --     base_url = "https://openrouter.ai/api/v1",
+        --     api_key = "your-openrouter-api-key",
+        --     additional_parameters = {
+        --         max_output_tokens = 4096,
+        --     }
+        -- },
         anthropic = {
             visible = true,                    -- optional, if set to false, will not shown in the profile switch
             model = "claude-3-5-haiku-latest", -- model list: https://docs.anthropic.com/en/docs/about-claude/models
