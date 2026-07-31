@@ -426,6 +426,12 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
                     elseif ev_type == "response.output_item.done" then
                         -- Output item completed; no content to emit
 
+                    -- Annotation events (e.g. web search citations)
+                    elseif ev_type == "response.output_text.annotation.added" then
+                        -- Annotation metadata; no content to emit
+                    elseif ev_type == "response.output_text.annotation.updated" then
+                        -- Annotation update; no content to emit
+
                     else
                         logger.info("unprocessed", ev_type)
                     end
