@@ -18,7 +18,8 @@ GeminiHandler.SupportedOptions = {
     ["temperature"] = true,
     ["topP"] = true,
     ["topK"] =true,
-    ["thinking_config"]=true,
+    ["thinkingConfig"]=true,
+    ["thinking_config"]=true,  -- backward compat, mapped to thinkingConfig below
 }
 
 function GeminiHandler:FetchModels()
@@ -94,14 +95,43 @@ local function buildGenerationConfig(additional_parameters)
         if type(additional_parameters) == "table" and next(additional_parameters) then
             gc = gc or {}
             for o, v in pairs(additional_parameters) do
-                if GeminiHandler.SupportedOptions[o] then gc[o] = v end
+                if GeminiHandler.SupportedOptions[o] then
+                    local key = o == "thinking_config" and "thinkingConfig" or o
+                    gc[key] = v
+                end
+            end
+            -- Normalize snake_case fields inside thinkingConfig to camelCase
+            if type(gc.thinkingConfig) == "table" then
+                if gc.thinkingConfig.thinking_level ~= nil then
+                    gc.thinkingConfig.thinkingLevel = gc.thinkingConfig.thinking_level
+                    gc.thinkingConfig.thinking_level = nil
+                end
+                if gc.thinkingConfig.thinking_budget ~= nil then
+                    gc.thinkingConfig.thinkingBudget = gc.thinkingConfig.thinking_budget
+                    gc.thinkingConfig.thinking_budget = nil
+                end
+                if gc.thinkingConfig.include_thoughts ~= nil then
+                    gc.thinkingConfig.includeThoughts = gc.thinkingConfig.include_thoughts
+                    gc.thinkingConfig.include_thoughts = nil
+                end
+                -- thinkBudget = 0: some models reject thinkingConfig, so drop it
+                if gc.thinkingConfig.thinkingBudget == 0 then
+                    gc.thinkingConfig.thinkingBudget = nil
+                end
+                if not next(gc.thinkingConfig) then
+                    gc.thinkingConfig = nil
+                end
             end
         end
         
         if additional_parameters.thinking_budget ~= nil then
-            gc = gc or {}
-            gc.thinking_config = gc.thinking_config or {}
-            gc.thinking_config.thinking_budget = additional_parameters.thinking_budget
+            if additional_parameters.thinking_budget > 0 then
+                gc = gc or {}
+                gc.thinkingConfig = gc.thinkingConfig or {}
+                gc.thinkingConfig.thinkingBudget = additional_parameters.thinking_budget
+            end
+            -- thinking_budget = 0 means "disable thinking". Sending thinkingConfig
+            -- to a model that doesn't support it causes 400, so skip it entirely.
         end
     end
     return gc
@@ -122,10 +152,10 @@ function GeminiHandler:buildRequestBody(messages, tool_def)
     local tools = tool_def and { tool_def } or nil
     local gc = buildGenerationConfig(self.additional_parameters)
     if self.model:find("gemma-4", 1, true) then
-        if gc and gc.thinking_config and gc.thinking_config.thinking_budget ~= nil then
-            -- gemma-4 does not support thinking_budget config
-            gc.thinking_config.thinking_budget = nil
-            gc.thinking_config.include_thoughts = false
+        if gc and gc.thinkingConfig and gc.thinkingConfig.thinkingBudget ~= nil then
+            -- gemma-4 does not support thinkingBudget config
+            gc.thinkingConfig.thinkingBudget = nil
+            gc.thinkingConfig.includeThoughts = false
             table.insert(system_instruction.parts, { text = "**DIRECT RESPONSE**: Respond directly to the user without generating any internal thinking, chain of thought, or reasoning channels." })
         end
     end

@@ -107,8 +107,9 @@ local CONFIGURATION = {
                 -- temperature = 0.7,
                 -- max_tokens = 1048576,
                 -- Note: thinking is enabled by default in newer models (gemini-2.5-*, gemini-3.*).
-                -- Some models do NOT support the thinking_budget parameter and will return a 400 error.
-                -- Uncomment the line below only if your model supports it and you want to disable thinking.
+                -- Use thinkingConfig with thinking_level to control thinking (e.g. "minimal", "low", "medium", "high").
+                -- thinkingConfig = { thinkingLevel = "minimal" },
+                -- To disable thinking entirely (where supported), set thinkingBudget = 0:
                 -- thinking_budget = 0,
             }
         },
@@ -117,8 +118,8 @@ local CONFIGURATION = {
             base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
             api_key = "your-gemini-api-key",
             additional_parameters = {
-                -- Note: gemma does NOT support thinking_budget option
-                thinking_config = { thinking_level = "minimal" }, -- minimum the reasoning level
+                -- Note: gemma does NOT support thinkingBudget / thinking_budget option
+                thinkingConfig = { thinkingLevel = "minimal" }, -- minimum the reasoning level
             }
         },
         gigachat = {
