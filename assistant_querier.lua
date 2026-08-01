@@ -152,13 +152,16 @@ function Querier:showError(err, message_history)
     if self.user_interrupted then
         dialog = InfoMessage:new{ timeout = 3, text = err }
     else
+        local provider = self.provider_name or "?"
+        local model = self.handler and self.handler.model or "?"
         dialog = ConfirmBox:new{
-            text = T(_("API Error:\n%1\n\nTry another provider in the settings dialog."), err or _("Unknown error")),
+            text = T(_("API Error:\n%1\n\nProvider: %2\nModel: %3\n\nTry another provider in the settings dialog."),
+                err or _("Unknown error"), provider, model),
             ok_text = _("Settings"),
             ok_callback = function() self.assistant:showSettings() end,
             cancel_text = _("Close"),
         }
-        logger.warn("API Error", err, "message_history", message_history)
+        logger.warn("API Error", err, "provider", provider, "model", model, "message_history", message_history)
     end
     UIManager:show(dialog)
 
@@ -797,20 +800,31 @@ function Querier:processStream(bgQuery, trunk_callback)
         local ok, err_struct = pcall(rapidjson.decode, err_json)
         if ok and err_struct then
             local raw_body = err_struct.raw_body or ""
+            local endpoint = err_struct.url or ""
             -- Try to extract a human-readable error from the raw_body JSON
             if #raw_body > 0 then
                 local ok2, j = pcall(rapidjson.decode, raw_body)
                 if ok2 then
                     local err_msg = koutil.tableGetValue(j, "error", "message")
                         or koutil.tableGetValue(j, "message")
-                    if err_msg then return nil, T("HTTP %1: %2", err_struct.code, err_msg) end
-                    if type(j.error) == "string" then return nil, j.error end
+                    if err_msg then
+                        local msg = T("HTTP %1: %2", err_struct.code, err_msg)
+                        if #endpoint > 0 then msg = msg .. "\n" .. endpoint end
+                        return nil, msg
+                    end
+                    if type(j.error) == "string" then
+                        local msg = j.error
+                        if #endpoint > 0 then msg = msg .. "\n" .. endpoint end
+                        return nil, msg
+                    end
                 end
             end
             -- Fallback: use status info from the structure
             local code = err_struct.code or ""
             local status = err_struct.status or ""
-            return nil, T("HTTP %1: %2", tostring(code), status ~= "" and status or _("Unknown error"))
+            local msg = T("HTTP %1: %2", tostring(code), status ~= "" and status or _("Unknown error"))
+            if #endpoint > 0 then msg = msg .. "\n" .. endpoint end
+            return nil, msg
         end
         -- If JSON parsing failed, return the raw content
         return nil, ret

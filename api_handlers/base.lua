@@ -166,6 +166,7 @@ function BaseHandler:backgroundRequest(url, headers, body)
             logger.warn("Background request non-200:", code, "status:", status, "url:", url)
             local err_struct = {
                 code = code,
+                url = url,
                 resp_headers = resp_headers,
                 status = status,
                 raw_body = "",

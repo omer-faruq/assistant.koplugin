@@ -503,6 +503,7 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
                 code, "status:", status, "url:", url, "body:", raw_body_snapshot)
             local err_struct = {
                 code = code,
+                url = url,
                 resp_headers = resp_headers,
                 status = status,
                 raw_body = raw_body_snapshot,
@@ -578,7 +579,7 @@ function ResponsesHandler:query(message_history, query_option)
             end
         end
         logger.warn(self.name, "HTTP request failed:", code, "response:", response)
-        return nil, "Error: " .. tostring(code or "unknown") .. " - " .. tostring(response)
+        return nil, "Error: " .. tostring(self.model) .. "\n" .. self.responses_url .. "\n- " .. tostring(code or "unknown") .. " - " .. tostring(response)
     end
 
     local ok, responseData = pcall(json.decode, response)

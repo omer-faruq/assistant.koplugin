@@ -106,8 +106,10 @@ local CONFIGURATION = {
             additional_parameters = {
                 -- temperature = 0.7,
                 -- max_tokens = 1048576,
-                -- Set to 0 to disable thinking. Recommended for gemini-2.5-* and newer, where thinking is enabled by default.
-                thinking_budget = 0,
+                -- Note: thinking is enabled by default in newer models (gemini-2.5-*, gemini-3.*).
+                -- Some models do NOT support the thinking_budget parameter and will return a 400 error.
+                -- Uncomment the line below only if your model supports it and you want to disable thinking.
+                -- thinking_budget = 0,
             }
         },
         gemini_gemma4 = {

@@ -161,7 +161,7 @@ function AnthropicHandler:query(message_history, query_option)
         if code == BaseHandler.CODE_CANCELLED then
             return nil, response
         end
-        return nil, "Error: Failed to connect to Anthropic API - " .. tostring(response)
+        return nil, "Error: Anthropic API (" .. tostring(self.model) .. ")\n" .. self:getApiUrl() .. "\n- " .. tostring(response)
     end
 
     local ok, parsed = pcall(json.decode, response)

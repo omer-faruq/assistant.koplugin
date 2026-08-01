@@ -98,9 +98,10 @@ local function buildGenerationConfig(additional_parameters)
             end
         end
         
-        if additional_parameters.thinking_budget then
+        if additional_parameters.thinking_budget ~= nil then
             gc = gc or {}
-            gc.thinking_config = { thinking_budget = additional_parameters.thinking_budget }
+            gc.thinking_config = gc.thinking_config or {}
+            gc.thinking_config.thinking_budget = additional_parameters.thinking_budget
         end
     end
     return gc
@@ -121,7 +122,7 @@ function GeminiHandler:buildRequestBody(messages, tool_def)
     local tools = tool_def and { tool_def } or nil
     local gc = buildGenerationConfig(self.additional_parameters)
     if self.model:find("gemma-4", 1, true) then
-        if gc and gc.thinking_config and gc.thinking_config.thinking_budget then
+        if gc and gc.thinking_config and gc.thinking_config.thinking_budget ~= nil then
             -- gemma-4 does not support thinking_budget config
             gc.thinking_config.thinking_budget = nil
             gc.thinking_config.include_thoughts = false
@@ -147,8 +148,8 @@ end
 function GeminiHandler:query(message_history, query_option)
 
     local model    = self.model
-    local base_url = self.base_url
-                  or "https://generativelanguage.googleapis.com/v1beta/models"
+    local base_url = (self.base_url or "https://generativelanguage.googleapis.com/v1beta/models")
+                       :gsub("/+$", "")
 
     local url_sync   = string.format("%s/%s:generateContent",            base_url, model)
     local url_stream = string.format("%s/%s:streamGenerateContent?alt=sse", base_url, model)
@@ -194,7 +195,7 @@ function GeminiHandler:query(message_history, query_option)
             request_size  = #requestBody,
             message_count = #message_history,
         })
-        return nil, "Error: Failed to connect to Gemini API - " .. tostring(response)
+        return nil, "Error: Gemini API (" .. tostring(model) .. ")\n" .. url_sync .. "\n- " .. tostring(response)
     end
 
     local ok, parsed = pcall(json.decode, response)

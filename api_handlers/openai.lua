@@ -123,7 +123,7 @@ function OpenAIHandler:query(message_history, query_option)
                 if err_msg then return nil, err_msg end
             end
         end
-        return nil, "Error: " .. tostring(code or "unknown") .. " - " .. tostring(response)
+        return nil, "Error: " .. tostring(self.model) .. "\n" .. self:getApiUrl() .. "\n- " .. tostring(code or "unknown") .. " - " .. tostring(response)
     end
 
     local ok, responseData = pcall(json.decode, response)
