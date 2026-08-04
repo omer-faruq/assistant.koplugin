@@ -458,6 +458,71 @@ function M.json_default(value, default_value)
     return value
 end
 
+-- ---------------------------------------------------------------------------
+-- PTF (Poor Text Formatting) helpers
+--
+-- KOReader's TextBoxWidget recognizes a tiny in-band markup: text that starts
+-- with \u{FFF1} and uses \u{FFF2} / \u{FFF3} to toggle synthetic-bold runs.
+-- These helpers produce strings that can be passed as `text` to InfoMessage,
+-- ConfirmBox, and any other widget that wraps TextBoxWidget.
+--
+-- Reference: frontend/ui/widget/textboxwidget.lua (PTF_* constants).
+-- ---------------------------------------------------------------------------
+local PTF_HEADER     = "\u{FFF1}"
+local PTF_BOLD_START = "\u{FFF2}"
+local PTF_BOLD_END   = "\u{FFF3}"
+
+--- Wrap a single string so it renders bold.
+--- Returns the input unchanged if it is empty/nil or already PTF-prefixed.
+--- @param text string
+--- @return string
+function M.ptf_bold(text)
+    if not text or text == "" or text:sub(1, #PTF_HEADER) == PTF_HEADER then
+        return text or ""
+    end
+    return PTF_HEADER .. PTF_BOLD_START .. text .. PTF_BOLD_END
+end
+
+--- Build a single PTF string from an ordered list of segments.
+--- Each segment is either a plain string or `{ text = "...", bold = true }`.
+--- Empty/nil segments are skipped.  The result is suitable as `text` for any
+--- TextBoxWidget-backed dialog.
+---
+--- Example:
+---   ptf_format({{text="API Error", bold=true}, "\n", {text="Bad key", bold=true},
+---               "\nProvider: openai"})
+--- @param segments table array of strings or {text=string, bold=bool}
+--- @return string
+function M.ptf_format(segments)
+    if type(segments) ~= "table" then return segments or "" end
+    -- Strip leading empty/plain segments before opening PTF (otherwise the
+    -- first bold run would never be reached: text must start with PTF_HEADER).
+    local out = strbuf.new()
+    local started = false
+    local in_bold = false
+    for _, seg in ipairs(segments) do
+        if type(seg) == "table" then
+            local t = seg.text
+            if t and t ~= "" then
+                if not started then out:put(PTF_HEADER); started = true end
+                if seg.bold and not in_bold then out:put(PTF_BOLD_START); in_bold = true end
+                if not seg.bold and in_bold then out:put(PTF_BOLD_END); in_bold = false end
+                out:put(t)
+            end
+        elseif type(seg) == "string" and seg ~= "" then
+            if not started then out:put(PTF_HEADER); started = true end
+            if in_bold then out:put(PTF_BOLD_END); in_bold = false end
+            out:put(seg)
+        end
+    end
+    -- Clean up any unclosed bold toggle so we leave a well-formed stream.
+    if in_bold then out:put(PTF_BOLD_END) end
+    -- If nothing was added, return a no-op PTF string so the widget's
+    -- PTF detection still triggers and the empty text is rendered cleanly.
+    if not started then return "" end
+    return out:get()
+end
+
 require("ffi/zlib_h")
 local libz = ffi.loadlib("z", 1)
 local ZLIB_HEADER = "\x78\x9c"

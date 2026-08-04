@@ -154,10 +154,20 @@ function Querier:showError(err, message_history)
     else
         local provider = self.provider_name or "?"
         local model = self.handler and self.handler.model or "?"
+        local text = assistant_utils.ptf_format{
+            { text = _("API Error"), bold = true },
+            "\n",
+            err or _("Unknown error"),
+            "\n",
+            { text = T("Provider: %1", provider), bold = true },
+            "\n",
+            { text = T("Model: %1", model), bold = true },
+            "\n\n",
+            _("Try another provider in the settings dialog."),
+        }
         dialog = ConfirmBox:new{
             face = Font:getFace("xx_smallinfofont"),
-            text = T(_("API Error\n%1\nProvider: %2\nModel: %3\n\nTry another provider in the settings dialog."),
-                err or _("Unknown error"), provider, model),
+            text = text,
             ok_text = _("Settings"),
             ok_callback = function() self.assistant:showSettings() end,
             cancel_text = _("Close"),
