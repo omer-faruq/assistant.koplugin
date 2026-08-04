@@ -155,7 +155,8 @@ function Querier:showError(err, message_history)
         local provider = self.provider_name or "?"
         local model = self.handler and self.handler.model or "?"
         dialog = ConfirmBox:new{
-            text = T(_("API Error:\n%1\n\nProvider: %2\nModel: %3\n\nTry another provider in the settings dialog."),
+            face = Font:getFace("xx_smallinfofont"),
+            text = T(_("API Error\n%1\nProvider: %2\nModel: %3\n\nTry another provider in the settings dialog."),
                 err or _("Unknown error"), provider, model),
             ok_text = _("Settings"),
             ok_callback = function() self.assistant:showSettings() end,
@@ -794,39 +795,62 @@ function Querier:processStream(bgQuery, trunk_callback)
 
     local ret = koutil.trim(result_buffer:get())
     if non200_start then
-        -- The JSON structure was appended after non200_start.
-        -- Format: {"code":..., "resp_headers":..., "status":..., "raw_body":"..."}
+        -- The child wrote the raw response body first, then a "\r\n" separator,
+        -- then PROTOCOL_NON_200 + err_struct JSON.  result_buffer therefore holds:
+        --   [raw_body][err_struct]
+        -- non200_start is captured at the marker branch (see L745) *before* the
+        -- err_struct portion is appended, so:
+        --   ret[1 .. non200_start]  == raw body from the server
+        --   ret[non200_start+1 ..]  == err_struct JSON
+        -- The server's error message (in raw_body) is far more informative than
+        -- err_struct.status, so try to extract it first.
+        -- NOTE: the slice end is non200_start, NOT non200_start-1. The marker
+        -- branch only APPENDS the err_struct JSON (the marker prefix itself is
+        -- not stored), so the body sits in bytes [1..non200_start] inclusive.
         local err_json = koutil.trim(ret:sub(non200_start + 1))
         local ok, err_struct = pcall(rapidjson.decode, err_json)
-        if ok and err_struct then
-            local raw_body = err_struct.raw_body or ""
-            local endpoint = err_struct.url or ""
-            -- Try to extract a human-readable error from the raw_body JSON
-            if #raw_body > 0 then
-                local ok2, j = pcall(rapidjson.decode, raw_body)
-                if ok2 then
-                    local err_msg = koutil.tableGetValue(j, "error", "message")
-                        or koutil.tableGetValue(j, "message")
-                    if err_msg then
-                        local msg = T("HTTP %1: %2", err_struct.code, err_msg)
-                        if #endpoint > 0 then msg = msg .. "\n" .. endpoint end
-                        return nil, msg
-                    end
-                    if type(j.error) == "string" then
-                        local msg = j.error
-                        if #endpoint > 0 then msg = msg .. "\n" .. endpoint end
-                        return nil, msg
-                    end
-                end
+
+        -- Slice off the raw body the server actually sent (before the marker).
+        -- The intervening "\r\n" separator was either dropped as an empty line
+        -- (koutil.trim("") == 0, skipped at L750) or absorbed into the marker's
+        -- line ending (CRLF stripped at L688), so the raw body is contiguous.
+        local raw_body
+        if ok and err_struct and #err_struct.raw_body > 0 then
+            -- Some handlers do populate raw_body; prefer it.
+            raw_body = err_struct.raw_body
+        else
+            raw_body = koutil.trim(ret:sub(1, non200_start))
+        end
+
+        local endpoint = (ok and err_struct and err_struct.url) or ""
+        local code     = (ok and err_struct and err_struct.code) or ""
+        local status   = (ok and err_struct and err_struct.status) or ""
+
+        -- Priority 1: the server's actual error payload.
+        -- Try common shapes: {"error":{"message":...}}, {"error":"..."}, {"message":...}
+        local err_msg
+        if #raw_body > 0 then
+            local ok2, j = pcall(rapidjson.decode, raw_body)
+            if ok2 and type(j) == "table" then
+                local e = j.error
+                err_msg = (type(e) == "table" and e.message)
+                    or (type(e) == "string" and e)
+                    or j.message
             end
-            -- Fallback: use status info from the structure
-            local code = err_struct.code or ""
-            local status = err_struct.status or ""
+        end
+        if err_msg and #err_msg > 0 then
+            local msg = T("HTTP %1: %2", tostring(code ~= "" and code or "?"), err_msg)
+            if #endpoint > 0 then msg = msg .. "\n\nAPI: " .. endpoint end
+            return nil, msg
+        end
+
+        -- Priority 2: use status info from err_struct.
+        if ok and err_struct then
             local msg = T("HTTP %1: %2", tostring(code), status ~= "" and status or _("Unknown error"))
             if #endpoint > 0 then msg = msg .. "\n" .. endpoint end
             return nil, msg
         end
-        -- If JSON parsing failed, return the raw content
+        -- If err_struct JSON parsing failed, return the raw content.
         return nil, ret
     end
 
