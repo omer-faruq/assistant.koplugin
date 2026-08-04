@@ -2,7 +2,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-07-29 15:45+0800\n"
+        "POT-Creation-Date: 2026-08-04 17:00+0800\n"
         "PO-Revision-Date: 2025-08-25 16:59+IRDT\n"
         "Last-Translator: GPT-4o <noreply@openai.com>\n"
         "Language-Team: GPT-4o <noreply@openai.com>\n"
@@ -12,8 +12,8 @@ msgstr  "Project-Id-Version: assistant.koplugin 1.0\n"
         "Content-Transfer-Encoding: 8bit\n"
         "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:481 ../main.lua:350 ../main.lua:360
-#: ../main.lua:562
+#: ../_meta.lua:4 ../assistant_dialog.lua:485 ../main.lua:354 ../main.lua:364
+#: ../main.lua:566
 msgid   "AI Assistant"
 msgstr  "دستیار هوشمند"
 
@@ -21,14 +21,14 @@ msgstr  "دستیار هوشمند"
 msgid   "💡 Enhance your KOReader experience with AI"
 msgstr  "💡 تجربهٔ KOReader خود را با AI بهبود بخشید"
 
-#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:30
-#: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
+#: ../api_handlers/anthropic.lua:30 ../api_handlers/gemini.lua:32
+#: ../api_handlers/openai.lua:43 ../api_handlers/responses.lua:52
 msgid   "Fetching models..."
 msgstr  "در حال دریافت مدل‌ها..."
 
-#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:40
-#: ../api_handlers/gemini.lua:50 ../api_handlers/openai.lua:58
-#: ../api_handlers/responses.lua:67
+#: ../api_handlers/anthropic.lua:48 ../api_handlers/gemini.lua:43
+#: ../api_handlers/gemini.lua:53 ../api_handlers/openai.lua:60
+#: ../api_handlers/responses.lua:69
 msgid   "Failed to fetch models"
 msgstr  "دریافت مدل‌ها انجام نشد"
 
@@ -70,52 +70,56 @@ msgstr  "پرس"
 msgid   "Enter a question before proceeding."
 msgstr  "قبل از ادامه، یک سؤال وارد کنید"
 
-#: ../assistant_dialog.lua:444
+#: ../assistant_dialog.lua:447
 msgid   "Add this button to the Highlight Menu?"
 msgstr  "آیا این دکمه را به منوی برجسته‌سازی اضافه کنید؟"
 
-#: ../assistant_dialog.lua:445
+#: ../assistant_dialog.lua:449
 msgid   "Add"
 msgstr  "افزودن"
 
-#: ../assistant_dialog.lua:472
+#: ../assistant_dialog.lua:476
 msgid   "Ask a question about the highlighted text"
 msgstr  "سؤالی درباره متن برجسته شده بپرسید"
 
-#: ../assistant_dialog.lua:473
+#: ../assistant_dialog.lua:477
 #, lua-format
 msgid   "Ask a question about this book:\n"
         "%s by %s"
 msgstr  "سؤالی درباره این کتاب بپرسید:\n"
         "%s توسط %s"
 
-#: ../assistant_dialog.lua:474
+#: ../assistant_dialog.lua:478
 msgid   "Ask a general question"
 msgstr  "پرسیدن یک سوال عمومی"
 
-#: ../assistant_dialog.lua:476
+#: ../assistant_dialog.lua:480
 msgid   "Type your question here..."
 msgstr  "سؤالتان را اینجا تایپ کنید..."
 
-#: ../assistant_dialog.lua:477
+#: ../assistant_dialog.lua:481
 msgid   "Ask anything about this book..."
 msgstr  "هر چیزی در مورد این کتاب بپرسید..."
 
-#: ../assistant_dialog.lua:478
+#: ../assistant_dialog.lua:482
 msgid   "Ask anything..."
 msgstr  "هر چیزی بپرسید..."
 
-#: ../assistant_dialog.lua:502
+#: ../assistant_dialog.lua:506
 msgid   "Use book text as context"
 msgstr  "استفاده از متن کتاب به‌عنوان زمینه"
 
-#: ../assistant_dialog.lua:555
+#: ../assistant_dialog.lua:559
 msgid   "Loading for %1 ..."
 msgstr  "در حال بارگذاری برای %1 ..."
 
-#: ../assistant_dialog.lua:568
-msgid   "Error: No response received"
-msgstr  "خطا: هیچ پاسخی دریافت نشد"
+#: ../assistant_dialog.lua:573
+msgid   "Error:"
+msgstr  "خطا:"
+
+#: ../assistant_dialog.lua:573
+msgid   "No response received"
+msgstr  "پاسخی دریافت نشد"
 
 #: ../assistant_dictdialog.lua:155
 msgid   "AI Dictionary"
@@ -129,23 +133,23 @@ msgstr  "کلمه‌ای را برای جستجو وارد کنید..."
 msgid   "Look Up"
 msgstr  "جستجو"
 
-#: ../assistant_dictdialog.lua:214
+#: ../assistant_dictdialog.lua:215
 msgid   "Analyzing book context for Term X-Ray..."
 msgstr  "در حال تحلیل زمینه کتاب برای اشعه ایکس اصطلاحات..."
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:808
+#: ../assistant_dictdialog.lua:392 ../assistant_prompts.lua:27 ../main.lua:812
 msgid   "Term X-Ray"
 msgstr  "پرتو ایکس واژه"
 
-#: ../assistant_dictdialog.lua:393
+#: ../assistant_dictdialog.lua:395
 msgid   "Loading Term X-Ray ..."
 msgstr  "در حال بارگذاری پرتو ایکس واژه..."
 
-#: ../assistant_dictdialog.lua:410 ../assistant_prompts.lua:74 ../main.lua:826
+#: ../assistant_dictdialog.lua:412 ../assistant_prompts.lua:74 ../main.lua:830
 msgid   "Dictionary"
 msgstr  "لغت‌نامه"
 
-#: ../assistant_dictdialog.lua:411
+#: ../assistant_dictdialog.lua:413
 msgid   "Loading AI Dictionary ..."
 msgstr  "در حال بارگذاری فرهنگ لغت هوش مصنوعی..."
 
@@ -157,61 +161,60 @@ msgstr  "هیچ‌کدام"
 msgid   "Model Built-In"
 msgstr  "داخلی مدل"
 
-#: ../assistant_featuredialog.lua:41
+#: ../assistant_featuredialog.lua:42
 msgid   "Custom Prompt"
 msgstr  "درخواست سفارشی"
 
-#: ../assistant_featuredialog.lua:42
+#: ../assistant_featuredialog.lua:43
 msgid   "Loading..."
 msgstr  "در حال بارگذاری..."
 
-#: ../assistant_featuredialog.lua:63
+#: ../assistant_featuredialog.lua:64
 msgid   "Recap"
 msgstr  "خلاصه"
 
-#: ../assistant_featuredialog.lua:64
+#: ../assistant_featuredialog.lua:65
 msgid   "Loading Recap..."
 msgstr  "در حال بارگذاری خلاصه..."
 
-#: ../assistant_featuredialog.lua:69
+#: ../assistant_featuredialog.lua:70
 msgid   "X‑Ray"
 msgstr  "اشعه ایکس"
 
-#: ../assistant_featuredialog.lua:70
+#: ../assistant_featuredialog.lua:71
 msgid   "Loading X-Ray..."
 msgstr  "در حال بارگذاری ایکس‌ری..."
 
 #. @translators book_info section headers and sub-fields
-#: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
+#: ../assistant_featuredialog.lua:76 ../assistant_prompts.lua:440
 msgid   "Book Information"
 msgstr  "اطلاعات کتاب"
 
-#: ../assistant_featuredialog.lua:76
+#: ../assistant_featuredialog.lua:77
 msgid   "Loading Book Information..."
 msgstr  "در حال بارگیری اطلاعات کتاب..."
 
-#: ../assistant_featuredialog.lua:81 ../main.lua:118 ../main.lua:298
+#: ../assistant_featuredialog.lua:82 ../main.lua:119 ../main.lua:302
 msgid   "Highlight & Note Analysis"
 msgstr  "تحلیل هایلایت و یادداشت"
 
-#: ../assistant_featuredialog.lua:82
+#: ../assistant_featuredialog.lua:83
 msgid   "Loading Highlight & Note Analysis..."
 msgstr  "در حال بارگذاری تحلیل هایلایت و یادداشت..."
 
-#: ../assistant_featuredialog.lua:87 ../main.lua:126 ../main.lua:310
+#: ../assistant_featuredialog.lua:88 ../main.lua:127 ../main.lua:314
 msgid   "Summary Using Highlights & Notes"
 msgstr  "خلاصه با استفاده از هایلایت‌ها و یادداشت‌ها"
 
-#: ../assistant_featuredialog.lua:88
+#: ../assistant_featuredialog.lua:89
 msgid   "Loading Summary Using Highlights & Notes..."
 msgstr  "در حال بارگذاری خلاصه با استفاده از هایلایت‌ها و یادداشت‌ها..."
 
-#: ../assistant_featuredialog.lua:99
-#, lua-format
-msgid   "Unknown feature type: %s"
-msgstr  "نوع ویژگی ناشناخته: %s"
+#: ../assistant_featuredialog.lua:101
+msgid   "Unknown feature type:"
+msgstr  "نوع ویژگی ناشناخته:"
 
-#: ../assistant_featuredialog.lua:185
+#: ../assistant_featuredialog.lua:189
 msgid   " - Title : %1\n"
         " - Author: %2\n"
         " - Reading progress: %3%\n"
@@ -439,7 +442,7 @@ msgstr  "ارتباطات زمینه‌ای"
 msgid   "Cultural Significance"
 msgstr  "اهمیت فرهنگی"
 
-#: ../assistant_prompts.lua:295 ../main.lua:789
+#: ../assistant_prompts.lua:295 ../main.lua:793
 msgid   "Wikipedia"
 msgstr  "ویکی‌پدیا"
 
@@ -600,86 +603,84 @@ msgstr  "مدیر برای %1 یافت نشد. لطفاً فایل configuration
 msgid   "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr  "پردازنده برای %1 یافت نشد. مطمئن شوید که در پوشه api_handlers وجود دارد."
 
-#: ../assistant_querier.lua:156
-msgid   "API Error:\n"
-        "%1\n"
-        "\n"
-        "Try another provider in the settings dialog."
-msgstr  "خطای API:\n"
-        "%1\n"
-        "\n"
-        "در تنظیمات، سرویس‌دهنده‌ی دیگری را امتحان کنید."
+#: ../assistant_querier.lua:158
+msgid   "API Error"
+msgstr  "خطای API"
 
-#: ../assistant_querier.lua:156 ../assistant_querier.lua:813
+#: ../assistant_querier.lua:160 ../assistant_querier.lua:862
 msgid   "Unknown error"
 msgstr  "خطای نامشخص"
 
-#: ../assistant_querier.lua:157
+#: ../assistant_querier.lua:166
+msgid   "Try another provider in the settings dialog."
+msgstr  "ارائه‌دهنده دیگری را در گفتگوی تنظیمات امتحان کنید."
+
+#: ../assistant_querier.lua:171
 msgid   "Settings"
 msgstr  "تنظیمات"
 
-#: ../assistant_querier.lua:159 ../assistant_settings.lua:218
+#: ../assistant_querier.lua:173 ../assistant_settings.lua:218
 #: ../assistant_viewer.lua:338
 msgid   "Close"
 msgstr  "بستن"
 
-#: ../assistant_querier.lua:209
+#: ../assistant_querier.lua:223
 msgid   "Plugin is not configured."
 msgstr  "افزونه پیکربندی نشده است."
 
-#: ../assistant_querier.lua:301 ../assistant_querier.lua:400
+#: ../assistant_querier.lua:315 ../assistant_querier.lua:415
 msgid   "Too many tool-call rounds; aborting."
 msgstr  "تعداد دورهای فراخوانی ابزار زیاد است؛ در حال لغو."
 
-#: ../assistant_querier.lua:309
+#: ../assistant_querier.lua:323
 msgid   "Stream failed with no error message."
 msgstr  "جریان داده بدون پیام خطا با شکست مواجه شد."
 
-#: ../assistant_querier.lua:326
+#: ../assistant_querier.lua:340
 msgid   "Stream ended with no content and no tool calls."
 msgstr  "جریان داده بدون محتوا و بدون فراخوانی ابزار به پایان رسید."
 
-#: ../assistant_querier.lua:373
+#: ../assistant_querier.lua:387
 msgid   "Request Cancelled by user."
 msgstr  "درخواست توسط کاربر لغو شد."
 
-#: ../assistant_querier.lua:382
+#: ../assistant_querier.lua:396
 msgid   "Querying AI ..."
 msgstr  "در حال پرسش از AI …"
 
-#: ../assistant_querier.lua:438
+#: ../assistant_querier.lua:453
 msgid   "Composing answer ..."
 msgstr  "در حال تنظیم پاسخ..."
 
-#: ../assistant_querier.lua:452 ../assistant_querier.lua:601
+#: ../assistant_querier.lua:469 ../assistant_querier.lua:618
 msgid   "Request cancelled by user."
 msgstr  "درخواست توسط کاربر لغو شد."
 
-#: ../assistant_querier.lua:459
+#: ../assistant_querier.lua:476
 msgid   "No response received."
 msgstr  "پاسخی دریافت نشد."
 
-#: ../assistant_querier.lua:493
+#: ../assistant_querier.lua:510
 msgid   "AI is responding"
 msgstr  "AI در حال پاسخ دادن است"
 
-#: ../assistant_querier.lua:512
+#: ../assistant_querier.lua:529
 msgid   "⏹ Stop"
 msgstr  "⏹ متوقف کن"
 
-#: ../assistant_querier.lua:618
+#: ../assistant_querier.lua:635
 msgid   "Failed to start subprocess for request"
 msgstr  "شروع زیرفرآیند درخواست ناموفق بود"
 
-#: ../assistant_querier.lua:843 ../assistant_querier.lua:846
+#: ../assistant_querier.lua:894 ../assistant_querier.lua:897
 msgid   "Deeply Thought"
 msgstr  "بررسی عمیق"
 
-#: ../assistant_querier.lua:1036
+#: ../assistant_querier.lua:1087
 msgid   "Stopped Reason: "
 msgstr  "دلیل توقف: "
 
-#: ../assistant_quicknote.lua:27 ../main.lua:102 ../main.lua:150
+#: ../assistant_quicknote.lua:27 ../main.lua:103 ../main.lua:151
 msgid   "Take Quick Notes"
 msgstr  "یادداشت‌برداری سریع"
 
@@ -883,7 +884,7 @@ msgstr  "تنظیمات assistant.koplugin پاک شوند؟\n"
         "این کار افزونه را به تنظیمات کارخانه بازمی‌گرداند. فقط تنظیمات حذف می‌شوند;\n"
         "فایل configuration.lua حفظ خواهد شد."
 
-#: ../assistant_settings.lua:652 ../main.lua:716
+#: ../assistant_settings.lua:652 ../main.lua:720
 msgid   "Purge"
 msgstr  "حذف"
 
@@ -891,19 +892,15 @@ msgstr  "حذف"
 msgid   "Search keywords are empty."
 msgstr  "کلمات جستجو خالی هستند."
 
-#: ../assistant_tool_executor.lua:142
-msgid   "Searching with %1 ... [%2]\n"
-        "\n"
-        "%3"
-msgstr  "در حال جستجو با %1 ... [%2]\n"
-        "\n"
-        "%3"
+#: ../assistant_tool_executor.lua:143
+msgid   "Searching with %1 ... [%2]"
+msgstr  "جستجو با %1 ... [%2]"
 
-#: ../assistant_tool_executor.lua:297
+#: ../assistant_tool_executor.lua:300
 msgid   "Tool call did not include id."
 msgstr  "فراخوانی ابزار شامل شناسه نشده است."
 
-#: ../assistant_tool_executor.lua:300
+#: ../assistant_tool_executor.lua:303
 msgid   "Tool call did not include search keywords."
 msgstr  "فراخوانی ابزار شامل کلمات جستجو نشده است."
 
@@ -923,33 +920,39 @@ msgstr  "خطای خالی"
 msgid   "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr  "نسخه جدیدی از افزونه %1 (%2) موجود است. لطفاً به‌روزرسانی کنید!"
 
-#: ../assistant_updater.lua:173
-msgid   "Downloading ... \n"
-        "Github: %1\n"
-        "Repo: %2\n"
-        "Branch/Tag: %3"
-msgstr  "در حال دانلود ... \n"
-        "گیت‌هاب: %1\n"
-        "مخزن: %2\n"
-        "شاخه/برچسب: %3"
+#: ../assistant_updater.lua:174
+msgid   "Downloading ..."
+msgstr  "در حال دانلود ..."
 
-#: ../assistant_updater.lua:196
+#: ../assistant_updater.lua:176
+msgid   "Github: "
+msgstr  "گیت‌هاب: "
+
+#: ../assistant_updater.lua:178
+msgid   "Repo: "
+msgstr  "مخزن: "
+
+#: ../assistant_updater.lua:180
+msgid   "Branch/Tag: "
+msgstr  "شاخه/برچسب: "
+
+#: ../assistant_updater.lua:204
 msgid   "Branch/Tag \"%1\" was not found."
 msgstr  "شاخه/برچسب \"%1\" یافت نشد."
 
-#: ../assistant_updater.lua:208
+#: ../assistant_updater.lua:216
 msgid   "OTA update canceled."
 msgstr  "به‌روزرسانی OTA لغو شد."
 
-#: ../assistant_updater.lua:214 ../assistant_updater.lua:297
+#: ../assistant_updater.lua:222 ../assistant_updater.lua:309
 msgid   "OTA update failed: %1"
 msgstr  "به‌روزرسانی OTA ناموفق بود: %1"
 
-#: ../assistant_updater.lua:219
+#: ../assistant_updater.lua:229
 msgid   "Installing %1..."
 msgstr  "در حال نصب %1..."
 
-#: ../assistant_updater.lua:301
+#: ../assistant_updater.lua:313
 msgid   "OTA UPDATE OK.\n"
         " Restart is required."
 msgstr  "به‌روزرسانی OTA با موفقیت انجام شد.\n"
@@ -959,21 +962,23 @@ msgstr  "به‌روزرسانی OTA با موفقیت انجام شد.\n"
 msgid   "Page"
 msgstr  "صفحه"
 
-#: ../assistant_utils.lua:194
-msgid   "Cannot access default folder for logs: %1\n"
-        "Using original location."
-msgstr  "دسترسی به پوشهٔ پیش‌فرض برای گزارش‌ها ممکن نیست: %1\n"
-        "از مکان اصلی استفاده می‌شود."
+#: ../assistant_utils.lua:195
+msgid   "Cannot access default folder for logs: %1"
+msgstr  "دسترسی به پوشه پیش‌فرض برای لاگ‌ها ممکن نیست: %1"
 
-#: ../assistant_utils.lua:249
+#: ../assistant_utils.lua:196
+msgid   "Using original location."
+msgstr  "استفاده از مکان اصلی."
+
+#: ../assistant_utils.lua:252
 msgid   "Notebook save failed. Continuing..."
 msgstr  "ذخیرهٔ دفترچه ناموفق بود. ادامه می‌دهیم..."
 
-#: ../assistant_utils.lua:378
+#: ../assistant_utils.lua:381
 msgid   "##### You may find these topics interesting:"
 msgstr  "##### ممکن است این موضوعات برایتان جالب باشد:"
 
-#: ../assistant_utils.lua:674
+#: ../assistant_utils.lua:742
 msgid   "fetchJSON: failed to parse returned data"
 msgstr  "fetchJSON: تجزیه داده‌های برگشتی انجام نشد"
 
@@ -1034,45 +1039,43 @@ msgstr  "کلمه در حافظه کپی شد."
 msgid   "Selection copied to clipboard."
 msgstr  "انتخاب در حافظه کپی شد."
 
-#: ../main.lua:78 ../main.lua:138
+#: ../main.lua:79 ../main.lua:139
 msgid   "Ask the AI a question"
 msgstr  "به AI سؤال بپرسید"
 
-#: ../main.lua:86 ../main.lua:284
+#: ../main.lua:87 ../main.lua:288
 msgid   "AI Recaps"
 msgstr  "خلاصه‌های AI"
 
-#: ../main.lua:94 ../main.lua:269
+#: ../main.lua:95 ../main.lua:273
 msgid   "AI X-Ray"
 msgstr  "اشعه ایکس هوشمند"
 
-#: ../main.lua:110 ../main.lua:254
+#: ../main.lua:111 ../main.lua:258
 msgid   "Book Summary & Recs"
 msgstr  "خلاصه و پیشنهاد کتاب"
 
-#: ../main.lua:145
+#: ../main.lua:146
 msgid   "Enter a question to ask AI."
 msgstr  "سؤال خود را برای هوش مصنوعی وارد کنید."
 
-#: ../main.lua:156
+#: ../main.lua:157
 msgid   "Take quick notes that will be saved to your notebook."
 msgstr  "یادداشت‌های سریع خود را بردارید تا در دفترچهٔ یادداشتتان ذخیره شوند."
 
-#: ../main.lua:161
+#: ../main.lua:162
 msgid   "NoteBook (AI Conversation Log)"
 msgstr  "دفترچه یادداشت (گفت‌وگوی هوش مصنوعی)"
 
-#: ../main.lua:167
-msgid   "Notebook file: \n"
-        "\n"
-msgstr  "فایل دفترچه‌یادداشت: \n"
-        "\n"
+#: ../main.lua:169
+msgid   "Notebook file:"
+msgstr  "فایل دفترچه یادداشت:"
 
-#: ../main.lua:168
+#: ../main.lua:172
 msgid   "View"
 msgstr  "مشاهده"
 
-#: ../main.lua:172
+#: ../main.lua:176
 msgid   "File does not exist.\n"
         "\n"
         "%1"
@@ -1080,11 +1083,11 @@ msgstr  "فایل وجود ندارد.\n"
         "\n"
         "%1"
 
-#: ../main.lua:180 ../main.lua:184
+#: ../main.lua:184 ../main.lua:188
 msgid   "Delete"
 msgstr  "حذف"
 
-#: ../main.lua:183
+#: ../main.lua:187
 msgid   "Delete file?\n"
         "%1\n"
         "This operation is not reversible."
@@ -1092,87 +1095,87 @@ msgstr  "فایل حذف شود؟\n"
         "%1\n"
         "این عمل برگشت‌ناپذیر است."
 
-#: ../main.lua:195
+#: ../main.lua:199
 msgid   "Edit"
 msgstr  "ویرایش"
 
-#: ../main.lua:209
+#: ../main.lua:213
 msgid   "AI Provider: %1(%2)"
 msgstr  "ارائه‌دهنده هوش مصنوعی: %1(%2)"
 
-#: ../main.lua:222
+#: ../main.lua:226
 msgid   "Smart Web Search: %1"
 msgstr  "جستجوی هوشمند وب: %1"
 
-#: ../main.lua:226
+#: ../main.lua:230
 msgid   "Improves response accuracy with real-time web results. \n"
         "Note: Higher token usage and additional API charges apply."
 msgstr  "دقت پاسخ را با نتایج وب بلادرنگ بهبود می‌بخشد.\n"
         "توجه: مصرف توکن بالاتر و هزینه‌های API اضافی اعمال می‌شود."
 
-#: ../main.lua:232
+#: ../main.lua:236
 msgid   "Other Settings"
 msgstr  "سایر تنظیمات"
 
-#: ../main.lua:250
+#: ../main.lua:254
 msgid   "Book-Level Built-in Prompts"
 msgstr  "درخواست‌های داخلی سطح کتاب"
 
-#: ../main.lua:263
+#: ../main.lua:267
 msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr  "خلاصه کتاب، زندگی‌نامه نویسنده، زمینه تاریخی و فهرستی از کتاب‌های مشابه همراه با توضیحات."
 
-#: ../main.lua:278
+#: ../main.lua:282
 msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr  "خلاصه «X-Ray» کتاب در بخش‌هایی مانند شخصیت‌ها، مکان‌ها، مضامین، اصطلاحات و مفاهیم، زمان‌بندی و بازگشت به داستان."
 
-#: ../main.lua:293
+#: ../main.lua:297
 msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr  "خلاصه‌ای بسیار کوتاه و بدون اسپویل از کتاب تا جایی که خوانده‌اید."
 
-#: ../main.lua:304
+#: ../main.lua:308
 msgid   "Analysis of your highlights, notes, and notebook content from the book."
 msgstr  "تحلیل هایلایت‌ها، یادداشت‌ها و محتوای دفترچهٔ شما از کتاب."
 
-#: ../main.lua:319
+#: ../main.lua:323
 msgid   "Summary of the book using your highlights and notes."
 msgstr  "خلاصه‌ای از کتاب با استفاده از هایلایت‌ها و یادداشت‌های شما."
 
-#: ../main.lua:326
+#: ../main.lua:330
 msgid   "Book-Level Custom Prompts"
 msgstr  "درخواست‌های سفارشی سطح کتاب"
 
-#: ../main.lua:333
+#: ../main.lua:337
 msgid   "Includes user defined book level prompts from Config file"
 msgstr  "شامل درخواست‌های سطح کتاب تعریف‌شده توسط کاربر در فایل پیکربندی"
 
-#: ../main.lua:408
+#: ../main.lua:412
 msgid   "This is a custom prompt"
 msgstr  "این یک درخواست سفارشی است"
 
-#: ../main.lua:418
+#: ../main.lua:422
 msgid   "No valid book-level custom prompt found"
 msgstr  "هیچ فرمان سفارشی معتبری در سطح کتاب یافت نشد"
 
-#: ../main.lua:423
+#: ../main.lua:427
 msgid   "For details, visit the 'Configuration' wiki page on github."
 msgstr  "برای جزئیات، به صفحه ویکی 'پیکربندی' در گیت‌هاب مراجعه کنید."
 
-#: ../main.lua:506
+#: ../main.lua:510
 msgid   "No valid model provider is found in the configuration.lua"
 msgstr  "هیچ ارائه‌دهندهٔ مدل معتبری در configuration.lua یافت نشد"
 
-#: ../main.lua:524
+#: ../main.lua:528
 msgid   "Configuration Error.\n"
         "Please set up configuration.lua."
 msgstr  "خطای پیکربندی.\n"
         "لطفاً configuration.lua را تنظیم کنید."
 
-#: ../main.lua:596
+#: ../main.lua:600
 msgid   "configuration.lua: model providers are invalid."
 msgstr  "configuration.lua: ارائه‌دهندگان مدل نامعتبرند."
 
-#: ../main.lua:681
+#: ../main.lua:685
 msgid   "Usage Tips\n"
         "\n"
         "Select:\n"
@@ -1204,15 +1207,15 @@ msgstr  "نکات استفاده\n"
         "سوایپ چندگانه (مثلاً ⮠، ⮡، ↺):\n"
         "روی پنجره نتیجه برای بستن (چون دکمه بستن دور است).\n"
 
-#: ../main.lua:703
+#: ../main.lua:707
 msgid   "Version Info"
 msgstr  "اطلاعات نسخه"
 
-#: ../main.lua:709
+#: ../main.lua:713
 msgid   "Purge Settings"
 msgstr  "بازنشانی تنظیمات"
 
-#: ../main.lua:712
+#: ../main.lua:716
 msgid   "Are you sure to purge the assistant plugin settings? \n"
         "This resets the assistant plugin to the status the first time you installed it.\n"
         "\n"
@@ -1222,29 +1225,36 @@ msgstr  "آیا مطمئن هستید که می‌خواهید تنظیمات ا
         "\n"
         "configuration.lua ایمن است، فقط تنظیمات حذف می‌شوند."
 
-#: ../main.lua:765
+#: ../main.lua:769
 #, lua-format
 msgid   "Remove [%s] from Highlight Menu?"
 msgstr  "آیا می‌خواهید [%s] را از منوی برجسته‌سازی حذف کنید؟"
 
-#: ../main.lua:766
+#: ../main.lua:770
 msgid   "Remove"
 msgstr  "حذف"
 
-#: ../main.lua:1011
+#: ../main.lua:1015
 msgid   "Configuration not found. Please set up configuration.lua first."
 msgstr  "پیکربندی یافت نشد. ابتدا configuration.lua را تنظیم کنید."
 
-#: ../main.lua:1058
-msgid   "Added [%1 (AI)] to Highlight Menu."
-msgstr  "[%1 (AI)] به منوی برجسته‌سازی افزوده شد."
+#: ../main.lua:1063
+msgid   "Added"
+msgstr  "افزوده شد"
 
-#: ../main.lua:1067
-#, lua-format
-msgid   "Removed [%s (AI)] from Highlight Menu."
-msgstr  "[%s (AI)] از منوی برجسته‌سازی حذف شد."
+#: ../main.lua:1065
+msgid   "to Highlight Menu."
+msgstr  "به منوی هایلایت."
 
-#: ../main.lua:1111
+#: ../main.lua:1076
+msgid   "Removed"
+msgstr  "حذف شد"
+
+#: ../main.lua:1078
+msgid   "from Highlight Menu."
+msgstr  "از منوی هایلایت."
+
+#: ../main.lua:1123
 msgid   "Do you want an AI Recap?\n"
         "For %1 by %2.\n"
         "\n"
@@ -1252,32 +1262,36 @@ msgstr  "خلاصهٔ هوش مصنوعی می‌خواهید؟\n"
         "برای %1 از %2.\n"
         "\n"
 
-#: ../main.lua:1112
+#: ../main.lua:1124
 msgid   "Last read an hour ago."
 msgid_plural    "Last read %1 hours ago."
 msgstr[0]       "آخرین بار یک ساعت پیش خوانده شد."
 msgstr[1]       "آخرین بار %1 ساعت پیش خوانده شد."
 
-#: ../main.lua:1117
+#: ../main.lua:1129
 msgid   "Yes"
 msgstr  "بله"
 
-#: ../main.lua:1126
+#: ../main.lua:1138
 msgid   "No"
 msgstr  "خیر"
 
-#: ../main.lua:1172
+#: ../main.lua:1179
 msgid   "Markdown Engine"
 msgstr  "موتور مارک‌داون"
 
-#: ../main.lua:1174
+#: ../main.lua:1180
+msgid   "KOReader"
+msgstr  "KOReader"
+
+#: ../main.lua:1181
 msgid   "Device"
 msgstr  "دستگاه"
 
-#: ../main.lua:1175
+#: ../main.lua:1182
 msgid   "Platform"
 msgstr  "پلتفرم"
 
-#: ../main.lua:1176
+#: ../main.lua:1183
 msgid   "Runtime"
 msgstr  "زمان اجرا"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-29 15:45+0800\n"
+"POT-Creation-Date: 2026-08-04 17:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:481 ../main.lua:350 ../main.lua:360
-#: ../main.lua:562
+#: ../_meta.lua:4 ../assistant_dialog.lua:485 ../main.lua:354 ../main.lua:364
+#: ../main.lua:566
 msgid "AI Assistant"
 msgstr ""
 
@@ -27,14 +27,14 @@ msgstr ""
 msgid "💡 Enhance your KOReader experience with AI"
 msgstr ""
 
-#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:30
-#: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
+#: ../api_handlers/anthropic.lua:30 ../api_handlers/gemini.lua:32
+#: ../api_handlers/openai.lua:43 ../api_handlers/responses.lua:52
 msgid "Fetching models..."
 msgstr ""
 
-#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:40
-#: ../api_handlers/gemini.lua:50 ../api_handlers/openai.lua:58
-#: ../api_handlers/responses.lua:67
+#: ../api_handlers/anthropic.lua:48 ../api_handlers/gemini.lua:43
+#: ../api_handlers/gemini.lua:53 ../api_handlers/openai.lua:60
+#: ../api_handlers/responses.lua:69
 msgid "Failed to fetch models"
 msgstr ""
 
@@ -76,51 +76,55 @@ msgstr ""
 msgid "Enter a question before proceeding."
 msgstr ""
 
-#: ../assistant_dialog.lua:444
+#: ../assistant_dialog.lua:447
 msgid "Add this button to the Highlight Menu?"
 msgstr ""
 
-#: ../assistant_dialog.lua:445
+#: ../assistant_dialog.lua:449
 msgid "Add"
 msgstr ""
 
-#: ../assistant_dialog.lua:472
+#: ../assistant_dialog.lua:476
 msgid "Ask a question about the highlighted text"
 msgstr ""
 
-#: ../assistant_dialog.lua:473
+#: ../assistant_dialog.lua:477
 #, lua-format
 msgid ""
 "Ask a question about this book:\n"
 "%s by %s"
 msgstr ""
 
-#: ../assistant_dialog.lua:474
+#: ../assistant_dialog.lua:478
 msgid "Ask a general question"
 msgstr ""
 
-#: ../assistant_dialog.lua:476
+#: ../assistant_dialog.lua:480
 msgid "Type your question here..."
 msgstr ""
 
-#: ../assistant_dialog.lua:477
+#: ../assistant_dialog.lua:481
 msgid "Ask anything about this book..."
 msgstr ""
 
-#: ../assistant_dialog.lua:478
+#: ../assistant_dialog.lua:482
 msgid "Ask anything..."
 msgstr ""
 
-#: ../assistant_dialog.lua:502
+#: ../assistant_dialog.lua:506
 msgid "Use book text as context"
 msgstr ""
 
-#: ../assistant_dialog.lua:555
+#: ../assistant_dialog.lua:559
 msgid "Loading for %1 ..."
 msgstr ""
 
-#: ../assistant_dialog.lua:568
-msgid "Error: No response received"
+#: ../assistant_dialog.lua:573
+msgid "Error:"
+msgstr ""
+
+#: ../assistant_dialog.lua:573
+msgid "No response received"
 msgstr ""
 
 #: ../assistant_dictdialog.lua:155
@@ -135,23 +139,23 @@ msgstr ""
 msgid "Look Up"
 msgstr ""
 
-#: ../assistant_dictdialog.lua:214
+#: ../assistant_dictdialog.lua:215
 msgid "Analyzing book context for Term X-Ray..."
 msgstr ""
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:808
+#: ../assistant_dictdialog.lua:392 ../assistant_prompts.lua:27 ../main.lua:812
 msgid "Term X-Ray"
 msgstr ""
 
-#: ../assistant_dictdialog.lua:393
+#: ../assistant_dictdialog.lua:395
 msgid "Loading Term X-Ray ..."
 msgstr ""
 
-#: ../assistant_dictdialog.lua:410 ../assistant_prompts.lua:74 ../main.lua:826
+#: ../assistant_dictdialog.lua:412 ../assistant_prompts.lua:74 ../main.lua:830
 msgid "Dictionary"
 msgstr ""
 
-#: ../assistant_dictdialog.lua:411
+#: ../assistant_dictdialog.lua:413
 msgid "Loading AI Dictionary ..."
 msgstr ""
 
@@ -163,61 +167,60 @@ msgstr ""
 msgid "Model Built-In"
 msgstr ""
 
-#: ../assistant_featuredialog.lua:41
+#: ../assistant_featuredialog.lua:42
 msgid "Custom Prompt"
 msgstr ""
 
-#: ../assistant_featuredialog.lua:42
+#: ../assistant_featuredialog.lua:43
 msgid "Loading..."
 msgstr ""
 
-#: ../assistant_featuredialog.lua:63
+#: ../assistant_featuredialog.lua:64
 msgid "Recap"
 msgstr ""
 
-#: ../assistant_featuredialog.lua:64
+#: ../assistant_featuredialog.lua:65
 msgid "Loading Recap..."
 msgstr ""
 
-#: ../assistant_featuredialog.lua:69
+#: ../assistant_featuredialog.lua:70
 msgid "X‑Ray"
 msgstr ""
 
-#: ../assistant_featuredialog.lua:70
+#: ../assistant_featuredialog.lua:71
 msgid "Loading X-Ray..."
 msgstr ""
 
 #. @translators book_info section headers and sub-fields
-#: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
+#: ../assistant_featuredialog.lua:76 ../assistant_prompts.lua:440
 msgid "Book Information"
 msgstr ""
 
-#: ../assistant_featuredialog.lua:76
+#: ../assistant_featuredialog.lua:77
 msgid "Loading Book Information..."
 msgstr ""
 
-#: ../assistant_featuredialog.lua:81 ../main.lua:118 ../main.lua:298
+#: ../assistant_featuredialog.lua:82 ../main.lua:119 ../main.lua:302
 msgid "Highlight & Note Analysis"
 msgstr ""
 
-#: ../assistant_featuredialog.lua:82
+#: ../assistant_featuredialog.lua:83
 msgid "Loading Highlight & Note Analysis..."
 msgstr ""
 
-#: ../assistant_featuredialog.lua:87 ../main.lua:126 ../main.lua:310
+#: ../assistant_featuredialog.lua:88 ../main.lua:127 ../main.lua:314
 msgid "Summary Using Highlights & Notes"
 msgstr ""
 
-#: ../assistant_featuredialog.lua:88
+#: ../assistant_featuredialog.lua:89
 msgid "Loading Summary Using Highlights & Notes..."
 msgstr ""
 
-#: ../assistant_featuredialog.lua:99
-#, lua-format
-msgid "Unknown feature type: %s"
+#: ../assistant_featuredialog.lua:101
+msgid "Unknown feature type:"
 msgstr ""
 
-#: ../assistant_featuredialog.lua:185
+#: ../assistant_featuredialog.lua:189
 msgid ""
 " - Title : %1\n"
 " - Author: %2\n"
@@ -441,7 +444,7 @@ msgstr ""
 msgid "Cultural Significance"
 msgstr ""
 
-#: ../assistant_prompts.lua:295 ../main.lua:789
+#: ../assistant_prompts.lua:295 ../main.lua:793
 msgid "Wikipedia"
 msgstr ""
 
@@ -602,84 +605,84 @@ msgstr ""
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr ""
 
-#: ../assistant_querier.lua:156
-msgid ""
-"API Error:\n"
-"%1\n"
-"\n"
-"Try another provider in the settings dialog."
+#: ../assistant_querier.lua:158
+msgid "API Error"
 msgstr ""
 
-#: ../assistant_querier.lua:156 ../assistant_querier.lua:813
+#: ../assistant_querier.lua:160 ../assistant_querier.lua:862
 msgid "Unknown error"
 msgstr ""
 
-#: ../assistant_querier.lua:157
+#: ../assistant_querier.lua:166
+msgid "Try another provider in the settings dialog."
+msgstr ""
+
+#: ../assistant_querier.lua:171
 msgid "Settings"
 msgstr ""
 
-#: ../assistant_querier.lua:159 ../assistant_settings.lua:218
+#: ../assistant_querier.lua:173 ../assistant_settings.lua:218
 #: ../assistant_viewer.lua:338
 msgid "Close"
 msgstr ""
 
-#: ../assistant_querier.lua:209
+#: ../assistant_querier.lua:223
 msgid "Plugin is not configured."
 msgstr ""
 
-#: ../assistant_querier.lua:301 ../assistant_querier.lua:400
+#: ../assistant_querier.lua:315 ../assistant_querier.lua:415
 msgid "Too many tool-call rounds; aborting."
 msgstr ""
 
-#: ../assistant_querier.lua:309
+#: ../assistant_querier.lua:323
 msgid "Stream failed with no error message."
 msgstr ""
 
-#: ../assistant_querier.lua:326
+#: ../assistant_querier.lua:340
 msgid "Stream ended with no content and no tool calls."
 msgstr ""
 
-#: ../assistant_querier.lua:373
+#: ../assistant_querier.lua:387
 msgid "Request Cancelled by user."
 msgstr ""
 
-#: ../assistant_querier.lua:382
+#: ../assistant_querier.lua:396
 msgid "Querying AI ..."
 msgstr ""
 
-#: ../assistant_querier.lua:438
+#: ../assistant_querier.lua:453
 msgid "Composing answer ..."
 msgstr ""
 
-#: ../assistant_querier.lua:452 ../assistant_querier.lua:601
+#: ../assistant_querier.lua:469 ../assistant_querier.lua:618
 msgid "Request cancelled by user."
 msgstr ""
 
-#: ../assistant_querier.lua:459
+#: ../assistant_querier.lua:476
 msgid "No response received."
 msgstr ""
 
-#: ../assistant_querier.lua:493
+#: ../assistant_querier.lua:510
 msgid "AI is responding"
 msgstr ""
 
-#: ../assistant_querier.lua:512
+#: ../assistant_querier.lua:529
 msgid "⏹ Stop"
 msgstr ""
 
-#: ../assistant_querier.lua:618
+#: ../assistant_querier.lua:635
 msgid "Failed to start subprocess for request"
 msgstr ""
 
-#: ../assistant_querier.lua:843 ../assistant_querier.lua:846
+#: ../assistant_querier.lua:894 ../assistant_querier.lua:897
 msgid "Deeply Thought"
 msgstr ""
 
-#: ../assistant_querier.lua:1036
+#: ../assistant_querier.lua:1087
 msgid "Stopped Reason: "
 msgstr ""
 
-#: ../assistant_quicknote.lua:27 ../main.lua:102 ../main.lua:150
+#: ../assistant_quicknote.lua:27 ../main.lua:103 ../main.lua:151
 msgid "Take Quick Notes"
 msgstr ""
 
@@ -873,7 +876,7 @@ msgid ""
 "File configuration.lua will be preserved."
 msgstr ""
 
-#: ../assistant_settings.lua:652 ../main.lua:716
+#: ../assistant_settings.lua:652 ../main.lua:720
 msgid "Purge"
 msgstr ""
 
@@ -881,18 +884,15 @@ msgstr ""
 msgid "Search keywords are empty."
 msgstr ""
 
-#: ../assistant_tool_executor.lua:142
-msgid ""
-"Searching with %1 ... [%2]\n"
-"\n"
-"%3"
-msgstr ""
-
-#: ../assistant_tool_executor.lua:297
-msgid "Tool call did not include id."
+#: ../assistant_tool_executor.lua:143
+msgid "Searching with %1 ... [%2]"
 msgstr ""
 
 #: ../assistant_tool_executor.lua:300
+msgid "Tool call did not include id."
+msgstr ""
+
+#: ../assistant_tool_executor.lua:303
 msgid "Tool call did not include search keywords."
 msgstr ""
 
@@ -912,31 +912,39 @@ msgstr ""
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr ""
 
-#: ../assistant_updater.lua:173
-msgid ""
-"Downloading ... \n"
-"Github: %1\n"
-"Repo: %2\n"
-"Branch/Tag: %3"
+#: ../assistant_updater.lua:174
+msgid "Downloading ..."
 msgstr ""
 
-#: ../assistant_updater.lua:196
+#: ../assistant_updater.lua:176
+msgid "Github: "
+msgstr ""
+
+#: ../assistant_updater.lua:178
+msgid "Repo: "
+msgstr ""
+
+#: ../assistant_updater.lua:180
+msgid "Branch/Tag: "
+msgstr ""
+
+#: ../assistant_updater.lua:204
 msgid "Branch/Tag \"%1\" was not found."
 msgstr ""
 
-#: ../assistant_updater.lua:208
+#: ../assistant_updater.lua:216
 msgid "OTA update canceled."
 msgstr ""
 
-#: ../assistant_updater.lua:214 ../assistant_updater.lua:297
+#: ../assistant_updater.lua:222 ../assistant_updater.lua:309
 msgid "OTA update failed: %1"
 msgstr ""
 
-#: ../assistant_updater.lua:219
+#: ../assistant_updater.lua:229
 msgid "Installing %1..."
 msgstr ""
 
-#: ../assistant_updater.lua:301
+#: ../assistant_updater.lua:313
 msgid ""
 "OTA UPDATE OK.\n"
 " Restart is required."
@@ -946,21 +954,23 @@ msgstr ""
 msgid "Page"
 msgstr ""
 
-#: ../assistant_utils.lua:194
-msgid ""
-"Cannot access default folder for logs: %1\n"
-"Using original location."
+#: ../assistant_utils.lua:195
+msgid "Cannot access default folder for logs: %1"
 msgstr ""
 
-#: ../assistant_utils.lua:249
+#: ../assistant_utils.lua:196
+msgid "Using original location."
+msgstr ""
+
+#: ../assistant_utils.lua:252
 msgid "Notebook save failed. Continuing..."
 msgstr ""
 
-#: ../assistant_utils.lua:378
+#: ../assistant_utils.lua:381
 msgid "##### You may find these topics interesting:"
 msgstr ""
 
-#: ../assistant_utils.lua:674
+#: ../assistant_utils.lua:742
 msgid "fetchJSON: failed to parse returned data"
 msgstr ""
 
@@ -1021,143 +1031,141 @@ msgstr ""
 msgid "Selection copied to clipboard."
 msgstr ""
 
-#: ../main.lua:78 ../main.lua:138
+#: ../main.lua:79 ../main.lua:139
 msgid "Ask the AI a question"
 msgstr ""
 
-#: ../main.lua:86 ../main.lua:284
+#: ../main.lua:87 ../main.lua:288
 msgid "AI Recaps"
 msgstr ""
 
-#: ../main.lua:94 ../main.lua:269
+#: ../main.lua:95 ../main.lua:273
 msgid "AI X-Ray"
 msgstr ""
 
-#: ../main.lua:110 ../main.lua:254
+#: ../main.lua:111 ../main.lua:258
 msgid "Book Summary & Recs"
 msgstr ""
 
-#: ../main.lua:145
+#: ../main.lua:146
 msgid "Enter a question to ask AI."
 msgstr ""
 
-#: ../main.lua:156
+#: ../main.lua:157
 msgid "Take quick notes that will be saved to your notebook."
 msgstr ""
 
-#: ../main.lua:161
+#: ../main.lua:162
 msgid "NoteBook (AI Conversation Log)"
 msgstr ""
 
-#: ../main.lua:167
-msgid ""
-"Notebook file: \n"
-"\n"
-msgstr ""
-
-#: ../main.lua:168
-msgid "View"
+#: ../main.lua:169
+msgid "Notebook file:"
 msgstr ""
 
 #: ../main.lua:172
+msgid "View"
+msgstr ""
+
+#: ../main.lua:176
 msgid ""
 "File does not exist.\n"
 "\n"
 "%1"
 msgstr ""
 
-#: ../main.lua:180 ../main.lua:184
+#: ../main.lua:184 ../main.lua:188
 msgid "Delete"
 msgstr ""
 
-#: ../main.lua:183
+#: ../main.lua:187
 msgid ""
 "Delete file?\n"
 "%1\n"
 "This operation is not reversible."
 msgstr ""
 
-#: ../main.lua:195
+#: ../main.lua:199
 msgid "Edit"
 msgstr ""
 
-#: ../main.lua:209
+#: ../main.lua:213
 msgid "AI Provider: %1(%2)"
 msgstr ""
 
-#: ../main.lua:222
+#: ../main.lua:226
 msgid "Smart Web Search: %1"
 msgstr ""
 
-#: ../main.lua:226
+#: ../main.lua:230
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 
-#: ../main.lua:232
+#: ../main.lua:236
 msgid "Other Settings"
 msgstr ""
 
-#: ../main.lua:250
+#: ../main.lua:254
 msgid "Book-Level Built-in Prompts"
 msgstr ""
 
-#: ../main.lua:263
+#: ../main.lua:267
 msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr ""
 
-#: ../main.lua:278
+#: ../main.lua:282
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr ""
 
-#: ../main.lua:293
+#: ../main.lua:297
 msgid "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr ""
 
-#: ../main.lua:304
+#: ../main.lua:308
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr ""
 
-#: ../main.lua:319
+#: ../main.lua:323
 msgid "Summary of the book using your highlights and notes."
 msgstr ""
 
-#: ../main.lua:326
+#: ../main.lua:330
 msgid "Book-Level Custom Prompts"
 msgstr ""
 
-#: ../main.lua:333
+#: ../main.lua:337
 msgid "Includes user defined book level prompts from Config file"
 msgstr ""
 
-#: ../main.lua:408
+#: ../main.lua:412
 msgid "This is a custom prompt"
 msgstr ""
 
-#: ../main.lua:418
+#: ../main.lua:422
 msgid "No valid book-level custom prompt found"
 msgstr ""
 
-#: ../main.lua:423
+#: ../main.lua:427
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr ""
 
-#: ../main.lua:506
+#: ../main.lua:510
 msgid "No valid model provider is found in the configuration.lua"
 msgstr ""
 
-#: ../main.lua:524
+#: ../main.lua:528
 msgid ""
 "Configuration Error.\n"
 "Please set up configuration.lua."
 msgstr ""
 
-#: ../main.lua:596
+#: ../main.lua:600
 msgid "configuration.lua: model providers are invalid."
 msgstr ""
 
-#: ../main.lua:681
+#: ../main.lua:685
 msgid ""
 "Usage Tips\n"
 "\n"
@@ -1176,15 +1184,15 @@ msgid ""
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 
-#: ../main.lua:703
+#: ../main.lua:707
 msgid "Version Info"
 msgstr ""
 
-#: ../main.lua:709
+#: ../main.lua:713
 msgid "Purge Settings"
 msgstr ""
 
-#: ../main.lua:712
+#: ../main.lua:716
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
@@ -1192,61 +1200,72 @@ msgid ""
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
 
-#: ../main.lua:765
+#: ../main.lua:769
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr ""
 
-#: ../main.lua:766
+#: ../main.lua:770
 msgid "Remove"
 msgstr ""
 
-#: ../main.lua:1011
+#: ../main.lua:1015
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr ""
 
-#: ../main.lua:1058
-msgid "Added [%1 (AI)] to Highlight Menu."
+#: ../main.lua:1063
+msgid "Added"
 msgstr ""
 
-#: ../main.lua:1067
-#, lua-format
-msgid "Removed [%s (AI)] from Highlight Menu."
+#: ../main.lua:1065
+msgid "to Highlight Menu."
 msgstr ""
 
-#: ../main.lua:1111
+#: ../main.lua:1076
+msgid "Removed"
+msgstr ""
+
+#: ../main.lua:1078
+msgid "from Highlight Menu."
+msgstr ""
+
+#: ../main.lua:1123
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
 "\n"
 msgstr ""
 
-#: ../main.lua:1112
+#: ../main.lua:1124
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../main.lua:1117
+#: ../main.lua:1129
 msgid "Yes"
 msgstr ""
 
-#: ../main.lua:1126
+#: ../main.lua:1138
 msgid "No"
 msgstr ""
 
-#: ../main.lua:1172
+#: ../main.lua:1179
 msgid "Markdown Engine"
 msgstr ""
 
-#: ../main.lua:1174
+#: ../main.lua:1180
+msgid "KOReader"
+msgstr ""
+
+#: ../main.lua:1181
 msgid "Device"
 msgstr ""
 
-#: ../main.lua:1175
+#: ../main.lua:1182
 msgid "Platform"
 msgstr ""
 
-#: ../main.lua:1176
+#: ../main.lua:1183
 msgid "Runtime"
 msgstr ""
