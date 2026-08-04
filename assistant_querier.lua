@@ -392,10 +392,11 @@ function Querier:query(message_history, title)
         -- NON-STREAM PATH  — may loop for tool calls
         -- ---------------------------------------------------------------
         local tool_notice = T("\n🌐 %1", ToolExecutor.ToolToText(query_option.use_websearch))
-        local notify = T("%1\n️☁️ %2\n⚡ %3%4",
-            title or _("Querying AI ..."),
-            self.provider_name, self.handler.model,
-            query_option.use_websearch ~= "none" and tool_notice or "")
+        local notify = assistant_utils.ptf_format{
+            { text = title or _("Querying AI ..."), bold = true },
+            "\n☁️ ", self.provider_name, "\n⚡ ", self.handler.model,
+            query_option.use_websearch ~= "none" and tool_notice or "",
+        }
         local infomsg = InfoMessage:new{ icon = "book.opened", text = notify }
         UIManager:show(infomsg)
         self.handler:setTrapWidget(infomsg)
@@ -448,8 +449,10 @@ function Querier:query(message_history, title)
                 UIManager:close(self.handler:resetTrapWidget())
                 local follow_msg = InfoMessage:new{
                     icon = "book.opened",
-                    text = T("%1\n️☁️ %2\n⚡ %3",
-                        _("Composing answer ..."), self.provider_name, self.handler.model),
+                    text = assistant_utils.ptf_format{
+                        { text = _("Composing answer ..."), bold = true },
+                        "\n☁️ ", self.provider_name, "\n⚡ ", self.handler.model,
+                    },
                 }
                 UIManager:show(follow_msg)
                 self.handler:setTrapWidget(follow_msg)

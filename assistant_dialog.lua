@@ -441,7 +441,11 @@ function AssistantDialog:show(highlightedText)
           local menukey = string.format("assistant_%02d_%s", tab.order, tab.idx)
           local settingkey = "showOnMain_" .. menukey
           UIManager:show(ConfirmBox:new{
-            text = string.format("%s: %s\n\n%s", tab.text, tab.desc, _("Add this button to the Highlight Menu?")),
+            text = assistant_utils.ptf_format{
+              { text = tab.text, bold = true },
+              ": ", tab.desc, "\n\n",
+              _("Add this button to the Highlight Menu?"),
+            },
             ok_text = _("Add"),
             ok_callback = function()
               self.assistant:handleEvent(Event:new("AssistantSetButton", {order=tab.order, idx=tab.idx}, "add"))
@@ -565,7 +569,10 @@ function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
   end
 
   if not message_history or #message_history < 1 then
-    UIManager:show(InfoMessage:new{text = _("Error: No response received"), icon = "notice-warning"})
+    UIManager:show(InfoMessage:new{
+        text = assistant_utils.ptf_format{ { text = _("Error:"), bold = true }, " ", _("No response received") },
+        icon = "notice-warning"
+    })
     return
   end
 

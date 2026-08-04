@@ -139,7 +139,10 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round)
     local keywordmsg = InfoMessage:new({
         face = Font:getFace("smallinfofont"),
         icon = "appbar.search",
-        text = T(_("Searching with %1 ... [%2]\n\n%3"), ToolExecutor.ToolToText(ws_mode), tool_round, keywords),
+        text = ASUtils.ptf_format{
+            { text = T(_("Searching with %1 ... [%2]"), ToolExecutor.ToolToText(ws_mode), tool_round), bold = true },
+            "\n\n", keywords,
+        },
     })
     UIManager:show(keywordmsg)
 

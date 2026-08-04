@@ -39,7 +39,9 @@ end
 function OpenAIHandler:FetchModels()
     local model_url = self.base_url .. "/models"
     local infomsg = InfoMessage:new{
-        text = _("Fetching models..."),
+        text = ASUtils.ptf_format{
+            { text = _("Fetching models..."), bold = true },
+        },
     }
     UIManager:show(infomsg)
     local models, err = ASUtils.fetchJSON(model_url, {

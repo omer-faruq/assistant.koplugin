@@ -18,6 +18,7 @@ local TextViewer = require("ui/widget/textviewer")
 local ButtonDialog = require("ui/widget/buttondialog")
 local ffiutil = require("ffi/util")
 local ToolExecutor = require("assistant_tool_executor")
+local assistant_utils = require("assistant_utils")
 
 local _ = require("assistant_gettext")
 local N_ = _.ngettext
@@ -164,7 +165,10 @@ function Assistant:addToMainMenu(menu_items)
                   UIManager:show(ConfirmBox:new{
                     icon = "appbar.pageview",
                     face = Font:getFace("smallinfofont"),
-                    text = _("Notebook file: \n\n") .. notebookfile,
+                    text = assistant_utils.ptf_format{
+                        { text = _("Notebook file:"), bold = true },
+                        "\n\n", notebookfile,
+                    },
                     ok_text = _("View"),
                     ok_callback = function()
                       if not koutil.pathExists(notebookfile) then
@@ -1055,7 +1059,11 @@ function Assistant:onAssistantSetButton(btnconf, action)
     self.updated = true
     self:addMainButton(idx, prompt)
     UIManager:show(InfoMessage:new{
-      text = T(_("Added [%1 (AI)] to Highlight Menu."), display_text),
+      text = assistant_utils.ptf_format{
+        { text = _("Added"), bold = true },
+        " [", display_text, " (AI)] ",
+        _("to Highlight Menu."),
+      },
       icon = "notice-info",
       timeout = 3
     })
@@ -1064,7 +1072,11 @@ function Assistant:onAssistantSetButton(btnconf, action)
     self.updated = true
     self.ui.highlight:removeFromHighlightDialog(menukey)
     UIManager:show(InfoMessage:new{
-      text = string.format(_("Removed [%s (AI)] from Highlight Menu."), display_text),
+      text = assistant_utils.ptf_format{
+        { text = _("Removed"), bold = true },
+        " [", display_text, " (AI)] ",
+        _("from Highlight Menu."),
+      },
       icon = "notice-info",
       timeout = 3
     })
@@ -1161,19 +1173,15 @@ function Assistant:showAboutDialog()
 
   UIManager:show(InfoMessage:new{
       show_icon = false,
-      text = string.format([[%s %s
-――――――――――――――――
-%s: %s
-KOReader: %s
-%s: %s
-%s: %s/%s
-%s: %s]],
-        self.meta.fullname, self.meta.version,
-        _("Markdown Engine"), md_renderer,
-        Version:getShortVersion(),
-        _("Device"), Device.model or "?",
-        _("Platform"), jit.os, jit.arch,
-        _("Runtime"), jit.version)
+      text = assistant_utils.ptf_format{
+        { text = T("%1 %2", self.meta.fullname, self.meta.version), bold = true },
+        "\n――――――――――――――――\n",
+        { text = T("%1: ", _("Markdown Engine")), bold = true }, md_renderer, "\n",
+        { text = T("%1: ", _("KOReader")), bold = true }, Version:getShortVersion(), "\n",
+        { text = T("%1: ", _("Device")), bold = true }, Device.model or "?", "\n",
+        { text = T("%1: ", _("Platform")), bold = true }, jit.os, "/", jit.arch, "\n",
+        { text = T("%1: ", _("Runtime")), bold = true }, jit.version,
+      },
   })
 end
 

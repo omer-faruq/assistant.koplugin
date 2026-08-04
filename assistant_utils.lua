@@ -191,7 +191,10 @@ function M.saveToNotebookFile(assistant, log_entry)
           if not util.pathExists(default_folder) then
             UIManager:show(InfoMessage:new{
                 icon = "notice-warning",
-                text = T(_("Cannot access default folder for logs: %1\nUsing original location."), default_folder),
+                text = M.ptf_format{
+                    { text = T(_("Cannot access default folder for logs: %1"), default_folder), bold = true },
+                    "\n", _("Using original location."),
+                },
                 timeout = 5,
               })
           else

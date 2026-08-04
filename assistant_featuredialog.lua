@@ -14,6 +14,7 @@ local assistant_prompts = require("assistant_prompts").assistant_prompts
 local Prompts = require("assistant_prompts")
 local NetworkMgr = require("ui/network/manager")
 local assistant_utils = require("assistant_utils")
+local assistant_utils = require("assistant_utils")
 local extractBookTextForAnalysis = assistant_utils.extractBookTextForAnalysis
 local extractHighlightsNotesAndNotebook = assistant_utils.extractHighlightsNotesAndNotebook
 local normalizeMarkdownHeadings = assistant_utils.normalizeMarkdownHeadings
@@ -94,9 +95,12 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         -- Get feature configuration
         local feature_config = feature_configurations[feature_type]
         if not feature_config then
-            UIManager:show(InfoMessage:new{ 
-                icon = "notice-warning", 
-                text = string.format(_("Unknown feature type: %s"), feature_type) 
+            UIManager:show(InfoMessage:new{
+                icon = "notice-warning",
+                text = assistant_utils.ptf_format{
+                    { text = _("Unknown feature type:"), bold = true },
+                    " ", tostring(feature_type),
+                },
             })
             return
         end
