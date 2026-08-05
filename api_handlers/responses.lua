@@ -433,6 +433,11 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
                     elseif ev_type == "response.output_text.annotation.updated" then
                         -- Annotation update; no content to emit
 
+                    -- Web search lifecycle (built-in web_search tool; metadata only,
+                    -- actual results arrive via content or function_call deltas)
+                    elseif ev_type:find("^response%.web_search_call") then
+                        -- Web search call lifecycle; no content to emit
+
                     else
                         logger.info("unprocessed", ev_type)
                     end
