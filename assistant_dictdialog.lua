@@ -211,9 +211,7 @@ local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
         -- Show loading dialog immediately to avoid app appearing frozen during LexRank processing
         local context_loading_msg = InfoMessage:new{
             icon = "book.opened",
-            text = assistant_utils.ptf_format{
-                { text = _("Analyzing book context for Term X-Ray..."), bold = true },
-            },
+            text = assistant_utils.bold_format(_("<b>Analyzing book context for Term X-Ray...</b>")),
         }
         UIManager:show(context_loading_msg)
         UIManager:forceRePaint()  -- Force immediate display before blocking LexRank operation

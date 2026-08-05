@@ -441,11 +441,9 @@ function AssistantDialog:show(highlightedText)
           local menukey = string.format("assistant_%02d_%s", tab.order, tab.idx)
           local settingkey = "showOnMain_" .. menukey
           UIManager:show(ConfirmBox:new{
-            text = assistant_utils.ptf_format{
-              { text = tab.text, bold = true },
-              ": ", tab.desc, "\n\n",
-              _("Add this button to the Highlight Menu?"),
-            },
+            text = assistant_utils.bold_format(
+              T(_("<b>%1:</b> %2\n\nAdd this button to the Highlight Menu?"), tab.text, tab.desc)
+            ),
             ok_text = _("Add"),
             ok_callback = function()
               self.assistant:handleEvent(Event:new("AssistantSetButton", {order=tab.order, idx=tab.idx}, "add"))
@@ -476,10 +474,9 @@ function AssistantDialog:show(highlightedText)
   if is_highlighted then
       dialog_hint = _("Ask a question about the highlighted text")
   elseif book.title then
-      dialog_hint = assistant_utils.ptf_format{
-          { text = _("Ask a question about this book:"), bold = true },
-          "\n", book.title, " ", _("by"), " ", book.author,
-      }
+      dialog_hint = assistant_utils.bold_format(
+          T(_("<b>Ask a question about this book:</b>\n%1 by %2"), book.title, book.author)
+      )
   else
       dialog_hint = _("Ask a general question")
   end
@@ -577,7 +574,7 @@ function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
 
   if not message_history or #message_history < 1 then
     UIManager:show(InfoMessage:new{
-        text = assistant_utils.ptf_format{ { text = _("Error:"), bold = true }, " ", _("No response received") },
+        text = assistant_utils.bold_format(_("<b>Error:</b> No response received")),
         icon = "notice-warning"
     })
     return

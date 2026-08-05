@@ -165,10 +165,9 @@ function Assistant:addToMainMenu(menu_items)
                   UIManager:show(ConfirmBox:new{
                     icon = "appbar.pageview",
                     face = Font:getFace("smallinfofont"),
-                    text = assistant_utils.ptf_format{
-                        { text = _("Notebook file:"), bold = true },
-                        "\n\n", notebookfile,
-                    },
+                    text = assistant_utils.bold_format(
+                        T(_("<b>Notebook file:</b>\n\n%1"), notebookfile)
+                    ),
                     ok_text = _("View"),
                     ok_callback = function()
                       if not koutil.pathExists(notebookfile) then
@@ -1059,11 +1058,9 @@ function Assistant:onAssistantSetButton(btnconf, action)
     self.updated = true
     self:addMainButton(idx, prompt)
     UIManager:show(InfoMessage:new{
-      text = assistant_utils.ptf_format{
-        { text = _("Added"), bold = true },
-        " [", display_text, " (AI)] ",
-        _("to Highlight Menu."),
-      },
+      text = assistant_utils.bold_format(
+        T(_("<b>Added</b> [%1 (AI)] to Highlight Menu."), display_text)
+      ),
       icon = "notice-info",
       timeout = 3
     })
@@ -1072,11 +1069,9 @@ function Assistant:onAssistantSetButton(btnconf, action)
     self.updated = true
     self.ui.highlight:removeFromHighlightDialog(menukey)
     UIManager:show(InfoMessage:new{
-      text = assistant_utils.ptf_format{
-        { text = _("Removed"), bold = true },
-        " [", display_text, " (AI)] ",
-        _("from Highlight Menu."),
-      },
+      text = assistant_utils.bold_format(
+        T(_("<b>Removed</b> [%1 (AI)] from Highlight Menu."), display_text)
+      ),
       icon = "notice-info",
       timeout = 3
     })
@@ -1173,15 +1168,16 @@ function Assistant:showAboutDialog()
 
   UIManager:show(InfoMessage:new{
       show_icon = false,
-      text = assistant_utils.ptf_format{
-        { text = T("%1 %2", self.meta.fullname, self.meta.version), bold = true },
-        "\n――――――――――――――――\n",
-        { text = T("%1: ", _("Markdown Engine")), bold = true }, md_renderer, "\n",
-        { text = T("%1: ", _("KOReader")), bold = true }, Version:getShortVersion(), "\n",
-        { text = T("%1: ", _("Device")), bold = true }, Device.model or "?", "\n",
-        { text = T("%1: ", _("Platform")), bold = true }, jit.os, "/", jit.arch, "\n",
-        { text = T("%1: ", _("Runtime")), bold = true }, jit.version,
-      },
+      text = assistant_utils.bold_format(
+        T("<b>%1 %2</b>\n――――――――――――――――\n<b>%3:</b> %4\n<b>%5:</b> %6\n<b>%7:</b> %8\n<b>%9:</b> %10/%11\n<b>%12:</b> %13",
+          self.meta.fullname, self.meta.version,
+          _("Markdown Engine"), md_renderer,
+          _("KOReader"), Version:getShortVersion(),
+          _("Device"), Device.model or "?",
+          _("Platform"), jit.os, jit.arch,
+          _("Runtime"), jit.version
+        )
+      ),
   })
 end
 

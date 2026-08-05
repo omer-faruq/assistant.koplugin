@@ -170,15 +170,10 @@ local function otaUpgrade(version)
   -- Phase 1: Download the archive (dismissable by user)
   local download_msg = InfoMessage:new{
     face = Font:getFace("xx_smallinfofont"),
-    text = assistant_utils.ptf_format{
-      { text = _("Downloading ..."), bold = true },
-      "\n",
-      { text = _("Github: "), bold = true }, GITHUB_BASE,
-      "\n",
-      { text = _("Repo: "), bold = true }, GITHUB_REPO,
-      "\n",
-      { text = _("Branch/Tag: "), bold = true }, version,
-    },
+    text = assistant_utils.bold_format(
+      T(_("<b>Downloading ...</b>\n<b>Github: </b>%1\n<b>Repo: </b>%2\n<b>Branch/Tag: </b>%3"),
+        GITHUB_BASE, GITHUB_REPO, version)
+    ),
   }
   UIManager:show(download_msg)
 
@@ -225,9 +220,9 @@ local function otaUpgrade(version)
 
   -- Phase 2: Extract and install (NOT dismissable)
   local extract_msg = InfoMessage:new{
-      text = assistant_utils.ptf_format{
-          { text = T(_("Installing %1..."), version), bold = true },
-      },
+      text = assistant_utils.bold_format(
+          T(_("<b>Installing %1...</b>"), version)
+      ),
   }
   UIManager:show(extract_msg)
   UIManager:forceRePaint()

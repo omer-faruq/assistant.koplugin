@@ -603,22 +603,10 @@ SettingsDialog.genMenuSettings = function(assistant)
                     title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, meta.version),
                     input = "main",
                     input_hint = _("branch or tag name"),
-                    description = ASUtils.ptf_format{
-                        _("Enter a branch or tag name to update the plugin from the source repository."),
-                        "\n\n",
-                        { text = _("Github URL:"), bold = true },
-                        "  ",
-                        ota_github_base,
-                        "\n",
-                        { text = _("Source Repo:"), bold = true },
-                        "  ",
-                        ota_github_repo,
-                        "\n\n",
-                        _([[Default: "main" (latest development branch)
-Examples: "main", "v1.12", "v1.11"]]),
-                        "\n\n",
-                        { text = _("The configuration.lua will be preserved."), bold = true }
-                    },
+                    description = ASUtils.bold_format(
+                        T(_("Enter a branch or tag name to update the plugin from the source repository.\n\n<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\nDefault: \"main\" (latest development branch)\nExamples: \"main\", \"v1.12\", \"v1.11\"\n\n<b>The configuration.lua will be preserved.</b>"),
+                          ota_github_base, ota_github_repo)
+                    ),
                     buttons = {
                         -- The cancellation button should be kept on the left 
                         -- and the button executing the action on the right.

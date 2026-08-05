@@ -191,10 +191,9 @@ function M.saveToNotebookFile(assistant, log_entry)
           if not util.pathExists(default_folder) then
             UIManager:show(InfoMessage:new{
                 icon = "notice-warning",
-                text = M.ptf_format{
-                    { text = T(_("Cannot access default folder for logs: %1"), default_folder), bold = true },
-                    "\n", _("Using original location."),
-                },
+                text = M.bold_format(
+                    T(_("<b>Cannot access default folder for logs: %1</b>\nUsing original location."), default_folder)
+                ),
                 timeout = 5,
               })
           else
@@ -475,43 +474,60 @@ local PTF_HEADER     = "\u{FFF1}"
 local PTF_BOLD_START = "\u{FFF2}"
 local PTF_BOLD_END   = "\u{FFF3}"
 
---- Build a single PTF string from an ordered list of segments.
---- Each segment is either a plain string or `{ text = "...", bold = true }`.
---- Empty/nil segments are skipped.  The result is suitable as `text` for any
---- TextBoxWidget-backed dialog.
+--- Parse text containing <b> and </b> tags into KOReader's PTF (Poor Text Formatting) bold string.
+--- If no <b> tag is present, returns the input string as-is.
+--- Suitable for text passed to InfoMessage, ConfirmBox, and other TextBoxWidget-backed dialogs.
 ---
 --- Example:
----   ptf_format({{text="API Error", bold=true}, "\n", {text="Bad key", bold=true},
----               "\nProvider: openai"})
---- @param segments table array of strings or {text=string, bold=bool}
+---   bold_format(_("<b>API Error:</b> Bad key"))
+--- @param text string|nil
 --- @return string
-function M.ptf_format(segments)
-    if type(segments) ~= "table" then return segments or "" end
-    -- Strip leading empty/plain segments before opening PTF (otherwise the
-    -- first bold run would never be reached: text must start with PTF_HEADER).
+function M.bold_format(text)
+    if type(text) ~= "string" or text == "" then return text or "" end
+    if not text:find("<b>", 1, true) then
+        return text
+    end
+
     local out = strbuf.new()
-    local started = false
+    out:put(PTF_HEADER)
     local in_bold = false
-    for _, seg in ipairs(segments) do
-        if type(seg) == "table" then
-            local t = seg.text
-            if t and t ~= "" then
-                if not started then out:put(PTF_HEADER); started = true end
-                if seg.bold and not in_bold then out:put(PTF_BOLD_START); in_bold = true end
-                if not seg.bold and in_bold then out:put(PTF_BOLD_END); in_bold = false end
-                out:put(t)
+    local pos = 1
+    local len = #text
+
+    while pos <= len do
+        if not in_bold then
+            local b_start, b_end = text:find("<b>", pos, true)
+            if b_start then
+                if b_start > pos then
+                    out:put(text:sub(pos, b_start - 1))
+                end
+                out:put(PTF_BOLD_START)
+                in_bold = true
+                pos = b_end + 1
+            else
+                out:put(text:sub(pos))
+                break
             end
-        elseif type(seg) == "string" and seg ~= "" then
-            if not started then out:put(PTF_HEADER); started = true end
-            if in_bold then out:put(PTF_BOLD_END); in_bold = false end
-            out:put(seg)
+        else
+            local e_start, e_end = text:find("</b>", pos, true)
+            if e_start then
+                if e_start > pos then
+                    out:put(text:sub(pos, e_start - 1))
+                end
+                out:put(PTF_BOLD_END)
+                in_bold = false
+                pos = e_end + 1
+            else
+                out:put(text:sub(pos))
+                break
+            end
         end
     end
-    -- Clean up any unclosed bold toggle so we leave a well-formed stream.
-    if in_bold then out:put(PTF_BOLD_END) end
-    -- If nothing was added, return a no-op PTF string so the widget's
-    -- PTF detection still triggers and the empty text is rendered cleanly.
-    if not started then return "" end
+
+    if in_bold then
+        out:put(PTF_BOLD_END)
+    end
+
     return out:get()
 end
 

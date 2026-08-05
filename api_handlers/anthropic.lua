@@ -26,9 +26,7 @@ function AnthropicHandler:FetchModels()
 
     local model_url = self.base_url .. "/models"
     local infomsg = InfoMessage:new{
-        text = ASUtils.ptf_format{
-            { text = _("Fetching models..."), bold = true },
-        },
+        text = ASUtils.bold_format(_("<b>Fetching models...</b>")),
     }
     UIManager:show(infomsg)
     local models, err = ASUtils.fetchJSON(model_url, {

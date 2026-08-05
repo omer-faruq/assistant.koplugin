@@ -97,10 +97,9 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         if not feature_config then
             UIManager:show(InfoMessage:new{
                 icon = "notice-warning",
-                text = assistant_utils.ptf_format{
-                    { text = _("Unknown feature type:"), bold = true },
-                    " ", tostring(feature_type),
-                },
+                text = assistant_utils.bold_format(
+                    T(_("<b>Unknown feature type:</b> %1"), tostring(feature_type))
+                ),
             })
             return
         end
