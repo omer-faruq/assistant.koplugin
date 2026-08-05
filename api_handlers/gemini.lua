@@ -20,6 +20,7 @@ GeminiHandler.SupportedOptions = {
     ["topK"] =true,
     ["thinkingConfig"]=true,
     ["thinking_config"]=true,  -- backward compat, mapped to thinkingConfig below
+    ["thinking_budget"]=true,   -- top-level convenience for thinkingConfig.thinkingBudget
 }
 
 function GeminiHandler:FetchModels()
@@ -92,47 +93,46 @@ end
 --- Collect Gemini generationConfig from provider settings.
 local function buildGenerationConfig(additional_parameters)
     local gc = nil
-    if additional_parameters then
-        if type(additional_parameters) == "table" and next(additional_parameters) then
-            gc = gc or {}
-            for o, v in pairs(additional_parameters) do
-                if GeminiHandler.SupportedOptions[o] then
+    if additional_parameters and type(additional_parameters) == "table" and next(additional_parameters) then
+        for o, v in pairs(additional_parameters) do
+            if GeminiHandler.SupportedOptions[o] then
+                if o == "thinking_budget" then
+                    -- Top-level convenience: map to thinkingConfig.thinkingBudget
+                    -- = 0 means "disable thinking"; skip so we don't send thinkingConfig
+                    -- to models that reject it with a 400.
+                    if v > 0 then
+                        gc = gc or {}
+                        gc.thinkingConfig = gc.thinkingConfig or {}
+                        gc.thinkingConfig.thinkingBudget = v
+                    end
+                else
+                    gc = gc or {}
                     local key = o == "thinking_config" and "thinkingConfig" or o
                     gc[key] = v
                 end
             end
-            -- Normalize snake_case fields inside thinkingConfig to camelCase
-            if type(gc.thinkingConfig) == "table" then
-                if gc.thinkingConfig.thinking_level ~= nil then
-                    gc.thinkingConfig.thinkingLevel = gc.thinkingConfig.thinking_level
-                    gc.thinkingConfig.thinking_level = nil
-                end
-                if gc.thinkingConfig.thinking_budget ~= nil then
-                    gc.thinkingConfig.thinkingBudget = gc.thinkingConfig.thinking_budget
-                    gc.thinkingConfig.thinking_budget = nil
-                end
-                if gc.thinkingConfig.include_thoughts ~= nil then
-                    gc.thinkingConfig.includeThoughts = gc.thinkingConfig.include_thoughts
-                    gc.thinkingConfig.include_thoughts = nil
-                end
-                -- thinkBudget = 0: some models reject thinkingConfig, so drop it
-                if gc.thinkingConfig.thinkingBudget == 0 then
-                    gc.thinkingConfig.thinkingBudget = nil
-                end
-                if not next(gc.thinkingConfig) then
-                    gc.thinkingConfig = nil
-                end
-            end
         end
-        
-        if additional_parameters.thinking_budget ~= nil then
-            if additional_parameters.thinking_budget > 0 then
-                gc = gc or {}
-                gc.thinkingConfig = gc.thinkingConfig or {}
-                gc.thinkingConfig.thinkingBudget = additional_parameters.thinking_budget
+        -- Normalize snake_case fields inside thinkingConfig to camelCase
+        if gc and type(gc.thinkingConfig) == "table" then
+            if gc.thinkingConfig.thinking_level ~= nil then
+                gc.thinkingConfig.thinkingLevel = gc.thinkingConfig.thinking_level
+                gc.thinkingConfig.thinking_level = nil
             end
-            -- thinking_budget = 0 means "disable thinking". Sending thinkingConfig
-            -- to a model that doesn't support it causes 400, so skip it entirely.
+            if gc.thinkingConfig.thinking_budget ~= nil then
+                gc.thinkingConfig.thinkingBudget = gc.thinkingConfig.thinking_budget
+                gc.thinkingConfig.thinking_budget = nil
+            end
+            if gc.thinkingConfig.include_thoughts ~= nil then
+                gc.thinkingConfig.includeThoughts = gc.thinkingConfig.include_thoughts
+                gc.thinkingConfig.include_thoughts = nil
+            end
+            -- thinkingBudget = 0: some models reject thinkingConfig, so drop it
+            if gc.thinkingConfig.thinkingBudget == 0 then
+                gc.thinkingConfig.thinkingBudget = nil
+            end
+            if not next(gc.thinkingConfig) then
+                gc.thinkingConfig = nil
+            end
         end
     end
     return gc
