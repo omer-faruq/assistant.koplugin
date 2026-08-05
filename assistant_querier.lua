@@ -155,7 +155,7 @@ function Querier:showError(err, message_history)
         local provider = self.provider_name or "?"
         local model = self.handler and self.handler.model or "?"
         local text = assistant_utils.bold_format(
-            T(_("<b>API Error</b>\n%1\n<b>Provider:</b> %2\n<b>Model:</b> %3\n\nTry another provider in the settings dialog."),
+            T(_("<b>API Error</b>\n%1\n\n<b>Provider:</b> %2\n<b>Model:</b> %3\n\nTry another provider in the settings dialog."),
               err or _("Unknown error"), provider, model)
         )
         dialog = ConfirmBox:new{
@@ -165,7 +165,7 @@ function Querier:showError(err, message_history)
             ok_callback = function() self.assistant:showSettings() end,
             cancel_text = _("Close"),
         }
-        logger.warn("API Error", err, "provider", provider, "model", model, "message_history", message_history)
+        logger.dbg("API Error", err, "provider", provider, "model", model, "message_history", message_history)
     end
     UIManager:show(dialog)
 
@@ -844,15 +844,13 @@ function Querier:processStream(bgQuery, trunk_callback)
             end
         end
         if err_msg and #err_msg > 0 then
-            local msg = T("HTTP %1: %2", tostring(code ~= "" and code or "?"), err_msg)
-            if #endpoint > 0 then msg = msg .. "\n\nAPI: " .. endpoint end
+            local msg = T(_("%1: (%2)\n\n<b>Error Message:</b>\n%3"), status ~= "" and status or tostring(code ~= "" and code or "?"), endpoint, err_msg)
             return nil, msg
         end
 
         -- Priority 2: use status info from err_struct.
         if ok and err_struct then
-            local msg = T("HTTP %1: %2", tostring(code), status ~= "" and status or _("Unknown error"))
-            if #endpoint > 0 then msg = msg .. "\n" .. endpoint end
+            local msg = T("%1: (%2)", status ~= "" and status or tostring(code ~= "" and code or "?"), endpoint)
             return nil, msg
         end
         -- If err_struct JSON parsing failed, return the raw content.

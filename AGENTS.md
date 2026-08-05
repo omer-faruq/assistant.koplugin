@@ -87,6 +87,7 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 - **Error handling**: Functions return `nil, err` on failure (or `false, err` for HTTP calls). Callers check the first return value.
 - **OOP pattern**: Lua metatable-based inheritance — `BaseHandler:new{...}` creates instances, `setmetatable(o, self)` with `self.__index = self` for class-like behavior.
 - **Localization**: All user-facing strings wrapped in `_("text")`. Import with `local _ = require("assistant_gettext")`. Plural forms use `N_("1 item", "%1 items", n)`.
+- **Rich Text & Formatting**: Use `assistant_utils.bold_format(...)` with `<b>` and `</b>` tags (e.g. `assistant_utils.bold_format(T(_("<b>Header:</b> %1"), val))`) to format bold runs in dialogs. Avoid manual string concatenation; keep strings contiguous inside `T(_("..."))` templates so they remain easy to translate.
 - **Configuration access**: Use `koutil.tableGetValue(CONFIGURATION, "path", "to", "key")` for safe nested access with defaults.
 - **Metadata on messages**: Use `assistant_utils.set_attr(msg, key, value)` / `get_attr(msg, key)` for fields that must not be serialized into API request bodies (e.g. `use_websearch`, `is_context`, `search_keywords`).
 
