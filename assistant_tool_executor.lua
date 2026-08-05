@@ -128,7 +128,7 @@ end
 --- @param ws_mode            string  "serpapi" | "tavilyapi"
 --- @param handler            table   BaseHandler instance with search methods
 --- @param tool_round         integer  Notice for the number of rounds the tool called
---- @return boolean success, string result
+--- @return boolean success, string|nil result
 function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round)
     if not keywords or #keywords == 0 then
         return false, _("Search keywords are empty.")
@@ -141,7 +141,9 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round)
         icon = "appbar.search",
         text = ASUtils.ptf_format{
             { text = T(_("Searching with %1 ... [%2]"), ToolExecutor.ToolToText(ws_mode), tool_round), bold = true },
-            "\n\n", keywords,
+            "\n\n",
+            { text = "⌗ ", bold = true },
+            keywords,
         },
     })
     UIManager:show(keywordmsg)

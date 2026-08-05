@@ -37,6 +37,7 @@ local koutil = require("util")
 local ToolExecutor = require("assistant_tool_executor")
 local ExtTools = require("assistant_exttools")
 local Updater = require("assistant_updater")
+local ASUtils = require("assistant_utils")
 
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
@@ -602,16 +603,22 @@ SettingsDialog.genMenuSettings = function(assistant)
                     title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, meta.version),
                     input = "main",
                     input_hint = _("branch or tag name"),
-                    description = T(_([[
-Enter a branch or tag name to update the AI Assistant plugin from the source repository.
-
-Github URL:  %1
-Source REPO: %2
-
-Default: "main" (latest development version)
-Examples: "main", "v1.12", "v1.11"
-
-The current plugin will be backed up and replaced. The configuration.lua will be preserved.]]), ota_github_base, ota_github_repo),
+                    description = ASUtils.ptf_format{
+                        _("Enter a branch or tag name to update the plugin from the source repository."),
+                        "\n\n",
+                        { text = _("Github URL:"), bold = true },
+                        "  ",
+                        ota_github_base,
+                        "\n",
+                        { text = _("Source Repo:"), bold = true },
+                        "  ",
+                        ota_github_repo,
+                        "\n\n",
+                        _([[Default: "main" (latest development branch)
+Examples: "main", "v1.12", "v1.11"]]),
+                        "\n\n",
+                        { text = _("The configuration.lua will be preserved."), bold = true }
+                    },
                     buttons = {
                         -- The cancellation button should be kept on the left 
                         -- and the button executing the action on the right.

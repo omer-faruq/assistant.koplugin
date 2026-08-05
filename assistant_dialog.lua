@@ -472,10 +472,17 @@ function AssistantDialog:show(highlightedText)
   end
 
   -- Show the dialog with the button rows
-  local dialog_hint = is_highlighted and 
-      _("Ask a question about the highlighted text") or 
-      book.title and string.format(_("Ask a question about this book:\n%s by %s"), book.title, book.author)
-      or _("Ask a general question")
+  local dialog_hint
+  if is_highlighted then
+      dialog_hint = _("Ask a question about the highlighted text")
+  elseif book.title then
+      dialog_hint = assistant_utils.ptf_format{
+          { text = _("Ask a question about this book:"), bold = true },
+          "\n", book.title, " ", _("by"), " ", book.author,
+      }
+  else
+      dialog_hint = _("Ask a general question")
+  end
   local input_hint = is_highlighted and 
       _("Type your question here...") or 
       book.title and _("Ask anything about this book...")

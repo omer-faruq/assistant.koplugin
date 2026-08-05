@@ -475,17 +475,6 @@ local PTF_HEADER     = "\u{FFF1}"
 local PTF_BOLD_START = "\u{FFF2}"
 local PTF_BOLD_END   = "\u{FFF3}"
 
---- Wrap a single string so it renders bold.
---- Returns the input unchanged if it is empty/nil or already PTF-prefixed.
---- @param text string
---- @return string
-function M.ptf_bold(text)
-    if not text or text == "" or text:sub(1, #PTF_HEADER) == PTF_HEADER then
-        return text or ""
-    end
-    return PTF_HEADER .. PTF_BOLD_START .. text .. PTF_BOLD_END
-end
-
 --- Build a single PTF string from an ordered list of segments.
 --- Each segment is either a plain string or `{ text = "...", bold = true }`.
 --- Empty/nil segments are skipped.  The result is suitable as `text` for any
