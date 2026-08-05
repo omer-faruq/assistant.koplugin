@@ -51,7 +51,6 @@ MSGINIT_BIN = msginit
 MSGFMT_BIN = msgfmt
 MSGMERGE_BIN = msgmerge
 MSGATTRIB_BIN = msgattrib
-MSGFILTER_BIN = msgfilter
 MSGCAT_BIN = msgcat
 XGETTEXT_BIN = xgettext
 
@@ -78,9 +77,9 @@ extract-untranslated:
 	@set -x;for po_file in $(PO_FILES); do \
 		dir=$$(dirname $$po_file); \
 		if [ ! -f "$$dir/untranslated.po" ]; then \
-			$(MSGATTRIB_BIN) --untranslated --force-po $$po_file -o $$dir/_untranslated.po; \
-			$(MSGATTRIB_BIN) --fuzzy --clear-fuzzy --empty --force-po $$po_file -o $$dir/_fuzzy.po; \
-			$(MSGCAT_BIN) --use-first $$dir/_untranslated.po $$dir/_fuzzy.po -o $$dir/untranslated.po; \
+			$(MSGATTRIB_BIN) --no-wrap --untranslated --force-po $$po_file -o $$dir/_untranslated.po; \
+			$(MSGATTRIB_BIN) --no-wrap --fuzzy --clear-fuzzy --empty --force-po $$po_file -o $$dir/_fuzzy.po; \
+			$(MSGCAT_BIN) --no-wrap --use-first $$dir/_untranslated.po $$dir/_fuzzy.po -o $$dir/untranslated.po; \
 		else \
 			echo "Skipping extraction for $$dir, untranslated.po already exists."; \
 		fi; \
@@ -90,8 +89,9 @@ import-translation:
 	@for po_file in $(PO_FILES); do \
 		dir=$$(dirname $$po_file); \
 		if [ -f "$$dir/updated_translated.po" ]; then \
-			$(MSGCAT_BIN) --use-first --sort-output $$dir/updated_translated.po $$po_file -o updated.po && \
-			$(MSGATTRIB_BIN) --no-obsolete --no-wrap --sort-by-file -i updated.po -o $$po_file; \
+			$(MSGCAT_BIN) --no-wrap --use-first --sort-output $$dir/updated_translated.po $$po_file -o $$dir/updated.po && \
+			$(MSGATTRIB_BIN) --no-obsolete --no-wrap --sort-by-file $$dir/updated.po -o $$po_file; \
+			rm -f $$dir/updated.po; \
 		fi; \
 	done
 

@@ -1,1298 +1,1360 @@
 #
-msgid   ""
-msgstr  "Project-Id-Version: assistant.koplugin\n"
-        "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2026-08-04 17:00+0800\n"
-        "PO-Revision-Date: 2025-09-11 10:53+0800\n"
-        "Last-Translator: AI Model v1.0\n"
-        "Language-Team: AI Translation Model\n"
-        "Language: lv\n"
-        "MIME-Version: 1.0\n"
-        "Content-Type: text/plain; charset=UTF-8\n"
-        "Content-Transfer-Encoding: 8bit\n"
-        "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=9 && (n%100<11 || n%100>19) ? 1 : 2);\n"
+msgid ""
+msgstr ""
+"Project-Id-Version: assistant.koplugin\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-05 15:45+0800\n"
+"PO-Revision-Date: 2025-09-11 10:53+0800\n"
+"Last-Translator: AI Model v1.0\n"
+"Language-Team: AI Translation Model\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=9 && (n%100<11 || n%100>19) ? 1 : 2);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:485 ../main.lua:354 ../main.lua:364
-#: ../main.lua:566
-msgid   "AI Assistant"
-msgstr  "AI asistents"
+#: ../_meta.lua:4 ../assistant_dialog.lua:489 ../main.lua:353 ../main.lua:363
+#: ../main.lua:565
+msgid "AI Assistant"
+msgstr "AI asistents"
 
 #: ../_meta.lua:5
-msgid   "💡 Enhance your KOReader experience with AI"
-msgstr  "💡 Uzlabo savu KOReader pieredzi ar AI"
+msgid "💡 Enhance your KOReader experience with AI"
+msgstr "💡 Uzlabo savu KOReader pieredzi ar AI"
 
-#: ../api_handlers/anthropic.lua:30 ../api_handlers/gemini.lua:32
-#: ../api_handlers/openai.lua:43 ../api_handlers/responses.lua:52
-msgid   "Fetching models..."
-msgstr  "Notiek modeļu ielāde..."
+#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
+#: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
+#, fuzzy
+msgid "<b>Fetching models...</b>"
+msgstr "Notiek modeļu ielāde..."
 
-#: ../api_handlers/anthropic.lua:48 ../api_handlers/gemini.lua:43
-#: ../api_handlers/gemini.lua:53 ../api_handlers/openai.lua:60
-#: ../api_handlers/responses.lua:69
-msgid   "Failed to fetch models"
-msgstr  "Neizdevās iegūt modeļus"
+#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
+#: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
+#: ../api_handlers/responses.lua:67
+msgid "Failed to fetch models"
+msgstr "Neizdevās iegūt modeļus"
 
 #: ../assistant_dialog.lua:92
-msgid   "### ☺ Question\n"
-msgstr  "### ☺ Jautājums\n"
+msgid "### ☺ Question\n"
+msgstr "### ☺ Jautājums\n"
 
 #: ../assistant_dialog.lua:134 ../assistant_model_picker.lua:102
 #: ../assistant_model_picker.lua:261
-msgid   "Search"
-msgstr  "Meklēt"
+msgid "Search"
+msgstr "Meklēt"
 
 #: ../assistant_dialog.lua:137
-msgid   "Response"
-msgstr  "Atbilde"
+msgid "Response"
+msgstr "Atbilde"
 
 #: ../assistant_dialog.lua:138
-msgid   "(No response)"
-msgstr  "(Nav atbildes)"
+msgid "(No response)"
+msgstr "(Nav atbildes)"
 
 #: ../assistant_dialog.lua:175 ../assistant_quicknote.lua:99
 #: ../assistant_viewer.lua:524
-msgid   "Highlighted text:"
-msgstr  "Izceltais teksts:"
+msgid "Highlighted text:"
+msgstr "Izceltais teksts:"
 
 #: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
 #: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
 #: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:96 ../assistant_settings.lua:620
+#: ../assistant_settings.lua:97 ../assistant_settings.lua:615
 #: ../assistant_viewer.lua:626
-msgid   "Cancel"
-msgstr  "Atcelt"
+msgid "Cancel"
+msgstr "Atcelt"
 
 #: ../assistant_dialog.lua:344 ../assistant_viewer.lua:636
-msgid   "Ask"
-msgstr  "Jautāt"
+msgid "Ask"
+msgstr "Jautāt"
 
 #: ../assistant_dialog.lua:357 ../assistant_viewer.lua:642
-msgid   "Enter a question before proceeding."
-msgstr  "Ievadiet jautājumu, lai turpinātu."
+msgid "Enter a question before proceeding."
+msgstr "Ievadiet jautājumu, lai turpinātu."
+
+#: ../assistant_dialog.lua:445
+#, fuzzy
+msgid ""
+"<b>%1:</b> %2\n"
+"\n"
+"Add this button to the Highlight Menu?"
+msgstr "Pievienot šo pogu izvēlnei “Izcelt”?"
 
 #: ../assistant_dialog.lua:447
-msgid   "Add this button to the Highlight Menu?"
-msgstr  "Pievienot šo pogu izvēlnei “Izcelt”?"
+msgid "Add"
+msgstr "Pievienot"
 
-#: ../assistant_dialog.lua:449
-msgid   "Add"
-msgstr  "Pievienot"
-
-#: ../assistant_dialog.lua:476
-msgid   "Ask a question about the highlighted text"
-msgstr  "Uzdod jautājumu par izcelto tekstu"
-
-#: ../assistant_dialog.lua:477
-#, lua-format
-msgid   "Ask a question about this book:\n"
-        "%s by %s"
-msgstr  "Uzdod jautājumu par šo grāmatu:\n"
-        "%s, autors %s"
+#: ../assistant_dialog.lua:475
+msgid "Ask a question about the highlighted text"
+msgstr "Uzdod jautājumu par izcelto tekstu"
 
 #: ../assistant_dialog.lua:478
-msgid   "Ask a general question"
-msgstr  "Uzdot vispārēju jautājumu"
-
-#: ../assistant_dialog.lua:480
-msgid   "Type your question here..."
-msgstr  "Ierakstiet jautājumu šeit..."
+#, fuzzy
+msgid ""
+"<b>Ask a question about this book:</b>\n"
+"%1 by %2"
+msgstr ""
+"Uzdod jautājumu par šo grāmatu:\n"
+"%s, autors %s"
 
 #: ../assistant_dialog.lua:481
-msgid   "Ask anything about this book..."
-msgstr  "Uzdod jebko par šo grāmatu..."
+msgid "Ask a general question"
+msgstr "Uzdot vispārēju jautājumu"
 
-#: ../assistant_dialog.lua:482
-msgid   "Ask anything..."
-msgstr  "Jautāt jebko..."
+#: ../assistant_dialog.lua:484
+msgid "Type your question here..."
+msgstr "Ierakstiet jautājumu šeit..."
 
-#: ../assistant_dialog.lua:506
-msgid   "Use book text as context"
-msgstr  "Izmantot grāmatas tekstu kā kontekstu"
+#: ../assistant_dialog.lua:485
+msgid "Ask anything about this book..."
+msgstr "Uzdod jebko par šo grāmatu..."
 
-#: ../assistant_dialog.lua:559
-msgid   "Loading for %1 ..."
-msgstr  "Ielādē %1 ..."
+#: ../assistant_dialog.lua:486
+msgid "Ask anything..."
+msgstr "Jautāt jebko..."
 
-#: ../assistant_dialog.lua:573
-msgid   "Error:"
-msgstr  "Kļūda:"
+#: ../assistant_dialog.lua:510
+msgid "Use book text as context"
+msgstr "Izmantot grāmatas tekstu kā kontekstu"
 
-#: ../assistant_dialog.lua:573
-msgid   "No response received"
-msgstr  "Nav saņemta atbilde"
+#: ../assistant_dialog.lua:563
+msgid "Loading for %1 ..."
+msgstr "Ielādē %1 ..."
+
+#: ../assistant_dialog.lua:577
+#, fuzzy
+msgid "<b>Error:</b> No response received"
+msgstr "Nav saņemta atbilde"
 
 #: ../assistant_dictdialog.lua:155
-msgid   "AI Dictionary"
-msgstr  "AI vārdnīca"
+msgid "AI Dictionary"
+msgstr "AI vārdnīca"
 
 #: ../assistant_dictdialog.lua:156
-msgid   "Enter a word to look up..."
-msgstr  "Ievadiet vārdu meklēšanai..."
+msgid "Enter a word to look up..."
+msgstr "Ievadiet vārdu meklēšanai..."
 
 #: ../assistant_dictdialog.lua:167
-msgid   "Look Up"
-msgstr  "Meklēt"
+msgid "Look Up"
+msgstr "Meklēt"
 
-#: ../assistant_dictdialog.lua:215
-msgid   "Analyzing book context for Term X-Ray..."
-msgstr  "Analizē grāmatas kontekstu Term X-Ray..."
+#: ../assistant_dictdialog.lua:214
+#, fuzzy
+msgid "<b>Analyzing book context for Term X-Ray...</b>"
+msgstr "Analizē grāmatas kontekstu Term X-Ray..."
 
-#: ../assistant_dictdialog.lua:392 ../assistant_prompts.lua:27 ../main.lua:812
-msgid   "Term X-Ray"
-msgstr  "Termina rentgena skats"
+#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
+msgid "Term X-Ray"
+msgstr "Termina rentgena skats"
 
-#: ../assistant_dictdialog.lua:395
-msgid   "Loading Term X-Ray ..."
-msgstr  "Ielādē termina rentgena skatu..."
+#: ../assistant_dictdialog.lua:393
+msgid "Loading Term X-Ray ..."
+msgstr "Ielādē termina rentgena skatu..."
 
-#: ../assistant_dictdialog.lua:412 ../assistant_prompts.lua:74 ../main.lua:830
-msgid   "Dictionary"
-msgstr  "Vārdnīca"
+#: ../assistant_dictdialog.lua:410 ../assistant_prompts.lua:74 ../main.lua:829
+msgid "Dictionary"
+msgstr "Vārdnīca"
 
-#: ../assistant_dictdialog.lua:413
-msgid   "Loading AI Dictionary ..."
-msgstr  "Ielādē AI vārdnīcu..."
+#: ../assistant_dictdialog.lua:411
+msgid "Loading AI Dictionary ..."
+msgstr "Ielādē AI vārdnīcu..."
 
 #: ../assistant_exttools.lua:262
-msgid   "None"
-msgstr  "Nav"
+msgid "None"
+msgstr "Nav"
 
 #: ../assistant_exttools.lua:263
-msgid   "Model Built-In"
-msgstr  "Modelī iebūvēts"
+msgid "Model Built-In"
+msgstr "Modelī iebūvēts"
 
 #: ../assistant_featuredialog.lua:42
-msgid   "Custom Prompt"
-msgstr  "Lietotāja uzvedne"
+msgid "Custom Prompt"
+msgstr "Lietotāja uzvedne"
 
 #: ../assistant_featuredialog.lua:43
-msgid   "Loading..."
-msgstr  "Ielādē..."
+msgid "Loading..."
+msgstr "Ielādē..."
 
 #: ../assistant_featuredialog.lua:64
-msgid   "Recap"
-msgstr  "Kopsavilkums"
+msgid "Recap"
+msgstr "Kopsavilkums"
 
 #: ../assistant_featuredialog.lua:65
-msgid   "Loading Recap..."
-msgstr  "Ielādē apkopojumu..."
+msgid "Loading Recap..."
+msgstr "Ielādē apkopojumu..."
 
 #: ../assistant_featuredialog.lua:70
-msgid   "X‑Ray"
-msgstr  "X-Ray"
+msgid "X‑Ray"
+msgstr "X-Ray"
 
 #: ../assistant_featuredialog.lua:71
-msgid   "Loading X-Ray..."
-msgstr  "Ielādē X-Ray..."
+msgid "Loading X-Ray..."
+msgstr "Ielādē X-Ray..."
 
 #. @translators book_info section headers and sub-fields
 #: ../assistant_featuredialog.lua:76 ../assistant_prompts.lua:440
-msgid   "Book Information"
-msgstr  "Grāmatas informācija"
+msgid "Book Information"
+msgstr "Grāmatas informācija"
 
 #: ../assistant_featuredialog.lua:77
-msgid   "Loading Book Information..."
-msgstr  "Ielādē grāmatas informāciju..."
+msgid "Loading Book Information..."
+msgstr "Ielādē grāmatas informāciju..."
 
-#: ../assistant_featuredialog.lua:82 ../main.lua:119 ../main.lua:302
-msgid   "Highlight & Note Analysis"
-msgstr  "Iezīmējumu un piezīmju analīze"
+#: ../assistant_featuredialog.lua:82 ../main.lua:119 ../main.lua:301
+msgid "Highlight & Note Analysis"
+msgstr "Iezīmējumu un piezīmju analīze"
 
 #: ../assistant_featuredialog.lua:83
-msgid   "Loading Highlight & Note Analysis..."
-msgstr  "Ielādē iezīmējumu un piezīmju analīzi..."
+msgid "Loading Highlight & Note Analysis..."
+msgstr "Ielādē iezīmējumu un piezīmju analīzi..."
 
-#: ../assistant_featuredialog.lua:88 ../main.lua:127 ../main.lua:314
-msgid   "Summary Using Highlights & Notes"
-msgstr  "Kopsavilkums, izmantojot iezīmējumus un piezīmes"
+#: ../assistant_featuredialog.lua:88 ../main.lua:127 ../main.lua:313
+msgid "Summary Using Highlights & Notes"
+msgstr "Kopsavilkums, izmantojot iezīmējumus un piezīmes"
 
 #: ../assistant_featuredialog.lua:89
-msgid   "Loading Summary Using Highlights & Notes..."
-msgstr  "Ielādē kopsavilkumu, izmantojot iezīmējumus un piezīmes..."
+msgid "Loading Summary Using Highlights & Notes..."
+msgstr "Ielādē kopsavilkumu, izmantojot iezīmējumus un piezīmes..."
 
 #: ../assistant_featuredialog.lua:101
-msgid   "Unknown feature type:"
-msgstr  "Nezināms funkcijas veids:"
+#, fuzzy
+msgid "<b>Unknown feature type:</b> %1"
+msgstr "Nezināms funkcijas veids:"
 
-#: ../assistant_featuredialog.lua:189
-msgid   " - Title : %1\n"
-        " - Author: %2\n"
-        " - Reading progress: %3%\n"
-        "\n"
-        "-----\n"
-        "\n"
-msgstr  " - Nosaukums : %1\n"
-        " - Autors: %2\n"
-        " - Lasīšanas progress: %3%\n"
-        "\n"
-        "-----\n"
-        "\n"
+#: ../assistant_featuredialog.lua:188
+msgid ""
+" - Title : %1\n"
+" - Author: %2\n"
+" - Reading progress: %3%\n"
+"\n"
+"-----\n"
+"\n"
+msgstr ""
+" - Nosaukums : %1\n"
+" - Autors: %2\n"
+" - Lasīšanas progress: %3%\n"
+"\n"
+"-----\n"
+"\n"
 
 #: ../assistant_model_picker.lua:76
-msgid   "Models: %1 (filtered)"
-msgstr  "Modeļi: %1 (filtrēts)"
+msgid "Models: %1 (filtered)"
+msgstr "Modeļi: %1 (filtrēts)"
 
 #: ../assistant_model_picker.lua:78
-msgid   "Models: %1"
-msgstr  "Modeļi: %1"
+msgid "Models: %1"
+msgstr "Modeļi: %1"
 
 #: ../assistant_model_picker.lua:81
-msgid   " — p. %1/%2"
-msgstr  " — lpp. %1/%2"
+msgid " — p. %1/%2"
+msgstr " — lpp. %1/%2"
 
 #: ../assistant_model_picker.lua:118
-msgid   "Manual"
-msgstr  "Manuāli"
+msgid "Manual"
+msgstr "Manuāli"
 
 #: ../assistant_model_picker.lua:122
-msgid   "Reset"
-msgstr  "Atiestatīt"
+msgid "Reset"
+msgstr "Atiestatīt"
 
 #: ../assistant_model_picker.lua:165 ../assistant_model_picker.lua:357
-msgid   "Model: %1"
-msgstr  "Modelis: %1"
+msgid "Model: %1"
+msgstr "Modelis: %1"
 
 #: ../assistant_model_picker.lua:177
-msgid   "Filter: \"%1\""
-msgstr  "Filtrs: \"%1\""
+msgid "Filter: \"%1\""
+msgstr "Filtrs: \"%1\""
 
 #: ../assistant_model_picker.lua:179
-msgid   "Select a model:"
-msgstr  "Izvēlieties modeli:"
+msgid "Select a model:"
+msgstr "Izvēlieties modeli:"
 
 #: ../assistant_model_picker.lua:247
-msgid   "Search Models"
-msgstr  "Meklēt modeļus"
+msgid "Search Models"
+msgstr "Meklēt modeļus"
 
 #: ../assistant_model_picker.lua:286
-msgid   "Model reset: %1"
-msgstr  "Modelis atiestatīts: %1"
+msgid "Model reset: %1"
+msgstr "Modelis atiestatīts: %1"
 
 #: ../assistant_model_picker.lua:316
-msgid   "No models matching \"%1\"."
-msgstr  "Nav modeļu, kas atbilst \"%1\"."
+msgid "No models matching \"%1\"."
+msgstr "Nav modeļu, kas atbilst \"%1\"."
 
 #: ../assistant_model_picker.lua:339
-msgid   "Enter Model ID"
-msgstr  "Ievadiet modeļa ID"
+msgid "Enter Model ID"
+msgstr "Ievadiet modeļa ID"
 
 #: ../assistant_model_picker.lua:341
-msgid   "e.g. google/gemini-3.0-flash-exp:free"
-msgstr  "piem., google/gemini-3.0-flash-exp:free"
+msgid "e.g. google/gemini-3.0-flash-exp:free"
+msgstr "piem., google/gemini-3.0-flash-exp:free"
 
 #: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:120 ../assistant_viewer.lua:447
-msgid   "Save"
-msgstr  "Saglabāt"
+#: ../assistant_settings.lua:121 ../assistant_viewer.lua:447
+msgid "Save"
+msgstr "Saglabāt"
 
 #: ../assistant_model_picker.lua:377
-msgid   "No models available."
-msgstr  "Nav pieejamu modeļu."
+msgid "No models available."
+msgstr "Nav pieejamu modeļu."
 
 #: ../assistant_prompts.lua:30
-msgid   "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
-msgstr  "Šī uzvedne izveido strukturētu sistēmu literāru vārdu vai frāžu kontekstapzinīgu definīciju ģenerēšanai, analizējot iezīmēto terminu tā apkārtējā tekstā, lai sniegtu niansētu skaidrojumu, kas aptver gan burtisko nozīmi, gan kontekstisko nozīmi."
+msgid "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
+msgstr "Šī uzvedne izveido strukturētu sistēmu literāru vārdu vai frāžu kontekstapzinīgu definīciju ģenerēšanai, analizējot iezīmēto terminu tā apkārtējā tekstā, lai sniegtu niansētu skaidrojumu, kas aptver gan burtisko nozīmi, gan kontekstisko nozīmi."
 
 #. @translators term_xray section headers
 #. @translators term_xray: "What It Is" section header
 #: ../assistant_prompts.lua:64
-msgid   "What It Is"
-msgstr  "Kas tas ir"
+msgid "What It Is"
+msgstr "Kas tas ir"
 
 #. @translators term_xray: "Role & Function" section header
 #: ../assistant_prompts.lua:66
-msgid   "Role & Function"
-msgstr  "Loma un funkcija"
+msgid "Role & Function"
+msgstr "Loma un funkcija"
 
 #. @translators term_xray: "Evolution & Connections" section header
 #: ../assistant_prompts.lua:68
-msgid   "Evolution & Connections"
-msgstr  "Evolūcija un savienojumi"
+msgid "Evolution & Connections"
+msgstr "Evolūcija un savienojumi"
 
 #. @translators term_xray: "Context Limitations" section header
 #: ../assistant_prompts.lua:70
-msgid   "Context Limitations"
-msgstr  "Konteksta ierobežojumi"
+msgid "Context Limitations"
+msgstr "Konteksta ierobežojumi"
 
 #: ../assistant_prompts.lua:76
-msgid   "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr  "Uzvedne darbojas kā vārdnīca izceltajam tekstam — vārdam vai frāzei."
+msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
+msgstr "Uzvedne darbojas kā vārdnīca izceltajam tekstam — vārdam vai frāzei."
 
 #: ../assistant_prompts.lua:82 ../assistant_quicknote.lua:101
-msgid   "Quick Note"
-msgstr  "Ātrā piezīme"
+msgid "Quick Note"
+msgstr "Ātrā piezīme"
 
 #: ../assistant_prompts.lua:83
-msgid   "This button creates a quick note with highlighted text."
-msgstr  "Šī poga izveido ātro piezīmi ar izcelto tekstu."
+msgid "This button creates a quick note with highlighted text."
+msgstr "Šī poga izveido ātro piezīmi ar izcelto tekstu."
 
 #: ../assistant_prompts.lua:88
-msgid   "Vocabulary"
-msgstr  "Vārdu krājums"
+msgid "Vocabulary"
+msgstr "Vārdu krājums"
 
 #: ../assistant_prompts.lua:92
-msgid   "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
-msgstr  "Uzvedne analizē sarežģītos vārdus un dod definīcijas, sinonīmus un piemērus."
+msgid "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
+msgstr "Uzvedne analizē sarežģītos vārdus un dod definīcijas, sinonīmus un piemērus."
 
 #: ../assistant_prompts.lua:109
-msgid   "Grammar"
-msgstr  "Gramatika"
+msgid "Grammar"
+msgstr "Gramatika"
 
 #: ../assistant_prompts.lua:113
-msgid   "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
-msgstr  "Uzvedne analizē izceltā teksta gramatiku un norāda kļūdas."
+msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
+msgstr "Uzvedne analizē izceltā teksta gramatiku un norāda kļūdas."
 
 #. @translators grammar section headers
 #: ../assistant_prompts.lua:136
-msgid   "Structure & Clauses"
-msgstr  "Struktūra un teikumi"
+msgid "Structure & Clauses"
+msgstr "Struktūra un teikumi"
 
 #: ../assistant_prompts.lua:137
-msgid   "Parts of Speech & Tenses"
-msgstr  "Vārdšķiras un laiki"
+msgid "Parts of Speech & Tenses"
+msgstr "Vārdšķiras un laiki"
 
 #: ../assistant_prompts.lua:138
-msgid   "Error Correction (If Applicable)"
-msgstr  "Kļūdu labošana (ja piemērojams)"
+msgid "Error Correction (If Applicable)"
+msgstr "Kļūdu labošana (ja piemērojams)"
 
 #: ../assistant_prompts.lua:142
-msgid   "Translate"
-msgstr  "Tulkot"
+msgid "Translate"
+msgstr "Tulkot"
 
 #: ../assistant_prompts.lua:144
-msgid   "This prompt translates the highlighted text to another language."
-msgstr  "Uzvedne iztulko izcelto tekstu citā valodā."
+msgid "This prompt translates the highlighted text to another language."
+msgstr "Uzvedne iztulko izcelto tekstu citā valodā."
 
 #: ../assistant_prompts.lua:156
-msgid   "Summarize"
-msgstr  "Kopsavilkums"
+msgid "Summarize"
+msgstr "Kopsavilkums"
 
 #: ../assistant_prompts.lua:159
-msgid   "This prompt summarizes the highlighted text, capturing its main points and essential details."
-msgstr  "Uzvedne izveido izceltā teksta kopsavilkumu, iekļaujot galvenos punktus."
+msgid "This prompt summarizes the highlighted text, capturing its main points and essential details."
+msgstr "Uzvedne izveido izceltā teksta kopsavilkumu, iekļaujot galvenos punktus."
 
 #: ../assistant_prompts.lua:174
-msgid   "Simplify"
-msgstr  "Vienkāršot"
+msgid "Simplify"
+msgstr "Vienkāršot"
 
 #: ../assistant_prompts.lua:177
-msgid   "This prompt simplifies the highlighted text to make it easier to understand."
-msgstr  "Uzvedne vienkāršo izcelto tekstu, lai būtu vieglāk saprotams."
+msgid "This prompt simplifies the highlighted text to make it easier to understand."
+msgstr "Uzvedne vienkāršo izcelto tekstu, lai būtu vieglāk saprotams."
 
 #: ../assistant_prompts.lua:191 ../assistant_prompts.lua:534
-msgid   "Key Points"
-msgstr  "Galvenie punkti"
+msgid "Key Points"
+msgstr "Galvenie punkti"
 
 #: ../assistant_prompts.lua:195
-msgid   "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
-msgstr  "Uzvedne izdala un uzskaita izceltā teksta galvenos punktus."
+msgid "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
+msgstr "Uzvedne izdala un uzskaita izceltā teksta galvenos punktus."
 
 #. @translators key_points section headers
 #: ../assistant_prompts.lua:216
-msgid   "Core Arguments"
-msgstr  "Pamatargumenti"
+msgid "Core Arguments"
+msgstr "Pamatargumenti"
 
 #: ../assistant_prompts.lua:217
-msgid   "Essential Facts & Conclusions"
-msgstr  "Būtiskie fakti un secinājumi"
+msgid "Essential Facts & Conclusions"
+msgstr "Būtiskie fakti un secinājumi"
 
 #: ../assistant_prompts.lua:220
-msgid   "ELI5"
-msgstr  "Paskaidro kā 5-gadniekam"
+msgid "ELI5"
+msgstr "Paskaidro kā 5-gadniekam"
 
 #: ../assistant_prompts.lua:224
-msgid   "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
-msgstr  "Uzvedne izskaidro izcelto tekstu, it kā runātu ar piecgadnieku."
+msgid "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
+msgstr "Uzvedne izskaidro izcelto tekstu, it kā runātu ar piecgadnieku."
 
 #. @translators ELI5 section headers
 #: ../assistant_prompts.lua:244
-msgid   "Core Idea"
-msgstr  "Pamatideja"
+msgid "Core Idea"
+msgstr "Pamatideja"
 
 #: ../assistant_prompts.lua:245
-msgid   "Fun Analogy"
-msgstr  "Jautra analoģija"
+msgid "Fun Analogy"
+msgstr "Jautra analoģija"
 
 #: ../assistant_prompts.lua:248
-msgid   "Explain"
-msgstr  "Izskaidrot"
+msgid "Explain"
+msgstr "Izskaidrot"
 
 #: ../assistant_prompts.lua:251
-msgid   "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
-msgstr  "Uzvedne sīki izskaidro izcelto tekstu, nodrošinot skaidrību un izpratni."
+msgid "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
+msgstr "Uzvedne sīki izskaidro izcelto tekstu, nodrošinot skaidrību un izpratni."
 
 #: ../assistant_prompts.lua:265
-msgid   "Historical Context"
-msgstr  "Vēsturiskais konteksts"
+msgid "Historical Context"
+msgstr "Vēsturiskais konteksts"
 
 #: ../assistant_prompts.lua:269
-msgid   "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
-msgstr  "Uzvedne sniedz sīku vēsturisko kontekstu izceltajam tekstam."
+msgid "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
+msgstr "Uzvedne sniedz sīku vēsturisko kontekstu izceltajam tekstam."
 
 #. @translators historical_context section headers
 #: ../assistant_prompts.lua:290
-msgid   "Era & Background"
-msgstr  "Laikmets & Fons"
+msgid "Era & Background"
+msgstr "Laikmets & Fons"
 
 #: ../assistant_prompts.lua:291
-msgid   "Contextual Connections"
-msgstr  "Kontekstuālie savienojumi"
+msgid "Contextual Connections"
+msgstr "Kontekstuālie savienojumi"
 
 #: ../assistant_prompts.lua:292
-msgid   "Cultural Significance"
-msgstr  "Kultūras nozīme"
+msgid "Cultural Significance"
+msgstr "Kultūras nozīme"
 
-#: ../assistant_prompts.lua:295 ../main.lua:793
-msgid   "Wikipedia"
-msgstr  "Wikipedia"
+#: ../assistant_prompts.lua:295 ../main.lua:792
+msgid "Wikipedia"
+msgstr "Wikipedia"
 
 #: ../assistant_prompts.lua:299
-msgid   "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
-msgstr  "Uzvedne izveido pilnu Wikipedia stila rakstu par izcelto tēmu."
+msgid "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
+msgstr "Uzvedne izveido pilnu Wikipedia stila rakstu par izcelto tēmu."
 
 #. @translators xray section headers
 #: ../assistant_prompts.lua:391
-msgid   "Characters"
-msgstr  "Tēli"
+msgid "Characters"
+msgstr "Tēli"
 
 #: ../assistant_prompts.lua:392
-msgid   "Locations"
-msgstr  "Vietas"
+msgid "Locations"
+msgstr "Vietas"
 
 #: ../assistant_prompts.lua:393
-msgid   "Main Themes"
-msgstr  "Galvenās tēmas"
+msgid "Main Themes"
+msgstr "Galvenās tēmas"
 
 #: ../assistant_prompts.lua:394
-msgid   "Terms & Concepts"
-msgstr  "Termini & jēdzieni"
+msgid "Terms & Concepts"
+msgstr "Termini & jēdzieni"
 
 #: ../assistant_prompts.lua:395
-msgid   "Timeline"
-msgstr  "Laika līnija"
+msgid "Timeline"
+msgstr "Laika līnija"
 
 #: ../assistant_prompts.lua:396
-msgid   "Re-immersion"
-msgstr  "Atkārtota iegremdēšanās"
+msgid "Re-immersion"
+msgstr "Atkārtota iegremdēšanās"
 
 #. @translators xray Re-immersion sub-fields
 #: ../assistant_prompts.lua:398
-msgid   "Where the action stopped:"
-msgstr  "Kur darbība apstājās:"
+msgid "Where the action stopped:"
+msgstr "Kur darbība apstājās:"
 
 #: ../assistant_prompts.lua:399
-msgid   "Protagonist's current objective:"
-msgstr  "Protagonista pašreizējais mērķis:"
+msgid "Protagonist's current objective:"
+msgstr "Protagonista pašreizējais mērķis:"
 
 #: ../assistant_prompts.lua:400
-msgid   "Open conflict or mystery:"
-msgstr  "Atklāts konflikts vai noslēpums:"
+msgid "Open conflict or mystery:"
+msgstr "Atklāts konflikts vai noslēpums:"
 
 #: ../assistant_prompts.lua:401
-msgid   "Narrative element in focus:"
-msgstr  "Stāstījuma elements fokusā:"
+msgid "Narrative element in focus:"
+msgstr "Stāstījuma elements fokusā:"
 
 #: ../assistant_prompts.lua:402
-msgid   "Prevailing emotional state/tone:"
-msgstr  "Dominējošais emocionālais stāvoklis/tonis:"
+msgid "Prevailing emotional state/tone:"
+msgstr "Dominējošais emocionālais stāvoklis/tonis:"
 
 #: ../assistant_prompts.lua:403
-msgid   "Outstanding questions:"
-msgstr  "Neatbildētie jautājumi:"
+msgid "Outstanding questions:"
+msgstr "Neatbildētie jautājumi:"
 
 #: ../assistant_prompts.lua:441
-msgid   "Genre"
-msgstr  "Žanrs"
+msgid "Genre"
+msgstr "Žanrs"
 
 #: ../assistant_prompts.lua:442
-msgid   "Publication Date"
-msgstr  "Publicēšanas datums"
+msgid "Publication Date"
+msgstr "Publicēšanas datums"
 
 #: ../assistant_prompts.lua:443
-msgid   "Publisher"
-msgstr  "Izdevējs"
+msgid "Publisher"
+msgstr "Izdevējs"
 
 #: ../assistant_prompts.lua:444
-msgid   "Plot Summary"
-msgstr  "Sižeta kopsavilkums"
+msgid "Plot Summary"
+msgstr "Sižeta kopsavilkums"
 
 #: ../assistant_prompts.lua:445
-msgid   "About the Author"
-msgstr  "Par autoru"
+msgid "About the Author"
+msgstr "Par autoru"
 
 #: ../assistant_prompts.lua:446
-msgid   "Historical and Cultural Context"
-msgstr  "Vēsturiskais un kultūras konteksts"
+msgid "Historical and Cultural Context"
+msgstr "Vēsturiskais un kultūras konteksts"
 
 #: ../assistant_prompts.lua:447
-msgid   "Similar Books Recommendations"
-msgstr  "Līdzīgu grāmatu ieteikumi"
+msgid "Similar Books Recommendations"
+msgstr "Līdzīgu grāmatu ieteikumi"
 
 #. @translators annotations section headers
 #: ../assistant_prompts.lua:478
-msgid   "Key Takeaways"
-msgstr  "Galvenās atziņas"
+msgid "Key Takeaways"
+msgstr "Galvenās atziņas"
 
 #: ../assistant_prompts.lua:479
-msgid   "To-Do / Action Items"
-msgstr  "Darāmo / Rīcības punkti"
+msgid "To-Do / Action Items"
+msgstr "Darāmo / Rīcības punkti"
 
 #: ../assistant_prompts.lua:480
-msgid   "Contextual Notes"
-msgstr  "Kontekstuālās piezīmes"
+msgid "Contextual Notes"
+msgstr "Kontekstuālās piezīmes"
 
 #: ../assistant_prompts.lua:481
-msgid   "Contextual Notes / Reflections"
-msgstr  "Kontekstuālās piezīmes / Pārdomas"
+msgid "Contextual Notes / Reflections"
+msgstr "Kontekstuālās piezīmes / Pārdomas"
 
 #. @translators summary_using_annotations output structure sections
 #: ../assistant_prompts.lua:532
-msgid   "TL;DR"
-msgstr  "TL;DR"
+msgid "TL;DR"
+msgstr "TL;DR"
 
 #: ../assistant_prompts.lua:533
-msgid   "Integrated Summary"
-msgstr  "Integrēts kopsavilkums"
+msgid "Integrated Summary"
+msgstr "Integrēts kopsavilkums"
 
 #: ../assistant_prompts.lua:535
-msgid   "Actionable Takeaways"
-msgstr  "Rīcībā izmantojamas atziņas"
+msgid "Actionable Takeaways"
+msgstr "Rīcībā izmantojamas atziņas"
 
 #: ../assistant_prompts.lua:536
-msgid   "Contradictions / Open Questions"
-msgstr  "Pretrunas / Atvērtie jautājumi"
+msgid "Contradictions / Open Questions"
+msgstr "Pretrunas / Atvērtie jautājumi"
 
 #. @translators used in the dictionary.
 #: ../assistant_prompts.lua:564
-msgid   "Conjugation"
-msgstr  "Locījums"
+msgid "Conjugation"
+msgstr "Locījums"
 
 #: ../assistant_prompts.lua:565
-msgid   "Synonyms"
-msgstr  "Sinonīmi"
+msgid "Synonyms"
+msgstr "Sinonīmi"
 
 #: ../assistant_prompts.lua:566
-msgid   "Meaning"
-msgstr  "Nozīme"
+msgid "Meaning"
+msgstr "Nozīme"
 
 #: ../assistant_prompts.lua:567
-msgid   "Translation"
-msgstr  "Tulkojums"
+msgid "Translation"
+msgstr "Tulkojums"
 
 #: ../assistant_prompts.lua:568
-msgid   "Book Usage"
-msgstr  "Grāmatas lietojums"
+msgid "Book Usage"
+msgstr "Grāmatas lietojums"
 
 #: ../assistant_prompts.lua:569
-msgid   "Example"
-msgstr  "Piemērs"
+msgid "Example"
+msgstr "Piemērs"
 
 #: ../assistant_prompts.lua:570
-msgid   "Word Origin"
-msgstr  "Vārda izcelsme"
+msgid "Word Origin"
+msgstr "Vārda izcelsme"
 
 #: ../assistant_querier.lua:97
-msgid   "Provider settings not found for: %1. Please check your configuration.lua file."
-msgstr  "Nav atrasti pakalpojuma iestatījumi: %1. Lūdzu, pārbaudiet configuration.lua failu."
+msgid "Provider settings not found for: %1. Please check your configuration.lua file."
+msgstr "Nav atrasti pakalpojuma iestatījumi: %1. Lūdzu, pārbaudiet configuration.lua failu."
 
 #: ../assistant_querier.lua:105
-msgid   "Handler not found for: %1. Please check your configuration.lua file."
-msgstr  "Darbības apstrādātājs nav atrasts: %1. Lūdzu, pārbaudiet savu configuration.lua failu."
+msgid "Handler not found for: %1. Please check your configuration.lua file."
+msgstr "Darbības apstrādātājs nav atrasts: %1. Lūdzu, pārbaudiet savu configuration.lua failu."
 
 #: ../assistant_querier.lua:115
-msgid   "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
-msgstr  "Nav atrasts apstrādātājs priekš %1. Lūdzu, pārliecinieties, ka apstrādātājs atrodas api_handlers mapē."
+msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
+msgstr "Nav atrasts apstrādātājs priekš %1. Lūdzu, pārliecinieties, ka apstrādātājs atrodas api_handlers mapē."
 
 #: ../assistant_querier.lua:158
-msgid   "API Error"
-msgstr  "API kļūda"
+msgid ""
+"<b>API Error</b>\n"
+"%1\n"
+"\n"
+"<b>Provider:</b> %2\n"
+"<b>Model:</b> %3\n"
+"\n"
+"Try another provider in the settings dialog."
+msgstr ""
 
-#: ../assistant_querier.lua:160 ../assistant_querier.lua:862
-msgid   "Unknown error"
-msgstr  "Nezināma kļūda"
+#: ../assistant_querier.lua:159
+msgid "Unknown error"
+msgstr "Nezināma kļūda"
 
-#: ../assistant_querier.lua:166
-msgid   "Try another provider in the settings dialog."
-msgstr  "Izmēģiniet citu pakalpojumu sniedzēju iestatījumu dialogā."
+#: ../assistant_querier.lua:164
+msgid "Settings"
+msgstr "Iestatījumi"
 
-#: ../assistant_querier.lua:171
-msgid   "Settings"
-msgstr  "Iestatījumi"
-
-#: ../assistant_querier.lua:173 ../assistant_settings.lua:218
+#: ../assistant_querier.lua:166 ../assistant_settings.lua:219
 #: ../assistant_viewer.lua:338
-msgid   "Close"
-msgstr  "Aizvērt"
+msgid "Close"
+msgstr "Aizvērt"
 
-#: ../assistant_querier.lua:223
-msgid   "Plugin is not configured."
-msgstr  "Spraudnis nav konfigurēts."
+#: ../assistant_querier.lua:216
+msgid "Plugin is not configured."
+msgstr "Spraudnis nav konfigurēts."
 
-#: ../assistant_querier.lua:315 ../assistant_querier.lua:415
-msgid   "Too many tool-call rounds; aborting."
-msgstr  "Pārāk daudz rīku izsaukumu kārtu; pārtrauc."
+#: ../assistant_querier.lua:308 ../assistant_querier.lua:406
+msgid "Too many tool-call rounds; aborting."
+msgstr "Pārāk daudz rīku izsaukumu kārtu; pārtrauc."
 
-#: ../assistant_querier.lua:323
-msgid   "Stream failed with no error message."
-msgstr  "Plūsma neizdevās bez kļūdas ziņojuma."
+#: ../assistant_querier.lua:316
+msgid "Stream failed with no error message."
+msgstr "Plūsma neizdevās bez kļūdas ziņojuma."
 
-#: ../assistant_querier.lua:340
-msgid   "Stream ended with no content and no tool calls."
-msgstr  "Plūsma beidzās bez satura un bez rīku izsaukumiem."
+#: ../assistant_querier.lua:333
+msgid "Stream ended with no content and no tool calls."
+msgstr "Plūsma beidzās bez satura un bez rīku izsaukumiem."
 
-#: ../assistant_querier.lua:387
-msgid   "Request Cancelled by user."
-msgstr  "Pieprasījums atcelts lietotāja."
+#: ../assistant_querier.lua:380
+msgid "Request Cancelled by user."
+msgstr "Pieprasījums atcelts lietotāja."
 
-#: ../assistant_querier.lua:396
-msgid   "Querying AI ..."
-msgstr  "Vaicā AI ..."
+#: ../assistant_querier.lua:389
+msgid "Querying AI ..."
+msgstr "Vaicā AI ..."
 
-#: ../assistant_querier.lua:453
-msgid   "Composing answer ..."
-msgstr  "Sastāda atbildi ..."
+#: ../assistant_querier.lua:444
+msgid "Composing answer ..."
+msgstr "Sastāda atbildi ..."
 
-#: ../assistant_querier.lua:469 ../assistant_querier.lua:618
-msgid   "Request cancelled by user."
-msgstr  "Pieprasījums atcelts lietotāja dēļ."
+#: ../assistant_querier.lua:459 ../assistant_querier.lua:610
+msgid "Request cancelled by user."
+msgstr "Pieprasījums atcelts lietotāja dēļ."
 
-#: ../assistant_querier.lua:476
-msgid   "No response received."
-msgstr  "Nav saņemta atbilde."
+#: ../assistant_querier.lua:466
+msgid "No response received."
+msgstr "Nav saņemta atbilde."
 
-#: ../assistant_querier.lua:510
-msgid   "AI is responding"
-msgstr  "AI atbild"
+#: ../assistant_querier.lua:500
+msgid "AI is responding"
+msgstr "AI atbild"
 
-#: ../assistant_querier.lua:529
-msgid   "⏹ Stop"
-msgstr  "⏹ Apturēt"
+#: ../assistant_querier.lua:521
+msgid "⏹ Stop"
+msgstr "⏹ Apturēt"
 
-#: ../assistant_querier.lua:635
-msgid   "Failed to start subprocess for request"
-msgstr  "Neizdevās startēt apakšprocesu pieprasījumam"
+#: ../assistant_querier.lua:627
+msgid "Failed to start subprocess for request"
+msgstr "Neizdevās startēt apakšprocesu pieprasījumam"
 
-#: ../assistant_querier.lua:894 ../assistant_querier.lua:897
-msgid   "Deeply Thought"
-msgstr  "Dziļi pārdomāts"
+#: ../assistant_querier.lua:849
+msgid "Error Message"
+msgstr ""
 
-#: ../assistant_querier.lua:1087
-msgid   "Stopped Reason: "
-msgstr  "Apstādināšanas iemesls: "
+#: ../assistant_querier.lua:878 ../assistant_querier.lua:881
+msgid "Deeply Thought"
+msgstr "Dziļi pārdomāts"
+
+#: ../assistant_querier.lua:1071
+msgid "Stopped Reason: "
+msgstr "Apstādināšanas iemesls: "
 
 #: ../assistant_quicknote.lua:27 ../main.lua:103 ../main.lua:151
-msgid   "Take Quick Notes"
-msgstr  "Veikt ātrās piezīmes"
+msgid "Take Quick Notes"
+msgstr "Veikt ātrās piezīmes"
 
 #: ../assistant_quicknote.lua:29
-msgid   "Write quick notes here"
-msgstr  "Šeit raksti ātrās piezīmes"
+msgid "Write quick notes here"
+msgstr "Šeit raksti ātrās piezīmes"
 
 #: ../assistant_quicknote.lua:55
-msgid   "Please enter a note before saving."
-msgstr  "Pirms saglabāšanas lūdzu ievadi piezīmi."
+msgid "Please enter a note before saving."
+msgstr "Pirms saglabāšanas lūdzu ievadi piezīmi."
 
 #: ../assistant_quicknote.lua:100
-msgid   "User:"
-msgstr  "Lietotājs:"
+msgid "User:"
+msgstr "Lietotājs:"
 
 #: ../assistant_quicknote.lua:122
-msgid   "Quick note saved successfully"
-msgstr  "Ātrā piezīme veiksmīgi saglabāta"
+msgid "Quick note saved successfully"
+msgstr "Ātrā piezīme veiksmīgi saglabāta"
 
-#: ../assistant_settings.lua:80
-msgid   "AI Response Language Setting"
-msgstr  "AI atbildes valodas iestatījums"
+#: ../assistant_settings.lua:81
+msgid "AI Response Language Setting"
+msgstr "AI atbildes valodas iestatījums"
 
-#: ../assistant_settings.lua:83
-msgid   "AI Response Language"
-msgstr  "AI atbildes valoda"
+#: ../assistant_settings.lua:84
+msgid "AI Response Language"
+msgstr "AI atbildes valoda"
 
-#: ../assistant_settings.lua:85 ../assistant_settings.lua:90
-msgid   "Leave blank to use: %1"
-msgstr  "Atstāj tukšu, lai izmantotu: %1"
+#: ../assistant_settings.lua:86 ../assistant_settings.lua:91
+msgid "Leave blank to use: %1"
+msgstr "Atstāj tukšu, lai izmantotu: %1"
 
-#: ../assistant_settings.lua:88
-msgid   "Dictionary Language"
-msgstr  "Vārdnīcas valoda"
+#: ../assistant_settings.lua:89
+msgid "Dictionary Language"
+msgstr "Vārdnīcas valoda"
 
-#: ../assistant_settings.lua:103
-msgid   "Clear"
-msgstr  "Notīrīt"
+#: ../assistant_settings.lua:104
+msgid "Clear"
+msgstr "Notīrīt"
 
-#: ../assistant_settings.lua:150
-msgid   "RTL written Language"
-msgstr  "No labās uz kreiso rakstības valoda"
+#: ../assistant_settings.lua:151
+msgid "RTL written Language"
+msgstr "No labās uz kreiso rakstības valoda"
 
-#: ../assistant_settings.lua:170
-msgid   "Leave these fields blank to use the UI language: %1"
-msgstr  "Atstāj šos laukus tukšus, lai izmantotu saskarnes valodu: %1"
+#: ../assistant_settings.lua:171
+msgid "Leave these fields blank to use the UI language: %1"
+msgstr "Atstāj šos laukus tukšus, lai izmantotu saskarnes valodu: %1"
 
-#: ../assistant_settings.lua:181
-msgid   "AI Provider and Models"
-msgstr  "AI sniedzējs un modeļi"
+#: ../assistant_settings.lua:182
+msgid "AI Provider and Models"
+msgstr "AI sniedzējs un modeļi"
 
-#: ../assistant_settings.lua:204
-msgid   "Browse Models"
-msgstr  "Pārlūkot modeļus"
+#: ../assistant_settings.lua:205
+msgid "Browse Models"
+msgstr "Pārlūkot modeļus"
 
-#: ../assistant_settings.lua:212
-msgid   "Browse available models on OpenRouter"
-msgstr  "Pārlūkot pieejamos modeļus OpenRouter"
+#: ../assistant_settings.lua:213
+msgid "Browse available models on OpenRouter"
+msgstr "Pārlūkot pieejamos modeļus OpenRouter"
 
-#: ../assistant_settings.lua:391
-msgid   "Builtin Tools Works ONLY with these models:\n"
-        "- Gemini-2.5/3\n"
-        "- OpenAI/gpt-4o-search\n"
-msgstr  "Iebūvētie rīki DARBOJAS TIKAI ar šiem modeļiem:\n"
-        "- Gemini-2.5/3\n"
-        "- OpenAI/gpt-4o-search\n"
+#: ../assistant_settings.lua:392
+msgid ""
+"Builtin Tools Works ONLY with these models:\n"
+"- Gemini-2.5/3\n"
+"- OpenAI/gpt-4o-search\n"
+msgstr ""
+"Iebūvētie rīki DARBOJAS TIKAI ar šiem modeļiem:\n"
+"- Gemini-2.5/3\n"
+"- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:416
-msgid   "AI Language: "
-msgstr  "AI valoda: "
+#: ../assistant_settings.lua:417
+msgid "AI Language: "
+msgstr "AI valoda: "
 
-#: ../assistant_settings.lua:428
-msgid   "AI Text Size: %1"
-msgstr  "AI teksta lielums: %1"
+#: ../assistant_settings.lua:429
+msgid "AI Text Size: %1"
+msgstr "AI teksta lielums: %1"
 
-#: ../assistant_settings.lua:432
-msgid   "AI Response Text Font Size"
-msgstr  "AI atbildes teksta fonta lielums"
+#: ../assistant_settings.lua:433
+msgid "AI Response Text Font Size"
+msgstr "AI atbildes teksta fonta lielums"
 
-#: ../assistant_settings.lua:448
-msgid   "Response Settings"
-msgstr  "Atbildes iestatījumi"
+#: ../assistant_settings.lua:449
+msgid "Response Settings"
+msgstr "Atbildes iestatījumi"
 
-#: ../assistant_settings.lua:451
-msgid   "Enable Stream Response"
-msgstr  "Iespējot plūsmas atbildi"
+#: ../assistant_settings.lua:452
+msgid "Enable Stream Response"
+msgstr "Iespējot plūsmas atbildi"
 
-#: ../assistant_settings.lua:459
-msgid   "Stream Text Auto Scroll"
-msgstr  "Plūsmas teksta automātiskā ritināšana"
+#: ../assistant_settings.lua:460
+msgid "Stream Text Auto Scroll"
+msgstr "Plūsmas teksta automātiskā ritināšana"
 
-#: ../assistant_settings.lua:468
-msgid   "Large Streaming Window"
-msgstr  "Liels straumēšanas logs"
+#: ../assistant_settings.lua:469
+msgid "Large Streaming Window"
+msgstr "Liels straumēšanas logs"
 
-#: ../assistant_settings.lua:478
-msgid   "Show Reasoning Text"
-msgstr  "Rādīt argumentācijas tekstu"
+#: ../assistant_settings.lua:479
+msgid "Show Reasoning Text"
+msgstr "Rādīt argumentācijas tekstu"
 
-#: ../assistant_settings.lua:486
-msgid   "Show deeply thought process (reasoning) from the AI response if exists."
-msgstr  "Rādīt dziļi pārdomātu procesu (argumentāciju) no AI atbildes, ja tāda ir."
+#: ../assistant_settings.lua:487
+msgid "Show deeply thought process (reasoning) from the AI response if exists."
+msgstr "Rādīt dziļi pārdomātu procesu (argumentāciju) no AI atbildes, ja tāda ir."
 
-#: ../assistant_settings.lua:491
-msgid   "Show Follow-up Questions"
-msgstr  "Rādīt papildu jautājumus"
+#: ../assistant_settings.lua:492
+msgid "Show Follow-up Questions"
+msgstr "Rādīt papildu jautājumus"
 
-#: ../assistant_settings.lua:499
-msgid   "Show follow up questions related to the response content."
-msgstr  "Rādīt papildu jautājumus, kas saistīti ar atbildes saturu."
+#: ../assistant_settings.lua:500
+msgid "Show follow up questions related to the response content."
+msgstr "Rādīt papildu jautājumus, kas saistīti ar atbildes saturu."
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:507
-msgid   "KOReader Tweaks & Overrides"
-msgstr  "KOReader uzlabojumi un pārrakstījumi"
+#: ../assistant_settings.lua:508
+msgid "KOReader Tweaks & Overrides"
+msgstr "KOReader uzlabojumi un pārrakstījumi"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:511
-msgid   "Use AI Assistant for 'Translate'"
-msgstr  "Izmantot AI asistentu 'Tulkot'"
+#: ../assistant_settings.lua:512
+msgid "Use AI Assistant for 'Translate'"
+msgstr "Izmantot AI asistentu 'Tulkot'"
 
-#: ../assistant_settings.lua:522
-msgid   "Auto-recap on opening long-unread books"
-msgstr  "Automātisks kopsavilkums, atverot sen nelasītas grāmatas"
+#: ../assistant_settings.lua:523
+msgid "Auto-recap on opening long-unread books"
+msgstr "Automātisks kopsavilkums, atverot sen nelasītas grāmatas"
 
-#: ../assistant_settings.lua:532
-msgid   "AI Recap will be enabled the next time a long-unread book is opened."
-msgstr  "AI kopsavilkums tiks ieslēgts nākamreiz, atverot sen nelasītu grāmatu."
+#: ../assistant_settings.lua:533
+msgid "AI Recap will be enabled the next time a long-unread book is opened."
+msgstr "AI kopsavilkums tiks ieslēgts nākamreiz, atverot sen nelasītu grāmatu."
 
-#: ../assistant_settings.lua:536
-msgid   "Show Dictionary(AI) in Dictionary Popup"
-msgstr  "Rādīt Vārdnīcu(AI) vārdnīcas uznirstošajā logā"
+#: ../assistant_settings.lua:537
+msgid "Show Dictionary(AI) in Dictionary Popup"
+msgstr "Rādīt Vārdnīcu(AI) vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:544
-msgid   "Show Wikipedia(AI) in Dictionary Popup"
-msgstr  "Rādīt Wikipedia(AI) vārdnīcas uznirstošajā logā"
+#: ../assistant_settings.lua:545
+msgid "Show Wikipedia(AI) in Dictionary Popup"
+msgstr "Rādīt Wikipedia(AI) vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:552
-msgid   "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr  "Rādīt Termina rentgena skatu (AI) vārdnīcas uznirstošajā logā"
+#: ../assistant_settings.lua:553
+msgid "Show Term X-Ray(AI) in Dictionary Popup"
+msgstr "Rādīt Termina rentgena skatu (AI) vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:560
-msgid   "Show Custom Prompts in Dictionary Popup"
-msgstr  "Rādīt lietotāja uzvednes vārdnīcas uznirstošajā logā"
+#: ../assistant_settings.lua:561
+msgid "Show Custom Prompts in Dictionary Popup"
+msgstr "Rādīt lietotāja uzvednes vārdnīcas uznirstošajā logā"
 
-#: ../assistant_settings.lua:570
-msgid   "Copy entered question to the clipboard"
-msgstr  "Kopēt ievadīto jautājumu starpliktuvē"
+#: ../assistant_settings.lua:571
+msgid "Copy entered question to the clipboard"
+msgstr "Kopēt ievadīto jautājumu starpliktuvē"
 
-#: ../assistant_settings.lua:578
-msgid   "Auto-save conversations to NoteBook"
-msgstr  "Automātiski saglabāt sarunas piezīmju grāmatā"
+#: ../assistant_settings.lua:579
+msgid "Auto-save conversations to NoteBook"
+msgstr "Automātiski saglabāt sarunas piezīmju grāmatā"
 
-#: ../assistant_settings.lua:586
-msgid   "Use book text for x-ray and recap"
-msgstr  "Izmantot grāmatas tekstu rentgena un kopsavilkumam"
+#: ../assistant_settings.lua:587
+msgid "Use book text for x-ray and recap"
+msgstr "Izmantot grāmatas tekstu rentgena un kopsavilkumam"
 
-#: ../assistant_settings.lua:594 ../assistant_settings.lua:602
-msgid   "OTA Update"
-msgstr  "OTA atjauninājums"
-
-#: ../assistant_settings.lua:604
-msgid   "branch or tag name"
-msgstr  "zara vai atzīmes nosaukums"
+#: ../assistant_settings.lua:595 ../assistant_settings.lua:603
+msgid "OTA Update"
+msgstr "OTA atjauninājums"
 
 #: ../assistant_settings.lua:605
-msgid   "Enter a branch or tag name to update the AI Assistant plugin from the source repository.\n"
-        "\n"
-        "Github URL:  %1\n"
-        "Source REPO: %2\n"
-        "\n"
-        "Default: \"main\" (latest development version)\n"
-        "Examples: \"main\", \"v1.12\", \"v1.11\"\n"
-        "\n"
-        "The current plugin will be backed up and replaced. The configuration.lua will be preserved."
-msgstr  "Ievadiet atzaru vai birku nosaukumu, lai atjauninātu AI Assistant spraudni no avota repozitorija.\n"
-        "\n"
-        "GitHub URL: %1\n"
-        "Avota REPO: %2\n"
-        "\n"
-        "Noklusējums: \"main\" (jaunākā izstrādes versija)\n"
-        "Piemēri: \"main\", \"v1.12\", \"v1.11\"\n"
-        "\n"
-        "Pašreizējais spraudnis tiks dublēts un aizstāts. Konfigurācijas fails configuration.lua tiks saglabāts."
+msgid "branch or tag name"
+msgstr "zara vai atzīmes nosaukums"
 
-#: ../assistant_settings.lua:626
-msgid   "Update"
-msgstr  "Atjaunināt"
+#: ../assistant_settings.lua:607
+#, fuzzy
+msgid ""
+"Enter a branch or tag name to update the plugin from the source repository.\n"
+"\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Source Repo:</b>  %2\n"
+"\n"
+"Default: \"main\" (latest development branch)\n"
+"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"\n"
+"<b>The configuration.lua will be preserved.</b>"
+msgstr ""
+"Ievadiet atzaru vai birku nosaukumu, lai atjauninātu AI Assistant spraudni no avota repozitorija.\n"
+"\n"
+"GitHub URL: %1\n"
+"Avota REPO: %2\n"
+"\n"
+"Noklusējums: \"main\" (jaunākā izstrādes versija)\n"
+"Piemēri: \"main\", \"v1.12\", \"v1.11\"\n"
+"\n"
+"Pašreizējais spraudnis tiks dublēts un aizstāts. Konfigurācijas fails configuration.lua tiks saglabāts."
 
-#: ../assistant_settings.lua:645
-msgid   "Purge the settings"
-msgstr  "Dzēst iestatījumus"
+#: ../assistant_settings.lua:621
+msgid "Update"
+msgstr "Atjaunināt"
 
-#: ../assistant_settings.lua:648
-msgid   "Purge assistant.koplugin settings?\n"
-        "\n"
-        "This restores the plugin to its factory defaults. Only settings will be removed; \n"
-        "File configuration.lua will be preserved."
-msgstr  "Iztīrīt assistant.koplugin iestatījumus?\n"
-        "\n"
-        "Tas atjauno spraudni uz rūpnīcas noklusējuma iestatījumiem. Tiks noņemti tikai iestatījumi; \n"
-        "Fails configuration.lua tiks saglabāts."
+#: ../assistant_settings.lua:640
+msgid "Purge the settings"
+msgstr "Dzēst iestatījumus"
 
-#: ../assistant_settings.lua:652 ../main.lua:720
-msgid   "Purge"
-msgstr  "Dzēst"
+#: ../assistant_settings.lua:643
+msgid ""
+"Purge assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Only settings will be removed; \n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Iztīrīt assistant.koplugin iestatījumus?\n"
+"\n"
+"Tas atjauno spraudni uz rūpnīcas noklusējuma iestatījumiem. Tiks noņemti tikai iestatījumi; \n"
+"Fails configuration.lua tiks saglabāts."
+
+#: ../assistant_settings.lua:647 ../main.lua:719
+msgid "Purge"
+msgstr "Dzēst"
 
 #: ../assistant_tool_executor.lua:134
-msgid   "Search keywords are empty."
-msgstr  "Meklēšanas atslēgvārdi ir tukši."
+msgid "Search keywords are empty."
+msgstr "Meklēšanas atslēgvārdi ir tukši."
 
 #: ../assistant_tool_executor.lua:143
-msgid   "Searching with %1 ... [%2]"
-msgstr  "Meklē ar %1 ... [%2]"
+msgid "Searching with %1 ... [%2]"
+msgstr "Meklē ar %1 ... [%2]"
 
-#: ../assistant_tool_executor.lua:300
-msgid   "Tool call did not include id."
-msgstr  "Rīka izsaukumā nav iekļauts id."
+#: ../assistant_tool_executor.lua:299
+msgid "Tool call did not include id."
+msgstr "Rīka izsaukumā nav iekļauts id."
 
-#: ../assistant_tool_executor.lua:303
-msgid   "Tool call did not include search keywords."
-msgstr  "Rīka izsaukumā nav iekļauti meklēšanas atslēgvārdi."
+#: ../assistant_tool_executor.lua:302
+msgid "Tool call did not include search keywords."
+msgstr "Rīka izsaukumā nav iekļauti meklēšanas atslēgvārdi."
 
 #: ../assistant_updater.lua:108
-msgid   "Checking for updates..."
-msgstr  "Pārbauda atjauninājumus..."
+msgid "Checking for updates..."
+msgstr "Pārbauda atjauninājumus..."
 
 #: ../assistant_updater.lua:111
-msgid   "AI Assistant: Failed to check updates: %2"
-msgstr  "AI Asistents: Neizdevās pārbaudīt atjauninājumus: %2"
+msgid "AI Assistant: Failed to check updates: %2"
+msgstr "AI Asistents: Neizdevās pārbaudīt atjauninājumus: %2"
 
 #: ../assistant_updater.lua:111
-msgid   "Empty Error"
-msgstr  "Tukša kļūda"
+msgid "Empty Error"
+msgstr "Tukša kļūda"
 
 #: ../assistant_updater.lua:121
-msgid   "A new version of the %1 plugin (%2) is available. Please update!"
-msgstr  "Ir pieejama jauna %1 spraudņa versija (%2). Lūdzu, atjauniniet!"
+msgid "A new version of the %1 plugin (%2) is available. Please update!"
+msgstr "Ir pieejama jauna %1 spraudņa versija (%2). Lūdzu, atjauniniet!"
 
 #: ../assistant_updater.lua:174
-msgid   "Downloading ..."
-msgstr  "Lejupielādē ..."
+msgid ""
+"<b>Downloading ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Repo: </b>%2\n"
+"<b>Branch/Tag: </b>%3"
+msgstr ""
 
-#: ../assistant_updater.lua:176
-msgid   "Github: "
-msgstr  "Github: "
+#: ../assistant_updater.lua:199
+msgid "Branch/Tag \"%1\" was not found."
+msgstr "Zars/Atzīme \"%1\" netika atrasts."
 
-#: ../assistant_updater.lua:178
-msgid   "Repo: "
-msgstr  "Repozitorijs: "
+#: ../assistant_updater.lua:211
+msgid "OTA update canceled."
+msgstr "OTA atjauninājums atcelts."
 
-#: ../assistant_updater.lua:180
-msgid   "Branch/Tag: "
-msgstr  "Filiāle/Tags: "
+#: ../assistant_updater.lua:217 ../assistant_updater.lua:304
+msgid "OTA update failed: %1"
+msgstr "OTA atjauninājums neizdevās: %1"
 
-#: ../assistant_updater.lua:204
-msgid   "Branch/Tag \"%1\" was not found."
-msgstr  "Zars/Atzīme \"%1\" netika atrasts."
+#: ../assistant_updater.lua:224
+#, fuzzy
+msgid "<b>Installing %1...</b>"
+msgstr "Instalē %1..."
 
-#: ../assistant_updater.lua:216
-msgid   "OTA update canceled."
-msgstr  "OTA atjauninājums atcelts."
-
-#: ../assistant_updater.lua:222 ../assistant_updater.lua:309
-msgid   "OTA update failed: %1"
-msgstr  "OTA atjauninājums neizdevās: %1"
-
-#: ../assistant_updater.lua:229
-msgid   "Installing %1..."
-msgstr  "Instalē %1..."
-
-#: ../assistant_updater.lua:313
-msgid   "OTA UPDATE OK.\n"
-        " Restart is required."
-msgstr  "OTA ATJAUNINĀJUMS OK.\n"
-        " Nepieciešama restartēšana."
+#: ../assistant_updater.lua:308
+msgid ""
+"OTA UPDATE OK.\n"
+" Restart is required."
+msgstr ""
+"OTA ATJAUNINĀJUMS OK.\n"
+" Nepieciešama restartēšana."
 
 #: ../assistant_utils.lua:169
-msgid   "Page"
-msgstr  "Lapa"
+msgid "Page"
+msgstr "Lapa"
 
 #: ../assistant_utils.lua:195
-msgid   "Cannot access default folder for logs: %1"
-msgstr  "Nevar piekļūt noklusējuma žurnālu mapei: %1"
+#, fuzzy
+msgid ""
+"<b>Cannot access default folder for logs: %1</b>\n"
+"Using original location."
+msgstr "Nevar piekļūt noklusējuma žurnālu mapei: %1"
 
-#: ../assistant_utils.lua:196
-msgid   "Using original location."
-msgstr  "Tiek izmantota sākotnējā atrašanās vieta."
+#: ../assistant_utils.lua:251
+msgid "Notebook save failed. Continuing..."
+msgstr "Piezīmju grāmatiņas saglabāšana neizdevās. Turpinu..."
 
-#: ../assistant_utils.lua:252
-msgid   "Notebook save failed. Continuing..."
-msgstr  "Piezīmju grāmatiņas saglabāšana neizdevās. Turpinu..."
+#: ../assistant_utils.lua:380
+msgid "##### You may find these topics interesting:"
+msgstr "##### Jūs varētu interesēt šīs tēmas:"
 
-#: ../assistant_utils.lua:381
-msgid   "##### You may find these topics interesting:"
-msgstr  "##### Jūs varētu interesēt šīs tēmas:"
-
-#: ../assistant_utils.lua:742
-msgid   "fetchJSON: failed to parse returned data"
-msgstr  "fetchJSON: neizdevās parsēt atgrieztos datus"
+#: ../assistant_utils.lua:747
+msgid "fetchJSON: failed to parse returned data"
+msgstr "fetchJSON: neizdevās parsēt atgrieztos datus"
 
 #. @translators button text, keep it short, like: Ask Another
 #: ../assistant_viewer.lua:308 ../assistant_viewer.lua:697
-msgid   "Ask Another Question"
-msgstr  "Uzdot citu jautājumu"
+msgid "Ask Another Question"
+msgstr "Uzdot citu jautājumu"
 
 #: ../assistant_viewer.lua:353
-msgid   "Copy"
-msgstr  "Kopēt"
+msgid "Copy"
+msgstr "Kopēt"
 
 #: ../assistant_viewer.lua:358
-msgid   "Text copied to the clipboard"
-msgstr  "Teksts nokopēts starpliktuvē"
+msgid "Text copied to the clipboard"
+msgstr "Teksts nokopēts starpliktuvē"
 
 #: ../assistant_viewer.lua:372
-msgid   "Add Note"
-msgstr  "Pievienot piezīmi"
+msgid "Add Note"
+msgstr "Pievienot piezīmi"
 
 #: ../assistant_viewer.lua:379
-msgid   "Highlight functionality not available"
-msgstr  "Izcelšana nav pieejama"
+msgid "Highlight functionality not available"
+msgstr "Izcelšana nav pieejama"
 
 #: ../assistant_viewer.lua:388
-msgid   "No text to add as note"
-msgstr  "Nav teksta, ko pievienot kā piezīmi"
+msgid "No text to add as note"
+msgstr "Nav teksta, ko pievienot kā piezīmi"
 
 #: ../assistant_viewer.lua:417
-msgid   "No text left to add as note"
-msgstr  "Nav palicis teksta pievienošanai kā piezīme"
+msgid "No text left to add as note"
+msgstr "Nav palicis teksta pievienošanai kā piezīme"
 
 #: ../assistant_viewer.lua:430
-msgid   "Note added successfully"
-msgstr  "Piezīme veiksmīgi pievienota"
+msgid "Note added successfully"
+msgstr "Piezīme veiksmīgi pievienota"
 
 #: ../assistant_viewer.lua:451
-msgid   "Conversation is saved to NoteBook"
-msgstr  "Saruna saglabāta piezīmju grāmatā"
+msgid "Conversation is saved to NoteBook"
+msgstr "Saruna saglabāta piezīmju grāmatā"
 
 #: ../assistant_viewer.lua:528
-msgid   "Book Analysis"
-msgstr  "Grāmatas analīze"
+msgid "Book Analysis"
+msgstr "Grāmatas analīze"
 
 #: ../assistant_viewer.lua:528
-msgid   "General Conversation"
-msgstr  "Vispārēja saruna"
+msgid "General Conversation"
+msgstr "Vispārēja saruna"
 
 #: ../assistant_viewer.lua:699
-msgid   "Type your question here"
-msgstr  "Ierakstiet savu jautājumu šeit"
+msgid "Type your question here"
+msgstr "Ierakstiet savu jautājumu šeit"
 
 #: ../assistant_viewer.lua:868
-msgid   "Word copied to clipboard."
-msgstr  "Vārds nokopēts starpliktuvē."
+msgid "Word copied to clipboard."
+msgstr "Vārds nokopēts starpliktuvē."
 
 #: ../assistant_viewer.lua:869
-msgid   "Selection copied to clipboard."
-msgstr  "Atlase nokopēta starpliktuvē."
+msgid "Selection copied to clipboard."
+msgstr "Atlase nokopēta starpliktuvē."
 
 #: ../main.lua:79 ../main.lua:139
-msgid   "Ask the AI a question"
-msgstr  "Uzdod AI jautājumu"
+msgid "Ask the AI a question"
+msgstr "Uzdod AI jautājumu"
 
-#: ../main.lua:87 ../main.lua:288
-msgid   "AI Recaps"
-msgstr  "AI kopsavilkumi"
+#: ../main.lua:87 ../main.lua:287
+msgid "AI Recaps"
+msgstr "AI kopsavilkumi"
 
-#: ../main.lua:95 ../main.lua:273
-msgid   "AI X-Ray"
-msgstr  "AI X-Ray"
+#: ../main.lua:95 ../main.lua:272
+msgid "AI X-Ray"
+msgstr "AI X-Ray"
 
-#: ../main.lua:111 ../main.lua:258
-msgid   "Book Summary & Recs"
-msgstr  "Grāmatas kopsavilkums un ieteikumi"
+#: ../main.lua:111 ../main.lua:257
+msgid "Book Summary & Recs"
+msgstr "Grāmatas kopsavilkums un ieteikumi"
 
 #: ../main.lua:146
-msgid   "Enter a question to ask AI."
-msgstr  "Ievadi jautājumu AI"
+msgid "Enter a question to ask AI."
+msgstr "Ievadi jautājumu AI"
 
 #: ../main.lua:157
-msgid   "Take quick notes that will be saved to your notebook."
-msgstr  "Veic ātrās piezīmes, kas tiks saglabātas tavā piezīmju grāmatiņā."
+msgid "Take quick notes that will be saved to your notebook."
+msgstr "Veic ātrās piezīmes, kas tiks saglabātas tavā piezīmju grāmatiņā."
 
 #: ../main.lua:162
-msgid   "NoteBook (AI Conversation Log)"
-msgstr  "Piezīmju grāmata (AI sarunu žurnāls)"
+msgid "NoteBook (AI Conversation Log)"
+msgstr "Piezīmju grāmata (AI sarunu žurnāls)"
 
 #: ../main.lua:169
-msgid   "Notebook file:"
-msgstr  "Piezīmju grāmatiņas fails:"
+#, fuzzy
+msgid ""
+"<b>Notebook file:</b>\n"
+"\n"
+"%1"
+msgstr "Piezīmju grāmatiņas fails:"
 
-#: ../main.lua:172
-msgid   "View"
-msgstr  "Skatīt"
+#: ../main.lua:171
+msgid "View"
+msgstr "Skatīt"
 
-#: ../main.lua:176
-msgid   "File does not exist.\n"
-        "\n"
-        "%1"
-msgstr  "Fails neeksistē.\n"
-        "\n"
-        "%1"
+#: ../main.lua:175
+msgid ""
+"File does not exist.\n"
+"\n"
+"%1"
+msgstr ""
+"Fails neeksistē.\n"
+"\n"
+"%1"
 
-#: ../main.lua:184 ../main.lua:188
-msgid   "Delete"
-msgstr  "Dzēst"
+#: ../main.lua:183 ../main.lua:187
+msgid "Delete"
+msgstr "Dzēst"
 
-#: ../main.lua:187
-msgid   "Delete file?\n"
-        "%1\n"
-        "This operation is not reversible."
-msgstr  "Dzēst failu?\n"
-        "%1\n"
-        "Šo darbību nevar atsaukt."
+#: ../main.lua:186
+msgid ""
+"Delete file?\n"
+"%1\n"
+"This operation is not reversible."
+msgstr ""
+"Dzēst failu?\n"
+"%1\n"
+"Šo darbību nevar atsaukt."
 
-#: ../main.lua:199
-msgid   "Edit"
-msgstr  "Rediģēt"
+#: ../main.lua:198
+msgid "Edit"
+msgstr "Rediģēt"
 
-#: ../main.lua:213
-msgid   "AI Provider: %1(%2)"
-msgstr  "AI sniedzējs: %1(%2)"
+#: ../main.lua:212
+msgid "AI Provider: %1(%2)"
+msgstr "AI sniedzējs: %1(%2)"
 
-#: ../main.lua:226
-msgid   "Smart Web Search: %1"
-msgstr  "Viedā tīmekļa meklēšana: %1"
+#: ../main.lua:225
+msgid "Smart Web Search: %1"
+msgstr "Viedā tīmekļa meklēšana: %1"
 
-#: ../main.lua:230
-msgid   "Improves response accuracy with real-time web results. \n"
-        "Note: Higher token usage and additional API charges apply."
-msgstr  "Uzlabo atbildes precizitāti ar reāllaika tīmekļa rezultātiem. \n"
-        "Piezīme: lielāks marķieru patēriņš un papildu API maksa."
+#: ../main.lua:229
+msgid ""
+"Improves response accuracy with real-time web results. \n"
+"Note: Higher token usage and additional API charges apply."
+msgstr ""
+"Uzlabo atbildes precizitāti ar reāllaika tīmekļa rezultātiem. \n"
+"Piezīme: lielāks marķieru patēriņš un papildu API maksa."
 
-#: ../main.lua:236
-msgid   "Other Settings"
-msgstr  "Citi iestatījumi"
+#: ../main.lua:235
+msgid "Other Settings"
+msgstr "Citi iestatījumi"
 
-#: ../main.lua:254
-msgid   "Book-Level Built-in Prompts"
-msgstr  "Grāmatas līmeņa iebūvētās uzvednes"
+#: ../main.lua:253
+msgid "Book-Level Built-in Prompts"
+msgstr "Grāmatas līmeņa iebūvētās uzvednes"
 
-#: ../main.lua:267
-msgid   "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
-msgstr  "Grāmatas kopsavilkums, autora biogrāfija, vēsturiskais konteksts un līdzīgu grāmatu ieteikumi ar aprakstiem."
+#: ../main.lua:266
+msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
+msgstr "Grāmatas kopsavilkums, autora biogrāfija, vēsturiskais konteksts un līdzīgu grāmatu ieteikumi ar aprakstiem."
 
-#: ../main.lua:282
-msgid   "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
-msgstr  "“X-Ray” kopsavilkums grāmatai, sadalīts sadaļās: Tēli, Vietas, Tēmas, Termini un jēdzieni, Hronoloģija un Atkārtota iesaiste."
+#: ../main.lua:281
+msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
+msgstr "“X-Ray” kopsavilkums grāmatai, sadalīts sadaļās: Tēli, Vietas, Tēmas, Termini un jēdzieni, Hronoloģija un Atkārtota iesaiste."
 
-#: ../main.lua:297
-msgid   "A very brief, spoiler-free summary of the book up to current reading progress."
-msgstr  "Īss kopsavilkums bez spoileriem līdz pašreizējai lasīšanas vietai."
+#: ../main.lua:296
+msgid "A very brief, spoiler-free summary of the book up to current reading progress."
+msgstr "Īss kopsavilkums bez spoileriem līdz pašreizējai lasīšanas vietai."
 
-#: ../main.lua:308
-msgid   "Analysis of your highlights, notes, and notebook content from the book."
-msgstr  "Jūsu iezīmējumu, piezīmju un piezīmju grāmatas satura analīze no grāmatas."
+#: ../main.lua:307
+msgid "Analysis of your highlights, notes, and notebook content from the book."
+msgstr "Jūsu iezīmējumu, piezīmju un piezīmju grāmatas satura analīze no grāmatas."
 
-#: ../main.lua:323
-msgid   "Summary of the book using your highlights and notes."
-msgstr  "Grāmatas kopsavilkums, izmantojot jūsu iezīmējumus un piezīmes."
+#: ../main.lua:322
+msgid "Summary of the book using your highlights and notes."
+msgstr "Grāmatas kopsavilkums, izmantojot jūsu iezīmējumus un piezīmes."
 
-#: ../main.lua:330
-msgid   "Book-Level Custom Prompts"
-msgstr  "Grāmatas līmeņa lietotāja uzvednes"
+#: ../main.lua:329
+msgid "Book-Level Custom Prompts"
+msgstr "Grāmatas līmeņa lietotāja uzvednes"
 
-#: ../main.lua:337
-msgid   "Includes user defined book level prompts from Config file"
-msgstr  "Ietver lietotāja definētas grāmatas līmeņa uzvednes no konfigurācijas faila"
+#: ../main.lua:336
+msgid "Includes user defined book level prompts from Config file"
+msgstr "Ietver lietotāja definētas grāmatas līmeņa uzvednes no konfigurācijas faila"
 
-#: ../main.lua:412
-msgid   "This is a custom prompt"
-msgstr  "Šī ir lietotāja uzvedne"
+#: ../main.lua:411
+msgid "This is a custom prompt"
+msgstr "Šī ir lietotāja uzvedne"
 
-#: ../main.lua:422
-msgid   "No valid book-level custom prompt found"
-msgstr  "Nav atrasts derīgs grāmatas līmeņa pielāgots ieteikums"
+#: ../main.lua:421
+msgid "No valid book-level custom prompt found"
+msgstr "Nav atrasts derīgs grāmatas līmeņa pielāgots ieteikums"
 
-#: ../main.lua:427
-msgid   "For details, visit the 'Configuration' wiki page on github."
-msgstr  "Sīkākai informācijai apmeklējiet 'Configuration' wiki lapu vietnē GitHub."
+#: ../main.lua:426
+msgid "For details, visit the 'Configuration' wiki page on github."
+msgstr "Sīkākai informācijai apmeklējiet 'Configuration' wiki lapu vietnē GitHub."
 
-#: ../main.lua:510
-msgid   "No valid model provider is found in the configuration.lua"
-msgstr  "configuration.lua nav atrasts derīgs modeļa nodrošinātājs"
+#: ../main.lua:509
+msgid "No valid model provider is found in the configuration.lua"
+msgstr "configuration.lua nav atrasts derīgs modeļa nodrošinātājs"
 
-#: ../main.lua:528
-msgid   "Configuration Error.\n"
-        "Please set up configuration.lua."
-msgstr  "Konfigurācijas kļūda.\n"
-        "Lūdzu, iestatiet configuration.lua."
+#: ../main.lua:527
+msgid ""
+"Configuration Error.\n"
+"Please set up configuration.lua."
+msgstr ""
+"Konfigurācijas kļūda.\n"
+"Lūdzu, iestatiet configuration.lua."
 
-#: ../main.lua:600
-msgid   "configuration.lua: model providers are invalid."
-msgstr  "configuration.lua: modeļa nodrošinātāji nav derīgi."
+#: ../main.lua:599
+msgid "configuration.lua: model providers are invalid."
+msgstr "configuration.lua: modeļa nodrošinātāji nav derīgi."
 
-#: ../main.lua:685
-msgid   "Usage Tips\n"
-        "\n"
-        "Select:\n"
-        "Highlight text (or a word) in the book, then press [AI assistant] in the poped up menu.\n"
-        "\n"
-        "Long Press:\n"
-        "- On a Prompt Button: Add to the highlight menu.\n"
-        "- On a highlight menu button to remove it.\n"
-        "- On the Close button to go back to the book in 1 step.\n"
-        "\n"
-        "Very-Long Press (over 3 seconds):\n"
-        "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
-        "\n"
-        "Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
-        "On the result dialog to close (as the Close button is far to reach).\n"
-msgstr  "Lietošanas padomi\n"
-        "\n"
-        "Izvēle:\n"
-        "Iezīmējiet tekstu (vai vārdu) grāmatā, pēc tam uznirstošajā izvēlnē spiediet [AI asistents].\n"
-        "\n"
-        "Ilgs pieskāriens:\n"
-        "- Uz uzvednes pogas: pievienot izcelšanas izvēlnei.\n"
-        "- Uz izcelšanas izvēlnes pogas: noņemt to.\n"
-        "- Uz Aizvērt pogas: atgriezties grāmatā vienā solī.\n"
-        "\n"
-        "Ļoti ilgs pieskāriens (ilgāk par 3 sekundēm):\n"
-        "Uz viena vārda grāmatā, lai parādītu izcelšanas izvēlni (vietā vārdnīcas).\n"
-        "\n"
-        "Vairāki vilkšanas žesti (piem., ⮠, ⮡, ↺):\n"
-        "Uz rezultātu dialoga, lai aizvērtu (jo Aizvērt poga ir grūti sasniedzama).\n"
+#: ../main.lua:684
+msgid ""
+"Usage Tips\n"
+"\n"
+"Select:\n"
+"Highlight text (or a word) in the book, then press [AI assistant] in the poped up menu.\n"
+"\n"
+"Long Press:\n"
+"- On a Prompt Button: Add to the highlight menu.\n"
+"- On a highlight menu button to remove it.\n"
+"- On the Close button to go back to the book in 1 step.\n"
+"\n"
+"Very-Long Press (over 3 seconds):\n"
+"On a single word in the book to show the highlight menu (instead of the dictionary).\n"
+"\n"
+"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"On the result dialog to close (as the Close button is far to reach).\n"
+msgstr ""
+"Lietošanas padomi\n"
+"\n"
+"Izvēle:\n"
+"Iezīmējiet tekstu (vai vārdu) grāmatā, pēc tam uznirstošajā izvēlnē spiediet [AI asistents].\n"
+"\n"
+"Ilgs pieskāriens:\n"
+"- Uz uzvednes pogas: pievienot izcelšanas izvēlnei.\n"
+"- Uz izcelšanas izvēlnes pogas: noņemt to.\n"
+"- Uz Aizvērt pogas: atgriezties grāmatā vienā solī.\n"
+"\n"
+"Ļoti ilgs pieskāriens (ilgāk par 3 sekundēm):\n"
+"Uz viena vārda grāmatā, lai parādītu izcelšanas izvēlni (vietā vārdnīcas).\n"
+"\n"
+"Vairāki vilkšanas žesti (piem., ⮠, ⮡, ↺):\n"
+"Uz rezultātu dialoga, lai aizvērtu (jo Aizvērt poga ir grūti sasniedzama).\n"
 
-#: ../main.lua:707
-msgid   "Version Info"
-msgstr  "Versijas informācija"
+#: ../main.lua:706
+msgid "Version Info"
+msgstr "Versijas informācija"
 
-#: ../main.lua:713
-msgid   "Purge Settings"
-msgstr  "Dzēst iestatījumus"
+#: ../main.lua:712
+msgid "Purge Settings"
+msgstr "Dzēst iestatījumus"
 
-#: ../main.lua:716
-msgid   "Are you sure to purge the assistant plugin settings? \n"
-        "This resets the assistant plugin to the status the first time you installed it.\n"
-        "\n"
-        "configuration.lua is safe, only the settings are purged."
-msgstr  "Vai tiešām vēlaties izdzēst asistenta spraudņa iestatījumus?\n"
-        "Šis atiestatīs asistenta spraudni uz stāvokli, kāds tas bija pirmās instalēšanas reizē.\n"
-        "\n"
-        "configuration.lua ir drošs — tiek izdzēsti tikai iestatījumi."
+#: ../main.lua:715
+msgid ""
+"Are you sure to purge the assistant plugin settings? \n"
+"This resets the assistant plugin to the status the first time you installed it.\n"
+"\n"
+"configuration.lua is safe, only the settings are purged."
+msgstr ""
+"Vai tiešām vēlaties izdzēst asistenta spraudņa iestatījumus?\n"
+"Šis atiestatīs asistenta spraudni uz stāvokli, kāds tas bija pirmās instalēšanas reizē.\n"
+"\n"
+"configuration.lua ir drošs — tiek izdzēsti tikai iestatījumi."
+
+#: ../main.lua:768
+#, lua-format
+msgid "Remove [%s] from Highlight Menu?"
+msgstr "Noņemt [%s] no Izcelšanas izvēlnes?"
 
 #: ../main.lua:769
-#, lua-format
-msgid   "Remove [%s] from Highlight Menu?"
-msgstr  "Noņemt [%s] no Izcelšanas izvēlnes?"
+msgid "Remove"
+msgstr "Noņemt"
 
-#: ../main.lua:770
-msgid   "Remove"
-msgstr  "Noņemt"
+#: ../main.lua:1014
+msgid "Configuration not found. Please set up configuration.lua first."
+msgstr "Konfigurācija nav atrasta. Vispirms iestatiet configuration.lua."
 
-#: ../main.lua:1015
-msgid   "Configuration not found. Please set up configuration.lua first."
-msgstr  "Konfigurācija nav atrasta. Vispirms iestatiet configuration.lua."
+#: ../main.lua:1062
+#, fuzzy
+msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
+msgstr "uz Izcelt izvēlni."
 
-#: ../main.lua:1063
-msgid   "Added"
-msgstr  "Pievienots"
+#: ../main.lua:1073
+#, fuzzy
+msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
+msgstr "Noņemt [%s] no Izcelšanas izvēlnes?"
 
-#: ../main.lua:1065
-msgid   "to Highlight Menu."
-msgstr  "uz Izcelt izvēlni."
+#: ../main.lua:1118
+msgid ""
+"Do you want an AI Recap?\n"
+"For %1 by %2.\n"
+"\n"
+msgstr ""
+"Vai vēlies AI kopsavilkumu?\n"
+"Priekš %1 no %2.\n"
+"\n"
 
-#: ../main.lua:1076
-msgid   "Removed"
-msgstr  "Noņemts"
-
-#: ../main.lua:1078
-msgid   "from Highlight Menu."
-msgstr  "no Izcelt izvēlnes."
-
-#: ../main.lua:1123
-msgid   "Do you want an AI Recap?\n"
-        "For %1 by %2.\n"
-        "\n"
-msgstr  "Vai vēlies AI kopsavilkumu?\n"
-        "Priekš %1 no %2.\n"
-        "\n"
+#: ../main.lua:1119
+msgid "Last read an hour ago."
+msgid_plural "Last read %1 hours ago."
+msgstr[0] "Pēdējo reizi lasīts pirms stundas."
+msgstr[1] "Pēdējo reizi lasīts pirms %1 stundām."
+msgstr[2] "Pēdējo reizi lasīts pirms %1 stundas."
 
 #: ../main.lua:1124
-msgid   "Last read an hour ago."
-msgid_plural    "Last read %1 hours ago."
-msgstr[0]       "Pēdējo reizi lasīts pirms stundas."
-msgstr[1]       "Pēdējo reizi lasīts pirms %1 stundām."
-msgstr[2]       "Pēdējo reizi lasīts pirms %1 stundas."
+msgid "Yes"
+msgstr "Jā"
 
-#: ../main.lua:1129
-msgid   "Yes"
-msgstr  "Jā"
+#: ../main.lua:1133
+msgid "No"
+msgstr "Nē"
 
-#: ../main.lua:1138
-msgid   "No"
-msgstr  "Nē"
+#: ../main.lua:1174
+msgid "Markdown Engine"
+msgstr "Markdown dzinējs"
 
-#: ../main.lua:1179
-msgid   "Markdown Engine"
-msgstr  "Markdown dzinējs"
+#: ../main.lua:1175
+msgid "KOReader"
+msgstr "KOReader"
 
-#: ../main.lua:1180
-msgid   "KOReader"
-msgstr  "KOReader"
+#: ../main.lua:1176
+msgid "Device"
+msgstr "Ierīce"
 
-#: ../main.lua:1181
-msgid   "Device"
-msgstr  "Ierīce"
+#: ../main.lua:1177
+msgid "Platform"
+msgstr "Platforma"
 
-#: ../main.lua:1182
-msgid   "Platform"
-msgstr  "Platforma"
+#: ../main.lua:1178
+msgid "Runtime"
+msgstr "Izpildlaiks"
 
-#: ../main.lua:1183
-msgid   "Runtime"
-msgstr  "Izpildlaiks"
+#~ msgid "API Error"
+#~ msgstr "API kļūda"
+
+#~ msgid "Added"
+#~ msgstr "Pievienots"
+
+#~ msgid "Branch/Tag: "
+#~ msgstr "Filiāle/Tags: "
+
+#~ msgid "Downloading ..."
+#~ msgstr "Lejupielādē ..."
+
+#~ msgid "Error:"
+#~ msgstr "Kļūda:"
+
+#~ msgid "Github: "
+#~ msgstr "Github: "
+
+#~ msgid "Removed"
+#~ msgstr "Noņemts"
+
+#~ msgid "Repo: "
+#~ msgstr "Repozitorijs: "
+
+#~ msgid "Try another provider in the settings dialog."
+#~ msgstr "Izmēģiniet citu pakalpojumu sniedzēju iestatījumu dialogā."
+
+#~ msgid "Using original location."
+#~ msgstr "Tiek izmantota sākotnējā atrašanās vieta."
+
+#~ msgid "from Highlight Menu."
+#~ msgstr "no Izcelt izvēlnes."

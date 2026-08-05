@@ -746,9 +746,9 @@ def translate_file(
 
     if os.path.isfile(partial_path):
         log_translate.warning("resuming from existing partial: %s", partial_path)
-        po = polib.pofile(partial_path)
+        po = polib.pofile(partial_path, wrapwidth=0)
     else:
-        po = polib.pofile(input_path)
+        po = polib.pofile(input_path, wrapwidth=0)
 
     # Detect whether the header is a fresh `msginit` placeholder (scenario 1
     # new language, or scenario 2 update whose untranslated.po was regenerated
