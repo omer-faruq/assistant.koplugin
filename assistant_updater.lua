@@ -8,7 +8,7 @@ local logger = require("logger")
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local koutil = require("util")
-local assistant_utils = require("assistant_utils")
+local ASUtils = require("assistant_utils")
 
 local CONFIGURATION = nil
 local meta = nil
@@ -103,7 +103,7 @@ local function checkForUpdates()
   local update_url = koutil.tableGetValue(CONFIGURATION, "features", "update_check_url")
     or "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest"
 
-  local parsed_data, err = assistant_utils.fetchJSON(update_url,
+  local parsed_data, err = ASUtils.fetchJSON(update_url,
       { ["Accept"] = "application/vnd.github.v3+json" },
       _("Checking for updates..."))
 
@@ -170,7 +170,7 @@ local function otaUpgrade(version)
   -- Phase 1: Download the archive (dismissable by user)
   local download_msg = InfoMessage:new{
     face = Font:getFace("xx_smallinfofont"),
-    text = assistant_utils.bold_format(
+      text = ASUtils.bold_format(
       T(_("<b>Downloading ...</b>\n<b>Github: </b>%1\n<b>Repo: </b>%2\n<b>Branch/Tag: </b>%3"),
         GITHUB_BASE, GITHUB_REPO, version)
     ),
@@ -220,7 +220,7 @@ local function otaUpgrade(version)
 
   -- Phase 2: Extract and install (NOT dismissable)
   local extract_msg = InfoMessage:new{
-      text = assistant_utils.bold_format(
+    text = ASUtils.bold_format(
           T(_("<b>Installing %1...</b>"), version)
       ),
   }

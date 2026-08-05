@@ -35,7 +35,7 @@ local InfoMessage = require("ui/widget/infomessage")
 local Screen = Device.screen
 local MD = require("assistant_mdparser")
 local Prompts = require("assistant_prompts")
-local assistant_utils = require("assistant_utils")
+local ASUtils = require("assistant_utils")
 
 -- Inject scroll page method for ScrollHtmlWidget
 ScrollHtmlWidget.scrollToPage = function(self, page_num)
@@ -523,7 +523,7 @@ function ChatGPTViewer:saveToNotebook()
   local timestamp = os.date("%Y-%m-%d %H:%M:%S")
   local highlighted_text_lbl = _("Highlighted text:")
   
-  local page_info = assistant_utils.getPageInfo(self.ui)
+  local page_info = ASUtils.getPageInfo(self.ui)
 
   local title_text = (self.title and self.title or self.ui.document and _("Book Analysis") or _("General Conversation")) .. "\n"
   local text_to_log = self.text or ""
@@ -544,7 +544,7 @@ function ChatGPTViewer:saveToNotebook()
   
   local log_entry = string.format("# [%s]%s\n## %s\n\n%s\n\n", timestamp, page_info, title_text, text_to_log)
   
-  assistant_utils.saveToNotebookFile(self.assistant, log_entry)
+  ASUtils.saveToNotebookFile(self.assistant, log_entry)
 end
 
 function ChatGPTViewer:onCloseWidget()

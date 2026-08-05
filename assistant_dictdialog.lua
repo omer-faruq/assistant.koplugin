@@ -7,7 +7,7 @@ local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local Event = require("ui/event")
 local koutil = require("util")
-local assistant_utils = require("assistant_utils")
+local ASUtils = require("assistant_utils")
 local dict_prompts = require("assistant_prompts").assistant_prompts.dict
 local Prompts = require("assistant_prompts")
 
@@ -210,7 +210,7 @@ local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
         -- Show loading dialog immediately to avoid app appearing frozen during LexRank processing
         local context_loading_msg = InfoMessage:new{
             icon = "book.opened",
-            text = assistant_utils.bold_format(_("<b>Analyzing book context for Term X-Ray...</b>")),
+            text = ASUtils.bold_format(_("<b>Analyzing book context for Term X-Ray...</b>")),
         }
         UIManager:show(context_loading_msg)
         UIManager:forceRePaint()  -- Force immediate display before blocking LexRank operation
@@ -221,7 +221,7 @@ local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
         local LexRankLanguages = require("assistant_lexrank_languages")
 
         -- Get book text up to current reading position
-        local book_text = assistant_utils.extractBookTextForAnalysis(CONFIGURATION, ui)
+        local book_text = ASUtils.extractBookTextForAnalysis(CONFIGURATION, ui)
 
         if book_text and #book_text > 100 then
             -- Tokenize sentences once (will be reused for all filtering and context expansion)
@@ -429,7 +429,7 @@ local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
         -- Limit prev_context to last 100 characters and next_context to first 100 characters
         local prev_context_limited = string.sub(prev_context, -100)
         local next_context_limited = string.sub(next_context, 1, 100)
-        local normalized_answer = assistant_utils.normalizeMarkdownHeadings(answer, 2, 6) or answer
+        local normalized_answer = ASUtils.normalizeMarkdownHeadings(answer, 2, 6) or answer
         return T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, highlightedText, next_context_limited, normalized_answer)
     end
 

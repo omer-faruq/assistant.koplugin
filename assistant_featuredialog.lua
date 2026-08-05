@@ -13,11 +13,10 @@ local ChatGPTViewer = require("assistant_viewer")
 local assistant_prompts = require("assistant_prompts").assistant_prompts
 local Prompts = require("assistant_prompts")
 local NetworkMgr = require("ui/network/manager")
-local assistant_utils = require("assistant_utils")
-local assistant_utils = require("assistant_utils")
-local extractBookTextForAnalysis = assistant_utils.extractBookTextForAnalysis
-local extractHighlightsNotesAndNotebook = assistant_utils.extractHighlightsNotesAndNotebook
-local normalizeMarkdownHeadings = assistant_utils.normalizeMarkdownHeadings
+local ASUtils = require("assistant_utils")
+local extractBookTextForAnalysis = ASUtils.extractBookTextForAnalysis
+local extractHighlightsNotesAndNotebook = ASUtils.extractHighlightsNotesAndNotebook
+local normalizeMarkdownHeadings = ASUtils.normalizeMarkdownHeadings
 
 local function showFeatureDialog(assistant, feature_type, title, author, progress_percent, message_history)
     local CONFIGURATION = assistant.CONFIGURATION
@@ -97,7 +96,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         if not feature_config then
             UIManager:show(InfoMessage:new{
                 icon = "notice-warning",
-                text = assistant_utils.bold_format(
+                text = ASUtils.bold_format(
                     T(_("<b>Unknown feature type:</b> %1"), tostring(feature_type))
                 ),
             })
@@ -174,14 +173,14 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         role = "user",
         content = user_content,
     }
-    assistant_utils.set_attr(context_message, "use_websearch", user_prompt_use_websearch)
+    ASUtils.set_attr(context_message, "use_websearch", user_prompt_use_websearch)
     table.insert(message_history, context_message)
 
     local function createResultText(answer)
 
       local normalized_answer = answer
       if assistant.settings:readSetting("auto_prompt_suggest", false) then
-        normalized_answer = assistant_utils.process_suggestions(normalized_answer)
+        normalized_answer = ASUtils.process_suggestions(normalized_answer)
       end
       normalized_answer = normalizeMarkdownHeadings(normalized_answer, 2, 6) or answer
 
@@ -251,7 +250,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
               content = answer
             })
             if assistant.settings:readSetting("auto_prompt_suggest", false) then
-              answer = assistant_utils.process_suggestions(answer)
+              answer = ASUtils.process_suggestions(answer)
             end
             local normalized_answer = normalizeMarkdownHeadings(answer, 3, 6) or answer
             local additional_text = "\n\n### ⮞ User: \n" .. (type(user_question) == "string" and user_question or (user_question.text or user_question)) .. "\n\n### ⮞ Assistant:\n" .. normalized_answer

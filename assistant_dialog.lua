@@ -18,9 +18,9 @@ local strbuf = require("string.buffer")
 local Device = require("device")
 local Screen = Device.screen
 local CheckButton = require("ui/widget/checkbutton")
-local assistant_utils = require("assistant_utils")
-local extractBookTextForAnalysis = assistant_utils.extractBookTextForAnalysis
-local normalizeMarkdownHeadings = assistant_utils.normalizeMarkdownHeadings
+local ASUtils = require("assistant_utils")
+local extractBookTextForAnalysis = ASUtils.extractBookTextForAnalysis
+local normalizeMarkdownHeadings = ASUtils.normalizeMarkdownHeadings
 local NetworkMgr = require("ui/network/manager")
 
 -- main dialog class
@@ -94,7 +94,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
       if title and title ~= "" then
         user_message:putf("➤ ‹ %s ›\n", title)
 
-        local user_input = assistant_utils.get_attr(message, "user_input", "")
+        local user_input = ASUtils.get_attr(message, "user_input", "")
 
         -- Check if user input is available
         if user_input and user_input ~= "" then
@@ -129,7 +129,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
       return user_message:get()
     elseif message.role == "assistant" then
       local assistant_content, answer_type
-      local kw = assistant_utils.get_attr(message, "search_keywords")
+      local kw = ASUtils.get_attr(message, "search_keywords")
       if kw then
         answer_type = _("Search")
         assistant_content = string.format("%s\n\n", kw)
@@ -137,7 +137,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
         answer_type =  _("Response")
         assistant_content = message.content or _("(No response)")
         if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
-          assistant_content = assistant_utils.process_suggestions(assistant_content)
+          assistant_content = ASUtils.process_suggestions(assistant_content)
         end
         -- Remove code block markers before displaying
         assistant_content = assistant_content:gsub("```", "\n")
@@ -178,7 +178,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
     -- skips the first message (system prompt)
     for i = 2, #message_history do
       local message = message_history[i]
-      local is_context = assistant_utils.get_attr(message, "is_context")
+      local is_context = ASUtils.get_attr(message, "is_context")
       if not is_context then
         table.insert(result_parts, formatSingleMessage(message, title))
       end
@@ -223,8 +223,8 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
             content = self:_formatUserPrompt(user_question.user_prompt, current_highlight, user_question.user_input or ""),
           }
           -- set these attributes in metatable (won't be encoded to API calls)
-          assistant_utils.set_attr(_user, "user_input", user_question.user_input)
-          assistant_utils.set_attr(_user, "use_websearch", user_question.use_websearch)
+          ASUtils.set_attr(_user, "user_input", user_question.user_input)
+          ASUtils.set_attr(_user, "use_websearch", user_question.use_websearch)
           table.insert(message_history, _user)
         end
 
@@ -279,7 +279,7 @@ I have a question about this book.]], book.title, book.author)
       role = "user",
       content = content,
   }
-  assistant_utils.set_attr(context, "is_context", true)
+  ASUtils.set_attr(context, "is_context", true)
   table.insert(message_history, context)
 
   local question_message = {
@@ -441,7 +441,7 @@ function AssistantDialog:show(highlightedText)
           local menukey = string.format("assistant_%02d_%s", tab.order, tab.idx)
           local settingkey = "showOnMain_" .. menukey
           UIManager:show(ConfirmBox:new{
-            text = assistant_utils.bold_format(
+            text = ASUtils.bold_format(
               T(_("<b>%1:</b> %2\n\nAdd this button to the Highlight Menu?"), tab.text, tab.desc)
             ),
             ok_text = _("Add"),
@@ -474,7 +474,7 @@ function AssistantDialog:show(highlightedText)
   if is_highlighted then
       dialog_hint = _("Ask a question about the highlighted text")
   elseif book.title then
-      dialog_hint = assistant_utils.bold_format(
+      dialog_hint = ASUtils.bold_format(
           T(_("<b>Ask a question about this book:</b>\n%1 by %2"), book.title, book.author)
       )
   else
@@ -556,8 +556,8 @@ function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
     content = user_content,
   }
   -- set attributes in metatable (won't be encoded to API calls)
-  assistant_utils.set_attr(_user, "user_input", user_input)
-  assistant_utils.set_attr(_user, "use_websearch", koutil.tableGetValue(prompt_config, "use_websearch") or false)
+  ASUtils.set_attr(_user, "user_input", user_input)
+  ASUtils.set_attr(_user, "use_websearch", koutil.tableGetValue(prompt_config, "use_websearch") or false)
   table.insert(message_history, _user)
   
   local answer, err = self.querier:query(message_history, T(_("Loading for %1 ..."), title or prompt_index))
@@ -574,7 +574,7 @@ function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
 
   if not message_history or #message_history < 1 then
     UIManager:show(InfoMessage:new{
-        text = assistant_utils.bold_format(_("<b>Error:</b> No response received")),
+        text = ASUtils.bold_format(_("<b>Error:</b> No response received")),
         icon = "notice-warning"
     })
     return

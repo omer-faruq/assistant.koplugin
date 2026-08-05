@@ -15,7 +15,7 @@ local strbuf = require("string.buffer")
 local ffi = require("ffi")
 local ffiutil = require("ffi/util")
 local Device = require("device")
-local assistant_utils = require("assistant_utils")
+local ASUtils = require("assistant_utils")
 local ToolExecutor = require("assistant_tool_executor")
 local Screen = Device.screen
 local Prompts = require("assistant_prompts").assistant_prompts
@@ -154,7 +154,7 @@ function Querier:showError(err, message_history)
     else
         local provider = self.provider_name or "?"
         local model = self.handler and self.handler.model or "?"
-        local text = assistant_utils.bold_format(
+        local text = ASUtils.bold_format(
             T(_("<b>API Error</b>\n%1\n\n<b>Provider:</b> %2\n<b>Model:</b> %3\n\nTry another provider in the settings dialog."),
               err or _("Unknown error"), provider, model)
         )
@@ -216,7 +216,7 @@ function Querier:query(message_history, title)
         return nil, _("Plugin is not configured.")
     end
 
-    local prompt_websearch   = assistant_utils.get_attr(message_history[#message_history], "use_websearch", false)
+    local prompt_websearch   = ASUtils.get_attr(message_history[#message_history], "use_websearch", false)
     local user_setting_ws    = self.settings:readSetting("use_websearch", "none")
     local query_option = {
         use_stream_mode = self.settings:readSetting("use_stream_mode", true),
@@ -385,7 +385,7 @@ function Querier:query(message_history, title)
         -- NON-STREAM PATH  — may loop for tool calls
         -- ---------------------------------------------------------------
         local tool_notice = T("\n🌐 %1", ToolExecutor.ToolToText(query_option.use_websearch))
-        local notify = assistant_utils.bold_format(
+        local notify = ASUtils.bold_format(
             T("<b>%1</b>\n☁️ %2\n⚡ %3%4", title or _("Querying AI ..."), self.provider_name, self.handler.model, query_option.use_websearch ~= "none" and tool_notice or "")
         )
         local infomsg = InfoMessage:new{ icon = "book.opened", text = notify }
@@ -440,7 +440,7 @@ function Querier:query(message_history, title)
                 UIManager:close(self.handler:resetTrapWidget())
                 local follow_msg = InfoMessage:new{
                     icon = "book.opened",
-                    text = assistant_utils.bold_format(
+                    text = ASUtils.bold_format(
                         T("<b>%1</b>\n☁️ %2\n⚡ %3", _("Composing answer ..."), self.provider_name, self.handler.model)
                     ),
                 }
@@ -498,7 +498,7 @@ function Querier:showStremDialog(res)
 
     streamDialog = InputDialog:new{
         title = _("AI is responding") ,
-        description = assistant_utils.bold_format(
+        description = ASUtils.bold_format(
             T("☁ %1/<b>%2</b>", self.provider_name, self.handler.model)
         ),
         inputtext_class = StreamText, -- use our custom InputText class

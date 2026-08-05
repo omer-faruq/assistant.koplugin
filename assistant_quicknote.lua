@@ -9,7 +9,7 @@ local logger = require("logger")
 local T = require("ffi/util").template
 local util = require("util")
 local _ = require("assistant_gettext")
-local assistant_utils = require("assistant_utils")
+local ASUtils = require("assistant_utils")
 
 local QuickNote = {}
 
@@ -100,7 +100,7 @@ function QuickNote:saveNote(note_text, highlighted_text)
   local user_lbl = _("User:")
   local quick_note_lbl = _("Quick Note")
 
-  local page_info = assistant_utils.getPageInfo(self.assistant.ui)
+  local page_info = ASUtils.getPageInfo(self.assistant.ui)
   local processed_note = note_text:gsub("\n", "\n\n")
 
   local processed_highlighted = ""
@@ -116,7 +116,7 @@ function QuickNote:saveNote(note_text, highlighted_text)
     log_entry = string.format("# [%s]\n## %s\n\n### ⮞ %s \n\n%s\n\n", timestamp, quick_note_lbl, user_lbl, processed_note)
   end
 
-  assistant_utils.saveToNotebookFile(self.assistant, log_entry)
+  ASUtils.saveToNotebookFile(self.assistant, log_entry)
 
   UIManager:show(InfoMessage:new{
     text = _("Quick note saved successfully"),

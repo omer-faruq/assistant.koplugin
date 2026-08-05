@@ -12,8 +12,8 @@ local T = ffiutil.template
 local _ = require("assistant_gettext")
 
 local ToolExecutor = require("assistant_tool_executor")
-local assistant_utils = require("assistant_utils")
-local json_default = assistant_utils.json_default
+local ASUtils = require("assistant_utils")
+local json_default = ASUtils.json_default
 
 local BaseHandler = {
     name = "BASE",
@@ -118,13 +118,13 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
             request_maxtime = maxtime or 120
         end
         completed, success, code, content = Trapper:dismissableRunInSubprocess(function()
-                return assistant_utils.httpRequest(url, request_timeout, request_maxtime, body, nil, headers)
+                return ASUtils.httpRequest(url, request_timeout, request_maxtime, body, nil, headers)
             end, self.trap_widget)
         if not completed then
             return false, self.CODE_CANCELLED, content
         end
     else
-        success, code, content = assistant_utils.httpRequest(url, timeout or 20, maxtime or 45, body, nil, headers)
+        success, code, content = ASUtils.httpRequest(url, timeout or 20, maxtime or 45, body, nil, headers)
     end
 
     return success, code, content
