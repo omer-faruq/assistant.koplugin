@@ -63,11 +63,11 @@ end
 --- @return table contents, string system_content
 local function toGeminiContents(messages)
     local contents      = {}
-    local system_content = ""
+    local system_parts = {}
 
     for _, msg in ipairs(messages) do
         if msg.role == "system" then
-            system_content = system_content .. msg.content .. "\n"
+            table.insert(system_parts, msg.content)
         elseif msg.role == "user" then
             if msg.parts then
                 -- Already a Gemini-native turn (e.g. functionResponse from augmented history)
@@ -85,6 +85,7 @@ local function toGeminiContents(messages)
         end
     end
 
+    local system_content = #system_parts > 0 and table.concat(system_parts, "\n") .. "\n" or ""
     return contents, system_content
 end
 

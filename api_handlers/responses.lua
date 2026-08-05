@@ -339,15 +339,14 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
                                 id = item.id,
                                 call_id = item.call_id,
                                 name = item.name,
-                                arguments = "",
+                                arguments = strbuf.new(),
                             }
                         end
                     elseif ev_type == "response.function_call_arguments.delta" then
                         local item_id = event.item_id
                         local delta = event.delta or ""
                         if pending_tool_calls[item_id] then
-                            pending_tool_calls[item_id].arguments =
-                                pending_tool_calls[item_id].arguments .. delta
+                            pending_tool_calls[item_id].arguments:put(delta)
                         end
                     elseif ev_type == "response.function_call_arguments.done" then
                         local item_id = event.item_id
@@ -355,6 +354,8 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
                         if pending then
                             if event.arguments then
                                 pending.arguments = event.arguments
+                            else
+                                pending.arguments = pending.arguments:tostring()
                             end
                             local tc_index = tool_call_index
                             tool_call_index = tool_call_index + 1

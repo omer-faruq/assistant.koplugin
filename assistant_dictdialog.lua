@@ -61,23 +61,22 @@ local function filterTextForTerm(text, highlighted_term, language_code, configur
 
     -- Simple sentence splitting (same logic as LexRank)
     local sentences = {}
-    local current_sentence = ""
+    local sentence_start = 1
 
     for i = 1, #text do
         local char = text:sub(i, i)
-        current_sentence = current_sentence .. char
 
         if char:match("[.!?;]") then
-            local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
+            local trimmed = text:sub(sentence_start, i):gsub("^%s*(.-)%s*$", "%1")
             if #trimmed > 10 then -- Minimum sentence length
                 table.insert(sentences, trimmed)
             end
-            current_sentence = ""
+            sentence_start = i + 1
         end
     end
 
     -- Add remaining text as sentence if it's long enough
-    local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
+    local trimmed = text:sub(sentence_start):gsub("^%s*(.-)%s*$", "%1")
     if #trimmed > 10 then
         table.insert(sentences, trimmed)
     end
@@ -228,24 +227,23 @@ local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
             -- Tokenize sentences once (will be reused for all filtering and context expansion)
             local language_module = LexRankLanguages.get_language_module(dict_language)
             local all_sentences = {}
-            local current_sentence = ""
+            local sentence_start = 1
             local delim_pattern = "[" .. table.concat(language_module.sentence_delimiters, "") .. "]"
 
             for i = 1, #book_text do
                 local char = book_text:sub(i, i)
-                current_sentence = current_sentence .. char
 
                 if char:match(delim_pattern) then
-                    local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
+                    local trimmed = book_text:sub(sentence_start, i):gsub("^%s*(.-)%s*$", "%1")
                     if #trimmed >= language_module.min_sentence_length then
                         table.insert(all_sentences, trimmed)
                     end
-                    current_sentence = ""
+                    sentence_start = i + 1
                 end
             end
 
             -- Add remaining text as sentence if it's long enough
-            local trimmed = current_sentence:gsub("^%s*(.-)%s*$", "%1")
+            local trimmed = book_text:sub(sentence_start):gsub("^%s*(.-)%s*$", "%1")
             if #trimmed >= language_module.min_sentence_length then
                 table.insert(all_sentences, trimmed)
             end

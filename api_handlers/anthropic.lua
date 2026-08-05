@@ -51,14 +51,14 @@ end
 --- Returns { messages = [...], system = "..." }
 local function prepareAnthropicMessages(message_history)
     local anthropic_messages = {}
-    local system_content = ""
+    local system_parts = {}
 
     for _, msg in ipairs(message_history) do
         if msg.role == "system" then
-            system_content = system_content .. msg.content .. "\n\n"
+            table.insert(system_parts, msg.content)
         end
     end
-    system_content = system_content:gsub("\n\n$", "")
+    local system_content = table.concat(system_parts, "\n\n")
 
     for _, msg in ipairs(message_history) do
         if msg.role ~= "system" then

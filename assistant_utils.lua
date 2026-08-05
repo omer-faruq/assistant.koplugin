@@ -54,7 +54,8 @@ function M.extractBookTextForAnalysis(CONFIGURATION, ui)
         local total_pages = ui.document:getPageCount()
         local max_page_size_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_page_size_for_analysis") or 250
         local start_page = math.max(1, current_page - max_page_size_for_analysis)
-        book_text = ""
+        local buf = shared_buf
+        buf:reset()
         for page = start_page, current_page do
             local page_text = ui.document:getPageText(page) or ""
             if type(page_text) == "table" then
@@ -71,8 +72,9 @@ function M.extractBookTextForAnalysis(CONFIGURATION, ui)
                 end
                 page_text = table.concat(texts, " ")
             end
-            book_text = book_text .. page_text .. "\n"
+            buf:put(page_text, "\n")
         end
+        book_text = buf:get()
         local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
         if #book_text > max_text_length_for_analysis then
             book_text = book_text:sub(-max_text_length_for_analysis)
@@ -86,21 +88,24 @@ end
 function M.extractHighlightsNotesAndNotebook(CONFIGURATION, ui, include_notebook)
     local highlights_and_notes = ""
     if ui.annotation and ui.annotation.annotations then
+        local buf = shared_buf
+        buf:reset()
         for _, annotation in ipairs(ui.annotation.annotations) do
             if annotation.text and annotation.text ~= "" then
-                highlights_and_notes = highlights_and_notes .. "Highlight: " .. annotation.text .. "\n"
+                buf:put("Highlight: ", annotation.text, "\n")
             end
             if annotation.note and annotation.note ~= "" then
-                highlights_and_notes = highlights_and_notes .. "Note: " .. annotation.note .. "\n"
+                buf:put("Note: ", annotation.note, "\n")
             end
             if annotation.chapter then
-                highlights_and_notes = highlights_and_notes .. "Chapter: " .. annotation.chapter .. "\n"
+                buf:put("Chapter: ", annotation.chapter, "\n")
             end
             if annotation.pageno then
-                highlights_and_notes = highlights_and_notes .. "Page: " .. annotation.pageno .. "\n"
+                buf:put("Page: ", annotation.pageno, "\n")
             end
-            highlights_and_notes = highlights_and_notes .. "\n"
+            buf:put("\n")
         end
+        highlights_and_notes = buf:get()
     end
     
     local notebook_content = ""
