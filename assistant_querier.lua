@@ -843,18 +843,12 @@ function Querier:processStream(bgQuery, trunk_callback)
                     or j.message
             end
         end
-        if err_msg and #err_msg > 0 then
-            local msg = T(_("%1: (%2)\n\n<b>Error Message:</b>\n%3"), status ~= "" and status or tostring(code ~= "" and code or "?"), endpoint, err_msg)
-            return nil, msg
-        end
 
-        -- Priority 2: use status info from err_struct.
-        if ok and err_struct then
-            local msg = T("%1: (%2)", status ~= "" and status or tostring(code ~= "" and code or "?"), endpoint)
-            return nil, msg
+        local err_header = T("%1: (%2)", status ~= "" and status or tostring(code ~= "" and code or "?"), endpoint)
+        if err_msg and #err_msg > 0 then
+            err_header = T("%1\n\n<b>%2:</b>\n%3", err_header, _("Error Message"), err_msg)
         end
-        -- If err_struct JSON parsing failed, return the raw content.
-        return nil, ret
+        return nil, err_header
     end
 
     if tool_calls then
