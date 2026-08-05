@@ -107,10 +107,11 @@ local CONFIGURATION = {
                 -- temperature = 0.7,
                 -- max_tokens = 1048576,
                 -- Note: thinking is enabled by default in newer models (gemini-2.5-*, gemini-3.*).
-                -- Use thinkingConfig with thinking_level to control thinking (e.g. "minimal", "low", "medium", "high").
+                -- thinking_budget = 0 disables thinking on 2.5 Flash; the handler
+                -- auto-converts it to thinkingLevel = "minimal" for Gemini 3 models.
+                thinking_budget = 0,
+                -- For finer control, use thinkingConfig directly:
                 -- thinkingConfig = { thinkingLevel = "minimal" },
-                -- To disable thinking entirely (where supported), set thinkingBudget = 0:
-                -- thinking_budget = 0,
             }
         },
         gemini_gemma4 = {

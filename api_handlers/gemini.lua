@@ -159,6 +159,23 @@ function GeminiHandler:buildRequestBody(messages, tool_def)
             gc.thinkingConfig.includeThoughts = false
             table.insert(system_instruction.parts, { text = "**DIRECT RESPONSE**: Respond directly to the user without generating any internal thinking, chain of thought, or reasoning channels." })
         end
+    elseif self.model:find("gemini-3", 1, true) then
+        -- Gemini 3 does not accept thinkingBudget (2.5-only). Auto-convert
+        -- thinking_budget = 0 → thinkingLevel = "minimal" so the same config
+        -- works when switching between 2.5 and 3 series.
+        local tb = self.additional_parameters and self.additional_parameters.thinking_budget
+        if tb ~= nil then
+            gc = gc or {}
+            gc.thinkingConfig = gc.thinkingConfig or {}
+            if tb == 0 and gc.thinkingConfig.thinkingLevel == nil then
+                gc.thinkingConfig.thinkingLevel = "minimal"
+            end
+            gc.thinkingConfig.thinkingBudget = nil
+            if not next(gc.thinkingConfig) then
+                gc.thinkingConfig = nil
+                if not next(gc) then gc = nil end
+            end
+        end
     end
 
     local body = {
