@@ -24,9 +24,8 @@ msgstr "💡 عزز تجربة KOReader مع الذكاء الاصطناعي"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "جارٍ جلب النماذج..."
+msgstr "<b>جارٍ جلب النماذج...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "أدخل سؤالًا قبل المتابعة."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "أضف هذا الزر إلى قائمة التحديد؟"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"هل تريد إضافة هذا الزر إلى قائمة التمييز؟"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "اسأل سؤالًا عن النص المميز"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"اسأل سؤالًا عن هذا الكتاب:\n"
-"%s بواسطة %s"
+"<b>اطرح سؤالاً حول هذا الكتاب:</b>\n"
+"%1 من تأليف %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "جارٍ التحميل لـ%1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "لم يتم تلقي رد"
+msgstr "<b>خطأ:</b> لم يتم تلقي أي رد"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "البحث"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "جارٍ تحليل سياق الكتاب لميزة Term X-Ray..."
+msgstr "<b>جارٍ تحليل سياق الكتاب لـ Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "جارٍ تحميل الملخص باستخدام التمييز والملاحظات..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "نوع ميزة غير معروف:"
+msgstr "<b>نوع ميزة غير معروف:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>خطأ في واجهة برمجة التطبيقات</b>\n"
+"%1\n"
+"\n"
+"<b>المزوّد:</b> %2\n"
+"<b>النموذج:</b> %3\n"
+"\n"
+"جرّب مزوّدًا آخر في مربع حوار الإعدادات."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "فشل بدء عملية فرعية للطلب"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "رسالة خطأ"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "اسم الفرع أو العلامة"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"أدخل اسم فرع أو علامة لتحديث إضافة المساعد الذكي من المستودع المصدر.\n"
+"أدخل اسم فرع أو وسم لتحديث الإضافة من المستودع المصدر.\n"
 "\n"
-"رابط GitHub: %1\n"
-"المستودع المصدر: %2\n"
+"<b>رابط جيثب:</b>  %1\n"
+"<b>المستودع المصدر:</b>  %2\n"
 "\n"
-"الافتراضي: \"main\" (أحدث نسخة تطويرية)\n"
+"الافتراضي: \"main\" (أحدث فرع تطوير)\n"
 "أمثلة: \"main\"، \"v1.12\"، \"v1.11\"\n"
 "\n"
-"سيتم نسخ الإضافة الحالية احتياطيًا واستبدالها. سيتم الحفاظ على ملف configuration.lua."
+"<b>سيتم الاحتفاظ بـ configuration.lua.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>جارٍ التنزيل ...</b>\n"
+"<b>جيثب: </b>%1\n"
+"<b>المستودع: </b>%2\n"
+"<b>الفرع/الوسم: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "فشل تحديث OTA: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "جارٍ تثبيت %1..."
+msgstr "<b>جارٍ تثبيت %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "صفحة"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "لا يمكن الوصول إلى المجلد الافتراضي للسجلات: %1"
+msgstr ""
+"<b>لا يمكن الوصول إلى المجلد الافتراضي للسجلات: %1</b>\n"
+"استخدام الموقع الأصلي."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "دفتر الملاحظات (سجل محادثة الذكاء الاصطناعي)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "ملف دفتر الملاحظات:"
+msgstr ""
+"<b>ملف المفكرة:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "التكوين غير موجود. يرجى إعداد configuration.lua أولًا."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "إلى قائمة التمييز."
+msgstr "<b>تمت الإضافة</b> [%1 (AI)] إلى قائمة التمييز."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "إزالة [%s] من قائمة التحديد؟"
+msgstr "<b>تمت الإزالة</b> [%1 (AI)] من قائمة التمييز."
 
 #: ../main.lua:1118
 msgid ""
@@ -1328,36 +1335,3 @@ msgstr "المنصة"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "وقت التشغيل"
-
-#~ msgid "API Error"
-#~ msgstr "خطأ في API"
-
-#~ msgid "Added"
-#~ msgstr "مُضاف"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "الفرع/العلامة: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "جارٍ التحميل ..."
-
-#~ msgid "Error:"
-#~ msgstr "خطأ:"
-
-#~ msgid "Github: "
-#~ msgstr "جيثب: "
-
-#~ msgid "Removed"
-#~ msgstr "تمت الإزالة"
-
-#~ msgid "Repo: "
-#~ msgstr "المستودع: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "جرب مزودًا آخر في مربع حوار الإعدادات."
-
-#~ msgid "Using original location."
-#~ msgstr "استخدام الموقع الأصلي."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "من قائمة التمييز."

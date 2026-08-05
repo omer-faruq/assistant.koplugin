@@ -24,9 +24,8 @@ msgstr "💡 用 AI 提升 KOReader 体验"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "正在获取模型..."
+msgstr "<b>正在获取模型...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "请先输入问题再继续"
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "添加此按钮到高亮菜单？"
+msgstr ""
+"<b>%1：</b> %2\n"
+"\n"
+"将此按钮添加到高亮菜单？"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "对高亮内容提问"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"关于本书提问：\n"
-"%s 作者：%s"
+"<b>询问关于本书的问题：</b>\n"
+"%1 著 %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "正在加载 %1……"
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "未收到响应"
+msgstr "<b>错误：</b> 未收到响应"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "查询"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "正在分析书籍上下文以进行术语透视..."
+msgstr "<b>正在为 Term X-Ray 分析书籍上下文...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "正在加载基于高亮与笔记的摘要…"
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "未知功能类型:"
+msgstr "<b>未知功能类型：</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>API 错误</b>\n"
+"%1\n"
+"\n"
+"<b>提供方：</b> %2\n"
+"<b>模型：</b> %3\n"
+"\n"
+"请在设置对话框中选择其他提供方。"
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "启动请求子进程失败"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "错误信息"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "分支或标签名称"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"输入分支或标签名称以从源仓库更新AI助手插件。\n"
+"输入分支或标签名称以从源代码仓库更新插件。\n"
 "\n"
-"Github URL: %1\n"
-"源仓库: %2\n"
+"<b>Github URL：</b>  %1\n"
+"<b>源代码仓库：</b>  %2\n"
 "\n"
-"默认: \"main\" (最新的开发版本)\n"
-"示例: \"main\", \"v1.12\", \"v1.11\"\n"
+"默认：\"main\"（最新开发分支）\n"
+"示例：\"main\"、\"v1.12\"、\"v1.11\"\n"
 "\n"
-"当前插件将被备份并替换。configuration.lua文件将被保留。"
+"<b>configuration.lua 文件将被保留。</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>正在下载...</b>\n"
+"<b>GitHub：</b>%1\n"
+"<b>仓库：</b>%2\n"
+"<b>分支/标签：</b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA 更新失败：%1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "正在安装 %1..."
+msgstr "<b>正在安装 %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "页"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "无法访问日志的默认文件夹：%1"
+msgstr ""
+"<b>无法访问默认日志文件夹：%1</b>\n"
+"使用原始位置。"
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "笔记本(AI 对话记录)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "笔记本文件："
+msgstr ""
+"<b>笔记本文件：</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "未找到配置，请先设置 configuration.lua"
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "到高亮菜单。"
+msgstr "<b>已添加</b> [%1 (AI)] 到高亮菜单。"
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "从菜单移除 [%s]？"
+msgstr "<b>已移除</b> [%1 (AI)] 从高亮菜单。"
 
 #: ../main.lua:1118
 msgid ""
@@ -1323,36 +1330,3 @@ msgstr "平台"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "运行时"
-
-#~ msgid "API Error"
-#~ msgstr "API错误"
-
-#~ msgid "Added"
-#~ msgstr "已添加"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "分支/标签: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "正在下载 ..."
-
-#~ msgid "Error:"
-#~ msgstr "错误:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "已移除"
-
-#~ msgid "Repo: "
-#~ msgstr "仓库: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "在设置对话框中尝试其他提供商。"
-
-#~ msgid "Using original location."
-#~ msgstr "使用原始位置。"
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "从高亮菜单。"

@@ -28,9 +28,8 @@ msgstr "💡 KOReader ಅನುಭವವನ್ನು AI ಯೊಂದಿಗೆ �
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "ಮಾದರಿಗಳನ್ನು ಪಡೆಯಲಾಗುತ್ತಿದೆ..."
+msgstr "<b>ಮಾದರಿಗಳನ್ನು ಪಡೆಯಲಾಗುತ್ತಿದೆ...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -77,12 +76,14 @@ msgid "Enter a question before proceeding."
 msgstr "ಮುಂದುವರಿಯುವ ಮೊದಲು ಪ್ರಶ್ನೆಯನ್ನು ನಮೂದಿಸಿ."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "ಈ ಬಟನ್ ಅನ್ನು ಹೈಲೈಟ್ ಮೆನುಗೆ ಸೇರಿಸುವುದೇ?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"ಈ ಬಟನ್ ಅನ್ನು ಹೈಲೈಟ್ ಮೆನುವಿಗೆ ಸೇರಿಸಬೇಕೇ?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -93,13 +94,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "ಹೈಲೈಟ್ ಮಾಡಿದ ಪಠ್ಯದ ಬಗ್ಗೆ ಪ್ರಶ್ನೆ ಕೇಳಿ"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"ಈ ಪುಸ್ತಕದ ಬಗ್ಗೆ ಪ್ರಶ್ನೆ ಕೇಳಿ:\n"
-"%s (ಲೇಖಕ: %s)"
+"<b>ಈ ಪುಸ್ತಕದ ಬಗ್ಗೆ ಪ್ರಶ್ನೆ ಕೇಳಿ:</b>\n"
+"%1 ರಚಿಸಿದ %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -126,9 +126,8 @@ msgid "Loading for %1 ..."
 msgstr "%1 ಗಾಗಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "ಯಾವುದೇ ಪ್ರತಿಕ್ರಿಯೆ ಸ್ವೀಕರಿಸಲಾಗಿಲ್ಲ"
+msgstr "<b>ದೋಷ:</b> ಯಾವುದೇ ಪ್ರತಿಕ್ರಿಯೆ ಸ್ವೀಕರಿಸಲಾಗಿಲ್ಲ"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -143,9 +142,8 @@ msgid "Look Up"
 msgstr "ಹುಡುಕು"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "ಟರ್ಮ್ ಎಕ್ಸ್-ರೇ ಗಾಗಿ ಪುಸ್ತಕ ಸಂದರ್ಭವನ್ನು ವಿಶ್ಲೇಷಿಸಲಾಗುತ್ತಿದೆ..."
+msgstr "<b>ಟರ್ಮ್ ಎಕ್ಸ್-ರೇಗಾಗಿ ಪುಸ್ತಕದ ಸಂದರ್ಭವನ್ನು ವಿಶ್ಲೇಷಿಸಲಾಗುತ್ತಿದೆ...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -221,9 +219,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "ಹೈಲೈಟ್ಗಳು ಮತ್ತು ಟಿಪ್ಪಣಿಗಳನ್ನು ಬಳಸಿಕೊಂಡು ಸಾರಾಂಶವನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "ಅಜ್ಞಾತ ವೈಶಿಷ್ಟ್ಯ ಪ್ರಕಾರ:"
+msgstr "<b>ಅಪರಿಚಿತ ವೈಶಿಷ್ಟ್ಯ ಪ್ರಕಾರ:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -626,6 +623,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>API ದೋಷ</b>\n"
+"%1\n"
+"\n"
+"<b>ಪೂರೈಕೆದಾರ:</b> %2\n"
+"<b>ಮಾದರಿ:</b> %3\n"
+"\n"
+"ಸೆಟ್ಟಿಂಗ್ಸ್ ಡೈಲಾಗ್ನಲ್ಲಿ ಬೇರೆ ಪೂರೈಕೆದಾರರನ್ನು ಪ್ರಯತ್ನಿಸಿ."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -690,7 +694,7 @@ msgstr "ವಿನಂತಿಗಾಗಿ ಉಪಪ್ರಕ್ರಿಯೆಯನ�
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "ದೋಷ ಸಂದೇಶ"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -869,7 +873,6 @@ msgid "branch or tag name"
 msgstr "ಶಾಖೆ ಅಥವಾ ಟ್ಯಾಗ್ ಹೆಸರು."
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -881,15 +884,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"AI ಅಸಿಸ್ಟೆಂಟ್ ಪ್ಲಗಿನ್ ಅನ್ನು ಮೂಲ ಸಂಗ್ರಹದಿಂದ ನವೀಕರಿಸಲು ಶಾಖೆ ಅಥವಾ ಟ್ಯಾಗ್ ಹೆಸರನ್ನು ನಮೂದಿಸಿ.\n"
+"ಪ್ಲಗಿನ್ ಅನ್ನು ಮೂಲ ಭಂಡಾರದಿಂದ ನವೀಕರಿಸಲು ಶಾಖೆ ಅಥವಾ ಟ್ಯಾಗ್ ಹೆಸರನ್ನು ನಮೂದಿಸಿ.\n"
 "\n"
-"Github URL: %1\n"
-"Source REPO: %2\n"
+"<b>ಗಿಟ್ಹಬ್ URL:</b>  %1\n"
+"<b>ಮೂಲ ಭಂಡಾರ:</b>  %2\n"
 "\n"
-"ಡೀಫಾಲ್ಟ್: \"main\" (ಇತ್ತೀಚಿನ ಅಭಿವೃದ್ಧಿ ಆವೃತ್ತಿ)\n"
+"ಡೀಫಾಲ್ಟ್: \"main\" (ಇತ್ತೀಚಿನ ಅಭಿವೃದ್ಧಿ ಶಾಖೆ)\n"
 "ಉದಾಹರಣೆಗಳು: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"ಪ್ರಸ್ತುತ ಪ್ಲಗಿನ್ ಅನ್ನು ಬ್ಯಾಕಪ್ ಮಾಡಿ ಬದಲಾಯಿಸಲಾಗುತ್ತದೆ. configuration.lua ಫೈಲ್ ಅನ್ನು ಸಂರಕ್ಷಿಸಲಾಗುತ್ತದೆ."
+"<b>configuration.lua ಅನ್ನು ಸಂರಕ್ಷಿಸಲಾಗುತ್ತದೆ.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -954,6 +957,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>ಡೌನ್ಲೋಡ್ ಆಗುತ್ತಿದೆ ...</b>\n"
+"<b>ಗಿಟ್ಹಬ್: </b>%1\n"
+"<b>ರೆಪೊ: </b>%2\n"
+"<b>ಶಾಖೆ/ಟ್ಯಾಗ್: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -968,9 +975,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA ಅಪ್ಡೇಟ್ ವಿಫಲವಾಗಿದೆ: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "%1 ಅನ್ನು ಸ್ಥಾಪಿಸಲಾಗುತ್ತಿದೆ..."
+msgstr "<b>%1 ಅನ್ನು ಸ್ಥಾಪಿಸಲಾಗುತ್ತಿದೆ...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -985,11 +991,12 @@ msgid "Page"
 msgstr "ಪುಟ"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "ಲಾಗ್ಗಳಿಗಾಗಿ ಡೀಫಾಲ್ಟ್ ಫೋಲ್ಡರ್ ಅನ್ನು ಪ್ರವೇಶಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ: %1"
+msgstr ""
+"<b>ಲಾಗ್‌ಗಳಿಗಾಗಿ ಡೀಫಾಲ್ಟ್ ಫೋಲ್ಡರ್ ಅನ್ನು ಪ್ರವೇಶಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ: %1</b>\n"
+"ಮೂಲ ಸ್ಥಳವನ್ನು ಬಳಸಲಾಗುತ್ತಿದೆ."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1089,12 +1096,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "ನೋಟ್ಬುಕ್ (AI ಸಂಭಾಷಣೆ ಲಾಗ್)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "ನೋಟ್ಬುಕ್ ಫೈಲ್:"
+msgstr ""
+"<b>ನೋಟ್‌ಬುಕ್ ಫೈಲ್:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1276,14 +1285,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "ಸಂರಚನೆ ಕಂಡುಬಂದಿಲ್ಲ. ದಯವಿಟ್ಟು ಮೊದಲು configuration.lua ಅನ್ನು ಹೊಂದಿಸಿ."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "ಹೈಲೈಟ್ ಮೆನುವಿಗೆ."
+msgstr "<b>ಸೇರಿಸಲಾಗಿದೆ</b> [%1 (AI)] ಹೈಲೈಟ್ ಮೆನುಗೆ."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "ಹೈಲೈಟ್ ಮೆನುವಿನಿಂದ [%s] ಅನ್ನು ತೆಗೆದುಹಾಕಬೇಕೇ?"
+msgstr "<b>ತೆಗೆದುಹಾಕಲಾಗಿದೆ</b> [%1 (AI)] ಹೈಲೈಟ್ ಮೆನುವಿನಿಂದ."
 
 #: ../main.lua:1118
 msgid ""
@@ -1328,36 +1335,3 @@ msgstr "ಪ್ಲಾಟ್ಫಾರ್ಮ್"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "ರನ್ಟೈಮ್"
-
-#~ msgid "API Error"
-#~ msgstr "API ದೋಷ"
-
-#~ msgid "Added"
-#~ msgstr "ಸೇರಿಸಲಾಗಿದೆ"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "ಶಾಖೆ/ಟ್ಯಾಗ್: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "ಡೌನ್ಲೋಡ್ ಮಾಡುತ್ತಿದೆ ..."
-
-#~ msgid "Error:"
-#~ msgstr "ದೋಷ:"
-
-#~ msgid "Github: "
-#~ msgstr "ಗಿಥಬ್: "
-
-#~ msgid "Removed"
-#~ msgstr "ತೆಗೆದುಹಾಕಲಾಗಿದೆ"
-
-#~ msgid "Repo: "
-#~ msgstr "ರೆಪೊ: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "ಸೆಟ್ಟಿಂಗ್ಸ್ ಡೈಲಾಗ್ನಲ್ಲಿ ಬೇರೆ ಪ್ರೊವೈಡರ್ ಪ್ರಯತ್ನಿಸಿ."
-
-#~ msgid "Using original location."
-#~ msgstr "ಮೂಲ ಸ್ಥಳವನ್ನು ಬಳಸಲಾಗುತ್ತಿದೆ."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "ಹೈಲೈಟ್ ಮೆನುವಿನಿಂದ."

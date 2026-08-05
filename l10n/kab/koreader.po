@@ -28,9 +28,8 @@ msgstr "💡 Err tajriba-ik n KOReader d tifrat s AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Asali n imudellen..."
+msgstr "<b>Awi n imeḍran...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -77,12 +76,14 @@ msgid "Enter a question before proceeding."
 msgstr "Sekcem asteqsi uqbel ad tkemmleḍ."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Rnu taqeffalt-agi ɣer Umuɣ n Usebgen?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Rnu tifina-a ɣer Umuɣ n usiɣzef?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -93,13 +94,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Steqsi asteqsi ɣef uḍris yettwasebgen"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Steqsi asteqsi ɣef yedli-agi:\n"
-"%s sɣur %s"
+"<b>Steqsi ɣef yedlis-a:</b>\n"
+"%1 sɣur %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -126,9 +126,8 @@ msgid "Loading for %1 ..."
 msgstr "Asali i %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Ur d-yusi ara yan umeɣsu"
+msgstr "<b>Tuccḍa:</b> Ulac tiririt teqbel"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -143,9 +142,8 @@ msgid "Look Up"
 msgstr "Nẓer"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Assefhem n tawennaṭ n yedlis i Term X-Ray..."
+msgstr "<b>Asefsi n tɣawsa n yedlis i Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -221,9 +219,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Asali n ugzul s yimawalen d yizmulen..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Anaw n tmeẓri ur ittwassnen:"
+msgstr "<b>Tawsit n tizemmar ur nettwassen:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -626,6 +623,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>Tuccḍa n API</b>\n"
+"%1\n"
+"\n"
+"<b>Amaẓlu:</b> %2\n"
+"<b>Anemdu:</b> %3\n"
+"\n"
+"Ɛreḍ s umsaddi nniḍen deg usefrek n yiɣewwaren."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -690,7 +694,7 @@ msgstr "Yexser ad yebdu aswir n wammas i tutra."
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Tuzzna n tucḍa"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -869,7 +873,6 @@ msgid "branch or tag name"
 msgstr "isem n ufurk neɣ n teg"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -881,15 +884,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Sekcem isem n ufurk neɣ n teg akken ad tleqqmeḍ azeɣrar n AI Assistant seg ufaylu n uɣbalu.\n"
+"Sekcem isem n tigejdit neɣ tagit akken ad tleqqmeḍ aplug-in seg uɛeggal n tigmi.\n"
 "\n"
-"Github URL:  %1\n"
-"Source REPO: %2\n"
+"<b>URL n Github:</b>  %1\n"
+"<b>Aɛeggal n tigmi:</b>  %2\n"
 "\n"
-"Lexṣas: \"main\" (lqem aneggaru n tneflit)\n"
+"Lexṣas: \"main\" (tigejdit n tneflit taneggara)\n"
 "Imedyaten: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Azeɣrar amiran ad yettwaḥrez s wudem awurman yerna ad yettwabeddel. Afaylu configuration.lua ad yettwaḥrez."
+"<b>Ad tḥeffeḍ configuration.lua.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -954,6 +957,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Aɛellem ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Aseɣẓan: </b>%2\n"
+"<b>Tigejdit/Tagit: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -968,9 +975,8 @@ msgid "OTA update failed: %1"
 msgstr "Aleqqem OTA yexser: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Asbeddi n %1..."
+msgstr "<b>Asers %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -985,11 +991,12 @@ msgid "Page"
 msgstr "Asebter"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Ur yezmir ara ad yekcem ɣer ukarḍu amezwer n yiɣmisen: %1"
+msgstr ""
+"<b>Ur yezmir ara ad yekcem ɣer ufaylu n yileɣman: %1</b>\n"
+"Yesqed asmel n tazwara."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1089,12 +1096,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "NoteBook (Aɣmis n umsewqal n AI)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Afaylu n ukarḍu n tira:"
+msgstr ""
+"<b>Afaylu n ukarḍas:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1276,14 +1285,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Tneɣmi ur tettwaf ara. Ttxil-k, sbadu configuration.lua d tamezwarut."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "γer Umuɣ n usemɣer."
+msgstr "<b>Yettwarnu</b> [%1 (AI)] ɣer Umuɣ n usiɣzef."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Kkes [%s] seg Wumuɣ n Usekcem?"
+msgstr "<b>Yettwakkes</b> [%1 (AI)] seg Umuɣ n usiɣzef."
 
 #: ../main.lua:1118
 msgid ""
@@ -1328,36 +1335,3 @@ msgstr "Tasga"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Aselkem"
-
-#~ msgid "API Error"
-#~ msgstr "Tuccḍa n API"
-
-#~ msgid "Added"
-#~ msgstr "Yerni"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Afer/Asem: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Azdam ..."
-
-#~ msgid "Error:"
-#~ msgstr "Tuccḍa:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Yettwakkes"
-
-#~ msgid "Repo: "
-#~ msgstr "Aɣbalu: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Ɛreḍ taɣbalit nniḍen deg usfaylu n yiɣewwaṛen."
-
-#~ msgid "Using original location."
-#~ msgstr "La tteddun s wadeg aẓuran."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "seg Umuɣ n usemɣer."

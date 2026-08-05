@@ -28,9 +28,8 @@ msgstr "💡 KOReader tajribangizni AI bilan yaxshilang"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Modellar yuklanmoqda..."
+msgstr "<b>Modellar olinmoqda...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -77,12 +76,14 @@ msgid "Enter a question before proceeding."
 msgstr "Davom etishdan oldin savol kiriting."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Ushbu tugmani Ajratish menyusiga qo'shish kerakmi?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Ushbu tugmani Highlight menyusiga qo‘shilsinmi?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -93,13 +94,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Ajratilgan matn haqida savol bering"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Ushbu kitob haqida savol bering:\n"
-"%s, %s tomonidan"
+"<b>Ushbu kitob haqida savol bering:</b>\n"
+"%1, %2 tomonidan"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -126,9 +126,8 @@ msgid "Loading for %1 ..."
 msgstr "%1 uchun yuklanmoqda ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Javob olinmadi"
+msgstr "<b>Xato:</b> Hech qanday javob olinmadi"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -143,9 +142,8 @@ msgid "Look Up"
 msgstr "Qidirish"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Term X-Ray uchun kitob konteksti tahlil qilinmoqda..."
+msgstr "<b>Term X-Ray uchun kitob konteksti tahlil qilinmoqda...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -221,9 +219,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Ajratilgan matn va eslatmalar asosida xulosa yuklanmoqda..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Noma'lum xususiyat turi:"
+msgstr "<b>Nomaʼlum xususiyat turi:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -626,6 +623,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>API xatosi</b>\n"
+"%1\n"
+"\n"
+"<b>Provayder:</b> %2\n"
+"<b>Model:</b> %3\n"
+"\n"
+"Sozlamalar oynasida boshqa provayderni tanlab ko‘ring."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -690,7 +694,7 @@ msgstr "So'rov uchun quyi jarayonni ishga tushirish muvaffaqiyatsiz tugadi."
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Xato xabari"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -869,7 +873,6 @@ msgid "branch or tag name"
 msgstr "filial yoki teg nomi"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -881,15 +884,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"AI Assistant plaginni manba omboridan yangilash uchun filial yoki teg nomini kiriting.\n"
+"Plaginni manba repozitoriyasidan yangilash uchun filial (branch) yoki teg (tag) nomini kiriting.\n"
 "\n"
-"Github URL:  %1\n"
-"Manba REPO: %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Manba Repo:</b>  %2\n"
 "\n"
-"Standart: \"main\" (eng so'nggi ishlab chiqish versiyasi)\n"
+"Odatiy: \"main\" (eng soʻnggi ishlab chiqish filiali)\n"
 "Misollar: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Joriy plagin zaxiralanadi va almashtiriladi. configuration.lua saqlanadi."
+"<b>configuration.lua fayli saqlanib qoladi.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -954,6 +957,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Yuklab olinmoqda ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Repozitoriy: </b>%2\n"
+"<b>Filial/Teg: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -968,9 +975,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA yangilanishi muvaffaqiyatsiz tugadi: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "%1 o'rnatilmoqda..."
+msgstr "<b>%1 o‘rnatilmoqda...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -985,11 +991,12 @@ msgid "Page"
 msgstr "Sahifa"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Jurnallar uchun standart papkaga kirish mumkin emas: %1"
+msgstr ""
+"<b>Jurnallar uchun standart papkaga kirish imkoni yo‘q: %1</b>\n"
+"Asl joylashuv ishlatilmoqda."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1089,12 +1096,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "NoteBook (AI suhbat jurnali)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Notebook fayli:"
+msgstr ""
+"<b>Daftar fayli:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1276,14 +1285,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfiguratsiya topilmadi. Iltimos, avval configuration.lua ni sozlang."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "Ajratish menyusiga."
+msgstr "<b>Qoʻshildi</b> [%1 (AI)] Ajratib koʻrsatish menyusiga."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "[%s] ni Ajratish menyusidan olib tashlash kerakmi?"
+msgstr "<b>Oʻchirildi</b> [%1 (AI)] Ajratib koʻrsatish menyusidan."
 
 #: ../main.lua:1118
 msgid ""
@@ -1328,36 +1335,3 @@ msgstr "Platforma"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Ish vaqti"
-
-#~ msgid "API Error"
-#~ msgstr "API xatosi"
-
-#~ msgid "Added"
-#~ msgstr "Qo'shildi"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Tarmoq/Teg: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Yuklab olinmoqda ..."
-
-#~ msgid "Error:"
-#~ msgstr "Xato:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Olib tashlandi"
-
-#~ msgid "Repo: "
-#~ msgstr "Repozitoriy: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Sozlamalar dialogida boshqa provayderni sinab ko‘ring."
-
-#~ msgid "Using original location."
-#~ msgstr "Asl joylashuvdan foydalanilmoqda."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "Ajratish menyusidan."

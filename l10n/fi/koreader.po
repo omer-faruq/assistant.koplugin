@@ -24,9 +24,8 @@ msgstr "💡 Paranna KOReader-kokemustasi AI:n avulla"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Haetaan malleja..."
+msgstr "<b>Haetaan malleja...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "Kirjoita kysymys ennen jatkamista."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Lisätäänkö tämä painike korostusvalikkoon?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Lisätäänkö tämä painike korostusvalikkoon?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Kysy kysymys korostetusta tekstiä koskien"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Kysy kysymys tästä kirjasta:\n"
-"%s kirjailija: %s"
+"<b>Kysy kirjasta:</b>\n"
+"%1, kirjoittanut %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "Ladataan kohdetta %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Vastausta ei saatu"
+msgstr "<b>Virhe:</b> Vastausta ei saatu"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "Etsi"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Analysoidaan kirjan kontekstia Term X-Ray -toimintoa varten..."
+msgstr "<b>Analysoidaan kirjan kontekstia Term X-Ray:tä varten...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Ladataan yhteenvetoa korostuksista ja muistiinpanoista..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Tuntematon ominaisuustyyppi:"
+msgstr "<b>Tuntematon ominaisuustyyppi:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>API-virhe</b>\n"
+"%1\n"
+"\n"
+"<b>Palveluntarjoaja:</b> %2\n"
+"<b>Malli:</b> %3\n"
+"\n"
+"Yritä toista palveluntarjoajaa asetuksista."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "Aliprosessia ei saatu käyntiin"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Virheilmoitus"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "haaran tai tagin nimi"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Anna haaran tai tagin nimi päivittääksesi AI Assistant -pluginin lähdevarastosta.\n"
+"Syötä haaran tai tagin nimi päivittääksesi liitännäisen lähdevarastosta.\n"
 "\n"
-"Github URL:  %1\n"
-"Lähde-REPO: %2\n"
+"<b>GitHub URL:</b> %1\n"
+"<b>Lähdevarasto:</b> %2\n"
 "\n"
-"Oletus: \"main\" (viimeisin kehitysversio)\n"
+"Oletus: \"main\" (viimeisin kehityshaara)\n"
 "Esimerkkejä: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Nykyinen plugin varmuuskopioidaan ja korvataan. Tiedosto configuration.lua säilytetään."
+"<b>Configuration.lua säilytetään.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Ladataan ...</b>\n"
+"<b>GitHub: </b>%1\n"
+"<b>Repo: </b>%2\n"
+"<b>Haara/Tagi: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA-päivitys epäonnistui: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Asennetaan %1..."
+msgstr "<b>Asennetaan %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "Sivu"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Ei pääsyä oletuslokikansioon: %1"
+msgstr ""
+"<b>Lokien oletuskansioon ei pääse: %1</b>\n"
+"Käytetään alkuperäistä sijaintia."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Muistikirja (tekoälykeskusteluloki)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Muistikirjatiedosto:"
+msgstr ""
+"<b>Muistikirjatiedosto:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Määritystä ei löytynyt. Määritä ensin configuration.lua."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "Korostusvalikkoon."
+msgstr "<b>Lisätty</b> [%1 (AI)] korostusvalikkoon."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Poistetaanko [%s] korostusvalikosta?"
+msgstr "<b>Poistettu</b> [%1 (AI)] korostusvalikosta."
 
 #: ../main.lua:1118
 msgid ""
@@ -1324,36 +1331,3 @@ msgstr "Alusta"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Suoritusympäristö"
-
-#~ msgid "API Error"
-#~ msgstr "API-virhe"
-
-#~ msgid "Added"
-#~ msgstr "Lisätty"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Branch/Tag: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Ladataan ..."
-
-#~ msgid "Error:"
-#~ msgstr "Virhe:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Poistettu"
-
-#~ msgid "Repo: "
-#~ msgstr "Repo: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Kokeile toista palveluntarjoajaa asetukset-valintaikkunassa."
-
-#~ msgid "Using original location."
-#~ msgstr "Käytetään alkuperäistä sijaintia."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "Korostusvalikosta."

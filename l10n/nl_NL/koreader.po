@@ -24,9 +24,8 @@ msgstr "💡 Verbeter uw KOReader-ervaring met AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Modellen ophalen..."
+msgstr "<b>Modellen ophalen...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "Voer een vraag in voordat u verdergaat."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Deze knop aan markeermenu toevoegen?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Deze knop toevoegen aan het Highlight-menu?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Stel een vraag over de gemarkeerde tekst"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Stel een vraag over dit boek:\n"
-"%s van %s"
+"<b>Stel een vraag over dit boek:</b>\n"
+"%1 door %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "Laden voor %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Geen antwoord ontvangen"
+msgstr "<b>Fout:</b> Geen antwoord ontvangen"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "Opzoeken"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Boekcontext analyseren voor Term X-Ray..."
+msgstr "<b>Boekcontext analyseren voor Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Bezig met laden van samenvatting op basis van markeer- en notities..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Onbekend functietype:"
+msgstr "<b>Onbekend functietype:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>API-fout</b>\n"
+"%1\n"
+"\n"
+"<b>Provider:</b> %2\n"
+"<b>Model:</b> %3\n"
+"\n"
+"Probeer een andere provider in het instellingendialoogvenster."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "Starten subprocess mislukt"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Foutmelding"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "branch- of tagnaam"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Voer een branch- of tagnaam in om de AI Assistant-plugin bij te werken vanuit de bronrepository.\n"
+"Voer een branch- of tagnaam in om de plugin bij te werken vanuit de bronrepository.\n"
 "\n"
-"Github URL: %1\n"
-"Bron REPO: %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Bronrepository:</b>  %2\n"
 "\n"
-"Standaard: \"main\" (nieuwste ontwikkelversie)\n"
+"Standaard: \"main\" (nieuwste ontwikkelingsbranch)\n"
 "Voorbeelden: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"De huidige plugin wordt geback-upt en vervangen. Het bestand configuration.lua blijft behouden."
+"<b>Het configuration.lua blijft behouden.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Bezig met downloaden ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Repo: </b>%2\n"
+"<b>Branch/Tag: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA-update mislukt: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Bezig met installeren van %1..."
+msgstr "<b>%1 installeren...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "Pagina"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Kan de standaardmap voor logboeken niet openen: %1"
+msgstr ""
+"<b>Kan geen toegang krijgen tot standaardmap voor logboeken: %1</b>\n"
+"Oorspronkelijke locatie wordt gebruikt."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Notitieboek (AI-gesprekslogboek)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Notebookbestand:"
+msgstr ""
+"<b>Notebookbestand:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Configuratie niet gevonden. Stel eerst configuration.lua in."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "naar het markeermenu."
+msgstr "<b>Toegevoegd</b> [%1 (AI)] aan het markeermenu."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "[%s] uit markeermenu verwijderen?"
+msgstr "<b>Verwijderd</b> [%1 (AI)] uit het markeermenu."
 
 #: ../main.lua:1118
 msgid ""
@@ -1324,36 +1331,3 @@ msgstr "Platform"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Runtime"
-
-#~ msgid "API Error"
-#~ msgstr "API-fout"
-
-#~ msgid "Added"
-#~ msgstr "Toegevoegd"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Branch/Tag: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Downloaden ..."
-
-#~ msgid "Error:"
-#~ msgstr "Fout:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Verwijderd"
-
-#~ msgid "Repo: "
-#~ msgstr "Repo: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Probeer een andere provider in het instellingendialoogvenster."
-
-#~ msgid "Using original location."
-#~ msgstr "Oorspronkelijke locatie gebruiken."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "van het markeermenu."

@@ -24,9 +24,8 @@ msgstr "💡 用 AI 強化你的 KOReader 體驗"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "正在取得模型..."
+msgstr "<b>正在取得模型...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "請先輸入問題"
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "將此按鈕加入劃線選單？"
+msgstr ""
+"<b>%1：</b> %2\n"
+"\n"
+"要將此按鈕新增到「重點選單」嗎？"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "針對劃線文字提問"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"關於本書提問：\n"
-"%s by %s"
+"<b>詢問關於這本書的問題：</b>\n"
+"%1 由 %2 所著"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "正在載入 %1……"
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "未收到回應"
+msgstr "<b>錯誤：</b>未收到回應"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "查詢"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "正在分析書籍脈絡以進行詞彙 X 光..."
+msgstr "<b>正在為 Term X-Ray 分析書籍上下文...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "正在載入使用劃線與筆記的摘要…"
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "未知功能類型:"
+msgstr "<b>未知的功能類型：</b>%1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>API 錯誤</b>\n"
+"%1\n"
+"\n"
+"<b>提供者：</b> %2\n"
+"<b>模型：</b> %3\n"
+"\n"
+"請在設定對話框中嘗試其他提供者。"
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "無法啟動子程序進行請求"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "錯誤訊息"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "分支或標籤名稱"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"輸入分支或標籤名稱以從原始儲存庫更新 AI Assistant 外掛程式。\n"
+"請輸入要從原始碼儲存庫更新外掛程式的分支或標籤名稱。\n"
 "\n"
-"GitHub 網址：%1\n"
-"來源儲存庫：%2\n"
+"<b>GitHub URL：</b>  %1\n"
+"<b>來源儲存庫：</b>  %2\n"
 "\n"
-"預設值：「main」（最新開發版本）\n"
+"預設值：「main」（最新開發分支）\n"
 "範例：「main」、「v1.12」、「v1.11」\n"
 "\n"
-"目前的外掛程式將會被備份並取代。configuration.lua 將會被保留。"
+"<b>configuration.lua 將會保留。</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>正在下載...</b>\n"
+"<b>GitHub：</b>%1\n"
+"<b>儲存庫：</b>%2\n"
+"<b>分支/標籤：</b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA 更新失敗：%1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "正在安裝 %1..."
+msgstr "<b>正在安裝 %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "頁面"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "無法存取日誌的預設資料夾：%1"
+msgstr ""
+"<b>無法存取記錄的預設資料夾：%1</b>\n"
+"使用原始位置。"
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "筆記本（AI 對話紀錄）"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "筆記本檔案："
+msgstr ""
+"<b>筆記本檔案：</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "找不到設定檔，請先建立 configuration.lua"
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "到「突顯選單」。"
+msgstr "<b>已新增</b> [%1 (AI)] 至「醒目提示」功能表。"
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "從劃線選單移除 [%s]？"
+msgstr "<b>已移除</b> [%1 (AI)] 自「醒目提示」功能表。"
 
 #: ../main.lua:1118
 msgid ""
@@ -1323,36 +1330,3 @@ msgstr "平台"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "執行環境"
-
-#~ msgid "API Error"
-#~ msgstr "API 錯誤"
-
-#~ msgid "Added"
-#~ msgstr "已新增"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "分支/標籤: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "下載中 ..."
-
-#~ msgid "Error:"
-#~ msgstr "錯誤:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "已移除"
-
-#~ msgid "Repo: "
-#~ msgstr "儲存庫: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "請在設定對話框中嘗試其他提供者。"
-
-#~ msgid "Using original location."
-#~ msgstr "使用原始位置。"
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "從「突顯選單」。"

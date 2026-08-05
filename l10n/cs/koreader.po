@@ -24,9 +24,8 @@ msgstr "💡 Zlepšete svůj zážitek s KOReader pomocí AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Načítám modely..."
+msgstr "<b>Načítání modelů...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "Před pokračováním zadejte otázku."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Přidat toto tlačítko do nabídky zvýraznění?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Přidat toto tlačítko do nabídky zvýraznění?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Zeptejte se na zvýrazněný text"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Zeptejte se na tuto knihu:\n"
-"%s od %s"
+"<b>Položte otázku o této knize:</b>\n"
+"%1 od %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "Načítání pro %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Nebyla obdržena žádná odpověď"
+msgstr "<b>Chyba:</b> Nebyla přijata žádná odpověď"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "Vyhledat"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Analyzuji kontext knihy pro Term X-Ray..."
+msgstr "<b>Analyzuji kontext knihy pro Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Načítání shrnutí pomocí zvýraznění a poznámek..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Neznámý typ funkce:"
+msgstr "<b>Neznámý typ funkce:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>Chyba API</b>\n"
+"%1\n"
+"\n"
+"<b>Poskytovatel:</b> %2\n"
+"<b>Model:</b> %3\n"
+"\n"
+"Zkuste jiného poskytovatele v dialogu nastavení."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "Nepodařilo se spustit podproces pro požadavek"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Chybová zpráva"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "název větve nebo tagu"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Zadejte název větve nebo tagu pro aktualizaci pluginu AI Assistant z úložiště zdrojů.\n"
+"Zadejte název větve nebo značky pro aktualizaci pluginu z repozitáře zdroje.\n"
 "\n"
-"Adresa GitHub: %1\n"
-"Úložiště zdrojů: %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Zdrojový repozitář:</b>  %2\n"
 "\n"
-"Výchozí: \"main\" (nejnovější vývojová verze)\n"
+"Výchozí: \"main\" (nejnovější vývojová větev)\n"
 "Příklady: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Stávající plugin bude zálohován a nahrazen. Soubor configuration.lua zůstane zachován."
+"<b>configuration.lua bude zachován.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Stahování ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Repo: </b>%2\n"
+"<b>Větev/Značka: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA aktualizace selhala: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Instaluji %1..."
+msgstr "<b>Instaluji %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "Strana"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Nelze přistoupit k výchozí složce pro logy: %1"
+msgstr ""
+"<b>Nelze přistoupit k výchozí složce pro logy: %1</b>\n"
+"Používá se původní umístění."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Poznámkový blok (záznam konverzace s AI)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Soubor notebooku:"
+msgstr ""
+"<b>Soubor notebooku:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigurace nenalezena. Nejprve nastavte configuration.lua."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "do nabídky Zvýraznění."
+msgstr "<b>Přidáno</b> [%1 (AI)] do nabídky zvýraznění."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Odebrat [%s] z nabídky zvýraznění?"
+msgstr "<b>Odebráno</b> [%1 (AI)] z nabídky zvýraznění."
 
 #: ../main.lua:1118
 msgid ""
@@ -1325,36 +1332,3 @@ msgstr "Platforma"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Běhové prostředí"
-
-#~ msgid "API Error"
-#~ msgstr "Chyba API"
-
-#~ msgid "Added"
-#~ msgstr "Přidáno"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Větev/Značka: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Stahování ..."
-
-#~ msgid "Error:"
-#~ msgstr "Chyba:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Odstraněno"
-
-#~ msgid "Repo: "
-#~ msgstr "Repozitář: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Zkuste jiného poskytovatele v dialogu nastavení."
-
-#~ msgid "Using original location."
-#~ msgstr "Použití původního umístění."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "z nabídky Zvýraznění."

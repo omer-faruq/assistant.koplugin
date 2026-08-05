@@ -29,9 +29,8 @@ msgstr "💡 Feabhsaigh do thaithí KOReader le AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Ag fáil samhlacha..."
+msgstr "<b>Ag fáil múnlaí...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -78,12 +77,14 @@ msgid "Enter a question before proceeding."
 msgstr "Cuir isteach ceist sula leanfaidh tú ar aghaidh."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "An gcuirfidh tú an cnaipe seo leis an Roghchlár Aibhsithe?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"An gcuirfidh tú an cnaipe seo leis an Roghchlár Aibhseach?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -94,13 +95,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Cuir ceist faoin téacs aibhsithe"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Cuir ceist faoin leabhar seo:\n"
-"%s le %s"
+"<b>Cuir ceist faoin leabhar seo:</b>\n"
+"%1 le %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -127,9 +127,8 @@ msgid "Loading for %1 ..."
 msgstr "Ag lódáil ar %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Ní bhfuarthas freagra"
+msgstr "<b>Earráid:</b> Ní bhfuarthas aon fhreagra"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -144,9 +143,8 @@ msgid "Look Up"
 msgstr "Cuardaigh"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Ag anailísiú comhthéacs an leabhair le haghaidh X-ghathú Téarma..."
+msgstr "<b>Ag anailísiú comhthéacs an leabhair do Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -222,9 +220,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Ag lódáil Achoimre ag Úsáid Aibhseáil & Nótaí..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Cineál gné anaithnid:"
+msgstr "<b>Cineál gné anaithnid:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -627,6 +624,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>Earráid API</b>\n"
+"%1\n"
+"\n"
+"<b>Soláthraí:</b> %2\n"
+"<b>Múnla:</b> %3\n"
+"\n"
+"Bain triail as soláthraí eile sa dialóg socruithe."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -691,7 +695,7 @@ msgstr "Theip ar thosú fo-phróisis don iarratas"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Teachtaireacht Earráide"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -870,7 +874,6 @@ msgid "branch or tag name"
 msgstr "ainm brainse nó clib"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -882,15 +885,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Iontráil ainm brainse nó clib chun an breiseán AI Assistant a nuashonrú ón stór foinseach.\n"
+"Iontráil ainm brainse nó clib chun an breiseán a nuashonrú ón stór foinse.\n"
 "\n"
-"URL Github: %1\n"
-"REPO Foinseach: %2\n"
+"<b>URL Github:</b>  %1\n"
+"<b>Stór Foinse:</b>  %2\n"
 "\n"
-"Réamhshocrú: \"main\" (an leagan forbartha is déanaí)\n"
+"Réamhshocrú: \"main\" (an brainse forbartha is déanaí)\n"
 "Samplaí: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Déanfar an breiseán reatha a chúltaca agus a athsholáthar. Coimeádfar an configuration.lua."
+"<b>Coinneofar an configuration.lua.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -955,6 +958,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Á íoslódáil ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Stór: </b>%2\n"
+"<b>Brainse/Clib: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -969,9 +976,8 @@ msgid "OTA update failed: %1"
 msgstr "Theip ar nuashonrú OTA: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Ag suiteáil %1..."
+msgstr "<b>Ag suiteáil %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -986,11 +992,12 @@ msgid "Page"
 msgstr "Leathanach"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Ní féidir rochtain a fháil ar an bhfillteán réamhshocraithe do logaí: %1"
+msgstr ""
+"<b>Ní féidir rochtain a fháil ar an bhfillteán réamhshocraithe le haghaidh logaí: %1</b>\n"
+"Ag baint úsáide as an suíomh bunaidh."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1090,12 +1097,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Leabhar Nótaí (Loga Comhrá AI)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Comhad nótaí:"
+msgstr ""
+"<b>Comhad nótaí:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1277,14 +1286,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Níor aimsíodh an chumraíocht. Cuir an configuration.lua ar bun ar dtús le do thoil."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "go dtí an Roghchlár Aibhsithe."
+msgstr "<b>Curtha leis</b> [%1 (AI)] chuig an Roghchlár Aibhsithe."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "An bhaint [%s] ón Roghchlár Aibhsithe?"
+msgstr "<b>Bainte</b> [%1 (AI)] ón Roghchlár Aibhsithe."
 
 #: ../main.lua:1118
 msgid ""
@@ -1332,36 +1339,3 @@ msgstr "Ardán"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Am rite"
-
-#~ msgid "API Error"
-#~ msgstr "Earráid API"
-
-#~ msgid "Added"
-#~ msgstr "Breisithe"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Brainse/Clib: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Á íoslódáil ..."
-
-#~ msgid "Error:"
-#~ msgstr "Earráid:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Bainte"
-
-#~ msgid "Repo: "
-#~ msgstr "Stór: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Bain triail as soláthraí eile sa dialóg socruithe."
-
-#~ msgid "Using original location."
-#~ msgstr "Ag úsáid an suíomh bunaidh."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "ón Roghchlár Aibhsithe."

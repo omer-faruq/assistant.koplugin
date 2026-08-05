@@ -24,9 +24,8 @@ msgstr "💡 Nâng cao trải nghiệm KOReader với AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Đang tải danh sách mô hình..."
+msgstr "<b>Đang tải danh sách mô hình...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "Nhập câu hỏi trước khi tiếp tục."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Thêm nút này vào menu đánh dấu?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Thêm nút này vào Menu Đánh dấu?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Đặt câu hỏi về văn bản đã đánh dấu"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Đặt câu hỏi về sách này:\n"
-"%s của %s"
+"<b>Đặt câu hỏi về cuốn sách này:</b>\n"
+"%1 của %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "Đang tải %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Không nhận được phản hồi"
+msgstr "<b>Lỗi:</b> Không nhận được phản hồi"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "Tra cứu"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Đang phân tích ngữ cảnh sách cho Term X-Ray..."
+msgstr "<b>Đang phân tích ngữ cảnh sách cho Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Đang tải Tóm tắt bằng Đoạn tô sáng & Ghi chú..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Loại tính năng không xác định:"
+msgstr "<b>Loại tính năng không xác định:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>Lỗi API</b>\n"
+"%1\n"
+"\n"
+"<b>Nhà cung cấp:</b> %2\n"
+"<b>Mô hình:</b> %3\n"
+"\n"
+"Hãy thử nhà cung cấp khác trong hộp thoại cài đặt."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "Không thể khởi chạy tiến trình con cho yêu cầu"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Thông báo lỗi"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "tên nhánh hoặc thẻ"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Nhập tên nhánh hoặc thẻ để cập nhật plugin AI Assistant từ kho lưu trữ nguồn.\n"
+"Nhập tên nhánh hoặc thẻ để cập nhật plugin từ kho lưu trữ nguồn.\n"
 "\n"
-"URL Github:  %1\n"
-"Kho nguồn: %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Repo nguồn:</b>  %2\n"
 "\n"
-"Mặc định: \"main\" (phiên bản phát triển mới nhất)\n"
+"Mặc định: \"main\" (nhánh phát triển mới nhất)\n"
 "Ví dụ: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Plugin hiện tại sẽ được sao lưu và thay thế. Tệp configuration.lua sẽ được giữ nguyên."
+"<b>Tệp configuration.lua sẽ được giữ nguyên.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Đang tải xuống ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Repo: </b>%2\n"
+"<b>Nhánh/Tag: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "Cập nhật OTA thất bại: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Đang cài đặt %1..."
+msgstr "<b>Đang cài đặt %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "Trang"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Không thể truy cập thư mục mặc định cho nhật ký: %1"
+msgstr ""
+"<b>Không thể truy cập thư mục mặc định cho nhật ký: %1</b>\n"
+"Đang sử dụng vị trí ban đầu."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Sổ tay (Nhật ký Trò chuyện AI)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Tệp Notebook:"
+msgstr ""
+"<b>Tệp sổ ghi chép:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Không tìm thấy cấu hình. Vui lòng thiết lập configuration.lua."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "đến Menu Đánh dấu."
+msgstr "<b>Đã thêm</b> [%1 (AI)] vào Menu Tô sáng."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Xoá [%s] khỏi menu đánh dấu?"
+msgstr "<b>Đã xóa</b> [%1 (AI)] khỏi Menu Tô sáng."
 
 #: ../main.lua:1118
 msgid ""
@@ -1323,36 +1330,3 @@ msgstr "Nền tảng"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Thời gian chạy"
-
-#~ msgid "API Error"
-#~ msgstr "Lỗi API"
-
-#~ msgid "Added"
-#~ msgstr "Đã thêm"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Nhánh/Thẻ: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Đang tải xuống ..."
-
-#~ msgid "Error:"
-#~ msgstr "Lỗi:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Đã xóa"
-
-#~ msgid "Repo: "
-#~ msgstr "Kho: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Hãy thử một nhà cung cấp khác trong hộp thoại cài đặt."
-
-#~ msgid "Using original location."
-#~ msgstr "Đang sử dụng vị trí gốc."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "từ Menu Đánh dấu."

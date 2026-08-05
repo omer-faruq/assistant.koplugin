@@ -28,9 +28,8 @@ msgstr "💡 Améliorez votre expérience KOReader avec l'IA"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Récupération des modèles..."
+msgstr "<b>Récupération des modèles...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -77,12 +76,14 @@ msgid "Enter a question before proceeding."
 msgstr "Entrez une question avant de continuer."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Ajouter ce bouton au menu de mise en évidence ?"
+msgstr ""
+"<b>%1 :</b> %2\n"
+"\n"
+"Ajouter ce bouton au menu Surlignage ?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -93,13 +94,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Posez une question sur le texte mis en évidence"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Posez une question sur ce livre :\n"
-"%s par %s"
+"<b>Poser une question sur ce livre :</b>\n"
+"%1 de %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -126,9 +126,8 @@ msgid "Loading for %1 ..."
 msgstr "Chargement de %1..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Aucune réponse reçue"
+msgstr "<b>Erreur :</b> Aucune réponse reçue"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -143,9 +142,8 @@ msgid "Look Up"
 msgstr "Rechercher"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Analyse du contexte du livre pour la radioscopie du terme..."
+msgstr "<b>Analyse du contexte du livre pour Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -221,9 +219,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Chargement du résumé à partir des surlignages et notes..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Type de fonctionnalité inconnu :"
+msgstr "<b>Type de fonctionnalité inconnu :</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -626,6 +623,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>Erreur API</b>\n"
+"%1\n"
+"\n"
+"<b>Fournisseur :</b> %2\n"
+"<b>Modèle :</b> %3\n"
+"\n"
+"Essayez un autre fournisseur dans la boîte de dialogue des paramètres."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -690,7 +694,7 @@ msgstr "Échec du lancement du sous-processus"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Message d'erreur"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -869,7 +873,6 @@ msgid "branch or tag name"
 msgstr "nom de branche ou d'étiquette"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -881,15 +884,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Saisissez un nom de branche ou de tag pour mettre à jour le plugin AI Assistant depuis le dépôt source.\n"
+"Saisissez un nom de branche ou de tag pour mettre à jour le plugin depuis le dépôt source.\n"
 "\n"
-"URL GitHub : %1\n"
-"Dépôt source : %2\n"
+"<b>URL Github :</b>  %1\n"
+"<b>Dépôt source :</b>  %2\n"
 "\n"
-"Par défaut : \"main\" (dernière version de développement)\n"
+"Par défaut : \"main\" (dernière branche de développement)\n"
 "Exemples : \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Le plugin actuel sera sauvegardé et remplacé. Le fichier configuration.lua sera conservé."
+"<b>Le fichier configuration.lua sera conservé.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -954,6 +957,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Téléchargement ...</b>\n"
+"<b>Github :</b> %1\n"
+"<b>Dépôt :</b> %2\n"
+"<b>Branche/Tag :</b> %3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -968,9 +975,8 @@ msgid "OTA update failed: %1"
 msgstr "Échec de la mise à jour OTA : %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Installation de %1..."
+msgstr "<b>Installation de %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -985,11 +991,12 @@ msgid "Page"
 msgstr "Page"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Impossible d'accéder au dossier par défaut des journaux : %1"
+msgstr ""
+"<b>Impossible d'accéder au dossier par défaut des journaux : %1</b>\n"
+"Utilisation de l'emplacement d'origine."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1089,12 +1096,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Carnet (journal de conversation IA)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Fichier du carnet :"
+msgstr ""
+"<b>Fichier notebook :</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1276,14 +1285,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Configuration non trouvée. Veuillez configurer configuration.lua d'abord."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "au menu de surbrillance."
+msgstr "<b>Ajouté</b> [%1 (IA)] au menu Surbrillance."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Supprimer [%s] du menu de mise en évidence ?"
+msgstr "<b>Supprimé</b> [%1 (IA)] du menu Surbrillance."
 
 #: ../main.lua:1118
 msgid ""
@@ -1328,36 +1335,3 @@ msgstr "Plateforme"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Runtime"
-
-#~ msgid "API Error"
-#~ msgstr "Erreur API"
-
-#~ msgid "Added"
-#~ msgstr "Ajouté"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Branche/Tag : "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Téléchargement ..."
-
-#~ msgid "Error:"
-#~ msgstr "Erreur:"
-
-#~ msgid "Github: "
-#~ msgstr "Github : "
-
-#~ msgid "Removed"
-#~ msgstr "Supprimé"
-
-#~ msgid "Repo: "
-#~ msgstr "Dépôt : "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Essayez un autre fournisseur dans la boîte de dialogue des paramètres."
-
-#~ msgid "Using original location."
-#~ msgstr "Utilisation de l'emplacement d'origine."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "du menu de surbrillance."

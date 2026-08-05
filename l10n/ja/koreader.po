@@ -24,9 +24,8 @@ msgstr "💡 KOReader を AI でもっと便利に"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "モデルを取得中..."
+msgstr "<b>モデルを取得中...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "質問を入力してください"
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "このボタンをハイライトメニューに追加しますか？"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"このボタンをハイライトメニューに追加しますか？"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "ハイライトしたテキストについて質問"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"この本について質問してください:\n"
-"%s（著者：%s）"
+"<b>この本について質問する:</b>\n"
+"%1（%2 著）"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "%1 の読み込み中..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "応答がありません"
+msgstr "<b>エラー:</b> 応答がありません"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "検索"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "タームXレイのための書籍コンテキストを分析中..."
+msgstr "<b>Term X-Rayのために本の文脈を分析中...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "ハイライト＆ノートを使用した要約を読み込み中..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "不明な機能タイプ:"
+msgstr "<b>不明な機能タイプ:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>APIエラー</b>\n"
+"%1\n"
+"\n"
+"<b>プロバイダー:</b> %2\n"
+"<b>モデル:</b> %3\n"
+"\n"
+"設定ダイアログで別のプロバイダーをお試しください。"
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "リクエスト用サブプロセス起動失敗"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "エラーメッセージ"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "ブランチ名またはタグ名"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"AIアシスタントプラグインをソースリポジトリから更新するには、ブランチ名またはタグ名を入力してください。\n"
+"プラグインをソースリポジトリから更新するには、ブランチまたはタグ名を入力してください。\n"
 "\n"
-"GitHub URL:  %1\n"
-"ソースリポジトリ: %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>ソースリポジトリ:</b>  %2\n"
 "\n"
-"デフォルト: \"main\" (最新開発版)\n"
+"デフォルト: \"main\"（最新の開発ブランチ）\n"
 "例: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"現在のプラグインはバックアップされ、置き換えられます。configuration.lua は保持されます。"
+"<b>configuration.luaは保持されます。</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>ダウンロード中...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>リポジトリ: </b>%2\n"
+"<b>ブランチ/タグ: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "OTAアップデートに失敗しました: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "%1をインストール中..."
+msgstr "<b>%1をインストール中...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "ページ"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "ログのデフォルトフォルダにアクセスできません: %1"
+msgstr ""
+"<b>ログの既定フォルダにアクセスできません: %1</b>\n"
+"元の場所を使用します。"
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "ノートブック（AI会話ログ）"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "ノートブックファイル:"
+msgstr ""
+"<b>ノートブックファイル:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "設定が見つかりません。先に configuration.lua を設定してください。"
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "ハイライトメニューへ。"
+msgstr "<b>追加しました</b> [%1 (AI)] をハイライトメニューに。"
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "ハイライトメニューから [%s] を削除しますか？"
+msgstr "<b>削除しました</b> [%1 (AI)] をハイライトメニューから。"
 
 #: ../main.lua:1118
 msgid ""
@@ -1323,36 +1330,3 @@ msgstr "プラットフォーム"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "ランタイム"
-
-#~ msgid "API Error"
-#~ msgstr "APIエラー"
-
-#~ msgid "Added"
-#~ msgstr "追加済み"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "ブランチ/タグ: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "ダウンロード中 ..."
-
-#~ msgid "Error:"
-#~ msgstr "エラー:"
-
-#~ msgid "Github: "
-#~ msgstr "GitHub: "
-
-#~ msgid "Removed"
-#~ msgstr "削除済み"
-
-#~ msgid "Repo: "
-#~ msgstr "リポジトリ: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "設定ダイアログで別のプロバイダを試してください。"
-
-#~ msgid "Using original location."
-#~ msgstr "元の場所を使用しています。"
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "ハイライトメニューから。"

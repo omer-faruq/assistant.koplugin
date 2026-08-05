@@ -28,9 +28,8 @@ msgstr "💡 Gwella eich profiad KOReader gydag AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Yn nôl modelau..."
+msgstr "<b>Yn nôl modelau...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -77,12 +76,14 @@ msgid "Enter a question before proceeding."
 msgstr "Rhowch gwestiwn cyn bwrw ymlaen."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Ychwanegu'r botwm hwn at y Ddewislen Amlygu?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Ychwanegu'r botwm hwn i'r Dewislen Amlygu?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -93,13 +94,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Gofyn cwestiwn am y testun wedi'i amlygu"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Gofyn cwestiwn am y llyfr hwn:\n"
-"%s gan %s"
+"<b>Gofyn cwestiwn am y llyfr hwn:</b>\n"
+"%1 gan %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -126,9 +126,8 @@ msgid "Loading for %1 ..."
 msgstr "Llwytho ar gyfer %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Dim ymateb wedi'i dderbyn"
+msgstr "<b>Gwall:</b> Dim ymateb wedi'i dderbyn"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -143,9 +142,8 @@ msgid "Look Up"
 msgstr "Chwilio"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Yn dadansoddi cyd-destun y llyfr ar gyfer Term X-Ray..."
+msgstr "<b>Dadansoddi cyd-destun y llyfr ar gyfer Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -221,9 +219,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Llwytho Crynodeb Gan Ddefnyddio Uchafbwyntiau a Nodiadau..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Math o nodwedd anhysbys:"
+msgstr "<b>Math o nodwedd anhysbys:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -626,6 +623,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>Gwall API</b>\n"
+"%1\n"
+"\n"
+"<b>Darparwr:</b> %2\n"
+"<b>Model:</b> %3\n"
+"\n"
+"Rhowch gynnig ar ddarparwr arall yn y blwch deialog gosodiadau."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -690,7 +694,7 @@ msgstr "Methodd cychwyn is-broses ar gyfer y cais."
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Neges Gwall"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -869,7 +873,6 @@ msgid "branch or tag name"
 msgstr "enw cangen neu dag"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -881,15 +884,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Nodwch enw cangen neu dag i ddiweddaru'r ategyn Cynorthwyydd AI o'r storfa ffynhonnell.\n"
+"Rhowch enw cangen neu dag i ddiweddaru'r ategyn o'r ystorfa ffynhonnell.\n"
 "\n"
-"URL Github:  %1\n"
-"REPO Ffynhonnell: %2\n"
+"<b>URL Github:</b>  %1\n"
+"<b>Ystorfa Ffynhonnell:</b>  %2\n"
 "\n"
-"Rhagosodedig: \"main\" (y fersiwn datblygu diweddaraf)\n"
+"Rhagosodedig: \"main\" (y gangen ddatblygu ddiweddaraf)\n"
 "Enghreifftiau: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Bydd yr ategyn presennol yn cael ei gefnogi a'i ddisodli. Bydd configuration.lua yn cael ei gadw."
+"<b>Bydd y configuration.lua yn cael ei gadw.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -954,6 +957,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Lawrlwytho ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Repo: </b>%2\n"
+"<b>Cangen/Tag: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -968,9 +975,8 @@ msgid "OTA update failed: %1"
 msgstr "Methodd diweddariad OTA: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Yn gosod %1..."
+msgstr "<b>Yn gosod %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -985,11 +991,12 @@ msgid "Page"
 msgstr "Tudalen"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Methu â chyrchu'r ffolder rhagosodedig ar gyfer logiau: %1"
+msgstr ""
+"<b>Methu cyrchu'r ffolder rhagosodedig ar gyfer logiau: %1</b>\n"
+"Defnyddio lleoliad gwreiddiol."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1089,12 +1096,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "NoteBook (Cofnod Sgwrs AI)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Ffeil llyfr nodiadau:"
+msgstr ""
+"<b>Ffeil nodiadur:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1276,14 +1285,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Ni chafwyd hyd i'r cyfluniad. Gosodwch configuration.lua yn gyntaf os gwelwch yn dda."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "i'r Ddewislen Amlygu."
+msgstr "<b>Wedi ychwanegu</b> [%1 (AI)] i'r Ddewislen Amlygu."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Dileu [%s] o'r Dewislen Amlygu?"
+msgstr "<b>Wedi tynnu</b> [%1 (AI)] o'r Dewislen Amlygu."
 
 #: ../main.lua:1118
 msgid ""
@@ -1332,36 +1339,3 @@ msgstr "Llwyfan"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Amser Rhedeg"
-
-#~ msgid "API Error"
-#~ msgstr "Gwall API"
-
-#~ msgid "Added"
-#~ msgstr "Ychwanegwyd"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Cangen/Tag: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Yn lawrlwytho ..."
-
-#~ msgid "Error:"
-#~ msgstr "Gwall:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Wedi'i dynnu"
-
-#~ msgid "Repo: "
-#~ msgstr "Ystorfa: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Rhowch gynnig ar ddarparwr arall yn y ddeialog gosodiadau."
-
-#~ msgid "Using original location."
-#~ msgstr "Yn defnyddio'r lleoliad gwreiddiol."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "o'r Ddewislen Amlygu."

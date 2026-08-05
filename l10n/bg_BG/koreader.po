@@ -24,9 +24,8 @@ msgstr "💡 Подобрете KOReader с AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Извличане на модели..."
+msgstr "<b>Изтегляне на модели...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "Въведи въпрос, преди продължение."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Добави тази бутона към менюто за маркиране?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Да се добави този бутон в менюто за маркиране?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Задайте въпрос за подчертаното"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Задайте въпрос за тази книга:\n"
-"%s от %s"
+"<b>Задайте въпрос за тази книга:</b>\n"
+"%1 от %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "Зареждане за %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Не е получен отговор"
+msgstr "<b>Грешка:</b> Не е получен отговор"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "Търси"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Анализиране на контекста на книгата за Term X-Ray..."
+msgstr "<b>Анализиране на контекста на книгата за Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Зареждане на обобщение чрез маркировки и бележки..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Неизвестен тип функция:"
+msgstr "<b>Неизвестен тип функция:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>Грешка в API</b>\n"
+"%1\n"
+"\n"
+"<b>Доставчик:</b> %2\n"
+"<b>Модел:</b> %3\n"
+"\n"
+"Опитайте с друг доставчик в диалога за настройки."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "Неуспешно стартиране на процеса за зая�
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Съобщение за грешка"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "име на клон или таг"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Въведете име на клон или таг, за да актуализирате плъгина AI Assistant от изходното хранилище.\n"
+"Въведете име на клон или таг, за да актуализирате плъгина от хранилището на източника.\n"
 "\n"
-"URL на GitHub: %1\n"
-"Хранилище източник: %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Хранилище на източника:</b>  %2\n"
 "\n"
-"По подразбиране: \"main\" (последна версия в процес на разработка)\n"
+"По подразбиране: \"main\" (последен клон за разработка)\n"
 "Примери: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Текущият плъгин ще бъде архивиран и заменен. Файлът configuration.lua ще бъде запазен."
+"<b>Конфигурационният файл configuration.lua ще бъде запазен.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Изтегляне ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Репозиторий: </b>%2\n"
+"<b>Клон/Таг: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA актуализацията не успя: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Инсталиране на %1..."
+msgstr "<b>Инсталиране на %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "Страница"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Няма достъп до папката по подразбиране за логове: %1"
+msgstr ""
+"<b>Няма достъп до папката по подразбиране за логове: %1</b>\n"
+"Използване на оригиналното местоположение."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Бележник (дневник на AI разговори)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Файл на бележника:"
+msgstr ""
+"<b>Файл на бележника:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Конфигурацията не е намерена. Настройте configuration.lua първо."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "към менюто за открояване."
+msgstr "<b>Добавено</b> [%1 (AI)] към менюто за подчертаване."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Премахнете [%s] от менюто за маркиране?"
+msgstr "<b>Премахнато</b> [%1 (AI)] от менюто за подчертаване."
 
 #: ../main.lua:1118
 msgid ""
@@ -1324,36 +1331,3 @@ msgstr "Платформа"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Среда на изпълнение"
-
-#~ msgid "API Error"
-#~ msgstr "API грешка"
-
-#~ msgid "Added"
-#~ msgstr "Добавено"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Клон/Таг: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Изтегляне ..."
-
-#~ msgid "Error:"
-#~ msgstr "Грешка:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Премахнато"
-
-#~ msgid "Repo: "
-#~ msgstr "Репозитори: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Опитайте друг доставчик в диалоговия прозорец за настройки."
-
-#~ msgid "Using original location."
-#~ msgstr "Използва се оригиналното местоположение."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "от менюто за открояване."

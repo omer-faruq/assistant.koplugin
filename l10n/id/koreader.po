@@ -28,9 +28,8 @@ msgstr "💡 Tingkatkan pengalaman KOReader Anda dengan AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Mengambil model..."
+msgstr "<b>Mengambil model...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -77,12 +76,14 @@ msgid "Enter a question before proceeding."
 msgstr "Masukkan pertanyaan sebelum melanjutkan."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Tambahkan tombol ini ke Menu Sorotan?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Tambahkan tombol ini ke Menu Sorotan?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -93,13 +94,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Ajukan pertanyaan tentang teks yang disorot"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Ajukan pertanyaan tentang buku ini:\n"
-"%s oleh %s"
+"<b>Ajukan pertanyaan tentang buku ini:</b>\n"
+"%1 oleh %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -126,9 +126,8 @@ msgid "Loading for %1 ..."
 msgstr "Memuat untuk %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Tidak ada respons yang diterima"
+msgstr "<b>Kesalahan:</b> Tidak ada respons yang diterima"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -143,9 +142,8 @@ msgid "Look Up"
 msgstr "Cari"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Menganalisis konteks buku untuk Term X-Ray..."
+msgstr "<b>Menganalisis konteks buku untuk Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -221,9 +219,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Memuat Ringkasan Menggunakan Sorotan & Catatan..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Jenis fitur tidak dikenal:"
+msgstr "<b>Jenis fitur tidak dikenal:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -626,6 +623,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>Kesalahan API</b>\n"
+"%1\n"
+"\n"
+"<b>Penyedia:</b> %2\n"
+"<b>Model:</b> %3\n"
+"\n"
+"Coba penyedia lain di dialog pengaturan."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -690,7 +694,7 @@ msgstr "Gagal memulai subproses untuk permintaan"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Pesan Kesalahan"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -869,7 +873,6 @@ msgid "branch or tag name"
 msgstr "nama cabang atau tag"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -881,15 +884,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Masukkan nama cabang atau tag untuk memperbarui plugin Asisten AI dari repositori sumber.\n"
+"Masukkan nama cabang atau tag untuk memperbarui plugin dari repositori sumber.\n"
 "\n"
-"URL Github:  %1\n"
-"REPO Sumber: %2\n"
+"<b>URL Github:</b>  %1\n"
+"<b>Repo Sumber:</b>  %2\n"
 "\n"
-"Default: \"main\" (versi pengembangan terbaru)\n"
+"Default: \"main\" (cabang pengembangan terbaru)\n"
 "Contoh: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Plugin saat ini akan dicadangkan dan diganti. File configuration.lua akan dipertahankan."
+"<b>configuration.lua akan dipertahankan.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -954,6 +957,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Mengunduh ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Repo: </b>%2\n"
+"<b>Cabang/Tag: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -968,9 +975,8 @@ msgid "OTA update failed: %1"
 msgstr "Pembaruan OTA gagal: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Memasang %1..."
+msgstr "<b>Memasang %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -985,11 +991,12 @@ msgid "Page"
 msgstr "Halaman"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Tidak dapat mengakses folder default untuk log: %1"
+msgstr ""
+"<b>Tidak dapat mengakses folder default untuk log: %1</b>\n"
+"Menggunakan lokasi asli."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1089,12 +1096,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "NoteBook (Log Percakapan AI)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "File buku catatan:"
+msgstr ""
+"<b>File buku catatan:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1276,14 +1285,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigurasi tidak ditemukan. Silakan atur configuration.lua terlebih dahulu."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "ke Menu Sorotan."
+msgstr "<b>Ditambahkan</b> [%1 (AI)] ke Menu Sorotan."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Hapus [%s] dari Menu Sorotan?"
+msgstr "<b>Dihapus</b> [%1 (AI)] dari Menu Sorotan."
 
 #: ../main.lua:1118
 msgid ""
@@ -1327,36 +1334,3 @@ msgstr "Platform"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Runtime"
-
-#~ msgid "API Error"
-#~ msgstr "Kesalahan API"
-
-#~ msgid "Added"
-#~ msgstr "Ditambahkan"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Cabang/Tag: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Mengunduh ..."
-
-#~ msgid "Error:"
-#~ msgstr "Kesalahan:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Dihapus"
-
-#~ msgid "Repo: "
-#~ msgstr "Repositori: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Coba penyedia lain di dialog pengaturan."
-
-#~ msgid "Using original location."
-#~ msgstr "Menggunakan lokasi asli."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "dari Menu Sorotan."

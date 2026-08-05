@@ -28,9 +28,8 @@ msgstr "💡 Forbedr din KOReader-oplevelse med AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Henter modeller..."
+msgstr "<b>Henter modeller...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -77,12 +76,14 @@ msgid "Enter a question before proceeding."
 msgstr "Indtast et spørgsmål inden fortsættelse."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Tilføj denne knap til Markeringsmenuen?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Tilføj denne knap til fremhævningsmenuen?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -93,13 +94,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Stil et spørgsmål om den markerede tekst"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Stil et spørgsmål om denne bog:\n"
-"%s af %s"
+"<b>Stil et spørgsmål om denne bog:</b>\n"
+"%1 af %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -126,9 +126,8 @@ msgid "Loading for %1 ..."
 msgstr "Indlæser for %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Intet svar modtaget"
+msgstr "<b>Fejl:</b> Ingen respons modtaget"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -143,9 +142,8 @@ msgid "Look Up"
 msgstr "Søg"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Analyserer bogkontekst til Term X-Ray..."
+msgstr "<b>Analyserer bogens kontekst til Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -221,9 +219,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Indlæser opsummering med markeringer og noter..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Ukendt funktionstype:"
+msgstr "<b>Ukendt funktionstype:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -626,6 +623,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>API-fejl</b>\n"
+"%1\n"
+"\n"
+"<b>Udbyder:</b> %2\n"
+"<b>Model:</b> %3\n"
+"\n"
+"Prøv en anden udbyder i indstillingsdialogen."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -690,7 +694,7 @@ msgstr "Kunne ikke starte underproces til forespørgsel"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Fejlmeddelelse"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -869,7 +873,6 @@ msgid "branch or tag name"
 msgstr "gren- eller tag-navn"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -881,15 +884,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Indtast et branch- eller tag-navn for at opdatere AI Assistant-pluginet fra kilde-lageret.\n"
+"Indtast et branch- eller tag-navn for at opdatere plugin'et fra kilde-repositoriet.\n"
 "\n"
-"Github URL: %1\n"
-"Kilde REPO: %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Kilde-repo:</b>  %2\n"
 "\n"
-"Standard: \"main\" (seneste udviklingsversion)\n"
+"Standard: \"main\" (seneste udviklingsgren)\n"
 "Eksempler: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Det nuværende plugin vil blive sikkerhedskopieret og erstattet. configuration.lua vil blive bevaret."
+"<b>configuration.lua vil blive bevaret.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -954,6 +957,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Downloader ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Repo: </b>%2\n"
+"<b>Branch/Tag: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -968,9 +975,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA-opdatering mislykkedes: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Installerer %1..."
+msgstr "<b>Installerer %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -985,11 +991,12 @@ msgid "Page"
 msgstr "Side"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Kan ikke få adgang til standardmappe for logfiler: %1"
+msgstr ""
+"<b>Kan ikke få adgang til standardmappe for logfiler: %1</b>\n"
+"Bruger oprindelig placering."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1089,12 +1096,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Notesbog (AI-samtalelog)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Notesbogsfil:"
+msgstr ""
+"<b>Notesbogsfil:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1276,14 +1285,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfiguration ikke fundet. Konfigurér venligst configuration.lua først."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "til fremhævningsmenuen."
+msgstr "<b>Tilføjet</b> [%1 (AI)] til fremhævningsmenuen."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Fjern [%s] fra markeringsmenuen?"
+msgstr "<b>Fjernet</b> [%1 (AI)] fra fremhævningsmenuen."
 
 #: ../main.lua:1118
 msgid ""
@@ -1328,36 +1335,3 @@ msgstr "Platform"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Runtime"
-
-#~ msgid "API Error"
-#~ msgstr "API-fejl"
-
-#~ msgid "Added"
-#~ msgstr "Tilføjet"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Branch/Tag: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Downloader ..."
-
-#~ msgid "Error:"
-#~ msgstr "Fejl:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Fjernet"
-
-#~ msgid "Repo: "
-#~ msgstr "Repo: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Prøv en anden udbyder i indstillingsdialogen."
-
-#~ msgid "Using original location."
-#~ msgstr "Bruger original placering."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "fra fremhævningsmenuen."

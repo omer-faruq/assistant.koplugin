@@ -24,9 +24,8 @@ msgstr "💡 KOReade-ren esperientzia hobetzen lagunduko dizu AIekin"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Ereduak eskuratzen..."
+msgstr "<b>Modeloak eskuratzen...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "Idatzi galdera aurrera ezeztu aurretik."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Gehitu botoi hau Altzarpakiko menuan?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Gehitu botoi hau Nabarmentze Menuan?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Eskatu galdera altzarapenarekin lotutako testuari buruz"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Eskatu galdera hau honi buruzko liburuari:\n"
-"%s %s eginez"
+"<b>Egin galdera bat liburu honi buruz:</b>\n"
+"%1, %2 egilea"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "Kargatzen %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Ez da erantzunik jaso"
+msgstr "<b>Errorea:</b> Ez da erantzunik jaso"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "Begiratu"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Liburuaren testuingurua aztertzen Term X-Ray-rako..."
+msgstr "<b>Liburuaren testuingurua aztertzen Term X-Ray-rentzat...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Laburpena kargatzen nabarmendu eta oharrak erabiliz..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Ezaugarri mota ezezaguna:"
+msgstr "<b>Ezezaguna den ezaugarri-mota:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>API Errorea</b>\n"
+"%1\n"
+"\n"
+"<b>Hornitzailea:</b> %2\n"
+"<b>Modeloa:</b> %3\n"
+"\n"
+"Probatu beste hornitzaile bat ezarpenen elkarrizketa-koadroan."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "Hitzordua hasi gabe gelditu da."
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Errore-mezua"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "adar edo etiketa izena"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Sartu adar edo etiketa izen bat AI Assistant plugina iturburu biltegiatik eguneratzeko.\n"
+"Idatzi adar edo etiketa izen bat plugin-a iturburu-biltegitik eguneratzeko.\n"
 "\n"
-"Github URL: %1\n"
-"Jatorrizko REPO: %2\n"
+"<b>Github URL-a:</b>  %1\n"
+"<b>Iturburu-biltegia:</b>  %2\n"
 "\n"
-"Lehenetsia: \"main\" (azken garapen bertsioa)\n"
+"Lehenetsia: \"main\" (azken garapen-adarra)\n"
 "Adibideak: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Oraingo plugina babeskopiatu eta ordezkatuko da. configuration.lua gorde egingo da."
+"<b>configuration.lua gorde egingo da.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Deskargatzen ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Biltegia: </b>%2\n"
+"<b>Adarra/Etiketa: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA eguneraketak huts egin du: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "%1 instalatzen..."
+msgstr "<b>%1 instalatzen...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "Orria"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Ezin da erregistroetarako karpeta lehenetsira sartu: %1"
+msgstr ""
+"<b>Ezin da sartu erregistroen karpeta lehenetsian: %1</b>\n"
+"Jatorrizko kokapena erabiltzen."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Koadernoa (AI elkarrizketa erregistroa)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Koaderno fitxategia:"
+msgstr ""
+"<b>Koadernoaren fitxategia:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigurazioa ez da aurkitu. Mesedez konfigurazioa ezarri lehen."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "Nabarmen Menu-ra."
+msgstr "<b>Gehituta</b> [%1 (AI)] Nabarmentze Menura."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "[%s] kendu Altzarpakiko menu-tik?"
+msgstr "<b>Kenduta</b> [%1 (AI)] Nabarmentze Menutik."
 
 #: ../main.lua:1118
 msgid ""
@@ -1324,36 +1331,3 @@ msgstr "Plataforma"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Exekuzio-denbora"
-
-#~ msgid "API Error"
-#~ msgstr "API akatsa"
-
-#~ msgid "Added"
-#~ msgstr "Gehituta"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Adarra/Etiketa: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Deskargatzen ..."
-
-#~ msgid "Error:"
-#~ msgstr "Errorea:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Kenduta"
-
-#~ msgid "Repo: "
-#~ msgstr "Biltegia: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Saiatu beste hornitzaile bat ezarpenen elkarrizketa-koadroan."
-
-#~ msgid "Using original location."
-#~ msgstr "Jatorrizko kokapena erabiliz."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "Nabarmen Menu-tik."

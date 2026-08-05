@@ -24,9 +24,8 @@ msgstr "💡 Plibonigu vian KOReader-efikon per AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Akirante modelojn..."
+msgstr "<b>Akirante modelojn...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "Enigu demandon antaŭ ol daŭrigi."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Ĉu aldoni ĉi tiun butonon al Enŝovada menuo?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Ĉu aldoni ĉi tiun butonon al la Menuo de Reliefigoj?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Demandi pri la enŝovita teksto"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Demandi pri ĉi tiu libro:\n"
-"%s de %s"
+"<b>Demandu demandon pri ĉi tiu libro:</b>\n"
+"%1 de %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "Ŝargante por %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Neniu respondo ricevita"
+msgstr "<b>Eraro:</b> Neniu respondo ricevita"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "Serĉi"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Analizas librokuntekston por Term X-Ray..."
+msgstr "<b>Analizante libro-kuntekston por Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Ŝarĝante Resumon Uzante Emfazojn kaj Notojn..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Nekonata funkcitipo:"
+msgstr "<b>Nekonata trajtotipo:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>API-eraro</b>\n"
+"%1\n"
+"\n"
+"<b>Provizanto:</b> %2\n"
+"<b>Modelo:</b> %3\n"
+"\n"
+"Provu alian provizanton en la agorda dialogujo."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "Malsukcesis lanĉi subprocezon por la peto"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Erarmesaĝo"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "branĉa aŭ etikeda nomo"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Enigu branĉon aŭ etikednomon por ĝisdatigi la AI-Asistanto-kromaĵon el la fonta deponejo.\n"
+"Enigu branĉan aŭ etikedan nomon por ĝisdatigi la kromprogramon el la fonta deponejo.\n"
 "\n"
-"GitHub URL:  %1\n"
-"Fonto REPO: %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Fonta Deponejo:</b>  %2\n"
 "\n"
-"Defaŭlte: \"main\" (plej nova disvolva versio)\n"
+"Defaŭlte: \"main\" (plej nova disvolva branĉo)\n"
 "Ekzemploj: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"La nuna kromaĵo estos sekurkopiita kaj anstataŭigita. La configuration.lua estos konservita."
+"<b>La dosiero configuration.lua estos konservita.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Elŝutado ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Deponejo: </b>%2\n"
+"<b>Branĉo/Etikedo: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA ĝisdatigo malsukcesis: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Instalas %1..."
+msgstr "<b>Instalante %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "Paĝo"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Ne eblas aliri la defaŭltan dosierujon por protokoloj: %1"
+msgstr ""
+"<b>Ne eblas aliri la defaŭltan dosierujon por protokoloj: %1</b>\n"
+"Uzante originalan lokon."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Kajiero (AI-Konversacia Protokolo)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Notlibro-dosiero:"
+msgstr ""
+"<b>Notlibra dosiero:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Agordo ne trovita. Bonvolu antaŭe agordi configuration.lua."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "al la Emfaza Menuo."
+msgstr "<b>Aldonita</b> [%1 (AI)] al Menuo de Emfazoj."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Ĉu forigi [%s] de la menuo de enŝovado?"
+msgstr "<b>Forigita</b> [%1 (AI)] el Menuo de Emfazoj."
 
 #: ../main.lua:1118
 msgid ""
@@ -1324,36 +1331,3 @@ msgstr "Platformo"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Rultempo"
-
-#~ msgid "API Error"
-#~ msgstr "API Eraro"
-
-#~ msgid "Added"
-#~ msgstr "Aldonita"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Branĉo/Etikedo: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Elŝutante ..."
-
-#~ msgid "Error:"
-#~ msgstr "Eraro:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Forigita"
-
-#~ msgid "Repo: "
-#~ msgstr "Deponejo: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Provu alian provizanton en la agorda dialogo."
-
-#~ msgid "Using original location."
-#~ msgstr "Uzante originalan lokon."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "el la Emfaza Menuo."

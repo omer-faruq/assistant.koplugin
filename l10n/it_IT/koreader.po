@@ -24,9 +24,8 @@ msgstr "💡 Migliora l'esperienza KOReader con AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Recupero modelli..."
+msgstr "<b>Recupero modelli...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "Inserisci una domanda prima di procedere."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Aggiungere questo pulsante al menu Evidenzia?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Aggiungere questo pulsante al menu evidenziazioni?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Fai una domanda sul testo evidenziato"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Fai una domanda su questo libro:\n"
-"%s di %s"
+"<b>Fai una domanda su questo libro:</b>\n"
+"%1 di %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "Caricamento di %1 in corso..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Nessuna risposta ricevuta"
+msgstr "<b>Errore:</b> Nessuna risposta ricevuta"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "Cerca"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Analisi del contesto del libro per radiografia del termine..."
+msgstr "<b>Analisi del contesto del libro per Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Caricamento riepilogo tramite evidenziazioni e note..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Tipo di funzionalità sconosciuto:"
+msgstr "<b>Tipo di feature sconosciuto:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>Errore API</b>\n"
+"%1\n"
+"\n"
+"<b>Provider:</b> %2\n"
+"<b>Modello:</b> %3\n"
+"\n"
+"Prova un altro provider nella finestra delle impostazioni."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "Impossibile avviare il sottoprocesso per la richiesta"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Messaggio di errore"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "nome del ramo o del tag"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Inserisci un nome di branch o tag per aggiornare il plugin AI Assistant dal repository sorgente.\n"
+"Inserisci il nome di un branch o tag per aggiornare il plugin dal repository sorgente.\n"
 "\n"
-"URL GitHub: %1\n"
-"REPO sorgente: %2\n"
+"<b>URL Github:</b>  %1\n"
+"<b>Repo sorgente:</b>  %2\n"
 "\n"
-"Predefinito: \"main\" (versione di sviluppo più recente)\n"
+"Predefinito: \"main\" (ultimo branch di sviluppo)\n"
 "Esempi: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Il plugin corrente verrà salvato e sostituito. Il file configuration.lua verrà conservato."
+"<b>Il file configuration.lua verrà preservato.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Download in corso...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Repo: </b>%2\n"
+"<b>Branch/Tag: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "Aggiornamento OTA fallito: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Installazione di %1 in corso..."
+msgstr "<b>Installazione di %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "Pagina"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Impossibile accedere alla cartella predefinita per i log: %1"
+msgstr ""
+"<b>Impossibile accedere alla cartella predefinita per i log: %1</b>\n"
+"Utilizzo posizione originale."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "NoteBook (registro conversazioni AI)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "File del notebook:"
+msgstr ""
+"<b>File notebook:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Configurazione non trovata. Configura prima configuration.lua."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "al menu Evidenziazione."
+msgstr "<b>Aggiunto</b> [%1 (AI)] al menu Evidenziazione."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Rimuovere [%s] dal menu Evidenzia?"
+msgstr "<b>Rimosso</b> [%1 (AI)] dal menu Evidenziazione."
 
 #: ../main.lua:1118
 msgid ""
@@ -1324,36 +1331,3 @@ msgstr "Piattaforma"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Runtime"
-
-#~ msgid "API Error"
-#~ msgstr "Errore API"
-
-#~ msgid "Added"
-#~ msgstr "Aggiunto"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Branch/Tag: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Download in corso ..."
-
-#~ msgid "Error:"
-#~ msgstr "Errore:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Rimosso"
-
-#~ msgid "Repo: "
-#~ msgstr "Repo: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Prova un altro fornitore nella finestra delle impostazioni."
-
-#~ msgid "Using original location."
-#~ msgstr "Utilizzo della posizione originale."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "dal menu Evidenziazione."

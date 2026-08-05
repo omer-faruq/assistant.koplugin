@@ -24,9 +24,8 @@ msgstr "💡 שפר את חוויית KOReader עם בינה מלאכותית"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "מביא מודלים..."
+msgstr "<b>טוען דגמים...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "הכנס שאלה לפני המשך"
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "האם להוסיף כפתור זה לתפריט הדגשה?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"להוסיף כפתור זה לתפריט ההדגשה?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "שאל שאלה על הטקסט המודגש"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"שאל שאלה על הספר:\n"
-"%s מאת %s"
+"<b>שאל שאלה על ספר זה:</b>\n"
+"%1 מאת %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "טוען עבור %1..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "לא התקבלה תגובה"
+msgstr "<b>שגיאה:</b> לא התקבלה תשובה"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "חפש"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "מנתח את הקשר של הספר עבור Term X-Ray..."
+msgstr "<b>מנתח הקשר של הספר עבור Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "טוען סיכום באמצעות הדגשות והערות..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "סוג תכונה לא ידוע:"
+msgstr "<b>סוג תכונה לא ידוע:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>שגיאת API</b>\n"
+"%1\n"
+"\n"
+"<b>ספק:</b> %2\n"
+"<b>מודל:</b> %3\n"
+"\n"
+"נסה ספק אחר בתיבת הדו-שיח של ההגדרות."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "הפעלת תת־התהליך לבקשה נכשלה"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "הודעת שגיאה"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "שם ענף או תגית"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"הזן שם ענף או תג לעדכון תוסף הסייע החכם ממאגר המקור.\n"
+"הזן שם ענף או תג כדי לעדכן את התוסף ממאגר המקור.\n"
 "\n"
-"כתובת Github: %1\n"
-"מאגר מקור: %2\n"
+"<b>כתובת URL של Github:</b>  %1\n"
+"<b>מאגר מקור:</b>  %2\n"
 "\n"
-"ברירת מחדל: \"main\" (גרסת הפיתוח העדכנית)\n"
+"ברירת מחדל: \"main\" (ענף הפיתוח האחרון)\n"
 "דוגמאות: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"התוסף הנוכחי יגובה ויוחלף. הקובץ configuration.lua יישמר."
+"<b>הקובץ configuration.lua יישמר.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>מוריד ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>מאגר: </b>%2\n"
+"<b>ענף/תג: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "עדכון OTA נכשל: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "מתקין %1..."
+msgstr "<b>מתקין %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "עמוד"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "לא ניתן לגשת לתיקיית ברירת המחדל עבור יומנים: %1"
+msgstr ""
+"<b>לא ניתן לגשת לתיקיית ברירת המחדל ללוגים: %1</b>\n"
+"משתמש במיקום המקורי."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "מחברת (יומן שיחות AI)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "קובץ מחברת:"
+msgstr ""
+"<b>קובץ מחברת:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "הגדרה לא נמצאה. אנא הגדר configuration.lua קודם."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "לתפריט ההדגשה."
+msgstr "<b>נוסף</b> [%1 (AI)] לתפריט ההדגשה."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "האם להסיר [%s] מתפריט הדגשה?"
+msgstr "<b>הוסר</b> [%1 (AI)] מתפריט ההדגשה."
 
 #: ../main.lua:1118
 msgid ""
@@ -1324,36 +1331,3 @@ msgstr "פלטפורמה"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "סביבת ריצה"
-
-#~ msgid "API Error"
-#~ msgstr "שגיאת API"
-
-#~ msgid "Added"
-#~ msgstr "נוסף"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "ענף/תג: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "מוריד ..."
-
-#~ msgid "Error:"
-#~ msgstr "שגיאה:"
-
-#~ msgid "Github: "
-#~ msgstr "גיטהאב: "
-
-#~ msgid "Removed"
-#~ msgstr "הוסר"
-
-#~ msgid "Repo: "
-#~ msgstr "מאגר: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "נסה ספק אחר בתיבת הדו-שיח של ההגדרות."
-
-#~ msgid "Using original location."
-#~ msgstr "משתמש במיקום המקורי."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "מתפריט ההדגשה."

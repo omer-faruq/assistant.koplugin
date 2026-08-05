@@ -24,9 +24,8 @@ msgstr "💡 KOReader deneyiminizi Yapay Zeka ile geliştirin"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Modeller getiriliyor..."
+msgstr "<b>Modeller getiriliyor...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "Devam etmeden önce bir soru girin."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Bu düğmeyi Vurgulama Menüsüne eklensin mi?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Bu düğme Vurgu Menüsü'ne eklensin mi?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Vurgulanan metin hakkında soru sor"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Bu kitap hakkında soru sor:\n"
-"%s - %s"
+"<b>Bu kitap hakkında bir soru sorun:</b>\n"
+"%1 - %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "%1 yükleniyor ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Yanıt alınamadı"
+msgstr "<b>Hata:</b> Yanıt alınamadı"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "Ara"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Kitap bağlamı Term X-Ray için analiz ediliyor..."
+msgstr "<b>Term X-Ray için kitap bağlamı analiz ediliyor...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Vurgular & Notlarla Özet Yükleniyor..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Bilinmeyen özellik türü:"
+msgstr "<b>Bilinmeyen özellik türü:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>API Hatası</b>\n"
+"%1\n"
+"\n"
+"<b>Sağlayıcı:</b> %2\n"
+"<b>Model:</b> %3\n"
+"\n"
+"Ayarlar iletişim kutusunda başka bir sağlayıcı deneyin."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "İstek için alt süreç başlatılamadı"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Hata Mesajı"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "dal veya etiket adı"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"AI Asistan eklentisini kaynak depodan güncellemek için bir dal veya etiket adı girin.\n"
+"Eklentiyi kaynak deposundan güncellemek için bir dal veya etiket adı girin.\n"
 "\n"
-"GitHub URL:  %1\n"
-"Kaynak Depo: %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Kaynak Depo:</b>  %2\n"
 "\n"
-"Varsayılan: \"main\" (en son geliştirme sürümü)\n"
+"Varsayılan: \"main\" (en son geliştirme dalı)\n"
 "Örnekler: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Mevcut eklenti yedeklenecek ve değiştirilecektir. configuration.lua korunacaktır."
+"<b>configuration.lua korunacaktır.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>İndiriliyor ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Depo: </b>%2\n"
+"<b>Dal/Etiket: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA güncellemesi başarısız oldu: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "%1 yükleniyor..."
+msgstr "<b>%1 yükleniyor...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "Sayfa"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Günlükler için varsayılan klasöre erişilemiyor: %1"
+msgstr ""
+"<b>Günlükler için varsayılan klasöre erişilemiyor: %1</b>\n"
+"Orijinal konum kullanılıyor."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Not Defteri (AI Konuşma Günlüğü)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Not defteri dosyası:"
+msgstr ""
+"<b>Not defteri dosyası:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Yapılandırma bulunamadı. Lütfen önce configuration.lua dosyasını ayarlayın."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "Vurgulama Menüsüne."
+msgstr "<b>Eklendi</b> [%1 (AI)] Vurgu Menüsüne."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "[%s] Vurgulama Menüsünden kaldırılsın mı?"
+msgstr "<b>Kaldırıldı</b> [%1 (AI)] Vurgu Menüsünden."
 
 #: ../main.lua:1118
 msgid ""
@@ -1324,36 +1331,3 @@ msgstr "Platform"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Çalışma Zamanı"
-
-#~ msgid "API Error"
-#~ msgstr "API Hatası"
-
-#~ msgid "Added"
-#~ msgstr "Eklendi"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Branch/Tag: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "İndiriliyor ..."
-
-#~ msgid "Error:"
-#~ msgstr "Hata:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Kaldırıldı"
-
-#~ msgid "Repo: "
-#~ msgstr "Repo: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Ayarlar iletişim kutusunda başka bir sağlayıcı deneyin."
-
-#~ msgid "Using original location."
-#~ msgstr "Orijinal konum kullanılıyor."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "Vurgulama Menüsünden."

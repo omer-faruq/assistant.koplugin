@@ -24,9 +24,8 @@ msgstr "💡 Poboljšajte KOReader iskustvo s AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Dohvaćanje modela..."
+msgstr "<b>Dohvaćanje modela...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "Unesite pitanje prije nastavka."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Dodati ovaj gumb u izbornik za isticanje?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Dodati ovaj gumb u izbornik oznaka?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Postavite pitanje o istaknutom tekstu"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Postavite pitanje o ovoj knjizi:\n"
-"%s autora %s"
+"<b>Postavite pitanje o ovoj knjizi:</b>\n"
+"%1 od %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "Učitavanje za %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Nije primljen odgovor"
+msgstr "<b>Greška:</b> Nije primljen odgovor"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "Pretraži"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Analiziram kontekst knjige za Term X-Ray..."
+msgstr "<b>Analiza konteksta knjige za Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Učitavanje sažetka pomoću istaknutih dijelova i bilježaka..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Nepoznata vrsta značajke:"
+msgstr "<b>Nepoznata vrsta značajke:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>API greška</b>\n"
+"%1\n"
+"\n"
+"<b>Davatelj:</b> %2\n"
+"<b>Model:</b> %3\n"
+"\n"
+"Pokušajte s drugim davateljem u dijaloškom okviru postavki."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "Neuspjelo pokretanje pod-procesa zahtjeva"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Poruka greške"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "naziv grane ili oznake"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Unesite naziv grane ili oznake za ažuriranje dodatka AI Assistant iz izvornog repozitorija.\n"
+"Unesite naziv grančice ili oznake za ažuriranje dodatka iz izvornog repozitorija.\n"
 "\n"
-"Github URL:  %1\n"
-"Izvorni REPO: %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Izvorni repozitorij:</b>  %2\n"
 "\n"
-"Zadano: \"main\" (najnovija razvojna verzija)\n"
+"Zadano: \"main\" (najnovija razvojna grančica)\n"
 "Primjeri: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Trenutni dodatak bit će sigurnosno kopiran i zamijenjen. Datoteka configuration.lua bit će sačuvana."
+"<b>Konfiguracijski configuration.lua bit će sačuvan.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Preuzimanje ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Repozitorij: </b>%2\n"
+"<b>Grančica/Oznaka: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA ažuriranje nije uspjelo: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Instaliranje %1..."
+msgstr "<b>Instaliranje %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "Stranica"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Nije moguće pristupiti zadanoj mapi za zapise: %1"
+msgstr ""
+"<b>Ne mogu pristupiti zadanoj mapi za zapise: %1</b>\n"
+"Koristi se izvorna lokacija."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Bilježnica (zapisnik AI razgovora)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Datoteka bilježnice:"
+msgstr ""
+"<b>Datoteka bilježnice:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfiguracija nije pronađena. Najprije postavite configuration.lua."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "u izbornik označavanja."
+msgstr "<b>Dodano</b> [%1 (AI)] u izbornik isticanja."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Ukloni [%s] iz izbornika za isticanje?"
+msgstr "<b>Uklonjeno</b> [%1 (AI)] iz izbornika isticanja."
 
 #: ../main.lua:1118
 msgid ""
@@ -1325,36 +1332,3 @@ msgstr "Platforma"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Izvođenje"
-
-#~ msgid "API Error"
-#~ msgstr "API greška"
-
-#~ msgid "Added"
-#~ msgstr "Dodano"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Grana/Oznaka: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Preuzimanje ..."
-
-#~ msgid "Error:"
-#~ msgstr "Greška:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Uklonjeno"
-
-#~ msgid "Repo: "
-#~ msgstr "Repozitorij: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Pokušajte s drugim pružateljem u dijaloškom okviru postavki."
-
-#~ msgid "Using original location."
-#~ msgstr "Koristi se izvorna lokacija."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "iz izbornika označavanja."

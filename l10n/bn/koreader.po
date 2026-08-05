@@ -28,9 +28,8 @@ msgstr "💡 এআই দিয়ে আপনার KOReader অভিজ্�
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "মডেল আনা হচ্ছে..."
+msgstr "<b>মডেল সংগ্রহ করা হচ্ছে...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -77,12 +76,14 @@ msgid "Enter a question before proceeding."
 msgstr "অগ্রসর হওয়ার আগে একটি প্রশ্ন লিখুন"
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "এই বাটনটি হাইলাইট মেনুতে যোগ করবেন?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"এই বোতামটি হাইলাইট মেনুতে যোগ করবেন?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -93,13 +94,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "উল্লেখিত পাঠ্য সম্পর্কে একটি প্রশ্ন জিজ্ঞাসা করুন"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"এই বই সম্পর্কে একটি প্রশ্ন জিজ্ঞাসা করুন:\n"
-"%s দ্বারা %s"
+"<b>এই বই সম্পর্কে একটি প্রশ্ন জিজ্ঞাসা করুন:</b>\n"
+"%1 দ্বারা %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -126,9 +126,8 @@ msgid "Loading for %1 ..."
 msgstr "%1 এর জন্য লোড হচ্ছে..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "কোনো প্রতিক্রিয়া পাওয়া যায়নি"
+msgstr "<b>ত্রুটি:</b> কোনো প্রতিক্রিয়া পাওয়া যায়নি"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -143,9 +142,8 @@ msgid "Look Up"
 msgstr "অনুসন্ধান"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "বইয়ের প্রসঙ্গ বিশ্লেষণ করা হচ্ছে টার্ম এক্স-রে এর জন্য..."
+msgstr "<b>টার্ম এক্স-রেতে জন্য বইয়ের প্রসঙ্গ বিশ্লেষণ করা হচ্ছে...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -221,9 +219,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "হাইলাইট ও নোট ব্যবহার করে সারাংশ লোড হচ্ছে..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "অজানা বৈশিষ্ট্যের ধরন:"
+msgstr "<b>অজানা বৈশিষ্ট্য প্রকার:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -626,6 +623,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>API ত্রুটি</b>\n"
+"%1\n"
+"\n"
+"<b>প্রদানকারী:</b> %2\n"
+"<b>মডেল:</b> %3\n"
+"\n"
+"সেটিংস ডায়ালগে অন্য প্রদানকারী চেষ্টা করুন।"
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -690,7 +694,7 @@ msgstr "অনুরোধের জন্য সাবপ্রসেস শু
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "ত্রুটি বার্তা"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -869,7 +873,6 @@ msgid "branch or tag name"
 msgstr "শাখা বা ট্যাগের নাম"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -881,15 +884,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"AI Assistant প্লাগইনটি সোর্স রিপোজিটরি থেকে আপডেট করতে একটি ব্রাঞ্চ বা ট্যাগ নাম লিখুন।\n"
+"প্লাগইনটি সোর্স রিপোজিটরি থেকে আপডেট করতে একটি শাখা বা ট্যাগের নাম লিখুন।\n"
 "\n"
-"Github URL:  %1\n"
-"সোর্স REPO: %2\n"
+"<b>গিটহাব URL:</b>  %1\n"
+"<b>সোর্স রিপো:</b>  %2\n"
 "\n"
-"ডিফল্ট: \"main\" (সর্বশেষ উন্নয়ন সংস্করণ)\n"
+"ডিফল্ট: \"main\" (সর্বশেষ ডেভেলপমেন্ট শাখা)\n"
 "উদাহরণ: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"বর্তমান প্লাগইনটি ব্যাকআপ করে প্রতিস্থাপন করা হবে। configuration.lua ফাইলটি সংরক্ষিত থাকবে।"
+"<b>configuration.lua সংরক্ষিত হবে।</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -954,6 +957,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>ডাউনলোড হচ্ছে ...</b>\n"
+"<b>গিটহাব: </b>%1\n"
+"<b>রিপোজিটরি: </b>%2\n"
+"<b>শাখা/ট্যাগ: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -968,9 +975,8 @@ msgid "OTA update failed: %1"
 msgstr "ওটিএ হালনাগাদ ব্যর্থ হয়েছে: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "%1 ইনস্টল করা হচ্ছে..."
+msgstr "<b>ইনস্টল করা হচ্ছে %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -985,11 +991,12 @@ msgid "Page"
 msgstr "পৃষ্ঠা"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "লগের জন্য ডিফল্ট ফোল্ডারে অ্যাক্সেস করা যাচ্ছে না: %1"
+msgstr ""
+"<b>লগের জন্য ডিফল্ট ফোল্ডারে অ্যাক্সেস করা যায়নি: %1</b>\n"
+"মূল অবস্থান ব্যবহার করা হচ্ছে।"
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1089,12 +1096,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "নোটবুক (এআই কথোপকথন লগ)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "নোটবুক ফাইল:"
+msgstr ""
+"<b>নোটবুক ফাইল:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1276,14 +1285,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "কনফিগারেশন পাওয়া যায়নি। প্রথমে configuration.lua সেট আপ করুন।"
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "হাইলাইট মেনুতে।"
+msgstr "<b>যুক্ত করা হয়েছে</b> [%1 (AI)] হাইলাইট মেনুতে।"
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "হাইলাইট মেনু থেকে [%s] মুছতে চান?"
+msgstr "<b>সরানো হয়েছে</b> [%1 (AI)] হাইলাইট মেনু থেকে।"
 
 #: ../main.lua:1118
 msgid ""
@@ -1328,36 +1335,3 @@ msgstr "প্ল্যাটফর্ম"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "রানটাইম"
-
-#~ msgid "API Error"
-#~ msgstr "API ত্রুটি"
-
-#~ msgid "Added"
-#~ msgstr "যোগ করা হয়েছে"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "শাখা/ট্যাগ: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "ডাউনলোড করা হচ্ছে ..."
-
-#~ msgid "Error:"
-#~ msgstr "ত্রুটি:"
-
-#~ msgid "Github: "
-#~ msgstr "গিটহাব: "
-
-#~ msgid "Removed"
-#~ msgstr "সরানো হয়েছে"
-
-#~ msgid "Repo: "
-#~ msgstr "রেপো: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "সেটিংস ডায়ালগে অন্য কোনো প্রদানকারী চেষ্টা করুন।"
-
-#~ msgid "Using original location."
-#~ msgstr "মূল অবস্থান ব্যবহার করা হচ্ছে।"
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "হাইলাইট মেনু থেকে।"

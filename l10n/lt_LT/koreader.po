@@ -24,9 +24,8 @@ msgstr "💡 Patobulinkite KOReader patirtį su AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Gaunami modeliai..."
+msgstr "<b>Gaunami modeliai...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "Įveskite klausimą prieš tęsdami."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Pridėti šį mygtuką prie pažymėjimo meniu?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Pridėti šį mygtuką prie Paryškinimo meniu?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Užduoti klausimą apie pažymėtą tekstą"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Užduoti klausimą apie šią knygą:\n"
-"%s, autorius %s"
+"<b>Užduokite klausimą apie šią knygą:</b>\n"
+"%1, autorius %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "Įkeliama %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Negautas atsakymas"
+msgstr "<b>Klaida:</b> Negautas atsakymas"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "Ieškoti"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Analizuojama knygos kontekstas terminų rentgenui..."
+msgstr "<b>Analizuojamas knygos kontekstas, skirtas Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Įkeliama santrauka naudojant paryškintas vietas ir užrašus..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Nežinomas funkcijos tipas:"
+msgstr "<b>Nežinomas funkcijos tipas:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>API klaida</b>\n"
+"%1\n"
+"\n"
+"<b>Teikėjas:</b> %2\n"
+"<b>Modelis:</b> %3\n"
+"\n"
+"Pabandykite kitą teikėją nustatymų dialoge."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "Nepavyko paleisti subproceso užklausai"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Klaidos pranešimas"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "šakos ar žymos pavadinimas"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Įveskite šakos ar žymos pavadinimą, kad atnaujintumėte AI Asistento papildinį iš šaltinio saugyklos.\n"
+"Įveskite šakos ar žymos pavadinimą, kad atnaujintumėte įskiepį iš šaltinio repozitorijos.\n"
 "\n"
-"Github URL:  %1\n"
-"Šaltinio REPO: %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Šaltinio repozitorija:</b>  %2\n"
 "\n"
-"Numatyta: \"main\" (naujausia kūrimo versija)\n"
+"Numatyta: \"main\" (naujausia kūrimo šaka)\n"
 "Pavyzdžiai: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Dabartinis papildinys bus atsarginis ir pakeistas. Configuration.lua failas bus išlaikytas."
+"<b>Configuration.lua failas bus išsaugotas.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Atsisiunčiama ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Repozitorija: </b>%2\n"
+"<b>Šaka/Žyma: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "OTA atnaujinimas nepavyko: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Diegiama %1..."
+msgstr "<b>Įdiegiama %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "Puslapis"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Negalima pasiekti numatytojo žurnalų aplanko: %1"
+msgstr ""
+"<b>Nepasiekiamas numatytasis žurnalų aplankas: %1</b>\n"
+"Naudojama pradinė vieta."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Užrašų knygelė (AI pokalbių žurnalas)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Užrašų knygelės failas:"
+msgstr ""
+"<b>Užrašų knygelės failas:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigūracija nerasta. Pirmiausia nustatykite configuration.lua."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "į Paryškinimo meniu."
+msgstr "<b>Pridėta</b> [%1 (AI)] prie Paryškinimo meniu."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Pašalinti [%s] iš pažymėjimo meniu?"
+msgstr "<b>Pašalinta</b> [%1 (AI)] iš Paryškinimo meniu."
 
 #: ../main.lua:1118
 msgid ""
@@ -1325,36 +1332,3 @@ msgstr "Platforma"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Vykdymo laikas"
-
-#~ msgid "API Error"
-#~ msgstr "API klaida"
-
-#~ msgid "Added"
-#~ msgstr "Pridėta"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Šaka/Žyma: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Atsisiunčiama ..."
-
-#~ msgid "Error:"
-#~ msgstr "Klaida:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Pašalinta"
-
-#~ msgid "Repo: "
-#~ msgstr "Repozitorija: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Pabandykite kitą teikėją nustatymų dialogo lange."
-
-#~ msgid "Using original location."
-#~ msgstr "Naudojama originali vieta."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "iš Paryškinimo meniu."

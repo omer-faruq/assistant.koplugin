@@ -24,9 +24,8 @@ msgstr "💡 Ενισχύστε την εμπειρία KOReader με AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Λήψη μοντέλων..."
+msgstr "<b>Λήψη μοντέλων...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "Πληκτρολογήστε μια ερώτηση πριν προχωρήσετε."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Προσθήκη αυτού του κουμπιού στο μενού επισήμανσης;"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Να προστεθεί αυτό το κουμπί στο Μενού Επισήμανσης;"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Ρωτήστε κάτι για το επισημασμένο κείμενο"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Ρωτήστε κάτι για αυτό το βιβλίο:\n"
-"%s από %s"
+"<b>Κάντε μια ερώτηση για αυτό το βιβλίο:</b>\n"
+"%1 από %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "Φόρτωση για %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Δεν ελήφθη καμία απόκριση"
+msgstr "<b>Σφάλμα:</b> Δεν λήφθηκε καμία απόκριση"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "Αναζήτηση"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Ανάλυση περιβάλλοντος βιβλίου για το Term X-Ray..."
+msgstr "<b>Ανάλυση περιεχομένου βιβλίου για το Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Φόρτωση Περίληψης με Χρήση Επισημάνσεων & Σημειώσεων..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Άγνωστος τύπος λειτουργίας:"
+msgstr "<b>Άγνωστος τύπος λειτουργίας:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>Σφάλμα API</b>\n"
+"%1\n"
+"\n"
+"<b>Πάροχος:</b> %2\n"
+"<b>Μοντέλο:</b> %3\n"
+"\n"
+"Δοκιμάστε άλλον πάροχο στο παράθυρο ρυθμίσεων."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "Αποτυχία έναρξης υποδιεργασίας για το �
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Μήνυμα σφάλματος"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "όνομα κλάδου ή ετικέτας"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Εισαγάγετε ένα όνομα κλάδου ή ετικέτας για να ενημερώσετε το πρόσθετο AI Assistant από το αποθετήριο πηγής.\n"
+"Εισάγετε ένα όνομα κλάδου ή ετικέτας για να ενημερώσετε την επέκταση από το αποθετήριο πηγής.\n"
 "\n"
-"URL Github:  %1\n"
-"REPO πηγής: %2\n"
+"<b>URL Github:</b>  %1\n"
+"<b>Αποθετήριο Πηγής:</b>  %2\n"
 "\n"
-"Προεπιλογή: \"main\" (τελευταία έκδοση ανάπτυξης)\n"
+"Προεπιλογή: \"main\" (τελευταίος κλάδος ανάπτυξης)\n"
 "Παραδείγματα: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Το τρέχον πρόσθετο θα δημιουργηθεί αντίγραφο ασφαλείας και θα αντικατασταθεί. Το configuration.lua θα διατηρηθεί."
+"<b>Το configuration.lua θα διατηρηθεί.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Λήψη ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Αποθετήριο: </b>%2\n"
+"<b>Κλάδος/Ετικέτα: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "Η ενημέρωση OTA απέτυχε: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Εγκατάσταση %1..."
+msgstr "<b>Εγκατάσταση του %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "Σελίδα"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Δεν είναι δυνατή η πρόσβαση στον προεπιλεγμένο φάκελο για αρχεία καταγραφής: %1"
+msgstr ""
+"<b>Δεν είναι δυνατή η πρόσβαση στον προεπιλεγμένο φάκελο καταγραφών: %1</b>\n"
+"Χρήση της αρχικής θέσης."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Σημειωματάριο (Αρχείο Συνομιλίας με ΤΝ)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Αρχείο σημειωματαρίου:"
+msgstr ""
+"<b>Αρχείο σημειωματάριου:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Η διαμόρφωση δεν βρέθηκε. Παρακαλώ ρυθμίστε το configuration.lua πρώτα."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "στο Μενού Επισήμανσης."
+msgstr "<b>Προστέθηκε</b> [%1 (AI)] στο Μενού Επισήμανσης."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Αφαιρέστε το [%s] από το μενού επισήμανσης;"
+msgstr "<b>Αφαιρέθηκε</b> [%1 (AI)] από το Μενού Επισήμανσης."
 
 #: ../main.lua:1118
 msgid ""
@@ -1324,36 +1331,3 @@ msgstr "Πλατφόρμα"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Χρόνος Εκτέλεσης"
-
-#~ msgid "API Error"
-#~ msgstr "Σφάλμα API"
-
-#~ msgid "Added"
-#~ msgstr "Προστέθηκε"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Κλάδος/Ετικέτα: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Λήψη ..."
-
-#~ msgid "Error:"
-#~ msgstr "Σφάλμα:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Αφαιρέθηκε"
-
-#~ msgid "Repo: "
-#~ msgstr "Αποθετήριο: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Δοκιμάστε άλλον πάροχο στο παράθυρο ρυθμίσεων."
-
-#~ msgid "Using original location."
-#~ msgstr "Χρήση αρχικής τοποθεσίας."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "από το Μενού Επισήμανσης."

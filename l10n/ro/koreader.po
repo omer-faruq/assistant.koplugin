@@ -24,9 +24,8 @@ msgstr "💡 Îmbunătățește experiența KOReader cu IA"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "Se preiau modelele..."
+msgstr "<b>Se preiau modelele...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "Introduceți o întrebare înainte de a continua."
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "Adăugăm acest buton în meniul de evidențiere?"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"Adăugați acest buton în Meniul de Evidențiere?"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "Pune o întrebare despre textul evidențiat"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"Pune o întrebare despre cartea:\n"
-"%s de %s"
+"<b>Puneți o întrebare despre această carte:</b>\n"
+"%1 de %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "Se încarcă pentru %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "Nu s-a primit niciun răspuns"
+msgstr "<b>Eroare:</b> Nu s-a primit niciun răspuns"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "Caută"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "Se analizează contextul cărții pentru Term X-Ray..."
+msgstr "<b>Se analizează contextul cărții pentru Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Se încarcă rezumatul folosind evidențierile și notițele..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "Tip de caracteristică necunoscut:"
+msgstr "<b>Tip de caracteristică necunoscut:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>Eroare API</b>\n"
+"%1\n"
+"\n"
+"<b>Furnizor:</b> %2\n"
+"<b>Model:</b> %3\n"
+"\n"
+"Încercați un alt furnizor în dialogul de setări."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "Eroare la pornirea subprocesului pentru cerere"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "Mesaj de eroare"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "nume branch sau tag"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Introduceți un nume de branch sau tag pentru a actualiza pluginul AI Assistant din depozitul sursă.\n"
+"Introduceți un nume de branch sau tag pentru a actualiza pluginul din depozitul sursă.\n"
 "\n"
-"URL GitHub: %1\n"
-"Depozit sursă: %2\n"
+"<b>URL Github:</b>  %1\n"
+"<b>Depozit sursă:</b>  %2\n"
 "\n"
-"Implicit: \"main\" (ultima versiune de dezvoltare)\n"
+"Implicit: \"main\" (ultima ramură de dezvoltare)\n"
 "Exemple: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"Pluginul curent va fi salvat și înlocuit. Fișierul configuration.lua va fi păstrat."
+"<b>Fișierul configuration.lua va fi păstrat.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>Se descarcă ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Repo: </b>%2\n"
+"<b>Branch/Tag: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "Actualizarea OTA a eșuat: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "Se instalează %1..."
+msgstr "<b>Se instalează %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "Pagina"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "Nu se poate accesa dosarul implicit pentru jurnale: %1"
+msgstr ""
+"<b>Nu se poate accesa dosarul implicit pentru jurnale: %1</b>\n"
+"Se folosește locația originală."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "Caiet (Jurnal conversație AI)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "Fișier Notebook:"
+msgstr ""
+"<b>Fișier notebook:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Configurarea nu a fost găsită. Setați configuration.lua mai întâi."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "la Meniul Highlight."
+msgstr "<b>Adăugat</b> [%1 (AI)] în meniul Evidențiere."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "Elimin [%s] din meniul de evidențiere?"
+msgstr "<b>Eliminat</b> [%1 (AI)] din meniul Evidențiere."
 
 #: ../main.lua:1118
 msgid ""
@@ -1325,36 +1332,3 @@ msgstr "Platformă"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "Mediu de execuție"
-
-#~ msgid "API Error"
-#~ msgstr "Eroare API"
-
-#~ msgid "Added"
-#~ msgstr "Adăugat"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "Branch/Tag: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "Se descarcă ..."
-
-#~ msgid "Error:"
-#~ msgstr "Eroare:"
-
-#~ msgid "Github: "
-#~ msgstr "Github: "
-
-#~ msgid "Removed"
-#~ msgstr "Eliminat"
-
-#~ msgid "Repo: "
-#~ msgstr "Repo: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "Încercați un alt furnizor în dialogul de setări."
-
-#~ msgid "Using original location."
-#~ msgstr "Se folosește locația originală."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "din Meniul Highlight."

@@ -24,9 +24,8 @@ msgstr "💡 تجربهٔ KOReader خود را با AI بهبود بخشید"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
 #: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
-#, fuzzy
 msgid "<b>Fetching models...</b>"
-msgstr "در حال دریافت مدل‌ها..."
+msgstr "<b>در حال دریافت مدل‌ها...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
 #: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
@@ -73,12 +72,14 @@ msgid "Enter a question before proceeding."
 msgstr "قبل از ادامه، یک سؤال وارد کنید"
 
 #: ../assistant_dialog.lua:445
-#, fuzzy
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
 "Add this button to the Highlight Menu?"
-msgstr "آیا این دکمه را به منوی برجسته‌سازی اضافه کنید؟"
+msgstr ""
+"<b>%1:</b> %2\n"
+"\n"
+"این دکمه را به منوی برجسته‌ها اضافه کنیم؟"
 
 #: ../assistant_dialog.lua:447
 msgid "Add"
@@ -89,13 +90,12 @@ msgid "Ask a question about the highlighted text"
 msgstr "سؤالی درباره متن برجسته شده بپرسید"
 
 #: ../assistant_dialog.lua:478
-#, fuzzy
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
 msgstr ""
-"سؤالی درباره این کتاب بپرسید:\n"
-"%s توسط %s"
+"<b>یک سوال درباره این کتاب بپرسید:</b>\n"
+"%1 از %2"
 
 #: ../assistant_dialog.lua:481
 msgid "Ask a general question"
@@ -122,9 +122,8 @@ msgid "Loading for %1 ..."
 msgstr "در حال بارگذاری برای %1 ..."
 
 #: ../assistant_dialog.lua:577
-#, fuzzy
 msgid "<b>Error:</b> No response received"
-msgstr "پاسخی دریافت نشد"
+msgstr "<b>خطا:</b> پاسخی دریافت نشد"
 
 #: ../assistant_dictdialog.lua:155
 msgid "AI Dictionary"
@@ -139,9 +138,8 @@ msgid "Look Up"
 msgstr "جستجو"
 
 #: ../assistant_dictdialog.lua:214
-#, fuzzy
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "در حال تحلیل زمینه کتاب برای اشعه ایکس اصطلاحات..."
+msgstr "<b>در حال تحلیل زمینه کتاب برای ترم ایکس ری...</b>"
 
 #: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
 msgid "Term X-Ray"
@@ -217,9 +215,8 @@ msgid "Loading Summary Using Highlights & Notes..."
 msgstr "در حال بارگذاری خلاصه با استفاده از هایلایت‌ها و یادداشت‌ها..."
 
 #: ../assistant_featuredialog.lua:101
-#, fuzzy
 msgid "<b>Unknown feature type:</b> %1"
-msgstr "نوع ویژگی ناشناخته:"
+msgstr "<b>نوع ویژگی ناشناخته:</b> %1"
 
 #: ../assistant_featuredialog.lua:188
 msgid ""
@@ -622,6 +619,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
+"<b>خطای API</b>\n"
+"%1\n"
+"\n"
+"<b>ارائه‌دهنده:</b> %2\n"
+"<b>مدل:</b> %3\n"
+"\n"
+"ارائه‌دهنده دیگری را در گفتگوی تنظیمات امتحان کنید."
 
 #: ../assistant_querier.lua:159
 msgid "Unknown error"
@@ -686,7 +690,7 @@ msgstr "شروع زیرفرآیند درخواست ناموفق بود"
 
 #: ../assistant_querier.lua:849
 msgid "Error Message"
-msgstr ""
+msgstr "پیام خطا"
 
 #: ../assistant_querier.lua:878 ../assistant_querier.lua:881
 msgid "Deeply Thought"
@@ -865,7 +869,6 @@ msgid "branch or tag name"
 msgstr "نام شاخه یا برچسب"
 
 #: ../assistant_settings.lua:607
-#, fuzzy
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -877,15 +880,15 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"برای به‌روزرسانی افزونه AI Assistant از مخزن منبع، نام یک شاخه یا برچسب را وارد کنید.\n"
+"برای به‌روزرسانی افزونه از مخزن منبع، نام یک شاخه یا برچسب را وارد کنید.\n"
 "\n"
-"آدرس Github:  %1\n"
-"مخزن منبع: %2\n"
+"<b>URL گیت‌هاب:</b>  %1\n"
+"<b>مخزن منبع:</b>  %2\n"
 "\n"
-"پیش‌فرض: \"main\" (آخرین نسخه توسعه)\n"
+"پیش‌فرض: \"main\" (آخرین شاخه توسعه)\n"
 "مثال‌ها: \"main\"، \"v1.12\"، \"v1.11\"\n"
 "\n"
-"افزونه فعلی پشتیبان‌گیری شده و جایگزین می‌شود. فایل configuration.lua حفظ خواهد شد."
+"<b>فایل configuration.lua حفظ خواهد شد.</b>"
 
 #: ../assistant_settings.lua:621
 msgid "Update"
@@ -950,6 +953,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
+"<b>در حال بارگیری ...</b>\n"
+"<b>گیت‌هاب: </b>%1\n"
+"<b>مخزن: </b>%2\n"
+"<b>شاخه/برچسب: </b>%3"
 
 #: ../assistant_updater.lua:199
 msgid "Branch/Tag \"%1\" was not found."
@@ -964,9 +971,8 @@ msgid "OTA update failed: %1"
 msgstr "به‌روزرسانی OTA ناموفق بود: %1"
 
 #: ../assistant_updater.lua:224
-#, fuzzy
 msgid "<b>Installing %1...</b>"
-msgstr "در حال نصب %1..."
+msgstr "<b>در حال نصب %1...</b>"
 
 #: ../assistant_updater.lua:308
 msgid ""
@@ -981,11 +987,12 @@ msgid "Page"
 msgstr "صفحه"
 
 #: ../assistant_utils.lua:195
-#, fuzzy
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
-msgstr "دسترسی به پوشه پیش‌فرض برای لاگ‌ها ممکن نیست: %1"
+msgstr ""
+"<b>دسترسی به پوشه پیش‌فرض لاگ‌ها ممکن نیست: %1</b>\n"
+"استفاده از مکان اصلی."
 
 #: ../assistant_utils.lua:251
 msgid "Notebook save failed. Continuing..."
@@ -1085,12 +1092,14 @@ msgid "NoteBook (AI Conversation Log)"
 msgstr "دفترچه یادداشت (گفت‌وگوی هوش مصنوعی)"
 
 #: ../main.lua:169
-#, fuzzy
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
 "%1"
-msgstr "فایل دفترچه یادداشت:"
+msgstr ""
+"<b>فایل نوت‌بوک:</b>\n"
+"\n"
+"%1"
 
 #: ../main.lua:171
 msgid "View"
@@ -1272,14 +1281,12 @@ msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "پیکربندی یافت نشد. ابتدا configuration.lua را تنظیم کنید."
 
 #: ../main.lua:1062
-#, fuzzy
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "به منوی هایلایت."
+msgstr "<b>اضافه شد</b> [%1 (AI)] به منوی هایلایت."
 
 #: ../main.lua:1073
-#, fuzzy
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "آیا می‌خواهید [%s] را از منوی برجسته‌سازی حذف کنید؟"
+msgstr "<b>حذف شد</b> [%1 (AI)] از منوی هایلایت."
 
 #: ../main.lua:1118
 msgid ""
@@ -1324,36 +1331,3 @@ msgstr "پلتفرم"
 #: ../main.lua:1178
 msgid "Runtime"
 msgstr "زمان اجرا"
-
-#~ msgid "API Error"
-#~ msgstr "خطای API"
-
-#~ msgid "Added"
-#~ msgstr "افزوده شد"
-
-#~ msgid "Branch/Tag: "
-#~ msgstr "شاخه/برچسب: "
-
-#~ msgid "Downloading ..."
-#~ msgstr "در حال دانلود ..."
-
-#~ msgid "Error:"
-#~ msgstr "خطا:"
-
-#~ msgid "Github: "
-#~ msgstr "گیت‌هاب: "
-
-#~ msgid "Removed"
-#~ msgstr "حذف شد"
-
-#~ msgid "Repo: "
-#~ msgstr "مخزن: "
-
-#~ msgid "Try another provider in the settings dialog."
-#~ msgstr "ارائه‌دهنده دیگری را در گفتگوی تنظیمات امتحان کنید."
-
-#~ msgid "Using original location."
-#~ msgstr "استفاده از مکان اصلی."
-
-#~ msgid "from Highlight Menu."
-#~ msgstr "از منوی هایلایت."
