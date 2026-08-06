@@ -6,9 +6,22 @@ local Trapper = require("ui/trapper")
 local Font = require("ui/font")
 local logger = require("logger")
 local _ = require("assistant_gettext")
-local T = require("ffi/util").template
+local FFIUtil = require("ffi/util")
+local T = FFIUtil.template
 local koutil = require("util")
 local ASUtils = require("assistant_utils")
+
+-- Variadic path join. Uses FFIUtil.joinPath so we don't sprinkle "/" literals
+-- and get the right separator handling for free.
+local function join(...)
+    local args = { ... }
+    local result = args[1]
+    if not result then return "" end
+    for i = 2, #args do
+        result = FFIUtil.joinPath(result, args[i])
+    end
+    return result
+end
 
 local CONFIGURATION = nil
 local meta = nil
@@ -139,17 +152,16 @@ local function otaUpgrade(version)
   local DataStorage = require("datastorage")
   local lfs = require("libs/libkoreader-lfs")
   local Archiver = require("ffi/archiver")
-  local FFIUtil = require("ffi/util")
   local util = require("util")
 
   local KOREADER_DIR = DataStorage:getFullDataDir()
-  local PLUGIN_DIR = KOREADER_DIR .. "/plugins"
-  local ASSISTANT_DIR = PLUGIN_DIR .. "/" .. PLUGIN_NAME
-  local UPDATE_TMPDIR = KOREADER_DIR .. "/ota/" .. PLUGIN_NAME .. ".update"
-  local UPDATE_BAKDIR = UPDATE_TMPDIR .. "/backup"
+  local PLUGIN_DIR = join(KOREADER_DIR, "plugins")
+  local ASSISTANT_DIR = join(PLUGIN_DIR, PLUGIN_NAME)
+  local UPDATE_TMPDIR = join(KOREADER_DIR, "ota", PLUGIN_NAME .. ".update")
+  local UPDATE_BAKDIR = join(UPDATE_TMPDIR, "backup")
   local TARGET_PLUGIN_PATH = ASSISTANT_DIR
-  local BACKUP_PLUGIN_PATH = UPDATE_BAKDIR .. "/" .. PLUGIN_NAME
-  local DL_TAR = string.format("%s/SOURCE-%s-%s.zip", UPDATE_TMPDIR, PLUGIN_NAME, version)
+  local BACKUP_PLUGIN_PATH = join(UPDATE_BAKDIR, PLUGIN_NAME)
+  local DL_TAR = join(UPDATE_TMPDIR, string.format("SOURCE-%s-%s.zip", PLUGIN_NAME, version))
 
   local function is_excluded(path)
     if path:find("/%.") or path:sub(1,1) == "." then
@@ -238,7 +250,7 @@ local function otaUpgrade(version)
     -- Extract entries from the archive into UPDATE_TMPDIR, skipping excluded paths
     for entry in arc:iterate() do
       if not is_excluded(entry.path) then
-        local dest_path = UPDATE_TMPDIR .. "/" .. entry.path
+        local dest_path = join(UPDATE_TMPDIR, entry.path)
         local parent_dir = dest_path:match("(.*)" .. package.config:sub(1,1))
         if parent_dir and not util.pathExists(parent_dir) then
           util.makePath(parent_dir)
@@ -257,8 +269,9 @@ local function otaUpgrade(version)
     local found_extracted_dir = nil
     for file in lfs.dir(UPDATE_TMPDIR) do
       if file:sub(1, #PLUGIN_NAME) == PLUGIN_NAME then
-        if util.directoryExists(UPDATE_TMPDIR .. "/" .. file) then
-          found_extracted_dir = UPDATE_TMPDIR .. "/" .. file
+        local candidate = join(UPDATE_TMPDIR, file)
+        if util.directoryExists(candidate) then
+          found_extracted_dir = candidate
           break
         end
       end
@@ -283,8 +296,8 @@ local function otaUpgrade(version)
     if util.pathExists(BACKUP_PLUGIN_PATH) then
       local restore_targets = {"configuration.lua"}
       for _, filename in ipairs(restore_targets) do
-        local old_file = BACKUP_PLUGIN_PATH .. "/" .. filename
-        local new_file = TARGET_PLUGIN_PATH .. "/" .. filename
+        local old_file = join(BACKUP_PLUGIN_PATH, filename)
+        local new_file = join(TARGET_PLUGIN_PATH, filename)
         if util.pathExists(old_file) then
           if util.pathExists(new_file) then FFIUtil.purgeDir(new_file) end
           os.rename(old_file, new_file)
