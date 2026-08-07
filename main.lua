@@ -625,10 +625,13 @@ function Assistant:init()
   -- Safe no-op on older versions where addToDictButtons doesn't exist.
   if self.ui and self.ui.dictionary
       and type(self.ui.dictionary.addToDictButtons) == "function" then
-    local buttons = self:_buildAssistantDictButtons(nil)
-    for _, button in ipairs(buttons) do
+    local button_ids = {}
+    for _, button in ipairs(self:_buildAssistantDictButtons(nil, true)) do
       self.ui.dictionary:addToDictButtons(button)
+      table.insert(button_ids, button.id)
     end
+    self:_groupDictButtonsInDefaultLayout(button_ids)
+    self:_restoreDictButtonsInUserLayout(button_ids)
   end
 
 
@@ -780,67 +783,97 @@ end
 -- Builds the Assistant button specs for the dict popup.
 -- Used by both the new addToDictButtons API and the legacy onDictButtonsReady hook.
 -- Returns an array of button specs.
-function Assistant:_buildAssistantDictButtons(dict_popup_arg)
+--
+-- `live` is set for the new API: the specs are registered once at init(), so
+-- our settings must be read through show_func/text_func to let every popup see
+-- their current value.  The legacy hook runs for each popup, so there the
+-- settings are simply resolved right here.
+function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
   if not CONFIGURATION then return {} end
 
   local plugin_buttons = {}
-  
-  if self.settings:readSetting("dict_popup_show_wikipedia", true) then
-    table.insert(plugin_buttons, {
-      id = "assistant_wikipedia",
-      font_bold = true,
-      text = Prompts.getDisplayText(_("Wikipedia"),
-        koutil.tableGetValue(Prompts.builtin_prompts, "wikipedia", "use_websearch") or false,
-        Prompts.isWebSearchEnabled(self.settings)) .. " (AI)",
-      callback = function(widget_instance)
-          local popup = widget_instance or dict_popup_arg
-          local word = popup and popup.word
-          NetworkMgr:runWhenOnline(function()
-              Trapper:wrap(function()
-                self.assistant_dialog:showPrompt(word, "wikipedia")
-              end)
-          end)
-      end,
-    })
+  local enabled_count = 0
+
+  -- Appends a spec, gated by one of our `dict_popup_show_*` settings.
+  local function addButton(setting_key, default, spec)
+    if self.settings:readSetting(setting_key, default) then
+      enabled_count = enabled_count + 1
+    elseif not live then
+      return -- legacy hook: hidden buttons are simply not built
+    end
+    if live then
+      -- `menu_text` is what puts the button in KOReader's "Customize buttons"
+      -- selector.  Without it the selector doesn't know the button, and the
+      -- first time the user sorts/toggles anything there our buttons are
+      -- dropped from the saved dict_button_config for good.
+      spec.menu_text = spec.menu_text or spec.text
+      spec.show_func = function()
+        return self.settings:readSetting(setting_key, default) and true or false
+      end
+    end
+    table.insert(plugin_buttons, spec)
   end
 
-  if self.settings:readSetting("dict_popup_show_term_xray", false) then
-    table.insert(plugin_buttons, {
-      id = "assistant_term_xray",
-      font_bold = true,
-      text = Prompts.getDisplayText(_("Term X-Ray"),
-        koutil.tableGetValue(Prompts.builtin_prompts, "term_xray", "use_websearch") or false,
-        Prompts.isWebSearchEnabled(self.settings)) .. " (AI)",
-      callback = function(widget_instance)
-          local popup = widget_instance or dict_popup_arg
-          local word = popup and popup.word
-          NetworkMgr:runWhenOnline(function()
-              Trapper:wrap(function()
-                showDictionaryDialog(self, word, nil, "term_xray")
-              end)
-          end)
-      end,
-    })
+  -- Label with the web search indicator resolved at call time.
+  local function displayText(label, use_websearch)
+    return Prompts.getDisplayText(label, use_websearch or false,
+      Prompts.isWebSearchEnabled(self.settings)) .. " (AI)"
   end
 
-  if self.settings:readSetting("dict_popup_show_dictionary", true) then
-    table.insert(plugin_buttons, {
-      id = "assistant_dictionary",
-      text = _("Dictionary") .. " (AI)",
-      font_bold = true,
-      callback = function(widget_instance)
-          local popup = widget_instance or dict_popup_arg
-          local word = popup and popup.word
-          NetworkMgr:runWhenOnline(function()
-              Trapper:wrap(function()
-                showDictionaryDialog(self, word)
-              end)
-          end)
-      end,
-    })
-  end
+  addButton("dict_popup_show_wikipedia", true, {
+    id = "assistant_wikipedia",
+    font_bold = true,
+    menu_text = _("Wikipedia") .. " (AI)",
+    text_func = function()
+      return displayText(_("Wikipedia"),
+        koutil.tableGetValue(Prompts.builtin_prompts, "wikipedia", "use_websearch"))
+    end,
+    callback = function(widget_instance)
+        local popup = widget_instance or dict_popup_arg
+        local word = popup and popup.word
+        NetworkMgr:runWhenOnline(function()
+            Trapper:wrap(function()
+              self.assistant_dialog:showPrompt(word, "wikipedia")
+            end)
+        end)
+    end,
+  })
 
-  if self.settings:readSetting("dict_popup_show_custom_prompts", false) then
+  addButton("dict_popup_show_term_xray", false, {
+    id = "assistant_term_xray",
+    font_bold = true,
+    menu_text = _("Term X-Ray") .. " (AI)",
+    text_func = function()
+      return displayText(_("Term X-Ray"),
+        koutil.tableGetValue(Prompts.builtin_prompts, "term_xray", "use_websearch"))
+    end,
+    callback = function(widget_instance)
+        local popup = widget_instance or dict_popup_arg
+        local word = popup and popup.word
+        NetworkMgr:runWhenOnline(function()
+            Trapper:wrap(function()
+              showDictionaryDialog(self, word, nil, "term_xray")
+            end)
+        end)
+    end,
+  })
+
+  addButton("dict_popup_show_dictionary", true, {
+    id = "assistant_dictionary",
+    font_bold = true,
+    text = _("Dictionary") .. " (AI)",
+    callback = function(widget_instance)
+        local popup = widget_instance or dict_popup_arg
+        local word = popup and popup.word
+        NetworkMgr:runWhenOnline(function()
+            Trapper:wrap(function()
+              showDictionaryDialog(self, word)
+            end)
+        end)
+    end,
+  })
+
+  if live or self.settings:readSetting("dict_popup_show_custom_prompts", false) then
     -- Collect custom prompts with show_on_dictionary_popup = true
     local custom_prompts = {}
     if CONFIGURATION and CONFIGURATION.features and CONFIGURATION.features.prompts then
@@ -855,18 +888,19 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg)
     end
 
     -- Calculate how many custom prompts to add (max 3 total buttons)
-    local max_custom_to_add = math.max(0, 3 - #plugin_buttons)
+    local max_custom_to_add = math.max(0, 3 - enabled_count)
     local custom_to_add = math.min(#custom_prompts, max_custom_to_add)
 
     -- Add custom prompts as buttons
     for i = 1, custom_to_add do
       local prompt = custom_prompts[i]
-      table.insert(plugin_buttons, {
+      addButton("dict_popup_show_custom_prompts", false, {
         id = "assistant_" .. prompt.id,
         font_bold = true,
-        text = Prompts.getDisplayText(prompt.config.text or prompt.id,
-          prompt.config.use_websearch or false,
-          Prompts.isWebSearchEnabled(self.settings)) .. " (AI)",
+        menu_text = (prompt.config.text or prompt.id) .. " (AI)",
+        text_func = function()
+          return displayText(prompt.config.text or prompt.id, prompt.config.use_websearch)
+        end,
         callback = function(widget_instance)
             local popup = widget_instance or dict_popup_arg
             local word = popup and popup.word
@@ -880,7 +914,94 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg)
     end
   end
 
+  if not live then
+    -- The legacy hook builds plain buttons: resolve the labels now.
+    for _, spec in ipairs(plugin_buttons) do
+      if spec.text_func then
+        spec.text = spec.text_func()
+        spec.text_func = nil
+      end
+    end
+  end
+
   return plugin_buttons
+end
+
+-- Is `button_id` used anywhere in a dict button layout (a list of rows of ids)?
+local function layoutHasButtonId(layout, button_id)
+  for _, row in ipairs(layout or {}) do
+    for _, id in ipairs(row) do
+      if id == button_id then return true end
+    end
+  end
+  return false
+end
+
+-- KOReader appends one full width row per plugin button to its default layout.
+-- Claim a single shared row instead (as the pre-addToDictButtons hook did), so
+-- a fresh install doesn't get a popup stacked with one-button rows.
+-- Only affects users who never customized their dictionary buttons.
+function Assistant:_groupDictButtonsInDefaultLayout(button_ids)
+  local default_layout = self.ui.dictionary.default_layout
+  if not default_layout then return end
+
+  local row = {}
+  for _, id in ipairs(button_ids) do
+    if not layoutHasButtonId(default_layout, id) then
+      table.insert(row, id)
+      if #row == 3 then -- keep rows at KOReader's default width
+        table.insert(default_layout, 2, row)
+        row = {}
+      end
+    end
+  end
+  if #row > 0 then
+    table.insert(default_layout, 2, row)
+  end
+end
+
+-- One time repair of the saved dictionary button layout.
+-- Our buttons used to be registered without a `menu_text`, so KOReader's
+-- "Customize buttons" selector didn't list them: as soon as the user sorted or
+-- toggled any dictionary button, the regenerated dict_button_config silently
+-- lost the Assistant buttons, with no way to get them back (that layout lives
+-- in KOReader's global settings, so even reinstalling the plugin doesn't help).
+-- Re-add each id once; whether the button is actually drawn stays under our own
+-- `dict_popup_show_*` settings (show_func), and removing it again in the
+-- selector now sticks.
+function Assistant:_restoreDictButtonsInUserLayout(button_ids)
+  local config = G_reader_settings:readSetting("dict_button_config")
+  if not (config and config.layout) then return end -- never customized, nothing to repair
+
+  local layout_changed = false
+  for _, id in ipairs(button_ids) do
+    local restore_flag = "dict_button_restored_" .. id
+    if not self.settings:isTrue(restore_flag) then
+      self.settings:saveSetting(restore_flag, true)
+      self.updated = true
+      if not layoutHasButtonId(config.layout, id) then
+        local last_idx = #config.layout
+        local row = config.layout[last_idx]
+        local max_in_row = koutil.tableGetValue(config, "row_count", last_idx) or 3
+        if not row or #row >= max_in_row then
+          row = {}
+          table.insert(config.layout, row)
+          if config.row_count then
+            config.row_count[#config.layout] = 3
+          end
+        end
+        table.insert(row, id)
+        if config.order and not layoutHasButtonId({ config.order }, id) then
+          table.insert(config.order, id) -- `order` is a flat list, i.e. a single row
+        end
+        layout_changed = true
+      end
+    end
+  end
+
+  if layout_changed then
+    G_reader_settings:saveSetting("dict_button_config", config)
+  end
 end
 
 function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
