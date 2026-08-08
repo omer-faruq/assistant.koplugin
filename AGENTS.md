@@ -53,7 +53,7 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 
 ### Entry & Core Orchestration
 - **`main.lua`** — Plugin init (`Assistant:init`), menu registration, dispatcher actions/gestures, translate-override hook, auto-recap hook, dictionary-popup button registration.
-- **`_meta.lua`** — Plugin name/version/description. Version is bumped automatically by the release workflow; never hand-edit for releases.
+- **`_meta.lua`** — Plugin name/version/description. Version is manually bumped on `main` after a release tag is applied (see Versioning below). The CI release workflow rewrites it from the tag name during zip packaging.
 - **`assistant_querier.lua`** (`Querier`) — Core query engine. Dynamically loads the right API handler, drives both stream and non-stream request paths, and runs the multi-round tool-call loop (web search, max 3 rounds). Parses SSE chunks into a unified format regardless of upstream API shape.
 - **`assistant_tool_executor.lua`** (`ToolExecutor`) — Centralizes web-search tool-calling across the three wire formats (`openai`, `anthropic`, `gemini`): building tool defs, parsing tool-call responses, executing search APIs, and building follow-up messages.
 - **`assistant_exttools.lua`** — External search API clients (SerpAPI, Tavily, SearXNG, Exa) used by `ToolExecutor`.
@@ -122,6 +122,15 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 - **Branch**: `main` is the default branch.
 - **Commit style**: Conventional commits — `fix:`, `refactor:`, `add:`, `feat:` prefixes.
 - **Releases**: Tag with `v*` (e.g. `v1.12`). The CI workflow rewrites `_meta.lua` version and creates a zip release asset.
+
+### Versioning
+
+- **`_meta.lua`** holds the current development version (the *next* release).
+- When a release is ready:
+  1. Tag the commit that represents the current version. Example: if `_meta.lua` says `"1.14"`, tag that commit as `v1.14`.
+  2. Bump the version in `_meta.lua` to the next number (e.g. `"1.15"`) and commit with `chore: bump version to 1.15`.
+- The CI workflow rewrites `_meta.lua` from the tag name during zip packaging, so the released artifact gets the correct version regardless of what's on `main`.
+- **AI agents**: when asked to tag a release, tag the commit matching the current `_meta.lua` version, then bump `_meta.lua` and commit the bump.
 
 ## CI/CD
 
