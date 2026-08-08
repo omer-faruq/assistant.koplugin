@@ -32,9 +32,11 @@ local stubs = {
     ["ui/gesturedetector"]      = {},
     ["ui/input"]                = {},
     ["ui/geometry"]             = {},
-    ["ui/font"]                 = {},
+    ["ui/font"]                 = { getFace = function() return {} end },
     ["ui/component"]            = {},
     ["ui/size"]                 = {},
+    ["ui/widget/trapwidget"]    = {},
+    ["ui/widget/notification"]  = { notify = function() end, SOURCE_ALWAYS_SHOW = 1 },
     ["ui"]                      = {},
     ["android"]                 = {},
     -- for assistant_gettext: datastorage mock

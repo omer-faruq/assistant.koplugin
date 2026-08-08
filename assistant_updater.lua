@@ -26,6 +26,26 @@ end
 local CONFIGURATION = nil
 local meta = nil
 
+-- Returns true if the path should be excluded from OTA extraction.
+-- Exposed at module level for testing; also used inside otaUpgrade.
+function is_excluded(path)
+    if path:find("/%.") or path:sub(1,1) == "." then
+        return true
+    end
+    if path:find(".+%.md$") then
+        return true
+    end
+    -- l10n: only keep .po files (exclude .py, .sh, Makefile, .pot, etc.)
+    if path:find("l10n/.+") and not path:find("%.po$") then
+        return true
+    end
+    -- test/ is source-only, not shipped to end users
+    if path:find("^test/") or path:find("/test/") then
+        return true
+    end
+    return false
+end
+
 -- A more robust version comparison function compliant with Semantic Versioning.
 -- Returns true if v1_str is newer than v2_str, false otherwise.
 -- Handles versions like "1.8", "1.8.0-rc.1", "1.8.0-rc.11", "1.8.0".
@@ -162,24 +182,6 @@ local function otaUpgrade(version)
   local TARGET_PLUGIN_PATH = ASSISTANT_DIR
   local BACKUP_PLUGIN_PATH = join(UPDATE_BAKDIR, PLUGIN_NAME)
   local DL_TAR = join(UPDATE_TMPDIR, string.format("SOURCE-%s-%s.zip", PLUGIN_NAME, version))
-
-  local function is_excluded(path)
-    if path:find("/%.") or path:sub(1,1) == "." then
-      return true
-    end
-    if path:find(".+%.md$") then
-      return true
-    end
-    -- l10n: only keep .po files (exclude .py, .sh, Makefile, .pot, etc.)
-    if path:find("l10n/.+") and not path:find("%.po$") then
-      return true
-    end
-    -- test/ is source-only, not shipped to end users
-    if path:find("^test/") or path:find("/test/") then
-      return true
-    end
-    return false
-  end
 
   util.makePath(UPDATE_BAKDIR)
 
@@ -327,6 +329,9 @@ local function otaUpgrade(version)
 end
 
 return {
+  isVersionNewer = isVersionNewer,
+  is_excluded = is_excluded,
+  join = join,
   checkForUpdates = function(assistant)
     CONFIGURATION = assistant.CONFIGURATION
     meta = assistant.meta
