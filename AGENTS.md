@@ -47,6 +47,8 @@ A headless test framework lives under `test/`. It runs inside the KOReader LuaJI
 
 **CI:** The `test/` directory is excluded from release zip archives and OTA update packages. It is source-only, not shipped to end users.
 
+**Testing policy:** When adding new functions or logic, write a test for it. If the function is already exported from its module, require it in the test file normally. If the function is a local/closure not exported, inline a copy of it in the test file as a snippet and test the snippet — this is acceptable for pure functions where the logic is the test target. The goal is to catch regressions, not to enforce module structure.
+
 ## Architecture
 
 This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant functionality to e-readers. It supports 10+ AI providers (Anthropic, OpenAI, Gemini, DeepSeek, Ollama, Groq, Mistral, GigaChat, OpenRouter, Gemma) and the OpenAI Responses API, plus features like translations, summaries, book X-Ray/Recap, a LexRank-based Term X-Ray, web-search tool calling, quick notes, and custom prompts.
