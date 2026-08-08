@@ -174,6 +174,10 @@ local function otaUpgrade(version)
     if path:find("l10n/.+") and not path:find("%.po$") then
       return true
     end
+    -- test/ is source-only, not shipped to end users
+    if path:find("^test/") or path:find("/test/") then
+      return true
+    end
     return false
   end
 

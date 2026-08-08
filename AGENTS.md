@@ -15,11 +15,37 @@ This file provides guidance to AI agents when working with code in this reposito
 ## Build / Test / Lint
 
 - **No build step** — Lua files are executed directly by KOReader.
-- **No formal test framework** — all testing is manual within a KOReader environment.
 - **Syntax check** (LuaJIT): `/usr/lib/koreader/luajit -e "assert(loadfile('main.lua'))"`
 - **Syntax check** (standard Lua): `luac -p <file>.lua` — catches basic errors but not LuaJIT-specific constructs.
 - **Do NOT use** `luajit -bl` (bytecode listing) — KOReader's stripped LuaJIT lacks the `jit.*` modules.
 - **Translation check**: `cd l10n && make check` — validates all `.po` files with `msgfmt`.
+
+### Test Framework
+
+A headless test framework lives under `test/`. It runs inside the KOReader LuaJIT runtime with KOReader's `setupkoenv.lua` and mocks for UI modules.
+
+**Run all tests:**
+```bash
+./test/run.sh
+```
+
+**Run a single module:**
+```bash
+./test/run.sh exttools
+```
+
+**Structure:**
+- `test/run.sh` — Shell entry point. `cd`s to `/usr/lib/koreader` so `setupkoenv.lua` relative paths resolve, then invokes `test/run_tests.lua`.
+- `test/run_tests.lua` — Lua test runner. Requires `setupkoenv`, adds the project root to `package.path`, discovers registered test files, runs them, and prints a summary. Exits non-zero on failure.
+- `test/test_helper.lua` — Stubs KOReader UI/widget modules, mocks `fetchJSON`, provides `assert.*` helpers (`equal`, `notNil`, `isTrue`, `isFalse`, `matches`, `notMatches`), and a `runTests(name, tests)` runner.
+- `test/test_*.lua` — Per-module test files. Each returns the result of `helper.runTests(...)`.
+
+**Adding a new test file:**
+1. Create `test/test_<module>.lua` following the `test_exttools.lua` pattern.
+2. Register it in `test/run_tests.lua`'s `test_files` table.
+3. Run `./test/run.sh` to verify.
+
+**CI:** The `test/` directory is excluded from release zip archives and OTA update packages. It is source-only, not shipped to end users.
 
 ## Architecture
 
