@@ -22,6 +22,7 @@ OpenAIHandler.SupportedOptions = {
     ["reasoning_format"] = true,
     ["reasoning_effort"] = true,
     ["reasoning"] = true,
+    ["thinking"] = true,
     ["thinking_budget"] = true,
     ["enable_thinking"] = true,
 }
