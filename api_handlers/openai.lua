@@ -13,18 +13,38 @@ local OpenAIHandler = BaseHandler:new({
     can_fetch_models = true,
 })
 
+-- Parameters whitelisted for pass-through into /chat/completions request body.
+-- Each entry denotes the handler will forward it from additional_parameters without
+-- transformation (see buildRequestBody).  All values are injected as-is.
+--
+-- Source annotations below help identify platform/model-specific options so
+-- future maintainers don't accidentally remove or blindly duplicate them.
 OpenAIHandler.SupportedOptions = {
-    ["temperature"] = true,
-    ["top_p"] = true,
-    ["max_completion_tokens"] = true,
-    ["max_tokens"] = true,
-    ["search_settings" ] = true,
-    ["reasoning_format"] = true,
-    ["reasoning_effort"] = true,
-    ["reasoning"] = true,
-    ["thinking"] = true,
-    ["thinking_budget"] = true,
-    ["enable_thinking"] = true,
+    -- ---- common OpenAI-compatible sampling ----
+    -- These are widely implemented, but individual providers/models may impose
+    -- different ranges or reject them for reasoning models.
+    ["temperature"]             = true,   -- common sampling parameter
+    ["top_p"]                   = true,   -- common nucleus-sampling parameter
+    ["max_completion_tokens"]   = true,   -- newer OpenAI/Groq-style completion limit
+    ["max_tokens"]              = true,   -- legacy completion limit; still widely supported
+
+    -- ---- provider-specific extensions ----
+    ["search_settings"]         = true,   -- Groq web-search settings; not an OpenAI standard field
+    ["reasoning_format"]        = true,   -- Groq: raw/parsed/hidden reasoning output format
+    ["reasoning_effort"]        = true,   -- OpenAI, OpenRouter, Groq, DeepSeek; supported values are model-specific
+    ["reasoning"]               = true,   -- OpenAI/OpenRouter-style reasoning object, e.g. { effort = "..." }
+
+    -- ---- reasoning/thinking controls (non-standard, model-dependent) ----
+    ["thinking"]                = true,   -- DeepSeek: { type = "disabled" } or { type = "enabled" }
+    ["thinking_budget"]         = true,   -- SiliconFlow, Alibaba/Qwen, and other reasoning-model APIs; max CoT tokens
+    ["enable_thinking"]         = true,   -- SiliconFlow, Alibaba/Qwen, and other APIs; toggles thinking mode
+
+    -- References:
+    -- OpenRouter: https://openrouter.ai/docs/api/api-reference/chat/create-a-chat-completion
+    -- Groq:       https://console.groq.com/docs/reasoning
+    -- SiliconFlow: https://docs.siliconflow.com/en/api-reference/chat-completions/chat-completions
+    -- Alibaba:    https://help.aliyun.com/zh/model-studio/deep-thinking
+    -- DeepSeek:   https://api-docs.deepseek.com/guides/thinking_mode
 }
 
 function OpenAIHandler:SyncOptions(querier)
