@@ -55,6 +55,7 @@ local ModelPickerDialog = InputDialog:extend{
     close_callback = nil,
     search_query = "",
     page = 1,
+    on_select = nil,  -- optional callback(model_id) to intercept selection (skips saveModelSelection)
 }
 
 function ModelPickerDialog:init()
@@ -160,10 +161,15 @@ function ModelPickerDialog:init()
         focused = true,
         parent = self,
         button_select_callback = function(btn)
-            saveModelSelection(self.assistant, btn.model_id)
-            UIManager:close(self)
-            Notification:notify(T(_("Model: %1"), btn.model_id))
-            if self.close_callback then self.close_callback() end
+            if self.on_select then
+                UIManager:close(self)
+                self.on_select(btn.model_id)
+            else
+                saveModelSelection(self.assistant, btn.model_id)
+                UIManager:close(self)
+                Notification:notify(T(_("Model: %1"), btn.model_id))
+                if self.close_callback then self.close_callback() end
+            end
         end,
     }
 
@@ -237,7 +243,7 @@ end
 function ModelPickerDialog:changePage(new_page)
     UIManager:close(self)
     showPickerDialog(self.assistant, self.all_models,
-        self.close_callback, self.search_query, new_page)
+        self.close_callback, self.search_query, new_page, self.on_select)
 end
 
 function ModelPickerDialog:onSearch()
@@ -274,7 +280,7 @@ end
 
 function ModelPickerDialog:onManualInput()
     UIManager:close(self)
-    showManualInput(self.assistant, self.close_callback)
+    showManualInput(self.assistant, self.close_callback, self.on_select)
 end
 
 function ModelPickerDialog:onReset()
@@ -292,7 +298,7 @@ function ModelPickerDialog:onCloseWidget()
 end
 
 --- Show the model picker dialog with optional search filter and page
-showPickerDialog = function(assistant, all_models, close_callback, search_query, page)
+showPickerDialog = function(assistant, all_models, close_callback, search_query, page, on_select)
     search_query = search_query or ""
     page = page or 1
     local models = all_models
@@ -316,7 +322,7 @@ showPickerDialog = function(assistant, all_models, close_callback, search_query,
             text = T(_("No models matching \"%1\"."), search_query),
         })
         -- Reopen without filter
-        showPickerDialog(assistant, all_models, close_callback, "")
+        showPickerDialog(assistant, all_models, close_callback, "", 1, on_select)
         return
     end
 
@@ -327,11 +333,12 @@ showPickerDialog = function(assistant, all_models, close_callback, search_query,
         close_callback = close_callback,
         search_query = search_query,
         page = page,
+        on_select = on_select,
     })
 end
 
 --- Show manual model input dialog
-showManualInput = function(assistant, close_callback)
+showManualInput = function(assistant, close_callback, on_select)
     local current_model = koutil.tableGetValue(
         assistant, "querier", "provider_setting", "model") or ""
     local dialog
@@ -352,10 +359,15 @@ showManualInput = function(assistant, close_callback)
                     local model_id = dialog:getInputText()
                     if model_id and koutil.trim(model_id) ~= "" then
                         model_id = koutil.trim(model_id)
-                        saveModelSelection(assistant, model_id)
-                        UIManager:close(dialog)
-                        Notification:notify(T(_("Model: %1"), model_id))
-                        if close_callback then close_callback() end
+                        if on_select then
+                            UIManager:close(dialog)
+                            on_select(model_id)
+                        else
+                            saveModelSelection(assistant, model_id)
+                            UIManager:close(dialog)
+                            Notification:notify(T(_("Model: %1"), model_id))
+                            if close_callback then close_callback() end
+                        end
                     end
                 end,
             },
@@ -364,8 +376,8 @@ showManualInput = function(assistant, close_callback)
     UIManager:show(dialog)
 end
 
---- Main entry point: fetch  models and show picker
-local function showModelPicker(assistant, close_callback)
+--- Main entry point: fetch models via querier's handler and show picker
+local function showModelPicker(assistant, close_callback, on_select)
     local models, err = assistant.querier.handler:FetchModels()
     if err then
         UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err, })
@@ -379,7 +391,10 @@ local function showModelPicker(assistant, close_callback)
         return
     end
    
-    showPickerDialog(assistant, models, close_callback)
+    showPickerDialog(assistant, models, close_callback, "", 1, on_select)
 end
 
-return showModelPicker
+return {
+    showModelPicker = showModelPicker,
+    showPickerDialog = showPickerDialog,
+}

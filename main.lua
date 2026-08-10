@@ -16,6 +16,7 @@ local T 		      = require("ffi/util").template
 local koutil = require("util")
 local TextViewer = require("ui/widget/textviewer")
 local ButtonDialog = require("ui/widget/buttondialog")
+local MultiInputDialog = require("ui/widget/multiinputdialog")
 local ffiutil = require("ffi/util")
 local ToolExecutor = require("assistant_tool_executor")
 local ASUtils = require("assistant_utils")
@@ -27,6 +28,7 @@ local Updater = require("assistant_updater")
 local Prompts = require("assistant_prompts")
 local SettingsDialog = require("assistant_settings")
 local showDictionaryDialog = require("assistant_dictdialog")
+local Registry = require("assistant_provider_registry")
 
 local Assistant = InputContainer:new {
   name = "assistant",
@@ -40,6 +42,26 @@ local Assistant = InputContainer:new {
   ui_language = nil,
   ui_language_is_rtl = nil,
   CONFIGURATION = nil,  -- reference to the main configuration
+}
+
+-- Preset platforms offered in the "Add Provider" sub-menu.
+-- Selecting one only asks for the API key (name/base_url come from here).
+local PRESET_PROVIDERS = {
+    { name = "DeepSeek",   handler = "openai",   base_url = "https://api.deepseek.com/v1" },
+    { name = "OpenRouter", handler = "openai",   base_url = "https://openrouter.ai/api/v1" },
+    { name = "Groq",       handler = "openai",   base_url = "https://api.groq.com/openai/v1" },
+    { name = "Mistral",    handler = "openai",   base_url = "https://api.mistral.ai/v1" },
+    { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta" },
+    { name = "Anthropic",  handler = "anthropic", base_url = "https://api.anthropic.com/v1" },
+}
+
+-- Protocol sub-menu for the "Custom" entry: pick a wire format, then
+-- enter a name + API key.
+local CUSTOM_HANDLERS = {
+    { name = "OpenAI",     handler = "openai",   base_url = "https://api.openai.com/v1" },
+    { name = "Anthropic",  handler = "anthropic", base_url = "https://api.anthropic.com/v1" },
+    { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta" },
+    { name = "Responses",  handler = "responses", base_url = "https://api.openai.com/v1" },
 }
 
 local function testConfigFile(filePath)
@@ -206,8 +228,47 @@ function Assistant:addToMainMenu(menu_items)
                 separator = true,
               },
               {
+                text = _("Add Provider"),
+                separator = true,
+                keep_menu_open = true,
+                sub_item_table_func = function()
+                    local items = {}
+                    -- Add preset providers
+                    for _, preset in ipairs(PRESET_PROVIDERS) do
+                        table.insert(items, {
+                            text = preset.name,
+                            keep_menu_open = true,
+                            callback = function()
+                                self:_showAddProviderDialog(preset.name, preset.handler, preset.base_url)
+                            end,
+                        })
+                    end
+                    -- Add Custom sub-menu for protocol selection
+                    local custom_items = {}
+                    for i, ch in ipairs(CUSTOM_HANDLERS) do
+                        table.insert(custom_items, {
+                            text = T(_("%1 (Compatible)"), ch.name),
+                            keep_menu_open = true,
+                            callback = function()
+                                self:_showAddProviderDialog(nil, ch.handler, ch.base_url)
+                            end,
+                        })
+                    end
+                    table.insert(items, {
+                        text = _("Custom"),
+                        sub_item_table = custom_items,
+                    })
+                    return items
+                end,
+              },
+              {
                 text_func = function ()
-                  local provider = self.querier.provider_name
+                  if not self.querier then
+                    return _("AI Provider: not configured")
+                  end
+                  local provider = self.querier.provider_setting
+                      and self.querier.provider_setting.display_name
+                      or self.querier.provider_name
                   local model = self.querier.handler.model
                   return T(_("AI Provider: %1(%2)"), provider, model)
                 end,
@@ -244,7 +305,7 @@ function Assistant:addToMainMenu(menu_items)
           
   -- append External Search tools menu item
   for _, n in ipairs(ToolExecutor.SEARCH_API_NAMES) do
-    table.insert(common_items_table[5].sub_item_table,
+    table.insert(common_items_table[6].sub_item_table,
       SettingsDialog.genWebSearchSubMenuItem(self, n))
   end
 
@@ -442,7 +503,7 @@ function Assistant:showSettings(close_callback)
 
   local settingDlg = SettingsDialog:new{
       assistant = self,
-      CONFIGURATION = CONFIGURATION,
+      CONFIGURATION = self.CONFIGURATION, -- merged config (file + UI providers)
       settings = self.settings,
       close_callback = close_callback,
   }
@@ -451,13 +512,113 @@ function Assistant:showSettings(close_callback)
   UIManager:show(settingDlg)
 end
 
+--- Show a unified dialog for adding a provider (Name, Base URL, API Key, Model).
+--- For preset providers: Name + Base URL are pre-filled from the preset.
+--- For Custom (preset_name=nil): Base URL is pre-filled from the protocol sub-menu, Name is empty.
+function Assistant:_showAddProviderDialog(preset_name, handler, base_url)
+    local dialog_title = preset_name and T(_("Add %1"), preset_name) or T(_("Add %1 Provider"), handler)
+    local default_name = preset_name or ""
+
+    local dialog_ref = {}  -- forward ref for enabled_func closure in buttons
+    local dialog
+    dialog = MultiInputDialog:new{
+        title = dialog_title,
+        fields = {
+            { description = _("Provider Name"), hint = _("Display name"), text = default_name },
+            { description = _("Base URL"),      hint = _("https://..."),   text = base_url },
+            { description = _("API Key"),       hint = _("Your API key"),  text = "" },
+            { description = _("Model"),         hint = _("Default: auto"), text = "auto" },
+        },
+        buttons = {{
+            {
+                id = "cancel",
+                text = _("Cancel"),
+                callback = function() UIManager:close(dialog) end,
+            },
+            {
+                id = "browse_models",
+                text = _("Browse Models"),
+                enabled_func = function()
+                    local d = dialog_ref[1]
+                    if not d then return false end
+                    return d:getFields()[3] ~= ""  -- enabled when API key is filled
+                end,
+                callback = function()
+                    local fields = dialog:getFields()
+                    local api_key = fields[3]
+                    local url = fields[2]
+                    if api_key == "" or url == "" then return end
+                    -- Fetch models then reuse model_picker's showPickerDialog
+                    NetworkMgr:runWhenOnline(function()
+                        Trapper:wrap(function()
+                            local models_url = url:gsub("/+$", "") .. "/models"
+                            local models_data, err = ASUtils.fetchJSON(models_url, {
+                                ["Content-Type"]  = "application/json",
+                                ["Authorization"] = "Bearer " .. api_key,
+                            })
+                            if err or not models_data or not models_data.data then
+                                UIManager:show(InfoMessage:new{
+                                    text = err or _("Failed to fetch models."),
+                                })
+                                return
+                            end
+                            local model_list = models_data.data
+                            table.sort(model_list, function(a, b) return a.id < b.id end)
+                            local mp = require("assistant_model_picker")
+                            mp.showPickerDialog(self, model_list, nil, "", 1,
+                                function(model_id)
+                                    if dialog.input_fields[4] then
+                                        dialog.input_fields[4]:setText(model_id)
+                                        dialog.input_fields[4]:moveCursorToCharPos(#model_id + 1)
+                                    end
+                                end
+                            )
+                        end)
+                    end)
+                end,
+            },
+            {
+                id = "save",
+                text = _("Save"),
+                is_enter_default = true,
+                callback = function()
+                    local fields = dialog:getFields()
+                    local name = fields[1]
+                    local url = fields[2]
+                    local api_key = fields[3]
+                    local model = fields[4]
+                    if name == "" then name = handler end
+                    if url == "" then
+                        UIManager:show(InfoMessage:new{ text = _("Base URL is required.") })
+                        return
+                    end
+                    if api_key == "" then
+                        UIManager:show(InfoMessage:new{ text = _("API key is required.") })
+                        return
+                    end
+                    Registry.installProvider(self, handler, url, name, api_key, model)
+                    UIManager:close(dialog)
+                    -- Refresh settings if open
+                    if self._settings_dialog then
+                        UIManager:close(self._settings_dialog)
+                        self._settings_dialog = nil
+                        UIManager:scheduleIn(0.15, function() self:showSettings() end)
+                    end
+                end,
+            },
+        }},
+    }
+    dialog_ref[1] = dialog
+    UIManager:show(dialog)
+end
+
 function Assistant:getModelProvider()
 
-  if type(CONFIGURATION) ~= "table" then
+  if type(self.CONFIGURATION) ~= "table" then
     return nil
   end
 
-  local provider_settings = CONFIGURATION.provider_settings -- provider settings table from configuration.lua
+  local provider_settings = self.CONFIGURATION.provider_settings -- provider settings table from configuration.lua
   if type(provider_settings) ~= "table" then
     return nil
   end
@@ -465,7 +626,7 @@ function Assistant:getModelProvider()
 
   local function is_provider_valid(key)
     if not key then return false end
-    local provider = koutil.tableGetValue(CONFIGURATION, "provider_settings", key)
+    local provider = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", key)
     return provider and koutil.tableGetValue(provider, "model") and
         koutil.tableGetValue(provider, "base_url") and
         koutil.tableGetValue(provider, "api_key")
@@ -488,7 +649,7 @@ function Assistant:getModelProvider()
     -- If the setting provider is invalid, delete this selection
     self.settings:delSetting("provider")
 
-    local conf_provider = CONFIGURATION.provider -- provider name from configuration.lua
+    local conf_provider = self.CONFIGURATION.provider -- provider name from configuration.lua
     if is_provider_valid(conf_provider) then
       -- if the configuration provider is valid, use it
       setting_provider = conf_provider
@@ -536,7 +697,7 @@ function Assistant:isConfigured()
       return nil
     end
 
-    if not CONFIGURATION then
+    if not self.CONFIGURATION then
       UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err_text })
       return nil
     end
@@ -550,6 +711,21 @@ function Assistant:init()
 
   -- init settings
   self.settings = LuaSettings:open(self.settings_file)
+
+  -- Load UI providers from settings and merge with file config
+  local ui_data = Registry.load(self.settings)
+  local merged_ps = Registry.merge(CONFIGURATION, ui_data)
+  self._ui_provider_data = ui_data  -- kept for Add/Delete from Settings UI
+
+  -- Build effective CONFIGURATION (file config as base + merged provider_settings)
+  local effective = {}
+  if CONFIGURATION then
+    for k, v in pairs(CONFIGURATION) do
+      effective[k] = v
+    end
+  end
+  effective.provider_settings = merged_ps or {}
+  self.CONFIGURATION = effective
 
   -- Register actions with dispatcher for gesture assignment
   self:onDispatcherRegisterActions()
@@ -587,9 +763,8 @@ function Assistant:init()
     end)
   end
 
-  -- skip initialization if configuration.lua is not found
-  if not CONFIGURATION then return end
-  self.CONFIGURATION = CONFIGURATION
+  -- skip initialization if no provider is configured (file or UI)
+  if not merged_ps then return end
 
   -- Sync provider selection from configuration if configuration provider changed
   self:syncProviderSelectionFromConfig()

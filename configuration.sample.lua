@@ -18,6 +18,16 @@ local CONFIGURATION = {
     -- This allows you to create multiple configurations using the same handler
     -- with different models, endpoints, or parameters.
     --
+    -- DISPLAY NAME: You can add an optional `display_name` field to any provider.
+    -- This name is shown in the menu and settings UI instead of the raw key.
+    -- Example: add `display_name = "Grok (xAI)"` to openai_grok below.
+    --
+    -- UI-ADDED PROVIDERS: You can also add providers directly from the plugin's
+    -- Settings UI (Settings -> Other Settings -> Provider Settings -> Add Provider).
+    -- UI-added providers are saved to the plugin's settings file (not here) and
+    -- merged with this configuration at startup. They support the same protocols:
+    -- openai, anthropic, gemini, responses.
+    --
     provider_settings = {
         openai = {
             default = true,        -- optional, if provider above is not set, will try to find one with `default =  true`
@@ -31,6 +41,7 @@ local CONFIGURATION = {
             }
         },
         openai_grok = {
+            display_name = "Grok (xAI)",   -- shown in menu instead of "openai_grok"
             --- use grok model via openai handler
             model = "grok", -- model list: https://docs.x.ai/developers/models
             base_url = "https://api.x.ai/v1",
@@ -48,6 +59,7 @@ local CONFIGURATION = {
         -- Supported additional_parameters: temperature, top_p, max_output_tokens,
         -- max_tokens, reasoning, reasoning_effort, store.
         responses_openai = {
+            display_name = "OpenAI Responses",
             visible = false,       -- optional, set to true to show in provider switch
             model = "gpt-4o-mini", -- model list: https://platform.openai.com/docs/models
             base_url = "https://api.openai.com/v1",
@@ -71,6 +83,20 @@ local CONFIGURATION = {
         --         max_output_tokens = 4096,
         --     }
         -- },
+        -- DeepSeek Responses API — newer /v1/responses endpoint with built-in web_search
+        -- Uses the 'responses' handler (same as OpenAI Responses above).
+        -- Supported model: deepseek-v4-flash (deepseek-v4-pro support expected later).
+        -- See: https://api-docs.deepseek.com/guides/responses_api
+        -- responses_deepseek = {
+        --     display_name = "DeepSeek Responses",
+        --     visible = false,
+        --     model = "deepseek-v4-flash",
+        --     base_url = "https://api.deepseek.com",
+        --     api_key = "your-deepseek-api-key",
+        --     additional_parameters = {
+        --         -- max_output_tokens = 4096,
+        --     }
+        -- },
         anthropic = {
             visible = true,                    -- optional, if set to false, will not shown in the profile switch
             model = "claude-3-5-haiku-latest", -- model list: https://docs.anthropic.com/en/docs/about-claude/models
@@ -83,6 +109,7 @@ local CONFIGURATION = {
         },
         -- Anthropic with built-in web search
         anthropic_websearch = {
+            display_name = "Claude + Web Search",
             visible = false,                   -- optional, if set to false, will not shown in the profile switch
             model = "claude-3-5-haiku-latest", -- model list: https://docs.anthropic.com/en/docs/about-claude/models
             base_url = "https://api.anthropic.com/v1",
@@ -115,6 +142,7 @@ local CONFIGURATION = {
             }
         },
         gemini_gemma4 = {
+            display_name = "Gemma (Gemini API)",
             model = "gemma-4-31b-it", -- model list: https://ai.google.dev/gemini-api/docs/models , ex: gemini-2.5-pro , gemini-2.5-flash
             base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
             api_key = "your-gemini-api-key",

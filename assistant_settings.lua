@@ -18,7 +18,6 @@ local InputDialog = require("ui/widget/inputdialog")
 local LineWidget = require("ui/widget/linewidget")
 local MovableContainer = require("ui/widget/container/movablecontainer")
 local RadioButtonTable = require("ui/widget/radiobuttontable")
-local ButtonTable = require("ui/widget/buttontable")
 local TextBoxWidget = require("ui/widget/textboxwidget")
 local SpinWidget = require("ui/widget/spinwidget")
 local Notification = require("ui/widget/notification")
@@ -38,6 +37,7 @@ local ToolExecutor = require("assistant_tool_executor")
 local ExtTools = require("assistant_exttools")
 local Updater = require("assistant_updater")
 local ASUtils = require("assistant_utils")
+local Registry = require("assistant_provider_registry")
 
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
@@ -215,6 +215,17 @@ function SettingsDialog:init()
             end
         },
         {
+            id = "delete_provider",
+            text = _("Delete Provider"),
+            enabled_func = function()
+                local cur = self.assistant.querier.provider_name
+                if not cur then return false end
+                local ps = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", cur)
+                return Registry.is_deletable(ps)
+            end,
+            callback = function() self:onDeleteProvider() end,
+        },
+        {
             id = "close",
             text = _("Close"),
             callback = function() UIManager:close(self) end
@@ -229,12 +240,13 @@ function SettingsDialog:init()
     local columns = koutil.tableSize(self.CONFIGURATION.provider_settings) > MAX_FOR_SINGLE_COLUMN and 2 or 1
     local buttonrow = {}
     for key, tab in ffiutil.orderedPairs(self.CONFIGURATION.provider_settings) do
-        if self.assistant.querier:is_handler(key) then
+        if self.assistant.querier:is_valid_provider(key, tab) then
             if not (koutil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
                 if #buttonrow < columns then
                     local seleted_model = self.settings:readSetting("selected_model_" .. key)
                     local model_name = seleted_model or koutil.tableGetValue(tab, "model")
-                    local button_text = string.format("%s (%s)", key, model_name)
+                    local display_name = koutil.tableGetValue(tab, "display_name") or key
+                    local button_text = string.format("%s (%s)", display_name, model_name)
                     table.insert(buttonrow, {
                         text = button_text,
                         provider = key, -- note: this `provider` field belongs to the RadioButton, not our AI Model provider.
@@ -343,10 +355,49 @@ function SettingsDialog:onBrowseModel()
 
     NetworkMgr:runWhenOnline(function()
         Trapper:wrap(function()
-            local showModelPicker = require("assistant_model_picker")
+            local showModelPicker = require("assistant_model_picker").showModelPicker
             showModelPicker(self.assistant, self.close_callback)
         end)
     end)
+end
+
+function SettingsDialog:onDeleteProvider()
+    local provider_name = self.assistant.querier.provider_name
+    local ps = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", provider_name)
+    if not Registry.is_deletable(ps) then return end
+
+    local display_name = koutil.tableGetValue(ps, "display_name") or provider_name
+    UIManager:show(ConfirmBox:new{
+        text = T(_("Delete provider %1?"), display_name),
+        ok_text = _("Delete"),
+        ok_callback = function()
+            local ui_data = self.assistant._ui_provider_data
+            Registry.delete(ui_data, provider_name)
+            Registry.save(self.settings, ui_data)
+            self.assistant.updated = true
+
+            -- Remove the provider from the in-memory merged config
+            if self.assistant.CONFIGURATION and self.assistant.CONFIGURATION.provider_settings then
+                self.assistant.CONFIGURATION.provider_settings[provider_name] = nil
+            end
+
+            -- Fallback: reselect a valid provider
+            local new_provider = self.assistant:getModelProvider()
+            if new_provider then
+                self.assistant.querier:load_model(new_provider)
+            end
+
+            -- Close and reopen settings
+            UIManager:close(self)
+            if self.assistant._settings_dialog then
+                UIManager:close(self.assistant._settings_dialog)
+                self.assistant._settings_dialog = nil
+            end
+            UIManager:scheduleIn(0.15, function()
+                self.assistant:showSettings()
+            end)
+        end,
+    })
 end
 
 function SettingsDialog:onCloseWidget()

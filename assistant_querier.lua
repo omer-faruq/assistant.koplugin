@@ -83,6 +83,18 @@ function Querier:is_handler(provider_name)
     return handler_name and API_HANDLERS[handler_name]
 end
 
+--- Check if a provider_key maps to a known handler, either via
+--- prefix convention (file providers) or explicit handler field (UI providers).
+--- Also accepts provider_setting table for direct handler check.
+function Querier:is_valid_provider(provider_key, provider_setting)
+    -- Check explicit handler field first (UI providers)
+    if provider_setting and provider_setting.handler and API_HANDLERS[provider_setting.handler] then
+        return true
+    end
+    -- Fallback to prefix convention (file providers)
+    return self:is_handler(provider_key)
+end
+
 --- Load provider model for the Querier
 function Querier:load_model(provider_name)
     -- If the provider is already loaded, do nothing.
@@ -100,9 +112,20 @@ function Querier:load_model(provider_name)
         return false, err
     end
 
-    local handler_name = string.match(provider_name, "^([^_]+)")
+    -- Check for explicit handler field (UI providers have this)
+    local handler_name = provider_setting.handler
+    if not handler_name then
+        -- Fallback: derive from provider key prefix (file providers, legacy)
+        handler_name = string.match(provider_name, "^([^_]+)")
+    end
     if not handler_name then
         local err = T(_("Handler not found for: %1. Please check your configuration.lua file."), provider_name)
+        logger.warn("Querier initialization failed: " .. err)
+        return false, err
+    end
+    -- Verify handler is in API_HANDLERS
+    if not API_HANDLERS[handler_name] then
+        local err = T(_("Handler %1 not available for provider: %2"), handler_name, provider_name)
         logger.warn("Querier initialization failed: " .. err)
         return false, err
     end
