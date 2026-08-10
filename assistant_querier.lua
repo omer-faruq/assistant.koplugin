@@ -199,6 +199,43 @@ local function createWaitingAnimation()
     }
 end
 
+--- Update the stream dialog text while streaming.
+-- With auto_scroll enabled we append the delta and let the view follow the
+-- cursor to the bottom. When auto_scroll is disabled we bypass addChars
+-- (which inserts at the cursor and triggers moveCursorToCharPos that pulls
+-- the view to the end). Instead we manually append the delta to the end of
+-- charlist, restore the user's charpos+top_line_num, then call initTextBox
+-- so that scrollViewToCharPos gets the saved values and preserves the view.
+-- Pure helper, kept as a local so it can be inlined in tests.
+local function updateStreamText(streamDialog, delta, auto_scroll)
+    if auto_scroll then
+        -- auto_scroll=false path may have left charpos at a mid-text
+        -- scroll position; force it to the end so addChars appends there
+        local widget = streamDialog._input_widget
+        widget.charpos = #widget.charlist + 1
+        streamDialog:addTextToInput(delta)
+    else
+        local widget = streamDialog._input_widget
+        -- Capture the user's current view state
+        widget:resyncPos()
+        local saved_top = widget.top_line_num
+        local saved_charpos = widget.charpos
+        -- Append the delta to the END of charlist (not at the cursor position,
+        -- which may be mid-text after user scrolled)
+        local added = koutil.splitToChars(delta)
+        for _, ch in ipairs(added) do
+            table.insert(widget.charlist, ch)
+        end
+        -- Restore the user's view state so scrollViewToCharPos preserves it
+        widget.charpos = saved_charpos
+        widget.top_line_num = saved_top
+        -- Rebuild the widget. scrollViewToCharPos sets virtual_line_num to
+        -- saved_top and moveCursorToCharPos(saved_charpos) finds the cursor
+        -- within the visible area → no adjustment → view stays put
+        widget:initTextBox(nil, true)
+    end
+end
+
 --- Query the AI with the provided message history.
 --- Handles both stream and non-stream modes, including multi-turn tool-call loops.
 ---
@@ -496,6 +533,8 @@ function Querier:showStremDialog(res)
         is_movable = true
     end
 
+    local stream_mode_auto_scroll = self.settings:readSetting("stream_mode_auto_scroll", true)
+
     streamDialog = InputDialog:new{
         title = _("AI is responding") ,
         description = ASUtils.bold_format(
@@ -522,6 +561,17 @@ function Querier:showStremDialog(res)
                     id = "close", -- id:close response to default cancel action (esc key ...)
                     callback = _closeStreamDialog,
                 },
+                {
+                    text_func = function() return stream_mode_auto_scroll and _("■ Scroll") or _("▶ Scroll") end,
+                    id = "auto_scroll",
+                    callback = function()
+                        stream_mode_auto_scroll = not stream_mode_auto_scroll
+                        self.settings:toggle("stream_mode_auto_scroll")
+                        local btn = streamDialog.button_table:getButtonById("auto_scroll")
+                        btn:setText(btn.text_func(), btn.width)
+                        streamDialog:refreshButtons()
+                    end,
+                },
             }
         }
     }
@@ -545,20 +595,14 @@ function Querier:showStremDialog(res)
     end
     animation_task = UIManager:scheduleIn(0.4, updateAnimation)
 
-    local stream_mode_auto_scroll = self.settings:readSetting("stream_mode_auto_scroll", true)
-    local pending_delta = strbuf.new()
+    local pending_delta = strbuf.new()  -- delta since the last UI flush
     local flush_scheduled = false
     local reasoning_was_ended = false
     local function flush_to_ui()
         flush_scheduled = false
         local delta = pending_delta:get()
         if #delta == 0 then return end
-        if stream_mode_auto_scroll then
-            streamDialog:addTextToInput(delta)
-        else
-            streamDialog._input_widget:resyncPos()
-            streamDialog:addTextToInput(delta)
-        end
+        updateStreamText(streamDialog, delta, stream_mode_auto_scroll)
     end
     local ok, content, tool_calls_or_err = pcall(self.processStream, self, res, function (content, buffer)
         if not first_content_received and content and #content > 0 then

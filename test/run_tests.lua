@@ -24,6 +24,7 @@ package.path = PROJECT_ROOT .. "/?.lua;" .. PROJECT_ROOT .. "/?/init.lua;" .. pa
 local test_files = {
     "test.test_exttools",
     "test.test_updater",
+    "test.test_querier_stream",
 }
 
 if filter then
