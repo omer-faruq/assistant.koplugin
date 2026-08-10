@@ -170,6 +170,11 @@ cd l10n && API_KEY=your_key make ai-translate L10N_LANG=fr  # Single language
   ```bash
   ./test/runui.sh model_picker
   ```
+  To simulate a specific device screen size (compatible with `kodev run` semantics):
+  ```bash
+  ./test/runui.sh -w=1072 -h=1448 -d=300 model_picker
+  ./test/runui.sh -s=kobo-clara model_picker
+  ```
   Add a test script under `test/` that requires `test/wbuilder`, shows widgets with `UIManager:show(...)`, and finishes with `UIManager:run()`. Use mock objects for `assistant` when the widget depends on plugin state.
 - **Dependencies**: no external dependencies beyond KOReader's standard libraries. The optional `hoedown` native library is the only exception, with a pure-Lua fallback.
 - **License**: GPL-3.0 (see `LICENSE`).

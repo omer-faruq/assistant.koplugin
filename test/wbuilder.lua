@@ -24,11 +24,28 @@ end
 
 -- Ensure SDL window dimensions are set before Device init reads them.
 -- The SDL device reads sdl_window from G_reader_settings; if missing, init fails.
+-- Honor EMULATE_READER_W/H/DPI env vars (compatible with kodev run convention).
 local sdl_win = G_reader_settings:readSetting("sdl_window")
 if not sdl_win or type(sdl_win) ~= "table" or not sdl_win.width then
     sdl_win = { width = 600, height = 800, left = 0, top = 0 }
-    G_reader_settings:saveSetting("sdl_window", sdl_win)
-    pcall(G_reader_settings.flush, G_reader_settings)
+end
+
+local em_w = tonumber(os.getenv("EMULATE_READER_W"))
+local em_h = tonumber(os.getenv("EMULATE_READER_H"))
+if em_w and em_w > 0 then
+    sdl_win.width = em_w
+end
+if em_h and em_h > 0 then
+    sdl_win.height = em_h
+end
+
+G_reader_settings:saveSetting("sdl_window", sdl_win)
+pcall(G_reader_settings.flush, G_reader_settings)
+
+-- DPI override: KOReader reads screen_dpi from settings (generic/device.lua)
+local em_dpi = tonumber(os.getenv("EMULATE_READER_DPI"))
+if em_dpi and em_dpi > 0 then
+    G_reader_settings:saveSetting("screen_dpi", em_dpi)
 end
 
 local Device = require("device")
