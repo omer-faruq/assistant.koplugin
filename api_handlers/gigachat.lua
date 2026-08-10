@@ -1,6 +1,6 @@
 local BaseHandler = require("api_handlers.base")
 local OpenAIHandler = require("api_handlers.openai")
-local json = require("json")
+local json = require("rapidjson")
 local koutil = require("util")
 
 local DEFAULT_UPDATE_INTERVAL = 3

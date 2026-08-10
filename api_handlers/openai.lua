@@ -1,5 +1,5 @@
 local BaseHandler = require("api_handlers.base")
-local json = require("json")
+local json = require("rapidjson")
 local koutil = require("util")
 local logger = require("logger")
 local ToolExecutor = require("assistant_tool_executor")

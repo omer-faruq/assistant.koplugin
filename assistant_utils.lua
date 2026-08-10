@@ -113,7 +113,6 @@ function M.extractHighlightsNotesAndNotebook(CONFIGURATION, ui, include_notebook
       pcall(function()
           local notebookfile = ui.bookinfo:getNotebookFile(ui.doc_settings)
           if notebookfile then
-              local json = require("json")
               local file = io.open(notebookfile, "r")
               if file then
                   local content = file:read("*all")

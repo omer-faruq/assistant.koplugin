@@ -455,9 +455,9 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
             logger.warn("parse, responseData:", responseData)
             return nil, nil, nil, err_msg
         end
-        local raw_calls = assistant_message.tool_calls
+        local raw_calls = json_default(assistant_message.tool_calls)
         if not raw_calls then
-            local direct = assistant_message.content
+            local direct = json_default(assistant_message.content)
             return nil, nil, direct, nil
         end
 
