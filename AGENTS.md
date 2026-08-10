@@ -166,5 +166,10 @@ cd l10n && API_KEY=your_key make ai-translate L10N_LANG=fr  # Single language
 - **Tool calling**: route all tool-call logic through `assistant_tool_executor.lua`'s `ToolExecutor` — it already normalizes the three wire formats. Don't duplicate per-provider.
 - **LexRank**: read `LEXRANK_LANGUAGES.md` before adding or modifying a language module.
 - **UI**: use existing dialog patterns from `assistant_dialog.lua` / `assistant_viewer.lua` (`ChatGPTViewer`) rather than building new widget scaffolding.
+- **UI testing with wbuilder**: KOReader provides a widget builder (`tools/wbuilder.lua` in upstream, run via `./kodev wbuilder`) to test widgets in isolation without starting the full reader. This project has its own `test/wbuilder.lua` that bootstraps the KOReader UI framework and plugin path. Run a widget test with:
+  ```bash
+  ./test/runui.sh model_picker
+  ```
+  Add a test script under `test/` that requires `test/wbuilder`, shows widgets with `UIManager:show(...)`, and finishes with `UIManager:run()`. Use mock objects for `assistant` when the widget depends on plugin state.
 - **Dependencies**: no external dependencies beyond KOReader's standard libraries. The optional `hoedown` native library is the only exception, with a pure-Lua fallback.
 - **License**: GPL-3.0 (see `LICENSE`).
