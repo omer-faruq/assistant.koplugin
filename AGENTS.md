@@ -68,6 +68,16 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 - **`responses.lua`** — OpenAI's `/v1/responses` endpoint with built-in web_search, file_search, and function-calling tools.
 - **Handler discovery**: at runtime, `Querier` scans `api_handlers/` for `.lua` files. Provider config keys use the pattern `{handler}_{description}` — the prefix before the first underscore selects the handler (e.g. `openai_perplexity` → `openai` handler).
 
+### Provider Registry
+
+- **`assistant_provider_registry.lua`** (`Registry`) — Manages UI-added AI providers stored in KOReader settings as JSON (`settings:saveSetting("ui_providers", json)`). Providers added via the Add Provider dialog use this registry; file-based providers live in `configuration.lua`.
+- **Two-source merge**: On startup, `Registry.load(settings)` reads UI providers, then `Registry.merge(file_config, ui_data)` combines them with file providers into `CONFIGURATION.provider_settings`. File providers get `source="file"`, `immutable=true`; UI providers get `source="ui"`.
+- **Provider ID scheme**: UI providers use stable IDs `"custom:N"` (auto-incrementing). File providers keep their original key from `configuration.lua`.
+- **Validation**: `Registry.validate(record)` checks `display_name`, `handler` (must match an `api_handlers/` file), `model` (defaults to `"auto"`), `base_url` (must be `http(s)://`), `api_key`.
+- **`Registry.installProvider(assistant, …)`** — Add + save + update in-memory config + load into querier in one call.
+- **`Registry.delete(data, id)`** and **`Registry.is_deletable(provider)`** — Only `source=="ui"` providers are deletable.
+- **`display_name`**: File providers can set `display_name` in their `configuration.lua` entry; UI providers require it. The Settings radio and main menu show `display_name` as the provider label.
+
 ### LexRank Extractive Summarization (Term X-Ray)
 - **`assistant_lexrank.lua`** — TF-IDF weighted LexRank sentence-ranking (tokenize → similarity matrix → PageRank → score-based selection with entity/position boosting). Configurable via `CONFIGURATION.features`.
 - **`assistant_lexrank_languages.lua`** — Per-language modules (stop words, sentence delimiters, tokenization, stemming, entity-detection) for `en`, `es`, `fr`, `de`, `tr`; falls back to English.
@@ -79,7 +89,7 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 - **`assistant_featuredialog.lua`** — Book-level features (Recap, X-Ray, Book Info, Annotations analysis, Summary-using-annotations).
 - **`assistant_dictdialog.lua`** — AI Dictionary + Term X-Ray popup.
 - **`assistant_settings.lua`** — Provider/model settings dialog and sub-menu.
-- **`assistant_model_picker.lua`** — Paginated/searchable model picker (calls `handler:FetchModels()`).
+- **`assistant_model_picker.lua`** — Paginated/searchable model picker (calls `handler:FetchModels()`). Exports `showPickerDialog` for external reuse; accepts an optional `on_select` callback to customize the selection result.
 - **`assistant_viewer.lua`** (`ChatGPTViewer`) — Scrollable Markdown/HTML result viewer widget; handles Add-Note/Save-to-Notebook/Copy, follow-up questions, and RTL rendering.
 - **`assistant_quicknote.lua`** — Quick-note capture, appended to the notebook file.
 - **`assistant_update_checker.lua`** — GitHub-releases version check with SemVer + pre-release comparison.
@@ -104,6 +114,7 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 | `api_handlers/openai.lua` | OpenAI handler — alias for OpenAI-compatible APIs |
 | `api_handlers/responses.lua` | OpenAI Responses API handler (`/v1/responses`) |
 | `assistant_tool_executor.lua` | Tool-call normalization across all three wire formats |
+| `assistant_provider_registry.lua` | UI provider add/delete/merge/validate, JSON settings storage |
 | `configuration.sample.lua` | Config template — update this, not `configuration.lua` |
 | `l10n/` | Translation files (`.po`/`.pot`), Makefile, AI translation script |
 | `.github/workflows/release.yml` | CI/CD: auto-release on `v*` tag push |
@@ -168,6 +179,9 @@ cd l10n && API_KEY=your_key make ai-translate L10N_LANG=fr  # Single language
 - **Never read or modify `configuration.lua`** — it contains user secrets. Update `configuration.sample.lua` only.
 - **Exclude `l10n/` from code searches and reads** — it contains only `.po`/`.pot` translation strings in 40+ languages. Searching or reading these files wastes tokens with no code insight.
 - **New providers**: if OpenAI-compatible, alias `OpenAIHandler:new{name="..."}` (see `deepseek.lua`). If it needs custom auth/response shape, extend `BaseHandler` and implement `query`/`SyncOptions`/`FetchModels`. Route response parsing through `self:parseToolCalls(...)`.
+- **Provider config keys**: file providers use `{handler}_{description}` as key (e.g. `openai_perplexity`). UI providers use `"custom:N"`. Use `Registry` for all UI provider CRUD; never manipulate `settings:saveSetting("ui_providers", ...)` directly.
+- **`display_name`**: always set this field on provider records. Settings UI and the main menu label use `display_name` (not the config key). File providers can add `display_name` to their `configuration.lua` entry.
+- **UI provider lifecycle**: `main.lua` `init()` does `Registry.load` → `Registry.merge` → effective `CONFIGURATION`. Add dialog calls `Registry.installProvider`. Delete calls `Registry.delete` + `Registry.save`. Consult `assistant_provider_registry.lua` before touching provider storage.
 - **Tool calling**: route all tool-call logic through `assistant_tool_executor.lua`'s `ToolExecutor` — it already normalizes the three wire formats. Don't duplicate per-provider.
 - **LexRank**: read `LEXRANK_LANGUAGES.md` before adding or modifying a language module.
 - **UI**: use existing dialog patterns from `assistant_dialog.lua` / `assistant_viewer.lua` (`ChatGPTViewer`) rather than building new widget scaffolding.
