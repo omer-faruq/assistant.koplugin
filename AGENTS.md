@@ -118,6 +118,11 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 - **Rich Text & Formatting**: Use `assistant_utils.bold_format(...)` with `<b>` and `</b>` tags (e.g. `assistant_utils.bold_format(T(_("<b>Header:</b> %1"), val))`) to format bold runs in dialogs. Avoid manual string concatenation; keep strings contiguous inside `T(_("..."))` templates so they remain easy to translate.
 - **Configuration access**: Use `koutil.tableGetValue(CONFIGURATION, "path", "to", "key")` for safe nested access with defaults.
 - **Metadata on messages**: Use `assistant_utils.set_attr(msg, key, value)` / `get_attr(msg, key)` for fields that must not be serialized into API request bodies (e.g. `use_websearch`, `is_context`, `search_keywords`).
+- **JSON null handling**: Always use `require("rapidjson")` — this is the one JSON library for the project. KOReader's bundled `rapidjson` represents JSON `null` as a userdata value (`rapidjson.null`), not Lua `nil`. To avoid null-related bugs:
+  1. Prefer `rapidjson.decode(str, {null=nil})` to convert JSON nulls to Lua `nil` at decode time.
+  2. When that's not suitable, check with `if value == nil or value == rapidjson.null then` before using a decoded value.
+  3. Use `assistant_utils.json_default(value, default)` when reading a nullable field and you need a fallback. This helper handles both `nil` and `rapidjson.null` in a single call.
+  4. Never introduce another JSON library (e.g. `dkjson`, `cjson`, `lunajson`) — mixing JSON implementations leads to incompatible null representations and subtle bugs.
 
 ## Git Workflow
 
