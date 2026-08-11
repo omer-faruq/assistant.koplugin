@@ -216,7 +216,7 @@ function SettingsDialog:init()
         },
         {
             id = "delete_provider",
-            text = _("Delete Provider"),
+            text = _("Delete"),
             enabled_func = function()
                 local cur = self.assistant.querier.provider_name
                 if not cur then return false end
