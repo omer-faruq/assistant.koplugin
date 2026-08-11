@@ -39,6 +39,7 @@ local ExtTools = require("assistant_exttools")
 local Updater = require("assistant_updater")
 local ASUtils = require("assistant_utils")
 local Registry = require("assistant_provider_registry")
+local SearchRegistry = require("assistant_search_registry")
 
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
@@ -743,6 +744,7 @@ File configuration.lua will be preserved.]]),
     }
 
     table.insert(sub_item_table, 1, Registry.getAddProviderMenuItem(assistant))
+    table.insert(sub_item_table, 2, SearchRegistry.getAddWebSearchMenuItem(assistant))
 
     return sub_item_table
 end

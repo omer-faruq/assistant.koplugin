@@ -38,9 +38,9 @@ local FM_ITEMS = {
     "ask", "quick_note", "notebook", "provider", "websearch", "other_settings",
 }
 -- "Other Settings" submenu: Add Provider must stay the FIRST item so the
--- trailing ".1" of both fixed paths remains valid.
+-- trailing ".1" of both fixed paths remains valid. Add Web Search API is second.
 local OTHER_SETTINGS_ITEMS = {
-    "add_provider", "language", "text_size", "response", "tweaks",
+    "add_provider", "add_web_search", "language", "text_size", "response", "tweaks",
     "copy_question", "auto_save", "book_text", "ota", "purge",
 }
 
