@@ -11,6 +11,7 @@
 
 local json = require("rapidjson")
 local logger = require("logger")
+local T = require("ffi/util").template
 local _ = require("assistant_gettext")
 
 local Registry = {}
@@ -33,6 +34,28 @@ Registry.DEFAULT_BASE_URLS = {
     gemini    = "https://generativelanguage.googleapis.com/v1beta",
     responses = "https://api.openai.com/v1",
 }
+
+-- Preset platforms offered in the "Add Provider" sub-menu.
+-- Selecting one only asks for the API key (name/base_url come from here).
+local PRESET_PROVIDERS = {
+    { name = "DeepSeek",   handler = "openai",   base_url = "https://api.deepseek.com/v1" },
+    { name = "OpenRouter", handler = "openai",   base_url = "https://openrouter.ai/api/v1" },
+    { name = "Groq",       handler = "openai",   base_url = "https://api.groq.com/openai/v1" },
+    { name = "Mistral",    handler = "openai",   base_url = "https://api.mistral.ai/v1" },
+    { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta" },
+    { name = "Anthropic",  handler = "anthropic", base_url = "https://api.anthropic.com/v1" },
+}
+Registry.PRESET_PROVIDERS = PRESET_PROVIDERS
+
+-- Protocol sub-menu for the "Custom" entry: pick a wire format, then
+-- enter a name + API key.
+local CUSTOM_HANDLERS = {
+    { name = "OpenAI",     handler = "openai",   base_url = "https://api.openai.com/v1" },
+    { name = "Anthropic",  handler = "anthropic", base_url = "https://api.anthropic.com/v1" },
+    { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta" },
+    { name = "Responses",  handler = "responses", base_url = "https://api.openai.com/v1" },
+}
+Registry.CUSTOM_HANDLERS = CUSTOM_HANDLERS
 
 ----------------------------------------------------------------------
 -- Load / Save
@@ -301,6 +324,51 @@ function Registry.installProvider(assistant, handler, base_url, display_name, ap
     end
 
     return id
+end
+
+----------------------------------------------------------------------
+-- Provider menu
+----------------------------------------------------------------------
+
+--- Build the "Add Provider" menu item used by the Settings dialog.
+--- Returns a TouchMenu item with a sub-menu of preset providers plus a
+--- "Custom" sub-menu of wire-format handlers. Selecting an entry opens
+--- the add-provider dialog through assistant:_showAddProviderDialog.
+---@param assistant table The Assistant instance
+---@return table menu item spec
+function Registry.getAddProviderMenuItem(assistant)
+    return {
+        text = _("Add Provider"),
+        keep_menu_open = true,
+        sub_item_table_func = function()
+            local items = {}
+            for i, preset in ipairs(PRESET_PROVIDERS) do
+                table.insert(items, {
+                    text = preset.name,
+                    keep_menu_open = true,
+                    callback = function()
+                        assistant:_showAddProviderDialog(preset.name, preset.handler, preset.base_url)
+                    end,
+                })
+            end
+
+            local custom_items = {}
+            for i, custom_handler in ipairs(CUSTOM_HANDLERS) do
+                table.insert(custom_items, {
+                    text = T(_("%1 (Compatible)"), custom_handler.name),
+                    keep_menu_open = true,
+                    callback = function()
+                        assistant:_showAddProviderDialog(nil, custom_handler.handler, custom_handler.base_url)
+                    end,
+                })
+            end
+            table.insert(items, {
+                text = _("Custom"),
+                sub_item_table = custom_items,
+            })
+            return items
+        end,
+    }
 end
 
 return Registry

@@ -720,7 +720,7 @@ File configuration.lua will be preserved.]]),
         },
     }
 
-    table.insert(sub_item_table, 1, assistant:getAddProviderMenuItem())
+    table.insert(sub_item_table, 1, Registry.getAddProviderMenuItem(assistant))
 
     return sub_item_table
 end
