@@ -123,6 +123,7 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 
 - **Language**: Lua 5.1 / LuaJIT 2.1. KOReader bundles LuaJIT — use `string.buffer` over repeated concatenation for performance-sensitive string building.
 - **Naming**: modules use `snake_case`; classes use `PascalCase`; methods use `camelCase`; constants use `UPPER_CASE`.
+- **Lua loop variables**: do not use `_` as a discarded loop variable. Use `i`, `index`, or a descriptive variable name instead, because `_` is commonly the gettext function in this project and shadowing it can cause runtime errors.
 - **Error handling**: Functions return `nil, err` on failure (or `false, err` for HTTP calls). Callers check the first return value.
 - **OOP pattern**: Lua metatable-based inheritance — `BaseHandler:new{...}` creates instances, `setmetatable(o, self)` with `self.__index = self` for class-like behavior.
 - **Localization**: All user-facing strings wrapped in `_("text")`. Import with `local _ = require("assistant_gettext")`. Plural forms use `N_("1 item", "%1 items", n)`.
@@ -186,6 +187,7 @@ cd l10n && API_KEY=your_key make ai-translate L10N_LANG=fr  # Single language
 - **Tool calling**: route all tool-call logic through `assistant_tool_executor.lua`'s `ToolExecutor` — it already normalizes the three wire formats. Don't duplicate per-provider.
 - **LexRank**: read `LEXRANK_LANGUAGES.md` before adding or modifying a language module.
 - **UI**: use existing dialog patterns from `assistant_dialog.lua` / `assistant_viewer.lua` (`ChatGPTViewer`) rather than building new widget scaffolding.
+- **Provider menu paths**: `main.lua` uses fixed TouchMenu paths `4.1.8.1` for the Reader menu and `3.1.6.1` for the FileManager menu to highlight `Add Provider` from Provider Settings (tab -> AI Assistant -> Other Settings -> Add Provider). `Add Provider` is no longer a top-level AI Assistant menu item — it lives as the first item of the `Other Settings` submenu (built by `SettingsDialog.genMenuSettings`), shared via `Assistant:getAddProviderMenuItem()` so the preset/custom submenu is defined once. If changing the menu tab order, Assistant submenu order, the `Other Settings` item order, or anything before `Other Settings`/`Add Provider`, update both paths and verify both layouts. The shortcut is intentionally hidden on non-touch devices.
 - **UI testing with wbuilder**: KOReader provides a widget builder (`tools/wbuilder.lua` in upstream, run via `./kodev wbuilder`) to test widgets in isolation without starting the full reader. This project has its own `test/wbuilder.lua` that bootstraps the KOReader UI framework and plugin path. Run a widget test with:
   ```bash
   ./test/runui.sh model_picker

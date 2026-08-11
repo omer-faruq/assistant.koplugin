@@ -28,7 +28,8 @@ local VerticalSpan = require("ui/widget/verticalspan")
 local ConfirmBox = require("ui/widget/confirmbox")
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
-local Screen = require("device").screen
+local Device = require("device")
+local Screen = Device.screen
 local ffiutil = require("ffi/util")
 local meta = require("_meta")
 local logger = require("logger")
@@ -231,6 +232,19 @@ function SettingsDialog:init()
             callback = function() UIManager:close(self) end
         }
     }}
+
+    if Device:isTouchDevice() then
+        table.insert(self.buttons[1], 2, {
+            id = "add_provider",
+            text = _("Add"),
+            callback = function()
+                UIManager:close(self)
+                UIManager:nextTick(function()
+                    self.assistant:showAddProviderMenu()
+                end)
+            end,
+        })
+    end
 
     -- init radio buttons for selecting AI Model provider
     self.radio_buttons = {} -- init radio buttons table
@@ -705,6 +719,8 @@ File configuration.lua will be preserved.]]),
             end
         },
     }
+
+    table.insert(sub_item_table, 1, assistant:getAddProviderMenuItem())
 
     return sub_item_table
 end

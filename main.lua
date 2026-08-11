@@ -64,6 +64,11 @@ local CUSTOM_HANDLERS = {
     { name = "Responses",  handler = "responses", base_url = "https://api.openai.com/v1" },
 }
 
+-- Paths to Add Provider in the fixed Reader/FileManager menu layouts:
+-- tab -> AI Assistant -> Other Settings -> Add Provider.
+local ADD_PROVIDER_READER_PATH = "4.1.8.1"
+local ADD_PROVIDER_FILEMANAGER_PATH = "3.1.6.1"
+
 local function testConfigFile(filePath)
     local env = {}
     setmetatable(env, {__index = _G})
@@ -228,40 +233,6 @@ function Assistant:addToMainMenu(menu_items)
                 separator = true,
               },
               {
-                text = _("Add Provider"),
-                separator = true,
-                keep_menu_open = true,
-                sub_item_table_func = function()
-                    local items = {}
-                    -- Add preset providers
-                    for _, preset in ipairs(PRESET_PROVIDERS) do
-                        table.insert(items, {
-                            text = preset.name,
-                            keep_menu_open = true,
-                            callback = function()
-                                self:_showAddProviderDialog(preset.name, preset.handler, preset.base_url)
-                            end,
-                        })
-                    end
-                    -- Add Custom sub-menu for protocol selection
-                    local custom_items = {}
-                    for i, ch in ipairs(CUSTOM_HANDLERS) do
-                        table.insert(custom_items, {
-                            text = T(_("%1 (Compatible)"), ch.name),
-                            keep_menu_open = true,
-                            callback = function()
-                                self:_showAddProviderDialog(nil, ch.handler, ch.base_url)
-                            end,
-                        })
-                    end
-                    table.insert(items, {
-                        text = _("Custom"),
-                        sub_item_table = custom_items,
-                    })
-                    return items
-                end,
-              },
-              {
                 text_func = function ()
                   if not self.querier then
                     return _("AI Provider: not configured")
@@ -305,7 +276,7 @@ function Assistant:addToMainMenu(menu_items)
           
   -- append External Search tools menu item
   for _, n in ipairs(ToolExecutor.SEARCH_API_NAMES) do
-    table.insert(common_items_table[6].sub_item_table,
+    table.insert(common_items_table[5].sub_item_table,
       SettingsDialog.genWebSearchSubMenuItem(self, n))
   end
 
@@ -492,6 +463,41 @@ function BookLevelCustomPrompts(assistant)
   return sub_item_table
 end
 
+function Assistant:getAddProviderMenuItem()
+    return {
+        text = _("Add Provider"),
+        keep_menu_open = true,
+        sub_item_table_func = function()
+            local items = {}
+            for i, preset in ipairs(PRESET_PROVIDERS) do
+                table.insert(items, {
+                    text = preset.name,
+                    keep_menu_open = true,
+                    callback = function()
+                        self:_showAddProviderDialog(preset.name, preset.handler, preset.base_url)
+                    end,
+                })
+            end
+
+            local custom_items = {}
+            for i, custom_handler in ipairs(CUSTOM_HANDLERS) do
+                table.insert(custom_items, {
+                    text = T(_("%1 (Compatible)"), custom_handler.name),
+                    keep_menu_open = true,
+                    callback = function()
+                        self:_showAddProviderDialog(nil, custom_handler.handler, custom_handler.base_url)
+                    end,
+                })
+            end
+            table.insert(items, {
+                text = _("Custom"),
+                sub_item_table = custom_items,
+            })
+            return items
+        end,
+    }
+end
+
 function Assistant:showSettings(close_callback)
   if not self:isConfigured() then return end
 
@@ -510,6 +516,43 @@ function Assistant:showSettings(close_callback)
 
   self._settings_dialog = settingDlg -- store reference to the dialog
   UIManager:show(settingDlg)
+end
+
+-- Open the KOReader main menu and use TouchMenu's live path navigation to
+-- walk to and highlight the existing "Add Provider" menu item. Touch-only:
+-- on non-touch devices the main menu is a plain Menu widget without path
+-- navigation, so we bail out. Closes the menu again if navigation is not
+-- possible.
+function Assistant:showAddProviderMenu()
+    if not Device:isTouchDevice() then return end
+
+    local menu = self.ui and self.ui.menu
+    if not menu or type(menu.onShowMenu) ~= "function" then return end
+
+    local function closeMenu()
+        if menu.onCloseReaderMenu then
+            menu:onCloseReaderMenu()
+        elseif menu.onCloseFileManagerMenu then
+            menu:onCloseFileManagerMenu()
+        end
+    end
+
+    local path = self.ui.document and ADD_PROVIDER_READER_PATH
+        or ADD_PROVIDER_FILEMANAGER_PATH
+
+    -- If a main menu is already open (e.g. the one the settings dialog was
+    -- opened from), reuse its live TouchMenu instead of stacking a second one.
+    local touch_menu = menu.menu_container and menu.menu_container[1]
+    if not touch_menu or type(touch_menu.openMenu) ~= "function" then
+        menu:onShowMenu(nil, true)
+        touch_menu = menu.menu_container and menu.menu_container[1]
+    end
+    if not touch_menu or type(touch_menu.openMenu) ~= "function" then
+        closeMenu()
+        return
+    end
+
+    touch_menu:openMenu(path)
 end
 
 --- Show a unified dialog for adding a provider (Name, Base URL, API Key, Model).
