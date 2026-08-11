@@ -685,7 +685,9 @@ function Assistant:onFlushSettings()
 end
 
 function Assistant:isConfigured()
-    local err_text = _("Configuration Error.\nPlease set up configuration.lua.")
+    local err_text = ASUtils.bold_format(
+        _("<b>Configuration Error.</b>\nPlease add a provider in Settings or configuration.lua.")
+    )
 
     -- handle error message during loading
     if CONFIG_LOAD_ERROR and type(CONFIG_LOAD_ERROR) == "string" then
@@ -765,6 +767,12 @@ function Assistant:init()
 
   -- skip initialization if no provider is configured (file or UI)
   if not merged_ps then return end
+
+  -- A missing/optional configuration.lua leaves a stale load error in
+  -- CONFIG_LOAD_ERROR.  With at least one provider available (e.g. UI-only)
+  -- the plugin is configured, so clear it before provider selection/querier
+  -- validation below (those paths re-set CONFIG_LOAD_ERROR on failure).
+  CONFIG_LOAD_ERROR = nil
 
   -- Sync provider selection from configuration if configuration provider changed
   self:syncProviderSelectionFromConfig()

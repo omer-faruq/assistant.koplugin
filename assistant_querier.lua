@@ -95,6 +95,22 @@ function Querier:is_valid_provider(provider_key, provider_setting)
     return self:is_handler(provider_key)
 end
 
+--- Get a user-facing display label for the provider.
+--- Prefers the provider's `display_name` when set (UI/file providers may
+--- define one) and falls back to the provider_name (config key) otherwise.
+--- @param provider_setting table|nil setting of the provider (defaults to self.provider_setting)
+--- @param provider_name string|nil provider key (defaults to self.provider_name)
+--- @return string|nil
+function Querier:getProviderLabel(provider_setting, provider_name)
+    provider_setting = provider_setting or self.provider_setting
+    provider_name = provider_name or self.provider_name
+    local display_name = json_default(provider_setting and provider_setting.display_name)
+    if display_name and #display_name > 0 then
+        return display_name
+    end
+    return provider_name
+end
+
 --- Load provider model for the Querier
 function Querier:load_model(provider_name)
     -- If the provider is already loaded, do nothing.
@@ -119,13 +135,15 @@ function Querier:load_model(provider_name)
         handler_name = string.match(provider_name, "^([^_]+)")
     end
     if not handler_name then
-        local err = T(_("Handler not found for: %1. Please check your configuration.lua file."), provider_name)
+        local err = T(_("Handler not found for: %1. Please check your configuration.lua file."),
+                self:getProviderLabel(provider_setting, provider_name))
         logger.warn("Querier initialization failed: " .. err)
         return false, err
     end
     -- Verify handler is in API_HANDLERS
     if not API_HANDLERS[handler_name] then
-        local err = T(_("Handler %1 not available for provider: %2"), handler_name, provider_name)
+        local err = T(_("Handler %1 not available for provider: %2"), handler_name,
+                self:getProviderLabel(provider_setting, provider_name))
         logger.warn("Querier initialization failed: " .. err)
         return false, err
     end
@@ -175,7 +193,7 @@ function Querier:showError(err, message_history)
     if self.user_interrupted then
         dialog = InfoMessage:new{ timeout = 3, text = err }
     else
-        local provider = self.provider_name or "?"
+        local provider = self:getProviderLabel() or "?"
         local model = self.handler and self.handler.model or "?"
         local text = ASUtils.bold_format(
             T(_("<b>API Error</b>\n%1\n\n<b>Provider:</b> %2\n<b>Model:</b> %3\n\nTry another provider in the settings dialog."),
@@ -188,7 +206,7 @@ function Querier:showError(err, message_history)
             ok_callback = function() self.assistant:showSettings() end,
             cancel_text = _("Close"),
         }
-        logger.dbg("API Error", err, "provider", provider, "model", model, "message_history", message_history)
+        logger.dbg("API Error", err, "provider", self.provider_name or "?", "model", model, "message_history", message_history)
     end
     UIManager:show(dialog)
 
@@ -446,7 +464,7 @@ function Querier:query(message_history, title)
         -- ---------------------------------------------------------------
         local tool_notice = T("\n🌐 %1", ToolExecutor.ToolToText(query_option.use_websearch))
         local notify = ASUtils.bold_format(
-            T("<b>%1</b>\n☁️ %2\n⚡ %3%4", title or _("Querying AI ..."), self.provider_name, self.handler.model, query_option.use_websearch ~= "none" and tool_notice or "")
+            T("<b>%1</b>\n☁️ %2\n⚡ %3%4", title or _("Querying AI ..."), self:getProviderLabel(), self.handler.model, query_option.use_websearch ~= "none" and tool_notice or "")
         )
         local infomsg = InfoMessage:new{ icon = "book.opened", text = notify }
         UIManager:show(infomsg)
@@ -501,7 +519,7 @@ function Querier:query(message_history, title)
                 local follow_msg = InfoMessage:new{
                     icon = "book.opened",
                     text = ASUtils.bold_format(
-                        T("<b>%1</b>\n☁️ %2\n⚡ %3", _("Composing answer ..."), self.provider_name, self.handler.model)
+                        T("<b>%1</b>\n☁️ %2\n⚡ %3", _("Composing answer ..."), self:getProviderLabel(), self.handler.model)
                     ),
                 }
                 UIManager:show(follow_msg)
@@ -561,7 +579,7 @@ function Querier:showStremDialog(res)
     streamDialog = InputDialog:new{
         title = _("AI is responding") ,
         description = ASUtils.bold_format(
-            T("☁ %1/<b>%2</b>", self.provider_name, self.handler.model)
+            T("☁ %1/<b>%2</b>", self:getProviderLabel(), self.handler.model)
         ),
         inputtext_class = StreamText, -- use our custom InputText class
         input_face = Font:getFace("infofont", self.settings:readSetting("response_font_size") or 20),
