@@ -603,7 +603,7 @@ function Querier:showStremDialog(res)
                     callback = _closeStreamDialog,
                 },
                 {
-                    text_func = function() return stream_mode_auto_scroll and _("⏹ Scroll") or _("▶ Scroll") end,
+                    text_func = function() return stream_mode_auto_scroll and _("■ Scroll") or _("▶ Scroll") end,
                     id = "auto_scroll",
                     callback = function()
                         stream_mode_auto_scroll = not stream_mode_auto_scroll

@@ -139,6 +139,7 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 
 - **Branch**: `main` is the default branch.
 - **Commit style**: Conventional commits — `fix:`, `refactor:`, `add:`, `feat:` prefixes.
+- **Commit authorization**: When the user explicitly asks to commit, create the commit directly with a concise Conventional Commit message inferred from the changes. Do not ask for confirmation of the message unless the user requests a custom message or the commit scope is genuinely ambiguous.
 - **Releases**: Tag with `v*` (e.g. `v1.12`). The CI workflow rewrites `_meta.lua` version and creates a zip release asset.
 
 ### Versioning
