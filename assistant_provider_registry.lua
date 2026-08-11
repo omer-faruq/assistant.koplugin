@@ -299,6 +299,29 @@ function Registry.delete(data, id)
     return true
 end
 
+--- Edit an existing UI provider in place.  Only mutable fields are updated;
+--- the handler, additional_parameters, and stable ID are preserved.
+---@param data table The full UI data structure (from load())
+---@param id string The provider's stable ID
+---@param fields table { display_name, base_url, api_key, model }
+---@return boolean ok
+---@return string|nil err
+function Registry.edit(data, id)
+    local existing = data.providers[id]
+    if not existing then
+        return false, _("Provider not found.")
+    end
+    return true
+end
+
+--- Convenience: check whether a merged provider record is editable (or deletable).
+--- Same condition: source="ui" and not immutable.
+---@param provider table A merged provider_settings entry
+---@return boolean
+function Registry.is_editable(provider)
+    return Registry.is_deletable(provider)
+end
+
 --- Convenience: check whether a merged provider record is deletable.
 ---@param provider table A merged provider_settings entry
 ---@return boolean
@@ -306,6 +329,57 @@ function Registry.is_deletable(provider)
     return provider
         and provider.source == "ui"
         and not provider.immutable
+end
+
+--- Update an existing UI provider: update record, save, refresh merged config.
+--- The provider ID and handler are preserved; additional_parameters from the
+--- existing record are kept (the edit dialog does not expose them).
+---@param assistant table The Assistant instance
+---@param id string The provider's stable ID (e.g. "custom:1")
+---@param display_name string
+---@param base_url string
+---@param api_key string
+---@param model string
+---@return string|nil id
+---@return string|nil err
+function Registry.updateProvider(assistant, id, display_name, base_url, api_key, model)
+    if not assistant._ui_provider_data then
+        return nil, _("Provider data not initialized.")
+    end
+
+    local existing = assistant._ui_provider_data.providers[id]
+    if not existing then
+        return nil, _("Provider not found.")
+    end
+
+    -- Update mutable fields in place; handler and additional_parameters are kept.
+    existing.display_name = display_name
+    existing.base_url = base_url
+    existing.api_key = api_key
+    existing.model = model ~= "" and model or "auto"
+
+    Registry.save(assistant.settings, assistant._ui_provider_data)
+    assistant.updated = true
+
+    -- Refresh in-memory merged config (reuse existing additional_parameters).
+    local merged_ps = assistant.CONFIGURATION.provider_settings or {}
+    merged_ps[id] = {
+        display_name = existing.display_name,
+        handler = existing.handler,
+        model = existing.model,
+        base_url = existing.base_url,
+        api_key = existing.api_key,
+        additional_parameters = existing.additional_parameters or {},
+        source = "ui",
+    }
+    assistant.CONFIGURATION.provider_settings = merged_ps
+
+    -- Reload querier if the currently selected provider was edited.
+    if assistant.querier and assistant.querier.provider_name == id then
+        assistant.querier:load_model(id)
+    end
+
+    return id
 end
 
 --- Install a newly added UI provider: save, update in-memory config, load into querier.

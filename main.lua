@@ -500,17 +500,39 @@ function Assistant:showAddProviderMenu()
     touch_menu:openMenu(path)
 end
 
---- Show a unified dialog for adding a provider (Name, Base URL, API Key, Model).
+--- Show a unified dialog for adding or editing a provider (Name, Base URL, API Key, Model).
 --- For preset providers: Name + Base URL are pre-filled from the preset.
 --- For Custom (preset_name=nil): Base URL is pre-filled from the protocol sub-menu, Name is empty.
----@param preset_name string|nil Preset display name, nil for Custom
+--- For Edit (edit_id ~= nil): all fields are pre-filled from the existing record.
+---@param preset_name string|nil Preset display name, nil for Custom (or Edit)
 ---@param handler string API handler name (e.g. "openai")
 ---@param base_url string Pre-filled base URL
 ---@param additional_parameters table|nil Provider-specific additional_parameters
 ---        (preset defaults; Custom passes nil which is stored as {})
-function Assistant:_showAddProviderDialog(preset_name, handler, base_url, additional_parameters)
-    local dialog_title = preset_name and T(_("Add %1"), preset_name) or T(_("Add %1 Provider"), handler)
-    local default_name = preset_name or ""
+---@param edit_id string|nil When non-nil, edit the existing provider with this ID
+function Assistant:_showAddProviderDialog(preset_name, handler, base_url, additional_parameters, edit_id)
+    local is_edit = edit_id ~= nil
+    local dialog_title
+    local default_name
+    local default_api_key = ""
+    local default_model = "auto"
+
+    if is_edit then
+        -- Pre-fill from the existing provider record
+        local ps = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", edit_id)
+        dialog_title = T(_("Edit %1"), koutil.tableGetValue(ps, "display_name") or edit_id)
+        default_name = koutil.tableGetValue(ps, "display_name") or ""
+        base_url = koutil.tableGetValue(ps, "base_url") or base_url or ""
+        default_api_key = koutil.tableGetValue(ps, "api_key") or ""
+        default_model = koutil.tableGetValue(ps, "model") or "auto"
+        -- Preserve the existing additional_parameters (not exposed in dialog)
+        additional_parameters = koutil.tableGetValue(ps, "additional_parameters") or {}
+        -- Handler comes from the existing record, not the parameter
+        handler = koutil.tableGetValue(ps, "handler") or handler
+    else
+        dialog_title = preset_name and T(_("Add %1"), preset_name) or T(_("Add %1 Provider"), handler)
+        default_name = preset_name or ""
+    end
 
     local dialog_ref = {}  -- forward ref for enabled_func closure in buttons
     local dialog
@@ -519,8 +541,8 @@ function Assistant:_showAddProviderDialog(preset_name, handler, base_url, additi
         fields = {
             { description = _("Provider Name"), hint = _("Display name"), text = default_name },
             { description = _("Base URL"),      hint = _("https://..."),   text = base_url },
-            { description = _("API Key"),       hint = _("Your API key"),  text = "" },
-            { description = _("Model"),         hint = _("Default: auto"), text = "auto" },
+            { description = _("API Key"),       hint = _("Your API key"),  text = default_api_key },
+            { description = _("Model"),         hint = _("Default: auto"), text = default_model },
         },
         buttons = {{
             {
@@ -589,7 +611,11 @@ function Assistant:_showAddProviderDialog(preset_name, handler, base_url, additi
                         UIManager:show(InfoMessage:new{ text = _("API key is required.") })
                         return
                     end
-                    Registry.installProvider(self, handler, url, name, api_key, model, additional_parameters)
+                    if is_edit then
+                        Registry.updateProvider(self, edit_id, name, url, api_key, model)
+                    else
+                        Registry.installProvider(self, handler, url, name, api_key, model, additional_parameters)
+                    end
                     UIManager:close(dialog)
                     -- Refresh settings if open
                     if self._settings_dialog then

@@ -216,6 +216,17 @@ function SettingsDialog:init()
             end
         },
         {
+            id = "edit_provider",
+            text = _("Edit"),
+            enabled_func = function()
+                local cur = self.assistant.querier.provider_name
+                if not cur then return false end
+                local ps = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", cur)
+                return Registry.is_editable(ps)
+            end,
+            callback = function() self:onEditProvider() end,
+        },
+        {
             id = "delete_provider",
             text = _("Delete"),
             enabled_func = function()
@@ -412,6 +423,17 @@ function SettingsDialog:onDeleteProvider()
             end)
         end,
     })
+end
+
+function SettingsDialog:onEditProvider()
+    local provider_name = self.assistant.querier.provider_name
+    local ps = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", provider_name)
+    if not Registry.is_editable(ps) then return end
+
+    UIManager:close(self)
+    UIManager:nextTick(function()
+        self.assistant:_showAddProviderDialog(nil, nil, nil, nil, provider_name)
+    end)
 end
 
 function SettingsDialog:onCloseWidget()

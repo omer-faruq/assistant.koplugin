@@ -316,6 +316,168 @@ local tests = {
         assert.equal(preset.additional_parameters.temperature, 0.7)
         assert.isTrue(deepEqual(preset.additional_parameters, EXPECTED_PRESET_PARAMS.DeepSeek))
     end),
+
+    -- =========================================================================
+    -- Edit / is_editable
+    -- =========================================================================
+
+    test("is_editable returns same result as is_deletable", function()
+        -- UI provider: editable
+        assert.isTrue(Registry.is_editable({ source = "ui" }))
+        assert.isTrue(Registry.is_deletable({ source = "ui" }))
+        -- File provider: not editable
+        assert.equal(Registry.is_editable({ source = "file", immutable = true }), false)
+        assert.equal(Registry.is_deletable({ source = "file", immutable = true }), false)
+        -- UI + immutable: not editable
+        assert.equal(Registry.is_editable({ source = "ui", immutable = true }), false)
+        assert.equal(Registry.is_deletable({ source = "ui", immutable = true }), false)
+        -- nil: not editable
+        assert.equal(Registry.is_editable(nil), nil)
+        assert.equal(Registry.is_deletable(nil), nil)
+    end),
+
+    test("Registry.edit returns false for non-existent provider", function()
+        local data = { providers = {}, _next_id = 1 }
+        local ok, err = Registry.edit(data, "custom:999", {})
+        assert.isFalse(ok)
+        assert.notNil(err)
+    end),
+
+    test("Registry.edit returns true for existing provider", function()
+        local data = { providers = {}, _next_id = 1 }
+        local id = Registry.add(data, {
+            display_name = "Test",
+            handler = "openai",
+            model = "auto",
+            base_url = "https://api.test.com/v1",
+            api_key = "key",
+        })
+        assert.notNil(id)
+        local ok, err = Registry.edit(data, id, {})
+        assert.isTrue(ok)
+    end),
+
+    test("updateProvider updates fields without generating new ID", function()
+        local assistant = mockAssistantForInstall()
+        -- First install a provider
+        local id, err = Registry.installProvider(assistant, "openai",
+            "https://api.old.com/v1", "Old Name", "old_key", "gpt-4")
+        assert.notNil(id, err)
+
+        -- Now update it
+        local same_id, err2 = Registry.updateProvider(assistant, id,
+            "New Name", "https://api.new.com/v1", "new_key", "gpt-4o")
+        assert.notNil(same_id, err2)
+        assert.equal(same_id, id, "updateProvider must return the same ID")
+
+        -- Verify fields updated in ui_provider_data
+        local record = assistant._ui_provider_data.providers[id]
+        assert.equal(record.display_name, "New Name")
+        assert.equal(record.base_url, "https://api.new.com/v1")
+        assert.equal(record.api_key, "new_key")
+        assert.equal(record.model, "gpt-4o")
+
+        -- Verify merged config updated
+        local merged = assistant.CONFIGURATION.provider_settings[id]
+        assert.equal(merged.display_name, "New Name")
+        assert.equal(merged.base_url, "https://api.new.com/v1")
+        assert.equal(merged.api_key, "new_key")
+        assert.equal(merged.model, "gpt-4o")
+    end),
+
+    test("updateProvider preserves handler and additional_parameters", function()
+        local assistant = mockAssistantForInstall()
+        local params = { temperature = 0.5, thinking = { type = "disabled" } }
+        local id, err = Registry.installProvider(assistant, "openai",
+            "https://api.deepseek.com/v1", "DeepSeek", "key", "auto", params)
+        assert.notNil(id, err)
+
+        -- Update only mutable fields
+        local same_id, err2 = Registry.updateProvider(assistant, id,
+            "DeepSeek Updated", "https://api.deepseek.com/v1", "new_key", "deepseek-chat")
+        assert.notNil(same_id, err2)
+
+        local record = assistant._ui_provider_data.providers[id]
+        assert.equal(record.handler, "openai", "handler must be preserved")
+        assert.isTrue(deepEqual(record.additional_parameters, params),
+            "additional_parameters must be preserved")
+
+        local merged = assistant.CONFIGURATION.provider_settings[id]
+        assert.equal(merged.handler, "openai", "merged handler must be preserved")
+        assert.isTrue(deepEqual(merged.additional_parameters, params),
+            "merged additional_parameters must be preserved")
+    end),
+
+    test("updateProvider defaults model to 'auto' when empty", function()
+        local assistant = mockAssistantForInstall()
+        local id, err = Registry.installProvider(assistant, "openai",
+            "https://api.test.com/v1", "Test", "key", "gpt-4")
+        assert.notNil(id, err)
+
+        Registry.updateProvider(assistant, id, "Test", "https://api.test.com/v1", "key", "")
+        local record = assistant._ui_provider_data.providers[id]
+        assert.equal(record.model, "auto")
+    end),
+
+    test("updateProvider fails for non-existent ID", function()
+        local assistant = mockAssistantForInstall()
+        local id, err = Registry.updateProvider(assistant, "custom:999",
+            "Ghost", "https://ghost.com", "key", "model")
+        assert.equal(id, nil)
+        assert.notNil(err)
+    end),
+
+    test("updateProvider sets updated flag and saves", function()
+        local assistant = mockAssistantForInstall()
+        local save_called = false
+        assistant.settings.saveSetting = function() save_called = true end
+
+        local id, err = Registry.installProvider(assistant, "openai",
+            "https://api.test.com/v1", "Test", "key", "auto")
+        assert.notNil(id, err)
+
+        assistant.updated = false
+        Registry.updateProvider(assistant, id, "Test2", "https://api2.test.com/v1", "key2", "gpt-4")
+        assert.isTrue(assistant.updated, "updated flag must be set")
+        assert.isTrue(save_called, "settings must be saved")
+    end),
+
+    -- =========================================================================
+    -- Delete regression
+    -- =========================================================================
+
+    test("delete still works correctly after edit additions", function()
+        local data = { providers = {}, _next_id = 1 }
+        local id1 = Registry.add(data, {
+            display_name = "Provider 1", handler = "openai",
+            model = "auto", base_url = "https://a.com", api_key = "k1",
+        })
+        local id2 = Registry.add(data, {
+            display_name = "Provider 2", handler = "anthropic",
+            model = "claude", base_url = "https://b.com", api_key = "k2",
+        })
+        assert.notNil(id1)
+        assert.notNil(id2)
+
+        -- Delete the first provider
+        local ok, err = Registry.delete(data, id1)
+        assert.isTrue(ok)
+        assert.equal(data.providers[id1], nil)
+        assert.notNil(data.providers[id2], "second provider must survive delete")
+
+        -- Delete the second
+        ok, err = Registry.delete(data, id2)
+        assert.isTrue(ok)
+        assert.equal(data.providers[id2], nil)
+    end),
+
+    test("is_deletable unchanged by edit additions", function()
+        -- Same semantics: UI = deletable (truthy), file = not (false)
+        assert.isTrue(Registry.is_deletable({ source = "ui" }))
+        assert.equal(Registry.is_deletable({ source = "ui", immutable = true }), false)
+        assert.equal(Registry.is_deletable({ source = "file" }), false)
+        assert.equal(Registry.is_deletable(nil), nil)
+    end),
 }
 
 return helper.runTests("assistant_provider_registry", tests)
