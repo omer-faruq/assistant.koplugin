@@ -503,7 +503,12 @@ end
 --- Show a unified dialog for adding a provider (Name, Base URL, API Key, Model).
 --- For preset providers: Name + Base URL are pre-filled from the preset.
 --- For Custom (preset_name=nil): Base URL is pre-filled from the protocol sub-menu, Name is empty.
-function Assistant:_showAddProviderDialog(preset_name, handler, base_url)
+---@param preset_name string|nil Preset display name, nil for Custom
+---@param handler string API handler name (e.g. "openai")
+---@param base_url string Pre-filled base URL
+---@param additional_parameters table|nil Provider-specific additional_parameters
+---        (preset defaults; Custom passes nil which is stored as {})
+function Assistant:_showAddProviderDialog(preset_name, handler, base_url, additional_parameters)
     local dialog_title = preset_name and T(_("Add %1"), preset_name) or T(_("Add %1 Provider"), handler)
     local default_name = preset_name or ""
 
@@ -584,7 +589,7 @@ function Assistant:_showAddProviderDialog(preset_name, handler, base_url)
                         UIManager:show(InfoMessage:new{ text = _("API key is required.") })
                         return
                     end
-                    Registry.installProvider(self, handler, url, name, api_key, model)
+                    Registry.installProvider(self, handler, url, name, api_key, model, additional_parameters)
                     UIManager:close(dialog)
                     -- Refresh settings if open
                     if self._settings_dialog then

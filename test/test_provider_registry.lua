@@ -1,7 +1,8 @@
 -- test_provider_registry.lua
 -- Tests for assistant_provider_registry.lua, focusing on the exported
--- "Add Provider" menu factory (Registry.getAddProviderMenuItem) and the
--- preset/custom provider tables that moved here from main.lua.
+-- "Add Provider" menu factory (Registry.getAddProviderMenuItem), the
+-- preset/custom provider tables that moved here from main.lua, and the
+-- persistence of preset additional_parameters (Registry.add / installProvider).
 local helper = require("test.test_helper")
 local assert = helper.assert
 local Registry = require("assistant_provider_registry")
@@ -10,13 +11,45 @@ local function test(name, fn)
     return { name = name, fn = fn }
 end
 
+-- Deep equality helper for comparing additional_parameters tables.
+local function deepEqual(a, b)
+    if type(a) ~= type(b) then return false end
+    if type(a) ~= "table" then return a == b end
+    local count_a, count_b = 0, 0
+    for k, v in pairs(a) do
+        count_a = count_a + 1
+        if not deepEqual(v, b[k]) then return false end
+    end
+    for key in pairs(b) do
+        count_b = count_b + 1
+    end
+    return count_a == count_b
+end
+
 -- A mock Assistant that records _showAddProviderDialog invocations.
 local function mockAssistant()
     return {
         calls = {},
-        _showAddProviderDialog = function(self, preset_name, handler, base_url)
-            table.insert(self.calls, { preset_name = preset_name, handler = handler, base_url = base_url })
+        _showAddProviderDialog = function(self, preset_name, handler, base_url, additional_parameters)
+            table.insert(self.calls, {
+                preset_name = preset_name,
+                handler = handler,
+                base_url = base_url,
+                additional_parameters = additional_parameters,
+            })
         end,
+    }
+end
+
+-- A mock Assistant with the provider-data/settings/config plumbing that
+-- Registry.installProvider touches.
+local function mockAssistantForInstall()
+    return {
+        _ui_provider_data = { providers = {}, _next_id = 1 },
+        settings = { saveSetting = function() end },
+        CONFIGURATION = { provider_settings = {} },
+        updated = false,
+        querier = nil,
     }
 end
 
@@ -25,6 +58,36 @@ local function subItems(menu_item)
     assert.notNil(menu_item.sub_item_table_func, "menu item should have sub_item_table_func")
     return menu_item.sub_item_table_func()
 end
+
+-- Expected default additional_parameters per preset name.
+local EXPECTED_PRESET_PARAMS = {
+    DeepSeek = {
+        temperature = 0.7,
+        max_tokens = 4096,
+        thinking = { type = "disabled" },
+    },
+    OpenRouter = {
+        temperature = 0.7,
+        max_tokens = 4096,
+        reasoning = { effort = "none" },
+    },
+    Groq = {
+        temperature = 0.7,
+        reasoning_effort = "none",
+    },
+    Mistral = {
+        temperature = 0.7,
+        max_tokens = 4096,
+    },
+    Gemini = {
+        temperature = 0.7,
+        thinking_budget = 0,
+    },
+    Anthropic = {
+        anthropic_version = "2023-06-01",
+        max_tokens = 4096,
+    },
+}
 
 local tests = {
 
@@ -65,6 +128,26 @@ local tests = {
         end
     end),
 
+    test("presets carry provider-specific additional_parameters defaults", function()
+        local presets = Registry.PRESET_PROVIDERS
+        assert.equal(#presets, 6)
+        for i, preset in ipairs(presets) do
+            local want = EXPECTED_PRESET_PARAMS[preset.name]
+            assert.notNil(want, "no expected defaults defined for preset " .. tostring(preset.name))
+            assert.notNil(preset.additional_parameters,
+                preset.name .. " preset should define additional_parameters")
+            assert.isTrue(deepEqual(preset.additional_parameters, want),
+                preset.name .. " additional_parameters mismatch")
+        end
+    end),
+
+    test("custom wire formats carry no additional_parameters", function()
+        for i, custom in ipairs(Registry.CUSTOM_HANDLERS) do
+            assert.equal(custom.additional_parameters, nil,
+                "custom handler " .. tostring(custom.name) .. " must not add defaults")
+        end
+    end),
+
     -- =========================================================================
     -- getAddProviderMenuItem
     -- =========================================================================
@@ -90,7 +173,7 @@ local tests = {
         assert.notNil(custom_item.sub_item_table)
     end),
 
-    test("preset callback invokes _showAddProviderDialog with preset fields", function()
+    test("preset callback invokes _showAddProviderDialog with preset fields and additional_parameters", function()
         local assistant = mockAssistant()
         local items = subItems(Registry.getAddProviderMenuItem(assistant))
         for i, preset in ipairs(Registry.PRESET_PROVIDERS) do
@@ -99,6 +182,8 @@ local tests = {
             assert.equal(call.preset_name, preset.name)
             assert.equal(call.handler, preset.handler)
             assert.equal(call.base_url, preset.base_url)
+            assert.equal(call.additional_parameters, preset.additional_parameters,
+                "preset additional_parameters should be forwarded to the dialog")
         end
     end),
 
@@ -114,7 +199,7 @@ local tests = {
         end
     end),
 
-    test("Custom callback invokes _showAddProviderDialog with nil name", function()
+    test("Custom callback invokes _showAddProviderDialog with nil name and no additional_parameters", function()
         local assistant = mockAssistant()
         local items = subItems(Registry.getAddProviderMenuItem(assistant))
         local custom_items = items[#items].sub_item_table
@@ -124,7 +209,112 @@ local tests = {
             assert.equal(call.preset_name, nil)
             assert.equal(call.handler, custom.handler)
             assert.equal(call.base_url, custom.base_url)
+            assert.equal(call.additional_parameters, nil,
+                "custom callback should not pass additional_parameters")
         end
+    end),
+
+    -- =========================================================================
+    -- Registry.add persistence
+    -- =========================================================================
+
+    test("Registry.add persists additional_parameters", function()
+        local data = { providers = {}, _next_id = 1 }
+        local params = { temperature = 0.7, thinking = { type = "disabled" } }
+        local id, err = Registry.add(data, {
+            display_name = "DeepSeek UI",
+            handler = "openai",
+            model = "auto",
+            base_url = "https://api.deepseek.com/v1",
+            api_key = "key",
+            additional_parameters = params,
+        })
+        assert.notNil(id, err)
+        assert.isTrue(deepEqual(data.providers[id].additional_parameters, params))
+    end),
+
+    test("Registry.add stores a deep copy of additional_parameters", function()
+        local params = { temperature = 0.7, thinking = { type = "disabled" } }
+        local data = { providers = {}, _next_id = 1 }
+        local id, err = Registry.add(data, {
+            display_name = "DeepSeek UI",
+            handler = "openai",
+            model = "auto",
+            base_url = "https://api.deepseek.com/v1",
+            api_key = "key",
+            additional_parameters = params,
+        })
+        assert.notNil(id, err)
+        assert.isFalse(data.providers[id].additional_parameters == params,
+            "stored additional_parameters must not share the source table")
+        -- mutating the stored copy must not leak back into the source table
+        data.providers[id].additional_parameters.thinking.type = "enabled"
+        data.providers[id].additional_parameters.temperature = 0.9
+        assert.equal(params.thinking.type, "disabled")
+        assert.equal(params.temperature, 0.7)
+    end),
+
+    test("Registry.add without additional_parameters defaults to empty table", function()
+        local data = { providers = {}, _next_id = 1 }
+        local id, err = Registry.add(data, {
+            display_name = "Plain UI",
+            handler = "openai",
+            model = "auto",
+            base_url = "https://api.openai.com/v1",
+            api_key = "key",
+        })
+        assert.notNil(id, err)
+        assert.equal(type(data.providers[id].additional_parameters), "table")
+        assert.equal(next(data.providers[id].additional_parameters), nil)
+    end),
+
+    -- =========================================================================
+    -- Registry.installProvider
+    -- =========================================================================
+
+    test("installProvider merges additional_parameters into provider_settings", function()
+        local assistant = mockAssistantForInstall()
+        local params = { temperature = 0.7, reasoning = { effort = "none" } }
+        local id, err = Registry.installProvider(assistant, "openai",
+            "https://openrouter.ai/api/v1", "OpenRouter UI", "key", "auto", params)
+        assert.notNil(id, err)
+        assert.equal(assistant.updated, true)
+        local merged = assistant.CONFIGURATION.provider_settings[id]
+        assert.notNil(merged)
+        assert.equal(merged.source, "ui")
+        assert.isTrue(deepEqual(merged.additional_parameters, params),
+            "merged provider_settings should carry the given additional_parameters")
+        assert.isTrue(deepEqual(assistant._ui_provider_data.providers[id].additional_parameters, params),
+            "ui provider data should persist the same additional_parameters")
+    end),
+
+    test("installProvider without additional_parameters defaults to empty table", function()
+        local assistant = mockAssistantForInstall()
+        local id, err = Registry.installProvider(assistant, "openai",
+            "https://api.openai.com/v1", "Plain UI", "key", "")
+        assert.notNil(id, err)
+        local merged = assistant.CONFIGURATION.provider_settings[id]
+        assert.notNil(merged)
+        assert.equal(type(merged.additional_parameters), "table")
+        assert.equal(next(merged.additional_parameters), nil)
+        assert.equal(type(assistant._ui_provider_data.providers[id].additional_parameters), "table")
+        assert.equal(next(assistant._ui_provider_data.providers[id].additional_parameters), nil)
+    end),
+
+    test("installProvider does not share preset additional_parameters tables", function()
+        local assistant = mockAssistantForInstall()
+        local preset = Registry.PRESET_PROVIDERS[1] -- DeepSeek
+        local id, err = Registry.installProvider(assistant, preset.handler, preset.base_url,
+            preset.name .. " UI", "key", "auto", preset.additional_parameters)
+        assert.notNil(id, err)
+        local merged = assistant.CONFIGURATION.provider_settings[id]
+        assert.notNil(merged)
+        -- Mutating the merged config must not corrupt the shared preset table.
+        merged.additional_parameters.thinking.type = "enabled"
+        merged.additional_parameters.temperature = 0.9
+        assert.equal(preset.additional_parameters.thinking.type, "disabled")
+        assert.equal(preset.additional_parameters.temperature, 0.7)
+        assert.isTrue(deepEqual(preset.additional_parameters, EXPECTED_PRESET_PARAMS.DeepSeek))
     end),
 }
 

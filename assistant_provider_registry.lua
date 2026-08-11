@@ -12,6 +12,7 @@
 local json = require("rapidjson")
 local logger = require("logger")
 local T = require("ffi/util").template
+local koutil = require("util")
 local _ = require("assistant_gettext")
 
 local Registry = {}
@@ -37,13 +38,41 @@ Registry.DEFAULT_BASE_URLS = {
 
 -- Preset platforms offered in the "Add Provider" sub-menu.
 -- Selecting one only asks for the API key (name/base_url come from here).
+-- Each preset carries provider-specific additional_parameters that default to
+-- reducing/disabling the reasoning/thinking chain (see configuration.sample.lua).
 local PRESET_PROVIDERS = {
-    { name = "DeepSeek",   handler = "openai",   base_url = "https://api.deepseek.com/v1" },
-    { name = "OpenRouter", handler = "openai",   base_url = "https://openrouter.ai/api/v1" },
-    { name = "Groq",       handler = "openai",   base_url = "https://api.groq.com/openai/v1" },
-    { name = "Mistral",    handler = "openai",   base_url = "https://api.mistral.ai/v1" },
-    { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta" },
-    { name = "Anthropic",  handler = "anthropic", base_url = "https://api.anthropic.com/v1" },
+    { name = "DeepSeek",   handler = "openai",   base_url = "https://api.deepseek.com/v1",
+      additional_parameters = {
+          temperature = 0.7,
+          max_tokens = 4096,
+          thinking = { type = "disabled" },
+      } },
+    { name = "OpenRouter", handler = "openai",   base_url = "https://openrouter.ai/api/v1",
+      additional_parameters = {
+          temperature = 0.7,
+          max_tokens = 4096,
+          reasoning = { effort = "none" },
+      } },
+    { name = "Groq",       handler = "openai",   base_url = "https://api.groq.com/openai/v1",
+      additional_parameters = {
+          temperature = 0.7,
+          reasoning_effort = "none",
+      } },
+    { name = "Mistral",    handler = "openai",   base_url = "https://api.mistral.ai/v1",
+      additional_parameters = {
+          temperature = 0.7,
+          max_tokens = 4096,
+      } },
+    { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta",
+      additional_parameters = {
+          temperature = 0.7,
+          thinking_budget = 0,
+      } },
+    { name = "Anthropic",  handler = "anthropic", base_url = "https://api.anthropic.com/v1",
+      additional_parameters = {
+          anthropic_version = "2023-06-01",
+          max_tokens = 4096,
+      } },
 }
 Registry.PRESET_PROVIDERS = PRESET_PROVIDERS
 
@@ -248,7 +277,9 @@ function Registry.add(data, fields)
         model = fields.model,
         base_url = fields.base_url,
         api_key = fields.api_key,
-        additional_parameters = fields.additional_parameters or {},
+        -- Deep copy so the stored record never shares nested tables with the
+        -- caller's table (e.g. a shared preset definition).
+        additional_parameters = koutil.tableDeepCopy(fields.additional_parameters) or {},
     }
     data.providers[id] = record
 
@@ -284,9 +315,11 @@ end
 ---@param display_name string
 ---@param api_key string
 ---@param model string
+---@param additional_parameters table|nil Provider-specific additional_parameters
+---        (preset defaults; nil is stored as {} for backward compatibility)
 ---@return string|nil id
 ---@return string|nil err
-function Registry.installProvider(assistant, handler, base_url, display_name, api_key, model)
+function Registry.installProvider(assistant, handler, base_url, display_name, api_key, model, additional_parameters)
     if not assistant._ui_provider_data then
         return nil, _("Provider data not initialized.")
     end
@@ -297,6 +330,7 @@ function Registry.installProvider(assistant, handler, base_url, display_name, ap
         base_url = base_url,
         api_key = api_key,
         model = model ~= "" and model or "auto",
+        additional_parameters = additional_parameters,
     }
     local id, err = Registry.add(assistant._ui_provider_data, record)
     if not id then
@@ -305,7 +339,9 @@ function Registry.installProvider(assistant, handler, base_url, display_name, ap
     Registry.save(assistant.settings, assistant._ui_provider_data)
     assistant.updated = true
 
-    -- Update in-memory merged config
+    -- Update in-memory merged config. Reuse the deep copy stored by
+    -- Registry.add (never the shared preset table).
+    local stored = assistant._ui_provider_data.providers[id]
     local merged_ps = assistant.CONFIGURATION.provider_settings or {}
     merged_ps[id] = {
         display_name = record.display_name,
@@ -313,7 +349,7 @@ function Registry.installProvider(assistant, handler, base_url, display_name, ap
         model = record.model,
         base_url = record.base_url,
         api_key = record.api_key,
-        additional_parameters = {},
+        additional_parameters = stored and stored.additional_parameters or {},
         source = "ui",
     }
     assistant.CONFIGURATION.provider_settings = merged_ps
@@ -347,7 +383,8 @@ function Registry.getAddProviderMenuItem(assistant)
                     text = preset.name,
                     keep_menu_open = true,
                     callback = function()
-                        assistant:_showAddProviderDialog(preset.name, preset.handler, preset.base_url)
+                        assistant:_showAddProviderDialog(preset.name, preset.handler, preset.base_url,
+                            preset.additional_parameters)
                     end,
                 })
             end
