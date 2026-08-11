@@ -234,13 +234,13 @@ function Assistant:addToMainMenu(menu_items)
               },
               {
                 text_func = function ()
-                  if not self.querier then
+                  if not self.querier or not self.querier.handler then
                     return _("AI Provider: not configured")
                   end
                   local provider = self.querier.provider_setting
                       and self.querier.provider_setting.display_name
                       or self.querier.provider_name
-                  local model = self.querier.handler.model
+                  local model = self.querier.handler.model or "?"
                   return T(_("AI Provider: %1(%2)"), provider, model)
                 end,
                 keep_menu_open = true,
@@ -731,6 +731,17 @@ function Assistant:isConfigured()
     local err_text = ASUtils.bold_format(
         _("<b>Configuration Error.</b>\nPlease add a provider in Settings or configuration.lua.")
     )
+    local function show_config_error()
+      UIManager:show(ConfirmBox:new{
+        icon = "notice-warning",
+        text = err_text,
+        ok_text = _("OK"),
+        ok_callback = function()
+          self:showAddProviderMenu()
+        end,
+        cancel_text = _("Cancel"),
+      })
+    end
 
     -- handle error message during loading
     if CONFIG_LOAD_ERROR and type(CONFIG_LOAD_ERROR) == "string" then
@@ -738,12 +749,12 @@ function Assistant:isConfigured()
       local cut = CONFIG_LOAD_ERROR:find("configuration.lua", 1, true) or 0 -- find as plain
       err_text = string.format("%s\n\n%s", err_text,
               (cut > 0) and CONFIG_LOAD_ERROR:sub(cut) or CONFIG_LOAD_ERROR)
-      UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err_text })
+      show_config_error()
       return nil
     end
 
-    if not self.CONFIGURATION then
-      UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err_text })
+    if not self.CONFIGURATION or not self.querier or not self.querier.handler then
+      show_config_error()
       return nil
     end
   
@@ -756,6 +767,12 @@ function Assistant:init()
 
   -- init settings
   self.settings = LuaSettings:open(self.settings_file)
+
+  -- Initialize UI state independently of provider configuration. Menus and
+  -- Settings can be opened before a provider is added through the UI.
+  local ui_locale = G_reader_settings:readSetting("language") or "en"
+  self.ui_language = Language:getLanguageName(ui_locale) or "English"
+  self.ui_language_is_rtl = Language:isLanguageRTL(ui_locale)
 
   -- Load UI providers from settings and merge with file config
   local ui_data = Registry.load(self.settings)
@@ -838,11 +855,6 @@ function Assistant:init()
     UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
     return
   end
-
-  -- store the UI language
-  local ui_locale = G_reader_settings:readSetting("language") or "en"
-  self.ui_language = Language:getLanguageName(ui_locale) or "English"
-  self.ui_language_is_rtl = Language:isLanguageRTL(ui_locale)
 
   -- Conditionally override translate method based on user setting
   self:syncTranslateOverride()
