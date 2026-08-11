@@ -557,12 +557,12 @@ function Querier:showStremDialog(res)
         buttons = {
             {
                 {
-                    text = _("⏹ Stop"),
+                    text = _("❌ Stop"),
                     id = "close", -- id:close response to default cancel action (esc key ...)
                     callback = _closeStreamDialog,
                 },
                 {
-                    text_func = function() return stream_mode_auto_scroll and _("■ Scroll") or _("▶ Scroll") end,
+                    text_func = function() return stream_mode_auto_scroll and _("⏹ Scroll") or _("▶ Scroll") end,
                     id = "auto_scroll",
                     callback = function()
                         stream_mode_auto_scroll = not stream_mode_auto_scroll
