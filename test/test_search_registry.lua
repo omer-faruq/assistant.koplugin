@@ -533,6 +533,15 @@ local tests = {
             assert.equal(sub_item.keep_menu_open, true)
         end
     end),
+
+    test("sub-menu items have a hold_callback for long-press actions", function()
+        local assistant = mockAssistant()
+        local item = SearchRegistry.getAddWebSearchMenuItem(assistant)
+        local sub_items = item.sub_item_table_func()
+        for i, sub_item in ipairs(sub_items) do
+            assert.notNil(sub_item.hold_callback, "sub_item " .. i .. " should have hold_callback")
+        end
+    end),
 }
 
 return helper.runTests("assistant_search_registry", tests)

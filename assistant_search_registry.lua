@@ -327,13 +327,41 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
         keep_menu_open = true,
         sub_item_table_func = function()
             local items = {}
-            for _, tool_key in ipairs(SearchRegistry.TOOL_KEYS) do
+            for i, tool_key in ipairs(SearchRegistry.TOOL_KEYS) do
                 local def = SearchRegistry.SEARCH_TOOLS[tool_key]
                 table.insert(items, {
                     text = def.display_name,
                     keep_menu_open = true,
                     callback = function()
                         assistant:_showAddWebSearchDialog(tool_key)
+                    end,
+                    hold_callback = function()
+                        local UIManager = require("ui/uimanager")
+                        local ConfirmBox = require("ui/widget/confirmbox")
+                        local merged = koutil.tableGetValue(
+                            assistant.CONFIGURATION, "provider_settings", tool_key)
+                        local deletable = SearchRegistry.is_deletable(merged)
+                        UIManager:show(ConfirmBox:new{
+                            text = T(_("%1 — choose an action"), def.display_name),
+                            other_buttons_first = true,
+                            other_buttons = {{
+                                {
+                                    text = _("Edit"),
+                                    callback = function()
+                                        assistant:_showAddWebSearchDialog(tool_key)
+                                    end,
+                                },
+                                {
+                                    text = _("Delete"),
+                                    callback = function()
+                                        if not deletable then return end
+                                        SearchRegistry.deleteSearchTool(assistant, tool_key)
+                                    end,
+                                },
+                            }},
+                            no_ok_button = true,
+                            cancel_text = _("Cancel"),
+                        })
                     end,
                 })
             end
