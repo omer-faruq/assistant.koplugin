@@ -810,7 +810,7 @@ function Querier:processStream(bgQuery, trunk_callback)
                         -- SSE empty events, nothing to do
                     elseif line:sub(1, 1) == "{" then
                         -- If the line starts with '{', it might be a JSON object
-                        local ok, j = pcall(rapidjson.decode, line, {null=nil})
+                        local ok, j = pcall(rapidjson.decode, line)
                         if ok and j then
                             -- log the json
                             local err_message = koutil.tableGetValue(j, "error", "message")

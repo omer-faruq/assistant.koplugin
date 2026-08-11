@@ -129,12 +129,17 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 - **Localization**: All user-facing strings wrapped in `_("text")`. Import with `local _ = require("assistant_gettext")`. Plural forms use `N_("1 item", "%1 items", n)`.
 - **Rich Text & Formatting**: Use `assistant_utils.bold_format(...)` with `<b>` and `</b>` tags (e.g. `assistant_utils.bold_format(T(_("<b>Header:</b> %1"), val))`) to format bold runs in dialogs. Avoid manual string concatenation; keep strings contiguous inside `T(_("..."))` templates so they remain easy to translate.
 - **Configuration access**: Use `koutil.tableGetValue(CONFIGURATION, "path", "to", "key")` for safe nested access with defaults.
+- **Table & util helpers (prefer existing)**: Before writing manual `for k,v in pairs(t) do copy[k]=v end` loops, check `koutil` (`require("util")`, i.e. KOReader `frontend/util.lua`) and `ffi/util`. Common helpers:
+  - `koutil.tableMerge(t1, t2)` — shallow-merge `t2` into `t1`. **Mutates `t1` in place and returns `nil`** — never assign its result. For a shallow copy: `local copy = {}; koutil.tableMerge(copy, record)`.
+  - `koutil.tableDeepCopy(o)` — deep copy (handles nested tables and metatables).
+  - `koutil.tableSize(t)`, `koutil.tableEquals(o1, o2)`, `koutil.tableRemoveValue(t, ...)`, `koutil.tableSetValue(t, value, "path", "to")`.
+  - `ffi/util`: `T = require("ffi/util").template` for `T(_("%1 items"), n)` interpolation; `util.orderedPairs(t)` for deterministic key order; `util.idiv(a, b)`; `util.copyFile`, `util.joinPath`, `util.purgeDir`.
+  - When unsure of a helper's signature or return value, **read the source** under `/usr/lib/koreader/` (e.g. `frontend/util.lua`, `ffi/util.lua`) rather than assuming — many helpers mutate in place and return `nil`.
 - **Metadata on messages**: Use `assistant_utils.set_attr(msg, key, value)` / `get_attr(msg, key)` for fields that must not be serialized into API request bodies (e.g. `use_websearch`, `is_context`, `search_keywords`).
-- **JSON null handling**: Always use `require("rapidjson")` — this is the one JSON library for the project. KOReader's bundled `rapidjson` represents JSON `null` as a userdata value (`rapidjson.null`), not Lua `nil`. To avoid null-related bugs:
-  1. Prefer `rapidjson.decode(str, {null=nil})` to convert JSON nulls to Lua `nil` at decode time.
-  2. When that's not suitable, check with `if value == nil or value == rapidjson.null then` before using a decoded value.
-  3. Use `assistant_utils.json_default(value, default)` when reading a nullable field and you need a fallback. This helper handles both `nil` and `rapidjson.null` in a single call.
-  4. Never introduce another JSON library (e.g. `dkjson`, `cjson`, `lunajson`) — mixing JSON implementations leads to incompatible null representations and subtle bugs.
+- **JSON null handling**: Always use `require("rapidjson")` — this is the one JSON library for the project. KOReader's bundled `rapidjson` represents JSON `null` as a userdata value (`rapidjson.null`), not Lua `nil`. The `{null=nil}` decode option that upstream docs mention **does not work** in KOReader's build — `null` is always returned as `rapidjson.null`. To handle nulls correctly:
+  1. Check with `if value == nil or value == rapidjson.null then` before using a decoded value.
+  2. Use `assistant_utils.json_default(value, default)` when reading a nullable field and you need a fallback. This helper handles both `nil` and `rapidjson.null` in a single call.
+  3. Never introduce another JSON library (e.g. `json` (LuaJSON), `dkjson`, `cjson`, `lunajson`) — KOReader bundles several, but only `rapidjson` is used here. Mixing JSON implementations leads to incompatible null representations and subtle bugs.
 
 ## Git Workflow
 
