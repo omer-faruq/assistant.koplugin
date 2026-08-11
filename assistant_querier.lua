@@ -844,39 +844,26 @@ function Querier:processStream(bgQuery, trunk_callback)
 
     local ret = koutil.trim(result_buffer:get())
     if non200_start then
-        -- The child wrote the raw response body first, then a "\r\n" separator,
-        -- then PROTOCOL_NON_200 + err_struct JSON.  result_buffer therefore holds:
-        --   [raw_body][err_struct]
-        -- non200_start is captured at the marker branch (see L745) *before* the
-        -- err_struct portion is appended, so:
-        --   ret[1 .. non200_start]  == raw body from the server
-        --   ret[non200_start+1 ..]  == err_struct JSON
-        -- The server's error message (in raw_body) is far more informative than
-        -- err_struct.status, so try to extract it first.
-        -- NOTE: the slice end is non200_start, NOT non200_start-1. The marker
-        -- branch only APPENDS the err_struct JSON (the marker prefix itself is
-        -- not stored), so the body sits in bytes [1..non200_start] inclusive.
+        -- result_buffer contains [raw_body][err_struct JSON].
         local err_json = koutil.trim(ret:sub(non200_start + 1))
         local ok, err_struct = pcall(rapidjson.decode, err_json)
+        if not ok or type(err_struct) ~= "table" then
+            err_struct = {}
+        end
 
-        -- Slice off the raw body the server actually sent (before the marker).
-        -- The intervening "\r\n" separator was either dropped as an empty line
-        -- (koutil.trim("") == 0, skipped at L750) or absorbed into the marker's
-        -- line ending (CRLF stripped at L688), so the raw body is contiguous.
+        -- Prefer raw_body from err_struct when available.
         local raw_body
-        if ok and err_struct and #err_struct.raw_body > 0 then
-            -- Some handlers do populate raw_body; prefer it.
+        if type(err_struct.raw_body) == "string" and #err_struct.raw_body > 0 then
             raw_body = err_struct.raw_body
         else
             raw_body = koutil.trim(ret:sub(1, non200_start))
         end
 
-        local endpoint = (ok and err_struct and err_struct.url) or ""
-        local code     = (ok and err_struct and err_struct.code) or ""
-        local status   = (ok and err_struct and err_struct.status) or ""
+        local endpoint = err_struct.url or ""
+        local code     = err_struct.code or ""
+        local status   = err_struct.status or ""
 
-        -- Priority 1: the server's actual error payload.
-        -- Try common shapes: {"error":{"message":...}}, {"error":"..."}, {"message":...}
+        -- Extract the message from common error payload shapes.
         local err_msg
         if #raw_body > 0 then
             local ok2, j = pcall(rapidjson.decode, raw_body)
