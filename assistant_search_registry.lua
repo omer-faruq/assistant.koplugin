@@ -146,9 +146,7 @@ function SearchRegistry.merge(file_config, ui_data)
             local record = file_config.provider_settings[key]
             if type(record) == "table" then
                 local copy = {}
-                for k, v in pairs(record) do
-                    copy[k] = v
-                end
+                koutil.tableMerge(copy, record)
                 copy.source = "file"
                 copy.immutable = true
                 merged[key] = copy
@@ -161,9 +159,7 @@ function SearchRegistry.merge(file_config, ui_data)
         for key, record in pairs(ui_data.tools) do
             if type(record) == "table" and SearchRegistry.SEARCH_TOOLS[key] then
                 local copy = {}
-                for k, v in pairs(record) do
-                    copy[k] = v
-                end
+                koutil.tableMerge(copy, record)
                 copy.source = "ui"
                 merged[key] = copy
             end
@@ -294,9 +290,7 @@ function SearchRegistry.deleteSearchTool(assistant, tool_key)
     local has_file = false
     if CONFIGURATION and CONFIGURATION.provider_settings and CONFIGURATION.provider_settings[tool_key] then
         local file_copy = {}
-        for k, v in pairs(CONFIGURATION.provider_settings[tool_key]) do
-            file_copy[k] = v
-        end
+        koutil.tableMerge(file_copy, CONFIGURATION.provider_settings[tool_key])
         file_copy.source = "file"
         file_copy.immutable = true
         merged_ps[tool_key] = file_copy

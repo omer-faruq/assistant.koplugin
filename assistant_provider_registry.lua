@@ -163,9 +163,7 @@ function Registry.merge(file_config, ui_data)
         for key, record in pairs(file_config.provider_settings) do
             if type(record) == "table" then
                 local copy = {}
-                for k, v in pairs(record) do
-                    copy[k] = v
-                end
+                koutil.tableMerge(copy, record)
                 copy.source = "file"
                 copy.immutable = true
                 merged[key] = copy
@@ -182,9 +180,7 @@ function Registry.merge(file_config, ui_data)
                     logger.warn("Registry: UI provider id collision, skipping: ", id)
                 else
                     local copy = {}
-                    for k, v in pairs(record) do
-                        copy[k] = v
-                    end
+                    koutil.tableMerge(copy, record)
                     copy.source = "ui"
                     merged[id] = copy
                     has_any = true
