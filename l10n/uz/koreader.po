@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 15:45+0800\n"
+"POT-Creation-Date: 2026-08-12 15:17+0800\n"
 "PO-Revision-Date: 2026-07-27 10:47+0800\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Oʻzbekcha (AI translation)\n"
@@ -17,22 +17,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:489 ../main.lua:353 ../main.lua:363
-#: ../main.lua:565
+#: ../_meta.lua:3 ../assistant_dialog.lua:489 ../main.lua:366 ../main.lua:376
+#: ../main.lua:886
 msgid "AI Assistant"
 msgstr "AI Yordamchi"
 
-#: ../_meta.lua:5
+#: ../_meta.lua:4
 msgid "💡 Enhance your KOReader experience with AI"
 msgstr "💡 KOReader tajribangizni AI bilan yaxshilang"
 
-#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
-#: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
+#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:32
+#: ../api_handlers/openai.lua:63 ../api_handlers/responses.lua:51
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Modellar olinmoqda...</b>"
 
-#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
-#: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
+#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:42
+#: ../api_handlers/gemini.lua:52 ../api_handlers/openai.lua:79
 #: ../api_handlers/responses.lua:67
 msgid "Failed to fetch models"
 msgstr "Modellarni yuklashda xatolik"
@@ -41,8 +41,8 @@ msgstr "Modellarni yuklashda xatolik"
 msgid "### ☺ Question\n"
 msgstr "### ☺ Savol\n"
 
-#: ../assistant_dialog.lua:134 ../assistant_model_picker.lua:102
-#: ../assistant_model_picker.lua:261
+#: ../assistant_dialog.lua:134 ../assistant_model_picker.lua:103
+#: ../assistant_model_picker.lua:267
 msgid "Search"
 msgstr "Qidirish"
 
@@ -59,11 +59,12 @@ msgstr "(Javob yo'q)"
 msgid "Highlighted text:"
 msgstr "Ajratilgan matn:"
 
-#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
-#: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
-#: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:97 ../assistant_settings.lua:615
-#: ../assistant_viewer.lua:626
+#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:160
+#: ../assistant_model_picker.lua:128 ../assistant_model_picker.lua:258
+#: ../assistant_model_picker.lua:351 ../assistant_quicknote.lua:39
+#: ../assistant_search_registry.lua:362 ../assistant_settings.lua:99
+#: ../assistant_settings.lua:703 ../assistant_viewer.lua:626 ../main.lua:551
+#: ../main.lua:675 ../main.lua:811
 msgid "Cancel"
 msgstr "Bekor qilish"
 
@@ -85,7 +86,7 @@ msgstr ""
 "\n"
 "Ushbu tugmani Highlight menyusiga qo‘shilsinmi?"
 
-#: ../assistant_dialog.lua:447
+#: ../assistant_dialog.lua:447 ../assistant_settings.lua:251
 msgid "Add"
 msgstr "Qo'shish"
 
@@ -129,35 +130,36 @@ msgstr "%1 uchun yuklanmoqda ..."
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Xato:</b> Hech qanday javob olinmadi"
 
-#: ../assistant_dictdialog.lua:155
+#: ../assistant_dictdialog.lua:154
 msgid "AI Dictionary"
 msgstr "AI Lugʻat"
 
-#: ../assistant_dictdialog.lua:156
+#: ../assistant_dictdialog.lua:155
 msgid "Enter a word to look up..."
 msgstr "Qidirish uchun soʻz kiriting..."
 
-#: ../assistant_dictdialog.lua:167
+#: ../assistant_dictdialog.lua:166
 msgid "Look Up"
 msgstr "Qidirish"
 
-#: ../assistant_dictdialog.lua:214
+#: ../assistant_dictdialog.lua:213
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Term X-Ray uchun kitob konteksti tahlil qilinmoqda...</b>"
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
+#: ../assistant_dictdialog.lua:388 ../assistant_prompts.lua:27 ../main.lua:1166
+#: ../main.lua:1168
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
-#: ../assistant_dictdialog.lua:393
+#: ../assistant_dictdialog.lua:391
 msgid "Loading Term X-Ray ..."
 msgstr "Term X-Ray yuklanmoqda ..."
 
-#: ../assistant_dictdialog.lua:410 ../assistant_prompts.lua:74 ../main.lua:829
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:74 ../main.lua:1185
 msgid "Dictionary"
 msgstr "Lugʻat"
 
-#: ../assistant_dictdialog.lua:411
+#: ../assistant_dictdialog.lua:409
 msgid "Loading AI Dictionary ..."
 msgstr "AI Lugʻat yuklanmoqda ..."
 
@@ -169,60 +171,60 @@ msgstr "Hech biri"
 msgid "Model Built-In"
 msgstr "Modelga oʻrnatilgan"
 
-#: ../assistant_featuredialog.lua:42
+#: ../assistant_featuredialog.lua:41
 msgid "Custom Prompt"
 msgstr "Maxsus soʻrov"
 
-#: ../assistant_featuredialog.lua:43
+#: ../assistant_featuredialog.lua:42
 msgid "Loading..."
 msgstr "Yuklanmoqda..."
 
-#: ../assistant_featuredialog.lua:64
+#: ../assistant_featuredialog.lua:63
 msgid "Recap"
 msgstr "Xulosa"
 
-#: ../assistant_featuredialog.lua:65
+#: ../assistant_featuredialog.lua:64
 msgid "Loading Recap..."
 msgstr "Xulosa yuklanmoqda..."
 
-#: ../assistant_featuredialog.lua:70
+#: ../assistant_featuredialog.lua:69
 msgid "X‑Ray"
 msgstr "X-Ray"
 
-#: ../assistant_featuredialog.lua:71
+#: ../assistant_featuredialog.lua:70
 msgid "Loading X-Ray..."
 msgstr "X-Ray yuklanmoqda..."
 
 #. @translators book_info section headers and sub-fields
-#: ../assistant_featuredialog.lua:76 ../assistant_prompts.lua:440
+#: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
 msgid "Book Information"
 msgstr "Kitob maʼlumoti"
 
-#: ../assistant_featuredialog.lua:77
+#: ../assistant_featuredialog.lua:76
 msgid "Loading Book Information..."
 msgstr "Kitob ma'lumotlari yuklanmoqda..."
 
-#: ../assistant_featuredialog.lua:82 ../main.lua:119 ../main.lua:301
+#: ../assistant_featuredialog.lua:81 ../main.lua:127 ../main.lua:314
 msgid "Highlight & Note Analysis"
 msgstr "Ajratilgan matn va eslatma tahlili"
 
-#: ../assistant_featuredialog.lua:83
+#: ../assistant_featuredialog.lua:82
 msgid "Loading Highlight & Note Analysis..."
 msgstr "Ajratilgan matn va eslatma tahlili yuklanmoqda..."
 
-#: ../assistant_featuredialog.lua:88 ../main.lua:127 ../main.lua:313
+#: ../assistant_featuredialog.lua:87 ../main.lua:135 ../main.lua:326
 msgid "Summary Using Highlights & Notes"
 msgstr "Ajratilgan matn va eslatmalar asosida xulosa"
 
-#: ../assistant_featuredialog.lua:89
+#: ../assistant_featuredialog.lua:88
 msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Ajratilgan matn va eslatmalar asosida xulosa yuklanmoqda..."
 
-#: ../assistant_featuredialog.lua:101
+#: ../assistant_featuredialog.lua:100
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Nomaʼlum xususiyat turi:</b> %1"
 
-#: ../assistant_featuredialog.lua:188
+#: ../assistant_featuredialog.lua:187
 msgid ""
 " - Title : %1\n"
 " - Author: %2\n"
@@ -238,64 +240,65 @@ msgstr ""
 "-----\n"
 "\n"
 
-#: ../assistant_model_picker.lua:76
+#: ../assistant_model_picker.lua:77
 msgid "Models: %1 (filtered)"
 msgstr "Modellar: %1 (filtrlangan)"
 
-#: ../assistant_model_picker.lua:78
+#: ../assistant_model_picker.lua:79
 msgid "Models: %1"
 msgstr "Modellar: %1"
 
-#: ../assistant_model_picker.lua:81
+#: ../assistant_model_picker.lua:82
 msgid " — p. %1/%2"
 msgstr " — b. %1/%2"
 
-#: ../assistant_model_picker.lua:118
+#: ../assistant_model_picker.lua:119
 msgid "Manual"
 msgstr "Qo'llanma"
 
-#: ../assistant_model_picker.lua:122
+#: ../assistant_model_picker.lua:123
 msgid "Reset"
 msgstr "Qayta tiklash"
 
-#: ../assistant_model_picker.lua:165 ../assistant_model_picker.lua:357
+#: ../assistant_model_picker.lua:170 ../assistant_model_picker.lua:368
 msgid "Model: %1"
 msgstr "Model: %1"
 
-#: ../assistant_model_picker.lua:177
+#: ../assistant_model_picker.lua:183
 msgid "Filter: \"%1\""
 msgstr "Filtr: \"%1\""
 
-#: ../assistant_model_picker.lua:179
+#: ../assistant_model_picker.lua:185
 msgid "Select a model:"
 msgstr "Modelni tanlang:"
 
-#: ../assistant_model_picker.lua:247
+#: ../assistant_model_picker.lua:253
 msgid "Search Models"
 msgstr "Modellarni qidirish"
 
-#: ../assistant_model_picker.lua:286
+#: ../assistant_model_picker.lua:292
 msgid "Model reset: %1"
 msgstr "Model qayta tiklandi: %1"
 
-#: ../assistant_model_picker.lua:316
+#: ../assistant_model_picker.lua:322
 msgid "No models matching \"%1\"."
 msgstr "\"%1\" ga mos keladigan modellar yo'q."
 
-#: ../assistant_model_picker.lua:339
+#: ../assistant_model_picker.lua:346
 msgid "Enter Model ID"
 msgstr "Model ID ni kiriting"
 
-#: ../assistant_model_picker.lua:341
+#: ../assistant_model_picker.lua:348
 msgid "e.g. google/gemini-3.0-flash-exp:free"
 msgstr "masalan, google/gemini-3.0-flash-exp:free"
 
-#: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:121 ../assistant_viewer.lua:447
+#: ../assistant_model_picker.lua:356 ../assistant_quicknote.lua:49
+#: ../assistant_settings.lua:123 ../assistant_viewer.lua:447 ../main.lua:598
+#: ../main.lua:680
 msgid "Save"
 msgstr "Saqlash"
 
-#: ../assistant_model_picker.lua:377
+#: ../assistant_model_picker.lua:389
 msgid "No models available."
 msgstr "Modellar mavjud emas."
 
@@ -452,7 +455,7 @@ msgstr "Kontekstual bog‘lanishlar"
 msgid "Cultural Significance"
 msgstr "Madaniy ahamiyat"
 
-#: ../assistant_prompts.lua:295 ../main.lua:792
+#: ../assistant_prompts.lua:295 ../main.lua:1147 ../main.lua:1149
 msgid "Wikipedia"
 msgstr "Vikipediya"
 
@@ -601,19 +604,70 @@ msgstr "Misol"
 msgid "Word Origin"
 msgstr "Soʻzning kelib chiqishi"
 
-#: ../assistant_querier.lua:97
+#: ../assistant_provider_registry.lua:210
+msgid "Provider record must be a table."
+msgstr "Ko'rsatgich ma'lumotlari jadval bo'lishi shart."
+
+#: ../assistant_provider_registry.lua:216
+msgid "Provider name is required."
+msgstr "Ko'rsatgich nomini kiriting."
+
+#: ../assistant_provider_registry.lua:221
+msgid "Unsupported API protocol."
+msgstr "Qo'llab-quvvatlanmaydigan API protokoli."
+
+#: ../assistant_provider_registry.lua:232 ../main.lua:608
+msgid "Base URL is required."
+msgstr "Asosiy URL manzili shart."
+
+#: ../assistant_provider_registry.lua:235 ../assistant_search_registry.lua:125
+msgid "Base URL must start with http:// or https://"
+msgstr "Asosiy URL manzil http:// yoki https:// bilan boshlanishi kerak."
+
+#: ../assistant_provider_registry.lua:241 ../main.lua:612
+msgid "API key is required."
+msgstr "API kaliti talab qilinadi."
+
+#: ../assistant_provider_registry.lua:292
+#: ../assistant_provider_registry.lua:308
+#: ../assistant_provider_registry.lua:348
+msgid "Provider not found."
+msgstr "Koʻrsatıcı topilmadi."
+
+#: ../assistant_provider_registry.lua:343
+#: ../assistant_provider_registry.lua:394
+msgid "Provider data not initialized."
+msgstr "Ko'rsatgich ma'lumotlari tayyorlanmagan."
+
+#: ../assistant_provider_registry.lua:447
+msgid "Provider API"
+msgstr "Ko'rsatgich API"
+
+#: ../assistant_provider_registry.lua:465
+msgid "%1 (Compatible)"
+msgstr "%1 (Muvofiq)"
+
+#: ../assistant_provider_registry.lua:473
+msgid "Custom"
+msgstr "Moddiy"
+
+#: ../assistant_querier.lua:125
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "%1 uchun provayder sozlamalari topilmadi. Iltimos, configuration.lua faylingizni tekshiring."
 
-#: ../assistant_querier.lua:105
+#: ../assistant_querier.lua:138
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "%1 uchun ishlovchi topilmadi. Iltimos, configuration.lua faylingizni tekshiring."
 
-#: ../assistant_querier.lua:115
+#: ../assistant_querier.lua:145
+msgid "Handler %1 not available for provider: %2"
+msgstr "Ko'rsatgich: %2 uchun %1 handleri mavjud emas."
+
+#: ../assistant_querier.lua:156
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 uchun ishlovchi topilmadi. Iltimos, ishlovchining api_handlers katalogida mavjudligiga ishonch hosil qiling."
 
-#: ../assistant_querier.lua:158
+#: ../assistant_querier.lua:199
 msgid ""
 "<b>API Error</b>\n"
 "%1\n"
@@ -631,80 +685,88 @@ msgstr ""
 "\n"
 "Sozlamalar oynasida boshqa provayderni tanlab ko‘ring."
 
-#: ../assistant_querier.lua:159
+#: ../assistant_querier.lua:200
 msgid "Unknown error"
 msgstr "Nomaʼlum xato"
 
-#: ../assistant_querier.lua:164
+#: ../assistant_querier.lua:205 ../main.lua:248
 msgid "Settings"
 msgstr "Sozlamalar"
 
-#: ../assistant_querier.lua:166 ../assistant_settings.lua:219
+#: ../assistant_querier.lua:207 ../assistant_settings.lua:207
 #: ../assistant_viewer.lua:338
 msgid "Close"
 msgstr "Yopish"
 
-#: ../assistant_querier.lua:216
+#: ../assistant_querier.lua:294
 msgid "Plugin is not configured."
 msgstr "Plagin sozlanmagan."
 
-#: ../assistant_querier.lua:308 ../assistant_querier.lua:406
+#: ../assistant_querier.lua:386 ../assistant_querier.lua:484
 msgid "Too many tool-call rounds; aborting."
 msgstr "Asbob chaqiruvlari juda ko'p; bekor qilinmoqda."
 
-#: ../assistant_querier.lua:316
+#: ../assistant_querier.lua:394
 msgid "Stream failed with no error message."
 msgstr "Oqim xato xabarisiz muvaffaqiyatsiz tugadi."
 
-#: ../assistant_querier.lua:333
+#: ../assistant_querier.lua:411
 msgid "Stream ended with no content and no tool calls."
 msgstr "Oqim hech qanday tarkib va asbob chaqiruvlarisiz tugadi."
 
-#: ../assistant_querier.lua:380
+#: ../assistant_querier.lua:458
 msgid "Request Cancelled by user."
 msgstr "So'rov foydalanuvchi tomonidan bekor qilindi."
 
-#: ../assistant_querier.lua:389
+#: ../assistant_querier.lua:467
 msgid "Querying AI ..."
 msgstr "AI so'ralmoqda ..."
 
-#: ../assistant_querier.lua:444
+#: ../assistant_querier.lua:522
 msgid "Composing answer ..."
 msgstr "Javob tuzilmoqda ..."
 
-#: ../assistant_querier.lua:459 ../assistant_querier.lua:610
+#: ../assistant_querier.lua:537 ../assistant_querier.lua:695
 msgid "Request cancelled by user."
 msgstr "So'rov foydalanuvchi tomonidan bekor qilindi."
 
-#: ../assistant_querier.lua:466
+#: ../assistant_querier.lua:544
 msgid "No response received."
 msgstr "Hech qanday javob olinmadi."
 
-#: ../assistant_querier.lua:500
+#: ../assistant_querier.lua:580
 msgid "AI is responding"
 msgstr "AI javob bermoqda"
 
-#: ../assistant_querier.lua:521
-msgid "⏹ Stop"
-msgstr "⏹ To'xtatish"
+#: ../assistant_querier.lua:601
+msgid "❌ Stop"
+msgstr "❌ To'xtatish"
 
-#: ../assistant_querier.lua:627
+#: ../assistant_querier.lua:606
+msgid "■ Scroll"
+msgstr "■ Scroll"
+
+#: ../assistant_querier.lua:606
+msgid "▶ Scroll"
+msgstr "▶ Scroll"
+
+#: ../assistant_querier.lua:712
 msgid "Failed to start subprocess for request"
 msgstr "So'rov uchun quyi jarayonni ishga tushirish muvaffaqiyatsiz tugadi."
 
-#: ../assistant_querier.lua:849
+#: ../assistant_querier.lua:921
 msgid "Error Message"
 msgstr "Xato xabari"
 
-#: ../assistant_querier.lua:878 ../assistant_querier.lua:881
+#: ../assistant_querier.lua:950 ../assistant_querier.lua:953
 msgid "Deeply Thought"
 msgstr "Chuqur fikr"
 
-#: ../assistant_querier.lua:1071
+#: ../assistant_querier.lua:1143
 msgid "Stopped Reason: "
 msgstr "To'xtatish sababi: "
 
-#: ../assistant_quicknote.lua:27 ../main.lua:103 ../main.lua:151
+#: ../assistant_quicknote.lua:27 ../main.lua:111 ../main.lua:159
 msgid "Take Quick Notes"
 msgstr "Tezkor eslatmalar oling"
 
@@ -724,47 +786,93 @@ msgstr "Foydalanuvchi:"
 msgid "Quick note saved successfully"
 msgstr "Tezkor eslatma muvaffaqiyatli saqlandi."
 
-#: ../assistant_settings.lua:81
+#: ../assistant_search_registry.lua:105
+msgid "Search tool record must be a table."
+msgstr "Qidiruv vositalari yozuvi jadval bo'lishi shart."
+
+#: ../assistant_search_registry.lua:110 ../assistant_search_registry.lua:189
+msgid "Unknown search tool: %1"
+msgstr "Noma'lum qidiruv vositasi: %1"
+
+#: ../assistant_search_registry.lua:117 ../main.lua:690
+msgid "API key is required for %1."
+msgstr "%1 uchun API kaliti talab qilinadi."
+
+#: ../assistant_search_registry.lua:122 ../main.lua:697
+msgid "Base URL is required for %1."
+msgstr "%1 uchun asosiy URL talab qilinadi."
+
+#: ../assistant_search_registry.lua:212
+msgid "Search tool not found."
+msgstr "Qidiruv vositalari topilmadi."
+
+#: ../assistant_search_registry.lua:241 ../assistant_search_registry.lua:279
+msgid "Search tool data not initialized."
+msgstr "Qidiruv vositalari ma'lumotlari boshlang'ichlanmagan."
+
+#: ../assistant_search_registry.lua:323
+msgid "WebSearch API"
+msgstr "WebSearch API"
+
+#: ../assistant_search_registry.lua:349
+msgid "%1 — choose an action"
+msgstr "%1 — harakatni tanlang"
+
+#: ../assistant_search_registry.lua:368 ../assistant_settings.lua:226
+#: ../main.lua:206
+msgid "Edit"
+msgstr "Tahrirlash"
+
+#: ../assistant_search_registry.lua:375 ../assistant_settings.lua:237
+#: ../assistant_settings.lua:398 ../main.lua:191 ../main.lua:195
+msgid "Delete"
+msgstr "O‘chirish"
+
+#: ../assistant_settings.lua:83
 msgid "AI Response Language Setting"
 msgstr "AI javob tili sozlamasi"
 
-#: ../assistant_settings.lua:84
+#: ../assistant_settings.lua:86
 msgid "AI Response Language"
 msgstr "AI javob tili"
 
-#: ../assistant_settings.lua:86 ../assistant_settings.lua:91
+#: ../assistant_settings.lua:88 ../assistant_settings.lua:93
 msgid "Leave blank to use: %1"
 msgstr "Foydalanish uchun boʻsh qoldiring: %1"
 
-#: ../assistant_settings.lua:89
+#: ../assistant_settings.lua:91
 msgid "Dictionary Language"
 msgstr "Lugʻat tili"
 
-#: ../assistant_settings.lua:104
+#: ../assistant_settings.lua:106
 msgid "Clear"
 msgstr "Tozalash"
 
-#: ../assistant_settings.lua:151
+#: ../assistant_settings.lua:153
 msgid "RTL written Language"
 msgstr "RTL yoziladigan til"
 
-#: ../assistant_settings.lua:171
+#: ../assistant_settings.lua:173
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "UI tilidan foydalanish uchun ushbu maydonlarni boʻsh qoldiring: %1"
 
-#: ../assistant_settings.lua:182
-msgid "AI Provider and Models"
-msgstr "AI provayderi va modellari"
+#: ../assistant_settings.lua:184
+msgid "Providers and Models"
+msgstr "Ko'rgazchilar va Model'lar"
 
-#: ../assistant_settings.lua:205
+#: ../assistant_settings.lua:212 ../main.lua:556
 msgid "Browse Models"
 msgstr "Modellarni koʻrib chiqish"
 
-#: ../assistant_settings.lua:213
+#: ../assistant_settings.lua:220
 msgid "Browse available models on OpenRouter"
 msgstr "OpenRouter’dagi mavjud modellarni koʻrib chiqish"
 
-#: ../assistant_settings.lua:392
+#: ../assistant_settings.lua:397
+msgid "Delete provider %1?"
+msgstr "%1 ta'minotchisini o'chirmoqchimisiz?"
+
+#: ../assistant_settings.lua:480
 msgid ""
 "Builtin Tools Works ONLY with these models:\n"
 "- Gemini-2.5/3\n"
@@ -774,105 +882,105 @@ msgstr ""
 "- Gemini-2.5/3\n"
 "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:417
+#: ../assistant_settings.lua:505
 msgid "AI Language: "
 msgstr "AI tili: "
 
-#: ../assistant_settings.lua:429
+#: ../assistant_settings.lua:517
 msgid "AI Text Size: %1"
 msgstr "AI matn hajmi: %1"
 
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:521
 msgid "AI Response Text Font Size"
 msgstr "AI javob matni shrift hajmi"
 
-#: ../assistant_settings.lua:449
+#: ../assistant_settings.lua:537
 msgid "Response Settings"
 msgstr "Javob sozlamalari"
 
-#: ../assistant_settings.lua:452
+#: ../assistant_settings.lua:540
 msgid "Enable Stream Response"
 msgstr "Oqimli javobni yoqish"
 
-#: ../assistant_settings.lua:460
+#: ../assistant_settings.lua:548
 msgid "Stream Text Auto Scroll"
 msgstr "Oqim matnini avtomatik aylantirish"
 
-#: ../assistant_settings.lua:469
+#: ../assistant_settings.lua:557
 msgid "Large Streaming Window"
 msgstr "Katta oqim oynasi"
 
-#: ../assistant_settings.lua:479
+#: ../assistant_settings.lua:567
 msgid "Show Reasoning Text"
 msgstr "Mulohaza matnini koʻrsatish"
 
-#: ../assistant_settings.lua:487
+#: ../assistant_settings.lua:575
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Agar mavjud boʻlsa, AI javobidagi chuqur fikrlash jarayonini (mulohazani) koʻrsatish."
 
-#: ../assistant_settings.lua:492
+#: ../assistant_settings.lua:580
 msgid "Show Follow-up Questions"
 msgstr "Keyingi savollarni koʻrsatish"
 
-#: ../assistant_settings.lua:500
+#: ../assistant_settings.lua:588
 msgid "Show follow up questions related to the response content."
 msgstr "Javob mazmuniga oid keyingi savollarni ko'rsatish."
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:508
-msgid "KOReader Tweaks & Overrides"
-msgstr "KOReader Sozlash va O'zgartirishlar"
+#: ../assistant_settings.lua:596
+msgid "KOReader Tweaks"
+msgstr "KOReader Sozlamalari"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:512
+#: ../assistant_settings.lua:600
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Tarjima uchun AI Yordamchidan foydalanish"
 
-#: ../assistant_settings.lua:523
+#: ../assistant_settings.lua:611
 msgid "Auto-recap on opening long-unread books"
 msgstr "Uzoq vaqt o'qilmagan kitoblarni ochganda avtomatik xulosa"
 
-#: ../assistant_settings.lua:533
+#: ../assistant_settings.lua:621
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "AI Xulosa uzoq vaqt o'qilmagan kitob keyingi ochilganda yoqiladi."
 
-#: ../assistant_settings.lua:537
+#: ../assistant_settings.lua:625
 msgid "Show Dictionary(AI) in Dictionary Popup"
 msgstr "Lug'at qalqib chiquvchi oynasida Lug'at(AI)ni ko'rsatish"
 
-#: ../assistant_settings.lua:545
+#: ../assistant_settings.lua:633
 msgid "Show Wikipedia(AI) in Dictionary Popup"
 msgstr "Lug'at qalqib chiquvchi oynasida Vikipediya(AI)ni ko'rsatish"
 
-#: ../assistant_settings.lua:553
+#: ../assistant_settings.lua:641
 msgid "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr "Lug'at qalqib chiquvchi oynasida Term X-Ray(AI)ni ko'rsatish"
 
-#: ../assistant_settings.lua:561
+#: ../assistant_settings.lua:649
 msgid "Show Custom Prompts in Dictionary Popup"
 msgstr "Lug'at qalqib chiquvchi oynasida Maxsus so'rovlarni ko'rsatish"
 
-#: ../assistant_settings.lua:571
+#: ../assistant_settings.lua:659
 msgid "Copy entered question to the clipboard"
 msgstr "Kiritilgan savolni buferga nusxalash"
 
-#: ../assistant_settings.lua:579
+#: ../assistant_settings.lua:667
 msgid "Auto-save conversations to NoteBook"
 msgstr "Suhbatlarni NoteBookga avtomatik saqlash"
 
-#: ../assistant_settings.lua:587
+#: ../assistant_settings.lua:675
 msgid "Use book text for x-ray and recap"
 msgstr "X-ray va xulosa uchun kitob matnidan foydalanish"
 
-#: ../assistant_settings.lua:595 ../assistant_settings.lua:603
+#: ../assistant_settings.lua:683 ../assistant_settings.lua:691
 msgid "OTA Update"
 msgstr "OTA Yangilash"
 
-#: ../assistant_settings.lua:605
+#: ../assistant_settings.lua:693
 msgid "branch or tag name"
 msgstr "filial yoki teg nomi"
 
-#: ../assistant_settings.lua:607
+#: ../assistant_settings.lua:695
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -894,15 +1002,15 @@ msgstr ""
 "\n"
 "<b>configuration.lua fayli saqlanib qoladi.</b>"
 
-#: ../assistant_settings.lua:621
+#: ../assistant_settings.lua:709
 msgid "Update"
 msgstr "Yangilash"
 
-#: ../assistant_settings.lua:640
+#: ../assistant_settings.lua:728
 msgid "Purge the settings"
 msgstr "Sozlamalarni tozalash"
 
-#: ../assistant_settings.lua:643
+#: ../assistant_settings.lua:731
 msgid ""
 "Purge assistant.koplugin settings?\n"
 "\n"
@@ -914,7 +1022,7 @@ msgstr ""
 "Bu plaginni zavod sozlamalariga qaytaradi. Faqat sozlamalar olib tashlanadi;\n"
 "configuration.lua fayli saqlanadi."
 
-#: ../assistant_settings.lua:647 ../main.lua:719
+#: ../assistant_settings.lua:735 ../main.lua:1043
 msgid "Purge"
 msgstr "Tozalash"
 
@@ -934,23 +1042,23 @@ msgstr "Asbob chaqiruvi idni o'z ichiga olmadi."
 msgid "Tool call did not include search keywords."
 msgstr "Asbob chaqiruvi qidiruv kalit so'zlarini o'z ichiga olmadi."
 
-#: ../assistant_updater.lua:108
+#: ../assistant_updater.lua:141
 msgid "Checking for updates..."
 msgstr "Yangilanishlar tekshirilmoqda..."
 
-#: ../assistant_updater.lua:111
+#: ../assistant_updater.lua:144
 msgid "AI Assistant: Failed to check updates: %2"
 msgstr "AI Yordamchi: Yangilanishlarni tekshirish muvaffaqiyatsiz tugadi: %2"
 
-#: ../assistant_updater.lua:111
+#: ../assistant_updater.lua:144
 msgid "Empty Error"
 msgstr "Bo'sh xato"
 
-#: ../assistant_updater.lua:121
+#: ../assistant_updater.lua:154
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "%1 plagining yangi versiyasi (%2) mavjud. Iltimos, yangilang!"
 
-#: ../assistant_updater.lua:174
+#: ../assistant_updater.lua:192
 msgid ""
 "<b>Downloading ...</b>\n"
 "<b>Github: </b>%1\n"
@@ -962,23 +1070,23 @@ msgstr ""
 "<b>Repozitoriy: </b>%2\n"
 "<b>Filial/Teg: </b>%3"
 
-#: ../assistant_updater.lua:199
+#: ../assistant_updater.lua:217
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "\"%1\" filiali/tagi topilmadi."
 
-#: ../assistant_updater.lua:211
+#: ../assistant_updater.lua:229
 msgid "OTA update canceled."
 msgstr "OTA yangilanishi bekor qilindi."
 
-#: ../assistant_updater.lua:217 ../assistant_updater.lua:304
+#: ../assistant_updater.lua:235 ../assistant_updater.lua:323
 msgid "OTA update failed: %1"
 msgstr "OTA yangilanishi muvaffaqiyatsiz tugadi: %1"
 
-#: ../assistant_updater.lua:224
+#: ../assistant_updater.lua:242
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 o‘rnatilmoqda...</b>"
 
-#: ../assistant_updater.lua:308
+#: ../assistant_updater.lua:327
 msgid ""
 "OTA UPDATE OK.\n"
 " Restart is required."
@@ -986,11 +1094,11 @@ msgstr ""
 "OTA YANGILANISHI OK.\n"
 " Qayta ishga tushirish talab qilinadi."
 
-#: ../assistant_utils.lua:169
+#: ../assistant_utils.lua:173
 msgid "Page"
 msgstr "Sahifa"
 
-#: ../assistant_utils.lua:195
+#: ../assistant_utils.lua:199
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
@@ -998,15 +1106,15 @@ msgstr ""
 "<b>Jurnallar uchun standart papkaga kirish imkoni yo‘q: %1</b>\n"
 "Asl joylashuv ishlatilmoqda."
 
-#: ../assistant_utils.lua:251
+#: ../assistant_utils.lua:255
 msgid "Notebook save failed. Continuing..."
 msgstr "Notebook saqlash muvaffaqiyatsiz tugadi. Davom etilmoqda..."
 
-#: ../assistant_utils.lua:380
+#: ../assistant_utils.lua:384
 msgid "##### You may find these topics interesting:"
 msgstr "##### Sizga quyidagi mavzular qiziq bo'lishi mumkin:"
 
-#: ../assistant_utils.lua:747
+#: ../assistant_utils.lua:751
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: qaytarilgan ma'lumotlarni tahlil qilish muvaffaqiyatsiz tugadi"
 
@@ -1067,35 +1175,35 @@ msgstr "So'z buferga nusxalandi."
 msgid "Selection copied to clipboard."
 msgstr "Tanlangan qism buferga nusxalandi."
 
-#: ../main.lua:79 ../main.lua:139
+#: ../main.lua:87 ../main.lua:147
 msgid "Ask the AI a question"
 msgstr "AI ga savol bering"
 
-#: ../main.lua:87 ../main.lua:287
+#: ../main.lua:95 ../main.lua:300
 msgid "AI Recaps"
 msgstr "AI xulosalari"
 
-#: ../main.lua:95 ../main.lua:272
+#: ../main.lua:103 ../main.lua:285
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
-#: ../main.lua:111 ../main.lua:257
+#: ../main.lua:119 ../main.lua:270
 msgid "Book Summary & Recs"
 msgstr "Kitob xulosasi va tavsiyalar"
 
-#: ../main.lua:146
+#: ../main.lua:154
 msgid "Enter a question to ask AI."
 msgstr "AI ga berish uchun savol kiriting."
 
-#: ../main.lua:157
+#: ../main.lua:165
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "Daftaringizga saqlanadigan tezkor eslatmalar yozing."
 
-#: ../main.lua:162
+#: ../main.lua:170
 msgid "NoteBook (AI Conversation Log)"
 msgstr "NoteBook (AI suhbat jurnali)"
 
-#: ../main.lua:169
+#: ../main.lua:177
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
@@ -1105,11 +1213,11 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid "View"
 msgstr "Ko‘rish"
 
-#: ../main.lua:175
+#: ../main.lua:183
 msgid ""
 "File does not exist.\n"
 "\n"
@@ -1119,11 +1227,7 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:183 ../main.lua:187
-msgid "Delete"
-msgstr "O‘chirish"
-
-#: ../main.lua:186
+#: ../main.lua:194
 msgid ""
 "Delete file?\n"
 "%1\n"
@@ -1133,19 +1237,19 @@ msgstr ""
 "%1\n"
 "Bu amalni qaytarib bo‘lmaydi."
 
-#: ../main.lua:198
-msgid "Edit"
-msgstr "Tahrirlash"
+#: ../main.lua:219
+msgid "AI Provider: not configured"
+msgstr "AI Ko'rgazchisi: sozlanmagan"
 
-#: ../main.lua:212
+#: ../main.lua:225
 msgid "AI Provider: %1(%2)"
 msgstr "AI Provayder: %1(%2)"
 
-#: ../main.lua:225
-msgid "Smart Web Search: %1"
-msgstr "Aqlli Veb Qidiruv: %1"
+#: ../main.lua:238
+msgid "Web Search: %1"
+msgstr "Veb Qidiruv: %1"
 
-#: ../main.lua:229
+#: ../main.lua:242
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
@@ -1153,71 +1257,123 @@ msgstr ""
 "Real vaqtli veb natijalar bilan javob aniqligini yaxshilaydi. \n"
 "Eslatma: Yuqori token iste'moli va qo'shimcha API to'lovlari qo'llaniladi."
 
-#: ../main.lua:235
-msgid "Other Settings"
-msgstr "Boshqa Sozlamalar"
-
-#: ../main.lua:253
+#: ../main.lua:266
 msgid "Book-Level Built-in Prompts"
 msgstr "Kitob Darajasidagi O‘rnatilgan So‘rovlar"
 
-#: ../main.lua:266
+#: ../main.lua:279
 msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr "Kitobning qisqacha mazmuni, muallif tarjimai holi, tarixiy kontekst va tavsiflar bilan o‘xshash kitob tavsiyalari ro‘yxati."
 
-#: ../main.lua:281
+#: ../main.lua:294
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" qisqacha mazmuni kitob uchun, Qahramonlar, Joylar, Mavzular, Atamalar va Tushunchalar, Vaqt jadvali va Qayta sho‘ng‘ish kabi aniq bo‘limlarga tuzilgan."
 
-#: ../main.lua:296
+#: ../main.lua:309
 msgid "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr "Kitobning hozirgi o‘qish jarayonigacha bo‘lgan juda qisqa, spoylersiz qisqacha mazmuni."
 
-#: ../main.lua:307
+#: ../main.lua:320
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Kitobdagi ajratib ko‘rsatilgan joylaringiz, eslatmalaringiz va daftar mazmunining tahlili."
 
-#: ../main.lua:322
+#: ../main.lua:335
 msgid "Summary of the book using your highlights and notes."
 msgstr "Ajratib ko‘rsatilgan joylaringiz va eslatmalaringizdan foydalangan holda kitobning qisqacha mazmuni."
 
-#: ../main.lua:329
+#: ../main.lua:342
 msgid "Book-Level Custom Prompts"
 msgstr "Kitob Darajasidagi Maxsus So‘rovlar"
 
-#: ../main.lua:336
+#: ../main.lua:349
 msgid "Includes user defined book level prompts from Config file"
 msgstr "Konfiguratsiya faylidan foydalanuvchi tomonidan belgilangan kitob darajasidagi so‘rovlarni o‘z ichiga oladi."
 
-#: ../main.lua:411
+#: ../main.lua:424
 msgid "This is a custom prompt"
 msgstr "Bu maxsus so‘rov."
 
-#: ../main.lua:421
+#: ../main.lua:434
 msgid "No valid book-level custom prompt found"
 msgstr "Hech qanday haqiqiy kitob darajasidagi maxsus so‘rov topilmadi."
 
-#: ../main.lua:426
+#: ../main.lua:439
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Tafsilotlar uchun github'dagi 'Configuration' wiki sahifasiga tashrif buyuring."
 
-#: ../main.lua:509
+#: ../main.lua:524 ../main.lua:653
+msgid "Edit %1"
+msgstr "%1 ni tahrirlash"
+
+#: ../main.lua:534 ../main.lua:654
+msgid "Add %1"
+msgstr "%1 ni qo'shish"
+
+#: ../main.lua:534
+msgid "Add %1 Provider"
+msgstr "%1 ta'minotchisini qo'shish"
+
+#: ../main.lua:543
+msgid "Display name"
+msgstr "Koʻrinadigan nom"
+
+#: ../main.lua:543
+msgid "Provider Name"
+msgstr "Ko'rgazchi Nomi"
+
+#: ../main.lua:544 ../main.lua:664
+msgid "Base URL"
+msgstr "Asosiy URL"
+
+#: ../main.lua:544 ../main.lua:664
+msgid "https://..."
+msgstr "https://..."
+
+#: ../main.lua:545 ../main.lua:660
+msgid "API Key"
+msgstr "API kaliti"
+
+#: ../main.lua:545 ../main.lua:660
+msgid "Your API key"
+msgstr "Sizning API kalitingiz"
+
+#: ../main.lua:546
+msgid "Default: auto"
+msgstr "Standart: avtomatik"
+
+#: ../main.lua:546
+msgid "Model"
+msgstr "Model"
+
+#: ../main.lua:577
+msgid "Failed to fetch models."
+msgstr "Modellarni olishda xatolik yuz berdi."
+
+#: ../main.lua:707
+msgid "Failed to save search tool."
+msgstr "Qidiruv vositasini saqlashda xatolik yuz berdi."
+
+#: ../main.lua:782
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "configuration.lua da hech qanday haqiqiy model provayder topilmadi."
 
-#: ../main.lua:527
+#: ../main.lua:801
 msgid ""
-"Configuration Error.\n"
-"Please set up configuration.lua."
+"<b>Configuration Error.</b>\n"
+"Please add a provider in Settings or configuration.lua."
 msgstr ""
-"Konfiguratsiya xatosi.\n"
-"Iltimos, configuration.lua ni sozlang."
+"<b>Sozlamalar xatosi.</b>\n"
+"Iltimos, Sozlamalar yoki configuration.lua faylida provider qo'shing."
 
-#: ../main.lua:599
+#: ../main.lua:807
+msgid "OK"
+msgstr "OK"
+
+#: ../main.lua:925
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: model provayderlari noto'g'ri."
 
-#: ../main.lua:684
+#: ../main.lua:1008
 msgid ""
 "Usage Tips\n"
 "\n"
@@ -1251,15 +1407,15 @@ msgstr ""
 "Ko'p surish (masalan, ⮠, ⮡, ↺):\n"
 "Natija dialogida: yopish uchun (Yopish tugmasi uzoqda joylashgani uchun).\n"
 
-#: ../main.lua:706
+#: ../main.lua:1030
 msgid "Version Info"
 msgstr "Versiya ma'lumoti"
 
-#: ../main.lua:712
+#: ../main.lua:1036
 msgid "Purge Settings"
 msgstr "Sozlamalarni tozalash"
 
-#: ../main.lua:715
+#: ../main.lua:1039
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
@@ -1271,28 +1427,28 @@ msgstr ""
 "\n"
 "configuration.lua xavfsiz, faqat sozlamalar tozalanadi."
 
-#: ../main.lua:768
+#: ../main.lua:1092
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "[%s] ni Ajratish menyusidan olib tashlash kerakmi?"
 
-#: ../main.lua:769
+#: ../main.lua:1093
 msgid "Remove"
 msgstr "Olib tashlash"
 
-#: ../main.lua:1014
+#: ../main.lua:1456
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfiguratsiya topilmadi. Iltimos, avval configuration.lua ni sozlang."
 
-#: ../main.lua:1062
+#: ../main.lua:1504
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Qoʻshildi</b> [%1 (AI)] Ajratib koʻrsatish menyusiga."
 
-#: ../main.lua:1073
+#: ../main.lua:1515
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
 msgstr "<b>Oʻchirildi</b> [%1 (AI)] Ajratib koʻrsatish menyusidan."
 
-#: ../main.lua:1118
+#: ../main.lua:1560
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
@@ -1302,36 +1458,36 @@ msgstr ""
 "%1 uchun %2 tomonidan.\n"
 "\n"
 
-#: ../main.lua:1119
+#: ../main.lua:1561
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Bir soat oldin o'qilgan."
 msgstr[1] "%1 soat oldin o'qilgan."
 
-#: ../main.lua:1124
+#: ../main.lua:1566
 msgid "Yes"
 msgstr "Ha"
 
-#: ../main.lua:1133
+#: ../main.lua:1575
 msgid "No"
 msgstr "Yo'q"
 
-#: ../main.lua:1174
+#: ../main.lua:1616
 msgid "Markdown Engine"
 msgstr "Markdown dvigateli"
 
-#: ../main.lua:1175
+#: ../main.lua:1617
 msgid "KOReader"
 msgstr "KOReader"
 
-#: ../main.lua:1176
+#: ../main.lua:1618
 msgid "Device"
 msgstr "Qurilma"
 
-#: ../main.lua:1177
+#: ../main.lua:1619
 msgid "Platform"
 msgstr "Platforma"
 
-#: ../main.lua:1178
+#: ../main.lua:1620
 msgid "Runtime"
 msgstr "Ish vaqti"

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 15:45+0800\n"
+"POT-Creation-Date: 2026-08-12 15:17+0800\n"
 "PO-Revision-Date: 2025-08-25 16:59+0300\n"
 "Last-Translator: AI Model v1.0\n"
 "Language-Team: AI Translation Model\n"
@@ -13,22 +13,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:489 ../main.lua:353 ../main.lua:363
-#: ../main.lua:565
+#: ../_meta.lua:3 ../assistant_dialog.lua:489 ../main.lua:366 ../main.lua:376
+#: ../main.lua:886
 msgid "AI Assistant"
 msgstr "עוזר מלאכותי"
 
-#: ../_meta.lua:5
+#: ../_meta.lua:4
 msgid "💡 Enhance your KOReader experience with AI"
 msgstr "💡 שפר את חוויית KOReader עם בינה מלאכותית"
 
-#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
-#: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
+#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:32
+#: ../api_handlers/openai.lua:63 ../api_handlers/responses.lua:51
 msgid "<b>Fetching models...</b>"
 msgstr "<b>טוען דגמים...</b>"
 
-#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
-#: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
+#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:42
+#: ../api_handlers/gemini.lua:52 ../api_handlers/openai.lua:79
 #: ../api_handlers/responses.lua:67
 msgid "Failed to fetch models"
 msgstr "נכשל בשליפת המודלים"
@@ -37,8 +37,8 @@ msgstr "נכשל בשליפת המודלים"
 msgid "### ☺ Question\n"
 msgstr "### ☺ שאלה\n"
 
-#: ../assistant_dialog.lua:134 ../assistant_model_picker.lua:102
-#: ../assistant_model_picker.lua:261
+#: ../assistant_dialog.lua:134 ../assistant_model_picker.lua:103
+#: ../assistant_model_picker.lua:267
 msgid "Search"
 msgstr "חיפוש"
 
@@ -55,11 +55,12 @@ msgstr "(אין תגובה)"
 msgid "Highlighted text:"
 msgstr "טקסט מודגש:"
 
-#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
-#: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
-#: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:97 ../assistant_settings.lua:615
-#: ../assistant_viewer.lua:626
+#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:160
+#: ../assistant_model_picker.lua:128 ../assistant_model_picker.lua:258
+#: ../assistant_model_picker.lua:351 ../assistant_quicknote.lua:39
+#: ../assistant_search_registry.lua:362 ../assistant_settings.lua:99
+#: ../assistant_settings.lua:703 ../assistant_viewer.lua:626 ../main.lua:551
+#: ../main.lua:675 ../main.lua:811
 msgid "Cancel"
 msgstr "ביטול"
 
@@ -81,7 +82,7 @@ msgstr ""
 "\n"
 "להוסיף כפתור זה לתפריט ההדגשה?"
 
-#: ../assistant_dialog.lua:447
+#: ../assistant_dialog.lua:447 ../assistant_settings.lua:251
 msgid "Add"
 msgstr "הוסף"
 
@@ -125,35 +126,36 @@ msgstr "טוען עבור %1..."
 msgid "<b>Error:</b> No response received"
 msgstr "<b>שגיאה:</b> לא התקבלה תשובה"
 
-#: ../assistant_dictdialog.lua:155
+#: ../assistant_dictdialog.lua:154
 msgid "AI Dictionary"
 msgstr "מילון מלאכותי"
 
-#: ../assistant_dictdialog.lua:156
+#: ../assistant_dictdialog.lua:155
 msgid "Enter a word to look up..."
 msgstr "הכנס מילה לחיפוש..."
 
-#: ../assistant_dictdialog.lua:167
+#: ../assistant_dictdialog.lua:166
 msgid "Look Up"
 msgstr "חפש"
 
-#: ../assistant_dictdialog.lua:214
+#: ../assistant_dictdialog.lua:213
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>מנתח הקשר של הספר עבור Term X-Ray...</b>"
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
+#: ../assistant_dictdialog.lua:388 ../assistant_prompts.lua:27 ../main.lua:1166
+#: ../main.lua:1168
 msgid "Term X-Ray"
 msgstr "רנטגן מונחים"
 
-#: ../assistant_dictdialog.lua:393
+#: ../assistant_dictdialog.lua:391
 msgid "Loading Term X-Ray ..."
 msgstr "טוען רנטגן מונחים..."
 
-#: ../assistant_dictdialog.lua:410 ../assistant_prompts.lua:74 ../main.lua:829
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:74 ../main.lua:1185
 msgid "Dictionary"
 msgstr "מילון"
 
-#: ../assistant_dictdialog.lua:411
+#: ../assistant_dictdialog.lua:409
 msgid "Loading AI Dictionary ..."
 msgstr "טוען מילון AI..."
 
@@ -165,60 +167,60 @@ msgstr "ללא"
 msgid "Model Built-In"
 msgstr "מובנה במודל"
 
-#: ../assistant_featuredialog.lua:42
+#: ../assistant_featuredialog.lua:41
 msgid "Custom Prompt"
 msgstr "בקשה מותאמת אישית"
 
-#: ../assistant_featuredialog.lua:43
+#: ../assistant_featuredialog.lua:42
 msgid "Loading..."
 msgstr "טוען..."
 
-#: ../assistant_featuredialog.lua:64
+#: ../assistant_featuredialog.lua:63
 msgid "Recap"
 msgstr "סיכום"
 
-#: ../assistant_featuredialog.lua:65
+#: ../assistant_featuredialog.lua:64
 msgid "Loading Recap..."
 msgstr "טוען סיכום..."
 
-#: ../assistant_featuredialog.lua:70
+#: ../assistant_featuredialog.lua:69
 msgid "X‑Ray"
 msgstr "רנטגן"
 
-#: ../assistant_featuredialog.lua:71
+#: ../assistant_featuredialog.lua:70
 msgid "Loading X-Ray..."
 msgstr "טוען X-Ray..."
 
 #. @translators book_info section headers and sub-fields
-#: ../assistant_featuredialog.lua:76 ../assistant_prompts.lua:440
+#: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
 msgid "Book Information"
 msgstr "פרטי הספר"
 
-#: ../assistant_featuredialog.lua:77
+#: ../assistant_featuredialog.lua:76
 msgid "Loading Book Information..."
 msgstr "טוען מידע על הספר..."
 
-#: ../assistant_featuredialog.lua:82 ../main.lua:119 ../main.lua:301
+#: ../assistant_featuredialog.lua:81 ../main.lua:127 ../main.lua:314
 msgid "Highlight & Note Analysis"
 msgstr "ניתוח הדגשות והערות"
 
-#: ../assistant_featuredialog.lua:83
+#: ../assistant_featuredialog.lua:82
 msgid "Loading Highlight & Note Analysis..."
 msgstr "טוען ניתוח הדגשות והערות..."
 
-#: ../assistant_featuredialog.lua:88 ../main.lua:127 ../main.lua:313
+#: ../assistant_featuredialog.lua:87 ../main.lua:135 ../main.lua:326
 msgid "Summary Using Highlights & Notes"
 msgstr "סיכום באמצעות הדגשות והערות"
 
-#: ../assistant_featuredialog.lua:89
+#: ../assistant_featuredialog.lua:88
 msgid "Loading Summary Using Highlights & Notes..."
 msgstr "טוען סיכום באמצעות הדגשות והערות..."
 
-#: ../assistant_featuredialog.lua:101
+#: ../assistant_featuredialog.lua:100
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>סוג תכונה לא ידוע:</b> %1"
 
-#: ../assistant_featuredialog.lua:188
+#: ../assistant_featuredialog.lua:187
 msgid ""
 " - Title : %1\n"
 " - Author: %2\n"
@@ -234,64 +236,65 @@ msgstr ""
 "-----\n"
 "\n"
 
-#: ../assistant_model_picker.lua:76
+#: ../assistant_model_picker.lua:77
 msgid "Models: %1 (filtered)"
 msgstr "מודלים: %1 (מסונן)"
 
-#: ../assistant_model_picker.lua:78
+#: ../assistant_model_picker.lua:79
 msgid "Models: %1"
 msgstr "מודלים: %1"
 
-#: ../assistant_model_picker.lua:81
+#: ../assistant_model_picker.lua:82
 msgid " — p. %1/%2"
 msgstr " — עמ׳ %1/%2"
 
-#: ../assistant_model_picker.lua:118
+#: ../assistant_model_picker.lua:119
 msgid "Manual"
 msgstr "ידני"
 
-#: ../assistant_model_picker.lua:122
+#: ../assistant_model_picker.lua:123
 msgid "Reset"
 msgstr "איפוס"
 
-#: ../assistant_model_picker.lua:165 ../assistant_model_picker.lua:357
+#: ../assistant_model_picker.lua:170 ../assistant_model_picker.lua:368
 msgid "Model: %1"
 msgstr "מודל: %1"
 
-#: ../assistant_model_picker.lua:177
+#: ../assistant_model_picker.lua:183
 msgid "Filter: \"%1\""
 msgstr "סינון: \"%1\""
 
-#: ../assistant_model_picker.lua:179
+#: ../assistant_model_picker.lua:185
 msgid "Select a model:"
 msgstr "בחר מודל:"
 
-#: ../assistant_model_picker.lua:247
+#: ../assistant_model_picker.lua:253
 msgid "Search Models"
 msgstr "חיפוש מודלים"
 
-#: ../assistant_model_picker.lua:286
+#: ../assistant_model_picker.lua:292
 msgid "Model reset: %1"
 msgstr "איפוס מודל: %1"
 
-#: ../assistant_model_picker.lua:316
+#: ../assistant_model_picker.lua:322
 msgid "No models matching \"%1\"."
 msgstr "לא נמצאו מודלים התואמים ל־\"%1\"."
 
-#: ../assistant_model_picker.lua:339
+#: ../assistant_model_picker.lua:346
 msgid "Enter Model ID"
 msgstr "הזן מזהה מודל"
 
-#: ../assistant_model_picker.lua:341
+#: ../assistant_model_picker.lua:348
 msgid "e.g. google/gemini-3.0-flash-exp:free"
 msgstr "לדוגמה: google/gemini-3.0-flash-exp:free"
 
-#: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:121 ../assistant_viewer.lua:447
+#: ../assistant_model_picker.lua:356 ../assistant_quicknote.lua:49
+#: ../assistant_settings.lua:123 ../assistant_viewer.lua:447 ../main.lua:598
+#: ../main.lua:680
 msgid "Save"
 msgstr "שמור"
 
-#: ../assistant_model_picker.lua:377
+#: ../assistant_model_picker.lua:389
 msgid "No models available."
 msgstr "אין מודלים זמינים."
 
@@ -448,7 +451,7 @@ msgstr "קשרים הקשריים"
 msgid "Cultural Significance"
 msgstr "משמעות תרבותית"
 
-#: ../assistant_prompts.lua:295 ../main.lua:792
+#: ../assistant_prompts.lua:295 ../main.lua:1147 ../main.lua:1149
 msgid "Wikipedia"
 msgstr "ויקיפדיה"
 
@@ -597,19 +600,70 @@ msgstr "דוגמה"
 msgid "Word Origin"
 msgstr "מקור המילה"
 
-#: ../assistant_querier.lua:97
+#: ../assistant_provider_registry.lua:210
+msgid "Provider record must be a table."
+msgstr "רשומת ספק חייבת להיות טבלה."
+
+#: ../assistant_provider_registry.lua:216
+msgid "Provider name is required."
+msgstr "שם הספק חובה."
+
+#: ../assistant_provider_registry.lua:221
+msgid "Unsupported API protocol."
+msgstr "פרוטוקול API לא נתמך."
+
+#: ../assistant_provider_registry.lua:232 ../main.lua:608
+msgid "Base URL is required."
+msgstr "כתובת הבסיס חובה."
+
+#: ../assistant_provider_registry.lua:235 ../assistant_search_registry.lua:125
+msgid "Base URL must start with http:// or https://"
+msgstr "כתובת הבסיס חייבת להתחיל ב-http:// או https://"
+
+#: ../assistant_provider_registry.lua:241 ../main.lua:612
+msgid "API key is required."
+msgstr "מפתח API נחוץ."
+
+#: ../assistant_provider_registry.lua:292
+#: ../assistant_provider_registry.lua:308
+#: ../assistant_provider_registry.lua:348
+msgid "Provider not found."
+msgstr "הספקן לא נמצא."
+
+#: ../assistant_provider_registry.lua:343
+#: ../assistant_provider_registry.lua:394
+msgid "Provider data not initialized."
+msgstr "נתוני הספק לא הותחלו."
+
+#: ../assistant_provider_registry.lua:447
+msgid "Provider API"
+msgstr "ממשק ה-API של הספק"
+
+#: ../assistant_provider_registry.lua:465
+msgid "%1 (Compatible)"
+msgstr "%1 (תואם)"
+
+#: ../assistant_provider_registry.lua:473
+msgid "Custom"
+msgstr "מותאם אישית"
+
+#: ../assistant_querier.lua:125
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "הגדרות הספק לא נמצאו עבור: %1. נא לבדוק את הקובץ configuration.lua."
 
-#: ../assistant_querier.lua:105
+#: ../assistant_querier.lua:138
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "מטפל לא נמצא עבור: %1. אנא בדוק את קובץ configuration.lua שלך."
 
-#: ../assistant_querier.lua:115
+#: ../assistant_querier.lua:145
+msgid "Handler %1 not available for provider: %2"
+msgstr "המחביל %1 אינו זמין עבור הספק: %2"
+
+#: ../assistant_querier.lua:156
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "המטפל עבור %1 לא נמצא. נא לוודא שהוא קיים בתיקיית api_handlers."
 
-#: ../assistant_querier.lua:158
+#: ../assistant_querier.lua:199
 msgid ""
 "<b>API Error</b>\n"
 "%1\n"
@@ -627,80 +681,88 @@ msgstr ""
 "\n"
 "נסה ספק אחר בתיבת הדו-שיח של ההגדרות."
 
-#: ../assistant_querier.lua:159
+#: ../assistant_querier.lua:200
 msgid "Unknown error"
 msgstr "שגיאה לא ידועה"
 
-#: ../assistant_querier.lua:164
+#: ../assistant_querier.lua:205 ../main.lua:248
 msgid "Settings"
 msgstr "הגדרות"
 
-#: ../assistant_querier.lua:166 ../assistant_settings.lua:219
+#: ../assistant_querier.lua:207 ../assistant_settings.lua:207
 #: ../assistant_viewer.lua:338
 msgid "Close"
 msgstr "סגור"
 
-#: ../assistant_querier.lua:216
+#: ../assistant_querier.lua:294
 msgid "Plugin is not configured."
 msgstr "התוסף לא הוגדר."
 
-#: ../assistant_querier.lua:308 ../assistant_querier.lua:406
+#: ../assistant_querier.lua:386 ../assistant_querier.lua:484
 msgid "Too many tool-call rounds; aborting."
 msgstr "יותר מדי סבבי קריאות לכלים; מבטל."
 
-#: ../assistant_querier.lua:316
+#: ../assistant_querier.lua:394
 msgid "Stream failed with no error message."
 msgstr "הזרם נכשל ללא הודעת שגיאה."
 
-#: ../assistant_querier.lua:333
+#: ../assistant_querier.lua:411
 msgid "Stream ended with no content and no tool calls."
 msgstr "הזרם הסתיים ללא תוכן וללא קריאות לכלים."
 
-#: ../assistant_querier.lua:380
+#: ../assistant_querier.lua:458
 msgid "Request Cancelled by user."
 msgstr "הבקשה בוטלה על ידי המשתמש."
 
-#: ../assistant_querier.lua:389
+#: ../assistant_querier.lua:467
 msgid "Querying AI ..."
 msgstr "מתבצע שאילתא לבינה מלאכותית"
 
-#: ../assistant_querier.lua:444
+#: ../assistant_querier.lua:522
 msgid "Composing answer ..."
 msgstr "מרכיב תשובה..."
 
-#: ../assistant_querier.lua:459 ../assistant_querier.lua:610
+#: ../assistant_querier.lua:537 ../assistant_querier.lua:695
 msgid "Request cancelled by user."
 msgstr "הבקשה בוטלה על ידי המשתמש."
 
-#: ../assistant_querier.lua:466
+#: ../assistant_querier.lua:544
 msgid "No response received."
 msgstr "לא התקבלה תגובה."
 
-#: ../assistant_querier.lua:500
+#: ../assistant_querier.lua:580
 msgid "AI is responding"
 msgstr "הבינה המלאכותית מגיבה"
 
-#: ../assistant_querier.lua:521
-msgid "⏹ Stop"
-msgstr "⏹ עצור"
+#: ../assistant_querier.lua:601
+msgid "❌ Stop"
+msgstr "❌ עצירה"
 
-#: ../assistant_querier.lua:627
+#: ../assistant_querier.lua:606
+msgid "■ Scroll"
+msgstr "■ גלילה"
+
+#: ../assistant_querier.lua:606
+msgid "▶ Scroll"
+msgstr "▶ גלילה"
+
+#: ../assistant_querier.lua:712
 msgid "Failed to start subprocess for request"
 msgstr "הפעלת תת־התהליך לבקשה נכשלה"
 
-#: ../assistant_querier.lua:849
+#: ../assistant_querier.lua:921
 msgid "Error Message"
 msgstr "הודעת שגיאה"
 
-#: ../assistant_querier.lua:878 ../assistant_querier.lua:881
+#: ../assistant_querier.lua:950 ../assistant_querier.lua:953
 msgid "Deeply Thought"
 msgstr "מחשבה עמוקה"
 
-#: ../assistant_querier.lua:1071
+#: ../assistant_querier.lua:1143
 msgid "Stopped Reason: "
 msgstr "סיבת העצירה: "
 
-#: ../assistant_quicknote.lua:27 ../main.lua:103 ../main.lua:151
+#: ../assistant_quicknote.lua:27 ../main.lua:111 ../main.lua:159
 msgid "Take Quick Notes"
 msgstr "כתוב הערות מהירות"
 
@@ -720,47 +782,93 @@ msgstr "משתמש:"
 msgid "Quick note saved successfully"
 msgstr "ההערה המהירה נשמרה בהצלחה"
 
-#: ../assistant_settings.lua:81
+#: ../assistant_search_registry.lua:105
+msgid "Search tool record must be a table."
+msgstr "רשומת כלי חיפוש חייבת להיות טבלה."
+
+#: ../assistant_search_registry.lua:110 ../assistant_search_registry.lua:189
+msgid "Unknown search tool: %1"
+msgstr "כלי חיפוש לא מוכר: %1"
+
+#: ../assistant_search_registry.lua:117 ../main.lua:690
+msgid "API key is required for %1."
+msgstr "מפתח API נדרש עבור %1."
+
+#: ../assistant_search_registry.lua:122 ../main.lua:697
+msgid "Base URL is required for %1."
+msgstr "כתובת URL בסיסית נדרשת עבור %1."
+
+#: ../assistant_search_registry.lua:212
+msgid "Search tool not found."
+msgstr "כלי חיפוש לא נמצא."
+
+#: ../assistant_search_registry.lua:241 ../assistant_search_registry.lua:279
+msgid "Search tool data not initialized."
+msgstr "נתוני כלי חיפוש לא התאתחלו."
+
+#: ../assistant_search_registry.lua:323
+msgid "WebSearch API"
+msgstr "ממשק WebSearch API"
+
+#: ../assistant_search_registry.lua:349
+msgid "%1 — choose an action"
+msgstr "%1 — בחר פעולה"
+
+#: ../assistant_search_registry.lua:368 ../assistant_settings.lua:226
+#: ../main.lua:206
+msgid "Edit"
+msgstr "עריכה"
+
+#: ../assistant_search_registry.lua:375 ../assistant_settings.lua:237
+#: ../assistant_settings.lua:398 ../main.lua:191 ../main.lua:195
+msgid "Delete"
+msgstr "מחיקה"
+
+#: ../assistant_settings.lua:83
 msgid "AI Response Language Setting"
 msgstr "הגדרת שפת תגובה של AI"
 
-#: ../assistant_settings.lua:84
+#: ../assistant_settings.lua:86
 msgid "AI Response Language"
 msgstr "שפת תגובת ה־AI"
 
-#: ../assistant_settings.lua:86 ../assistant_settings.lua:91
+#: ../assistant_settings.lua:88 ../assistant_settings.lua:93
 msgid "Leave blank to use: %1"
 msgstr "השאר ריק כדי להשתמש ב־%1"
 
-#: ../assistant_settings.lua:89
+#: ../assistant_settings.lua:91
 msgid "Dictionary Language"
 msgstr "שפת המילון"
 
-#: ../assistant_settings.lua:104
+#: ../assistant_settings.lua:106
 msgid "Clear"
 msgstr "נקה"
 
-#: ../assistant_settings.lua:151
+#: ../assistant_settings.lua:153
 msgid "RTL written Language"
 msgstr "שפת כתיבה מימין לשמאל"
 
-#: ../assistant_settings.lua:171
+#: ../assistant_settings.lua:173
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "השאר שדות אלו ריקים כדי להשתמש בשפת הממשק: %1"
 
-#: ../assistant_settings.lua:182
-msgid "AI Provider and Models"
-msgstr "ספק בינה מלאכותית ומודלים"
+#: ../assistant_settings.lua:184
+msgid "Providers and Models"
+msgstr "ספקים ומודלים"
 
-#: ../assistant_settings.lua:205
+#: ../assistant_settings.lua:212 ../main.lua:556
 msgid "Browse Models"
 msgstr "עיון בדגמים"
 
-#: ../assistant_settings.lua:213
+#: ../assistant_settings.lua:220
 msgid "Browse available models on OpenRouter"
 msgstr "עיין בדגמים הזמינים ב-OpenRouter"
 
-#: ../assistant_settings.lua:392
+#: ../assistant_settings.lua:397
+msgid "Delete provider %1?"
+msgstr "למחוק את ספק %1?"
+
+#: ../assistant_settings.lua:480
 msgid ""
 "Builtin Tools Works ONLY with these models:\n"
 "- Gemini-2.5/3\n"
@@ -770,105 +878,105 @@ msgstr ""
 "- Gemini-2.5/3\n"
 "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:417
+#: ../assistant_settings.lua:505
 msgid "AI Language: "
 msgstr "שפת AI: "
 
-#: ../assistant_settings.lua:429
+#: ../assistant_settings.lua:517
 msgid "AI Text Size: %1"
 msgstr "גודל טקסט AI: %1"
 
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:521
 msgid "AI Response Text Font Size"
 msgstr "גודל גופן של טקסט התגובה של AI"
 
-#: ../assistant_settings.lua:449
+#: ../assistant_settings.lua:537
 msgid "Response Settings"
 msgstr "הגדרות תשובה"
 
-#: ../assistant_settings.lua:452
+#: ../assistant_settings.lua:540
 msgid "Enable Stream Response"
 msgstr "הפעל תגובת זרם"
 
-#: ../assistant_settings.lua:460
+#: ../assistant_settings.lua:548
 msgid "Stream Text Auto Scroll"
 msgstr "גלילה אוטומטית של טקסט הזרם"
 
-#: ../assistant_settings.lua:469
+#: ../assistant_settings.lua:557
 msgid "Large Streaming Window"
 msgstr "חלון סטרימינג גדול"
 
-#: ../assistant_settings.lua:479
+#: ../assistant_settings.lua:567
 msgid "Show Reasoning Text"
 msgstr "הצג טקסט נימוק"
 
-#: ../assistant_settings.lua:487
+#: ../assistant_settings.lua:575
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "הצג תהליך חשיבה עמוק (נימוק) מתשובת הבינה המלאכותית אם קיים."
 
-#: ../assistant_settings.lua:492
+#: ../assistant_settings.lua:580
 msgid "Show Follow-up Questions"
 msgstr "הצג שאלות המשך"
 
-#: ../assistant_settings.lua:500
+#: ../assistant_settings.lua:588
 msgid "Show follow up questions related to the response content."
 msgstr "הצג שאלות המשך הקשורות לתוכן התשובה."
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:508
-msgid "KOReader Tweaks & Overrides"
-msgstr "כיוונונים ועקיפות של KOReader"
+#: ../assistant_settings.lua:596
+msgid "KOReader Tweaks"
+msgstr "שינויים ב-KOReader"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:512
+#: ../assistant_settings.lua:600
 msgid "Use AI Assistant for 'Translate'"
 msgstr "השתמש בעוזר AI עבור 'תרגום'"
 
-#: ../assistant_settings.lua:523
+#: ../assistant_settings.lua:611
 msgid "Auto-recap on opening long-unread books"
 msgstr "סיכום אוטומטי בפתיחת ספרים שלא נקראו זמן רב"
 
-#: ../assistant_settings.lua:533
+#: ../assistant_settings.lua:621
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "סיכום AI יופעל בפעם הבאה שייפתח ספר שלא נקרא זמן רב."
 
-#: ../assistant_settings.lua:537
+#: ../assistant_settings.lua:625
 msgid "Show Dictionary(AI) in Dictionary Popup"
 msgstr "הצג מילון (AI) בחלון המילון"
 
-#: ../assistant_settings.lua:545
+#: ../assistant_settings.lua:633
 msgid "Show Wikipedia(AI) in Dictionary Popup"
 msgstr "הצג ויקיפדיה (AI) בחלון המילון"
 
-#: ../assistant_settings.lua:553
+#: ../assistant_settings.lua:641
 msgid "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr "הצג רנטגן מונחים (AI) בחלון מילון קופץ"
 
-#: ../assistant_settings.lua:561
+#: ../assistant_settings.lua:649
 msgid "Show Custom Prompts in Dictionary Popup"
 msgstr "הצג בקשות מותאמות אישית בחלון מילון קופץ"
 
-#: ../assistant_settings.lua:571
+#: ../assistant_settings.lua:659
 msgid "Copy entered question to the clipboard"
 msgstr "העתק שאלה ללוח"
 
-#: ../assistant_settings.lua:579
+#: ../assistant_settings.lua:667
 msgid "Auto-save conversations to NoteBook"
 msgstr "שמירה אוטומטית של שיחות לפנקס"
 
-#: ../assistant_settings.lua:587
+#: ../assistant_settings.lua:675
 msgid "Use book text for x-ray and recap"
 msgstr "השתמש בטקסט הספר ל-x-ray ולסיכום"
 
-#: ../assistant_settings.lua:595 ../assistant_settings.lua:603
+#: ../assistant_settings.lua:683 ../assistant_settings.lua:691
 msgid "OTA Update"
 msgstr "עדכון OTA"
 
-#: ../assistant_settings.lua:605
+#: ../assistant_settings.lua:693
 msgid "branch or tag name"
 msgstr "שם ענף או תגית"
 
-#: ../assistant_settings.lua:607
+#: ../assistant_settings.lua:695
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -890,15 +998,15 @@ msgstr ""
 "\n"
 "<b>הקובץ configuration.lua יישמר.</b>"
 
-#: ../assistant_settings.lua:621
+#: ../assistant_settings.lua:709
 msgid "Update"
 msgstr "עדכן"
 
-#: ../assistant_settings.lua:640
+#: ../assistant_settings.lua:728
 msgid "Purge the settings"
 msgstr "נקה את ההגדרות"
 
-#: ../assistant_settings.lua:643
+#: ../assistant_settings.lua:731
 msgid ""
 "Purge assistant.koplugin settings?\n"
 "\n"
@@ -910,7 +1018,7 @@ msgstr ""
 "זה משחזר את התוסף להגדרות היצרן. רק ההגדרות יוסרו;\n"
 "הקובץ configuration.lua יישמר."
 
-#: ../assistant_settings.lua:647 ../main.lua:719
+#: ../assistant_settings.lua:735 ../main.lua:1043
 msgid "Purge"
 msgstr "נקה"
 
@@ -930,23 +1038,23 @@ msgstr "קריאת הכלי לא כללה מזהה."
 msgid "Tool call did not include search keywords."
 msgstr "קריאת הכלי לא כללה מילות חיפוש."
 
-#: ../assistant_updater.lua:108
+#: ../assistant_updater.lua:141
 msgid "Checking for updates..."
 msgstr "בודק עדכונים..."
 
-#: ../assistant_updater.lua:111
+#: ../assistant_updater.lua:144
 msgid "AI Assistant: Failed to check updates: %2"
 msgstr "AI Assistant: בדיקת עדכונים נכשלה: %2"
 
-#: ../assistant_updater.lua:111
+#: ../assistant_updater.lua:144
 msgid "Empty Error"
 msgstr "שגיאה: תוכן ריק"
 
-#: ../assistant_updater.lua:121
+#: ../assistant_updater.lua:154
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "גרסה חדשה של התוסף %1 (%2) זמינה. אנא עדכן!"
 
-#: ../assistant_updater.lua:174
+#: ../assistant_updater.lua:192
 msgid ""
 "<b>Downloading ...</b>\n"
 "<b>Github: </b>%1\n"
@@ -958,23 +1066,23 @@ msgstr ""
 "<b>מאגר: </b>%2\n"
 "<b>ענף/תג: </b>%3"
 
-#: ../assistant_updater.lua:199
+#: ../assistant_updater.lua:217
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ענף/תגית \"%1\" לא נמצא."
 
-#: ../assistant_updater.lua:211
+#: ../assistant_updater.lua:229
 msgid "OTA update canceled."
 msgstr "עדכון OTA בוטל."
 
-#: ../assistant_updater.lua:217 ../assistant_updater.lua:304
+#: ../assistant_updater.lua:235 ../assistant_updater.lua:323
 msgid "OTA update failed: %1"
 msgstr "עדכון OTA נכשל: %1"
 
-#: ../assistant_updater.lua:224
+#: ../assistant_updater.lua:242
 msgid "<b>Installing %1...</b>"
 msgstr "<b>מתקין %1...</b>"
 
-#: ../assistant_updater.lua:308
+#: ../assistant_updater.lua:327
 msgid ""
 "OTA UPDATE OK.\n"
 " Restart is required."
@@ -982,11 +1090,11 @@ msgstr ""
 "עדכון OTA בוצע בהצלחה.\n"
 " נדרשת הפעלה מחדש."
 
-#: ../assistant_utils.lua:169
+#: ../assistant_utils.lua:173
 msgid "Page"
 msgstr "עמוד"
 
-#: ../assistant_utils.lua:195
+#: ../assistant_utils.lua:199
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
@@ -994,15 +1102,15 @@ msgstr ""
 "<b>לא ניתן לגשת לתיקיית ברירת המחדל ללוגים: %1</b>\n"
 "משתמש במיקום המקורי."
 
-#: ../assistant_utils.lua:251
+#: ../assistant_utils.lua:255
 msgid "Notebook save failed. Continuing..."
 msgstr "שמירת היומן נכשלה. ממשיך..."
 
-#: ../assistant_utils.lua:380
+#: ../assistant_utils.lua:384
 msgid "##### You may find these topics interesting:"
 msgstr "##### ייתכן שתמצא נושאים אלה מעניינים:"
 
-#: ../assistant_utils.lua:747
+#: ../assistant_utils.lua:751
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: נכשל בפענוח הנתונים שהוחזרו"
 
@@ -1063,35 +1171,35 @@ msgstr "המילה הועתקה ללוח."
 msgid "Selection copied to clipboard."
 msgstr "הבחירה הועתקה ללוח."
 
-#: ../main.lua:79 ../main.lua:139
+#: ../main.lua:87 ../main.lua:147
 msgid "Ask the AI a question"
 msgstr "שאל את הבינה המלאכותית שאלה"
 
-#: ../main.lua:87 ../main.lua:287
+#: ../main.lua:95 ../main.lua:300
 msgid "AI Recaps"
 msgstr "סיכומי AI"
 
-#: ../main.lua:95 ../main.lua:272
+#: ../main.lua:103 ../main.lua:285
 msgid "AI X-Ray"
 msgstr "רנטגן AI"
 
-#: ../main.lua:111 ../main.lua:257
+#: ../main.lua:119 ../main.lua:270
 msgid "Book Summary & Recs"
 msgstr "סיכום ומלצות"
 
-#: ../main.lua:146
+#: ../main.lua:154
 msgid "Enter a question to ask AI."
 msgstr "הקלד שאלה לבינה מלאכותית"
 
-#: ../main.lua:157
+#: ../main.lua:165
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "כתוב הערות מהירות שישמרו ביומן שלך."
 
-#: ../main.lua:162
+#: ../main.lua:170
 msgid "NoteBook (AI Conversation Log)"
 msgstr "מחברת (יומן שיחות AI)"
 
-#: ../main.lua:169
+#: ../main.lua:177
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
@@ -1101,11 +1209,11 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid "View"
 msgstr "צפייה"
 
-#: ../main.lua:175
+#: ../main.lua:183
 msgid ""
 "File does not exist.\n"
 "\n"
@@ -1115,11 +1223,7 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:183 ../main.lua:187
-msgid "Delete"
-msgstr "מחיקה"
-
-#: ../main.lua:186
+#: ../main.lua:194
 msgid ""
 "Delete file?\n"
 "%1\n"
@@ -1129,19 +1233,19 @@ msgstr ""
 "%1\n"
 "לא ניתן לבטל פעולה זו."
 
-#: ../main.lua:198
-msgid "Edit"
-msgstr "עריכה"
+#: ../main.lua:219
+msgid "AI Provider: not configured"
+msgstr "ספק AI: לא הוגדר"
 
-#: ../main.lua:212
+#: ../main.lua:225
 msgid "AI Provider: %1(%2)"
 msgstr "ספק AI: %1(%2)"
 
-#: ../main.lua:225
-msgid "Smart Web Search: %1"
-msgstr "חיפוש אינטרנט חכם: %1"
+#: ../main.lua:238
+msgid "Web Search: %1"
+msgstr "חיפוש באינטרנט: %1"
 
-#: ../main.lua:229
+#: ../main.lua:242
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
@@ -1149,71 +1253,123 @@ msgstr ""
 "משפר את דיוק התגובה באמצעות תוצאות אינטרנט בזמן אמת.\n"
 "הערה: שימוש גבוה יותר באסימונים וחיובי API נוספים חלים."
 
-#: ../main.lua:235
-msgid "Other Settings"
-msgstr "הגדרות אחרות"
-
-#: ../main.lua:253
+#: ../main.lua:266
 msgid "Book-Level Built-in Prompts"
 msgstr "בקשות מובנות ברמת הספר"
 
-#: ../main.lua:266
+#: ../main.lua:279
 msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr "סיכום הספר, ביוגרפיה של המחבר, הקשר היסטורי, ורשימת המלצות לספרים דומים עם תיאורים."
 
-#: ../main.lua:281
+#: ../main.lua:294
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "סיכום \"X-Ray\" לספר, מחולק לנושאים כמו דמויות, מיקומים, נושאים, מונחים ורעיונות, ציר זמן וחזרה לעלילה."
 
-#: ../main.lua:296
+#: ../main.lua:309
 msgid "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr "סיכום קצר וללא ספוילרים של הספר עד נקודת הקריאה הנוכחית."
 
-#: ../main.lua:307
+#: ../main.lua:320
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "ניתוח ההדגשות, ההערות ותוכן המחברת שלך מהספר."
 
-#: ../main.lua:322
+#: ../main.lua:335
 msgid "Summary of the book using your highlights and notes."
 msgstr "סיכום הספר באמצעות ההדגשות והערות שלך."
 
-#: ../main.lua:329
+#: ../main.lua:342
 msgid "Book-Level Custom Prompts"
 msgstr "בקשות מותאמות אישית ברמת הספר"
 
-#: ../main.lua:336
+#: ../main.lua:349
 msgid "Includes user defined book level prompts from Config file"
 msgstr "כולל בקשות ברמת ספר שהגדיר המשתמש מקובץ התצורה"
 
-#: ../main.lua:411
+#: ../main.lua:424
 msgid "This is a custom prompt"
 msgstr "זו בקשה מותאמת אישית"
 
-#: ../main.lua:421
+#: ../main.lua:434
 msgid "No valid book-level custom prompt found"
 msgstr "לא נמצאה פרומפט מותאם ברמת הספר"
 
-#: ../main.lua:426
+#: ../main.lua:439
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "לפרטים, בקר בדף הוויקי 'Configuration' ב־GitHub."
 
-#: ../main.lua:509
+#: ../main.lua:524 ../main.lua:653
+msgid "Edit %1"
+msgstr "עריכת %1"
+
+#: ../main.lua:534 ../main.lua:654
+msgid "Add %1"
+msgstr "הוסף %1"
+
+#: ../main.lua:534
+msgid "Add %1 Provider"
+msgstr "הוסף ספק %1"
+
+#: ../main.lua:543
+msgid "Display name"
+msgstr "שם תצוגה"
+
+#: ../main.lua:543
+msgid "Provider Name"
+msgstr "שם הספק"
+
+#: ../main.lua:544 ../main.lua:664
+msgid "Base URL"
+msgstr "כתובת URL בסיסית"
+
+#: ../main.lua:544 ../main.lua:664
+msgid "https://..."
+msgstr "https://..."
+
+#: ../main.lua:545 ../main.lua:660
+msgid "API Key"
+msgstr "מפתח API"
+
+#: ../main.lua:545 ../main.lua:660
+msgid "Your API key"
+msgstr "מפתח ה-API שלך"
+
+#: ../main.lua:546
+msgid "Default: auto"
+msgstr "ברירת מחדל: אוטומטי"
+
+#: ../main.lua:546
+msgid "Model"
+msgstr "מודל"
+
+#: ../main.lua:577
+msgid "Failed to fetch models."
+msgstr "שגיאה במשיכת המודלים."
+
+#: ../main.lua:707
+msgid "Failed to save search tool."
+msgstr "שגיאה בשמירת כלי החיפוש."
+
+#: ../main.lua:782
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "לא נמצא ספק מודל תקף ב-configuration.lua"
 
-#: ../main.lua:527
+#: ../main.lua:801
 msgid ""
-"Configuration Error.\n"
-"Please set up configuration.lua."
+"<b>Configuration Error.</b>\n"
+"Please add a provider in Settings or configuration.lua."
 msgstr ""
-"שגיאת תצורה.\n"
-"הגדר את configuration.lua."
+"<b>שגיאת התקנה.</b>\n"
+"אנא הוסף ספק בהגדרות או ב-configuration.lua."
 
-#: ../main.lua:599
+#: ../main.lua:807
+msgid "OK"
+msgstr "אישור"
+
+#: ../main.lua:925
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: ספקי המודל אינם תקפים."
 
-#: ../main.lua:684
+#: ../main.lua:1008
 msgid ""
 "Usage Tips\n"
 "\n"
@@ -1247,15 +1403,15 @@ msgstr ""
 "חליקה מרובה (לדוגמה: ⮠, ⮡, ↺):\n"
 "על תיבת התוצאה כדי לסגור (מכיוון שכפתור הסגירה רחוק להגיע אליו).\n"
 
-#: ../main.lua:706
+#: ../main.lua:1030
 msgid "Version Info"
 msgstr "מידע על גרסה"
 
-#: ../main.lua:712
+#: ../main.lua:1036
 msgid "Purge Settings"
 msgstr "נקה הגדרות"
 
-#: ../main.lua:715
+#: ../main.lua:1039
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
@@ -1267,28 +1423,28 @@ msgstr ""
 "\n"
 "configuration.lua בטוח, רק ההגדרות יימחקו."
 
-#: ../main.lua:768
+#: ../main.lua:1092
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "האם להסיר [%s] מתפריט הדגשה?"
 
-#: ../main.lua:769
+#: ../main.lua:1093
 msgid "Remove"
 msgstr "הסר"
 
-#: ../main.lua:1014
+#: ../main.lua:1456
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "הגדרה לא נמצאה. אנא הגדר configuration.lua קודם."
 
-#: ../main.lua:1062
+#: ../main.lua:1504
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>נוסף</b> [%1 (AI)] לתפריט ההדגשה."
 
-#: ../main.lua:1073
+#: ../main.lua:1515
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
 msgstr "<b>הוסר</b> [%1 (AI)] מתפריט ההדגשה."
 
-#: ../main.lua:1118
+#: ../main.lua:1560
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
@@ -1298,36 +1454,36 @@ msgstr ""
 "עבור %1 מאת %2.\n"
 "\n"
 
-#: ../main.lua:1119
+#: ../main.lua:1561
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "נקרא לפני שעה."
 msgstr[1] "נקרא לפני %1 שעות."
 
-#: ../main.lua:1124
+#: ../main.lua:1566
 msgid "Yes"
 msgstr "כן"
 
-#: ../main.lua:1133
+#: ../main.lua:1575
 msgid "No"
 msgstr "לא"
 
-#: ../main.lua:1174
+#: ../main.lua:1616
 msgid "Markdown Engine"
 msgstr "מנוע Markdown"
 
-#: ../main.lua:1175
+#: ../main.lua:1617
 msgid "KOReader"
 msgstr "KOReader"
 
-#: ../main.lua:1176
+#: ../main.lua:1618
 msgid "Device"
 msgstr "מכשיר"
 
-#: ../main.lua:1177
+#: ../main.lua:1619
 msgid "Platform"
 msgstr "פלטפורמה"
 
-#: ../main.lua:1178
+#: ../main.lua:1620
 msgid "Runtime"
 msgstr "סביבת ריצה"

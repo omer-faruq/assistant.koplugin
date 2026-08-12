@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 15:45+0800\n"
+"POT-Creation-Date: 2026-08-12 15:17+0800\n"
 "PO-Revision-Date: 2026-07-27 10:47+0800\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: සිංහල (AI translation)\n"
@@ -17,22 +17,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 
-#: ../_meta.lua:4 ../assistant_dialog.lua:489 ../main.lua:353 ../main.lua:363
-#: ../main.lua:565
+#: ../_meta.lua:3 ../assistant_dialog.lua:489 ../main.lua:366 ../main.lua:376
+#: ../main.lua:886
 msgid "AI Assistant"
 msgstr "AI සහායක"
 
-#: ../_meta.lua:5
+#: ../_meta.lua:4
 msgid "💡 Enhance your KOReader experience with AI"
 msgstr "💡 AI සමඟ ඔබේ KOReader අත්දැකීම වැඩිදියුණු කරන්න"
 
-#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:31
-#: ../api_handlers/openai.lua:42 ../api_handlers/responses.lua:51
+#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:32
+#: ../api_handlers/openai.lua:63 ../api_handlers/responses.lua:51
 msgid "<b>Fetching models...</b>"
 msgstr "<b>මාදිලි ලබා ගනිමින්...</b>"
 
-#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:41
-#: ../api_handlers/gemini.lua:51 ../api_handlers/openai.lua:58
+#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:42
+#: ../api_handlers/gemini.lua:52 ../api_handlers/openai.lua:79
 #: ../api_handlers/responses.lua:67
 msgid "Failed to fetch models"
 msgstr "ආකෘති ලබා ගැනීමට අපොහොසත් විය"
@@ -41,8 +41,8 @@ msgstr "ආකෘති ලබා ගැනීමට අපොහොසත් �
 msgid "### ☺ Question\n"
 msgstr "### ☺ ප්‍රශ්නය\n"
 
-#: ../assistant_dialog.lua:134 ../assistant_model_picker.lua:102
-#: ../assistant_model_picker.lua:261
+#: ../assistant_dialog.lua:134 ../assistant_model_picker.lua:103
+#: ../assistant_model_picker.lua:267
 msgid "Search"
 msgstr "සොයන්න"
 
@@ -59,11 +59,12 @@ msgstr "(ප්‍රතිචාරයක් නැත)"
 msgid "Highlighted text:"
 msgstr "උද්දීපනය කළ පෙළ:"
 
-#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:161
-#: ../assistant_model_picker.lua:127 ../assistant_model_picker.lua:252
-#: ../assistant_model_picker.lua:344 ../assistant_quicknote.lua:39
-#: ../assistant_settings.lua:97 ../assistant_settings.lua:615
-#: ../assistant_viewer.lua:626
+#: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:160
+#: ../assistant_model_picker.lua:128 ../assistant_model_picker.lua:258
+#: ../assistant_model_picker.lua:351 ../assistant_quicknote.lua:39
+#: ../assistant_search_registry.lua:362 ../assistant_settings.lua:99
+#: ../assistant_settings.lua:703 ../assistant_viewer.lua:626 ../main.lua:551
+#: ../main.lua:675 ../main.lua:811
 msgid "Cancel"
 msgstr "අවලංගු කරන්න"
 
@@ -85,7 +86,7 @@ msgstr ""
 "\n"
 "මෙම බොත්තම උද්දීපන මෙනුවට එක් කරන්නද?"
 
-#: ../assistant_dialog.lua:447
+#: ../assistant_dialog.lua:447 ../assistant_settings.lua:251
 msgid "Add"
 msgstr "එකතු කරන්න"
 
@@ -129,35 +130,36 @@ msgstr "%1 සඳහා පූරණය වෙමින් ..."
 msgid "<b>Error:</b> No response received"
 msgstr "<b>දෝෂය:</b> ප්‍රතිචාරයක් ලැබී නැත"
 
-#: ../assistant_dictdialog.lua:155
+#: ../assistant_dictdialog.lua:154
 msgid "AI Dictionary"
 msgstr "AI ශබ්දකෝෂය"
 
-#: ../assistant_dictdialog.lua:156
+#: ../assistant_dictdialog.lua:155
 msgid "Enter a word to look up..."
 msgstr "සොයා බැලීමට වචනයක් ඇතුළත් කරන්න..."
 
-#: ../assistant_dictdialog.lua:167
+#: ../assistant_dictdialog.lua:166
 msgid "Look Up"
 msgstr "සොයා බලන්න"
 
-#: ../assistant_dictdialog.lua:214
+#: ../assistant_dictdialog.lua:213
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Term X-Ray සඳහා පොත් සන්දර්භය විශ්ලේෂණය කරමින්...</b>"
 
-#: ../assistant_dictdialog.lua:390 ../assistant_prompts.lua:27 ../main.lua:811
+#: ../assistant_dictdialog.lua:388 ../assistant_prompts.lua:27 ../main.lua:1166
+#: ../main.lua:1168
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
-#: ../assistant_dictdialog.lua:393
+#: ../assistant_dictdialog.lua:391
 msgid "Loading Term X-Ray ..."
 msgstr "Term X-Ray පූරණය වෙමින් ..."
 
-#: ../assistant_dictdialog.lua:410 ../assistant_prompts.lua:74 ../main.lua:829
+#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:74 ../main.lua:1185
 msgid "Dictionary"
 msgstr "ශබ්දකෝෂය"
 
-#: ../assistant_dictdialog.lua:411
+#: ../assistant_dictdialog.lua:409
 msgid "Loading AI Dictionary ..."
 msgstr "AI ශබ්දකෝෂය පූරණය වෙමින් ..."
 
@@ -169,60 +171,60 @@ msgstr "කිසිවක් නැත"
 msgid "Model Built-In"
 msgstr "ආකෘතියේ ගොඩනගා ඇති"
 
-#: ../assistant_featuredialog.lua:42
+#: ../assistant_featuredialog.lua:41
 msgid "Custom Prompt"
 msgstr "අභිරුචි ප්‍රේරණය"
 
-#: ../assistant_featuredialog.lua:43
+#: ../assistant_featuredialog.lua:42
 msgid "Loading..."
 msgstr "පූරණය වෙමින්..."
 
-#: ../assistant_featuredialog.lua:64
+#: ../assistant_featuredialog.lua:63
 msgid "Recap"
 msgstr "සාරාංශය"
 
-#: ../assistant_featuredialog.lua:65
+#: ../assistant_featuredialog.lua:64
 msgid "Loading Recap..."
 msgstr "සාරාංශය පූරණය වෙමින්..."
 
-#: ../assistant_featuredialog.lua:70
+#: ../assistant_featuredialog.lua:69
 msgid "X‑Ray"
 msgstr "X‑Ray"
 
-#: ../assistant_featuredialog.lua:71
+#: ../assistant_featuredialog.lua:70
 msgid "Loading X-Ray..."
 msgstr "X‑Ray පූරණය වෙමින්..."
 
 #. @translators book_info section headers and sub-fields
-#: ../assistant_featuredialog.lua:76 ../assistant_prompts.lua:440
+#: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
 msgid "Book Information"
 msgstr "පොත් තොරතුරු"
 
-#: ../assistant_featuredialog.lua:77
+#: ../assistant_featuredialog.lua:76
 msgid "Loading Book Information..."
 msgstr "පොත් තොරතුරු පූරණය වෙමින්..."
 
-#: ../assistant_featuredialog.lua:82 ../main.lua:119 ../main.lua:301
+#: ../assistant_featuredialog.lua:81 ../main.lua:127 ../main.lua:314
 msgid "Highlight & Note Analysis"
 msgstr "උද්දීපනය සහ සටහන් විශ්ලේෂණය"
 
-#: ../assistant_featuredialog.lua:83
+#: ../assistant_featuredialog.lua:82
 msgid "Loading Highlight & Note Analysis..."
 msgstr "උද්දීපනය සහ සටහන් විශ්ලේෂණය පූරණය වෙමින්..."
 
-#: ../assistant_featuredialog.lua:88 ../main.lua:127 ../main.lua:313
+#: ../assistant_featuredialog.lua:87 ../main.lua:135 ../main.lua:326
 msgid "Summary Using Highlights & Notes"
 msgstr "උද්දීපන සහ සටහන් භාවිතා කර සාරාංශය"
 
-#: ../assistant_featuredialog.lua:89
+#: ../assistant_featuredialog.lua:88
 msgid "Loading Summary Using Highlights & Notes..."
 msgstr "උද්දීපන සහ සටහන් භාවිතා කර සාරාංශය පූරණය වෙමින්..."
 
-#: ../assistant_featuredialog.lua:101
+#: ../assistant_featuredialog.lua:100
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>නොදන්නා විශේෂාංග වර්ගය:</b> %1"
 
-#: ../assistant_featuredialog.lua:188
+#: ../assistant_featuredialog.lua:187
 msgid ""
 " - Title : %1\n"
 " - Author: %2\n"
@@ -238,64 +240,65 @@ msgstr ""
 "-----\n"
 "\n"
 
-#: ../assistant_model_picker.lua:76
+#: ../assistant_model_picker.lua:77
 msgid "Models: %1 (filtered)"
 msgstr "ආකෘති: %1 (පෙරහන් කරන ලද)"
 
-#: ../assistant_model_picker.lua:78
+#: ../assistant_model_picker.lua:79
 msgid "Models: %1"
 msgstr "ආකෘති: %1"
 
-#: ../assistant_model_picker.lua:81
+#: ../assistant_model_picker.lua:82
 msgid " — p. %1/%2"
 msgstr " — පි. %1/%2"
 
-#: ../assistant_model_picker.lua:118
+#: ../assistant_model_picker.lua:119
 msgid "Manual"
 msgstr "අත්පොත"
 
-#: ../assistant_model_picker.lua:122
+#: ../assistant_model_picker.lua:123
 msgid "Reset"
 msgstr "යළි සකසන්න"
 
-#: ../assistant_model_picker.lua:165 ../assistant_model_picker.lua:357
+#: ../assistant_model_picker.lua:170 ../assistant_model_picker.lua:368
 msgid "Model: %1"
 msgstr "ආකෘතිය: %1"
 
-#: ../assistant_model_picker.lua:177
+#: ../assistant_model_picker.lua:183
 msgid "Filter: \"%1\""
 msgstr "පෙරහන: \"%1\""
 
-#: ../assistant_model_picker.lua:179
+#: ../assistant_model_picker.lua:185
 msgid "Select a model:"
 msgstr "ආකෘතියක් තෝරන්න:"
 
-#: ../assistant_model_picker.lua:247
+#: ../assistant_model_picker.lua:253
 msgid "Search Models"
 msgstr "ආකෘති සොයන්න"
 
-#: ../assistant_model_picker.lua:286
+#: ../assistant_model_picker.lua:292
 msgid "Model reset: %1"
 msgstr "ආකෘතිය යළි සකසන ලදී: %1"
 
-#: ../assistant_model_picker.lua:316
+#: ../assistant_model_picker.lua:322
 msgid "No models matching \"%1\"."
 msgstr "\"%1\" ට ගැලපෙන ආකෘති නොමැත."
 
-#: ../assistant_model_picker.lua:339
+#: ../assistant_model_picker.lua:346
 msgid "Enter Model ID"
 msgstr "ආකෘති හැඳුනුම්පත ඇතුළත් කරන්න"
 
-#: ../assistant_model_picker.lua:341
+#: ../assistant_model_picker.lua:348
 msgid "e.g. google/gemini-3.0-flash-exp:free"
 msgstr "උදා: google/gemini-3.0-flash-exp:free"
 
-#: ../assistant_model_picker.lua:349 ../assistant_quicknote.lua:49
-#: ../assistant_settings.lua:121 ../assistant_viewer.lua:447
+#: ../assistant_model_picker.lua:356 ../assistant_quicknote.lua:49
+#: ../assistant_settings.lua:123 ../assistant_viewer.lua:447 ../main.lua:598
+#: ../main.lua:680
 msgid "Save"
 msgstr "සුරකින්න"
 
-#: ../assistant_model_picker.lua:377
+#: ../assistant_model_picker.lua:389
 msgid "No models available."
 msgstr "ආකෘති නොමැත."
 
@@ -452,7 +455,7 @@ msgstr "සන්දර්භීය සම්බන්ධතා"
 msgid "Cultural Significance"
 msgstr "සංස්කෘතික වැදගත්කම"
 
-#: ../assistant_prompts.lua:295 ../main.lua:792
+#: ../assistant_prompts.lua:295 ../main.lua:1147 ../main.lua:1149
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
@@ -601,19 +604,70 @@ msgstr "උදාහරණය"
 msgid "Word Origin"
 msgstr "වචන සම්භවය"
 
-#: ../assistant_querier.lua:97
+#: ../assistant_provider_registry.lua:210
+msgid "Provider record must be a table."
+msgstr "සපයන දත්ත දායකය අවයව ලෙස තිබිය යුතුය."
+
+#: ../assistant_provider_registry.lua:216
+msgid "Provider name is required."
+msgstr "සපයන දත්ත දායකයේ නම අනිවාර්යයි."
+
+#: ../assistant_provider_registry.lua:221
+msgid "Unsupported API protocol."
+msgstr "භාවිත නොහැකි API ප්‍රවේශ පද්ධතිය."
+
+#: ../assistant_provider_registry.lua:232 ../main.lua:608
+msgid "Base URL is required."
+msgstr "මූලික URL අනිවාර්යයි."
+
+#: ../assistant_provider_registry.lua:235 ../assistant_search_registry.lua:125
+msgid "Base URL must start with http:// or https://"
+msgstr "මූලික URL http:// හෝ https:// ලෙස ආරම්භ විය යුතුය."
+
+#: ../assistant_provider_registry.lua:241 ../main.lua:612
+msgid "API key is required."
+msgstr "API පහල අවශ්‍ය වේ."
+
+#: ../assistant_provider_registry.lua:292
+#: ../assistant_provider_registry.lua:308
+#: ../assistant_provider_registry.lua:348
+msgid "Provider not found."
+msgstr "සපයන්නෙක් හමු නොවේ."
+
+#: ../assistant_provider_registry.lua:343
+#: ../assistant_provider_registry.lua:394
+msgid "Provider data not initialized."
+msgstr "සපයන දත්ත දායකයේ දත්ත මුල් කිරීම සිදුවී නොතිබේ."
+
+#: ../assistant_provider_registry.lua:447
+msgid "Provider API"
+msgstr "සපයන දත්ත දායකයේ API"
+
+#: ../assistant_provider_registry.lua:465
+msgid "%1 (Compatible)"
+msgstr "%1 (සමඟ ගැලපෙන)"
+
+#: ../assistant_provider_registry.lua:473
+msgid "Custom"
+msgstr "අභිරුචි"
+
+#: ../assistant_querier.lua:125
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "%1 සඳහා සපයන්නා සැකසුම් හමු නොවීය. කරුණාකර ඔබේ configuration.lua ගොනුව පරීක්ෂා කරන්න."
 
-#: ../assistant_querier.lua:105
+#: ../assistant_querier.lua:138
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "%1 සඳහා හසුරුවන්නා හමු නොවීය. කරුණාකර ඔබේ configuration.lua ගොනුව පරීක්ෂා කරන්න."
 
-#: ../assistant_querier.lua:115
+#: ../assistant_querier.lua:145
+msgid "Handler %1 not available for provider: %2"
+msgstr "සපයන දත්ත දායකය: %2 සඳහා මෙම හැඳින්වීමේ ක්‍රියාකාරකම %1 ලබා නොදේ."
+
+#: ../assistant_querier.lua:156
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 සඳහා හසුරුවන්නා හමු නොවීය. කරුණාකර හසුරුවන්නා api_handlers නාමාවලියේ පවතින බවට සහතික වන්න."
 
-#: ../assistant_querier.lua:158
+#: ../assistant_querier.lua:199
 msgid ""
 "<b>API Error</b>\n"
 "%1\n"
@@ -631,80 +685,88 @@ msgstr ""
 "\n"
 "සැකසුම් සංවාදයේ වෙනත් සපයන්නෙකු උත්සාහ කරන්න."
 
-#: ../assistant_querier.lua:159
+#: ../assistant_querier.lua:200
 msgid "Unknown error"
 msgstr "නොදන්නා දෝෂය"
 
-#: ../assistant_querier.lua:164
+#: ../assistant_querier.lua:205 ../main.lua:248
 msgid "Settings"
 msgstr "සැකසුම්"
 
-#: ../assistant_querier.lua:166 ../assistant_settings.lua:219
+#: ../assistant_querier.lua:207 ../assistant_settings.lua:207
 #: ../assistant_viewer.lua:338
 msgid "Close"
 msgstr "වසන්න"
 
-#: ../assistant_querier.lua:216
+#: ../assistant_querier.lua:294
 msgid "Plugin is not configured."
 msgstr "ප්ලගිනය වින්‍යාස කර නැත."
 
-#: ../assistant_querier.lua:308 ../assistant_querier.lua:406
+#: ../assistant_querier.lua:386 ../assistant_querier.lua:484
 msgid "Too many tool-call rounds; aborting."
 msgstr "මෙවලම් ඇමතුම් වට ගණන ඉතා වැඩිය; අවලංගු කරමින්."
 
-#: ../assistant_querier.lua:316
+#: ../assistant_querier.lua:394
 msgid "Stream failed with no error message."
 msgstr "ප්‍රවාහය දෝෂ පණිවිඩයක් නොමැතිව අසාර්ථක විය."
 
-#: ../assistant_querier.lua:333
+#: ../assistant_querier.lua:411
 msgid "Stream ended with no content and no tool calls."
 msgstr "ප්‍රවාහය අන්තර්ගතයක් සහ මෙවලම් ඇමතුම් නොමැතිව අවසන් විය."
 
-#: ../assistant_querier.lua:380
+#: ../assistant_querier.lua:458
 msgid "Request Cancelled by user."
 msgstr "පරිශීලකයා විසින් ඉල්ලීම අවලංගු කරන ලදී."
 
-#: ../assistant_querier.lua:389
+#: ../assistant_querier.lua:467
 msgid "Querying AI ..."
 msgstr "AI විමසමින් ..."
 
-#: ../assistant_querier.lua:444
+#: ../assistant_querier.lua:522
 msgid "Composing answer ..."
 msgstr "පිළිතුර සම්පාදනය කරමින් ..."
 
-#: ../assistant_querier.lua:459 ../assistant_querier.lua:610
+#: ../assistant_querier.lua:537 ../assistant_querier.lua:695
 msgid "Request cancelled by user."
 msgstr "පරිශීලකයා විසින් ඉල්ලීම අවලංගු කරන ලදී."
 
-#: ../assistant_querier.lua:466
+#: ../assistant_querier.lua:544
 msgid "No response received."
 msgstr "ප්‍රතිචාරයක් ලැබී නැත."
 
-#: ../assistant_querier.lua:500
+#: ../assistant_querier.lua:580
 msgid "AI is responding"
 msgstr "AI ප්‍රතිචාර දක්වමින් සිටී"
 
-#: ../assistant_querier.lua:521
-msgid "⏹ Stop"
-msgstr "⏹ නවත්වන්න"
+#: ../assistant_querier.lua:601
+msgid "❌ Stop"
+msgstr "❌ නවතන්න"
 
-#: ../assistant_querier.lua:627
+#: ../assistant_querier.lua:606
+msgid "■ Scroll"
+msgstr "■ ලෙසළ"
+
+#: ../assistant_querier.lua:606
+msgid "▶ Scroll"
+msgstr "▶ ගොඩක් කිරීම"
+
+#: ../assistant_querier.lua:712
 msgid "Failed to start subprocess for request"
 msgstr "ඉල්ලීම සඳහා උප ක්‍රියාවලිය ආරම්භ කිරීමට අපොහොසත් විය"
 
-#: ../assistant_querier.lua:849
+#: ../assistant_querier.lua:921
 msgid "Error Message"
 msgstr "දෝෂ පණිවිඩය"
 
-#: ../assistant_querier.lua:878 ../assistant_querier.lua:881
+#: ../assistant_querier.lua:950 ../assistant_querier.lua:953
 msgid "Deeply Thought"
 msgstr "ගැඹුරින් සිතා ඇත"
 
-#: ../assistant_querier.lua:1071
+#: ../assistant_querier.lua:1143
 msgid "Stopped Reason: "
 msgstr "නතර කිරීමට හේතුව: "
 
-#: ../assistant_quicknote.lua:27 ../main.lua:103 ../main.lua:151
+#: ../assistant_quicknote.lua:27 ../main.lua:111 ../main.lua:159
 msgid "Take Quick Notes"
 msgstr "ඉක්මන් සටහන් ගන්න"
 
@@ -724,47 +786,93 @@ msgstr "පරිශීලක:"
 msgid "Quick note saved successfully"
 msgstr "ඉක්මන් සටහන සාර්ථකව සුරකින ලදී"
 
-#: ../assistant_settings.lua:81
+#: ../assistant_search_registry.lua:105
+msgid "Search tool record must be a table."
+msgstr "සෙවීම් මෙහෙයුම් දත්ත මේතුලයක් විය යුතුය."
+
+#: ../assistant_search_registry.lua:110 ../assistant_search_registry.lua:189
+msgid "Unknown search tool: %1"
+msgstr "නොදන්නා සෙවුම් මෙවලම: %1"
+
+#: ../assistant_search_registry.lua:117 ../main.lua:690
+msgid "API key is required for %1."
+msgstr "%1 සඳහා API යෙදුම් පුරුදු අවසර කිරීම අත්‍යවේක්‍යයි."
+
+#: ../assistant_search_registry.lua:122 ../main.lua:697
+msgid "Base URL is required for %1."
+msgstr "%1 සඳහා මූලික URL අවසර කිරීම අත්‍යවේක්‍යයි."
+
+#: ../assistant_search_registry.lua:212
+msgid "Search tool not found."
+msgstr "සෙවීම් මෙහෙයුම් සොයාගත නොහැකි විය."
+
+#: ../assistant_search_registry.lua:241 ../assistant_search_registry.lua:279
+msgid "Search tool data not initialized."
+msgstr "සෙවීම් මෙහෙයුම් දත්ත මුල් කිරීම කළ නොහැකි විය."
+
+#: ../assistant_search_registry.lua:323
+msgid "WebSearch API"
+msgstr "වෙබ් සෙවුම් API"
+
+#: ../assistant_search_registry.lua:349
+msgid "%1 — choose an action"
+msgstr "%1 — ක්‍රියාවක් තෝරන්න"
+
+#: ../assistant_search_registry.lua:368 ../assistant_settings.lua:226
+#: ../main.lua:206
+msgid "Edit"
+msgstr "සංස්කරණය"
+
+#: ../assistant_search_registry.lua:375 ../assistant_settings.lua:237
+#: ../assistant_settings.lua:398 ../main.lua:191 ../main.lua:195
+msgid "Delete"
+msgstr "මකන්න"
+
+#: ../assistant_settings.lua:83
 msgid "AI Response Language Setting"
 msgstr "AI ප්‍රතිචාර භාෂා සැකසුම"
 
-#: ../assistant_settings.lua:84
+#: ../assistant_settings.lua:86
 msgid "AI Response Language"
 msgstr "AI ප්‍රතිචාර භාෂාව"
 
-#: ../assistant_settings.lua:86 ../assistant_settings.lua:91
+#: ../assistant_settings.lua:88 ../assistant_settings.lua:93
 msgid "Leave blank to use: %1"
 msgstr "භාවිතා කිරීමට හිස් තබන්න: %1"
 
-#: ../assistant_settings.lua:89
+#: ../assistant_settings.lua:91
 msgid "Dictionary Language"
 msgstr "ශබ්දකෝෂ භාෂාව"
 
-#: ../assistant_settings.lua:104
+#: ../assistant_settings.lua:106
 msgid "Clear"
 msgstr "හිස් කරන්න"
 
-#: ../assistant_settings.lua:151
+#: ../assistant_settings.lua:153
 msgid "RTL written Language"
 msgstr "RTL ලිඛිත භාෂාව"
 
-#: ../assistant_settings.lua:171
+#: ../assistant_settings.lua:173
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "UI භාෂාව භාවිතා කිරීමට මෙම ක්ෂේත්‍ර හිස් තබන්න: %1"
 
-#: ../assistant_settings.lua:182
-msgid "AI Provider and Models"
-msgstr "AI සපයන්නා සහ ආකෘති"
+#: ../assistant_settings.lua:184
+msgid "Providers and Models"
+msgstr "සපයන්නන් සහ ආකෘති"
 
-#: ../assistant_settings.lua:205
+#: ../assistant_settings.lua:212 ../main.lua:556
 msgid "Browse Models"
 msgstr "ආකෘති පිරික්සන්න"
 
-#: ../assistant_settings.lua:213
+#: ../assistant_settings.lua:220
 msgid "Browse available models on OpenRouter"
 msgstr "OpenRouter හි පවතින ආකෘති පිරික්සන්න"
 
-#: ../assistant_settings.lua:392
+#: ../assistant_settings.lua:397
+msgid "Delete provider %1?"
+msgstr "සැපයුම්කරු %1 ඉවත් කරන්නද?"
+
+#: ../assistant_settings.lua:480
 msgid ""
 "Builtin Tools Works ONLY with these models:\n"
 "- Gemini-2.5/3\n"
@@ -774,105 +882,105 @@ msgstr ""
 "- Gemini-2.5/3\n"
 "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:417
+#: ../assistant_settings.lua:505
 msgid "AI Language: "
 msgstr "AI භාෂාව: "
 
-#: ../assistant_settings.lua:429
+#: ../assistant_settings.lua:517
 msgid "AI Text Size: %1"
 msgstr "AI පෙළ ප්‍රමාණය: %1"
 
-#: ../assistant_settings.lua:433
+#: ../assistant_settings.lua:521
 msgid "AI Response Text Font Size"
 msgstr "AI ප්‍රතිචාර පෙළ අකුරු ප්‍රමාණය"
 
-#: ../assistant_settings.lua:449
+#: ../assistant_settings.lua:537
 msgid "Response Settings"
 msgstr "ප්‍රතිචාර සැකසුම්"
 
-#: ../assistant_settings.lua:452
+#: ../assistant_settings.lua:540
 msgid "Enable Stream Response"
 msgstr "ප්‍රවාහ ප්‍රතිචාරය සක්‍රීය කරන්න"
 
-#: ../assistant_settings.lua:460
+#: ../assistant_settings.lua:548
 msgid "Stream Text Auto Scroll"
 msgstr "ප්‍රවාහ පෙළ ස්වයංක්‍රීය අනුචලනය"
 
-#: ../assistant_settings.lua:469
+#: ../assistant_settings.lua:557
 msgid "Large Streaming Window"
 msgstr "විශාල ප්‍රවාහ කවුළුව"
 
-#: ../assistant_settings.lua:479
+#: ../assistant_settings.lua:567
 msgid "Show Reasoning Text"
 msgstr "තර්ක පෙළ පෙන්වන්න"
 
-#: ../assistant_settings.lua:487
+#: ../assistant_settings.lua:575
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "AI ප්‍රතිචාරයෙන් ගැඹුරු චින්තන ක්‍රියාවලිය (තර්කනය) පවතී නම් පෙන්වන්න."
 
-#: ../assistant_settings.lua:492
+#: ../assistant_settings.lua:580
 msgid "Show Follow-up Questions"
 msgstr "අනුගාමී ප්‍රශ්න පෙන්වන්න"
 
-#: ../assistant_settings.lua:500
+#: ../assistant_settings.lua:588
 msgid "Show follow up questions related to the response content."
 msgstr "ප්‍රතිචාර අන්තර්ගතයට අදාළ අනුගමන ප්‍රශ්න පෙන්වන්න."
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:508
-msgid "KOReader Tweaks & Overrides"
-msgstr "KOReader ට්වීක්ස් සහ අභිබවා යාම්"
+#: ../assistant_settings.lua:596
+msgid "KOReader Tweaks"
+msgstr "KOReader සුදුරු කිරීම්"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:512
+#: ../assistant_settings.lua:600
 msgid "Use AI Assistant for 'Translate'"
 msgstr "AI සහායක 'පරිවර්තනය' සඳහා භාවිතා කරන්න"
 
-#: ../assistant_settings.lua:523
+#: ../assistant_settings.lua:611
 msgid "Auto-recap on opening long-unread books"
 msgstr "දිගු කාලයක් නොකියවූ පොත් විවෘත කිරීමේදී ස්වයංක්‍රීය සාරාංශය"
 
-#: ../assistant_settings.lua:533
+#: ../assistant_settings.lua:621
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "ඊළඟ වතාවේ දිගු කාලයක් නොකියවූ පොතක් විවෘත කළ විට AI සාරාංශය සක්‍රීය කෙරේ."
 
-#: ../assistant_settings.lua:537
+#: ../assistant_settings.lua:625
 msgid "Show Dictionary(AI) in Dictionary Popup"
 msgstr "ශබ්දකෝෂ උත්පතනයේ ශබ්දකෝෂය(AI) පෙන්වන්න"
 
-#: ../assistant_settings.lua:545
+#: ../assistant_settings.lua:633
 msgid "Show Wikipedia(AI) in Dictionary Popup"
 msgstr "ශබ්දකෝෂ උත්පතනයේ විකිපීඩියා(AI) පෙන්වන්න"
 
-#: ../assistant_settings.lua:553
+#: ../assistant_settings.lua:641
 msgid "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr "ශබ්දකෝෂ උත්පතනයේ පද X-Ray(AI) පෙන්වන්න"
 
-#: ../assistant_settings.lua:561
+#: ../assistant_settings.lua:649
 msgid "Show Custom Prompts in Dictionary Popup"
 msgstr "ශබ්දකෝෂ උත්පතනයේ අභිරුචි ඉඟි පෙන්වන්න"
 
-#: ../assistant_settings.lua:571
+#: ../assistant_settings.lua:659
 msgid "Copy entered question to the clipboard"
 msgstr "ඇතුළත් කළ ප්‍රශ්නය පසුරු පුවරුවට පිටපත් කරන්න"
 
-#: ../assistant_settings.lua:579
+#: ../assistant_settings.lua:667
 msgid "Auto-save conversations to NoteBook"
 msgstr "සංවාද ස්වයංක්‍රීයව NoteBook වෙත සුරකින්න"
 
-#: ../assistant_settings.lua:587
+#: ../assistant_settings.lua:675
 msgid "Use book text for x-ray and recap"
 msgstr "x-ray සහ සාරාංශය සඳහා පොත් පෙළ භාවිතා කරන්න"
 
-#: ../assistant_settings.lua:595 ../assistant_settings.lua:603
+#: ../assistant_settings.lua:683 ../assistant_settings.lua:691
 msgid "OTA Update"
 msgstr "OTA යාවත්කාලීන කිරීම"
 
-#: ../assistant_settings.lua:605
+#: ../assistant_settings.lua:693
 msgid "branch or tag name"
 msgstr "ශාඛාව හෝ ටැග් නම"
 
-#: ../assistant_settings.lua:607
+#: ../assistant_settings.lua:695
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -894,15 +1002,15 @@ msgstr ""
 "\n"
 "<b>configuration.lua ආරක්ෂා වනු ඇත.</b>"
 
-#: ../assistant_settings.lua:621
+#: ../assistant_settings.lua:709
 msgid "Update"
 msgstr "යාවත්කාලීන කරන්න"
 
-#: ../assistant_settings.lua:640
+#: ../assistant_settings.lua:728
 msgid "Purge the settings"
 msgstr "සැකසුම් පවිත්‍ර කරන්න"
 
-#: ../assistant_settings.lua:643
+#: ../assistant_settings.lua:731
 msgid ""
 "Purge assistant.koplugin settings?\n"
 "\n"
@@ -914,7 +1022,7 @@ msgstr ""
 "මෙය ප්ලගිනය එහි කර්මාන්තශාලා පෙරනිමි වෙත ප්‍රතිස්ථාපනය කරයි. සැකසුම් පමණක් ඉවත් කෙරේ;\n"
 "ගොනුව configuration.lua ආරක්ෂා කෙරේ."
 
-#: ../assistant_settings.lua:647 ../main.lua:719
+#: ../assistant_settings.lua:735 ../main.lua:1043
 msgid "Purge"
 msgstr "පවිත්‍ර කරන්න"
 
@@ -934,23 +1042,23 @@ msgstr "මෙවලම් ඇමතුමේ හැඳුනුම්පත ඇ
 msgid "Tool call did not include search keywords."
 msgstr "මෙවලම් ඇමතුමේ සෙවුම් මූල පද ඇතුළත් නොවීය."
 
-#: ../assistant_updater.lua:108
+#: ../assistant_updater.lua:141
 msgid "Checking for updates..."
 msgstr "යාවත්කාලීන සඳහා පරීක්ෂා කරමින්..."
 
-#: ../assistant_updater.lua:111
+#: ../assistant_updater.lua:144
 msgid "AI Assistant: Failed to check updates: %2"
 msgstr "AI සහායක: යාවත්කාලීන පරීක්ෂා කිරීම අසාර්ථක විය: %2"
 
-#: ../assistant_updater.lua:111
+#: ../assistant_updater.lua:144
 msgid "Empty Error"
 msgstr "හිස් දෝෂය"
 
-#: ../assistant_updater.lua:121
+#: ../assistant_updater.lua:154
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "%1 ප්ලගිනයේ නව අනුවාදයක් (%2) ලබා ගත හැක. කරුණාකර යාවත්කාලීන කරන්න!"
 
-#: ../assistant_updater.lua:174
+#: ../assistant_updater.lua:192
 msgid ""
 "<b>Downloading ...</b>\n"
 "<b>Github: </b>%1\n"
@@ -962,23 +1070,23 @@ msgstr ""
 "<b>ගබඩාව: </b>%2\n"
 "<b>ශාඛාව/ටැගය: </b>%3"
 
-#: ../assistant_updater.lua:199
+#: ../assistant_updater.lua:217
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Branch/Tag \"%1\" හමු නොවීය."
 
-#: ../assistant_updater.lua:211
+#: ../assistant_updater.lua:229
 msgid "OTA update canceled."
 msgstr "OTA යාවත්කාලීනය අවලංගු කරන ලදී."
 
-#: ../assistant_updater.lua:217 ../assistant_updater.lua:304
+#: ../assistant_updater.lua:235 ../assistant_updater.lua:323
 msgid "OTA update failed: %1"
 msgstr "OTA යාවත්කාලීනය අසාර්ථක විය: %1"
 
-#: ../assistant_updater.lua:224
+#: ../assistant_updater.lua:242
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 ස්ථාපනය වෙමින්...</b>"
 
-#: ../assistant_updater.lua:308
+#: ../assistant_updater.lua:327
 msgid ""
 "OTA UPDATE OK.\n"
 " Restart is required."
@@ -986,11 +1094,11 @@ msgstr ""
 "OTA යාවත්කාලීනය හරි.\n"
 " නැවත ආරම්භ කිරීම අවශ්ය වේ."
 
-#: ../assistant_utils.lua:169
+#: ../assistant_utils.lua:173
 msgid "Page"
 msgstr "පිටුව"
 
-#: ../assistant_utils.lua:195
+#: ../assistant_utils.lua:199
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
@@ -998,15 +1106,15 @@ msgstr ""
 "<b>ලොග් සඳහා පෙරනිමි ෆෝල්ඩරයට ප්‍රවේශ විය නොහැක: %1</b>\n"
 "මුල් ස්ථානය භාවිතා කරමින්."
 
-#: ../assistant_utils.lua:251
+#: ../assistant_utils.lua:255
 msgid "Notebook save failed. Continuing..."
 msgstr "සටහන් පොත සුරැකීම අසාර්ථක විය. ඉදිරියට යමින්..."
 
-#: ../assistant_utils.lua:380
+#: ../assistant_utils.lua:384
 msgid "##### You may find these topics interesting:"
 msgstr "##### ඔබට මෙම මාතෘකා සිත්ගන්නා සුළු විය හැක:"
 
-#: ../assistant_utils.lua:747
+#: ../assistant_utils.lua:751
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: ආපසු ලැබුණු දත්ත විග්‍රහ කිරීම අසාර්ථක විය"
 
@@ -1067,35 +1175,35 @@ msgstr "වචනය ක්ලිප්බෝඩ් එකට පිටපත්
 msgid "Selection copied to clipboard."
 msgstr "තේරීම ක්ලිප්බෝඩ් එකට පිටපත් කරන ලදී."
 
-#: ../main.lua:79 ../main.lua:139
+#: ../main.lua:87 ../main.lua:147
 msgid "Ask the AI a question"
 msgstr "AI ට ප්රශ්නයක් අසන්න"
 
-#: ../main.lua:87 ../main.lua:287
+#: ../main.lua:95 ../main.lua:300
 msgid "AI Recaps"
 msgstr "AI සාරාංශ"
 
-#: ../main.lua:95 ../main.lua:272
+#: ../main.lua:103 ../main.lua:285
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
-#: ../main.lua:111 ../main.lua:257
+#: ../main.lua:119 ../main.lua:270
 msgid "Book Summary & Recs"
 msgstr "පොත් සාරාංශය සහ නිර්දේශ"
 
-#: ../main.lua:146
+#: ../main.lua:154
 msgid "Enter a question to ask AI."
 msgstr "AI ට ඇසීමට ප්රශ්නයක් ඇතුළත් කරන්න."
 
-#: ../main.lua:157
+#: ../main.lua:165
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "ඔබේ සටහන් පොතට සුරැකෙන ඉක්මන් සටහන් ගන්න."
 
-#: ../main.lua:162
+#: ../main.lua:170
 msgid "NoteBook (AI Conversation Log)"
 msgstr "NoteBook (AI සංවාද ලොගය)"
 
-#: ../main.lua:169
+#: ../main.lua:177
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
@@ -1105,11 +1213,11 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:171
+#: ../main.lua:179
 msgid "View"
 msgstr "දර්ශනය"
 
-#: ../main.lua:175
+#: ../main.lua:183
 msgid ""
 "File does not exist.\n"
 "\n"
@@ -1119,11 +1227,7 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:183 ../main.lua:187
-msgid "Delete"
-msgstr "මකන්න"
-
-#: ../main.lua:186
+#: ../main.lua:194
 msgid ""
 "Delete file?\n"
 "%1\n"
@@ -1133,19 +1237,19 @@ msgstr ""
 "%1\n"
 "මෙම ක්‍රියාව ආපසු හැරවිය නොහැක."
 
-#: ../main.lua:198
-msgid "Edit"
-msgstr "සංස්කරණය"
+#: ../main.lua:219
+msgid "AI Provider: not configured"
+msgstr "AI සපයන්නා: සැකසීම් කර නොතිබේ"
 
-#: ../main.lua:212
+#: ../main.lua:225
 msgid "AI Provider: %1(%2)"
 msgstr "AI සැපයුම්කරු: %1(%2)"
 
-#: ../main.lua:225
-msgid "Smart Web Search: %1"
-msgstr "ස්මාර්ට් වෙබ් සෙවුම: %1"
+#: ../main.lua:238
+msgid "Web Search: %1"
+msgstr "වෙබ් සෙවුම්: %1"
 
-#: ../main.lua:229
+#: ../main.lua:242
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
@@ -1153,71 +1257,123 @@ msgstr ""
 "තථ්‍ය කාල වෙබ් ප්‍රතිඵල සමඟ ප්‍රතිචාර නිරවද්‍යතාව වැඩි දියුණු කරයි.\n"
 "සටහන: ඉහළ ටෝකන් භාවිතය සහ අමතර API ගාස්තු අදාළ වේ."
 
-#: ../main.lua:235
-msgid "Other Settings"
-msgstr "වෙනත් සැකසුම්"
-
-#: ../main.lua:253
+#: ../main.lua:266
 msgid "Book-Level Built-in Prompts"
 msgstr "පොත් මට්ටමේ ගොඩනඟන ලද ඉඟි"
 
-#: ../main.lua:266
+#: ../main.lua:279
 msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr "පොතේ සාරාංශය, කතෘ චරිතාපදානය, ඓතිහාසික සන්දර්භය, සහ විස්තර සහිත සමාන පොත් නිර්දේශ ලැයිස්තුව."
 
-#: ../main.lua:281
+#: ../main.lua:294
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" පොතක් සඳහා සාරාංශය, චරිත, ස්ථාන, තේමා, පද සහ සංකල්ප, කාල රේඛාව, සහ නැවත ගිල්වීම වැනි නිශ්චිත කොටස් වලට ව්‍යුහගත කර ඇත."
 
-#: ../main.lua:296
+#: ../main.lua:309
 msgid "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr "වත්මන් කියවීමේ ප්‍රගතිය දක්වා පොතේ ඉතා කෙටි, ස්පොයිලර් රහිත සාරාංශයක්."
 
-#: ../main.lua:307
+#: ../main.lua:320
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "පොතෙන් ඔබේ උද්දීපන, සටහන්, සහ සටහන් පොතේ අන්තර්ගතය විශ්ලේෂණය."
 
-#: ../main.lua:322
+#: ../main.lua:335
 msgid "Summary of the book using your highlights and notes."
 msgstr "ඔබේ උද්දීපන සහ සටහන් භාවිතා කරමින් පොතේ සාරාංශය."
 
-#: ../main.lua:329
+#: ../main.lua:342
 msgid "Book-Level Custom Prompts"
 msgstr "පොත් මට්ටමේ අභිරුචි ඉඟි"
 
-#: ../main.lua:336
+#: ../main.lua:349
 msgid "Includes user defined book level prompts from Config file"
 msgstr "වින්‍යාස ගොනුවෙන් පරිශීලක නිර්වචනය කළ පොත් මට්ටමේ ඉඟි ඇතුළත් වේ"
 
-#: ../main.lua:411
+#: ../main.lua:424
 msgid "This is a custom prompt"
 msgstr "මෙය අභිරුචි ඉඟියකි"
 
-#: ../main.lua:421
+#: ../main.lua:434
 msgid "No valid book-level custom prompt found"
 msgstr "වලංගු පොත් මට්ටමේ අභිරුචි ඉඟියක් හමු නොවීය"
 
-#: ../main.lua:426
+#: ../main.lua:439
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "විස්තර සඳහා, github හි 'Configuration' විකි පිටුවට පිවිසෙන්න."
 
-#: ../main.lua:509
+#: ../main.lua:524 ../main.lua:653
+msgid "Edit %1"
+msgstr "%1 සංස්කරණය කරන්න"
+
+#: ../main.lua:534 ../main.lua:654
+msgid "Add %1"
+msgstr "%1 එකතු කරන්න"
+
+#: ../main.lua:534
+msgid "Add %1 Provider"
+msgstr "%1 සැපයුම්කරු එකතු කරන්න"
+
+#: ../main.lua:543
+msgid "Display name"
+msgstr "නාම ප්‍රදර්ශනය"
+
+#: ../main.lua:543
+msgid "Provider Name"
+msgstr "සපයන්නාගේ නම"
+
+#: ../main.lua:544 ../main.lua:664
+msgid "Base URL"
+msgstr "මූලික URL"
+
+#: ../main.lua:544 ../main.lua:664
+msgid "https://..."
+msgstr "https://..."
+
+#: ../main.lua:545 ../main.lua:660
+msgid "API Key"
+msgstr "API පහල"
+
+#: ../main.lua:545 ../main.lua:660
+msgid "Your API key"
+msgstr "ඔබගේ API පහල"
+
+#: ../main.lua:546
+msgid "Default: auto"
+msgstr "පෙරනිමි: ස්වයංක්‍රීය"
+
+#: ../main.lua:546
+msgid "Model"
+msgstr "ආකෘති"
+
+#: ../main.lua:577
+msgid "Failed to fetch models."
+msgstr "මොඩල් ගෙන යාමට අසාරක යුතු විය."
+
+#: ../main.lua:707
+msgid "Failed to save search tool."
+msgstr "සෙයාර්ච් මෙහෙයුම් කිරීම කළ හැකි නොවේ."
+
+#: ../main.lua:782
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "configuration.lua තුළ වලංගු ආකෘති සපයන්නෙකු හමු නොවීය."
 
-#: ../main.lua:527
+#: ../main.lua:801
 msgid ""
-"Configuration Error.\n"
-"Please set up configuration.lua."
+"<b>Configuration Error.</b>\n"
+"Please add a provider in Settings or configuration.lua."
 msgstr ""
-"වින්‍යාස දෝෂයකි.\n"
-"කරුණාකර configuration.lua සකසන්න."
+"<b>කට්ටල දෝෂයක්.</b>\n"
+"කරුණාකර සැකසුම් හෝ configuration.lua තුළ ප්‍රවේශකයක් එක් කරන්න."
 
-#: ../main.lua:599
+#: ../main.lua:807
+msgid "OK"
+msgstr "හොඳින්"
+
+#: ../main.lua:925
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: ආකෘති සපයන්නන් වලංගු නොවේ."
 
-#: ../main.lua:684
+#: ../main.lua:1008
 msgid ""
 "Usage Tips\n"
 "\n"
@@ -1251,15 +1407,15 @@ msgstr ""
 "බහු-ස්වයිප් (උදා: ⮠, ⮡, ↺):\n"
 "ප්‍රතිඵල සංවාදය මත වසා දැමීමට (වසන්න බොත්තම ළඟා වීමට දුර බැවින්).\n"
 
-#: ../main.lua:706
+#: ../main.lua:1030
 msgid "Version Info"
 msgstr "අනුවාද තොරතුරු"
 
-#: ../main.lua:712
+#: ../main.lua:1036
 msgid "Purge Settings"
 msgstr "සැකසුම් ඉවත් කරන්න"
 
-#: ../main.lua:715
+#: ../main.lua:1039
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
@@ -1271,28 +1427,28 @@ msgstr ""
 "\n"
 "configuration.lua ආරක්ෂිතයි, සැකසුම් පමණක් ඉවත් කෙරේ."
 
-#: ../main.lua:768
+#: ../main.lua:1092
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "උද්දීපන මෙනුවෙන් [%s] ඉවත් කරන්නද?"
 
-#: ../main.lua:769
+#: ../main.lua:1093
 msgid "Remove"
 msgstr "ඉවත් කරන්න"
 
-#: ../main.lua:1014
+#: ../main.lua:1456
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "වින්‍යාසය හමු නොවීය. කරුණාකර පළමුව configuration.lua සකසන්න."
 
-#: ../main.lua:1062
+#: ../main.lua:1504
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>එක් කරන ලදී</b> [%1 (AI)] Highlight Menu වෙත."
 
-#: ../main.lua:1073
+#: ../main.lua:1515
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
 msgstr "<b>ඉවත් කරන ලදී</b> [%1 (AI)] Highlight Menu වෙතින්."
 
-#: ../main.lua:1118
+#: ../main.lua:1560
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
@@ -1302,36 +1458,36 @@ msgstr ""
 "%1 විසින් %2 සඳහා.\n"
 "\n"
 
-#: ../main.lua:1119
+#: ../main.lua:1561
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "පැයකට පෙර අවසන් වරට කියවන ලදී."
 msgstr[1] "පැය %1කට පෙර අවසන් වරට කියවන ලදී."
 
-#: ../main.lua:1124
+#: ../main.lua:1566
 msgid "Yes"
 msgstr "ඔව්"
 
-#: ../main.lua:1133
+#: ../main.lua:1575
 msgid "No"
 msgstr "නැත"
 
-#: ../main.lua:1174
+#: ../main.lua:1616
 msgid "Markdown Engine"
 msgstr "මාර්ක්ඩවුන් එන්ජිම"
 
-#: ../main.lua:1175
+#: ../main.lua:1617
 msgid "KOReader"
 msgstr "KOReader"
 
-#: ../main.lua:1176
+#: ../main.lua:1618
 msgid "Device"
 msgstr "උපාංගය"
 
-#: ../main.lua:1177
+#: ../main.lua:1619
 msgid "Platform"
 msgstr "වේදිකාව"
 
-#: ../main.lua:1178
+#: ../main.lua:1620
 msgid "Runtime"
 msgstr "ධාවන කාලය"
