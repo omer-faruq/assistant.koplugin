@@ -491,10 +491,11 @@ local tests = {
     -- getAddWebSearchMenuItem
     -- =========================================================================
 
-    test("menu item text is localized", function()
+    test("menu item text_func is localized", function()
         local assistant = mockAssistant()
         local item = SearchRegistry.getAddWebSearchMenuItem(assistant)
-        assert.equal(item.text, "WebSearch API")
+        assert.notNil(item.text_func, "should use text_func instead of text")
+        assert.equal(item.text_func(), "WebSearch API")
         assert.equal(item.keep_menu_open, true)
         assert.notNil(item.sub_item_table_func)
     end),
@@ -506,14 +507,32 @@ local tests = {
         assert.equal(#sub_items, 4)
     end),
 
-    test("sub-menu items have correct display names from SEARCH_TOOLS", function()
+    test("sub-menu items have text_func returning correct display names", function()
         local assistant = mockAssistant()
         local item = SearchRegistry.getAddWebSearchMenuItem(assistant)
         local sub_items = item.sub_item_table_func()
-        assert.equal(sub_items[1].text, "SerpAPI")
-        assert.equal(sub_items[2].text, "Tavily")
-        assert.equal(sub_items[3].text, "Exa.ai")
-        assert.equal(sub_items[4].text, "SearXNG")
+        assert.equal(sub_items[1].text_func(), "SerpAPI")
+        assert.equal(sub_items[2].text_func(), "Tavily")
+        assert.equal(sub_items[3].text_func(), "Exa.ai")
+        assert.equal(sub_items[4].text_func(), "SearXNG")
+    end),
+
+    test("sub-menu items show checkmark when configured via API key", function()
+        local assistant = mockAssistant()
+        assistant.CONFIGURATION.provider_settings.serpapi = { api_key = "sk-test" }
+        local item = SearchRegistry.getAddWebSearchMenuItem(assistant)
+        local sub_items = item.sub_item_table_func()
+        assert.equal(sub_items[1].text_func(), "✓ SerpAPI")
+        -- Unconfigured tools still have no checkmark
+        assert.equal(sub_items[2].text_func(), "Tavily")
+    end),
+
+    test("sub-menu items show checkmark when configured via base_url", function()
+        local assistant = mockAssistant()
+        assistant.CONFIGURATION.provider_settings.searxngapi = { base_url = "https://search.example.com" }
+        local item = SearchRegistry.getAddWebSearchMenuItem(assistant)
+        local sub_items = item.sub_item_table_func()
+        assert.equal(sub_items[4].text_func(), "✓ SearXNG")
     end),
 
     test("sub-menu items have callbacks", function()

@@ -327,7 +327,15 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
             for i, tool_key in ipairs(SearchRegistry.TOOL_KEYS) do
                 local def = SearchRegistry.SEARCH_TOOLS[tool_key]
                 table.insert(items, {
-                    text = def.display_name,
+                    text_func = function()
+                        local merged = koutil.tableGetValue(
+                            assistant.CONFIGURATION, "provider_settings", tool_key)
+                        local configured = merged and (
+                            (type(merged.api_key) == "string" and #merged.api_key > 0) or
+                            (type(merged.base_url) == "string" and #merged.base_url > 0)
+                        )
+                        return configured and ("✓ " .. def.display_name) or def.display_name
+                    end,
                     keep_menu_open = true,
                     callback = function()
                         assistant:_showAddWebSearchDialog(tool_key)
