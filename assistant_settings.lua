@@ -181,7 +181,7 @@ local function LanguageSetting(assistant, close_callback)
 end
 
 local SettingsDialog = InputDialog:extend{
-    title = _("AI Provider and Models"),
+    title = _("Providers and Models"),
 
     -- inited variables
     assistant = nil, -- reference to the main assistant object
@@ -202,6 +202,11 @@ function SettingsDialog:init()
 
     -- action buttons
     self.buttons = {{
+        {
+            id = "close",
+            text = _("Close"),
+            callback = function() UIManager:close(self) end
+        },
         {
             id = "select_model",
             text = _("Browse Models"),
@@ -238,15 +243,10 @@ function SettingsDialog:init()
             end,
             callback = function() self:onDeleteProvider() end,
         },
-        {
-            id = "close",
-            text = _("Close"),
-            callback = function() UIManager:close(self) end
-        }
     }}
 
     if Device:isTouchDevice() then
-        table.insert(self.buttons[1], 2, {
+        table.insert(self.buttons[1], 3, {
             id = "add_provider",
             text = _("Add"),
             callback = function()
