@@ -798,10 +798,10 @@ def translate_file(
     lang_fullname = LANG_MAP[lang_code]
     partial_path = output_path + ".partial"
 
-    log_translate.info("translating %s (%s)", lang_code, lang_fullname)
+    log_translate.info("[%s] translating %s", lang_code, lang_fullname)
 
     if os.path.isfile(partial_path):
-        log_translate.warning("resuming from existing partial: %s", partial_path)
+        log_translate.warning("[%s] resuming from existing partial: %s", lang_code, partial_path)
         po = polib.pofile(partial_path, wrapwidth=0)
     else:
         po = polib.pofile(input_path, wrapwidth=0)
@@ -825,13 +825,13 @@ def translate_file(
     ]
 
     if not pending:
-        log_translate.info("nothing to translate; all entries are already filled")
+        log_translate.info("[%s] nothing to translate; all entries are already filled", lang_code)
     else:
         total = len(pending)
         chunks = list(_chunk(pending, cfg.chunk_size))
         log_translate.info(
-            "%d entries in %d chunks of up to %d",
-            total, len(chunks), cfg.chunk_size,
+            "[%s] %d entries in %d chunks of up to %d",
+            lang_code, total, len(chunks), cfg.chunk_size,
         )
 
         def save_partial() -> None:
@@ -857,8 +857,8 @@ def translate_file(
             save_partial()
             elapsed = time.time() - t0
             log_translate.info(
-                "[chunk %d/%d] %d entries in %.1fs",
-                i, len(chunks), len(chunk_entries), elapsed,
+                "[%s] [chunk %d/%d] %d entries in %.1fs",
+                lang_code, i, len(chunks), len(chunk_entries), elapsed,
             )
 
     if needs_header_fix:
@@ -880,7 +880,7 @@ def translate_file(
     if os.path.isfile(partial_path):
         os.unlink(partial_path)
 
-    log_translate.info("done %s (%s)", lang_code, lang_fullname)
+    log_translate.info("[%s] done %s", lang_code, lang_fullname)
     return 0
 
 
