@@ -572,6 +572,39 @@ def _build_messages(
     ]
 
 
+def _extract_balanced_json(text: str) -> str | None:
+    """Extract the outermost balanced JSON object from text.
+
+    Tracks braces and string-in/out state so nested objects and escaped
+    characters inside strings are handled correctly, unlike a greedy regex.
+    """
+    start = text.find("{")
+    if start == -1:
+        return None
+    depth = 0
+    in_string = False
+    escape = False
+    for i, ch in enumerate(text[start:], start):
+        if escape:
+            escape = False
+            continue
+        if ch == "\\":
+            escape = True
+            continue
+        if ch == '"':
+            in_string = not in_string
+            continue
+        if in_string:
+            continue
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                return text[start : i + 1]
+    return None
+
+
 def _extract_json(content: str) -> dict[str, Any]:
     """Parse the model's JSON content, tolerating stray markdown fences."""
     text = content.strip()
@@ -582,11 +615,22 @@ def _extract_json(content: str) -> dict[str, Any]:
     try:
         return json.loads(text)
     except ValueError:
-        # Try to find the outermost JSON object in the content.
-        match = re.search(r"\{.*\}", text, re.DOTALL)
-        if not match:
+        json_text = _extract_balanced_json(text)
+        if not json_text:
+            log.error(
+                "No balanced JSON object found in LLM content "
+                "(first 500 chars):\n%s",
+                text[:500],
+            )
             raise
-        return json.loads(match.group(0))
+        try:
+            return json.loads(json_text)
+        except ValueError:
+            log.error(
+                "Failed to parse extracted JSON (first 500 chars):\n%s",
+                json_text[:500],
+            )
+            raise
 
 
 def _normalize_newlines(s: str) -> str:
@@ -658,6 +702,9 @@ def _apply_translations(
             entry.msgstr = t["msgstr"]
 
 
+JSON_RETRIES = 3
+
+
 def _translate_chunk(
     cfg: Config,
     lang_code: str,
@@ -666,9 +713,9 @@ def _translate_chunk(
 ) -> None:
     """Translate a chunk of entries, with bisection on length-truncation.
 
-    On non-truncation errors (network/HTTP/JSON), the underlying _post_chat
-    already exhausted the retry budget; we just re-raise with msgid context
-    for diagnostics.
+    Retries the full API call up to JSON_RETRIES times when JSON extraction
+    or validation fails, with exponential backoff.  Length truncation is
+    handled separately via bisection (no retry).
     """
     items = [_entry_to_item(i, e) for i, e in enumerate(entries)]
     nplurals_match = re.search(r"nplurals\s*=\s*(\d+)", PLURAL_FORMS.get(lang_code, ""))
@@ -684,27 +731,36 @@ def _translate_chunk(
         payload = _extract_json(result["content"])
         return _validate_translations(payload_items, payload, nplurals)
 
-    try:
-        translations = attempt(items)
-    except _LengthTruncation as lt:
-        if len(entries) == 1:
-            # Single entry still truncated; give up on this entry.
+    last_error: Exception | None = None
+    for retry in range(JSON_RETRIES):
+        try:
+            _apply_translations(entries, items, attempt(items))
+            return
+        except _LengthTruncation as lt:
+            if len(entries) == 1:
+                raise RuntimeError(
+                    f"single-entry chunk still truncated (finish_reason={lt.reason}); "
+                    f"msgid={entries[0].msgid!r}"
+                ) from lt
+            # Bisect and recurse.
+            mid = len(entries) // 2
+            _translate_chunk(cfg, lang_code, lang_fullname, entries[:mid])
+            _translate_chunk(cfg, lang_code, lang_fullname, entries[mid:])
+            return
+        except (ValueError, RuntimeError) as exc:
+            last_error = exc
+            if retry < JSON_RETRIES - 1:
+                sleep_for = 2 ** retry + random.uniform(0, 2 ** retry * 0.25)
+                log_translate.warning(
+                    "[retry %d/%d] chunk for %s (msgid=%r): %s",
+                    retry + 1, JSON_RETRIES, lang_code, sample_msgid, exc,
+                )
+                time.sleep(sleep_for)
+                continue
             raise RuntimeError(
-                f"single-entry chunk still truncated (finish_reason={lt.reason}); "
-                f"msgid={entries[0].msgid!r}"
-            ) from lt
-        # Bisect and recurse.
-        mid = len(entries) // 2
-        _translate_chunk(cfg, lang_code, lang_fullname, entries[:mid])
-        _translate_chunk(cfg, lang_code, lang_fullname, entries[mid:])
-        return
-    except RuntimeError as exc:
-        # Wrap with chunk context so users can identify which msgid failed.
-        raise RuntimeError(
-            f"chunk failed for {lang_code} (msgid={sample_msgid!r}): {exc}"
-        ) from exc
-
-    _apply_translations(entries, items, translations)
+                f"chunk failed for {lang_code} (msgid={sample_msgid!r}) "
+                f"after {JSON_RETRIES} retries: {last_error}"
+            ) from last_error
 
 
 class _LengthTruncation(Exception):
