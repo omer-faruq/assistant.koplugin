@@ -11,6 +11,9 @@
 -- File search tools are imported as-is with source="file", immutable=true
 -- injected. UI search tools override file config with the same tool key.
 
+local UIManager = require("ui/uimanager")
+local ConfirmBox = require("ui/widget/confirmbox")
+local ButtonTable = require("ui/widget/buttontable")
 local json = require("rapidjson")
 local logger = require("logger")
 local T = require("ffi/util").template
@@ -330,32 +333,57 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
                         assistant:_showAddWebSearchDialog(tool_key)
                     end,
                     hold_callback = function()
-                        local UIManager = require("ui/uimanager")
-                        local ConfirmBox = require("ui/widget/confirmbox")
                         local merged = koutil.tableGetValue(
                             assistant.CONFIGURATION, "provider_settings", tool_key)
                         local deletable = SearchRegistry.is_deletable(merged)
-                        UIManager:show(ConfirmBox:new{
+
+                        local confirm = ConfirmBox:new{
                             text = T(_("%1 — choose an action"), def.display_name),
-                            other_buttons_first = true,
-                            other_buttons = {{
+                            no_ok_button = true,
+                            cancel_text = "",
+                        }
+
+                        -- Replace internal button_table with single-row layout:
+                        -- Widget tree: confirm.movable[1] → FrameContainer → [1] → VerticalGroup → [3] → ButtonTable
+                        local vgroup = confirm.movable[1][1]
+                        local bt_width = vgroup[3].width
+                        vgroup[3] = ButtonTable:new{
+                            width = bt_width,
+                            buttons = {{
+                                {
+                                    text = _("Cancel"),
+                                    callback = function()
+                                        UIManager:close(confirm)
+                                    end,
+                                },
                                 {
                                     text = _("Edit"),
                                     callback = function()
+                                        UIManager:close(confirm)
                                         assistant:_showAddWebSearchDialog(tool_key)
                                     end,
                                 },
                                 {
                                     text = _("Delete"),
+                                    enabled = deletable,
                                     callback = function()
-                                        if not deletable then return end
                                         SearchRegistry.deleteSearchTool(assistant, tool_key)
+                                        UIManager:close(confirm)
                                     end,
                                 },
                             }},
-                            no_ok_button = true,
-                            cancel_text = _("Cancel"),
-                        })
+                            zero_sep = true,
+                            show_parent = confirm,
+                        }
+
+                        -- Invalidate cached sizes so the frame re-layouts on paint
+                        vgroup._size = nil
+                        vgroup._offsets = nil
+                        confirm.movable[1]._size = nil
+                        confirm.movable._size = nil
+                        confirm.movable.dimen = nil
+
+                        UIManager:show(confirm)
                     end,
                 })
             end

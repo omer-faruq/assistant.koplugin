@@ -203,5 +203,22 @@ cd l10n && API_KEY=your_key make ai-translate L10N_LANG=fr  # Single language
   ./test/runui.sh -s=kobo-clara model_picker
   ```
   Add a test script under `test/` that requires `test/wbuilder`, shows widgets with `UIManager:show(...)`, and finishes with `UIManager:run()`. Use mock objects for `assistant` when the widget depends on plugin state.
+- **Modifying KOReader widget internals**: When a KOReader widget's public API doesn't support a layout or behavior you need, you can reach into its internal widget tree after construction, swap a sub-widget, and invalidate cached sizes to trigger re-layout. This is a last-resort technique — always check the public API first.
+  - **Study the source first**: always `read` the widget's source under `/usr/lib/koreader/frontend/ui/widget/` to understand the internal widget tree structure (`init()` method) before reaching in.
+  - **Access pattern**: widgets are typically nested via `widget[1]` (first child), `widget[2]`, etc. Trace the hierarchy from `init()` to find the target sub-widget.
+  - **Example — swapping ConfirmBox's button_table**: `ConfirmBox` always builds a Cancel/OK row as a separate `ButtonTable` row. To get all buttons in a single row, create the `ConfirmBox` with `no_ok_button = true, cancel_text = ""`, then reach in and replace the internal `ButtonTable`:
+    ```lua
+    -- Widget tree: confirm.movable[1] → FrameContainer → [1] → VerticalGroup → [3] → ButtonTable
+    local vgroup = confirm.movable[1][1]
+    local bt_width = vgroup[3].width  -- capture before replacing
+    vgroup[3] = ButtonTable:new{ width = bt_width, buttons = {{ ... }}, zero_sep = true, show_parent = confirm }
+    ```
+  - **Invalidate cached sizes**: after replacing a sub-widget, nil out `_size`, `_offsets`, and `dimen` on the affected containers up the tree so the next paint cycle recalculates geometry:
+    ```lua
+    vgroup._size = nil; vgroup._offsets = nil
+    confirm.movable[1]._size = nil   -- FrameContainer
+    confirm.movable._size = nil; confirm.movable.dimen = nil   -- MovableContainer
+    ```
+  - **Always comment the widget tree path** at the access point so future readers can verify it against the upstream source.
 - **Dependencies**: no external dependencies beyond KOReader's standard libraries. The optional `hoedown` native library is the only exception, with a pure-Lua fallback.
 - **License**: GPL-3.0 (see `LICENSE`).
