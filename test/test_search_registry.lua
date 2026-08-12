@@ -1,6 +1,6 @@
 -- test_search_registry.lua
 -- Tests for assistant_search_registry.lua: load/save, validate, merge,
--- upsert, delete, and the Add Web Search API menu factory.
+-- upsert, delete, and the WebSearch API menu factory.
 local helper = require("test.test_helper")
 local assert = helper.assert
 local SearchRegistry = require("assistant_search_registry")
@@ -494,7 +494,7 @@ local tests = {
     test("menu item text is localized", function()
         local assistant = mockAssistant()
         local item = SearchRegistry.getAddWebSearchMenuItem(assistant)
-        assert.equal(item.text, "Add Web Search API")
+        assert.equal(item.text, "WebSearch API")
         assert.equal(item.keep_menu_open, true)
         assert.notNil(item.sub_item_table_func)
     end),

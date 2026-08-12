@@ -23,7 +23,7 @@ local CONFIGURATION = {
     -- Example: add `display_name = "Grok (xAI)"` to openai_grok below.
     --
     -- UI-ADDED PROVIDERS: You can also add providers directly from the plugin's
-    -- Settings UI (Settings -> Other Settings -> Provider Settings -> Add Provider).
+    -- Settings UI (Tools -> AI Assistant -> Settings -> Provider Settings -> Provider API).
     -- UI-added providers are saved to the plugin's settings file (not here) and
     -- merged with this configuration at startup. They support the same protocols:
     -- openai, anthropic, gemini, responses.

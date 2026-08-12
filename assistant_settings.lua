@@ -593,7 +593,7 @@ SettingsDialog.genMenuSettings = function(assistant)
         },
         {
             -- @translators: functional overriding
-            text = _("KOReader Tweaks & Overrides"),
+            text = _("KOReader Tweaks"),
             sub_item_table = {
                 {
                     -- @translators: 'Translate' is a built-in function

@@ -45,8 +45,8 @@ local Assistant = InputContainer:new {
   CONFIGURATION = nil,  -- reference to the main configuration
 }
 
--- Paths to Add Provider in the fixed Reader/FileManager menu layouts:
--- tab -> AI Assistant -> Other Settings -> Add Provider.
+-- Paths to Provider API in the fixed Reader/FileManager menu layouts:
+-- tab -> AI Assistant -> Settings -> Provider API.
 local ADD_PROVIDER_READER_PATH = "4.1.8.1"
 local ADD_PROVIDER_FILEMANAGER_PATH = "3.1.6.1"
 
@@ -235,7 +235,7 @@ function Assistant:addToMainMenu(menu_items)
                   text_func = function ()
                     local key = self.settings:readSetting("use_websearch", "none")
                     local text = ToolExecutor.ToolToText(key)
-                      return T(_("Smart Web Search: %1"), text)
+                      return T(_("Web Search: %1"), text)
                   end,
                   hold_callback = function ()
                       UIManager:show(InfoMessage:new{
@@ -245,7 +245,7 @@ function Assistant:addToMainMenu(menu_items)
                   sub_item_table = {},
               },
               {
-                text = _("Other Settings"),
+                text = _("Settings"),
                 sub_item_table_func = function ()
                   return SettingsDialog.genMenuSettings(self)
                 end,
@@ -465,7 +465,7 @@ function Assistant:showSettings(close_callback)
 end
 
 -- Open the KOReader main menu and use TouchMenu's live path navigation to
--- walk to and highlight the existing "Add Provider" menu item. Touch-only:
+-- walk to and highlight the existing "Provider API" menu item. Touch-only:
 -- on non-touch devices the main menu is a plain Menu widget without path
 -- navigation, so we bail out. Closes the menu again if navigation is not
 -- possible.

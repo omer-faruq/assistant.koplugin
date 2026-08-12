@@ -36,7 +36,7 @@ Registry.DEFAULT_BASE_URLS = {
     responses = "https://api.openai.com/v1",
 }
 
--- Preset platforms offered in the "Add Provider" sub-menu.
+-- Preset platforms offered in the "Provider API" sub-menu.
 -- Selecting one only asks for the API key (name/base_url come from here).
 -- Each preset carries provider-specific additional_parameters that default to
 -- reducing/disabling the reasoning/thinking chain (see configuration.sample.lua).
@@ -436,7 +436,7 @@ end
 -- Provider menu
 ----------------------------------------------------------------------
 
---- Build the "Add Provider" menu item used by the Settings dialog.
+--- Build the "Provider API" menu item used by the Settings dialog.
 --- Returns a TouchMenu item with a sub-menu of preset providers plus a
 --- "Custom" sub-menu of wire-format handlers. Selecting an entry opens
 --- the add-provider dialog through assistant:_showAddProviderDialog.
@@ -444,7 +444,7 @@ end
 ---@return table menu item spec
 function Registry.getAddProviderMenuItem(assistant)
     return {
-        text = _("Add Provider"),
+        text = _("Provider API"),
         keep_menu_open = true,
         sub_item_table_func = function()
             local items = {}

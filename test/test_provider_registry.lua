@@ -1,6 +1,6 @@
 -- test_provider_registry.lua
 -- Tests for assistant_provider_registry.lua, focusing on the exported
--- "Add Provider" menu factory (Registry.getAddProviderMenuItem), the
+-- "Provider API" menu factory (Registry.getAddProviderMenuItem), the
 -- preset/custom provider tables that moved here from main.lua, and the
 -- persistence of preset additional_parameters (Registry.add / installProvider).
 local helper = require("test.test_helper")
@@ -152,9 +152,9 @@ local tests = {
     -- getAddProviderMenuItem
     -- =========================================================================
 
-    test("menu item is localized 'Add Provider' and keeps menu open", function()
+    test("menu item is localized 'Provider API' and keeps menu open", function()
         local item = Registry.getAddProviderMenuItem(mockAssistant())
-        assert.equal(item.text, "Add Provider")
+        assert.equal(item.text, "Provider API")
         assert.equal(item.keep_menu_open, true)
         assert.notNil(item.sub_item_table_func)
     end),

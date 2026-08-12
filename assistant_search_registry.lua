@@ -314,13 +314,13 @@ end
 -- Menu
 ----------------------------------------------------------------------
 
---- Build the "Add Web Search API" menu item for the Settings Other Settings submenu.
+--- Build the "WebSearch API" menu item for the Settings submenu.
 --- Returns a TouchMenu item with a sub-menu listing the four search tools.
 ---@param assistant table The Assistant instance
 ---@return table menu item spec
 function SearchRegistry.getAddWebSearchMenuItem(assistant)
     return {
-        text = _("Add Web Search API"),
+        text = _("WebSearch API"),
         keep_menu_open = true,
         sub_item_table_func = function()
             local items = {}
