@@ -287,7 +287,7 @@ def check_api(cfg: Config) -> int:
     payload = {
         "model": cfg.api_model,
         "temperature": 0,
-        "max_tokens": 8,
+        "max_tokens": 256,
         "messages": [
             {
                 "role": "system",
@@ -332,8 +332,10 @@ def check_api(cfg: Config) -> int:
         return 1
 
     try:
-        reply = data["choices"][0]["message"]["content"] or ""
-    except (KeyError, IndexError, TypeError):
+        choices = data.get("choices") or [{}]
+        message = choices[0].get("message") or {}
+        reply = message.get("content") or ""
+    except (KeyError, IndexError, TypeError, AttributeError):
         log.error("FAIL: malformed response (%ds)", elapsed)
         log.error("%s", json.dumps(data, indent=2)[:2000])
         return 1
