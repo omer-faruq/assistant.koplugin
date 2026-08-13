@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: assistant.koplugin 1.12\n"
+"Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-12 15:17+0800\n"
-"PO-Revision-Date: 2026-07-27 10:47+0800\n"
+"POT-Creation-Date: 2026-08-13 10:35+0800\n"
+"PO-Revision-Date: 2026-08-13 04:11+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Bahasa Melayu (AI translation)\n"
 "Language: ms\n"
@@ -57,7 +57,7 @@ msgstr "(Tiada respons)"
 #: ../assistant_dialog.lua:175 ../assistant_quicknote.lua:99
 #: ../assistant_viewer.lua:524
 msgid "Highlighted text:"
-msgstr "Teks yang diserlahkan:"
+msgstr "Teks yang disorot:"
 
 #: ../assistant_dialog.lua:337 ../assistant_dictdialog.lua:160
 #: ../assistant_model_picker.lua:128 ../assistant_model_picker.lua:258
@@ -74,7 +74,7 @@ msgstr "Tanya"
 
 #: ../assistant_dialog.lua:357 ../assistant_viewer.lua:642
 msgid "Enter a question before proceeding."
-msgstr "Masukkan soalan sebelum meneruskan."
+msgstr "Sila masukkan soalan sebelum meneruskan."
 
 #: ../assistant_dialog.lua:445
 msgid ""
@@ -84,7 +84,7 @@ msgid ""
 msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
-"Tambah butang ini ke Menu Sorotan?"
+"Tambahkan butang ini ke Menu Sorotan?"
 
 #: ../assistant_dialog.lua:447 ../assistant_settings.lua:251
 msgid "Add"
@@ -92,7 +92,7 @@ msgstr "Tambah"
 
 #: ../assistant_dialog.lua:475
 msgid "Ask a question about the highlighted text"
-msgstr "Tanya soalan tentang teks yang diserlahkan"
+msgstr "Tanya soalan tentang teks yang disorot"
 
 #: ../assistant_dialog.lua:478
 msgid ""
@@ -112,11 +112,11 @@ msgstr "Taip soalan anda di sini..."
 
 #: ../assistant_dialog.lua:485
 msgid "Ask anything about this book..."
-msgstr "Tanya apa-apa tentang buku ini..."
+msgstr "Tanya apa sahaja tentang buku ini..."
 
 #: ../assistant_dialog.lua:486
 msgid "Ask anything..."
-msgstr "Tanya apa-apa..."
+msgstr "Tanya apa sahaja..."
 
 #: ../assistant_dialog.lua:510
 msgid "Use book text as context"
@@ -181,11 +181,11 @@ msgstr "Memuatkan..."
 
 #: ../assistant_featuredialog.lua:63
 msgid "Recap"
-msgstr "Rumusan"
+msgstr "Recap"
 
 #: ../assistant_featuredialog.lua:64
 msgid "Loading Recap..."
-msgstr "Memuatkan Rumusan..."
+msgstr "Memuatkan Recap..."
 
 #: ../assistant_featuredialog.lua:69
 msgid "X‑Ray"
@@ -234,8 +234,8 @@ msgid ""
 "\n"
 msgstr ""
 " - Tajuk : %1\n"
-" - Pengarang: %2\n"
-" - Kemajuan bacaan: %3%\n"
+" - Penulis: %2\n"
+" - Kemajuan membaca: %3%\n"
 "\n"
 "-----\n"
 "\n"
@@ -254,7 +254,7 @@ msgstr " — ms. %1/%2"
 
 #: ../assistant_model_picker.lua:119
 msgid "Manual"
-msgstr "Manual"
+msgstr "Panduan"
 
 #: ../assistant_model_picker.lua:123
 msgid "Reset"
@@ -278,7 +278,7 @@ msgstr "Cari Model"
 
 #: ../assistant_model_picker.lua:292
 msgid "Model reset: %1"
-msgstr "Set semula model: %1"
+msgstr "Model diset semula: %1"
 
 #: ../assistant_model_picker.lua:322
 msgid "No models matching \"%1\"."
@@ -304,7 +304,7 @@ msgstr "Tiada model tersedia."
 
 #: ../assistant_prompts.lua:30
 msgid "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
-msgstr "Arahan ini mencipta sistem berstruktur untuk menjana definisi perkataan atau frasa daripada kesusasteraan yang peka konteks dengan menganalisis istilah yang diserlahkan dalam teks sekelilingnya untuk memberikan penjelasan bernuansa yang menangkap kedua-dua makna literal dan kepentingan kontekstual."
+msgstr "Arahan ini mencipta sistem berstruktur untuk menjana definisi yang peka konteks bagi perkataan atau frasa daripada karya sastera dengan menganalisis istilah yang diserlahkan dalam teks sekelilingnya untuk memberikan penjelasan bernuansa yang merangkumi makna literal dan kepentingan kontekstual."
 
 #. @translators term_xray section headers
 #. @translators term_xray: "What It Is" section header
@@ -329,7 +329,7 @@ msgstr "Batasan Konteks"
 
 #: ../assistant_prompts.lua:76
 msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Arahan ini bertindak sebagai kamus untuk teks yang diserlahkan, kepada perkataan atau frasa."
+msgstr "Arahan ini bertindak sebagai kamus untuk teks yang diserlahkan, bagi sesuatu perkataan atau frasa."
 
 #: ../assistant_prompts.lua:82 ../assistant_quicknote.lua:101
 msgid "Quick Note"
@@ -345,7 +345,7 @@ msgstr "Kosa Kata"
 
 #: ../assistant_prompts.lua:92
 msgid "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
-msgstr "Arahan ini menganalisis kosa kata teks yang diserlahkan, mengenal pasti perkataan kompleks dan memberikan definisi, sinonim, dan contoh penggunaan."
+msgstr "Arahan ini menganalisis kosa kata teks yang diserlahkan, mengenal pasti perkataan kompleks dan memberikan definisi, sinonim, serta contoh penggunaan."
 
 #: ../assistant_prompts.lua:109
 msgid "Grammar"
@@ -362,11 +362,11 @@ msgstr "Struktur & Klausa"
 
 #: ../assistant_prompts.lua:137
 msgid "Parts of Speech & Tenses"
-msgstr "Bahagian Pertuturan & Kala"
+msgstr "Golongan Kata & Kala"
 
 #: ../assistant_prompts.lua:138
 msgid "Error Correction (If Applicable)"
-msgstr "Pembetulan Ralat (Jika Berkenaan)"
+msgstr "Pembetulan Kesalahan (Jika Berkenaan)"
 
 #: ../assistant_prompts.lua:142
 msgid "Translate"
@@ -374,7 +374,7 @@ msgstr "Terjemah"
 
 #: ../assistant_prompts.lua:144
 msgid "This prompt translates the highlighted text to another language."
-msgstr "Arahan ini menterjemah teks yang diserlahkan ke bahasa lain."
+msgstr "Arahan ini menterjemahkan teks yang diserlahkan ke bahasa lain."
 
 #: ../assistant_prompts.lua:156
 msgid "Summarize"
@@ -382,7 +382,7 @@ msgstr "Ringkaskan"
 
 #: ../assistant_prompts.lua:159
 msgid "This prompt summarizes the highlighted text, capturing its main points and essential details."
-msgstr "Arahan ini meringkaskan teks yang diserlahkan, menangkap perkara utama dan butiran pentingnya."
+msgstr "Arahan ini meringkaskan teks yang diserlahkan, menangkap perkara utama dan butiran penting."
 
 #: ../assistant_prompts.lua:174
 msgid "Simplify"
@@ -390,7 +390,7 @@ msgstr "Permudahkan"
 
 #: ../assistant_prompts.lua:177
 msgid "This prompt simplifies the highlighted text to make it easier to understand."
-msgstr "Arahan ini memudahkan teks yang diserlahkan untuk menjadikannya lebih mudah difahami."
+msgstr "Arahan ini mempermudahkan teks yang diserlahkan supaya lebih mudah difahami."
 
 #: ../assistant_prompts.lua:191 ../assistant_prompts.lua:534
 msgid "Key Points"
@@ -432,7 +432,7 @@ msgstr "Terangkan"
 
 #: ../assistant_prompts.lua:251
 msgid "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
-msgstr "Prompt ini menerangkan teks yang diserlahkan secara terperinci, memastikan kejelasan dan pemahaman."
+msgstr "Arahan ini menerangkan teks yang diserlahkan secara terperinci, memastikan kejelasan dan pemahaman."
 
 #: ../assistant_prompts.lua:265
 msgid "Historical Context"
@@ -440,7 +440,7 @@ msgstr "Konteks Sejarah"
 
 #: ../assistant_prompts.lua:269
 msgid "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
-msgstr "Prompt ini menyediakan konteks sejarah yang terperinci untuk teks yang diserlahkan, menerangkan kepentingan dan latar belakangnya."
+msgstr "Arahan ini memberikan konteks sejarah yang terperinci untuk teks yang diserlahkan, menerangkan kepentingan dan latar belakangnya."
 
 #. @translators historical_context section headers
 #: ../assistant_prompts.lua:290
@@ -449,7 +449,7 @@ msgstr "Era & Latar Belakang"
 
 #: ../assistant_prompts.lua:291
 msgid "Contextual Connections"
-msgstr "Sambungan Kontekstual"
+msgstr "Hubungan Kontekstual"
 
 #: ../assistant_prompts.lua:292
 msgid "Cultural Significance"
@@ -461,7 +461,7 @@ msgstr "Wikipedia"
 
 #: ../assistant_prompts.lua:299
 msgid "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
-msgstr "Prompt ini menghasilkan artikel gaya Wikipedia yang komprehensif berdasarkan teks yang diserlahkan, memastikan ketepatan fakta dan neutraliti."
+msgstr "Arahan ini menjana artikel gaya Wikipedia yang komprehensif berdasarkan teks yang diserlahkan, memastikan ketepatan fakta dan kesaksamaan."
 
 #. @translators xray section headers
 #: ../assistant_prompts.lua:391
@@ -491,7 +491,7 @@ msgstr "Imersi Semula"
 #. @translators xray Re-immersion sub-fields
 #: ../assistant_prompts.lua:398
 msgid "Where the action stopped:"
-msgstr "Di mana aksi berhenti:"
+msgstr "Di mana aksi terhenti:"
 
 #: ../assistant_prompts.lua:399
 msgid "Protagonist's current objective:"
@@ -499,7 +499,7 @@ msgstr "Objektif semasa protagonis:"
 
 #: ../assistant_prompts.lua:400
 msgid "Open conflict or mystery:"
-msgstr "Konflik terbuka atau misteri:"
+msgstr "Konflik atau misteri terbuka:"
 
 #: ../assistant_prompts.lua:401
 msgid "Narrative element in focus:"
@@ -507,7 +507,7 @@ msgstr "Elemen naratif yang menjadi fokus:"
 
 #: ../assistant_prompts.lua:402
 msgid "Prevailing emotional state/tone:"
-msgstr "Keadaan emosi/nada yang lazim:"
+msgstr "Keadaan emosi/nada yang dominan:"
 
 #: ../assistant_prompts.lua:403
 msgid "Outstanding questions:"
@@ -531,7 +531,7 @@ msgstr "Ringkasan Plot"
 
 #: ../assistant_prompts.lua:445
 msgid "About the Author"
-msgstr "Mengenai Penulis"
+msgstr "Tentang Penulis"
 
 #: ../assistant_prompts.lua:446
 msgid "Historical and Cultural Context"
@@ -544,11 +544,11 @@ msgstr "Cadangan Buku Serupa"
 #. @translators annotations section headers
 #: ../assistant_prompts.lua:478
 msgid "Key Takeaways"
-msgstr "Pengambilan Utama"
+msgstr "Poin Utama"
 
 #: ../assistant_prompts.lua:479
 msgid "To-Do / Action Items"
-msgstr "Tugasan / Item Tindakan"
+msgstr "Senarai Tugas / Item Tindakan"
 
 #: ../assistant_prompts.lua:480
 msgid "Contextual Notes"
@@ -569,7 +569,7 @@ msgstr "Ringkasan Bersepadu"
 
 #: ../assistant_prompts.lua:535
 msgid "Actionable Takeaways"
-msgstr "Pengambilan Boleh Tindakan"
+msgstr "Poin Tindakan"
 
 #: ../assistant_prompts.lua:536
 msgid "Contradictions / Open Questions"
@@ -586,7 +586,7 @@ msgstr "Sinonim"
 
 #: ../assistant_prompts.lua:566
 msgid "Meaning"
-msgstr "Maksud"
+msgstr "Makna"
 
 #: ../assistant_prompts.lua:567
 msgid "Translation"
@@ -594,7 +594,7 @@ msgstr "Terjemahan"
 
 #: ../assistant_prompts.lua:568
 msgid "Book Usage"
-msgstr "Penggunaan Buku"
+msgstr "Penggunaan dalam Buku"
 
 #: ../assistant_prompts.lua:569
 msgid "Example"
@@ -602,15 +602,15 @@ msgstr "Contoh"
 
 #: ../assistant_prompts.lua:570
 msgid "Word Origin"
-msgstr "Asal Kata"
+msgstr "Asal Usul Kata"
 
 #: ../assistant_provider_registry.lua:210
 msgid "Provider record must be a table."
-msgstr "Rekod penyedia mesti berupa jadual."
+msgstr "Rekod pembekal mestilah jadual."
 
 #: ../assistant_provider_registry.lua:216
 msgid "Provider name is required."
-msgstr "Nama penyedia diperlukan."
+msgstr "Nama pembekal diperlukan."
 
 #: ../assistant_provider_registry.lua:221
 msgid "Unsupported API protocol."
@@ -632,20 +632,20 @@ msgstr "Kunci API diperlukan."
 #: ../assistant_provider_registry.lua:308
 #: ../assistant_provider_registry.lua:348
 msgid "Provider not found."
-msgstr "Pemberi tidak ditemui."
+msgstr "Pembekal tidak ditemui."
 
 #: ../assistant_provider_registry.lua:343
 #: ../assistant_provider_registry.lua:394
 msgid "Provider data not initialized."
-msgstr "Data penyedia tidak diinisialisasi."
+msgstr "Data pembekal tidak diinisialisasi."
 
 #: ../assistant_provider_registry.lua:447
 msgid "Provider API"
-msgstr "API Penyedia"
+msgstr "API Pembekal"
 
 #: ../assistant_provider_registry.lua:465
 msgid "%1 (Compatible)"
-msgstr "%1 (Sepadan)"
+msgstr "%1 (Serasi)"
 
 #: ../assistant_provider_registry.lua:473
 msgid "Custom"
@@ -661,11 +661,11 @@ msgstr "Pengendali tidak ditemui untuk: %1. Sila semak fail configuration.lua an
 
 #: ../assistant_querier.lua:145
 msgid "Handler %1 not available for provider: %2"
-msgstr "Pengendali %1 tidak tersedia untuk penyedia: %2"
+msgstr "Pengendali %1 tidak tersedia untuk pembekal: %2"
 
 #: ../assistant_querier.lua:156
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
-msgstr "Pengendali untuk %1 tidak ditemui. Sila pastikan pengendali wujud dalam direktori api_handlers."
+msgstr "Pengendali untuk %1 tidak ditemui. Sila pastikan pengendali tersebut wujud dalam direktori api_handlers."
 
 #: ../assistant_querier.lua:199
 msgid ""
@@ -700,11 +700,11 @@ msgstr "Tutup"
 
 #: ../assistant_querier.lua:294
 msgid "Plugin is not configured."
-msgstr "Pemalam tidak dikonfigurasi."
+msgstr "Plugin tidak dikonfigurasikan."
 
 #: ../assistant_querier.lua:386 ../assistant_querier.lua:484
 msgid "Too many tool-call rounds; aborting."
-msgstr "Terlalu banyak pusingan panggilan alat; dibatalkan."
+msgstr "Terlalu banyak pusingan panggilan alat; membatalkan."
 
 #: ../assistant_querier.lua:394
 msgid "Stream failed with no error message."
@@ -720,7 +720,7 @@ msgstr "Permintaan dibatalkan oleh pengguna."
 
 #: ../assistant_querier.lua:467
 msgid "Querying AI ..."
-msgstr "Menyoal AI ..."
+msgstr "Menghantar pertanyaan kepada AI ..."
 
 #: ../assistant_querier.lua:522
 msgid "Composing answer ..."
@@ -736,7 +736,7 @@ msgstr "Tiada respons diterima."
 
 #: ../assistant_querier.lua:580
 msgid "AI is responding"
-msgstr "AI sedang merespon."
+msgstr "AI sedang memberi respons"
 
 #: ../assistant_querier.lua:601
 msgid "❌ Stop"
@@ -744,11 +744,11 @@ msgstr "❌ Berhenti"
 
 #: ../assistant_querier.lua:606
 msgid "■ Scroll"
-msgstr "■ T scroll"
+msgstr "■ Tatal"
 
 #: ../assistant_querier.lua:606
 msgid "▶ Scroll"
-msgstr "▶ T scroll"
+msgstr "▶ Tatal"
 
 #: ../assistant_querier.lua:712
 msgid "Failed to start subprocess for request"
@@ -788,11 +788,11 @@ msgstr "Nota pantas berjaya disimpan"
 
 #: ../assistant_search_registry.lua:105
 msgid "Search tool record must be a table."
-msgstr "Rekod alat carian mesti menjadi jadual."
+msgstr "Rekod alat carian mestilah jadual."
 
 #: ../assistant_search_registry.lua:110 ../assistant_search_registry.lua:189
 msgid "Unknown search tool: %1"
-msgstr "Alat carian tidak dikenal: %1"
+msgstr "Alat carian tidak diketahui: %1"
 
 #: ../assistant_search_registry.lua:117 ../main.lua:690
 msgid "API key is required for %1."
@@ -800,7 +800,7 @@ msgstr "Kunci API diperlukan untuk %1."
 
 #: ../assistant_search_registry.lua:122 ../main.lua:697
 msgid "Base URL is required for %1."
-msgstr "URL asas diperlukan untuk %1."
+msgstr "URL Asas diperlukan untuk %1."
 
 #: ../assistant_search_registry.lua:212
 msgid "Search tool not found."
@@ -854,23 +854,23 @@ msgstr "Bahasa Tulisan RTL"
 
 #: ../assistant_settings.lua:173
 msgid "Leave these fields blank to use the UI language: %1"
-msgstr "Biarkan ruangan ini kosong untuk menggunakan bahasa UI: %1"
+msgstr "Biarkan medan ini kosong untuk menggunakan bahasa UI: %1"
 
 #: ../assistant_settings.lua:184
 msgid "Providers and Models"
-msgstr "Penyedia dan Model"
+msgstr "Pembekal dan Model"
 
 #: ../assistant_settings.lua:212 ../main.lua:556
 msgid "Browse Models"
 msgstr "Layari Model"
 
 #: ../assistant_settings.lua:220
-msgid "Browse available models on OpenRouter"
-msgstr "Layari model yang tersedia di OpenRouter"
+msgid "Browse available models from the current provider"
+msgstr "Layari model yang tersedia daripada pembekal semasa"
 
 #: ../assistant_settings.lua:397
 msgid "Delete provider %1?"
-msgstr "Hapus penyedia %1?"
+msgstr "Padamkan pembekal %1?"
 
 #: ../assistant_settings.lua:480
 msgid ""
@@ -878,7 +878,7 @@ msgid ""
 "- Gemini-2.5/3\n"
 "- OpenAI/gpt-4o-search\n"
 msgstr ""
-"Alat Binaan Berfungsi HANYA dengan model ini:\n"
+"Alat Terbina Dalam Berfungsi HANYA dengan model-model ini:\n"
 "- Gemini-2.5/3\n"
 "- OpenAI/gpt-4o-search\n"
 
@@ -900,11 +900,11 @@ msgstr "Tetapan Respons"
 
 #: ../assistant_settings.lua:540
 msgid "Enable Stream Response"
-msgstr "Dayakan Respons Aliran"
+msgstr "Dayakan Respons Penstriman"
 
 #: ../assistant_settings.lua:548
 msgid "Stream Text Auto Scroll"
-msgstr "Tatal Auto Teks Aliran"
+msgstr "Tatal Auto Teks Strim"
 
 #: ../assistant_settings.lua:557
 msgid "Large Streaming Window"
@@ -912,24 +912,24 @@ msgstr "Tetingkap Penstriman Besar"
 
 #: ../assistant_settings.lua:567
 msgid "Show Reasoning Text"
-msgstr "Tunjukkan Teks Penaakulan"
+msgstr "Papar Teks Penaakulan"
 
 #: ../assistant_settings.lua:575
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
-msgstr "Tunjukkan proses pemikiran mendalam (penaakulan) daripada respons AI jika ada."
+msgstr "Papar proses pemikiran mendalam (penaakulan) daripada respons AI jika ada."
 
 #: ../assistant_settings.lua:580
 msgid "Show Follow-up Questions"
-msgstr "Tunjukkan Soalan Susulan"
+msgstr "Papar Soalan Susulan"
 
 #: ../assistant_settings.lua:588
 msgid "Show follow up questions related to the response content."
-msgstr "Tunjukkan soalan susulan berkaitan dengan kandungan respons."
+msgstr "Papar soalan susulan yang berkaitan dengan kandungan respons."
 
 #. @translators: functional overriding
 #: ../assistant_settings.lua:596
 msgid "KOReader Tweaks"
-msgstr "Penambahbaikan KOReader"
+msgstr "Pelarasan KOReader"
 
 #. @translators: 'Translate' is a built-in function
 #: ../assistant_settings.lua:600
@@ -938,35 +938,35 @@ msgstr "Gunakan Pembantu AI untuk 'Terjemah'"
 
 #: ../assistant_settings.lua:611
 msgid "Auto-recap on opening long-unread books"
-msgstr "Rekap automatik apabila membuka buku yang lama tidak dibaca"
+msgstr "Rekap auto apabila membuka buku yang lama tidak dibaca"
 
 #: ../assistant_settings.lua:621
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
-msgstr "Rekap AI akan diaktifkan pada kali seterusnya buku yang lama tidak dibaca dibuka."
+msgstr "Rekap AI akan diaktifkan pada kali berikutnya buku yang lama tidak dibaca dibuka."
 
 #: ../assistant_settings.lua:625
 msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Tunjukkan Kamus(AI) dalam Popup Kamus"
+msgstr "Papar Kamus(AI) dalam Popup Kamus"
 
 #: ../assistant_settings.lua:633
 msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Tunjukkan Wikipedia(AI) dalam Popup Kamus"
+msgstr "Papar Wikipedia(AI) dalam Popup Kamus"
 
 #: ../assistant_settings.lua:641
 msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Tunjukkan X-Ray Istilah(AI) dalam Popup Kamus"
+msgstr "Papar Term X-Ray(AI) dalam Popup Kamus"
 
 #: ../assistant_settings.lua:649
 msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Tunjukkan Gesaan Tersuai dalam Popup Kamus"
+msgstr "Papar Prompts Tersuai dalam Popup Kamus"
 
 #: ../assistant_settings.lua:659
 msgid "Copy entered question to the clipboard"
-msgstr "Salin soalan yang dimasukkan ke papan klip"
+msgstr "Salin soalan yang dimasukkan ke papan keratan"
 
 #: ../assistant_settings.lua:667
 msgid "Auto-save conversations to NoteBook"
-msgstr "Simpan perbualan secara automatik ke Buku Nota"
+msgstr "Auto-simpan perbualan ke NoteBook"
 
 #: ../assistant_settings.lua:675
 msgid "Use book text for x-ray and recap"
@@ -974,7 +974,7 @@ msgstr "Gunakan teks buku untuk x-ray dan rekap"
 
 #: ../assistant_settings.lua:683 ../assistant_settings.lua:691
 msgid "OTA Update"
-msgstr "Kemas kini OTA"
+msgstr "Kemas Kini OTA"
 
 #: ../assistant_settings.lua:693
 msgid "branch or tag name"
@@ -992,9 +992,9 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Masukkan nama cawangan atau tag untuk mengemas kini pemalam dari repositori sumber.\n"
+"Masukkan nama cawangan atau tag untuk mengemas kini plugin daripada repositori sumber.\n"
 "\n"
-"<b>Github URL:</b>  %1\n"
+"<b>URL Github:</b>  %1\n"
 "<b>Repo Sumber:</b>  %2\n"
 "\n"
 "Lalai: \"main\" (cawangan pembangunan terkini)\n"
@@ -1004,11 +1004,11 @@ msgstr ""
 
 #: ../assistant_settings.lua:709
 msgid "Update"
-msgstr "Kemas kini"
+msgstr "Kemas Kini"
 
 #: ../assistant_settings.lua:728
 msgid "Purge the settings"
-msgstr "Buang tetapan"
+msgstr "Buang Tetapan"
 
 #: ../assistant_settings.lua:731
 msgid ""
@@ -1019,8 +1019,8 @@ msgid ""
 msgstr ""
 "Buang tetapan assistant.koplugin?\n"
 "\n"
-"Ini memulihkan pemalam kepada tetapan kilang asalnya. Hanya tetapan akan dialih keluar; \n"
-"Fail configuration.lua akan dipelihara."
+"Ini memulihkan plugin kepada tetapan kilang asalnya. Hanya tetapan akan dibuang; \n"
+"Fail configuration.lua akan dikekalkan."
 
 #: ../assistant_settings.lua:735 ../main.lua:1043
 msgid "Purge"
@@ -1036,19 +1036,19 @@ msgstr "Mencari dengan %1 ... [%2]"
 
 #: ../assistant_tool_executor.lua:299
 msgid "Tool call did not include id."
-msgstr "Panggilan alat tidak termasuk id."
+msgstr "Panggilan alat tidak menyertakan id."
 
 #: ../assistant_tool_executor.lua:302
 msgid "Tool call did not include search keywords."
-msgstr "Panggilan alat tidak termasuk kata kunci carian."
+msgstr "Panggilan alat tidak menyertakan kata kunci carian."
 
 #: ../assistant_updater.lua:141
 msgid "Checking for updates..."
-msgstr "Memeriksa kemas kini..."
+msgstr "Menyemak kemas kini..."
 
 #: ../assistant_updater.lua:144
 msgid "AI Assistant: Failed to check updates: %2"
-msgstr "Pembantu AI: Gagal memeriksa kemas kini: %2"
+msgstr "Pembantu AI: Gagal menyemak kemas kini: %2"
 
 #: ../assistant_updater.lua:144
 msgid "Empty Error"
@@ -1056,7 +1056,7 @@ msgstr "Ralat Kosong"
 
 #: ../assistant_updater.lua:154
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
-msgstr "Versi baharu bagi pemalam %1 (%2) tersedia. Sila kemas kini!"
+msgstr "Versi baharu plugin %1 (%2) tersedia. Sila kemas kini!"
 
 #: ../assistant_updater.lua:192
 msgid ""
@@ -1065,14 +1065,14 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
-"<b>Muat turun ...</b>\n"
+"<b>Memuat turun ...</b>\n"
 "<b>Github: </b>%1\n"
 "<b>Repo: </b>%2\n"
 "<b>Cawangan/Tag: </b>%3"
 
 #: ../assistant_updater.lua:217
 msgid "Branch/Tag \"%1\" was not found."
-msgstr "Branch/Tag \"%1\" tidak ditemui."
+msgstr "Cawangan/Tag \"%1\" tidak ditemui."
 
 #: ../assistant_updater.lua:229
 msgid "OTA update canceled."
@@ -1103,20 +1103,20 @@ msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
 msgstr ""
-"<b>Tidak boleh mengakses folder lalai untuk log: %1</b>\n"
+"<b>Tidak dapat mengakses folder lalai untuk log: %1</b>\n"
 "Menggunakan lokasi asal."
 
 #: ../assistant_utils.lua:255
 msgid "Notebook save failed. Continuing..."
-msgstr "Penyimpanan buku nota gagal. Meneruskan..."
+msgstr "Penyimpanan Notebook gagal. Meneruskan..."
 
 #: ../assistant_utils.lua:384
 msgid "##### You may find these topics interesting:"
-msgstr "##### Anda mungkin mendapati topik ini menarik:"
+msgstr "##### Anda mungkin mendapati topik-topik ini menarik:"
 
 #: ../assistant_utils.lua:751
 msgid "fetchJSON: failed to parse returned data"
-msgstr "fetchJSON: gagal menghuraikan data yang dikembalikan"
+msgstr "fetchJSON: gagal menghurai data yang dikembalikan"
 
 #. @translators button text, keep it short, like: Ask Another
 #: ../assistant_viewer.lua:308 ../assistant_viewer.lua:697
@@ -1129,7 +1129,7 @@ msgstr "Salin"
 
 #: ../assistant_viewer.lua:358
 msgid "Text copied to the clipboard"
-msgstr "Teks disalin ke papan klip"
+msgstr "Teks disalin ke papan keratan"
 
 #: ../assistant_viewer.lua:372
 msgid "Add Note"
@@ -1145,7 +1145,7 @@ msgstr "Tiada teks untuk ditambah sebagai nota"
 
 #: ../assistant_viewer.lua:417
 msgid "No text left to add as note"
-msgstr "Tiada teks yang tinggal untuk ditambah sebagai nota"
+msgstr "Tiada teks lagi untuk ditambah sebagai nota"
 
 #: ../assistant_viewer.lua:430
 msgid "Note added successfully"
@@ -1169,11 +1169,11 @@ msgstr "Taip soalan anda di sini"
 
 #: ../assistant_viewer.lua:868
 msgid "Word copied to clipboard."
-msgstr "Perkataan disalin ke papan klip."
+msgstr "Perkataan disalin ke papan keratan."
 
 #: ../assistant_viewer.lua:869
 msgid "Selection copied to clipboard."
-msgstr "Pilihan disalin ke papan klip."
+msgstr "Pilihan disalin ke papan keratan."
 
 #: ../main.lua:87 ../main.lua:147
 msgid "Ask the AI a question"
@@ -1181,7 +1181,7 @@ msgstr "Tanya soalan kepada AI"
 
 #: ../main.lua:95 ../main.lua:300
 msgid "AI Recaps"
-msgstr "Ringkasan AI"
+msgstr "Rekap AI"
 
 #: ../main.lua:103 ../main.lua:285
 msgid "AI X-Ray"
@@ -1193,7 +1193,7 @@ msgstr "Ringkasan Buku & Cadangan"
 
 #: ../main.lua:154
 msgid "Enter a question to ask AI."
-msgstr "Masukkan soalan untuk bertanya AI."
+msgstr "Masukkan soalan untuk ditanya kepada AI."
 
 #: ../main.lua:165
 msgid "Take quick notes that will be saved to your notebook."
@@ -1239,7 +1239,7 @@ msgstr ""
 
 #: ../main.lua:219
 msgid "AI Provider: not configured"
-msgstr "Penyedia AI: tidak dikonfigurasi"
+msgstr "Pembekal AI: tidak dikonfigurasikan"
 
 #: ../main.lua:225
 msgid "AI Provider: %1(%2)"
@@ -1259,23 +1259,23 @@ msgstr ""
 
 #: ../main.lua:266
 msgid "Book-Level Built-in Prompts"
-msgstr "Prompts Binaan Tahap Buku"
+msgstr "Prompt Terbina Dalam Peringkat Buku"
 
 #: ../main.lua:279
 msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
-msgstr "Ringkasan buku, biografi pengarang, konteks sejarah, dan senarai cadangan buku serupa dengan penerangan."
+msgstr "Ringkasan buku, biografi penulis, konteks sejarah, dan senarai cadangan buku yang serupa dengan penerangan."
 
 #: ../main.lua:294
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
-msgstr "Ringkasan \"X-Ray\" untuk buku, distrukturkan ke dalam bahagian khusus seperti Watak, Lokasi, Tema, Istilah & Konsep, Garis Masa, dan Pencelupan Semula."
+msgstr "Ringkasan \"X-Ray\" untuk buku, disusun mengikut bahagian khusus seperti Watak, Lokasi, Tema, Istilah & Konsep, Garis Masa, dan Imersi Semula."
 
 #: ../main.lua:309
 msgid "A very brief, spoiler-free summary of the book up to current reading progress."
-msgstr "Ringkasan yang sangat ringkas, bebas spoiler buku sehingga kemajuan bacaan semasa."
+msgstr "Ringkasan yang sangat ringkas, tanpa spoiler, tentang buku sehingga kemajuan bacaan semasa."
 
 #: ../main.lua:320
 msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Analisis sorotan, nota, dan kandungan buku nota anda daripada buku."
+msgstr "Analisis sorotan, nota, dan kandungan buku nota anda daripada buku tersebut."
 
 #: ../main.lua:335
 msgid "Summary of the book using your highlights and notes."
@@ -1283,19 +1283,19 @@ msgstr "Ringkasan buku menggunakan sorotan dan nota anda."
 
 #: ../main.lua:342
 msgid "Book-Level Custom Prompts"
-msgstr "Prompts Tersuai Tahap Buku"
+msgstr "Prompt Tersuai Peringkat Buku"
 
 #: ../main.lua:349
 msgid "Includes user defined book level prompts from Config file"
-msgstr "Termasuk prompts tahap buku yang ditentukan pengguna daripada fail Config"
+msgstr "Termasuk prompt peringkat buku yang ditentukan pengguna daripada fail Config"
 
 #: ../main.lua:424
 msgid "This is a custom prompt"
-msgstr "Ini adalah prompt tersuai"
+msgstr "Ini ialah prompt tersuai"
 
 #: ../main.lua:434
 msgid "No valid book-level custom prompt found"
-msgstr "Tiada prompt tersuai tahap buku yang sah ditemui"
+msgstr "Tiada prompt tersuai peringkat buku yang sah ditemui"
 
 #: ../main.lua:439
 msgid "For details, visit the 'Configuration' wiki page on github."
@@ -1303,7 +1303,7 @@ msgstr "Untuk butiran, lawati halaman wiki 'Configuration' di github."
 
 #: ../main.lua:524 ../main.lua:653
 msgid "Edit %1"
-msgstr "Edit %1"
+msgstr "Sunting %1"
 
 #: ../main.lua:534 ../main.lua:654
 msgid "Add %1"
@@ -1311,7 +1311,7 @@ msgstr "Tambah %1"
 
 #: ../main.lua:534
 msgid "Add %1 Provider"
-msgstr "Tambah Penyedia %1"
+msgstr "Tambah Pembekal %1"
 
 #: ../main.lua:543
 msgid "Display name"
@@ -1319,11 +1319,11 @@ msgstr "Nama paparan"
 
 #: ../main.lua:543
 msgid "Provider Name"
-msgstr "Nama Penyedia"
+msgstr "Nama Pembekal"
 
 #: ../main.lua:544 ../main.lua:664
 msgid "Base URL"
-msgstr "URL asas"
+msgstr "URL Asas"
 
 #: ../main.lua:544 ../main.lua:664
 msgid "https://..."
@@ -1347,7 +1347,7 @@ msgstr "Model"
 
 #: ../main.lua:577
 msgid "Failed to fetch models."
-msgstr "Gagal mengambil model."
+msgstr "Gagal mendapatkan model."
 
 #: ../main.lua:707
 msgid "Failed to save search tool."
@@ -1363,7 +1363,7 @@ msgid ""
 "Please add a provider in Settings or configuration.lua."
 msgstr ""
 "<b>Ralat Konfigurasi.</b>\n"
-"Silakan tambah penyedia dalam Tetapan atau configuration.lua."
+"Sila tambah pembekal dalam Tetapan atau configuration.lua."
 
 #: ../main.lua:807
 msgid "OK"
@@ -1391,10 +1391,10 @@ msgid ""
 "Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
-"Petua Penggunaan\n"
+"Tip Penggunaan\n"
 "\n"
 "Pilih:\n"
-"Serlahkan teks (atau perkataan) dalam buku, kemudian tekan [Pembantu AI] dalam menu yang muncul.\n"
+"Serlahkan teks (atau perkataan) dalam buku, kemudian tekan [AI assistant] dalam menu timbul.\n"
 "\n"
 "Tekan Lama:\n"
 "- Pada Butang Prompt: Tambah ke menu serlahan.\n"
@@ -1402,9 +1402,9 @@ msgstr ""
 "- Pada butang Tutup untuk kembali ke buku dalam 1 langkah.\n"
 "\n"
 "Tekan Sangat Lama (lebih 3 saat):\n"
-"Pada satu perkataan dalam buku untuk menunjukkan menu serlahan (sebagai ganti kamus).\n"
+"Pada satu perkataan dalam buku untuk memaparkan menu serlahan (bukan kamus).\n"
 "\n"
-"Leret Berbilang (contohnya, ⮠, ⮡, ↺):\n"
+"Leret Berbilang (cth., ⮠, ⮡, ↺):\n"
 "Pada dialog hasil untuk menutup (kerana butang Tutup sukar dicapai).\n"
 
 #: ../main.lua:1030
@@ -1413,7 +1413,7 @@ msgstr "Maklumat Versi"
 
 #: ../main.lua:1036
 msgid "Purge Settings"
-msgstr "Padam Tetapan"
+msgstr "Buang Tetapan"
 
 #: ../main.lua:1039
 msgid ""
@@ -1422,10 +1422,10 @@ msgid ""
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Adakah anda pasti untuk memadam tetapan pemalam pembantu? \n"
-"Ini akan menetapkan semula pemalam pembantu kepada status kali pertama anda memasangnya.\n"
+"Adakah anda pasti mahu membuang tetapan plugin pembantu? \n"
+"Ini menetapkan semula plugin pembantu kepada status kali pertama anda memasangnya.\n"
 "\n"
-"configuration.lua selamat, hanya tetapan yang dipadam."
+"configuration.lua selamat, hanya tetapan yang dibuang."
 
 #: ../main.lua:1092
 #, lua-format
@@ -1438,15 +1438,15 @@ msgstr "Buang"
 
 #: ../main.lua:1456
 msgid "Configuration not found. Please set up configuration.lua first."
-msgstr "Konfigurasi tidak ditemui. Sila sediakan configuration.lua terlebih dahulu."
+msgstr "Konfigurasi tidak ditemui. Sila sediakan configuration.lua dahulu."
 
 #: ../main.lua:1504
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Ditambah</b> [%1 (AI)] ke Menu Sorotan."
+msgstr "<b>Ditambah</b> [%1 (AI)] ke Menu Serlahan."
 
 #: ../main.lua:1515
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Dibuang</b> [%1 (AI)] daripada Menu Sorotan."
+msgstr "<b>Dibuang</b> [%1 (AI)] daripada Menu Serlahan."
 
 #: ../main.lua:1560
 msgid ""
@@ -1454,14 +1454,14 @@ msgid ""
 "For %1 by %2.\n"
 "\n"
 msgstr ""
-"Adakah anda mahu Ringkasan AI?\n"
+"Adakah anda mahu Rekap AI?\n"
 "Untuk %1 oleh %2.\n"
 "\n"
 
 #: ../main.lua:1561
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
-msgstr[0] "Dibaca terakhir %1 jam yang lalu."
+msgstr[0] "Dibaca terakhir %1 jam lalu."
 
 #: ../main.lua:1566
 msgid "Yes"
@@ -1489,4 +1489,4 @@ msgstr "Platform"
 
 #: ../main.lua:1620
 msgid "Runtime"
-msgstr "Masa Jalan"
+msgstr "Runtime"

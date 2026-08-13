@@ -1,31 +1,35 @@
+# Slovak translations for assistant.koplugin package.
+# Copyright (C) 2026 THE assistant.koplugin'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the assistant.koplugin package.
+# Automatically generated, 2026.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: assistant.koplugin\n"
+"Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-12 15:17+0800\n"
-"PO-Revision-Date: 2025-07-16 12:00+0200\n"
-"Last-Translator: v1.0\n"
-"Language-Team: AI Assistant\n"
+"POT-Creation-Date: 2026-08-13 10:35+0800\n"
+"PO-Revision-Date: 2026-08-13 10:35+0800\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #: ../_meta.lua:3 ../assistant_dialog.lua:489 ../main.lua:366 ../main.lua:376
 #: ../main.lua:886
 msgid "AI Assistant"
-msgstr "Asistent AI"
+msgstr "AI asistent"
 
 #: ../_meta.lua:4
 msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Vylepšite svoj KOReader pomocou AI"
+msgstr "💡 Vylepšite si zážitok z KOReaderu pomocou AI"
 
 #: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:32
 #: ../api_handlers/openai.lua:63 ../api_handlers/responses.lua:51
 msgid "<b>Fetching models...</b>"
-msgstr "<b>Pridobivanje modelov...</b>"
+msgstr "<b>Načítavajú sa modely...</b>"
 
 #: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:42
 #: ../api_handlers/gemini.lua:52 ../api_handlers/openai.lua:79
@@ -66,11 +70,11 @@ msgstr "Zrušiť"
 
 #: ../assistant_dialog.lua:344 ../assistant_viewer.lua:636
 msgid "Ask"
-msgstr "Spýtať sa"
+msgstr "Opýtať sa"
 
 #: ../assistant_dialog.lua:357 ../assistant_viewer.lua:642
 msgid "Enter a question before proceeding."
-msgstr "Pred pokračovaním zadajte otázku."
+msgstr "Zadajte otázku pred pokračovaním."
 
 #: ../assistant_dialog.lua:445
 msgid ""
@@ -80,7 +84,7 @@ msgid ""
 msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
-"Dodaj ta gumb v meni označevanja?"
+"Pridať toto tlačidlo do ponuky zvýraznenia?"
 
 #: ../assistant_dialog.lua:447 ../assistant_settings.lua:251
 msgid "Add"
@@ -88,7 +92,7 @@ msgstr "Pridať"
 
 #: ../assistant_dialog.lua:475
 msgid "Ask a question about the highlighted text"
-msgstr "Spýtať sa na zvýraznený text"
+msgstr "Opýtať sa na zvýraznený text"
 
 #: ../assistant_dialog.lua:478
 msgid ""
@@ -108,11 +112,11 @@ msgstr "Sem napíšte svoju otázku..."
 
 #: ../assistant_dialog.lua:485
 msgid "Ask anything about this book..."
-msgstr "Spýtať sa čokoľvek o tejto knihe..."
+msgstr "Opýtajte sa čokoľvek o tejto knihe..."
 
 #: ../assistant_dialog.lua:486
 msgid "Ask anything..."
-msgstr "Spýtajte sa na čokoľvek..."
+msgstr "Opýtajte sa čokoľvek..."
 
 #: ../assistant_dialog.lua:510
 msgid "Use book text as context"
@@ -120,7 +124,7 @@ msgstr "Použiť text knihy ako kontext"
 
 #: ../assistant_dialog.lua:563
 msgid "Loading for %1 ..."
-msgstr "Načítavanie pre %1 ..."
+msgstr "Načítava sa pre %1 ..."
 
 #: ../assistant_dialog.lua:577
 msgid "<b>Error:</b> No response received"
@@ -140,16 +144,16 @@ msgstr "Vyhľadať"
 
 #: ../assistant_dictdialog.lua:213
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr "<b>Prebieha analýza kontextu knihy pre Term X-Ray...</b>"
+msgstr "<b>Analyzuje sa kontext knihy pre Term X-Ray...</b>"
 
 #: ../assistant_dictdialog.lua:388 ../assistant_prompts.lua:27 ../main.lua:1166
 #: ../main.lua:1168
 msgid "Term X-Ray"
-msgstr "Röntgen výrazu"
+msgstr "Term X-Ray"
 
 #: ../assistant_dictdialog.lua:391
 msgid "Loading Term X-Ray ..."
-msgstr "Načítavanie röntgenu výrazu..."
+msgstr "Načítava sa Term X-Ray ..."
 
 #: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:74 ../main.lua:1185
 msgid "Dictionary"
@@ -157,11 +161,11 @@ msgstr "Slovník"
 
 #: ../assistant_dictdialog.lua:409
 msgid "Loading AI Dictionary ..."
-msgstr "Načítavanie AI slovníka..."
+msgstr "Načítava sa AI slovník ..."
 
 #: ../assistant_exttools.lua:262
 msgid "None"
-msgstr "Žiadne"
+msgstr "Žiadny"
 
 #: ../assistant_exttools.lua:263
 msgid "Model Built-In"
@@ -169,7 +173,7 @@ msgstr "Vstavaný model"
 
 #: ../assistant_featuredialog.lua:41
 msgid "Custom Prompt"
-msgstr "Vlastná výzva"
+msgstr "Vlastný prompt"
 
 #: ../assistant_featuredialog.lua:42
 msgid "Loading..."
@@ -177,19 +181,19 @@ msgstr "Načítava sa..."
 
 #: ../assistant_featuredialog.lua:63
 msgid "Recap"
-msgstr "Zhrnutie"
+msgstr "Rekapitulácia"
 
 #: ../assistant_featuredialog.lua:64
 msgid "Loading Recap..."
-msgstr "Načítavam súhrn..."
+msgstr "Načítava sa rekapitulácia..."
 
 #: ../assistant_featuredialog.lua:69
 msgid "X‑Ray"
-msgstr "X-Ray"
+msgstr "X‑Ray"
 
 #: ../assistant_featuredialog.lua:70
 msgid "Loading X-Ray..."
-msgstr "Načítavam X-Ray..."
+msgstr "Načítava sa X-Ray..."
 
 #. @translators book_info section headers and sub-fields
 #: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
@@ -198,7 +202,7 @@ msgstr "Informácie o knihe"
 
 #: ../assistant_featuredialog.lua:76
 msgid "Loading Book Information..."
-msgstr "Načítavajú sa informácie o knihe…"
+msgstr "Načítavajú sa informácie o knihe..."
 
 #: ../assistant_featuredialog.lua:81 ../main.lua:127 ../main.lua:314
 msgid "Highlight & Note Analysis"
@@ -206,15 +210,15 @@ msgstr "Analýza zvýraznení a poznámok"
 
 #: ../assistant_featuredialog.lua:82
 msgid "Loading Highlight & Note Analysis..."
-msgstr "Načítavanie analýzy zvýraznení a poznámok..."
+msgstr "Načítava sa analýza zvýraznení a poznámok..."
 
 #: ../assistant_featuredialog.lua:87 ../main.lua:135 ../main.lua:326
 msgid "Summary Using Highlights & Notes"
-msgstr "Súhrn pomocou zvýraznení a poznámok"
+msgstr "Zhrnutie pomocou zvýraznení a poznámok"
 
 #: ../assistant_featuredialog.lua:88
 msgid "Loading Summary Using Highlights & Notes..."
-msgstr "Načítavanie súhrnu pomocou zvýraznení a poznámok..."
+msgstr "Načítava sa zhrnutie pomocou zvýraznení a poznámok..."
 
 #: ../assistant_featuredialog.lua:100
 msgid "<b>Unknown feature type:</b> %1"
@@ -231,7 +235,7 @@ msgid ""
 msgstr ""
 " - Názov : %1\n"
 " - Autor: %2\n"
-" - Postup čítania: %3%\n"
+" - Priebeh čítania: %3%\n"
 "\n"
 "-----\n"
 "\n"
@@ -246,15 +250,15 @@ msgstr "Modely: %1"
 
 #: ../assistant_model_picker.lua:82
 msgid " — p. %1/%2"
-msgstr " — str. %1/%2"
+msgstr " — s. %1/%2"
 
 #: ../assistant_model_picker.lua:119
 msgid "Manual"
-msgstr "Manuálne"
+msgstr "Manuál"
 
 #: ../assistant_model_picker.lua:123
 msgid "Reset"
-msgstr "Obnoviť"
+msgstr "Resetovať"
 
 #: ../assistant_model_picker.lua:170 ../assistant_model_picker.lua:368
 msgid "Model: %1"
@@ -274,11 +278,11 @@ msgstr "Hľadať modely"
 
 #: ../assistant_model_picker.lua:292
 msgid "Model reset: %1"
-msgstr "Model obnovený: %1"
+msgstr "Reset modelu: %1"
 
 #: ../assistant_model_picker.lua:322
 msgid "No models matching \"%1\"."
-msgstr "Žiadne modely nezodpovedajú \"%1\"."
+msgstr "Žiadne modely nezodpovedajú výrazu \"%1\"."
 
 #: ../assistant_model_picker.lua:346
 msgid "Enter Model ID"
@@ -300,7 +304,7 @@ msgstr "Nie sú k dispozícii žiadne modely."
 
 #: ../assistant_prompts.lua:30
 msgid "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
-msgstr "Táto výzva vytvára štruktúrovaný systém na generovanie kontextovo podmienených definícií slov alebo fráz z literatúry analýzou zvýrazneného výrazu v jeho okolitom texte, aby poskytla jemné vysvetlenia zachytávajúce doslovný význam aj kontextový význam."
+msgstr "Tento prompt vytvára štruktúrovaný systém na generovanie kontextových definícií slov alebo fráz z literatúry tým, že analyzuje zvýraznený výraz v rámci okolitého textu, aby poskytol nuansované vysvetlenia, ktoré zachytávajú doslovný aj kontextuálny význam."
 
 #. @translators term_xray section headers
 #. @translators term_xray: "What It Is" section header
@@ -311,12 +315,12 @@ msgstr "Čo to je"
 #. @translators term_xray: "Role & Function" section header
 #: ../assistant_prompts.lua:66
 msgid "Role & Function"
-msgstr "Rola a funkcia"
+msgstr "Úloha a funkcia"
 
 #. @translators term_xray: "Evolution & Connections" section header
 #: ../assistant_prompts.lua:68
 msgid "Evolution & Connections"
-msgstr "Evolúcia a súvislosti"
+msgstr "Vývoj a súvislosti"
 
 #. @translators term_xray: "Context Limitations" section header
 #: ../assistant_prompts.lua:70
@@ -325,7 +329,7 @@ msgstr "Obmedzenia kontextu"
 
 #: ../assistant_prompts.lua:76
 msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Táto výzva funguje ako slovník pre zvýraznený text, slovo alebo frázu."
+msgstr "Tento prompt funguje ako slovník pre zvýraznený text, teda pre slovo alebo frázu."
 
 #: ../assistant_prompts.lua:82 ../assistant_quicknote.lua:101
 msgid "Quick Note"
@@ -333,7 +337,7 @@ msgstr "Rýchla poznámka"
 
 #: ../assistant_prompts.lua:83
 msgid "This button creates a quick note with highlighted text."
-msgstr "Toto tlačidlo vytvorí rýchlu poznámku s označeným textom."
+msgstr "Toto tlačidlo vytvorí rýchlu poznámku so zvýrazneným textom."
 
 #: ../assistant_prompts.lua:88
 msgid "Vocabulary"
@@ -341,7 +345,7 @@ msgstr "Slovná zásoba"
 
 #: ../assistant_prompts.lua:92
 msgid "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
-msgstr "Táto výzva analyzuje slovnú zásobu zvýrazneného textu, identifikuje zložité slová a poskytne definície, synonymá a príklady použitia."
+msgstr "Tento prompt analyzuje slovnú zásobu zvýrazneného textu, identifikuje náročné slová a poskytuje definície, synonymá a príklady použitia."
 
 #: ../assistant_prompts.lua:109
 msgid "Grammar"
@@ -349,7 +353,7 @@ msgstr "Gramatika"
 
 #: ../assistant_prompts.lua:113
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
-msgstr "Táto výzva analyzuje gramatiku zvýrazneného textu a podrobne vysvetlí jeho štruktúru a prípadné chyby."
+msgstr "Tento prompt analyzuje gramatiku zvýrazneného textu a poskytuje podrobné vysvetlenie jeho štruktúry a prípadných gramatických chýb."
 
 #. @translators grammar section headers
 #: ../assistant_prompts.lua:136
@@ -362,7 +366,7 @@ msgstr "Slovné druhy a časy"
 
 #: ../assistant_prompts.lua:138
 msgid "Error Correction (If Applicable)"
-msgstr "Oprava chýb (ak je to možné)"
+msgstr "Oprava chýb (ak je to relevantné)"
 
 #: ../assistant_prompts.lua:142
 msgid "Translate"
@@ -370,7 +374,7 @@ msgstr "Preložiť"
 
 #: ../assistant_prompts.lua:144
 msgid "This prompt translates the highlighted text to another language."
-msgstr "Táto výzva preloží zvýraznený text do iného jazyka."
+msgstr "Tento prompt preloží zvýraznený text do iného jazyka."
 
 #: ../assistant_prompts.lua:156
 msgid "Summarize"
@@ -378,7 +382,7 @@ msgstr "Zhrnúť"
 
 #: ../assistant_prompts.lua:159
 msgid "This prompt summarizes the highlighted text, capturing its main points and essential details."
-msgstr "Táto výzva zhrnie zvýraznený text a vyzdvihne hlavné body a podstatné detaily."
+msgstr "Tento prompt zhrnie zvýraznený text, pričom zachytí jeho hlavné body a podstatné detaily."
 
 #: ../assistant_prompts.lua:174
 msgid "Simplify"
@@ -386,7 +390,7 @@ msgstr "Zjednodušiť"
 
 #: ../assistant_prompts.lua:177
 msgid "This prompt simplifies the highlighted text to make it easier to understand."
-msgstr "Táto výzva zjednoduší zvýraznený text, aby bol ľahšie zrozumiteľný."
+msgstr "Tento prompt zjednoduší zvýraznený text, aby sa ľahšie pochopil."
 
 #: ../assistant_prompts.lua:191 ../assistant_prompts.lua:534
 msgid "Key Points"
@@ -394,7 +398,7 @@ msgstr "Kľúčové body"
 
 #: ../assistant_prompts.lua:195
 msgid "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
-msgstr "Táto výzva vytiahne a zoradí kľúčové body zvýrazneného textu s jasnosťou a prehľadnosťou."
+msgstr "Tento prompt extrahuje a vypíše kľúčové body zo zvýrazneného textu, pričom zabezpečuje jasnosť a prehľadnosť."
 
 #. @translators key_points section headers
 #: ../assistant_prompts.lua:216
@@ -407,11 +411,11 @@ msgstr "Podstatné fakty a závery"
 
 #: ../assistant_prompts.lua:220
 msgid "ELI5"
-msgstr "Vysvetliť ako pre päťročného"
+msgstr "ELI5"
 
 #: ../assistant_prompts.lua:224
 msgid "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
-msgstr "Táto výzva vysvetlí zvýraznený text tak, aby to pochopil aj päťročný, a zjednoduší zložité pojmy."
+msgstr "Tento prompt vysvetlí zvýraznený text, ako keby ho vysvetľoval päťročnému dieťaťu, pričom zložité koncepty zjednoduší na ľahko pochopiteľné pojmy."
 
 #. @translators ELI5 section headers
 #: ../assistant_prompts.lua:244
@@ -428,7 +432,7 @@ msgstr "Vysvetliť"
 
 #: ../assistant_prompts.lua:251
 msgid "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
-msgstr "Táto výzva podrobne vysvetlí zvýraznený text a zabezpečí jasnosť."
+msgstr "Tento prompt podrobne vysvetlí zvýraznený text, pričom zabezpečí jasnosť a porozumenie."
 
 #: ../assistant_prompts.lua:265
 msgid "Historical Context"
@@ -436,12 +440,12 @@ msgstr "Historický kontext"
 
 #: ../assistant_prompts.lua:269
 msgid "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
-msgstr "Táto výzva poskytne podrobný historický kontext zvýrazneného textu a vysvetlí jeho význam."
+msgstr "Tento prompt poskytuje podrobný historický kontext pre zvýraznený text, pričom vysvetľuje jeho význam a pozadie."
 
 #. @translators historical_context section headers
 #: ../assistant_prompts.lua:290
 msgid "Era & Background"
-msgstr "Éra a pozadie"
+msgstr "Obdobie a pozadie"
 
 #: ../assistant_prompts.lua:291
 msgid "Contextual Connections"
@@ -457,7 +461,7 @@ msgstr "Wikipedia"
 
 #: ../assistant_prompts.lua:299
 msgid "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
-msgstr "Táto výzva vytvorí komplexný článok v štýle Wikipédie na základe zvýrazneného textu a zabezpečí faktickú správnosť a neutralitu."
+msgstr "Tento prompt vygeneruje komplexný článok v štýle Wikipédie na základe zvýrazneného textu, pričom zabezpečí faktickú presnosť a neutralitu."
 
 #. @translators xray section headers
 #: ../assistant_prompts.lua:391
@@ -482,12 +486,12 @@ msgstr "Časová os"
 
 #: ../assistant_prompts.lua:396
 msgid "Re-immersion"
-msgstr "Znovu ponorenie"
+msgstr "Opätovné ponorenie"
 
 #. @translators xray Re-immersion sub-fields
 #: ../assistant_prompts.lua:398
 msgid "Where the action stopped:"
-msgstr "Kde sa akcia zastavila:"
+msgstr "Kde sa dej zastavil:"
 
 #: ../assistant_prompts.lua:399
 msgid "Protagonist's current objective:"
@@ -507,7 +511,7 @@ msgstr "Prevládajúci emocionálny stav/tón:"
 
 #: ../assistant_prompts.lua:403
 msgid "Outstanding questions:"
-msgstr "Nevyriešené otázky:"
+msgstr "Otvorené otázky:"
 
 #: ../assistant_prompts.lua:441
 msgid "Genre"
@@ -544,7 +548,7 @@ msgstr "Kľúčové poznatky"
 
 #: ../assistant_prompts.lua:479
 msgid "To-Do / Action Items"
-msgstr "Úlohy / Akčné položky"
+msgstr "Úlohy / Akčné body"
 
 #: ../assistant_prompts.lua:480
 msgid "Contextual Notes"
@@ -561,7 +565,7 @@ msgstr "TL;DR"
 
 #: ../assistant_prompts.lua:533
 msgid "Integrated Summary"
-msgstr "Integrovaný súhrn"
+msgstr "Integrované zhrnutie"
 
 #: ../assistant_prompts.lua:535
 msgid "Actionable Takeaways"
@@ -590,7 +594,7 @@ msgstr "Preklad"
 
 #: ../assistant_prompts.lua:568
 msgid "Book Usage"
-msgstr "Použitie knihy"
+msgstr "Použitie v knihe"
 
 #: ../assistant_prompts.lua:569
 msgid "Example"
@@ -610,15 +614,15 @@ msgstr "Názov poskytovateľa je povinný."
 
 #: ../assistant_provider_registry.lua:221
 msgid "Unsupported API protocol."
-msgstr "Nepodporovaný API protokol."
+msgstr "Nepodporovaný protokol API."
 
 #: ../assistant_provider_registry.lua:232 ../main.lua:608
 msgid "Base URL is required."
-msgstr "Základná URL je povinná."
+msgstr "Základná URL adresa je povinná."
 
 #: ../assistant_provider_registry.lua:235 ../assistant_search_registry.lua:125
 msgid "Base URL must start with http:// or https://"
-msgstr "Základná URL musí začínať http:// alebo https://"
+msgstr "Základná URL adresa musí začínať na http:// alebo https://"
 
 #: ../assistant_provider_registry.lua:241 ../main.lua:612
 msgid "API key is required."
@@ -628,7 +632,7 @@ msgstr "API kľúč je povinný."
 #: ../assistant_provider_registry.lua:308
 #: ../assistant_provider_registry.lua:348
 msgid "Provider not found."
-msgstr "Poskytovateľ nenájdený."
+msgstr "Poskytovateľ nebol nájdený."
 
 #: ../assistant_provider_registry.lua:343
 #: ../assistant_provider_registry.lua:394
@@ -641,27 +645,27 @@ msgstr "API poskytovateľa"
 
 #: ../assistant_provider_registry.lua:465
 msgid "%1 (Compatible)"
-msgstr "%1 (Kompatibilný)"
+msgstr "%1 (kompatibilný)"
 
 #: ../assistant_provider_registry.lua:473
 msgid "Custom"
-msgstr "Vlastné"
+msgstr "Vlastný"
 
 #: ../assistant_querier.lua:125
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
-msgstr "Nastavitve ponudnika za %1 niso bile najdene. Preverite datoteko configuration.lua."
+msgstr "Nastavenia poskytovateľa sa nenašli pre: %1. Skontrolujte svoj súbor configuration.lua."
 
 #: ../assistant_querier.lua:138
 msgid "Handler not found for: %1. Please check your configuration.lua file."
-msgstr "Obslužný program nebol nájdený pre: %1. Skontrolujte súbor configuration.lua."
+msgstr "Handler sa nenašiel pre: %1. Skontrolujte svoj súbor configuration.lua."
 
 #: ../assistant_querier.lua:145
 msgid "Handler %1 not available for provider: %2"
-msgstr "Obsluha %1 nie je dostupná pre poskytovateľa: %2"
+msgstr "Handler %1 nie je k dispozícii pre poskytovateľa: %2"
 
 #: ../assistant_querier.lua:156
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
-msgstr "Obdelovalnik za %1 ni bil najden. Prepričajte se, da obdelovalnik obstaja v imeniku api_handlers."
+msgstr "Handler pre %1 sa nenašiel. Uistite sa, že handler existuje v adresári api_handlers."
 
 #: ../assistant_querier.lua:199
 msgid ""
@@ -673,13 +677,13 @@ msgid ""
 "\n"
 "Try another provider in the settings dialog."
 msgstr ""
-"<b>API napaka</b>\n"
+"<b>Chyba API</b>\n"
 "%1\n"
 "\n"
-"<b>Ponudnik:</b> %2\n"
+"<b>Poskytovateľ:</b> %2\n"
 "<b>Model:</b> %3\n"
 "\n"
-"Poskusite drugega ponudnika v pogovornem oknu z nastavitvami."
+"Skúste iného poskytovateľa v dialógovom okne nastavení."
 
 #: ../assistant_querier.lua:200
 msgid "Unknown error"
@@ -696,19 +700,19 @@ msgstr "Zavrieť"
 
 #: ../assistant_querier.lua:294
 msgid "Plugin is not configured."
-msgstr "Vtičnik ni nastavljen."
+msgstr "Plugin nie je nakonfigurovaný."
 
 #: ../assistant_querier.lua:386 ../assistant_querier.lua:484
 msgid "Too many tool-call rounds; aborting."
-msgstr "Príliš veľa kôl volania nástrojov; ukončuje sa."
+msgstr "Príliš veľa kôl volaní nástrojov; prerušujem."
 
 #: ../assistant_querier.lua:394
 msgid "Stream failed with no error message."
-msgstr "Stream zlyhal bez chybovej správy."
+msgstr "Stream zlyhal bez chybového hlásenia."
 
 #: ../assistant_querier.lua:411
 msgid "Stream ended with no content and no tool calls."
-msgstr "Stream skončil bez obsahu a bez volaní nástrojov."
+msgstr "Stream sa skončil bez obsahu a bez volaní nástrojov."
 
 #: ../assistant_querier.lua:458
 msgid "Request Cancelled by user."
@@ -716,11 +720,11 @@ msgstr "Požiadavka zrušená používateľom."
 
 #: ../assistant_querier.lua:467
 msgid "Querying AI ..."
-msgstr "Dotazujem AI..."
+msgstr "Dotazujem AI ..."
 
 #: ../assistant_querier.lua:522
 msgid "Composing answer ..."
-msgstr "Skladá sa odpoveď ..."
+msgstr "Zostavujem odpoveď ..."
 
 #: ../assistant_querier.lua:537 ../assistant_querier.lua:695
 msgid "Request cancelled by user."
@@ -728,7 +732,7 @@ msgstr "Požiadavka zrušená používateľom."
 
 #: ../assistant_querier.lua:544
 msgid "No response received."
-msgstr "Žiadna odpoveď neprišla."
+msgstr "Nebola prijatá žiadna odpoveď."
 
 #: ../assistant_querier.lua:580
 msgid "AI is responding"
@@ -736,15 +740,15 @@ msgstr "AI odpovedá"
 
 #: ../assistant_querier.lua:601
 msgid "❌ Stop"
-msgstr "❌ Zastavi"
+msgstr "❌ Zastaviť"
 
 #: ../assistant_querier.lua:606
 msgid "■ Scroll"
-msgstr "■ Posuň"
+msgstr "■ Posúvať"
 
 #: ../assistant_querier.lua:606
 msgid "▶ Scroll"
-msgstr "▶ Preliš"
+msgstr "▶ Posúvať"
 
 #: ../assistant_querier.lua:712
 msgid "Failed to start subprocess for request"
@@ -752,11 +756,11 @@ msgstr "Nepodarilo sa spustiť podproces pre požiadavku"
 
 #: ../assistant_querier.lua:921
 msgid "Error Message"
-msgstr "Sporočilo o napaki"
+msgstr "Chybové hlásenie"
 
 #: ../assistant_querier.lua:950 ../assistant_querier.lua:953
 msgid "Deeply Thought"
-msgstr "Globoko premišljen"
+msgstr "Hlboké zamyslenie"
 
 #: ../assistant_querier.lua:1143
 msgid "Stopped Reason: "
@@ -764,7 +768,7 @@ msgstr "Dôvod zastavenia: "
 
 #: ../assistant_quicknote.lua:27 ../main.lua:111 ../main.lua:159
 msgid "Take Quick Notes"
-msgstr "Vytvoriť rýchle poznámky"
+msgstr "Rýchle poznámky"
 
 #: ../assistant_quicknote.lua:29
 msgid "Write quick notes here"
@@ -788,19 +792,19 @@ msgstr "Záznam vyhľadávacieho nástroja musí byť tabuľka."
 
 #: ../assistant_search_registry.lua:110 ../assistant_search_registry.lua:189
 msgid "Unknown search tool: %1"
-msgstr "Neznáme vyhľadávacie nástroje: %1"
+msgstr "Neznámy vyhľadávací nástroj: %1"
 
 #: ../assistant_search_registry.lua:117 ../main.lua:690
 msgid "API key is required for %1."
-msgstr "API kľúč je povinný pre %1."
+msgstr "Pre %1 sa vyžaduje API kľúč."
 
 #: ../assistant_search_registry.lua:122 ../main.lua:697
 msgid "Base URL is required for %1."
-msgstr "Základná URL je povinná pre %1."
+msgstr "Pre %1 sa vyžaduje Base URL."
 
 #: ../assistant_search_registry.lua:212
 msgid "Search tool not found."
-msgstr "Vyhľadávací nástroj nenájdený."
+msgstr "Vyhľadávací nástroj sa nenašiel."
 
 #: ../assistant_search_registry.lua:241 ../assistant_search_registry.lua:279
 msgid "Search tool data not initialized."
@@ -826,15 +830,15 @@ msgstr "Odstrániť"
 
 #: ../assistant_settings.lua:83
 msgid "AI Response Language Setting"
-msgstr "Nastavenie jazyka odpovede AI"
+msgstr "Nastavenie jazyka odpovedí AI"
 
 #: ../assistant_settings.lua:86
 msgid "AI Response Language"
-msgstr "Jazyk AI odpovede"
+msgstr "Jazyk odpovedí AI"
 
 #: ../assistant_settings.lua:88 ../assistant_settings.lua:93
 msgid "Leave blank to use: %1"
-msgstr "Nechajte prázdne pre: %1"
+msgstr "Nechajte prázdne, aby sa použilo: %1"
 
 #: ../assistant_settings.lua:91
 msgid "Dictionary Language"
@@ -846,11 +850,11 @@ msgstr "Vyčistiť"
 
 #: ../assistant_settings.lua:153
 msgid "RTL written Language"
-msgstr "Jazyk písaný sprava-doľava"
+msgstr "Jazyk písaný sprava doľava"
 
 #: ../assistant_settings.lua:173
 msgid "Leave these fields blank to use the UI language: %1"
-msgstr "Nechajte prázdne pre jazyk rozhrania: %1"
+msgstr "Nechajte tieto polia prázdne, aby sa použil jazyk rozhrania: %1"
 
 #: ../assistant_settings.lua:184
 msgid "Providers and Models"
@@ -861,8 +865,8 @@ msgid "Browse Models"
 msgstr "Prehliadať modely"
 
 #: ../assistant_settings.lua:220
-msgid "Browse available models on OpenRouter"
-msgstr "Prehliadať dostupné modely na OpenRouter"
+msgid "Browse available models from the current provider"
+msgstr "Prehliadať dostupné modely od aktuálneho poskytovateľa"
 
 #: ../assistant_settings.lua:397
 msgid "Delete provider %1?"
@@ -888,93 +892,93 @@ msgstr "Veľkosť textu AI: %1"
 
 #: ../assistant_settings.lua:521
 msgid "AI Response Text Font Size"
-msgstr "Veľkosť písma odpovede AI"
+msgstr "Veľkosť písma textu odpovede AI"
 
 #: ../assistant_settings.lua:537
 msgid "Response Settings"
-msgstr "Nastavenia odpovedí"
+msgstr "Nastavitve odgovora"
 
 #: ../assistant_settings.lua:540
 msgid "Enable Stream Response"
-msgstr "Povoliť stream odpoveď"
+msgstr "Omogoči pretakanje odgovora"
 
 #: ../assistant_settings.lua:548
 msgid "Stream Text Auto Scroll"
-msgstr "Automatické posúvanie textu streamu"
+msgstr "Samodejno drsenje pretakanega besedila"
 
 #: ../assistant_settings.lua:557
 msgid "Large Streaming Window"
-msgstr "Veľké streamovacie okno"
+msgstr "Veliko okno pretakanja"
 
 #: ../assistant_settings.lua:567
 msgid "Show Reasoning Text"
-msgstr "Zobraziť text uvažovania"
+msgstr "Prikaži besedilo razmišljanja"
 
 #: ../assistant_settings.lua:575
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
-msgstr "Zobraziť hlboké uvažovanie (reasoning) z AI odpovede, ak existuje."
+msgstr "Prikaži poglobljen miselni proces (razmišljanje) iz odgovora AI, če obstaja."
 
 #: ../assistant_settings.lua:580
 msgid "Show Follow-up Questions"
-msgstr "Zobraziť následné otázky"
+msgstr "Prikaži nadaljnja vprašanja"
 
 #: ../assistant_settings.lua:588
 msgid "Show follow up questions related to the response content."
-msgstr "Zobraziť následné otázky súvisiace s obsahom odpovede."
+msgstr "Prikaži nadaljnja vprašanja, povezana z vsebino odgovora."
 
 #. @translators: functional overriding
 #: ../assistant_settings.lua:596
 msgid "KOReader Tweaks"
-msgstr "KOReader úpravy"
+msgstr "Prilagoditve KOReader"
 
 #. @translators: 'Translate' is a built-in function
 #: ../assistant_settings.lua:600
 msgid "Use AI Assistant for 'Translate'"
-msgstr "Použiť AI asistenta pre „Preložiť“"
+msgstr "Uporabi pomočnika AI za 'Prevajanje'"
 
 #: ../assistant_settings.lua:611
 msgid "Auto-recap on opening long-unread books"
-msgstr "Automatické zhrnutie pri otváraní dlho nečítaných kníh"
+msgstr "Samodejni povzetek ob odpiranju dolgo neprebranih knjig"
 
 #: ../assistant_settings.lua:621
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
-msgstr "AI zhrnutie bude aktivované pri ďalšom otvorení dlho nečítanej knihy."
+msgstr "Povzetek AI bo omogočen naslednjič, ko odprete dolgo neprebrano knjigo."
 
 #: ../assistant_settings.lua:625
 msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Zobraziť Slovník(AI) vo vyskakovacom slovníku"
+msgstr "Prikaži slovar (AI) v pojavnem oknu slovarja"
 
 #: ../assistant_settings.lua:633
 msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Zobraziť Wikipedia(AI) vo vyskakovacom slovníku"
+msgstr "Prikaži Wikipedijo (AI) v pojavnem oknu slovarja"
 
 #: ../assistant_settings.lua:641
 msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Zobraziť Röntgen výrazu (AI) vo vyskakovacom slovníku"
+msgstr "Prikaži Term X-Ray (AI) v pojavnem oknu slovarja"
 
 #: ../assistant_settings.lua:649
 msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Zobraziť vlastné výzvy vo vyskakovacom slovníku"
+msgstr "Prikaži prilagojene pozive v pojavnem oknu slovarja"
 
 #: ../assistant_settings.lua:659
 msgid "Copy entered question to the clipboard"
-msgstr "Kopírovať otázku do schránky"
+msgstr "Kopiraj vneseno vprašanje v odložišče"
 
 #: ../assistant_settings.lua:667
 msgid "Auto-save conversations to NoteBook"
-msgstr "Automaticky ukladať konverzácie do poznámok"
+msgstr "Samodejno shrani pogovore v beležko"
 
 #: ../assistant_settings.lua:675
 msgid "Use book text for x-ray and recap"
-msgstr "Použiť text knihy pre x-ray a zhrnutie"
+msgstr "Uporabi besedilo knjige za X-Ray in povzetek"
 
 #: ../assistant_settings.lua:683 ../assistant_settings.lua:691
 msgid "OTA Update"
-msgstr "OTA aktualizácia"
+msgstr "Posodobitev OTA"
 
 #: ../assistant_settings.lua:693
 msgid "branch or tag name"
-msgstr "názov vetvy alebo značky"
+msgstr "ime veje ali oznake"
 
 #: ../assistant_settings.lua:695
 msgid ""
@@ -988,23 +992,23 @@ msgid ""
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Zadajte názov vetvy alebo tagu na aktualizáciu pluginu zo zdrojového repozitára.\n"
+"Vnesite ime veje ali oznake za posodobitev vtičnika iz izvornega repozitorija.\n"
 "\n"
-"<b>Github URL:</b>  %1\n"
-"<b>Zdrojový repozitár:</b>  %2\n"
+"<b>URL Github:</b>  %1\n"
+"<b>Izvorni repozitorij:</b>  %2\n"
 "\n"
-"Predvolené: \"main\" (najnovšia vývojová vetva)\n"
-"Príklady: \"main\", \"v1.12\", \"v1.11\"\n"
+"Privzeto: \"main\" (najnovejša razvojna veja)\n"
+"Primeri: \"main\", \"v1.12\", \"v1.11\"\n"
 "\n"
-"<b>Súbor configuration.lua bude zachovaný.</b>"
+"<b>Datoteka configuration.lua bo ohranjena.</b>"
 
 #: ../assistant_settings.lua:709
 msgid "Update"
-msgstr "Aktualizovať"
+msgstr "Posodobi"
 
 #: ../assistant_settings.lua:728
 msgid "Purge the settings"
-msgstr "Zmazať nastavenia"
+msgstr "Počisti nastavitve"
 
 #: ../assistant_settings.lua:731
 msgid ""
@@ -1013,46 +1017,46 @@ msgid ""
 "This restores the plugin to its factory defaults. Only settings will be removed; \n"
 "File configuration.lua will be preserved."
 msgstr ""
-"Vymazať nastavenia assistant.koplugin?\n"
+"Počistim nastavitve assistant.koplugin?\n"
 "\n"
-"Tým sa obnovia predvolené nastavenia pluginu. Odstránia sa len nastavenia;\n"
-"súbor configuration.lua zostane zachovaný."
+"To obnovi vtičnik na tovarniške privzete nastavitve. Odstranjene bodo samo nastavitve; \n"
+"Datoteka configuration.lua bo ohranjena."
 
 #: ../assistant_settings.lua:735 ../main.lua:1043
 msgid "Purge"
-msgstr "Zmazať"
+msgstr "Počisti"
 
 #: ../assistant_tool_executor.lua:134
 msgid "Search keywords are empty."
-msgstr "Kľúčové slová vyhľadávania sú prázdne."
+msgstr "Iskalne ključne besede so prazne."
 
 #: ../assistant_tool_executor.lua:143
 msgid "Searching with %1 ... [%2]"
-msgstr "Vyhľadávanie pomocou %1 ... [%2]"
+msgstr "Iskanje z %1 ... [%2]"
 
 #: ../assistant_tool_executor.lua:299
 msgid "Tool call did not include id."
-msgstr "Volanie nástroja neobsahovalo ID."
+msgstr "Klic orodja ni vseboval ID-ja."
 
 #: ../assistant_tool_executor.lua:302
 msgid "Tool call did not include search keywords."
-msgstr "Volanie nástroja neobsahovalo kľúčové slová vyhľadávania."
+msgstr "Klic orodja ni vseboval iskalnih ključnih besed."
 
 #: ../assistant_updater.lua:141
 msgid "Checking for updates..."
-msgstr "Kontrolujem aktualizácie..."
+msgstr "Preverjanje posodobitev..."
 
 #: ../assistant_updater.lua:144
 msgid "AI Assistant: Failed to check updates: %2"
-msgstr "AI Assistant: Kontrola aktualizácií zlyhala: %2"
+msgstr "AI pomočnik: Preverjanje posodobitev ni uspelo: %2"
 
 #: ../assistant_updater.lua:144
 msgid "Empty Error"
-msgstr "Chyba prázdneho vstupu"
+msgstr "Prazna napaka"
 
 #: ../assistant_updater.lua:154
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
-msgstr "Je dostupná nová verzia pluginu %1 (%2). Prosím, aktualizujte!"
+msgstr "Na voljo je nova različica vtičnika %1 (%2). Prosimo, posodobite!"
 
 #: ../assistant_updater.lua:192
 msgid ""
@@ -1068,88 +1072,88 @@ msgstr ""
 
 #: ../assistant_updater.lua:217
 msgid "Branch/Tag \"%1\" was not found."
-msgstr "Vetva/Značka \"%1\" nebola nájdená."
+msgstr "Veja/oznaka \"%1\" ni bila najdena."
 
 #: ../assistant_updater.lua:229
 msgid "OTA update canceled."
-msgstr "OTA aktualizácia zrušená."
+msgstr "Posodobitev OTA je preklicana."
 
 #: ../assistant_updater.lua:235 ../assistant_updater.lua:323
 msgid "OTA update failed: %1"
-msgstr "OTA aktualizácia zlyhala: %1"
+msgstr "Posodobitev OTA ni uspela: %1"
 
 #: ../assistant_updater.lua:242
 msgid "<b>Installing %1...</b>"
-msgstr "<b>Inštaluje sa %1...</b>"
+msgstr "<b>Nameščanje %1...</b>"
 
 #: ../assistant_updater.lua:327
 msgid ""
 "OTA UPDATE OK.\n"
 " Restart is required."
 msgstr ""
-"OTA AKTUALIZÁCIA OK.\n"
-" Vyžaduje sa reštart."
+"POSODOBITEV OTA JE USPEŠNA.\n"
+" Potreben je ponovni zagon."
 
 #: ../assistant_utils.lua:173
 msgid "Page"
-msgstr "Strana"
+msgstr "Stran"
 
 #: ../assistant_utils.lua:199
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
 msgstr ""
-"<b>Nie je možný prístup k predvolenému priečinku pre denníky: %1</b>\n"
-"Použije sa pôvodné umiestnenie."
+"<b>Ni mogoče dostopati do privzete mape za dnevnike: %1</b>\n"
+"Uporabljam prvotno lokacijo."
 
 #: ../assistant_utils.lua:255
 msgid "Notebook save failed. Continuing..."
-msgstr "Uloženie zošita zlyhalo. Pokračuje sa ďalej..."
+msgstr "Shranjevanje v beležko ni uspelo. Nadaljujem..."
 
 #: ../assistant_utils.lua:384
 msgid "##### You may find these topics interesting:"
-msgstr "##### Mohli by vás zaujímať tieto témy:"
+msgstr "##### Morda vas bodo te teme zanimale:"
 
 #: ../assistant_utils.lua:751
 msgid "fetchJSON: failed to parse returned data"
-msgstr "fetchJSON: nepodarilo sa spracovať vrátené údaje"
+msgstr "fetchJSON: razčlenjevanje vrnjenih podatkov ni uspelo"
 
 #. @translators button text, keep it short, like: Ask Another
 #: ../assistant_viewer.lua:308 ../assistant_viewer.lua:697
 msgid "Ask Another Question"
-msgstr "Opýtať sa znova"
+msgstr "Zastavi drugo vprašanje"
 
 #: ../assistant_viewer.lua:353
 msgid "Copy"
-msgstr "Kopírovať"
+msgstr "Kopiraj"
 
 #: ../assistant_viewer.lua:358
 msgid "Text copied to the clipboard"
-msgstr "Text skopiran do odložišča"
+msgstr "Besedilo je kopirano v odložišče."
 
 #: ../assistant_viewer.lua:372
 msgid "Add Note"
-msgstr "Pridať poznámku"
+msgstr "Dodaj opombo"
 
 #: ../assistant_viewer.lua:379
 msgid "Highlight functionality not available"
-msgstr "Zvýrazňovanie nie je k dispozícii"
+msgstr "Funkcija označevanja ni na voljo."
 
 #: ../assistant_viewer.lua:388
 msgid "No text to add as note"
-msgstr "Žiadny text na pridanie ako poznámka"
+msgstr "Žiadny text na pridanie ako poznámku"
 
 #: ../assistant_viewer.lua:417
 msgid "No text left to add as note"
-msgstr "Už nie je čo pridať ako poznámku"
+msgstr "Nezostal žiadny text na pridanie ako poznámku"
 
 #: ../assistant_viewer.lua:430
 msgid "Note added successfully"
-msgstr "Poznámka úspešne pridaná"
+msgstr "Poznámka bola úspešne pridaná."
 
 #: ../assistant_viewer.lua:451
 msgid "Conversation is saved to NoteBook"
-msgstr "Konverzácia bola uložená do poznámok"
+msgstr "Konverzácia je uložená do NoteBooku."
 
 #: ../assistant_viewer.lua:528
 msgid "Book Analysis"
@@ -1165,19 +1169,19 @@ msgstr "Sem napíšte svoju otázku"
 
 #: ../assistant_viewer.lua:868
 msgid "Word copied to clipboard."
-msgstr "Slovo skopírované do schránky."
+msgstr "Slovo bolo skopírované do schránky."
 
 #: ../assistant_viewer.lua:869
 msgid "Selection copied to clipboard."
-msgstr "Výber skopírovaný do schránky."
+msgstr "Výber bol skopírovaný do schránky."
 
 #: ../main.lua:87 ../main.lua:147
 msgid "Ask the AI a question"
-msgstr "Spýtať sa AI otázku"
+msgstr "Položte otázku AI"
 
 #: ../main.lua:95 ../main.lua:300
 msgid "AI Recaps"
-msgstr "AI rekapitulácie"
+msgstr "AI zhrnutia"
 
 #: ../main.lua:103 ../main.lua:285
 msgid "AI X-Ray"
@@ -1193,11 +1197,11 @@ msgstr "Zadajte otázku pre AI."
 
 #: ../main.lua:165
 msgid "Take quick notes that will be saved to your notebook."
-msgstr "Vytvorte rýchle poznámky, ktoré sa uložia do vášho zošita."
+msgstr "Robte si rýchle poznámky, ktoré sa uložia do vášho NoteBooku."
 
 #: ../main.lua:170
 msgid "NoteBook (AI Conversation Log)"
-msgstr "Zošík (záznam AI konverzácie)"
+msgstr "NoteBook (denník konverzácií AI)"
 
 #: ../main.lua:177
 msgid ""
@@ -1205,7 +1209,7 @@ msgid ""
 "\n"
 "%1"
 msgstr ""
-"<b>Súbor notebooku:</b>\n"
+"<b>Súbor NoteBooku:</b>\n"
 "\n"
 "%1"
 
@@ -1229,13 +1233,13 @@ msgid ""
 "%1\n"
 "This operation is not reversible."
 msgstr ""
-"Odstrániť súbor?\n"
+"Vymazať súbor?\n"
 "%1\n"
-"Táto operácia je nezvratná."
+"Táto operácia sa nedá vrátiť späť."
 
 #: ../main.lua:219
 msgid "AI Provider: not configured"
-msgstr "AI poskytovateľ: nenastavený"
+msgstr "Poskytovateľ AI: nie je nakonfigurovaný"
 
 #: ../main.lua:225
 msgid "AI Provider: %1(%2)"
@@ -1250,52 +1254,52 @@ msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
-"Zlepšuje presnosť odpovedí pomocou výsledkov z webu v reálnom čase.\n"
-"Poznámka: Vyššie využitie tokenov a dodatočné poplatky API."
+"Zlepšuje presnosť odpovedí pomocou výsledkov z webu v reálnom čase. \n"
+"Poznámka: Vyššia spotreba tokenov a dodatočné poplatky za API."
 
 #: ../main.lua:266
 msgid "Book-Level Built-in Prompts"
-msgstr "Vstavané výzvy na úrovni knihy"
+msgstr "Vstavané prompty na úrovni knihy"
 
 #: ../main.lua:279
 msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
-msgstr "Zhrnutie knihy, životopis autora, historický kontext a zoznam podobných odporúčaných kníh s popisom."
+msgstr "Zhrnutie knihy, životopis autora, historický kontext a zoznam podobných kníh s odporúčaniami a popismi."
 
 #: ../main.lua:294
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
-msgstr "„X-Ray“ zhrnutie knihy rozdelené do sekcií: Postavy, Miesta, Témy, Pojmy a koncepty, Časová os a Opätovné ponorenie."
+msgstr "\"X-Ray\" zhrnutie knihy, štruktúrované do konkrétnych sekcií, ako sú Postavy, Miesta, Témy, Pojmy a koncepty, Časová os a Opätovné ponorenie."
 
 #: ../main.lua:309
 msgid "A very brief, spoiler-free summary of the book up to current reading progress."
-msgstr "Veľmi stručné zhrnutie knihy bez spoilerov až po aktuálny postup čítania."
+msgstr "Veľmi stručné zhrnutie knihy bez spoilerov až po aktuálny pokrok v čítaní."
 
 #: ../main.lua:320
 msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Analýza vašich zvýraznení, poznámok a obsahu zošita z knihy."
+msgstr "Analýza vašich zvýraznení, poznámok a obsahu NoteBooku z knihy."
 
 #: ../main.lua:335
 msgid "Summary of the book using your highlights and notes."
-msgstr "Súhrn knihy pomocou vašich zvýraznení a poznámok."
+msgstr "Zhrnutie knihy pomocou vašich zvýraznení a poznámok."
 
 #: ../main.lua:342
 msgid "Book-Level Custom Prompts"
-msgstr "Vlastné výzvy na úrovni knihy"
+msgstr "Vlastné prompty na úrovni knihy"
 
 #: ../main.lua:349
 msgid "Includes user defined book level prompts from Config file"
-msgstr "Obsahuje používateľom definované výzvy na úrovni knihy z konfiguračného súboru"
+msgstr "Zahŕňa používateľom definované prompty na úrovni knihy z konfiguračného súboru."
 
 #: ../main.lua:424
 msgid "This is a custom prompt"
-msgstr "Toto je vlastná výzva"
+msgstr "Toto je vlastný prompt"
 
 #: ../main.lua:434
 msgid "No valid book-level custom prompt found"
-msgstr "Nenašla sa platná vlastná výzva na úrovni knihy"
+msgstr "Nenašiel sa žiadny platný vlastný prompt na úrovni knihy."
 
 #: ../main.lua:439
 msgid "For details, visit the 'Configuration' wiki page on github."
-msgstr "Podrobnosti nájdete na wiki stránke 'Configuration' na github."
+msgstr "Podrobnosti nájdete na wiki stránke 'Configuration' na GitHube."
 
 #: ../main.lua:524 ../main.lua:653
 msgid "Edit %1"
@@ -1307,11 +1311,11 @@ msgstr "Pridať %1"
 
 #: ../main.lua:534
 msgid "Add %1 Provider"
-msgstr "Pridať %1 poskytovateľa"
+msgstr "Pridať poskytovateľa %1"
 
 #: ../main.lua:543
 msgid "Display name"
-msgstr "Zobrazovacie meno"
+msgstr "Zobrazovaný názov"
 
 #: ../main.lua:543
 msgid "Provider Name"
@@ -1351,7 +1355,7 @@ msgstr "Nepodarilo sa uložiť vyhľadávací nástroj."
 
 #: ../main.lua:782
 msgid "No valid model provider is found in the configuration.lua"
-msgstr "V configuration.lua nebol nájdený žiadny platný poskytovateľ modelu"
+msgstr "V configuration.lua sa nenašiel žiadny platný poskytovateľ modelov."
 
 #: ../main.lua:801
 msgid ""
@@ -1359,15 +1363,15 @@ msgid ""
 "Please add a provider in Settings or configuration.lua."
 msgstr ""
 "<b>Chyba konfigurácie.</b>\n"
-"Prosím, pridajte poskytovateľa v nastavení alebo v súbore configuration.lua."
+"Pridajte poskytovateľa v Nastaveniach alebo v configuration.lua."
 
 #: ../main.lua:807
 msgid "OK"
-msgstr "OK"
+msgstr "V redu"
 
 #: ../main.lua:925
 msgid "configuration.lua: model providers are invalid."
-msgstr "configuration.lua: poskytovatelia modelu sú neplatní."
+msgstr "configuration.lua: ponudniki modelov so neveljavni."
 
 #: ../main.lua:1008
 msgid ""
@@ -1387,29 +1391,29 @@ msgid ""
 "Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
-"Tipy na používanie\n"
+"Nasveti za uporabo\n"
 "\n"
-"Výber:\n"
-"Označte text (alebo slovo) v knihe a potom stlačte [AI asistent] vo vyskočenom menu.\n"
+"Izberite:\n"
+"Označite besedilo (ali besedo) v knjigi, nato pritisnite [AI assistant] v pojavnem meniju.\n"
 "\n"
-"Dlho stlačiť:\n"
-"- Na tlačidle výzvy: Pridať do menu zvýraznenia.\n"
-"- Na tlačidle menu zvýraznenia na jeho odstránenie.\n"
-"- Na tlačidle Zatvoriť pre návrat do knihy v 1 kroku.\n"
+"Dolg pritisk:\n"
+"- Na gumbu za poziv: Dodajte v meni označb.\n"
+"- Na gumbu v meniju označb, da ga odstranite.\n"
+"- Na gumbu Zapri, da se v 1 koraku vrnete v knjigo.\n"
 "\n"
-"Veľmi dlho stlačiť (viac ako 3 sekundy):\n"
-"Na jedno slovo v knihe pre zobrazenie menu zvýraznenia (namiesto slovníka).\n"
+"Zelo dolg pritisk (več kot 3 sekunde):\n"
+"Na posamezni besedi v knjigi, da se prikaže meni označb (namesto slovarja).\n"
 "\n"
-"Multi-swipe (napr. ⮠, ⮡, ↺):\n"
-"Na výsledkovom dialógu pre zatvorenie (keďže tlačidlo Zatvoriť je ďaleko).\n"
+"Večkratni poteg (npr. ⮠, ⮡, ↺):\n"
+"Na pogovornem oknu z rezultatom, da ga zaprete (ker je gumb Zapri težko dosegljiv).\n"
 
 #: ../main.lua:1030
 msgid "Version Info"
-msgstr "Informácie o verzii"
+msgstr "Informacije o različici"
 
 #: ../main.lua:1036
 msgid "Purge Settings"
-msgstr "Zmazať nastavenia"
+msgstr "Počisti nastavitve"
 
 #: ../main.lua:1039
 msgid ""
@@ -1418,31 +1422,31 @@ msgid ""
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Naozaj chcete vymazať nastavenia pluginu asistenta?\n"
-"Týmto sa plugin asistenta resetuje do stavu ako keď ste ho prvýkrát nainštalovali.\n"
+"Ali ste prepričani, da želite počistiti nastavitve vtičnika asistenta? \n"
+"To ponastavi vtičnik asistenta na stanje ob prvi namestitvi.\n"
 "\n"
-"configuration.lua je v bezpečí, vymažú sa iba nastavenia."
+"configuration.lua je varen, počistijo se samo nastavitve."
 
 #: ../main.lua:1092
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
-msgstr "Odstrániť [%s] z menu zvýraznenia?"
+msgstr "Odstrani [%s] iz menija označb?"
 
 #: ../main.lua:1093
 msgid "Remove"
-msgstr "Odstrániť"
+msgstr "Odstrani"
 
 #: ../main.lua:1456
 msgid "Configuration not found. Please set up configuration.lua first."
-msgstr "Konfigurácia nebola nájdená. Najskôr nastavte configuration.lua."
+msgstr "Konfiguracija ni bila najdena. Prosimo, najprej nastavite configuration.lua."
 
 #: ../main.lua:1504
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Pridané</b> [%1 (AI)] do ponuky Zvýraznenia."
+msgstr "<b>Dodano</b> [%1 (AI)] v meni označb."
 
 #: ../main.lua:1515
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Odstránené</b> [%1 (AI)] z ponuky Zvýraznenia."
+msgstr "<b>Odstranjeno</b> [%1 (AI)] iz menija označb."
 
 #: ../main.lua:1560
 msgid ""
@@ -1450,28 +1454,29 @@ msgid ""
 "For %1 by %2.\n"
 "\n"
 msgstr ""
-"Chcete AI zhrnutie?\n"
-"Pre %1 od %2.\n"
+"Ali želite AI povzetek?\n"
+"Za %1 od %2.\n"
 "\n"
 
 #: ../main.lua:1561
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
-msgstr[0] "Naposledy prečítané pred hodinou."
-msgstr[1] "Naposledy prečítané pred %1 hodinami."
-msgstr[2] "Naposledy prečítané pred %1 hodinami."
+msgstr[0] "Nazadnje prebrano pred eno uro."
+msgstr[1] "Nazadnje prebrano pred %1 urama."
+msgstr[2] "Nazadnje prebrano pred %1 urami."
+msgstr[3] "Nazadnje prebrano pred %1 urami."
 
 #: ../main.lua:1566
 msgid "Yes"
-msgstr "Áno"
+msgstr "Da"
 
 #: ../main.lua:1575
 msgid "No"
-msgstr "Nie"
+msgstr "Ne"
 
 #: ../main.lua:1616
 msgid "Markdown Engine"
-msgstr "Markdown engine"
+msgstr "Markdown pogon"
 
 #: ../main.lua:1617
 msgid "KOReader"
@@ -1479,7 +1484,7 @@ msgstr "KOReader"
 
 #: ../main.lua:1618
 msgid "Device"
-msgstr "Zariadenie"
+msgstr "Naprava"
 
 #: ../main.lua:1619
 msgid "Platform"
@@ -1487,4 +1492,4 @@ msgstr "Platforma"
 
 #: ../main.lua:1620
 msgid "Runtime"
-msgstr "Runtime"
+msgstr "Izvajalno okolje"
