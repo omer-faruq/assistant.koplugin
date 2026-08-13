@@ -54,7 +54,7 @@ MSGATTRIB_BIN = msgattrib
 MSGCAT_BIN = msgcat
 XGETTEXT_BIN = xgettext
 
-LANGS :=  af_ZA ar be bg_BG bn ca cs cy da de el eo es et eu fa fi fr ga gl he hi hr hu ia id ie it_IT ja ka kab kn ko_KR lt_LT lv mk ms nb_NO nl_NL nn or pl pt_BR pt_PT ro ro_MD ru si sk sl sr sv th tr uk ur uz vi zh_CN zh_TW
+LANGS := zh_CN zh_TW af_ZA ar be bg_BG bn ca cs cy da de el eo es et eu fa fi fr ga gl he hi hr hu ia id ie it_IT ja ka kab kn ko_KR lt_LT lv mk ms nb_NO nl_NL nn or pl pt_BR pt_PT ro ro_MD ru si sk sl sr sv th tr uk ur uz vi
 
 PO_FILES  := $(wildcard */$(DOMAIN).po)
 
@@ -97,10 +97,12 @@ import-translation:
 
 check:
 	@echo "Checking syntax of existing .po files..."
-	@for po_file in $(PO_FILES); do \
+	@rc=0; \
+	for po_file in $(PO_FILES); do \
 		dir=$$(dirname $$po_file); printf "%-8s" "$$dir"; \
-		$(MSGFMT_BIN) -v --check -o /dev/null $$po_file; \
-	done
+		$(MSGFMT_BIN) -v --check -o /dev/null $$po_file || rc=1; \
+	done; \
+	exit $$rc
 
 # Send a minimal ping to the configured API endpoint to verify connectivity,
 # authentication, and model availability. Useful for debugging before running
