@@ -217,7 +217,7 @@ function SettingsDialog:init()
             hold_callback = function ()
                 UIManager:show(InfoMessage:new{
                     alignment = "center",
-                    text = _("Browse available models on OpenRouter")
+                    text = _("Browse available models from the current provider")
                 })
             end
         },

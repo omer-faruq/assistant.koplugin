@@ -189,7 +189,19 @@ PLURAL_FORMS: dict[str, str] = {
 
 TEMPLATE_FILE = "templates/koreader.pot"
 
-SYSTEM_PROMPT = """You are an expert localization specialist translating strings from a gettext .po file into {language} ({lang_code}).
+SYSTEM_PROMPT = """You are an expert localization specialist translating user-facing strings for an AI assistant plugin in KOReader, an open-source e-book reader, into {language} ({lang_code}). The strings appear in menus, dialogs, buttons, settings, and error messages.
+
+Domain context: this plugin is an AI assistant for a reading app. It lets readers ask questions about their current book, get translations, summaries, and X-Ray/Recap-style analysis of the text, run web-search tool calls, and capture quick notes — using cloud AI providers (Anthropic, OpenAI, Gemini, DeepSeek, Ollama, Groq, Mistral, GigaChat, OpenRouter, Gemma) and configurable models.
+
+Translate software/AI terminology using the established conventions of the target language's software and AI community, not literal dictionary translations. In particular:
+  - "provider" / "AI provider" means an AI/API service provider (a company or self-hosted service supplying the model). Use the target language's standard term for a cloud/service provider (e.g. the equivalent of "service provider" / "vendor" in that language), not a literal "the one who provides".
+  - "model" means a machine-learning model, not "type/pattern/template".
+  - "prompt" means the instruction text sent to an AI, not "hint/encouragement".
+  - "token" is an AI token; keep it or use the language's accepted AI term.
+  - "streaming" means real-time streamed output.
+  - "web search" means internet/online search; "tool calling" means the AI invoking external tools.
+  - E-reader terms: "annotation" = a reader's margin note, "highlight" = selected/emphasized text, "notebook" = the note collection.
+  - Feature names ("X-Ray", "Recap", "Term X-Ray") may stay in English or be translated consistently across the file.
 
 You will receive a JSON object describing the target language and a list of items to translate. Each item has:
   - id: the index of the item (use this id verbatim in your response)
@@ -232,11 +244,31 @@ class Config:
         )
         self.api_model: str = os.environ.get("API_MODEL", "gpt-4o-mini")
 
+        # Model recommendations for bulk gettext translation (50+ languages,
+        # many low-resource). Flash/mini-tier models are preferred: the quality
+        # gap on short UI strings is barely perceptible, while large models
+        # cost 10-20x more for no practical gain here.
+        #
+        #   - Gemini 2.5 Flash (or Flash-Lite): best multilingual coverage and
+        #     cost/latency for low-resource languages. Point API_ENDPOINT at
+        #     Google's OpenAI-compat layer or use OpenRouter.
+        #   - GPT-4.1-mini / GPT-5-mini: stay on the OpenAI-native endpoint,
+        #     better JSON adherence and translation quality than gpt-4o-mini at
+        #     comparable cost.
+        #   - Claude Haiku 4.5: highest nuance/tone for UI copy, but requires an
+        #     Anthropic-compatible proxy (OpenRouter/LiteLLM); not a native
+        #     /v1/chat/completions endpoint.
+        #
+        # Avoid gpt-4o / Claude Sonnet-tier models for batch translation.
+
         self.chunk_size: int = int(os.environ.get("AI_CHUNK_SIZE", "20"))
         self.max_tokens: int = int(os.environ.get("AI_MAX_TOKENS", "4096"))
         self.request_timeout: int = int(os.environ.get("AI_REQUEST_TIMEOUT", "120"))
         self.max_retries: int = int(os.environ.get("AI_MAX_RETRIES", "8"))
         self.max_chunk_time: int = int(os.environ.get("AI_MAX_CHUNK_TIME", "900"))
+        self.json_mode: bool = os.environ.get("AI_JSON_MODE", "1").lower() not in (
+            "0", "false", "no",
+        )
 
     def require_api_key(self) -> None:
         if not self.api_key:
@@ -421,6 +453,12 @@ def _post_chat(cfg: Config, messages: list[dict[str, str]]) -> dict[str, Any]:
         "max_tokens": cfg.max_tokens,
         "messages": messages,
     }
+    if cfg.json_mode:
+        # Constrain the model to emit a JSON object. Supported by OpenAI and
+        # Gemini's OpenAI-compat endpoint; requires "json" to appear in the
+        # prompt (SYSTEM_PROMPT/USER_TEMPLATE already satisfy this). Set
+        # AI_JSON_MODE=0 for endpoints that reject this field.
+        payload["response_format"] = {"type": "json_object"}
 
     headers = {
         "Authorization": f"Bearer {cfg.api_key}",
@@ -790,6 +828,7 @@ def _set_header_metadata(po: polib.POFile, lang_code: str, lang_fullname: str) -
     )
     po.metadata["Language-Team"] = f"{lang_fullname} (AI translation)"
     po.metadata["Last-Translator"] = "AI (auto)"
+    po.metadata["PO-Revision-Date"] = time.strftime("%Y-%m-%d %H:%M+0000", time.gmtime())
 
 
 def translate_file(
@@ -947,6 +986,7 @@ def main(argv: list[str] | None = None) -> int:
     if action == "error":
         return 2
 
+    assert input_path is not None and output_path is not None
     try:
         return translate_file(cfg, args.lang_code, input_path, output_path)
     except KeyboardInterrupt:
