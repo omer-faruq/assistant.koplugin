@@ -40,6 +40,7 @@ local Updater = require("assistant_updater")
 local ASUtils = require("assistant_utils")
 local Registry = require("assistant_provider_registry")
 local SearchRegistry = require("assistant_search_registry")
+local Notebook = require("assistant_notebook")
 
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
@@ -592,6 +593,51 @@ SettingsDialog.genMenuSettings = function(assistant)
             }
         },
         {
+            text = _("Notebook Settings"),
+            sub_item_table = {
+                {
+                    text = _("Auto-save conversations to notebook"),
+                    checked_func = function () return assistant.settings:readSetting("auto_save_to_notebook", false) end,
+                    callback = function()
+                        assistant.settings:toggle("auto_save_to_notebook")
+                        assistant.updated = true
+                    end
+                },
+                {
+                    text = _("Multiple notebooks"),
+                    checked_func = function ()
+                        return assistant.settings:readSetting("use_multiple_general_notebooks", false)
+                    end,
+                    callback = function()
+                        assistant.settings:toggle("use_multiple_general_notebooks")
+                        assistant.updated = true
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Choose which notebook your notes are saved to.")
+                        })
+                    end
+                },
+                {
+                    text_func = function ()
+                        local folder = Notebook.getFolder(assistant, false)
+                        if folder then
+                            return T(_("Notebooks folder: %1"), folder)
+                        end
+                        return _("Notebooks folder")
+                    end,
+                    callback = function (touchmenu_instance)
+                        Notebook.showFolderPicker(assistant, {
+                            on_select = function ()
+                                touchmenu_instance:updateItems()
+                            end,
+                        })
+                    end,
+                    keep_menu_open = true,
+                },
+            },
+        },
+        {
             -- @translators: functional overriding
             text = _("KOReader Tweaks"),
             sub_item_table = {
@@ -660,24 +706,6 @@ SettingsDialog.genMenuSettings = function(assistant)
             checked_func = function () return assistant.settings:readSetting("auto_copy_asked_question", true) end,
             callback = function()
                 assistant.settings:toggle("auto_copy_asked_question")
-                assistant.updated = true
-            end
-        },
-        {
-            text = _("Auto-save conversations to NoteBook"),
-            checked_func = function () return assistant.settings:readSetting("auto_save_to_notebook", false) end,
-            callback = function()
-                assistant.settings:toggle("auto_save_to_notebook")
-                assistant.updated = true
-            end
-        },
-        {
-            text = _("Use multiple general notebooks"),
-            checked_func = function ()
-                return assistant.settings:readSetting("use_multiple_general_notebooks", false)
-            end,
-            callback = function()
-                assistant.settings:toggle("use_multiple_general_notebooks")
                 assistant.updated = true
             end
         },

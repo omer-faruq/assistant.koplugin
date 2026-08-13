@@ -171,11 +171,11 @@ function Assistant:addToMainMenu(menu_items)
                 text_func = function ()
                   if not self.ui.doc_settings and Notebook.isEnabled(self) then
                     return T(
-                      _("NoteBook: %1"),
+                      _("Notebook: %1"),
                       Notebook.getActiveDisplayName(self, 24)
                     )
                   end
-                  return _("NoteBook (AI Conversation Log)")
+                  return _("Notebook (AI Conversation Log)")
                 end,
                 callback = function ()
                   local is_general_mode = not self.ui.doc_settings

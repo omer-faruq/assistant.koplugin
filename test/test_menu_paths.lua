@@ -39,9 +39,10 @@ local FM_ITEMS = {
 }
 -- "Settings" submenu: Provider API must stay the FIRST item so the
 -- trailing ".1" of both fixed paths remains valid. WebSearch API is second.
+-- The three notebook settings are grouped under the "Notebooks" submenu.
 local OTHER_SETTINGS_ITEMS = {
-    "add_provider", "add_web_search", "language", "text_size", "response", "tweaks",
-    "copy_question", "auto_save", "book_text", "ota", "purge",
+    "add_provider", "add_web_search", "language", "text_size", "response", "notebooks",
+    "tweaks", "copy_question", "book_text", "ota", "purge",
 }
 
 local function indexOf(list, key)

@@ -13,6 +13,7 @@ local GENERAL_NOTEBOOKS_DIR = "general_notebooks"
 local LEGACY_NOTEBOOK_FILENAME = "general_notebook.md"
 local ACTIVE_NOTEBOOK_SETTING = "active_general_notebook"
 local MULTI_NOTEBOOK_SETTING = "use_multiple_general_notebooks"
+local FOLDER_SETTING = "general_notebooks_folder"
 
 local function joinPath(parent, child)
     if not parent or parent == "" then
@@ -108,23 +109,33 @@ function M.getLegacyPath(assistant)
     return target_dir and joinPath(target_dir, LEGACY_NOTEBOOK_FILENAME) or nil
 end
 
+-- Returns the notebooks folder chosen in Settings, if any.
+function M.getConfiguredFolder(assistant)
+    local folder = assistant and assistant.settings
+        and assistant.settings:readSetting(FOLDER_SETTING)
+        or nil
+    if folder and folder ~= "" then
+        return folder
+    end
+end
+
 -- Returns: folder, error, warning.
--- A configured general_notebooks_folder must already exist. If it does not,
+-- A configured notebooks folder must already exist. If it does not,
 -- the default general_notebooks subfolder is used instead and a warning is returned.
 function M.getFolder(assistant, for_write)
-    local configured_folder = getFeature(assistant, "general_notebooks_folder")
+    local configured_folder = M.getConfiguredFolder(assistant)
     local warning
 
     if configured_folder and configured_folder ~= "" then
         if isDirectory(configured_folder) then
             return configured_folder, nil, nil
         end
-        warning = T(_("Configured general notebooks folder is not accessible: %1"), configured_folder)
+        warning = T(_("Configured notebooks folder is not accessible: %1"), configured_folder)
     end
 
     local base_dir = getCurrentBaseDirectory(assistant)
     if not base_dir then
-        return nil, _("No base folder is available for general notebooks."), warning
+        return nil, _("No base folder is available for notebooks."), warning
     end
 
     local folder = joinPath(base_dir, GENERAL_NOTEBOOKS_DIR)
@@ -133,7 +144,7 @@ function M.getFolder(assistant, for_write)
         return folder, nil, warning
     end
     if mode ~= nil then
-        return nil, T(_("General notebooks path is not a directory: %1"), folder), warning
+        return nil, T(_("Notebooks path is not a directory: %1"), folder), warning
     end
 
     if not for_write then
@@ -142,7 +153,7 @@ function M.getFolder(assistant, for_write)
 
     local ok, err = lfs.mkdir(folder)
     if not ok and not isDirectory(folder) then
-        return nil, T(_("Could not create general notebooks folder: %1"), tostring(err)), warning
+        return nil, T(_("Could not create notebooks folder: %1"), tostring(err)), warning
     end
 
     return folder, nil, warning
@@ -171,7 +182,7 @@ function M.list(assistant)
                 end
             end
         elseif not err then
-            err = T(_("Could not list general notebooks folder: %1"), folder)
+            err = T(_("Could not list notebooks folder: %1"), folder)
         end
     end
 
@@ -213,7 +224,7 @@ function M.getActive(assistant)
     -- may be temporarily unavailable; falling back must not destroy the sticky choice.
     local legacy_path = M.getLegacyPath(assistant)
     if not legacy_path then
-        return nil, folder_err or _("No path is available for the legacy general notebook."), folder_warning
+        return nil, folder_err or _("No path is available for the legacy notebook."), folder_warning
     end
     return makeEntry(legacy_path, LEGACY_NOTEBOOK_FILENAME, true), folder_err, folder_warning
 end
@@ -363,7 +374,7 @@ function M.showCreateDialog(assistant, options)
     dialog = InputDialog:new{
         title = _("New notebook"),
         input_hint = _("Notebook name"),
-        description = _("Create a general notebook."),
+        description = _("Create a notebook."),
         buttons = {
             {
                 {
@@ -453,7 +464,7 @@ function M.showPicker(assistant, options)
 
     if #items == 0 then
         items[#items + 1] = {
-            text = _("No general notebooks yet"),
+            text = _("No notebooks yet"),
             enabled = false,
         }
     end
@@ -473,7 +484,7 @@ function M.showPicker(assistant, options)
     end
 
     menu = Menu:new{
-        title = options.title or _("General notebooks"),
+        title = options.title or _("Notebooks"),
         subtitle = T(
             _("Active: %1"),
             M.getActiveDisplayName(assistant, 24)
@@ -483,6 +494,33 @@ function M.showPicker(assistant, options)
 
     UIManager:show(menu)
     return menu
+end
+
+-- Opens KOReader's PathChooser to let the user pick the notebooks folder,
+-- storing the chosen path as a setting.
+function M.showFolderPicker(assistant, options)
+    options = options or {}
+
+    local PathChooser = require("ui/widget/pathchooser")
+    local current = M.getConfiguredFolder(assistant)
+    local start_path = (current and current ~= "" and current)
+        or getCurrentBaseDirectory(assistant)
+
+    local path_chooser = PathChooser:new{
+        select_directory = true,
+        select_file = false,
+        show_files = false,
+        path = start_path,
+        onConfirm = function(dir_path)
+            assistant.settings:saveSetting(FOLDER_SETTING, dir_path)
+            assistant.updated = true
+            if options.on_select then
+                options.on_select(dir_path)
+            end
+        end,
+    }
+    UIManager:show(path_chooser)
+    return path_chooser
 end
 
 return M
