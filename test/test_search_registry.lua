@@ -511,10 +511,10 @@ local tests = {
         local assistant = mockAssistant()
         local item = SearchRegistry.getAddWebSearchMenuItem(assistant)
         local sub_items = item.sub_item_table_func()
-        assert.equal(sub_items[1].text_func(), "SerpAPI")
-        assert.equal(sub_items[2].text_func(), "Tavily")
-        assert.equal(sub_items[3].text_func(), "Exa.ai")
-        assert.equal(sub_items[4].text_func(), "SearXNG")
+        assert.equal(sub_items[1].text_func(), "☐ SerpAPI")
+        assert.equal(sub_items[2].text_func(), "☐ Tavily")
+        assert.equal(sub_items[3].text_func(), "☐ Exa.ai")
+        assert.equal(sub_items[4].text_func(), "☐ SearXNG")
     end),
 
     test("sub-menu items show checkmark when configured via API key", function()
@@ -522,9 +522,9 @@ local tests = {
         assistant.CONFIGURATION.provider_settings.serpapi = { api_key = "sk-test" }
         local item = SearchRegistry.getAddWebSearchMenuItem(assistant)
         local sub_items = item.sub_item_table_func()
-        assert.equal(sub_items[1].text_func(), "✓ SerpAPI")
-        -- Unconfigured tools still have no checkmark
-        assert.equal(sub_items[2].text_func(), "Tavily")
+        assert.equal(sub_items[1].text_func(), "☑ SerpAPI")
+        -- Unconfigured tools show the empty ballot box
+        assert.equal(sub_items[2].text_func(), "☐ Tavily")
     end),
 
     test("sub-menu items show checkmark when configured via base_url", function()
@@ -532,7 +532,7 @@ local tests = {
         assistant.CONFIGURATION.provider_settings.searxngapi = { base_url = "https://search.example.com" }
         local item = SearchRegistry.getAddWebSearchMenuItem(assistant)
         local sub_items = item.sub_item_table_func()
-        assert.equal(sub_items[4].text_func(), "✓ SearXNG")
+        assert.equal(sub_items[4].text_func(), "☑ SearXNG")
     end),
 
     test("sub-menu items have callbacks", function()

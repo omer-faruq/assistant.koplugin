@@ -334,7 +334,7 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
                             (type(merged.api_key) == "string" and #merged.api_key > 0) or
                             (type(merged.base_url) == "string" and #merged.base_url > 0)
                         )
-                        return configured and ("✓ " .. def.display_name) or def.display_name
+                        return (configured and "☑ " or "☐ ") .. def.display_name
                     end,
                     keep_menu_open = true,
                     callback = function()
