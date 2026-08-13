@@ -10,6 +10,7 @@ local T = require("ffi/util").template
 local util = require("util")
 local _ = require("assistant_gettext")
 local ASUtils = require("assistant_utils")
+local Notebook = require("assistant_notebook")
 
 local QuickNote = {}
 
@@ -23,8 +24,17 @@ function QuickNote:new(assistant)
 end
 
 function QuickNote:createNoteInputDialog(callback, highlighted_text)
+  local description = nil
+  if not self.assistant.ui.doc_settings and Notebook.isEnabled(self.assistant) then
+    description = T(
+      _("Notebook: %1"),
+      Notebook.getActiveDisplayName(self.assistant, 24)
+    )
+  end
+
   self.input_dialog = InputDialog:new {
     title = _("Take Quick Notes"),
+    description = description,
     input = "",
     input_hint = _("Write quick notes here"),
     input_type = "text",
@@ -116,12 +126,28 @@ function QuickNote:saveNote(note_text, highlighted_text)
     log_entry = string.format("# [%s]\n## %s\n\n### ⮞ %s \n\n%s\n\n", timestamp, quick_note_lbl, user_lbl, processed_note)
   end
 
-  ASUtils.saveToNotebookFile(self.assistant, log_entry)
+  local saved_path, _save_err, used_fallback = ASUtils.saveToNotebookFile(self.assistant, log_entry)
+  if not saved_path then
+    return
+  end
 
-  UIManager:show(InfoMessage:new{
-    text = _("Quick note saved successfully"),
-    timeout = 2
-  })
+  if not self.assistant.ui.doc_settings
+      and Notebook.isEnabled(self.assistant)
+      and not used_fallback then
+    local saved_name = saved_path:match("([^/\\]+)$") or saved_path
+    saved_name = saved_name:gsub("%.md$", "")
+    UIManager:show(InfoMessage:new{
+      text = T(_("Saved to: %1"), saved_name),
+      timeout = 2
+    })
+  elseif not self.assistant.ui.doc_settings and Notebook.isEnabled(self.assistant) then
+    return
+  else
+    UIManager:show(InfoMessage:new{
+      text = _("Quick note saved successfully"),
+      timeout = 2
+    })
+  end
 end
 
 return QuickNote

@@ -355,6 +355,7 @@ local CONFIGURATION = {
         ota_github_base = "https://github.com", -- GitHub proxy base URL for OTA updates
         ota_github_repo = "omer-faruq/assistant.koplugin", -- GitHub repository for OTA updates
         default_folder_for_logs = nil,         -- Set the default folder for auto saved logs, nil for the same folder as the book, ex: "/mnt/onboard/logs/" for Kobo , "/mnt/us/documents/logs/" for Kindle
+        general_notebooks_folder = nil,        -- Optional folder for general notebooks; nil uses a general_notebooks subfolder under default_folder_for_logs (or home_dir if unset)
         max_text_length_for_analysis = 100000, -- max text length to be used on xray-recap-book analyzes,
         max_page_size_for_analysis = 250,      -- maximum page size to be used on xray-recap-book analyzes (for page-based documents, ex: PDF)
 

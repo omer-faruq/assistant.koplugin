@@ -16,21 +16,21 @@ local socketutil = require("socketutil")
 local https = require("ssl.https")
 local json = require("rapidjson")
 local Trapper = require("ui/trapper")
+local Notebook = require("assistant_notebook")
 
 local M = {}
 local shared_buf = strbuf.new()
 
 function M.getGeneralNotebookFilePath(assistant)
-  local notebookfile = nil
-  local default_folder = util.tableGetValue(assistant.CONFIGURATION, "features", "default_folder_for_logs")
-  local home_dir = G_reader_settings:readSetting("home_dir")
-  local current_dir = assistant.ui.file_chooser and assistant.ui.file_chooser.path or assistant.ui:getLastDirFile()
-  local target_dir = default_folder and default_folder ~= "" and util.pathExists(default_folder) and default_folder or (home_dir or current_dir)
-  if target_dir then
-    local notebookfile_path = target_dir .. "/general_notebook.md"
-    notebookfile = notebookfile_path
+  if Notebook.isEnabled(assistant) then
+    local notebook, err, warning = Notebook.getActive(assistant)
+    if notebook then
+      return notebook.path, warning or err
+    end
+    return Notebook.getLegacyPath(assistant), warning or err
   end
-  return notebookfile
+
+  return Notebook.getLegacyPath(assistant)
 end
 
 function M.extractBookTextForAnalysis(CONFIGURATION, ui)
@@ -186,7 +186,7 @@ function M.getPageInfo(ui)
 end
 
 function M.saveToNotebookFile(assistant, log_entry)
-  local success, err = pcall(function()
+  local success, saved_path, save_err, used_fallback = pcall(function()
     local notebookfile = assistant.ui.bookinfo:getNotebookFile(assistant.ui.doc_settings)
     local default_folder = util.tableGetValue(assistant.CONFIGURATION, "features", "default_folder_for_logs")
     if assistant.ui.doc_settings then
@@ -234,28 +234,97 @@ function M.saveToNotebookFile(assistant, log_entry)
         assistant.ui.doc_settings:saveSetting("notebook_file", notebookfile)
       end
     else
-      notebookfile = M.getGeneralNotebookFilePath(assistant)
-    end
-
-    if notebookfile then
-      local file = io.open(notebookfile, "a")
-      if file then
-        file:write(log_entry)
-        file:close()
-      else
-        logger.warn("Assistant: Could not open notebook file:", notebookfile)
+      local general_warning
+      notebookfile, general_warning = M.getGeneralNotebookFilePath(assistant)
+      if general_warning then
+        logger.warn("Assistant: General notebook warning:", general_warning)
+        UIManager:show(InfoMessage:new{
+          icon = "notice-warning",
+          text = general_warning,
+          timeout = 5,
+        })
       end
     end
+
+    if not notebookfile then
+      return nil, _("Notebook path is unavailable."), false
+    end
+
+    local file, open_err = io.open(notebookfile, "a")
+    local fallback_used = false
+
+    -- Multi-notebook is optional. If the selected destination cannot be
+    -- opened for append, fall back to the legacy general_notebook.md so the
+    -- conversation is not lost.
+    if not file and not assistant.ui.doc_settings and Notebook.isEnabled(assistant) then
+      local failed_path = notebookfile
+      local legacy_path = Notebook.getLegacyPath(assistant)
+
+      if legacy_path and legacy_path ~= failed_path then
+        logger.warn(
+          "Assistant: Could not open general notebook:",
+          failed_path,
+          open_err,
+          "- falling back to:",
+          legacy_path
+        )
+
+        notebookfile = legacy_path
+        file, open_err = io.open(notebookfile, "a")
+        fallback_used = file ~= nil
+      end
+    end
+
+    if not file then
+      logger.warn("Assistant: Could not open notebook file:", notebookfile, open_err)
+      return nil, open_err or _("Could not open notebook file."), false
+    end
+
+    local write_ok, write_err = file:write(log_entry)
+    local close_ok, close_err = file:close()
+    if not write_ok then
+      logger.warn("Assistant: Could not write notebook file:", notebookfile, write_err)
+      return nil, write_err or _("Could not write notebook file."), false
+    end
+    if close_ok == nil then
+      logger.warn("Assistant: Could not close notebook file:", notebookfile, close_err)
+      return nil, close_err or _("Could not close notebook file."), false
+    end
+
+    if fallback_used then
+      UIManager:show(InfoMessage:new{
+        icon = "notice-warning",
+        text = T(
+          _("Could not save to the selected notebook.\nSaved to: %1"),
+          "general_notebook"
+        ),
+        timeout = 5,
+      })
+    end
+
+    return notebookfile, nil, fallback_used
   end)
 
   if not success then
-    logger.warn("Assistant: Error during notebook save:", err)
+    logger.warn("Assistant: Error during notebook save:", saved_path)
+    UIManager:show(InfoMessage:new{
+      icon = "notice-warning",
+      text = _("Notebook save failed. Continuing..."),
+      timeout = 3,
+    })
+    return nil, saved_path, false
+  end
+
+  -- Preserve book-mode behavior, but make general-mode failures visible.
+  if not saved_path and not assistant.ui.doc_settings then
     UIManager:show(InfoMessage:new{
       icon = "notice-warning",
       text = _("Notebook save failed. Continuing..."),
       timeout = 3,
     })
   end
+
+  return saved_path, save_err, used_fallback == true
 end
 
 function M.normalizeMarkdownHeadings(content, heading_offset, max_heading_level)

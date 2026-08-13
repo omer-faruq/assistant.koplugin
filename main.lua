@@ -20,6 +20,7 @@ local MultiInputDialog = require("ui/widget/multiinputdialog")
 local ffiutil = require("ffi/util")
 local ToolExecutor = require("assistant_tool_executor")
 local ASUtils = require("assistant_utils")
+local Notebook = require("assistant_notebook")
 
 local _ = require("assistant_gettext")
 local N_ = _.ngettext
@@ -167,10 +168,77 @@ function Assistant:addToMainMenu(menu_items)
                 end,
               },
               {
-                text = _("NoteBook (AI Conversation Log)"),
+                text_func = function ()
+                  if not self.ui.doc_settings and Notebook.isEnabled(self) then
+                    return T(
+                      _("NoteBook: %1"),
+                      Notebook.getActiveDisplayName(self, 24)
+                    )
+                  end
+                  return _("NoteBook (AI Conversation Log)")
+                end,
                 callback = function ()
-                  local notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
-                  UIManager:show(ConfirmBox:new{
+                  local is_general_mode = not self.ui.doc_settings
+                  local notebookfile
+
+                  if is_general_mode then
+                    notebookfile = ASUtils.getGeneralNotebookFilePath(self)
+                  else
+                    notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
+                  end
+
+                  local other_buttons = {}
+                  local notebook_dialog
+
+                  if is_general_mode and Notebook.isEnabled(self) then
+                    table.insert(other_buttons, {
+                      text = _("Switch"),
+                      callback = function ()
+                        Notebook.showPicker(self, {
+                          on_select = function ()
+                            -- Close the old details dialog because it still
+                            -- refers to the previously active notebook.
+                            if notebook_dialog then
+                              UIManager:close(notebook_dialog)
+                            end
+                          end,
+                        })
+                      end
+                    })
+                  end
+
+                  table.insert(other_buttons, {
+                    text = _("Delete"),
+                    callback = function ()
+                      UIManager:show(ConfirmBox:new{
+                        text = T(_("Delete file?\n%1\nThis operation is not reversible."), notebookfile),
+                        ok_text = _("Delete"),
+                        ok_callback = function ()
+                          local ok, err = koutil.removeFile(notebookfile)
+                          if not ok then
+                            UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
+                            return
+                          end
+                          if notebook_dialog then
+                            UIManager:close(notebook_dialog)
+                          end
+                        end
+                      })
+                    end
+                  })
+
+                  -- KOReader's ShowNotebookFile event edits the current book
+                  -- notebook. Do not expose it for a general notebook path.
+                  if not is_general_mode then
+                    table.insert(other_buttons, {
+                      text = _("Edit"),
+                      callback = function ()
+                        UIManager:broadcastEvent(Event:new("ShowNotebookFile"))
+                      end
+                    })
+                  end
+
+                  notebook_dialog = ConfirmBox:new{
                     icon = "appbar.pageview",
                     face = Font:getFace("smallinfofont"),
                     text = ASUtils.bold_format(
@@ -186,30 +254,9 @@ function Assistant:addToMainMenu(menu_items)
                       end
                       TextViewer.openFile(notebookfile)
                     end,
-                    other_buttons = {{
-                      {
-                        text = _("Delete"),
-                        callback = function ()
-                          UIManager:show(ConfirmBox:new{
-                            text = T(_("Delete file?\n%1\nThis operation is not reversible."), notebookfile),
-                            ok_text = _("Delete"),
-                            ok_callback = function ()
-                              local ok, err = koutil.removeFile(notebookfile)
-                              if not ok then
-                                UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
-                              end
-                            end
-                          })
-                        end
-                      },
-                      {
-                        text = _("Edit"),
-                        callback = function ()
-                          UIManager:broadcastEvent(Event:new("ShowNotebookFile"))
-                        end
-                      },
-                    }}
-                  })
+                    other_buttons = { other_buttons },
+                  }
+                  UIManager:show(notebook_dialog)
                 end,
                 separator = true,
               },
