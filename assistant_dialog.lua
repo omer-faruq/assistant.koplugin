@@ -19,6 +19,7 @@ local Device = require("device")
 local Screen = Device.screen
 local CheckButton = require("ui/widget/checkbutton")
 local ASUtils = require("assistant_utils")
+local Notebook = require("assistant_notebook")
 local extractBookTextForAnalysis = ASUtils.extractBookTextForAnalysis
 local normalizeMarkdownHeadings = ASUtils.normalizeMarkdownHeadings
 local NetworkMgr = require("ui/network/manager")
@@ -317,6 +318,8 @@ function AssistantDialog:show(highlightedText)
 
   -- Handle regular dialog (user input prompt, other buttons)
   local book = self:_getBookContext()
+  local use_multi_general_notebooks =
+      not self.assistant.ui.doc_settings and Notebook.isEnabled(self.assistant)
   local system_prompt = koutil.tableGetValue(self.CONFIGURATION, "features", "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
   if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
     local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
@@ -340,7 +343,48 @@ function AssistantDialog:show(highlightedText)
         self:_close()
       end
     },
-    {
+  }
+
+  if use_multi_general_notebooks then
+    table.insert(first_row, {
+      id = "general_notebook",
+      text = Notebook.getActiveDisplayName(self.assistant, 18),
+      callback = function()
+        -- Hide the keyboard while the picker is open, but keep the current
+        -- question text in the existing InputDialog.
+        if self.input_dialog then
+          self.input_dialog:onCloseKeyboard()
+        end
+
+        Notebook.showPicker(self.assistant, {
+          title = _("Select notebook"),
+          on_select = function()
+            if not self.input_dialog then
+              return
+            end
+
+            local button = self.input_dialog.button_table
+                and self.input_dialog.button_table:getButtonById("general_notebook")
+            if button then
+              button:setText(
+                Notebook.getActiveDisplayName(self.assistant, 18),
+                button.width
+              )
+              button:refresh()
+            end
+
+            UIManager:nextTick(function()
+              if self.input_dialog then
+                self.input_dialog:onShowKeyboard()
+              end
+            end)
+          end,
+        })
+      end,
+    })
+  end
+
+  table.insert(first_row, {
       text = _("Ask"),
       is_enter_default = true,
       callback = function()
@@ -384,9 +428,8 @@ function AssistantDialog:show(highlightedText)
           self:_createAndShowViewer(highlightedText, message_history, viewer_title)
         end)
       end
-    }
-  }
-  
+    })
+
   -- Only add additional buttons if there's highlighted text
   if is_highlighted then
     local sorted_prompts = Prompts.getSortedPrompts(function (prompt)

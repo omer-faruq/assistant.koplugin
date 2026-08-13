@@ -36,6 +36,7 @@ local Screen = Device.screen
 local MD = require("assistant_mdparser")
 local Prompts = require("assistant_prompts")
 local ASUtils = require("assistant_utils")
+local Notebook = require("assistant_notebook")
 
 -- Inject scroll page method for ScrollHtmlWidget
 ScrollHtmlWidget.scrollToPage = function(self, page_num)
@@ -250,11 +251,18 @@ function ChatGPTViewer:init()
   
   active_chatgpt_viewer = self
 
+  local is_multi_general =
+      not self.assistant.ui.doc_settings and Notebook.isEnabled(self.assistant)
+  local notebook_subtitle = is_multi_general
+      and Notebook.getActiveDisplayName(self.assistant, 24)
+      or nil
+
   local titlebar = TitleBar:new {
     width = self.width,
     align = "left",
     with_bottom_line = true,
     title = "Assistant: " .. (self.title or ""),
+    subtitle = notebook_subtitle,
     title_face = self.title_face,
     title_multilines = self.title_multilines,
     title_shrink_font_to_fit = self.title_shrink_font_to_fit,
@@ -441,11 +449,38 @@ function ChatGPTViewer:init()
       table.insert(buttons[#buttons], #(buttons[#buttons]), add_note_button)
   end
 
-  -- Only add Save button if auto_save_to_notebook is disabled
+  -- Only add Save button if auto_save_to_notebook is disabled.
+  -- In general multi-notebook mode, let the user choose the destination at
+  -- save time; otherwise preserve the existing one-click Save behavior.
   if not self.assistant.settings:readSetting("auto_save_to_notebook", false) then
       local save_button = {
           text = _("Save"),
           callback = function()
+              if is_multi_general then
+                  Notebook.showPicker(self.assistant, {
+                      title = _("Save conversation to"),
+                      on_select = function(notebook)
+                          local saved_path, _save_err, used_fallback = self:saveToNotebook()
+
+                          if titlebar and titlebar.setSubTitle then
+                              titlebar:setSubTitle(
+                                  Notebook.getActiveDisplayName(self.assistant, 24)
+                              )
+                          end
+
+                          if saved_path and not used_fallback then
+                              local saved_name = saved_path:match("([^/\\]+)$") or saved_path
+                              saved_name = saved_name:gsub("%.md$", "")
+                              UIManager:show(InfoMessage:new{
+                                  text = T(_("Saved to: %1"), saved_name),
+                                  timeout = 2,
+                              })
+                          end
+                      end,
+                  })
+                  return
+              end
+
               self:saveToNotebook()
               UIManager:show(InfoMessage:new{
                   text = _("Conversation is saved to NoteBook"),
@@ -544,7 +579,7 @@ function ChatGPTViewer:saveToNotebook()
   
   local log_entry = string.format("# [%s]%s\n## %s\n\n%s\n\n", timestamp, page_info, title_text, text_to_log)
   
-  ASUtils.saveToNotebookFile(self.assistant, log_entry)
+  return ASUtils.saveToNotebookFile(self.assistant, log_entry)
 end
 
 function ChatGPTViewer:onCloseWidget()

@@ -584,6 +584,16 @@ SettingsDialog.genMenuSettings = function(assistant)
             end
         },
         {
+            text = _("Use multiple general notebooks"),
+            checked_func = function ()
+                return assistant.settings:readSetting("use_multiple_general_notebooks", false)
+            end,
+            callback = function()
+                assistant.settings:toggle("use_multiple_general_notebooks")
+                assistant.updated = true
+            end
+        },
+        {
             text = _("Use book text for x-ray and recap"),
             checked_func = function () return assistant.settings:readSetting("use_book_text_for_analysis", false) end,
             callback = function()
