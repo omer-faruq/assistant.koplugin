@@ -310,7 +310,7 @@ function Assistant:addToMainMenu(menu_items)
 
   local book_level_items = {
               {
-                text = _("Book-Level Built-in Prompts"),
+                text = _("Book Insights"),
                 sub_item_table = {
                   {
                     text_func = function()
@@ -386,14 +386,14 @@ function Assistant:addToMainMenu(menu_items)
                 }
               },
               {
-                text = _("Book-Level Custom Prompts"),
+                text = _("Custom Prompts"),
                 enabled = not not koutil.tableGetValue(CONFIGURATION, "features", "book_level_prompts"),
                 sub_item_table_func = function ()
                   return BookLevelCustomPrompts(self)
                 end,
                 hold_callback = function ()
                   UIManager:show(InfoMessage:new{
-                    text = _("Includes user defined book level prompts from Config file")
+                    text = _("Your own prompts defined in the configuration file")
                   })
                 end,
                 separator = true,
@@ -478,7 +478,7 @@ function BookLevelCustomPrompts(assistant)
 
   if #sub_item_table == 0 then
     local button = {
-      text = _("No valid book-level custom prompt found"),
+      text = _("No valid custom prompt found"),
       enabled = false,
     }
     table.insert(sub_item_table, button)
