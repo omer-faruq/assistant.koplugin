@@ -45,6 +45,10 @@ A headless test framework lives under `test/`. It runs inside the KOReader LuaJI
 2. Register it in `test/run_tests.lua`'s `test_files` table.
 3. Run `./test/run.sh` to verify.
 
+**Stub discipline:** `test_helper.lua` installs empty stubs in `package.preload` for KOReader UI modules that can't load headless. Two pitfalls to be aware of:
+- Real `ui/widget/*` modules (e.g. `inputdialog`, `menu`, `confirmbox`, `buttontable`) `require("device")`. If the real `device` module loads, its `pcall(require, "android")` probe is satisfied by the empty `android = {}` stub, `frontend/device.lua` selects the Android implementation, and its init crashes (`attempt to call field 'isPackageEnabled' (a nil value)`). Whenever a new `require` chain (e.g. a new module pulled in by `assistant_utils`) reaches a real KOReader widget module, add a stub for that widget in `test_helper.lua`'s `stubs` table.
+- The `KOREADER_DEVICE` env var is **not** read by `frontend/device.lua` — setting it has no effect on the test suite. Device selection is: android probe → filesystem probes (kindle/kobo/pocketbook/…) → SDL.
+
 **CI:** The `test/` directory is excluded from release zip archives and OTA update packages. It is source-only, not shipped to end users.
 
 **Testing policy:** When adding new functions or logic, write a test for it. If the function is already exported from its module, require it in the test file normally. If the function is a local/closure not exported, inline a copy of it in the test file as a snippet and test the snippet — this is acceptable for pure functions where the logic is the test target. The goal is to catch regressions, not to enforce module structure.
@@ -77,6 +81,7 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 - **`Registry.installProvider(assistant, …)`** — Add + save + update in-memory config + load into querier in one call.
 - **`Registry.delete(data, id)`** and **`Registry.is_deletable(provider)`** — Only `source=="ui"` providers are deletable.
 - **`display_name`**: File providers can set `display_name` in their `configuration.lua` entry; UI providers require it. The Settings radio and main menu show `display_name` as the provider label.
+- **Gemini base_url**: the native `gemini` handler expects base_url to include the `/models` segment (e.g. `https://generativelanguage.googleapis.com/v1beta/models`) — `FetchModels` GETs base_url directly and `query` POSTs `{base_url}/{model}:generateContent`. Registry defaults (`DEFAULT_BASE_URLS`, presets, custom handlers) must keep this segment. OpenAI-compatible Gemini endpoints (`.../v1beta/openai`) use the `openai` handler instead.
 
 ### LexRank Extractive Summarization (Term X-Ray)
 - **`assistant_lexrank.lua`** — TF-IDF weighted LexRank sentence-ranking (tokenize → similarity matrix → PageRank → score-based selection with entity/position boosting). Configurable via `CONFIGURATION.features`.
@@ -89,7 +94,7 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 - **`assistant_featuredialog.lua`** — Book-level features (Recap, X-Ray, Book Info, Annotations analysis, Summary-using-annotations).
 - **`assistant_dictdialog.lua`** — AI Dictionary + Term X-Ray popup.
 - **`assistant_settings.lua`** — Provider/model settings dialog and sub-menu.
-- **`assistant_model_picker.lua`** — Paginated/searchable model picker (calls `handler:FetchModels()`). Exports `showPickerDialog` for external reuse; accepts an optional `on_select` callback to customize the selection result.
+- **`assistant_model_picker.lua`** — Paginated/searchable model picker (calls `handler:FetchModels()`). Exports `showPickerDialog` for external reuse (optional `on_select` callback to customize the selection result) and `fetchModels(handler_name, base_url, api_key)` — builds a fresh handler instance and fetches through that handler's own `FetchModels`; used by the Add Provider dialog's Browse Models. Must be called inside `Trapper:wrap`.
 - **`assistant_viewer.lua`** (`ChatGPTViewer`) — Scrollable Markdown/HTML result viewer widget; handles Add-Note/Save-to-Notebook/Copy, follow-up questions, and RTL rendering.
 - **`assistant_quicknote.lua`** — Quick-note capture, appended to the notebook file.
 - **`assistant_update_checker.lua`** — GitHub-releases version check with SemVer + pre-release comparison.
@@ -190,6 +195,7 @@ cd l10n && API_KEY=your_key make ai-translate L10N_LANG=fr  # Single language
 - **Provider config keys**: file providers use `{handler}_{description}` as key (e.g. `openai_perplexity`). UI providers use `"custom:N"`. Use `Registry` for all UI provider CRUD; never manipulate `settings:saveSetting("ui_providers", ...)` directly.
 - **`display_name`**: always set this field on provider records. Settings UI and the main menu label use `display_name` (not the config key). File providers can add `display_name` to their `configuration.lua` entry.
 - **UI provider lifecycle**: `main.lua` `init()` does `Registry.load` → `Registry.merge` → effective `CONFIGURATION`. Add dialog calls `Registry.installProvider`. Delete calls `Registry.delete` + `Registry.save`. Consult `assistant_provider_registry.lua` before touching provider storage.
+- **Add/Edit Provider dialog** (`Assistant:_showAddProviderDialog`): Browse Models must fetch through `assistant_model_picker.fetchModels` (per-handler `FetchModels` behind a dismissable InfoMessage — do not hardcode a `/models` GET). The Save callback closes the dialog and reopens the Provider Settings window (`showSettings`), including when the dialog was opened from the main TouchMenu rather than from an already-open settings dialog.
 - **Tool calling**: route all tool-call logic through `assistant_tool_executor.lua`'s `ToolExecutor` — it already normalizes the three wire formats. Don't duplicate per-provider.
 - **LexRank**: read `LEXRANK_LANGUAGES.md` before adding or modifying a language module.
 - **UI**: use existing dialog patterns from `assistant_dialog.lua` / `assistant_viewer.lua` (`ChatGPTViewer`) rather than building new widget scaffolding.

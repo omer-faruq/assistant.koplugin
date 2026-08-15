@@ -37,6 +37,16 @@ local stubs = {
     ["ui/size"]                 = {},
     ["ui/widget/trapwidget"]    = {},
     ["ui/widget/notification"]  = { notify = function() end, SOURCE_ALWAYS_SHOW = 1 },
+    -- Real widget modules pulled in by assistant_utils -> assistant_notebook
+    -- and assistant_search_registry. They require the real "device" module,
+    -- whose android probe (pcall(require, "android")) is satisfied by the
+    -- empty android stub above, making device.lua load the Android
+    -- implementation and crash. Stub them so the real device module is
+    -- never required by the test chain.
+    ["ui/widget/inputdialog"]   = {},
+    ["ui/widget/menu"]          = {},
+    ["ui/widget/confirmbox"]    = {},
+    ["ui/widget/buttontable"]   = {},
     ["ui"]                      = {},
     ["android"]                 = {},
     -- for assistant_gettext: datastorage mock
