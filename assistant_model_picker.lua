@@ -394,7 +394,32 @@ local function showModelPicker(assistant, close_callback, on_select)
     showPickerDialog(assistant, models, close_callback, "", 1, on_select)
 end
 
+--- Build a temporary handler instance from provider fields and fetch the
+--- model list through the handler's own FetchModels. Each handler knows its
+--- endpoint, auth headers, and post-processing (e.g. Gemini filters by
+--- supportedGenerationMethods and strips the "models/" prefix), so the
+--- returned list is always picker-ready.
+---
+--- A fresh instance is used instead of the module-level handler singleton,
+--- which may be the currently active provider and must not be mutated.
+--- Must be called inside Trapper:wrap — FetchModels runs the request in a
+--- dismissable subprocess behind an InfoMessage.
+--- @param handler_name string API handler name (e.g. "openai", "gemini")
+--- @param base_url string   provider base URL as entered by the user
+--- @param api_key string    provider API key
+--- @return table|nil model_list @return string|nil err
+local function fetchModels(handler_name, base_url, api_key)
+    local handler_module = require("api_handlers." .. handler_name)
+    local provider_handler = handler_module:new{
+        base_url = base_url,
+        api_key = api_key,
+    }
+    provider_handler:normalizeBaseUrl()
+    return provider_handler:FetchModels()
+end
+
 return {
     showModelPicker = showModelPicker,
     showPickerDialog = showPickerDialog,
+    fetchModels = fetchModels,
 }

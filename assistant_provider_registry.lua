@@ -28,11 +28,14 @@ Registry.HANDLERS = {
     responses = true,
 }
 
--- Default base URLs for each handler (used as pre-fill hint in UI)
+-- Default base URLs for each handler (used as pre-fill hint in UI).
+-- Gemini: the native API path format is /v1beta/models/{model}:generateContent
+-- and models.list is /v1beta/models, so base_url must include the /models
+-- segment (see configuration.sample.lua and api_handlers/gemini.lua).
 Registry.DEFAULT_BASE_URLS = {
     openai    = "https://api.openai.com/v1",
     anthropic = "https://api.anthropic.com/v1",
-    gemini    = "https://generativelanguage.googleapis.com/v1beta",
+    gemini    = "https://generativelanguage.googleapis.com/v1beta/models",
     responses = "https://api.openai.com/v1",
 }
 
@@ -63,7 +66,7 @@ local PRESET_PROVIDERS = {
           temperature = 0.7,
           max_tokens = 4096,
       } },
-    { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta",
+    { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta/models",
       additional_parameters = {
           temperature = 0.7,
           thinking_budget = 0,
@@ -81,7 +84,7 @@ Registry.PRESET_PROVIDERS = PRESET_PROVIDERS
 local CUSTOM_HANDLERS = {
     { name = "OpenAI",     handler = "openai",   base_url = "https://api.openai.com/v1" },
     { name = "Anthropic",  handler = "anthropic", base_url = "https://api.anthropic.com/v1" },
-    { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta" },
+    { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta/models" },
     { name = "Responses",  handler = "responses", base_url = "https://api.openai.com/v1" },
 }
 Registry.CUSTOM_HANDLERS = CUSTOM_HANDLERS

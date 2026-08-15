@@ -611,23 +611,26 @@ function Assistant:_showAddProviderDialog(preset_name, handler, base_url, additi
                     local api_key = fields[3]
                     local url = fields[2]
                     if api_key == "" or url == "" then return end
-                    -- Fetch models then reuse model_picker's showPickerDialog
+                    -- Fetch models through the provider handler's own
+                    -- FetchModels (api_handlers), then reuse model_picker's
+                    -- showPickerDialog. Each handler builds its endpoint,
+                    -- auth headers and post-processing itself, and runs the
+                    -- request behind a dismissable InfoMessage so a stalled
+                    -- network can be cancelled by tapping.
                     NetworkMgr:runWhenOnline(function()
                         Trapper:wrap(function()
-                            local models_url = url:gsub("/+$", "") .. "/models"
-                            local models_data, err = ASUtils.fetchJSON(models_url, {
-                                ["Content-Type"]  = "application/json",
-                                ["Authorization"] = "Bearer " .. api_key,
-                            })
-                            if err or not models_data or not models_data.data then
+                            local mp = require("assistant_model_picker")
+                            local model_list, err = mp.fetchModels(handler, url, api_key)
+                            if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
+                                return  -- user dismissed the InfoMessage
+                            end
+                            if err or not model_list or #model_list == 0 then
                                 UIManager:show(InfoMessage:new{
-                                    text = err or _("Failed to fetch models."),
+                                    icon = "notice-warning",
+                                    text = err or _("No models available."),
                                 })
                                 return
                             end
-                            local model_list = models_data.data
-                            table.sort(model_list, function(a, b) return a.id < b.id end)
-                            local mp = require("assistant_model_picker")
                             mp.showPickerDialog(self, model_list, nil, "", 1,
                                 function(model_id)
                                     if dialog.input_fields[4] then
@@ -665,12 +668,14 @@ function Assistant:_showAddProviderDialog(preset_name, handler, base_url, additi
                         Registry.installProvider(self, handler, url, name, api_key, model, additional_parameters)
                     end
                     UIManager:close(dialog)
-                    -- Refresh settings if open
+                    -- Close any stale settings dialog, then open a fresh
+                    -- Provider Settings window so the added/edited provider
+                    -- is immediately visible and selectable.
                     if self._settings_dialog then
                         UIManager:close(self._settings_dialog)
                         self._settings_dialog = nil
-                        UIManager:scheduleIn(0.15, function() self:showSettings() end)
                     end
+                    UIManager:scheduleIn(0.15, function() self:showSettings() end)
                 end,
             },
         }},
