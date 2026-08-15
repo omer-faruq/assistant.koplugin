@@ -46,10 +46,9 @@ local Assistant = InputContainer:new {
   CONFIGURATION = nil,  -- reference to the main configuration
 }
 
--- Paths to Provider API in the fixed Reader/FileManager menu layouts:
--- tab -> AI Assistant -> Settings -> Provider API.
-local ADD_PROVIDER_READER_PATH = "4.1.8.1"
-local ADD_PROVIDER_FILEMANAGER_PATH = "3.1.6.1"
+-- Menu items carry an `assistant_item_id` marker so the Add Provider flow can
+-- locate them in the live TouchMenu by identity instead of fixed indices
+-- (see showAddProviderMenu and AGENTS.md "Provider menu paths").
 
 local function testConfigFile(filePath)
     local env = {}
@@ -145,14 +144,14 @@ table.insert(require("ui/elements/filemanager_menu_order").tools, 1, "ai_assista
 function Assistant:addToMainMenu(menu_items)
   local common_items_table = {
               {
-                text = _("Ask the AI a question"),
-                separator = true,
+                text = _("Ask a question"),
+                separator = false,
                 callback = function ()
                   self:onAskAIQuestion()
                 end,
                 hold_callback = function ()
                   UIManager:show(InfoMessage:new{
-                    text = _("Enter a question to ask AI.")
+                    text = _("Enter a question to ask the AI.")
                   })
                 end
               },
@@ -293,6 +292,7 @@ function Assistant:addToMainMenu(menu_items)
               },
               {
                 text = _("Settings"),
+                assistant_item_id = "assistant_settings",
                 sub_item_table_func = function ()
                   return SettingsDialog.genMenuSettings(self)
                 end,
@@ -385,20 +385,27 @@ function Assistant:addToMainMenu(menu_items)
                   },
                 }
               },
-              {
-                text = _("Custom Prompts"),
-                enabled = not not koutil.tableGetValue(CONFIGURATION, "features", "book_level_prompts"),
-                sub_item_table_func = function ()
-                  return BookLevelCustomPrompts(self)
-                end,
-                hold_callback = function ()
-                  UIManager:show(InfoMessage:new{
-                    text = _("Your own prompts defined in the configuration file")
-                  })
-                end,
-                separator = true,
-              },
             }
+
+  -- Only show the Custom Prompts entry when book_level_prompts are actually
+  -- configured. When absent, mark the Book Insights group with a trailing
+  -- separator so it doesn't visually run into the next menu item.
+  if koutil.tableGetValue(CONFIGURATION, "features", "book_level_prompts") then
+    table.insert(book_level_items, {
+              text = _("Custom Prompts"),
+              sub_item_table_func = function ()
+                return BookLevelCustomPrompts(self)
+              end,
+              hold_callback = function ()
+                UIManager:show(InfoMessage:new{
+                  text = _("Your own prompts defined in the configuration file")
+                })
+              end,
+              separator = true,
+            })
+  else
+    book_level_items[1].separator = true
+  end
 
     local reader_items_table = {}
     -- shallow copy of the common_items_table
@@ -411,6 +418,7 @@ function Assistant:addToMainMenu(menu_items)
         -- Reader menu
         menu_items.ai_assistant = {
             text = _("AI Assistant"),
+            assistant_item_id = "assistant_ai_menu",
             sorting_hint = "tools",
             hold_callback = function ()
               self:_help_dialog()
@@ -421,6 +429,7 @@ function Assistant:addToMainMenu(menu_items)
         -- Filemanager menu
         menu_items.ai_assistant = {
             text = _("AI Assistant"),
+            assistant_item_id = "assistant_ai_menu",
             sorting_hint = "tools",
             hold_callback = function ()
               self:_help_dialog()
@@ -511,13 +520,62 @@ function Assistant:showSettings(close_callback)
   UIManager:show(settingDlg)
 end
 
+-- Menu-path helpers for showAddProviderMenu. Items carry `assistant_item_id`
+-- markers (see the item tables in addToMainMenu and the "Provider API" item
+-- in assistant_provider_registry.lua); indices are resolved against the live
+-- TouchMenu layout instead of fixed path constants, so menu reordering or
+-- conditional items cannot desync the navigation.
+-- Note: MenuSorter keeps references to the item tables when it builds
+-- tab_item_table, so markers set at menu-registration time survive.
+
+-- 1-based index of the item carrying the marker in item_table, or nil.
+local function findItemIndexByMarker(item_table, marker)
+    if not item_table then return nil end
+    for i, item in ipairs(item_table) do
+        if type(item) == "table" and item.assistant_item_id == marker then
+            return i
+        end
+    end
+    return nil
+end
+
+-- Computes the TouchMenu path (e.g. "4.1.7.1") to the "Provider API" item by
+-- walking tab_item_table: tab -> AI Assistant -> Settings -> Provider API.
+local function computeAddProviderMenuPath(tab_item_table)
+    if not tab_item_table then return nil end
+    for tab_nb, tab_items in ipairs(tab_item_table) do
+        local ai_idx = findItemIndexByMarker(tab_items, "assistant_ai_menu")
+        if ai_idx then
+            local ai_item = tab_items[ai_idx]
+            local ai_sub = ai_item.sub_item_table_func and ai_item.sub_item_table_func()
+                or ai_item.sub_item_table
+            local settings_idx = findItemIndexByMarker(ai_sub, "assistant_settings")
+            if settings_idx then
+                local settings_item = ai_sub[settings_idx]
+                local settings_sub = settings_item.sub_item_table_func
+                    and settings_item.sub_item_table_func() or settings_item.sub_item_table
+                local provider_idx = findItemIndexByMarker(settings_sub, "assistant_add_provider")
+                if provider_idx then
+                    return string.format("%d.%d.%d.%d", tab_nb, ai_idx, settings_idx, provider_idx)
+                end
+            end
+        end
+    end
+    return nil
+end
+
 -- Open the KOReader main menu and use TouchMenu's live path navigation to
--- walk to and highlight the existing "Provider API" menu item. Touch-only:
--- on non-touch devices the main menu is a plain Menu widget without path
--- navigation, so we bail out. Closes the menu again if navigation is not
--- possible.
+-- walk to and highlight the existing "Provider API" menu item. On non-touch
+-- devices the main menu is a plain Menu widget without path navigation, so
+-- show directions to the item instead. Closes the menu again if navigation
+-- is not possible.
 function Assistant:showAddProviderMenu()
-    if not Device:isTouchDevice() then return end
+    if not Device:isTouchDevice() then
+        UIManager:show(InfoMessage:new{
+            text = _("Add providers from the main menu:\n⚙ → AI Assistant → Settings → Provider API")
+        })
+        return
+    end
 
     local menu = self.ui and self.ui.menu
     if not menu or type(menu.onShowMenu) ~= "function" then return end
@@ -530,9 +588,6 @@ function Assistant:showAddProviderMenu()
         end
     end
 
-    local path = self.ui.document and ADD_PROVIDER_READER_PATH
-        or ADD_PROVIDER_FILEMANAGER_PATH
-
     -- If a main menu is already open (e.g. the one the settings dialog was
     -- opened from), reuse its live TouchMenu instead of stacking a second one.
     local touch_menu = menu.menu_container and menu.menu_container[1]
@@ -541,6 +596,14 @@ function Assistant:showAddProviderMenu()
         touch_menu = menu.menu_container and menu.menu_container[1]
     end
     if not touch_menu or type(touch_menu.openMenu) ~= "function" then
+        closeMenu()
+        return
+    end
+
+    -- Resolve the path from the live layout (marker-based, no fixed indices).
+    local path = computeAddProviderMenuPath(touch_menu.tab_item_table)
+    if not path then
+        logger.warn("assistant: Provider API item not found in main menu")
         closeMenu()
         return
     end

@@ -246,18 +246,16 @@ function SettingsDialog:init()
         },
     }}
 
-    if Device:isTouchDevice() then
-        table.insert(self.buttons[1], 3, {
-            id = "add_provider",
-            text = _("Add"),
-            callback = function()
-                UIManager:close(self)
-                UIManager:nextTick(function()
-                    self.assistant:showAddProviderMenu()
-                end)
-            end,
-        })
-    end
+    table.insert(self.buttons[1], 3, {
+        id = "add_provider",
+        text = _("Add"),
+        callback = function()
+            UIManager:close(self)
+            UIManager:nextTick(function()
+                self.assistant:showAddProviderMenu()
+            end)
+        end,
+    })
 
     -- init radio buttons for selecting AI Model provider
     self.radio_buttons = {} -- init radio buttons table

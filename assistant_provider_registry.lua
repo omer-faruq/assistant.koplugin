@@ -448,6 +448,9 @@ end
 function Registry.getAddProviderMenuItem(assistant)
     return {
         text = _("Provider API"),
+        -- Marker used by main.lua's showAddProviderMenu to locate this item
+        -- in the live TouchMenu (see AGENTS.md "Provider menu paths").
+        assistant_item_id = "assistant_add_provider",
         keep_menu_open = true,
         sub_item_table_func = function()
             local items = {}
