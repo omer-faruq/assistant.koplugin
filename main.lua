@@ -145,7 +145,6 @@ function Assistant:addToMainMenu(menu_items)
   local common_items_table = {
               {
                 text = _("Ask a question"),
-                separator = false,
                 callback = function ()
                   self:onAskAIQuestion()
                 end,
@@ -415,7 +414,10 @@ function Assistant:addToMainMenu(menu_items)
     end
 
     if self.ui.document then
-        -- Reader menu
+        -- Reader menu. No separator after "Ask a question": the book-level
+        -- items carry the trailing separator (on Custom Prompts when
+        -- configured, otherwise on Book Insights).
+        common_items_table[1].separator = false
         menu_items.ai_assistant = {
             text = _("AI Assistant"),
             assistant_item_id = "assistant_ai_menu",
@@ -426,7 +428,9 @@ function Assistant:addToMainMenu(menu_items)
             sub_item_table = reader_items_table
           }
     else
-        -- Filemanager menu
+        -- Filemanager menu. Separate "Ask a question" from the notebook
+        -- items that follow it.
+        common_items_table[1].separator = true
         menu_items.ai_assistant = {
             text = _("AI Assistant"),
             assistant_item_id = "assistant_ai_menu",
