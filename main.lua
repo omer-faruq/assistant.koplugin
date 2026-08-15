@@ -261,13 +261,13 @@ function Assistant:addToMainMenu(menu_items)
               {
                 text_func = function ()
                   if not self.querier or not self.querier.handler then
-                    return _("Provider: ❌ NOT CONFIGURED")
+                    return _("Provider ▸ NOT CONFIGURED")
                   end
                   local provider = self.querier.provider_setting
                       and self.querier.provider_setting.display_name
                       or self.querier.provider_name
                   local model = self.querier.handler.model or "?"
-                  return T(_("Provider: %1(%2)"), provider, model)
+                  return T(_("Provider ▸ %1(%2)"), provider, model)
                 end,
                 keep_menu_open = true,
                 callback = function (touchmenu_instance)
@@ -280,7 +280,7 @@ function Assistant:addToMainMenu(menu_items)
                   text_func = function ()
                     local key = self.settings:readSetting("use_websearch", "none")
                     local text = ToolExecutor.ToolToText(key)
-                      return T(_("Web Search: %1"), text)
+                      return T(_("Web Search ▸ %1"), text)
                   end,
                   hold_callback = function ()
                       UIManager:show(InfoMessage:new{
