@@ -57,8 +57,14 @@ function OpenAIHandler:getApiUrl()
     return self.base_url .. "/chat/completions"
 end
 
+--- Return the full models-list endpoint URL.
+--- Overridable per-handler (e.g. OpenRouter's guardrail-filtered /models/user).
+function OpenAIHandler:getModelsUrl()
+    return self.models_url or (self.base_url .. "/models")
+end
+
 function OpenAIHandler:FetchModels()
-    local model_url = self.base_url .. "/models"
+    local model_url = self:getModelsUrl()
     local infomsg = InfoMessage:new{
         text = ASUtils.bold_format(_("<b>Fetching models...</b>")),
     }
