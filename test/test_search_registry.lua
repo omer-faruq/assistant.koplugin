@@ -491,11 +491,10 @@ local tests = {
     -- getAddWebSearchMenuItem
     -- =========================================================================
 
-    test("menu item text_func is localized", function()
+    test("menu item text is localized", function()
         local assistant = mockAssistant()
         local item = SearchRegistry.getAddWebSearchMenuItem(assistant)
-        assert.notNil(item.text_func, "should use text_func instead of text")
-        assert.equal(item.text_func(), "WebSearch API")
+        assert.equal(item.text, "WebSearch API")
         assert.equal(item.keep_menu_open, true)
         assert.notNil(item.sub_item_table_func)
     end),
