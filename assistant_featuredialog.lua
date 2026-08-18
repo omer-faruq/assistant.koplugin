@@ -12,7 +12,6 @@ local koutil = require("util")
 local ChatGPTViewer = require("assistant_viewer")
 local assistant_prompts = require("assistant_prompts").assistant_prompts
 local Prompts = require("assistant_prompts")
-local NetworkMgr = require("ui/network/manager")
 local ASUtils = require("assistant_utils")
 local extractBookTextForAnalysis = ASUtils.extractBookTextForAnalysis
 local extractHighlightsNotesAndNotebook = ASUtils.extractHighlightsNotesAndNotebook
@@ -236,7 +235,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         end
 
         viewer:trimMessageHistory()
-        NetworkMgr:runWhenOnline(function()
+        ASUtils.runWhenOnlineFast(function()
           Trapper:wrap(function()
             local answer, err = Querier:query(message_history)
             

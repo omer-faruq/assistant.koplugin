@@ -22,7 +22,6 @@ local ASUtils = require("assistant_utils")
 local Notebook = require("assistant_notebook")
 local extractBookTextForAnalysis = ASUtils.extractBookTextForAnalysis
 local normalizeMarkdownHeadings = ASUtils.normalizeMarkdownHeadings
-local NetworkMgr = require("ui/network/manager")
 
 -- main dialog class
 local AssistantDialog = {
@@ -230,7 +229,7 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
         end
 
         viewer:trimMessageHistory()
-        NetworkMgr:runWhenOnline(function()
+        ASUtils.runWhenOnlineFast(function()
           Trapper:wrap(function()
             local answer, err = self.querier:query(message_history)
             

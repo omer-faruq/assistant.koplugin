@@ -3,7 +3,6 @@ This widget displays a setting dialog.
 ]]
 
 local Trapper = require("ui/trapper")
-local NetworkMgr = require("ui/network/manager")
 local koutil = require("util")
 local Blitbuffer = require("ffi/blitbuffer")
 local CenterContainer = require("ui/widget/container/centercontainer")
@@ -378,7 +377,7 @@ function SettingsDialog:onBrowseModel()
         return
     end
 
-    NetworkMgr:runWhenOnline(function()
+    ASUtils.runWhenOnlineFast(function()
         Trapper:wrap(function()
             local showModelPicker = require("assistant_model_picker").showModelPicker
             showModelPicker(self.assistant, self.close_callback)
@@ -744,7 +743,7 @@ SettingsDialog.genMenuSettings = function(assistant)
                             {
                                 text = _("Update"),
                                 callback = function()
-                                    NetworkMgr:runWhenOnline(function()
+ASUtils.runWhenOnlineFast(function()
                                         local version = version_input:getInputText()
                                         if version == "" then version = "main" end
                                         UIManager:close(version_input)

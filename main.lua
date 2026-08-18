@@ -2,7 +2,6 @@ local Device = require("device")
 local logger = require("logger")
 local Event = require("ui/event")
 local InputContainer = require("ui/widget/container/inputcontainer")
-local NetworkMgr = require("ui/network/manager")
 local Dispatcher = require("dispatcher")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
@@ -31,20 +30,6 @@ local SettingsDialog = require("assistant_settings")
 local showDictionaryDialog = require("assistant_dictdialog")
 local Registry = require("assistant_provider_registry")
 local SearchRegistry = require("assistant_search_registry")
-
---- Like NetworkMgr:runWhenOnline(), but checks Wi-Fi radio state first.
--- NetworkMgr:runWhenOnline() calls isOnline(), which does a real DNS
--- resolution and can take up to ~20s to time out before falling back to
--- the "Do you want to turn on Wi-Fi?" prompt. When Wi-Fi is already off,
--- isWifiOn() is an instant local check that reaches the same prompt
--- without waiting on the network first.
-local function runWhenOnlineFast(callback)
-  if not NetworkMgr:isWifiOn() then
-    NetworkMgr:promptWifiOn(callback)
-    return
-  end
-  NetworkMgr:runWhenOnline(callback)
-end
 
 local Assistant = InputContainer:new {
   name = "assistant",
@@ -485,7 +470,7 @@ function BookLevelCustomPrompts(assistant)
           Prompts.isWebSearchEnabled(assistant.settings)),
         callback = function()
           if not assistant:isConfigured() then return end
-          runWhenOnlineFast(function()
+          ASUtils.runWhenOnlineFast(function()
             local book = getDocumentInfo(assistant.ui.document)
             local showFeatureDialog = require("assistant_featuredialog")
             Trapper:wrap(function()
@@ -698,7 +683,7 @@ function Assistant:_showAddProviderDialog(preset_name, handler, base_url, additi
                     -- auth headers and post-processing itself, and runs the
                     -- request behind a dismissable InfoMessage so a stalled
                     -- network can be cancelled by tapping.
-                    runWhenOnlineFast(function()
+                    ASUtils.runWhenOnlineFast(function()
                         Trapper:wrap(function()
                             local mp = require("assistant_model_picker")
                             local model_list, err = mp.fetchModels(handler, url, api_key)
@@ -1023,7 +1008,7 @@ function Assistant:init()
             return
           end
 
-          runWhenOnlineFast(function()
+          ASUtils.runWhenOnlineFast(function()
             if not updateMessageShown then
               Updater.checkForUpdates(self)
               updateMessageShown = true
@@ -1203,7 +1188,7 @@ function Assistant:addMainButton(prompt_idx, prompt)
             self.quicknote:saveNote(nil, _reader_highlight_instance.selected_text.text)
           end)
         else
-          runWhenOnlineFast(function()
+          ASUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
               if prompt.order == -10 and prompt_idx == "dictionary" then
                 -- Dictionary prompt, show dictionary dialog
@@ -1285,7 +1270,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
     callback = function(widget_instance)
         local popup = widget_instance or dict_popup_arg
         local word = popup and popup.word
-        runWhenOnlineFast(function()
+        ASUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
               self.assistant_dialog:showPrompt(word, "wikipedia")
             end)
@@ -1304,7 +1289,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
     callback = function(widget_instance)
         local popup = widget_instance or dict_popup_arg
         local word = popup and popup.word
-        runWhenOnlineFast(function()
+        ASUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
               showDictionaryDialog(self, word, nil, "term_xray")
             end)
@@ -1319,7 +1304,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
     callback = function(widget_instance)
         local popup = widget_instance or dict_popup_arg
         local word = popup and popup.word
-        runWhenOnlineFast(function()
+        ASUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
               showDictionaryDialog(self, word)
             end)
@@ -1358,7 +1343,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
         callback = function(widget_instance)
             local popup = widget_instance or dict_popup_arg
             local word = popup and popup.word
-            runWhenOnlineFast(function()
+            ASUtils.runWhenOnlineFast(function()
                 Trapper:wrap(function()
                   self.assistant_dialog:showPrompt(word, prompt.id)
                 end)
@@ -1489,7 +1474,7 @@ end
       return
     end
     
-    runWhenOnlineFast(function()
+    ASUtils.runWhenOnlineFast(function()
       -- Show dialog without highlighted text
       Trapper:wrap(function()
         self.assistant_dialog:show()
@@ -1500,7 +1485,7 @@ end
 
   function Assistant:onAskAIRecap()
     if not self:isConfigured() then return end
-    runWhenOnlineFast(function()
+    ASUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1512,7 +1497,7 @@ end
 
   function Assistant:onAskAIXRay()
     if not self:isConfigured() then return end
-    runWhenOnlineFast(function()
+    ASUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1524,7 +1509,7 @@ end
 
   function Assistant:onAskAIBookInfo()
     if not self:isConfigured() then return end
-    runWhenOnlineFast(function()
+    ASUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1536,7 +1521,7 @@ end
 
   function Assistant:onAskAIAnnotations()
     if not self:isConfigured() then return end
-    runWhenOnlineFast(function()
+    ASUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1548,7 +1533,7 @@ end
 
   function Assistant:onAskSummaryUsingAnnotations()
     if not self:isConfigured() then return end
-    runWhenOnlineFast(function()
+    ASUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1592,7 +1577,7 @@ function Assistant:syncTranslateOverride()
       end
 
       local words = koutil.splitToWords(text)
-      runWhenOnlineFast(function()
+      ASUtils.runWhenOnlineFast(function()
         Trapper:wrap(function()
           -- splitToWords result like this: { "The", " ", "good", " ", "news" }
           if #words > 5 then
@@ -1698,7 +1683,7 @@ function Assistant:_hookRecap()
             text            = message,
             ok_text         = _("Yes"),
             ok_callback     = function()
-              runWhenOnlineFast(function()
+              ASUtils.runWhenOnlineFast(function()
                 local showFeatureDialog = require("assistant_featuredialog")
                 Trapper:wrap(function()
                   showFeatureDialog(assistant, "recap", title, authors, percent_finished)

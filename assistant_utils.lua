@@ -823,4 +823,21 @@ function M.fetchJSON(url, header, string_or_widget, timeout, maxtime, post_body)
   return parsed, nil
 end
 
+--- Like NetworkMgr:runWhenOnline(), but checks Wi-Fi radio state first.
+-- NetworkMgr:runWhenOnline() calls isOnline(), which does a real DNS
+-- resolution and can take up to ~20s to time out before falling back to
+-- the "Do you want to turn on Wi-Fi?" prompt. When Wi-Fi is already off,
+-- isWifiOn() is an instant local check that reaches the same prompt
+-- without waiting on the network first.
+-- NOTE: NetworkMgr is lazy-required inside the function body to avoid
+-- pulling in the full KOReader UI/network stack during test suite init.
+function M.runWhenOnlineFast(callback)
+  local NetworkMgr = require("ui/network/manager")
+  if not NetworkMgr:isWifiOn() then
+    NetworkMgr:promptWifiOn(callback)
+    return
+  end
+  NetworkMgr:runWhenOnline(callback)
+end
+
 return M
