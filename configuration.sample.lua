@@ -349,6 +349,7 @@ local CONFIGURATION = {
         hide_highlighted_text = false,         -- Set to true to hide the highlighted text at the top
         hide_long_highlights = true,           -- Hide highlighted text if longer than threshold
         long_highlight_threshold = 500,        -- Number of characters considered "long"
+        ask_button_use_websearch = false,      -- Enable web search for the "Ask" button
         -- system_prompt = "You are a helpful AI assistant. Always respond in Markdown format.", -- Custom system prompt for the AI ("Ask" button) to override the default, to disable set to nil
         updater_disabled = false,              -- Set to true to disable update check.
         update_check_url = "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest", -- URL for checking latest release

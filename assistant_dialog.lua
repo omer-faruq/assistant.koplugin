@@ -286,6 +286,8 @@ I have a question about this book.]], book.title, book.author)
     role = "user",
     content = user_question
   }
+  ASUtils.set_attr(question_message, "use_websearch",
+    koutil.tableGetValue(self.CONFIGURATION, "features", "ask_button_use_websearch") or false)
   table.insert(message_history, question_message)
 end
 
@@ -384,7 +386,9 @@ function AssistantDialog:show(highlightedText)
   end
 
   table.insert(first_row, {
-      text = _("Ask"),
+      text = Prompts.getDisplayText(_("Ask"),
+        koutil.tableGetValue(self.CONFIGURATION, "features", "ask_button_use_websearch") or false,
+        Prompts.isWebSearchEnabled(self.assistant.settings)),
       is_enter_default = true,
       callback = function()
         local user_question = self.input_dialog and self.input_dialog:getInputText() or ""
