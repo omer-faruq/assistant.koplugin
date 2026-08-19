@@ -17,70 +17,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../_meta.lua:3 ../assistant_dialog.lua:532 ../main.lua:413 ../main.lua:423
-#: ../main.lua:933
 msgid "AI Assistant"
 msgstr "AI 어시스턴트"
 
-#: ../_meta.lua:4
 msgid "💡 Enhance your KOReader experience with AI"
 msgstr "💡 AI로 KOReader 경험을 향상하세요"
 
-#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:32
-#: ../api_handlers/openai.lua:63 ../api_handlers/responses.lua:51
 msgid "<b>Fetching models...</b>"
 msgstr "<b>모델을 불러오는 중...</b>"
 
-#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:42
-#: ../api_handlers/gemini.lua:52 ../api_handlers/openai.lua:79
-#: ../api_handlers/responses.lua:67
 msgid "Failed to fetch models"
 msgstr "모델을 불러오지 못했습니다"
 
-#: ../assistant_dialog.lua:93
 msgid "### ☺ Question\n"
 msgstr "### ☺ 질문\n"
 
-#: ../assistant_dialog.lua:135 ../assistant_model_picker.lua:103
-#: ../assistant_model_picker.lua:267
 msgid "Search"
 msgstr "검색"
 
-#: ../assistant_dialog.lua:138
 msgid "Response"
 msgstr "응답"
 
-#: ../assistant_dialog.lua:139
 msgid "(No response)"
 msgstr "(응답 없음)"
 
-#: ../assistant_dialog.lua:176 ../assistant_quicknote.lua:109
-#: ../assistant_viewer.lua:559
 msgid "Highlighted text:"
 msgstr "하이라이트된 텍스트:"
 
-#: ../assistant_dialog.lua:340 ../assistant_dictdialog.lua:160
-#: ../assistant_model_picker.lua:128 ../assistant_model_picker.lua:258
-#: ../assistant_model_picker.lua:351 ../assistant_notebook.lua:381
-#: ../assistant_quicknote.lua:49 ../assistant_search_registry.lua:362
-#: ../assistant_settings.lua:100 ../assistant_settings.lua:741
-#: ../assistant_viewer.lua:661 ../main.lua:598 ../main.lua:722 ../main.lua:858
 msgid "Cancel"
 msgstr "취소"
 
-#: ../assistant_dialog.lua:360
 msgid "Select notebook"
 msgstr "노트북 선택"
 
-#: ../assistant_dialog.lua:388 ../assistant_viewer.lua:671
 msgid "Ask"
 msgstr "질문하기"
 
-#: ../assistant_dialog.lua:401 ../assistant_viewer.lua:677
 msgid "Enter a question before proceeding."
 msgstr "계속하려면 질문을 입력하세요."
 
-#: ../assistant_dialog.lua:488
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
@@ -90,15 +65,12 @@ msgstr ""
 "\n"
 "이 버튼을 하이라이트 메뉴에 추가할까요?"
 
-#: ../assistant_dialog.lua:490 ../assistant_settings.lua:252
 msgid "Add"
 msgstr "추가"
 
-#: ../assistant_dialog.lua:518
 msgid "Ask a question about the highlighted text"
 msgstr "하이라이트된 텍스트에 대해 질문하기"
 
-#: ../assistant_dialog.lua:521
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
@@ -106,129 +78,97 @@ msgstr ""
 "<b>이 책에 대해 질문하기:</b>\n"
 "%1 (지은이: %2)"
 
-#: ../assistant_dialog.lua:524
 msgid "Ask a general question"
 msgstr "일반 질문하기"
 
-#: ../assistant_dialog.lua:527
 msgid "Type your question here..."
 msgstr "여기에 질문을 입력하세요..."
 
-#: ../assistant_dialog.lua:528
 msgid "Ask anything about this book..."
 msgstr "이 책에 대해 무엇이든 물어보세요..."
 
-#: ../assistant_dialog.lua:529
 msgid "Ask anything..."
 msgstr "무엇이든 물어보세요..."
 
-#: ../assistant_dialog.lua:553
 msgid "Use book text as context"
 msgstr "책 텍스트를 컨텍스트로 사용"
 
-#: ../assistant_dialog.lua:606
 msgid "Loading for %1 ..."
 msgstr "%1 불러오는 중 ..."
 
-#: ../assistant_dialog.lua:620
 msgid "<b>Error:</b> No response received"
 msgstr "<b>오류:</b> 응답을 받지 못했습니다"
 
-#: ../assistant_dictdialog.lua:154
 msgid "AI Dictionary"
 msgstr "AI 사전"
 
-#: ../assistant_dictdialog.lua:155
 msgid "Enter a word to look up..."
 msgstr "검색할 단어를 입력하세요..."
 
-#: ../assistant_dictdialog.lua:166
 msgid "Look Up"
 msgstr "찾기"
 
-#: ../assistant_dictdialog.lua:213
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Term X-Ray를 위해 책 컨텍스트를 분석하는 중...</b>"
 
-#: ../assistant_dictdialog.lua:388 ../assistant_prompts.lua:27 ../main.lua:1213
-#: ../main.lua:1215
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
-#: ../assistant_dictdialog.lua:391
 msgid "Loading Term X-Ray ..."
 msgstr "Term X-Ray 불러오는 중 ..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:74 ../main.lua:1232
 msgid "Dictionary"
 msgstr "사전"
 
-#: ../assistant_dictdialog.lua:409
 msgid "Loading AI Dictionary ..."
 msgstr "AI 사전 불러오는 중 ..."
 
-#: ../assistant_exttools.lua:262
 msgid "None"
 msgstr "없음"
 
-#: ../assistant_exttools.lua:263
 msgid "Model Built-In"
 msgstr "모델 내장"
 
-#: ../assistant_featuredialog.lua:41
 msgid "Custom Prompt"
 msgstr "사용자 지정 프롬프트"
 
-#: ../assistant_featuredialog.lua:42
 msgid "Loading..."
 msgstr "불러오는 중..."
 
-#: ../assistant_featuredialog.lua:63
 msgid "Recap"
 msgstr "Recap"
 
-#: ../assistant_featuredialog.lua:64
 msgid "Loading Recap..."
 msgstr "Recap 불러오는 중..."
 
-#: ../assistant_featuredialog.lua:69
 msgid "X‑Ray"
 msgstr "X‑Ray"
 
-#: ../assistant_featuredialog.lua:70
 msgid "Loading X-Ray..."
 msgstr "X-Ray 불러오는 중..."
 
 #. @translators book_info section headers and sub-fields
-#: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
 msgid "Book Information"
 msgstr "책 정보"
 
-#: ../assistant_featuredialog.lua:76
 msgid "Loading Book Information..."
 msgstr "책 정보 불러오는 중..."
 
-#: ../assistant_featuredialog.lua:81 ../main.lua:128 ../main.lua:361
 msgid "Highlight & Note Analysis"
 msgstr "하이라이트 및 메모 분석"
 
-#: ../assistant_featuredialog.lua:82
 msgid "Loading Highlight & Note Analysis..."
 msgstr "하이라이트 및 메모 분석 불러오는 중..."
 
-#: ../assistant_featuredialog.lua:87 ../main.lua:136 ../main.lua:373
 msgid "Summary Using Highlights & Notes"
 msgstr "하이라이트 및 메모를 활용한 요약"
 
-#: ../assistant_featuredialog.lua:88
 msgid "Loading Summary Using Highlights & Notes..."
 msgstr "하이라이트 및 메모를 활용한 요약 불러오는 중..."
 
-#: ../assistant_featuredialog.lua:100
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>알 수 없는 기능 유형:</b> %1"
 
-#: ../assistant_featuredialog.lua:187
 msgid ""
 " - Title : %1\n"
 " - Author: %2\n"
@@ -244,546 +184,410 @@ msgstr ""
 "-----\n"
 "\n"
 
-#: ../assistant_model_picker.lua:77
 msgid "Models: %1 (filtered)"
 msgstr "모델: %1 (필터링됨)"
 
-#: ../assistant_model_picker.lua:79
 msgid "Models: %1"
 msgstr "모델: %1"
 
-#: ../assistant_model_picker.lua:82
 msgid " — p. %1/%2"
 msgstr " — %1/%2쪽"
 
-#: ../assistant_model_picker.lua:119
 msgid "Manual"
 msgstr "설명서"
 
-#: ../assistant_model_picker.lua:123
 msgid "Reset"
 msgstr "초기화"
 
-#: ../assistant_model_picker.lua:170 ../assistant_model_picker.lua:368
 msgid "Model: %1"
 msgstr "모델: %1"
 
-#: ../assistant_model_picker.lua:183
 msgid "Filter: \"%1\""
 msgstr "필터: \"%1\""
 
-#: ../assistant_model_picker.lua:185
 msgid "Select a model:"
 msgstr "모델 선택:"
 
-#: ../assistant_model_picker.lua:253
 msgid "Search Models"
 msgstr "모델 검색"
 
-#: ../assistant_model_picker.lua:292
 msgid "Model reset: %1"
 msgstr "모델 초기화: %1"
 
-#: ../assistant_model_picker.lua:322
 msgid "No models matching \"%1\"."
 msgstr "\"%1\"에 해당하는 모델이 없습니다."
 
-#: ../assistant_model_picker.lua:346
 msgid "Enter Model ID"
 msgstr "모델 ID 입력"
 
-#: ../assistant_model_picker.lua:348
 msgid "e.g. google/gemini-3.0-flash-exp:free"
 msgstr "예: google/gemini-3.0-flash-exp:free"
 
-#: ../assistant_model_picker.lua:356 ../assistant_quicknote.lua:59
-#: ../assistant_settings.lua:124 ../assistant_viewer.lua:457 ../main.lua:645
-#: ../main.lua:727
 msgid "Save"
 msgstr "저장"
 
-#: ../assistant_model_picker.lua:389
 msgid "No models available."
 msgstr "사용 가능한 모델이 없습니다."
 
-#: ../assistant_notebook.lua:133
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "설정된 노트북 폴더에 접근할 수 없습니다: %1"
 
-#: ../assistant_notebook.lua:138
 msgid "No base folder is available for notebooks."
 msgstr "노트북에 사용할 기본 폴더가 없습니다."
 
-#: ../assistant_notebook.lua:147
 msgid "Notebooks path is not a directory: %1"
 msgstr "노트북 경로가 디렉터리가 아닙니다: %1"
 
-#: ../assistant_notebook.lua:156
 msgid "Could not create notebooks folder: %1"
 msgstr "노트북 폴더를 만들 수 없습니다: %1"
 
-#: ../assistant_notebook.lua:185
 msgid "Could not list notebooks folder: %1"
 msgstr "노트북 폴더 목록을 가져올 수 없습니다: %1"
 
-#: ../assistant_notebook.lua:227
 msgid "No path is available for the legacy notebook."
 msgstr "레거시 노트북에 사용할 수 있는 경로가 없습니다."
 
-#: ../assistant_notebook.lua:234
 msgid "Assistant settings are not available."
 msgstr "어시스턴트 설정을 사용할 수 없습니다."
 
-#: ../assistant_notebook.lua:237
 msgid "Invalid notebook entry."
 msgstr "잘못된 노트북 항목입니다."
 
-#: ../assistant_notebook.lua:247
 msgid "Invalid notebook filename."
 msgstr "잘못된 노트북 파일 이름입니다."
 
-#: ../assistant_notebook.lua:268
 msgid "Notebook name must be text."
 msgstr "노트북 이름은 텍스트여야 합니다."
 
-#: ../assistant_notebook.lua:273 ../assistant_notebook.lua:296
 msgid "Notebook name cannot be empty."
 msgstr "노트북 이름은 비워 둘 수 없습니다."
 
-#: ../assistant_notebook.lua:276
 msgid "Notebook name cannot contain path separators."
 msgstr "노트북 이름에는 경로 구분 기호를 포함할 수 없습니다."
 
-#: ../assistant_notebook.lua:279
 msgid "Notebook name cannot contain '..'."
 msgstr "노트북 이름에는 '..'을 포함할 수 없습니다."
 
-#: ../assistant_notebook.lua:282
 msgid "Notebook name contains characters that are not supported by the filesystem."
 msgstr "노트북 이름에 파일 시스템에서 지원하지 않는 문자가 포함되어 있습니다."
 
-#: ../assistant_notebook.lua:285
 msgid "Notebook name cannot end with a space or dot."
 msgstr "노트북 이름은 공백이나 마침표로 끝날 수 없습니다."
 
-#: ../assistant_notebook.lua:303
 msgid "Notebook name is reserved by the filesystem."
 msgstr "노트북 이름은 파일 시스템에서 예약되어 있습니다."
 
-#: ../assistant_notebook.lua:324
 msgid "Notebook path is not a file: %1"
 msgstr "노트북 경로가 파일이 아닙니다: %1"
 
-#: ../assistant_notebook.lua:330
 msgid "Could not create notebook: %1"
 msgstr "노트북을 만들 수 없습니다: %1"
 
-#: ../assistant_notebook.lua:375
 msgid "New notebook"
 msgstr "새 노트북"
 
-#: ../assistant_notebook.lua:376
 msgid "Notebook name"
 msgstr "노트북 이름"
 
-#: ../assistant_notebook.lua:377
 msgid "Create a notebook."
 msgstr "노트북을 만듭니다."
 
-#: ../assistant_notebook.lua:388
 msgid "Create"
 msgstr "만들기"
 
-#: ../assistant_notebook.lua:401
 msgid "Could not create notebook."
 msgstr "노트북을 만들 수 없습니다."
 
-#: ../assistant_notebook.lua:453
 msgid "Could not select notebook."
 msgstr "노트북을 선택할 수 없습니다."
 
-#: ../assistant_notebook.lua:467
 msgid "No notebooks yet"
 msgstr "아직 노트북이 없습니다"
 
-#: ../assistant_notebook.lua:473
 msgid "New notebook…"
 msgstr "새 노트북…"
 
-#: ../assistant_notebook.lua:487
 msgid "Notebooks"
 msgstr "노트북"
 
-#: ../assistant_notebook.lua:489
 msgid "Active: %1"
 msgstr "활성: %1"
 
-#: ../assistant_prompts.lua:30
 msgid "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr "이 프롬프트는 문학 작품 속 단어나 구절에 대해 문맥을 고려한 정의를 생성하는 체계적인 시스템을 만듭니다. 강조 표시된 용어를 주변 텍스트 안에서 분석하여 문자 그대로의 의미와 맥락적 중요성을 모두 담아내는 세밀한 설명을 제공합니다."
 
 #. @translators term_xray section headers
 #. @translators term_xray: "What It Is" section header
-#: ../assistant_prompts.lua:64
 msgid "What It Is"
 msgstr "정의"
 
 #. @translators term_xray: "Role & Function" section header
-#: ../assistant_prompts.lua:66
 msgid "Role & Function"
 msgstr "역할 및 기능"
 
 #. @translators term_xray: "Evolution & Connections" section header
-#: ../assistant_prompts.lua:68
 msgid "Evolution & Connections"
 msgstr "변화와 연관성"
 
 #. @translators term_xray: "Context Limitations" section header
-#: ../assistant_prompts.lua:70
 msgid "Context Limitations"
 msgstr "맥락의 한계"
 
-#: ../assistant_prompts.lua:76
 msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr "이 프롬프트는 강조 표시된 텍스트(단어 또는 구절)에 대한 사전 역할을 합니다."
 
-#: ../assistant_prompts.lua:82 ../assistant_quicknote.lua:111
 msgid "Quick Note"
 msgstr "빠른 메모"
 
-#: ../assistant_prompts.lua:83
 msgid "This button creates a quick note with highlighted text."
 msgstr "이 버튼은 강조 표시된 텍스트로 빠른 메모를 만듭니다."
 
-#: ../assistant_prompts.lua:88
 msgid "Vocabulary"
 msgstr "어휘"
 
-#: ../assistant_prompts.lua:92
 msgid "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr "이 프롬프트는 강조 표시된 텍스트의 어휘를 분석하여 어려운 단어를 찾아내고 정의, 동의어, 사용 예를 제공합니다."
 
-#: ../assistant_prompts.lua:109
 msgid "Grammar"
 msgstr "문법"
 
-#: ../assistant_prompts.lua:113
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "이 프롬프트는 강조 표시된 텍스트의 문법을 분석하여 구조와 문법 오류에 대한 자세한 설명을 제공합니다."
 
 #. @translators grammar section headers
-#: ../assistant_prompts.lua:136
 msgid "Structure & Clauses"
 msgstr "구조와 절"
 
-#: ../assistant_prompts.lua:137
 msgid "Parts of Speech & Tenses"
 msgstr "품사와 시제"
 
-#: ../assistant_prompts.lua:138
 msgid "Error Correction (If Applicable)"
 msgstr "오류 수정(해당하는 경우)"
 
-#: ../assistant_prompts.lua:142
 msgid "Translate"
 msgstr "번역"
 
-#: ../assistant_prompts.lua:144
 msgid "This prompt translates the highlighted text to another language."
 msgstr "이 프롬프트는 강조 표시된 텍스트를 다른 언어로 번역합니다."
 
-#: ../assistant_prompts.lua:156
 msgid "Summarize"
 msgstr "요약"
 
-#: ../assistant_prompts.lua:159
 msgid "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr "이 프롬프트는 강조 표시된 텍스트를 요약하여 주요 내용과 핵심 세부 사항을 담아냅니다."
 
-#: ../assistant_prompts.lua:174
 msgid "Simplify"
 msgstr "쉽게 설명"
 
-#: ../assistant_prompts.lua:177
 msgid "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr "이 프롬프트는 강조 표시된 텍스트를 이해하기 쉽도록 단순화합니다."
 
-#: ../assistant_prompts.lua:191 ../assistant_prompts.lua:534
 msgid "Key Points"
 msgstr "핵심 요점"
 
-#: ../assistant_prompts.lua:195
 msgid "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr "이 프롬프트는 강조 표시된 텍스트에서 핵심 요점을 추출하여 명확하고 체계적으로 나열합니다."
 
 #. @translators key_points section headers
-#: ../assistant_prompts.lua:216
 msgid "Core Arguments"
 msgstr "핵심 논점"
 
-#: ../assistant_prompts.lua:217
 msgid "Essential Facts & Conclusions"
 msgstr "핵심 사실과 결론"
 
-#: ../assistant_prompts.lua:220
 msgid "ELI5"
 msgstr "ELI5"
 
-#: ../assistant_prompts.lua:224
 msgid "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr "이 프롬프트는 강조 표시된 텍스트를 다섯 살 아이에게 설명하듯 풀어서, 복잡한 개념을 이해하기 쉬운 용어로 단순화합니다."
 
 #. @translators ELI5 section headers
-#: ../assistant_prompts.lua:244
 msgid "Core Idea"
 msgstr "핵심 아이디어"
 
-#: ../assistant_prompts.lua:245
 msgid "Fun Analogy"
 msgstr "재미있는 비유"
 
-#: ../assistant_prompts.lua:248
 msgid "Explain"
 msgstr "설명"
 
-#: ../assistant_prompts.lua:251
 msgid "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr "이 프롬프트는 강조 표시된 텍스트를 자세히 설명하여 명확성과 이해를 돕습니다."
 
-#: ../assistant_prompts.lua:265
 msgid "Historical Context"
 msgstr "역사적 맥락"
 
-#: ../assistant_prompts.lua:269
 msgid "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr "이 프롬프트는 강조 표시된 텍스트에 대한 자세한 역사적 맥락을 제공하여 그 중요성과 배경을 설명합니다."
 
 #. @translators historical_context section headers
-#: ../assistant_prompts.lua:290
 msgid "Era & Background"
 msgstr "시대와 배경"
 
-#: ../assistant_prompts.lua:291
 msgid "Contextual Connections"
 msgstr "맥락적 연관성"
 
-#: ../assistant_prompts.lua:292
 msgid "Cultural Significance"
 msgstr "문화적 중요성"
 
-#: ../assistant_prompts.lua:295 ../main.lua:1194 ../main.lua:1196
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#: ../assistant_prompts.lua:299
 msgid "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr "이 프롬프트는 강조 표시된 텍스트를 바탕으로 사실적 정확성과 중립성을 보장하는 포괄적인 Wikipedia 스타일 문서를 생성합니다."
 
 #. @translators xray section headers
-#: ../assistant_prompts.lua:391
 msgid "Characters"
 msgstr "등장인물"
 
-#: ../assistant_prompts.lua:392
 msgid "Locations"
 msgstr "장소"
 
-#: ../assistant_prompts.lua:393
 msgid "Main Themes"
 msgstr "주요 주제"
 
-#: ../assistant_prompts.lua:394
 msgid "Terms & Concepts"
 msgstr "용어 및 개념"
 
-#: ../assistant_prompts.lua:395
 msgid "Timeline"
 msgstr "타임라인"
 
-#: ../assistant_prompts.lua:396
 msgid "Re-immersion"
 msgstr "재몰입"
 
 #. @translators xray Re-immersion sub-fields
-#: ../assistant_prompts.lua:398
 msgid "Where the action stopped:"
 msgstr "줄거리가 중단된 지점:"
 
-#: ../assistant_prompts.lua:399
 msgid "Protagonist's current objective:"
 msgstr "주인공의 현재 목표:"
 
-#: ../assistant_prompts.lua:400
 msgid "Open conflict or mystery:"
 msgstr "해결되지 않은 갈등 또는 미스터리:"
 
-#: ../assistant_prompts.lua:401
 msgid "Narrative element in focus:"
 msgstr "초점이 맞춰진 서사 요소:"
 
-#: ../assistant_prompts.lua:402
 msgid "Prevailing emotional state/tone:"
 msgstr "지배적인 감정 상태/분위기:"
 
-#: ../assistant_prompts.lua:403
 msgid "Outstanding questions:"
 msgstr "남아 있는 질문:"
 
-#: ../assistant_prompts.lua:441
 msgid "Genre"
 msgstr "장르"
 
-#: ../assistant_prompts.lua:442
 msgid "Publication Date"
 msgstr "출판일"
 
-#: ../assistant_prompts.lua:443
 msgid "Publisher"
 msgstr "출판사"
 
-#: ../assistant_prompts.lua:444
 msgid "Plot Summary"
 msgstr "줄거리 요약"
 
-#: ../assistant_prompts.lua:445
 msgid "About the Author"
 msgstr "작가 소개"
 
-#: ../assistant_prompts.lua:446
 msgid "Historical and Cultural Context"
 msgstr "역사적·문화적 배경"
 
-#: ../assistant_prompts.lua:447
 msgid "Similar Books Recommendations"
 msgstr "비슷한 책 추천"
 
 #. @translators annotations section headers
-#: ../assistant_prompts.lua:478
 msgid "Key Takeaways"
 msgstr "핵심 요점"
 
-#: ../assistant_prompts.lua:479
 msgid "To-Do / Action Items"
 msgstr "할 일 / 실행 항목"
 
-#: ../assistant_prompts.lua:480
 msgid "Contextual Notes"
 msgstr "맥락 메모"
 
-#: ../assistant_prompts.lua:481
 msgid "Contextual Notes / Reflections"
 msgstr "맥락 메모 / 성찰"
 
 #. @translators summary_using_annotations output structure sections
-#: ../assistant_prompts.lua:532
 msgid "TL;DR"
 msgstr "TL;DR"
 
-#: ../assistant_prompts.lua:533
 msgid "Integrated Summary"
 msgstr "통합 요약"
 
-#: ../assistant_prompts.lua:535
 msgid "Actionable Takeaways"
 msgstr "실행 가능한 핵심"
 
-#: ../assistant_prompts.lua:536
 msgid "Contradictions / Open Questions"
 msgstr "모순 / 미해결 질문"
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:564
 msgid "Conjugation"
 msgstr "활용"
 
-#: ../assistant_prompts.lua:565
 msgid "Synonyms"
 msgstr "동의어"
 
-#: ../assistant_prompts.lua:566
 msgid "Meaning"
 msgstr "의미"
 
-#: ../assistant_prompts.lua:567
 msgid "Translation"
 msgstr "번역"
 
-#: ../assistant_prompts.lua:568
 msgid "Book Usage"
 msgstr "책 속 용례"
 
-#: ../assistant_prompts.lua:569
 msgid "Example"
 msgstr "예문"
 
-#: ../assistant_prompts.lua:570
 msgid "Word Origin"
 msgstr "어원"
 
-#: ../assistant_provider_registry.lua:210
 msgid "Provider record must be a table."
 msgstr "공급자 레코드는 테이블이어야 합니다."
 
-#: ../assistant_provider_registry.lua:216
 msgid "Provider name is required."
 msgstr "공급자 이름은 필수입니다."
 
-#: ../assistant_provider_registry.lua:221
 msgid "Unsupported API protocol."
 msgstr "지원되지 않는 API 프로토콜입니다."
 
-#: ../assistant_provider_registry.lua:232 ../main.lua:655
 msgid "Base URL is required."
 msgstr "기본 URL은 필수입니다."
 
-#: ../assistant_provider_registry.lua:235 ../assistant_search_registry.lua:125
 msgid "Base URL must start with http:// or https://"
 msgstr "기본 URL은 http:// 또는 https://로 시작해야 합니다."
 
-#: ../assistant_provider_registry.lua:241 ../main.lua:659
 msgid "API key is required."
 msgstr "API 키는 필수입니다."
 
-#: ../assistant_provider_registry.lua:292
-#: ../assistant_provider_registry.lua:308
-#: ../assistant_provider_registry.lua:348
 msgid "Provider not found."
 msgstr "공급자를 찾을 수 없습니다."
 
-#: ../assistant_provider_registry.lua:343
-#: ../assistant_provider_registry.lua:394
 msgid "Provider data not initialized."
 msgstr "공급자 데이터가 초기화되지 않았습니다."
 
-#: ../assistant_provider_registry.lua:447
 msgid "Provider API"
 msgstr "공급자 API"
 
-#: ../assistant_provider_registry.lua:465
 msgid "%1 (Compatible)"
 msgstr "%1 (호환 가능)"
 
-#: ../assistant_provider_registry.lua:473
 msgid "Custom"
 msgstr "사용자 지정"
 
-#: ../assistant_querier.lua:125
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "%1에 대한 공급자 설정을 찾을 수 없습니다. configuration.lua 파일을 확인하세요."
 
-#: ../assistant_querier.lua:138
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "%1에 대한 핸들러를 찾을 수 없습니다. configuration.lua 파일을 확인하세요."
 
-#: ../assistant_querier.lua:145
 msgid "Handler %1 not available for provider: %2"
 msgstr "핸들러 %1은(는) 공급자 %2에서 사용할 수 없습니다."
 
-#: ../assistant_querier.lua:156
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1에 대한 핸들러를 찾을 수 없습니다. api_handlers 디렉터리에 핸들러가 있는지 확인하세요."
 
-#: ../assistant_querier.lua:199
 msgid ""
 "<b>API Error</b>\n"
 "%1\n"
@@ -801,202 +605,150 @@ msgstr ""
 "\n"
 "설정 대화상자에서 다른 공급자를 시도하세요."
 
-#: ../assistant_querier.lua:200
 msgid "Unknown error"
 msgstr "알 수 없는 오류"
 
-#: ../assistant_querier.lua:205 ../main.lua:295
 msgid "Settings"
 msgstr "설정"
 
-#: ../assistant_querier.lua:207 ../assistant_settings.lua:208
-#: ../assistant_viewer.lua:346
 msgid "Close"
 msgstr "닫기"
 
-#: ../assistant_querier.lua:294
 msgid "Plugin is not configured."
 msgstr "플러그인이 구성되지 않았습니다."
 
-#: ../assistant_querier.lua:386 ../assistant_querier.lua:484
 msgid "Too many tool-call rounds; aborting."
 msgstr "도구 호출 라운드가 너무 많아 중단합니다."
 
-#: ../assistant_querier.lua:394
 msgid "Stream failed with no error message."
 msgstr "오류 메시지 없이 스트리밍이 실패했습니다."
 
-#: ../assistant_querier.lua:411
 msgid "Stream ended with no content and no tool calls."
 msgstr "콘텐츠와 도구 호출 없이 스트리밍이 종료되었습니다."
 
-#: ../assistant_querier.lua:458
 msgid "Request Cancelled by user."
 msgstr "사용자가 요청을 취소했습니다."
 
-#: ../assistant_querier.lua:467
 msgid "Querying AI ..."
 msgstr "AI에 질문하는 중 ..."
 
-#: ../assistant_querier.lua:522
 msgid "Composing answer ..."
 msgstr "답변 작성 중 ..."
 
-#: ../assistant_querier.lua:537 ../assistant_querier.lua:695
 msgid "Request cancelled by user."
 msgstr "사용자가 요청을 취소했습니다."
 
-#: ../assistant_querier.lua:544
 msgid "No response received."
 msgstr "응답을 받지 못했습니다."
 
-#: ../assistant_querier.lua:580
 msgid "AI is responding"
 msgstr "AI가 응답 중입니다"
 
-#: ../assistant_querier.lua:601
 msgid "❌ Stop"
 msgstr "❌ 중지"
 
-#: ../assistant_querier.lua:606
 msgid "■ Scroll"
 msgstr "■ 스크롤"
 
-#: ../assistant_querier.lua:606
 msgid "▶ Scroll"
 msgstr "▶ 스크롤"
 
-#: ../assistant_querier.lua:712
 msgid "Failed to start subprocess for request"
 msgstr "요청에 대한 하위 프로세스를 시작하지 못했습니다"
 
-#: ../assistant_querier.lua:921
 msgid "Error Message"
 msgstr "오류 메시지"
 
-#: ../assistant_querier.lua:950 ../assistant_querier.lua:953
 msgid "Deeply Thought"
 msgstr "심층 사고"
 
-#: ../assistant_querier.lua:1143
 msgid "Stopped Reason: "
 msgstr "중지 사유: "
 
-#: ../assistant_quicknote.lua:30 ../main.lua:174
 msgid "Notebook: %1"
 msgstr "노트북: %1"
 
-#: ../assistant_quicknote.lua:36 ../main.lua:112 ../main.lua:160
 msgid "Take Quick Notes"
 msgstr "빠른 메모 작성"
 
-#: ../assistant_quicknote.lua:39
 msgid "Write quick notes here"
 msgstr "여기에 빠른 메모를 작성하세요"
 
-#: ../assistant_quicknote.lua:65
 msgid "Please enter a note before saving."
 msgstr "저장하기 전에 메모를 입력하세요."
 
-#: ../assistant_quicknote.lua:110
 msgid "User:"
 msgstr "사용자:"
 
-#: ../assistant_quicknote.lua:140 ../assistant_viewer.lua:475
 msgid "Saved to: %1"
 msgstr "저장 위치: %1"
 
-#: ../assistant_quicknote.lua:147
 msgid "Quick note saved successfully"
 msgstr "빠른 메모가 성공적으로 저장되었습니다"
 
-#: ../assistant_search_registry.lua:105
 msgid "Search tool record must be a table."
 msgstr "검색 도구 레코드는 테이블이어야 합니다."
 
-#: ../assistant_search_registry.lua:110 ../assistant_search_registry.lua:189
 msgid "Unknown search tool: %1"
 msgstr "알 수 없는 검색 도구: %1"
 
-#: ../assistant_search_registry.lua:117 ../main.lua:737
 msgid "API key is required for %1."
 msgstr "%1에 API 키가 필요합니다."
 
-#: ../assistant_search_registry.lua:122 ../main.lua:744
 msgid "Base URL is required for %1."
 msgstr "%1에 기본 URL이 필요합니다."
 
-#: ../assistant_search_registry.lua:212
 msgid "Search tool not found."
 msgstr "검색 도구를 찾을 수 없습니다."
 
-#: ../assistant_search_registry.lua:241 ../assistant_search_registry.lua:279
 msgid "Search tool data not initialized."
 msgstr "검색 도구 데이터가 초기화되지 않았습니다."
 
-#: ../assistant_search_registry.lua:323
 msgid "WebSearch API"
 msgstr "웹 검색 API"
 
-#: ../assistant_search_registry.lua:349
 msgid "%1 — choose an action"
 msgstr "%1 — 작업 선택"
 
-#: ../assistant_search_registry.lua:368 ../assistant_settings.lua:227
-#: ../main.lua:234
 msgid "Edit"
 msgstr "편집"
 
-#: ../assistant_search_registry.lua:375 ../assistant_settings.lua:238
-#: ../assistant_settings.lua:399 ../main.lua:211 ../main.lua:215
 msgid "Delete"
 msgstr "삭제"
 
-#: ../assistant_settings.lua:84
 msgid "AI Response Language Setting"
 msgstr "AI 응답 언어 설정"
 
-#: ../assistant_settings.lua:87
 msgid "AI Response Language"
 msgstr "AI 응답 언어"
 
-#: ../assistant_settings.lua:89 ../assistant_settings.lua:94
 msgid "Leave blank to use: %1"
 msgstr "비워 두면 사용: %1"
 
-#: ../assistant_settings.lua:92
 msgid "Dictionary Language"
 msgstr "사전 언어"
 
-#: ../assistant_settings.lua:107
 msgid "Clear"
 msgstr "지우기"
 
-#: ../assistant_settings.lua:154
 msgid "RTL written Language"
 msgstr "RTL 작성 언어"
 
-#: ../assistant_settings.lua:174
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "이 필드를 비워 두면 UI 언어를 사용합니다: %1"
 
-#: ../assistant_settings.lua:185
 msgid "Providers and Models"
 msgstr "공급자 및 모델"
 
-#: ../assistant_settings.lua:213 ../main.lua:603
 msgid "Browse Models"
 msgstr "모델 찾아보기"
 
-#: ../assistant_settings.lua:221
 msgid "Browse available models from the current provider"
 msgstr "현재 공급자에서 사용 가능한 모델 찾아보기"
 
-#: ../assistant_settings.lua:398
 msgid "Delete provider %1?"
 msgstr "공급자 %1을(를) 삭제하시겠습니까?"
 
-#: ../assistant_settings.lua:481
 msgid ""
 "Builtin Tools Works ONLY with these models:\n"
 "- Gemini-2.5/3\n"
@@ -1006,125 +758,95 @@ msgstr ""
 "- Gemini-2.5/3\n"
 "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:506
 msgid "AI Language: "
 msgstr "AI 언어: "
 
-#: ../assistant_settings.lua:518
 msgid "AI Text Size: %1"
 msgstr "AI 텍스트 크기: %1"
 
-#: ../assistant_settings.lua:522
 msgid "AI Response Text Font Size"
 msgstr "AI 응답 텍스트 글꼴 크기"
 
-#: ../assistant_settings.lua:538
 msgid "Response Settings"
 msgstr "응답 설정"
 
-#: ../assistant_settings.lua:541
 msgid "Enable Stream Response"
 msgstr "스트리밍 응답 활성화"
 
-#: ../assistant_settings.lua:549
 msgid "Stream Text Auto Scroll"
 msgstr "스트리밍 텍스트 자동 스크롤"
 
-#: ../assistant_settings.lua:558
 msgid "Large Streaming Window"
 msgstr "큰 스트리밍 창"
 
-#: ../assistant_settings.lua:568
 msgid "Show Reasoning Text"
 msgstr "추론 텍스트 표시"
 
-#: ../assistant_settings.lua:576
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "AI 응답에 추론(깊은 사고 과정)이 포함된 경우 표시합니다."
 
-#: ../assistant_settings.lua:581
 msgid "Show Follow-up Questions"
 msgstr "후속 질문 표시"
 
-#: ../assistant_settings.lua:589
 msgid "Show follow up questions related to the response content."
 msgstr "응답 내용과 관련된 후속 질문을 표시합니다."
 
-#: ../assistant_settings.lua:596
 msgid "Notebook Settings"
 msgstr "노트북 설정"
 
-#: ../assistant_settings.lua:599
 msgid "Auto-save conversations to notebook"
 msgstr "대화를 노트북에 자동 저장"
 
-#: ../assistant_settings.lua:607
 msgid "Multiple notebooks"
 msgstr "여러 노트북"
 
-#: ../assistant_settings.lua:617
 msgid "Choose which notebook your notes are saved to."
 msgstr "메모를 저장할 노트북을 선택하세요."
 
-#: ../assistant_settings.lua:625
 msgid "Notebooks folder: %1"
 msgstr "노트북 폴더: %1"
 
-#: ../assistant_settings.lua:627
 msgid "Notebooks folder"
 msgstr "노트북 폴더"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:642
 msgid "KOReader Tweaks"
 msgstr "KOReader 조정"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:646
 msgid "Use AI Assistant for 'Translate'"
 msgstr "'번역'에 AI 어시스턴트 사용"
 
-#: ../assistant_settings.lua:657
 msgid "Auto-recap on opening long-unread books"
 msgstr "오랫동안 읽지 않은 책을 열 때 자동 Recap"
 
-#: ../assistant_settings.lua:667
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "AI Recap은 다음에 오랫동안 읽지 않은 책을 열 때 활성화됩니다."
 
-#: ../assistant_settings.lua:671
 msgid "Show Dictionary(AI) in Dictionary Popup"
 msgstr "사전 팝업에 사전(AI) 표시"
 
-#: ../assistant_settings.lua:679
 msgid "Show Wikipedia(AI) in Dictionary Popup"
 msgstr "사전 팝업에 Wikipedia(AI) 표시"
 
-#: ../assistant_settings.lua:687
 msgid "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr "사전 팝업에 Term X-Ray(AI) 표시"
 
-#: ../assistant_settings.lua:695
 msgid "Show Custom Prompts in Dictionary Popup"
 msgstr "사전 팝업에 사용자 정의 프롬프트 표시"
 
-#: ../assistant_settings.lua:705
 msgid "Copy entered question to the clipboard"
 msgstr "입력한 질문을 클립보드에 복사"
 
-#: ../assistant_settings.lua:713
 msgid "Use book text for x-ray and recap"
 msgstr "x-ray 및 recap에 책 텍스트 사용"
 
-#: ../assistant_settings.lua:721 ../assistant_settings.lua:729
 msgid "OTA Update"
 msgstr "OTA 업데이트"
 
-#: ../assistant_settings.lua:731
 msgid "branch or tag name"
 msgstr "브랜치 또는 태그 이름"
 
-#: ../assistant_settings.lua:733
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -1146,15 +868,12 @@ msgstr ""
 "\n"
 "<b>configuration.lua는 보존됩니다.</b>"
 
-#: ../assistant_settings.lua:747
 msgid "Update"
 msgstr "업데이트"
 
-#: ../assistant_settings.lua:766
 msgid "Purge the settings"
 msgstr "설정 초기화"
 
-#: ../assistant_settings.lua:769
 msgid ""
 "Purge assistant.koplugin settings?\n"
 "\n"
@@ -1166,43 +885,33 @@ msgstr ""
 "이 작업은 플러그인을 기본값으로 복원합니다. 설정만 제거되며, \n"
 "configuration.lua 파일은 보존됩니다."
 
-#: ../assistant_settings.lua:773 ../main.lua:1090
 msgid "Purge"
 msgstr "초기화"
 
-#: ../assistant_tool_executor.lua:134
 msgid "Search keywords are empty."
 msgstr "검색 키워드가 비어 있습니다."
 
-#: ../assistant_tool_executor.lua:143
 msgid "Searching with %1 ... [%2]"
 msgstr "%1(으)로 검색 중 ... [%2]"
 
-#: ../assistant_tool_executor.lua:299
 msgid "Tool call did not include id."
 msgstr "도구 호출에 id가 포함되지 않았습니다."
 
-#: ../assistant_tool_executor.lua:302
 msgid "Tool call did not include search keywords."
 msgstr "도구 호출에 검색 키워드가 포함되지 않았습니다."
 
-#: ../assistant_updater.lua:141
 msgid "Checking for updates..."
 msgstr "업데이트 확인 중..."
 
-#: ../assistant_updater.lua:144
 msgid "AI Assistant: Failed to check updates: %2"
 msgstr "AI 어시스턴트: 업데이트 확인 실패: %2"
 
-#: ../assistant_updater.lua:144
 msgid "Empty Error"
 msgstr "빈 오류"
 
-#: ../assistant_updater.lua:154
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "%1 플러그인의 새 버전(%2)을 사용할 수 있습니다. 업데이트하세요!"
 
-#: ../assistant_updater.lua:192
 msgid ""
 "<b>Downloading ...</b>\n"
 "<b>Github: </b>%1\n"
@@ -1214,23 +923,18 @@ msgstr ""
 "<b>저장소: </b>%2\n"
 "<b>브랜치/태그: </b>%3"
 
-#: ../assistant_updater.lua:217
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "브랜치/태그 \"%1\"을(를) 찾을 수 없습니다."
 
-#: ../assistant_updater.lua:229
 msgid "OTA update canceled."
 msgstr "OTA 업데이트가 취소되었습니다."
 
-#: ../assistant_updater.lua:235 ../assistant_updater.lua:323
 msgid "OTA update failed: %1"
 msgstr "OTA 업데이트 실패: %1"
 
-#: ../assistant_updater.lua:242
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 설치 중...</b>"
 
-#: ../assistant_updater.lua:327
 msgid ""
 "OTA UPDATE OK.\n"
 " Restart is required."
@@ -1238,11 +942,9 @@ msgstr ""
 "OTA 업데이트 완료.\n"
 " 다시 시작해야 합니다."
 
-#: ../assistant_utils.lua:173
 msgid "Page"
 msgstr "페이지"
 
-#: ../assistant_utils.lua:199
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
@@ -1250,23 +952,18 @@ msgstr ""
 "<b>로그 기본 폴더에 접근할 수 없습니다: %1</b>\n"
 "원래 위치를 사용합니다."
 
-#: ../assistant_utils.lua:250
 msgid "Notebook path is unavailable."
 msgstr "노트북 경로를 사용할 수 없습니다."
 
-#: ../assistant_utils.lua:280
 msgid "Could not open notebook file."
 msgstr "노트북 파일을 열 수 없습니다."
 
-#: ../assistant_utils.lua:287
 msgid "Could not write notebook file."
 msgstr "노트북 파일을 쓸 수 없습니다."
 
-#: ../assistant_utils.lua:291
 msgid "Could not close notebook file."
 msgstr "노트북 파일을 닫을 수 없습니다."
 
-#: ../assistant_utils.lua:298
 msgid ""
 "Could not save to the selected notebook.\n"
 "Saved to: %1"
@@ -1274,112 +971,85 @@ msgstr ""
 "선택한 노트북에 저장할 수 없습니다.\n"
 "저장 위치: %1"
 
-#: ../assistant_utils.lua:312 ../assistant_utils.lua:322
 msgid "Notebook save failed. Continuing..."
 msgstr "NoteBook 저장에 실패했습니다. 계속 진행합니다..."
 
-#: ../assistant_utils.lua:453
 msgid "##### You may find these topics interesting:"
 msgstr "##### 다음 주제가 흥미로울 수 있습니다:"
 
-#: ../assistant_utils.lua:820
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: 반환된 데이터를 파싱하지 못했습니다."
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:316 ../assistant_viewer.lua:732
 msgid "Ask Another Question"
 msgstr "다른 질문하기"
 
-#: ../assistant_viewer.lua:361
 msgid "Copy"
 msgstr "복사"
 
-#: ../assistant_viewer.lua:366
 msgid "Text copied to the clipboard"
 msgstr "텍스트가 클립보드에 복사되었습니다."
 
-#: ../assistant_viewer.lua:380
 msgid "Add Note"
 msgstr "메모 추가"
 
-#: ../assistant_viewer.lua:387
 msgid "Highlight functionality not available"
 msgstr "하이라이트 기능을 사용할 수 없습니다."
 
-#: ../assistant_viewer.lua:396
 msgid "No text to add as note"
 msgstr "메모로 추가할 텍스트가 없습니다."
 
-#: ../assistant_viewer.lua:425
 msgid "No text left to add as note"
 msgstr "메모로 추가할 텍스트가 남아 있지 않습니다."
 
-#: ../assistant_viewer.lua:438
 msgid "Note added successfully"
 msgstr "메모가 성공적으로 추가되었습니다."
 
-#: ../assistant_viewer.lua:461
 msgid "Save conversation to"
 msgstr "대화 저장 위치"
 
-#: ../assistant_viewer.lua:486
 msgid "Conversation is saved to notebook"
 msgstr "대화가 노트북에 저장되었습니다."
 
-#: ../assistant_viewer.lua:563
 msgid "Book Analysis"
 msgstr "책 분석"
 
-#: ../assistant_viewer.lua:563
 msgid "General Conversation"
 msgstr "일반 대화"
 
-#: ../assistant_viewer.lua:734
 msgid "Type your question here"
 msgstr "질문을 입력하세요"
 
-#: ../assistant_viewer.lua:903
 msgid "Word copied to clipboard."
 msgstr "단어가 클립보드에 복사되었습니다."
 
-#: ../assistant_viewer.lua:904
 msgid "Selection copied to clipboard."
 msgstr "선택 영역이 클립보드에 복사되었습니다."
 
-#: ../main.lua:88 ../main.lua:148
 msgid "Ask the AI a question"
 msgstr "AI에게 질문하기"
 
-#: ../main.lua:96 ../main.lua:347
 msgid "AI Recaps"
 msgstr "AI 요약"
 
-#: ../main.lua:104 ../main.lua:332
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
-#: ../main.lua:120 ../main.lua:317
 msgid "Book Summary & Recs"
 msgstr "책 요약 및 추천"
 
-#: ../main.lua:155
 msgid "Enter a question to ask AI."
 msgstr "AI에게 물어볼 질문을 입력하세요."
 
-#: ../main.lua:166
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "노트북에 저장될 빠른 메모를 작성하세요."
 
-#: ../main.lua:178
 msgid "Notebook (AI Conversation Log)"
 msgstr "노트북 (AI 대화 기록)"
 
-#: ../main.lua:195
 msgid "Switch"
 msgstr "전환"
 
-#: ../main.lua:214
 msgid ""
 "Delete file?\n"
 "%1\n"
@@ -1389,7 +1059,6 @@ msgstr ""
 "%1\n"
 "이 작업은 되돌릴 수 없습니다."
 
-#: ../main.lua:245
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
@@ -1399,11 +1068,9 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:247
 msgid "View"
 msgstr "보기"
 
-#: ../main.lua:251
 msgid ""
 "File does not exist.\n"
 "\n"
@@ -1413,19 +1080,15 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:266
 msgid "AI Provider: not configured"
 msgstr "AI 제공자: 구성되지 않음"
 
-#: ../main.lua:272
 msgid "AI Provider: %1(%2)"
 msgstr "AI 제공자: %1(%2)"
 
-#: ../main.lua:285
 msgid "Web Search: %1"
 msgstr "웹 검색: %1"
 
-#: ../main.lua:289
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
@@ -1433,107 +1096,81 @@ msgstr ""
 "실시간 웹 검색 결과로 응답 정확도를 향상시킵니다. \n"
 "참고: 더 많은 토큰 사용량과 추가 API 비용이 발생합니다."
 
-#: ../main.lua:313
 msgid "Book-Level Built-in Prompts"
 msgstr "책 수준 내장 프롬프트"
 
-#: ../main.lua:326
 msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr "책 요약, 작가 소개, 역사적 배경, 그리고 설명이 포함된 유사 도서 추천 목록."
 
-#: ../main.lua:341
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" 요약: 등장인물, 장소, 주제, 용어 및 개념, 타임라인, 재몰입과 같은 특정 섹션으로 구성된 책 요약."
 
-#: ../main.lua:356
 msgid "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr "현재 읽기 진행 상황까지의 스포일러 없는 아주 간단한 책 요약."
 
-#: ../main.lua:367
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "책에서의 하이라이트, 메모, 노트북 내용 분석."
 
-#: ../main.lua:382
 msgid "Summary of the book using your highlights and notes."
 msgstr "하이라이트와 메모를 활용한 책 요약."
 
-#: ../main.lua:389
 msgid "Book-Level Custom Prompts"
 msgstr "책 수준 사용자 정의 프롬프트"
 
-#: ../main.lua:396
 msgid "Includes user defined book level prompts from Config file"
 msgstr "Config 파일에 정의된 사용자 정의 책 수준 프롬프트를 포함합니다."
 
-#: ../main.lua:471
 msgid "This is a custom prompt"
 msgstr "사용자 정의 프롬프트입니다."
 
-#: ../main.lua:481
 msgid "No valid book-level custom prompt found"
 msgstr "유효한 책 수준 사용자 정의 프롬프트를 찾을 수 없습니다."
 
-#: ../main.lua:486
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "자세한 내용은 GitHub의 'Configuration' 위키 페이지를 방문하세요."
 
-#: ../main.lua:571 ../main.lua:700
 msgid "Edit %1"
 msgstr "%1 편집"
 
-#: ../main.lua:581 ../main.lua:701
 msgid "Add %1"
 msgstr "%1 추가"
 
-#: ../main.lua:581
 msgid "Add %1 Provider"
 msgstr "%1 제공자 추가"
 
-#: ../main.lua:590
 msgid "Display name"
 msgstr "표시 이름"
 
-#: ../main.lua:590
 msgid "Provider Name"
 msgstr "제공자 이름"
 
-#: ../main.lua:591 ../main.lua:711
 msgid "Base URL"
 msgstr "기본 URL"
 
-#: ../main.lua:591 ../main.lua:711
 msgid "https://..."
 msgstr "https://..."
 
-#: ../main.lua:592 ../main.lua:707
 msgid "API Key"
 msgstr "API 키"
 
-#: ../main.lua:592 ../main.lua:707
 msgid "Your API key"
 msgstr "내 API 키"
 
-#: ../main.lua:593
 msgid "Default: auto"
 msgstr "기본값: 자동"
 
-#: ../main.lua:593
 msgid "Model"
 msgstr "모델"
 
-#: ../main.lua:624
 msgid "Failed to fetch models."
 msgstr "모델을 불러오지 못했습니다."
 
-#: ../main.lua:754
 msgid "Failed to save search tool."
 msgstr "검색 도구를 저장하지 못했습니다."
 
-#: ../main.lua:829
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "configuration.lua에서 유효한 모델 제공자를 찾을 수 없습니다."
 
-#: ../main.lua:848
 msgid ""
 "<b>Configuration Error.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -1541,15 +1178,12 @@ msgstr ""
 "<b>구성 오류.</b>\n"
 "설정 또는 configuration.lua에서 제공자를 추가하세요."
 
-#: ../main.lua:854
 msgid "OK"
 msgstr "확인"
 
-#: ../main.lua:972
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: 모델 제공자가 유효하지 않습니다."
 
-#: ../main.lua:1055
 msgid ""
 "Usage Tips\n"
 "\n"
@@ -1583,15 +1217,12 @@ msgstr ""
 "멀티 스와이프(예: ⮠, ⮡, ↺):\n"
 "결과 대화상자에서 닫기(닫기 버튼이 멀리 있어서)를 실행합니다.\n"
 
-#: ../main.lua:1077
 msgid "Version Info"
 msgstr "버전 정보"
 
-#: ../main.lua:1083
 msgid "Purge Settings"
 msgstr "설정 초기화"
 
-#: ../main.lua:1086
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
@@ -1603,28 +1234,22 @@ msgstr ""
 "\n"
 "configuration.lua는 안전하며 설정만 초기화됩니다."
 
-#: ../main.lua:1139
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "하이라이트 메뉴에서 [%s]을(를) 제거하시겠습니까?"
 
-#: ../main.lua:1140
 msgid "Remove"
 msgstr "제거"
 
-#: ../main.lua:1503
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "구성 파일을 찾을 수 없습니다. 먼저 configuration.lua를 설정하세요."
 
-#: ../main.lua:1551
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>추가됨</b>: [%1 (AI)]을(를) 하이라이트 메뉴에 추가했습니다."
 
-#: ../main.lua:1562
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
 msgstr "<b>제거됨</b>: [%1 (AI)]을(를) 하이라이트 메뉴에서 제거했습니다."
 
-#: ../main.lua:1607
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
@@ -1634,35 +1259,27 @@ msgstr ""
 "%2의 %1에 대해.\n"
 "\n"
 
-#: ../main.lua:1608
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "%1시간 전에 마지막으로 읽었습니다."
 
-#: ../main.lua:1613
 msgid "Yes"
 msgstr "예"
 
-#: ../main.lua:1622
 msgid "No"
 msgstr "아니요"
 
-#: ../main.lua:1663
 msgid "Markdown Engine"
 msgstr "마크다운 엔진"
 
-#: ../main.lua:1664
 msgid "KOReader"
 msgstr "KOReader"
 
-#: ../main.lua:1665
 msgid "Device"
 msgstr "기기"
 
-#: ../main.lua:1666
 msgid "Platform"
 msgstr "플랫폼"
 
-#: ../main.lua:1667
 msgid "Runtime"
 msgstr "런타임"

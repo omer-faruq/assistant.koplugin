@@ -17,70 +17,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../_meta.lua:3 ../assistant_dialog.lua:532 ../main.lua:413 ../main.lua:423
-#: ../main.lua:933
 msgid "AI Assistant"
 msgstr "AIアシスタント"
 
-#: ../_meta.lua:4
 msgid "💡 Enhance your KOReader experience with AI"
 msgstr "💡 AIでKOReaderの体験を向上させましょう"
 
-#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:32
-#: ../api_handlers/openai.lua:63 ../api_handlers/responses.lua:51
 msgid "<b>Fetching models...</b>"
 msgstr "<b>モデルを取得中...</b>"
 
-#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:42
-#: ../api_handlers/gemini.lua:52 ../api_handlers/openai.lua:79
-#: ../api_handlers/responses.lua:67
 msgid "Failed to fetch models"
 msgstr "モデルの取得に失敗しました"
 
-#: ../assistant_dialog.lua:93
 msgid "### ☺ Question\n"
 msgstr "### ☺ 質問\n"
 
-#: ../assistant_dialog.lua:135 ../assistant_model_picker.lua:103
-#: ../assistant_model_picker.lua:267
 msgid "Search"
 msgstr "検索"
 
-#: ../assistant_dialog.lua:138
 msgid "Response"
 msgstr "応答"
 
-#: ../assistant_dialog.lua:139
 msgid "(No response)"
 msgstr "（応答なし）"
 
-#: ../assistant_dialog.lua:176 ../assistant_quicknote.lua:109
-#: ../assistant_viewer.lua:559
 msgid "Highlighted text:"
 msgstr "ハイライトしたテキスト:"
 
-#: ../assistant_dialog.lua:340 ../assistant_dictdialog.lua:160
-#: ../assistant_model_picker.lua:128 ../assistant_model_picker.lua:258
-#: ../assistant_model_picker.lua:351 ../assistant_notebook.lua:381
-#: ../assistant_quicknote.lua:49 ../assistant_search_registry.lua:362
-#: ../assistant_settings.lua:100 ../assistant_settings.lua:741
-#: ../assistant_viewer.lua:661 ../main.lua:598 ../main.lua:722 ../main.lua:858
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: ../assistant_dialog.lua:360
 msgid "Select notebook"
 msgstr "ノートブックを選択"
 
-#: ../assistant_dialog.lua:388 ../assistant_viewer.lua:671
 msgid "Ask"
 msgstr "質問する"
 
-#: ../assistant_dialog.lua:401 ../assistant_viewer.lua:677
 msgid "Enter a question before proceeding."
 msgstr "質問を入力してから続行してください。"
 
-#: ../assistant_dialog.lua:488
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
@@ -90,15 +65,12 @@ msgstr ""
 "\n"
 "このボタンをハイライトメニューに追加しますか？"
 
-#: ../assistant_dialog.lua:490 ../assistant_settings.lua:252
 msgid "Add"
 msgstr "追加"
 
-#: ../assistant_dialog.lua:518
 msgid "Ask a question about the highlighted text"
 msgstr "ハイライトしたテキストについて質問する"
 
-#: ../assistant_dialog.lua:521
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
@@ -106,129 +78,97 @@ msgstr ""
 "<b>この本について質問する:</b>\n"
 "%1（著者: %2）"
 
-#: ../assistant_dialog.lua:524
 msgid "Ask a general question"
 msgstr "一般的な質問をする"
 
-#: ../assistant_dialog.lua:527
 msgid "Type your question here..."
 msgstr "ここに質問を入力してください..."
 
-#: ../assistant_dialog.lua:528
 msgid "Ask anything about this book..."
 msgstr "この本について何でも質問してください..."
 
-#: ../assistant_dialog.lua:529
 msgid "Ask anything..."
 msgstr "何でも質問してください..."
 
-#: ../assistant_dialog.lua:553
 msgid "Use book text as context"
 msgstr "本のテキストをコンテキストとして使用"
 
-#: ../assistant_dialog.lua:606
 msgid "Loading for %1 ..."
 msgstr "%1 を読み込み中 ..."
 
-#: ../assistant_dialog.lua:620
 msgid "<b>Error:</b> No response received"
 msgstr "<b>エラー:</b> 応答がありませんでした"
 
-#: ../assistant_dictdialog.lua:154
 msgid "AI Dictionary"
 msgstr "AI辞書"
 
-#: ../assistant_dictdialog.lua:155
 msgid "Enter a word to look up..."
 msgstr "調べる単語を入力してください..."
 
-#: ../assistant_dictdialog.lua:166
 msgid "Look Up"
 msgstr "調べる"
 
-#: ../assistant_dictdialog.lua:213
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Term X-Rayのため、書籍のコンテキストを分析中...</b>"
 
-#: ../assistant_dictdialog.lua:388 ../assistant_prompts.lua:27 ../main.lua:1213
-#: ../main.lua:1215
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
-#: ../assistant_dictdialog.lua:391
 msgid "Loading Term X-Ray ..."
 msgstr "Term X-Rayを読み込み中 ..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:74 ../main.lua:1232
 msgid "Dictionary"
 msgstr "辞書"
 
-#: ../assistant_dictdialog.lua:409
 msgid "Loading AI Dictionary ..."
 msgstr "AI辞書を読み込み中 ..."
 
-#: ../assistant_exttools.lua:262
 msgid "None"
 msgstr "なし"
 
-#: ../assistant_exttools.lua:263
 msgid "Model Built-In"
 msgstr "モデル内蔵"
 
-#: ../assistant_featuredialog.lua:41
 msgid "Custom Prompt"
 msgstr "カスタムプロンプト"
 
-#: ../assistant_featuredialog.lua:42
 msgid "Loading..."
 msgstr "読み込み中..."
 
-#: ../assistant_featuredialog.lua:63
 msgid "Recap"
 msgstr "Recap"
 
-#: ../assistant_featuredialog.lua:64
 msgid "Loading Recap..."
 msgstr "Recapを読み込み中..."
 
-#: ../assistant_featuredialog.lua:69
 msgid "X‑Ray"
 msgstr "X‑Ray"
 
-#: ../assistant_featuredialog.lua:70
 msgid "Loading X-Ray..."
 msgstr "X-Rayを読み込み中..."
 
 #. @translators book_info section headers and sub-fields
-#: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
 msgid "Book Information"
 msgstr "書籍情報"
 
-#: ../assistant_featuredialog.lua:76
 msgid "Loading Book Information..."
 msgstr "書籍情報を読み込み中..."
 
-#: ../assistant_featuredialog.lua:81 ../main.lua:128 ../main.lua:361
 msgid "Highlight & Note Analysis"
 msgstr "ハイライトとノートの分析"
 
-#: ../assistant_featuredialog.lua:82
 msgid "Loading Highlight & Note Analysis..."
 msgstr "ハイライトとノートの分析を読み込み中..."
 
-#: ../assistant_featuredialog.lua:87 ../main.lua:136 ../main.lua:373
 msgid "Summary Using Highlights & Notes"
 msgstr "ハイライトとノートを使った要約"
 
-#: ../assistant_featuredialog.lua:88
 msgid "Loading Summary Using Highlights & Notes..."
 msgstr "ハイライトとノートを使った要約を読み込み中..."
 
-#: ../assistant_featuredialog.lua:100
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>不明な機能タイプ:</b> %1"
 
-#: ../assistant_featuredialog.lua:187
 msgid ""
 " - Title : %1\n"
 " - Author: %2\n"
@@ -244,546 +184,410 @@ msgstr ""
 "-----\n"
 "\n"
 
-#: ../assistant_model_picker.lua:77
 msgid "Models: %1 (filtered)"
 msgstr "モデル: %1（フィルタリング済み）"
 
-#: ../assistant_model_picker.lua:79
 msgid "Models: %1"
 msgstr "モデル: %1"
 
-#: ../assistant_model_picker.lua:82
 msgid " — p. %1/%2"
 msgstr " — %1/%2ページ"
 
-#: ../assistant_model_picker.lua:119
 msgid "Manual"
 msgstr "マニュアル"
 
-#: ../assistant_model_picker.lua:123
 msgid "Reset"
 msgstr "リセット"
 
-#: ../assistant_model_picker.lua:170 ../assistant_model_picker.lua:368
 msgid "Model: %1"
 msgstr "モデル: %1"
 
-#: ../assistant_model_picker.lua:183
 msgid "Filter: \"%1\""
 msgstr "フィルター: \"%1\""
 
-#: ../assistant_model_picker.lua:185
 msgid "Select a model:"
 msgstr "モデルを選択:"
 
-#: ../assistant_model_picker.lua:253
 msgid "Search Models"
 msgstr "モデルを検索"
 
-#: ../assistant_model_picker.lua:292
 msgid "Model reset: %1"
 msgstr "モデルをリセットしました: %1"
 
-#: ../assistant_model_picker.lua:322
 msgid "No models matching \"%1\"."
 msgstr "\"%1\" に一致するモデルがありません。"
 
-#: ../assistant_model_picker.lua:346
 msgid "Enter Model ID"
 msgstr "モデルIDを入力"
 
-#: ../assistant_model_picker.lua:348
 msgid "e.g. google/gemini-3.0-flash-exp:free"
 msgstr "例: google/gemini-3.0-flash-exp:free"
 
-#: ../assistant_model_picker.lua:356 ../assistant_quicknote.lua:59
-#: ../assistant_settings.lua:124 ../assistant_viewer.lua:457 ../main.lua:645
-#: ../main.lua:727
 msgid "Save"
 msgstr "保存"
 
-#: ../assistant_model_picker.lua:389
 msgid "No models available."
 msgstr "利用可能なモデルがありません。"
 
-#: ../assistant_notebook.lua:133
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "設定されたノートブックフォルダにアクセスできません: %1"
 
-#: ../assistant_notebook.lua:138
 msgid "No base folder is available for notebooks."
 msgstr "ノートブック用のベースフォルダがありません。"
 
-#: ../assistant_notebook.lua:147
 msgid "Notebooks path is not a directory: %1"
 msgstr "ノートブックのパスはディレクトリではありません: %1"
 
-#: ../assistant_notebook.lua:156
 msgid "Could not create notebooks folder: %1"
 msgstr "ノートブックフォルダを作成できませんでした: %1"
 
-#: ../assistant_notebook.lua:185
 msgid "Could not list notebooks folder: %1"
 msgstr "ノートブックフォルダを一覧表示できませんでした: %1"
 
-#: ../assistant_notebook.lua:227
 msgid "No path is available for the legacy notebook."
 msgstr "レガシーノートブックのパスがありません。"
 
-#: ../assistant_notebook.lua:234
 msgid "Assistant settings are not available."
 msgstr "アシスタント設定を利用できません。"
 
-#: ../assistant_notebook.lua:237
 msgid "Invalid notebook entry."
 msgstr "無効なノートブックエントリです。"
 
-#: ../assistant_notebook.lua:247
 msgid "Invalid notebook filename."
 msgstr "無効なノートブックファイル名です。"
 
-#: ../assistant_notebook.lua:268
 msgid "Notebook name must be text."
 msgstr "ノートブック名はテキストである必要があります。"
 
-#: ../assistant_notebook.lua:273 ../assistant_notebook.lua:296
 msgid "Notebook name cannot be empty."
 msgstr "ノートブック名は空にできません。"
 
-#: ../assistant_notebook.lua:276
 msgid "Notebook name cannot contain path separators."
 msgstr "ノートブック名にパス区切り文字を含めることはできません。"
 
-#: ../assistant_notebook.lua:279
 msgid "Notebook name cannot contain '..'."
 msgstr "ノートブック名に「..」を含めることはできません。"
 
-#: ../assistant_notebook.lua:282
 msgid "Notebook name contains characters that are not supported by the filesystem."
 msgstr "ノートブック名にファイルシステムでサポートされていない文字が含まれています。"
 
-#: ../assistant_notebook.lua:285
 msgid "Notebook name cannot end with a space or dot."
 msgstr "ノートブック名はスペースまたはドットで終わらせることができません。"
 
-#: ../assistant_notebook.lua:303
 msgid "Notebook name is reserved by the filesystem."
 msgstr "ノートブック名はファイルシステムによって予約されています。"
 
-#: ../assistant_notebook.lua:324
 msgid "Notebook path is not a file: %1"
 msgstr "ノートブックのパスはファイルではありません: %1"
 
-#: ../assistant_notebook.lua:330
 msgid "Could not create notebook: %1"
 msgstr "ノートブックを作成できませんでした: %1"
 
-#: ../assistant_notebook.lua:375
 msgid "New notebook"
 msgstr "新しいノートブック"
 
-#: ../assistant_notebook.lua:376
 msgid "Notebook name"
 msgstr "ノートブック名"
 
-#: ../assistant_notebook.lua:377
 msgid "Create a notebook."
 msgstr "ノートブックを作成します。"
 
-#: ../assistant_notebook.lua:388
 msgid "Create"
 msgstr "作成"
 
-#: ../assistant_notebook.lua:401
 msgid "Could not create notebook."
 msgstr "ノートブックを作成できませんでした。"
 
-#: ../assistant_notebook.lua:453
 msgid "Could not select notebook."
 msgstr "ノートブックを選択できませんでした。"
 
-#: ../assistant_notebook.lua:467
 msgid "No notebooks yet"
 msgstr "ノートブックはまだありません"
 
-#: ../assistant_notebook.lua:473
 msgid "New notebook…"
 msgstr "新しいノートブック…"
 
-#: ../assistant_notebook.lua:487
 msgid "Notebooks"
 msgstr "ノートブック"
 
-#: ../assistant_notebook.lua:489
 msgid "Active: %1"
 msgstr "アクティブ: %1"
 
-#: ../assistant_prompts.lua:30
 msgid "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr "このプロンプトは、選択した語句を周囲のテキスト内で分析し、文字通りの意味と文脈上の重要性の両方を捉えたニュアンスのある説明を提供することで、文学作品の語句に対する文脈を考慮した定義を生成するための構造化されたシステムを作成します。"
 
 #. @translators term_xray section headers
 #. @translators term_xray: "What It Is" section header
-#: ../assistant_prompts.lua:64
 msgid "What It Is"
 msgstr "それは何か"
 
 #. @translators term_xray: "Role & Function" section header
-#: ../assistant_prompts.lua:66
 msgid "Role & Function"
 msgstr "役割と機能"
 
 #. @translators term_xray: "Evolution & Connections" section header
-#: ../assistant_prompts.lua:68
 msgid "Evolution & Connections"
 msgstr "変遷と関連性"
 
 #. @translators term_xray: "Context Limitations" section header
-#: ../assistant_prompts.lua:70
 msgid "Context Limitations"
 msgstr "文脈の限界"
 
-#: ../assistant_prompts.lua:76
 msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr "このプロンプトは、選択したテキストの辞書として機能し、語句の意味を提供します。"
 
-#: ../assistant_prompts.lua:82 ../assistant_quicknote.lua:111
 msgid "Quick Note"
 msgstr "クイックノート"
 
-#: ../assistant_prompts.lua:83
 msgid "This button creates a quick note with highlighted text."
 msgstr "このボタンは、選択したテキストを含むクイックノートを作成します。"
 
-#: ../assistant_prompts.lua:88
 msgid "Vocabulary"
 msgstr "語彙"
 
-#: ../assistant_prompts.lua:92
 msgid "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr "このプロンプトは、選択したテキストの語彙を分析し、難しい単語を特定して、定義、類義語、使用例を提供します。"
 
-#: ../assistant_prompts.lua:109
 msgid "Grammar"
 msgstr "文法"
 
-#: ../assistant_prompts.lua:113
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "このプロンプトは、選択したテキストの文法を分析し、その構造と文法上の誤りについて詳しく説明します。"
 
 #. @translators grammar section headers
-#: ../assistant_prompts.lua:136
 msgid "Structure & Clauses"
 msgstr "構造と節"
 
-#: ../assistant_prompts.lua:137
 msgid "Parts of Speech & Tenses"
 msgstr "品詞と時制"
 
-#: ../assistant_prompts.lua:138
 msgid "Error Correction (If Applicable)"
 msgstr "誤りの訂正（該当する場合）"
 
-#: ../assistant_prompts.lua:142
 msgid "Translate"
 msgstr "翻訳"
 
-#: ../assistant_prompts.lua:144
 msgid "This prompt translates the highlighted text to another language."
 msgstr "このプロンプトは、選択したテキストを別の言語に翻訳します。"
 
-#: ../assistant_prompts.lua:156
 msgid "Summarize"
 msgstr "要約"
 
-#: ../assistant_prompts.lua:159
 msgid "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr "このプロンプトは、選択したテキストを要約し、要点と重要な詳細をまとめます。"
 
-#: ../assistant_prompts.lua:174
 msgid "Simplify"
 msgstr "簡略化"
 
-#: ../assistant_prompts.lua:177
 msgid "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr "このプロンプトは、選択したテキストをわかりやすく簡略化します。"
 
-#: ../assistant_prompts.lua:191 ../assistant_prompts.lua:534
 msgid "Key Points"
 msgstr "重要ポイント"
 
-#: ../assistant_prompts.lua:195
 msgid "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr "このプロンプトは、選択したテキストから重要ポイントを抽出して一覧表示し、明確で整理された形にします。"
 
 #. @translators key_points section headers
-#: ../assistant_prompts.lua:216
 msgid "Core Arguments"
 msgstr "中心となる主張"
 
-#: ../assistant_prompts.lua:217
 msgid "Essential Facts & Conclusions"
 msgstr "重要な事実と結論"
 
-#: ../assistant_prompts.lua:220
 msgid "ELI5"
 msgstr "ELI5"
 
-#: ../assistant_prompts.lua:224
 msgid "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr "このプロンプトは、選択したテキストを5歳児に説明するように、複雑な概念をわかりやすい言葉に単純化して説明します。"
 
 #. @translators ELI5 section headers
-#: ../assistant_prompts.lua:244
 msgid "Core Idea"
 msgstr "核となるアイデア"
 
-#: ../assistant_prompts.lua:245
 msgid "Fun Analogy"
 msgstr "楽しい例え"
 
-#: ../assistant_prompts.lua:248
 msgid "Explain"
 msgstr "説明"
 
-#: ../assistant_prompts.lua:251
 msgid "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr "このプロンプトは、選択したテキストを詳しく説明し、明確さと理解を確保します。"
 
-#: ../assistant_prompts.lua:265
 msgid "Historical Context"
 msgstr "歴史的背景"
 
-#: ../assistant_prompts.lua:269
 msgid "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr "このプロンプトは、選択したテキストの詳細な歴史的背景を提供し、その重要性と背景を説明します。"
 
 #. @translators historical_context section headers
-#: ../assistant_prompts.lua:290
 msgid "Era & Background"
 msgstr "時代と背景"
 
-#: ../assistant_prompts.lua:291
 msgid "Contextual Connections"
 msgstr "文脈上の関連"
 
-#: ../assistant_prompts.lua:292
 msgid "Cultural Significance"
 msgstr "文化的意義"
 
-#: ../assistant_prompts.lua:295 ../main.lua:1194 ../main.lua:1196
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#: ../assistant_prompts.lua:299
 msgid "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr "このプロンプトは、選択したテキストに基づいて、事実の正確さと中立性を確保した包括的なWikipediaスタイルの記事を生成します。"
 
 #. @translators xray section headers
-#: ../assistant_prompts.lua:391
 msgid "Characters"
 msgstr "登場人物"
 
-#: ../assistant_prompts.lua:392
 msgid "Locations"
 msgstr "場所"
 
-#: ../assistant_prompts.lua:393
 msgid "Main Themes"
 msgstr "主要テーマ"
 
-#: ../assistant_prompts.lua:394
 msgid "Terms & Concepts"
 msgstr "用語と概念"
 
-#: ../assistant_prompts.lua:395
 msgid "Timeline"
 msgstr "タイムライン"
 
-#: ../assistant_prompts.lua:396
 msgid "Re-immersion"
 msgstr "再没入"
 
 #. @translators xray Re-immersion sub-fields
-#: ../assistant_prompts.lua:398
 msgid "Where the action stopped:"
 msgstr "物語が中断した場所："
 
-#: ../assistant_prompts.lua:399
 msgid "Protagonist's current objective:"
 msgstr "主人公の現在の目的："
 
-#: ../assistant_prompts.lua:400
 msgid "Open conflict or mystery:"
 msgstr "未解決の対立または謎："
 
-#: ../assistant_prompts.lua:401
 msgid "Narrative element in focus:"
 msgstr "焦点となっている物語要素："
 
-#: ../assistant_prompts.lua:402
 msgid "Prevailing emotional state/tone:"
 msgstr "支配的な感情状態・トーン："
 
-#: ../assistant_prompts.lua:403
 msgid "Outstanding questions:"
 msgstr "未解決の疑問："
 
-#: ../assistant_prompts.lua:441
 msgid "Genre"
 msgstr "ジャンル"
 
-#: ../assistant_prompts.lua:442
 msgid "Publication Date"
 msgstr "出版日"
 
-#: ../assistant_prompts.lua:443
 msgid "Publisher"
 msgstr "出版社"
 
-#: ../assistant_prompts.lua:444
 msgid "Plot Summary"
 msgstr "あらすじ"
 
-#: ../assistant_prompts.lua:445
 msgid "About the Author"
 msgstr "著者について"
 
-#: ../assistant_prompts.lua:446
 msgid "Historical and Cultural Context"
 msgstr "歴史的・文化的背景"
 
-#: ../assistant_prompts.lua:447
 msgid "Similar Books Recommendations"
 msgstr "類似書籍のおすすめ"
 
 #. @translators annotations section headers
-#: ../assistant_prompts.lua:478
 msgid "Key Takeaways"
 msgstr "重要なポイント"
 
-#: ../assistant_prompts.lua:479
 msgid "To-Do / Action Items"
 msgstr "やること / アクション項目"
 
-#: ../assistant_prompts.lua:480
 msgid "Contextual Notes"
 msgstr "文脈ノート"
 
-#: ../assistant_prompts.lua:481
 msgid "Contextual Notes / Reflections"
 msgstr "文脈ノート / 考察"
 
 #. @translators summary_using_annotations output structure sections
-#: ../assistant_prompts.lua:532
 msgid "TL;DR"
 msgstr "TL;DR"
 
-#: ../assistant_prompts.lua:533
 msgid "Integrated Summary"
 msgstr "統合サマリー"
 
-#: ../assistant_prompts.lua:535
 msgid "Actionable Takeaways"
 msgstr "実践可能なポイント"
 
-#: ../assistant_prompts.lua:536
 msgid "Contradictions / Open Questions"
 msgstr "矛盾 / 未解決の疑問"
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:564
 msgid "Conjugation"
 msgstr "活用"
 
-#: ../assistant_prompts.lua:565
 msgid "Synonyms"
 msgstr "類義語"
 
-#: ../assistant_prompts.lua:566
 msgid "Meaning"
 msgstr "意味"
 
-#: ../assistant_prompts.lua:567
 msgid "Translation"
 msgstr "翻訳"
 
-#: ../assistant_prompts.lua:568
 msgid "Book Usage"
 msgstr "書籍内での用法"
 
-#: ../assistant_prompts.lua:569
 msgid "Example"
 msgstr "例文"
 
-#: ../assistant_prompts.lua:570
 msgid "Word Origin"
 msgstr "語源"
 
-#: ../assistant_provider_registry.lua:210
 msgid "Provider record must be a table."
 msgstr "プロバイダー設定はテーブルである必要があります。"
 
-#: ../assistant_provider_registry.lua:216
 msgid "Provider name is required."
 msgstr "プロバイダー名は必須です。"
 
-#: ../assistant_provider_registry.lua:221
 msgid "Unsupported API protocol."
 msgstr "サポートされていないAPIプロトコルです。"
 
-#: ../assistant_provider_registry.lua:232 ../main.lua:655
 msgid "Base URL is required."
 msgstr "ベースURLは必須です。"
 
-#: ../assistant_provider_registry.lua:235 ../assistant_search_registry.lua:125
 msgid "Base URL must start with http:// or https://"
 msgstr "ベースURLは http:// または https:// で始まる必要があります。"
 
-#: ../assistant_provider_registry.lua:241 ../main.lua:659
 msgid "API key is required."
 msgstr "APIキーは必須です。"
 
-#: ../assistant_provider_registry.lua:292
-#: ../assistant_provider_registry.lua:308
-#: ../assistant_provider_registry.lua:348
 msgid "Provider not found."
 msgstr "プロバイダーが見つかりません。"
 
-#: ../assistant_provider_registry.lua:343
-#: ../assistant_provider_registry.lua:394
 msgid "Provider data not initialized."
 msgstr "プロバイダーデータが初期化されていません。"
 
-#: ../assistant_provider_registry.lua:447
 msgid "Provider API"
 msgstr "プロバイダーAPI"
 
-#: ../assistant_provider_registry.lua:465
 msgid "%1 (Compatible)"
 msgstr "%1（互換）"
 
-#: ../assistant_provider_registry.lua:473
 msgid "Custom"
 msgstr "カスタム"
 
-#: ../assistant_querier.lua:125
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "プロバイダー設定が見つかりません: %1。configuration.lua ファイルを確認してください。"
 
-#: ../assistant_querier.lua:138
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "ハンドラーが見つかりません: %1。configuration.lua ファイルを確認してください。"
 
-#: ../assistant_querier.lua:145
 msgid "Handler %1 not available for provider: %2"
 msgstr "ハンドラー %1 はプロバイダー %2 では利用できません。"
 
-#: ../assistant_querier.lua:156
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 のハンドラーが見つかりませんでした。api_handlers ディレクトリにハンドラーが存在することを確認してください。"
 
-#: ../assistant_querier.lua:199
 msgid ""
 "<b>API Error</b>\n"
 "%1\n"
@@ -801,202 +605,150 @@ msgstr ""
 "\n"
 "設定ダイアログで別のプロバイダーをお試しください。"
 
-#: ../assistant_querier.lua:200
 msgid "Unknown error"
 msgstr "不明なエラー"
 
-#: ../assistant_querier.lua:205 ../main.lua:295
 msgid "Settings"
 msgstr "設定"
 
-#: ../assistant_querier.lua:207 ../assistant_settings.lua:208
-#: ../assistant_viewer.lua:346
 msgid "Close"
 msgstr "閉じる"
 
-#: ../assistant_querier.lua:294
 msgid "Plugin is not configured."
 msgstr "プラグインが設定されていません。"
 
-#: ../assistant_querier.lua:386 ../assistant_querier.lua:484
 msgid "Too many tool-call rounds; aborting."
 msgstr "ツール呼び出しのラウンドが多すぎるため、中止します。"
 
-#: ../assistant_querier.lua:394
 msgid "Stream failed with no error message."
 msgstr "エラーメッセージなしでストリームが失敗しました。"
 
-#: ../assistant_querier.lua:411
 msgid "Stream ended with no content and no tool calls."
 msgstr "コンテンツもツール呼び出しもないままストリームが終了しました。"
 
-#: ../assistant_querier.lua:458
 msgid "Request Cancelled by user."
 msgstr "ユーザーによってリクエストがキャンセルされました。"
 
-#: ../assistant_querier.lua:467
 msgid "Querying AI ..."
 msgstr "AIに問い合わせ中..."
 
-#: ../assistant_querier.lua:522
 msgid "Composing answer ..."
 msgstr "回答を作成中..."
 
-#: ../assistant_querier.lua:537 ../assistant_querier.lua:695
 msgid "Request cancelled by user."
 msgstr "ユーザーによってリクエストがキャンセルされました。"
 
-#: ../assistant_querier.lua:544
 msgid "No response received."
 msgstr "応答がありませんでした。"
 
-#: ../assistant_querier.lua:580
 msgid "AI is responding"
 msgstr "AIが応答中"
 
-#: ../assistant_querier.lua:601
 msgid "❌ Stop"
 msgstr "❌ 停止"
 
-#: ../assistant_querier.lua:606
 msgid "■ Scroll"
 msgstr "■ スクロール"
 
-#: ../assistant_querier.lua:606
 msgid "▶ Scroll"
 msgstr "▶ スクロール"
 
-#: ../assistant_querier.lua:712
 msgid "Failed to start subprocess for request"
 msgstr "リクエストのサブプロセスを開始できませんでした"
 
-#: ../assistant_querier.lua:921
 msgid "Error Message"
 msgstr "エラーメッセージ"
 
-#: ../assistant_querier.lua:950 ../assistant_querier.lua:953
 msgid "Deeply Thought"
 msgstr "思考内容"
 
-#: ../assistant_querier.lua:1143
 msgid "Stopped Reason: "
 msgstr "停止理由: "
 
-#: ../assistant_quicknote.lua:30 ../main.lua:174
 msgid "Notebook: %1"
 msgstr "ノートブック: %1"
 
-#: ../assistant_quicknote.lua:36 ../main.lua:112 ../main.lua:160
 msgid "Take Quick Notes"
 msgstr "クイックノートを取る"
 
-#: ../assistant_quicknote.lua:39
 msgid "Write quick notes here"
 msgstr "ここにクイックノートを入力してください"
 
-#: ../assistant_quicknote.lua:65
 msgid "Please enter a note before saving."
 msgstr "保存する前にメモを入力してください。"
 
-#: ../assistant_quicknote.lua:110
 msgid "User:"
 msgstr "ユーザー:"
 
-#: ../assistant_quicknote.lua:140 ../assistant_viewer.lua:475
 msgid "Saved to: %1"
 msgstr "保存先: %1"
 
-#: ../assistant_quicknote.lua:147
 msgid "Quick note saved successfully"
 msgstr "クイックノートを保存しました。"
 
-#: ../assistant_search_registry.lua:105
 msgid "Search tool record must be a table."
 msgstr "検索ツールのレコードはテーブルである必要があります。"
 
-#: ../assistant_search_registry.lua:110 ../assistant_search_registry.lua:189
 msgid "Unknown search tool: %1"
 msgstr "不明な検索ツール: %1"
 
-#: ../assistant_search_registry.lua:117 ../main.lua:737
 msgid "API key is required for %1."
 msgstr "%1にはAPIキーが必要です。"
 
-#: ../assistant_search_registry.lua:122 ../main.lua:744
 msgid "Base URL is required for %1."
 msgstr "%1にはベースURLが必要です。"
 
-#: ../assistant_search_registry.lua:212
 msgid "Search tool not found."
 msgstr "検索ツールが見つかりません。"
 
-#: ../assistant_search_registry.lua:241 ../assistant_search_registry.lua:279
 msgid "Search tool data not initialized."
 msgstr "検索ツールのデータが初期化されていません。"
 
-#: ../assistant_search_registry.lua:323
 msgid "WebSearch API"
 msgstr "Web検索API"
 
-#: ../assistant_search_registry.lua:349
 msgid "%1 — choose an action"
 msgstr "%1 — アクションを選択"
 
-#: ../assistant_search_registry.lua:368 ../assistant_settings.lua:227
-#: ../main.lua:234
 msgid "Edit"
 msgstr "編集"
 
-#: ../assistant_search_registry.lua:375 ../assistant_settings.lua:238
-#: ../assistant_settings.lua:399 ../main.lua:211 ../main.lua:215
 msgid "Delete"
 msgstr "削除"
 
-#: ../assistant_settings.lua:84
 msgid "AI Response Language Setting"
 msgstr "AI応答言語の設定"
 
-#: ../assistant_settings.lua:87
 msgid "AI Response Language"
 msgstr "AI応答言語"
 
-#: ../assistant_settings.lua:89 ../assistant_settings.lua:94
 msgid "Leave blank to use: %1"
 msgstr "空欄の場合は%1を使用します"
 
-#: ../assistant_settings.lua:92
 msgid "Dictionary Language"
 msgstr "辞書の言語"
 
-#: ../assistant_settings.lua:107
 msgid "Clear"
 msgstr "クリア"
 
-#: ../assistant_settings.lua:154
 msgid "RTL written Language"
 msgstr "RTL表記の言語"
 
-#: ../assistant_settings.lua:174
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "これらのフィールドを空欄にすると、UI言語（%1）を使用します"
 
-#: ../assistant_settings.lua:185
 msgid "Providers and Models"
 msgstr "プロバイダーとモデル"
 
-#: ../assistant_settings.lua:213 ../main.lua:603
 msgid "Browse Models"
 msgstr "モデルを参照"
 
-#: ../assistant_settings.lua:221
 msgid "Browse available models from the current provider"
 msgstr "現在のプロバイダーから利用可能なモデルを参照します"
 
-#: ../assistant_settings.lua:398
 msgid "Delete provider %1?"
 msgstr "プロバイダー%1を削除しますか？"
 
-#: ../assistant_settings.lua:481
 msgid ""
 "Builtin Tools Works ONLY with these models:\n"
 "- Gemini-2.5/3\n"
@@ -1006,125 +758,95 @@ msgstr ""
 "- Gemini-2.5/3\n"
 "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:506
 msgid "AI Language: "
 msgstr "AI言語: "
 
-#: ../assistant_settings.lua:518
 msgid "AI Text Size: %1"
 msgstr "AIテキストサイズ: %1"
 
-#: ../assistant_settings.lua:522
 msgid "AI Response Text Font Size"
 msgstr "AI応答テキストのフォントサイズ"
 
-#: ../assistant_settings.lua:538
 msgid "Response Settings"
 msgstr "応答設定"
 
-#: ../assistant_settings.lua:541
 msgid "Enable Stream Response"
 msgstr "ストリーム応答を有効にする"
 
-#: ../assistant_settings.lua:549
 msgid "Stream Text Auto Scroll"
 msgstr "ストリームテキストの自動スクロール"
 
-#: ../assistant_settings.lua:558
 msgid "Large Streaming Window"
 msgstr "大きなストリーミングウィンドウ"
 
-#: ../assistant_settings.lua:568
 msgid "Show Reasoning Text"
 msgstr "推論テキストを表示"
 
-#: ../assistant_settings.lua:576
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "AI応答に含まれる場合、深く考えた過程（推論）を表示します。"
 
-#: ../assistant_settings.lua:581
 msgid "Show Follow-up Questions"
 msgstr "フォローアップ質問を表示"
 
-#: ../assistant_settings.lua:589
 msgid "Show follow up questions related to the response content."
 msgstr "応答内容に関連するフォローアップ質問を表示します。"
 
-#: ../assistant_settings.lua:596
 msgid "Notebook Settings"
 msgstr "ノートブック設定"
 
-#: ../assistant_settings.lua:599
 msgid "Auto-save conversations to notebook"
 msgstr "会話をノートブックに自動保存"
 
-#: ../assistant_settings.lua:607
 msgid "Multiple notebooks"
 msgstr "複数のノートブック"
 
-#: ../assistant_settings.lua:617
 msgid "Choose which notebook your notes are saved to."
 msgstr "メモの保存先ノートブックを選択してください。"
 
-#: ../assistant_settings.lua:625
 msgid "Notebooks folder: %1"
 msgstr "ノートブックフォルダ: %1"
 
-#: ../assistant_settings.lua:627
 msgid "Notebooks folder"
 msgstr "ノートブックフォルダ"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:642
 msgid "KOReader Tweaks"
 msgstr "KOReader の微調整"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:646
 msgid "Use AI Assistant for 'Translate'"
 msgstr "「翻訳」にAIアシスタントを使用"
 
-#: ../assistant_settings.lua:657
 msgid "Auto-recap on opening long-unread books"
 msgstr "長期間未読の本を開いたときに自動レキャップ"
 
-#: ../assistant_settings.lua:667
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "次回、長期間未読の本を開いたときにAIレキャップが有効になります。"
 
-#: ../assistant_settings.lua:671
 msgid "Show Dictionary(AI) in Dictionary Popup"
 msgstr "辞書ポップアップに辞書（AI）を表示"
 
-#: ../assistant_settings.lua:679
 msgid "Show Wikipedia(AI) in Dictionary Popup"
 msgstr "辞書ポップアップにWikipedia（AI）を表示"
 
-#: ../assistant_settings.lua:687
 msgid "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr "辞書ポップアップにTerm X-Ray（AI）を表示"
 
-#: ../assistant_settings.lua:695
 msgid "Show Custom Prompts in Dictionary Popup"
 msgstr "辞書ポップアップにカスタムプロンプトを表示"
 
-#: ../assistant_settings.lua:705
 msgid "Copy entered question to the clipboard"
 msgstr "入力した質問をクリップボードにコピー"
 
-#: ../assistant_settings.lua:713
 msgid "Use book text for x-ray and recap"
 msgstr "X-Rayとレキャップに書籍テキストを使用"
 
-#: ../assistant_settings.lua:721 ../assistant_settings.lua:729
 msgid "OTA Update"
 msgstr "OTAアップデート"
 
-#: ../assistant_settings.lua:731
 msgid "branch or tag name"
 msgstr "ブランチ名またはタグ名"
 
-#: ../assistant_settings.lua:733
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -1146,15 +868,12 @@ msgstr ""
 "\n"
 "<b>configuration.lua は保持されます。</b>"
 
-#: ../assistant_settings.lua:747
 msgid "Update"
 msgstr "更新"
 
-#: ../assistant_settings.lua:766
 msgid "Purge the settings"
 msgstr "設定を消去"
 
-#: ../assistant_settings.lua:769
 msgid ""
 "Purge assistant.koplugin settings?\n"
 "\n"
@@ -1166,43 +885,33 @@ msgstr ""
 "これによりプラグインは工場出荷時のデフォルトに戻ります。削除されるのは設定のみです。\n"
 "configuration.lua ファイルは保持されます。"
 
-#: ../assistant_settings.lua:773 ../main.lua:1090
 msgid "Purge"
 msgstr "消去"
 
-#: ../assistant_tool_executor.lua:134
 msgid "Search keywords are empty."
 msgstr "検索キーワードが空です。"
 
-#: ../assistant_tool_executor.lua:143
 msgid "Searching with %1 ... [%2]"
 msgstr "%1 で検索中 ... [%2]"
 
-#: ../assistant_tool_executor.lua:299
 msgid "Tool call did not include id."
 msgstr "ツール呼び出しにIDが含まれていません。"
 
-#: ../assistant_tool_executor.lua:302
 msgid "Tool call did not include search keywords."
 msgstr "ツール呼び出しに検索キーワードが含まれていません。"
 
-#: ../assistant_updater.lua:141
 msgid "Checking for updates..."
 msgstr "更新を確認中..."
 
-#: ../assistant_updater.lua:144
 msgid "AI Assistant: Failed to check updates: %2"
 msgstr "AIアシスタント: 更新の確認に失敗しました: %2"
 
-#: ../assistant_updater.lua:144
 msgid "Empty Error"
 msgstr "空のエラー"
 
-#: ../assistant_updater.lua:154
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "%1 プラグインの新しいバージョン (%2) が利用可能です。更新してください！"
 
-#: ../assistant_updater.lua:192
 msgid ""
 "<b>Downloading ...</b>\n"
 "<b>Github: </b>%1\n"
@@ -1214,23 +923,18 @@ msgstr ""
 "<b>リポジトリ: </b>%2\n"
 "<b>ブランチ/タグ: </b>%3"
 
-#: ../assistant_updater.lua:217
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ブランチ/タグ \"%1\" が見つかりませんでした。"
 
-#: ../assistant_updater.lua:229
 msgid "OTA update canceled."
 msgstr "OTAアップデートはキャンセルされました。"
 
-#: ../assistant_updater.lua:235 ../assistant_updater.lua:323
 msgid "OTA update failed: %1"
 msgstr "OTAアップデートに失敗しました: %1"
 
-#: ../assistant_updater.lua:242
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 をインストール中...</b>"
 
-#: ../assistant_updater.lua:327
 msgid ""
 "OTA UPDATE OK.\n"
 " Restart is required."
@@ -1238,11 +942,9 @@ msgstr ""
 "OTAアップデートOK。\n"
 " 再起動が必要です。"
 
-#: ../assistant_utils.lua:173
 msgid "Page"
 msgstr "ページ"
 
-#: ../assistant_utils.lua:199
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
@@ -1250,23 +952,18 @@ msgstr ""
 "<b>ログの既定フォルダーにアクセスできません: %1</b>\n"
 "元の場所を使用します。"
 
-#: ../assistant_utils.lua:250
 msgid "Notebook path is unavailable."
 msgstr "ノートブックのパスを利用できません。"
 
-#: ../assistant_utils.lua:280
 msgid "Could not open notebook file."
 msgstr "ノートブックファイルを開けませんでした。"
 
-#: ../assistant_utils.lua:287
 msgid "Could not write notebook file."
 msgstr "ノートブックファイルを書き込めませんでした。"
 
-#: ../assistant_utils.lua:291
 msgid "Could not close notebook file."
 msgstr "ノートブックファイルを閉じられませんでした。"
 
-#: ../assistant_utils.lua:298
 msgid ""
 "Could not save to the selected notebook.\n"
 "Saved to: %1"
@@ -1274,112 +971,85 @@ msgstr ""
 "選択したノートブックに保存できませんでした。\n"
 "保存先: %1"
 
-#: ../assistant_utils.lua:312 ../assistant_utils.lua:322
 msgid "Notebook save failed. Continuing..."
 msgstr "ノートブックの保存に失敗しました。続行します..."
 
-#: ../assistant_utils.lua:453
 msgid "##### You may find these topics interesting:"
 msgstr "##### 以下のトピックに興味があるかもしれません:"
 
-#: ../assistant_utils.lua:820
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: 返されたデータの解析に失敗しました"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:316 ../assistant_viewer.lua:732
 msgid "Ask Another Question"
 msgstr "別の質問をする"
 
-#: ../assistant_viewer.lua:361
 msgid "Copy"
 msgstr "コピー"
 
-#: ../assistant_viewer.lua:366
 msgid "Text copied to the clipboard"
 msgstr "テキストをクリップボードにコピーしました"
 
-#: ../assistant_viewer.lua:380
 msgid "Add Note"
 msgstr "ノートを追加"
 
-#: ../assistant_viewer.lua:387
 msgid "Highlight functionality not available"
 msgstr "ハイライト機能は利用できません"
 
-#: ../assistant_viewer.lua:396
 msgid "No text to add as note"
 msgstr "ノートに追加するテキストがありません"
 
-#: ../assistant_viewer.lua:425
 msgid "No text left to add as note"
 msgstr "ノートに追加するテキストが残っていません"
 
-#: ../assistant_viewer.lua:438
 msgid "Note added successfully"
 msgstr "ノートを追加しました"
 
-#: ../assistant_viewer.lua:461
 msgid "Save conversation to"
 msgstr "会話の保存先"
 
-#: ../assistant_viewer.lua:486
 msgid "Conversation is saved to notebook"
 msgstr "会話はノートブックに保存されています。"
 
-#: ../assistant_viewer.lua:563
 msgid "Book Analysis"
 msgstr "書籍分析"
 
-#: ../assistant_viewer.lua:563
 msgid "General Conversation"
 msgstr "一般的な会話"
 
-#: ../assistant_viewer.lua:734
 msgid "Type your question here"
 msgstr "ここに質問を入力してください"
 
-#: ../assistant_viewer.lua:903
 msgid "Word copied to clipboard."
 msgstr "単語をクリップボードにコピーしました。"
 
-#: ../assistant_viewer.lua:904
 msgid "Selection copied to clipboard."
 msgstr "選択範囲をクリップボードにコピーしました。"
 
-#: ../main.lua:88 ../main.lua:148
 msgid "Ask the AI a question"
 msgstr "AIに質問する"
 
-#: ../main.lua:96 ../main.lua:347
 msgid "AI Recaps"
 msgstr "AI要約"
 
-#: ../main.lua:104 ../main.lua:332
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
-#: ../main.lua:120 ../main.lua:317
 msgid "Book Summary & Recs"
 msgstr "書籍の要約とおすすめ"
 
-#: ../main.lua:155
 msgid "Enter a question to ask AI."
 msgstr "AIに質問を入力してください。"
 
-#: ../main.lua:166
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "ノートブックに保存される簡単なメモを取ります。"
 
-#: ../main.lua:178
 msgid "Notebook (AI Conversation Log)"
 msgstr "ノートブック（AI会話ログ）"
 
-#: ../main.lua:195
 msgid "Switch"
 msgstr "切り替え"
 
-#: ../main.lua:214
 msgid ""
 "Delete file?\n"
 "%1\n"
@@ -1389,7 +1059,6 @@ msgstr ""
 "%1\n"
 "この操作は元に戻せません。"
 
-#: ../main.lua:245
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
@@ -1399,11 +1068,9 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:247
 msgid "View"
 msgstr "表示"
 
-#: ../main.lua:251
 msgid ""
 "File does not exist.\n"
 "\n"
@@ -1413,19 +1080,15 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:266
 msgid "AI Provider: not configured"
 msgstr "AIプロバイダー: 未設定"
 
-#: ../main.lua:272
 msgid "AI Provider: %1(%2)"
 msgstr "AIプロバイダー: %1(%2)"
 
-#: ../main.lua:285
 msgid "Web Search: %1"
 msgstr "ウェブ検索: %1"
 
-#: ../main.lua:289
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
@@ -1433,107 +1096,81 @@ msgstr ""
 "リアルタイムのウェブ検索結果で応答精度が向上します。\n"
 "注: トークン使用量が増え、追加のAPI費用がかかります。"
 
-#: ../main.lua:313
 msgid "Book-Level Built-in Prompts"
 msgstr "書籍レベルの組み込みプロンプト"
 
-#: ../main.lua:326
 msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr "書籍の要約、著者略歴、歴史的背景、説明付きの類似書籍のおすすめリスト。"
 
-#: ../main.lua:341
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "「X-Ray」の書籍要約。登場人物、場所、テーマ、用語・概念、タイムライン、再没入などのセクションに分類されます。"
 
-#: ../main.lua:356
 msgid "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr "現在の読書進捗までの、ネタバレなしの非常に簡潔な書籍要約。"
 
-#: ../main.lua:367
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "書籍からのハイライト、メモ、ノートブック内容の分析。"
 
-#: ../main.lua:382
 msgid "Summary of the book using your highlights and notes."
 msgstr "ハイライトとメモを使った書籍の要約。"
 
-#: ../main.lua:389
 msgid "Book-Level Custom Prompts"
 msgstr "書籍レベルのカスタムプロンプト"
 
-#: ../main.lua:396
 msgid "Includes user defined book level prompts from Config file"
 msgstr "設定ファイルからのユーザー定義の書籍レベルプロンプトを含みます"
 
-#: ../main.lua:471
 msgid "This is a custom prompt"
 msgstr "これはカスタムプロンプトです"
 
-#: ../main.lua:481
 msgid "No valid book-level custom prompt found"
 msgstr "有効な書籍レベルのカスタムプロンプトが見つかりません"
 
-#: ../main.lua:486
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "詳細は、GitHubの「Configuration」wikiページを参照してください。"
 
-#: ../main.lua:571 ../main.lua:700
 msgid "Edit %1"
 msgstr "%1を編集"
 
-#: ../main.lua:581 ../main.lua:701
 msgid "Add %1"
 msgstr "%1を追加"
 
-#: ../main.lua:581
 msgid "Add %1 Provider"
 msgstr "%1プロバイダーを追加"
 
-#: ../main.lua:590
 msgid "Display name"
 msgstr "表示名"
 
-#: ../main.lua:590
 msgid "Provider Name"
 msgstr "プロバイダー名"
 
-#: ../main.lua:591 ../main.lua:711
 msgid "Base URL"
 msgstr "ベースURL"
 
-#: ../main.lua:591 ../main.lua:711
 msgid "https://..."
 msgstr "https://..."
 
-#: ../main.lua:592 ../main.lua:707
 msgid "API Key"
 msgstr "APIキー"
 
-#: ../main.lua:592 ../main.lua:707
 msgid "Your API key"
 msgstr "あなたのAPIキー"
 
-#: ../main.lua:593
 msgid "Default: auto"
 msgstr "デフォルト: auto"
 
-#: ../main.lua:593
 msgid "Model"
 msgstr "モデル"
 
-#: ../main.lua:624
 msgid "Failed to fetch models."
 msgstr "モデルの取得に失敗しました。"
 
-#: ../main.lua:754
 msgid "Failed to save search tool."
 msgstr "検索ツールの保存に失敗しました。"
 
-#: ../main.lua:829
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "configuration.luaに有効なモデルプロバイダーが見つかりません"
 
-#: ../main.lua:848
 msgid ""
 "<b>Configuration Error.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -1541,15 +1178,12 @@ msgstr ""
 "<b>設定エラー。</b>\n"
 "設定またはconfiguration.luaでプロバイダーを追加してください。"
 
-#: ../main.lua:854
 msgid "OK"
 msgstr "OK"
 
-#: ../main.lua:972
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: モデルプロバイダーが無効です。"
 
-#: ../main.lua:1055
 msgid ""
 "Usage Tips\n"
 "\n"
@@ -1583,15 +1217,12 @@ msgstr ""
 "マルチスワイプ（例: ⮠, ⮡, ↺）:\n"
 "結果ダイアログ上でスワイプすると閉じます（閉じるボタンが遠いため）。\n"
 
-#: ../main.lua:1077
 msgid "Version Info"
 msgstr "バージョン情報"
 
-#: ../main.lua:1083
 msgid "Purge Settings"
 msgstr "設定を消去"
 
-#: ../main.lua:1086
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
@@ -1603,28 +1234,22 @@ msgstr ""
 "\n"
 "configuration.lua は安全です。消去されるのは設定のみです。"
 
-#: ../main.lua:1139
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "ハイライトメニューから [%s] を削除しますか？"
 
-#: ../main.lua:1140
 msgid "Remove"
 msgstr "削除"
 
-#: ../main.lua:1503
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "設定が見つかりません。最初に configuration.lua を設定してください。"
 
-#: ../main.lua:1551
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>追加しました</b> [%1 (AI)] をハイライトメニューに。"
 
-#: ../main.lua:1562
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
 msgstr "<b>削除しました</b> [%1 (AI)] をハイライトメニューから。"
 
-#: ../main.lua:1607
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
@@ -1634,35 +1259,27 @@ msgstr ""
 "%1（著者: %2）\n"
 "\n"
 
-#: ../main.lua:1608
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "%1時間前に最後に読んだ。"
 
-#: ../main.lua:1613
 msgid "Yes"
 msgstr "はい"
 
-#: ../main.lua:1622
 msgid "No"
 msgstr "いいえ"
 
-#: ../main.lua:1663
 msgid "Markdown Engine"
 msgstr "Markdownエンジン"
 
-#: ../main.lua:1664
 msgid "KOReader"
 msgstr "KOReader"
 
-#: ../main.lua:1665
 msgid "Device"
 msgstr "デバイス"
 
-#: ../main.lua:1666
 msgid "Platform"
 msgstr "プラットフォーム"
 
-#: ../main.lua:1667
 msgid "Runtime"
 msgstr "ランタイム"

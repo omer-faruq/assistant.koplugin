@@ -17,70 +17,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:3 ../assistant_dialog.lua:532 ../main.lua:413 ../main.lua:423
-#: ../main.lua:933
 msgid "AI Assistant"
 msgstr "Yapay Zekâ Asistanı"
 
-#: ../_meta.lua:4
 msgid "💡 Enhance your KOReader experience with AI"
 msgstr "💡 KOReader deneyiminizi yapay zekâ ile geliştirin"
 
-#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:32
-#: ../api_handlers/openai.lua:63 ../api_handlers/responses.lua:51
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Modeller getiriliyor...</b>"
 
-#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:42
-#: ../api_handlers/gemini.lua:52 ../api_handlers/openai.lua:79
-#: ../api_handlers/responses.lua:67
 msgid "Failed to fetch models"
 msgstr "Modeller getirilemedi"
 
-#: ../assistant_dialog.lua:93
 msgid "### ☺ Question\n"
 msgstr "### ☺ Soru\n"
 
-#: ../assistant_dialog.lua:135 ../assistant_model_picker.lua:103
-#: ../assistant_model_picker.lua:267
 msgid "Search"
 msgstr "Ara"
 
-#: ../assistant_dialog.lua:138
 msgid "Response"
 msgstr "Yanıt"
 
-#: ../assistant_dialog.lua:139
 msgid "(No response)"
 msgstr "(Yanıt yok)"
 
-#: ../assistant_dialog.lua:176 ../assistant_quicknote.lua:109
-#: ../assistant_viewer.lua:559
 msgid "Highlighted text:"
 msgstr "Vurgulanan metin:"
 
-#: ../assistant_dialog.lua:340 ../assistant_dictdialog.lua:160
-#: ../assistant_model_picker.lua:128 ../assistant_model_picker.lua:258
-#: ../assistant_model_picker.lua:351 ../assistant_notebook.lua:381
-#: ../assistant_quicknote.lua:49 ../assistant_search_registry.lua:362
-#: ../assistant_settings.lua:100 ../assistant_settings.lua:741
-#: ../assistant_viewer.lua:661 ../main.lua:598 ../main.lua:722 ../main.lua:858
 msgid "Cancel"
 msgstr "İptal"
 
-#: ../assistant_dialog.lua:360
 msgid "Select notebook"
 msgstr "Defter seç"
 
-#: ../assistant_dialog.lua:388 ../assistant_viewer.lua:671
 msgid "Ask"
 msgstr "Sor"
 
-#: ../assistant_dialog.lua:401 ../assistant_viewer.lua:677
 msgid "Enter a question before proceeding."
 msgstr "Devam etmeden önce bir soru girin."
 
-#: ../assistant_dialog.lua:488
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
@@ -90,15 +65,12 @@ msgstr ""
 "\n"
 "Bu düğme Vurgu Menüsü'ne eklensin mi?"
 
-#: ../assistant_dialog.lua:490 ../assistant_settings.lua:252
 msgid "Add"
 msgstr "Ekle"
 
-#: ../assistant_dialog.lua:518
 msgid "Ask a question about the highlighted text"
 msgstr "Vurgulanan metin hakkında bir soru sorun"
 
-#: ../assistant_dialog.lua:521
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
@@ -106,129 +78,97 @@ msgstr ""
 "<b>Bu kitap hakkında bir soru sorun:</b>\n"
 "%1 - %2"
 
-#: ../assistant_dialog.lua:524
 msgid "Ask a general question"
 msgstr "Genel bir soru sorun"
 
-#: ../assistant_dialog.lua:527
 msgid "Type your question here..."
 msgstr "Sorunuzu buraya yazın..."
 
-#: ../assistant_dialog.lua:528
 msgid "Ask anything about this book..."
 msgstr "Bu kitap hakkında her şeyi sorun..."
 
-#: ../assistant_dialog.lua:529
 msgid "Ask anything..."
 msgstr "Her şeyi sorun..."
 
-#: ../assistant_dialog.lua:553
 msgid "Use book text as context"
 msgstr "Kitap metnini bağlam olarak kullan"
 
-#: ../assistant_dialog.lua:606
 msgid "Loading for %1 ..."
 msgstr "%1 için yükleniyor ..."
 
-#: ../assistant_dialog.lua:620
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Hata:</b> Yanıt alınamadı"
 
-#: ../assistant_dictdialog.lua:154
 msgid "AI Dictionary"
 msgstr "Yapay Zekâ Sözlüğü"
 
-#: ../assistant_dictdialog.lua:155
 msgid "Enter a word to look up..."
 msgstr "Aramak için bir kelime girin..."
 
-#: ../assistant_dictdialog.lua:166
 msgid "Look Up"
 msgstr "Ara"
 
-#: ../assistant_dictdialog.lua:213
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Terim X-Ray için kitap bağlamı analiz ediliyor...</b>"
 
-#: ../assistant_dictdialog.lua:388 ../assistant_prompts.lua:27 ../main.lua:1213
-#: ../main.lua:1215
 msgid "Term X-Ray"
 msgstr "Terim X-Ray"
 
-#: ../assistant_dictdialog.lua:391
 msgid "Loading Term X-Ray ..."
 msgstr "Terim X-Ray yükleniyor ..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:74 ../main.lua:1232
 msgid "Dictionary"
 msgstr "Sözlük"
 
-#: ../assistant_dictdialog.lua:409
 msgid "Loading AI Dictionary ..."
 msgstr "Yapay Zekâ Sözlüğü yükleniyor ..."
 
-#: ../assistant_exttools.lua:262
 msgid "None"
 msgstr "Yok"
 
-#: ../assistant_exttools.lua:263
 msgid "Model Built-In"
 msgstr "Dahili Model"
 
-#: ../assistant_featuredialog.lua:41
 msgid "Custom Prompt"
 msgstr "Özel İstem"
 
-#: ../assistant_featuredialog.lua:42
 msgid "Loading..."
 msgstr "Yükleniyor..."
 
-#: ../assistant_featuredialog.lua:63
 msgid "Recap"
 msgstr "Recap"
 
-#: ../assistant_featuredialog.lua:64
 msgid "Loading Recap..."
 msgstr "Recap yükleniyor..."
 
-#: ../assistant_featuredialog.lua:69
 msgid "X‑Ray"
 msgstr "X-Ray"
 
-#: ../assistant_featuredialog.lua:70
 msgid "Loading X-Ray..."
 msgstr "X-Ray yükleniyor..."
 
 #. @translators book_info section headers and sub-fields
-#: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
 msgid "Book Information"
 msgstr "Kitap Bilgisi"
 
-#: ../assistant_featuredialog.lua:76
 msgid "Loading Book Information..."
 msgstr "Kitap Bilgisi yükleniyor..."
 
-#: ../assistant_featuredialog.lua:81 ../main.lua:128 ../main.lua:361
 msgid "Highlight & Note Analysis"
 msgstr "Vurgu ve Not Analizi"
 
-#: ../assistant_featuredialog.lua:82
 msgid "Loading Highlight & Note Analysis..."
 msgstr "Vurgu ve Not Analizi yükleniyor..."
 
-#: ../assistant_featuredialog.lua:87 ../main.lua:136 ../main.lua:373
 msgid "Summary Using Highlights & Notes"
 msgstr "Vurgular ve Notlarla Özet"
 
-#: ../assistant_featuredialog.lua:88
 msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Vurgular ve Notlarla Özet yükleniyor..."
 
-#: ../assistant_featuredialog.lua:100
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Bilinmeyen özellik türü:</b> %1"
 
-#: ../assistant_featuredialog.lua:187
 msgid ""
 " - Title : %1\n"
 " - Author: %2\n"
@@ -244,546 +184,410 @@ msgstr ""
 "-----\n"
 "\n"
 
-#: ../assistant_model_picker.lua:77
 msgid "Models: %1 (filtered)"
 msgstr "Modeller: %1 (filtrelendi)"
 
-#: ../assistant_model_picker.lua:79
 msgid "Models: %1"
 msgstr "Modeller: %1"
 
-#: ../assistant_model_picker.lua:82
 msgid " — p. %1/%2"
 msgstr " — s. %1/%2"
 
-#: ../assistant_model_picker.lua:119
 msgid "Manual"
 msgstr "Kılavuz"
 
-#: ../assistant_model_picker.lua:123
 msgid "Reset"
 msgstr "Sıfırla"
 
-#: ../assistant_model_picker.lua:170 ../assistant_model_picker.lua:368
 msgid "Model: %1"
 msgstr "Model: %1"
 
-#: ../assistant_model_picker.lua:183
 msgid "Filter: \"%1\""
 msgstr "Filtre: \"%1\""
 
-#: ../assistant_model_picker.lua:185
 msgid "Select a model:"
 msgstr "Bir model seçin:"
 
-#: ../assistant_model_picker.lua:253
 msgid "Search Models"
 msgstr "Modelleri Ara"
 
-#: ../assistant_model_picker.lua:292
 msgid "Model reset: %1"
 msgstr "Model sıfırlandı: %1"
 
-#: ../assistant_model_picker.lua:322
 msgid "No models matching \"%1\"."
 msgstr "\"%1\" ile eşleşen model yok."
 
-#: ../assistant_model_picker.lua:346
 msgid "Enter Model ID"
 msgstr "Model Kimliği Girin"
 
-#: ../assistant_model_picker.lua:348
 msgid "e.g. google/gemini-3.0-flash-exp:free"
 msgstr "ör. google/gemini-3.0-flash-exp:free"
 
-#: ../assistant_model_picker.lua:356 ../assistant_quicknote.lua:59
-#: ../assistant_settings.lua:124 ../assistant_viewer.lua:457 ../main.lua:645
-#: ../main.lua:727
 msgid "Save"
 msgstr "Kaydet"
 
-#: ../assistant_model_picker.lua:389
 msgid "No models available."
 msgstr "Kullanılabilir model yok."
 
-#: ../assistant_notebook.lua:133
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Yapılandırılan defterler klasörüne erişilemiyor: %1"
 
-#: ../assistant_notebook.lua:138
 msgid "No base folder is available for notebooks."
 msgstr "Defterler için temel klasör mevcut değil."
 
-#: ../assistant_notebook.lua:147
 msgid "Notebooks path is not a directory: %1"
 msgstr "Defterler yolu bir dizin değil: %1"
 
-#: ../assistant_notebook.lua:156
 msgid "Could not create notebooks folder: %1"
 msgstr "Defterler klasörü oluşturulamadı: %1"
 
-#: ../assistant_notebook.lua:185
 msgid "Could not list notebooks folder: %1"
 msgstr "Defterler klasörü listelenemedi: %1"
 
-#: ../assistant_notebook.lua:227
 msgid "No path is available for the legacy notebook."
 msgstr "Eski defter için yol mevcut değil."
 
-#: ../assistant_notebook.lua:234
 msgid "Assistant settings are not available."
 msgstr "Asistan ayarları mevcut değil."
 
-#: ../assistant_notebook.lua:237
 msgid "Invalid notebook entry."
 msgstr "Geçersiz defter girdisi."
 
-#: ../assistant_notebook.lua:247
 msgid "Invalid notebook filename."
 msgstr "Geçersiz defter dosya adı."
 
-#: ../assistant_notebook.lua:268
 msgid "Notebook name must be text."
 msgstr "Defter adı metin olmalıdır."
 
-#: ../assistant_notebook.lua:273 ../assistant_notebook.lua:296
 msgid "Notebook name cannot be empty."
 msgstr "Defter adı boş olamaz."
 
-#: ../assistant_notebook.lua:276
 msgid "Notebook name cannot contain path separators."
 msgstr "Defter adı yol ayırıcıları içeremez."
 
-#: ../assistant_notebook.lua:279
 msgid "Notebook name cannot contain '..'."
 msgstr "Defter adı '..' içeremez."
 
-#: ../assistant_notebook.lua:282
 msgid "Notebook name contains characters that are not supported by the filesystem."
 msgstr "Defter adı, dosya sistemi tarafından desteklenmeyen karakterler içeriyor."
 
-#: ../assistant_notebook.lua:285
 msgid "Notebook name cannot end with a space or dot."
 msgstr "Defter adı boşluk veya nokta ile bitemez."
 
-#: ../assistant_notebook.lua:303
 msgid "Notebook name is reserved by the filesystem."
 msgstr "Defter adı dosya sistemi tarafından ayrılmıştır."
 
-#: ../assistant_notebook.lua:324
 msgid "Notebook path is not a file: %1"
 msgstr "Defter yolu bir dosya değil: %1"
 
-#: ../assistant_notebook.lua:330
 msgid "Could not create notebook: %1"
 msgstr "Defter oluşturulamadı: %1"
 
-#: ../assistant_notebook.lua:375
 msgid "New notebook"
 msgstr "Yeni defter"
 
-#: ../assistant_notebook.lua:376
 msgid "Notebook name"
 msgstr "Defter adı"
 
-#: ../assistant_notebook.lua:377
 msgid "Create a notebook."
 msgstr "Bir defter oluşturun."
 
-#: ../assistant_notebook.lua:388
 msgid "Create"
 msgstr "Oluştur"
 
-#: ../assistant_notebook.lua:401
 msgid "Could not create notebook."
 msgstr "Defter oluşturulamadı."
 
-#: ../assistant_notebook.lua:453
 msgid "Could not select notebook."
 msgstr "Defter seçilemedi."
 
-#: ../assistant_notebook.lua:467
 msgid "No notebooks yet"
 msgstr "Henüz defter yok"
 
-#: ../assistant_notebook.lua:473
 msgid "New notebook…"
 msgstr "Yeni defter…"
 
-#: ../assistant_notebook.lua:487
 msgid "Notebooks"
 msgstr "Defterler"
 
-#: ../assistant_notebook.lua:489
 msgid "Active: %1"
 msgstr "Etkin: %1"
 
-#: ../assistant_prompts.lua:30
 msgid "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr "Bu istem, vurgulanan terimi çevresindeki metin içinde analiz ederek edebiyattan kelimelerin veya ifadelerin bağlama duyarlı tanımlarını üretmek için yapılandırılmış bir sistem oluşturur; böylece hem gerçek anlamı hem de bağlamsal önemi yakalayan ayrıntılı açıklamalar sağlar."
 
 #. @translators term_xray section headers
 #. @translators term_xray: "What It Is" section header
-#: ../assistant_prompts.lua:64
 msgid "What It Is"
 msgstr "Ne Olduğu"
 
 #. @translators term_xray: "Role & Function" section header
-#: ../assistant_prompts.lua:66
 msgid "Role & Function"
 msgstr "Rolü ve İşlevi"
 
 #. @translators term_xray: "Evolution & Connections" section header
-#: ../assistant_prompts.lua:68
 msgid "Evolution & Connections"
 msgstr "Gelişimi ve Bağlantıları"
 
 #. @translators term_xray: "Context Limitations" section header
-#: ../assistant_prompts.lua:70
 msgid "Context Limitations"
 msgstr "Bağlam Sınırlamaları"
 
-#: ../assistant_prompts.lua:76
 msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr "Bu istem, vurgulanan metindeki bir kelime veya ifade için sözlük görevi görür."
 
-#: ../assistant_prompts.lua:82 ../assistant_quicknote.lua:111
 msgid "Quick Note"
 msgstr "Hızlı Not"
 
-#: ../assistant_prompts.lua:83
 msgid "This button creates a quick note with highlighted text."
 msgstr "Bu düğme, vurgulanan metinle hızlı bir not oluşturur."
 
-#: ../assistant_prompts.lua:88
 msgid "Vocabulary"
 msgstr "Kelime Bilgisi"
 
-#: ../assistant_prompts.lua:92
 msgid "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr "Bu istem, vurgulanan metnin kelime bilgisini analiz eder; karmaşık kelimeleri belirler ve tanımlar, eş anlamlılar ve kullanım örnekleri sunar."
 
-#: ../assistant_prompts.lua:109
 msgid "Grammar"
 msgstr "Dil Bilgisi"
 
-#: ../assistant_prompts.lua:113
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Bu istem, vurgulanan metnin dil bilgisini analiz eder; yapısının ve varsa dil bilgisi hatalarının ayrıntılı bir açıklamasını sağlar."
 
 #. @translators grammar section headers
-#: ../assistant_prompts.lua:136
 msgid "Structure & Clauses"
 msgstr "Yapı ve Cümlecikler"
 
-#: ../assistant_prompts.lua:137
 msgid "Parts of Speech & Tenses"
 msgstr "Sözcük Türleri ve Zamanlar"
 
-#: ../assistant_prompts.lua:138
 msgid "Error Correction (If Applicable)"
 msgstr "Hata Düzeltme (Varsa)"
 
-#: ../assistant_prompts.lua:142
 msgid "Translate"
 msgstr "Çevir"
 
-#: ../assistant_prompts.lua:144
 msgid "This prompt translates the highlighted text to another language."
 msgstr "Bu istem, vurgulanan metni başka bir dile çevirir."
 
-#: ../assistant_prompts.lua:156
 msgid "Summarize"
 msgstr "Özetle"
 
-#: ../assistant_prompts.lua:159
 msgid "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr "Bu istem, vurgulanan metni özetler; ana noktalarını ve temel ayrıntılarını yakalar."
 
-#: ../assistant_prompts.lua:174
 msgid "Simplify"
 msgstr "Basitleştir"
 
-#: ../assistant_prompts.lua:177
 msgid "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr "Bu istem, anlaşılmasını kolaylaştırmak için vurgulanan metni basitleştirir."
 
-#: ../assistant_prompts.lua:191 ../assistant_prompts.lua:534
 msgid "Key Points"
 msgstr "Ana Noktalar"
 
-#: ../assistant_prompts.lua:195
 msgid "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr "Bu istem, vurgulanan metinden ana noktaları çıkarır ve listeler; açıklık ve düzen sağlar."
 
 #. @translators key_points section headers
-#: ../assistant_prompts.lua:216
 msgid "Core Arguments"
 msgstr "Temel Argümanlar"
 
-#: ../assistant_prompts.lua:217
 msgid "Essential Facts & Conclusions"
 msgstr "Temel Bilgiler ve Sonuçlar"
 
-#: ../assistant_prompts.lua:220
 msgid "ELI5"
 msgstr "ELI5"
 
-#: ../assistant_prompts.lua:224
 msgid "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr "Bu istem, vurgulanan metni beş yaşındaki bir çocuğa anlatır gibi açıklar; karmaşık kavramları kolayca anlaşılır terimlere sadeleştirir."
 
 #. @translators ELI5 section headers
-#: ../assistant_prompts.lua:244
 msgid "Core Idea"
 msgstr "Temel Fikir"
 
-#: ../assistant_prompts.lua:245
 msgid "Fun Analogy"
 msgstr "Eğlenceli Benzetme"
 
-#: ../assistant_prompts.lua:248
 msgid "Explain"
 msgstr "Açıkla"
 
-#: ../assistant_prompts.lua:251
 msgid "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr "Bu istem, vurgulanan metni ayrıntılı olarak açıklar; açıklık ve anlayış sağlar."
 
-#: ../assistant_prompts.lua:265
 msgid "Historical Context"
 msgstr "Tarihsel Bağlam"
 
-#: ../assistant_prompts.lua:269
 msgid "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr "Bu istem, vurgulanan metin için ayrıntılı bir tarihsel bağlam sağlar; önemini ve arka planını açıklar."
 
 #. @translators historical_context section headers
-#: ../assistant_prompts.lua:290
 msgid "Era & Background"
 msgstr "Dönem ve Arka Plan"
 
-#: ../assistant_prompts.lua:291
 msgid "Contextual Connections"
 msgstr "Bağlamsal Bağlantılar"
 
-#: ../assistant_prompts.lua:292
 msgid "Cultural Significance"
 msgstr "Kültürel Önem"
 
-#: ../assistant_prompts.lua:295 ../main.lua:1194 ../main.lua:1196
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#: ../assistant_prompts.lua:299
 msgid "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr "Bu istem, vurgulanan metne dayanarak kapsamlı bir Wikipedia tarzı madde üretir; olgusal doğruluk ve tarafsızlık sağlar."
 
 #. @translators xray section headers
-#: ../assistant_prompts.lua:391
 msgid "Characters"
 msgstr "Karakterler"
 
-#: ../assistant_prompts.lua:392
 msgid "Locations"
 msgstr "Mekânlar"
 
-#: ../assistant_prompts.lua:393
 msgid "Main Themes"
 msgstr "Ana Temalar"
 
-#: ../assistant_prompts.lua:394
 msgid "Terms & Concepts"
 msgstr "Terimler ve Kavramlar"
 
-#: ../assistant_prompts.lua:395
 msgid "Timeline"
 msgstr "Zaman Çizelgesi"
 
-#: ../assistant_prompts.lua:396
 msgid "Re-immersion"
 msgstr "Hikâyeye Yeniden Dalış"
 
 #. @translators xray Re-immersion sub-fields
-#: ../assistant_prompts.lua:398
 msgid "Where the action stopped:"
 msgstr "Olayın kaldığı yer:"
 
-#: ../assistant_prompts.lua:399
 msgid "Protagonist's current objective:"
 msgstr "Başkahramanın şu anki hedefi:"
 
-#: ../assistant_prompts.lua:400
 msgid "Open conflict or mystery:"
 msgstr "Çözülmemiş çatışma veya gizem:"
 
-#: ../assistant_prompts.lua:401
 msgid "Narrative element in focus:"
 msgstr "Odaktaki anlatı öğesi:"
 
-#: ../assistant_prompts.lua:402
 msgid "Prevailing emotional state/tone:"
 msgstr "Baskın duygu durumu/tonu:"
 
-#: ../assistant_prompts.lua:403
 msgid "Outstanding questions:"
 msgstr "Cevaplanmamış sorular:"
 
-#: ../assistant_prompts.lua:441
 msgid "Genre"
 msgstr "Tür"
 
-#: ../assistant_prompts.lua:442
 msgid "Publication Date"
 msgstr "Yayın Tarihi"
 
-#: ../assistant_prompts.lua:443
 msgid "Publisher"
 msgstr "Yayınevi"
 
-#: ../assistant_prompts.lua:444
 msgid "Plot Summary"
 msgstr "Konu Özeti"
 
-#: ../assistant_prompts.lua:445
 msgid "About the Author"
 msgstr "Yazar Hakkında"
 
-#: ../assistant_prompts.lua:446
 msgid "Historical and Cultural Context"
 msgstr "Tarihsel ve Kültürel Bağlam"
 
-#: ../assistant_prompts.lua:447
 msgid "Similar Books Recommendations"
 msgstr "Benzer Kitap Önerileri"
 
 #. @translators annotations section headers
-#: ../assistant_prompts.lua:478
 msgid "Key Takeaways"
 msgstr "Ana Çıkarımlar"
 
-#: ../assistant_prompts.lua:479
 msgid "To-Do / Action Items"
 msgstr "Yapılacaklar / Eylem Maddeleri"
 
-#: ../assistant_prompts.lua:480
 msgid "Contextual Notes"
 msgstr "Bağlam Notları"
 
-#: ../assistant_prompts.lua:481
 msgid "Contextual Notes / Reflections"
 msgstr "Bağlam Notları / Düşünceler"
 
 #. @translators summary_using_annotations output structure sections
-#: ../assistant_prompts.lua:532
 msgid "TL;DR"
 msgstr "TL;DR"
 
-#: ../assistant_prompts.lua:533
 msgid "Integrated Summary"
 msgstr "Bütünleşik Özet"
 
-#: ../assistant_prompts.lua:535
 msgid "Actionable Takeaways"
 msgstr "Uygulanabilir Çıkarımlar"
 
-#: ../assistant_prompts.lua:536
 msgid "Contradictions / Open Questions"
 msgstr "Çelişkiler / Açık Sorular"
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:564
 msgid "Conjugation"
 msgstr "Çekim"
 
-#: ../assistant_prompts.lua:565
 msgid "Synonyms"
 msgstr "Eş Anlamlılar"
 
-#: ../assistant_prompts.lua:566
 msgid "Meaning"
 msgstr "Anlam"
 
-#: ../assistant_prompts.lua:567
 msgid "Translation"
 msgstr "Çeviri"
 
-#: ../assistant_prompts.lua:568
 msgid "Book Usage"
 msgstr "Kitaptaki Kullanımı"
 
-#: ../assistant_prompts.lua:569
 msgid "Example"
 msgstr "Örnek"
 
-#: ../assistant_prompts.lua:570
 msgid "Word Origin"
 msgstr "Kelime Kökeni"
 
-#: ../assistant_provider_registry.lua:210
 msgid "Provider record must be a table."
 msgstr "Sağlayıcı kaydı bir tablo olmalıdır."
 
-#: ../assistant_provider_registry.lua:216
 msgid "Provider name is required."
 msgstr "Sağlayıcı adı zorunludur."
 
-#: ../assistant_provider_registry.lua:221
 msgid "Unsupported API protocol."
 msgstr "Desteklenmeyen API protokolü."
 
-#: ../assistant_provider_registry.lua:232 ../main.lua:655
 msgid "Base URL is required."
 msgstr "Temel URL zorunludur."
 
-#: ../assistant_provider_registry.lua:235 ../assistant_search_registry.lua:125
 msgid "Base URL must start with http:// or https://"
 msgstr "Temel URL, http:// veya https:// ile başlamalıdır."
 
-#: ../assistant_provider_registry.lua:241 ../main.lua:659
 msgid "API key is required."
 msgstr "API anahtarı zorunludur."
 
-#: ../assistant_provider_registry.lua:292
-#: ../assistant_provider_registry.lua:308
-#: ../assistant_provider_registry.lua:348
 msgid "Provider not found."
 msgstr "Sağlayıcı bulunamadı."
 
-#: ../assistant_provider_registry.lua:343
-#: ../assistant_provider_registry.lua:394
 msgid "Provider data not initialized."
 msgstr "Sağlayıcı verisi başlatılmadı."
 
-#: ../assistant_provider_registry.lua:447
 msgid "Provider API"
 msgstr "Sağlayıcı API'si"
 
-#: ../assistant_provider_registry.lua:465
 msgid "%1 (Compatible)"
 msgstr "%1 (Uyumlu)"
 
-#: ../assistant_provider_registry.lua:473
 msgid "Custom"
 msgstr "Özel"
 
-#: ../assistant_querier.lua:125
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Sağlayıcı ayarları bulunamadı: %1. Lütfen configuration.lua dosyanızı kontrol edin."
 
-#: ../assistant_querier.lua:138
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "İşleyici bulunamadı: %1. Lütfen configuration.lua dosyanızı kontrol edin."
 
-#: ../assistant_querier.lua:145
 msgid "Handler %1 not available for provider: %2"
 msgstr "İşleyici %1, sağlayıcı %2 için kullanılamıyor."
 
-#: ../assistant_querier.lua:156
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 için işleyici bulunamadı. Lütfen işleyicinin api_handlers dizininde mevcut olduğundan emin olun."
 
-#: ../assistant_querier.lua:199
 msgid ""
 "<b>API Error</b>\n"
 "%1\n"
@@ -801,202 +605,150 @@ msgstr ""
 "\n"
 "Ayarlar iletişim kutusunda başka bir sağlayıcı deneyin."
 
-#: ../assistant_querier.lua:200
 msgid "Unknown error"
 msgstr "Bilinmeyen hata"
 
-#: ../assistant_querier.lua:205 ../main.lua:295
 msgid "Settings"
 msgstr "Ayarlar"
 
-#: ../assistant_querier.lua:207 ../assistant_settings.lua:208
-#: ../assistant_viewer.lua:346
 msgid "Close"
 msgstr "Kapat"
 
-#: ../assistant_querier.lua:294
 msgid "Plugin is not configured."
 msgstr "Eklenti yapılandırılmamış."
 
-#: ../assistant_querier.lua:386 ../assistant_querier.lua:484
 msgid "Too many tool-call rounds; aborting."
 msgstr "Çok fazla araç çağrısı turu; iptal ediliyor."
 
-#: ../assistant_querier.lua:394
 msgid "Stream failed with no error message."
 msgstr "Akış herhangi bir hata mesajı olmadan başarısız oldu."
 
-#: ../assistant_querier.lua:411
 msgid "Stream ended with no content and no tool calls."
 msgstr "Akış içerik ve araç çağrısı olmadan sona erdi."
 
-#: ../assistant_querier.lua:458
 msgid "Request Cancelled by user."
 msgstr "İstek kullanıcı tarafından iptal edildi."
 
-#: ../assistant_querier.lua:467
 msgid "Querying AI ..."
 msgstr "Yapay zekâ sorgulanıyor ..."
 
-#: ../assistant_querier.lua:522
 msgid "Composing answer ..."
 msgstr "Yanıt oluşturuluyor ..."
 
-#: ../assistant_querier.lua:537 ../assistant_querier.lua:695
 msgid "Request cancelled by user."
 msgstr "İstek kullanıcı tarafından iptal edildi."
 
-#: ../assistant_querier.lua:544
 msgid "No response received."
 msgstr "Yanıt alınmadı."
 
-#: ../assistant_querier.lua:580
 msgid "AI is responding"
 msgstr "Yapay zekâ yanıtlıyor"
 
-#: ../assistant_querier.lua:601
 msgid "❌ Stop"
 msgstr "❌ Durdur"
 
-#: ../assistant_querier.lua:606
 msgid "■ Scroll"
 msgstr "■ Kaydır"
 
-#: ../assistant_querier.lua:606
 msgid "▶ Scroll"
 msgstr "▶ Kaydır"
 
-#: ../assistant_querier.lua:712
 msgid "Failed to start subprocess for request"
 msgstr "İstek için alt süreç başlatılamadı"
 
-#: ../assistant_querier.lua:921
 msgid "Error Message"
 msgstr "Hata Mesajı"
 
-#: ../assistant_querier.lua:950 ../assistant_querier.lua:953
 msgid "Deeply Thought"
 msgstr "Derin Düşünce"
 
-#: ../assistant_querier.lua:1143
 msgid "Stopped Reason: "
 msgstr "Durdurma Nedeni: "
 
-#: ../assistant_quicknote.lua:30 ../main.lua:174
 msgid "Notebook: %1"
 msgstr "Defter: %1"
 
-#: ../assistant_quicknote.lua:36 ../main.lua:112 ../main.lua:160
 msgid "Take Quick Notes"
 msgstr "Hızlı Not Al"
 
-#: ../assistant_quicknote.lua:39
 msgid "Write quick notes here"
 msgstr "Buraya hızlı notlar yazın"
 
-#: ../assistant_quicknote.lua:65
 msgid "Please enter a note before saving."
 msgstr "Kaydetmeden önce lütfen bir not girin."
 
-#: ../assistant_quicknote.lua:110
 msgid "User:"
 msgstr "Kullanıcı:"
 
-#: ../assistant_quicknote.lua:140 ../assistant_viewer.lua:475
 msgid "Saved to: %1"
 msgstr "Kaydedildi: %1"
 
-#: ../assistant_quicknote.lua:147
 msgid "Quick note saved successfully"
 msgstr "Hızlı not başarıyla kaydedildi"
 
-#: ../assistant_search_registry.lua:105
 msgid "Search tool record must be a table."
 msgstr "Arama aracı kaydı bir tablo olmalıdır."
 
-#: ../assistant_search_registry.lua:110 ../assistant_search_registry.lua:189
 msgid "Unknown search tool: %1"
 msgstr "Bilinmeyen arama aracı: %1"
 
-#: ../assistant_search_registry.lua:117 ../main.lua:737
 msgid "API key is required for %1."
 msgstr "%1 için API anahtarı gereklidir."
 
-#: ../assistant_search_registry.lua:122 ../main.lua:744
 msgid "Base URL is required for %1."
 msgstr "%1 için temel URL gereklidir."
 
-#: ../assistant_search_registry.lua:212
 msgid "Search tool not found."
 msgstr "Arama aracı bulunamadı."
 
-#: ../assistant_search_registry.lua:241 ../assistant_search_registry.lua:279
 msgid "Search tool data not initialized."
 msgstr "Arama aracı verileri başlatılmadı."
 
-#: ../assistant_search_registry.lua:323
 msgid "WebSearch API"
 msgstr "Web Arama API'si"
 
-#: ../assistant_search_registry.lua:349
 msgid "%1 — choose an action"
 msgstr "%1 — bir eylem seçin"
 
-#: ../assistant_search_registry.lua:368 ../assistant_settings.lua:227
-#: ../main.lua:234
 msgid "Edit"
 msgstr "Düzenle"
 
-#: ../assistant_search_registry.lua:375 ../assistant_settings.lua:238
-#: ../assistant_settings.lua:399 ../main.lua:211 ../main.lua:215
 msgid "Delete"
 msgstr "Sil"
 
-#: ../assistant_settings.lua:84
 msgid "AI Response Language Setting"
 msgstr "Yapay Zekâ Yanıt Dili Ayarı"
 
-#: ../assistant_settings.lua:87
 msgid "AI Response Language"
 msgstr "Yapay Zekâ Yanıt Dili"
 
-#: ../assistant_settings.lua:89 ../assistant_settings.lua:94
 msgid "Leave blank to use: %1"
 msgstr "Kullanmak için boş bırakın: %1"
 
-#: ../assistant_settings.lua:92
 msgid "Dictionary Language"
 msgstr "Sözlük Dili"
 
-#: ../assistant_settings.lua:107
 msgid "Clear"
 msgstr "Temizle"
 
-#: ../assistant_settings.lua:154
 msgid "RTL written Language"
 msgstr "RTL Yazılan Dil"
 
-#: ../assistant_settings.lua:174
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Arayüz dilini kullanmak için bu alanları boş bırakın: %1"
 
-#: ../assistant_settings.lua:185
 msgid "Providers and Models"
 msgstr "Sağlayıcılar ve Modeller"
 
-#: ../assistant_settings.lua:213 ../main.lua:603
 msgid "Browse Models"
 msgstr "Modellere Göz At"
 
-#: ../assistant_settings.lua:221
 msgid "Browse available models from the current provider"
 msgstr "Geçerli sağlayıcıdan kullanılabilir modellere göz atın"
 
-#: ../assistant_settings.lua:398
 msgid "Delete provider %1?"
 msgstr "%1 sağlayıcısı silinsin mi?"
 
-#: ../assistant_settings.lua:481
 msgid ""
 "Builtin Tools Works ONLY with these models:\n"
 "- Gemini-2.5/3\n"
@@ -1006,125 +758,95 @@ msgstr ""
 "- Gemini-2.5/3\n"
 "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:506
 msgid "AI Language: "
 msgstr "Yapay Zekâ Dili: "
 
-#: ../assistant_settings.lua:518
 msgid "AI Text Size: %1"
 msgstr "Yapay Zekâ Metin Boyutu: %1"
 
-#: ../assistant_settings.lua:522
 msgid "AI Response Text Font Size"
 msgstr "Yapay Zekâ Yanıt Metni Yazı Boyutu"
 
-#: ../assistant_settings.lua:538
 msgid "Response Settings"
 msgstr "Yanıt Ayarları"
 
-#: ../assistant_settings.lua:541
 msgid "Enable Stream Response"
 msgstr "Akış Yanıtını Etkinleştir"
 
-#: ../assistant_settings.lua:549
 msgid "Stream Text Auto Scroll"
 msgstr "Akış Metnini Otomatik Kaydır"
 
-#: ../assistant_settings.lua:558
 msgid "Large Streaming Window"
 msgstr "Büyük Akış Penceresi"
 
-#: ../assistant_settings.lua:568
 msgid "Show Reasoning Text"
 msgstr "Akıl Yürütme Metnini Göster"
 
-#: ../assistant_settings.lua:576
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "AI yanıtında varsa derin düşünme sürecini (akıl yürütme) göster."
 
-#: ../assistant_settings.lua:581
 msgid "Show Follow-up Questions"
 msgstr "Devam Sorularını Göster"
 
-#: ../assistant_settings.lua:589
 msgid "Show follow up questions related to the response content."
 msgstr "Yanıt içeriğiyle ilgili devam sorularını göster."
 
-#: ../assistant_settings.lua:596
 msgid "Notebook Settings"
 msgstr "Defter Ayarları"
 
-#: ../assistant_settings.lua:599
 msgid "Auto-save conversations to notebook"
 msgstr "Sohbetleri deftere otomatik kaydet"
 
-#: ../assistant_settings.lua:607
 msgid "Multiple notebooks"
 msgstr "Birden çok defter"
 
-#: ../assistant_settings.lua:617
 msgid "Choose which notebook your notes are saved to."
 msgstr "Notlarınızın hangi deftere kaydedileceğini seçin."
 
-#: ../assistant_settings.lua:625
 msgid "Notebooks folder: %1"
 msgstr "Defterler klasörü: %1"
 
-#: ../assistant_settings.lua:627
 msgid "Notebooks folder"
 msgstr "Defterler klasörü"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:642
 msgid "KOReader Tweaks"
 msgstr "KOReader İnce Ayarları"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:646
 msgid "Use AI Assistant for 'Translate'"
 msgstr "'Çevir' için AI Asistanını Kullan"
 
-#: ../assistant_settings.lua:657
 msgid "Auto-recap on opening long-unread books"
 msgstr "Uzun süredir okunmayan kitapları açarken otomatik özet"
 
-#: ../assistant_settings.lua:667
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "AI Özet, uzun süredir okunmayan bir kitap bir dahaki açılışında etkinleştirilecek."
 
-#: ../assistant_settings.lua:671
 msgid "Show Dictionary(AI) in Dictionary Popup"
 msgstr "Sözlük Açılır Penceresinde Sözlük(AI) Göster"
 
-#: ../assistant_settings.lua:679
 msgid "Show Wikipedia(AI) in Dictionary Popup"
 msgstr "Sözlük Açılır Penceresinde Wikipedia(AI) Göster"
 
-#: ../assistant_settings.lua:687
 msgid "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr "Sözlük Açılır Penceresinde Terim X-Ray(AI) Göster"
 
-#: ../assistant_settings.lua:695
 msgid "Show Custom Prompts in Dictionary Popup"
 msgstr "Sözlük Açılır Penceresinde Özel İstemleri Göster"
 
-#: ../assistant_settings.lua:705
 msgid "Copy entered question to the clipboard"
 msgstr "Girilen soruyu panoya kopyala"
 
-#: ../assistant_settings.lua:713
 msgid "Use book text for x-ray and recap"
 msgstr "X-ray ve özet için kitap metnini kullan"
 
-#: ../assistant_settings.lua:721 ../assistant_settings.lua:729
 msgid "OTA Update"
 msgstr "OTA Güncelleme"
 
-#: ../assistant_settings.lua:731
 msgid "branch or tag name"
 msgstr "dal veya etiket adı"
 
-#: ../assistant_settings.lua:733
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -1146,15 +868,12 @@ msgstr ""
 "\n"
 "<b>configuration.lua korunacaktır.</b>"
 
-#: ../assistant_settings.lua:747
 msgid "Update"
 msgstr "Güncelle"
 
-#: ../assistant_settings.lua:766
 msgid "Purge the settings"
 msgstr "Ayarları temizle"
 
-#: ../assistant_settings.lua:769
 msgid ""
 "Purge assistant.koplugin settings?\n"
 "\n"
@@ -1166,43 +885,33 @@ msgstr ""
 "Bu, eklentiyi fabrika varsayılanlarına döndürür. Yalnızca ayarlar kaldırılacak; \n"
 "configuration.lua dosyası korunacaktır."
 
-#: ../assistant_settings.lua:773 ../main.lua:1090
 msgid "Purge"
 msgstr "Temizle"
 
-#: ../assistant_tool_executor.lua:134
 msgid "Search keywords are empty."
 msgstr "Arama anahtar kelimeleri boş."
 
-#: ../assistant_tool_executor.lua:143
 msgid "Searching with %1 ... [%2]"
 msgstr "%1 ile aranıyor ... [%2]"
 
-#: ../assistant_tool_executor.lua:299
 msgid "Tool call did not include id."
 msgstr "Araç çağrısı kimlik içermiyor."
 
-#: ../assistant_tool_executor.lua:302
 msgid "Tool call did not include search keywords."
 msgstr "Araç çağrısı arama anahtar kelimeleri içermiyor."
 
-#: ../assistant_updater.lua:141
 msgid "Checking for updates..."
 msgstr "Güncellemeler kontrol ediliyor..."
 
-#: ../assistant_updater.lua:144
 msgid "AI Assistant: Failed to check updates: %2"
 msgstr "AI Asistanı: Güncellemeler kontrol edilemedi: %2"
 
-#: ../assistant_updater.lua:144
 msgid "Empty Error"
 msgstr "Boş Hata"
 
-#: ../assistant_updater.lua:154
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "%1 eklentisinin yeni bir sürümü (%2) mevcut. Lütfen güncelleyin!"
 
-#: ../assistant_updater.lua:192
 msgid ""
 "<b>Downloading ...</b>\n"
 "<b>Github: </b>%1\n"
@@ -1214,23 +923,18 @@ msgstr ""
 "<b>Depo: </b>%2\n"
 "<b>Dal/Etiket: </b>%3"
 
-#: ../assistant_updater.lua:217
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "\"%1\" dalı/etiketi bulunamadı."
 
-#: ../assistant_updater.lua:229
 msgid "OTA update canceled."
 msgstr "OTA güncellemesi iptal edildi."
 
-#: ../assistant_updater.lua:235 ../assistant_updater.lua:323
 msgid "OTA update failed: %1"
 msgstr "OTA güncellemesi başarısız oldu: %1"
 
-#: ../assistant_updater.lua:242
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 yükleniyor...</b>"
 
-#: ../assistant_updater.lua:327
 msgid ""
 "OTA UPDATE OK.\n"
 " Restart is required."
@@ -1238,11 +942,9 @@ msgstr ""
 "OTA GÜNCELLEME OK.\n"
 " Yeniden başlatma gerekiyor."
 
-#: ../assistant_utils.lua:173
 msgid "Page"
 msgstr "Sayfa"
 
-#: ../assistant_utils.lua:199
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
@@ -1250,23 +952,18 @@ msgstr ""
 "<b>Günlükler için varsayılan klasöre erişilemiyor: %1</b>\n"
 "Orijinal konum kullanılıyor."
 
-#: ../assistant_utils.lua:250
 msgid "Notebook path is unavailable."
 msgstr "Defter yolu kullanılamıyor."
 
-#: ../assistant_utils.lua:280
 msgid "Could not open notebook file."
 msgstr "Defter dosyası açılamadı."
 
-#: ../assistant_utils.lua:287
 msgid "Could not write notebook file."
 msgstr "Defter dosyası yazılamadı."
 
-#: ../assistant_utils.lua:291
 msgid "Could not close notebook file."
 msgstr "Defter dosyası kapatılamadı."
 
-#: ../assistant_utils.lua:298
 msgid ""
 "Could not save to the selected notebook.\n"
 "Saved to: %1"
@@ -1274,112 +971,85 @@ msgstr ""
 "Seçilen deftere kaydedilemedi.\n"
 "Kaydedildi: %1"
 
-#: ../assistant_utils.lua:312 ../assistant_utils.lua:322
 msgid "Notebook save failed. Continuing..."
 msgstr "Notebook kaydetme başarısız oldu. Devam ediliyor..."
 
-#: ../assistant_utils.lua:453
 msgid "##### You may find these topics interesting:"
 msgstr "##### Bu konular ilginizi çekebilir:"
 
-#: ../assistant_utils.lua:820
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: döndürülen veri ayrıştırılamadı"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:316 ../assistant_viewer.lua:732
 msgid "Ask Another Question"
 msgstr "Başka Bir Soru Sor"
 
-#: ../assistant_viewer.lua:361
 msgid "Copy"
 msgstr "Kopyala"
 
-#: ../assistant_viewer.lua:366
 msgid "Text copied to the clipboard"
 msgstr "Metin panoya kopyalandı"
 
-#: ../assistant_viewer.lua:380
 msgid "Add Note"
 msgstr "Not Ekle"
 
-#: ../assistant_viewer.lua:387
 msgid "Highlight functionality not available"
 msgstr "Vurgulama işlevi kullanılamıyor"
 
-#: ../assistant_viewer.lua:396
 msgid "No text to add as note"
 msgstr "Not olarak eklenecek metin yok"
 
-#: ../assistant_viewer.lua:425
 msgid "No text left to add as note"
 msgstr "Not olarak eklenecek metin kalmadı"
 
-#: ../assistant_viewer.lua:438
 msgid "Note added successfully"
 msgstr "Not başarıyla eklendi"
 
-#: ../assistant_viewer.lua:461
 msgid "Save conversation to"
 msgstr "Sohbeti kaydet"
 
-#: ../assistant_viewer.lua:486
 msgid "Conversation is saved to notebook"
 msgstr "Sohbet deftere kaydedildi"
 
-#: ../assistant_viewer.lua:563
 msgid "Book Analysis"
 msgstr "Kitap Analizi"
 
-#: ../assistant_viewer.lua:563
 msgid "General Conversation"
 msgstr "Genel Sohbet"
 
-#: ../assistant_viewer.lua:734
 msgid "Type your question here"
 msgstr "Sorunuzu buraya yazın"
 
-#: ../assistant_viewer.lua:903
 msgid "Word copied to clipboard."
 msgstr "Kelime panoya kopyalandı."
 
-#: ../assistant_viewer.lua:904
 msgid "Selection copied to clipboard."
 msgstr "Seçim panoya kopyalandı."
 
-#: ../main.lua:88 ../main.lua:148
 msgid "Ask the AI a question"
 msgstr "AI'ya bir soru sorun"
 
-#: ../main.lua:96 ../main.lua:347
 msgid "AI Recaps"
 msgstr "AI Özetleri"
 
-#: ../main.lua:104 ../main.lua:332
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
-#: ../main.lua:120 ../main.lua:317
 msgid "Book Summary & Recs"
 msgstr "Kitap Özeti ve Öneriler"
 
-#: ../main.lua:155
 msgid "Enter a question to ask AI."
 msgstr "AI'ya sormak için bir soru girin."
 
-#: ../main.lua:166
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "Not defterinize kaydedilecek hızlı notlar alın."
 
-#: ../main.lua:178
 msgid "Notebook (AI Conversation Log)"
 msgstr "Defter (AI Sohbet Günlüğü)"
 
-#: ../main.lua:195
 msgid "Switch"
 msgstr "Değiştir"
 
-#: ../main.lua:214
 msgid ""
 "Delete file?\n"
 "%1\n"
@@ -1389,7 +1059,6 @@ msgstr ""
 "%1\n"
 "Bu işlem geri alınamaz."
 
-#: ../main.lua:245
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
@@ -1399,11 +1068,9 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:247
 msgid "View"
 msgstr "Görüntüle"
 
-#: ../main.lua:251
 msgid ""
 "File does not exist.\n"
 "\n"
@@ -1413,19 +1080,15 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:266
 msgid "AI Provider: not configured"
 msgstr "AI Sağlayıcı: yapılandırılmamış"
 
-#: ../main.lua:272
 msgid "AI Provider: %1(%2)"
 msgstr "AI Sağlayıcı: %1(%2)"
 
-#: ../main.lua:285
 msgid "Web Search: %1"
 msgstr "Web Arama: %1"
 
-#: ../main.lua:289
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
@@ -1433,107 +1096,81 @@ msgstr ""
 "Gerçek zamanlı web sonuçlarıyla yanıt doğruluğunu artırır. \n"
 "Not: Daha yüksek token kullanımı ve ek API ücretleri uygulanır."
 
-#: ../main.lua:313
 msgid "Book-Level Built-in Prompts"
 msgstr "Kitap Düzeyinde Yerleşik İstemler"
 
-#: ../main.lua:326
 msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr "Kitabın özeti, yazar biyografisi, tarihsel bağlam ve açıklamalı benzer kitap önerilerinin listesi."
 
-#: ../main.lua:341
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" özeti; Karakterler, Mekânlar, Temalar, Terimler ve Kavramlar, Zaman Çizelgesi ve Yeniden Okuma gibi belirli bölümlere ayrılmıştır."
 
-#: ../main.lua:356
 msgid "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr "Kitabın, mevcut okuma ilerlemesine kadar olan kısmının spoiler içermeyen çok kısa bir özeti."
 
-#: ../main.lua:367
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Kitaptaki vurgularınızın, notlarınızın ve not defteri içeriğinizin analizi."
 
-#: ../main.lua:382
 msgid "Summary of the book using your highlights and notes."
 msgstr "Vurgularınızı ve notlarınızı kullanarak kitabın özeti."
 
-#: ../main.lua:389
 msgid "Book-Level Custom Prompts"
 msgstr "Kitap Düzeyinde Özel İstemler"
 
-#: ../main.lua:396
 msgid "Includes user defined book level prompts from Config file"
 msgstr "Yapılandırma dosyasındaki kullanıcı tanımlı kitap düzeyi istemlerini içerir."
 
-#: ../main.lua:471
 msgid "This is a custom prompt"
 msgstr "Bu özel bir istemdir"
 
-#: ../main.lua:481
 msgid "No valid book-level custom prompt found"
 msgstr "Kitap düzeyinde geçerli bir özel istem bulunamadı."
 
-#: ../main.lua:486
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Ayrıntılar için GitHub'daki 'Configuration' wiki sayfasını ziyaret edin."
 
-#: ../main.lua:571 ../main.lua:700
 msgid "Edit %1"
 msgstr "%1 Düzenle"
 
-#: ../main.lua:581 ../main.lua:701
 msgid "Add %1"
 msgstr "%1 Ekle"
 
-#: ../main.lua:581
 msgid "Add %1 Provider"
 msgstr "%1 Sağlayıcısı Ekle"
 
-#: ../main.lua:590
 msgid "Display name"
 msgstr "Görünen ad"
 
-#: ../main.lua:590
 msgid "Provider Name"
 msgstr "Sağlayıcı Adı"
 
-#: ../main.lua:591 ../main.lua:711
 msgid "Base URL"
 msgstr "Temel URL"
 
-#: ../main.lua:591 ../main.lua:711
 msgid "https://..."
 msgstr "https://..."
 
-#: ../main.lua:592 ../main.lua:707
 msgid "API Key"
 msgstr "API Anahtarı"
 
-#: ../main.lua:592 ../main.lua:707
 msgid "Your API key"
 msgstr "API anahtarınız"
 
-#: ../main.lua:593
 msgid "Default: auto"
 msgstr "Varsayılan: auto"
 
-#: ../main.lua:593
 msgid "Model"
 msgstr "Model"
 
-#: ../main.lua:624
 msgid "Failed to fetch models."
 msgstr "Modeller alınamadı."
 
-#: ../main.lua:754
 msgid "Failed to save search tool."
 msgstr "Arama aracı kaydedilemedi."
 
-#: ../main.lua:829
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "configuration.lua içinde geçerli bir model sağlayıcısı bulunamadı."
 
-#: ../main.lua:848
 msgid ""
 "<b>Configuration Error.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -1541,15 +1178,12 @@ msgstr ""
 "<b>Yapılandırma Hatası.</b>\n"
 "Lütfen Ayarlar'dan veya configuration.lua'dan bir sağlayıcı ekleyin."
 
-#: ../main.lua:854
 msgid "OK"
 msgstr "Tamam"
 
-#: ../main.lua:972
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: model sağlayıcıları geçersiz."
 
-#: ../main.lua:1055
 msgid ""
 "Usage Tips\n"
 "\n"
@@ -1583,15 +1217,12 @@ msgstr ""
 "Çoklu Kaydırma (örn. ⮠, ⮡, ↺):\n"
 "Sonuç iletişim kutusunda kapatmak için (Kapat düğmesine ulaşmak zor olduğundan).\n"
 
-#: ../main.lua:1077
 msgid "Version Info"
 msgstr "Sürüm Bilgisi"
 
-#: ../main.lua:1083
 msgid "Purge Settings"
 msgstr "Ayarları Temizle"
 
-#: ../main.lua:1086
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
@@ -1603,28 +1234,22 @@ msgstr ""
 "\n"
 "configuration.lua güvende, yalnızca ayarlar temizlenir."
 
-#: ../main.lua:1139
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "[%s] Vurgu Menüsünden kaldırılsın mı?"
 
-#: ../main.lua:1140
 msgid "Remove"
 msgstr "Kaldır"
 
-#: ../main.lua:1503
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Yapılandırma bulunamadı. Lütfen önce configuration.lua dosyasını ayarlayın."
 
-#: ../main.lua:1551
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Eklendi</b> [%1 (AI)] Vurgu Menüsüne."
 
-#: ../main.lua:1562
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
 msgstr "<b>Kaldırıldı</b> [%1 (AI)] Vurgu Menüsünden."
 
-#: ../main.lua:1607
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
@@ -1634,36 +1259,28 @@ msgstr ""
 "%1, %2 tarafından.\n"
 "\n"
 
-#: ../main.lua:1608
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Son okuma 1 saat önce."
 msgstr[1] "Son okuma %1 saat önce."
 
-#: ../main.lua:1613
 msgid "Yes"
 msgstr "Evet"
 
-#: ../main.lua:1622
 msgid "No"
 msgstr "Hayır"
 
-#: ../main.lua:1663
 msgid "Markdown Engine"
 msgstr "Markdown Motoru"
 
-#: ../main.lua:1664
 msgid "KOReader"
 msgstr "KOReader"
 
-#: ../main.lua:1665
 msgid "Device"
 msgstr "Cihaz"
 
-#: ../main.lua:1666
 msgid "Platform"
 msgstr "Platform"
 
-#: ../main.lua:1667
 msgid "Runtime"
 msgstr "Çalışma Zamanı"

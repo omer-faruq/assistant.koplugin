@@ -17,70 +17,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../_meta.lua:3 ../assistant_dialog.lua:532 ../main.lua:413 ../main.lua:423
-#: ../main.lua:933
 msgid "AI Assistant"
 msgstr "AI-assistent"
 
-#: ../_meta.lua:4
 msgid "💡 Enhance your KOReader experience with AI"
 msgstr "💡 Täienda oma KOReaderi kogemust AI-ga"
 
-#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:32
-#: ../api_handlers/openai.lua:63 ../api_handlers/responses.lua:51
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Laen mudeleid...</b>"
 
-#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:42
-#: ../api_handlers/gemini.lua:52 ../api_handlers/openai.lua:79
-#: ../api_handlers/responses.lua:67
 msgid "Failed to fetch models"
 msgstr "Mudelite laadimine ebaõnnestus"
 
-#: ../assistant_dialog.lua:93
 msgid "### ☺ Question\n"
 msgstr "### ☺ Küsimus\n"
 
-#: ../assistant_dialog.lua:135 ../assistant_model_picker.lua:103
-#: ../assistant_model_picker.lua:267
 msgid "Search"
 msgstr "Otsi"
 
-#: ../assistant_dialog.lua:138
 msgid "Response"
 msgstr "Vastus"
 
-#: ../assistant_dialog.lua:139
 msgid "(No response)"
 msgstr "(Vastus puudub)"
 
-#: ../assistant_dialog.lua:176 ../assistant_quicknote.lua:109
-#: ../assistant_viewer.lua:559
 msgid "Highlighted text:"
 msgstr "Esiletõstetud tekst:"
 
-#: ../assistant_dialog.lua:340 ../assistant_dictdialog.lua:160
-#: ../assistant_model_picker.lua:128 ../assistant_model_picker.lua:258
-#: ../assistant_model_picker.lua:351 ../assistant_notebook.lua:381
-#: ../assistant_quicknote.lua:49 ../assistant_search_registry.lua:362
-#: ../assistant_settings.lua:100 ../assistant_settings.lua:741
-#: ../assistant_viewer.lua:661 ../main.lua:598 ../main.lua:722 ../main.lua:858
 msgid "Cancel"
 msgstr "Tühista"
 
-#: ../assistant_dialog.lua:360
 msgid "Select notebook"
 msgstr "Vali märkmik"
 
-#: ../assistant_dialog.lua:388 ../assistant_viewer.lua:671
 msgid "Ask"
 msgstr "Küsi"
 
-#: ../assistant_dialog.lua:401 ../assistant_viewer.lua:677
 msgid "Enter a question before proceeding."
 msgstr "Enne jätkamist sisesta küsimus."
 
-#: ../assistant_dialog.lua:488
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
@@ -90,15 +65,12 @@ msgstr ""
 "\n"
 "Kas lisada see nupp esiletõstmise menüüsse?"
 
-#: ../assistant_dialog.lua:490 ../assistant_settings.lua:252
 msgid "Add"
 msgstr "Lisa"
 
-#: ../assistant_dialog.lua:518
 msgid "Ask a question about the highlighted text"
 msgstr "Küsi küsimus esiletõstetud teksti kohta"
 
-#: ../assistant_dialog.lua:521
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
@@ -106,129 +78,97 @@ msgstr ""
 "<b>Küsi selle raamatu kohta küsimus:</b>\n"
 "%1 – %2"
 
-#: ../assistant_dialog.lua:524
 msgid "Ask a general question"
 msgstr "Küsi üldist küsimust"
 
-#: ../assistant_dialog.lua:527
 msgid "Type your question here..."
 msgstr "Sisesta oma küsimus siia..."
 
-#: ../assistant_dialog.lua:528
 msgid "Ask anything about this book..."
 msgstr "Küsi selle raamatu kohta ükskõik mida..."
 
-#: ../assistant_dialog.lua:529
 msgid "Ask anything..."
 msgstr "Küsi ükskõik mida..."
 
-#: ../assistant_dialog.lua:553
 msgid "Use book text as context"
 msgstr "Kasuta raamatu teksti kontekstina"
 
-#: ../assistant_dialog.lua:606
 msgid "Loading for %1 ..."
 msgstr "Laen %1 ..."
 
-#: ../assistant_dialog.lua:620
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Viga:</b> Vastust ei saadud"
 
-#: ../assistant_dictdialog.lua:154
 msgid "AI Dictionary"
 msgstr "AI-sõnaraamat"
 
-#: ../assistant_dictdialog.lua:155
 msgid "Enter a word to look up..."
 msgstr "Sisesta otsitav sõna..."
 
-#: ../assistant_dictdialog.lua:166
 msgid "Look Up"
 msgstr "Otsi üles"
 
-#: ../assistant_dictdialog.lua:213
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analüüsin raamatu konteksti Term X-Ray jaoks...</b>"
 
-#: ../assistant_dictdialog.lua:388 ../assistant_prompts.lua:27 ../main.lua:1213
-#: ../main.lua:1215
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
-#: ../assistant_dictdialog.lua:391
 msgid "Loading Term X-Ray ..."
 msgstr "Laen Term X-Ray ..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:74 ../main.lua:1232
 msgid "Dictionary"
 msgstr "Sõnaraamat"
 
-#: ../assistant_dictdialog.lua:409
 msgid "Loading AI Dictionary ..."
 msgstr "Laen AI-sõnaraamatut ..."
 
-#: ../assistant_exttools.lua:262
 msgid "None"
 msgstr "Puudub"
 
-#: ../assistant_exttools.lua:263
 msgid "Model Built-In"
 msgstr "Mudeli sisseehitatud"
 
-#: ../assistant_featuredialog.lua:41
 msgid "Custom Prompt"
 msgstr "Kohandatud prompt"
 
-#: ../assistant_featuredialog.lua:42
 msgid "Loading..."
 msgstr "Laadimine..."
 
-#: ../assistant_featuredialog.lua:63
 msgid "Recap"
 msgstr "Recap"
 
-#: ../assistant_featuredialog.lua:64
 msgid "Loading Recap..."
 msgstr "Laen Recap..."
 
-#: ../assistant_featuredialog.lua:69
 msgid "X‑Ray"
 msgstr "X‑Ray"
 
-#: ../assistant_featuredialog.lua:70
 msgid "Loading X-Ray..."
 msgstr "Laen X-Ray..."
 
 #. @translators book_info section headers and sub-fields
-#: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
 msgid "Book Information"
 msgstr "Raamatu teave"
 
-#: ../assistant_featuredialog.lua:76
 msgid "Loading Book Information..."
 msgstr "Laen raamatu teavet..."
 
-#: ../assistant_featuredialog.lua:81 ../main.lua:128 ../main.lua:361
 msgid "Highlight & Note Analysis"
 msgstr "Esiletõstmiste ja märkmete analüüs"
 
-#: ../assistant_featuredialog.lua:82
 msgid "Loading Highlight & Note Analysis..."
 msgstr "Laen esiletõstmiste ja märkmete analüüsi..."
 
-#: ../assistant_featuredialog.lua:87 ../main.lua:136 ../main.lua:373
 msgid "Summary Using Highlights & Notes"
 msgstr "Kokkuvõte esiletõstmistest ja märkmetest"
 
-#: ../assistant_featuredialog.lua:88
 msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Laen kokkuvõtet esiletõstmistest ja märkmetest..."
 
-#: ../assistant_featuredialog.lua:100
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Tundmatu funktsiooni tüüp:</b> %1"
 
-#: ../assistant_featuredialog.lua:187
 msgid ""
 " - Title : %1\n"
 " - Author: %2\n"
@@ -244,546 +184,410 @@ msgstr ""
 "-----\n"
 "\n"
 
-#: ../assistant_model_picker.lua:77
 msgid "Models: %1 (filtered)"
 msgstr "Mudelid: %1 (filtreeritud)"
 
-#: ../assistant_model_picker.lua:79
 msgid "Models: %1"
 msgstr "Mudelid: %1"
 
-#: ../assistant_model_picker.lua:82
 msgid " — p. %1/%2"
 msgstr " — lk. %1/%2"
 
-#: ../assistant_model_picker.lua:119
 msgid "Manual"
 msgstr "Käsiraamat"
 
-#: ../assistant_model_picker.lua:123
 msgid "Reset"
 msgstr "Lähtesta"
 
-#: ../assistant_model_picker.lua:170 ../assistant_model_picker.lua:368
 msgid "Model: %1"
 msgstr "Mudel: %1"
 
-#: ../assistant_model_picker.lua:183
 msgid "Filter: \"%1\""
 msgstr "Filter: \"%1\""
 
-#: ../assistant_model_picker.lua:185
 msgid "Select a model:"
 msgstr "Vali mudel:"
 
-#: ../assistant_model_picker.lua:253
 msgid "Search Models"
 msgstr "Otsi mudeleid"
 
-#: ../assistant_model_picker.lua:292
 msgid "Model reset: %1"
 msgstr "Mudel lähtestatud: %1"
 
-#: ../assistant_model_picker.lua:322
 msgid "No models matching \"%1\"."
 msgstr "Ühtegi mudelit, mis vastaks \"%1\", ei leitud."
 
-#: ../assistant_model_picker.lua:346
 msgid "Enter Model ID"
 msgstr "Sisesta mudeli ID"
 
-#: ../assistant_model_picker.lua:348
 msgid "e.g. google/gemini-3.0-flash-exp:free"
 msgstr "nt google/gemini-3.0-flash-exp:free"
 
-#: ../assistant_model_picker.lua:356 ../assistant_quicknote.lua:59
-#: ../assistant_settings.lua:124 ../assistant_viewer.lua:457 ../main.lua:645
-#: ../main.lua:727
 msgid "Save"
 msgstr "Salvesta"
 
-#: ../assistant_model_picker.lua:389
 msgid "No models available."
 msgstr "Mudeleid pole saadaval."
 
-#: ../assistant_notebook.lua:133
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Konfigureeritud märkmike kaust pole kättesaadav: %1"
 
-#: ../assistant_notebook.lua:138
 msgid "No base folder is available for notebooks."
 msgstr "Märkmike jaoks pole põhikausta saadaval."
 
-#: ../assistant_notebook.lua:147
 msgid "Notebooks path is not a directory: %1"
 msgstr "Märkmike tee pole kataloog: %1"
 
-#: ../assistant_notebook.lua:156
 msgid "Could not create notebooks folder: %1"
 msgstr "Märkmike kausta ei õnnestunud luua: %1"
 
-#: ../assistant_notebook.lua:185
 msgid "Could not list notebooks folder: %1"
 msgstr "Märkmike kausta ei õnnestunud loetleda: %1"
 
-#: ../assistant_notebook.lua:227
 msgid "No path is available for the legacy notebook."
 msgstr "Pärandmärkmiku jaoks pole teed saadaval."
 
-#: ../assistant_notebook.lua:234
 msgid "Assistant settings are not available."
 msgstr "Assistendi sätted pole saadaval."
 
-#: ../assistant_notebook.lua:237
 msgid "Invalid notebook entry."
 msgstr "Vigane märkmiku kirje."
 
-#: ../assistant_notebook.lua:247
 msgid "Invalid notebook filename."
 msgstr "Vigane märkmiku failinimi."
 
-#: ../assistant_notebook.lua:268
 msgid "Notebook name must be text."
 msgstr "Märkmiku nimi peab olema tekst."
 
-#: ../assistant_notebook.lua:273 ../assistant_notebook.lua:296
 msgid "Notebook name cannot be empty."
 msgstr "Märkmiku nimi ei tohi olla tühi."
 
-#: ../assistant_notebook.lua:276
 msgid "Notebook name cannot contain path separators."
 msgstr "Märkmiku nimi ei tohi sisaldada tee eraldusmärke."
 
-#: ../assistant_notebook.lua:279
 msgid "Notebook name cannot contain '..'."
 msgstr "Märkmiku nimi ei tohi sisaldada '..'."
 
-#: ../assistant_notebook.lua:282
 msgid "Notebook name contains characters that are not supported by the filesystem."
 msgstr "Märkmiku nimi sisaldab tähemärke, mida failisüsteem ei toeta."
 
-#: ../assistant_notebook.lua:285
 msgid "Notebook name cannot end with a space or dot."
 msgstr "Märkmiku nimi ei tohi lõppeda tühiku ega punktiga."
 
-#: ../assistant_notebook.lua:303
 msgid "Notebook name is reserved by the filesystem."
 msgstr "Märkmiku nimi on failisüsteemi poolt reserveeritud."
 
-#: ../assistant_notebook.lua:324
 msgid "Notebook path is not a file: %1"
 msgstr "Märkmiku tee pole fail: %1"
 
-#: ../assistant_notebook.lua:330
 msgid "Could not create notebook: %1"
 msgstr "Märkmikku ei õnnestunud luua: %1"
 
-#: ../assistant_notebook.lua:375
 msgid "New notebook"
 msgstr "Uus märkmik"
 
-#: ../assistant_notebook.lua:376
 msgid "Notebook name"
 msgstr "Märkmiku nimi"
 
-#: ../assistant_notebook.lua:377
 msgid "Create a notebook."
 msgstr "Loo märkmik."
 
-#: ../assistant_notebook.lua:388
 msgid "Create"
 msgstr "Loo"
 
-#: ../assistant_notebook.lua:401
 msgid "Could not create notebook."
 msgstr "Märkmikku ei õnnestunud luua."
 
-#: ../assistant_notebook.lua:453
 msgid "Could not select notebook."
 msgstr "Märkmikku ei õnnestunud valida."
 
-#: ../assistant_notebook.lua:467
 msgid "No notebooks yet"
 msgstr "Märkmikke veel pole"
 
-#: ../assistant_notebook.lua:473
 msgid "New notebook…"
 msgstr "Uus märkmik…"
 
-#: ../assistant_notebook.lua:487
 msgid "Notebooks"
 msgstr "Märkmikud"
 
-#: ../assistant_notebook.lua:489
 msgid "Active: %1"
 msgstr "Aktiivne: %1"
 
-#: ../assistant_prompts.lua:30
 msgid "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr "See prompt loob struktureeritud süsteemi kirjandusest pärinevate sõnade või fraaside kontekstitundlike definitsioonide genereerimiseks, analüüsides esiletõstetud terminit seda ümbritsevas tekstis, et pakkuda nüansirikkaid selgitusi, mis hõlmavad nii sõnasõnalist tähendust kui ka kontekstuaalset tähtsust."
 
 #. @translators term_xray section headers
 #. @translators term_xray: "What It Is" section header
-#: ../assistant_prompts.lua:64
 msgid "What It Is"
 msgstr "Mis see on"
 
 #. @translators term_xray: "Role & Function" section header
-#: ../assistant_prompts.lua:66
 msgid "Role & Function"
 msgstr "Roll ja funktsioon"
 
 #. @translators term_xray: "Evolution & Connections" section header
-#: ../assistant_prompts.lua:68
 msgid "Evolution & Connections"
 msgstr "Areng ja seosed"
 
 #. @translators term_xray: "Context Limitations" section header
-#: ../assistant_prompts.lua:70
 msgid "Context Limitations"
 msgstr "Konteksti piirangud"
 
-#: ../assistant_prompts.lua:76
 msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr "See prompt toimib esiletõstetud teksti – sõna või fraasi – sõnaraamatuna."
 
-#: ../assistant_prompts.lua:82 ../assistant_quicknote.lua:111
 msgid "Quick Note"
 msgstr "Kiirmärge"
 
-#: ../assistant_prompts.lua:83
 msgid "This button creates a quick note with highlighted text."
 msgstr "See nupp loob esiletõstetud tekstiga kiirmärke."
 
-#: ../assistant_prompts.lua:88
 msgid "Vocabulary"
 msgstr "Sõnavara"
 
-#: ../assistant_prompts.lua:92
 msgid "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr "See prompt analüüsib esiletõstetud teksti sõnavara, tuvastades keerulised sõnad ning pakkudes definitsioone, sünonüüme ja kasutusnäiteid."
 
-#: ../assistant_prompts.lua:109
 msgid "Grammar"
 msgstr "Grammatika"
 
-#: ../assistant_prompts.lua:113
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "See prompt analüüsib esiletõstetud teksti grammatikat, pakkudes üksikasjalikku selgitust selle struktuuri ja kõigi grammatikavigade kohta."
 
 #. @translators grammar section headers
-#: ../assistant_prompts.lua:136
 msgid "Structure & Clauses"
 msgstr "Struktuur ja laused"
 
-#: ../assistant_prompts.lua:137
 msgid "Parts of Speech & Tenses"
 msgstr "Sõnaliigid ja ajavormid"
 
-#: ../assistant_prompts.lua:138
 msgid "Error Correction (If Applicable)"
 msgstr "Vigade parandus (kui asjakohane)"
 
-#: ../assistant_prompts.lua:142
 msgid "Translate"
 msgstr "Tõlgi"
 
-#: ../assistant_prompts.lua:144
 msgid "This prompt translates the highlighted text to another language."
 msgstr "See prompt tõlgib esiletõstetud teksti teise keelde."
 
-#: ../assistant_prompts.lua:156
 msgid "Summarize"
 msgstr "Kokkuvõte"
 
-#: ../assistant_prompts.lua:159
 msgid "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr "See prompt võtab esiletõstetud teksti kokku, hõlmates selle põhipunktid ja olulised üksikasjad."
 
-#: ../assistant_prompts.lua:174
 msgid "Simplify"
 msgstr "Lihtsusta"
 
-#: ../assistant_prompts.lua:177
 msgid "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr "See prompt lihtsustab esiletõstetud teksti, et seda oleks lihtsam mõista."
 
-#: ../assistant_prompts.lua:191 ../assistant_prompts.lua:534
 msgid "Key Points"
 msgstr "Põhipunktid"
 
-#: ../assistant_prompts.lua:195
 msgid "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr "See prompt eraldab ja loetleb esiletõstetud teksti põhipunktid, tagades selguse ja korrastatuse."
 
 #. @translators key_points section headers
-#: ../assistant_prompts.lua:216
 msgid "Core Arguments"
 msgstr "Põhiargumendid"
 
-#: ../assistant_prompts.lua:217
 msgid "Essential Facts & Conclusions"
 msgstr "Olulised faktid ja järeldused"
 
-#: ../assistant_prompts.lua:220
 msgid "ELI5"
 msgstr "ELI5"
 
-#: ../assistant_prompts.lua:224
 msgid "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr "See prompt selgitab esiletõstetud teksti nii, nagu räägiks viieaastasele, lihtsustades keerulised mõisted kergesti arusaadavateks terminiteks."
 
 #. @translators ELI5 section headers
-#: ../assistant_prompts.lua:244
 msgid "Core Idea"
 msgstr "Põhiidee"
 
-#: ../assistant_prompts.lua:245
 msgid "Fun Analogy"
 msgstr "Lõbus analoogia"
 
-#: ../assistant_prompts.lua:248
 msgid "Explain"
 msgstr "Selgita"
 
-#: ../assistant_prompts.lua:251
 msgid "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr "See prompt selgitab esiletõstetud teksti üksikasjalikult, tagades selguse ja mõistmise."
 
-#: ../assistant_prompts.lua:265
 msgid "Historical Context"
 msgstr "Ajalooline kontekst"
 
-#: ../assistant_prompts.lua:269
 msgid "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr "See prompt annab esiletõstetud tekstile üksikasjaliku ajaloolise konteksti, selgitades selle tähtsust ja tausta."
 
 #. @translators historical_context section headers
-#: ../assistant_prompts.lua:290
 msgid "Era & Background"
 msgstr "Ajastu ja taust"
 
-#: ../assistant_prompts.lua:291
 msgid "Contextual Connections"
 msgstr "Kontekstuaalsed seosed"
 
-#: ../assistant_prompts.lua:292
 msgid "Cultural Significance"
 msgstr "Kultuuriline tähtsus"
 
-#: ../assistant_prompts.lua:295 ../main.lua:1194 ../main.lua:1196
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#: ../assistant_prompts.lua:299
 msgid "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr "See prompt genereerib esiletõstetud teksti põhjal põhjaliku Wikipedia-stiilis artikli, tagades faktilise täpsuse ja erapooletuse."
 
 #. @translators xray section headers
-#: ../assistant_prompts.lua:391
 msgid "Characters"
 msgstr "Tegelased"
 
-#: ../assistant_prompts.lua:392
 msgid "Locations"
 msgstr "Asukohad"
 
-#: ../assistant_prompts.lua:393
 msgid "Main Themes"
 msgstr "Peamised teemad"
 
-#: ../assistant_prompts.lua:394
 msgid "Terms & Concepts"
 msgstr "Terminid ja mõisted"
 
-#: ../assistant_prompts.lua:395
 msgid "Timeline"
 msgstr "Ajajoon"
 
-#: ../assistant_prompts.lua:396
 msgid "Re-immersion"
 msgstr "Uuesti sisseelamine"
 
 #. @translators xray Re-immersion sub-fields
-#: ../assistant_prompts.lua:398
 msgid "Where the action stopped:"
 msgstr "Kus tegevus peatus:"
 
-#: ../assistant_prompts.lua:399
 msgid "Protagonist's current objective:"
 msgstr "Peategelase praegune eesmärk:"
 
-#: ../assistant_prompts.lua:400
 msgid "Open conflict or mystery:"
 msgstr "Avatud konflikt või mõistatus:"
 
-#: ../assistant_prompts.lua:401
 msgid "Narrative element in focus:"
 msgstr "Fookuses olev narratiivne element:"
 
-#: ../assistant_prompts.lua:402
 msgid "Prevailing emotional state/tone:"
 msgstr "Valitsev emotsionaalne seisund/toon:"
 
-#: ../assistant_prompts.lua:403
 msgid "Outstanding questions:"
 msgstr "Lahtised küsimused:"
 
-#: ../assistant_prompts.lua:441
 msgid "Genre"
 msgstr "Žanr"
 
-#: ../assistant_prompts.lua:442
 msgid "Publication Date"
 msgstr "Ilmumisaeg"
 
-#: ../assistant_prompts.lua:443
 msgid "Publisher"
 msgstr "Kirjastaja"
 
-#: ../assistant_prompts.lua:444
 msgid "Plot Summary"
 msgstr "Süžee kokkuvõte"
 
-#: ../assistant_prompts.lua:445
 msgid "About the Author"
 msgstr "Autorist"
 
-#: ../assistant_prompts.lua:446
 msgid "Historical and Cultural Context"
 msgstr "Ajalooline ja kultuuriline kontekst"
 
-#: ../assistant_prompts.lua:447
 msgid "Similar Books Recommendations"
 msgstr "Sarnaste raamatute soovitused"
 
 #. @translators annotations section headers
-#: ../assistant_prompts.lua:478
 msgid "Key Takeaways"
 msgstr "Peamised järeldused"
 
-#: ../assistant_prompts.lua:479
 msgid "To-Do / Action Items"
 msgstr "Tegevused / ülesanded"
 
-#: ../assistant_prompts.lua:480
 msgid "Contextual Notes"
 msgstr "Kontekstuaalsed märkused"
 
-#: ../assistant_prompts.lua:481
 msgid "Contextual Notes / Reflections"
 msgstr "Kontekstuaalsed märkused / mõtisklused"
 
 #. @translators summary_using_annotations output structure sections
-#: ../assistant_prompts.lua:532
 msgid "TL;DR"
 msgstr "Lühikokkuvõte"
 
-#: ../assistant_prompts.lua:533
 msgid "Integrated Summary"
 msgstr "Integreeritud kokkuvõte"
 
-#: ../assistant_prompts.lua:535
 msgid "Actionable Takeaways"
 msgstr "Rakendatavad järeldused"
 
-#: ../assistant_prompts.lua:536
 msgid "Contradictions / Open Questions"
 msgstr "Vastuolud / lahtised küsimused"
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:564
 msgid "Conjugation"
 msgstr "Pööramine"
 
-#: ../assistant_prompts.lua:565
 msgid "Synonyms"
 msgstr "Sünonüümid"
 
-#: ../assistant_prompts.lua:566
 msgid "Meaning"
 msgstr "Tähendus"
 
-#: ../assistant_prompts.lua:567
 msgid "Translation"
 msgstr "Tõlge"
 
-#: ../assistant_prompts.lua:568
 msgid "Book Usage"
 msgstr "Kasutus raamatus"
 
-#: ../assistant_prompts.lua:569
 msgid "Example"
 msgstr "Näide"
 
-#: ../assistant_prompts.lua:570
 msgid "Word Origin"
 msgstr "Sõna päritolu"
 
-#: ../assistant_provider_registry.lua:210
 msgid "Provider record must be a table."
 msgstr "Pakkuja kirje peab olema tabel."
 
-#: ../assistant_provider_registry.lua:216
 msgid "Provider name is required."
 msgstr "Pakkuja nimi on kohustuslik."
 
-#: ../assistant_provider_registry.lua:221
 msgid "Unsupported API protocol."
 msgstr "Toetamata API-protokoll."
 
-#: ../assistant_provider_registry.lua:232 ../main.lua:655
 msgid "Base URL is required."
 msgstr "Baas-URL on kohustuslik."
 
-#: ../assistant_provider_registry.lua:235 ../assistant_search_registry.lua:125
 msgid "Base URL must start with http:// or https://"
 msgstr "Baas-URL peab algama http:// või https://"
 
-#: ../assistant_provider_registry.lua:241 ../main.lua:659
 msgid "API key is required."
 msgstr "API-võti on kohustuslik."
 
-#: ../assistant_provider_registry.lua:292
-#: ../assistant_provider_registry.lua:308
-#: ../assistant_provider_registry.lua:348
 msgid "Provider not found."
 msgstr "Pakkujat ei leitud."
 
-#: ../assistant_provider_registry.lua:343
-#: ../assistant_provider_registry.lua:394
 msgid "Provider data not initialized."
 msgstr "Pakkuja andmed on lähtestamata."
 
-#: ../assistant_provider_registry.lua:447
 msgid "Provider API"
 msgstr "Pakkuja API"
 
-#: ../assistant_provider_registry.lua:465
 msgid "%1 (Compatible)"
 msgstr "%1 (ühilduv)"
 
-#: ../assistant_provider_registry.lua:473
 msgid "Custom"
 msgstr "Kohandatud"
 
-#: ../assistant_querier.lua:125
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Pakkuja sätteid ei leitud: %1. Palun kontrollige oma configuration.lua faili."
 
-#: ../assistant_querier.lua:138
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Töötlejat ei leitud: %1. Palun kontrollige oma configuration.lua faili."
 
-#: ../assistant_querier.lua:145
 msgid "Handler %1 not available for provider: %2"
 msgstr "Töötleja %1 ei ole pakkuja %2 jaoks saadaval."
 
-#: ../assistant_querier.lua:156
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Töötlejat %1 ei leitud. Palun veenduge, et töötleja on olemas api_handlers kataloogis."
 
-#: ../assistant_querier.lua:199
 msgid ""
 "<b>API Error</b>\n"
 "%1\n"
@@ -801,202 +605,150 @@ msgstr ""
 "\n"
 "Proovige seadete dialoogis teist pakkujat."
 
-#: ../assistant_querier.lua:200
 msgid "Unknown error"
 msgstr "Tundmatu viga"
 
-#: ../assistant_querier.lua:205 ../main.lua:295
 msgid "Settings"
 msgstr "Seaded"
 
-#: ../assistant_querier.lua:207 ../assistant_settings.lua:208
-#: ../assistant_viewer.lua:346
 msgid "Close"
 msgstr "Sule"
 
-#: ../assistant_querier.lua:294
 msgid "Plugin is not configured."
 msgstr "Plugin pole konfigureeritud."
 
-#: ../assistant_querier.lua:386 ../assistant_querier.lua:484
 msgid "Too many tool-call rounds; aborting."
 msgstr "Liiga palju tööriistaväljakutsete voorusid; katkestan."
 
-#: ../assistant_querier.lua:394
 msgid "Stream failed with no error message."
 msgstr "Voog ebaõnnestus ilma veateateta."
 
-#: ../assistant_querier.lua:411
 msgid "Stream ended with no content and no tool calls."
 msgstr "Voog lõppes ilma sisu ja tööriistaväljakutseteta."
 
-#: ../assistant_querier.lua:458
 msgid "Request Cancelled by user."
 msgstr "Kasutaja tühistas päringu."
 
-#: ../assistant_querier.lua:467
 msgid "Querying AI ..."
 msgstr "Päring AI-le ..."
 
-#: ../assistant_querier.lua:522
 msgid "Composing answer ..."
 msgstr "Vastuse koostamine ..."
 
-#: ../assistant_querier.lua:537 ../assistant_querier.lua:695
 msgid "Request cancelled by user."
 msgstr "Kasutaja tühistas päringu."
 
-#: ../assistant_querier.lua:544
 msgid "No response received."
 msgstr "Vastust ei saadud."
 
-#: ../assistant_querier.lua:580
 msgid "AI is responding"
 msgstr "AI vastab"
 
-#: ../assistant_querier.lua:601
 msgid "❌ Stop"
 msgstr "❌ Peata"
 
-#: ../assistant_querier.lua:606
 msgid "■ Scroll"
 msgstr "■ Keri"
 
-#: ../assistant_querier.lua:606
 msgid "▶ Scroll"
 msgstr "▶ Keri"
 
-#: ../assistant_querier.lua:712
 msgid "Failed to start subprocess for request"
 msgstr "Päringu alamprotsessi käivitamine ebaõnnestus"
 
-#: ../assistant_querier.lua:921
 msgid "Error Message"
 msgstr "Veateade"
 
-#: ../assistant_querier.lua:950 ../assistant_querier.lua:953
 msgid "Deeply Thought"
 msgstr "Sügav mõtlemine"
 
-#: ../assistant_querier.lua:1143
 msgid "Stopped Reason: "
 msgstr "Peatamise põhjus: "
 
-#: ../assistant_quicknote.lua:30 ../main.lua:174
 msgid "Notebook: %1"
 msgstr "Märkmik: %1"
 
-#: ../assistant_quicknote.lua:36 ../main.lua:112 ../main.lua:160
 msgid "Take Quick Notes"
 msgstr "Tee kiirmärkmeid"
 
-#: ../assistant_quicknote.lua:39
 msgid "Write quick notes here"
 msgstr "Kirjuta siia kiirmärkmeid"
 
-#: ../assistant_quicknote.lua:65
 msgid "Please enter a note before saving."
 msgstr "Palun sisesta enne salvestamist märge."
 
-#: ../assistant_quicknote.lua:110
 msgid "User:"
 msgstr "Kasutaja:"
 
-#: ../assistant_quicknote.lua:140 ../assistant_viewer.lua:475
 msgid "Saved to: %1"
 msgstr "Salvestatud: %1"
 
-#: ../assistant_quicknote.lua:147
 msgid "Quick note saved successfully"
 msgstr "Kiirmärge salvestati edukalt"
 
-#: ../assistant_search_registry.lua:105
 msgid "Search tool record must be a table."
 msgstr "Otsingutööriista kirje peab olema tabel."
 
-#: ../assistant_search_registry.lua:110 ../assistant_search_registry.lua:189
 msgid "Unknown search tool: %1"
 msgstr "Tundmatu otsingutööriist: %1"
 
-#: ../assistant_search_registry.lua:117 ../main.lua:737
 msgid "API key is required for %1."
 msgstr "API-võti on vajalik %1 jaoks."
 
-#: ../assistant_search_registry.lua:122 ../main.lua:744
 msgid "Base URL is required for %1."
 msgstr "Baas-URL on vajalik %1 jaoks."
 
-#: ../assistant_search_registry.lua:212
 msgid "Search tool not found."
 msgstr "Otsingutööriista ei leitud."
 
-#: ../assistant_search_registry.lua:241 ../assistant_search_registry.lua:279
 msgid "Search tool data not initialized."
 msgstr "Otsingutööriista andmed pole lähtestatud."
 
-#: ../assistant_search_registry.lua:323
 msgid "WebSearch API"
 msgstr "Veebiotsingu API"
 
-#: ../assistant_search_registry.lua:349
 msgid "%1 — choose an action"
 msgstr "%1 — vali toiming"
 
-#: ../assistant_search_registry.lua:368 ../assistant_settings.lua:227
-#: ../main.lua:234
 msgid "Edit"
 msgstr "Muuda"
 
-#: ../assistant_search_registry.lua:375 ../assistant_settings.lua:238
-#: ../assistant_settings.lua:399 ../main.lua:211 ../main.lua:215
 msgid "Delete"
 msgstr "Kustuta"
 
-#: ../assistant_settings.lua:84
 msgid "AI Response Language Setting"
 msgstr "AI vastuse keele seadistus"
 
-#: ../assistant_settings.lua:87
 msgid "AI Response Language"
 msgstr "AI vastuse keel"
 
-#: ../assistant_settings.lua:89 ../assistant_settings.lua:94
 msgid "Leave blank to use: %1"
 msgstr "Jäta tühjaks, et kasutada: %1"
 
-#: ../assistant_settings.lua:92
 msgid "Dictionary Language"
 msgstr "Sõnaraamatu keel"
 
-#: ../assistant_settings.lua:107
 msgid "Clear"
 msgstr "Tühjenda"
 
-#: ../assistant_settings.lua:154
 msgid "RTL written Language"
 msgstr "Paremalt vasakule kirjutatud keel"
 
-#: ../assistant_settings.lua:174
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Jäta need väljad tühjaks, et kasutada kasutajaliidese keelt: %1"
 
-#: ../assistant_settings.lua:185
 msgid "Providers and Models"
 msgstr "Teenusepakkujad ja mudelid"
 
-#: ../assistant_settings.lua:213 ../main.lua:603
 msgid "Browse Models"
 msgstr "Sirvi mudeleid"
 
-#: ../assistant_settings.lua:221
 msgid "Browse available models from the current provider"
 msgstr "Sirvi praeguse teenusepakkuja saadaolevaid mudeleid"
 
-#: ../assistant_settings.lua:398
 msgid "Delete provider %1?"
 msgstr "Kustuta teenusepakkuja %1?"
 
-#: ../assistant_settings.lua:481
 msgid ""
 "Builtin Tools Works ONLY with these models:\n"
 "- Gemini-2.5/3\n"
@@ -1006,125 +758,95 @@ msgstr ""
 "- Gemini-2.5/3\n"
 "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:506
 msgid "AI Language: "
 msgstr "AI keel: "
 
-#: ../assistant_settings.lua:518
 msgid "AI Text Size: %1"
 msgstr "AI teksti suurus: %1"
 
-#: ../assistant_settings.lua:522
 msgid "AI Response Text Font Size"
 msgstr "AI vastuse teksti fondi suurus"
 
-#: ../assistant_settings.lua:538
 msgid "Response Settings"
 msgstr "Vastuse sätted"
 
-#: ../assistant_settings.lua:541
 msgid "Enable Stream Response"
 msgstr "Luba voogedastusega vastus"
 
-#: ../assistant_settings.lua:549
 msgid "Stream Text Auto Scroll"
 msgstr "Voogedastuse teksti automaatkerimine"
 
-#: ../assistant_settings.lua:558
 msgid "Large Streaming Window"
 msgstr "Suur voogedastuse aken"
 
-#: ../assistant_settings.lua:568
 msgid "Show Reasoning Text"
 msgstr "Näita arutluse teksti"
 
-#: ../assistant_settings.lua:576
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Näita AI vastuse põhjalikku mõttekäiku (arutlust), kui see on olemas."
 
-#: ../assistant_settings.lua:581
 msgid "Show Follow-up Questions"
 msgstr "Näita järelküsimusi"
 
-#: ../assistant_settings.lua:589
 msgid "Show follow up questions related to the response content."
 msgstr "Näita vastuse sisuga seotud järelküsimusi."
 
-#: ../assistant_settings.lua:596
 msgid "Notebook Settings"
 msgstr "Märkmiku sätted"
 
-#: ../assistant_settings.lua:599
 msgid "Auto-save conversations to notebook"
 msgstr "Salvesta vestlused automaatselt märkmikku"
 
-#: ../assistant_settings.lua:607
 msgid "Multiple notebooks"
 msgstr "Mitu märkmikku"
 
-#: ../assistant_settings.lua:617
 msgid "Choose which notebook your notes are saved to."
 msgstr "Vali, millisesse märkmikku oma märkmed salvestada."
 
-#: ../assistant_settings.lua:625
 msgid "Notebooks folder: %1"
 msgstr "Märkmike kaust: %1"
 
-#: ../assistant_settings.lua:627
 msgid "Notebooks folder"
 msgstr "Märkmike kaust"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:642
 msgid "KOReader Tweaks"
 msgstr "KOReaderi kohandused"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:646
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Kasuta AI-assistenti 'Tõlgi' jaoks"
 
-#: ../assistant_settings.lua:657
 msgid "Auto-recap on opening long-unread books"
 msgstr "Pikalt lugemata raamatute avamisel automaatne kokkuvõte"
 
-#: ../assistant_settings.lua:667
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "AI-kokkuvõte lubatakse järgmine kord, kui avatakse pikalt lugemata raamat."
 
-#: ../assistant_settings.lua:671
 msgid "Show Dictionary(AI) in Dictionary Popup"
 msgstr "Näita sõnaraamatut (AI) sõnaraamatu hüpikaknas"
 
-#: ../assistant_settings.lua:679
 msgid "Show Wikipedia(AI) in Dictionary Popup"
 msgstr "Näita Vikipeediat (AI) sõnaraamatu hüpikaknas"
 
-#: ../assistant_settings.lua:687
 msgid "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr "Näita Term X-Ray (AI) sõnaraamatu hüpikaknas"
 
-#: ../assistant_settings.lua:695
 msgid "Show Custom Prompts in Dictionary Popup"
 msgstr "Näita kohandatud päringuid sõnaraamatu hüpikaknas"
 
-#: ../assistant_settings.lua:705
 msgid "Copy entered question to the clipboard"
 msgstr "Kopeeri sisestatud küsimus lõikelauale"
 
-#: ../assistant_settings.lua:713
 msgid "Use book text for x-ray and recap"
 msgstr "Kasuta raamatu teksti X-Ray ja kokkuvõtte jaoks"
 
-#: ../assistant_settings.lua:721 ../assistant_settings.lua:729
 msgid "OTA Update"
 msgstr "OTA-värskendus"
 
-#: ../assistant_settings.lua:731
 msgid "branch or tag name"
 msgstr "haru või sildi nimi"
 
-#: ../assistant_settings.lua:733
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -1146,15 +868,12 @@ msgstr ""
 "\n"
 "<b>Fail configuration.lua säilitatakse.</b>"
 
-#: ../assistant_settings.lua:747
 msgid "Update"
 msgstr "Värskenda"
 
-#: ../assistant_settings.lua:766
 msgid "Purge the settings"
 msgstr "Puhasta sätted"
 
-#: ../assistant_settings.lua:769
 msgid ""
 "Purge assistant.koplugin settings?\n"
 "\n"
@@ -1166,43 +885,33 @@ msgstr ""
 "See taastab plugina tehasevaikeseaded. Eemaldatakse ainult sätted; \n"
 "Fail configuration.lua säilitatakse."
 
-#: ../assistant_settings.lua:773 ../main.lua:1090
 msgid "Purge"
 msgstr "Puhasta"
 
-#: ../assistant_tool_executor.lua:134
 msgid "Search keywords are empty."
 msgstr "Otsingumärksõnad on tühjad."
 
-#: ../assistant_tool_executor.lua:143
 msgid "Searching with %1 ... [%2]"
 msgstr "Otsin: %1 ... [%2]"
 
-#: ../assistant_tool_executor.lua:299
 msgid "Tool call did not include id."
 msgstr "Tööriistakutse ei sisaldanud id-d."
 
-#: ../assistant_tool_executor.lua:302
 msgid "Tool call did not include search keywords."
 msgstr "Tööriistakutse ei sisaldanud otsingumärksõnu."
 
-#: ../assistant_updater.lua:141
 msgid "Checking for updates..."
 msgstr "Värskenduste kontrollimine..."
 
-#: ../assistant_updater.lua:144
 msgid "AI Assistant: Failed to check updates: %2"
 msgstr "AI-assistent: värskenduste kontrollimine ebaõnnestus: %2"
 
-#: ../assistant_updater.lua:144
 msgid "Empty Error"
 msgstr "Tühi viga"
 
-#: ../assistant_updater.lua:154
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Saadaval on %1 plugini uus versioon (%2). Palun värskenda!"
 
-#: ../assistant_updater.lua:192
 msgid ""
 "<b>Downloading ...</b>\n"
 "<b>Github: </b>%1\n"
@@ -1214,23 +923,18 @@ msgstr ""
 "<b>Hoidla: </b>%2\n"
 "<b>Haru/Silt: </b>%3"
 
-#: ../assistant_updater.lua:217
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Haru/silt \"%1\" ei leitud."
 
-#: ../assistant_updater.lua:229
 msgid "OTA update canceled."
 msgstr "OTA-värskendus tühistati."
 
-#: ../assistant_updater.lua:235 ../assistant_updater.lua:323
 msgid "OTA update failed: %1"
 msgstr "OTA-värskendus ebaõnnestus: %1"
 
-#: ../assistant_updater.lua:242
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Installimine: %1...</b>"
 
-#: ../assistant_updater.lua:327
 msgid ""
 "OTA UPDATE OK.\n"
 " Restart is required."
@@ -1238,11 +942,9 @@ msgstr ""
 "OTA-VÄRSKENDUS ÕNNESTUS.\n"
 " Taaskäivitus on vajalik."
 
-#: ../assistant_utils.lua:173
 msgid "Page"
 msgstr "Lehekülg"
 
-#: ../assistant_utils.lua:199
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
@@ -1250,23 +952,18 @@ msgstr ""
 "<b>Logide vaikimisi kaustale ei pääse ligi: %1</b>\n"
 "Kasutatakse algset asukohta."
 
-#: ../assistant_utils.lua:250
 msgid "Notebook path is unavailable."
 msgstr "Märkmiku tee pole saadaval."
 
-#: ../assistant_utils.lua:280
 msgid "Could not open notebook file."
 msgstr "Märkmiku faili ei õnnestunud avada."
 
-#: ../assistant_utils.lua:287
 msgid "Could not write notebook file."
 msgstr "Märkmiku faili ei õnnestunud kirjutada."
 
-#: ../assistant_utils.lua:291
 msgid "Could not close notebook file."
 msgstr "Märkmiku faili ei õnnestunud sulgeda."
 
-#: ../assistant_utils.lua:298
 msgid ""
 "Could not save to the selected notebook.\n"
 "Saved to: %1"
@@ -1274,112 +971,85 @@ msgstr ""
 "Valitud märkmikku ei õnnestunud salvestada.\n"
 "Salvestatud: %1"
 
-#: ../assistant_utils.lua:312 ../assistant_utils.lua:322
 msgid "Notebook save failed. Continuing..."
 msgstr "Märkmikusse salvestamine ebaõnnestus. Jätkan..."
 
-#: ../assistant_utils.lua:453
 msgid "##### You may find these topics interesting:"
 msgstr "##### Järgmised teemad võivad sulle huvi pakkuda:"
 
-#: ../assistant_utils.lua:820
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: tagastatud andmete parsimine ebaõnnestus"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:316 ../assistant_viewer.lua:732
 msgid "Ask Another Question"
 msgstr "Küsi veel üks küsimus"
 
-#: ../assistant_viewer.lua:361
 msgid "Copy"
 msgstr "Kopeeri"
 
-#: ../assistant_viewer.lua:366
 msgid "Text copied to the clipboard"
 msgstr "Tekst kopeeriti lõikelauale"
 
-#: ../assistant_viewer.lua:380
 msgid "Add Note"
 msgstr "Lisa märkus"
 
-#: ../assistant_viewer.lua:387
 msgid "Highlight functionality not available"
 msgstr "Esiletõstmise funktsioon pole saadaval"
 
-#: ../assistant_viewer.lua:396
 msgid "No text to add as note"
 msgstr "Märkme lisamiseks pole teksti"
 
-#: ../assistant_viewer.lua:425
 msgid "No text left to add as note"
 msgstr "Märkme lisamiseks pole enam teksti"
 
-#: ../assistant_viewer.lua:438
 msgid "Note added successfully"
 msgstr "Märge lisatud"
 
-#: ../assistant_viewer.lua:461
 msgid "Save conversation to"
 msgstr "Salvesta vestlus asukohta"
 
-#: ../assistant_viewer.lua:486
 msgid "Conversation is saved to notebook"
 msgstr "Vestlus on salvestatud märkmikku"
 
-#: ../assistant_viewer.lua:563
 msgid "Book Analysis"
 msgstr "Raamatu analüüs"
 
-#: ../assistant_viewer.lua:563
 msgid "General Conversation"
 msgstr "Üldine vestlus"
 
-#: ../assistant_viewer.lua:734
 msgid "Type your question here"
 msgstr "Sisesta oma küsimus siia"
 
-#: ../assistant_viewer.lua:903
 msgid "Word copied to clipboard."
 msgstr "Sõna kopeeriti lõikelauale."
 
-#: ../assistant_viewer.lua:904
 msgid "Selection copied to clipboard."
 msgstr "Valik kopeeriti lõikelauale."
 
-#: ../main.lua:88 ../main.lua:148
 msgid "Ask the AI a question"
 msgstr "Esita AI-le küsimus"
 
-#: ../main.lua:96 ../main.lua:347
 msgid "AI Recaps"
 msgstr "AI kokkuvõtted"
 
-#: ../main.lua:104 ../main.lua:332
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
-#: ../main.lua:120 ../main.lua:317
 msgid "Book Summary & Recs"
 msgstr "Raamatu kokkuvõte ja soovitused"
 
-#: ../main.lua:155
 msgid "Enter a question to ask AI."
 msgstr "Sisesta küsimus, mida AI-le esitada."
 
-#: ../main.lua:166
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "Tee kiirmärkmeid, mis salvestatakse sinu märkmikku."
 
-#: ../main.lua:178
 msgid "Notebook (AI Conversation Log)"
 msgstr "Märkmik (AI vestluslogi)"
 
-#: ../main.lua:195
 msgid "Switch"
 msgstr "Vaheta"
 
-#: ../main.lua:214
 msgid ""
 "Delete file?\n"
 "%1\n"
@@ -1389,7 +1059,6 @@ msgstr ""
 "%1\n"
 "Seda toimingut ei saa tagasi võtta."
 
-#: ../main.lua:245
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
@@ -1399,11 +1068,9 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:247
 msgid "View"
 msgstr "Vaata"
 
-#: ../main.lua:251
 msgid ""
 "File does not exist.\n"
 "\n"
@@ -1413,19 +1080,15 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:266
 msgid "AI Provider: not configured"
 msgstr "AI-teenusepakkuja: pole konfigureeritud"
 
-#: ../main.lua:272
 msgid "AI Provider: %1(%2)"
 msgstr "AI-teenusepakkuja: %1(%2)"
 
-#: ../main.lua:285
 msgid "Web Search: %1"
 msgstr "Veebiotsing: %1"
 
-#: ../main.lua:289
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
@@ -1433,107 +1096,81 @@ msgstr ""
 "Parandab vastuste täpsust reaalajas veebitulemustega. \n"
 "Märkus: suurem tokenite kasutus ja täiendavad API-tasud."
 
-#: ../main.lua:313
 msgid "Book-Level Built-in Prompts"
 msgstr "Raamatutaseme sisseehitatud päringud"
 
-#: ../main.lua:326
 msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr "Raamatu kokkuvõte, autori elulugu, ajalooline kontekst ja sarnaste raamatute soovituste loend kirjeldustega."
 
-#: ../main.lua:341
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" kokkuvõte raamatust, mis on jaotatud osadeks nagu tegelased, asukohad, teemad, terminid ja mõisted, ajatelg ning uuesti sisseelamine."
 
-#: ../main.lua:356
 msgid "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr "Väga lühike, spoilerivaba kokkuvõte raamatust kuni praeguse lugemise edenemiseni."
 
-#: ../main.lua:367
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analüüs sinu raamatu esiletõstetud lõikudest, märkmetest ja märkmiku sisust."
 
-#: ../main.lua:382
 msgid "Summary of the book using your highlights and notes."
 msgstr "Raamatu kokkuvõte, kasutades sinu esiletõstetud lõike ja märkmeid."
 
-#: ../main.lua:389
 msgid "Book-Level Custom Prompts"
 msgstr "Raamatutaseme kohandatud päringud"
 
-#: ../main.lua:396
 msgid "Includes user defined book level prompts from Config file"
 msgstr "Sisaldab kasutaja määratud raamatutaseme päringuid konfiguratsioonifailist"
 
-#: ../main.lua:471
 msgid "This is a custom prompt"
 msgstr "See on kohandatud päring"
 
-#: ../main.lua:481
 msgid "No valid book-level custom prompt found"
 msgstr "Sobivat raamatutaseme kohandatud päringut ei leitud"
 
-#: ../main.lua:486
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Üksikasjadeks külasta GitHubi viki-lehte 'Configuration'."
 
-#: ../main.lua:571 ../main.lua:700
 msgid "Edit %1"
 msgstr "Muuda %1"
 
-#: ../main.lua:581 ../main.lua:701
 msgid "Add %1"
 msgstr "Lisa %1"
 
-#: ../main.lua:581
 msgid "Add %1 Provider"
 msgstr "Lisa %1 teenusepakkuja"
 
-#: ../main.lua:590
 msgid "Display name"
 msgstr "Kuvatav nimi"
 
-#: ../main.lua:590
 msgid "Provider Name"
 msgstr "Teenusepakkuja nimi"
 
-#: ../main.lua:591 ../main.lua:711
 msgid "Base URL"
 msgstr "Baas-URL"
 
-#: ../main.lua:591 ../main.lua:711
 msgid "https://..."
 msgstr "https://..."
 
-#: ../main.lua:592 ../main.lua:707
 msgid "API Key"
 msgstr "API-võti"
 
-#: ../main.lua:592 ../main.lua:707
 msgid "Your API key"
 msgstr "Sinu API-võti"
 
-#: ../main.lua:593
 msgid "Default: auto"
 msgstr "Vaikimisi: auto"
 
-#: ../main.lua:593
 msgid "Model"
 msgstr "Mudel"
 
-#: ../main.lua:624
 msgid "Failed to fetch models."
 msgstr "Mudelite hankimine ebaõnnestus."
 
-#: ../main.lua:754
 msgid "Failed to save search tool."
 msgstr "Otsingutööriista salvestamine ebaõnnestus."
 
-#: ../main.lua:829
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "configuration.lua-failist ei leitud sobivat mudeliteenusepakkujat."
 
-#: ../main.lua:848
 msgid ""
 "<b>Configuration Error.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -1541,15 +1178,12 @@ msgstr ""
 "<b>Konfiguratsiooniviga.</b>\n"
 "Palun lisa teenusepakkuja seadetes või configuration.lua-faili."
 
-#: ../main.lua:854
 msgid "OK"
 msgstr "OK"
 
-#: ../main.lua:972
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: mudeliteenuse pakkujad on vigased."
 
-#: ../main.lua:1055
 msgid ""
 "Usage Tips\n"
 "\n"
@@ -1583,15 +1217,12 @@ msgstr ""
 "Mitmikpühkimine (nt ⮠, ⮡, ↺):\n"
 "Tulemuse dialoogil: sulgeb selle (kuna Sule-nupp on kaugel).\n"
 
-#: ../main.lua:1077
 msgid "Version Info"
 msgstr "Versiooniteave"
 
-#: ../main.lua:1083
 msgid "Purge Settings"
 msgstr "Puhasta sätted"
 
-#: ../main.lua:1086
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
@@ -1603,28 +1234,22 @@ msgstr ""
 "\n"
 "configuration.lua on ohutu, puhastatakse ainult sätted."
 
-#: ../main.lua:1139
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Eemaldada [%s] esiletõstmise menüüst?"
 
-#: ../main.lua:1140
 msgid "Remove"
 msgstr "Eemalda"
 
-#: ../main.lua:1503
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfiguratsiooni ei leitud. Palun seadistage esmalt configuration.lua."
 
-#: ../main.lua:1551
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Lisatud</b> [%1 (AI)] esiletõstmise menüüsse."
 
-#: ../main.lua:1562
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
 msgstr "<b>Eemaldatud</b> [%1 (AI)] esiletõstmise menüüst."
 
-#: ../main.lua:1607
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
@@ -1634,36 +1259,28 @@ msgstr ""
 "Teosele %1, autorilt %2.\n"
 "\n"
 
-#: ../main.lua:1608
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Viimati loetud tund aega tagasi."
 msgstr[1] "Viimati loetud %1 tundi tagasi."
 
-#: ../main.lua:1613
 msgid "Yes"
 msgstr "Jah"
 
-#: ../main.lua:1622
 msgid "No"
 msgstr "Ei"
 
-#: ../main.lua:1663
 msgid "Markdown Engine"
 msgstr "Markdowni mootor"
 
-#: ../main.lua:1664
 msgid "KOReader"
 msgstr "KOReader"
 
-#: ../main.lua:1665
 msgid "Device"
 msgstr "Seade"
 
-#: ../main.lua:1666
 msgid "Platform"
 msgstr "Platvorm"
 
-#: ../main.lua:1667
 msgid "Runtime"
 msgstr "Käitusaeg"

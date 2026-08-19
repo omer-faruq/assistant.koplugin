@@ -70,16 +70,16 @@ init-dirs: template
 
 update: init-dirs
 	@set -x;for po_file in $(PO_FILES); do \
-		$(MSGMERGE_BIN) --update --backup=none --no-wrap --sort-by-file $$po_file $(TEMPLATE_DIR)/$(DOMAIN).pot; \
+		$(MSGMERGE_BIN) --update --backup=none --no-wrap --no-location --sort-by-file $$po_file $(TEMPLATE_DIR)/$(DOMAIN).pot; \
 	done
 
 extract-untranslated:
 	@set -x;for po_file in $(PO_FILES); do \
 		dir=$$(dirname $$po_file); \
 		if [ ! -f "$$dir/untranslated.po" ]; then \
-			$(MSGATTRIB_BIN) --no-wrap --untranslated --force-po $$po_file -o $$dir/_untranslated.po; \
-			$(MSGATTRIB_BIN) --no-wrap --fuzzy --clear-fuzzy --empty --force-po $$po_file -o $$dir/_fuzzy.po; \
-			$(MSGCAT_BIN) --no-wrap --use-first $$dir/_untranslated.po $$dir/_fuzzy.po -o $$dir/untranslated.po; \
+			$(MSGATTRIB_BIN) --no-wrap --no-location --untranslated --force-po $$po_file -o $$dir/_untranslated.po; \
+			$(MSGATTRIB_BIN) --no-wrap --no-location --fuzzy --clear-fuzzy --empty --force-po $$po_file -o $$dir/_fuzzy.po; \
+			$(MSGCAT_BIN) --no-wrap --no-location --use-first $$dir/_untranslated.po $$dir/_fuzzy.po -o $$dir/untranslated.po; \
 		else \
 			echo "Skipping extraction for $$dir, untranslated.po already exists."; \
 		fi; \
@@ -89,8 +89,8 @@ import-translation:
 	@for po_file in $(PO_FILES); do \
 		dir=$$(dirname $$po_file); \
 		if [ -f "$$dir/updated_translated.po" ]; then \
-			$(MSGCAT_BIN) --no-wrap --use-first --sort-output $$dir/updated_translated.po $$po_file -o $$dir/updated.po && \
-			$(MSGATTRIB_BIN) --no-obsolete --no-wrap --sort-by-file $$dir/updated.po -o $$po_file; \
+			$(MSGCAT_BIN) --no-location --no-wrap --use-first --sort-output $$dir/updated_translated.po $$po_file -o $$dir/updated.po && \
+			$(MSGATTRIB_BIN) --no-obsolete --no-wrap --no-location --sort-by-file $$dir/updated.po -o $$po_file; \
 			rm -f $$dir/updated.po; \
 		fi; \
 	done
@@ -204,6 +204,7 @@ template:
 		--add-comments=@translators \
 		--package-name=assistant.koplugin \
 		--no-wrap \
+		--no-location \
 		--sort-by-file \
 		--package-version=`grep version ../_meta.lua | grep -Eo '[0-9.]+'` \
 		`find .. -type f -name "*.lua" | sort` \

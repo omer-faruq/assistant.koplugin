@@ -17,70 +17,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : (n==3) ? 3 :(n==6) ? 4 : 5;\n"
 
-#: ../_meta.lua:3 ../assistant_dialog.lua:532 ../main.lua:413 ../main.lua:423
-#: ../main.lua:933
 msgid "AI Assistant"
 msgstr "Cynorthwyydd AI"
 
-#: ../_meta.lua:4
 msgid "💡 Enhance your KOReader experience with AI"
 msgstr "💡 Gwella eich profiad KOReader gydag AI"
 
-#: ../api_handlers/anthropic.lua:29 ../api_handlers/gemini.lua:32
-#: ../api_handlers/openai.lua:63 ../api_handlers/responses.lua:51
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Yn llwytho modelau...</b>"
 
-#: ../api_handlers/anthropic.lua:46 ../api_handlers/gemini.lua:42
-#: ../api_handlers/gemini.lua:52 ../api_handlers/openai.lua:79
-#: ../api_handlers/responses.lua:67
 msgid "Failed to fetch models"
 msgstr "Methwyd â llwytho modelau"
 
-#: ../assistant_dialog.lua:93
 msgid "### ☺ Question\n"
 msgstr "### ☺ Cwestiwn\n"
 
-#: ../assistant_dialog.lua:135 ../assistant_model_picker.lua:103
-#: ../assistant_model_picker.lua:267
 msgid "Search"
 msgstr "Chwilio"
 
-#: ../assistant_dialog.lua:138
 msgid "Response"
 msgstr "Ymateb"
 
-#: ../assistant_dialog.lua:139
 msgid "(No response)"
 msgstr "(Dim ymateb)"
 
-#: ../assistant_dialog.lua:176 ../assistant_quicknote.lua:109
-#: ../assistant_viewer.lua:559
 msgid "Highlighted text:"
 msgstr "Testun wedi'i amlygu:"
 
-#: ../assistant_dialog.lua:340 ../assistant_dictdialog.lua:160
-#: ../assistant_model_picker.lua:128 ../assistant_model_picker.lua:258
-#: ../assistant_model_picker.lua:351 ../assistant_notebook.lua:381
-#: ../assistant_quicknote.lua:49 ../assistant_search_registry.lua:362
-#: ../assistant_settings.lua:100 ../assistant_settings.lua:741
-#: ../assistant_viewer.lua:661 ../main.lua:598 ../main.lua:722 ../main.lua:858
 msgid "Cancel"
 msgstr "Canslo"
 
-#: ../assistant_dialog.lua:360
 msgid "Select notebook"
 msgstr "Dewis llyfr nodiadau"
 
-#: ../assistant_dialog.lua:388 ../assistant_viewer.lua:671
 msgid "Ask"
 msgstr "Gofyn"
 
-#: ../assistant_dialog.lua:401 ../assistant_viewer.lua:677
 msgid "Enter a question before proceeding."
 msgstr "Rhowch gwestiwn cyn bwrw ymlaen."
 
-#: ../assistant_dialog.lua:488
 msgid ""
 "<b>%1:</b> %2\n"
 "\n"
@@ -90,15 +65,12 @@ msgstr ""
 "\n"
 "Ychwanegu'r botwm hwn i'r Ddewislen Amlygu?"
 
-#: ../assistant_dialog.lua:490 ../assistant_settings.lua:252
 msgid "Add"
 msgstr "Ychwanegu"
 
-#: ../assistant_dialog.lua:518
 msgid "Ask a question about the highlighted text"
 msgstr "Gofyn cwestiwn am y testun wedi'i amlygu"
 
-#: ../assistant_dialog.lua:521
 msgid ""
 "<b>Ask a question about this book:</b>\n"
 "%1 by %2"
@@ -106,129 +78,97 @@ msgstr ""
 "<b>Gofyn cwestiwn am y llyfr hwn:</b>\n"
 "%1 gan %2"
 
-#: ../assistant_dialog.lua:524
 msgid "Ask a general question"
 msgstr "Gofyn cwestiwn cyffredinol"
 
-#: ../assistant_dialog.lua:527
 msgid "Type your question here..."
 msgstr "Teipiwch eich cwestiwn yma..."
 
-#: ../assistant_dialog.lua:528
 msgid "Ask anything about this book..."
 msgstr "Gofyn unrhyw beth am y llyfr hwn..."
 
-#: ../assistant_dialog.lua:529
 msgid "Ask anything..."
 msgstr "Gofyn unrhyw beth..."
 
-#: ../assistant_dialog.lua:553
 msgid "Use book text as context"
 msgstr "Defnyddio testun y llyfr fel cyd-destun"
 
-#: ../assistant_dialog.lua:606
 msgid "Loading for %1 ..."
 msgstr "Yn llwytho ar gyfer %1 ..."
 
-#: ../assistant_dialog.lua:620
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Gwall:</b> Ni dderbyniwyd ymateb"
 
-#: ../assistant_dictdialog.lua:154
 msgid "AI Dictionary"
 msgstr "Geiriadur AI"
 
-#: ../assistant_dictdialog.lua:155
 msgid "Enter a word to look up..."
 msgstr "Rhowch air i chwilio amdano..."
 
-#: ../assistant_dictdialog.lua:166
 msgid "Look Up"
 msgstr "Edrych i Fyny"
 
-#: ../assistant_dictdialog.lua:213
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Yn dadansoddi cyd-destun y llyfr ar gyfer Term X-Ray...</b>"
 
-#: ../assistant_dictdialog.lua:388 ../assistant_prompts.lua:27 ../main.lua:1213
-#: ../main.lua:1215
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
-#: ../assistant_dictdialog.lua:391
 msgid "Loading Term X-Ray ..."
 msgstr "Yn llwytho Term X-Ray ..."
 
-#: ../assistant_dictdialog.lua:408 ../assistant_prompts.lua:74 ../main.lua:1232
 msgid "Dictionary"
 msgstr "Geiriadur"
 
-#: ../assistant_dictdialog.lua:409
 msgid "Loading AI Dictionary ..."
 msgstr "Yn llwytho Geiriadur AI ..."
 
-#: ../assistant_exttools.lua:262
 msgid "None"
 msgstr "Dim"
 
-#: ../assistant_exttools.lua:263
 msgid "Model Built-In"
 msgstr "Model Adeiledig"
 
-#: ../assistant_featuredialog.lua:41
 msgid "Custom Prompt"
 msgstr "Prompt Personol"
 
-#: ../assistant_featuredialog.lua:42
 msgid "Loading..."
 msgstr "Yn llwytho..."
 
-#: ../assistant_featuredialog.lua:63
 msgid "Recap"
 msgstr "Crynodeb"
 
-#: ../assistant_featuredialog.lua:64
 msgid "Loading Recap..."
 msgstr "Yn llwytho Crynodeb..."
 
-#: ../assistant_featuredialog.lua:69
 msgid "X‑Ray"
 msgstr "X‑Ray"
 
-#: ../assistant_featuredialog.lua:70
 msgid "Loading X-Ray..."
 msgstr "Yn llwytho X-Ray..."
 
 #. @translators book_info section headers and sub-fields
-#: ../assistant_featuredialog.lua:75 ../assistant_prompts.lua:440
 msgid "Book Information"
 msgstr "Gwybodaeth am y Llyfr"
 
-#: ../assistant_featuredialog.lua:76
 msgid "Loading Book Information..."
 msgstr "Yn llwytho Gwybodaeth am y Llyfr..."
 
-#: ../assistant_featuredialog.lua:81 ../main.lua:128 ../main.lua:361
 msgid "Highlight & Note Analysis"
 msgstr "Dadansoddiad Amlygiadau a Nodiadau"
 
-#: ../assistant_featuredialog.lua:82
 msgid "Loading Highlight & Note Analysis..."
 msgstr "Yn llwytho Dadansoddiad Amlygiadau a Nodiadau..."
 
-#: ../assistant_featuredialog.lua:87 ../main.lua:136 ../main.lua:373
 msgid "Summary Using Highlights & Notes"
 msgstr "Crynodeb gan Ddefnyddio Amlygiadau a Nodiadau"
 
-#: ../assistant_featuredialog.lua:88
 msgid "Loading Summary Using Highlights & Notes..."
 msgstr "Yn llwytho Crynodeb gan Ddefnyddio Amlygiadau a Nodiadau..."
 
-#: ../assistant_featuredialog.lua:100
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Math o nodwedd anhysbys:</b> %1"
 
-#: ../assistant_featuredialog.lua:187
 msgid ""
 " - Title : %1\n"
 " - Author: %2\n"
@@ -244,546 +184,410 @@ msgstr ""
 "-----\n"
 "\n"
 
-#: ../assistant_model_picker.lua:77
 msgid "Models: %1 (filtered)"
 msgstr "Modelau: %1 (wedi'u hidlo)"
 
-#: ../assistant_model_picker.lua:79
 msgid "Models: %1"
 msgstr "Modelau: %1"
 
-#: ../assistant_model_picker.lua:82
 msgid " — p. %1/%2"
 msgstr " — t. %1/%2"
 
-#: ../assistant_model_picker.lua:119
 msgid "Manual"
 msgstr "Llawlyfr"
 
-#: ../assistant_model_picker.lua:123
 msgid "Reset"
 msgstr "Ailosod"
 
-#: ../assistant_model_picker.lua:170 ../assistant_model_picker.lua:368
 msgid "Model: %1"
 msgstr "Model: %1"
 
-#: ../assistant_model_picker.lua:183
 msgid "Filter: \"%1\""
 msgstr "Hidlydd: \"%1\""
 
-#: ../assistant_model_picker.lua:185
 msgid "Select a model:"
 msgstr "Dewiswch fodel:"
 
-#: ../assistant_model_picker.lua:253
 msgid "Search Models"
 msgstr "Chwilio Modelau"
 
-#: ../assistant_model_picker.lua:292
 msgid "Model reset: %1"
 msgstr "Model wedi'i ailosod: %1"
 
-#: ../assistant_model_picker.lua:322
 msgid "No models matching \"%1\"."
 msgstr "Dim modelau'n cyfateb i \"%1\"."
 
-#: ../assistant_model_picker.lua:346
 msgid "Enter Model ID"
 msgstr "Rhowch ID y Model"
 
-#: ../assistant_model_picker.lua:348
 msgid "e.g. google/gemini-3.0-flash-exp:free"
 msgstr "e.e. google/gemini-3.0-flash-exp:free"
 
-#: ../assistant_model_picker.lua:356 ../assistant_quicknote.lua:59
-#: ../assistant_settings.lua:124 ../assistant_viewer.lua:457 ../main.lua:645
-#: ../main.lua:727
 msgid "Save"
 msgstr "Cadw"
 
-#: ../assistant_model_picker.lua:389
 msgid "No models available."
 msgstr "Dim modelau ar gael."
 
-#: ../assistant_notebook.lua:133
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Nid yw ffolder y llyfrau nodiadau wedi'i ffurfweddu yn hygyrch: %1"
 
-#: ../assistant_notebook.lua:138
 msgid "No base folder is available for notebooks."
 msgstr "Nid oes ffolder sylfaen ar gael ar gyfer llyfrau nodiadau."
 
-#: ../assistant_notebook.lua:147
 msgid "Notebooks path is not a directory: %1"
 msgstr "Nid yw llwybr y llyfrau nodiadau yn gyfeiriadur: %1"
 
-#: ../assistant_notebook.lua:156
 msgid "Could not create notebooks folder: %1"
 msgstr "Methwyd creu ffolder y llyfrau nodiadau: %1"
 
-#: ../assistant_notebook.lua:185
 msgid "Could not list notebooks folder: %1"
 msgstr "Methwyd rhestru ffolder y llyfrau nodiadau: %1"
 
-#: ../assistant_notebook.lua:227
 msgid "No path is available for the legacy notebook."
 msgstr "Nid oes llwybr ar gael ar gyfer y llyfr nodiadau etifeddol."
 
-#: ../assistant_notebook.lua:234
 msgid "Assistant settings are not available."
 msgstr "Nid yw gosodiadau'r cynorthwyydd ar gael."
 
-#: ../assistant_notebook.lua:237
 msgid "Invalid notebook entry."
 msgstr "Cofnod llyfr nodiadau annilys."
 
-#: ../assistant_notebook.lua:247
 msgid "Invalid notebook filename."
 msgstr "Enw ffeil llyfr nodiadau annilys."
 
-#: ../assistant_notebook.lua:268
 msgid "Notebook name must be text."
 msgstr "Rhaid i enw'r llyfr nodiadau fod yn destun."
 
-#: ../assistant_notebook.lua:273 ../assistant_notebook.lua:296
 msgid "Notebook name cannot be empty."
 msgstr "Ni all enw'r llyfr nodiadau fod yn wag."
 
-#: ../assistant_notebook.lua:276
 msgid "Notebook name cannot contain path separators."
 msgstr "Ni all enw'r llyfr nodiadau gynnwys gwahanyddion llwybr."
 
-#: ../assistant_notebook.lua:279
 msgid "Notebook name cannot contain '..'."
 msgstr "Ni all enw'r llyfr nodiadau gynnwys '..'."
 
-#: ../assistant_notebook.lua:282
 msgid "Notebook name contains characters that are not supported by the filesystem."
 msgstr "Mae enw'r llyfr nodiadau yn cynnwys nodau nad yw'r system ffeiliau yn eu cefnogi."
 
-#: ../assistant_notebook.lua:285
 msgid "Notebook name cannot end with a space or dot."
 msgstr "Ni all enw'r llyfr nodiadau orffen gyda bwlch neu ddot."
 
-#: ../assistant_notebook.lua:303
 msgid "Notebook name is reserved by the filesystem."
 msgstr "Mae enw'r llyfr nodiadau wedi'i gadw gan y system ffeiliau."
 
-#: ../assistant_notebook.lua:324
 msgid "Notebook path is not a file: %1"
 msgstr "Nid yw llwybr y llyfr nodiadau yn ffeil: %1"
 
-#: ../assistant_notebook.lua:330
 msgid "Could not create notebook: %1"
 msgstr "Methwyd creu'r llyfr nodiadau: %1"
 
-#: ../assistant_notebook.lua:375
 msgid "New notebook"
 msgstr "Llyfr nodiadau newydd"
 
-#: ../assistant_notebook.lua:376
 msgid "Notebook name"
 msgstr "Enw'r llyfr nodiadau"
 
-#: ../assistant_notebook.lua:377
 msgid "Create a notebook."
 msgstr "Creu llyfr nodiadau."
 
-#: ../assistant_notebook.lua:388
 msgid "Create"
 msgstr "Creu"
 
-#: ../assistant_notebook.lua:401
 msgid "Could not create notebook."
 msgstr "Methwyd creu llyfr nodiadau."
 
-#: ../assistant_notebook.lua:453
 msgid "Could not select notebook."
 msgstr "Methwyd dewis llyfr nodiadau."
 
-#: ../assistant_notebook.lua:467
 msgid "No notebooks yet"
 msgstr "Dim llyfrau nodiadau eto"
 
-#: ../assistant_notebook.lua:473
 msgid "New notebook…"
 msgstr "Llyfr nodiadau newydd…"
 
-#: ../assistant_notebook.lua:487
 msgid "Notebooks"
 msgstr "Llyfrau nodiadau"
 
-#: ../assistant_notebook.lua:489
 msgid "Active: %1"
 msgstr "Gweithredol: %1"
 
-#: ../assistant_prompts.lua:30
 msgid "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr "Mae'r cyfarwyddiad hwn yn creu system strwythuredig ar gyfer cynhyrchu diffiniadau sy'n ymwybodol o gyd-destun o eiriau neu ymadroddion o lenyddiaeth drwy ddadansoddi'r term sydd wedi'i amlygu o fewn ei destun cyfagos i ddarparu esboniadau cynnil sy'n dal yr ystyr llythrennol a'r arwyddocâd cyd-destunol."
 
 #. @translators term_xray section headers
 #. @translators term_xray: "What It Is" section header
-#: ../assistant_prompts.lua:64
 msgid "What It Is"
 msgstr "Beth Yw"
 
 #. @translators term_xray: "Role & Function" section header
-#: ../assistant_prompts.lua:66
 msgid "Role & Function"
 msgstr "Rôl a Swyddogaeth"
 
 #. @translators term_xray: "Evolution & Connections" section header
-#: ../assistant_prompts.lua:68
 msgid "Evolution & Connections"
 msgstr "Esblygiad a Chysylltiadau"
 
 #. @translators term_xray: "Context Limitations" section header
-#: ../assistant_prompts.lua:70
 msgid "Context Limitations"
 msgstr "Cyfyngiadau Cyd-destun"
 
-#: ../assistant_prompts.lua:76
 msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
 msgstr "Mae'r cyfarwyddiad hwn yn gweithredu fel geiriadur ar gyfer y testun sydd wedi'i amlygu, i air neu ymadrodd."
 
-#: ../assistant_prompts.lua:82 ../assistant_quicknote.lua:111
 msgid "Quick Note"
 msgstr "Nodyn Cyflym"
 
-#: ../assistant_prompts.lua:83
 msgid "This button creates a quick note with highlighted text."
 msgstr "Mae'r botwm hwn yn creu nodyn cyflym gyda'r testun sydd wedi'i amlygu."
 
-#: ../assistant_prompts.lua:88
 msgid "Vocabulary"
 msgstr "Geirfa"
 
-#: ../assistant_prompts.lua:92
 msgid "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
 msgstr "Mae'r cyfarwyddiad hwn yn dadansoddi geirfa'r testun sydd wedi'i amlygu, gan nodi geiriau cymhleth a darparu diffiniadau, cyfystyron, ac enghreifftiau o ddefnydd."
 
-#: ../assistant_prompts.lua:109
 msgid "Grammar"
 msgstr "Gramadeg"
 
-#: ../assistant_prompts.lua:113
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Mae'r cyfarwyddiad hwn yn dadansoddi gramadeg y testun sydd wedi'i amlygu, gan ddarparu esboniad manwl o'i strwythur ac unrhyw wallau gramadegol."
 
 #. @translators grammar section headers
-#: ../assistant_prompts.lua:136
 msgid "Structure & Clauses"
 msgstr "Strwythur a Chymalau"
 
-#: ../assistant_prompts.lua:137
 msgid "Parts of Speech & Tenses"
 msgstr "Rhannau Ymadrodd ac Amseroedd"
 
-#: ../assistant_prompts.lua:138
 msgid "Error Correction (If Applicable)"
 msgstr "Cywiro Gwallau (Os Yn Berthnasol)"
 
-#: ../assistant_prompts.lua:142
 msgid "Translate"
 msgstr "Cyfieithu"
 
-#: ../assistant_prompts.lua:144
 msgid "This prompt translates the highlighted text to another language."
 msgstr "Mae'r cyfarwyddiad hwn yn cyfieithu'r testun sydd wedi'i amlygu i iaith arall."
 
-#: ../assistant_prompts.lua:156
 msgid "Summarize"
 msgstr "Crynhoi"
 
-#: ../assistant_prompts.lua:159
 msgid "This prompt summarizes the highlighted text, capturing its main points and essential details."
 msgstr "Mae'r cyfarwyddiad hwn yn crynhoi'r testun sydd wedi'i amlygu, gan ddal ei brif bwyntiau a'i fanylion hanfodol."
 
-#: ../assistant_prompts.lua:174
 msgid "Simplify"
 msgstr "Symleiddio"
 
-#: ../assistant_prompts.lua:177
 msgid "This prompt simplifies the highlighted text to make it easier to understand."
 msgstr "Mae'r cyfarwyddiad hwn yn symleiddio'r testun sydd wedi'i amlygu i'w wneud yn haws i'w ddeall."
 
-#: ../assistant_prompts.lua:191 ../assistant_prompts.lua:534
 msgid "Key Points"
 msgstr "Prif Bwyntiau"
 
-#: ../assistant_prompts.lua:195
 msgid "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."
 msgstr "Mae'r cyfarwyddiad hwn yn echdynnu ac yn rhestru'r prif bwyntiau o'r testun sydd wedi'i amlygu, gan sicrhau eglurder a threfniadaeth."
 
 #. @translators key_points section headers
-#: ../assistant_prompts.lua:216
 msgid "Core Arguments"
 msgstr "Prif Ddadleuon"
 
-#: ../assistant_prompts.lua:217
 msgid "Essential Facts & Conclusions"
 msgstr "Ffeithiau Hanfodol a Chasgliadau"
 
-#: ../assistant_prompts.lua:220
 msgid "ELI5"
 msgstr "ELI5"
 
-#: ../assistant_prompts.lua:224
 msgid "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."
 msgstr "Mae'r cyfarwyddiad hwn yn esbonio'r testun sydd wedi'i amlygu fel pe bai i blentyn pum mlwydd oed, gan symleiddio cysyniadau cymhleth i dermau hawdd eu deall."
 
 #. @translators ELI5 section headers
-#: ../assistant_prompts.lua:244
 msgid "Core Idea"
 msgstr "Prif Syniad"
 
-#: ../assistant_prompts.lua:245
 msgid "Fun Analogy"
 msgstr "Cymhariaeth Hwyliog"
 
-#: ../assistant_prompts.lua:248
 msgid "Explain"
 msgstr "Esbonio"
 
-#: ../assistant_prompts.lua:251
 msgid "This prompt explains the highlighted text in detail, ensuring clarity and understanding."
 msgstr "Mae'r cyfarwyddiad hwn yn esbonio'r testun sydd wedi'i amlygu yn fanwl, gan sicrhau eglurder a dealltwriaeth."
 
-#: ../assistant_prompts.lua:265
 msgid "Historical Context"
 msgstr "Cyd-destun Hanesyddol"
 
-#: ../assistant_prompts.lua:269
 msgid "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."
 msgstr "Mae'r cyfarwyddiad hwn yn darparu cyd-destun hanesyddol manwl ar gyfer y testun sydd wedi'i amlygu, gan esbonio ei arwyddocâd a'i gefndir."
 
 #. @translators historical_context section headers
-#: ../assistant_prompts.lua:290
 msgid "Era & Background"
 msgstr "Cyfnod a Chefndir"
 
-#: ../assistant_prompts.lua:291
 msgid "Contextual Connections"
 msgstr "Cysylltiadau Cyd-destunol"
 
-#: ../assistant_prompts.lua:292
 msgid "Cultural Significance"
 msgstr "Arwyddocâd Diwylliannol"
 
-#: ../assistant_prompts.lua:295 ../main.lua:1194 ../main.lua:1196
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#: ../assistant_prompts.lua:299
 msgid "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
 msgstr "Mae'r cyfarwyddiad hwn yn cynhyrchu erthygl gynhwysfawr arddull Wikipedia yn seiliedig ar y testun sydd wedi'i amlygu, gan sicrhau cywirdeb ffeithiol a niwtraliaeth."
 
 #. @translators xray section headers
-#: ../assistant_prompts.lua:391
 msgid "Characters"
 msgstr "Cymeriadau"
 
-#: ../assistant_prompts.lua:392
 msgid "Locations"
 msgstr "Lleoliadau"
 
-#: ../assistant_prompts.lua:393
 msgid "Main Themes"
 msgstr "Prif Themâu"
 
-#: ../assistant_prompts.lua:394
 msgid "Terms & Concepts"
 msgstr "Termau a Chysyniadau"
 
-#: ../assistant_prompts.lua:395
 msgid "Timeline"
 msgstr "Llinell Amser"
 
-#: ../assistant_prompts.lua:396
 msgid "Re-immersion"
 msgstr "Ail-ymgolli"
 
 #. @translators xray Re-immersion sub-fields
-#: ../assistant_prompts.lua:398
 msgid "Where the action stopped:"
 msgstr "Lle stopiodd y gweithredu:"
 
-#: ../assistant_prompts.lua:399
 msgid "Protagonist's current objective:"
 msgstr "Amcan cyfredol y prif gymeriad:"
 
-#: ../assistant_prompts.lua:400
 msgid "Open conflict or mystery:"
 msgstr "Gwrthdaro agored neu ddirgelwch:"
 
-#: ../assistant_prompts.lua:401
 msgid "Narrative element in focus:"
 msgstr "Elfen naratif dan sylw:"
 
-#: ../assistant_prompts.lua:402
 msgid "Prevailing emotional state/tone:"
 msgstr "Cyflwr emosiynol/naws cyffredinol:"
 
-#: ../assistant_prompts.lua:403
 msgid "Outstanding questions:"
 msgstr "Cwestiynau heb eu hateb:"
 
-#: ../assistant_prompts.lua:441
 msgid "Genre"
 msgstr "Genre"
 
-#: ../assistant_prompts.lua:442
 msgid "Publication Date"
 msgstr "Dyddiad Cyhoeddi"
 
-#: ../assistant_prompts.lua:443
 msgid "Publisher"
 msgstr "Cyhoeddwr"
 
-#: ../assistant_prompts.lua:444
 msgid "Plot Summary"
 msgstr "Crynodeb o'r Plot"
 
-#: ../assistant_prompts.lua:445
 msgid "About the Author"
 msgstr "Am yr Awdur"
 
-#: ../assistant_prompts.lua:446
 msgid "Historical and Cultural Context"
 msgstr "Cyd-destun Hanesyddol a Diwylliannol"
 
-#: ../assistant_prompts.lua:447
 msgid "Similar Books Recommendations"
 msgstr "Argymhellion Llyfrau Tebyg"
 
 #. @translators annotations section headers
-#: ../assistant_prompts.lua:478
 msgid "Key Takeaways"
 msgstr "Prif Bwyntiau"
 
-#: ../assistant_prompts.lua:479
 msgid "To-Do / Action Items"
 msgstr "Tasgau / Eitemau Gweithredu"
 
-#: ../assistant_prompts.lua:480
 msgid "Contextual Notes"
 msgstr "Nodiadau Cyd-destunol"
 
-#: ../assistant_prompts.lua:481
 msgid "Contextual Notes / Reflections"
 msgstr "Nodiadau Cyd-destunol / Myfyrdodau"
 
 #. @translators summary_using_annotations output structure sections
-#: ../assistant_prompts.lua:532
 msgid "TL;DR"
 msgstr "TL;DR"
 
-#: ../assistant_prompts.lua:533
 msgid "Integrated Summary"
 msgstr "Crynodeb Integredig"
 
-#: ../assistant_prompts.lua:535
 msgid "Actionable Takeaways"
 msgstr "Prif Bwyntiau Gweithredadwy"
 
-#: ../assistant_prompts.lua:536
 msgid "Contradictions / Open Questions"
 msgstr "Gwrthddywediadau / Cwestiynau Agored"
 
 #. @translators used in the dictionary.
-#: ../assistant_prompts.lua:564
 msgid "Conjugation"
 msgstr "Ffurfiau'r Ferf"
 
-#: ../assistant_prompts.lua:565
 msgid "Synonyms"
 msgstr "Cyfystyron"
 
-#: ../assistant_prompts.lua:566
 msgid "Meaning"
 msgstr "Ystyr"
 
-#: ../assistant_prompts.lua:567
 msgid "Translation"
 msgstr "Cyfieithiad"
 
-#: ../assistant_prompts.lua:568
 msgid "Book Usage"
 msgstr "Defnydd yn y Llyfr"
 
-#: ../assistant_prompts.lua:569
 msgid "Example"
 msgstr "Enghraifft"
 
-#: ../assistant_prompts.lua:570
 msgid "Word Origin"
 msgstr "Tarddiad y Gair"
 
-#: ../assistant_provider_registry.lua:210
 msgid "Provider record must be a table."
 msgstr "Rhaid i gofnod y darparwr fod yn dabl."
 
-#: ../assistant_provider_registry.lua:216
 msgid "Provider name is required."
 msgstr "Mae enw'r darparwr yn ofynnol."
 
-#: ../assistant_provider_registry.lua:221
 msgid "Unsupported API protocol."
 msgstr "Protocol API heb ei gefnogi."
 
-#: ../assistant_provider_registry.lua:232 ../main.lua:655
 msgid "Base URL is required."
 msgstr "Mae angen URL sylfaenol."
 
-#: ../assistant_provider_registry.lua:235 ../assistant_search_registry.lua:125
 msgid "Base URL must start with http:// or https://"
 msgstr "Rhaid i'r URL sylfaenol ddechrau gyda http:// neu https://"
 
-#: ../assistant_provider_registry.lua:241 ../main.lua:659
 msgid "API key is required."
 msgstr "Mae angen allwedd API."
 
-#: ../assistant_provider_registry.lua:292
-#: ../assistant_provider_registry.lua:308
-#: ../assistant_provider_registry.lua:348
 msgid "Provider not found."
 msgstr "Ni chafwyd hyd i'r darparwr."
 
-#: ../assistant_provider_registry.lua:343
-#: ../assistant_provider_registry.lua:394
 msgid "Provider data not initialized."
 msgstr "Ni chychwynnwyd data'r darparwr."
 
-#: ../assistant_provider_registry.lua:447
 msgid "Provider API"
 msgstr "API'r Darparwr"
 
-#: ../assistant_provider_registry.lua:465
 msgid "%1 (Compatible)"
 msgstr "%1 (Cydnaws)"
 
-#: ../assistant_provider_registry.lua:473
 msgid "Custom"
 msgstr "Personol"
 
-#: ../assistant_querier.lua:125
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Ni chafwyd hyd i osodiadau darparwr ar gyfer: %1. Gwiriwch eich ffeil configuration.lua."
 
-#: ../assistant_querier.lua:138
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Ni chafwyd hyd i handler ar gyfer: %1. Gwiriwch eich ffeil configuration.lua."
 
-#: ../assistant_querier.lua:145
 msgid "Handler %1 not available for provider: %2"
 msgstr "Nid yw handler %1 ar gael ar gyfer darparwr: %2"
 
-#: ../assistant_querier.lua:156
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Ni chafwyd hyd i'r handler ar gyfer %1. Sicrhewch fod y handler yn bodoli yn y cyfeiriadur api_handlers."
 
-#: ../assistant_querier.lua:199
 msgid ""
 "<b>API Error</b>\n"
 "%1\n"
@@ -801,202 +605,150 @@ msgstr ""
 "\n"
 "Rhowch gynnig ar ddarparwr arall yn y deialog gosodiadau."
 
-#: ../assistant_querier.lua:200
 msgid "Unknown error"
 msgstr "Gwall anhysbys"
 
-#: ../assistant_querier.lua:205 ../main.lua:295
 msgid "Settings"
 msgstr "Gosodiadau"
 
-#: ../assistant_querier.lua:207 ../assistant_settings.lua:208
-#: ../assistant_viewer.lua:346
 msgid "Close"
 msgstr "Cau"
 
-#: ../assistant_querier.lua:294
 msgid "Plugin is not configured."
 msgstr "Nid yw'r ategyn wedi'i ffurfweddu."
 
-#: ../assistant_querier.lua:386 ../assistant_querier.lua:484
 msgid "Too many tool-call rounds; aborting."
 msgstr "Gormod o rowndiau o alwadau offer; yn rhoi'r gorau iddi."
 
-#: ../assistant_querier.lua:394
 msgid "Stream failed with no error message."
 msgstr "Methodd y ffrydio heb neges gwall."
 
-#: ../assistant_querier.lua:411
 msgid "Stream ended with no content and no tool calls."
 msgstr "Daeth y ffrydio i ben heb gynnwys ac heb alwadau offer."
 
-#: ../assistant_querier.lua:458
 msgid "Request Cancelled by user."
 msgstr "Cafodd y cais ei ganslo gan y defnyddiwr."
 
-#: ../assistant_querier.lua:467
 msgid "Querying AI ..."
 msgstr "Yn holi'r AI ..."
 
-#: ../assistant_querier.lua:522
 msgid "Composing answer ..."
 msgstr "Yn llunio ateb ..."
 
-#: ../assistant_querier.lua:537 ../assistant_querier.lua:695
 msgid "Request cancelled by user."
 msgstr "Cais wedi'i ganslo gan y defnyddiwr."
 
-#: ../assistant_querier.lua:544
 msgid "No response received."
 msgstr "Ni dderbyniwyd unrhyw ymateb."
 
-#: ../assistant_querier.lua:580
 msgid "AI is responding"
 msgstr "Mae'r AI yn ymateb"
 
-#: ../assistant_querier.lua:601
 msgid "❌ Stop"
 msgstr "❌ Stopio"
 
-#: ../assistant_querier.lua:606
 msgid "■ Scroll"
 msgstr "■ Sgrolio"
 
-#: ../assistant_querier.lua:606
 msgid "▶ Scroll"
 msgstr "▶ Sgrolio"
 
-#: ../assistant_querier.lua:712
 msgid "Failed to start subprocess for request"
 msgstr "Methodd cychwyn is-broses ar gyfer y cais."
 
-#: ../assistant_querier.lua:921
 msgid "Error Message"
 msgstr "Neges Gwall"
 
-#: ../assistant_querier.lua:950 ../assistant_querier.lua:953
 msgid "Deeply Thought"
 msgstr "Meddwl Dwys"
 
-#: ../assistant_querier.lua:1143
 msgid "Stopped Reason: "
 msgstr "Rheswm Stopio: "
 
-#: ../assistant_quicknote.lua:30 ../main.lua:174
 msgid "Notebook: %1"
 msgstr "Llyfr nodiadau: %1"
 
-#: ../assistant_quicknote.lua:36 ../main.lua:112 ../main.lua:160
 msgid "Take Quick Notes"
 msgstr "Cymryd Nodiadau Cyflym"
 
-#: ../assistant_quicknote.lua:39
 msgid "Write quick notes here"
 msgstr "Ysgrifennwch nodiadau cyflym yma"
 
-#: ../assistant_quicknote.lua:65
 msgid "Please enter a note before saving."
 msgstr "Rhowch nodyn cyn cadw."
 
-#: ../assistant_quicknote.lua:110
 msgid "User:"
 msgstr "Defnyddiwr:"
 
-#: ../assistant_quicknote.lua:140 ../assistant_viewer.lua:475
 msgid "Saved to: %1"
 msgstr "Wedi'i gadw i: %1"
 
-#: ../assistant_quicknote.lua:147
 msgid "Quick note saved successfully"
 msgstr "Cafodd y nodyn cyflym ei gadw'n llwyddiannus"
 
-#: ../assistant_search_registry.lua:105
 msgid "Search tool record must be a table."
 msgstr "Rhaid i gofnod yr offeryn chwilio fod yn dabl."
 
-#: ../assistant_search_registry.lua:110 ../assistant_search_registry.lua:189
 msgid "Unknown search tool: %1"
 msgstr "Offeryn chwilio anhysbys: %1"
 
-#: ../assistant_search_registry.lua:117 ../main.lua:737
 msgid "API key is required for %1."
 msgstr "Mae angen allwedd API ar gyfer %1."
 
-#: ../assistant_search_registry.lua:122 ../main.lua:744
 msgid "Base URL is required for %1."
 msgstr "Mae angen URL sylfaenol ar gyfer %1."
 
-#: ../assistant_search_registry.lua:212
 msgid "Search tool not found."
 msgstr "Ni chafwyd hyd i'r offeryn chwilio."
 
-#: ../assistant_search_registry.lua:241 ../assistant_search_registry.lua:279
 msgid "Search tool data not initialized."
 msgstr "Nid yw data'r offeryn chwilio wedi'i ymgychwyn."
 
-#: ../assistant_search_registry.lua:323
 msgid "WebSearch API"
 msgstr "API Chwilio'r We"
 
-#: ../assistant_search_registry.lua:349
 msgid "%1 — choose an action"
 msgstr "%1 — dewiswch weithred"
 
-#: ../assistant_search_registry.lua:368 ../assistant_settings.lua:227
-#: ../main.lua:234
 msgid "Edit"
 msgstr "Golygu"
 
-#: ../assistant_search_registry.lua:375 ../assistant_settings.lua:238
-#: ../assistant_settings.lua:399 ../main.lua:211 ../main.lua:215
 msgid "Delete"
 msgstr "Dileu"
 
-#: ../assistant_settings.lua:84
 msgid "AI Response Language Setting"
 msgstr "Gosodiad Iaith Ymateb AI"
 
-#: ../assistant_settings.lua:87
 msgid "AI Response Language"
 msgstr "Iaith Ymateb AI"
 
-#: ../assistant_settings.lua:89 ../assistant_settings.lua:94
 msgid "Leave blank to use: %1"
 msgstr "Gadewch yn wag i ddefnyddio: %1"
 
-#: ../assistant_settings.lua:92
 msgid "Dictionary Language"
 msgstr "Iaith y Geiriadur"
 
-#: ../assistant_settings.lua:107
 msgid "Clear"
 msgstr "Clirio"
 
-#: ../assistant_settings.lua:154
 msgid "RTL written Language"
 msgstr "Iaith ysgrifenedig RTL"
 
-#: ../assistant_settings.lua:174
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Gadewch y meysydd hyn yn wag i ddefnyddio iaith y rhyngwyneb: %1"
 
-#: ../assistant_settings.lua:185
 msgid "Providers and Models"
 msgstr "Darparwyr a Modelau"
 
-#: ../assistant_settings.lua:213 ../main.lua:603
 msgid "Browse Models"
 msgstr "Pori Modelau"
 
-#: ../assistant_settings.lua:221
 msgid "Browse available models from the current provider"
 msgstr "Porwch y modelau sydd ar gael gan y darparwr cyfredol"
 
-#: ../assistant_settings.lua:398
 msgid "Delete provider %1?"
 msgstr "Dileu darparwr %1?"
 
-#: ../assistant_settings.lua:481
 msgid ""
 "Builtin Tools Works ONLY with these models:\n"
 "- Gemini-2.5/3\n"
@@ -1006,125 +758,95 @@ msgstr ""
 "- Gemini-2.5/3\n"
 "- OpenAI/gpt-4o-search\n"
 
-#: ../assistant_settings.lua:506
 msgid "AI Language: "
 msgstr "Iaith AI: "
 
-#: ../assistant_settings.lua:518
 msgid "AI Text Size: %1"
 msgstr "Maint Testun AI: %1"
 
-#: ../assistant_settings.lua:522
 msgid "AI Response Text Font Size"
 msgstr "Maint Ffont Testun Ymateb AI"
 
-#: ../assistant_settings.lua:538
 msgid "Response Settings"
 msgstr "Gosodiadau Ymateb"
 
-#: ../assistant_settings.lua:541
 msgid "Enable Stream Response"
 msgstr "Galluogi Ymateb Ffrydio"
 
-#: ../assistant_settings.lua:549
 msgid "Stream Text Auto Scroll"
 msgstr "Sgrolio Awtomatig Testun Ffrydio"
 
-#: ../assistant_settings.lua:558
 msgid "Large Streaming Window"
 msgstr "Ffenestr Ffrydio Fawr"
 
-#: ../assistant_settings.lua:568
 msgid "Show Reasoning Text"
 msgstr "Dangos Testun Rhesymu"
 
-#: ../assistant_settings.lua:576
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Dangos proses feddwl ddofn (rhesymu) o ymateb yr AI, os oes un."
 
-#: ../assistant_settings.lua:581
 msgid "Show Follow-up Questions"
 msgstr "Dangos Cwestiynau Dilynol"
 
-#: ../assistant_settings.lua:589
 msgid "Show follow up questions related to the response content."
 msgstr "Dangos cwestiynau dilynol sy'n gysylltiedig â chynnwys yr ymateb."
 
-#: ../assistant_settings.lua:596
 msgid "Notebook Settings"
 msgstr "Gosodiadau Llyfr Nodiadau"
 
-#: ../assistant_settings.lua:599
 msgid "Auto-save conversations to notebook"
 msgstr "Cadw sgyrsiau i'r llyfr nodiadau yn awtomatig"
 
-#: ../assistant_settings.lua:607
 msgid "Multiple notebooks"
 msgstr "Llyfrau nodiadau lluosog"
 
-#: ../assistant_settings.lua:617
 msgid "Choose which notebook your notes are saved to."
 msgstr "Dewiswch i ba lyfr nodiadau y cedwir eich nodiadau."
 
-#: ../assistant_settings.lua:625
 msgid "Notebooks folder: %1"
 msgstr "Ffolder y llyfrau nodiadau: %1"
 
-#: ../assistant_settings.lua:627
 msgid "Notebooks folder"
 msgstr "Ffolder y llyfrau nodiadau"
 
 #. @translators: functional overriding
-#: ../assistant_settings.lua:642
 msgid "KOReader Tweaks"
 msgstr "Addasiadau KOReader"
 
 #. @translators: 'Translate' is a built-in function
-#: ../assistant_settings.lua:646
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Defnyddio Cynorthwyydd AI ar gyfer 'Cyfieithu'"
 
-#: ../assistant_settings.lua:657
 msgid "Auto-recap on opening long-unread books"
 msgstr "Ail-grynodeb awtomatig wrth agor llyfrau sydd heb eu darllen ers amser hir"
 
-#: ../assistant_settings.lua:667
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "Bydd Ail-grynodeb AI yn cael ei alluogi y tro nesaf y bydd llyfr sydd heb ei ddarllen ers amser hir yn cael ei agor."
 
-#: ../assistant_settings.lua:671
 msgid "Show Dictionary(AI) in Dictionary Popup"
 msgstr "Dangos Geiriadur(AI) yn y naidlen geiriadur"
 
-#: ../assistant_settings.lua:679
 msgid "Show Wikipedia(AI) in Dictionary Popup"
 msgstr "Dangos Wicipedia(AI) yn y naidlen geiriadur"
 
-#: ../assistant_settings.lua:687
 msgid "Show Term X-Ray(AI) in Dictionary Popup"
 msgstr "Dangos Term X-Ray(AI) yn y naidlen geiriadur"
 
-#: ../assistant_settings.lua:695
 msgid "Show Custom Prompts in Dictionary Popup"
 msgstr "Dangos Anogiadau Personol yn y naidlen geiriadur"
 
-#: ../assistant_settings.lua:705
 msgid "Copy entered question to the clipboard"
 msgstr "Copïo'r cwestiwn a gofnodwyd i'r clipfwrdd"
 
-#: ../assistant_settings.lua:713
 msgid "Use book text for x-ray and recap"
 msgstr "Defnyddio testun y llyfr ar gyfer x-ray ac ail-grynodeb"
 
-#: ../assistant_settings.lua:721 ../assistant_settings.lua:729
 msgid "OTA Update"
 msgstr "Diweddariad OTA"
 
-#: ../assistant_settings.lua:731
 msgid "branch or tag name"
 msgstr "enw cangen neu dag"
 
-#: ../assistant_settings.lua:733
 msgid ""
 "Enter a branch or tag name to update the plugin from the source repository.\n"
 "\n"
@@ -1146,15 +868,12 @@ msgstr ""
 "\n"
 "<b>Bydd configuration.lua yn cael ei gadw.</b>"
 
-#: ../assistant_settings.lua:747
 msgid "Update"
 msgstr "Diweddaru"
 
-#: ../assistant_settings.lua:766
 msgid "Purge the settings"
 msgstr "Clirio'r gosodiadau"
 
-#: ../assistant_settings.lua:769
 msgid ""
 "Purge assistant.koplugin settings?\n"
 "\n"
@@ -1166,43 +885,33 @@ msgstr ""
 "Bydd hyn yn adfer yr ategyn i'w osodiadau diofyn ffatri. Dim ond gosodiadau fydd yn cael eu tynnu; \n"
 "Bydd ffeil configuration.lua yn cael ei chadw."
 
-#: ../assistant_settings.lua:773 ../main.lua:1090
 msgid "Purge"
 msgstr "Clirio"
 
-#: ../assistant_tool_executor.lua:134
 msgid "Search keywords are empty."
 msgstr "Mae'r geiriau allweddol chwilio yn wag."
 
-#: ../assistant_tool_executor.lua:143
 msgid "Searching with %1 ... [%2]"
 msgstr "Yn chwilio gyda %1 ... [%2]"
 
-#: ../assistant_tool_executor.lua:299
 msgid "Tool call did not include id."
 msgstr "Nid oedd y galwad offeryn yn cynnwys id."
 
-#: ../assistant_tool_executor.lua:302
 msgid "Tool call did not include search keywords."
 msgstr "Nid oedd y galwad offeryn yn cynnwys geiriau allweddol chwilio."
 
-#: ../assistant_updater.lua:141
 msgid "Checking for updates..."
 msgstr "Yn gwirio am ddiweddariadau..."
 
-#: ../assistant_updater.lua:144
 msgid "AI Assistant: Failed to check updates: %2"
 msgstr "Cynorthwyydd AI: Methwyd gwirio am ddiweddariadau: %2"
 
-#: ../assistant_updater.lua:144
 msgid "Empty Error"
 msgstr "Gwall Gwag"
 
-#: ../assistant_updater.lua:154
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Mae fersiwn newydd o'r ategyn %1 (%2) ar gael. Diweddarwch os gwelwch yn dda!"
 
-#: ../assistant_updater.lua:192
 msgid ""
 "<b>Downloading ...</b>\n"
 "<b>Github: </b>%1\n"
@@ -1214,23 +923,18 @@ msgstr ""
 "<b>Ystorfa: </b>%2\n"
 "<b>Cangen/Tag: </b>%3"
 
-#: ../assistant_updater.lua:217
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Ni ddaethpwyd o hyd i'r gangen/tag \"%1\"."
 
-#: ../assistant_updater.lua:229
 msgid "OTA update canceled."
 msgstr "Diddymwyd y diweddariad OTA."
 
-#: ../assistant_updater.lua:235 ../assistant_updater.lua:323
 msgid "OTA update failed: %1"
 msgstr "Methodd y diweddariad OTA: %1"
 
-#: ../assistant_updater.lua:242
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Yn gosod %1...</b>"
 
-#: ../assistant_updater.lua:327
 msgid ""
 "OTA UPDATE OK.\n"
 " Restart is required."
@@ -1238,11 +942,9 @@ msgstr ""
 "DIWEDDARIAD OTA YN IAWN.\n"
 " Mae angen ailgychwyn."
 
-#: ../assistant_utils.lua:173
 msgid "Page"
 msgstr "Tudalen"
 
-#: ../assistant_utils.lua:199
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
@@ -1250,23 +952,18 @@ msgstr ""
 "<b>Ni ellir cyrchu'r ffolder diofyn ar gyfer logiau: %1</b>\n"
 "Yn defnyddio'r lleoliad gwreiddiol."
 
-#: ../assistant_utils.lua:250
 msgid "Notebook path is unavailable."
 msgstr "Nid yw llwybr y llyfr nodiadau ar gael."
 
-#: ../assistant_utils.lua:280
 msgid "Could not open notebook file."
 msgstr "Methwyd agor ffeil y llyfr nodiadau."
 
-#: ../assistant_utils.lua:287
 msgid "Could not write notebook file."
 msgstr "Methwyd ysgrifennu ffeil y llyfr nodiadau."
 
-#: ../assistant_utils.lua:291
 msgid "Could not close notebook file."
 msgstr "Methwyd cau ffeil y llyfr nodiadau."
 
-#: ../assistant_utils.lua:298
 msgid ""
 "Could not save to the selected notebook.\n"
 "Saved to: %1"
@@ -1274,112 +971,85 @@ msgstr ""
 "Methwyd cadw i'r llyfr nodiadau a ddewiswyd.\n"
 "Wedi'i gadw i: %1"
 
-#: ../assistant_utils.lua:312 ../assistant_utils.lua:322
 msgid "Notebook save failed. Continuing..."
 msgstr "Methodd cadw'r NoteBook. Yn parhau..."
 
-#: ../assistant_utils.lua:453
 msgid "##### You may find these topics interesting:"
 msgstr "##### Efallai y bydd y pynciau hyn yn ddiddorol i chi:"
 
-#: ../assistant_utils.lua:820
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: methodd â pharsio'r data a ddychwelwyd"
 
 #. @translators button text, keep it short, like: Ask Another
-#: ../assistant_viewer.lua:316 ../assistant_viewer.lua:732
 msgid "Ask Another Question"
 msgstr "Gofyn Cwestiwn Arall"
 
-#: ../assistant_viewer.lua:361
 msgid "Copy"
 msgstr "Copïo"
 
-#: ../assistant_viewer.lua:366
 msgid "Text copied to the clipboard"
 msgstr "Copïwyd y testun i'r clipfwrdd"
 
-#: ../assistant_viewer.lua:380
 msgid "Add Note"
 msgstr "Ychwanegu Nodyn"
 
-#: ../assistant_viewer.lua:387
 msgid "Highlight functionality not available"
 msgstr "Nid yw'r swyddogaeth amlygu ar gael."
 
-#: ../assistant_viewer.lua:396
 msgid "No text to add as note"
 msgstr "Dim testun i'w ychwanegu fel nodyn"
 
-#: ../assistant_viewer.lua:425
 msgid "No text left to add as note"
 msgstr "Dim testun ar ôl i'w ychwanegu fel nodyn"
 
-#: ../assistant_viewer.lua:438
 msgid "Note added successfully"
 msgstr "Ychwanegwyd y nodyn yn llwyddiannus"
 
-#: ../assistant_viewer.lua:461
 msgid "Save conversation to"
 msgstr "Cadw sgwrs i"
 
-#: ../assistant_viewer.lua:486
 msgid "Conversation is saved to notebook"
 msgstr "Mae'r sgwrs wedi'i chadw i'r llyfr nodiadau"
 
-#: ../assistant_viewer.lua:563
 msgid "Book Analysis"
 msgstr "Dadansoddiad Llyfr"
 
-#: ../assistant_viewer.lua:563
 msgid "General Conversation"
 msgstr "Sgwrs Gyffredinol"
 
-#: ../assistant_viewer.lua:734
 msgid "Type your question here"
 msgstr "Teipiwch eich cwestiwn yma"
 
-#: ../assistant_viewer.lua:903
 msgid "Word copied to clipboard."
 msgstr "Copïwyd y gair i'r clipfwrdd."
 
-#: ../assistant_viewer.lua:904
 msgid "Selection copied to clipboard."
 msgstr "Copïwyd y dewisiad i'r clipfwrdd."
 
-#: ../main.lua:88 ../main.lua:148
 msgid "Ask the AI a question"
 msgstr "Gofynnwch gwestiwn i'r AI"
 
-#: ../main.lua:96 ../main.lua:347
 msgid "AI Recaps"
 msgstr "Crynodebau AI"
 
-#: ../main.lua:104 ../main.lua:332
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
-#: ../main.lua:120 ../main.lua:317
 msgid "Book Summary & Recs"
 msgstr "Crynodeb o'r Llyfr ac Argymhellion"
 
-#: ../main.lua:155
 msgid "Enter a question to ask AI."
 msgstr "Rhowch gwestiwn i'w ofyn i'r AI."
 
-#: ../main.lua:166
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "Cymerwch nodiadau cyflym a fydd yn cael eu cadw i'ch llyfr nodiadau."
 
-#: ../main.lua:178
 msgid "Notebook (AI Conversation Log)"
 msgstr "Llyfr Nodiadau (Cofnod Sgwrs AI)"
 
-#: ../main.lua:195
 msgid "Switch"
 msgstr "Newid"
 
-#: ../main.lua:214
 msgid ""
 "Delete file?\n"
 "%1\n"
@@ -1389,7 +1059,6 @@ msgstr ""
 "%1\n"
 "Ni ellir dadwneud y weithred hon."
 
-#: ../main.lua:245
 msgid ""
 "<b>Notebook file:</b>\n"
 "\n"
@@ -1399,11 +1068,9 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:247
 msgid "View"
 msgstr "Gweld"
 
-#: ../main.lua:251
 msgid ""
 "File does not exist.\n"
 "\n"
@@ -1413,19 +1080,15 @@ msgstr ""
 "\n"
 "%1"
 
-#: ../main.lua:266
 msgid "AI Provider: not configured"
 msgstr "Darparwr AI: heb ei ffurfweddu"
 
-#: ../main.lua:272
 msgid "AI Provider: %1(%2)"
 msgstr "Darparwr AI: %1(%2)"
 
-#: ../main.lua:285
 msgid "Web Search: %1"
 msgstr "Chwiliad Gwe: %1"
 
-#: ../main.lua:289
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
@@ -1433,107 +1096,81 @@ msgstr ""
 "Yn gwella cywirdeb ymatebion gyda chanlyniadau gwe amser real. \n"
 "Nodyn: Bydd defnydd uwch o tokenau a chostau API ychwanegol yn berthnasol."
 
-#: ../main.lua:313
 msgid "Book-Level Built-in Prompts"
 msgstr "Anogiadau Adeiledig ar Lefel Llyfr"
 
-#: ../main.lua:326
 msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
 msgstr "Crynodeb o'r llyfr, bywgraffiad yr awdur, cyd-destun hanesyddol, a rhestr o argymhellion llyfrau tebyg gyda disgrifiadau."
 
-#: ../main.lua:341
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Crynodeb \"X-Ray\" ar gyfer llyfr, wedi'i strwythuro'n adrannau penodol fel Cymeriadau, Lleoliadau, Themâu, Termau a Chysyniadau, Llinell Amser, ac Ail-ymgolli."
 
-#: ../main.lua:356
 msgid "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr "Crynodeb byr iawn, di-sbwylwyr o'r llyfr hyd at y cynnydd darllen presennol."
 
-#: ../main.lua:367
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Dadansoddiad o'ch amlygiadau, nodiadau, a chynnwys eich llyfr nodiadau o'r llyfr."
 
-#: ../main.lua:382
 msgid "Summary of the book using your highlights and notes."
 msgstr "Crynodeb o'r llyfr gan ddefnyddio'ch amlygiadau a'ch nodiadau."
 
-#: ../main.lua:389
 msgid "Book-Level Custom Prompts"
 msgstr "Anogiadau Addasedig ar Lefel Llyfr"
 
-#: ../main.lua:396
 msgid "Includes user defined book level prompts from Config file"
 msgstr "Yn cynnwys anogiadau lefel llyfr a ddiffinnir gan y defnyddiwr o'r ffeil Config"
 
-#: ../main.lua:471
 msgid "This is a custom prompt"
 msgstr "Mae hwn yn anogiad addasedig."
 
-#: ../main.lua:481
 msgid "No valid book-level custom prompt found"
 msgstr "Ni ddaethpwyd o hyd i anogiad lefel llyfr addasedig dilys."
 
-#: ../main.lua:486
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Am fanylion, ewch i dudalen wiki 'Configuration' ar github."
 
-#: ../main.lua:571 ../main.lua:700
 msgid "Edit %1"
 msgstr "Golygu %1"
 
-#: ../main.lua:581 ../main.lua:701
 msgid "Add %1"
 msgstr "Ychwanegu %1"
 
-#: ../main.lua:581
 msgid "Add %1 Provider"
 msgstr "Ychwanegu Darparwr %1"
 
-#: ../main.lua:590
 msgid "Display name"
 msgstr "Enw arddangos"
 
-#: ../main.lua:590
 msgid "Provider Name"
 msgstr "Enw'r Darparwr"
 
-#: ../main.lua:591 ../main.lua:711
 msgid "Base URL"
 msgstr "URL Sylfaenol"
 
-#: ../main.lua:591 ../main.lua:711
 msgid "https://..."
 msgstr "https://..."
 
-#: ../main.lua:592 ../main.lua:707
 msgid "API Key"
 msgstr "Allwedd API"
 
-#: ../main.lua:592 ../main.lua:707
 msgid "Your API key"
 msgstr "Eich allwedd API"
 
-#: ../main.lua:593
 msgid "Default: auto"
 msgstr "Diofyn: auto"
 
-#: ../main.lua:593
 msgid "Model"
 msgstr "Model"
 
-#: ../main.lua:624
 msgid "Failed to fetch models."
 msgstr "Methwyd â llwytho'r modelau."
 
-#: ../main.lua:754
 msgid "Failed to save search tool."
 msgstr "Methwyd ag arbed yr offeryn chwilio."
 
-#: ../main.lua:829
 msgid "No valid model provider is found in the configuration.lua"
 msgstr "Ni ddaethpwyd o hyd i ddarparwr model dilys yn y configuration.lua"
 
-#: ../main.lua:848
 msgid ""
 "<b>Configuration Error.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -1541,15 +1178,12 @@ msgstr ""
 "<b>Gwall Cyfluniad.</b>\n"
 "Ychwanegwch ddarparwr yn y Gosodiadau neu configuration.lua."
 
-#: ../main.lua:854
 msgid "OK"
 msgstr "Iawn"
 
-#: ../main.lua:972
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: mae darparwyr modelau yn annilys."
 
-#: ../main.lua:1055
 msgid ""
 "Usage Tips\n"
 "\n"
@@ -1583,15 +1217,12 @@ msgstr ""
 "Llithriad Lluosog (e.e., ⮠, ⮡, ↺):\n"
 "Ar y deialog canlyniad i gau (gan fod y botwm Cau yn bell i'w gyrraedd).\n"
 
-#: ../main.lua:1077
 msgid "Version Info"
 msgstr "Gwybodaeth Fersiwn"
 
-#: ../main.lua:1083
 msgid "Purge Settings"
 msgstr "Clirio Gosodiadau"
 
-#: ../main.lua:1086
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
@@ -1603,28 +1234,22 @@ msgstr ""
 "\n"
 "Mae configuration.lua yn ddiogel, dim ond y gosodiadau sy'n cael eu clirio."
 
-#: ../main.lua:1139
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Dileu [%s] o'r Ddewislen Amlygu?"
 
-#: ../main.lua:1140
 msgid "Remove"
 msgstr "Dileu"
 
-#: ../main.lua:1503
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Ni chafwyd hyd i'r cyfluniad. Sefydlwch configuration.lua yn gyntaf."
 
-#: ../main.lua:1551
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Ychwanegwyd</b> [%1 (AI)] i'r Ddewislen Amlygu."
 
-#: ../main.lua:1562
 msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
 msgstr "<b>Dilewyd</b> [%1 (AI)] o'r Ddewislen Amlygu."
 
-#: ../main.lua:1607
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
@@ -1634,7 +1259,6 @@ msgstr ""
 "Ar gyfer %1 gan %2.\n"
 "\n"
 
-#: ../main.lua:1608
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Darllenwyd ddiwethaf awr yn ôl."
@@ -1644,30 +1268,23 @@ msgstr[3] "Darllenwyd ddiwethaf %1 awr yn ôl."
 msgstr[4] "Darllenwyd ddiwethaf %1 awr yn ôl."
 msgstr[5] "Darllenwyd ddiwethaf %1 awr yn ôl."
 
-#: ../main.lua:1613
 msgid "Yes"
 msgstr "Ie"
 
-#: ../main.lua:1622
 msgid "No"
 msgstr "Na"
 
-#: ../main.lua:1663
 msgid "Markdown Engine"
 msgstr "Peiriant Markdown"
 
-#: ../main.lua:1664
 msgid "KOReader"
 msgstr "KOReader"
 
-#: ../main.lua:1665
 msgid "Device"
 msgstr "Dyfais"
 
-#: ../main.lua:1666
 msgid "Platform"
 msgstr "Llwyfan"
 
-#: ../main.lua:1667
 msgid "Runtime"
 msgstr "Amser Rhedeg"
