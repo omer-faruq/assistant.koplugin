@@ -668,7 +668,9 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
       end
     },
     {
-      text = _("Ask"),
+      text = Prompts.getDisplayText(_("Ask"),
+        Prompts.isAskButtonWebSearchEnabled(self.assistant),
+        Prompts.isWebSearchEnabled(self.assistant.settings)),
       is_enter_default = true,
       callback = function()
         local question = self.input_dialog:getInputText()
