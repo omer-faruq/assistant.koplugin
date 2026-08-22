@@ -18,9 +18,10 @@ end
 -- 3. Stub problematic KOReader modules that can't load headless
 --    (UI widgets, android, etc.)
 local stubs = {
-    ["ui/uimanager"]           = { close = function() end, schedule = function() end },
-    ["ui/trapper"]             = { dismissableRunInSubprocess = function(self, fn) return fn() end, clear = function() end },
+    ["ui/uimanager"]           = { close = function() end, schedule = function() end, show = function() end },
+    ["ui/trapper"]             = { dismissableRunInSubprocess = function(self, fn) return fn() end, clear = function() end, wrap = function(self, fn) return fn() end },
     ["ui/widget/infomessage"]  = { new = function(_, o) return o end },
+    ["ui/widget/multiinputdialog"] = { new = function(_, o) return o end },
     ["ui/widget/textboxwidget"] = {},
     ["ui/widget/textwidget"]    = {},
     ["ui/widget/button"]        = {},

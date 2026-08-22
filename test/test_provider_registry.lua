@@ -1,7 +1,7 @@
 -- test_provider_registry.lua
 -- Tests for assistant_provider_registry.lua, focusing on the exported
 -- "Provider API" menu factory (Registry.getAddProviderMenuItem), the
--- preset/custom provider tables that moved here from main.lua, and the
+-- preset provider table that moved here from main.lua, and the
 -- persistence of preset additional_parameters (Registry.add / installProvider).
 local helper = require("test.test_helper")
 local assert = helper.assert
@@ -59,6 +59,19 @@ local function subItems(menu_item)
     return menu_item.sub_item_table_func()
 end
 
+-- Captures the options table passed to MultiInputDialog:new while fn runs
+-- (the test_helper stub returns that table verbatim from new()).
+local function captureDialog(fn)
+    local MID = require("ui/widget/multiinputdialog")
+    local captured
+    local orig_new = MID.new
+    MID.new = function(_, o) captured = o; return o end
+    local ok, err = pcall(fn)
+    MID.new = orig_new
+    if not ok then error(err) end
+    return captured
+end
+
 -- Expected default additional_parameters per preset name.
 local EXPECTED_PRESET_PARAMS = {
     DeepSeek = {
@@ -70,14 +83,6 @@ local EXPECTED_PRESET_PARAMS = {
         temperature = 0.7,
         max_tokens = 4096,
         reasoning = { effort = "none" },
-    },
-    Groq = {
-        temperature = 0.7,
-        reasoning_effort = "none",
-    },
-    Mistral = {
-        temperature = 0.7,
-        max_tokens = 4096,
     },
     Gemini = {
         temperature = 0.7,
@@ -106,25 +111,10 @@ local tests = {
         end
     end),
 
-    test("CUSTOM_HANDLERS exported with name/handler/base_url", function()
-        local customs = Registry.CUSTOM_HANDLERS
-        assert.notNil(customs)
-        assert.equal(#customs, 4)
-        for i, custom in ipairs(customs) do
-            assert.notNil(custom.name)
-            assert.notNil(custom.handler)
-            assert.matches(custom.base_url, "^https?://")
-        end
-    end),
-
-    test("preset and custom handlers are all known to the registry", function()
+    test("preset handlers are all known to the registry", function()
         for i, preset in ipairs(Registry.PRESET_PROVIDERS) do
             assert.isTrue(Registry.HANDLERS[preset.handler],
                 "unknown handler: " .. tostring(preset.handler))
-        end
-        for i, custom in ipairs(Registry.CUSTOM_HANDLERS) do
-            assert.isTrue(Registry.HANDLERS[custom.handler],
-                "unknown handler: " .. tostring(custom.handler))
         end
     end),
 
@@ -133,18 +123,15 @@ local tests = {
         assert.equal(#presets, 6)
         for i, preset in ipairs(presets) do
             local want = EXPECTED_PRESET_PARAMS[preset.name]
-            assert.notNil(want, "no expected defaults defined for preset " .. tostring(preset.name))
-            assert.notNil(preset.additional_parameters,
-                preset.name .. " preset should define additional_parameters")
-            assert.isTrue(deepEqual(preset.additional_parameters, want),
-                preset.name .. " additional_parameters mismatch")
-        end
-    end),
-
-    test("custom wire formats carry no additional_parameters", function()
-        for i, custom in ipairs(Registry.CUSTOM_HANDLERS) do
-            assert.equal(custom.additional_parameters, nil,
-                "custom handler " .. tostring(custom.name) .. " must not add defaults")
+            if want == nil then
+                assert.equal(preset.additional_parameters, nil,
+                    preset.name .. " should not define unexpected additional_parameters")
+            else
+                assert.notNil(preset.additional_parameters,
+                    preset.name .. " preset should define additional_parameters")
+                assert.isTrue(deepEqual(preset.additional_parameters, want),
+                    preset.name .. " additional_parameters mismatch")
+            end
         end
     end),
 
@@ -159,18 +146,15 @@ local tests = {
         assert.notNil(item.sub_item_table_func)
     end),
 
-    test("sub-menu lists all presets followed by a Custom sub-menu", function()
+    test("sub-menu lists all presets", function()
         local items = subItems(Registry.getAddProviderMenuItem(mockAssistant()))
-        assert.equal(#items, #Registry.PRESET_PROVIDERS + 1)
+        assert.equal(#items, #Registry.PRESET_PROVIDERS)
         for i, preset in ipairs(Registry.PRESET_PROVIDERS) do
             local item = items[i]
             assert.equal(item.text, preset.name)
             assert.equal(item.keep_menu_open, true)
             assert.notNil(item.callback)
         end
-        local custom_item = items[#items]
-        assert.equal(custom_item.text, "Custom")
-        assert.notNil(custom_item.sub_item_table)
     end),
 
     test("preset callback invokes _showAddProviderDialog with preset fields and additional_parameters", function()
@@ -187,31 +171,47 @@ local tests = {
         end
     end),
 
-    test("Custom sub-menu lists compatible wire formats", function()
-        local items = subItems(Registry.getAddProviderMenuItem(mockAssistant()))
-        local custom_items = items[#items].sub_item_table
-        assert.equal(#custom_items, #Registry.CUSTOM_HANDLERS)
-        for i, custom in ipairs(Registry.CUSTOM_HANDLERS) do
-            local item = custom_items[i]
-            assert.equal(item.text, custom.name .. " (Compatible)")
-            assert.equal(item.keep_menu_open, true)
-            assert.notNil(item.callback)
+    test("Responses preset keeps the responses handler reachable", function()
+        for i, preset in ipairs(Registry.PRESET_PROVIDERS) do
+            if preset.name == "OpenAI Responses" then
+                assert.equal(preset.handler, "responses")
+                assert.equal(preset.base_url, Registry.DEFAULT_BASE_URLS.responses)
+                return
+            end
+        end
+        error("Responses preset missing from PRESET_PROVIDERS")
+    end),
+
+    -- =========================================================================
+    -- showProviderDialog field descriptions
+    -- =========================================================================
+
+    test("Base URL description reflects the selected handler", function()
+        local cases = {
+            { handler = "openai",    pattern = "chat/completions" },
+            { handler = "responses", pattern = "web search" },
+            { handler = "gemini",    pattern = "/models" },
+            { handler = "anthropic", pattern = "Anthropic" },
+        }
+        for i, case in ipairs(cases) do
+            local dialog = captureDialog(function()
+                Registry.showProviderDialog({}, nil, case.handler, "https://api.example.com/v1")
+            end)
+            assert.notNil(dialog, "no dialog built for handler " .. case.handler)
+            assert.matches(dialog.fields[2].description, case.pattern,
+                "wrong Base URL description for handler " .. case.handler)
         end
     end),
 
-    test("Custom callback invokes _showAddProviderDialog with nil name and no additional_parameters", function()
-        local assistant = mockAssistant()
-        local items = subItems(Registry.getAddProviderMenuItem(assistant))
-        local custom_items = items[#items].sub_item_table
-        for i, custom in ipairs(Registry.CUSTOM_HANDLERS) do
-            custom_items[i].callback()
-            local call = assistant.calls[#assistant.calls]
-            assert.equal(call.preset_name, nil)
-            assert.equal(call.handler, custom.handler)
-            assert.equal(call.base_url, custom.base_url)
-            assert.equal(call.additional_parameters, nil,
-                "custom callback should not pass additional_parameters")
-        end
+    test("dialog fields advertise the Browse Models workflow", function()
+        local dialog = captureDialog(function()
+            Registry.showProviderDialog({}, nil, "openai", "https://api.example.com/v1")
+        end)
+        assert.notNil(dialog)
+        assert.matches(dialog.fields[3].description, "Browse Models",
+            "API Key description should mention Browse Models")
+        assert.matches(dialog.fields[4].description, "Browse Models",
+            "Model description should mention Browse Models")
     end),
 
     -- =========================================================================

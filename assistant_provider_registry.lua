@@ -11,9 +11,14 @@
 
 local json = require("rapidjson")
 local logger = require("logger")
-local T = require("ffi/util").template
 local koutil = require("util")
 local _ = require("assistant_gettext")
+local UIManager = require("ui/uimanager")
+local InfoMessage = require("ui/widget/infomessage")
+local MultiInputDialog = require("ui/widget/multiinputdialog")
+local Trapper = require("ui/trapper")
+local ASUtils = require("assistant_utils")
+local T = require("ffi/util").template
 
 local Registry = {}
 
@@ -39,6 +44,15 @@ Registry.DEFAULT_BASE_URLS = {
     responses = "https://api.openai.com/v1",
 }
 
+-- Per-handler guidance shown as the Base URL field description in the
+-- add/edit provider dialog (falls back to a generic hint for other handlers).
+local BASE_URL_DESCRIPTIONS = {
+    openai    = _("OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"),
+    responses = _("OpenAI Responses API — use the plain /v1 base URL; /responses is added automatically. Most models include built-in web search"),
+    gemini    = _("Gemini API endpoint; must include the /models segment, e.g. …/v1beta/models"),
+    anthropic = _("Anthropic Messages API endpoint, e.g. https://api.anthropic.com/v1"),
+}
+
 -- Preset platforms offered in the "Provider API" sub-menu.
 -- Selecting one only asks for the API key (name/base_url come from here).
 -- Each preset carries provider-specific additional_parameters that default to
@@ -56,16 +70,7 @@ local PRESET_PROVIDERS = {
           max_tokens = 4096,
           reasoning = { effort = "none" },
       } },
-    { name = "Groq",       handler = "openai",   base_url = "https://api.groq.com/openai/v1",
-      additional_parameters = {
-          temperature = 0.7,
-          reasoning_effort = "none",
-      } },
-    { name = "Mistral",    handler = "openai",   base_url = "https://api.mistral.ai/v1",
-      additional_parameters = {
-          temperature = 0.7,
-          max_tokens = 4096,
-      } },
+    { name = "OpenAI Compatible", handler = "openai", base_url = "https://api.openai.com/v1" },
     { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta/models",
       additional_parameters = {
           temperature = 0.7,
@@ -76,18 +81,9 @@ local PRESET_PROVIDERS = {
           anthropic_version = "2023-06-01",
           max_tokens = 4096,
       } },
+    { name = "OpenAI Responses", handler = "responses", base_url = "https://api.openai.com/v1" },
 }
 Registry.PRESET_PROVIDERS = PRESET_PROVIDERS
-
--- Protocol sub-menu for the "Custom" entry: pick a wire format, then
--- enter a name + API key.
-local CUSTOM_HANDLERS = {
-    { name = "OpenAI",     handler = "openai",   base_url = "https://api.openai.com/v1" },
-    { name = "Anthropic",  handler = "anthropic", base_url = "https://api.anthropic.com/v1" },
-    { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta/models" },
-    { name = "Responses",  handler = "responses", base_url = "https://api.openai.com/v1" },
-}
-Registry.CUSTOM_HANDLERS = CUSTOM_HANDLERS
 
 ----------------------------------------------------------------------
 -- Load / Save
@@ -436,13 +432,183 @@ function Registry.installProvider(assistant, handler, base_url, display_name, ap
 end
 
 ----------------------------------------------------------------------
+-- Add/Edit provider dialog
+----------------------------------------------------------------------
+
+--- Show a unified dialog for adding or editing a provider (Name, Base URL, API Key, Model).
+--- For preset providers: Name + Base URL are pre-filled from the preset.
+--- For Edit (edit_id ~= nil): all fields are pre-filled from the existing record.
+--- In add mode a Clear button empties the preset pre-fill (Name, Base URL, Model)
+--- while leaving the user-typed API Key untouched.
+---@param assistant table The Assistant instance
+---@param preset_name string|nil Preset display name
+---@param handler string API handler name (e.g. "openai")
+---@param base_url string Pre-filled base URL
+---@param additional_parameters table|nil Provider-specific additional_parameters
+---        (preset defaults; Custom passes nil which is stored as {})
+---@param edit_id string|nil When non-nil, edit the existing provider with this ID
+function Registry.showProviderDialog(assistant, preset_name, handler, base_url, additional_parameters, edit_id)
+    local is_edit = edit_id ~= nil
+    local dialog_title
+    local default_name
+    local default_api_key = ""
+    local default_model = ""
+
+    if is_edit then
+        -- Pre-fill from the existing provider record
+        local ps = koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", edit_id)
+        dialog_title = T(_("Edit %1"), koutil.tableGetValue(ps, "display_name") or edit_id)
+        default_name = koutil.tableGetValue(ps, "display_name") or ""
+        base_url = koutil.tableGetValue(ps, "base_url") or base_url or ""
+        default_api_key = koutil.tableGetValue(ps, "api_key") or ""
+        default_model = koutil.tableGetValue(ps, "model") or ""
+        -- Preserve the existing additional_parameters (not exposed in dialog)
+        additional_parameters = koutil.tableGetValue(ps, "additional_parameters") or {}
+        -- Handler comes from the existing record, not the parameter
+        handler = koutil.tableGetValue(ps, "handler") or handler
+    else
+        dialog_title = preset_name and T(_("Add %1"), preset_name) or T(_("Add %1 Provider"), handler)
+        default_name = preset_name or ""
+    end
+
+    -- Handler-aware guidance for the Base URL field (handler is resolved from
+    -- the record in edit mode, so compute it after the branch above).
+    local base_url_desc = BASE_URL_DESCRIPTIONS[handler]
+        or _("Base URL of the API endpoint, e.g. https://example.com/v1")
+
+    local dialog_ref = {}  -- forward ref for enabled_func closure in buttons
+    local dialog
+    local dialog_buttons = {{
+        {
+            id = "cancel",
+            text = _("Cancel"),
+            callback = function() UIManager:close(dialog) end,
+        },
+        {
+            id = "browse_models",
+            text = _("Browse Models"),
+            enabled_func = function()
+                local d = dialog_ref[1]
+                if not d then return false end
+                return d:getFields()[3] ~= ""  -- enabled when API key is filled
+            end,
+            callback = function()
+                local fields = dialog:getFields()
+                local api_key = fields[3]
+                local url = fields[2]
+                if api_key == "" or url == "" then return end
+                -- Fetch models through the provider handler's own
+                -- FetchModels (api_handlers), then reuse model_picker's
+                -- showPickerDialog. Each handler builds its endpoint,
+                -- auth headers and post-processing itself, and runs the
+                -- request behind a dismissable InfoMessage so a stalled
+                -- network can be cancelled by tapping.
+                ASUtils.runWhenOnlineFast(function()
+                    Trapper:wrap(function()
+                        local mp = require("assistant_model_picker")
+                        local model_list, err = mp.fetchModels(handler, url, api_key)
+                        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
+                            return  -- user dismissed the InfoMessage
+                        end
+                        if err or not model_list or #model_list == 0 then
+                            UIManager:show(InfoMessage:new{
+                                icon = "notice-warning",
+                                text = err or _("No models available."),
+                            })
+                            return
+                        end
+                        mp.showPickerDialog(assistant, model_list, nil, "", 1,
+                            function(model_id)
+                                if dialog.input_fields[4] then
+                                    dialog.input_fields[4]:setText(model_id)
+                                    dialog.input_fields[4]:moveCursorToCharPos(#model_id + 1)
+                                end
+                            end
+                        )
+                    end)
+                end)
+            end,
+        },
+        {
+            id = "save",
+            text = _("Save"),
+            is_enter_default = true,
+            callback = function()
+                local fields = dialog:getFields()
+                local name = fields[1]
+                local url = fields[2]
+                local api_key = fields[3]
+                local model = fields[4]
+                if name == "" then name = handler end
+                if url == "" then
+                    UIManager:show(InfoMessage:new{ text = _("Base URL is required.") })
+                    return
+                end
+                if api_key == "" then
+                    UIManager:show(InfoMessage:new{ text = _("API key is required.") })
+                    return
+                end
+                if is_edit then
+                    Registry.updateProvider(assistant, edit_id, name, url, api_key, model)
+                else
+                    Registry.installProvider(assistant, handler, url, name, api_key, model, additional_parameters)
+                end
+                UIManager:close(dialog)
+                -- Close any stale settings dialog, then open a fresh
+                -- Provider Settings window so the added/edited provider
+                -- is immediately visible and selectable.
+                if assistant._settings_dialog then
+                    UIManager:close(assistant._settings_dialog)
+                    assistant._settings_dialog = nil
+                end
+                UIManager:scheduleIn(0.15, function() assistant:showSettings() end)
+            end,
+        },
+    }}
+    if not is_edit then
+        -- Clear the fields pre-filled from the preset (Name, Base URL, Model);
+        -- leaves the user-typed API Key untouched.
+        table.insert(dialog_buttons[1], 2, {
+            id = "clear",
+            text = _("Clear"),
+            callback = function()
+                local fields = dialog.input_fields
+                for i, index in ipairs({1, 2, 4}) do
+                    if fields[index] then
+                        fields[index]:setText("")
+                        fields[index]:moveCursorToCharPos(1)
+                    end
+                end
+            end,
+        })
+    end
+    dialog = MultiInputDialog:new{
+        title = dialog_title,
+        fields = {
+            { description = _("Provider Name — shown in menus; leave empty to use the handler name"),
+              hint = _("Display name"), text = default_name },
+            { description = base_url_desc,
+              hint = _("https://..."),   text = base_url },
+            { description = _("API Key — enter your key, then tap Browse Models to list available models"),
+              hint = _("Your API key"),  text = default_api_key },
+            { description = _("Model — tap Browse Models to pick an available model"),
+              hint = _("Pick one via Browse Models"), text = default_model },
+        },
+        buttons = dialog_buttons,
+    }
+    dialog_ref[1] = dialog
+    UIManager:show(dialog)
+end
+
+----------------------------------------------------------------------
 -- Provider menu
 ----------------------------------------------------------------------
 
 --- Build the "Provider API" menu item used by the Settings dialog.
---- Returns a TouchMenu item with a sub-menu of preset providers plus a
---- "Custom" sub-menu of wire-format handlers. Selecting an entry opens
---- the add-provider dialog through assistant:_showAddProviderDialog.
+--- Returns a TouchMenu item with a sub-menu listing the preset providers.
+--- Selecting an entry opens the add-provider dialog through
+--- assistant:_showAddProviderDialog; the fields remain editable so users
+--- can point a preset at a custom base URL.
 ---@param assistant table The Assistant instance
 ---@return table menu item spec
 function Registry.getAddProviderMenuItem(assistant)
@@ -464,21 +630,6 @@ function Registry.getAddProviderMenuItem(assistant)
                     end,
                 })
             end
-
-            local custom_items = {}
-            for i, custom_handler in ipairs(CUSTOM_HANDLERS) do
-                table.insert(custom_items, {
-                    text = T(_("%1 (Compatible)"), custom_handler.name),
-                    keep_menu_open = true,
-                    callback = function()
-                        assistant:_showAddProviderDialog(nil, custom_handler.handler, custom_handler.base_url)
-                    end,
-                })
-            end
-            table.insert(items, {
-                text = _("Custom"),
-                sub_item_table = custom_items,
-            })
             return items
         end,
     }
