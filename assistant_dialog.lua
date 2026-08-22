@@ -205,14 +205,14 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
     ui = self.assistant.ui,
     -- Hide Add Note button when invoked via gesture (no highlighted text)
     disable_add_note = (not highlightedText or highlightedText == ""),
-    onAskQuestion = function(viewer, user_question) -- callback for user entered question
+    onAskQuestion = function(viewer, user_question, use_websearch) -- callback for user entered question
         -- Use viewer's own highlighted_text value
         local current_highlight = viewer.highlighted_text or highlightedText
         local viewer_title = ""
 
         if type(user_question) == "string" then
           -- Use user entered question
-          self:_prepareMessageHistoryForUserQuery(message_history, current_highlight, user_question)
+          self:_prepareMessageHistoryForUserQuery(message_history, current_highlight, user_question, use_websearch)
         elseif type(user_question) == "table" then
           -- Use custom prompt from configuration
           viewer_title = Prompts.getDisplayText(user_question.text or "Custom Prompt",
@@ -260,7 +260,7 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
 end
 
 
-function AssistantDialog:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question)
+function AssistantDialog:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question, use_websearch)
   local book = self:_getBookContext()
   local content
   if highlightedText and highlightedText ~= "" then
@@ -286,8 +286,7 @@ I have a question about this book.]], book.title, book.author)
     role = "user",
     content = user_question
   }
-  ASUtils.set_attr(question_message, "use_websearch",
-    Prompts.isAskButtonWebSearchEnabled(self.assistant))
+  ASUtils.set_attr(question_message, "use_websearch", use_websearch or false)
   table.insert(message_history, question_message)
 end
 
@@ -336,6 +335,7 @@ function AssistantDialog:show(highlightedText)
   local button_rows = {}
   local prompt_buttons = {}
   local use_book_text_checkbox -- ref to the CheckButton widget
+  local use_web_search_checkbox -- ref to the web search CheckButton widget
   local first_row = {
     {
       text = _("Cancel"),
@@ -386,9 +386,7 @@ function AssistantDialog:show(highlightedText)
   end
 
   table.insert(first_row, {
-      text = Prompts.getDisplayText(_("Ask"),
-        Prompts.isAskButtonWebSearchEnabled(self.assistant),
-        Prompts.isWebSearchEnabled(self.assistant.settings)),
+      text = _("Ask"),
       is_enter_default = true,
       callback = function()
         local user_question = self.input_dialog and self.input_dialog:getInputText() or ""
@@ -411,7 +409,7 @@ function AssistantDialog:show(highlightedText)
         end
         self:_close()
         user_question = user_question .. book_text_prompt
-        self:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question)
+        self:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question, use_web_search_checkbox.checked)
         Trapper:wrap(function()
           local answer, err = self.querier:query(message_history)
           
@@ -549,15 +547,34 @@ function AssistantDialog:show(highlightedText)
     dismiss_callback = function () self:_close() end
   }
 
-  -- Add checkbox below the input field
+  -- Add checkboxes below the input field
+  local vgroup = self.input_dialog.dialog_frame[1]
+  local checkbox_pos = 2 -- insert after the input text area
+  local web_search_available = self.assistant.settings:readSetting("use_websearch", "none") ~= "none"
+  local saved_web_search = self.assistant.settings:readSetting("ask_use_websearch", false)
+  use_web_search_checkbox = CheckButton:new{
+    face = Font:getFace("xx_smallinfofont"),
+    text = _("Use web search 🌐"),
+    parent = self.input_dialog,
+    checked = web_search_available and saved_web_search,
+    enabled = web_search_available,
+    callback = function()
+      self.assistant.settings:saveSetting("ask_use_websearch", use_web_search_checkbox.checked)
+    end,
+  }
+  table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
+    HorizontalSpan:new{ width = Size.padding.large },
+    use_web_search_checkbox,
+  })
+  checkbox_pos = checkbox_pos + 1
+
   if book.title then
     use_book_text_checkbox = CheckButton:new{
       face = Font:getFace("xx_smallinfofont"),
       text = _("Use book text as context"),
       parent = self.input_dialog,
     }
-    local vgroup = self.input_dialog.dialog_frame[1]
-    table.insert(vgroup, 2, HorizontalGroup:new{
+    table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
       HorizontalSpan:new{ width = Size.padding.large },
       use_book_text_checkbox,
     })

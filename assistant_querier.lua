@@ -294,6 +294,10 @@ function Querier:query(message_history, title)
         return nil, _("Plugin is not configured.")
     end
 
+    -- prompt_websearch is a boolean (checkbox metadata on the last message);
+    -- query_option.use_websearch must be a string ("none" or a search provider key).
+    -- The expression below always yields a string: the boolean only gates whether
+    -- the user's configured search provider is used.
     local prompt_websearch   = ASUtils.get_attr(message_history[#message_history], "use_websearch", false)
     local user_setting_ws    = self.settings:readSetting("use_websearch", "none")
     local query_option = {

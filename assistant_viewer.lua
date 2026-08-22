@@ -15,9 +15,12 @@ local CenterContainer = require("ui/widget/container/centercontainer")
 local Device = require("device")
 local logger = require("logger")
 local Event = require("ui/event")
+local Font = require("ui/font")
 local Geom = require("ui/geometry")
 local FrameContainer = require("ui/widget/container/framecontainer")
 local GestureRange = require("ui/gesturerange")
+local HorizontalGroup = require("ui/widget/horizontalgroup")
+local HorizontalSpan = require("ui/widget/horizontalspan")
 local InputContainer = require("ui/widget/container/inputcontainer")
 local InputDialog = require("ui/widget/inputdialog")
 local MovableContainer = require("ui/widget/container/movablecontainer")
@@ -37,6 +40,7 @@ local MD = require("assistant_mdparser")
 local Prompts = require("assistant_prompts")
 local ASUtils = require("assistant_utils")
 local Notebook = require("assistant_notebook")
+local CheckButton = require("ui/widget/checkbutton")
 
 -- Inject scroll page method for ScrollHtmlWidget
 ScrollHtmlWidget.scrollToPage = function(self, page_num)
@@ -611,6 +615,7 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
 
   -- Initialize default options
   local default_options = {}
+  local use_web_search_checkbox -- ref to the web search CheckButton widget
   
   -- Load additional prompts from configuration if available
   local sorted_prompts = Prompts.getSortedPrompts(function (prompt)
@@ -668,9 +673,7 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
       end
     },
     {
-      text = Prompts.getDisplayText(_("Ask"),
-        Prompts.isAskButtonWebSearchEnabled(self.assistant),
-        Prompts.isWebSearchEnabled(self.assistant.settings)),
+      text = _("Ask"),
       is_enter_default = true,
       callback = function()
         local question = self.input_dialog:getInputText()
@@ -684,11 +687,12 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
         if self.assistant.settings:readSetting("auto_copy_asked_question", true) and Device:hasClipboard() then
           Device.input.setClipboardText(question)
         end
+        local use_websearch = use_web_search_checkbox and use_web_search_checkbox.checked or false
         UIManager:close(self.input_dialog)
         self.input_dialog = nil
         
         if self.onAskQuestion then
-          self.onAskQuestion(self, question) -- question is string (user input)
+          self.onAskQuestion(self, question, use_websearch) -- question is string (user input)
         end
       end
     }
@@ -743,6 +747,25 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
     height = Screen:getHeight() * 0.4,
     buttons = button_rows,
   }
+
+  -- Add web search checkbox below the input field
+  local web_search_available = self.assistant.settings:readSetting("use_websearch", "none") ~= "none"
+  local saved_web_search = self.assistant.settings:readSetting("ask_use_websearch", false)
+  use_web_search_checkbox = CheckButton:new{
+    face = Font:getFace("xx_smallinfofont"),
+    text = _("Use web search 🌐"),
+    parent = self.input_dialog,
+    checked = web_search_available and saved_web_search,
+    enabled = web_search_available,
+    callback = function()
+      self.assistant.settings:saveSetting("ask_use_websearch", use_web_search_checkbox.checked)
+    end,
+  }
+  local vgroup = self.input_dialog.dialog_frame[1]
+  table.insert(vgroup, 2, HorizontalGroup:new{
+    HorizontalSpan:new{ width = Size.padding.large },
+    use_web_search_checkbox,
+  })
 
   -- add close button (top right cross) to input dialog
   self.input_dialog.title_bar.close_callback = function()
