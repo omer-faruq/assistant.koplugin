@@ -1,5 +1,6 @@
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
+local koutil = require("util")
 -- preconfigured prompts for various tasks
 
 -- Custom prompts for the AI
@@ -636,6 +637,16 @@ local M = {
 
 M.isWebSearchEnabled = function(settings)
     return settings:readSetting("use_websearch", "none") ~= "none"
+end
+
+-- Ask button web search: runtime setting wins, falls back to the
+-- configuration.lua flag for users who set it there.
+M.isAskButtonWebSearchEnabled = function(assistant)
+    local saved = assistant.settings:readSetting("ask_button_use_websearch")
+    if saved ~= nil then
+        return saved
+    end
+    return koutil.tableGetValue(assistant.CONFIGURATION, "features", "ask_button_use_websearch") or false
 end
 
 M.getDisplayText = function(text, use_websearch, web_search_enabled)

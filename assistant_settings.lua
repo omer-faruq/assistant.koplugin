@@ -37,6 +37,7 @@ local ToolExecutor = require("assistant_tool_executor")
 local ExtTools = require("assistant_exttools")
 local Updater = require("assistant_updater")
 local ASUtils = require("assistant_utils")
+local Prompts = require("assistant_prompts")
 local Registry = require("assistant_provider_registry")
 local SearchRegistry = require("assistant_search_registry")
 local Notebook = require("assistant_notebook")
@@ -711,6 +712,14 @@ SettingsDialog.genMenuSettings = function(assistant)
             checked_func = function () return assistant.settings:readSetting("use_book_text_for_analysis", false) end,
             callback = function()
                 assistant.settings:toggle("use_book_text_for_analysis")
+                assistant.updated = true
+            end
+        },
+        {
+            text = _("Use web search for the Ask button"),
+            checked_func = function () return Prompts.isAskButtonWebSearchEnabled(assistant) end,
+            callback = function()
+                assistant.settings:toggle("ask_button_use_websearch")
                 assistant.updated = true
             end
         },
