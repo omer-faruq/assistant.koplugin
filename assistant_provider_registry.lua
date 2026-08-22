@@ -48,9 +48,9 @@ Registry.DEFAULT_BASE_URLS = {
 -- add/edit provider dialog (falls back to a generic hint for other handlers).
 local BASE_URL_DESCRIPTIONS = {
     openai    = _("OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"),
-    responses = _("OpenAI Responses API — use the plain /v1 base URL; /responses is added automatically. Most models include built-in web search"),
-    gemini    = _("Gemini API endpoint; must include the /models segment, e.g. …/v1beta/models"),
-    anthropic = _("Anthropic Messages API endpoint, e.g. https://api.anthropic.com/v1"),
+    responses = _("OpenAI Responses API — Include built-in web search"),
+    gemini    = _("Gemini API. must include the /models segment, e.g. …/v1beta/models"),
+    anthropic = _("Anthropic Messages API"),
 }
 
 -- Preset platforms offered in the "Provider API" sub-menu.
@@ -58,6 +58,18 @@ local BASE_URL_DESCRIPTIONS = {
 -- Each preset carries provider-specific additional_parameters that default to
 -- reducing/disabling the reasoning/thinking chain (see configuration.sample.lua).
 local PRESET_PROVIDERS = {
+    { name = "OpenAI", handler = "openai", base_url = "https://api.openai.com/v1" },
+    { name = "OpenAI - Responses", handler = "responses", base_url = "https://api.openai.com/v1" },
+    { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta/models",
+      additional_parameters = {
+          temperature = 0.7,
+          thinking_budget = 0,
+      } },
+    { name = "Anthropic",  handler = "anthropic", base_url = "https://api.anthropic.com/v1",
+      additional_parameters = {
+          anthropic_version = "2023-06-01",
+          max_tokens = 4096,
+      } },
     { name = "DeepSeek",   handler = "openai",   base_url = "https://api.deepseek.com/v1",
       additional_parameters = {
           temperature = 0.7,
@@ -70,18 +82,6 @@ local PRESET_PROVIDERS = {
           max_tokens = 4096,
           reasoning = { effort = "none" },
       } },
-    { name = "OpenAI Compatible", handler = "openai", base_url = "https://api.openai.com/v1" },
-    { name = "Gemini",     handler = "gemini",   base_url = "https://generativelanguage.googleapis.com/v1beta/models",
-      additional_parameters = {
-          temperature = 0.7,
-          thinking_budget = 0,
-      } },
-    { name = "Anthropic",  handler = "anthropic", base_url = "https://api.anthropic.com/v1",
-      additional_parameters = {
-          anthropic_version = "2023-06-01",
-          max_tokens = 4096,
-      } },
-    { name = "OpenAI Responses", handler = "responses", base_url = "https://api.openai.com/v1" },
 }
 Registry.PRESET_PROVIDERS = PRESET_PROVIDERS
 

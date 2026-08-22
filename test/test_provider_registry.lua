@@ -173,7 +173,7 @@ local tests = {
 
     test("Responses preset keeps the responses handler reachable", function()
         for i, preset in ipairs(Registry.PRESET_PROVIDERS) do
-            if preset.name == "OpenAI Responses" then
+            if preset.name == "OpenAI - Responses" then
                 assert.equal(preset.handler, "responses")
                 assert.equal(preset.base_url, Registry.DEFAULT_BASE_URLS.responses)
                 return
@@ -303,7 +303,11 @@ local tests = {
 
     test("installProvider does not share preset additional_parameters tables", function()
         local assistant = mockAssistantForInstall()
-        local preset = Registry.PRESET_PROVIDERS[1] -- DeepSeek
+        local preset
+        for i, p in ipairs(Registry.PRESET_PROVIDERS) do
+            if p.name == "DeepSeek" then preset = p end
+        end
+        assert.notNil(preset, "DeepSeek preset missing from PRESET_PROVIDERS")
         local id, err = Registry.installProvider(assistant, preset.handler, preset.base_url,
             preset.name .. " UI", "key", "auto", preset.additional_parameters)
         assert.notNil(id, err)
