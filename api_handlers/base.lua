@@ -56,6 +56,9 @@ function BaseHandler:SyncOptions(querier)
     self.provider_name = querier.provider_name
     self.handler_name = querier.handler_name
     koutil.tableMerge(self, querier.provider_setting)
+    -- model_parameters is never used on self; wipe it so no provider's
+    -- presets linger on this shared instance.
+    self.model_parameters = nil
 
     -- Normalize base_url: strip known API path suffixes for backward compatibility
     self:normalizeBaseUrl()
@@ -64,6 +67,22 @@ function BaseHandler:SyncOptions(querier)
     local selected_model = querier.settings:readSetting("selected_model_" .. self.provider_name)
     if selected_model then
         self.model = selected_model
+    end
+
+    -- Rebuild request parameters from source on every sync: handlers are
+    -- long-lived module-level singletons shared by providers, so parameters
+    -- must never be read back from self — tableMerge leaves stale copies of
+    -- setting-only fields (e.g. model_parameters) when the next provider
+    -- does not define them.
+    local setting = querier.provider_setting
+    local shared = json_default(setting.additional_parameters, {})
+    if type(shared) ~= "table" then shared = {} end
+    local presets = json_default(setting.model_parameters, {})
+    local preset = type(presets) == "table" and presets[self.model]
+    if type(preset) == "table" then
+        self.additional_parameters = koutil.tableDeepCopy(preset)
+    else
+        self.additional_parameters = koutil.tableDeepCopy(shared)
     end
 end
 

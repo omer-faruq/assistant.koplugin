@@ -10,12 +10,20 @@ local groqHandler = OpenAIHandler:new({
 })
 
 local LAST_CALLED = 0
-local API_CALL_DEBOUNCE_DELAY = time.s(15)
+local GROQ_DEFAULT_DEBOUNCE = time.s(15)
+local API_CALL_DEBOUNCE_DELAY = GROQ_DEFAULT_DEBOUNCE
 
 function groqHandler:SyncOptions(querier)
     OpenAIHandler.SyncOptions(self, querier)
-    if self.additional_parameters.groq_wait_seconds then
-        API_CALL_DEBOUNCE_DELAY = time.s(self.additional_parameters.groq_wait_seconds)
+    -- Presence-based semantics: an omitted groq_wait_seconds (e.g. after a
+    -- per-model preset replaced additional_parameters) resets to the default;
+    -- an explicit value is respected, so groq_wait_seconds = 0 disables the
+    -- debounce (e.g. on paid tiers). Invalid values also reset to the default.
+    local wait_seconds = tonumber(self.additional_parameters.groq_wait_seconds)
+    if wait_seconds and wait_seconds >= 0 then
+        API_CALL_DEBOUNCE_DELAY = time.s(wait_seconds)
+    else
+        API_CALL_DEBOUNCE_DELAY = GROQ_DEFAULT_DEBOUNCE
     end
 end
 
