@@ -419,7 +419,15 @@ local CONFIGURATION = {
         -- The `show_on_main_popup` determines if the prompt is shown in the main popup
         -- The `show_on_dictionary_popup` determines if the prompt is shown in the dictionary popup ( max 3 including the built-in ones)
         -- Set `visible = false` to hide the prompt from all popups.
-        -- Available placeholders to use in the prompts: {user_input},{highlight},{title},{author},{language},{progress}
+        -- Available placeholders to use in the prompts: {user_input},{highlight},{title},{author},{language},{progress},{chapter}
+        -- Per-prompt override `use_book_context = true/false` (deep-merged over the built-in defaults below).
+        -- When true, book metadata (title, author, current reading position incl. chapter) is prepended to the
+        -- prompt so the AI can answer with awareness of the book. This is gated by the global master switch
+        -- "Prepend Book Metadata to Prompts" in the plugin settings menu (enabled by default); that switch is
+        -- NOT set in configuration.lua. This flag is the general "book awareness" gate for prompts; future
+        -- context levels (e.g. surrounding page text) would reuse it behind their own separate switches.
+        -- Built-in defaults: use_book_context = true only for explain, historical_context, summarize, key_points, ELI5;
+        -- false for translate, vocabulary, grammar, wikipedia, simplify, term_xray, dictionary, quick_note and others.
         prompts = {
 
             -- hide some prompts to keep the UI clean

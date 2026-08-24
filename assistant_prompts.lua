@@ -26,6 +26,7 @@ local builtin_prompts = {
     term_xray = {
         text = _("Term X-Ray"),
         use_websearch = true,
+        use_book_context = false,
         order = -20, -- negative number to not show on additional questions dialog
         desc = _("This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."),
         system_prompt = markdown_format_prompt,
@@ -73,6 +74,7 @@ Briefly note what important information appears to be missing or what questions 
         order = -10, -- negative number indicates a stub prompt
         text = _("Dictionary"),
         use_websearch = false,
+        use_book_context = false,
         desc = _("This prompt acts as a dictionary for the highlighted text, to a word or phrase."),
         -- this prompt is a stub (will not shown in follow-up questions)
         -- it will be replaced by the actual prompt in the code below
@@ -80,6 +82,7 @@ Briefly note what important information appears to be missing or what questions 
     quick_note = {
         order = 5, --should be visible on additional questions dialog
         text = _("Quick Note"),
+        use_book_context = false,
         desc = _("This button creates a quick note with highlighted text."),
         user_prompt = "", --dummy prompt
         -- this prompt is a stub
@@ -87,6 +90,7 @@ Briefly note what important information appears to be missing or what questions 
     vocabulary = {
         text = _("Vocabulary"),
         use_websearch = false,
+        use_book_context = false,
         order = 10,
         desc = _(
             "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."),
@@ -108,6 +112,7 @@ Briefly note what important information appears to be missing or what questions 
     grammar = {
         text = _("Grammar"),
         use_websearch = false,
+        use_book_context = false,
         order = 20,
         desc = _(
             "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."),
@@ -141,6 +146,7 @@ Briefly note what important information appears to be missing or what questions 
         order = 30,
         text = _("Translate"),
         use_websearch = false,
+        use_book_context = false,
         desc = _("This prompt translates the highlighted text to another language."),
         user_prompt = [[You are a professional translator. Translate the text below into {language}.
 
@@ -155,6 +161,7 @@ Briefly note what important information appears to be missing or what questions 
     summarize = {
         text = _("Summarize"),
         use_websearch = false,
+        use_book_context = true,
         order = 40,
         desc = _("This prompt summarizes the highlighted text, capturing its main points and essential details."),
         user_prompt = [[
@@ -173,6 +180,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
     simplify = {
         text = _("Simplify"),
         use_websearch = false,
+        use_book_context = false,
         order = 50,
         desc = _("This prompt simplifies the highlighted text to make it easier to understand."),
         user_prompt = [[ You are a linguistic expert. Simplify the text below to maximize readability and clarity.
@@ -190,6 +198,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
     key_points = {
         text = _("Key Points"),
         use_websearch = false,
+        use_book_context = true,
         order = 60,
         desc = _(
             "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."),
@@ -219,6 +228,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
     ELI5 = {
         text = _("ELI5"),
         use_websearch = false,
+        use_book_context = true,
         order = 70,
         desc = _(
             "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."),
@@ -247,6 +257,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
     explain = {
         text = _("Explain"),
         use_websearch = true,
+        use_book_context = true,
         order = 80,
         desc = _("This prompt explains the highlighted text in detail, ensuring clarity and understanding."),
         user_prompt = [[You are an expert Explainer. Provide a clear and comprehensive explanation of the text below.
@@ -264,6 +275,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
     historical_context = {
         text = _("Historical Context"),
         use_websearch = true,
+        use_book_context = true,
         order = 90,
         desc = _(
             "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."),
@@ -294,6 +306,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
     wikipedia = {
         text = _("Wikipedia"),
         use_websearch = true,
+        use_book_context = false,
         order = 100,
         desc = _(
             "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."),

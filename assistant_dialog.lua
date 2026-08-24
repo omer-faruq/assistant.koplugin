@@ -54,16 +54,52 @@ function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText, user_in
   local text_to_use = highlightedText and highlightedText ~= "" and highlightedText or ""
   local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
   
-  -- Calculate progress if placeholder is present  
+  -- Resolve live page number / total pages (mirrors ASUtils.getPageInfo internals)
+  local function resolve_page()
+    local ui = self.assistant.ui
+    if not ui or not ui.highlight or not ui.highlight.selected_text
+        or not ui.highlight.selected_text.pos0 then
+      return nil, nil
+    end
+    local pos0 = ui.highlight.selected_text.pos0
+    local page_number
+    if ui.paging then
+      page_number = pos0.page
+    else
+      page_number = ui.document:getPageFromXPointer(pos0)
+    end
+    local total_pages = ui.document.info.number_of_pages
+    return page_number, total_pages
+  end
+
+  -- Calculate progress if placeholder is present
   local formatted_progress = nil
   if user_prompt:find("{progress}", 1, true) then
-      local success, doc_settings = pcall(function() 
-          return require("docsettings"):open(self.assistant.ui.document.file) 
+    local page_number, total_pages = resolve_page()
+    if page_number and total_pages and total_pages ~= 0 then
+      local pct = math.floor(page_number / total_pages * 100 + 0.5)
+      formatted_progress = string.format("%.2f", pct)
+    else
+      local success, doc_settings = pcall(function()
+        return require("docsettings"):open(self.assistant.ui.document.file)
       end)
       if success and doc_settings then
-          local percent_finished = doc_settings:readSetting("percent_finished") or 0
-          formatted_progress = string.format("%.2f", percent_finished * 100)
+        local percent_finished = doc_settings:readSetting("percent_finished") or 0
+        formatted_progress = string.format("%.2f", percent_finished * 100)
       end
+    end
+  end
+
+  -- Calculate chapter if placeholder is present
+  local formatted_chapter = nil
+  if user_prompt:find("{chapter}", 1, true) then
+    local chapter_title = ""
+    local page_number = resolve_page()
+    local ui = self.assistant.ui
+    if page_number and ui and ui.toc then
+      chapter_title = ui.toc:getTocTitleByPage(page_number) or ""
+    end
+    formatted_chapter = chapter_title
   end
 
   -- Add user input if placeholder is not present
@@ -79,6 +115,7 @@ function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText, user_in
     highlight = text_to_use,
     user_input = user_input,
     progress = formatted_progress,
+    chapter = formatted_chapter,
   })
 
 end
@@ -218,6 +255,11 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
           viewer_title = Prompts.getDisplayText(user_question.text or "Custom Prompt",
             user_question.use_websearch or false,
             Prompts.isWebSearchEnabled(self.assistant.settings))
+          if user_question.use_book_context == true
+              and self.assistant.settings:readSetting("prepend_book_metadata", true) then
+            table.insert(message_history, self:_buildBookContextMessage(current_highlight))
+          end
+
           local _user = {
             role = "user",
             content = self:_formatUserPrompt(user_question.user_prompt, current_highlight, user_question.user_input or ""),
@@ -260,14 +302,14 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
 end
 
 
-function AssistantDialog:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question, use_websearch)
+function AssistantDialog:_buildBookContextMessage(highlighted_text)
   local book = self:_getBookContext()
   local content
-  if highlightedText and highlightedText ~= "" then
+  if highlighted_text and highlighted_text ~= "" then
     content = string.format([[I'm reading something titled '%s' by %s.
 I have a question about the following highlighted text: ```%s```.
 If the question is not clear enough, analyze the highlighted text.]],
-      book.title, book.author, highlightedText)
+      book.title, book.author, highlighted_text)
   elseif book.title and book.author then
     content = string.format([[I'm reading something titled '%s' by %s.
 I have a question about this book.]], book.title, book.author)
@@ -275,11 +317,21 @@ I have a question about this book.]], book.title, book.author)
     content = string.format([[You are a helpful assistant. I have a question.]])
   end
 
-  local context = {
-      role = "user",
-      content = content,
+  local page_info = ASUtils.getPageInfo(self.assistant.ui)
+  if page_info and page_info ~= "" then
+    content = content .. string.format("\n\nMy current reading position is:%s.", page_info)
+  end
+
+  local msg = {
+    role = "user",
+    content = content,
   }
-  ASUtils.set_attr(context, "is_context", true)
+  ASUtils.set_attr(msg, "is_context", true)
+  return msg
+end
+
+function AssistantDialog:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question, use_websearch)
+  local context = self:_buildBookContextMessage(highlightedText)
   table.insert(message_history, context)
 
   local question_message = {
@@ -613,6 +665,11 @@ function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
     role = "system",
     content = system_prompt,
   }}
+
+  if prompt_config.use_book_context == true
+      and self.assistant.settings:readSetting("prepend_book_metadata", true) then
+    table.insert(message_history, self:_buildBookContextMessage(highlightedText))
+  end
 
   local _user = {
     role = "user",

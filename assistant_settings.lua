@@ -543,6 +543,14 @@ SettingsDialog.genMenuSettings = function(assistant)
                     end
                 },
                 {
+                    text = _("Prepend Book Metadata to Prompts"),
+                    checked_func = function() return assistant.settings:readSetting("prepend_book_metadata", true) end,
+                    callback = function()
+                        assistant.settings:toggle("prepend_book_metadata")
+                        assistant.updated = true
+                    end,
+                },
+                {
                     text = _("Stream Text Auto Scroll"),
                     enabled_func = function () return assistant.settings:readSetting("use_stream_mode") end,
                     checked_func = function () return assistant.settings:readSetting("stream_mode_auto_scroll", true) end,
