@@ -635,6 +635,11 @@ SettingsDialog.genMenuSettings = function(assistant)
         },
         {
             text = _("Notebook Settings"),
+            hold_callback = function ()
+                UIManager:show(InfoMessage:new{
+                    text = _("The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs.")
+                })
+            end,
             sub_item_table = {
                 {
                     text = _("Auto-save conversations to notebook"),
@@ -740,6 +745,23 @@ SettingsDialog.genMenuSettings = function(assistant)
                         assistant.updated = true
                     end
                 },
+                {
+                    text = _("Purge Settings"),
+                    callback = function()
+                        UIManager:show(ConfirmBox:new{
+                            text = _([[Purge assistant.koplugin settings?
+
+This restores the plugin to its factory defaults. Only settings will be removed;
+File configuration.lua will be preserved.]]),
+                            ok_text = _("Purge"),
+                            ok_callback = function()
+                                assistant.settings:reset({})
+                                assistant.settings:flush()
+                                UIManager:askForRestart()
+                            end
+                        })
+                    end
+                },
             }
         },
         {
@@ -786,23 +808,6 @@ ASUtils.runWhenOnlineFast(function()
                 UIManager:show(version_input)
             end,
             keep_menu_open = true,
-        },
-        {
-            text = _("Purge the settings"),
-            callback = function()
-                UIManager:show(ConfirmBox:new{
-                    text = _([[Purge assistant.koplugin settings?
-
-This restores the plugin to its factory defaults. Only settings will be removed; 
-File configuration.lua will be preserved.]]),
-                    ok_text = _("Purge"),
-                    ok_callback = function()
-                        assistant.settings:reset({})
-                        assistant.settings:flush()
-                        UIManager:askForRestart()
-                    end
-                })
-            end
         },
     }
 
