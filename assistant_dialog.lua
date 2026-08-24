@@ -304,27 +304,43 @@ end
 
 function AssistantDialog:_buildBookContextMessage(highlighted_text)
   local book = self:_getBookContext()
-  local content
+  local head
   if highlighted_text and highlighted_text ~= "" then
-    content = string.format([[I'm reading something titled '%s' by %s.
+    head = string.format([[I'm reading something titled '%s' by %s.
 I have a question about the following highlighted text: ```%s```.
 If the question is not clear enough, analyze the highlighted text.]],
       book.title, book.author, highlighted_text)
   elseif book.title and book.author then
-    content = string.format([[I'm reading something titled '%s' by %s.
+    head = string.format([[I'm reading something titled '%s' by %s.
 I have a question about this book.]], book.title, book.author)
   else
-    content = string.format([[You are a helpful assistant. I have a question.]])
+    head = string.format([[You are a helpful assistant. I have a question.]])
   end
+
+  -- Append segments into a string buffer: avoids repeated `content = content ..`
+  -- intermediate string objects.
+  local buf = strbuf.new()
+  buf:put(head)
 
   local page_info = ASUtils.getPageInfo(self.assistant.ui)
   if page_info and page_info ~= "" then
-    content = content .. string.format("\n\nMy current reading position is:%s.", page_info)
+    buf:put("\n\n", string.format("My current reading position is:%s.", page_info))
+  end
+
+  if highlighted_text and highlighted_text ~= ""
+      and self.assistant.settings:readSetting("include_page_text", false) then
+    local max_chars = koutil.tableGetValue(self.CONFIGURATION, "features", "max_page_context_chars") or 6000
+    local page_text = ASUtils.getPageRangeText(self.assistant.ui, 1, 1, max_chars)
+    if page_text ~= "" then
+      buf:put("\n\n", string.format(
+        "Surrounding text from the book (for reference only - the task applies ONLY to the highlighted passage):\n```\n%s\n```",
+        page_text))
+    end
   end
 
   local msg = {
     role = "user",
-    content = content,
+    content = buf:get(),
   }
   ASUtils.set_attr(msg, "is_context", true)
   return msg

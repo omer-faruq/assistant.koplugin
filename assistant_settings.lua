@@ -549,6 +549,24 @@ SettingsDialog.genMenuSettings = function(assistant)
                         assistant.settings:toggle("prepend_book_metadata")
                         assistant.updated = true
                     end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file.")
+                        })
+                    end
+                },
+                {
+                    text = _("Include Nearby Page Text as Context"),
+                    checked_func = function() return assistant.settings:readSetting("include_page_text", false) end,
+                    callback = function()
+                        assistant.settings:toggle("include_page_text")
+                        assistant.updated = true
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage.")
+                        })
+                    end
                 },
                 {
                     text = _("Stream Text Auto Scroll"),
