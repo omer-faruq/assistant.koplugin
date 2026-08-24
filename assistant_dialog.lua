@@ -604,7 +604,7 @@ function AssistantDialog:show(highlightedText)
     input_height = 6,
     allow_newline = true,
     input_multiline = true,
-    text_height = math.floor( 10 * Screen:scaleBySize(20) ), -- about 10 lines of text
+    text_height = math.floor( 3 * Screen:scaleBySize(20) ), -- about 3 lines of text
     buttons = button_rows,
     title_bar_left_icon = "appbar.settings",
     title_bar_left_icon_tap_callback = function ()
@@ -639,14 +639,31 @@ function AssistantDialog:show(highlightedText)
   if book.title then
     use_book_text_checkbox = CheckButton:new{
       face = Font:getFace("xx_smallinfofont"),
-      text = _("Use book text as context"),
+      text = _("Use Book Text as Context"),
       parent = self.input_dialog,
     }
     table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
       HorizontalSpan:new{ width = Size.padding.large },
       use_book_text_checkbox,
     })
+    checkbox_pos = checkbox_pos + 1
   end
+
+  local use_copy_clipboard_checkbox
+  use_copy_clipboard_checkbox = CheckButton:new{
+    face = Font:getFace("xx_smallinfofont"),
+    text = _("Copy to Clipboard"),
+    parent = self.input_dialog,
+    checked = self.assistant.settings:readSetting("auto_copy_asked_question", true),
+    callback = function()
+      self.assistant.settings:saveSetting("auto_copy_asked_question", use_copy_clipboard_checkbox.checked)
+    end,
+  }
+  table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
+    HorizontalSpan:new{ width = Size.padding.large },
+    use_copy_clipboard_checkbox,
+  })
+  checkbox_pos = checkbox_pos + 1
   
   --  adds a close button to the top right
   self.input_dialog.title_bar.close_callback = function() self:_close() end

@@ -511,37 +511,8 @@ SettingsDialog.genMenuSettings = function(assistant)
             keep_menu_open = true,
         },
         {
-            text_func = function ()
-                return T(_("AI Text Size: %1"), assistant.settings:readSetting("response_font_size") or 20)
-            end,
-            callback = function (touchmenu_instance)
-                local widget = SpinWidget:new{
-                    title_text = _("AI Response Text Font Size"),
-                    value = assistant.settings:readSetting("response_font_size") or 20,
-                    value_min = 12, value_max = 30, default_value = 20,
-                    callback = function(spin)
-                        assistant.settings:saveSetting("response_font_size", spin.value)
-                        assistant.updated = true
-                    end,
-                    close_callback = function ()
-                        touchmenu_instance:updateItems()
-                    end
-                }
-                UIManager:show(widget)
-            end,
-            keep_menu_open = true,
-        },
-        {
-            text = _("Response Settings"),
+            text = _("Context Settings"),
             sub_item_table = {
-                {
-                    text = _("Enable Stream Response"),
-                    checked_func = function () return assistant.settings:readSetting("use_stream_mode", true) end,
-                    callback = function ()
-                        assistant.settings:toggle("use_stream_mode")
-                        assistant.updated = true
-                    end
-                },
                 {
                     text = _("Prepend Book Metadata to Prompts"),
                     checked_func = function() return assistant.settings:readSetting("prepend_book_metadata", true) end,
@@ -566,6 +537,53 @@ SettingsDialog.genMenuSettings = function(assistant)
                         UIManager:show(InfoMessage:new{
                             text = _("Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage.")
                         })
+                    end
+                },
+                {
+                    text = _("Use Book Text for X-Ray and Recap"),
+                    checked_func = function () return assistant.settings:readSetting("use_book_text_for_analysis", false) end,
+                    callback = function()
+                        assistant.settings:toggle("use_book_text_for_analysis")
+                        assistant.updated = true
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage.")
+                        })
+                    end
+                },
+            }
+        },
+        {
+            text = _("Response Settings"),
+            sub_item_table = {
+                {
+                    text_func = function ()
+                        return T(_("Text Size: %1"), assistant.settings:readSetting("response_font_size") or 20)
+                    end,
+                    callback = function (touchmenu_instance)
+                        local widget = SpinWidget:new{
+                            title_text = _("Response Text Font Size"),
+                            value = assistant.settings:readSetting("response_font_size") or 20,
+                            value_min = 12, value_max = 30, default_value = 20,
+                            callback = function(spin)
+                                assistant.settings:saveSetting("response_font_size", spin.value)
+                                assistant.updated = true
+                            end,
+                            close_callback = function ()
+                                touchmenu_instance:updateItems()
+                            end
+                        }
+                        UIManager:show(widget)
+                    end,
+                    keep_menu_open = true,
+                },
+                {
+                    text = _("Enable Stream Response"),
+                    checked_func = function () return assistant.settings:readSetting("use_stream_mode", true) end,
+                    callback = function ()
+                        assistant.settings:toggle("use_stream_mode")
+                        assistant.updated = true
                     end
                 },
                 {
@@ -723,22 +741,6 @@ SettingsDialog.genMenuSettings = function(assistant)
                     end
                 },
             }
-        },
-        {
-            text = _("Copy entered question to the clipboard"),
-            checked_func = function () return assistant.settings:readSetting("auto_copy_asked_question", true) end,
-            callback = function()
-                assistant.settings:toggle("auto_copy_asked_question")
-                assistant.updated = true
-            end
-        },
-        {
-            text = _("Use book text for x-ray and recap"),
-            checked_func = function () return assistant.settings:readSetting("use_book_text_for_analysis", false) end,
-            callback = function()
-                assistant.settings:toggle("use_book_text_for_analysis")
-                assistant.updated = true
-            end
         },
         {
             text = _("OTA Update"),
