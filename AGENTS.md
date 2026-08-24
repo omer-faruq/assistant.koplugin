@@ -132,6 +132,7 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 - **Error handling**: Functions return `nil, err` on failure (or `false, err` for HTTP calls). Callers check the first return value.
 - **OOP pattern**: Lua metatable-based inheritance — `BaseHandler:new{...}` creates instances, `setmetatable(o, self)` with `self.__index = self` for class-like behavior.
 - **Localization**: All user-facing strings wrapped in `_("text")`. Import with `local _ = require("assistant_gettext")`. Plural forms use `N_("1 item", "%1 items", n)`.
+- **Menu & UI label casing**: Menu titles, settings items, checkboxes, and dialog labels use Title Case — e.g. `"Prepend Book Metadata to Prompts"`, `"Use Book Text for X-Ray and Recap"`. Keep short function words (`to`, `for`, `as`, `and`, `in`) lowercase, consistent with existing labels.
 - **Rich Text & Formatting**: Use `assistant_utils.bold_format(...)` with `<b>` and `</b>` tags (e.g. `assistant_utils.bold_format(T(_("<b>Header:</b> %1"), val))`) to format bold runs in dialogs. Avoid manual string concatenation; keep strings contiguous inside `T(_("..."))` templates so they remain easy to translate.
 - **Configuration access**: Use `koutil.tableGetValue(CONFIGURATION, "path", "to", "key")` for safe nested access with defaults.
 - **Table & util helpers (prefer existing)**: Before writing manual `for k,v in pairs(t) do copy[k]=v end` loops, check `koutil` (`require("util")`, i.e. KOReader `frontend/util.lua`) and `ffi/util`. Common helpers:
