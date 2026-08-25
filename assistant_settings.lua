@@ -499,22 +499,10 @@ end
 SettingsDialog.genMenuSettings = function(assistant)
     local sub_item_table = {
         {
-            text_func = function ()
-                return _("AI Language: ") .. 
-                    (assistant.settings:readSetting("response_language") or assistant.ui_language)
-            end,
-            callback = function (touchmenu_instance)
-                LanguageSetting(assistant, function ()
-                    touchmenu_instance:updateItems()
-                end)
-            end,
-            keep_menu_open = true,
-        },
-        {
             text = _("Context Settings"),
             sub_item_table = {
                 {
-                    text = _("Prepend Book Metadata to Prompts"),
+                    text = _("Add Book Metadata as Context"),
                     checked_func = function() return assistant.settings:readSetting("prepend_book_metadata", true) end,
                     callback = function()
                         assistant.settings:toggle("prepend_book_metadata")
@@ -527,7 +515,7 @@ SettingsDialog.genMenuSettings = function(assistant)
                     end
                 },
                 {
-                    text = _("Include Nearby Page Text as Context"),
+                    text = _("Add Nearby Page Text as Context"),
                     checked_func = function() return assistant.settings:readSetting("include_page_text", false) end,
                     callback = function()
                         assistant.settings:toggle("include_page_text")
@@ -557,6 +545,23 @@ SettingsDialog.genMenuSettings = function(assistant)
         {
             text = _("Response Settings"),
             sub_item_table = {
+                {
+                    text_func = function ()
+                        return _("AI Language: ") ..
+                            (assistant.settings:readSetting("response_language") or assistant.ui_language)
+                    end,
+                    callback = function (touchmenu_instance)
+                        LanguageSetting(assistant, function ()
+                            touchmenu_instance:updateItems()
+                        end)
+                    end,
+                    keep_menu_open = true,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Configure the response language of the AI LLM.")
+                        })
+                    end
+                },
                 {
                     text_func = function ()
                         return T(_("Text Size: %1"), assistant.settings:readSetting("response_font_size") or 20)
@@ -668,7 +673,7 @@ SettingsDialog.genMenuSettings = function(assistant)
                     text_func = function ()
                         local folder = Notebook.getFolder(assistant, false)
                         if folder then
-                            return T(_("Notebooks folder: %1"), folder)
+                            return T(_("Notebooks folder: %1"), Notebook.getFolderBasename(folder))
                         end
                         return _("Notebooks folder")
                     end,
@@ -680,6 +685,14 @@ SettingsDialog.genMenuSettings = function(assistant)
                         })
                     end,
                     keep_menu_open = true,
+                    hold_callback = function ()
+                        local folder, folder_err = Notebook.getFolder(assistant, false)
+                        UIManager:show(InfoMessage:new{
+                            text = folder
+                                and T(_("Notebooks folder path:\n%1"), folder)
+                                or (folder_err or _("No notebooks folder is set."))
+                        })
+                    end,
                 },
             },
         },
@@ -746,14 +759,15 @@ SettingsDialog.genMenuSettings = function(assistant)
                     end
                 },
                 {
-                    text = _("Purge Settings"),
+                    text = _("Reset Assistant Settings"),
                     callback = function()
                         UIManager:show(ConfirmBox:new{
-                            text = _([[Purge assistant.koplugin settings?
+                            text = _([[Reset all assistant.koplugin settings?
 
-This restores the plugin to its factory defaults. Only settings will be removed;
+This restores the plugin to its factory defaults. Providers, API keys and
+search tool credentials added via the Settings UI will be removed.
 File configuration.lua will be preserved.]]),
-                            ok_text = _("Purge"),
+                            ok_text = _("Reset"),
                             ok_callback = function()
                                 assistant.settings:reset({})
                                 assistant.settings:flush()

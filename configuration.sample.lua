@@ -357,7 +357,7 @@ local CONFIGURATION = {
         default_folder_for_logs = nil,         -- Set the default folder for auto saved logs, nil for the same folder as the book, ex: "/mnt/onboard/logs/" for Kobo , "/mnt/us/documents/logs/" for Kindle
         max_text_length_for_analysis = 100000, -- max text length to be used on xray-recap-book analyzes,
         max_page_size_for_analysis = 250,      -- maximum page size to be used on xray-recap-book analyzes (for page-based documents, ex: PDF)
-        max_page_context_chars = 6000,         -- max characters of nearby-page text sent as context when "Include Nearby Page Text as Context" is enabled
+        max_page_context_chars = 6000,         -- max characters of nearby-page text sent as context when "Add Nearby Page Text as Context" is enabled
 
         -- Term X-Ray context expansion settings (for analyzing characters, objects, places, concepts, magic)
         -- NOTE: The following settings are optimized to provide ~40k input tokens per term x-ray lookup, using ~10% of a 400k token context window.
@@ -424,10 +424,10 @@ local CONFIGURATION = {
         -- Per-prompt override `use_book_context = true/false` (deep-merged over the built-in defaults below).
         -- When true, book metadata (title, author, current reading position incl. chapter) is prepended to the
         -- prompt so the AI can answer with awareness of the book. This is gated by the global master switch
-        -- "Prepend Book Metadata to Prompts" in the plugin settings menu (enabled by default); that switch is
+        -- "Add Book Metadata as Context" in the plugin settings menu (enabled by default); that switch is
         -- NOT set in configuration.lua. This flag is the general "book awareness" gate for prompts; future
         -- context levels (e.g. surrounding page text) would reuse it behind their own separate switches.
-        -- Enabling "Include Nearby Page Text as Context" in the settings menu additionally appends ±1 page of
+        -- Enabling "Add Nearby Page Text as Context" in the settings menu additionally appends ±1 page of
         -- surrounding book text (default off; requires the prompt's use_book_context).
         -- Built-in defaults: use_book_context = true only for explain, historical_context, summarize, key_points, ELI5;
         -- false for translate, vocabulary, grammar, wikipedia, simplify, term_xray, dictionary, quick_note and others.

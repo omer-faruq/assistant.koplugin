@@ -29,6 +29,7 @@ local test_files = {
     "test.test_search_registry",
     "test.test_updater",
     "test.test_querier_stream",
+    "test.test_notebook",
 }
 
 if filter then
