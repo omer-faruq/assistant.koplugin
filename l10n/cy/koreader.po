@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Cymraeg (AI translation)\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Cwestiwn\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Efallai y bydd y pynciau hyn yn ddiddorol i chi:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (Cydnaws)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — dewiswch weithred"
@@ -171,12 +168,6 @@ msgstr "Iaith Ymateb AI"
 msgid "AI Response Language Setting"
 msgstr "Gosodiad Iaith Ymateb AI"
 
-msgid "AI Response Text Font Size"
-msgstr "Maint Ffont Testun Ymateb AI"
-
-msgid "AI Text Size: %1"
-msgstr "Maint Testun AI: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "Mae'r AI yn ymateb"
 
 msgid "API Key"
 msgstr "Allwedd API"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "Allwedd API — nodwch eich allwedd, yna tapiwch Pori Modelau i restru modelau sydd ar gael"
 
 msgid "API key is required for %1."
 msgstr "Mae angen allwedd API ar gyfer %1."
@@ -210,6 +204,12 @@ msgstr "Ychwanegu %1"
 msgid "Add %1 Provider"
 msgstr "Ychwanegu Darparwr %1"
 
+msgid "Add Book Metadata as Context"
+msgstr "Ychwanegu Metadata Llyfr fel Cyd-destun"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Ychwanegu Testun Tudalen Gerllaw fel Cyd-destun"
+
 msgid "Add Note"
 msgstr "Ychwanegu Nodyn"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Dadansoddiad o'ch amlygiadau, nodiadau, a chynnwys eich llyfr nodiadau o'r llyfr."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Gofyn"
 msgid "Ask Another Question"
 msgstr "Gofyn Cwestiwn Arall"
 
+msgid "Ask a Question"
+msgstr "Gofyn Cwestiwn"
+
 msgid "Ask a general question"
 msgstr "Gofyn cwestiwn cyffredinol"
-
-msgid "Ask a question"
-msgstr "Gofyn cwestiwn"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Gofyn cwestiwn am y testun wedi'i amlygu"
@@ -262,11 +265,11 @@ msgstr "Gofynnwch gwestiwn i'r AI"
 msgid "Assistant settings are not available."
 msgstr "Nid yw gosodiadau'r cynorthwyydd ar gael."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "Ail-grynodeb awtomatig wrth agor llyfrau sydd heb eu darllen ers amser hir"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "Crynodeb awtomatig wrth agor llyfrau nas darllenwyd ers tro"
 
-msgid "Auto-save conversations to notebook"
-msgstr "Cadw sgyrsiau i'r llyfr nodiadau yn awtomatig"
+msgid "Auto-save Conversations to Notebook"
+msgstr "Cadw sgyrsiau yn awtomatig i'r llyfr nodiadau"
 
 msgid "Base URL"
 msgstr "URL Sylfaenol"
@@ -279,6 +282,9 @@ msgstr "Mae angen URL sylfaenol."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "Rhaid i'r URL sylfaenol ddechrau gyda http:// neu https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "URL Sylfaenol y pwynt terfyn API, e.e. https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Dadansoddiad Llyfr"
@@ -339,6 +345,9 @@ msgstr "Yn llunio ateb ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Ni chafwyd hyd i'r cyfluniad. Sefydlwch configuration.lua yn gyntaf."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Ffurfweddu iaith ymateb yr AI LLM. Yn defnyddio iaith rhyngwyneb KOReader yn ddiofyn."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Nid yw ffolder y llyfrau nodiadau wedi'i ffurfweddu yn hygyrch: %1"
 
@@ -349,6 +358,9 @@ msgstr "Ffurfiau'r Ferf"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Cyfyngiadau Cyd-destun"
+
+msgid "Context Settings"
+msgstr "Gosodiadau cyd-destun"
 
 msgid "Contextual Connections"
 msgstr "Cysylltiadau Cyd-destunol"
@@ -368,8 +380,8 @@ msgstr "Mae'r sgwrs wedi'i chadw i'r llyfr nodiadau"
 msgid "Copy"
 msgstr "Copïo"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Copïo'r cwestiwn a gofnodwyd i'r clipfwrdd"
+msgid "Copy to Clipboard"
+msgstr "Copïo i'r clipfwrdd"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Creu llyfr nodiadau."
 msgid "Cultural Significance"
 msgstr "Arwyddocâd Diwylliannol"
 
-msgid "Custom"
-msgstr "Personol"
-
 msgid "Custom Prompt"
 msgstr "Prompt Personol"
 
@@ -430,9 +439,6 @@ msgstr "Prompts Personol"
 
 msgid "Deeply Thought"
 msgstr "Meddwl Dwys"
-
-msgid "Default: auto"
-msgstr "Diofyn: auto"
 
 msgid "Delete"
 msgstr "Dileu"
@@ -494,20 +500,20 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Rhowch enw cangen neu dag i ddiweddaru'r ategyn o'r ystorfa ffynhonnell.\n"
+"Nodwch enw cangen neu dag i ddiweddaru'r ategyn o'r storfa ffynhonnell.\n"
 "\n"
 "<b>URL Github:</b>  %1\n"
-"<b>Ystorfa Ffynhonnell:</b>  %2\n"
+"<b>Storfa Ffynhonnell:</b>  %2\n"
 "\n"
-"Diofyn: \"main\" (cangen ddatblygu ddiweddaraf)\n"
-"Enghreifftiau: \"main\", \"v1.12\", \"v1.11\"\n"
+"Rhagosodedig: \"main\" (cod datblygu ar flaen y gad)\n"
+"Gall y cod hwn fod yn ansefydlog a gall cyfieithiadau fod yn anghyflawn; caiff ei gefnogi ar sail ymdrech orau yn unig. I ddiweddaru i ryddhau sefydlog, nodwch dag yn lle hynny (e.e. \"v1.12\").\n"
 "\n"
-"<b>Bydd configuration.lua yn cael ei gadw.</b>"
+"<b>Bydd y configuration.lua yn cael ei gadw.</b>"
 
 msgid "Enter a question before proceeding."
 msgstr "Rhowch gwestiwn cyn bwrw ymlaen."
@@ -567,6 +573,9 @@ msgstr "Am fanylion, ewch i dudalen wiki 'Configuration' ar github."
 
 msgid "Fun Analogy"
 msgstr "Cymhariaeth Hwyliog"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "API Gemini. rhaid cynnwys yr adran /models, e.e. …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Sgwrs Gyffredinol"
@@ -691,14 +700,14 @@ msgstr "Peiriant Markdown"
 msgid "Meaning"
 msgstr "Ystyr"
 
-msgid "Model"
-msgstr "Model"
-
 msgid "Model Built-In"
 msgstr "Model Adeiledig"
 
 msgid "Model reset: %1"
 msgstr "Model wedi'i ailosod: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Model — tapiwch Pori Modelau i ddewis model sydd ar gael"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -709,8 +718,8 @@ msgstr "Modelau: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Modelau: %1 (wedi'u hidlo)"
 
-msgid "Multiple notebooks"
-msgstr "Llyfrau nodiadau lluosog"
+msgid "Multiple Notebooks"
+msgstr "Nodiaduron Lluosog"
 
 msgid "Narrative element in focus:"
 msgstr "Elfen naratif dan sylw:"
@@ -732,6 +741,9 @@ msgstr "Dim modelau ar gael."
 
 msgid "No models matching \"%1\"."
 msgstr "Dim modelau'n cyfateb i \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "Nid oes ffolder nodiaduron wedi'i osod."
 
 msgid "No notebooks yet"
 msgstr "Dim llyfrau nodiadau eto"
@@ -805,11 +817,18 @@ msgstr "Llyfr nodiadau: %1"
 msgid "Notebooks"
 msgstr "Llyfrau nodiadau"
 
-msgid "Notebooks folder"
-msgstr "Ffolder y llyfrau nodiadau"
+msgid "Notebooks Folder"
+msgstr "Ffolder Nodiaduron"
 
-msgid "Notebooks folder: %1"
-msgstr "Ffolder y llyfrau nodiadau: %1"
+msgid "Notebooks Folder: %1"
+msgstr "Ffolder Nodiadau: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Llwybr ffolder nodiadau:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "Nid yw llwybr y llyfrau nodiadau yn gyfeiriadur: %1"
@@ -833,8 +852,17 @@ msgstr "Diddymwyd y diweddariad OTA."
 msgid "OTA update failed: %1"
 msgstr "Methodd y diweddariad OTA: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Dim ond yn cael ei ddefnyddio gan anogion sy'n dewis cyd-destun y llyfr (yn ddiofyn: Egluro, Cyd-destun Hanesyddol, Crynodeb, Pwyntiau Allweddol ac ELI5). Pan gaiff ei alluogi, anfonir testun y dudalen a amlygwyd a'r tudalennau cyfagos at yr AI fel cyfeiriad cefndirol. Mae angen dewis testun ac yn cynyddu defnydd tocynnau."
+
 msgid "Open conflict or mystery:"
 msgstr "Gwrthdaro agored neu ddirgelwch:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "API Ymatebion OpenAI — Cynnwys chwiliad gwe adeiledig"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "Pwynt terfyn sgwrs/cwblhad sy'n gydnaws ag OpenAI, e.e. https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Cwestiynau heb eu hateb:"
@@ -844,6 +872,9 @@ msgstr "Tudalen"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Rhannau Ymadrodd ac Amseroedd"
+
+msgid "Pick one via Browse Models"
+msgstr "Dewiswch un trwy Bori Modelau"
 
 msgid "Platform"
 msgstr "Llwyfan"
@@ -857,6 +888,9 @@ msgstr "Crynodeb o'r Plot"
 msgid "Plugin is not configured."
 msgstr "Nid yw'r ategyn wedi'i ffurfweddu."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Yn rhagddodi metadata'r llyfr (teitl, awdur a safle darllen cyfredol gan gynnwys pennod) i anogion sy'n dewis cyd-destun y llyfr (yn ddiofyn: Egluro, Cyd-destun Hanesyddol, Crynodeb, Pwyntiau Allweddol ac ELI5). Gellir diystyru ymddygiad fesul anog gyda use_book_context yn y ffeil ffurfweddu."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Cyflwr emosiynol/naws cyffredinol:"
 
@@ -866,8 +900,8 @@ msgstr "Amcan cyfredol y prif gymeriad:"
 msgid "Provider API"
 msgstr "API'r Darparwr"
 
-msgid "Provider Name"
-msgstr "Enw'r Darparwr"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Enw'r Darparwr — dangosir mewn dewislenni; gadewch yn wag i ddefnyddio enw protocol yr API (e.e. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Ni chychwynnwyd data'r darparwr."
@@ -905,20 +939,6 @@ msgstr "Clirio"
 msgid "Purge Settings"
 msgstr "Clirio Gosodiadau"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Clirio gosodiadau assistant.koplugin?\n"
-"\n"
-"Bydd hyn yn adfer yr ategyn i'w osodiadau diofyn ffatri. Dim ond gosodiadau fydd yn cael eu tynnu; \n"
-"Bydd ffeil configuration.lua yn cael ei chadw."
-
-msgid "Purge the settings"
-msgstr "Clirio'r gosodiadau"
-
 msgid "Querying AI ..."
 msgstr "Yn holi'r AI ..."
 
@@ -953,11 +973,30 @@ msgstr "Cais wedi'i ganslo gan y defnyddiwr."
 msgid "Reset"
 msgstr "Ailosod"
 
+msgid "Reset Assistant Settings"
+msgstr "Ailosod Gosodiadau'r Cynorthwyydd"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Ailosod holl osodiadau assistant.koplugin?\n"
+"\n"
+"Bydd hyn yn adfer yr ategyn i'w osodiadau diofyn ffatri. Bydd darparwyr, allweddi API a\n"
+"credentials offer chwilio a ychwanegwyd drwy'r UI Gosodiadau yn cael eu tynnu.\n"
+"Bydd y ffeil configuration.lua yn cael ei chadw."
+
 msgid "Response"
 msgstr "Ymateb"
 
 msgid "Response Settings"
 msgstr "Gosodiadau Ymateb"
+
+msgid "Response Text Font Size"
+msgstr "Maint Ffont Testun Ateb"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1088,11 +1127,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Termau a Chysyniadau"
 
+msgid "Text Size: %1"
+msgstr "Maint Testun: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "Copïwyd y testun i'r clipfwrdd"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Ni chafwyd hyd i'r handler ar gyfer %1. Sicrhewch fod y handler yn bodoli yn y cyfeiriadur api_handlers."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "Y llyfr nodiadau yw eich cofnod sgwrs: atebion AI a nodiadau cyflym yn cael eu hychwanegu ato. Gallwch greu llyfrau nodiadau lluosog i drefnu eich cofnodion."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Mae'r botwm hwn yn creu nodyn cyflym gyda'r testun sydd wedi'i amlygu."
@@ -1212,11 +1257,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Defnyddio Cynorthwyydd AI ar gyfer 'Cyfieithu'"
 
-msgid "Use book text as context"
-msgstr "Defnyddio testun y llyfr fel cyd-destun"
+msgid "Use Book Text as Context"
+msgstr "Defnyddio Testun y Llyfr fel Cyd-destun"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Defnyddio testun y llyfr ar gyfer x-ray ac ail-grynodeb"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Defnyddio Testun y Llyfr ar gyfer X-Ray a Recap"
+
+msgid "Use web search 🌐"
+msgstr "Defnyddio chwiliad gwe 🌐"
 
 msgid "User:"
 msgstr "Defnyddiwr:"
@@ -1240,6 +1288,9 @@ msgstr "API Chwilio'r We"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Beth Yw"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Pan gaiff ei alluogi, mae nodweddion Recap ac X-Ray yn cynnwys testun y llyfr hyd at eich safle darllen presennol yn awtomatig fel cyd-destun. Mae hyn ond yn effeithio ar nodweddion lefel llyfr, nid anogion y ddewislen amlygu, ac yn cynyddu defnydd tocynnau yn sylweddol."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

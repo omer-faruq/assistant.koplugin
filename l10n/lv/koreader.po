@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Jautājums\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Iespējams, šīs tēmas jums šķitīs interesantas:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (saderīgs)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — izvēlieties darbību"
@@ -171,12 +168,6 @@ msgstr "AI atbildes valoda"
 msgid "AI Response Language Setting"
 msgstr "AI atbildes valodas iestatījums"
 
-msgid "AI Response Text Font Size"
-msgstr "AI atbildes teksta fonta izmērs"
-
-msgid "AI Text Size: %1"
-msgstr "AI teksta izmērs: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "AI atbild"
 
 msgid "API Key"
 msgstr "API atslēga"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "API atslēga — ievadiet savu atslēgu, pēc tam pieskarieties \"Pārlūkot modeļus\", lai parādītu pieejamos modeļus"
 
 msgid "API key is required for %1."
 msgstr "API atslēga ir nepieciešama %1."
@@ -210,6 +204,12 @@ msgstr "Pievienot %1"
 msgid "Add %1 Provider"
 msgstr "Pievienot %1 pakalpojumu sniedzēju"
 
+msgid "Add Book Metadata as Context"
+msgstr "Pievienot grāmatas metadatus kā kontekstu"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Pievienot blakus esošās lapas tekstu kā kontekstu"
+
 msgid "Add Note"
 msgstr "Pievienot piezīmi"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Jūsu iezīmējumu, piezīmju un piezīmju grāmatiņas satura analīze no grāmatas."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Jautāt"
 msgid "Ask Another Question"
 msgstr "Uzdot citu jautājumu"
 
+msgid "Ask a Question"
+msgstr "Uzdot jautājumu"
+
 msgid "Ask a general question"
 msgstr "Uzdot vispārīgu jautājumu"
-
-msgid "Ask a question"
-msgstr "Uzdot jautājumu"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Uzdot jautājumu par iezīmēto tekstu"
@@ -262,11 +265,11 @@ msgstr "Uzdodiet AI jautājumu"
 msgid "Assistant settings are not available."
 msgstr "Asistenta iestatījumi nav pieejami."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "Automātisks kopsavilkums, atverot ilgi nelasītas grāmatas"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "Automātiski ģenerēt kopsavilkumu, atverot ilgi nelasītas grāmatas"
 
-msgid "Auto-save conversations to notebook"
-msgstr "Automātiski saglabāt sarunas piezīmju kladē"
+msgid "Auto-save Conversations to Notebook"
+msgstr "Automātiski saglabāt sarunas piezīmju grāmatā"
 
 msgid "Base URL"
 msgstr "Bāzes URL"
@@ -279,6 +282,9 @@ msgstr "Bāzes URL ir obligāts."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "Bāzes URL jāsākas ar http:// vai https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "API galapunkta bāzes URL, piem., https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Grāmatas analīze"
@@ -339,6 +345,9 @@ msgstr "Notiek atbildes veidošana ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigurācija nav atrasta. Lūdzu, vispirms iestatiet configuration.lua."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Konfigurējiet AI LLM atbildes valodu. Pēc noklusējuma tiek izmantota KOReader saskarnes valoda."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Konfigurētā piezīmju klažu mape nav pieejama: %1"
 
@@ -349,6 +358,9 @@ msgstr "Konjugācija"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Konteksta ierobežojumi"
+
+msgid "Context Settings"
+msgstr "Konteksta iestatījumi"
 
 msgid "Contextual Connections"
 msgstr "Kontekstuālās saiknes"
@@ -368,8 +380,8 @@ msgstr "Saruna tiek saglabāta piezīmju kladē"
 msgid "Copy"
 msgstr "Kopēt"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Kopēt ievadīto jautājumu starpliktuvē"
+msgid "Copy to Clipboard"
+msgstr "Kopēt starpliktuvē"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Izveidot piezīmju kladi."
 msgid "Cultural Significance"
 msgstr "Kultūras nozīme"
 
-msgid "Custom"
-msgstr "Pielāgots"
-
 msgid "Custom Prompt"
 msgstr "Pielāgota uzvedne"
 
@@ -430,9 +439,6 @@ msgstr "Pielāgoti prompti"
 
 msgid "Deeply Thought"
 msgstr "Padziļināta domāšana"
-
-msgid "Default: auto"
-msgstr "Noklusējums: automātiski"
 
 msgid "Delete"
 msgstr "Dzēst"
@@ -494,18 +500,18 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Ievadiet zara vai birkas nosaukumu, lai atjauninātu spraudni no avota krātuves.\n"
+"Ievadiet zara vai tagas nosaukumu, lai atjauninātu spraudni no avota repozitorija.\n"
 "\n"
 "<b>Github URL:</b>  %1\n"
-"<b>Avota krātuve:</b>  %2\n"
+"<b>Avota repozitorijs:</b>  %2\n"
 "\n"
-"Noklusējums: \"main\" (jaunākā izstrādes zars)\n"
-"Piemēri: \"main\", \"v1.12\", \"v1.11\"\n"
+"Noklusējums: \"main\" (visjaunākā izstrādes koda versija)\n"
+"Šis kods var būt nestabils, un tulkojumi var būt nepilnīgi; tas tiek atbalstīts tikai pēc iespējām. Lai atjauninātu uz stabilu laidienu, tā vietā ievadiet tagu (piemēram, \"v1.12\").\n"
 "\n"
 "<b>Fails configuration.lua tiks saglabāts.</b>"
 
@@ -567,6 +573,9 @@ msgstr "Detalizētai informācijai apmeklējiet 'Configuration' wiki lapu vietn�
 
 msgid "Fun Analogy"
 msgstr "Jautra analoģija"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API. jāiekļauj /models segments, piem., …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Vispārīga saruna"
@@ -688,14 +697,14 @@ msgstr "Markdown dzinis"
 msgid "Meaning"
 msgstr "Nozīme"
 
-msgid "Model"
-msgstr "Modelis"
-
 msgid "Model Built-In"
 msgstr "Modeļa iebūvētais"
 
 msgid "Model reset: %1"
 msgstr "Modelis atiestatīts: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Modelis — pieskarieties Browse Models, lai izvēlētos pieejamo modeli"
 
 msgid "Model: %1"
 msgstr "Modelis: %1"
@@ -706,8 +715,8 @@ msgstr "Modeļi: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Modeļi: %1 (filtrēti)"
 
-msgid "Multiple notebooks"
-msgstr "Vairākas piezīmju klades"
+msgid "Multiple Notebooks"
+msgstr "Vairākas piezīmju grāmatiņas"
 
 msgid "Narrative element in focus:"
 msgstr "Stāstījuma elements uzmanības centrā:"
@@ -729,6 +738,9 @@ msgstr "Nav pieejamu modeļu."
 
 msgid "No models matching \"%1\"."
 msgstr "Nav modeļu, kas atbilst \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "Nav iestatīta piezīmju grāmatiņu mape."
 
 msgid "No notebooks yet"
 msgstr "Pagaidām nav piezīmju klažu."
@@ -802,11 +814,18 @@ msgstr "Piezīmju klade: %1"
 msgid "Notebooks"
 msgstr "Piezīmju klades"
 
-msgid "Notebooks folder"
-msgstr "Piezīmju klažu mape"
+msgid "Notebooks Folder"
+msgstr "Piezīmju grāmatiņu mape"
 
-msgid "Notebooks folder: %1"
-msgstr "Piezīmju klažu mape: %1"
+msgid "Notebooks Folder: %1"
+msgstr "Piezīmju grāmatiņu mape: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Piezīmju grāmatiņu mapes ceļš:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "Piezīmju klažu ceļš nav mape: %1"
@@ -830,8 +849,17 @@ msgstr "OTA atjauninājums atcelts."
 msgid "OTA update failed: %1"
 msgstr "OTA atjaunināšana neizdevās: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Tiek izmantots tikai ar tām uzvednēm, kas aktivizē grāmatas kontekstu (pēc noklusējuma: Explain, Historical Context, Summarize, Key Points un ELI5). Kad tas ir iespējots, izceltās lapas un blakus esošo lapu teksts tiek nosūtīts AI kā fona atsauce. Nepieciešama teksta atlase un palielina tokenu patēriņu."
+
 msgid "Open conflict or mystery:"
 msgstr "Atklāts konflikts vai noslēpums:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — Iekļaut iebūvēto tīmekļa meklēšanu"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "OpenAI saderīgs chat/completions galapunkts, piem., https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Neatbildētie jautājumi:"
@@ -841,6 +869,9 @@ msgstr "Lapa"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Vārdšķiras un laiki"
+
+msgid "Pick one via Browse Models"
+msgstr "Izvēlieties vienu, izmantojot modeļu pārlūkošanu"
 
 msgid "Platform"
 msgstr "Platforma"
@@ -854,6 +885,9 @@ msgstr "Sižeta kopsavilkums"
 msgid "Plugin is not configured."
 msgstr "Spraudnis nav konfigurēts."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Uzvedņu sākumā pievieno grāmatas metadatus (nosaukumu, autoru un pašreizējo lasīšanas pozīciju, ieskaitot nodaļu) tām uzvednēm, kuras izmanto grāmatas kontekstu (pēc noklusējuma: Explain, Historical Context, Summarize, Key Points un ELI5). Atsevišķu uzvedņu darbību var mainīt, izmantojot use_book_context konfigurācijas failā."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Valdošais emocionālais stāvoklis/tonis:"
 
@@ -863,8 +897,8 @@ msgstr "Galvenā varoņa pašreizējais mērķis:"
 msgid "Provider API"
 msgstr "Pakalpojumu sniedzēja API"
 
-msgid "Provider Name"
-msgstr "Pakalpojumu sniedzēja nosaukums"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Pakalpojumu sniedzēja nosaukums — rāda izvēlnēs; atstājiet tukšu, lai izmantotu API protokola nosaukumu (piem., \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Pakalpojumu sniedzēja dati nav inicializēti."
@@ -902,20 +936,6 @@ msgstr "Iztīrīt"
 msgid "Purge Settings"
 msgstr "Notīrīt iestatījumus"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Iztīrīt assistant.koplugin iestatījumus?\n"
-"\n"
-"Tas atjaunos spraudņa rūpnīcas noklusējuma iestatījumus. Tiks noņemti tikai iestatījumi; \n"
-"Fails configuration.lua tiks saglabāts."
-
-msgid "Purge the settings"
-msgstr "Iztīrīt iestatījumus"
-
 msgid "Querying AI ..."
 msgstr "Notiek AI vaicājums ..."
 
@@ -950,11 +970,29 @@ msgstr "Lietotājs atcēla pieprasījumu."
 msgid "Reset"
 msgstr "Atiestatīt"
 
+msgid "Reset Assistant Settings"
+msgstr "Atiestatīt asistenta iestatījumus"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Atiestatīt visus assistant.koplugin iestatījumus?\n"
+"\n"
+"Tas atjaunos spraudņa rūpnīcas noklusējuma iestatījumus. Pakalpojumu sniedzēji, API atslēgas un meklēšanas rīka akreditācijas dati, kas pievienoti, izmantojot iestatījumu saskarni, tiks noņemti.\n"
+"Fails configuration.lua tiks saglabāts."
+
 msgid "Response"
 msgstr "Atbilde"
 
 msgid "Response Settings"
 msgstr "Atbildes iestatījumi"
+
+msgid "Response Text Font Size"
+msgstr "Atbildes teksta fonta lielums"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1085,11 +1123,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Termini un jēdzieni"
 
+msgid "Text Size: %1"
+msgstr "Fonta lielums: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "Teksts kopēts starpliktuvē"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Apstrādātājs %1 netika atrasts. Lūdzu, pārliecinieties, ka apstrādātājs atrodas api_handlers direktorijā."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "Piezīmju grāmata ir jūsu sarunu žurnāls: AI atbildes un ātrās piezīmes tiek tai pievienotas. Varat izveidot vairākas piezīmju grāmatas, lai organizētu savus žurnālus."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Šī poga izveido ātro piezīmi ar iezīmēto tekstu."
@@ -1209,11 +1253,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Izmantot AI asistentu 'Tulkot' funkcijai"
 
-msgid "Use book text as context"
+msgid "Use Book Text as Context"
 msgstr "Izmantot grāmatas tekstu kā kontekstu"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Izmantot grāmatas tekstu X-Ray un kopsavilkumam"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Izmantot grāmatas tekstu X-Ray un Recap"
+
+msgid "Use web search 🌐"
+msgstr "Izmantot tīmekļa meklēšanu 🌐"
 
 msgid "User:"
 msgstr "Lietotājs:"
@@ -1237,6 +1284,9 @@ msgstr "WebSearch API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Kas tas ir"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Ja iespējots, funkcijas Recap un X-Ray automātiski iekļauj grāmatas tekstu līdz pašreizējai lasīšanas pozīcijai kā kontekstu. Tas ietekmē tikai grāmatas līmeņa funkcijas, nevis iezīmētā teksta izvēlnes uzvednes, un ievērojami palielina tokenu patēriņu."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

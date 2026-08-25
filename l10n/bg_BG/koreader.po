@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Въпрос\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Може да намерите тези теми за интересни:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (съвместим)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — изберете действие"
@@ -171,12 +168,6 @@ msgstr "Език на отговорите на AI"
 msgid "AI Response Language Setting"
 msgstr "Настройка на езика на отговорите на AI"
 
-msgid "AI Response Text Font Size"
-msgstr "Размер на шрифта на текста на отговорите на AI"
-
-msgid "AI Text Size: %1"
-msgstr "Размер на текста на AI: %1"
-
 msgid "AI X-Ray"
 msgstr "ИИ X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "AI отговаря"
 
 msgid "API Key"
 msgstr "API ключ"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "API ключ — въведете своя ключ, след това докоснете Преглед на модели, за да изброите наличните модели"
 
 msgid "API key is required for %1."
 msgstr "За %1 е необходим API ключ."
@@ -210,6 +204,12 @@ msgstr "Добавяне на %1"
 msgid "Add %1 Provider"
 msgstr "Добавяне на доставчик %1"
 
+msgid "Add Book Metadata as Context"
+msgstr "Добавяне на метаданни на книгата като контекст"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Добавяне на текст от близките страници като контекст"
+
 msgid "Add Note"
 msgstr "Добави бележка"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Анализ на вашите маркирания, бележки и съдържанието на бележника от книгата."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Питай"
 msgid "Ask Another Question"
 msgstr "Задай друг въпрос"
 
+msgid "Ask a Question"
+msgstr "Задайте въпрос"
+
 msgid "Ask a general question"
 msgstr "Задай общ въпрос"
-
-msgid "Ask a question"
-msgstr "Задайте въпрос"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Задай въпрос за маркирания текст"
@@ -262,11 +265,11 @@ msgstr "Задайте въпрос на ИИ"
 msgid "Assistant settings are not available."
 msgstr "Настройките на асистента не са налични."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "Автоматично обобщение при отваряне на отдавна нечетени книги"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "Автоматичен преглед при отваряне на дълго нечетени книги"
 
-msgid "Auto-save conversations to notebook"
-msgstr "Автоматично запазване на разговорите в тетрадка"
+msgid "Auto-save Conversations to Notebook"
+msgstr "Автоматично запазване на разговори в тефтер"
 
 msgid "Base URL"
 msgstr "Базов URL"
@@ -279,6 +282,9 @@ msgstr "Базовият URL е задължителен."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "Базовият URL трябва да започва с http:// или https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "Базов URL на API крайната точка, напр. https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Анализ на книгата"
@@ -339,6 +345,9 @@ msgstr "Съставяне на отговор ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Конфигурацията не е намерена. Моля, първо настройте configuration.lua."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Настройка на езика за отговор на AI LLM. По подразбиране е езикът на интерфейса на KOReader."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Конфигурираната папка за тетрадки не е достъпна: %1"
 
@@ -349,6 +358,9 @@ msgstr "Спрежение"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Ограничения на контекста"
+
+msgid "Context Settings"
+msgstr "Настройки на контекста"
 
 msgid "Contextual Connections"
 msgstr "Контекстуални връзки"
@@ -368,8 +380,8 @@ msgstr "Разговорът е запазен в тетрадката"
 msgid "Copy"
 msgstr "Копирай"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Копиране на въведения въпрос в клипборда"
+msgid "Copy to Clipboard"
+msgstr "Копиране в клипборда"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Създай тетрадка."
 msgid "Cultural Significance"
 msgstr "Културна значимост"
 
-msgid "Custom"
-msgstr "Персонализиран"
-
 msgid "Custom Prompt"
 msgstr "Персонализиран промпт"
 
@@ -430,9 +439,6 @@ msgstr "Персонализирани промпти"
 
 msgid "Deeply Thought"
 msgstr "Задълбочено мислене"
-
-msgid "Default: auto"
-msgstr "По подразбиране: автоматично"
 
 msgid "Delete"
 msgstr "Изтриване"
@@ -494,20 +500,20 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Въведете име на клон или таг, за да актуализирате приставката от хранилището на изходния код.\n"
+"Въведете име на клон или етикет, за да актуализирате приставката от хранилището на източника.\n"
 "\n"
-"<b>Github URL:</b>  %1\n"
-"<b>Изходно хранилище:</b>  %2\n"
+"<b>URL на Github:</b>  %1\n"
+"<b>Хранилище на източника:</b>  %2\n"
 "\n"
-"По подразбиране: \"main\" (последният клон за разработка)\n"
-"Примери: \"main\", \"v1.12\", \"v1.11\"\n"
+"По подразбиране: \"main\" (най-новата версия на разработката)\n"
+"Този код може да е нестабилен и преводите да са непълни; поддържа се само до колкото е възможно. За да актуализирате до стабилна версия, въведете етикет (напр. \"v1.12\").\n"
 "\n"
-"<b>Файлът configuration.lua ще бъде запазен.</b>"
+"<b>configuration.lua ще бъде запазен.</b>"
 
 msgid "Enter a question before proceeding."
 msgstr "Въведете въпрос, преди да продължите."
@@ -567,6 +573,9 @@ msgstr "За подробности посетете уики страницат
 
 msgid "Fun Analogy"
 msgstr "Забавна аналогия"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API. трябва да включва сегмента /models, напр. …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Общ разговор"
@@ -687,14 +696,14 @@ msgstr "Двигател за Markdown"
 msgid "Meaning"
 msgstr "Значение"
 
-msgid "Model"
-msgstr "Модел"
-
 msgid "Model Built-In"
 msgstr "Вграден в модела"
 
 msgid "Model reset: %1"
 msgstr "Моделът е нулиран: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Модел — докоснете Преглед на модели, за да изберете наличен модел"
 
 msgid "Model: %1"
 msgstr "Модел: %1"
@@ -705,8 +714,8 @@ msgstr "Модели: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Модели: %1 (филтрирани)"
 
-msgid "Multiple notebooks"
-msgstr "Няколко тетрадки"
+msgid "Multiple Notebooks"
+msgstr "Множество тефтери"
 
 msgid "Narrative element in focus:"
 msgstr "Наративен елемент във фокус:"
@@ -728,6 +737,9 @@ msgstr "Няма налични модели."
 
 msgid "No models matching \"%1\"."
 msgstr "Няма модели, съответстващи на \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "Не е зададена папка за тефтери."
 
 msgid "No notebooks yet"
 msgstr "Все още няма тетрадки"
@@ -801,11 +813,18 @@ msgstr "Тетрадка: %1"
 msgid "Notebooks"
 msgstr "Тетрадки"
 
-msgid "Notebooks folder"
-msgstr "Папка за тетрадки"
+msgid "Notebooks Folder"
+msgstr "Папка за тефтери"
 
-msgid "Notebooks folder: %1"
-msgstr "Папка за тетрадки: %1"
+msgid "Notebooks Folder: %1"
+msgstr "Папка за тефтери: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Път до папката за тефтери:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "Пътят за тетрадки не е директория: %1"
@@ -829,8 +848,17 @@ msgstr "OTA актуализацията е отменена."
 msgid "OTA update failed: %1"
 msgstr "Неуспешна OTA актуализация: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Използва се само от подкани, които се включват в контекста на книгата (по подразбиране: Обясни, Исторически контекст, Обобщи, Ключови точки и ELI5). Когато е включено, текстът на маркираната страница и съседните страници се изпращат на AI като фонова препратка. Изисква избор на текст и увеличава използването на токени."
+
 msgid "Open conflict or mystery:"
 msgstr "Неразрешен конфликт или загадка:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — Включва вградено търсене в интернет"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "Крайна точка за чат/завършвания, съвместима с OpenAI, напр. https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Неизяснени въпроси:"
@@ -840,6 +868,9 @@ msgstr "Страница"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Части на речта и времена"
+
+msgid "Pick one via Browse Models"
+msgstr "Изберете чрез Преглед на модели"
 
 msgid "Platform"
 msgstr "Платформа"
@@ -853,6 +884,9 @@ msgstr "Резюме на сюжета"
 msgid "Plugin is not configured."
 msgstr "Приставката не е конфигурирана."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Добавя метаданни на книгата (заглавие, автор и текуща позиция за четене, включително глава) към подкани, които се включват в контекста на книгата (по подразбиране: Обясни, Исторически контекст, Обобщи, Ключови точки и ELI5). Поведението за отделна подкана може да бъде заменено с use_book_context в конфигурационния файл."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Преобладаващо емоционално състояние/тон:"
 
@@ -862,8 +896,8 @@ msgstr "Текуща цел на главния герой:"
 msgid "Provider API"
 msgstr "API на доставчика"
 
-msgid "Provider Name"
-msgstr "Име на доставчика"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Име на доставчика — показва се в менютата; оставете празно, за да се използва името на API протокола (напр. „openai“)"
 
 msgid "Provider data not initialized."
 msgstr "Данните за доставчика не са инициализирани."
@@ -901,20 +935,6 @@ msgstr "Изчисти"
 msgid "Purge Settings"
 msgstr "Изчистване на настройките"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Да се изчистят ли настройките на assistant.koplugin?\n"
-"\n"
-"Това възстановява приставката до фабричните ѝ настройки. Ще бъдат премахнати само настройките; \n"
-"файлът configuration.lua ще бъде запазен."
-
-msgid "Purge the settings"
-msgstr "Изчистване на настройките"
-
 msgid "Querying AI ..."
 msgstr "Запитване към AI ..."
 
@@ -949,11 +969,30 @@ msgstr "Заявката е отменена от потребителя."
 msgid "Reset"
 msgstr "Нулиране"
 
+msgid "Reset Assistant Settings"
+msgstr "Нулиране на настройките на асистента"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Нулиране на всички настройки на assistant.koplugin?\n"
+"\n"
+"Това възстановява приставката до фабричните настройки. Доставчиците, API ключовете и\n"
+"удостоверенията за инструмента за търсене, добавени чрез интерфейса за настройки, ще бъдат премахнати.\n"
+"Файлът configuration.lua ще бъде запазен."
+
 msgid "Response"
 msgstr "Отговор"
 
 msgid "Response Settings"
 msgstr "Настройки на отговора"
+
+msgid "Response Text Font Size"
+msgstr "Размер на шрифта на текстовия отговор"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1084,11 +1123,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Термини и понятия"
 
+msgid "Text Size: %1"
+msgstr "Размер на текста: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "Текстът е копиран в клипборда."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Обработчикът за %1 не беше намерен. Моля, уверете се, че обработчикът съществува в директорията api_handlers."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "Тефтерът е вашият дневник на разговори: отговорите на AI и бързите бележки се добавят към него. Можете да създадете множество тефтери, за да организирате своите записи."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Този бутон създава бърза бележка с маркирания текст."
@@ -1208,11 +1253,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Използване на ИИ асистента за „Превод“"
 
-msgid "Use book text as context"
-msgstr "Използвай текста на книгата като контекст"
+msgid "Use Book Text as Context"
+msgstr "Използване на текст от книгата като контекст"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Използване на текста на книгата за X-Ray и Recap"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Използване на текст от книгата за X-Ray и Recap"
+
+msgid "Use web search 🌐"
+msgstr "Използване на търсене в интернет 🌐"
 
 msgid "User:"
 msgstr "Потребител:"
@@ -1236,6 +1284,9 @@ msgstr "WebSearch API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Какво представлява"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Когато е включено, функциите Recap и X-Ray автоматично включват текста на книгата до текущата ви позиция за четене като контекст. Това засяга само функциите на ниво книга, а не подканите от менюто за маркиране, и значително увеличава използването на токени."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

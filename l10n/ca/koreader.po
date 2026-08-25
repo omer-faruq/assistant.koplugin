@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Pregunta\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Potser aquests temes us resulten interessants:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (Compatible)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — tria una acció"
@@ -171,12 +168,6 @@ msgstr "Idioma de resposta de la IA"
 msgid "AI Response Language Setting"
 msgstr "Configuració de l'idioma de resposta de la IA"
 
-msgid "AI Response Text Font Size"
-msgstr "Mida de la lletra del text de resposta de la IA"
-
-msgid "AI Text Size: %1"
-msgstr "Mida del text de la IA: %1"
-
 msgid "AI X-Ray"
 msgstr "X-Ray de la IA"
 
@@ -185,6 +176,9 @@ msgstr "La IA està responent"
 
 msgid "API Key"
 msgstr "Clau de l'API"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "Clau API — introduïu la vostra clau, després toqueu Cercar models per llistar els models disponibles"
 
 msgid "API key is required for %1."
 msgstr "Es requereix una clau d'API per a %1."
@@ -210,6 +204,12 @@ msgstr "Afegeix %1"
 msgid "Add %1 Provider"
 msgstr "Afegeix el proveïdor %1"
 
+msgid "Add Book Metadata as Context"
+msgstr "Afegeix les metadades del llibre com a context"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Afegeix el text de la pàgina propera com a context"
+
 msgid "Add Note"
 msgstr "Afegeix una nota"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Anàlisi dels teus subratllats, notes i contingut del quadern del llibre."
+
+msgid "Anthropic Messages API"
+msgstr "API de missatges d'Anthropic"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Pregunta"
 msgid "Ask Another Question"
 msgstr "Fes una altra pregunta"
 
+msgid "Ask a Question"
+msgstr "Fes una pregunta"
+
 msgid "Ask a general question"
 msgstr "Fes una pregunta general"
-
-msgid "Ask a question"
-msgstr "Feu una pregunta"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Fes una pregunta sobre el text ressaltat"
@@ -262,10 +265,10 @@ msgstr "Fes una pregunta a la IA"
 msgid "Assistant settings are not available."
 msgstr "La configuració de l'assistent no està disponible."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "Auto-resum en obrir llibres que fa temps que no es llegeixen"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "Resum automàtic en obrir llibres no llegits durant molt de temps"
 
-msgid "Auto-save conversations to notebook"
+msgid "Auto-save Conversations to Notebook"
 msgstr "Desa automàticament les converses al quadern"
 
 msgid "Base URL"
@@ -279,6 +282,9 @@ msgstr "L'URL base és obligatori."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "L'URL base ha de començar amb http:// o https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "URL base del punt final de l'API, p. ex. https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Anàlisi del llibre"
@@ -339,6 +345,9 @@ msgstr "Redactant la resposta ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "No s'ha trobat la configuració. Si us plau, configureu primer configuration.lua."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Configura l'idioma de resposta del LLM d'IA. Per defecte, l'idioma de la interfície del KOReader."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "La carpeta de quaderns configurada no és accessible: %1"
 
@@ -349,6 +358,9 @@ msgstr "Conjugació"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Limitacions del context"
+
+msgid "Context Settings"
+msgstr "Configuració del context"
 
 msgid "Contextual Connections"
 msgstr "Connexions contextuals"
@@ -368,8 +380,8 @@ msgstr "La conversa s'ha desat al quadern."
 msgid "Copy"
 msgstr "Copia"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Copia la pregunta introduïda al porta-retalls"
+msgid "Copy to Clipboard"
+msgstr "Copia al porta-retalls"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Crea un quadern."
 msgid "Cultural Significance"
 msgstr "Importància cultural"
 
-msgid "Custom"
-msgstr "Personalitzat"
-
 msgid "Custom Prompt"
 msgstr "Prompt personalitzat"
 
@@ -430,9 +439,6 @@ msgstr "Indicacions personalitzades"
 
 msgid "Deeply Thought"
 msgstr "Pensament profund"
-
-msgid "Default: auto"
-msgstr "Per defecte: auto"
 
 msgid "Delete"
 msgstr "Elimina"
@@ -494,18 +500,18 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Introduïu un nom de branca o etiqueta per actualitzar el connector des del repositori font.\n"
+"Introduïu un nom de branca o d'etiqueta per actualitzar el connector des del repositori d'origen.\n"
 "\n"
 "<b>URL de GitHub:</b>  %1\n"
-"<b>Repositori font:</b>  %2\n"
+"<b>Repositori d'origen:</b>  %2\n"
 "\n"
-"Per defecte: \"main\" (branca de desenvolupament més recent)\n"
-"Exemples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Per defecte: \"main\" (codi de desenvolupament d'avantguarda)\n"
+"Aquest codi pot ser inestable i les traduccions poden ser incompletes; només es dona suport amb el millor esforç possible. Per actualitzar a una versió estable, introduïu una etiqueta (p. ex., \"v1.12\").\n"
 "\n"
 "<b>El configuration.lua es conservarà.</b>"
 
@@ -567,6 +573,9 @@ msgstr "Per a més detalls, visita la pàgina wiki «Configuration» a GitHub."
 
 msgid "Fun Analogy"
 msgstr "Analogia divertida"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "API de Gemini. ha d'incloure el segment /models, p. ex. …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Conversa general"
@@ -687,14 +696,14 @@ msgstr "Motor de Markdown"
 msgid "Meaning"
 msgstr "Significat"
 
-msgid "Model"
-msgstr "Model"
-
 msgid "Model Built-In"
 msgstr "Model integrat"
 
 msgid "Model reset: %1"
 msgstr "Model restablert: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Model: toqueu Cercar models per triar un model disponible"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -705,7 +714,7 @@ msgstr "Models: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Models: %1 (filtrats)"
 
-msgid "Multiple notebooks"
+msgid "Multiple Notebooks"
 msgstr "Múltiples quaderns"
 
 msgid "Narrative element in focus:"
@@ -728,6 +737,9 @@ msgstr "No hi ha models disponibles."
 
 msgid "No models matching \"%1\"."
 msgstr "No hi ha cap model que coincideixi amb \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "No s'ha establert cap carpeta de quaderns."
 
 msgid "No notebooks yet"
 msgstr "Encara no hi ha quaderns"
@@ -801,11 +813,18 @@ msgstr "Quadern: %1"
 msgid "Notebooks"
 msgstr "Quaderns"
 
-msgid "Notebooks folder"
+msgid "Notebooks Folder"
 msgstr "Carpeta de quaderns"
 
-msgid "Notebooks folder: %1"
+msgid "Notebooks Folder: %1"
 msgstr "Carpeta de quaderns: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Ruta de la carpeta de quaderns:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "La ruta dels quaderns no és un directori: %1"
@@ -829,8 +848,17 @@ msgstr "S'ha cancel·lat l'actualització OTA."
 msgid "OTA update failed: %1"
 msgstr "Ha fallat l'actualització OTA: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Només s'utilitza per a indicacions (prompts) que accepten el context del llibre (per defecte: Explica, Context històric, Resum, Punts clau i ELI5). Quan està activat, el text de la pàgina destacada i de les pàgines adjacents s'envia a la IA com a referència de fons. Requereix una selecció de text i augmenta l'ús de tokens."
+
 msgid "Open conflict or mystery:"
 msgstr "Conflicte o misteri obert:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "API de respostes d'OpenAI: inclou cerca web integrada"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "Punt final de xat/completions compatible amb OpenAI, p. ex. https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Preguntes pendents:"
@@ -840,6 +868,9 @@ msgstr "Pàgina"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Categories gramaticals i temps verbals"
+
+msgid "Pick one via Browse Models"
+msgstr "Trieu-ne un mitjançant Explora models"
 
 msgid "Platform"
 msgstr "Plataforma"
@@ -853,6 +884,9 @@ msgstr "Resum de la trama"
 msgid "Plugin is not configured."
 msgstr "El complement no està configurat."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Afegeix metadades del llibre (títol, autor i posició de lectura actual inclòs el capítol) a les indicacions que accepten el context del llibre (per defecte: Explica, Context històric, Resum, Punts clau i ELI5). El comportament per indicació es pot anul·lar amb use_book_context al fitxer de configuració."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Estat emocional/to predominant:"
 
@@ -862,8 +896,8 @@ msgstr "Objectiu actual del protagonista:"
 msgid "Provider API"
 msgstr "API del proveïdor"
 
-msgid "Provider Name"
-msgstr "Nom del proveïdor"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Nom del proveïdor — es mostra als menús; deixeu-ho en blanc per utilitzar el nom del protocol de l'API (p. ex. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Dades del proveïdor no inicialitzades."
@@ -901,20 +935,6 @@ msgstr "Purga"
 msgid "Purge Settings"
 msgstr "Purgar configuració"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Voleu purgar la configuració de assistant.koplugin?\n"
-"\n"
-"Això restaura el connector als valors predeterminats de fàbrica. Només se'n eliminaran els paràmetres; \n"
-"El fitxer configuration.lua es conservarà."
-
-msgid "Purge the settings"
-msgstr "Purga la configuració"
-
 msgid "Querying AI ..."
 msgstr "Consultant la IA ..."
 
@@ -949,11 +969,28 @@ msgstr "Sol·licitud cancel·lada per l'usuari."
 msgid "Reset"
 msgstr "Restableix"
 
+msgid "Reset Assistant Settings"
+msgstr "Restableix la configuració de l'assistent"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Restableix tots els paràmetres d'assistant.koplugin?\n"
+"\n"
+"Això restaura el complement als seus valors predeterminats de fàbrica. Els proveïdors, les claus API i les credencials de l'eina de cerca afegits mitjançant la interfície de configuració s'eliminaran. El fitxer configuration.lua es conservarà."
+
 msgid "Response"
 msgstr "Resposta"
 
 msgid "Response Settings"
 msgstr "Configuració de la resposta"
+
+msgid "Response Text Font Size"
+msgstr "Mida de lletra del text de resposta"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1084,11 +1121,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Termes i conceptes"
 
+msgid "Text Size: %1"
+msgstr "Mida del text: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "S'ha copiat el text al porta-retalls."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "No s'ha trobat el gestor per a %1. Assegureu-vos que el gestor existeix al directori api_handlers."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "El quadern és el vostre registre de conversa: les respostes de la IA i les notes ràpides s'hi afegeixen. Podeu crear múltiples quaderns per organitzar els vostres registres."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Aquest botó crea una nota ràpida amb el text ressaltat."
@@ -1208,11 +1251,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Utilitza l'Assistent d'IA per a «Traduir»"
 
-msgid "Use book text as context"
+msgid "Use Book Text as Context"
 msgstr "Utilitza el text del llibre com a context"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Utilitza el text del llibre per a X-Ray i el resum"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Utilitza el text del llibre per a X-Ray i Recap"
+
+msgid "Use web search 🌐"
+msgstr "Utilitza la cerca web 🌐"
 
 msgid "User:"
 msgstr "Usuari:"
@@ -1236,6 +1282,9 @@ msgstr "API de cerca web"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Què és"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Quan està activat, les funcions de Recap i X-Ray inclouen automàticament el text del llibre fins a la vostra posició de lectura actual com a context. Això només afecta les funcions a nivell de llibre, no les indicacions del menú de destacats, i augmenta significativament l'ús de tokens."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

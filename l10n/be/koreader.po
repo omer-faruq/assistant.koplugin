@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Пытанне\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Магчыма, вам будуць цікавыя гэтыя тэмы:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (Сумяшчальны)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — абярыце дзеянне"
@@ -171,12 +168,6 @@ msgstr "Мова адказаў ШІ"
 msgid "AI Response Language Setting"
 msgstr "Налада мовы адказаў ШІ"
 
-msgid "AI Response Text Font Size"
-msgstr "Памер шрыфта тэксту адказаў ШІ"
-
-msgid "AI Text Size: %1"
-msgstr "Памер тэксту ШІ: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "ШІ адказвае"
 
 msgid "API Key"
 msgstr "API-ключ"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "API-ключ — увядзіце ваш ключ, затым націсніце «Агляд мадэляў», каб пабачыць даступныя мадэлі"
 
 msgid "API key is required for %1."
 msgstr "Для %1 патрабуецца API-ключ."
@@ -210,6 +204,12 @@ msgstr "Дадаць %1"
 msgid "Add %1 Provider"
 msgstr "Дадаць правайдара %1"
 
+msgid "Add Book Metadata as Context"
+msgstr "Дадаць метаданыя кнігі як кантэкст"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Дадаць тэкст суседніх старонак як кантэкст"
+
 msgid "Add Note"
 msgstr "Дадаць нататку"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Аналіз вашых вылучэнняў, нататак і змесціва нататніка па кнізе."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Спытаць"
 msgid "Ask Another Question"
 msgstr "Задаць яшчэ адно пытанне"
 
+msgid "Ask a Question"
+msgstr "Задаць пытанне"
+
 msgid "Ask a general question"
 msgstr "Задаць агульнае пытанне"
-
-msgid "Ask a question"
-msgstr "Задаць пытанне"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Задаць пытанне пра вылучаны тэкст"
@@ -262,11 +265,11 @@ msgstr "Задайце пытанне AI"
 msgid "Assistant settings are not available."
 msgstr "Налады асістэнта недаступныя."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "Аўта-рэкап пры адкрыцці даўно нечытаных кніг"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "Аўтапераказ пры адкрыцці даўно нечытаных кніг"
 
-msgid "Auto-save conversations to notebook"
-msgstr "Аўтаматычна захоўваць размовы ў сшытак"
+msgid "Auto-save Conversations to Notebook"
+msgstr "Аўтазахаванне размоў у нататнік"
 
 msgid "Base URL"
 msgstr "Базавы URL"
@@ -279,6 +282,9 @@ msgstr "Базавы URL абавязковы."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "Базавы URL павінен пачынацца з http:// або https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "Базавы URL API-канцапункта, напр. https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Аналіз кнігі"
@@ -339,6 +345,9 @@ msgstr "Складанне адказу ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Канфігурацыя не знойдзена. Калі ласка, спачатку наладзьце configuration.lua."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Наладзіць мову адказаў ШІ-мадэлі. Па змаўчанні выкарыстоўваецца мова інтэрфейсу KOReader."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Настроеная тэчка сшыткаў недаступная: %1"
 
@@ -349,6 +358,9 @@ msgstr "Спражэнне"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Абмежаванні кантэксту"
+
+msgid "Context Settings"
+msgstr "Налады кантэксту"
 
 msgid "Contextual Connections"
 msgstr "Кантэкстуальныя сувязі"
@@ -368,8 +380,8 @@ msgstr "Размова захавана ў сшытак"
 msgid "Copy"
 msgstr "Капіраваць"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Капіраваць уведзенае пытанне ў буфер абмену"
+msgid "Copy to Clipboard"
+msgstr "Капіраваць у буфер абмену"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Стварыць сшытак."
 msgid "Cultural Significance"
 msgstr "Культурная значнасць"
 
-msgid "Custom"
-msgstr "Уласны"
-
 msgid "Custom Prompt"
 msgstr "Уласны промпт"
 
@@ -430,9 +439,6 @@ msgstr "Уласныя промпты"
 
 msgid "Deeply Thought"
 msgstr "Глыбокія развагі"
-
-msgid "Default: auto"
-msgstr "Па змаўчанні: аўта"
 
 msgid "Delete"
 msgstr "Выдаліць"
@@ -494,18 +500,18 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
 "Увядзіце назву галінкі або тэга, каб абнавіць плагін з зыходнага рэпазіторыя.\n"
 "\n"
-"<b>Github URL:</b>  %1\n"
+"<b>URL GitHub:</b>  %1\n"
 "<b>Зыходны рэпазіторый:</b>  %2\n"
 "\n"
-"Па змаўчанні: \"main\" (апошняя галінка распрацоўкі)\n"
-"Прыклады: \"main\", \"v1.12\", \"v1.11\"\n"
+"Па змаўчанні: \"main\" (эксперыментальны код)\n"
+"Гэты код можа быць нестабільным, а пераклады могуць быць няпоўнымі; ён падтрымліваецца толькі па меры магчымасці. Каб абнавіцца да стабільнага выпуску, увядзіце замест гэтага тэг (напрыклад, \"v1.12\").\n"
 "\n"
 "<b>Файл configuration.lua будзе захаваны.</b>"
 
@@ -567,6 +573,9 @@ msgstr "Падрабязней глядзіце на wiki-старонцы 'Conf
 
 msgid "Fun Analogy"
 msgstr "Цікавая аналогія"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API. Павінен уключаць сегмент /models, напр. …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Агульная размова"
@@ -688,14 +697,14 @@ msgstr "Рухавік Markdown"
 msgid "Meaning"
 msgstr "Значэнне"
 
-msgid "Model"
-msgstr "Мадэль"
-
 msgid "Model Built-In"
 msgstr "Убудаваны ў мадэль"
 
 msgid "Model reset: %1"
 msgstr "Мадэль скінута: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Мадэль — націсніце «Агляд мадэляў», каб выбраць даступную мадэль"
 
 msgid "Model: %1"
 msgstr "Мадэль: %1"
@@ -706,8 +715,8 @@ msgstr "Мадэлі: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Мадэлі: %1 (адфільтравана)"
 
-msgid "Multiple notebooks"
-msgstr "Некалькі сшыткаў"
+msgid "Multiple Notebooks"
+msgstr "Некалькі нататнікаў"
 
 msgid "Narrative element in focus:"
 msgstr "Апавядальны элемент у цэнтры ўвагі:"
@@ -729,6 +738,9 @@ msgstr "Няма даступных мадэляў."
 
 msgid "No models matching \"%1\"."
 msgstr "Няма мадэляў, якія адпавядаюць \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "Папка нататнікаў не зададзена."
 
 msgid "No notebooks yet"
 msgstr "Яшчэ няма сшыткаў"
@@ -802,11 +814,18 @@ msgstr "Сшытак: %1"
 msgid "Notebooks"
 msgstr "Сшыткі"
 
-msgid "Notebooks folder"
-msgstr "Тэчка сшыткаў"
+msgid "Notebooks Folder"
+msgstr "Папка нататнікаў"
 
-msgid "Notebooks folder: %1"
-msgstr "Тэчка сшыткаў: %1"
+msgid "Notebooks Folder: %1"
+msgstr "Папка нататнікаў: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Шлях да папкі нататнікаў:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "Шлях да сшыткаў не з'яўляецца каталогам: %1"
@@ -830,8 +849,17 @@ msgstr "OTA-абнаўленне адменена."
 msgid "OTA update failed: %1"
 msgstr "OTA-абнаўленне не атрымалася: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Выкарыстоўваецца толькі запытамі, якія дазваляюць кантэкст кнігі (па змаўчанні: Тлумачэнне, Гістарычны кантэкст, Рэзюмэ, Ключавыя моманты і ELI5). Калі ўключана, тэкст вылучанай старонкі і суседніх старонак адпраўляецца ШІ як даведачны кантэкст. Патрабуе вылучэння тэксту і павялічвае выкарыстанне токенаў."
+
 msgid "Open conflict or mystery:"
 msgstr "Адкрыты канфлікт ці загадка:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — Уключыць убудаваны вэб-пошук"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "OpenAI-сумяшчальны канчатковы пункт chat/completions, напр. https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Адкрытыя пытанні:"
@@ -841,6 +869,9 @@ msgstr "Старонка"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Часціны мовы і часы"
+
+msgid "Pick one via Browse Models"
+msgstr "Выберыце адзін праз Прагляд мадэляў"
 
 msgid "Platform"
 msgstr "Платформа"
@@ -854,6 +885,9 @@ msgstr "Кароткі змест"
 msgid "Plugin is not configured."
 msgstr "Плагін не настроены."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Дадае метаданыя кнігі (назва, аўтар і бягучая пазіцыя чытання, уключаючы раздзел) да запытаў, якія далучаюцца да кантэксту кнігі (па змаўчанні: Explain, Historical Context, Summarize, Key Points і ELI5). Паводзіны для кожнага запыту можна змяніць з дапамогай use_book_context у канфігурацыйным файле."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Пераважны эмацыйны стан/тон:"
 
@@ -863,8 +897,8 @@ msgstr "Бягучая мэта галоўнага героя:"
 msgid "Provider API"
 msgstr "API правайдэра"
 
-msgid "Provider Name"
-msgstr "Назва правайдара"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Назва правайдэра — паказваецца ў меню; пакіньце пустым, каб выкарыстоўваць назву пратаколу API (напрыклад, \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Дадзеныя правайдэра не ініцыялізаваны."
@@ -902,20 +936,6 @@ msgstr "Ачысціць"
 msgid "Purge Settings"
 msgstr "Ачысціць налады"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Ачысціць налады assistant.koplugin?\n"
-"\n"
-"Гэта верне плагін да заводскіх наладаў. Будуць выдалены толькі налады; \n"
-"Файл configuration.lua будзе захаваны."
-
-msgid "Purge the settings"
-msgstr "Ачысціць налады"
-
 msgid "Querying AI ..."
 msgstr "Запыт да ШІ ..."
 
@@ -950,11 +970,30 @@ msgstr "Запыт адменены карыстальнікам."
 msgid "Reset"
 msgstr "Скінуць"
 
+msgid "Reset Assistant Settings"
+msgstr "Скінуць налады асістэнта"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Скінуць усе налады assistant.koplugin?\n"
+"\n"
+"Гэта верне плагін да заводскіх налад па змаўчанні. Пастаўшчыкі, API-ключы і\n"
+"уліковыя даныя пошукавага інструмента, дададзеныя праз інтэрфейс налад, будуць выдалены.\n"
+"Файл configuration.lua будзе захаваны."
+
 msgid "Response"
 msgstr "Адказ"
 
 msgid "Response Settings"
 msgstr "Налады адказу"
+
+msgid "Response Text Font Size"
+msgstr "Памер шрыфта тэксту адказу"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1085,11 +1124,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Тэрміны і паняцці"
 
+msgid "Text Size: %1"
+msgstr "Памер тэксту: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "Тэкст скапіраваны ў буфер абмену"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Апрацоўшчык для %1 не знойдзены. Калі ласка, пераканайцеся, што апрацоўшчык існуе ў каталогу api_handlers."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "Нататнік — гэта ваш журнал размоў: адказы AI і хуткія нататкі дадаюцца да яго. Вы можаце стварыць некалькі нататнікаў для арганізацыі вашых журналаў."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Гэтая кнопка стварае хуткую нататку з вылучаным тэкстам."
@@ -1209,11 +1254,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Выкарыстоўваць AI-памочніка для «Перакладу»"
 
-msgid "Use book text as context"
+msgid "Use Book Text as Context"
 msgstr "Выкарыстоўваць тэкст кнігі як кантэкст"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Выкарыстоўваць тэкст кнігі для x-ray і recap"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Выкарыстоўваць тэкст кнігі для X-Ray і Recap"
+
+msgid "Use web search 🌐"
+msgstr "Выкарыстоўваць вэб-пошук 🌐"
 
 msgid "User:"
 msgstr "Карыстальнік:"
@@ -1237,6 +1285,9 @@ msgstr "WebSearch API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Што гэта"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Калі ўключана, функцыі Recap і X-Ray аўтаматычна ўключаюць тэкст кнігі да бягучай пазіцыі чытання ў якасці кантэксту. Гэта ўплывае толькі на функцыі ўзроўню кнігі, а не на запыты меню выдзялення, і значна павялічвае выкарыстанне токенаў."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

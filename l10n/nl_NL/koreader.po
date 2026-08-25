@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Vraag\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Mogelijk vind je deze onderwerpen interessant:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (Compatibel)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — kies een actie"
@@ -171,12 +168,6 @@ msgstr "AI-antwoordtaal"
 msgid "AI Response Language Setting"
 msgstr "Taalinstelling AI-antwoord"
 
-msgid "AI Response Text Font Size"
-msgstr "Lettergrootte AI-antwoordtekst"
-
-msgid "AI Text Size: %1"
-msgstr "AI-tekstgrootte: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "AI reageert"
 
 msgid "API Key"
 msgstr "API-sleutel"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "API-sleutel — voer uw sleutel in, tik daarna op Modellen bekijken om beschikbare modellen te tonen"
 
 msgid "API key is required for %1."
 msgstr "API-sleutel is vereist voor %1."
@@ -210,6 +204,12 @@ msgstr "%1 toevoegen"
 msgid "Add %1 Provider"
 msgstr "%1-provider toevoegen"
 
+msgid "Add Book Metadata as Context"
+msgstr "Boekmetadata als context toevoegen"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Voeg tekst van nabijgelegen pagina's toe als context"
+
 msgid "Add Note"
 msgstr "Notitie toevoegen"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analyse van je markeringen, notities en notitieboekinhoud uit het boek."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Vragen"
 msgid "Ask Another Question"
 msgstr "Stel nog een vraag"
 
+msgid "Ask a Question"
+msgstr "Stel een vraag"
+
 msgid "Ask a general question"
 msgstr "Stel een algemene vraag"
-
-msgid "Ask a question"
-msgstr "Stel een vraag"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Stel een vraag over de gemarkeerde tekst"
@@ -262,11 +265,11 @@ msgstr "Stel de AI een vraag"
 msgid "Assistant settings are not available."
 msgstr "Assistentinstellingen zijn niet beschikbaar."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "Auto-recap bij het openen van lang ongelezen boeken"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "Automatische recap bij het openen van lang ongelezen boeken"
 
-msgid "Auto-save conversations to notebook"
-msgstr "Gesprekken automatisch opslaan in notitieboek"
+msgid "Auto-save Conversations to Notebook"
+msgstr "Gesprekken automatisch opslaan in notitieblok"
 
 msgid "Base URL"
 msgstr "Basis-URL"
@@ -279,6 +282,9 @@ msgstr "Basis-URL is vereist."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "Basis-URL moet beginnen met http:// of https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "Basis-URL van het API-eindpunt, bijv. https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Boekanalyse"
@@ -339,6 +345,9 @@ msgstr "Antwoord samenstellen ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Configuratie niet gevonden. Stel eerst configuration.lua in."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Configureer de antwoordtaal van de AI LLM. Standaard ingesteld op de KOReader-interface-taal."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Geconfigureerde map voor notitieboeken is niet toegankelijk: %1"
 
@@ -349,6 +358,9 @@ msgstr "Vervoeging"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Contextbeperkingen"
+
+msgid "Context Settings"
+msgstr "Contextinstellingen"
 
 msgid "Contextual Connections"
 msgstr "Contextuele verbanden"
@@ -368,8 +380,8 @@ msgstr "Gesprek is opgeslagen in notitieboek"
 msgid "Copy"
 msgstr "Kopiëren"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Ingevoerde vraag naar het klembord kopiëren"
+msgid "Copy to Clipboard"
+msgstr "Kopiëren naar klembord"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Maak een notitieboek aan."
 msgid "Cultural Significance"
 msgstr "Culturele betekenis"
 
-msgid "Custom"
-msgstr "Eigen"
-
 msgid "Custom Prompt"
 msgstr "Aangepaste prompt"
 
@@ -430,9 +439,6 @@ msgstr "Aangepaste prompts"
 
 msgid "Deeply Thought"
 msgstr "Diep nagedacht"
-
-msgid "Default: auto"
-msgstr "Standaard: auto"
 
 msgid "Delete"
 msgstr "Verwijderen"
@@ -494,20 +500,20 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Voer een branch- of tagnaam in om de plugin bij te werken vanuit de bronrepository.\n"
+"Voer een tak- of tagnaam in om de plugin bij te werken vanuit de bronrepository.\n"
 "\n"
 "<b>Github-URL:</b>  %1\n"
-"<b>Bronrepo:</b>  %2\n"
+"<b>Bronrepository:</b>  %2\n"
 "\n"
-"Standaard: \"main\" (nieuwste ontwikkelbranch)\n"
-"Voorbeelden: \"main\", \"v1.12\", \"v1.11\"\n"
+"Standaard: \"main\" (bleeding-edge ontwikkelcode)\n"
+"Deze code kan onstabiel zijn en vertalingen kunnen onvolledig zijn; deze wordt alleen ondersteund op basis van best-effort. Om bij te werken naar een stabiele release, voer je in plaats daarvan een tag in (bijv. \"v1.12\").\n"
 "\n"
-"<b>Het configuration.lua-bestand blijft behouden.</b>"
+"<b>De configuration.lua wordt behouden.</b>"
 
 msgid "Enter a question before proceeding."
 msgstr "Voer een vraag in voordat je doorgaat."
@@ -567,6 +573,9 @@ msgstr "Voor details, bezoek de 'Configuration'-wikipagina op GitHub."
 
 msgid "Fun Analogy"
 msgstr "Leuke analogie"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API. moet het /models segment bevatten, bijv. …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Algemeen gesprek"
@@ -687,14 +696,14 @@ msgstr "Markdown-engine"
 msgid "Meaning"
 msgstr "Betekenis"
 
-msgid "Model"
-msgstr "Model"
-
 msgid "Model Built-In"
 msgstr "Ingebouwd model"
 
 msgid "Model reset: %1"
 msgstr "Model gereset: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Model — tik op Modellen bekijken om een beschikbaar model te kiezen"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -705,7 +714,7 @@ msgstr "Modellen: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Modellen: %1 (gefilterd)"
 
-msgid "Multiple notebooks"
+msgid "Multiple Notebooks"
 msgstr "Meerdere notitieboeken"
 
 msgid "Narrative element in focus:"
@@ -728,6 +737,9 @@ msgstr "Geen modellen beschikbaar."
 
 msgid "No models matching \"%1\"."
 msgstr "Geen modellen gevonden die overeenkomen met \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "Er is geen map voor notitieboeken ingesteld."
 
 msgid "No notebooks yet"
 msgstr "Nog geen notitieboeken"
@@ -801,11 +813,18 @@ msgstr "Notitieboek: %1"
 msgid "Notebooks"
 msgstr "Notitieboeken"
 
-msgid "Notebooks folder"
-msgstr "Map voor notitieboeken"
+msgid "Notebooks Folder"
+msgstr "Notebookmap"
 
-msgid "Notebooks folder: %1"
-msgstr "Map voor notitieboeken: %1"
+msgid "Notebooks Folder: %1"
+msgstr "Notebookmap: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Pad van notebookmap:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "Pad voor notitieboeken is geen map: %1"
@@ -829,8 +848,17 @@ msgstr "OTA-update geannuleerd."
 msgid "OTA update failed: %1"
 msgstr "OTA-update mislukt: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Wordt alleen gebruikt door prompts die zich aanmelden voor boekcontext (standaard: Uitleggen, Historische context, Samenvatten, Kernpunten en ELI5). Wanneer ingeschakeld, wordt de tekst van de gemarkeerde pagina en de aangrenzende pagina's als achtergrondreferentie naar de AI gestuurd. Vereist een tekstselectie en verhoogt het tokenverbruik."
+
 msgid "Open conflict or mystery:"
 msgstr "Open conflict of mysterie:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — Ingebouwde webzoekopdracht inschakelen"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "OpenAI-compatibel chat/completions-eindpunt, bijv. https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Openstaande vragen:"
@@ -840,6 +868,9 @@ msgstr "Pagina"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Woordsoorten en tijden"
+
+msgid "Pick one via Browse Models"
+msgstr "Kies er een via Bladeren door modellen"
 
 msgid "Platform"
 msgstr "Platform"
@@ -853,6 +884,9 @@ msgstr "Samenvatting van het plot"
 msgid "Plugin is not configured."
 msgstr "Plugin is niet geconfigureerd."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Voegt boekmetadata (titel, auteur en huidige leespositie inclusief hoofdstuk) toe aan prompts die gebruikmaken van boekcontext (standaard: Uitleggen, Historische context, Samenvatten, Kernpunten en ELI5). Het gedrag per prompt kan worden overschreven met use_book_context in het configuratiebestand."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Heersende emotionele toestand/toon:"
 
@@ -862,8 +896,8 @@ msgstr "Huidige doel van de protagonist:"
 msgid "Provider API"
 msgstr "Provider-API"
 
-msgid "Provider Name"
-msgstr "Providernaam"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Providernaam — weergegeven in menu's; laat leeg om de API-protocolnaam te gebruiken (bijv. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Providergegevens niet geïnitialiseerd."
@@ -901,20 +935,6 @@ msgstr "Wissen"
 msgid "Purge Settings"
 msgstr "Instellingen wissen"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Instellingen van assistant.koplugin wissen?\n"
-"\n"
-"Hiermee wordt de plugin teruggezet naar de fabrieksinstellingen. Alleen instellingen worden verwijderd; \n"
-"Het bestand configuration.lua blijft behouden."
-
-msgid "Purge the settings"
-msgstr "Instellingen wissen"
-
 msgid "Querying AI ..."
 msgstr "AI wordt bevraagd ..."
 
@@ -949,11 +969,30 @@ msgstr "Verzoek geannuleerd door gebruiker."
 msgid "Reset"
 msgstr "Reset"
 
+msgid "Reset Assistant Settings"
+msgstr "Assistent-instellingen resetten"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Alle instellingen van assistant.koplugin resetten?\n"
+"\n"
+"Dit herstelt de plugin naar de fabrieksinstellingen. Providers, API-sleutels en\n"
+"referenties voor zoekhulpmiddelen die via de instellingen-interface zijn toegevoegd, worden verwijderd.\n"
+"Het bestand configuration.lua blijft behouden."
+
 msgid "Response"
 msgstr "Antwoord"
 
 msgid "Response Settings"
 msgstr "Antwoordinstellingen"
+
+msgid "Response Text Font Size"
+msgstr "Lettergrootte van antwoordtekst"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1084,11 +1123,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Termen en concepten"
 
+msgid "Text Size: %1"
+msgstr "Lettergrootte: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "Tekst naar het klembord gekopieerd"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "De handler voor %1 is niet gevonden. Zorg ervoor dat de handler in de map api_handlers bestaat."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "Het notitieblok is uw gesprekslogboek: AI-antwoorden en snelle notities worden eraan toegevoegd. U kunt meerdere notitieblokken maken om uw logboeken te organiseren."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Deze knop maakt een snelle notitie met de gemarkeerde tekst."
@@ -1208,11 +1253,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "AI-assistent gebruiken voor 'Vertalen'"
 
-msgid "Use book text as context"
+msgid "Use Book Text as Context"
 msgstr "Boektekst als context gebruiken"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Boektekst gebruiken voor x-ray en recap"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Boektekst gebruiken voor X-Ray en Recap"
+
+msgid "Use web search 🌐"
+msgstr "Gebruik web zoeken 🌐"
 
 msgid "User:"
 msgstr "Gebruiker:"
@@ -1236,6 +1284,9 @@ msgstr "WebSearch-API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Wat het is"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Wanneer ingeschakeld, nemen de functies Recap en X-Ray automatisch de boektekst tot uw huidige leespositie op als context. Dit heeft alleen invloed op functies op boekniveau, niet op de prompts in het markeermenu, en verhoogt het tokenverbruik aanzienlijk."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Spørsmål\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Kanskje du finner disse emnene interessante:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (kompatibel)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — velg en handling"
@@ -171,12 +168,6 @@ msgstr "AI-svarspråk"
 msgid "AI Response Language Setting"
 msgstr "Innstilling for AI-svarspråk"
 
-msgid "AI Response Text Font Size"
-msgstr "Skriftstørrelse for AI-svar"
-
-msgid "AI Text Size: %1"
-msgstr "AI-tekststørrelse: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "AI svarer"
 
 msgid "API Key"
 msgstr "API-nøkkel"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "API-nøkkel — skriv inn nøkkelen din, trykk deretter Bla gjennom modeller for å liste tilgjengelige modeller"
 
 msgid "API key is required for %1."
 msgstr "API-nøkkel er påkrevd for %1."
@@ -210,6 +204,12 @@ msgstr "Legg til %1"
 msgid "Add %1 Provider"
 msgstr "Legg til %1-leverandør"
 
+msgid "Add Book Metadata as Context"
+msgstr "Legg til bokmetadata som kontekst"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Legg til tekst fra nærliggende sider som kontekst"
+
 msgid "Add Note"
 msgstr "Legg til notat"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analyse av markeringene dine, notatene og notatbokinnholdet fra boken."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Spør"
 msgid "Ask Another Question"
 msgstr "Still et nytt spørsmål"
 
+msgid "Ask a Question"
+msgstr "Still et spørsmål"
+
 msgid "Ask a general question"
 msgstr "Still et generelt spørsmål"
-
-msgid "Ask a question"
-msgstr "Still et spørsmål"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Still et spørsmål om den markerte teksten"
@@ -262,10 +265,10 @@ msgstr "Still et spørsmål til AI-en"
 msgid "Assistant settings are not available."
 msgstr "Assistentinnstillingene er ikke tilgjengelige."
 
-msgid "Auto-recap on opening long-unread books"
+msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Auto-oppsummering ved åpning av lenge uleste bøker"
 
-msgid "Auto-save conversations to notebook"
+msgid "Auto-save Conversations to Notebook"
 msgstr "Lagre samtaler automatisk til notatbok"
 
 msgid "Base URL"
@@ -279,6 +282,9 @@ msgstr "Grunn-URL er påkrevd."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "Grunn-URL må starte med http:// eller https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "Grunn-URL for API-endepunktet, f.eks. https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Bokanalyse"
@@ -339,6 +345,9 @@ msgstr "Formulerer svar ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigurasjonen ble ikke funnet. Vennligst sett opp configuration.lua først."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Konfigurer svarsspråket til AI LLM. Som standard brukes KOReaders grensesnittspråk."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Den konfigurerte notatbokmappen er ikke tilgjengelig: %1"
 
@@ -349,6 +358,9 @@ msgstr "Bøyning"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Kontekstbegrensninger"
+
+msgid "Context Settings"
+msgstr "Kontekstinnstillinger"
 
 msgid "Contextual Connections"
 msgstr "Kontekstuelle sammenhenger"
@@ -368,8 +380,8 @@ msgstr "Samtalen er lagret til notatboken"
 msgid "Copy"
 msgstr "Kopier"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Kopier angitt spørsmål til utklippstavlen"
+msgid "Copy to Clipboard"
+msgstr "Kopier til utklippstavle"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Opprett en notatbok."
 msgid "Cultural Significance"
 msgstr "Kulturell betydning"
 
-msgid "Custom"
-msgstr "Egendefinert"
-
 msgid "Custom Prompt"
 msgstr "Egendefinert prompt"
 
@@ -430,9 +439,6 @@ msgstr "Egendefinerte prompter"
 
 msgid "Deeply Thought"
 msgstr "Dyp tenkning"
-
-msgid "Default: auto"
-msgstr "Standard: auto"
 
 msgid "Delete"
 msgstr "Slett"
@@ -494,18 +500,18 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Skriv inn et gren- eller tag-navn for å oppdatere programtillegget fra kilde-repoet.\n"
+"Skriv inn et gren- eller tag-navn for å oppdatere programtillegget fra kildelageret.\n"
 "\n"
-"<b>Github URL:</b>  %1\n"
-"<b>Kilde-repo:</b>  %2\n"
+"<b>GitHub-URL:</b>  %1\n"
+"<b>Kildelager:</b>  %2\n"
 "\n"
-"Standard: \"main\" (siste utviklingsgren)\n"
-"Eksempler: \"main\", \"v1.12\", \"v1.11\"\n"
+"Standard: \"main\" (bleeding-edge utviklingskode)\n"
+"Denne koden kan være ustabil og oversettelser kan være ufullstendige; den støttes kun på best-effort-basis. For å oppdatere til en stabil utgivelse, skriv inn en tag i stedet (f.eks. \"v1.12\").\n"
 "\n"
 "<b>configuration.lua vil bli bevart.</b>"
 
@@ -567,6 +573,9 @@ msgstr "For detaljer, besøk «Configuration»-wikisiden på GitHub."
 
 msgid "Fun Analogy"
 msgstr "Morsom analogi"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API. må inkludere /models-segmentet, f.eks. …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Generell samtale"
@@ -687,14 +696,14 @@ msgstr "Markdown-motor"
 msgid "Meaning"
 msgstr "Betydning"
 
-msgid "Model"
-msgstr "Modell"
-
 msgid "Model Built-In"
 msgstr "Modellens innebygde"
 
 msgid "Model reset: %1"
 msgstr "Modell tilbakestilt: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Modell — trykk Bla gjennom modeller for å velge en tilgjengelig modell"
 
 msgid "Model: %1"
 msgstr "Modell: %1"
@@ -705,7 +714,7 @@ msgstr "Modeller: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Modeller: %1 (filtrert)"
 
-msgid "Multiple notebooks"
+msgid "Multiple Notebooks"
 msgstr "Flere notatbøker"
 
 msgid "Narrative element in focus:"
@@ -728,6 +737,9 @@ msgstr "Ingen modeller tilgjengelige."
 
 msgid "No models matching \"%1\"."
 msgstr "Ingen modeller samsvarer med \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "Ingen mappe for notatbøker er angitt."
 
 msgid "No notebooks yet"
 msgstr "Ingen notatbøker ennå"
@@ -801,11 +813,18 @@ msgstr "Notatbok: %1"
 msgid "Notebooks"
 msgstr "Notatbøker"
 
-msgid "Notebooks folder"
-msgstr "Notatbokmappe"
+msgid "Notebooks Folder"
+msgstr "Mappe for notatbøker"
 
-msgid "Notebooks folder: %1"
-msgstr "Notatbokmappe: %1"
+msgid "Notebooks Folder: %1"
+msgstr "Mappe for notatbøker: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Bane for notatbøker-mappen:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "Banen for notatbøker er ikke en mappe: %1"
@@ -829,8 +848,17 @@ msgstr "OTA-oppdateringen ble avbrutt."
 msgid "OTA update failed: %1"
 msgstr "OTA-oppdateringen feilet: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Brukes kun av ledetekster som velger å inkludere bokkontekst (som standard: Forklar, Historisk kontekst, Oppsummer, Nøkkelpunkter og ELI5). Når aktivert, sendes teksten fra den uthevede siden og tilstøtende sider til AI-en som bakgrunnsreferanse. Krever et tekstutvalg og øker token-forbruket."
+
 msgid "Open conflict or mystery:"
 msgstr "Åpen konflikt eller mysterium:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — Inkluder innebygd nettsøk"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "OpenAI-kompatibelt chat/completions-endepunkt, f.eks. https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Ubesvarte spørsmål:"
@@ -840,6 +868,9 @@ msgstr "Side"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Ordklasser og tider"
+
+msgid "Pick one via Browse Models"
+msgstr "Velg én via Bla gjennom modeller"
 
 msgid "Platform"
 msgstr "Plattform"
@@ -853,6 +884,9 @@ msgstr "Handlingssammendrag"
 msgid "Plugin is not configured."
 msgstr "Programtillegget er ikke konfigurert."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Legger til bokmetadata (tittel, forfatter og gjeldende leseposisjon inkl. kapittel) foran ledetekster som velger å inkludere bokkontekst (som standard: Forklar, Historisk kontekst, Oppsummer, Nøkkelpunkter og ELI5). Oppførselen per ledetekst kan overstyres med use_book_context i konfigurasjonsfilen."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Dominerende følelsesmessig tilstand/tone:"
 
@@ -862,8 +896,8 @@ msgstr "Protagonistens nåværende mål:"
 msgid "Provider API"
 msgstr "Leverandør-API"
 
-msgid "Provider Name"
-msgstr "Leverandørnavn"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Leverandørnavn — vises i menyer; la stå tomt for å bruke API-protokollnavnet (f.eks. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Leverandørdata er ikke initialisert."
@@ -901,20 +935,6 @@ msgstr "Tøm"
 msgid "Purge Settings"
 msgstr "Tøm innstillinger"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Tømme innstillingene for assistant.koplugin?\n"
-"\n"
-"Dette gjenoppretter programtillegget til standardinnstillingene. Bare innstillinger vil bli fjernet; \n"
-"Filen configuration.lua vil bli bevart."
-
-msgid "Purge the settings"
-msgstr "Tøm innstillingene"
-
 msgid "Querying AI ..."
 msgstr "Spør AI ..."
 
@@ -949,11 +969,29 @@ msgstr "Forespørselen ble avbrutt av brukeren."
 msgid "Reset"
 msgstr "Tilbakestill"
 
+msgid "Reset Assistant Settings"
+msgstr "Tilbakestill assistentinnstillinger"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Tilbakestille alle assistant.koplugin-innstillinger?\n"
+"\n"
+"Dette gjenoppretter pluginen til standardinnstillingene. Leverandører, API-nøkler og legitimasjon for søkeverktøy som er lagt til via innstillingsgrensesnittet, vil bli fjernet.\n"
+"Filen configuration.lua vil bli bevart."
+
 msgid "Response"
 msgstr "Svar"
 
 msgid "Response Settings"
 msgstr "Svarinnstillinger"
+
+msgid "Response Text Font Size"
+msgstr "Skriftstørrelse for svartekst"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1084,11 +1122,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Begreper og konsepter"
 
+msgid "Text Size: %1"
+msgstr "Skriftstørrelse: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "Teksten ble kopiert til utklippstavlen"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Fant ikke behandleren for %1. Kontroller at behandleren finnes i api_handlers-katalogen."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "Notatboken er samtaleloggen din: AI-svar og raske notater legges til den. Du kan opprette flere notatbøker for å organisere loggene dine."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Denne knappen oppretter et hurtignotat med markert tekst."
@@ -1208,11 +1252,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Bruk AI-assistenten for 'Oversett'"
 
-msgid "Use book text as context"
+msgid "Use Book Text as Context"
 msgstr "Bruk boktekst som kontekst"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Bruk boktekst til X-Ray og oppsummering"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Bruk boktekst for X-Ray og Recap"
+
+msgid "Use web search 🌐"
+msgstr "Bruk nettsøk 🌐"
 
 msgid "User:"
 msgstr "Bruker:"
@@ -1236,6 +1283,9 @@ msgstr "WebSearch API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Hva det er"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Når aktivert, inkluderer Recap- og X-Ray-funksjonene automatisk bokteksten frem til gjeldende leseposisjon som kontekst. Dette påvirker kun funksjoner på boknivå, ikke ledetekster i uthevingsmenyen, og øker token-forbruket betydelig."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

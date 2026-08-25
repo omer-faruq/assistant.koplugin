@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ 질문\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### 다음 주제가 흥미로울 수 있습니다:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (호환 가능)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — 작업 선택"
@@ -171,12 +168,6 @@ msgstr "AI 응답 언어"
 msgid "AI Response Language Setting"
 msgstr "AI 응답 언어 설정"
 
-msgid "AI Response Text Font Size"
-msgstr "AI 응답 텍스트 글꼴 크기"
-
-msgid "AI Text Size: %1"
-msgstr "AI 텍스트 크기: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "AI가 응답 중입니다"
 
 msgid "API Key"
 msgstr "API 키"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "API 키 — 키를 입력한 다음 모델 찾아보기를 탭하여 사용 가능한 모델을 확인하세요."
 
 msgid "API key is required for %1."
 msgstr "%1에 API 키가 필요합니다."
@@ -210,6 +204,12 @@ msgstr "%1 추가"
 msgid "Add %1 Provider"
 msgstr "%1 제공자 추가"
 
+msgid "Add Book Metadata as Context"
+msgstr "책 메타데이터를 컨텍스트로 추가"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "주변 페이지 텍스트를 컨텍스트로 추가"
+
 msgid "Add Note"
 msgstr "메모 추가"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "책에서의 하이라이트, 메모, 노트북 내용 분석."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "질문하기"
 msgid "Ask Another Question"
 msgstr "다른 질문하기"
 
+msgid "Ask a Question"
+msgstr "질문하기"
+
 msgid "Ask a general question"
 msgstr "일반 질문하기"
-
-msgid "Ask a question"
-msgstr "질문하기"
 
 msgid "Ask a question about the highlighted text"
 msgstr "하이라이트된 텍스트에 대해 질문하기"
@@ -262,10 +265,10 @@ msgstr "AI에게 질문하기"
 msgid "Assistant settings are not available."
 msgstr "어시스턴트 설정을 사용할 수 없습니다."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "오랫동안 읽지 않은 책을 열 때 자동 Recap"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "오래 읽지 않은 책을 열 때 자동 요약"
 
-msgid "Auto-save conversations to notebook"
+msgid "Auto-save Conversations to Notebook"
 msgstr "대화를 노트북에 자동 저장"
 
 msgid "Base URL"
@@ -279,6 +282,9 @@ msgstr "기본 URL은 필수입니다."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "기본 URL은 http:// 또는 https://로 시작해야 합니다."
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "API 엔드포인트의 기본 URL(예: https://example.com/v1)"
 
 msgid "Book Analysis"
 msgstr "책 분석"
@@ -339,6 +345,9 @@ msgstr "답변 작성 중 ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "구성 파일을 찾을 수 없습니다. 먼저 configuration.lua를 설정하세요."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "AI LLM의 응답 언어를 설정합니다. 기본값은 KOReader 인터페이스 언어입니다."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "설정된 노트북 폴더에 접근할 수 없습니다: %1"
 
@@ -349,6 +358,9 @@ msgstr "활용"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "맥락의 한계"
+
+msgid "Context Settings"
+msgstr "컨텍스트 설정"
 
 msgid "Contextual Connections"
 msgstr "맥락적 연관성"
@@ -368,8 +380,8 @@ msgstr "대화가 노트북에 저장되었습니다."
 msgid "Copy"
 msgstr "복사"
 
-msgid "Copy entered question to the clipboard"
-msgstr "입력한 질문을 클립보드에 복사"
+msgid "Copy to Clipboard"
+msgstr "클립보드에 복사"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "노트북을 만듭니다."
 msgid "Cultural Significance"
 msgstr "문화적 중요성"
 
-msgid "Custom"
-msgstr "사용자 지정"
-
 msgid "Custom Prompt"
 msgstr "사용자 지정 프롬프트"
 
@@ -430,9 +439,6 @@ msgstr "사용자 정의 프롬프트"
 
 msgid "Deeply Thought"
 msgstr "심층 사고"
-
-msgid "Default: auto"
-msgstr "기본값: 자동"
 
 msgid "Delete"
 msgstr "삭제"
@@ -494,18 +500,18 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
 "소스 저장소에서 플러그인을 업데이트할 브랜치 또는 태그 이름을 입력하세요.\n"
 "\n"
-"<b>Github URL:</b>  %1\n"
+"<b>GitHub URL:</b>  %1\n"
 "<b>소스 저장소:</b>  %2\n"
 "\n"
-"기본값: \"main\" (최신 개발 브랜치)\n"
-"예: \"main\", \"v1.12\", \"v1.11\"\n"
+"기본값: \"main\" (최신 개발 코드)\n"
+"이 코드는 불안정할 수 있으며 번역이 불완전할 수 있습니다. 가능한 한 최선을 다해 지원됩니다. 안정적인 릴리스로 업데이트하려면 대신 태그(예: \"v1.12\")를 입력하세요.\n"
 "\n"
 "<b>configuration.lua는 보존됩니다.</b>"
 
@@ -567,6 +573,9 @@ msgstr "자세한 내용은 GitHub의 'Configuration' 위키 페이지를 방문
 
 msgid "Fun Analogy"
 msgstr "재미있는 비유"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API. /models 세그먼트를 포함해야 합니다(예: …/v1beta/models)."
 
 msgid "General Conversation"
 msgstr "일반 대화"
@@ -686,14 +695,14 @@ msgstr "마크다운 엔진"
 msgid "Meaning"
 msgstr "의미"
 
-msgid "Model"
-msgstr "모델"
-
 msgid "Model Built-In"
 msgstr "모델 내장"
 
 msgid "Model reset: %1"
 msgstr "모델 초기화: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "모델 — 사용 가능한 모델을 선택하려면 모델 찾아보기를 탭하세요."
 
 msgid "Model: %1"
 msgstr "모델: %1"
@@ -704,8 +713,8 @@ msgstr "모델: %1"
 msgid "Models: %1 (filtered)"
 msgstr "모델: %1 (필터링됨)"
 
-msgid "Multiple notebooks"
-msgstr "여러 노트북"
+msgid "Multiple Notebooks"
+msgstr "여러 노트"
 
 msgid "Narrative element in focus:"
 msgstr "초점이 맞춰진 서사 요소:"
@@ -727,6 +736,9 @@ msgstr "사용 가능한 모델이 없습니다."
 
 msgid "No models matching \"%1\"."
 msgstr "\"%1\"에 해당하는 모델이 없습니다."
+
+msgid "No notebooks folder is set."
+msgstr "노트 폴더가 설정되지 않았습니다."
 
 msgid "No notebooks yet"
 msgstr "아직 노트북이 없습니다"
@@ -800,11 +812,18 @@ msgstr "노트북: %1"
 msgid "Notebooks"
 msgstr "노트북"
 
-msgid "Notebooks folder"
-msgstr "노트북 폴더"
+msgid "Notebooks Folder"
+msgstr "노트 폴더"
 
-msgid "Notebooks folder: %1"
-msgstr "노트북 폴더: %1"
+msgid "Notebooks Folder: %1"
+msgstr "노트 폴더: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"노트 폴더 경로:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "노트북 경로가 디렉터리가 아닙니다: %1"
@@ -828,8 +847,17 @@ msgstr "OTA 업데이트가 취소되었습니다."
 msgid "OTA update failed: %1"
 msgstr "OTA 업데이트 실패: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "책 컨텍스트를 선택한 프롬프트에서만 사용됩니다(기본값: 설명, 역사적 배경, 요약, 핵심 요점, ELI5). 활성화하면 강조 표시된 페이지와 인접한 페이지의 텍스트가 배경 참조로 AI에 전송됩니다. 텍스트 선택이 필요하며 토큰 사용량이 증가합니다."
+
 msgid "Open conflict or mystery:"
 msgstr "해결되지 않은 갈등 또는 미스터리:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — 기본 제공 웹 검색 포함"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "OpenAI 호환 chat/completions 엔드포인트(예: https://api.openai.com/v1)"
 
 msgid "Outstanding questions:"
 msgstr "남아 있는 질문:"
@@ -839,6 +867,9 @@ msgstr "페이지"
 
 msgid "Parts of Speech & Tenses"
 msgstr "품사와 시제"
+
+msgid "Pick one via Browse Models"
+msgstr "모델 찾아보기로 선택하세요"
 
 msgid "Platform"
 msgstr "플랫폼"
@@ -852,6 +883,9 @@ msgstr "줄거리 요약"
 msgid "Plugin is not configured."
 msgstr "플러그인이 구성되지 않았습니다."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "책 컨텍스트를 선택한 프롬프트 앞에 책 메타데이터(제목, 저자 및 현재 읽기 위치(장 포함))를 추가합니다(기본값: 설명, 역사적 배경, 요약, 핵심 요점, ELI5). 프롬프트별 동작은 구성 파일의 use_book_context로 재정의할 수 있습니다."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "지배적인 감정 상태/분위기:"
 
@@ -861,8 +895,8 @@ msgstr "주인공의 현재 목표:"
 msgid "Provider API"
 msgstr "공급자 API"
 
-msgid "Provider Name"
-msgstr "제공자 이름"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "프로바이더 이름 — 메뉴에 표시됩니다. 비워 두면 API 프로토콜 이름(예: \"openai\")을 사용합니다"
 
 msgid "Provider data not initialized."
 msgstr "공급자 데이터가 초기화되지 않았습니다."
@@ -900,20 +934,6 @@ msgstr "초기화"
 msgid "Purge Settings"
 msgstr "설정 초기화"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"assistant.koplugin 설정을 초기화하시겠습니까?\n"
-"\n"
-"이 작업은 플러그인을 기본값으로 복원합니다. 설정만 제거되며, \n"
-"configuration.lua 파일은 보존됩니다."
-
-msgid "Purge the settings"
-msgstr "설정 초기화"
-
 msgid "Querying AI ..."
 msgstr "AI에 질문하는 중 ..."
 
@@ -948,11 +968,29 @@ msgstr "사용자가 요청을 취소했습니다."
 msgid "Reset"
 msgstr "초기화"
 
+msgid "Reset Assistant Settings"
+msgstr "어시스턴트 설정 초기화"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"모든 assistant.koplugin 설정을 초기화하시겠습니까?\n"
+"\n"
+"이 작업은 플러그인을 공장 기본값으로 복원합니다. 설정 UI를 통해 추가된 공급자, API 키 및 검색 도구 자격 증명이 제거됩니다.\n"
+"configuration.lua 파일은 보존됩니다."
+
 msgid "Response"
 msgstr "응답"
 
 msgid "Response Settings"
 msgstr "응답 설정"
+
+msgid "Response Text Font Size"
+msgstr "응답 텍스트 글꼴 크기"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1083,11 +1121,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "용어 및 개념"
 
+msgid "Text Size: %1"
+msgstr "글꼴 크기: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "텍스트가 클립보드에 복사되었습니다."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1에 대한 핸들러를 찾을 수 없습니다. api_handlers 디렉터리에 핸들러가 있는지 확인하세요."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "노트북은 대화 로그입니다. AI 답변과 빠른 메모가 여기에 추가됩니다. 여러 노트북을 만들어 로그를 정리할 수 있습니다."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "이 버튼은 강조 표시된 텍스트로 빠른 메모를 만듭니다."
@@ -1207,11 +1251,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "'번역'에 AI 어시스턴트 사용"
 
-msgid "Use book text as context"
+msgid "Use Book Text as Context"
 msgstr "책 텍스트를 컨텍스트로 사용"
 
-msgid "Use book text for x-ray and recap"
-msgstr "x-ray 및 recap에 책 텍스트 사용"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "X-Ray 및 Recap에 책 텍스트 사용"
+
+msgid "Use web search 🌐"
+msgstr "웹 검색 사용 🌐"
 
 msgid "User:"
 msgstr "사용자:"
@@ -1235,6 +1282,9 @@ msgstr "웹 검색 API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "정의"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "활성화하면 Recap 및 X-Ray 기능이 현재 읽기 위치까지의 책 텍스트를 컨텍스트로 자동 포함합니다. 이는 책 수준 기능에만 영향을 미치며 하이라이트 메뉴 프롬프트에는 영향을 미치지 않습니다. 또한 토큰 사용량이 크게 증가합니다."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

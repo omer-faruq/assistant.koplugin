@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Câu hỏi\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Bạn có thể thấy các chủ đề này thú vị:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (Tương thích)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — chọn một hành động"
@@ -171,12 +168,6 @@ msgstr "Ngôn ngữ phản hồi AI"
 msgid "AI Response Language Setting"
 msgstr "Cài đặt ngôn ngữ phản hồi AI"
 
-msgid "AI Response Text Font Size"
-msgstr "Cỡ chữ văn bản phản hồi AI"
-
-msgid "AI Text Size: %1"
-msgstr "Cỡ chữ AI: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "AI đang phản hồi"
 
 msgid "API Key"
 msgstr "Khóa API"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "Khóa API — nhập khóa của bạn, sau đó nhấn Duyệt Mô hình để xem danh sách mô hình khả dụng"
 
 msgid "API key is required for %1."
 msgstr "Cần có khóa API cho %1."
@@ -210,6 +204,12 @@ msgstr "Thêm %1"
 msgid "Add %1 Provider"
 msgstr "Thêm nhà cung cấp %1"
 
+msgid "Add Book Metadata as Context"
+msgstr "Thêm siêu dữ liệu sách làm ngữ cảnh"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Thêm văn bản trang lân cận làm ngữ cảnh"
+
 msgid "Add Note"
 msgstr "Thêm ghi chú"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Phân tích các đoạn đánh dấu, ghi chú và nội dung sổ ghi chú của bạn từ cuốn sách."
+
+msgid "Anthropic Messages API"
+msgstr "API Tin nhắn Anthropic"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Hỏi"
 msgid "Ask Another Question"
 msgstr "Hỏi câu hỏi khác"
 
+msgid "Ask a Question"
+msgstr "Đặt câu hỏi"
+
 msgid "Ask a general question"
 msgstr "Đặt câu hỏi chung"
-
-msgid "Ask a question"
-msgstr "Đặt câu hỏi"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Đặt câu hỏi về văn bản đã đánh dấu"
@@ -262,11 +265,11 @@ msgstr "Đặt câu hỏi cho AI"
 msgid "Assistant settings are not available."
 msgstr "Không có sẵn cài đặt trợ lý."
 
-msgid "Auto-recap on opening long-unread books"
+msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Tự động tóm tắt khi mở sách đã lâu không đọc"
 
-msgid "Auto-save conversations to notebook"
-msgstr "Tự động lưu hội thoại vào sổ ghi chép"
+msgid "Auto-save Conversations to Notebook"
+msgstr "Tự động lưu cuộc hội thoại vào sổ ghi chú"
 
 msgid "Base URL"
 msgstr "URL gốc"
@@ -279,6 +282,9 @@ msgstr "URL gốc là bắt buộc."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "URL gốc phải bắt đầu bằng http:// hoặc https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "URL cơ sở của điểm cuối API, ví dụ: https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Phân tích sách"
@@ -339,6 +345,9 @@ msgstr "Đang soạn câu trả lời ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Không tìm thấy cấu hình. Vui lòng thiết lập configuration.lua trước."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Định cấu hình ngôn ngữ phản hồi của AI LLM. Mặc định là ngôn ngữ giao diện KOReader."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Không thể truy cập thư mục sổ ghi chép đã cấu hình: %1"
 
@@ -349,6 +358,9 @@ msgstr "Chia động từ"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Giới hạn ngữ cảnh"
+
+msgid "Context Settings"
+msgstr "Cài đặt ngữ cảnh"
 
 msgid "Contextual Connections"
 msgstr "Các mối liên hệ ngữ cảnh"
@@ -368,8 +380,8 @@ msgstr "Hội thoại đã được lưu vào sổ ghi chép"
 msgid "Copy"
 msgstr "Sao chép"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Sao chép câu hỏi đã nhập vào bộ nhớ tạm"
+msgid "Copy to Clipboard"
+msgstr "Sao chép vào khay nhớ tạm"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Tạo một sổ ghi chép."
 msgid "Cultural Significance"
 msgstr "Ý nghĩa văn hóa"
 
-msgid "Custom"
-msgstr "Tùy chỉnh"
-
 msgid "Custom Prompt"
 msgstr "Lời nhắc tùy chỉnh"
 
@@ -430,9 +439,6 @@ msgstr "Prompt tùy chỉnh"
 
 msgid "Deeply Thought"
 msgstr "Suy nghĩ sâu sắc"
-
-msgid "Default: auto"
-msgstr "Mặc định: auto"
 
 msgid "Delete"
 msgstr "Xóa"
@@ -494,20 +500,20 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Nhập tên nhánh hoặc thẻ để cập nhật plugin từ kho lưu trữ nguồn.\n"
+"Nhập tên nhánh hoặc tag để cập nhật plugin từ kho mã nguồn.\n"
 "\n"
-"<b>Github URL:</b>  %1\n"
-"<b>Repo nguồn:</b>  %2\n"
+"<b>URL Github:</b>  %1\n"
+"<b>Kho mã nguồn:</b>  %2\n"
 "\n"
-"Mặc định: \"main\" (nhánh phát triển mới nhất)\n"
-"Ví dụ: \"main\", \"v1.12\", \"v1.11\"\n"
+"Mặc định: \"main\" (mã phát triển mới nhất)\n"
+"Mã này có thể không ổn định và bản dịch có thể chưa hoàn chỉnh; nó chỉ được hỗ trợ ở mức tốt nhất có thể. Để cập nhật lên bản phát hành ổn định, hãy nhập tag thay thế (ví dụ: \"v1.12\").\n"
 "\n"
-"<b>Tệp configuration.lua sẽ được giữ nguyên.</b>"
+"<b>Cấu hình configuration.lua sẽ được giữ nguyên.</b>"
 
 msgid "Enter a question before proceeding."
 msgstr "Vui lòng nhập câu hỏi trước khi tiếp tục."
@@ -567,6 +573,9 @@ msgstr "Để biết chi tiết, hãy truy cập trang wiki 'Configuration' trê
 
 msgid "Fun Analogy"
 msgstr "Phép so sánh thú vị"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "API Gemini. phải bao gồm đoạn /models, ví dụ: …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Trò chuyện chung"
@@ -686,14 +695,14 @@ msgstr "Công cụ Markdown"
 msgid "Meaning"
 msgstr "Nghĩa"
 
-msgid "Model"
-msgstr "Mô hình"
-
 msgid "Model Built-In"
 msgstr "Mô hình tích hợp sẵn"
 
 msgid "Model reset: %1"
 msgstr "Đã đặt lại mô hình: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Mô hình — nhấn Duyệt Mô hình để chọn mô hình khả dụng"
 
 msgid "Model: %1"
 msgstr "Mô hình: %1"
@@ -704,7 +713,7 @@ msgstr "Mô hình: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Mô hình: %1 (đã lọc)"
 
-msgid "Multiple notebooks"
+msgid "Multiple Notebooks"
 msgstr "Nhiều sổ ghi chép"
 
 msgid "Narrative element in focus:"
@@ -727,6 +736,9 @@ msgstr "Không có mô hình nào khả dụng."
 
 msgid "No models matching \"%1\"."
 msgstr "Không có mô hình nào khớp với \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "Chưa đặt thư mục sổ ghi chép."
 
 msgid "No notebooks yet"
 msgstr "Chưa có sổ ghi chép nào"
@@ -800,11 +812,18 @@ msgstr "Sổ ghi chép: %1"
 msgid "Notebooks"
 msgstr "Sổ ghi chép"
 
-msgid "Notebooks folder"
+msgid "Notebooks Folder"
 msgstr "Thư mục sổ ghi chép"
 
-msgid "Notebooks folder: %1"
+msgid "Notebooks Folder: %1"
 msgstr "Thư mục sổ ghi chép: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Đường dẫn thư mục sổ ghi chép:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "Đường dẫn sổ ghi chép không phải là thư mục: %1"
@@ -828,8 +847,17 @@ msgstr "Đã hủy cập nhật OTA."
 msgid "OTA update failed: %1"
 msgstr "Cập nhật OTA thất bại: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Chỉ được sử dụng bởi các prompt chọn tham gia ngữ cảnh sách (mặc định: Giải thích, Bối cảnh lịch sử, Tóm tắt, Điểm chính và ELI5). Khi được bật, văn bản của trang được đánh dấu và các trang lân cận được gửi đến AI như tham chiếu nền. Yêu cầu chọn văn bản và tăng mức sử dụng token."
+
 msgid "Open conflict or mystery:"
 msgstr "Xung đột hoặc bí ẩn còn bỏ ngỏ:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "API Phản hồi OpenAI — Bao gồm tìm kiếm web tích hợp"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "Điểm cuối chat/completions tương thích OpenAI, ví dụ: https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Những câu hỏi còn bỏ ngỏ:"
@@ -839,6 +867,9 @@ msgstr "Trang"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Từ loại & Thì"
+
+msgid "Pick one via Browse Models"
+msgstr "Chọn một qua Duyệt Mô hình"
 
 msgid "Platform"
 msgstr "Nền tảng"
@@ -852,6 +883,9 @@ msgstr "Tóm tắt cốt truyện"
 msgid "Plugin is not configured."
 msgstr "Plugin chưa được cấu hình."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Thêm siêu dữ liệu sách (tiêu đề, tác giả và vị trí đọc hiện tại bao gồm cả chương) vào đầu các lời nhắc chọn sử dụng ngữ cảnh sách (mặc định: Explain, Historical Context, Summarize, Key Points và ELI5). Hành vi theo từng lời nhắc có thể được ghi đè bằng use_book_context trong tệp cấu hình."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Trạng thái cảm xúc/giọng điệu bao trùm:"
 
@@ -861,8 +895,8 @@ msgstr "Mục tiêu hiện tại của nhân vật chính:"
 msgid "Provider API"
 msgstr "API nhà cung cấp"
 
-msgid "Provider Name"
-msgstr "Tên nhà cung cấp"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Tên nhà cung cấp — hiển thị trong menu; để trống để sử dụng tên giao thức API (ví dụ: \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Dữ liệu nhà cung cấp chưa được khởi tạo."
@@ -900,20 +934,6 @@ msgstr "Xóa sạch"
 msgid "Purge Settings"
 msgstr "Xóa cài đặt"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Xóa sạch cài đặt của assistant.koplugin?\n"
-"\n"
-"Thao tác này khôi phục plugin về cài đặt mặc định ban đầu. Chỉ cài đặt sẽ bị xóa; \n"
-"Tệp configuration.lua sẽ được giữ nguyên."
-
-msgid "Purge the settings"
-msgstr "Xóa sạch cài đặt"
-
 msgid "Querying AI ..."
 msgstr "Đang truy vấn AI ..."
 
@@ -948,11 +968,29 @@ msgstr "Yêu cầu đã bị người dùng hủy."
 msgid "Reset"
 msgstr "Đặt lại"
 
+msgid "Reset Assistant Settings"
+msgstr "Đặt lại Cài đặt Trợ lý"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Đặt lại tất cả cài đặt của assistant.koplugin?\n"
+"\n"
+"Thao tác này sẽ khôi phục plugin về cài đặt gốc. Các nhà cung cấp, khóa API và thông tin xác thực công cụ tìm kiếm được thêm qua giao diện Cài đặt sẽ bị xóa.\n"
+"Tệp configuration.lua sẽ được giữ nguyên."
+
 msgid "Response"
 msgstr "Phản hồi"
 
 msgid "Response Settings"
 msgstr "Cài đặt phản hồi"
+
+msgid "Response Text Font Size"
+msgstr "Cỡ chữ văn bản phản hồi"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1083,11 +1121,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Thuật ngữ & Khái niệm"
 
+msgid "Text Size: %1"
+msgstr "Cỡ chữ: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "Văn bản đã được sao chép vào bộ nhớ tạm"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Không tìm thấy trình xử lý cho %1. Vui lòng đảm bảo trình xử lý tồn tại trong thư mục api_handlers."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "Sổ tay là nhật ký hội thoại của bạn: câu trả lời của AI và ghi chú nhanh được thêm vào đó. Bạn có thể tạo nhiều sổ tay để tổ chức các nhật ký của mình."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Nút này tạo một ghi chú nhanh với văn bản được tô sáng."
@@ -1207,11 +1251,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Sử dụng Trợ lý AI cho 'Dịch'"
 
-msgid "Use book text as context"
-msgstr "Dùng nội dung sách làm ngữ cảnh"
+msgid "Use Book Text as Context"
+msgstr "Dùng văn bản sách làm ngữ cảnh"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Sử dụng văn bản sách cho X-Ray và tóm tắt"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Dùng văn bản sách cho X-Ray và Recap"
+
+msgid "Use web search 🌐"
+msgstr "Sử dụng tìm kiếm web 🌐"
 
 msgid "User:"
 msgstr "Người dùng:"
@@ -1235,6 +1282,9 @@ msgstr "API Tìm kiếm web"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Nó là gì"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Khi được bật, các tính năng Recap và X-Ray tự động bao gồm văn bản sách đến vị trí đọc hiện tại của bạn làm ngữ cảnh. Điều này chỉ ảnh hưởng đến các tính năng ở cấp độ sách, không phải các lời nhắc trong menu đánh dấu, và làm tăng đáng kể mức sử dụng token."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 04:11+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Bahasa Melayu (AI translation)\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Soalan\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Anda mungkin mendapati topik-topik ini menarik:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (Serasi)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — pilih tindakan"
@@ -171,12 +168,6 @@ msgstr "Bahasa Respons AI"
 msgid "AI Response Language Setting"
 msgstr "Tetapan Bahasa Respons AI"
 
-msgid "AI Response Text Font Size"
-msgstr "Saiz Fon Teks Respons AI"
-
-msgid "AI Text Size: %1"
-msgstr "Saiz Teks AI: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "AI sedang memberi respons"
 
 msgid "API Key"
 msgstr "Kunci API"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "API Key — masukkan kunci anda, kemudian ketik Semak Model untuk menyenaraikan model yang tersedia"
 
 msgid "API key is required for %1."
 msgstr "Kunci API diperlukan untuk %1."
@@ -210,6 +204,12 @@ msgstr "Tambah %1"
 msgid "Add %1 Provider"
 msgstr "Tambah Pembekal %1"
 
+msgid "Add Book Metadata as Context"
+msgstr "Tambah Metadata Buku sebagai Konteks"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Tambah Teks Halaman Berdekatan sebagai Konteks"
+
 msgid "Add Note"
 msgstr "Tambah Nota"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analisis sorotan, nota, dan kandungan buku nota anda daripada buku tersebut."
+
+msgid "Anthropic Messages API"
+msgstr "API Mesej Anthropic"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Tanya"
 msgid "Ask Another Question"
 msgstr "Tanya Soalan Lain"
 
+msgid "Ask a Question"
+msgstr "Tanya Soalan"
+
 msgid "Ask a general question"
 msgstr "Tanya soalan umum"
-
-msgid "Ask a question"
-msgstr "Tanya soalan"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Tanya soalan tentang teks yang disorot"
@@ -262,11 +265,11 @@ msgstr "Tanya soalan kepada AI"
 msgid "Assistant settings are not available."
 msgstr "Tetapan pembantu tidak tersedia."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "Rekap auto apabila membuka buku yang lama tidak dibaca"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "Auto-recap apabila Membuka Buku yang Lama Tidak Dibaca"
 
-msgid "Auto-save conversations to notebook"
-msgstr "Simpan perbualan secara automatik ke buku nota"
+msgid "Auto-save Conversations to Notebook"
+msgstr "Simpan Automatik Perbualan ke Buku Nota"
 
 msgid "Base URL"
 msgstr "URL Asas"
@@ -279,6 +282,9 @@ msgstr "URL asas diperlukan."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "URL asas mesti bermula dengan http:// atau https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "URL asas titik akhir API, cth. https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Analisis Buku"
@@ -339,6 +345,9 @@ msgstr "Menyusun jawapan ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigurasi tidak ditemui. Sila sediakan configuration.lua dahulu."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Konfigurasikan bahasa respons AI LLM. Lalai kepada bahasa antara muka KOReader."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Folder buku nota yang dikonfigurasi tidak boleh diakses: %1"
 
@@ -349,6 +358,9 @@ msgstr "Konjugasi"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Batasan Konteks"
+
+msgid "Context Settings"
+msgstr "Tetapan Konteks"
 
 msgid "Contextual Connections"
 msgstr "Hubungan Kontekstual"
@@ -368,8 +380,8 @@ msgstr "Perbualan disimpan ke buku nota"
 msgid "Copy"
 msgstr "Salin"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Salin soalan yang dimasukkan ke papan keratan"
+msgid "Copy to Clipboard"
+msgstr "Salin ke Papan Klip"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Cipta buku nota."
 msgid "Cultural Significance"
 msgstr "Kepentingan Budaya"
 
-msgid "Custom"
-msgstr "Tersuai"
-
 msgid "Custom Prompt"
 msgstr "Prompt Tersuai"
 
@@ -430,9 +439,6 @@ msgstr "Prompt Tersuai"
 
 msgid "Deeply Thought"
 msgstr "Pemikiran Mendalam"
-
-msgid "Default: auto"
-msgstr "Lalai: auto"
 
 msgid "Delete"
 msgstr "Padam"
@@ -494,18 +500,18 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Masukkan nama cawangan atau tag untuk mengemas kini plugin daripada repositori sumber.\n"
+"Masukkan nama cawangan atau tag untuk mengemas kini pemalam daripada repositori sumber.\n"
 "\n"
 "<b>URL Github:</b>  %1\n"
 "<b>Repo Sumber:</b>  %2\n"
 "\n"
-"Lalai: \"main\" (cawangan pembangunan terkini)\n"
-"Contoh: \"main\", \"v1.12\", \"v1.11\"\n"
+"Lalai: \"main\" (kod pembangunan terkini)\n"
+"Kod ini mungkin tidak stabil dan terjemahan mungkin tidak lengkap; ia disokong atas asas usaha terbaik sahaja. Untuk mengemas kini ke keluaran stabil, masukkan tag sebagai gantian (cth. \"v1.12\").\n"
 "\n"
 "<b>configuration.lua akan dikekalkan.</b>"
 
@@ -567,6 +573,9 @@ msgstr "Untuk butiran, lawati halaman wiki 'Configuration' di github."
 
 msgid "Fun Analogy"
 msgstr "Analogi Menarik"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "API Gemini. Mesti sertakan segmen /models, cth. …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Perbualan Umum"
@@ -686,14 +695,14 @@ msgstr "Enjin Markdown"
 msgid "Meaning"
 msgstr "Makna"
 
-msgid "Model"
-msgstr "Model"
-
 msgid "Model Built-In"
 msgstr "Model Terbina Dalam"
 
 msgid "Model reset: %1"
 msgstr "Model diset semula: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Model — ketik Semak Model untuk memilih model yang tersedia"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -704,8 +713,8 @@ msgstr "Model: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Model: %1 (ditapis)"
 
-msgid "Multiple notebooks"
-msgstr "Pelbagai buku nota"
+msgid "Multiple Notebooks"
+msgstr "Berbilang Buku Nota"
 
 msgid "Narrative element in focus:"
 msgstr "Elemen naratif yang menjadi fokus:"
@@ -727,6 +736,9 @@ msgstr "Tiada model tersedia."
 
 msgid "No models matching \"%1\"."
 msgstr "Tiada model yang sepadan dengan \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "Tiada folder buku nota ditetapkan."
 
 msgid "No notebooks yet"
 msgstr "Belum ada buku nota"
@@ -800,11 +812,18 @@ msgstr "Buku nota: %1"
 msgid "Notebooks"
 msgstr "Buku nota"
 
-msgid "Notebooks folder"
-msgstr "Folder buku nota"
+msgid "Notebooks Folder"
+msgstr "Folder Buku Nota"
 
-msgid "Notebooks folder: %1"
-msgstr "Folder buku nota: %1"
+msgid "Notebooks Folder: %1"
+msgstr "Folder Buku Nota: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Laluan folder buku nota:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "Laluan buku nota bukan direktori: %1"
@@ -828,8 +847,17 @@ msgstr "Kemas kini OTA dibatalkan."
 msgid "OTA update failed: %1"
 msgstr "Kemas kini OTA gagal: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Hanya digunakan oleh prompt yang memilih untuk menggunakan konteks buku (secara lalai: Explain, Historical Context, Summarize, Key Points dan ELI5). Apabila didayakan, teks halaman yang diserlahkan dan halaman bersebelahan dihantar kepada AI sebagai rujukan latar belakang. Memerlukan pemilihan teks dan meningkatkan penggunaan token."
+
 msgid "Open conflict or mystery:"
 msgstr "Konflik atau misteri terbuka:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "API Respons OpenAI — Sertakan carian web terbina dalam"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "Titik akhir chat/completions yang serasi dengan OpenAI, cth. https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Soalan yang belum terjawab:"
@@ -839,6 +867,9 @@ msgstr "Halaman"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Golongan Kata & Kala"
+
+msgid "Pick one via Browse Models"
+msgstr "Pilih satu melalui Semak Model"
 
 msgid "Platform"
 msgstr "Platform"
@@ -852,6 +883,9 @@ msgstr "Ringkasan Plot"
 msgid "Plugin is not configured."
 msgstr "Plugin tidak dikonfigurasikan."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Menambahkan metadata buku (tajuk, pengarang dan kedudukan bacaan semasa termasuk bab) pada prompt yang memilih untuk menggunakan konteks buku (secara lalai: Explain, Historical Context, Summarize, Key Points dan ELI5). Tingkah laku setiap prompt boleh diubah dengan use_book_context dalam fail konfigurasi."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Keadaan emosi/nada yang dominan:"
 
@@ -861,8 +895,8 @@ msgstr "Objektif semasa protagonis:"
 msgid "Provider API"
 msgstr "API Pembekal"
 
-msgid "Provider Name"
-msgstr "Nama Pembekal"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Nama Penyedia — dipaparkan dalam menu; biarkan kosong untuk menggunakan nama protokol API (cth. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Data pembekal tidak diinisialisasi."
@@ -900,20 +934,6 @@ msgstr "Buang"
 msgid "Purge Settings"
 msgstr "Buang Tetapan"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Buang tetapan assistant.koplugin?\n"
-"\n"
-"Ini memulihkan plugin kepada tetapan kilang asalnya. Hanya tetapan akan dibuang; \n"
-"Fail configuration.lua akan dikekalkan."
-
-msgid "Purge the settings"
-msgstr "Buang Tetapan"
-
 msgid "Querying AI ..."
 msgstr "Menghantar pertanyaan kepada AI ..."
 
@@ -948,11 +968,30 @@ msgstr "Permintaan dibatalkan oleh pengguna."
 msgid "Reset"
 msgstr "Set Semula"
 
+msgid "Reset Assistant Settings"
+msgstr "Set Semula Tetapan Pembantu"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Set semula semua tetapan assistant.koplugin?\n"
+"\n"
+"Ini akan memulihkan plugin kepada tetapan asal kilang. Pembekal, kunci API dan\n"
+"bukti kelayakan alat carian yang ditambah melalui UI Tetapan akan dialih keluar.\n"
+"Fail configuration.lua akan dikekalkan."
+
 msgid "Response"
 msgstr "Respons"
 
 msgid "Response Settings"
 msgstr "Tetapan Respons"
+
+msgid "Response Text Font Size"
+msgstr "Saiz Fon Teks Respons"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1083,11 +1122,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Istilah & Konsep"
 
+msgid "Text Size: %1"
+msgstr "Saiz Teks: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "Teks disalin ke papan keratan"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Pengendali untuk %1 tidak ditemui. Sila pastikan pengendali tersebut wujud dalam direktori api_handlers."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "Buku nota ialah log perbualan anda: jawapan AI dan nota pantas ditambahkan padanya. Anda boleh mencipta pelbagai buku nota untuk menyusun log anda."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Butang ini mencipta nota pantas dengan teks yang diserlahkan."
@@ -1207,11 +1252,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Gunakan Pembantu AI untuk 'Terjemah'"
 
-msgid "Use book text as context"
-msgstr "Gunakan teks buku sebagai konteks"
+msgid "Use Book Text as Context"
+msgstr "Gunakan Teks Buku sebagai Konteks"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Gunakan teks buku untuk x-ray dan rekap"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Gunakan Teks Buku untuk X-Ray dan Recap"
+
+msgid "Use web search 🌐"
+msgstr "Gunakan carian web 🌐"
 
 msgid "User:"
 msgstr "Pengguna:"
@@ -1235,6 +1283,9 @@ msgstr "API Carian Web"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Apa Itu"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Apabila diaktifkan, ciri Recap dan X-Ray secara automatik menyertakan teks buku sehingga kedudukan bacaan semasa anda sebagai konteks. Ini hanya menjejaskan ciri peringkat buku, bukan prompt menu sorotan, dan meningkatkan penggunaan token dengan ketara."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

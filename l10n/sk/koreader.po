@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Otázka\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Morda vas bodo te teme zanimale:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (kompatibilný)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — vyberte akciu"
@@ -171,12 +168,6 @@ msgstr "Jazyk odpovedí AI"
 msgid "AI Response Language Setting"
 msgstr "Nastavenie jazyka odpovedí AI"
 
-msgid "AI Response Text Font Size"
-msgstr "Veľkosť písma textu odpovede AI"
-
-msgid "AI Text Size: %1"
-msgstr "Veľkosť textu AI: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "AI odpovedá"
 
 msgid "API Key"
 msgstr "API kľúč"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "API ključ — vnesite svoj ključ, nato tapnite Brskaj po modelih, da prikažete razpoložljive modele"
 
 msgid "API key is required for %1."
 msgstr "Pre %1 sa vyžaduje API kľúč."
@@ -210,6 +204,12 @@ msgstr "Pridať %1"
 msgid "Add %1 Provider"
 msgstr "Pridať poskytovateľa %1"
 
+msgid "Add Book Metadata as Context"
+msgstr "Dodaj metapodatke knjige kot kontekst"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Dodaj besedilo sosednjih strani kot kontekst"
+
 msgid "Add Note"
 msgstr "Dodaj opombo"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analýza vašich zvýraznení, poznámok a obsahu NoteBooku z knihy."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Opýtať sa"
 msgid "Ask Another Question"
 msgstr "Zastavi drugo vprašanje"
 
+msgid "Ask a Question"
+msgstr "Zastavi vprašanje"
+
 msgid "Ask a general question"
 msgstr "Položiť všeobecnú otázku"
-
-msgid "Ask a question"
-msgstr "Zastavi vprašanje"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Opýtať sa na zvýraznený text"
@@ -262,10 +265,10 @@ msgstr "Položte otázku AI"
 msgid "Assistant settings are not available."
 msgstr "Nastavitve asistenta niso na voljo."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "Samodejni povzetek ob odpiranju dolgo neprebranih knjig"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "Samodejni povzetek ob odprtju dolgo neprebranih knjig"
 
-msgid "Auto-save conversations to notebook"
+msgid "Auto-save Conversations to Notebook"
 msgstr "Samodejno shrani pogovore v beležnico"
 
 msgid "Base URL"
@@ -279,6 +282,9 @@ msgstr "Základná URL adresa je povinná."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "Základná URL adresa musí začínať na http:// alebo https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "Osnovni URL API končne točke, npr. https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Analýza knihy"
@@ -339,6 +345,9 @@ msgstr "Zostavujem odpoveď ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfiguracija ni bila najdena. Prosimo, najprej nastavite configuration.lua."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Nastavi jezik odgovorov AI LLM. Privzeto se uporabi jezik vmesnika KOReader."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Nastavljena mapa beležnic ni dostopna: %1"
 
@@ -349,6 +358,9 @@ msgstr "Časovanie"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Obmedzenia kontextu"
+
+msgid "Context Settings"
+msgstr "Nastavitve konteksta"
 
 msgid "Contextual Connections"
 msgstr "Kontextové súvislosti"
@@ -368,8 +380,8 @@ msgstr "Pogovor je shranjen v beležnico"
 msgid "Copy"
 msgstr "Kopiraj"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Kopiraj vneseno vprašanje v odložišče"
+msgid "Copy to Clipboard"
+msgstr "Kopiraj v odložišče"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Ustvari beležnico."
 msgid "Cultural Significance"
 msgstr "Kultúrny význam"
 
-msgid "Custom"
-msgstr "Vlastný"
-
 msgid "Custom Prompt"
 msgstr "Vlastný prompt"
 
@@ -430,9 +439,6 @@ msgstr "Prilagojeni pozivi"
 
 msgid "Deeply Thought"
 msgstr "Hlboké zamyslenie"
-
-msgid "Default: auto"
-msgstr "Predvolené: auto"
 
 msgid "Delete"
 msgstr "Odstrániť"
@@ -494,20 +500,20 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
 "Vnesite ime veje ali oznake za posodobitev vtičnika iz izvornega repozitorija.\n"
 "\n"
-"<b>URL Github:</b>  %1\n"
-"<b>Izvorni repozitorij:</b>  %2\n"
+"<b>URL GitHub:</b>  %1\n"
+"<b>Izvorni repo:</b>  %2\n"
 "\n"
-"Privzeto: \"main\" (najnovejša razvojna veja)\n"
-"Primeri: \"main\", \"v1.12\", \"v1.11\"\n"
+"Privzeto: \"main\" (razvojna koda z najnovejšimi spremembami)\n"
+"Ta koda je lahko nestabilna in prevodi so lahko nepopolni; podprta je le po najboljših močeh. Za posodobitev na stabilno izdajo vnesite oznako (npr. \"v1.12\").\n"
 "\n"
-"<b>Datoteka configuration.lua bo ohranjena.</b>"
+"<b>configuration.lua bo ohranjena.</b>"
 
 msgid "Enter a question before proceeding."
 msgstr "Zadajte otázku pred pokračovaním."
@@ -567,6 +573,9 @@ msgstr "Podrobnosti nájdete na wiki stránke 'Configuration' na GitHube."
 
 msgid "Fun Analogy"
 msgstr "Zábavná analógia"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API. Vključevati mora segment /models, npr. …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Všeobecná konverzácia"
@@ -689,14 +698,14 @@ msgstr "Markdown pogon"
 msgid "Meaning"
 msgstr "Význam"
 
-msgid "Model"
-msgstr "Model"
-
 msgid "Model Built-In"
 msgstr "Vstavaný model"
 
 msgid "Model reset: %1"
 msgstr "Reset modelu: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Model — tapnite Brskaj po modelih, da izberete razpoložljiv model"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -707,8 +716,8 @@ msgstr "Modely: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Modely: %1 (filtrované)"
 
-msgid "Multiple notebooks"
-msgstr "Več beležnic"
+msgid "Multiple Notebooks"
+msgstr "Več zvezkov"
 
 msgid "Narrative element in focus:"
 msgstr "Rozprávačský prvok v centre pozornosti:"
@@ -730,6 +739,9 @@ msgstr "Nie sú k dispozícii žiadne modely."
 
 msgid "No models matching \"%1\"."
 msgstr "Žiadne modely nezodpovedajú výrazu \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "Mapa zvezkov ni nastavljena."
 
 msgid "No notebooks yet"
 msgstr "Še ni beležnic"
@@ -803,11 +815,18 @@ msgstr "Beležnica: %1"
 msgid "Notebooks"
 msgstr "Beležnice"
 
-msgid "Notebooks folder"
-msgstr "Mapa beležnic"
+msgid "Notebooks Folder"
+msgstr "Mapa zvezkov"
 
-msgid "Notebooks folder: %1"
-msgstr "Mapa beležnic: %1"
+msgid "Notebooks Folder: %1"
+msgstr "Mapa zvezkov: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Pot do mape zvezkov:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "Pot do beležnic ni mapa: %1"
@@ -831,8 +850,17 @@ msgstr "Posodobitev OTA je preklicana."
 msgid "OTA update failed: %1"
 msgstr "Posodobitev OTA ni uspela: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Uporabljajo ga samo pozivi, ki se odločijo za kontekst knjige (privzeto: Explain, Historical Context, Summarize, Key Points in ELI5). Ko je omogočeno, se besedilo označene strani in sosednjih strani pošlje AI-ju kot referenčno ozadje. Zahteva izbiro besedila in poveča porabo žetonov."
+
 msgid "Open conflict or mystery:"
 msgstr "Otvorený konflikt alebo záhada:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — vključi vgrajeno spletno iskanje"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "OpenAI-združljiva končna točka za chat/completions, npr. https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Otvorené otázky:"
@@ -842,6 +870,9 @@ msgstr "Stran"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Slovné druhy a časy"
+
+msgid "Pick one via Browse Models"
+msgstr "Izberite enega prek Brskaj po modelih"
 
 msgid "Platform"
 msgstr "Platforma"
@@ -855,6 +886,9 @@ msgstr "Zhrnutie deja"
 msgid "Plugin is not configured."
 msgstr "Plugin nie je nakonfigurovaný."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Pred pozive, ki se odločijo za kontekst knjige (privzeto: Explain, Historical Context, Summarize, Key Points in ELI5), doda metapodatke knjige (naslov, avtorja in trenutni položaj branja, vključno s poglavjem). Vedenje posameznega poziva je mogoče preglasiti z nastavitvijo use_book_context v konfiguracijski datoteki."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Prevládajúci emocionálny stav/tón:"
 
@@ -864,8 +898,8 @@ msgstr "Aktuálny cieľ protagonistu:"
 msgid "Provider API"
 msgstr "API poskytovateľa"
 
-msgid "Provider Name"
-msgstr "Názov poskytovateľa"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Názov poskytovateľa — zobrazuje sa v ponukách; ponechajte prázdne, aby sa použil názov protokolu API (napr. „openai“)"
 
 msgid "Provider data not initialized."
 msgstr "Dáta poskytovateľa nie sú inicializované."
@@ -903,20 +937,6 @@ msgstr "Počisti"
 msgid "Purge Settings"
 msgstr "Počisti nastavitve"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Počistim nastavitve assistant.koplugin?\n"
-"\n"
-"To obnovi vtičnik na tovarniške privzete nastavitve. Odstranjene bodo samo nastavitve; \n"
-"Datoteka configuration.lua bo ohranjena."
-
-msgid "Purge the settings"
-msgstr "Počisti nastavitve"
-
 msgid "Querying AI ..."
 msgstr "Dotazujem AI ..."
 
@@ -951,11 +971,30 @@ msgstr "Požiadavka zrušená používateľom."
 msgid "Reset"
 msgstr "Resetovať"
 
+msgid "Reset Assistant Settings"
+msgstr "Ponastavi nastavitve asistenta"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Ponastavim vse nastavitve assistant.koplugin?\n"
+"\n"
+"To vrne vtičnik na tovarniške privzete nastavitve. Ponudniki, ključi API in\n"
+"poverilnice orodja za iskanje, dodane prek uporabniškega vmesnika Nastavitve, bodo odstranjene.\n"
+"Datoteka configuration.lua bo ohranjena."
+
 msgid "Response"
 msgstr "Odpoveď"
 
 msgid "Response Settings"
 msgstr "Nastavitve odgovora"
+
+msgid "Response Text Font Size"
+msgstr "Velikost pisave besedila odgovora"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1086,11 +1125,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Pojmy a koncepty"
 
+msgid "Text Size: %1"
+msgstr "Velikost besedila: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "Besedilo je kopirano v odložišče."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handler pre %1 sa nenašiel. Uistite sa, že handler existuje v adresári api_handlers."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "Beležnica je vaš dnevnik pogovorov: odgovori AI in hitre opombe se ji dodajajo. Ustvarite lahko več beležnic za organizacijo svojih dnevnikov."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Toto tlačidlo vytvorí rýchlu poznámku so zvýrazneným textom."
@@ -1210,11 +1255,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Uporabi pomočnika AI za 'Prevajanje'"
 
-msgid "Use book text as context"
-msgstr "Použiť text knihy ako kontext"
+msgid "Use Book Text as Context"
+msgstr "Uporabi besedilo knjige kot kontekst"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Uporabi besedilo knjige za X-Ray in povzetek"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Uporabi besedilo knjige za X-Ray in Recap"
+
+msgid "Use web search 🌐"
+msgstr "Uporabi spletno iskanje 🌐"
 
 msgid "User:"
 msgstr "Používateľ:"
@@ -1238,6 +1286,9 @@ msgstr "WebSearch API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Čo to je"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Ko je omogočeno, funkciji Recap in X-Ray samodejno vključita besedilo knjige do vašega trenutnega položaja branja kot kontekst. To vpliva le na funkcije na ravni knjige, ne na pozive v meniju za označevanje, in znatno poveča porabo tokenov."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"
