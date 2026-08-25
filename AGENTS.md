@@ -190,6 +190,7 @@ cd l10n && API_KEY=your_key make ai-translate L10N_LANG=fr  # Single language
 
 ## Tips for AI Agents
 
+- **Developer's English**: The developer is not a native English speaker, so wording they provide (UI strings, docs, commit messages) may not be idiomatic. Correct it into natural, idiomatic English while preserving their intent — e.g. prefer established terms like "bleeding-edge code" over literal phrasings.
 - **Never read or modify `configuration.lua`** — it contains user secrets. Update `configuration.sample.lua` only.
 - **Exclude `l10n/` from code searches and reads** — it contains only `.po`/`.pot` translation strings in 40+ languages. Searching or reading these files wastes tokens with no code insight.
 - **New providers**: if OpenAI-compatible, alias `OpenAIHandler:new{name="..."}` (see `deepseek.lua`). If it needs custom auth/response shape, extend `BaseHandler` and implement `query`/`SyncOptions`/`FetchModels`. Route response parsing through `self:parseToolCalls(...)`.
