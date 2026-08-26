@@ -18,6 +18,25 @@ local ffi = require("ffi")
 local ffiutil = require("ffi/util")
 local strbuf = require("string.buffer")
 
+-- Lifecycle / metadata events that carry no content to emit.  They are matched
+-- by key lookup rather than an ever-growing `elseif ev_type == "..."` chain.
+-- Side-effectful events (deltas, completed, tool-call accumulation, web_search
+-- lifecycle) are intentionally excluded and handled explicitly below.
+local NOOP_TYPES = {
+    ["response.output_text.done"]              = true,
+    ["response.created"]                       = true,
+    ["response.in_progress"]                   = true,
+    ["response.content_part.added"]            = true,
+    ["response.content_part.done"]             = true,
+    ["response.reasoning_text.done"]           = true,
+    ["response.reasoning_summary_part.added"]  = true,
+    ["response.reasoning_summary_text.done"]   = true,
+    ["response.reasoning_summary_part.done"]   = true,
+    ["response.output_item.done"]              = true,
+    ["response.output_text.annotation.added"]  = true,
+    ["response.output_text.annotation.updated"]= true,
+}
+
 --- OpenAI Responses API handler.
 --- Supports the /v1/responses endpoint with built-in web_search,
 --- file_search, and function-calling tools.
@@ -328,8 +347,6 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
                                 finish_reason = nil,
                             }},
                         })
-                    elseif ev_type == "response.output_text.done" then
-                        -- nothing extra to emit
 
                     -- Transform function_call events → tool_calls in Chat Completions format
                     elseif ev_type == "response.output_item.added" then
@@ -395,19 +412,6 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
                     elseif ev_type == "response.completed" then
                         ffiutil.writeToFD(child_write_fd, "data: [DONE]\n\n")
 
-                    -- Lifecycle events (no content to emit)
-                    elseif ev_type == "response.created" then
-                        -- Response created; no content to emit
-                    elseif ev_type == "response.in_progress" then
-                        -- Response generation in progress; no content to emit
-
-                    -- Content part lifecycle (metadata only; deltas carry the actual text)
-                    elseif ev_type == "response.content_part.added" then
-                        -- Part metadata (type: output_text|refusal|reasoning_text).
-                        -- Actual text arrives via output_text.delta or reasoning_text.delta.
-                    elseif ev_type == "response.content_part.done" then
-                        -- Content part completed; no content to emit
-
                     -- Reasoning text streaming (e.g. o-series models)
                     elseif ev_type == "response.reasoning_text.delta" then
                         local delta = event.delta or ""
@@ -420,18 +424,39 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
                                 finish_reason = nil,
                             }},
                         })
-                    elseif ev_type == "response.reasoning_text.done" then
-                        -- Reasoning text completed; no extra content to emit
 
-                    -- Output item lifecycle
-                    elseif ev_type == "response.output_item.done" then
-                        -- Output item completed; no content to emit
+                    -- Reasoning summary streaming (e.g. summary of the model's reasoning)
+                    elseif ev_type == "response.reasoning_summary_text.delta" then
+                        local delta = event.delta or ""
+                        emitJSON({
+                            id = "resp_stream",
+                            object = "chat.completion.chunk",
+                            choices = {{
+                                index = 0,
+                                delta = { reasoning_content = delta .. "\n" },
+                                finish_reason = nil,
+                            }},
+                        })
 
-                    -- Annotation events (e.g. web search citations)
-                    elseif ev_type == "response.output_text.annotation.added" then
-                        -- Annotation metadata; no content to emit
-                    elseif ev_type == "response.output_text.annotation.updated" then
-                        -- Annotation update; no content to emit
+                    -- Catch-all for other reasoning* delta subtypes (e.g. future
+                    -- reasoning sub-events carrying a `delta`); map to reasoning_content
+                    -- so they are not silently dropped as "unprocessed".
+                    elseif ev_type:find("^response%.reasoning") and event.delta then
+                        local delta = event.delta or ""
+                        emitJSON({
+                            id = "resp_stream",
+                            object = "chat.completion.chunk",
+                            choices = {{
+                                index = 0,
+                                delta = { reasoning_content = delta },
+                                finish_reason = nil,
+                            }},
+                        })
+
+                    -- Lifecycle / metadata events that carry no content to emit
+                    -- (matched by key lookup to avoid an ever-growing elseif chain).
+                    elseif NOOP_TYPES[ev_type] then
+                        -- noop
 
                     -- Web search lifecycle (built-in web_search tool; metadata only,
                     -- actual results arrive via content or function_call deltas)
