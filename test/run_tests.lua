@@ -30,6 +30,7 @@ local test_files = {
     "test.test_updater",
     "test.test_querier_stream",
     "test.test_notebook",
+    "test.test_handler_timeouts",
 }
 
 if filter then

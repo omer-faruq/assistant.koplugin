@@ -508,13 +508,17 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
             return 1 -- return non-nil to continue
         end
 
-        -- Use a simple function sink for incremental chunk processing
+        -- Use a simple function sink for incremental chunk processing.
+        -- applyStreamTimeouts sets the socket timeouts for this forked child and
+        -- wraps the sink with a total-time deadline when the provider configures
+        -- `maxtime` (see BaseHandler) -- keep this in sync with base.lua's
+        -- backgroundRequest.
         local request = {
             url     = url,
             method  = "POST",
             headers = headers or {},
             source  = ltn12.source.string(body or ""),
-            sink    = sink,
+            sink    = self:applyStreamTimeouts(sink),
         }
 
         local code, resp_headers, status = socket.skip(1, http.request(request))

@@ -28,6 +28,22 @@ local CONFIGURATION = {
     -- merged with this configuration at startup. They support the same protocols:
     -- openai, anthropic, gemini, responses.
     --
+    -- NETWORK TIMEOUTS: Any provider may set optional `timeout` and `maxtime`
+    -- values (in seconds) alongside `base_url`. These are useful for slow local
+    -- servers (LM Studio, Ollama, llama.cpp) where the model needs a long time
+    -- before the first token arrives. Both are optional; omit them to keep the
+    -- built-in defaults.
+    --   timeout -- per-read block timeout: how long to wait for the first byte,
+    --              and for each subsequent chunk. This is the value to raise when
+    --              a local model spends a long time on prompt processing.
+    --   maxtime -- total budget for the whole request. In non-stream mode this is
+    --              a HARD cap, so raising `timeout` alone has no effect if
+    --              `maxtime` expires first -- raise both. In stream mode there is
+    --              no total cap unless you set `maxtime` explicitly.
+    -- These keys are read by the plugin and are never sent to the API.
+    -- They are only available for providers defined here, not for UI-added ones.
+    -- See the `ollama` entry below for an example.
+    --
     provider_settings = {
         openai = {
             default = true,        -- optional, if provider above is not set, will try to find one with `default =  true`
@@ -263,6 +279,10 @@ local CONFIGURATION = {
             model = "your-preferred-model",        -- model list: https://ollama.com/library
             base_url = "your-ollama-api-endpoint", -- ex: "https://ollama.example.com/v1"
             api_key = "ollama",
+            -- Local servers can be slow to produce the first token; raise these
+            -- if you hit timeouts (see the NETWORK TIMEOUTS note above).
+            -- timeout = 120,
+            -- maxtime = 900,
             additional_parameters = {}
         },
         mistral = {

@@ -39,15 +39,14 @@ function GigaChatHandler:buildRequestBody(messages, query_option, tools)
 end
 
 function GigaChatHandler:makeRequest(url, headers, body, timeout, maxtime)
-    -- Preserve GigaChat-specific timeout defaults when the caller does not pass them.
-    if not timeout then
-        if body and #body > 10000 then
-            timeout = 500
-            maxtime = 500
-        else
-            timeout = 45
-            maxtime = 90
-        end
+    -- Preserve GigaChat-specific timeout defaults when neither the caller nor the
+    -- provider config supplies a value. resolveTimeouts resolves the two values
+    -- independently, so a `maxtime`-only provider config survives -- the previous
+    -- single `if not timeout` guard discarded it whenever `timeout` was nil.
+    if body and #body > 10000 then
+        timeout, maxtime = self:resolveTimeouts(timeout, maxtime, 500, 500)
+    else
+        timeout, maxtime = self:resolveTimeouts(timeout, maxtime, 45, 90)
     end
 
     local token, err = self:getAccessToken()

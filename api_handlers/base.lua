@@ -105,17 +105,81 @@ function BaseHandler:query(message_history, query_option)
 end
 
 
+--- Sanitize a user-supplied timeout value from the provider configuration.
+--- Anything that is not a positive number (typos like "60", 0, negatives) is
+--- rejected so it cannot produce a broken socket call; the caller falls through
+--- to the next tier.
+local function valid_timeout(value)
+    if type(value) ~= "number" or value <= 0 then return nil end
+    return value
+end
+
+--- Resolve the effective socket timeouts for a request.
+---
+--- Both values are resolved independently, so a provider may configure only one
+--- of them. Precedence per value:
+---   explicit argument  >  provider_settings key  >  the supplied default
+---
+--- `self.timeout` / `self.maxtime` land on the handler instance automatically:
+--- BaseHandler:SyncOptions merges every key of the provider_settings entry onto
+--- `self`, so no extra plumbing is needed to expose them.
+---
+--- @param timeout      number|nil  explicit per-read block timeout
+--- @param maxtime      number|nil  explicit total-transfer budget
+--- @param def_timeout  number|nil  fallback block timeout
+--- @param def_maxtime  number|nil  fallback total budget
+--- @return number|nil block_timeout, number|nil total_timeout
+function BaseHandler:resolveTimeouts(timeout, maxtime, def_timeout, def_maxtime)
+    local block = timeout or valid_timeout(self.timeout) or def_timeout
+    local total = maxtime or valid_timeout(self.maxtime) or def_maxtime
+    return block, total
+end
+
+--- Default per-read block timeout for streaming requests: the maximum gap
+--- tolerated between received bytes, which for an LLM is dominated by the wait
+--- for the first token (prompt processing on slow local servers).
+BaseHandler.DEFAULT_STREAM_BLOCK_TIMEOUT = 120
+
+--- Apply streaming socket timeouts and return the sink to use for the request.
+---
+--- Called from backgroundRequest implementations, i.e. always inside the forked
+--- child process, so the global assignments here cannot leak into the parent.
+--- Streaming never had a total-transfer cap and deliberately still does not get
+--- one by default -- a long answer that works today must keep working. A total
+--- cap is applied only when the provider explicitly configures `maxtime`.
+---
+--- @param sink function  the ltn12 sink to wrap
+--- @return function sink
+function BaseHandler:applyStreamTimeouts(sink)
+    local block_timeout, total_timeout =
+        self:resolveTimeouts(nil, nil, self.DEFAULT_STREAM_BLOCK_TIMEOUT, nil)
+
+    http.TIMEOUT = block_timeout
+    -- KOReader routes https through socket.http, but keep ssl.https in sync in
+    -- case it services the request directly.
+    if https.TIMEOUT then https.TIMEOUT = block_timeout end
+
+    if not total_timeout then return sink end
+
+    local deadline = socket.gettime() + total_timeout
+    return function(chunk, err)
+        if chunk and socket.gettime() > deadline then
+            logger.warn("Background request exceeded total timeout of", total_timeout, "s")
+            return nil, "total timeout exceeded"
+        end
+        return sink(chunk, err)
+    end
+end
+
 --- Make a synchronous HTTP POST request, optionally through a dismissable subprocess.
 function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
     local completed, success, code, content
     if self.trap_widget then
         local request_timeout, request_maxtime
         if body and #body > 10000 then
-            request_timeout = timeout or 300
-            request_maxtime = maxtime or 120
+            request_timeout, request_maxtime = self:resolveTimeouts(timeout, maxtime, 300, 120)
         else
-            request_timeout = timeout or 45
-            request_maxtime = maxtime or 120
+            request_timeout, request_maxtime = self:resolveTimeouts(timeout, maxtime, 45, 120)
         end
         completed, success, code, content = Trapper:dismissableRunInSubprocess(function()
                 return ASUtils.httpRequest(url, request_timeout, request_maxtime, body, nil, headers)
@@ -124,7 +188,8 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
             return false, self.CODE_CANCELLED, content
         end
     else
-        success, code, content = ASUtils.httpRequest(url, timeout or 20, maxtime or 45, body, nil, headers)
+        local request_timeout, request_maxtime = self:resolveTimeouts(timeout, maxtime, 20, 45)
+        success, code, content = ASUtils.httpRequest(url, request_timeout, request_maxtime, body, nil, headers)
     end
 
     return success, code, content
@@ -154,12 +219,18 @@ function BaseHandler:backgroundRequest(url, headers, body)
             https.cert_verify = false -- old devices cannot verify ssl certs
         end
 
+        -- Nothing was set here before, so the request inherited whatever global
+        -- timeout the parent last left behind (ASUtils.httpRequest calls
+        -- socketutil:reset_timeout() after every call), making streaming
+        -- timeouts unpredictable. Set them explicitly instead.
+        local sink = self:applyStreamTimeouts(ltn12.sink.file(wrap_fd(child_write_fd)))
+
         local request = {
             url    = url,
             method = "POST",
             headers = headers or {},
             source  = ltn12.source.string(body or ""),
-            sink    = ltn12.sink.file(wrap_fd(child_write_fd)),
+            sink    = sink,
         }
         local code, resp_headers, status = socket.skip(1, http.request(request))
         if code ~= 200 then
