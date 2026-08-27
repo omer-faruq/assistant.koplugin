@@ -177,7 +177,7 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
     if self.trap_widget then
         local request_timeout, request_maxtime
         if body and #body > 10000 then
-            request_timeout, request_maxtime = self:resolveTimeouts(timeout, maxtime, 300, 120)
+            request_timeout, request_maxtime = self:resolveTimeouts(timeout, maxtime, 300, 300)
         else
             request_timeout, request_maxtime = self:resolveTimeouts(timeout, maxtime, 45, 120)
         end

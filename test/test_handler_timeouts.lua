@@ -143,12 +143,14 @@ local tests = {
         assert.equal(maxtime, 120)
     end),
 
-    test("makeRequest: large body uses the 300/120 defaults", function()
+    test("makeRequest: large body total cap matches its block timeout", function()
+        -- Previously 300/120: the 120s total silently overrode the 300s block
+        -- timeout, so large requests died well before the intended budget.
         local h = handler()
         h.trap_widget = {}
         local timeout, maxtime = captureRequestTimeouts(h, string.rep("x", 10001))
         assert.equal(timeout, 300)
-        assert.equal(maxtime, 120)
+        assert.equal(maxtime, 300, "total budget must not be shorter than the block timeout")
     end),
 
     test("makeRequest: provider config overrides the defaults", function()
