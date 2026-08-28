@@ -852,6 +852,8 @@ function Querier:processStream(bgQuery, trunk_callback)
                         end
                     elseif line:sub(1, 7) == "event: " then
                         -- Ignore SSE event lines (from Anthropic)
+                    elseif line:sub(1, 3) == "id:" then
+                        -- ignore SSE event id
                     elseif line:sub(1, 1) == ":" then
                         -- SSE empty events, nothing to do
                     elseif line:sub(1, 1) == "{" then
