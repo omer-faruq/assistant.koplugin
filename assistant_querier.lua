@@ -369,11 +369,15 @@ function Querier:query(message_history, title)
         --
         -- handler:query() returns a background function; showStremDialog
         -- drives processStream and returns:
-        --   ok=true,  content=string,  nil          → plain text answer
-        --   ok=true,  content=nil,     tool_calls=[] → LLM wants tool(s)
-        --   ok=nil,   err=string                     → cancelled / error
+        --   ok=true,  content=string,  nil            → plain text answer
+        --   ok=true,  content=table,   tool_calls=[]  → LLM wants tool(s)
+        --   ok=nil,   err=string,      err_struct=[]  → cancelled / error
+        -- (on the error path the 3rd value is the structured error, on the
+        --  tool-call path it is the tool_calls array — disambiguate by ok)
         -- ---------------------------------------------------------------
         local tool_rounds = 0
+        local max_retries = self.handler:getMaxRetries()
+        local retry_attempt = 0
 
         repeat
             local bg_fn
@@ -391,70 +395,108 @@ function Querier:query(message_history, title)
                 break
             end
 
-            local ok, content, tool_calls_array = self:showStremDialog(bg_fn)
+            local ok, content, third = self:showStremDialog(bg_fn)
             if not ok then
                 -- cancelled or stream error
                 res = nil
-                err = content or _("Stream failed with no error message.")
-                if err ~= self.handler.CODE_CANCELLED then
-                    logger.warn("cancelled/strem error", content, tool_calls_array)
+                -- showStremDialog returns (nil, err, err_struct); the 3rd value
+                -- is the structured error (code/resp_headers/raw_body).
+                local err_struct = third
+                -- Retryable 429: replay the exact same request (same messages/use_tool)
+                -- after a cancellable wait. Intermediate 429s are not errors.
+                if err_struct and tonumber(err_struct.code) == 429 and retry_attempt < max_retries then
+                    local retry_info = self.handler:getRetryDelay(
+                        err_struct.code, err_struct.resp_headers, err_struct.raw_body, retry_attempt + 1)
+                    if retry_info.retryable then
+                        local finished = self.handler:sleepWithRetryInfo(
+                            retry_info.delay, retry_attempt + 1, max_retries)
+                        if not finished then
+                            err = self.handler.CODE_CANCELLED
+                            break
+                        end
+                        retry_attempt = retry_attempt + 1
+                        -- Fall through to the bottom of the repeat body with
+                        -- res=nil/err=nil so the `until` test is false and the
+                        -- loop re-invokes handler:query with the same args.
+                        -- The success/tool-call handling below is in the `else`
+                        -- branch and is NOT executed on a retry (Lua 5.1 has no
+                        -- continue; the else block prevents the stale error
+                        -- header from being mistaken for a plain-string answer).
+                        err = nil
+                    else
+                        -- 429 present but explicitly non-retryable: final failure
+                        err = content or _("Stream failed with no error message.")
+                        if err ~= self.handler.CODE_CANCELLED then
+                            logger.warn("cancelled/strem error", content, third)
+                        end
+                        break
+                    end
+                else
+                    -- non-429 error, or 429 with retries exhausted: final failure
+                    err = content or _("Stream failed with no error message.")
+                    if err ~= self.handler.CODE_CANCELLED then
+                        logger.warn("cancelled/strem error", content, third)
+                    end
+                    break
                 end
-                break
-            end
+            else
+                -- Only when the stream dialog finished ok do we treat the
+                -- content as a real answer or as tool calls.
+                if type(content) == "string" then
+                    -- Normal text answer — done
+                    res = content
+                    err = nil
+                    break
+                end
 
-            if type(content) == "string" then
-                -- Normal text answer — done
-                res = content
+                -- Tool calls detected in stream (ok=true; 3rd value is the tool_calls array)
+                local tool_calls_array = third
+                if type(tool_calls_array) ~= "table" or #tool_calls_array == 0 then
+                    res = nil
+                    err = _("Stream ended with no content and no tool calls.")
+                    break
+                end
+
+                -- Build tool result and append to history
+                local format = ToolExecutor.getHandlerFormat(self.handler_name)
+                local build_ok, raw_assistant = ToolExecutor.buildRawAssistantForToolCall(tool_calls_array, format, content)
+                if not build_ok then
+                    res = nil
+                    err = raw_assistant
+                    logger.warn("failed to buildRawAssistantForToolCall", content, tool_calls_array)
+                    break
+                end
+
+                local search_ok, search_results
+                search_ok, search_results = executeSearch(tool_calls_array, tool_rounds)
+                if not search_ok then
+                    res = nil
+                    err = search_results
+                    if err ~= self.handler.CODE_CANCELLED then
+                        logger.warn("failed to executeSearch at round", tool_rounds, "DETAIL", search_results,
+                                            content, tool_calls_array)
+                    end
+                    break
+                end
+                tool_rounds = tool_rounds + #search_results
+
+                local append_ok, append_err = ToolExecutor.appendToolResult(message_history, {
+                        raw_assistant  = raw_assistant,
+                        format         = format,
+                        search_results = search_results,
+                })
+
+                if not append_ok then
+                    res = nil
+                    err = append_err
+                    logger.warn("failed to appendToolResult", content, tool_calls_array, append_err)
+                    break
+                end
+
+                -- query_option stays unchanged; loop will call handler:query again with augmented history
+                res = nil
                 err = nil
-                break
             end
-
-            -- Tool calls detected in stream
-            if type(tool_calls_array) ~= "table" or #tool_calls_array == 0 then
-                res = nil
-                err = _("Stream ended with no content and no tool calls.")
-                break
-            end
-
-            -- Build tool result and append to history
-            local format = ToolExecutor.getHandlerFormat(self.handler_name)
-            local build_ok, raw_assistant = ToolExecutor.buildRawAssistantForToolCall(tool_calls_array, format, content)
-            if not build_ok then
-                res = nil
-                err = raw_assistant
-                logger.warn("failed to buildRawAssistantForToolCall", content, tool_calls_array)
-                break
-            end
-
-            local search_ok, search_results
-            search_ok, search_results = executeSearch(tool_calls_array, tool_rounds)
-            if not search_ok then
-                res = nil
-                err = search_results
-                if err ~= self.handler.CODE_CANCELLED then
-                    logger.warn("failed to executeSearch at round", tool_rounds, "DETAIL", search_results,
-                                        content, tool_calls_array)
-                end
-                break
-            end
-            tool_rounds = tool_rounds + #search_results
-
-            local append_ok, append_err = ToolExecutor.appendToolResult(message_history, {
-                    raw_assistant  = raw_assistant,
-                    format         = format,
-                    search_results = search_results,
-            })
-
-            if not append_ok then
-                res = nil
-                err = append_err
-                logger.warn("failed to appendToolResult", content, tool_calls_array, append_err)
-                break
-            end
-
-            -- query_option stays unchanged; loop will call handler:query again with augmented history
-            res = nil
-            err = nil
 
         until type(res) == "string" or (err ~= nil)
 
@@ -649,7 +691,7 @@ function Querier:showStremDialog(res)
         if #delta == 0 then return end
         updateStreamText(streamDialog, delta, stream_mode_auto_scroll)
     end
-    local ok, content, tool_calls_or_err = pcall(self.processStream, self, res, function (content, buffer)
+    local ok, content, tool_calls_or_err, err_struct = pcall(self.processStream, self, res, function (content, buffer)
         if not first_content_received and content and #content > 0 then
             first_content_received = true
             if animation_task then
@@ -699,7 +741,7 @@ function Querier:showStremDialog(res)
         return nil, _("Request cancelled by user.")
     end
     if err then
-        return nil, err:gsub("^[\n%s]*", "") -- clean leading spaces and newlines
+        return nil, err:gsub("^[\n%s]*", ""), err_struct -- clean leading spaces and newlines
     end
 
     return true, content
@@ -924,7 +966,9 @@ function Querier:processStream(bgQuery, trunk_callback)
         if err_msg and #err_msg > 0 then
             err_header = T("%1\n\n<b>%2:</b>\n%3", err_header, _("Error Message"), err_msg)
         end
-        return nil, err_header
+        -- Third return value carries the structured error (code/resp_headers/raw_body)
+        -- so the caller can decide whether to retry a 429.
+        return nil, err_header, err_struct
     end
 
     if tool_calls then

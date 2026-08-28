@@ -751,7 +751,7 @@ function M.httpRequest(url, timeout, maxtime, post_body, post_content_type, head
         content = decompressed
     end
 
-    return true, code, content
+    return true, code, content, resp_headers
 end
 
 --- Display a count down (seconds) InfoMessage while waiting
