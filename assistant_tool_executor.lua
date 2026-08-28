@@ -68,7 +68,7 @@ local function buildToolResultMessages(tool_call_result)
         for _, result in ipairs(results) do
             table.insert(parts, {
                     functionResponse = {
-                        name     = "web_search",
+                        name     = "assistant_web_search",
                         id       = result.tool_call_id,
                         response = { result = result.search_result },
                     },
@@ -194,7 +194,7 @@ function ToolExecutor.buildRawAssistantForToolCall(tool_calls, format, contents)
             table.insert(ret, {
                     type  = "tool_use",
                     id    = id,
-                    name  = "web_search",
+                    name  = "assistant_web_search",
                     input = { keywords = kw },
             })
         end
@@ -205,7 +205,7 @@ function ToolExecutor.buildRawAssistantForToolCall(tool_calls, format, contents)
         for _, tc in ipairs(tool_calls) do
             table.insert(parts, {
                     functionCall = {
-                        name = "web_search",
+                        name = "assistant_web_search",
                         id   = tc.tool_call_id,
                         args = { keywords = tc.keywords },
                     },
@@ -504,7 +504,7 @@ Return exactly one concise search query string.]]
 
     if format == "anthropic" then
         return {
-            name         = "web_search",
+            name         = "assistant_web_search",
             description  = description,
             input_schema = param_schema,
         }
@@ -512,7 +512,7 @@ Return exactly one concise search query string.]]
         return {
             function_declarations = {
                 {
-                    name        = "web_search",
+                    name        = "assistant_web_search",
                     description = description,
                     parameters  = param_schema,
                 },
@@ -521,7 +521,7 @@ Return exactly one concise search query string.]]
     elseif format == "responses" then
         return {
             type        = "function",
-            name        = "web_search",
+            name        = "assistant_web_search",
             description = description,
             parameters  = param_schema,
         }
@@ -529,7 +529,7 @@ Return exactly one concise search query string.]]
         return {
             type = "function",
             ["function"] = {
-                name        = "web_search",
+                name        = "assistant_web_search",
                 description = description,
                 parameters  = param_schema,
             },

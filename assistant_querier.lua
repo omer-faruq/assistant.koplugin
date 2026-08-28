@@ -1122,7 +1122,7 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                 end
                 tool_call_acc.current = {
                     id = json_default(fc.id) or json_default(fc.name) or "fc_0",
-                    name = json_default(fc.name) or "web_search",
+                    name = json_default(fc.name) or "assistant_web_search",
                     args = json_default(fc.args) or {}
                 }
                 stop_reason = "tool_calls"
