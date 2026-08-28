@@ -32,6 +32,7 @@ local test_files = {
     "test.test_notebook",
     "test.test_retry",
     "test.test_base_sync_options",
+    "test.test_chapter_context",
 }
 
 if filter then
