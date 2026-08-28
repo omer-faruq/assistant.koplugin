@@ -370,8 +370,6 @@ function SettingsDialog:updateSelectModelButton()
 end
 
 function SettingsDialog:onBrowseModel()
-    UIManager:close(self)
-    
     -- final check
     if not self.assistant.querier.handler.can_fetch_models then
         return
@@ -379,8 +377,23 @@ function SettingsDialog:onBrowseModel()
 
     ASUtils.runWhenOnlineFast(function()
         Trapper:wrap(function()
-            local showModelPicker = require("assistant_model_picker").showModelPicker
-            showModelPicker(self.assistant, self.close_callback)
+            local handler = self.assistant.querier.handler
+            local models, err = handler:FetchModels()
+            if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
+                return  -- user dismissed the InfoMessage; keep settings window
+            end
+            if err or not models or #models == 0 then
+                -- keep the settings window open on failure
+                UIManager:show(InfoMessage:new{
+                    icon = "notice-warning",
+                    text = err or _("No models available."),
+                })
+                return
+            end
+            -- success: close settings and open the model picker
+            UIManager:close(self)
+            local showPickerDialog = require("assistant_model_picker").showPickerDialog
+            showPickerDialog(self.assistant, models, self.close_callback, "", 1)
         end)
     end)
 end
