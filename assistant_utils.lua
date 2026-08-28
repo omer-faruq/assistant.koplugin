@@ -374,6 +374,176 @@ function M.getPageRangeText(ui, before, after, max_chars)
   return assemblePageContext(prev, current, next, max_chars)
 end
 
+--[[
+  Resolve the TOC chapter range containing the current reading position.
+
+  Returns nil when there is no usable TOC or the position is outside it:
+    - no ui / document / toc module
+    - empty TOC after fillToc()
+    - current page lies before the first TOC entry ("outside the TOC")
+
+  On success returns:
+    { start_page, end_page, next_page, title, start_xp, end_xp }
+  where next_page/end_xp are nil for the last chapter (extraction then runs
+  to the end of the document).
+--]]
+function M.getCurrentChapterRange(ui)
+  if not ui or not ui.document or not ui.toc then
+    return nil
+  end
+  if not ui.document.info then
+    return nil
+  end
+
+  -- Make sure the TOC is filled and non-empty.
+  local ok = pcall(function() ui.toc:fillToc() end)
+  if not ok or type(ui.toc.toc) ~= "table" or #ui.toc.toc == 0 then
+    return nil
+  end
+
+  -- Current reading position (mirrors extractBookTextForAnalysis conventions).
+  local page
+  if ui.document.info.has_pages then
+    page = ui.view and ui.view.state and ui.view.state.page
+  else
+    local xp_ok, xp = pcall(function() return ui.document:getXPointer() end)
+    if xp_ok and xp then
+      page = ui.document:getPageFromXPointer(xp)
+    end
+  end
+  if not page then
+    return nil
+  end
+
+  -- TOC entry covering the current page (nil when before the first entry).
+  local idx_ok, index = pcall(function() return ui.toc:getTocIndexByPage(page) end)
+  if not idx_ok or not index then
+    return nil
+  end
+
+  local toc = ui.toc.toc
+  local entry = toc[index]
+  -- Defensive: also treat an entry starting after our position as "outside
+  -- the TOC" (covers implementations returning index 1 for early pages).
+  if not entry or not entry.page or entry.page > page then
+    return nil
+  end
+
+  local total_pages = ui.document:getPageCount()
+  local next_entry = toc[index + 1]
+  local end_page
+  if next_entry and next_entry.page then
+    end_page = math.max(entry.page, next_entry.page - 1)
+  else
+    end_page = total_pages or entry.page
+  end
+
+  return {
+    start_page = entry.page,
+    end_page = end_page,
+    next_page = next_entry and next_entry.page or nil,
+    title = entry.title,
+    start_xp = entry.xpointer,
+    end_xp = next_entry and next_entry.xpointer or nil,
+  }
+end
+
+--[[
+  Best-effort end-of-document xpointer for reflowable documents, so the last
+  TOC chapter extracts to the true end (a page xpointer only reaches the
+  start of the last page). Candidates, first valid one wins:
+    1. xpointer of the page after the last (engine may clamp it to the end)
+    2. gotoPos beyond the document (clamps to the end) then getXPointer()
+  Falls back to the last page's start xpointer. Every step is pcall-guarded,
+  and candidates must be in-document and ordered after the current position
+  (compareXPointers) to be accepted.
+--]]
+local function getDocumentEndXPointer(ui)
+  local page_count = ui.document:getPageCount() or 1
+  local start_xp = ui.document:getXPointer()
+  local candidates = {}
+  pcall(function()
+    table.insert(candidates, ui.document:getPageXPointer(page_count + 1))
+  end)
+  pcall(function()
+    ui.document:gotoPos(2 ^ 30)
+    table.insert(candidates, ui.document:getXPointer())
+  end)
+  pcall(function() ui.document:gotoXPointer(start_xp) end)
+  for _, xp in ipairs(candidates) do
+    local ok_valid, ordered = pcall(function()
+      return xp and ui.document:isXPointerInDocument(xp)
+          and ui.document:compareXPointers(start_xp, xp) == 1
+    end)
+    if ok_valid and ordered then
+      return xp
+    end
+  end
+  return ui.document:getPageXPointer(page_count)
+end
+
+--[[
+  Extract the text of the current TOC chapter (see getCurrentChapterRange).
+
+  Returns nil when the chapter range cannot be resolved (no TOC / position
+  outside it), otherwise a string trimmed to features.max_text_length_for_analysis,
+  keeping the TAIL so the text nearest the reading position survives
+  (same guard style as extractBookTextForAnalysis).
+--]]
+function M.extractCurrentChapterText(CONFIGURATION, ui)
+  local range = M.getCurrentChapterRange(ui)
+  if not range then
+    return nil
+  end
+
+  local book_text = ""
+  if ui.document.info.has_pages then
+    -- Paged documents: collect the chapter's page texts.
+    local buf = shared_buf
+    buf:reset()
+    for page = range.start_page, range.end_page do
+      buf:put(pageTextToString(ui.document:getPageText(page)), "\n")
+    end
+    book_text = buf:get()
+  else
+    -- Reflowable documents: xpointer range (extraction mutates the view
+    -- position, so save/restore the xpointer around it, as getPageRangeText).
+    local saved_xp = ui.document:getXPointer()
+    local ok = pcall(function()
+      local start_xp = range.start_xp
+      if not start_xp then
+        start_xp = ui.document:getPageXPointer(range.start_page)
+      end
+      local end_xp = range.end_xp
+      if not end_xp then
+        if range.next_page then
+          -- No xpointer on the next TOC entry: an end xpointer at the START
+          -- of the following page still includes the chapter's final page
+          -- (same boundary convention as getPageRangeText).
+          end_xp = ui.document:getPageXPointer(range.next_page)
+        else
+          -- Last chapter: extract to the true end of the document.
+          end_xp = getDocumentEndXPointer(ui)
+        end
+      end
+      book_text = ui.document:getTextFromXPointers(start_xp, end_xp) or ""
+    end)
+    -- Always restore the view position.
+    pcall(function() ui.document:gotoXPointer(saved_xp) end)
+    if not ok then
+      return nil
+    end
+  end
+
+  local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
+  if #book_text > max_text_length_for_analysis then
+    book_text = book_text:sub(-max_text_length_for_analysis)
+    book_text = book_text:gsub("^[\128-\191]+", "")
+    book_text = util.fixUtf8(book_text, "_")
+  end
+  return book_text
+end
+
 function M.saveToNotebookFile(assistant, log_entry)
   local success, saved_path, save_err, used_fallback = pcall(function()
     local notebookfile = assistant.ui.bookinfo:getNotebookFile(assistant.ui.doc_settings)
