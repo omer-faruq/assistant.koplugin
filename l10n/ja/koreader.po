@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ 質問\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### 以下のトピックに興味があるかもしれません:"
-
-msgid "%1 (Compatible)"
-msgstr "%1（互換）"
 
 msgid "%1 — choose an action"
 msgstr "%1 — アクションを選択"
@@ -171,12 +168,6 @@ msgstr "AI応答言語"
 msgid "AI Response Language Setting"
 msgstr "AI応答言語の設定"
 
-msgid "AI Response Text Font Size"
-msgstr "AI応答テキストのフォントサイズ"
-
-msgid "AI Text Size: %1"
-msgstr "AIテキストサイズ: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "AIが応答中"
 
 msgid "API Key"
 msgstr "APIキー"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "APIキー — キーを入力し、「モデルを参照」をタップすると利用可能なモデルが一覧表示されます"
 
 msgid "API key is required for %1."
 msgstr "%1にはAPIキーが必要です。"
@@ -210,6 +204,12 @@ msgstr "%1を追加"
 msgid "Add %1 Provider"
 msgstr "%1プロバイダーを追加"
 
+msgid "Add Book Metadata as Context"
+msgstr "書籍メタデータをコンテキストとして追加"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "周辺ページのテキストをコンテキストとして追加"
+
 msgid "Add Note"
 msgstr "ノートを追加"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "書籍からのハイライト、メモ、ノートブック内容の分析。"
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "質問する"
 msgid "Ask Another Question"
 msgstr "別の質問をする"
 
+msgid "Ask a Question"
+msgstr "質問する"
+
 msgid "Ask a general question"
 msgstr "一般的な質問をする"
-
-msgid "Ask a question"
-msgstr "質問する"
 
 msgid "Ask a question about the highlighted text"
 msgstr "ハイライトしたテキストについて質問する"
@@ -262,10 +265,10 @@ msgstr "AIに質問する"
 msgid "Assistant settings are not available."
 msgstr "アシスタント設定を利用できません。"
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "長期間未読の本を開いたときに自動レキャップ"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "長期間未読の書籍を開いたときに自動要約"
 
-msgid "Auto-save conversations to notebook"
+msgid "Auto-save Conversations to Notebook"
 msgstr "会話をノートブックに自動保存"
 
 msgid "Base URL"
@@ -279,6 +282,9 @@ msgstr "ベースURLは必須です。"
 
 msgid "Base URL must start with http:// or https://"
 msgstr "ベースURLは http:// または https:// で始まる必要があります。"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "APIエンドポイントのベースURL（例: https://example.com/v1）"
 
 msgid "Book Analysis"
 msgstr "書籍分析"
@@ -339,6 +345,9 @@ msgstr "回答を作成中..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "設定が見つかりません。最初に configuration.lua を設定してください。"
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "AI LLMの応答言語を設定します。デフォルトはKOReaderのインターフェース言語です。"
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "設定されたノートブックフォルダにアクセスできません: %1"
 
@@ -349,6 +358,9 @@ msgstr "活用"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "文脈の限界"
+
+msgid "Context Settings"
+msgstr "コンテキスト設定"
 
 msgid "Contextual Connections"
 msgstr "文脈上の関連"
@@ -368,8 +380,8 @@ msgstr "会話はノートブックに保存されています。"
 msgid "Copy"
 msgstr "コピー"
 
-msgid "Copy entered question to the clipboard"
-msgstr "入力した質問をクリップボードにコピー"
+msgid "Copy to Clipboard"
+msgstr "クリップボードにコピー"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "ノートブックを作成します。"
 msgid "Cultural Significance"
 msgstr "文化的意義"
 
-msgid "Custom"
-msgstr "カスタム"
-
 msgid "Custom Prompt"
 msgstr "カスタムプロンプト"
 
@@ -430,9 +439,6 @@ msgstr "カスタムプロンプト"
 
 msgid "Deeply Thought"
 msgstr "思考内容"
-
-msgid "Default: auto"
-msgstr "デフォルト: auto"
 
 msgid "Delete"
 msgstr "削除"
@@ -494,8 +500,8 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
@@ -504,8 +510,8 @@ msgstr ""
 "<b>Github URL:</b>  %1\n"
 "<b>ソースリポジトリ:</b>  %2\n"
 "\n"
-"デフォルト: \"main\" (最新の開発ブランチ)\n"
-"例: \"main\", \"v1.12\", \"v1.11\"\n"
+"デフォルト: \"main\" (最先端の開発コード)\n"
+"このコードは不安定である可能性があり、翻訳が不完全な場合もあります。ベストエフォートでのみサポートされています。安定版に更新するには、代わりにタグを入力してください (例: \"v1.12\")。\n"
 "\n"
 "<b>configuration.lua は保持されます。</b>"
 
@@ -567,6 +573,9 @@ msgstr "詳細は、GitHubの「Configuration」wikiページを参照してく�
 
 msgid "Fun Analogy"
 msgstr "楽しい例え"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API。必ず/modelsセグメントを含めてください（例: …/v1beta/models）"
 
 msgid "General Conversation"
 msgstr "一般的な会話"
@@ -686,14 +695,14 @@ msgstr "Markdownエンジン"
 msgid "Meaning"
 msgstr "意味"
 
-msgid "Model"
-msgstr "モデル"
-
 msgid "Model Built-In"
 msgstr "モデル内蔵"
 
 msgid "Model reset: %1"
 msgstr "モデルをリセットしました: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "モデル — 「モデルを参照」をタップして利用可能なモデルを選択します"
 
 msgid "Model: %1"
 msgstr "モデル: %1"
@@ -704,7 +713,7 @@ msgstr "モデル: %1"
 msgid "Models: %1 (filtered)"
 msgstr "モデル: %1（フィルタリング済み）"
 
-msgid "Multiple notebooks"
+msgid "Multiple Notebooks"
 msgstr "複数のノートブック"
 
 msgid "Narrative element in focus:"
@@ -727,6 +736,9 @@ msgstr "利用可能なモデルがありません。"
 
 msgid "No models matching \"%1\"."
 msgstr "\"%1\" に一致するモデルがありません。"
+
+msgid "No notebooks folder is set."
+msgstr "ノートブックフォルダが設定されていません。"
 
 msgid "No notebooks yet"
 msgstr "ノートブックはまだありません"
@@ -800,11 +812,18 @@ msgstr "ノートブック: %1"
 msgid "Notebooks"
 msgstr "ノートブック"
 
-msgid "Notebooks folder"
+msgid "Notebooks Folder"
 msgstr "ノートブックフォルダ"
 
-msgid "Notebooks folder: %1"
+msgid "Notebooks Folder: %1"
 msgstr "ノートブックフォルダ: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"ノートブックフォルダのパス:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "ノートブックのパスはディレクトリではありません: %1"
@@ -828,8 +847,17 @@ msgstr "OTAアップデートはキャンセルされました。"
 msgid "OTA update failed: %1"
 msgstr "OTAアップデートに失敗しました: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "ブックコンテキストを有効にしたプロンプトでのみ使用されます（デフォルト: 説明、歴史的背景、要約、要点、ELI5）。有効にすると、ハイライトしたページと隣接するページのテキストが背景参照としてAIに送信されます。テキスト選択が必要になり、トークン使用量が増加します。"
+
 msgid "Open conflict or mystery:"
 msgstr "未解決の対立または謎："
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — 組み込みのウェブ検索を含める"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "OpenAI互換のchat/completionsエンドポイント（例: https://api.openai.com/v1）"
 
 msgid "Outstanding questions:"
 msgstr "未解決の疑問："
@@ -839,6 +867,9 @@ msgstr "ページ"
 
 msgid "Parts of Speech & Tenses"
 msgstr "品詞と時制"
+
+msgid "Pick one via Browse Models"
+msgstr "「モデルを参照」から選択してください"
 
 msgid "Platform"
 msgstr "プラットフォーム"
@@ -852,6 +883,9 @@ msgstr "あらすじ"
 msgid "Plugin is not configured."
 msgstr "プラグインが設定されていません。"
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "ブックコンテキストを有効にしたプロンプトに、書籍メタデータ（タイトル、著者、現在の読書位置（章を含む））を先頭に追加します（デフォルト: 説明、歴史的背景、要約、要点、ELI5）。プロンプトごとの動作は、設定ファイルのuse_book_contextで上書きできます。"
+
 msgid "Prevailing emotional state/tone:"
 msgstr "支配的な感情状態・トーン："
 
@@ -861,8 +895,8 @@ msgstr "主人公の現在の目的："
 msgid "Provider API"
 msgstr "プロバイダーAPI"
 
-msgid "Provider Name"
-msgstr "プロバイダー名"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "プロバイダー名 — メニューに表示されます。空欄の場合はAPIプロトコル名（例: \"openai\"）が使用されます"
 
 msgid "Provider data not initialized."
 msgstr "プロバイダーデータが初期化されていません。"
@@ -900,20 +934,6 @@ msgstr "消去"
 msgid "Purge Settings"
 msgstr "設定を消去"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"assistant.koplugin の設定を消去しますか？\n"
-"\n"
-"これによりプラグインは工場出荷時のデフォルトに戻ります。削除されるのは設定のみです。\n"
-"configuration.lua ファイルは保持されます。"
-
-msgid "Purge the settings"
-msgstr "設定を消去"
-
 msgid "Querying AI ..."
 msgstr "AIに問い合わせ中..."
 
@@ -948,11 +968,29 @@ msgstr "ユーザーによってリクエストがキャンセルされました
 msgid "Reset"
 msgstr "リセット"
 
+msgid "Reset Assistant Settings"
+msgstr "アシスタント設定をリセット"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"assistant.koplugin の設定をすべてリセットしますか？\n"
+"\n"
+"プラグインを工場出荷時の既定値に戻します。設定 UI で追加したプロバイダー、API キー、検索ツールの認証情報は削除されます。\n"
+"configuration.lua ファイルは保持されます。"
+
 msgid "Response"
 msgstr "応答"
 
 msgid "Response Settings"
 msgstr "応答設定"
+
+msgid "Response Text Font Size"
+msgstr "応答テキストのフォントサイズ"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1083,11 +1121,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "用語と概念"
 
+msgid "Text Size: %1"
+msgstr "テキストサイズ: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "テキストをクリップボードにコピーしました"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 のハンドラーが見つかりませんでした。api_handlers ディレクトリにハンドラーが存在することを確認してください。"
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "ノートブックは会話ログです。AIの回答やクイックノートがここに追加されます。複数のノートブックを作成してログを整理できます。"
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "このボタンは、選択したテキストを含むクイックノートを作成します。"
@@ -1207,11 +1251,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "「翻訳」にAIアシスタントを使用"
 
-msgid "Use book text as context"
-msgstr "本のテキストをコンテキストとして使用"
+msgid "Use Book Text as Context"
+msgstr "書籍テキストをコンテキストとして使用"
 
-msgid "Use book text for x-ray and recap"
-msgstr "X-Rayとレキャップに書籍テキストを使用"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "X-Ray と Recap に書籍テキストを使用"
+
+msgid "Use web search 🌐"
+msgstr "ウェブ検索を使用 🌐"
 
 msgid "User:"
 msgstr "ユーザー:"
@@ -1235,6 +1282,9 @@ msgstr "Web検索API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "それは何か"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "有効にすると、Recap と X-Ray 機能は、現在の読書位置までの書籍テキストを自動的にコンテキストとして含めます。これはブックレベルの機能のみに影響し、ハイライトメニューのプロンプトには影響しません。また、トークン使用量が大幅に増加します。"
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

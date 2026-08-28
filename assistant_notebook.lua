@@ -119,6 +119,24 @@ function M.getConfiguredFolder(assistant)
     end
 end
 
+-- Returns the last path segment of a folder, for compact menu display.
+-- Falls back to the full path when no segment can be extracted.
+function M.getFolderBasename(folder)
+    if not folder or folder == "" then
+        return nil
+    end
+    local _, name = util.splitFilePathName(folder)
+    if name == "" and folder:sub(-1) == "/" then
+        -- trailing slash: split again without it
+        local trimmed = folder:gsub("/+$", "")
+        _, name = util.splitFilePathName(trimmed)
+    end
+    if name == "" then
+        return folder
+    end
+    return name
+end
+
 -- Returns: folder, error, warning.
 -- A configured notebooks folder must already exist. If it does not,
 -- the default general_notebooks subfolder is used instead and a warning is returned.

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 02:47+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: عربى (AI translation)\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ السؤال\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### قد تهمك هذه الموضوعات:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (متوافق)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — اختر إجراءً"
@@ -171,12 +168,6 @@ msgstr "لغة استجابة الذكاء الاصطناعي"
 msgid "AI Response Language Setting"
 msgstr "إعداد لغة استجابة الذكاء الاصطناعي"
 
-msgid "AI Response Text Font Size"
-msgstr "حجم خط نص استجابة الذكاء الاصطناعي"
-
-msgid "AI Text Size: %1"
-msgstr "حجم نص الذكاء الاصطناعي: %1"
-
 msgid "AI X-Ray"
 msgstr "X-Ray للذكاء الاصطناعي"
 
@@ -185,6 +176,9 @@ msgstr "الذكاء الاصطناعي يرد"
 
 msgid "API Key"
 msgstr "مفتاح API"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "مفتاح API — أدخل مفتاحك، ثم اضغط على تصفح النماذج لعرض النماذج المتاحة"
 
 msgid "API key is required for %1."
 msgstr "مفتاح API مطلوب لـ %1."
@@ -210,6 +204,12 @@ msgstr "إضافة %1"
 msgid "Add %1 Provider"
 msgstr "إضافة مزود %1"
 
+msgid "Add Book Metadata as Context"
+msgstr "إضافة بيانات الكتاب الوصفية كسياق"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "إضافة نص الصفحات المجاورة كسياق"
+
 msgid "Add Note"
 msgstr "إضافة ملاحظة"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "تحليل لتمييزاتك وملاحظاتك ومحتوى دفتر ملاحظاتك من الكتاب."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "اسأل"
 msgid "Ask Another Question"
 msgstr "اسأل سؤالًا آخر"
 
+msgid "Ask a Question"
+msgstr "اطرح سؤالًا"
+
 msgid "Ask a general question"
 msgstr "اسأل سؤالاً عاماً"
-
-msgid "Ask a question"
-msgstr "اطرح سؤالاً"
 
 msgid "Ask a question about the highlighted text"
 msgstr "اسأل سؤالاً عن النص المميز"
@@ -262,11 +265,11 @@ msgstr "اسأل الذكاء الاصطناعي سؤالًا"
 msgid "Assistant settings are not available."
 msgstr "إعدادات المساعد غير متاحة."
 
-msgid "Auto-recap on opening long-unread books"
+msgid "Auto-recap on Opening Long-unread Books"
 msgstr "ملخص تلقائي عند فتح الكتب التي لم تُقرأ منذ فترة طويلة"
 
-msgid "Auto-save conversations to notebook"
-msgstr "حفظ المحادثات تلقائيًا في المفكرة"
+msgid "Auto-save Conversations to Notebook"
+msgstr "حفظ المحادثات تلقائيًا في دفتر الملاحظات"
 
 msgid "Base URL"
 msgstr "عنوان URL الأساسي"
@@ -279,6 +282,9 @@ msgstr "عنوان URL الأساسي مطلوب."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "يجب أن يبدأ عنوان URL الأساسي بـ http:// أو https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "عنوان URL الأساسي لنقطة نهاية API، مثال: https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "تحليل الكتاب"
@@ -339,6 +345,9 @@ msgstr "جارٍ صياغة الإجابة ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "لم يتم العثور على الإعدادات. يرجى إعداد configuration.lua أولاً."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "قم بتكوين لغة استجابة AI LLM. يتم تعيين الافتراضي على لغة واجهة KOReader."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "مجلد المفكرات المُهيأ غير قابل للوصول: %1"
 
@@ -349,6 +358,9 @@ msgstr "التصريف"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "قيود السياق"
+
+msgid "Context Settings"
+msgstr "إعدادات السياق"
 
 msgid "Contextual Connections"
 msgstr "الروابط السياقية"
@@ -368,8 +380,8 @@ msgstr "تم حفظ المحادثة في المفكرة"
 msgid "Copy"
 msgstr "نسخ"
 
-msgid "Copy entered question to the clipboard"
-msgstr "نسخ السؤال المُدخل إلى الحافظة"
+msgid "Copy to Clipboard"
+msgstr "نسخ إلى الحافظة"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "إنشاء مفكرة."
 msgid "Cultural Significance"
 msgstr "الأهمية الثقافية"
 
-msgid "Custom"
-msgstr "مخصص"
-
 msgid "Custom Prompt"
 msgstr "موجه مخصص"
 
@@ -430,9 +439,6 @@ msgstr "الموجهات المخصصة"
 
 msgid "Deeply Thought"
 msgstr "تفكير عميق"
-
-msgid "Default: auto"
-msgstr "الافتراضي: تلقائي"
 
 msgid "Delete"
 msgstr "حذف"
@@ -494,20 +500,20 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"أدخل اسم فرع أو وسم لتحديث الملحق من المستودع المصدر.\n"
+"أدخل اسم فرع أو وسم لتحديث الإضافة من المستودع المصدر.\n"
 "\n"
 "<b>رابط GitHub:</b>  %1\n"
 "<b>المستودع المصدر:</b>  %2\n"
 "\n"
-"الافتراضي: \"main\" (أحدث فرع تطويري)\n"
-"أمثلة: \"main\", \"v1.12\", \"v1.11\"\n"
+"الافتراضي: \"main\" (أحدث كود تطويري)\n"
+"قد يكون هذا الكود غير مستقر وقد تكون الترجمات غير مكتملة؛ وهو مدعوم على أساس بذل الجهد فقط. للتحديث إلى إصدار مستقر، أدخل وسمًا بدلاً من ذلك (مثل \"v1.12\").\n"
 "\n"
-"<b>سيتم الاحتفاظ بملف configuration.lua.</b>"
+"<b>سيتم الحفاظ على configuration.lua.</b>"
 
 msgid "Enter a question before proceeding."
 msgstr "أدخل سؤالاً قبل المتابعة."
@@ -567,6 +573,9 @@ msgstr "للتفاصيل، تفضل بزيارة صفحة الويكي 'Configur
 
 msgid "Fun Analogy"
 msgstr "تشبيه ممتع"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API. يجب أن يتضمن المقطع /models، مثال: …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "محادثة عامة"
@@ -691,14 +700,14 @@ msgstr "محرك ماركداون"
 msgid "Meaning"
 msgstr "المعنى"
 
-msgid "Model"
-msgstr "النموذج"
-
 msgid "Model Built-In"
 msgstr "النموذج المدمج"
 
 msgid "Model reset: %1"
 msgstr "تمت إعادة تعيين النموذج: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "النموذج — اضغط على تصفح النماذج لاختيار نموذج متاح"
 
 msgid "Model: %1"
 msgstr "النموذج: %1"
@@ -709,8 +718,8 @@ msgstr "النماذج: %1"
 msgid "Models: %1 (filtered)"
 msgstr "النماذج: %1 (مُصفّاة)"
 
-msgid "Multiple notebooks"
-msgstr "مفكرات متعددة"
+msgid "Multiple Notebooks"
+msgstr "دفاتر ملاحظات متعددة"
 
 msgid "Narrative element in focus:"
 msgstr "العنصر السردي المُركَّز عليه:"
@@ -732,6 +741,9 @@ msgstr "لا توجد نماذج متاحة."
 
 msgid "No models matching \"%1\"."
 msgstr "لا توجد نماذج تطابق \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "لم يتم تعيين مجلد دفاتر الملاحظات."
 
 msgid "No notebooks yet"
 msgstr "لا توجد مفكرات بعد"
@@ -805,11 +817,18 @@ msgstr "المفكرة: %1"
 msgid "Notebooks"
 msgstr "المفكرات"
 
-msgid "Notebooks folder"
-msgstr "مجلد المفكرات"
+msgid "Notebooks Folder"
+msgstr "مجلد دفاتر الملاحظات"
 
-msgid "Notebooks folder: %1"
+msgid "Notebooks Folder: %1"
 msgstr "مجلد المفكرات: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"مسار مجلد المفكرات:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "مسار المفكرات ليس مجلدًا: %1"
@@ -833,8 +852,17 @@ msgstr "تم إلغاء تحديث OTA."
 msgid "OTA update failed: %1"
 msgstr "فشل تحديث OTA: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "يُستخدم فقط بواسطة المطالبات التي تختار سياق الكتاب (افتراضيًا: الشرح، السياق التاريخي، التلخيص، النقاط الرئيسية وELI5). عند التمكين، يتم إرسال نص الصفحة المميزة والصفحات المجاورة إلى الذكاء الاصطناعي كمرجع خلفي. يتطلب تحديد نص ويزيد من استهلاك الرموز المميزة."
+
 msgid "Open conflict or mystery:"
 msgstr "الصراع أو اللغز المفتوح:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — تضمين البحث على الويب المدمج"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "نقطة نهاية chat/completions المتوافقة مع OpenAI، مثال: https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "الأسئلة المعلقة:"
@@ -844,6 +872,9 @@ msgstr "صفحة"
 
 msgid "Parts of Speech & Tenses"
 msgstr "أجزاء الكلام والأزمنة"
+
+msgid "Pick one via Browse Models"
+msgstr "اختر واحدًا عبر تصفح النماذج"
 
 msgid "Platform"
 msgstr "المنصة"
@@ -857,6 +888,9 @@ msgstr "ملخص الحبكة"
 msgid "Plugin is not configured."
 msgstr "الإضافة غير مهيأة."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "يضيف بيانات الكتاب الوصفية (العنوان والمؤلف وموضع القراءة الحالي بما في ذلك الفصل) في بداية المطالبات التي تختار سياق الكتاب (افتراضيًا: الشرح، السياق التاريخي، التلخيص، النقاط الرئيسية وELI5). يمكن تجاوز سلوك كل مطالبة باستخدام use_book_context في ملف الإعدادات."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "الحالة العاطفية/النبرة السائدة:"
 
@@ -866,8 +900,8 @@ msgstr "الهدف الحالي لبطل الرواية:"
 msgid "Provider API"
 msgstr "API المزوّد"
 
-msgid "Provider Name"
-msgstr "اسم المزود"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "اسم مزوّد الخدمة — يُعرض في القوائم؛ اتركه فارغًا لاستخدام اسم بروتوكول واجهة برمجة التطبيقات (مثل \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "لم تتم تهيئة بيانات المزوّد."
@@ -905,20 +939,6 @@ msgstr "مسح"
 msgid "Purge Settings"
 msgstr "مسح الإعدادات"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"مسح إعدادات assistant.koplugin؟\n"
-"\n"
-"سيؤدي هذا إلى استعادة الملحق إلى إعداداته الافتراضية. سيتم إزالة الإعدادات فقط؛ \n"
-"سيتم الاحتفاظ بملف configuration.lua."
-
-msgid "Purge the settings"
-msgstr "مسح الإعدادات"
-
 msgid "Querying AI ..."
 msgstr "جارٍ الاستعلام من الذكاء الاصطناعي ..."
 
@@ -953,11 +973,29 @@ msgstr "تم إلغاء الطلب من قبل المستخدم."
 msgid "Reset"
 msgstr "إعادة تعيين"
 
+msgid "Reset Assistant Settings"
+msgstr "إعادة تعيين إعدادات المساعد"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"إعادة تعيين جميع إعدادات assistant.koplugin؟\n"
+"\n"
+"سيؤدي هذا إلى استعادة الملحق إلى إعداداته الافتراضية. ستتم إزالة المزودين ومفاتيح API وبيانات اعتماد أداة البحث المضافة عبر واجهة الإعدادات.\n"
+"سيتم الاحتفاظ بملف configuration.lua."
+
 msgid "Response"
 msgstr "الرد"
 
 msgid "Response Settings"
 msgstr "إعدادات الاستجابة"
+
+msgid "Response Text Font Size"
+msgstr "حجم خط نص الرد"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1088,11 +1126,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "المصطلحات والمفاهيم"
 
+msgid "Text Size: %1"
+msgstr "حجم النص: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "تم نسخ النص إلى الحافظة"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "لم يتم العثور على المعالج لـ %1. يرجى التأكد من وجود المعالج في مجلد api_handlers."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "دفتر الملاحظات هو سجل المحادثات الخاص بك: يتم إلحاق إجابات الذكاء الاصطناعي والملاحظات السريعة به. يمكنك إنشاء دفاتر ملاحظات متعددة لتنظيم سجلاتك."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "ينشئ هذا الزر ملاحظة سريعة بالنص المميز."
@@ -1212,11 +1256,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "استخدام المساعد الذكي في 'الترجمة'"
 
-msgid "Use book text as context"
-msgstr "استخدم نص الكتاب كسياق"
+msgid "Use Book Text as Context"
+msgstr "استخدام نص الكتاب كسياق"
 
-msgid "Use book text for x-ray and recap"
-msgstr "استخدام نص الكتاب في X-Ray والملخص"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "استخدام نص الكتاب لـ X-Ray و Recap"
+
+msgid "Use web search 🌐"
+msgstr "استخدم البحث على الويب 🌐"
 
 msgid "User:"
 msgstr "المستخدم:"
@@ -1240,6 +1287,9 @@ msgstr "واجهة برمجة تطبيقات البحث على الويب"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "ما هو"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "عند التمكين، تقوم ميزتا Recap وX-Ray تلقائيًا بتضمين نص الكتاب حتى موضع القراءة الحالي كسياق. هذا يؤثر فقط على الميزات على مستوى الكتاب، وليس مطالبات قائمة التمييز، ويزيد بشكل كبير من استخدام الرموز."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

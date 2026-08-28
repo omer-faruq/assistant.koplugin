@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ שאלה\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### ייתכן שתמצאו נושאים אלה מעניינים:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (תואם)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — בחר פעולה"
@@ -171,12 +168,6 @@ msgstr "שפת תשובת ה-AI"
 msgid "AI Response Language Setting"
 msgstr "הגדרת שפת תשובת ה-AI"
 
-msgid "AI Response Text Font Size"
-msgstr "גודל גופן טקסט תשובת ה-AI"
-
-msgid "AI Text Size: %1"
-msgstr "גודל טקסט AI: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "ה-AI מגיב"
 
 msgid "API Key"
 msgstr "מפתח API"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "מפתח API — הזן את המפתח שלך, ולאחר מכן הקש על 'דפדף במודלים' כדי לרשום את המודלים הזמינים"
 
 msgid "API key is required for %1."
 msgstr "מפתח API נדרש עבור %1."
@@ -210,6 +204,12 @@ msgstr "הוסף %1"
 msgid "Add %1 Provider"
 msgstr "הוסף ספק %1"
 
+msgid "Add Book Metadata as Context"
+msgstr "הוסף מטא-נתונים של הספר כהקשר"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "הוסף טקסט של עמודים סמוכים כהקשר"
+
 msgid "Add Note"
 msgstr "הוסף הערה"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "ניתוח של ההדגשות, ההערות ותוכן המחברת שלך מהספר."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "שאל"
 msgid "Ask Another Question"
 msgstr "שאל שאלה נוספת"
 
+msgid "Ask a Question"
+msgstr "שאל שאלה"
+
 msgid "Ask a general question"
 msgstr "שאל שאלה כללית"
-
-msgid "Ask a question"
-msgstr "שאל שאלה"
 
 msgid "Ask a question about the highlighted text"
 msgstr "שאל שאלה על הטקסט שסומן"
@@ -262,10 +265,10 @@ msgstr "שאל את ה-AI שאלה"
 msgid "Assistant settings are not available."
 msgstr "הגדרות העוזר אינן זמינות."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "סיכום אוטומטי בפתיחת ספרים שלא נקראו זמן רב"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "תקציר אוטומטי בפתיחת ספרים שלא נקראו מזה זמן"
 
-msgid "Auto-save conversations to notebook"
+msgid "Auto-save Conversations to Notebook"
 msgstr "שמירה אוטומטית של שיחות למחברת"
 
 msgid "Base URL"
@@ -279,6 +282,9 @@ msgstr "נדרשת כתובת בסיס."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "כתובת הבסיס חייבת להתחיל ב-http:// או https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "כתובת ה-URL הבסיסית של נקודת הקצה של ה-API, למשל https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "ניתוח ספר"
@@ -339,6 +345,9 @@ msgstr "מרכיב תשובה..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "התצורה לא נמצאה. יש להגדיר את configuration.lua קודם."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "הגדר את שפת התגובה של מודל ה-AI (LLM). ברירת המחדל היא שפת הממשק של KOReader."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "תיקיית המחברות המוגדרת אינה נגישה: %1"
 
@@ -349,6 +358,9 @@ msgstr "הטיה"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "מגבלות הקשר"
+
+msgid "Context Settings"
+msgstr "הגדרות הקשר"
 
 msgid "Contextual Connections"
 msgstr "קשרים הקשריים"
@@ -368,8 +380,8 @@ msgstr "השיחה נשמרה למחברת"
 msgid "Copy"
 msgstr "העתק"
 
-msgid "Copy entered question to the clipboard"
-msgstr "העתק את השאלה שהוזנה ללוח הגזירים"
+msgid "Copy to Clipboard"
+msgstr "העתק ללוח"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "צור מחברת."
 msgid "Cultural Significance"
 msgstr "משמעות תרבותית"
 
-msgid "Custom"
-msgstr "מותאם אישית"
-
 msgid "Custom Prompt"
 msgstr "הנחיה מותאמת אישית"
 
@@ -430,9 +439,6 @@ msgstr "הנחיות מותאמות אישית"
 
 msgid "Deeply Thought"
 msgstr "חשיבה מעמיקה"
-
-msgid "Default: auto"
-msgstr "ברירת מחדל: auto"
 
 msgid "Delete"
 msgstr "מחיקה"
@@ -494,8 +500,8 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
@@ -504,8 +510,8 @@ msgstr ""
 "<b>כתובת Github:</b>  %1\n"
 "<b>מאגר מקור:</b>  %2\n"
 "\n"
-"ברירת מחדל: \"main\" (ענף הפיתוח העדכני)\n"
-"דוגמאות: \"main\", \"v1.12\", \"v1.11\"\n"
+"ברירת מחדל: \"main\" (קוד פיתוח עדכני)\n"
+"קוד זה עלול להיות לא יציב והתרגומים עלולים להיות לא שלמים; הוא נתמך על בסיס מיטב המאמץ בלבד. לעדכון לגרסה יציבה, הזן תג במקום (לדוגמה \"v1.12\").\n"
 "\n"
 "<b>הקובץ configuration.lua יישמר.</b>"
 
@@ -567,6 +573,9 @@ msgstr "לפרטים, בקר בדף הוויקי 'Configuration' ב-github."
 
 msgid "Fun Analogy"
 msgstr "אנלוגיה משעשעת"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API. חייב לכלול את הקטע /models, למשל …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "שיחה כללית"
@@ -689,14 +698,14 @@ msgstr "מנוע Markdown"
 msgid "Meaning"
 msgstr "משמעות"
 
-msgid "Model"
-msgstr "מודל"
-
 msgid "Model Built-In"
 msgstr "מובנה במודל"
 
 msgid "Model reset: %1"
 msgstr "איפוס מודל: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "מודל — הקש על 'דפדף במודלים' כדי לבחור מודל זמין"
 
 msgid "Model: %1"
 msgstr "מודל: %1"
@@ -707,7 +716,7 @@ msgstr "מודלים: %1"
 msgid "Models: %1 (filtered)"
 msgstr "מודלים: %1 (מסוננים)"
 
-msgid "Multiple notebooks"
+msgid "Multiple Notebooks"
 msgstr "מחברות מרובות"
 
 msgid "Narrative element in focus:"
@@ -730,6 +739,9 @@ msgstr "אין מודלים זמינים."
 
 msgid "No models matching \"%1\"."
 msgstr "אין מודלים תואמים ל-\"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "לא הוגדרה תיקיית מחברות."
 
 msgid "No notebooks yet"
 msgstr "אין עדיין מחברות"
@@ -803,11 +815,18 @@ msgstr "מחברת: %1"
 msgid "Notebooks"
 msgstr "מחברות"
 
-msgid "Notebooks folder"
-msgstr "תיקיית המחברות"
+msgid "Notebooks Folder"
+msgstr "תיקיית מחברות"
 
-msgid "Notebooks folder: %1"
-msgstr "תיקיית המחברות: %1"
+msgid "Notebooks Folder: %1"
+msgstr "תיקיית מחברות: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"נתיב תיקיית המחברות:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "הנתיב למחברות אינו תיקייה: %1"
@@ -831,8 +850,17 @@ msgstr "עדכון OTA בוטל."
 msgid "OTA update failed: %1"
 msgstr "עדכון OTA נכשל: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "משמש רק להנחיות שבוחרות להשתמש בהקשר הספר (בברירת מחדל: Explain, Historical Context, Summarize, Key Points ו-ELI5). כאשר הוא מופעל, הטקסט של העמוד המודגש והעמודים הסמוכים נשלח ל-AI כהפניה רקע. דורש בחירת טקסט ומגדיל את צריכת הטוקנים."
+
 msgid "Open conflict or mystery:"
 msgstr "קונפליקט או תעלומה פתוחים:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — כולל חיפוש אינטרנט מובנה"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "נקודת קצה תואמת OpenAI ל-chat/completions, למשל https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "שאלות פתוחות:"
@@ -842,6 +870,9 @@ msgstr "עמוד"
 
 msgid "Parts of Speech & Tenses"
 msgstr "חלקי דיבור וזמנים"
+
+msgid "Pick one via Browse Models"
+msgstr "בחר אחד דרך עיון בדגמים"
 
 msgid "Platform"
 msgstr "פלטפורמה"
@@ -855,6 +886,9 @@ msgstr "תקציר עלילה"
 msgid "Plugin is not configured."
 msgstr "התוסף אינו מוגדר."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "מוסיף מטא-נתונים של הספר (כותרת, מחבר ומיקום קריאה נוכחי כולל פרק) להנחיות שבוחרות בהקשר ספר (כברירת מחדל: הסבר, הקשר היסטורי, סיכום, נקודות עיקריות ו-ELI5). ניתן לעקוף התנהגות זו לכל הנחיה באמצעות use_book_context בקובץ התצורה."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "המצב הרגשי/הטון השולט:"
 
@@ -864,8 +898,8 @@ msgstr "המטרה הנוכחית של הגיבור הראשי:"
 msgid "Provider API"
 msgstr "API של הספק"
 
-msgid "Provider Name"
-msgstr "שם ספק"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "שם הספק — מוצג בתפריטים; השאר ריק כדי להשתמש בשם פרוטוקול ה-API (למשל \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "נתוני הספק לא אותחלו."
@@ -903,20 +937,6 @@ msgstr "נקה"
 msgid "Purge Settings"
 msgstr "מחיקת הגדרות"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"לנקות את הגדרות assistant.koplugin?\n"
-"\n"
-"פעולה זו תחזיר את התוסף להגדרות ברירת המחדל שלו. רק ההגדרות יוסרו; \n"
-"הקובץ configuration.lua יישמר."
-
-msgid "Purge the settings"
-msgstr "נקה את ההגדרות"
-
 msgid "Querying AI ..."
 msgstr "שואל את ה-AI..."
 
@@ -951,11 +971,29 @@ msgstr "הבקשה בוטלה על ידי המשתמש."
 msgid "Reset"
 msgstr "איפוס"
 
+msgid "Reset Assistant Settings"
+msgstr "איפוס הגדרות העוזר"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"לאפס את כל הגדרות assistant.koplugin?\n"
+"\n"
+"פעולה זו משחזרת את ההגדרות לברירת המחדל של היצרן. ספקים, מפתחות API ופרטי כניסה לכלי חיפוש שנוספו דרך ממשק ההגדרות יוסרו.\n"
+"הקובץ configuration.lua יישמר."
+
 msgid "Response"
 msgstr "תשובה"
 
 msgid "Response Settings"
 msgstr "הגדרות תגובה"
+
+msgid "Response Text Font Size"
+msgstr "גודל גופן טקסט התשובה"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1086,11 +1124,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "מונחים ומושגים"
 
+msgid "Text Size: %1"
+msgstr "גודל טקסט: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "הטקסט הועתק ללוח הגזירים"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "המטפל עבור %1 לא נמצא. אנא ודא שהמטפל קיים בתיקיית api_handlers."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "המחברת היא יומן השיחות שלך: תשובות AI והערות מהירות מתווספות אליה. ניתן ליצור מספר מחברות כדי לארגן את היומנים שלך."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "כפתור זה יוצר הערה מהירה עם הטקסט המסומן."
@@ -1210,11 +1254,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "השתמש בעוזר ה-AI עבור 'תרגום'"
 
-msgid "Use book text as context"
+msgid "Use Book Text as Context"
 msgstr "השתמש בטקסט הספר כהקשר"
 
-msgid "Use book text for x-ray and recap"
-msgstr "השתמש בטקסט הספר עבור X-Ray וסיכום"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "השתמש בטקסט הספר עבור X-Ray ו-Recap"
+
+msgid "Use web search 🌐"
+msgstr "השתמש בחיפוש אינטרנט 🌐"
 
 msgid "User:"
 msgstr "משתמש:"
@@ -1238,6 +1285,9 @@ msgstr "ממשק API לחיפוש באינטרנט"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "מה זה"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "כאשר אפשרות זו מופעלת, הפונקציות Recap ו-X-Ray כוללות אוטומטית את טקסט הספר עד למיקום הקריאה הנוכחי שלך כהקשר. זה משפיע רק על פונקציות ברמת הספר, לא על ההנחיות בתפריט הסימון, ומגדיל משמעותית את צריכת הטוקנים."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

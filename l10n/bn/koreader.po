@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 02:53+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: বাংলা (AI translation)\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ প্রশ্ন\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### এই বিষয়গুলো আপনার আগ্রহের হতে পারে:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (সামঞ্জস্যপূর্ণ)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — একটি কাজ বেছে নিন"
@@ -171,12 +168,6 @@ msgstr "AI প্রতিক্রিয়ার ভাষা"
 msgid "AI Response Language Setting"
 msgstr "AI প্রতিক্রিয়ার ভাষা সেটিং"
 
-msgid "AI Response Text Font Size"
-msgstr "AI প্রতিক্রিয়ার টেক্সট ফন্ট সাইজ"
-
-msgid "AI Text Size: %1"
-msgstr "AI টেক্সট সাইজ: %1"
-
 msgid "AI X-Ray"
 msgstr "এআই এক্স-রে"
 
@@ -185,6 +176,9 @@ msgstr "AI সাড়া দিচ্ছে"
 
 msgid "API Key"
 msgstr "API কী"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "API কী — আপনার কী লিখুন, তারপর উপলব্ধ মডেলগুলির তালিকা পেতে Browse Models-এ ট্যাপ করুন"
 
 msgid "API key is required for %1."
 msgstr "%1-এর জন্য API কী প্রয়োজন।"
@@ -210,6 +204,12 @@ msgstr "%1 যোগ করুন"
 msgid "Add %1 Provider"
 msgstr "%1 প্রদানকারী যোগ করুন"
 
+msgid "Add Book Metadata as Context"
+msgstr "বইয়ের মেটাডেটা প্রসঙ্গ হিসেবে যোগ করুন"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "সংলগ্ন পৃষ্ঠার পাঠ্য প্রসঙ্গ হিসেবে যোগ করুন"
+
 msgid "Add Note"
 msgstr "নোট যোগ করুন"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "বই থেকে আপনার হাইলাইট, নোট এবং নোটবুক বিষয়বস্তুর বিশ্লেষণ।"
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "জিজ্ঞাসা করুন"
 msgid "Ask Another Question"
 msgstr "আরেকটি প্রশ্ন জিজ্ঞাসা করুন"
 
+msgid "Ask a Question"
+msgstr "প্রশ্ন করুন"
+
 msgid "Ask a general question"
 msgstr "একটি সাধারণ প্রশ্ন জিজ্ঞাসা করুন"
-
-msgid "Ask a question"
-msgstr "একটি প্রশ্ন জিজ্ঞাসা করুন"
 
 msgid "Ask a question about the highlighted text"
 msgstr "হাইলাইট করা লেখা সম্পর্কে একটি প্রশ্ন জিজ্ঞাসা করুন"
@@ -262,11 +265,11 @@ msgstr "এআই-কে একটি প্রশ্ন করুন"
 msgid "Assistant settings are not available."
 msgstr "সহায়ক সেটিংস উপলব্ধ নেই।"
 
-msgid "Auto-recap on opening long-unread books"
+msgid "Auto-recap on Opening Long-unread Books"
 msgstr "দীর্ঘদিন পড়া হয়নি এমন বই খোলার সময় স্বয়ংক্রিয় রিক্যাপ"
 
-msgid "Auto-save conversations to notebook"
-msgstr "কথোপকথন স্বয়ংক্রিয়ভাবে নোটবুকে সংরক্ষণ করুন"
+msgid "Auto-save Conversations to Notebook"
+msgstr "নোটবুকে কথোপকথন স্বয়ংক্রিয় সংরক্ষণ"
 
 msgid "Base URL"
 msgstr "বেস URL"
@@ -279,6 +282,9 @@ msgstr "বেস URL প্রয়োজন।"
 
 msgid "Base URL must start with http:// or https://"
 msgstr "বেস URL অবশ্যই http:// বা https:// দিয়ে শুরু হতে হবে।"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "API এন্ডপয়েন্টের বেস URL, যেমন https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "বই বিশ্লেষণ"
@@ -339,6 +345,9 @@ msgstr "উত্তর তৈরি করা হচ্ছে ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "কনফিগারেশন পাওয়া যায়নি। অনুগ্রহ করে আগে configuration.lua সেট আপ করুন।"
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "AI LLM-এর প্রতিক্রিয়া ভাষা কনফিগার করুন। ডিফল্টভাবে KOReader ইন্টারফেস ভাষা ব্যবহার হয়।"
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "কনফিগার করা নোটবুক ফোল্ডারটি অ্যাক্সেসযোগ্য নয়: %1"
 
@@ -349,6 +358,9 @@ msgstr "ক্রিয়ার রূপ"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "প্রসঙ্গের সীমাবদ্ধতা"
+
+msgid "Context Settings"
+msgstr "প্রসঙ্গ সেটিংস"
 
 msgid "Contextual Connections"
 msgstr "প্রাসঙ্গিক সংযোগ"
@@ -368,8 +380,8 @@ msgstr "কথোপকথন নোটবুকে সংরক্ষণ কর
 msgid "Copy"
 msgstr "কপি"
 
-msgid "Copy entered question to the clipboard"
-msgstr "লেখা প্রশ্নটি ক্লিপবোর্ডে কপি করুন"
+msgid "Copy to Clipboard"
+msgstr "ক্লিপবোর্ডে কপি করুন"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "একটি নোটবুক তৈরি করুন।"
 msgid "Cultural Significance"
 msgstr "সাংস্কৃতিক তাৎপর্য"
 
-msgid "Custom"
-msgstr "কাস্টম"
-
 msgid "Custom Prompt"
 msgstr "কাস্টম প্রম্পট"
 
@@ -430,9 +439,6 @@ msgstr "কাস্টম প্রম্পট"
 
 msgid "Deeply Thought"
 msgstr "গভীর চিন্তা"
-
-msgid "Default: auto"
-msgstr "ডিফল্ট: অটো"
 
 msgid "Delete"
 msgstr "মুছুন"
@@ -494,18 +500,18 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"সোর্স রিপোজিটরি থেকে প্লাগইন আপডেট করতে একটি ব্রাঞ্চ বা ট্যাগের নাম লিখুন।\n"
+"উৎস রিপোজিটরি থেকে প্লাগইন আপডেট করতে একটি ব্রাঞ্চ বা ট্যাগের নাম লিখুন।\n"
 "\n"
-"<b>গিটহাব URL:</b>  %1\n"
-"<b>সোর্স রিপো:</b>  %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Source Repo:</b>  %2\n"
 "\n"
-"ডিফল্ট: \"main\" (সর্বশেষ ডেভেলপমেন্ট ব্রাঞ্চ)\n"
-"উদাহরণ: \"main\", \"v1.12\", \"v1.11\"\n"
+"ডিফল্ট: \"main\" (পরীক্ষামূলক উন্নয়ন কোড)\n"
+"এই কোডটি অস্থির হতে পারে এবং অনুবাদ অসম্পূর্ণ থাকতে পারে; এটি শুধুমাত্র সর্বোচ্চ চেষ্টার ভিত্তিতে সমর্থিত। স্থিতিশীল রিলিজে আপডেট করতে, পরিবর্তে একটি ট্যাগ লিখুন (যেমন \"v1.12\")।\n"
 "\n"
 "<b>configuration.lua ফাইলটি সংরক্ষিত থাকবে।</b>"
 
@@ -567,6 +573,9 @@ msgstr "বিস্তারিত জানতে, github-এ 'Configuration' 
 
 msgid "Fun Analogy"
 msgstr "মজার উপমা"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API-এ /models সেগমেন্ট অন্তর্ভুক্ত করতে হবে, যেমন …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "সাধারণ কথোপকথন"
@@ -687,14 +696,14 @@ msgstr "মার্কডাউন ইঞ্জিন"
 msgid "Meaning"
 msgstr "অর্থ"
 
-msgid "Model"
-msgstr "মডেল"
-
 msgid "Model Built-In"
 msgstr "মডেলের অন্তর্নির্মিত"
 
 msgid "Model reset: %1"
 msgstr "মডেল রিসেট হয়েছে: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "মডেল — উপলব্ধ মডেল নির্বাচন করতে Browse Models-এ ট্যাপ করুন"
 
 msgid "Model: %1"
 msgstr "মডেল: %1"
@@ -705,7 +714,7 @@ msgstr "মডেল: %1"
 msgid "Models: %1 (filtered)"
 msgstr "মডেল: %1 (ফিল্টার করা)"
 
-msgid "Multiple notebooks"
+msgid "Multiple Notebooks"
 msgstr "একাধিক নোটবুক"
 
 msgid "Narrative element in focus:"
@@ -728,6 +737,9 @@ msgstr "কোনো মডেল উপলব্ধ নেই।"
 
 msgid "No models matching \"%1\"."
 msgstr "\"%1\" এর সাথে মিলে এমন কোনো মডেল নেই।"
+
+msgid "No notebooks folder is set."
+msgstr "কোনো নোটবুক ফোল্ডার সেট করা নেই।"
 
 msgid "No notebooks yet"
 msgstr "এখনও কোনো নোটবুক নেই"
@@ -801,11 +813,18 @@ msgstr "নোটবুক: %1"
 msgid "Notebooks"
 msgstr "নোটবুক"
 
-msgid "Notebooks folder"
+msgid "Notebooks Folder"
 msgstr "নোটবুক ফোল্ডার"
 
-msgid "Notebooks folder: %1"
+msgid "Notebooks Folder: %1"
 msgstr "নোটবুক ফোল্ডার: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"নোটবুক ফোল্ডারের পথ:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "নোটবুক পাথটি একটি ডিরেক্টরি নয়: %1"
@@ -829,8 +848,17 @@ msgstr "OTA আপডেট বাতিল করা হয়েছে।"
 msgid "OTA update failed: %1"
 msgstr "OTA আপডেট ব্যর্থ হয়েছে: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "শুধুমাত্র সেই প্রম্পটগুলির দ্বারা ব্যবহৃত হয় যা বই প্রসঙ্গে অপ্ট-ইন করে (ডিফল্টভাবে: Explain, Historical Context, Summarize, Key Points এবং ELI5)। সক্রিয় করা হলে, হাইলাইট করা পৃষ্ঠা এবং সংলগ্ন পৃষ্ঠাগুলির পাঠ্য AI-তে পটভূমি রেফারেন্স হিসেবে পাঠানো হয়। একটি পাঠ্য নির্বাচন প্রয়োজন এবং টোকেন ব্যবহার বৃদ্ধি করে।"
+
 msgid "Open conflict or mystery:"
 msgstr "অমীমাংসিত দ্বন্দ্ব বা রহস্য:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — বিল্ট-ইন ওয়েব সার্চ অন্তর্ভুক্ত করুন"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "OpenAI-সামঞ্জস্যপূর্ণ chat/completions এন্ডপয়েন্ট, যেমন https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "অমীমাংসিত প্রশ্ন:"
@@ -840,6 +868,9 @@ msgstr "পৃষ্ঠা"
 
 msgid "Parts of Speech & Tenses"
 msgstr "পদ প্রকরণ ও কাল"
+
+msgid "Pick one via Browse Models"
+msgstr "Browse Models থেকে একটি নির্বাচন করুন"
 
 msgid "Platform"
 msgstr "প্ল্যাটফর্ম"
@@ -853,6 +884,9 @@ msgstr "প্লট সারসংক্ষেপ"
 msgid "Plugin is not configured."
 msgstr "প্লাগইন কনফিগার করা হয়নি।"
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "বইয়ের মেটাডেটা (শিরোনাম, লেখক এবং অধ্যায়সহ বর্তমান পাঠ অবস্থান) সেই প্রম্পটগুলোর শুরুতে যুক্ত করা হয় যেগুলো বইয়ের প্রসঙ্গে অপ্ট-ইন করে (ডিফল্ট: Explain, Historical Context, Summarize, Key Points এবং ELI5)। প্রতি-প্রম্পটের আচরণ কনফিগারেশন ফাইলের use_book_context দিয়ে ওভাররাইড করা যেতে পারে।"
+
 msgid "Prevailing emotional state/tone:"
 msgstr "প্রচলিত আবেগগত অবস্থা/সুর:"
 
@@ -862,8 +896,8 @@ msgstr "নায়কের বর্তমান লক্ষ্য:"
 msgid "Provider API"
 msgstr "প্রোভাইডার API"
 
-msgid "Provider Name"
-msgstr "প্রদানকারীর নাম"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "পরিষেবা প্রদানকারীর নাম — মেনুতে দেখানো হয়; API প্রোটোকল নাম ব্যবহার করতে খালি রাখুন (যেমন \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "প্রোভাইডার ডেটা আরম্ভ করা হয়নি।"
@@ -901,20 +935,6 @@ msgstr "মুছে ফেলুন"
 msgid "Purge Settings"
 msgstr "সেটিংস মুছুন"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"assistant.koplugin-এর সেটিংস মুছে ফেলবেন?\n"
-"\n"
-"এটি প্লাগইনটিকে তার ফ্যাক্টরি ডিফল্টে ফিরিয়ে নেবে। শুধুমাত্র সেটিংস মুছে যাবে; \n"
-"configuration.lua ফাইলটি সংরক্ষিত থাকবে।"
-
-msgid "Purge the settings"
-msgstr "সেটিংস মুছে ফেলুন"
-
 msgid "Querying AI ..."
 msgstr "AI-কে জিজ্ঞাসা করা হচ্ছে ..."
 
@@ -949,11 +969,29 @@ msgstr "ব্যবহারকারীর দ্বারা অনুরো�
 msgid "Reset"
 msgstr "রিসেট"
 
+msgid "Reset Assistant Settings"
+msgstr "সহায়ক সেটিংস রিসেট করুন"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"সমস্ত assistant.koplugin সেটিংস রিসেট করবেন?\n"
+"\n"
+"এটি প্লাগইনটিকে তার ফ্যাক্টরি ডিফল্টে ফিরিয়ে নেবে। সেটিংস UI-এর মাধ্যমে যোগ করা প্রোভাইডার, API কী এবং সার্চ টুলের শংসাপত্র মুছে ফেলা হবে।\n"
+"configuration.lua ফাইলটি সংরক্ষিত থাকবে।"
+
 msgid "Response"
 msgstr "প্রতিক্রিয়া"
 
 msgid "Response Settings"
 msgstr "প্রতিক্রিয়া সেটিংস"
+
+msgid "Response Text Font Size"
+msgstr "উত্তরের পাঠ্য ফন্টের আকার"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1084,11 +1122,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "শব্দ ও ধারণা"
 
+msgid "Text Size: %1"
+msgstr "পাঠ্যের আকার: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "টেক্সট ক্লিপবোর্ডে কপি করা হয়েছে"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1-এর জন্য হ্যান্ডলার পাওয়া যায়নি। অনুগ্রহ করে নিশ্চিত করুন যে হ্যান্ডলারটি api_handlers ডিরেক্টরিতে আছে।"
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "নোটবুকটি আপনার কথোপকথনের লগ: AI উত্তর এবং দ্রুত নোট এতে যুক্ত হয়। আপনার লগগুলো সাজাতে একাধিক নোটবুক তৈরি করতে পারেন।"
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "এই বাটনটি হাইলাইট করা পাঠ্য সহ একটি দ্রুত নোট তৈরি করে।"
@@ -1208,11 +1252,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "'অনুবাদ'-এর জন্য AI সহকারী ব্যবহার করুন"
 
-msgid "Use book text as context"
-msgstr "বইয়ের লেখাকে প্রসঙ্গ হিসেবে ব্যবহার করুন"
+msgid "Use Book Text as Context"
+msgstr "বইয়ের পাঠ্যকে প্রসঙ্গ হিসেবে ব্যবহার করুন"
 
-msgid "Use book text for x-ray and recap"
-msgstr "এক্স-রে এবং রিক্যাপের জন্য বইয়ের টেক্সট ব্যবহার করুন"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "X-Ray এবং Recap-এর জন্য বইয়ের পাঠ্য ব্যবহার করুন"
+
+msgid "Use web search 🌐"
+msgstr "ওয়েব সার্চ ব্যবহার করুন 🌐"
 
 msgid "User:"
 msgstr "ব্যবহারকারী:"
@@ -1236,6 +1283,9 @@ msgstr "ওয়েব সার্চ API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "এটি কী"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "সক্রিয় করলে, Recap এবং X-Ray ফিচারগুলো স্বয়ংক্রিয়ভাবে আপনার বর্তমান পাঠ অবস্থান পর্যন্ত বইয়ের পাঠ্য প্রসঙ্গ হিসেবে অন্তর্ভুক্ত করে। এটি শুধুমাত্র বই-স্তরের ফিচারগুলোকে প্রভাবিত করে, হাইলাইট-মেনুর প্রম্পটগুলোকে নয়, এবং টোকেন ব্যবহার উল্লেখযোগ্যভাবে বাড়িয়ে দেয়।"
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

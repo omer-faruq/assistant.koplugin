@@ -512,41 +512,91 @@ end
 SettingsDialog.genMenuSettings = function(assistant)
     local sub_item_table = {
         {
-            text_func = function ()
-                return _("AI Language: ") .. 
-                    (assistant.settings:readSetting("response_language") or assistant.ui_language)
-            end,
-            callback = function (touchmenu_instance)
-                LanguageSetting(assistant, function ()
-                    touchmenu_instance:updateItems()
-                end)
-            end,
-            keep_menu_open = true,
-        },
-        {
-            text_func = function ()
-                return T(_("AI Text Size: %1"), assistant.settings:readSetting("response_font_size") or 20)
-            end,
-            callback = function (touchmenu_instance)
-                local widget = SpinWidget:new{
-                    title_text = _("AI Response Text Font Size"),
-                    value = assistant.settings:readSetting("response_font_size") or 20,
-                    value_min = 12, value_max = 30, default_value = 20,
-                    callback = function(spin)
-                        assistant.settings:saveSetting("response_font_size", spin.value)
+            text = _("Context Settings"),
+            sub_item_table = {
+                {
+                    text = _("Add Book Metadata as Context"),
+                    checked_func = function() return assistant.settings:readSetting("prepend_book_metadata", true) end,
+                    callback = function()
+                        assistant.settings:toggle("prepend_book_metadata")
                         assistant.updated = true
                     end,
-                    close_callback = function ()
-                        touchmenu_instance:updateItems()
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file.")
+                        })
                     end
-                }
-                UIManager:show(widget)
-            end,
-            keep_menu_open = true,
+                },
+                {
+                    text = _("Add Nearby Page Text as Context"),
+                    checked_func = function() return assistant.settings:readSetting("include_page_text", false) end,
+                    callback = function()
+                        assistant.settings:toggle("include_page_text")
+                        assistant.updated = true
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage.")
+                        })
+                    end
+                },
+                {
+                    text = _("Use Book Text for X-Ray and Recap"),
+                    checked_func = function () return assistant.settings:readSetting("use_book_text_for_analysis", false) end,
+                    callback = function()
+                        assistant.settings:toggle("use_book_text_for_analysis")
+                        assistant.updated = true
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage.")
+                        })
+                    end
+                },
+            }
         },
         {
             text = _("Response Settings"),
             sub_item_table = {
+                {
+                    text_func = function ()
+                        return _("AI Language: ") ..
+                            (assistant.settings:readSetting("response_language") or assistant.ui_language)
+                    end,
+                    callback = function (touchmenu_instance)
+                        LanguageSetting(assistant, function ()
+                            touchmenu_instance:updateItems()
+                        end)
+                    end,
+                    keep_menu_open = true,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Configure the response language of the AI LLM. Defaults to the KOReader interface language.")
+                        })
+                    end
+                },
+                {
+                    text_func = function ()
+                        return T(_("Text Size: %1"), assistant.settings:readSetting("response_font_size") or 20)
+                    end,
+                    callback = function (touchmenu_instance)
+                        local widget = SpinWidget:new{
+                            title_text = _("Response Text Font Size"),
+                            value = assistant.settings:readSetting("response_font_size") or 20,
+                            value_min = 12, value_max = 30, default_value = 20,
+                            callback = function(spin)
+                                assistant.settings:saveSetting("response_font_size", spin.value)
+                                assistant.updated = true
+                            end,
+                            close_callback = function ()
+                                touchmenu_instance:updateItems()
+                            end
+                        }
+                        UIManager:show(widget)
+                    end,
+                    keep_menu_open = true,
+                    separator = true,
+                },
                 {
                     text = _("Enable Stream Response"),
                     checked_func = function () return assistant.settings:readSetting("use_stream_mode", true) end,
@@ -604,9 +654,14 @@ SettingsDialog.genMenuSettings = function(assistant)
         },
         {
             text = _("Notebook Settings"),
+            hold_callback = function ()
+                UIManager:show(InfoMessage:new{
+                    text = _("The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs.")
+                })
+            end,
             sub_item_table = {
                 {
-                    text = _("Auto-save conversations to notebook"),
+                    text = _("Auto-save Conversations to Notebook"),
                     checked_func = function () return assistant.settings:readSetting("auto_save_to_notebook", false) end,
                     callback = function()
                         assistant.settings:toggle("auto_save_to_notebook")
@@ -614,7 +669,7 @@ SettingsDialog.genMenuSettings = function(assistant)
                     end
                 },
                 {
-                    text = _("Multiple notebooks"),
+                    text = _("Multiple Notebooks"),
                     checked_func = function ()
                         return assistant.settings:readSetting("use_multiple_general_notebooks", false)
                     end,
@@ -632,9 +687,9 @@ SettingsDialog.genMenuSettings = function(assistant)
                     text_func = function ()
                         local folder = Notebook.getFolder(assistant, false)
                         if folder then
-                            return T(_("Notebooks folder: %1"), folder)
+                            return T(_("Notebooks Folder: %1"), Notebook.getFolderBasename(folder))
                         end
-                        return _("Notebooks folder")
+                        return _("Notebooks Folder")
                     end,
                     callback = function (touchmenu_instance)
                         Notebook.showFolderPicker(assistant, {
@@ -644,6 +699,14 @@ SettingsDialog.genMenuSettings = function(assistant)
                         })
                     end,
                     keep_menu_open = true,
+                    hold_callback = function ()
+                        local folder, folder_err = Notebook.getFolder(assistant, false)
+                        UIManager:show(InfoMessage:new{
+                            text = folder
+                                and T(_("Notebooks folder path:\n%1"), folder)
+                                or (folder_err or _("No notebooks folder is set."))
+                        })
+                    end,
                 },
             },
         },
@@ -664,7 +727,7 @@ SettingsDialog.genMenuSettings = function(assistant)
                     end
                 },
                 {
-                    text = _("Auto-recap on opening long-unread books"),
+                    text = _("Auto-recap on Opening Long-unread Books"),
                     checked_func = function () return assistant.settings:readSetting("enable_auto_recap", false) end,
                     callback = function()
                         assistant.settings:toggle("enable_auto_recap")
@@ -709,23 +772,25 @@ SettingsDialog.genMenuSettings = function(assistant)
                         assistant.updated = true
                     end
                 },
+                {
+                    text = _("Reset Assistant Settings"),
+                    callback = function()
+                        UIManager:show(ConfirmBox:new{
+                            text = _([[Reset all assistant.koplugin settings?
+
+This restores the plugin to its factory defaults. Providers, API keys and
+search tool credentials added via the Settings UI will be removed.
+File configuration.lua will be preserved.]]),
+                            ok_text = _("Reset"),
+                            ok_callback = function()
+                                assistant.settings:reset({})
+                                assistant.settings:flush()
+                                UIManager:askForRestart()
+                            end
+                        })
+                    end
+                },
             }
-        },
-        {
-            text = _("Copy entered question to the clipboard"),
-            checked_func = function () return assistant.settings:readSetting("auto_copy_asked_question", true) end,
-            callback = function()
-                assistant.settings:toggle("auto_copy_asked_question")
-                assistant.updated = true
-            end
-        },
-        {
-            text = _("Use book text for x-ray and recap"),
-            checked_func = function () return assistant.settings:readSetting("use_book_text_for_analysis", false) end,
-            callback = function()
-                assistant.settings:toggle("use_book_text_for_analysis")
-                assistant.updated = true
-            end
         },
         {
             text = _("OTA Update"),
@@ -740,11 +805,11 @@ SettingsDialog.genMenuSettings = function(assistant)
                     input = "main",
                     input_hint = _("branch or tag name"),
                     description = ASUtils.bold_format(
-                        T(_("Enter a branch or tag name to update the plugin from the source repository.\n\n<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\nDefault: \"main\" (latest development branch)\nExamples: \"main\", \"v1.12\", \"v1.11\"\n\n<b>The configuration.lua will be preserved.</b>"),
+                        T(_("Enter a branch or tag name to update the plugin from the source repository.\n\n<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\nDefault: \"main\" (bleeding-edge development code)\nThis code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n\n<b>The configuration.lua will be preserved.</b>"),
                           ota_github_base, ota_github_repo)
                     ),
                     buttons = {
-                        -- The cancellation button should be kept on the left 
+                        -- The cancellation button should be kept on the left
                         -- and the button executing the action on the right.
                         {
                             {
@@ -771,23 +836,6 @@ ASUtils.runWhenOnlineFast(function()
                 UIManager:show(version_input)
             end,
             keep_menu_open = true,
-        },
-        {
-            text = _("Purge the settings"),
-            callback = function()
-                UIManager:show(ConfirmBox:new{
-                    text = _([[Purge assistant.koplugin settings?
-
-This restores the plugin to its factory defaults. Only settings will be removed; 
-File configuration.lua will be preserved.]]),
-                    ok_text = _("Purge"),
-                    ok_callback = function()
-                        assistant.settings:reset({})
-                        assistant.settings:flush()
-                        UIManager:askForRestart()
-                    end
-                })
-            end
         },
     }
 

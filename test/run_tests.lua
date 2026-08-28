@@ -23,11 +23,13 @@ package.path = PROJECT_ROOT .. "/?.lua;" .. PROJECT_ROOT .. "/?/init.lua;" .. pa
 -- Collect test files
 local test_files = {
     "test.test_exttools",
+    "test.test_prompts",
     "test.test_menu_paths",
     "test.test_provider_registry",
     "test.test_search_registry",
     "test.test_updater",
     "test.test_querier_stream",
+    "test.test_notebook",
     "test.test_retry",
 }
 

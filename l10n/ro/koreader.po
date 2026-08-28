@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Întrebare\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### S-ar putea să găsești interesante aceste subiecte:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (Compatibil)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — alege o acțiune"
@@ -171,12 +168,6 @@ msgstr "Limba răspunsurilor AI"
 msgid "AI Response Language Setting"
 msgstr "Setarea limbii răspunsurilor AI"
 
-msgid "AI Response Text Font Size"
-msgstr "Dimensiunea fontului textului răspunsului AI"
-
-msgid "AI Text Size: %1"
-msgstr "Dimensiunea textului AI: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "AI-ul răspunde"
 
 msgid "API Key"
 msgstr "Cheie API"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "Cheie API — introduceți cheia, apoi atingeți Navigare modele pentru a lista modelele disponibile"
 
 msgid "API key is required for %1."
 msgstr "Cheia API este necesară pentru %1."
@@ -210,6 +204,12 @@ msgstr "Adaugă %1"
 msgid "Add %1 Provider"
 msgstr "Adaugă furnizorul %1"
 
+msgid "Add Book Metadata as Context"
+msgstr "Adăugați metadatele cărții ca context"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Adăugați textul paginii învecinate ca context"
+
 msgid "Add Note"
 msgstr "Adaugă notă"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analiza evidențierilor, notelor și conținutului din caiet referitoare la carte."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Întreabă"
 msgid "Ask Another Question"
 msgstr "Pune altă întrebare"
 
+msgid "Ask a Question"
+msgstr "Adresați o întrebare"
+
 msgid "Ask a general question"
 msgstr "Pune o întrebare generală"
-
-msgid "Ask a question"
-msgstr "Pune o întrebare"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Pune o întrebare despre textul evidențiat"
@@ -262,11 +265,11 @@ msgstr "Pune o întrebare AI-ului"
 msgid "Assistant settings are not available."
 msgstr "Setările asistentului nu sunt disponibile."
 
-msgid "Auto-recap on opening long-unread books"
+msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Recapitulare automată la deschiderea cărților necitite de mult timp"
 
-msgid "Auto-save conversations to notebook"
-msgstr "Salvează automat conversațiile în caiet"
+msgid "Auto-save Conversations to Notebook"
+msgstr "Salvare automată a conversațiilor în caiet"
 
 msgid "Base URL"
 msgstr "URL de bază"
@@ -279,6 +282,9 @@ msgstr "URL-ul de bază este obligatoriu."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "URL-ul de bază trebuie să înceapă cu http:// sau https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "URL-ul de bază al punctului final API, de ex. https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Analiză carte"
@@ -339,6 +345,9 @@ msgstr "Se compune răspunsul ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Configurația nu a fost găsită. Vă rugăm să configurați mai întâi configuration.lua."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Configurați limba răspunsului AI LLM. Implicit este limba interfeței KOReader."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Folderul configurat pentru caiete nu este accesibil: %1"
 
@@ -349,6 +358,9 @@ msgstr "Conjugare"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Limitări de context"
+
+msgid "Context Settings"
+msgstr "Setări context"
 
 msgid "Contextual Connections"
 msgstr "Conexiuni contextuale"
@@ -368,8 +380,8 @@ msgstr "Conversația este salvată în caiet"
 msgid "Copy"
 msgstr "Copiază"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Copiază întrebarea introdusă în clipboard"
+msgid "Copy to Clipboard"
+msgstr "Copiază în clipboard"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Creează un caiet."
 msgid "Cultural Significance"
 msgstr "Semnificație culturală"
 
-msgid "Custom"
-msgstr "Personalizat"
-
 msgid "Custom Prompt"
 msgstr "Prompt personalizat"
 
@@ -430,9 +439,6 @@ msgstr "Prompturi personalizate"
 
 msgid "Deeply Thought"
 msgstr "Gândire profundă"
-
-msgid "Default: auto"
-msgstr "Implicit: auto"
 
 msgid "Delete"
 msgstr "Ștergere"
@@ -494,18 +500,18 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Introdu un nume de ramură sau de etichetă pentru a actualiza pluginul din depozitul sursă.\n"
+"Introduceți numele unui branch sau tag pentru a actualiza pluginul din depozitul sursă.\n"
 "\n"
-"<b>URL Github:</b>  %1\n"
+"<b>URL GitHub:</b>  %1\n"
 "<b>Depozit sursă:</b>  %2\n"
 "\n"
-"Implicit: \"main\" (ultima ramură de dezvoltare)\n"
-"Exemple: \"main\", \"v1.12\", \"v1.11\"\n"
+"Implicit: \"main\" (cod de dezvoltare experimental)\n"
+"Acest cod poate fi instabil, iar traducerile pot fi incomplete; este suportat doar în limita posibilităților. Pentru a actualiza la o versiune stabilă, introduceți în schimb un tag (de exemplu, \"v1.12\").\n"
 "\n"
 "<b>Fișierul configuration.lua va fi păstrat.</b>"
 
@@ -567,6 +573,9 @@ msgstr "Pentru detalii, vizitează pagina wiki „Configuration” de pe GitHub.
 
 msgid "Fun Analogy"
 msgstr "Analogia amuzantă"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "API Gemini. trebuie să includă segmentul /models, de ex. …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Conversație generală"
@@ -688,14 +697,14 @@ msgstr "Motor Markdown"
 msgid "Meaning"
 msgstr "Semnificație"
 
-msgid "Model"
-msgstr "Model"
-
 msgid "Model Built-In"
 msgstr "Model încorporat"
 
 msgid "Model reset: %1"
 msgstr "Model resetat: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Model — atingeți Navigare modele pentru a alege un model disponibil"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -706,7 +715,7 @@ msgstr "Modele: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Modele: %1 (filtrate)"
 
-msgid "Multiple notebooks"
+msgid "Multiple Notebooks"
 msgstr "Mai multe caiete"
 
 msgid "Narrative element in focus:"
@@ -729,6 +738,9 @@ msgstr "Niciun model disponibil."
 
 msgid "No models matching \"%1\"."
 msgstr "Niciun model care să se potrivească cu \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "Niciun folder de caiete nu este setat."
 
 msgid "No notebooks yet"
 msgstr "Nu există încă caiete."
@@ -802,11 +814,18 @@ msgstr "Caiet: %1"
 msgid "Notebooks"
 msgstr "Caiete"
 
-msgid "Notebooks folder"
+msgid "Notebooks Folder"
 msgstr "Folderul caietelor"
 
-msgid "Notebooks folder: %1"
+msgid "Notebooks Folder: %1"
 msgstr "Folderul caietelor: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Calea folderului de caiete:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "Calea pentru caiete nu este un director: %1"
@@ -830,8 +849,17 @@ msgstr "Actualizarea OTA a fost anulată."
 msgid "OTA update failed: %1"
 msgstr "Actualizarea OTA a eșuat: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Folosit doar de prompt-urile care optează pentru contextul cărții (implicit: Explică, Context istoric, Rezumat, Puncte cheie și ELI5). Când este activat, textul paginii evidențiate și al paginilor învecinate este trimis AI-ului ca referință de fundal. Necesită o selecție de text și crește utilizarea token-urilor."
+
 msgid "Open conflict or mystery:"
 msgstr "Conflict deschis sau mister:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — Include căutare web încorporată"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "Punct final chat/completions compatibil cu OpenAI, de ex. https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Întrebări deschise:"
@@ -841,6 +869,9 @@ msgstr "Pagina"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Părți de vorbire și timpuri verbale"
+
+msgid "Pick one via Browse Models"
+msgstr "Selectați unul prin Răsfoirea modelelor"
 
 msgid "Platform"
 msgstr "Platformă"
@@ -854,6 +885,9 @@ msgstr "Rezumatul acțiunii"
 msgid "Plugin is not configured."
 msgstr "Pluginul nu este configurat."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Antepune metadatele cărții (titlu, autor și poziția curentă de citire, inclusiv capitolul) prompt-urilor care optează pentru contextul cărții (implicit: Explică, Context istoric, Rezumat, Puncte cheie și ELI5). Comportamentul per-prompt poate fi suprascris cu use_book_context în fișierul de configurare."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Starea emoțională/tonul predominant:"
 
@@ -863,8 +897,8 @@ msgstr "Obiectivul actual al protagonistului:"
 msgid "Provider API"
 msgstr "API furnizor"
 
-msgid "Provider Name"
-msgstr "Numele furnizorului"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Nume furnizor — afișat în meniuri; lăsați gol pentru a folosi numele protocolului API (de ex. „openai”)"
 
 msgid "Provider data not initialized."
 msgstr "Datele furnizorului nu au fost inițializate."
@@ -902,20 +936,6 @@ msgstr "Șterge"
 msgid "Purge Settings"
 msgstr "Ștergeți setările"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Ștergi setările assistant.koplugin?\n"
-"\n"
-"Aceasta readuce pluginul la setările implicite din fabrică. Vor fi eliminate doar setările; \n"
-"Fișierul configuration.lua va fi păstrat."
-
-msgid "Purge the settings"
-msgstr "Șterge setările"
-
 msgid "Querying AI ..."
 msgstr "Se interoghează AI-ul ..."
 
@@ -950,11 +970,30 @@ msgstr "Cerere anulată de utilizator."
 msgid "Reset"
 msgstr "Resetare"
 
+msgid "Reset Assistant Settings"
+msgstr "Resetează setările asistentului"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Resetați toate setările assistant.koplugin?\n"
+"\n"
+"Aceasta readuce pluginul la setările implicite din fabrică. Furnizorii, cheile API și\n"
+"credențialele instrumentului de căutare adăugate prin interfața de setări vor fi eliminate.\n"
+"Fișierul configuration.lua va fi păstrat."
+
 msgid "Response"
 msgstr "Răspuns"
 
 msgid "Response Settings"
 msgstr "Setări de răspuns"
+
+msgid "Response Text Font Size"
+msgstr "Dimensiunea fontului pentru textul de răspuns"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1085,11 +1124,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Termeni și concepte"
 
+msgid "Text Size: %1"
+msgstr "Dimensiune text: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "Textul a fost copiat în clipboard"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handlerul pentru %1 nu a fost găsit. Asigurați-vă că handlerul există în directorul api_handlers."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "Caietul este jurnalul conversațiilor: răspunsurile AI și notele rapide sunt adăugate la el. Puteți crea mai multe caiete pentru a organiza jurnalele."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Acest buton creează o notă rapidă cu textul evidențiat."
@@ -1209,11 +1254,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Folosește Asistentul AI pentru „Traducere”"
 
-msgid "Use book text as context"
+msgid "Use Book Text as Context"
 msgstr "Folosește textul cărții ca context"
 
-msgid "Use book text for x-ray and recap"
+msgid "Use Book Text for X-Ray and Recap"
 msgstr "Folosește textul cărții pentru X-Ray și Recap"
+
+msgid "Use web search 🌐"
+msgstr "Utilizați căutarea web 🌐"
 
 msgid "User:"
 msgstr "Utilizator:"
@@ -1237,6 +1285,9 @@ msgstr "API WebSearch"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Ce este"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Când este activat, funcțiile Recap și X-Ray includ automat textul cărții până la poziția curentă de citire ca context. Acest lucru afectează doar funcțiile la nivel de carte, nu prompt-urile din meniul de evidențiere, și crește semnificativ utilizarea token-urilor."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

@@ -132,6 +132,7 @@ This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant function
 - **Error handling**: Functions return `nil, err` on failure (or `false, err` for HTTP calls). Callers check the first return value.
 - **OOP pattern**: Lua metatable-based inheritance — `BaseHandler:new{...}` creates instances, `setmetatable(o, self)` with `self.__index = self` for class-like behavior.
 - **Localization**: All user-facing strings wrapped in `_("text")`. Import with `local _ = require("assistant_gettext")`. Plural forms use `N_("1 item", "%1 items", n)`.
+- **Menu & UI label casing**: Menu titles, settings items, checkboxes, and dialog labels use Title Case — e.g. `"Prepend Book Metadata to Prompts"`, `"Use Book Text for X-Ray and Recap"`. Keep short function words (`to`, `for`, `as`, `and`, `in`) lowercase, consistent with existing labels.
 - **Rich Text & Formatting**: Use `assistant_utils.bold_format(...)` with `<b>` and `</b>` tags (e.g. `assistant_utils.bold_format(T(_("<b>Header:</b> %1"), val))`) to format bold runs in dialogs. Avoid manual string concatenation; keep strings contiguous inside `T(_("..."))` templates so they remain easy to translate.
 - **Configuration access**: Use `koutil.tableGetValue(CONFIGURATION, "path", "to", "key")` for safe nested access with defaults.
 - **Table & util helpers (prefer existing)**: Before writing manual `for k,v in pairs(t) do copy[k]=v end` loops, check `koutil` (`require("util")`, i.e. KOReader `frontend/util.lua`) and `ffi/util`. Common helpers:
@@ -189,6 +190,7 @@ cd l10n && API_KEY=your_key make ai-translate L10N_LANG=fr  # Single language
 
 ## Tips for AI Agents
 
+- **Developer's English**: The developer is not a native English speaker, so wording they provide (UI strings, docs, commit messages) may not be idiomatic. Correct it into natural, idiomatic English while preserving their intent — e.g. prefer established terms like "bleeding-edge code" over literal phrasings.
 - **Never read or modify `configuration.lua`** — it contains user secrets. Update `configuration.sample.lua` only.
 - **Exclude `l10n/` from code searches and reads** — it contains only `.po`/`.pot` translation strings in 40+ languages. Searching or reading these files wastes tokens with no code insight.
 - **New providers**: if OpenAI-compatible, alias `OpenAIHandler:new{name="..."}` (see `deepseek.lua`). If it needs custom auth/response shape, extend `BaseHandler` and implement `query`/`SyncOptions`/`FetchModels`. Route response parsing through `self:parseToolCalls(...)`.

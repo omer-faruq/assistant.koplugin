@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Ceist\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### B'fhéidir go mbeidh na hábhair seo suimiúil duit:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (Comhoiriúnach)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — roghnaigh gníomh"
@@ -171,12 +168,6 @@ msgstr "Teanga Freagra AI"
 msgid "AI Response Language Setting"
 msgstr "Socrú Teanga Freagra AI"
 
-msgid "AI Response Text Font Size"
-msgstr "Méid Cló Théacs Freagra AI"
-
-msgid "AI Text Size: %1"
-msgstr "Méid Théacs AI: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "Tá AI ag freagairt"
 
 msgid "API Key"
 msgstr "Eochair API"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "Eochair API — iontráil d'eochair, ansin tapáil Brabhsáil Samhlacha chun na samhlacha atá ar fáil a liostú"
 
 msgid "API key is required for %1."
 msgstr "Tá eochair API ag teastáil le haghaidh %1."
@@ -210,6 +204,12 @@ msgstr "Cuir %1 leis"
 msgid "Add %1 Provider"
 msgstr "Cuir Soláthraí %1 leis"
 
+msgid "Add Book Metadata as Context"
+msgstr "Cuir Meiteashonraí an Leabhair mar Chomhthéacs"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Cuir Téacs Leathanach in aice láimhe mar Chomhthéacs"
+
 msgid "Add Note"
 msgstr "Cuir Nóta Leis"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Anailís ar do chuid aibhsithe, nótaí, agus ábhar an leabhar nótaí ón leabhar."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Fiafraigh"
 msgid "Ask Another Question"
 msgstr "Cuir Ceist Eile"
 
+msgid "Ask a Question"
+msgstr "Cuir Ceist"
+
 msgid "Ask a general question"
 msgstr "Cuir ceist ghinearálta"
-
-msgid "Ask a question"
-msgstr "Cuir ceist"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Cuir ceist faoin téacs aibhsithe"
@@ -262,11 +265,11 @@ msgstr "Cuir ceist ar an AI"
 msgid "Assistant settings are not available."
 msgstr "Níl socruithe an chúntóra ar fáil."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "Uathachoimre nuair a osclaítear leabhair nár léadh le fada"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "Achoimre uathoibríoch ar leabhair nár léadh le fada"
 
-msgid "Auto-save conversations to notebook"
-msgstr "Sábháil comhráite go huathoibríoch sa leabhar nótaí"
+msgid "Auto-save Conversations to Notebook"
+msgstr "Comhráite a shábháil go huathoibríoch sa leabhar nótaí"
 
 msgid "Base URL"
 msgstr "URL Bonn"
@@ -279,6 +282,9 @@ msgstr "Tá bun-URL ag teastáil."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "Caithfidh an bun-URL tosú le http:// nó https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "URL bonn an chríochphointe API, m.sh. https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Anailís Leabhar"
@@ -339,6 +345,9 @@ msgstr "Ag cumadh freagra ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Níor aimsíodh an chumraíocht. Cumraigh configuration.lua ar dtús, le do thoil."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Cumraigh teanga freagartha an AI LLM. Réamhshocraítear go teanga chomhéadain KOReader."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Níl rochtain ar fhillteán na leabhar nótaí atá cumraithe: %1"
 
@@ -349,6 +358,9 @@ msgstr "Réimniú"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Teorainneacha Comhthéacs"
+
+msgid "Context Settings"
+msgstr "Socruithe Comhthéacs"
 
 msgid "Contextual Connections"
 msgstr "Naisc Chomhthéacsúla"
@@ -368,8 +380,8 @@ msgstr "Tá an comhrá sábháilte sa leabhar nótaí."
 msgid "Copy"
 msgstr "Cóipeáil"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Cóipeáil an cheist iontráilte chuig an ngearrthaisce"
+msgid "Copy to Clipboard"
+msgstr "Cóipeáil go dtí an ghearrthaisce"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Cruthaigh leabhar nótaí."
 msgid "Cultural Significance"
 msgstr "Tábhacht Chultúrtha"
 
-msgid "Custom"
-msgstr "Saincheaptha"
-
 msgid "Custom Prompt"
 msgstr "Treoir Shaincheaptha"
 
@@ -430,9 +439,6 @@ msgstr "Prómpaí Saincheaptha"
 
 msgid "Deeply Thought"
 msgstr "Machnamh Domhain"
-
-msgid "Default: auto"
-msgstr "Réamhshocrú: auto"
 
 msgid "Delete"
 msgstr "Scrios"
@@ -494,20 +500,20 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Iontráil ainm brainse nó clibe chun an breiseán a nuashonrú ón stór foinseach.\n"
+"Cuir isteach ainm brainse nó chlib chun an breiseán a nuashonrú ón stór foinseach.\n"
 "\n"
-"<b>Github URL:</b>  %1\n"
+"<b>URL Github:</b>  %1\n"
 "<b>Stór Foinseach:</b>  %2\n"
 "\n"
-"Réamhshocrú: \"main\" (an brainse forbartha is déanaí)\n"
-"Samplaí: \"main\", \"v1.12\", \"v1.11\"\n"
+"Réamhshocrú: \"main\" (cód forbartha ar thús cadhnaíochta)\n"
+"D'fhéadfadh an cód seo a bheith éagobhsaí agus d'fhéadfadh na haistriúcháin a bheith neamhiomlán; tacaítear leis ar bhonn dea-thola amháin. Chun nuashonrú cobhsaí a fháil, cuir isteach clib ina ionad sin (m.sh. \"v1.12\").\n"
 "\n"
-"<b>Caomhnófar an comhad configuration.lua.</b>"
+"<b>Caomhnófar an configuration.lua.</b>"
 
 msgid "Enter a question before proceeding."
 msgstr "Cuir isteach ceist sula leanann tú ar aghaidh."
@@ -567,6 +573,9 @@ msgstr "Le haghaidh sonraí, tabhair cuairt ar leathanach wiki 'Configuration' a
 
 msgid "Fun Analogy"
 msgstr "Analaí Spraíúil"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "API Gemini. ní mór an chuid /models a bheith san áireamh, m.sh. …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Comhrá Ginearálta"
@@ -690,14 +699,14 @@ msgstr "Inneall Markdown"
 msgid "Meaning"
 msgstr "Brí"
 
-msgid "Model"
-msgstr "Múnla"
-
 msgid "Model Built-In"
 msgstr "Samhail Ionsuite"
 
 msgid "Model reset: %1"
 msgstr "Samhail athshocraithe: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Samhail — tapáil Brabhsáil Samhlacha chun samhail atá ar fáil a roghnú"
 
 msgid "Model: %1"
 msgstr "Samhail: %1"
@@ -708,8 +717,8 @@ msgstr "Samhlacha: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Samhlacha: %1 (scagtha)"
 
-msgid "Multiple notebooks"
-msgstr "Leabhair nótaí iolracha"
+msgid "Multiple Notebooks"
+msgstr "Il-Leabhair Nótaí"
 
 msgid "Narrative element in focus:"
 msgstr "Gné insinte atá i bhfócas:"
@@ -731,6 +740,9 @@ msgstr "Níl aon samhail ar fáil."
 
 msgid "No models matching \"%1\"."
 msgstr "Níl aon samhail ag teacht le \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "Níl aon fhillteán leabhar nótaí socraithe."
 
 msgid "No notebooks yet"
 msgstr "Níl aon leabhar nótaí fós"
@@ -804,11 +816,18 @@ msgstr "Leabhar nótaí: %1"
 msgid "Notebooks"
 msgstr "Leabhair nótaí"
 
-msgid "Notebooks folder"
-msgstr "Fillteán na leabhar nótaí"
+msgid "Notebooks Folder"
+msgstr "Fillteán Leabhar Nótaí"
 
-msgid "Notebooks folder: %1"
-msgstr "Fillteán na leabhar nótaí: %1"
+msgid "Notebooks Folder: %1"
+msgstr "Fillteán Nótaí: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Cosán fillteáin nótaí:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "Ní fillteán é cosán na leabhar nótaí: %1"
@@ -832,8 +851,17 @@ msgstr "Cealaíodh an nuashonrú OTA."
 msgid "OTA update failed: %1"
 msgstr "Theip ar an nuashonrú OTA: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Úsáidtear é ach amháin ag prasanna a roghnaíonn comhthéacs an leabhair (de réir réamhshocraithe: Explain, Historical Context, Summarize, Key Points agus ELI5). Nuair a chumasaítear é, seoltar téacs an leathanaigh aibhsithe agus na leathanaigh in aice láimhe chuig an AI mar thagairt chúlra. Éilíonn sé roghnú téacs agus méadaíonn sé úsáid token."
+
 msgid "Open conflict or mystery:"
 msgstr "Coimhlint nó rúndiamhair gan réiteach:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — Cuir san áireamh cuardach gréasáin ionsuite"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "Críochphointe comhrá/críochnuithe atá comhoiriúnach le OpenAI, m.sh. https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Ceisteanna gan freagra:"
@@ -843,6 +871,9 @@ msgstr "Leathanach"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Codanna Cainte & Aimsireacha"
+
+msgid "Pick one via Browse Models"
+msgstr "Roghnaigh ceann trí Brabhsáil Mhúnlaí"
 
 msgid "Platform"
 msgstr "Ardán"
@@ -856,6 +887,9 @@ msgstr "Achoimre Plota"
 msgid "Plugin is not configured."
 msgstr "Níl an breiseán cumraithe."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Cuireann sé meiteashonraí an leabhair (teideal, údar agus suíomh reatha léitheoireachta lena n-áirítear caibidil) roimh phrasanna a roghnaíonn comhthéacs an leabhair (de réir réamhshocraithe: Mínigh, Comhthéacs Stairiúil, Achoimre, Príomhphointí agus ELI5). Is féidir iompar gach pras a shárú le use_book_context sa chomhad cumraíochta."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Staid mhothúchánach/ton atá i réim:"
 
@@ -865,8 +899,8 @@ msgstr "Cuspóir reatha an phríomhcharachtair:"
 msgid "Provider API"
 msgstr "API Soláthraí"
 
-msgid "Provider Name"
-msgstr "Ainm an tSoláthraí"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Ainm an tSoláthraí — ar taispeáint sna roghchláir; fág folamh chun ainm phrótacal an API a úsáid (m.sh. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Níl sonraí an tsoláthraí curtha ar bun."
@@ -904,20 +938,6 @@ msgstr "Glan"
 msgid "Purge Settings"
 msgstr "Glan Socruithe"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Glan socruithe assistant.koplugin?\n"
-"\n"
-"Cuireann sé seo an breiseán ar ais go dtí a réamhshocruithe monarchan. Ní bhainfear ach na socruithe; \n"
-"Caomhnófar an comhad configuration.lua."
-
-msgid "Purge the settings"
-msgstr "Glan na socruithe"
-
 msgid "Querying AI ..."
 msgstr "Ag fiosrú AI ..."
 
@@ -952,11 +972,28 @@ msgstr "Cealaíodh an t-iarratas ag an úsáideoir."
 msgid "Reset"
 msgstr "Athshocraigh"
 
+msgid "Reset Assistant Settings"
+msgstr "Athshocraigh Socruithe an Chúntóra"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Athshocraigh gach socrú assistant.koplugin?\n"
+"\n"
+"Athchóireálann sé seo an breiseán go dtí a réamhshocruithe monarchan. Bainfear soláthróirí, eochracha API agus dintiúir uirlis chuardaigh a cuireadh leis trí Chomhéadan na Socruithe. Caomhnófar an comhad configuration.lua."
+
 msgid "Response"
 msgstr "Freagra"
 
 msgid "Response Settings"
 msgstr "Socruithe Freagra"
+
+msgid "Response Text Font Size"
+msgstr "Méid Cló Téacs Freagra"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1087,11 +1124,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Téarmaí & Coincheapa"
 
+msgid "Text Size: %1"
+msgstr "Méid Téacs: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "Cóipeáladh an téacs chuig an ngearrthaisce."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Níor aimsíodh an láimhseálaí do %1. Déan cinnte go bhfuil an láimhseálaí san eolaire api_handlers."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "Is é an leabhar nótaí do log comhrá: cuirtear freagraí AI agus nótaí tapa leis. Is féidir leat níos mó ná leabhar nótaí amháin a chruthú chun do logaí a eagrú."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Cruthaíonn an cnaipe seo nóta tapa leis an téacs aibhsithe."
@@ -1211,11 +1254,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Úsáid an Cúntóir AI le haghaidh 'Aistriú'"
 
-msgid "Use book text as context"
-msgstr "Úsáid téacs an leabhair mar chomhthéacs"
+msgid "Use Book Text as Context"
+msgstr "Úsáid Téacs an Leabhair mar Chomhthéacs"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Úsáid téacs an leabhair le haghaidh x-ray agus achoimre"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Úsáid Téacs an Leabhair le haghaidh X-Ray agus Recap"
+
+msgid "Use web search 🌐"
+msgstr "Úsáid cuardach gréasáin 🌐"
 
 msgid "User:"
 msgstr "Úsáideoir:"
@@ -1239,6 +1285,9 @@ msgstr "API WebSearch"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Cad é atá ann"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Nuair a chuirtear ar siúl é, cuimsíonn na gnéithe Recap agus X-Ray téacs an leabhair suas go dtí do shuíomh reatha léitheoireachta mar chomhthéacs go huathoibríoch. Ní dhéanann sé seo difear ach do ghnéithe ar leibhéal an leabhair, ní do phrasanna roghchlár an aibhsithe, agus méadaíonn sé úsáid na dtóicín go suntasach."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

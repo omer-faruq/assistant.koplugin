@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 02:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: 中文（台灣) (AI translation)\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ 問題\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### 您可能對這些主題感興趣："
-
-msgid "%1 (Compatible)"
-msgstr "%1（相容）"
 
 msgid "%1 — choose an action"
 msgstr "%1 — 選擇動作"
@@ -171,12 +168,6 @@ msgstr "AI 回應語言"
 msgid "AI Response Language Setting"
 msgstr "AI 回應語言設定"
 
-msgid "AI Response Text Font Size"
-msgstr "AI 回應文字字型大小"
-
-msgid "AI Text Size: %1"
-msgstr "AI 文字大小：%1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "AI 正在回應"
 
 msgid "API Key"
 msgstr "API 金鑰"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "API 金鑰 — 輸入您的金鑰，然後點選「瀏覽模型」以列出可用的模型"
 
 msgid "API key is required for %1."
 msgstr "%1 需要 API 金鑰。"
@@ -210,6 +204,12 @@ msgstr "新增 %1"
 msgid "Add %1 Provider"
 msgstr "新增 %1 服務商"
 
+msgid "Add Book Metadata as Context"
+msgstr "將書籍元資料新增為上下文"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "將附近頁面文字新增為上下文"
+
 msgid "Add Note"
 msgstr "新增筆記"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "分析您在本書中的畫線、筆記與筆記本內容。"
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "詢問"
 msgid "Ask Another Question"
 msgstr "再問一個問題"
 
+msgid "Ask a Question"
+msgstr "提出問題"
+
 msgid "Ask a general question"
 msgstr "詢問一般問題"
-
-msgid "Ask a question"
-msgstr "提出問題"
 
 msgid "Ask a question about the highlighted text"
 msgstr "詢問與反白文字相關的問題"
@@ -262,11 +265,11 @@ msgstr "向 AI 提問"
 msgid "Assistant settings are not available."
 msgstr "助理設定目前無法使用。"
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "開啟久未閱讀的書籍時自動 Recap"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "開啟久未閱讀書籍時自動回顧"
 
-msgid "Auto-save conversations to notebook"
-msgstr "自動將對話儲存到筆記本"
+msgid "Auto-save Conversations to Notebook"
+msgstr "自動將對話儲存至筆記本"
 
 msgid "Base URL"
 msgstr "基礎 URL"
@@ -279,6 +282,9 @@ msgstr "必須填寫 Base URL。"
 
 msgid "Base URL must start with http:// or https://"
 msgstr "Base URL 必須以 http:// 或 https:// 開頭。"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "API 端點的基礎 URL，例如 https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "書籍分析"
@@ -339,6 +345,9 @@ msgstr "正在撰寫回答 ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "找不到設定檔。請先設定 configuration.lua。"
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "設定 AI 語言模型（LLM）的回應語言。預設為 KOReader 的介面語言。"
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "設定的筆記本資料夾無法存取：%1"
 
@@ -349,6 +358,9 @@ msgstr "動詞變化"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "上下文限制"
+
+msgid "Context Settings"
+msgstr "上下文設定"
 
 msgid "Contextual Connections"
 msgstr "上下文關聯"
@@ -368,8 +380,8 @@ msgstr "對話已儲存到筆記本"
 msgid "Copy"
 msgstr "複製"
 
-msgid "Copy entered question to the clipboard"
-msgstr "將輸入的問題複製到剪貼簿"
+msgid "Copy to Clipboard"
+msgstr "複製到剪貼簿"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "建立筆記本。"
 msgid "Cultural Significance"
 msgstr "文化意義"
 
-msgid "Custom"
-msgstr "自訂"
-
 msgid "Custom Prompt"
 msgstr "自訂提示"
 
@@ -430,9 +439,6 @@ msgstr "自訂提示"
 
 msgid "Deeply Thought"
 msgstr "深度思考"
-
-msgid "Default: auto"
-msgstr "預設：自動"
 
 msgid "Delete"
 msgstr "刪除"
@@ -494,20 +500,20 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"輸入分支或標籤名稱，以從來源儲存庫更新外掛程式。\n"
+"輸入分支或標籤名稱以從來源儲存庫更新外掛程式。\n"
 "\n"
-"<b>Github URL:</b>  %1\n"
-"<b>來源儲存庫:</b>  %2\n"
+"<b>GitHub URL：</b>  %1\n"
+"<b>來源儲存庫：</b>  %2\n"
 "\n"
-"預設值: \"main\"（最新開發分支）\n"
-"範例: \"main\"、\"v1.12\"、\"v1.11\"\n"
+"預設：\"main\"（尖端開發代碼）\n"
+"此代碼可能不穩定，翻譯也可能不完整；僅會盡力提供支援。若要更新至穩定版本，請改輸入標籤（例如 \"v1.12\"）。\n"
 "\n"
-"<b>configuration.lua 將被保留。</b>"
+"<b>configuration.lua 將予以保留。</b>"
 
 msgid "Enter a question before proceeding."
 msgstr "請先輸入問題再繼續。"
@@ -567,6 +573,9 @@ msgstr "詳情請參閱 GitHub 上的「Configuration」Wiki 頁面。"
 
 msgid "Fun Analogy"
 msgstr "有趣的比喻"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API。必須包含 /models 路徑段，例如 …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "一般對話"
@@ -686,14 +695,14 @@ msgstr "Markdown 引擎"
 msgid "Meaning"
 msgstr "意思"
 
-msgid "Model"
-msgstr "模型"
-
 msgid "Model Built-In"
 msgstr "模型內建"
 
 msgid "Model reset: %1"
 msgstr "模型已重設：%1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "模型 — 點選「瀏覽模型」以選擇可用的模型"
 
 msgid "Model: %1"
 msgstr "模型：%1"
@@ -704,7 +713,7 @@ msgstr "模型：%1"
 msgid "Models: %1 (filtered)"
 msgstr "模型：%1（已篩選）"
 
-msgid "Multiple notebooks"
+msgid "Multiple Notebooks"
 msgstr "多個筆記本"
 
 msgid "Narrative element in focus:"
@@ -727,6 +736,9 @@ msgstr "沒有可用的模型。"
 
 msgid "No models matching \"%1\"."
 msgstr "沒有符合「%1」的模型。"
+
+msgid "No notebooks folder is set."
+msgstr "尚未設定筆記本資料夾。"
 
 msgid "No notebooks yet"
 msgstr "尚無筆記本"
@@ -800,11 +812,18 @@ msgstr "筆記本：%1"
 msgid "Notebooks"
 msgstr "筆記本"
 
-msgid "Notebooks folder"
+msgid "Notebooks Folder"
 msgstr "筆記本資料夾"
 
-msgid "Notebooks folder: %1"
+msgid "Notebooks Folder: %1"
 msgstr "筆記本資料夾：%1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"筆記本資料夾路徑：\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "筆記本路徑不是目錄：%1"
@@ -828,8 +847,17 @@ msgstr "OTA 更新已取消。"
 msgid "OTA update failed: %1"
 msgstr "OTA 更新失敗：%1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "僅用於選擇加入書籍上下文的提示（預設為：解釋、歷史背景、摘要、關鍵要點和 ELI5）。啟用時，會將已選取頁面及相鄰頁面的文字作為背景參考傳送給 AI。需要選取文字，並會增加令牌使用量。"
+
 msgid "Open conflict or mystery:"
 msgstr "未解的衝突或謎團："
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — 包含內建網路搜尋"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "與 OpenAI 相容的聊天/補全端點，例如 https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "尚未解答的問題："
@@ -839,6 +867,9 @@ msgstr "頁面"
 
 msgid "Parts of Speech & Tenses"
 msgstr "詞性與時態"
+
+msgid "Pick one via Browse Models"
+msgstr "請透過「瀏覽模型」選擇"
 
 msgid "Platform"
 msgstr "平台"
@@ -852,6 +883,9 @@ msgstr "劇情摘要"
 msgid "Plugin is not configured."
 msgstr "外掛程式尚未設定。"
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "將書籍元資料（書名、作者及目前閱讀位置，包括章節）新增到選擇加入書籍上下文的提示開頭（預設為：解釋、歷史背景、摘要、關鍵要點和 ELI5）。每個提示的行為可在設定檔中使用 use_book_context 覆寫。"
+
 msgid "Prevailing emotional state/tone:"
 msgstr "主要情緒狀態／基調："
 
@@ -861,8 +895,8 @@ msgstr "主角目前的目標："
 msgid "Provider API"
 msgstr "提供者 API"
 
-msgid "Provider Name"
-msgstr "服務商名稱"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "供應商名稱 — 顯示於選單中；留空則使用 API 協定名稱（例如「openai」）"
 
 msgid "Provider data not initialized."
 msgstr "提供者資料尚未初始化。"
@@ -900,20 +934,6 @@ msgstr "清除"
 msgid "Purge Settings"
 msgstr "清除設定"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"清除 assistant.koplugin 的設定？\n"
-"\n"
-"這會將外掛程式恢復為原廠預設值。只會移除設定； \n"
-"configuration.lua 檔案將被保留。"
-
-msgid "Purge the settings"
-msgstr "清除設定"
-
 msgid "Querying AI ..."
 msgstr "正在查詢 AI ..."
 
@@ -948,11 +968,30 @@ msgstr "要求已由使用者取消。"
 msgid "Reset"
 msgstr "重設"
 
+msgid "Reset Assistant Settings"
+msgstr "重設助理設定"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"重設所有 assistant.koplugin 設定？\n"
+"\n"
+"這會將外掛程式恢復為原廠預設值。透過設定介面新增的提供者、API 金鑰和\n"
+"搜尋工具憑證將被移除。\n"
+"configuration.lua 檔案將予以保留。"
+
 msgid "Response"
 msgstr "回應"
 
 msgid "Response Settings"
 msgstr "回覆設定"
+
+msgid "Response Text Font Size"
+msgstr "回應文字字型大小"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1083,11 +1122,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "術語與概念"
 
+msgid "Text Size: %1"
+msgstr "文字大小：%1"
+
 msgid "Text copied to the clipboard"
 msgstr "文字已複製到剪貼簿"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "找不到 %1 的處理常式。請確認該處理常式存在於 api_handlers 目錄中。"
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "記事本為您的對話記錄：AI 回答和快速筆記會附加到其中。您可以建立多個記事本來組織您的記錄。"
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "此按鈕會以反白文字建立快速筆記。"
@@ -1207,11 +1252,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "使用 AI 助理進行「翻譯」"
 
-msgid "Use book text as context"
+msgid "Use Book Text as Context"
 msgstr "使用書籍文字作為上下文"
 
-msgid "Use book text for x-ray and recap"
-msgstr "使用書籍文字進行 X-Ray 和 Recap"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "使用書籍文字進行 X-Ray 和回顧"
+
+msgid "Use web search 🌐"
+msgstr "使用網路搜尋 🌐"
 
 msgid "User:"
 msgstr "使用者："
@@ -1235,6 +1283,9 @@ msgstr "WebSearch API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "它是什麼"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "啟用時，Recap 和 X-Ray 功能會自動將目前閱讀位置之前的書籍文字作為上下文。這僅影響書籍層級功能，不影響選取項目選單的提示，並會大幅增加令牌使用量。"
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

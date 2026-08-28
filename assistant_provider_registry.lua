@@ -585,7 +585,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
     dialog = MultiInputDialog:new{
         title = dialog_title,
         fields = {
-            { description = _("Provider Name — shown in menus; leave empty to use the handler name"),
+            { description = _("Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"),
               hint = _("Display name"), text = default_name },
             { description = base_url_desc,
               hint = _("https://..."),   text = base_url },

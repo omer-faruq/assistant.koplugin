@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 03:58+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ქართული (AI translation)\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ კითხვა\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### შესაძლოა დაგაინტერესოთ ეს თემები:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (თავსებადი)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — აირჩიეთ მოქმედება"
@@ -171,12 +168,6 @@ msgstr "AI პასუხის ენა"
 msgid "AI Response Language Setting"
 msgstr "AI პასუხის ენის პარამეტრი"
 
-msgid "AI Response Text Font Size"
-msgstr "AI პასუხის ტექსტის შრიფტის ზომა"
-
-msgid "AI Text Size: %1"
-msgstr "AI ტექსტის ზომა: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "AI პასუხობს"
 
 msgid "API Key"
 msgstr "API გასაღები"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "API გასაღები — შეიყვანეთ თქვენი გასაღები, შემდეგ შეეხეთ მოდელების დათვალიერებას ხელმისაწვდომი მოდელების ჩამოსათვლელად"
 
 msgid "API key is required for %1."
 msgstr "API გასაღები სავალდებულოა %1-ისთვის."
@@ -210,6 +204,12 @@ msgstr "%1-ის დამატება"
 msgid "Add %1 Provider"
 msgstr "%1 პროვაიდერის დამატება"
 
+msgid "Add Book Metadata as Context"
+msgstr "დაამატეთ წიგნის მეტამონაცემები კონტექსტად"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "მიმდებარე გვერდის ტექსტის დამატება კონტექსტად"
+
 msgid "Add Note"
 msgstr "შენიშვნის დამატება"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "თქვენი მონიშვნების, შენიშვნების და რვეულის შინაარსის ანალიზი წიგნიდან."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "კითხვა"
 msgid "Ask Another Question"
 msgstr "სხვა კითხვის დასმა"
 
+msgid "Ask a Question"
+msgstr "დასვით შეკითხვა"
+
 msgid "Ask a general question"
 msgstr "დასვით ზოგადი კითხვა"
-
-msgid "Ask a question"
-msgstr "დასვით კითხვა"
 
 msgid "Ask a question about the highlighted text"
 msgstr "დასვით კითხვა მონიშნულ ტექსტზე"
@@ -262,10 +265,10 @@ msgstr "დაუსვით შეკითხვა AI-ს"
 msgid "Assistant settings are not available."
 msgstr "ასისტენტის პარამეტრები ხელმისაწვდომი არ არის."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "ავტო-რეკაპი დიდი ხნით წაუკითხავი წიგნების გახსნისას"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "ავტომატური რექაპი დიდი ხნის წაუკითხავი წიგნების გახსნისას"
 
-msgid "Auto-save conversations to notebook"
+msgid "Auto-save Conversations to Notebook"
 msgstr "საუბრების ავტომატურად შენახვა რვეულში"
 
 msgid "Base URL"
@@ -279,6 +282,9 @@ msgstr "საბაზო URL სავალდებულოა."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "საბაზო URL უნდა იწყებოდეს http:// ან https://-ით"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "API endpoint-ის საბაზო URL, მაგალითად: https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "წიგნის ანალიზი"
@@ -339,6 +345,9 @@ msgstr "პასუხის შედგენა ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "კონფიგურაცია ვერ მოიძებნა. გთხოვთ, ჯერ დააყენოთ configuration.lua."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "დააკონფიგურირეთ AI LLM-ის პასუხის ენა. ნაგულისხმევია KOReader-ის ინტერფეისის ენა."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "კონფიგურირებული რვეულების საქაღალდე მიუწვდომელია: %1"
 
@@ -349,6 +358,9 @@ msgstr "უღლება"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "კონტექსტის შეზღუდვები"
+
+msgid "Context Settings"
+msgstr "კონტექსტის პარამეტრები"
 
 msgid "Contextual Connections"
 msgstr "კონტექსტური კავშირები"
@@ -368,8 +380,8 @@ msgstr "საუბარი შენახულია რვეულში"
 msgid "Copy"
 msgstr "კოპირება"
 
-msgid "Copy entered question to the clipboard"
-msgstr "შეყვანილი კითხვის კოპირება ბუფერში"
+msgid "Copy to Clipboard"
+msgstr "კოპირება ბუფერში"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "შექმენით რვეული."
 msgid "Cultural Significance"
 msgstr "კულტურული მნიშვნელობა"
 
-msgid "Custom"
-msgstr "მორგებული"
-
 msgid "Custom Prompt"
 msgstr "მორგებული პრომპტი"
 
@@ -430,9 +439,6 @@ msgstr "მორგებული პრომპტები"
 
 msgid "Deeply Thought"
 msgstr "ღრმა ფიქრი"
-
-msgid "Default: auto"
-msgstr "ნაგულისხმები: ავტო"
 
 msgid "Delete"
 msgstr "წაშლა"
@@ -494,20 +500,20 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"შეიყვანეთ ბრანჩის ან ტეგის სახელი პლაგინის საწყისი რეპოზიტორიდან განსაახლებლად.\n"
+"შეიყვანეთ განშტოების ან ტეგის სახელი, რომ განაახლოთ პლაგინი წყაროს საცავიდან.\n"
 "\n"
-"<b>Github URL:</b>  %1\n"
-"<b>საწყისი რეპო:</b>  %2\n"
+"<b>GitHub URL:</b>  %1\n"
+"<b>წყაროს საცავი:</b>  %2\n"
 "\n"
-"ნაგულისხმევი: \"main\" (უკანასკნელი დეველოპმენტური ბრანჩი)\n"
-"მაგალითები: \"main\", \"v1.12\", \"v1.11\"\n"
+"ნაგულისხმები: \"main\" (ყველაზე ახალი განვითარების კოდი)\n"
+"ეს კოდი შეიძლება იყოს არასტაბილური და თარგმანები არასრული; მხარდაჭერა არის მხოლოდ შეძლებისდაგვარად. სტაბილურ ვერსიაზე განახლებისთვის, შეიყვანეთ ტეგი (მაგ. \"v1.12\").\n"
 "\n"
-"<b>ფაილი configuration.lua შენარჩუნდება.</b>"
+"<b>configuration.lua შენარჩუნდება.</b>"
 
 msgid "Enter a question before proceeding."
 msgstr "გაგრძელებამდე შეიყვანეთ კითხვა."
@@ -567,6 +573,9 @@ msgstr "დეტალებისთვის ეწვიეთ 'Configuratio
 
 msgid "Fun Analogy"
 msgstr "სახალისო ანალოგია"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API. უნდა შეიცავდეს /models სეგმენტს, მაგ. …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "ზოგადი საუბარი"
@@ -687,14 +696,14 @@ msgstr "Markdown ძრავა"
 msgid "Meaning"
 msgstr "მნიშვნელობა"
 
-msgid "Model"
-msgstr "მოდელი"
-
 msgid "Model Built-In"
 msgstr "მოდელის ჩაშენებული"
 
 msgid "Model reset: %1"
 msgstr "მოდელის გადატვირთვა: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "მოდელი — შეეხეთ „მოდელების დათვალიერებას“ ხელმისაწვდომი მოდელის ასარჩევად."
 
 msgid "Model: %1"
 msgstr "მოდელი: %1"
@@ -705,8 +714,8 @@ msgstr "მოდელები: %1"
 msgid "Models: %1 (filtered)"
 msgstr "მოდელები: %1 (გაფილტრული)"
 
-msgid "Multiple notebooks"
-msgstr "მრავალი რვეული"
+msgid "Multiple Notebooks"
+msgstr "მრავლობითი რვეულები"
 
 msgid "Narrative element in focus:"
 msgstr "ფოკუსში მყოფი ნარატიული ელემენტი:"
@@ -728,6 +737,9 @@ msgstr "მოდელები არ არის ხელმისაწვ
 
 msgid "No models matching \"%1\"."
 msgstr "მოდელები, რომლებიც ემთხვევა \"%1\"-ს, არ არსებობს."
+
+msgid "No notebooks folder is set."
+msgstr "რვეულების საქაღალდე არ არის მითითებული."
 
 msgid "No notebooks yet"
 msgstr "ჯერ არ არის რვეულები"
@@ -801,11 +813,18 @@ msgstr "რვეული: %1"
 msgid "Notebooks"
 msgstr "რვეულები"
 
-msgid "Notebooks folder"
+msgid "Notebooks Folder"
 msgstr "რვეულების საქაღალდე"
 
-msgid "Notebooks folder: %1"
+msgid "Notebooks Folder: %1"
 msgstr "რვეულების საქაღალდე: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"რვეულების საქაღალდის გზა:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "რვეულების ბილიკი არ არის დირექტორია: %1"
@@ -829,8 +848,17 @@ msgstr "OTA განახლება გაუქმდა."
 msgid "OTA update failed: %1"
 msgstr "OTA განახლება ვერ მოხერხდა: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "გამოიყენება მხოლოდ იმ პრომპტებისთვის, რომლებიც ითხოვენ წიგნის კონტექსტს (ნაგულისხმევად: ახსნა, ისტორიული კონტექსტი, შეჯამება, ძირითადი პუნქტები და ELI5). როდესაც ჩართულია, მონიშნული გვერდის და მიმდებარე გვერდების ტექსტი ეგზავნება AI-ს ფონურ საცნობარო მასალად. საჭიროებს ტექსტის მონიშვნას და ზრდის ტოკენების მოხმარებას."
+
 msgid "Open conflict or mystery:"
 msgstr "ღია კონფლიქტი ან საიდუმლო:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — ჩართეთ ჩაშენებული ვებ-ძებნა"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "OpenAI-თან თავსებადი chat/completions მისამართი, მაგ. https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "გადაუჭრელი კითხვები:"
@@ -840,6 +868,9 @@ msgstr "გვერდი"
 
 msgid "Parts of Speech & Tenses"
 msgstr "მეტყველების ნაწილები და დროები"
+
+msgid "Pick one via Browse Models"
+msgstr "აირჩიეთ Browse Models-ის საშუალებით"
 
 msgid "Platform"
 msgstr "პლატფორმა"
@@ -853,6 +884,9 @@ msgstr "სიუჟეტის შეჯამება"
 msgid "Plugin is not configured."
 msgstr "დამატება არ არის კონფიგურირებული."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "ამატებს წიგნის მეტამონაცემებს (სათაურს, ავტორს და მიმდინარე კითხვის პოზიციას, თავის ჩათვლით) მოთხოვნებს, რომლებსაც აქვთ ჩართული წიგნის კონტექსტი (ნაგულისხმევად: Explain, Historical Context, Summarize, Key Points და ELI5). თითოეული მოთხოვნის ქცევა შეიძლება გადაიწეროს use_book_context-ით კონფიგურაციის ფაილში."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "გაბატონებული ემოციური მდგომარეობა/ტონი:"
 
@@ -862,8 +896,8 @@ msgstr "პროტაგონისტის ამჟამინდელ�
 msgid "Provider API"
 msgstr "პროვაიდერის API"
 
-msgid "Provider Name"
-msgstr "პროვაიდერის სახელი"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "პროვაიდერის სახელი — ნაჩვენებია მენიუში; დატოვეთ ცარიელი API პროტოკოლის სახელის გამოსაყენებლად (მაგ., „openai“)"
 
 msgid "Provider data not initialized."
 msgstr "პროვაიდერის მონაცემები არ არის ინიციალიზებული."
@@ -901,20 +935,6 @@ msgstr "გასუფთავება"
 msgid "Purge Settings"
 msgstr "პარამეტრების გასუფთავება"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"გავასუფთაოთ assistant.koplugin-ის პარამეტრები?\n"
-"\n"
-"ეს დააბრუნებს პლაგინს ქარხნულ ნაგულისხმევ მდგომარეობაში. მოიხსნება მხოლოდ პარამეტრები; \n"
-"ფაილი configuration.lua შენარჩუნდება."
-
-msgid "Purge the settings"
-msgstr "პარამეტრების გასუფთავება"
-
 msgid "Querying AI ..."
 msgstr "მიმდინარეობს AI-ის მოთხოვნა ..."
 
@@ -949,11 +969,30 @@ msgstr "მოთხოვნა გაუქმდა მომხმარე�
 msgid "Reset"
 msgstr "გადატვირთვა"
 
+msgid "Reset Assistant Settings"
+msgstr "ასისტენტის პარამეტრების გადატვირთვა"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"გადატვირთოთ assistant.koplugin-ის ყველა პარამეტრი?\n"
+"\n"
+"ეს აღადგენს პლაგინს ქარხნულ პარამეტრებზე. პროვაიდერები, API გასაღებები და\n"
+"საძიებო ინსტრუმენტების ავტორიზაციის მონაცემები, რომლებიც დამატებულია პარამეტრების ინტერფეისიდან, წაიშლება.\n"
+"configuration.lua ფაილი შენარჩუნდება."
+
 msgid "Response"
 msgstr "პასუხი"
 
 msgid "Response Settings"
 msgstr "პასუხის პარამეტრები"
+
+msgid "Response Text Font Size"
+msgstr "პასუხის ტექსტის შრიფტის ზომა"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1084,11 +1123,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "ტერმინები და ცნებები"
 
+msgid "Text Size: %1"
+msgstr "ტექსტის ზომა: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "ტექსტი დაკოპირდა ბუფერში"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "დამმუშავებელი %1-ისთვის ვერ მოიძებნა. გთხოვთ, დარწმუნდით, რომ დამმუშავებელი არსებობს api_handlers დირექტორიაში."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "ნოუთბუქი არის თქვენი საუბრის ჟურნალი: AI პასუხები და სწრაფი ჩანაწერები ემატება მას. შეგიძლიათ შექმნათ მრავალი ნოუთბუქი თქვენი ჟურნალების ორგანიზებისთვის."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "ეს ღილაკი ქმნის სწრაფ ჩანაწერს მონიშნული ტექსტით."
@@ -1208,11 +1253,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "AI ასისტენტის გამოყენება „თარგმნისთვის“"
 
-msgid "Use book text as context"
-msgstr "წიგნის ტექსტის გამოყენება კონტექსტად"
+msgid "Use Book Text as Context"
+msgstr "წიგნის ტექსტის კონტექსტად გამოყენება"
 
-msgid "Use book text for x-ray and recap"
-msgstr "წიგნის ტექსტის გამოყენება X-Ray-სა და რეკაპისთვის"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "წიგნის ტექსტის გამოყენება X-Ray-სა და Recap-ისთვის"
+
+msgid "Use web search 🌐"
+msgstr "გამოიყენეთ ვებ-ძებნა 🌐"
 
 msgid "User:"
 msgstr "მომხმარებელი:"
@@ -1236,6 +1284,9 @@ msgstr "ვებ-ძიების API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "რა არის ეს"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "როდესაც ჩართულია, Recap და X-Ray ფუნქციები ავტომატურად აერთიანებს წიგნის ტექსტს თქვენს ამჟამინდელ კითხვის პოზიციამდე, როგორც კონტექსტი. ეს გავლენას ახდენს მხოლოდ წიგნის დონის ფუნქციებზე, არა მონიშვნის მენიუს პრომპტებზე, და მნიშვნელოვნად ზრდის ტოკენების მოხმარებას."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

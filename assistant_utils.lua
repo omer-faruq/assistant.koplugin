@@ -185,6 +185,195 @@ function M.getPageInfo(ui)
   return page_info
 end
 
+--[[
+  Convert a getPageText() result (string or table-of-blocks) into a plain string.
+  Mirrors the table handling used in extractBookTextForAnalysis.
+--]]
+local function pageTextToString(t)
+  if type(t) == "string" then
+    return t
+  elseif type(t) == "table" then
+    local texts = {}
+    for _, block in ipairs(t) do
+      if type(block) == "table" then
+        for i = 1, #block do
+          local span = block[i]
+          if type(span) == "table" and span.word then
+            table.insert(texts, span.word)
+          end
+        end
+      end
+    end
+    return table.concat(texts, " ")
+  end
+  return ""
+end
+
+--[[
+  Pure budget-assembly helper for nearby-page context.
+
+  Given three text segments (prev / current / next), assemble them into a single
+  string bounded by max_chars:
+    - current-page text has priority within max_chars;
+    - any remaining budget is split evenly between prev (keep its TAIL, closest
+      to the highlight) and next (keep its HEAD, closest to the highlight);
+    - when current alone exceeds max_chars, only its HEAD is kept;
+    - truncations drop a broken leading/trailing UTF-8 byte sequence (mirroring
+      the guard style at extractBookTextForAnalysis :45-49 / :78-83);
+    - non-empty parts are joined with "\n\n";
+    - returns "" when everything is empty.
+
+  Kept factored (not a method) so tests can inline a copy of it.
+--]]
+local function assemblePageContext(prev, current, next, max_chars)
+  prev = (type(prev) == "string" and prev ~= "") and prev or ""
+  current = (type(current) == "string" and current ~= "") and current or ""
+  next = (type(next) == "string" and next ~= "") and next or ""
+
+  if prev == "" and current == "" and next == "" then
+    return ""
+  end
+
+  max_chars = max_chars or 6000
+  local parts = {}
+
+  if #current <= max_chars then
+    parts.current = current
+    local remaining = max_chars - #current
+    local half = math.floor(remaining / 2)
+
+    if prev ~= "" then
+      if #prev <= half then
+        parts.prev = prev
+      else
+        -- keep the TAIL of prev (closest to the highlight)
+        local s = #prev - half + 1
+        parts.prev = prev:sub(s)
+        parts.prev = parts.prev:gsub("^[\128-\191]+", "")
+        parts.prev = util.fixUtf8(parts.prev, "_")
+      end
+    end
+
+    if next ~= "" then
+      if #next <= half then
+        parts.next = next
+      else
+        -- keep the HEAD of next (closest to the highlight)
+        local e = half
+        parts.next = next:sub(1, e)
+        parts.next = parts.next:gsub("[\128-\191]+$", "")
+        parts.next = util.fixUtf8(parts.next, "_")
+      end
+    end
+  else
+    -- current alone exceeds the budget: keep its HEAD only
+    parts.current = current:sub(1, max_chars)
+    parts.current = parts.current:gsub("[\128-\191]+$", "")
+    parts.current = util.fixUtf8(parts.current, "_")
+  end
+
+  local out = {}
+  if parts.prev and parts.prev ~= "" then table.insert(out, parts.prev) end
+  if parts.current and parts.current ~= "" then table.insert(out, parts.current) end
+  if parts.next and parts.next ~= "" then table.insert(out, parts.next) end
+  return table.concat(out, "\n\n")
+end
+
+--[[
+  Returns nearby-page text around the current text selection, or "" whenever
+  anything is unavailable (no ui / document / selection pos0).
+
+  @param ui table        The KOReader ui object (ui.document, ui.highlight, ...)
+  @param before number   Pages before the anchor to include in the prev segment
+  @param after  number   Pages after the anchor to include in the current segment
+  @param max_chars number Maximum total characters for the assembled context
+
+  Anchor page resolution (mirrors getPageInfo):
+    - paging mode:   ui.highlight.selected_text.pos0.page
+    - rolling mode:  ui.document:getPageFromXPointer(pos0)
+
+  Paged documents (document.info.has_pages): collect prev/current/next page
+  texts via getPageText (clamped to [1, total], out-of-range sides skipped).
+
+  Reflowable documents: save the xpointer, extract three segments via
+  getTextFromXPointers over getPageXPointer ranges, then restore the xpointer.
+--]]
+function M.getPageRangeText(ui, before, after, max_chars)
+  if not ui or not ui.document then
+    return ""
+  end
+  if not ui.highlight or not ui.highlight.selected_text or not ui.highlight.selected_text.pos0 then
+    return ""
+  end
+  if not ui.document.info then
+    return ""
+  end
+
+  local pos0 = ui.highlight.selected_text.pos0
+  local anchor_page
+  if ui.paging then
+    anchor_page = pos0.page
+  else
+    anchor_page = ui.document:getPageFromXPointer(pos0)
+  end
+  if not anchor_page then
+    return ""
+  end
+
+  local total_pages = ui.document:getPageCount()
+  if not total_pages or total_pages < 1 then
+    return ""
+  end
+
+  before = before or 1
+  after = after or 1
+
+  local prev, current, next = "", "", ""
+
+  if ui.document.info.has_pages then
+    -- Paged documents: collect prev/current/next page texts via getPageText.
+    local prev_start = math.max(1, anchor_page - before)
+    local prev_pages = {}
+    for p = prev_start, anchor_page - 1 do
+      local t = pageTextToString(ui.document:getPageText(p))
+      if t ~= "" then table.insert(prev_pages, t) end
+    end
+    prev = table.concat(prev_pages, "\n\n")
+
+    current = pageTextToString(ui.document:getPageText(anchor_page))
+
+    local next_end = math.min(total_pages, anchor_page + after)
+    local next_pages = {}
+    for p = anchor_page + 1, next_end do
+      local t = pageTextToString(ui.document:getPageText(p))
+      if t ~= "" then table.insert(next_pages, t) end
+    end
+    next = table.concat(next_pages, "\n\n")
+  else
+    -- Reflowable documents: use xpointer ranges (getTextFromXPointers mutates
+    -- the view position, so save/restore the xpointer around extraction).
+    local saved_xp = ui.document:getXPointer()
+    local ok = pcall(function()
+      local xp_anchor = ui.document:getPageXPointer(anchor_page)
+      local xp_prev_start = ui.document:getPageXPointer(math.max(1, anchor_page - before))
+      prev = ui.document:getTextFromXPointers(xp_prev_start, xp_anchor) or ""
+
+      local xp_after = ui.document:getPageXPointer(math.min(total_pages, anchor_page + after))
+      current = ui.document:getTextFromXPointers(xp_anchor, xp_after) or ""
+
+      local xp_next_end = ui.document:getPageXPointer(math.min(total_pages, anchor_page + after + 1))
+      next = ui.document:getTextFromXPointers(xp_after, xp_next_end) or ""
+    end)
+    -- Always restore the view position.
+    pcall(function() ui.document:gotoXPointer(saved_xp) end)
+    if not ok then
+      return ""
+    end
+  end
+
+  return assemblePageContext(prev, current, next, max_chars)
+end
+
 function M.saveToNotebookFile(assistant, log_entry)
   local success, saved_path, save_err, used_fallback = pcall(function()
     local notebookfile = assistant.ui.bookinfo:getNotebookFile(assistant.ui.doc_settings)

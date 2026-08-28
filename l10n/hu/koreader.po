@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Kérdés\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Érdekesnek találhatja ezeket a témákat:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (kompatibilis)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — válassz műveletet"
@@ -171,12 +168,6 @@ msgstr "AI válasznyelve"
 msgid "AI Response Language Setting"
 msgstr "AI válasznyelv beállítása"
 
-msgid "AI Response Text Font Size"
-msgstr "AI válasz szövegének betűmérete"
-
-msgid "AI Text Size: %1"
-msgstr "AI szövegméret: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "Az AI válaszol"
 
 msgid "API Key"
 msgstr "API-kulcs"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "API-kulcs — add meg a kulcsod, majd koppints a Modellek böngészése elemre az elérhető modellek listázásához"
 
 msgid "API key is required for %1."
 msgstr "API-kulcs szükséges a(z) %1 számára."
@@ -210,6 +204,12 @@ msgstr "%1 hozzáadása"
 msgid "Add %1 Provider"
 msgstr "%1 szolgáltató hozzáadása"
 
+msgid "Add Book Metadata as Context"
+msgstr "Könyv metaadatainak hozzáadása kontextusként"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Szomszédos oldal szövegének hozzáadása kontextusként"
+
 msgid "Add Note"
 msgstr "Megjegyzés hozzáadása"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "A könyvhöz kapcsolódó kiemelések, megjegyzések és jegyzetfüzet-tartalom elemzése."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Kérdezés"
 msgid "Ask Another Question"
 msgstr "Új kérdés feltevése"
 
+msgid "Ask a Question"
+msgstr "Kérdés feltevése"
+
 msgid "Ask a general question"
 msgstr "Tegyél fel általános kérdést"
-
-msgid "Ask a question"
-msgstr "Tegyen fel egy kérdést"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Kérdezz a kiemelt szövegről"
@@ -262,11 +265,11 @@ msgstr "Tegyen fel egy kérdést az AI-nak"
 msgid "Assistant settings are not available."
 msgstr "Az asszisztens beállításai nem érhetők el."
 
-msgid "Auto-recap on opening long-unread books"
+msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automatikus összefoglaló hosszú ideje nem olvasott könyvek megnyitásakor"
 
-msgid "Auto-save conversations to notebook"
-msgstr "Beszélgetések automatikus mentése jegyzetfüzetbe"
+msgid "Auto-save Conversations to Notebook"
+msgstr "Beszélgetések automatikus mentése a jegyzetfüzetbe"
 
 msgid "Base URL"
 msgstr "Alap URL"
@@ -279,6 +282,9 @@ msgstr "Az alap URL megadása kötelező."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "Az alap URL-nek http:// vagy https:// előtaggal kell kezdődnie."
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "Az API-végpont alap URL-je, pl. https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Könyv elemzése"
@@ -339,6 +345,9 @@ msgstr "Válasz összeállítása ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "A konfiguráció nem található. Kérlek, először állítsd be a configuration.lua fájlt."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Az AI LLM válasznyelvének beállítása. Alapértelmezés szerint a KOReader felületi nyelve."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "A beállított jegyzetfüzet-mappa nem érhető el: %1"
 
@@ -349,6 +358,9 @@ msgstr "Igeragozás"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Kontextus korlátai"
+
+msgid "Context Settings"
+msgstr "Kontextus beállításai"
 
 msgid "Contextual Connections"
 msgstr "Kontextuális kapcsolatok"
@@ -368,8 +380,8 @@ msgstr "A beszélgetés jegyzetfüzetbe mentve"
 msgid "Copy"
 msgstr "Másolás"
 
-msgid "Copy entered question to the clipboard"
-msgstr "A beírt kérdés másolása a vágólapra"
+msgid "Copy to Clipboard"
+msgstr "Másolás a vágólapra"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Jegyzetfüzet létrehozása."
 msgid "Cultural Significance"
 msgstr "Kulturális jelentőség"
 
-msgid "Custom"
-msgstr "Egyéni"
-
 msgid "Custom Prompt"
 msgstr "Egyéni prompt"
 
@@ -430,9 +439,6 @@ msgstr "Egyéni promptok"
 
 msgid "Deeply Thought"
 msgstr "Mély gondolkodás"
-
-msgid "Default: auto"
-msgstr "Alapértelmezett: auto"
 
 msgid "Delete"
 msgstr "Törlés"
@@ -494,20 +500,20 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Adja meg az ág vagy címke nevét a plugin forrásadattárból történő frissítéséhez.\n"
+"Adjon meg egy ág vagy címke nevet a bővítmény forrás tárolóból történő frissítéséhez.\n"
 "\n"
-"<b>GitHub URL:</b>  %1\n"
-"<b>Forrásadattár:</b>  %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Forrás tároló:</b>  %2\n"
 "\n"
-"Alapértelmezett: \"main\" (legújabb fejlesztési ág)\n"
-"Példák: \"main\", \"v1.12\", \"v1.11\"\n"
+"Alapértelmezett: \"main\" (fejlesztői ág, mindig a legújabb kód)\n"
+"Ez a kód instabil lehet, és a fordítások hiányosak lehetnek; csak a legjobb szándék szerint támogatott. Stabil kiadásra frissítéshez adjon meg egy címkét (pl. \"v1.12\").\n"
 "\n"
-"<b>A configuration.lua fájl megőrzésre kerül.</b>"
+"<b>A configuration.lua megmarad.</b>"
 
 msgid "Enter a question before proceeding."
 msgstr "A folytatáshoz írj be egy kérdést."
@@ -567,6 +573,9 @@ msgstr "A részletekért látogassa meg a „Configuration” wiki oldalt a GitH
 
 msgid "Fun Analogy"
 msgstr "Szórakoztató hasonlat"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API: tartalmaznia kell a /models szegmenst, pl. …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Általános beszélgetés"
@@ -687,14 +696,14 @@ msgstr "Markdown motor"
 msgid "Meaning"
 msgstr "Jelentés"
 
-msgid "Model"
-msgstr "Modell"
-
 msgid "Model Built-In"
 msgstr "Beépített modell"
 
 msgid "Model reset: %1"
 msgstr "Modell visszaállítva: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Modell — koppints a Modellek böngészése elemre egy elérhető modell kiválasztásához"
 
 msgid "Model: %1"
 msgstr "Modell: %1"
@@ -705,7 +714,7 @@ msgstr "Modellek: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Modellek: %1 (szűrve)"
 
-msgid "Multiple notebooks"
+msgid "Multiple Notebooks"
 msgstr "Több jegyzetfüzet"
 
 msgid "Narrative element in focus:"
@@ -728,6 +737,9 @@ msgstr "Nincs elérhető modell."
 
 msgid "No models matching \"%1\"."
 msgstr "Nincs a(z) \"%1\" kifejezésnek megfelelő modell."
+
+msgid "No notebooks folder is set."
+msgstr "Nincs jegyzetfüzet mappa beállítva."
 
 msgid "No notebooks yet"
 msgstr "Még nincsenek jegyzetfüzetek"
@@ -801,11 +813,18 @@ msgstr "Jegyzetfüzet: %1"
 msgid "Notebooks"
 msgstr "Jegyzetfüzetek"
 
-msgid "Notebooks folder"
-msgstr "Jegyzetfüzet-mappa"
+msgid "Notebooks Folder"
+msgstr "Jegyzetfüzet mappa"
 
-msgid "Notebooks folder: %1"
-msgstr "Jegyzetfüzet-mappa: %1"
+msgid "Notebooks Folder: %1"
+msgstr "Jegyzetfüzetek mappája: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Jegyzetfüzetek mappa elérési útja:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "A jegyzetfüzetek elérési útja nem könyvtár: %1"
@@ -829,8 +848,17 @@ msgstr "OTA frissítés megszakítva."
 msgid "OTA update failed: %1"
 msgstr "OTA frissítés sikertelen: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Csak azok a promptok használják, amelyek kifejezetten kérik a könyvkontextust (alapértelmezés szerint: Magyarázd el, Történelmi kontextus, Összefoglaló, Kulcspontok és ELI5). Ha engedélyezve van, a kijelölt oldal és a szomszédos oldalak szövege háttér-információként kerül az AI-hoz. Szövegkijelölést igényel, és növeli a tokenfelhasználást."
+
 msgid "Open conflict or mystery:"
 msgstr "Nyitott konfliktus vagy rejtély:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — Beépített webkeresés belefoglalása"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "OpenAI-kompatibilis chat/completions végpont, pl. https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Nyitott kérdések:"
@@ -840,6 +868,9 @@ msgstr "Oldal"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Szófajok és igeidők"
+
+msgid "Pick one via Browse Models"
+msgstr "Válasszon egyet a Modellek tallózásával"
 
 msgid "Platform"
 msgstr "Platform"
@@ -853,6 +884,9 @@ msgstr "Cselekmény összefoglalása"
 msgid "Plugin is not configured."
 msgstr "A bővítmény nincs konfigurálva."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "A könyv metaadatait (cím, szerző és az aktuális olvasási pozíció, beleértve a fejezetet) a könyvkontextust kérő promptok elejére illeszti (alapértelmezés szerint: Magyarázd el, Történelmi kontextus, Összefoglaló, Kulcspontok és ELI5). Az egyes promptok viselkedése felülbírálható a use_book_context beállítással a konfigurációs fájlban."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Uralkodó érzelmi állapot/hangulat:"
 
@@ -862,8 +896,8 @@ msgstr "A főszereplő jelenlegi célja:"
 msgid "Provider API"
 msgstr "Szolgáltató API"
 
-msgid "Provider Name"
-msgstr "Szolgáltató neve"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Szolgáltató neve — menükben jelenik meg; hagyd üresen az API-protokoll nevének használatához (pl. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "A szolgáltató adatai nincsenek inicializálva."
@@ -901,20 +935,6 @@ msgstr "Törlés"
 msgid "Purge Settings"
 msgstr "Beállítások törlése"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Törli az assistant.koplugin beállításait?\n"
-"\n"
-"Ez visszaállítja a plugin gyári alapértelmezéseire. Csak a beállítások kerülnek eltávolításra; \n"
-"A configuration.lua fájl megőrzésre kerül."
-
-msgid "Purge the settings"
-msgstr "Beállítások törlése"
-
 msgid "Querying AI ..."
 msgstr "AI lekérdezése ..."
 
@@ -949,11 +969,30 @@ msgstr "A kérést a felhasználó megszakította."
 msgid "Reset"
 msgstr "Visszaállítás"
 
+msgid "Reset Assistant Settings"
+msgstr "Asszisztens beállítások visszaállítása"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Visszaállítja az összes assistant.koplugin beállítást?\n"
+"\n"
+"Ez a bővítményt gyári alapértékekre állítja vissza. A Beállítások felületen\n"
+"hozzáadott szolgáltatók, API-kulcsok és keresőeszköz hitelesítő adatok\n"
+"törlésre kerülnek. A configuration.lua fájl megmarad."
+
 msgid "Response"
 msgstr "Válasz"
 
 msgid "Response Settings"
 msgstr "Válaszbeállítások"
+
+msgid "Response Text Font Size"
+msgstr "Válasz szövegének betűmérete"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1084,11 +1123,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Kifejezések és fogalmak"
 
+msgid "Text Size: %1"
+msgstr "Betűméret: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "A szöveg a vágólapra másolva."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "A(z) %1 kezelő nem található. Győződjön meg róla, hogy a kezelő létezik az api_handlers könyvtárban."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "A jegyzetfüzet a beszélgetési naplód: az AI-válaszok és a gyors jegyzetek hozzáfűződnek. Több jegyzetfüzetet is létrehozhatsz a naplók rendszerezéséhez."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ez a gomb gyors jegyzetet hoz létre a kiemelt szöveggel."
@@ -1208,11 +1253,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "AI asszisztens használata a 'Fordítás' funkcióhoz"
 
-msgid "Use book text as context"
-msgstr "A könyv szövegének használata kontextusként"
+msgid "Use Book Text as Context"
+msgstr "Könyv szövegének használata kontextusként"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Könyvszöveg használata az X-Ray és az összefoglaló funkciókhoz"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Könyv szövegének használata X-Ray és Recap funkciókhoz"
+
+msgid "Use web search 🌐"
+msgstr "Webkeresés használata 🌐"
 
 msgid "User:"
 msgstr "Felhasználó:"
@@ -1236,6 +1284,9 @@ msgstr "WebSearch API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Mi ez"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Ha engedélyezve van, a Recap és az X-Ray funkciók automatikusan tartalmazzák a könyv szövegét az aktuális olvasási pozícióig kontextusként. Ez csak a könyvszintű funkciókat érinti, a kijelölésmenü promptjait nem, és jelentősen növeli a tokenfelhasználást."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

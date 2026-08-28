@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,7 +86,13 @@ msgstr ""
 msgid "Ask anything..."
 msgstr ""
 
-msgid "Use book text as context"
+msgid "Use web search 🌐"
+msgstr ""
+
+msgid "Use Book Text as Context"
+msgstr ""
+
+msgid "Copy to Clipboard"
 msgstr ""
 
 msgid "Loading for %1 ..."
@@ -533,6 +539,18 @@ msgstr ""
 msgid "Word Origin"
 msgstr ""
 
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr ""
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr ""
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr ""
+
+msgid "Anthropic Messages API"
+msgstr ""
+
 msgid "Provider record must be a table."
 msgstr ""
 
@@ -557,13 +575,46 @@ msgstr ""
 msgid "Provider data not initialized."
 msgstr ""
 
+msgid "Edit %1"
+msgstr ""
+
+msgid "Add %1"
+msgstr ""
+
+msgid "Add %1 Provider"
+msgstr ""
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr ""
+
+msgid "Browse Models"
+msgstr ""
+
+msgid "Clear"
+msgstr ""
+
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr ""
+
+msgid "Display name"
+msgstr ""
+
+msgid "https://..."
+msgstr ""
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr ""
+
+msgid "Your API key"
+msgstr ""
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr ""
+
+msgid "Pick one via Browse Models"
+msgstr ""
+
 msgid "Provider API"
-msgstr ""
-
-msgid "%1 (Compatible)"
-msgstr ""
-
-msgid "Custom"
 msgstr ""
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
@@ -711,9 +762,6 @@ msgstr ""
 msgid "Dictionary Language"
 msgstr ""
 
-msgid "Clear"
-msgstr ""
-
 msgid "RTL written Language"
 msgstr ""
 
@@ -721,9 +769,6 @@ msgid "Leave these fields blank to use the UI language: %1"
 msgstr ""
 
 msgid "Providers and Models"
-msgstr ""
-
-msgid "Browse Models"
 msgstr ""
 
 msgid "Browse available models from the current provider"
@@ -738,16 +783,40 @@ msgid ""
 "- OpenAI/gpt-4o-search\n"
 msgstr ""
 
-msgid "AI Language: "
+msgid "Context Settings"
 msgstr ""
 
-msgid "AI Text Size: %1"
+msgid "Add Book Metadata as Context"
 msgstr ""
 
-msgid "AI Response Text Font Size"
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr ""
+
+msgid "Add Nearby Page Text as Context"
+msgstr ""
+
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr ""
+
+msgid "Use Book Text for X-Ray and Recap"
+msgstr ""
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
 msgstr ""
 
 msgid "Response Settings"
+msgstr ""
+
+msgid "AI Language: "
+msgstr ""
+
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr ""
+
+msgid "Text Size: %1"
+msgstr ""
+
+msgid "Response Text Font Size"
 msgstr ""
 
 msgid "Enable Stream Response"
@@ -774,19 +843,30 @@ msgstr ""
 msgid "Notebook Settings"
 msgstr ""
 
-msgid "Auto-save conversations to notebook"
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
 msgstr ""
 
-msgid "Multiple notebooks"
+msgid "Auto-save Conversations to Notebook"
+msgstr ""
+
+msgid "Multiple Notebooks"
 msgstr ""
 
 msgid "Choose which notebook your notes are saved to."
 msgstr ""
 
-msgid "Notebooks folder: %1"
+msgid "Notebooks Folder: %1"
 msgstr ""
 
-msgid "Notebooks folder"
+msgid "Notebooks Folder"
+msgstr ""
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+
+msgid "No notebooks folder is set."
 msgstr ""
 
 #. @translators: functional overriding
@@ -797,7 +877,7 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr ""
 
-msgid "Auto-recap on opening long-unread books"
+msgid "Auto-recap on Opening Long-unread Books"
 msgstr ""
 
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -815,10 +895,15 @@ msgstr ""
 msgid "Show Custom Prompts in Dictionary Popup"
 msgstr ""
 
-msgid "Copy entered question to the clipboard"
+msgid "Reset Assistant Settings"
 msgstr ""
 
-msgid "Use book text for x-ray and recap"
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
 msgstr ""
 
 msgid "OTA Update"
@@ -833,26 +918,13 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
 
 msgid "Update"
-msgstr ""
-
-msgid "Purge the settings"
-msgstr ""
-
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-
-msgid "Purge"
 msgstr ""
 
 msgid "Search keywords are empty."
@@ -995,7 +1067,7 @@ msgstr ""
 msgid "Book Summary & Recs"
 msgstr ""
 
-msgid "Ask a question"
+msgid "Ask a Question"
 msgstr ""
 
 msgid "Enter a question to ask the AI."
@@ -1083,37 +1155,10 @@ msgid ""
 "⚙ → AI Assistant → Settings → Provider API"
 msgstr ""
 
-msgid "Edit %1"
-msgstr ""
-
-msgid "Add %1"
-msgstr ""
-
-msgid "Add %1 Provider"
-msgstr ""
-
-msgid "Display name"
-msgstr ""
-
-msgid "Provider Name"
-msgstr ""
-
-msgid "Base URL"
-msgstr ""
-
-msgid "https://..."
-msgstr ""
-
 msgid "API Key"
 msgstr ""
 
-msgid "Your API key"
-msgstr ""
-
-msgid "Default: auto"
-msgstr ""
-
-msgid "Model"
+msgid "Base URL"
 msgstr ""
 
 msgid "Failed to save search tool."
@@ -1162,6 +1207,9 @@ msgid ""
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
+msgstr ""
+
+msgid "Purge"
 msgstr ""
 
 #, lua-format

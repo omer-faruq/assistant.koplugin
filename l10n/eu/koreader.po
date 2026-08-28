@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 03:15+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Euskara (AI translation)\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Galdera\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Baliteke gai hauek interesgarriak iruditzea:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (Bateragarria)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — aukeratu ekintza bat"
@@ -171,12 +168,6 @@ msgstr "AI erantzunaren hizkuntza"
 msgid "AI Response Language Setting"
 msgstr "AI erantzunaren hizkuntza-ezarpena"
 
-msgid "AI Response Text Font Size"
-msgstr "AI erantzunaren testuaren letra-tamaina"
-
-msgid "AI Text Size: %1"
-msgstr "AI testuaren tamaina: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "AI erantzuten ari da"
 
 msgid "API Key"
 msgstr "API gakoa"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "API Giltza — sartu zure giltza, ondoren sakatu Arakatu Ereduak erabilgarri dauden ereduak zerrendatzeko"
 
 msgid "API key is required for %1."
 msgstr "API gakoa beharrezkoa da %1rentzat."
@@ -210,6 +204,12 @@ msgstr "Gehitu %1"
 msgid "Add %1 Provider"
 msgstr "Gehitu %1 hornitzailea"
 
+msgid "Add Book Metadata as Context"
+msgstr "Gehitu liburuaren metadatuak testuinguru gisa"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Gehitu inguruko orriaren testua testuinguru gisa"
+
 msgid "Add Note"
 msgstr "Gehitu oharra"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Liburuko zure nabarmendutakoen, oharren eta koadernoaren edukiaren analisia."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Galdetu"
 msgid "Ask Another Question"
 msgstr "Egin beste galdera bat"
 
+msgid "Ask a Question"
+msgstr "Egin galdera bat"
+
 msgid "Ask a general question"
 msgstr "Egin galdera orokor bat"
-
-msgid "Ask a question"
-msgstr "Galdera bat egin"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Galdetu nabarmendutako testuari buruz"
@@ -262,10 +265,10 @@ msgstr "Galdetu AIari"
 msgid "Assistant settings are not available."
 msgstr "Laguntzailearen ezarpenak ez daude eskuragarri."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "Auto-laburpena denbora luzez irakurri gabeko liburuak irekitzean"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "Auto-laburpena luzaroan irakurri gabeko liburuak irekitzean"
 
-msgid "Auto-save conversations to notebook"
+msgid "Auto-save Conversations to Notebook"
 msgstr "Gorde elkarrizketak automatikoki koadernoan"
 
 msgid "Base URL"
@@ -279,6 +282,9 @@ msgstr "Oinarrizko URLa beharrezkoa da."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "Oinarrizko URLak http:// edo https:// hasiera izan behar du."
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "API puntuaren oinarrizko URLa, adibidez https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Liburuaren analisia"
@@ -339,6 +345,9 @@ msgstr "Erantzuna osatzen ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigurazioa ez da aurkitu. Mesedez, konfiguratu configuration.lua lehenik."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Konfiguratu AI LLMaren erantzun-hizkuntza. Lehenetsita, KOReader interfazearen hizkuntza erabiltzen da."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Konfiguratutako koaderno-karpeta ez da eskuragarria: %1"
 
@@ -349,6 +358,9 @@ msgstr "Konjugazioa"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Testuinguruaren mugak"
+
+msgid "Context Settings"
+msgstr "Testuinguruaren ezarpenak"
 
 msgid "Contextual Connections"
 msgstr "Testuinguru-loturak"
@@ -368,8 +380,8 @@ msgstr "Elkarrizketa koadernoan gorde da."
 msgid "Copy"
 msgstr "Kopiatu"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Kopiatu sartutako galdera arbelean"
+msgid "Copy to Clipboard"
+msgstr "Kopiatu arbelera"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Sortu koaderno bat."
 msgid "Cultural Significance"
 msgstr "Garrantzi kulturala"
 
-msgid "Custom"
-msgstr "Pertsonalizatua"
-
 msgid "Custom Prompt"
 msgstr "Prompt pertsonalizatua"
 
@@ -430,9 +439,6 @@ msgstr "Prompt pertsonalizatuak"
 
 msgid "Deeply Thought"
 msgstr "Sakon pentsatua"
-
-msgid "Default: auto"
-msgstr "Lehenetsia: auto"
 
 msgid "Delete"
 msgstr "Ezabatu"
@@ -494,20 +500,20 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Sartu adar edo etiketa izena plugina iturburu-biltegietatik eguneratzeko.\n"
+"Sartu adar- edo etiketa-izena plugina iturburu-biltegietatik eguneratzeko.\n"
 "\n"
-"<b>Github URL:</b>  %1\n"
+"<b>Github URLa:</b>  %1\n"
 "<b>Iturburu-biltegia:</b>  %2\n"
 "\n"
-"Lehenetsia: \"main\" (garapeneko azken adarra)\n"
-"Adibideak: \"main\", \"v1.12\", \"v1.11\"\n"
+"Lehenetsia: \"main\" (garapen-puntako kodea)\n"
+"Kode hau ezegonkorra izan daiteke eta itzulpenak osatu gabe egon daitezke; laguntza ahalegin onenaz ematen da. Bertsio egonkor batera eguneratzeko, idatzi etiketa bat (adibidez, \"v1.12\").\n"
 "\n"
-"<b>configuration.lua fitxategia gordeko da.</b>"
+"<b>configuration.lua gordeko da.</b>"
 
 msgid "Enter a question before proceeding."
 msgstr "Idatzi galdera bat jarraitu aurretik."
@@ -567,6 +573,9 @@ msgstr "Xehetasunetarako, bisitatu github-eko 'Configuration' wiki orria."
 
 msgid "Fun Analogy"
 msgstr "Analogia dibertigarria"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API. '/models' segmentua sartu behar da, adibidez …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Elkarrizketa orokorra"
@@ -687,14 +696,14 @@ msgstr "Markdown motorra"
 msgid "Meaning"
 msgstr "Esanahia"
 
-msgid "Model"
-msgstr "Modeloa"
-
 msgid "Model Built-In"
 msgstr "Modelo Integratua"
 
 msgid "Model reset: %1"
 msgstr "Eredua berrezarri da: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Eredua — sakatu Arakatu Ereduak erabilgarri dagoen eredu bat aukeratzeko"
 
 msgid "Model: %1"
 msgstr "Eredua: %1"
@@ -705,7 +714,7 @@ msgstr "Modeloak: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Modeloak: %1 (iragazita)"
 
-msgid "Multiple notebooks"
+msgid "Multiple Notebooks"
 msgstr "Koaderno anitz"
 
 msgid "Narrative element in focus:"
@@ -728,6 +737,9 @@ msgstr "Ez dago eredu erabilgarririk."
 
 msgid "No models matching \"%1\"."
 msgstr "Ez dago \"%1\"(r)en pareko eredurik."
+
+msgid "No notebooks folder is set."
+msgstr "Ez da koaderno-karpetarik ezarri."
 
 msgid "No notebooks yet"
 msgstr "Oraindik ez dago koadernorik"
@@ -801,11 +813,18 @@ msgstr "Koadernoa: %1"
 msgid "Notebooks"
 msgstr "Koadernoak"
 
-msgid "Notebooks folder"
-msgstr "Koaderno-karpeta"
+msgid "Notebooks Folder"
+msgstr "Koadernoen karpeta"
 
-msgid "Notebooks folder: %1"
-msgstr "Koaderno-karpeta: %1"
+msgid "Notebooks Folder: %1"
+msgstr "Koadernoak Karpeta: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Koadernoak karpetaren bidea:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "Koaderno-bidea ez da direktorio bat: %1"
@@ -829,8 +848,17 @@ msgstr "OTA eguneratzea bertan behera utzi da."
 msgid "OTA update failed: %1"
 msgstr "OTA eguneratzeak huts egin du: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Liburuaren testuingurua aukeratzen duten promptek bakarrik erabiltzen dute (lehenespenez: Azaldu, Testuinguru Historikoa, Laburbildu, Funtsezko Puntuak eta ELI5). Gaituta dagoenean, nabarmendutako orriaren eta alboko orrien testua AIri bidaltzen zaio erreferentzia gisa. Testu-hautapena eskatzen du eta tokenen kontsumoa handitzen du."
+
 msgid "Open conflict or mystery:"
 msgstr "Konpondu gabeko gatazka edo misterioa:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — Sartu integratutako web bilaketa"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "OpenAI-rekin bateragarria den chat/completions puntua, adibidez https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Erantzun gabeko galderak:"
@@ -840,6 +868,9 @@ msgstr "Orria"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Hitz motak eta denborak"
+
+msgid "Pick one via Browse Models"
+msgstr "Aukeratu bat modeloak arakatuz"
 
 msgid "Platform"
 msgstr "Plataforma"
@@ -853,6 +884,9 @@ msgstr "Argumentuaren laburpena"
 msgid "Plugin is not configured."
 msgstr "Plugina ez dago konfiguratuta."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Liburuaren metadatuak (izenburua, egilea eta egungo irakurketa-posizioa, kapitulua barne) gehitzen dizkie liburuaren testuingurua aukeratzen duten promptei (lehenespenez: Azaldu, Testuinguru Historikoa, Laburbildu, Funtsezko Puntuak eta ELI5). Prompt bakoitzaren portaera use_book_context ezarpenarekin baliogabetu daiteke konfigurazio fitxategian."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Emozio-egoera/tonu nagusia:"
 
@@ -862,8 +896,8 @@ msgstr "Protagonistaren egungo helburua:"
 msgid "Provider API"
 msgstr "Hornitzailearen APIa"
 
-msgid "Provider Name"
-msgstr "Hornitzailearen izena"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Hornitzailearen izena — menuetan erakusten da; hutsik utzi API protokoloaren izena erabiltzeko (adib. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Hornitzailearen datuak ez dira hasieratu."
@@ -901,20 +935,6 @@ msgstr "Garbitu"
 msgid "Purge Settings"
 msgstr "Ezarpenak garbitu"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"assistant.koplugin ezarpenak garbitu?\n"
-"\n"
-"Honek plugina fabrikako lehenetsietara itzuliko du. Ezarpenak soilik kenduko dira; \n"
-"configuration.lua fitxategia gordeko da."
-
-msgid "Purge the settings"
-msgstr "Garbitu ezarpenak"
-
 msgid "Querying AI ..."
 msgstr "AIri galdetzen ..."
 
@@ -949,11 +969,28 @@ msgstr "Erabiltzaileak eskaera ezeztatu du."
 msgid "Reset"
 msgstr "Berrezarri"
 
+msgid "Reset Assistant Settings"
+msgstr "Berrezarri Laguntzailearen Ezarpenak"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Berrezarri assistant.koplugin ezarpen guztiak?\n"
+"\n"
+"Honek plugin-a fabrikako lehenetsietara itzultzen du. Ezarpenen UI bidez gehitutako hornitzaileak, API gakoak eta bilaketa-tresnen kredentzialak kenduko dira. configuration.lua fitxategia gordeko da."
+
 msgid "Response"
 msgstr "Erantzuna"
 
 msgid "Response Settings"
 msgstr "Erantzunaren ezarpenak"
+
+msgid "Response Text Font Size"
+msgstr "Erantzun Testuaren Letra-tamaina"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1084,11 +1121,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Terminoak eta kontzeptuak"
 
+msgid "Text Size: %1"
+msgstr "Testu-tamaina: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "Testua arbelean kopiatu da"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1-rentzako handlerra ez da aurkitu. Ziurtatu handlerra api_handlers direktorioan dagoela."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "Koadernoa zure elkarrizketa-erregistroa da: AIren erantzunak eta ohar azkarrak gehitzen zaizkio. Hainbat koaderno sor ditzakezu zure erregistroak antolatzeko."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Botoi honek ohar azkar bat sortzen du nabarmendutako testuarekin."
@@ -1208,11 +1251,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Erabili AI laguntzailea 'Itzuli'rako"
 
-msgid "Use book text as context"
+msgid "Use Book Text as Context"
 msgstr "Erabili liburuaren testua testuinguru gisa"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Erabili liburuaren testua x-ray eta laburpenerako"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Erabili liburuaren testua X-Ray eta Recap-erako"
+
+msgid "Use web search 🌐"
+msgstr "Erabili web bilaketa 🌐"
 
 msgid "User:"
 msgstr "Erabiltzailea:"
@@ -1236,6 +1282,9 @@ msgstr "WebSearch API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Zer den"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Gaituta dagoenean, Recap eta X-Ray funtzioek automatikoki sartzen dute liburuaren testua egungo irakurketa-posizioraino testuinguru gisa. Honek liburu-mailako funtzioei eragiten die soilik, nabarmendutako menuaren promptei ez, eta nabarmen handitzen du tokenen kontsumoa."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

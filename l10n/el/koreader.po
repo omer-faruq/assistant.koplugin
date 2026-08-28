@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 09:00+0800\n"
+"POT-Creation-Date: 2026-08-25 16:20+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,9 +43,6 @@ msgstr "### ☺ Ερώτηση\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Μπορεί να βρείτε αυτά τα θέματα ενδιαφέροντα:"
-
-msgid "%1 (Compatible)"
-msgstr "%1 (Συμβατό)"
 
 msgid "%1 — choose an action"
 msgstr "%1 — επιλέξτε μια ενέργεια"
@@ -171,12 +168,6 @@ msgstr "Γλώσσα απόκρισης AI"
 msgid "AI Response Language Setting"
 msgstr "Ρύθμιση γλώσσας απόκρισης AI"
 
-msgid "AI Response Text Font Size"
-msgstr "Μέγεθος γραμματοσειράς κειμένου απόκρισης AI"
-
-msgid "AI Text Size: %1"
-msgstr "Μέγεθος κειμένου AI: %1"
-
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -185,6 +176,9 @@ msgstr "Το AI απαντά"
 
 msgid "API Key"
 msgstr "Κλειδί API"
+
+msgid "API Key — enter your key, then tap Browse Models to list available models"
+msgstr "Κλειδί API — εισάγετε το κλειδί σας και μετά πατήστε Περιήγηση στα μοντέλα για να δείτε τα διαθέσιμα μοντέλα"
 
 msgid "API key is required for %1."
 msgstr "Το κλειδί API απαιτείται για %1."
@@ -210,6 +204,12 @@ msgstr "Προσθήκη %1"
 msgid "Add %1 Provider"
 msgstr "Προσθήκη παρόχου %1"
 
+msgid "Add Book Metadata as Context"
+msgstr "Προσθήκη Μεταδεδομένων Βιβλίου ως Πλαίσιο"
+
+msgid "Add Nearby Page Text as Context"
+msgstr "Προσθήκη κειμένου διπλανής σελίδας ως πλαίσιο"
+
 msgid "Add Note"
 msgstr "Προσθήκη σημείωσης"
 
@@ -222,6 +222,9 @@ msgstr ""
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Ανάλυση των επισημάνσεων, των σημειώσεων και του περιεχομένου του σημειωματάριου από το βιβλίο."
+
+msgid "Anthropic Messages API"
+msgstr "Anthropic Messages API"
 
 msgid ""
 "Are you sure to purge the assistant plugin settings? \n"
@@ -241,11 +244,11 @@ msgstr "Ρωτήστε"
 msgid "Ask Another Question"
 msgstr "Κάντε άλλη ερώτηση"
 
+msgid "Ask a Question"
+msgstr "Κάντε μια Ερώτηση"
+
 msgid "Ask a general question"
 msgstr "Κάντε μια γενική ερώτηση"
-
-msgid "Ask a question"
-msgstr "Κάντε μια ερώτηση"
 
 msgid "Ask a question about the highlighted text"
 msgstr "Κάντε μια ερώτηση σχετικά με το επισημασμένο κείμενο"
@@ -262,10 +265,10 @@ msgstr "Κάντε μια ερώτηση στο AI"
 msgid "Assistant settings are not available."
 msgstr "Οι ρυθμίσεις του βοηθού δεν είναι διαθέσιμες."
 
-msgid "Auto-recap on opening long-unread books"
-msgstr "Αυτόματο Recap κατά το άνοιγμα βιβλίων που δεν έχουν διαβαστεί για πολύ καιρό"
+msgid "Auto-recap on Opening Long-unread Books"
+msgstr "Αυτόματη ανακεφαλαίωση κατά το άνοιγμα βιβλίων που δεν έχουν διαβαστεί για καιρό"
 
-msgid "Auto-save conversations to notebook"
+msgid "Auto-save Conversations to Notebook"
 msgstr "Αυτόματη αποθήκευση συνομιλιών στο σημειωματάριο"
 
 msgid "Base URL"
@@ -279,6 +282,9 @@ msgstr "Το βασικό URL είναι υποχρεωτικό."
 
 msgid "Base URL must start with http:// or https://"
 msgstr "Το βασικό URL πρέπει να ξεκινά με http:// ή https://"
+
+msgid "Base URL of the API endpoint, e.g. https://example.com/v1"
+msgstr "Βασική διεύθυνση URL του τελικού σημείου API, π.χ. https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Ανάλυση Βιβλίου"
@@ -339,6 +345,9 @@ msgstr "Σύνταξη απάντησης ..."
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Δεν βρέθηκε διαμόρφωση. Παρακαλώ ρυθμίστε πρώτα το configuration.lua."
 
+msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
+msgstr "Διαμόρφωση της γλώσσας απόκρισης του AI LLM. Από προεπιλογή ορίζεται η γλώσσα διεπαφής του KOReader."
+
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Ο φάκελος σημειωματαρίων που έχει ρυθμιστεί δεν είναι προσβάσιμος: %1"
 
@@ -349,6 +358,9 @@ msgstr "Κλίση"
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Περιορισμοί πλαισίου"
+
+msgid "Context Settings"
+msgstr "Ρυθμίσεις πλαισίου"
 
 msgid "Contextual Connections"
 msgstr "Συνδέσεις συμφραζομένων"
@@ -368,8 +380,8 @@ msgstr "Η συνομιλία αποθηκεύτηκε στο σημειωματ
 msgid "Copy"
 msgstr "Αντιγραφή"
 
-msgid "Copy entered question to the clipboard"
-msgstr "Αντιγραφή της εισαγόμενης ερώτησης στο πρόχειρο"
+msgid "Copy to Clipboard"
+msgstr "Αντιγραφή στο πρόχειρο"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -419,9 +431,6 @@ msgstr "Δημιουργία σημειωματαρίου."
 msgid "Cultural Significance"
 msgstr "Πολιτιστική σημασία"
 
-msgid "Custom"
-msgstr "Προσαρμοσμένο"
-
 msgid "Custom Prompt"
 msgstr "Προσαρμοσμένη Προτροπή"
 
@@ -430,9 +439,6 @@ msgstr "Προσαρμοσμένα Prompts"
 
 msgid "Deeply Thought"
 msgstr "Βαθιά σκέψη"
-
-msgid "Default: auto"
-msgstr "Προεπιλογή: αυτόματο"
 
 msgid "Delete"
 msgstr "Διαγραφή"
@@ -494,18 +500,18 @@ msgid ""
 "<b>Github URL:</b>  %1\n"
 "<b>Source Repo:</b>  %2\n"
 "\n"
-"Default: \"main\" (latest development branch)\n"
-"Examples: \"main\", \"v1.12\", \"v1.11\"\n"
+"Default: \"main\" (bleeding-edge development code)\n"
+"This code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.12\").\n"
 "\n"
 "<b>The configuration.lua will be preserved.</b>"
 msgstr ""
-"Εισάγετε ένα όνομα κλάδου ή ετικέτας για να ενημερώσετε το πρόσθετο από το αποθετήριο πηγής.\n"
+"Εισαγάγετε ένα όνομα κλάδου (branch) ή ετικέτας (tag) για να ενημερώσετε το πρόσθετο από το αποθετήριο πηγής.\n"
 "\n"
 "<b>Διεύθυνση GitHub:</b>  %1\n"
 "<b>Αποθετήριο πηγής:</b>  %2\n"
 "\n"
-"Προεπιλογή: \"main\" (τελευταίος κλάδος ανάπτυξης)\n"
-"Παραδείγματα: \"main\", \"v1.12\", \"v1.11\"\n"
+"Προεπιλογή: \"main\" (κώδικας αιχμής ανάπτυξης)\n"
+"Αυτός ο κώδικας μπορεί να είναι ασταθής και οι μεταφράσεις μπορεί να είναι ελλιπείς· υποστηρίζεται μόνο στο μέτρο του δυνατού. Για ενημέρωση σε σταθερή έκδοση, εισαγάγετε αντί αυτού μια ετικέτα (π.χ. \"v1.12\").\n"
 "\n"
 "<b>Το configuration.lua θα διατηρηθεί.</b>"
 
@@ -567,6 +573,9 @@ msgstr "Για λεπτομέρειες, επισκεφθείτε τη σελί�
 
 msgid "Fun Analogy"
 msgstr "Διασκεδαστική αναλογία"
+
+msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
+msgstr "Gemini API. πρέπει να περιλαμβάνει το τμήμα /models, π.χ. …/v1beta/models"
 
 msgid "General Conversation"
 msgstr "Γενική Συνομιλία"
@@ -687,14 +696,14 @@ msgstr "Μηχανή Markdown"
 msgid "Meaning"
 msgstr "Σημασία"
 
-msgid "Model"
-msgstr "Μοντέλο"
-
 msgid "Model Built-In"
 msgstr "Ενσωματωμένο Μοντέλο"
 
 msgid "Model reset: %1"
 msgstr "Επαναφορά μοντέλου: %1"
+
+msgid "Model — tap Browse Models to pick an available model"
+msgstr "Μοντέλο — πατήστε Περιήγηση στα μοντέλα για να επιλέξετε ένα διαθέσιμο μοντέλο"
 
 msgid "Model: %1"
 msgstr "Μοντέλο: %1"
@@ -705,7 +714,7 @@ msgstr "Μοντέλα: %1"
 msgid "Models: %1 (filtered)"
 msgstr "Μοντέλα: %1 (φιλτραρισμένα)"
 
-msgid "Multiple notebooks"
+msgid "Multiple Notebooks"
 msgstr "Πολλαπλά σημειωματάρια"
 
 msgid "Narrative element in focus:"
@@ -728,6 +737,9 @@ msgstr "Δεν υπάρχουν διαθέσιμα μοντέλα."
 
 msgid "No models matching \"%1\"."
 msgstr "Δεν βρέθηκαν μοντέλα που να ταιριάζουν με \"%1\"."
+
+msgid "No notebooks folder is set."
+msgstr "Δεν έχει οριστεί φάκελος σημειωματαρίων."
 
 msgid "No notebooks yet"
 msgstr "Κανένα σημειωματάριο ακόμα"
@@ -801,11 +813,18 @@ msgstr "Σημειωματάριο: %1"
 msgid "Notebooks"
 msgstr "Σημειωματάρια"
 
-msgid "Notebooks folder"
+msgid "Notebooks Folder"
 msgstr "Φάκελος σημειωματαρίων"
 
-msgid "Notebooks folder: %1"
+msgid "Notebooks Folder: %1"
 msgstr "Φάκελος σημειωματαρίων: %1"
+
+msgid ""
+"Notebooks folder path:\n"
+"%1"
+msgstr ""
+"Διαδρομή φακέλου σημειωματαρίων:\n"
+"%1"
 
 msgid "Notebooks path is not a directory: %1"
 msgstr "Η διαδρομή των σημειωματαρίων δεν είναι κατάλογος: %1"
@@ -829,8 +848,17 @@ msgstr "Η ενημέρωση OTA ακυρώθηκε."
 msgid "OTA update failed: %1"
 msgstr "Η ενημέρωση OTA απέτυχε: %1"
 
+msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
+msgstr "Χρησιμοποιείται μόνο από προτροπές που ενεργοποιούν το πλαίσιο βιβλίου (από προεπιλογή: Εξήγηση, Ιστορικό πλαίσιο, Σύνοψη, Βασικά σημεία και ELI5). Όταν είναι ενεργοποιημένο, το κείμενο της επισημασμένης σελίδας και των γειτονικών σελίδων αποστέλλεται στο AI ως αναφορά υποβάθρου. Απαιτεί επιλογή κειμένου και αυξάνει τη χρήση tokens."
+
 msgid "Open conflict or mystery:"
 msgstr "Ανοιχτή σύγκρουση ή μυστήριο:"
+
+msgid "OpenAI Responses API — Include built-in web search"
+msgstr "OpenAI Responses API — Συμπερίληψη ενσωματωμένης αναζήτησης στο διαδίκτυο"
+
+msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
+msgstr "Συμβατό με OpenAI τελικό σημείο chat/completions, π.χ. https://api.openai.com/v1"
 
 msgid "Outstanding questions:"
 msgstr "Εκκρεμή ερωτήματα:"
@@ -840,6 +868,9 @@ msgstr "Σελίδα"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Μέρη του λόγου & Χρόνοι"
+
+msgid "Pick one via Browse Models"
+msgstr "Επιλέξτε ένα μέσω της περιήγησης μοντέλων"
 
 msgid "Platform"
 msgstr "Πλατφόρμα"
@@ -853,6 +884,9 @@ msgstr "Περίληψη Πλοκής"
 msgid "Plugin is not configured."
 msgstr "Το πρόσθετο δεν έχει ρυθμιστεί."
 
+msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
+msgstr "Προσθέτει στην αρχή μεταδεδομένα βιβλίου (τίτλος, συγγραφέας και τρέχουσα θέση ανάγνωσης συμπεριλαμβανομένου κεφαλαίου) σε prompts που επιλέγουν να χρησιμοποιήσουν το πλαίσιο βιβλίου (από προεπιλογή: Explain, Historical Context, Summarize, Key Points και ELI5). Η συμπεριφορά ανά prompt μπορεί να παρακαμφθεί με τη ρύθμιση use_book_context στο αρχείο διαμόρφωσης."
+
 msgid "Prevailing emotional state/tone:"
 msgstr "Επικρατούσα συναισθηματική κατάσταση/τόνος:"
 
@@ -862,8 +896,8 @@ msgstr "Τρέχων στόχος του πρωταγωνιστή:"
 msgid "Provider API"
 msgstr "API Παρόχου"
 
-msgid "Provider Name"
-msgstr "Όνομα παρόχου"
+msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Όνομα παρόχου — εμφανίζεται στα μενού· αφήστε κενό για χρήση του ονόματος πρωτοκόλλου API (π.χ. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Τα δεδομένα παρόχου δεν έχουν αρχικοποιηθεί."
@@ -901,20 +935,6 @@ msgstr "Εκκαθάριση"
 msgid "Purge Settings"
 msgstr "Εκκαθάριση Ρυθμίσεων"
 
-msgid ""
-"Purge assistant.koplugin settings?\n"
-"\n"
-"This restores the plugin to its factory defaults. Only settings will be removed; \n"
-"File configuration.lua will be preserved."
-msgstr ""
-"Εκκαθάριση των ρυθμίσεων του assistant.koplugin;\n"
-"\n"
-"Αυτό επαναφέρει το πρόσθετο στις εργοστασιακές του προεπιλογές. Θα αφαιρεθούν μόνο οι ρυθμίσεις· \n"
-"Το αρχείο configuration.lua θα διατηρηθεί."
-
-msgid "Purge the settings"
-msgstr "Εκκαθάριση των ρυθμίσεων"
-
 msgid "Querying AI ..."
 msgstr "Το AI ερωτάται ..."
 
@@ -949,11 +969,29 @@ msgstr "Η αίτηση ακυρώθηκε από τον χρήστη."
 msgid "Reset"
 msgstr "Επαναφορά"
 
+msgid "Reset Assistant Settings"
+msgstr "Επαναφορά ρυθμίσεων βοηθού"
+
+msgid ""
+"Reset all assistant.koplugin settings?\n"
+"\n"
+"This restores the plugin to its factory defaults. Providers, API keys and\n"
+"search tool credentials added via the Settings UI will be removed.\n"
+"File configuration.lua will be preserved."
+msgstr ""
+"Επαναφορά όλων των ρυθμίσεων του assistant.koplugin;\n"
+"\n"
+"Αυτό επαναφέρει το πρόσθετο στις προεπιλογές εργοστασίου. Οι πάροχοι, τα κλειδιά API και τα διαπιστευτήρια εργαλείου αναζήτησης που προστέθηκαν μέσω της διεπαφής ρυθμίσεων θα καταργηθούν.\n"
+"Το αρχείο configuration.lua θα διατηρηθεί."
+
 msgid "Response"
 msgstr "Απάντηση"
 
 msgid "Response Settings"
 msgstr "Ρυθμίσεις απόκρισης"
+
+msgid "Response Text Font Size"
+msgstr "Μέγεθος γραμματοσειράς κειμένου απόκρισης"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1084,11 +1122,17 @@ msgstr "Term X-Ray"
 msgid "Terms & Concepts"
 msgstr "Όροι & Έννοιες"
 
+msgid "Text Size: %1"
+msgstr "Μέγεθος κειμένου: %1"
+
 msgid "Text copied to the clipboard"
 msgstr "Το κείμενο αντιγράφηκε στο πρόχειρο"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Ο χειριστής για το %1 δεν βρέθηκε. Βεβαιωθείτε ότι ο χειριστής υπάρχει στον κατάλογο api_handlers."
+
+msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
+msgstr "Το σημειωματάριο είναι το ημερολόγιο συνομιλίας σας: οι απαντήσεις του AI και οι γρήγορες σημειώσεις προστίθενται σε αυτό. Μπορείτε να δημιουργήσετε πολλά σημειωματάρια για να οργανώσετε τα ημερολόγιά σας."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Αυτό το κουμπί δημιουργεί μια γρήγορη σημείωση με το επισημασμένο κείμενο."
@@ -1208,11 +1252,14 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Χρήση του AI Assistant για τη «Μετάφραση»"
 
-msgid "Use book text as context"
-msgstr "Χρήση του κειμένου του βιβλίου ως πλαίσιο"
+msgid "Use Book Text as Context"
+msgstr "Χρήση κειμένου βιβλίου ως πλαίσιο"
 
-msgid "Use book text for x-ray and recap"
-msgstr "Χρήση του κειμένου του βιβλίου για X-Ray και Recap"
+msgid "Use Book Text for X-Ray and Recap"
+msgstr "Χρήση κειμένου βιβλίου για X-Ray και Recap"
+
+msgid "Use web search 🌐"
+msgstr "Χρήση διαδικτυακής αναζήτησης 🌐"
 
 msgid "User:"
 msgstr "Χρήστης:"
@@ -1236,6 +1283,9 @@ msgstr "WebSearch API"
 #. @translators term_xray: "What It Is" section header
 msgid "What It Is"
 msgstr "Τι είναι"
+
+msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
+msgstr "Όταν είναι ενεργοποιημένο, οι λειτουργίες Recap και X-Ray περιλαμβάνουν αυτόματα το κείμενο του βιβλίου έως την τρέχουσα θέση ανάγνωσής σας ως πλαίσιο. Αυτό επηρεάζει μόνο τις λειτουργίες σε επίπεδο βιβλίου, όχι τις προτροπές του μενού επισήμανσης, και αυξάνει σημαντικά τη χρήση token."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"
