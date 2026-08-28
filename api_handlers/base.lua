@@ -203,10 +203,10 @@ function BaseHandler:getRetryDelay(code, headers, body, attempt)
 end
 
 --- Show a cancellable count-down while waiting to retry a 429.
---- Two-line countdown: bold PFT header + Attempts N/M (countdown appended by sleepWithInfo).
+--- Two-line countdown: bold PFT header + Attempts N/M — retry in (countdown appended by sleepWithInfo).
 --- @return boolean true when the wait finished, false when the user cancelled.
 function BaseHandler:sleepWithRetryInfo(delay, attempt, max_retries)
-    local raw = T(_("<b>API Busy (Status: 429)</b>\nAttempts %1/%2"), attempt, max_retries)
+    local raw = T(_("<b>API Busy (Status: 429)</b>\nAttempts %1/%2 — retry in"), attempt, max_retries)
     return ASUtils.sleepWithInfo(delay, ASUtils.bold_format(raw))
 end
 
