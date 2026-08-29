@@ -704,7 +704,7 @@ function AssistantDialog:show(highlightedText)
     if chapter_range then
       use_chapter_checkbox = CheckButton:new{
         face = Font:getFace("xx_smallinfofont"),
-        text = _("Limit Context to Current Chapter"),
+        text = _("Current Chapter Only"),
         parent = self.input_dialog,
         -- No effect unless "Include Text Read So Far" is checked too;
         -- starts disabled and follows that checkbox via its callback.
