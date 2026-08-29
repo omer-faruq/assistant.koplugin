@@ -1,7 +1,7 @@
 -- test_chapter_context.lua
 -- Tests for the chapter-scoped context helpers in assistant_utils.lua:
 -- getCurrentChapterRange and extractCurrentChapterText.
-local helper = require("test.test_helper")
+local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
 

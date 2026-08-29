@@ -3,7 +3,7 @@
 -- "Provider API" menu factory (Registry.getAddProviderMenuItem), the
 -- preset provider table that moved here from main.lua, and the
 -- persistence of preset additional_parameters (Registry.add / installProvider).
-local helper = require("test.test_helper")
+local helper = require("test.helper")
 local assert = helper.assert
 local Registry = require("assistant_provider_registry")
 
@@ -60,7 +60,7 @@ local function subItems(menu_item)
 end
 
 -- Captures the options table passed to MultiInputDialog:new while fn runs
--- (the test_helper stub returns that table verbatim from new()).
+-- (the helper stub returns that table verbatim from new()).
 local function captureDialog(fn)
     local MID = require("ui/widget/multiinputdialog")
     local captured

@@ -1,7 +1,7 @@
 -- test_base_sync_options.lua
 -- Tests for BaseHandler:SyncOptions per-model parameter presets
 -- (model_parameters full-replace semantics).
-local helper = require("test.test_helper")
+local helper = require("test.helper")
 local assert = helper.assert
 local BaseHandler = require("api_handlers.base")
 

@@ -8,7 +8,7 @@
 --   * ASUtils.getPageRangeText availability guards
 --   * inline copy of the pure budget-assembly helper (assemblePageContext)
 --   * inline copy of the page-text injection decision logic
-local helper = require("test.test_helper")
+local helper = require("test.helper")
 local assert = helper.assert
 local M = require("assistant_prompts")
 local ASUtils = helper.ASUtils

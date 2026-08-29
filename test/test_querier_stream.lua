@@ -11,7 +11,7 @@
 -- The real flush logic is a local closure inside showStremDialog that needs
 -- the full KOReader UI stack, so (per project testing policy) we inline a copy
 -- of the pure helper and a driver that mirrors the closure, and test those.
-local helper = require("test.test_helper")
+local helper = require("test.helper")
 local assert = helper.assert
 local strbuf = require("string.buffer")
 

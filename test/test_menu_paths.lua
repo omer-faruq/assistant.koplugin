@@ -7,7 +7,7 @@
 -- widget stack), so per project testing policy the relevant helpers are
 -- inlined here as snippets and tested directly. If the marker names or the
 -- path computation in main.lua change, these tests must be updated together.
-local helper = require("test.test_helper")
+local helper = require("test.helper")
 local assert = helper.assert
 
 local function test(name, fn)

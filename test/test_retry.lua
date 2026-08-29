@@ -2,7 +2,7 @@
 -- Tests for the 429 retry mechanism in api_handlers/base.lua:
 --   getMaxRetries / parseRetryAfter / isRetryable429 / getRetryDelay
 --   and the makeRequest retry loop (with a mocked ASUtils.httpRequest).
-local helper = require("test.test_helper")
+local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
 

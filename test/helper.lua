@@ -1,8 +1,8 @@
--- test_helper.lua
+-- helper.lua
 -- Sets up KOReader environment, mocks problematic modules, provides assertions.
 --
 -- Usage in test files:
---   local helper = require("test.test_helper")
+--   local helper = require("test.helper")
 --   local assert = helper.assert
 --   helper.mockFetchJSON(returns)  -- configure mock responses
 

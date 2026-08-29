@@ -3,7 +3,7 @@
 --   getFolderBasename
 --
 -- Filesystem-dependent functions (getFolder, list, ...) are not tested headlessly.
-local helper = require("test.test_helper")
+local helper = require("test.helper")
 local assert = helper.assert
 local Notebook = require("assistant_notebook")
 

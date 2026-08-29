@@ -1,7 +1,7 @@
 -- test_search_registry.lua
 -- Tests for assistant_search_registry.lua: load/save, validate, merge,
 -- upsert, delete, and the WebSearch API menu factory.
-local helper = require("test.test_helper")
+local helper = require("test.helper")
 local assert = helper.assert
 local SearchRegistry = require("assistant_search_registry")
 

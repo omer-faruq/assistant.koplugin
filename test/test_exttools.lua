@@ -1,6 +1,6 @@
 -- test_exttools.lua
 -- Tests for assistant_exttools.lua: SerpAPI, Tavily, SearXNG, Exa.ai, and SearchToolBase.
-local helper = require("test.test_helper")
+local helper = require("test.helper")
 local assert = helper.assert
 local extools = helper.extools
 

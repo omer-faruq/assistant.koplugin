@@ -3,7 +3,7 @@
 --   isVersionNewer, is_excluded, join
 --
 -- The destructive otaUpgrade function itself is not tested headlessly.
-local helper = require("test.test_helper")
+local helper = require("test.helper")
 local assert = helper.assert
 local updater = require("assistant_updater")
 
@@ -105,7 +105,7 @@ local tests = {
 
     test("is_excluded: test directory excluded", function()
         assert.isTrue(updater.is_excluded("test/run.sh"))
-        assert.isTrue(updater.is_excluded("test/test_helper.lua"))
+        assert.isTrue(updater.is_excluded("test/helper.lua"))
         assert.isTrue(updater.is_excluded("assistant.koplugin/test/run.sh"))
     end),
 
