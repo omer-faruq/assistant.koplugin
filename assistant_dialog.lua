@@ -655,19 +655,40 @@ function AssistantDialog:show(highlightedText)
   local checkbox_pos = 2 -- insert after the input text area
   local web_search_available = self.assistant.settings:readSetting("use_websearch", "none") ~= "none"
   local saved_web_search = self.assistant.settings:readSetting("ask_use_websearch", false)
+  -- Correct side-by-side row: each CheckButton must have explicit width,
+  -- otherwise it claims the full InputDialog available width and the
+  -- HorizontalGroup overflows (see checkbutton.lua:77 `getAddedWidgetAvailableWidth`).
+  local available_w = self.input_dialog:getAddedWidgetAvailableWidth()
+  local gap = Size.padding.large
+  local half_w = math.floor((available_w - gap * 3) / 2)
+  if half_w < 50 then half_w = math.floor((available_w - gap * 2) / 2) end
   use_web_search_checkbox = CheckButton:new{
     face = Font:getFace("xx_smallinfofont"),
     text = _("Use web search 🌐"),
     parent = self.input_dialog,
+    width = half_w,
     checked = web_search_available and saved_web_search,
     enabled = web_search_available,
     callback = function()
       self.assistant.settings:saveSetting("ask_use_websearch", use_web_search_checkbox.checked)
     end,
   }
+  local use_copy_clipboard_checkbox
+  use_copy_clipboard_checkbox = CheckButton:new{
+    face = Font:getFace("xx_smallinfofont"),
+    text = _("Copy to Clipboard"),
+    parent = self.input_dialog,
+    width = half_w,
+    checked = self.assistant.settings:readSetting("auto_copy_asked_question", true),
+    callback = function()
+      self.assistant.settings:saveSetting("auto_copy_asked_question", use_copy_clipboard_checkbox.checked)
+    end,
+  }
   table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
-    HorizontalSpan:new{ width = Size.padding.large },
+    HorizontalSpan:new{ width = gap },
     use_web_search_checkbox,
+    HorizontalSpan:new{ width = gap },
+    use_copy_clipboard_checkbox,
   })
   checkbox_pos = checkbox_pos + 1
 
@@ -723,21 +744,7 @@ function AssistantDialog:show(highlightedText)
     end
   end
 
-  local use_copy_clipboard_checkbox
-  use_copy_clipboard_checkbox = CheckButton:new{
-    face = Font:getFace("xx_smallinfofont"),
-    text = _("Copy to Clipboard"),
-    parent = self.input_dialog,
-    checked = self.assistant.settings:readSetting("auto_copy_asked_question", true),
-    callback = function()
-      self.assistant.settings:saveSetting("auto_copy_asked_question", use_copy_clipboard_checkbox.checked)
-    end,
-  }
-  table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
-    HorizontalSpan:new{ width = Size.padding.large },
-    use_copy_clipboard_checkbox,
-  })
-  checkbox_pos = checkbox_pos + 1
+
   
   --  adds a close button to the top right
   self.input_dialog.title_bar.close_callback = function() self:_close() end
