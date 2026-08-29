@@ -710,8 +710,13 @@ function AssistantDialog:show(highlightedText)
         -- starts disabled and follows that checkbox via its callback.
         enabled = use_book_text_checkbox.checked,
       }
+      -- Indent child by parent's checkbox width so its text aligns
+      -- with the parent's text (parent indent + checkbox width).
+      local chbox_w = use_book_text_checkbox._checkmark
+          and use_book_text_checkbox._checkmark.dimen.w
+          or Size.padding.large
       table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
-        HorizontalSpan:new{ width = Size.padding.large * 2 },
+        HorizontalSpan:new{ width = Size.padding.large + chbox_w },
         use_chapter_checkbox,
       })
       checkbox_pos = checkbox_pos + 1
