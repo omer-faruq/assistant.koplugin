@@ -31,6 +31,7 @@ local test_files = {
     "test.test_querier_stream",
     "test.test_notebook",
     "test.test_retry",
+    "test.test_base_sync_options",
 }
 
 if filter then

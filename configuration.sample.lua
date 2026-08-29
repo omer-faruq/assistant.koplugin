@@ -174,6 +174,32 @@ local CONFIGURATION = {
                 --     -- Or enable reasoning with the default parameters:
                 --     -- enabled = true -- Default: inferred from effort or max_tokens
                 -- }
+            },
+            -- Per-model parameter presets (optional).
+            -- When you switch models via Settings → Browse Models, the matching
+            -- entry here fully replaces `additional_parameters` for that model
+            -- (no partial merge). Models without an entry keep the shared
+            -- `additional_parameters` above.
+            -- Presets are configured in this file only — the Add Provider
+            -- dialog does not expose them.
+            -- Because of full replacement, every key a model needs must be
+            -- repeated in its preset — including keys handled by custom
+            -- handler code rather than the standard parameter pass-through.
+            model_parameters = {
+                -- A model id different from the provider's default `model`
+                -- above; switching to it via Browse Models applies this preset:
+                -- ["qwen/qwen3-next-80b-a3b:free"] = {
+                --     temperature = 0.7,
+                --     max_tokens = 6000,
+                --     reasoning = { effort = "high" },
+                -- },
+                -- An empty table ({}) discards all shared parameters for that
+                -- model — use it only if the model needs no extra parameters:
+                -- ["model/that-needs-nothing:free"] = {},
+                -- ["deepseek/deepseek-r1:free"] = {
+                --     temperature = 0.6,
+                --     max_tokens = 8192,
+                -- },
             }
         },
         openrouter_free = {
