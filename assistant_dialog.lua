@@ -23,6 +23,42 @@ local Notebook = require("assistant_notebook")
 local extractBookTextForAnalysis = ASUtils.extractBookTextForAnalysis
 local normalizeMarkdownHeadings = ASUtils.normalizeMarkdownHeadings
 
+--[[
+  Extract the context text selected by the Ask dialog checkboxes.
+  When `use_chapter` is set, narrow the context to the chapter containing
+  the current position (see ASUtils.extractCurrentChapterText); otherwise
+  fall back to the full "book text up to current position" extraction.
+--]]
+local function extractContextText(CONFIGURATION, ui, use_chapter)
+  if use_chapter then
+    return ASUtils.extractCurrentChapterText(CONFIGURATION, ui)
+  end
+  return extractBookTextForAnalysis(CONFIGURATION, ui)
+end
+
+--[[
+  Format the "[! IMPORTANT !] Here is ..." fragment appended to the user
+  question when the "Use Book Text as Context" checkbox is checked.
+
+  Returns "" when there is no book text to include. Single source of truth
+  for both Ask paths (regular Ask button and highlight prompt buttons) so
+  the LLM instruction stays identical everywhere.
+
+  NOTE: Intentionally NOT wrapped in _() — this fragment is an instruction
+  to the LLM (English-only models), not user-facing UI text.
+--]]
+local function buildBookTextPrompt(use_chapter, book_text)
+  if not book_text or book_text == "" then
+    return ""
+  end
+  local context_source = use_chapter
+      and "the text of the current chapter I am reading"
+      or "the book text up to my current position"
+  return string.format(
+    "\n\n [! IMPORTANT !] Here is %s, only consider this text for your response, and answer in language of previous part of the question:\n [BOOK TEXT BEGIN]\n%s\n[BOOK TEXT END]",
+    context_source, book_text)
+end
+
 -- main dialog class
 local AssistantDialog = {
   CONFIGURATION = nil,
@@ -403,6 +439,7 @@ function AssistantDialog:show(highlightedText)
   local button_rows = {}
   local prompt_buttons = {}
   local use_book_text_checkbox -- ref to the CheckButton widget
+  local use_chapter_checkbox -- ref to the chapter-limit CheckButton widget
   local use_web_search_checkbox -- ref to the web search CheckButton widget
   local first_row = {
     {
@@ -460,10 +497,9 @@ function AssistantDialog:show(highlightedText)
         local user_question = self.input_dialog and self.input_dialog:getInputText() or ""
         local book_text_prompt = ""
         if use_book_text_checkbox and use_book_text_checkbox.checked then
-          local book_text = extractBookTextForAnalysis(self.CONFIGURATION, self.assistant.ui)
-          if book_text then
-            book_text_prompt = string.format("\n\n [! IMPORTANT !] Here is the book text up to my current position, only consider this text for your response, and answer in language of previous part of the question:\n [BOOK TEXT BEGIN]\n%s\n[BOOK TEXT END]", book_text)
-          end
+          local use_chapter = use_chapter_checkbox and use_chapter_checkbox.checked
+          book_text_prompt = buildBookTextPrompt(use_chapter,
+              extractContextText(self.CONFIGURATION, self.assistant.ui, use_chapter))
         end
         if not user_question or user_question == "" then
           UIManager:show(InfoMessage:new{
@@ -538,11 +574,10 @@ function AssistantDialog:show(highlightedText)
               self.assistant.quicknote:saveNote(user_question, highlightedText)
             else
               local book_text_prompt = ""
-              if use_book_text_checkbox.checked then
-                local book_text = extractBookTextForAnalysis(self.CONFIGURATION, self.assistant.ui)
-                if book_text then
-                  book_text_prompt = string.format("\n\n[! IMPORTANT !] Here is the book text up to my current position, only consider this text for your response:\n [BOOK TEXT BEGIN]\n%s\n[BOOK TEXT END]", book_text)
-                end
+              if use_book_text_checkbox and use_book_text_checkbox.checked then
+                local use_chapter = use_chapter_checkbox and use_chapter_checkbox.checked
+                book_text_prompt = buildBookTextPrompt(use_chapter,
+                    extractContextText(self.CONFIGURATION, self.assistant.ui, use_chapter))
               end
               user_question = user_question .. book_text_prompt
               self:showPrompt(highlightedText, tab.idx, user_question)
@@ -636,17 +671,51 @@ function AssistantDialog:show(highlightedText)
   })
   checkbox_pos = checkbox_pos + 1
 
+  -- Both checkboxes live under the `book.title` guard: the chapter option
+  -- depends on the "Use Book Text as Context" checkbox, and `_getBookContext`
+  -- falls back to "Unknown Title", so this guard is only bypassed when the
+  -- document props fail entirely (in which case hiding both is correct).
   if book.title then
     use_book_text_checkbox = CheckButton:new{
       face = Font:getFace("xx_smallinfofont"),
       text = _("Use Book Text as Context"),
       parent = self.input_dialog,
+      callback = function()
+        -- The chapter-limit option only takes effect when book text is
+        -- enabled; mirror that state (greyed out / unchecked otherwise).
+        if use_chapter_checkbox then
+          if use_book_text_checkbox.checked then
+            use_chapter_checkbox:enable()
+          else
+            use_chapter_checkbox:disable()
+          end
+        end
+      end,
     }
     table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
       HorizontalSpan:new{ width = Size.padding.large },
       use_book_text_checkbox,
     })
     checkbox_pos = checkbox_pos + 1
+
+    -- Chapter limit is only offered when a TOC chapter covers the current
+    -- position (no TOC / outside the TOC -> no option).
+    local chapter_range = ASUtils.getCurrentChapterRange(self.assistant.ui)
+    if chapter_range then
+      use_chapter_checkbox = CheckButton:new{
+        face = Font:getFace("xx_smallinfofont"),
+        text = _("Limit Context to Current Chapter"),
+        parent = self.input_dialog,
+        -- No effect unless "Use Book Text as Context" is checked too;
+        -- starts disabled and follows that checkbox via its callback.
+        enabled = use_book_text_checkbox.checked,
+      }
+      table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
+        HorizontalSpan:new{ width = Size.padding.large },
+        use_chapter_checkbox,
+      })
+      checkbox_pos = checkbox_pos + 1
+    end
   end
 
   local use_copy_clipboard_checkbox

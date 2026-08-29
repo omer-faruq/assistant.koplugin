@@ -374,6 +374,277 @@ function M.getPageRangeText(ui, before, after, max_chars)
   return assemblePageContext(prev, current, next, max_chars)
 end
 
+--[[
+  Resolve the TOC chapter range containing the current reading position.
+
+  NOTE on nested TOCs: "chapter" here means the flat TOC entry covering the
+  position, which for nested TOCs may be a subsection (depth > 1) rather than
+  the top-level chapter. Resolving the top-level chapter would require
+  walking up via entry.parent/depth and is left as future work; extraction is
+  scoped to the entry found here.
+
+  Returns nil when there is no usable TOC or the position is outside it:
+    - no ui / document / toc module
+    - empty TOC after fillToc()
+    - current page lies before the first TOC entry ("outside the TOC")
+
+  On success returns:
+    { start_page, end_page, next_page, title, start_xp, end_xp }
+  where next_page/end_xp are nil for the last chapter (extraction then runs
+  to the end of the document).
+--]]
+function M.getCurrentChapterRange(ui)
+  if not ui or not ui.document or not ui.toc then
+    return nil
+  end
+  if not ui.document.info then
+    return nil
+  end
+
+  -- Make sure the TOC is filled and non-empty.
+  local ok = pcall(function() ui.toc:fillToc() end)
+  if not ok or type(ui.toc.toc) ~= "table" or #ui.toc.toc == 0 then
+    return nil
+  end
+
+  -- Current reading position (mirrors extractBookTextForAnalysis conventions).
+  -- For reflowable documents the xpointer is passed straight to the TOC
+  -- lookup when the reader's TOC can handle it (ReaderToc:getTocIndexByPage
+  -- accepts xpointer strings via getAccurateTocIndexByXPointer for sub-page
+  -- precision); the page-based lookup remains the fallback.
+  local page
+  local index
+  if ui.document.info.has_pages then
+    page = ui.view and ui.view.state and ui.view.state.page
+  else
+    local xp_ok, xp = pcall(function() return ui.document:getXPointer() end)
+    if xp_ok and xp then
+      local pg_ok, pg = pcall(function() return ui.document:getPageFromXPointer(xp) end)
+      if pg_ok and pg then
+        page = pg
+      end
+      local xp_idx_ok, xp_index = pcall(function() return ui.toc:getTocIndexByPage(xp) end)
+      if xp_idx_ok and xp_index then
+        index = xp_index
+      end
+    end
+  end
+  if not page then
+    return nil
+  end
+
+  -- TOC entry covering the current position (nil when before the first entry).
+  if not index then
+    local idx_ok, idx = pcall(function() return ui.toc:getTocIndexByPage(page) end)
+    if not idx_ok or not idx then
+      return nil
+    end
+    index = idx
+  end
+
+  local toc = ui.toc.toc
+  local entry = toc[index]
+  -- Defensive: also treat an entry starting after our position as "outside
+  -- the TOC" (covers implementations returning index 1 for early pages).
+  if not entry or not entry.page or entry.page > page then
+    return nil
+  end
+
+  local ok_total, total_pages = pcall(function() return ui.document:getPageCount() end)
+  if not ok_total or not total_pages or total_pages < 1 then
+    total_pages = nil
+  end
+  local next_entry = toc[index + 1]
+  local end_page
+  if next_entry and next_entry.page then
+    end_page = math.max(entry.page, next_entry.page - 1)
+  else
+    end_page = total_pages or entry.page
+  end
+
+  return {
+    start_page = entry.page,
+    end_page = end_page,
+    next_page = next_entry and next_entry.page or nil,
+    title = entry.title,
+    start_xp = entry.xpointer,
+    end_xp = next_entry and next_entry.xpointer or nil,
+  }
+end
+
+--[[
+  Best-effort end-of-document xpointer for reflowable documents, so the last
+  TOC chapter extracts to the true end (a page xpointer only reaches the
+  start of the last page, cutting its tail). Candidates, first valid one wins:
+    1. xpointer of the page after the last (engines may clamp it to the end;
+       some return nil for the out-of-range page, which is discarded)
+    2. gotoPos beyond the document (clamps to the end) then getXPointer()
+  Falls back to the last page's start xpointer (tail loss accepted over a
+  wrong range). Every probe is pcall-guarded. Candidates must be non-nil,
+  differ from the current xpointer, be in-document and ordered after the
+  current position (compareXPointers). The gotoPos probe, which could clamp
+  mid-document in a broken engine, must additionally resolve to the last page
+  (getPageFromXPointer == page_count) to be trusted.
+
+  There is no API for "the last page's end xpointer": getXPointer() returns
+  the current position and getTextFromXPointers requires both endpoints, so
+  a nil end does not mean "to the end" here.
+--]]
+local function getDocumentEndXPointer(ui)
+  -- Defensive: without a page count there is nothing to anchor the end
+  -- probes on.
+  local ok_count, page_count = pcall(function() return ui.document:getPageCount() end)
+  if not ok_count or not page_count or page_count < 1 then
+    return nil
+  end
+  local ok_start, start_xp = pcall(function() return ui.document:getXPointer() end)
+  if not ok_start or not start_xp then
+    start_xp = nil
+  end
+
+  local xp_after_last, xp_after_goto = nil, nil
+  pcall(function()
+    local xp = ui.document:getPageXPointer(page_count + 1)
+    if xp and xp ~= start_xp then
+      xp_after_last = xp
+    end
+  end)
+  pcall(function()
+    ui.document:gotoPos(2 ^ 30)
+    local xp = ui.document:getXPointer()
+    if xp and xp ~= start_xp then
+      xp_after_goto = xp
+    end
+  end)
+  -- Always restore the view position.
+  pcall(function()
+    if start_xp then ui.document:gotoXPointer(start_xp) end
+  end)
+
+  local function accepted(xp)
+    if not xp or xp == start_xp then
+      return false
+    end
+    local ok_valid, valid = pcall(function()
+      return ui.document:isXPointerInDocument(xp)
+          and (not start_xp or ui.document:compareXPointers(start_xp, xp) == 1)
+    end)
+    return ok_valid and valid
+  end
+
+  -- The page-after-last xpointer, when the engine returns one, marks the
+  -- document boundary by construction.
+  if accepted(xp_after_last) then
+    return xp_after_last
+  end
+  -- The gotoPos probe must resolve to the last page to prove it reached the
+  -- true end (and not some mid-document clamp); when the engine cannot tell
+  -- us, trust the in-document + ordered checks above.
+  if accepted(xp_after_goto) then
+    local ok_page, page = pcall(function() return ui.document:getPageFromXPointer(xp_after_goto) end)
+    if not ok_page or not page or page == page_count then
+      return xp_after_goto
+    end
+  end
+  local ok_last, last_xp = pcall(function() return ui.document:getPageXPointer(page_count) end)
+  return ok_last and last_xp or nil
+end
+
+--[[
+  Extract the text of the current TOC chapter (see getCurrentChapterRange).
+
+  Returns nil when the chapter range cannot be resolved (no TOC / position
+  outside it), otherwise a string trimmed to features.max_text_length_for_analysis,
+  keeping the TAIL so the text nearest the reading position survives
+  (same guard style as extractBookTextForAnalysis).
+
+  Extraction mutates the view position and the engine's selection rendering;
+  both are saved before and restored after (best effort for the selection).
+--]]
+function M.extractCurrentChapterText(CONFIGURATION, ui)
+  local range = M.getCurrentChapterRange(ui)
+  if not range then
+    return nil
+  end
+
+  local book_text = ""
+  if ui.document.info.has_pages then
+    -- Paged documents: collect the chapter's page texts (per-page pcall so a
+    -- failing page is skipped instead of aborting the whole extraction).
+    local buf = shared_buf
+    buf:reset()
+    for page = range.start_page, range.end_page do
+      local ok_text, text = pcall(function() return ui.document:getPageText(page) end)
+      if ok_text and text then
+        buf:put(pageTextToString(text), "\n")
+      end
+    end
+    book_text = buf:get()
+  else
+    -- Reflowable documents: xpointer range (extraction mutates the view
+    -- position, so save/restore the xpointer around it, as getPageRangeText).
+    -- getTextFromXPointers also drives the engine's selection rendering, so
+    -- preserve any active text selection alongside the position.
+    local saved_xp
+    local ok_xp, xp = pcall(function() return ui.document:getXPointer() end)
+    if ok_xp then
+      saved_xp = xp
+    end
+    local saved_selection
+    if ui.highlight and ui.highlight.selected_text
+        and ui.highlight.selected_text.pos0 and ui.highlight.selected_text.pos1 then
+      saved_selection = util.tableDeepCopy(ui.highlight.selected_text)
+    end
+    local ok = pcall(function()
+      local start_xp = range.start_xp
+      if not start_xp then
+        start_xp = ui.document:getPageXPointer(range.start_page)
+      end
+      local end_xp = range.end_xp
+      if not end_xp then
+        if range.next_page then
+          -- No xpointer on the next TOC entry: an end xpointer at the START
+          -- of the following page still includes the chapter's final page
+          -- (same boundary convention as getPageRangeText).
+          end_xp = ui.document:getPageXPointer(range.next_page)
+        else
+          -- Last chapter: extract to the true end of the document.
+          end_xp = getDocumentEndXPointer(ui)
+        end
+      end
+      book_text = ui.document:getTextFromXPointers(start_xp, end_xp) or ""
+    end)
+    -- Always restore the view position.
+    pcall(function()
+      if saved_xp then ui.document:gotoXPointer(saved_xp) end
+    end)
+    -- Restore the text selection the extraction disturbed. There is no
+    -- ReaderHighlight API to re-select, so restore the state table and, for
+    -- rolling documents (pos0/pos1 are xpointers), re-issue the engine's own
+    -- draw-selection call the way readerhighlight.lua does.
+    if saved_selection then
+      pcall(function()
+        ui.highlight.selected_text = saved_selection
+        local sel_pos0, sel_pos1 = saved_selection.pos0, saved_selection.pos1
+        if type(sel_pos0) == "string" and type(sel_pos1) == "string" then
+          ui.document:getTextFromXPointers(sel_pos0, sel_pos1, true)
+        end
+      end)
+    end
+    if not ok then
+      return nil
+    end
+  end
+
+  local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
+  if #book_text > max_text_length_for_analysis then
+    book_text = book_text:sub(-max_text_length_for_analysis)
+    book_text = book_text:gsub("^[\128-\191]+", "")
+    book_text = util.fixUtf8(book_text, "_")
+  end
+  return book_text
+end
+
 function M.saveToNotebookFile(assistant, log_entry)
   local success, saved_path, save_err, used_fallback = pcall(function()
     local notebookfile = assistant.ui.bookinfo:getNotebookFile(assistant.ui.doc_settings)
