@@ -1,6 +1,11 @@
 local logger = require("logger")
 local HorizontalGroup = require("ui/widget/horizontalgroup")
 local HorizontalSpan = require("ui/widget/horizontalspan")
+local VerticalSpan = require("ui/widget/verticalspan")
+local CenterContainer = require("ui/widget/container/centercontainer")
+local LineWidget = require("ui/widget/linewidget")
+local Geom = require("ui/geometry")
+local Blitbuffer = require("ffi/blitbuffer")
 local Size = require("ui/size")
 local InputDialog = require("ui/widget/inputdialog")
 local ChatGPTViewer = require("assistant_viewer")
@@ -653,6 +658,24 @@ function AssistantDialog:show(highlightedText)
   -- Add checkboxes below the input field
   local vgroup = self.input_dialog.dialog_frame[1]
   local checkbox_pos = 2 -- insert after the input text area
+  -- Separator line between Ask text/input and checkbox group
+  do
+    local available_w = self.input_dialog:getAddedWidgetAvailableWidth()
+    local line = LineWidget:new{
+      dimen = Geom:new{ w = available_w, h = Size.line.thin },
+      background = Blitbuffer.COLOR_DARK_GRAY,
+    }
+    local line_container = CenterContainer:new{
+      dimen = Geom:new{ w = self.input_dialog.width, h = line:getSize().h },
+      line,
+    }
+    table.insert(vgroup, checkbox_pos, VerticalSpan:new{ width = Size.padding.default })
+    checkbox_pos = checkbox_pos + 1
+    table.insert(vgroup, checkbox_pos, line_container)
+    checkbox_pos = checkbox_pos + 1
+    table.insert(vgroup, checkbox_pos, VerticalSpan:new{ width = Size.padding.default })
+    checkbox_pos = checkbox_pos + 1
+  end
   local web_search_available = self.assistant.settings:readSetting("use_websearch", "none") ~= "none"
   local saved_web_search = self.assistant.settings:readSetting("ask_use_websearch", false)
   -- Correct side-by-side row: each CheckButton must have explicit width,
