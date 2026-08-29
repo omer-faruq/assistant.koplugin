@@ -41,9 +41,8 @@ A headless test framework lives under `test/`. It runs inside the KOReader LuaJI
 - `test/test_*.lua` — Per-module test files. Each returns the result of `helper.runTests(...)`.
 
 **Adding a new test file:**
-1. Create `test/test_<module>.lua` following the `test_exttools.lua` pattern.
-2. Register it in `test/run_tests.lua`'s `test_files` table.
-3. Run `./test/run.sh` to verify.
+1. Create `test/test_<module>.lua` following the `test_exttools.lua` pattern. The runner auto-discovers any `test/test_*.lua` file (except `test_helper.lua`) at runtime — no registration needed. Files run in alphabetical order, so test files must stay independent of each other.
+2. Run `./test/run.sh` to verify.
 
 **Stub discipline:** `test_helper.lua` installs empty stubs in `package.preload` for KOReader UI modules that can't load headless. Two pitfalls to be aware of:
 - Real `ui/widget/*` modules (e.g. `inputdialog`, `menu`, `confirmbox`, `buttontable`) `require("device")`. If the real `device` module loads, its `pcall(require, "android")` probe is satisfied by the empty `android = {}` stub, `frontend/device.lua` selects the Android implementation, and its init crashes (`attempt to call field 'isPackageEnabled' (a nil value)`). Whenever a new `require` chain (e.g. a new module pulled in by `assistant_utils`) reaches a real KOReader widget module, add a stub for that widget in `test_helper.lua`'s `stubs` table.

@@ -20,20 +20,21 @@ require("setupkoenv")
 -- Add project root to package.path
 package.path = PROJECT_ROOT .. "/?.lua;" .. PROJECT_ROOT .. "/?/init.lua;" .. package.path
 
--- Collect test files
-local test_files = {
-    "test.test_exttools",
-    "test.test_prompts",
-    "test.test_menu_paths",
-    "test.test_provider_registry",
-    "test.test_search_registry",
-    "test.test_updater",
-    "test.test_querier_stream",
-    "test.test_notebook",
-    "test.test_retry",
-    "test.test_base_sync_options",
-    "test.test_chapter_context",
-}
+-- Discover test files at runtime: any test/test_*.lua except test_helper.lua.
+-- Sorted alphabetically for deterministic order; new test files are picked up
+-- automatically, so adding one never requires touching this runner.
+local lfs = require("libs/libkoreader-lfs")
+local test_dir = PROJECT_ROOT .. "/test"
+local test_files = {}
+for entry in lfs.dir(test_dir) do
+    if entry ~= "test_helper.lua" and entry:match("^test_.+%.lua$") then
+        table.insert(test_files, "test." .. entry:sub(1, -5))
+    end
+end
+table.sort(test_files)
+if #test_files == 0 then
+    error("No test files found in " .. test_dir)
+end
 
 if filter then
     local filtered = {}
