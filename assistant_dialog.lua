@@ -711,7 +711,7 @@ function AssistantDialog:show(highlightedText)
         enabled = use_book_text_checkbox.checked,
       }
       table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
-        HorizontalSpan:new{ width = Size.padding.large },
+        HorizontalSpan:new{ width = Size.padding.large * 2 },
         use_chapter_checkbox,
       })
       checkbox_pos = checkbox_pos + 1
