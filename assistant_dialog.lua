@@ -38,7 +38,7 @@ end
 
 --[[
   Format the "[! IMPORTANT !] Here is ..." fragment appended to the user
-  question when the "Use Book Text as Context" checkbox is checked.
+  question when the "Include Text Read So Far" checkbox is checked.
 
   Returns "" when there is no book text to include. Single source of truth
   for both Ask paths (regular Ask button and highlight prompt buttons) so
@@ -672,13 +672,13 @@ function AssistantDialog:show(highlightedText)
   checkbox_pos = checkbox_pos + 1
 
   -- Both checkboxes live under the `book.title` guard: the chapter option
-  -- depends on the "Use Book Text as Context" checkbox, and `_getBookContext`
+  -- depends on the "Include Text Read So Far" checkbox, and `_getBookContext`
   -- falls back to "Unknown Title", so this guard is only bypassed when the
   -- document props fail entirely (in which case hiding both is correct).
   if book.title then
     use_book_text_checkbox = CheckButton:new{
       face = Font:getFace("xx_smallinfofont"),
-      text = _("Use Book Text as Context"),
+      text = _("Include Text Read So Far"),
       parent = self.input_dialog,
       callback = function()
         -- The chapter-limit option only takes effect when book text is
@@ -706,7 +706,7 @@ function AssistantDialog:show(highlightedText)
         face = Font:getFace("xx_smallinfofont"),
         text = _("Limit Context to Current Chapter"),
         parent = self.input_dialog,
-        -- No effect unless "Use Book Text as Context" is checked too;
+        -- No effect unless "Include Text Read So Far" is checked too;
         -- starts disabled and follows that checkbox via its callback.
         enabled = use_book_text_checkbox.checked,
       }
