@@ -623,12 +623,15 @@ function AssistantDialog:show(highlightedText)
 
   -- Show the dialog with the button rows
   local dialog_hint
+  local text_height
   if is_highlighted then
       dialog_hint = _("Ask a question about the highlighted text")
+      text_height = math.floor( 3 * Screen:scaleBySize(20) ) -- about 3 lines of text
   elseif book.title then
       dialog_hint = ASUtils.bold_format(
           T(_("<b>Ask a question about this book:</b>\n%1 by %2"), book.title, book.author)
       )
+      text_height = math.floor( 5 * Screen:scaleBySize(20) ) -- about 5 lines of text
   else
       dialog_hint = _("Ask a general question")
   end
@@ -644,7 +647,7 @@ function AssistantDialog:show(highlightedText)
     input_height = 6,
     allow_newline = true,
     input_multiline = true,
-    text_height = math.floor( 3 * Screen:scaleBySize(20) ), -- about 3 lines of text
+    text_height = text_height,
     buttons = button_rows,
     title_bar_left_icon = "appbar.settings",
     title_bar_left_icon_tap_callback = function ()
@@ -683,11 +686,18 @@ function AssistantDialog:show(highlightedText)
   -- HorizontalGroup overflows (see checkbutton.lua:77 `getAddedWidgetAvailableWidth`).
   local available_w = self.input_dialog:getAddedWidgetAvailableWidth()
   local gap = Size.padding.large
-  local half_w = math.floor((available_w - gap * 3) / 2)
-  if half_w < 50 then half_w = math.floor((available_w - gap * 2) / 2) end
+  -- Align checkbox left edge with the input field's visible left edge.
+  -- getAddedWidgetAvailableWidth() returns the text_width (inner content width),
+  -- but the InputText widget is wider: it adds bordersize + padding + margin on
+  -- each side via its internal FrameContainer (inputtext.lua:569-575).
+  -- The input is centered in a CenterContainer{w=self.input_dialog.width}.
+  local input_extra = 2 * (Size.border.inputtext + Size.padding.small + Size.margin.default)
+  local left_gap = math.floor((self.input_dialog.width - available_w - input_extra) / 2)
+  local half_w = math.floor((available_w - left_gap - gap * 2) / 2)
+  if half_w < 50 then half_w = math.floor((available_w - left_gap - gap) / 2) end
   use_web_search_checkbox = CheckButton:new{
     face = Font:getFace("xx_smallinfofont"),
-    text = _("Use web search 🌐"),
+    text = _("🌐 Web Search"),
     parent = self.input_dialog,
     width = half_w,
     checked = web_search_available and saved_web_search,
@@ -698,8 +708,8 @@ function AssistantDialog:show(highlightedText)
   }
   local use_copy_clipboard_checkbox
   use_copy_clipboard_checkbox = CheckButton:new{
-    face = Font:getFace("xx_smallinfofont"),
-    text = _("Copy to Clipboard"),
+    face = Font:getFace("smallffont"),
+    text = _("⌨ Copy to Clipboard"),
     parent = self.input_dialog,
     width = half_w,
     checked = self.assistant.settings:readSetting("auto_copy_asked_question", true),
@@ -708,7 +718,7 @@ function AssistantDialog:show(highlightedText)
     end,
   }
   table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
-    HorizontalSpan:new{ width = gap },
+    HorizontalSpan:new{ width = left_gap },
     use_web_search_checkbox,
     HorizontalSpan:new{ width = gap },
     use_copy_clipboard_checkbox,
@@ -720,10 +730,14 @@ function AssistantDialog:show(highlightedText)
   -- falls back to "Unknown Title", so this guard is only bypassed when the
   -- document props fail entirely (in which case hiding both is correct).
   if book.title then
+    -- Chapter limit is only offered when a TOC chapter covers the current
+    -- position (no TOC / outside the TOC -> no option).
+    local chapter_range = ASUtils.getCurrentChapterRange(self.assistant.ui)
     use_book_text_checkbox = CheckButton:new{
-      face = Font:getFace("xx_smallinfofont"),
-      text = _("Include Text Read So Far"),
+      face = Font:getFace("smallffont"),
+      text = _("✉ Attach Prior Text"),
       parent = self.input_dialog,
+      width = half_w,
       callback = function()
         -- The chapter-limit option only takes effect when book text is
         -- enabled; mirror that state (greyed out / unchecked otherwise).
@@ -736,35 +750,29 @@ function AssistantDialog:show(highlightedText)
         end
       end,
     }
-    table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
-      HorizontalSpan:new{ width = Size.padding.large },
-      use_book_text_checkbox,
-    })
-    checkbox_pos = checkbox_pos + 1
-
-    -- Chapter limit is only offered when a TOC chapter covers the current
-    -- position (no TOC / outside the TOC -> no option).
-    local chapter_range = ASUtils.getCurrentChapterRange(self.assistant.ui)
     if chapter_range then
       use_chapter_checkbox = CheckButton:new{
-        face = Font:getFace("xx_smallinfofont"),
-        text = _("Current Chapter Only"),
+        face = Font:getFace("smallffont"),
+        text = _("✎ Current Chapter Only"),
         parent = self.input_dialog,
+        width = half_w,
         -- No effect unless "Include Text Read So Far" is checked too;
         -- starts disabled and follows that checkbox via its callback.
         enabled = use_book_text_checkbox.checked,
       }
-      -- Indent child by parent's checkbox width so its text aligns
-      -- with the parent's text (parent indent + checkbox width).
-      local chbox_w = use_book_text_checkbox._checkmark
-          and use_book_text_checkbox._checkmark.dimen.w
-          or Size.padding.large
       table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
-        HorizontalSpan:new{ width = Size.padding.large + chbox_w },
+        HorizontalSpan:new{ width = left_gap },
+        use_book_text_checkbox,
+        HorizontalSpan:new{ width = gap },
         use_chapter_checkbox,
       })
-      checkbox_pos = checkbox_pos + 1
+    else
+      table.insert(vgroup, checkbox_pos, HorizontalGroup:new{
+        HorizontalSpan:new{ width = left_gap },
+        use_book_text_checkbox,
+      })
     end
+    checkbox_pos = checkbox_pos + 1
   end
 
 
