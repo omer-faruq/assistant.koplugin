@@ -790,6 +790,10 @@ function Assistant:getModelProvider()
   return setting_provider
 end
 
+function Assistant:getFeature(key, default)
+    return ASUtils.getFeature(self.CONFIGURATION, key, default)
+end
+
 -- Flush settings to disk, triggered by koreader
 function Assistant:onFlushSettings()
     if self.updated then
@@ -1199,7 +1203,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
   if live or self.settings:readSetting("dict_popup_show_custom_prompts", false) then
     -- Collect custom prompts with show_on_dictionary_popup = true
     local custom_prompts = {}
-    if CONFIGURATION and CONFIGURATION.features and CONFIGURATION.features.prompts then
+    if CONFIGURATION and CONFIGURATION.features and CONFIGURATION.features.prompts then -- RAW config, not effective
       for prompt_key, prompt_config in pairs(CONFIGURATION.features.prompts) do
         if prompt_config.show_on_dictionary_popup == true and prompt_config.visible ~= false then
           table.insert(custom_prompts, {

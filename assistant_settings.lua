@@ -795,10 +795,8 @@ File configuration.lua will be preserved.]]),
         {
             text = _("OTA Update"),
             callback = function(touchmenu_instance)
-                local ota_github_base = koutil.tableGetValue(assistant.CONFIGURATION, "features", "ota_github_base")
-                    or "https://github.com"
-                local ota_github_repo = koutil.tableGetValue(assistant.CONFIGURATION, "features", "ota_github_repo")
-                    or "omer-faruq/assistant.koplugin"
+                local ota_github_base = assistant:getFeature("ota_github_base", "https://github.com")
+                local ota_github_repo = assistant:getFeature("ota_github_repo", "omer-faruq/assistant.koplugin")
                 local version_input
                 version_input = InputDialog:new{
                     title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, meta.version),
