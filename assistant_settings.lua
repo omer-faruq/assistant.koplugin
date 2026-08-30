@@ -227,7 +227,7 @@ function SettingsDialog:init()
             enabled_func = function()
                 local cur = self.assistant.querier.provider_name
                 if not cur then return false end
-                local ps = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", cur)
+                local ps = self.assistant:getProvider(cur)
                 return Registry.is_editable(ps)
             end,
             callback = function() self:onEditProvider() end,
@@ -238,7 +238,7 @@ function SettingsDialog:init()
             enabled_func = function()
                 local cur = self.assistant.querier.provider_name
                 if not cur then return false end
-                local ps = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", cur)
+                local ps = self.assistant:getProvider(cur)
                 return Registry.is_deletable(ps)
             end,
             callback = function() self:onDeleteProvider() end,
@@ -400,7 +400,7 @@ end
 
 function SettingsDialog:onDeleteProvider()
     local provider_name = self.assistant.querier.provider_name
-    local ps = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", provider_name)
+    local ps = self.assistant:getProvider(provider_name)
     if not Registry.is_deletable(ps) then return end
 
     local display_name = koutil.tableGetValue(ps, "display_name") or provider_name
@@ -439,7 +439,7 @@ end
 
 function SettingsDialog:onEditProvider()
     local provider_name = self.assistant.querier.provider_name
-    local ps = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", provider_name)
+    local ps = self.assistant:getProvider(provider_name)
     if not Registry.is_editable(ps) then return end
 
     UIManager:close(self)
@@ -480,7 +480,7 @@ SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
             elseif key == "builtin" then
                 return koutil.tableGetValue(assistant, "querier", "handler", "has_builtin_websearch")
             elseif ToolExecutor.IsExtSearch(key) then
-                return 
+                return
                     (koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", key, "api_key") ~= nil) or
                     (koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", key, "base_url") ~= nil)
             end
