@@ -553,28 +553,48 @@ Now begin the analysis with the provided book_text and highlights.]],
         use_websearch = true,
         system_prompt = markdown_format_prompt,
         user_prompt = T([[
-## Task: Book-Aware Word Analysis
-Explain "{word}" as used in "{title}" by {author}, strictly based on the context below.
+## Task: Book-Aware Dictionary and Word-Form Analysis
+Explain "{word}" as used in "{title}" by {author}, strictly based on the context below. Treat the selected text as potentially inflected, derived, misspelled, or part of a phrase.
 
 ## Context from the Book
 {context}
 
 ## Execution Rules
-1. **Language**: The entire response, including all headers and labels, must be strictly rendered in {language}. (Except for the "%6" sentence itself).
-2. **Book-Awareness**: Focus heavily on how "{word}" functions in this specific book. Contrast its dictionary definition with its narrative, thematic, or worldbuilding usage.
-3. **Output**: Start directly with the structured analysis. Do NOT include any introductory or concluding commentary.
+1. **Language**: Render the entire response, including all headers and labels, in {language}. The example sentence in "%6" may remain in the language being learned.
+2. **Word-Form Analysis (required)**: Analyze the form before explaining its meaning.
+   - Identify the exact surface form, part of speech, and relevant grammatical features (such as tense, number, person, degree, or participle).
+   - Give the lemma/dictionary form: infinitive for verbs, singular form for nouns, and positive form for adjectives and adverbs where applicable.
+   - Distinguish inflection from derivation. If the word is transparently derived, explicitly identify its morphological base or source lexeme rather than merely repeating the selected word. For example, analyze `recognition` as the noun related to the verb `recognize` (with the suffix `-tion`).
+   - Correct an obvious spelling error before analyzing it, and clearly distinguish the selected form from the corrected form. For example, treat `reconization` as a likely misspelling/OCR variant, consider `recognition` as the standard noun, and identify its source verb as `recognize` (not `reconize`) when the context supports that reading. Do not derive a word from a misspelling; if the intended correction or derivation is uncertain, say so instead of guessing.
+3. **Book-Awareness**: Focus heavily on how "{word}" functions in this specific book. Contrast its general dictionary meaning with its narrative, thematic, or worldbuilding usage.
+4. **Output**: Start directly with the structured analysis. Do not include introductory or concluding commentary.
 
 ## Output Structure
-* ** %1 **: Vocabulary in original conjugation if different from the form in the sentence.
-* ** %2 **: Up to 3 synonyms, noting which are most relevant to the book's usage.
-* ** %3 **: Literal meaning of the expression without any context.
-* ** %4 **: Translation of the whole sentence containing the word. Highlight **{word}** in bold.
-* ** %5 **: How "{word}" is specifically used in THIS BOOK. Explain what it suggests about characters, tone, or themes.
-* ** %6 **: Another example sentence showing the word's use, preferably from the same literary genre.
-* ** %7 **: Origins, etymology, or significance of the word.
+Use a normal Markdown heading (`###`) for every section and bullets (`-`) only for lists. Do not format section labels as `* **label**:` and do not put spaces inside bold markers.
+
+### %1
+State the surface form, any correction, part of speech, grammatical features, lemma/dictionary form, and morphological base or source lexeme when applicable. Explicitly show the relationship between the selected form and its base form.
+
+### %2
+Give up to 3 simple synonyms and briefly note which one(s) best fit the book's usage.
+
+### %3
+Give the literal, context-free meaning of the word or expression.
+
+### %4
+Translate the whole sentence containing the word. Highlight the occurrence of **{word}** in bold, with no spaces inside the Markdown markers.
+
+### %5
+Explain how "{word}" is specifically used in THIS BOOK and what it suggests about the characters, tone, or themes.
+
+### %6
+Write one original example sentence showing the word's use, preferably in the same literary genre.
+
+### %7
+Give reliable etymological information or explain the word's significance. Distinguish etymological origin from the immediate morphological base. If the origin is uncertain, say so.
 ]],
             -- @translators used in the dictionary.
-            _("Conjugation"),
+            _("Word Form & Lemma"),
             _("Synonyms"),
             _("Meaning"),
             _("Translation"),
