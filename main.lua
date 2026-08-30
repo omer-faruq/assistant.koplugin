@@ -841,6 +841,36 @@ function Assistant:confDeleteSearchTool(key)
     return self:confDeleteProvider(key)
 end
 
+function Assistant:buildEffectiveConfig(rawConfig)
+    -- Centralizes main.lua:859-875 inline build. rawConfig is the RAW file table (dofile configuration.lua).
+    -- Returns effective table; does not assign self.CONFIGURATION (caller does).
+    -- RAW vs EFFECTIVE never diverge: effective shares RAW tables shallowly (e.g. features)
+    -- intentionally; provider_settings is rebuilt via Registry/SearchRegistry merges.
+    rawConfig = rawConfig or CONFIGURATION
+    local ui_data = Registry.load(self.settings)
+    local merged_ps = Registry.merge(rawConfig, ui_data)
+    self._ui_provider_data = ui_data
+
+    local ui_search_data = SearchRegistry.load(self.settings)
+    local merged_search = SearchRegistry.merge(rawConfig, ui_search_data)
+    self._ui_search_data = ui_search_data
+
+    local effective = {}
+    if rawConfig then
+        for k, v in pairs(rawConfig) do
+            effective[k] = v
+        end
+    end
+    -- shallow-copy features sharing is intentional; provider_settings is rebuilt
+    effective.provider_settings = merged_ps or {}
+    if merged_search then
+        for key, record in pairs(merged_search) do
+            effective.provider_settings[key] = record
+        end
+    end
+    return effective
+end
+
 -- Flush settings to disk, triggered by koreader
 function Assistant:onFlushSettings()
     if self.updated then
@@ -896,34 +926,11 @@ function Assistant:init()
   self.ui_language = Language:getLanguageName(ui_locale) or "English"
   self.ui_language_is_rtl = Language:isLanguageRTL(ui_locale)
 
-  -- Load UI providers from settings and merge with file config
-  local ui_data = Registry.load(self.settings)
-  local merged_ps = Registry.merge(CONFIGURATION, ui_data)
-  self._ui_provider_data = ui_data  -- kept for Add/Delete from Settings UI
-
-  -- Load UI search tools from settings and merge with file config
-  local ui_search_data = SearchRegistry.load(self.settings)
-  local merged_search = SearchRegistry.merge(CONFIGURATION, ui_search_data)
-  self._ui_search_data = ui_search_data  -- kept for Add/Delete from Settings UI
-
-  -- Build effective CONFIGURATION (file config as base + merged provider_settings)
-  local effective = {}
-  if CONFIGURATION then
-    for k, v in pairs(CONFIGURATION) do
-      effective[k] = v
-    end
-  end
-  -- Merge AI providers and search tools into provider_settings.
-  -- Search tool keys (serpapi, tavilyapi, exaapi, searxngapi) are separate
-  -- from AI provider keys and do not appear in the AI provider radio because
-  -- is_valid_provider filters by handler presence.
-  effective.provider_settings = merged_ps or {}
-  if merged_search then
-    for key, record in pairs(merged_search) do
-      effective.provider_settings[key] = record
-    end
-  end
-  self.CONFIGURATION = effective
+  -- Build effective CONFIGURATION via centralized method (RAW vs EFFECTIVE).
+  -- RAW is the local CONFIGURATION loaded via dofile(configuration.lua);
+  -- EFFECTIVE (self.CONFIGURATION) shallow-copies RAW tables intentionally
+  -- (e.g. features shares RAW table) while provider_settings is rebuilt.
+  self.CONFIGURATION = self:buildEffectiveConfig()
 
   -- Register actions with dispatcher for gesture assignment
   self:onDispatcherRegisterActions()
@@ -962,7 +969,7 @@ function Assistant:init()
   end
 
   -- skip initialization if no provider is configured (file or UI)
-  if not merged_ps then return end
+  if not self.CONFIGURATION.provider_settings or not next(self.CONFIGURATION.provider_settings) then return end
 
   -- A missing/optional configuration.lua leaves a stale load error in
   -- CONFIG_LOAD_ERROR.  With at least one provider available (e.g. UI-only)
