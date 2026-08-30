@@ -158,7 +158,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     }
     
     -- Format the user prompt with variables
-    local user_content = user_prompt_template:gsub("{(%w+)}", {
+    local user_content = user_prompt_template:gsub("{([%w_]+)}", {
       title = title,
       author = author,
       progress = formatted_progress_percent,
@@ -227,9 +227,18 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
           prepareMessageHistoryForAdditionalQuestion(message_history, user_question, title, author)
         elseif type(user_question) == "table" then
           viewer_title = user_question.text or "Custom Prompt"
+          local raw_followup = user_question.user_prompt or user_question
+          -- Expand {title}/{author}/{progress}/{language}/{user_input} so custom templates don't leak raw placeholders
+          local expanded_followup = raw_followup:gsub("{([%w_]+)}", {
+            title = title,
+            author = author,
+            progress = formatted_progress_percent,
+            language = language,
+            user_input = user_question.user_input or "",
+          })
           table.insert(message_history, {
             role = "user",
-            content = string.format("I'm reading something titled '%s' by %s. Only answer the following question, do not add any additional information or context that is not directly related to the question, the question is: %s", title, author, user_question.user_prompt or user_question)
+            content = string.format("I'm reading something titled '%s' by %s. Only answer the following question, do not add any additional information or context that is not directly related to the question, the question is: %s", title, author, expanded_followup)
           })
         end
 
