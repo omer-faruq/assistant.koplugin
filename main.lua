@@ -808,6 +808,39 @@ function Assistant:confIsProviderEnabled(key)
     return self:confIsProviderValid(self:confGetProvider(key))
 end
 
+function Assistant:confSetProvider(id, record)
+    if not id or id == "" then return nil, "invalid id" end
+    self.CONFIGURATION = self.CONFIGURATION or {}
+    self.CONFIGURATION.provider_settings = self.CONFIGURATION.provider_settings or {}
+    self.CONFIGURATION.provider_settings[id] = record
+    if record ~= nil then
+        if self.querier and self.querier.load_model then
+            pcall(function() self.querier:load_model(id) end)
+        end
+    end
+    require("assistant_tool_executor").SetSearchAPIConfig(self.CONFIGURATION)
+    self.updated = true
+    return true
+end
+
+function Assistant:confDeleteProvider(id)
+    if not id or id == "" then return nil, "invalid id" end
+    if self.CONFIGURATION and self.CONFIGURATION.provider_settings then
+        self.CONFIGURATION.provider_settings[id] = nil
+        require("assistant_tool_executor").SetSearchAPIConfig(self.CONFIGURATION)
+        self.updated = true
+    end
+    return true
+end
+
+function Assistant:confSetSearchTool(key, record)
+    return self:confSetProvider(key, record)
+end
+
+function Assistant:confDeleteSearchTool(key)
+    return self:confDeleteProvider(key)
+end
+
 -- Flush settings to disk, triggered by koreader
 function Assistant:onFlushSettings()
     if self.updated then

@@ -251,20 +251,12 @@ function SearchRegistry.installSearchTool(assistant, tool_key, api_key, base_url
     end
 
     SearchRegistry.save(assistant.settings, assistant._ui_search_data)
-    assistant.updated = true
-
-    -- Update in-memory merged config: UI record overrides file config
-    local merged_ps = assistant.CONFIGURATION.provider_settings or {}
-    merged_ps[tool_key] = {
+    local rec = {
         api_key = record.api_key,
         base_url = record.base_url,
         source = "ui",
     }
-    assistant.CONFIGURATION.provider_settings = merged_ps
-
-    -- Push config into the extools module so searches work immediately
-    local ToolExecutor = require("assistant_tool_executor")
-    ToolExecutor.SetSearchAPIConfig(assistant.CONFIGURATION)
+    assistant:confSetSearchTool(tool_key, rec)
 
     return true
 end
@@ -285,27 +277,7 @@ function SearchRegistry.deleteSearchTool(assistant, tool_key)
     end
 
     SearchRegistry.save(assistant.settings, assistant._ui_search_data)
-    assistant.updated = true
-
-    -- Remove from merged config or fall back to file config
-    local merged_ps = assistant.CONFIGURATION.provider_settings or {}
-    -- Check if file config has this key
-    local has_file = false
-    if CONFIGURATION and CONFIGURATION.provider_settings and CONFIGURATION.provider_settings[tool_key] then
-        local file_copy = {}
-        koutil.tableMerge(file_copy, CONFIGURATION.provider_settings[tool_key])
-        file_copy.source = "file"
-        file_copy.immutable = true
-        merged_ps[tool_key] = file_copy
-        has_file = true
-    end
-    if not has_file then
-        merged_ps[tool_key] = nil
-    end
-    assistant.CONFIGURATION.provider_settings = merged_ps
-
-    local ToolExecutor = require("assistant_tool_executor")
-    ToolExecutor.SetSearchAPIConfig(assistant.CONFIGURATION)
+    assistant:confDeleteSearchTool(tool_key)
 
     return true
 end
@@ -328,7 +300,9 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
                 local def = SearchRegistry.SEARCH_TOOLS[tool_key]
                 table.insert(items, {
                     text_func = function()
-                        local merged = assistant:confGetProvider(tool_key)
+                        local merged = assistant.confGetProvider
+                            and assistant:confGetProvider(tool_key)
+                            or koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", tool_key)
                         local configured = merged and (
                             (type(merged.api_key) == "string" and #merged.api_key > 0) or
                             (type(merged.base_url) == "string" and #merged.base_url > 0)
@@ -340,7 +314,9 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
                         assistant:_showAddWebSearchDialog(tool_key)
                     end,
                     hold_callback = function()
-                        local merged = assistant:confGetProvider(tool_key)
+                        local merged = assistant.confGetProvider
+                            and assistant:confGetProvider(tool_key)
+                            or koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", tool_key)
                         local deletable = SearchRegistry.is_deletable(merged)
 
                         local confirm = ConfirmBox:new{

@@ -354,11 +354,9 @@ function Registry.updateProvider(assistant, id, display_name, base_url, api_key,
     existing.model = model ~= "" and model or "auto"
 
     Registry.save(assistant.settings, assistant._ui_provider_data)
-    assistant.updated = true
 
-    -- Refresh in-memory merged config (reuse existing additional_parameters).
-    local merged_ps = assistant.CONFIGURATION.provider_settings or {}
-    merged_ps[id] = {
+    -- Refresh in-memory merged config via centralized method.
+    local newRecord = {
         display_name = existing.display_name,
         handler = existing.handler,
         model = existing.model,
@@ -367,12 +365,7 @@ function Registry.updateProvider(assistant, id, display_name, base_url, api_key,
         additional_parameters = existing.additional_parameters or {},
         source = "ui",
     }
-    assistant.CONFIGURATION.provider_settings = merged_ps
-
-    -- Reload querier if the currently selected provider was edited.
-    if assistant.querier and assistant.querier.provider_name == id then
-        assistant.querier:load_model(id)
-    end
+    assistant:confSetProvider(id, newRecord)
 
     return id
 end
@@ -406,13 +399,10 @@ function Registry.installProvider(assistant, handler, base_url, display_name, ap
         return nil, err
     end
     Registry.save(assistant.settings, assistant._ui_provider_data)
-    assistant.updated = true
 
-    -- Update in-memory merged config. Reuse the deep copy stored by
-    -- Registry.add (never the shared preset table).
+    -- Update in-memory merged config via centralized method.
     local stored = assistant._ui_provider_data.providers[id]
-    local merged_ps = assistant.CONFIGURATION.provider_settings or {}
-    merged_ps[id] = {
+    local newRecord = {
         display_name = record.display_name,
         handler = record.handler,
         model = record.model,
@@ -421,12 +411,7 @@ function Registry.installProvider(assistant, handler, base_url, display_name, ap
         additional_parameters = stored and stored.additional_parameters or {},
         source = "ui",
     }
-    assistant.CONFIGURATION.provider_settings = merged_ps
-
-    -- Load the new provider (only if querier exists; first provider needs restart)
-    if assistant.querier then
-        assistant.querier:load_model(id)
-    end
+    assistant:confSetProvider(id, newRecord)
 
     return id
 end

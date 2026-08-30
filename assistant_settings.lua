@@ -411,12 +411,7 @@ function SettingsDialog:onDeleteProvider()
             local ui_data = self.assistant._ui_provider_data
             Registry.delete(ui_data, provider_name)
             Registry.save(self.settings, ui_data)
-            self.assistant.updated = true
-
-            -- Remove the provider from the in-memory merged config
-            if self.assistant.CONFIGURATION and self.assistant.CONFIGURATION.provider_settings then
-                self.assistant.CONFIGURATION.provider_settings[provider_name] = nil
-            end
+            self.assistant:confDeleteProvider(provider_name)
 
             -- Fallback: reselect a valid provider
             local new_provider = self.assistant:getModelProvider()

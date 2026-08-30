@@ -44,13 +44,51 @@ end
 -- A mock Assistant with the provider-data/settings/config plumbing that
 -- Registry.installProvider touches.
 local function mockAssistantForInstall()
-    return {
+    local assistant = {
         _ui_provider_data = { providers = {}, _next_id = 1 },
         settings = { saveSetting = function() end },
         CONFIGURATION = { provider_settings = {} },
         updated = false,
         querier = nil,
     }
+    -- Minimal conf* methods to mimic main.lua's centralized write path.
+    function assistant:confSetProvider(id, record)
+        if not id or id == "" then return nil, "invalid id" end
+        self.CONFIGURATION = self.CONFIGURATION or {}
+        self.CONFIGURATION.provider_settings = self.CONFIGURATION.provider_settings or {}
+        self.CONFIGURATION.provider_settings[id] = record
+        if record ~= nil and self.querier and self.querier.load_model then
+            pcall(function() self.querier:load_model(id) end)
+        end
+        local ok, ToolExecutor = pcall(require, "assistant_tool_executor")
+        if ok and ToolExecutor.SetSearchAPIConfig then
+            ToolExecutor.SetSearchAPIConfig(self.CONFIGURATION)
+        end
+        self.updated = true
+        return true
+    end
+    function assistant:confDeleteProvider(id)
+        if not id or id == "" then return nil, "invalid id" end
+        if self.CONFIGURATION and self.CONFIGURATION.provider_settings then
+            self.CONFIGURATION.provider_settings[id] = nil
+            local ok, ToolExecutor = pcall(require, "assistant_tool_executor")
+            if ok and ToolExecutor.SetSearchAPIConfig then
+                ToolExecutor.SetSearchAPIConfig(self.CONFIGURATION)
+            end
+            self.updated = true
+        end
+        return true
+    end
+    function assistant:confGetProvider(key)
+        if not key or key == "" then return nil end
+        local koutil = require("util")
+        local v = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", key)
+        if v == nil or v == require("rapidjson").null then return nil end
+        return v
+    end
+    assistant.confSetSearchTool = assistant.confSetProvider
+    assistant.confDeleteSearchTool = assistant.confDeleteProvider
+    return assistant
 end
 
 -- Resolves the menu item's sub-menu by invoking sub_item_table_func().
