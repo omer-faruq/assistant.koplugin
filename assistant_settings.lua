@@ -261,9 +261,9 @@ function SettingsDialog:init()
 
     local MAX_FOR_SINGLE_COLUMN = 12
     -- 2 columns if more than MAX_FOR_SINGLE_COLUMN providers, otherwise 1 column
-    local columns = koutil.tableSize(self.CONFIGURATION.provider_settings) > MAX_FOR_SINGLE_COLUMN and 2 or 1
+    local columns = koutil.tableSize(self.assistant:confGetProviderSettings()) > MAX_FOR_SINGLE_COLUMN and 2 or 1
     local buttonrow = {}
-    for key, tab in ffiutil.orderedPairs(self.CONFIGURATION.provider_settings) do
+    for key, tab in ffiutil.orderedPairs(self.assistant:confGetProviderSettings()) do
         if self.assistant.querier:is_valid_provider(key, tab) then
             if not (koutil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
                 if #buttonrow < columns then

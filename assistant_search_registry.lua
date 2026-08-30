@@ -300,9 +300,7 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
                 local def = SearchRegistry.SEARCH_TOOLS[tool_key]
                 table.insert(items, {
                     text_func = function()
-                        local merged = assistant.confGetProvider
-                            and assistant:confGetProvider(tool_key)
-                            or koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", tool_key)
+                        local merged = assistant:confGetProvider(tool_key)
                         local configured = merged and (
                             (type(merged.api_key) == "string" and #merged.api_key > 0) or
                             (type(merged.base_url) == "string" and #merged.base_url > 0)
@@ -314,9 +312,7 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
                         assistant:_showAddWebSearchDialog(tool_key)
                     end,
                     hold_callback = function()
-                        local merged = assistant.confGetProvider
-                            and assistant:confGetProvider(tool_key)
-                            or koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", tool_key)
+                        local merged = assistant:confGetProvider(tool_key)
                         local deletable = SearchRegistry.is_deletable(merged)
 
                         local confirm = ConfirmBox:new{

@@ -732,7 +732,7 @@ function Assistant:getModelProvider()
     return nil
   end
 
-  local provider_settings = self.CONFIGURATION.provider_settings -- provider settings table from configuration.lua
+  local provider_settings = self:confGetProviderSettings()
   if type(provider_settings) ~= "table" then
     return nil
   end
@@ -791,6 +791,15 @@ function Assistant:confGetProvider(key)
     local v = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", key)
     if v == nil or v == require("rapidjson").null then return nil end
     return v
+end
+
+function Assistant:confGetPrompts()
+    -- prompts is in features; RAW==EFFECTIVE for features, so use effective
+    return self:confGetFeature("prompts")
+end
+
+function Assistant:confGetProviderSettings()
+    return (self.CONFIGURATION and self.CONFIGURATION.provider_settings) or {}
 end
 
 function Assistant:confIsProviderValid(provider)
@@ -969,7 +978,7 @@ function Assistant:init()
   end
 
   -- skip initialization if no provider is configured (file or UI)
-  if not self.CONFIGURATION.provider_settings or not next(self.CONFIGURATION.provider_settings) then return end
+  if not next(self:confGetProviderSettings()) then return end
 
   -- A missing/optional configuration.lua leaves a stale load error in
   -- CONFIG_LOAD_ERROR.  With at least one provider available (e.g. UI-only)
@@ -1037,7 +1046,7 @@ function Assistant:_rebuildShowOnMainButtons()
   if not self.ui.document then return end
 
   Prompts.invalidateCache()
-  Prompts.getMergedPrompts(ASUtils.getFeature(CONFIGURATION, "prompts"))
+  Prompts.getMergedPrompts(self:confGetPrompts())
 
   local showOnMain = Prompts.getSortedPrompts(function (prompt, idx)
     if prompt.visible == false then
@@ -1257,8 +1266,9 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
   if live or self.settings:readSetting("dict_popup_show_custom_prompts", false) then
     -- Collect custom prompts with show_on_dictionary_popup = true
     local custom_prompts = {}
-    if CONFIGURATION and CONFIGURATION.features and CONFIGURATION.features.prompts then -- RAW config, not effective
-      for prompt_key, prompt_config in pairs(CONFIGURATION.features.prompts) do
+    local prompts = self:confGetPrompts()
+    if prompts then
+      for prompt_key, prompt_config in pairs(prompts) do
         if prompt_config.show_on_dictionary_popup == true and prompt_config.visible ~= false then
           table.insert(custom_prompts, {
             id = prompt_key,
@@ -1551,7 +1561,7 @@ function Assistant:onAssistantSetButton(btnconf, action)
   -- use merged prompts: prompts defined only in configuration.lua
   -- are absent from the built-in `builtin_prompts` table
   local prompt = Prompts.getMergedPrompts(
-    ASUtils.getFeature(CONFIGURATION, "prompts"))[idx]
+    self:confGetPrompts())[idx]
   local ws_enabled = Prompts.isWebSearchEnabled(self.settings)
   local display_text = Prompts.getDisplayText(prompt.text or idx, prompt.use_websearch or false, ws_enabled)
 
