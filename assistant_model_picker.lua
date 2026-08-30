@@ -286,7 +286,7 @@ end
 function ModelPickerDialog:onReset()
     resetModelSelection(self.assistant)
     UIManager:close(self)
-    local _p = self.assistant:getProvider(self.assistant.querier.provider_name)
+    local _p = self.assistant:confGetProvider(self.assistant.querier.provider_name)
     local config_model = (_p and _p.model) or "?"
     Notification:notify(T(_("Model reset: %1"), config_model))
     if self.close_callback then self.close_callback() end

@@ -238,13 +238,13 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
     end
 
     -- won't show if `hide_highlighted_text` is set to false
-    if self.assistant:getFeature("hide_highlighted_text") then
+    if self.assistant:confGetFeature("hide_highlighted_text") then
       show_highlighted_text = false
     end
 
     -- won't show if highlighted text is longer than threshold `long_highlight_threshold`
-    if show_highlighted_text and self.assistant:getFeature("hide_long_highlights") and
-        highlightedText and #highlightedText > self.assistant:getFeature("long_highlight_threshold", 99999) then
+    if show_highlighted_text and self.assistant:confGetFeature("hide_long_highlights") and
+        highlightedText and #highlightedText > self.assistant:confGetFeature("long_highlight_threshold", 99999) then
       show_highlighted_text = false
     end
 
@@ -370,7 +370,7 @@ I have a question about this book.]], book.title, book.author)
 
   if highlighted_text and highlighted_text ~= ""
       and self.assistant.settings:readSetting("include_page_text", false) then
-    local max_chars = self.assistant:getFeature("max_page_context_chars", 6000)
+    local max_chars = self.assistant:confGetFeature("max_page_context_chars", 6000)
     local page_text = ASUtils.getPageRangeText(self.assistant.ui, 1, 1, max_chars)
     if page_text ~= "" then
       buf:put("\n\n", string.format(
@@ -429,7 +429,7 @@ function AssistantDialog:show(highlightedText)
   local book = self:_getBookContext()
   local use_multi_general_notebooks =
       not self.assistant.ui.doc_settings and Notebook.isEnabled(self.assistant)
-  local system_prompt = self.assistant:getFeature("system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
+  local system_prompt = self.assistant:confGetFeature("system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
   if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
     local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
     system_prompt = system_prompt .. Prompts.assistant_prompts.suggestions_prompt
@@ -783,7 +783,7 @@ end
 -- ( prompts from configuration )
 function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
 
-  local user_prompts = self.assistant:getFeature("prompts")
+  local user_prompts = self.assistant:confGetFeature("prompts")
   local prompt_config = Prompts.getMergedPrompts(user_prompts)[prompt_index]
 
   local raw_title = koutil.tableGetValue(prompt_config, "text") or prompt_index

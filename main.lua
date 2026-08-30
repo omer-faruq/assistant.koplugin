@@ -650,7 +650,7 @@ function Assistant:_showAddWebSearchDialog(tool_key)
     local default_url = existing and existing.base_url or ""
 
     local is_edit = SearchRegistry.is_deletable(
-        self:getProvider(tool_key))
+        self:confGetProvider(tool_key))
 
     local title = is_edit and T(_("Edit %1"), tool_def.display_name)
         or T(_("Add %1"), tool_def.display_name)
@@ -740,7 +740,7 @@ function Assistant:getModelProvider()
 
   local function find_setting_provider(filter_func)
     for key, tab in pairs(provider_settings) do
-      if self:isProviderEnabled(key) then
+      if self:confIsProviderEnabled(key) then
         if filter_func and filter_func(key, tab) then return key end
         if not filter_func then return key end
       end
@@ -748,7 +748,7 @@ function Assistant:getModelProvider()
     return nil
   end
 
-  if self:isProviderEnabled(setting_provider) then
+  if self:confIsProviderEnabled(setting_provider) then
     -- If the setting provider is valid, use it
     return setting_provider
   else
@@ -756,7 +756,7 @@ function Assistant:getModelProvider()
     self.settings:delSetting("provider")
 
     local conf_provider = self.CONFIGURATION.provider -- provider name from configuration.lua
-    if self:isProviderEnabled(conf_provider) then
+    if self:confIsProviderEnabled(conf_provider) then
       -- if the configuration provider is valid, use it
       setting_provider = conf_provider
     else
@@ -782,18 +782,18 @@ function Assistant:getModelProvider()
   return setting_provider
 end
 
-function Assistant:getFeature(key, default)
+function Assistant:confGetFeature(key, default)
     return ASUtils.getFeature(self.CONFIGURATION, key, default)
 end
 
-function Assistant:getProvider(key)
+function Assistant:confGetProvider(key)
     if not key or key == "" then return nil end
     local v = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", key)
     if v == nil or v == require("rapidjson").null then return nil end
     return v
 end
 
-function Assistant:isProviderValid(provider)
+function Assistant:confIsProviderValid(provider)
     if type(provider) ~= "table" then return false end
     local model = provider.model
     local base_url = provider.base_url
@@ -804,8 +804,8 @@ function Assistant:isProviderValid(provider)
     return true
 end
 
-function Assistant:isProviderEnabled(key)
-    return self:isProviderValid(self:getProvider(key))
+function Assistant:confIsProviderEnabled(key)
+    return self:confIsProviderValid(self:confGetProvider(key))
 end
 
 -- Flush settings to disk, triggered by koreader

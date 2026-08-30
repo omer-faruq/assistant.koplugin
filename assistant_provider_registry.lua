@@ -456,7 +456,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
 
     if is_edit then
         -- Pre-fill from the existing provider record
-        local ps = assistant:getProvider(edit_id)
+        local ps = assistant:confGetProvider(edit_id)
         dialog_title = T(_("Edit %1"), koutil.tableGetValue(ps, "display_name") or edit_id)
         default_name = koutil.tableGetValue(ps, "display_name") or ""
         base_url = koutil.tableGetValue(ps, "base_url") or base_url or ""

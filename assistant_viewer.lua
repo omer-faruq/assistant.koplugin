@@ -630,7 +630,7 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
     return true
   end, Prompts.isWebSearchEnabled(self.assistant.settings)) or {}
 
-  local user_prompts = self.assistant:getFeature("prompts")
+  local user_prompts = self.assistant:confGetFeature("prompts")
   local merged_prompts = Prompts.getMergedPrompts(user_prompts) or {}
     
   -- Add buttons in sorted order
