@@ -34,11 +34,11 @@ local normalizeMarkdownHeadings = ASUtils.normalizeMarkdownHeadings
   the current position (see ASUtils.extractCurrentChapterText); otherwise
   fall back to the full "book text up to current position" extraction.
 --]]
-local function extractContextText(CONFIGURATION, ui, use_chapter)
+local function extractContextText(assistant, use_chapter)
   if use_chapter then
-    return ASUtils.extractCurrentChapterText(CONFIGURATION, ui)
+    return ASUtils.extractCurrentChapterText(assistant)
   end
-  return extractBookTextForAnalysis(CONFIGURATION, ui)
+  return extractBookTextForAnalysis(assistant)
 end
 
 --[[
@@ -66,18 +66,16 @@ end
 
 -- main dialog class
 local AssistantDialog = {
-  CONFIGURATION = nil,
   assistant = nil,
   querier = nil,
   input_dialog = nil,
 }
 AssistantDialog.__index = AssistantDialog
 
-function AssistantDialog:new(assistant, c)
+function AssistantDialog:new(assistant)
   local self = setmetatable({}, AssistantDialog)
   self.assistant = assistant
   self.querier = assistant.querier
-  self.CONFIGURATION = c
   return self
 end
 
@@ -504,7 +502,7 @@ function AssistantDialog:show(highlightedText)
         if use_book_text_checkbox and use_book_text_checkbox.checked then
           local use_chapter = use_chapter_checkbox and use_chapter_checkbox.checked
           book_text_prompt = buildBookTextPrompt(use_chapter,
-              extractContextText(self.CONFIGURATION, self.assistant.ui, use_chapter))
+              extractContextText(self.assistant, use_chapter))
         end
         if not user_question or user_question == "" then
           UIManager:show(InfoMessage:new{
@@ -521,19 +519,19 @@ function AssistantDialog:show(highlightedText)
         self:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question, use_web_search_checkbox.checked)
         Trapper:wrap(function()
           local answer, err = self.querier:query(message_history)
-          
+
           -- Check if we got a valid response
           if err then
             self.querier:showError(err, message_history)
             return
           end
-          
+
           table.insert(message_history, {
             role = "assistant",
             content = answer,
           })
-          
-          -- do not have a title to display user prompt 
+
+          -- do not have a title to display user prompt
           local viewer_title = nil
           self:_createAndShowViewer(highlightedText, message_history, viewer_title)
         end)
@@ -582,7 +580,7 @@ function AssistantDialog:show(highlightedText)
               if use_book_text_checkbox and use_book_text_checkbox.checked then
                 local use_chapter = use_chapter_checkbox and use_chapter_checkbox.checked
                 book_text_prompt = buildBookTextPrompt(use_chapter,
-                    extractContextText(self.CONFIGURATION, self.assistant.ui, use_chapter))
+                    extractContextText(self.assistant, use_chapter))
               end
               user_question = user_question .. book_text_prompt
               self:showPrompt(highlightedText, tab.idx, user_question)

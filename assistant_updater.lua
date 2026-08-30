@@ -23,7 +23,6 @@ local function join(...)
     return result
 end
 
-local CONFIGURATION = nil
 local meta = nil
 
 -- Returns true if the path should be excluded from OTA extraction.
@@ -128,12 +127,12 @@ local function isVersionNewer(v1_str, v2_str)
     return false -- Versions are identical
 end
 
-local function checkForUpdates()
-  if ASUtils.getFeature(CONFIGURATION, "updater_disabled") then
+local function checkForUpdates(assistant)
+  if assistant:confGetFeature("updater_disabled") then
     return
   end
 
-  local update_url = ASUtils.getFeature(CONFIGURATION, "update_check_url")
+  local update_url = assistant:confGetFeature("update_check_url")
     or "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest"
 
   local parsed_data, err = ASUtils.fetchJSON(update_url,
@@ -158,12 +157,12 @@ local function checkForUpdates()
   end
 end
 
-local function otaUpgrade(version)
+local function otaUpgrade(assistant, version)
   local PLUGIN_NAME = "assistant.koplugin"
 
-  local GITHUB_BASE = ASUtils.getFeature(CONFIGURATION, "ota_github_base")
+  local GITHUB_BASE = assistant:confGetFeature("ota_github_base")
     or "https://github.com"
-  local GITHUB_REPO = ASUtils.getFeature(CONFIGURATION, "ota_github_repo")
+  local GITHUB_REPO = assistant:confGetFeature("ota_github_repo")
     or "omer-faruq/assistant.koplugin"
 
   local REPO_REF = version:sub(1, 1) == "v" and "tags" or "heads"
@@ -334,13 +333,11 @@ return {
   is_excluded = is_excluded,
   join = join,
   checkForUpdates = function(assistant)
-    CONFIGURATION = assistant.CONFIGURATION
     meta = assistant.meta
-    return Trapper:wrap(checkForUpdates)
+    return Trapper:wrap(function() checkForUpdates(assistant) end)
   end,
   otaUpgrade = function(assistant, version)
-    CONFIGURATION = assistant.CONFIGURATION
     meta = assistant.meta
-    return Trapper:wrap(function() otaUpgrade(version) end)
+    return Trapper:wrap(function() otaUpgrade(assistant, version) end)
   end,
 }

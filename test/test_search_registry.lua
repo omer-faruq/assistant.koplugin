@@ -52,7 +52,7 @@ local function mockAssistant(search_data)
         end
         local ok, ToolExecutor = pcall(require, "assistant_tool_executor")
         if ok and ToolExecutor.SetSearchAPIConfig then
-            ToolExecutor.SetSearchAPIConfig(self.CONFIGURATION)
+            ToolExecutor.SetSearchAPIConfig(self)
         end
         self.updated = true
         return true
@@ -63,7 +63,7 @@ local function mockAssistant(search_data)
             self.CONFIGURATION.provider_settings[id] = nil
             local ok, ToolExecutor = pcall(require, "assistant_tool_executor")
             if ok and ToolExecutor.SetSearchAPIConfig then
-                ToolExecutor.SetSearchAPIConfig(self.CONFIGURATION)
+                ToolExecutor.SetSearchAPIConfig(self)
             end
             self.updated = true
         end

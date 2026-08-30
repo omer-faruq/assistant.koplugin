@@ -18,7 +18,6 @@ local extractHighlightsNotesAndNotebook = ASUtils.extractHighlightsNotesAndNoteb
 local normalizeMarkdownHeadings = ASUtils.normalizeMarkdownHeadings
 
 local function showFeatureDialog(assistant, feature_type, title, author, progress_percent, message_history)
-    local CONFIGURATION = assistant.CONFIGURATION
     local Querier = assistant.querier
     local ui = assistant.ui
 
@@ -47,12 +46,12 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         book_text = nil
         highlights_notes = nil
         if custom_config.use_book_text and custom_config.use_book_text == true then
-            book_text = extractBookTextForAnalysis(CONFIGURATION, ui)
+            book_text = extractBookTextForAnalysis(assistant)
         end
         if custom_config.use_highlight_with_notebook and custom_config.use_highlight_with_notebook == true then
-            highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui, true)
+            highlights_notes = extractHighlightsNotesAndNotebook(assistant, true)
         elseif custom_config.use_highlight_without_notebook and custom_config.use_highlight_without_notebook == true then
-            highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui, false)
+            highlights_notes = extractHighlightsNotesAndNotebook(assistant, false)
         end
     else
         -- Original feature type handling
@@ -108,7 +107,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         local prompts_key = feature_config.prompts_key
         
         -- Get feature CONFIGURATION with fallbacks
-        local file_config = ASUtils.getFeature(CONFIGURATION, config_key) or {}
+        local file_config = assistant:confGetFeature(config_key) or {}
         
         -- Prompts for feature (from config or prompts.lua)
         system_prompt = koutil.tableGetValue(file_config, "system_prompt")
@@ -124,13 +123,13 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         highlights_notes = nil
         if feature_type == "xray" or feature_type == "recap" then
           if assistant.settings:readSetting("use_book_text_for_analysis", false) then
-            book_text = extractBookTextForAnalysis(CONFIGURATION, ui)
+            book_text = extractBookTextForAnalysis(assistant)
           end
         elseif feature_type == "annotations" then
-          highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui,true)
+          highlights_notes = extractHighlightsNotesAndNotebook(assistant, true)
         elseif feature_type == "summary_using_annotations" then
-          book_text = extractBookTextForAnalysis(CONFIGURATION, ui)
-          highlights_notes = extractHighlightsNotesAndNotebook(CONFIGURATION, ui,false)
+          book_text = extractBookTextForAnalysis(assistant)
+          highlights_notes = extractHighlightsNotesAndNotebook(assistant, false)
         end
     end
 

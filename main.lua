@@ -401,7 +401,7 @@ function Assistant:addToMainMenu(menu_items)
   -- Only show the Custom Prompts entry when book_level_prompts are actually
   -- configured. When absent, mark the Book Insights group with a trailing
   -- separator so it doesn't visually run into the next menu item.
-  if ASUtils.getFeature(CONFIGURATION, "book_level_prompts") then
+  if self:confGetFeature("book_level_prompts") then
     table.insert(book_level_items, {
               text = _("Custom Prompts"),
               sub_item_table_func = function ()
@@ -473,7 +473,7 @@ function BookLevelCustomPrompts(assistant)
   local sub_item_table = {}
 
   -- Read book_level_prompts from configuration
-  local book_level_prompts = ASUtils.getFeature(CONFIGURATION, "book_level_prompts") or {}
+  local book_level_prompts = assistant:confGetFeature("book_level_prompts") or {}
 
   for key, prompt_config in ffiutil.orderedPairs(book_level_prompts) do
     if prompt_config.visible == true and prompt_config.type == "feature" then
@@ -527,7 +527,6 @@ function Assistant:showSettings(close_callback)
 
   local settingDlg = SettingsDialog:new{
       assistant = self,
-      CONFIGURATION = self.CONFIGURATION, -- merged config (file + UI providers)
       settings = self.settings,
       close_callback = close_callback,
   }
@@ -783,7 +782,9 @@ function Assistant:getModelProvider()
 end
 
 function Assistant:confGetFeature(key, default)
-    return ASUtils.getFeature(self.CONFIGURATION, key, default)
+    local v = koutil.tableGetValue(self.CONFIGURATION, "features", key)
+    if v == nil then return default end
+    return v
 end
 
 function Assistant:confGetProvider(key)
@@ -800,6 +801,10 @@ end
 
 function Assistant:confGetProviderSettings()
     return (self.CONFIGURATION and self.CONFIGURATION.provider_settings) or {}
+end
+
+function Assistant:confGetFeatures()
+    return (self.CONFIGURATION and self.CONFIGURATION.features) or {}
 end
 
 function Assistant:confIsProviderValid(provider)
@@ -827,7 +832,7 @@ function Assistant:confSetProvider(id, record)
             pcall(function() self.querier:load_model(id) end)
         end
     end
-    require("assistant_tool_executor").SetSearchAPIConfig(self.CONFIGURATION)
+    require("assistant_tool_executor").SetSearchAPIConfig(self)
     self.updated = true
     return true
 end
@@ -836,7 +841,7 @@ function Assistant:confDeleteProvider(id)
     if not id or id == "" then return nil, "invalid id" end
     if self.CONFIGURATION and self.CONFIGURATION.provider_settings then
         self.CONFIGURATION.provider_settings[id] = nil
-        require("assistant_tool_executor").SetSearchAPIConfig(self.CONFIGURATION)
+        require("assistant_tool_executor").SetSearchAPIConfig(self)
         self.updated = true
     end
     return true
@@ -1025,7 +1030,7 @@ function Assistant:init()
   end
 
 
-  self.assistant_dialog = AssistantDialog:new(self, CONFIGURATION)
+  self.assistant_dialog = AssistantDialog:new(self)
 
   if self.ui.document then
     -- Reader specific

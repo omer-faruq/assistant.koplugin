@@ -108,6 +108,28 @@ local SAMPLE_TOC = {
     { page = 80, title = "Chapter Three", depth = 1, xpointer = "xp_c3" },
 }
 
+local function mockAssistant(featuresOrUi, maybeUi)
+    local features, ui
+    if maybeUi ~= nil then
+        features = featuresOrUi or {}
+        ui = maybeUi
+    elseif featuresOrUi and (featuresOrUi.document or featuresOrUi.view or featuresOrUi.toc) then
+        features = {}
+        ui = featuresOrUi
+    else
+        features = featuresOrUi or {}
+        ui = nil
+    end
+    return {
+        ui = ui,
+        confGetFeature = function(self, key, default)
+            local v = features[key]
+            if v ~= nil then return v end
+            return default
+        end
+    }
+end
+
 local tests = {
 
     -- =========================================================================
@@ -208,7 +230,7 @@ local tests = {
 
     test("extract: reflowable uses entry xpointers and restores position", function()
         local ui, calls = makeReflowableUI(SAMPLE_TOC, { page = 55 })
-        local text = ASUtils.extractCurrentChapterText({}, ui)
+        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
         assert.equal(text, "text:xp_c2->xp_c3")
         assert.equal(#calls.extractions, 1)
         assert.equal(calls.extractions[1].xp0, "xp_c2")
@@ -224,7 +246,7 @@ local tests = {
             { page = 50, title = "Chapter Two", depth = 1 },
         }
         local ui = makeReflowableUI(entries, { page = 20 })
-        local text = ASUtils.extractCurrentChapterText({}, ui)
+        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
         -- end xpointer = start of next chapter's page: includes page 49 fully
         assert.equal(text, "text:xp_p10->xp_p50")
     end),
@@ -236,7 +258,7 @@ local tests = {
         -- Minimal mock: no isXPointerInDocument/compareXPointers/gotoPos,
         -- so the end-of-document ladder degrades to the last page xpointer.
         local ui = makeReflowableUI(entries, { page = 90, page_count = 100 })
-        local text = ASUtils.extractCurrentChapterText({}, ui)
+        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
         assert.equal(text, "text:xp_p10->xp_p100")
     end),
 
@@ -254,7 +276,7 @@ local tests = {
                 return 1
             end,
         })
-        local text = ASUtils.extractCurrentChapterText({}, ui)
+        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
         -- xpointer of the page after the last is accepted as document end
         assert.equal(text, "text:xp_p10->xp_p101")
         -- view position restored (ladder's own restore + extraction restore)
@@ -265,7 +287,7 @@ local tests = {
 
     test("extract: nil when chapter range unavailable", function()
         local ui = makeReflowableUI(SAMPLE_TOC, { page = 3 })
-        assert.equal(ASUtils.extractCurrentChapterText({}, ui), nil)
+        assert.equal(ASUtils.extractCurrentChapterText(mockAssistant(ui)), nil)
     end),
 
     test("extract: extraction error returns nil but still restores position", function()
@@ -273,7 +295,7 @@ local tests = {
             page = 55,
             fail_extraction = true,
         })
-        local text = ASUtils.extractCurrentChapterText({}, ui)
+        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
         assert.equal(text, nil)
         assert.equal(#calls.restores, 1)
         assert.equal(calls.restores[1], "cur_xp")
@@ -283,7 +305,7 @@ local tests = {
         local big = string.rep("x", 5000)
         local ui = makeReflowableUI(SAMPLE_TOC, { page = 55, text = big })
         local text = ASUtils.extractCurrentChapterText(
-            { features = { max_text_length_for_analysis = 1000 } }, ui)
+            mockAssistant({ max_text_length_for_analysis = 1000 }, ui))
         assert.notNil(text)
         assert.equal(#text, 1000)
         -- tail kept: must equal the last 1000 characters of the source text
@@ -293,7 +315,7 @@ local tests = {
     test("extract: short chapter text is returned unmodified", function()
         local ui = makeReflowableUI(SAMPLE_TOC, { page = 55, text = "short chapter" })
         local text = ASUtils.extractCurrentChapterText(
-            { features = { max_text_length_for_analysis = 1000 } }, ui)
+            mockAssistant({ max_text_length_for_analysis = 1000 }, ui))
         assert.equal(text, "short chapter")
     end),
 
@@ -303,7 +325,7 @@ local tests = {
 
     test("extract: paged document concatenates chapter pages", function()
         local ui = makePagedUI(SAMPLE_TOC, { page = 55 })
-        local text = ASUtils.extractCurrentChapterText({}, ui)
+        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
         assert.matches(text, "page50")
         assert.matches(text, "page79")
         assert.notMatches(text, "page49")
@@ -317,7 +339,7 @@ local tests = {
                 return { { { word = "Hello" }, { word = "page" }, { word = tostring(page) } } }
             end,
         })
-        local text = ASUtils.extractCurrentChapterText({}, ui)
+        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
         assert.matches(text, "Hello page 50")
         assert.matches(text, "Hello page 51")
     end),
@@ -325,7 +347,7 @@ local tests = {
     test("extract: paged document tail truncation", function()
         local ui = makePagedUI(SAMPLE_TOC, { page = 55 })
         local text = ASUtils.extractCurrentChapterText(
-            { features = { max_text_length_for_analysis = 10 } }, ui)
+            mockAssistant({ max_text_length_for_analysis = 10 }, ui))
         assert.notNil(text)
         assert.equal(#text, 10)
     end),

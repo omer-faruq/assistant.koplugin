@@ -98,13 +98,18 @@ end
 local ToolExecutor = {}
 ToolExecutor.SEARCH_API_NAMES = SEARCH_API_NAMES
 
---- Exposed func to set module variable
-function ToolExecutor.SetSearchAPIConfig(CONFIGURATION)
+--- Exposed func to set module variable via Assistant instance
+--- @param assistant table Assistant instance; fetches provider via :confGetProvider to avoid CONFIGURATION param
+function ToolExecutor.SetSearchAPIConfig(assistant)
+    if not assistant then return end
     for api, tool in pairs(ExtTools) do
-        local c = koutil.tableGetValue(CONFIGURATION, "provider_settings", api)
+        local c = assistant:confGetProvider(api)
         if c then
             if c.api_key then tool.api_key = c.api_key end
             if c.base_url then tool.base_url = c.base_url:gsub("/+$", "") end -- trim the ending `/`
+        else
+            tool.api_key = nil
+            tool.base_url = nil -- clear stale if provider deleted
         end
     end
 end

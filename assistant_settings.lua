@@ -185,7 +185,6 @@ local SettingsDialog = InputDialog:extend{
 
     -- inited variables
     assistant = nil, -- reference to the main assistant object
-    CONFIGURATION = nil,
     settings = nil,
 
     -- widgets
@@ -475,9 +474,9 @@ SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
             elseif key == "builtin" then
                 return koutil.tableGetValue(assistant, "querier", "handler", "has_builtin_websearch")
             elseif ToolExecutor.IsExtSearch(key) then
-                return
-                    (koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", key, "api_key") ~= nil) or
-                    (koutil.tableGetValue(assistant.CONFIGURATION, "provider_settings", key, "base_url") ~= nil)
+                local ps = assistant:confGetProvider(key)
+                return (koutil.tableGetValue(ps, "api_key") ~= nil) or
+                       (koutil.tableGetValue(ps, "base_url") ~= nil)
             end
             return false --
         end,

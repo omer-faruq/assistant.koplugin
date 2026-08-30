@@ -52,7 +52,7 @@ local function expandContextWithSurroundings(all_sentences, selected_indices, co
 end
 
 -- Filter text to find sentences containing the highlighted term with surrounding context
-local function filterTextForTerm(text, highlighted_term, language_code, configuration)
+local function filterTextForTerm(text, highlighted_term, language_code, assistant)
     if not text or not highlighted_term or highlighted_term == "" then
         return nil
     end
@@ -109,7 +109,7 @@ local function filterTextForTerm(text, highlighted_term, language_code, configur
     end
 
     -- Include larger context sentences around matches for better coverage
-    local context_window = ASUtils.getFeature(CONFIGURATION, "term_filter_context_window", 5) -- sentences before and after
+    local context_window = assistant:confGetFeature("term_filter_context_window", 5) -- sentences before and after
     local selected_indices = {}
 
     for _, idx in ipairs(matching_indices) do
@@ -135,7 +135,6 @@ local function filterTextForTerm(text, highlighted_term, language_code, configur
 end
 
 local function showDictionaryDialog(assistant, highlightedText, message_history, prompt_type)
-    local CONFIGURATION = assistant.CONFIGURATION
     local Querier = assistant.querier
     local ui = assistant.ui
 
@@ -221,7 +220,7 @@ local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
         local LexRankLanguages = require("assistant_lexrank_languages")
 
         -- Get book text up to current reading position
-        local book_text = ASUtils.extractBookTextForAnalysis(CONFIGURATION, ui)
+        local book_text = ASUtils.extractBookTextForAnalysis(assistant)
 
         if book_text and #book_text > 100 then
             -- Tokenize sentences once (will be reused for all filtering and context expansion)
@@ -250,21 +249,21 @@ local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
 
             -- OPTIMIZED: Single LexRank call with return_with_metadata=true
             -- Run with the lowest threshold to get all candidates with scores
-            local threshold_very_inclusive = ASUtils.getFeature(CONFIGURATION, "lexrank_threshold_very_inclusive", 0.005)
-            local all_candidates = LexRank.rank_sentences(book_text, threshold_very_inclusive, 0.1, dict_language, CONFIGURATION.features, true)
+            local threshold_very_inclusive = assistant:confGetFeature("lexrank_threshold_very_inclusive", 0.005)
+            local all_candidates = LexRank.rank_sentences(book_text, threshold_very_inclusive, 0.1, dict_language, assistant:confGetFeatures(), true)
 
             -- Filter candidates at different levels using their scores (no re-tokenization needed!)
-            local max_characters = ASUtils.getFeature(CONFIGURATION, "term_xray_max_characters", 100000)
+            local max_characters = assistant:confGetFeature("term_xray_max_characters", 100000)
             local selected_indices = {}
             local seen_indices = {}
 
             if all_candidates and #all_candidates > 0 then
                 -- Calculate score threshold for term-specific sentences
-                local threshold_term_specific = ASUtils.getFeature(CONFIGURATION, "lexrank_threshold_term_specific", 0.01)
-                local threshold_general = ASUtils.getFeature(CONFIGURATION, "lexrank_threshold_general", 0.01)
+                local threshold_term_specific = assistant:confGetFeature("lexrank_threshold_term_specific", 0.01)
+                local threshold_general = assistant:confGetFeature("lexrank_threshold_general", 0.01)
 
                 -- Stage 1: Find term-specific matches and add high-scoring sentence around them
-                local filtered_text = filterTextForTerm(book_text, highlightedText, dict_language, CONFIGURATION)
+                local filtered_text = filterTextForTerm(book_text, highlightedText, dict_language, assistant)
                 if filtered_text and #filtered_text > 100 then
                     for _, candidate in ipairs(all_candidates) do
                         -- Check if sentence appears in filtered (term-specific) text
@@ -298,8 +297,8 @@ local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
             table.sort(selected_indices)
 
             -- OPTIMIZED: Expand context using indices (no re-tokenization!)
-            local context_before = ASUtils.getFeature(CONFIGURATION, "term_xray_context_sentences_before", 5)
-            local context_after = ASUtils.getFeature(CONFIGURATION, "term_xray_context_sentences_after", 5)
+            local context_before = assistant:confGetFeature("term_xray_context_sentences_before", 5)
+            local context_after = assistant:confGetFeature("term_xray_context_sentences_after", 5)
             local context_sentences = expandContextWithSurroundings(
                 all_sentences,
                 selected_indices,

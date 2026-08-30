@@ -118,8 +118,6 @@ function Querier:load_model(provider_name)
         return true
     end
 
-    local CONFIGURATION = self.assistant.CONFIGURATION
-
     local provider_setting = self.assistant:confGetProvider(provider_name)
     if not provider_setting then
         local err = T(_("Provider settings not found for: %1. Please check your configuration.lua file."),
@@ -170,7 +168,7 @@ function Querier:load_model(provider_name)
     self.handler:SyncOptions(self)
 
     -- register to the ToolExecutor module
-    ToolExecutor.SetSearchAPIConfig(CONFIGURATION)
+    ToolExecutor.SetSearchAPIConfig(self.assistant)
     return true
 end
 
