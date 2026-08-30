@@ -108,7 +108,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         local prompts_key = feature_config.prompts_key
         
         -- Get feature CONFIGURATION with fallbacks
-        local file_config = koutil.tableGetValue(CONFIGURATION, "features", config_key) or {}
+        local file_config = ASUtils.getFeature(CONFIGURATION, config_key) or {}
         
         -- Prompts for feature (from config or prompts.lua)
         system_prompt = koutil.tableGetValue(file_config, "system_prompt")

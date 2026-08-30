@@ -129,11 +129,11 @@ local function isVersionNewer(v1_str, v2_str)
 end
 
 local function checkForUpdates()
-  if koutil.tableGetValue(CONFIGURATION, "features", "updater_disabled") then
+  if ASUtils.getFeature(CONFIGURATION, "updater_disabled") then
     return
   end
 
-  local update_url = koutil.tableGetValue(CONFIGURATION, "features", "update_check_url")
+  local update_url = ASUtils.getFeature(CONFIGURATION, "update_check_url")
     or "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest"
 
   local parsed_data, err = ASUtils.fetchJSON(update_url,
@@ -161,9 +161,9 @@ end
 local function otaUpgrade(version)
   local PLUGIN_NAME = "assistant.koplugin"
 
-  local GITHUB_BASE = koutil.tableGetValue(CONFIGURATION, "features", "ota_github_base")
+  local GITHUB_BASE = ASUtils.getFeature(CONFIGURATION, "ota_github_base")
     or "https://github.com"
-  local GITHUB_REPO = koutil.tableGetValue(CONFIGURATION, "features", "ota_github_repo")
+  local GITHUB_REPO = ASUtils.getFeature(CONFIGURATION, "ota_github_repo")
     or "omer-faruq/assistant.koplugin"
 
   local REPO_REF = version:sub(1, 1) == "v" and "tags" or "heads"

@@ -624,14 +624,14 @@ function AssistantDialog:show(highlightedText)
   -- Show the dialog with the button rows
   local dialog_hint
   local text_height
+  text_height = math.floor( 5 * Screen:scaleBySize(20) ) -- about 5 lines of text
   if is_highlighted then
       dialog_hint = _("Ask a question about the highlighted text")
-      text_height = math.floor( 3 * Screen:scaleBySize(20) ) -- about 3 lines of text
+      text_height = math.floor( 3 * Screen:scaleBySize(20) ) -- highlighted dialog is complicated
   elseif book.title then
       dialog_hint = ASUtils.bold_format(
           T(_("<b>Ask a question about this book:</b>\n%1 by %2"), book.title, book.author)
       )
-      text_height = math.floor( 5 * Screen:scaleBySize(20) ) -- about 5 lines of text
   else
       dialog_hint = _("Ask a general question")
   end

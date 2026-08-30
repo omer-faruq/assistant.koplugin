@@ -27,15 +27,8 @@ local function joinPath(parent, child)
     return parent .. "/" .. child
 end
 
-local function getFeature(assistant, key)
-    if not assistant or type(assistant.CONFIGURATION) ~= "table" then
-        return nil
-    end
-    return util.tableGetValue(assistant.CONFIGURATION, "features", key)
-end
-
 local function getCurrentBaseDirectory(assistant)
-    local default_folder = getFeature(assistant, "default_folder_for_logs")
+    local default_folder = ASUtils.getFeature(assistant.CONFIGURATION, "default_folder_for_logs")
     if default_folder and default_folder ~= ""
         and lfs.attributes(default_folder, "mode") == "directory" then
         return default_folder
@@ -387,7 +380,7 @@ end
 function M.saveToNotebookFile(assistant, log_entry)
     local success, saved_path, save_err, used_fallback = pcall(function()
         local notebookfile = assistant.ui.bookinfo:getNotebookFile(assistant.ui.doc_settings)
-        local default_folder = util.tableGetValue(assistant.CONFIGURATION, "features", "default_folder_for_logs")
+        local default_folder = ASUtils.getFeature(assistant.CONFIGURATION, "default_folder_for_logs")
         if assistant.ui.doc_settings then
             if default_folder and default_folder ~= "" then
                 if not notebookfile:find("^" .. default_folder:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")) then

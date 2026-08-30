@@ -77,6 +77,12 @@ end
 -- utils.PLUGIN_DIR during gettext's load sees a usable value.
 local _ = require("assistant_gettext")
 
+function M.getFeature(CONFIGURATION, key, default)
+  local v = koutil.tableGetValue(CONFIGURATION, "features", key)
+  if v == nil then return default end
+  return v
+end
+
 function M.extractBookTextForAnalysis(CONFIGURATION, ui)
     local book_text = nil
       if not ui.document.info.has_pages then
@@ -86,44 +92,26 @@ function M.extractBookTextForAnalysis(CONFIGURATION, ui)
           local start_xp = ui.document:getXPointer()
           ui.document:gotoXPointer(current_xp)
           book_text = ui.document:getTextFromXPointers(start_xp, current_xp) or ""
-          local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
+          local max_text_length_for_analysis = M.getFeature(CONFIGURATION, "max_text_length_for_analysis", 100000)
           if #book_text > max_text_length_for_analysis then
-              book_text = book_text:sub(-max_text_length_for_analysis)
-              book_text = book_text:gsub("^[\128-\191]+", "")
-              book_text = util.fixUtf8(book_text, "_")
+              book_text = M.truncateToTailUtf8Safe(book_text, max_text_length_for_analysis)
           end
       else
         -- Extract text from the last n pages up to current reading position for page-based documents
         local current_page = ui.view.state.page
         local total_pages = ui.document:getPageCount()
-        local max_page_size_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_page_size_for_analysis") or 250
+        local max_page_size_for_analysis = M.getFeature(CONFIGURATION, "max_page_size_for_analysis", 250)
         local start_page = math.max(1, current_page - max_page_size_for_analysis)
         local buf = shared_buf
         buf:reset()
         for page = start_page, current_page do
-            local page_text = ui.document:getPageText(page) or ""
-            if type(page_text) == "table" then
-                local texts = {}
-                for _, block in ipairs(page_text) do
-                    if type(block) == "table" then
-                        for i = 1, #block do
-                            local span = block[i]
-                            if type(span) == "table" and span.word then
-                                table.insert(texts, span.word)
-                            end
-                        end
-                    end
-                end
-                page_text = table.concat(texts, " ")
-            end
+            local page_text = pageTextToString(ui.document:getPageText(page))
             buf:put(page_text, "\n")
         end
         book_text = buf:get()
-        local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
+        local max_text_length_for_analysis = M.getFeature(CONFIGURATION, "max_text_length_for_analysis", 100000)
         if #book_text > max_text_length_for_analysis then
-            book_text = book_text:sub(-max_text_length_for_analysis)
-            book_text = book_text:gsub("^[\128-\191]+", "")
-            book_text = util.fixUtf8(book_text, "_")
+            book_text = M.truncateToTailUtf8Safe(book_text, max_text_length_for_analysis)
         end
     end
     return book_text
@@ -181,11 +169,9 @@ function M.extractHighlightsNotesAndNotebook(CONFIGURATION, ui, include_notebook
         end
     end
     
-    local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
+    local max_text_length_for_analysis = M.getFeature(CONFIGURATION, "max_text_length_for_analysis", 100000)
     if #combined > max_text_length_for_analysis then
-        combined = combined:sub(-max_text_length_for_analysis)
-        combined = combined:gsub("^[\128-\191]+", "")
-        combined = util.fixUtf8(combined, "_")
+        combined = M.truncateToTailUtf8Safe(combined, max_text_length_for_analysis)
     end
     
     return combined
@@ -253,6 +239,19 @@ local function pageTextToString(t)
   return ""
 end
 
+function M.truncateToTailUtf8Safe(text, max_len)
+  if #text <= max_len then return text end
+  text = text:sub(-max_len)
+  text = text:gsub("^[\128-\191]+", "")
+  return util.fixUtf8(text, "_")
+end
+function M.truncateToHeadUtf8Safe(text, max_len)
+  if #text <= max_len then return text end
+  text = text:sub(1, max_len)
+  text = text:gsub("[\128-\191]+$", "")
+  return util.fixUtf8(text, "_")
+end
+
 --[[
   Pure budget-assembly helper for nearby-page context.
 
@@ -287,33 +286,15 @@ local function assemblePageContext(prev, current, next, max_chars)
     local half = math.floor(remaining / 2)
 
     if prev ~= "" then
-      if #prev <= half then
-        parts.prev = prev
-      else
-        -- keep the TAIL of prev (closest to the highlight)
-        local s = #prev - half + 1
-        parts.prev = prev:sub(s)
-        parts.prev = parts.prev:gsub("^[\128-\191]+", "")
-        parts.prev = util.fixUtf8(parts.prev, "_")
-      end
+      parts.prev = M.truncateToTailUtf8Safe(prev, half)
     end
 
     if next ~= "" then
-      if #next <= half then
-        parts.next = next
-      else
-        -- keep the HEAD of next (closest to the highlight)
-        local e = half
-        parts.next = next:sub(1, e)
-        parts.next = parts.next:gsub("[\128-\191]+$", "")
-        parts.next = util.fixUtf8(parts.next, "_")
-      end
+      parts.next = M.truncateToHeadUtf8Safe(next, half)
     end
   else
     -- current alone exceeds the budget: keep its HEAD only
-    parts.current = current:sub(1, max_chars)
-    parts.current = parts.current:gsub("[\128-\191]+$", "")
-    parts.current = util.fixUtf8(parts.current, "_")
+    parts.current = M.truncateToHeadUtf8Safe(current, max_chars)
   end
 
   local out = {}
@@ -680,11 +661,9 @@ function M.extractCurrentChapterText(CONFIGURATION, ui)
     end
   end
 
-  local max_text_length_for_analysis = koutil.tableGetValue(CONFIGURATION, "features", "max_text_length_for_analysis") or 100000
+  local max_text_length_for_analysis = M.getFeature(CONFIGURATION, "max_text_length_for_analysis", 100000)
   if #book_text > max_text_length_for_analysis then
-    book_text = book_text:sub(-max_text_length_for_analysis)
-    book_text = book_text:gsub("^[\128-\191]+", "")
-    book_text = util.fixUtf8(book_text, "_")
+    book_text = M.truncateToTailUtf8Safe(book_text, max_text_length_for_analysis)
   end
   return book_text
 end

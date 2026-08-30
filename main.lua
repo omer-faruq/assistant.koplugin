@@ -401,7 +401,7 @@ function Assistant:addToMainMenu(menu_items)
   -- Only show the Custom Prompts entry when book_level_prompts are actually
   -- configured. When absent, mark the Book Insights group with a trailing
   -- separator so it doesn't visually run into the next menu item.
-  if koutil.tableGetValue(CONFIGURATION, "features", "book_level_prompts") then
+  if ASUtils.getFeature(CONFIGURATION, "book_level_prompts") then
     table.insert(book_level_items, {
               text = _("Custom Prompts"),
               sub_item_table_func = function ()
@@ -473,7 +473,7 @@ function BookLevelCustomPrompts(assistant)
   local sub_item_table = {}
 
   -- Read book_level_prompts from configuration
-  local book_level_prompts = koutil.tableGetValue(CONFIGURATION, "features", "book_level_prompts") or {}
+  local book_level_prompts = ASUtils.getFeature(CONFIGURATION, "book_level_prompts") or {}
 
   for key, prompt_config in ffiutil.orderedPairs(book_level_prompts) do
     if prompt_config.visible == true and prompt_config.type == "feature" then
@@ -979,7 +979,7 @@ function Assistant:_rebuildShowOnMainButtons()
   if not self.ui.document then return end
 
   Prompts.invalidateCache()
-  Prompts.getMergedPrompts(koutil.tableGetValue(CONFIGURATION, "features", "prompts"))
+  Prompts.getMergedPrompts(ASUtils.getFeature(CONFIGURATION, "prompts"))
 
   local showOnMain = Prompts.getSortedPrompts(function (prompt, idx)
     if prompt.visible == false then
@@ -1493,7 +1493,7 @@ function Assistant:onAssistantSetButton(btnconf, action)
   -- use merged prompts: prompts defined only in configuration.lua
   -- are absent from the built-in `builtin_prompts` table
   local prompt = Prompts.getMergedPrompts(
-    koutil.tableGetValue(CONFIGURATION, "features", "prompts"))[idx]
+    ASUtils.getFeature(CONFIGURATION, "prompts"))[idx]
   local ws_enabled = Prompts.isWebSearchEnabled(self.settings)
   local display_text = Prompts.getDisplayText(prompt.text or idx, prompt.use_websearch or false, ws_enabled)
 

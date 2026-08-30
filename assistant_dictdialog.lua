@@ -109,7 +109,7 @@ local function filterTextForTerm(text, highlighted_term, language_code, configur
     end
 
     -- Include larger context sentences around matches for better coverage
-    local context_window = koutil.tableGetValue(CONFIGURATION, "features", "term_filter_context_window") or 5 -- sentences before and after
+    local context_window = ASUtils.getFeature(CONFIGURATION, "term_filter_context_window", 5) -- sentences before and after
     local selected_indices = {}
 
     for _, idx in ipairs(matching_indices) do
@@ -250,18 +250,18 @@ local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
 
             -- OPTIMIZED: Single LexRank call with return_with_metadata=true
             -- Run with the lowest threshold to get all candidates with scores
-            local threshold_very_inclusive = koutil.tableGetValue(CONFIGURATION, "features", "lexrank_threshold_very_inclusive") or 0.005
+            local threshold_very_inclusive = ASUtils.getFeature(CONFIGURATION, "lexrank_threshold_very_inclusive", 0.005)
             local all_candidates = LexRank.rank_sentences(book_text, threshold_very_inclusive, 0.1, dict_language, CONFIGURATION.features, true)
 
             -- Filter candidates at different levels using their scores (no re-tokenization needed!)
-            local max_characters = koutil.tableGetValue(CONFIGURATION, "features", "term_xray_max_characters") or 100000
+            local max_characters = ASUtils.getFeature(CONFIGURATION, "term_xray_max_characters", 100000)
             local selected_indices = {}
             local seen_indices = {}
 
             if all_candidates and #all_candidates > 0 then
                 -- Calculate score threshold for term-specific sentences
-                local threshold_term_specific = koutil.tableGetValue(CONFIGURATION, "features", "lexrank_threshold_term_specific") or 0.01
-                local threshold_general = koutil.tableGetValue(CONFIGURATION, "features", "lexrank_threshold_general") or 0.01
+                local threshold_term_specific = ASUtils.getFeature(CONFIGURATION, "lexrank_threshold_term_specific", 0.01)
+                local threshold_general = ASUtils.getFeature(CONFIGURATION, "lexrank_threshold_general", 0.01)
 
                 -- Stage 1: Find term-specific matches and add high-scoring sentence around them
                 local filtered_text = filterTextForTerm(book_text, highlightedText, dict_language, CONFIGURATION)
@@ -298,8 +298,8 @@ local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
             table.sort(selected_indices)
 
             -- OPTIMIZED: Expand context using indices (no re-tokenization!)
-            local context_before = koutil.tableGetValue(CONFIGURATION, "features", "term_xray_context_sentences_before") or 5
-            local context_after = koutil.tableGetValue(CONFIGURATION, "features", "term_xray_context_sentences_after") or 5
+            local context_before = ASUtils.getFeature(CONFIGURATION, "term_xray_context_sentences_before", 5)
+            local context_after = ASUtils.getFeature(CONFIGURATION, "term_xray_context_sentences_after", 5)
             local context_sentences = expandContextWithSurroundings(
                 all_sentences,
                 selected_indices,
