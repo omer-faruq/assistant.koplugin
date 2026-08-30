@@ -99,7 +99,7 @@ local ToolExecutor = {}
 ToolExecutor.SEARCH_API_NAMES = SEARCH_API_NAMES
 
 --- Exposed func to set module variable via Assistant instance
---- @param assistant table Assistant instance; fetches provider via :confGetProvider to avoid CONFIGURATION param
+--- @param assistant table Assistant instance
 function ToolExecutor.SetSearchAPIConfig(assistant)
     if not assistant then return end
     for api, tool in pairs(ExtTools) do

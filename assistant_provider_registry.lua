@@ -355,7 +355,7 @@ function Registry.updateProvider(assistant, id, display_name, base_url, api_key,
 
     Registry.save(assistant.settings, assistant._ui_provider_data)
 
-    -- Refresh in-memory merged config via centralized method.
+    -- Refresh merged config.
     local newRecord = {
         display_name = existing.display_name,
         handler = existing.handler,
@@ -400,7 +400,7 @@ function Registry.installProvider(assistant, handler, base_url, display_name, ap
     end
     Registry.save(assistant.settings, assistant._ui_provider_data)
 
-    -- Update in-memory merged config via centralized method.
+    -- Update merged config.
     local stored = assistant._ui_provider_data.providers[id]
     local newRecord = {
         display_name = record.display_name,

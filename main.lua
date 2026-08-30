@@ -795,7 +795,7 @@ function Assistant:confGetProvider(key)
 end
 
 function Assistant:confGetPrompts()
-    -- prompts is in features; RAW==EFFECTIVE for features, so use effective
+    -- prompts is in features.
     return self:confGetFeature("prompts")
 end
 
@@ -856,10 +856,10 @@ function Assistant:confDeleteSearchTool(key)
 end
 
 function Assistant:buildEffectiveConfig(rawConfig)
-    -- Centralizes main.lua:859-875 inline build. rawConfig is the RAW file table (dofile configuration.lua).
+    -- rawConfig is the RAW file table (dofile configuration.lua).
     -- Returns effective table; does not assign self.CONFIGURATION (caller does).
-    -- RAW vs EFFECTIVE never diverge: effective shares RAW tables shallowly (e.g. features)
-    -- intentionally; provider_settings is rebuilt via Registry/SearchRegistry merges.
+    -- effective shares RAW tables shallowly (e.g. features).
+    -- provider_settings is rebuilt via Registry/SearchRegistry merges.
     rawConfig = rawConfig or CONFIGURATION
     local ui_data = Registry.load(self.settings)
     local merged_ps = Registry.merge(rawConfig, ui_data)
@@ -940,10 +940,9 @@ function Assistant:init()
   self.ui_language = Language:getLanguageName(ui_locale) or "English"
   self.ui_language_is_rtl = Language:isLanguageRTL(ui_locale)
 
-  -- Build effective CONFIGURATION via centralized method (RAW vs EFFECTIVE).
+  -- Build effective CONFIGURATION.
   -- RAW is the local CONFIGURATION loaded via dofile(configuration.lua);
-  -- EFFECTIVE (self.CONFIGURATION) shallow-copies RAW tables intentionally
-  -- (e.g. features shares RAW table) while provider_settings is rebuilt.
+  -- shallow-copies RAW tables (e.g. features) while provider_settings is rebuilt.
   self.CONFIGURATION = self:buildEffectiveConfig()
 
   -- Register actions with dispatcher for gesture assignment

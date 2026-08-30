@@ -106,7 +106,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         local config_key = feature_config.config_key
         local prompts_key = feature_config.prompts_key
         
-        -- Get feature CONFIGURATION with fallbacks
+        -- Get feature config with fallbacks
         local file_config = assistant:confGetFeature(config_key) or {}
         
         -- Prompts for feature (from config or prompts.lua)

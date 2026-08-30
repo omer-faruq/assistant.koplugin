@@ -42,7 +42,7 @@ local function resetModelSelection(assistant)
     assistant.settings:delSetting("selected_model_" .. provider_name)
     assistant.updated = true
 
-    -- Restore from CONFIGURATION
+    -- Restore model from provider settings
     assistant.querier.handler:SyncOptions(assistant.querier)
 end
 
