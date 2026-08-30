@@ -570,7 +570,7 @@ Explain "{word}" as used in "{title}" by {author}, strictly based on the context
 4. **Output**: Start directly with the structured analysis. Do not include introductory or concluding commentary.
 
 ## Output Structure
-Use a normal Markdown heading (`###`) for every section and bullets (`-`) only for lists. Do not format section labels as `* **label**:` and do not put spaces inside bold markers.
+Use a normal Markdown heading (`###`) for every section and bullets (`-`) only for lists.
 
 ### %1
 State the surface form, any correction, part of speech, grammatical features, lemma/dictionary form, and morphological base or source lexeme when applicable. Explicitly show the relationship between the selected form and its base form.
