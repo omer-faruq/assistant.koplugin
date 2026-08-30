@@ -583,7 +583,7 @@ function ChatGPTViewer:saveToNotebook()
   
   local log_entry = string.format("# [%s]%s\n## %s\n\n%s\n\n", timestamp, page_info, title_text, text_to_log)
   
-  return ASUtils.saveToNotebookFile(self.assistant, log_entry)
+  return Notebook.saveToNotebookFile(self.assistant, log_entry)
 end
 
 function ChatGPTViewer:onCloseWidget()

@@ -1,11 +1,13 @@
 local T = require("ffi/util").template
 local lfs = require("libs/libkoreader-lfs")
 local util = require("util")
+local logger = require("logger")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local InputDialog = require("ui/widget/inputdialog")
 local Menu = require("ui/widget/menu")
 local _ = require("assistant_gettext")
+local ASUtils = require("assistant_utils")
 
 local M = {}
 
@@ -107,6 +109,17 @@ end
 function M.getLegacyPath(assistant)
     local target_dir = getCurrentBaseDirectory(assistant)
     return target_dir and joinPath(target_dir, LEGACY_NOTEBOOK_FILENAME) or nil
+end
+
+function M.getGeneralNotebookFilePath(assistant)
+    if M.isEnabled(assistant) then
+        local notebook, err, warning = M.getActive(assistant)
+        if notebook then
+            return notebook.path, warning or err
+        end
+        return M.getLegacyPath(assistant), warning or err
+    end
+    return M.getLegacyPath(assistant)
 end
 
 -- Returns the notebooks folder chosen in Settings, if any.
@@ -369,6 +382,148 @@ local function showMessage(text, is_warning)
         text = text,
         timeout = 5,
     })
+end
+
+function M.saveToNotebookFile(assistant, log_entry)
+    local success, saved_path, save_err, used_fallback = pcall(function()
+        local notebookfile = assistant.ui.bookinfo:getNotebookFile(assistant.ui.doc_settings)
+        local default_folder = util.tableGetValue(assistant.CONFIGURATION, "features", "default_folder_for_logs")
+        if assistant.ui.doc_settings then
+            if default_folder and default_folder ~= "" then
+                if not notebookfile:find("^" .. default_folder:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")) then
+                    if not util.pathExists(default_folder) then
+                        UIManager:show(InfoMessage:new{
+                            icon = "notice-warning",
+                            text = ASUtils.bold_format(
+                                T(_("<b>Cannot access default folder for logs: %1</b>\nUsing original location."), default_folder)
+                            ),
+                            timeout = 5,
+                        })
+                    else
+                        local original_filename = notebookfile:match("([^/\\]+)$")
+                        if original_filename then
+                            original_filename = original_filename:gsub("%.[^.]*$", ".md")
+                        else
+                            local doc_path = assistant.ui.document.file
+                            if doc_path then
+                                local doc_filename = doc_path:match("([^/\\]+)$")
+                                if doc_filename then
+                                    original_filename = doc_filename..".md"
+                                else
+                                    original_filename = "notebook.md"
+                                end
+                            else
+                                original_filename = "notebook.md"
+                            end
+                        end
+                        local new_notebookfile = default_folder .. "/" .. original_filename
+
+                        assistant.ui.doc_settings:saveSetting("notebook_file", new_notebookfile)
+
+                        notebookfile = new_notebookfile
+                    end
+                end
+            end
+
+            if notebookfile and not notebookfile:find("%.md$") then
+                notebookfile = notebookfile:gsub("%.[^.]*$", ".md")
+                if not notebookfile:find("%.md$") then
+                    notebookfile = notebookfile .. ".md"
+                end
+                assistant.ui.doc_settings:saveSetting("notebook_file", notebookfile)
+            end
+        else
+            local general_warning
+            notebookfile, general_warning = M.getGeneralNotebookFilePath(assistant)
+            if general_warning then
+                logger.warn("Assistant: General notebook warning:", general_warning)
+                UIManager:show(InfoMessage:new{
+                    icon = "notice-warning",
+                    text = general_warning,
+                    timeout = 5,
+                })
+            end
+        end
+
+        if not notebookfile then
+            return nil, _("Notebook path is unavailable."), false
+        end
+
+        local file, open_err = io.open(notebookfile, "a")
+        local fallback_used = false
+
+        -- Multi-notebook is optional. If the selected destination cannot be
+        -- opened for append, fall back to the legacy general_notebook.md so the
+        -- conversation is not lost.
+        if not file and not assistant.ui.doc_settings and M.isEnabled(assistant) then
+            local failed_path = notebookfile
+            local legacy_path = M.getLegacyPath(assistant)
+
+            if legacy_path and legacy_path ~= failed_path then
+                logger.warn(
+                    "Assistant: Could not open general notebook:",
+                    failed_path,
+                    open_err,
+                    "- falling back to:",
+                    legacy_path
+                )
+
+                notebookfile = legacy_path
+                file, open_err = io.open(notebookfile, "a")
+                fallback_used = file ~= nil
+            end
+        end
+
+        if not file then
+            logger.warn("Assistant: Could not open notebook file:", notebookfile, open_err)
+            return nil, open_err or _("Could not open notebook file."), false
+        end
+
+        local write_ok, write_err = file:write(log_entry)
+        local close_ok, close_err = file:close()
+        if not write_ok then
+            logger.warn("Assistant: Could not write notebook file:", notebookfile, write_err)
+            return nil, write_err or _("Could not write notebook file."), false
+        end
+        if close_ok == nil then
+            logger.warn("Assistant: Could not close notebook file:", notebookfile, close_err)
+            return nil, close_err or _("Could not close notebook file."), false
+        end
+
+        if fallback_used then
+            UIManager:show(InfoMessage:new{
+                icon = "notice-warning",
+                text = T(
+                    _("Could not save to the selected notebook.\nSaved to: %1"),
+                    "general_notebook"
+                ),
+                timeout = 5,
+            })
+        end
+
+        return notebookfile, nil, fallback_used
+    end)
+
+    if not success then
+        logger.warn("Assistant: Error during notebook save:", saved_path)
+        UIManager:show(InfoMessage:new{
+            icon = "notice-warning",
+            text = _("Notebook save failed. Continuing..."),
+            timeout = 3,
+        })
+        return nil, saved_path, false
+    end
+
+    -- Preserve book-mode behavior, but make general-mode failures visible.
+    if not saved_path and not assistant.ui.doc_settings then
+        UIManager:show(InfoMessage:new{
+            icon = "notice-warning",
+            text = _("Notebook save failed. Continuing..."),
+            timeout = 3,
+        })
+    end
+
+    return saved_path, save_err, used_fallback == true
 end
 
 function M.getActiveDisplayName(assistant, max_chars)

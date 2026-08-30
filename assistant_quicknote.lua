@@ -126,7 +126,7 @@ function QuickNote:saveNote(note_text, highlighted_text)
     log_entry = string.format("# [%s]\n## %s\n\n### ⮞ %s \n\n%s\n\n", timestamp, quick_note_lbl, user_lbl, processed_note)
   end
 
-  local saved_path, _save_err, used_fallback = ASUtils.saveToNotebookFile(self.assistant, log_entry)
+  local saved_path, _save_err, used_fallback = Notebook.saveToNotebookFile(self.assistant, log_entry)
   if not saved_path then
     return
   end

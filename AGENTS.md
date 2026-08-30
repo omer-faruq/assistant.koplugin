@@ -106,6 +106,12 @@ KOReader plugin (`assistant.koplugin`) adding AI assistant features (10+ provide
 - Translation scripts in `l10n/` are developer-run manually. **AI agents must not** run `make template/update/translate/ai-translate`; only `make check` is allowed when explicitly requested.
 - Reference (do not invoke): `cd l10n && make template|update|check|translate`. Domain is `DOMAIN=assistant` (`assistant.pot` / `assistant.po` / `assistant.mo`); `all: mo` is the default target, `translate` builds the MO, `check` validates PO via `msgfmt`, and MO files are committed to the repo.
 
+## Development Principles
+
+- **No backward compatibility for internal code**: This repo is a KOReader plugin; all `assistant_*.lua` modules are internal with no external consumers. When migrating code, move it and update all internal call sites in one go — **do not keep `Deprecated` wrappers / compat layers**. They add duplicate logic and circular dependencies.
+- **Prefer clear, direct calls**: Callers should `require` the owning module directly (e.g. `Notebook.saveToNotebookFile`) without proxying through an intermediary. Keep the call chain one hop.
+- **Keep module responsibilities explicit**: Split by domain / use case (e.g. `Notebook` owns storage, `QuickNote` owns the interaction flow). Do not blur boundaries for compatibility.
+
 ## Tips for AI Agents
 
 - **English polish**: the developer isn't a native speaker; correct wording into idiomatic English while preserving intent (e.g. "bleeding-edge code").

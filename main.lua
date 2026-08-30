@@ -192,7 +192,7 @@ function Assistant:addToMainMenu(menu_items)
                   local notebookfile
 
                   if is_general_mode then
-                    notebookfile = ASUtils.getGeneralNotebookFilePath(self)
+                    notebookfile = Notebook.getGeneralNotebookFilePath(self)
                   else
                     notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
                   end
