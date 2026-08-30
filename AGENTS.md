@@ -27,6 +27,7 @@ This file provides guidance to AI agents when working with code in this reposito
 - **Stub discipline**: new `require` chains reaching a real KOReader widget module crash the headless suite (the empty `android` stub makes `device.lua` pick the Android impl). Add a stub in `helper.lua`'s `stubs` table (lines 42–53) whenever a new module is pulled in.
 - **Headless**: tests run without a device or KOReader GUI; UI modules are mocked in `test/helper.lua`. The runner prints a summary and exits non-zero on failure.
 - **Headless pitfall — `G_reader_settings`**: `G_reader_settings` is a global created by `setupkoenv` / `test/run_tests.lua`. A bare `luajit -e "require('assistant_utils')"` outside `./test/run.sh` fails with `attempt to index global 'G_reader_settings' (a nil value)` (`device`/`fontlist` chain). `fixer` agents must verify modules via `assert(loadfile(...))` (syntax) or `./test/run.sh` (runtime); do not `require` UI-touching modules with raw `luajit -e`.
+- **Self-location pitfall**: prefer `assistant_utils.PLUGIN_DIR` over `DataStorage:getDataDir().."/plugins/..."` directly; the latter diverges under `MULTIUSER`/extra_plugin_paths.
 - **Before committing**: run `./test/run.sh` — CI ships without running tests, so local runs are the only automated guard.
 - **UI testing**: `./test/runui.sh model_picker` (add `-w=1072 -h=1448 -d=300` or `-s=kobo-clara` to simulate a device). Add a `test/` script that requires `test/wbuilder`, shows widgets with `UIManager:show(...)`, and ends with `UIManager:run()`. `test/wbuilder` bootstraps the KOReader UI framework and plugin path for isolated widget tests.
 
@@ -56,8 +57,10 @@ KOReader plugin (`assistant.koplugin`) adding AI assistant features (10+ provide
   - `ToolExecutor` loads enabled (non-empty `api_key`) tools from `SearchRegistry` at query time and passes them into the handler's tool defs. Both registries must be used directly — never touch `settings:saveSetting("ui_providers"/"ui_search_tools", ...)`.
 - **LexRank (Term X-Ray)**: `assistant_lexrank.lua` does TF-IDF-weighted LexRank sentence ranking (tokenize → similarity matrix → PageRank → score-based selection with entity/position boosting); its tunables (`lexrank_max_sentences`, etc.) live **here**. Per-language modules in `assistant_lexrank_languages.lua` (`en`,`es`,`fr`,`de`,`tr`; fallback en) — read `LEXRANK_LANGUAGES.md` before editing. Display thresholds (multi-level filtering, context expansion) live in `assistant_dictdialog.lua`, which consumes `rank_sentences`.
 - **UI / Dialogs**: `assistant_dialog.lua` (Ask AI popup + result formatting), `assistant_featuredialog.lua` (book features: Recap/X-Ray/annotations), `assistant_dictdialog.lua` (AI Dictionary + Term X-Ray), `assistant_settings.lua` (provider/model settings), `assistant_model_picker.lua` (`showPickerDialog`/`fetchModels`, call inside `Trapper:wrap`).
-  - `assistant_viewer.lua` (`ChatGPTViewer` scrollable result viewer), `assistant_quicknote.lua` (quick-note capture), `assistant_update_checker.lua` (GitHub release check), `assistant_mdparser.lua` (hoedown → markdown.lua fallback).
-- **Shared Utils & Config**: `assistant_utils.lua` (extraction, notebook I/O, `httpRequest`, `set_attr`/`get_attr`), `assistant_gettext.lua` (`_("text")`), `assistant_prompts.lua`. `configuration.lua` is user-owned, gitignored, holds secrets — never read/modify; update `configuration.sample.lua` instead. Runtime config lives in `CONFIGURATION` (built from `configuration.lua` + UI registries); read nested values via `koutil.tableGetValue`.
+  - `assistant_viewer.lua` (`ChatGPTViewer` scrollable result viewer), `assistant_quicknote.lua` (quick-note capture), `assistant_updater.lua` (GitHub release check), `assistant_mdparser.lua` (hoedown → markdown.lua fallback).
+- **Shared Utils & Config**: `assistant_utils.lua` (extraction, notebook I/O, `httpRequest`, `PLUGIN_DIR` constant via `debug.getinfo` self-location with `DataStorage` fallback, set once by `main.lua`), `assistant_gettext.lua` (isolated MO shim that dofiles `frontend/gettext.lua`, `ffi.cdef` guard, `textdomain "assistant"`, `l10n/assistant.mo`), `assistant_prompts.lua`. `configuration.lua` is user-owned, gitignored, holds secrets — never read/modify; update `configuration.sample.lua` instead. Runtime config lives in `CONFIGURATION` (built from `configuration.lua` + UI registries); read nested values via `koutil.tableGetValue`.
+- **PLUGIN_DIR**: runtime constant `assistant_utils.PLUGIN_DIR` computed once in `main.lua` from its own source path (`debug.getinfo`), with `lfs` existence checks + `DataStorage`/install-dir fallbacks. Used by gettext (`l10n`) and mdparser (`lib`). OTA target remains `DataStorage:getFullDataDir()/plugins` (writable).
+- **gettext / Translation**: `assistant_gettext.lua` now reads `l10n/*/assistant.mo` (MO, not PO) and exposes the same `_` / `N_` / `C_` / `NC_` API as upstream. It isolates the assistant domain so plugin strings never clash with KOReader's core catalog.
 - **Dependencies**: none beyond KOReader's standard libraries; the optional `hoedown` native library has a pure-Lua fallback. License: GPL-3.0 (see `LICENSE`).
 
 ## Key Files
@@ -69,6 +72,9 @@ KOReader plugin (`assistant.koplugin`) adding AI assistant features (10+ provide
 | `api_handlers/base.lua` | Handler base class (registries: `assistant_provider_registry.lua`, `assistant_search_registry.lua`) |
 | `configuration.sample.lua` | Config template — update this, not `configuration.lua` |
 | `assistant_search_registry.lua` | UI search-tool add/merge/validate, JSON settings storage |
+| `assistant_gettext.lua` | MO shim (assistant domain) |
+| `assistant_utils.lua` | `httpRequest`, `PLUGIN_DIR`, extraction, notebook I/O |
+| `assistant_updater.lua` | GitHub release check |
 
 ## Coding Conventions
 
@@ -92,13 +98,13 @@ KOReader plugin (`assistant.koplugin`) adding AI assistant features (10+ provide
 - Default branch `main`; Conventional Commits (`fix:`, `refactor:`, `add:`, `feat:`). When asked to commit, do it directly with a concise message.
 - `_meta.lua` holds the current development version (the *next* release). When a release is ready: tag the commit matching it (e.g. `_meta.lua` says `"1.14"` → tag `v1.14`), then bump `_meta.lua` to the next number and commit (`chore: bump version to 1.15`).
 - AI agents: when asked to tag a release, tag the commit matching `_meta.lua`'s version, then bump and commit the bump.
-- CI (`.github/workflows/release.yml`): on `v*` push — checkout, rewrite `_meta.lua` from the tag, zip (excludes dotfiles, `.md`, non-`.po` l10n).
+- CI (`.github/workflows/release.yml`): on `v*` push — checkout, rewrite `_meta.lua` from the tag, zip (excludes dotfiles, `.md`, l10n non-mo files — only `*.mo` shipped; MO files are now tracked in repo, built via `l10n/Makefile DOMAIN=assistant`, `all: mo`).
 - CI creates a GitHub pre-release with the zip asset; no tests run in CI (testing is manual in KOReader).
 
 ## Translation Management
 
 - Translation scripts in `l10n/` are developer-run manually. **AI agents must not** run `make template/update/translate/ai-translate`; only `make check` is allowed when explicitly requested.
-- Reference (do not invoke): `cd l10n && make template|update|check|translate`.
+- Reference (do not invoke): `cd l10n && make template|update|check|translate`. Domain is `DOMAIN=assistant` (`assistant.pot` / `assistant.po` / `assistant.mo`); `all: mo` is the default target, `translate` builds the MO, `check` validates PO via `msgfmt`, and MO files are committed to the repo.
 
 ## Tips for AI Agents
 
