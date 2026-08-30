@@ -111,6 +111,7 @@ KOReader plugin (`assistant.koplugin`) adding AI assistant features (10+ provide
 - **No backward compatibility for internal code**: This repo is a KOReader plugin; all `assistant_*.lua` modules are internal with no external consumers. When migrating code, move it and update all internal call sites in one go — **do not keep `Deprecated` wrappers / compat layers**. They add duplicate logic and circular dependencies.
 - **Prefer clear, direct calls**: Callers should `require` the owning module directly (e.g. `Notebook.saveToNotebookFile`) without proxying through an intermediary. Keep the call chain one hop.
 - **Keep module responsibilities explicit**: Split by domain / use case (e.g. `Notebook` owns storage, `QuickNote` owns the interaction flow). Do not blur boundaries for compatibility.
+- **Avoid direct access to CONFIGURATION raw table**: Read and write CONFIGURATION only via `Assistant:confGet*` / `confSet*` / `buildEffectiveConfig` (e.g. `confGetFeature`, `confGetProvider`, `confGetFeatures`). Do not read `CONFIGURATION.features` / `CONFIGURATION.provider_settings` directly and do not write `CONFIGURATION.provider_settings[key]` by hand.
 
 ## Tips for AI Agents
 
