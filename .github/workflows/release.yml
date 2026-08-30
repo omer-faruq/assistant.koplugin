@@ -49,9 +49,10 @@ jobs:
           # Copy project files into the directory using a tar pipe, excluding unwanted files.
           # This archives the current directory and immediately extracts it into the target directory.
           tar c --exclude='./.*' --exclude='./*.md' --exclude='./test' --exclude="./$PACKAGE_NAME" . | tar x -C "$PACKAGE_NAME"
-          # Remove development helper files from the l10n directory (keep only .po files)
-          echo "Cleaning up l10n directory, keeping only .po files..."
-          find "$PACKAGE_NAME/l10n" -type f ! -name '*.po' -print -delete
+          # Remove development helper files from the l10n directory. For OTA
+          # distribution, only the compiled .mo files are needed.
+          echo "Cleaning up l10n directory, keeping only .mo files..."
+          find "$PACKAGE_NAME/l10n" -type f ! -name '*.mo' -print -delete
           # Create the final zip archive from the cleaned directory
           zip -r "$ARCHIVE_NAME" "$PACKAGE_NAME"
 

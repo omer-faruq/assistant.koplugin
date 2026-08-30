@@ -1,3 +1,9 @@
+-- Compute plugin dir once at init; reuse as runtime constant.
+local _plugin_src = debug.getinfo(1, "S").source:match("^@(.+)$") or "main.lua"
+local _plugin_dir = _plugin_src:match("(.*/)") or ""
+_plugin_dir = _plugin_dir:gsub("/$", "")
+if _plugin_dir == "" then _plugin_dir = "." end
+
 local Device = require("device")
 local logger = require("logger")
 local Event = require("ui/event")
@@ -20,6 +26,13 @@ local ffiutil = require("ffi/util")
 local ToolExecutor = require("assistant_tool_executor")
 local ASUtils = require("assistant_utils")
 local Notebook = require("assistant_notebook")
+
+-- Expose plugin dir as a runtime constant for mdparser etc.
+-- Set right after assistant_utils is first required (and before the modules
+-- below load) so utils.PLUGIN_DIR is the authoritative install path computed
+-- from main.lua's own location. assistant_gettext resolves its l10n dir on its
+-- own (no utils require) to keep the dependency graph acyclic.
+ASUtils.PLUGIN_DIR = _plugin_dir
 
 local _ = require("assistant_gettext")
 local N_ = _.ngettext

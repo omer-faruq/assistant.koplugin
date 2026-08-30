@@ -1,4 +1,4 @@
-.PHONY: all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-api clean init-dirs
+.PHONY: all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-api clean init-dirs mo
 
 # Effective parallelism for ai-translate.
 # Priority: explicit -jN / --jobs=N on the command line > bare -j (nproc) > 4.
@@ -11,7 +11,7 @@ ifeq ($(JOBS),)
 JOBS := $(shell if echo '$(MAKEFLAGS)' | grep -qE ' (-j|--jobs)( |$$)'; then nproc; else echo 4; fi)
 endif
 
-all: translate
+all: mo
 
 # This target runs the full translation pipeline:
 # 1. Extracts strings from source code into a .pot template.
@@ -22,6 +22,7 @@ all: translate
 # 6. Merges the new translations back into the .po files.
 # 7. Checks the syntax of the final .po files.
 # 8. Cleans up all intermediate files.
+# 9. Compiles the final .po files into .mo files.
 translate:
 	@if [ ! -f .env ]; then \
 		echo "\033[0;31mError: AI access environment file \`.env' is not found.\033[0m"; \
@@ -42,10 +43,12 @@ translate:
 	@$(MAKE) check
 	@echo "[7/7] Cleaning up intermediate files..."
 	@$(MAKE) clean
+	@echo "[8/8] Compiling .mo files..."
+	@$(MAKE) mo
 	@echo "\nTranslation process completed successfully!"
 
 
-DOMAIN = koreader
+DOMAIN = assistant
 TEMPLATE_DIR = templates
 MSGINIT_BIN = msginit
 MSGFMT_BIN = msgfmt
@@ -154,7 +157,9 @@ check-langs:
 
 clean:
 	@echo "Cleaning intermediate translation files..."
-	@find . -type f -name "*.po" ! -name "koreader.po" -print -delete
+	# Keep the current domain's .po ($(DOMAIN).po) and the legacy koreader.po
+	# (still present during the migration window) — delete all other .po files.
+	@find . -type f -name "*.po" ! -name "$(DOMAIN).po" ! -name "koreader.po" -print -delete
 
 ai-translate:
 	@set -e; \

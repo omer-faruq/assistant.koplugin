@@ -96,11 +96,13 @@ local tests = {
         assert.isTrue(updater.is_excluded("AGENTS.md"))
     end),
 
-    test("is_excluded: l10n non-po files excluded", function()
+    test("is_excluded: l10n non-mo files excluded", function()
         assert.isTrue(updater.is_excluded("l10n/Makefile"))
         assert.isTrue(updater.is_excluded("l10n/translate.py"))
         assert.isTrue(updater.is_excluded("l10n/template.pot"))
-        assert.isFalse(updater.is_excluded("l10n/fr/assistant.koplugin.po"))
+        assert.isTrue(updater.is_excluded("l10n/fr/assistant.po"))
+        assert.isFalse(updater.is_excluded("l10n/fr/assistant.mo"))
+        assert.isFalse(updater.is_excluded("l10n/zh_CN/assistant.mo"))
     end),
 
     test("is_excluded: test directory excluded", function()

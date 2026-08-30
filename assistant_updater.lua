@@ -35,8 +35,8 @@ function is_excluded(path)
     if path:find(".+%.md$") then
         return true
     end
-    -- l10n: only keep .po files (exclude .py, .sh, Makefile, .pot, etc.)
-    if path:find("l10n/.+") and not path:find("%.po$") then
+    -- l10n: only keep .mo files (exclude .po, .py, .sh, Makefile, .pot, etc.)
+    if path:find("l10n/.+") and not path:find("%.mo$") then
         return true
     end
     -- test/ is source-only, not shipped to end users
@@ -174,6 +174,7 @@ local function otaUpgrade(version)
   local Archiver = require("ffi/archiver")
   local util = require("util")
 
+  -- OTA target is intentionally DataStorage (writable) — not self-location (may be read-only install dir).
   local KOREADER_DIR = DataStorage:getFullDataDir()
   local PLUGIN_DIR = join(KOREADER_DIR, "plugins")
   local ASSISTANT_DIR = join(PLUGIN_DIR, PLUGIN_NAME)

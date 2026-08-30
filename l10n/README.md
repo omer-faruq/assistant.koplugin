@@ -6,8 +6,8 @@ The plugin uses the same language translation logic as KOReader.
 
 The localization process uses standard `gettext` tools (`.pot` template file and `.po` language files).
 
-- `templates/koreader.pot`: The template file containing all translatable strings from the source code.
-- `<LANG_CODE>/koreader.po`: The translation file for a specific language.
+- `templates/assistant.pot`: The template file containing all translatable strings from the source code.
+- `<LANG_CODE>/assistant.po`: The translation file for a specific language.
 
 The `Makefile` in this directory automates the gettext part of the pipeline
 (extract → merge → compile → check). AI translation is handled by the

@@ -7,7 +7,6 @@ local ffiutil = require("ffi/util")
 local strbuf = require("string.buffer")
 local T = require("ffi/util").template
 local koutil = require("util")
-local _ = require("assistant_gettext")
 local http = require("socket.http")
 local ltn12 = require("ltn12")
 local socket = require("socket")
@@ -20,6 +19,65 @@ local Notebook = require("assistant_notebook")
 
 local M = {}
 local shared_buf = strbuf.new()
+
+-- Standalone plugin-dir resolver. assistant_gettext must NOT require this
+-- module (it resolves its own l10n dir from its own source location), so the
+-- dependency stays one-way: utils -> gettext.
+local lfs_plugin_dir = require("libs/libkoreader-lfs")
+
+-- Runtime constant PLUGIN_DIR is set authoritatively by main.lua at init.
+-- Tests / direct requires without main fall back to lazy computation below.
+local _cached_dir
+
+-- Compute the plugin dir (fallback used only when main.lua has not yet set
+-- M.PLUGIN_DIR, e.g. in the test suite or a direct require).
+local function computePluginDir()
+  local function fromSelf()
+    local info = debug.getinfo(2, "S")
+    local src = info and info.source and info.source:match("^@(.+)$") or ""
+    local dir = src:match("(.*/)") or ""
+    dir = dir:gsub("/$", "")
+    if dir ~= "" and lfs_plugin_dir.attributes(dir, "mode") == "directory" then return dir end
+    info = debug.getinfo(1, "S")
+    src = info and info.source and info.source:match("^@(.+)$") or ""
+    dir = src:match("(.*/)") or ""
+    dir = dir:gsub("/$", "")
+    if dir ~= "" and lfs_plugin_dir.attributes(dir, "mode") == "directory" then return dir end
+    return nil
+  end
+  local d = fromSelf()
+  if d then
+    if lfs_plugin_dir.attributes(d .. "/l10n", "mode") == "directory" or lfs_plugin_dir.attributes(d .. "/lib", "mode") == "directory" then return d end
+    return d
+  end
+  local ok, DataStorage = pcall(require, "datastorage")
+  if ok and DataStorage then
+    local p = DataStorage:getDataDir() .. "/plugins/assistant.koplugin"
+    if lfs_plugin_dir.attributes(p, "mode") == "directory" then return p end
+    return p
+  end
+    if lfs_plugin_dir.attributes("plugins/assistant.koplugin", "mode") == "directory" then return "plugins/assistant.koplugin" end
+  return "."
+end
+
+-- Backward-compatible accessor: prefer the authoritative runtime constant
+-- set by main.lua, then the lazy fallback cache.
+function M.getPluginDir()
+  if M.PLUGIN_DIR and M.PLUGIN_DIR ~= "" then return M.PLUGIN_DIR end
+  if _cached_dir then return _cached_dir end
+  _cached_dir = computePluginDir()
+  return _cached_dir
+end
+
+-- Initialize PLUGIN_DIR at file load so tests without main still have it.
+-- main.lua overwrites this with the authoritative value before gettext loads.
+if not M.PLUGIN_DIR then
+  M.PLUGIN_DIR = M.getPluginDir()
+end
+
+-- gettext require placed AFTER PLUGIN_DIR is set so any consumer that reads
+-- utils.PLUGIN_DIR during gettext's load sees a usable value.
+local _ = require("assistant_gettext")
 
 function M.getGeneralNotebookFilePath(assistant)
   if Notebook.isEnabled(assistant) then

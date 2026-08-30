@@ -10,8 +10,7 @@ local ffi = require("ffi")
 local ffiutil = require("ffi/util")
 local lfs = require("libs/libkoreader-lfs")
 local util = require("util")
-
-local plugin_lib_dir = DataStorage:getDataDir() .. "/plugins/assistant.koplugin/lib"
+local plugin_lib_dir = (require("assistant_utils").PLUGIN_DIR or require("assistant_utils").getPluginDir() or ".") .. "/lib"
 local LibHoedown = nil
 
 -- Kindle stock firmware historically ships soft-float; hardfp devices expose
