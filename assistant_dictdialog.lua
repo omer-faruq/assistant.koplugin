@@ -404,6 +404,11 @@ local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
     else
         user_prompt = dict_prompts.user_prompt
         context_content = prev_context .. highlightedText .. next_context
+
+        -- Get book information for dict
+        local prop = ui.document:getProps()
+        local book_title = prop.title or "Unknown Title"
+        local book_author = prop.authors or "Unknown Author"
         title = _("Dictionary")
         loading_message = _("Loading AI Dictionary ...")
         local context_message = {
@@ -411,7 +416,9 @@ local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
             content = string.gsub(user_prompt, "{(%w+)}", {
                     language = dict_language,
                     context = context_content,
-                    word = highlightedText
+                    word = highlightedText,
+                    title = book_title,
+                    author = book_author
             })
         }
         table.insert(message_history, context_message)
