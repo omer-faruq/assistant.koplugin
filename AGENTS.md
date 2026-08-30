@@ -14,219 +14,103 @@ This file provides guidance to AI agents when working with code in this reposito
 
 ## Build / Test / Lint
 
-- **No build step** — Lua files are executed directly by KOReader.
-- **Syntax check** (LuaJIT): `/usr/lib/koreader/luajit -e "assert(loadfile('main.lua'))"`
-- **Syntax check** (standard Lua): `luac -p <file>.lua` — catches basic errors but not LuaJIT-specific constructs.
-- **Do NOT use** `luajit -bl` (bytecode listing) — KOReader's stripped LuaJIT lacks the `jit.*` modules.
-- **Translation check**: `cd l10n && make check` — validates all `.po` files with `msgfmt`.
-
-### Test Framework
-
-A headless test framework lives under `test/`. It runs inside the KOReader LuaJIT runtime with KOReader's `setupkoenv.lua` and mocks for UI modules.
-
-**Run all tests:**
-```bash
-./test/run.sh
-```
-
-**Run a single module:**
-```bash
-./test/run.sh exttools
-```
-
-**Structure:**
-- `test/run.sh` — Shell entry point. `cd`s to `/usr/lib/koreader` so `setupkoenv.lua` relative paths resolve, then invokes `test/run_tests.lua`.
-- `test/run_tests.lua` — Lua test runner. Requires `setupkoenv`, adds the project root to `package.path`, discovers `test/test_*.lua` files at runtime, runs them, and prints a summary. Exits non-zero on failure.
-- `test/helper.lua` — Stubs KOReader UI/widget modules, mocks `fetchJSON`, provides `assert.*` helpers (`equal`, `notNil`, `isTrue`, `isFalse`, `matches`, `notMatches`), and a `runTests(name, tests)` runner. No `test_` prefix so the runner never picks it up.
-- `test/test_*.lua` — Per-module test files. Each returns the result of `helper.runTests(...)`.
-
-**Adding a new test file:**
-1. Create `test/test_<module>.lua` following the `test_exttools.lua` pattern. The runner auto-discovers any `test/test_*.lua` file at runtime — no registration needed. Files run in alphabetical order, so test files must stay independent of each other.
-2. Run `./test/run.sh` to verify.
-
-**Stub discipline:** `helper.lua` installs empty stubs in `package.preload` for KOReader UI modules that can't load headless. Two pitfalls to be aware of:
-- Real `ui/widget/*` modules (e.g. `inputdialog`, `menu`, `confirmbox`, `buttontable`) `require("device")`. If the real `device` module loads, its `pcall(require, "android")` probe is satisfied by the empty `android = {}` stub, `frontend/device.lua` selects the Android implementation, and its init crashes (`attempt to call field 'isPackageEnabled' (a nil value)`). Whenever a new `require` chain (e.g. a new module pulled in by `assistant_utils`) reaches a real KOReader widget module, add a stub for that widget in `helper.lua`'s `stubs` table.
-- The `KOREADER_DEVICE` env var is **not** read by `frontend/device.lua` — setting it has no effect on the test suite. Device selection is: android probe → filesystem probes (kindle/kobo/pocketbook/…) → SDL.
-
-**CI:** The `test/` directory is excluded from release zip archives and OTA update packages. It is source-only, not shipped to end users.
-
-**Testing policy:** When adding new functions or logic, write a test for it. If the function is already exported from its module, require it in the test file normally. If the function is a local/closure not exported, inline a copy of it in the test file as a snippet and test the snippet — this is acceptable for pure functions where the logic is the test target. The goal is to catch regressions, not to enforce module structure.
+- **No build step** — Lua files run directly in KOReader.
+- **Syntax check** (LuaJIT): `/usr/lib/koreader/luajit -e "assert(loadfile('main.lua'))"`. **Do not** use `luajit -bl` (stripped build lacks `jit.*`).
+- **Syntax check** (standard Lua): `luac -p file.lua` catches basic errors but not LuaJIT-specific constructs.
+- **Translation check** (when explicitly requested): `cd l10n && make check` validates `.po` syntax with `msgfmt`.
+- **Test framework** (under `test/`): runs inside KOReader's LuaJIT runtime via `setupkoenv.lua` with mocks for UI modules. Run all modules: `./test/run.sh`; run a single module: `./test/run.sh exttools`.
+- Discovery is automatic — any `test/test_*.lua` file is picked up at runtime (each returns `helper.runTests(...)`); files run alphabetically, so keep them independent. Stubs for KOReader UI modules live in `test/helper.lua` (see `stubs` table, lines 20–85).
+  - `test/run.sh` → `cd`s to `/usr/lib/koreader` then invokes `test/run_tests.lua`, which requires `setupkoenv`, adds the project root to `package.path`, discovers `test/test_*.lua`, runs them, and exits non-zero on failure.
+  - `test/helper.lua` — stubs UI/widget modules, mocks `fetchJSON`, provides `assert.*` helpers (`equal`, `notNil`, `isTrue`, `isFalse`, `matches`, `notMatches`) and a `runTests(name, tests)` runner.
+  - The `test/` directory is excluded from release zip archives and OTA packages — it is source-only, not shipped to end users.
+- **Adding a test**: create `test/test_<module>.lua` following `test_exttools.lua`; the runner auto-discovers it — no registration. Policy: when adding logic, write a test; if the function is exported, `require` it; if local, inline a copy in the test file and test the snippet.
+- **Stub discipline**: new `require` chains reaching a real KOReader widget module crash the headless suite (the empty `android` stub makes `device.lua` pick the Android impl). Add a stub in `helper.lua`'s `stubs` table (lines 42–53) whenever a new module is pulled in.
+- **Headless**: tests run without a device or KOReader GUI; UI modules are mocked in `test/helper.lua`. The runner prints a summary and exits non-zero on failure.
+- **Before committing**: run `./test/run.sh` — CI ships without running tests, so local runs are the only automated guard.
+- **UI testing**: `./test/runui.sh model_picker` (add `-w=1072 -h=1448 -d=300` or `-s=kobo-clara` to simulate a device). Add a `test/` script that requires `test/wbuilder`, shows widgets with `UIManager:show(...)`, and ends with `UIManager:run()`. `test/wbuilder` bootstraps the KOReader UI framework and plugin path for isolated widget tests.
 
 ## Architecture
 
-This is a KOReader plugin (`assistant.koplugin`) that adds AI assistant functionality to e-readers. It supports 10+ AI providers (Anthropic, OpenAI, Gemini, DeepSeek, Ollama, Groq, Mistral, GigaChat, OpenRouter, Gemma) and the OpenAI Responses API, plus features like translations, summaries, book X-Ray/Recap, a LexRank-based Term X-Ray, web-search tool calling, quick notes, and custom prompts.
+KOReader plugin (`assistant.koplugin`) adding AI assistant features (10+ providers, OpenAI Responses API, translations, summaries, X-Ray/Recap, LexRank Term X-Ray, web-search tools, quick notes, custom prompts).
 
-### Entry & Core Orchestration
-- **`main.lua`** — Plugin init (`Assistant:init`), menu registration, dispatcher actions/gestures, translate-override hook, auto-recap hook, dictionary-popup button registration.
-- **`_meta.lua`** — Plugin name/version/description. Version is manually bumped on `main` after a release tag is applied (see Versioning below). The CI release workflow rewrites it from the tag name during zip packaging.
-- **`assistant_querier.lua`** (`Querier`) — Core query engine. Dynamically loads the right API handler, drives both stream and non-stream request paths, and runs the multi-round tool-call loop (web search, max 3 rounds). Parses SSE chunks into a unified format regardless of upstream API shape.
-- **`assistant_tool_executor.lua`** (`ToolExecutor`) — Centralizes web-search tool-calling across the three wire formats (`openai`, `anthropic`, `gemini`): building tool defs, parsing tool-call responses, executing search APIs, and building follow-up messages.
-- **`assistant_exttools.lua`** — External search API clients (SerpAPI, Tavily, SearXNG, Exa) used by `ToolExecutor`.
+- **Entry & Core**: `main.lua` (plugin init, TouchMenu registration, dispatcher actions/gestures, translate-override + auto-recap hooks, dictionary-popup button), `_meta.lua` (version, manually bumped on `main` after a release tag; CI rewrites it from the tag during packaging).
+- **Request flow**: `main.lua` → `Querier:query` → handler `query` → (optional tool loop via `ToolExecutor`) → results shown in `ChatGPTViewer` / `assistant_dialog.lua`.
+- `assistant_querier.lua` (`Querier`) loads handlers, drives stream/non-stream paths, runs the web-search tool loop (max 3 rounds feeding results back), and parses SSE into a unified format. `assistant_tool_executor.lua` (`ToolExecutor`) normalizes tool-calling across `openai`/`anthropic`/`gemini` wire formats; `assistant_exttools.lua` holds the search API clients (SerpAPI, Tavily, SearXNG, Exa).
+- **API Handlers** (`api_handlers/`): `base.lua` (`BaseHandler`) provides `SyncOptions`, `makeRequest`/`backgroundRequest`, `normalizeBaseUrl`, `parseToolCalls`; every handler implements `query`.
+  - `openai.lua` (+ `deepseek`/`ollama`/`openrouter`/`mistral` aliases) — `Authorization: Bearer`, `/chat/completions`; set `base_url` for any OpenAI-compatible endpoint.
+  - `anthropic.lua` — `x-api-key` + `anthropic-version` headers, `/v1/messages`.
+  - `gemini.lua` — API key as query param, `{base_url}/{model}:generateContent`.
+  - `responses.lua` — OpenAI `/v1/responses` with built-in `web_search`/`file_search`/function tools.
+  - Deltas: `groq.lua` (free-tier debounce), `gigachat.lua` (OAuth token), `gemma.lua` (picks OpenAI/Gemini parent by `base_url`; strips `<thought>`).
+  - The Querier selects exactly one handler per request using the discovery rules above.
+  - **Handler discovery**: `Querier` scans `api_handlers/` at runtime. File providers use config keys `{handler}_{description}` (prefix before first underscore selects the handler, e.g. `openai_perplexity` → `openai`). UI providers use stable IDs `custom:N` but carry a `provider.handler` field naming the handler. `Registry.HANDLERS` only allows `openai`/`anthropic`/`gemini`/`responses` — thin wrappers and deltas are **not** UI-selectable.
+- **Provider Registry** (`assistant_provider_registry.lua`, `Registry`): manages UI providers stored as JSON in `settings:saveSetting("ui_providers", ...)`.
+  - `Registry.load` reads UI providers; `Registry.merge(file_config, ui_data)` combines them with file providers into `CONFIGURATION.provider_settings`. File providers get `source="file"`, `immutable=true`; UI providers get `source="ui"`, `custom:N` (auto-incrementing). At `main.lua` init this builds the effective config.
+  - File providers are defined in `configuration.lua`; only `source=="ui"` providers can be edited or deleted from the settings UI. Config keys: file `{handler}_{description}`, UI `custom:N` (see Handler discovery).
+  - `Registry.validate(record)` checks `display_name`, `handler` (must match an `api_handlers/` file), `model` (defaults `"auto"`), `base_url` (`http(s)://`), `api_key`.
+  - `Registry.installProvider(assistant, …)` — add + save + update in-memory config + load into querier. `Registry.delete(data, id)` and `Registry.is_deletable(provider)` — only `source=="ui"` providers are deletable.
+  - `display_name` drives the Settings radio and main menu label (not the config key). Gemini `base_url` must keep the `/models` segment (`FetchModels` GETs base_url; `query` POSTs `{base_url}/{model}:generateContent`); OpenAI-compatible Gemini endpoints use the `openai` handler.
+- **Search Registry** (`assistant_search_registry.lua`, `SearchRegistry`): mirrors the provider registry for web-search tools stored under `ui_search_tools`, but uses **fixed tool keys** (`serpapi`, `tavilyapi`, `exaapi`, `searxngapi`) rather than `custom:N`. `SEARCH_TOOLS` defines those keys and their schema. Covered engines: SerpAPI, Tavily, SearXNG, Exa. UI tools are added via the Settings → Search Tools dialog.
+  - `SearchRegistry.load`/`save`/`merge`/`validate`/`installSearchTool`/`delete`/`is_deletable` follow the same `source`/`immutable` pattern (file tools `source="file"`, immutable; only UI tools deletable). Merge combines file + UI data keyed by tool key.
+  - `ToolExecutor` loads enabled (non-empty `api_key`) tools from `SearchRegistry` at query time and passes them into the handler's tool defs. Both registries must be used directly — never touch `settings:saveSetting("ui_providers"/"ui_search_tools", ...)`.
+- **LexRank (Term X-Ray)**: `assistant_lexrank.lua` does TF-IDF-weighted LexRank sentence ranking (tokenize → similarity matrix → PageRank → score-based selection with entity/position boosting); its tunables (`lexrank_max_sentences`, etc.) live **here**. Per-language modules in `assistant_lexrank_languages.lua` (`en`,`es`,`fr`,`de`,`tr`; fallback en) — read `LEXRANK_LANGUAGES.md` before editing. Display thresholds (multi-level filtering, context expansion) live in `assistant_dictdialog.lua`, which consumes `rank_sentences`.
+- **UI / Dialogs**: `assistant_dialog.lua` (Ask AI popup + result formatting), `assistant_featuredialog.lua` (book features: Recap/X-Ray/annotations), `assistant_dictdialog.lua` (AI Dictionary + Term X-Ray), `assistant_settings.lua` (provider/model settings), `assistant_model_picker.lua` (`showPickerDialog`/`fetchModels`, call inside `Trapper:wrap`).
+  - `assistant_viewer.lua` (`ChatGPTViewer` scrollable result viewer), `assistant_quicknote.lua` (quick-note capture), `assistant_update_checker.lua` (GitHub release check), `assistant_mdparser.lua` (hoedown → markdown.lua fallback).
+- **Shared Utils & Config**: `assistant_utils.lua` (extraction, notebook I/O, `httpRequest`, `set_attr`/`get_attr`), `assistant_gettext.lua` (`_("text")`), `assistant_prompts.lua`. `configuration.lua` is user-owned, gitignored, holds secrets — never read/modify; update `configuration.sample.lua` instead. Runtime config lives in `CONFIGURATION` (built from `configuration.lua` + UI registries); read nested values via `koutil.tableGetValue`.
+- **Dependencies**: none beyond KOReader's standard libraries; the optional `hoedown` native library has a pure-Lua fallback. License: GPL-3.0 (see `LICENSE`).
 
-### API Handlers (`api_handlers/`)
-- **`base.lua`** (`BaseHandler`) — Base class extended by all handlers. Provides `SyncOptions`, `makeRequest`/`backgroundRequest` (sync vs. streaming HTTP), `normalizeBaseUrl`, and the unified `parseToolCalls` entry point. Every handler must implement `query`.
-- **Three native wire formats**: `openai.lua`, `anthropic.lua`, `gemini.lua` — full implementations.
-- **Thin wrappers** (just alias `OpenAIHandler`): `deepseek.lua`, `ollama.lua`, `openrouter.lua`, `mistral.lua`.
-- **Small deltas**: `groq.lua` (free-tier rate-limit debounce), `gigachat.lua` (OAuth token fetch/refresh on top of OpenAI format), `gemma.lua` (dynamically picks OpenAI or Gemini parent by `base_url`; strips `<thought>` tags).
-- **`responses.lua`** — OpenAI's `/v1/responses` endpoint with built-in web_search, file_search, and function-calling tools.
-- **Handler discovery**: at runtime, `Querier` scans `api_handlers/` for `.lua` files. Provider config keys use the pattern `{handler}_{description}` — the prefix before the first underscore selects the handler (e.g. `openai_perplexity` → `openai` handler).
-
-### Provider Registry
-
-- **`assistant_provider_registry.lua`** (`Registry`) — Manages UI-added AI providers stored in KOReader settings as JSON (`settings:saveSetting("ui_providers", json)`). Providers added via the Add Provider dialog use this registry; file-based providers live in `configuration.lua`.
-- **Two-source merge**: On startup, `Registry.load(settings)` reads UI providers, then `Registry.merge(file_config, ui_data)` combines them with file providers into `CONFIGURATION.provider_settings`. File providers get `source="file"`, `immutable=true`; UI providers get `source="ui"`.
-- **Provider ID scheme**: UI providers use stable IDs `"custom:N"` (auto-incrementing). File providers keep their original key from `configuration.lua`.
-- **Validation**: `Registry.validate(record)` checks `display_name`, `handler` (must match an `api_handlers/` file), `model` (defaults to `"auto"`), `base_url` (must be `http(s)://`), `api_key`.
-- **`Registry.installProvider(assistant, …)`** — Add + save + update in-memory config + load into querier in one call.
-- **`Registry.delete(data, id)`** and **`Registry.is_deletable(provider)`** — Only `source=="ui"` providers are deletable.
-- **`display_name`**: File providers can set `display_name` in their `configuration.lua` entry; UI providers require it. The Settings radio and main menu show `display_name` as the provider label.
-- **Gemini base_url**: the native `gemini` handler expects base_url to include the `/models` segment (e.g. `https://generativelanguage.googleapis.com/v1beta/models`) — `FetchModels` GETs base_url directly and `query` POSTs `{base_url}/{model}:generateContent`. Registry defaults (`DEFAULT_BASE_URLS`, presets, custom handlers) must keep this segment. OpenAI-compatible Gemini endpoints (`.../v1beta/openai`) use the `openai` handler instead.
-
-### LexRank Extractive Summarization (Term X-Ray)
-- **`assistant_lexrank.lua`** — TF-IDF weighted LexRank sentence-ranking (tokenize → similarity matrix → PageRank → score-based selection with entity/position boosting). Configurable via `CONFIGURATION.features`.
-- **`assistant_lexrank_languages.lua`** — Per-language modules (stop words, sentence delimiters, tokenization, stemming, entity-detection) for `en`, `es`, `fr`, `de`, `tr`; falls back to English.
-- **`LEXRANK_LANGUAGES.md`** — Guide + template for adding new language modules. **Read before touching LexRank.**
-- **`assistant_dictdialog.lua`** — Consumer of LexRank for "Term X-Ray": runs `rank_sentences` once, filters at multiple thresholds, expands selected sentences with surrounding context.
-
-### UI / Dialog Layer
-- **`assistant_dialog.lua`** — Main "Ask AI" popup dialog and result formatting.
-- **`assistant_featuredialog.lua`** — Book-level features (Recap, X-Ray, Book Info, Annotations analysis, Summary-using-annotations).
-- **`assistant_dictdialog.lua`** — AI Dictionary + Term X-Ray popup.
-- **`assistant_settings.lua`** — Provider/model settings dialog and sub-menu.
-- **`assistant_model_picker.lua`** — Paginated/searchable model picker (calls `handler:FetchModels()`). Exports `showPickerDialog` for external reuse (optional `on_select` callback to customize the selection result) and `fetchModels(handler_name, base_url, api_key)` — builds a fresh handler instance and fetches through that handler's own `FetchModels`; used by the Add Provider dialog's Browse Models. Must be called inside `Trapper:wrap`.
-- **`assistant_viewer.lua`** (`ChatGPTViewer`) — Scrollable Markdown/HTML result viewer widget; handles Add-Note/Save-to-Notebook/Copy, follow-up questions, and RTL rendering.
-- **`assistant_quicknote.lua`** — Quick-note capture, appended to the notebook file.
-- **`assistant_update_checker.lua`** — GitHub-releases version check with SemVer + pre-release comparison.
-- **`assistant_mdparser.lua`** — Markdown→HTML wrapper; prefers native `hoedown` (via `lib/libhoedown.so.3`), falls back to KOReader's pure-Lua `markdown.lua`, with pipe-table post-processing.
-
-### Shared Utilities & Localization
-- **`assistant_utils.lua`** — Book-text/annotation extraction, notebook file I/O, `httpRequest` with gzip support, metadata attribute helpers (`set_attr`/`get_attr` via metatables — for fields like `use_websearch` that must NOT leak into API payloads).
-- **`assistant_gettext.lua`** — Pure-Lua gettext subset forked from KOReader's `frontend/gettext.lua`, pointed at this plugin's `l10n/` directory. Use `_("text")` for all user-facing strings.
-- **`assistant_prompts.lua`** — All built-in prompt templates (highlight-menu + book-level features), plus prompt-merging/sorting helpers that combine built-ins with user overrides from `configuration.lua`.
-
-### Configuration
-- **`configuration.lua`** — User-owned, gitignored, contains API keys. **Never read or modify it.**
-- **`configuration.sample.lua`** — Template tracked in git. When the config format changes, update this file only.
-
-## Key Files & Directories
+## Key Files
 
 | Path | Purpose |
 |---|---|
-| `main.lua` | Plugin entry point, dispatcher actions, menu hooks |
-| `assistant_querier.lua` | Core query engine, handler loading, SSE parsing, tool-call loop |
-| `api_handlers/base.lua` | Base handler class — extend this for new providers |
-| `api_handlers/openai.lua` | OpenAI handler — alias for OpenAI-compatible APIs |
-| `api_handlers/responses.lua` | OpenAI Responses API handler (`/v1/responses`) |
-| `assistant_tool_executor.lua` | Tool-call normalization across all three wire formats |
-| `assistant_provider_registry.lua` | UI provider add/delete/merge/validate, JSON settings storage |
+| `main.lua` | Plugin entry, dispatcher actions, menu hooks |
+| `assistant_querier.lua` | Core query engine, handler loading, SSE parsing, tool loop |
+| `api_handlers/base.lua` | Handler base class (registries: `assistant_provider_registry.lua`, `assistant_search_registry.lua`) |
 | `configuration.sample.lua` | Config template — update this, not `configuration.lua` |
-| `l10n/` | Translation files (`.po`/`.pot`), Makefile, AI translation script |
-| `.github/workflows/release.yml` | CI/CD: auto-release on `v*` tag push |
+| `assistant_search_registry.lua` | UI search-tool add/merge/validate, JSON settings storage |
 
 ## Coding Conventions
 
-- **Language**: Lua 5.1 / LuaJIT 2.1. KOReader bundles LuaJIT — use `string.buffer` over repeated concatenation for performance-sensitive string building.
-- **Naming**: modules use `snake_case`; classes use `PascalCase`; methods use `camelCase`; constants use `UPPER_CASE`.
-- **Lua loop variables**: do not use `_` as a discarded loop variable. Use `i`, `index`, or a descriptive variable name instead, because `_` is commonly the gettext function in this project and shadowing it can cause runtime errors.
-- **Error handling**: Functions return `nil, err` on failure (or `false, err` for HTTP calls). Callers check the first return value.
-- **OOP pattern**: Lua metatable-based inheritance — `BaseHandler:new{...}` creates instances, `setmetatable(o, self)` with `self.__index = self` for class-like behavior.
-- **Localization**: All user-facing strings wrapped in `_("text")`. Import with `local _ = require("assistant_gettext")`. Plural forms use `N_("1 item", "%1 items", n)`.
-- **Menu & UI label casing**: Menu titles, settings items, checkboxes, and dialog labels use Title Case — e.g. `"Prepend Book Metadata to Prompts"`, `"Use Book Text for X-Ray and Recap"`. Keep short function words (`to`, `for`, `as`, `and`, `in`) lowercase, consistent with existing labels.
-- **Rich Text & Formatting**: Use `assistant_utils.bold_format(...)` with `<b>` and `</b>` tags (e.g. `assistant_utils.bold_format(T(_("<b>Header:</b> %1"), val))`) to format bold runs in dialogs. Avoid manual string concatenation; keep strings contiguous inside `T(_("..."))` templates so they remain easy to translate.
-- **Configuration access**: Use `koutil.tableGetValue(CONFIGURATION, "path", "to", "key")` for safe nested access with defaults.
-- **Table & util helpers (prefer existing)**: Before writing manual `for k,v in pairs(t) do copy[k]=v end` loops, check `koutil` (`require("util")`, i.e. KOReader `frontend/util.lua`) and `ffi/util`. Common helpers:
-  - `koutil.tableMerge(t1, t2)` — shallow-merge `t2` into `t1`. **Mutates `t1` in place and returns `nil`** — never assign its result. For a shallow copy: `local copy = {}; koutil.tableMerge(copy, record)`.
-  - `koutil.tableDeepCopy(o)` — deep copy (handles nested tables and metatables).
-  - `koutil.tableSize(t)`, `koutil.tableEquals(o1, o2)`, `koutil.tableRemoveValue(t, ...)`, `koutil.tableSetValue(t, value, "path", "to")`.
-  - `ffi/util`: `T = require("ffi/util").template` for `T(_("%1 items"), n)` interpolation; `util.orderedPairs(t)` for deterministic key order; `util.idiv(a, b)`; `util.copyFile`, `util.joinPath`, `util.purgeDir`.
-  - When unsure of a helper's signature or return value, **read the source** under `/usr/lib/koreader/` (e.g. `frontend/util.lua`, `ffi/util.lua`) rather than assuming — many helpers mutate in place and return `nil`.
-- **Metadata on messages**: Use `assistant_utils.set_attr(msg, key, value)` / `get_attr(msg, key)` for fields that must not be serialized into API request bodies (e.g. `use_websearch`, `is_context`, `search_keywords`).
-- **Dialog button ordering**: Follow KOReader's `InputDialog` convention — the cancellation/close button goes on the **left**, and action buttons (Save, OK, etc.) go on the **right**. KOReader's `frontend/ui/widget/inputdialog.lua` states: *"The cancellation button should be kept on the left and the button executing the action on the right."* The title bar close icon (X) always stays on the right via `TitleBar.close_callback`, which is handled automatically.
-- **JSON null handling**: Always use `require("rapidjson")` — this is the one JSON library for the project. KOReader's bundled `rapidjson` represents JSON `null` as a userdata value (`rapidjson.null`), not Lua `nil`. The `{null=nil}` decode option that upstream docs mention **does not work** in KOReader's build — `null` is always returned as `rapidjson.null`. To handle nulls correctly:
-  1. Check with `if value == nil or value == rapidjson.null then` before using a decoded value.
-  2. Use `assistant_utils.json_default(value, default)` when reading a nullable field and you need a fallback. This helper handles both `nil` and `rapidjson.null` in a single call.
-  3. Never introduce another JSON library (e.g. `json` (LuaJSON), `dkjson`, `cjson`, `lunajson`) — KOReader bundles several, but only `rapidjson` is used here. Mixing JSON implementations leads to incompatible null representations and subtle bugs.
+- Lua 5.1 / LuaJIT 2.1; use `string.buffer` for hot loops. Naming: `snake_case` modules, `PascalCase` classes, `camelCase` methods, `UPPER_CASE` consts. Never use `_` as a discarded loop var (it is the gettext function).
+- Error handling: return `nil, err` (or `false, err` for HTTP); callers check the first return value. e.g. `local data, err = fetch(); if not data then return nil, err end`.
+- Localization: wrap every user-facing string in `_("text")` (`local _ = require("assistant_gettext")`); plurals via `N_("1 item", "%1 items", n)`. Keep strings contiguous inside `T(_("..."))` templates; title-case UI labels (short words lowercase).
+- OOP: metatable inheritance — `BaseHandler:new{...}` with `self.__index = self`; every handler implements `query`. e.g. `local H = BaseHandler:new{ name = "x" }`.
+- Helpers:
+  - Nested reads via `koutil.tableGetValue(CONFIGURATION, ...)`; `koutil.tableMerge(t1,t2)` **mutates `t1` in place** (returns nil — never assign its result).
+  - `T = require("ffi/util").template` for `T(_("%1 items"), n)`; `util.orderedPairs(t)` for deterministic key order.
+  - JSON only `require("rapidjson")`; `null` is `rapidjson.null` — check `== nil or == rapidjson.null`, fall back with `assistant_utils.json_default`. Never introduce another JSON library (e.g. `dkjson`, `cjson`) — mixed null representations cause subtle bugs.
+  - Bold runs via `assistant_utils.bold_format(T(_("<b>Header:</b> %1"), val))` with `<b>`/`</b>`.
+  - Prefer `koutil.tableDeepCopy`/`tableSize`/`tableEquals` over manual table loops.
+- Dialog buttons: cancellation/close on the **left**, action buttons (Save/OK) on the **right** (KOReader `InputDialog` convention).
+- Message metadata: `assistant_utils.set_attr`/`get_attr` for fields that must not serialize into API bodies (`use_websearch`, `is_context`, `search_keywords`).
+- Rich text & formatting: use `assistant_utils.bold_format(...)` with `<b>`/`</b>`; avoid manual concatenation inside translated strings. e.g. `assistant_utils.bold_format(T(_("<b>Note:</b> %1"), txt))`.
+- Menu/UI label casing: Title Case for titles, settings items, checkboxes, dialog labels; keep short words (`to`, `for`, `as`, `and`, `in`) lowercase.
 
-## Git Workflow
+## Git Workflow / Versioning / CI/CD
 
-- **Branch**: `main` is the default branch.
-- **Commit style**: Conventional commits — `fix:`, `refactor:`, `add:`, `feat:` prefixes.
-- **Commit authorization**: When the user explicitly asks to commit, create the commit directly with a concise Conventional Commit message inferred from the changes. Do not ask for confirmation of the message unless the user requests a custom message or the commit scope is genuinely ambiguous.
-- **Releases**: Tag with `v*` (e.g. `v1.12`). The CI workflow rewrites `_meta.lua` version and creates a zip release asset.
-
-### Versioning
-
-- **`_meta.lua`** holds the current development version (the *next* release).
-- When a release is ready:
-  1. Tag the commit that represents the current version. Example: if `_meta.lua` says `"1.14"`, tag that commit as `v1.14`.
-  2. Bump the version in `_meta.lua` to the next number (e.g. `"1.15"`) and commit with `chore: bump version to 1.15`.
-- The CI workflow rewrites `_meta.lua` from the tag name during zip packaging, so the released artifact gets the correct version regardless of what's on `main`.
-- **AI agents**: when asked to tag a release, tag the commit matching the current `_meta.lua` version, then bump `_meta.lua` and commit the bump.
-
-## CI/CD
-
-- **Trigger**: Push of a `v*` tag (e.g. `v1.2.3`).
-- **Workflow** (`.github/workflows/release.yml`):
-  1. Checkout code
-  2. Rewrite `version` in `_meta.lua` from the tag
-  3. Archive project into `assistant.koplugin-<tag>.zip` (excluding dotfiles, `.md` files, and non-`.po` files in `l10n/`)
-  4. Create a GitHub pre-release with the zip as asset
-- No tests run in CI — testing is manual in KOReader.
+- Default branch `main`; Conventional Commits (`fix:`, `refactor:`, `add:`, `feat:`). When asked to commit, do it directly with a concise message.
+- `_meta.lua` holds the current development version (the *next* release). When a release is ready: tag the commit matching it (e.g. `_meta.lua` says `"1.14"` → tag `v1.14`), then bump `_meta.lua` to the next number and commit (`chore: bump version to 1.15`).
+- AI agents: when asked to tag a release, tag the commit matching `_meta.lua`'s version, then bump and commit the bump.
+- CI (`.github/workflows/release.yml`): on `v*` push — checkout, rewrite `_meta.lua` from the tag, zip (excludes dotfiles, `.md`, non-`.po` l10n).
+- CI creates a GitHub pre-release with the zip asset; no tests run in CI (testing is manual in KOReader).
 
 ## Translation Management
 
-Translation scripts in `l10n/` are run manually by developers. **AI agents should not run them or create translation-update tasks** — do not invoke `make template`, `make update`, `make translate`, or `make ai-translate` as part of code changes. Only `make check` may be used to validate `.po` syntax when explicitly requested.
-
-For reference, the developer-facing commands are:
-
-```bash
-cd l10n && make template      # Generate .pot from source
-cd l10n && make update        # Merge .pot into all .po files
-cd l10n && make check         # Validate .po syntax
-cd l10n && make translate     # Full pipeline (requires API_KEY in .env)
-cd l10n && API_KEY=your_key make ai-translate L10N_LANG=fr  # Single language
-```
+- Translation scripts in `l10n/` are developer-run manually. **AI agents must not** run `make template/update/translate/ai-translate`; only `make check` is allowed when explicitly requested.
+- Reference (do not invoke): `cd l10n && make template|update|check|translate`.
 
 ## Tips for AI Agents
 
-- **Developer's English**: The developer is not a native English speaker, so wording they provide (UI strings, docs, commit messages) may not be idiomatic. Correct it into natural, idiomatic English while preserving their intent — e.g. prefer established terms like "bleeding-edge code" over literal phrasings.
-- **Never read or modify `configuration.lua`** — it contains user secrets. Update `configuration.sample.lua` only.
-- **Exclude `l10n/` from code searches and reads** — it contains only `.po`/`.pot` translation strings in 40+ languages. Searching or reading these files wastes tokens with no code insight.
-- **New providers**: if OpenAI-compatible, alias `OpenAIHandler:new{name="..."}` (see `deepseek.lua`). If it needs custom auth/response shape, extend `BaseHandler` and implement `query`/`SyncOptions`/`FetchModels`. Route response parsing through `self:parseToolCalls(...)`.
-- **Provider config keys**: file providers use `{handler}_{description}` as key (e.g. `openai_perplexity`). UI providers use `"custom:N"`. Use `Registry` for all UI provider CRUD; never manipulate `settings:saveSetting("ui_providers", ...)` directly.
-- **`display_name`**: always set this field on provider records. Settings UI and the main menu label use `display_name` (not the config key). File providers can add `display_name` to their `configuration.lua` entry.
-- **UI provider lifecycle**: `main.lua` `init()` does `Registry.load` → `Registry.merge` → effective `CONFIGURATION`. Add dialog calls `Registry.installProvider`. Delete calls `Registry.delete` + `Registry.save`. Consult `assistant_provider_registry.lua` before touching provider storage.
-- **Add/Edit Provider dialog** (`Registry.showProviderDialog`, exposed via the thin `Assistant:_showAddProviderDialog` delegate in main.lua): Browse Models must fetch through `assistant_model_picker.fetchModels` (per-handler `FetchModels` behind a dismissable InfoMessage — do not hardcode a `/models` GET). The Save callback closes the dialog and reopens the Provider Settings window (`showSettings`), including when the dialog was opened from the main TouchMenu rather than from an already-open settings dialog.
-- **Tool calling**: route all tool-call logic through `assistant_tool_executor.lua`'s `ToolExecutor` — it already normalizes the three wire formats. Don't duplicate per-provider.
-- **LexRank**: read `LEXRANK_LANGUAGES.md` before adding or modifying a language module.
-- **UI**: use existing dialog patterns from `assistant_dialog.lua` / `assistant_viewer.lua` (`ChatGPTViewer`) rather than building new widget scaffolding.
-- **Provider menu paths**: `main.lua`'s `showAddProviderMenu` highlights `Provider API` from Provider Settings (tab -> AI Assistant -> Settings -> Provider API) by computing the TouchMenu path **dynamically from the live `tab_item_table`** — no fixed path constants. Items are located via `assistant_item_id` markers: `assistant_ai_menu` (AI Assistant item), `assistant_settings` (Settings item, in `addToMainMenu`), `assistant_add_provider` (Provider API item, set in `Registry.getAddProviderMenuItem`). MenuSorter keeps item-table references, so markers survive menu building. When moving/renaming any of these three items, keep its marker. Conditional items are safe (`Custom Prompts` is only inserted when `book_level_prompts` is configured). `test/test_menu_paths.lua` guards the marker-based path computation via an inlined snippet. On non-touch devices the same entry points show an InfoMessage with the menu path instead of navigating.
-- **UI testing with wbuilder**: KOReader provides a widget builder (`tools/wbuilder.lua` in upstream, run via `./kodev wbuilder`) to test widgets in isolation without starting the full reader. This project has its own `test/wbuilder.lua` that bootstraps the KOReader UI framework and plugin path. Run a widget test with:
-  ```bash
-  ./test/runui.sh model_picker
-  ```
-  To simulate a specific device screen size (compatible with `kodev run` semantics):
-  ```bash
-  ./test/runui.sh -w=1072 -h=1448 -d=300 model_picker
-  ./test/runui.sh -s=kobo-clara model_picker
-  ```
-  Add a test script under `test/` that requires `test/wbuilder`, shows widgets with `UIManager:show(...)`, and finishes with `UIManager:run()`. Use mock objects for `assistant` when the widget depends on plugin state.
-- **Modifying KOReader widget internals**: When a KOReader widget's public API doesn't support a layout or behavior you need, you can reach into its internal widget tree after construction, swap a sub-widget, and invalidate cached sizes to trigger re-layout. This is a last-resort technique — always check the public API first.
-  - **Study the source first**: always `read` the widget's source under `/usr/lib/koreader/frontend/ui/widget/` to understand the internal widget tree structure (`init()` method) before reaching in.
-  - **Access pattern**: widgets are typically nested via `widget[1]` (first child), `widget[2]`, etc. Trace the hierarchy from `init()` to find the target sub-widget.
-  - **Example — swapping ConfirmBox's button_table**: `ConfirmBox` always builds a Cancel/OK row as a separate `ButtonTable` row. To get all buttons in a single row, create the `ConfirmBox` with `no_ok_button = true, cancel_text = ""`, then reach in and replace the internal `ButtonTable`:
-    ```lua
-    -- Widget tree: confirm.movable[1] → FrameContainer → [1] → VerticalGroup → [3] → ButtonTable
-    local vgroup = confirm.movable[1][1]
-    local bt_width = vgroup[3].width  -- capture before replacing
-    vgroup[3] = ButtonTable:new{ width = bt_width, buttons = {{ ... }}, zero_sep = true, show_parent = confirm }
-    ```
-  - **Invalidate cached sizes**: after replacing a sub-widget, nil out `_size`, `_offsets`, and `dimen` on the affected containers up the tree so the next paint cycle recalculates geometry:
-    ```lua
-    vgroup._size = nil; vgroup._offsets = nil
-    confirm.movable[1]._size = nil   -- FrameContainer
-    confirm.movable._size = nil; confirm.movable.dimen = nil   -- MovableContainer
-    ```
-  - **Always comment the widget tree path** at the access point so future readers can verify it against the upstream source.
-- **Dependencies**: no external dependencies beyond KOReader's standard libraries. The optional `hoedown` native library is the only exception, with a pure-Lua fallback.
-- **License**: GPL-3.0 (see `LICENSE`).
+- **English polish**: the developer isn't a native speaker; correct wording into idiomatic English while preserving intent (e.g. "bleeding-edge code").
+- **Secrets**: never read/modify `configuration.lua` (gitignored, holds keys); update `configuration.sample.lua` only. Exclude `l10n/` from code searches/reads (40+ languages, no code insight).
+- **New providers**: OpenAI-compatible → alias `OpenAIHandler:new{name="..."}`; custom auth/shape → extend `BaseHandler` (`query`/`SyncOptions`/`FetchModels`) and route parsing through `self:parseToolCalls(...)`. Never duplicate tool-calling — use `ToolExecutor`.
+- **Registry/Search lifecycle**: do all UI provider/search CRUD via `Registry`/`SearchRegistry` (consult `assistant_provider_registry.lua` / `assistant_search_registry.lua`); never manipulate `settings:saveSetting("ui_providers"/"ui_search_tools", ...)` directly.
+- **Tool calling**: route all tool-call logic through `ToolExecutor` — it already normalizes the three wire formats; don't duplicate per-provider.
+- **Tests**: when adding logic, write a test (see Build / Test / Lint). Exported functions are `require`d directly; local closures are inlined as a snippet.
+- **Ask dialog checkbox layout** (`assistant_dialog.lua`): side-by-side rows `HorizontalGroup{ HorizontalSpan(left_gap) + CheckButton(width=half_w) + HorizontalSpan(gap) + CheckButton(width=half_w) }`. Each `CheckButton` needs explicit `width = half_w` or it overflows (`checkbutton.lua:77`). Left inset `left_gap = (dialog_width - available_w - input_extra)/2` where `input_extra = 2*(Size.border.inputtext + Size.padding.small + Size.margin.default)` — aligns to the InputText border, don't hardcode `Size.padding.large`. Actual labels are emoji-prefixed: `✉ Attach Prior Text`, `✎ Current Chapter Only`, `🌐 Web Search`, `⌨ Copy to Clipboard`.
+- **Menu markers**: `main.lua` locates TouchMenu items via `assistant_item_id` markers — `assistant_ai_menu`, `assistant_settings`, `assistant_add_provider`. MenuSorter keeps references, so markers survive building; keep them when moving/renaming. Conditional items (e.g. `Custom Prompts`) are safe. `showAddProviderMenu` computes the TouchMenu path dynamically from the live `tab_item_table`.
+- **LexRank**: read `LEXRANK_LANGUAGES.md` before adding/modifying a language module.
+- **KOReader widget internals**: only as a last resort. Check the public API first, then read the widget source under `/usr/lib/koreader/frontend/ui/widget/` to trace the `widget[1]`/`[2]` tree; swap a sub-widget and nil `_size`/`_offsets`/`dimen` up the tree to re-layout. Always comment the widget-tree path.
+- **UI testing (wbuilder)**: `./test/runui.sh model_picker` accepts `-w=1072 -h=1448 -d=300` or `-s=kobo-clara` to simulate a device screen.
+- **UI patterns**: reuse existing dialog/widget scaffolding (`ChatGPTViewer`, `assistant_dialog.lua`) rather than building new widget trees.
+- **UI reference (niche)**: KOReader UI is niche — when touching plugin UI/widget code, scan `/usr/lib/koreader/frontend/ui/widget/` and `/usr/lib/koreader/plugins/` for reference patterns before writing new layouts.

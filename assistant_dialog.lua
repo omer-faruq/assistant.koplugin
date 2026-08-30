@@ -681,16 +681,10 @@ function AssistantDialog:show(highlightedText)
   end
   local web_search_available = self.assistant.settings:readSetting("use_websearch", "none") ~= "none"
   local saved_web_search = self.assistant.settings:readSetting("ask_use_websearch", false)
-  -- Correct side-by-side row: each CheckButton must have explicit width,
-  -- otherwise it claims the full InputDialog available width and the
-  -- HorizontalGroup overflows (see checkbutton.lua:77 `getAddedWidgetAvailableWidth`).
+  -- CheckButton must have explicit width or HorizontalGroup overflows (checkbutton.lua:77).
   local available_w = self.input_dialog:getAddedWidgetAvailableWidth()
   local gap = Size.padding.large
-  -- Align checkbox left edge with the input field's visible left edge.
-  -- getAddedWidgetAvailableWidth() returns the text_width (inner content width),
-  -- but the InputText widget is wider: it adds bordersize + padding + margin on
-  -- each side via its internal FrameContainer (inputtext.lua:569-575).
-  -- The input is centered in a CenterContainer{w=self.input_dialog.width}.
+  -- Align left edge with InputText visible border (see AGENTS.md).
   local input_extra = 2 * (Size.border.inputtext + Size.padding.small + Size.margin.default)
   local left_gap = math.floor((self.input_dialog.width - available_w - input_extra) / 2)
   local half_w = math.floor((available_w - left_gap - gap * 2) / 2)
