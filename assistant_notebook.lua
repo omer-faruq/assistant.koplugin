@@ -632,7 +632,7 @@ function M.showPicker(assistant, options)
     end
 
     items[#items + 1] = {
-        text = _("New notebook…"),
+        text = _("New notebook..."),
         callback = function()
             M.showCreateDialog(assistant, {
                 parent = menu,

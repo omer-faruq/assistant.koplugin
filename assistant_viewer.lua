@@ -753,7 +753,7 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
   local saved_web_search = self.assistant.settings:readSetting("ask_use_websearch", false)
   use_web_search_checkbox = CheckButton:new{
     face = Font:getFace("xx_smallinfofont"),
-    text = _("Use web search 🌐"),
+    text = _("Use web search") .. " 🌐",
     parent = self.input_dialog,
     checked = web_search_available and saved_web_search,
     enabled = web_search_available,

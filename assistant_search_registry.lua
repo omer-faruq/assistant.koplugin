@@ -316,7 +316,7 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
                         local deletable = SearchRegistry.is_deletable(merged)
 
                         local confirm = ConfirmBox:new{
-                            text = T(_("%1 — choose an action"), def.display_name),
+                            text = T(_("%1 - choose an action"), def.display_name),
                             no_ok_button = true,
                             cancel_text = "",
                         }

@@ -79,7 +79,7 @@ function ModelPickerDialog:init()
         table.insert(title_parts, T(_("Models: %1"), model_count))
     end
     if total_pages > 1 then
-        table.insert(title_parts, T(_(" — p. %1/%2"), self.page, total_pages))
+        table.insert(title_parts, T(_(" - p. %1/%2"), self.page, total_pages))
     end
     self.title = table.concat(title_parts)
 

@@ -165,7 +165,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
     if not message then return "" end
     if message.role == "user" then
       local user_message = strbuf.new()
-      user_message:put(_("### ☺ Question\n"))
+      user_message:put(T(_("### %1 Question\n"), "☺"))
 
       if title and title ~= "" then
         user_message:putf("➤ ‹ %s ›\n", title)
@@ -689,7 +689,7 @@ function AssistantDialog:show(highlightedText)
   if half_w < 50 then half_w = math.floor((available_w - left_gap - gap) / 2) end
   use_web_search_checkbox = CheckButton:new{
     face = Font:getFace("xx_smallinfofont"),
-    text = _("🌐 Web Search"),
+    text = "🌐 " .. _("Web Search"),
     parent = self.input_dialog,
     width = half_w,
     checked = web_search_available and saved_web_search,
@@ -701,7 +701,7 @@ function AssistantDialog:show(highlightedText)
   local use_copy_clipboard_checkbox
   use_copy_clipboard_checkbox = CheckButton:new{
     face = Font:getFace("smallffont"),
-    text = _("⌨ Copy to Clipboard"),
+    text = "⌨ " .. _("Copy to Clipboard"),
     parent = self.input_dialog,
     width = half_w,
     checked = self.assistant.settings:readSetting("auto_copy_asked_question", true),
@@ -727,7 +727,7 @@ function AssistantDialog:show(highlightedText)
     local chapter_range = ASUtils.getCurrentChapterRange(self.assistant.ui)
     use_book_text_checkbox = CheckButton:new{
       face = Font:getFace("smallffont"),
-      text = _("✉ Attach Prior Text"),
+      text = "✉ " .. _("Attach Prior Text"),
       parent = self.input_dialog,
       width = half_w,
       callback = function()
@@ -745,7 +745,7 @@ function AssistantDialog:show(highlightedText)
     if chapter_range then
       use_chapter_checkbox = CheckButton:new{
         face = Font:getFace("smallffont"),
-        text = _("✎ Current Chapter Only"),
+        text = "✎ " .. _("Current Chapter Only"),
         parent = self.input_dialog,
         width = half_w,
         -- No effect unless "Include Text Read So Far" is checked too;

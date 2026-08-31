@@ -48,8 +48,8 @@ Registry.DEFAULT_BASE_URLS = {
 -- add/edit provider dialog (falls back to a generic hint for other handlers).
 local BASE_URL_DESCRIPTIONS = {
     openai    = _("OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"),
-    responses = _("OpenAI Responses API — Include built-in web search"),
-    gemini    = _("Gemini API. must include the /models segment, e.g. …/v1beta/models"),
+    responses = _("OpenAI Responses API - Include built-in web search"),
+    gemini    = _("Gemini API. must include the /models segment, e.g. .../v1beta/models"),
     anthropic = _("Anthropic Messages API"),
 }
 
@@ -570,13 +570,13 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
     dialog = MultiInputDialog:new{
         title = dialog_title,
         fields = {
-            { description = _("Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"),
+            { description = _("Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"),
               hint = _("Display name"), text = default_name },
             { description = base_url_desc,
               hint = _("https://..."),   text = base_url },
-            { description = _("API Key — enter your key, then tap Browse Models to list available models"),
+            { description = _("API Key - enter your key, then tap Browse Models to list available models"),
               hint = _("Your API key"),  text = default_api_key },
-            { description = _("Model — tap Browse Models to pick an available model"),
+            { description = _("Model - tap Browse Models to pick an available model"),
               hint = _("Pick one via Browse Models"), text = default_model },
         },
         buttons = dialog_buttons,

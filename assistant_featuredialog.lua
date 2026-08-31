@@ -73,7 +73,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
                 prompts_key = "recap"
             },
             xray = {
-                title = _("X‑Ray"),
+                title = _("X-Ray"),
                 loading_message = _("Loading X-Ray..."),
                 config_key = "xray_config",
                 prompts_key = "xray"

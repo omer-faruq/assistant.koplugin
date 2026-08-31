@@ -231,13 +231,13 @@ function Assistant:addToMainMenu(menu_items)
               {
                 text_func = function ()
                   if not self.querier or not self.querier.handler then
-                    return _("Provider ▸ NOT CONFIGURED")
+                    return T(_("Provider %1 NOT CONFIGURED"), "▸")
                   end
                   local provider = self.querier.provider_setting
                       and self.querier.provider_setting.display_name
                       or self.querier.provider_name
                   local model = self.querier.handler.model or "?"
-                  return T(_("Provider ▸ %1(%2)"), provider, model)
+                  return T(_("Provider %1 %2(%3)"), "▸", provider, model)
                 end,
                 keep_menu_open = true,
                 callback = function (touchmenu_instance)
@@ -250,7 +250,7 @@ function Assistant:addToMainMenu(menu_items)
                   text_func = function ()
                     local key = self.settings:readSetting("use_websearch", "none")
                     local text = ToolExecutor.ToolToText(key)
-                      return T(_("Web Search ▸ %1"), text)
+                      return T(_("Web Search %1 %2"), "▸", text)
                   end,
                   hold_callback = function ()
                       UIManager:show(InfoMessage:new{
@@ -545,7 +545,7 @@ end
 function Assistant:showAddProviderMenu()
     if not Device:isTouchDevice() then
         UIManager:show(InfoMessage:new{
-            text = _("Add providers from the main menu:\n⚙ → AI Assistant → Settings → Provider API")
+            text = T(_("Add providers from the main menu:\n%1 -> AI Assistant -> Settings -> Provider API"), "⚙")
         })
         return
     end
@@ -881,7 +881,7 @@ function Assistant:_rebuildShowOnMainButtons()
 end
 
 function Assistant:_help_dialog()
-    local info_text = string.format("%s %s  ", self.meta.fullname, self.meta.version) .. _([[Usage Tips
+    local info_text = string.format("%s %s  ", self.meta.fullname, self.meta.version) .. T(_([[Usage Tips
 
 Select:
 Highlight text (or a word) in the book, then press [AI assistant] in the poped up menu.
@@ -894,9 +894,9 @@ Long Press:
 Very-Long Press (over 3 seconds):
 On a single word in the book to show the highlight menu (instead of the dictionary).
 
-Multi-Swipe (e.g., ⮠, ⮡, ↺):
+Multi-Swipe (e.g., %1, %2, %3):
 On the result dialog to close (as the Close button is far to reach).
-]])
+]]), "⮠", "⮡", "↺")
     UIManager:show(ConfirmBox:new{
         icon = "info",
         text = info_text,
