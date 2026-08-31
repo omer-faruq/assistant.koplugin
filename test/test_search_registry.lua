@@ -39,45 +39,48 @@ local function mockAssistant(search_data)
     local assistant = {
         _ui_search_data = search_data or { tools = {} },
         settings = mockSettings(),
-        CONFIGURATION = { provider_settings = {} },
         updated = false,
     }
-    function assistant:confSetProvider(id, record)
+    -- Minimal config object to mimic assistant_config.lua's Config.
+    local config_data = { provider_settings = {} }
+    local config = {}
+    function config:setProvider(id, record)
         if not id or id == "" then return nil, "invalid id" end
-        self.CONFIGURATION = self.CONFIGURATION or {}
-        self.CONFIGURATION.provider_settings = self.CONFIGURATION.provider_settings or {}
-        self.CONFIGURATION.provider_settings[id] = record
-        if record ~= nil and self.querier and self.querier.load_model then
-            pcall(function() self.querier:load_model(id) end)
+        config_data.provider_settings = config_data.provider_settings or {}
+        config_data.provider_settings[id] = record
+        if record ~= nil and assistant.querier and assistant.querier.load_model then
+            pcall(function() assistant.querier:load_model(id) end)
         end
         local ok, ToolExecutor = pcall(require, "assistant_tool_executor")
         if ok and ToolExecutor.SetSearchAPIConfig then
-            ToolExecutor.SetSearchAPIConfig(self)
+            ToolExecutor.SetSearchAPIConfig(assistant)
         end
-        self.updated = true
+        assistant.updated = true
         return true
     end
-    function assistant:confDeleteProvider(id)
+    function config:deleteProvider(id)
         if not id or id == "" then return nil, "invalid id" end
-        if self.CONFIGURATION and self.CONFIGURATION.provider_settings then
-            self.CONFIGURATION.provider_settings[id] = nil
+        if config_data and config_data.provider_settings then
+            config_data.provider_settings[id] = nil
             local ok, ToolExecutor = pcall(require, "assistant_tool_executor")
             if ok and ToolExecutor.SetSearchAPIConfig then
-                ToolExecutor.SetSearchAPIConfig(self)
+                ToolExecutor.SetSearchAPIConfig(assistant)
             end
-            self.updated = true
+            assistant.updated = true
         end
         return true
     end
-    function assistant:confGetProvider(id)
+    function config:getProvider(id)
         if not id or id == "" then return nil end
         local koutil = require("util")
-        local v = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", id)
+        local v = koutil.tableGetValue(config_data, "provider_settings", id)
         if v == nil or v == require("rapidjson").null then return nil end
         return v
     end
-    assistant.confSetSearchTool = assistant.confSetProvider
-    assistant.confDeleteSearchTool = assistant.confDeleteProvider
+    config.setSearchTool = config.setProvider
+    config.deleteSearchTool = config.deleteProvider
+    config._data = config_data
+    assistant.config = config
     return assistant
 end
 
@@ -488,7 +491,7 @@ local tests = {
         assert.isTrue(assistant.updated)
 
         -- Verify merged config updated
-        local merged = assistant.CONFIGURATION.provider_settings.serpapi
+        local merged = assistant.config._data.provider_settings.serpapi
         assert.notNil(merged)
         assert.equal(merged.api_key, "sk-123")
         assert.equal(merged.source, "ui")
@@ -501,7 +504,7 @@ local tests = {
         local ok, err = SearchRegistry.installSearchTool(
             assistant, "searxngapi", nil, "https://sx.example.com")
         assert.isTrue(ok, err)
-        local merged = assistant.CONFIGURATION.provider_settings.searxngapi
+        local merged = assistant.config._data.provider_settings.searxngapi
         assert.notNil(merged)
         assert.equal(merged.base_url, "https://sx.example.com")
         assert.equal(merged.source, "ui")
@@ -555,7 +558,7 @@ local tests = {
 
     test("sub-menu items show checkmark when configured via API key", function()
         local assistant = mockAssistant()
-        assistant.CONFIGURATION.provider_settings.serpapi = { api_key = "sk-test" }
+        assistant.config._data.provider_settings.serpapi = { api_key = "sk-test" }
         local item = SearchRegistry.getAddWebSearchMenuItem(assistant)
         local sub_items = item.sub_item_table_func()
         assert.equal(sub_items[1].text_func(), "☑ SerpAPI")
@@ -565,7 +568,7 @@ local tests = {
 
     test("sub-menu items show checkmark when configured via base_url", function()
         local assistant = mockAssistant()
-        assistant.CONFIGURATION.provider_settings.searxngapi = { base_url = "https://search.example.com" }
+        assistant.config._data.provider_settings.searxngapi = { base_url = "https://search.example.com" }
         local item = SearchRegistry.getAddWebSearchMenuItem(assistant)
         local sub_items = item.sub_item_table_func()
         assert.equal(sub_items[4].text_func(), "☑ SearXNG")

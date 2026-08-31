@@ -103,7 +103,7 @@ ToolExecutor.SEARCH_API_NAMES = SEARCH_API_NAMES
 function ToolExecutor.SetSearchAPIConfig(assistant)
     if not assistant then return end
     for api, tool in pairs(ExtTools) do
-        local c = assistant:confGetProvider(api)
+        local c = assistant.config:getProvider(api)
         if c then
             if c.api_key then tool.api_key = c.api_key end
             if c.base_url then tool.base_url = c.base_url:gsub("/+$", "") end -- trim the ending `/`

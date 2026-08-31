@@ -128,11 +128,11 @@ local function isVersionNewer(v1_str, v2_str)
 end
 
 local function checkForUpdates(assistant)
-  if assistant:confGetFeature("updater_disabled") then
+  if assistant.config:getFeature("updater_disabled") then
     return
   end
 
-  local update_url = assistant:confGetFeature("update_check_url")
+  local update_url = assistant.config:getFeature("update_check_url")
     or "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest"
 
   local parsed_data, err = ASUtils.fetchJSON(update_url,
@@ -160,9 +160,9 @@ end
 local function otaUpgrade(assistant, version)
   local PLUGIN_NAME = "assistant.koplugin"
 
-  local GITHUB_BASE = assistant:confGetFeature("ota_github_base")
+  local GITHUB_BASE = assistant.config:getFeature("ota_github_base")
     or "https://github.com"
-  local GITHUB_REPO = assistant:confGetFeature("ota_github_repo")
+  local GITHUB_REPO = assistant.config:getFeature("ota_github_repo")
     or "omer-faruq/assistant.koplugin"
 
   local REPO_REF = version:sub(1, 1) == "v" and "tags" or "heads"

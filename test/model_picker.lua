@@ -22,10 +22,19 @@ local mock_assistant = {
             SyncOptions = function() end,
         },
     },
-    CONFIGURATION = {
-        provider_settings = {
-            test_provider = { model = "gpt-4o" },
+    config = {
+        _data = {
+            provider_settings = {
+                test_provider = { model = "gpt-4o" },
+            },
         },
+        getProvider = function(self, id)
+            if not id or id == "" then return nil end
+            local koutil = require("util")
+            local v = koutil.tableGetValue(self._data, "provider_settings", id)
+            if v == nil or v == require("rapidjson").null then return nil end
+            return v
+        end,
     },
     settings = {
         saveSetting = function(_, key, val) end,

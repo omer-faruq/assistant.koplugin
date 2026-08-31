@@ -88,7 +88,7 @@ function M.extractBookTextForAnalysis(assistant)
           local start_xp = ui.document:getXPointer()
           ui.document:gotoXPointer(current_xp)
           book_text = ui.document:getTextFromXPointers(start_xp, current_xp) or ""
-          local max_text_length_for_analysis = assistant:confGetFeature("max_text_length_for_analysis", 100000)
+          local max_text_length_for_analysis = assistant.config:getFeature("max_text_length_for_analysis", 100000)
           if #book_text > max_text_length_for_analysis then
               book_text = M.truncateToTailUtf8Safe(book_text, max_text_length_for_analysis)
           end
@@ -96,7 +96,7 @@ function M.extractBookTextForAnalysis(assistant)
         -- Extract text from the last n pages up to current reading position for page-based documents
         local current_page = ui.view.state.page
         local total_pages = ui.document:getPageCount()
-        local max_page_size_for_analysis = assistant:confGetFeature("max_page_size_for_analysis", 250)
+        local max_page_size_for_analysis = assistant.config:getFeature("max_page_size_for_analysis", 250)
         local start_page = math.max(1, current_page - max_page_size_for_analysis)
         local buf = shared_buf
         buf:reset()
@@ -105,7 +105,7 @@ function M.extractBookTextForAnalysis(assistant)
             buf:put(page_text, "\n")
         end
         book_text = buf:get()
-        local max_text_length_for_analysis = assistant:confGetFeature("max_text_length_for_analysis", 100000)
+        local max_text_length_for_analysis = assistant.config:getFeature("max_text_length_for_analysis", 100000)
         if #book_text > max_text_length_for_analysis then
             book_text = M.truncateToTailUtf8Safe(book_text, max_text_length_for_analysis)
         end
@@ -166,7 +166,7 @@ function M.extractHighlightsNotesAndNotebook(assistant, include_notebook)
         end
     end
     
-    local max_text_length_for_analysis = assistant:confGetFeature("max_text_length_for_analysis", 100000)
+    local max_text_length_for_analysis = assistant.config:getFeature("max_text_length_for_analysis", 100000)
     if #combined > max_text_length_for_analysis then
         combined = M.truncateToTailUtf8Safe(combined, max_text_length_for_analysis)
     end
@@ -659,7 +659,7 @@ function M.extractCurrentChapterText(assistant)
     end
   end
 
-  local max_text_length_for_analysis = assistant:confGetFeature("max_text_length_for_analysis", 100000)
+  local max_text_length_for_analysis = assistant.config:getFeature("max_text_length_for_analysis", 100000)
   if #book_text > max_text_length_for_analysis then
     book_text = M.truncateToTailUtf8Safe(book_text, max_text_length_for_analysis)
   end

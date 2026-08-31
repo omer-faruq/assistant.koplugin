@@ -22,7 +22,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     local ui = assistant.ui
 
     -- Check if Querier is initialized
-    local ok, err = Querier:load_model(assistant:confGetActiveProviderId())
+    local ok, err = Querier:load_model(assistant.config:getActiveProviderId())
     if not ok then
         UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
         return
@@ -107,7 +107,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         local prompts_key = feature_config.prompts_key
         
         -- Get feature config with fallbacks
-        local file_config = assistant:confGetFeature(config_key) or {}
+        local file_config = assistant.config:getFeature(config_key) or {}
         
         -- Prompts for feature (from config or prompts.lua)
         system_prompt = koutil.tableGetValue(file_config, "system_prompt")

@@ -256,7 +256,7 @@ function SearchRegistry.installSearchTool(assistant, tool_key, api_key, base_url
         base_url = record.base_url,
         source = "ui",
     }
-    assistant:confSetSearchTool(tool_key, rec)
+    assistant.config:setSearchTool(tool_key, rec)
 
     return true
 end
@@ -277,7 +277,7 @@ function SearchRegistry.deleteSearchTool(assistant, tool_key)
     end
 
     SearchRegistry.save(assistant.settings, assistant._ui_search_data)
-    assistant:confDeleteSearchTool(tool_key)
+    assistant.config:deleteSearchTool(tool_key)
 
     return true
 end
@@ -300,7 +300,7 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
                 local def = SearchRegistry.SEARCH_TOOLS[tool_key]
                 table.insert(items, {
                     text_func = function()
-                        local merged = assistant:confGetProvider(tool_key)
+                        local merged = assistant.config:getProvider(tool_key)
                         local configured = merged and (
                             (type(merged.api_key) == "string" and #merged.api_key > 0) or
                             (type(merged.base_url) == "string" and #merged.base_url > 0)
@@ -312,7 +312,7 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
                         assistant:_showAddWebSearchDialog(tool_key)
                     end,
                     hold_callback = function()
-                        local merged = assistant:confGetProvider(tool_key)
+                        local merged = assistant.config:getProvider(tool_key)
                         local deletable = SearchRegistry.is_deletable(merged)
 
                         local confirm = ConfirmBox:new{

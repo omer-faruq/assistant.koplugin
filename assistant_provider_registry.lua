@@ -365,7 +365,7 @@ function Registry.updateProvider(assistant, id, display_name, base_url, api_key,
         additional_parameters = existing.additional_parameters or {},
         source = "ui",
     }
-    assistant:confSetProvider(id, newRecord)
+    assistant.config:setProvider(id, newRecord)
 
     return id
 end
@@ -411,7 +411,7 @@ function Registry.installProvider(assistant, handler, base_url, display_name, ap
         additional_parameters = stored and stored.additional_parameters or {},
         source = "ui",
     }
-    assistant:confSetProvider(id, newRecord)
+    assistant.config:setProvider(id, newRecord)
 
     return id
 end
@@ -441,7 +441,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
 
     if is_edit then
         -- Pre-fill from the existing provider record
-        local ps = assistant:confGetProvider(edit_id)
+        local ps = assistant.config:getProvider(edit_id)
         dialog_title = T(_("Edit %1"), koutil.tableGetValue(ps, "display_name") or edit_id)
         default_name = koutil.tableGetValue(ps, "display_name") or ""
         base_url = koutil.tableGetValue(ps, "base_url") or base_url or ""

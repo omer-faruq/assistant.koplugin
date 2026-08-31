@@ -109,7 +109,7 @@ local function filterTextForTerm(text, highlighted_term, language_code, assistan
     end
 
     -- Include larger context sentences around matches for better coverage
-    local context_window = assistant:confGetFeature("term_filter_context_window", 5) -- sentences before and after
+    local context_window = assistant.config:getFeature("term_filter_context_window", 5) -- sentences before and after
     local selected_indices = {}
 
     for _, idx in ipairs(matching_indices) do
@@ -139,7 +139,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     local ui = assistant.ui
 
     -- Check if Querier is initialized
-    local ok, err = Querier:load_model(assistant:confGetActiveProviderId())
+    local ok, err = Querier:load_model(assistant.config:getActiveProviderId())
     if not ok then
         UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
         return
@@ -249,18 +249,18 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
 
             -- OPTIMIZED: Single LexRank call with return_with_metadata=true
             -- Run with the lowest threshold to get all candidates with scores
-            local threshold_very_inclusive = assistant:confGetFeature("lexrank_threshold_very_inclusive", 0.005)
-            local all_candidates = LexRank.rank_sentences(book_text, threshold_very_inclusive, 0.1, dict_language, assistant:confGetFeatures(), true)
+            local threshold_very_inclusive = assistant.config:getFeature("lexrank_threshold_very_inclusive", 0.005)
+            local all_candidates = LexRank.rank_sentences(book_text, threshold_very_inclusive, 0.1, dict_language, assistant.config:getFeatures(), true)
 
             -- Filter candidates at different levels using their scores (no re-tokenization needed!)
-            local max_characters = assistant:confGetFeature("term_xray_max_characters", 100000)
+            local max_characters = assistant.config:getFeature("term_xray_max_characters", 100000)
             local selected_indices = {}
             local seen_indices = {}
 
             if all_candidates and #all_candidates > 0 then
                 -- Calculate score threshold for term-specific sentences
-                local threshold_term_specific = assistant:confGetFeature("lexrank_threshold_term_specific", 0.01)
-                local threshold_general = assistant:confGetFeature("lexrank_threshold_general", 0.01)
+                local threshold_term_specific = assistant.config:getFeature("lexrank_threshold_term_specific", 0.01)
+                local threshold_general = assistant.config:getFeature("lexrank_threshold_general", 0.01)
 
                 -- Stage 1: Find term-specific matches and add high-scoring sentence around them
                 local filtered_text = filterTextForTerm(book_text, highlightedText, dict_language, assistant)
@@ -297,8 +297,8 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             table.sort(selected_indices)
 
             -- OPTIMIZED: Expand context using indices (no re-tokenization!)
-            local context_before = assistant:confGetFeature("term_xray_context_sentences_before", 5)
-            local context_after = assistant:confGetFeature("term_xray_context_sentences_after", 5)
+            local context_before = assistant.config:getFeature("term_xray_context_sentences_before", 5)
+            local context_after = assistant.config:getFeature("term_xray_context_sentences_after", 5)
             local context_sentences = expandContextWithSurroundings(
                 all_sentences,
                 selected_indices,

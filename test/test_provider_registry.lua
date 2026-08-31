@@ -47,47 +47,50 @@ local function mockAssistantForInstall()
     local assistant = {
         _ui_provider_data = { providers = {}, _next_id = 1 },
         settings = { saveSetting = function() end },
-        CONFIGURATION = { provider_settings = {} },
         updated = false,
         querier = nil,
     }
-    -- Minimal conf* methods to mimic main.lua's centralized write path.
-    function assistant:confSetProvider(id, record)
-        if not id or id == "" then return nil, "invalid id" end
-        self.CONFIGURATION = self.CONFIGURATION or {}
-        self.CONFIGURATION.provider_settings = self.CONFIGURATION.provider_settings or {}
-        self.CONFIGURATION.provider_settings[id] = record
-        if record ~= nil and self.querier and self.querier.load_model then
-            pcall(function() self.querier:load_model(id) end)
-        end
-        local ok, ToolExecutor = pcall(require, "assistant_tool_executor")
-        if ok and ToolExecutor.SetSearchAPIConfig then
-            ToolExecutor.SetSearchAPIConfig(self)
-        end
-        self.updated = true
-        return true
-    end
-    function assistant:confDeleteProvider(id)
-        if not id or id == "" then return nil, "invalid id" end
-        if self.CONFIGURATION and self.CONFIGURATION.provider_settings then
-            self.CONFIGURATION.provider_settings[id] = nil
-            local ok, ToolExecutor = pcall(require, "assistant_tool_executor")
-            if ok and ToolExecutor.SetSearchAPIConfig then
-                ToolExecutor.SetSearchAPIConfig(self)
-            end
-            self.updated = true
-        end
-        return true
-    end
-    function assistant:confGetProvider(id)
+    -- Minimal config object to mimic assistant_config.lua's Config.
+    local config_data = { provider_settings = {} }
+    local config = {}
+    function config:getProvider(id)
         if not id or id == "" then return nil end
         local koutil = require("util")
-        local v = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", id)
+        local v = koutil.tableGetValue(config_data, "provider_settings", id)
         if v == nil or v == require("rapidjson").null then return nil end
         return v
     end
-    assistant.confSetSearchTool = assistant.confSetProvider
-    assistant.confDeleteSearchTool = assistant.confDeleteProvider
+    function config:setProvider(id, record)
+        if not id or id == "" then return nil, "invalid id" end
+        config_data.provider_settings = config_data.provider_settings or {}
+        config_data.provider_settings[id] = record
+        if record ~= nil and assistant.querier and assistant.querier.load_model then
+            pcall(function() assistant.querier:load_model(id) end)
+        end
+        local ok, ToolExecutor = pcall(require, "assistant_tool_executor")
+        if ok and ToolExecutor.SetSearchAPIConfig then
+            ToolExecutor.SetSearchAPIConfig(assistant)
+        end
+        assistant.updated = true
+        return true
+    end
+    function config:deleteProvider(id)
+        if not id or id == "" then return nil, "invalid id" end
+        if config_data and config_data.provider_settings then
+            config_data.provider_settings[id] = nil
+            local ok, ToolExecutor = pcall(require, "assistant_tool_executor")
+            if ok and ToolExecutor.SetSearchAPIConfig then
+                ToolExecutor.SetSearchAPIConfig(assistant)
+            end
+            assistant.updated = true
+        end
+        return true
+    end
+    config.setSearchTool = config.setProvider
+    config.deleteSearchTool = config.deleteProvider
+    -- Expose the raw data table for direct assertions in tests.
+    config._data = config_data
+    assistant.config = config
     return assistant
 end
 
@@ -317,7 +320,7 @@ local tests = {
             "https://openrouter.ai/api/v1", "OpenRouter UI", "key", "auto", params)
         assert.notNil(id, err)
         assert.equal(assistant.updated, true)
-        local merged = assistant.CONFIGURATION.provider_settings[id]
+        local merged = assistant.config._data.provider_settings[id]
         assert.notNil(merged)
         assert.equal(merged.source, "ui")
         assert.isTrue(deepEqual(merged.additional_parameters, params),
@@ -331,7 +334,7 @@ local tests = {
         local id, err = Registry.installProvider(assistant, "openai",
             "https://api.openai.com/v1", "Plain UI", "key", "")
         assert.notNil(id, err)
-        local merged = assistant.CONFIGURATION.provider_settings[id]
+        local merged = assistant.config._data.provider_settings[id]
         assert.notNil(merged)
         assert.equal(type(merged.additional_parameters), "table")
         assert.equal(next(merged.additional_parameters), nil)
@@ -349,7 +352,7 @@ local tests = {
         local id, err = Registry.installProvider(assistant, preset.handler, preset.base_url,
             preset.name .. " UI", "key", "auto", preset.additional_parameters)
         assert.notNil(id, err)
-        local merged = assistant.CONFIGURATION.provider_settings[id]
+        local merged = assistant.config._data.provider_settings[id]
         assert.notNil(merged)
         -- Mutating the merged config must not corrupt the shared preset table.
         merged.additional_parameters.thinking.type = "enabled"
@@ -420,7 +423,7 @@ local tests = {
         assert.equal(record.model, "gpt-4o")
 
         -- Verify merged config updated
-        local merged = assistant.CONFIGURATION.provider_settings[id]
+        local merged = assistant.config._data.provider_settings[id]
         assert.equal(merged.display_name, "New Name")
         assert.equal(merged.base_url, "https://api.new.com/v1")
         assert.equal(merged.api_key, "new_key")
@@ -444,7 +447,7 @@ local tests = {
         assert.isTrue(deepEqual(record.additional_parameters, params),
             "additional_parameters must be preserved")
 
-        local merged = assistant.CONFIGURATION.provider_settings[id]
+        local merged = assistant.config._data.provider_settings[id]
         assert.equal(merged.handler, "openai", "merged handler must be preserved")
         assert.isTrue(deepEqual(merged.additional_parameters, params),
             "merged additional_parameters must be preserved")

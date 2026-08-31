@@ -43,6 +43,7 @@ local SettingsDialog = require("assistant_settings")
 local showDictionaryDialog = require("assistant_dictdialog")
 local Registry = require("assistant_provider_registry")
 local SearchRegistry = require("assistant_search_registry")
+local Config = require("assistant_config")
 
 local Assistant = InputContainer:new {
   name = "assistant",
@@ -55,38 +56,8 @@ local Assistant = InputContainer:new {
   assistant_dialog = nil, -- reference to the main dialog instance
   ui_language = nil,
   ui_language_is_rtl = nil,
-  CONFIGURATION = nil,  -- reference to the main configuration
+  config = nil,  -- Config object (assistant_config.lua)
 }
-
--- Menu items carry an `assistant_item_id` marker so the Add Provider flow can
--- locate them in the live TouchMenu by identity instead of fixed indices
--- (see showAddProviderMenu and AGENTS.md "Provider menu paths").
-
-local function testConfigFile(filePath)
-    local env = {}
-    setmetatable(env, {__index = _G})
-    local chunk, err = loadfile(filePath, "t", env) -- test mode to loadfile, check syntax errors
-    if not chunk then return false, err end
-    local success, result = pcall(chunk) -- run the code, checks runtime errors
-    if not success then return false, result end
-    return true, nil
-end
-
--- configuration locations
-local ASSISTANT_DIR = T("%1/plugins/%2.koplugin/", DataStorage:getDataDir(), Assistant.name)
-local CONFIG_FILE_PATH = ASSISTANT_DIR .. "configuration.lua"
-local META_FILE_PATH = ASSISTANT_DIR .. "_meta.lua"
-local CONFIG_LOAD_ERROR = nil
-local CONFIGURATION = nil
-
--- test the configuration.lua and store the error message if any
-local ok, err = testConfigFile(CONFIG_FILE_PATH)
-if not ok then CONFIG_LOAD_ERROR = err end
-
--- Load Configuration
-local success, result = pcall(function() return dofile(CONFIG_FILE_PATH) end)
-if success then CONFIGURATION = result
-else logger.warn(result) end
 
 -- Flag to ensure the update message is shown only once per session
 local updateMessageShown = false
@@ -401,7 +372,7 @@ function Assistant:addToMainMenu(menu_items)
   -- Only show the Custom Prompts entry when book_level_prompts are actually
   -- configured. When absent, mark the Book Insights group with a trailing
   -- separator so it doesn't visually run into the next menu item.
-  if self:confGetFeature("book_level_prompts") then
+  if self.config:getFeature("book_level_prompts") then
     table.insert(book_level_items, {
               text = _("Custom Prompts"),
               sub_item_table_func = function ()
@@ -473,7 +444,7 @@ function BookLevelCustomPrompts(assistant)
   local sub_item_table = {}
 
   -- Read book_level_prompts from configuration
-  local book_level_prompts = assistant:confGetFeature("book_level_prompts") or {}
+  local book_level_prompts = assistant.config:getFeature("book_level_prompts") or {}
 
   for key, prompt_config in ffiutil.orderedPairs(book_level_prompts) do
     if prompt_config.visible == true and prompt_config.type == "feature" then
@@ -649,7 +620,7 @@ function Assistant:_showAddWebSearchDialog(tool_key)
     local default_url = existing and existing.base_url or ""
 
     local is_edit = SearchRegistry.is_deletable(
-        self:confGetProvider(tool_key))
+        self.config:getProvider(tool_key))
 
     local title = is_edit and T(_("Edit %1"), tool_def.display_name)
         or T(_("Add %1"), tool_def.display_name)
@@ -725,201 +696,9 @@ function Assistant:_showAddWebSearchDialog(tool_key)
     UIManager:show(dialog)
 end
 
--- ---------------------------------------------------------------------------
--- Effective configuration accessors (in-memory CONFIGURATION)
--- CONFIGURATION is built at init by merging read-only configuration.lua with
--- UI data persisted in settings (assistant.lua). All helpers below read/write
--- the effective in-memory table; none writes back to configuration.lua.
--- ---------------------------------------------------------------------------
+-- Effective configuration accessors are in assistant_config.lua (Config object).
+-- Mounted as self.config during init(); all callers use self.config:get* etc.
 
---- Returns the *key/ID string* of the active provider (e.g. "openai_foo" or
---- "custom:1"). Resolves the selection with fallback logic: saved setting →
---- configuration.lua default → first `default=true` provider → any enabled.
---- On fallback, persists the new selection to self.settings.
---- Contrast with confGetProvider(id) which returns the provider *record table*.
---- Mutates only self.settings on fallback; configuration.lua is never written.
-function Assistant:confGetActiveProviderId()
-
-  if type(self.CONFIGURATION) ~= "table" then
-    return nil
-  end
-
-  local provider_settings = self:confGetProviderSettings()
-  if type(provider_settings) ~= "table" then
-    return nil
-  end
-  local setting_provider = self.settings:readSetting("provider")
-
-  local function find_setting_provider(filter_func)
-    for key, tab in pairs(provider_settings) do
-      if self:confIsProviderEnabled(key) then
-        if filter_func and filter_func(key, tab) then return key end
-        if not filter_func then return key end
-      end
-    end
-    return nil
-  end
-
-  if self:confIsProviderEnabled(setting_provider) then
-    -- If the setting provider is valid, use it
-    return setting_provider
-  else
-    -- If the setting provider is invalid, delete this selection
-    self.settings:delSetting("provider")
-
-    local conf_provider = self.CONFIGURATION.provider -- provider name from configuration.lua
-    if self:confIsProviderEnabled(conf_provider) then
-      -- if the configuration provider is valid, use it
-      setting_provider = conf_provider
-    else
-      -- try to find the one defined with `default = true`
-      setting_provider = find_setting_provider(function(key, tab)
-        return koutil.tableGetValue(tab, "default") == true
-      end)
-      
-      -- still invalid (none of them defined `default`)
-      if not setting_provider then
-        setting_provider = find_setting_provider()
-        logger.warn("Invalid provider setting found, using a random one: ", setting_provider)
-      end
-    end
-
-    if not setting_provider then
-      CONFIG_LOAD_ERROR = _("No valid model provider is found in the configuration.lua")
-      return nil
-    end -- if still not found, the configuration is wrong
-    self.settings:saveSetting("provider", setting_provider)
-    self.updated = true -- mark settings as updated
-  end
-  return setting_provider
-end
-
---- Read a feature value from the effective CONFIGURATION.features table.
---- @param feature_key string Feature name (e.g. "prompts"), not an API key.
---- @param default any Fallback value when the key is absent.
-function Assistant:confGetFeature(feature_key, default)
-    local v = koutil.tableGetValue(self.CONFIGURATION, "features", feature_key)
-    if v == nil then return default end
-    return v
-end
-
---- Returns the provider *record table* for a given ID.
---- @param id string Provider identifier (e.g. "openai_perplexity" or "custom:1"), not the API key.
---- Contrast with confGetActiveProviderId() which returns the *selected key string*.
-function Assistant:confGetProvider(id)
-    if not id or id == "" then return nil end
-    local v = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", id)
-    if v == nil or v == require("rapidjson").null then return nil end
-    return v
-end
-
---- Returns the entire provider_settings table from CONFIGURATION.
-function Assistant:confGetProviderSettings()
-    return koutil.tableGetValue(self.CONFIGURATION, "provider_settings") or {}
-end
-
---- Returns the entire features table from CONFIGURATION.
-function Assistant:confGetFeatures()
-    return koutil.tableGetValue(self.CONFIGURATION, "features") or {}
-end
-
---- Checks that a provider record table has non-empty model, base_url and api_key.
-function Assistant:confIsProviderValid(provider)
-    if type(provider) ~= "table" then return false end
-    local model = provider.model
-    local base_url = provider.base_url
-    local api_key = provider.api_key
-    if not model or model == "" then return false end
-    if not base_url or base_url == "" then return false end
-    if not api_key or api_key == "" then return false end
-    return true
-end
-
---- Convenience predicate: true when the provider record for `id` is valid.
---- @param id string Provider identifier (e.g. "openai_foo" or "custom:1"), not an API key.
-function Assistant:confIsProviderEnabled(id)
-    return self:confIsProviderValid(self:confGetProvider(id))
-end
-
---- Write a provider record into the effective CONFIGURATION.provider_settings,
---- then hot-reload the querier and ToolExecutor.
---- Mutates only the in-memory CONFIGURATION and marks self.settings dirty;
---- configuration.lua is never written.
-function Assistant:confSetProvider(id, record)
-    if not id or id == "" then return nil, "invalid id" end
-    self.CONFIGURATION = self.CONFIGURATION or {}
-    self.CONFIGURATION.provider_settings = self.CONFIGURATION.provider_settings or {}
-    self.CONFIGURATION.provider_settings[id] = record
-    if record ~= nil then
-        if self.querier and self.querier.load_model then
-            pcall(function() self.querier:load_model(id) end)
-        end
-    end
-    require("assistant_tool_executor").SetSearchAPIConfig(self)
-    self.updated = true
-    return true
-end
-
---- Remove a provider from the effective CONFIGURATION.provider_settings and
---- refresh ToolExecutor config.
---- Mutates only the in-memory CONFIGURATION; configuration.lua is never written.
-function Assistant:confDeleteProvider(id)
-    if not id or id == "" then return nil, "invalid id" end
-    local ps = koutil.tableGetValue(self.CONFIGURATION, "provider_settings")
-    if ps then
-        ps[id] = nil
-        require("assistant_tool_executor").SetSearchAPIConfig(self)
-        self.updated = true
-    end
-    return true
-end
-
---- Thin wrapper: search tools share the provider_settings table under fixed
---- keys (serpapi, tavilyapi, …). Delegates to confSetProvider.
---- @param tool_key string Fixed search-tool key (e.g. "serpapi"), not an API key.
-function Assistant:confSetSearchTool(tool_key, record)
-    return self:confSetProvider(tool_key, record)
-end
-
---- Thin wrapper: search tools share the provider_settings table under fixed
---- keys (serpapi, tavilyapi, …). Delegates to confDeleteProvider.
---- @param tool_key string Fixed search-tool key (e.g. "serpapi"), not an API key.
-function Assistant:confDeleteSearchTool(tool_key)
-    return self:confDeleteProvider(tool_key)
-end
-
---- Build the effective CONFIGURATION table from the raw dofile() result of
---- configuration.lua merged with UI registries persisted in self.settings.
---- Returns the effective table (caller assigns self.CONFIGURATION).
---- The raw table is never mutated; provider_settings is rebuilt via
---- Registry/SearchRegistry merges. configuration.lua remains read-only.
-function Assistant:buildEffectiveConfig(rawConfig)
-    rawConfig = rawConfig or CONFIGURATION
-    local ui_data = Registry.load(self.settings)
-    local merged_ps = Registry.merge(rawConfig, ui_data)
-    self._ui_provider_data = ui_data
-
-    local ui_search_data = SearchRegistry.load(self.settings)
-    local merged_search = SearchRegistry.merge(rawConfig, ui_search_data)
-    self._ui_search_data = ui_search_data
-
-    local effective = {}
-    if rawConfig then
-        for k, v in pairs(rawConfig) do
-            effective[k] = v
-        end
-    end
-    -- shallow-copy features sharing is intentional; provider_settings is rebuilt
-    effective.provider_settings = merged_ps or {}
-    if merged_search then
-        for key, record in pairs(merged_search) do
-            effective.provider_settings[key] = record
-        end
-    end
-    return effective
-end
-
--- Flush settings to disk, triggered by koreader
 function Assistant:onFlushSettings()
     if self.updated then
         self.settings:flush()
@@ -944,16 +723,17 @@ function Assistant:isConfigured()
     end
 
     -- handle error message during loading
-    if CONFIG_LOAD_ERROR and type(CONFIG_LOAD_ERROR) == "string" then
+    local loadError = self.config and self.config:getLoadError()
+    if loadError and type(loadError) == "string" then
       -- keep the error message clean
-      local cut = CONFIG_LOAD_ERROR:find("configuration.lua", 1, true) or 0 -- find as plain
+      local cut = loadError:find("configuration.lua", 1, true) or 0 -- find as plain
       err_text = string.format("%s\n\n%s", err_text,
-              (cut > 0) and CONFIG_LOAD_ERROR:sub(cut) or CONFIG_LOAD_ERROR)
+              (cut > 0) and loadError:sub(cut) or loadError)
       show_config_error()
       return nil
     end
 
-    if not self.CONFIGURATION or not self.querier or not self.querier.handler then
+    if not self.config or not self.querier or not self.querier.handler then
       show_config_error()
       return nil
     end
@@ -963,7 +743,7 @@ end
 
 function Assistant:init()
   -- loading our own _meta.lua
-  self.meta = dofile(META_FILE_PATH)
+  self.meta = dofile(Config.getMetaPath())
 
   -- init settings
   self.settings = LuaSettings:open(self.settings_file)
@@ -975,9 +755,11 @@ function Assistant:init()
   self.ui_language_is_rtl = Language:isLanguageRTL(ui_locale)
 
   -- Build effective CONFIGURATION.
-  -- RAW is the local CONFIGURATION loaded via dofile(configuration.lua);
+  -- RAW is the configuration loaded via dofile(configuration.lua);
   -- shallow-copies RAW tables (e.g. features) while provider_settings is rebuilt.
-  self.CONFIGURATION = self:buildEffectiveConfig()
+  local rawConfig, loadError = Config.loadRawConfig()
+  self.config = Config:new{ assistant = self, data = rawConfig or {}, loadError = loadError }
+  self.config:buildEffectiveConfig()
 
   -- Register actions with dispatcher for gesture assignment
   self:onDispatcherRegisterActions()
@@ -1016,20 +798,20 @@ function Assistant:init()
   end
 
   -- skip initialization if no provider is configured (file or UI)
-  if not next(self:confGetProviderSettings()) then return end
+  if not next(self.config:getProviderSettings()) then return end
 
   -- A missing/optional configuration.lua leaves a stale load error in
-  -- CONFIG_LOAD_ERROR.  With at least one provider available (e.g. UI-only)
-  -- the plugin is configured, so clear it before provider selection/querier
-  -- validation below (those paths re-set CONFIG_LOAD_ERROR on failure).
-  CONFIG_LOAD_ERROR = nil
+  -- self.config._loadError.  With at least one provider available (e.g.
+  -- UI-only) the plugin is configured, so clear it before provider
+  -- selection/querier validation below (those paths re-set the error on failure).
+  self.config:clearLoadError()
 
   -- Sync provider selection from configuration if configuration provider changed
   self:syncProviderSelectionFromConfig()
 
-  local model_provider = self:confGetActiveProviderId()
+  local model_provider = self.config:getActiveProviderId()
   if not model_provider then
-    CONFIG_LOAD_ERROR = _("configuration.lua: model providers are invalid.")
+    self.config:setLoadError(_("configuration.lua: model providers are invalid."))
     return
   end
 
@@ -1041,7 +823,7 @@ function Assistant:init()
 
   local ok, err = self.querier:load_model(model_provider)
   if not ok then
-    CONFIG_LOAD_ERROR = err
+    self.config:setLoadError(err)
     UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
     return
   end
@@ -1084,7 +866,7 @@ function Assistant:_rebuildShowOnMainButtons()
   if not self.ui.document then return end
 
   Prompts.invalidateCache()
-  Prompts.getMergedPrompts(self:confGetFeature("prompts"))
+  Prompts.getMergedPrompts(self.config:getFeature("prompts"))
 
   local showOnMain = Prompts.getSortedPrompts(function (prompt, idx)
     if prompt.visible == false then
@@ -1217,7 +999,7 @@ end
 -- their current value.  The legacy hook runs for each popup, so there the
 -- settings are simply resolved right here.
 function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
-  if not CONFIGURATION then return {} end
+  if not self.config then return {} end
 
   local plugin_buttons = {}
   local enabled_count = 0
@@ -1304,7 +1086,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
   if live or self.settings:readSetting("dict_popup_show_custom_prompts", false) then
     -- Collect custom prompts with show_on_dictionary_popup = true
     local custom_prompts = {}
-    local prompts = self:confGetFeature("prompts")
+    local prompts = self.config:getFeature("prompts")
     if prompts then
       for prompt_key, prompt_config in pairs(prompts) do
         if prompt_config.show_on_dictionary_popup == true and prompt_config.visible ~= false then
@@ -1434,7 +1216,7 @@ function Assistant:_restoreDictButtonsInUserLayout(button_ids)
 end
 
 function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
-  if not CONFIGURATION then return end
+  if not self.config then return end
   -- If new KOReader API is present, we already registered at init() time.
   -- This hook won't be called on new KOReader anyway, but guard for safety.
   if self.ui and self.ui.dictionary
@@ -1558,7 +1340,7 @@ function Assistant:syncTranslateOverride()
 
     -- Override translate method with AI Assistant
     Translator.showTranslation = function(ts_self, text, detailed_view, source_lang, target_lang, from_highlight, index)
-      if not CONFIGURATION then
+      if not self.config then
         UIManager:show(InfoMessage:new{
           icon = "notice-warning",
           text = _("Configuration not found. Please set up configuration.lua first.")
@@ -1599,7 +1381,7 @@ function Assistant:onAssistantSetButton(btnconf, action)
   -- use merged prompts: prompts defined only in configuration.lua
   -- are absent from the built-in `builtin_prompts` table
   local prompt = Prompts.getMergedPrompts(
-    self:confGetFeature("prompts"))[idx]
+    self.config:getFeature("prompts"))[idx]
   local ws_enabled = Prompts.isWebSearchEnabled(self.settings)
   local display_text = Prompts.getDisplayText(prompt.text or idx, prompt.use_websearch or false, ws_enabled)
 
@@ -1696,7 +1478,7 @@ function Assistant:syncProviderSelectionFromConfig()
   -- Sync the selected provider from configuration.lua into settings only when
   -- configuration provider changes compared to the last remembered value.
   -- The remembered value is stored in settings as "previous_config_ai_provider".
-  local conf = self.CONFIGURATION
+  local conf = self.config and self.config._data
   if not conf then return end
 
   local config_provider = koutil.tableGetValue(conf, "provider")

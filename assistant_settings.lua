@@ -226,7 +226,7 @@ function SettingsDialog:init()
             enabled_func = function()
                 local cur = self.assistant.querier.provider_name
                 if not cur then return false end
-                local ps = self.assistant:confGetProvider(cur)
+                local ps = self.assistant.config:getProvider(cur)
                 return Registry.is_editable(ps)
             end,
             callback = function() self:onEditProvider() end,
@@ -237,7 +237,7 @@ function SettingsDialog:init()
             enabled_func = function()
                 local cur = self.assistant.querier.provider_name
                 if not cur then return false end
-                local ps = self.assistant:confGetProvider(cur)
+                local ps = self.assistant.config:getProvider(cur)
                 return Registry.is_deletable(ps)
             end,
             callback = function() self:onDeleteProvider() end,
@@ -260,9 +260,9 @@ function SettingsDialog:init()
 
     local MAX_FOR_SINGLE_COLUMN = 12
     -- 2 columns if more than MAX_FOR_SINGLE_COLUMN providers, otherwise 1 column
-    local columns = koutil.tableSize(self.assistant:confGetProviderSettings()) > MAX_FOR_SINGLE_COLUMN and 2 or 1
+    local columns = koutil.tableSize(self.assistant.config:getProviderSettings()) > MAX_FOR_SINGLE_COLUMN and 2 or 1
     local buttonrow = {}
-    for key, tab in ffiutil.orderedPairs(self.assistant:confGetProviderSettings()) do
+    for key, tab in ffiutil.orderedPairs(self.assistant.config:getProviderSettings()) do
         if self.assistant.querier:is_valid_provider(key, tab) then
             if not (koutil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
                 if #buttonrow < columns then
@@ -399,7 +399,7 @@ end
 
 function SettingsDialog:onDeleteProvider()
     local provider_name = self.assistant.querier.provider_name
-    local ps = self.assistant:confGetProvider(provider_name)
+    local ps = self.assistant.config:getProvider(provider_name)
     if not Registry.is_deletable(ps) then return end
 
     local display_name = koutil.tableGetValue(ps, "display_name") or provider_name
@@ -410,10 +410,10 @@ function SettingsDialog:onDeleteProvider()
             local ui_data = self.assistant._ui_provider_data
             Registry.delete(ui_data, provider_name)
             Registry.save(self.settings, ui_data)
-            self.assistant:confDeleteProvider(provider_name)
+            self.assistant.config:deleteProvider(provider_name)
 
             -- Fallback: reselect a valid provider
-            local new_provider = self.assistant:confGetActiveProviderId()
+            local new_provider = self.assistant.config:getActiveProviderId()
             if new_provider then
                 self.assistant.querier:load_model(new_provider)
             end
@@ -433,7 +433,7 @@ end
 
 function SettingsDialog:onEditProvider()
     local provider_name = self.assistant.querier.provider_name
-    local ps = self.assistant:confGetProvider(provider_name)
+    local ps = self.assistant.config:getProvider(provider_name)
     if not Registry.is_editable(ps) then return end
 
     UIManager:close(self)
@@ -474,7 +474,7 @@ SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
             elseif key == "builtin" then
                 return koutil.tableGetValue(assistant, "querier", "handler", "has_builtin_websearch")
             elseif ToolExecutor.IsExtSearch(key) then
-                local ps = assistant:confGetProvider(key)
+                local ps = assistant.config:getProvider(key)
                 return (koutil.tableGetValue(ps, "api_key") ~= nil) or
                        (koutil.tableGetValue(ps, "base_url") ~= nil)
             end
@@ -789,8 +789,8 @@ File configuration.lua will be preserved.]]),
         {
             text = _("OTA Update"),
             callback = function(touchmenu_instance)
-                local ota_github_base = assistant:confGetFeature("ota_github_base", "https://github.com")
-                local ota_github_repo = assistant:confGetFeature("ota_github_repo", "omer-faruq/assistant.koplugin")
+                local ota_github_base = assistant.config:getFeature("ota_github_base", "https://github.com")
+                local ota_github_repo = assistant.config:getFeature("ota_github_repo", "omer-faruq/assistant.koplugin")
                 local version_input
                 version_input = InputDialog:new{
                     title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, meta.version),

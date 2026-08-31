@@ -118,7 +118,7 @@ function Querier:load_model(provider_name)
         return true
     end
 
-    local provider_setting = self.assistant:confGetProvider(provider_name)
+    local provider_setting = self.assistant.config:getProvider(provider_name)
     if not provider_setting then
         local err = T(_("Provider settings not found for: %1. Please check your configuration.lua file."),
          provider_name)
