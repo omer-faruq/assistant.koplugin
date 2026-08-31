@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — s. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - s. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\"-sammanfattning för en bok, strukturerad i specifika avsnitt som karaktärer, platser, teman, termer och begrepp, tidslinje och återinlevelse."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Fråga\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Fråga\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Du kanske finner dessa ämnen intressanta:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — välj en åtgärd"
+msgid "%1 - choose an action"
+msgstr "%1 – välj en åtgärd"
 
 msgid "(No response)"
 msgstr "(Inget svar)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Lägg till den här knappen i markeringsmenyn?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API upptaget (status: 429)</b>\n"
+"Försök %1/%2 - försök igen om"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI svarar"
 msgid "API Key"
 msgstr "API-nyckel"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API-nyckel — ange din nyckel och tryck sedan på Bläddra bland modeller för att lista tillgängliga modeller"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API-nyckel – ange din nyckel och tryck sedan på Bläddra bland modeller för att lista tillgängliga modeller"
 
 msgid "API key is required for %1."
 msgstr "API-nyckel krävs för %1."
@@ -215,10 +222,10 @@ msgstr "Lägg till anteckning"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Lägg till leverantörer från huvudmenyn:\n"
-"⚙ → AI-assistent → Inställningar → Leverantörs-API"
+"%1 -> AI-assistent -> Inställningar -> Leverantörs-API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analys av dina markeringar, anteckningar och anteckningsboksinnehåll från boken."
@@ -264,6 +271,9 @@ msgstr "Ställ en fråga till AI:n"
 
 msgid "Assistant settings are not available."
 msgstr "Assistentinställningar är inte tillgängliga."
+
+msgid "Attach Prior Text"
+msgstr "Bifoga föregående text"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Auto-recap vid öppning av länge olästa böcker"
@@ -351,10 +361,6 @@ msgstr "Konfigurera svarspråket för AI-LLM:en. Standard är KOReader-gränssni
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Den konfigurerade anteckningsboksmappen är inte tillgänglig: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Konjugation"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Kontextbegränsningar"
@@ -431,6 +437,9 @@ msgstr "Skapa en anteckningsbok."
 msgid "Cultural Significance"
 msgstr "Kulturell betydelse"
 
+msgid "Current Chapter Only"
+msgstr "Endast aktuellt kapitel"
+
 msgid "Custom Prompt"
 msgstr "Anpassad prompt"
 
@@ -490,6 +499,9 @@ msgstr "Tomt fel"
 
 msgid "Enable Stream Response"
 msgstr "Aktivera strömmande svar"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Förbättra din KOReader-upplevelse med AI"
 
 msgid "Enter Model ID"
 msgstr "Ange modell-ID"
@@ -574,8 +586,8 @@ msgstr "För detaljer, besök wikisidan 'Configuration' på GitHub."
 msgid "Fun Analogy"
 msgstr "Rolig analogi"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. Måste inkludera /models-segmentet, t.ex. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. Måste inkludera /models-segmentet, t.ex. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Allmän konversation"
@@ -696,14 +708,14 @@ msgstr "Markdown-motor"
 msgid "Meaning"
 msgstr "Betydelse"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Modell – tryck på Bläddra bland modeller för att välja en tillgänglig modell"
+
 msgid "Model Built-In"
 msgstr "Inbyggd modell"
 
 msgid "Model reset: %1"
 msgstr "Modell återställd: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Modell — tryck på Bläddra bland modeller för att välja en tillgänglig modell"
 
 msgid "Model: %1"
 msgstr "Modell: %1"
@@ -723,11 +735,14 @@ msgstr "Berättarelement i fokus:"
 msgid "New notebook"
 msgstr "Ny anteckningsbok"
 
-msgid "New notebook…"
-msgstr "Ny anteckningsbok…"
+msgid "New notebook..."
+msgstr "Ny anteckningsbok..."
 
 msgid "No"
 msgstr "Nej"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Ingen aktiv leverantör har konfigurerats. Lägg till en i Inställningar."
 
 msgid "No base folder is available for notebooks."
 msgstr "Ingen basmapp är tillgänglig för anteckningsböcker."
@@ -758,9 +773,6 @@ msgstr "Ingen text att lägga till som anteckning"
 
 msgid "No valid custom prompt found"
 msgstr "Ingen giltig anpassad prompt hittades"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Ingen giltig modellleverantör hittades i configuration.lua"
 
 msgid "None"
 msgstr "Ingen"
@@ -854,8 +866,8 @@ msgstr "Används endast av prompts som väljer att använda bokkontext (som stan
 msgid "Open conflict or mystery:"
 msgstr "Öppen konflikt eller gåta:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — Inkludera inbyggd webbsökning"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API – Inkludera inbyggd webbsökning"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI-kompatibel chat/completions-slutpunkt, t.ex. https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "Rådande känsloläge/ton:"
 msgid "Protagonist's current objective:"
 msgstr "Huvudpersonens aktuella mål:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Leverantör %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Leverantör %1 INTE KONFIGURERAD"
+
 msgid "Provider API"
 msgstr "Provider-API"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Leverantörsnamn — visas i menyer; lämna tomt för att använda API-protokollnamnet (t.ex. \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Leverantörsnamn – visas i menyer; lämna tomt för att använda API-protokollets namn (t.ex. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Providerdata har inte initierats."
@@ -913,12 +931,6 @@ msgstr "Providerposten måste vara en tabell."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Providerinställningar hittades inte för: %1. Kontrollera din configuration.lua-fil."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Leverantör ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Leverantör ▸ EJ KONFIGURERAD"
 
 msgid "Providers and Models"
 msgstr "Leverantörer och modeller"
@@ -1010,6 +1022,9 @@ msgstr "Spara konversation till"
 msgid "Saved to: %1"
 msgstr "Sparat till: %1"
 
+msgid "Scroll"
+msgstr "Rulla"
+
 msgid "Search"
 msgstr "Sök"
 
@@ -1072,6 +1087,9 @@ msgstr "Rekommendationer av liknande böcker"
 
 msgid "Simplify"
 msgstr "Förenkla"
+
+msgid "Stop"
+msgstr "Stoppa"
 
 msgid "Stopped Reason: "
 msgstr "Stopporsak: "
@@ -1230,13 +1248,13 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Användningstips\n"
 "\n"
 "Markera:\n"
-"Markera text (eller ett ord) i boken, tryck sedan på [AI-assistent] i menyn som visas.\n"
+"Markera text (eller ett ord) i boken och tryck sedan på [AI-assistent] i den meny som dyker upp.\n"
 "\n"
 "Lång tryckning:\n"
 "- På en promptknapp: Lägg till i markeringsmenyn.\n"
@@ -1244,23 +1262,20 @@ msgstr ""
 "- På Stäng-knappen för att gå tillbaka till boken i ett steg.\n"
 "\n"
 "Mycket lång tryckning (över 3 sekunder):\n"
-"På ett enskilt ord i boken för att visa markeringsmenyn (istället för ordlistan).\n"
+"På ett enskilt ord i boken för att visa markeringsmenyn (istället för ordboken).\n"
 "\n"
-"Multi-svep (t.ex. ⮠, ⮡, ↺):\n"
+"Multi-svep (t.ex. %1, %2, %3):\n"
 "På resultatdialogen för att stänga (eftersom Stäng-knappen är svår att nå).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Använd AI-assistenten för 'Översätt'"
 
-msgid "Use Book Text as Context"
-msgstr "Använd boktext som kontext"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Använd boktext för X-Ray och Recap"
 
-msgid "Use web search 🌐"
-msgstr "Använd webbsökning 🌐"
+msgid "Use web search"
+msgstr "Använd webbsökning"
 
 msgid "User:"
 msgstr "Användare:"
@@ -1274,8 +1289,11 @@ msgstr "Visa"
 msgid "Vocabulary"
 msgstr "Ordförråd"
 
-msgid "Web Search ▸ %1"
-msgstr "Webbsökning ▸ %1"
+msgid "Web Search"
+msgstr "Webbsökning"
+
+msgid "Web Search %1 %2"
+msgstr "Webbsökning %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch API"
@@ -1295,6 +1313,10 @@ msgstr "Var handlingen stannade:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Ordform & lemma"
+
 msgid "Word Origin"
 msgstr "Ordets ursprung"
 
@@ -1304,8 +1326,8 @@ msgstr "Ordet har kopierats till urklipp."
 msgid "Write quick notes here"
 msgstr "Skriv snabba anteckningar här"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Ja"
@@ -1330,15 +1352,3 @@ msgstr "fetchJSON: det gick inte att tolka returnerad data"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Rulla"
-
-msgid "▶ Scroll"
-msgstr "▶ Rulla"
-
-msgid "❌ Stop"
-msgstr "❌ Stopp"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Förbättra din KOReader-upplevelse med AI"

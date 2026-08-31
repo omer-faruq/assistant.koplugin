@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 04:38+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ภาษาไทย (AI translation)\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — หน้า %1/%2"
+msgid " - p. %1/%2"
+msgstr " - น. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "สรุปแบบ \"X-Ray\" สำหรับหนังสือ โดยจัดโครงสร้างเป็นส่วนต่างๆ เช่น ตัวละคร สถานที่ แก่นเรื่อง คำศัพท์และแนวคิด ไทม์ไลน์ และการกลับเข้าสู่เรื่องราวอีกครั้ง"
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ คำถาม\n"
+msgid "### %1 Question\n"
+msgstr "### คำถาม %1\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### คุณอาจสนใจหัวข้อเหล่านี้:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — เลือกการดำเนินการ"
+msgid "%1 - choose an action"
+msgstr "%1 - เลือกการดำเนินการ"
 
 msgid "(No response)"
 msgstr "(ไม่มีคำตอบ)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "เพิ่มปุ่มนี้ไปยังเมนูไฮไลต์หรือไม่?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API ไม่ว่าง (สถานะ: 429)</b>\n"
+"ความพยายาม %1/%2 - ลองใหม่ใน"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI กำลังตอบกลับ"
 msgid "API Key"
 msgstr "คีย์ API"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "คีย์ API — ป้อนคีย์ของคุณ จากนั้นแตะเรียกดูโมเดลเพื่อแสดงรายการโมเดลที่มี"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API Key - ป้อนคีย์ของคุณ จากนั้นแตะเรียกดูโมเดลเพื่อแสดงรายการโมเดลที่มี"
 
 msgid "API key is required for %1."
 msgstr "ต้องใช้คีย์ API สำหรับ %1"
@@ -215,10 +222,10 @@ msgstr "เพิ่มบันทึก"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "เพิ่มผู้ให้บริการจากเมนูหลัก:\n"
-"⚙ → AI Assistant → การตั้งค่า → Provider API"
+"%1 -> AI Assistant -> การตั้งค่า -> Provider API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "การวิเคราะห์ไฮไลต์ บันทึก และเนื้อหาในสมุดบันทึกของคุณจากหนังสือ"
@@ -264,6 +271,9 @@ msgstr "ถามคำถามกับ AI"
 
 msgid "Assistant settings are not available."
 msgstr "ไม่มีการตั้งค่าผู้ช่วย"
+
+msgid "Attach Prior Text"
+msgstr "แนบข้อความก่อนหน้า"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "สรุปอัตโนมัติเมื่อเปิดหนังสือที่ไม่ได้อ่านมานาน"
@@ -351,10 +361,6 @@ msgstr "กำหนดภาษาสำหรับการตอบกลั
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "ไม่สามารถเข้าถึงโฟลเดอร์สมุดบันทึกที่กำหนดค่าไว้: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "การผันคำ"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "ข้อจำกัดของบริบท"
@@ -431,6 +437,9 @@ msgstr "สร้างสมุดบันทึก"
 msgid "Cultural Significance"
 msgstr "ความสำคัญทางวัฒนธรรม"
 
+msgid "Current Chapter Only"
+msgstr "เฉพาะบทปัจจุบัน"
+
 msgid "Custom Prompt"
 msgstr "พรอมป์ต์ที่กำหนดเอง"
 
@@ -490,6 +499,9 @@ msgstr "ข้อผิดพลาดว่างเปล่า"
 
 msgid "Enable Stream Response"
 msgstr "เปิดใช้การตอบกลับแบบสตรีม"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "ยกระดับประสบการณ์ KOReader ของคุณด้วย AI"
 
 msgid "Enter Model ID"
 msgstr "ป้อนรหัสโมเดล"
@@ -574,8 +586,8 @@ msgstr "สำหรับรายละเอียด โปรดดูห�
 msgid "Fun Analogy"
 msgstr "อุปมาอุปไมยสนุก ๆ"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API ต้องมีส่วน /models เช่น …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API ต้องมีส่วน /models เช่น .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "สนทนาทั่วไป"
@@ -695,14 +707,14 @@ msgstr "เอนจิน Markdown"
 msgid "Meaning"
 msgstr "ความหมาย"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "โมเดล - แตะเรียกดูโมเดลเพื่อเลือกโมเดลที่มี"
+
 msgid "Model Built-In"
 msgstr "โมเดลในตัว"
 
 msgid "Model reset: %1"
 msgstr "รีเซ็ตโมเดลแล้ว: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "โมเดล — แตะเรียกดูโมเดลเพื่อเลือกโมเดลที่มี"
 
 msgid "Model: %1"
 msgstr "โมเดล: %1"
@@ -722,11 +734,14 @@ msgstr "องค์ประกอบของเรื่องที่กำ
 msgid "New notebook"
 msgstr "สมุดบันทึกใหม่"
 
-msgid "New notebook…"
-msgstr "สมุดบันทึกใหม่…"
+msgid "New notebook..."
+msgstr "สมุดบันทึกใหม่..."
 
 msgid "No"
 msgstr "ไม่"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "ยังไม่ได้กำหนดค่าผู้ให้บริการที่ใช้งานอยู่ โปรดเพิ่มในการตั้งค่า"
 
 msgid "No base folder is available for notebooks."
 msgstr "ไม่มีโฟลเดอร์หลักสำหรับสมุดบันทึก"
@@ -757,9 +772,6 @@ msgstr "ไม่มีข้อความสำหรับเพิ่มเ
 
 msgid "No valid custom prompt found"
 msgstr "ไม่พบพรอมต์ที่กำหนดเองที่ถูกต้อง"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "ไม่พบผู้ให้บริการโมเดลที่ถูกต้องใน configuration.lua"
 
 msgid "None"
 msgstr "ไม่มี"
@@ -853,8 +865,8 @@ msgstr "ใช้เฉพาะกับพรอมต์ที่เลือ
 msgid "Open conflict or mystery:"
 msgstr "ปมขัดแย้งหรือปริศนาที่ยังไม่คลี่คลาย:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — รวมการค้นหาเว็บในตัว"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - รวมการค้นหาเว็บในตัว"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "ปลายทาง chat/completions ที่รองรับ OpenAI เช่น https://api.openai.com/v1"
@@ -892,11 +904,17 @@ msgstr "อารมณ์/โทนโดยรวม:"
 msgid "Protagonist's current objective:"
 msgstr "เป้าหมายปัจจุบันของตัวเอก:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "ผู้ให้บริการ %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "ผู้ให้บริการ %1 ยังไม่ได้กำหนดค่า"
+
 msgid "Provider API"
 msgstr "API ของผู้ให้บริการ"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "ชื่อผู้ให้บริการ — แสดงในเมนู เว้นว่างไว้เพื่อใช้ชื่อโปรโตคอล API (เช่น \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "ชื่อผู้ให้บริการ - แสดงในเมนู; เว้นว่างไว้เพื่อใช้ชื่อโปรโตคอล API (เช่น \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "ข้อมูลผู้ให้บริการยังไม่ได้เริ่มต้น"
@@ -912,12 +930,6 @@ msgstr "ข้อมูลผู้ให้บริการต้องเป
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "ไม่พบการตั้งค่าผู้ให้บริการสำหรับ: %1 กรุณาตรวจสอบไฟล์ configuration.lua ของคุณ"
-
-msgid "Provider ▸ %1(%2)"
-msgstr "ผู้ให้บริการ ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "ผู้ให้บริการ ▸ ยังไม่ได้กำหนดค่า"
 
 msgid "Providers and Models"
 msgstr "ผู้ให้บริการและโมเดล"
@@ -1009,6 +1021,9 @@ msgstr "บันทึกบทสนทนาไปยัง"
 msgid "Saved to: %1"
 msgstr "บันทึกไปที่: %1"
 
+msgid "Scroll"
+msgstr "เลื่อน"
+
 msgid "Search"
 msgstr "ค้นหา"
 
@@ -1071,6 +1086,9 @@ msgstr "คำแนะนำหนังสือที่คล้ายกั
 
 msgid "Simplify"
 msgstr "ทำให้ง่ายขึ้น"
+
+msgid "Stop"
+msgstr "หยุด"
 
 msgid "Stopped Reason: "
 msgstr "เหตุผลที่หยุด: "
@@ -1229,37 +1247,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "เคล็ดลับการใช้งาน\n"
 "\n"
 "เลือก:\n"
-"ไฮไลต์ข้อความ (หรือคำ) ในหนังสือ จากนั้นกด [ผู้ช่วย AI] ในเมนูป๊อปอัพ\n"
+"ไฮไลต์ข้อความ (หรือคำ) ในหนังสือ จากนั้นกด [ผู้ช่วย AI] ในเมนูป๊อปอัปที่ปรากฏ\n"
 "\n"
 "กดค้าง:\n"
 "- บนปุ่มพรอมต์: เพิ่มไปยังเมนูไฮไลต์\n"
-"- บนปุ่มในเมนูไฮไลต์เพื่อลบออก\n"
-"- บนปุ่มปิดเพื่อกลับไปยังหนังสือใน 1 ขั้นตอน\n"
+"- บนปุ่มเมนูไฮไลต์เพื่อลบออก\n"
+"- บนปุ่มปิดเพื่อกลับไปยังหนังสือในขั้นตอนเดียว\n"
 "\n"
 "กดค้างนานมาก (เกิน 3 วินาที):\n"
 "บนคำเดียวในหนังสือเพื่อแสดงเมนูไฮไลต์ (แทนพจนานุกรม)\n"
 "\n"
-"ปัดหลายนิ้ว (เช่น ⮠, ⮡, ↺):\n"
-"บนกล่องผลลัพธ์เพื่อปิด (เพราะปุ่มปิดอยู่ไกลเกินเอื้อม)\n"
+"ปัดหลายนิ้ว (เช่น %1, %2, %3):\n"
+"บนกล่องผลลัพธ์เพื่อปิด (เนื่องจากปุ่มปิดอยู่ไกลเกินเอื้อม)\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "ใช้ AI Assistant สำหรับ 'แปล'"
 
-msgid "Use Book Text as Context"
-msgstr "ใช้ข้อความหนังสือเป็นบริบท"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "ใช้ข้อความหนังสือสำหรับ X-Ray และ Recap"
 
-msgid "Use web search 🌐"
-msgstr "ใช้การค้นหาเว็บ 🌐"
+msgid "Use web search"
+msgstr "ใช้การค้นหาเว็บ"
 
 msgid "User:"
 msgstr "ผู้ใช้:"
@@ -1273,8 +1288,11 @@ msgstr "ดู"
 msgid "Vocabulary"
 msgstr "คำศัพท์"
 
-msgid "Web Search ▸ %1"
-msgstr "ค้นหาเว็บ ▸ %1"
+msgid "Web Search"
+msgstr "การค้นหาเว็บ"
+
+msgid "Web Search %1 %2"
+msgstr "การค้นหาเว็บ %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch API"
@@ -1294,6 +1312,10 @@ msgstr "จุดที่เนื้อเรื่องค้างอยู
 msgid "Wikipedia"
 msgstr "วิกิพีเดีย"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "รูปคำและคำตั้งต้น"
+
 msgid "Word Origin"
 msgstr "ที่มาของคำ"
 
@@ -1303,8 +1325,8 @@ msgstr "คัดลอกคำไปยังคลิปบอร์ดแล
 msgid "Write quick notes here"
 msgstr "เขียนบันทึกย่อที่นี่"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "ใช่"
@@ -1329,15 +1351,3 @@ msgstr "fetchJSON: ไม่สามารถแยกวิเคราะห�
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ เลื่อน"
-
-msgid "▶ Scroll"
-msgstr "▶ เลื่อน"
-
-msgid "❌ Stop"
-msgstr "❌ หยุด"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 ยกระดับประสบการณ์ KOReader ของคุณด้วย AI"

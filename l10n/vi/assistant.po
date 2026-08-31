@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — tr. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - tr. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Bản tóm tắt \"X-Ray\" cho một cuốn sách, được cấu trúc thành các phần cụ thể như Nhân vật, Địa điểm, Chủ đề, Thuật ngữ & Khái niệm, Dòng thời gian và Tái hòa nhập."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Câu hỏi\n"
+msgid "### %1 Question\n"
+msgstr "### Câu hỏi %1\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Bạn có thể thấy các chủ đề này thú vị:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — chọn một hành động"
+msgid "%1 - choose an action"
+msgstr "%1 - chọn hành động"
 
 msgid "(No response)"
 msgstr "(Không có phản hồi)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Thêm nút này vào Menu Đánh dấu?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API bận (Trạng thái: 429)</b>\n"
+"Lần thử %1/%2 - thử lại sau"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI đang phản hồi"
 msgid "API Key"
 msgstr "Khóa API"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "Khóa API — nhập khóa của bạn, sau đó nhấn Duyệt Mô hình để xem danh sách mô hình khả dụng"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "Khóa API - nhập khóa của bạn, sau đó nhấn Duyệt mô hình để liệt kê các mô hình khả dụng"
 
 msgid "API key is required for %1."
 msgstr "Cần có khóa API cho %1."
@@ -215,10 +222,10 @@ msgstr "Thêm ghi chú"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Thêm nhà cung cấp từ menu chính:\n"
-"⚙ → AI Assistant → Cài đặt → API nhà cung cấp"
+"%1 -> Trợ lý AI -> Cài đặt -> API Nhà cung cấp"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Phân tích các đoạn đánh dấu, ghi chú và nội dung sổ ghi chú của bạn từ cuốn sách."
@@ -264,6 +271,9 @@ msgstr "Đặt câu hỏi cho AI"
 
 msgid "Assistant settings are not available."
 msgstr "Không có sẵn cài đặt trợ lý."
+
+msgid "Attach Prior Text"
+msgstr "Đính kèm văn bản trước đó"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Tự động tóm tắt khi mở sách đã lâu không đọc"
@@ -351,10 +361,6 @@ msgstr "Định cấu hình ngôn ngữ phản hồi của AI LLM. Mặc định
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Không thể truy cập thư mục sổ ghi chép đã cấu hình: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Chia động từ"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Giới hạn ngữ cảnh"
@@ -431,6 +437,9 @@ msgstr "Tạo một sổ ghi chép."
 msgid "Cultural Significance"
 msgstr "Ý nghĩa văn hóa"
 
+msgid "Current Chapter Only"
+msgstr "Chỉ chương hiện tại"
+
 msgid "Custom Prompt"
 msgstr "Lời nhắc tùy chỉnh"
 
@@ -490,6 +499,9 @@ msgstr "Lỗi trống"
 
 msgid "Enable Stream Response"
 msgstr "Bật phản hồi dạng stream"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Nâng cao trải nghiệm KOReader của bạn với AI"
 
 msgid "Enter Model ID"
 msgstr "Nhập ID mô hình"
@@ -574,8 +586,8 @@ msgstr "Để biết chi tiết, hãy truy cập trang wiki 'Configuration' trê
 msgid "Fun Analogy"
 msgstr "Phép so sánh thú vị"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "API Gemini. phải bao gồm đoạn /models, ví dụ: …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "API Gemini. phải bao gồm đoạn /models, ví dụ .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Trò chuyện chung"
@@ -695,14 +707,14 @@ msgstr "Công cụ Markdown"
 msgid "Meaning"
 msgstr "Nghĩa"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Mô hình - nhấn Duyệt mô hình để chọn mô hình khả dụng"
+
 msgid "Model Built-In"
 msgstr "Mô hình tích hợp sẵn"
 
 msgid "Model reset: %1"
 msgstr "Đã đặt lại mô hình: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Mô hình — nhấn Duyệt Mô hình để chọn mô hình khả dụng"
 
 msgid "Model: %1"
 msgstr "Mô hình: %1"
@@ -722,11 +734,14 @@ msgstr "Yếu tố tường thuật đang là trọng tâm:"
 msgid "New notebook"
 msgstr "Sổ ghi chép mới"
 
-msgid "New notebook…"
-msgstr "Sổ ghi chép mới…"
+msgid "New notebook..."
+msgstr "Sổ tay mới..."
 
 msgid "No"
 msgstr "Không"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Chưa cấu hình nhà cung cấp nào đang hoạt động. Vui lòng thêm trong Cài đặt."
 
 msgid "No base folder is available for notebooks."
 msgstr "Không có thư mục cơ sở nào cho sổ ghi chép."
@@ -757,9 +772,6 @@ msgstr "Không có văn bản để thêm làm ghi chú"
 
 msgid "No valid custom prompt found"
 msgstr "Không tìm thấy prompt tùy chỉnh hợp lệ"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Không tìm thấy nhà cung cấp mô hình hợp lệ trong configuration.lua"
 
 msgid "None"
 msgstr "Không có"
@@ -853,8 +865,8 @@ msgstr "Chỉ được sử dụng bởi các prompt chọn tham gia ngữ cản
 msgid "Open conflict or mystery:"
 msgstr "Xung đột hoặc bí ẩn còn bỏ ngỏ:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "API Phản hồi OpenAI — Bao gồm tìm kiếm web tích hợp"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "API Responses của OpenAI - Bao gồm tìm kiếm web tích hợp"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "Điểm cuối chat/completions tương thích OpenAI, ví dụ: https://api.openai.com/v1"
@@ -892,11 +904,17 @@ msgstr "Trạng thái cảm xúc/giọng điệu bao trùm:"
 msgid "Protagonist's current objective:"
 msgstr "Mục tiêu hiện tại của nhân vật chính:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Nhà cung cấp %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Nhà cung cấp %1 CHƯA ĐƯỢC CẤU HÌNH"
+
 msgid "Provider API"
 msgstr "API nhà cung cấp"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Tên nhà cung cấp — hiển thị trong menu; để trống để sử dụng tên giao thức API (ví dụ: \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Tên nhà cung cấp - hiển thị trong menu; để trống để dùng tên giao thức API (ví dụ \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Dữ liệu nhà cung cấp chưa được khởi tạo."
@@ -912,12 +930,6 @@ msgstr "Bản ghi nhà cung cấp phải là một bảng."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Không tìm thấy cài đặt nhà cung cấp cho: %1. Vui lòng kiểm tra tệp configuration.lua của bạn."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Nhà cung cấp ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Nhà cung cấp ▸ CHƯA ĐƯỢC CẤU HÌNH"
 
 msgid "Providers and Models"
 msgstr "Nhà cung cấp và Mô hình"
@@ -1008,6 +1020,9 @@ msgstr "Lưu hội thoại vào"
 msgid "Saved to: %1"
 msgstr "Đã lưu vào: %1"
 
+msgid "Scroll"
+msgstr "Cuộn"
+
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -1070,6 +1085,9 @@ msgstr "Gợi ý sách tương tự"
 
 msgid "Simplify"
 msgstr "Đơn giản hóa"
+
+msgid "Stop"
+msgstr "Dừng"
 
 msgid "Stopped Reason: "
 msgstr "Lý do dừng: "
@@ -1228,37 +1246,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Mẹo sử dụng\n"
 "\n"
 "Chọn:\n"
-"Tô sáng văn bản (hoặc một từ) trong sách, sau đó nhấn [Trợ lý AI] trong menu bật lên.\n"
+"Bôi đen văn bản (hoặc một từ) trong sách, sau đó nhấn [Trợ lý AI] trong menu hiện ra.\n"
 "\n"
 "Nhấn giữ:\n"
-"- Trên Nút Prompt: Thêm vào menu tô sáng.\n"
-"- Trên một nút trong menu tô sáng để xóa nó.\n"
-"- Trên nút Đóng để quay lại sách chỉ trong 1 bước.\n"
+"- Trên nút Prompt: Thêm vào menu bôi đen.\n"
+"- Trên nút menu bôi đen để xóa nó.\n"
+"- Trên nút Đóng để quay lại sách trong 1 bước.\n"
 "\n"
 "Nhấn giữ rất lâu (trên 3 giây):\n"
-"Trên một từ trong sách để hiển thị menu tô sáng (thay vì từ điển).\n"
+"Trên một từ đơn trong sách để hiển thị menu bôi đen (thay vì từ điển).\n"
 "\n"
-"Vuốt đa hướng (ví dụ: ⮠, ⮡, ↺):\n"
-"Trên hộp thoại kết quả để đóng (vì nút Đóng ở xa tầm với).\n"
+"Vuốt nhiều lần (ví dụ: %1, %2, %3):\n"
+"Trên hộp thoại kết quả để đóng (vì nút Đóng ở xa khó với tới).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Sử dụng Trợ lý AI cho 'Dịch'"
 
-msgid "Use Book Text as Context"
-msgstr "Dùng văn bản sách làm ngữ cảnh"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Dùng văn bản sách cho X-Ray và Recap"
 
-msgid "Use web search 🌐"
-msgstr "Sử dụng tìm kiếm web 🌐"
+msgid "Use web search"
+msgstr "Sử dụng tìm kiếm web"
 
 msgid "User:"
 msgstr "Người dùng:"
@@ -1272,8 +1287,11 @@ msgstr "Xem"
 msgid "Vocabulary"
 msgstr "Từ vựng"
 
-msgid "Web Search ▸ %1"
-msgstr "Tìm kiếm web ▸ %1"
+msgid "Web Search"
+msgstr "Tìm kiếm web"
+
+msgid "Web Search %1 %2"
+msgstr "Tìm kiếm web %1 %2"
 
 msgid "WebSearch API"
 msgstr "API Tìm kiếm web"
@@ -1293,6 +1311,10 @@ msgstr "Nơi câu chuyện dừng lại:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Dạng từ & Từ gốc"
+
 msgid "Word Origin"
 msgstr "Nguồn gốc từ"
 
@@ -1302,8 +1324,8 @@ msgstr "Đã sao chép từ vào bảng tạm."
 msgid "Write quick notes here"
 msgstr "Viết ghi chú nhanh tại đây"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Có"
@@ -1328,15 +1350,3 @@ msgstr "fetchJSON: không thể phân tích dữ liệu trả về"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Cuộn"
-
-msgid "▶ Scroll"
-msgstr "▶ Cuộn"
-
-msgid "❌ Stop"
-msgstr "❌ Dừng"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Nâng cao trải nghiệm KOReader của bạn với AI"

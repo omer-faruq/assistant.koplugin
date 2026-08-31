@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — p. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - p. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\"-resumo por libro, strukturita en specifajn sekciojn kiel Roluloj, Lokoj, Temoj, Terminoj kaj Konceptoj, Kronologio, kaj Re-engaĝiĝo."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Demando\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Demando\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Vi eble trovos ĉi tiujn temojn interesaj:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — elektu agon"
+msgid "%1 - choose an action"
+msgstr "%1 - elektu agon"
 
 msgid "(No response)"
 msgstr "(Neniu respondo)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Ĉu aldoni ĉi tiun butonon al la Marka Menuo?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API Okupita (Stato: 429)</b>\n"
+"Provoj %1/%2 - reprovo post"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI respondas"
 msgid "API Key"
 msgstr "API-ŝlosilo"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API-Ŝlosilo — enigu vian ŝlosilon, poste frapetu Browse Models por listigi haveblajn modelojn"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API-Ŝlosilo - enigu vian ŝlosilon, poste frapetu Browse Models por listigi disponeblajn modelojn"
 
 msgid "API key is required for %1."
 msgstr "API-ŝlosilo estas postulata por %1."
@@ -215,10 +222,10 @@ msgstr "Aldoni Noton"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Aldonu provizantojn el la ĉefa menuo:\n"
-"⚙ → AI Assistant → Agordoj → Provizanto API"
+"%1 -> AI Asistanto -> Agordoj -> API de Provizanto"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analizo de viaj elstarigoj, notoj kaj notlibra enhavo el la libro."
@@ -264,6 +271,9 @@ msgstr "Demandu ion al la AI"
 
 msgid "Assistant settings are not available."
 msgstr "La agordoj de la asistanto ne disponeblas."
+
+msgid "Attach Prior Text"
+msgstr "Alkroĉi antaŭan tekston"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Aŭtomata resumo je malfermo de longe nelegitaj libroj"
@@ -351,10 +361,6 @@ msgstr "Agordi la respondlingvon de la AI-LLM. Defaŭlte ĝi uzas la interfaclin
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "La agordita dosierujo de kajeroj ne estas alirebla: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Konjugacio"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Kuntekstaj Limigoj"
@@ -431,6 +437,9 @@ msgstr "Kreu kajeron."
 msgid "Cultural Significance"
 msgstr "Kultura Signifo"
 
+msgid "Current Chapter Only"
+msgstr "Nur la nuna ĉapitro"
+
 msgid "Custom Prompt"
 msgstr "Propra Prompto"
 
@@ -490,6 +499,9 @@ msgstr "Malplena Eraro"
 
 msgid "Enable Stream Response"
 msgstr "Ebligi Fluan Respondon"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Plibonigu vian KOReader-sperton per AI"
 
 msgid "Enter Model ID"
 msgstr "Enigu modelan ID-on"
@@ -574,8 +586,8 @@ msgstr "Por detaloj, vizitu la vikipaĝon 'Configuration' en github."
 msgid "Fun Analogy"
 msgstr "Amuza Analogio"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. devas inkluzivi la segmenton /models, ekz. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. devas inkluzivi la segmenton /models, ekz. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Ĝenerala konversacio"
@@ -696,14 +708,14 @@ msgstr "Markdown-Motoro"
 msgid "Meaning"
 msgstr "Signifo"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Modelo - frapetu Foliumi Modelojn por elekti haveblan modelon"
+
 msgid "Model Built-In"
 msgstr "Enkonstruita Modelo"
 
 msgid "Model reset: %1"
 msgstr "Modelo restarigita: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Modelo — frapetu Browse Models por elekti haveblan modelon"
 
 msgid "Model: %1"
 msgstr "Modelo: %1"
@@ -723,11 +735,14 @@ msgstr "Rakonta elemento en fokuso:"
 msgid "New notebook"
 msgstr "Nova kajero"
 
-msgid "New notebook…"
-msgstr "Nova kajero…"
+msgid "New notebook..."
+msgstr "Nova kajero..."
 
 msgid "No"
 msgstr "Ne"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Neniu aktiva provizanto estas agordita. Bonvolu aldoni unu en Agordoj."
 
 msgid "No base folder is available for notebooks."
 msgstr "Ne disponeblas baza dosierujo por kajeroj."
@@ -758,9 +773,6 @@ msgstr "Neniu teksto por aldoni kiel noton."
 
 msgid "No valid custom prompt found"
 msgstr "Neniu valida propra prompto trovita"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Neniu valida model-provizanto troviĝas en la configuration.lua."
 
 msgid "None"
 msgstr "Neniu"
@@ -854,8 +866,8 @@ msgstr "Uzata nur de promptoj, kiuj elektas librokuntekston (defaŭlte: Explain,
 msgid "Open conflict or mystery:"
 msgstr "Malferma konflikto aŭ mistero:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — Inkluzivi enkonstruitan retserĉon"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - Inkluzivi enkonstruitan retserĉon"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI-kongrua chat/completions finpunkto, ekz. https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "Dominanta emocia stato/tono:"
 msgid "Protagonist's current objective:"
 msgstr "Nuna celo de la protagonisto:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Provizanto %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Provizanto %1 NE AGORDITA"
+
 msgid "Provider API"
 msgstr "API de provizanto"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Nomo de provizanto — montrata en menuoj; lasu malplena por uzi la nomon de la API-protokolo (ekz. \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Nomo de provizanto - montrata en menuoj; lasu malplena por uzi la nomon de la API-protokolo (ekz. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Datumoj de provizanto ne estas inicializitaj."
@@ -913,12 +931,6 @@ msgstr "Registro de provizanto devas esti tabelo."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Agordoj de provizanto ne trovitaj por: %1. Bonvolu kontroli vian dosieron configuration.lua."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Provizanto ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Provizanto ▸ NE AGORDITA"
 
 msgid "Providers and Models"
 msgstr "Provizantoj kaj modeloj"
@@ -1008,6 +1020,9 @@ msgstr "Konservi konversacion al"
 msgid "Saved to: %1"
 msgstr "Konservita en: %1"
 
+msgid "Scroll"
+msgstr "Rulumu"
+
 msgid "Search"
 msgstr "Serĉi"
 
@@ -1070,6 +1085,9 @@ msgstr "Rekomendoj de similaj libroj"
 
 msgid "Simplify"
 msgstr "Plisimpligi"
+
+msgid "Stop"
+msgstr "Ĉesu"
 
 msgid "Stopped Reason: "
 msgstr "Ĉesiga kialo: "
@@ -1228,37 +1246,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Uzaj Konsiloj\n"
 "\n"
 "Elektu:\n"
-"Marku tekston (aŭ vorton) en la libro, poste premu [AI asistanto] en la aperinta menuo.\n"
+"Marku tekston (aŭ vorton) en la libro, tiam premu [AI asistanto] en la ŝprucmenuo.\n"
 "\n"
 "Longa Premo:\n"
-"- Sur Prompt-butono: Aldoni al la marka menuo.\n"
-"- Sur marka menuo butono por forigi ĝin.\n"
-"- Sur la Ferma butono por reveni al la libro en 1 paŝo.\n"
+"- Sur prompt-butono: Aldonu al la menuo de markoj.\n"
+"- Sur butono en la menuo de markoj por forigi ĝin.\n"
+"- Sur la Ferma butono por reiri al la libro en 1 paŝo.\n"
 "\n"
 "Tre Longa Premo (pli ol 3 sekundoj):\n"
-"Sur unu vorto en la libro por montri la markan menuon (anstataŭ la vortaro).\n"
+"Sur unu vorto en la libro por montri la menuon de markoj (anstataŭ la vortaro).\n"
 "\n"
-"Plur-Svingo (ekz., ⮠, ⮡, ↺):\n"
-"Sur la rezulta dialogo por fermi (ĉar la Ferma butono estas tro malproksima por atingi).\n"
+"Plursvingo (ekz., %1, %2, %3):\n"
+"Sur la rezulta dialogo por fermi (ĉar la Ferma butono estas tro for por atingi).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Uzi AI-Asistanton por 'Traduki'"
 
-msgid "Use Book Text as Context"
-msgstr "Uzi Libran Tekston kiel Kuntekston"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Uzi Libran Tekston por X-Ray kaj Recap"
 
-msgid "Use web search 🌐"
-msgstr "Uzi retserĉon 🌐"
+msgid "Use web search"
+msgstr "Uzu retserĉon"
 
 msgid "User:"
 msgstr "Uzanto:"
@@ -1272,8 +1287,11 @@ msgstr "Vidi"
 msgid "Vocabulary"
 msgstr "Vortprovizo"
 
-msgid "Web Search ▸ %1"
-msgstr "Reta Serĉo ▸ %1"
+msgid "Web Search"
+msgstr "Retserĉo"
+
+msgid "Web Search %1 %2"
+msgstr "Retserĉo %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch API"
@@ -1293,6 +1311,10 @@ msgstr "Kie la agado haltis:"
 msgid "Wikipedia"
 msgstr "Vikipedio"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Vortoformo kaj lemo"
+
 msgid "Word Origin"
 msgstr "Deveno de la vorto"
 
@@ -1302,8 +1324,8 @@ msgstr "Vorto kopiita al tondujo."
 msgid "Write quick notes here"
 msgstr "Skribu rapidajn notojn ĉi tie"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Jes"
@@ -1328,15 +1350,3 @@ msgstr "fetchJSON: malsukcesis analizi la resenditajn datumojn"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Rulumu"
-
-msgid "▶ Scroll"
-msgstr "▶ Rulumu"
-
-msgid "❌ Stop"
-msgstr "❌ Ĉesu"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Plibonigu vian KOReader-sperton per AI"

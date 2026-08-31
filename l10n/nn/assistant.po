@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — s. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - s. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\"-samandrag for ei bok, strukturert i spesifikke seksjonar som karakterar, stader, tema, omgrep og konsept, tidslinje og gjeninnleving."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Spørsmål\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Spørsmål\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Du kan finne desse emna interessante:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — vel ein handling"
+msgid "%1 - choose an action"
+msgstr "%1 - vel ein handling"
 
 msgid "(No response)"
 msgstr "(Ingen svar)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Legg til denne knappen i markeringsmenyen?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API oppteke (Status: 429)</b>\n"
+"Forsøk %1/%2 - prøv igjen om"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "KI svarar"
 msgid "API Key"
 msgstr "API-nøkkel"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API-nøkkel — skriv inn nøkkelen din, og trykk deretter på Bla gjennom modellar for å lista tilgjengelege modellar"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API-nøkkel – skriv inn nøkkelen din, og trykk Bla gjennom modellar for å lista tilgjengelege modellar."
 
 msgid "API key is required for %1."
 msgstr "API-nøkkel er påkravd for %1."
@@ -215,10 +222,10 @@ msgstr "Legg til notat"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Legg til leverandørar frå hovudmenyen:\n"
-"⚙ → AI-assistent → Innstillingar → Leverandør-API"
+"%1 -> AI-assistent -> Innstillingar -> Leverandør-API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analyse av markeringane dine, notata dine og notatbokinnhaldet ditt frå boka."
@@ -264,6 +271,9 @@ msgstr "Spør AI-en eit spørsmål"
 
 msgid "Assistant settings are not available."
 msgstr "Assistentinnstillingane er ikkje tilgjengelege."
+
+msgid "Attach Prior Text"
+msgstr "Legg ved tidlegare tekst"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Auto-recap ved opning av lenge uleste bøker"
@@ -351,10 +361,6 @@ msgstr "Konfigurer responsspråket til AI-LLM-en. Standard er grensesnittspråke
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Konfigurert notatbokmappe er ikkje tilgjengeleg: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Bøying"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Kontekstavgrensingar"
@@ -431,6 +437,9 @@ msgstr "Opprett ei notatbok."
 msgid "Cultural Significance"
 msgstr "Kulturell tyding"
 
+msgid "Current Chapter Only"
+msgstr "Berre noverande kapittel"
+
 msgid "Custom Prompt"
 msgstr "Tilpassa prompt"
 
@@ -490,6 +499,9 @@ msgstr "Tom feilmelding"
 
 msgid "Enable Stream Response"
 msgstr "Aktiver strøymande svar"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Forbetra KOReader-opplevinga di med AI"
 
 msgid "Enter Model ID"
 msgstr "Skriv inn modell-ID"
@@ -574,8 +586,8 @@ msgstr "For detaljar, sjå 'Configuration'-wikisida på GitHub."
 msgid "Fun Analogy"
 msgstr "Kjekk analogi"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. må inkludere /models-delen, t.d. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. må inkludere /models-segmentet, t.d. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Generell samtale"
@@ -696,14 +708,14 @@ msgstr "Markdown-motor"
 msgid "Meaning"
 msgstr "Tyding"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Modell - trykk på Bla gjennom modellar for å velje ein tilgjengeleg modell"
+
 msgid "Model Built-In"
 msgstr "Innebygd modell"
 
 msgid "Model reset: %1"
 msgstr "Modell tilbakestilt: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Modell — trykk Bla gjennom modellar for å velje ein tilgjengeleg modell"
 
 msgid "Model: %1"
 msgstr "Modell: %1"
@@ -723,11 +735,14 @@ msgstr "Forteljeelement i fokus:"
 msgid "New notebook"
 msgstr "Ny notatbok"
 
-msgid "New notebook…"
-msgstr "Ny notatbok…"
+msgid "New notebook..."
+msgstr "Ny notatbok..."
 
 msgid "No"
 msgstr "Nei"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Ingen aktiv leverandør er konfigurert. Legg til ein i Innstillingar."
 
 msgid "No base folder is available for notebooks."
 msgstr "Ingen grunnmappe er tilgjengeleg for notatbøker."
@@ -758,9 +773,6 @@ msgstr "Ingen tekst å leggje til som notat"
 
 msgid "No valid custom prompt found"
 msgstr "Ingen gyldig egendefinert prompt funnen."
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Ingen gyldig modell-leverandør er funnen i configuration.lua."
 
 msgid "None"
 msgstr "Ingen"
@@ -854,8 +866,8 @@ msgstr "Berre brukt av ledetekstar som vel å inkludere bokkontekst (som standar
 msgid "Open conflict or mystery:"
 msgstr "Open konflikt eller gåte:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — Inkluder innebygd nettsøk"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - Inkluder innebygd nettsøk"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI-kompatibelt chat/completions-endepunkt, t.d. https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "Rådande kjensletilstand/tone:"
 msgid "Protagonist's current objective:"
 msgstr "Hovudpersonen sitt noverande mål:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Tilbydar %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Tilbydar %1 IKKJE KONFIGURERT"
+
 msgid "Provider API"
 msgstr "Leverandør-API"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Namn på tilbydar — vist i menyar; lat stå tomt for å bruke namnet på API-protokollen (t.d. «openai»)"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Namn på tilbydar - vist i menyar; la stå tom for å bruke API-protokollnamnet (t.d. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Leverandørdata er ikkje initialisert."
@@ -913,12 +931,6 @@ msgstr "Leverandørposten må vere ein tabell."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Fann ikkje leverandørinnstillingar for: %1. Kontroller configuration.lua-fila di."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Leverandør ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Leverandør ▸ IKKJE KONFIGURERT"
 
 msgid "Providers and Models"
 msgstr "Leverandørar og modellar"
@@ -1010,6 +1022,9 @@ msgstr "Lagre samtale til"
 msgid "Saved to: %1"
 msgstr "Lagra til: %1"
 
+msgid "Scroll"
+msgstr "Rull"
+
 msgid "Search"
 msgstr "Søk"
 
@@ -1072,6 +1087,9 @@ msgstr "Tilrådingar for liknande bøker"
 
 msgid "Simplify"
 msgstr "Forenkle"
+
+msgid "Stop"
+msgstr "Stopp"
 
 msgid "Stopped Reason: "
 msgstr "Stoppårsak: "
@@ -1230,37 +1248,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Brukstips\n"
 "\n"
 "Merk:\n"
-"Merk tekst (eller eit ord) i boka, og trykk deretter [AI-assistent] i menyen som kjem opp.\n"
+"Marker tekst (eller eit ord) i boka, og trykk deretter [KI-assistent] i menyen som kjem opp.\n"
 "\n"
 "Langt trykk:\n"
-"- På ein prompt-knapp: Legg til i merkemenyen.\n"
-"- På ein knapp i merkemenyen for å fjerne han.\n"
-"- På Lukk-knappen for å gå tilbake til boka i 1 steg.\n"
+"- På ein prompt-knapp: Legg til i markeringsmenyen.\n"
+"- På ein knapp i markeringsmenyen for å fjerne han.\n"
+"- På lukkeknappen for å gå tilbake til boka i 1 steg.\n"
 "\n"
 "Svært langt trykk (over 3 sekund):\n"
-"På eit enkelt ord i boka for å vise merkemenyen (i staden for ordboka).\n"
+"På eit enkelt ord i boka for å vise markeringsmenyen (i staden for ordboka).\n"
 "\n"
-"Fleir-sveip (t.d. ⮠, ⮡, ↺):\n"
-"På resultatdialogen for å lukke (sidan Lukk-knappen er langt unna).\n"
+"Fleirsveip (t.d. %1, %2, %3):\n"
+"På resultatdialogen for å lukke (sidan lukkeknappen er langt unna).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Bruk AI-assistenten for 'Omset'."
 
-msgid "Use Book Text as Context"
-msgstr "Bruk boktekst som kontekst"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Bruk boktekst for X-Ray og Recap"
 
-msgid "Use web search 🌐"
-msgstr "Bruk nettsøk 🌐"
+msgid "Use web search"
+msgstr "Bruk nettsøk"
 
 msgid "User:"
 msgstr "Brukar:"
@@ -1274,8 +1289,11 @@ msgstr "Vis"
 msgid "Vocabulary"
 msgstr "Vokabular"
 
-msgid "Web Search ▸ %1"
-msgstr "Nettsøk ▸ %1"
+msgid "Web Search"
+msgstr "Nettsøk"
+
+msgid "Web Search %1 %2"
+msgstr "Nettsøk %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch API"
@@ -1295,6 +1313,10 @@ msgstr "Der handlinga stoppa:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Ordform og lemma"
+
 msgid "Word Origin"
 msgstr "Ordopphav"
 
@@ -1304,8 +1326,8 @@ msgstr "Ordet kopiert til utklippstavla."
 msgid "Write quick notes here"
 msgstr "Skriv snøggnotat her"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Ja"
@@ -1330,15 +1352,3 @@ msgstr "fetchJSON: klarte ikkje å tolke returnerte data"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Rull"
-
-msgid "▶ Scroll"
-msgstr "▶ Rull"
-
-msgid "❌ Stop"
-msgstr "❌ Stopp"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Forbetre KOReader-opplevinga med KI"

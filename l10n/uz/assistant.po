@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 04:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Oʻzbekcha (AI translation)\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — b. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - b. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" xulosasi kitob uchun, Qahramonlar, Joylar, Mavzular, Atamalar va tushunchalar, Vaqt jadvali va Qayta kirish kabi aniq boʻlimlarga ajratilgan."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Savol\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Savol\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Sizga quyidagi mavzular qiziq boʻlishi mumkin:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — amalni tanlang"
+msgid "%1 - choose an action"
+msgstr "%1 - amalni tanlang"
 
 msgid "(No response)"
 msgstr "(Javob yo'q)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Bu tugmani Ajratish menyusiga qo'shilsinmi?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API band (Holat: 429)</b>\n"
+"Urinishlar %1/%2 - qayta urinishgacha"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI javob bermoqda"
 msgid "API Key"
 msgstr "API kaliti"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API kaliti — kalitingizni kiriting, soʻng mavjud modellarni koʻrish uchun “Modellarni koʻrish”ni bosing"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API kaliti - kalitingizni kiriting, so'ng mavjud modellar ro'yxatini ko'rish uchun Modellarni ko'rib chiqish tugmasini bosing"
 
 msgid "API key is required for %1."
 msgstr "%1 uchun API kaliti talab qilinadi."
@@ -215,10 +222,10 @@ msgstr "Izoh qoʻshish"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
-"Provayderlarni asosiy menyudan qoʻshing:\n"
-"⚙ → AI Assistant → Sozlamalar → Provider API"
+"Provayderlarni asosiy menyudan qo'shing:\n"
+"%1 -> AI Yordamchi -> Sozlamalar -> Provayder API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Kitobdagi ajratib koʻrsatilgan matnlaringiz, eslatmalaringiz va daftar tarkibingiz tahlili."
@@ -264,6 +271,9 @@ msgstr "AI'dan savol soʻrang"
 
 msgid "Assistant settings are not available."
 msgstr "Yordamchi sozlamalari mavjud emas."
+
+msgid "Attach Prior Text"
+msgstr "Oldingi matnni biriktirish"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Uzoq vaqt oʻqilmagan kitoblarni ochishda avtomatik recap"
@@ -351,10 +361,6 @@ msgstr "AI LLM ning javob tilini sozlang. Odatiy holatda KOReader interfeys tili
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Sozlangan daftarlar papkasiga kirish imkoni yoʻq: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Tuslanish"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Kontekst cheklovlari"
@@ -431,6 +437,9 @@ msgstr "Daftar yarating."
 msgid "Cultural Significance"
 msgstr "Madaniy ahamiyat"
 
+msgid "Current Chapter Only"
+msgstr "Faqat joriy bob"
+
 msgid "Custom Prompt"
 msgstr "Maxsus prompt"
 
@@ -490,6 +499,9 @@ msgstr "Boʻsh xato"
 
 msgid "Enable Stream Response"
 msgstr "Oqimli javobni yoqish"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "KOReader tajribangizni AI yordamida yaxshilang"
 
 msgid "Enter Model ID"
 msgstr "Model ID kiriting"
@@ -574,8 +586,8 @@ msgstr "Tafsilotlar uchun github'dagi 'Configuration' wiki sahifasiga tashrif bu
 msgid "Fun Analogy"
 msgstr "Qiziqarli oʻxshatish"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. /models segmentini oʻz ichiga olishi kerak, masalan: …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. /models segmentini o'z ichiga olishi kerak, masalan .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Umumiy suhbat"
@@ -696,14 +708,14 @@ msgstr "Markdown dvijogi"
 msgid "Meaning"
 msgstr "Maʼno"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Model - mavjud modelni tanlash uchun Modellarni ko'rib chiqish tugmasini bosing"
+
 msgid "Model Built-In"
 msgstr "Modelga o'rnatilgan"
 
 msgid "Model reset: %1"
 msgstr "Model qayta tiklandi: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Model — mavjud modelni tanlash uchun “Modellarni koʻrish”ni bosing"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -723,11 +735,14 @@ msgstr "Diqqat markazidagi hikoya elementi:"
 msgid "New notebook"
 msgstr "Yangi daftar"
 
-msgid "New notebook…"
-msgstr "Yangi daftar…"
+msgid "New notebook..."
+msgstr "Yangi daftar..."
 
 msgid "No"
 msgstr "Yo'q"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Faol provayder sozlanmagan. Iltimos, Sozlamalarda bittasini qo'shing."
 
 msgid "No base folder is available for notebooks."
 msgstr "Daftarlar uchun asosiy papka mavjud emas."
@@ -758,9 +773,6 @@ msgstr "Eslatma sifatida qoʻshish uchun matn yoʻq"
 
 msgid "No valid custom prompt found"
 msgstr "Yaroqli maxsus prompt topilmadi"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "configuration.lua'da yaroqli model provayderi topilmadi"
 
 msgid "None"
 msgstr "Hech biri"
@@ -854,8 +866,8 @@ msgstr "Faqat kitob kontekstini tanlagan soʻrovlar tomonidan ishlatiladi (odati
 msgid "Open conflict or mystery:"
 msgstr "Ochiq ziddiyat yoki sir:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — oʻrnatilgan veb-qidiruvni qoʻshish"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - O'rnatilgan veb-qidiruvni o'z ichiga oladi"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI bilan mos keluvchi chat/completions manzili, masalan: https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "Hukmron hissiy holat/ohang:"
 msgid "Protagonist's current objective:"
 msgstr "Bosh qahramonning hozirgi maqsadi:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Provayder %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Provayder %1 SOZLANMAGAN"
+
 msgid "Provider API"
 msgstr "Provayder API"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Provayder nomi — menyularda koʻrsatiladi; boʻsh qoldirilsa, API protokoli nomi ishlatiladi (masalan, \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Provayder nomi - menyularda ko'rsatiladi; API protokoli nomidan foydalanish uchun bo'sh qoldiring (masalan, \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Provayder maʼlumotlari ishga tushirilmagan."
@@ -913,12 +931,6 @@ msgstr "Provayder yozuvi jadval boʻlishi kerak."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "%1 uchun provayder sozlamalari topilmadi. Iltimos, configuration.lua faylingizni tekshiring."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Provayder ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Provayder ▸ SOZLANMAGAN"
 
 msgid "Providers and Models"
 msgstr "Provayderlar va modellar"
@@ -1009,6 +1021,9 @@ msgstr "Suhbatni saqlash"
 msgid "Saved to: %1"
 msgstr "Saqlangan: %1"
 
+msgid "Scroll"
+msgstr "Aylantirish"
+
 msgid "Search"
 msgstr "Qidirish"
 
@@ -1071,6 +1086,9 @@ msgstr "Oʻxshash kitoblar tavsiyalari"
 
 msgid "Simplify"
 msgstr "Soddalashtirish"
+
+msgid "Stop"
+msgstr "To'xtatish"
 
 msgid "Stopped Reason: "
 msgstr "Toʻxtatish sababi: "
@@ -1229,37 +1247,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Foydalanish bo'yicha maslahatlar\n"
 "\n"
 "Tanlash:\n"
-"Kitobda matnni (yoki so'zni) ajratib belgilang, so'ng paydo bo'lgan menyuda [AI assistant] tugmasini bosing.\n"
+"Kitobdagi matnni (yoki so'zni) ajratib oling, so'ng qalqib chiquvchi menyuda [AI yordamchi] tugmasini bosing.\n"
 "\n"
 "Uzoq bosish:\n"
-"- Prompt tugmasida: Belgilash menyusiga qo'shish.\n"
-"- Belgilash menyusidagi tugmada: uni olib tashlash.\n"
-"- Yopish tugmasida: kitobga bir qadamda qaytish.\n"
+"- Prompt tugmasida: Ajratish menyusiga qo'shish.\n"
+"- Ajratish menyusi tugmasida uni olib tashlash uchun.\n"
+"- Yopish tugmasida kitobga bir qadamda qaytish uchun.\n"
 "\n"
 "Juda uzoq bosish (3 soniyadan ortiq):\n"
-"Kitobdagi bitta so'zda: lug'at o'rniga belgilash menyusini ko'rsatish.\n"
+"Kitobdagi bitta so'zni juda uzoq bosib, lug'at o'rniga ajratish menyusini ko'rsatish.\n"
 "\n"
-"Ko'p surish (masalan, ⮠, ⮡, ↺):\n"
-"Natija oynasida: yopish uchun (chunki Yopish tugmasi uzoqda).\n"
+"Ko'p surish (masalan, %1, %2, %3):\n"
+"Natija muloqot oynasida yopish uchun (Yopish tugmasi uzoqda bo'lgani uchun).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "'Tarjima' uchun AI yordamchisidan foydalanish"
 
-msgid "Use Book Text as Context"
-msgstr "Kitob matnini kontekst sifatida ishlatish"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "X-Ray va Recap uchun kitob matnini ishlatish"
 
-msgid "Use web search 🌐"
-msgstr "Veb-qidiruvdan foydalanish 🌐"
+msgid "Use web search"
+msgstr "Veb-qidiruvdan foydalanish"
 
 msgid "User:"
 msgstr "Foydalanuvchi:"
@@ -1273,8 +1288,11 @@ msgstr "Koʻrish"
 msgid "Vocabulary"
 msgstr "Soʻz boyligi"
 
-msgid "Web Search ▸ %1"
-msgstr "Veb-qidiruv ▸ %1"
+msgid "Web Search"
+msgstr "Veb-qidiruv"
+
+msgid "Web Search %1 %2"
+msgstr "Veb-qidiruv %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch API"
@@ -1294,6 +1312,10 @@ msgstr "Voqea qayerda toʻxtagan:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "So'z shakli va lemma"
+
 msgid "Word Origin"
 msgstr "Soʻzning kelib chiqishi"
 
@@ -1303,8 +1325,8 @@ msgstr "Soʻz almashish buferiga nusxalandi"
 msgid "Write quick notes here"
 msgstr "Tezkor eslatmalarni shu yerga yozing"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Ha"
@@ -1329,15 +1351,3 @@ msgstr "fetchJSON: qaytarilgan maʼlumotlarni tahlil qilib boʻlmadi"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Aylantirish"
-
-msgid "▶ Scroll"
-msgstr "▶ Aylantirish"
-
-msgid "❌ Stop"
-msgstr "❌ Toʻxtatish"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 KOReader tajribangizni AI bilan yaxshilang"

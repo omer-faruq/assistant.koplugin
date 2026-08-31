@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 04:21+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ଓଡ଼ିଆ (AI translation)\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — ପୃ. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - ପୃ. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" ସାରାଂଶ ଏକ ପୁସ୍ତକ ପାଇଁ, ନିର୍ଦ୍ଦିଷ୍ଟ ବିଭାଗଗୁଡ଼ିକରେ ସଜ୍ଜିତ ଯେପରିକି ଚରିତ୍ର, ସ୍ଥାନ, ବିଷୟବସ୍ତୁ, ଶବ୍ଦ ଓ ଧାରଣା, ସମୟରେଖା ଏବଂ ପୁନଃନିମଜ୍ଜନ।"
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ ପ୍ରଶ୍ନ\n"
+msgid "### %1 Question\n"
+msgstr "### %1 ପ୍ରଶ୍ନ\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### ଆପଣ ଏହି ବିଷୟଗୁଡ଼ିକୁ ଆଗ୍ରହଜନକ ପାଇପାରନ୍ତି:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — ଏକ କାର୍ଯ୍ୟ ଚୟନ କରନ୍ତୁ"
+msgid "%1 - choose an action"
+msgstr "%1 - ଏକ କାର୍ଯ୍ୟ ବାଛନ୍ତୁ"
 
 msgid "(No response)"
 msgstr "(କୌଣସି ଉତ୍ତର ନାହିଁ)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "ଏହି ବଟନ୍ କୁ ହାଇଲାଇଟ୍ ମେନୁରେ ଯୋଡ଼ିବେ?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API ବ୍ୟସ୍ତ (ସ୍ଥିତି: 429)</b>\n"
+"ପ୍ରୟାସ %1/%2 - ପୁନଃ ଚେଷ୍ଟା ପର୍ଯ୍ୟନ୍ତ"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI ଉତ୍ତର ଦେଉଛି"
 msgid "API Key"
 msgstr "API କୀ"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API କୀ — ନିଜର କୀ ପ୍ରବେଶ କରନ୍ତୁ, ତାପରେ ଉପଲବ୍ଧ ମଡେଲଗୁଡ଼ିକୁ ତାଲିକାଭୁକ୍ତ କରିବାକୁ Browse Models ଟାପ୍ କରନ୍ତୁ"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API କୀ - ଆପଣଙ୍କ କୀ ପ୍ରବେଶ କରନ୍ତୁ, ତା'ପରେ ଉପଲବ୍ଧ ମଡେଲଗୁଡ଼ିକୁ ତାଲିକାଭୁକ୍ତ କରିବା ପାଇଁ Browse Models ଟାପ୍ କରନ୍ତୁ"
 
 msgid "API key is required for %1."
 msgstr "%1 ପାଇଁ API କୀ ଆବଶ୍ୟକ।"
@@ -215,10 +222,10 @@ msgstr "ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
-"ମୁଖ୍ୟ ମେନୁରୁ ପ୍ରୋଭାଇଡର୍ ଯୋଡନ୍ତୁ:\n"
-"⚙ → AI ସହାୟକ → ସେଟିଂସ୍ → ପ୍ରୋଭାଇଡର୍ API"
+"ମୁଖ୍ୟ ମେନୁରୁ ପ୍ରଦାନକାରୀ ଯୋଡନ୍ତୁ:\n"
+"%1 -> AI Assistant -> ସେଟିଂସ -> Provider API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "ପୁସ୍ତକରୁ ଆପଣଙ୍କ ହାଇଲାଇଟ୍, ନୋଟ୍ ଏବଂ ନୋଟବୁକ୍ ବିଷୟବସ୍ତୁର ବିଶ୍ଳେଷଣ।"
@@ -264,6 +271,9 @@ msgstr "AI କୁ ଏକ ପ୍ରଶ୍ନ ପଚାରନ୍ତୁ"
 
 msgid "Assistant settings are not available."
 msgstr "ସହାୟକ ସେଟିଂସ୍ ଉପଲବ୍ଧ ନାହିଁ।"
+
+msgid "Attach Prior Text"
+msgstr "ପୂର୍ବ ପାଠ୍ୟ ସଂଲଗ୍ନ କରନ୍ତୁ"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "ଦୀର୍ଘ ସମୟ ଧରି ପଢ଼ା ଯାଇନଥିବା ବହିଗୁଡ଼ିକ ଖୋଲିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ସାରାଂଶ"
@@ -351,10 +361,6 @@ msgstr "AI LLM ର ଉତ୍ତର ଭାଷା ନିର୍ଦ୍ଧାରଣ �
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "କନଫିଗର ହୋଇଥିବା ନୋଟବୁକ୍ ଫୋଲ୍ଡର୍ ଉପଲବ୍ଧ ନାହିଁ: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "କ୍ରିୟାରୂପ"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "ପ୍ରସଙ୍ଗ ସୀମାବଦ୍ଧତା"
@@ -431,6 +437,9 @@ msgstr "ଏକ ନୋଟବୁକ୍ ସୃଷ୍ଟି କରନ୍ତୁ।"
 msgid "Cultural Significance"
 msgstr "ସାଂସ୍କୃତିକ ମହତ୍ତ୍ୱ"
 
+msgid "Current Chapter Only"
+msgstr "କେବଳ ବର୍ତ୍ତମାନ ଅଧ୍ୟାୟ"
+
 msgid "Custom Prompt"
 msgstr "କଷ୍ଟମ୍ ପ୍ରମ୍ପ୍ଟ"
 
@@ -490,6 +499,9 @@ msgstr "ଖାଲି ତ୍ରୁଟି"
 
 msgid "Enable Stream Response"
 msgstr "ଷ୍ଟ୍ରିମ୍ ଉତ୍ତର ସକ୍ଷମ କରନ୍ତୁ"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "AI ସହିତ ଆପଣଙ୍କ KOReader ଅନୁଭବକୁ ଉନ୍ନତ କରନ୍ତୁ"
 
 msgid "Enter Model ID"
 msgstr "ମଡେଲ୍ ID ପ୍ରବେଶ କରନ୍ତୁ"
@@ -574,8 +586,8 @@ msgstr "ବିବରଣୀ ପାଇଁ, github ରେ 'Configuration' ୱିକ
 msgid "Fun Analogy"
 msgstr "ମଜାଦାର ସାଦୃଶ୍ୟ"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API। ଏଥିରେ /models ସେଗମେଣ୍ଟ ଅନ୍ତର୍ଭୁକ୍ତ ହେବା ଆବଶ୍ୟକ, ଉଦାହରଣ ସ୍ୱରୂପ …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. /models ସେଗମେଣ୍ଟ ଅନ୍ତର୍ଭୁକ୍ତ କରିବା ଆବଶ୍ୟକ, ଯେପରି .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "ସାଧାରଣ ବାର୍ତ୍ତାଳାପ"
@@ -696,14 +708,14 @@ msgstr "ମାର୍କଡାଉନ୍ ଇଞ୍ଜିନ୍"
 msgid "Meaning"
 msgstr "ଅର୍ଥ"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "ମଡେଲ - ଉପଲବ୍ଧ ମଡେଲ ବାଛିବା ପାଇଁ Browse Models ଟାପ୍ କରନ୍ତୁ"
+
 msgid "Model Built-In"
 msgstr "ଅନ୍ତର୍ନିହିତ ମଡେଲ୍"
 
 msgid "Model reset: %1"
 msgstr "ମଡେଲ୍ ରିସେଟ୍: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "ମଡେଲ — ଉପଲବ୍ଧ ମଡେଲ ବାଛିବା ପାଇଁ Browse Models ଟାପ୍ କରନ୍ତୁ"
 
 msgid "Model: %1"
 msgstr "ମଡେଲ୍: %1"
@@ -723,11 +735,14 @@ msgstr "କେନ୍ଦ୍ରୀୟ କାହାଣୀ ଉପାଦାନ:"
 msgid "New notebook"
 msgstr "ନୂତନ ନୋଟବୁକ୍"
 
-msgid "New notebook…"
-msgstr "ନୂତନ ନୋଟବୁକ୍…"
+msgid "New notebook..."
+msgstr "ନୂଆ ନୋଟବୁକ୍..."
 
 msgid "No"
 msgstr "ନା"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "କୌଣସି ସକ୍ରିୟ ପ୍ରଦାନକାରୀ ବିନ୍ୟାସ କରାଯାଇ ନାହିଁ। ଦୟାକରି ସେଟିଂସରେ ଗୋଟିଏ ଯୋଡନ୍ତୁ।"
 
 msgid "No base folder is available for notebooks."
 msgstr "ନୋଟବୁକ୍ ପାଇଁ କୌଣସି ମୂଳ ଫୋଲ୍ଡର୍ ଉପଲବ୍ଧ ନାହିଁ।"
@@ -758,9 +773,6 @@ msgstr "ନୋଟ ଭାବରେ ଯୋଡ଼ିବାକୁ କୌଣସି �
 
 msgid "No valid custom prompt found"
 msgstr "କୌଣସି ବୈଧ କଷ୍ଟମ୍ ପ୍ରମ୍ପ୍ଟ ମିଳିଲା ନାହିଁ"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "configuration.lua ରେ କୌଣସି ବୈଧ ମଡେଲ୍ ପ୍ରଦାନକାରୀ ମିଳିଲା ନାହିଁ।"
 
 msgid "None"
 msgstr "କିଛି ନାହିଁ"
@@ -854,8 +866,8 @@ msgstr "କେବଳ ସେହି ପ୍ରମ୍ପ୍ଟଗୁଡ଼ିକ ଦ
 msgid "Open conflict or mystery:"
 msgstr "ଅସମାଧାନ ଦ୍ୱନ୍ଦ୍ୱ କିମ୍ବା ରହସ୍ୟ:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — ବିଲ୍ଟ-ଇନ୍ ୱେବ୍ ସର୍ଚ୍ଚ ଅନ୍ତର୍ଭୁକ୍ତ କରନ୍ତୁ"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - ବିଲ୍ଟ-ଇନ୍ ୱେବ୍ ସର୍ଚ୍ଚ ଅନ୍ତର୍ଭୁକ୍ତ କରନ୍ତୁ"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI-ସୁସଙ୍ଗତ ଚାଟ/କମ୍ପ୍ଲିସନ୍ ଏଣ୍ଡପଏଣ୍ଟ, ଉଦାହରଣ ସ୍ୱରୂପ https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "ପ୍ରଚଳିତ ଭାବଗତ ଅବସ୍ଥା/ସ୍ୱର:"
 msgid "Protagonist's current objective:"
 msgstr "ନାୟକର ବର୍ତ୍ତମାନର ଲକ୍ଷ୍ୟ:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "ପ୍ରଦାନକାରୀ %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "ପ୍ରଦାନକାରୀ %1 ବିନ୍ୟାସ କରାଯାଇନାହିଁ"
+
 msgid "Provider API"
 msgstr "ସେବା ପ୍ରଦାନକାରୀ API"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "ପ୍ରଦାନକାରୀ ନାମ — ମେନୁରେ ଦେଖାଯାଏ; API ପ୍ରୋଟୋକଲ ନାମ (ଯେପରି \"openai\") ବ୍ୟବହାର କରିବାକୁ ଖାଲି ଛାଡ଼ନ୍ତୁ"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "ପ୍ରଦାନକାରୀ ନାମ - ମେନୁରେ ଦେଖାଯିବ; API ପ୍ରୋଟୋକଲ ନାମ ବ୍ୟବହାର କରିବା ପାଇଁ ଖାଲି ଛାଡନ୍ତୁ (ଯେପରି \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "ସେବା ପ୍ରଦାନକାରୀ ଡାଟା ଆରମ୍ଭ ହୋଇନାହିଁ।"
@@ -913,12 +931,6 @@ msgstr "ସେବା ପ୍ରଦାନକାରୀ ରେକର୍ଡ ଏକ �
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "ସେବା ପ୍ରଦାନକାରୀ ସେଟିଂସ୍ %1 ପାଇଁ ମିଳିଲା ନାହିଁ। ଦୟାକରି ଆପଣଙ୍କ configuration.lua ଫାଇଲ ଯାଞ୍ଚ କରନ୍ତୁ।"
-
-msgid "Provider ▸ %1(%2)"
-msgstr "ପ୍ରୋଭାଇଡର୍ ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "ପ୍ରୋଭାଇଡର୍ ▸ କନଫିଗର୍ ହୋଇନାହିଁ"
 
 msgid "Providers and Models"
 msgstr "ପ୍ରଦାତା ଏବଂ ମଡେଲ୍"
@@ -1010,6 +1022,9 @@ msgstr "ବାର୍ତ୍ତାଳାପ ସଞ୍ଚୟ କରନ୍ତୁ"
 msgid "Saved to: %1"
 msgstr "ସଞ୍ଚୟ ହୋଇଛି: %1"
 
+msgid "Scroll"
+msgstr "ସ୍କ୍ରୋଲ୍"
+
 msgid "Search"
 msgstr "ସନ୍ଧାନ"
 
@@ -1072,6 +1087,9 @@ msgstr "ସମାନ ବହି ସୁପାରିଶ"
 
 msgid "Simplify"
 msgstr "ସରଳ କରନ୍ତୁ"
+
+msgid "Stop"
+msgstr "ବନ୍ଦ କରନ୍ତୁ"
 
 msgid "Stopped Reason: "
 msgstr "ବନ୍ଦ ହେବାର କାରଣ:"
@@ -1230,37 +1248,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "ବ୍ୟବହାର ଟିପ୍ସ\n"
 "\n"
 "ଚୟନ:\n"
-"ପୁସ୍ତକରେ ଟେକ୍ସଟ୍ (କିମ୍ବା ଗୋଟିଏ ଶବ୍ଦ) ହାଇଲାଇଟ୍ କରନ୍ତୁ, ତାପରେ ପପ୍-ଅପ୍ ମେନୁରେ [AI ସହାୟକ] ଦବାନ୍ତୁ।\n"
+"ବହିରେ ପାଠ୍ୟ (କିମ୍ବା ଏକ ଶବ୍ଦ) ହାଇଲାଇଟ୍ କରନ୍ତୁ, ତା’ପରେ ପପ୍-ଅପ୍ ମେନୁରେ [AI assistant] ଦବାନ୍ତୁ।\n"
 "\n"
-"ଦୀର୍ଘ ଦବାଅ:\n"
-"- ଏକ ପ୍ରମ୍ପ୍ଟ ବଟନ୍ ଉପରେ: ହାଇଲାଇଟ୍ ମେନୁରେ ଯୋଡ଼ନ୍ତୁ।\n"
-"- ହାଇଲାଇଟ୍ ମେନୁ ବଟନ୍ ଉପରେ ଏହାକୁ ହଟାଇବାକୁ।\n"
-"- ବନ୍ଦ ବଟନ୍ ଉପରେ 1 ପଦକ୍ଷେପରେ ପୁସ୍ତକକୁ ଫେରିବାକୁ।\n"
+"ଲମ୍ବା ଦବାନ୍ତୁ:\n"
+"- ପ୍ରମ୍ପ୍ଟ ବଟନ୍ ଉପରେ: ହାଇଲାଇଟ୍ ମେନୁରେ ଯୋଡନ୍ତୁ।\n"
+"- ହାଇଲାଇଟ୍ ମେନୁ ବଟନ୍ ଉପରେ ଏହାକୁ ହଟାଇବା ପାଇଁ।\n"
+"- ବନ୍ଦ କରନ୍ତୁ ବଟନ୍ ଉପରେ ୧ ଥରରେ ବହିକୁ ଫେରିବା ପାଇଁ।\n"
 "\n"
-"ଅତି ଦୀର୍ଘ ଦବାଅ (3 ସେକେଣ୍ଡରୁ ଅଧିକ):\n"
-"ପୁସ୍ତକର ଗୋଟିଏ ଶବ୍ଦ ଉପରେ (ଅଭିଧାନ ବଦଳରେ) ହାଇଲାଇଟ୍ ମେନୁ ଦେଖାଇବାକୁ।\n"
+"ଅତି ଲମ୍ବା ଦବାନ୍ତୁ (୩ ସେକେଣ୍ଡରୁ ଅଧିକ):\n"
+"ବହିରେ ଗୋଟିଏ ଶବ୍ଦ ଉପରେ ହାଇଲାଇଟ୍ ମେନୁ ଦେଖାଇବା ପାଇଁ (ଅଭିଧାନ ପରିବର୍ତ୍ତେ)।\n"
 "\n"
-"ମଲ୍ଟି-ସ୍ୱାଇପ୍ (ଯଥା: ⮠, ⮡, ↺):\n"
-"ଫଳାଫଳ ଡାଏଲଗ୍ ବନ୍ଦ କରିବାକୁ (କାରଣ ବନ୍ଦ ବଟନ୍ ପହଞ୍ଚିବା କଷ୍ଟକର)।\n"
+"ମଲ୍ଟି-ସ୍ୱାଇପ୍ (ଯେପରି, %1, %2, %3):\n"
+"ଫଳାଫଳ ଡାଏଲଗ୍ ଉପରେ ବନ୍ଦ କରିବା ପାଇଁ (ଯେହେତୁ ବନ୍ଦ କରନ୍ତୁ ବଟନ୍ ପହଞ୍ଚିବା ଦୂର)।\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "'ଅନୁବାଦ' ପାଇଁ AI ସହାୟକ ବ୍ୟବହାର କରନ୍ତୁ"
 
-msgid "Use Book Text as Context"
-msgstr "ବହି ପାଠ୍ୟକୁ ପ୍ରସଙ୍ଗ ଭାବରେ ବ୍ୟବହାର କରନ୍ତୁ"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "X-Ray ଏବଂ Recap ପାଇଁ ବହି ପାଠ୍ୟ ବ୍ୟବହାର କରନ୍ତୁ"
 
-msgid "Use web search 🌐"
-msgstr "ୱେବ୍ ସର୍ଚ୍ଚ ବ୍ୟବହାର କରନ୍ତୁ 🌐"
+msgid "Use web search"
+msgstr "ୱେବ୍ ସର୍ଚ୍ଚ ବ୍ୟବହାର କରନ୍ତୁ"
 
 msgid "User:"
 msgstr "ବ୍ୟବହାରକାରୀ:"
@@ -1274,8 +1289,11 @@ msgstr "ଦେଖନ୍ତୁ"
 msgid "Vocabulary"
 msgstr "ଶବ୍ଦଭଣ୍ଡାର"
 
-msgid "Web Search ▸ %1"
-msgstr "ୱେବ୍ ସର୍ଚ୍ଚ ▸ %1"
+msgid "Web Search"
+msgstr "ୱେବ୍ ସର୍ଚ୍ଚ"
+
+msgid "Web Search %1 %2"
+msgstr "ୱେବ୍ ସର୍ଚ୍ଚ %1 %2"
 
 msgid "WebSearch API"
 msgstr "ୱେବ୍ ସନ୍ଧାନ API"
@@ -1295,6 +1313,10 @@ msgstr "କାହାଣୀ କେଉଁଠାରେ ଅଟକିଥିଲା:"
 msgid "Wikipedia"
 msgstr "ଉଇକିପିଡ଼ିଆ"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "ଶବ୍ଦ ରୂପ ଓ ମୂଳ ରୂପ"
+
 msgid "Word Origin"
 msgstr "ଶବ୍ଦର ଉତ୍ପତ୍ତି"
 
@@ -1304,8 +1326,8 @@ msgstr "ଶବ୍ଦ କ୍ଲିପବୋର୍ଡ଼ରେ କପି ହୋଇ
 msgid "Write quick notes here"
 msgstr "ଏଠାରେ ଶୀଘ୍ର ନୋଟ୍ ଲେଖନ୍ତୁ"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "ହଁ"
@@ -1330,15 +1352,3 @@ msgstr "fetchJSON: ପ୍ରାପ୍ତ ଡାଟା ପାର୍ସ କରି�
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ ସ୍କ୍ରୋଲ୍ କରନ୍ତୁ"
-
-msgid "▶ Scroll"
-msgstr "▶ ସ୍କ୍ରୋଲ୍ କରନ୍ତୁ"
-
-msgid "❌ Stop"
-msgstr "❌ ବନ୍ଦ କରନ୍ତୁ"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 KOReader ଅଭିଜ୍ଞତାକୁ AI ସହିତ ବୃଦ୍ଧି କରନ୍ତୁ"

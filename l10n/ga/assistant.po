@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — lch. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - lch. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Achoimre \"X-Ray\" do leabhar, struchtúrtha ina rannóga ar leith ar nós Carachtair, Suímh, Téamaí, Téarmaí & Coincheapa, Amlíne, agus Ath-thumadh."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Ceist\n"
+msgid "### %1 Question\n"
+msgstr "### Ceist %1\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### B'fhéidir go mbeidh na hábhair seo suimiúil duit:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — roghnaigh gníomh"
+msgid "%1 - choose an action"
+msgstr "%1 - roghnaigh gníomh"
 
 msgid "(No response)"
 msgstr "(Gan freagra)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "An gcuirfear an cnaipe seo leis an Roghchlár Aibhsithe?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API Gnóthach (Stádas: 429)</b>\n"
+"Iarrachtaí %1/%2 - bain triail as arís i"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "Tá AI ag freagairt"
 msgid "API Key"
 msgstr "Eochair API"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "Eochair API — iontráil d'eochair, ansin tapáil Brabhsáil Samhlacha chun na samhlacha atá ar fáil a liostú"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "Eochair API - cuir isteach d'eochair, ansin tapáil Brabhsáil Samhlacha chun na samhlacha atá ar fáil a liostú"
 
 msgid "API key is required for %1."
 msgstr "Tá eochair API ag teastáil le haghaidh %1."
@@ -215,10 +222,10 @@ msgstr "Cuir Nóta Leis"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
-"Cuir soláthraithe leis ón bpríomh-roghchlár:\n"
-"⚙ → Cúntóir AI → Socruithe → API Soláthraí"
+"Cuir soláthróirí leis ón bpríomh-roghchlár:\n"
+"%1 -> Cúntóir AI -> Socruithe -> API Soláthróra"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Anailís ar do chuid aibhsithe, nótaí, agus ábhar an leabhar nótaí ón leabhar."
@@ -264,6 +271,9 @@ msgstr "Cuir ceist ar an AI"
 
 msgid "Assistant settings are not available."
 msgstr "Níl socruithe an chúntóra ar fáil."
+
+msgid "Attach Prior Text"
+msgstr "Ceangail Téacs Roimhe"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Achoimre uathoibríoch ar leabhair nár léadh le fada"
@@ -351,10 +361,6 @@ msgstr "Cumraigh teanga freagartha an AI LLM. Réamhshocraítear go teanga chomh
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Níl rochtain ar fhillteán na leabhar nótaí atá cumraithe: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Réimniú"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Teorainneacha Comhthéacs"
@@ -431,6 +437,9 @@ msgstr "Cruthaigh leabhar nótaí."
 msgid "Cultural Significance"
 msgstr "Tábhacht Chultúrtha"
 
+msgid "Current Chapter Only"
+msgstr "Caibidil Reatha Amháin"
+
 msgid "Custom Prompt"
 msgstr "Treoir Shaincheaptha"
 
@@ -490,6 +499,9 @@ msgstr "Earráid Fholamh"
 
 msgid "Enable Stream Response"
 msgstr "Cumasaigh Freagra Srutha"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Feabhsaigh d'eispéireas KOReader le AI"
 
 msgid "Enter Model ID"
 msgstr "Cuir isteach Aitheantas Samhla"
@@ -574,8 +586,8 @@ msgstr "Le haghaidh sonraí, tabhair cuairt ar leathanach wiki 'Configuration' a
 msgid "Fun Analogy"
 msgstr "Analaí Spraíúil"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "API Gemini. ní mór an chuid /models a bheith san áireamh, m.sh. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. caithfidh sé an deighleog /models a áireamh, m.sh. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Comhrá Ginearálta"
@@ -699,14 +711,14 @@ msgstr "Inneall Markdown"
 msgid "Meaning"
 msgstr "Brí"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Múnla - tapáil Brabhsáil Múnlaí chun múnla atá ar fáil a roghnú"
+
 msgid "Model Built-In"
 msgstr "Samhail Ionsuite"
 
 msgid "Model reset: %1"
 msgstr "Samhail athshocraithe: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Samhail — tapáil Brabhsáil Samhlacha chun samhail atá ar fáil a roghnú"
 
 msgid "Model: %1"
 msgstr "Samhail: %1"
@@ -726,11 +738,14 @@ msgstr "Gné insinte atá i bhfócas:"
 msgid "New notebook"
 msgstr "Leabhar nótaí nua"
 
-msgid "New notebook…"
-msgstr "Leabhar nótaí nua…"
+msgid "New notebook..."
+msgstr "Leabhar nótaí nua..."
 
 msgid "No"
 msgstr "Níl"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Níl aon soláthraí gníomhach cumraithe. Cuir ceann leis i Socruithe le do thoil."
 
 msgid "No base folder is available for notebooks."
 msgstr "Níl aon fhillteán bun ar fáil do na leabhair nótaí."
@@ -761,9 +776,6 @@ msgstr "Níl aon téacs le cur mar nóta"
 
 msgid "No valid custom prompt found"
 msgstr "Níor aimsíodh aon phrómpa saincheaptha bailí"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Níor aimsíodh aon soláthraí múnla bailí sa configuration.lua"
 
 msgid "None"
 msgstr "Dada"
@@ -857,8 +869,8 @@ msgstr "Úsáidtear é ach amháin ag prasanna a roghnaíonn comhthéacs an leab
 msgid "Open conflict or mystery:"
 msgstr "Coimhlint nó rúndiamhair gan réiteach:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — Cuir san áireamh cuardach gréasáin ionsuite"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - Cuir cuardach gréasáin ionsuite san áireamh"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "Críochphointe comhrá/críochnuithe atá comhoiriúnach le OpenAI, m.sh. https://api.openai.com/v1"
@@ -896,11 +908,17 @@ msgstr "Staid mhothúchánach/ton atá i réim:"
 msgid "Protagonist's current objective:"
 msgstr "Cuspóir reatha an phríomhcharachtair:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Soláthraí %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Soláthraí %1 GAN CHUMRAÍOCHT"
+
 msgid "Provider API"
 msgstr "API Soláthraí"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Ainm an tSoláthraí — ar taispeáint sna roghchláir; fág folamh chun ainm phrótacal an API a úsáid (m.sh. \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Ainm an tsoláthraí - taispeántar i roghchláir; fág bán chun ainm phrótacal an API a úsáid (m.sh. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Níl sonraí an tsoláthraí curtha ar bun."
@@ -916,12 +934,6 @@ msgstr "Ní mór taifead an tsoláthraí a bheith ina thábla."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Níor aimsíodh socruithe an tsoláthraí do: %1. Seiceáil do chomhad configuration.lua le do thoil."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Soláthraí ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Soláthraí ▸ GAN CHUMRÚ"
 
 msgid "Providers and Models"
 msgstr "Soláthraithe agus Múnlaí"
@@ -1011,6 +1023,9 @@ msgstr "Sábháil comhrá chuig"
 msgid "Saved to: %1"
 msgstr "Sábháilte chuig: %1"
 
+msgid "Scroll"
+msgstr "Scrolláil"
+
 msgid "Search"
 msgstr "Cuardaigh"
 
@@ -1073,6 +1088,9 @@ msgstr "Moltaí do Leabhair Chomhchosúla"
 
 msgid "Simplify"
 msgstr "Simpligh"
+
+msgid "Stop"
+msgstr "Stad"
 
 msgid "Stopped Reason: "
 msgstr "Cúis Stoptha: "
@@ -1231,37 +1249,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Leideanna Úsáide\n"
 "\n"
 "Roghnaigh:\n"
-"Aibhsigh téacs (nó focal) sa leabhar, ansin brúigh [AI assistant] sa roghchlár aníos.\n"
+"Aibhsigh téacs (nó focal) sa leabhar, ansin brúigh [Cúntóir AI] sa roghchlár a thagann aníos.\n"
 "\n"
 "Brú Fada:\n"
-"- Ar Chnaipe Pras: Cuir leis an roghchlár aibhsithe.\n"
-"- Ar chnaipe roghchláir aibhsithe chun é a bhaint.\n"
-"- Ar an gcnaipe Dún chun filleadh ar an leabhar in aon chéim amháin.\n"
+"- Ar Chnaipe Prompt: Cuir le roghchlár aibhsiú.\n"
+"- Ar chnaipe sa roghchlár aibhsiú chun é a bhaint.\n"
+"- Ar an gcnaipe Dún le filleadh ar an leabhar i gcéim amháin.\n"
 "\n"
-"Brú An-fhada (os cionn 3 soicind):\n"
-"Ar fhocal amháin sa leabhar chun an roghchlár aibhsithe a thaispeáint (in ionad an fhoclóra).\n"
+"Brú An-Fhada (os cionn 3 soicind):\n"
+"Ar fhocal amháin sa leabhar chun roghchlár aibhsiú a thaispeáint (in ionad an fhoclóra).\n"
 "\n"
-"Il-Swipe (m.sh., ⮠, ⮡, ↺):\n"
-"Ar an dialóg toraidh chun é a dhúnadh (mar go bhfuil an cnaipe Dún i bhfad uait).\n"
+"Il-Swipe (m.sh., %1, %2, %3):\n"
+"Ar an dialóg toraidh le dúnadh (mar go bhfuil an cnaipe Dún i bhfad uait).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Úsáid an Cúntóir AI le haghaidh 'Aistriú'"
 
-msgid "Use Book Text as Context"
-msgstr "Úsáid Téacs an Leabhair mar Chomhthéacs"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Úsáid Téacs an Leabhair le haghaidh X-Ray agus Recap"
 
-msgid "Use web search 🌐"
-msgstr "Úsáid cuardach gréasáin 🌐"
+msgid "Use web search"
+msgstr "Úsáid cuardach gréasáin"
 
 msgid "User:"
 msgstr "Úsáideoir:"
@@ -1275,8 +1290,11 @@ msgstr "Féach"
 msgid "Vocabulary"
 msgstr "Stór Focal"
 
-msgid "Web Search ▸ %1"
-msgstr "Cuardach Gréasáin ▸ %1"
+msgid "Web Search"
+msgstr "Cuardach Gréasáin"
+
+msgid "Web Search %1 %2"
+msgstr "Cuardach Gréasáin %1 %2"
 
 msgid "WebSearch API"
 msgstr "API WebSearch"
@@ -1296,6 +1314,10 @@ msgstr "Cá stop an gníomh:"
 msgid "Wikipedia"
 msgstr "Vicipéid"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Foirm Fhocail & Leama"
+
 msgid "Word Origin"
 msgstr "Bunús an Fhocail"
 
@@ -1305,8 +1327,8 @@ msgstr "Cóipeáladh an focal go dtí an ghearrthaisce."
 msgid "Write quick notes here"
 msgstr "Scríobh nótaí tapa anseo"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Tá"
@@ -1331,15 +1353,3 @@ msgstr "fetchJSON: theip ar na sonraí a tugadh ar ais a pharsáil"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Scrolláil"
-
-msgid "▶ Scroll"
-msgstr "▶ Scrolláil"
-
-msgid "❌ Stop"
-msgstr "❌ Stad"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Feabhsaigh d'eispéireas KOReader le AI"

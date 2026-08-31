@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 02:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: 简体中文 (AI translation)\n"
@@ -33,20 +33,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — 第 %1/%2 页"
+msgid " - p. %1/%2"
+msgstr " - 第 %1/%2 页"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "书籍的“X-Ray”摘要，按特定部分组织，如人物、地点、主题、术语与概念、时间线和重新沉浸。"
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ 问题\n"
+msgid "### %1 Question\n"
+msgstr "### %1 问题\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### 您可能会对这些主题感兴趣："
 
-msgid "%1 — choose an action"
-msgstr "%1 — 选择操作"
+msgid "%1 - choose an action"
+msgstr "%1 - 选择操作"
 
 msgid "(No response)"
 msgstr "（无回答）"
@@ -59,6 +59,13 @@ msgstr ""
 "<b>%1：</b> %2\n"
 "\n"
 "将此按钮添加到高亮菜单？"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API 繁忙（状态：429）</b>\n"
+"尝试 %1/%2 - 重试倒计时"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -178,8 +185,8 @@ msgstr "AI 正在响应"
 msgid "API Key"
 msgstr "API 密钥"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API 密钥 — 输入你的密钥，然后点击“浏览模型”以列出可用模型"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API 密钥 - 输入您的密钥，然后点击浏览模型以列出可用模型"
 
 msgid "API key is required for %1."
 msgstr "%1 需要 API 密钥。"
@@ -216,10 +223,10 @@ msgstr "添加笔记"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
-"从主菜单添加服务提供商：\n"
-"⚙ → AI 助手 → 设置 → 服务提供商 API"
+"从主菜单添加提供商：\n"
+"%1 -> AI 助手 -> 设置 -> API 提供商"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "对您在这本书中的高亮、笔记和笔记本内容的分析。"
@@ -265,6 +272,9 @@ msgstr "向 AI 提问"
 
 msgid "Assistant settings are not available."
 msgstr "助手设置不可用。"
+
+msgid "Attach Prior Text"
+msgstr "附加上文"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "打开长时间未读的书籍时自动 Recap"
@@ -352,10 +362,6 @@ msgstr "配置 AI 大语言模型的回复语言。默认使用 KOReader 界面�
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "配置的笔记本文件夹不可访问：%1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "动词变位"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "上下文限制"
@@ -432,6 +438,9 @@ msgstr "创建一个笔记本。"
 msgid "Cultural Significance"
 msgstr "文化意义"
 
+msgid "Current Chapter Only"
+msgstr "仅当前章节"
+
 msgid "Custom Prompt"
 msgstr "自定义提示词"
 
@@ -491,6 +500,9 @@ msgstr "空错误"
 
 msgid "Enable Stream Response"
 msgstr "启用流式响应"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "使用 AI 提升您的 KOReader 体验"
 
 msgid "Enter Model ID"
 msgstr "输入模型 ID"
@@ -575,8 +587,8 @@ msgstr "详情请参阅 github 上的“Configuration”wiki 页面。"
 msgid "Fun Analogy"
 msgstr "有趣类比"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API。必须包含 /models 段，例如 …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API。必须包含 /models 段，例如 .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "通用对话"
@@ -696,14 +708,14 @@ msgstr "Markdown 引擎"
 msgid "Meaning"
 msgstr "含义"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "模型 - 点击浏览模型以选择可用模型"
+
 msgid "Model Built-In"
 msgstr "模型内置"
 
 msgid "Model reset: %1"
 msgstr "模型已重置：%1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "模型 — 点击“浏览模型”以选择可用模型"
 
 msgid "Model: %1"
 msgstr "模型：%1"
@@ -723,11 +735,14 @@ msgstr "当前重点叙事元素："
 msgid "New notebook"
 msgstr "新建笔记本"
 
-msgid "New notebook…"
-msgstr "新建笔记本…"
+msgid "New notebook..."
+msgstr "新笔记本..."
 
 msgid "No"
 msgstr "否"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "未配置有效的提供商。请在设置中添加一个。"
 
 msgid "No base folder is available for notebooks."
 msgstr "没有可用于笔记本的基础文件夹。"
@@ -758,9 +773,6 @@ msgstr "没有可添加为笔记的文本"
 
 msgid "No valid custom prompt found"
 msgstr "未找到有效的自定义提示词"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "在 configuration.lua 中未找到有效的模型服务商"
 
 msgid "None"
 msgstr "无"
@@ -854,8 +866,8 @@ msgstr "仅用于选择启用书籍上下文的提示词（默认：解释、历
 msgid "Open conflict or mystery:"
 msgstr "未解决的冲突或谜团："
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — 包含内置联网搜索"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - 包含内置网络搜索"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "兼容 OpenAI 的 chat/completions 接口地址，例如 https://api.openai.com/v1"
@@ -893,18 +905,17 @@ msgstr "主导情绪/基调："
 msgid "Protagonist's current objective:"
 msgstr "主角当前目标："
 
-msgid "Provider  %1(%2)"
-msgstr "服务商  %1(%2)"
+msgid "Provider %1 %2(%3)"
+msgstr "服务商 %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "服务商 %1 未配置"
 
 msgid "Provider API"
 msgstr "提供商 API"
 
-msgid "Provider Name  shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "服务商名称  在菜单中显示；留空则使用 API 协议名称（例如 \"openai\"）"
-
-#, fuzzy
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "提供商名称 — 显示在菜单中；留空则使用处理程序名称"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "服务商名称 - 显示在菜单中；留空则使用 API 协议名称（例如 \"openai\"）"
 
 msgid "Provider data not initialized."
 msgstr "提供商数据未初始化。"
@@ -920,13 +931,6 @@ msgstr "提供商记录必须是表。"
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "未找到提供商 %1 的设置。请检查您的 configuration.lua 文件。"
-
-#, fuzzy
-msgid "Provider ▸ %1(%2)"
-msgstr "AI 服务商：%1（%2）"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "服务提供商 ▸ 未配置"
 
 msgid "Providers and Models"
 msgstr "提供商和模型"
@@ -1018,6 +1022,9 @@ msgstr "将对话保存到"
 msgid "Saved to: %1"
 msgstr "已保存到：%1"
 
+msgid "Scroll"
+msgstr "滚动"
+
 msgid "Search"
 msgstr "搜索"
 
@@ -1080,6 +1087,9 @@ msgstr "相似书籍推荐"
 
 msgid "Simplify"
 msgstr "简化"
+
+msgid "Stop"
+msgstr "停止"
 
 msgid "Stopped Reason: "
 msgstr "停止原因： "
@@ -1238,37 +1248,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
-"使用提示\n"
+"使用技巧\n"
 "\n"
 "选择：\n"
-"在书中高亮文本（或一个单词），然后在弹出的菜单中按 [AI 助手]。\n"
+"在书中高亮文本（或一个词），然后在弹出的菜单中选择 [AI 助手]。\n"
 "\n"
 "长按：\n"
-"- 在提示按钮上：添加到高亮菜单。\n"
-"- 在高亮菜单按钮上：移除它。\n"
-"- 在关闭按钮上：一步返回书籍。\n"
+"- 长按提示按钮：添加到高亮菜单。\n"
+"- 长按高亮菜单按钮以移除。\n"
+"- 长按关闭按钮一步返回书籍。\n"
 "\n"
-"超长按（超过 3 秒）：\n"
-"在书中的单个单词上显示高亮菜单（而不是词典）。\n"
+"超长按（超过3秒）：\n"
+"在书中的单个词上超长按，以显示高亮菜单（而不是词典）。\n"
 "\n"
-"多指滑动（例如 ⮠, ⮡, ↺）：\n"
-"在结果对话框上关闭（因为关闭按钮太远）。\n"
+"多指滑动（例如 %1、%2、%3）：\n"
+"在结果对话框上滑动以关闭（因为关闭按钮难以触及）。\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "使用 AI 助手进行“翻译”"
 
-msgid "Use Book Text as Context"
-msgstr "使用书籍文本作为上下文"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "使用书籍文本进行 X-Ray 和 Recap"
 
-msgid "Use web search 🌐"
-msgstr "使用网络搜索 🌐"
+msgid "Use web search"
+msgstr "使用网络搜索"
 
 msgid "User:"
 msgstr "用户："
@@ -1282,12 +1289,11 @@ msgstr "查看"
 msgid "Vocabulary"
 msgstr "词汇"
 
-msgid "Web Search  %1"
-msgstr "网络搜索  %1"
+msgid "Web Search"
+msgstr "网络搜索"
 
-#, fuzzy
-msgid "Web Search ▸ %1"
-msgstr "网络搜索：%1"
+msgid "Web Search %1 %2"
+msgstr "网络搜索 %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch API"
@@ -1307,6 +1313,10 @@ msgstr "情节停在哪里："
 msgid "Wikipedia"
 msgstr "维基百科"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "词形与词元"
+
 msgid "Word Origin"
 msgstr "词源"
 
@@ -1316,8 +1326,8 @@ msgstr "单词已复制到剪贴板。"
 msgid "Write quick notes here"
 msgstr "在此输入快速笔记"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "是"
@@ -1342,15 +1352,3 @@ msgstr "fetchJSON：解析返回的数据失败"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ 滚动"
-
-msgid "▶ Scroll"
-msgstr "▶ 滚动"
-
-msgid "❌ Stop"
-msgstr "❌ 停止"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 用 AI 提升您的 KOReader 体验"

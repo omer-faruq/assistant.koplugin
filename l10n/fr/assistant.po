@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — p. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - p. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Résumé « X-Ray » d'un livre, structuré en sections spécifiques comme Personnages, Lieux, Thèmes, Termes et concepts, Chronologie et Réimmersion."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Question\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Question\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Ces sujets pourraient vous intéresser :"
 
-msgid "%1 — choose an action"
-msgstr "%1 — choisissez une action"
+msgid "%1 - choose an action"
+msgstr "%1 - choisir une action"
 
 msgid "(No response)"
 msgstr "(Aucune réponse)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1 :</b> %2\n"
 "\n"
 "Ajouter ce bouton au menu Surlignage ?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API occupée (Statut : 429)</b>\n"
+"Tentatives %1/%2 - nouvelle tentative dans"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "L'IA répond"
 msgid "API Key"
 msgstr "Clé API"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "Clé API — saisissez votre clé, puis appuyez sur Parcourir les modèles pour lister les modèles disponibles"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "Clé API : saisissez votre clé, puis appuyez sur Parcourir les modèles pour lister les modèles disponibles."
 
 msgid "API key is required for %1."
 msgstr "La clé API est requise pour %1."
@@ -215,10 +222,10 @@ msgstr "Ajouter une note"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Ajoutez des fournisseurs depuis le menu principal :\n"
-"⚙ → AI Assistant → Paramètres → API du fournisseur"
+"%1 -> AI Assistant -> Réglages -> API du fournisseur"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analyse de vos surlignages, notes et contenu du carnet issus du livre."
@@ -264,6 +271,9 @@ msgstr "Poser une question à l'IA"
 
 msgid "Assistant settings are not available."
 msgstr "Les paramètres de l'assistant ne sont pas disponibles."
+
+msgid "Attach Prior Text"
+msgstr "Joindre le texte précédent"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Récapitulatif automatique à l'ouverture de livres non lus depuis longtemps"
@@ -351,10 +361,6 @@ msgstr "Configurez la langue de réponse de l'IA (LLM). Par défaut, elle corres
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Le dossier des carnets configuré n'est pas accessible : %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Conjugaison"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Limites contextuelles"
@@ -431,6 +437,9 @@ msgstr "Créer un carnet."
 msgid "Cultural Significance"
 msgstr "Importance culturelle"
 
+msgid "Current Chapter Only"
+msgstr "Chapitre actuel uniquement"
+
 msgid "Custom Prompt"
 msgstr "Prompt personnalisé"
 
@@ -490,6 +499,9 @@ msgstr "Erreur vide"
 
 msgid "Enable Stream Response"
 msgstr "Activer la réponse en streaming"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Améliorez votre expérience KOReader avec l'IA."
 
 msgid "Enter Model ID"
 msgstr "Saisir l'ID du modèle"
@@ -574,8 +586,8 @@ msgstr "Pour plus de détails, consultez la page wiki « Configuration » sur Gi
 msgid "Fun Analogy"
 msgstr "Analogie amusante"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "API Gemini. Doit inclure le segment /models, p. ex. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "API Gemini : doit inclure le segment /models, p. ex. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Conversation générale"
@@ -696,14 +708,14 @@ msgstr "Moteur Markdown"
 msgid "Meaning"
 msgstr "Signification"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Modèle - appuyez sur Parcourir les modèles pour choisir un modèle disponible"
+
 msgid "Model Built-In"
 msgstr "Modèle intégré"
 
 msgid "Model reset: %1"
 msgstr "Modèle réinitialisé : %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Modèle — appuyez sur Parcourir les modèles pour choisir un modèle disponible"
 
 msgid "Model: %1"
 msgstr "Modèle : %1"
@@ -723,11 +735,14 @@ msgstr "Élément narratif au centre de l'attention :"
 msgid "New notebook"
 msgstr "Nouveau carnet"
 
-msgid "New notebook…"
-msgstr "Nouveau carnet…"
+msgid "New notebook..."
+msgstr "Nouveau carnet..."
 
 msgid "No"
 msgstr "Non"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Aucun fournisseur actif configuré. Veuillez en ajouter un dans les réglages."
 
 msgid "No base folder is available for notebooks."
 msgstr "Aucun dossier de base n'est disponible pour les carnets."
@@ -758,9 +773,6 @@ msgstr "Aucun texte à ajouter comme note"
 
 msgid "No valid custom prompt found"
 msgstr "Aucun prompt personnalisé valide trouvé"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Aucun fournisseur de modèles valide trouvé dans configuration.lua"
 
 msgid "None"
 msgstr "Aucun"
@@ -854,8 +866,8 @@ msgstr "Uniquement utilisé par les prompts qui optent pour le contexte du livre
 msgid "Open conflict or mystery:"
 msgstr "Conflit ouvert ou mystère :"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "API Responses d'OpenAI — Inclure la recherche web intégrée"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - Inclure la recherche web intégrée"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "Point de terminaison chat/completions compatible OpenAI, p. ex. https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "État émotionnel / ton dominant :"
 msgid "Protagonist's current objective:"
 msgstr "Objectif actuel du protagoniste :"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Fournisseur %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Fournisseur %1 NON CONFIGURÉ"
+
 msgid "Provider API"
 msgstr "API du fournisseur"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Nom du fournisseur — affiché dans les menus ; laisser vide pour utiliser le nom du protocole API (p. ex. « openai »)"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Nom du fournisseur - affiché dans les menus ; laissez vide pour utiliser le nom du protocole API (par exemple \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Données du fournisseur non initialisées."
@@ -913,12 +931,6 @@ msgstr "L'enregistrement du fournisseur doit être une table."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Paramètres du fournisseur introuvables pour : %1. Veuillez vérifier votre fichier configuration.lua."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Fournisseur ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Fournisseur ▸ NON CONFIGURÉ"
 
 msgid "Providers and Models"
 msgstr "Fournisseurs et modèles"
@@ -1010,6 +1022,9 @@ msgstr "Enregistrer la conversation dans"
 msgid "Saved to: %1"
 msgstr "Enregistré dans : %1"
 
+msgid "Scroll"
+msgstr "Défiler"
+
 msgid "Search"
 msgstr "Rechercher"
 
@@ -1072,6 +1087,9 @@ msgstr "Recommandations de livres similaires"
 
 msgid "Simplify"
 msgstr "Simplifier"
+
+msgid "Stop"
+msgstr "Arrêter"
 
 msgid "Stopped Reason: "
 msgstr "Raison de l'arrêt : "
@@ -1230,37 +1248,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Conseils d'utilisation\n"
 "\n"
-"Sélection :\n"
-"Surlignez du texte (ou un mot) dans le livre, puis appuyez sur [assistant IA] dans le menu contextuel.\n"
+"Sélectionner :\n"
+"Surlignez un texte (ou un mot) dans le livre, puis appuyez sur [Assistant IA] dans le menu contextuel.\n"
 "\n"
 "Appui long :\n"
-"- Sur un bouton de prompt : ajouter au menu de surlignage.\n"
+"- Sur un bouton de prompt : Ajouter au menu de surlignage.\n"
 "- Sur un bouton du menu de surlignage pour le supprimer.\n"
 "- Sur le bouton Fermer pour revenir au livre en 1 étape.\n"
 "\n"
 "Appui très long (plus de 3 secondes) :\n"
-"Sur un mot du livre pour afficher le menu de surlignage (au lieu du dictionnaire).\n"
+"Sur un mot unique du livre pour afficher le menu de surlignage (au lieu du dictionnaire).\n"
 "\n"
-"Balayage multiple (p. ex. ⮠, ⮡, ↺) :\n"
+"Multi-glissement (par ex., %1, %2, %3) :\n"
 "Sur la boîte de dialogue des résultats pour fermer (car le bouton Fermer est difficile à atteindre).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Utiliser l'assistant IA pour « Traduire »"
 
-msgid "Use Book Text as Context"
-msgstr "Utiliser le texte du livre comme contexte"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Utiliser le texte du livre pour X-Ray et Recap"
 
-msgid "Use web search 🌐"
-msgstr "Utiliser la recherche web 🌐"
+msgid "Use web search"
+msgstr "Utiliser la recherche web"
 
 msgid "User:"
 msgstr "Utilisateur :"
@@ -1274,8 +1289,11 @@ msgstr "Afficher"
 msgid "Vocabulary"
 msgstr "Vocabulaire"
 
-msgid "Web Search ▸ %1"
-msgstr "Recherche Web ▸ %1"
+msgid "Web Search"
+msgstr "Recherche web"
+
+msgid "Web Search %1 %2"
+msgstr "Recherche web %1 %2"
 
 msgid "WebSearch API"
 msgstr "API WebSearch"
@@ -1295,6 +1313,10 @@ msgstr "Là où l'action s'est arrêtée :"
 msgid "Wikipedia"
 msgstr "Wikipédia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Forme du mot et lemme"
+
 msgid "Word Origin"
 msgstr "Origine du mot"
 
@@ -1304,8 +1326,8 @@ msgstr "Mot copié dans le presse-papiers."
 msgid "Write quick notes here"
 msgstr "Écrivez des notes rapides ici"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Oui"
@@ -1330,15 +1352,3 @@ msgstr "fetchJSON : échec de l'analyse des données renvoyées"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Défiler"
-
-msgid "▶ Scroll"
-msgstr "▶ Défiler"
-
-msgid "❌ Stop"
-msgstr "❌ Arrêter"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Améliorez votre expérience KOReader avec l'IA"

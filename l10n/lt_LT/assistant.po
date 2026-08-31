@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — p. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - p. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" knygos santrauka, suskirstyta į konkrečius skyrius, tokius kaip Veikėjai, Vietos, Temos, Terminai ir sąvokos, Chronologija ir Pakartotinis įsigilinimas."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Klausimas\n"
+msgid "### %1 Question\n"
+msgstr "### %1 klausimas\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Jums gali būti įdomios šios temos:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — pasirinkite veiksmą"
+msgid "%1 - choose an action"
+msgstr "%1 - pasirinkite veiksmą"
 
 msgid "(No response)"
 msgstr "(Nėra atsakymo)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Pridėti šį mygtuką prie pažymėjimo meniu?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API užimta (Status: 429)</b>\n"
+"Bandymas %1/%2 - kartoti po"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI atsako"
 msgid "API Key"
 msgstr "API raktas"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API raktas — įveskite savo raktą, tada bakstelėkite „Naršyti modelius“, kad būtų rodomi prieinami modeliai"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API raktas – įveskite raktą, tada bakstelėkite „Naršyti modelius“, kad pamatytumėte galimus modelius."
 
 msgid "API key is required for %1."
 msgstr "API raktas reikalingas %1."
@@ -215,10 +222,10 @@ msgstr "Pridėti pastabą"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Pridėkite teikėjus iš pagrindinio meniu:\n"
-"⚙ → AI asistentas → Nustatymai → Teikėjo API"
+"%1 -> AI asistentas -> Nustatymai -> Teikėjo API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Knygos paryškinimų, pastabų ir užrašų knygelės turinio analizė."
@@ -264,6 +271,9 @@ msgstr "Užduokite klausimą AI"
 
 msgid "Assistant settings are not available."
 msgstr "Asistento nustatymai neprieinami."
+
+msgid "Attach Prior Text"
+msgstr "Pridėti ankstesnį tekstą"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automatinė santrauka atidarius ilgai neskaičius knygų"
@@ -351,10 +361,6 @@ msgstr "Konfigūruoti AI LLM atsakymo kalbą. Pagal numatytuosius nustatymus nau
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Nustatytas užrašų knygų aplankas nepasiekiamas: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Asmenavimas"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Konteksto apribojimai"
@@ -431,6 +437,9 @@ msgstr "Sukurti užrašų knygą."
 msgid "Cultural Significance"
 msgstr "Kultūrinė reikšmė"
 
+msgid "Current Chapter Only"
+msgstr "Tik dabartinis skyrius"
+
 msgid "Custom Prompt"
 msgstr "Pasirinktinis raginimas"
 
@@ -490,6 +499,9 @@ msgstr "Tuščia klaida"
 
 msgid "Enable Stream Response"
 msgstr "Įjungti srautinį atsakymą"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Patobulinkite KOReader patirtį naudodami AI"
 
 msgid "Enter Model ID"
 msgstr "Įveskite modelio ID"
@@ -574,8 +586,8 @@ msgstr "Išsamesnės informacijos ieškokite 'Configuration' wiki puslapyje GitH
 msgid "Fun Analogy"
 msgstr "Įdomi analogija"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. turi būti įtrauktas /models segmentas, pvz., …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. turi įtraukti /models segmentą, pvz. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Bendras pokalbis"
@@ -698,14 +710,14 @@ msgstr "Markdown variklis"
 msgid "Meaning"
 msgstr "Reikšmė"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Modelis – bakstelėkite „Naršyti modelius“, kad pasirinktumėte galimą modelį"
+
 msgid "Model Built-In"
 msgstr "Modelio įtaisytasis"
 
 msgid "Model reset: %1"
 msgstr "Modelis atstatytas: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Modelis — bakstelėkite „Naršyti modelius“, kad pasirinktumėte prieinamą modelį"
 
 msgid "Model: %1"
 msgstr "Modelis: %1"
@@ -725,11 +737,14 @@ msgstr "Dėmesio centre esantis pasakojimo elementas:"
 msgid "New notebook"
 msgstr "Nauja užrašų knyga"
 
-msgid "New notebook…"
-msgstr "Nauja užrašų knyga…"
+msgid "New notebook..."
+msgstr "Naujas bloknotas..."
 
 msgid "No"
 msgstr "Ne"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Nesukonfigūruotas aktyvus paslaugų teikėjas. Prašome pridėti jį nustatymuose."
 
 msgid "No base folder is available for notebooks."
 msgstr "Nėra prieinamo pagrindinio aplanko užrašų knygoms."
@@ -760,9 +775,6 @@ msgstr "Nėra teksto, kurį būtų galima pridėti kaip pastabą."
 
 msgid "No valid custom prompt found"
 msgstr "Nerasta tinkamo pasirinktinio prompto."
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Nerastas tinkamas modelio paslaugų teikėjas configuration.lua faile."
 
 msgid "None"
 msgstr "Nėra"
@@ -856,8 +868,8 @@ msgstr "Naudojama tik tų užklausų (prompt), kurios pasirenka knygos kontekst�
 msgid "Open conflict or mystery:"
 msgstr "Atviras konfliktas ar paslaptis:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — Įtraukti įtaisytąją žiniatinklio paiešką"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API – įtraukti integruotą interneto paiešką"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "Su OpenAI suderinamas pokalbio / užbaigimo galinis taškas, pvz., https://api.openai.com/v1"
@@ -895,11 +907,17 @@ msgstr "Vyraujanti emocinė būsena/tonas:"
 msgid "Protagonist's current objective:"
 msgstr "Pagrindinio veikėjo dabartinis tikslas:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Teikėjas %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Teikėjas %1 NESUKONFIGŪRUOTAS"
+
 msgid "Provider API"
 msgstr "Teikėjo API"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Teikėjo pavadinimas — rodomas meniu; palikite tuščią, kad būtų naudojamas API protokolo pavadinimas (pvz., „openai“)"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Teikėjo pavadinimas – rodomas meniu; palikite tuščią, kad būtų naudojamas API protokolo pavadinimas (pvz., \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Teikėjo duomenys neinicijuoti."
@@ -915,12 +933,6 @@ msgstr "Teikėjo įrašas turi būti lentelė."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Teikėjo nustatymai nerasti: %1. Patikrinkite savo configuration.lua failą."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Teikėjas ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Teikėjas ▸ NESUKONFIGŪRUOTAS"
 
 msgid "Providers and Models"
 msgstr "Teikėjai ir modeliai"
@@ -1011,6 +1023,9 @@ msgstr "Išsaugoti pokalbį į"
 msgid "Saved to: %1"
 msgstr "Išsaugota į: %1"
 
+msgid "Scroll"
+msgstr "Slinkti"
+
 msgid "Search"
 msgstr "Paieška"
 
@@ -1073,6 +1088,9 @@ msgstr "Panašių knygų rekomendacijos"
 
 msgid "Simplify"
 msgstr "Supaprastinti"
+
+msgid "Stop"
+msgstr "Sustabdyti"
 
 msgid "Stopped Reason: "
 msgstr "Sustabdymo priežastis: "
@@ -1231,37 +1249,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Naudojimo patarimai\n"
 "\n"
 "Pasirinkimas:\n"
-"Pažymėkite teksto fragmentą (arba žodį) knygoje, tada paspauskite [AI asistentas] iškylančiame meniu.\n"
+"Pažymėkite knygos tekstą (arba žodį), tada spustelėkite [AI asistentas] iškylančiame meniu.\n"
 "\n"
 "Ilgas paspaudimas:\n"
-"- Ant užklausos mygtuko: pridėti į pažymėjimo meniu.\n"
-"- Ant pažymėjimo meniu mygtuko, kad jį pašalintumėte.\n"
-"- Ant mygtuko Uždaryti, kad grįžtumėte į knygą vienu žingsniu.\n"
+"- Ant užklausos mygtuko: pridėti prie paryškinimo meniu.\n"
+"- Ant paryškinimo meniu mygtuko, kad jį pašalintumėte.\n"
+"- Ant uždarymo mygtuko, kad grįžtumėte į knygą vienu žingsniu.\n"
 "\n"
 "Labai ilgas paspaudimas (ilgiau nei 3 sekundes):\n"
-"Ant vieno žodžio knygoje, kad būtų parodytas pažymėjimo meniu (vietoj žodyno).\n"
+"Ant vieno žodžio knygoje, kad būtų parodytas paryškinimo meniu (vietoj žodyno).\n"
 "\n"
-"Daugiapirštis braukimas (pvz., ⮠, ⮡, ↺):\n"
-"Ant rezultatų dialogo, kad uždarytumėte (nes mygtukas Uždaryti yra per toli).\n"
+"Kelių pirštų perbraukimas (pvz., %1, %2, %3):\n"
+"Ant rezultatų dialogo lango, kad jį uždarytumėte (nes uždarymo mygtukas yra per toli).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Naudoti AI asistentą vertimui"
 
-msgid "Use Book Text as Context"
-msgstr "Naudoti knygos tekstą kaip kontekstą"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Naudoti knygos tekstą X-Ray ir Recap funkcijoms"
 
-msgid "Use web search 🌐"
-msgstr "Naudoti interneto paiešką 🌐"
+msgid "Use web search"
+msgstr "Naudoti interneto paiešką"
 
 msgid "User:"
 msgstr "Vartotojas:"
@@ -1275,8 +1290,11 @@ msgstr "Peržiūrėti"
 msgid "Vocabulary"
 msgstr "Žodynas"
 
-msgid "Web Search ▸ %1"
-msgstr "Interneto paieška ▸ %1"
+msgid "Web Search"
+msgstr "Interneto paieška"
+
+msgid "Web Search %1 %2"
+msgstr "Interneto paieška %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch API"
@@ -1296,6 +1314,10 @@ msgstr "Kur sustojo veiksmas:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Žodžio forma ir lema"
+
 msgid "Word Origin"
 msgstr "Žodžio kilmė"
 
@@ -1305,8 +1327,8 @@ msgstr "Žodis nukopijuotas į iškarpinę."
 msgid "Write quick notes here"
 msgstr "Rašykite greitas pastabas čia"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Taip"
@@ -1331,15 +1353,3 @@ msgstr "fetchJSON: nepavyko išanalizuoti gautų duomenų"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Slinkti"
-
-msgid "▶ Scroll"
-msgstr "▶ Slinkti"
-
-msgid "❌ Stop"
-msgstr "❌ Sustabdyti"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Pagerinkite savo KOReader patirtį su AI"

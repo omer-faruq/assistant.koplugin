@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — p. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - p. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Resum «X-Ray» d'un llibre, estructurat en seccions específiques com Personatges, Llocs, Temes, Termes i conceptes, Cronologia i Re-immersió."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Pregunta\n"
+msgid "### %1 Question\n"
+msgstr "### Pregunta %1\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Potser aquests temes us resulten interessants:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — tria una acció"
+msgid "%1 - choose an action"
+msgstr "%1 - tria una acció"
 
 msgid "(No response)"
 msgstr "(Sense resposta)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Vols afegir aquest botó al menú de ressaltats?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API ocupada (Estat: 429)</b>\n"
+"Intents %1/%2 - reintenta en"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "La IA està responent"
 msgid "API Key"
 msgstr "Clau de l'API"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "Clau API — introduïu la vostra clau, després toqueu Cercar models per llistar els models disponibles"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "Clau API - introdueix la teva clau, després toca a Explora models per llistar els models disponibles."
 
 msgid "API key is required for %1."
 msgstr "Es requereix una clau d'API per a %1."
@@ -215,10 +222,10 @@ msgstr "Afegeix una nota"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
-"Afegiu proveïdors des del menú principal:\n"
-"⚙ → Assistent d'IA → Configuració → API del proveïdor"
+"Afegeix proveïdors des del menú principal:\n"
+"%1 -> Assistent d'IA -> Configuració -> API de proveïdor"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Anàlisi dels teus subratllats, notes i contingut del quadern del llibre."
@@ -264,6 +271,9 @@ msgstr "Fes una pregunta a la IA"
 
 msgid "Assistant settings are not available."
 msgstr "La configuració de l'assistent no està disponible."
+
+msgid "Attach Prior Text"
+msgstr "Adjunta text anterior"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Resum automàtic en obrir llibres no llegits durant molt de temps"
@@ -351,10 +361,6 @@ msgstr "Configura l'idioma de resposta del LLM d'IA. Per defecte, l'idioma de la
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "La carpeta de quaderns configurada no és accessible: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Conjugació"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Limitacions del context"
@@ -431,6 +437,9 @@ msgstr "Crea un quadern."
 msgid "Cultural Significance"
 msgstr "Importància cultural"
 
+msgid "Current Chapter Only"
+msgstr "Només el capítol actual"
+
 msgid "Custom Prompt"
 msgstr "Prompt personalitzat"
 
@@ -490,6 +499,9 @@ msgstr "Error buit"
 
 msgid "Enable Stream Response"
 msgstr "Activa la resposta en streaming"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Millora la teva experiència de KOReader amb IA"
 
 msgid "Enter Model ID"
 msgstr "Introdueix l'ID del model"
@@ -574,8 +586,8 @@ msgstr "Per a més detalls, visita la pàgina wiki «Configuration» a GitHub."
 msgid "Fun Analogy"
 msgstr "Analogia divertida"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "API de Gemini. ha d'incloure el segment /models, p. ex. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "API de Gemini. Ha d'incloure el segment /models, per exemple .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Conversa general"
@@ -696,14 +708,14 @@ msgstr "Motor de Markdown"
 msgid "Meaning"
 msgstr "Significat"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Model: toqueu Explora els models per triar un model disponible"
+
 msgid "Model Built-In"
 msgstr "Model integrat"
 
 msgid "Model reset: %1"
 msgstr "Model restablert: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Model: toqueu Cercar models per triar un model disponible"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -723,11 +735,14 @@ msgstr "Element narratiu central:"
 msgid "New notebook"
 msgstr "Quadern nou"
 
-msgid "New notebook…"
-msgstr "Quadern nou…"
+msgid "New notebook..."
+msgstr "Nou quadern..."
 
 msgid "No"
 msgstr "No"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "No hi ha cap proveïdor actiu configurat. Afegeix-ne un a Configuració."
 
 msgid "No base folder is available for notebooks."
 msgstr "No hi ha cap carpeta base disponible per als quaderns."
@@ -758,9 +773,6 @@ msgstr "No hi ha text per afegir com a nota"
 
 msgid "No valid custom prompt found"
 msgstr "No s'ha trobat cap indicació personalitzada vàlida."
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "No s'ha trobat cap proveïdor de models vàlid a configuration.lua"
 
 msgid "None"
 msgstr "Cap"
@@ -854,8 +866,8 @@ msgstr "Només s'utilitza per a indicacions (prompts) que accepten el context de
 msgid "Open conflict or mystery:"
 msgstr "Conflicte o misteri obert:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "API de respostes d'OpenAI: inclou cerca web integrada"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - Inclou la cerca web integrada"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "Punt final de xat/completions compatible amb OpenAI, p. ex. https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "Estat emocional/to predominant:"
 msgid "Protagonist's current objective:"
 msgstr "Objectiu actual del protagonista:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Proveïdor %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Proveïdor %1 NO CONFIGURAT"
+
 msgid "Provider API"
 msgstr "API del proveïdor"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Nom del proveïdor — es mostra als menús; deixeu-ho en blanc per utilitzar el nom del protocol de l'API (p. ex. \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Nom del proveïdor: es mostra als menús; deixeu-lo buit per fer servir el nom del protocol de l'API (p. ex. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Dades del proveïdor no inicialitzades."
@@ -913,12 +931,6 @@ msgstr "El registre del proveïdor ha de ser una taula."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "No s'ha trobat la configuració del proveïdor per a: %1. Comproveu el fitxer configuration.lua."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Proveïdor ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Proveïdor ▸ NO CONFIGURAT"
 
 msgid "Providers and Models"
 msgstr "Proveïdors i models"
@@ -1008,6 +1020,9 @@ msgstr "Desa la conversa a"
 msgid "Saved to: %1"
 msgstr "Desat a: %1"
 
+msgid "Scroll"
+msgstr "Desplaça"
+
 msgid "Search"
 msgstr "Cerca"
 
@@ -1070,6 +1085,9 @@ msgstr "Recomanacions de llibres similars"
 
 msgid "Simplify"
 msgstr "Simplifica"
+
+msgid "Stop"
+msgstr "Atura"
 
 msgid "Stopped Reason: "
 msgstr "Motiu d'aturada: "
@@ -1228,37 +1246,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Consells d'ús\n"
 "\n"
-"Seleccioneu:\n"
-"Subratlleu text (o una paraula) al llibre i, a continuació, premeu [AI assistant] al menú emergent.\n"
+"Selecció:\n"
+"Ressalteu text (o una paraula) al llibre i, a continuació, premeu [AI assistant] al menú emergent.\n"
 "\n"
-"Premsa llarga:\n"
-"- Sobre un botó de prompt: Afegeix al menú de subratllats.\n"
-"- Sobre un botó del menú de subratllats per eliminar-lo.\n"
-"- Sobre el botó Tanca per tornar al llibre en 1 pas.\n"
+"Manteniu premut:\n"
+"- En un botó de prompt: Afegeix al menú de ressaltats.\n"
+"- En un botó del menú de ressaltats per eliminar-lo.\n"
+"- En el botó Tanca per tornar al llibre en 1 pas.\n"
 "\n"
-"Premsa molt llarga (més de 3 segons):\n"
-"Sobre una sola paraula del llibre per mostrar el menú de subratllats (en lloc del diccionari).\n"
+"Manteniu premut durant molt de temps (més de 3 segons):\n"
+"En una paraula del llibre per mostrar el menú de ressaltats (en lloc del diccionari).\n"
 "\n"
-"Multidesplaçament (p. ex., ⮠, ⮡, ↺):\n"
-"Sobre el diàleg de resultats per tancar-lo (ja que el botó Tanca és lluny d'abastar).\n"
+"Lliscament múltiple (p. ex., %1, %2, %3):\n"
+"Al diàleg de resultats per tancar (ja que el botó Tanca és lluny d'abastar).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Utilitza l'Assistent d'IA per a «Traduir»"
 
-msgid "Use Book Text as Context"
-msgstr "Utilitza el text del llibre com a context"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Utilitza el text del llibre per a X-Ray i Recap"
 
-msgid "Use web search 🌐"
-msgstr "Utilitza la cerca web 🌐"
+msgid "Use web search"
+msgstr "Utilitza la cerca web"
 
 msgid "User:"
 msgstr "Usuari:"
@@ -1272,8 +1287,11 @@ msgstr "Veure"
 msgid "Vocabulary"
 msgstr "Vocabulari"
 
-msgid "Web Search ▸ %1"
-msgstr "Cerca web ▸ %1"
+msgid "Web Search"
+msgstr "Cerca web"
+
+msgid "Web Search %1 %2"
+msgstr "Cerca web %1 %2"
 
 msgid "WebSearch API"
 msgstr "API de cerca web"
@@ -1293,6 +1311,10 @@ msgstr "On es va aturar l'acció:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Forma de la paraula i lema"
+
 msgid "Word Origin"
 msgstr "Origen de la paraula"
 
@@ -1302,8 +1324,8 @@ msgstr "Paraula copiada al porta-retalls."
 msgid "Write quick notes here"
 msgstr "Escriu notes ràpides aquí"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Sí"
@@ -1328,15 +1350,3 @@ msgstr "fetchJSON: no s'ha pogut analitzar les dades retornades"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Desplaça"
-
-msgid "▶ Scroll"
-msgstr "▶ Desplaça"
-
-msgid "❌ Stop"
-msgstr "❌ Atura"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Millora la teva experiència amb KOReader amb IA"

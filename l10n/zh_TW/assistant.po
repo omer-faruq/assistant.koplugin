@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 02:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: 中文（台灣) (AI translation)\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — 第 %1/%2 頁"
+msgid " - p. %1/%2"
+msgstr " - 第 %1/%2 頁"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "書籍的「X-Ray」摘要，結構化為特定章節，例如角色、地點、主題、術語與概念、時間軸，以及重新沉浸。"
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ 問題\n"
+msgid "### %1 Question\n"
+msgstr "### %1 個問題\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### 您可能對這些主題感興趣："
 
-msgid "%1 — choose an action"
-msgstr "%1 — 選擇動作"
+msgid "%1 - choose an action"
+msgstr "%1 - 選擇動作"
 
 msgid "(No response)"
 msgstr "（無回應）"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1：</b> %2\n"
 "\n"
 "要將此按鈕新增到反白選單嗎？"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API 忙碌（狀態碼：429）</b>\n"
+"嘗試 %1/%2 - 重試等待"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI 正在回應"
 msgid "API Key"
 msgstr "API 金鑰"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API 金鑰 — 輸入您的金鑰，然後點選「瀏覽模型」以列出可用的模型"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API 金鑰 - 輸入您的金鑰，然後點選「瀏覽模型」以列出可用模型"
 
 msgid "API key is required for %1."
 msgstr "%1 需要 API 金鑰。"
@@ -215,10 +222,10 @@ msgstr "新增筆記"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
-"從主選單新增供應商：\n"
-"⚙ → AI 助理 → 設定 → 供應商 API"
+"從主選單新增提供者：\n"
+"%1 -> AI Assistant -> 設定 -> Provider API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "分析您在本書中的畫線、筆記與筆記本內容。"
@@ -264,6 +271,9 @@ msgstr "向 AI 提問"
 
 msgid "Assistant settings are not available."
 msgstr "助理設定目前無法使用。"
+
+msgid "Attach Prior Text"
+msgstr "附加前文"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "開啟久未閱讀書籍時自動回顧"
@@ -351,10 +361,6 @@ msgstr "設定 AI 語言模型（LLM）的回應語言。預設為 KOReader 的�
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "設定的筆記本資料夾無法存取：%1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "動詞變化"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "上下文限制"
@@ -431,6 +437,9 @@ msgstr "建立筆記本。"
 msgid "Cultural Significance"
 msgstr "文化意義"
 
+msgid "Current Chapter Only"
+msgstr "僅目前章節"
+
 msgid "Custom Prompt"
 msgstr "自訂提示"
 
@@ -490,6 +499,9 @@ msgstr "錯誤為空"
 
 msgid "Enable Stream Response"
 msgstr "啟用串流回覆"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "使用 AI 增強您的 KOReader 體驗"
 
 msgid "Enter Model ID"
 msgstr "輸入模型 ID"
@@ -574,8 +586,8 @@ msgstr "詳情請參閱 GitHub 上的「Configuration」Wiki 頁面。"
 msgid "Fun Analogy"
 msgstr "有趣的比喻"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API。必須包含 /models 路徑段，例如 …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API。必須包含 /models 區段，例如 .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "一般對話"
@@ -695,14 +707,14 @@ msgstr "Markdown 引擎"
 msgid "Meaning"
 msgstr "意思"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "模型 - 點選「瀏覽模型」以選擇可用模型"
+
 msgid "Model Built-In"
 msgstr "模型內建"
 
 msgid "Model reset: %1"
 msgstr "模型已重設：%1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "模型 — 點選「瀏覽模型」以選擇可用的模型"
 
 msgid "Model: %1"
 msgstr "模型：%1"
@@ -722,11 +734,14 @@ msgstr "當前敘事重點："
 msgid "New notebook"
 msgstr "新筆記本"
 
-msgid "New notebook…"
-msgstr "新筆記本…"
+msgid "New notebook..."
+msgstr "新增筆記本..."
 
 msgid "No"
 msgstr "否"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "未設定任何有效的提供者。請在設定中新增。"
 
 msgid "No base folder is available for notebooks."
 msgstr "沒有可用的筆記本基礎資料夾。"
@@ -757,9 +772,6 @@ msgstr "沒有可加入筆記的文字"
 
 msgid "No valid custom prompt found"
 msgstr "找不到有效的自訂提示"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "在 configuration.lua 中找不到有效的模型服務商"
 
 msgid "None"
 msgstr "無"
@@ -853,8 +865,8 @@ msgstr "僅用於選擇加入書籍上下文的提示（預設為：解釋、歷
 msgid "Open conflict or mystery:"
 msgstr "未解的衝突或謎團："
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — 包含內建網路搜尋"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - 包含內建網路搜尋"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "與 OpenAI 相容的聊天/補全端點，例如 https://api.openai.com/v1"
@@ -892,11 +904,17 @@ msgstr "主要情緒狀態／基調："
 msgid "Protagonist's current objective:"
 msgstr "主角目前的目標："
 
+msgid "Provider %1 %2(%3)"
+msgstr "服務提供者 %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "服務提供者 %1 尚未設定"
+
 msgid "Provider API"
 msgstr "提供者 API"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "供應商名稱 — 顯示於選單中；留空則使用 API 協定名稱（例如「openai」）"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "服務提供者名稱 - 顯示於選單中；留空則使用 API 協定名稱（例如 \"openai\"）"
 
 msgid "Provider data not initialized."
 msgstr "提供者資料尚未初始化。"
@@ -912,12 +930,6 @@ msgstr "提供者記錄必須是 table。"
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "找不到 %1 的提供者設定。請檢查您的 configuration.lua 檔案。"
-
-msgid "Provider ▸ %1(%2)"
-msgstr "供應商 ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "供應商 ▸ 未設定"
 
 msgid "Providers and Models"
 msgstr "供應商與模型"
@@ -1009,6 +1021,9 @@ msgstr "將對話儲存至"
 msgid "Saved to: %1"
 msgstr "已儲存至：%1"
 
+msgid "Scroll"
+msgstr "捲動"
+
 msgid "Search"
 msgstr "搜尋"
 
@@ -1071,6 +1086,9 @@ msgstr "類似書籍推薦"
 
 msgid "Simplify"
 msgstr "簡化"
+
+msgid "Stop"
+msgstr "停止"
 
 msgid "Stopped Reason: "
 msgstr "停止原因： "
@@ -1229,37 +1247,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
-"使用提示\n"
+"使用技巧\n"
 "\n"
 "選取：\n"
-"在書中反白文字（或單字），然後在彈出的選單中按 [AI assistant]。\n"
+"在書中標記文字（或單字），然後在彈出的選單中按下 [AI 助手]。\n"
 "\n"
 "長按：\n"
-"- 在提示按鈕上：加入反白選單。\n"
-"- 在反白選單按鈕上：移除它。\n"
+"- 在提示按鈕上：新增至標記選單。\n"
+"- 在標記選單按鈕上：將其移除。\n"
 "- 在關閉按鈕上：一步返回書籍。\n"
 "\n"
 "超長按（超過 3 秒）：\n"
-"在書中的單字上顯示反白選單（而非字典）。\n"
+"在書中的單字上顯示標記選單（而非字典）。\n"
 "\n"
-"多指滑動（例如 ⮠、⮡、↺）：\n"
-"在結果對話框上關閉（因為關閉按鈕太遠）。\n"
+"多指滑動（例如 %1, %2, %3）：\n"
+"在結果對話框上關閉（因為關閉按鈕距離較遠）。\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "使用 AI 助理進行「翻譯」"
 
-msgid "Use Book Text as Context"
-msgstr "使用書籍文字作為上下文"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "使用書籍文字進行 X-Ray 和回顧"
 
-msgid "Use web search 🌐"
-msgstr "使用網路搜尋 🌐"
+msgid "Use web search"
+msgstr "使用網路搜尋"
 
 msgid "User:"
 msgstr "使用者："
@@ -1273,8 +1288,11 @@ msgstr "檢視"
 msgid "Vocabulary"
 msgstr "詞彙"
 
-msgid "Web Search ▸ %1"
-msgstr "網路搜尋 ▸ %1"
+msgid "Web Search"
+msgstr "網路搜尋"
+
+msgid "Web Search %1 %2"
+msgstr "網路搜尋 %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch API"
@@ -1294,6 +1312,10 @@ msgstr "故事停在哪裡："
 msgid "Wikipedia"
 msgstr "維基百科"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "詞形與詞元"
+
 msgid "Word Origin"
 msgstr "詞源"
 
@@ -1303,8 +1325,8 @@ msgstr "單字已複製到剪貼簿。"
 msgid "Write quick notes here"
 msgstr "在此寫下快速筆記"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "是"
@@ -1329,15 +1351,3 @@ msgstr "fetchJSON：無法解析回傳的資料"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ 捲動"
-
-msgid "▶ Scroll"
-msgstr "▶ 捲動"
-
-msgid "❌ Stop"
-msgstr "❌ 停止"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 使用 AI 提升你的 KOReader 體驗"

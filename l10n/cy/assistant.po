@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Cymraeg (AI translation)\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — t. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - t. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Crynodeb \"X-Ray\" ar gyfer llyfr, wedi'i strwythuro'n adrannau penodol fel Cymeriadau, Lleoliadau, Themâu, Termau a Chysyniadau, Llinell Amser, ac Ail-ymgolli."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Cwestiwn\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Cwestiwn\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Efallai y bydd y pynciau hyn yn ddiddorol i chi:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — dewiswch weithred"
+msgid "%1 - choose an action"
+msgstr "%1 - dewiswch weithred"
 
 msgid "(No response)"
 msgstr "(Dim ymateb)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Ychwanegu'r botwm hwn i'r Ddewislen Amlygu?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API yn Brysur (Statws: 429)</b>\n"
+"Ymdrechion %1/%2 - ailgynnig mewn"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "Mae'r AI yn ymateb"
 msgid "API Key"
 msgstr "Allwedd API"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "Allwedd API — nodwch eich allwedd, yna tapiwch Pori Modelau i restru modelau sydd ar gael"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "Allwedd API - rhowch eich allwedd, yna tapiwch Pori Modelau i restru modelau sydd ar gael"
 
 msgid "API key is required for %1."
 msgstr "Mae angen allwedd API ar gyfer %1."
@@ -215,10 +222,10 @@ msgstr "Ychwanegu Nodyn"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Ychwanegwch ddarparwyr o'r brif ddewislen:\n"
-"⚙ → AI Assistant → Gosodiadau → Darparwr API"
+"%1 -> Cynorthwyydd AI -> Gosodiadau -> API Darparwr"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Dadansoddiad o'ch amlygiadau, nodiadau, a chynnwys eich llyfr nodiadau o'r llyfr."
@@ -264,6 +271,9 @@ msgstr "Gofynnwch gwestiwn i'r AI"
 
 msgid "Assistant settings are not available."
 msgstr "Nid yw gosodiadau'r cynorthwyydd ar gael."
+
+msgid "Attach Prior Text"
+msgstr "Atodi Testun Blaenorol"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Crynodeb awtomatig wrth agor llyfrau nas darllenwyd ers tro"
@@ -351,10 +361,6 @@ msgstr "Ffurfweddu iaith ymateb yr AI LLM. Yn defnyddio iaith rhyngwyneb KOReade
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Nid yw ffolder y llyfrau nodiadau wedi'i ffurfweddu yn hygyrch: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Ffurfiau'r Ferf"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Cyfyngiadau Cyd-destun"
@@ -431,6 +437,9 @@ msgstr "Creu llyfr nodiadau."
 msgid "Cultural Significance"
 msgstr "Arwyddocâd Diwylliannol"
 
+msgid "Current Chapter Only"
+msgstr "Pennod Gyfredol yn Unig"
+
 msgid "Custom Prompt"
 msgstr "Prompt Personol"
 
@@ -490,6 +499,9 @@ msgstr "Gwall Gwag"
 
 msgid "Enable Stream Response"
 msgstr "Galluogi Ymateb Ffrydio"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Gwella'ch profiad KOReader gydag AI"
 
 msgid "Enter Model ID"
 msgstr "Rhowch ID y Model"
@@ -574,8 +586,8 @@ msgstr "Am fanylion, ewch i dudalen wiki 'Configuration' ar github."
 msgid "Fun Analogy"
 msgstr "Cymhariaeth Hwyliog"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "API Gemini. rhaid cynnwys yr adran /models, e.e. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "API Gemini. rhaid cynnwys yr adran /models, e.e. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Sgwrs Gyffredinol"
@@ -700,14 +712,14 @@ msgstr "Peiriant Markdown"
 msgid "Meaning"
 msgstr "Ystyr"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Model - tap Pori Modelau i ddewis model sydd ar gael"
+
 msgid "Model Built-In"
 msgstr "Model Adeiledig"
 
 msgid "Model reset: %1"
 msgstr "Model wedi'i ailosod: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Model — tapiwch Pori Modelau i ddewis model sydd ar gael"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -727,11 +739,14 @@ msgstr "Elfen naratif dan sylw:"
 msgid "New notebook"
 msgstr "Llyfr nodiadau newydd"
 
-msgid "New notebook…"
-msgstr "Llyfr nodiadau newydd…"
+msgid "New notebook..."
+msgstr "Nodiadur newydd..."
 
 msgid "No"
 msgstr "Na"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Nid oes darparwr gweithredol wedi'i ffurfweddu. Ychwanegwch un yn y Gosodiadau."
 
 msgid "No base folder is available for notebooks."
 msgstr "Nid oes ffolder sylfaen ar gael ar gyfer llyfrau nodiadau."
@@ -762,9 +777,6 @@ msgstr "Dim testun i'w ychwanegu fel nodyn"
 
 msgid "No valid custom prompt found"
 msgstr "Ni chanfuwyd prompt personol dilys."
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Ni ddaethpwyd o hyd i ddarparwr model dilys yn y configuration.lua"
 
 msgid "None"
 msgstr "Dim"
@@ -858,8 +870,8 @@ msgstr "Dim ond yn cael ei ddefnyddio gan anogion sy'n dewis cyd-destun y llyfr 
 msgid "Open conflict or mystery:"
 msgstr "Gwrthdaro agored neu ddirgelwch:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "API Ymatebion OpenAI — Cynnwys chwiliad gwe adeiledig"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - Cynnwys chwiliad gwe adeiledig"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "Pwynt terfyn sgwrs/cwblhad sy'n gydnaws ag OpenAI, e.e. https://api.openai.com/v1"
@@ -897,11 +909,17 @@ msgstr "Cyflwr emosiynol/naws cyffredinol:"
 msgid "Protagonist's current objective:"
 msgstr "Amcan cyfredol y prif gymeriad:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Darparwr %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Darparwr %1 HEB EI FFURFWEDDU"
+
 msgid "Provider API"
 msgstr "API'r Darparwr"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Enw'r Darparwr — dangosir mewn dewislenni; gadewch yn wag i ddefnyddio enw protocol yr API (e.e. \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Enw Darparwr - a ddangosir mewn dewislenni; gadewch yn wag i ddefnyddio enw protocol API (e.e. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Ni chychwynnwyd data'r darparwr."
@@ -917,12 +935,6 @@ msgstr "Rhaid i gofnod y darparwr fod yn dabl."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Ni chafwyd hyd i osodiadau darparwr ar gyfer: %1. Gwiriwch eich ffeil configuration.lua."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Darparwr ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Darparwr ▸ HEB EI FFURFWEDDU"
 
 msgid "Providers and Models"
 msgstr "Darparwyr a Modelau"
@@ -1014,6 +1026,9 @@ msgstr "Cadw sgwrs i"
 msgid "Saved to: %1"
 msgstr "Wedi'i gadw i: %1"
 
+msgid "Scroll"
+msgstr "Sgrolio"
+
 msgid "Search"
 msgstr "Chwilio"
 
@@ -1076,6 +1091,9 @@ msgstr "Argymhellion Llyfrau Tebyg"
 
 msgid "Simplify"
 msgstr "Symleiddio"
+
+msgid "Stop"
+msgstr "Stop"
 
 msgid "Stopped Reason: "
 msgstr "Rheswm Stopio: "
@@ -1234,37 +1252,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Awgrymiadau Defnydd\n"
 "\n"
 "Dewis:\n"
-"Amlygwch destun (neu air) yn y llyfr, yna pwyswch [AI assistant] yn y ddewislen naid.\n"
+"Amlygwch destun (neu air) yn y llyfr, yna pwyswch [AI assistant] yn y ddewislen sy'n ymddangos.\n"
 "\n"
-"Gwasg Hir:\n"
+"Pwys Hir:\n"
 "- Ar Fotwm Prompt: Ychwanegwch at y ddewislen amlygu.\n"
 "- Ar fotwm y ddewislen amlygu i'w dynnu.\n"
 "- Ar y botwm Cau i fynd yn ôl i'r llyfr mewn 1 cam.\n"
 "\n"
-"Gwasg Hir Iawn (dros 3 eiliad):\n"
-"Ar air sengl yn y llyfr i ddangos y ddewislen amlygu (yn lle'r geiriadur).\n"
+"Pwys Hir Iawn (dros 3 eiliad):\n"
+"Ar un gair yn y llyfr i ddangos y ddewislen amlygu (yn lle'r geiriadur).\n"
 "\n"
-"Llithriad Lluosog (e.e., ⮠, ⮡, ↺):\n"
-"Ar y deialog canlyniad i gau (gan fod y botwm Cau yn bell i'w gyrraedd).\n"
+"Llithro Lluosog (e.e., %1, %2, %3):\n"
+"Ar y deialog canlyniad i gau (gan fod y botwm Cau ymhell i gyrraedd).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Defnyddio Cynorthwyydd AI ar gyfer 'Cyfieithu'"
 
-msgid "Use Book Text as Context"
-msgstr "Defnyddio Testun y Llyfr fel Cyd-destun"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Defnyddio Testun y Llyfr ar gyfer X-Ray a Recap"
 
-msgid "Use web search 🌐"
-msgstr "Defnyddio chwiliad gwe 🌐"
+msgid "Use web search"
+msgstr "Defnyddio chwiliad gwe"
 
 msgid "User:"
 msgstr "Defnyddiwr:"
@@ -1278,8 +1293,11 @@ msgstr "Gweld"
 msgid "Vocabulary"
 msgstr "Geirfa"
 
-msgid "Web Search ▸ %1"
-msgstr "Chwilio Gwe ▸ %1"
+msgid "Web Search"
+msgstr "Chwiliad Gwe"
+
+msgid "Web Search %1 %2"
+msgstr "Chwiliad Gwe %1 %2"
 
 msgid "WebSearch API"
 msgstr "API Chwilio'r We"
@@ -1299,6 +1317,10 @@ msgstr "Lle stopiodd y gweithredu:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Ffurf Gair a Lemma"
+
 msgid "Word Origin"
 msgstr "Tarddiad y Gair"
 
@@ -1308,8 +1330,8 @@ msgstr "Copïwyd y gair i'r clipfwrdd."
 msgid "Write quick notes here"
 msgstr "Ysgrifennwch nodiadau cyflym yma"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Ie"
@@ -1334,15 +1356,3 @@ msgstr "fetchJSON: methodd â pharsio'r data a ddychwelwyd"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Sgrolio"
-
-msgid "▶ Scroll"
-msgstr "▶ Sgrolio"
-
-msgid "❌ Stop"
-msgstr "❌ Stopio"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Gwella eich profiad KOReader gydag AI"

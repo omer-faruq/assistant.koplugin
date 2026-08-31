@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — s. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - s. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" zhrnutie knihy, štruktúrované do konkrétnych sekcií, ako sú Postavy, Miesta, Témy, Pojmy a koncepty, Časová os a Opätovné ponorenie."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Otázka\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Otázka\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Morda vas bodo te teme zanimale:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — vyberte akciu"
+msgid "%1 - choose an action"
+msgstr "%1 – vyberte akciu"
 
 msgid "(No response)"
 msgstr "(Žiadna odpoveď)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Pridať toto tlačidlo do ponuky zvýraznenia?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API zaneprázdnené (Stav: 429)</b>\n"
+"Pokus %1/%2 – opakovať o"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI odpovedá"
 msgid "API Key"
 msgstr "API kľúč"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API ključ — vnesite svoj ključ, nato tapnite Brskaj po modelih, da prikažete razpoložljive modele"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "Kľúč API – zadajte svoj kľúč a potom klepnite na Prehľadávať modely pre zobrazenie dostupných modelov"
 
 msgid "API key is required for %1."
 msgstr "Pre %1 sa vyžaduje API kľúč."
@@ -215,10 +222,10 @@ msgstr "Dodaj opombo"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
-"Dodajte ponudnike iz glavnega menija:\n"
-"⚙ → AI asistent → Nastavitve → API ponudnika"
+"Pridajte poskytovateľov z hlavnej ponuky:\n"
+"%1 -> Asistent AI -> Nastavenia -> API poskytovateľa"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analýza vašich zvýraznení, poznámok a obsahu NoteBooku z knihy."
@@ -264,6 +271,9 @@ msgstr "Položte otázku AI"
 
 msgid "Assistant settings are not available."
 msgstr "Nastavitve asistenta niso na voljo."
+
+msgid "Attach Prior Text"
+msgstr "Pripojiť predchádzajúci text"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Samodejni povzetek ob odprtju dolgo neprebranih knjig"
@@ -351,10 +361,6 @@ msgstr "Nastavi jezik odgovorov AI LLM. Privzeto se uporabi jezik vmesnika KORea
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Nastavljena mapa beležnic ni dostopna: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Časovanie"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Obmedzenia kontextu"
@@ -431,6 +437,9 @@ msgstr "Ustvari beležnico."
 msgid "Cultural Significance"
 msgstr "Kultúrny význam"
 
+msgid "Current Chapter Only"
+msgstr "Iba aktuálna kapitola"
+
 msgid "Custom Prompt"
 msgstr "Vlastný prompt"
 
@@ -490,6 +499,9 @@ msgstr "Prazna napaka"
 
 msgid "Enable Stream Response"
 msgstr "Omogoči pretakanje odgovora"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Vylepšite si zážitok z KOReader pomocou AI"
 
 msgid "Enter Model ID"
 msgstr "Zadajte ID modelu"
@@ -574,8 +586,8 @@ msgstr "Podrobnosti nájdete na wiki stránke 'Configuration' na GitHube."
 msgid "Fun Analogy"
 msgstr "Zábavná analógia"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. Vključevati mora segment /models, npr. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. musí obsahovať segment /models, napr. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Všeobecná konverzácia"
@@ -698,14 +710,14 @@ msgstr "Markdown pogon"
 msgid "Meaning"
 msgstr "Význam"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Model – klepnite na Prehľadávať modely pre výber dostupného modelu"
+
 msgid "Model Built-In"
 msgstr "Vstavaný model"
 
 msgid "Model reset: %1"
 msgstr "Reset modelu: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Model — tapnite Brskaj po modelih, da izberete razpoložljiv model"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -725,11 +737,14 @@ msgstr "Rozprávačský prvok v centre pozornosti:"
 msgid "New notebook"
 msgstr "Nova beležnica"
 
-msgid "New notebook…"
-msgstr "Nova beležnica…"
+msgid "New notebook..."
+msgstr "Nový zápisník..."
 
 msgid "No"
 msgstr "Ne"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Nie je nakonfigurovaný žiadny aktívny poskytovateľ. Pridajte ho v Nastaveniach."
 
 msgid "No base folder is available for notebooks."
 msgstr "Na voljo ni osnovne mape za beležnice."
@@ -760,9 +775,6 @@ msgstr "Žiadny text na pridanie ako poznámku"
 
 msgid "No valid custom prompt found"
 msgstr "Ni najdenega veljavnega prilagojenega poziva."
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "V configuration.lua sa nenašiel žiadny platný poskytovateľ modelov."
 
 msgid "None"
 msgstr "Žiadny"
@@ -856,8 +868,8 @@ msgstr "Uporabljajo ga samo pozivi, ki se odločijo za kontekst knjige (privzeto
 msgid "Open conflict or mystery:"
 msgstr "Otvorený konflikt alebo záhada:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — vključi vgrajeno spletno iskanje"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API – zahrnúť vstavané vyhľadávanie na webe"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI-združljiva končna točka za chat/completions, npr. https://api.openai.com/v1"
@@ -895,11 +907,17 @@ msgstr "Prevládajúci emocionálny stav/tón:"
 msgid "Protagonist's current objective:"
 msgstr "Aktuálny cieľ protagonistu:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Poskytovateľ %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Poskytovateľ %1 NIE JE NAKONFIGUROVANÝ"
+
 msgid "Provider API"
 msgstr "API poskytovateľa"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Názov poskytovateľa — zobrazuje sa v ponukách; ponechajte prázdne, aby sa použil názov protokolu API (napr. „openai“)"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Názov poskytovateľa – zobrazuje sa v ponukách; ponechajte prázdne pre použitie názvu protokolu API (napr. „openai“)"
 
 msgid "Provider data not initialized."
 msgstr "Dáta poskytovateľa nie sú inicializované."
@@ -915,12 +933,6 @@ msgstr "Záznam poskytovateľa musí byť tabuľka."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Nastavenia poskytovateľa sa nenašli pre: %1. Skontrolujte svoj súbor configuration.lua."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Ponudnik ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Ponudnik ▸ NI KONFIGURIRAN"
 
 msgid "Providers and Models"
 msgstr "Poskytovatelia a modely"
@@ -1012,6 +1024,9 @@ msgstr "Shrani pogovor v"
 msgid "Saved to: %1"
 msgstr "Shranjeno v: %1"
 
+msgid "Scroll"
+msgstr "Posúvať"
+
 msgid "Search"
 msgstr "Hľadať"
 
@@ -1074,6 +1089,9 @@ msgstr "Odporúčania podobných kníh"
 
 msgid "Simplify"
 msgstr "Zjednodušiť"
+
+msgid "Stop"
+msgstr "Zastaviť"
 
 msgid "Stopped Reason: "
 msgstr "Dôvod zastavenia: "
@@ -1232,37 +1250,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
-"Nasveti za uporabo\n"
+"Tipy na používanie\n"
 "\n"
-"Izberite:\n"
-"Označite besedilo (ali besedo) v knjigi, nato pritisnite [AI assistant] v pojavnem meniju.\n"
+"Výber:\n"
+"Označte text (alebo slovo) v knihe a potom stlačte [Asistent AI] vo vyskakovacej ponuke.\n"
 "\n"
-"Dolg pritisk:\n"
-"- Na gumbu za poziv: Dodajte v meni označb.\n"
-"- Na gumbu v meniju označb, da ga odstranite.\n"
-"- Na gumbu Zapri, da se v 1 koraku vrnete v knjigo.\n"
+"Dlhé stlačenie:\n"
+"- Na tlačidle promptu: Pridať do ponuky zvýraznenia.\n"
+"- Na tlačidle ponuky zvýraznenia pre jeho odstránenie.\n"
+"- Na tlačidle Zavrieť pre návrat ku knihe v jednom kroku.\n"
 "\n"
-"Zelo dolg pritisk (več kot 3 sekunde):\n"
-"Na posamezni besedi v knjigi, da se prikaže meni označb (namesto slovarja).\n"
+"Veľmi dlhé stlačenie (viac ako 3 sekundy):\n"
+"Na jednom slove v knihe pre zobrazenie ponuky zvýraznenia (namiesto slovníka).\n"
 "\n"
-"Večkratni poteg (npr. ⮠, ⮡, ↺):\n"
-"Na pogovornem oknu z rezultatom, da ga zaprete (ker je gumb Zapri težko dosegljiv).\n"
+"Potiahnutie viacerými prstami (napr. %1, %2, %3):\n"
+"V dialógu s výsledkom pre zatvorenie (keďže tlačidlo Zavrieť je ťažko dosiahnuteľné).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Uporabi pomočnika AI za 'Prevajanje'"
 
-msgid "Use Book Text as Context"
-msgstr "Uporabi besedilo knjige kot kontekst"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Uporabi besedilo knjige za X-Ray in Recap"
 
-msgid "Use web search 🌐"
-msgstr "Uporabi spletno iskanje 🌐"
+msgid "Use web search"
+msgstr "Použiť vyhľadávanie na webe"
 
 msgid "User:"
 msgstr "Používateľ:"
@@ -1276,8 +1291,11 @@ msgstr "Zobraziť"
 msgid "Vocabulary"
 msgstr "Slovná zásoba"
 
-msgid "Web Search ▸ %1"
-msgstr "Spletno iskanje ▸ %1"
+msgid "Web Search"
+msgstr "Vyhľadávanie na webe"
+
+msgid "Web Search %1 %2"
+msgstr "Vyhľadávanie na webe %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch API"
@@ -1297,6 +1315,10 @@ msgstr "Kde sa dej zastavil:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Tvar slova a lemma"
+
 msgid "Word Origin"
 msgstr "Pôvod slova"
 
@@ -1306,8 +1328,8 @@ msgstr "Slovo bolo skopírované do schránky."
 msgid "Write quick notes here"
 msgstr "Sem napíšte rýchle poznámky"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Da"
@@ -1332,15 +1354,3 @@ msgstr "fetchJSON: razčlenjevanje vrnjenih podatkov ni uspelo"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Posúvať"
-
-msgid "▶ Scroll"
-msgstr "▶ Posúvať"
-
-msgid "❌ Stop"
-msgstr "❌ Zastaviť"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Vylepšite si zážitok z KOReaderu pomocou AI"

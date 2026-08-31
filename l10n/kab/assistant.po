@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 04:13+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Taqbaylit (AI translation)\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — as. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - sb. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Tazdeɣt \"X-Ray\" i udlis, i tettwabnan ɣer tigezmiyin timeẓyanin am Iseɣẓanen, Idigan, Isental, Tiwalin & Timusniwin, Azemz, akked Tunezgit."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Asteqsi\n"
+msgid "### %1 Question\n"
+msgstr "### Asteqsi %1\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Ahat ad tafed isental-agi d iɛejben:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — fren tigawt"
+msgid "%1 - choose an action"
+msgstr "%1 - fren tigawt"
 
 msgid "(No response)"
 msgstr "(Ulac tiririt)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Ad d-nernu aqeffar-agi ɣer Umuɣ n Usnen?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API Yettwacɣaṛ (Addad: 429)</b>\n"
+"Tirmilin %1/%2 - aɛawed deg"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI la yettirir."
 msgid "API Key"
 msgstr "Tasarut n API"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "Tasarut n API — sekcem tasarut-ik·im, syin ṭṭaq ɣef Browse Models i wakken ad d-banen yimudlen yellan"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "Tasarut n API - sekcem tasarut-ik, syin sit ɣef Browse Models i wakken ad d-banen yimudlen yellan"
 
 msgid "API key is required for %1."
 msgstr "Tasarut n API teḥwaǧ i %1."
@@ -215,10 +222,10 @@ msgstr "Rnu tazmilt"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
-"Rnu imekkiyen seg umuɣ agejdan:\n"
-"⚙ → AI Assistant → Iɣewwaṛen → API n umekki"
+"Rnu imsudda seg umuɣ agejdan:\n"
+"%1 -> Amyinaw n AI -> Iɣewwaren -> API n Umsudd"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Taseftit n yimarkiyen-ik, tizmertin-ik, akked agbur n tazmert-ik seg udlis."
@@ -264,6 +271,9 @@ msgstr "Steqsi asteqsi i AI."
 
 msgid "Assistant settings are not available."
 msgstr "Tiseɣtiwin n umɛawan ur llint ara."
+
+msgid "Attach Prior Text"
+msgstr "Rnu aḍris izrin"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Asmekti awurman ticki ara d-teldi idlisen ur nettwaghra ara seg zik"
@@ -351,10 +361,6 @@ msgstr "Sweṭṭeḍ tutlayt n tririt n LLM n AI. S lexṣas, d tutlayt n ugdil
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Akaram n tadbeltin yettwasebded ur yettwasekcem ara: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Asnif"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Tigejditin n usatal"
@@ -431,6 +437,9 @@ msgstr "Xleq tadbelt."
 msgid "Cultural Significance"
 msgstr "Azal aḍelsan"
 
+msgid "Current Chapter Only"
+msgstr "Agzul amiran kan"
+
 msgid "Custom Prompt"
 msgstr "Asuter i d-yettwaseknen"
 
@@ -490,6 +499,9 @@ msgstr "Tuccḍa ilem"
 
 msgid "Enable Stream Response"
 msgstr "Rmed asuffeɣ n tririt"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Snerni tarmit-ik deg KOReader s AI"
 
 msgid "Enter Model ID"
 msgstr "Sekcem ID n umaḍel"
@@ -574,8 +586,8 @@ msgstr "I wugar n telqayt, ẓer asebtar 'Configuration' wiki deg github."
 msgid "Fun Analogy"
 msgstr "Amday aḥlawan"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "API n Gemini. Ilaq ad tesɛuḍ aḥric /models, amedya …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "API n Gemini. ilaq ad tesɛuḍ aḥric /models, amedya .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Ameslay amatu."
@@ -696,14 +708,14 @@ msgstr "Amasi n Markdown"
 msgid "Meaning"
 msgstr "Anamek"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Amuddel - sit ɣef Browse Models i wakken ad tferneḍ amuddel yellan"
+
 msgid "Model Built-In"
 msgstr "Amudel i yebnan"
 
 msgid "Model reset: %1"
 msgstr "Amaḍel yettwales: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Amodel — ṭṭaq ɣef Browse Models i wakken ad tferneḍ amodel yellan"
 
 msgid "Model: %1"
 msgstr "Amaḍel: %1"
@@ -723,11 +735,14 @@ msgstr "Aferdis n tneγruft i d-ittεessin:"
 msgid "New notebook"
 msgstr "Tadbelt tamaynut"
 
-msgid "New notebook…"
-msgstr "Tadbelt tamaynut…"
+msgid "New notebook..."
+msgstr "Anagraw amaynut..."
 
 msgid "No"
 msgstr "Uhu"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Ulac amsudd yermed yettwasebded. Ttxil rnu yiwen deg Iɣewwaren."
 
 msgid "No base folder is available for notebooks."
 msgstr "Ulac akaram agejdan i tadbeltin."
@@ -758,9 +773,6 @@ msgstr "Ulac aḍris ara yettwarnu d tazmert."
 
 msgid "No valid custom prompt found"
 msgstr "Ulac asumer udmawan iṣeḥḥan yettwafan."
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Ulac amekki n umodel i yettwafan deg configuration.lua."
 
 msgid "None"
 msgstr "Ulac"
@@ -854,8 +866,8 @@ msgstr "Yettwaseqdec kan s yisuturen i yeqeblen amagrad n wedlis (s lexṣas: Ex
 msgid "Open conflict or mystery:"
 msgstr "Amennuɣ neɣ tabṛṛist yeldin:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "API n tiririyin n OpenAI — Yesɛa anadi n web yettwabnan daxel"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "API n Tiririyin n OpenAI - Yesɛa anadi n web yettwaselɣen"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "Endpoint chat/completions i kompatiblen akked OpenAI, amedya https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "Addad n wul / taneγruft i d-yezgan:"
 msgid "Protagonist's current objective:"
 msgstr "Taswiɛt tamirant n uneɣru:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Amsudd %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Amsudd %1 UR YETTWASEBDED ARA"
+
 msgid "Provider API"
 msgstr "API n umseddar"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Isem n uneggaf — yettwaskan deg yimuɣen; eǧǧ-it d ilem akken ad yettuseqdec isem n upṛutukul n API (md. \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Isem n umsudd - yettwaskan deg yimuɣen; eǧǧ-it d ilem i wakken ad tesqedceḍ isem n upṛuṭukul n API (amedya \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Isefka n umseddar ur ttwabdan."
@@ -913,12 +931,6 @@ msgstr "Asekkil n umseddar yessefk ad yili d tafelwit."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Iɣewwaṛen n umseddar ur ttwafen i: %1. Ma ulac aɣilif, senqed afaylu configuration.lua."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Amekki ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Amekki ▸ UR YETTWASEWWEC ARA"
 
 msgid "Providers and Models"
 msgstr "Imeddafen d imudelli"
@@ -1010,6 +1022,9 @@ msgstr "Sekles aheddi ar"
 msgid "Saved to: %1"
 msgstr "Yettwasekles ar: %1"
 
+msgid "Scroll"
+msgstr "Sgerded"
+
 msgid "Search"
 msgstr "Nadi"
 
@@ -1072,6 +1087,9 @@ msgstr "Iseggest n yedlisen i ttencabin"
 
 msgid "Simplify"
 msgstr "Sebbṛec"
+
+msgid "Stop"
+msgstr "Seḥbes"
 
 msgid "Stopped Reason: "
 msgstr "Abrid n useḥbes: "
@@ -1230,37 +1248,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
-"Tiqciṭin n useqdec\n"
+"Iwellihen n Useqdec\n"
 "\n"
 "Fren:\n"
-"Freq aḍris (neɣ awal) deg wedlis, sin akin, senned ɣef [AI assistant] deg umuɣ i d-ibanen.\n"
+"Sberreq aḍris (neɣ awal) deg wedlis, syin sit ɣef [Amyinaw n AI] deg umuɣ i d-yettbanen.\n"
 "\n"
-"Asenned aɣezfan:\n"
-"- ɣef tqeffalt n Prompt: rnu ɣer umuɣ n usefreq.\n"
-"- ɣef tqeffalt n umuɣ n usefreq iwakken ad tt-kkseḍ.\n"
-"- ɣef tqeffalt n umdal iwakken ad tuɣaleḍ ɣer wedlis deg 1 n usurif.\n"
+"Tiɣezza taɣezzafant:\n"
+"- Ɣef tqeffalt n Prompt: Rnu-t ɣer umuɣ n usberreq.\n"
+"- Ɣef tqeffalt n umuɣ n usberreq i wakken ad t-kkseḍ.\n"
+"- Ɣef tqeffalt Mdel i wakken ad tuɣaleḍ ɣer wedlis s yiwen n weḥric.\n"
 "\n"
-"Asenned aɣezfan nezzeh (ugar n 3 n tasinin):\n"
-"ɣef yiwen n wawal deg wedlis iwakken ad d-iban umuɣ n usefreq (deg umkan n umawal).\n"
+"Tiɣezza taɣezzafant aṭas (ugar n 3 tsinin):\n"
+"Ɣef yiwen n wawal deg wedlis i wakken ad d-yeban umuɣ n usberreq (deg umḍiq n wamawal).\n"
 "\n"
-"Aswept aṭas (am. ⮠, ⮡, ↺):\n"
-"ɣef usqif n ugmu iwakken ad yemdel (imi tqeffalt n umdal tebɛed).\n"
+"Aẓway s waṭas (amedya, %1, %2, %3):\n"
+"Ɣef tenɣruft n yigmaḍ i wakken ad t-mdeleḍ (acku tqeffalt Mdel tebɛed).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Seqdec Amɛawan n AI i 'Tasuqilt'"
 
-msgid "Use Book Text as Context"
-msgstr "Seqdec aḍris n wedlis d amagrad"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Seqdec aḍris n wedlis i X-Ray d Recap"
 
-msgid "Use web search 🌐"
-msgstr "Seqdec anadi s web 🌐"
+msgid "Use web search"
+msgstr "Seqdec anadi n web"
 
 msgid "User:"
 msgstr "Aseqdac:"
@@ -1274,8 +1289,11 @@ msgstr "Sken"
 msgid "Vocabulary"
 msgstr "Tigemmi n wawalen"
 
-msgid "Web Search ▸ %1"
-msgstr "Anadi deg web ▸ %1"
+msgid "Web Search"
+msgstr "Anadi n Web"
+
+msgid "Web Search %1 %2"
+msgstr "Anadi n Web %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch API"
@@ -1295,6 +1313,10 @@ msgstr "Anda i teḥbes tigawt:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Talɣa n wawal & Aẓar"
+
 msgid "Word Origin"
 msgstr "Aẓar n wawal"
 
@@ -1304,8 +1326,8 @@ msgstr "Awal yettwaneɣlef ɣer clipboard."
 msgid "Write quick notes here"
 msgstr "Aru tizmilin iɣewwaṛen dagi"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Ih"
@@ -1330,15 +1352,3 @@ msgstr "fetchJSON: ur yezmir ara ad yegzu isefka yettwaran"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Zzi"
-
-msgid "▶ Scroll"
-msgstr "▶ Zzi"
-
-msgid "❌ Stop"
-msgstr "❌ Seḥbes"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Semder tarmit-ik n KOReader s AI"

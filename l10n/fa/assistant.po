@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 03:19+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: فارسی (AI translation)\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — ص. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - ص. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "خلاصه «X-Ray» برای یک کتاب، ساختاریافته در بخشهای مشخص مانند شخصیتها، مکانها، مضامین، اصطلاحات و مفاهیم، خط زمانی، و بازغوطهوری."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ سؤال\n"
+msgid "### %1 Question\n"
+msgstr "### پرسش %1\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### ممکن است این موضوعات برایتان جالب باشند:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — یک اقدام را انتخاب کنید"
+msgid "%1 - choose an action"
+msgstr "%1 - انتخاب یک اقدام"
 
 msgid "(No response)"
 msgstr "(پاسخی دریافت نشد)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "این دکمه به منوی هایلایت اضافه شود؟"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API مشغول است (وضعیت: 429)</b>\n"
+"تلاش %1/%2 - تلاش مجدد در"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "هوش مصنوعی در حال پاسخگویی است"
 msgid "API Key"
 msgstr "کلید API"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "کلید API — کلید خود را وارد کنید، سپس روی Browse Models ضربه بزنید تا مدل‌های موجود را فهرست کند."
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "کلید API - کلید خود را وارد کنید، سپس روی «مرور مدلها» ضربه بزنید تا مدلهای موجود فهرست شوند."
 
 msgid "API key is required for %1."
 msgstr "کلید API برای %1 الزامی است."
@@ -215,10 +222,10 @@ msgstr "افزودن یادداشت"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
-"ارائهدهندهها را از منوی اصلی اضافه کنید:\n"
-"⚙ → دستیار هوش مصنوعی → تنظیمات → API ارائهدهنده"
+"ارائهدهندگان را از منوی اصلی اضافه کنید:\n"
+"%1 -> دستیار هوش مصنوعی -> تنظیمات -> API ارائهدهنده"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "تحلیل هایلایتها، یادداشتها و محتوای دفترچه یادداشت شما از کتاب."
@@ -264,6 +271,9 @@ msgstr "از هوش مصنوعی سؤال بپرسید"
 
 msgid "Assistant settings are not available."
 msgstr "تنظیمات دستیار در دسترس نیست."
+
+msgid "Attach Prior Text"
+msgstr "ضمیمه کردن متن قبلی"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "بازگویی خودکار هنگام باز کردن کتاب‌هایی که مدت‌هاست خوانده نشده‌اند"
@@ -351,10 +361,6 @@ msgstr "زبان پاسخ LLM هوش مصنوعی را پیکربندی کنید
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "پوشهٔ نوتپدهای پیکربندیشده در دسترس نیست: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "صرف"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "محدودیت‌های بافت"
@@ -431,6 +437,9 @@ msgstr "ایجاد یک نوتپد."
 msgid "Cultural Significance"
 msgstr "اهمیت فرهنگی"
 
+msgid "Current Chapter Only"
+msgstr "فقط فصل جاری"
+
 msgid "Custom Prompt"
 msgstr "پرامپت سفارشی"
 
@@ -490,6 +499,9 @@ msgstr "خطای خالی"
 
 msgid "Enable Stream Response"
 msgstr "فعال‌سازی پاسخ جریانی"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "تجربه KOReader خود را با هوش مصنوعی ارتقا دهید"
 
 msgid "Enter Model ID"
 msgstr "شناسه مدل را وارد کنید"
@@ -574,8 +586,8 @@ msgstr "برای جزئیات، به صفحه ویکی «پیکربندی» در
 msgid "Fun Analogy"
 msgstr "قیاس جالب"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. باید بخش /models را شامل شود، مثلاً …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "API جمینای. باید بخش /models را شامل شود، مثلاً .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "گفتگوی عمومی"
@@ -696,14 +708,14 @@ msgstr "موتور مارک‌داون"
 msgid "Meaning"
 msgstr "معنی"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "مدل - برای انتخاب یک مدل موجود، روی «مرور مدلها» ضربه بزنید"
+
 msgid "Model Built-In"
 msgstr "مدل داخلی"
 
 msgid "Model reset: %1"
 msgstr "بازنشانی مدل: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "مدل — روی Browse Models ضربه بزنید تا یک مدل موجود انتخاب کنید"
 
 msgid "Model: %1"
 msgstr "مدل: %1"
@@ -723,11 +735,14 @@ msgstr "عنصر روایی در کانون توجه:"
 msgid "New notebook"
 msgstr "نوتپد جدید"
 
-msgid "New notebook…"
-msgstr "نوتپد جدید…"
+msgid "New notebook..."
+msgstr "دفترچه یادداشت جدید..."
 
 msgid "No"
 msgstr "خیر"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "هیچ ارائه‌دهنده فعالی پیکربندی نشده است. لطفاً یکی را در تنظیمات اضافه کنید."
 
 msgid "No base folder is available for notebooks."
 msgstr "هیچ پوشهٔ پایهای برای نوتپدها در دسترس نیست."
@@ -758,9 +773,6 @@ msgstr "متنی برای افزودن به یادداشت وجود ندارد"
 
 msgid "No valid custom prompt found"
 msgstr "هیچ پرامپت سفارشی معتبری یافت نشد."
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "هیچ ارائهدهنده مدل معتبری در configuration.lua یافت نشد"
 
 msgid "None"
 msgstr "هیچ"
@@ -854,8 +866,8 @@ msgstr "فقط توسط درخواست‌هایی استفاده می‌شود �
 msgid "Open conflict or mystery:"
 msgstr "کشمکش یا راز حل‌نشده:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "API پاسخهای OpenAI — شامل جستجوی وب داخلی"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - شامل جستجوی وب داخلی"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "نقطهپایان (endpoint) سازگار با OpenAI برای چت/تکمیل، بهعنوان مثال https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "حال‌وهوای عاطفی غالب:"
 msgid "Protagonist's current objective:"
 msgstr "هدف فعلی شخصیت اصلی:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "ارائهدهنده %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "ارائهدهنده %1 پیکربندی نشده است"
+
 msgid "Provider API"
 msgstr "API ارائه‌دهنده"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "نام ارائه‌دهنده — در منوها نمایش داده می‌شود؛ خالی بگذارید تا از نام پروتکل API استفاده شود (مثلاً «openai»)"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "نام ارائهدهنده - در منوها نمایش داده میشود؛ برای استفاده از نام پروتکل API، خالی بگذارید (مثلاً «openai»)"
 
 msgid "Provider data not initialized."
 msgstr "داده‌های ارائه‌دهنده مقداردهی نشده است."
@@ -913,12 +931,6 @@ msgstr "رکورد ارائه‌دهنده باید یک جدول باشد."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "تنظیمات ارائه‌دهنده برای %1 یافت نشد. لطفاً فایل configuration.lua خود را بررسی کنید."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "ارائهدهنده ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "ارائهدهنده ▸ پیکربندی نشده"
 
 msgid "Providers and Models"
 msgstr "ارائهدهندگان و مدلها"
@@ -1010,6 +1022,9 @@ msgstr "ذخیرهٔ گفتگو در"
 msgid "Saved to: %1"
 msgstr "ذخیره‌شده در: %1"
 
+msgid "Scroll"
+msgstr "پیمایش"
+
 msgid "Search"
 msgstr "جستجو"
 
@@ -1072,6 +1087,9 @@ msgstr "پیشنهاد کتاب‌های مشابه"
 
 msgid "Simplify"
 msgstr "ساده‌سازی"
+
+msgid "Stop"
+msgstr "توقف"
 
 msgid "Stopped Reason: "
 msgstr "دلیل توقف: "
@@ -1230,13 +1248,13 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "راهنمای استفاده\n"
 "\n"
 "انتخاب:\n"
-"متنی (یا یک کلمه) را در کتاب هایلایت کنید، سپس در منوی بازشده [دستیار هوش مصنوعی] را فشار دهید.\n"
+"متن (یا یک واژه) را در کتاب هایلایت کنید، سپس در منوی بازشده دکمه [دستیار هوش مصنوعی] را فشار دهید.\n"
 "\n"
 "فشار طولانی:\n"
 "- روی دکمهٔ پرامپت: افزودن به منوی هایلایت.\n"
@@ -1244,23 +1262,20 @@ msgstr ""
 "- روی دکمهٔ بستن برای بازگشت به کتاب در ۱ مرحله.\n"
 "\n"
 "فشار خیلی طولانی (بیش از ۳ ثانیه):\n"
-"روی یک کلمه در کتاب برای نمایش منوی هایلایت (به‌جای فرهنگ لغت).\n"
+"روی یک واژه در کتاب برای نمایش منوی هایلایت (به‌جای فرهنگ لغت).\n"
 "\n"
-"چندبار کشیدن (مثلاً ⮠، ⮡، ↺):\n"
-"روی کادر نتیجه برای بستن (چون دکمهٔ بستن دور از دسترس است).\n"
+"چندبار کشیدن (مثلاً %1، %2، %3):\n"
+"روی گفتگوی نتیجه برای بستن (چون دکمه بستن دور از دسترس است).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "استفاده از دستیار هوش مصنوعی برای «ترجمه»"
 
-msgid "Use Book Text as Context"
-msgstr "استفاده از متن کتاب بهعنوان بافتار"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "استفاده از متن کتاب برای X-Ray و Recap"
 
-msgid "Use web search 🌐"
-msgstr "استفاده از جستجوی وب 🌐"
+msgid "Use web search"
+msgstr "استفاده از جستجوی وب"
 
 msgid "User:"
 msgstr "کاربر:"
@@ -1274,8 +1289,11 @@ msgstr "مشاهده"
 msgid "Vocabulary"
 msgstr "واژگان"
 
-msgid "Web Search ▸ %1"
-msgstr "جستجوی وب ▸ %1"
+msgid "Web Search"
+msgstr "جستجوی وب"
+
+msgid "Web Search %1 %2"
+msgstr "جستجوی وب %1 %2"
 
 msgid "WebSearch API"
 msgstr "API جستجوی وب"
@@ -1295,6 +1313,10 @@ msgstr "جایی که داستان متوقف شد:"
 msgid "Wikipedia"
 msgstr "ویکی‌پدیا"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "صورت واژه و بُن‌واژه"
+
 msgid "Word Origin"
 msgstr "ریشه واژه"
 
@@ -1304,8 +1326,8 @@ msgstr "واژه در کلیپبورد کپی شد."
 msgid "Write quick notes here"
 msgstr "یادداشتهای سریع را اینجا بنویسید"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "بله"
@@ -1330,15 +1352,3 @@ msgstr "fetchJSON: تجزیه داده‌های بازگشتی ناموفق بو
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ پیمایش"
-
-msgid "▶ Scroll"
-msgstr "▶ پیمایش"
-
-msgid "❌ Stop"
-msgstr "❌ توقف"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 تجربهٔ KOReader خود را با هوش مصنوعی ارتقا دهید"

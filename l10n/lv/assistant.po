@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — lpp. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - lpp. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" kopsavilkums grāmatai, strukturēts konkrētās sadaļās, piemēram, Tēli, Vietas, Tēmas, Termini un jēdzieni, Laika līnija un Atkārtota iegremdēšanās."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Jautājums\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Jautājums\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Iespējams, šīs tēmas jums šķitīs interesantas:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — izvēlieties darbību"
+msgid "%1 - choose an action"
+msgstr "%1 - izvēlieties darbību"
 
 msgid "(No response)"
 msgstr "(Nav atbildes)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Pievienot šo pogu iezīmju izvēlnei?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API aizņemts (Statuss: 429)</b>\n"
+"Mēģinājumi %1/%2 - atkārtot pēc"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI atbild"
 msgid "API Key"
 msgstr "API atslēga"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API atslēga — ievadiet savu atslēgu, pēc tam pieskarieties \"Pārlūkot modeļus\", lai parādītu pieejamos modeļus"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API atslēga - ievadiet savu atslēgu, pēc tam pieskarieties \"Pārlūkot modeļus\", lai parādītu pieejamos modeļus."
 
 msgid "API key is required for %1."
 msgstr "API atslēga ir nepieciešama %1."
@@ -215,10 +222,10 @@ msgstr "Pievienot piezīmi"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Pievienojiet pakalpojumu sniedzējus no galvenās izvēlnes:\n"
-"⚙ → AI Assistant → Iestatījumi → Pakalpojumu sniedzēja API"
+"%1 -> AI palīgs -> Iestatījumi -> Pakalpojumu sniedzēja API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Jūsu iezīmējumu, piezīmju un piezīmju grāmatiņas satura analīze no grāmatas."
@@ -264,6 +271,9 @@ msgstr "Uzdodiet AI jautājumu"
 
 msgid "Assistant settings are not available."
 msgstr "Asistenta iestatījumi nav pieejami."
+
+msgid "Attach Prior Text"
+msgstr "Pievienot iepriekšējo tekstu"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automātiski ģenerēt kopsavilkumu, atverot ilgi nelasītas grāmatas"
@@ -351,10 +361,6 @@ msgstr "Konfigurējiet AI LLM atbildes valodu. Pēc noklusējuma tiek izmantota 
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Konfigurētā piezīmju klažu mape nav pieejama: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Konjugācija"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Konteksta ierobežojumi"
@@ -431,6 +437,9 @@ msgstr "Izveidot piezīmju kladi."
 msgid "Cultural Significance"
 msgstr "Kultūras nozīme"
 
+msgid "Current Chapter Only"
+msgstr "Tikai pašreizējā nodaļa"
+
 msgid "Custom Prompt"
 msgstr "Pielāgota uzvedne"
 
@@ -490,6 +499,9 @@ msgstr "Tukša kļūda"
 
 msgid "Enable Stream Response"
 msgstr "Iespējot straumēto atbildi"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Uzlabojiet savu KOReader pieredzi ar AI"
 
 msgid "Enter Model ID"
 msgstr "Ievadiet modeļa ID"
@@ -574,8 +586,8 @@ msgstr "Detalizētai informācijai apmeklējiet 'Configuration' wiki lapu vietn�
 msgid "Fun Analogy"
 msgstr "Jautra analoģija"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. jāiekļauj /models segments, piem., …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. jāiekļauj /models segments, piem., .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Vispārīga saruna"
@@ -697,14 +709,14 @@ msgstr "Markdown dzinis"
 msgid "Meaning"
 msgstr "Nozīme"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Modelis - pieskarieties \"Pārlūkot modeļus\", lai izvēlētos pieejamo modeli."
+
 msgid "Model Built-In"
 msgstr "Modeļa iebūvētais"
 
 msgid "Model reset: %1"
 msgstr "Modelis atiestatīts: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Modelis — pieskarieties Browse Models, lai izvēlētos pieejamo modeli"
 
 msgid "Model: %1"
 msgstr "Modelis: %1"
@@ -724,11 +736,14 @@ msgstr "Stāstījuma elements uzmanības centrā:"
 msgid "New notebook"
 msgstr "Jauna piezīmju klade"
 
-msgid "New notebook…"
-msgstr "Jauna piezīmju klade…"
+msgid "New notebook..."
+msgstr "Jauna piezīmju grāmatiņa..."
 
 msgid "No"
 msgstr "Nē"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Nav konfigurēts neviens aktīvs pakalpojumu sniedzējs. Lūdzu, pievienojiet to iestatījumos."
 
 msgid "No base folder is available for notebooks."
 msgstr "Nav pieejama pamata mape piezīmju kladēm."
@@ -759,9 +774,6 @@ msgstr "Nav teksta, ko pievienot kā piezīmi"
 
 msgid "No valid custom prompt found"
 msgstr "Nav atrasts derīgs pielāgots prompts."
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Konfigurācijas failā configuration.lua nav atrasts derīgs modeļa pakalpojumu sniedzējs."
 
 msgid "None"
 msgstr "Nav"
@@ -855,8 +867,8 @@ msgstr "Tiek izmantots tikai ar tām uzvednēm, kas aktivizē grāmatas kontekst
 msgid "Open conflict or mystery:"
 msgstr "Atklāts konflikts vai noslēpums:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — Iekļaut iebūvēto tīmekļa meklēšanu"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - iekļaut iebūvēto tīmekļa meklēšanu."
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI saderīgs chat/completions galapunkts, piem., https://api.openai.com/v1"
@@ -894,11 +906,17 @@ msgstr "Valdošais emocionālais stāvoklis/tonis:"
 msgid "Protagonist's current objective:"
 msgstr "Galvenā varoņa pašreizējais mērķis:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Nodrošinātājs %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Nodrošinātājs %1 NAV KONFIGURĒTS"
+
 msgid "Provider API"
 msgstr "Pakalpojumu sniedzēja API"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Pakalpojumu sniedzēja nosaukums — rāda izvēlnēs; atstājiet tukšu, lai izmantotu API protokola nosaukumu (piem., \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Nodrošinātāja nosaukums - tiek rādīts izvēlnēs; atstājiet tukšu, lai izmantotu API protokola nosaukumu (piemēram, \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Pakalpojumu sniedzēja dati nav inicializēti."
@@ -914,12 +932,6 @@ msgstr "Pakalpojumu sniedzēja ierakstam jābūt tabulai."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Pakalpojumu sniedzēja iestatījumi nav atrasti: %1. Lūdzu, pārbaudiet savu configuration.lua failu."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Pakalpojumu sniedzējs ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Pakalpojumu sniedzējs ▸ NAV KONFIGURĒTS"
 
 msgid "Providers and Models"
 msgstr "Pakalpojumu sniedzēji un modeļi"
@@ -1010,6 +1022,9 @@ msgstr "Saglabāt sarunu"
 msgid "Saved to: %1"
 msgstr "Saglabāts: %1"
 
+msgid "Scroll"
+msgstr "Ritināt"
+
 msgid "Search"
 msgstr "Meklēt"
 
@@ -1072,6 +1087,9 @@ msgstr "Līdzīgu grāmatu ieteikumi"
 
 msgid "Simplify"
 msgstr "Vienkāršot"
+
+msgid "Stop"
+msgstr "Apturēt"
 
 msgid "Stopped Reason: "
 msgstr "Apturēšanas iemesls: "
@@ -1230,37 +1248,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Lietošanas padomi\n"
 "\n"
-"Atlasīšana:\n"
-"Iezīmējiet tekstu (vai vārdu) grāmatā, pēc tam nospiediet [AI asistentu] uznirstošajā izvēlnē.\n"
+"Atlasiet:\n"
+"Iezīmējiet tekstu (vai vārdu) grāmatā, pēc tam nospiediet [AI palīgs] uznirstošajā izvēlnē.\n"
 "\n"
 "Ilga nospiešana:\n"
-"- Uz uzvednes pogas: pievienot iezīmēšanas izvēlnei.\n"
+"- Uz Prompt pogas: pievienot iezīmēšanas izvēlnei.\n"
 "- Uz iezīmēšanas izvēlnes pogas, lai to noņemtu.\n"
-"- Uz pogas Aizvērt, lai atgrieztos grāmatā vienā solī.\n"
+"- Uz aizvēršanas pogas, lai atgrieztos grāmatā vienā solī.\n"
 "\n"
 "Ļoti ilga nospiešana (vairāk nekā 3 sekundes):\n"
 "Uz viena vārda grāmatā, lai parādītu iezīmēšanas izvēlni (nevis vārdnīcu).\n"
 "\n"
-"Vairāku pirkstu vilciens (piem., ⮠, ⮡, ↺):\n"
-"Uz rezultātu dialoga, lai aizvērtu (jo Aizvērt poga ir tālu aizsniedzama).\n"
+"Vairāku pirkstu vilkšana (piem., %1, %2, %3):\n"
+"Uz rezultāta dialoga, lai aizvērtu (jo aizvēršanas poga ir tālu).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Izmantot AI asistentu 'Tulkot' funkcijai"
 
-msgid "Use Book Text as Context"
-msgstr "Izmantot grāmatas tekstu kā kontekstu"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Izmantot grāmatas tekstu X-Ray un Recap"
 
-msgid "Use web search 🌐"
-msgstr "Izmantot tīmekļa meklēšanu 🌐"
+msgid "Use web search"
+msgstr "Izmantot tīmekļa meklēšanu"
 
 msgid "User:"
 msgstr "Lietotājs:"
@@ -1274,8 +1289,11 @@ msgstr "Skatīt"
 msgid "Vocabulary"
 msgstr "Vārdu krājums"
 
-msgid "Web Search ▸ %1"
-msgstr "Tīmekļa meklēšana ▸ %1"
+msgid "Web Search"
+msgstr "Tīmekļa meklēšana"
+
+msgid "Web Search %1 %2"
+msgstr "Tīmekļa meklēšana %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch API"
@@ -1295,6 +1313,10 @@ msgstr "Kur darbība apstājās:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Vārda forma un lema"
+
 msgid "Word Origin"
 msgstr "Vārda izcelsme"
 
@@ -1304,8 +1326,8 @@ msgstr "Vārds nokopēts starpliktuvē."
 msgid "Write quick notes here"
 msgstr "Rakstiet ātros pierakstus šeit"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Jā"
@@ -1330,15 +1352,3 @@ msgstr "fetchJSON: neizdevās parsēt atgrieztos datus"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Ritināt"
-
-msgid "▶ Scroll"
-msgstr "▶ Ritināt"
-
-msgid "❌ Stop"
-msgstr "❌ Apturēt"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Uzlabojiet savu KOReader pieredzi ar AI"

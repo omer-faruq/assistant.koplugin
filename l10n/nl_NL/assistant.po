@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — p. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - p. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\"-samenvatting voor een boek, gestructureerd in specifieke secties zoals Personages, Locaties, Thema's, Termen en concepten, Tijdlijn en Herbeleving."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Vraag\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Vraag\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Mogelijk vind je deze onderwerpen interessant:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — kies een actie"
+msgid "%1 - choose an action"
+msgstr "%1 - kies een actie"
 
 msgid "(No response)"
 msgstr "(Geen antwoord)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Deze knop toevoegen aan het markeermenu?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API bezet (Status: 429)</b>\n"
+"Pogingen %1/%2 - opnieuw proberen over"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI reageert"
 msgid "API Key"
 msgstr "API-sleutel"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API-sleutel — voer uw sleutel in, tik daarna op Modellen bekijken om beschikbare modellen te tonen"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API-sleutel - voer je sleutel in en tik op Blader door modellen om beschikbare modellen te tonen"
 
 msgid "API key is required for %1."
 msgstr "API-sleutel is vereist voor %1."
@@ -215,10 +222,10 @@ msgstr "Notitie toevoegen"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
-"Voeg providers toe via het hoofdmenu:\n"
-"⚙ → AI Assistant → Instellingen → Provider API"
+"Voeg providers toe vanuit het hoofdmenu:\n"
+"%1 -> AI Assistant -> Instellingen -> Provider API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analyse van je markeringen, notities en notitieboekinhoud uit het boek."
@@ -264,6 +271,9 @@ msgstr "Stel de AI een vraag"
 
 msgid "Assistant settings are not available."
 msgstr "Assistentinstellingen zijn niet beschikbaar."
+
+msgid "Attach Prior Text"
+msgstr "Eerdere tekst bijvoegen"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automatische recap bij het openen van lang ongelezen boeken"
@@ -351,10 +361,6 @@ msgstr "Configureer de antwoordtaal van de AI LLM. Standaard ingesteld op de KOR
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Geconfigureerde map voor notitieboeken is niet toegankelijk: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Vervoeging"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Contextbeperkingen"
@@ -431,6 +437,9 @@ msgstr "Maak een notitieboek aan."
 msgid "Cultural Significance"
 msgstr "Culturele betekenis"
 
+msgid "Current Chapter Only"
+msgstr "Alleen huidig hoofdstuk"
+
 msgid "Custom Prompt"
 msgstr "Aangepaste prompt"
 
@@ -490,6 +499,9 @@ msgstr "Lege foutmelding"
 
 msgid "Enable Stream Response"
 msgstr "Stream-antwoord inschakelen"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Verbeter je KOReader-ervaring met AI"
 
 msgid "Enter Model ID"
 msgstr "Voer model-ID in"
@@ -574,8 +586,8 @@ msgstr "Voor details, bezoek de 'Configuration'-wikipagina op GitHub."
 msgid "Fun Analogy"
 msgstr "Leuke analogie"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. moet het /models segment bevatten, bijv. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. De URL moet het /models-segment bevatten, bijv. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Algemeen gesprek"
@@ -696,14 +708,14 @@ msgstr "Markdown-engine"
 msgid "Meaning"
 msgstr "Betekenis"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Model - tik op Blader door modellen om een beschikbaar model te kiezen"
+
 msgid "Model Built-In"
 msgstr "Ingebouwd model"
 
 msgid "Model reset: %1"
 msgstr "Model gereset: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Model — tik op Modellen bekijken om een beschikbaar model te kiezen"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -723,11 +735,14 @@ msgstr "Verhaalelement in focus:"
 msgid "New notebook"
 msgstr "Nieuw notitieboek"
 
-msgid "New notebook…"
-msgstr "Nieuw notitieboek…"
+msgid "New notebook..."
+msgstr "Nieuw notitieboekje..."
 
 msgid "No"
 msgstr "Nee"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Geen actieve provider geconfigureerd. Voeg er een toe in Instellingen."
 
 msgid "No base folder is available for notebooks."
 msgstr "Er is geen basismap beschikbaar voor notitieboeken."
@@ -758,9 +773,6 @@ msgstr "Geen tekst om als notitie toe te voegen"
 
 msgid "No valid custom prompt found"
 msgstr "Geen geldige aangepaste prompt gevonden"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Geen geldige modelprovider gevonden in configuration.lua."
 
 msgid "None"
 msgstr "Geen"
@@ -854,8 +866,8 @@ msgstr "Wordt alleen gebruikt door prompts die zich aanmelden voor boekcontext (
 msgid "Open conflict or mystery:"
 msgstr "Open conflict of mysterie:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — Ingebouwde webzoekopdracht inschakelen"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - Ingebouwde webzoekopdracht opnemen"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI-compatibel chat/completions-eindpunt, bijv. https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "Heersende emotionele toestand/toon:"
 msgid "Protagonist's current objective:"
 msgstr "Huidige doel van de protagonist:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Provider %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Provider %1 NIET GECONFIGUREERD"
+
 msgid "Provider API"
 msgstr "Provider-API"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Providernaam — weergegeven in menu's; laat leeg om de API-protocolnaam te gebruiken (bijv. \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Providernaam - getoond in menu's; leeg laten om de API-protocolnaam te gebruiken (bijv. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Providergegevens niet geïnitialiseerd."
@@ -913,12 +931,6 @@ msgstr "Providerrecord moet een tabel zijn."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Providerinstellingen niet gevonden voor: %1. Controleer je configuration.lua-bestand."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Provider ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Provider ▸ NIET GECONFIGUREERD"
 
 msgid "Providers and Models"
 msgstr "Providers en modellen"
@@ -1010,6 +1022,9 @@ msgstr "Gesprek opslaan in"
 msgid "Saved to: %1"
 msgstr "Opgeslagen in: %1"
 
+msgid "Scroll"
+msgstr "Scrollen"
+
 msgid "Search"
 msgstr "Zoeken"
 
@@ -1072,6 +1087,9 @@ msgstr "Aanbevelingen voor soortgelijke boeken"
 
 msgid "Simplify"
 msgstr "Vereenvoudigen"
+
+msgid "Stop"
+msgstr "Stoppen"
 
 msgid "Stopped Reason: "
 msgstr "Stopreden: "
@@ -1230,37 +1248,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Gebruikstips\n"
 "\n"
 "Selecteren:\n"
-"Markeer tekst (of een woord) in het boek en druk daarna op [AI-assistent] in het verschenen menu.\n"
+"Markeer tekst (of een woord) in het boek en druk vervolgens op [AI-assistent] in het pop-upmenu.\n"
 "\n"
-"Lang indrukken:\n"
+"Lang drukken:\n"
 "- Op een promptknop: toevoegen aan het markeermenu.\n"
-"- Op een knop in het markeermenu om deze te verwijderen.\n"
-"- Op de Sluiten-knop om in 1 stap terug te gaan naar het boek.\n"
+"- Op een markeermenuknop om deze te verwijderen.\n"
+"- Op de Sluiten-knop om in 1 stap terug te keren naar het boek.\n"
 "\n"
-"Zeer lang indrukken (langer dan 3 seconden):\n"
+"Zeer lang drukken (langer dan 3 seconden):\n"
 "Op een enkel woord in het boek om het markeermenu te tonen (in plaats van het woordenboek).\n"
 "\n"
-"Multi-veeg (bijv. ⮠, ⮡, ↺):\n"
-"Op de resultaatdialoog om te sluiten (omdat de Sluiten-knop te ver weg is).\n"
+"Multi-swipe (bijv. %1, %2, %3):\n"
+"Op het resultaatdialoog om te sluiten (omdat de Sluiten-knop te ver weg is).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "AI-assistent gebruiken voor 'Vertalen'"
 
-msgid "Use Book Text as Context"
-msgstr "Boektekst als context gebruiken"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Boektekst gebruiken voor X-Ray en Recap"
 
-msgid "Use web search 🌐"
-msgstr "Gebruik web zoeken 🌐"
+msgid "Use web search"
+msgstr "Web zoeken gebruiken"
 
 msgid "User:"
 msgstr "Gebruiker:"
@@ -1274,8 +1289,11 @@ msgstr "Bekijken"
 msgid "Vocabulary"
 msgstr "Woordenschat"
 
-msgid "Web Search ▸ %1"
-msgstr "Web zoeken ▸ %1"
+msgid "Web Search"
+msgstr "Web zoeken"
+
+msgid "Web Search %1 %2"
+msgstr "Web zoeken %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch-API"
@@ -1295,6 +1313,10 @@ msgstr "Waar de actie stopte:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Woordvorm en lemma"
+
 msgid "Word Origin"
 msgstr "Woordherkomst"
 
@@ -1304,8 +1326,8 @@ msgstr "Woord gekopieerd naar klembord."
 msgid "Write quick notes here"
 msgstr "Schrijf hier snelle notities"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Ja"
@@ -1330,15 +1352,3 @@ msgstr "fetchJSON: parseren van geretourneerde gegevens mislukt"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Scrollen"
-
-msgid "▶ Scroll"
-msgstr "▶ Scrollen"
-
-msgid "❌ Stop"
-msgstr "❌ Stoppen"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Verbeter je KOReader-ervaring met AI"

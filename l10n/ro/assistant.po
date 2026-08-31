@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — p. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - p. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Rezumat „X-Ray” pentru o carte, structurat în secțiuni specifice precum Personaje, Locații, Teme, Termeni și concepte, Cronologie și Re-imersare."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Întrebare\n"
+msgid "### %1 Question\n"
+msgstr "### Întrebarea %1\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### S-ar putea să găsești interesante aceste subiecte:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — alege o acțiune"
+msgid "%1 - choose an action"
+msgstr "%1 - alege o acțiune"
 
 msgid "(No response)"
 msgstr "(Fără răspuns)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Adaug acest buton în meniul de evidențiere?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API ocupat (Stare: 429)</b>\n"
+"Încercări %1/%2 - reîncercare în"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI-ul răspunde"
 msgid "API Key"
 msgstr "Cheie API"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "Cheie API — introduceți cheia, apoi atingeți Navigare modele pentru a lista modelele disponibile"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "Cheie API - introduceți cheia, apoi atingeți Răsfoiește modele pentru a lista modelele disponibile"
 
 msgid "API key is required for %1."
 msgstr "Cheia API este necesară pentru %1."
@@ -215,10 +222,10 @@ msgstr "Adaugă notă"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Adăugați furnizori din meniul principal:\n"
-"⚙ → Asistent AI → Setări → API Furnizor"
+"%1 -> Asistent AI -> Setări -> API furnizor"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analiza evidențierilor, notelor și conținutului din caiet referitoare la carte."
@@ -264,6 +271,9 @@ msgstr "Pune o întrebare AI-ului"
 
 msgid "Assistant settings are not available."
 msgstr "Setările asistentului nu sunt disponibile."
+
+msgid "Attach Prior Text"
+msgstr "Atașează textul anterior"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Recapitulare automată la deschiderea cărților necitite de mult timp"
@@ -351,10 +361,6 @@ msgstr "Configurați limba răspunsului AI LLM. Implicit este limba interfeței 
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Folderul configurat pentru caiete nu este accesibil: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Conjugare"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Limitări de context"
@@ -431,6 +437,9 @@ msgstr "Creează un caiet."
 msgid "Cultural Significance"
 msgstr "Semnificație culturală"
 
+msgid "Current Chapter Only"
+msgstr "Doar capitolul curent"
+
 msgid "Custom Prompt"
 msgstr "Prompt personalizat"
 
@@ -490,6 +499,9 @@ msgstr "Eroare goală"
 
 msgid "Enable Stream Response"
 msgstr "Activează răspunsul în flux"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Îmbunătățiți-vă experiența KOReader cu AI"
 
 msgid "Enter Model ID"
 msgstr "Introdu ID-ul modelului"
@@ -574,8 +586,8 @@ msgstr "Pentru detalii, vizitează pagina wiki „Configuration” de pe GitHub.
 msgid "Fun Analogy"
 msgstr "Analogia amuzantă"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "API Gemini. trebuie să includă segmentul /models, de ex. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "API Gemini. trebuie să includă segmentul /models, ex. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Conversație generală"
@@ -697,14 +709,14 @@ msgstr "Motor Markdown"
 msgid "Meaning"
 msgstr "Semnificație"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Model - atingeți Răsfoiește modele pentru a alege un model disponibil"
+
 msgid "Model Built-In"
 msgstr "Model încorporat"
 
 msgid "Model reset: %1"
 msgstr "Model resetat: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Model — atingeți Navigare modele pentru a alege un model disponibil"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -724,11 +736,14 @@ msgstr "Element narativ în centrul atenției:"
 msgid "New notebook"
 msgstr "Caiet nou"
 
-msgid "New notebook…"
-msgstr "Caiet nou…"
+msgid "New notebook..."
+msgstr "Carnet nou..."
 
 msgid "No"
 msgstr "Nu"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Niciun furnizor activ configurat. Vă rugăm să adăugați unul în Setări."
 
 msgid "No base folder is available for notebooks."
 msgstr "Nu este disponibil niciun folder de bază pentru caiete."
@@ -759,9 +774,6 @@ msgstr "Niciun text de adăugat ca notă"
 
 msgid "No valid custom prompt found"
 msgstr "Nu s-a găsit niciun prompt personalizat valid."
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Nu s-a găsit niciun furnizor de modele valid în configuration.lua"
 
 msgid "None"
 msgstr "Niciunul"
@@ -855,8 +867,8 @@ msgstr "Folosit doar de prompt-urile care optează pentru contextul cărții (im
 msgid "Open conflict or mystery:"
 msgstr "Conflict deschis sau mister:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — Include căutare web încorporată"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "API OpenAI Responses - Include căutarea web integrată"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "Punct final chat/completions compatibil cu OpenAI, de ex. https://api.openai.com/v1"
@@ -894,11 +906,17 @@ msgstr "Starea emoțională/tonul predominant:"
 msgid "Protagonist's current objective:"
 msgstr "Obiectivul actual al protagonistului:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Furnizor %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Furnizorul %1 NU ESTE CONFIGURAT"
+
 msgid "Provider API"
 msgstr "API furnizor"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Nume furnizor — afișat în meniuri; lăsați gol pentru a folosi numele protocolului API (de ex. „openai”)"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Nume furnizor - afișat în meniuri; lăsați gol pentru a folosi numele protocolului API (ex. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Datele furnizorului nu au fost inițializate."
@@ -914,12 +932,6 @@ msgstr "Înregistrarea furnizorului trebuie să fie un tabel."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Setările furnizorului nu au fost găsite pentru: %1. Verificați fișierul configuration.lua."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Furnizor ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Furnizor ▸ NECONFIGURAT"
 
 msgid "Providers and Models"
 msgstr "Furnizori și modele"
@@ -1011,6 +1023,9 @@ msgstr "Salvează conversația în"
 msgid "Saved to: %1"
 msgstr "Salvat în: %1"
 
+msgid "Scroll"
+msgstr "Derulare"
+
 msgid "Search"
 msgstr "Căutare"
 
@@ -1073,6 +1088,9 @@ msgstr "Recomandări de cărți similare"
 
 msgid "Simplify"
 msgstr "Simplifică"
+
+msgid "Stop"
+msgstr "Oprește"
 
 msgid "Stopped Reason: "
 msgstr "Motivul opririi: "
@@ -1231,37 +1249,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Sfaturi de utilizare\n"
 "\n"
 "Selectare:\n"
-"Evidențiați textul (sau un cuvânt) din carte, apoi apăsați [AI assistant] în meniul care apare.\n"
+"Evidențiați text (sau un cuvânt) în carte, apoi apăsați [Asistent AI] în meniul apărut.\n"
 "\n"
 "Apăsare lungă:\n"
-"- Pe un buton de prompt: Adăugați la meniul de evidențiere.\n"
+"- Pe un buton de prompt: Adaugă în meniul de evidențiere.\n"
 "- Pe un buton din meniul de evidențiere pentru a-l elimina.\n"
-"- Pe butonul Închidere pentru a reveni la carte într-un singur pas.\n"
+"- Pe butonul Închide pentru a reveni la carte într-un singur pas.\n"
 "\n"
 "Apăsare foarte lungă (peste 3 secunde):\n"
-"Pe un singur cuvânt din carte pentru a afișa meniul de evidențiere (în locul dicționarului).\n"
+"Pe un singur cuvânt din carte pentru a afișa meniul de evidențiere (în loc de dicționar).\n"
 "\n"
-"Glisare multiplă (de ex., ⮠, ⮡, ↺):\n"
-"Pe dialogul de rezultat pentru a-l închide (deoarece butonul Închidere este greu de atins).\n"
+"Glisare multiplă (ex. %1, %2, %3):\n"
+"Pe dialogul cu rezultate pentru a închide (deoarece butonul Închide este greu de atins).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Folosește Asistentul AI pentru „Traducere”"
 
-msgid "Use Book Text as Context"
-msgstr "Folosește textul cărții ca context"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Folosește textul cărții pentru X-Ray și Recap"
 
-msgid "Use web search 🌐"
-msgstr "Utilizați căutarea web 🌐"
+msgid "Use web search"
+msgstr "Utilizează căutarea web"
 
 msgid "User:"
 msgstr "Utilizator:"
@@ -1275,8 +1290,11 @@ msgstr "Vizualizare"
 msgid "Vocabulary"
 msgstr "Vocabular"
 
-msgid "Web Search ▸ %1"
-msgstr "Căutare web ▸ %1"
+msgid "Web Search"
+msgstr "Căutare web"
+
+msgid "Web Search %1 %2"
+msgstr "Căutare web %1 %2"
 
 msgid "WebSearch API"
 msgstr "API WebSearch"
@@ -1296,6 +1314,10 @@ msgstr "Unde s-a oprit acțiunea:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Formă cuvânt & Lemă"
+
 msgid "Word Origin"
 msgstr "Originea cuvântului"
 
@@ -1305,8 +1327,8 @@ msgstr "Cuvânt copiat în clipboard."
 msgid "Write quick notes here"
 msgstr "Scrie note rapide aici"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Da"
@@ -1331,15 +1353,3 @@ msgstr "fetchJSON: eșec la parsarea datelor returnate"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Derulare"
-
-msgid "▶ Scroll"
-msgstr "▶ Derulare"
-
-msgid "❌ Stop"
-msgstr "❌ Oprire"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Îmbunătățește-ți experiența KOReader cu AI"

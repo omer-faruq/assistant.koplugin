@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 04:37+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: සිංහල (AI translation)\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — පි. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - පි. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "පොතක් සඳහා \"X-Ray\" සාරාංශය, චරිත, ස්ථාන, තේමා, පද සහ සංකල්ප, කාලරේඛාව සහ නැවත ගිල්වීම වැනි නිශ්චිත කොටස් වලට ව්‍යුහගත කර ඇත."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ ප්රශ්නය\n"
+msgid "### %1 Question\n"
+msgstr "### %1 ප්‍රශ්නය\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### මෙම මාතෘකා ඔබට සිත්ගන්නා සුළු විය හැක:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — ක්‍රියාවක් තෝරන්න"
+msgid "%1 - choose an action"
+msgstr "%1 - ක්‍රියාවක් තෝරන්න"
 
 msgid "(No response)"
 msgstr "(ප්රතිචාරයක් නැත)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "මෙම බොත්තම උද්දීපන මෙනුවට එක් කරන්නද?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API කාර්යබහුලයි (තත්ත්වය: 429)</b>\n"
+"උත්සාහයන් %1/%2 - නැවත උත්සාහ කිරීමට"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI ප්‍රතිචාර දක්වමින් ඇත"
 msgid "API Key"
 msgstr "API යතුර"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API යතුර — ඔබගේ යතුර ඇතුළත් කරන්න, ඉන්පසු පවතින මාදිලි ලැයිස්තුගත කිරීමට Browse Models තට්ටු කරන්න"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API යතුර - ඔබගේ යතුර ඇතුළත් කරන්න, ඉන්පසු පවතින මාදිලි ලැයිස්තුගත කිරීමට මාදිලි පිරික්සන්න තට්ටු කරන්න"
 
 msgid "API key is required for %1."
 msgstr "%1 සඳහා API යතුර අවශ්‍ය වේ."
@@ -215,10 +222,10 @@ msgstr "සටහනක් එක් කරන්න"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
-"ප්‍රධාන මෙනුවෙන් සැපයුම්කරුවන් එක් කරන්න:\n"
-"⚙ → AI සහායක → සැකසුම් → සැපයුම්කරු API"
+"ප්‍රධාන මෙනුවෙන් සේවා සපයන්නන් එක් කරන්න:\n"
+"%1 -> AI සහායක -> සැකසීම් -> සපයන්නා API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "පොතෙන් ඔබේ උද්දීපන, සටහන් සහ සටහන් පොත් අන්තර්ගතය පිළිබඳ විශ්ලේෂණය."
@@ -264,6 +271,9 @@ msgstr "AI වෙත ප්‍රශ්නයක් අසන්න"
 
 msgid "Assistant settings are not available."
 msgstr "සහායක සැකසුම් ලබා ගත නොහැක."
+
+msgid "Attach Prior Text"
+msgstr "පෙර පෙළ අමුණන්න"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "දිගු කලක් නොකියවූ පොත් විවෘත කිරීමේදී ස්වයංක්රීය Recap"
@@ -351,10 +361,6 @@ msgstr "AI LLM හි ප්රතිචාර භාෂාව වින්ය�
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "වින්යාස කළ සටහන් පොත් ෆෝල්ඩරයට ප්රවේශ විය නොහැක: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "ක්රියා පද රූප"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "සන්දර්භ සීමාවන්"
@@ -431,6 +437,9 @@ msgstr "සටහන් පොතක් සාදන්න."
 msgid "Cultural Significance"
 msgstr "සංස්කෘතික වැදගත්කම"
 
+msgid "Current Chapter Only"
+msgstr "වත්මන් පරිච්ඡේදය පමණක්"
+
 msgid "Custom Prompt"
 msgstr "අභිරුචි ප්රොම්ප්ටය"
 
@@ -490,6 +499,9 @@ msgstr "හිස් දෝෂය"
 
 msgid "Enable Stream Response"
 msgstr "ප්‍රවාහ ප්‍රතිචාරය සබල කරන්න"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "AI සමඟ ඔබගේ KOReader අත්දැකීම වැඩිදියුණු කරන්න"
 
 msgid "Enter Model ID"
 msgstr "ආකෘති ID ඇතුළත් කරන්න"
@@ -574,8 +586,8 @@ msgstr "විස්තර සඳහා, github හි 'Configuration' වික
 msgid "Fun Analogy"
 msgstr "විනෝදජනක ප්රතිසමය"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. /models කොටස ඇතුළත් විය යුතුය, උදා. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. /models කොටස ඇතුළත් විය යුතුය, උදා. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "සාමාන්‍ය සංවාදය"
@@ -696,14 +708,14 @@ msgstr "Markdown එන්ජිම"
 msgid "Meaning"
 msgstr "අර්ථය"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "මාදිලිය - පවතින මාදිලියක් තෝරා ගැනීමට මාදිලි පිරික්සන්න තට්ටු කරන්න"
+
 msgid "Model Built-In"
 msgstr "මාදිලියේ අන්තර්ගත"
 
 msgid "Model reset: %1"
 msgstr "ආකෘතිය යළි සකසන ලදී: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "මාදිලිය — පවතින මාදිලියක් තේරීමට Browse Models තට්ටු කරන්න"
 
 msgid "Model: %1"
 msgstr "ආකෘතිය: %1"
@@ -723,11 +735,14 @@ msgstr "අවධානයට ලක්වන ආඛ්යාන අංගය:"
 msgid "New notebook"
 msgstr "නව සටහන් පොත"
 
-msgid "New notebook…"
-msgstr "නව සටහන් පොත…"
+msgid "New notebook..."
+msgstr "නව සටහන් පොත..."
 
 msgid "No"
 msgstr "නැත"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "සක්‍රීය සේවා සපයන්නෙකු වින්‍යාස කර නොමැත. කරුණාකර සැකසීම් තුළ එකක් එක් කරන්න."
 
 msgid "No base folder is available for notebooks."
 msgstr "සටහන් පොත් සඳහා මූලික ෆෝල්ඩරයක් නොමැත."
@@ -758,9 +773,6 @@ msgstr "සටහනක් ලෙස එක් කිරීමට පෙළක�
 
 msgid "No valid custom prompt found"
 msgstr "වලංගු අභිරුචි ප්‍රොම්ප්ටයක් හමු නොවීය"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "configuration.lua හි වලංගු ආකෘති සැපයුම්කරුවෙකු හමු නොවීය"
 
 msgid "None"
 msgstr "කිසිවක් නැත"
@@ -854,8 +866,8 @@ msgstr "පොත් සන්දර්භයට ඇතුළත් වන ප�
 msgid "Open conflict or mystery:"
 msgstr "විවෘත ගැටුම හෝ අභිරහස:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — අන්තර්ගත වෙබ් සෙවීම ඇතුළත් කරන්න"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - ගොඩනඟන ලද වෙබ් සෙවීම ඇතුළත් කරන්න"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI-අනුකූල chat/completions අන්ත ලක්ෂ්යය, උදා. https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "පවතින චිත්තවේගීය තත්ත්වය/ස
 msgid "Protagonist's current objective:"
 msgstr "ප්රධාන චරිතයේ වර්තමාන ඉලක්කය:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "සේවා සපයන්නා %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "සේවා සපයන්නා %1 වින්‍යාස කර නොමැත"
+
 msgid "Provider API"
 msgstr "සැපයුම්කරු API"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "සේවා සපයන්නාගේ නම — මෙනුවල පෙන්වනු ලැබේ; API ප්‍රොටෝකෝල නම භාවිත කිරීමට හිස්ව තබන්න (උදා. \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "සේවා සපයන්නාගේ නම - මෙනු වල පෙන්වයි; API ප්‍රොටෝකෝල නම භාවිතා කිරීමට හිස්ව තබන්න (උදා. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "සැපයුම්කරු දත්ත ආරම්භ කර නොමැත."
@@ -913,12 +931,6 @@ msgstr "සැපයුම්කරු වාර්තාව වගුවක් 
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "%1 සඳහා සැපයුම්කරු සැකසුම් හමු නොවීය. කරුණාකර ඔබගේ configuration.lua ගොනුව පරීක්ෂා කරන්න."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "සැපයුම්කරු ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "සැපයුම්කරු ▸ වින්‍යාස කර නොමැත"
 
 msgid "Providers and Models"
 msgstr "සැපයුම්කරුවන් සහ මාදිලි"
@@ -1010,6 +1022,9 @@ msgstr "සංවාදය සුරකින්න"
 msgid "Saved to: %1"
 msgstr "සුරකින ලදී: %1"
 
+msgid "Scroll"
+msgstr "අනුචලනය"
+
 msgid "Search"
 msgstr "සොයන්න"
 
@@ -1072,6 +1087,9 @@ msgstr "සමාන පොත් නිර්දේශ"
 
 msgid "Simplify"
 msgstr "සරල කරන්න"
+
+msgid "Stop"
+msgstr "නවත්වන්න"
 
 msgid "Stopped Reason: "
 msgstr "නැවැත්වීමට හේතුව: "
@@ -1230,37 +1248,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
-"භාවිත ඉඟි\n"
+"භාවිත උපදෙස්\n"
 "\n"
-"තේරීම:\n"
-"පොතේ පෙළ (හෝ වචනයක්) උද්දීපනය කරන්න, ඉන්පසු පොප්-අප් මෙනුවේ [AI සහායක] ඔබන්න.\n"
+"තෝරන්න:\n"
+"පොතේ පෙළ (හෝ වචනයක්) උද්දීපනය කරන්න, ඉන්පසු උත්පතන මෙනුවේ [AI සහායක] ඔබන්න.\n"
 "\n"
-"දිගු එබීම:\n"
-"- Prompt බොත්තමක් මත: උද්දීපන මෙනුවට එක් කරන්න.\n"
-"- උද්දීපන මෙනු බොත්තමක් මත: එය ඉවත් කිරීමට.\n"
-"- Close බොත්තම මත: එක් පියවරකින් පොතට ආපසු යාමට.\n"
+"දිගු වේලාවක් ඔබා සිටීම:\n"
+"- Prompt බොත්තමක් මත: උද්දීපන මෙනුවට එක් කිරීමට.\n"
+"- උද්දීපන මෙනු බොත්තමක් මත එය ඉවත් කිරීමට.\n"
+"- Close බොත්තම මත එක් පියවරකින් පොතට ආපසු යාමට.\n"
 "\n"
-"ඉතා දිගු එබීම (තත්පර 3කට වැඩි):\n"
-"පොතේ තනි වචනයක් මත: ශබ්දකෝෂය වෙනුවට උද්දීපන මෙනුව පෙන්වීමට.\n"
+"ඉතා දිගු වේලාවක් ඔබා සිටීම (තත්පර 3කට වඩා):\n"
+"පොතේ තනි වචනයක් මත උද්දීපන මෙනුව පෙන්වීමට (ශබ්දකෝෂය වෙනුවට).\n"
 "\n"
-"බහු-ස්වයිප් (උදා., ⮠, ⮡, ↺):\n"
-"ප්රතිඵල සංවාදය මත: වැසීමට (Close බොත්තමට ළඟාවීම දුර බැවින්).\n"
+"බහු-ස්වයිප් (උදා., %1, %2, %3):\n"
+"ප්‍රතිඵල සංවාදය මත වැසීමට (Close බොත්තම ළඟා වීමට දුර නිසා).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "'පරිවර්තනය' සඳහා AI සහායක භාවිතා කරන්න"
 
-msgid "Use Book Text as Context"
-msgstr "පොතේ පෙළ සන්දර්භය ලෙස භාවිතා කරන්න"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "X-Ray සහ Recap සඳහා පොතේ පෙළ භාවිතා කරන්න"
 
-msgid "Use web search 🌐"
-msgstr "වෙබ් සෙවීම භාවිතා කරන්න 🌐"
+msgid "Use web search"
+msgstr "වෙබ් සෙවීම භාවිතා කරන්න"
 
 msgid "User:"
 msgstr "පරිශීලක:"
@@ -1274,8 +1289,11 @@ msgstr "බලන්න"
 msgid "Vocabulary"
 msgstr "වචන මාලාව"
 
-msgid "Web Search ▸ %1"
-msgstr "වෙබ් සෙවීම ▸ %1"
+msgid "Web Search"
+msgstr "වෙබ් සෙවීම"
+
+msgid "Web Search %1 %2"
+msgstr "වෙබ් සෙවීම %1 %2"
 
 msgid "WebSearch API"
 msgstr "වෙබ් සෙවුම් API"
@@ -1295,6 +1313,10 @@ msgstr "ක්රියාව නතර වූ තැන:"
 msgid "Wikipedia"
 msgstr "විකිපීඩියා"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "වචන ස්වරූපය සහ මූල පදය"
+
 msgid "Word Origin"
 msgstr "වචනයේ මූලාරම්භය"
 
@@ -1304,8 +1326,8 @@ msgstr "වචනය ක්ලිප්බෝඩ් වෙත පිටපත්
 msgid "Write quick notes here"
 msgstr "ඉක්මන් සටහන් මෙහි ලියන්න"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "ඔව්"
@@ -1330,15 +1352,3 @@ msgstr "fetchJSON: ලැබුණු දත්ත විග්‍රහ කි�
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ අනුචලනය"
-
-msgid "▶ Scroll"
-msgstr "▶ අනුචලනය"
-
-msgid "❌ Stop"
-msgstr "❌ නවත්වන්න"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 AI සමඟ ඔබගේ KOReader අත්දැකීම වැඩිදියුණු කරන්න"

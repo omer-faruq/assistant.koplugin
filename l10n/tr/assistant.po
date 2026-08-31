@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — s. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - s. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" özeti; Karakterler, Mekânlar, Temalar, Terimler ve Kavramlar, Zaman Çizelgesi ve Yeniden Okuma gibi belirli bölümlere ayrılmıştır."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Soru\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Soru\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Bu konular ilginizi çekebilir:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — bir eylem seçin"
+msgid "%1 - choose an action"
+msgstr "%1 - bir eylem seçin"
 
 msgid "(No response)"
 msgstr "(Yanıt yok)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Bu düğme Vurgu Menüsü'ne eklensin mi?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API Meşgul (Durum: 429)</b>\n"
+"Deneme %1/%2 - yeniden denenecek süre"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "Yapay zekâ yanıtlıyor"
 msgid "API Key"
 msgstr "API Anahtarı"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API Anahtarı — anahtarınızı girin, ardından kullanılabilir modelleri listelemek için Modellere Gözat'a dokunun"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API Anahtarı - anahtarınızı girin, ardından mevcut modelleri listelemek için Modellere Göz At'a dokunun"
 
 msgid "API key is required for %1."
 msgstr "%1 için API anahtarı gereklidir."
@@ -215,10 +222,10 @@ msgstr "Not Ekle"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Ana menüden sağlayıcı ekleyin:\n"
-"⚙ → AI Assistant → Ayarlar → Sağlayıcı API"
+"%1 -> Yapay Zeka Asistanı -> Ayarlar -> Sağlayıcı API'si"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Kitaptaki vurgularınızın, notlarınızın ve not defteri içeriğinizin analizi."
@@ -264,6 +271,9 @@ msgstr "AI'ya bir soru sorun"
 
 msgid "Assistant settings are not available."
 msgstr "Asistan ayarları mevcut değil."
+
+msgid "Attach Prior Text"
+msgstr "Önceki Metni Ekle"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Uzun Süredir Okunmayan Kitapları Açarken Otomatik Recap"
@@ -351,10 +361,6 @@ msgstr "Yapay zeka LLM'inin yanıt dilini yapılandırın. Varsayılan olarak KO
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Yapılandırılan defterler klasörüne erişilemiyor: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Çekim"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Bağlam Sınırlamaları"
@@ -431,6 +437,9 @@ msgstr "Bir defter oluşturun."
 msgid "Cultural Significance"
 msgstr "Kültürel Önem"
 
+msgid "Current Chapter Only"
+msgstr "Yalnızca Mevcut Bölüm"
+
 msgid "Custom Prompt"
 msgstr "Özel İstem"
 
@@ -490,6 +499,9 @@ msgstr "Boş Hata"
 
 msgid "Enable Stream Response"
 msgstr "Akış Yanıtını Etkinleştir"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "KOReader deneyiminizi yapay zeka ile geliştirin"
 
 msgid "Enter Model ID"
 msgstr "Model Kimliği Girin"
@@ -574,8 +586,8 @@ msgstr "Ayrıntılar için GitHub'daki 'Configuration' wiki sayfasını ziyaret 
 msgid "Fun Analogy"
 msgstr "Eğlenceli Benzetme"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. /models bölümünü içermelidir, örn. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. /models segmentini içermelidir, örn. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Genel Sohbet"
@@ -696,14 +708,14 @@ msgstr "Markdown Motoru"
 msgid "Meaning"
 msgstr "Anlam"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Model - mevcut bir model seçmek için Modellere Göz At'a dokunun"
+
 msgid "Model Built-In"
 msgstr "Dahili Model"
 
 msgid "Model reset: %1"
 msgstr "Model sıfırlandı: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Model — kullanılabilir bir model seçmek için Modellere Gözat'a dokunun"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -723,11 +735,14 @@ msgstr "Odaktaki anlatı öğesi:"
 msgid "New notebook"
 msgstr "Yeni defter"
 
-msgid "New notebook…"
-msgstr "Yeni defter…"
+msgid "New notebook..."
+msgstr "Yeni defter..."
 
 msgid "No"
 msgstr "Hayır"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Etkin sağlayıcı yapılandırılmadı. Lütfen Ayarlar'dan bir tane ekleyin."
 
 msgid "No base folder is available for notebooks."
 msgstr "Defterler için temel klasör mevcut değil."
@@ -758,9 +773,6 @@ msgstr "Not olarak eklenecek metin yok"
 
 msgid "No valid custom prompt found"
 msgstr "Geçerli bir özel istem bulunamadı"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "configuration.lua içinde geçerli bir model sağlayıcısı bulunamadı."
 
 msgid "None"
 msgstr "Yok"
@@ -854,8 +866,8 @@ msgstr "Yalnızca kitap bağlamını kabul eden istemler tarafından kullanılı
 msgid "Open conflict or mystery:"
 msgstr "Çözülmemiş çatışma veya gizem:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — Yerleşik web aramasını dahil et"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - Yerleşik web aramasını dahil et"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI uyumlu sohbet/tamamlamalar uç noktası, örn. https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "Baskın duygu durumu/tonu:"
 msgid "Protagonist's current objective:"
 msgstr "Başkahramanın şu anki hedefi:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Sağlayıcı %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Sağlayıcı %1 YAPILANDIRILMADI"
+
 msgid "Provider API"
 msgstr "Sağlayıcı API'si"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Sağlayıcı Adı — menülerde gösterilir; API protokol adını kullanmak için boş bırakın (örn. \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Sağlayıcı Adı - menülerde gösterilir; API protokol adını kullanmak için boş bırakın (örn. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Sağlayıcı verisi başlatılmadı."
@@ -913,12 +931,6 @@ msgstr "Sağlayıcı kaydı bir tablo olmalıdır."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Sağlayıcı ayarları bulunamadı: %1. Lütfen configuration.lua dosyanızı kontrol edin."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Sağlayıcı ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Sağlayıcı ▸ YAPILANDIRILMADI"
 
 msgid "Providers and Models"
 msgstr "Sağlayıcılar ve Modeller"
@@ -1009,6 +1021,9 @@ msgstr "Sohbeti kaydet"
 msgid "Saved to: %1"
 msgstr "Kaydedildi: %1"
 
+msgid "Scroll"
+msgstr "Kaydır"
+
 msgid "Search"
 msgstr "Ara"
 
@@ -1071,6 +1086,9 @@ msgstr "Benzer Kitap Önerileri"
 
 msgid "Simplify"
 msgstr "Basitleştir"
+
+msgid "Stop"
+msgstr "Durdur"
 
 msgid "Stopped Reason: "
 msgstr "Durdurma Nedeni: "
@@ -1229,37 +1247,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Kullanım İpuçları\n"
 "\n"
-"Seç:\n"
-"Kitapta metni (veya bir kelimeyi) vurgulayın, ardından açılan menüde [AI asistan] düğmesine basın.\n"
+"Seçme:\n"
+"Kitapta metni (veya bir kelimeyi) vurgulayın, ardından açılan menüde [Yapay Zeka Asistanı] düğmesine basın.\n"
 "\n"
 "Uzun Basma:\n"
-"- Bir İstem Düğmesinde: Vurgu menüsüne ekleyin.\n"
-"- Bir vurgu menüsü düğmesinde: kaldırmak için.\n"
-"- Kapat düğmesinde: 1 adımda kitaba geri dönmek için.\n"
+"- İstem Düğmesi üzerinde: Vurgu menüsüne ekler.\n"
+"- Kaldırmak için bir vurgu menüsü düğmesi üzerinde.\n"
+"- Tek adımda kitaba dönmek için Kapat düğmesi üzerinde.\n"
 "\n"
-"Çok Uzun Basma (3 saniyeden uzun):\n"
-"Kitapta tek bir kelimede (sözlük yerine) vurgu menüsünü göstermek için.\n"
+"Çok Uzun Basma (3 saniyeden fazla):\n"
+"Kitaptaki tek bir kelime üzerinde vurgu menüsünü göstermek için (sözlük yerine).\n"
 "\n"
-"Çoklu Kaydırma (örn. ⮠, ⮡, ↺):\n"
-"Sonuç iletişim kutusunda kapatmak için (Kapat düğmesine ulaşmak zor olduğundan).\n"
+"Çoklu Kaydırma (örn. %1, %2, %3):\n"
+"Sonuç penceresini kapatmak için (Kapat düğmesine ulaşmak uzak olduğundan).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "'Çevir' için AI Asistanını Kullan"
 
-msgid "Use Book Text as Context"
-msgstr "Kitap Metnini Bağlam Olarak Kullan"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "X-Ray ve Recap için Kitap Metnini Kullan"
 
-msgid "Use web search 🌐"
-msgstr "Web aramasını kullan 🌐"
+msgid "Use web search"
+msgstr "Web aramasını kullan"
 
 msgid "User:"
 msgstr "Kullanıcı:"
@@ -1273,8 +1288,11 @@ msgstr "Görüntüle"
 msgid "Vocabulary"
 msgstr "Kelime Bilgisi"
 
-msgid "Web Search ▸ %1"
-msgstr "Web Arama ▸ %1"
+msgid "Web Search"
+msgstr "Web Araması"
+
+msgid "Web Search %1 %2"
+msgstr "Web Araması %1 %2"
 
 msgid "WebSearch API"
 msgstr "Web Arama API'si"
@@ -1294,6 +1312,10 @@ msgstr "Olayın kaldığı yer:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Kelime Formu ve Lemma"
+
 msgid "Word Origin"
 msgstr "Kelime Kökeni"
 
@@ -1303,7 +1325,7 @@ msgstr "Kelime panoya kopyalandı."
 msgid "Write quick notes here"
 msgstr "Buraya hızlı notlar yazın"
 
-msgid "X‑Ray"
+msgid "X-Ray"
 msgstr "X-Ray"
 
 msgid "Yes"
@@ -1329,15 +1351,3 @@ msgstr "fetchJSON: döndürülen veri ayrıştırılamadı"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Kaydır"
-
-msgid "▶ Scroll"
-msgstr "▶ Kaydır"
-
-msgid "❌ Stop"
-msgstr "❌ Durdur"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 KOReader deneyiminizi yapay zekâ ile geliştirin"

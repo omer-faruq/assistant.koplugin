@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — σ. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - σ. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Περίληψη «X-Ray» για ένα βιβλίο, δομημένη σε συγκεκριμένες ενότητες όπως Χαρακτήρες, Τοποθεσίες, Θέματα, Όροι & Έννοιες, Χρονοδιάγραμμα και Επαναβύθιση."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Ερώτηση\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Ερώτηση\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Μπορεί να βρείτε αυτά τα θέματα ενδιαφέροντα:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — επιλέξτε μια ενέργεια"
+msgid "%1 - choose an action"
+msgstr "%1 - επιλέξτε μια ενέργεια"
 
 msgid "(No response)"
 msgstr "(Καμία απάντηση)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Να προστεθεί αυτό το κουμπί στο Μενού Επισήμανσης;"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>Το API είναι απασχολημένο (Κατάσταση: 429)</b>\n"
+"Προσπάθειες %1/%2 - επανάληψη σε"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "Το AI απαντά"
 msgid "API Key"
 msgstr "Κλειδί API"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "Κλειδί API — εισάγετε το κλειδί σας και μετά πατήστε Περιήγηση στα μοντέλα για να δείτε τα διαθέσιμα μοντέλα"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API Key - εισάγετε το κλειδί σας και πατήστε Περιήγηση Μοντέλων για να δείτε τα διαθέσιμα μοντέλα"
 
 msgid "API key is required for %1."
 msgstr "Το κλειδί API απαιτείται για %1."
@@ -215,10 +222,10 @@ msgstr "Προσθήκη σημείωσης"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Προσθέστε παρόχους από το κύριο μενού:\n"
-"⚙ → AI Assistant → Ρυθμίσεις → Provider API"
+"%1 -> AI Assistant -> Ρυθμίσεις -> API Παρόχου"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Ανάλυση των επισημάνσεων, των σημειώσεων και του περιεχομένου του σημειωματάριου από το βιβλίο."
@@ -264,6 +271,9 @@ msgstr "Κάντε μια ερώτηση στο AI"
 
 msgid "Assistant settings are not available."
 msgstr "Οι ρυθμίσεις του βοηθού δεν είναι διαθέσιμες."
+
+msgid "Attach Prior Text"
+msgstr "Επισύναψη προηγούμενου κειμένου"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Αυτόματη ανακεφαλαίωση κατά το άνοιγμα βιβλίων που δεν έχουν διαβαστεί για καιρό"
@@ -351,10 +361,6 @@ msgstr "Διαμόρφωση της γλώσσας απόκρισης του AI 
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Ο φάκελος σημειωματαρίων που έχει ρυθμιστεί δεν είναι προσβάσιμος: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Κλίση"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Περιορισμοί πλαισίου"
@@ -431,6 +437,9 @@ msgstr "Δημιουργία σημειωματαρίου."
 msgid "Cultural Significance"
 msgstr "Πολιτιστική σημασία"
 
+msgid "Current Chapter Only"
+msgstr "Μόνο το τρέχον κεφάλαιο"
+
 msgid "Custom Prompt"
 msgstr "Προσαρμοσμένη Προτροπή"
 
@@ -490,6 +499,9 @@ msgstr "Κενό σφάλμα"
 
 msgid "Enable Stream Response"
 msgstr "Ενεργοποίηση απόκρισης σε ροή"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Βελτιώστε την εμπειρία σας στο KOReader με AI"
 
 msgid "Enter Model ID"
 msgstr "Εισαγωγή αναγνωριστικού μοντέλου"
@@ -574,8 +586,8 @@ msgstr "Για λεπτομέρειες, επισκεφθείτε τη σελί�
 msgid "Fun Analogy"
 msgstr "Διασκεδαστική αναλογία"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. πρέπει να περιλαμβάνει το τμήμα /models, π.χ. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. πρέπει να περιλαμβάνει το τμήμα /models, π.χ. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Γενική Συνομιλία"
@@ -696,14 +708,14 @@ msgstr "Μηχανή Markdown"
 msgid "Meaning"
 msgstr "Σημασία"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Μοντέλο - πατήστε Αναζήτηση Μοντέλων για να επιλέξετε ένα διαθέσιμο μοντέλο"
+
 msgid "Model Built-In"
 msgstr "Ενσωματωμένο Μοντέλο"
 
 msgid "Model reset: %1"
 msgstr "Επαναφορά μοντέλου: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Μοντέλο — πατήστε Περιήγηση στα μοντέλα για να επιλέξετε ένα διαθέσιμο μοντέλο"
 
 msgid "Model: %1"
 msgstr "Μοντέλο: %1"
@@ -723,11 +735,14 @@ msgstr "Αφηγηματικό στοιχείο στο επίκεντρο:"
 msgid "New notebook"
 msgstr "Νέο σημειωματάριο"
 
-msgid "New notebook…"
-msgstr "Νέο σημειωματάριο…"
+msgid "New notebook..."
+msgstr "Νέο σημειωματάριο..."
 
 msgid "No"
 msgstr "Όχι"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Δεν έχει ρυθμιστεί ενεργός πάροχος. Προσθέστε έναν στις Ρυθμίσεις."
 
 msgid "No base folder is available for notebooks."
 msgstr "Δεν υπάρχει διαθέσιμος βασικός φάκελος για τα σημειωματάρια."
@@ -758,9 +773,6 @@ msgstr "Δεν υπάρχει κείμενο για προσθήκη ως σημ
 
 msgid "No valid custom prompt found"
 msgstr "Δεν βρέθηκε έγκυρο προσαρμοσμένο prompt"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Δεν βρέθηκε έγκυρος πάροχος μοντέλου στο configuration.lua"
 
 msgid "None"
 msgstr "Κανένα"
@@ -854,8 +866,8 @@ msgstr "Χρησιμοποιείται μόνο από προτροπές που
 msgid "Open conflict or mystery:"
 msgstr "Ανοιχτή σύγκρουση ή μυστήριο:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — Συμπερίληψη ενσωματωμένης αναζήτησης στο διαδίκτυο"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - Συμπερίληψη ενσωματωμένης αναζήτησης ιστού"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "Συμβατό με OpenAI τελικό σημείο chat/completions, π.χ. https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "Επικρατούσα συναισθηματική κατάσταση/�
 msgid "Protagonist's current objective:"
 msgstr "Τρέχων στόχος του πρωταγωνιστή:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Πάροχος %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Πάροχος %1 ΔΕΝ ΕΧΕΙ ΡΥΘΜΙΣΤΕΙ"
+
 msgid "Provider API"
 msgstr "API Παρόχου"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Όνομα παρόχου — εμφανίζεται στα μενού· αφήστε κενό για χρήση του ονόματος πρωτοκόλλου API (π.χ. \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Όνομα Παρόχου - εμφανίζεται στα μενού· αφήστε το κενό για να χρησιμοποιηθεί το όνομα του πρωτοκόλλου API (π.χ. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Τα δεδομένα παρόχου δεν έχουν αρχικοποιηθεί."
@@ -913,12 +931,6 @@ msgstr "Η εγγραφή παρόχου πρέπει να είναι πίνακ
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Δεν βρέθηκαν ρυθμίσεις παρόχου για: %1. Ελέγξτε το αρχείο configuration.lua."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Πάροχος ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Πάροχος ▸ ΔΕΝ ΕΧΕΙ ΡΥΘΜΙΣΤΕΙ"
 
 msgid "Providers and Models"
 msgstr "Πάροχοι και Μοντέλα"
@@ -1009,6 +1021,9 @@ msgstr "Αποθήκευση συνομιλίας σε"
 msgid "Saved to: %1"
 msgstr "Αποθηκεύτηκε σε: %1"
 
+msgid "Scroll"
+msgstr "Κύλιση"
+
 msgid "Search"
 msgstr "Αναζήτηση"
 
@@ -1071,6 +1086,9 @@ msgstr "Προτάσεις Παρόμοιων Βιβλίων"
 
 msgid "Simplify"
 msgstr "Απλοποίηση"
+
+msgid "Stop"
+msgstr "Διακοπή"
 
 msgid "Stopped Reason: "
 msgstr "Λόγος διακοπής: "
@@ -1229,37 +1247,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Συμβουλές χρήσης\n"
 "\n"
 "Επιλογή:\n"
-"Επισημάνετε κείμενο (ή μια λέξη) στο βιβλίο και μετά πατήστε [AI assistant] στο αναδυόμενο μενού.\n"
+"Επισημάνετε κείμενο (ή μια λέξη) στο βιβλίο και έπειτα πατήστε [Βοηθός AI] στο αναδυόμενο μενού.\n"
 "\n"
 "Παρατεταμένο πάτημα:\n"
 "- Σε ένα κουμπί προτροπής: Προσθήκη στο μενού επισήμανσης.\n"
-"- Σε ένα κουμπί του μενού επισήμανσης για αφαίρεση.\n"
-"- Στο κουμπί Κλείσιμο για επιστροφή στο βιβλίο με 1 βήμα.\n"
+"- Σε ένα κουμπί του μενού επισήμανσης για να το αφαιρέσετε.\n"
+"- Στο κουμπί Κλείσιμο για να επιστρέψετε στο βιβλίο με 1 βήμα.\n"
 "\n"
 "Πολύ παρατεταμένο πάτημα (πάνω από 3 δευτερόλεπτα):\n"
-"Σε μια μεμονωμένη λέξη στο βιβλίο για εμφάνιση του μενού επισήμανσης (αντί για το λεξικό).\n"
+"Σε μια λέξη στο βιβλίο για να εμφανιστεί το μενού επισήμανσης (αντί για το λεξικό).\n"
 "\n"
-"Πολλαπλό σάρωμα (π.χ., ⮠, ⮡, ↺):\n"
+"Πολλαπλό σάρωμα (π.χ., %1, %2, %3):\n"
 "Στο παράθυρο αποτελεσμάτων για κλείσιμο (καθώς το κουμπί Κλείσιμο είναι μακριά).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Χρήση του AI Assistant για τη «Μετάφραση»"
 
-msgid "Use Book Text as Context"
-msgstr "Χρήση κειμένου βιβλίου ως πλαίσιο"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Χρήση κειμένου βιβλίου για X-Ray και Recap"
 
-msgid "Use web search 🌐"
-msgstr "Χρήση διαδικτυακής αναζήτησης 🌐"
+msgid "Use web search"
+msgstr "Χρήση αναζήτησης στο διαδίκτυο"
 
 msgid "User:"
 msgstr "Χρήστης:"
@@ -1273,8 +1288,11 @@ msgstr "Προβολή"
 msgid "Vocabulary"
 msgstr "Λεξιλόγιο"
 
-msgid "Web Search ▸ %1"
-msgstr "Αναζήτηση Ιστού ▸ %1"
+msgid "Web Search"
+msgstr "Αναζήτηση στο διαδίκτυο"
+
+msgid "Web Search %1 %2"
+msgstr "Αναζήτηση στο διαδίκτυο %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch API"
@@ -1294,6 +1312,10 @@ msgstr "Πού σταμάτησε η δράση:"
 msgid "Wikipedia"
 msgstr "Βικιπαίδεια"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Μορφή λέξης & Λήμμα"
+
 msgid "Word Origin"
 msgstr "Προέλευση Λέξης"
 
@@ -1303,7 +1325,7 @@ msgstr "Η λέξη αντιγράφηκε στο πρόχειρο."
 msgid "Write quick notes here"
 msgstr "Γράψτε γρήγορες σημειώσεις εδώ"
 
-msgid "X‑Ray"
+msgid "X-Ray"
 msgstr "X-Ray"
 
 msgid "Yes"
@@ -1329,15 +1351,3 @@ msgstr "fetchJSON: απέτυχε η ανάλυση των επιστρεφόμ�
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Κύλιση"
-
-msgid "▶ Scroll"
-msgstr "▶ Κύλιση"
-
-msgid "❌ Stop"
-msgstr "❌ Διακοπή"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Βελτιώστε την εμπειρία σας στο KOReader με AI"

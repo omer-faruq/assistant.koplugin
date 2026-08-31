@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — %1/%2쪽"
+msgid " - p. %1/%2"
+msgstr " - %1/%2쪽"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" 요약: 등장인물, 장소, 주제, 용어 및 개념, 타임라인, 재몰입과 같은 특정 섹션으로 구성된 책 요약."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ 질문\n"
+msgid "### %1 Question\n"
+msgstr "### %1 질문\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### 다음 주제가 흥미로울 수 있습니다:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — 작업 선택"
+msgid "%1 - choose an action"
+msgstr "%1 - 동작 선택"
 
 msgid "(No response)"
 msgstr "(응답 없음)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "이 버튼을 하이라이트 메뉴에 추가할까요?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API 사용 중 (상태: 429)</b>\n"
+"시도 %1/%2 - 재시도까지"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI가 응답 중입니다"
 msgid "API Key"
 msgstr "API 키"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API 키 — 키를 입력한 다음 모델 찾아보기를 탭하여 사용 가능한 모델을 확인하세요."
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API 키 - 키를 입력한 후 모델 찾아보기를 눌러 사용 가능한 모델을 나열하세요."
 
 msgid "API key is required for %1."
 msgstr "%1에 API 키가 필요합니다."
@@ -215,10 +222,10 @@ msgstr "메모 추가"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
-"메인 메뉴에서 제공업체를 추가하세요:\n"
-"⚙ → AI Assistant → 설정 → 제공업체 API"
+"메인 메뉴에서 공급자 추가:\n"
+"%1 -> AI 어시스턴트 -> 설정 -> 공급자 API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "책에서의 하이라이트, 메모, 노트북 내용 분석."
@@ -264,6 +271,9 @@ msgstr "AI에게 질문하기"
 
 msgid "Assistant settings are not available."
 msgstr "어시스턴트 설정을 사용할 수 없습니다."
+
+msgid "Attach Prior Text"
+msgstr "이전 텍스트 포함"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "오래 읽지 않은 책을 열 때 자동 요약"
@@ -351,10 +361,6 @@ msgstr "AI LLM의 응답 언어를 설정합니다. 기본값은 KOReader 인터
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "설정된 노트북 폴더에 접근할 수 없습니다: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "활용"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "맥락의 한계"
@@ -431,6 +437,9 @@ msgstr "노트북을 만듭니다."
 msgid "Cultural Significance"
 msgstr "문화적 중요성"
 
+msgid "Current Chapter Only"
+msgstr "현재 챕터만"
+
 msgid "Custom Prompt"
 msgstr "사용자 지정 프롬프트"
 
@@ -490,6 +499,9 @@ msgstr "빈 오류"
 
 msgid "Enable Stream Response"
 msgstr "스트리밍 응답 활성화"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "AI로 KOReader 경험을 향상시키세요"
 
 msgid "Enter Model ID"
 msgstr "모델 ID 입력"
@@ -574,8 +586,8 @@ msgstr "자세한 내용은 GitHub의 'Configuration' 위키 페이지를 방문
 msgid "Fun Analogy"
 msgstr "재미있는 비유"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. /models 세그먼트를 포함해야 합니다(예: …/v1beta/models)."
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. /models 세그먼트를 포함해야 합니다(예: .../v1beta/models)"
 
 msgid "General Conversation"
 msgstr "일반 대화"
@@ -695,14 +707,14 @@ msgstr "마크다운 엔진"
 msgid "Meaning"
 msgstr "의미"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "모델 - 사용 가능한 모델을 선택하려면 모델 찾아보기를 탭하세요"
+
 msgid "Model Built-In"
 msgstr "모델 내장"
 
 msgid "Model reset: %1"
 msgstr "모델 초기화: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "모델 — 사용 가능한 모델을 선택하려면 모델 찾아보기를 탭하세요."
 
 msgid "Model: %1"
 msgstr "모델: %1"
@@ -722,11 +734,14 @@ msgstr "초점이 맞춰진 서사 요소:"
 msgid "New notebook"
 msgstr "새 노트북"
 
-msgid "New notebook…"
-msgstr "새 노트북…"
+msgid "New notebook..."
+msgstr "새 노트..."
 
 msgid "No"
 msgstr "아니요"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "활성 공급자가 구성되어 있지 않습니다. 설정에서 추가하세요."
 
 msgid "No base folder is available for notebooks."
 msgstr "노트북에 사용할 기본 폴더가 없습니다."
@@ -757,9 +772,6 @@ msgstr "메모로 추가할 텍스트가 없습니다."
 
 msgid "No valid custom prompt found"
 msgstr "유효한 사용자 정의 프롬프트를 찾을 수 없습니다."
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "configuration.lua에서 유효한 모델 제공자를 찾을 수 없습니다."
 
 msgid "None"
 msgstr "없음"
@@ -853,8 +865,8 @@ msgstr "책 컨텍스트를 선택한 프롬프트에서만 사용됩니다(기�
 msgid "Open conflict or mystery:"
 msgstr "해결되지 않은 갈등 또는 미스터리:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — 기본 제공 웹 검색 포함"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - 내장 웹 검색 포함"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI 호환 chat/completions 엔드포인트(예: https://api.openai.com/v1)"
@@ -892,11 +904,17 @@ msgstr "지배적인 감정 상태/분위기:"
 msgid "Protagonist's current objective:"
 msgstr "주인공의 현재 목표:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "제공자 %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "제공자 %1 구성되지 않음"
+
 msgid "Provider API"
 msgstr "공급자 API"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "프로바이더 이름 — 메뉴에 표시됩니다. 비워 두면 API 프로토콜 이름(예: \"openai\")을 사용합니다"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "제공자 이름 - 메뉴에 표시됩니다. 비워 두면 API 프로토콜 이름(예: \"openai\")을 사용합니다."
 
 msgid "Provider data not initialized."
 msgstr "공급자 데이터가 초기화되지 않았습니다."
@@ -912,12 +930,6 @@ msgstr "공급자 레코드는 테이블이어야 합니다."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "%1에 대한 공급자 설정을 찾을 수 없습니다. configuration.lua 파일을 확인하세요."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "제공업체 ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "제공업체 ▸ 구성되지 않음"
 
 msgid "Providers and Models"
 msgstr "공급자 및 모델"
@@ -1008,6 +1020,9 @@ msgstr "대화 저장 위치"
 msgid "Saved to: %1"
 msgstr "저장 위치: %1"
 
+msgid "Scroll"
+msgstr "스크롤"
+
 msgid "Search"
 msgstr "검색"
 
@@ -1070,6 +1085,9 @@ msgstr "비슷한 책 추천"
 
 msgid "Simplify"
 msgstr "쉽게 설명"
+
+msgid "Stop"
+msgstr "중지"
 
 msgid "Stopped Reason: "
 msgstr "중지 사유: "
@@ -1228,37 +1246,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
-"사용법\n"
+"사용 팁\n"
 "\n"
 "선택:\n"
-"책에서 텍스트(또는 단어)를 하이라이트한 후, 팝업 메뉴에서 [AI 어시스턴트]를 누르세요.\n"
+"책에서 텍스트(또는 단어)를 강조한 후, 나타난 메뉴에서 [AI 어시스턴트]를 누르세요.\n"
 "\n"
 "길게 누르기:\n"
-"- 프롬프트 버튼: 하이라이트 메뉴에 추가합니다.\n"
-"- 하이라이트 메뉴 버튼: 길게 눌러 제거합니다.\n"
-"- 닫기 버튼: 한 번에 책으로 돌아갑니다.\n"
+"- 프롬프트 버튼에서: 하이라이트 메뉴에 추가합니다.\n"
+"- 하이라이트 메뉴 버튼에서: 제거합니다.\n"
+"- 닫기 버튼에서: 한 단계로 책으로 돌아갑니다.\n"
 "\n"
-"매우 길게 누르기(3초 이상):\n"
-"책의 단어 하나를 길게 눌러 (사전 대신) 하이라이트 메뉴를 표시합니다.\n"
+"초길게 누르기(3초 이상):\n"
+"책의 단어 하나에서 하이라이트 메뉴를 표시합니다(사전 대신).\n"
 "\n"
-"멀티 스와이프(예: ⮠, ⮡, ↺):\n"
-"결과 대화상자에서 닫기(닫기 버튼이 멀리 있어서)를 실행합니다.\n"
+"멀티 스와이프(예: %1, %2, %3):\n"
+"결과 대화상자에서 닫습니다(닫기 버튼이 멀리 있으므로).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "'번역'에 AI 어시스턴트 사용"
 
-msgid "Use Book Text as Context"
-msgstr "책 텍스트를 컨텍스트로 사용"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "X-Ray 및 Recap에 책 텍스트 사용"
 
-msgid "Use web search 🌐"
-msgstr "웹 검색 사용 🌐"
+msgid "Use web search"
+msgstr "웹 검색 사용"
 
 msgid "User:"
 msgstr "사용자:"
@@ -1272,8 +1287,11 @@ msgstr "보기"
 msgid "Vocabulary"
 msgstr "어휘"
 
-msgid "Web Search ▸ %1"
-msgstr "웹 검색 ▸ %1"
+msgid "Web Search"
+msgstr "웹 검색"
+
+msgid "Web Search %1 %2"
+msgstr "웹 검색 %1 %2"
 
 msgid "WebSearch API"
 msgstr "웹 검색 API"
@@ -1293,6 +1311,10 @@ msgstr "줄거리가 중단된 지점:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "단어 형태 및 표제어"
+
 msgid "Word Origin"
 msgstr "어원"
 
@@ -1302,8 +1324,8 @@ msgstr "단어가 클립보드에 복사되었습니다."
 msgid "Write quick notes here"
 msgstr "여기에 빠른 메모를 작성하세요"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "예"
@@ -1328,15 +1350,3 @@ msgstr "fetchJSON: 반환된 데이터를 파싱하지 못했습니다."
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ 스크롤"
-
-msgid "▶ Scroll"
-msgstr "▶ 스크롤"
-
-msgid "❌ Stop"
-msgstr "❌ 중지"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 AI로 KOReader 경험을 향상하세요"

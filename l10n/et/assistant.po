@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — lk. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - lk. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" kokkuvõte raamatust, mis on jaotatud osadeks nagu tegelased, asukohad, teemad, terminid ja mõisted, ajatelg ning uuesti sisseelamine."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Küsimus\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Küsimus\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Järgmised teemad võivad sulle huvi pakkuda:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — vali toiming"
+msgid "%1 - choose an action"
+msgstr "%1 - vali toiming"
 
 msgid "(No response)"
 msgstr "(Vastus puudub)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Kas lisada see nupp esiletõstmise menüüsse?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API hõivatud (staatus: 429)</b>\n"
+"Katsed %1/%2 - proovi uuesti"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI vastab"
 msgid "API Key"
 msgstr "API-võti"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API-võti – sisesta oma võti ja puuduta „Sirvi mudeleid”, et kuvada saadaolevad mudelid"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API võti – sisesta oma võti, seejärel puuduta Sirvi mudeleid, et loetleda saadaolevad mudelid"
 
 msgid "API key is required for %1."
 msgstr "API-võti on vajalik %1 jaoks."
@@ -215,10 +222,10 @@ msgstr "Lisa märkus"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Lisa teenusepakkujad peamenüüst:\n"
-"⚙ → AI Assistant → Seaded → Teenusepakkuja API"
+"%1 -> AI Assistant -> Seaded -> API-pakkuja"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analüüs sinu raamatu esiletõstetud lõikudest, märkmetest ja märkmiku sisust."
@@ -264,6 +271,9 @@ msgstr "Esita AI-le küsimus"
 
 msgid "Assistant settings are not available."
 msgstr "Assistendi sätted pole saadaval."
+
+msgid "Attach Prior Text"
+msgstr "Manusta eelnev tekst"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automaatne kokkuvõte pikalt lugemata raamatute avamisel"
@@ -351,10 +361,6 @@ msgstr "Seadista AI LLM-i vastuste keel. Vaikimisi on KOReaderi liidese keel."
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Konfigureeritud märkmike kaust pole kättesaadav: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Pööramine"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Konteksti piirangud"
@@ -431,6 +437,9 @@ msgstr "Loo märkmik."
 msgid "Cultural Significance"
 msgstr "Kultuuriline tähtsus"
 
+msgid "Current Chapter Only"
+msgstr "Ainult praegune peatükk"
+
 msgid "Custom Prompt"
 msgstr "Kohandatud prompt"
 
@@ -490,6 +499,9 @@ msgstr "Tühi viga"
 
 msgid "Enable Stream Response"
 msgstr "Luba voogedastusega vastus"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Täienda oma KOReaderi kogemust AI abil"
 
 msgid "Enter Model ID"
 msgstr "Sisesta mudeli ID"
@@ -574,8 +586,8 @@ msgstr "Üksikasjadeks külasta GitHubi viki-lehte 'Configuration'."
 msgid "Fun Analogy"
 msgstr "Lõbus analoogia"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. Peab sisaldama /models segmenti, nt …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. peab sisaldama /models segmenti, nt .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Üldine vestlus"
@@ -696,14 +708,14 @@ msgstr "Markdowni mootor"
 msgid "Meaning"
 msgstr "Tähendus"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Mudel – puudutage „Sirvi mudeleid”, et valida saadaolev mudel"
+
 msgid "Model Built-In"
 msgstr "Mudeli sisseehitatud"
 
 msgid "Model reset: %1"
 msgstr "Mudel lähtestatud: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Mudel – puuduta „Sirvi mudeleid”, et valida saadaolev mudel"
 
 msgid "Model: %1"
 msgstr "Mudel: %1"
@@ -723,11 +735,14 @@ msgstr "Fookuses olev narratiivne element:"
 msgid "New notebook"
 msgstr "Uus märkmik"
 
-msgid "New notebook…"
-msgstr "Uus märkmik…"
+msgid "New notebook..."
+msgstr "Uus märkmik..."
 
 msgid "No"
 msgstr "Ei"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Aktiivset teenusepakkujat pole konfigureeritud. Palun lisa see seadetes."
 
 msgid "No base folder is available for notebooks."
 msgstr "Märkmike jaoks pole põhikausta saadaval."
@@ -758,9 +773,6 @@ msgstr "Märkme lisamiseks pole teksti"
 
 msgid "No valid custom prompt found"
 msgstr "Kehtivat kohandatud päringut ei leitud."
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "configuration.lua-failist ei leitud sobivat mudeliteenusepakkujat."
 
 msgid "None"
 msgstr "Puudub"
@@ -854,8 +866,8 @@ msgstr "Kasutavad ainult need päringud, mis lubavad raamatu konteksti (vaikimis
 msgid "Open conflict or mystery:"
 msgstr "Avatud konflikt või mõistatus:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API – sisaldab sisseehitatud veebiotsingut"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API – lisa sisseehitatud veebiotsing"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI-ga ühilduv chat/completions lõpp-punkt, nt https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "Valitsev emotsionaalne seisund/toon:"
 msgid "Protagonist's current objective:"
 msgstr "Peategelase praegune eesmärk:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Teenusepakkuja %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Teenusepakkuja %1 POLE KONFIGUREERITUD"
+
 msgid "Provider API"
 msgstr "Pakkuja API"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Teenusepakkuja nimi — kuvatakse menüüdes; jäta tühjaks, et kasutada API protokolli nime (nt \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Teenusepakkuja nimi – kuvatakse menüüdes; jätke tühjaks, et kasutada API protokolli nime (nt \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Pakkuja andmed on lähtestamata."
@@ -913,12 +931,6 @@ msgstr "Pakkuja kirje peab olema tabel."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Pakkuja sätteid ei leitud: %1. Palun kontrollige oma configuration.lua faili."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Teenusepakkuja ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Teenusepakkuja ▸ POLE SEADISTATUD"
 
 msgid "Providers and Models"
 msgstr "Teenusepakkujad ja mudelid"
@@ -1010,6 +1022,9 @@ msgstr "Salvesta vestlus asukohta"
 msgid "Saved to: %1"
 msgstr "Salvestatud: %1"
 
+msgid "Scroll"
+msgstr "Keri"
+
 msgid "Search"
 msgstr "Otsi"
 
@@ -1072,6 +1087,9 @@ msgstr "Sarnaste raamatute soovitused"
 
 msgid "Simplify"
 msgstr "Lihtsusta"
+
+msgid "Stop"
+msgstr "Peata"
 
 msgid "Stopped Reason: "
 msgstr "Peatamise põhjus: "
@@ -1230,37 +1248,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Kasutusnõuanded\n"
 "\n"
-"Valimine:\n"
-"Tõstke raamatus tekst (või sõna) esile, seejärel vajutage hüpikmenüüs [AI assistent].\n"
+"Valik:\n"
+"Tõstke raamatus esile tekst (või sõna), seejärel vajutage hüpikmenüüs [AI-assistent].\n"
 "\n"
 "Pikk vajutus:\n"
-"- Prompti nupul: lisab esiletõstmise menüüsse.\n"
-"- Esiletõstmise menüü nupul: eemaldab selle.\n"
-"- Sule-nupul: naaseb raamatu juurde ühe sammuga.\n"
+"- Päringunupul: lisa esiletõstmise menüüsse.\n"
+"- Esiletõstmise menüü nupul: eemalda see.\n"
+"- Sulgemisnupul: mine tagasi raamatu juurde ühe sammuga.\n"
 "\n"
 "Väga pikk vajutus (üle 3 sekundi):\n"
-"Ühel sõnal raamatus: kuvab esiletõstmise menüü (sõnaraamatu asemel).\n"
+"Raamatus ühel sõnal, et kuvada esiletõstmise menüü (sõnaraamatu asemel).\n"
 "\n"
-"Mitmikpühkimine (nt ⮠, ⮡, ↺):\n"
-"Tulemuse dialoogil: sulgeb selle (kuna Sule-nupp on kaugel).\n"
+"Mitmikpühkimine (nt %1, %2, %3):\n"
+"Tulemuse dialoogil sulgemiseks (kuna sulgemisnupp on kaugel).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Kasuta AI-assistenti 'Tõlgi' jaoks"
 
-msgid "Use Book Text as Context"
-msgstr "Kasuta raamatu teksti kontekstina"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Kasuta raamatu teksti X-Ray ja Recap jaoks"
 
-msgid "Use web search 🌐"
-msgstr "Kasuta veebiotsingut 🌐"
+msgid "Use web search"
+msgstr "Kasuta veebiotsingut"
 
 msgid "User:"
 msgstr "Kasutaja:"
@@ -1274,8 +1289,11 @@ msgstr "Vaata"
 msgid "Vocabulary"
 msgstr "Sõnavara"
 
-msgid "Web Search ▸ %1"
-msgstr "Veebiotsing ▸ %1"
+msgid "Web Search"
+msgstr "Veebiotsing"
+
+msgid "Web Search %1 %2"
+msgstr "Veebiotsing %1 %2"
 
 msgid "WebSearch API"
 msgstr "Veebiotsingu API"
@@ -1295,6 +1313,10 @@ msgstr "Kus tegevus peatus:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Sõnavorm ja lemma"
+
 msgid "Word Origin"
 msgstr "Sõna päritolu"
 
@@ -1304,8 +1326,8 @@ msgstr "Sõna kopeeriti lõikelauale."
 msgid "Write quick notes here"
 msgstr "Kirjuta siia kiirmärkmeid"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Jah"
@@ -1330,15 +1352,3 @@ msgstr "fetchJSON: tagastatud andmete parsimine ebaõnnestus"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Keri"
-
-msgid "▶ Scroll"
-msgstr "▶ Keri"
-
-msgid "❌ Stop"
-msgstr "❌ Peata"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Täienda oma KOReaderi kogemust AI-ga"

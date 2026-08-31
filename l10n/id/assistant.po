@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Bahasa Indonesia (AI translation)\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — hlm. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - hlm. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Ringkasan \"X-Ray\" untuk sebuah buku, disusun dalam bagian-bagian tertentu seperti Karakter, Lokasi, Tema, Istilah & Konsep, Linimasa, dan Re-immersion."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Pertanyaan\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Pertanyaan\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Anda mungkin tertarik dengan topik-topik ini:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — pilih tindakan"
+msgid "%1 - choose an action"
+msgstr "%1 - pilih tindakan"
 
 msgid "(No response)"
 msgstr "(Tidak ada respons)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Tambahkan tombol ini ke Menu Sorotan?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API Sibuk (Status: 429)</b>\n"
+"Percobaan %1/%2 - coba lagi dalam"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI sedang merespons"
 msgid "API Key"
 msgstr "Kunci API"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "Kunci API — masukkan kunci Anda, lalu ketuk Jelajahi Model untuk melihat model yang tersedia"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API Key - masukkan kunci Anda, lalu ketuk Jelajahi Model untuk menampilkan model yang tersedia"
 
 msgid "API key is required for %1."
 msgstr "Kunci API diperlukan untuk %1."
@@ -215,10 +222,10 @@ msgstr "Tambah Catatan"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Tambahkan penyedia dari menu utama:\n"
-"⚙ → AI Assistant → Pengaturan → Provider API"
+"%1 -> AI Assistant -> Pengaturan -> Penyedia API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Analisis sorotan, catatan, dan konten buku catatan Anda dari buku tersebut."
@@ -264,6 +271,9 @@ msgstr "Ajukan pertanyaan ke AI"
 
 msgid "Assistant settings are not available."
 msgstr "Pengaturan asisten tidak tersedia."
+
+msgid "Attach Prior Text"
+msgstr "Lampirkan Teks Sebelumnya"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Recap otomatis saat membuka buku yang lama tidak dibaca"
@@ -351,10 +361,6 @@ msgstr "Konfigurasikan bahasa respons dari AI LLM. Bawaan menggunakan bahasa ant
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Folder buku catatan yang dikonfigurasi tidak dapat diakses: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Konjugasi"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Keterbatasan Konteks"
@@ -431,6 +437,9 @@ msgstr "Buat buku catatan."
 msgid "Cultural Significance"
 msgstr "Signifikansi Budaya"
 
+msgid "Current Chapter Only"
+msgstr "Hanya Bab Saat Ini"
+
 msgid "Custom Prompt"
 msgstr "Prompt Kustom"
 
@@ -490,6 +499,9 @@ msgstr "Kesalahan Kosong"
 
 msgid "Enable Stream Response"
 msgstr "Aktifkan Respons Streaming"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Tingkatkan pengalaman KOReader Anda dengan AI"
 
 msgid "Enter Model ID"
 msgstr "Masukkan ID Model"
@@ -574,8 +586,8 @@ msgstr "Untuk detail, kunjungi halaman wiki 'Configuration' di github."
 msgid "Fun Analogy"
 msgstr "Analogi Seru"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "API Gemini. harus menyertakan segmen /models, mis. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. harus menyertakan segmen /models, mis. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Percakapan Umum"
@@ -695,14 +707,14 @@ msgstr "Mesin Markdown"
 msgid "Meaning"
 msgstr "Makna"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Model - ketuk Telusuri Model untuk memilih model yang tersedia"
+
 msgid "Model Built-In"
 msgstr "Model Bawaan"
 
 msgid "Model reset: %1"
 msgstr "Model direset: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Model — ketuk Jelajahi Model untuk memilih model yang tersedia"
 
 msgid "Model: %1"
 msgstr "Model: %1"
@@ -722,11 +734,14 @@ msgstr "Elemen naratif yang menjadi fokus:"
 msgid "New notebook"
 msgstr "Buku catatan baru"
 
-msgid "New notebook…"
-msgstr "Buku catatan baru…"
+msgid "New notebook..."
+msgstr "Buku catatan baru..."
 
 msgid "No"
 msgstr "Tidak"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Tidak ada penyedia aktif yang dikonfigurasi. Silakan tambahkan satu di Pengaturan."
 
 msgid "No base folder is available for notebooks."
 msgstr "Tidak ada folder dasar yang tersedia untuk buku catatan."
@@ -757,9 +772,6 @@ msgstr "Tidak ada teks untuk ditambahkan sebagai catatan"
 
 msgid "No valid custom prompt found"
 msgstr "Tidak ditemukan prompt kustom yang valid."
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Tidak ada penyedia model yang valid ditemukan di configuration.lua"
 
 msgid "None"
 msgstr "Tidak ada"
@@ -853,8 +865,8 @@ msgstr "Hanya digunakan oleh prompt yang memilih untuk menggunakan konteks buku 
 msgid "Open conflict or mystery:"
 msgstr "Konflik atau misteri yang belum terpecahkan:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — Sertakan pencarian web bawaan"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - Sertakan pencarian web bawaan"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "Endpoint chat/completions yang kompatibel dengan OpenAI, mis. https://api.openai.com/v1"
@@ -892,11 +904,17 @@ msgstr "Keadaan emosional/nada yang dominan:"
 msgid "Protagonist's current objective:"
 msgstr "Tujuan protagonis saat ini:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Penyedia %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Penyedia %1 BELUM DIKONFIGURASI"
+
 msgid "Provider API"
 msgstr "API Penyedia"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Nama Penyedia — ditampilkan di menu; kosongkan untuk menggunakan nama protokol API (mis. \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Nama Penyedia - ditampilkan di menu; biarkan kosong untuk menggunakan nama protokol API (mis. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Data penyedia belum diinisialisasi."
@@ -912,12 +930,6 @@ msgstr "Catatan penyedia harus berupa tabel."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Pengaturan penyedia tidak ditemukan untuk: %1. Silakan periksa file configuration.lua Anda."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Penyedia ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Penyedia ▸ BELUM DIKONFIGURASI"
 
 msgid "Providers and Models"
 msgstr "Penyedia dan Model"
@@ -1009,6 +1021,9 @@ msgstr "Simpan percakapan ke"
 msgid "Saved to: %1"
 msgstr "Tersimpan ke: %1"
 
+msgid "Scroll"
+msgstr "Gulir"
+
 msgid "Search"
 msgstr "Cari"
 
@@ -1071,6 +1086,9 @@ msgstr "Rekomendasi Buku Serupa"
 
 msgid "Simplify"
 msgstr "Sederhanakan"
+
+msgid "Stop"
+msgstr "Berhenti"
 
 msgid "Stopped Reason: "
 msgstr "Alasan Berhenti: "
@@ -1229,7 +1247,7 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Tips Penggunaan\n"
@@ -1245,21 +1263,18 @@ msgstr ""
 "Tekan Sangat Lama (lebih dari 3 detik):\n"
 "Pada satu kata di buku untuk menampilkan menu sorotan (bukan kamus).\n"
 "\n"
-"Multi-Gesek (mis., ⮠, ⮡, ↺):\n"
+"Gesek Ganda (misalnya, %1, %2, %3):\n"
 "Pada dialog hasil untuk menutup (karena tombol Tutup sulit dijangkau).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Gunakan Asisten AI untuk 'Terjemahan'"
 
-msgid "Use Book Text as Context"
-msgstr "Gunakan Teks Buku sebagai Konteks"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Gunakan Teks Buku untuk X-Ray dan Recap"
 
-msgid "Use web search 🌐"
-msgstr "Gunakan pencarian web 🌐"
+msgid "Use web search"
+msgstr "Gunakan pencarian web"
 
 msgid "User:"
 msgstr "Pengguna:"
@@ -1273,8 +1288,11 @@ msgstr "Lihat"
 msgid "Vocabulary"
 msgstr "Kosakata"
 
-msgid "Web Search ▸ %1"
-msgstr "Penelusuran Web ▸ %1"
+msgid "Web Search"
+msgstr "Pencarian Web"
+
+msgid "Web Search %1 %2"
+msgstr "Pencarian Web %1 %2"
 
 msgid "WebSearch API"
 msgstr "API WebSearch"
@@ -1294,6 +1312,10 @@ msgstr "Di mana aksi berhenti:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Bentuk Kata & Lema"
+
 msgid "Word Origin"
 msgstr "Asal Kata"
 
@@ -1303,8 +1325,8 @@ msgstr "Kata disalin ke papan klip."
 msgid "Write quick notes here"
 msgstr "Tulis catatan singkat di sini"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Ya"
@@ -1329,15 +1351,3 @@ msgstr "fetchJSON: gagal mengurai data yang dikembalikan"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Gulir"
-
-msgid "▶ Scroll"
-msgstr "▶ Gulir"
-
-msgid "❌ Stop"
-msgstr "❌ Berhenti"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Tingkatkan pengalaman KOReader Anda dengan AI"

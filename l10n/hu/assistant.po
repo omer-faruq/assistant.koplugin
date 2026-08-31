@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — o. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - o. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" összefoglaló egy könyvhöz, meghatározott szakaszokra bontva, mint például Szereplők, Helyszínek, Témák, Kifejezések és fogalmak, Idővonal és Visszamerülés."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Kérdés\n"
+msgid "### %1 Question\n"
+msgstr "### %1 Kérdés\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Érdekesnek találhatja ezeket a témákat:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — válassz műveletet"
+msgid "%1 - choose an action"
+msgstr "%1 - válasszon műveletet"
 
 msgid "(No response)"
 msgstr "(Nincs válasz)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Hozzáadjuk ezt a gombot a Kiemelés menühöz?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API foglalt (Státusz: 429)</b>\n"
+"Próbálkozások: %1/%2 - újrapróbálás:"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "Az AI válaszol"
 msgid "API Key"
 msgstr "API-kulcs"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API-kulcs — add meg a kulcsod, majd koppints a Modellek böngészése elemre az elérhető modellek listázásához"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API-kulcs - adja meg a kulcsát, majd koppintson a Modellek tallózása elemre az elérhető modellek listázásához."
 
 msgid "API key is required for %1."
 msgstr "API-kulcs szükséges a(z) %1 számára."
@@ -215,10 +222,10 @@ msgstr "Megjegyzés hozzáadása"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Adjon hozzá szolgáltatókat a főmenüből:\n"
-"⚙ → AI Assistant → Beállítások → Szolgáltató API"
+"%1 -> AI asszisztens -> Beállítások -> Szolgáltató API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "A könyvhöz kapcsolódó kiemelések, megjegyzések és jegyzetfüzet-tartalom elemzése."
@@ -264,6 +271,9 @@ msgstr "Tegyen fel egy kérdést az AI-nak"
 
 msgid "Assistant settings are not available."
 msgstr "Az asszisztens beállításai nem érhetők el."
+
+msgid "Attach Prior Text"
+msgstr "Előző szöveg csatolása"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automatikus összefoglaló hosszú ideje nem olvasott könyvek megnyitásakor"
@@ -351,10 +361,6 @@ msgstr "Az AI LLM válasznyelvének beállítása. Alapértelmezés szerint a KO
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "A beállított jegyzetfüzet-mappa nem érhető el: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Igeragozás"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Kontextus korlátai"
@@ -431,6 +437,9 @@ msgstr "Jegyzetfüzet létrehozása."
 msgid "Cultural Significance"
 msgstr "Kulturális jelentőség"
 
+msgid "Current Chapter Only"
+msgstr "Csak az aktuális fejezet"
+
 msgid "Custom Prompt"
 msgstr "Egyéni prompt"
 
@@ -490,6 +499,9 @@ msgstr "Üres hiba"
 
 msgid "Enable Stream Response"
 msgstr "Streamelt válasz engedélyezése"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Fokozza KOReader-élményét az AI segítségével."
 
 msgid "Enter Model ID"
 msgstr "Adja meg a modell azonosítóját"
@@ -574,8 +586,8 @@ msgstr "A részletekért látogassa meg a „Configuration” wiki oldalt a GitH
 msgid "Fun Analogy"
 msgstr "Szórakoztató hasonlat"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API: tartalmaznia kell a /models szegmenst, pl. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. tartalmaznia kell a /models szegmenst, pl. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Általános beszélgetés"
@@ -696,14 +708,14 @@ msgstr "Markdown motor"
 msgid "Meaning"
 msgstr "Jelentés"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Modell – koppintson a Modellek tallózása elemre az elérhető modell kiválasztásához"
+
 msgid "Model Built-In"
 msgstr "Beépített modell"
 
 msgid "Model reset: %1"
 msgstr "Modell visszaállítva: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Modell — koppints a Modellek böngészése elemre egy elérhető modell kiválasztásához"
 
 msgid "Model: %1"
 msgstr "Modell: %1"
@@ -723,11 +735,14 @@ msgstr "Fókuszban lévő narratív elem:"
 msgid "New notebook"
 msgstr "Új jegyzetfüzet"
 
-msgid "New notebook…"
-msgstr "Új jegyzetfüzet…"
+msgid "New notebook..."
+msgstr "Új jegyzetfüzet..."
 
 msgid "No"
 msgstr "Nem"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Nincs aktív szolgáltató beállítva. Kérjük, adjon hozzá egyet a Beállításokban."
 
 msgid "No base folder is available for notebooks."
 msgstr "Nincs elérhető alapmappa a jegyzetfüzetek számára."
@@ -758,9 +773,6 @@ msgstr "Nincs szöveg, amelyet megjegyzésként hozzáadhatna."
 
 msgid "No valid custom prompt found"
 msgstr "Nem található érvényes egyéni prompt."
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "Nem található érvényes modellszolgáltató a configuration.lua fájlban."
 
 msgid "None"
 msgstr "Nincs"
@@ -854,8 +866,8 @@ msgstr "Csak azok a promptok használják, amelyek kifejezetten kérik a könyvk
 msgid "Open conflict or mystery:"
 msgstr "Nyitott konfliktus vagy rejtély:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — Beépített webkeresés belefoglalása"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - Beépített webes keresés használata"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI-kompatibilis chat/completions végpont, pl. https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "Uralkodó érzelmi állapot/hangulat:"
 msgid "Protagonist's current objective:"
 msgstr "A főszereplő jelenlegi célja:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Szolgáltató %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Szolgáltató %1 NINCS KONFIGURÁLVA"
+
 msgid "Provider API"
 msgstr "Szolgáltató API"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Szolgáltató neve — menükben jelenik meg; hagyd üresen az API-protokoll nevének használatához (pl. \"openai\")"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Szolgáltató neve – a menükben jelenik meg; hagyja üresen az API protokoll nevének használatához (pl. \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "A szolgáltató adatai nincsenek inicializálva."
@@ -913,12 +931,6 @@ msgstr "A szolgáltatói rekordnak táblának kell lennie."
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "A(z) %1 szolgáltató beállításai nem találhatók. Ellenőrizze a configuration.lua fájlt."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Szolgáltató ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Szolgáltató ▸ NINCS KONFIGURÁLVA"
 
 msgid "Providers and Models"
 msgstr "Szolgáltatók és modellek"
@@ -1010,6 +1022,9 @@ msgstr "Beszélgetés mentése ide:"
 msgid "Saved to: %1"
 msgstr "Mentve ide: %1"
 
+msgid "Scroll"
+msgstr "Görgetés"
+
 msgid "Search"
 msgstr "Keresés"
 
@@ -1072,6 +1087,9 @@ msgstr "Hasonló könyvek ajánlása"
 
 msgid "Simplify"
 msgstr "Egyszerűsítés"
+
+msgid "Stop"
+msgstr "Leállítás"
 
 msgid "Stopped Reason: "
 msgstr "Leállítás oka: "
@@ -1230,37 +1248,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Használati tippek\n"
 "\n"
 "Kijelölés:\n"
-"Jelölj ki szöveget (vagy egy szót) a könyvben, majd nyomd meg az [AI asszisztens] gombot a felugró menüben.\n"
+"Emeljen ki szöveget (vagy egy szót) a könyvben, majd nyomja meg az [AI asszisztens] gombot a felugró menüben.\n"
 "\n"
 "Hosszú nyomás:\n"
-"- Egy Prompt gombon: Hozzáadás a kiemelés menühöz.\n"
-"- Egy kiemelés menü gombon: eltávolítás.\n"
-"- A Bezárás gombon: egy lépésben visszatérés a könyvhöz.\n"
+"- Prompt gombon: Hozzáadás a kiemelés menühöz.\n"
+"- Kiemelés menü gombján: eltávolítás.\n"
+"- A Bezárás gombon: visszatérés a könyvhöz egy lépésben.\n"
 "\n"
-"Nagyon hosszú nyomás (3 másodpercnél tovább):\n"
-"Egyetlen szóra a könyvben a kiemelés menü megjelenítéséhez (a szótár helyett).\n"
+"Nagyon hosszú nyomás (3 másodpercnél hosszabb):\n"
+"Egyetlen szón a könyvben, hogy megjelenjen a kiemelés menü (a szótár helyett).\n"
 "\n"
-"Többszörös húzás (pl. ⮠, ⮡, ↺):\n"
+"Többszörös húzás (pl. %1, %2, %3):\n"
 "Az eredmény párbeszédablakon a bezáráshoz (mivel a Bezárás gomb messze van).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "AI asszisztens használata a 'Fordítás' funkcióhoz"
 
-msgid "Use Book Text as Context"
-msgstr "Könyv szövegének használata kontextusként"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Könyv szövegének használata X-Ray és Recap funkciókhoz"
 
-msgid "Use web search 🌐"
-msgstr "Webkeresés használata 🌐"
+msgid "Use web search"
+msgstr "Webes keresés használata"
 
 msgid "User:"
 msgstr "Felhasználó:"
@@ -1274,8 +1289,11 @@ msgstr "Megtekintés"
 msgid "Vocabulary"
 msgstr "Szókincs"
 
-msgid "Web Search ▸ %1"
-msgstr "Webes keresés ▸ %1"
+msgid "Web Search"
+msgstr "Webes keresés"
+
+msgid "Web Search %1 %2"
+msgstr "Webes keresés %1 %2"
 
 msgid "WebSearch API"
 msgstr "WebSearch API"
@@ -1295,6 +1313,10 @@ msgstr "Hol állt meg a cselekmény:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Szóalak és lemma"
+
 msgid "Word Origin"
 msgstr "Szóeredet"
 
@@ -1304,8 +1326,8 @@ msgstr "A szó átmásolva a vágólapra."
 msgid "Write quick notes here"
 msgstr "Írj ide gyors jegyzeteket"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Igen"
@@ -1330,15 +1352,3 @@ msgstr "fetchJSON: nem sikerült elemezni a visszakapott adatokat"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Görgetés"
-
-msgid "▶ Scroll"
-msgstr "▶ Görgetés"
-
-msgid "❌ Stop"
-msgstr "❌ Leállítás"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Fokozd a KOReader-élményt az AI segítségével"

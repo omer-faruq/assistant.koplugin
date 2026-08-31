@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 03:58+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ქართული (AI translation)\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — გვ. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - გვ. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "„X-Ray“ შეჯამება წიგნისთვის, დაყოფილი კონკრეტულ სექციებად, როგორიცაა პერსონაჟები, ადგილები, თემები, ტერმინები და ცნებები, ქრონოლოგია და ხელახალი ჩაღრმავება."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ კითხვა\n"
+msgid "### %1 Question\n"
+msgstr "### %1 კითხვა\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### შესაძლოა დაგაინტერესოთ ეს თემები:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — აირჩიეთ მოქმედება"
+msgid "%1 - choose an action"
+msgstr "%1 - აირჩიეთ მოქმედება"
 
 msgid "(No response)"
 msgstr "(პასუხი არ არის)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "დავამატოთ ეს ღილაკი მონიშვნის მენიუში?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API დაკავებულია (სტატუსი: 429)</b>\n"
+"მცდელობები %1/%2 - ხელახლა ცდა"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AI პასუხობს"
 msgid "API Key"
 msgstr "API გასაღები"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API გასაღები — შეიყვანეთ თქვენი გასაღები, შემდეგ შეეხეთ მოდელების დათვალიერებას ხელმისაწვდომი მოდელების ჩამოსათვლელად"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API Key - შეიყვანეთ თქვენი გასაღები, შემდეგ შეეხეთ Browse Models ხელმისაწვდომი მოდელების სიის სანახავად"
 
 msgid "API key is required for %1."
 msgstr "API გასაღები სავალდებულოა %1-ისთვის."
@@ -215,10 +222,10 @@ msgstr "შენიშვნის დამატება"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "დაამატეთ პროვაიდერები მთავარი მენიუდან:\n"
-"⚙ → AI ასისტენტი → პარამეტრები → პროვაიდერის API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "თქვენი მონიშვნების, შენიშვნების და რვეულის შინაარსის ანალიზი წიგნიდან."
@@ -264,6 +271,9 @@ msgstr "დაუსვით შეკითხვა AI-ს"
 
 msgid "Assistant settings are not available."
 msgstr "ასისტენტის პარამეტრები ხელმისაწვდომი არ არის."
+
+msgid "Attach Prior Text"
+msgstr "წინა ტექსტის მიმაგრება"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "ავტომატური რექაპი დიდი ხნის წაუკითხავი წიგნების გახსნისას"
@@ -351,10 +361,6 @@ msgstr "დააკონფიგურირეთ AI LLM-ის პასუ
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "კონფიგურირებული რვეულების საქაღალდე მიუწვდომელია: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "უღლება"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "კონტექსტის შეზღუდვები"
@@ -431,6 +437,9 @@ msgstr "შექმენით რვეული."
 msgid "Cultural Significance"
 msgstr "კულტურული მნიშვნელობა"
 
+msgid "Current Chapter Only"
+msgstr "მხოლოდ მიმდინარე თავი"
+
 msgid "Custom Prompt"
 msgstr "მორგებული პრომპტი"
 
@@ -490,6 +499,9 @@ msgstr "შეცდომა ცარიელია"
 
 msgid "Enable Stream Response"
 msgstr "სტრიმინგ პასუხის ჩართვა"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "გააუმჯობესეთ თქვენი KOReader გამოცდილება AI-ით"
 
 msgid "Enter Model ID"
 msgstr "შეიყვანეთ მოდელის ID"
@@ -574,8 +586,8 @@ msgstr "დეტალებისთვის ეწვიეთ 'Configuratio
 msgid "Fun Analogy"
 msgstr "სახალისო ანალოგია"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. უნდა შეიცავდეს /models სეგმენტს, მაგ. …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. უნდა მოიცავდეს /models სეგმენტს, მაგ. .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "ზოგადი საუბარი"
@@ -696,14 +708,14 @@ msgstr "Markdown ძრავა"
 msgid "Meaning"
 msgstr "მნიშვნელობა"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "მოდელი - შეეხეთ მოდელების დათვალიერებას ხელმისაწვდომი მოდელის ასარჩევად"
+
 msgid "Model Built-In"
 msgstr "მოდელის ჩაშენებული"
 
 msgid "Model reset: %1"
 msgstr "მოდელის გადატვირთვა: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "მოდელი — შეეხეთ „მოდელების დათვალიერებას“ ხელმისაწვდომი მოდელის ასარჩევად."
 
 msgid "Model: %1"
 msgstr "მოდელი: %1"
@@ -723,11 +735,14 @@ msgstr "ფოკუსში მყოფი ნარატიული ელ
 msgid "New notebook"
 msgstr "ახალი რვეული"
 
-msgid "New notebook…"
-msgstr "ახალი რვეული…"
+msgid "New notebook..."
+msgstr "ახალი რვეული..."
 
 msgid "No"
 msgstr "არა"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "აქტიური პროვაიდერი არ არის კონფიგურირებული. გთხოვთ, დაამატეთ ერთი პარამეტრებში."
 
 msgid "No base folder is available for notebooks."
 msgstr "რვეულებისთვის საბაზო საქაღალდე არ არის ხელმისაწვდომი."
@@ -758,9 +773,6 @@ msgstr "შენიშვნის დასამატებელი ტე�
 
 msgid "No valid custom prompt found"
 msgstr "სწორი მორგებული პრომპტი ვერ მოიძებნა"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "configuration.lua-ში არ მოიძებნა სწორი მოდელის პროვაიდერი."
 
 msgid "None"
 msgstr "არცერთი"
@@ -854,8 +866,8 @@ msgstr "გამოიყენება მხოლოდ იმ პრომ
 msgid "Open conflict or mystery:"
 msgstr "ღია კონფლიქტი ან საიდუმლო:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — ჩართეთ ჩაშენებული ვებ-ძებნა"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - ჩართეთ ჩაშენებული ვებ-ძებნა"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI-თან თავსებადი chat/completions მისამართი, მაგ. https://api.openai.com/v1"
@@ -893,11 +905,17 @@ msgstr "გაბატონებული ემოციური მდგ�
 msgid "Protagonist's current objective:"
 msgstr "პროტაგონისტის ამჟამინდელი მიზანი:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "პროვაიდერი %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "პროვაიდერი %1 არ არის კონფიგურირებული"
+
 msgid "Provider API"
 msgstr "პროვაიდერის API"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "პროვაიდერის სახელი — ნაჩვენებია მენიუში; დატოვეთ ცარიელი API პროტოკოლის სახელის გამოსაყენებლად (მაგ., „openai“)"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "პროვაიდერის სახელი - ნაჩვენებია მენიუში; დატოვეთ ცარიელი API პროტოკოლის სახელის გამოსაყენებლად (მაგ., \\\"openai\\\")"
 
 msgid "Provider data not initialized."
 msgstr "პროვაიდერის მონაცემები არ არის ინიციალიზებული."
@@ -913,12 +931,6 @@ msgstr "პროვაიდერის ჩანაწერი უნდა 
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "პროვაიდერის პარამეტრები ვერ მოიძებნა: %1. გთხოვთ, შეამოწმოთ თქვენი configuration.lua ფაილი."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "პროვაიდერი ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "პროვაიდერი ▸ არ არის კონფიგურირებული"
 
 msgid "Providers and Models"
 msgstr "პროვაიდერები და მოდელები"
@@ -1010,6 +1022,9 @@ msgstr "საუბრის შენახვა"
 msgid "Saved to: %1"
 msgstr "შენახულია: %1"
 
+msgid "Scroll"
+msgstr "გადახვევა"
+
 msgid "Search"
 msgstr "ძებნა"
 
@@ -1072,6 +1087,9 @@ msgstr "მსგავსი წიგნების რეკომენდ�
 
 msgid "Simplify"
 msgstr "გამარტივება"
+
+msgid "Stop"
+msgstr "შეჩერება"
 
 msgid "Stopped Reason: "
 msgstr "შეჩერების მიზეზი: "
@@ -1230,37 +1248,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "გამოყენების რჩევები\n"
 "\n"
 "არჩევა:\n"
-"მონიშნეთ ტექსტი (ან სიტყვა) წიგნში, შემდეგ დააჭირეთ [AI ასისტენტს] ამომხტარ მენიუში.\n"
+"მონიშნეთ ტექსტი (ან სიტყვა) წიგნში, შემდეგ დააჭირეთ [AI ასისტენტი] გამოსულ მენიუში.\n"
 "\n"
 "ხანგრძლივი დაჭერა:\n"
-"- პრომპტის ღილაკზე: დაამატეთ მონიშვნის მენიუში.\n"
-"- მონიშვნის მენიუს ღილაკზე — მოსაშორებლად.\n"
-"- დახურვის ღილაკზე — წიგნში ერთი ნაბიჯით დასაბრუნებლად.\n"
+"- პრომპტ ღილაკზე: ემატება მონიშვნის მენიუში.\n"
+"- მონიშვნის მენიუს ღილაკზე — წასაშლელად.\n"
+"- დახურვის ღილაკზე — წიგნში დასაბრუნებლად ერთი ნაბიჯით.\n"
 "\n"
 "ძალიან ხანგრძლივი დაჭერა (3 წამზე მეტი):\n"
-"წიგნში ერთ სიტყვაზე — მონიშვნის მენიუს საჩვენებლად (ლექსიკონის ნაცვლად).\n"
+"წიგნში ერთ სიტყვაზე მონიშვნის მენიუს საჩვენებლად (ლექსიკონის ნაცვლად).\n"
 "\n"
-"მრავალჯერადი გადაფურცვლა (მაგ., ⮠, ⮡, ↺):\n"
-"შედეგის დიალოგზე — დასახურავად (რადგან დახურვის ღილაკი შორს არის).\n"
+"მრავალჯერადი სვაიპი (მაგ., %1, %2, %3):\n"
+"შედეგის დიალოგზე დასახურავად (რადგან დახურვის ღილაკი შორს არის).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "AI ასისტენტის გამოყენება „თარგმნისთვის“"
 
-msgid "Use Book Text as Context"
-msgstr "წიგნის ტექსტის კონტექსტად გამოყენება"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "წიგნის ტექსტის გამოყენება X-Ray-სა და Recap-ისთვის"
 
-msgid "Use web search 🌐"
-msgstr "გამოიყენეთ ვებ-ძებნა 🌐"
+msgid "Use web search"
+msgstr "ვებ-ძიების გამოყენება"
 
 msgid "User:"
 msgstr "მომხმარებელი:"
@@ -1274,8 +1289,11 @@ msgstr "ნახვა"
 msgid "Vocabulary"
 msgstr "ლექსიკა"
 
-msgid "Web Search ▸ %1"
-msgstr "ვებ-ძიება ▸ %1"
+msgid "Web Search"
+msgstr "ვებ-ძიება"
+
+msgid "Web Search %1 %2"
+msgstr "ვებ-ძიება %1 %2"
 
 msgid "WebSearch API"
 msgstr "ვებ-ძიების API"
@@ -1295,6 +1313,10 @@ msgstr "სად გაჩერდა მოქმედება:"
 msgid "Wikipedia"
 msgstr "ვიკიპედია"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "სიტყვის ფორმა და ლემა"
+
 msgid "Word Origin"
 msgstr "სიტყვის წარმოშობა"
 
@@ -1304,8 +1326,8 @@ msgstr "სიტყვა დაკოპირდა ბუფერში."
 msgid "Write quick notes here"
 msgstr "ჩაწერეთ სწრაფი ჩანაწერები აქ"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "დიახ"
@@ -1330,15 +1352,3 @@ msgstr "fetchJSON: დაბრუნებული მონაცემებ
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ გადახვევა"
-
-msgid "▶ Scroll"
-msgstr "▶ გადახვევა"
-
-msgid "❌ Stop"
-msgstr "❌ გაჩერება"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 გააუმჯობესეთ KOReader-ის გამოცდილება AI-ით"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — %1/%2ページ"
+msgid " - p. %1/%2"
+msgstr " - %1/%2ページ"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "「X-Ray」の書籍要約。登場人物、場所、テーマ、用語・概念、タイムライン、再没入などのセクションに分類されます。"
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ 質問\n"
+msgid "### %1 Question\n"
+msgstr "### %1の質問\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### 以下のトピックに興味があるかもしれません:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — アクションを選択"
+msgid "%1 - choose an action"
+msgstr "%1 - アクションを選択してください"
 
 msgid "(No response)"
 msgstr "（応答なし）"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "このボタンをハイライトメニューに追加しますか？"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>APIビジー（ステータス: 429）</b>\n"
+"試行 %1/%2 - 再試行まで"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "AIが応答中"
 msgid "API Key"
 msgstr "APIキー"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "APIキー — キーを入力し、「モデルを参照」をタップすると利用可能なモデルが一覧表示されます"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "APIキー - キーを入力し、「モデルを参照」をタップすると利用可能なモデルが一覧表示されます"
 
 msgid "API key is required for %1."
 msgstr "%1にはAPIキーが必要です。"
@@ -215,10 +222,10 @@ msgstr "ノートを追加"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
-"メインメニューからプロバイダーを追加してください：\n"
-"⚙ → AIアシスタント → 設定 → プロバイダーAPI"
+"メインメニューからプロバイダーを追加します:\n"
+"%1 -> AIアシスタント -> 設定 -> プロバイダーAPI"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "書籍からのハイライト、メモ、ノートブック内容の分析。"
@@ -264,6 +271,9 @@ msgstr "AIに質問する"
 
 msgid "Assistant settings are not available."
 msgstr "アシスタント設定を利用できません。"
+
+msgid "Attach Prior Text"
+msgstr "前のテキストを添付"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "長期間未読の書籍を開いたときに自動要約"
@@ -351,10 +361,6 @@ msgstr "AI LLMの応答言語を設定します。デフォルトはKOReaderの�
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "設定されたノートブックフォルダにアクセスできません: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "活用"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "文脈の限界"
@@ -431,6 +437,9 @@ msgstr "ノートブックを作成します。"
 msgid "Cultural Significance"
 msgstr "文化的意義"
 
+msgid "Current Chapter Only"
+msgstr "現在の章のみ"
+
 msgid "Custom Prompt"
 msgstr "カスタムプロンプト"
 
@@ -490,6 +499,9 @@ msgstr "空のエラー"
 
 msgid "Enable Stream Response"
 msgstr "ストリーム応答を有効にする"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "AIでKOReaderの体験を向上させましょう"
 
 msgid "Enter Model ID"
 msgstr "モデルIDを入力"
@@ -574,8 +586,8 @@ msgstr "詳細は、GitHubの「Configuration」wikiページを参照してく�
 msgid "Fun Analogy"
 msgstr "楽しい例え"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API。必ず/modelsセグメントを含めてください（例: …/v1beta/models）"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API。 /models セグメントを含める必要があります。例: .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "一般的な会話"
@@ -695,14 +707,14 @@ msgstr "Markdownエンジン"
 msgid "Meaning"
 msgstr "意味"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "モデル - 利用可能なモデルを選ぶには「モデルを参照」をタップ"
+
 msgid "Model Built-In"
 msgstr "モデル内蔵"
 
 msgid "Model reset: %1"
 msgstr "モデルをリセットしました: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "モデル — 「モデルを参照」をタップして利用可能なモデルを選択します"
 
 msgid "Model: %1"
 msgstr "モデル: %1"
@@ -722,11 +734,14 @@ msgstr "焦点となっている物語要素："
 msgid "New notebook"
 msgstr "新しいノートブック"
 
-msgid "New notebook…"
-msgstr "新しいノートブック…"
+msgid "New notebook..."
+msgstr "新しいノートブック..."
 
 msgid "No"
 msgstr "いいえ"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "アクティブなプロバイダーが設定されていません。設定で追加してください。"
 
 msgid "No base folder is available for notebooks."
 msgstr "ノートブック用のベースフォルダがありません。"
@@ -757,9 +772,6 @@ msgstr "ノートに追加するテキストがありません"
 
 msgid "No valid custom prompt found"
 msgstr "有効なカスタムプロンプトが見つかりません"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "configuration.luaに有効なモデルプロバイダーが見つかりません"
 
 msgid "None"
 msgstr "なし"
@@ -853,8 +865,8 @@ msgstr "ブックコンテキストを有効にしたプロンプトでのみ使
 msgid "Open conflict or mystery:"
 msgstr "未解決の対立または謎："
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — 組み込みのウェブ検索を含める"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API - 組み込みのウェブ検索を含める"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "OpenAI互換のchat/completionsエンドポイント（例: https://api.openai.com/v1）"
@@ -892,11 +904,17 @@ msgstr "支配的な感情状態・トーン："
 msgid "Protagonist's current objective:"
 msgstr "主人公の現在の目的："
 
+msgid "Provider %1 %2(%3)"
+msgstr "プロバイダ %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "プロバイダ %1 未設定"
+
 msgid "Provider API"
 msgstr "プロバイダーAPI"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "プロバイダー名 — メニューに表示されます。空欄の場合はAPIプロトコル名（例: \"openai\"）が使用されます"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "プロバイダ名 - メニューに表示されます。空のままにすると API プロトコル名（例: \"openai\"）が使用されます"
 
 msgid "Provider data not initialized."
 msgstr "プロバイダーデータが初期化されていません。"
@@ -912,12 +930,6 @@ msgstr "プロバイダー設定はテーブルである必要があります。
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "プロバイダー設定が見つかりません: %1。configuration.lua ファイルを確認してください。"
-
-msgid "Provider ▸ %1(%2)"
-msgstr "プロバイダー ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "プロバイダー ▸ 未設定"
 
 msgid "Providers and Models"
 msgstr "プロバイダーとモデル"
@@ -1008,6 +1020,9 @@ msgstr "会話の保存先"
 msgid "Saved to: %1"
 msgstr "保存先: %1"
 
+msgid "Scroll"
+msgstr "スクロール"
+
 msgid "Search"
 msgstr "検索"
 
@@ -1070,6 +1085,9 @@ msgstr "類似書籍のおすすめ"
 
 msgid "Simplify"
 msgstr "簡略化"
+
+msgid "Stop"
+msgstr "停止"
 
 msgid "Stopped Reason: "
 msgstr "停止理由: "
@@ -1228,13 +1246,13 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "使い方のヒント\n"
 "\n"
 "選択:\n"
-"本の中でテキスト（または単語）をハイライトし、表示されたメニューの [AIアシスタント] を押します。\n"
+"本の中でテキスト（または単語）をハイライトし、表示されたメニューの[AIアシスタント]を押します。\n"
 "\n"
 "長押し:\n"
 "- プロンプトボタン上: ハイライトメニューに追加します。\n"
@@ -1242,23 +1260,20 @@ msgstr ""
 "- 閉じるボタン上: 1ステップで本に戻ります。\n"
 "\n"
 "超長押し（3秒以上）:\n"
-"本の中の単語を超長押しすると、辞書の代わりにハイライトメニューが表示されます。\n"
+"本の中の単語上で、（辞書の代わりに）ハイライトメニューを表示します。\n"
 "\n"
-"マルチスワイプ（例: ⮠, ⮡, ↺）:\n"
-"結果ダイアログ上でスワイプすると閉じます（閉じるボタンが遠いため）。\n"
+"マルチスワイプ（例: %1、%2、%3）:\n"
+"結果ダイアログ上で閉じます（閉じるボタンが遠いため）。\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "「翻訳」にAIアシスタントを使用"
 
-msgid "Use Book Text as Context"
-msgstr "書籍テキストをコンテキストとして使用"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "X-Ray と Recap に書籍テキストを使用"
 
-msgid "Use web search 🌐"
-msgstr "ウェブ検索を使用 🌐"
+msgid "Use web search"
+msgstr "Web検索を使用"
 
 msgid "User:"
 msgstr "ユーザー:"
@@ -1272,8 +1287,11 @@ msgstr "表示"
 msgid "Vocabulary"
 msgstr "語彙"
 
-msgid "Web Search ▸ %1"
-msgstr "ウェブ検索 ▸ %1"
+msgid "Web Search"
+msgstr "Web検索"
+
+msgid "Web Search %1 %2"
+msgstr "Web検索 %1 %2"
 
 msgid "WebSearch API"
 msgstr "Web検索API"
@@ -1293,6 +1311,10 @@ msgstr "物語が中断した場所："
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "語形と見出し語"
+
 msgid "Word Origin"
 msgstr "語源"
 
@@ -1302,8 +1324,8 @@ msgstr "単語をクリップボードにコピーしました。"
 msgid "Write quick notes here"
 msgstr "ここにクイックノートを入力してください"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "はい"
@@ -1328,15 +1350,3 @@ msgstr "fetchJSON: 返されたデータの解析に失敗しました"
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ スクロール"
-
-msgid "▶ Scroll"
-msgstr "▶ スクロール"
-
-msgid "❌ Stop"
-msgstr "❌ 停止"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 AIでKOReaderの体験を向上させましょう"

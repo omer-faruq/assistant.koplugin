@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 16:20+0800\n"
+"POT-Creation-Date: 2026-08-31 17:14+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,20 +32,20 @@ msgstr ""
 "-----\n"
 "\n"
 
-msgid " — p. %1/%2"
-msgstr " — с. %1/%2"
+msgid " - p. %1/%2"
+msgstr " - стр. %1/%2"
 
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "«X-Ray»-сводка по книге, структурированная по разделам: персонажи, места, темы, термины и понятия, хронология и повторное погружение."
 
-msgid "### ☺ Question\n"
-msgstr "### ☺ Вопрос\n"
+msgid "### %1 Question\n"
+msgstr "### Вопрос %1\n"
 
 msgid "##### You may find these topics interesting:"
 msgstr "##### Возможно, вам будут интересны эти темы:"
 
-msgid "%1 — choose an action"
-msgstr "%1 — выберите действие"
+msgid "%1 - choose an action"
+msgstr "%1 - выберите действие"
 
 msgid "(No response)"
 msgstr "(Нет ответа)"
@@ -58,6 +58,13 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Добавить эту кнопку в меню выделения?"
+
+msgid ""
+"<b>API Busy (Status: 429)</b>\n"
+"Attempts %1/%2 - retry in"
+msgstr ""
+"<b>API занят (Статус: 429)</b>\n"
+"Попытки %1/%2 - повторить через"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -177,8 +184,8 @@ msgstr "ИИ отвечает"
 msgid "API Key"
 msgstr "API-ключ"
 
-msgid "API Key — enter your key, then tap Browse Models to list available models"
-msgstr "API-ключ — введите ваш ключ, затем нажмите «Обзор моделей», чтобы вывести список доступных моделей"
+msgid "API Key - enter your key, then tap Browse Models to list available models"
+msgstr "API-ключ — введите ваш ключ, затем нажмите «Обзор моделей», чтобы получить список доступных моделей."
 
 msgid "API key is required for %1."
 msgstr "Для %1 требуется API-ключ."
@@ -215,10 +222,10 @@ msgstr "Добавить заметку"
 
 msgid ""
 "Add providers from the main menu:\n"
-"⚙ → AI Assistant → Settings → Provider API"
+"%1 -> AI Assistant -> Settings -> Provider API"
 msgstr ""
 "Добавьте провайдеров из главного меню:\n"
-"⚙ → AI Assistant → Настройки → API провайдера"
+"%1 -> AI Assistant -> Настройки -> API провайдера"
 
 msgid "Analysis of your highlights, notes, and notebook content from the book."
 msgstr "Анализ ваших выделений, заметок и содержимого блокнота по книге."
@@ -264,6 +271,9 @@ msgstr "Задайте вопрос ИИ"
 
 msgid "Assistant settings are not available."
 msgstr "Настройки ассистента недоступны."
+
+msgid "Attach Prior Text"
+msgstr "Прикрепить предыдущий текст"
 
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Автоматический пересказ при открытии давно не читавшихся книг"
@@ -351,10 +361,6 @@ msgstr "Настройте язык ответов языковой модели
 msgid "Configured notebooks folder is not accessible: %1"
 msgstr "Настроенная папка блокнотов недоступна: %1"
 
-#. @translators used in the dictionary.
-msgid "Conjugation"
-msgstr "Спряжение"
-
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
 msgstr "Ограничения контекста"
@@ -431,6 +437,9 @@ msgstr "Создать блокнот."
 msgid "Cultural Significance"
 msgstr "Культурная значимость"
 
+msgid "Current Chapter Only"
+msgstr "Только текущая глава"
+
 msgid "Custom Prompt"
 msgstr "Свой промпт"
 
@@ -490,6 +499,9 @@ msgstr "Пустая ошибка"
 
 msgid "Enable Stream Response"
 msgstr "Включить потоковый ответ"
+
+msgid "Enhance your KOReader experience with AI"
+msgstr "Улучшите свой опыт работы с KOReader с помощью ИИ"
 
 msgid "Enter Model ID"
 msgstr "Введите ID модели"
@@ -574,8 +586,8 @@ msgstr "Подробнее см. на странице вики «Configuration�
 msgid "Fun Analogy"
 msgstr "Забавная аналогия"
 
-msgid "Gemini API. must include the /models segment, e.g. …/v1beta/models"
-msgstr "Gemini API. Должен включать сегмент /models, например …/v1beta/models"
+msgid "Gemini API. must include the /models segment, e.g. .../v1beta/models"
+msgstr "Gemini API. Должен включать сегмент /models, например .../v1beta/models"
 
 msgid "General Conversation"
 msgstr "Общий диалог"
@@ -698,14 +710,14 @@ msgstr "Движок Markdown"
 msgid "Meaning"
 msgstr "Значение"
 
+msgid "Model - tap Browse Models to pick an available model"
+msgstr "Модель — нажмите «Обзор моделей», чтобы выбрать доступную модель"
+
 msgid "Model Built-In"
 msgstr "Встроено в модель"
 
 msgid "Model reset: %1"
 msgstr "Модель сброшена: %1"
-
-msgid "Model — tap Browse Models to pick an available model"
-msgstr "Модель — нажмите «Обзор моделей», чтобы выбрать доступную модель"
 
 msgid "Model: %1"
 msgstr "Модель: %1"
@@ -725,11 +737,14 @@ msgstr "Сюжетный элемент в фокусе:"
 msgid "New notebook"
 msgstr "Новый блокнот"
 
-msgid "New notebook…"
-msgstr "Новый блокнот…"
+msgid "New notebook..."
+msgstr "Новый блокнот..."
 
 msgid "No"
 msgstr "Нет"
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr "Не настроен активный провайдер. Пожалуйста, добавьте его в Настройках."
 
 msgid "No base folder is available for notebooks."
 msgstr "Нет доступной базовой папки для блокнотов."
@@ -760,9 +775,6 @@ msgstr "Нет текста для добавления в заметку"
 
 msgid "No valid custom prompt found"
 msgstr "Не найден корректный пользовательский промпт"
-
-msgid "No valid model provider is found in the configuration.lua"
-msgstr "В configuration.lua не найден корректный провайдер моделей."
 
 msgid "None"
 msgstr "Нет"
@@ -856,8 +868,8 @@ msgstr "Используется только в запросах, которы�
 msgid "Open conflict or mystery:"
 msgstr "Открытый конфликт или загадка:"
 
-msgid "OpenAI Responses API — Include built-in web search"
-msgstr "OpenAI Responses API — включая встроенный веб-поиск"
+msgid "OpenAI Responses API - Include built-in web search"
+msgstr "OpenAI Responses API — включить встроенный веб-поиск"
 
 msgid "OpenAI-compatible chat/completions endpoint, e.g. https://api.openai.com/v1"
 msgstr "Совместимый с OpenAI эндпоинт chat/completions, например https://api.openai.com/v1"
@@ -895,11 +907,17 @@ msgstr "Преобладающее эмоциональное состояние
 msgid "Protagonist's current objective:"
 msgstr "Текущая цель главного героя:"
 
+msgid "Provider %1 %2(%3)"
+msgstr "Провайдер %1 %2(%3)"
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr "Провайдер %1 НЕ НАСТРОЕН"
+
 msgid "Provider API"
 msgstr "API провайдера"
 
-msgid "Provider Name — shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
-msgstr "Название провайдера — отображается в меню; оставьте пустым, чтобы использовать имя протокола API (например, «openai»)"
+msgid "Provider Name - shown in menus; leave empty to use the API protocol name (e.g. \"openai\")"
+msgstr "Название провайдера — отображается в меню; оставьте пустым, чтобы использовать имя протокола API (например, \"openai\")"
 
 msgid "Provider data not initialized."
 msgstr "Данные провайдера не инициализированы."
@@ -915,12 +933,6 @@ msgstr "Запись провайдера должна быть таблицей
 
 msgid "Provider settings not found for: %1. Please check your configuration.lua file."
 msgstr "Настройки провайдера не найдены для: %1. Проверьте файл configuration.lua."
-
-msgid "Provider ▸ %1(%2)"
-msgstr "Провайдер ▸ %1(%2)"
-
-msgid "Provider ▸ NOT CONFIGURED"
-msgstr "Провайдер ▸ НЕ НАСТРОЕН"
 
 msgid "Providers and Models"
 msgstr "Провайдеры и модели"
@@ -1011,6 +1023,9 @@ msgstr "Сохранить диалог в"
 msgid "Saved to: %1"
 msgstr "Сохранено в: %1"
 
+msgid "Scroll"
+msgstr "Прокрутка"
+
 msgid "Search"
 msgstr "Поиск"
 
@@ -1073,6 +1088,9 @@ msgstr "Рекомендации похожих книг"
 
 msgid "Simplify"
 msgstr "Упростить"
+
+msgid "Stop"
+msgstr "Остановить"
 
 msgid "Stopped Reason: "
 msgstr "Причина остановки: "
@@ -1231,37 +1249,34 @@ msgid ""
 "Very-Long Press (over 3 seconds):\n"
 "On a single word in the book to show the highlight menu (instead of the dictionary).\n"
 "\n"
-"Multi-Swipe (e.g., ⮠, ⮡, ↺):\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
 "On the result dialog to close (as the Close button is far to reach).\n"
 msgstr ""
 "Советы по использованию\n"
 "\n"
 "Выделение:\n"
-"Выделите текст (или слово) в книге, затем нажмите [ИИ-ассистент] во всплывающем меню.\n"
+"Выделите текст (или слово) в книге, затем нажмите [AI assistant] в появившемся меню.\n"
 "\n"
 "Долгое нажатие:\n"
 "- На кнопке промпта: добавить в меню выделения.\n"
-"- На кнопке меню выделения — чтобы удалить её.\n"
-"- На кнопке «Закрыть» — чтобы вернуться к книге за 1 шаг.\n"
+"- На кнопке меню выделения, чтобы удалить её.\n"
+"- На кнопке «Закрыть», чтобы вернуться к книге за 1 шаг.\n"
 "\n"
 "Очень долгое нажатие (более 3 секунд):\n"
-"На отдельном слове в книге — чтобы показать меню выделения (вместо словаря).\n"
+"Нажмите на отдельное слово в книге, чтобы показать меню выделения (вместо словаря).\n"
 "\n"
-"Мультисвайп (например, ⮠, ⮡, ↺):\n"
-"По диалогу с результатом — чтобы закрыть (так как до кнопки «Закрыть» далеко).\n"
+"Мульти-свайп (например, %1, %2, %3):\n"
+"На диалоге результата, чтобы закрыть (так как до кнопки «Закрыть» далеко).\n"
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Использовать AI Assistant для «Перевода»"
 
-msgid "Use Book Text as Context"
-msgstr "Использовать текст книги как контекст"
-
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Использовать текст книги для X-Ray и Recap"
 
-msgid "Use web search 🌐"
-msgstr "Использовать веб-поиск 🌐"
+msgid "Use web search"
+msgstr "Использовать веб-поиск"
 
 msgid "User:"
 msgstr "Пользователь:"
@@ -1275,8 +1290,11 @@ msgstr "Просмотр"
 msgid "Vocabulary"
 msgstr "Лексика"
 
-msgid "Web Search ▸ %1"
-msgstr "Веб-поиск ▸ %1"
+msgid "Web Search"
+msgstr "Веб-поиск"
+
+msgid "Web Search %1 %2"
+msgstr "Веб-поиск %1 %2"
 
 msgid "WebSearch API"
 msgstr "API веб-поиска"
@@ -1296,6 +1314,10 @@ msgstr "Где остановилось действие:"
 msgid "Wikipedia"
 msgstr "Википедия"
 
+#. @translators used in the dictionary.
+msgid "Word Form & Lemma"
+msgstr "Словоформа и лемма"
+
 msgid "Word Origin"
 msgstr "Происхождение слова"
 
@@ -1305,8 +1327,8 @@ msgstr "Слово скопировано в буфер обмена."
 msgid "Write quick notes here"
 msgstr "Введите быстрые заметки здесь"
 
-msgid "X‑Ray"
-msgstr "X‑Ray"
+msgid "X-Ray"
+msgstr "X-Ray"
 
 msgid "Yes"
 msgstr "Да"
@@ -1331,15 +1353,3 @@ msgstr "fetchJSON: не удалось разобрать возвращённы
 
 msgid "https://..."
 msgstr "https://..."
-
-msgid "■ Scroll"
-msgstr "■ Прокрутка"
-
-msgid "▶ Scroll"
-msgstr "▶ Прокрутка"
-
-msgid "❌ Stop"
-msgstr "❌ Остановить"
-
-msgid "💡 Enhance your KOReader experience with AI"
-msgstr "💡 Улучшите взаимодействие с KOReader с помощью ИИ"
