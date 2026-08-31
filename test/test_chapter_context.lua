@@ -122,8 +122,8 @@ local function mockAssistant(featuresOrUi, maybeUi)
     end
     return {
         ui = ui,
-        confGetFeature = function(self, key, default)
-            local v = features[key]
+        confGetFeature = function(self, feature_key, default)
+            local v = features[feature_key]
             if v ~= nil then return v end
             return default
         end

@@ -413,7 +413,7 @@ function SettingsDialog:onDeleteProvider()
             self.assistant:confDeleteProvider(provider_name)
 
             -- Fallback: reselect a valid provider
-            local new_provider = self.assistant:getModelProvider()
+            local new_provider = self.assistant:confGetActiveProviderId()
             if new_provider then
                 self.assistant.querier:load_model(new_provider)
             end

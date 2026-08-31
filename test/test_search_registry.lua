@@ -69,10 +69,10 @@ local function mockAssistant(search_data)
         end
         return true
     end
-    function assistant:confGetProvider(key)
-        if not key or key == "" then return nil end
+    function assistant:confGetProvider(id)
+        if not id or id == "" then return nil end
         local koutil = require("util")
-        local v = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", key)
+        local v = koutil.tableGetValue(self.CONFIGURATION, "provider_settings", id)
         if v == nil or v == require("rapidjson").null then return nil end
         return v
     end

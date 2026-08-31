@@ -83,7 +83,7 @@ KOReader plugin (`assistant.koplugin`) adding AI assistant features (10+ provide
 - Localization: wrap every user-facing string in `_("text")` (`local _ = require("assistant_gettext")`); plurals via `N_("1 item", "%1 items", n)`. Keep strings contiguous inside `T(_("..."))` templates; title-case UI labels (short words lowercase).
 - OOP: metatable inheritance — `BaseHandler:new{...}` with `self.__index = self`; every handler implements `query`. e.g. `local H = BaseHandler:new{ name = "x" }`.
 - Helpers:
-  - Nested reads via `Assistant:confGetFeature` / `confGetProvider` (or `koutil.tableGetValue` for non-CONFIGURATION tables); `koutil.tableMerge(t1,t2)` **mutates `t1` in place** (returns nil — never assign its result).
+  - Nested reads: always via `Assistant:confGetFeature` / `confGetProvider` / `confGetProviderSettings` / `confGetFeatures` for CONFIGURATION, or `koutil.tableGetValue(t, ...)` for other tables; never use manual `and` chains like `t and t.foo and t.foo.bar` — they are error-prone and inconsistent. `koutil.tableMerge(t1,t2)` **mutates `t1` in place** (returns nil — never assign its result).
   - `T = require("ffi/util").template` for `T(_("%1 items"), n)`; `util.orderedPairs(t)` for deterministic key order.
   - JSON only `require("rapidjson")`; `null` is `rapidjson.null` — check `== nil or == rapidjson.null`, fall back with `assistant_utils.json_default`. Never introduce another JSON library (e.g. `dkjson`, `cjson`) — mixed null representations cause subtle bugs.
   - Bold runs via `assistant_utils.bold_format(T(_("<b>Header:</b> %1"), val))` with `<b>`/`</b>`.

@@ -22,7 +22,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     local ui = assistant.ui
 
     -- Check if Querier is initialized
-    local ok, err = Querier:load_model(assistant:getModelProvider())
+    local ok, err = Querier:load_model(assistant:confGetActiveProviderId())
     if not ok then
         UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
         return
