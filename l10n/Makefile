@@ -1,4 +1,17 @@
-.PHONY: all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-api clean init-dirs mo
+# ── Variables ─────────────────────────────────────────────────────────
+DOMAIN        = assistant
+TEMPLATE_DIR  = templates
+
+MSGINIT_BIN   = msginit
+MSGFMT_BIN    = msgfmt
+MSGMERGE_BIN  = msgmerge
+MSGATTRIB_BIN = msgattrib
+MSGCAT_BIN    = msgcat
+XGETTEXT_BIN  = xgettext
+
+LANGS      := zh_CN zh_TW af_ZA ar be bg_BG bn ca cs cy da de el eo es et eu fa fi fr ga gl he hi hr hu ia id ie it_IT ja ka kab kn ko_KR lt_LT lv mk ms nb_NO nl_NL nn or pl pt_BR pt_PT ro ro_MD ru si sk sl sr sv th tr uk ur uz vi
+MO_FILES   := $(LANGS:%=%/$(DOMAIN).mo)
+PO_FILES   := $(wildcard */$(DOMAIN).po)
 
 # Effective parallelism for ai-translate.
 # Priority: explicit -jN / --jobs=N on the command line > bare -j (nproc) > 4.
@@ -11,7 +24,36 @@ ifeq ($(JOBS),)
 JOBS := $(shell if echo '$(MAKEFLAGS)' | grep -qE ' (-j|--jobs)( |$$)'; then nproc; else echo 4; fi)
 endif
 
-all: mo
+# ── Targets ───────────────────────────────────────────────────────────
+
+.DEFAULT_GOAL := all
+
+.PHONY: help all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-api clean init-dirs mo retranslate-fuzzy
+
+help:
+	@echo "Usage: make [target]"
+	@echo ""
+	@echo "  mo              Compile .po -> .mo (offline, incremental)"
+	@echo "  translate       Full pipeline: template -> update -> extract -> ai-translate -> import -> check -> clean -> mo (needs .env)"
+	@echo "  template        Regenerate templates/assistant.pot"
+	@echo "  update          Merge pot into po"
+	@echo "  check           msgfmt --check"
+	@echo "  check-api       Ping configured API endpoint"
+	@echo "  check-langs     Detect drift vs KOReader supported languages"
+	@echo "  clean           Remove intermediate files"
+	@echo "  ai-translate    Run AI translation (all or L10N_LANG=xx)"
+	@echo "  retranslate-fuzzy  Re-extract and re-translate fuzzy entries (all or L10N_LANG=xx)"
+	@echo "  init-dirs       Create missing language directories"
+
+# Default target: full pipeline + MO compilation (virtual)
+all: translate
+
+# Compile .po files to .mo files
+%.mo: %.po
+	@mkdir -p $(dir $@)
+	@$(MSGFMT_BIN) --no-hash -o $@ $<
+
+mo: $(MO_FILES)
 
 # This target runs the full translation pipeline:
 # 1. Extracts strings from source code into a .pot template.
@@ -29,37 +71,24 @@ translate:
 		echo "Please set it before running translation. See: README.md"; \
 		exit 1; \
 	fi
-	@echo "[1/7] Generating POT template file..."
+	@echo "[1/8] Generating POT template file..."
 	@$(MAKE) template
-	@echo "[2/7] Merging POT file into PO files..."
+	@echo "[2/8] Merging POT file into PO files..."
 	@$(MAKE) update
-	@echo "[3/7] Generating untranslated files..."
+	@echo "[3/8] Generating untranslated files..."
 	@$(MAKE) extract-untranslated
-	@echo "[4/7] Running AI translation and verifying results..."
+	@echo "[4/8] Running AI translation and verifying results..."
 	@$(MAKE) ai-translate
-	@echo "[5/7] Merging untranslated files..."
+	@echo "[5/8] Merging untranslated files..."
 	@$(MAKE) import-translation
-	@echo "[6/7] Checking PO files..."
+	@echo "[6/8] Checking PO files..."
 	@$(MAKE) check
-	@echo "[7/7] Cleaning up intermediate files..."
+	@echo "[7/8] Cleaning up intermediate files..."
 	@$(MAKE) clean
 	@echo "[8/8] Compiling .mo files..."
 	@$(MAKE) mo
 	@echo "\nTranslation process completed successfully!"
 
-
-DOMAIN = assistant
-TEMPLATE_DIR = templates
-MSGINIT_BIN = msginit
-MSGFMT_BIN = msgfmt
-MSGMERGE_BIN = msgmerge
-MSGATTRIB_BIN = msgattrib
-MSGCAT_BIN = msgcat
-XGETTEXT_BIN = xgettext
-
-LANGS := zh_CN zh_TW af_ZA ar be bg_BG bn ca cs cy da de el eo es et eu fa fi fr ga gl he hi hr hu ia id ie it_IT ja ka kab kn ko_KR lt_LT lv mk ms nb_NO nl_NL nn or pl pt_BR pt_PT ro ro_MD ru si sk sl sr sv th tr uk ur uz vi
-
-PO_FILES  := $(wildcard */$(DOMAIN).po)
 
 init-dirs: template
 	@echo "Ensuring language directories and initial .po files exist..."
@@ -92,7 +121,7 @@ import-translation:
 	@for po_file in $(PO_FILES); do \
 		dir=$$(dirname $$po_file); \
 		if [ -f "$$dir/updated_translated.po" ]; then \
-			$(MSGCAT_BIN) --no-location --no-wrap --use-first --sort-output $$dir/updated_translated.po $$po_file -o $$dir/updated.po && \
+			$(MSGCAT_BIN) --no-location --no-wrap --use-first --sort-output $$dir/updated_translated.po $$po_file -o $$dir/updated.po; \
 			$(MSGATTRIB_BIN) --no-obsolete --no-wrap --no-location --sort-by-file $$dir/updated.po -o $$po_file; \
 			rm -f $$dir/updated.po; \
 		fi; \
@@ -100,11 +129,17 @@ import-translation:
 
 check:
 	@echo "Checking syntax of existing .po files..."
-	@rc=0; \
+	@rc=0; has_fuzzy=0; \
 	for po_file in $(PO_FILES); do \
 		dir=$$(dirname $$po_file); printf "%-8s" "$$dir"; \
-		$(MSGFMT_BIN) -v --check -o /dev/null $$po_file || rc=1; \
+		out=$$( $(MSGFMT_BIN) -v --check -o /dev/null $$po_file 2>&1 ); \
+		echo "$$out"; \
+		echo "$$out" | grep -q "fuzzy" && has_fuzzy=1; \
+		$(MSGFMT_BIN) --check -o /dev/null $$po_file 2>/dev/null || rc=1; \
 	done; \
+	if [ $$has_fuzzy -eq 1 ]; then \
+		echo "\033[0;33mHint: fuzzy translations found. Run 'make retranslate-fuzzy' or 'L10N_LANG=xx make retranslate-fuzzy' to re-translate.\033[0m"; \
+	fi; \
 	exit $$rc
 
 # Send a minimal ping to the configured API endpoint to verify connectivity,
@@ -202,6 +237,18 @@ ai-translate-%:
 		fi; \
 	} || exit 1
 
+retranslate-fuzzy:
+	@echo "Forcing re-translation of fuzzy entries..."
+	@for lang in $(LANGS); do \
+		if [ -n "$(L10N_LANG)" ] && [ "$$lang" != "$(L10N_LANG)" ]; then continue; fi; \
+		rm -f $$lang/untranslated.po $$lang/_untranslated.po $$lang/_fuzzy.po $$lang/updated_translated.po; \
+	done
+	@$(MAKE) extract-untranslated
+	@$(MAKE) ai-translate
+	@$(MAKE) import-translation
+	@echo "Fuzzy re-translation imported; running 'make check'..."
+	@$(MAKE) check || true
+
 template:
 	mkdir -p $(TEMPLATE_DIR)
 	$(XGETTEXT_BIN) --from-code=utf-8 \
@@ -214,13 +261,3 @@ template:
 		--package-version=`grep version ../_meta.lua | grep -Eo '[0-9.]+'` \
 		`find .. -type f -name "*.lua" | sort` \
 		-o $(TEMPLATE_DIR)/$(DOMAIN).pot
-
-
-# Compile .po files to .mo files
-# for future use
-SELF := $(lastword $(MAKEFILE_LIST))
-MO_FILES = $(PO_FILES:%.po=%.mo)
-%.mo: %.po
-	@$(MSGFMT_BIN) --no-hash -o $@ $<
-mo:
-	$(MAKE) --file=$(SELF) $(MO_FILES)

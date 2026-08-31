@@ -123,7 +123,7 @@ LANG_MAP: dict[str, str] = {
 
 # Static Plural-Forms table extracted from KOReader's official translations
 # under /usr/lib/koreader/l10n/<lang>/koreader.po headers. Used when the
-# Python script generates a fresh koreader.po from a .pot (scenario 1).
+# Python script generates a fresh assistant.po from a .pot (scenario 1).
 PLURAL_FORMS: dict[str, str] = {
     "af_ZA": "nplurals=2; plural=(n != 1);",
     "ar": "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;",
@@ -187,7 +187,7 @@ PLURAL_FORMS: dict[str, str] = {
     "zh_TW": "nplurals=1; plural=0;",
 }
 
-TEMPLATE_FILE = "templates/koreader.pot"
+TEMPLATE_FILE = "templates/assistant.pot"
 
 SYSTEM_PROMPT = """You are an expert localization specialist translating user-facing strings for an AI assistant plugin in KOReader, an open-source e-book reader, into {language} ({lang_code}). The strings appear in menus, dialogs, buttons, settings, and error messages.
 
@@ -356,7 +356,7 @@ def decide_paths(lang_code: str) -> tuple[str | None, str | None, str | None]:
       - "skip":      both files already exist; nothing to do
       - "error":     inconsistent state on disk
     """
-    translated = os.path.join(lang_code, "koreader.po")
+    translated = os.path.join(lang_code, "assistant.po")
     untranslated = os.path.join(lang_code, "untranslated.po")
     updated_translated = os.path.join(lang_code, "updated_translated.po")
 
@@ -852,7 +852,7 @@ def translate_file(
     # by the Makefile and still has placeholder values). In both cases we need
     # to overwrite Language / Plural-Forms / Language-Team / Last-Translator
     # before saving the final output. Existing non-placeholder headers (e.g.
-    # the real koreader.po copied from upstream) are preserved untouched.
+    # the real assistant.po copied from upstream) are preserved untouched.
     existing_plural = po.metadata.get("Plural-Forms", "")
     header_is_placeholder = "INTEGER" in existing_plural or not existing_plural
     needs_header_fix = (
