@@ -136,22 +136,24 @@ function Config:getFeatures()
     return koutil.tableGetValue(self._data, "features") or {}
 end
 
---- Checks that a provider record table has non-empty model, base_url and api_key.
-function Config:isProviderValid(provider)
-    if type(provider) ~= "table" then return false end
-    local model = provider.model
-    local base_url = provider.base_url
-    local api_key = provider.api_key
-    if not model or model == "" then return false end
-    if not base_url or base_url == "" then return false end
-    if not api_key or api_key == "" then return false end
-    return true
-end
-
---- Convenience predicate: true when the provider record for `id` is valid.
---- @param id string Provider identifier (e.g. "openai_foo" or "custom:1"), not an API key.
+--- True when provider has model/base_url/api_key. Model may be
+--- provider.model or selected_model_<id> (for file-providers that
+--- omit model in configuration.lua and let the user pick via UI).
 function Config:isProviderEnabled(id)
-    return self:isProviderValid(self:getProvider(id))
+    if not id or id == "" then return false end
+    local provider = self:getProvider(id)
+    if not provider or type(provider) ~= "table" then return false end
+    local hasModel = provider.model and provider.model ~= ""
+    if not hasModel then
+        local assistant = self._assistant
+        if assistant and assistant.settings then
+            local sel = assistant.settings:readSetting("selected_model_" .. id)
+            if sel and sel ~= "" then hasModel = true end
+        end
+    end
+    local hasBaseUrl = provider.base_url and provider.base_url ~= ""
+    local hasApiKey = provider.api_key and provider.api_key ~= ""
+    return hasModel and hasBaseUrl and hasApiKey
 end
 
 --- Returns the *key/ID string* of the active provider (e.g. "openai_foo" or

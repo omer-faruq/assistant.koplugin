@@ -138,8 +138,17 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     local Querier = assistant.querier
     local ui = assistant.ui
 
-    -- Check if Querier is initialized
-    local ok, err = Querier:load_model(assistant.config:getActiveProviderId())
+    -- Prefer already-loaded querier; fallback to getActiveProviderId.
+    local provider = (assistant.querier and assistant.querier.provider_name
+                      and assistant.querier:is_inited())
+                     and assistant.querier.provider_name
+                     or assistant.config:getActiveProviderId()
+    if not provider then
+        UIManager:show(InfoMessage:new{ icon = "notice-warning",
+            text = _("No active provider configured. Please add one in Settings.") })
+        return
+    end
+    local ok, err = Querier:load_model(provider)
     if not ok then
         UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
         return
