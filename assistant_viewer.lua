@@ -83,6 +83,11 @@ blockquote, dd, pre {
     font-size: 0.8em;
 }
 
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 ol, ul, menu {
     margin: 0;
     padding-left: 1.5em;

@@ -792,7 +792,7 @@ function M.process_suggestions(content)
         return last
     end
     local last_close_end
-    for _, tag in ipairs({ "</div>", "</think>", "</pre>" }) do
+    for _, tag in ipairs({ "</div>", "</pre>" }) do
         local p = last_pos(tag)
         if p then
             local e = p + #tag - 1
@@ -805,7 +805,6 @@ function M.process_suggestions(content)
         if not tag_start then return content end
     else
         if string.find(content, '<div class="reasoningtext">', 1, true)
-            or string.find(content, "<think>", 1, true)
             or string.find(content, "<pre>", 1, true) then
             return content -- has start but no close = truncated, ignore
         end
