@@ -140,6 +140,7 @@ do
   end
 end
 GetText.dirname = plugin_dir .. "/l10n"
+GetText.plugin_dir = plugin_dir
 GetText.textdomain = "assistant"
 
 -- Sync to KOReader's active UI language (optional in case gettext is absent).

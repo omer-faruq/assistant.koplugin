@@ -23,8 +23,9 @@ local shared_buf = strbuf.new()
 -- dependency stays one-way: utils -> gettext.
 local lfs_plugin_dir = require("libs/libkoreader-lfs")
 
--- Runtime constant PLUGIN_DIR is set authoritatively by main.lua at init.
--- Tests / direct requires without main fall back to lazy computation below.
+-- PLUGIN_DIR is lazily delegated to assistant_gettext.plugin_dir (the single
+-- source of truth). Tests / direct requires without gettext fall back to the
+-- self-computation below.
 local _cached_dir
 
 -- Compute the plugin dir (fallback used only when main.lua has not yet set
@@ -58,22 +59,29 @@ local function computePluginDir()
   return "."
 end
 
--- Backward-compatible accessor: prefer the authoritative runtime constant
--- set by main.lua, then the lazy fallback cache.
+-- Backward-compatible accessor: prefer assistant_gettext.plugin_dir (single
+-- source), then the cached self-computation for tests without gettext.
 function M.getPluginDir()
   if M.PLUGIN_DIR and M.PLUGIN_DIR ~= "" then return M.PLUGIN_DIR end
   if _cached_dir then return _cached_dir end
+  -- Try gettext first (single source of truth).
+  local ok, gt = pcall(require, "assistant_gettext")
+  if ok and gt and gt.plugin_dir and gt.plugin_dir ~= "" then
+    _cached_dir = gt.plugin_dir
+    return _cached_dir
+  end
+  -- Fallback: self-compute (tests / standalone luajit without gettext).
   _cached_dir = computePluginDir()
   return _cached_dir
 end
 
 -- Initialize PLUGIN_DIR at file load so tests without main still have it.
--- main.lua overwrites this with the authoritative value before gettext loads.
+-- getPluginDir() now delegates to assistant_gettext.plugin_dir when available.
 if not M.PLUGIN_DIR then
   M.PLUGIN_DIR = M.getPluginDir()
 end
 
--- gettext require placed AFTER PLUGIN_DIR is set so any consumer that reads
+-- gettext require placed after PLUGIN_DIR is set so any consumer that reads
 -- utils.PLUGIN_DIR during gettext's load sees a usable value.
 local _ = require("assistant_gettext")
 

@@ -1,4 +1,5 @@
-local T = require("ffi/util").template
+local FFIUtil = require("ffi/util")
+local T = FFIUtil.template
 local lfs = require("libs/libkoreader-lfs")
 local util = require("util")
 local logger = require("logger")
@@ -18,13 +19,8 @@ local MULTI_NOTEBOOK_SETTING = "use_multiple_general_notebooks"
 local FOLDER_SETTING = "general_notebooks_folder"
 
 local function joinPath(parent, child)
-    if not parent or parent == "" then
-        return nil
-    end
-    if parent:sub(-1) == "/" then
-        return parent .. child
-    end
-    return parent .. "/" .. child
+    if not parent or parent == "" then return nil end
+    return FFIUtil.joinPath(parent, child)
 end
 
 local function getCurrentBaseDirectory(assistant)
