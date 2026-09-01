@@ -25,7 +25,7 @@ jobs:
     steps:
       # Step 1: Check out your repository under $GITHUB_WORKSPACE, so your job can access it.
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # Step 2: Update version in _meta.lua based on the Git tag.
       - name: Update version in _meta.lua
@@ -62,9 +62,9 @@ jobs:
 
       # Step 5: Create a GitHub Release and upload the archive as a release asset.
       - name: Create Release and Upload Asset
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
-          # Mark this release as a pre-release. Set to 'false' to create a full release.
-          prerelease: true
+          prerelease: false
+          make_latest: true
           # The files to upload as release assets.
           files: assistant.koplugin-${{ github.ref_name }}.zip
