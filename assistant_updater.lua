@@ -23,7 +23,23 @@ local function join(...)
     return result
 end
 
+local UPDATE_CHECK_INTERVAL = 48 * 3600 -- 48 hours in seconds
+local LAST_CHECK_KEY = "updater_last_check"
+
 local meta = nil
+
+-- Throttle helper: true when enough time has passed since last check.
+-- `now` is injectable for tests; defaults to os.time().
+local function shouldCheckForUpdates(assistant, now)
+    now = now or os.time()
+    if not assistant or not assistant.settings then return true end
+    local last = assistant.settings:readSetting(LAST_CHECK_KEY)
+    if last == nil then return true end
+    if type(last) == "string" then last = tonumber(last) end
+    if type(last) ~= "number" then return true end
+    if last > now then return true end -- clock skew: future timestamp treated as expired
+    return (now - last) >= UPDATE_CHECK_INTERVAL
+end
 
 local function normalize(path) -- strip ./, /, assistant.koplugin-*/ prefix
     if not path or path == "" then return "" end
@@ -161,9 +177,27 @@ local function isVersionNewer(v1_str, v2_str)
 end
 
 local function checkForUpdates(assistant)
+  if not assistant or not assistant.settings or not assistant.config then
+    return
+  end
   if assistant.config:getFeature("updater_disabled") then
     return
   end
+
+  -- 48h throttle: skip network check if last check was recent.
+  -- Timestamp is persisted in settings so it survives restarts.
+  local now = os.time()
+  if not shouldCheckForUpdates(assistant, now) then
+    return
+  end
+  -- In-memory guard prevents parallel network calls from rapid
+  -- re-entries before the first request completes. Persistent timestamp
+  -- is only saved after a successful response, so transient failures
+  -- (offline, 5xx) can retry on the next window entry.
+  if assistant._update_check_running then
+    return
+  end
+  assistant._update_check_running = true
 
   local update_url = assistant.config:getFeature("update_check_url")
     or "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest"
@@ -173,9 +207,15 @@ local function checkForUpdates(assistant)
       _("Checking for updates..."))
 
   if not parsed_data then
+    assistant._update_check_running = nil
     Notification:notify(T(_("AI Assistant: Failed to check updates: %2"), err or _("Empty Error")), Notification.SOURCE_ALWAYS_SHOW)
     return
   end
+
+  -- Success: persist timestamp so we don't check again within 48h
+  assistant.settings:saveSetting(LAST_CHECK_KEY, now)
+  assistant.updated = true
+  assistant._update_check_running = nil
 
   local latest_version_tag = parsed_data.tag_name
   if latest_version_tag and meta and meta.version then
@@ -457,6 +497,9 @@ return {
   isVersionNewer = isVersionNewer,
   is_excluded = is_excluded,
   join = join,
+  UPDATE_CHECK_INTERVAL = UPDATE_CHECK_INTERVAL,
+  LAST_CHECK_KEY = LAST_CHECK_KEY,
+  shouldCheckForUpdates = shouldCheckForUpdates,
   checkForUpdates = function(assistant)
     meta = assistant.meta
     return Trapper:wrap(function() checkForUpdates(assistant) end)

@@ -46,9 +46,6 @@ local Assistant = InputContainer:new {
   config = nil,  -- Config object (assistant_config.lua)
 }
 
--- Flag to ensure the update message is shown only once per session
-local updateMessageShown = false
-
 function Assistant:onDispatcherRegisterActions()
   -- Register main AI ask action
   Dispatcher:registerAction("ai_ask_question", {
@@ -767,10 +764,8 @@ function Assistant:init()
           end
 
           ASUtils.runWhenOnlineFast(function()
-            if not updateMessageShown then
-              Updater.checkForUpdates(self)
-              updateMessageShown = true
-            end
+            -- Throttled inside updater: only hits network if 48h passed since last check
+            Updater.checkForUpdates(self)
             UIManager:nextTick(function()
               -- Show the main AI dialog with highlighted text
               self.assistant_dialog:show(_reader_highlight_instance.selected_text.text)
