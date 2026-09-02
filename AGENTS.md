@@ -97,9 +97,9 @@ KOReader plugin (`assistant.koplugin`) adding AI assistant features (10+ provide
 ## Git Workflow / Versioning / CI/CD
 
 - Default branch `main`; Conventional Commits (`fix:`, `refactor:`, `add:`, `feat:`). When asked to commit, do it directly with a concise message.
-- `_meta.lua` holds the current development version (the *next* release). When a release is ready: tag the commit matching it (e.g. `_meta.lua` says `"1.14"` → tag `v1.14`), then bump `_meta.lua` to the next number and commit (`chore: bump version to 1.15`).
-- AI agents: when asked to tag a release, tag the commit matching `_meta.lua`'s version, then bump and commit the bump.
-- CI (`.github/workflows/release.yml`): on `v*` push — checkout, rewrite `_meta.lua` from the tag, zip (excludes dotfiles, `.md`, l10n non-mo files — only `*.mo` shipped; MO files are now tracked in repo, built via `l10n/Makefile DOMAIN=assistant`, `all: mo`).
+- `_meta.lua` holds the current development version with `-dev` suffix (e.g. `"1.17-dev"` for next `1.17`). When a release is ready: tag the commit (`v1.17` for `1.17-dev`), CI will `git archive "$GITHUB_REF_NAME" --prefix=assistant.koplugin/ | tar xf -` and `sed` only `$PACKAGE_NAME/_meta.lua` to `"1.17"` (repo's `1.17-dev` untouched), then bump repo to next dev (`"1.18-dev"`) and commit (`chore: set version to 1.18-dev`).
+- AI agents: when asked to tag a release, tag the commit matching `_meta.lua`'s `X.Y-dev` (tag `vX.Y`), then bump `_meta.lua` to next `X.(Y+1)-dev` and commit.
+- CI (`.github/workflows/release.yml`): on `v*` push (+ `workflow_dispatch`) — `git archive "$GITHUB_REF_NAME"` with prefix, `sed` package's `_meta.lua` from tag, `zip -r -x@/tmp/exclude.list` driven by `.releaseignore` (light, `*` includes `/`, `!` kept for OTA compat, CI uses explicit `l10n` list via Python `pkg`/`raw`→`exclude.list`); only `*.mo` shipped. OTA reads `.releaseignore` from the Git archive zip (not CI product) and falls back to legacy `dot/md/l10n/test` rules.
 - CI creates a GitHub pre-release with the zip asset; no tests run in CI (testing is manual in KOReader).
 
 ## Translation Management
