@@ -332,7 +332,7 @@ local function otaUpgrade(assistant, version)
   if not dl_result then
     logger.warn("[OTA] Phase 1 download failed: dl_err=" .. tostring(dl_err))
     FFIUtil.purgeDir(UPDATE_TMPDIR)
-    Notification:notify(T(_("OTA update failed: %1"), tostring(dl_err)), Notification.SOURCE_ALWAYS_SHOW)
+    UIManager:show(InfoMessage:new{ text = T(_("OTA update failed: %1"), tostring(dl_err)) })
     return
   end
 
