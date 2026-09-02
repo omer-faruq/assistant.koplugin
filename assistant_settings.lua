@@ -792,14 +792,28 @@ File configuration.lua will be preserved.]]),
                 local ota_github_base = assistant.config:getFeature("ota_github_base", "https://github.com")
                 local ota_github_repo = assistant.config:getFeature("ota_github_repo", "omer-faruq/assistant.koplugin")
                 local version_input
+                local default_version = Updater.getDefaultOtaInput(assistant) or "main"
+                local current_version = tostring(meta.version)
+                local is_dev = current_version:find("-dev", 1, true) ~= nil
+                local latest_tag = Updater.getSavedLatestVersion(assistant)
+                local desc_text
+                if is_dev then
+                    desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\nCurrent version: %3 (development version)\nMay be unstable, translations may be incomplete. To switch to a stable release, enter a tag (e.g. \"v1.16\").\n\n<b>The configuration.lua will be preserved.</b>"),
+                        ota_github_base, ota_github_repo, current_version)
+                else
+                    if latest_tag and latest_tag ~= "" then
+                        desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\nCurrent stable version: %3\nLatest stable version: %4\n\nEnter a branch or tag name to update the plugin from the source repository.\n\n<b>The configuration.lua will be preserved.</b>"),
+                            ota_github_base, ota_github_repo, current_version, latest_tag)
+                    else
+                        desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\nCurrent stable version: %3\n\nEnter a branch or tag name to update the plugin from the source repository. For bleeding-edge, enter \"main\".\n\n<b>The configuration.lua will be preserved.</b>"),
+                            ota_github_base, ota_github_repo, current_version)
+                    end
+                end
                 version_input = InputDialog:new{
                     title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, meta.version),
-                    input = "main",
+                    input = default_version,
                     input_hint = _("branch or tag name"),
-                    description = ASUtils.bold_format(
-                        T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\nEnter a branch or tag name to update the plugin from the source repository.\n\nDefault: \"main\" (bleeding-edge version: -dev)\nMay be unstable, translations may be incomplete. For stable release, enter a tag (e.g. \"v1.16\").\n\n<b>The configuration.lua will be preserved.</b>"),
-                          ota_github_base, ota_github_repo)
-                    ),
+                    description = ASUtils.bold_format(desc_text),
                     buttons = {
                         -- The cancellation button should be kept on the left
                         -- and the button executing the action on the right.

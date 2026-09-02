@@ -25,6 +25,7 @@ end
 
 local UPDATE_CHECK_INTERVAL = 48 * 3600 -- 48 hours in seconds
 local LAST_CHECK_KEY = "updater_last_check"
+local LATEST_VERSION_KEY = "updater_latest_version"
 
 local meta = nil
 
@@ -216,14 +217,18 @@ local function checkForUpdates(assistant)
   assistant._update_check_running = nil
 
   local latest_version_tag = parsed_data.tag_name
-  if latest_version_tag and meta and meta.version then
-    local latest_version_str = latest_version_tag:match("^v?(.*)$")
-    local current_version_str = tostring(meta.version)
+  if latest_version_tag and latest_version_tag ~= "" then
+    -- Always record latest available version for OTA dialog default
+    assistant.settings:saveSetting(LATEST_VERSION_KEY, latest_version_tag)
+    if meta and meta.version then
+      local latest_version_str = latest_version_tag:match("^v?(.*)$")
+      local current_version_str = tostring(meta.version)
 
-    if isVersionNewer(latest_version_str, current_version_str) then
-      local message = T(_("A new version of the %1 plugin (%2) is available. Please update!"),
-        meta.fullname, latest_version_tag)
-      Notification:notify(message, Notification.SOURCE_ALWAYS_SHOW)
+      if isVersionNewer(latest_version_str, current_version_str) then
+        local message = T(_("A new version of the %1 plugin (%2) is available. Please update!"),
+          meta.fullname, latest_version_tag)
+        Notification:notify(message, Notification.SOURCE_ALWAYS_SHOW)
+      end
     end
   end
 end
@@ -481,13 +486,44 @@ local function otaUpgrade(assistant, version)
   UIManager:askForRestart()
 end
 
+local function getSavedLatestVersion(assistant)
+    if not assistant or not assistant.settings then return nil end
+    local saved = assistant.settings:readSetting(LATEST_VERSION_KEY)
+    if type(saved) == "string" and saved ~= "" then
+        return saved
+    end
+    return nil
+end
+
+local function getDefaultOtaInput(assistant)
+    if not assistant or not assistant.settings then return "main" end
+    local effective_meta = meta or (assistant and assistant.meta)
+    if not effective_meta or not effective_meta.version then return "main" end
+    local current = tostring(effective_meta.version)
+    if current:find("-dev", 1, true) then return "main" end
+    local saved = getSavedLatestVersion(assistant)
+    if saved and saved ~= "" then
+        return saved
+    end
+    -- No saved latest: fallback to current stable version as tag (v-prefix)
+    -- Ensure tag format matches GitHub tags (v1.16)
+    local cur_stripped = current:match("^v?(.*)$") or current
+    if cur_stripped ~= "" then
+        return "v" .. cur_stripped
+    end
+    return current
+end
+
 return {
   isVersionNewer = isVersionNewer,
   is_excluded = is_excluded,
   join = join,
   UPDATE_CHECK_INTERVAL = UPDATE_CHECK_INTERVAL,
   LAST_CHECK_KEY = LAST_CHECK_KEY,
+  LATEST_VERSION_KEY = LATEST_VERSION_KEY,
   shouldCheckForUpdates = shouldCheckForUpdates,
+  getSavedLatestVersion = getSavedLatestVersion,
+  getDefaultOtaInput = getDefaultOtaInput,
   checkForUpdates = function(assistant)
     meta = assistant.meta
     return Trapper:wrap(function() checkForUpdates(assistant) end)
