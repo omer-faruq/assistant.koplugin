@@ -798,7 +798,7 @@ File configuration.lua will be preserved.]]),
                 local latest_tag = Updater.getSavedLatestVersion(assistant)
                 local desc_text
                 if is_dev then
-                    desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\nCurrent version: %3 (development version)\nMay be unstable, translations may be incomplete. To switch to a stable release, enter a tag (e.g. \"v1.16\").\n\n<b>The configuration.lua will be preserved.</b>"),
+                    desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\nCurrent version: %3 (development version)\nUpdate to \"main\" is bleeding-edge.\nMay be unstable, translations may be incomplete. To switch to a stable release, enter a tag (e.g. \"v1.16\").\n\n<b>The configuration.lua will be preserved.</b>"),
                         ota_github_base, ota_github_repo, current_version)
                 else
                     if latest_tag and latest_tag ~= "" then
