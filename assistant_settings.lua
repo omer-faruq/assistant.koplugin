@@ -797,7 +797,7 @@ File configuration.lua will be preserved.]]),
                     input = "main",
                     input_hint = _("branch or tag name"),
                     description = ASUtils.bold_format(
-                        T(_("Enter a branch or tag name to update the plugin from the source repository.\n\n<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\nDefault: \"main\" (bleeding-edge development code, shows as *-dev)\nThis code may be unstable and translations may be incomplete; it is supported on a best-effort basis only. To update to a stable release, enter a tag instead (e.g. \"v1.16\").\n\n<b>The configuration.lua will be preserved.</b>"),
+                        T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\nEnter a branch or tag name to update the plugin from the source repository.\n\nDefault: \"main\" (bleeding-edge version: -dev)\nMay be unstable, translations may be incomplete. For stable release, enter a tag (e.g. \"v1.16\").\n\n<b>The configuration.lua will be preserved.</b>"),
                           ota_github_base, ota_github_repo)
                     ),
                     buttons = {
