@@ -53,6 +53,8 @@ local stubs = {
     -- for assistant_gettext: datastorage mock
     ["datastorage"]             = {
         getDataDir = function() return "/tmp" end,
+        getFullDataDir = function() return "/tmp" end,
+        getSettingsDir = function() return "/tmp" end,
     },
     -- for assistant_gettext: gettext mock (language)
     ["gettext"]                 = {

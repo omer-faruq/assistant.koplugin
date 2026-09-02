@@ -21,6 +21,9 @@ jobs:
     # Grant permissions for the GITHUB_TOKEN to create a release.
     permissions:
       contents: write
+    env:
+      PACKAGE_NAME: assistant.koplugin
+      ARCHIVE_NAME: assistant.koplugin-${{ github.ref_name }}.zip
 
     # Steps represent a sequence of tasks that will be executed as part of the job.
     steps:
@@ -32,8 +35,9 @@ jobs:
       # Unified exclusion via .releaseignore; CI uses zip -x@exclude.list.
       - name: Archive project source with zip
         run: |
-          PACKAGE_NAME="assistant.koplugin"
-          ARCHIVE_NAME="${PACKAGE_NAME}-${GITHUB_REF_NAME}.zip"
+          # PACKAGE_NAME/ARCHIVE_NAME from job env, re-export for shell
+          PACKAGE_NAME="$PACKAGE_NAME"
+          ARCHIVE_NAME="$ARCHIVE_NAME"
           echo "Building release archive from .releaseignore..."
           if [ -f .releaseignore ]; then cat .releaseignore; echo "---"; else echo "WARNING: .releaseignore missing"; fi
           rm -rf "$PACKAGE_NAME" "$ARCHIVE_NAME"
@@ -43,6 +47,7 @@ jobs:
           sed -i -E "s/(version\s*=\s*)[^,]+/\1\"${VERSION}\"/" "$PACKAGE_NAME/_meta.lua"
           cat "$PACKAGE_NAME/_meta.lua"
           if [ -f .releaseignore ]; then
+            # convert our .releaseignore to a zip compatible list
             python3 -c "pkg='assistant.koplugin'; raw=[l.strip().rstrip('/') for l in open('.releaseignore') if (t:=l.strip()) and not t.startswith('#') and not t.startswith('!') and t.rstrip('/')]; open('/tmp/exclude.list','w').write('\n'.join([f'{pkg}/{p}\n{pkg}/{p}/*\n*/{p}\n*/{p}/*' for p in raw]) + f'\n{pkg}/.*\n*/.*\n.git/*\n')"
             echo "exclude.list:"; cat /tmp/exclude.list; echo "---"
             zip -r "$ARCHIVE_NAME" "$PACKAGE_NAME" -x@/tmp/exclude.list
@@ -53,7 +58,7 @@ jobs:
 
       # Step 4: List files in the created archive for debugging purposes.
       - name: List archive contents
-        run: unzip -l assistant.koplugin-${GITHUB_REF_NAME}.zip
+        run: unzip -l "$ARCHIVE_NAME"
 
       # Step 5: Create a GitHub Release and upload the archive as a release asset.
       - name: Create Release and Upload Asset
@@ -62,4 +67,4 @@ jobs:
           prerelease: false
           make_latest: true
           # The files to upload as release assets.
-          files: assistant.koplugin-${{ github.ref_name }}.zip
+          files: ${{ env.ARCHIVE_NAME }}

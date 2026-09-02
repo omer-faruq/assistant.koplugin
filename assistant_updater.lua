@@ -77,7 +77,6 @@ local function is_excluded(path)
     if cached_pats then return is_excluded_with(path, cached_pats) end
     return is_excluded_with(path, nil)
 end
-_G.is_excluded = is_excluded -- keep global compat for test/test_updater.lua
 
 -- A more robust version comparison function compliant with Semantic Versioning.
 -- Returns true if v1_str is newer than v2_str, false otherwise.
