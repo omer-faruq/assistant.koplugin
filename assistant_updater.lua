@@ -229,30 +229,58 @@ local function otaUpgrade(assistant, version)
   UIManager:show(download_msg)
 
   local completed, dl_result, dl_err = Trapper:dismissableRunInSubprocess(function()
-    local socket = require("socket")
-    local http = require("socket.http")
-    local ltn12 = require("ltn12")
+    local sub_logger = require("logger")
+    local _ok, _r1, _r2 = xpcall(function()
+      local socket = require("socket")
+      local http = require("socket.http")
+      local ltn12 = require("ltn12")
+      local lfs = require("libs/libkoreader-lfs")
 
-    local file_handle = io.open(DL_TAR, "wb")
-    if not file_handle then
-      return false, "Could not create temp file"
-    end
-
-    local sink = ltn12.sink.file(file_handle)
-    local status_code = socket.skip(1, http.request{
-      url = RELEASE_URL,
-      method = "GET",
-      sink = sink,
-    })
-
-    if status_code ~= 200 then
-      if status_code == 404 then
-        return false, T(_("Branch/Tag \"%1\" was not found."), version)
+      local file_handle = io.open(DL_TAR, "wb")
+      if not file_handle then
+        sub_logger.warn("[OTA] failed to create temp file: " .. tostring(DL_TAR))
+        return false, "Could not create temp file"
       end
-      return false, "Download failed: HTTP " .. tostring(status_code)
-    end
 
-    return true, nil
+      local sink = ltn12.sink.file(file_handle)
+      local status_code, headers, status_line = socket.skip(1, http.request{
+        url = RELEASE_URL,
+        method = "GET",
+        sink = sink,
+      })
+
+      -- Ensure file is flushed and closed so Archiver can read it
+      -- ltn12 sink.file auto-closes handle on EOF (chunk==nil); explicit close must be pcall-guarded to avoid "attempt to use a closed file"
+      if file_handle then
+        pcall(file_handle.close, file_handle)
+      end
+
+      local size = lfs.attributes(DL_TAR, "size")
+
+      if status_code ~= 200 then
+        sub_logger.warn("[OTA] download failed: status_code=" .. tostring(status_code) .. " url=" .. tostring(RELEASE_URL) .. " size=" .. tostring(size))
+        if status_code == 404 then
+          return false, T(_("Branch/Tag \"%1\" was not found."), version)
+        end
+        if status_code and status_code >= 300 and status_code < 400 then
+          local loc = headers and (headers.location or headers.Location or headers["Location"] or headers["location"])
+          return false, "Download failed: HTTP " .. tostring(status_code) .. " redirect to " .. tostring(loc)
+        end
+        return false, "Download failed: HTTP " .. tostring(status_code)
+      end
+
+      if not size or size == 0 then
+        sub_logger.warn("[OTA] downloaded file is empty: " .. tostring(DL_TAR) .. " size=" .. tostring(size))
+        return false, "Download failed: empty file"
+      end
+
+      return true, nil
+    end, debug.traceback)
+    if not _ok then
+      sub_logger.warn("[OTA] Phase 1 task exception: " .. tostring(_r1))
+      return false, tostring(_r1)
+    end
+    return _r1, _r2
   end, download_msg)
 
   UIManager:close(download_msg)
@@ -264,6 +292,7 @@ local function otaUpgrade(assistant, version)
   end
 
   if not dl_result then
+    logger.warn("[OTA] Phase 1 download failed: dl_err=" .. tostring(dl_err))
     FFIUtil.purgeDir(UPDATE_TMPDIR)
     Notification:notify(T(_("OTA update failed: %1"), tostring(dl_err)), Notification.SOURCE_ALWAYS_SHOW)
     return
@@ -280,31 +309,44 @@ local function otaUpgrade(assistant, version)
 
   local function do_install()
     local arc = Archiver.Reader:new()
-    if not arc:open(DL_TAR) then
+    local ok_open = arc:open(DL_TAR)
+    if not ok_open then
       FFIUtil.purgeDir(UPDATE_TMPDIR)
       return false, "Failed to open archive"
     end
     -- 2a: read .releaseignore from archive if present
     local tmp_ignore = join(UPDATE_TMPDIR, ".releaseignore.tmp")
+    local found_ignore = false
     for entry in arc:iterate() do
       if normalize(entry.path) == ".releaseignore" then
         local parent = tmp_ignore:match("(.*)" .. package.config:sub(1, 1))
-        if parent and not util.pathExists(parent) then util.makePath(parent) end
+        if parent and not util.pathExists(parent) then
+          util.makePath(parent)
+        end
         arc:extractToPath(entry.path, tmp_ignore)
+        found_ignore = true
         break
       end
     end
     local pats = nil
-    if util.pathExists(tmp_ignore) then pats = load_ignore(tmp_ignore) end
+    if util.pathExists(tmp_ignore) then
+      pats = load_ignore(tmp_ignore)
+    end
     cached_pats = pats
     arc:close()
-    if not arc:open(DL_TAR) then
+    arc = Archiver.Reader:new()
+
+    local ok_open2 = arc:open(DL_TAR)
+    if not ok_open2 then
       FFIUtil.purgeDir(UPDATE_TMPDIR)
       return false, "Failed to open archive"
     end
     for entry in arc:iterate() do
       local norm = normalize(entry.path)
-      if norm ~= ".releaseignore" and norm ~= ".releaseignore.tmp" and not is_excluded_with(entry.path, pats) then
+      local excluded = is_excluded_with(entry.path, pats)
+      if norm == ".releaseignore" or norm == ".releaseignore.tmp" or excluded then
+        -- skip
+      else
         local dest_path = join(UPDATE_TMPDIR, entry.path)
         local parent_dir = dest_path:match("(.*)" .. package.config:sub(1,1))
         if parent_dir and not util.pathExists(parent_dir) then
@@ -318,7 +360,9 @@ local function otaUpgrade(assistant, version)
       end
     end
     arc:close()
-    if util.pathExists(tmp_ignore) then os.remove(tmp_ignore) end
+    if util.pathExists(tmp_ignore) then
+      os.remove(tmp_ignore)
+    end
 
     -- Locate the extracted top-level plugin directory (e.g. assistant.koplugin-<ver>)
     -- Fail early before touching the existing installation so we don't have to roll back.
@@ -326,7 +370,8 @@ local function otaUpgrade(assistant, version)
     for file in lfs.dir(UPDATE_TMPDIR) do
       if file:sub(1, #PLUGIN_NAME) == PLUGIN_NAME then
         local candidate = join(UPDATE_TMPDIR, file)
-        if util.directoryExists(candidate) then
+        local is_dir = util.directoryExists(candidate)
+        if is_dir then
           found_extracted_dir = candidate
           break
         end
@@ -342,11 +387,18 @@ local function otaUpgrade(assistant, version)
       if util.pathExists(BACKUP_PLUGIN_PATH) then
         FFIUtil.purgeDir(BACKUP_PLUGIN_PATH)
       end
-      os.rename(TARGET_PLUGIN_PATH, BACKUP_PLUGIN_PATH)
+      local ok_ren, err_ren = os.rename(TARGET_PLUGIN_PATH, BACKUP_PLUGIN_PATH)
+      if not ok_ren then
+        FFIUtil.purgeDir(UPDATE_TMPDIR)
+        return false, "Failed to backup existing plugin: " .. tostring(err_ren)
+      end
     end
 
     -- Install the freshly extracted plugin into its target location
-    os.rename(found_extracted_dir, TARGET_PLUGIN_PATH)
+    local ok_ren2, err_ren2 = os.rename(found_extracted_dir, TARGET_PLUGIN_PATH)
+    if not ok_ren2 then
+      return false, "Failed to install plugin: " .. tostring(err_ren2)
+    end
 
     -- Restore user-owned files from the backup
     if util.pathExists(BACKUP_PLUGIN_PATH) then
@@ -355,7 +407,13 @@ local function otaUpgrade(assistant, version)
         local old_file = join(BACKUP_PLUGIN_PATH, filename)
         local new_file = join(TARGET_PLUGIN_PATH, filename)
         if util.pathExists(old_file) then
-          if util.pathExists(new_file) then FFIUtil.purgeDir(new_file) end
+          if util.pathExists(new_file) then
+            FFIUtil.purgeDir(new_file)
+            -- FFIUtil.purgeDir handles both files and dirs; also try os.remove for file case
+            if util.pathExists(new_file) then
+              os.remove(new_file)
+            end
+          end
           os.rename(old_file, new_file)
         end
       end
@@ -366,11 +424,21 @@ local function otaUpgrade(assistant, version)
     return true, nil
   end
 
-  local ok, err_msg = do_install()
+  local pcall_ok, ok, err_msg = pcall(do_install)
+  if not pcall_ok then
+    logger.warn("[OTA] Phase 2: do_install crashed: " .. tostring(ok))
+    -- ok here is the error message from pcall
+    UIManager:close(extract_msg)
+    UIManager:show(InfoMessage:new{ text = T(_("OTA update failed: %1"), tostring(ok)) })
+    -- Ensure temp is cleaned on crash
+    pcall(function() FFIUtil.purgeDir(UPDATE_TMPDIR) end)
+    return
+  end
   UIManager:close(extract_msg)
 
   if not ok then
-    Notification:notify(T(_("OTA update failed: %1"), tostring(err_msg)), Notification.SOURCE_ALWAYS_SHOW)
+    logger.warn("[OTA] Phase 2: do_install failed: " .. tostring(err_msg))
+    UIManager:show(InfoMessage:new{ text = T(_("OTA update failed: %1"), tostring(err_msg)) })
     return
   end
 
