@@ -54,11 +54,10 @@ local function glob_match(pat, path) -- * matches /
     esc = esc:gsub("%*", ".*"):gsub("%?", ".")
     return path:match("^" .. esc .. "$") or path:match("/" .. esc .. "$") or path:match("^" .. esc .. "/") or path:match("/" .. esc .. "/")
 end
-local function load_ignore(tmp_path)
-    local f = io.open(tmp_path, "r")
-    if not f then return nil end
+local function parse_ignore_content(content)
+    if not content or content == "" then return nil end
     local pats = {}
-    for line in f:lines() do
+    for line in content:gmatch("[^\r\n]+") do
         local t = line:match("^%s*(.-)%s*$")
         if t ~= "" and t:sub(1, 1) ~= "#" then
             local neg = t:sub(1, 1) == "!"
@@ -68,7 +67,6 @@ local function load_ignore(tmp_path)
             if core ~= "" then pats[#pats + 1] = { core = core, neg = neg, is_dir = is_dir } end
         end
     end
-    f:close()
     return pats
 end
 local function is_excluded_with(p, pats)
@@ -360,26 +358,21 @@ local function otaUpgrade(assistant, version)
       FFIUtil.purgeDir(UPDATE_TMPDIR)
       return false, "Failed to open archive"
     end
-    -- 2a: read .releaseignore from archive if present
-    local tmp_ignore = join(UPDATE_TMPDIR, ".releaseignore.tmp")
-    local found_ignore = false
+    -- 2a: read .releaseignore from archive if present (in-memory, no temp file)
+    -- Archiver.Reader supports extractToMemory(entry.path) -> string; no file object API.
+    local pats = nil
     for entry in arc:iterate() do
       if normalize(entry.path) == ".releaseignore" then
-        local parent = tmp_ignore:match("(.*)" .. package.config:sub(1, 1))
-        if parent and not util.pathExists(parent) then
-          util.makePath(parent)
+        local content = arc:extractToMemory(entry.path)
+        if content then
+          pats = parse_ignore_content(content)
         end
-        arc:extractToPath(entry.path, tmp_ignore)
-        found_ignore = true
         break
       end
     end
-    local pats = nil
-    if util.pathExists(tmp_ignore) then
-      pats = load_ignore(tmp_ignore)
-    end
     cached_pats = pats
     arc:close()
+    -- Archiver.Reader is single-use: do not reuse after close, create a fresh instance.
     arc = Archiver.Reader:new()
 
     local ok_open2 = arc:open(DL_TAR)
@@ -388,10 +381,8 @@ local function otaUpgrade(assistant, version)
       return false, "Failed to open archive"
     end
     for entry in arc:iterate() do
-      local norm = normalize(entry.path)
-      local excluded = is_excluded_with(entry.path, pats)
-      if norm == ".releaseignore" or norm == ".releaseignore.tmp" or excluded then
-        -- skip
+      if is_excluded_with(entry.path, pats) then
+        -- skip (dotfiles like .releaseignore already excluded via ".*" / legacy fallback)
       else
         local dest_path = join(UPDATE_TMPDIR, entry.path)
         local parent_dir = dest_path:match("(.*)" .. package.config:sub(1,1))
@@ -406,9 +397,6 @@ local function otaUpgrade(assistant, version)
       end
     end
     arc:close()
-    if util.pathExists(tmp_ignore) then
-      os.remove(tmp_ignore)
-    end
 
     -- Locate the extracted top-level plugin directory (e.g. assistant.koplugin-<ver>)
     -- Fail early before touching the existing installation so we don't have to roll back.
