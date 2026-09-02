@@ -1,0 +1,17 @@
+# .releaseignore - unified release exclusion list for CI and OTA
+# Syntax: light, last-match-wins
+# - blank lines and lines starting with # ignored (after trim)
+# - trailing "/" denotes directory (and everything under it)
+# - "*" matches any chars including "/" (so *.md matches at any depth)
+# - "!" negates - kept for OTA compat (CI now uses explicit, no ! needed)
+.*
+*.md
+test/
+.github/
+.git/
+__pycache__/
+l10n/Makefile
+l10n/README.md
+l10n/*.py
+l10n/**/*.po
+l10n/**/*.pot

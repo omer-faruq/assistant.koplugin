@@ -10,6 +10,7 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel.
 jobs:
@@ -27,34 +28,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      # Step 2: Update version in _meta.lua based on the Git tag.
-      - name: Update version in _meta.lua
-        run: |
-          # Extract version from tag (e.g., v1.2.3 -> 1.2.3)
-          VERSION=${GITHUB_REF_NAME#v}
-          echo "Updating version to ${VERSION} in _meta.lua"
-          # Use sed to replace only the version number, preserving the rest of the line (like the trailing comma).
-          # This ensures the version is stored as a string, enclosed in double quotes.
-          sed -i -E "s/(version\s*=\s*)[^,]+/\1\"${VERSION}\"/" _meta.lua
-          cat _meta.lua
-
-      # Step 3: Create the directory structure and archive the project source into a zip file.
-      # We create a directory with the correct name first, copy the files into it, and then zip that directory.
+      # Step 2: Create the directory structure and archive the project source into a zip file.
+      # Unified exclusion via .releaseignore; CI uses zip -x@exclude.list.
       - name: Archive project source with zip
         run: |
           PACKAGE_NAME="assistant.koplugin"
           ARCHIVE_NAME="${PACKAGE_NAME}-${GITHUB_REF_NAME}.zip"
-          # Create the directory structure for zipping
-          mkdir "$PACKAGE_NAME"
-          # Copy project files into the directory using a tar pipe, excluding unwanted files.
-          # This archives the current directory and immediately extracts it into the target directory.
-          tar c --exclude='./.*' --exclude='./*.md' --exclude='./test' --exclude="./$PACKAGE_NAME" . | tar x -C "$PACKAGE_NAME"
-          # Remove development helper files from the l10n directory. For OTA
-          # distribution, only the compiled .mo files are needed.
-          echo "Cleaning up l10n directory, keeping only .mo files..."
-          find "$PACKAGE_NAME/l10n" -type f ! -name '*.mo' -print -delete
-          # Create the final zip archive from the cleaned directory
-          zip -r "$ARCHIVE_NAME" "$PACKAGE_NAME"
+          echo "Building release archive from .releaseignore..."
+          if [ -f .releaseignore ]; then cat .releaseignore; echo "---"; else echo "WARNING: .releaseignore missing"; fi
+          rm -rf "$PACKAGE_NAME" "$ARCHIVE_NAME"
+          git archive --format=tar --prefix="$PACKAGE_NAME/" "$GITHUB_REF_NAME" | tar xf -
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "Updating version to $VERSION in $PACKAGE_NAME/_meta.lua"
+          sed -i -E "s/(version\s*=\s*)[^,]+/\1\"${VERSION}\"/" "$PACKAGE_NAME/_meta.lua"
+          cat "$PACKAGE_NAME/_meta.lua"
+          if [ -f .releaseignore ]; then
+            python3 -c "pkg='assistant.koplugin'; raw=[l.strip().rstrip('/') for l in open('.releaseignore') if (t:=l.strip()) and not t.startswith('#') and not t.startswith('!') and t.rstrip('/')]; open('/tmp/exclude.list','w').write('\n'.join([f'{pkg}/{p}\n{pkg}/{p}/*\n*/{p}\n*/{p}/*' for p in raw]) + f'\n{pkg}/.*\n*/.*\n.git/*\n')"
+            echo "exclude.list:"; cat /tmp/exclude.list; echo "---"
+            zip -r "$ARCHIVE_NAME" "$PACKAGE_NAME" -x@/tmp/exclude.list
+          else
+            zip -r "$ARCHIVE_NAME" "$PACKAGE_NAME"
+          fi
+          echo "Archive created: $ARCHIVE_NAME"
 
       # Step 4: List files in the created archive for debugging purposes.
       - name: List archive contents

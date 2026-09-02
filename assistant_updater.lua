@@ -25,25 +25,59 @@ end
 
 local meta = nil
 
--- Returns true if the path should be excluded from OTA extraction.
--- Exposed at module level for testing; also used inside otaUpgrade.
-function is_excluded(path)
-    if path:find("/%.") or path:sub(1,1) == "." then
-        return true
-    end
-    if path:find(".+%.md$") then
-        return true
-    end
-    -- l10n: only keep .mo files (exclude .po, .py, .sh, Makefile, .pot, etc.)
-    if path:find("l10n/.+") and not path:find("%.mo$") then
-        return true
-    end
-    -- test/ is source-only, not shipped to end users
-    if path:find("^test/") or path:find("/test/") then
-        return true
-    end
-    return false
+local function normalize(path) -- strip ./, /, assistant.koplugin-*/ prefix
+    if not path or path == "" then return "" end
+    local p = path:gsub("\\", "/")
+    while p:sub(1, 2) == "./" do p = p:sub(3) end
+    while p:sub(1, 1) == "/" do p = p:sub(2) end
+    p = p:gsub("^assistant%.koplugin[^/]*/", "")
+    return p:gsub("/+$", "")
 end
+local function glob_match(pat, path) -- * matches /
+    local esc = pat:gsub("%%", "%%%%"):gsub("%.", "%%."):gsub("%+", "%%+"):gsub("%-", "%%-"):gsub("%^", "%%^"):gsub("%$", "%%$"):gsub("%(", "%%("):gsub("%)", "%%)")
+    esc = esc:gsub("%*", ".*"):gsub("%?", ".")
+    return path:match("^" .. esc .. "$") or path:match("/" .. esc .. "$") or path:match("^" .. esc .. "/") or path:match("/" .. esc .. "/")
+end
+local function load_ignore(tmp_path)
+    local f = io.open(tmp_path, "r")
+    if not f then return nil end
+    local pats = {}
+    for line in f:lines() do
+        local t = line:match("^%s*(.-)%s*$")
+        if t ~= "" and t:sub(1, 1) ~= "#" then
+            local neg = t:sub(1, 1) == "!"
+            local core = neg and t:sub(2):match("^%s*(.-)%s*$") or t
+            local is_dir = core:sub(-1) == "/"
+            if is_dir then core = core:sub(1, -2) end
+            if core ~= "" then pats[#pats + 1] = { core = core, neg = neg, is_dir = is_dir } end
+        end
+    end
+    f:close()
+    return pats
+end
+local function is_excluded_with(p, pats)
+    local n = normalize(p)
+    if n == "" then return false end
+    if not pats or #pats == 0 then -- fallback legacy rules
+        if n:find("/%.") or n:sub(1, 1) == "." then return true end
+        if n:find(".+%.md$") then return true end
+        if n:find("l10n/.+") and not n:find("%.mo$") then return true end
+        if n:find("^test/") or n:find("/test/") then return true end
+        return false
+    end
+    local exc = false
+    for _, pt in ipairs(pats) do
+        local hit = glob_match(pt.core, n)
+        if hit then exc = not pt.neg end
+    end
+    return exc
+end
+local cached_pats = nil -- for non-OTA is_excluded compat (tests)
+local function is_excluded(path)
+    if cached_pats then return is_excluded_with(path, cached_pats) end
+    return is_excluded_with(path, nil)
+end
+_G.is_excluded = is_excluded -- keep global compat for test/test_updater.lua
 
 -- A more robust version comparison function compliant with Semantic Versioning.
 -- Returns true if v1_str is newer than v2_str, false otherwise.
@@ -246,16 +280,32 @@ local function otaUpgrade(assistant, version)
   UIManager:forceRePaint()
 
   local function do_install()
-    -- Open the downloaded archive for reading
     local arc = Archiver.Reader:new()
     if not arc:open(DL_TAR) then
       FFIUtil.purgeDir(UPDATE_TMPDIR)
       return false, "Failed to open archive"
     end
-
-    -- Extract entries from the archive into UPDATE_TMPDIR, skipping excluded paths
+    -- 2a: read .releaseignore from archive if present
+    local tmp_ignore = join(UPDATE_TMPDIR, ".releaseignore.tmp")
     for entry in arc:iterate() do
-      if not is_excluded(entry.path) then
+      if normalize(entry.path) == ".releaseignore" then
+        local parent = tmp_ignore:match("(.*)" .. package.config:sub(1, 1))
+        if parent and not util.pathExists(parent) then util.makePath(parent) end
+        arc:extractToPath(entry.path, tmp_ignore)
+        break
+      end
+    end
+    local pats = nil
+    if util.pathExists(tmp_ignore) then pats = load_ignore(tmp_ignore) end
+    cached_pats = pats
+    arc:close()
+    if not arc:open(DL_TAR) then
+      FFIUtil.purgeDir(UPDATE_TMPDIR)
+      return false, "Failed to open archive"
+    end
+    for entry in arc:iterate() do
+      local norm = normalize(entry.path)
+      if norm ~= ".releaseignore" and norm ~= ".releaseignore.tmp" and not is_excluded_with(entry.path, pats) then
         local dest_path = join(UPDATE_TMPDIR, entry.path)
         local parent_dir = dest_path:match("(.*)" .. package.config:sub(1,1))
         if parent_dir and not util.pathExists(parent_dir) then
@@ -269,6 +319,7 @@ local function otaUpgrade(assistant, version)
       end
     end
     arc:close()
+    if util.pathExists(tmp_ignore) then os.remove(tmp_ignore) end
 
     -- Locate the extracted top-level plugin directory (e.g. assistant.koplugin-<ver>)
     -- Fail early before touching the existing installation so we don't have to roll back.
