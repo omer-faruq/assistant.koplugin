@@ -306,6 +306,12 @@ local function otaUpgrade(assistant, version)
   }
   UIManager:show(extract_msg)
   UIManager:forceRePaint()
+  local function closeInstalling()
+    if extract_msg then
+      pcall(UIManager.close, UIManager, extract_msg)
+      extract_msg = nil
+    end
+  end
 
   local function do_install()
     local arc = Archiver.Reader:new()
@@ -428,20 +434,21 @@ local function otaUpgrade(assistant, version)
   if not pcall_ok then
     logger.warn("[OTA] Phase 2: do_install crashed: " .. tostring(ok))
     -- ok here is the error message from pcall
-    UIManager:close(extract_msg)
+    closeInstalling()
     UIManager:show(InfoMessage:new{ text = T(_("OTA update failed: %1"), tostring(ok)) })
     -- Ensure temp is cleaned on crash
     pcall(function() FFIUtil.purgeDir(UPDATE_TMPDIR) end)
     return
   end
-  UIManager:close(extract_msg)
 
   if not ok then
     logger.warn("[OTA] Phase 2: do_install failed: " .. tostring(err_msg))
+    closeInstalling()
     UIManager:show(InfoMessage:new{ text = T(_("OTA update failed: %1"), tostring(err_msg)) })
     return
   end
 
+  closeInstalling()
   Notification:notify(T(_("OTA UPDATE OK.\n Restart is required.")), Notification.SOURCE_ALWAYS_SHOW)
   UIManager:askForRestart()
 end

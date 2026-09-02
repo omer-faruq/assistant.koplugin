@@ -121,7 +121,7 @@ if LibHoedown then
     package.path = string.format("%s;%s/?.lua", package.path, plugin_lib_dir)
     local ok, hoedownMD = pcall(require, "resty.hoedown")
     if ok then
-        Parser = function (text)
+        local _hoedown_fn = function (text)
             return hoedownMD(text, {
                 rendered    = "html",
                 nesting     = 1,
@@ -131,6 +131,7 @@ if LibHoedown then
                 },
             })
         end
+        Parser = setmetatable({ _is_hoedown = true }, { __call = function(_, text) return _hoedown_fn(text) end })
         logger.info("Using hoedown (C binding) for markdown parsing")
     end
 end
