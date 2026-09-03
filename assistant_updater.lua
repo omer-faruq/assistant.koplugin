@@ -207,7 +207,7 @@ local function checkForUpdates(assistant)
 
   if not parsed_data then
     assistant._update_check_running = nil
-    Notification:notify(T(_("AI Assistant: Failed to check updates: %2"), err or _("Empty Error")), Notification.SOURCE_ALWAYS_SHOW)
+    UIManager:show(InfoMessage:new{ text = T(_("AI Assistant: Failed to check updates: %1"), err or _("Empty Error")) })
     return
   end
 

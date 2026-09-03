@@ -94,6 +94,7 @@ KOReader plugin (`assistant.koplugin`) adding AI assistant features (10+ provide
 - Message metadata: `assistant_utils.set_attr`/`get_attr` for fields that must not serialize into API bodies (`use_websearch`, `is_context`, `search_keywords`).
 - Rich text & formatting: use `assistant_utils.bold_format(...)` with `<b>`/`</b>`; avoid manual concatenation inside translated strings. e.g. `assistant_utils.bold_format(T(_("<b>Note:</b> %1"), txt))`.
 - Menu/UI label casing: Title Case for titles, settings items, checkboxes, dialog labels; keep short words (`to`, `for`, `as`, `and`, `in`) lowercase.
+- **Notifications vs InfoMessage**: Use `Notification:notify` **only for success/confirmation messages** that should appear briefly and dismiss automatically. For **errors, failures, or messages requiring user acknowledgment**, always use `UIManager:show(InfoMessage:new{ text = ... })`. `InfoMessage` blocks until dismissed; `Notification` is non-blocking and suited for transient success toasts.
 
 ## Git Workflow / Versioning / CI/CD
 
