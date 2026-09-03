@@ -161,7 +161,7 @@ end
 
 function AssistantDialog:_createResultText(highlightedText, message_history, previous_text, title)
   -- Helper function to format a single message (user or assistant)
-  local function formatSingleMessage(message, title)
+  local function formatSingleMessage(message, title, msg_idx)
     if not message then return "" end
     if message.role == "user" then
       local user_message = strbuf.new()
@@ -212,7 +212,19 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
       else
         answer_type =  _("Response")
         assistant_content = message.content or _("(No response)")
-        if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+        local show_for_this = ASUtils.get_attr(message, "show_suggestions")
+        if show_for_this == nil and msg_idx then
+          for j = msg_idx - 1, 1, -1 do
+            if message_history[j].role == "user" then
+              local v = ASUtils.get_attr(message_history[j], "show_suggestions")
+              if v ~= nil then show_for_this = v; break end
+            end
+          end
+        end
+        if show_for_this == nil then
+          show_for_this = Prompts.isSuggestionsEnabled(self.assistant.settings, Prompts.assistant_prompts.default)
+        end
+        if show_for_this then
           assistant_content = ASUtils.process_suggestions(assistant_content)
         end
         -- Remove code block markers before displaying
@@ -256,7 +268,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
       local message = message_history[i]
       local is_context = ASUtils.get_attr(message, "is_context")
       if not is_context then
-        table.insert(result_parts, formatSingleMessage(message, title))
+        table.insert(result_parts, formatSingleMessage(message, title, i))
       end
     end
     return table.concat(result_parts)
@@ -266,7 +278,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
   local last_assistant_message = message_history[#message_history]
 
   return previous_text .. "------------\n\n" ..
-      formatSingleMessage(last_user_message, title) .. formatSingleMessage(last_assistant_message, title)
+      formatSingleMessage(last_user_message, title, #message_history - 1) .. formatSingleMessage(last_assistant_message, title, #message_history)
 end
 
 -- Helper function to create and show ChatGPT viewer
@@ -285,10 +297,30 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
         -- Use viewer's own highlighted_text value
         local current_highlight = viewer.highlighted_text or highlightedText
         local viewer_title = ""
+        local pending_show_suggestions = false
 
         if type(user_question) == "string" then
-          -- Use user entered question
+          -- inherit show_suggestions from last user message for free follow-up
+          local inherited_suggestions = nil
+          for i = #message_history, 1, -1 do
+            if message_history[i].role == "user" then
+              local v = ASUtils.get_attr(message_history[i], "show_suggestions")
+              if v ~= nil then inherited_suggestions = v; break end
+            end
+          end
           self:_prepareMessageHistoryForUserQuery(message_history, current_highlight, user_question, use_websearch)
+          if inherited_suggestions ~= nil then
+            pending_show_suggestions = inherited_suggestions
+            -- _prepare already set inherited value, but ensure the last user reflects it
+            for i = #message_history, 1, -1 do
+              if message_history[i].role == "user" then
+                ASUtils.set_attr(message_history[i], "show_suggestions", inherited_suggestions)
+                break
+              end
+            end
+          else
+            pending_show_suggestions = Prompts.isSuggestionsEnabled(self.assistant.settings, Prompts.assistant_prompts.default)
+          end
         elseif type(user_question) == "table" then
           -- Use custom prompt from configuration
           viewer_title = Prompts.getDisplayText(user_question.text or "Custom Prompt",
@@ -306,6 +338,8 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
           -- set these attributes in metatable (won't be encoded to API calls)
           ASUtils.set_attr(_user, "user_input", user_question.user_input)
           ASUtils.set_attr(_user, "use_websearch", user_question.use_websearch)
+          pending_show_suggestions = Prompts.isSuggestionsEnabled(self.assistant.settings, user_question)
+          ASUtils.set_attr(_user, "show_suggestions", pending_show_suggestions)
           table.insert(message_history, _user)
         end
 
@@ -320,10 +354,12 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
               return
             end
             
-            table.insert(message_history, {
+            local assistant_msg = {
               role = "assistant",
               content = answer
-            })
+            }
+            ASUtils.set_attr(assistant_msg, "show_suggestions", pending_show_suggestions)
+            table.insert(message_history, assistant_msg)
             viewer:update(self:_createResultText(current_highlight, message_history, viewer.text, viewer_title))
             
             if viewer.scroll_text_w then
@@ -389,11 +425,26 @@ function AssistantDialog:_prepareMessageHistoryForUserQuery(message_history, hig
   local context = self:_buildBookContextMessage(highlightedText)
   table.insert(message_history, context)
 
+  -- inherit show_suggestions from last user message, fallback to default
+  local inherited = nil
+  for i = #message_history, 1, -1 do
+    if message_history[i].role == "user" then
+      local v = ASUtils.get_attr(message_history[i], "show_suggestions")
+      if v ~= nil then inherited = v; break end
+    end
+  end
+  local show_suggestions
+  if inherited ~= nil then
+    show_suggestions = inherited
+  else
+    show_suggestions = Prompts.isSuggestionsEnabled(self.assistant.settings, Prompts.assistant_prompts.default)
+  end
   local question_message = {
     role = "user",
     content = user_question
   }
   ASUtils.set_attr(question_message, "use_websearch", use_websearch or false)
+  ASUtils.set_attr(question_message, "show_suggestions", show_suggestions)
   table.insert(message_history, question_message)
 end
 
@@ -428,8 +479,7 @@ function AssistantDialog:show(highlightedText)
   local use_multi_general_notebooks =
       not self.assistant.ui.doc_settings and Notebook.isEnabled(self.assistant)
   local system_prompt = self.assistant.config:getFeature("system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
-  if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
-    local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
+  if Prompts.isSuggestionsEnabled(self.assistant.settings, Prompts.assistant_prompts.default) then
     system_prompt = system_prompt .. Prompts.assistant_prompts.suggestions_prompt
   end
 
@@ -526,10 +576,12 @@ function AssistantDialog:show(highlightedText)
             return
           end
 
-          table.insert(message_history, {
+          local assistant_msg = {
             role = "assistant",
             content = answer,
-          })
+          }
+          ASUtils.set_attr(assistant_msg, "show_suggestions", Prompts.isSuggestionsEnabled(self.assistant.settings, Prompts.assistant_prompts.default))
+          table.insert(message_history, assistant_msg)
 
           -- do not have a title to display user prompt
           local viewer_title = nil
@@ -794,7 +846,7 @@ function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
   local user_content = self:_formatUserPrompt(koutil.tableGetValue(prompt_config, "user_prompt"), highlightedText, user_input or "")
   local system_prompt = koutil.tableGetValue(prompt_config, "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
 
-  if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+  if Prompts.isSuggestionsEnabled(self.assistant.settings, prompt_config) then
     system_prompt = system_prompt .. Prompts.assistant_prompts.suggestions_prompt
   end
 
@@ -815,6 +867,7 @@ function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
   -- set attributes in metatable (won't be encoded to API calls)
   ASUtils.set_attr(_user, "user_input", user_input)
   ASUtils.set_attr(_user, "use_websearch", koutil.tableGetValue(prompt_config, "use_websearch") or false)
+  ASUtils.set_attr(_user, "show_suggestions", Prompts.isSuggestionsEnabled(self.assistant.settings, prompt_config))
   table.insert(message_history, _user)
   
   local answer, err = self.querier:query(message_history, T(_("Loading for %1 ..."), title or prompt_index))
@@ -823,10 +876,12 @@ function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
     return
   end
   if answer then
-    table.insert(message_history, {
+    local assistant_msg = {
       role = "assistant",
       content = answer
-    })
+    }
+    ASUtils.set_attr(assistant_msg, "show_suggestions", Prompts.isSuggestionsEnabled(self.assistant.settings, prompt_config))
+    table.insert(message_history, assistant_msg)
   end
 
   if not message_history or #message_history < 1 then

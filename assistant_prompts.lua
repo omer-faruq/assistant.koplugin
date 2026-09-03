@@ -14,6 +14,7 @@ local T = require("ffi/util").template
 -- text: text to display on the button in the UI.
 -- order: order of the button in the UI, higher number means later in the list.
 -- show_on_main_popup: if true, the button will be shown in the main popup dialog.
+-- show_suggestions: if true, suggested follow-up questions will be appended (requires global auto_prompt_suggest enabled).
 
 local markdown_format_prompt = [[
 ### Formatting Constraint
@@ -27,6 +28,7 @@ local builtin_prompts = {
         text = _("Term X-Ray"),
         use_websearch = true,
         use_book_context = false,
+        show_suggestions = false,
         order = -20, -- negative number to not show on additional questions dialog
         desc = _("This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."),
         system_prompt = markdown_format_prompt,
@@ -75,6 +77,7 @@ Briefly note what important information appears to be missing or what questions 
         text = _("Dictionary"),
         use_websearch = false,
         use_book_context = false,
+        show_suggestions = false,
         desc = _("This prompt acts as a dictionary for the highlighted text, to a word or phrase."),
         -- this prompt is a stub (will not shown in follow-up questions)
         -- it will be replaced by the actual prompt in the code below
@@ -83,6 +86,7 @@ Briefly note what important information appears to be missing or what questions 
         order = 5, --should be visible on additional questions dialog
         text = _("Quick Note"),
         use_book_context = false,
+        show_suggestions = false,
         desc = _("This button creates a quick note with highlighted text."),
         user_prompt = "", --dummy prompt
         -- this prompt is a stub
@@ -91,6 +95,7 @@ Briefly note what important information appears to be missing or what questions 
         text = _("Vocabulary"),
         use_websearch = false,
         use_book_context = false,
+        show_suggestions = false,
         order = 10,
         desc = _(
             "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."),
@@ -113,6 +118,7 @@ Briefly note what important information appears to be missing or what questions 
         text = _("Grammar"),
         use_websearch = false,
         use_book_context = false,
+        show_suggestions = false,
         order = 20,
         desc = _(
             "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."),
@@ -147,6 +153,7 @@ Briefly note what important information appears to be missing or what questions 
         text = _("Translate"),
         use_websearch = false,
         use_book_context = false,
+        show_suggestions = false,
         desc = _("This prompt translates the highlighted text to another language."),
         user_prompt = [[You are a professional translator. Translate the text below into {language}.
 
@@ -162,6 +169,7 @@ Briefly note what important information appears to be missing or what questions 
         text = _("Summarize"),
         use_websearch = false,
         use_book_context = true,
+        show_suggestions = false,
         order = 40,
         desc = _("This prompt summarizes the highlighted text, capturing its main points and essential details."),
         user_prompt = [[
@@ -181,6 +189,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
         text = _("Simplify"),
         use_websearch = false,
         use_book_context = false,
+        show_suggestions = false,
         order = 50,
         desc = _("This prompt simplifies the highlighted text to make it easier to understand."),
         user_prompt = [[ You are a linguistic expert. Simplify the text below to maximize readability and clarity.
@@ -199,6 +208,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
         text = _("Key Points"),
         use_websearch = false,
         use_book_context = true,
+        show_suggestions = true,
         order = 60,
         desc = _(
             "This prompt extracts and lists the key points from the highlighted text, ensuring clarity and organization."),
@@ -229,6 +239,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
         text = _("ELI5"),
         use_websearch = false,
         use_book_context = true,
+        show_suggestions = true,
         order = 70,
         desc = _(
             "This prompt explains the highlighted text as if to a five-year-old, simplifying complex concepts into easily understandable terms."),
@@ -258,6 +269,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
         text = _("Explain"),
         use_websearch = true,
         use_book_context = true,
+        show_suggestions = true,
         order = 80,
         desc = _("This prompt explains the highlighted text in detail, ensuring clarity and understanding."),
         user_prompt = [[You are an expert Explainer. Provide a clear and comprehensive explanation of the text below.
@@ -276,6 +288,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
         text = _("Historical Context"),
         use_websearch = true,
         use_book_context = true,
+        show_suggestions = true,
         order = 90,
         desc = _(
             "This prompt provides a detailed historical context for the highlighted text, explaining its significance and background."),
@@ -307,6 +320,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
         text = _("Wikipedia"),
         use_websearch = true,
         use_book_context = false,
+        show_suggestions = true,
         order = 100,
         desc = _(
             "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."),
@@ -337,10 +351,12 @@ Topic to cover (from user selection): {highlight}]],
 
 local assistant_prompts = {
     default = {
+        show_suggestions = true,
         system_prompt = markdown_format_prompt,
     },
     recap = {
         use_websearch = true,
+        show_suggestions = true,
         system_prompt = markdown_format_prompt,
         user_prompt = [[
 You are a literary assistant helping a reader resume their book. They have read **{progress}%** of **"{title}"** by **{author}**.
@@ -358,6 +374,7 @@ You are a literary assistant helping a reader resume their book. They have read 
     },
     xray = {
         use_websearch = true,
+        show_suggestions = true,
         system_prompt = markdown_format_prompt,
         user_prompt = T([[
 Your output must be spoiler‑free beyond the reader’s current progress.
@@ -417,6 +434,7 @@ Language: **{language}**.
     },
     book_info = {
         use_websearch = true,
+        show_suggestions = true,
         system_prompt = markdown_format_prompt,
         user_prompt = T([[You are an objective Informative Assistant for a reading app, providing structured information about books.
 
@@ -461,6 +479,7 @@ Render the *entire* response (including headers) completely in {language}.
     },
     annotations = {
         use_websearch = false,
+        show_suggestions = false,
         system_prompt = markdown_format_prompt,
         user_prompt = T([[
 You are given my notes and highlights.
@@ -495,6 +514,7 @@ Render the *entire* response (including headers) completely in {language}.
     },
     summary_using_annotations = {
         use_websearch = true,
+        show_suggestions = false,
         system_prompt = markdown_format_prompt,
         user_prompt = T([[
 You are a meticulous book summarizer and analyst.
@@ -551,6 +571,7 @@ Now begin the analysis with the provided book_text and highlights.]],
 
     dict = {
         use_websearch = true,
+        show_suggestions = false,
         system_prompt = markdown_format_prompt,
         user_prompt = T([[
 ## Task: Book-Aware Dictionary and Word-Form Analysis
@@ -669,6 +690,18 @@ local M = {
 
 M.isWebSearchEnabled = function(settings)
     return settings:readSetting("use_websearch", "none") ~= "none"
+end
+
+M.isSuggestionsEnabled = function(settings, prompt_config)
+    if not settings:readSetting("auto_prompt_suggest", false) then return false end
+    if prompt_config ~= nil and prompt_config.show_suggestions ~= nil then
+        return prompt_config.show_suggestions and true or false
+    end
+    local def = M.assistant_prompts and M.assistant_prompts.default and M.assistant_prompts.default.show_suggestions
+    if def ~= nil then
+        return def and true or false
+    end
+    return true
 end
 
 M.getDisplayText = function(text, use_websearch, web_search_enabled)

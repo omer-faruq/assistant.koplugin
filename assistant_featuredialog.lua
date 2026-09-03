@@ -42,6 +42,8 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
 
     local language = assistant.settings:readSetting("response_language") or assistant.ui_language
 
+    -- prompt config used for per-prompt show_suggestions decision
+    local feature_prompt_config = nil
     if type(feature_type) == "table" then
         -- Custom feature from configuration
         local custom_config = feature_type
@@ -50,6 +52,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         system_prompt = custom_config.system_prompt
         user_prompt_template = custom_config.user_prompt
         user_prompt_use_websearch = koutil.tableGetValue(custom_config, "use_websearch") or false
+        feature_prompt_config = custom_config
 
         -- Handle use flags
         book_text = nil
@@ -140,12 +143,21 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
           book_text = extractBookTextForAnalysis(assistant)
           highlights_notes = extractHighlightsNotesAndNotebook(assistant, false)
         end
+        -- build effective prompt config for show_suggestions (file override > builtin)
+        local builtin_cfg = assistant_prompts[prompts_key] or {}
+        feature_prompt_config = {}
+        for k, v in pairs(builtin_cfg) do
+            feature_prompt_config[k] = v
+        end
+        if file_config.show_suggestions ~= nil then
+            feature_prompt_config.show_suggestions = file_config.show_suggestions
+        end
     end
 
     local ws_enabled = Prompts.isWebSearchEnabled(assistant.settings)
     feature_title = Prompts.getDisplayText(feature_title, user_prompt_use_websearch or false, ws_enabled)
 
-    if assistant.settings:readSetting("auto_prompt_suggest", false) then
+    if Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config) then
       system_prompt = system_prompt .. assistant_prompts.suggestions_prompt
     end
     
@@ -181,12 +193,13 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         content = user_content,
     }
     ASUtils.set_attr(context_message, "use_websearch", user_prompt_use_websearch)
+    ASUtils.set_attr(context_message, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
     table.insert(message_history, context_message)
 
     local function createResultText(answer)
 
       local normalized_answer = answer
-      if assistant.settings:readSetting("auto_prompt_suggest", false) then
+      if Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config) then
         normalized_answer = ASUtils.process_suggestions(normalized_answer)
       end
       normalized_answer = normalizeMarkdownHeadings(normalized_answer, 2, 6) or answer
@@ -207,6 +220,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         role = "user",
         content = string.format("I'm reading something titled '%s' by %s. Only answer the following question, do not add any additional information or context that is not directly related to the question, the question is: %s", title, author, user_question)
       }
+      ASUtils.set_attr(context, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
       table.insert(message_history, context)
     end
 
@@ -216,10 +230,14 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       return
     end
 
-    table.insert(message_history, {
-      role = "assistant",
-      content = answer
-    })
+    do
+      local assistant_msg = {
+        role = "assistant",
+        content = answer
+      }
+      ASUtils.set_attr(assistant_msg, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
+      table.insert(message_history, assistant_msg)
+    end
 
     local chatgpt_viewer
     chatgpt_viewer = ChatGPTViewer:new {
@@ -245,10 +263,14 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
             language = language,
             user_input = user_question.user_input or "",
           })
-          table.insert(message_history, {
-            role = "user",
-            content = string.format("I'm reading something titled '%s' by %s. Only answer the following question, do not add any additional information or context that is not directly related to the question, the question is: %s", title, author, expanded_followup)
-          })
+          do
+            local followup_user = {
+              role = "user",
+              content = string.format("I'm reading something titled '%s' by %s. Only answer the following question, do not add any additional information or context that is not directly related to the question, the question is: %s", title, author, expanded_followup)
+            }
+            ASUtils.set_attr(followup_user, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
+            table.insert(message_history, followup_user)
+          end
         end
 
         viewer:trimMessageHistory()
@@ -261,11 +283,15 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
               return
             end
             
-            table.insert(message_history, {
-              role = "assistant",
-              content = answer
-            })
-            if assistant.settings:readSetting("auto_prompt_suggest", false) then
+            do
+              local assistant_msg = {
+                role = "assistant",
+                content = answer
+              }
+              ASUtils.set_attr(assistant_msg, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
+              table.insert(message_history, assistant_msg)
+            end
+            if Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config) then
               answer = ASUtils.process_suggestions(answer)
             end
             local normalized_answer = normalizeMarkdownHeadings(answer, 3, 6) or answer

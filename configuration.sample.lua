@@ -457,6 +457,9 @@ local CONFIGURATION = {
         -- surrounding book text (default off; requires the prompt's use_book_context).
         -- Built-in defaults: use_book_context = true only for explain, historical_context, summarize, key_points, ELI5;
         -- false for translate, vocabulary, grammar, wikipedia, simplify, term_xray, dictionary, quick_note and others.
+        -- Per-prompt override `show_suggestions = true/false` -- whether to append follow-up questions after this prompt (requires global Show Follow-up Questions enabled).
+        -- Built-in defaults: show_suggestions = true only for key_points, ELI5, explain, historical_context, wikipedia;
+        -- false for vocabulary, grammar, translate, summarize, simplify, dictionary, quick_note, term_xray.
         prompts = {
 
             -- hide some prompts to keep the UI clean
