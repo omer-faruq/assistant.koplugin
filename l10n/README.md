@@ -36,7 +36,7 @@ Create an `.env` file in this directory with the following variables
 Optional tuning variables (defaults shown):
 
     AI_CHUNK_SIZE=20        # msgids per API request (smaller = safer, slower)
-    AI_MAX_TOKENS=4096      # max response tokens per chunk
+    AI_MAX_TOKENS=8192      # max response tokens per chunk
     AI_REQUEST_TIMEOUT=120  # per-request HTTP timeout, in seconds
     AI_MAX_RETRIES=8        # retries on 429 / 5xx / network errors
     AI_MAX_CHUNK_TIME=900   # hard cap on total seconds spent per chunk

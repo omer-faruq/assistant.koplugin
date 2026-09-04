@@ -262,7 +262,7 @@ class Config:
         # Avoid gpt-4o / Claude Sonnet-tier models for batch translation.
 
         self.chunk_size: int = int(os.environ.get("AI_CHUNK_SIZE", "20"))
-        self.max_tokens: int = int(os.environ.get("AI_MAX_TOKENS", "4096"))
+        self.max_tokens: int = int(os.environ.get("AI_MAX_TOKENS", "8192"))
         self.request_timeout: int = int(os.environ.get("AI_REQUEST_TIMEOUT", "120"))
         self.max_retries: int = int(os.environ.get("AI_MAX_RETRIES", "8"))
         self.max_chunk_time: int = int(os.environ.get("AI_MAX_CHUNK_TIME", "900"))
@@ -439,7 +439,11 @@ def _compute_backoff(
     return max(1.0, min(backoff, max(0.0, remaining - 1)))
 
 
-def _post_chat(cfg: Config, messages: list[dict[str, str]]) -> dict[str, Any]:
+def _post_chat(
+    cfg: Config,
+    messages: list[dict[str, str]],
+    max_tokens: int | None = None,
+) -> dict[str, Any]:
     """POST a chat completion request with retry on transient errors.
 
     Retries on: network errors (Read/Connect/Connection/ChunkedEncoding),
@@ -452,7 +456,7 @@ def _post_chat(cfg: Config, messages: list[dict[str, str]]) -> dict[str, Any]:
     payload = {
         "model": cfg.api_model,
         "temperature": 0.2,
-        "max_tokens": cfg.max_tokens,
+        "max_tokens": max_tokens or cfg.max_tokens,
         "messages": messages,
     }
     if cfg.json_mode:
@@ -754,8 +758,10 @@ def _translate_chunk(
     """Translate a chunk of entries, with bisection on length-truncation.
 
     Retries the full API call up to JSON_RETRIES times when JSON extraction
-    or validation fails, with exponential backoff.  Length truncation is
-    handled separately via bisection (no retry).
+    or validation fails, with exponential backoff. Length truncation is
+    handled via bisection; a single entry that still truncates is retried
+    with a boosted max_tokens budget (same content may succeed transiently,
+    or need more output tokens for high-nplurals languages).
     """
     items = [_entry_to_item(i, e) for i, e in enumerate(entries)]
     nplurals_match = re.search(r"nplurals\s*=\s*(\d+)", PLURAL_FORMS.get(lang_code, ""))
@@ -763,29 +769,69 @@ def _translate_chunk(
 
     sample_msgid = entries[0].msgid[:60] if entries else "<empty>"
 
-    def attempt(payload_items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    def attempt(
+        payload_items: list[dict[str, Any]],
+        max_tokens: int | None = None,
+    ) -> list[dict[str, Any]]:
         messages = _build_messages(cfg, lang_code, lang_fullname, payload_items)
-        result = _post_chat(cfg, messages)
+        result = _post_chat(cfg, messages, max_tokens=max_tokens)
         if result["finish_reason"] not in ("stop", "end_turn"):
             raise _LengthTruncation(result["finish_reason"], result["content"])
         payload = _extract_json(result["content"])
         return _validate_translations(payload_items, payload, nplurals)
 
+    def attempt_single_with_boost() -> list[dict[str, Any]]:
+        """Retry one entry with progressively larger output budgets."""
+        try:
+            return attempt(items)
+        except _LengthTruncation as first:
+            pass
+        seen_budgets: set[int] = set()
+        for boost in (2, 4):
+            # Cap at 16384: DeepSeek-class endpoints max out at 8192
+            # output tokens, OpenAI mini-tier at 16384 — higher values
+            # just earn a non-retryable HTTP 400 there.
+            boosted = min(cfg.max_tokens * boost, 16384)
+            if boosted <= cfg.max_tokens or boosted in seen_budgets:
+                continue
+            seen_budgets.add(boosted)
+            log_translate.warning(
+                "[%s] single entry truncated (msgid=%r); "
+                "retrying with max_tokens=%d",
+                lang_code, sample_msgid, boosted,
+            )
+            try:
+                return attempt(items, max_tokens=boosted)
+            except _LengthTruncation:
+                continue
+        raise _LengthTruncation("length", "")
+
     last_error: Exception | None = None
     for retry in range(JSON_RETRIES):
         try:
-            _apply_translations(entries, items, attempt(items))
+            if len(entries) == 1:
+                _apply_translations(entries, items, attempt_single_with_boost())
+            else:
+                _apply_translations(entries, items, attempt(items))
             return
         except _LengthTruncation as lt:
             if len(entries) == 1:
                 raise RuntimeError(
-                    f"single-entry chunk still truncated (finish_reason={lt.reason}); "
+                    f"[{lang_code}] single-entry chunk still truncated "
+                    f"(finish_reason={lt.reason}) after boosted retries; "
                     f"msgid={entries[0].msgid!r}"
                 ) from lt
-            # Bisect and recurse.
+            # Bisect and recurse. Attempt both halves even if the first
+            # fails, so one bad entry doesn't silently drop its sibling.
             mid = len(entries) // 2
-            _translate_chunk(cfg, lang_code, lang_fullname, entries[:mid])
+            first_err: Exception | None = None
+            try:
+                _translate_chunk(cfg, lang_code, lang_fullname, entries[:mid])
+            except (RuntimeError, ValueError) as exc:
+                first_err = exc
             _translate_chunk(cfg, lang_code, lang_fullname, entries[mid:])
+            if first_err is not None:
+                raise first_err
             return
         except (ValueError, RuntimeError) as exc:
             last_error = exc
@@ -798,7 +844,7 @@ def _translate_chunk(
                 time.sleep(sleep_for)
                 continue
             raise RuntimeError(
-                f"chunk failed for {lang_code} (msgid={sample_msgid!r}) "
+                f"[{lang_code}] chunk failed (msgid={sample_msgid!r}) "
                 f"after {JSON_RETRIES} retries: {last_error}"
             ) from last_error
 
@@ -892,14 +938,32 @@ def translate_file(
                     os.unlink(tmp_path)
                 raise
 
+        failed_chunks = 0
         for i, chunk_entries in enumerate(chunks, 1):
             t0 = time.time()
-            _translate_chunk(cfg, lang_code, lang_fullname, chunk_entries)
+            try:
+                _translate_chunk(cfg, lang_code, lang_fullname, chunk_entries)
+            except RuntimeError as exc:
+                # Keep going: save whatever the bisect halves completed so
+                # a single bad entry doesn't block the remaining chunks.
+                # Partial is kept (final is NOT written) so a re-run
+                # resumes at the failed entries.
+                failed_chunks += 1
+                log_translate.error(
+                    "[%s] [chunk %d/%d] FAILED (%d failed so far): %s",
+                    lang_code, i, len(chunks), failed_chunks, exc,
+                )
             save_partial()
             elapsed = time.time() - t0
             log_translate.info(
                 "[%s] [chunk %d/%d] %d entries in %.1fs",
                 lang_code, i, len(chunks), len(chunk_entries), elapsed,
+            )
+
+        if failed_chunks:
+            raise RuntimeError(
+                f"[{lang_code}] {failed_chunks}/{len(chunks)} chunk(s) failed; "
+                f"partial progress saved, re-run to resume"
             )
 
     if needs_header_fix:
@@ -1005,7 +1069,7 @@ def main(argv: list[str] | None = None) -> int:
         if logging.getLogger().isEnabledFor(logging.DEBUG):
             log.exception("translation failed")
         else:
-            log.error("FAILED: %s", exc)
+            log.error("[%s] FAILED: %s", args.lang_code, exc)
         return 1
 
 
