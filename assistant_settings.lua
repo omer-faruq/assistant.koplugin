@@ -794,18 +794,21 @@ File configuration.lua will be preserved.]]),
                 local version_input
                 local default_version = Updater.getDefaultOtaInput(assistant) or "main"
                 local current_version = tostring(meta.version)
+                -- Match the tag display logic: GitHub tags carry a v-prefix, so show
+                -- the current version the same way (see Updater.getDefaultOtaInput).
+                local current_version_display = "v" .. (current_version:match("^v?(.*)$") or current_version)
                 local latest_tag = Updater.getSavedLatestVersion(assistant)
                 local has_update = latest_tag and latest_tag ~= "" and Updater.isVersionNewer(latest_tag, current_version)
                 local desc_text
                 if has_update then
                     desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\n- Current version: %3\n- Latest version: <b>%4</b>\n- Development version: main"),
-                        ota_github_base, ota_github_repo, current_version, latest_tag)
+                        ota_github_base, ota_github_repo, current_version_display, latest_tag)
                 else
                     desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\n- Current version: %3\n- Development version: main"),
-                        ota_github_base, ota_github_repo, current_version)
+                        ota_github_base, ota_github_repo, current_version_display)
                 end
                 version_input = InputDialog:new{
-                    title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, meta.version),
+                    title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, current_version_display),
                     input = default_version,
                     input_hint = _("branch or tag name"),
                     description = ASUtils.bold_format(desc_text),
