@@ -15,6 +15,7 @@ local koutil = require("util")
 local _ = require("assistant_gettext")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
+local ConfirmBox = require("ui/widget/confirmbox")
 local MultiInputDialog = require("ui/widget/multiinputdialog")
 local Trapper = require("ui/trapper")
 local ASUtils = require("assistant_utils")
@@ -438,10 +439,12 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
     local default_name
     local default_api_key = ""
     local default_model = ""
+    local can_delete = false
 
     if is_edit then
         -- Pre-fill from the existing provider record
         local ps = assistant.config:getProvider(edit_id)
+        can_delete = Registry.is_deletable(ps)
         dialog_title = T(_("Edit %1"), koutil.tableGetValue(ps, "display_name") or edit_id)
         default_name = koutil.tableGetValue(ps, "display_name") or ""
         base_url = koutil.tableGetValue(ps, "base_url") or base_url or ""
@@ -550,6 +553,44 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
             end,
         },
     }}
+    if is_edit and can_delete then
+        -- Only UI-configured providers are deletable; the Delete action
+        -- therefore lives inside the edit dialog, next to Save.
+        table.insert(dialog_buttons[1], #dialog_buttons[1], {
+            id = "delete",
+            text = _("Delete"),
+            callback = function()
+                local ps = assistant.config:getProvider(edit_id)
+                if not Registry.is_deletable(ps) then return end
+                local display_name = koutil.tableGetValue(ps, "display_name") or edit_id
+                UIManager:show(ConfirmBox:new{
+                    text = T(_("Delete provider %1?"), display_name),
+                    ok_text = _("Delete"),
+                    ok_callback = function()
+                        local ui_data = assistant._ui_provider_data
+                        Registry.delete(ui_data, edit_id)
+                        Registry.save(assistant.settings, ui_data)
+                        assistant.config:deleteProvider(edit_id)
+
+                        -- Fallback: reselect a valid provider
+                        local new_provider = assistant.config:getActiveProviderId()
+                        if new_provider then
+                            assistant.querier:load_model(new_provider)
+                        end
+
+                        UIManager:close(dialog)
+                        -- Close any stale settings dialog, then open a fresh
+                        -- Provider Settings window reflecting the deletion.
+                        if assistant._settings_dialog then
+                            UIManager:close(assistant._settings_dialog)
+                            assistant._settings_dialog = nil
+                        end
+                        UIManager:scheduleIn(0.15, function() assistant:showSettings() end)
+                    end,
+                })
+            end,
+        })
+    end
     if not is_edit then
         -- Clear the fields pre-filled from the preset (Name, Base URL, Model);
         -- leaves the user-typed API Key untouched.

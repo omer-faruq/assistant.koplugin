@@ -231,17 +231,6 @@ function SettingsDialog:init()
             end,
             callback = function() self:onEditProvider() end,
         },
-        {
-            id = "delete_provider",
-            text = _("Delete"),
-            enabled_func = function()
-                local cur = self.assistant.querier.provider_name
-                if not cur then return false end
-                local ps = self.assistant.config:getProvider(cur)
-                return Registry.is_deletable(ps)
-            end,
-            callback = function() self:onDeleteProvider() end,
-        },
     }}
 
     table.insert(self.buttons[1], 3, {
@@ -395,40 +384,6 @@ function SettingsDialog:onBrowseModel()
             showPickerDialog(self.assistant, models, self.close_callback, "", 1)
         end)
     end)
-end
-
-function SettingsDialog:onDeleteProvider()
-    local provider_name = self.assistant.querier.provider_name
-    local ps = self.assistant.config:getProvider(provider_name)
-    if not Registry.is_deletable(ps) then return end
-
-    local display_name = koutil.tableGetValue(ps, "display_name") or provider_name
-    UIManager:show(ConfirmBox:new{
-        text = T(_("Delete provider %1?"), display_name),
-        ok_text = _("Delete"),
-        ok_callback = function()
-            local ui_data = self.assistant._ui_provider_data
-            Registry.delete(ui_data, provider_name)
-            Registry.save(self.settings, ui_data)
-            self.assistant.config:deleteProvider(provider_name)
-
-            -- Fallback: reselect a valid provider
-            local new_provider = self.assistant.config:getActiveProviderId()
-            if new_provider then
-                self.assistant.querier:load_model(new_provider)
-            end
-
-            -- Close and reopen settings
-            UIManager:close(self)
-            if self.assistant._settings_dialog then
-                UIManager:close(self.assistant._settings_dialog)
-                self.assistant._settings_dialog = nil
-            end
-            UIManager:scheduleIn(0.15, function()
-                self.assistant:showSettings()
-            end)
-        end,
-    })
 end
 
 function SettingsDialog:onEditProvider()
