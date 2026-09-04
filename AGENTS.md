@@ -80,6 +80,7 @@ KOReader plugin (`assistant.koplugin`) adding AI assistant features (10+ provide
 ## Coding Conventions
 
 - Lua 5.1 / LuaJIT 2.1; use `string.buffer` for hot loops. Naming: `snake_case` modules, `PascalCase` classes, `camelCase` methods, `UPPER_CASE` consts. Never use `_` as a discarded loop var (it is the gettext function).
+- **Indentation**: 4 spaces, never tabs (matches KOReader upstream). Vendored code under `lib/` keeps upstream formatting.
 - Error handling: return `nil, err` (or `false, err` for HTTP); callers check the first return value. e.g. `local data, err = fetch(); if not data then return nil, err end`.
 - Localization: wrap every user-facing string in `_("text")` (`local _ = require("assistant_gettext")`); plurals via `N_("1 item", "%1 items", n)`. Keep strings contiguous inside `T(_("..."))` templates; title-case UI labels (short words lowercase).
   - **ASCII-only msgids**: every `_("...")`/`N_()`/`C_()`/`NC_()` string must be US-ASCII only (U+0000–U+007F). Inject Unicode glyphs (emoji, arrows, dashes) **outside** `_()` via `T()` placeholders or concatenation — e.g. `T(_("Provider %1 NOT CONFIGURED"), "▸")` not `_("Provider ▸ NOT CONFIGURED")`; `"🌐 " .. _("Web Search")` not `_("🌐 Web Search")`; `_("Provider Name - shown ...")` not `_("Provider Name — shown ...")` (use `-`/`...`). Prevents `msgattrib`/`msgcat`/`msgmerge` `invalid multibyte`/`Charset missing` warnings, keeps `l10n/Makefile` to a shell `msgattrib` pipeline (no `polib` needed), and follows GNU gettext manual (ASCII msgids).

@@ -801,10 +801,10 @@ File configuration.lua will be preserved.]]),
                 local has_update = latest_tag and latest_tag ~= "" and Updater.isVersionNewer(latest_tag, current_version)
                 local desc_text
                 if has_update then
-                    desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\n- Current version: %3\n- Latest version: <b>%4</b>\n- Development version: main"),
+                    desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\n- Current version: %3\n- Latest version: <b>%4</b>\n- Development branch: main"),
                         ota_github_base, ota_github_repo, current_version_display, latest_tag)
                 else
-                    desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\n- Current version: %3\n- Development version: main"),
+                    desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\n- Current version: %3\n- Development branch: main"),
                         ota_github_base, ota_github_repo, current_version_display)
                 end
                 version_input = InputDialog:new{
@@ -825,7 +825,7 @@ File configuration.lua will be preserved.]]),
                             {
                                 text = _("Update"),
                                 callback = function()
-ASUtils.runWhenOnlineFast(function()
+                                    ASUtils.runWhenOnlineFast(function()
                                         local version = version_input:getInputText()
                                         if version == "" then version = "main" end
                                         UIManager:close(version_input)
