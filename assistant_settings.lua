@@ -231,6 +231,21 @@ function SettingsDialog:init()
             end,
             callback = function() self:onEditProvider() end,
         },
+        {
+            id = "edit_parameters",
+            text = _("Reasoning Option"),
+            enabled_func = function()
+                local cur = self.assistant.querier.provider_name
+                if not cur then return false end
+                local ps = self.assistant.config:getProvider(cur)
+                return Registry.is_editable(ps)
+            end,
+            callback = function()
+                local cur = self.assistant.querier.provider_name
+                if not cur then return end
+                Registry.showParametersDialog(self.assistant, cur)
+            end,
+        },
     }}
 
     table.insert(self.buttons[1], 3, {

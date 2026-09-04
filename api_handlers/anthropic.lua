@@ -15,6 +15,7 @@ local AnthropicHandler = BaseHandler:new({
 })
 AnthropicHandler.SupportedOptions = {
     ["max_tokens"] = true,
+    ["thinking"] = true, -- extended thinking: { type = "enabled", budget_tokens = N } / { type = "disabled" }
 }
 
 --- Return the full API endpoint URL by appending the messages path.

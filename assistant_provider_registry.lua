@@ -16,6 +16,21 @@ local _ = require("assistant_gettext")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local ConfirmBox = require("ui/widget/confirmbox")
+local Blitbuffer = require("ffi/blitbuffer")
+local ButtonTable = require("ui/widget/buttontable")
+local CheckButton = require("ui/widget/checkbutton")
+local CenterContainer = require("ui/widget/container/centercontainer")
+local Font = require("ui/font")
+local Geom = require("ui/geometry")
+local MovableContainer = require("ui/widget/container/movablecontainer")
+local InputContainer = require("ui/widget/container/inputcontainer")
+local Size = require("ui/size")
+local TextBoxWidget = require("ui/widget/textboxwidget")
+local TitleBar = require("ui/widget/titlebar")
+local FrameContainer = require("ui/widget/container/framecontainer")
+local VerticalGroup = require("ui/widget/verticalgroup")
+local Device = require("device")
+local Screen = Device.screen
 local MultiInputDialog = require("ui/widget/multiinputdialog")
 local Trapper = require("ui/trapper")
 local ASUtils = require("assistant_utils")
@@ -328,17 +343,19 @@ function Registry.is_deletable(provider)
 end
 
 --- Update an existing UI provider: update record, save, refresh merged config.
---- The provider ID and handler are preserved; additional_parameters from the
---- existing record are kept (the edit dialog does not expose them).
+--- The provider ID and handler are preserved. When additional_parameters is
+--- non-nil it replaces the stored table (deep copy); otherwise the existing
+--- record's parameters are kept.
 ---@param assistant table The Assistant instance
 ---@param id string The provider's stable ID (e.g. "custom:1")
 ---@param display_name string
 ---@param base_url string
 ---@param api_key string
 ---@param model string
+---@param additional_parameters table|nil Replacement parameters (nil keeps existing)
 ---@return string|nil id
 ---@return string|nil err
-function Registry.updateProvider(assistant, id, display_name, base_url, api_key, model)
+function Registry.updateProvider(assistant, id, display_name, base_url, api_key, model, additional_parameters)
     if not assistant._ui_provider_data then
         return nil, _("Provider data not initialized.")
     end
@@ -348,11 +365,14 @@ function Registry.updateProvider(assistant, id, display_name, base_url, api_key,
         return nil, _("Provider not found.")
     end
 
-    -- Update mutable fields in place; handler and additional_parameters are kept.
+    -- Update mutable fields in place; handler is kept.
     existing.display_name = display_name
     existing.base_url = base_url
     existing.api_key = api_key
     existing.model = model ~= "" and model or "auto"
+    if additional_parameters ~= nil then
+        existing.additional_parameters = koutil.tableDeepCopy(additional_parameters)
+    end
 
     Registry.save(assistant.settings, assistant._ui_provider_data)
 
@@ -415,6 +435,218 @@ function Registry.installProvider(assistant, handler, base_url, display_name, ap
     assistant.config:setProvider(id, newRecord)
 
     return id
+end
+
+----------------------------------------------------------------------
+-- Additional parameters dialog
+----------------------------------------------------------------------
+
+--- Reasoning-control parameters offered as checkboxes in the Parameters dialog,
+--- grouped by API handler. Platforms express "control reasoning" differently
+--- (dialects); since the handler passes additional_parameters through verbatim,
+--- the entries below carry the exact dialect shape for each platform commonly
+--- reached through that handler. All presets DISABLE reasoning except the
+--- Anthropic entry (thinking is opt-in there, so the preset enables it with a
+--- preset budget). Checkbox state mirrors key presence in the provider's
+--- additional_parameters; unknown existing parameters are preserved.
+--- Doc references (2025/2026): OpenAI reasoning_effort; DeepSeek/GLM thinking{type};
+--- Qwen enable_thinking; Ollama think; OpenRouter reasoning{effort}; Anthropic
+--- thinking{type,budget_tokens}; Gemini thinkingBudget/thinkingLevel.
+Registry.PARAM_CATALOG = {
+    openai = {
+        { key = "reasoning_effort", value = "none",
+          desc = _("OpenAI/Groq/xAI/Mistral: reasoning_effort = none (disable reasoning)") },
+        { key = "thinking", value = { type = "disabled" },
+          desc = _("DeepSeek/GLM: thinking = {type = disabled}") },
+        { key = "enable_thinking", value = false,
+          desc = _("Qwen: enable_thinking = false") },
+        { key = "think", value = false,
+          desc = _("Ollama: think = false") },
+        { key = "reasoning", value = { effort = "none" },
+          desc = _("OpenRouter: reasoning = {effort = none}") },
+    },
+    responses = {
+        { key = "reasoning", value = { effort = "none" },
+          desc = _("reasoning = {effort = none} (disable reasoning)") },
+    },
+    anthropic = {
+        { key = "thinking", value = { type = "enabled", budget_tokens = 10240 },
+          desc = _("Enable extended thinking (budget_tokens = 10240, must be < max_tokens)") },
+    },
+    gemini = {
+        -- NOTE: the handler skips thinkingBudget == 0 (some 2.5 models 400 on
+        -- thinkingConfig), so this preset only takes effect on Gemini 3 models
+        -- via their thinkingLevel = "minimal" auto-conversion; 2.5 Flash/Lite
+        -- ignore it (thinking stays on).
+        { key = "thinking_budget", value = 0,
+          desc = _("Minimal thinking (Gemini 3 auto-converts to minimal level; ignored on 2.5)") },
+        { key = "thinkingConfig", value = { thinkingLevel = "minimal" },
+          desc = _("thinkingLevel = minimal (Gemini 3+, cannot fully disable)") },
+    },
+}
+
+--- Show a checkbox dialog to toggle common additional_parameters of a UI provider.
+--- Checked items are written with their preset values, unchecked items are
+--- removed; unknown existing parameters are preserved. Only meaningful for
+--- UI providers (source == "ui").
+---@param assistant table The Assistant instance
+---@param provider_id string The provider's stable ID
+---@return table dialog The shown dialog widget (for tests/inspectors)
+function Registry.showParametersDialog(assistant, provider_id)
+    local ps = assistant.config:getProvider(provider_id)
+    if not Registry.is_editable(ps) then return end
+
+    local handler = koutil.tableGetValue(ps, "handler") or "openai"
+    local catalog = Registry.PARAM_CATALOG[handler] or {}
+    local current = koutil.tableDeepCopy(
+        koutil.tableGetValue(ps, "additional_parameters") or {})
+
+    local display_name = koutil.tableGetValue(ps, "display_name") or provider_id
+    local dialog_title = T(_("Reasoning Options - %1"), display_name)
+
+    if #catalog == 0 then
+        UIManager:show(InfoMessage:new{
+            text = T(_("No common parameters are available for handler %1."), handler),
+        })
+        return
+    end
+
+    local dialog
+    -- Checkbox widgets are kept in this local (not on the shared
+    -- PARAM_CATALOG entries): storing them on the catalog would pin the
+    -- whole widget tree in memory after close and leak state across dialogs.
+    -- NOTE: must be declared before the buttons table below — the Save
+    -- callback closes over it, and a later local would instead resolve
+    -- as a nil global inside the callback.
+    local checkboxes = {}
+    local buttons = {{
+        {
+            text = _("Cancel"),
+            callback = function() UIManager:close(dialog) end,
+        },
+        {
+                id = "save",
+                text = _("Save"),
+                callback = function()
+                    local params = current
+                    for i, item in ipairs(catalog) do
+                        if checkboxes[i].checked then
+                            params[item.key] = item.value
+                        else
+                            params[item.key] = nil
+                        end
+                    end
+                    local ok, err = Registry.updateProvider(assistant, provider_id,
+                        koutil.tableGetValue(ps, "display_name"),
+                        koutil.tableGetValue(ps, "base_url"),
+                        koutil.tableGetValue(ps, "api_key"),
+                        koutil.tableGetValue(ps, "model"),
+                        params)
+                    if not ok then
+                        UIManager:show(InfoMessage:new{
+                            icon = "notice-warning",
+                            text = err or _("Failed to save provider."),
+                        })
+                        return
+                    end
+                    UIManager:close(dialog)
+                end,
+        },
+    }}
+
+    -- Hand-built dialog: plain InputDialog always renders an InputText, which
+    -- makes no sense for a checkbox-only form. Mirror ConfirmBox/SettingsDialog
+    -- composition: TitleBar -> notice -> CheckButtons -> ButtonTable inside a
+    -- MovableContainer+FrameContainer, centered on screen.
+    local screen_w, screen_h = Screen:getWidth(), Screen:getHeight()
+    local width = math.floor(math.min(screen_w, screen_h) * 0.8)
+    local inner_width = width - 2 * (Size.padding.default + Size.margin.small)
+
+    dialog = InputContainer:new{ modal = true }
+    -- Mirror ConfirmBox/InputDialog: without onShow/onCloseWidget dirty
+    -- callbacks the widget is never painted (or cleared) on screen.
+    local movable
+    local frame
+    dialog.onShow = function()
+        UIManager:setDirty(dialog, function()
+            return "ui", movable and movable.dimen or frame.dimen
+        end)
+    end
+    dialog.onCloseWidget = function()
+        UIManager:setDirty(nil, function()
+            return "ui", movable and movable.dimen or frame.dimen
+        end)
+    end
+
+    local vgroup = VerticalGroup:new{
+        align = "left",
+        TitleBar:new{
+            width = width,
+            align = "left",
+            with_bottom_line = true,
+            title = dialog_title,
+            show_parent = dialog,
+        },
+        FrameContainer:new{
+            padding = Size.padding.default,
+            margin = Size.margin.small,
+            bordersize = 0,
+            TextBoxWidget:new{
+                text = _("Generally do NOT select more than one - pick the switch that matches your model and platform. A wrong switch may cause API errors."),
+                face = Font:getFace("xx_smallinfofont"),
+                width = inner_width,
+            },
+        },
+    }
+    for i, item in ipairs(catalog) do
+        checkboxes[i] = CheckButton:new{
+            text = item.desc,
+            checked = current[item.key] ~= nil,
+            face = Font:getFace("xx_smallinfofont"),
+            checkmark_face = Font:getFace("xx_smallinfofont"),
+            width = inner_width,
+            parent = dialog,
+            show_parent = dialog,
+        }
+        table.insert(vgroup, FrameContainer:new{
+            padding = Size.padding.default,
+            margin = Size.margin.small,
+            bordersize = 0,
+            checkboxes[i],
+        })
+    end
+
+    local button_table = ButtonTable:new{
+        width = width - 2 * Size.padding.default,
+        buttons = buttons,
+        zero_sep = true,
+        show_parent = dialog,
+    }
+    table.insert(vgroup, CenterContainer:new{
+        dimen = Geom:new{
+            w = width,
+            h = button_table:getSize().h,
+        },
+        button_table,
+    })
+
+    frame = FrameContainer:new{
+        radius = Size.radius.window,
+        bordersize = Size.border.window,
+        padding = 0,
+        margin = 0,
+        background = Blitbuffer.COLOR_WHITE,
+        vgroup,
+    }
+    movable = MovableContainer:new{
+        frame,
+    }
+    dialog[1] = CenterContainer:new{
+        dimen = Geom:new{ w = screen_w, h = screen_h },
+        movable,
+    }
+    UIManager:show(dialog)
+    return dialog
 end
 
 ----------------------------------------------------------------------

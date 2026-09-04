@@ -45,6 +45,22 @@ local stubs = {
     -- implementation and crash. Stub them so the real device module is
     -- never required by the test chain.
     ["ui/widget/inputdialog"]   = {},
+    ["ui/widget/checkbutton"]   = {},
+    ["ui/widget/container/framecontainer"] = {},
+    ["ui/widget/container/centercontainer"] = {},
+    ["ui/widget/container/movablecontainer"] = {},
+    ["ui/widget/container/inputcontainer"] = {},
+    ["ui/widget/verticalgroup"] = {},
+    ["ui/widget/titlebar"]      = {},
+    ["ffi/blitbuffer"]          = { COLOR_WHITE = {}, COLOR_BLACK = {} },
+    -- headless screen metrics for hand-built dialogs
+    ["device"]                  = {
+        screen = {
+            getWidth = function() return 600 end,
+            getHeight = function() return 800 end,
+        },
+    },
+    ["ui/widget/buttontable"]   = { new = function(_, o) return o end, getButtonById = function() end },
     ["ui/widget/menu"]          = {},
     ["ui/widget/confirmbox"]    = {},
     ["ui/widget/buttontable"]   = {},

@@ -38,6 +38,7 @@ OpenAIHandler.SupportedOptions = {
     ["thinking"]                = true,   -- DeepSeek: { type = "disabled" } or { type = "enabled" }
     ["thinking_budget"]         = true,   -- SiliconFlow, Alibaba/Qwen, and other reasoning-model APIs; max CoT tokens
     ["enable_thinking"]         = true,   -- SiliconFlow, Alibaba/Qwen, and other APIs; toggles thinking mode
+    ["think"]                   = true,   -- Ollama: boolean or "low"/"medium"/"high"/"max" thinking toggle
 
     -- References:
     -- OpenRouter: https://openrouter.ai/docs/api/api-reference/chat/create-a-chat-completion
