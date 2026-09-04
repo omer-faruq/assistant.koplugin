@@ -452,8 +452,10 @@ Registry.PARAM_CATALOG = {
     openai = {
         { key = "reasoning_effort", value = "none",
           desc = "OpenAI/xAI: reasoning_effort = none" },
+        { key = "reasoning_effort", value = "low",
+          desc = "GLM: reasoning_effort = low" },
         { key = "thinking", value = { type = "disabled" },
-          desc = "DeepSeek/GLM: thinking = {type = disabled}" },
+          desc = "DeepSeek: thinking = {type = disabled}" },
         { key = "enable_thinking", value = false,
           desc = "Qwen: enable_thinking = false" },
         { key = "think", value = false,
