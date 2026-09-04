@@ -441,37 +441,33 @@ end
 -- Additional parameters dialog
 ----------------------------------------------------------------------
 
---- Reasoning-control parameters offered as checkboxes in the Parameters dialog,
---- grouped by API handler. Platforms express "control reasoning" differently
---- (dialects); since the handler passes additional_parameters through verbatim,
---- the entries below carry the exact dialect shape for each platform commonly
---- reached through that handler. All presets DISABLE reasoning except the
---- Anthropic entry (thinking is opt-in there, so the preset enables it with a
---- preset budget). Checkbox state mirrors key presence in the provider's
---- additional_parameters; unknown existing parameters are preserved.
---- Doc references (2025/2026): OpenAI reasoning_effort; DeepSeek/GLM thinking{type};
---- Qwen enable_thinking; Ollama think; OpenRouter reasoning{effort}; Anthropic
---- thinking{type,budget_tokens}; Gemini thinkingBudget/thinkingLevel.
+-- Reasoning-control checkbox presets for the Parameters dialog, per handler:
+-- platforms express reasoning toggles differently ("dialects"), so each entry
+-- carries that platform's exact parameter shape; checked = write preset value,
+-- unchecked = remove (unknown existing parameters are preserved). All presets
+-- disable reasoning except Anthropic, where thinking is opt-in.
+-- NOTE: desc strings are intentionally not _()-wrapped — platform names and
+-- verbatim parameter names, nothing worth translating.
 Registry.PARAM_CATALOG = {
     openai = {
         { key = "reasoning_effort", value = "none",
-          desc = _("OpenAI/Groq/xAI/Mistral: reasoning_effort = none (disable reasoning)") },
+          desc = "OpenAI/Groq/xAI/Mistral: reasoning_effort = none (disable reasoning)" },
         { key = "thinking", value = { type = "disabled" },
-          desc = _("DeepSeek/GLM: thinking = {type = disabled}") },
+          desc = "DeepSeek/GLM: thinking = {type = disabled}" },
         { key = "enable_thinking", value = false,
-          desc = _("Qwen: enable_thinking = false") },
+          desc = "Qwen: enable_thinking = false" },
         { key = "think", value = false,
-          desc = _("Ollama: think = false") },
+          desc = "Ollama: think = false" },
         { key = "reasoning", value = { effort = "none" },
-          desc = _("OpenRouter: reasoning = {effort = none}") },
+          desc = "OpenRouter: reasoning = {effort = none}" },
     },
     responses = {
         { key = "reasoning", value = { effort = "none" },
-          desc = _("reasoning = {effort = none} (disable reasoning)") },
+          desc = "reasoning = {effort = none} (disable reasoning)" },
     },
     anthropic = {
         { key = "thinking", value = { type = "enabled", budget_tokens = 10240 },
-          desc = _("Enable extended thinking (budget_tokens = 10240, must be < max_tokens)") },
+          desc = "Enable extended thinking (budget_tokens = 10240, must be < max_tokens)" },
     },
     gemini = {
         -- NOTE: the handler skips thinkingBudget == 0 (some 2.5 models 400 on
@@ -479,9 +475,9 @@ Registry.PARAM_CATALOG = {
         -- via their thinkingLevel = "minimal" auto-conversion; 2.5 Flash/Lite
         -- ignore it (thinking stays on).
         { key = "thinking_budget", value = 0,
-          desc = _("Minimal thinking (Gemini 3 auto-converts to minimal level; ignored on 2.5)") },
+          desc = "Minimal thinking (Gemini 3 auto-converts to minimal level; ignored on 2.5)" },
         { key = "thinkingConfig", value = { thinkingLevel = "minimal" },
-          desc = _("thinkingLevel = minimal (Gemini 3+, cannot fully disable)") },
+          desc = "thinkingLevel = minimal (Gemini 3+, cannot fully disable)" },
     },
 }
 
