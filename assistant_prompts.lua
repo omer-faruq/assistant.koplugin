@@ -626,7 +626,7 @@ Give reliable etymological information or explain the word's significance. Disti
     suggestions_prompt = [[
 
 ### Suggested Questions
-At the very end of your response, provide 2-3 follow-up questions based on your answer that the user might want to ask next.
+Write your full answer FIRST. At the very end of your response, provide 2-3 follow-up questions based on your answer that the user might want to ask next. This MUST be the LAST section of your response. NEVER put suggestions at the beginning. Nothing must appear after the closing `</suggestions>` tag.
 Wrap this entire section inside a `<suggestions>` tag, with each question on a new line starting with a dash (-).
 
 <suggestions>
