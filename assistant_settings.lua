@@ -238,7 +238,7 @@ function SettingsDialog:init()
                 local cur = self.assistant.querier.provider_name
                 if not cur then return false end
                 local ps = self.assistant.config:getProvider(cur)
-                return Registry.is_editable(ps)
+                return Registry.hasReasoningOptions(cur, ps)
             end,
             callback = function()
                 local cur = self.assistant.querier.provider_name
@@ -314,6 +314,7 @@ function SettingsDialog:init()
             self.assistant.updated = true
             self.assistant.querier:load_model(btn.provider)
             self:updateSelectModelButton()
+            self:updateReasoningButton()
         end
     }
     self.layout = {self.layout[#self.layout]} -- keep bottom buttons
@@ -364,6 +365,24 @@ function SettingsDialog:updateSelectModelButton()
     local btn = self.button_table:getButtonById("select_model")
     if btn then
         if self.assistant.querier.handler.can_fetch_models then
+            btn:enable()
+        else
+            btn:disable()
+        end
+        UIManager:setDirty(self, "ui")
+    end
+end
+
+function SettingsDialog:updateReasoningButton()
+    local btn = self.button_table:getButtonById("edit_parameters")
+    if btn then
+        local cur = self.assistant.querier.provider_name
+        local enabled = false
+        if cur then
+            local ps = self.assistant.config:getProvider(cur)
+            enabled = Registry.hasReasoningOptions(cur, ps)
+        end
+        if enabled then
             btn:enable()
         else
             btn:disable()

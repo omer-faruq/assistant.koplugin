@@ -441,17 +441,17 @@ end
 -- Additional parameters dialog
 ----------------------------------------------------------------------
 
--- Reasoning-control checkbox presets for the Parameters dialog, per handler:
--- platforms express reasoning toggles differently ("dialects"), so each entry
--- carries that platform's exact parameter shape; checked = write preset value,
--- unchecked = remove (unknown existing parameters are preserved). All presets
--- disable reasoning except Anthropic, where thinking is opt-in.
+-- Per-handler reasoning presets ("dialects"): each entry carries that
+-- platform's exact parameter shape. Selections live in a runtime overlay
+-- (settings key "reasoning_option_<id>"), merged over the base config in
+-- BaseHandler:SyncOptions. All presets disable reasoning except Anthropic,
+-- where thinking is opt-in.
 -- NOTE: desc strings are intentionally not _()-wrapped — platform names and
 -- verbatim parameter names, nothing worth translating.
 Registry.PARAM_CATALOG = {
     openai = {
         { key = "reasoning_effort", value = "none",
-          desc = "OpenAI/Groq/xAI/Mistral: reasoning_effort = none (disable reasoning)" },
+          desc = "OpenAI/xAI: reasoning_effort = none" },
         { key = "thinking", value = { type = "disabled" },
           desc = "DeepSeek/GLM: thinking = {type = disabled}" },
         { key = "enable_thinking", value = false,
@@ -463,39 +463,132 @@ Registry.PARAM_CATALOG = {
     },
     responses = {
         { key = "reasoning", value = { effort = "none" },
-          desc = "reasoning = {effort = none} (disable reasoning)" },
+          desc = "Responses: reasoning = {effort = none}" },
     },
     anthropic = {
         { key = "thinking", value = { type = "enabled", budget_tokens = 10240 },
-          desc = "Enable extended thinking (budget_tokens = 10240, must be < max_tokens)" },
+          desc = "Anthropic: thinking = {type = enabled, budget_tokens = 10240} (must be < max_tokens)" },
+        { key = "thinking", value = { type = "disabled" },
+          desc = "Anthropic: thinking = {type = disabled}" },
     },
     gemini = {
-        -- NOTE: the handler skips thinkingBudget == 0 (some 2.5 models 400 on
-        -- thinkingConfig), so this preset only takes effect on Gemini 3 models
-        -- via their thinkingLevel = "minimal" auto-conversion; 2.5 Flash/Lite
-        -- ignore it (thinking stays on).
+        -- Independent options per series — pick one, not both: thinking_budget
+        -- for 2.5 (0 disables thinking), thinkingConfig for Gemini 3 / Gemma-4
+        -- (minimal minimizes thinking; 3+ cannot fully disable it).
         { key = "thinking_budget", value = 0,
-          desc = "Minimal thinking (Gemini 3 auto-converts to minimal level; ignored on 2.5)" },
+          desc = "Gemini(2.5): thinkingBudget = 0" },
         { key = "thinkingConfig", value = { thinkingLevel = "minimal" },
-          desc = "thinkingLevel = minimal (Gemini 3+, cannot fully disable)" },
+          desc = "Gemini(3/Gemma-4): thinkingLevel = minimal" },
     },
 }
 
---- Show a checkbox dialog to toggle common additional_parameters of a UI provider.
---- Checked items are written with their preset values, unchecked items are
---- removed; unknown existing parameters are preserved. Only meaningful for
---- UI providers (source == "ui").
+--- Settings key for the per-provider reasoning overlay (runtime only,
+--- never written back to configuration.lua / ui_providers).
+---@param provider_id string
+---@return string
+function Registry.getReasoningKey(provider_id)
+    return "reasoning_option_" .. tostring(provider_id)
+end
+
+--- Read the reasoning overlay table for a provider (selected catalog
+--- key->preset pairs only). Returns {} when unset or malformed.
+---@param settings table LuaSettings instance
+---@param provider_id string
+---@return table
+function Registry.getReasoningOverlay(settings, provider_id)
+    if not settings or not provider_id then return {} end
+    local overlay
+    if settings.readSetting then
+        local ok, val = pcall(function()
+            return settings:readSetting(Registry.getReasoningKey(provider_id))
+        end)
+        if ok then overlay = val end
+    end
+    if type(overlay) ~= "table" then return {} end
+    return overlay
+end
+
+--- Resolve the PARAM_CATALOG key for a provider, handling alias handlers.
+--- Alias handlers (deepseek, ollama, groq, mistral, openrouter, gigachat)
+--- are thin wrappers around openai; gemma dispatches between openai/gemini
+--- based on base_url. Returns the resolved key (e.g. "openai") that can be
+--- looked up in PARAM_CATALOG, or nil if unresolvable.
+---@param provider_id string The provider key (file key or "custom:N")
+---@param ps table|nil The provider settings record
+---@return string|nil resolved_key
+function Registry.resolveCatalogKey(provider_id, ps)
+    -- 1. Derive raw handler name
+    local raw
+    if ps then
+        raw = koutil.tableGetValue(ps, "handler")
+    end
+    if not raw and type(provider_id) == "string" then
+        raw = provider_id:match("^([^_]+)")
+    end
+    raw = raw or "openai"
+
+    -- 2. Alias mapping: thin openai wrappers → openai
+    local ALIAS_TO_OPENAI = {
+        deepseek = true,
+        ollama = true,
+        groq = true,
+        mistral = true,
+        openrouter = true,
+        gigachat = true,
+    }
+    if ALIAS_TO_OPENAI[raw] then
+        return "openai"
+    end
+
+    -- 3. Gemma: dispatch between openai/gemini by base_url (mirrors
+    --    api_handlers/gemma.lua FormatByURL).
+    if raw == "gemma" then
+        local base_url = ps and koutil.tableGetValue(ps, "base_url") or ""
+        if base_url:match("generativelanguage%.googleapis%.com")
+            and not base_url:match("/openai") then
+            return "gemini"
+        end
+        return "openai"
+    end
+
+    -- 4. Canonical handler name (openai, responses, anthropic, gemini)
+    if Registry.HANDLERS[raw] then
+        return raw
+    end
+
+    -- Unknown handler — no catalog available.
+    return nil
+end
+
+--- Check whether a provider has reasoning options available.
+---@param provider_id string The provider key (file key or "custom:N")
+---@param ps table|nil The provider settings record
+---@return boolean
+function Registry.hasReasoningOptions(provider_id, ps)
+    local catalog_key = Registry.resolveCatalogKey(provider_id, ps)
+    if not catalog_key then return false end
+    local catalog = Registry.PARAM_CATALOG[catalog_key]
+    return catalog ~= nil and #catalog > 0
+end
+
+--- Show a checkbox dialog to toggle reasoning options of any provider
+--- (file or UI). Selections are stored as a runtime overlay in settings
+--- under "reasoning_option_<provider_id>" and shallow-merged over
+--- same-name additional_parameters keys in BaseHandler:SyncOptions;
+--- configuration values stay untouched. Checked state reflects the overlay
+--- (not the effective/base parameters) so save/load round-trips stably.
 ---@param assistant table The Assistant instance
----@param provider_id string The provider's stable ID
+---@param provider_id string The provider ID (file key or UI "custom:N")
 ---@return table dialog The shown dialog widget (for tests/inspectors)
 function Registry.showParametersDialog(assistant, provider_id)
     local ps = assistant.config:getProvider(provider_id)
-    if not Registry.is_editable(ps) then return end
+    if not ps then return end
 
-    local handler = koutil.tableGetValue(ps, "handler") or "openai"
-    local catalog = Registry.PARAM_CATALOG[handler] or {}
-    local current = koutil.tableDeepCopy(
-        koutil.tableGetValue(ps, "additional_parameters") or {})
+    -- Resolve the catalog key, handling alias handlers (deepseek, ollama, etc.)
+    local catalog_key = Registry.resolveCatalogKey(provider_id, ps)
+    local catalog = (catalog_key and Registry.PARAM_CATALOG[catalog_key]) or {}
+    local handler = catalog_key or "openai"
+    local current = Registry.getReasoningOverlay(assistant.settings, provider_id)
 
     local display_name = koutil.tableGetValue(ps, "display_name") or provider_id
     local dialog_title = T(_("Reasoning Options - %1"), display_name)
@@ -524,27 +617,31 @@ function Registry.showParametersDialog(assistant, provider_id)
                 id = "save",
                 text = _("Save"),
                 callback = function()
-                    local params = current
+                    -- Runtime overlay only: never touches ui_providers or
+                    -- configuration.lua. Only selected catalog entries are
+                    -- stored; unselected entries simply leave the base values.
+                    local overlay = {}
                     for i, item in ipairs(catalog) do
                         if checkboxes[i].checked then
-                            params[item.key] = item.value
-                        else
-                            params[item.key] = nil
+                            overlay[item.key] = koutil.tableDeepCopy(item.value)
                         end
                     end
-                    local ok, err = Registry.updateProvider(assistant, provider_id,
-                        koutil.tableGetValue(ps, "display_name"),
-                        koutil.tableGetValue(ps, "base_url"),
-                        koutil.tableGetValue(ps, "api_key"),
-                        koutil.tableGetValue(ps, "model"),
-                        params)
-                    if not ok then
-                        UIManager:show(InfoMessage:new{
-                            icon = "notice-warning",
-                            text = err or _("Failed to save provider."),
-                        })
-                        return
+                    local key = Registry.getReasoningKey(provider_id)
+                    if next(overlay) == nil then
+                        assistant.settings:delSetting(key)
+                    else
+                        assistant.settings:saveSetting(key, overlay)
                     end
+                    -- Refresh the live handler when editing the active
+                    -- provider. Querier:load_model early-returns for the
+                    -- same provider, so SyncOptions must be called directly.
+                    if assistant.querier
+                        and assistant.querier.provider_name == provider_id
+                        and assistant.querier.handler
+                        and assistant.querier.handler.SyncOptions then
+                        assistant.querier.handler:SyncOptions(assistant.querier)
+                    end
+                    assistant.updated = true
                     UIManager:close(dialog)
                 end,
         },
@@ -593,11 +690,30 @@ function Registry.showParametersDialog(assistant, provider_id)
                 width = inner_width,
             },
         },
+        FrameContainer:new{
+            padding = Size.padding.default,
+            margin = Size.margin.small,
+            bordersize = 0,
+            TextBoxWidget:new{
+                text = _("Unselected keeps configuration.lua values; selected overrides same-name keys."),
+                face = Font:getFace("xx_smallinfofont"),
+                width = inner_width,
+            },
+        },
     }
+    -- Same-key entries (e.g. Anthropic enable/disable) share one overlay
+    -- slot, so checked state must compare values, not just key presence.
+    local function isSelected(item)
+        local v = current[item.key]
+        if v == nil then return false end
+        if type(v) ~= type(item.value) then return false end
+        if type(v) ~= "table" then return v == item.value end
+        return koutil.tableEquals(v, item.value)
+    end
     for i, item in ipairs(catalog) do
         checkboxes[i] = CheckButton:new{
             text = item.desc,
-            checked = current[item.key] ~= nil,
+            checked = isSelected(item),
             face = Font:getFace("xx_smallinfofont"),
             checkmark_face = Font:getFace("xx_smallinfofont"),
             width = inner_width,
@@ -799,6 +915,9 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                         Registry.delete(ui_data, edit_id)
                         Registry.save(assistant.settings, ui_data)
                         assistant.config:deleteProvider(edit_id)
+
+                        -- Clean up reasoning overlay for the deleted provider.
+                        assistant.settings:delSetting(Registry.getReasoningKey(edit_id))
 
                         -- Fallback: reselect a valid provider
                         local new_provider = assistant.config:getActiveProviderId()

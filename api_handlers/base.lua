@@ -261,6 +261,37 @@ function BaseHandler:SyncOptions(querier)
     else
         self.additional_parameters = koutil.tableDeepCopy(shared)
     end
+
+    -- Runtime reasoning overlay (Reasoning Option dialog): shallow-merge the
+    -- selected catalog entries over same-name top-level keys. Stored in
+    -- settings under "reasoning_option_<provider_id>", never written back
+    -- to configuration. Must rebuild from querier.provider_setting above on
+    -- every sync (never read back from self): handlers are long-lived
+    -- singletons shared by providers, so stale overlay keys must not linger.
+    -- Only keys present in the current handler's PARAM_CATALOG are applied;
+    -- unknown/stale keys are silently skipped to avoid polluting the request.
+    local provider_id = querier.provider_name or self.provider_name or ""
+    local Registry = require("assistant_provider_registry")
+    local overlay_key = Registry.getReasoningKey(provider_id)
+    local overlay
+    if querier.settings and querier.settings.readSetting then
+        local ok, val = pcall(function() return querier.settings:readSetting(overlay_key) end)
+        if ok then overlay = val end
+    end
+    if type(overlay) == "table" then
+        local ps = querier.provider_setting
+        local catalog_key = Registry.resolveCatalogKey(provider_id, ps)
+        local whitelist = (catalog_key and Registry.PARAM_CATALOG[catalog_key]) or {}
+        local allowed = {}
+        for _, entry in ipairs(whitelist) do
+            allowed[entry.key] = true
+        end
+        for k, v in pairs(overlay) do
+            if allowed[k] then
+                self.additional_parameters[k] = koutil.tableDeepCopy(v)
+            end
+        end
+    end
 end
 
 function BaseHandler:FetchModels()
