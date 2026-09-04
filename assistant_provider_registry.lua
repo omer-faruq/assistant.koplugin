@@ -687,17 +687,7 @@ function Registry.showParametersDialog(assistant, provider_id)
             margin = Size.margin.small,
             bordersize = 0,
             TextBoxWidget:new{
-                text = _("Generally do NOT select more than one - pick the switch that matches your model and platform. A wrong switch may cause API errors."),
-                face = Font:getFace("xx_smallinfofont"),
-                width = inner_width,
-            },
-        },
-        FrameContainer:new{
-            padding = Size.padding.default,
-            margin = Size.margin.small,
-            bordersize = 0,
-            TextBoxWidget:new{
-                text = _("Unselected keeps configuration.lua values; selected overrides same-name keys."),
+                text = ASUtils.bold_format(_("Generally do <b>NOT</b> select more than one - pick a parameter that matches your model and platform. A wrong parameter may cause API errors. \n\nSelected value overrides additional_parameters of configuration.")),
                 face = Font:getFace("xx_smallinfofont"),
                 width = inner_width,
             },
