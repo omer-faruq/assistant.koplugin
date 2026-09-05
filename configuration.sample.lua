@@ -1,8 +1,7 @@
 local CONFIGURATION = {
-    -- Choose your preferred AI provider: "anthropic", "openai", "gemini", ...
-    -- use one of the settings defined in provider_settings below.
-    -- NOTE: "openai" , "openai_grok" are different service using same handling code.
-    provider = "openai",
+    -- No `provider` key needed. The active provider is the one marked with
+    -- `default = true` below (switch providers anytime from the plugin's
+    -- Settings UI or provider switch menu).
 
     -- Provider-specific settings
     --
@@ -10,17 +9,19 @@ local CONFIGURATION = {
     -- - The part BEFORE the first underscore determines which API handler is used
     -- - The part AFTER the underscore is just a descriptive name (can be anything)
     --
-    -- Examples:
-    --   openai_perplexity  → uses 'openai' handler for Perplexity API
-    --   openai_grok        → uses 'openai' handler for Grok API
-    --   anthropic_websearch → uses 'anthropic' handler with custom settings
+    -- Only 4 handlers are supported for new configurations:
+    --   openai, anthropic, gemini, responses
+    -- Any OpenAI-compatible endpoint (DeepSeek, OpenRouter, Grok, Perplexity,
+    -- Ollama, Mistral, ...) uses the `openai` handler with its own base_url,
+    -- e.g. `openai_deepseek`, `openai_openrouter`.
     --
-    -- This allows you to create multiple configurations using the same handler
-    -- with different models, endpoints, or parameters.
+    -- DISPLAY NAME: add a `display_name` field to any provider. It is shown in
+    -- the menu and settings UI instead of the raw key.
     --
-    -- DISPLAY NAME: You can add an optional `display_name` field to any provider.
-    -- This name is shown in the menu and settings UI instead of the raw key.
-    -- Example: add `display_name = "Grok (xAI)"` to openai_grok below.
+    -- LEGACY KEYS: old standalone keys like `deepseek`, `openrouter`, `groq`,
+    -- `mistral`, `ollama`, `gemma`, `gigachat` still work for backward
+    -- compatibility, but do not use them for new configurations — use the
+    -- `openai_*` form with `display_name` instead.
     --
     -- UI-ADDED PROVIDERS: You can also add providers directly from the plugin's
     -- Settings UI (Tools -> AI Assistant -> Settings -> Provider Settings -> Provider API).
@@ -28,166 +29,44 @@ local CONFIGURATION = {
     -- merged with this configuration at startup. They support the same protocols:
     -- openai, anthropic, gemini, responses.
     --
+    -- NOTE: no `additional_parameters` needed for basic usage. The handlers use
+    -- sensible defaults; only add that field if you need to pass extra API
+    -- options (temperature, max_tokens, etc.).
+    --
     provider_settings = {
         openai = {
-            default = true,        -- optional, if provider above is not set, will try to find one with `default =  true`
-            visible = true,        -- optional, if set to false, will not shown in the provider switch
-            model = "gpt-5.4-mini", -- model list: https://platform.openai.com/docs/models
+            default = true,          -- optional, used when `provider` above is not set
+            visible = true,          -- optional, if set to false, will not shown in the provider switch
+            model = "gpt-5.4-mini",  -- model list: https://platform.openai.com/docs/models
             base_url = "https://api.openai.com/v1",
             api_key = "your-openai-api-key",
-            additional_parameters = {
-                temperature = 0.7,
-                max_tokens = 4096
-            }
+            -- Optional: uncomment to pass extra API options.
+            -- additional_parameters = {
+            --     temperature = 0.7,
+            --     top_p = 1.0,
+            --     max_tokens = 4096,
+            -- },
         },
-        openai_grok = {
-            display_name = "Grok (xAI)",   -- shown in menu instead of "openai_grok"
-            --- use grok model via openai handler
-            model = "grok", -- model list: https://docs.x.ai/developers/models
-            base_url = "https://api.x.ai/v1",
-            api_key = "your-grok-api-key",
-            additional_parameters = {
-                temperature = 0.7,
-                max_tokens = 4096
-            }
+        openai_deepseek = {
+            display_name = "DeepSeek", -- shown in menu instead of "openai_deepseek"
+            model = "deepseek-v4-flash",   -- model list: https://api-docs.deepseek.com/quickstart/first_api_call
+            base_url = "https://api.deepseek.com/v1",
+            api_key = "your-deepseek-api-key",
         },
-        -- OpenAI Responses API — newer /v1/responses endpoint with built-in tools
-        -- Prefix "responses" loads the api_handlers/responses.lua handler.
-        -- Built-in web_search: set use_websearch = "builtin" in plugin settings
-        -- (no external search API key needed). The API handles search directly —
-        -- no SerpAPI/Tavily/SearXNG/Exa configuration required.
-        -- Supported additional_parameters: temperature, top_p, max_output_tokens,
-        -- max_tokens, reasoning, reasoning_effort, store.
-        responses_openai = {
-            display_name = "OpenAI Responses",
-            visible = false,       -- optional, set to true to show in provider switch
-            model = "gpt-4o-mini", -- model list: https://platform.openai.com/docs/models
-            base_url = "https://api.openai.com/v1",
-            api_key = "your-openai-api-key",
-            additional_parameters = {
-                -- temperature = 0.7,
-                -- max_output_tokens = 4096,  -- use max_output_tokens instead of max_tokens
-                -- reasoning = { effort = "medium" }, -- for reasoning models (o1, o3, etc.)
-                -- store = true,  -- store the response for use in the OpenAI dashboard
-            }
-        },
-        -- Example: Responses API via OpenRouter (OpenAI-compatible)
-        -- OpenRouter also supports the /v1/responses endpoint.
-        -- See: https://openrouter.ai/docs/api_reference/responses/overview
-        -- responses_openrouter = {
-        --     visible = false,
-        --     model = "openai/gpt-oss-20b",
-        --     base_url = "https://openrouter.ai/api/v1",
-        --     api_key = "your-openrouter-api-key",
-        --     additional_parameters = {
-        --         max_output_tokens = 4096,
-        --     }
-        -- },
-        -- DeepSeek Responses API — newer /v1/responses endpoint with built-in web_search
-        -- Uses the 'responses' handler (same as OpenAI Responses above).
-        -- Supported model: deepseek-v4-flash (deepseek-v4-pro support expected later).
-        -- See: https://api-docs.deepseek.com/guides/responses_api
-        -- responses_deepseek = {
-        --     display_name = "DeepSeek Responses",
-        --     visible = false,
-        --     model = "deepseek-v4-flash",
-        --     base_url = "https://api.deepseek.com",
-        --     api_key = "your-deepseek-api-key",
-        --     additional_parameters = {
-        --         -- max_output_tokens = 4096,
-        --     }
-        -- },
-        anthropic = {
-            visible = true,                    -- optional, if set to false, will not shown in the profile switch
-            model = "claude-3-5-haiku-latest", -- model list: https://docs.anthropic.com/en/docs/about-claude/models
-            base_url = "https://api.anthropic.com/v1",
-            api_key = "your-anthropic-api-key",
-            additional_parameters = {
-                anthropic_version = "2023-06-01", -- api version list: https://docs.anthropic.com/en/api/versioning
-                max_tokens = 4096
-            }
-        },
-        -- Anthropic with built-in web search
-        anthropic_websearch = {
-            display_name = "Claude + Web Search",
-            visible = false,                   -- optional, if set to false, will not shown in the profile switch
-            model = "claude-3-5-haiku-latest", -- model list: https://docs.anthropic.com/en/docs/about-claude/models
-            base_url = "https://api.anthropic.com/v1",
-            api_key = "your-anthropic-api-key",
-            additional_parameters = {
-                anthropic_version = "2023-06-01", -- api version list: https://docs.anthropic.com/en/api/versioning
-                max_tokens = 4096,
-                tools = {
-                    { -- enable web search
-                        type = "web_search_20250305",
-                        name = "web_search",
-                        max_uses = 5,
-                    },
-                }
-            }
-        },
-        gemini = {
-            model = "gemini-flash-latest", -- model list: https://ai.google.dev/gemini-api/docs/models , ex: gemini-2.5-pro , gemini-2.5-flash
-            base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
-            api_key = "your-gemini-api-key",
-            additional_parameters = {
-                -- temperature = 0.7,
-                -- max_tokens = 1048576,
-                -- Note: thinking is enabled by default in newer models (gemini-2.5-*, gemini-3.*).
-                -- thinking_budget = 0 disables thinking on 2.5 Flash; the handler
-                -- auto-converts it to thinkingLevel = "minimal" for Gemini 3 models.
-                thinking_budget = 0,
-                -- For finer control, use thinkingConfig directly:
-                -- thinkingConfig = { thinkingLevel = "minimal" },
-            }
-        },
-        gemini_gemma4 = {
-            display_name = "Gemma (Gemini API)",
-            model = "gemma-4-31b-it", -- model list: https://ai.google.dev/gemini-api/docs/models , ex: gemini-2.5-pro , gemini-2.5-flash
-            base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
-            api_key = "your-gemini-api-key",
-            additional_parameters = {
-                -- Note: gemma does NOT support thinkingBudget / thinking_budget option
-                thinkingConfig = { thinkingLevel = "minimal" }, -- minimum the reasoning level
-            }
-        },
-        gigachat = {
-            model = "GigaChat-2",
-            base_url = "https://gigachat.devices.sberbank.ru/api/v1",
-            auth_url = "https://ngw.devices.sberbank.ru:9443/api/v2/oauth",
-            api_key = "your-authorization-key",
-            additional_parameters = {}
-        },
-        openrouter = {
-            model = "google/gemini-2.0-flash-exp:free", -- model list: https://openrouter.ai/models?order=top-weekly
+        openai_openrouter = {
+            display_name = "OpenRouter", -- shown in menu instead of "openai_openrouter"
+            model = "openrouter/free", -- model list: https://openrouter.ai/models?order=top-weekly
             base_url = "https://openrouter.ai/api/v1",
             api_key = "your-openrouter-api-key",
-            additional_parameters = {
-                temperature = 0.7,
-                max_tokens = 4096,
-                -- Reasoning tokens configuration (optional)
-                -- reference: https://openrouter.ai/docs/use-cases/reasoning-tokens
-                -- reasoning = {
-                --     -- One of the following (not both):
-                --     effort = "high", -- Can be "high", "medium", "low", or "none" (OpenAI-style)
-                --     -- max_tokens = 2000, -- Specific token limit (Anthropic-style)
-                --     -- Or enable reasoning with the default parameters:
-                --     -- enabled = true -- Default: inferred from effort or max_tokens
-                -- }
-            },
             -- Per-model parameter presets (optional).
-            -- When you switch models via Settings → Browse Models, the matching
+            -- When you switch models via Settings -> Browse Models, the matching
             -- entry here fully replaces `additional_parameters` for that model
             -- (no partial merge). Models without an entry keep the shared
             -- `additional_parameters` above.
-            -- Presets are configured in this file only — the Add Provider
-            -- dialog does not expose them.
             -- Because of full replacement, every key a model needs must be
-            -- repeated in its preset — including keys handled by custom
-            -- handler code rather than the standard parameter pass-through.
+            -- repeated in its preset.
             model_parameters = {
-                -- A model id different from the provider's default `model`
-                -- above; switching to it via Browse Models applies this preset:
+                -- Switching to this model via Browse Models applies this preset:
                 -- ["qwen/qwen3-next-80b-a3b:free"] = {
                 --     temperature = 0.7,
                 --     max_tokens = 6000,
@@ -196,155 +75,51 @@ local CONFIGURATION = {
                 -- An empty table ({}) discards all shared parameters for that
                 -- model — use it only if the model needs no extra parameters:
                 -- ["model/that-needs-nothing:free"] = {},
-                -- ["deepseek/deepseek-r1:free"] = {
-                --     temperature = 0.6,
-                --     max_tokens = 8192,
-                -- },
             }
         },
-        openrouter_free = {
-            --- use another free model with defferent configuration
-            model = "openrouter/free", -- model list: https://openrouter.ai/models?order=top-weekly
-            base_url = "https://openrouter.ai/api/v1",
-            api_key = "your-openrouter-api-key",
-            additional_parameters = {
-                temperature = 0.7,
-                max_tokens = 4096,
-            }
-        },
-        deepseek = {
-            visible = false,                   -- optional, if set to false, will not shown in the profile switch
-            model = "deepseek-v4-flash",
-            base_url = "https://api.deepseek.com/v1",
-            api_key = "your-deepseek-api-key",
-            additional_parameters = {
-                temperature = 0.7,
-                max_tokens = 4096,
-                -- Thinking mode configuration (optional)
-                -- For DeepSeek-v4, disable thinking mode for faster responses:
-                -- thinking = { type = "disabled" },
-                -- Or enable thinking mode with budget control:
-                -- thinking = { type = "enabled", budget_tokens = 2000 },
-            }
-        },
-        gemma = {
-            -- Gemma models via Google's OpenAI-compatible API or other providers
-            -- Automatically detects API type and filters out <thought> tags from Gemma 4 models
-            -- (Gemma 2 models don't have this issue, but handler is safe for both)
-            
-            -- Option 1: Google's OpenAI-compatible API (Recommended for Gemma 4)
-            -- Note: Both endpoints work: /v1beta/openai/ or /v1beta/chat/completions
-            visible = false,                   -- optional, if set to false, will not shown in the profile switch
-            model = "gemma-4-31b-it",
-            base_url = "https://generativelanguage.googleapis.com/v1beta/openai",   -- Alternative: base_url = "https://generativelanguage.googleapis.com/v1beta/chat/completions",
-            api_key = "your-gemini-api-key",
-            additional_parameters = {
-                thinking_config = { thinking_level = "minimal" }, -- minimum the reasoning level
-                -- temperature = 0.3,
-                -- max_tokens = 500,  -- Use "max_tokens" for OpenAI-compatible format
-            }
-            
-            -- Option 2: Ollama or other OpenAI-compatible API (for Gemma 2)
-            -- model = "gemma-2-9b-it",
-            -- base_url = "http://localhost:11434/v1",
-            -- api_key = "gemma",
-            -- additional_parameters = {
-            --     temperature = 0.7,
-            --     max_tokens = 4096
-            -- }
-            
-            -- Option 3: Native Gemini API format (alternative)
-            -- model = "gemma-4-31b-it",
-            -- base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
-            -- api_key = "your-gemini-api-key",
-            -- additional_parameters = {
-            --     temperature = 0.3,
-            --     maxOutputTokens = 500  -- Use "maxOutputTokens" for native Gemini format
-            -- }
+        openai_grok = {
+            display_name = "Grok (xAI)", -- shown in menu instead of "openai_grok"
+            model = "grok-4-latest",       -- alias tracks the latest Grok 4 release, see: https://docs.x.ai/developers/models
+            base_url = "https://api.x.ai/v1",
+            api_key = "your-grok-api-key",
         },
         openai_perplexity = {
-            visible = false,                   -- optional, if set to false, will not shown in the profile switch
-            -- Perplexity API is OpenAI-compatible, uses openai handler
-            -- Model list: https://docs.perplexity.ai/guides/model-cards
-            model = "sonar-pro",
+            display_name = "Perplexity",
+            visible = false,          -- optional, if set to false, will not shown in the provider switch
+            model = "sonar-pro",      -- model list: https://docs.perplexity.ai/guides/model-cards
             base_url = "https://api.perplexity.ai",
             api_key = "pplx-your-api-key",
-            additional_parameters = {
-                temperature = 0.7,
-                max_tokens = 4096
-            }
         },
-        openai_perplexity_reasoning = {
-            visible = false,                   -- optional, if set to false, will not shown in the profile switch
-            -- Perplexity reasoning models for complex tasks
-            model = "sonar-reasoning-pro",
-            base_url = "https://api.perplexity.ai",
-            api_key = "pplx-your-api-key",
-            additional_parameters = {
-                temperature = 0.7,
-                max_tokens = 8192
-            }
-        },
-        ollama = {
-            model = "your-preferred-model",        -- model list: https://ollama.com/library
-            base_url = "your-ollama-api-endpoint", -- ex: "https://ollama.example.com/v1"
+        openai_ollama = {
+            display_name = "Ollama (local)",
+            visible = false,          -- optional, if set to false, will not shown in the provider switch
+            model = "your-preferred-model",         -- model list: https://ollama.com/library
+            base_url = "your-ollama-api-endpoint",  -- ex: "http://localhost:11434/v1"
             api_key = "ollama",
-            additional_parameters = {}
         },
-        mistral = {
-            model = "mistral-small-latest", -- model list: https://docs.mistral.ai/getting-started/models/models_overview/
-            base_url = "https://api.mistral.ai/v1",
-            api_key = "your-mistral-api-key",
-            additional_parameters = {
-                temperature = 0.7,
-                max_tokens = 4096
-            }
+        anthropic = {
+            visible = true,                    -- optional, if set to false, will not shown in the provider switch
+            model = "claude-3-5-haiku-latest", -- model list: https://docs.anthropic.com/en/docs/about-claude/models
+            base_url = "https://api.anthropic.com/v1",
+            api_key = "your-anthropic-api-key",
+            -- NOTE: the Anthropic API requires max_tokens — copy the
+            -- additional_parameters pattern from `openai` above and set it.
         },
-        groq = {
-            model = "llama-3.3-70b-versatile", -- model list: https://console.groq.com/docs/models
-            base_url = "https://api.groq.com/openai/v1",
-            api_key = "your-groq-api-key",
-            additional_parameters = {
-                temperature = 0.7,
-                -- config options, see: https://console.groq.com/docs/api-reference
-                -- eg: disable reasoning for model qwen3, set:
-                -- reasoning_effort = "none"
-                -- 
-                -- groq free API limit waits (default 15 secs)
-                groq_wait_seconds = 15,
-            }
+        gemini = {
+            model = "gemini-flash-latest", -- model list: https://ai.google.dev/gemini-api/docs/models , ex: gemini-2.5-pro , gemini-2.5-flash
+            base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
+            api_key = "your-gemini-api-key",
         },
-        groq_qwen = {
-            --- Recommended setting
-            --- qwen3 without reasoning
-            model = "qwen/qwen3-32b",
-            base_url = "https://api.groq.com/openai/v1",
-            api_key = "your-groq-api-key",
-            additional_parameters = {
-                temperature = 0.7,
-                reasoning_effort = "none"
-            }
-        },
-        openai_modelstudio = {
-            -- Alibaba Cloud Model Studio (Qwen) via OpenAI-compatible endpoint
-            model = "qwen3.6-flash",
-            base_url = "https://{WorkspaceId}.{Region}.maas.aliyuncs.com/compatible-mode/v1",
-            api_key = "your-modelstudio-api-key",
-            additional_parameters = {
-                temperature = 0.7,
-                max_tokens = 4096,
-                -- Set to false to disable reasoning/thinking for low latency
-                enable_thinking = false,
-                -- Alternatively, if enable_thinking is true, set a budget for thinking tokens (e.g. 512 or 1024)
-                -- thinking_budget = 1024,
-            }
-        },
-        openai_azure = {
-            endpoint = "https://your-resource-name.openai.azure.com/your-deployment-name/", -- Your Azure OpenAI resource endpoint
-            model = "your-deployment-name",         -- Your model deployment name
-            api_key = "your-azure-api-key",         -- Your Azure OpenAI API key
-            temperature = 0.7,
-            max_tokens = 4096
+        -- OpenAI Responses API — newer /v1/responses endpoint with built-in tools
+        -- Built-in web_search: set use_websearch = "builtin" in plugin settings
+        -- (no external search API key needed). The API handles search directly —
+        -- no SerpAPI/Tavily/SearXNG/Exa configuration required.
+        responses_openai = {
+            display_name = "OpenAI Responses",
+            visible = false,       -- optional, set to true to show in provider switch
+            model = "gpt-4o-mini", -- model list: https://platform.openai.com/docs/models
+            base_url = "https://api.openai.com/v1",
+            api_key = "your-openai-api-key",
         },
         serpapi = {
             -- External Search Tool API: SerpAPI, free tier: 250 searchs / month
@@ -353,7 +128,7 @@ local CONFIGURATION = {
         },
         tavilyapi = {
             -- External Search Tool API: Tavily, free tier: 1000 searchs / month
-            -- https://www.tavily.com/ 
+            -- https://www.tavily.com/
             api_key = "your-tavily-api-key"
         },
         searxngapi = {
