@@ -472,6 +472,12 @@ function BookLevelCustomPrompts(assistant)
 end
 
 function Assistant:showSettings(close_callback)
+  if not self.config or not next(self.config:getProviderSettings()) then
+    UIManager:show(InfoMessage:new{
+      text = T(_("Add providers from the main menu:\n%1 -> AI Assistant -> Settings -> Provider API"), "⚙")
+    })
+    return
+  end
   if not self:isConfigured() then return end
 
   if self._settings_dialog then
@@ -488,97 +494,6 @@ function Assistant:showSettings(close_callback)
 
   self._settings_dialog = settingDlg -- store reference to the dialog
   UIManager:show(settingDlg)
-end
-
--- Menu-path helpers for showAddProviderMenu. Items carry `assistant_item_id`
--- markers (see the item tables in addToMainMenu and the "Provider API" item
--- in assistant_provider_registry.lua); indices are resolved against the live
--- TouchMenu layout instead of fixed path constants, so menu reordering or
--- conditional items cannot desync the navigation.
--- Note: MenuSorter keeps references to the item tables when it builds
--- tab_item_table, so markers set at menu-registration time survive.
-
--- 1-based index of the item carrying the marker in item_table, or nil.
-local function findItemIndexByMarker(item_table, marker)
-    if not item_table then return nil end
-    for i, item in ipairs(item_table) do
-        if type(item) == "table" and item.assistant_item_id == marker then
-            return i
-        end
-    end
-    return nil
-end
-
--- Computes the TouchMenu path (e.g. "4.1.7.1") to the "Provider API" item by
--- walking tab_item_table: tab -> AI Assistant -> Settings -> Provider API.
-local function computeAddProviderMenuPath(tab_item_table)
-    if not tab_item_table then return nil end
-    for tab_nb, tab_items in ipairs(tab_item_table) do
-        local ai_idx = findItemIndexByMarker(tab_items, "assistant_ai_menu")
-        if ai_idx then
-            local ai_item = tab_items[ai_idx]
-            local ai_sub = ai_item.sub_item_table_func and ai_item.sub_item_table_func()
-                or ai_item.sub_item_table
-            local settings_idx = findItemIndexByMarker(ai_sub, "assistant_settings")
-            if settings_idx then
-                local settings_item = ai_sub[settings_idx]
-                local settings_sub = settings_item.sub_item_table_func
-                    and settings_item.sub_item_table_func() or settings_item.sub_item_table
-                local provider_idx = findItemIndexByMarker(settings_sub, "assistant_add_provider")
-                if provider_idx then
-                    return string.format("%d.%d.%d.%d", tab_nb, ai_idx, settings_idx, provider_idx)
-                end
-            end
-        end
-    end
-    return nil
-end
-
--- Open the KOReader main menu and use TouchMenu's live path navigation to
--- walk to and highlight the existing "Provider API" menu item. On non-touch
--- devices the main menu is a plain Menu widget without path navigation, so
--- show directions to the item instead. Closes the menu again if navigation
--- is not possible.
-function Assistant:showAddProviderMenu()
-    if not Device:isTouchDevice() then
-        UIManager:show(InfoMessage:new{
-            text = T(_("Add providers from the main menu:\n%1 -> AI Assistant -> Settings -> Provider API"), "⚙")
-        })
-        return
-    end
-
-    local menu = self.ui and self.ui.menu
-    if not menu or type(menu.onShowMenu) ~= "function" then return end
-
-    local function closeMenu()
-        if menu.onCloseReaderMenu then
-            menu:onCloseReaderMenu()
-        elseif menu.onCloseFileManagerMenu then
-            menu:onCloseFileManagerMenu()
-        end
-    end
-
-    -- If a main menu is already open (e.g. the one the settings dialog was
-    -- opened from), reuse its live TouchMenu instead of stacking a second one.
-    local touch_menu = menu.menu_container and menu.menu_container[1]
-    if not touch_menu or type(touch_menu.openMenu) ~= "function" then
-        menu:onShowMenu(nil, true)
-        touch_menu = menu.menu_container and menu.menu_container[1]
-    end
-    if not touch_menu or type(touch_menu.openMenu) ~= "function" then
-        closeMenu()
-        return
-    end
-
-    -- Resolve the path from the live layout (marker-based, no fixed indices).
-    local path = computeAddProviderMenuPath(touch_menu.tab_item_table)
-    if not path then
-        logger.warn("assistant: Provider API item not found in main menu")
-        closeMenu()
-        return
-    end
-
-    touch_menu:openMenu(path)
 end
 
 --- Show the unified add/edit provider dialog.
@@ -700,7 +615,9 @@ function Assistant:isConfigured()
         text = err_text,
         ok_text = _("OK"),
         ok_callback = function()
-          self:showAddProviderMenu()
+          UIManager:show(InfoMessage:new{
+            text = T(_("Add providers from the main menu:\n%1 -> AI Assistant -> Settings -> Provider API"), "⚙")
+          })
         end,
         cancel_text = _("Cancel"),
       })

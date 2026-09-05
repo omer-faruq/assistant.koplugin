@@ -221,17 +221,6 @@ function SettingsDialog:init()
             end
         },
         {
-            id = "edit_provider",
-            text = _("Edit"),
-            enabled_func = function()
-                local cur = self.assistant.querier.provider_name
-                if not cur then return false end
-                local ps = self.assistant.config:getProvider(cur)
-                return Registry.is_editable(ps)
-            end,
-            callback = function() self:onEditProvider() end,
-        },
-        {
             id = "edit_parameters",
             text = _("Reasoning Option"),
             enabled_func = function()
@@ -246,18 +235,26 @@ function SettingsDialog:init()
                 Registry.showParametersDialog(self.assistant, cur)
             end,
         },
+        {
+            id = "edit_provider",
+            text = _("Edit"),
+            enabled_func = function()
+                local cur = self.assistant.querier.provider_name
+                if not cur then return false end
+                local ps = self.assistant.config:getProvider(cur)
+                return Registry.is_editable(ps)
+            end,
+            callback = function() self:onEditProvider() end,
+        },
+        {
+            -- OK only closes the dialog (provider selection is already
+            -- saved on radio-button select); kept on the right for UI
+            -- consistency (close left, action right).
+            id = "ok",
+            text = _("OK"),
+            callback = function() UIManager:close(self) end,
+        },
     }}
-
-    table.insert(self.buttons[1], 3, {
-        id = "add_provider",
-        text = _("Add"),
-        callback = function()
-            UIManager:close(self)
-            UIManager:nextTick(function()
-                self.assistant:showAddProviderMenu()
-            end)
-        end,
-    })
 
     -- init radio buttons for selecting AI Model provider
     self.radio_buttons = {} -- init radio buttons table
