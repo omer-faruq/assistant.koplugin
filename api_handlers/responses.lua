@@ -507,7 +507,7 @@ function ResponsesHandler:backgroundRequest(url, headers, body)
             -- Do NOT emit [DONE] — the frontend breaks on [DONE] and would
             -- never see the error line.
             logger.warn("ResponsesHandler background request non-200:",
-                code, "status:", status, "url:", url, "body:", raw_body_snapshot)
+                code, "status:", status, "url:", url, "body:", tostring(raw_body_snapshot):sub(1, 200))
             local err_struct = {
                 code = code,
                 url = url,
@@ -585,26 +585,26 @@ function ResponsesHandler:query(message_history, query_option)
                 end
             end
         end
-        logger.warn(self.name, "HTTP request failed:", code, "response:", response)
+        logger.warn(self.name, "HTTP request failed:", code, "response:", tostring(response):sub(1, 200))
         return nil, "Error: " .. tostring(self.model) .. "\n" .. self.responses_url .. "\n- " .. tostring(code or "unknown") .. " - " .. tostring(response)
     end
 
     local ok, responseData = pcall(json.decode, response)
     if not ok or not responseData then
-        logger.warn(self.name, "failed to parse response:", response)
+        logger.warn(self.name, "failed to parse response:", tostring(response):sub(1, 200))
         return nil, "Error: failed to parse API response"
     end
 
     -- Check for API-level error (HTTP 4xx/5xx with JSON error body)
     local api_err = ASUtils.extractErrorMessage(responseData)
     if api_err then
-        logger.warn(self.name, "API error (HTTP", code, "):", api_err, "| body:", response)
+        logger.warn(self.name, "API error (HTTP", code, "):", api_err, "| body:", tostring(response):sub(1, 200))
         return nil, api_err
     end
 
     -- Check for missing output (graceful fallback for unexpected response shape)
     if type(responseData.output) ~= "table" then
-        logger.warn(self.name, "missing 'output' array in response (HTTP", code, "):", response)
+        logger.warn(self.name, "missing 'output' array in response (HTTP", code, "):", tostring(response):sub(1, 200))
         return nil, "Unexpected API response: missing output"
     end
 
@@ -616,7 +616,7 @@ function ResponsesHandler:query(message_history, query_option)
         if text_content then
             return text_content, nil
         end
-        logger.warn(self.name, "no content in output (HTTP", code, "):", response)
+        logger.warn(self.name, "no content in output (HTTP", code, "):", tostring(response):sub(1, 200))
         return nil, "No content in API response"
     end
 

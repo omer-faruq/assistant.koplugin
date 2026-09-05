@@ -368,7 +368,7 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
             local err_msg = koutil.tableGetValue(responseData, "error", "message")
                          or koutil.tableGetValue(responseData, "message")
                          or "Gemini: missing content"
-            logger.warn("Gemini parse, responseData:", responseData)
+            logger.warn("Gemini parse, responseData:", select(2, pcall(json.encode, responseData)):sub(1, 200))
             return nil, nil, nil, err_msg
         end
         local tool_calls = {}
@@ -457,7 +457,7 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
             local err_msg = koutil.tableGetValue(responseData, "error", "message")
                          or koutil.tableGetValue(responseData, "message")
                          or "OpenAI stage-1: no message in response"
-            logger.warn("parse, responseData:", responseData)
+            logger.warn("parse, responseData:", select(2, pcall(json.encode, responseData)):sub(1, 200))
             return nil, nil, nil, err_msg
         end
         local raw_calls = json_default(assistant_message.tool_calls)

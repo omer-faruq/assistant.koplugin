@@ -204,7 +204,7 @@ function Querier:showError(err, message_history)
             ok_callback = function() self.assistant:showSettings() end,
             cancel_text = _("Close"),
         }
-        logger.dbg("API Error", err, "provider", self.provider_name or "?", "model", model, "message_history", message_history)
+        logger.dbg("API Error", tostring(err):sub(1, 200), "provider", self.provider_name or "?", "model", model, "message_history", type(message_history) == "table" and #message_history or 0)
     end
     UIManager:show(dialog)
 
@@ -316,7 +316,7 @@ function Querier:query(message_history, title)
             local tool_call_id, keywords, extract_err = ToolExecutor.extractKeywords(tool_call)
             if extract_err or not tool_call_id or not keywords then
                 err = extract_err
-                logger.warn("executeSearch", err, "tool_call", tool_call)
+                logger.warn("executeSearch", err, "tool_call", select(2, pcall(rapidjson.encode, tool_call)):sub(1, 200))
                 break
             end
 
@@ -426,7 +426,7 @@ function Querier:query(message_history, title)
                         -- 429 present but explicitly non-retryable: final failure
                         err = content or _("Stream failed with no error message.")
                         if err ~= self.handler.CODE_CANCELLED then
-                            logger.warn("cancelled/strem error", content, third)
+                            logger.dbg("strem error", tostring(content):sub(1, 200), "code", type(third) == "table" and third.code or (third == nil and "nil" or tostring(third):sub(1, 50)))
                         end
                         break
                     end
@@ -434,7 +434,7 @@ function Querier:query(message_history, title)
                     -- non-429 error, or 429 with retries exhausted: final failure
                     err = content or _("Stream failed with no error message.")
                     if err ~= self.handler.CODE_CANCELLED then
-                        logger.warn("cancelled/strem error", content, third)
+                        logger.dbg("strem error", tostring(content):sub(1, 200), "code", type(third) == "table" and third.code or (third == nil and "nil" or tostring(third):sub(1, 50)))
                     end
                     break
                 end
@@ -462,7 +462,7 @@ function Querier:query(message_history, title)
                 if not build_ok then
                     res = nil
                     err = raw_assistant
-                    logger.warn("failed to buildRawAssistantForToolCall", content, tool_calls_array)
+                    logger.warn("failed to buildRawAssistantForToolCall", "content=" .. tostring(content):sub(1, 200), "tool_calls=#" .. #tool_calls_array)
                     break
                 end
 
@@ -472,8 +472,8 @@ function Querier:query(message_history, title)
                     res = nil
                     err = search_results
                     if err ~= self.handler.CODE_CANCELLED then
-                        logger.warn("failed to executeSearch at round", tool_rounds, "DETAIL", search_results,
-                                            content, tool_calls_array)
+                        logger.warn("failed to executeSearch at round", tool_rounds, "DETAIL", tostring(search_results):sub(1, 200),
+                                            "content=" .. tostring(content):sub(1, 200), "tool_calls=#" .. #tool_calls_array)
                     end
                     break
                 end
@@ -488,7 +488,7 @@ function Querier:query(message_history, title)
                 if not append_ok then
                     res = nil
                     err = append_err
-                    logger.warn("failed to appendToolResult", content, tool_calls_array, append_err)
+                    logger.warn("failed to appendToolResult", "content=" .. tostring(content):sub(1, 200), "tool_calls=#" .. #tool_calls_array, append_err)
                     break
                 end
 
@@ -539,7 +539,7 @@ function Querier:query(message_history, title)
                     res = nil
                     err = search_results
                     if err ~= self.handler.CODE_CANCELLED then
-                        logger.warn("failed to executeSearch", res)
+                        logger.warn("failed to executeSearch", "res=" .. tostring(res):sub(1, 200))
                     end
                     break
                 end
@@ -555,7 +555,7 @@ function Querier:query(message_history, title)
                 if not append_ok then
                     res = nil
                     err = append_err
-                    logger.warn("failed to appendToolResult", res, append_err)
+                    logger.warn("failed to appendToolResult", "res=" .. tostring(res):sub(1, 200), append_err)
                     break
                 end
 
@@ -724,7 +724,7 @@ function Querier:showStremDialog(res)
     end
     if not ok then
         -- pcall failure: content holds the Lua error, tool_calls_or_err is nil
-        logger.warn("Error processing stream: " .. tostring(content))
+        logger.warn("Error processing stream: " .. tostring(content):sub(1, 200))
         err = content
     elseif type(tool_calls_or_err) == "table" then
         -- processStream detected a tool call; tool_calls_or_err is the accumulated tool_call table
@@ -847,7 +847,7 @@ function Querier:processStream(bgQuery, trunk_callback)
                                 break
                             end
                         else
-                            logger.warn("Failed to parse JSON from SSE data:", json_str)
+                            logger.warn("Failed to parse JSON from SSE data:", tostring(json_str):sub(1, 200))
                         end
                     elseif line:sub(1, 7) == "event: " then
                         -- Ignore SSE event lines (from Anthropic)
@@ -873,7 +873,7 @@ function Querier:processStream(bgQuery, trunk_callback)
 
                             if trunk_callback then
                                 trunk_callback(line)  -- Output to trunk callback
-                                logger.info("JSON object received:", line)
+                                logger.info("JSON object received:", tostring(line):sub(1, 200))
                             end
                         else
                             -- the json was breaked into lines, just log the raw line
@@ -1199,7 +1199,7 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
     end
     if not (result_content == nil or reasoning_content == nil or stop_reason == nil or
         choices == nil or candidates == nil or anthropic_type == nil) then
-        logger.warn("Unexpected JSON:", event)
+        logger.warn("Unexpected JSON:", select(2, pcall(rapidjson.encode, event)):sub(1, 200))
     end
 end
 

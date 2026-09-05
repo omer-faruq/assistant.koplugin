@@ -156,7 +156,7 @@ function OpenAIHandler:query(message_history, query_option)
 
     local ok, responseData = pcall(json.decode, response)
     if not ok or not responseData then
-        logger.warn(self.name, "failed to parse response:", response)
+        logger.warn(self.name, "failed to parse response:", tostring(response):sub(1, 200))
         return nil, "Error: failed to parse API response"
     end
 

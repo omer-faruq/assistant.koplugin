@@ -212,12 +212,11 @@ function GeminiHandler:query(message_history, query_option)
         if code == BaseHandler.CODE_CANCELLED then
             return nil, response
         end
-        logger.warn("Gemini API request failed:", {
-            error         = response,
-            model         = model,
-            request_size  = #requestBody,
-            message_count = #message_history,
-        })
+        logger.warn("Gemini API request failed:",
+            "error:", tostring(response):sub(1, 200),
+            "model:", model,
+            "request_size:", #requestBody,
+            "message_count:", #message_history)
         return nil, "Error: Gemini API (" .. tostring(model) .. ")\n" .. url_sync .. "\n- " .. tostring(response)
     end
 
@@ -227,7 +226,7 @@ function GeminiHandler:query(message_history, query_option)
         if err then
             return nil, err
         end
-        logger.warn("Gemini: JSON decode error:", response)
+        logger.warn("Gemini: JSON decode error:", tostring(response):sub(1, 200))
         return nil, "Error: Failed to parse Gemini API response"
     end
 

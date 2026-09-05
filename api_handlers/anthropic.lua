@@ -167,7 +167,7 @@ function AnthropicHandler:query(message_history, query_option)
 
     local ok, parsed = pcall(json.decode, response)
     if not ok or not parsed then
-        logger.warn("Anthropic: JSON decode error:", response)
+        logger.warn("Anthropic: JSON decode error:", tostring(response):sub(1, 200))
         return nil, "Error: Failed to parse Anthropic API response"
     end
 
