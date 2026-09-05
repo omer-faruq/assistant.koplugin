@@ -223,7 +223,7 @@ function GeminiHandler:query(message_history, query_option)
 
     local ok, parsed = pcall(json.decode, response)
     if not ok or not parsed or not parsed.candidates then
-        local err = koutil.tableGetValue(parsed, "error", "message")
+        local err = ASUtils.extractErrorMessage(parsed)
         if err then
             return nil, err
         end

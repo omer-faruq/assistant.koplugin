@@ -88,6 +88,12 @@ local tests = {
         assert.equal(h:parseRetryAfter({}, body), 7.5)
     end),
 
+    test("parseRetryAfter: detail-wrapped 'try again in Xs'", function()
+        local h = newHandler()
+        local body = '{"detail":{"error":{"message":"Busy. Please try again in 3s."}}}'
+        assert.equal(h:parseRetryAfter({}, body), 3)
+    end),
+
     test("parseRetryAfter: accepts an already-decoded table body", function()
         local h = newHandler()
         local body = { error = { message = "Please try again in 3s." } }

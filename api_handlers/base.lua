@@ -154,9 +154,8 @@ function BaseHandler:parseRetryAfter(headers, body)
                 end
             end
         end
-        -- error.message "try again in X.Xs"
-        local msg = decoded.error and decoded.error.message
-        if type(msg) ~= "string" then msg = decoded.message end
+        -- error message "try again in X.Xs" (shared helper covers wrappers)
+        local msg = ASUtils.extractErrorMessage(decoded)
         if type(msg) == "string" then
             local secs = msg:match("try again in ([%d%.]+)s")
             if secs then
@@ -246,29 +245,16 @@ end
 --- @param body string|table|nil response body
 --- @return string|nil short detail
 function BaseHandler:extractRetryDetail(body)
-    local msg = nil
     local decoded = decodeBody(body)
-    if type(decoded) == "table" then
-        msg = koutil.tableGetValue(decoded, "error", "message")
-        if type(msg) ~= "string" then
-            msg = koutil.tableGetValue(decoded, "detail", "error", "message")
+    local msg = ASUtils.extractErrorMessage(decoded or body)
+    if type(msg) ~= "string" then
+        -- No message shape (e.g. { error = { code = 429 } }): show the code.
+        local e = decoded and getErrorNode(decoded) or nil
+        if type(e) == "table" and e.code ~= nil then
+            msg = tostring(e.code)
         end
-        if type(msg) ~= "string" then
-            msg = koutil.tableGetValue(decoded, "detail", "message")
-        end
-        if type(msg) ~= "string" then
-            msg = koutil.tableGetValue(decoded, "message")
-        end
-        if type(msg) ~= "string" then
-            local e = getErrorNode(decoded)
-            if type(e) == "string" then
-                msg = e
-            elseif type(e) == "table" and type(e.code) ~= "nil" then
-                -- e.g. { error = { code = 429, message = ... } } without message
-                msg = tostring(e.code)
-            end
-        end
-    elseif type(body) == "string" and #body > 0 then
+    end
+    if type(msg) ~= "string" and type(body) == "string" and #body > 0 then
         msg = body
     end
     if type(msg) ~= "string" then return nil end

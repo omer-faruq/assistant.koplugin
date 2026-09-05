@@ -147,7 +147,7 @@ function OpenAIHandler:query(message_history, query_option)
         if response and #response > 0 then
             local ok, rd = pcall(json.decode, response)
             if ok then
-                local err_msg = koutil.tableGetValue(rd, "error", "message")
+                local err_msg = ASUtils.extractErrorMessage(rd)
                 if err_msg then return nil, err_msg end
             end
         end

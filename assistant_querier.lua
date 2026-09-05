@@ -860,9 +860,7 @@ function Querier:processStream(bgQuery, trunk_callback)
                         local ok, j = pcall(rapidjson.decode, line)
                         if ok and j then
                             -- log the json
-                            local err_message = koutil.tableGetValue(j, "error", "message")
-                                or koutil.tableGetValue(j, "detail", "error", "message")
-                                or koutil.tableGetValue(j, "detail", "message")
+                            local err_message = ASUtils.extractErrorMessage(j)
                             if err_message then
                                 result_buffer:put(err_message)
                             elseif j.error then
@@ -955,24 +953,8 @@ function Querier:processStream(bgQuery, trunk_callback)
         local code     = err_struct.code or ""
         local status   = err_struct.status or ""
 
-        -- Extract the message from common error payload shapes, including
-        -- proxy wrappers like {"detail":{"error":{"message":...}}}.
-        local err_msg
-        if #raw_body > 0 then
-            local ok2, j = pcall(rapidjson.decode, raw_body)
-            if ok2 and type(j) == "table" then
-                local e = j.error
-                local d = j.detail
-                local de = type(d) == "table" and d.error or nil
-                err_msg = (type(e) == "table" and e.message)
-                    or (type(e) == "string" and e)
-                    or (type(de) == "table" and de.message)
-                    or (type(de) == "string" and de)
-                    or (type(d) == "table" and d.message)
-                    or (type(d) == "string" and d)
-                    or j.message
-            end
-        end
+        -- Shared helper covers error/detail wrappers (see assistant_utils).
+        local err_msg = ASUtils.extractErrorMessage(raw_body)
 
         local err_header = T("%1: (%2)", status ~= "" and status or tostring(code ~= "" and code or "?"), endpoint)
         if err_msg and #err_msg > 0 then

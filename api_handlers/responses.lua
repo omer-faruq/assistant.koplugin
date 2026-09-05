@@ -90,32 +90,8 @@ end
 -- Error extraction helper
 -- ---------------------------------------------------------------------------
 
---- Extract a human-readable error message from a decoded API response.
---- Handles common error shapes:
----   { error = { message = "..." } }  -- OpenAI/standard
----   { error = "..." }                -- flat string error
----   { message = "..." }              -- bare message
---- @param decoded table  json.decode result
---- @return string|nil  error message, or nil if no error found
-local function extractErrorMessage(decoded)
-    if type(decoded) ~= "table" then return nil end
-
-    -- Nested error.message (OpenAI format)
-    local err_msg = koutil.tableGetValue(decoded, "error", "message")
-    if err_msg then return err_msg end
-
-    -- Flat error string
-    if type(decoded.error) == "string" and #decoded.error > 0 then
-        return decoded.error
-    end
-
-    -- Bare message
-    if type(decoded.message) == "string" and #decoded.message > 0 then
-        return decoded.message
-    end
-
-    return nil
-end
+-- Error messages are extracted via the shared ASUtils.extractErrorMessage
+-- helper (see assistant_utils.lua); do not add local variants.
 
 -- ---------------------------------------------------------------------------
 -- Message conversion: OpenAI-format message_history → Responses API input
@@ -602,7 +578,7 @@ function ResponsesHandler:query(message_history, query_option)
         if response and #response > 0 then
             local ok, rd = pcall(json.decode, response)
             if ok then
-                local err_msg = extractErrorMessage(rd)
+                local err_msg = ASUtils.extractErrorMessage(rd)
                 if err_msg then
                     logger.warn(self.name, "HTTP", code, "error:", err_msg)
                     return nil, err_msg
@@ -620,7 +596,7 @@ function ResponsesHandler:query(message_history, query_option)
     end
 
     -- Check for API-level error (HTTP 4xx/5xx with JSON error body)
-    local api_err = extractErrorMessage(responseData)
+    local api_err = ASUtils.extractErrorMessage(responseData)
     if api_err then
         logger.warn(self.name, "API error (HTTP", code, "):", api_err, "| body:", response)
         return nil, api_err
