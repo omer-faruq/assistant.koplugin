@@ -406,8 +406,9 @@ function Querier:query(message_history, title)
                     local retry_info = self.handler:getRetryDelay(
                         err_struct.code, err_struct.resp_headers, err_struct.raw_body, retry_attempt + 1)
                     if retry_info.retryable then
+                        local detail = self.handler:extractRetryDetail(err_struct.raw_body)
                         local finished = self.handler:sleepWithRetryInfo(
-                            retry_info.delay, retry_attempt + 1, max_retries)
+                            retry_info.delay, retry_attempt + 1, max_retries, detail)
                         if not finished then
                             err = self.handler.CODE_CANCELLED
                             break
@@ -860,10 +861,14 @@ function Querier:processStream(bgQuery, trunk_callback)
                         if ok and j then
                             -- log the json
                             local err_message = koutil.tableGetValue(j, "error", "message")
+                                or koutil.tableGetValue(j, "detail", "error", "message")
+                                or koutil.tableGetValue(j, "detail", "message")
                             if err_message then
                                 result_buffer:put(err_message)
                             elseif j.error then
                                 result_buffer:put(tostring(j.error))
+                            elseif type(j.detail) == "string" then
+                                result_buffer:put(j.detail)
                             else
                                 result_buffer:put(line)
                             end
@@ -950,14 +955,21 @@ function Querier:processStream(bgQuery, trunk_callback)
         local code     = err_struct.code or ""
         local status   = err_struct.status or ""
 
-        -- Extract the message from common error payload shapes.
+        -- Extract the message from common error payload shapes, including
+        -- proxy wrappers like {"detail":{"error":{"message":...}}}.
         local err_msg
         if #raw_body > 0 then
             local ok2, j = pcall(rapidjson.decode, raw_body)
             if ok2 and type(j) == "table" then
                 local e = j.error
+                local d = j.detail
+                local de = type(d) == "table" and d.error or nil
                 err_msg = (type(e) == "table" and e.message)
                     or (type(e) == "string" and e)
+                    or (type(de) == "table" and de.message)
+                    or (type(de) == "string" and de)
+                    or (type(d) == "table" and d.message)
+                    or (type(d) == "string" and d)
                     or j.message
             end
         end

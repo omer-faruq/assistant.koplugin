@@ -83,6 +83,23 @@ local function decodeBody(body)
     return nil
 end
 
+--- Return the error node from a decoded 429 body, unwrapping common
+--- proxy wrappers like {"detail":{"error":{...}}} or {"detail":{...}}.
+--- @param decoded table|nil decoded JSON body
+--- @return table|string|nil error node
+local function getErrorNode(decoded)
+    if type(decoded) ~= "table" then return nil end
+    if decoded.error ~= nil then return decoded.error end
+    local d = decoded.detail
+    if type(d) == "table" then
+        if d.error ~= nil then return d.error end
+        if d.message ~= nil or d.code ~= nil or d.status ~= nil then return d end
+    elseif type(d) == "string" and #d > 0 then
+        return d
+    end
+    return nil
+end
+
 --- Maximum number of 429 retries, overridable via additional_parameters.max_retries (clamped 0..8).
 function BaseHandler:getMaxRetries()
     local mr = self.additional_parameters and self.additional_parameters.max_retries
@@ -162,11 +179,15 @@ function BaseHandler:isRetryable429(code, headers, body)
     end
     local decoded = decodeBody(body)
     if type(decoded) == "table" then
-        local e = decoded.error
+        local e = getErrorNode(decoded)
         local code_str = type(e) == "table" and e.code or (type(e) == "string" and e) or nil
         local status   = type(e) == "table" and e.status or nil
         local reason   = type(e) == "table" and e.reason or nil
-        local msg      = type(e) == "table" and e.message or decoded.message or nil
+        local msg      = (type(e) == "table" and e.message)
+            or (type(e) == "string" and e)
+            or decoded.message
+            or (type(decoded.detail) == "table" and decoded.detail.message)
+            or nil
         if code_str == "insufficient_quota" or code_str == "billing_hard_limit_reached" then
             return false
         end
@@ -184,29 +205,97 @@ function BaseHandler:isRetryable429(code, headers, body)
 end
 
 --- Compute the retry decision for a 429.
+--- Progressive wait capped at 5s: the server hint (Retry-After etc.) is
+--- only a floor; the actual delay is min(max(server_hint, backoff), 5).
+--- This keeps repeated 429s with a tiny Retry-After (e.g. 1s x 8 = 8s)
+--- from finishing too quickly (1, 2, 4, 5, 5, ...s + jitter), while never
+--- making the user wait longer than 5s per retry.
 --- @return table { retryable=boolean, delay=number, reason=string }
 function BaseHandler:getRetryDelay(code, headers, body, attempt)
     if not self:isRetryable429(code, headers, body) then
         return { retryable = false, delay = 0, reason = "not-retryable" }
     end
-    local delay = self:parseRetryAfter(headers, body)
-    if delay then
-        return { retryable = true, delay = delay, reason = "retry-after" }
-    end
-    -- Exponential backoff fallback: base 1s * 2^(attempt-1), cap 60s, + jitter ±25%.
+    attempt = tonumber(attempt) or 1
+    if attempt < 1 then attempt = 1 end
+    -- Exponential backoff: base 1s * 2^(attempt-1), cap 5s, + jitter ±25%
+    -- (jitter output clamped to 5s so a capped retry is exactly 5s).
     local base = 1 * (2 ^ (attempt - 1))
-    local capped = math.min(base, 60)
+    local capped = math.min(base, 5)
     local jitter = capped * 0.25
-    local d = capped + (math.random() * 2 - 1) * jitter
-    if d < 0 then d = 0 end
-    return { retryable = true, delay = d, reason = "backoff" }
+    local backoff = capped + (math.random() * 2 - 1) * jitter
+    if backoff < 0 then backoff = 0 end
+    if backoff > 5 then backoff = 5 end
+    local server_delay = self:parseRetryAfter(headers, body)
+    if server_delay and server_delay > 0 then
+        local delay = math.max(server_delay, backoff)
+        if delay > 5 then delay = 5 end
+        if server_delay >= backoff then
+            return { retryable = true, delay = delay, reason = "retry-after" }
+        end
+        return { retryable = true, delay = delay, reason = "backoff" }
+    end
+    -- No (or non-positive) server hint: pure backoff. A past HTTP-date
+    -- parses to 0 and lands here, so we never sleep 0s between retries.
+    return { retryable = true, delay = backoff, reason = "backoff" }
+end
+
+--- Extract a short human-readable detail from a 429 response body for display.
+--- Tries error.message / detail.error.message / message in decoded JSON,
+--- falls back to raw text.
+--- Result is single-line, truncated to ~200 chars, or nil when empty.
+--- @param body string|table|nil response body
+--- @return string|nil short detail
+function BaseHandler:extractRetryDetail(body)
+    local msg = nil
+    local decoded = decodeBody(body)
+    if type(decoded) == "table" then
+        msg = koutil.tableGetValue(decoded, "error", "message")
+        if type(msg) ~= "string" then
+            msg = koutil.tableGetValue(decoded, "detail", "error", "message")
+        end
+        if type(msg) ~= "string" then
+            msg = koutil.tableGetValue(decoded, "detail", "message")
+        end
+        if type(msg) ~= "string" then
+            msg = koutil.tableGetValue(decoded, "message")
+        end
+        if type(msg) ~= "string" then
+            local e = getErrorNode(decoded)
+            if type(e) == "string" then
+                msg = e
+            elseif type(e) == "table" and type(e.code) ~= "nil" then
+                -- e.g. { error = { code = 429, message = ... } } without message
+                msg = tostring(e.code)
+            end
+        end
+    elseif type(body) == "string" and #body > 0 then
+        msg = body
+    end
+    if type(msg) ~= "string" then return nil end
+    -- Collapse whitespace so multi-line JSON errors fit one dialog line.
+    msg = msg:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
+    if msg == "" then return nil end
+    -- Strip our own bold markers so API text cannot break PTF formatting.
+    msg = msg:gsub("<b>", ""):gsub("</b>", "")
+    if #msg > 200 then
+        msg = msg:sub(1, 200) .. "..."
+    end
+    return msg
 end
 
 --- Show a cancellable count-down while waiting to retry a 429.
---- Two-line countdown: bold PFT header + Attempts N/M — retry in (countdown appended by sleepWithInfo).
+--- Three-line countdown: bold PFT header + Attempts N/M — retry in
+--- (countdown appended by sleepWithInfo) + optional Detail line.
+--- @param delay number seconds to wait
+--- @param attempt number current attempt (1-based)
+--- @param max_retries number configured max retries
+--- @param detail string|nil optional API error text (already truncated)
 --- @return boolean true when the wait finished, false when the user cancelled.
-function BaseHandler:sleepWithRetryInfo(delay, attempt, max_retries)
-    local raw = T(_("<b>API Busy (Status: 429)</b>\nAttempts %1/%2 - retry in"), attempt, max_retries)
+function BaseHandler:sleepWithRetryInfo(delay, attempt, max_retries, detail)
+    local raw = T(_("<b>API Busy</b>\nAttempts %1/%2 ... Retry in"), attempt, max_retries)
+    if type(detail) == "string" and detail ~= "" then
+        raw = T("%1\n\n%2 %3", raw, _("<b>Detail:</b>"), detail)
+    end
     return ASUtils.sleepWithInfo(delay, ASUtils.bold_format(raw))
 end
 
@@ -365,7 +454,8 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
         if is_429 and attempt <= max_retries then
             local info = self:getRetryDelay(code, resp_headers, content, attempt)
             if info.retryable then
-                local finished = self:sleepWithRetryInfo(info.delay, attempt, max_retries)
+                local detail = self:extractRetryDetail(content)
+                local finished = self:sleepWithRetryInfo(info.delay, attempt, max_retries, detail)
                 if not finished then
                     -- user cancelled the wait → treat as user cancellation
                     return false, self.CODE_CANCELLED, self.CODE_CANCELLED

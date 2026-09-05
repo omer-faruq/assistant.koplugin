@@ -154,11 +154,11 @@ local tests = {
     -- ------------------------------------------------------------------
     -- getRetryDelay
     -- ------------------------------------------------------------------
-    test("getRetryDelay: uses retry-after without jitter", function()
+    test("getRetryDelay: retry-after is capped at 5s", function()
         local h = newHandler()
         local info = h:getRetryDelay(429, { ["retry-after"] = "10" }, "", 1)
         assert.isTrue(info.retryable)
-        assert.equal(info.delay, 10)
+        assert.equal(info.delay, 5)
         assert.equal(info.reason, "retry-after")
     end),
 
@@ -170,10 +170,37 @@ local tests = {
         assert.isTrue(info.delay >= 0.75 and info.delay <= 1.25, "delay ~= " .. tostring(info.delay))
     end),
 
-    test("getRetryDelay: backoff caps at 60s", function()
+    test("getRetryDelay: backoff caps at 5s", function()
         local h = newHandler()
         local info = h:getRetryDelay(429, {}, "", 10)
-        assert.isTrue(info.delay >= 45 and info.delay <= 75, "delay ~= " .. tostring(info.delay))
+        assert.isTrue(info.delay >= 3.75 and info.delay <= 5, "delay ~= " .. tostring(info.delay))
+    end),
+
+    test("getRetryDelay: small retry-after still backs off progressively", function()
+        local h = newHandler()
+        -- Retry-After:1 alone would finish 8 retries in 8s; backoff must lift it.
+        local info = h:getRetryDelay(429, { ["retry-after"] = "1" }, "", 5)
+        assert.isTrue(info.retryable)
+        assert.equal(info.reason, "backoff")
+        -- attempt 5 backoff base 5s +/-25% clamped to 5 => 3.75..5s
+        assert.isTrue(info.delay >= 3.75 and info.delay <= 5, "delay ~= " .. tostring(info.delay))
+    end),
+
+    test("getRetryDelay: large retry-after is capped at 5s", function()
+        local h = newHandler()
+        local info = h:getRetryDelay(429, { ["retry-after"] = "30" }, "", 1)
+        assert.isTrue(info.retryable)
+        assert.equal(info.delay, 5)
+        assert.equal(info.reason, "retry-after")
+    end),
+
+    test("getRetryDelay: zero server hint falls back to backoff", function()
+        local h = newHandler()
+        local past = os.time() - 60
+        local info = h:getRetryDelay(429, { ["retry-after"] = formatHttpDate(past) }, "", 1)
+        assert.isTrue(info.retryable)
+        assert.equal(info.reason, "backoff")
+        assert.isTrue(info.delay >= 0.75 and info.delay <= 1.25, "delay ~= " .. tostring(info.delay))
     end),
 
     test("getRetryDelay: non-retryable 429 returns retryable=false", function()
@@ -274,6 +301,58 @@ local tests = {
         assert.isFalse(success)
         assert.equal(code, BaseHandler.CODE_TIMEOUT)
         assert.equal(content, "timed out")
+    end),
+
+    -- ------------------------------------------------------------------
+    -- extractRetryDetail + sleepWithRetryInfo display
+    -- ------------------------------------------------------------------
+    test("extractRetryDetail: prefers error.message from JSON", function()
+        local h = newHandler()
+        local d = h:extractRetryDetail('{"error":{"message":"Rate limit reached, slow down."}}')
+        assert.equal(d, "Rate limit reached, slow down.")
+    end),
+
+    test("extractRetryDetail: unwraps detail.error.message proxy wrapper", function()
+        local h = newHandler()
+        local body = '{"detail":{"error":{"message":"Model \'DeepSeek-V4-Flash\' is at its concurrency limit (80)","type":"rate_limit_error"}}}'
+        local d = h:extractRetryDetail(body)
+        assert.notNil(d)
+        assert.matches(d, "concurrency limit")
+        assert.isTrue(h:isRetryable429(429, {}, body))
+    end),
+
+    test("extractRetryDetail: unwraps detail.message and string detail", function()
+        local h = newHandler()
+        assert.matches(h:extractRetryDetail('{"detail":{"message":"slow down"}}'), "slow down")
+        assert.matches(h:extractRetryDetail('{"detail":"just slow down"}'), "just slow down")
+    end),
+
+    test("extractRetryDetail: falls back to raw text and truncates", function()
+        local h = newHandler()
+        assert.equal(h:extractRetryDetail(nil), nil)
+        assert.equal(h:extractRetryDetail(""), nil)
+        local long = string.rep("x", 300)
+        local d = h:extractRetryDetail(long)
+        assert.equal(#d, 203) -- 200 chars + "..."
+        assert.matches(d, "%.%.%.$")
+        -- multi-line collapses to one line, bold markers stripped
+        local multi = h:extractRetryDetail("line1\n  line2\n<b>hi</b>")
+        assert.equal(multi, "line1 line2 hi")
+    end),
+
+    test("sleepWithRetryInfo: shows API detail when present", function()
+        local h = newHandler()
+        local captured = nil
+        ASUtils.sleepWithInfo = function(_, text) captured = text return true end
+        h:sleepWithRetryInfo(1, 2, 8, "Rate limit abc")
+        assert.notNil(captured)
+        assert.matches(captured, "API Busy")
+        assert.matches(captured, "Rate limit abc")
+        captured = nil
+        h:sleepWithRetryInfo(1, 2, 8, nil)
+        assert.notNil(captured)
+        assert.matches(captured, "API Busy")
+        assert.notMatches(captured, "Rate limit abc")
     end),
 }
 
