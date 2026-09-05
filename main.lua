@@ -258,7 +258,6 @@ function Assistant:addToMainMenu(menu_items)
               },
               {
                 text = _("Settings"),
-                assistant_item_id = "assistant_settings",
                 sub_item_table_func = function ()
                   return SettingsDialog.genMenuSettings(self)
                 end,
@@ -387,7 +386,6 @@ function Assistant:addToMainMenu(menu_items)
         common_items_table[1].separator = false
         menu_items.ai_assistant = {
             text = _("AI Assistant"),
-            assistant_item_id = "assistant_ai_menu",
             sorting_hint = "tools",
             hold_callback = function ()
               self:_help_dialog()
@@ -400,7 +398,6 @@ function Assistant:addToMainMenu(menu_items)
         common_items_table[1].separator = true
         menu_items.ai_assistant = {
             text = _("AI Assistant"),
-            assistant_item_id = "assistant_ai_menu",
             sorting_hint = "tools",
             hold_callback = function ()
               self:_help_dialog()

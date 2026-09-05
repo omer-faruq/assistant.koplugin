@@ -979,8 +979,6 @@ end
 function Registry.getAddProviderMenuItem(assistant)
     return {
         text = _("Provider API"),
-        -- Marker identifies this item in the live TouchMenu
-        assistant_item_id = "assistant_add_provider",
         keep_menu_open = true,
         sub_item_table_func = function()
             local items = {}
