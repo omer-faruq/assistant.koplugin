@@ -116,7 +116,13 @@ function ModelPickerDialog:init()
         },
         {
             {
-                text = _("Manual"),
+                id = "close",
+                text = _("Cancel"),
+                callback = function() UIManager:close(self) end,
+            },
+            {
+                -- @translators Button text: means custom input, keep translation short
+                text = _("Custom"),
                 callback = function() self:onManualInput() end,
             },
             {
@@ -124,8 +130,11 @@ function ModelPickerDialog:init()
                 callback = function() self:onReset() end,
             },
             {
-                id = "close",
-                text = _("Cancel"),
+                -- OK only closes the dialog (model selection is already
+                -- saved on radio-button select); kept on the right for UI
+                -- consistency (close left, action right).
+                id = "ok",
+                text = _("OK"),
                 callback = function() UIManager:close(self) end,
             },
         },
