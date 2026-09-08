@@ -69,47 +69,7 @@ All setup can be done directly from the KOReader UI.
 
 #### Option B (Advanced): Use `configuration.lua`
 
-1. Copy `configuration.sample.lua` to `configuration.lua` (do not modify the sample file directly).
-2. Edit the `configuration.lua` file as needed.
-    - Set your API keys in `provider_settings`.
-    - For more advanced configuration, see the Wiki Configuration.lua.
-
-#### Using OpenAI-Compatible APIs
-
-The plugin supports any OpenAI-compatible API through a flexible naming pattern. Configuration keys follow the format `{handler}_{description}`, where:
-- **handler**: The API handler to use (e.g., `openai`, `anthropic`, `gemini`)
-- **description**: Any descriptive name for your configuration (e.g., `perplexity`, `grok`, `local`)
-
-**Examples:**
-- `openai_perplexity` → uses the `openai` handler for Perplexity API
-- `openai_grok` → uses the `openai` handler for Grok API
-- `anthropic_websearch` → uses the `anthropic` handler with web search enabled
-
-You can create multiple configurations using the same handler with different settings. The part before the first underscore determines which handler is used.
-
-In the UI, this is the same as picking the `OpenAI` preset and replacing the Base URL — use `Clear` to start from a blank URL if needed.
-
-Here's the minimum working example:
-
-```lua
-local CONFIGURATION = {
-
-    provider_settings = {
-        gemini = {
-            model = "gemini-2.5-flash",
-            base_url = "https://generativelanguage.googleapis.com/v1beta/models/",
-            api_key = "your-gemini-api-key",
-        },
-        -- You can add other providers here, for example:
-        -- openai = {
-        --     model = "gpt-4o-mini",
-        --     base_url = "https://api.openai.com/v1/chat/completions",
-        --     api_key = "your-openai-api-key",
-        -- }
-    }
-}
-return CONFIGURATION
-```
+For file-based setup (naming pattern, multiple profiles, extra examples), see [Installation](../../wiki/Installation).
 
 ### 4. Using the Plugin
 
