@@ -862,6 +862,9 @@ function Assistant:addMainButton(prompt_idx, prompt)
               elseif prompt_idx == "term_xray" then
                 -- Special case for term_xray prompt - use dictionary dialog with enhanced context
                 showDictionaryDialog(self, _reader_highlight_instance.selected_text.text, nil, "term_xray")
+              elseif prompt_idx == "translate" then
+                -- Same Smart Dictionary Lookup routing as KOReader's built-in Translate
+                self:showTranslateOrDictionary(_reader_highlight_instance.selected_text.text)
               else
                 -- For other prompts, show the custom prompt dialog
                 self.assistant_dialog:showPrompt(_reader_highlight_instance.selected_text.text, prompt_idx)
@@ -1221,6 +1224,73 @@ end
     return true
   end
 
+-- Route a translate request through Smart Dictionary Lookup: short selections
+-- may open the AI Dictionary instead (see ASUtils.lookup_mode_for_selection),
+-- with a one-time three-way prompt on first use. Callers must already be inside
+-- ASUtils.runWhenOnlineFast + Trapper:wrap.
+function Assistant:showTranslateOrDictionary(text)
+  local function open_translation()
+    self.assistant_dialog:showPrompt(text, "translate")
+  end
+  local function open_dictionary()
+    showDictionaryDialog(self, text)
+  end
+
+  -- No default: a truthy default would be written by LuaSettings:readSetting,
+  -- destroying the "never asked" (nil) state.
+  local choice = self.settings:readSetting("ai_smart_dictionary")
+  local mode = ASUtils.lookup_mode_for_selection(text)
+  local route = ASUtils.resolve_translate_route(choice, mode)
+
+  if route == "ask" then
+    -- Three-way first-run choice in a single button row:
+    --   Translate  -> persist "off", never ask again
+    --   Dictionary -> persist "on", never ask again
+    --   Cancel / dismiss -> abort this action; leave the setting unset
+    --     so the next short selection asks again
+    local ask_dialog
+    ask_dialog = ButtonDialog:new{
+      title = ASUtils.bold_format(_("Dictionary or Translation?\n\nThis selection looks like a word or short phrase.\n\nYou can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'.")),
+      title_align = "left",
+      info_face = Font:getFace("smallinfofont"),
+      buttons = {{
+        {
+          text = _("Cancel"),
+          callback = function()
+            -- Abort: no translation, no persistence.
+            UIManager:close(ask_dialog)
+          end,
+        },
+        {
+          text = _("Translate"),
+          callback = function()
+            self.settings:saveSetting("ai_smart_dictionary", false)
+            UIManager:close(ask_dialog)
+            ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_translation) end)
+          end,
+        },
+        {
+          text = _("Dictionary"),
+          callback = function()
+            self.settings:saveSetting("ai_smart_dictionary", true)
+            UIManager:close(ask_dialog)
+            ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_dictionary) end)
+          end,
+        },
+      }},
+      dismissable = true,
+      tap_close_callback = function()
+        -- Tap outside / back: abort, no persistence.
+      end,
+    }
+    UIManager:show(ask_dialog)
+  elseif route == "dictionary" then
+    open_dictionary()
+  else
+    open_translation()
+  end
+end
+
 -- Sync Overriding translate method with setting
 function Assistant:syncTranslateOverride()
 
@@ -1243,71 +1313,11 @@ function Assistant:syncTranslateOverride()
         return
       end
 
-      -- Route short selections to the AI Dictionary when Smart Dictionary Lookup
-      -- is on. The first time a selection is judged a dictionary lookup, ask the
-      -- user once and persist their choice (dc7a373 / #207/#208).
-      local function open_translation()
-        self.assistant_dialog:showPrompt(text, "translate")
-      end
-      local function open_dictionary()
-        showDictionaryDialog(self, text)
-      end
-
+      -- Smart Dictionary Lookup may divert short selections to the AI
+      -- Dictionary, with a one-time prompt (dc7a373 / #207/#208).
       ASUtils.runWhenOnlineFast(function()
         Trapper:wrap(function()
-          -- No default: a truthy default would be written by LuaSettings:readSetting,
-          -- destroying the "never asked" (nil) state.
-          local choice = self.settings:readSetting("ai_smart_dictionary")
-          local mode = ASUtils.lookup_mode_for_selection(text)
-          local route = ASUtils.resolve_translate_route(choice, mode)
-
-          if route == "ask" then
-            -- Three-way first-run choice in a single button row:
-            --   Translate  -> persist "off", never ask again
-            --   Dictionary -> persist "on", never ask again
-            --   Cancel / dismiss -> abort this action; leave the setting unset
-            --     so the next short selection asks again
-            local ask_dialog
-            ask_dialog = ButtonDialog:new{
-              title = ASUtils.bold_format(_("Dictionary or Translation?\n\nThis selection looks like a word or short phrase.\n\nYou can change this later in Settings > KOReader Tweaks > Smart Dictionary Lookup for 'Translate'.")),
-              title_align = "left",
-              info_face = Font:getFace("smallinfofont"),
-              buttons = {{
-                {
-                  text = _("Cancel"),
-                  callback = function()
-                    -- Abort: no translation, no persistence.
-                    UIManager:close(ask_dialog)
-                  end,
-                },
-                {
-                  text = _("Translate"),
-                  callback = function()
-                    self.settings:saveSetting("ai_smart_dictionary", false)
-                    UIManager:close(ask_dialog)
-                    ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_translation) end)
-                  end,
-                },
-                {
-                  text = _("Dictionary"),
-                  callback = function()
-                    self.settings:saveSetting("ai_smart_dictionary", true)
-                    UIManager:close(ask_dialog)
-                    ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_dictionary) end)
-                  end,
-                },
-              }},
-              dismissable = true,
-              tap_close_callback = function()
-                -- Tap outside / back: abort, no persistence.
-              end,
-            }
-            UIManager:show(ask_dialog)
-          elseif route == "dictionary" then
-            open_dictionary()
-          else
-            open_translation()
-          end
+          self:showTranslateOrDictionary(text)
         end)
       end)
     end

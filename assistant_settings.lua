@@ -570,6 +570,26 @@ SettingsDialog.genDictionaryOutputMenu = function(assistant)
         })
     end
 
+    -- Which AI entries are offered in KOReader's dictionary popup.
+    for i, popup in ipairs({
+        { key = "dict_popup_show_dictionary", text = _("Show Dictionary(AI) in Dictionary Popup"), default = true },
+        { key = "dict_popup_show_wikipedia", text = _("Show Wikipedia(AI) in Dictionary Popup"), default = true },
+        { key = "dict_popup_show_term_xray", text = _("Show Term X-Ray(AI) in Dictionary Popup"), default = false },
+        { key = "dict_popup_show_custom_prompts", text = _("Show Custom Prompts in Dictionary Popup"), default = false },
+    }) do
+        table.insert(items, {
+            text = popup.text,
+            separator = i == 1,
+            checked_func = function()
+                return assistant.settings:readSetting(popup.key, popup.default)
+            end,
+            callback = function()
+                assistant.settings:toggle(popup.key)
+                assistant.updated = true
+            end,
+        })
+    end
+
     return items
 end
 
@@ -781,8 +801,7 @@ SettingsDialog.genMenuSettings = function(assistant)
             },
         },
         {
-            -- @translators: functional overriding
-            text = _("KOReader Tweaks"),
+            text = _("Other Settings"),
             sub_item_table = {
                 {
                     -- @translators: 'Translate' is a built-in function
@@ -803,6 +822,16 @@ SettingsDialog.genMenuSettings = function(assistant)
                         local key = "ai_smart_dictionary"
                         assistant.settings:saveSetting(key, not assistant.settings:readSetting(key))
                         assistant.updated = true
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _([[Route short selections to the AI Dictionary instead of the Translator.
+
+- Counts as short: up to 5 words; for CJK text, which has no word
+  separators, up to 8 characters.
+- Short selections open the AI Dictionary; longer selections are
+  translated as usual.]])
+                        })
                     end
                 },
                 {
@@ -817,38 +846,6 @@ SettingsDialog.genMenuSettings = function(assistant)
                             return
                         end
                         Notification:notify(_("AI Recap will be enabled the next time a long-unread book is opened."), Notification.SOURCE_ALWAYS_SHOW)
-                    end
-                },
-                {
-                    text = _("Show Dictionary(AI) in Dictionary Popup"),
-                    checked_func = function () return assistant.settings:readSetting("dict_popup_show_dictionary", true) end,
-                    callback = function()
-                        assistant.settings:toggle("dict_popup_show_dictionary")
-                        assistant.updated = true
-                    end
-                },
-                {
-                    text = _("Show Wikipedia(AI) in Dictionary Popup"),
-                    checked_func = function () return assistant.settings:readSetting("dict_popup_show_wikipedia", true) end,
-                    callback = function()
-                        assistant.settings:toggle("dict_popup_show_wikipedia")
-                        assistant.updated = true
-                    end
-                },
-                {
-                    text = _("Show Term X-Ray(AI) in Dictionary Popup"),
-                    checked_func = function () return assistant.settings:readSetting("dict_popup_show_term_xray", false) end,
-                    callback = function()
-                        assistant.settings:toggle("dict_popup_show_term_xray")
-                        assistant.updated = true
-                    end
-                },
-                {
-                    text = _("Show Custom Prompts in Dictionary Popup"),
-                    checked_func = function () return assistant.settings:readSetting("dict_popup_show_custom_prompts", false) end,
-                    callback = function()
-                        assistant.settings:toggle("dict_popup_show_custom_prompts")
-                        assistant.updated = true
                     end
                 },
                 {
