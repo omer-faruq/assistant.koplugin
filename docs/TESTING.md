@@ -39,6 +39,13 @@ The suite runs inside KOReader's LuaJIT runtime via `setupkoenv` with UI modules
 - `G_reader_settings` is a global created by `setupkoenv` / `run_tests.lua`. A bare `luajit -e "require('assistant_utils')"` outside `./test/run.sh` fails with `attempt to index global 'G_reader_settings' (a nil value)` (the `device`/`fontlist` chain). Verify modules via `assert(loadfile(...))` (syntax) or `./test/run.sh` (runtime); do **not** `require` UI-touching modules with raw `luajit -e`.
 - Prefer `assistant_utils.PLUGIN_DIR` over `DataStorage:getDataDir().."/plugins/..."` directly; the latter diverges under `MULTIUSER`/extra_plugin_paths.
 
+## Static guards
+
+Some invariants are enforced by source-scanning tests rather than runtime checks:
+
+- `test/test_gettext_loop_shadow.lua` — no `_()` call inside a `for _,` loop body (`_` gets shadowed by the loop variable).
+- `test/test_gettext_ascii_msgids.lua` — every `_()`/`N_()`/`C_()`/`NC_()` msgid is US-ASCII. Non-ASCII msgids trigger gettext's msgattrib header-loss bug and corrupt glyphs (commit `0353186`); the offenders spanned U+2011 (‑) through U+1F4A1 (💡). Put Unicode punctuation/symbols/emoji outside `_()`.
+
 ## UI test scripts
 
 `test/wbuilder` bootstraps the KOReader UI framework and plugin path for isolated widget tests. A UI test requires `test/wbuilder`, shows widgets with `UIManager:show(...)`, and ends with `UIManager:run()`.

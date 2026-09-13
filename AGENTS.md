@@ -40,15 +40,16 @@ Full flow, handlers, LexRank, config, key files: `docs/ARCHITECTURE.md`.
 1. **Config**: read/write `CONFIGURATION` only via `assistant.config` getters/mutators; UI provider/search CRUD only via `Registry`/`SearchRegistry`. Never touch `settings:saveSetting("ui_providers"/"ui_search_tools", ...)`.
 2. **JSON**: `rapidjson` only (never `dkjson`/`cjson`); `null` is `rapidjson.null` — compare `== nil or == rapidjson.null`, fall back via `assistant_utils.json_default`.
 3. **Nested reads**: use `assistant.config:get*` or `koutil.tableGetValue(t, ...)` (also for API responses, incl. numeric keys). Never `t and t.foo and t.foo.bar` — it crashes on malformed shapes. `koutil.tableMerge(t1,t2)` mutates `t1` and returns nil.
-4. **gettext**: wrap every user-facing string in `_()`; msgids must be US-ASCII only — inject emoji/arrows/dashes via `T()` placeholders or concatenation. Plurals via `N_()`; keep strings contiguous inside `T(_("..."))`. Never use `_` as a discarded loop variable.
-5. **Dialogs**: cancellation/close on the **left**, action buttons (Save/OK) on the **right**. Title Case labels; short words (`to`, `for`, `as`, `and`, `in`) lowercase.
-6. **Notifications**: `Notification:notify(msg, Notification.SOURCE_ALWAYS_SHOW)` only for transient success; errors/failures/ack → `UIManager:show(InfoMessage:new{...})`.
-7. **Credentials**: UI-entered `api_key`/`base_url` are trimmed and internal whitespace rejected in `Registry.validate`/`SearchRegistry.validate`. Normalize there — not per handler, not at header build.
-8. **No backward compatibility for internal code**: move code and update every call site in one go; no `Deprecated` wrappers. `require` the owning module directly (one hop); split by domain and keep module responsibilities explicit.
-9. **Style**: Lua 5.1 / LuaJIT 2.1; use `string.buffer` for hot loops. 4 spaces, never tabs (vendored `lib/` keeps upstream formatting); `snake_case` modules, `PascalCase` classes, `camelCase` methods, `UPPER_CASE` consts. Errors return `nil, err`.
-10. **Directions/formatting**: `T = require("ffi/util").template`; bold via `assistant_utils.bold_format(T(_("<b>Header:</b> %1"), val))`; message metadata via `assistant_utils.set_attr`/`get_attr`.
-11. **Scope**: exclude `l10n/` from code searches/reads (40+ languages, no code insight). Polish non-native English wording into idiomatic English without changing intent.
-12. **Widgets**: reuse existing scaffolding (`ChatGPTViewer`, `assistant_dialog.lua`); read `docs/UI_DIALOGS.md` before hand-building dialogs. KOReader widget internals only as a last resort.
+4. **gettext**: wrap every user-facing string in `_()`; msgids must be US-ASCII — replace Unicode punctuation with ASCII (`-` not `—`, `...` not `…`) and inject all non-ASCII glyphs (emoji, arrows, symbols) **outside** `_()` via `T()` placeholders or concatenation. Plurals via `N_()`; keep strings contiguous inside `T(_("..."))`. Guarded by `test/test_gettext_ascii_msgids.lua`.
+5. **Never use `_` as a discarded loop variable** (`for _, x in ...`): it shadows the gettext function and crashes `_()` calls in the loop body. Guarded by `test/test_gettext_loop_shadow.lua`.
+6. **Dialogs**: cancellation/close on the **left**, action buttons (Save/OK) on the **right**. Title Case labels; short words (`to`, `for`, `as`, `and`, `in`) lowercase.
+7. **Notifications**: `Notification:notify(msg, Notification.SOURCE_ALWAYS_SHOW)` only for transient success; errors/failures/ack → `UIManager:show(InfoMessage:new{...})`.
+8. **Credentials**: UI-entered `api_key`/`base_url` are trimmed and internal whitespace rejected in `Registry.validate`/`SearchRegistry.validate`. Normalize there — not per handler, not at header build.
+9. **No backward compatibility for internal code**: move code and update every call site in one go; no `Deprecated` wrappers. `require` the owning module directly (one hop); split by domain and keep module responsibilities explicit.
+10. **Style**: Lua 5.1 / LuaJIT 2.1; use `string.buffer` for hot loops. 4 spaces, never tabs (vendored `lib/` keeps upstream formatting); `snake_case` modules, `PascalCase` classes, `camelCase` methods, `UPPER_CASE` consts. Errors return `nil, err`.
+11. **Directions/formatting**: `T = require("ffi/util").template`; bold via `assistant_utils.bold_format(T(_("<b>Header:</b> %1"), val))`; message metadata via `assistant_utils.set_attr`/`get_attr`.
+12. **Scope**: exclude `l10n/` from code searches/reads (40+ languages, no code insight). Polish non-native English wording into idiomatic English without changing intent.
+13. **Widgets**: reuse existing scaffolding (`ChatGPTViewer`, `assistant_dialog.lua`); read `docs/UI_DIALOGS.md` before hand-building dialogs. KOReader widget internals only as a last resort.
 
 ## Git / Versioning
 
