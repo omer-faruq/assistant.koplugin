@@ -61,6 +61,7 @@ local stubs = {
         },
     },
     ["ui/widget/buttontable"]   = { new = function(_, o) return o end, getButtonById = function() end },
+    ["ui/widget/buttondialog"]  = { new = function(_, o) return o end },
     ["ui/widget/menu"]          = {},
     ["ui/widget/confirmbox"]    = {},
     ["ui/widget/buttontable"]   = {},

@@ -3,7 +3,6 @@ local InputDialog = require("ui/widget/inputdialog")
 local UIManager = require("ui/uimanager")
 local TextBoxWidget = require("ui/widget/textboxwidget")
 local InfoMessage = require("ui/widget/infomessage")
-local ConfirmBox = require("ui/widget/confirmbox")
 local Event = require("ui/event")
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
