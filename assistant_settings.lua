@@ -797,6 +797,15 @@ SettingsDialog.genMenuSettings = function(assistant)
                     end
                 },
                 {
+                    text = _("Smart Dictionary Lookup for 'Translate'"),
+                    checked_func = function () return assistant.settings:readSetting("ai_smart_dictionary", false) end,
+                    callback = function()
+                        local key = "ai_smart_dictionary"
+                        assistant.settings:saveSetting(key, not assistant.settings:readSetting(key))
+                        assistant.updated = true
+                    end
+                },
+                {
                     text = _("Auto-recap on Opening Long-unread Books"),
                     checked_func = function () return assistant.settings:readSetting("enable_auto_recap", false) end,
                     callback = function()

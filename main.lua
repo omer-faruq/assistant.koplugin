@@ -1243,9 +1243,47 @@ function Assistant:syncTranslateOverride()
         return
       end
 
+      -- Route short selections to the AI Dictionary when Smart Dictionary Lookup
+      -- is on. The first time a selection is judged a dictionary lookup, ask the
+      -- user once and persist their choice (dc7a373 / #207/#208).
+      local function open_translation()
+        self.assistant_dialog:showPrompt(text, "translate")
+      end
+      local function open_dictionary()
+        showDictionaryDialog(self, text)
+      end
+
       ASUtils.runWhenOnlineFast(function()
         Trapper:wrap(function()
-          self.assistant_dialog:showPrompt(text, "translate")
+          -- No default: a truthy default would be written by LuaSettings:readSetting,
+          -- destroying the "never asked" (nil) state.
+          local choice = self.settings:readSetting("ai_smart_dictionary")
+          local mode = ASUtils.lookup_mode_for_selection(text)
+          local route = ASUtils.resolve_translate_route(choice, mode)
+
+          if route == "ask" then
+            UIManager:show(ConfirmBox:new{
+              face = Font:getFace("smallinfofont"),
+              -- Kept as bold_format so any future <b> emphasis renders through
+              -- ConfirmBox's TextBoxWidget (it is a no-op without tags).
+              text = ASUtils.bold_format(_("Dictionary or Translation?\n\nThis selection looks like a word or short phrase.\n\nYou can change this later in Settings > KOReader Tweaks > Smart Dictionary Lookup for 'Translate'.")),
+              cancel_text = _("Translate"),
+              ok_text = _("Dictionary"),
+              dismissable = false,
+              cancel_callback = function()
+                self.settings:saveSetting("ai_smart_dictionary", false)
+                ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_translation) end)
+              end,
+              ok_callback = function()
+                self.settings:saveSetting("ai_smart_dictionary", true)
+                ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_dictionary) end)
+              end,
+            })
+          elseif route == "dictionary" then
+            open_dictionary()
+          else
+            open_translation()
+          end
         end)
       end)
     end
