@@ -1262,23 +1262,47 @@ function Assistant:syncTranslateOverride()
           local route = ASUtils.resolve_translate_route(choice, mode)
 
           if route == "ask" then
-            UIManager:show(ConfirmBox:new{
-              face = Font:getFace("smallinfofont"),
-              -- Kept as bold_format so any future <b> emphasis renders through
-              -- ConfirmBox's TextBoxWidget (it is a no-op without tags).
-              text = ASUtils.bold_format(_("Dictionary or Translation?\n\nThis selection looks like a word or short phrase.\n\nYou can change this later in Settings > KOReader Tweaks > Smart Dictionary Lookup for 'Translate'.")),
-              cancel_text = _("Translate"),
-              ok_text = _("Dictionary"),
-              dismissable = false,
-              cancel_callback = function()
-                self.settings:saveSetting("ai_smart_dictionary", false)
-                ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_translation) end)
+            -- Three-way first-run choice in a single button row:
+            --   Translate  -> persist "off", never ask again
+            --   Dictionary -> persist "on", never ask again
+            --   Cancel / dismiss -> abort this action; leave the setting unset
+            --     so the next short selection asks again
+            local ask_dialog
+            ask_dialog = ButtonDialog:new{
+              title = ASUtils.bold_format(_("Dictionary or Translation?\n\nThis selection looks like a word or short phrase.\n\nYou can change this later in Settings > KOReader Tweaks > Smart Dictionary Lookup for 'Translate'.")),
+              title_align = "left",
+              info_face = Font:getFace("smallinfofont"),
+              buttons = {{
+                {
+                  text = _("Cancel"),
+                  callback = function()
+                    -- Abort: no translation, no persistence.
+                    UIManager:close(ask_dialog)
+                  end,
+                },
+                {
+                  text = _("Translate"),
+                  callback = function()
+                    self.settings:saveSetting("ai_smart_dictionary", false)
+                    UIManager:close(ask_dialog)
+                    ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_translation) end)
+                  end,
+                },
+                {
+                  text = _("Dictionary"),
+                  callback = function()
+                    self.settings:saveSetting("ai_smart_dictionary", true)
+                    UIManager:close(ask_dialog)
+                    ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_dictionary) end)
+                  end,
+                },
+              }},
+              dismissable = true,
+              tap_close_callback = function()
+                -- Tap outside / back: abort, no persistence.
               end,
-              ok_callback = function()
-                self.settings:saveSetting("ai_smart_dictionary", true)
-                ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_dictionary) end)
-              end,
-            })
+            }
+            UIManager:show(ask_dialog)
           elseif route == "dictionary" then
             open_dictionary()
           else
