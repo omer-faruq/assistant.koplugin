@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "Idioma de resposta da IA"
 msgid "AI Response Language Setting"
 msgstr "Definição do idioma de resposta da IA"
 
+msgid "AI Term X-Ray"
+msgstr "X-Ray de termos com IA"
+
+msgid "AI Wikipedia"
+msgstr "Wikipédia com IA"
+
 msgid "AI X-Ray"
 msgstr "X-Ray da IA"
 
@@ -238,6 +244,12 @@ msgstr "A chave de API é obrigatória para %1."
 
 msgid "API key is required."
 msgstr "A chave de API é obrigatória."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "A chave de API não pode conter espaços nem quebras de linha para %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "A chave de API não pode conter espaços nem quebras de linha."
 
 msgid "About the Author"
 msgstr "Sobre o Autor"
@@ -336,6 +348,9 @@ msgstr "O URL base é obrigatório para %1."
 msgid "Base URL is required."
 msgstr "O URL base é obrigatório."
 
+msgid "Base URL must not contain spaces."
+msgstr "O URL base não pode conter espaços."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "O URL base tem de começar por http:// ou https://"
 
@@ -357,9 +372,6 @@ msgstr "Análises do Livro"
 
 msgid "Book Summary & Recs"
 msgstr "Resumo do Livro e Recomendações"
-
-msgid "Book Usage"
-msgstr "Uso no Livro"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "O ramo/etiqueta \"%1\" não foi encontrado."
@@ -389,6 +401,9 @@ msgstr "Personagens"
 msgid "Checking for updates..."
 msgstr "A verificar atualizações..."
 
+msgid "Choose Definition Sections"
+msgstr "Escolher secções de definição"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Escolha o caderno onde as suas notas são guardadas."
 
@@ -400,6 +415,9 @@ msgstr "Fechar"
 
 msgid "Composing answer ..."
 msgstr "A compor a resposta ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Conciso - responder com frases curtas"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Configuração não encontrada. Por favor, configure primeiro o configuration.lua."
@@ -529,6 +547,25 @@ msgstr "Dicionário"
 msgid "Dictionary Language"
 msgstr "Idioma do dicionário"
 
+msgid "Dictionary Popup"
+msgstr "Pop-up do dicionário"
+
+msgid "Dictionary Settings"
+msgstr "Configurações do dicionário"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Dicionário ou tradução?\n"
+"\n"
+"Esta seleção parece uma palavra ou uma frase curta.\n"
+"\n"
+"Pode alterar isto mais tarde em Configurações > Outras configurações > Pesquisa inteligente de dicionário para «Traduzir»."
+
 msgid "Display name"
 msgstr "Nome de exibição"
 
@@ -597,6 +634,9 @@ msgstr "Explicar"
 msgid "Failed to fetch models"
 msgstr "Falha ao obter modelos"
 
+msgid "Failed to save provider."
+msgstr "Falha ao guardar o fornecedor."
+
 msgid "Failed to save search tool."
 msgstr "Falha ao guardar a ferramenta de pesquisa."
 
@@ -617,6 +657,9 @@ msgstr "Filtro: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Para mais detalhes, visite a página wiki 'Configuration' no github."
+
+msgid "Full - full definitions"
+msgstr "Completo - definições completas"
 
 msgid "Fun Analogy"
 msgstr "Analogia Divertida"
@@ -685,9 +728,8 @@ msgstr "Nome de ficheiro de caderno inválido."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "Ajustes do KOReader"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Mantenha as respostas do dicionário curtas: no máximo uma ou duas frases por secção."
 
 msgid "Key Points"
 msgstr "Pontos-Chave"
@@ -749,8 +791,8 @@ msgstr "Temas Principais"
 msgid "Markdown Engine"
 msgstr "Motor Markdown"
 
-msgid "Meaning"
-msgstr "Significado"
+msgid "Meaning & Usage"
+msgstr "Significado e utilização"
 
 msgid "Model"
 msgstr "Modelo"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "Chat Completions API compatível com OpenAI"
 
+msgid "Other Settings"
+msgstr "Outras configurações"
+
 msgid "Outstanding questions:"
 msgstr "Perguntas em aberto:"
 
@@ -948,6 +993,9 @@ msgstr "O plugin não está configurado."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Adiciona os metadados do livro (título, autor e posição de leitura atual, incluindo capítulo) aos prompts que optam pelo contexto do livro (por predefinição: Explain, Historical Context, Summarize, Key Points e ELI5). O comportamento por prompt pode ser substituído com use_book_context no ficheiro de configuração."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Lista predefinida de secções do dicionário de IA."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Estado emocional/tom predominante:"
@@ -1069,6 +1117,21 @@ msgstr "Tamanho da Fonte do Texto de Resposta"
 msgid "Role & Function"
 msgstr "Papel e Função"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Encaminhar seleções curtas para o Dicionário de IA em vez do Tradutor.\n"
+"\n"
+"- Considera-se curto: até 5 palavras; para texto CJK, que não tem\n"
+"  separadores de palavras, até 8 caracteres.\n"
+"- As seleções curtas abrem o Dicionário de IA; as seleções mais longas\n"
+"  são traduzidas normalmente."
+
 msgid "Runtime"
 msgstr "Runtime"
 
@@ -1117,23 +1180,11 @@ msgstr "Seleção copiada para a área de transferência."
 msgid "Settings"
 msgstr "Definições"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Mostrar prompts personalizados no pop-up do dicionário"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Mostrar Dicionário (IA) no pop-up do dicionário"
-
 msgid "Show Follow-up Questions"
 msgstr "Mostrar perguntas de acompanhamento"
 
 msgid "Show Reasoning Text"
 msgstr "Mostrar texto de raciocínio"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Mostrar Term X-Ray (IA) no pop-up do dicionário"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Mostrar Wikipédia (IA) no pop-up do dicionário"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Mostrar o processo de pensamento profundo (raciocínio) da resposta da IA, se existir."
@@ -1146,6 +1197,12 @@ msgstr "Recomendações de Livros Semelhantes"
 
 msgid "Simplify"
 msgstr "Simplificar"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Pesquisa inteligente de dicionário para «Traduzir»"
+
+msgid "Standard - standard definitions"
+msgstr "Padrão - definições padrão"
 
 msgid "Stop"
 msgstr "Parar"
@@ -1221,8 +1278,8 @@ msgstr "Este botão cria uma nota rápida com o texto destacado."
 msgid "This is a custom prompt"
 msgstr "Este é um prompt personalizado"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Este prompt serve de dicionário para o texto destacado, definindo uma palavra ou expressão."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Este prompt funciona como um dicionário que tem em conta o livro para o texto realçado, até uma palavra ou frase."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Este prompt analisa a gramática do texto destacado, fornecendo uma explicação detalhada da sua estrutura e de quaisquer erros gramaticais."
@@ -1375,7 +1432,6 @@ msgstr "Onde a ação parou:"
 msgid "Wikipedia"
 msgstr "Wikipédia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Forma da Palavra e Lema"
 

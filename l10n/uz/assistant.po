@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 04:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Oʻzbekcha (AI translation)\n"
@@ -224,6 +224,12 @@ msgstr "AI javob tili"
 msgid "AI Response Language Setting"
 msgstr "AI javob tili sozlamasi"
 
+msgid "AI Term X-Ray"
+msgstr "AI Term X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI Vikipediya"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "%1 uchun API kaliti talab qilinadi."
 
 msgid "API key is required."
 msgstr "API kaliti talab qilinadi."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "%1 uchun API kalitida boʻsh joy yoki qator uzilishi boʻlmasligi kerak."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API kalitida boʻsh joy yoki qator uzilishi boʻlmasligi kerak."
 
 msgid "About the Author"
 msgstr "Muallif haqida"
@@ -336,6 +348,9 @@ msgstr "%1 uchun asosiy URL talab qilinadi."
 msgid "Base URL is required."
 msgstr "Asosiy URL talab qilinadi."
 
+msgid "Base URL must not contain spaces."
+msgstr "Asosiy URL manzilida boʻsh joy boʻlmasligi kerak."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Asosiy URL http:// yoki https:// bilan boshlanishi kerak."
 
@@ -357,9 +372,6 @@ msgstr "Kitob tahlillari"
 
 msgid "Book Summary & Recs"
 msgstr "Kitob xulosasi va tavsiyalar"
-
-msgid "Book Usage"
-msgstr "Kitobda qoʻllanilishi"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "\"%1\" branch/tag topilmadi."
@@ -389,6 +401,9 @@ msgstr "Qahramonlar"
 msgid "Checking for updates..."
 msgstr "Yangilanishlar tekshirilmoqda..."
 
+msgid "Choose Definition Sections"
+msgstr "Taʼrif boʻlimlarini tanlash"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Eslatmalaringiz qaysi daftarga saqlanishini tanlang."
 
@@ -400,6 +415,9 @@ msgstr "Yopish"
 
 msgid "Composing answer ..."
 msgstr "Javob tayyorlanmoqda ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Qisqa - qisqa jumlalarda javob bering"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfiguratsiya topilmadi. Iltimos, avval configuration.lua ni sozlang."
@@ -529,6 +547,25 @@ msgstr "Lug'at"
 msgid "Dictionary Language"
 msgstr "Lugʻat tili"
 
+msgid "Dictionary Popup"
+msgstr "Lugʻat oynasi"
+
+msgid "Dictionary Settings"
+msgstr "Lugʻat sozlamalari"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Lugʻat yoki tarjima?\n"
+"\n"
+"Bu tanlov soʻz yoki qisqa iboraga oʻxshaydi.\n"
+"\n"
+"Buni keyinroq Sozlamalar > Boshqa sozlamalar > «Tarjima» uchun aqlli lugʻat qidiruvi boʻlimida oʻzgartirishingiz mumkin."
+
 msgid "Display name"
 msgstr "Koʻrsatiladigan nom"
 
@@ -597,6 +634,9 @@ msgstr "Tushuntirish"
 msgid "Failed to fetch models"
 msgstr "Modellarni yuklab olish muvaffaqiyatsiz bo'ldi"
 
+msgid "Failed to save provider."
+msgstr "Provayderni saqlab boʻlmadi."
+
 msgid "Failed to save search tool."
 msgstr "Qidiruv vositasini saqlash muvaffaqiyatsiz tugadi."
 
@@ -617,6 +657,9 @@ msgstr "Filter: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Tafsilotlar uchun github'dagi 'Configuration' wiki sahifasiga tashrif buyuring."
+
+msgid "Full - full definitions"
+msgstr "Toʻliq - toʻliq taʼriflar"
 
 msgid "Fun Analogy"
 msgstr "Qiziqarli oʻxshatish"
@@ -685,9 +728,8 @@ msgstr "Notoʻgʻri daftar fayl nomi."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader sozlashlari"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Lugʻat javoblarini qisqa saqlang: har bir boʻlim uchun koʻpi bilan bir-ikki jumla."
 
 msgid "Key Points"
 msgstr "Asosiy fikrlar"
@@ -749,8 +791,8 @@ msgstr "Asosiy mavzular"
 msgid "Markdown Engine"
 msgstr "Markdown dvijogi"
 
-msgid "Meaning"
-msgstr "Maʼno"
+msgid "Meaning & Usage"
+msgstr "Maʼno va qoʻllanish"
 
 msgid "Model"
 msgstr "Model"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-ga mos Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Boshqa sozlamalar"
+
 msgid "Outstanding questions:"
 msgstr "Ochiq savollar:"
 
@@ -948,6 +993,9 @@ msgstr "Plagin sozlanmagan."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Kitob metamaʼlumotlarini (sarlavha, muallif va joriy oʻqish pozitsiyasi, shu jumladan bob) kitob kontekstini tanlagan soʻrovlarga boshiga qoʻshadi (odatiy: Tushuntirish, Tarixiy kontekst, Xulosa, Asosiy fikrlar va ELI5). Har bir soʻrov boʻyicha xatti-harakatni konfiguratsiya faylidagi use_book_context bilan bekor qilish mumkin."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "AI lugʻati boʻlimlarining tayyor roʻyxati."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Hukmron hissiy holat/ohang:"
@@ -1068,6 +1116,21 @@ msgstr "Javob matni shrift oʻlchami"
 msgid "Role & Function"
 msgstr "Roli va funksiyasi"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Qisqa tanlovlarni Tarjimon oʻrniga AI lugʻatiga yoʻnaltiring.\n"
+"\n"
+"- Qisqa deb hisoblanadi: 5 soʻzgacha; soʻz ajratgichlari boʻlmagan\n"
+"  CJK matni uchun 8 belgigacha.\n"
+"- Qisqa tanlovlar AI lugʻatini ochadi; uzunroq tanlovlar esa\n"
+"  odatdagidek tarjima qilinadi."
+
 msgid "Runtime"
 msgstr "Ish vaqti"
 
@@ -1116,23 +1179,11 @@ msgstr "Tanlangan matn almashish buferiga nusxalandi"
 msgid "Settings"
 msgstr "Sozlamalar"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Lugʻat qalqib chiquvchi oynasida maxsus soʻrovlarni koʻrsatish"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Lugʻat qalqib chiquvchi oynasida Lugʻat(AI)ni koʻrsatish"
-
 msgid "Show Follow-up Questions"
 msgstr "Keyingi savollarni koʻrsatish"
 
 msgid "Show Reasoning Text"
 msgstr "Mulohaza matnini koʻrsatish"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Lugʻat qalqib chiquvchi oynasida Term X-Ray(AI)ni koʻrsatish"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Lugʻat qalqib chiquvchi oynasida Vikipediya(AI)ni koʻrsatish"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Agar mavjud boʻlsa, AI javobidagi chuqur fikrlash jarayonini (mulohazani) koʻrsatish."
@@ -1145,6 +1196,12 @@ msgstr "Oʻxshash kitoblar tavsiyalari"
 
 msgid "Simplify"
 msgstr "Soddalashtirish"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "«Tarjima» uchun aqlli lugʻat qidiruvi"
+
+msgid "Standard - standard definitions"
+msgstr "Standart - standart taʼriflar"
 
 msgid "Stop"
 msgstr "To'xtatish"
@@ -1220,8 +1277,8 @@ msgstr "Bu tugma ajratilgan matn bilan tezkor eslatma yaratadi."
 msgid "This is a custom prompt"
 msgstr "Bu maxsus prompt"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Bu prompt ajratilgan matn uchun, yaʼni soʻz yoki ibora uchun lugʻat vazifasini bajaradi."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Bu koʻrsatma belgilangan matn uchun soʻz yoki ibora darajasida kitobni hisobga oluvchi lugʻat vazifasini bajaradi."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Bu prompt ajratilgan matnning grammatikasini tahlil qiladi, uning tuzilishi va har qanday grammatik xatolar haqida batafsil tushuntirish beradi."
@@ -1374,7 +1431,6 @@ msgstr "Voqea qayerda toʻxtagan:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "So'z shakli va lemma"
 

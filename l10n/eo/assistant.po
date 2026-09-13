@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -225,6 +225,12 @@ msgstr "AI-Responda Lingvo"
 msgid "AI Response Language Setting"
 msgstr "AI-Responda Lingva Agordo"
 
+msgid "AI Term X-Ray"
+msgstr "AI-Terma X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI-Vikipedio"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -239,6 +245,12 @@ msgstr "API-ŝlosilo estas postulata por %1."
 
 msgid "API key is required."
 msgstr "API-ŝlosilo estas deviga."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "API-ŝlosilo ne rajtas enhavi spacojn aŭ linisaltojn por %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API-ŝlosilo ne rajtas enhavi spacojn aŭ linisaltojn."
 
 msgid "About the Author"
 msgstr "Pri la aŭtoro"
@@ -337,6 +349,9 @@ msgstr "Baza URL estas postulata por %1."
 msgid "Base URL is required."
 msgstr "Baza URL estas deviga."
 
+msgid "Base URL must not contain spaces."
+msgstr "Baza URL ne rajtas enhavi spacojn."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Baza URL devas komenciĝi per http:// aŭ https://"
 
@@ -358,9 +373,6 @@ msgstr "Libro-Enrigardoj"
 
 msgid "Book Summary & Recs"
 msgstr "Libro-resumo kaj rekomendoj"
-
-msgid "Book Usage"
-msgstr "Uzo en la libro"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Branĉo/Etikedo \"%1\" ne estis trovita."
@@ -390,6 +402,9 @@ msgstr "Roluloj"
 msgid "Checking for updates..."
 msgstr "Kontrolante ĝisdatigojn..."
 
+msgid "Choose Definition Sections"
+msgstr "Elekti difinsekciojn"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Elektu, en kiun kajeron viaj notoj estas konservataj."
 
@@ -401,6 +416,9 @@ msgstr "Fermi"
 
 msgid "Composing answer ..."
 msgstr "Verkante respondon ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Konciza - respondi per mallongaj frazoj"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Agordo ne trovita. Bonvolu agordi configuration.lua unue."
@@ -530,6 +548,25 @@ msgstr "Vortaro"
 msgid "Dictionary Language"
 msgstr "Vortara Lingvo"
 
+msgid "Dictionary Popup"
+msgstr "Vortara ŝprucfenestro"
+
+msgid "Dictionary Settings"
+msgstr "Vortaraj agordoj"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Vortaro aŭ traduko?\n"
+"\n"
+"Ĉi tiu elekto ŝajnas esti vorto aŭ mallonga frazo.\n"
+"\n"
+"Vi povas ŝanĝi tion poste en Agordoj > Aliaj agordoj > Saĝa vortara serĉo por 'Traduki'."
+
 msgid "Display name"
 msgstr "Montrata nomo"
 
@@ -598,6 +635,9 @@ msgstr "Klarigi"
 msgid "Failed to fetch models"
 msgstr "Malsukcesis ŝarĝi modelojn"
 
+msgid "Failed to save provider."
+msgstr "Malsukcesis konservi la provizanton."
+
 msgid "Failed to save search tool."
 msgstr "Malsukcesis konservi la serĉilon."
 
@@ -618,6 +658,9 @@ msgstr "Filtrilo: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Por detaloj, vizitu la vikipaĝon 'Configuration' en github."
+
+msgid "Full - full definitions"
+msgstr "Plena - plenaj difinoj"
 
 msgid "Fun Analogy"
 msgstr "Amuza Analogio"
@@ -686,9 +729,8 @@ msgstr "Nevalida dosiernomo de kajero."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader-Ĝustigoj"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Tenu respondojn de la vortaro mallongaj: maksimume unu aŭ du frazoj por sekcio."
 
 msgid "Key Points"
 msgstr "Ĉefaj Punktoj"
@@ -750,8 +792,8 @@ msgstr "Ĉefaj temoj"
 msgid "Markdown Engine"
 msgstr "Markdown-Motoro"
 
-msgid "Meaning"
-msgstr "Signifo"
+msgid "Meaning & Usage"
+msgstr "Signifo kaj uzado"
 
 msgid "Model"
 msgstr "Modelo"
@@ -923,6 +965,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-kongruebla Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Aliaj agordoj"
+
 msgid "Outstanding questions:"
 msgstr "Neresponditaj demandoj:"
 
@@ -949,6 +994,9 @@ msgstr "La kromprogramo ne estas agordita."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Antaŭmetas librajn metadatumojn (titolo, aŭtoro kaj nuna legopozicio inkluzive de ĉapitro) al promptoj, kiuj elektas librokuntekston (defaŭlte: Explain, Historical Context, Summarize, Key Points kaj ELI5). Konduton por ĉiu prompto eblas superregi per use_book_context en la agorda dosiero."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Antaŭdifinita listo de sekcioj de la AI-vortaro."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Dominanta emocia stato/tono:"
@@ -1068,6 +1116,21 @@ msgstr "Tipara Grandeco de Responda Teksto"
 msgid "Role & Function"
 msgstr "Rolo kaj Funkcio"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Sendu mallongajn elektojn al la AI-vortaro anstataŭ al la tradukilo.\n"
+"\n"
+"- Konsideriĝas mallonga: ĝis 5 vortoj; por CJK-teksto, kiu ne havas\n"
+"  vortdisigilojn, ĝis 8 signoj.\n"
+"- Mallongaj elektoj malfermas la AI-vortaron; pli longaj elektoj estas\n"
+"  tradukataj kiel kutime."
+
 msgid "Runtime"
 msgstr "Rultempo"
 
@@ -1116,23 +1179,11 @@ msgstr "Elektitaĵo kopiita al tondujo."
 msgid "Settings"
 msgstr "Agordoj"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Montri Proprajn Promptojn en la Vortara Ŝprucfenestro"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Montri Vortaron (AI) en la Vortara Ŝprucfenestro"
-
 msgid "Show Follow-up Questions"
 msgstr "Montri Sekvajn Demandojn"
 
 msgid "Show Reasoning Text"
 msgstr "Montri Rezonadan Tekston"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Montri Term-X-Ray (AI) en la Vortara Ŝprucfenestro"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Montri Vikipedion (AI) en la Vortara Ŝprucfenestro"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Montri la profundan pensprocezon (rezonadon) el la AI-respondo, se ĝi ekzistas."
@@ -1145,6 +1196,12 @@ msgstr "Rekomendoj de similaj libroj"
 
 msgid "Simplify"
 msgstr "Plisimpligi"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Saĝa vortara serĉo por 'Translate'"
+
+msgid "Standard - standard definitions"
+msgstr "Norma - normaj difinoj"
 
 msgid "Stop"
 msgstr "Ĉesu"
@@ -1220,8 +1277,8 @@ msgstr "Ĉi tiu butono kreas rapidan noton kun la markita teksto."
 msgid "This is a custom prompt"
 msgstr "Ĉi tio estas propra prompto."
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Ĉi tiu prompto funkcias kiel vortaro por la markita teksto, por vorto aŭ frazo."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Ĉi tiu prompto funkcias kiel librokonscia vortaro por la reliefigita teksto, por vorto aŭ esprimo."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Ĉi tiu prompto analizas la gramatikon de la markita teksto, donante detalan klarigon de ĝia strukturo kaj de iuj gramatikaj eraroj."
@@ -1374,7 +1431,6 @@ msgstr "Kie la agado haltis:"
 msgid "Wikipedia"
 msgstr "Vikipedio"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Vortoformo kaj lemo"
 

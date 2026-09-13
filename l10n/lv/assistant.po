@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "AI atbildes valoda"
 msgid "AI Response Language Setting"
 msgstr "AI atbildes valodas iestatījums"
 
+msgid "AI Term X-Ray"
+msgstr "AI Term X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI Wikipedia"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "API atslēga ir nepieciešama %1."
 
 msgid "API key is required."
 msgstr "API atslēga ir obligāta."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "API atslēga %1 nedrīkst saturēt atstarpes vai rindu pārtraukumus."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API atslēga nedrīkst saturēt atstarpes vai rindu pārtraukumus."
 
 msgid "About the Author"
 msgstr "Par autoru"
@@ -336,6 +348,9 @@ msgstr "Bāzes URL ir nepieciešams %1."
 msgid "Base URL is required."
 msgstr "Bāzes URL ir obligāts."
 
+msgid "Base URL must not contain spaces."
+msgstr "Pamata URL nedrīkst saturēt atstarpes."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Bāzes URL jāsākas ar http:// vai https://"
 
@@ -357,9 +372,6 @@ msgstr "Grāmatas ieskati"
 
 msgid "Book Summary & Recs"
 msgstr "Grāmatas kopsavilkums un ieteikumi"
-
-msgid "Book Usage"
-msgstr "Lietojums grāmatā"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Zars/birka \"%1\" netika atrasts."
@@ -389,6 +401,9 @@ msgstr "Tēli"
 msgid "Checking for updates..."
 msgstr "Notiek atjauninājumu pārbaude..."
 
+msgid "Choose Definition Sections"
+msgstr "Izvēlēties definīcijas sadaļas"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Izvēlieties, kurā piezīmju kladē tiks saglabātas jūsu piezīmes."
 
@@ -400,6 +415,9 @@ msgstr "Aizvērt"
 
 msgid "Composing answer ..."
 msgstr "Notiek atbildes veidošana ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Īsi - atbilde īsos teikumos"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigurācija nav atrasta. Lūdzu, vispirms iestatiet configuration.lua."
@@ -529,6 +547,25 @@ msgstr "Vārdnīca"
 msgid "Dictionary Language"
 msgstr "Vārdnīcas valoda"
 
+msgid "Dictionary Popup"
+msgstr "Vārdnīcas uznirstošais logs"
+
+msgid "Dictionary Settings"
+msgstr "Vārdnīcas iestatījumi"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Vārdnīca vai tulkošana?\n"
+"\n"
+"Šī atlase izskatās pēc vārda vai īsas frāzes.\n"
+"\n"
+"To varēsiet mainīt vēlāk: Iestatījumi > Citi iestatījumi > Viedā vārdnīcas meklēšana opcijai 'Tulkot'."
+
 msgid "Display name"
 msgstr "Parādāmais nosaukums"
 
@@ -597,6 +634,9 @@ msgstr "Izskaidrot"
 msgid "Failed to fetch models"
 msgstr "Neizdevās iegūt modeļus"
 
+msgid "Failed to save provider."
+msgstr "Neizdevās saglabāt pakalpojumu sniedzēju."
+
 msgid "Failed to save search tool."
 msgstr "Neizdevās saglabāt meklēšanas rīku."
 
@@ -617,6 +657,9 @@ msgstr "Filtrs: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Detalizētai informācijai apmeklējiet 'Configuration' wiki lapu vietnē GitHub."
+
+msgid "Full - full definitions"
+msgstr "Pilna - pilnas definīcijas"
 
 msgid "Fun Analogy"
 msgstr "Jautra analoģija"
@@ -685,9 +728,8 @@ msgstr "Nederīgs piezīmju klades faila nosaukums."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader pielāgojumi"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Vārdnīcas atbildēm jābūt īsām: ne vairāk kā viens vai divi teikumi katrā sadaļā."
 
 msgid "Key Points"
 msgstr "Galvenie punkti"
@@ -750,8 +792,8 @@ msgstr "Galvenās tēmas"
 msgid "Markdown Engine"
 msgstr "Markdown dzinis"
 
-msgid "Meaning"
-msgstr "Nozīme"
+msgid "Meaning & Usage"
+msgstr "Nozīme un lietojums"
 
 msgid "Model"
 msgstr "Modelis"
@@ -923,6 +965,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI saderīgs Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Citi iestatījumi"
+
 msgid "Outstanding questions:"
 msgstr "Neatbildētie jautājumi:"
 
@@ -949,6 +994,9 @@ msgstr "Spraudnis nav konfigurēts."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Uzvedņu sākumā pievieno grāmatas metadatus (nosaukumu, autoru un pašreizējo lasīšanas pozīciju, ieskaitot nodaļu) tām uzvednēm, kuras izmanto grāmatas kontekstu (pēc noklusējuma: Explain, Historical Context, Summarize, Key Points un ELI5). Atsevišķu uzvedņu darbību var mainīt, izmantojot use_book_context konfigurācijas failā."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Priekšiestatīts AI vārdnīcas sadaļu saraksts."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Valdošais emocionālais stāvoklis/tonis:"
@@ -1069,6 +1117,21 @@ msgstr "Atbildes teksta fonta lielums"
 msgid "Role & Function"
 msgstr "Loma un funkcija"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Novirzīt īsas atlases uz AI vārdnīcu, nevis tulkotāju.\n"
+"\n"
+"- Par īsu uzskata: līdz 5 vārdiem; CJK tekstam, kurā nav vārdu\n"
+"  atdalītāju, līdz 8 rakstzīmēm.\n"
+"- Īsas atlases atver AI vārdnīcu; garākas atlases tiek\n"
+"  tulkotas kā parasti."
+
 msgid "Runtime"
 msgstr "Izpildlaiks"
 
@@ -1117,23 +1180,11 @@ msgstr "Iezīmētais teksts nokopēts starpliktuvē."
 msgid "Settings"
 msgstr "Iestatījumi"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Rādīt pielāgotās uzvednes vārdnīcas uznirstošajā logā"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Rādīt vārdnīcu (AI) vārdnīcas uznirstošajā logā"
-
 msgid "Show Follow-up Questions"
 msgstr "Rādīt papildu jautājumus"
 
 msgid "Show Reasoning Text"
 msgstr "Rādīt spriešanas tekstu"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Rādīt Term X-Ray(AI) vārdnīcas uznirstošajā logā"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Rādīt Vikipēdiju (AI) vārdnīcas uznirstošajā logā"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Rādīt AI atbildes dziļās domāšanas procesu (spriešanu), ja tāds ir."
@@ -1146,6 +1197,12 @@ msgstr "Līdzīgu grāmatu ieteikumi"
 
 msgid "Simplify"
 msgstr "Vienkāršot"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Viedā vārdnīcas meklēšana opcijai 'Tulkot'"
+
+msgid "Standard - standard definitions"
+msgstr "Standarta - standarta definīcijas"
 
 msgid "Stop"
 msgstr "Apturēt"
@@ -1221,8 +1278,8 @@ msgstr "Šī poga izveido ātro piezīmi ar iezīmēto tekstu."
 msgid "This is a custom prompt"
 msgstr "Šis ir pielāgots prompts"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Šī uzvedne darbojas kā vārdnīca iezīmētajam tekstam — vārdam vai frāzei."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Šī uzvedne darbojas kā uz grāmatu orientēta vārdnīca atzīmētajam tekstam — vārdam vai frāzei."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Šī uzvedne analizē iezīmētā teksta gramatiku, sniedzot detalizētu tā struktūras un visu gramatikas kļūdu skaidrojumu."
@@ -1375,7 +1432,6 @@ msgstr "Kur darbība apstājās:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Vārda forma un lema"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 03:15+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Euskara (AI translation)\n"
@@ -224,6 +224,12 @@ msgstr "AI erantzunaren hizkuntza"
 msgid "AI Response Language Setting"
 msgstr "AI erantzunaren hizkuntza-ezarpena"
 
+msgid "AI Term X-Ray"
+msgstr "AI terminoen X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI Wikipedia"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "API gakoa beharrezkoa da %1rentzat."
 
 msgid "API key is required."
 msgstr "API gakoa beharrezkoa da."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "%1: API gakoak ez du zuriunerik edo lerro-jauzirik eduki behar."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API gakoak ez du zuriunerik edo lerro-jauzirik eduki behar."
 
 msgid "About the Author"
 msgstr "Egileari buruz"
@@ -336,6 +348,9 @@ msgstr "Oinarrizko URLa beharrezkoa da %1rentzat."
 msgid "Base URL is required."
 msgstr "Oinarrizko URLa beharrezkoa da."
 
+msgid "Base URL must not contain spaces."
+msgstr "Oinarrizko URLak ez du zuriunerik eduki behar."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Oinarrizko URLak http:// edo https:// hasiera izan behar du."
 
@@ -357,9 +372,6 @@ msgstr "Liburuaren ikuspegiak"
 
 msgid "Book Summary & Recs"
 msgstr "Liburuaren laburpena eta gomendioak"
-
-msgid "Book Usage"
-msgstr "Liburuko erabilera"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Ez da \"%1\" adarra/etiketa aurkitu."
@@ -389,6 +401,9 @@ msgstr "Pertsonaiak"
 msgid "Checking for updates..."
 msgstr "Eguneraketak egiaztatzen..."
 
+msgid "Choose Definition Sections"
+msgstr "Aukeratu definizio-atalak"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Aukeratu zein koadernotan gordetzen diren zure oharrak."
 
@@ -400,6 +415,9 @@ msgstr "Itxi"
 
 msgid "Composing answer ..."
 msgstr "Erantzuna osatzen ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Laburra - erantzun esaldi laburretan"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigurazioa ez da aurkitu. Mesedez, konfiguratu configuration.lua lehenik."
@@ -529,6 +547,25 @@ msgstr "Hiztegia"
 msgid "Dictionary Language"
 msgstr "Hiztegiaren hizkuntza"
 
+msgid "Dictionary Popup"
+msgstr "Hiztegi-leihoa"
+
+msgid "Dictionary Settings"
+msgstr "Hiztegiaren ezarpenak"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Hiztegia edo itzulpena?\n"
+"\n"
+"Hautapen honek hitz bat edo esaldi labur bat dirudi.\n"
+"\n"
+"Hau geroago alda dezakezu: Ezarpenak > Beste ezarpenak > Hiztegi-kontsulta adimenduna 'Itzuli' funtziorako."
+
 msgid "Display name"
 msgstr "Bistaratze-izena"
 
@@ -597,6 +634,9 @@ msgstr "Azaldu"
 msgid "Failed to fetch models"
 msgstr "Ezin izan dira modeloak eskuratu"
 
+msgid "Failed to save provider."
+msgstr "Huts egin du hornitzailea gordetzean."
+
 msgid "Failed to save search tool."
 msgstr "Ezin izan da bilaketa-tresna gorde."
 
@@ -617,6 +657,9 @@ msgstr "Iragazkia: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Xehetasunetarako, bisitatu github-eko 'Configuration' wiki orria."
+
+msgid "Full - full definitions"
+msgstr "Osoa - definizio osoak"
 
 msgid "Fun Analogy"
 msgstr "Analogia dibertigarria"
@@ -685,9 +728,8 @@ msgstr "Koadernoaren fitxategi-izena baliogabea."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader doikuntzak"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Eduki hiztegiaren erantzunak labur: gehienez esaldi bat edo bi atal bakoitzeko."
 
 msgid "Key Points"
 msgstr "Puntu nagusiak"
@@ -749,8 +791,8 @@ msgstr "Gai nagusiak"
 msgid "Markdown Engine"
 msgstr "Markdown motorra"
 
-msgid "Meaning"
-msgstr "Esanahia"
+msgid "Meaning & Usage"
+msgstr "Esanahia eta erabilera"
 
 msgid "Model"
 msgstr "Eredua"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAIrekin bateragarria den Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Beste ezarpenak"
+
 msgid "Outstanding questions:"
 msgstr "Erantzun gabeko galderak:"
 
@@ -948,6 +993,9 @@ msgstr "Plugina ez dago konfiguratuta."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Liburuaren metadatuak (izenburua, egilea eta egungo irakurketa-posizioa, kapitulua barne) gehitzen dizkie liburuaren testuingurua aukeratzen duten promptei (lehenespenez: Azaldu, Testuinguru Historikoa, Laburbildu, Funtsezko Puntuak eta ELI5). Prompt bakoitzaren portaera use_book_context ezarpenarekin baliogabetu daiteke konfigurazio fitxategian."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "AI hiztegiaren atalen zerrenda aurrez ezarria."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Emozio-egoera/tonu nagusia:"
@@ -1067,6 +1115,21 @@ msgstr "Erantzun Testuaren Letra-tamaina"
 msgid "Role & Function"
 msgstr "Eginkizuna eta funtzioa"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Bideratu hautapen laburrak AI hiztegira, itzultzailearen ordez.\n"
+"\n"
+"- Laburtzat jotzen da: 5 hitz arte; CJK testuak, hitz\n"
+"  bereizlerik ez baitu, 8 karaktere arte.\n"
+"- Hautapen laburrek AI hiztegia irekitzen dute; hautapen luzeagoak\n"
+"  ohi bezala itzultzen dira."
+
 msgid "Runtime"
 msgstr "Exekuzio-ingurunea"
 
@@ -1115,23 +1178,11 @@ msgstr "Hautapena arbelean kopiatu da."
 msgid "Settings"
 msgstr "Ezarpenak"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Erakutsi prompt pertsonalizatuak hiztegi-popup-ean"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Erakutsi Hiztegia (AI) hiztegi-popup-ean"
-
 msgid "Show Follow-up Questions"
 msgstr "Erakutsi jarraipen-galderak"
 
 msgid "Show Reasoning Text"
 msgstr "Erakutsi arrazoiketa-testua"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Erakutsi Term X-Ray (AI) hiztegi-popup-ean"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Erakutsi Wikipedia (AI) hiztegi-popup-ean"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Erakutsi AIaren erantzunaren pentsamendu-prozesu sakona (arrazoiketa), baldin badago."
@@ -1144,6 +1195,12 @@ msgstr "Antzeko liburuen gomendioak"
 
 msgid "Simplify"
 msgstr "Sinplifikatu"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Hiztegi-kontsulta adimenduna 'Itzuli' funtziorako"
+
+msgid "Standard - standard definitions"
+msgstr "Estandarra - definizio estandarrak"
 
 msgid "Stop"
 msgstr "Gelditu"
@@ -1219,8 +1276,8 @@ msgstr "Botoi honek ohar azkar bat sortzen du nabarmendutako testuarekin."
 msgid "This is a custom prompt"
 msgstr "Prompt pertsonalizatu bat da."
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Prompt hau nabarmendutako testuaren hiztegi gisa jarduten du, hitz edo esaldi baterako."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Prompt honek liburuaren testuingurua ezagutzen duen hiztegi gisa jokatzen du nabarmendutako testuarentzat, hitz edo esaldi batera arte."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Prompt honek nabarmendutako testuaren gramatika aztertzen du, haren egituraren eta egon daitezkeen akats gramatikalen azalpen zehatza emanez."
@@ -1373,7 +1430,6 @@ msgstr "Non gelditu zen ekintza:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Hitz forma eta lema"
 

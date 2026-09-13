@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 02:47+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: عربى (AI translation)\n"
@@ -224,6 +224,12 @@ msgstr "لغة استجابة الذكاء الاصطناعي"
 msgid "AI Response Language Setting"
 msgstr "إعداد لغة استجابة الذكاء الاصطناعي"
 
+msgid "AI Term X-Ray"
+msgstr "الأشعة السينية للمصطلحات بالذكاء الاصطناعي"
+
+msgid "AI Wikipedia"
+msgstr "ويكيبيديا بالذكاء الاصطناعي"
+
 msgid "AI X-Ray"
 msgstr "X-Ray للذكاء الاصطناعي"
 
@@ -238,6 +244,12 @@ msgstr "مفتاح API مطلوب لـ %1."
 
 msgid "API key is required."
 msgstr "مفتاح API مطلوب."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "يجب ألا يحتوي مفتاح API على مسافات أو فواصل أسطر لـ %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "يجب ألا يحتوي مفتاح API على مسافات أو فواصل أسطر."
 
 msgid "About the Author"
 msgstr "عن المؤلف"
@@ -336,6 +348,9 @@ msgstr "عنوان URL الأساسي مطلوب لـ %1."
 msgid "Base URL is required."
 msgstr "عنوان URL الأساسي مطلوب."
 
+msgid "Base URL must not contain spaces."
+msgstr "يجب ألا يحتوي عنوان URL الأساسي على مسافات."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "يجب أن يبدأ عنوان URL الأساسي بـ http:// أو https://"
 
@@ -357,9 +372,6 @@ msgstr "رؤى الكتاب"
 
 msgid "Book Summary & Recs"
 msgstr "ملخص الكتاب والتوصيات"
-
-msgid "Book Usage"
-msgstr "الاستخدام في الكتاب"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "الفرع/الوسم \"%1\" غير موجود."
@@ -389,6 +401,9 @@ msgstr "الشخصيات"
 msgid "Checking for updates..."
 msgstr "جارٍ التحقق من التحديثات..."
 
+msgid "Choose Definition Sections"
+msgstr "اختر أقسام التعريف"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "اختر المفكرة التي تُحفظ فيها ملاحظاتك."
 
@@ -400,6 +415,9 @@ msgstr "إغلاق"
 
 msgid "Composing answer ..."
 msgstr "جارٍ صياغة الإجابة ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "موجز - الرد بجمل قصيرة"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "لم يتم العثور على الإعدادات. يرجى إعداد configuration.lua أولاً."
@@ -529,6 +547,25 @@ msgstr "القاموس"
 msgid "Dictionary Language"
 msgstr "لغة القاموس"
 
+msgid "Dictionary Popup"
+msgstr "نافذة القاموس المنبثقة"
+
+msgid "Dictionary Settings"
+msgstr "إعدادات القاموس"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"قاموس أم ترجمة؟\n"
+"\n"
+"يبدو أن هذا التحديد كلمة أو عبارة قصيرة.\n"
+"\n"
+"يمكنك تغيير ذلك لاحقًا في الإعدادات > إعدادات أخرى > البحث الذكي في القاموس لـ 'ترجمة'."
+
 msgid "Display name"
 msgstr "الاسم المعروض"
 
@@ -597,6 +634,9 @@ msgstr "اشرح"
 msgid "Failed to fetch models"
 msgstr "فشل جلب النماذج"
 
+msgid "Failed to save provider."
+msgstr "تعذّر حفظ المزوّد."
+
 msgid "Failed to save search tool."
 msgstr "فشل في حفظ أداة البحث."
 
@@ -617,6 +657,9 @@ msgstr "التصفية: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "للتفاصيل، تفضل بزيارة صفحة الويكي 'Configuration' على github."
+
+msgid "Full - full definitions"
+msgstr "كامل - تعريفات كاملة"
 
 msgid "Fun Analogy"
 msgstr "تشبيه ممتع"
@@ -685,9 +728,8 @@ msgstr "اسم ملف المفكرة غير صالح."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "تعديلات KOReader"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "اجعل إجابات القاموس قصيرة: جملة أو جملتان على الأكثر لكل قسم."
 
 msgid "Key Points"
 msgstr "النقاط الرئيسية"
@@ -753,8 +795,8 @@ msgstr "الموضوعات الرئيسية"
 msgid "Markdown Engine"
 msgstr "محرك ماركداون"
 
-msgid "Meaning"
-msgstr "المعنى"
+msgid "Meaning & Usage"
+msgstr "المعنى والاستخدام"
 
 msgid "Model"
 msgstr "النموذج"
@@ -926,6 +968,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "Chat Completions API المتوافق مع OpenAI"
 
+msgid "Other Settings"
+msgstr "إعدادات أخرى"
+
 msgid "Outstanding questions:"
 msgstr "الأسئلة المعلقة:"
 
@@ -952,6 +997,9 @@ msgstr "الإضافة غير مهيأة."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "يضيف بيانات الكتاب الوصفية (العنوان والمؤلف وموضع القراءة الحالي بما في ذلك الفصل) في بداية المطالبات التي تختار سياق الكتاب (افتراضيًا: الشرح، السياق التاريخي، التلخيص، النقاط الرئيسية وELI5). يمكن تجاوز سلوك كل مطالبة باستخدام use_book_context في ملف الإعدادات."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "قائمة معدّة مسبقًا بأقسام قاموس الذكاء الاصطناعي."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "الحالة العاطفية/النبرة السائدة:"
@@ -1072,6 +1120,21 @@ msgstr "حجم خط نص الرد"
 msgid "Role & Function"
 msgstr "الدور والوظيفة"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"وجّه التحديدات القصيرة إلى قاموس الذكاء الاصطناعي بدلًا من المترجم.\n"
+"\n"
+"- يُعدّ قصيرًا: حتى 5 كلمات؛ وبالنسبة للنصوص الصينية واليابانية والكورية، التي لا تحتوي على\n"
+"  فواصل بين الكلمات، حتى 8 أحرف.\n"
+"- التحديدات القصيرة تفتح قاموس الذكاء الاصطناعي؛ أما التحديدات الأطول فتُترجم\n"
+"  كالمعتاد."
+
 msgid "Runtime"
 msgstr "وقت التشغيل"
 
@@ -1120,23 +1183,11 @@ msgstr "تم نسخ التحديد إلى الحافظة."
 msgid "Settings"
 msgstr "الإعدادات"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "إظهار الموجّهات المخصصة في نافذة القاموس المنبثقة"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "إظهار القاموس (AI) في نافذة القاموس المنبثقة"
-
 msgid "Show Follow-up Questions"
 msgstr "إظهار أسئلة المتابعة"
 
 msgid "Show Reasoning Text"
 msgstr "إظهار نص التفكير"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "إظهار Term X-Ray (AI) في نافذة القاموس المنبثقة"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "إظهار ويكيبيديا (AI) في نافذة القاموس المنبثقة"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "إظهار عملية التفكير العميق (الاستدلال) من استجابة الذكاء الاصطناعي إذا وُجدت."
@@ -1149,6 +1200,12 @@ msgstr "توصيات بكتب مشابهة"
 
 msgid "Simplify"
 msgstr "بسّط"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "البحث الذكي في القاموس لـ 'ترجمة'"
+
+msgid "Standard - standard definitions"
+msgstr "قياسي - تعريفات قياسية"
 
 msgid "Stop"
 msgstr "إيقاف"
@@ -1224,8 +1281,8 @@ msgstr "ينشئ هذا الزر ملاحظة سريعة بالنص المميز
 msgid "This is a custom prompt"
 msgstr "هذا موجّه مخصص"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "يعمل هذا الموجّه كقاموس للنص المميز، سواء كان كلمة أو عبارة."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "يعمل هذا الأمر التوجيهي كقاموس واعٍ بالكتاب بالنسبة للنص المميّز، سواء أكان كلمة أو عبارة."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "يحلل هذا الموجّه قواعد النص المميز، ويقدم شرحًا مفصلاً لبنية النص وأي أخطاء نحوية."
@@ -1378,7 +1435,6 @@ msgstr "أين توقف الحدث:"
 msgid "Wikipedia"
 msgstr "ويكيبيديا"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "صيغة الكلمة والأصل"
 

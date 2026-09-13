@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "Język odpowiedzi AI"
 msgid "AI Response Language Setting"
 msgstr "Ustawienie języka odpowiedzi AI"
 
+msgid "AI Term X-Ray"
+msgstr "X-Ray terminu AI"
+
+msgid "AI Wikipedia"
+msgstr "Wikipedia AI"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "Klucz API jest wymagany dla %1."
 
 msgid "API key is required."
 msgstr "Klucz API jest wymagany."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "Klucz API dla %1 nie może zawierać spacji ani znaków nowej linii."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "Klucz API nie może zawierać spacji ani znaków nowej linii."
 
 msgid "About the Author"
 msgstr "O autorze"
@@ -336,6 +348,9 @@ msgstr "Adres URL bazowy jest wymagany dla %1."
 msgid "Base URL is required."
 msgstr "Adres URL bazowy jest wymagany."
 
+msgid "Base URL must not contain spaces."
+msgstr "Bazowy adres URL nie może zawierać spacji."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Adres URL bazowy musi zaczynać się od http:// lub https://"
 
@@ -357,9 +372,6 @@ msgstr "Spostrzeżenia o książce"
 
 msgid "Book Summary & Recs"
 msgstr "Podsumowanie książki i rekomendacje"
-
-msgid "Book Usage"
-msgstr "Użycie w książce"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Nie znaleziono gałęzi/tagu \"%1\"."
@@ -389,6 +401,9 @@ msgstr "Postacie"
 msgid "Checking for updates..."
 msgstr "Sprawdzanie aktualizacji..."
 
+msgid "Choose Definition Sections"
+msgstr "Wybierz sekcje definicji"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Wybierz notatnik, do którego zapisywane są Twoje notatki."
 
@@ -400,6 +415,9 @@ msgstr "Zamknij"
 
 msgid "Composing answer ..."
 msgstr "Tworzenie odpowiedzi ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Zwięźle – odpowiadaj krótkimi zdaniami"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Nie znaleziono konfiguracji. Najpierw skonfiguruj configuration.lua."
@@ -529,6 +547,25 @@ msgstr "Słownik"
 msgid "Dictionary Language"
 msgstr "Język słownika"
 
+msgid "Dictionary Popup"
+msgstr "Okno słownika"
+
+msgid "Dictionary Settings"
+msgstr "Ustawienia słownika"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Słownik czy tłumaczenie?\n"
+"\n"
+"Ten fragment wygląda na słowo lub krótkie wyrażenie.\n"
+"\n"
+"Możesz to później zmienić w Ustawienia > Inne ustawienia > Inteligentne wyszukiwanie słownikowe dla „Tłumacz”."
+
 msgid "Display name"
 msgstr "Nazwa wyświetlana"
 
@@ -597,6 +634,9 @@ msgstr "Wyjaśnij"
 msgid "Failed to fetch models"
 msgstr "Nie udało się pobrać modeli"
 
+msgid "Failed to save provider."
+msgstr "Nie udało się zapisać dostawcy."
+
 msgid "Failed to save search tool."
 msgstr "Nie udało się zapisać narzędzia wyszukiwania."
 
@@ -617,6 +657,9 @@ msgstr "Filtr: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Szczegóły znajdziesz na stronie wiki „Configuration” w serwisie GitHub."
+
+msgid "Full - full definitions"
+msgstr "Pełne – pełne definicje"
 
 msgid "Fun Analogy"
 msgstr "Zabawna analogia"
@@ -685,9 +728,8 @@ msgstr "Nieprawidłowa nazwa pliku notatnika."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "Dostosowania KOReadera"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Utrzymuj krótkie odpowiedzi słownika: najwyżej jedno lub dwa zdania na sekcję."
 
 msgid "Key Points"
 msgstr "Kluczowe punkty"
@@ -751,8 +793,8 @@ msgstr "Główne motywy"
 msgid "Markdown Engine"
 msgstr "Silnik Markdown"
 
-msgid "Meaning"
-msgstr "Znaczenie"
+msgid "Meaning & Usage"
+msgstr "Znaczenie i użycie"
 
 msgid "Model"
 msgstr "Model"
@@ -924,6 +966,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "API Chat Completions zgodne z OpenAI"
 
+msgid "Other Settings"
+msgstr "Inne ustawienia"
+
 msgid "Outstanding questions:"
 msgstr "Otwarte pytania:"
 
@@ -950,6 +995,9 @@ msgstr "Wtyczka nie jest skonfigurowana."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Dodaje metadane książki (tytuł, autora i bieżącą pozycję czytania, w tym rozdział) do promptów, dla których włączono kontekst książki (domyślnie: Explain, Historical Context, Summarize, Key Points i ELI5). Zachowanie dla poszczególnych promptów można nadpisać za pomocą use_book_context w pliku konfiguracyjnym."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Wstępnie ustawiona lista sekcji słownika AI."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Dominujący stan emocjonalny/nastrój:"
@@ -1071,6 +1119,21 @@ msgstr "Rozmiar czcionki tekstu odpowiedzi"
 msgid "Role & Function"
 msgstr "Rola i funkcja"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Kieruj krótkie zaznaczenia do słownika AI zamiast do tłumacza.\n"
+"\n"
+"- Za krótkie uznaje się: do 5 słów; w przypadku tekstu CJK, który nie ma\n"
+"  separatorów słów, do 8 znaków.\n"
+"- Krótkie zaznaczenia otwierają słownik AI; dłuższe są\n"
+"  tłumaczone jak zwykle."
+
 msgid "Runtime"
 msgstr "Środowisko uruchomieniowe"
 
@@ -1119,23 +1182,11 @@ msgstr "Zaznaczenie skopiowano do schowka."
 msgid "Settings"
 msgstr "Ustawienia"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Pokaż niestandardowe prompty w oknie słownika"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Pokaż Słownik (AI) w oknie słownika"
-
 msgid "Show Follow-up Questions"
 msgstr "Pokaż pytania uzupełniające"
 
 msgid "Show Reasoning Text"
 msgstr "Pokaż tekst rozumowania"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Pokaż Term X-Ray (AI) w oknie słownika"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Pokaż Wikipedię (AI) w oknie słownika"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Pokaż głęboki proces myślowy (rozumowanie) z odpowiedzi AI, jeśli istnieje."
@@ -1148,6 +1199,12 @@ msgstr "Rekomendacje podobnych książek"
 
 msgid "Simplify"
 msgstr "Uprość"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Inteligentne wyszukiwanie słownikowe dla „Tłumacz”"
+
+msgid "Standard - standard definitions"
+msgstr "Standardowe – standardowe definicje"
 
 msgid "Stop"
 msgstr "Zatrzymaj"
@@ -1223,8 +1280,8 @@ msgstr "Ten przycisk tworzy szybką notatkę z zaznaczonym tekstem."
 msgid "This is a custom prompt"
 msgstr "To jest niestandardowy prompt"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Ten prompt działa jak słownik dla zaznaczonego tekstu, czyli słowa lub frazy."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Ten prompt działa jak słownik uwzględniający kontekst książki dla zaznaczonego tekstu — słowa lub krótkiego wyrażenia."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Ten prompt analizuje gramatykę zaznaczonego tekstu, podając szczegółowe wyjaśnienie jego struktury oraz wszelkich błędów gramatycznych."
@@ -1377,7 +1434,6 @@ msgstr "Gdzie zatrzymała się akcja:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Forma wyrazu i lemat"
 

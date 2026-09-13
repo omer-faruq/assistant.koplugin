@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 04:09+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Македонски (AI translation)\n"
@@ -224,6 +224,12 @@ msgstr "Јазик на АИ одговорите"
 msgid "AI Response Language Setting"
 msgstr "Подесување на јазикот на АИ одговорите"
 
+msgid "AI Term X-Ray"
+msgstr "AI Рендген за поими"
+
+msgid "AI Wikipedia"
+msgstr "AI Википедија"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "Потребен е API клуч за %1."
 
 msgid "API key is required."
 msgstr "Потребен е API клуч."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "API клучот не смее да содржи празни места или нови редови за %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API клучот не смее да содржи празни места или нови редови."
 
 msgid "About the Author"
 msgstr "За авторот"
@@ -336,6 +348,9 @@ msgstr "Потребна е основна URL за %1."
 msgid "Base URL is required."
 msgstr "Потребна е основна URL адреса."
 
+msgid "Base URL must not contain spaces."
+msgstr "Основната URL-адреса не смее да содржи празни места."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Основната URL адреса мора да започнува со http:// или https://"
 
@@ -357,9 +372,6 @@ msgstr "Увид во книгата"
 
 msgid "Book Summary & Recs"
 msgstr "Резиме на книга и препораки"
-
-msgid "Book Usage"
-msgstr "Употреба во книгата"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Гранката/ознаката „%1“ не е пронајдена."
@@ -389,6 +401,9 @@ msgstr "Ликови"
 msgid "Checking for updates..."
 msgstr "Проверка за ажурирања..."
 
+msgid "Choose Definition Sections"
+msgstr "Изберете секции за дефиниции"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Изберете во кој бележник се зачувуваат вашите белешки."
 
@@ -400,6 +415,9 @@ msgstr "Затвори"
 
 msgid "Composing answer ..."
 msgstr "Составување одговор ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Концизно – одговарај со кратки реченици"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Конфигурацијата не е пронајдена. Ве молиме прво поставете configuration.lua."
@@ -529,6 +547,25 @@ msgstr "Речник"
 msgid "Dictionary Language"
 msgstr "Јазик на речникот"
 
+msgid "Dictionary Popup"
+msgstr "Искокан прозорец на речникот"
+
+msgid "Dictionary Settings"
+msgstr "Поставки за речникот"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Речник или превод?\n"
+"\n"
+"Овој избор личи на збор или кратка фраза.\n"
+"\n"
+"Ова можете да го промените подоцна во Поставки > Други поставки > Паметно пребарување во речник за „Преведи“."
+
 msgid "Display name"
 msgstr "Име за приказ"
 
@@ -597,6 +634,9 @@ msgstr "Објасни"
 msgid "Failed to fetch models"
 msgstr "Неуспешно вчитување на модели"
 
+msgid "Failed to save provider."
+msgstr "Не успеа зачувувањето на провајдерот."
+
 msgid "Failed to save search tool."
 msgstr "Неуспешно зачувување на алатката за пребарување."
 
@@ -617,6 +657,9 @@ msgstr "Филтер: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "За детали, посетете ја вики-страницата „Configuration“ на github."
+
+msgid "Full - full definitions"
+msgstr "Целосно – целосни дефиниции"
 
 msgid "Fun Analogy"
 msgstr "Забавна аналогија"
@@ -685,9 +728,8 @@ msgstr "Невалидно име на датотека за бележник."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader прилагодувања"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Одржувајте ги одговорите на речникот кратки: најмногу една или две реченици по секција."
 
 msgid "Key Points"
 msgstr "Клучни точки"
@@ -749,8 +791,8 @@ msgstr "Главни теми"
 msgid "Markdown Engine"
 msgstr "Markdown мотор"
 
-msgid "Meaning"
-msgstr "Значење"
+msgid "Meaning & Usage"
+msgstr "Значење и употреба"
 
 msgid "Model"
 msgstr "Модел"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-компатибилен Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Други поставки"
+
 msgid "Outstanding questions:"
 msgstr "Отворени прашања:"
 
@@ -948,6 +993,9 @@ msgstr "Приклучокот не е конфигуриран."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Ги додава метаподатоците на книгата (наслов, автор и моменталната позиција на читање, вклучувајќи глава) на промптите што се вклучени во контекстот на книгата (по стандард: Објасни, Историски контекст, Сумирај, Клучни точки и ELI5). Однесувањето за секој промпт може да се промени со use_book_context во конфигурациската датотека."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Однапред зададена листа на секции на AI речникот."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Преовладувачка емоционална состојба/тон:"
@@ -1069,6 +1117,21 @@ msgstr "Големина на фонтот на текстот на одгово
 msgid "Role & Function"
 msgstr "Улога и функција"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Насочи кратки избори кон AI речникот наместо кон преведувачот.\n"
+"\n"
+"- Се смета за кратко: до 5 збора; за CJK текст, кој нема\n"
+"  разделувачи на зборови, до 8 знаци.\n"
+"- Кратките избори го отвораат AI речникот; подолгите избори се\n"
+"  преведуваат како и обично."
+
 msgid "Runtime"
 msgstr "Runtime"
 
@@ -1117,23 +1180,11 @@ msgstr "Изборот е копиран во клипборд."
 msgid "Settings"
 msgstr "Подесувања"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Прикажи прилагодени промпти во скокачкиот прозорец за речник"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Прикажи Речник (ВИ) во скокачкиот прозорец за речник"
-
 msgid "Show Follow-up Questions"
 msgstr "Прикажи дополнителни прашања"
 
 msgid "Show Reasoning Text"
 msgstr "Прикажи текст за расудување"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Прикажи Term X-Ray (ВИ) во скокачкиот прозорец за речник"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Прикажи Википедија (ВИ) во скокачкиот прозорец за речник"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Прикажи го длабокиот процес на размислување (расудување) од одговорот на ВИ, доколку постои."
@@ -1146,6 +1197,12 @@ msgstr "Препораки за слични книги"
 
 msgid "Simplify"
 msgstr "Поедностави"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Паметно пребарување во речник за „Преведи“"
+
+msgid "Standard - standard definitions"
+msgstr "Стандардно – стандардни дефиниции"
 
 msgid "Stop"
 msgstr "Стоп"
@@ -1221,8 +1278,8 @@ msgstr "Ова копче создава брза белешка со означ
 msgid "This is a custom prompt"
 msgstr "Ова е прилагоден промпт"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Овој промпт служи како речник за означениот текст, за збор или фраза."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Овој промпт делува како речник поврзан со книгата за означениот текст, сè до поединечен збор или фраза."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Овој промпт ја анализира граматиката на означениот текст, обезбедувајќи детално објаснување на неговата структура и сите граматички грешки."
@@ -1375,7 +1432,6 @@ msgstr "Каде застана дејството:"
 msgid "Wikipedia"
 msgstr "Википедија"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Зборовна форма и лема"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "AI vastuse keel"
 msgid "AI Response Language Setting"
 msgstr "AI vastuse keele seadistus"
 
+msgid "AI Term X-Ray"
+msgstr "AI Term X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI Vikipeedia"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "API-võti on vajalik %1 jaoks."
 
 msgid "API key is required."
 msgstr "API-võti on kohustuslik."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "API-võti ei tohi %1 puhul sisaldada tühikuid ega reavahetusi."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API-võti ei tohi sisaldada tühikuid ega reavahetusi."
 
 msgid "About the Author"
 msgstr "Autorist"
@@ -336,6 +348,9 @@ msgstr "Baas-URL on vajalik %1 jaoks."
 msgid "Base URL is required."
 msgstr "Baas-URL on kohustuslik."
 
+msgid "Base URL must not contain spaces."
+msgstr "Baas-URL ei tohi sisaldada tühikuid."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Baas-URL peab algama http:// või https://"
 
@@ -357,9 +372,6 @@ msgstr "Raamatu ülevaated"
 
 msgid "Book Summary & Recs"
 msgstr "Raamatu kokkuvõte ja soovitused"
-
-msgid "Book Usage"
-msgstr "Kasutus raamatus"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Haru/silt \"%1\" ei leitud."
@@ -389,6 +401,9 @@ msgstr "Tegelased"
 msgid "Checking for updates..."
 msgstr "Värskenduste kontrollimine..."
 
+msgid "Choose Definition Sections"
+msgstr "Vali määratluse jaotised"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Vali, millisesse märkmikku oma märkmed salvestada."
 
@@ -400,6 +415,9 @@ msgstr "Sule"
 
 msgid "Composing answer ..."
 msgstr "Vastuse koostamine ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Lühike – vasta lühikeste lausetega"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfiguratsiooni ei leitud. Palun seadistage esmalt configuration.lua."
@@ -529,6 +547,25 @@ msgstr "Sõnaraamat"
 msgid "Dictionary Language"
 msgstr "Sõnaraamatu keel"
 
+msgid "Dictionary Popup"
+msgstr "Sõnaraamatu hüpikaken"
+
+msgid "Dictionary Settings"
+msgstr "Sõnaraamatu seaded"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Sõnaraamat või tõlge?\n"
+"\n"
+"See valik sarnaneb sõnale või lühikesele fraasile.\n"
+"\n"
+"Saad seda hiljem muuta: Seaded > Muud seaded > Nutikas sõnaraamatuotsing valiku „Tõlgi“ jaoks."
+
 msgid "Display name"
 msgstr "Kuvatav nimi"
 
@@ -597,6 +634,9 @@ msgstr "Selgita"
 msgid "Failed to fetch models"
 msgstr "Mudelite laadimine ebaõnnestus"
 
+msgid "Failed to save provider."
+msgstr "Teenusepakkuja salvestamine ebaõnnestus."
+
 msgid "Failed to save search tool."
 msgstr "Otsingutööriista salvestamine ebaõnnestus."
 
@@ -617,6 +657,9 @@ msgstr "Filter: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Üksikasjadeks külasta GitHubi viki-lehte 'Configuration'."
+
+msgid "Full - full definitions"
+msgstr "Täielik – täielikud määratlused"
 
 msgid "Fun Analogy"
 msgstr "Lõbus analoogia"
@@ -685,9 +728,8 @@ msgstr "Vigane märkmiku failinimi."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReaderi kohandused"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Hoia sõnaraamatu vastused lühikesed: kõige rohkem üks või kaks lauset jaotise kohta."
 
 msgid "Key Points"
 msgstr "Põhipunktid"
@@ -749,8 +791,8 @@ msgstr "Peamised teemad"
 msgid "Markdown Engine"
 msgstr "Markdowni mootor"
 
-msgid "Meaning"
-msgstr "Tähendus"
+msgid "Meaning & Usage"
+msgstr "Tähendus ja kasutus"
 
 msgid "Model"
 msgstr "Mudel"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-ühilduv Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Muud seaded"
+
 msgid "Outstanding questions:"
 msgstr "Lahtised küsimused:"
 
@@ -948,6 +993,9 @@ msgstr "Plugin pole konfigureeritud."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Lisab raamatu metaandmed (pealkiri, autor ja praegune lugemiskoht koos peatükiga) päringute algusesse, mis lubavad raamatu konteksti (vaikimisi: Selgita, Ajalooline kontekst, Kokkuvõte, Põhipunktid ja ELI5). Päringupõhist käitumist saab konfiguratsioonifailis muuta valikuga use_book_context."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "AI-sõnaraamatu jaotiste eelmääratud loend."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Valitsev emotsionaalne seisund/toon:"
@@ -1069,6 +1117,21 @@ msgstr "Vastuse teksti kirjasuurus"
 msgid "Role & Function"
 msgstr "Roll ja funktsioon"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Suuna lühikesed valikud tõlkija asemel AI-sõnaraamatusse.\n"
+"\n"
+"- Lühikeseks loetakse kuni 5 sõna; CJK-teksti puhul, milles puuduvad\n"
+"  sõnaeraldajad, kuni 8 märki.\n"
+"- Lühikesed valikud avavad AI-sõnaraamatu; pikemad valikud\n"
+"  tõlgitakse tavapäraselt."
+
 msgid "Runtime"
 msgstr "Käitusaeg"
 
@@ -1117,23 +1180,11 @@ msgstr "Valik kopeeriti lõikelauale."
 msgid "Settings"
 msgstr "Seaded"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Näita kohandatud päringuid sõnaraamatu hüpikaknas"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Näita sõnaraamatut (AI) sõnaraamatu hüpikaknas"
-
 msgid "Show Follow-up Questions"
 msgstr "Näita järelküsimusi"
 
 msgid "Show Reasoning Text"
 msgstr "Näita arutluse teksti"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Näita Term X-Ray (AI) sõnaraamatu hüpikaknas"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Näita Vikipeediat (AI) sõnaraamatu hüpikaknas"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Näita AI vastuse põhjalikku mõttekäiku (arutlust), kui see on olemas."
@@ -1146,6 +1197,12 @@ msgstr "Sarnaste raamatute soovitused"
 
 msgid "Simplify"
 msgstr "Lihtsusta"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Nutikas sõnaraamatuotsing valiku „Tõlgi“ jaoks"
+
+msgid "Standard - standard definitions"
+msgstr "Standardne – standardsed määratlused"
 
 msgid "Stop"
 msgstr "Peata"
@@ -1221,8 +1278,8 @@ msgstr "See nupp loob esiletõstetud tekstiga kiirmärke."
 msgid "This is a custom prompt"
 msgstr "See on kohandatud päring"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "See prompt toimib esiletõstetud teksti – sõna või fraasi – sõnaraamatuna."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "See prompt toimib raamatutundliku sõnaraamatuna esiletõstetud tekstile – sõnale või fraasile."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "See prompt analüüsib esiletõstetud teksti grammatikat, pakkudes üksikasjalikku selgitust selle struktuuri ja kõigi grammatikavigade kohta."
@@ -1375,7 +1432,6 @@ msgstr "Kus tegevus peatus:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Sõnavorm ja lemma"
 

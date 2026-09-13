@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "Idioma de resposta de la IA"
 msgid "AI Response Language Setting"
 msgstr "Configuració de l'idioma de resposta de la IA"
 
+msgid "AI Term X-Ray"
+msgstr "Term X-Ray amb IA"
+
+msgid "AI Wikipedia"
+msgstr "Wikipedia amb IA"
+
 msgid "AI X-Ray"
 msgstr "X-Ray de la IA"
 
@@ -238,6 +244,12 @@ msgstr "Es requereix una clau d'API per a %1."
 
 msgid "API key is required."
 msgstr "La clau d'API és obligatòria."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "La clau API no pot contenir espais ni salts de línia per a %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "La clau API no pot contenir espais ni salts de línia."
 
 msgid "About the Author"
 msgstr "Sobre l'autor"
@@ -336,6 +348,9 @@ msgstr "Es requereix una URL base per a %1."
 msgid "Base URL is required."
 msgstr "L'URL base és obligatori."
 
+msgid "Base URL must not contain spaces."
+msgstr "L'URL base no pot contenir espais."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "L'URL base ha de començar amb http:// o https://"
 
@@ -357,9 +372,6 @@ msgstr "Informació del llibre"
 
 msgid "Book Summary & Recs"
 msgstr "Resum del llibre i recomanacions"
-
-msgid "Book Usage"
-msgstr "Ús al llibre"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "No s'ha trobat la branca/etiqueta «%1»."
@@ -389,6 +401,9 @@ msgstr "Personatges"
 msgid "Checking for updates..."
 msgstr "S'està comprovant si hi ha actualitzacions..."
 
+msgid "Choose Definition Sections"
+msgstr "Tria les seccions de definició"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Tria a quin quadern es desen les notes."
 
@@ -400,6 +415,9 @@ msgstr "Tanca"
 
 msgid "Composing answer ..."
 msgstr "Redactant la resposta ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Concis: respon amb frases curtes"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "No s'ha trobat la configuració. Si us plau, configureu primer configuration.lua."
@@ -529,6 +547,25 @@ msgstr "Diccionari"
 msgid "Dictionary Language"
 msgstr "Idioma del diccionari"
 
+msgid "Dictionary Popup"
+msgstr "Finestra emergent del diccionari"
+
+msgid "Dictionary Settings"
+msgstr "Configuració del diccionari"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Diccionari o traducció?\n"
+"\n"
+"Aquesta selecció sembla una paraula o una frase curta.\n"
+"\n"
+"Pots canviar-ho més endavant a Configuració > Altres paràmetres > Cerca intel·ligent al diccionari per a «Traducció»."
+
 msgid "Display name"
 msgstr "Nom visible"
 
@@ -597,6 +634,9 @@ msgstr "Explica"
 msgid "Failed to fetch models"
 msgstr "No s'han pogut obtenir els models"
 
+msgid "Failed to save provider."
+msgstr "No s'ha pogut desar el proveïdor."
+
 msgid "Failed to save search tool."
 msgstr "No s'ha pogut desar l'eina de cerca."
 
@@ -617,6 +657,9 @@ msgstr "Filtre: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Per a més detalls, visita la pàgina wiki «Configuration» a GitHub."
+
+msgid "Full - full definitions"
+msgstr "Completa: definicions completes"
 
 msgid "Fun Analogy"
 msgstr "Analogia divertida"
@@ -685,9 +728,8 @@ msgstr "Nom de fitxer de quadern no vàlid."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "Ajustos de KOReader"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Mantén les respostes del diccionari curtes: com a màxim una o dues frases per secció."
 
 msgid "Key Points"
 msgstr "Punts clau"
@@ -749,8 +791,8 @@ msgstr "Temes principals"
 msgid "Markdown Engine"
 msgstr "Motor de Markdown"
 
-msgid "Meaning"
-msgstr "Significat"
+msgid "Meaning & Usage"
+msgstr "Significat i ús"
 
 msgid "Model"
 msgstr "Model"
@@ -922,6 +964,9 @@ msgstr "API de respostes d'OpenAI"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "API Chat Completions compatible amb OpenAI"
 
+msgid "Other Settings"
+msgstr "Altres paràmetres"
+
 msgid "Outstanding questions:"
 msgstr "Preguntes pendents:"
 
@@ -948,6 +993,9 @@ msgstr "El complement no està configurat."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Afegeix metadades del llibre (títol, autor i posició de lectura actual inclòs el capítol) a les indicacions que accepten el context del llibre (per defecte: Explica, Context històric, Resum, Punts clau i ELI5). El comportament per indicació es pot anul·lar amb use_book_context al fitxer de configuració."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Llista predefinida de seccions del diccionari d'IA."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Estat emocional/to predominant:"
@@ -1067,6 +1115,21 @@ msgstr "Mida de lletra del text de resposta"
 msgid "Role & Function"
 msgstr "Rol i funció"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Envia les seleccions curtes al diccionari d'IA en lloc del traductor.\n"
+"\n"
+"- Es considera curta: fins a 5 paraules; per a text CJK, que no té\n"
+"  separadors de paraules, fins a 8 caràcters.\n"
+"- Les seleccions curtes obren el diccionari d'IA; les seleccions més\n"
+"  llargues es tradueixen com de costum."
+
 msgid "Runtime"
 msgstr "Runtime"
 
@@ -1115,23 +1178,11 @@ msgstr "Selecció copiada al porta-retalls."
 msgid "Settings"
 msgstr "Configuració"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Mostra les indicacions personalitzades a la finestra emergent del diccionari"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Mostra el Diccionari (IA) a la finestra emergent del diccionari"
-
 msgid "Show Follow-up Questions"
 msgstr "Mostra les preguntes de seguiment"
 
 msgid "Show Reasoning Text"
 msgstr "Mostra el text de raonament"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Mostra Term X-Ray (IA) a la finestra emergent del diccionari"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Mostra la Viquipèdia (IA) a la finestra emergent del diccionari"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Mostra el procés de pensament profund (raonament) de la resposta de la IA, si n'hi ha."
@@ -1144,6 +1195,12 @@ msgstr "Recomanacions de llibres similars"
 
 msgid "Simplify"
 msgstr "Simplifica"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Cerca intel·ligent al diccionari per a «Traducció»"
+
+msgid "Standard - standard definitions"
+msgstr "Estàndard: definicions estàndard"
 
 msgid "Stop"
 msgstr "Atura"
@@ -1219,8 +1276,8 @@ msgstr "Aquest botó crea una nota ràpida amb el text ressaltat."
 msgid "This is a custom prompt"
 msgstr "Això és una indicació personalitzada"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Aquesta indicació actua com un diccionari per al text ressaltat, ja sigui una paraula o una frase."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Aquest prompt actua com un diccionari conscient del llibre per al text ressaltat, ja sigui una paraula o una frase."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Aquesta indicació analitza la gramàtica del text ressaltat i ofereix una explicació detallada de la seva estructura i de qualsevol error gramatical."
@@ -1373,7 +1430,6 @@ msgstr "On es va aturar l'acció:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Forma de la paraula i lema"
 

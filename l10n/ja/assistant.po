@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "AI応答言語"
 msgid "AI Response Language Setting"
 msgstr "AI応答言語の設定"
 
+msgid "AI Term X-Ray"
+msgstr "AI用語X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI Wikipedia"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "%1にはAPIキーが必要です。"
 
 msgid "API key is required."
 msgstr "APIキーは必須です。"
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "%1 のAPIキーにはスペースや改行を含めることはできません。"
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "APIキーにはスペースや改行を含めることはできません。"
 
 msgid "About the Author"
 msgstr "著者について"
@@ -336,6 +348,9 @@ msgstr "%1にはベースURLが必要です。"
 msgid "Base URL is required."
 msgstr "ベースURLは必須です。"
 
+msgid "Base URL must not contain spaces."
+msgstr "ベースURLにはスペースを含めることはできません。"
+
 msgid "Base URL must start with http:// or https://"
 msgstr "ベースURLは http:// または https:// で始まる必要があります。"
 
@@ -357,9 +372,6 @@ msgstr "ブックインサイト"
 
 msgid "Book Summary & Recs"
 msgstr "書籍の要約とおすすめ"
-
-msgid "Book Usage"
-msgstr "書籍内での用法"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ブランチ/タグ \"%1\" が見つかりませんでした。"
@@ -389,6 +401,9 @@ msgstr "登場人物"
 msgid "Checking for updates..."
 msgstr "更新を確認中..."
 
+msgid "Choose Definition Sections"
+msgstr "定義セクションを選択"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "メモの保存先ノートブックを選択してください。"
 
@@ -400,6 +415,9 @@ msgstr "閉じる"
 
 msgid "Composing answer ..."
 msgstr "回答を作成中..."
+
+msgid "Concise - reply in short sentences"
+msgstr "簡潔 - 短い文で回答"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "設定が見つかりません。最初に configuration.lua を設定してください。"
@@ -529,6 +547,25 @@ msgstr "辞書"
 msgid "Dictionary Language"
 msgstr "辞書の言語"
 
+msgid "Dictionary Popup"
+msgstr "辞書ポップアップ"
+
+msgid "Dictionary Settings"
+msgstr "辞書設定"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"辞書と翻訳のどちらにしますか？\n"
+"\n"
+"この選択範囲は単語または短いフレーズのようです。\n"
+"\n"
+"これは後で設定 > その他の設定 > 「翻訳」のスマート辞書検索から変更できます。"
+
 msgid "Display name"
 msgstr "表示名"
 
@@ -597,6 +634,9 @@ msgstr "説明"
 msgid "Failed to fetch models"
 msgstr "モデルの取得に失敗しました"
 
+msgid "Failed to save provider."
+msgstr "プロバイダーを保存できませんでした。"
+
 msgid "Failed to save search tool."
 msgstr "検索ツールの保存に失敗しました。"
 
@@ -617,6 +657,9 @@ msgstr "フィルター: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "詳細は、GitHubの「Configuration」wikiページを参照してください。"
+
+msgid "Full - full definitions"
+msgstr "完全 - 完全な定義"
 
 msgid "Fun Analogy"
 msgstr "楽しい例え"
@@ -685,9 +728,8 @@ msgstr "無効なノートブックファイル名です。"
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader の微調整"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "辞書の回答は短く保ちます：各セクションにつき最大1～2文。"
 
 msgid "Key Points"
 msgstr "重要ポイント"
@@ -748,8 +790,8 @@ msgstr "主要テーマ"
 msgid "Markdown Engine"
 msgstr "Markdownエンジン"
 
-msgid "Meaning"
-msgstr "意味"
+msgid "Meaning & Usage"
+msgstr "意味と用法"
 
 msgid "Model"
 msgstr "モデル"
@@ -921,6 +963,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI互換のChat Completions API"
 
+msgid "Other Settings"
+msgstr "その他の設定"
+
 msgid "Outstanding questions:"
 msgstr "未解決の疑問："
 
@@ -947,6 +992,9 @@ msgstr "プラグインが設定されていません。"
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "ブックコンテキストを有効にしたプロンプトに、書籍メタデータ（タイトル、著者、現在の読書位置（章を含む））を先頭に追加します（デフォルト: 説明、歴史的背景、要約、要点、ELI5）。プロンプトごとの動作は、設定ファイルのuse_book_contextで上書きできます。"
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "AI辞書のセクションのプリセットリスト。"
 
 msgid "Prevailing emotional state/tone:"
 msgstr "支配的な感情状態・トーン："
@@ -1067,6 +1115,21 @@ msgstr "応答テキストのフォントサイズ"
 msgid "Role & Function"
 msgstr "役割と機能"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"短い選択範囲は翻訳機能ではなくAI辞書に送られます。\n"
+"\n"
+"- 短いと見なされる範囲：最大5語。単語の区切りがないCJKテキストでは\n"
+"  最大8文字。\n"
+"- 短い選択範囲はAI辞書を開き、長い選択範囲は通常どおり\n"
+"  翻訳されます。"
+
 msgid "Runtime"
 msgstr "ランタイム"
 
@@ -1115,23 +1178,11 @@ msgstr "選択範囲をクリップボードにコピーしました。"
 msgid "Settings"
 msgstr "設定"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "辞書ポップアップにカスタムプロンプトを表示"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "辞書ポップアップに辞書（AI）を表示"
-
 msgid "Show Follow-up Questions"
 msgstr "フォローアップ質問を表示"
 
 msgid "Show Reasoning Text"
 msgstr "推論テキストを表示"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "辞書ポップアップにTerm X-Ray（AI）を表示"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "辞書ポップアップにWikipedia（AI）を表示"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "AI応答に含まれる場合、深く考えた過程（推論）を表示します。"
@@ -1144,6 +1195,12 @@ msgstr "類似書籍のおすすめ"
 
 msgid "Simplify"
 msgstr "簡略化"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "「翻訳」のスマート辞書検索"
+
+msgid "Standard - standard definitions"
+msgstr "標準 - 標準的な定義"
 
 msgid "Stop"
 msgstr "停止"
@@ -1219,8 +1276,8 @@ msgstr "このボタンは、選択したテキストを含むクイックノー
 msgid "This is a custom prompt"
 msgstr "これはカスタムプロンプトです"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "このプロンプトは、選択したテキストの辞書として機能し、語句の意味を提供します。"
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "このプロンプトは、ハイライトされたテキスト（単語またはフレーズ）に対して、書籍を理解した辞書として機能します。"
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "このプロンプトは、選択したテキストの文法を分析し、その構造と文法上の誤りについて詳しく説明します。"
@@ -1373,7 +1430,6 @@ msgstr "物語が中断した場所："
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "語形と見出し語"
 

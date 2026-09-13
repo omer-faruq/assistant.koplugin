@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Bahasa Indonesia (AI translation)\n"
@@ -224,6 +224,12 @@ msgstr "Bahasa Respons AI"
 msgid "AI Response Language Setting"
 msgstr "Pengaturan Bahasa Respons AI"
 
+msgid "AI Term X-Ray"
+msgstr "X-Ray Istilah AI"
+
+msgid "AI Wikipedia"
+msgstr "Wikipedia AI"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "Kunci API diperlukan untuk %1."
 
 msgid "API key is required."
 msgstr "Kunci API wajib diisi."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "Kunci API tidak boleh berisi spasi atau jeda baris untuk %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "Kunci API tidak boleh berisi spasi atau jeda baris."
 
 msgid "About the Author"
 msgstr "Tentang Penulis"
@@ -336,6 +348,9 @@ msgstr "URL dasar diperlukan untuk %1."
 msgid "Base URL is required."
 msgstr "URL dasar wajib diisi."
 
+msgid "Base URL must not contain spaces."
+msgstr "URL Dasar tidak boleh berisi spasi."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "URL dasar harus diawali dengan http:// atau https://"
 
@@ -357,9 +372,6 @@ msgstr "Wawasan Buku"
 
 msgid "Book Summary & Recs"
 msgstr "Ringkasan Buku & Rekomendasi"
-
-msgid "Book Usage"
-msgstr "Penggunaan dalam Buku"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Cabang/Tag \"%1\" tidak ditemukan."
@@ -389,6 +401,9 @@ msgstr "Tokoh"
 msgid "Checking for updates..."
 msgstr "Memeriksa pembaruan..."
 
+msgid "Choose Definition Sections"
+msgstr "Pilih Bagian Definisi"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Pilih buku catatan tempat catatan Anda disimpan."
 
@@ -400,6 +415,9 @@ msgstr "Tutup"
 
 msgid "Composing answer ..."
 msgstr "Menyusun jawaban ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Ringkas - balas dengan kalimat pendek"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigurasi tidak ditemukan. Silakan atur configuration.lua terlebih dahulu."
@@ -529,6 +547,25 @@ msgstr "Kamus"
 msgid "Dictionary Language"
 msgstr "Bahasa Kamus"
 
+msgid "Dictionary Popup"
+msgstr "Pop-up Kamus"
+
+msgid "Dictionary Settings"
+msgstr "Pengaturan Kamus"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Kamus atau Terjemahan?\n"
+"\n"
+"Pilihan ini tampak seperti kata atau frasa pendek.\n"
+"\n"
+"Anda dapat mengubahnya nanti di Pengaturan > Pengaturan Lain > Pencarian Kamus Pintar untuk 'Terjemahkan'."
+
 msgid "Display name"
 msgstr "Nama tampilan"
 
@@ -597,6 +634,9 @@ msgstr "Jelaskan"
 msgid "Failed to fetch models"
 msgstr "Gagal mengambil model"
 
+msgid "Failed to save provider."
+msgstr "Gagal menyimpan penyedia."
+
 msgid "Failed to save search tool."
 msgstr "Gagal menyimpan alat pencarian."
 
@@ -617,6 +657,9 @@ msgstr "Filter: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Untuk detail, kunjungi halaman wiki 'Configuration' di github."
+
+msgid "Full - full definitions"
+msgstr "Lengkap - definisi lengkap"
 
 msgid "Fun Analogy"
 msgstr "Analogi Seru"
@@ -685,9 +728,8 @@ msgstr "Nama file buku catatan tidak valid."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "Penyesuaian KOReader"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Jaga jawaban kamus tetap singkat: paling banyak satu atau dua kalimat per bagian."
 
 msgid "Key Points"
 msgstr "Poin-Poin Utama"
@@ -748,8 +790,8 @@ msgstr "Tema Utama"
 msgid "Markdown Engine"
 msgstr "Mesin Markdown"
 
-msgid "Meaning"
-msgstr "Makna"
+msgid "Meaning & Usage"
+msgstr "Arti & Penggunaan"
 
 msgid "Model"
 msgstr "Model"
@@ -921,6 +963,9 @@ msgstr "API Respons OpenAI"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "API Chat Completions yang kompatibel dengan OpenAI"
 
+msgid "Other Settings"
+msgstr "Pengaturan Lain"
+
 msgid "Outstanding questions:"
 msgstr "Pertanyaan yang belum terjawab:"
 
@@ -947,6 +992,9 @@ msgstr "Plugin belum dikonfigurasi."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Menyisipkan metadata buku (judul, penulis, dan posisi baca saat ini termasuk bab) di awal prompt yang memilih untuk menggunakan konteks buku (secara default: Jelaskan, Konteks Historis, Ringkas, Poin-Poin Utama, dan ELI5). Perilaku per-prompt dapat ditimpa dengan use_book_context di file konfigurasi."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Daftar prasetel bagian Kamus AI."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Keadaan emosional/nada yang dominan:"
@@ -1068,6 +1116,21 @@ msgstr "Ukuran Font Teks Respons"
 msgid "Role & Function"
 msgstr "Peran & Fungsi"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Arahkan pilihan pendek ke Kamus AI alih-alih Penerjemah.\n"
+"\n"
+"- Dianggap pendek: hingga 5 kata; untuk teks CJK, yang tidak memiliki\n"
+"  pemisah kata, hingga 8 karakter.\n"
+"- Pilihan pendek membuka Kamus AI; pilihan yang lebih panjang\n"
+"  diterjemahkan seperti biasa."
+
 msgid "Runtime"
 msgstr "Runtime"
 
@@ -1116,23 +1179,11 @@ msgstr "Pilihan disalin ke papan klip."
 msgid "Settings"
 msgstr "Pengaturan"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Tampilkan Prompt Kustom di Popup Kamus"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Tampilkan Kamus (AI) di Popup Kamus"
-
 msgid "Show Follow-up Questions"
 msgstr "Tampilkan Pertanyaan Lanjutan"
 
 msgid "Show Reasoning Text"
 msgstr "Tampilkan Teks Penalaran"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Tampilkan Term X-Ray (AI) di Popup Kamus"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Tampilkan Wikipedia (AI) di Popup Kamus"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Tampilkan proses berpikir mendalam (penalaran) dari respons AI jika ada."
@@ -1145,6 +1196,12 @@ msgstr "Rekomendasi Buku Serupa"
 
 msgid "Simplify"
 msgstr "Sederhanakan"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Pencarian Kamus Pintar untuk 'Terjemahkan'"
+
+msgid "Standard - standard definitions"
+msgstr "Standar - definisi standar"
 
 msgid "Stop"
 msgstr "Berhenti"
@@ -1220,8 +1277,8 @@ msgstr "Tombol ini membuat catatan cepat dengan teks yang disorot."
 msgid "This is a custom prompt"
 msgstr "Ini adalah prompt kustom"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Prompt ini berfungsi sebagai kamus untuk teks yang disorot, yaitu untuk sebuah kata atau frasa."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Prompt ini berfungsi sebagai kamus yang memahami buku untuk teks yang disorot, hingga satu kata atau frasa."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Prompt ini menganalisis tata bahasa dari teks yang disorot, memberikan penjelasan rinci tentang strukturnya dan setiap kesalahan tata bahasa."
@@ -1374,7 +1431,6 @@ msgstr "Di mana aksi berhenti:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Bentuk Kata & Lema"
 

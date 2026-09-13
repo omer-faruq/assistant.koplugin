@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: assistant.koplugin 1.17\n"
+"Project-Id-Version: assistant.koplugin 1.18\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:36+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -243,9 +243,6 @@ msgstr ""
 msgid "e.g. google/gemini-3.0-flash-exp:free"
 msgstr ""
 
-msgid "Save"
-msgstr ""
-
 msgid "No models available."
 msgstr ""
 
@@ -358,6 +355,24 @@ msgstr ""
 msgid "Active: %1"
 msgstr ""
 
+msgid "Meaning & Usage"
+msgstr ""
+
+msgid "Translation"
+msgstr ""
+
+msgid "Synonyms"
+msgstr ""
+
+msgid "Word Form & Lemma"
+msgstr ""
+
+msgid "Example"
+msgstr ""
+
+msgid "Word Origin"
+msgstr ""
+
 msgid "This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."
 msgstr ""
 
@@ -378,7 +393,7 @@ msgstr ""
 msgid "Context Limitations"
 msgstr ""
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
 msgstr ""
 
 msgid "Quick Note"
@@ -566,28 +581,6 @@ msgstr ""
 msgid "Contradictions / Open Questions"
 msgstr ""
 
-#. @translators used in the dictionary.
-msgid "Word Form & Lemma"
-msgstr ""
-
-msgid "Synonyms"
-msgstr ""
-
-msgid "Meaning"
-msgstr ""
-
-msgid "Translation"
-msgstr ""
-
-msgid "Book Usage"
-msgstr ""
-
-msgid "Example"
-msgstr ""
-
-msgid "Word Origin"
-msgstr ""
-
 msgid "OpenAI-compatible Chat Completions API"
 msgstr ""
 
@@ -636,7 +629,13 @@ msgstr ""
 msgid "Base URL must start with http:// or https://"
 msgstr ""
 
+msgid "Base URL must not contain spaces."
+msgstr ""
+
 msgid "API key is required."
+msgstr ""
+
+msgid "API key must not contain spaces or line breaks."
 msgstr ""
 
 msgid "Provider not found."
@@ -679,6 +678,9 @@ msgid "Request failed: %1"
 msgstr ""
 
 msgid "Connection test successful."
+msgstr ""
+
+msgid "Failed to save provider."
 msgstr ""
 
 msgid "Delete"
@@ -823,6 +825,9 @@ msgstr ""
 msgid "API key is required for %1."
 msgstr ""
 
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr ""
+
 msgid "Base URL is required for %1."
 msgstr ""
 
@@ -872,6 +877,36 @@ msgid ""
 "Builtin Tools Works ONLY with these models:\n"
 "- Gemini-2.5/3\n"
 "- OpenAI/gpt-4o-search\n"
+msgstr ""
+
+msgid "AI Wikipedia"
+msgstr ""
+
+msgid "AI Term X-Ray"
+msgstr ""
+
+msgid "Custom Prompts"
+msgstr ""
+
+msgid "Dictionary Popup"
+msgstr ""
+
+msgid "Concise - reply in short sentences"
+msgstr ""
+
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr ""
+
+msgid "Standard - standard definitions"
+msgstr ""
+
+msgid "Full - full definitions"
+msgstr ""
+
+msgid "Preset list of AI Dictionary sections."
+msgstr ""
+
+msgid "Choose Definition Sections"
 msgstr ""
 
 msgid "Context Settings"
@@ -931,6 +966,9 @@ msgstr ""
 msgid "Show follow up questions related to the response content."
 msgstr ""
 
+msgid "Dictionary Settings"
+msgstr ""
+
 msgid "Notebook Settings"
 msgstr ""
 
@@ -960,30 +998,29 @@ msgstr ""
 msgid "No notebooks folder is set."
 msgstr ""
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
+msgid "Other Settings"
 msgstr ""
 
 #. @translators: 'Translate' is a built-in function
 msgid "Use AI Assistant for 'Translate'"
 msgstr ""
 
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr ""
+
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr ""
 
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
-msgstr ""
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr ""
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr ""
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr ""
-
-msgid "Show Custom Prompts in Dictionary Popup"
 msgstr ""
 
 msgid "Reset Assistant Settings"
@@ -1105,6 +1142,9 @@ msgstr ""
 msgid "Note added successfully"
 msgstr ""
 
+msgid "Save"
+msgstr ""
+
 msgid "Save conversation to"
 msgstr ""
 
@@ -1209,9 +1249,6 @@ msgstr ""
 msgid "Summary of the book using your highlights and notes."
 msgstr ""
 
-msgid "Custom Prompts"
-msgstr ""
-
 msgid "Your own prompts defined in the configuration file"
 msgstr ""
 
@@ -1282,6 +1319,14 @@ msgid "Remove [%s] from Highlight Menu?"
 msgstr ""
 
 msgid "Remove"
+msgstr ""
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
 msgstr ""
 
 msgid "Configuration not found. Please set up configuration.lua first."

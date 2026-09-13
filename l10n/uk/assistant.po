@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -216,6 +216,12 @@ msgstr "Мова відповідей ШІ"
 msgid "AI Response Language Setting"
 msgstr "Налаштування мови відповідей ШІ"
 
+msgid "AI Term X-Ray"
+msgstr "AI Term X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI-Вікіпедія"
+
 msgid "AI X-Ray"
 msgstr "ШІ X-Ray"
 
@@ -230,6 +236,12 @@ msgstr "Для %1 потрібен API-ключ."
 
 msgid "API key is required."
 msgstr "API-ключ обов'язковий."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "Ключ API не повинен містити пробілів або розривів рядків для %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "Ключ API не повинен містити пробілів або розривів рядків."
 
 msgid "About the Author"
 msgstr "Про автора"
@@ -328,6 +340,9 @@ msgstr "Для %1 потрібна базова URL-адреса."
 msgid "Base URL is required."
 msgstr "Базовий URL обов'язковий."
 
+msgid "Base URL must not contain spaces."
+msgstr "Базова URL-адреса не повинна містити пробілів."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Базовий URL має починатися з http:// або https://"
 
@@ -349,9 +364,6 @@ msgstr "Інсайти книги"
 
 msgid "Book Summary & Recs"
 msgstr "Короткий зміст книги та рекомендації"
-
-msgid "Book Usage"
-msgstr "Використання в книзі"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Гілку/тег \"%1\" не знайдено."
@@ -381,6 +393,9 @@ msgstr "Персонажі"
 msgid "Checking for updates..."
 msgstr "Перевірка оновлень..."
 
+msgid "Choose Definition Sections"
+msgstr "Вибір розділів визначень"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Виберіть, у який записник зберігати ваші нотатки."
 
@@ -392,6 +407,9 @@ msgstr "Закрити"
 
 msgid "Composing answer ..."
 msgstr "Формування відповіді ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Стисло — відповідь короткими реченнями"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Конфігурацію не знайдено. Будь ласка, спочатку налаштуйте configuration.lua."
@@ -521,6 +539,25 @@ msgstr "Словник"
 msgid "Dictionary Language"
 msgstr "Мова словника"
 
+msgid "Dictionary Popup"
+msgstr "Спливаюче вікно словника"
+
+msgid "Dictionary Settings"
+msgstr "Налаштування словника"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Словник чи переклад?\n"
+"\n"
+"Цей вибір схожий на слово або коротку фразу.\n"
+"\n"
+"Ви можете змінити це пізніше в Налаштування > Інші налаштування > Розумний пошук у словнику для «Перекладу»."
+
 msgid "Display name"
 msgstr "Відображувана назва"
 
@@ -589,6 +626,9 @@ msgstr "Пояснити"
 msgid "Failed to fetch models"
 msgstr "Не вдалося отримати моделі"
 
+msgid "Failed to save provider."
+msgstr "Не вдалося зберегти провайдера."
+
 msgid "Failed to save search tool."
 msgstr "Не вдалося зберегти інструмент пошуку."
 
@@ -609,6 +649,9 @@ msgstr "Фільтр: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Докладніше див. на сторінці вікі «Configuration» на GitHub."
+
+msgid "Full - full definitions"
+msgstr "Повно — повні визначення"
 
 msgid "Fun Analogy"
 msgstr "Цікава аналогія"
@@ -677,9 +720,8 @@ msgstr "Недійсне ім'я файлу записника."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "Твіки KOReader"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Тримайте відповіді словника короткими: щонайбільше одне-два речення на розділ."
 
 msgid "Key Points"
 msgstr "Ключові моменти"
@@ -743,8 +785,8 @@ msgstr "Головні теми"
 msgid "Markdown Engine"
 msgstr "Рушій Markdown"
 
-msgid "Meaning"
-msgstr "Значення"
+msgid "Meaning & Usage"
+msgstr "Значення та вживання"
 
 msgid "Model"
 msgstr "Модель"
@@ -916,6 +958,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-сумісний Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Інші налаштування"
+
 msgid "Outstanding questions:"
 msgstr "Відкриті питання:"
 
@@ -942,6 +987,9 @@ msgstr "Плагін не налаштовано."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Додає метадані книги (назву, автора та поточну позицію читання, включно з розділом) до запитів, які погоджуються на використання контексту книги (за замовчуванням: Пояснити, Історичний контекст, Підсумувати, Ключові моменти та ELI5). Поведінку для окремого запиту можна перевизначити за допомогою use_book_context у конфігураційному файлі."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Попередньо визначений список розділів AI-словника."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Панівний емоційний стан/тон:"
@@ -1063,6 +1111,21 @@ msgstr "Розмір шрифту відповіді"
 msgid "Role & Function"
 msgstr "Роль і функція"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Спрямовувати короткі виділення до AI-словника замість перекладача.\n"
+"\n"
+"- Вважається коротким: до 5 слів; для тексту CJK, який не має\n"
+"  розділювачів слів, — до 8 символів.\n"
+"- Короткі виділення відкривають AI-словник; довші виділення\n"
+"  перекладаються як завжди."
+
 msgid "Runtime"
 msgstr "Середовище виконання"
 
@@ -1111,23 +1174,11 @@ msgstr "Виділення скопійовано в буфер обміну."
 msgid "Settings"
 msgstr "Налаштування"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Показувати користувацькі запити у спливаючому вікні словника"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Показувати словник (ШІ) у спливаючому вікні словника"
-
 msgid "Show Follow-up Questions"
 msgstr "Показувати супутні запитання"
 
 msgid "Show Reasoning Text"
 msgstr "Показувати текст міркувань"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Показувати Term X-Ray (ШІ) у спливаючому вікні словника"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Показувати Вікіпедію (ШІ) у спливаючому вікні словника"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Показувати глибокий процес мислення (міркування) з відповіді ШІ, якщо він є."
@@ -1140,6 +1191,12 @@ msgstr "Рекомендації схожих книг"
 
 msgid "Simplify"
 msgstr "Спростити"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Розумний пошук у словнику для «Перекладу»"
+
+msgid "Standard - standard definitions"
+msgstr "Стандартно — стандартні визначення"
 
 msgid "Stop"
 msgstr "Зупинити"
@@ -1215,8 +1272,8 @@ msgstr "Ця кнопка створює швидку нотатку з виді
 msgid "This is a custom prompt"
 msgstr "Це користувацький запит"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Цей промпт діє як словник для виділеного тексту, пояснюючи слово чи фразу."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Цей промпт діє як словник із урахуванням книги для виділеного тексту — до одного слова або фрази."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Цей промпт аналізує граматику виділеного тексту, надаючи детальне пояснення його структури та будь-яких граматичних помилок."
@@ -1369,7 +1426,6 @@ msgstr "Де зупинилася дія:"
 msgid "Wikipedia"
 msgstr "Вікіпедія"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Форма слова та лема"
 

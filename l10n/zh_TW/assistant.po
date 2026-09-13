@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 02:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: 中文（台灣) (AI translation)\n"
@@ -224,6 +224,12 @@ msgstr "AI 回應語言"
 msgid "AI Response Language Setting"
 msgstr "AI 回應語言設定"
 
+msgid "AI Term X-Ray"
+msgstr "AI 詞語 X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI 維基百科"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "%1 需要 API 金鑰。"
 
 msgid "API key is required."
 msgstr "必須填寫 API 金鑰。"
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "%1 的 API 金鑰不得包含空格或換行。"
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API 金鑰不得包含空格或換行。"
 
 msgid "About the Author"
 msgstr "關於作者"
@@ -336,6 +348,9 @@ msgstr "%1 需要 Base URL。"
 msgid "Base URL is required."
 msgstr "必須填寫 Base URL。"
 
+msgid "Base URL must not contain spaces."
+msgstr "基礎 URL 不得包含空格。"
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Base URL 必須以 http:// 或 https:// 開頭。"
 
@@ -357,9 +372,6 @@ msgstr "書籍洞察"
 
 msgid "Book Summary & Recs"
 msgstr "書籍摘要與推薦"
-
-msgid "Book Usage"
-msgstr "書中用法"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "找不到分支/標籤「%1」。"
@@ -389,6 +401,9 @@ msgstr "角色"
 msgid "Checking for updates..."
 msgstr "正在檢查更新..."
 
+msgid "Choose Definition Sections"
+msgstr "選擇釋義區段"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "選擇要將筆記儲存到哪個筆記本。"
 
@@ -400,6 +415,9 @@ msgstr "關閉"
 
 msgid "Composing answer ..."
 msgstr "正在撰寫回答 ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "簡潔 - 以簡短句子回覆"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "找不到設定檔。請先設定 configuration.lua。"
@@ -529,6 +547,25 @@ msgstr "字典"
 msgid "Dictionary Language"
 msgstr "字典語言"
 
+msgid "Dictionary Popup"
+msgstr "字典彈出視窗"
+
+msgid "Dictionary Settings"
+msgstr "字典設定"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"要查字典還是翻譯？\n"
+"\n"
+"您選取的內容看起來是單字或簡短詞組。\n"
+"\n"
+"您之後可以在「設定 > 其他設定 > '翻譯' 的智慧字典查詢」中變更此設定。"
+
 msgid "Display name"
 msgstr "顯示名稱"
 
@@ -597,6 +634,9 @@ msgstr "解釋"
 msgid "Failed to fetch models"
 msgstr "取得模型失敗"
 
+msgid "Failed to save provider."
+msgstr "無法儲存供應商。"
+
 msgid "Failed to save search tool."
 msgstr "無法儲存搜尋工具。"
 
@@ -617,6 +657,9 @@ msgstr "篩選：「%1」"
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "詳情請參閱 GitHub 上的「Configuration」Wiki 頁面。"
+
+msgid "Full - full definitions"
+msgstr "完整 - 完整釋義"
 
 msgid "Fun Analogy"
 msgstr "有趣的比喻"
@@ -685,9 +728,8 @@ msgstr "無效的筆記本檔名。"
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader 微調"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "讓字典答案保持簡短：每個區段最多一到兩句。"
 
 msgid "Key Points"
 msgstr "重點"
@@ -748,8 +790,8 @@ msgstr "主要主題"
 msgid "Markdown Engine"
 msgstr "Markdown 引擎"
 
-msgid "Meaning"
-msgstr "意思"
+msgid "Meaning & Usage"
+msgstr "含義與用法"
 
 msgid "Model"
 msgstr "模型"
@@ -921,6 +963,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI 相容的 Chat Completions API"
 
+msgid "Other Settings"
+msgstr "其他設定"
+
 msgid "Outstanding questions:"
 msgstr "尚未解答的問題："
 
@@ -947,6 +992,9 @@ msgstr "外掛程式尚未設定。"
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "將書籍元資料（書名、作者及目前閱讀位置，包括章節）新增到選擇加入書籍上下文的提示開頭（預設為：解釋、歷史背景、摘要、關鍵要點和 ELI5）。每個提示的行為可在設定檔中使用 use_book_context 覆寫。"
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "AI 字典區段的預設清單。"
 
 msgid "Prevailing emotional state/tone:"
 msgstr "主要情緒狀態／基調："
@@ -1068,6 +1116,21 @@ msgstr "回應文字字型大小"
 msgid "Role & Function"
 msgstr "角色與功能"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"將較短的選取內容導向 AI 字典，而非翻譯器。\n"
+"\n"
+"- 視為簡短：最多 5 個單字；對於沒有詞間分隔的 CJK 文字，\n"
+"  最多 8 個字元。\n"
+"- 較短的選取內容會開啟 AI 字典；較長的選取內容則照常\n"
+"  翻譯。"
+
 msgid "Runtime"
 msgstr "執行環境"
 
@@ -1116,23 +1179,11 @@ msgstr "選取內容已複製到剪貼簿。"
 msgid "Settings"
 msgstr "設定"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "在字典彈出視窗中顯示自訂提示"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "在字典彈出視窗中顯示字典（AI）"
-
 msgid "Show Follow-up Questions"
 msgstr "顯示後續問題"
 
 msgid "Show Reasoning Text"
 msgstr "顯示推理文字"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "在字典彈出視窗中顯示 Term X-Ray（AI）"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "在字典彈出視窗中顯示維基百科（AI）"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "若 AI 回覆中有深度思考過程（推理），則顯示。"
@@ -1145,6 +1196,12 @@ msgstr "類似書籍推薦"
 
 msgid "Simplify"
 msgstr "簡化"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "「翻譯」的智慧字典查詢"
+
+msgid "Standard - standard definitions"
+msgstr "標準 - 標準釋義"
 
 msgid "Stop"
 msgstr "停止"
@@ -1220,8 +1277,8 @@ msgstr "此按鈕會以反白文字建立快速筆記。"
 msgid "This is a custom prompt"
 msgstr "這是自訂提示詞"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "此提示詞可作為反白文字的字典，用於解釋詞語或片語。"
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "此提示詞可作為能感知書籍內容的字典，為選取的文字（單字或詞組）提供解釋。"
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "此提示詞會分析反白文字的文法，詳細說明其結構及任何文法錯誤。"
@@ -1374,7 +1431,6 @@ msgstr "故事停在哪裡："
 msgid "Wikipedia"
 msgstr "維基百科"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "詞形與詞元"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 03:34+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: हिन्दी (AI translation)\n"
@@ -224,6 +224,12 @@ msgstr "AI उत्तर भाषा"
 msgid "AI Response Language Setting"
 msgstr "AI उत्तर भाषा सेटिंग"
 
+msgid "AI Term X-Ray"
+msgstr "AI टर्म X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI विकिपीडिया"
+
 msgid "AI X-Ray"
 msgstr "AI एक्स-रे"
 
@@ -238,6 +244,12 @@ msgstr "%1 के लिए API कुंजी आवश्यक है।"
 
 msgid "API key is required."
 msgstr "API कुंजी आवश्यक है।"
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "%1 के लिए API key में स्पेस या लाइन ब्रेक नहीं होने चाहिए।"
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API key में स्पेस या लाइन ब्रेक नहीं होने चाहिए।"
 
 msgid "About the Author"
 msgstr "लेखक के बारे में"
@@ -336,6 +348,9 @@ msgstr "%1 के लिए बेस URL आवश्यक है।"
 msgid "Base URL is required."
 msgstr "बेस URL आवश्यक है।"
 
+msgid "Base URL must not contain spaces."
+msgstr "Base URL में स्पेस नहीं होने चाहिए।"
+
 msgid "Base URL must start with http:// or https://"
 msgstr "बेस URL http:// या https:// से शुरू होना चाहिए।"
 
@@ -357,9 +372,6 @@ msgstr "पुस्तक अंतर्दृष्टि"
 
 msgid "Book Summary & Recs"
 msgstr "पुस्तक सारांश और अनुशंसाएँ"
-
-msgid "Book Usage"
-msgstr "पुस्तक में प्रयोग"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ब्रांच/टैग \"%1\" नहीं मिला।"
@@ -389,6 +401,9 @@ msgstr "पात्र"
 msgid "Checking for updates..."
 msgstr "अपडेट की जाँच की जा रही है..."
 
+msgid "Choose Definition Sections"
+msgstr "परिभाषा अनुभाग चुनें"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "चुनें कि आपके नोट किस नोटबुक में सहेजे जाएँ।"
 
@@ -400,6 +415,9 @@ msgstr "बंद करें"
 
 msgid "Composing answer ..."
 msgstr "उत्तर तैयार किया जा रहा है ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "संक्षिप्त - छोटे वाक्यों में उत्तर दें"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "कॉन्फ़िगरेशन नहीं मिला। कृपया पहले configuration.lua सेट करें।"
@@ -529,6 +547,25 @@ msgstr "शब्दकोश"
 msgid "Dictionary Language"
 msgstr "शब्दकोश भाषा"
 
+msgid "Dictionary Popup"
+msgstr "शब्दकोश पॉपअप"
+
+msgid "Dictionary Settings"
+msgstr "शब्दकोश सेटिंग्स"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"शब्दकोश या अनुवाद?\n"
+"\n"
+"यह चयन किसी शब्द या छोटे वाक्यांश जैसा दिखता है।\n"
+"\n"
+"आप इसे बाद में सेटिंग्स > अन्य सेटिंग्स > 'Translate' के लिए स्मार्ट डिक्शनरी लुकअप में बदल सकते हैं।"
+
 msgid "Display name"
 msgstr "प्रदर्शन नाम"
 
@@ -597,6 +634,9 @@ msgstr "समझाएँ"
 msgid "Failed to fetch models"
 msgstr "मॉडल प्राप्त करने में विफल"
 
+msgid "Failed to save provider."
+msgstr "प्रदाता सहेजने में विफल।"
+
 msgid "Failed to save search tool."
 msgstr "खोज उपकरण सहेजने में विफल।"
 
@@ -617,6 +657,9 @@ msgstr "फ़िल्टर: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "विवरण के लिए, GitHub पर 'Configuration' विकी पृष्ठ देखें।"
+
+msgid "Full - full definitions"
+msgstr "पूर्ण - पूरी परिभाषाएँ"
 
 msgid "Fun Analogy"
 msgstr "मज़ेदार उपमा"
@@ -685,9 +728,8 @@ msgstr "अमान्य नोटबुक फ़ाइल नाम।"
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader ट्वीक्स"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "शब्दकोश उत्तर छोटे रखें: प्रति अनुभाग अधिकतम एक या दो वाक्य।"
 
 msgid "Key Points"
 msgstr "मुख्य बिंदु"
@@ -749,8 +791,8 @@ msgstr "मुख्य विषय"
 msgid "Markdown Engine"
 msgstr "मार्कडाउन इंजन"
 
-msgid "Meaning"
-msgstr "अर्थ"
+msgid "Meaning & Usage"
+msgstr "अर्थ और प्रयोग"
 
 msgid "Model"
 msgstr "मॉडल"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-संगत Chat Completions API"
 
+msgid "Other Settings"
+msgstr "अन्य सेटिंग्स"
+
 msgid "Outstanding questions:"
 msgstr "अनुत्तरित प्रश्न:"
 
@@ -948,6 +993,9 @@ msgstr "प्लगइन कॉन्फ़िगर नहीं है।"
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "पुस्तक मेटाडेटा (शीर्षक, लेखक और वर्तमान पठन स्थिति अध्याय सहित) को उन प्रॉम्प्ट्स की शुरुआत में जोड़ता है जो पुस्तक संदर्भ के लिए ऑप्ट-इन करते हैं (डिफ़ॉल्ट रूप से: Explain, Historical Context, Summarize, Key Points और ELI5)। प्रति-प्रॉम्प्ट व्यवहार को कॉन्फ़िगरेशन फ़ाइल में use_book_context से ओवरराइड किया जा सकता है।"
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "AI शब्दकोश अनुभागों की प्रीसेट सूची।"
 
 msgid "Prevailing emotional state/tone:"
 msgstr "प्रचलित भावनात्मक स्थिति/स्वर:"
@@ -1069,6 +1117,21 @@ msgstr "उत्तर पाठ फ़ॉन्ट आकार"
 msgid "Role & Function"
 msgstr "भूमिका और कार्य"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"छोटे चयनों को अनुवादक के बजाय AI शब्दकोश पर भेजें।\n"
+"\n"
+"- छोटा माना जाएगा: 5 शब्दों तक; CJK पाठ के लिए, जिसमें शब्द\n"
+"  विभाजक नहीं होते, 8 अक्षरों तक।\n"
+"- छोटे चयन AI शब्दकोश खोलते हैं; लंबे चयन सामान्य रूप से\n"
+"  अनुवादित होते हैं।"
+
 msgid "Runtime"
 msgstr "रनटाइम"
 
@@ -1117,23 +1180,11 @@ msgstr "चयन क्लिपबोर्ड पर कॉपी किय�
 msgid "Settings"
 msgstr "सेटिंग्स"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "शब्दकोश पॉपअप में कस्टम प्रॉम्प्ट दिखाएँ"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "शब्दकोश पॉपअप में शब्दकोश(AI) दिखाएँ"
-
 msgid "Show Follow-up Questions"
 msgstr "फ़ॉलो-अप प्रश्न दिखाएँ"
 
 msgid "Show Reasoning Text"
 msgstr "रीज़निंग टेक्स्ट दिखाएँ"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "शब्दकोश पॉपअप में टर्म एक्स-रे(AI) दिखाएँ"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "शब्दकोश पॉपअप में विकिपीडिया(AI) दिखाएँ"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "यदि मौजूद हो, तो AI प्रतिक्रिया से गहन विचार प्रक्रिया (रीज़निंग) दिखाएँ।"
@@ -1146,6 +1197,12 @@ msgstr "समान पुस्तकों की अनुशंसाएँ
 
 msgid "Simplify"
 msgstr "सरल करें"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "'Translate' के लिए स्मार्ट डिक्शनरी लुकअप"
+
+msgid "Standard - standard definitions"
+msgstr "मानक - मानक परिभाषाएँ"
 
 msgid "Stop"
 msgstr "रोकें"
@@ -1221,8 +1278,8 @@ msgstr "यह बटन हाइलाइट किए गए पाठ के
 msgid "This is a custom prompt"
 msgstr "यह एक कस्टम प्रॉम्प्ट है"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "यह प्रॉम्प्ट हाइलाइट किए गए पाठ के लिए एक शब्दकोश की तरह कार्य करता है, किसी शब्द या वाक्यांश के लिए।"
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "यह प्रॉम्प्ट हाइलाइट किए गए टेक्स्ट के लिए — किसी शब्द या वाक्यांश तक — पुस्तक-सजग शब्दकोश का काम करता है।"
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "यह प्रॉम्प्ट हाइलाइट किए गए पाठ के व्याकरण का विश्लेषण करता है, उसकी संरचना और किसी भी व्याकरण संबंधी त्रुटियों की विस्तृत व्याख्या प्रदान करता है।"
@@ -1375,7 +1432,6 @@ msgstr "कहानी कहाँ रुकी थी:"
 msgid "Wikipedia"
 msgstr "विकिपीडिया"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "शब्द रूप और मूल रूप"
 

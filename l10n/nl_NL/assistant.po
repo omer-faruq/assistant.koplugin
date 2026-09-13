@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "AI-antwoordtaal"
 msgid "AI Response Language Setting"
 msgstr "Taalinstelling AI-antwoord"
 
+msgid "AI Term X-Ray"
+msgstr "AI Term X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI Wikipedia"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "API-sleutel is vereist voor %1."
 
 msgid "API key is required."
 msgstr "API-sleutel is vereist."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "API-sleutel mag geen spaties of regeleinden bevatten voor %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API-sleutel mag geen spaties of regeleinden bevatten."
 
 msgid "About the Author"
 msgstr "Over de auteur"
@@ -336,6 +348,9 @@ msgstr "Basis-URL is vereist voor %1."
 msgid "Base URL is required."
 msgstr "Basis-URL is vereist."
 
+msgid "Base URL must not contain spaces."
+msgstr "Basis-URL mag geen spaties bevatten."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Basis-URL moet beginnen met http:// of https://"
 
@@ -357,9 +372,6 @@ msgstr "Boekinzichten"
 
 msgid "Book Summary & Recs"
 msgstr "Boeksamenvatting en aanbevelingen"
-
-msgid "Book Usage"
-msgstr "Gebruik in het boek"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Branch/tag \"%1\" is niet gevonden."
@@ -389,6 +401,9 @@ msgstr "Personages"
 msgid "Checking for updates..."
 msgstr "Controleren op updates..."
 
+msgid "Choose Definition Sections"
+msgstr "Definitiesecties kiezen"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Kies in welk notitieboek je notities worden opgeslagen."
 
@@ -400,6 +415,9 @@ msgstr "Sluiten"
 
 msgid "Composing answer ..."
 msgstr "Antwoord samenstellen ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Beknopt - antwoord in korte zinnen"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Configuratie niet gevonden. Stel eerst configuration.lua in."
@@ -529,6 +547,25 @@ msgstr "Woordenboek"
 msgid "Dictionary Language"
 msgstr "Woordenboektaal"
 
+msgid "Dictionary Popup"
+msgstr "Woordenboekpop-up"
+
+msgid "Dictionary Settings"
+msgstr "Woordenboekinstellingen"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Woordenboek of vertaling?\n"
+"\n"
+"Deze selectie lijkt op een woord of korte zin.\n"
+"\n"
+"Je kunt dit later wijzigen in Instellingen > Overige instellingen > Slimme woordenboekopzoeking voor 'Vertalen'."
+
 msgid "Display name"
 msgstr "Weergavenaam"
 
@@ -597,6 +634,9 @@ msgstr "Uitleggen"
 msgid "Failed to fetch models"
 msgstr "Ophalen van modellen mislukt"
 
+msgid "Failed to save provider."
+msgstr "Opslaan van aanbieder mislukt."
+
 msgid "Failed to save search tool."
 msgstr "Opslaan van zoektool mislukt."
 
@@ -617,6 +657,9 @@ msgstr "Filter: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Voor details, bezoek de 'Configuration'-wikipagina op GitHub."
+
+msgid "Full - full definitions"
+msgstr "Volledig - volledige definities"
 
 msgid "Fun Analogy"
 msgstr "Leuke analogie"
@@ -685,9 +728,8 @@ msgstr "Ongeldige notitieboekbestandsnaam."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader-tweaks"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Houd woordenboekantwoorden kort: maximaal één of twee zinnen per sectie."
 
 msgid "Key Points"
 msgstr "Kernpunten"
@@ -749,8 +791,8 @@ msgstr "Hoofdthema's"
 msgid "Markdown Engine"
 msgstr "Markdown-engine"
 
-msgid "Meaning"
-msgstr "Betekenis"
+msgid "Meaning & Usage"
+msgstr "Betekenis en gebruik"
 
 msgid "Model"
 msgstr "Model"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-compatibele Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Overige instellingen"
+
 msgid "Outstanding questions:"
 msgstr "Openstaande vragen:"
 
@@ -948,6 +993,9 @@ msgstr "Plugin is niet geconfigureerd."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Voegt boekmetadata (titel, auteur en huidige leespositie inclusief hoofdstuk) toe aan prompts die gebruikmaken van boekcontext (standaard: Uitleggen, Historische context, Samenvatten, Kernpunten en ELI5). Het gedrag per prompt kan worden overschreven met use_book_context in het configuratiebestand."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Vooraf ingestelde lijst met secties voor het AI-woordenboek."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Heersende emotionele toestand/toon:"
@@ -1069,6 +1117,21 @@ msgstr "Lettergrootte van antwoordtekst"
 msgid "Role & Function"
 msgstr "Rol en functie"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Stuur korte selecties naar het AI-woordenboek in plaats van naar de Vertaler.\n"
+"\n"
+"- Geldt als kort: tot 5 woorden; voor CJK-tekst, die geen\n"
+"  woordscheidingstekens heeft, tot 8 tekens.\n"
+"- Korte selecties openen het AI-woordenboek; langere selecties worden\n"
+"  zoals gebruikelijk vertaald."
+
 msgid "Runtime"
 msgstr "Runtime"
 
@@ -1117,23 +1180,11 @@ msgstr "Selectie gekopieerd naar klembord."
 msgid "Settings"
 msgstr "Instellingen"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Aangepaste prompts tonen in woordenboekpop-up"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Woordenboek(AI) tonen in woordenboekpop-up"
-
 msgid "Show Follow-up Questions"
 msgstr "Vervolgvragen tonen"
 
 msgid "Show Reasoning Text"
 msgstr "Redeneringstekst tonen"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Term X-Ray(AI) tonen in woordenboekpop-up"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Wikipedia(AI) tonen in woordenboekpop-up"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Toon het diepgaande denkproces (redenering) van het AI-antwoord, indien aanwezig."
@@ -1146,6 +1197,12 @@ msgstr "Aanbevelingen voor soortgelijke boeken"
 
 msgid "Simplify"
 msgstr "Vereenvoudigen"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Slimme woordenboekopzoeking voor 'Vertalen'"
+
+msgid "Standard - standard definitions"
+msgstr "Standaard - standaarddefinities"
 
 msgid "Stop"
 msgstr "Stoppen"
@@ -1221,8 +1278,8 @@ msgstr "Deze knop maakt een snelle notitie met de gemarkeerde tekst."
 msgid "This is a custom prompt"
 msgstr "Dit is een aangepaste prompt"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Deze prompt fungeert als een woordenboek voor de gemarkeerde tekst, voor een woord of zinsdeel."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Deze prompt fungeert als een woordenboek dat rekening houdt met het boek, voor de gemarkeerde tekst, tot een woord of zin."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Deze prompt analyseert de grammatica van de gemarkeerde tekst en geeft een gedetailleerde uitleg van de structuur en eventuele grammaticale fouten."
@@ -1375,7 +1432,6 @@ msgstr "Waar de actie stopte:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Woordvorm en lemma"
 

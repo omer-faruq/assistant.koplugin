@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "AI atsakymo kalba"
 msgid "AI Response Language Setting"
 msgstr "AI atsakymo kalbos nustatymas"
 
+msgid "AI Term X-Ray"
+msgstr "AI termino X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI Vikipedija"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "API raktas reikalingas %1."
 
 msgid "API key is required."
 msgstr "API raktas yra privalomas."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "API raktas, skirtas %1, negali turėti tarpų ar eilučių lūžių."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API raktas negali turėti tarpų ar eilučių lūžių."
 
 msgid "About the Author"
 msgstr "Apie autorių"
@@ -336,6 +348,9 @@ msgstr "Bazinis URL reikalingas %1."
 msgid "Base URL is required."
 msgstr "Bazinis URL yra privalomas."
 
+msgid "Base URL must not contain spaces."
+msgstr "Bazinis URL negali turėti tarpų."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Bazinis URL turi prasidėti http:// arba https://"
 
@@ -357,9 +372,6 @@ msgstr "Knygos įžvalgos"
 
 msgid "Book Summary & Recs"
 msgstr "Knygos santrauka ir rekomendacijos"
-
-msgid "Book Usage"
-msgstr "Vartojimas knygoje"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Šaka/Žyma \"%1\" nerasta."
@@ -389,6 +401,9 @@ msgstr "Veikėjai"
 msgid "Checking for updates..."
 msgstr "Tikrinama, ar yra naujinimų..."
 
+msgid "Choose Definition Sections"
+msgstr "Pasirinkti apibrėžimų skyrius"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Pasirinkite, į kurią užrašų knygą bus išsaugomi jūsų užrašai."
 
@@ -400,6 +415,9 @@ msgstr "Uždaryti"
 
 msgid "Composing answer ..."
 msgstr "Rengiamas atsakymas ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Glaustai – atsakymai trumpais sakiniais"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigūracija nerasta. Pirmiausia nustatykite configuration.lua."
@@ -529,6 +547,25 @@ msgstr "Žodynas"
 msgid "Dictionary Language"
 msgstr "Žodyno kalba"
 
+msgid "Dictionary Popup"
+msgstr "Žodyno iškylantysis langas"
+
+msgid "Dictionary Settings"
+msgstr "Žodyno nustatymai"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Žodynas ar vertimas?\n"
+"\n"
+"Ši ištrauka atrodo kaip žodis ar trumpa frazė.\n"
+"\n"
+"Tai vėliau galite pakeisti Nustatymai > Kiti nustatymai > Išmanioji žodyno paieška, skirta „Versti“."
+
 msgid "Display name"
 msgstr "Rodomas pavadinimas"
 
@@ -597,6 +634,9 @@ msgstr "Paaiškinti"
 msgid "Failed to fetch models"
 msgstr "Nepavyko gauti modelių"
 
+msgid "Failed to save provider."
+msgstr "Nepavyko išsaugoti teikėjo."
+
 msgid "Failed to save search tool."
 msgstr "Nepavyko išsaugoti paieškos įrankio."
 
@@ -617,6 +657,9 @@ msgstr "Filtras: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Išsamesnės informacijos ieškokite 'Configuration' wiki puslapyje GitHub."
+
+msgid "Full - full definitions"
+msgstr "Išsamiai – išsamūs apibrėžimai"
 
 msgid "Fun Analogy"
 msgstr "Įdomi analogija"
@@ -685,9 +728,8 @@ msgstr "Neteisingas užrašų knygos failo pavadinimas."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader tinkinimai"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Žodyno atsakymai turi būti trumpi: ne daugiau kaip vienas ar du sakiniai vienoje skiltyje."
 
 msgid "Key Points"
 msgstr "Pagrindiniai dalykai"
@@ -751,8 +793,8 @@ msgstr "Pagrindinės temos"
 msgid "Markdown Engine"
 msgstr "Markdown variklis"
 
-msgid "Meaning"
-msgstr "Reikšmė"
+msgid "Meaning & Usage"
+msgstr "Reikšmė ir vartosena"
 
 msgid "Model"
 msgstr "Modelis"
@@ -924,6 +966,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "Chat Completions API, suderinama su OpenAI"
 
+msgid "Other Settings"
+msgstr "Kiti nustatymai"
+
 msgid "Outstanding questions:"
 msgstr "Neatsakyti klausimai:"
 
@@ -950,6 +995,9 @@ msgstr "Priedas nesukonfigūruotas."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Prideda knygos metaduomenis (pavadinimą, autorių ir dabartinę skaitymo padėtį, įskaitant skyrių) prie užklausų, kurios pasirenka knygos kontekstą (pagal nutylėjimą: Paaiškinti, Istorinis kontekstas, Apibendrinti, Pagrindiniai punktai ir ELI5). Elgseną pagal užklausą galima pakeisti naudojant use_book_context konfigūracijos faile."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Iš anksto nustatytas AI žodyno skilčių sąrašas."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Vyraujanti emocinė būsena/tonas:"
@@ -1070,6 +1118,21 @@ msgstr "Atsakymo teksto šrifto dydis"
 msgid "Role & Function"
 msgstr "Vaidmuo ir funkcija"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Trumpas ištraukas siųsti į AI žodyną, o ne į vertėją.\n"
+"\n"
+"- Trumpa laikoma: iki 5 žodžių; CJK tekstui, kuriame nėra žodžių\n"
+"  skyriklių, – iki 8 ženklų.\n"
+"- Trumpos ištraukos atidaro AI žodyną; ilgesnės ištraukos verčiamos\n"
+"  kaip įprastai."
+
 msgid "Runtime"
 msgstr "Vykdymo aplinka"
 
@@ -1118,23 +1181,11 @@ msgstr "Pasirinkimas nukopijuotas į iškarpinę."
 msgid "Settings"
 msgstr "Nustatymai"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Rodyti pasirinktines užklausas žodyno iššokančiajame lange"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Rodyti žodyną (AI) žodyno iššokančiajame lange"
-
 msgid "Show Follow-up Questions"
 msgstr "Rodyti tolesnius klausimus"
 
 msgid "Show Reasoning Text"
 msgstr "Rodyti samprotavimo tekstą"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Rodyti terminų rentgeną (AI) žodyno iššokančiajame lange"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Rodyti Vikipediją (AI) žodyno iššokančiajame lange"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Rodyti gilų mąstymo procesą (samprotavimą) iš AI atsakymo, jei toks yra."
@@ -1147,6 +1198,12 @@ msgstr "Panašių knygų rekomendacijos"
 
 msgid "Simplify"
 msgstr "Supaprastinti"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Išmanioji žodyno paieška, skirta „Versti“"
+
+msgid "Standard - standard definitions"
+msgstr "Standartiškai – standartiniai apibrėžimai"
 
 msgid "Stop"
 msgstr "Sustabdyti"
@@ -1222,8 +1279,8 @@ msgstr "Šis mygtukas sukuria greitą užrašą su paryškintu tekstu."
 msgid "This is a custom prompt"
 msgstr "Tai tinkinta užklausa."
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Šis raginimas veikia kaip žodynas paryškintam tekstui – žodžiui ar frazei."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Ši užklausa veikia kaip knygą išmanantis žodynas, pažymėtam tekstui – žodžiui ar frazei."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Šis raginimas analizuoja paryškinto teksto gramatiką, pateikdamas išsamų jo struktūros ir gramatinių klaidų paaiškinimą."
@@ -1376,7 +1433,6 @@ msgstr "Kur sustojo veiksmas:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Žodžio forma ir lema"
 

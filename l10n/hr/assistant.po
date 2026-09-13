@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "Jezik AI odgovora"
 msgid "AI Response Language Setting"
 msgstr "Postavka jezika AI odgovora"
 
+msgid "AI Term X-Ray"
+msgstr "AI X-Ray pojma"
+
+msgid "AI Wikipedia"
+msgstr "AI Wikipedija"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "API ključ je potreban za %1."
 
 msgid "API key is required."
 msgstr "API ključ je obvezan."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "API ključ ne smije sadržavati razmake ni prijelome retka za %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API ključ ne smije sadržavati razmake ni prijelome retka."
 
 msgid "About the Author"
 msgstr "O autoru"
@@ -336,6 +348,9 @@ msgstr "Osnovni URL je potreban za %1."
 msgid "Base URL is required."
 msgstr "Osnovni URL je obvezan."
 
+msgid "Base URL must not contain spaces."
+msgstr "Osnovni URL ne smije sadržavati razmake."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Osnovni URL mora počinjati s http:// ili https://"
 
@@ -357,9 +372,6 @@ msgstr "Uvidi o knjizi"
 
 msgid "Book Summary & Recs"
 msgstr "Sažetak knjige i preporuke"
-
-msgid "Book Usage"
-msgstr "Upotreba u knjizi"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Grana/Oznaka \"%1\" nije pronađena."
@@ -389,6 +401,9 @@ msgstr "Likovi"
 msgid "Checking for updates..."
 msgstr "Provjera ažuriranja..."
 
+msgid "Choose Definition Sections"
+msgstr "Odaberite odjeljke definicije"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Odaberite u koju bilježnicu će se vaše bilješke spremati."
 
@@ -400,6 +415,9 @@ msgstr "Zatvori"
 
 msgid "Composing answer ..."
 msgstr "Sastavljam odgovor ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Sažeto – odgovaraj u kratkim rečenicama"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfiguracija nije pronađena. Najprije postavite configuration.lua."
@@ -529,6 +547,25 @@ msgstr "Rječnik"
 msgid "Dictionary Language"
 msgstr "Jezik rječnika"
 
+msgid "Dictionary Popup"
+msgstr "Skočni prozor rječnika"
+
+msgid "Dictionary Settings"
+msgstr "Postavke rječnika"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Rječnik ili prijevod?\n"
+"\n"
+"Ovaj odabir izgleda kao riječ ili kratka fraza.\n"
+"\n"
+"To možete kasnije promijeniti u Postavke > Ostale postavke > Pametno pretraživanje rječnika za 'Prevedi'."
+
 msgid "Display name"
 msgstr "Naziv za prikaz"
 
@@ -597,6 +634,9 @@ msgstr "Objasni"
 msgid "Failed to fetch models"
 msgstr "Dohvaćanje modela nije uspjelo."
 
+msgid "Failed to save provider."
+msgstr "Spremanje pružatelja nije uspjelo."
+
 msgid "Failed to save search tool."
 msgstr "Spremanje alata za pretraživanje nije uspjelo."
 
@@ -617,6 +657,9 @@ msgstr "Filter: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Za detalje posjetite wiki stranicu 'Configuration' na GitHubu."
+
+msgid "Full - full definitions"
+msgstr "Potpuno – potpune definicije"
 
 msgid "Fun Analogy"
 msgstr "Zabavna analogija"
@@ -685,9 +728,8 @@ msgstr "Nevažeći naziv datoteke bilježnice."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader prilagodbe"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Neka odgovori rječnika budu kratki: najviše jedna ili dvije rečenice po odjeljku."
 
 msgid "Key Points"
 msgstr "Ključne točke"
@@ -750,8 +792,8 @@ msgstr "Glavne teme"
 msgid "Markdown Engine"
 msgstr "Markdown pogon"
 
-msgid "Meaning"
-msgstr "Značenje"
+msgid "Meaning & Usage"
+msgstr "Značenje i upotreba"
 
 msgid "Model"
 msgstr "Model"
@@ -923,6 +965,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-kompatibilni Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Ostale postavke"
+
 msgid "Outstanding questions:"
 msgstr "Otvorena pitanja:"
 
@@ -949,6 +994,9 @@ msgstr "Dodatak nije konfiguriran."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Dodaje metapodatke knjige (naslov, autora i trenutnu poziciju čitanja uključujući poglavlje) upitima koji uključuju kontekst knjige (prema zadanim postavkama: Objasni, Povijesni kontekst, Sažmi, Ključne točke i ELI5). Ponašanje po upitu može se nadjačati s use_book_context u konfiguracijskoj datoteci."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Unaprijed postavljen popis odjeljaka AI rječnika."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Prevladavajuće emocionalno stanje/ton:"
@@ -1070,6 +1118,21 @@ msgstr "Veličina fonta teksta odgovora"
 msgid "Role & Function"
 msgstr "Uloga i funkcija"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Kratke odabire usmjerava u AI rječnik umjesto u prevoditelj.\n"
+"\n"
+"- Kratkim se smatra: do 5 riječi; za CJK tekst, koji nema\n"
+"  razdjelnike riječi, do 8 znakova.\n"
+"- Kratki odabiri otvaraju AI rječnik; duži se odabiri\n"
+"  prevode kao i obično."
+
 msgid "Runtime"
 msgstr "Runtime"
 
@@ -1118,23 +1181,11 @@ msgstr "Odabir je kopiran u međuspremnik."
 msgid "Settings"
 msgstr "Postavke"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Prikaži prilagođene upite u skočnom prozoru rječnika"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Prikaži Rječnik(AI) u skočnom prozoru rječnika"
-
 msgid "Show Follow-up Questions"
 msgstr "Prikaži dodatna pitanja"
 
 msgid "Show Reasoning Text"
 msgstr "Prikaži tekst razmišljanja"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Prikaži Term X-Ray(AI) u skočnom prozoru rječnika"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Prikaži Wikipediju(AI) u skočnom prozoru rječnika"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Prikaži duboki proces razmišljanja (rezoniranje) iz AI odgovora ako postoji."
@@ -1147,6 +1198,12 @@ msgstr "Preporuke sličnih knjiga"
 
 msgid "Simplify"
 msgstr "Pojednostavi"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Pametno pretraživanje rječnika za 'Prevedi'"
+
+msgid "Standard - standard definitions"
+msgstr "Standardno – standardne definicije"
 
 msgid "Stop"
 msgstr "Zaustavi"
@@ -1222,8 +1279,8 @@ msgstr "Ovaj gumb stvara brzu bilješku s označenim tekstom."
 msgid "This is a custom prompt"
 msgstr "Ovo je prilagođeni upit."
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Ovaj upit djeluje kao rječnik za označeni tekst, za riječ ili frazu."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Ovaj prompt služi kao rječnik koji poznaje knjigu za označeni tekst, sve do pojedinačne riječi ili fraze."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Ovaj upit analizira gramatiku označenog teksta, pružajući detaljno objašnjenje njegove strukture i svih gramatičkih pogrešaka."
@@ -1376,7 +1433,6 @@ msgstr "Gdje je radnja stala:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Oblik riječi i lema"
 

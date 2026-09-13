@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "Tekoälyn vastauskieli"
 msgid "AI Response Language Setting"
 msgstr "Tekoälyn vastauskielen asetus"
 
+msgid "AI Term X-Ray"
+msgstr "AI-termin X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI-Wikipedia"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "API-avain vaaditaan palvelulle %1."
 
 msgid "API key is required."
 msgstr "API-avain on pakollinen."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "API-avain ei saa sisältää välilyöntejä tai rivinvaihtoja kohteelle %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API-avain ei saa sisältää välilyöntejä tai rivinvaihtoja."
 
 msgid "About the Author"
 msgstr "Tietoa kirjailijasta"
@@ -336,6 +348,9 @@ msgstr "Perus-URL vaaditaan palvelulle %1."
 msgid "Base URL is required."
 msgstr "Perus-URL on pakollinen."
 
+msgid "Base URL must not contain spaces."
+msgstr "Perus-URL ei saa sisältää välilyöntejä."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Perus-URL-osoitteen on alettava http:// tai https://."
 
@@ -357,9 +372,6 @@ msgstr "Kirjan oivallukset"
 
 msgid "Book Summary & Recs"
 msgstr "Kirjan tiivistelmä ja suositukset"
-
-msgid "Book Usage"
-msgstr "Käyttö kirjassa"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Haaraa/tagia \"%1\" ei löytynyt."
@@ -389,6 +401,9 @@ msgstr "Hahmot"
 msgid "Checking for updates..."
 msgstr "Tarkistetaan päivityksiä..."
 
+msgid "Choose Definition Sections"
+msgstr "Valitse määritelmäosiot"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Valitse, mihin muistikirjaan muistiinpanosi tallennetaan."
 
@@ -400,6 +415,9 @@ msgstr "Sulje"
 
 msgid "Composing answer ..."
 msgstr "Laaditaan vastausta ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Tiivis – vastaa lyhyillä lauseilla"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfiguraatiotiedostoa ei löytynyt. Määritä configuration.lua ensin."
@@ -529,6 +547,25 @@ msgstr "Sanakirja"
 msgid "Dictionary Language"
 msgstr "Sanakirjan kieli"
 
+msgid "Dictionary Popup"
+msgstr "Sanakirjan ponnahdusikkuna"
+
+msgid "Dictionary Settings"
+msgstr "Sanakirja-asetukset"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Sanakirja vai käännös?\n"
+"\n"
+"Tämä valinta näyttää sanalta tai lyhyeltä ilmaukselta.\n"
+"\n"
+"Voit muuttaa tämän myöhemmin kohdassa Asetukset > Muut asetukset > Älykäs sanakirjahaku 'Käännä'-toiminnolle."
+
 msgid "Display name"
 msgstr "Näyttönimi"
 
@@ -597,6 +634,9 @@ msgstr "Selitä"
 msgid "Failed to fetch models"
 msgstr "Mallien haku epäonnistui"
 
+msgid "Failed to save provider."
+msgstr "Palveluntarjoajan tallennus epäonnistui."
+
 msgid "Failed to save search tool."
 msgstr "Hakutyökalun tallentaminen epäonnistui."
 
@@ -617,6 +657,9 @@ msgstr "Suodatin: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Lisätietoja saat GitHubin 'Configuration'-wiki-sivulta."
+
+msgid "Full - full definitions"
+msgstr "Täysi – täydet määritelmät"
 
 msgid "Fun Analogy"
 msgstr "Hauska vertaus"
@@ -685,9 +728,8 @@ msgstr "Virheellinen muistikirjan tiedostonimi."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader-säädöt"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Pidä sanakirjan vastaukset lyhyinä: enintään yksi tai kaksi lausetta osiota kohti."
 
 msgid "Key Points"
 msgstr "Keskeiset kohdat"
@@ -749,8 +791,8 @@ msgstr "Pääteemat"
 msgid "Markdown Engine"
 msgstr "Markdown-moottori"
 
-msgid "Meaning"
-msgstr "Merkitys"
+msgid "Meaning & Usage"
+msgstr "Merkitys ja käyttö"
 
 msgid "Model"
 msgstr "Malli"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-yhteensopiva Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Muut asetukset"
+
 msgid "Outstanding questions:"
 msgstr "Avoimet kysymykset:"
 
@@ -948,6 +993,9 @@ msgstr "Laajennusta ei ole määritetty."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Liittää kirjan metatiedot (otsikko, tekijä ja nykyinen lukuasema sisältäen luvun) kehotteisiin, jotka ottavat käyttöön kirjan kontekstin (oletuksena: Selitä, Historiallinen konteksti, Tiivistä, Keskeiset kohdat ja ELI5). Kehotteiden käyttäytymistä voidaan ohittaa asetustiedoston use_book_context-asetuksella."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Valmis luettelo AI-sanakirjan osioista."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Vallitseva tunnetila/sävy:"
@@ -1069,6 +1117,21 @@ msgstr "Vastetekstin fonttikoko"
 msgid "Role & Function"
 msgstr "Rooli ja toiminta"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Ohjaa lyhyet valinnat AI-sanakirjaan kääntäjän sijaan.\n"
+"\n"
+"- Lyhyeksi lasketaan: enintään 5 sanaa; CJK-tekstissä, jossa ei ole\n"
+"  sananerottimia, enintään 8 merkkiä.\n"
+"- Lyhyet valinnat avaavat AI-sanakirjan; pidemmät valinnat\n"
+"  käännetään tavalliseen tapaan."
+
 msgid "Runtime"
 msgstr "Suoritusaika"
 
@@ -1117,23 +1180,11 @@ msgstr "Valinta kopioitu leikepöydälle."
 msgid "Settings"
 msgstr "Asetukset"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Näytä mukautetut kehotteet sanakirja-ponnahdusikkunassa"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Näytä Sanakirja (AI) sanakirja-ponnahdusikkunassa"
-
 msgid "Show Follow-up Questions"
 msgstr "Näytä jatkokysymykset"
 
 msgid "Show Reasoning Text"
 msgstr "Näytä päättelyteksti"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Näytä Term X-Ray (AI) sanakirja-ponnahdusikkunassa"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Näytä Wikipedia (AI) sanakirja-ponnahdusikkunassa"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Näytä tekoälyvastauksen syvällinen ajatteluprosessi (päättely), jos sellainen on olemassa."
@@ -1146,6 +1197,12 @@ msgstr "Samankaltaisten kirjojen suositukset"
 
 msgid "Simplify"
 msgstr "Yksinkertaista"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Älykäs sanakirjahaku 'Käännä'-toiminnolle"
+
+msgid "Standard - standard definitions"
+msgstr "Vakio – vakiomääritelmät"
 
 msgid "Stop"
 msgstr "Pysäytä"
@@ -1221,8 +1278,8 @@ msgstr "Tämä painike luo pikamuistiinpanon korostetusta tekstistä."
 msgid "This is a custom prompt"
 msgstr "Tämä on mukautettu kehote"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Tämä kehote toimii sanakirjana korostetulle tekstille, sanalle tai ilmaukselle."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Tämä kehote toimii kirjan kontekstin huomioivana sanakirjana korostetulle tekstille, sanalle tai ilmaukselle."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Tämä kehote analysoi korostetun tekstin kieliopin ja antaa yksityiskohtaisen selityksen sen rakenteesta ja mahdollisista kielioppivirheistä."
@@ -1375,7 +1432,6 @@ msgstr "Mihin tarina jäi:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Sananmuoto ja lemma"
 

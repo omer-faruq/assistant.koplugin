@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 04:38+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ภาษาไทย (AI translation)\n"
@@ -224,6 +224,12 @@ msgstr "ภาษาคำตอบของ AI"
 msgid "AI Response Language Setting"
 msgstr "การตั้งค่าภาษาคำตอบของ AI"
 
+msgid "AI Term X-Ray"
+msgstr "AI Term X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI Wikipedia"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "ต้องใช้คีย์ API สำหรับ %1"
 
 msgid "API key is required."
 msgstr "ต้องระบุ API key"
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "คีย์ API ต้องไม่มีช่องว่างหรือตัวขึ้นบรรทัดใหม่สำหรับ %1"
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "คีย์ API ต้องไม่มีช่องว่างหรือตัวขึ้นบรรทัดใหม่"
 
 msgid "About the Author"
 msgstr "เกี่ยวกับผู้แต่ง"
@@ -336,6 +348,9 @@ msgstr "ต้องใช้ Base URL สำหรับ %1"
 msgid "Base URL is required."
 msgstr "ต้องระบุ Base URL"
 
+msgid "Base URL must not contain spaces."
+msgstr "Base URL ต้องไม่มีช่องว่าง"
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Base URL ต้องขึ้นต้นด้วย http:// หรือ https://"
 
@@ -357,9 +372,6 @@ msgstr "ข้อมูลเชิงลึกของหนังสือ"
 
 msgid "Book Summary & Recs"
 msgstr "สรุปหนังสือและคำแนะนำ"
-
-msgid "Book Usage"
-msgstr "การใช้ในหนังสือ"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ไม่พบ Branch/Tag \"%1\""
@@ -389,6 +401,9 @@ msgstr "ตัวละคร"
 msgid "Checking for updates..."
 msgstr "กำลังตรวจสอบอัปเดต..."
 
+msgid "Choose Definition Sections"
+msgstr "เลือกส่วนของคำนิยาม"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "เลือกสมุดบันทึกที่จะบันทึกโน้ตของคุณ"
 
@@ -400,6 +415,9 @@ msgstr "ปิด"
 
 msgid "Composing answer ..."
 msgstr "กำลังเรียบเรียงคำตอบ ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "กระชับ - ตอบเป็นประโยคสั้น ๆ"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "ไม่พบการกำหนดค่า กรุณาตั้งค่า configuration.lua ก่อน"
@@ -529,6 +547,25 @@ msgstr "พจนานุกรม"
 msgid "Dictionary Language"
 msgstr "ภาษาพจนานุกรม"
 
+msgid "Dictionary Popup"
+msgstr "ป๊อปอัปพจนานุกรม"
+
+msgid "Dictionary Settings"
+msgstr "การตั้งค่าพจนานุกรม"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"พจนานุกรมหรือการแปล?\n"
+"\n"
+"ข้อความที่เลือกดูเหมือนเป็นคำหรือวลีสั้น ๆ\n"
+"\n"
+"คุณเปลี่ยนได้ภายหลังที่ การตั้งค่า > การตั้งค่าอื่น ๆ > การค้นหาพจนานุกรมอัจฉริยะสำหรับ 'แปล'"
+
 msgid "Display name"
 msgstr "ชื่อที่แสดง"
 
@@ -597,6 +634,9 @@ msgstr "อธิบาย"
 msgid "Failed to fetch models"
 msgstr "ไม่สามารถโหลดโมเดลได้"
 
+msgid "Failed to save provider."
+msgstr "บันทึกผู้ให้บริการไม่สำเร็จ"
+
 msgid "Failed to save search tool."
 msgstr "ไม่สามารถบันทึกเครื่องมือค้นหาได้"
 
@@ -617,6 +657,9 @@ msgstr "ตัวกรอง: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "สำหรับรายละเอียด โปรดดูหน้า wiki 'Configuration' บน github"
+
+msgid "Full - full definitions"
+msgstr "เต็มรูปแบบ - คำนิยามแบบเต็ม"
 
 msgid "Fun Analogy"
 msgstr "อุปมาอุปไมยสนุก ๆ"
@@ -685,9 +728,8 @@ msgstr "ชื่อไฟล์สมุดบันทึกไม่ถูก
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "การปรับแต่ง KOReader"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "ทำให้คำตอบจากพจนานุกรมสั้นเข้าไว้: ไม่เกินหนึ่งหรือสองประโยคต่อส่วน"
 
 msgid "Key Points"
 msgstr "ประเด็นสำคัญ"
@@ -748,8 +790,8 @@ msgstr "แก่นเรื่องหลัก"
 msgid "Markdown Engine"
 msgstr "เอนจิน Markdown"
 
-msgid "Meaning"
-msgstr "ความหมาย"
+msgid "Meaning & Usage"
+msgstr "ความหมายและการใช้งาน"
 
 msgid "Model"
 msgstr "โมเดล"
@@ -921,6 +963,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "Chat Completions API ที่เข้ากันได้กับ OpenAI"
 
+msgid "Other Settings"
+msgstr "การตั้งค่าอื่น ๆ"
+
 msgid "Outstanding questions:"
 msgstr "คำถามที่ยังค้างคา:"
 
@@ -947,6 +992,9 @@ msgstr "ยังไม่ได้กำหนดค่าปลั๊กอิ
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "เพิ่มข้อมูลเมทาดาทาของหนังสือ (ชื่อเรื่อง ผู้แต่ง และตำแหน่งการอ่านปัจจุบันรวมถึงบท) ลงในพรอมป์ที่เลือกใช้บริบทของหนังสือ (โดยค่าเริ่มต้น: อธิบาย, บริบททางประวัติศาสตร์, สรุป, ประเด็นสำคัญ และ ELI5) พฤติกรรมต่อพรอมป์สามารถแทนที่ได้ด้วย use_book_context ในไฟล์กำหนดค่า"
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "รายการส่วนของพจนานุกรม AI ที่ตั้งไว้ล่วงหน้า"
 
 msgid "Prevailing emotional state/tone:"
 msgstr "อารมณ์/โทนโดยรวม:"
@@ -1068,6 +1116,21 @@ msgstr "ขนาดตัวอักษรข้อความตอบกล
 msgid "Role & Function"
 msgstr "บทบาทและหน้าที่"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"ส่งข้อความที่เลือกแบบสั้นไปยังพจนานุกรม AI แทนที่จะเป็นตัวแปล\n"
+"\n"
+"- นับว่าสั้น: ไม่เกิน 5 คำ; สำหรับข้อความ CJK ซึ่งไม่มีตัวคั่นคำ\n"
+"  ไม่เกิน 8 ตัวอักษร\n"
+"- ข้อความที่เลือกแบบสั้นจะเปิดพจนานุกรม AI; ข้อความที่เลือกยาวจะ\n"
+"  ถูกแปลตามปกติ"
+
 msgid "Runtime"
 msgstr "รันไทม์"
 
@@ -1116,23 +1179,11 @@ msgstr "คัดลอกข้อความที่เลือกไปย
 msgid "Settings"
 msgstr "การตั้งค่า"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "แสดงพรอมป์ที่กำหนดเองในป็อปอัพพจนานุกรม"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "แสดง Dictionary(AI) ในป็อปอัพพจนานุกรม"
-
 msgid "Show Follow-up Questions"
 msgstr "แสดงคำถามติดตาม"
 
 msgid "Show Reasoning Text"
 msgstr "แสดงข้อความการให้เหตุผล"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "แสดง Term X-Ray(AI) ในป็อปอัพพจนานุกรม"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "แสดง Wikipedia(AI) ในป็อปอัพพจนานุกรม"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "แสดงกระบวนการคิดอย่างลึกซึ้ง (การให้เหตุผล) จากการตอบกลับของ AI หากมี"
@@ -1145,6 +1196,12 @@ msgstr "คำแนะนำหนังสือที่คล้ายกั
 
 msgid "Simplify"
 msgstr "ทำให้ง่ายขึ้น"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "การค้นหาพจนานุกรมอัจฉริยะสำหรับ 'แปล'"
+
+msgid "Standard - standard definitions"
+msgstr "มาตรฐาน - คำนิยามมาตรฐาน"
 
 msgid "Stop"
 msgstr "หยุด"
@@ -1220,8 +1277,8 @@ msgstr "ปุ่มนี้สร้างโน้ตด่วนพร้อ
 msgid "This is a custom prompt"
 msgstr "นี่คือพรอมป์ที่กำหนดเอง"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "พรอมต์นี้ทำหน้าที่เป็นพจนานุกรมสำหรับข้อความที่ไฮไลต์ กล่าวคือให้ความหมายของคำหรือวลี"
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "พรอมต์นี้ทำหน้าที่เป็นพจนานุกรมที่เข้าใจบริบทของหนังสือสำหรับข้อความที่ไฮไลต์ โดยจำกัดไว้ที่คำหรือวลีหนึ่ง ๆ"
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "พรอมต์นี้วิเคราะห์ไวยากรณ์ของข้อความที่ไฮไลต์ ให้คำอธิบายโดยละเอียดเกี่ยวกับโครงสร้างและข้อผิดพลาดทางไวยากรณ์"
@@ -1374,7 +1431,6 @@ msgstr "จุดที่เนื้อเรื่องค้างอยู
 msgid "Wikipedia"
 msgstr "วิกิพีเดีย"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "รูปคำและคำตั้งต้น"
 

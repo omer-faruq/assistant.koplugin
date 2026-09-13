@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "Yapay Zekâ Yanıt Dili"
 msgid "AI Response Language Setting"
 msgstr "Yapay Zekâ Yanıt Dili Ayarı"
 
+msgid "AI Term X-Ray"
+msgstr "AI Terim X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI Wikipedia"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "%1 için API anahtarı gereklidir."
 
 msgid "API key is required."
 msgstr "API anahtarı zorunludur."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "API anahtarı %1 için boşluk veya satır sonu içermemelidir."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API anahtarı boşluk veya satır sonu içermemelidir."
 
 msgid "About the Author"
 msgstr "Yazar Hakkında"
@@ -336,6 +348,9 @@ msgstr "%1 için temel URL gereklidir."
 msgid "Base URL is required."
 msgstr "Temel URL zorunludur."
 
+msgid "Base URL must not contain spaces."
+msgstr "Temel URL boşluk içermemelidir."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Temel URL, http:// veya https:// ile başlamalıdır."
 
@@ -357,9 +372,6 @@ msgstr "Kitap İçgörüleri"
 
 msgid "Book Summary & Recs"
 msgstr "Kitap Özeti ve Öneriler"
-
-msgid "Book Usage"
-msgstr "Kitaptaki Kullanımı"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "\"%1\" dalı/etiketi bulunamadı."
@@ -389,6 +401,9 @@ msgstr "Karakterler"
 msgid "Checking for updates..."
 msgstr "Güncellemeler kontrol ediliyor..."
 
+msgid "Choose Definition Sections"
+msgstr "Tanım Bölümlerini Seçin"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Notlarınızın hangi deftere kaydedileceğini seçin."
 
@@ -400,6 +415,9 @@ msgstr "Kapat"
 
 msgid "Composing answer ..."
 msgstr "Yanıt oluşturuluyor ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Öz - kısa cümlelerle yanıtla"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Yapılandırma bulunamadı. Lütfen önce configuration.lua dosyasını ayarlayın."
@@ -529,6 +547,25 @@ msgstr "Sözlük"
 msgid "Dictionary Language"
 msgstr "Sözlük Dili"
 
+msgid "Dictionary Popup"
+msgstr "Sözlük Açılır Penceresi"
+
+msgid "Dictionary Settings"
+msgstr "Sözlük Ayarları"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Sözlük mü, Çeviri mi?\n"
+"\n"
+"Bu seçim bir kelime veya kısa bir ifade gibi görünüyor.\n"
+"\n"
+"Bunu daha sonra Ayarlar > Diğer Ayarlar > 'Çevir' için Akıllı Sözlük Araması bölümünden değiştirebilirsiniz."
+
 msgid "Display name"
 msgstr "Görünen ad"
 
@@ -597,6 +634,9 @@ msgstr "Açıkla"
 msgid "Failed to fetch models"
 msgstr "Modeller getirilemedi"
 
+msgid "Failed to save provider."
+msgstr "Sağlayıcı kaydedilemedi."
+
 msgid "Failed to save search tool."
 msgstr "Arama aracı kaydedilemedi."
 
@@ -617,6 +657,9 @@ msgstr "Filtre: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Ayrıntılar için GitHub'daki 'Configuration' wiki sayfasını ziyaret edin."
+
+msgid "Full - full definitions"
+msgstr "Tam - tam tanımlar"
 
 msgid "Fun Analogy"
 msgstr "Eğlenceli Benzetme"
@@ -685,9 +728,8 @@ msgstr "Geçersiz defter dosya adı."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader İnce Ayarları"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Sözlük yanıtlarını kısa tutun: bölüm başına en fazla bir veya iki cümle."
 
 msgid "Key Points"
 msgstr "Ana Noktalar"
@@ -749,8 +791,8 @@ msgstr "Ana Temalar"
 msgid "Markdown Engine"
 msgstr "Markdown Motoru"
 
-msgid "Meaning"
-msgstr "Anlam"
+msgid "Meaning & Usage"
+msgstr "Anlam ve Kullanım"
 
 msgid "Model"
 msgstr "Model"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI uyumlu Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Diğer Ayarlar"
+
 msgid "Outstanding questions:"
 msgstr "Cevaplanmamış sorular:"
 
@@ -948,6 +993,9 @@ msgstr "Eklenti yapılandırılmamış."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Kitap bağlamını kabul eden istemlerin başına kitap üst verisini (başlık, yazar ve bölüm dahil güncel okuma konumu) ekler. (Varsayılan olarak: Açıkla, Tarihsel Bağlam, Özetle, Anahtar Noktalar ve ELI5). Her istem için davranış, yapılandırma dosyasındaki use_book_context ile geçersiz kılınabilir."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "AI Sözlüğü bölümlerinin hazır listesi."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Baskın duygu durumu/tonu:"
@@ -1068,6 +1116,21 @@ msgstr "Yanıt Metni Yazı Boyutu"
 msgid "Role & Function"
 msgstr "Rolü ve İşlevi"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Kısa seçimleri Çevirmen yerine AI Sözlüğü'ne yönlendir.\n"
+"\n"
+"- Kısa sayılanlar: en fazla 5 kelime; kelime ayırıcısı olmayan\n"
+"  CJK metinler için en fazla 8 karakter.\n"
+"- Kısa seçimler AI Sözlüğü'nü açar; daha uzun seçimler\n"
+"  normal şekilde çevrilir."
+
 msgid "Runtime"
 msgstr "Çalışma Zamanı"
 
@@ -1116,23 +1179,11 @@ msgstr "Seçim panoya kopyalandı."
 msgid "Settings"
 msgstr "Ayarlar"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Sözlük Açılır Penceresinde Özel İstemleri Göster"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Sözlük Açılır Penceresinde Sözlük(AI) Göster"
-
 msgid "Show Follow-up Questions"
 msgstr "Devam Sorularını Göster"
 
 msgid "Show Reasoning Text"
 msgstr "Akıl Yürütme Metnini Göster"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Sözlük Açılır Penceresinde Terim X-Ray(AI) Göster"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Sözlük Açılır Penceresinde Wikipedia(AI) Göster"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "AI yanıtında varsa derin düşünme sürecini (akıl yürütme) göster."
@@ -1145,6 +1196,12 @@ msgstr "Benzer Kitap Önerileri"
 
 msgid "Simplify"
 msgstr "Basitleştir"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "'Çevir' için Akıllı Sözlük Araması"
+
+msgid "Standard - standard definitions"
+msgstr "Standart - standart tanımlar"
 
 msgid "Stop"
 msgstr "Durdur"
@@ -1220,8 +1277,8 @@ msgstr "Bu düğme, vurgulanan metinle hızlı bir not oluşturur."
 msgid "This is a custom prompt"
 msgstr "Bu özel bir istemdir"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Bu istem, vurgulanan metindeki bir kelime veya ifade için sözlük görevi görür."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Bu istem, vurgulanan metin için kitap farkındalıklı bir sözlük görevi görür; bir kelime veya kısa ifadeye kadar."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Bu istem, vurgulanan metnin dil bilgisini analiz eder; yapısının ve varsa dil bilgisi hatalarının ayrıntılı bir açıklamasını sağlar."
@@ -1374,7 +1431,6 @@ msgstr "Olayın kaldığı yer:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Kelime Formu ve Lemma"
 

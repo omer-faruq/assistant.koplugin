@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "Jazyk odpovedí AI"
 msgid "AI Response Language Setting"
 msgstr "Nastavenie jazyka odpovedí AI"
 
+msgid "AI Term X-Ray"
+msgstr "AI Term X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI Wikipedia"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "Pre %1 sa vyžaduje API kľúč."
 
 msgid "API key is required."
 msgstr "API kľúč je povinný."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "API kľúč nesmie obsahovať medzery ani zalomenia riadkov pre %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API kľúč nesmie obsahovať medzery ani zalomenia riadkov."
 
 msgid "About the Author"
 msgstr "O autorovi"
@@ -336,6 +348,9 @@ msgstr "Pre %1 sa vyžaduje Base URL."
 msgid "Base URL is required."
 msgstr "Základná URL adresa je povinná."
 
+msgid "Base URL must not contain spaces."
+msgstr "Základná URL adresa nesmie obsahovať medzery."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Základná URL adresa musí začínať na http:// alebo https://"
 
@@ -357,9 +372,6 @@ msgstr "Vpogledi v knjigo"
 
 msgid "Book Summary & Recs"
 msgstr "Zhrnutie knihy a odporúčania"
-
-msgid "Book Usage"
-msgstr "Použitie v knihe"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Veja/oznaka \"%1\" ni bila najdena."
@@ -389,6 +401,9 @@ msgstr "Postavy"
 msgid "Checking for updates..."
 msgstr "Preverjanje posodobitev..."
 
+msgid "Choose Definition Sections"
+msgstr "Vyberte sekcie definícií"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Izberite, v katero beležnico bodo shranjene vaše opombe."
 
@@ -400,6 +415,9 @@ msgstr "Zavrieť"
 
 msgid "Composing answer ..."
 msgstr "Zostavujem odpoveď ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Stručné – odpovedať krátkymi vetami"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfiguracija ni bila najdena. Prosimo, najprej nastavite configuration.lua."
@@ -529,6 +547,25 @@ msgstr "Slovník"
 msgid "Dictionary Language"
 msgstr "Jazyk slovníka"
 
+msgid "Dictionary Popup"
+msgstr "Vyskakovacie okno slovníka"
+
+msgid "Dictionary Settings"
+msgstr "Nastavenia slovníka"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Slovník alebo preklad?\n"
+"\n"
+"Tento výber vyzerá ako slovo alebo krátka fráza.\n"
+"\n"
+"Neskôr to môžete zmeniť v Nastavenia > Ďalšie nastavenia > Inteligentné vyhľadávanie v slovníku pre „Preložiť“."
+
 msgid "Display name"
 msgstr "Zobrazovaný názov"
 
@@ -597,6 +634,9 @@ msgstr "Vysvetliť"
 msgid "Failed to fetch models"
 msgstr "Nepodarilo sa načítať modely"
 
+msgid "Failed to save provider."
+msgstr "Poskytovateľa sa nepodarilo uložiť."
+
 msgid "Failed to save search tool."
 msgstr "Nepodarilo sa uložiť vyhľadávací nástroj."
 
@@ -617,6 +657,9 @@ msgstr "Filter: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Podrobnosti nájdete na wiki stránke 'Configuration' na GitHube."
+
+msgid "Full - full definitions"
+msgstr "Úplné – úplné definície"
 
 msgid "Fun Analogy"
 msgstr "Zábavná analógia"
@@ -685,9 +728,8 @@ msgstr "Neveljavno ime datoteke beležnice."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "Prilagoditve KOReader"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Udržujte odpovede slovníka krátke: najviac jedna alebo dve vety na sekciu."
 
 msgid "Key Points"
 msgstr "Kľúčové body"
@@ -751,8 +793,8 @@ msgstr "Hlavné témy"
 msgid "Markdown Engine"
 msgstr "Markdown pogon"
 
-msgid "Meaning"
-msgstr "Význam"
+msgid "Meaning & Usage"
+msgstr "Význam a použitie"
 
 msgid "Model"
 msgstr "Model"
@@ -924,6 +966,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-kompatibilné Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Ďalšie nastavenia"
+
 msgid "Outstanding questions:"
 msgstr "Otvorené otázky:"
 
@@ -950,6 +995,9 @@ msgstr "Plugin nie je nakonfigurovaný."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Pred pozive, ki se odločijo za kontekst knjige (privzeto: Explain, Historical Context, Summarize, Key Points in ELI5), doda metapodatke knjige (naslov, avtorja in trenutni položaj branja, vključno s poglavjem). Vedenje posameznega poziva je mogoče preglasiti z nastavitvijo use_book_context v konfiguracijski datoteki."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Predvolený zoznam sekcií AI slovníka."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Prevládajúci emocionálny stav/tón:"
@@ -1071,6 +1119,21 @@ msgstr "Velikost pisave besedila odgovora"
 msgid "Role & Function"
 msgstr "Úloha a funkcia"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Smerovať krátke výbery do AI slovníka namiesto prekladača.\n"
+"\n"
+"- Za krátke sa považuje: do 5 slov; pri CJK texte, ktorý nemá\n"
+"  oddeľovače slov, do 8 znakov.\n"
+"- Krátke výbery otvoria AI slovník; dlhšie výbery sa\n"
+"  preložia ako obvykle."
+
 msgid "Runtime"
 msgstr "Izvajalno okolje"
 
@@ -1119,23 +1182,11 @@ msgstr "Výber bol skopírovaný do schránky."
 msgid "Settings"
 msgstr "Nastavenia"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Prikaži prilagojene pozive v pojavnem oknu slovarja"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Prikaži slovar (AI) v pojavnem oknu slovarja"
-
 msgid "Show Follow-up Questions"
 msgstr "Prikaži nadaljnja vprašanja"
 
 msgid "Show Reasoning Text"
 msgstr "Prikaži besedilo razmišljanja"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Prikaži Term X-Ray (AI) v pojavnem oknu slovarja"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Prikaži Wikipedijo (AI) v pojavnem oknu slovarja"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Prikaži poglobljen miselni proces (razmišljanje) iz odgovora AI, če obstaja."
@@ -1148,6 +1199,12 @@ msgstr "Odporúčania podobných kníh"
 
 msgid "Simplify"
 msgstr "Zjednodušiť"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Inteligentné vyhľadávanie v slovníku pre „Preložiť“"
+
+msgid "Standard - standard definitions"
+msgstr "Štandardné – štandardné definície"
 
 msgid "Stop"
 msgstr "Zastaviť"
@@ -1223,8 +1280,8 @@ msgstr "Toto tlačidlo vytvorí rýchlu poznámku so zvýrazneným textom."
 msgid "This is a custom prompt"
 msgstr "Toto je vlastný prompt"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Tento prompt funguje ako slovník pre zvýraznený text, teda pre slovo alebo frázu."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Tento pokyn funguje ako slovník zohľadňujúci knihu pre zvýraznený text, a to pre slovo alebo frázu."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Tento prompt analyzuje gramatiku zvýrazneného textu a poskytuje podrobné vysvetlenie jeho štruktúry a prípadných gramatických chýb."
@@ -1377,7 +1434,6 @@ msgstr "Kde sa dej zastavil:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Tvar slova a lemma"
 

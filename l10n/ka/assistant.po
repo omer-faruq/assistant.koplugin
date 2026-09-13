@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 03:58+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ქართული (AI translation)\n"
@@ -224,6 +224,12 @@ msgstr "AI პასუხის ენა"
 msgid "AI Response Language Setting"
 msgstr "AI პასუხის ენის პარამეტრი"
 
+msgid "AI Term X-Ray"
+msgstr "AI ტერმინის X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI ვიკიპედია"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "API გასაღები სავალდებულოა %1-ი
 
 msgid "API key is required."
 msgstr "API გასაღები სავალდებულოა."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "API გასაღები არ უნდა შეიცავდეს ჰარებს ან ხაზის წყვეტებს %1-ისთვის."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API გასაღები არ უნდა შეიცავდეს ჰარებს ან ხაზის წყვეტებს."
 
 msgid "About the Author"
 msgstr "ავტორის შესახებ"
@@ -336,6 +348,9 @@ msgstr "საბაზო URL სავალდებულოა %1-ისთ
 msgid "Base URL is required."
 msgstr "საბაზო URL სავალდებულოა."
 
+msgid "Base URL must not contain spaces."
+msgstr "საბაზისო URL არ უნდა შეიცავდეს ჰარებს."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "საბაზო URL უნდა იწყებოდეს http:// ან https://-ით"
 
@@ -357,9 +372,6 @@ msgstr "წიგნის ანალიზი"
 
 msgid "Book Summary & Recs"
 msgstr "წიგნის შეჯამება და რეკომენდაციები"
-
-msgid "Book Usage"
-msgstr "წიგნში გამოყენება"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ბრანჩი/ტეგი \"%1\" ვერ მოიძებნა."
@@ -389,6 +401,9 @@ msgstr "პერსონაჟები"
 msgid "Checking for updates..."
 msgstr "მიმდინარეობს განახლებების შემოწმება..."
 
+msgid "Choose Definition Sections"
+msgstr "განმარტების სექციების არჩევა"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "აირჩიეთ, რომელ რვეულში შეინახება თქვენი ჩანაწერები."
 
@@ -400,6 +415,9 @@ msgstr "დახურვა"
 
 msgid "Composing answer ..."
 msgstr "პასუხის შედგენა ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "მოკლე - უპასუხეთ მოკლე წინადადებებით"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "კონფიგურაცია ვერ მოიძებნა. გთხოვთ, ჯერ დააყენოთ configuration.lua."
@@ -529,6 +547,25 @@ msgstr "ლექსიკონი"
 msgid "Dictionary Language"
 msgstr "ლექსიკონის ენა"
 
+msgid "Dictionary Popup"
+msgstr "ლექსიკონის ამომავალი ფანჯარა"
+
+msgid "Dictionary Settings"
+msgstr "ლექსიკონის პარამეტრები"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"ლექსიკონი თუ თარგმანი?\n"
+"\n"
+"ეს მონიშვნა სიტყვას ან მოკლე ფრაზას ჰგავს.\n"
+"\n"
+"ამის შეცვლა მოგვიანებით შეგიძლიათ პარამეტრებში > სხვა პარამეტრები > ჭკვიანი ლექსიკონის ძიება 'თარგმნისთვის'."
+
 msgid "Display name"
 msgstr "საჩვენებელი სახელი"
 
@@ -597,6 +634,9 @@ msgstr "ახსნა"
 msgid "Failed to fetch models"
 msgstr "მოდელების ჩატვირთვა ვერ მოხერხდა"
 
+msgid "Failed to save provider."
+msgstr "მომწოდებლის შენახვა ვერ მოხერხდა."
+
 msgid "Failed to save search tool."
 msgstr "საძიებო ხელსაწყოს შენახვა ვერ მოხერხდა."
 
@@ -617,6 +657,9 @@ msgstr "ფილტრი: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "დეტალებისთვის ეწვიეთ 'Configuration' ვიკი გვერდს github-ზე."
+
+msgid "Full - full definitions"
+msgstr "სრული - სრული განმარტებები"
 
 msgid "Fun Analogy"
 msgstr "სახალისო ანალოგია"
@@ -685,9 +728,8 @@ msgstr "რვეულის ფაილის სახელი არას
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader-ის პარამეტრები"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "ლექსიკონის პასუხები მოკლედ შეინახეთ: მაქსიმუმ ერთი ან ორი წინადადება თითო სექციაზე."
 
 msgid "Key Points"
 msgstr "ძირითადი პუნქტები"
@@ -749,8 +791,8 @@ msgstr "მთავარი თემები"
 msgid "Markdown Engine"
 msgstr "Markdown ძრავა"
 
-msgid "Meaning"
-msgstr "მნიშვნელობა"
+msgid "Meaning & Usage"
+msgstr "მნიშვნელობა და გამოყენება"
 
 msgid "Model"
 msgstr "მოდელი"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-თან თავსებადი Chat Completions API"
 
+msgid "Other Settings"
+msgstr "სხვა პარამეტრები"
+
 msgid "Outstanding questions:"
 msgstr "გადაუჭრელი კითხვები:"
 
@@ -948,6 +993,9 @@ msgstr "დამატება არ არის კონფიგური
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "ამატებს წიგნის მეტამონაცემებს (სათაურს, ავტორს და მიმდინარე კითხვის პოზიციას, თავის ჩათვლით) მოთხოვნებს, რომლებსაც აქვთ ჩართული წიგნის კონტექსტი (ნაგულისხმევად: Explain, Historical Context, Summarize, Key Points და ELI5). თითოეული მოთხოვნის ქცევა შეიძლება გადაიწეროს use_book_context-ით კონფიგურაციის ფაილში."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "AI ლექსიკონის სექციების წინასწარ განსაზღვრული სია."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "გაბატონებული ემოციური მდგომარეობა/ტონი:"
@@ -1069,6 +1117,21 @@ msgstr "პასუხის ტექსტის შრიფტის ზო
 msgid "Role & Function"
 msgstr "როლი და ფუნქცია"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"მოკლე მონიშვნები გადაამისამართეთ AI ლექსიკონში მთარგმნელის ნაცვლად.\n"
+"\n"
+"- მოკლედ ითვლება: 5 სიტყვამდე; CJK ტექსტისთვის, რომელსაც სიტყვების\n"
+"  გამყოფები არ აქვს, 8 სიმბოლომდე.\n"
+"- მოკლე მონიშვნები ხსნის AI ლექსიკონს; გრძელი მონიშვნები\n"
+"  ჩვეულებრივად ითარგმნება."
+
 msgid "Runtime"
 msgstr "რანტაიმი"
 
@@ -1117,23 +1180,11 @@ msgstr "მონიშნული ტექსტი დაკოპირდ�
 msgid "Settings"
 msgstr "პარამეტრები"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "მორგებული პრომპტების ჩვენება ლექსიკონის ამომხტარ ფანჯარაში"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "ლექსიკონის (AI) ჩვენება ლექსიკონის ამომხტარ ფანჯარაში"
-
 msgid "Show Follow-up Questions"
 msgstr "შემდგომი კითხვების ჩვენება"
 
 msgid "Show Reasoning Text"
 msgstr "მსჯელობის ტექსტის ჩვენება"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "ტერმინის X-Ray (AI) ჩვენება ლექსიკონის ამომხტარ ფანჯარაში"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "ვიკიპედიის (AI) ჩვენება ლექსიკონის ამომხტარ ფანჯარაში"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "აჩვენე AI პასუხის ღრმა მსჯელობის პროცესი (reasoning), თუ არსებობს."
@@ -1146,6 +1197,12 @@ msgstr "მსგავსი წიგნების რეკომენდ�
 
 msgid "Simplify"
 msgstr "გამარტივება"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "ჭკვიანი ლექსიკონის ძიება 'Translate'-ისთვის"
+
+msgid "Standard - standard definitions"
+msgstr "სტანდარტული — სტანდარტული განმარტებები"
 
 msgid "Stop"
 msgstr "შეჩერება"
@@ -1221,8 +1278,8 @@ msgstr "ეს ღილაკი ქმნის სწრაფ ჩანა�
 msgid "This is a custom prompt"
 msgstr "ეს არის მორგებული პრომპტი"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "ეს პრომპტი მოქმედებს როგორც ლექსიკონი მონიშნული ტექსტისთვის, კონკრეტული სიტყვის ან ფრაზისთვის."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "ეს პრომპტი მოქმედებს როგორც წიგნის კონტექსტის მცოდნე ლექსიკონი მონიშნული ტექსტისთვის, სიტყვის ან ფრაზის დონეზე."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "ეს პრომპტი აანალიზებს მონიშნული ტექსტის გრამატიკას, გვაწვდის დეტალურ ახსნას მისი სტრუქტურისა და ნებისმიერი გრამატიკული შეცდომის შესახებ."
@@ -1375,7 +1432,6 @@ msgstr "სად გაჩერდა მოქმედება:"
 msgid "Wikipedia"
 msgstr "ვიკიპედია"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "სიტყვის ფორმა და ლემა"
 

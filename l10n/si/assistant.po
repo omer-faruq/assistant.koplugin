@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 04:37+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: සිංහල (AI translation)\n"
@@ -224,6 +224,12 @@ msgstr "AI ප්‍රතිචාර භාෂාව"
 msgid "AI Response Language Setting"
 msgstr "AI ප්‍රතිචාර භාෂා සැකසුම"
 
+msgid "AI Term X-Ray"
+msgstr "AI පද X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI විකිපීඩියා"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "%1 සඳහා API යතුර අවශ්‍ය වේ."
 
 msgid "API key is required."
 msgstr "API යතුර අවශ්ය වේ."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "%1 සඳහා API යතුරේ හිස්තැන් හෝ පේළි බිඳීම් තිබිය යුතු නොවේ."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API යතුරේ හිස්තැන් හෝ පේළි බිඳීම් තිබිය යුතු නොවේ."
 
 msgid "About the Author"
 msgstr "කතෘ පිළිබඳ"
@@ -336,6 +348,9 @@ msgstr "%1 සඳහා මූලික URL අවශ්‍ය වේ."
 msgid "Base URL is required."
 msgstr "මූලික URL අවශ්ය වේ."
 
+msgid "Base URL must not contain spaces."
+msgstr "මූල URL හි හිස්තැන් තිබිය යුතු නොවේ."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "මූලික URL http:// හෝ https:// වලින් ආරම්භ විය යුතුය."
 
@@ -357,9 +372,6 @@ msgstr "පොත් තීක්ෂණ"
 
 msgid "Book Summary & Recs"
 msgstr "පොත් සාරාංශය සහ නිර්දේශ"
-
-msgid "Book Usage"
-msgstr "පොතේ භාවිතය"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Branch/Tag \"%1\" හමු නොවීය."
@@ -389,6 +401,9 @@ msgstr "චරිත"
 msgid "Checking for updates..."
 msgstr "යාවත්කාලීන සඳහා පරීක්ෂා කරමින්..."
 
+msgid "Choose Definition Sections"
+msgstr "නිර්වචන කොටස් තෝරන්න"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "ඔබේ සටහන් සුරැකෙන සටහන් පොත තෝරන්න."
 
@@ -400,6 +415,9 @@ msgstr "වසන්න"
 
 msgid "Composing answer ..."
 msgstr "පිළිතුර සම්පාදනය කරමින් ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "සංක්ෂිප්ත - කෙටි වාක්‍යවලින් පිළිතුරු දෙන්න"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "වින්යාසය හමු නොවීය. කරුණාකර පළමුව configuration.lua සකසන්න."
@@ -529,6 +547,25 @@ msgstr "ශබ්දකෝෂය"
 msgid "Dictionary Language"
 msgstr "ශබ්දකෝෂ භාෂාව"
 
+msgid "Dictionary Popup"
+msgstr "ශබ්දකෝෂ පොප්අප්"
+
+msgid "Dictionary Settings"
+msgstr "ශබ්දකෝෂ සැකසුම්"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"ශබ්දකෝෂයද නැතහොත් පරිවර්තනයද?\n"
+"\n"
+"මෙම තේරීම එක් වචනයක් හෝ කෙටි වාක්‍ය ඛණ්ඩයක් ලෙස පෙනේ.\n"
+"\n"
+"ඔබට මෙය පසුව සැකසුම් > වෙනත් සැකසුම් > 'Translate' සඳහා බුද්ධිමත් ශබ්දකෝෂ සෙවුම තුළ වෙනස් කළ හැක."
+
 msgid "Display name"
 msgstr "පෙන්වන නම"
 
@@ -597,6 +634,9 @@ msgstr "පැහැදිලි කරන්න"
 msgid "Failed to fetch models"
 msgstr "මාදිලි ලබා ගැනීම අසාර්ථක විය"
 
+msgid "Failed to save provider."
+msgstr "සැපයුම්කරු සුරැකීමට අසමත් විය."
+
 msgid "Failed to save search tool."
 msgstr "සෙවුම් මෙවලම සුරැකීමට අපොහොසත් විය."
 
@@ -617,6 +657,9 @@ msgstr "පෙරහන: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "විස්තර සඳහා, github හි 'Configuration' විකි පිටුවට පිවිසෙන්න."
+
+msgid "Full - full definitions"
+msgstr "සම්පූර්ණ - සම්පූර්ණ නිර්වචන"
 
 msgid "Fun Analogy"
 msgstr "විනෝදජනක ප්රතිසමය"
@@ -685,9 +728,8 @@ msgstr "වලංගු නොවන සටහන් පොත් ගොනු �
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader ගැලපීම්"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "ශබ්දකෝෂ පිළිතුරු කෙටියෙන් තබන්න: එක් කොටසකට වැඩිම වාක්‍ය එකක් හෝ දෙකක්."
 
 msgid "Key Points"
 msgstr "ප්රධාන කරුණු"
@@ -749,8 +791,8 @@ msgstr "ප්රධාන තේමා"
 msgid "Markdown Engine"
 msgstr "Markdown එන්ජිම"
 
-msgid "Meaning"
-msgstr "අර්ථය"
+msgid "Meaning & Usage"
+msgstr "අර්ථය සහ භාවිතය"
 
 msgid "Model"
 msgstr "මාදිලිය"
@@ -922,6 +964,9 @@ msgstr "OpenAI ප්‍රතිචාර API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-අනුකූල Chat Completions API"
 
+msgid "Other Settings"
+msgstr "වෙනත් සැකසුම්"
+
 msgid "Outstanding questions:"
 msgstr "ඉතිරිව ඇති ප්රශ්න:"
 
@@ -948,6 +993,9 @@ msgstr "ප්ලගිනය වින්‍යාස කර නොමැත."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "පොත් සන්දර්භයට ඇතුළත් වන ප්රොම්ප්ට් සඳහා පොත් පාර-දත්ත (මාතෘකාව, කතෘ සහ පරිච්ඡේදය ඇතුළු වර්තමාන කියවීමේ ස්ථානය) උපසර්ගයක් ලෙස එක් කරයි (පෙරනිමියෙන්: Explain, Historical Context, Summarize, Key Points සහ ELI5). වින්යාස ගොනුවේ use_book_context සමඟ එක් එක් ප්රොම්ප්ටයේ හැසිරීම අභිබවා යා හැක."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "AI ශබ්දකෝෂ කොටස්වල පෙරසිටුවන ලද ලැයිස්තුව."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "පවතින චිත්තවේගීය තත්ත්වය/ස්වරය:"
@@ -1069,6 +1117,21 @@ msgstr "ප්‍රතිචාර පෙළෙහි අකුරු ප්‍
 msgid "Role & Function"
 msgstr "කාර්යභාරය සහ ක්රියාකාරීත්වය"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"කෙටි තේරීම් පරිවර්තකය වෙනුවට AI ශබ්දකෝෂයට යොමු කරන්න.\n"
+"\n"
+"- කෙටි ලෙස ගණන් ගැනේ: වචන 5ක් දක්වා; වචන\n"
+"  බෙදුම් නොමැති CJK පෙළ සඳහා අක්ෂර 8ක් දක්වා.\n"
+"- කෙටි තේරීම් AI ශබ්දකෝෂය විවෘත කරයි; දිගු තේරීම්\n"
+"  සුපුරුදු පරිදි පරිවර්තනය වේ."
+
 msgid "Runtime"
 msgstr "ධාවන කාලය"
 
@@ -1117,23 +1180,11 @@ msgstr "තේරීම ක්ලිප්බෝඩ් වෙත පිටපත
 msgid "Settings"
 msgstr "සැකසුම්"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "ශබ්දකෝෂ පොප්අප් එකේ අභිරුචි ප්‍රොම්ප්ට් පෙන්වන්න"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "ශබ්දකෝෂ පොප්අප් එකේ ශබ්දකෝෂය(AI) පෙන්වන්න"
-
 msgid "Show Follow-up Questions"
 msgstr "අනුගාමී ප්‍රශ්න පෙන්වන්න"
 
 msgid "Show Reasoning Text"
 msgstr "තර්කන පෙළ පෙන්වන්න"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "ශබ්දකෝෂ පොප්අප් එකේ Term X-Ray(AI) පෙන්වන්න"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "ශබ්දකෝෂ පොප්අප් එකේ විකිපීඩියා(AI) පෙන්වන්න"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "AI ප්‍රතිචාරයේ ඇත්නම් ගැඹුරු චින්තන ක්‍රියාවලිය (තර්කනය) පෙන්වන්න."
@@ -1146,6 +1197,12 @@ msgstr "සමාන පොත් නිර්දේශ"
 
 msgid "Simplify"
 msgstr "සරල කරන්න"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "'Translate' සඳහා බුද්ධිමත් ශබ්දකෝෂ සෙවුම"
+
+msgid "Standard - standard definitions"
+msgstr "සම්මත - සම්මත නිර්වචන"
 
 msgid "Stop"
 msgstr "නවත්වන්න"
@@ -1221,8 +1278,8 @@ msgstr "මෙම බොත්තම උද්දීපනය කළ පාඨ�
 msgid "This is a custom prompt"
 msgstr "මෙය අභිරුචි ප්‍රොම්ප්ට් එකකි"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "මෙම ප්රොම්ප්ටය උද්දීපනය කළ පාඨය සඳහා, වචනයකට හෝ වාක්යාංශයකට ශබ්දකෝෂයක් ලෙස ක්රියා කරයි."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "මෙම ප්‍රොම්ට් උද්දීපිත පෙළ සඳහා පොත හඳුනන ශබ්දකෝෂයක් ලෙස ක්‍රියා කරයි; වචනයක් හෝ වාක්‍ය ඛණ්ඩයක් දක්වා පමණි."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "මෙම ප්රොම්ප්ටය උද්දීපනය කළ පාඨයේ ව්යාකරණ විශ්ලේෂණය කරයි, එහි ව්යුහය සහ ඕනෑම ව්යාකරණ දෝෂයක් පිළිබඳ සවිස්තරාත්මක පැහැදිලි කිරීමක් සපයයි."
@@ -1375,7 +1432,6 @@ msgstr "ක්රියාව නතර වූ තැන:"
 msgid "Wikipedia"
 msgstr "විකිපීඩියා"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "වචන ස්වරූපය සහ මූල පදය"
 

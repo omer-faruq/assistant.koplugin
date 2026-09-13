@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 02:46+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Afrikaans (AI translation)\n"
@@ -219,6 +219,12 @@ msgstr "AI-antwoordtaal"
 msgid "AI Response Language Setting"
 msgstr "AI-antwoordtaalinstelling"
 
+msgid "AI Term X-Ray"
+msgstr "KI Term X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "KI Wikipedia"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -233,6 +239,12 @@ msgstr "API-sleutel word vir %1 vereis."
 
 msgid "API key is required."
 msgstr "API-sleutel is verpligtend."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "API-sleutel mag nie spasies of reëlbreuke bevat vir %1 nie."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API-sleutel mag nie spasies of reëlbreuke bevat nie."
 
 msgid "About the Author"
 msgstr "Oor die outeur"
@@ -331,6 +343,9 @@ msgstr "Basis-URL word vir %1 vereis."
 msgid "Base URL is required."
 msgstr "Basis-URL is verpligtend."
 
+msgid "Base URL must not contain spaces."
+msgstr "Basis-URL mag nie spasies bevat nie."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Basis-URL moet met http:// of https:// begin."
 
@@ -352,9 +367,6 @@ msgstr "Boek-insigte"
 
 msgid "Book Summary & Recs"
 msgstr "Boekopsomming en aanbevelings"
-
-msgid "Book Usage"
-msgstr "Gebruik in die boek"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Tak/Tag \"%1\" is nie gevind nie."
@@ -384,6 +396,9 @@ msgstr "Karakters"
 msgid "Checking for updates..."
 msgstr "Kyk vir opdaterings..."
 
+msgid "Choose Definition Sections"
+msgstr "Kies definisie-afdelings"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Kies na watter notaboek jou notas gestoor word."
 
@@ -395,6 +410,9 @@ msgstr "Sluit"
 
 msgid "Composing answer ..."
 msgstr "Besig om antwoord saam te stel ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Kort en bondig - antwoord in kort sinne"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigurasie nie gevind nie. Stel asseblief eers configuration.lua op."
@@ -524,6 +542,25 @@ msgstr "Woordeboek"
 msgid "Dictionary Language"
 msgstr "Woordeboektaal"
 
+msgid "Dictionary Popup"
+msgstr "Woordeboek-opspringvenster"
+
+msgid "Dictionary Settings"
+msgstr "Woordeboek-instellings"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Woordeboek of vertaling?\n"
+"\n"
+"Hierdie seleksie lyk soos 'n woord of kort frase.\n"
+"\n"
+"Jy kan dit later verander in Instellings > Ander instellings > Slim woordeboek-soektog vir 'Vertaal'."
+
 msgid "Display name"
 msgstr "Vertoonnaam"
 
@@ -592,6 +629,9 @@ msgstr "Verduidelik"
 msgid "Failed to fetch models"
 msgstr "Kon nie modelle laai nie"
 
+msgid "Failed to save provider."
+msgstr "Kon nie die verskaffer stoor nie."
+
 msgid "Failed to save search tool."
 msgstr "Kon nie soekinstrument stoor nie."
 
@@ -612,6 +652,9 @@ msgstr "Filter: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Vir besonderhede, besoek die 'Configuration'-wiki-bladsy op github."
+
+msgid "Full - full definitions"
+msgstr "Volledig - volledige definisies"
 
 msgid "Fun Analogy"
 msgstr "Pret-analogie"
@@ -680,9 +723,8 @@ msgstr "Ongeldige notaboeklêernaam."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader-aanpassings"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Hou woordeboekantwoorde kort: hoogstens een of twee sinne per afdeling."
 
 msgid "Key Points"
 msgstr "Hoofpunte"
@@ -744,8 +786,8 @@ msgstr "Hoof-temas"
 msgid "Markdown Engine"
 msgstr "Markdown-enjin"
 
-msgid "Meaning"
-msgstr "Betekenis"
+msgid "Meaning & Usage"
+msgstr "Betekenis en gebruik"
 
 msgid "Model"
 msgstr "Model"
@@ -917,6 +959,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-versoenbare Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Ander instellings"
+
 msgid "Outstanding questions:"
 msgstr "Oop vrae:"
 
@@ -943,6 +988,9 @@ msgstr "Die inprop is nie gekonfigureer nie."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Voeg boekmetadata (titel, outeur en huidige leesposisie insl. hoofstuk) by vooraan aan prompts wat vir boekkonteks opteer (by verstek: Verduidelik, Historiese Konteks, Opsom, Sleutelpunte en ELI5). Per-prompt-gedrag kan met use_book_context in die konfigurasielêer oorskryf word."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Voorafbepaalde lys van KI-woordeboek-afdelings."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Heersende emosionele toestand/toon:"
@@ -1064,6 +1112,21 @@ msgstr "Reaksieteks-fontgrootte"
 msgid "Role & Function"
 msgstr "Rol en funksie"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Stuur kort seleksies na die KI-woordeboek eerder as na die vertaler.\n"
+"\n"
+"- Tel as kort: tot 5 woorde; vir CJK-teks, wat geen woord-\n"
+"  skeiders het nie, tot 8 karakters.\n"
+"- Kort seleksies open die KI-woordeboek; langer seleksies word\n"
+"  soos gewoonlik vertaal."
+
 msgid "Runtime"
 msgstr "Looptyd"
 
@@ -1112,23 +1175,11 @@ msgstr "Seleksie na knipbord gekopieer."
 msgid "Settings"
 msgstr "Instellings"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Wys pasgemaakte opdragte in Woordeboek-popup"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Wys Woordeboek(AI) in Woordeboek-popup"
-
 msgid "Show Follow-up Questions"
 msgstr "Wys opvolgyrae"
 
 msgid "Show Reasoning Text"
 msgstr "Wys redenasieteks"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Wys Term X-Ray(AI) in Woordeboek-popup"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Wys Wikipedia(AI) in Woordeboek-popup"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Wys die diep denkproses (redenasie) van die AI-antwoord indien dit bestaan."
@@ -1141,6 +1192,12 @@ msgstr "Aanbevelings vir soortgelyke boeke"
 
 msgid "Simplify"
 msgstr "Vereenvoudig"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Slim woordeboek-soektog vir 'Vertaal'"
+
+msgid "Standard - standard definitions"
+msgstr "Standaard - standaarddefinisies"
 
 msgid "Stop"
 msgstr "Stop"
@@ -1216,8 +1273,8 @@ msgstr "Hierdie knoppie skep 'n vinnige nota met uitgeligte teks."
 msgid "This is a custom prompt"
 msgstr "Dit is 'n aangepaste prompt."
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Hierdie prompt dien as 'n woordeboek vir die uitgeligte teks, vir 'n woord of frase."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Hierdie opdrag dien as 'n boekbewuste woordeboek vir die gemarkeerde teks, vir 'n woord of frase."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Hierdie prompt ontleed die grammatika van die uitgeligte teks en verskaf 'n gedetailleerde verduideliking van die struktuur daarvan en enige grammatikale foute."
@@ -1370,7 +1427,6 @@ msgstr "Waar die aksie opgehou het:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Woordvorm en Lemma"
 

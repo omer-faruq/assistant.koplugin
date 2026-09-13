@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 04:11+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Bahasa Melayu (AI translation)\n"
@@ -224,6 +224,12 @@ msgstr "Bahasa Respons AI"
 msgid "AI Response Language Setting"
 msgstr "Tetapan Bahasa Respons AI"
 
+msgid "AI Term X-Ray"
+msgstr "X-Ray Istilah AI"
+
+msgid "AI Wikipedia"
+msgstr "Wikipedia AI"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "Kunci API diperlukan untuk %1."
 
 msgid "API key is required."
 msgstr "Kunci API diperlukan."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "Kunci API tidak boleh mengandungi ruang atau pemisah baris untuk %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "Kunci API tidak boleh mengandungi ruang atau pemisah baris."
 
 msgid "About the Author"
 msgstr "Tentang Penulis"
@@ -336,6 +348,9 @@ msgstr "URL Asas diperlukan untuk %1."
 msgid "Base URL is required."
 msgstr "URL asas diperlukan."
 
+msgid "Base URL must not contain spaces."
+msgstr "URL asas tidak boleh mengandungi ruang."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "URL asas mesti bermula dengan http:// atau https://"
 
@@ -357,9 +372,6 @@ msgstr "Wawasan Buku"
 
 msgid "Book Summary & Recs"
 msgstr "Ringkasan Buku & Cadangan"
-
-msgid "Book Usage"
-msgstr "Penggunaan dalam Buku"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Cawangan/Tag \"%1\" tidak ditemui."
@@ -389,6 +401,9 @@ msgstr "Watak"
 msgid "Checking for updates..."
 msgstr "Menyemak kemas kini..."
 
+msgid "Choose Definition Sections"
+msgstr "Pilih Bahagian Definisi"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Pilih buku nota tempat nota anda disimpan."
 
@@ -400,6 +415,9 @@ msgstr "Tutup"
 
 msgid "Composing answer ..."
 msgstr "Menyusun jawapan ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Ringkas - balas dalam ayat pendek"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigurasi tidak ditemui. Sila sediakan configuration.lua dahulu."
@@ -529,6 +547,25 @@ msgstr "Kamus"
 msgid "Dictionary Language"
 msgstr "Bahasa Kamus"
 
+msgid "Dictionary Popup"
+msgstr "Pop-up Kamus"
+
+msgid "Dictionary Settings"
+msgstr "Tetapan Kamus"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Kamus atau Terjemahan?\n"
+"\n"
+"Pilihan ini kelihatan seperti satu perkataan atau frasa pendek.\n"
+"\n"
+"Anda boleh mengubahnya kemudian dalam Tetapan > Tetapan Lain > Carian Kamus Pintar untuk 'Terjemah'."
+
 msgid "Display name"
 msgstr "Nama paparan"
 
@@ -597,6 +634,9 @@ msgstr "Terangkan"
 msgid "Failed to fetch models"
 msgstr "Gagal mendapatkan model"
 
+msgid "Failed to save provider."
+msgstr "Gagal menyimpan penyedia."
+
 msgid "Failed to save search tool."
 msgstr "Gagal menyimpan alat carian."
 
@@ -617,6 +657,9 @@ msgstr "Penapis: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Untuk butiran, lawati halaman wiki 'Configuration' di github."
+
+msgid "Full - full definitions"
+msgstr "Penuh - definisi penuh"
 
 msgid "Fun Analogy"
 msgstr "Analogi Menarik"
@@ -685,9 +728,8 @@ msgstr "Nama fail buku nota tidak sah."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "Pelarasan KOReader"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Pastikan jawapan kamus ringkas: paling banyak satu atau dua ayat bagi setiap bahagian."
 
 msgid "Key Points"
 msgstr "Perkara Utama"
@@ -748,8 +790,8 @@ msgstr "Tema Utama"
 msgid "Markdown Engine"
 msgstr "Enjin Markdown"
 
-msgid "Meaning"
-msgstr "Makna"
+msgid "Meaning & Usage"
+msgstr "Makna & Penggunaan"
 
 msgid "Model"
 msgstr "Model"
@@ -921,6 +963,9 @@ msgstr "API Respons OpenAI"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "API Chat Completions yang serasi dengan OpenAI"
 
+msgid "Other Settings"
+msgstr "Tetapan Lain"
+
 msgid "Outstanding questions:"
 msgstr "Soalan yang belum terjawab:"
 
@@ -947,6 +992,9 @@ msgstr "Plugin tidak dikonfigurasikan."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Menambahkan metadata buku (tajuk, pengarang dan kedudukan bacaan semasa termasuk bab) pada prompt yang memilih untuk menggunakan konteks buku (secara lalai: Explain, Historical Context, Summarize, Key Points dan ELI5). Tingkah laku setiap prompt boleh diubah dengan use_book_context dalam fail konfigurasi."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Senarai pratetap bahagian Kamus AI."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Keadaan emosi/nada yang dominan:"
@@ -1068,6 +1116,21 @@ msgstr "Saiz Fon Teks Respons"
 msgid "Role & Function"
 msgstr "Peranan & Fungsi"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Halakan pilihan pendek ke Kamus AI dan bukan ke Penterjemah.\n"
+"\n"
+"- Dikira pendek: sehingga 5 perkataan; untuk teks CJK, yang tiada\n"
+"  pemisah perkataan, sehingga 8 aksara.\n"
+"- Pilihan pendek membuka Kamus AI; pilihan yang lebih panjang\n"
+"  diterjemah seperti biasa."
+
 msgid "Runtime"
 msgstr "Runtime"
 
@@ -1116,23 +1179,11 @@ msgstr "Pilihan disalin ke papan keratan."
 msgid "Settings"
 msgstr "Tetapan"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Papar Prompts Tersuai dalam Popup Kamus"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Papar Kamus(AI) dalam Popup Kamus"
-
 msgid "Show Follow-up Questions"
 msgstr "Papar Soalan Susulan"
 
 msgid "Show Reasoning Text"
 msgstr "Papar Teks Penaakulan"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Papar Term X-Ray(AI) dalam Popup Kamus"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Papar Wikipedia(AI) dalam Popup Kamus"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Papar proses pemikiran mendalam (penaakulan) daripada respons AI jika ada."
@@ -1145,6 +1196,12 @@ msgstr "Cadangan Buku Serupa"
 
 msgid "Simplify"
 msgstr "Permudahkan"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Carian Kamus Pintar untuk 'Terjemah'"
+
+msgid "Standard - standard definitions"
+msgstr "Standard - definisi standard"
 
 msgid "Stop"
 msgstr "Berhenti"
@@ -1220,8 +1277,8 @@ msgstr "Butang ini mencipta nota pantas dengan teks yang diserlahkan."
 msgid "This is a custom prompt"
 msgstr "Ini ialah prompt tersuai"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Arahan ini bertindak sebagai kamus untuk teks yang diserlahkan, bagi sesuatu perkataan atau frasa."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Gesaan ini bertindak sebagai kamus yang peka buku untuk teks yang disorot, untuk perkataan atau frasa."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Arahan ini menganalisis tatabahasa teks yang diserlahkan, memberikan penjelasan terperinci tentang strukturnya dan sebarang kesalahan tatabahasa."
@@ -1374,7 +1431,6 @@ msgstr "Di mana aksi terhenti:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Bentuk Kata & Lemma"
 

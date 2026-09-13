@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "Γλώσσα απόκρισης AI"
 msgid "AI Response Language Setting"
 msgstr "Ρύθμιση γλώσσας απόκρισης AI"
 
+msgid "AI Term X-Ray"
+msgstr "AI Term X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI Wikipedia"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "Το κλειδί API απαιτείται για %1."
 
 msgid "API key is required."
 msgstr "Το κλειδί API είναι υποχρεωτικό."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "Το κλειδί API δεν πρέπει να περιέχει κενά ή αλλαγές γραμμής για %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "Το κλειδί API δεν πρέπει να περιέχει κενά ή αλλαγές γραμμής."
 
 msgid "About the Author"
 msgstr "Σχετικά με τον Συγγραφέα"
@@ -336,6 +348,9 @@ msgstr "Το βασικό URL απαιτείται για %1."
 msgid "Base URL is required."
 msgstr "Το βασικό URL είναι υποχρεωτικό."
 
+msgid "Base URL must not contain spaces."
+msgstr "Το βασικό URL δεν πρέπει να περιέχει κενά."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Το βασικό URL πρέπει να ξεκινά με http:// ή https://"
 
@@ -357,9 +372,6 @@ msgstr "Πληροφορίες Βιβλίου"
 
 msgid "Book Summary & Recs"
 msgstr "Περίληψη Βιβλίου & Προτάσεις"
-
-msgid "Book Usage"
-msgstr "Χρήση στο Βιβλίο"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Ο κλάδος/η ετικέτα \"%1\" δεν βρέθηκε."
@@ -389,6 +401,9 @@ msgstr "Χαρακτήρες"
 msgid "Checking for updates..."
 msgstr "Έλεγχος για ενημερώσεις..."
 
+msgid "Choose Definition Sections"
+msgstr "Επιλογή ενοτήτων ορισμών"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Επιλέξτε σε ποιο σημειωματάριο αποθηκεύονται οι σημειώσεις σας."
 
@@ -400,6 +415,9 @@ msgstr "Κλείσιμο"
 
 msgid "Composing answer ..."
 msgstr "Σύνταξη απάντησης ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Συνοπτικό - απάντηση με σύντομες προτάσεις"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Δεν βρέθηκε διαμόρφωση. Παρακαλώ ρυθμίστε πρώτα το configuration.lua."
@@ -529,6 +547,25 @@ msgstr "Λεξικό"
 msgid "Dictionary Language"
 msgstr "Γλώσσα λεξικού"
 
+msgid "Dictionary Popup"
+msgstr "Αναδυόμενο παράθυρο λεξικού"
+
+msgid "Dictionary Settings"
+msgstr "Ρυθμίσεις λεξικού"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Λεξικό ή Μετάφραση;\n"
+"\n"
+"Αυτή η επιλογή μοιάζει με λέξη ή σύντομη φράση.\n"
+"\n"
+"Μπορείτε να το αλλάξετε αργότερα στις Ρυθμίσεις > Άλλες ρυθμίσεις > Έξυπνη αναζήτηση λεξικού για 'Μετάφραση'."
+
 msgid "Display name"
 msgstr "Εμφανιζόμενο όνομα"
 
@@ -597,6 +634,9 @@ msgstr "Εξήγηση"
 msgid "Failed to fetch models"
 msgstr "Απέτυχε η φόρτωση μοντέλων"
 
+msgid "Failed to save provider."
+msgstr "Αποτυχία αποθήκευσης παρόχου."
+
 msgid "Failed to save search tool."
 msgstr "Αποτυχία αποθήκευσης εργαλείου αναζήτησης."
 
@@ -617,6 +657,9 @@ msgstr "Φίλτρο: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Για λεπτομέρειες, επισκεφθείτε τη σελίδα wiki «Configuration» στο github."
+
+msgid "Full - full definitions"
+msgstr "Πλήρες - πλήρεις ορισμοί"
 
 msgid "Fun Analogy"
 msgstr "Διασκεδαστική αναλογία"
@@ -685,9 +728,8 @@ msgstr "Μη έγκυρο όνομα αρχείου σημειωματαρίου
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "Προσαρμογές KOReader"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Διατηρήστε τις απαντήσεις του λεξικού σύντομες: το πολύ μία ή δύο προτάσεις ανά ενότητα."
 
 msgid "Key Points"
 msgstr "Κύρια σημεία"
@@ -749,8 +791,8 @@ msgstr "Κύρια Θέματα"
 msgid "Markdown Engine"
 msgstr "Μηχανή Markdown"
 
-msgid "Meaning"
-msgstr "Σημασία"
+msgid "Meaning & Usage"
+msgstr "Σημασία & Χρήση"
 
 msgid "Model"
 msgstr "Μοντέλο"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "Chat Completions API συμβατό με OpenAI"
 
+msgid "Other Settings"
+msgstr "Άλλες ρυθμίσεις"
+
 msgid "Outstanding questions:"
 msgstr "Εκκρεμή ερωτήματα:"
 
@@ -948,6 +993,9 @@ msgstr "Το πρόσθετο δεν έχει ρυθμιστεί."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Προσθέτει στην αρχή μεταδεδομένα βιβλίου (τίτλος, συγγραφέας και τρέχουσα θέση ανάγνωσης συμπεριλαμβανομένου κεφαλαίου) σε prompts που επιλέγουν να χρησιμοποιήσουν το πλαίσιο βιβλίου (από προεπιλογή: Explain, Historical Context, Summarize, Key Points και ELI5). Η συμπεριφορά ανά prompt μπορεί να παρακαμφθεί με τη ρύθμιση use_book_context στο αρχείο διαμόρφωσης."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Προκαθορισμένη λίστα ενοτήτων του Λεξικού AI."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Επικρατούσα συναισθηματική κατάσταση/τόνος:"
@@ -1068,6 +1116,21 @@ msgstr "Μέγεθος γραμματοσειράς κειμένου απόκρ�
 msgid "Role & Function"
 msgstr "Ρόλος & Λειτουργία"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Δρομολόγηση των σύντομων επιλογών στο Λεξικό AI αντί για τον Μεταφραστή.\n"
+"\n"
+"- Θεωρούνται σύντομες: έως 5 λέξεις· για κείμενο CJK, το οποίο δεν έχει\n"
+"  διαχωριστικά λέξεων, έως 8 χαρακτήρες.\n"
+"- Οι σύντομες επιλογές ανοίγουν το Λεξικό AI· οι μεγαλύτερες επιλογές\n"
+"  μεταφράζονται ως συνήθως."
+
 msgid "Runtime"
 msgstr "Περιβάλλον εκτέλεσης"
 
@@ -1116,23 +1179,11 @@ msgstr "Η επιλογή αντιγράφηκε στο πρόχειρο."
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Εμφάνιση προσαρμοσμένων προτροπών στο αναδυόμενο παράθυρο λεξικού"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Εμφάνιση Λεξικού (AI) στο αναδυόμενο παράθυρο λεξικού"
-
 msgid "Show Follow-up Questions"
 msgstr "Εμφάνιση επακόλουθων ερωτήσεων"
 
 msgid "Show Reasoning Text"
 msgstr "Εμφάνιση κειμένου συλλογισμού"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Εμφάνιση Term X-Ray (AI) στο αναδυόμενο παράθυρο λεξικού"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Εμφάνιση Wikipedia (AI) στο αναδυόμενο παράθυρο λεξικού"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Εμφάνιση της διαδικασίας βαθιάς σκέψης (συλλογισμού) από την απόκριση του AI, εάν υπάρχει."
@@ -1145,6 +1196,12 @@ msgstr "Προτάσεις Παρόμοιων Βιβλίων"
 
 msgid "Simplify"
 msgstr "Απλοποίηση"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Έξυπνη αναζήτηση λεξικού για 'Μετάφραση'"
+
+msgid "Standard - standard definitions"
+msgstr "Τυπικό - τυπικοί ορισμοί"
 
 msgid "Stop"
 msgstr "Διακοπή"
@@ -1220,8 +1277,8 @@ msgstr "Αυτό το κουμπί δημιουργεί μια γρήγορη σ
 msgid "This is a custom prompt"
 msgstr "Αυτή είναι μια προσαρμοσμένη προτροπή"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Αυτό το prompt λειτουργεί ως λεξικό για το επισημασμένο κείμενο, δηλαδή για μια λέξη ή φράση."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Αυτό το prompt λειτουργεί ως λεξικό με επίγνωση του βιβλίου για το επισημασμένο κείμενο, έως μία λέξη ή φράση."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Αυτό το prompt αναλύει τη γραμματική του επισημασμένου κειμένου, παρέχοντας λεπτομερή εξήγηση της δομής του και τυχόν γραμματικών λαθών."
@@ -1374,7 +1431,6 @@ msgstr "Πού σταμάτησε η δράση:"
 msgid "Wikipedia"
 msgstr "Βικιπαίδεια"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Μορφή λέξης & Λήμμα"
 

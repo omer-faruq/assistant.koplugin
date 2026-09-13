@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "AI válasznyelve"
 msgid "AI Response Language Setting"
 msgstr "AI válasznyelv beállítása"
 
+msgid "AI Term X-Ray"
+msgstr "AI Term X-Ray"
+
+msgid "AI Wikipedia"
+msgstr "AI Wikipédia"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "API-kulcs szükséges a(z) %1 számára."
 
 msgid "API key is required."
 msgstr "API-kulcs megadása kötelező."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "A(z) %1 API-kulcsa nem tartalmazhat szóközt vagy sortörést."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "Az API-kulcs nem tartalmazhat szóközt vagy sortörést."
 
 msgid "About the Author"
 msgstr "A szerzőről"
@@ -336,6 +348,9 @@ msgstr "Alap URL szükséges a(z) %1 számára."
 msgid "Base URL is required."
 msgstr "Az alap URL megadása kötelező."
 
+msgid "Base URL must not contain spaces."
+msgstr "Az alap URL nem tartalmazhat szóközt."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Az alap URL-nek http:// vagy https:// előtaggal kell kezdődnie."
 
@@ -357,9 +372,6 @@ msgstr "Könyv betekintések"
 
 msgid "Book Summary & Recs"
 msgstr "Könyv összefoglaló és ajánlások"
-
-msgid "Book Usage"
-msgstr "Használat a könyvben"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "A \"%1\" ág/címke nem található."
@@ -389,6 +401,9 @@ msgstr "Szereplők"
 msgid "Checking for updates..."
 msgstr "Frissítések keresése..."
 
+msgid "Choose Definition Sections"
+msgstr "Definíciós szakaszok kiválasztása"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Válaszd ki, melyik jegyzetfüzetbe kerüljenek a jegyzeteid."
 
@@ -400,6 +415,9 @@ msgstr "Bezárás"
 
 msgid "Composing answer ..."
 msgstr "Válasz összeállítása ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Tömör - rövid mondatokban válaszol"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "A konfiguráció nem található. Kérlek, először állítsd be a configuration.lua fájlt."
@@ -529,6 +547,25 @@ msgstr "Szótár"
 msgid "Dictionary Language"
 msgstr "Szótár nyelve"
 
+msgid "Dictionary Popup"
+msgstr "Szótár felugró ablaka"
+
+msgid "Dictionary Settings"
+msgstr "Szótár beállításai"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Szótár vagy fordítás?\n"
+"\n"
+"Ez a kijelölés egy szónak vagy rövid kifejezésnek tűnik.\n"
+"\n"
+"Ezt később módosíthatja a Beállítások > Egyéb beállítások > Intelligens szótárkeresés a „Fordítás” funkcióhoz menüpontban."
+
 msgid "Display name"
 msgstr "Megjelenített név"
 
@@ -597,6 +634,9 @@ msgstr "Magyarázat"
 msgid "Failed to fetch models"
 msgstr "Nem sikerült lekérni a modelleket"
 
+msgid "Failed to save provider."
+msgstr "Nem sikerült menteni a szolgáltatót."
+
 msgid "Failed to save search tool."
 msgstr "Nem sikerült elmenteni a keresőeszközt."
 
@@ -617,6 +657,9 @@ msgstr "Szűrő: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "A részletekért látogassa meg a „Configuration” wiki oldalt a GitHubon."
+
+msgid "Full - full definitions"
+msgstr "Teljes - teljes definíciók"
 
 msgid "Fun Analogy"
 msgstr "Szórakoztató hasonlat"
@@ -685,9 +728,8 @@ msgstr "Érvénytelen jegyzetfüzet-fájlnév."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader finomhangolások"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "A szótárválaszok legyenek rövidek: szakaszonként legfeljebb egy vagy két mondat."
 
 msgid "Key Points"
 msgstr "Fő pontok"
@@ -749,8 +791,8 @@ msgstr "Fő témák"
 msgid "Markdown Engine"
 msgstr "Markdown motor"
 
-msgid "Meaning"
-msgstr "Jelentés"
+msgid "Meaning & Usage"
+msgstr "Jelentés és használat"
 
 msgid "Model"
 msgstr "Modell"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-kompatibilis Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Egyéb beállítások"
+
 msgid "Outstanding questions:"
 msgstr "Nyitott kérdések:"
 
@@ -948,6 +993,9 @@ msgstr "A bővítmény nincs konfigurálva."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "A könyv metaadatait (cím, szerző és az aktuális olvasási pozíció, beleértve a fejezetet) a könyvkontextust kérő promptok elejére illeszti (alapértelmezés szerint: Magyarázd el, Történelmi kontextus, Összefoglaló, Kulcspontok és ELI5). Az egyes promptok viselkedése felülbírálható a use_book_context beállítással a konfigurációs fájlban."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Az AI-szótár szakaszainak előre beállított listája."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Uralkodó érzelmi állapot/hangulat:"
@@ -1069,6 +1117,21 @@ msgstr "Válasz szövegének betűmérete"
 msgid "Role & Function"
 msgstr "Szerep és funkció"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"A rövid kijelöléseket a fordító helyett az AI-szótárhoz irányítja.\n"
+"\n"
+"- Rövidnek számít: legfeljebb 5 szó; a szóhatároló nélküli CJK\n"
+"  szöveg esetében legfeljebb 8 karakter.\n"
+"- A rövid kijelölések megnyitják az AI-szótárt; a hosszabbakat a\n"
+"  szokásos módon fordítja le."
+
 msgid "Runtime"
 msgstr "Futásidejű környezet"
 
@@ -1117,23 +1180,11 @@ msgstr "A kijelölés átmásolva a vágólapra."
 msgid "Settings"
 msgstr "Beállítások"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Egyedi promptok megjelenítése a szótár felugró ablakban"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Szótár (AI) megjelenítése a szótár felugró ablakban"
-
 msgid "Show Follow-up Questions"
 msgstr "További kérdések megjelenítése"
 
 msgid "Show Reasoning Text"
 msgstr "Gondolkodási szöveg megjelenítése"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Term X-Ray (AI) megjelenítése a szótár felugró ablakban"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Wikipédia (AI) megjelenítése a szótár felugró ablakban"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Az AI válasz mély gondolkodási folyamatának (reasoning) megjelenítése, ha létezik."
@@ -1146,6 +1197,12 @@ msgstr "Hasonló könyvek ajánlása"
 
 msgid "Simplify"
 msgstr "Egyszerűsítés"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Intelligens szótárkeresés a „Fordítás” funkcióhoz"
+
+msgid "Standard - standard definitions"
+msgstr "Normál - szabványos definíciók"
 
 msgid "Stop"
 msgstr "Leállítás"
@@ -1221,8 +1278,8 @@ msgstr "Ez a gomb gyors jegyzetet hoz létre a kiemelt szöveggel."
 msgid "This is a custom prompt"
 msgstr "Ez egy egyéni prompt."
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Ez a prompt szótárként működik a kiemelt szöveg, azaz egy szó vagy kifejezés számára."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Ez a prompt a kijelölt szöveghez könyvkontextust figyelembe vevő szótárként működik, egyetlen szótól egy kifejezésig."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Ez a prompt elemzi a kiemelt szöveg nyelvtanát, részletes magyarázatot adva annak szerkezetéről és minden nyelvtani hibáról."
@@ -1375,7 +1432,6 @@ msgstr "Hol állt meg a cselekmény:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Szóalak és lemma"
 

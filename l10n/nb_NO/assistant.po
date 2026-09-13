@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "AI-svarspråk"
 msgid "AI Response Language Setting"
 msgstr "Innstilling for AI-svarspråk"
 
+msgid "AI Term X-Ray"
+msgstr "AI-termrøntgen"
+
+msgid "AI Wikipedia"
+msgstr "AI-Wikipedia"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "API-nøkkel er påkrevd for %1."
 
 msgid "API key is required."
 msgstr "API-nøkkel er påkrevd."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "API-nøkkelen kan ikke inneholde mellomrom eller linjeskift for %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "API-nøkkelen kan ikke inneholde mellomrom eller linjeskift."
 
 msgid "About the Author"
 msgstr "Om forfatteren"
@@ -336,6 +348,9 @@ msgstr "Base-URL er påkrevd for %1."
 msgid "Base URL is required."
 msgstr "Grunn-URL er påkrevd."
 
+msgid "Base URL must not contain spaces."
+msgstr "Base-URL-en kan ikke inneholde mellomrom."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "Grunn-URL må starte med http:// eller https://"
 
@@ -357,9 +372,6 @@ msgstr "Bokinnsikt"
 
 msgid "Book Summary & Recs"
 msgstr "Bokoppsummering og anbefalinger"
-
-msgid "Book Usage"
-msgstr "Bruk i boken"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Grenen/taggen \"%1\" ble ikke funnet."
@@ -389,6 +401,9 @@ msgstr "Karakterer"
 msgid "Checking for updates..."
 msgstr "Sjekker etter oppdateringer..."
 
+msgid "Choose Definition Sections"
+msgstr "Velg definisjonsseksjoner"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Velg hvilken notatbok notatene dine lagres i."
 
@@ -400,6 +415,9 @@ msgstr "Lukk"
 
 msgid "Composing answer ..."
 msgstr "Formulerer svar ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Kortfattet – svar med korte setninger"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Konfigurasjonen ble ikke funnet. Vennligst sett opp configuration.lua først."
@@ -529,6 +547,25 @@ msgstr "Ordbok"
 msgid "Dictionary Language"
 msgstr "Ordbokspråk"
 
+msgid "Dictionary Popup"
+msgstr "Ordbokspopup"
+
+msgid "Dictionary Settings"
+msgstr "Ordbokinnstillinger"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Ordbok eller oversettelse?\n"
+"\n"
+"Denne markeringen ser ut som et ord eller en kort frase.\n"
+"\n"
+"Du kan endre dette senere i Innstillinger > Andre innstillinger > Smart ordbokoppslag for «Oversett»."
+
 msgid "Display name"
 msgstr "Visningsnavn"
 
@@ -597,6 +634,9 @@ msgstr "Forklar"
 msgid "Failed to fetch models"
 msgstr "Kunne ikke hente modeller"
 
+msgid "Failed to save provider."
+msgstr "Kunne ikke lagre leverandøren."
+
 msgid "Failed to save search tool."
 msgstr "Kunne ikke lagre søkeverktøyet."
 
@@ -617,6 +657,9 @@ msgstr "Filter: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "For detaljer, besøk «Configuration»-wikisiden på GitHub."
+
+msgid "Full - full definitions"
+msgstr "Full – fulle definisjoner"
 
 msgid "Fun Analogy"
 msgstr "Morsom analogi"
@@ -685,9 +728,8 @@ msgstr "Ugyldig notatbokfilnavn."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "KOReader-justeringer"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Hold ordboksvar korte: maksimalt én eller to setninger per seksjon."
 
 msgid "Key Points"
 msgstr "Hovedpunkter"
@@ -749,8 +791,8 @@ msgstr "Hovedtemaer"
 msgid "Markdown Engine"
 msgstr "Markdown-motor"
 
-msgid "Meaning"
-msgstr "Betydning"
+msgid "Meaning & Usage"
+msgstr "Betydning og bruk"
 
 msgid "Model"
 msgstr "Modell"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "OpenAI-kompatibelt Chat Completions API"
 
+msgid "Other Settings"
+msgstr "Andre innstillinger"
+
 msgid "Outstanding questions:"
 msgstr "Ubesvarte spørsmål:"
 
@@ -948,6 +993,9 @@ msgstr "Programtillegget er ikke konfigurert."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Legger til bokmetadata (tittel, forfatter og gjeldende leseposisjon inkl. kapittel) foran ledetekster som velger å inkludere bokkontekst (som standard: Forklar, Historisk kontekst, Oppsummer, Nøkkelpunkter og ELI5). Oppførselen per ledetekst kan overstyres med use_book_context i konfigurasjonsfilen."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Forhåndsinnstilt liste over seksjoner for AI-ordboken."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Dominerende følelsesmessig tilstand/tone:"
@@ -1068,6 +1116,21 @@ msgstr "Skriftstørrelse for svartekst"
 msgid "Role & Function"
 msgstr "Rolle og funksjon"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Send korte markeringer til AI-ordboken i stedet for oversetteren.\n"
+"\n"
+"- Regnes som kort: opptil 5 ord; for CJK-tekst, som ikke har\n"
+"  ordskilletegn, opptil 8 tegn.\n"
+"- Korte markeringer åpner AI-ordboken; lengre markeringer\n"
+"  oversettes som vanlig."
+
 msgid "Runtime"
 msgstr "Kjøretid"
 
@@ -1116,23 +1179,11 @@ msgstr "Markeringen ble kopiert til utklippstavlen."
 msgid "Settings"
 msgstr "Innstillinger"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Vis egendefinerte prompter i ordbok-popupen"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Vis ordbok (AI) i ordbok-popupen"
-
 msgid "Show Follow-up Questions"
 msgstr "Vis oppfølgingsspørsmål"
 
 msgid "Show Reasoning Text"
 msgstr "Vis resonneringstekst"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Vis Term X-Ray (AI) i ordbok-popupen"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Vis Wikipedia (AI) i ordbok-popupen"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Vis dyp tankeprosess (resonnering) fra AI-svaret hvis den finnes."
@@ -1145,6 +1196,12 @@ msgstr "Anbefalinger av lignende bøker"
 
 msgid "Simplify"
 msgstr "Forenkle"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Smart ordbokoppslag for «Oversett»"
+
+msgid "Standard - standard definitions"
+msgstr "Standard – standarddefinisjoner"
 
 msgid "Stop"
 msgstr "Stopp"
@@ -1220,8 +1277,8 @@ msgstr "Denne knappen oppretter et hurtignotat med markert tekst."
 msgid "This is a custom prompt"
 msgstr "Dette er en egendefinert ledetekst"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Denne prompten fungerer som en ordbok for den markerte teksten, det vil si et ord eller uttrykk."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Denne prompten fungerer som en bokbevisst ordbok for den markerte teksten, ned til et ord eller en kort frase."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Denne prompten analyserer grammatikken i den markerte teksten og gir en detaljert forklaring av strukturen og eventuelle grammatiske feil."
@@ -1374,7 +1431,6 @@ msgstr "Hvor handlingen stoppet:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Ordform og lemma"
 

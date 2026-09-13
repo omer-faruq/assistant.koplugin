@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "Limba de răspuns AI"
 msgid "AI Response Language Setting"
 msgstr "Setarea limbii de răspuns AI"
 
+msgid "AI Term X-Ray"
+msgstr "X-Ray AI pentru termeni"
+
+msgid "AI Wikipedia"
+msgstr "Wikipedia AI"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "Cheia API este necesară pentru %1."
 
 msgid "API key is required."
 msgstr "Cheia API este obligatorie."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "Cheia API nu poate conține spații sau rânduri noi pentru %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "Cheia API nu poate conține spații sau rânduri noi."
 
 msgid "About the Author"
 msgstr "Despre autor"
@@ -336,6 +348,9 @@ msgstr "URL-ul de bază este necesar pentru %1."
 msgid "Base URL is required."
 msgstr "URL-ul de bază este obligatoriu."
 
+msgid "Base URL must not contain spaces."
+msgstr "URL-ul de bază nu poate conține spații."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "URL-ul de bază trebuie să înceapă cu http:// sau https://"
 
@@ -357,9 +372,6 @@ msgstr "Perspective asupra cărții"
 
 msgid "Book Summary & Recs"
 msgstr "Rezumatul cărții și recomandări"
-
-msgid "Book Usage"
-msgstr "Utilizare în carte"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Branch/Tag \"%1\" nu a fost găsit."
@@ -389,6 +401,9 @@ msgstr "Personaje"
 msgid "Checking for updates..."
 msgstr "Se verifică actualizările..."
 
+msgid "Choose Definition Sections"
+msgstr "Alege secțiunile definiției"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "Alege în ce caiet sunt salvate notițele tale."
 
@@ -400,6 +415,9 @@ msgstr "Închide"
 
 msgid "Composing answer ..."
 msgstr "Se compune răspunsul ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "Concis - răspunde în propoziții scurte"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "Configurația nu a fost găsită. Vă rugăm să configurați mai întâi configuration.lua."
@@ -529,6 +547,25 @@ msgstr "Dicționar"
 msgid "Dictionary Language"
 msgstr "Limba dicționarului"
 
+msgid "Dictionary Popup"
+msgstr "Fereastră pop-up a dicționarului"
+
+msgid "Dictionary Settings"
+msgstr "Setări dicționar"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"Dicționar sau traducere?\n"
+"\n"
+"Această selecție pare un cuvânt sau o expresie scurtă.\n"
+"\n"
+"Poți schimba asta mai târziu în Setări > Alte setări > Căutare inteligentă în dicționar pentru „Traducere”."
+
 msgid "Display name"
 msgstr "Nume afișat"
 
@@ -597,6 +634,9 @@ msgstr "Explică"
 msgid "Failed to fetch models"
 msgstr "Nu s-au putut încărca modelele"
 
+msgid "Failed to save provider."
+msgstr "Salvarea furnizorului a eșuat."
+
 msgid "Failed to save search tool."
 msgstr "Nu s-a putut salva instrumentul de căutare."
 
@@ -617,6 +657,9 @@ msgstr "Filtru: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Pentru detalii, vizitează pagina wiki „Configuration” de pe GitHub."
+
+msgid "Full - full definitions"
+msgstr "Complet - definiții complete"
 
 msgid "Fun Analogy"
 msgstr "Analogia amuzantă"
@@ -685,9 +728,8 @@ msgstr "Nume de fișier de caiet nevalid."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "Ajustări KOReader"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "Păstrează răspunsurile dicționarului scurte: cel mult una sau două propoziții pe secțiune."
 
 msgid "Key Points"
 msgstr "Puncte cheie"
@@ -750,8 +792,8 @@ msgstr "Teme principale"
 msgid "Markdown Engine"
 msgstr "Motor Markdown"
 
-msgid "Meaning"
-msgstr "Sens"
+msgid "Meaning & Usage"
+msgstr "Sens și utilizare"
 
 msgid "Model"
 msgstr "Model"
@@ -923,6 +965,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "API Chat Completions compatibil cu OpenAI"
 
+msgid "Other Settings"
+msgstr "Alte setări"
+
 msgid "Outstanding questions:"
 msgstr "Întrebări rămase fără răspuns:"
 
@@ -949,6 +994,9 @@ msgstr "Pluginul nu este configurat."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "Adaugă metadatele cărții (titlu, autor și poziția curentă de citire, inclusiv capitolul) la prompterele care optează pentru contextul cărții (implicit: Explică, Context istoric, Rezumat, Puncte cheie și ELI5). Comportamentul per-prompt poate fi suprascris cu use_book_context în fișierul de configurare."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "Listă prestabilită de secțiuni ale dicționarului AI."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "Starea emoțională/tonul predominant:"
@@ -1070,6 +1118,21 @@ msgstr "Dimensiunea Fontului pentru Textul de Răspuns"
 msgid "Role & Function"
 msgstr "Rol și funcție"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"Direcționează selecțiile scurte către dicționarul AI în locul traducătorului.\n"
+"\n"
+"- Sunt considerate scurte: până la 5 cuvinte; pentru textul CJK, care nu are\n"
+"  separatori de cuvinte, până la 8 caractere.\n"
+"- Selecțiile scurte deschid dicționarul AI; selecțiile mai lungi sunt\n"
+"  traduse ca de obicei."
+
 msgid "Runtime"
 msgstr "Runtime"
 
@@ -1118,23 +1181,11 @@ msgstr "Selecția a fost copiată în clipboard."
 msgid "Settings"
 msgstr "Setări"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "Afișează prompturile personalizate în fereastra pop-up a dicționarului"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "Afișează Dicționar (AI) în fereastra pop-up a dicționarului"
-
 msgid "Show Follow-up Questions"
 msgstr "Afișează întrebările de continuare"
 
 msgid "Show Reasoning Text"
 msgstr "Afișează textul de raționament"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "Afișează Term X-Ray (AI) în fereastra pop-up a dicționarului"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "Afișează Wikipedia (AI) în fereastra pop-up a dicționarului"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Afișează procesul de gândire profundă (raționamentul) din răspunsul AI, dacă există."
@@ -1147,6 +1198,12 @@ msgstr "Recomandări de cărți similare"
 
 msgid "Simplify"
 msgstr "Simplifică"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "Căutare inteligentă în dicționar pentru „Traducere”"
+
+msgid "Standard - standard definitions"
+msgstr "Standard - definiții standard"
 
 msgid "Stop"
 msgstr "Oprire"
@@ -1222,8 +1279,8 @@ msgstr "Acest buton creează o notă rapidă cu textul evidențiat."
 msgid "This is a custom prompt"
 msgstr "Acesta este un prompt personalizat."
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "Acest prompt servește drept dicționar pentru textul evidențiat, pentru un cuvânt sau o expresie."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "Acest prompt acționează ca un dicționar care cunoaște cartea, pentru textul evidențiat, pentru un cuvânt sau o expresie."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "Acest prompt analizează gramatica textului evidențiat, oferind o explicație detaliată a structurii sale și a eventualelor erori gramaticale."
@@ -1376,7 +1433,6 @@ msgstr "Unde s-a oprit acțiunea:"
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "Forma cuvântului și lema"
 

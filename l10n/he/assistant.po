@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -224,6 +224,12 @@ msgstr "שפת תשובת ה-AI"
 msgid "AI Response Language Setting"
 msgstr "הגדרת שפת תשובת ה-AI"
 
+msgid "AI Term X-Ray"
+msgstr "X-Ray למונח ב-AI"
+
+msgid "AI Wikipedia"
+msgstr "ויקיפדיה AI"
+
 msgid "AI X-Ray"
 msgstr "AI X-Ray"
 
@@ -238,6 +244,12 @@ msgstr "מפתח API נדרש עבור %1."
 
 msgid "API key is required."
 msgstr "נדרש מפתח API."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "מפתח ה-API לא יכול להכיל רווחים או שבירות שורה עבור %1."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "מפתח ה-API לא יכול להכיל רווחים או שבירות שורה."
 
 msgid "About the Author"
 msgstr "על המחבר/ת"
@@ -336,6 +348,9 @@ msgstr "כתובת בסיס נדרשת עבור %1."
 msgid "Base URL is required."
 msgstr "נדרשת כתובת בסיס."
 
+msgid "Base URL must not contain spaces."
+msgstr "כתובת ה-URL הבסיסית לא יכולה להכיל רווחים."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "כתובת הבסיס חייבת להתחיל ב-http:// או https://"
 
@@ -357,9 +372,6 @@ msgstr "תובנות ספר"
 
 msgid "Book Summary & Recs"
 msgstr "סיכום ספר והמלצות"
-
-msgid "Book Usage"
-msgstr "שימוש בספר"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "הענף/התג \"%1\" לא נמצא."
@@ -389,6 +401,9 @@ msgstr "דמויות"
 msgid "Checking for updates..."
 msgstr "בודק עדכונים..."
 
+msgid "Choose Definition Sections"
+msgstr "בחירת מקטעי הגדרה"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "בחר לאיזו מחברת יישמרו ההערות שלך."
 
@@ -400,6 +415,9 @@ msgstr "סגירה"
 
 msgid "Composing answer ..."
 msgstr "מרכיב תשובה..."
+
+msgid "Concise - reply in short sentences"
+msgstr "תמציתי - מענה במשפטים קצרים"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "התצורה לא נמצאה. יש להגדיר את configuration.lua קודם."
@@ -529,6 +547,25 @@ msgstr "מילון"
 msgid "Dictionary Language"
 msgstr "שפת מילון"
 
+msgid "Dictionary Popup"
+msgstr "חלונית מילון"
+
+msgid "Dictionary Settings"
+msgstr "הגדרות מילון"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"מילון או תרגום?\n"
+"\n"
+"הבחירה הזו נראית כמו מילה או ביטוי קצר.\n"
+"\n"
+"תוכל לשנות זאת מאוחר יותר בהגדרות > הגדרות נוספות > חיפוש חכם במילון עבור 'תרגום'."
+
 msgid "Display name"
 msgstr "שם תצוגה"
 
@@ -597,6 +634,9 @@ msgstr "הסבר"
 msgid "Failed to fetch models"
 msgstr "טעינת המודלים נכשלה"
 
+msgid "Failed to save provider."
+msgstr "שמירת הספק נכשלה."
+
 msgid "Failed to save search tool."
 msgstr "שמירת כלי החיפוש נכשלה."
 
@@ -617,6 +657,9 @@ msgstr "מסנן: \"%1\""
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "לפרטים, בקר בדף הוויקי 'Configuration' ב-github."
+
+msgid "Full - full definitions"
+msgstr "מלא - הגדרות מלאות"
 
 msgid "Fun Analogy"
 msgstr "אנלוגיה משעשעת"
@@ -685,9 +728,8 @@ msgstr "שם קובץ מחברת לא תקין."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "כיוונוני KOReader"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "שמור על תשובות המילון קצרות: לכל היותר משפט או שניים לכל מקטע."
 
 msgid "Key Points"
 msgstr "נקודות מפתח"
@@ -751,8 +793,8 @@ msgstr "נושאים מרכזיים"
 msgid "Markdown Engine"
 msgstr "מנוע Markdown"
 
-msgid "Meaning"
-msgstr "משמעות"
+msgid "Meaning & Usage"
+msgstr "משמעות ושימוש"
 
 msgid "Model"
 msgstr "דגם"
@@ -924,6 +966,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "API של Chat Completions תואם OpenAI"
 
+msgid "Other Settings"
+msgstr "הגדרות נוספות"
+
 msgid "Outstanding questions:"
 msgstr "שאלות פתוחות:"
 
@@ -950,6 +995,9 @@ msgstr "התוסף אינו מוגדר."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "מוסיף מטא-נתונים של הספר (כותרת, מחבר ומיקום קריאה נוכחי כולל פרק) להנחיות שבוחרות בהקשר ספר (כברירת מחדל: הסבר, הקשר היסטורי, סיכום, נקודות עיקריות ו-ELI5). ניתן לעקוף התנהגות זו לכל הנחיה באמצעות use_book_context בקובץ התצורה."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "רשימה מוגדרת מראש של מקטעי מילון ה-AI."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "המצב הרגשי/הטון השולט:"
@@ -1070,6 +1118,21 @@ msgstr "גודל גופן טקסט התשובה"
 msgid "Role & Function"
 msgstr "תפקיד ותפקוד"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"הפניית בחירות קצרות למילון ה-AI במקום למתרגם.\n"
+"\n"
+"- נחשב קצר: עד 5 מילים; בטקסט CJK, שאין בו מפרידי\n"
+"  מילים, עד 8 תווים.\n"
+"- בחירות קצרות פותחות את מילון ה-AI; בחירות ארוכות יותר\n"
+"  מתורגמות כרגיל."
+
 msgid "Runtime"
 msgstr "סביבת ריצה"
 
@@ -1118,23 +1181,11 @@ msgstr "הבחירה הועתקה ללוח."
 msgid "Settings"
 msgstr "הגדרות"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "הצג הנחיות מותאמות אישית בחלון המילון"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "הצג מילון (AI) בחלון המילון"
-
 msgid "Show Follow-up Questions"
 msgstr "הצג שאלות המשך"
 
 msgid "Show Reasoning Text"
 msgstr "הצג טקסט חשיבה"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "הצג Term X-Ray (AI) בחלון המילון"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "הצג ויקיפדיה (AI) בחלון המילון"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "הצג תהליך חשיבה מעמיק (reasoning) מתגובת ה-AI, אם קיים."
@@ -1147,6 +1198,12 @@ msgstr "המלצות לספרים דומים"
 
 msgid "Simplify"
 msgstr "פשט"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "חיפוש חכם במילון עבור 'תרגום'"
+
+msgid "Standard - standard definitions"
+msgstr "רגיל - הגדרות רגילות"
 
 msgid "Stop"
 msgstr "עצור"
@@ -1222,8 +1279,8 @@ msgstr "כפתור זה יוצר הערה מהירה עם הטקסט המסומ�
 msgid "This is a custom prompt"
 msgstr "זוהי הנחיה מותאמת אישית"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "הנחיה זו משמשת כמילון לטקסט המסומן, עבור מילה או ביטוי."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "הנחיה זו משמשת כמילון מודע לספר עבור הטקסט המסומן, עבור מילה או ביטוי."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "הנחיה זו מנתחת את הדקדוק של הטקסט המסומן, ומספקת הסבר מפורט על המבנה שלו ועל כל שגיאות דקדוקיות."
@@ -1376,7 +1433,6 @@ msgstr "היכן שהעלילה נעצרה:"
 msgid "Wikipedia"
 msgstr "ויקיפדיה"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "צורת מילה ולמה"
 

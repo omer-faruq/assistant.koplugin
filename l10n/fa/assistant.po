@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 14:32+0800\n"
+"POT-Creation-Date: 2026-09-13 21:58+0800\n"
 "PO-Revision-Date: 2026-08-13 03:19+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: فارسی (AI translation)\n"
@@ -224,6 +224,12 @@ msgstr "زبان پاسخ هوش مصنوعی"
 msgid "AI Response Language Setting"
 msgstr "تنظیم زبان پاسخ هوش مصنوعی"
 
+msgid "AI Term X-Ray"
+msgstr "ایکس‌ری اصطلاح هوش مصنوعی"
+
+msgid "AI Wikipedia"
+msgstr "ویکی‌پدیای هوش مصنوعی"
+
 msgid "AI X-Ray"
 msgstr "ایکسری هوش مصنوعی"
 
@@ -238,6 +244,12 @@ msgstr "کلید API برای %1 الزامی است."
 
 msgid "API key is required."
 msgstr "کلید API الزامی است."
+
+msgid "API key must not contain spaces or line breaks for %1."
+msgstr "کلید API برای %1 نباید حاوی فاصله یا خط جدید باشد."
+
+msgid "API key must not contain spaces or line breaks."
+msgstr "کلید API نباید حاوی فاصله یا خط جدید باشد."
 
 msgid "About the Author"
 msgstr "درباره نویسنده"
@@ -336,6 +348,9 @@ msgstr "URL پایه برای %1 الزامی است."
 msgid "Base URL is required."
 msgstr "آدرس پایه الزامی است."
 
+msgid "Base URL must not contain spaces."
+msgstr "Base URL نباید حاوی فاصله باشد."
+
 msgid "Base URL must start with http:// or https://"
 msgstr "آدرس پایه باید با http:// یا https:// شروع شود."
 
@@ -357,9 +372,6 @@ msgstr "تحلیلهای کتاب"
 
 msgid "Book Summary & Recs"
 msgstr "خلاصه کتاب و پیشنهادها"
-
-msgid "Book Usage"
-msgstr "کاربرد در کتاب"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "شاخه/تگ \"%1\" یافت نشد."
@@ -389,6 +401,9 @@ msgstr "شخصیت‌ها"
 msgid "Checking for updates..."
 msgstr "در حال بررسی به‌روزرسانی‌ها..."
 
+msgid "Choose Definition Sections"
+msgstr "انتخاب بخش‌های تعریف"
+
 msgid "Choose which notebook your notes are saved to."
 msgstr "انتخاب کنید یادداشت‌هایتان در کدام نوتپد ذخیره شوند."
 
@@ -400,6 +415,9 @@ msgstr "بستن"
 
 msgid "Composing answer ..."
 msgstr "در حال تنظیم پاسخ ..."
+
+msgid "Concise - reply in short sentences"
+msgstr "مختصر - پاسخ در جملات کوتاه"
 
 msgid "Configuration not found. Please set up configuration.lua first."
 msgstr "پیکربندی یافت نشد. لطفاً ابتدا configuration.lua را تنظیم کنید."
@@ -529,6 +547,25 @@ msgstr "دیکشنری"
 msgid "Dictionary Language"
 msgstr "زبان دیکشنری"
 
+msgid "Dictionary Popup"
+msgstr "پاپ‌آپ واژه‌نامه"
+
+msgid "Dictionary Settings"
+msgstr "تنظیمات واژه‌نامه"
+
+msgid ""
+"Dictionary or Translation?\n"
+"\n"
+"This selection looks like a word or short phrase.\n"
+"\n"
+"You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
+msgstr ""
+"واژه‌نامه یا ترجمه؟\n"
+"\n"
+"این گزینش شبیه یک واژه یا عبارت کوتاه است.\n"
+"\n"
+"می‌توانید این را بعداً در تنظیمات > تنظیمات دیگر > جست‌وجوی هوشمند واژه‌نامه برای «ترجمه» تغییر دهید."
+
 msgid "Display name"
 msgstr "نام نمایشی"
 
@@ -597,6 +634,9 @@ msgstr "توضیح"
 msgid "Failed to fetch models"
 msgstr "دریافت مدلها ناموفق بود"
 
+msgid "Failed to save provider."
+msgstr "ذخیره ارائه‌دهنده ناموفق بود."
+
 msgid "Failed to save search tool."
 msgstr "ذخیره ابزار جستجو ناموفق بود."
 
@@ -617,6 +657,9 @@ msgstr "فیلتر: «%1»"
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "برای جزئیات، به صفحه ویکی «پیکربندی» در گیتهاب مراجعه کنید."
+
+msgid "Full - full definitions"
+msgstr "کامل - تعریف‌های کامل"
 
 msgid "Fun Analogy"
 msgstr "قیاس جالب"
@@ -685,9 +728,8 @@ msgstr "نام فایل نوتپد نامعتبر است."
 msgid "KOReader"
 msgstr "KOReader"
 
-#. @translators: functional overriding
-msgid "KOReader Tweaks"
-msgstr "تنظیمات KOReader"
+msgid "Keep dictionary answers short: at most one or two sentences per section."
+msgstr "پاسخ‌های واژه‌نامه را کوتاه نگه دارید: حداکثر یک یا دو جمله در هر بخش."
 
 msgid "Key Points"
 msgstr "نکات کلیدی"
@@ -749,8 +791,8 @@ msgstr "تم‌های اصلی"
 msgid "Markdown Engine"
 msgstr "موتور مارک‌داون"
 
-msgid "Meaning"
-msgstr "معنی"
+msgid "Meaning & Usage"
+msgstr "معنا و کاربرد"
 
 msgid "Model"
 msgstr "مدل"
@@ -922,6 +964,9 @@ msgstr "OpenAI Responses API"
 msgid "OpenAI-compatible Chat Completions API"
 msgstr "Chat Completions API سازگار با OpenAI"
 
+msgid "Other Settings"
+msgstr "تنظیمات دیگر"
+
 msgid "Outstanding questions:"
 msgstr "پرسش‌های بی‌پاسخ:"
 
@@ -948,6 +993,9 @@ msgstr "افزونه پیکربندی نشده است."
 
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
 msgstr "فرادادههای کتاب (عنوان، نویسنده و موقعیت فعلی مطالعه شامل فصل) را به درخواستهایی که زمینه کتاب را فعال میکنند اضافه میکند (بهطور پیشفرض: توضیح، زمینه تاریخی، خلاصه، نکات کلیدی و ELI5). رفتار هر درخواست را میتوان با use_book_context در فایل پیکربندی بازنویسی کرد."
+
+msgid "Preset list of AI Dictionary sections."
+msgstr "فهرست از پیش تعیین‌شده بخش‌های واژه‌نامه هوش مصنوعی."
 
 msgid "Prevailing emotional state/tone:"
 msgstr "حال‌وهوای عاطفی غالب:"
@@ -1069,6 +1117,21 @@ msgstr "اندازه قلم متن پاسخ"
 msgid "Role & Function"
 msgstr "نقش و کارکرد"
 
+msgid ""
+"Route short selections to the AI Dictionary instead of the Translator.\n"
+"\n"
+"- Counts as short: up to 5 words; for CJK text, which has no word\n"
+"  separators, up to 8 characters.\n"
+"- Short selections open the AI Dictionary; longer selections are\n"
+"  translated as usual."
+msgstr ""
+"گزینش‌های کوتاه را به‌جای مترجم به واژه‌نامه هوش مصنوعی هدایت کنید.\n"
+"\n"
+"- کوتاه محسوب می‌شود: تا ۵ واژه؛ برای متن CJK که جداکننده واژه\n"
+"  ندارد، تا ۸ نویسه.\n"
+"- گزینش‌های کوتاه واژه‌نامه هوش مصنوعی را باز می‌کنند؛ گزینش‌های بلندتر\n"
+"  مانند معمول ترجمه می‌شوند."
+
 msgid "Runtime"
 msgstr "زمان اجرا"
 
@@ -1117,23 +1180,11 @@ msgstr "انتخاب در کلیپبورد کپی شد."
 msgid "Settings"
 msgstr "تنظیمات"
 
-msgid "Show Custom Prompts in Dictionary Popup"
-msgstr "نمایش پرامپت‌های سفارشی در پنجره دیکشنری"
-
-msgid "Show Dictionary(AI) in Dictionary Popup"
-msgstr "نمایش دیکشنری (هوش مصنوعی) در پنجره دیکشنری"
-
 msgid "Show Follow-up Questions"
 msgstr "نمایش سوالات پیگیری"
 
 msgid "Show Reasoning Text"
 msgstr "نمایش متن استدلال"
-
-msgid "Show Term X-Ray(AI) in Dictionary Popup"
-msgstr "نمایش Term X-Ray (هوش مصنوعی) در پنجره دیکشنری"
-
-msgid "Show Wikipedia(AI) in Dictionary Popup"
-msgstr "نمایش ویکی‌پدیا (هوش مصنوعی) در پنجره دیکشنری"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "نمایش فرایند تفکر عمیق (استدلال) از پاسخ هوش مصنوعی، در صورت وجود."
@@ -1146,6 +1197,12 @@ msgstr "پیشنهاد کتاب‌های مشابه"
 
 msgid "Simplify"
 msgstr "ساده‌سازی"
+
+msgid "Smart Dictionary Lookup for 'Translate'"
+msgstr "جست‌وجوی هوشمند واژه‌نامه برای «ترجمه»"
+
+msgid "Standard - standard definitions"
+msgstr "استاندارد - تعریف‌های استاندارد"
 
 msgid "Stop"
 msgstr "توقف"
@@ -1221,8 +1278,8 @@ msgstr "این دکمه یک یادداشت سریع با متن هایلایت�
 msgid "This is a custom prompt"
 msgstr "این یک پرامپت سفارشی است"
 
-msgid "This prompt acts as a dictionary for the highlighted text, to a word or phrase."
-msgstr "این پرامپت به‌عنوان یک فرهنگ لغت برای متن هایلایت‌شده، یعنی یک واژه یا عبارت، عمل می‌کند."
+msgid "This prompt acts as a book-aware dictionary for the highlighted text, to a word or phrase."
+msgstr "این پرامپت به‌عنوان واژه‌نامه‌ای کتاب‌آگاه برای متن برجسته‌شده، تا سطح یک واژه یا عبارت، عمل می‌کند."
 
 msgid "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."
 msgstr "این پرامپت دستور زبان متن هایلایت‌شده را تحلیل می‌کند و توضیحی دقیق از ساختار آن و هرگونه خطای گرامری ارائه می‌دهد."
@@ -1375,7 +1432,6 @@ msgstr "جایی که داستان متوقف شد:"
 msgid "Wikipedia"
 msgstr "ویکی‌پدیا"
 
-#. @translators used in the dictionary.
 msgid "Word Form & Lemma"
 msgstr "صورت واژه و بُن‌واژه"
 
