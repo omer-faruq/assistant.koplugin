@@ -1,0 +1,40 @@
+# UI / Dialogs
+
+KOReader UI is niche. **Reuse existing scaffolding** (`ChatGPTViewer`, `assistant_dialog.lua`, `assistant_provider_registry.lua`) rather than building new widget trees. When hand-building, scan `/usr/lib/koreader/frontend/ui/widget/` and `/usr/lib/koreader/plugins/` for reference patterns first.
+
+## General conventions
+
+- Dialog buttons: cancellation/close on the **left**, action buttons (Save/OK) on the **right** (KOReader `InputDialog` convention).
+- Menu/UI labels: Title Case for titles, settings items, checkboxes, dialog labels; keep short words (`to`, `for`, `as`, `and`, `in`) lowercase.
+- Success/confirmation → `Notification:notify(msg, Notification.SOURCE_ALWAYS_SHOW)` (non-blocking). Errors/failures/ack → `UIManager:show(InfoMessage:new{...})` (blocks).
+
+## Ask dialog checkbox layout (`assistant_dialog.lua`)
+
+Side-by-side rows: `HorizontalGroup{ HorizontalSpan(left_gap) + CheckButton(width=half_w) + HorizontalSpan(gap) + CheckButton(width=half_w) }`.
+
+- Each `CheckButton` needs an explicit `width = half_w` or it overflows (`checkbutton.lua:77`).
+- Left inset `left_gap = (dialog_width - available_w - input_extra)/2` where `input_extra = 2*(Size.border.inputtext + Size.padding.small + Size.margin.default)` — aligns to the InputText border; don't hardcode `Size.padding.large`.
+- Actual labels are emoji-prefixed: `✉ Attach Prior Text`, `✎ Current Chapter Only`, `🌐 Web Search`, `⌨ Copy to Clipboard`.
+
+## Hand-built dialogs (no input field)
+
+`InputDialog` **always** creates and renders an `InputText` — there is no flag to hide it. For checkbox-only / pure-picker forms, build the widget tree by hand. Reference: `Registry.showParametersDialog` in `assistant_provider_registry.lua`.
+
+Recipe (mirror `ConfirmBox`/`SettingsDialog`):
+
+`CenterContainer(full-screen Geom) → MovableContainer → FrameContainer(background COLOR_WHITE, radius/border) → VerticalGroup{ TitleBar, content widgets…, CenterContainer(ButtonTable) }`.
+
+Keep `frame`/`movable` in locals upvalue-captured by the dirty callbacks.
+
+Pitfalls learned there:
+
+- **Paint hooks are mandatory**: a bare `InputContainer` is never painted. Set `modal = true` and define `onShow`/`onCloseWidget` that call `UIManager:setDirty(self/nil, function() return "ui", movable.dimen end)`. Without them the dialog silently never appears (or never clears).
+- **Children must be positional**: containers traverse `[1]`, `[2]`, …; `MovableContainer:new{ frame = ... }` stores children in the hash part and renders nothing. Build sub-widgets into locals, then pass them positionally.
+- **`CheckButton` needs an explicit `width`** when its parent has no `getAddedWidgetAvailableWidth()` (it dereferences that method otherwise).
+- **Never store widget references on module-level tables** (e.g. writing `item.checkbox = ...` back onto a shared catalog): it pins the whole closed dialog tree in memory and leaks state across dialog instances. Keep widget refs in locals.
+- **Declare locals before closures that use them**: button callbacks built in a `buttons` table close over dialog locals; a local declared *after* the table silently captures a nil **global** and crashes only when the button is tapped (`attempt to index global 'x' (a nil value)`). Declare shared locals (`dialog`, checkbox tables, …) above any closure that references them, and note why.
+- **Missing children crash at first paint, not construction**: a stale/nil child reference leaves a container without `[1]`; construction succeeds and the crash surfaces only on repaint (`framecontainer.lua:55 self[1]:getSize()`). Reproduce with a runui script: show the dialog, then `UIManager:scheduleIn(2, function() UIManager:forceRePaint(); UIManager:quit() end); UIManager:run()` — and exercise button callbacks programmatically (`button_table:getButtonById("ok").callback()`, or `buttons_layout[row][col]` positionally when the entry has no `id`) to cover tap-time paths headlessly.
+
+## KOReader widget internals (last resort)
+
+Check the public API first, then read the widget source under `/usr/lib/koreader/frontend/ui/widget/` to trace the `widget[1]`/`[2]` tree; swap a sub-widget and nil `_size`/`_offsets`/`dimen` up the tree to re-layout. Always comment the widget-tree path.

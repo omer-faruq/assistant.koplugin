@@ -1,0 +1,82 @@
+# Architecture
+
+KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses API, translations, summaries, X-Ray/Recap, LexRank Term X-Ray, web-search tools, quick notes, custom prompts.
+
+## Request flow
+
+`main.lua` → `Assistant:query` → `Querier:query` → exactly one handler `query` → optional tool loop (`ToolExecutor`) → results shown in `ChatGPTViewer` / `assistant_dialog.lua`.
+
+## Core
+
+- `main.lua` — plugin init, TouchMenu registration, dispatcher actions/gestures, translate-override + auto-recap hooks, dictionary-popup button. `Assistant:_showAddProviderDialog` / `_showAddWebSearchDialog` delegate to the registries.
+- `_meta.lua` — version (`X.Y-dev`), manually bumped on `main` after a release tag; CI rewrites it from the tag during packaging.
+- `assistant_querier.lua` (`Querier`) — loads handlers, drives stream/non-stream paths, runs the web-search tool loop (max 3 rounds feeding results back), and parses SSE into one unified format.
+- `assistant_tool_executor.lua` (`ToolExecutor`) — normalizes tool-calling across the `openai`/`anthropic`/`gemini` wire formats; loads enabled search tools from `SearchRegistry` at query time.
+- `assistant_exttools.lua` — search API clients (SerpAPI, Tavily, SearXNG, Exa).
+
+## API handlers (`api_handlers/`)
+
+`base.lua` (`BaseHandler`) provides `SyncOptions`, `makeRequest`/`backgroundRequest`, `normalizeBaseUrl`, and `parseToolCalls`; every handler implements `query`. Handlers use metatable inheritance: `BaseHandler:new{...}` with `self.__index = self` (e.g. `local H = BaseHandler:new{ name = "x" }`).
+
+- `openai.lua` (+ `deepseek`/`ollama`/`openrouter`/`mistral` aliases) — `Authorization: Bearer`, `/chat/completions`; set `base_url` for any OpenAI-compatible endpoint.
+- `anthropic.lua` — `x-api-key` + `anthropic-version` headers, `/v1/messages`.
+- `gemini.lua` — API key as query param, `{base_url}/{model}:generateContent`.
+- `responses.lua` — OpenAI `/v1/responses` with built-in `web_search`/`file_search`/function tools.
+- Deltas: `groq.lua` (free-tier debounce), `gigachat.lua` (OAuth token), `gemma.lua` (picks OpenAI/Gemini parent by `base_url`; strips `<thought>`).
+
+### Handler discovery
+
+`Querier` scans `api_handlers/` at runtime. File providers use config keys `{handler}_{description}` (the prefix before the first underscore selects the handler, e.g. `openai_perplexity` → `openai`). UI providers use stable IDs `custom:N` plus a `provider.handler` field naming the handler. `Registry.HANDLERS` allows only `openai`/`anthropic`/`gemini`/`responses` — thin wrappers and deltas are **not** UI-selectable.
+
+### New providers & tool calling
+
+- OpenAI-compatible → alias `OpenAIHandler:new{name="..."}`.
+- Custom auth/shape → extend `BaseHandler` (`query`/`SyncOptions`/`FetchModels`) and route parsing through `self:parseToolCalls(...)`.
+- Route all tool-call logic through `ToolExecutor` — it already normalizes the three wire formats; do not duplicate per provider.
+
+## Registries
+
+`assistant_provider_registry.lua` (`Registry`) and `assistant_search_registry.lua` (`SearchRegistry`) manage UI-configured providers and web-search tools stored as JSON in settings. Lifecycle, storage keys, validation and config rules: **`docs/REGISTRIES.md`**.
+
+## LexRank (Term X-Ray)
+
+`assistant_lexrank.lua` does TF-IDF-weighted LexRank sentence ranking (tokenize → similarity matrix → PageRank → score-based selection with entity/position boosting); its tunables (`lexrank_max_sentences`, etc.) live **here**. Per-language modules in `assistant_lexrank_languages.lua` (`en`,`es`,`fr`,`de`,`tr`; fallback en) — read `docs/LEXRANK_LANGUAGES.md` before editing. Display thresholds (multi-level filtering, context expansion) live in `assistant_dictdialog.lua`, which consumes `rank_sentences`.
+
+## UI / Dialogs
+
+- `assistant_dialog.lua` — Ask AI popup + result formatting.
+- `assistant_featuredialog.lua` — book features: Recap/X-Ray/annotations.
+- `assistant_dictdialog.lua` — AI Dictionary + Term X-Ray.
+- `assistant_settings.lua` — provider/model settings.
+- `assistant_model_picker.lua` — `showPickerDialog`/`fetchModels`; call inside `Trapper:wrap`.
+- `assistant_viewer.lua` (`ChatGPTViewer`) — scrollable result viewer.
+- `assistant_quicknote.lua` — quick-note capture; `assistant_updater.lua` — GitHub release check; `assistant_mdparser.lua` — hoedown → markdown.lua fallback.
+
+## Config
+
+`assistant_config.lua` (`Config` at `assistant.config`) owns the effective `CONFIGURATION`, built from `configuration.lua` + UI registries via `config:buildEffectiveConfig()`. Getters: `getFeature` / `getProvider` / `getProviderSettings` / `getFeatures` / `isProviderEnabled` / `getActiveProviderId`; mutators: `setProvider` / `deleteProvider` / `setSearchTool` / `deleteSearchTool`; errors: `getLoadError`/`setLoadError`/`clearLoadError`; statics: `loadRawConfig`/`getConfigPath`/`getMetaPath`/`testConfigFile`. Access rules: `docs/REGISTRIES.md`.
+
+## Shared utils & gettext
+
+- `assistant_utils.lua` — extraction, notebook I/O, `httpRequest`, `PLUGIN_DIR` (computed via `debug.getinfo` self-location, set once by `main.lua`).
+- `assistant_gettext.lua` — isolated MO shim, `textdomain "assistant"`, reads `l10n/*/assistant.mo` (MO, not PO); exposes the same `_`/`N_`/`C_`/`NC_` API as upstream, keeping plugin strings out of KOReader's core catalog.
+- `assistant_prompts.lua` — prompt templates.
+- Helpers: prefer `koutil.tableGetValue`, `koutil.tableDeepCopy`/`tableSize`/`tableEquals` over manual table loops; `util.orderedPairs(t)` for deterministic key order. Error handling returns `nil, err` (or `false, err` for HTTP); callers check the first return value.
+- Formatting: bold runs via `assistant_utils.bold_format(T(_("<b>Header:</b> %1"), val))`; message metadata via `assistant_utils.set_attr`/`get_attr` for fields that must not serialize into API bodies (`use_websearch`, `is_context`, `search_keywords`).
+- **PLUGIN_DIR**: runtime constant `assistant_utils.PLUGIN_DIR` computed in `main.lua` from its own source path with `lfs` existence checks + `DataStorage`/install-dir fallbacks; used by gettext (`l10n`) and mdparser (`lib`). OTA target remains `DataStorage:getFullDataDir()/plugins` (writable).
+- **Dependencies**: none beyond KOReader's standard libraries; the optional `hoedown` native library has a pure-Lua fallback. License: GPL-3.0 (see `LICENSE`).
+
+## Key files
+
+| Path | Purpose |
+|---|---|
+| `main.lua` | Plugin entry, dispatcher actions, menu hooks |
+| `assistant_querier.lua` | Core query engine, handler loading, SSE parsing, tool loop |
+| `api_handlers/base.lua` | Handler base class |
+| `assistant_provider_registry.lua` | UI provider add/edit/merge/validate |
+| `assistant_search_registry.lua` | UI search-tool add/merge/validate |
+| `assistant_config.lua` | Effective `CONFIGURATION` |
+| `configuration.sample.lua` | Config template — update this, not `configuration.lua` |
+| `assistant_gettext.lua` | MO shim (assistant domain) |
+| `assistant_utils.lua` | `httpRequest`, `PLUGIN_DIR`, extraction, notebook I/O |
+| `assistant_updater.lua` | GitHub release check |
