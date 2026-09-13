@@ -497,6 +497,31 @@ SettingsDialog.genDictionaryOutputMenu = function(assistant)
         assistant.updated = true
     end
 
+    -- Which AI entries the dictionary popup offers.
+    local popup_items = {}
+    for i, popup in ipairs({
+        { key = "dict_popup_show_dictionary", text = _("AI Dictionary"), default = true },
+        { key = "dict_popup_show_wikipedia", text = _("AI Wikipedia"), default = true },
+        { key = "dict_popup_show_term_xray", text = _("AI Term X-Ray"), default = false },
+        { key = "dict_popup_show_custom_prompts", text = _("Custom Prompts"), default = false },
+    }) do
+        popup_items[i] = {
+            text = popup.text,
+            checked_func = function()
+                return assistant.settings:readSetting(popup.key, popup.default)
+            end,
+            callback = function()
+                assistant.settings:toggle(popup.key)
+                assistant.updated = true
+            end,
+        }
+    end
+
+    table.insert(items, {
+        text = _("Dictionary Popup"),
+        sub_item_table = popup_items,
+    })
+
     table.insert(items, {
         text = _("Concise - reply in short sentences"),
         separator = true,
@@ -532,7 +557,7 @@ SettingsDialog.genDictionaryOutputMenu = function(assistant)
     end
 
     table.insert(items, {
-        text = _("Custom - choose sections"),
+        text = _("Custom"),
         radio = true,
         checked_func = function()
             return assistant.settings:readSetting("dict_output_preset", "standard") == "custom"
@@ -543,8 +568,9 @@ SettingsDialog.genDictionaryOutputMenu = function(assistant)
         end,
     })
 
+    local section_items = {}
     for i, sec in ipairs(Prompts.dict_sections) do
-        table.insert(items, {
+        section_items[i] = {
             text = sec.header,
             checked_func = function()
                 local preset = assistant.settings:readSetting("dict_output_preset", "standard")
@@ -567,28 +593,13 @@ SettingsDialog.genDictionaryOutputMenu = function(assistant)
                 assistant.settings:saveSetting("dict_output_preset", "custom")
                 assistant.updated = true
             end,
-        })
+        }
     end
 
-    -- Which AI entries are offered in KOReader's dictionary popup.
-    for i, popup in ipairs({
-        { key = "dict_popup_show_dictionary", text = _("Show Dictionary(AI) in Dictionary Popup"), default = true },
-        { key = "dict_popup_show_wikipedia", text = _("Show Wikipedia(AI) in Dictionary Popup"), default = true },
-        { key = "dict_popup_show_term_xray", text = _("Show Term X-Ray(AI) in Dictionary Popup"), default = false },
-        { key = "dict_popup_show_custom_prompts", text = _("Show Custom Prompts in Dictionary Popup"), default = false },
-    }) do
-        table.insert(items, {
-            text = popup.text,
-            separator = i == 1,
-            checked_func = function()
-                return assistant.settings:readSetting(popup.key, popup.default)
-            end,
-            callback = function()
-                assistant.settings:toggle(popup.key)
-                assistant.updated = true
-            end,
-        })
-    end
+    table.insert(items, {
+        text = _("Choose Definition Sections"),
+        sub_item_table = section_items,
+    })
 
     return items
 end
