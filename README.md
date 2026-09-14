@@ -4,19 +4,16 @@
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/omer-faruq/assistant.koplugin)
 
-A powerful plugin that lets you interact with AI language models (Claude, GPT-4, Gemini, DeepSeek, Ollama etc.) while reading. Ask questions about text, get translations, summaries, explanations and more - all without leaving your book.
+Interact with AI language models (Claude, GPT-4, Gemini, DeepSeek, Ollama, etc.) while reading. Ask questions, get translations, summaries, explanations and more - all without leaving your book.
 
 <small>Originally forked from a deleted fork of AskGPT by zeeyado, then modified using WindSurf. That fork is now public and includes many updates: https://github.com/zeeyado/koassistant.koplugin </small>
 
 ## Features
 
-- **Multiple AI Providers**: Speaks the mainstream protocols natively — OpenAI Chat Completions, OpenAI Responses, Anthropic Messages, and Google Gemini — so most platforms work out of the box. Examples:
-  - OpenAI, DeepSeek, OpenRouter, Ollama, Groq, Mistral, NVIDIA, etc. (via OpenAI-compatible endpoints)
-  - Claude (Anthropic), Gemini, and the OpenAI Responses API
+- **Multiple AI Providers**: Natively speaks the four mainstream protocols — OpenAI Chat Completions, OpenAI Responses, Anthropic Messages, and Google Gemini — so common platforms (OpenAI, Anthropic, Gemini, DeepSeek, OpenRouter, Ollama, Groq, Mistral, etc.) work out of the box.
 - **Stream Mode**: Real-time responses from the API. Get the full LLM experience on e-ink devices.
-- **Multiple Providers/Models**: Select different models or AI provider platforms in the UI.
-- **UI-Based Setup**: Add providers and models entirely from the UI, with built-in model browsing and connection testing.
 - **Web Search**: Let LLMs search the web for real and up-to-date information. Supports SerpAPI, Tavily, Exa, and SearXNG, with a per-question toggle.
+- **UI-Based Setup**: Add providers and models entirely from the UI, with built-in model browsing and connection testing.
 - **Built-in Prompts**:
   - **Translation**: Instantly translate highlighted text to any language
   - **Quick Actions**: One-click buttons for common tasks like summarizing or explaining
@@ -24,19 +21,18 @@ A powerful plugin that lets you interact with AI language models (Claude, GPT-4,
   - **Term X-Ray**: For single word or phrase highlights, get the meaning of it based on the previously mentioned places. (thanks to [Michael Kucek](https://github.com/michael-kucek))
   - **Recap**: Catch up on a book you haven't opened for a while. (thanks to [jbhul](https://github.com/jbhul))
   - **X-Ray**: A spoiler-free guide to characters, places, themes, and timeline up to your progress.
-- **Markdown Support**: (thanks to [David Fan](https://github.com/d-fan))
-- **Notebook & Quick Notes**: Save AI conversations and quick notes as Markdown, either to the current book or a general notebook, with optional auto-save.
+- **Notebook & Quick Notes**: Save AI conversations and quick notes as Markdown, to the current book or a general notebook, with optional auto-save.
 - **Highlight Menu Presets**: Pin built-in prompts to the highlight popup for one-tap access (configurable).
 - **Book Insights**: Explore the whole book without highlighting — Book Summary & Recs, AI X-Ray, AI Recaps, and analysis or summaries built from your highlights and notes.
 - **Gesture Shortcuts**: Trigger Ask, Recap, and X-Ray by gesture, no highlighting needed. (thanks to [Jayphen](https://github.com/Jayphen))
-- **AI Dictionary**: Get book-aware definitions and synonyms for any word or phrase, based on the book you are reading.
-- **l10n Support**: Supports all languages that the KOReader project supports.
+- **AI Dictionary**: Get book-aware definitions and synonyms for any word or phrase.
+- **l10n Support**: Supports every language available in KOReader.
 
 ## Basic Requirements
 
-- [KOReader](https://github.com/koreader/koreader) installed on your device
-- API key from a LLM provider (Anthropic, OpenAI, Gemini, OpenRouter, DeepSeek, Ollama, etc.)
-- (Optional) API key from a search api provider (Tavily, SerpAPI, SearXNG ...)
+- **[Required]** [KOReader](https://github.com/koreader/koreader) installed on your device
+- **[Required]** API key from at least one LLM provider (Anthropic, OpenAI, Gemini, OpenRouter, DeepSeek, Ollama, etc.)
+- **[Recommended]** API key from a search provider (Tavily, SerpAPI, Exa, SearXNG, ...)
 
 ## Getting Started 
 
@@ -50,7 +46,17 @@ See [Obtaining API Keys](../../wiki/Obtaining-API-Keys) from the wiki page.
 
 ### 3. Configure the Plugin
 
-All setup can be done directly from the KOReader UI.
+All setup is done directly from the KOReader UI.
+
+#### Before You Start: Get the API Key onto the Reader
+
+Typing a long API key on an e-ink keyboard is painful. The easy path:
+
+1. Save your API key in a `.txt` file on your computer.
+2. Send that file to your reader (USB, cloud, etc.).
+3. Open the `.txt` file as a book in KOReader.
+4. Copy the key to the clipboard.
+5. Then follow the configuration below and paste it into the API Key field.
 
 #### Option A: Configure from the UI
 
@@ -82,7 +88,7 @@ For file-based setup (naming pattern, multiple profiles, extra examples), see [I
    - **Ask**: Ask a specific question about the text
    - **Custom Actions**: Use any prompts you've configured
        - **Translate**: Convert text to your configured language
-5. **Additional Questions**: Ask additional questions about the highlighted text using your custom prompts
+5. **Additional Questions**: Keep asking follow-ups about the highlighted text using your custom prompts
 
 #### Using AI Translate with Gestures
 
@@ -123,7 +129,6 @@ The Assistant plugin adds AI-powered buttons (Wikipedia, Term X-Ray, Dictionary,
 - Use **"Ask"** for specific questions about the text
 - Try the pre-made buttons for quick analysis
 - Add your own custom prompts for specialized tasks
-- **Entering API keys on e-ink**: save the key in a `.txt` file, send it to your reader, open it as a book, copy the key, then long-press the API Key field and paste.
 - **Entering very long URLs**: save the provider with a short placeholder URL first, then reopen it with **Edit** and replace it with the full URL.
 
 ## Contributors ✨
