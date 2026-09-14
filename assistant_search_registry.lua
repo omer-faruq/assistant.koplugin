@@ -17,6 +17,7 @@ local json = require("rapidjson")
 local logger = require("logger")
 local T = require("ffi/util").template
 local koutil = require("util")
+local ASUtils = require("assistant_utils")
 local _ = require("assistant_gettext")
 
 local SearchRegistry = {}
@@ -109,32 +110,23 @@ function SearchRegistry.validate(record, tool_key)
         return false, T(_("Unknown search tool: %1"), tostring(tool_key))
     end
 
-    -- Check the required credential field
+    -- Check the required credential field (shared normalization gate).
+    local name = tool_def.display_name
+    local ok, err
     if tool_def.needs == "api_key" then
-        if type(record.api_key) == "string" then
-            record.api_key = koutil.trim(record.api_key)
-        end
-        if not record.api_key or type(record.api_key) ~= "string"
-            or record.api_key:match("^%s*$") then
-            return false, T(_("API key is required for %1."), tool_def.display_name)
-        end
-        if record.api_key:match("%s") then
-            return false, T(_("API key must not contain spaces or line breaks for %1."), tool_def.display_name)
-        end
+        ok, err = ASUtils.validate_credential_field(record, "api_key", {
+            required = T(_("API key is required for %1."), name),
+            whitespace = T(_("API key must not contain spaces or line breaks for %1."), name),
+        })
     elseif tool_def.needs == "base_url" then
-        if type(record.base_url) == "string" then
-            record.base_url = koutil.trim(record.base_url)
-        end
-        if not record.base_url or type(record.base_url) ~= "string"
-            or record.base_url:match("^%s*$") then
-            return false, T(_("Base URL is required for %1."), tool_def.display_name)
-        end
-        if not record.base_url:match("^https?://") then
-            return false, _("Base URL must start with http:// or https://")
-        end
-        if record.base_url:match("%s") then
-            return false, _("Base URL must not contain spaces.")
-        end
+        ok, err = ASUtils.validate_credential_field(record, "base_url", {
+            required = T(_("Base URL is required for %1."), name),
+            scheme = _("Base URL must start with http:// or https://"),
+            whitespace = _("Base URL must not contain spaces."),
+        })
+    end
+    if not ok then
+        return false, err
     end
 
     return true

@@ -283,29 +283,22 @@ function Registry.validate(record)
     end
 
     -- base_url
-    if type(record.base_url) == "string" then
-        record.base_url = koutil.trim(record.base_url)
-    end
-    if not record.base_url or type(record.base_url) ~= "string" then
-        return false, _("Base URL is required.")
-    end
-    if not record.base_url:match("^https?://") then
-        return false, _("Base URL must start with http:// or https://")
-    end
-    if record.base_url:match("%s") then
-        return false, _("Base URL must not contain spaces.")
+    local ok, err = ASUtils.validate_credential_field(record, "base_url", {
+        required = _("Base URL is required."),
+        scheme = _("Base URL must start with http:// or https://"),
+        whitespace = _("Base URL must not contain spaces."),
+    })
+    if not ok then
+        return false, err
     end
 
     -- api_key
-    if type(record.api_key) == "string" then
-        record.api_key = koutil.trim(record.api_key)
-    end
-    if not record.api_key or type(record.api_key) ~= "string"
-        or record.api_key:match("^%s*$") then
-        return false, _("API key is required.")
-    end
-    if record.api_key:match("%s") then
-        return false, _("API key must not contain spaces or line breaks.")
+    ok, err = ASUtils.validate_credential_field(record, "api_key", {
+        required = _("API key is required."),
+        whitespace = _("API key must not contain spaces or line breaks."),
+    })
+    if not ok then
+        return false, err
     end
 
     -- additional_parameters (default empty)
@@ -870,9 +863,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
     local dialog_ref = {}  -- forward ref for enabled_func closure in buttons
     local dialog
     local function readFields()
-        local f = dialog:getFields()
-        for i = 1, #f do f[i] = koutil.trim(f[i]) end
-        return f
+        return ASUtils.trimDialogFields(dialog)
     end
     local dialog_buttons = {{
         {

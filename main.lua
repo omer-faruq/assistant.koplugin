@@ -535,6 +535,9 @@ function Assistant:_showAddWebSearchDialog(tool_key)
 
     local dialog_ref = {}
     local dialog
+    local function readFields()
+        return ASUtils.trimDialogFields(dialog)
+    end
     dialog = MultiInputDialog:new{
         title = title,
         fields = fields,
@@ -547,25 +550,18 @@ function Assistant:_showAddWebSearchDialog(tool_key)
                 text = _("OK"),
                 is_enter_default = true,
                 callback = function()
-                    local input_fields = dialog:getFields()
+                    local input_fields = readFields()
 
                     local api_key, base_url
                     if tool_def.needs == "api_key" then
                         api_key = input_fields[1]
-                        if api_key == "" then
-                            UIManager:show(InfoMessage:new{
-                                text = T(_("API key is required for %1."), tool_def.display_name) })
-                            return
-                        end
                     else
                         base_url = input_fields[1]
-                        if base_url == "" then
-                            UIManager:show(InfoMessage:new{
-                                text = T(_("Base URL is required for %1."), tool_def.display_name) })
-                            return
-                        end
                     end
 
+                    -- SearchRegistry.validate (through installSearchTool) is the
+                    -- shared normalization gate: it trims and rejects empty or
+                    -- whitespace-laden credentials, returning the message.
                     local ok, err = SearchRegistry.installSearchTool(
                         self, tool_key, api_key, base_url)
                     if not ok then

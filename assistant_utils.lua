@@ -907,6 +907,53 @@ function M.json_default(value, default_value)
 end
 
 -- ---------------------------------------------------------------------------
+-- Credential / field normalization
+--
+-- UI dialogs store credentials verbatim, so a pasted API key or URL often
+-- carries a trailing newline or space; left alone it corrupts the
+-- Authorization / x-api-key header (HTTP 401) or the request URL. Provider
+-- and search registries share these helpers so normalization lives in one
+-- place (see docs/REGISTRIES.md).
+-- ---------------------------------------------------------------------------
+
+--- Read every field of a MultiInputDialog and trim surrounding whitespace.
+--- Returns the trimmed values; the dialog's own widgets are not modified.
+---@param dialog table A widget exposing getFields()
+---@return string[]
+function M.trimDialogFields(dialog)
+    local fields = dialog:getFields()
+    for i = 1, #fields do
+        fields[i] = koutil.trim(fields[i])
+    end
+    return fields
+end
+
+--- Normalize record[key] in place (trim) and validate it as a credential or
+--- URL. Callers pass their own localized messages so each registry keeps its
+--- context-specific wording.
+---@param record table
+---@param key string Field name to normalize and validate
+---@param opts table { required: string, whitespace: string, scheme?: string }
+---        Providing `scheme` also enforces an "http(s)://" prefix (for URLs).
+---@return boolean ok
+---@return string|nil err
+function M.validate_credential_field(record, key, opts)
+    if type(record[key]) == "string" then
+        record[key] = koutil.trim(record[key])
+    end
+    if type(record[key]) ~= "string" or record[key] == "" then
+        return false, opts.required
+    end
+    if opts.scheme and not record[key]:match("^https?://") then
+        return false, opts.scheme
+    end
+    if record[key]:match("%s") then
+        return false, opts.whitespace
+    end
+    return true
+end
+
+-- ---------------------------------------------------------------------------
 -- PTF (Poor Text Formatting) helpers
 --
 -- KOReader's TextBoxWidget recognizes a tiny in-band markup: text that starts

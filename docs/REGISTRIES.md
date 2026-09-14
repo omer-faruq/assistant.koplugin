@@ -7,7 +7,7 @@ Two registries own everything configured from the UI. Both store JSON in `LuaSet
 - Do all UI provider/search CRUD through `Registry`/`SearchRegistry`. **Never** call `settings:saveSetting("ui_providers"/"ui_search_tools", ...)` directly.
 - Read/write `CONFIGURATION` only via `assistant.config` (`getFeature`/`getProvider`/`getProviderSettings`/`getFeatures`/`isProviderEnabled`/`getActiveProviderId`/`setProvider`/`deleteProvider`/`setSearchTool`/`deleteSearchTool`/`buildEffectiveConfig`). Never read `CONFIGURATION.features`/`provider_settings` directly, and never write `CONFIGURATION.provider_settings[key]` by hand.
 - File providers/tools live in `configuration.lua` (gitignored, holds secrets) — never read/modify it; update `configuration.sample.lua` only.
-- Normalize credentials here: `Registry.validate` / `SearchRegistry.validate` trim `display_name`/`model`/`base_url`/`api_key` and reject **internal** whitespace. Do not scatter trims through handlers or header construction.
+- Normalize credentials here: `Registry.validate` / `SearchRegistry.validate` trim `display_name`/`model`/`base_url`/`api_key` and reject **internal** whitespace. Shared normalization lives in `assistant_utils.validate_credential_field` (trim + required/scheme/whitespace checks) and `assistant_utils.trimDialogFields`; both registries route their credential checks through it. Do not scatter trims through handlers or header construction.
 
 ## Provider Registry (`assistant_provider_registry.lua`, `Registry`)
 
@@ -28,4 +28,4 @@ Two registries own everything configured from the UI. Both store JSON in `LuaSet
 
 ## Credential input
 
-The provider and search dialogs read fields through trimming helpers; `Registry.validate`/`SearchRegistry.validate` are the authoritative normalization gate. This stops a pasted key/URL carrying a trailing `\n`/space from producing a malformed auth header (HTTP 401) or URL.
+Both the provider and search dialogs read fields through `ASUtils.trimDialogFields`; `Registry.validate`/`SearchRegistry.validate` are the authoritative normalization gate (the Web Search dialog relies on `SearchRegistry.validate` via `installSearchTool` instead of duplicating required-field checks). This stops a pasted key/URL carrying a trailing `\n`/space from producing a malformed auth header (HTTP 401) or URL.
