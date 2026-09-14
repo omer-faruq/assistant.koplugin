@@ -9,6 +9,17 @@ MSGATTRIB_BIN = msgattrib
 MSGCAT_BIN    = msgcat
 XGETTEXT_BIN  = xgettext
 
+# Shared xgettext options so `template` (writes templates/$(DOMAIN).pot) and
+# `stats` (extracts into a temp dir) always agree on what counts as a string.
+XGETTEXT_OPTS = --from-code=utf-8 \
+	--keyword=C_:1c,2 --keyword=N_:1,2 --keyword=NC_:1c,2,3 \
+	--add-comments=@translators \
+	--package-name=assistant.koplugin \
+	--no-wrap \
+	--no-location \
+	--sort-by-file \
+	--package-version=$(shell grep version ../_meta.lua | grep -Eo '[0-9.]+')
+
 # Ordered cheap -> expensive for the AI translator. Primary key is nplurals
 # (1 -> 6): the prompt demands msgstr_plural arrays of exactly nplurals
 # non-empty forms, and a mismatch fails the whole 20-entry chunk (up to 3
@@ -42,7 +53,7 @@ endif
 
 .DEFAULT_GOAL := all
 
-.PHONY: help all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-api clean init-dirs mo retranslate-fuzzy retranslate-msgid
+.PHONY: help all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-api stats clean init-dirs mo retranslate-fuzzy retranslate-msgid
 
 help:
 	@echo "Usage: make [target]"
@@ -54,6 +65,7 @@ help:
 	@echo "  check           msgfmt --check"
 	@echo "  check-api       Ping configured API endpoint"
 	@echo "  check-langs     Detect drift vs KOReader supported languages"
+	@echo "  stats           Estimate untranslated strings from current source (read-only)"
 	@echo "  clean           Remove intermediate files"
 	@echo "  ai-translate    Run AI translation (all or L10N_LANG=xx)"
 	@echo "  retranslate-fuzzy  Re-extract and re-translate fuzzy entries (all or L10N_LANG=xx)"
@@ -205,6 +217,44 @@ check-langs:
 	fi; \
 	exit $$rc
 
+# Read-only estimate of the translation workload introduced by the current
+# source tree. Extracts a fresh POT straight from the Lua sources into a temp
+# dir, merges it into a temp copy of every .po, and reports how many entries
+# each language still needs. Nothing in the repo is written, so a committed
+# POT/.po is neither required nor updated. Use it to decide whether a
+# translation run is worth the token cost.
+stats:
+	@tmp=$$(mktemp -d) && trap "rm -rf $$tmp" EXIT; \
+	echo "Extracting strings from source..."; \
+	LC_ALL=C $(XGETTEXT_BIN) $(XGETTEXT_OPTS) \
+		`find .. -type f -name "*.lua" | sort` \
+		-o "$$tmp/$(DOMAIN).pot" || exit 1; \
+	src_n=$$(grep -c '^msgid ' "$$tmp/$(DOMAIN).pot"); \
+	src_n=$$((src_n - 1)); \
+	echo "Source msgids: $$src_n"; \
+	printf "%-8s %7s %7s %13s\n" "LANG" "DONE%" "FUZZY" "UNTRANSLATED"; \
+	tt=0; tf=0; tu=0; touched=0; maxu=0; \
+	for po_file in $(PO_FILES); do \
+		dir=$$(dirname $$po_file); \
+		if ! LC_ALL=C $(MSGMERGE_BIN) --quiet --no-wrap --no-location "$$po_file" "$$tmp/$(DOMAIN).pot" -o "$$tmp/merged.po" 2>/dev/null; then \
+			echo "$$dir: merge failed, skipped"; continue; \
+		fi; \
+		stats=$$(LC_ALL=C $(MSGFMT_BIN) --statistics -o /dev/null "$$tmp/merged.po" 2>&1); \
+		t=$$(echo "$$stats" | grep -oE '[0-9]+ translated' | grep -oE '[0-9]+' | head -1); \
+		f=$$(echo "$$stats" | grep -oE '[0-9]+ fuzzy' | grep -oE '[0-9]+' | head -1); \
+		u=$$(echo "$$stats" | grep -oE '[0-9]+ untranslated' | grep -oE '[0-9]+' | head -1); \
+		t=$${t:-0}; f=$${f:-0}; u=$${u:-0}; \
+		total=$$((t+f+u)); pct=0; [ $$total -gt 0 ] && pct=$$((t*100/total)); \
+		printf "%-8s %6d%% %7d %13d\n" "$$dir" "$$pct" "$$f" "$$u"; \
+		tt=$$((tt+t)); tf=$$((tf+f)); tu=$$((tu+u)); \
+		if [ $$((f+u)) -gt 0 ]; then touched=$$((touched+1)); fi; \
+		if [ $$((f+u)) -gt $$maxu ]; then maxu=$$((f+u)); fi; \
+	done; \
+	grand=$$((tt+tf+tu)); gpct=0; [ $$grand -gt 0 ] && gpct=$$((tt*100/grand)); \
+	echo "----------------------------------------------------------"; \
+	printf "%-8s %6d%% %7d %13d\n" "TOTAL" "$$gpct" "$$tf" "$$tu"; \
+	echo "Remaining: $$((tu+tf)) entries across $$touched language(s), up to $$maxu per language."
+
 clean:
 	@echo "Cleaning intermediate translation files..."
 	# Keep the current domain's .po ($(DOMAIN).po) and the legacy koreader.po
@@ -306,13 +356,6 @@ retranslate-msgid:
 
 template:
 	mkdir -p $(TEMPLATE_DIR)
-	$(XGETTEXT_BIN) --from-code=utf-8 \
-		--keyword=C_:1c,2 --keyword=N_:1,2 --keyword=NC_:1c,2,3 \
-		--add-comments=@translators \
-		--package-name=assistant.koplugin \
-		--no-wrap \
-		--no-location \
-		--sort-by-file \
-		--package-version=`grep version ../_meta.lua | grep -Eo '[0-9.]+'` \
+	$(XGETTEXT_BIN) $(XGETTEXT_OPTS) \
 		`find .. -type f -name "*.lua" | sort` \
 		-o $(TEMPLATE_DIR)/$(DOMAIN).pot
