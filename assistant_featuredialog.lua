@@ -37,7 +37,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     end
 
     local formatted_progress_percent = string.format("%.2f", progress_percent * 100)
-    local feature_title, loading_message, system_prompt, user_prompt_template, user_prompt_use_websearch, book_text, highlights_notes
+    local feature_title, system_prompt, user_prompt_template, user_prompt_use_websearch, book_text, highlights_notes
 
     local language = assistant.settings:readSetting("response_language") or assistant.ui_language
 
@@ -47,7 +47,6 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         -- Custom feature from configuration
         local custom_config = feature_type
         feature_title = custom_config.text or _("Custom Prompt")
-        loading_message = custom_config.loading_message or _("Loading...")
         system_prompt = custom_config.system_prompt
         user_prompt_template = custom_config.user_prompt
         user_prompt_use_websearch = koutil.tableGetValue(custom_config, "use_websearch") or false
@@ -70,31 +69,26 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         local feature_configurations = {
             recap = {
                 title = _("Recap"),
-                loading_message = _("Loading Recap..."),
                 config_key = "recap_config",
                 prompts_key = "recap"
             },
             xray = {
                 title = _("X-Ray"),
-                loading_message = _("Loading X-Ray..."),
                 config_key = "xray_config",
                 prompts_key = "xray"
             },
             book_info = {
                 title = _("Book Information"),
-                loading_message = _("Loading Book Information..."),
                 config_key = "book_info_config",
                 prompts_key = "book_info"
             },
             annotations = {
                 title = _("Highlight & Note Analysis"),
-                loading_message = _("Loading Highlight & Note Analysis..."),
                 config_key = "annotations_config",
                 prompts_key = "annotations"
             },
             summary_using_annotations = {
                 title = _("Summary Using Highlights & Notes"),
-                loading_message = _("Loading Summary Using Highlights & Notes..."),
                 config_key = "summary_using_annotations_config",
                 prompts_key = "summary_using_annotations"
             }
@@ -113,7 +107,6 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         end
         
         feature_title = feature_config.title
-        loading_message = feature_config.loading_message
         local config_key = feature_config.config_key
         local prompts_key = feature_config.prompts_key
         
@@ -223,7 +216,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       table.insert(message_history, context)
     end
 
-    local answer, err = Querier:query(message_history, loading_message)
+    local answer, err = Querier:query(message_history, feature_title)
     if err then
       assistant.querier:showError(err, message_history)
       return
@@ -275,7 +268,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         viewer:trimMessageHistory()
         ASUtils.runWhenOnlineFast(function()
           Trapper:wrap(function()
-            local answer, err = Querier:query(message_history)
+            local answer, err = Querier:query(message_history, viewer_title ~= "" and viewer_title or feature_title)
             
             if err then
               Querier:showError(err, message_history)

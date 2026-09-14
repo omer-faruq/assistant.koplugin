@@ -386,7 +386,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     local book_author = prop.authors or "Unknown Author"
 
     -- Choose the appropriate prompt and context based on prompt type
-    local user_prompt, context_content, title, loading_message
+    local user_prompt, context_content, title
     if prompt_type == "term_xray" then
         local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
         user_prompt = term_xray_prompts.user_prompt
@@ -394,7 +394,6 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         title = Prompts.getDisplayText(_("Term X-Ray"),
             term_xray_prompts.use_websearch or false,
             Prompts.isWebSearchEnabled(assistant.settings))
-        loading_message = _("Loading Term X-Ray ...")
         local context_message = {
             role = "user",
             content = string.gsub(user_prompt, "{([%w_]+)}", {
@@ -414,7 +413,6 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             { concise = assistant.settings:readSetting("dict_concise", false) })
         context_content = prev_context .. highlightedText .. next_context
         title = _("Dictionary")
-        loading_message = _("Loading AI Dictionary ...")
         local context_message = {
             role = "user",
             content = string.gsub(user_prompt, "{([%w_]+)}", {
@@ -429,7 +427,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     end
 
     -- Query the AI with the message history
-    local ret, err = Querier:query(message_history, loading_message)
+    local ret, err = Querier:query(message_history, title)
     if err ~= nil then
         assistant.querier:showError(err, message_history)
         return

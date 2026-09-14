@@ -343,10 +343,17 @@ function AssistantDialog:_createAndShowViewer(highlightedText, message_history, 
           table.insert(message_history, _user)
         end
 
+        -- Name the request in the streaming dialog: prompt name when the user
+        -- picked one, otherwise the typed question.
+        local request_title = viewer_title
+        if request_title == "" and type(user_question) == "string" then
+          request_title = user_question
+        end
+
         viewer:trimMessageHistory()
         ASUtils.runWhenOnlineFast(function()
           Trapper:wrap(function()
-            local answer, err = self.querier:query(message_history)
+            local answer, err = self.querier:query(message_history, request_title)
             
             -- Check if we got a valid response
             if err then
@@ -565,10 +572,11 @@ function AssistantDialog:show(highlightedText)
           Device.input.setClipboardText(user_question)
         end
         self:_close()
+        local request_title = user_question
         user_question = user_question .. book_text_prompt
         self:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question, use_web_search_checkbox.checked)
         Trapper:wrap(function()
-          local answer, err = self.querier:query(message_history)
+          local answer, err = self.querier:query(message_history, request_title)
 
           -- Check if we got a valid response
           if err then
@@ -874,7 +882,7 @@ function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
   ASUtils.set_attr(_user, "show_suggestions", Prompts.isSuggestionsEnabled(self.assistant.settings, prompt_config))
   table.insert(message_history, _user)
   
-  local answer, err = self.querier:query(message_history, T(_("Loading for %1 ..."), title or prompt_index))
+  local answer, err = self.querier:query(message_history, title or prompt_index)
   if err then
     self.querier:showError(err, message_history)
     return

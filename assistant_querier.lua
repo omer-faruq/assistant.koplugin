@@ -275,8 +275,24 @@ local function updateStreamText(streamDialog, delta, auto_scroll)
     end
 end
 
+--- Collapse whitespace and cap a request label so it fits the dialog title bar.
+--- Accepts numbers too (prompt indexes); nil/empty yields nil.
+--- @param text string|number|nil
+--- @return string|nil
+local function formatRequestTitle(text)
+    if text == nil then return nil end
+    text = tostring(text)
+    if text == "" then return nil end
+    return ASUtils.truncateToHeadUtf8Safe(text:gsub("%s+", " "), 60)
+end
+
 --- Query the AI with the provided message history.
 --- Handles both stream and non-stream modes, including multi-turn tool-call loops.
+---
+--- @param title string|number|nil  label naming the request (prompt/feature name,
+---                                 or the user's question). Shown by the
+---                                 non-stream progress toast and the streaming
+---                                 dialog title.
 ---
 --- Non-stream tool-call loop:
 ---   handler:query() returns a table { __is_tool_call=true, keywords=..., ... }
@@ -291,6 +307,8 @@ function Querier:query(message_history, title)
     if not self:is_inited() then
         return nil, _("Plugin is not configured.")
     end
+
+    local request_title = formatRequestTitle(title)
 
     -- prompt_websearch is a boolean (checkbox metadata on the last message);
     -- query_option.use_websearch must be a string ("none" or a search provider key).
@@ -393,7 +411,7 @@ function Querier:query(message_history, title)
                 break
             end
 
-            local ok, content, third = self:showStremDialog(bg_fn)
+            local ok, content, third = self:showStremDialog(bg_fn, request_title)
             if not ok then
                 -- cancelled or stream error
                 res = nil
@@ -508,8 +526,17 @@ function Querier:query(message_history, title)
         -- NON-STREAM PATH  — may loop for tool calls
         -- ---------------------------------------------------------------
         local tool_notice = T("\n🌐 %1", ToolExecutor.ToolToText(query_option.use_websearch))
+        -- First line names the request; only the request name is bold.
+        local loading_title
+        if request_title then
+            loading_title = T(_("Loading for <b>%1</b> ..."), request_title)
+        else
+            loading_title = T("<b>%1</b>", _("Querying AI ..."))
+        end
         local notify = ASUtils.bold_format(
-            T("<b>%1</b>\n☁️ %2\n⚡ %3%4", title or _("Querying AI ..."), self:getProviderLabel(), self.handler.model, query_option.use_websearch ~= "none" and tool_notice or "")
+            T("%1\n☁️ %2\n⚡ %3%4", loading_title,
+                self:getProviderLabel(), self.handler.model,
+                query_option.use_websearch ~= "none" and tool_notice or "")
         )
         local infomsg = InfoMessage:new{ icon = "book.opened", text = notify }
         UIManager:show(infomsg)
@@ -590,7 +617,7 @@ function Querier:query(message_history, title)
     end
     return res
 end
-function Querier:showStremDialog(res)
+function Querier:showStremDialog(res, request_title)
 
     self.user_interrupted = false -- reset the stream interrupted flag
     local streamDialog
@@ -622,7 +649,7 @@ function Querier:showStremDialog(res)
     local stream_mode_auto_scroll = self.settings:readSetting("stream_mode_auto_scroll", true)
 
     streamDialog = InputDialog:new{
-        title = _("AI is responding") ,
+        title = request_title or _("AI is responding"),
         description = ASUtils.bold_format(
             T("☁ %1/<b>%2</b>", self:getProviderLabel(), self.handler.model)
         ),
