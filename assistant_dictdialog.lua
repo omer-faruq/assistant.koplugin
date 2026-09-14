@@ -319,10 +319,8 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             -- Sentences are sent in chronological order from the book, which the LLM is instructed to consider
             context_text = table.concat(context_sentences, " ")
 
-            -- Truncate context to max_characters limit
-            if #context_text > max_characters then
-                context_text = context_text:sub(1, max_characters)
-            end
+            -- Truncate context to max_characters limit (byte-safe, no broken UTF-8)
+            context_text = ASUtils.truncateToHeadUtf8Safe(context_text, max_characters)
 
             context_sentence_count = #context_sentences
         else
@@ -438,9 +436,10 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     end
 
     local function createResultText(highlightedText, answer)
-        -- Limit prev_context to last 100 characters and next_context to first 100 characters
-        local prev_context_limited = string.sub(prev_context, -100)
-        local next_context_limited = string.sub(next_context, 1, 100)
+        -- Limit prev_context to last 100 bytes and next_context to first 100 bytes,
+        -- backing off to UTF-8 character boundaries so no partial glyph is shown
+        local prev_context_limited = ASUtils.truncateToTailUtf8Safe(prev_context, 100)
+        local next_context_limited = ASUtils.truncateToHeadUtf8Safe(next_context, 100)
         local normalized_answer = ASUtils.normalizeMarkdownHeadings(answer, 2, 6) or answer
         return T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, highlightedText, next_context_limited, normalized_answer)
     end

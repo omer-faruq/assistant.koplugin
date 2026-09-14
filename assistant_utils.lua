@@ -244,17 +244,41 @@ local function pageTextToString(t)
   return ""
 end
 
+-- Byte length implied by a UTF-8 lead byte; 0 marks a continuation byte (or an
+-- invalid lead byte). Used to keep truncation on character boundaries.
+local function utf8_char_len(byte)
+  if byte < 0x80 then return 1 end
+  if byte < 0xC0 then return 0 end
+  if byte < 0xE0 then return 2 end
+  if byte < 0xF0 then return 3 end
+  if byte < 0xF8 then return 4 end
+  return 0
+end
+
 function M.truncateToTailUtf8Safe(text, max_len)
   if #text <= max_len then return text end
-  text = text:sub(-max_len)
-  text = text:gsub("^[\128-\191]+", "")
-  return util.fixUtf8(text, "_")
+  -- A byte slice would start mid-character: advance over the leading
+  -- continuation bytes (at most 3) to the next character boundary.
+  local start = #text - max_len + 1
+  while start <= #text and utf8_char_len(text:byte(start)) == 0 do
+    start = start + 1
+  end
+  return text:sub(start)
 end
+
 function M.truncateToHeadUtf8Safe(text, max_len)
   if #text <= max_len then return text end
-  text = text:sub(1, max_len)
-  text = text:gsub("[\128-\191]+$", "")
-  return util.fixUtf8(text, "_")
+  -- A byte slice would end mid-character: walk back (at most 3 bytes) to the
+  -- last character boundary that fits within max_len.
+  local i = max_len
+  while i >= 1 do
+    local len = utf8_char_len(text:byte(i))
+    if len == 1 or (len > 1 and i + len - 1 <= max_len) then
+      return text:sub(1, i + len - 1)
+    end
+    i = i - 1
+  end
+  return ""
 end
 
 --[[
