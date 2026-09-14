@@ -4,26 +4,29 @@
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/omer-faruq/assistant.koplugin)
 
-Interact with AI language models (Claude, GPT-4, Gemini, DeepSeek, Ollama, etc.) while reading. Ask questions, get translations, summaries, explanations and more - all without leaving your book.
+Interact with AI language models while reading. Ask questions, get translations, summaries, explanations and more - all without leaving your book.
 
 <small>Originally forked from a deleted fork of AskGPT by zeeyado, then modified using WindSurf. That fork is now public and includes many updates: https://github.com/zeeyado/koassistant.koplugin </small>
 
 ## Features
 
-- **Multiple AI Providers**: Natively speaks the four mainstream protocols — OpenAI Chat Completions, OpenAI Responses, Anthropic Messages, and Google Gemini — so common platforms (OpenAI, Anthropic, Gemini, DeepSeek, OpenRouter, Ollama, Groq, Mistral, etc.) work out of the box.
+- **Multiple AI Providers**: Natively speaks the four mainstream protocols — OpenAI Chat Completions, OpenAI Responses, Anthropic Messages, and Google Gemini — so popular platforms such as DeepSeek, OpenRouter, Ollama, Groq, and Mistral work out of the box.
 - **Stream Mode**: Real-time responses from the API. Get the full LLM experience on e-ink devices.
 - **Web Search**: Let LLMs search the web for real and up-to-date information. Supports SerpAPI, Tavily, Exa, and SearXNG, with a per-question toggle.
 - **UI-Based Setup**: Add providers and models entirely from the UI, with built-in model browsing and connection testing.
-- **Built-in Prompts**:
-  - **Translation**: Instantly translate highlighted text to any language
-  - **Quick Actions**: One-click buttons for common tasks like summarizing or explaining
+- **Built-in Prompts** (from the highlight menu):
+  - **Translation**: Instantly translate highlighted text to any language.
+  - **Quick Actions**: One-click buttons for common tasks like summarizing, simplifying, or explaining.
   - **Dictionary**: Get book-aware explanations — meaning, synonyms, and usage in the current book. (thanks to [plateaukao](https://github.com/plateaukao))
-  - **Term X-Ray**: For single word or phrase highlights, get the meaning of it based on the previously mentioned places. (thanks to [Michael Kucek](https://github.com/michael-kucek))
-  - **Recap**: Catch up on a book you haven't opened for a while. (thanks to [jbhul](https://github.com/jbhul))
-  - **X-Ray**: A spoiler-free guide to characters, places, themes, and timeline up to your progress.
-- **Notebook & Quick Notes**: Save AI conversations and quick notes as Markdown, to the current book or a general notebook, with optional auto-save.
+  - **Term X-Ray**: Explain a highlighted word or phrase using its earlier mentions in the book. (thanks to [Michael Kucek](https://github.com/michael-kucek))
+- **Notebook & Quick Notes**: Save AI conversations and quick notes as Markdown, either to the book's notebook or to a general notebook — with optional auto-save and multiple general notebooks to organize your logs.
 - **Highlight Menu Presets**: Pin built-in prompts to the highlight popup for one-tap access (configurable).
-- **Book Insights**: Explore the whole book without highlighting — Book Summary & Recs, AI X-Ray, AI Recaps, and analysis or summaries built from your highlights and notes.
+- **Book Insights** (whole-book features, no highlight needed):
+  - **Book Summary & Recs**: Summary, author biography, historical context, and similar book recommendations.
+  - **X-Ray**: A spoiler-free guide to characters, places, themes, and timeline up to your progress.
+  - **Recap**: Catch up on a book you haven't opened for a while. (thanks to [jbhul](https://github.com/jbhul))
+  - **Highlight & Note Analysis**: Analysis of your highlights and notes from the book.
+  - **Summary Using Highlights & Notes**: A book summary built from your highlights and notes.
 - **Gesture Shortcuts**: Trigger Ask, Recap, and X-Ray by gesture, no highlighting needed. (thanks to [Jayphen](https://github.com/Jayphen))
 - **AI Dictionary**: Get book-aware definitions and synonyms for any word or phrase.
 - **l10n Support**: Supports every language available in KOReader.
@@ -31,7 +34,7 @@ Interact with AI language models (Claude, GPT-4, Gemini, DeepSeek, Ollama, etc.)
 ## Basic Requirements
 
 - **[Required]** [KOReader](https://github.com/koreader/koreader) installed on your device
-- **[Required]** API key from at least one LLM provider (Anthropic, OpenAI, Gemini, OpenRouter, DeepSeek, Ollama, etc.)
+- **[Required]** API key from at least one LLM provider
 - **[Recommended]** API key from a search provider (Tavily, SerpAPI, Exa, SearXNG, ...)
 
 ## Getting Started 
@@ -62,14 +65,14 @@ Typing a long API key on an e-ink keyboard is painful. The easy path:
 
 **Providers:**
 
-1. Go to `⚙ → AI Assistant → Settings → Provider API` and choose a preset (e.g. OpenAI, Gemini, Anthropic, DeepSeek, OpenRouter). For any other OpenAI-compatible endpoint, start from the `OpenAI` preset and update the URL.
+1. Go to `⚙ → AI Assistant → Settings → Provider API` and choose the preset matching your platform. For any other OpenAI-compatible endpoint, start from the `OpenAI` preset and update the URL.
 2. Fill in the dialog:
    - **Provider Name** — the label shown in menus
    - **Base URL** — pre-filled by the preset, editable
    - **API Key** — your provider key
    - **Model** — type it manually, or tap **Browse Models** to fetch the list online and pick one
 3. Tap **Test** to check the connection, then **OK** to save. The new provider becomes active right away.
-4. To switch providers later, go to `⚙ → AI Assistant → Settings → Providers and Models` and select one. Only providers added from the UI can be edited or deleted.
+4. To add another provider, go to `⚙ → AI Assistant → Settings → Provider API`. To switch providers or models, tap the provider entry (`Provider ▸ ...`) in `⚙ → AI Assistant` to open the **Providers and Models** dialog and select one. Only providers added from the UI can be edited or deleted.
 
 **Web search keys (SerpAPI / Tavily / Exa / SearXNG):** available both via UI configuration (`Settings → WebSearch API`) and via the configuration file. In the Ask dialog, use the `🌐 Web Search` checkbox to enable it per question.
 
@@ -81,29 +84,22 @@ For file-based setup (naming pattern, multiple profiles, extra examples), see [I
 
 #### Standard Usage
 
-1. Open any book in KOReader
-2. Highlight the text you want to analyze
-3. Tap the highlight and select "AI Assistant"
-4. Choose an action:
-   - **Ask**: Ask a specific question about the text
-   - **Custom Actions**: Use any prompts you've configured
-       - **Translate**: Convert text to your configured language
-5. **Additional Questions**: Keep asking follow-ups about the highlighted text using your custom prompts
+1. Open any book in KOReader.
+2. Highlight the text you want to analyze.
+3. Tap the highlight and select **AI Assistant**.
+4. In the dialog, either type a question and tap **Ask**, or tap one of the built-in prompt buttons (Translate, Summarize, Explain, Dictionary, Term X-Ray, and more) to run it on the selected text.
+5. **Follow-up questions**: keep asking about the same selection; the conversation stays in context.
+
+**Tip**: long-press a prompt button to pin it to the first-level highlight menu for one-tap access. Long-press it in the highlight menu to remove it.
 
 #### Using AI Translate with Gestures
 
-You can set up a long-press gesture to translate instantly, bypassing the highlight menu. This is done by overriding KOReader's built-in "Translate" action. (thanks to [Ilia Reutov](https://github.com/Agnesor))
+You can override KOReader's built-in "Translate" action so a long-press translates through the AI instantly, bypassing the highlight menu. (thanks to [Ilia Reutov](https://github.com/Agnesor))
 
-1.  **Enable the Override**:
-    *   Navigate to the top menu `Tools (🔧) > More tools`.
-    *   Find and enable **Use AI Assistant for 'Translate'**.
+1. Enable **Use AI Assistant for 'Translate'** under `⚙ → AI Assistant → Settings → Other Settings`.
+2. In KOReader's main menu, go to `Taps and gestures → Gesture manager`, select `Long-press on text`, and choose **Translate**.
 
-2.  **Set the Gesture**:
-    *   Go to KOReader's main menu -> `Taps and gestures` -> `Gesture manager`.
-    *   Select `Long-press on text`.
-    *   Choose **"Translate"** from the list of actions.
-
-Now, when you long-press a word, the AI translates it directly. To use the standard translation service again, simply uncheck the override option in the Assistant plugin's menu.
+Now a long-press translates the word directly. Uncheck the option to restore the standard translation service.
 
 #### Dictionary Output
 
