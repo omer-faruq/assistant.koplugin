@@ -402,6 +402,12 @@ local dict_tests = {
         assert.matches(p, "{language}")
     end),
 
+    test("build_dict_prompt: bolds the queried headword everywhere", function()
+        local p = M.build_dict_prompt(M.dict_presets.standard)
+        assert.matches(p, "%*%*Headword in Bold%*%*")
+        assert.matches(p, "%*%*{word}%*%*")
+    end),
+
     test("presetToMap: standard maps meaning+translation+synonyms", function()
         local map = M.presetToMap("standard")
         assert.equal(map.meaning, true)

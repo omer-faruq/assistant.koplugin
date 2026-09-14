@@ -721,6 +721,9 @@ M.build_dict_prompt = function(enabled_ids, opts)
     add(([[%d. **Language**: Render the entire response, including all headers and labels, in {language}.%s]])
         :format(n, has_example and " An example sentence may remain in the language being learned." or ""))
 
+    n = n + 1
+    add(([[%d. **Headword in Bold**: Act as a dictionary compiler. Every time the queried word or expression appears in your response, render that occurrence in **bold** (`**{word}**`), keeping the bold markers tight against it with no extra spaces.]]):format(n))
+
     if concise then
         n = n + 1
         add(([[%d. **Brevity**: Keep the entire response short. Use at most one or two sentences per section and do not add extra commentary.]]):format(n))
