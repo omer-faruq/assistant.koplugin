@@ -8,131 +8,10 @@ local T = require("ffi/util").template
 local Event = require("ui/event")
 local koutil = require("util")
 local ASUtils = require("assistant_utils")
+local Splitter = require("assistant_sentence_splitter")
+local TermXray = require("assistant_term_xray")
 local dict_prompts = require("assistant_prompts").assistant_prompts.dict
 local Prompts = require("assistant_prompts")
-
--- Expand context sentences to include surrounding sentences for pronouns and related narrative
--- This captures "he", "she", "they" and nearby actions that provide important context
--- OPTIMIZED: Now accepts pre-tokenized sentences and indices to avoid re-tokenization
--- all_sentences: array of all sentences in the text (pre-tokenized)
--- selected_indices: array of indices of selected sentences in all_sentences
--- context_window_before/after: number of surrounding sentences to include
-local function expandContextWithSurroundings(all_sentences, selected_indices, context_window_before, context_window_after)
-    if not selected_indices or #selected_indices == 0 then
-        return {}
-    end
-
-    context_window_before = context_window_before or 1  -- Include 1 sentence before
-    context_window_after = context_window_after or 1    -- Include 1 sentence after
-
-    -- Expand the indices to include surrounding context
-    local expanded_indices = {}
-    local expanded_set = {}
-
-    for _, idx in ipairs(selected_indices) do
-        -- Include context_window_before sentences before and context_window_after after
-        for neighbor_idx = math.max(1, idx - context_window_before), math.min(#all_sentences, idx + context_window_after) do
-            if not expanded_set[neighbor_idx] then
-                table.insert(expanded_indices, neighbor_idx)
-                expanded_set[neighbor_idx] = true
-            end
-        end
-    end
-
-    -- Sort by document order
-    table.sort(expanded_indices)
-
-    -- Build the expanded context from the expanded indices
-    local expanded_sentences = {}
-    for _, idx in ipairs(expanded_indices) do
-        table.insert(expanded_sentences, all_sentences[idx])
-    end
-
-    return expanded_sentences
-end
-
--- Filter text to find sentences containing the highlighted term with surrounding context
-local function filterTextForTerm(text, highlighted_term, language_code, assistant)
-    if not text or not highlighted_term or highlighted_term == "" then
-        return nil
-    end
-
-    local LexRankLanguages = require("assistant_lexrank_languages")
-
-    -- Simple sentence splitting (same logic as LexRank)
-    local sentences = {}
-    local sentence_start = 1
-
-    for i = 1, #text do
-        local char = text:sub(i, i)
-
-        if char:match("[.!?;]") then
-            local trimmed = text:sub(sentence_start, i):gsub("^%s*(.-)%s*$", "%1")
-            if #trimmed > 10 then -- Minimum sentence length
-                table.insert(sentences, trimmed)
-            end
-            sentence_start = i + 1
-        end
-    end
-
-    -- Add remaining text as sentence if it's long enough
-    local trimmed = text:sub(sentence_start):gsub("^%s*(.-)%s*$", "%1")
-    if #trimmed > 10 then
-        table.insert(sentences, trimmed)
-    end
-
-    -- Find sentences containing the term (case-insensitive)
-    local matching_indices = {}
-    local term_lower = highlighted_term:lower()
-
-    for i, sentence in ipairs(sentences) do
-        if sentence:lower():find(term_lower, 1, true) then -- true = plain text search
-            table.insert(matching_indices, i)
-        end
-    end
-
-    -- If no direct matches, try language-aware stemming
-    if #matching_indices == 0 then
-        local stemmed_term = LexRankLanguages.stem_word(highlighted_term, language_code)
-        if stemmed_term ~= term_lower then -- Only if stemming actually changed the word
-            for i, sentence in ipairs(sentences) do
-                if sentence:lower():find(stemmed_term, 1, true) then
-                    table.insert(matching_indices, i)
-                end
-            end
-        end
-    end
-
-    -- If still no matches, return nil (will trigger fallback)
-    if #matching_indices == 0 then
-        return nil
-    end
-
-    -- Include larger context sentences around matches for better coverage
-    local context_window = assistant.config:getFeature("term_filter_context_window", 5) -- sentences before and after
-    local selected_indices = {}
-
-    for _, idx in ipairs(matching_indices) do
-        for context_idx = math.max(1, idx - context_window), math.min(#sentences, idx + context_window) do
-            selected_indices[context_idx] = true
-        end
-    end
-
-    -- Build filtered text from selected sentences
-    local filtered_sentences = {}
-    for i = 1, #sentences do
-        if selected_indices[i] then
-            table.insert(filtered_sentences, sentences[i])
-        end
-    end
-
-    -- Require minimum amount of text to make LexRank worthwhile
-    if #filtered_sentences < 3 then
-        return nil
-    end
-
-    return table.concat(filtered_sentences, " ")
-end
 
 -- Original book text immediately before/after the selected word. Shared by the
 -- Dictionary excerpt and Term X-Ray so both can show and send the term's own
@@ -275,121 +154,56 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     local prev_context, next_context = extractSelectedWordContext(ui, highlightedText)
 
     if prompt_type == "term_xray" then
-        -- Show loading dialog immediately to avoid app appearing frozen during LexRank processing
+        -- Show the loading dialog immediately to avoid the app appearing frozen during the anchor scan
         local context_loading_msg = InfoMessage:new{
             icon = "book.opened",
             text = ASUtils.bold_format(_("<b>Analyzing book context for Term X-Ray...</b>")),
         }
-        UIManager:show(context_loading_msg)
-        UIManager:forceRePaint()  -- Force immediate display before blocking LexRank operation
 
-        -- For term_xray, use LexRank to extract relevant context from book text
-        -- OPTIMIZED: Single LexRank call with score-based filtering (instead of 3 separate calls)
-        local LexRank = require("assistant_lexrank")
-        local LexRankLanguages = require("assistant_lexrank_languages")
+        -- The whole blocking analysis runs under pcall so a malformed book
+        -- never leaves the loading dialog on screen.
+        local analysis_ok, analysis_err = pcall(function()
+            UIManager:show(context_loading_msg)
+            UIManager:forceRePaint()  -- Force immediate display before blocking the anchor scan
 
-        -- Get book text up to current reading position
-        local book_text = ASUtils.extractBookTextForAnalysis(assistant)
+            -- Include the page the reader is on (and a couple ahead): the
+            -- extraction otherwise stops at the top of the current view, which
+            -- would exclude the selected term's own occurrence.
+            local book_text = ASUtils.extractBookTextForAnalysis(assistant, 2)
 
-        if book_text and #book_text > 100 then
-            -- Tokenize sentences once (will be reused for all filtering and context expansion)
-            local language_module = LexRankLanguages.get_language_module(dict_language)
-            local all_sentences = {}
-            local sentence_start = 1
-            local delim_pattern = "[" .. table.concat(language_module.sentence_delimiters, "") .. "]"
-
-            for i = 1, #book_text do
-                local char = book_text:sub(i, i)
-
-                if char:match(delim_pattern) then
-                    local trimmed = book_text:sub(sentence_start, i):gsub("^%s*(.-)%s*$", "%1")
-                    if #trimmed >= language_module.min_sentence_length then
-                        table.insert(all_sentences, trimmed)
-                    end
-                    sentence_start = i + 1
-                end
+            if book_text and #book_text > 100 then
+                -- Detect the book's own language for sentence splitting. The
+                -- configured dict_language is the translation target, not the
+                -- book language, so it must not override detection; English is
+                -- the safe fallback (ASCII sentence punctuation covers Latin
+                -- scripts, and CJK is detected from the text itself).
+                local effective_language = Splitter.detect_language_code(book_text, "en")
+                local all_sentences = Splitter.tokenize_sentences(book_text, effective_language)
+                local term = ASUtils.strip_selection_punctuation(highlightedText)
+                local term_indices = TermXray.find_term_indices(all_sentences, term)
+                local max_characters = assistant.config:getFeature("term_xray_max_characters", 60000)
+                local built = TermXray.build_anchor_context(all_sentences, term_indices, {
+                    sentences_before = assistant.config:getFeature("term_xray_context_sentences_before", 2),
+                    sentences_after = assistant.config:getFeature("term_xray_context_sentences_after", 2),
+                    max_occurrences = assistant.config:getFeature("term_xray_max_occurrences", 40),
+                    max_characters = max_characters,
+                })
+                context_text = built.text
+                context_sentence_count = built.sentence_count
+            else
+                -- Fallback to standard context if book text is too short
+                context_text = prev_context .. highlightedText .. next_context
             end
+        end)
 
-            -- Add remaining text as sentence if it's long enough
-            local trimmed = book_text:sub(sentence_start):gsub("^%s*(.-)%s*$", "%1")
-            if #trimmed >= language_module.min_sentence_length then
-                table.insert(all_sentences, trimmed)
-            end
-
-            -- OPTIMIZED: Single LexRank call with return_with_metadata=true
-            -- Run with the lowest threshold to get all candidates with scores
-            local threshold_very_inclusive = assistant.config:getFeature("lexrank_threshold_very_inclusive", 0.005)
-            local all_candidates = LexRank.rank_sentences(book_text, threshold_very_inclusive, 0.1, dict_language, assistant.config:getFeatures(), true)
-
-            -- Filter candidates at different levels using their scores (no re-tokenization needed!)
-            local max_characters = assistant.config:getFeature("term_xray_max_characters", 100000)
-            local selected_indices = {}
-            local seen_indices = {}
-
-            if all_candidates and #all_candidates > 0 then
-                -- Calculate score threshold for term-specific sentences
-                local threshold_term_specific = assistant.config:getFeature("lexrank_threshold_term_specific", 0.01)
-                local threshold_general = assistant.config:getFeature("lexrank_threshold_general", 0.01)
-
-                -- Stage 1: Find term-specific matches and add high-scoring sentence around them
-                local filtered_text = filterTextForTerm(book_text, highlightedText, dict_language, assistant)
-                if filtered_text and #filtered_text > 100 then
-                    for _, candidate in ipairs(all_candidates) do
-                        -- Check if sentence appears in filtered (term-specific) text
-                        if filtered_text:find(candidate.sentence, 1, true) and candidate.score >= threshold_term_specific then
-                            if not seen_indices[candidate.index] then
-                                table.insert(selected_indices, candidate.index)
-                                seen_indices[candidate.index] = true
-                            end
-                        end
-                    end
-                end
-
-                -- Stage 2: Add high-scoring general context sentences
-                for _, candidate in ipairs(all_candidates) do
-                    if not seen_indices[candidate.index] and candidate.score >= threshold_general then
-                        table.insert(selected_indices, candidate.index)
-                        seen_indices[candidate.index] = true
-                    end
-                end
-
-                -- Stage 3: Add remaining candidates for comprehensive coverage
-                for _, candidate in ipairs(all_candidates) do
-                    if not seen_indices[candidate.index] then
-                        table.insert(selected_indices, candidate.index)
-                        seen_indices[candidate.index] = true
-                    end
-                end
-            end
-
-            -- Sort indices to maintain document order
-            table.sort(selected_indices)
-
-            -- OPTIMIZED: Expand context using indices (no re-tokenization!)
-            local context_before = assistant.config:getFeature("term_xray_context_sentences_before", 5)
-            local context_after = assistant.config:getFeature("term_xray_context_sentences_after", 5)
-            local context_sentences = expandContextWithSurroundings(
-                all_sentences,
-                selected_indices,
-                context_before,
-                context_after
-            )
-
-            -- Concatenate context sentences without numbering
-            -- Sentences are sent in chronological order from the book, which the LLM is instructed to consider
-            context_text = table.concat(context_sentences, " ")
-
-            -- Truncate context to max_characters limit (byte-safe, no broken UTF-8)
-            context_text = ASUtils.truncateToHeadUtf8Safe(context_text, max_characters)
-
-            context_sentence_count = #context_sentences
-        else
-            -- Fallback to standard context if book text is too short
-            context_text = prev_context .. highlightedText .. next_context
-        end
-
-        -- Close the context loading dialog (LexRank processing is complete)
+        -- Always dismiss the loading dialog, even if analysis failed.
         UIManager:close(context_loading_msg)
+
+        if not analysis_ok then
+            logger.warn("Term X-Ray context analysis failed: " .. tostring(analysis_err))
+            context_text = prev_context .. highlightedText .. next_context
+            context_sentence_count = 0
+        end
     else
         -- Standard dictionary context extraction
         context_text = prev_context .. highlightedText .. next_context
@@ -405,7 +219,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     if prompt_type == "term_xray" then
         local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
         user_prompt = term_xray_prompts.user_prompt
-        -- Prepend the term's immediate surroundings to the LexRank-selected
+        -- Prepend the term's immediate surroundings to the anchor-selected
         -- context so the model always sees its own sentence.
         local context_parts = {}
         if prev_context ~= "" or next_context ~= "" then

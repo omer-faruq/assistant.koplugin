@@ -1,6 +1,6 @@
 # Architecture
 
-KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses API, translations, summaries, X-Ray/Recap, LexRank Term X-Ray, web-search tools, quick notes, custom prompts.
+KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses API, translations, summaries, X-Ray/Recap, Term X-Ray (anchor-based), web-search tools, quick notes, custom prompts.
 
 ## Request flow
 
@@ -38,9 +38,9 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 
 `assistant_provider_registry.lua` (`Registry`) and `assistant_search_registry.lua` (`SearchRegistry`) manage UI-configured providers and web-search tools stored as JSON in settings. Lifecycle, storage keys, validation and config rules: **`docs/REGISTRIES.md`**.
 
-## LexRank (Term X-Ray)
+## Term X-Ray (anchor-based)
 
-`assistant_lexrank.lua` does TF-IDF-weighted LexRank sentence ranking (tokenize → similarity matrix → PageRank → score-based selection with entity/position boosting); its tunables (`lexrank_max_sentences`, etc.) live **here**. Per-language modules in `assistant_lexrank_languages.lua` (`en`,`es`,`fr`,`de`,`tr`; fallback en) — read `docs/LEXRANK_LANGUAGES.md` before editing. Display thresholds (multi-level filtering, context expansion) live in `assistant_dictdialog.lua`, which consumes `rank_sentences`.
+`assistant_sentence_splitter.lua` splits book text into sentences using per-language delimiter sets (`en`/`es`/`fr`/`de`/`tr` use ASCII `. ! ? ;`; `zh`/`ja`/`ko` also add the full-width `。！？；…`), each sentence keeping its trailing delimiter. It also exposes script-aware `detect_language_code` (kana → Japanese, Hangul → Korean, otherwise sufficiently CJK → Chinese; English fallback), plus `get_language_module`. There is no ranking. `assistant_term_xray.lua` finds every occurrence of a term with `find_term_indices` (case-insensitive plain match, one retry with edge punctuation stripped) and assembles the bounded context with `build_anchor_context`: ±before/after sentence windows around each anchor, up to `max_occurrences` anchors sampled evenly across the whole book (first and last mention always included), assembled in document order under a character budget that skips oversized sentences. `assistant_dictdialog.lua` wires the two together.
 
 ## UI / Dialogs
 

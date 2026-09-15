@@ -85,8 +85,9 @@ end
 -- utils.PLUGIN_DIR during gettext's load sees a usable value.
 local _ = require("assistant_gettext")
 
-function M.extractBookTextForAnalysis(assistant)
+function M.extractBookTextForAnalysis(assistant, pages_ahead)
     local ui = assistant and assistant.ui
+    pages_ahead = pages_ahead or 0
     local book_text = nil
       if not ui or not ui.document or not ui.document.info then return nil end
       if not ui.document.info.has_pages then
@@ -95,7 +96,18 @@ function M.extractBookTextForAnalysis(assistant)
           ui.document:gotoPos(0)
           local start_xp = ui.document:getXPointer()
           ui.document:gotoXPointer(current_xp)
-          book_text = ui.document:getTextFromXPointers(start_xp, current_xp) or ""
+          -- getXPointer() is the top of the current view, so the range would end
+          -- before the page the reader is on. Extend `pages_ahead` pages so the
+          -- visible page (and the text the reader selected there) is included.
+          local end_xp = current_xp
+          if pages_ahead > 0 then
+              local current_page = ui.document:getPageFromXPointer(current_xp)
+              if current_page then
+                  local ahead_xp = ui.document:getPageXPointer(current_page + pages_ahead)
+                  if ahead_xp then end_xp = ahead_xp end
+              end
+          end
+          book_text = ui.document:getTextFromXPointers(start_xp, end_xp) or ""
           local max_text_length_for_analysis = assistant.config:getFeature("max_text_length_for_analysis", 100000)
           if #book_text > max_text_length_for_analysis then
               book_text = M.truncateToTailUtf8Safe(book_text, max_text_length_for_analysis)
@@ -106,9 +118,10 @@ function M.extractBookTextForAnalysis(assistant)
         local total_pages = ui.document:getPageCount()
         local max_page_size_for_analysis = assistant.config:getFeature("max_page_size_for_analysis", 250)
         local start_page = math.max(1, current_page - max_page_size_for_analysis)
+        local end_page = math.min(total_pages, current_page + pages_ahead)
         local buf = shared_buf
         buf:reset()
-        for page = start_page, current_page do
+        for page = start_page, end_page do
             local page_text = pageTextToString(ui.document:getPageText(page))
             buf:put(page_text, "\n")
         end

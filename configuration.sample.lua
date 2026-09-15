@@ -160,60 +160,27 @@ local CONFIGURATION = {
         max_page_size_for_analysis = 250,      -- maximum page size to be used on xray-recap-book analyzes (for page-based documents, ex: PDF)
         max_page_context_chars = 6000,         -- max characters of nearby-page text sent as context when "Add Nearby Page Text as Context" is enabled
 
-        -- Term X-Ray context expansion settings (for analyzing characters, objects, places, concepts, magic)
-        -- NOTE: The following settings are optimized to provide ~40k input tokens per term x-ray lookup, using ~10% of a 400k token context window.
-        -- This allows rich analysis of characters, magic systems, plot elements, and relationships in fantasy books.
-        term_xray_context_sentences_before = 5, -- Number of sentences to include BEFORE matching sentences for context (captures descriptions, setup)
-        term_xray_context_sentences_after = 5,  -- Number of sentences to include AFTER matching sentences for context (captures effects, consequences)
-        -- These settings help capture pronouns (he/she/it/that) and narrative context that the LLM needs for complete analysis
-        -- Increase to 3+ for complex magic systems or concepts; decrease to 1 for quick summaries
-        -- Example: For "the Ring", before context captures "The Dark Lord had created..." and after captures "...His mind began to cloud"
+        -- Term X-Ray is occurrence-anchored (keyword-in-context): every mention of
+        -- the searched term is a sentence-level anchor and the context is the
+        -- sentences immediately around those anchors. There is no ranking.
+        term_xray_context_sentences_before = 2, -- Number of sentences to include BEFORE each term anchor (captures descriptions, setup)
+        term_xray_context_sentences_after = 2,  -- Number of sentences to include AFTER each term anchor (captures effects, consequences)
+        -- This captures pronouns (he/she/it/that) and narrative context the LLM needs.
+        -- Increase for complex magic systems or concepts; decrease to 1 for quick summaries
+        -- Example: for "the Ring", the before context captures "The Dark Lord had created..." and the after captures "...His mind began to cloud"
 
-        -- LexRank algorithm configuration for intelligent context selection
-        -- LexRank scores sentences based on importance and relevance to identify key content.
-        -- Suggested values: 1000-2000 (process quickly), 2500 (recommended), 5000+ (exhaustive analysis)
-        lexrank_max_sentences = 2500,
+        -- Maximum number of occurrence windows kept. When a term occurs more often,
+        -- occurrences are sampled evenly across the whole book, always including the
+        -- first and last mention. Lower it to cap context for very common terms.
+        term_xray_max_occurrences = 40,
 
-        -- What percentage of high-ranking sentences should be selected? Higher = more inclusive.
-        -- 0.70 (70%): Conservative, quality-focused sentences only
-        -- 0.90 (90%): Balanced, includes most important content
-        -- 0.99 (99%): Comprehensive, nearly all ranked content included
-        lexrank_min_selection_percentage = 0.99,
-
-        -- Upper bound on sentence selection. Prevents over-selection in smaller texts.
-        -- 0.85 (85%): Conservative approach, focuses on best matches
-        -- 1.0 (100%): Includes all available context material
-        lexrank_max_selection_percentage = 1.0,
-
-        -- Relevance threshold for sentences containing the searched term. Lower = more inclusive.
-        -- 0.05: Strict filtering, only very relevant term matches
-        -- 0.01: Inclusive, captures weaker term relevance
-        -- 0.005: Exhaustive, includes tangential mentions
-        lexrank_threshold_term_specific = 0.01,
-
-        -- Relevance threshold for general context sentences. Lower = more inclusive.
-        -- 0.05: Strict filtering, high-relevance background context only
-        -- 0.01: Balanced, includes good supporting content
-        -- 0.005: Comprehensive, captures all contextual material
-        lexrank_threshold_general = 0.01,
-
-        -- Fallback threshold when not enough sentences are found. Very permissive.
-        -- 0.02: More selective fallback
-        -- 0.005: Very inclusive fallback
-        lexrank_threshold_very_inclusive = 0.005,
-
-        -- Term-specific context settings
-        -- How many surrounding sentences to include around term mentions?
-        -- 5: Minimal context (focuses on term itself)
-        -- 10: Moderate context (includes narrative details)
-        -- 15+: Extensive context (shows full scene/paragraph)
-        term_filter_context_window = 15,
-
-        -- Hard character limit for total context sent to LLM. Controls token usage.
-        -- 50000 chars (~12k tokens): Quick lookups, lighter processing
-        -- 100000 chars (~25k tokens): Balanced context for rich analysis (recommended)
-        -- 200000 chars (~50k tokens): Comprehensive context, uses more of context window
-        term_xray_max_characters = 100000,
+        -- Hard character limit for the total context sent to the LLM. Controls token usage.
+        -- A sentence that would cross the limit is skipped (not a hard stop), so coverage
+        -- later in the book still survives an oversized sentence.
+        -- 30000 chars: Recommended for CJK text (each character carries more meaning)
+        -- 60000 chars: Balanced context for rich analysis (recommended)
+        -- 120000 chars: Comprehensive context, uses more of the context window
+        term_xray_max_characters = 60000,
 
         -- These are prompts defined in `assistant_prompts.lua`, can be overriden here.
         -- each prompt shown as a button in the main dialog.

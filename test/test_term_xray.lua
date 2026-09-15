@@ -1,0 +1,190 @@
+-- test_term_xray.lua
+-- Tests for the occurrence-anchored Term X-Ray extractor:
+--   * find_term_indices: case-insensitive, punctuation-stripped fallback
+--   * build_anchor_context: anchor windows, occurrence sampling, document order
+--     and the skip-not-stop character budget
+--
+-- The CJK case guards the original bug: a byte-wise sentence scanner raised a
+-- comparison error on Chinese text with no ASCII punctuation.
+local helper = require("test.helper")
+local assert = helper.assert
+local TermXray = require("assistant_term_xray")
+local Splitter = require("assistant_sentence_splitter")
+
+local function test(name, fn)
+    return { name = name, fn = fn }
+end
+
+-- Sentences are single tokens ("s1".."sN") so a word count equals the number of
+-- concatenated sentences.
+local function make_sentences(count, length)
+    local sentences = {}
+    for i = 1, count do
+        local marker = "s" .. i
+        sentences[i] = marker .. string.rep("x", math.max(0, length - #marker))
+    end
+    return sentences
+end
+
+local function pad(marker, length)
+    return marker .. string.rep("x", length - #marker)
+end
+
+local tests = {
+    test("find_term_indices: case-insensitive, ascending", function()
+        local sentences = { "The Ring was lost.", "It glowed softly.", "Then the RING returned." }
+        assert.equal(table.concat(TermXray.find_term_indices(sentences, "ring"), ","), "1,3")
+        assert.equal(table.concat(TermXray.find_term_indices(sentences, "RING"), ","), "1,3")
+    end),
+
+    test("find_term_indices: stripped-punctuation fallback", function()
+        -- "word." is absent verbatim; the stripped term "word" matches.
+        local sentences = { "A word here.", "Nothing relevant at all." }
+        assert.equal(table.concat(TermXray.find_term_indices(sentences, "word."), ","), "1")
+    end),
+
+    test("find_term_indices: absent term yields an empty list", function()
+        local sentences = { "alpha beta", "gamma delta" }
+        assert.equal(#TermXray.find_term_indices(sentences, "zebra"), 0)
+    end),
+
+    test("build_anchor_context: windows expand around anchors in document order", function()
+        local sentences = make_sentences(10, 20)
+        local built = TermXray.build_anchor_context(sentences, { 5 }, {
+            sentences_before = 2,
+            sentences_after = 2,
+        })
+        assert.equal(built.text, table.concat(
+            { sentences[3], sentences[4], sentences[5], sentences[6], sentences[7] }, " "))
+        assert.equal(built.sentence_count, 5)
+        assert.equal(built.sentence_count, select(2, built.text:gsub("%S+", "")))
+    end),
+
+    test("build_anchor_context: budget skips an oversized middle sentence", function()
+        local sentences = {
+            pad("A1", 100),
+            pad("B2", 3000), -- overflows the 1000-char budget
+            pad("C3", 100),
+            pad("D4", 100),
+            pad("E5", 100),
+            pad("F6", 100),
+            pad("G7", 100),
+            pad("H8", 100),
+        }
+        local built = TermXray.build_anchor_context(sentences, { 4 }, {
+            sentences_before = 3,
+            sentences_after = 4,
+            max_characters = 1000,
+        })
+        assert.isTrue(#built.text <= 1000, "context must respect max_characters")
+        assert.equal(built.sentence_count, 7)
+        assert.isTrue(built.text:find("H8", 1, true) ~= nil, "late sentences must survive the skip")
+        assert.equal(built.text:find("B2", 1, true), nil, "the oversized sentence must be skipped")
+    end),
+
+    test("build_anchor_context: samples exactly max_occurrences across the whole list", function()
+        local sentences = make_sentences(30, 20)
+        local term_indices = {}
+        for i = 1, 30 do
+            term_indices[i] = i
+        end
+        local built = TermXray.build_anchor_context(sentences, term_indices, {
+            sentences_before = 0,
+            sentences_after = 0,
+            max_occurrences = 5,
+        })
+        -- Even spacing over 30 items picks 1, 8, 15, 22 and 30.
+        assert.equal(built.text, table.concat(
+            { sentences[1], sentences[8], sentences[15], sentences[22], sentences[30] }, " "))
+        assert.equal(built.sentence_count, 5)
+        assert.equal(built.text:find(sentences[1] .. " ", 1, true), 1, "the first occurrence must be included")
+        assert.equal(built.text:sub(-#sentences[30]), sentences[30], "the last occurrence must be included")
+    end),
+
+    test("build_anchor_context: max_occurrences of 1 keeps only the first occurrence", function()
+        local sentences = make_sentences(10, 20)
+        local term_indices = {}
+        for i = 1, 10 do
+            term_indices[i] = i
+        end
+        local built = TermXray.build_anchor_context(sentences, term_indices, {
+            sentences_before = 0,
+            sentences_after = 0,
+            max_occurrences = 1,
+        })
+        assert.equal(built.text, sentences[1])
+        assert.equal(built.sentence_count, 1)
+    end),
+
+    test("build_anchor_context: empty inputs produce empty text without crashing", function()
+        local empty_indices = TermXray.build_anchor_context({ "one", "two" }, {}, {})
+        assert.equal(empty_indices.text, "")
+        assert.equal(empty_indices.sentence_count, 0)
+
+        local nil_indices = TermXray.build_anchor_context({ "one", "two" }, nil, {})
+        assert.equal(nil_indices.text, "")
+        assert.equal(nil_indices.sentence_count, 0)
+
+        local no_sentences = TermXray.build_anchor_context({}, { 1 }, {})
+        assert.equal(no_sentences.text, "")
+        assert.equal(no_sentences.sentence_count, 0)
+
+        local nil_sentences = TermXray.build_anchor_context(nil, { 1 }, {})
+        assert.equal(nil_sentences.text, "")
+        assert.equal(nil_sentences.sentence_count, 0)
+    end),
+
+    test("CJK end-to-end: split, find and build without an ASCII-punctuation error", function()
+        local book = "张伟走进那座古老而安静的图书馆。馆内藏书丰富而珍贵。"
+            .. "他寻找一本关于星空的稀有书籍。窗外阳光明媚照在书架上。"
+
+        local effective = Splitter.detect_language_code(book, "en")
+        assert.isTrue(type(effective) == "string" and effective ~= "",
+            "language detection must return a language code")
+
+        local all_sentences = Splitter.tokenize_sentences(book, effective)
+        assert.isTrue(#all_sentences > 0, "the CJK tokenizer must produce sentences")
+
+        local term = "图书馆"
+        local term_indices = TermXray.find_term_indices(all_sentences, term)
+        assert.isTrue(#term_indices >= 1, "the term must be found in the CJK text")
+
+        local built = TermXray.build_anchor_context(all_sentences, term_indices, {
+            max_characters = 60000,
+        })
+        assert.matches(built.text, term)
+        assert.isTrue(built.sentence_count >= 1, "at least the anchor sentence must be emitted")
+        assert.isTrue(#built.text <= 60000, "context must respect max_characters")
+    end),
+
+    test("detect_language_code: long CJK prefix does not error", function()
+        local book = string.rep("张伟走进那座古老而安静的图书馆。", 300) -- > 4000 bytes
+        assert.isTrue(#book > 4000, "fixture must exceed the sample bound")
+        assert.equal(Splitter.detect_language_code(book, "en"), "zh",
+            "a long Chinese sample must be detected as zh")
+
+        local english = string.rep("The quick brown fox jumps over the lazy dog. ", 200)
+        assert.equal(Splitter.detect_language_code(english, "en"), "en",
+            "a long English sample must stay en")
+    end),
+
+    test("find_term_indices: phrase matches across line breaks and doubled spaces", function()
+        local sentences = {
+            "He walked down Vasil Levski\nBoulevard in the rain.",
+            "Vasil  Levski   Boulevard was busy that morning.",
+            "Nothing relevant here.",
+        }
+        local indices = TermXray.find_term_indices(sentences, "Vasil Levski Boulevard")
+        assert.equal(#indices, 2, "whitespace differences must not prevent matching")
+        assert.equal(indices[1], 1)
+        assert.equal(indices[2], 2)
+    end),
+
+    test("find_term_indices: non-breaking spaces match regular spaces", function()
+        local sentences = { "The office on Vasil\194\160Levski\194\160Boulevard was closed." }
+        local indices = TermXray.find_term_indices(sentences, "Vasil Levski Boulevard")
+        assert.equal(#indices, 1, "non-breaking spaces must not prevent matching")
+    end),
+}
+
+return helper.runTests("term_xray", tests)
