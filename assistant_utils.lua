@@ -281,6 +281,35 @@ function M.truncateToHeadUtf8Safe(text, max_len)
   return ""
 end
 
+-- Marks a word selection can pick up at its edges but that are not part of the
+-- word. ASCII punctuation/whitespace is matched by [%p%s]; these are the common
+-- non-ASCII marks (general punctuation, CJK and fullwidth forms).
+local EDGE_PUNCT = {}
+for ch in ("…·，。、；：！？「」『』（）【】《》〈〉“”‘’«»"):gmatch(util.UTF8_CHAR_PATTERN) do
+  EDGE_PUNCT[ch] = true
+end
+
+-- Strip whitespace/punctuation a selection picked up at its edges
+-- ("Docile." -> "Docile", "他说。" -> "他说"). Only the edges are trimmed, so
+-- internal punctuation ("don't", "well-known") is preserved. Returns the text
+-- unchanged when it is not a string or nothing but edge marks remains.
+function M.strip_selection_punctuation(text)
+  if type(text) ~= "string" then return text end
+  local chars = {}
+  for ch in text:gmatch(util.UTF8_CHAR_PATTERN) do
+    chars[#chars + 1] = ch
+  end
+  local first, last = 1, #chars
+  while first <= last and (EDGE_PUNCT[chars[first]] or chars[first]:match("[%p%s]")) do
+    first = first + 1
+  end
+  while last >= first and (EDGE_PUNCT[chars[last]] or chars[last]:match("[%p%s]")) do
+    last = last - 1
+  end
+  if first > last then return text end
+  return table.concat(chars, "", first, last)
+end
+
 --[[
   Pure budget-assembly helper for nearby-page context.
 

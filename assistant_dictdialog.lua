@@ -418,7 +418,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             content = string.gsub(user_prompt, "{([%w_]+)}", {
                 language = dict_language,
                 context = context_content,
-                word = highlightedText,
+                word = ASUtils.strip_selection_punctuation(highlightedText),
                 title = book_title,
                 author = book_author,
             }),
