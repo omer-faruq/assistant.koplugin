@@ -439,7 +439,9 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         local prev_context_limited = ASUtils.truncateToTailUtf8Safe(prev_context, 100)
         local next_context_limited = ASUtils.truncateToHeadUtf8Safe(next_context, 100)
         local normalized_answer = ASUtils.normalizeMarkdownHeadings(answer, 2, 6) or answer
-        return T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, highlightedText, next_context_limited, normalized_answer)
+        -- Normalize the selection's whitespace before bolding it: a leading or
+        -- trailing space in "** word **" stops Markdown from rendering bold.
+        return T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, koutil.cleanupSelectedText(highlightedText), next_context_limited, normalized_answer)
     end
 
     local result = createResultText(highlightedText, ret)
