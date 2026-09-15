@@ -134,6 +134,62 @@ local function filterTextForTerm(text, highlighted_term, language_code, assistan
     return table.concat(filtered_sentences, " ")
 end
 
+-- Original book text immediately before/after the selected word. Shared by the
+-- Dictionary excerpt and Term X-Ray so both can show and send the term's own
+-- sentence. Returns "", "" when the selection API is unavailable.
+local function extractSelectedWordContext(ui, highlightedText)
+    local prev_context, next_context = "", ""
+    if not (ui.highlight and ui.highlight.getSelectedWordContext) then
+        return prev_context, next_context
+    end
+
+    -- Helper function to count words in a string.
+    local function countWords(str)
+        if not str or str == "" then return 0 end
+        local _, count = string.gsub(str, "%S+", "")
+        return count
+    end
+
+    local use_fallback_context = true
+    -- Try to get the full sentence containing the word. If `getSelectedSentence()` doesn't exist,
+    -- the code will gracefully use the fallback method.
+    if ui.highlight.getSelectedSentence then
+        local success, sentence = pcall(function() return ui.highlight:getSelectedSentence() end)
+        if success and sentence then
+            -- Find the selected word in the sentence to split it.
+            local word_start, word_end = string.find(sentence, highlightedText, 1, true)
+            if word_start then
+                local prev_part = string.sub(sentence, 1, word_start - 1)
+                local next_part = string.sub(sentence, word_end + 1)
+
+                -- Check if the sentence context is too short on both sides.
+                if countWords(prev_part) < 50 and countWords(next_part) < 50 then
+                    -- The sentence is short, so we'll use the fallback to get more context.
+                    use_fallback_context = true
+                else
+                    -- The sentence provides enough context, so we'll use it.
+                    prev_context = prev_part
+                    next_context = next_part
+                    use_fallback_context = false
+                end
+            end
+        end
+    end
+
+    -- Use the fallback method (word count) if we couldn't get a good sentence context.
+    if use_fallback_context then
+        local success, prev, next = pcall(function()
+            return ui.highlight:getSelectedWordContext(50)
+        end)
+        if success then
+            prev_context = prev or ""
+            next_context = next or ""
+        end
+    end
+
+    return prev_context, next_context
+end
+
 local function showDictionaryDialog(assistant, highlightedText, message_history, prompt_type)
     local Querier = assistant.querier
     local ui = assistant.ui
@@ -209,10 +265,14 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     end
 
     -- Get context for the selected word
-    local prev_context, next_context = "", ""
     local context_text = ""
     local context_sentence_count = 0
     local dict_language = assistant.settings:readSetting("dict_language") or assistant.ui_language
+
+    -- Original text around the selected word, shared by both prompt types: the
+    -- Dictionary builds its excerpt from it and Term X-Ray feeds it to the
+    -- model so the term's own sentence is always present.
+    local prev_context, next_context = extractSelectedWordContext(ui, highlightedText)
 
     if prompt_type == "term_xray" then
         -- Show loading dialog immediately to avoid app appearing frozen during LexRank processing
@@ -332,51 +392,6 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         UIManager:close(context_loading_msg)
     else
         -- Standard dictionary context extraction
-        if ui.highlight and ui.highlight.getSelectedWordContext then
-            -- Helper function to count words in a string.
-            local function countWords(str)
-                if not str or str == "" then return 0 end
-                local _, count = string.gsub(str, "%S+", "")
-                return count
-            end
-
-            local use_fallback_context = true
-            -- Try to get the full sentence containing the word. If `getSelectedSentence()` doesn't exist,
-            -- the code will gracefully use the fallback method.
-            if ui.highlight.getSelectedSentence then
-                local success, sentence = pcall(function() return ui.highlight:getSelectedSentence() end)
-                if success and sentence then
-                    -- Find the selected word in the sentence to split it.
-                    local word_start, word_end = string.find(sentence, highlightedText, 1, true)
-                    if word_start then
-                        local prev_part = string.sub(sentence, 1, word_start - 1)
-                        local next_part = string.sub(sentence, word_end + 1)
-
-                        -- Check if the sentence context is too short on both sides.
-                        if countWords(prev_part) < 50 and countWords(next_part) < 50 then
-                            -- The sentence is short, so we'll use the fallback to get more context.
-                            use_fallback_context = true
-                        else
-                            -- The sentence provides enough context, so we'll use it.
-                            prev_context = prev_part
-                            next_context = next_part
-                            use_fallback_context = false
-                        end
-                    end
-                end
-            end
-
-            -- Use the fallback method (word count) if we couldn't get a good sentence context.
-            if use_fallback_context then
-                local success, prev, next = pcall(function()
-                    return ui.highlight:getSelectedWordContext(50)
-                end)
-                if success then
-                    prev_context = prev or ""
-                    next_context = next or ""
-                end
-            end
-        end
         context_text = prev_context .. highlightedText .. next_context
     end
 
@@ -390,7 +405,16 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     if prompt_type == "term_xray" then
         local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
         user_prompt = term_xray_prompts.user_prompt
-        context_content = context_text
+        -- Prepend the term's immediate surroundings to the LexRank-selected
+        -- context so the model always sees its own sentence.
+        local context_parts = {}
+        if prev_context ~= "" or next_context ~= "" then
+            table.insert(context_parts, prev_context .. highlightedText .. next_context)
+        end
+        if context_text and context_text ~= "" then
+            table.insert(context_parts, context_text)
+        end
+        context_content = table.concat(context_parts, "\n\n")
         title = Prompts.getDisplayText(_("Term X-Ray"),
             term_xray_prompts.use_websearch or false,
             Prompts.isWebSearchEnabled(assistant.settings))
