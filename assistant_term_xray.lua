@@ -1,21 +1,72 @@
 -- Term X-Ray anchor extraction.
 --
--- Pure occurrence-anchored (keyword-in-context) helpers: find where a term
--- occurs in the split book text and assemble the bounded context around those
--- anchors. No ranking, scoring or configuration access: callers pass every
+-- Pure occurrence-anchored (keyword-in-context) helpers: split book text into
+-- sentences, find where a term occurs, and assemble the bounded context around
+-- those anchors. No ranking, scoring or configuration access: callers pass every
 -- tunable through `opts`.
 
+local util = require("util")
 local ASUtils = require("assistant_utils")
 
 local TermXray = {}
 
 -- Fallbacks mirror the shipped configuration defaults, so the module also
 -- behaves sensibly when a caller omits an option.
-local DEFAULT_SENTENCES_BEFORE = 2
-local DEFAULT_SENTENCES_AFTER = 2
+local DEFAULT_SENTENCES_BEFORE = 5
+local DEFAULT_SENTENCES_AFTER = 5
 local DEFAULT_MAX_OCCURRENCES = 40
 local DEFAULT_MAX_CHARACTERS = 60000
 local MIN_MAX_CHARACTERS = 1000
+
+-- Sentence delimiters: the ASCII sentence marks plus their full-width CJK
+-- equivalents and the ellipsis. The CJK marks are a superset of the ASCII ones,
+-- so one set splits Latin and CJK text alike and no language detection is
+-- needed.
+local SENTENCE_DELIMITERS = { ".", "!", "?", ";", "。", "！", "？", "；", "…" }
+
+-- Sentences shorter than this (bytes) are dropped as fragments.
+local MIN_SENTENCE_LENGTH = 10
+
+-- Split text into sentences. Each sentence keeps its trailing delimiter, and the
+-- remaining text after the last delimiter counts as a sentence too. Returns {}
+-- for nil/empty input.
+function TermXray.split_sentences(text)
+    if not text or text == "" then
+        return {}
+    end
+
+    local delim_set = {}
+    for i = 1, #SENTENCE_DELIMITERS do
+        delim_set[SENTENCE_DELIMITERS[i]] = true
+    end
+
+    local sentences = {}
+    local sentence_start = 1
+    local byte_pos = 1
+
+    for char in text:gmatch(util.UTF8_CHAR_PATTERN) do
+        local char_end = byte_pos + #char - 1
+
+        if delim_set[char] then
+            local trimmed = text:sub(sentence_start, char_end):gsub("^%s*(.-)%s*$", "%1")
+            if #trimmed >= MIN_SENTENCE_LENGTH then
+                sentences[#sentences + 1] = trimmed
+            end
+            sentence_start = char_end + 1
+        end
+
+        byte_pos = char_end + 1
+    end
+
+    if sentence_start <= #text then
+        local trimmed = text:sub(sentence_start):gsub("^%s*(.-)%s*$", "%1")
+        if #trimmed >= MIN_SENTENCE_LENGTH then
+            sentences[#sentences + 1] = trimmed
+        end
+    end
+
+    return sentences
+end
 
 -- Case- and whitespace-insensitive normalization used for term matching. Book
 -- text extracted from a document can carry line breaks, doubled spaces or

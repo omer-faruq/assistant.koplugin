@@ -9,7 +9,6 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local TermXray = require("assistant_term_xray")
-local Splitter = require("assistant_sentence_splitter")
 
 local function test(name, fn)
     return { name = name, fn = fn }
@@ -138,11 +137,7 @@ local tests = {
         local book = "张伟走进那座古老而安静的图书馆。馆内藏书丰富而珍贵。"
             .. "他寻找一本关于星空的稀有书籍。窗外阳光明媚照在书架上。"
 
-        local effective = Splitter.detect_language_code(book, "en")
-        assert.isTrue(type(effective) == "string" and effective ~= "",
-            "language detection must return a language code")
-
-        local all_sentences = Splitter.tokenize_sentences(book, effective)
+        local all_sentences = TermXray.split_sentences(book)
         assert.isTrue(#all_sentences > 0, "the CJK tokenizer must produce sentences")
 
         local term = "图书馆"
@@ -157,15 +152,10 @@ local tests = {
         assert.isTrue(#built.text <= 60000, "context must respect max_characters")
     end),
 
-    test("detect_language_code: long CJK prefix does not error", function()
-        local book = string.rep("张伟走进那座古老而安静的图书馆。", 300) -- > 4000 bytes
-        assert.isTrue(#book > 4000, "fixture must exceed the sample bound")
-        assert.equal(Splitter.detect_language_code(book, "en"), "zh",
-            "a long Chinese sample must be detected as zh")
-
-        local english = string.rep("The quick brown fox jumps over the lazy dog. ", 200)
-        assert.equal(Splitter.detect_language_code(english, "en"), "en",
-            "a long English sample must stay en")
+    test("tokenize_sentences: long CJK text splits without error", function()
+        local book = string.rep("张伟走进那座古老而安静的图书馆。", 300)
+        local sentences = TermXray.split_sentences(book)
+        assert.isTrue(#sentences > 100, "a long CJK text must split into many sentences")
     end),
 
     test("find_term_indices: phrase matches across line breaks and doubled spaces", function()

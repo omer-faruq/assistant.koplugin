@@ -163,8 +163,8 @@ local CONFIGURATION = {
         -- Term X-Ray is occurrence-anchored (keyword-in-context): every mention of
         -- the searched term is a sentence-level anchor and the context is the
         -- sentences immediately around those anchors. There is no ranking.
-        term_xray_context_sentences_before = 2, -- Number of sentences to include BEFORE each term anchor (captures descriptions, setup)
-        term_xray_context_sentences_after = 2,  -- Number of sentences to include AFTER each term anchor (captures effects, consequences)
+        term_xray_context_sentences_before = 5, -- Number of sentences to include BEFORE each term anchor (captures descriptions, setup)
+        term_xray_context_sentences_after = 5,  -- Number of sentences to include AFTER each term anchor (captures effects, consequences)
         -- This captures pronouns (he/she/it/that) and narrative context the LLM needs.
         -- Increase for complex magic systems or concepts; decrease to 1 for quick summaries
         -- Example: for "the Ring", the before context captures "The Dark Lord had created..." and the after captures "...His mind began to cloud"

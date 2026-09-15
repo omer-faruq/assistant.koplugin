@@ -31,7 +31,7 @@ Guidance for AI agents working in `assistant.koplugin` (KOReader AI assistant pl
 - `Registry` / `SearchRegistry` — UI provider/search CRUD + JSON settings.
 - `assistant_config.lua` — owns the effective `CONFIGURATION`.
 - UI: `assistant_dialog.lua`, `assistant_viewer.lua`, `assistant_featuredialog.lua`, `assistant_dictdialog.lua`, `assistant_settings.lua`, `assistant_model_picker.lua`, `assistant_quicknote.lua`, `assistant_mdparser.lua`.
-- `assistant_sentence_splitter.lua` — language-aware sentence splitting + language detection; `assistant_term_xray.lua` — term-anchor (keyword-in-context) extraction.
+- `assistant_term_xray.lua` — sentence splitting + term-anchor (keyword-in-context) extraction.
 Full flow, handlers, config, key files: `docs/ARCHITECTURE.md`.
 
 ## Invariants (never break)

@@ -8,7 +8,6 @@ local T = require("ffi/util").template
 local Event = require("ui/event")
 local koutil = require("util")
 local ASUtils = require("assistant_utils")
-local Splitter = require("assistant_sentence_splitter")
 local TermXray = require("assistant_term_xray")
 local dict_prompts = require("assistant_prompts").assistant_prompts.dict
 local Prompts = require("assistant_prompts")
@@ -172,19 +171,13 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             local book_text = ASUtils.extractBookTextForAnalysis(assistant, 2)
 
             if book_text and #book_text > 100 then
-                -- Detect the book's own language for sentence splitting. The
-                -- configured dict_language is the translation target, not the
-                -- book language, so it must not override detection; English is
-                -- the safe fallback (ASCII sentence punctuation covers Latin
-                -- scripts, and CJK is detected from the text itself).
-                local effective_language = Splitter.detect_language_code(book_text, "en")
-                local all_sentences = Splitter.tokenize_sentences(book_text, effective_language)
+                local all_sentences = TermXray.split_sentences(book_text)
                 local term = ASUtils.strip_selection_punctuation(highlightedText)
                 local term_indices = TermXray.find_term_indices(all_sentences, term)
                 local max_characters = assistant.config:getFeature("term_xray_max_characters", 60000)
                 local built = TermXray.build_anchor_context(all_sentences, term_indices, {
-                    sentences_before = assistant.config:getFeature("term_xray_context_sentences_before", 2),
-                    sentences_after = assistant.config:getFeature("term_xray_context_sentences_after", 2),
+                    sentences_before = assistant.config:getFeature("term_xray_context_sentences_before", 5),
+                    sentences_after = assistant.config:getFeature("term_xray_context_sentences_after", 5),
                     max_occurrences = assistant.config:getFeature("term_xray_max_occurrences", 40),
                     max_characters = max_characters,
                 })
