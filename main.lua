@@ -1261,6 +1261,7 @@ function Assistant:showTranslateOrDictionary(text)
           text = _("Translate"),
           callback = function()
             self.settings:saveSetting("ai_smart_dictionary", false)
+            self.updated = true -- persist choice on next FlushSettings
             UIManager:close(ask_dialog)
             ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_translation) end)
           end,
@@ -1269,6 +1270,7 @@ function Assistant:showTranslateOrDictionary(text)
           text = _("Dictionary"),
           callback = function()
             self.settings:saveSetting("ai_smart_dictionary", true)
+            self.updated = true -- persist choice on next FlushSettings
             UIManager:close(ask_dialog)
             ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_dictionary) end)
           end,
