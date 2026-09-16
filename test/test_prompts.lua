@@ -408,6 +408,13 @@ local dict_tests = {
         assert.matches(p, "%*%*{word}%*%*")
     end),
 
+    test("build_dict_prompt: headword exception only when translation is enabled", function()
+        local with_translation = M.build_dict_prompt({ "meaning", "translation" })
+        assert.matches(with_translation, "in the Translation section")
+        local without_translation = M.build_dict_prompt({ "meaning", "synonyms" })
+        assert.notMatches(without_translation, "in the Translation section")
+    end),
+
     test("presetToMap: standard maps meaning+translation+synonyms", function()
         local map = M.presetToMap("standard")
         assert.equal(map.meaning, true)

@@ -27,7 +27,7 @@ Standard Markdown formatting (including quotes, tables, lists) is fully supporte
 -- localized and later rendered by the model in the response language.
 local dict_sections = {
     { id = "meaning", header = _("Meaning & Usage"), body = [[Give the literal, context-free meaning of the word or expression, then explain how "{word}" is specifically used in THIS BOOK and what it suggests about the characters, tone, or themes.]], body_concise = [[Give the literal, context-free meaning of "{word}" in one sentence, then at most one short sentence on how it is used in THIS BOOK.]] },
-    { id = "translation", header = _("Translation"), body = [[Translate the whole sentence containing the word into fluent, natural {language}. Do NOT leave "{word}" untranslated in the translated sentence. Bold the translated equivalent of "{word}" with no spaces inside the Markdown markers. You may optionally add the original in parentheses right after it, e.g. **<translated equivalent>** ("{word}").]] },
+    { id = "translation", header = _("Translation"), body = [[Translate the whole sentence containing the word into fluent, natural {language}. Bold the translated equivalent together with the original in parentheses as one unit, e.g. **<translated> ("{word}")**, keeping the bold markers tight with no extra spaces.]] },
     { id = "synonyms", header = _("Synonyms"), body = [[Give up to 3 simple synonyms and briefly note which one(s) best fit the book's usage.]] },
     { id = "word_form", header = _("Word Form & Lemma"), body = [[State the surface form, any correction, part of speech, grammatical features, lemma/dictionary form, and morphological base or source lexeme when applicable. Explicitly show the relationship between the selected form and its base form.]] },
     { id = "example", header = _("Example"), body = [[Write one original example sentence showing the word's use, preferably in the same literary genre.]] },
@@ -700,6 +700,7 @@ M.build_dict_prompt = function(enabled_ids, opts)
 
     local has_word_form = enabled["word_form"] == true
     local has_example = enabled["example"] == true
+    local has_translation = enabled["translation"] == true
 
     local p = {}
     local function add(s) p[#p + 1] = s end
@@ -724,7 +725,7 @@ M.build_dict_prompt = function(enabled_ids, opts)
         :format(n, has_example and " An example sentence may remain in the language being learned." or ""))
 
     n = n + 1
-    add(([[%d. **Headword in Bold**: Act as a dictionary compiler. Every time the queried word or expression appears in your response, render that occurrence in **bold** (`**{word}**`), keeping the bold markers tight against it with no extra spaces. Exception: in the Translation section, bold the translated equivalent instead - do not insert the untranslated source word into the translated sentence just to bold it.]]):format(n))
+    add(([[%d. **Headword in Bold**: Act as a dictionary compiler. Every time the queried word or expression appears in your response, render that occurrence in **bold** (`**{word}**`), keeping the bold markers tight against it with no extra spaces.]] .. (has_translation and [[ Exception: in the Translation section, bold the translated equivalent together with the original in parentheses as one unit (`**<translated> ("{word}")**`) instead of the bare source word.]] or "")):format(n))
 
     if concise then
         n = n + 1
