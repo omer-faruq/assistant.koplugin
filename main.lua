@@ -59,6 +59,7 @@ function Assistant:onDispatcherRegisterActions()
   Dispatcher:registerAction("ai_recap", {
     category = "none", 
     event = "AskAIRecap", 
+    -- @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
     title = _("AI Recaps"), 
     general = true
   })
@@ -309,6 +310,7 @@ function Assistant:addToMainMenu(menu_items)
                   },
                   {
                     text_func = function()
+                      -- @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
                       return Prompts.getDisplayText(_("AI Recaps"),
                         koutil.tableGetValue(Prompts.assistant_prompts, "recap", "use_websearch") or false,
                         Prompts.isWebSearchEnabled(self.settings))
@@ -946,8 +948,10 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
   addButton("dict_popup_show_term_xray", false, {
     id = "assistant_term_xray",
     font_bold = true,
+    -- @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
     menu_text = _("Term X-Ray") .. " (AI)",
     text_func = function()
+      -- @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
       return displayText(_("Term X-Ray"),
         koutil.tableGetValue(Prompts.builtin_prompts, "term_xray", "use_websearch"))
     end,
@@ -1405,6 +1409,7 @@ function Assistant:_hookRecap()
           local doc_props = doc_settings:child("doc_props")
           local title = doc_props:readSetting("title", "Unknown Title")
           local authors = doc_props:readSetting("authors", "Unknown Author")
+          -- @translators Prompt offering a "Recap" (a brief spoiler-free summary of what was already read, to refresh memory after a break). %1 is the book title, %2 is the author.
           local message = T(_("Do you want an AI Recap?\nFor %1 by %2.\n\n"), title, authors)
                     .. T(N_("Last read an hour ago.", "Last read %1 hours ago.", timeDiffHours), timeDiffHours)
   

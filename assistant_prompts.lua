@@ -42,6 +42,7 @@ local dict_presets = {
 -- prompts attributes can be overridden in the configuration file.
 local builtin_prompts = {
     term_xray = {
+        -- @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
         text = _("Term X-Ray"),
         use_websearch = false,
         use_book_context = false,

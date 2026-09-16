@@ -68,6 +68,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         -- Feature type configurations for easy extension
         local feature_configurations = {
             recap = {
+                -- @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
                 title = _("Recap"),
                 config_key = "recap_config",
                 prompts_key = "recap"

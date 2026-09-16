@@ -502,6 +502,7 @@ SettingsDialog.genDictionaryOutputMenu = function(assistant)
     for i, popup in ipairs({
         { key = "dict_popup_show_dictionary", text = _("AI Dictionary"), default = true },
         { key = "dict_popup_show_wikipedia", text = _("AI Wikipedia"), default = true },
+        -- @translators Settings option. Same "Term X-Ray" feature as the popup button: explains the selected word by scanning every occurrence across the book. "AI" marks it as AI-powered. Translate consistently with "Term X-Ray". Keep it short.
         { key = "dict_popup_show_term_xray", text = _("AI Term X-Ray"), default = false },
         { key = "dict_popup_show_custom_prompts", text = _("Custom Prompts"), default = false },
     }) do
@@ -636,6 +637,7 @@ SettingsDialog.genMenuSettings = function(assistant)
                     end
                 },
                 {
+                    -- @translators Settings option. "Recap" is a brief spoiler-free summary of what was already read. Keep consistent with "Recap" / "AI Recap" elsewhere.
                     text = _("Use Book Text for X-Ray and Recap"),
                     checked_func = function () return assistant.settings:readSetting("use_book_text_for_analysis", false) end,
                     callback = function()
@@ -644,6 +646,7 @@ SettingsDialog.genMenuSettings = function(assistant)
                     end,
                     hold_callback = function ()
                         UIManager:show(InfoMessage:new{
+                            -- @translators Explanation for the book-text option. "Recap" is a brief spoiler-free summary of what was already read.
                             text = _("When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage.")
                         })
                     end
@@ -846,6 +849,7 @@ SettingsDialog.genMenuSettings = function(assistant)
                     end
                 },
                 {
+                    -- @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
                     text = _("Auto-recap on Opening Long-unread Books"),
                     checked_func = function () return assistant.settings:readSetting("enable_auto_recap", false) end,
                     callback = function()
@@ -856,6 +860,7 @@ SettingsDialog.genMenuSettings = function(assistant)
                             require("dispatcher"):removeAction("ai_recap")
                             return
                         end
+                        -- @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
                         Notification:notify(_("AI Recap will be enabled the next time a long-unread book is opened."), Notification.SOURCE_ALWAYS_SHOW)
                     end
                 },
