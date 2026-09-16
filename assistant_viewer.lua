@@ -90,7 +90,19 @@ pre {
 
 ol, ul, menu {
     margin: 0;
-    padding-left: 1.5em;
+    padding-left: 2em;
+}
+
+/* Body copy sits one level in; headings stay flush left. Lists and
+   blockquotes already carry their own indent above, tables stay flush, so
+   only paragraphs need it here. padding-left is used because it is already
+   honored elsewhere in this stylesheet. */
+p {
+    padding-left: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    padding-left: 0;
 }
 
 /* Use a small filled disc at every nesting level.
