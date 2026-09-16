@@ -23,6 +23,7 @@ import logging
 import os
 import random
 import re
+import secrets
 import shutil
 import signal
 import sys
@@ -245,6 +246,13 @@ class Config:
         )
         self.api_model: str = os.environ.get("API_MODEL", "gpt-4o-mini")
 
+        # OpenCode Go/Zen (API_ENDPOINT containing "opencode.ai") requires an
+        # `x-opencode-session` header carrying a stable opaque id for
+        # routing/prompt caching. The Makefile generates one id per run and
+        # passes it via AI_OPENCODE_SESSION (explicit env wins); direct
+        # script runs without it fall back to a per-process id below.
+        self.opencode_session: str = os.environ.get("AI_OPENCODE_SESSION", "")
+
         # Model recommendations for bulk gettext translation (50+ languages,
         # many low-resource). Flash/mini-tier models are preferred: the quality
         # gap on short UI strings is barely perceptible, while large models
@@ -277,6 +285,29 @@ class Config:
             sys.exit(1)
 
 
+# Fallback id sent as `x-opencode-session` when neither the Makefile nor the
+# user provides AI_OPENCODE_SESSION (e.g. direct `./ai_translate.py <lang>`
+# runs). Same 16-char URL-safe style as the Makefile id. Note parallel make
+# jobs would each get their own id from this fallback, so prefer going
+# through make for shared caching/routing.
+_RUN_SESSION_ID = secrets.token_urlsafe(12)
+
+
+def _is_opencode_api(endpoint: str) -> bool:
+    return "opencode.ai" in (endpoint or "").lower()
+
+
+def _build_headers(cfg: Config) -> dict[str, str]:
+    """Request headers, adding `x-opencode-session` for the opencode API."""
+    headers = {
+        "Authorization": f"Bearer {cfg.api_key}",
+        "Content-Type": "application/json",
+    }
+    if _is_opencode_api(cfg.api_endpoint):
+        headers["x-opencode-session"] = cfg.opencode_session or _RUN_SESSION_ID
+    return headers
+
+
 # -------------------- Connectivity check --------------------
 
 def check_api(cfg: Config) -> int:
@@ -303,10 +334,7 @@ def check_api(cfg: Config) -> int:
         response = requests.post(
             cfg.api_endpoint,
             json=payload,
-            headers={
-                "Authorization": f"Bearer {cfg.api_key}",
-                "Content-Type": "application/json",
-            },
+            headers=_build_headers(cfg),
             timeout=30,
         )
     except requests.RequestException as exc:
@@ -467,10 +495,7 @@ def _post_chat(
         # AI_JSON_MODE=0 for endpoints that reject this field.
         payload["response_format"] = {"type": "json_object"}
 
-    headers = {
-        "Authorization": f"Bearer {cfg.api_key}",
-        "Content-Type": "application/json",
-    }
+    headers = _build_headers(cfg)
 
     chunk_start = time.time()
     last_reason = "unknown"
@@ -1036,6 +1061,9 @@ def main(argv: list[str] | None = None) -> int:
 
     log.info("API endpoint: %s", cfg.api_endpoint)
     log.info("API model:    %s", cfg.api_model)
+    if _is_opencode_api(cfg.api_endpoint):
+        log.info("opencode API detected; x-opencode-session=%s",
+                 cfg.opencode_session or _RUN_SESSION_ID)
 
     if args.check_api:
         return check_api(cfg)

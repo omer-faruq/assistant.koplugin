@@ -40,6 +40,7 @@ Optional tuning variables (defaults shown):
     AI_REQUEST_TIMEOUT=120  # per-request HTTP timeout, in seconds
     AI_MAX_RETRIES=8        # retries on 429 / 5xx / network errors
     AI_MAX_CHUNK_TIME=900   # hard cap on total seconds spent per chunk
+    AI_OPENCODE_SESSION=    # stable id sent as x-opencode-session when API_ENDPOINT contains "opencode.ai" (default: one id generated per make run; random per process for direct script runs)
 
 On any retry, the script logs a one-liner with the reason (e.g. `HTTP 429`,
 `network:ReadTimeout`) and the backoff duration, so long runs remain
