@@ -93,10 +93,6 @@ ol, ul, menu {
     padding-left: 2em;
 }
 
-/* Body copy sits one level in; headings stay flush left. Lists and
-   blockquotes already carry their own indent above, tables stay flush, so
-   only paragraphs need it here. padding-left is used because it is already
-   honored elsewhere in this stylesheet. */
 p {
     padding-left: 1em;
 }
