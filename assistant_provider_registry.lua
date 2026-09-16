@@ -94,6 +94,61 @@ end
 -- Exposed for unit tests (pure formatting, no UI state).
 Registry.formatTestReport = formatTestReport
 
+--- Run a connection test against a provider configuration and report the
+--- result. Owns the online check and the Trapper wrap so callers are
+--- one-liners. Uses a throwaway handler instance (same pattern as
+--- model_picker.fetchModels) so the live provider singleton is never mutated;
+--- the request runs in a dismissable subprocess behind an InfoMessage. The
+--- API key is never displayed.
+--- @param handler_name string API handler name (e.g. "openai", "gemini")
+--- @param base_url string   provider base URL as entered by the user
+--- @param api_key string    provider API key
+--- @param model string      model id to test against
+function Registry.testConnection(handler_name, base_url, api_key, model)
+    ASUtils.runWhenOnlineFast(function()
+        Trapper:wrap(function()
+            local handler_module = require("api_handlers." .. handler_name)
+            local tester = handler_module:new{
+                base_url = base_url,
+                api_key  = api_key,
+                model    = model,
+            }
+            tester:normalizeBaseUrl()
+            -- testRequest() owns the dismissable "Testing connection..."
+            -- InfoMessage (shows the exact POST endpoint, tap to cancel).
+            local report, err = tester:Test()
+            if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
+                return  -- user dismissed the InfoMessage
+            end
+            if not report then
+                UIManager:show(InfoMessage:new{
+                    icon = "notice-warning",
+                    face = Font:getFace("xx_smallinfofont"),
+                    text = T(_("Request failed: %1"), tostring(err)),
+                })
+                return
+            end
+            local ok_status = report.status >= 200 and report.status < 300
+            if ok_status then
+                -- Success stays on screen until acknowledged (the user ran a
+                -- test and is waiting on its result).
+                UIManager:show(InfoMessage:new{
+                    face = Font:getFace("xx_smallinfofont"),
+                    text = _("Connection test successful."),
+                })
+            else
+                -- Failure: full dump (parameters, request, raw API error body)
+                -- in a dismissable InfoMessage.
+                UIManager:show(InfoMessage:new{
+                    icon = "notice-warning",
+                    face = Font:getFace("xx_smallinfofont"),
+                    text = formatTestReport(handler_name, base_url, model, report),
+                })
+            end
+        end)
+    end)
+end
+
 -- Preset platforms offered in the "Provider API" sub-menu.
 -- Selecting one only asks for the API key (name/base_url come from here).
 -- Each preset carries provider-specific additional_parameters that default to
@@ -919,7 +974,11 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                                 end
                             end,
                             -- Title shows the provider being edited.
-                            fields[1] ~= "" and fields[1] or nil
+                            fields[1] ~= "" and fields[1] or nil,
+                            nil,  -- selected_model
+                            nil,  -- reopen_callback
+                            -- Test with the same credentials the list came from.
+                            { handler = handler, base_url = url, api_key = api_key }
                         )
                     end)
                 end)
@@ -938,55 +997,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                 dialog:onCloseKeyboard()  -- free the screen for the test report
                 local fields = readFields()
                 local url, api_key, model = fields[2], fields[3], fields[4]
-                -- Fire the test through the handler's own Test() on a
-                -- throwaway instance (same pattern as model_picker.fetchModels)
-                -- so the live provider singleton is never mutated. The request
-                -- runs in a dismissable subprocess behind an InfoMessage;
-                -- whatever comes back only opens a report dialog — the provider
-                -- form itself is left untouched, success or failure.
-                ASUtils.runWhenOnlineFast(function()
-                    Trapper:wrap(function()
-                        local handler_module = require("api_handlers." .. handler)
-                        local tester = handler_module:new{
-                            base_url = url,
-                            api_key  = api_key,
-                            model    = model,
-                        }
-                        tester:normalizeBaseUrl()
-                        -- testRequest() owns the dismissable "Testing
-                        -- connection..." InfoMessage (shows the exact POST
-                        -- endpoint, tap to cancel).
-                        local report, err = tester:Test()
-                        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
-                            return  -- user dismissed the InfoMessage
-                        end
-                        if not report then
-                            UIManager:show(InfoMessage:new{
-                                icon = "notice-warning",
-                                face = Font:getFace("xx_smallinfofont"),
-                                text = T(_("Request failed: %1"), tostring(err)),
-                            })
-                            return
-                        end
-                        local ok_status = report.status >= 200 and report.status < 300
-                        if ok_status then
-                            -- Success stays on screen until acknowledged (the
-                            -- user ran a test and is waiting on its result).
-                            UIManager:show(InfoMessage:new{
-                                face = Font:getFace("xx_smallinfofont"),
-                                text = _("Connection test successful."),
-                            })
-                        else
-                            -- Failure: full dump (parameters, request, raw
-                            -- API error body) in a dismissable InfoMessage.
-                            UIManager:show(InfoMessage:new{
-                                icon = "notice-warning",
-                                face = Font:getFace("xx_smallinfofont"),
-                                text = formatTestReport(handler, url, model, report),
-                            })
-                        end
-                    end)
-                end)
+                Registry.testConnection(handler, url, api_key, model)
             end,
         },
         {

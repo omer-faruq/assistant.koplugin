@@ -23,6 +23,7 @@ local T = require("ffi/util").template
 local Screen = require("device").screen
 local logger = require("logger")
 local ASUtils = require("assistant_utils")
+local Registry = require("assistant_provider_registry")
 
 -- Forward declarations
 local showPickerDialog, showManualInput
@@ -71,6 +72,8 @@ local ModelPickerDialog = InputDialog:extend{
     provider_label = nil,  -- optional title prefix; falls back to the active provider's label
     selected_model = nil,  -- staged choice (radio highlight) pending OK confirmation
     reopen_callback = nil,  -- hand the window back to the caller (skipped on long-press)
+    test_context = nil,  -- { handler, base_url, api_key } whose models are listed;
+                         -- falls back to the active provider when nil
 }
 
 function ModelPickerDialog:init()
@@ -80,6 +83,34 @@ function ModelPickerDialog:init()
     local MODELS_PER_PAGE = math.max(5, math.floor((Screen:getHeight() - fixed_height) / item_height))
 
     local current_model = effectiveModel(self.assistant)
+
+    -- Credentials the listed models came from. Callers that list a provider
+    -- other than the active one (the edit dialog's "Browse Models") pass the
+    -- edited dialog's fields; otherwise test the active provider.
+    local test_context = self.test_context
+    if not test_context then
+        local querier = self.assistant.querier
+        if querier then
+            test_context = {
+                handler = querier.handler_name,
+                base_url = koutil.tableGetValue(querier, "provider_setting", "base_url"),
+                api_key = koutil.tableGetValue(querier, "provider_setting", "api_key"),
+            }
+        end
+    end
+
+    -- The model the Test button acts on: the staged choice wins, otherwise the
+    -- model currently in effect. Never empty, so the test is never fired with
+    -- a nil model id.
+    local function testModelId()
+        if self.selected_model and self.selected_model ~= "" then
+            return self.selected_model
+        end
+        if current_model and current_model ~= "" then
+            return current_model
+        end
+        return nil
+    end
 
     local model_count = #self.models
     local total_pages = math.max(1, math.ceil(model_count / MODELS_PER_PAGE))
@@ -155,6 +186,11 @@ function ModelPickerDialog:init()
                 callback = function() self:onSearch() end,
             },
             {
+                -- @translators Button text: means custom input, keep translation short
+                text = _("Custom"),
+                callback = function() self:onManualInput() end,
+            },
+            {
                 text = "▷▷",
                 enabled = has_next,
                 callback = function()
@@ -172,15 +208,24 @@ function ModelPickerDialog:init()
                 callback = function() finishClose(true) end,
             },
             {
-                -- @translators Button text: means custom input, keep translation short
-                text = _("Custom"),
-                callback = function() self:onManualInput() end,
-            },
-            {
                 text = _("Reset"),
                 callback = function()
                     self:onReset()
                     finishClose(true)
+                end,
+            },
+            {
+                -- Test the staged choice, falling back to the model in effect.
+                -- The shared helper owns the online check + Trapper wrap and
+                -- shows the dismissable "Testing connection..." message.
+                id = "test",
+                text = _("Test"),
+                enabled_func = function() return testModelId() ~= nil end,
+                callback = function()
+                    local model_id = testModelId()
+                    if not model_id then return end
+                    Registry.testConnection(test_context.handler,
+                        test_context.base_url, test_context.api_key, model_id)
                 end,
             },
             {
@@ -308,7 +353,8 @@ function ModelPickerDialog:changePage(new_page)
     UIManager:close(self)
     showPickerDialog(self.assistant, self.all_models,
         self.close_callback, self.search_query, new_page, self.on_select,
-        self.provider_label, self.selected_model, self.reopen_callback)
+        self.provider_label, self.selected_model, self.reopen_callback,
+        self.test_context)
 end
 
 function ModelPickerDialog:onSearch()
@@ -327,7 +373,7 @@ function ModelPickerDialog:onSearch()
                     showPickerDialog(self.assistant, self.all_models,
                         self.close_callback, self.search_query, self.page,
                         self.on_select, self.provider_label, self.selected_model,
-                        self.reopen_callback)
+                        self.reopen_callback, self.test_context)
                 end,
             },
             {
@@ -339,7 +385,7 @@ function ModelPickerDialog:onSearch()
                     showPickerDialog(self.assistant, self.all_models,
                         self.close_callback, query, 1,
                         self.on_select, self.provider_label, self.selected_model,
-                        self.reopen_callback)
+                        self.reopen_callback, self.test_context)
                 end,
             },
         }},
@@ -368,7 +414,9 @@ end
 ---        paging/search reopens (nil on a fresh entry)
 --- @param reopen_callback function|nil hand the window back to the caller on
 ---        a normal dismissal; skipped on long-press (the user is done)
-showPickerDialog = function(assistant, all_models, close_callback, search_query, page, on_select, provider_label, selected_model, reopen_callback)
+--- @param test_context table|nil { handler, base_url, api_key } whose models
+---        are listed; nil tests the active provider
+showPickerDialog = function(assistant, all_models, close_callback, search_query, page, on_select, provider_label, selected_model, reopen_callback, test_context)
     search_query = search_query or ""
     page = page or 1
     local models = all_models
@@ -392,7 +440,7 @@ showPickerDialog = function(assistant, all_models, close_callback, search_query,
             text = T(_("No models matching \"%1\"."), search_query),
         })
         -- Reopen without filter
-        showPickerDialog(assistant, all_models, close_callback, "", 1, on_select, provider_label, selected_model, reopen_callback)
+        showPickerDialog(assistant, all_models, close_callback, "", 1, on_select, provider_label, selected_model, reopen_callback, test_context)
         return
     end
 
@@ -407,6 +455,7 @@ showPickerDialog = function(assistant, all_models, close_callback, search_query,
         provider_label = provider_label,
         selected_model = selected_model,
         reopen_callback = reopen_callback,
+        test_context = test_context,
     })
 end
 
