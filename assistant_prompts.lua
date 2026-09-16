@@ -21,7 +21,6 @@ local markdown_format_prompt = [[
 Do not use LaTeX math blocks (like $...$) for standard text or emphasis. Never wrap plain words in $\\textit{...}$ or $\\texttt{...}$. 
 Standard Markdown formatting (including quotes, tables, lists) is fully supported and encouraged where appropriate.
 Use hierarchical headings: `#` for top-level sections, `##` and `###` for subsections as needed; do not skip levels.
-Keep tables compact for a narrow e-ink screen: at most 3-4 columns with short cell text; use lists for wider data.
 ]]
 
 -- AI Dictionary output sections. The user prompt is composed from the enabled

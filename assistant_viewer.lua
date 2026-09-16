@@ -147,13 +147,11 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
     font-size: 0.8em;
-    width: 100%;
 }
 
 table td, table th {
     border: 1px solid black;
-    padding: 0 0.2em;
-    word-wrap: break-word;
+    padding: 0;
 }
 
 .subtext {
