@@ -485,10 +485,14 @@ function Assistant:showSettings(close_callback)
     return
   end
 
+  -- Reopens (after add/edit/delete provider) inherit the caller's refresh hook
+  -- so the main menu label keeps tracking the active provider/model.
+  self._settings_close_callback = close_callback or self._settings_close_callback
+
   local settingDlg = SettingsDialog:new{
       assistant = self,
       settings = self.settings,
-      close_callback = close_callback,
+      close_callback = self._settings_close_callback,
   }
 
   self._settings_dialog = settingDlg -- store reference to the dialog

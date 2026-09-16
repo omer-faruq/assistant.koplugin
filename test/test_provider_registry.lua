@@ -44,12 +44,18 @@ end
 -- A mock Assistant with the provider-data/settings/config plumbing that
 -- Registry.installProvider touches.
 local function mockAssistantForInstall()
+    local stored = {}
     local assistant = {
         _ui_provider_data = { providers = {}, _next_id = 1 },
-        settings = { saveSetting = function() end },
+        settings = {
+            saveSetting = function(_, key, value) stored[key] = value end,
+            readSetting = function(_, key) return stored[key] end,
+            delSetting = function(_, key) stored[key] = nil end,
+        },
         updated = false,
         querier = nil,
     }
+    assistant.settings._stored = stored
     -- Minimal config object to mimic assistant_config.lua's Config.
     local config_data = { provider_settings = {} }
     local config = {}
@@ -626,6 +632,77 @@ local tests = {
         assert.notNil(same_id, err2)
         assert.equal(assistant._ui_provider_data.providers[id].model, "auto")
         assert.equal(assistant.config._data.provider_settings[id].model, "auto")
+    end),
+
+    test("updateProvider clears the runtime model override", function()
+        local assistant = mockAssistantForInstall()
+        local id = Registry.installProvider(assistant, "openai",
+            "https://api.test.com/v1", "AMD", "key", "auto")
+        assistant.settings:saveSetting("selected_model_" .. id, "gpt-4o")
+
+        local same_id, err = Registry.updateProvider(assistant, id,
+            "AMD", "https://api.test.com/v1", "key", "gpt-4o-mini")
+        assert.equal(same_id, id, err)
+        assert.equal(assistant.settings:readSetting("selected_model_" .. id), nil,
+            "the edited model must not be shadowed by a stale override")
+    end),
+
+    test("updateProvider re-syncs the handler when the active provider is edited", function()
+        local assistant = mockAssistantForInstall()
+        local id = Registry.installProvider(assistant, "openai",
+            "https://api.test.com/v1", "AMD", "key", "auto")
+        local forced = {}
+        assistant.querier = {
+            provider_name = id,
+            load_model = function(_, name, force) forced[#forced + 1] = force end,
+        }
+
+        local same_id, err = Registry.updateProvider(assistant, id,
+            "AMD", "https://api.test.com/v1", "key", "gpt-4o-mini")
+        assert.equal(same_id, id, err)
+        assert.equal(forced[#forced], true,
+            "the active provider must be force-reloaded")
+    end),
+
+    test("updateProvider leaves an inactive provider's handler alone", function()
+        local assistant = mockAssistantForInstall()
+        local id = Registry.installProvider(assistant, "openai",
+            "https://api.test.com/v1", "AMD", "key", "auto")
+        local forced = {}
+        assistant.querier = {
+            provider_name = "custom:99",
+            load_model = function(_, name, force) forced[#forced + 1] = force end,
+        }
+
+        local same_id, err = Registry.updateProvider(assistant, id,
+            "AMD", "https://api.test.com/v1", "key", "gpt-4o-mini")
+        assert.equal(same_id, id, err)
+        assert.equal(#forced, 0, "only the active provider should be reloaded")
+    end),
+
+    test("Edit dialog pre-fills the runtime-selected model over the record", function()
+        local assistant = mockAssistantForInstall()
+        local id = Registry.installProvider(assistant, "openai",
+            "https://api.test.com/v1", "AMD", "key", "auto")
+        assistant.settings:saveSetting("selected_model_" .. id, "gpt-4o")
+
+        local dialog = captureDialog(function()
+            Registry.showProviderDialog(assistant, nil, nil, nil, nil, id)
+        end)
+        assert.notNil(dialog, "edit dialog should be built")
+        assert.equal(dialog.fields[4].text, "gpt-4o")
+    end),
+
+    test("Edit dialog falls back to the record model without an override", function()
+        local assistant = mockAssistantForInstall()
+        local id = Registry.installProvider(assistant, "openai",
+            "https://api.test.com/v1", "AMD", "key", "gpt-4o-mini")
+
+        local dialog = captureDialog(function()
+            Registry.showProviderDialog(assistant, nil, nil, nil, nil, id)
+        end)
+        assert.notNil(dialog, "edit dialog should be built")
+        assert.equal(dialog.fields[4].text, "gpt-4o-mini")
     end),
 
     test("formatTestReport surfaces the extracted JSON error message", function()

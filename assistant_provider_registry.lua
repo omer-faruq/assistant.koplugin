@@ -427,6 +427,10 @@ function Registry.updateProvider(assistant, id, display_name, base_url, api_key,
 
     Registry.save(assistant.settings, assistant._ui_provider_data)
 
+    -- The freshly edited model is now the source of truth: drop any runtime
+    -- picker override, which would otherwise keep winning in SyncOptions.
+    assistant.settings:delSetting("selected_model_" .. id)
+
     -- Refresh merged config.
     local newRecord = {
         display_name = existing.display_name,
@@ -438,6 +442,14 @@ function Registry.updateProvider(assistant, id, display_name, base_url, api_key,
         source = "ui",
     }
     assistant.config:setProvider(id, newRecord)
+
+    -- setProvider -> load_model early-returns because this provider is already
+    -- loaded, leaving the querier's provider_setting copy stale. Force a
+    -- re-read so an edit to the active provider reaches the handler/menu.
+    if assistant.querier and assistant.querier.provider_name == id
+            and assistant.querier.load_model then
+        assistant.querier:load_model(id, true)
+    end
 
     return id
 end
@@ -836,7 +848,10 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
         default_name = koutil.tableGetValue(ps, "display_name") or ""
         base_url = koutil.tableGetValue(ps, "base_url") or base_url or ""
         default_api_key = koutil.tableGetValue(ps, "api_key") or ""
-        default_model = koutil.tableGetValue(ps, "model") or ""
+        -- Show the model actually in effect: the runtime picker stores its
+        -- choice as selected_model_<id>, which overrides the record's model.
+        default_model = assistant.settings:readSetting("selected_model_" .. edit_id)
+            or koutil.tableGetValue(ps, "model") or ""
         -- Preserve the existing additional_parameters (not exposed in dialog)
         additional_parameters = koutil.tableGetValue(ps, "additional_parameters") or {}
         -- Handler comes from the existing record, not the parameter

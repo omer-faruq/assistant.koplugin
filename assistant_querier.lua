@@ -111,10 +111,13 @@ function Querier:getProviderLabel(provider_setting, provider_name)
     return provider_name
 end
 
---- Load provider model for the Querier
-function Querier:load_model(provider_name)
-    -- If the provider is already loaded, do nothing.
-    if provider_name == self.provider_name and self:is_inited() then
+--- Load provider model for the Querier.
+--- @param provider_name string
+--- @param force boolean|nil Re-read and re-sync even when this provider is
+---        already loaded (used after editing the active provider)
+function Querier:load_model(provider_name, force)
+    -- If the provider is already loaded and no refresh is requested, do nothing.
+    if not force and provider_name == self.provider_name and self:is_inited() then
         return true
     end
 

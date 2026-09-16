@@ -27,6 +27,18 @@ local ASUtils = require("assistant_utils")
 -- Forward declarations
 local showPickerDialog, showManualInput
 
+--- Model currently in effect for the active provider: the runtime override
+--- (selected_model_<id>) wins over the provider record, mirroring
+--- BaseHandler:SyncOptions.
+local function effectiveModel(assistant)
+    local querier = assistant.querier
+    if not querier then return "" end
+    local override = querier.provider_name and assistant.settings
+        and assistant.settings:readSetting("selected_model_" .. querier.provider_name)
+    if override and override ~= "" then return override end
+    return koutil.tableGetValue(querier, "provider_setting", "model") or ""
+end
+
 --- Save selected model to settings and apply to current session
 local function saveModelSelection(assistant, model_id)
     local provider_name = assistant.querier.provider_name
@@ -65,8 +77,7 @@ function ModelPickerDialog:init()
     local fixed_height = Screen:scaleBySize(135) + 2*Size.margin.default -- title bar, buttons row, etc
     local MODELS_PER_PAGE = math.max(5, math.floor((Screen:getHeight() - fixed_height) / item_height))
 
-    local current_model = koutil.tableGetValue(
-        self.assistant, "querier", "provider_settings", "model") or ""
+    local current_model = effectiveModel(self.assistant)
 
     local model_count = #self.models
     local total_pages = math.max(1, math.ceil(model_count / MODELS_PER_PAGE))
@@ -359,8 +370,7 @@ end
 
 --- Show manual model input dialog
 showManualInput = function(assistant, close_callback, on_select)
-    local current_model = koutil.tableGetValue(
-        assistant, "querier", "provider_setting", "model") or ""
+    local current_model = effectiveModel(assistant)
     local dialog
     dialog = InputDialog:new{
         title = _("Enter Model ID"),
