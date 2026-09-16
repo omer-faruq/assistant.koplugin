@@ -354,6 +354,16 @@ local tests = {
         assert.equal(next(assistant._ui_provider_data.providers[id].additional_parameters), nil)
     end),
 
+    test("installProvider persists the new provider as the active selection", function()
+        local assistant = mockAssistantForInstall()
+        local id, err = Registry.installProvider(assistant, "openai",
+            "https://api.test.com/v1", "AMD", "key", "gpt-4o")
+        assert.notNil(id, err)
+        -- getActiveProviderId reads this key on the next reload (e.g. opening a
+        -- book); without it the previous provider/model would come back.
+        assert.equal(assistant.settings:readSetting("provider"), id)
+    end),
+
     test("installProvider does not share preset additional_parameters tables", function()
         local assistant = mockAssistantForInstall()
         local preset

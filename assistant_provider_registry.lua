@@ -552,6 +552,11 @@ function Registry.installProvider(assistant, handler, base_url, display_name, ap
     }
     assistant.config:setProvider(id, newRecord)
 
+    -- setProvider already loaded the new provider into the querier, so persist
+    -- the selection too: getActiveProviderId reads this key, and without it the
+    -- next reload (opening a book) falls back to the previously active provider.
+    assistant.settings:saveSetting("provider", id)
+
     return id
 end
 
