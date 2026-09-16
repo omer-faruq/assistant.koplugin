@@ -501,6 +501,13 @@ function AssistantDialog:showAskDialog(highlightedText)
   local use_book_text_checkbox -- ref to the CheckButton widget
   local use_chapter_checkbox -- ref to the chapter-limit CheckButton widget
   local use_web_search_checkbox -- ref to the web search CheckButton widget
+  local function getNotebookButtonText()
+    local notebooks = Notebook.list(self.assistant)
+    if not notebooks or #notebooks == 0 then
+      return _("Notebook")
+    end
+    return T(_("Notebook: %1"), Notebook.getActiveDisplayName(self.assistant, 18))
+  end
   local first_row = {
     {
       text = _("Cancel"),
@@ -514,7 +521,7 @@ function AssistantDialog:showAskDialog(highlightedText)
   if use_multi_general_notebooks then
     table.insert(first_row, {
       id = "general_notebook",
-      text = Notebook.getActiveDisplayName(self.assistant, 18),
+      text = getNotebookButtonText(),
       callback = function()
         -- Hide the keyboard while the picker is open, but keep the current
         -- question text in the existing InputDialog.
@@ -533,7 +540,7 @@ function AssistantDialog:showAskDialog(highlightedText)
                 and self.input_dialog.button_table:getButtonById("general_notebook")
             if button then
               button:setText(
-                Notebook.getActiveDisplayName(self.assistant, 18),
+                getNotebookButtonText(),
                 button.width
               )
               button:refresh()
