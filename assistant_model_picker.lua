@@ -69,6 +69,8 @@ local ModelPickerDialog = InputDialog:extend{
     page = 1,
     on_select = nil,  -- optional callback(model_id) to intercept selection (skips saveModelSelection)
     provider_label = nil,  -- optional title prefix; falls back to the active provider's label
+    selected_model = nil,  -- staged choice (radio highlight) pending OK confirmation
+    reopen_callback = nil,  -- hand the window back to the caller (skipped on long-press)
 }
 
 function ModelPickerDialog:init()
@@ -106,6 +108,36 @@ function ModelPickerDialog:init()
     local has_prev = self.page > 1
     local has_next = self.page < total_pages
 
+    -- Final closes refresh whatever the caller owns (close_callback) and,
+    -- unless the user is done (long-press), hand the window back to the
+    -- caller (reopen_callback). Paging/search close the dialog directly and
+    -- must not fire either.
+    local function finishClose(reopen)
+        UIManager:close(self)
+        if self.close_callback then self.close_callback() end
+        if reopen and self.reopen_callback then self.reopen_callback() end
+    end
+
+    -- Apply the staged selection and close. `reopen` is false for the OK
+    -- long-press shortcut: the user is done, so the caller's window is not
+    -- handed back, only refreshed. Every applied pick is confirmed with a
+    -- notification, tap or long-press alike.
+    local function applySelection(reopen)
+        local model_id = self.selected_model
+        if not model_id then
+            finishClose(reopen)
+            return
+        end
+        if self.on_select then
+            finishClose(reopen)
+            self.on_select(model_id)
+        else
+            saveModelSelection(self.assistant, model_id)
+            finishClose(reopen)
+        end
+        Notification:notify(T(_("Model: %1"), model_id), Notification.SOURCE_ALWAYS_SHOW)
+    end
+
     self.buttons = {
         {
             {
@@ -137,7 +169,7 @@ function ModelPickerDialog:init()
             {
                 id = "close",
                 text = _("Cancel"),
-                callback = function() UIManager:close(self) end,
+                callback = function() finishClose(true) end,
             },
             {
                 -- @translators Button text: means custom input, keep translation short
@@ -146,15 +178,19 @@ function ModelPickerDialog:init()
             },
             {
                 text = _("Reset"),
-                callback = function() self:onReset() end,
+                callback = function()
+                    self:onReset()
+                    finishClose(true)
+                end,
             },
             {
-                -- OK only closes the dialog (model selection is already
-                -- saved on radio-button select); kept on the right for UI
-                -- consistency (close left, action right).
+                -- OK applies the staged selection (radio highlight); the
+                -- choice is not saved until this button is tapped. Holding it
+                -- applies and closes without handing the window back.
                 id = "ok",
                 text = _("OK"),
-                callback = function() UIManager:close(self) end,
+                callback = function() applySelection(true) end,
+                hold_callback = function() applySelection(false) end,
             },
         },
     }
@@ -166,16 +202,23 @@ function ModelPickerDialog:init()
     self.radio_buttons = {}
     for i = start_idx, end_idx do
         local m = self.models[i]
+        -- Staged selection wins; otherwise highlight the effective model.
+        local checked
+        if self.selected_model then
+            checked = (m.id == self.selected_model)
+        else
+            checked = (m.id == current_model)
+        end
         table.insert(self.radio_buttons, {{
             text = m.id,
             model_id = m.id,
-            checked = (m.id == current_model),
+            checked = checked,
         }})
     end
 
     -- Initialize base InputDialog (creates title_bar, button_table, layout)
     InputDialog.init(self)
-    self.title_bar.close_callback = function() UIManager:close(self) end
+    self.title_bar.close_callback = function() finishClose(true) end
     self.title_bar:init()
 
     self.element_width = math.floor(self.width * 0.9)
@@ -189,15 +232,8 @@ function ModelPickerDialog:init()
         focused = true,
         parent = self,
         button_select_callback = function(btn)
-            if self.on_select then
-                UIManager:close(self)
-                self.on_select(btn.model_id)
-            else
-                saveModelSelection(self.assistant, btn.model_id)
-                UIManager:close(self)
-                Notification:notify(T(_("Model: %1"), btn.model_id), Notification.SOURCE_ALWAYS_SHOW)
-                if self.close_callback then self.close_callback() end
-            end
+            -- Stage the choice only; OK applies it, Cancel discards.
+            self.selected_model = btn.model_id
         end,
     }
 
@@ -272,7 +308,7 @@ function ModelPickerDialog:changePage(new_page)
     UIManager:close(self)
     showPickerDialog(self.assistant, self.all_models,
         self.close_callback, self.search_query, new_page, self.on_select,
-        self.provider_label)
+        self.provider_label, self.selected_model, self.reopen_callback)
 end
 
 function ModelPickerDialog:onSearch()
@@ -290,7 +326,8 @@ function ModelPickerDialog:onSearch()
                     UIManager:close(search_dialog)
                     showPickerDialog(self.assistant, self.all_models,
                         self.close_callback, self.search_query, self.page,
-                        self.on_select, self.provider_label)
+                        self.on_select, self.provider_label, self.selected_model,
+                        self.reopen_callback)
                 end,
             },
             {
@@ -301,7 +338,8 @@ function ModelPickerDialog:onSearch()
                     UIManager:close(search_dialog)
                     showPickerDialog(self.assistant, self.all_models,
                         self.close_callback, query, 1,
-                        self.on_select, self.provider_label)
+                        self.on_select, self.provider_label, self.selected_model,
+                        self.reopen_callback)
                 end,
             },
         }},
@@ -311,16 +349,14 @@ end
 
 function ModelPickerDialog:onManualInput()
     UIManager:close(self)
-    showManualInput(self.assistant, self.close_callback, self.on_select)
+    showManualInput(self.assistant, self.close_callback, self.on_select, self.reopen_callback)
 end
 
 function ModelPickerDialog:onReset()
     resetModelSelection(self.assistant)
-    UIManager:close(self)
     local _p = self.assistant.config:getProvider(self.assistant.querier.provider_name)
     local config_model = (_p and _p.model) or "?"
     Notification:notify(T(_("Model reset: %1"), config_model), Notification.SOURCE_ALWAYS_SHOW)
-    if self.close_callback then self.close_callback() end
 end
 
 function ModelPickerDialog:onCloseWidget()
@@ -328,7 +364,11 @@ function ModelPickerDialog:onCloseWidget()
 end
 
 --- Show the model picker dialog with optional search filter and page
-showPickerDialog = function(assistant, all_models, close_callback, search_query, page, on_select, provider_label)
+--- @param selected_model string|nil staged choice to keep highlighted across
+---        paging/search reopens (nil on a fresh entry)
+--- @param reopen_callback function|nil hand the window back to the caller on
+---        a normal dismissal; skipped on long-press (the user is done)
+showPickerDialog = function(assistant, all_models, close_callback, search_query, page, on_select, provider_label, selected_model, reopen_callback)
     search_query = search_query or ""
     page = page or 1
     local models = all_models
@@ -352,7 +392,7 @@ showPickerDialog = function(assistant, all_models, close_callback, search_query,
             text = T(_("No models matching \"%1\"."), search_query),
         })
         -- Reopen without filter
-        showPickerDialog(assistant, all_models, close_callback, "", 1, on_select, provider_label)
+        showPickerDialog(assistant, all_models, close_callback, "", 1, on_select, provider_label, selected_model, reopen_callback)
         return
     end
 
@@ -365,11 +405,13 @@ showPickerDialog = function(assistant, all_models, close_callback, search_query,
         page = page,
         on_select = on_select,
         provider_label = provider_label,
+        selected_model = selected_model,
+        reopen_callback = reopen_callback,
     })
 end
 
 --- Show manual model input dialog
-showManualInput = function(assistant, close_callback, on_select)
+showManualInput = function(assistant, close_callback, on_select, reopen_callback)
     local current_model = effectiveModel(assistant)
     local dialog
     dialog = InputDialog:new{
@@ -380,7 +422,11 @@ showManualInput = function(assistant, close_callback, on_select)
             {
                 text = _("Cancel"),
                 id = "close",
-                callback = function() UIManager:close(dialog) end,
+                callback = function()
+                    UIManager:close(dialog)
+                    if close_callback then close_callback() end
+                    if reopen_callback then reopen_callback() end
+                end,
             },
             {
                 text = _("OK"),
@@ -397,6 +443,7 @@ showManualInput = function(assistant, close_callback, on_select)
                             UIManager:close(dialog)
                             Notification:notify(T(_("Model: %1"), model_id), Notification.SOURCE_ALWAYS_SHOW)
                             if close_callback then close_callback() end
+                            if reopen_callback then reopen_callback() end
                         end
                     end
                 end,

@@ -409,10 +409,18 @@ function SettingsDialog:onBrowseModel()
                 })
                 return
             end
-            -- success: close settings and open the model picker
+            -- success: close settings and open the model picker. The menu
+            -- refresh rides along on every close (so the main menu label
+            -- updates even on long-press); the picker hands the window back
+            -- to Provider Settings on a normal dismissal only.
+            local menu_refresh = self.close_callback
             UIManager:close(self)
             local showPickerDialog = require("assistant_model_picker").showPickerDialog
-            showPickerDialog(self.assistant, models, self.close_callback, "", 1)
+            showPickerDialog(self.assistant, models, menu_refresh, "", 1, nil, nil, nil, function()
+                UIManager:nextTick(function()
+                    self.assistant:showSettings(menu_refresh)
+                end)
+            end)
         end)
     end)
 end
