@@ -266,9 +266,10 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
 
     local function createResultText(highlightedText, answer)
         -- Limit prev_context to last 100 bytes and next_context to first 100 bytes,
-        -- backing off to UTF-8 character boundaries so no partial glyph is shown
-        local prev_context_limited = ASUtils.truncateToTailUtf8Safe(prev_context, 100)
-        local next_context_limited = ASUtils.truncateToHeadUtf8Safe(next_context, 100)
+        -- backing off to UTF-8 character boundaries and snapping to word
+        -- boundaries so no partial word is shown
+        local prev_context_limited = TermXray.clip_excerpt(prev_context, 100, "tail")
+        local next_context_limited = TermXray.clip_excerpt(next_context, 100, "head")
         local normalized_answer = ASUtils.normalizeMarkdownHeadings(answer, 2, 6) or answer
         -- Normalize the selection's whitespace before bolding it: a leading or
         -- trailing space in "** word **" stops Markdown from rendering bold.

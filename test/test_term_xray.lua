@@ -9,6 +9,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local TermXray = require("assistant_term_xray")
+local ASUtils = helper.ASUtils
 
 local function test(name, fn)
     return { name = name, fn = fn }
@@ -174,6 +175,65 @@ local tests = {
         local sentences = { "The office on Vasil\194\160Levski\194\160Boulevard was closed." }
         local indices = TermXray.find_term_indices(sentences, "Vasil Levski Boulevard")
         assert.equal(#indices, 1, "non-breaking spaces must not prevent matching")
+    end),
+
+    test("clip_excerpt tail: cut inside a word snaps to the next whole word", function()
+        -- The dictionary "... r him ..." case: prev ends "...for him" and the
+        -- 100-byte budget slices "fo" off "for".
+        assert.equal(TermXray.clip_excerpt("ab for him", 5, "tail"), "him")
+        assert.equal(TermXray.clip_excerpt("ab for him", 6, "tail"), "him")
+    end),
+
+    test("clip_excerpt head: cut inside a word snaps back to the previous word", function()
+        assert.equal(TermXray.clip_excerpt("hello world", 8, "head"), "hello")
+        assert.equal(TermXray.clip_excerpt("hi world", 5, "head"), "hi")
+    end),
+
+    test("clip_excerpt: clean cuts at spaces are unchanged", function()
+        assert.equal(TermXray.clip_excerpt("aa bb cc", 5, "tail"), "bb cc")
+        assert.equal(TermXray.clip_excerpt("aa bb cc", 5, "head"), "aa bb")
+    end),
+
+    test("clip_excerpt: short strings are returned unchanged", function()
+        assert.equal(TermXray.clip_excerpt("abc", 100, "tail"), "abc")
+        assert.equal(TermXray.clip_excerpt("abc", 100, "head"), "abc")
+        assert.equal(TermXray.clip_excerpt("abc", 3, "tail"), "abc")
+        assert.equal(TermXray.clip_excerpt("abc", 3, "head"), "abc")
+    end),
+
+    test("clip_excerpt: hyphen and apostrophe count as word characters", function()
+        assert.equal(TermXray.clip_excerpt("self-esteem hi", 5, "tail"), "hi")
+        assert.equal(TermXray.clip_excerpt("hi don't", 5, "head"), "hi")
+    end),
+
+    test("clip_excerpt: single over-long token falls back to un-snapped", function()
+        assert.equal(TermXray.clip_excerpt("abcdefghij", 5, "tail"), "fghij")
+        assert.equal(TermXray.clip_excerpt("abcdefghij", 5, "head"), "abcde")
+    end),
+
+    test("clip_excerpt: CJK cuts on the character boundary within budget", function()
+        local cjk = string.rep("中", 40) -- 120 bytes
+        local tail = TermXray.clip_excerpt(cjk, 100, "tail")
+        local head = TermXray.clip_excerpt(cjk, 100, "head")
+        assert.equal(tail, ASUtils.truncateToTailUtf8Safe(cjk, 100))
+        assert.equal(head, ASUtils.truncateToHeadUtf8Safe(cjk, 100))
+        assert.isTrue(#tail <= 100, "tail excerpt must stay within budget")
+        assert.isTrue(#head <= 100, "head excerpt must stay within budget")
+        assert.isTrue(#tail < #cjk, "tail excerpt must be truncated")
+        assert.isTrue(#head < #cjk, "head excerpt must be truncated")
+    end),
+
+    test("clip_excerpt: never longer than the UTF-8-safe truncation", function()
+        local prev = "lorem ipsum dolor sit amet consectetur adipiscing elit sed do"
+        local next_ctx = "eiusmod tempor incididunt ut labore et dolore magna aliqua"
+        for k = 1, 59 do
+            local tail = TermXray.clip_excerpt(prev, k, "tail")
+            local head = TermXray.clip_excerpt(next_ctx, k, "head")
+            assert.isTrue(#tail <= #ASUtils.truncateToTailUtf8Safe(prev, k),
+                "tail clip must not exceed the UTF-8-safe truncation")
+            assert.isTrue(#head <= #ASUtils.truncateToHeadUtf8Safe(next_ctx, k),
+                "head clip must not exceed the UTF-8-safe truncation")
+        end
     end),
 }
 

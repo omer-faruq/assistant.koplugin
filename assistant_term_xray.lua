@@ -196,4 +196,53 @@ function TermXray.build_anchor_context(all_sentences, term_indices, opts)
     return { text = table.concat(parts, " "), sentence_count = sentence_count }
 end
 
+-- Word-class for excerpt snapping: alphanumerics plus the apostrophe and
+-- hyphen so hyphenated words and contractions snap as one token.
+local function is_excerpt_word_byte(b)
+    if not b then return false end
+    return string.char(b):match("[%w'%-]") ~= nil
+end
+
+-- Clip a dictionary excerpt to `max_len` bytes without leaving a mid-word
+-- fragment. `side` is "tail" (keep the end: prev-context) or "head" (keep the
+-- start: next-context). Starts from the UTF-8-safe truncation, then snaps to
+-- a word boundary only when the cut falls inside a word. CJK text has no
+-- spaces and its bytes are outside the snap class, so it stays cut on the
+-- character boundary. Falls back to the un-snapped truncation when snapping
+-- would leave nothing (budget smaller than one word). Never returns a string
+-- longer than the UTF-8-safe truncation.
+function TermXray.clip_excerpt(text, max_len, side)
+    if type(text) ~= "string" or text == "" then return text or "" end
+    if type(max_len) ~= "number" or max_len < 1 then return text end
+    if #text <= max_len then return text end
+
+    if side == "head" then
+        local clipped = ASUtils.truncateToHeadUtf8Safe(text, max_len)
+        if clipped == "" then return clipped end
+        local last = clipped:byte(#clipped)
+        local after = text:byte(#clipped + 1)
+        if is_excerpt_word_byte(last) and is_excerpt_word_byte(after) then
+            local snapped = clipped:gsub("%s*%S+$", "")
+            if snapped:match("^%s*$") then
+                return clipped
+            end
+            return snapped
+        end
+        return clipped
+    end
+
+    local clipped = ASUtils.truncateToTailUtf8Safe(text, max_len)
+    if clipped == "" then return clipped end
+    local first = clipped:byte(1)
+    local before = text:byte(#text - #clipped)
+    if is_excerpt_word_byte(first) and is_excerpt_word_byte(before) then
+        local snapped = clipped:gsub("^%S+%s*", "")
+        if snapped:match("^%s*$") then
+            return clipped
+        end
+        return snapped
+    end
+    return clipped
+end
+
 return TermXray
