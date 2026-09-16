@@ -627,6 +627,70 @@ local tests = {
         assert.equal(assistant._ui_provider_data.providers[id].model, "auto")
         assert.equal(assistant.config._data.provider_settings[id].model, "auto")
     end),
+
+    test("formatTestReport surfaces the extracted JSON error message", function()
+        local report = {
+            url    = "https://api.test.com/v1/chat/completions",
+            body   = "{}",
+            status = 401,
+            raw    = '{"error":{"message":"Incorrect API key provided"}}',
+        }
+        local text = Registry.formatTestReport("openai", "https://api.test.com/v1", "gpt-4", report)
+        assert.matches(text, "API error: Incorrect API key provided")
+    end),
+
+    test("formatTestReport unwraps nested proxy error shapes", function()
+        local report = {
+            url    = "https://api.test.com/v1/chat/completions",
+            body   = "{}",
+            status = 429,
+            raw    = '{"detail":{"error":{"message":"concurrency limit (80)"}}}',
+        }
+        local text = Registry.formatTestReport("openai", "https://api.test.com/v1", "gpt-4", report)
+        assert.matches(text, "API error: concurrency limit %(80%)")
+    end),
+
+    test("formatTestReport falls back to the full raw body when no JSON error exists", function()
+        local long_tail = string.rep("x", 900)
+        local raw = "<html>Bad gateway " .. long_tail .. "</html>"
+        local report = {
+            url    = "https://api.test.com/v1/chat/completions",
+            body   = "{}",
+            status = 502,
+            raw    = raw,
+        }
+        local text = Registry.formatTestReport("openai", "https://api.test.com/v1", "gpt-4", report)
+        assert.matches(text, "<html>Bad gateway")
+        assert.isTrue(text:find(raw, 1, true) ~= nil, "expected the untruncated raw body")
+    end),
+
+    test("formatTestReport marks an empty error body explicitly", function()
+        local report = {
+            url    = "https://api.test.com/v1/chat/completions",
+            body   = "{}",
+            status = 500,
+            raw    = "",
+        }
+        local text = Registry.formatTestReport("openai", "https://api.test.com/v1", "gpt-4", report)
+        assert.isTrue(text:find("(empty response body)", 1, true) ~= nil,
+            "expected the empty-body marker")
+    end),
+
+    test("formatTestReport leads a failure with a bold verdict and a blank line", function()
+        local report = {
+            url    = "https://api.test.com/v1/chat/completions",
+            body   = "{}",
+            status = 401,
+            raw    = '{"error":{"message":"Incorrect API key provided"}}',
+        }
+        local text = Registry.formatTestReport("openai", "https://api.test.com/v1", "gpt-4", report)
+        local lines = {}
+        for line in (text .. "\n"):gmatch("(.-)\n") do lines[#lines + 1] = line end
+        assert.isTrue(lines[1]:find("API returned an error", 1, true) ~= nil,
+            "first line must state the failure")
+        assert.equal(lines[2], "", "exactly one blank line must follow the verdict")
+        assert.matches(lines[3], "Parameters")
+    end),
 }
 
 return helper.runTests("assistant_provider_registry", tests)

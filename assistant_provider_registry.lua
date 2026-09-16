@@ -69,39 +69,31 @@ local BASE_URL_DESCRIPTIONS = {
     anthropic = _("Anthropic Messages API"),
 }
 
--- Response body cap shown in the connection-test report (keeps the
--- InfoMessage readable when an API returns a large error page).
-local MAX_TEST_BODY_DISPLAY = 700
-
---- Compose the connection-test report for the provider dialog: the user's
---- parameters, the exact request that was sent, and the response — the
---- model's reply text on success, the raw API error body on failure. Long
---- bodies are truncated. Pure data formatting; the caller decides the
---- InfoMessage icon. The API key is deliberately not shown at all.
+--- Connection-test failure report for the provider dialog: bold verdict, then
+--- parameters, the exact request sent, and the API's own error message
+--- (shared extractor; full raw body as fallback). Never shows the API key.
 local function formatTestReport(handler_name, base_url, model, report)
-    local ok_status = report.status >= 200 and report.status < 300
-    local response_text
-    if ok_status and report.content then
-        response_text = T(_("Model replied: %1"), report.content)
-    else
-        response_text = ASUtils.truncateToHeadUtf8Safe(report.raw, MAX_TEST_BODY_DISPLAY)
-        if response_text == "" then
-            response_text = _("(empty response body)")
-        end
-    end
+    local api_error = ASUtils.extractErrorMessage(report.raw)
+    local response_text = api_error and T(_("API error: %1"), api_error)
+        or report.raw ~= "" and report.raw
+        or _("(empty response body)")
     return table.concat({
-        ASUtils.bold_format(_("<b>Parameters</b>")),
-        T(_("Handler: %1"), handler_name),
-        T(_("Base URL: %1"), base_url),
-        T(_("Model: %1"), model),
-        "",
-        ASUtils.bold_format(T(_("<b>Request</b> - POST %1"), report.url)),
-        report.body,
-        "",
-        ASUtils.bold_format(T(_("<b>Response</b> - HTTP %1"), report.status)),
-        response_text,
-    }, "\n")
+            ASUtils.bold_format(_("<b>API returned an error</b>")),
+            "",
+            ASUtils.bold_format(_("<b>Parameters</b>")),
+            T(_("Protocol: %1"), handler_name),
+            T(_("URL: %1"), base_url),
+            T(_("Model: %1"), model),
+            "",
+            ASUtils.bold_format(T(_("<b>Request</b> - POST %1"), report.url)),
+            report.body,
+            "",
+            ASUtils.bold_format(T(_("<b>Response</b> - HTTP %1"), report.status)),
+            response_text,
+        }, "\n")
 end
+-- Exposed for unit tests (pure formatting, no UI state).
+Registry.formatTestReport = formatTestReport
 
 -- Preset platforms offered in the "Provider API" sub-menu.
 -- Selecting one only asks for the API key (name/base_url come from here).
