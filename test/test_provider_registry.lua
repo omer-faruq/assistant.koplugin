@@ -204,6 +204,15 @@ local tests = {
         end
     end),
 
+    test("preset callback remembers the menu instance for dismissal", function()
+        local assistant = mockAssistant()
+        local items = subItems(Registry.getAddProviderMenuItem(assistant))
+        local menu_instance = { closeMenu = function() end }
+        items[1].callback(menu_instance)
+        -- A confirmed add closes this menu, which stays open behind the dialogs.
+        assert.equal(assistant._menu_instance, menu_instance)
+    end),
+
     test("preset callback invokes _showAddProviderDialog with preset fields and additional_parameters", function()
         local assistant = mockAssistant()
         local items = subItems(Registry.getAddProviderMenuItem(assistant))

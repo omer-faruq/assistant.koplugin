@@ -880,6 +880,17 @@ end
 -- Add/Edit provider dialog
 ----------------------------------------------------------------------
 
+--- Dismiss the main menu that launched the provider flow, if any. The menu
+--- stays open behind these dialogs, so a confirmed change should leave the
+--- user with the Provider Settings window instead of a stale menu underneath.
+--- The instance is remembered by the Provider API menu entries.
+local function dismissMenu(assistant)
+    local menu_instance = assistant._menu_instance
+    if not menu_instance then return end
+    assistant._menu_instance = nil
+    menu_instance:closeMenu()
+end
+
 --- Show a unified dialog for adding or editing a provider (Name, Base URL, API Key, Model).
 --- For preset providers: Name + Base URL are pre-filled from the preset.
 --- For Edit (edit_id ~= nil): all fields are pre-filled from the existing record.
@@ -1043,6 +1054,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                     end
                 end
                 UIManager:close(dialog)
+                dismissMenu(assistant)
                 -- Close any stale settings dialog, then open a fresh
                 -- Provider Settings window so the added/edited provider
                 -- is immediately visible and selectable.
@@ -1083,6 +1095,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                         end
 
                         UIManager:close(dialog)
+                        dismissMenu(assistant)
                         -- Close any stale settings dialog, then open a fresh
                         -- Provider Settings window reflecting the deletion.
                         if assistant._settings_dialog then
@@ -1152,7 +1165,9 @@ function Registry.getAddProviderMenuItem(assistant)
                 table.insert(items, {
                     text = preset.name,
                     keep_menu_open = true,
-                    callback = function()
+                    callback = function(touchmenu_instance)
+                        -- Remember the menu so a confirmed add can dismiss it.
+                        assistant._menu_instance = touchmenu_instance
                         assistant:_showAddProviderDialog(preset.name, preset.handler, preset.base_url,
                             preset.additional_parameters)
                     end,

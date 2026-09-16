@@ -239,6 +239,9 @@ function Assistant:addToMainMenu(menu_items)
                 end,
                 keep_menu_open = true,
                 callback = function (touchmenu_instance)
+                  -- Remember the menu so a confirmed provider edit can dismiss
+                  -- it (the menu stays open behind the dialogs).
+                  self._menu_instance = touchmenu_instance
                   self:showSettings(function ()
                     touchmenu_instance:updateItems()
                   end)
