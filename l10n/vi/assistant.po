@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 21:58+0800\n"
+"POT-Creation-Date: 2026-09-16 11:29+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -212,11 +212,14 @@ msgstr "Từ điển AI"
 msgid "AI Language: "
 msgstr "Ngôn ngữ AI: "
 
+#. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
-msgstr "Tính năng Tóm tắt AI sẽ được bật vào lần tới khi mở một cuốn sách đã lâu không đọc."
+msgstr "Tóm tắt AI sẽ được bật vào lần tới khi mở một cuốn sách lâu ngày chưa đọc."
 
+#. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
+#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
-msgstr "AI Tóm tắt"
+msgstr "Tóm tắt AI"
 
 msgid "AI Response Language"
 msgstr "Ngôn ngữ phản hồi AI"
@@ -224,8 +227,9 @@ msgstr "Ngôn ngữ phản hồi AI"
 msgid "AI Response Language Setting"
 msgstr "Cài đặt ngôn ngữ phản hồi AI"
 
+#. @translators Settings option. Same "Term X-Ray" feature as the popup button: explains the selected word by scanning every occurrence across the book. "AI" marks it as AI-powered. Translate consistently with "Term X-Ray". Keep it short.
 msgid "AI Term X-Ray"
-msgstr "X-Ray Thuật ngữ AI"
+msgstr "Thuật ngữ X-Ray AI"
 
 msgid "AI Wikipedia"
 msgstr "Wikipedia AI"
@@ -333,8 +337,9 @@ msgstr "Không có sẵn cài đặt trợ lý."
 msgid "Attach Prior Text"
 msgstr "Đính kèm văn bản trước đó"
 
+#. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
-msgstr "Tự động tóm tắt khi mở sách đã lâu không đọc"
+msgstr "Tự động tóm tắt khi mở sách lâu ngày chưa đọc"
 
 msgid "Auto-save Conversations to Notebook"
 msgstr "Tự động lưu cuộc hội thoại vào sổ ghi chú"
@@ -569,15 +574,17 @@ msgstr ""
 msgid "Display name"
 msgstr "Tên hiển thị"
 
+#. @translators Prompt offering a "Recap" (a brief spoiler-free summary of what was already read, to refresh memory after a break). %1 is the book title, %2 is the author.
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
 "\n"
 msgstr ""
-"Bạn có muốn AI Tóm tắt lại không?\n"
+"Bạn có muốn tóm tắt bằng AI không?\n"
 "Cho %1 của %2.\n"
 "\n"
 
+#. @translators Button label, acronym for "Explain Like I'm 5": explains the highlighted text in very simple terms a child could understand. Keep the acronym if it is widely recognized; otherwise translate the meaning briefly. Keep it short and consistent wherever "ELI5" appears.
 msgid "ELI5"
 msgstr "ELI5"
 
@@ -751,32 +758,8 @@ msgstr "Để trống để sử dụng: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Để trống các trường này để sử dụng ngôn ngữ giao diện: %1"
 
-msgid "Loading AI Dictionary ..."
-msgstr "Đang tải Từ điển AI ..."
-
-msgid "Loading Book Information..."
-msgstr "Đang tải Thông tin sách..."
-
-msgid "Loading Highlight & Note Analysis..."
-msgstr "Đang tải Phân tích Đánh dấu & Ghi chú..."
-
-msgid "Loading Recap..."
-msgstr "Đang tải Recap..."
-
-msgid "Loading Summary Using Highlights & Notes..."
-msgstr "Đang tải Tóm tắt bằng Đánh dấu & Ghi chú..."
-
-msgid "Loading Term X-Ray ..."
-msgstr "Đang tải Term X-Ray ..."
-
-msgid "Loading X-Ray..."
-msgstr "Đang tải X-Ray..."
-
-msgid "Loading for %1 ..."
-msgstr "Đang tải cho %1 ..."
-
-msgid "Loading..."
-msgstr "Đang tải..."
+msgid "Loading for <b>%1</b> ..."
+msgstr "Đang tải cho <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Địa điểm"
@@ -871,6 +854,9 @@ msgstr "Không có"
 msgid "Note added successfully"
 msgstr "Đã thêm ghi chú thành công"
 
+msgid "Notebook"
+msgstr "Sổ ghi chú"
+
 msgid "Notebook (AI Conversation Log)"
 msgstr "Sổ ghi chép (Nhật ký hội thoại AI)"
 
@@ -951,8 +937,9 @@ msgstr "Đã hủy cập nhật OTA."
 msgid "OTA update failed: %1"
 msgstr "Cập nhật OTA thất bại: %1"
 
+#. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
-msgstr "Chỉ được sử dụng bởi các prompt chọn tham gia ngữ cảnh sách (mặc định: Giải thích, Bối cảnh lịch sử, Tóm tắt, Điểm chính và ELI5). Khi được bật, văn bản của trang được đánh dấu và các trang lân cận được gửi đến AI như tham chiếu nền. Yêu cầu chọn văn bản và tăng mức sử dụng token."
+msgstr "Chỉ được dùng bởi các prompt có bật ngữ cảnh sách (mặc định: Giải thích, Bối cảnh lịch sử, Tóm tắt, Điểm chính và ELI5). Khi bật, văn bản của trang được tô sáng và các trang liền kề sẽ được gửi tới AI làm tham chiếu nền. Yêu cầu phải chọn văn bản và làm tăng lượng token sử dụng."
 
 msgid "Open conflict or mystery:"
 msgstr "Xung đột hoặc bí ẩn còn bỏ ngỏ:"
@@ -990,8 +977,9 @@ msgstr "Tóm tắt cốt truyện"
 msgid "Plugin is not configured."
 msgstr "Plugin chưa được cấu hình."
 
+#. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
-msgstr "Thêm siêu dữ liệu sách (tiêu đề, tác giả và vị trí đọc hiện tại bao gồm cả chương) vào đầu các lời nhắc chọn sử dụng ngữ cảnh sách (mặc định: Explain, Historical Context, Summarize, Key Points và ELI5). Hành vi theo từng lời nhắc có thể được ghi đè bằng use_book_context trong tệp cấu hình."
+msgstr "Thêm siêu dữ liệu sách (tiêu đề, tác giả và vị trí đọc hiện tại, bao gồm cả chương) vào đầu các prompt có bật ngữ cảnh sách (mặc định: Giải thích, Bối cảnh lịch sử, Tóm tắt, Điểm chính và ELI5). Có thể ghi đè hành vi của từng prompt bằng use_book_context trong tệp cấu hình."
 
 msgid "Preset list of AI Dictionary sections."
 msgstr "Danh sách mục từ điển AI có sẵn."
@@ -1065,8 +1053,9 @@ msgstr "Tùy chọn Lập luận"
 msgid "Reasoning Options - %1"
 msgstr "Tùy chọn Lập luận - %1"
 
+#. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
-msgstr "Recap"
+msgstr "Tóm tắt"
 
 msgid "Remove"
 msgstr "Xóa"
@@ -1249,8 +1238,10 @@ msgstr "Ghi chú nhanh"
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "Ghi chú nhanh sẽ được lưu vào sổ ghi chú của bạn."
 
+#. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
+#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
-msgstr "Term X-Ray"
+msgstr "Thuật ngữ X-Ray"
 
 msgid "Terms & Concepts"
 msgstr "Thuật ngữ & Khái niệm"
@@ -1388,8 +1379,9 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Sử dụng Trợ lý AI cho 'Dịch'"
 
+#. @translators Settings option. "Recap" is a brief spoiler-free summary of what was already read. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Use Book Text for X-Ray and Recap"
-msgstr "Dùng văn bản sách cho X-Ray và Recap"
+msgstr "Dùng nội dung sách cho X-Ray và Tóm tắt"
 
 msgid "Use web search"
 msgstr "Sử dụng tìm kiếm web"
@@ -1420,8 +1412,9 @@ msgstr "API Tìm kiếm web"
 msgid "What It Is"
 msgstr "Nó là gì"
 
+#. @translators Explanation for the book-text option. "Recap" is a brief spoiler-free summary of what was already read.
 msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
-msgstr "Khi được bật, các tính năng Recap và X-Ray tự động bao gồm văn bản sách đến vị trí đọc hiện tại của bạn làm ngữ cảnh. Điều này chỉ ảnh hưởng đến các tính năng ở cấp độ sách, không phải các lời nhắc trong menu đánh dấu, và làm tăng đáng kể mức sử dụng token."
+msgstr "Khi được bật, tính năng Tóm tắt và X-Ray sẽ tự động đưa nội dung sách tính đến vị trí đọc hiện tại của bạn vào làm ngữ cảnh. Điều này chỉ ảnh hưởng đến các tính năng ở cấp sách, không ảnh hưởng đến các lệnh trong menu đánh dấu, và làm tăng đáng kể lượng token sử dụng."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

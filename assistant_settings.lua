@@ -619,6 +619,7 @@ SettingsDialog.genMenuSettings = function(assistant)
                     end,
                     hold_callback = function ()
                         UIManager:show(InfoMessage:new{
+                            -- @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
                             text = _("Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file.")
                         })
                     end
@@ -632,6 +633,7 @@ SettingsDialog.genMenuSettings = function(assistant)
                     end,
                     hold_callback = function ()
                         UIManager:show(InfoMessage:new{
+                            -- @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
                             text = _("Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage.")
                         })
                     end

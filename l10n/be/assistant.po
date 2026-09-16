@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 21:58+0800\n"
+"POT-Creation-Date: 2026-09-16 11:29+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -212,11 +212,14 @@ msgstr "ШІ-слоўнік"
 msgid "AI Language: "
 msgstr "Мова ШІ: "
 
+#. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
-msgstr "AI-рэкап будзе ўключаны пры наступным адкрыцці даўно нечытанай кнігі."
+msgstr "AI-агляд будзе ўключаны пры наступным адкрыцці даўно не чытанай кнігі."
 
+#. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
+#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
-msgstr "AI-рэзюмэ"
+msgstr "AI-агляды"
 
 msgid "AI Response Language"
 msgstr "Мова адказаў ШІ"
@@ -224,8 +227,9 @@ msgstr "Мова адказаў ШІ"
 msgid "AI Response Language Setting"
 msgstr "Налада мовы адказаў ШІ"
 
+#. @translators Settings option. Same "Term X-Ray" feature as the popup button: explains the selected word by scanning every occurrence across the book. "AI" marks it as AI-powered. Translate consistently with "Term X-Ray". Keep it short.
 msgid "AI Term X-Ray"
-msgstr "AI Term X-Ray"
+msgstr "AI X-Ray тэрміна"
 
 msgid "AI Wikipedia"
 msgstr "AI Wikipedia"
@@ -333,8 +337,9 @@ msgstr "Налады асістэнта недаступныя."
 msgid "Attach Prior Text"
 msgstr "Далучыць папярэдні тэкст"
 
+#. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
-msgstr "Аўтапераказ пры адкрыцці даўно нечытаных кніг"
+msgstr "Аўтаматычны агляд пры адкрыцці даўно не чытаных кніг"
 
 msgid "Auto-save Conversations to Notebook"
 msgstr "Аўтазахаванне размоў у нататнік"
@@ -569,15 +574,17 @@ msgstr ""
 msgid "Display name"
 msgstr "Адлюстроўваемая назва"
 
+#. @translators Prompt offering a "Recap" (a brief spoiler-free summary of what was already read, to refresh memory after a break). %1 is the book title, %2 is the author.
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
 "\n"
 msgstr ""
-"Ці хочаце вы AI Recap?\n"
-"Для %1 аўтара %2.\n"
+"Ці хочаце вы AI-агляд?\n"
+"Для %1, аўтар %2.\n"
 "\n"
 
+#. @translators Button label, acronym for "Explain Like I'm 5": explains the highlighted text in very simple terms a child could understand. Keep the acronym if it is widely recognized; otherwise translate the meaning briefly. Keep it short and consistent wherever "ELI5" appears.
 msgid "ELI5"
 msgstr "ELI5"
 
@@ -753,32 +760,8 @@ msgstr "Пакіньце пустым, каб выкарыстоўваць: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Пакіньце гэтыя палі пустымі, каб выкарыстоўваць мову інтэрфейсу: %1"
 
-msgid "Loading AI Dictionary ..."
-msgstr "Загрузка ШІ-слоўніка ..."
-
-msgid "Loading Book Information..."
-msgstr "Загрузка інфармацыі пра кнігу..."
-
-msgid "Loading Highlight & Note Analysis..."
-msgstr "Загрузка аналізу вылучэнняў і нататак..."
-
-msgid "Loading Recap..."
-msgstr "Загрузка Recap..."
-
-msgid "Loading Summary Using Highlights & Notes..."
-msgstr "Загрузка рэзюмэ з выкарыстаннем вылучэнняў і нататак..."
-
-msgid "Loading Term X-Ray ..."
-msgstr "Загрузка Term X-Ray ..."
-
-msgid "Loading X-Ray..."
-msgstr "Загрузка X-Ray..."
-
-msgid "Loading for %1 ..."
-msgstr "Загрузка для %1 ..."
-
-msgid "Loading..."
-msgstr "Загрузка..."
+msgid "Loading for <b>%1</b> ..."
+msgstr "Загрузка для <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Месцы"
@@ -873,6 +856,9 @@ msgstr "Няма"
 msgid "Note added successfully"
 msgstr "Нататка паспяхова дададзена"
 
+msgid "Notebook"
+msgstr "Нататнік"
+
 msgid "Notebook (AI Conversation Log)"
 msgstr "Сшытак (часопіс размоў AI)"
 
@@ -953,8 +939,9 @@ msgstr "OTA-абнаўленне адменена."
 msgid "OTA update failed: %1"
 msgstr "OTA-абнаўленне не атрымалася: %1"
 
+#. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
-msgstr "Выкарыстоўваецца толькі запытамі, якія дазваляюць кантэкст кнігі (па змаўчанні: Тлумачэнне, Гістарычны кантэкст, Рэзюмэ, Ключавыя моманты і ELI5). Калі ўключана, тэкст вылучанай старонкі і суседніх старонак адпраўляецца ШІ як даведачны кантэкст. Патрабуе вылучэння тэксту і павялічвае выкарыстанне токенаў."
+msgstr "Выкарыстоўваецца толькі промптамі, якія ўключаюць кантэкст кнігі (па змаўчанні: Тлумачэнне, Гістарычны кантэкст, Канспект, Ключавыя пункты і ELI5). Калі ўключана, тэкст выдзеленай старонкі і суседніх старонак адпраўляецца ШІ як даведачная інфармацыя. Патрабуе вылучэння тэксту і павялічвае выдаткаванне токенаў."
 
 msgid "Open conflict or mystery:"
 msgstr "Адкрыты канфлікт ці загадка:"
@@ -992,8 +979,9 @@ msgstr "Кароткі змест"
 msgid "Plugin is not configured."
 msgstr "Плагін не настроены."
 
+#. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
-msgstr "Дадае метаданыя кнігі (назва, аўтар і бягучая пазіцыя чытання, уключаючы раздзел) да запытаў, якія далучаюцца да кантэксту кнігі (па змаўчанні: Explain, Historical Context, Summarize, Key Points і ELI5). Паводзіны для кожнага запыту можна змяніць з дапамогай use_book_context у канфігурацыйным файле."
+msgstr "Дадае метаданыя кнігі (назву, аўтара і бягучую пазіцыю чытання, у тым ліку раздзел) перад промптамі, якія ўключаюць кантэкст кнігі (па змаўчанні: Тлумачэнне, Гістарычны кантэкст, Канспект, Ключавыя пункты і ELI5). Паводзіны асобных промптаў можна перавызначыць з дапамогай use_book_context у файле канфігурацыі."
 
 msgid "Preset list of AI Dictionary sections."
 msgstr "Прадвызначаны спіс раздзелаў AI-слоўніка."
@@ -1067,8 +1055,9 @@ msgstr "Параметр разважання"
 msgid "Reasoning Options - %1"
 msgstr "Параметры разважання - %1"
 
+#. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
-msgstr "Recap"
+msgstr "Агляд"
 
 msgid "Remove"
 msgstr "Выдаліць"
@@ -1252,8 +1241,10 @@ msgstr "Зрабіць хуткія нататкі"
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "Рабіце хуткія нататкі, якія будуць захаваны ў вашым нататніку."
 
+#. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
+#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
-msgstr "Term X-Ray"
+msgstr "X-Ray тэрміна"
 
 msgid "Terms & Concepts"
 msgstr "Тэрміны і паняцці"
@@ -1391,8 +1382,9 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Выкарыстоўваць AI-памочніка для «Перакладу»"
 
+#. @translators Settings option. "Recap" is a brief spoiler-free summary of what was already read. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Use Book Text for X-Ray and Recap"
-msgstr "Выкарыстоўваць тэкст кнігі для X-Ray і Recap"
+msgstr "Выкарыстоўваць тэкст кнігі для X-Ray і агляду"
 
 msgid "Use web search"
 msgstr "Выкарыстоўваць вэб-пошук"
@@ -1423,8 +1415,9 @@ msgstr "WebSearch API"
 msgid "What It Is"
 msgstr "Што гэта"
 
+#. @translators Explanation for the book-text option. "Recap" is a brief spoiler-free summary of what was already read.
 msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
-msgstr "Калі ўключана, функцыі Recap і X-Ray аўтаматычна ўключаюць тэкст кнігі да бягучай пазіцыі чытання ў якасці кантэксту. Гэта ўплывае толькі на функцыі ўзроўню кнігі, а не на запыты меню выдзялення, і значна павялічвае выкарыстанне токенаў."
+msgstr "Калі ўключана, функцыі «Агляд» і «X-Ray» аўтаматычна дадаюць тэкст кнігі да вашай бягучай пазіцыі чытання як кантэкст. Гэта ўплывае толькі на функцыі ўзроўню кнігі, а не на запыты з меню выдзеленага тэксту, і значна павялічвае выдаткоўванне токенаў."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

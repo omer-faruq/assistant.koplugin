@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 21:58+0800\n"
+"POT-Creation-Date: 2026-09-16 11:29+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Bahasa Indonesia (AI translation)\n"
@@ -212,9 +212,12 @@ msgstr "Kamus AI"
 msgid "AI Language: "
 msgstr "Bahasa AI: "
 
+#. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
-msgstr "Rekap AI akan diaktifkan saat berikutnya buku yang sudah lama tidak dibaca dibuka."
+msgstr "Rekap AI akan diaktifkan saat buku yang lama tidak dibaca dibuka berikutnya."
 
+#. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
+#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "Rekap AI"
 
@@ -224,8 +227,9 @@ msgstr "Bahasa Respons AI"
 msgid "AI Response Language Setting"
 msgstr "Pengaturan Bahasa Respons AI"
 
+#. @translators Settings option. Same "Term X-Ray" feature as the popup button: explains the selected word by scanning every occurrence across the book. "AI" marks it as AI-powered. Translate consistently with "Term X-Ray". Keep it short.
 msgid "AI Term X-Ray"
-msgstr "X-Ray Istilah AI"
+msgstr "AI Term X-Ray"
 
 msgid "AI Wikipedia"
 msgstr "Wikipedia AI"
@@ -333,8 +337,9 @@ msgstr "Pengaturan asisten tidak tersedia."
 msgid "Attach Prior Text"
 msgstr "Lampirkan Teks Sebelumnya"
 
+#. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
-msgstr "Recap otomatis saat membuka buku yang lama tidak dibaca"
+msgstr "Rekap otomatis saat membuka buku yang lama tidak dibaca"
 
 msgid "Auto-save Conversations to Notebook"
 msgstr "Simpan Otomatis Percakapan ke Notebook"
@@ -569,6 +574,7 @@ msgstr ""
 msgid "Display name"
 msgstr "Nama tampilan"
 
+#. @translators Prompt offering a "Recap" (a brief spoiler-free summary of what was already read, to refresh memory after a break). %1 is the book title, %2 is the author.
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
@@ -578,6 +584,7 @@ msgstr ""
 "Untuk %1 oleh %2.\n"
 "\n"
 
+#. @translators Button label, acronym for "Explain Like I'm 5": explains the highlighted text in very simple terms a child could understand. Keep the acronym if it is widely recognized; otherwise translate the meaning briefly. Keep it short and consistent wherever "ELI5" appears.
 msgid "ELI5"
 msgstr "ELI5"
 
@@ -751,32 +758,8 @@ msgstr "Kosongkan untuk menggunakan: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Kosongkan kolom ini untuk menggunakan bahasa antarmuka: %1"
 
-msgid "Loading AI Dictionary ..."
-msgstr "Memuat Kamus AI ..."
-
-msgid "Loading Book Information..."
-msgstr "Memuat Informasi Buku..."
-
-msgid "Loading Highlight & Note Analysis..."
-msgstr "Memuat Analisis Sorotan & Catatan..."
-
-msgid "Loading Recap..."
-msgstr "Memuat Recap..."
-
-msgid "Loading Summary Using Highlights & Notes..."
-msgstr "Memuat Ringkasan Menggunakan Sorotan & Catatan..."
-
-msgid "Loading Term X-Ray ..."
-msgstr "Memuat Term X-Ray ..."
-
-msgid "Loading X-Ray..."
-msgstr "Memuat X-Ray..."
-
-msgid "Loading for %1 ..."
-msgstr "Memuat untuk %1 ..."
-
-msgid "Loading..."
-msgstr "Memuat..."
+msgid "Loading for <b>%1</b> ..."
+msgstr "Memuat untuk <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Lokasi"
@@ -871,6 +854,9 @@ msgstr "Tidak ada"
 msgid "Note added successfully"
 msgstr "Catatan berhasil ditambahkan"
 
+msgid "Notebook"
+msgstr "Buku Catatan"
+
 msgid "Notebook (AI Conversation Log)"
 msgstr "Buku Catatan (Log Percakapan AI)"
 
@@ -951,8 +937,9 @@ msgstr "Pembaruan OTA dibatalkan."
 msgid "OTA update failed: %1"
 msgstr "Pembaruan OTA gagal: %1"
 
+#. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
-msgstr "Hanya digunakan oleh prompt yang memilih untuk menggunakan konteks buku (secara bawaan: Jelaskan, Konteks Historis, Ringkas, Poin-Poin Utama, dan ELI5). Jika diaktifkan, teks halaman yang disorot dan halaman di sekitarnya dikirim ke AI sebagai referensi latar belakang. Memerlukan pemilihan teks dan meningkatkan penggunaan token."
+msgstr "Hanya digunakan oleh prompt yang mengaktifkan konteks buku (secara bawaan: Jelaskan, Konteks Historis, Ringkas, Poin Penting, dan ELI5). Saat diaktifkan, teks halaman yang disorot beserta halaman di sekitarnya dikirim ke AI sebagai referensi latar belakang. Memerlukan pemilihan teks dan menambah penggunaan token."
 
 msgid "Open conflict or mystery:"
 msgstr "Konflik atau misteri yang belum terpecahkan:"
@@ -990,8 +977,9 @@ msgstr "Ringkasan Alur"
 msgid "Plugin is not configured."
 msgstr "Plugin belum dikonfigurasi."
 
+#. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
-msgstr "Menyisipkan metadata buku (judul, penulis, dan posisi baca saat ini termasuk bab) di awal prompt yang memilih untuk menggunakan konteks buku (secara default: Jelaskan, Konteks Historis, Ringkas, Poin-Poin Utama, dan ELI5). Perilaku per-prompt dapat ditimpa dengan use_book_context di file konfigurasi."
+msgstr "Menambahkan metadata buku (judul, penulis, dan posisi baca saat ini termasuk bab) di awal prompt yang mengaktifkan konteks buku (secara bawaan: Jelaskan, Konteks Historis, Ringkas, Poin Penting, dan ELI5). Perilaku tiap prompt dapat ditimpa dengan use_book_context di berkas konfigurasi."
 
 msgid "Preset list of AI Dictionary sections."
 msgstr "Daftar prasetel bagian Kamus AI."
@@ -1065,8 +1053,9 @@ msgstr "Opsi Penalaran"
 msgid "Reasoning Options - %1"
 msgstr "Opsi Penalaran - %1"
 
+#. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
-msgstr "Recap"
+msgstr "Rekap"
 
 msgid "Remove"
 msgstr "Hapus"
@@ -1250,6 +1239,8 @@ msgstr "Buat Catatan Singkat"
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "Buat catatan singkat yang akan disimpan ke buku catatan Anda."
 
+#. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
+#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
@@ -1389,8 +1380,9 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Gunakan Asisten AI untuk 'Terjemahan'"
 
+#. @translators Settings option. "Recap" is a brief spoiler-free summary of what was already read. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Use Book Text for X-Ray and Recap"
-msgstr "Gunakan Teks Buku untuk X-Ray dan Recap"
+msgstr "Gunakan Teks Buku untuk X-Ray dan Rekap"
 
 msgid "Use web search"
 msgstr "Gunakan pencarian web"
@@ -1421,8 +1413,9 @@ msgstr "API WebSearch"
 msgid "What It Is"
 msgstr "Apa Itu"
 
+#. @translators Explanation for the book-text option. "Recap" is a brief spoiler-free summary of what was already read.
 msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
-msgstr "Jika diaktifkan, fitur Recap dan X-Ray secara otomatis menyertakan teks buku hingga posisi baca Anda saat ini sebagai konteks. Ini hanya memengaruhi fitur tingkat buku, bukan prompt menu sorotan, dan meningkatkan penggunaan token secara signifikan."
+msgstr "Saat diaktifkan, fitur Rekap dan X-Ray otomatis menyertakan teks buku hingga posisi baca Anda saat ini sebagai konteks. Ini hanya memengaruhi fitur tingkat buku, bukan prompt di menu sorotan, dan secara signifikan meningkatkan penggunaan token."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

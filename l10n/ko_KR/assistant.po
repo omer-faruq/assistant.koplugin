@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 21:58+0800\n"
+"POT-Creation-Date: 2026-09-16 11:29+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -212,9 +212,12 @@ msgstr "AI 사전"
 msgid "AI Language: "
 msgstr "AI 언어: "
 
+#. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
-msgstr "AI Recap은 다음에 오랫동안 읽지 않은 책을 열 때 활성화됩니다."
+msgstr "AI 요약은 다음번에 오랫동안 읽지 않은 책을 열 때 활성화됩니다."
 
+#. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
+#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AI 요약"
 
@@ -224,6 +227,7 @@ msgstr "AI 응답 언어"
 msgid "AI Response Language Setting"
 msgstr "AI 응답 언어 설정"
 
+#. @translators Settings option. Same "Term X-Ray" feature as the popup button: explains the selected word by scanning every occurrence across the book. "AI" marks it as AI-powered. Translate consistently with "Term X-Ray". Keep it short.
 msgid "AI Term X-Ray"
 msgstr "AI 용어 X-Ray"
 
@@ -333,8 +337,9 @@ msgstr "어시스턴트 설정을 사용할 수 없습니다."
 msgid "Attach Prior Text"
 msgstr "이전 텍스트 포함"
 
+#. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
-msgstr "오래 읽지 않은 책을 열 때 자동 요약"
+msgstr "오랫동안 읽지 않은 책을 열 때 자동 요약"
 
 msgid "Auto-save Conversations to Notebook"
 msgstr "대화를 노트북에 자동 저장"
@@ -569,15 +574,17 @@ msgstr ""
 msgid "Display name"
 msgstr "표시 이름"
 
+#. @translators Prompt offering a "Recap" (a brief spoiler-free summary of what was already read, to refresh memory after a break). %1 is the book title, %2 is the author.
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
 "\n"
 msgstr ""
-"AI Recap을 원하시나요?\n"
-"%2의 %1에 대해.\n"
+"AI 요약을 원하시나요?\n"
+"%2 지음, %1.\n"
 "\n"
 
+#. @translators Button label, acronym for "Explain Like I'm 5": explains the highlighted text in very simple terms a child could understand. Keep the acronym if it is widely recognized; otherwise translate the meaning briefly. Keep it short and consistent wherever "ELI5" appears.
 msgid "ELI5"
 msgstr "ELI5"
 
@@ -751,32 +758,8 @@ msgstr "비워 두면 사용: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "이 필드를 비워 두면 UI 언어를 사용합니다: %1"
 
-msgid "Loading AI Dictionary ..."
-msgstr "AI 사전 불러오는 중 ..."
-
-msgid "Loading Book Information..."
-msgstr "책 정보 불러오는 중..."
-
-msgid "Loading Highlight & Note Analysis..."
-msgstr "하이라이트 및 메모 분석 불러오는 중..."
-
-msgid "Loading Recap..."
-msgstr "Recap 불러오는 중..."
-
-msgid "Loading Summary Using Highlights & Notes..."
-msgstr "하이라이트 및 메모를 활용한 요약 불러오는 중..."
-
-msgid "Loading Term X-Ray ..."
-msgstr "Term X-Ray 불러오는 중 ..."
-
-msgid "Loading X-Ray..."
-msgstr "X-Ray 불러오는 중..."
-
-msgid "Loading for %1 ..."
-msgstr "%1 불러오는 중 ..."
-
-msgid "Loading..."
-msgstr "불러오는 중..."
+msgid "Loading for <b>%1</b> ..."
+msgstr "<b>%1</b> 불러오는 중 ..."
 
 msgid "Locations"
 msgstr "장소"
@@ -871,6 +854,9 @@ msgstr "없음"
 msgid "Note added successfully"
 msgstr "메모가 성공적으로 추가되었습니다."
 
+msgid "Notebook"
+msgstr "노트북"
+
 msgid "Notebook (AI Conversation Log)"
 msgstr "노트북 (AI 대화 기록)"
 
@@ -951,8 +937,9 @@ msgstr "OTA 업데이트가 취소되었습니다."
 msgid "OTA update failed: %1"
 msgstr "OTA 업데이트 실패: %1"
 
+#. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
-msgstr "책 컨텍스트를 선택한 프롬프트에서만 사용됩니다(기본값: 설명, 역사적 배경, 요약, 핵심 요점, ELI5). 활성화하면 강조 표시된 페이지와 인접한 페이지의 텍스트가 배경 참조로 AI에 전송됩니다. 텍스트 선택이 필요하며 토큰 사용량이 증가합니다."
+msgstr "책 컨텍스트를 사용하도록 설정된 프롬프트에서만 사용됩니다(기본값: 설명, 역사적 배경, 요약, 핵심 포인트, ELI5). 활성화하면 강조 표시된 페이지와 인접 페이지의 텍스트가 배경 참조 자료로 AI에 전송됩니다. 텍스트를 선택해야 하며 토큰 사용량이 증가합니다."
 
 msgid "Open conflict or mystery:"
 msgstr "해결되지 않은 갈등 또는 미스터리:"
@@ -990,8 +977,9 @@ msgstr "줄거리 요약"
 msgid "Plugin is not configured."
 msgstr "플러그인이 구성되지 않았습니다."
 
+#. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
-msgstr "책 컨텍스트를 선택한 프롬프트 앞에 책 메타데이터(제목, 저자 및 현재 읽기 위치(장 포함))를 추가합니다(기본값: 설명, 역사적 배경, 요약, 핵심 요점, ELI5). 프롬프트별 동작은 구성 파일의 use_book_context로 재정의할 수 있습니다."
+msgstr "책 컨텍스트를 사용하도록 설정된 프롬프트 앞에 책 메타데이터(제목, 저자, 챕터를 포함한 현재 읽기 위치)를 추가합니다(기본값: 설명, 역사적 배경, 요약, 핵심 포인트, ELI5). 프롬프트별 동작은 구성 파일에서 use_book_context로 재정의할 수 있습니다."
 
 msgid "Preset list of AI Dictionary sections."
 msgstr "AI 사전 섹션의 사전 설정 목록입니다."
@@ -1065,8 +1053,9 @@ msgstr "추론 옵션"
 msgid "Reasoning Options - %1"
 msgstr "추론 옵션 - %1"
 
+#. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
-msgstr "Recap"
+msgstr "요약"
 
 msgid "Remove"
 msgstr "제거"
@@ -1249,8 +1238,10 @@ msgstr "빠른 메모 작성"
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "노트북에 저장될 빠른 메모를 작성하세요."
 
+#. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
+#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
-msgstr "Term X-Ray"
+msgstr "용어 X-Ray"
 
 msgid "Terms & Concepts"
 msgstr "용어 및 개념"
@@ -1388,8 +1379,9 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "'번역'에 AI 어시스턴트 사용"
 
+#. @translators Settings option. "Recap" is a brief spoiler-free summary of what was already read. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Use Book Text for X-Ray and Recap"
-msgstr "X-Ray 및 Recap에 책 텍스트 사용"
+msgstr "X-Ray 및 요약에 책 본문 사용"
 
 msgid "Use web search"
 msgstr "웹 검색 사용"
@@ -1420,8 +1412,9 @@ msgstr "웹 검색 API"
 msgid "What It Is"
 msgstr "정의"
 
+#. @translators Explanation for the book-text option. "Recap" is a brief spoiler-free summary of what was already read.
 msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
-msgstr "활성화하면 Recap 및 X-Ray 기능이 현재 읽기 위치까지의 책 텍스트를 컨텍스트로 자동 포함합니다. 이는 책 수준 기능에만 영향을 미치며 하이라이트 메뉴 프롬프트에는 영향을 미치지 않습니다. 또한 토큰 사용량이 크게 증가합니다."
+msgstr "활성화하면 요약 및 X-Ray 기능이 현재 읽기 위치까지의 책 본문을 자동으로 컨텍스트에 포함합니다. 이는 책 수준 기능에만 적용되며 하이라이트 메뉴 프롬프트에는 영향을 주지 않고, 토큰 사용량을 크게 증가시킵니다."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

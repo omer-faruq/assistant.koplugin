@@ -254,6 +254,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
             _("Essential Facts & Conclusions"))
     },
     ELI5 = {
+        -- @translators Button label, acronym for "Explain Like I'm 5": explains the highlighted text in very simple terms a child could understand. Keep the acronym if it is widely recognized; otherwise translate the meaning briefly. Keep it short and consistent wherever "ELI5" appears.
         text = _("ELI5"),
         use_websearch = false,
         use_book_context = true,

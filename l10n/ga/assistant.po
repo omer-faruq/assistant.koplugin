@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 21:58+0800\n"
+"POT-Creation-Date: 2026-09-16 11:29+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -212,11 +212,14 @@ msgstr "Foclóir AI"
 msgid "AI Language: "
 msgstr "Teanga AI: "
 
+#. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
-msgstr "Cumasófar Achoimre AI an chéad uair eile a osclaítear leabhar nár léadh le fada."
+msgstr "Cumasófar AI Recap an chéad uair eile a osclófar leabhar nár léadh le fada."
 
+#. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
+#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
-msgstr "Achoimrí AI"
+msgstr "AI Recapanna"
 
 msgid "AI Response Language"
 msgstr "Teanga Freagra AI"
@@ -224,8 +227,9 @@ msgstr "Teanga Freagra AI"
 msgid "AI Response Language Setting"
 msgstr "Socrú Teanga Freagra AI"
 
+#. @translators Settings option. Same "Term X-Ray" feature as the popup button: explains the selected word by scanning every occurrence across the book. "AI" marks it as AI-powered. Translate consistently with "Term X-Ray". Keep it short.
 msgid "AI Term X-Ray"
-msgstr "X-Ray Téarma AI"
+msgstr "AI X-Ray Téarma"
 
 msgid "AI Wikipedia"
 msgstr "Wikipedia AI"
@@ -333,8 +337,9 @@ msgstr "Níl socruithe an chúntóra ar fáil."
 msgid "Attach Prior Text"
 msgstr "Ceangail Téacs Roimhe"
 
+#. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
-msgstr "Achoimre uathoibríoch ar leabhair nár léadh le fada"
+msgstr "Uath-Recap nuair a Osclaítear Leabhair Nár Léadh le Fada"
 
 msgid "Auto-save Conversations to Notebook"
 msgstr "Comhráite a shábháil go huathoibríoch sa leabhar nótaí"
@@ -569,15 +574,17 @@ msgstr ""
 msgid "Display name"
 msgstr "Ainm taispeána"
 
+#. @translators Prompt offering a "Recap" (a brief spoiler-free summary of what was already read, to refresh memory after a break). %1 is the book title, %2 is the author.
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
 "\n"
 msgstr ""
-"An dteastaíonn Achoimre AI uait?\n"
+"Ar mhaith leat AI Recap?\n"
 "Do %1 le %2.\n"
 "\n"
 
+#. @translators Button label, acronym for "Explain Like I'm 5": explains the highlighted text in very simple terms a child could understand. Keep the acronym if it is widely recognized; otherwise translate the meaning briefly. Keep it short and consistent wherever "ELI5" appears.
 msgid "ELI5"
 msgstr "ELI5"
 
@@ -755,32 +762,8 @@ msgstr "Fág bán le húsáid: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Fág na réimsí seo bán le teanga an chomhéadain a úsáid: %1"
 
-msgid "Loading AI Dictionary ..."
-msgstr "Ag lódáil Foclóir AI ..."
-
-msgid "Loading Book Information..."
-msgstr "Ag lódáil Eolas faoin Leabhar..."
-
-msgid "Loading Highlight & Note Analysis..."
-msgstr "Ag lódáil Anailís ar Aibhsithe agus Nótaí..."
-
-msgid "Loading Recap..."
-msgstr "Ag lódáil Achoimre..."
-
-msgid "Loading Summary Using Highlights & Notes..."
-msgstr "Ag lódáil Achoimre ag Úsáid Aibhsithe agus Nótaí..."
-
-msgid "Loading Term X-Ray ..."
-msgstr "Ag lódáil Term X-Ray ..."
-
-msgid "Loading X-Ray..."
-msgstr "Ag lódáil X-Ray..."
-
-msgid "Loading for %1 ..."
-msgstr "Ag lódáil do %1 ..."
-
-msgid "Loading..."
-msgstr "Ag lódáil..."
+msgid "Loading for <b>%1</b> ..."
+msgstr "Á lódáil le haghaidh <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Áiteanna"
@@ -875,6 +858,9 @@ msgstr "Dada"
 msgid "Note added successfully"
 msgstr "Cuireadh an nóta leis go rathúil"
 
+msgid "Notebook"
+msgstr "Leabhar Nótaí"
+
 msgid "Notebook (AI Conversation Log)"
 msgstr "Leabhar nótaí (Loga Comhrá AI)"
 
@@ -955,8 +941,9 @@ msgstr "Cealaíodh an nuashonrú OTA."
 msgid "OTA update failed: %1"
 msgstr "Theip ar an nuashonrú OTA: %1"
 
+#. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
-msgstr "Úsáidtear é ach amháin ag prasanna a roghnaíonn comhthéacs an leabhair (de réir réamhshocraithe: Explain, Historical Context, Summarize, Key Points agus ELI5). Nuair a chumasaítear é, seoltar téacs an leathanaigh aibhsithe agus na leathanaigh in aice láimhe chuig an AI mar thagairt chúlra. Éilíonn sé roghnú téacs agus méadaíonn sé úsáid token."
+msgstr "Ní úsáidtear é ach ag leideanna a roghnaíonn comhthéacs leabhair (de réir réamhshocraithe: Mínigh, Comhthéacs Stairiúil, Achoimrigh, Príomhphointí agus ELI5). Nuair a chumasaítear é, seoltar téacs an leathanaigh aibhsithe agus na leathanaigh in aice láimhe chuig an AI mar thagairt chúlra. Teastaíonn roghnú téacs agus méadaíonn sé úsáid token."
 
 msgid "Open conflict or mystery:"
 msgstr "Coimhlint nó rúndiamhair gan réiteach:"
@@ -994,8 +981,9 @@ msgstr "Achoimre Plota"
 msgid "Plugin is not configured."
 msgstr "Níl an breiseán cumraithe."
 
+#. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
-msgstr "Cuireann sé meiteashonraí an leabhair (teideal, údar agus suíomh reatha léitheoireachta lena n-áirítear caibidil) roimh phrasanna a roghnaíonn comhthéacs an leabhair (de réir réamhshocraithe: Mínigh, Comhthéacs Stairiúil, Achoimre, Príomhphointí agus ELI5). Is féidir iompar gach pras a shárú le use_book_context sa chomhad cumraíochta."
+msgstr "Cuireann sé meiteashonraí leabhair (teideal, údar agus suíomh reatha léitheoireachta lena n-áirítear caibidil) roimh leideanna a roghnaíonn comhthéacs leabhair (de réir réamhshocraithe: Mínigh, Comhthéacs Stairiúil, Achoimrigh, Príomhphointí agus ELI5). Is féidir iompar gach leide a shárú le use_book_context sa chomhad cumraíochta."
 
 msgid "Preset list of AI Dictionary sections."
 msgstr "Liosta réamhshocraithe de ranna Foclóir AI."
@@ -1069,8 +1057,9 @@ msgstr "Rogha Réasúnaíochta"
 msgid "Reasoning Options - %1"
 msgstr "Roghanna Réasúnaíochta - %1"
 
+#. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
-msgstr "Achoimre"
+msgstr "Recap"
 
 msgid "Remove"
 msgstr "Bain"
@@ -1252,8 +1241,10 @@ msgstr "Tóg Nótaí Tapa"
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "Tóg nótaí tapa a shábhálfar i do leabhar nótaí."
 
+#. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
+#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
-msgstr "Term X-Ray"
+msgstr "X-Ray Téarma"
 
 msgid "Terms & Concepts"
 msgstr "Téarmaí & Coincheapa"
@@ -1391,6 +1382,7 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Úsáid an Cúntóir AI le haghaidh 'Aistriú'"
 
+#. @translators Settings option. "Recap" is a brief spoiler-free summary of what was already read. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Use Book Text for X-Ray and Recap"
 msgstr "Úsáid Téacs an Leabhair le haghaidh X-Ray agus Recap"
 
@@ -1423,8 +1415,9 @@ msgstr "API WebSearch"
 msgid "What It Is"
 msgstr "Cad é atá ann"
 
+#. @translators Explanation for the book-text option. "Recap" is a brief spoiler-free summary of what was already read.
 msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
-msgstr "Nuair a chuirtear ar siúl é, cuimsíonn na gnéithe Recap agus X-Ray téacs an leabhair suas go dtí do shuíomh reatha léitheoireachta mar chomhthéacs go huathoibríoch. Ní dhéanann sé seo difear ach do ghnéithe ar leibhéal an leabhair, ní do phrasanna roghchlár an aibhsithe, agus méadaíonn sé úsáid na dtóicín go suntasach."
+msgstr "Nuair a chumasófar é, áireoidh gnéithe Recap agus X-Ray téacs an leabhair suas go dtí do shuíomh léitheoireachta reatha mar chomhthéacs go huathoibríoch. Ní théann sé seo i bhfeidhm ach ar ghnéithe ar leibhéal an leabhair, ní ar na promptanna i roghchlár na mbéimnithe, agus méadaíonn sé úsáid tokens go suntasach."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"

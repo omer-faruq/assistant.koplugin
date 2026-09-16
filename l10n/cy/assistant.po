@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 21:58+0800\n"
+"POT-Creation-Date: 2026-09-16 11:29+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Cymraeg (AI translation)\n"
@@ -212,9 +212,12 @@ msgstr "Geiriadur AI"
 msgid "AI Language: "
 msgstr "Iaith AI: "
 
+#. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
-msgstr "Bydd Ail-grynodeb AI yn cael ei alluogi y tro nesaf y bydd llyfr sydd heb ei ddarllen ers amser hir yn cael ei agor."
+msgstr "Bydd Crynodeb AI yn cael ei alluogi'r tro nesaf y bydd llyfr sydd heb ei ddarllen ers tro yn cael ei agor."
 
+#. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
+#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "Crynodebau AI"
 
@@ -224,8 +227,9 @@ msgstr "Iaith Ymateb AI"
 msgid "AI Response Language Setting"
 msgstr "Gosodiad Iaith Ymateb AI"
 
+#. @translators Settings option. Same "Term X-Ray" feature as the popup button: explains the selected word by scanning every occurrence across the book. "AI" marks it as AI-powered. Translate consistently with "Term X-Ray". Keep it short.
 msgid "AI Term X-Ray"
-msgstr "X-Ray Termau AI"
+msgstr "X-Ray Term AI"
 
 msgid "AI Wikipedia"
 msgstr "Wicipedia AI"
@@ -333,8 +337,9 @@ msgstr "Nid yw gosodiadau'r cynorthwyydd ar gael."
 msgid "Attach Prior Text"
 msgstr "Atodi Testun Blaenorol"
 
+#. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
-msgstr "Crynodeb awtomatig wrth agor llyfrau nas darllenwyd ers tro"
+msgstr "Crynodeb awtomatig wrth agor llyfrau sydd heb eu darllen ers tro"
 
 msgid "Auto-save Conversations to Notebook"
 msgstr "Cadw sgyrsiau yn awtomatig i'r llyfr nodiadau"
@@ -569,6 +574,7 @@ msgstr ""
 msgid "Display name"
 msgstr "Enw arddangos"
 
+#. @translators Prompt offering a "Recap" (a brief spoiler-free summary of what was already read, to refresh memory after a break). %1 is the book title, %2 is the author.
 msgid ""
 "Do you want an AI Recap?\n"
 "For %1 by %2.\n"
@@ -578,6 +584,7 @@ msgstr ""
 "Ar gyfer %1 gan %2.\n"
 "\n"
 
+#. @translators Button label, acronym for "Explain Like I'm 5": explains the highlighted text in very simple terms a child could understand. Keep the acronym if it is widely recognized; otherwise translate the meaning briefly. Keep it short and consistent wherever "ELI5" appears.
 msgid "ELI5"
 msgstr "ELI5"
 
@@ -756,32 +763,8 @@ msgstr "Gadewch yn wag i ddefnyddio: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Gadewch y meysydd hyn yn wag i ddefnyddio iaith y rhyngwyneb: %1"
 
-msgid "Loading AI Dictionary ..."
-msgstr "Yn llwytho Geiriadur AI ..."
-
-msgid "Loading Book Information..."
-msgstr "Yn llwytho Gwybodaeth am y Llyfr..."
-
-msgid "Loading Highlight & Note Analysis..."
-msgstr "Yn llwytho Dadansoddiad Amlygiadau a Nodiadau..."
-
-msgid "Loading Recap..."
-msgstr "Yn llwytho Crynodeb..."
-
-msgid "Loading Summary Using Highlights & Notes..."
-msgstr "Yn llwytho Crynodeb gan Ddefnyddio Amlygiadau a Nodiadau..."
-
-msgid "Loading Term X-Ray ..."
-msgstr "Yn llwytho Term X-Ray ..."
-
-msgid "Loading X-Ray..."
-msgstr "Yn llwytho X-Ray..."
-
-msgid "Loading for %1 ..."
-msgstr "Yn llwytho ar gyfer %1 ..."
-
-msgid "Loading..."
-msgstr "Yn llwytho..."
+msgid "Loading for <b>%1</b> ..."
+msgstr "Yn llwytho ar gyfer <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Lleoliadau"
@@ -876,6 +859,9 @@ msgstr "Dim"
 msgid "Note added successfully"
 msgstr "Ychwanegwyd y nodyn yn llwyddiannus"
 
+msgid "Notebook"
+msgstr "Llyfr Nodiadau"
+
 msgid "Notebook (AI Conversation Log)"
 msgstr "Llyfr Nodiadau (Cofnod Sgwrs AI)"
 
@@ -956,8 +942,9 @@ msgstr "Diddymwyd y diweddariad OTA."
 msgid "OTA update failed: %1"
 msgstr "Methodd y diweddariad OTA: %1"
 
+#. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
-msgstr "Dim ond yn cael ei ddefnyddio gan anogion sy'n dewis cyd-destun y llyfr (yn ddiofyn: Egluro, Cyd-destun Hanesyddol, Crynodeb, Pwyntiau Allweddol ac ELI5). Pan gaiff ei alluogi, anfonir testun y dudalen a amlygwyd a'r tudalennau cyfagos at yr AI fel cyfeiriad cefndirol. Mae angen dewis testun ac yn cynyddu defnydd tocynnau."
+msgstr "Dim ond anogiadau sy'n dewis cynnwys cyd-destun y llyfr sy'n ei ddefnyddio (yn ddiofyn: Esbonio, Cyd-destun Hanesyddol, Crynodeb, Prif Bwyntiau ac ELI5). Pan gaiff ei alluogi, anfonir testun y dudalen a amlygwyd a'r tudalennau cyfagos at yr AI fel cyfeirnod cefndir. Mae angen detholiad testun ac mae'n cynyddu'r defnydd o docynnau."
 
 msgid "Open conflict or mystery:"
 msgstr "Gwrthdaro agored neu ddirgelwch:"
@@ -995,8 +982,9 @@ msgstr "Crynodeb o'r Plot"
 msgid "Plugin is not configured."
 msgstr "Nid yw'r ategyn wedi'i ffurfweddu."
 
+#. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
-msgstr "Yn rhagddodi metadata'r llyfr (teitl, awdur a safle darllen cyfredol gan gynnwys pennod) i anogion sy'n dewis cyd-destun y llyfr (yn ddiofyn: Egluro, Cyd-destun Hanesyddol, Crynodeb, Pwyntiau Allweddol ac ELI5). Gellir diystyru ymddygiad fesul anog gyda use_book_context yn y ffeil ffurfweddu."
+msgstr "Mae'n rhagychwanegu metadata'r llyfr (teitl, awdur a'r safle darllen presennol gan gynnwys pennod) at anogiadau sy'n dewis cynnwys cyd-destun y llyfr (yn ddiofyn: Esbonio, Cyd-destun Hanesyddol, Crynodeb, Prif Bwyntiau ac ELI5). Gellir diystyru ymddygiad pob anogiad ar wahân gyda use_book_context yn y ffeil ffurfweddu."
 
 msgid "Preset list of AI Dictionary sections."
 msgstr "Rhestr ragosodedig o adrannau'r Geiriadur AI."
@@ -1070,6 +1058,7 @@ msgstr "Opsiwn Rhesymu"
 msgid "Reasoning Options - %1"
 msgstr "Opsiynau Rhesymu - %1"
 
+#. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Crynodeb"
 
@@ -1255,8 +1244,10 @@ msgstr "Cymryd Nodiadau Cyflym"
 msgid "Take quick notes that will be saved to your notebook."
 msgstr "Cymerwch nodiadau cyflym a fydd yn cael eu cadw i'ch llyfr nodiadau."
 
+#. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
+#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
-msgstr "Term X-Ray"
+msgstr "X-Ray Term"
 
 msgid "Terms & Concepts"
 msgstr "Termau a Chysyniadau"
@@ -1394,8 +1385,9 @@ msgstr ""
 msgid "Use AI Assistant for 'Translate'"
 msgstr "Defnyddio Cynorthwyydd AI ar gyfer 'Cyfieithu'"
 
+#. @translators Settings option. "Recap" is a brief spoiler-free summary of what was already read. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Use Book Text for X-Ray and Recap"
-msgstr "Defnyddio Testun y Llyfr ar gyfer X-Ray a Recap"
+msgstr "Defnyddio testun y llyfr ar gyfer X-Ray a Chrynodeb"
 
 msgid "Use web search"
 msgstr "Defnyddio chwiliad gwe"
@@ -1426,8 +1418,9 @@ msgstr "API Chwilio'r We"
 msgid "What It Is"
 msgstr "Beth Yw"
 
+#. @translators Explanation for the book-text option. "Recap" is a brief spoiler-free summary of what was already read.
 msgid "When enabled, the Recap and X-Ray features automatically include the book text up to your current reading position as context. This only affects book-level features, not the highlight-menu prompts, and significantly increases token usage."
-msgstr "Pan gaiff ei alluogi, mae nodweddion Recap ac X-Ray yn cynnwys testun y llyfr hyd at eich safle darllen presennol yn awtomatig fel cyd-destun. Mae hyn ond yn effeithio ar nodweddion lefel llyfr, nid anogion y ddewislen amlygu, ac yn cynyddu defnydd tocynnau yn sylweddol."
+msgstr "Pan gaiff ei alluogi, bydd nodweddion Crynodeb ac X-Ray yn cynnwys testun y llyfr hyd at eich safle darllen presennol fel cyd-destun yn awtomatig. Dim ond nodweddion lefel y llyfr y mae hyn yn effeithio arnynt, ac nid y promptiau yn y ddewislen amlygu, ac mae'n cynyddu'r defnydd o docynnau'n sylweddol."
 
 #. @translators xray Re-immersion sub-fields
 msgid "Where the action stopped:"
