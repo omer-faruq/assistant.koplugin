@@ -677,7 +677,7 @@ function Assistant:init()
             Updater.checkForUpdates(self)
             UIManager:nextTick(function()
               -- Show the main AI dialog with highlighted text
-              self.assistant_dialog:show(_reader_highlight_instance.selected_text.text)
+              self.assistant_dialog:showAskDialog(_reader_highlight_instance.selected_text.text)
             end)
           end)
         end,
@@ -863,7 +863,7 @@ function Assistant:addMainButton(prompt_idx, prompt)
                 self:showTranslateOrDictionary(_reader_highlight_instance.selected_text.text)
               else
                 -- For other prompts, show the custom prompt dialog
-                self.assistant_dialog:showPrompt(_reader_highlight_instance.selected_text.text, prompt_idx)
+                self.assistant_dialog:runPrompt(_reader_highlight_instance.selected_text.text, prompt_idx)
               end
             end)
           end)
@@ -937,7 +937,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
         local word = popup and popup.word
         ASUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
-              self.assistant_dialog:showPrompt(word, "wikipedia")
+              self.assistant_dialog:runPrompt(word, "wikipedia")
             end)
         end)
     end,
@@ -1011,7 +1011,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
             local word = popup and popup.word
             ASUtils.runWhenOnlineFast(function()
                 Trapper:wrap(function()
-                  self.assistant_dialog:showPrompt(word, prompt.id)
+                  self.assistant_dialog:runPrompt(word, prompt.id)
                 end)
             end)
         end,
@@ -1143,7 +1143,7 @@ end
     ASUtils.runWhenOnlineFast(function()
       -- Show dialog without highlighted text
       Trapper:wrap(function()
-        self.assistant_dialog:show()
+        self.assistant_dialog:showAskDialog()
       end)
     end)
     return true
@@ -1226,7 +1226,7 @@ end
 -- ASUtils.runWhenOnlineFast + Trapper:wrap.
 function Assistant:showTranslateOrDictionary(text)
   local function open_translation()
-    self.assistant_dialog:showPrompt(text, "translate")
+    self.assistant_dialog:runPrompt(text, "translate")
   end
   local function open_dictionary()
     showDictionaryDialog(self, text)

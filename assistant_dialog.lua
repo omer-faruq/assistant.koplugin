@@ -282,7 +282,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
 end
 
 -- Helper function to create and show ChatGPT viewer
-function AssistantDialog:_createAndShowViewer(highlightedText, message_history, title)
+function AssistantDialog:_showResultViewer(highlightedText, message_history, title)
   local result_text = self:_createResultText(highlightedText, message_history, nil, title)
   
   local chatgpt_viewer 
@@ -474,7 +474,7 @@ end
 
 -- When clicked [Assistant] button in main select popup,
 -- Or when activated from guesture (no text highlighted)
-function AssistantDialog:show(highlightedText)
+function AssistantDialog:showAskDialog(highlightedText)
 
   local is_highlighted = highlightedText and highlightedText ~= ""
   
@@ -593,7 +593,7 @@ function AssistantDialog:show(highlightedText)
 
           -- do not have a title to display user prompt
           local viewer_title = nil
-          self:_createAndShowViewer(highlightedText, message_history, viewer_title)
+          self:_showResultViewer(highlightedText, message_history, viewer_title)
         end)
       end
     })
@@ -643,7 +643,7 @@ function AssistantDialog:show(highlightedText)
                     extractContextText(self.assistant, use_chapter))
               end
               user_question = user_question .. book_text_prompt
-              self:showPrompt(highlightedText, tab.idx, user_question)
+              self:runPrompt(highlightedText, tab.idx, user_question)
             end
           end)
         end,
@@ -843,12 +843,12 @@ end
 
 -- Process main select popup buttons
 -- ( prompts from configuration )
-function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
+function AssistantDialog:runPrompt(highlightedText, prompt_id, user_input)
 
   local user_prompts = self.assistant.config:getFeature("prompts")
-  local prompt_config = Prompts.getMergedPrompts(user_prompts)[prompt_index]
+  local prompt_config = Prompts.getMergedPrompts(user_prompts)[prompt_id]
 
-  local raw_title = koutil.tableGetValue(prompt_config, "text") or prompt_index
+  local raw_title = koutil.tableGetValue(prompt_config, "text") or prompt_id
   local title = Prompts.getDisplayText(raw_title,
     koutil.tableGetValue(prompt_config, "use_websearch") or false,
     Prompts.isWebSearchEnabled(self.assistant.settings))
@@ -882,7 +882,7 @@ function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
   ASUtils.set_attr(_user, "show_suggestions", Prompts.isSuggestionsEnabled(self.assistant.settings, prompt_config))
   table.insert(message_history, _user)
   
-  local answer, err = self.querier:query(message_history, title or prompt_index)
+  local answer, err = self.querier:query(message_history, title or prompt_id)
   if err then
     self.querier:showError(err, message_history)
     return
@@ -904,7 +904,7 @@ function AssistantDialog:showPrompt(highlightedText, prompt_index, user_input)
     return
   end
 
-  self:_createAndShowViewer(highlightedText, message_history, title)
+  self:_showResultViewer(highlightedText, message_history, title)
 end
 
 return AssistantDialog
