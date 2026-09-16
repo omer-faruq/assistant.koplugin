@@ -872,6 +872,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                 return koutil.trim(d:getFields()[3] or "") ~= ""  -- enabled when API key is filled
             end,
             callback = function()
+                dialog:onCloseKeyboard()  -- free the screen for the model list
                 local fields = readFields()
                 local api_key = fields[3]
                 local url = fields[2]
@@ -920,6 +921,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                 return f[1] ~= "" and f[2] ~= "" and f[3] ~= "" and f[4] ~= ""
             end,
             callback = function()
+                dialog:onCloseKeyboard()  -- free the screen for the test report
                 local fields = readFields()
                 local url, api_key, model = fields[2], fields[3], fields[4]
                 -- Fire the test through the handler's own Test() on a
