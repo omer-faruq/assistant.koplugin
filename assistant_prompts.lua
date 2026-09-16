@@ -20,6 +20,7 @@ local markdown_format_prompt = [[
 ### Formatting Constraint
 Do not use LaTeX math blocks (like $...$) for standard text or emphasis. Never wrap plain words in $\\textit{...}$ or $\\texttt{...}$. 
 Standard Markdown formatting (including quotes, tables, lists) is fully supported and encouraged where appropriate.
+Use hierarchical headings: `#` for top-level sections, `##` and `###` for subsections as needed; do not skip levels.
 ]]
 
 -- AI Dictionary output sections. The user prompt is composed from the enabled
@@ -63,16 +64,16 @@ You are a context-aware literary assistant for a reading app's "X-Ray" feature. 
 ## Analysis Structure
 Generate a clear, accessible analysis (approx. 300-400 words, present tense, fluid prose) using these headers:
 
-### %1
+# %1
 Define/describe "{highlight}" based on the context. Identify its nature (whether it is a character, object, location, or concept) and its core traits, physical descriptions, or basic rules.
 
-### %2
+# %2
 Explain how this term functions in the narrative. What do they/it do? What are the motivations, uses, effects, or relationships shown in the context?
 
-### %3
+# %3
 Track how understanding of this term changes from the early to late context sentences. Detail how it connects to other characters, places, or elements mentioned.
 
-### %4
+# %4
 Briefly note what important information appears to be missing or what questions are left unanswered due to the limited context provided.
 
 ## Inputs
@@ -145,14 +146,14 @@ Briefly note what important information appears to be missing or what questions 
         
 * **Language**: Render the *entire* response (including headers) completely in {language}.
 
-### 1. %1
+# 1. %1
 * **Sentence Type**: (e.g., Simple, Compound, Complex)
 * **Analysis**: Explain the clause relationships and main syntax framework.
 
-### 2. %2
+# 2. %2
 * Break down key phrases, identifying word classes, verb tenses, and morphology.
 
-### 3. %3
+# 3. %3
 * **Error**: "[Incorrect segment]"
 * **Correction**: "[Corrected version]"
 * **Rule**: Explain the violated grammar rule. *(If flawless, state: "No errors detected.")*
@@ -239,10 +240,10 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 * **Output**: Return only the bulleted list without any introductory text.
 
 **Output Structure:**
-### 📌 %1
+# 📌 %1
 * (Key insights and main arguments of the text...)
 
-### 📊 %2
+# 📊 %2
 * (Crucial data, facts, or final statements...)
 
 ---
@@ -271,10 +272,10 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 * **Output**: Be direct and concise. Return only the explanation without any conversational filler.
 
 **Output Structure:**
-### 💡 %1
+# 💡 %1
 (Explain the concept in 1-2 very simple, jargon-free sentences.)
 
-### 🍎 %2
+# 🍎 %2
 (Provide a relatable, real-world analogy to make the concept instantly clear.)
 
 ---
@@ -296,7 +297,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 **Rules:**
 * **Depth**: Fully break down the meaning, including complex terms, underlying concepts, and implicit nuances. 
 * **Language**: Render the *entire* response (including headers) completely in {language}.
-* **Format**: Use a mix of fluid prose and clean Markdown structure (like bullet points) for maximum clarity.
+* **Format**: Use a mix of fluid prose and clean Markdown structure (like bullet points) for maximum clarity. When splitting into sections, use a Markdown heading (`#`) for every section title.
 * **Output**: Start directly with the explanation; do not include introductory text or meta-commentary.
 
 ---
@@ -318,13 +319,13 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 * **Output**: Start directly with the analysis. Avoid introductory phrases or meta-commentary.
 
 **Output Structure:**
-### 1. %1
+# 1. %1
 (Identify the historical period, major global/local events, and the societal structures or prevailing ideologies of that time.)
 
-### 2. %2
+# 2. %2
 (Explicitly connect these historical elements to the text's content, characters, themes, or underlying messages.)
 
-### 3. %3
+# 3. %3
 (Explain the cultural environment or evolution that shaped this text and how the text reflects or challenges it.)
 
 ---
@@ -361,6 +362,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 **Output:**
 
 * Provide structured, clear, and coherent content.
+* Use a Markdown heading (`#`) for every section title.
 * Deliver entirely in {language} (including headers).
 
 Topic to cover (from user selection): {highlight}]],
@@ -400,19 +402,19 @@ Your output must be spoiler‑free beyond the reader’s current progress.
 
 Required structure:
 
-### %1
+# %1
 - **Name** — brief description(3 sentences) _<u>relationship(s) with others</u>_
 
-### %2
+# %2
 - **Place** — brief description(3 sentences) _<u>notable event(s) there</u>_
 
-### %3
+# %3
 - **Theme** — brief description(3 sentences) of how it appears up to now
 
-### %4
+# %4
 - **Term** — concise definition / significance
 
-### %5
+# %5
 List around 8 to 12 **key chapters or scenes** that were most important to the plot up to the current point.  Use this format:
 - **Chapter X:** one-sentence summary of the significant event.
 Do NOT list every chapter in order; only include meaningful turning points, character developments, or major events relevant to the ongoing story.
@@ -477,14 +479,15 @@ Render the *entire* response (including headers) completely in {language}.
 ### 2. %6
 * Brief biography, writing style, and other notable works.
 
-### 3. %7
+# 3. %7
 * The context in which the book was written/set and how themes relate to it.
 
-### 4. %8
+# 4. %8
 * 3–5 high-quality similar books with a short description and why it's recommended.
 
 **Output Requirements:**
 * Neutral tone, clean formatting for a reading app UI.
+* Use a Markdown heading (`#`/`##`) for every section and sub-section title.
 * Transparent about missing info; never speculate.]],
             -- @translators book_info section headers and sub-fields
             _("Book Information"),
@@ -504,23 +507,23 @@ Render the *entire* response (including headers) completely in {language}.
 You are given my notes and highlights.
 Your task is to carefully analyze this content and produce a structured summary that includes:
 
-1. **%1**
+# %1
    - Summarize the most important insights, lessons, or narrative developments.
    - Highlight recurring themes, turning points, or critical information.
 
-2. **%2**
+# %2
    - Based on the content and my notes, suggest practical actions, reflections, or follow-ups I should consider.
    - If the text is fictional, focus on intellectual or emotional takeaways (e.g., themes to reflect on, characters to analyze, related readings).
    - If the text is non-fiction, focus on actionable steps (e.g., habits to adopt, ideas to research, concepts to apply).
 
-3. **%3**
+# %3
    - Clarify connections between my highlights/notes and the broader narrative or arguments.
    - Point out any open questions or areas I may want to revisit in the earlier chapters.
 
 Output format:
-- Start with a concise **executive summary** (3–5 sentences).
-- Then provide a **detailed list** under "%1" and "%2."
-- End with **%4** in bullet points.
+- Start with a concise executive summary (3-5 sentences).
+- Then provide detailed sections under "# %1" and "# %2".
+- End with "# %4" in bullet points. Use a Markdown heading (`#`) for every section title.
 
 Keep the tone clear, thoughtful, and practical.
 Render the *entire* response (including headers) completely in {language}.
@@ -568,11 +571,12 @@ STYLE & RULES:
    - If a highlight is not related to the book text (if it is not in the book text), ignore it.
 
 OUTPUT STRUCTURE:
-- %1
-- %2
-- %3
-- %4
-- ⚠️ %5 (if any)
+Use a Markdown heading (`#`) for every section title:
+# %1
+# %2
+# %3
+# %4
+# ⚠️ %5 (if any)
 
 IMPORTANT:
 - Always weave highlights *inline*, never at the end.
@@ -745,11 +749,11 @@ M.build_dict_prompt = function(enabled_ids, opts)
 
     add("")
     add("## Output Structure")
-    add("Use a normal Markdown heading (`###`) for every section and bullets (`-`) only for lists.")
+    add("Use a normal Markdown heading (`#`) for every section and bullets (`-`) only for lists.")
     add("")
     for i, sec in ipairs(dict_sections) do
         if enabled[sec.id] then
-            add("### " .. sec.header)
+            add("# " .. sec.header)
             add((concise and sec.body_concise) or sec.body)
             add("")
         end

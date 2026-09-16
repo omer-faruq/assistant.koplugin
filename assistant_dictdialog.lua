@@ -270,10 +270,9 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         -- boundaries so no partial word is shown
         local prev_context_limited = TermXray.clip_excerpt(prev_context, 100, "tail")
         local next_context_limited = TermXray.clip_excerpt(next_context, 100, "head")
-        local normalized_answer = ASUtils.normalizeMarkdownHeadings(answer, 2, 6) or answer
         -- Normalize the selection's whitespace before bolding it: a leading or
         -- trailing space in "** word **" stops Markdown from rendering bold.
-        return T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, koutil.cleanupSelectedText(highlightedText), next_context_limited, normalized_answer)
+        return T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, koutil.cleanupSelectedText(highlightedText), next_context_limited, answer)
     end
 
     local result = createResultText(highlightedText, ret)

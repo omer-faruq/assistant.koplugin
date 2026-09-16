@@ -14,7 +14,6 @@ local Prompts = require("assistant_prompts")
 local ASUtils = require("assistant_utils")
 local extractBookTextForAnalysis = ASUtils.extractBookTextForAnalysis
 local extractHighlightsNotesAndNotebook = ASUtils.extractHighlightsNotesAndNotebook
-local normalizeMarkdownHeadings = ASUtils.normalizeMarkdownHeadings
 
 local function showFeatureDialog(assistant, feature_type, title, author, progress_percent, message_history)
     local Querier = assistant.querier
@@ -191,11 +190,10 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
 
     local function createResultText(answer)
 
-      local normalized_answer = answer
+      local processed_answer = answer
       if Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config) then
-        normalized_answer = ASUtils.process_suggestions(normalized_answer)
+        processed_answer = ASUtils.process_suggestions(processed_answer)
       end
-      normalized_answer = normalizeMarkdownHeadings(normalized_answer, 2, 6) or answer
 
       local header_text = T(_([[
  - Title : %1
@@ -205,7 +203,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
 -----
 
 ]]), title, author, formatted_progress_percent)
-      return header_text .. normalized_answer
+      return header_text .. processed_answer
     end
 
     local function prepareMessageHistoryForAdditionalQuestion(message_history, user_question, title, author)
@@ -287,8 +285,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
             if Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config) then
               answer = ASUtils.process_suggestions(answer)
             end
-            local normalized_answer = normalizeMarkdownHeadings(answer, 3, 6) or answer
-            local additional_text = "\n\n### ⮞ User: \n" .. (type(user_question) == "string" and user_question or (user_question.text or user_question)) .. "\n\n### ⮞ Assistant:\n" .. normalized_answer
+            local additional_text = "\n\n### ⮞ User: \n" .. (type(user_question) == "string" and user_question or (user_question.text or user_question)) .. "\n\n### ⮞ Assistant:\n" .. answer
             viewer:update(viewer.text .. additional_text)
             
             if viewer.scroll_text_w then

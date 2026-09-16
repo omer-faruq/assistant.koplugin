@@ -101,6 +101,18 @@ h1, h2, h3, h4, h5, h6 {
     padding-left: 0;
 }
 
+/* Cap runaway model headings: MuPDF defaults render # / ## oversized on
+   e-ink. Prompts now use # / ## for sections, so these caps keep top-level
+   titles compact while preserving h1 > h2 > h3 order
+   (h3-h6 keep their default sizes). */
+h1 {
+    font-size: 1.3em;
+}
+
+h2 {
+    font-size: 1.2em;
+}
+
 /* Use a small filled disc at every nesting level.
    This viewer renders through MuPDF (ScrollHtmlWidget), whose built-in
    stylesheet assigns list markers by depth (level 2 = hollow "circle",

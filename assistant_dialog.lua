@@ -26,7 +26,6 @@ local CheckButton = require("ui/widget/checkbutton")
 local ASUtils = require("assistant_utils")
 local Notebook = require("assistant_notebook")
 local extractBookTextForAnalysis = ASUtils.extractBookTextForAnalysis
-local normalizeMarkdownHeadings = ASUtils.normalizeMarkdownHeadings
 
 --[[
   Extract the context text selected by the Ask dialog checkboxes.
@@ -229,7 +228,6 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
         end
         -- Remove code block markers before displaying
         assistant_content = assistant_content:gsub("```", "\n")
-        assistant_content = normalizeMarkdownHeadings(assistant_content, 3, 6) or assistant_content
       end
 
       return string.format("### ✦ %s\n\n%s\n\n", answer_type,assistant_content)
