@@ -85,7 +85,7 @@ blockquote, dd, pre {
 
 pre {
     white-space: pre-wrap;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 ol, ul, menu {
@@ -152,6 +152,15 @@ table {
 table td, table th {
     border: 1px solid black;
     padding: 0;
+    overflow-wrap: break-word;
+}
+
+/* Western mode: MuPDF breaks Latin only at spaces, so keeping headers on
+   one line raises each column's minimum and keeps label columns readable.
+   (CJK is intentionally out of scope: it breaks char-by-char and nowrap
+   cannot pin it.) */
+table th {
+    white-space: nowrap;
 }
 
 .subtext {
