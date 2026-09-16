@@ -508,6 +508,15 @@ function AssistantDialog:showAskDialog(highlightedText)
     end
     return T(_("Notebook: %1"), Notebook.getActiveDisplayName(self.assistant, 18))
   end
+  local sorted_prompts = {}
+  if is_highlighted then
+    sorted_prompts = Prompts.getSortedPrompts(function (prompt)
+      if prompt.visible == false then
+        return false
+      end
+      return true
+    end, Prompts.isWebSearchEnabled(self.assistant.settings)) or {}
+  end
   local first_row = {
     {
       text = _("Cancel"),
@@ -517,6 +526,50 @@ function AssistantDialog:showAskDialog(highlightedText)
       end
     },
   }
+
+  local quick_note_tab
+  if is_highlighted then
+    for _, tab in ipairs(sorted_prompts) do
+      if tab.idx == "quick_note" then
+        quick_note_tab = tab
+        break
+      end
+    end
+  end
+  if quick_note_tab then
+    table.insert(first_row, {
+      text = quick_note_tab.text,
+      callback = function()
+        local user_question = self.input_dialog and self.input_dialog:getInputText() or ""
+        if user_question ~= "" and self.assistant.settings:readSetting("auto_copy_asked_question", true) and Device:hasClipboard() then
+          Device.input.setClipboardText(user_question)
+        end
+        self:_close()
+        Trapper:wrap(function()
+          -- Special case for quick note prompt
+          if not self.assistant.quicknote then
+            local QuickNote = require("assistant_quicknote")
+            self.assistant.quicknote = QuickNote:new(self.assistant)
+          end
+          -- Save note with highlighted text
+          self.assistant.quicknote:saveNote(user_question, highlightedText)
+        end)
+      end,
+      hold_callback = function()
+        local menukey = string.format("assistant_%02d_%s", quick_note_tab.order, quick_note_tab.idx)
+        local settingkey = "showOnMain_" .. menukey
+        UIManager:show(ConfirmBox:new{
+          text = ASUtils.bold_format(
+            T(_("<b>%1:</b> %2\n\nAdd this button to the Highlight Menu?"), quick_note_tab.text, quick_note_tab.desc)
+          ),
+          ok_text = _("Add"),
+          ok_callback = function()
+            self.assistant:handleEvent(Event:new("AssistantSetButton", {order=quick_note_tab.order, idx=quick_note_tab.idx}, "add"))
+          end,
+        })
+      end,
+    })
+  end
 
   if use_multi_general_notebooks then
     table.insert(first_row, {
@@ -607,71 +660,65 @@ function AssistantDialog:showAskDialog(highlightedText)
 
   -- Only add additional buttons if there's highlighted text
   if is_highlighted then
-    local sorted_prompts = Prompts.getSortedPrompts(function (prompt)
-      if prompt.visible == false then
-        return false
-      end
-      return true
-    end, Prompts.isWebSearchEnabled(self.assistant.settings)) or {}
-
     -- logger.warn("Sorted prompts: ", sorted_prompts)
     -- Add buttons in sorted order
     for i, tab in ipairs(sorted_prompts) do
-      table.insert(prompt_buttons, {
-        text = tab.text,
-        callback = function()
-          local user_question = self.input_dialog and self.input_dialog:getInputText() or ""
-          if user_question ~= "" and self.assistant.settings:readSetting("auto_copy_asked_question", true) and Device:hasClipboard() then
-            Device.input.setClipboardText(user_question)
-          end
-          self:_close()
-          Trapper:wrap(function()
-            if tab.order == -10 and tab.idx == "dictionary" then
-              -- Special case for dictionary prompt
-              local showDictionaryDialog = require("assistant_dictdialog")
-              showDictionaryDialog(self.assistant, highlightedText)
-            elseif tab.idx == "term_xray" then
-              -- Special case for term_xray prompt - use dictionary dialog with enhanced context
-              local showDictionaryDialog = require("assistant_dictdialog")
-              showDictionaryDialog(self.assistant, highlightedText, nil, "term_xray")
-            elseif tab.idx == "quick_note" then
-              -- Special case for quick note prompt
-              if not self.assistant.quicknote then
-                local QuickNote = require("assistant_quicknote")
-                self.assistant.quicknote = QuickNote:new(self.assistant)
-              end
-              -- Save note with highlighted text
-              self.assistant.quicknote:saveNote(user_question, highlightedText)
-            else
-              local book_text_prompt = ""
-              if use_book_text_checkbox and use_book_text_checkbox.checked then
-                local use_chapter = use_chapter_checkbox and use_chapter_checkbox.checked
-                book_text_prompt = buildBookTextPrompt(use_chapter,
-                    extractContextText(self.assistant, use_chapter))
-              end
-              user_question = user_question .. book_text_prompt
-              self:runPrompt(highlightedText, tab.idx, user_question)
+      if tab.idx == "quick_note" then
+        -- Quick Note lives in first_row; do not duplicate it in the grid.
+      else
+        table.insert(prompt_buttons, {
+          text = tab.text,
+          callback = function()
+            local user_question = self.input_dialog and self.input_dialog:getInputText() or ""
+            if user_question ~= "" and self.assistant.settings:readSetting("auto_copy_asked_question", true) and Device:hasClipboard() then
+              Device.input.setClipboardText(user_question)
             end
-          end)
-        end,
-        hold_callback = function()
-          local menukey = string.format("assistant_%02d_%s", tab.order, tab.idx)
-          local settingkey = "showOnMain_" .. menukey
-          UIManager:show(ConfirmBox:new{
-            text = ASUtils.bold_format(
-              T(_("<b>%1:</b> %2\n\nAdd this button to the Highlight Menu?"), tab.text, tab.desc)
-            ),
-            ok_text = _("Add"),
-            ok_callback = function()
-              self.assistant:handleEvent(Event:new("AssistantSetButton", {order=tab.order, idx=tab.idx}, "add"))
-            end,
-          })
-        end
-      })
+            self:_close()
+            Trapper:wrap(function()
+              if tab.order == -10 and tab.idx == "dictionary" then
+                -- Special case for dictionary prompt
+                local showDictionaryDialog = require("assistant_dictdialog")
+                showDictionaryDialog(self.assistant, highlightedText)
+              elseif tab.idx == "term_xray" then
+                -- Special case for term_xray prompt - use dictionary dialog with enhanced context
+                local showDictionaryDialog = require("assistant_dictdialog")
+                showDictionaryDialog(self.assistant, highlightedText, nil, "term_xray")
+              else
+                local book_text_prompt = ""
+                if use_book_text_checkbox and use_book_text_checkbox.checked then
+                  local use_chapter = use_chapter_checkbox and use_chapter_checkbox.checked
+                  book_text_prompt = buildBookTextPrompt(use_chapter,
+                      extractContextText(self.assistant, use_chapter))
+                end
+                user_question = user_question .. book_text_prompt
+                self:runPrompt(highlightedText, tab.idx, user_question)
+              end
+            end)
+          end,
+          hold_callback = function()
+            local menukey = string.format("assistant_%02d_%s", tab.order, tab.idx)
+            local settingkey = "showOnMain_" .. menukey
+            UIManager:show(ConfirmBox:new{
+              text = ASUtils.bold_format(
+                T(_("<b>%1:</b> %2\n\nAdd this button to the Highlight Menu?"), tab.text, tab.desc)
+              ),
+              ok_text = _("Add"),
+              ok_callback = function()
+                self.assistant:handleEvent(Event:new("AssistantSetButton", {order=tab.order, idx=tab.idx}, "add"))
+              end,
+            })
+          end
+        })
+      end
     end
   end
   
   table.insert(button_rows, first_row)
+  if #prompt_buttons > 0 then
+    -- Empty row as a visual separator between first_row and the prompt grid.
+    -- ButtonTable skips zero-column rows in the focus manager.
+    table.insert(button_rows, {})
+  end
   -- Organize buttons into rows of three
   local current_row = {}
   for _, button in ipairs(prompt_buttons) do
