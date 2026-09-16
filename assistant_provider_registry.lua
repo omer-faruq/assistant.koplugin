@@ -86,7 +86,6 @@ local function formatTestReport(handler_name, base_url, model, report)
             T(_("Model: %1"), model),
             "",
             ASUtils.bold_format(T(_("<b>Request</b> - POST %1"), report.url)),
-            report.body,
             "",
             ASUtils.bold_format(T(_("<b>Response</b> - HTTP %1"), report.status)),
             response_text,
