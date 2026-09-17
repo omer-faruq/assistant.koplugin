@@ -32,6 +32,33 @@ local Registry = require("assistant_provider_registry")
 local SearchRegistry = require("assistant_search_registry")
 local Config = require("assistant_config")
 
+-- Single row id for the FileManager long-press AI buttons.
+-- One row_func returns one row, so both buttons share this id to sit
+-- on the same line.
+local FM_AI_ROW_ID = "assistant_ai"
+
+-- Browser widgets sharing the FileManager long-press file_dialog mechanism.
+-- coverbrowser.koplugin registers its rows on the same four classes.
+local FILE_DIALOG_WIDGET_MODULES = {
+  "apps/filemanager/filemanager",
+  "apps/filemanager/filemanagerhistory",
+  "apps/filemanager/filemanagercollection",
+  "apps/filemanager/filemanagerfilesearcher",
+}
+
+-- Requires the browser widget classes (best effort: a tree may miss some),
+-- returning an array of widget tables.
+local function getFileDialogWidgets()
+  local widgets = {}
+  for i, name in ipairs(FILE_DIALOG_WIDGET_MODULES) do
+    local ok, widget = pcall(require, name)
+    if ok and type(widget) == "table" then
+      table.insert(widgets, widget)
+    end
+  end
+  return widgets
+end
+
 local Assistant = InputContainer:new {
   name = "assistant",
   meta = nil,           -- reference to the _meta module
@@ -426,6 +453,180 @@ local function getDocumentInfo(document)
   }
 end
 
+-- FileManager-side metadata for book_info: no open document exists, and
+-- book_info only needs title/author/language, so this never opens the
+-- document (no body/toc/cover needed).
+-- Priority: long-press book_props -> bookinfo:getDocProps(file, nil, true)
+-- (metadata only, no open) -> sidecar DocSettings doc_props -> filename.
+-- Reading progress comes from the sidecar percent_finished, or 0.
+function Assistant:getDocumentInfoForFile(file, book_props)
+  local function normAuthors(value)
+    if type(value) == "table" then
+      return table.concat(value, ", ")
+    end
+    return value
+  end
+
+  local title = koutil.tableGetValue(book_props, "title")
+  local authors = normAuthors(koutil.tableGetValue(book_props, "authors"))
+
+  if (not title or title == "") or (not authors or authors == "") then
+    local bookinfo = koutil.tableGetValue(self, "ui", "bookinfo")
+    if type(bookinfo) == "table" and type(bookinfo.getDocProps) == "function" then
+      local ok, props = pcall(bookinfo.getDocProps, bookinfo, file, nil, true)
+      if ok and type(props) == "table" then
+        if not title or title == "" then
+          title = koutil.tableGetValue(props, "title")
+            or koutil.tableGetValue(props, "display_title")
+        end
+        if not authors or authors == "" then
+          authors = normAuthors(koutil.tableGetValue(props, "authors"))
+        end
+      end
+    end
+  end
+
+  local percent_finished = 0
+  -- Prefer the BookList cache when available (cheap, synchronous): it is the
+  -- most reliable progress source. Fall back to sidecar DocSettings below.
+  local booklist_percent = nil
+  local ok_booklist, BookList = pcall(require, "ui/widget/booklist")
+  if ok_booklist and type(BookList) == "table"
+    and type(BookList.getBookInfo) == "function" then
+    local ok_info, info = pcall(BookList.getBookInfo, file)
+    if ok_info and type(info) == "table"
+      and type(info.percent_finished) == "number" then
+      booklist_percent = info.percent_finished
+    end
+  end
+  if type(booklist_percent) == "number" then
+    percent_finished = booklist_percent
+  end
+  local ok_settings, doc_settings = pcall(function()
+    return require("docsettings"):open(file)
+  end)
+  if ok_settings and doc_settings then
+    if (not title or title == "") or (not authors or authors == "") then
+      local ok_child, doc_props = pcall(function()
+        return doc_settings:child("doc_props")
+      end)
+      if ok_child and doc_props then
+        if not title or title == "" then
+          local ok_t, v = pcall(function() return doc_props:readSetting("title") end)
+          if ok_t and type(v) == "string" and v ~= "" then title = v end
+        end
+        if not authors or authors == "" then
+          local ok_a, v = pcall(function() return doc_props:readSetting("authors") end)
+          if ok_a then
+            local norm = normAuthors(v)
+            if type(norm) == "string" and norm ~= "" then authors = norm end
+          end
+        end
+      end
+    end
+    local ok_p, v = pcall(function()
+      return doc_settings:readSetting("percent_finished")
+    end)
+    if type(booklist_percent) ~= "number" and ok_p and type(v) == "number" then
+      percent_finished = v
+    end
+  end
+
+  if not title or title == "" then
+    local ok_name, name = pcall(function()
+      return require("apps/filemanager/filemanagerutil").splitFileNameType(file)
+    end)
+    if ok_name and type(name) == "string" and name ~= "" then
+      title = name
+    else
+      title = file
+    end
+  end
+  if not authors or authors == "" then
+    authors = "Unknown Author"
+  end
+
+  return {
+    title = title,
+    authors = authors,
+    percent_finished = percent_finished,
+  }
+end
+
+-- Builds the FileManager long-press row with both AI buttons on one line.
+-- One row_func returns one row, so returning two buttons here keeps them
+-- side by side. Gate: directories and files without a document provider
+-- return nil (no row). Progress is NOT checked here: it needs the BookList
+-- cache and is judged inside onAskAIRecapForFile, keeping long-press cheap.
+function Assistant:_buildFileDialogAIRow(file, is_file, book_props)
+  if not is_file then return nil end
+  local ok, DocumentRegistry = pcall(require, "document/documentregistry")
+  if not ok or type(DocumentRegistry) ~= "table"
+    or not DocumentRegistry:hasProvider(file) then
+    return nil
+  end
+  return {
+    {
+      text = _("Book Info (AI)"),
+      callback = function()
+        self:_closeFileDialogs()
+        self:onAskAIBookInfoForFile(file, book_props)
+      end,
+    },
+    {
+      text = _("Recap (AI)"),
+      callback = function()
+        self:_closeFileDialogs()
+        self:onAskAIRecapForFile(file, book_props)
+      end,
+    },
+  }
+end
+
+-- Close any open long-press file dialog before running book_info, so the
+-- result viewer is not stacked behind it. The dialog owner varies by browser
+-- (FileManager, History, Collections, FileSearcher), so try each widget's
+-- current menu instance.
+function Assistant:_closeFileDialogs()
+  for i, widget in ipairs(getFileDialogWidgets()) do
+    if type(widget.getMenuInstance) == "function" then
+      local ok, menu = pcall(widget.getMenuInstance)
+      if ok and type(menu) == "table" and menu.file_dialog then
+        UIManager:close(menu.file_dialog)
+      end
+    end
+  end
+end
+
+-- FileManager-side long-press AI buttons on one row (no book open).
+-- Registered on every browser widget available, mirroring coverbrowser.
+function Assistant:_registerFileDialogButtons()
+  local ok, FileManager = pcall(require, "apps/filemanager/filemanager")
+  if not ok or type(FileManager) ~= "table"
+    or type(FileManager.addFileDialogButtons) ~= "function" then
+    return
+  end
+  for i, widget in ipairs(getFileDialogWidgets()) do
+    FileManager.addFileDialogButtons(widget, FM_AI_ROW_ID,
+      function(file, is_file, dialog_book_props)
+        return self:_buildFileDialogAIRow(file, is_file, dialog_book_props)
+      end)
+  end
+end
+
+-- Paired with _registerFileDialogButtons: row_id is globally unique, and
+-- addFileDialogButtons already dedupes, so re-registration is safe.
+function Assistant:_removeFileDialogButtons()
+  local ok, FileManager = pcall(require, "apps/filemanager/filemanager")
+  if not ok or type(FileManager) ~= "table"
+    or type(FileManager.removeFileDialogButtons) ~= "function" then
+    return
+  end
+  for i, widget in ipairs(getFileDialogWidgets()) do
+    FileManager.removeFileDialogButtons(widget, FM_AI_ROW_ID)
+  end
+end
+
 function BookLevelCustomPrompts(assistant)
   local sub_item_table = {}
 
@@ -606,6 +807,10 @@ function Assistant:onFlushSettings()
     end
 end
 
+function Assistant:onClose()
+  self:_removeFileDialogButtons()
+end
+
 function Assistant:isConfigured()
     local err_text = ASUtils.bold_format(
         _("<b>No provider set up yet.</b>\nPlease add a provider in Settings or configuration.lua.")
@@ -668,6 +873,14 @@ function Assistant:init()
 
   -- Register menu to main menu (under "tools") - for both reader and filemanager
   self.ui.menu:registerToMainMenu(self)
+
+  if not self.ui.document then
+    -- FileManager side (no open document): long-press "Book Info (AI)" button.
+    -- Registered before the provider early-return below so the entry exists
+    -- even when providers are added later through the UI; the callback itself
+    -- re-checks isConfigured().
+    self:_registerFileDialogButtons()
+  end
 
   if self.ui.document then
     -- Reader specific initialization
@@ -1186,11 +1399,74 @@ end
 
   function Assistant:onAskAIBookInfo()
     if not self:isConfigured() then return end
+    if not koutil.tableGetValue(self, "ui", "document") then
+      UIManager:show(InfoMessage:new{
+        text = _("No book is open. Long-press a book in the file manager and choose Book Info (AI).")
+      })
+      return true
+    end
     ASUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
         showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished)
+      end)
+    end)
+    return true
+  end
+
+  -- FileManager-side book_info: metadata comes from the file, not an open doc.
+  function Assistant:onAskAIBookInfoForFile(file, book_props)
+    if not self:isConfigured() then return end
+    ASUtils.runWhenOnlineFast(function()
+      local book = self:getDocumentInfoForFile(file, book_props)
+      local showFeatureDialog = require("assistant_featuredialog")
+      Trapper:wrap(function()
+        showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished)
+      end)
+    end)
+    return true
+  end
+
+  -- FileManager-side recap: degraded version without book text (no document
+  -- open), so require proof the book was opened and started. Never opens the
+  -- document here.
+  function Assistant:onAskAIRecapForFile(file, book_props)
+    if not self:isConfigured() then return end
+    local book = self:getDocumentInfoForFile(file, book_props)
+    local been_opened = nil
+    local list_percent = nil
+    local ok_list, BookList = pcall(require, "ui/widget/booklist")
+    if ok_list and type(BookList) == "table"
+      and type(BookList.getBookInfo) == "function" then
+      local ok_info, info = pcall(BookList.getBookInfo, file)
+      if ok_info and type(info) == "table" then
+        been_opened = info.been_opened
+        if type(info.percent_finished) == "number" then
+          list_percent = info.percent_finished
+        end
+      end
+    end
+    local percent = list_percent
+    if type(percent) ~= "number" then
+      percent = book.percent_finished
+    end
+    if type(percent) ~= "number" then
+      percent = 0
+    end
+    if been_opened == nil then
+      been_opened = percent > 0
+    end
+    if not been_opened or percent <= 0 then
+      UIManager:show(InfoMessage:new{
+        text = _("Please open this book and start reading before requesting a recap.")
+      })
+      return true
+    end
+    ASUtils.runWhenOnlineFast(function()
+      local showFeatureDialog = require("assistant_featuredialog")
+      Trapper:wrap(function()
+        showFeatureDialog(self, "recap", book.title, book.authors, percent)
       end)
     end)
     return true
