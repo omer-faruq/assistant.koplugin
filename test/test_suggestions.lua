@@ -12,6 +12,26 @@ local function test(name, fn)
     return { name = name, fn = fn }
 end
 
+-- Inline copy of the <think> fallback branch in Querier:processStream
+-- (assistant_querier.lua). The real method needs a subprocess mock, so only
+-- its pure split/wrap logic is tested here, per AGENTS.md testing policy.
+local function split_think(ret, show_reasoning)
+    local think_open = ret:find("<think>", 1, true)
+    local think_close = ret:find("</think>", 1, true)
+    if think_open == 1 and think_close then
+        local reasoning = ret:sub(8, think_close - 1)
+        ret = ret:sub(think_close + 8):gsub("^%s+", "", 1)
+        if show_reasoning then
+            ret = "#### ※ Deeply Thought\n\n```reasoning\n" .. reasoning .. "\n```\n\n---\n\n" .. ret
+        end
+    elseif show_reasoning and not think_open and think_close then
+        local reasoning = ret:sub(1, think_close - 1)
+        ret = ret:sub(think_close + 8):gsub("^%s+", "", 1)
+        ret = "#### ※ Deeply Thought\n\n```reasoning\n" .. reasoning .. "\n```\n\n---\n\n" .. ret
+    end
+    return ret
+end
+
 local tests = {
     test("fence: trailing suggestions converted, fence kept", function()
         local input = "#### ※ Deeply Thought\n\n```reasoning\nthinking here\n```\n\n---\n\nMain answer.\n<suggestions>\n- First question?\n- Second question?\n</suggestions>\n"
@@ -44,6 +64,30 @@ local tests = {
     test("plain: no tag leaves content untouched", function()
         local input = "Just an answer, nothing to do."
         assert.equal(ASUtils.process_suggestions(input), input)
+    end),
+
+    test("think: prefixed pair wraps with show on, strips with show off", function()
+        local input = "<think>Let me think.</think>\n\nThe answer."
+        assert.equal(split_think(input, true),
+            "#### ※ Deeply Thought\n\n```reasoning\nLet me think.\n```\n\n---\n\nThe answer.")
+        assert.equal(split_think(input, false), "The answer.")
+    end),
+
+    test("think: missing opener still wraps with show on", function()
+        local input = "Let me think.</think>\n\nThe answer."
+        assert.matches(split_think(input, true), "```reasoning\nLet me think.\n```")
+        assert.matches(split_think(input, true), "The answer%.$")
+    end),
+
+    test("think: mid-text tags left untouched", function()
+        local input = "Talk about <think>tags</think> here."
+        assert.equal(split_think(input, true), input)
+        assert.equal(split_think(input, false), input)
+    end),
+
+    test("think: unclosed tag leaves content untouched", function()
+        local input = "<think>Never ending thought."
+        assert.equal(split_think(input, true), input)
     end),
 }
 

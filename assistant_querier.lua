@@ -1018,6 +1018,23 @@ function Querier:processStream(bgQuery, trunk_callback)
             reasoning = reasoning:gsub("</?suggestions>", "")
         end
         ret = T('#### ※ %1\n\n```reasoning\n%2\n```\n\n---\n\n%3', _("Deeply Thought"), reasoning, ret)
+    else
+        -- Fallback for local models (Qwen3/QwQ/R1/GLM via bare Ollama/llama.cpp):
+        -- thinking arrives inline in <think> tags with no structured channel.
+        local think_open = ret:find("<think>", 1, true)
+        local think_close = ret:find("</think>", 1, true)
+        if think_open == 1 and think_close then
+            local reasoning = ret:sub(8, think_close - 1)
+            ret = ret:sub(think_close + 8):gsub("^%s+", "", 1)
+            if show_reasoning then
+                ret = T('#### ※ %1\n\n```reasoning\n%2\n```\n\n---\n\n%3', _("Deeply Thought"), reasoning, ret)
+            end
+        elseif show_reasoning and not think_open and think_close then
+            -- QwQ sometimes drops the opening tag: everything before </think> is thinking.
+            local reasoning = ret:sub(1, think_close - 1)
+            ret = ret:sub(think_close + 8):gsub("^%s+", "", 1)
+            ret = T('#### ※ %1\n\n```reasoning\n%2\n```\n\n---\n\n%3', _("Deeply Thought"), reasoning, ret)
+        end
     end
     return ret, nil
 end
