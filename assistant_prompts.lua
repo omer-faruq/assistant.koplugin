@@ -240,10 +240,10 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 * **Output**: Return only the bulleted list without any introductory text.
 
 **Output Structure:**
-# 📌 %1
+# ★ %1
 * (Key insights and main arguments of the text...)
 
-# 📊 %2
+# ◆ %2
 * (Crucial data, facts, or final statements...)
 
 ---
@@ -272,10 +272,10 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 * **Output**: Be direct and concise. Return only the explanation without any conversational filler.
 
 **Output Structure:**
-# 💡 %1
+# ● %1
 (Explain the concept in 1-2 very simple, jargon-free sentences.)
 
-# 🍎 %2
+# ○ %2
 (Provide a relatable, real-world analogy to make the concept instantly clear.)
 
 ---
@@ -567,7 +567,7 @@ STYLE & RULES:
    - Clear, thoughtful, and practical.
    - Never copy the entire book verbatim; focus on essence and integration of highlights.
 7. Contradictions:
-   - If a highlight conflicts with the book text, mark it with ⚠️ and briefly note the possible interpretation.
+   - If a highlight conflicts with the book text, mark it with ⚠ and briefly note the possible interpretation.
    - If a highlight is not related to the book text (if it is not in the book text), ignore it.
 
 OUTPUT STRUCTURE:
@@ -576,7 +576,7 @@ Use a Markdown heading (`#`) for every section title:
 # %2
 # %3
 # %4
-# ⚠️ %5 (if any)
+# ⚠ %5 (if any)
 
 IMPORTANT:
 - Always weave highlights *inline*, never at the end.

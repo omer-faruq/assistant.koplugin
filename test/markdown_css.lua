@@ -111,21 +111,21 @@ J.R.R. Tolkien (1892-1973) was an Oxford professor of Anglo-Saxon with **bold** 
 | assistant_mdparser | hoedown C binding if present, else pure Lua fallback | OK |
 | A very long header label that must stay on one line | Body cells should wrap instead of widening the column forever and ever | Pending review of overflow-wrap behavior |
 
-# 📌 Core Arguments
+# ★ Core Arguments
 
 * The Ring corrupts through **absolute power**, not strength of arms.
 * Small, *ordinary* courage moves history more than kings and wizards.
 
-# 📊 Essential Facts and Conclusions
+# ◆ Essential Facts and Conclusions
 
 * Published 1954-1955; three volumes, one continuous story.
 * Central claim: mercy and endurance defeat domination.
 
-# 💡 Core Idea
+# ● Core Idea
 
 A magic ring must be thrown into a volcano before it enslaves everyone.
 
-# 🍎 Fun Analogy
+# ○ Fun Analogy
 
 Like carrying a heavy, whispering backpack that tells you to keep it.
 
@@ -157,6 +157,17 @@ print(hello("koreader"))
 The user asks about a classic book, so internal knowledge suffices and no web search is needed. The answer follows the book_info structure with four sections.
 ```
 
+## Recommendations
+- **《鸣禽与蛇之歌》（The Ballad of Songbirds and Snakes）**——苏珊·柯林斯著
+- **《Battle Royale》（大逃杀）**——高见广春著
+- **《蝇王》（Lord of the Flies）**——威廉·戈尔丁著
+
+**Output Structure:**
+# ★ %1
+* (Key insights and main arguments of the text...)
+
+# ◆ %2
+* (Crucial data, facts, or final statements...)
 ---
 
 Final paragraph with **bold**, *italic*, ***bold italic***, ~~strikethrough~~ and footnote.[^1]
