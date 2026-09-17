@@ -15,7 +15,7 @@ local ASUtils = require("assistant_utils")
 local extractBookTextForAnalysis = ASUtils.extractBookTextForAnalysis
 local extractHighlightsNotesAndNotebook = ASUtils.extractHighlightsNotesAndNotebook
 
-local function showFeatureDialog(assistant, feature_type, title, author, progress_percent, message_history)
+local function showFeatureDialog(assistant, feature_type, title, author, progress_percent, message_history, notebook_path)
     local Querier = assistant.querier
     local ui = assistant.ui
 
@@ -238,6 +238,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       text = createResultText(answer),
       disable_add_note = true,
       message_history = message_history,
+      notebook_path = notebook_path,
       onAskQuestion = function(viewer, user_question)
         local viewer_title = ""
 

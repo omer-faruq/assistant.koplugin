@@ -19,6 +19,14 @@ local function read_main()
     return src
 end
 
+local function read_file(name)
+    local f = io.open(project_root .. name, "r")
+    if not f then return nil end
+    local src = f:read("*a")
+    f:close()
+    return src
+end
+
 -- Plain-substring assertion (no pattern magic).
 local function assert_contains(src, needle, msg)
     assert.isTrue(src:find(needle, 1, true) ~= nil, msg or ("missing: " .. needle))
@@ -212,6 +220,54 @@ local tests = {
             "helper must prefer the BookList progress cache")
         assert_contains(body, "percent_finished",
             "helper must keep the sidecar fallback")
+    end),
+
+    test("ForFile entries resolve a per-book notebook path", function()
+        local src = read_main()
+        assert.notNil(src, "could not read main.lua")
+        local start = src:find("function Assistant:onAskAIBookInfoForFile", 1, true)
+        assert.notNil(start, "onAskAIBookInfoForFile must exist")
+        local stop = src:find("function Assistant:onAskAIRecapForFile", 1, true)
+        assert.notNil(stop, "onAskAIRecapForFile must exist")
+        local body = src:sub(start, stop)
+        assert_contains(body, "getBookNotebookPath",
+            "book info for file must resolve a per-book notebook path")
+        assert_contains(body, "Notebook.isEnabled",
+            "per-book path must only apply in multi-notebook mode")
+        local recap = src:sub(stop, stop + 2500)
+        assert_contains(recap, "getBookNotebookPath",
+            "recap for file must resolve a per-book notebook path")
+    end),
+
+    test("featuredialog accepts a notebook path for the viewer", function()
+        local src = read_file("assistant_featuredialog.lua")
+        assert.notNil(src, "could not read assistant_featuredialog.lua")
+        assert_contains(src, "message_history, notebook_path",
+            "showFeatureDialog must accept a notebook path")
+        assert_contains(src, "notebook_path = notebook_path",
+            "notebook path must reach ChatGPTViewer")
+    end),
+
+    test("viewer saves through its notebook path", function()
+        local src = read_file("assistant_viewer.lua")
+        assert.notNil(src, "could not read assistant_viewer.lua")
+        assert_contains(src, "saveToNotebookFile(self.assistant, log_entry, self.notebook_path)",
+            "viewer save must pass its notebook path")
+        assert_contains(src, "self.notebook_path = nil",
+            "explicit picker choice must clear the per-book path")
+        assert_contains(src, "notebook_path:match(",
+            "multi-notebook subtitle must prefer the per-book basename")
+    end),
+
+    test("main menu notebook picks first in FM multi-notebook mode", function()
+        local src = read_main()
+        assert.notNil(src, "could not read main.lua")
+        assert_contains(src, "showNotebookFileDialog",
+            "notebook file dialog must be a reusable local function")
+        assert_contains(src, 'title = _("Notebooks")',
+            "FM multi-notebook menu must open the notebook picker")
+        assert_contains(src, "showNotebookFileDialog(notebook.path, false, false)",
+            "picked notebook must reuse the file dialog without Switch")
     end),
 }
 

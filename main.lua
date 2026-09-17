@@ -172,84 +172,107 @@ function Assistant:addToMainMenu(menu_items)
                 end,
                 callback = function ()
                   local is_general_mode = not self.ui.doc_settings
-                  local notebookfile
+                  local multi_enabled = Notebook.isEnabled(self)
 
+                  local function showNotebookFileDialog(notebookfile, include_switch, include_edit)
+                    local other_buttons = {}
+                    local notebook_dialog
+
+                    if include_switch then
+                      table.insert(other_buttons, {
+                        text = _("Switch"),
+                        callback = function ()
+                          Notebook.showPicker(self, {
+                            on_select = function ()
+                              -- Close the old details dialog because it still
+                              -- refers to the previously active notebook.
+                              if notebook_dialog then
+                                UIManager:close(notebook_dialog)
+                              end
+                            end,
+                          })
+                        end
+                      })
+                    end
+
+                    table.insert(other_buttons, {
+                      text = _("Delete"),
+                      callback = function ()
+                        UIManager:show(ConfirmBox:new{
+                          text = T(_("Delete file?\n%1\nThis operation is not reversible."), notebookfile),
+                          ok_text = _("Delete"),
+                          ok_callback = function ()
+                            local ok, err = koutil.removeFile(notebookfile)
+                            if not ok then
+                              UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
+                              return
+                            end
+                            if notebook_dialog then
+                              UIManager:close(notebook_dialog)
+                            end
+                          end
+                        })
+                      end
+                    })
+
+                    -- KOReader's ShowNotebookFile event edits the current book
+                    -- notebook. Do not expose it for a general notebook path.
+                    if include_edit then
+                      table.insert(other_buttons, {
+                        text = _("Edit"),
+                        callback = function ()
+                          UIManager:broadcastEvent(Event:new("ShowNotebookFile"))
+                        end
+                      })
+                    end
+
+                    notebook_dialog = ConfirmBox:new{
+                      icon = "appbar.pageview",
+                      face = Font:getFace("smallinfofont"),
+                      text = ASUtils.bold_format(
+                          T(_("<b>Notebook file:</b>\n\n%1"), notebookfile)
+                      ),
+                      ok_text = _("View"),
+                      ok_callback = function()
+                        if not koutil.pathExists(notebookfile) then
+                          UIManager:show(InfoMessage:new{
+                            text = T(_("File does not exist.\n\n%1"), notebookfile)
+                          })
+                          return
+                        end
+                        TextViewer.openFile(notebookfile)
+                      end,
+                      other_buttons = { other_buttons },
+                    }
+                    UIManager:show(notebook_dialog)
+                  end
+
+                  -- FileManager without an open book in multi-notebook mode:
+                  -- pick the notebook first, then show its file dialog. The
+                  -- picker itself is the selection, so no Switch button.
+                  if is_general_mode and multi_enabled then
+                    Notebook.showPicker(self, {
+                      title = _("Notebooks"),
+                      on_select = function(notebook)
+                        if notebook and notebook.path then
+                          showNotebookFileDialog(notebook.path, false, false)
+                        end
+                      end,
+                    })
+                    return
+                  end
+
+                  local notebookfile
                   if is_general_mode then
                     notebookfile = Notebook.getGeneralNotebookFilePath(self)
                   else
                     notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
                   end
-
-                  local other_buttons = {}
-                  local notebook_dialog
-
-                  if is_general_mode and Notebook.isEnabled(self) then
-                    table.insert(other_buttons, {
-                      text = _("Switch"),
-                      callback = function ()
-                        Notebook.showPicker(self, {
-                          on_select = function ()
-                            -- Close the old details dialog because it still
-                            -- refers to the previously active notebook.
-                            if notebook_dialog then
-                              UIManager:close(notebook_dialog)
-                            end
-                          end,
-                        })
-                      end
-                    })
-                  end
-
-                  table.insert(other_buttons, {
-                    text = _("Delete"),
-                    callback = function ()
-                      UIManager:show(ConfirmBox:new{
-                        text = T(_("Delete file?\n%1\nThis operation is not reversible."), notebookfile),
-                        ok_text = _("Delete"),
-                        ok_callback = function ()
-                          local ok, err = koutil.removeFile(notebookfile)
-                          if not ok then
-                            UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
-                            return
-                          end
-                          if notebook_dialog then
-                            UIManager:close(notebook_dialog)
-                          end
-                        end
-                      })
-                    end
-                  })
-
-                  -- KOReader's ShowNotebookFile event edits the current book
-                  -- notebook. Do not expose it for a general notebook path.
-                  if not is_general_mode then
-                    table.insert(other_buttons, {
-                      text = _("Edit"),
-                      callback = function ()
-                        UIManager:broadcastEvent(Event:new("ShowNotebookFile"))
-                      end
-                    })
-                  end
-
-                  notebook_dialog = ConfirmBox:new{
-                    icon = "appbar.pageview",
-                    face = Font:getFace("smallinfofont"),
-                    text = ASUtils.bold_format(
-                        T(_("<b>Notebook file:</b>\n\n%1"), notebookfile)
-                    ),
-                    ok_text = _("View"),
-                    ok_callback = function()
-                      if not koutil.pathExists(notebookfile) then
-                        UIManager:show(InfoMessage:new{
-                          text = T(_("File does not exist.\n\n%1"), notebookfile)
-                        })
-                        return
-                      end
-                      TextViewer.openFile(notebookfile)
-                    end,
-                    other_buttons = { other_buttons },
-                  }
-                  UIManager:show(notebook_dialog)
+                  showNotebookFileDialog(
+                    notebookfile,
+                    is_general_mode and multi_enabled,
+                    not is_general_mode
+                  )
                 end,
                 separator = true,
               },
@@ -1420,9 +1443,18 @@ end
     if not self:isConfigured() then return end
     ASUtils.runWhenOnlineFast(function()
       local book = self:getDocumentInfoForFile(file, book_props)
+      local notebook_path
+      if Notebook.isEnabled(self) then
+        local ok, path = pcall(Notebook.getBookNotebookPath, self, file)
+        if ok and type(path) == "string" and path ~= "" then
+          notebook_path = path
+        elseif not ok then
+          logger.warn("Assistant: Could not compute per-book notebook path:", path)
+        end
+      end
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
-        showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished)
+        showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished, nil, notebook_path)
       end)
     end)
     return true
@@ -1463,10 +1495,19 @@ end
       })
       return true
     end
+    local notebook_path
+    if Notebook.isEnabled(self) then
+      local ok, path = pcall(Notebook.getBookNotebookPath, self, file)
+      if ok and type(path) == "string" and path ~= "" then
+        notebook_path = path
+      elseif not ok then
+        logger.warn("Assistant: Could not compute per-book notebook path:", path)
+      end
+    end
     ASUtils.runWhenOnlineFast(function()
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
-        showFeatureDialog(self, "recap", book.title, book.authors, percent)
+        showFeatureDialog(self, "recap", book.title, book.authors, percent, nil, notebook_path)
       end)
     end)
     return true

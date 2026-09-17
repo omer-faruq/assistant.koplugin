@@ -48,6 +48,31 @@ local tests = {
     test("getFolderBasename: root path falls back to full path", function()
         assert.equal(Notebook.getFolderBasename("/"), "/")
     end),
+
+    -- =========================================================================
+    -- bookNotebookFilename (pure, headless-safe)
+    -- =========================================================================
+
+    test("bookNotebookFilename: swaps book suffix for .md", function()
+        assert.equal(Notebook.bookNotebookFilename("/books/Dune.epub", "Untitled"), "Dune.md")
+    end),
+
+    test("bookNotebookFilename: keeps dotted stems, uses last suffix", function()
+        assert.equal(Notebook.bookNotebookFilename("/books/a.b.pdf", "Untitled"), "a.b.md")
+    end),
+
+    test("bookNotebookFilename: suffix-less file gains .md", function()
+        assert.equal(Notebook.bookNotebookFilename("/books/README", "Untitled"), "README.md")
+    end),
+
+    test("bookNotebookFilename: backslash separators work", function()
+        assert.equal(Notebook.bookNotebookFilename("C:\\books\\Dune.mobi", "Untitled"), "Dune.md")
+    end),
+
+    test("bookNotebookFilename: empty or missing path falls back", function()
+        assert.equal(Notebook.bookNotebookFilename("", "Untitled"), "Untitled.md")
+        assert.equal(Notebook.bookNotebookFilename(nil, "Untitled"), "Untitled.md")
+    end),
 }
 
 return helper.runTests("assistant_notebook.lua", tests)

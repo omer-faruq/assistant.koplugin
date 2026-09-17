@@ -326,6 +326,46 @@ function M.normalizeName(name)
     return name
 end
 
+-- Derives a notebook filename from a book file path: basename with the
+-- book extension swapped for ".md". Book paths already live on the
+-- filesystem, so no sanitizing is needed. Never touches settings or disk.
+function M.bookNotebookFilename(book_file, fallback)
+    local name = type(book_file) == "string" and book_file:match("([^/\\]+)$") or ""
+    local stem = name:gsub("%.[^%.]*$", "")
+    if stem == "" or stem == "." or stem == ".." then
+        stem = (type(fallback) == "string" and fallback ~= "") and fallback or "Untitled"
+    end
+    return stem .. ".md"
+end
+
+-- Returns the per-book general notebook path for a file-manager book path:
+-- <general_notebooks>/<book-stem>.md. Returns nil (caller falls back to
+-- the legacy single-file behavior) when multiple general notebooks are
+-- disabled. Only computes the path and ensures the folder exists; the file
+-- itself is created on append-open.
+-- Never changes the active notebook selection.
+-- Returns: path or nil, error.
+function M.getBookNotebookPath(assistant, book_file)
+    if not M.isEnabled(assistant) then
+        return nil
+    end
+
+    local folder, err, warning = M.getFolder(assistant, true)
+    if warning then
+        logger.warn("Assistant: General notebook warning:", warning)
+    end
+    if not folder then
+        return nil, err or warning
+    end
+
+    local filename = M.bookNotebookFilename(book_file, "Untitled")
+    local path = joinPath(folder, filename)
+    if not path then
+        return nil, _("No base folder is available for notebooks.")
+    end
+    return path
+end
+
 -- Returns: notebook, error, warning.
 function M.create(assistant, name)
     local filename, name_err = M.normalizeName(name)
@@ -373,11 +413,19 @@ local function showMessage(text, is_warning)
     })
 end
 
-function M.saveToNotebookFile(assistant, log_entry)
+function M.saveToNotebookFile(assistant, log_entry, notebook_path)
     local success, saved_path, save_err, used_fallback = pcall(function()
+        local has_doc_settings = assistant.ui.doc_settings ~= nil
+        -- Explicit per-book path only applies without doc_settings
+        -- (general mode); book mode always uses its own notebook file.
+        local explicit_path = nil
+        if not has_doc_settings
+            and type(notebook_path) == "string" and notebook_path ~= "" then
+            explicit_path = notebook_path
+        end
         local notebookfile = assistant.ui.bookinfo:getNotebookFile(assistant.ui.doc_settings)
         local default_folder = assistant.config:getFeature("default_folder_for_logs")
-        if assistant.ui.doc_settings then
+        if has_doc_settings then
             if default_folder and default_folder ~= "" then
                 if not notebookfile:find("^" .. default_folder:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")) then
                     if not util.pathExists(default_folder) then
@@ -422,15 +470,19 @@ function M.saveToNotebookFile(assistant, log_entry)
                 assistant.ui.doc_settings:saveSetting("notebook_file", notebookfile)
             end
         else
-            local general_warning
-            notebookfile, general_warning = M.getGeneralNotebookFilePath(assistant)
-            if general_warning then
-                logger.warn("Assistant: General notebook warning:", general_warning)
-                UIManager:show(InfoMessage:new{
-                    icon = "notice-warning",
-                    text = general_warning,
-                    timeout = 5,
-                })
+            if explicit_path then
+                notebookfile = explicit_path
+            else
+                local general_warning
+                notebookfile, general_warning = M.getGeneralNotebookFilePath(assistant)
+                if general_warning then
+                    logger.warn("Assistant: General notebook warning:", general_warning)
+                    UIManager:show(InfoMessage:new{
+                        icon = "notice-warning",
+                        text = general_warning,
+                        timeout = 5,
+                    })
+                end
             end
         end
 
@@ -442,22 +494,29 @@ function M.saveToNotebookFile(assistant, log_entry)
         local fallback_used = false
 
         -- Multi-notebook is optional. If the selected destination cannot be
-        -- opened for append, fall back to the legacy general_notebook.md so the
-        -- conversation is not lost.
-        if not file and not assistant.ui.doc_settings and M.isEnabled(assistant) then
+        -- opened for append, fall back so the conversation is not lost:
+        -- an explicit per-book path falls back to the general notebook path
+        -- (active or legacy), otherwise fall back to the legacy
+        -- general_notebook.md.
+        if not file and not has_doc_settings and M.isEnabled(assistant) then
             local failed_path = notebookfile
-            local legacy_path = M.getLegacyPath(assistant)
+            local fallback_path = nil
+            if explicit_path and notebookfile == explicit_path then
+                fallback_path = M.getGeneralNotebookFilePath(assistant)
+            else
+                fallback_path = M.getLegacyPath(assistant)
+            end
 
-            if legacy_path and legacy_path ~= failed_path then
+            if fallback_path and fallback_path ~= failed_path then
                 logger.warn(
                     "Assistant: Could not open general notebook:",
                     failed_path,
                     open_err,
                     "- falling back to:",
-                    legacy_path
+                    fallback_path
                 )
 
-                notebookfile = legacy_path
+                notebookfile = fallback_path
                 file, open_err = io.open(notebookfile, "a")
                 fallback_used = file ~= nil
             end

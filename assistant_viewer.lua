@@ -258,9 +258,17 @@ function ChatGPTViewer:init()
 
   local is_multi_general =
       not self.assistant.ui.doc_settings and Notebook.isEnabled(self.assistant)
-  local notebook_subtitle = is_multi_general
-      and Notebook.getActiveDisplayName(self.assistant, 24)
-      or nil
+  local notebook_subtitle = nil
+  if is_multi_general then
+      if type(self.notebook_path) == "string" and self.notebook_path ~= "" then
+          local basename = self.notebook_path:match("([^/\\]+)$") or self.notebook_path
+          basename = basename:gsub("%.[mM][dD]$", "")
+          notebook_subtitle = basename ~= "" and basename
+              or Notebook.getActiveDisplayName(self.assistant, 24)
+      else
+          notebook_subtitle = Notebook.getActiveDisplayName(self.assistant, 24)
+      end
+  end
 
   local titlebar = TitleBar:new {
     width = self.width,
@@ -465,6 +473,9 @@ function ChatGPTViewer:init()
                   Notebook.showPicker(self.assistant, {
                       title = _("Save conversation to"),
                       on_select = function(notebook)
+                          -- Explicit user choice wins over any per-book
+                          -- path: clear it so the save follows active.
+                          self.notebook_path = nil
                           local saved_path, _save_err, used_fallback = self:saveToNotebook()
 
                           if titlebar and titlebar.setSubTitle then
@@ -584,7 +595,7 @@ function ChatGPTViewer:saveToNotebook()
   
   local log_entry = string.format("# [%s]%s\n## %s\n\n%s\n\n", timestamp, page_info, title_text, text_to_log)
   
-  return Notebook.saveToNotebookFile(self.assistant, log_entry)
+  return Notebook.saveToNotebookFile(self.assistant, log_entry, self.notebook_path)
 end
 
 function ChatGPTViewer:onCloseWidget()
