@@ -471,16 +471,16 @@ Generate information about "{title}" by {author} in the following structure,
 Render the *entire* response (including headers) completely in {language}.
 
 ### 1. %1
-* **%2**: 
-* **%3**: 
-* **%4**: 
-* **%5**:
+- **%2**: 
+- **%3**: 
+- **%4**: 
+- **%5**:
 
 ### 2. %6
-* Brief biography, writing style, and other notable works.
+* The context in which the book was written/set and how themes relate to it.
 
 # 3. %7
-* The context in which the book was written/set and how themes relate to it.
+* Brief biography, writing style, and other notable works.
 
 # 4. %8
 * 3–5 high-quality similar books with a short description and why it's recommended.
@@ -495,8 +495,8 @@ Render the *entire* response (including headers) completely in {language}.
             _("Publication Date"),
             _("Publisher"),
             _("Plot Summary"),
-            _("About the Author"),
             _("Historical and Cultural Context"),
+            _("About the Author"),
             _("Similar Books Recommendations"))
     },
     annotations = {

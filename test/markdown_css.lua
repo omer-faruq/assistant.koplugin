@@ -84,16 +84,16 @@ local SAMPLE = [[
 * **Publisher**: Allen and Unwin
 * **Plot Summary**: A hobbit inherits a magic ring and must destroy it in Mount Doom.
 
-### 2. About the Author
-
-J.R.R. Tolkien (1892-1973) was an Oxford professor of Anglo-Saxon with **bold** opinions on myth, *italic* affection for languages, and `inline code` nowhere near his desk. CJK mixed: 托尔金的中土世界构建极为完整，**精灵语**与`年表`混排，用来检查 CJK 字体与换行。
-
-# 3. Historical and Cultural Context
+### 2. Historical and Cultural Context
 
 > All that is gold does not glitter, not all those who wander are lost.
 >
 > > Verse from Bilbo's poem about Aragorn; check nested indent stays sane.
 > > Second line of the nested quote.
+
+# 3. About the Author
+
+J.R.R. Tolkien (1892-1973) was an Oxford professor of Anglo-Saxon with **bold** opinions on myth, *italic* affection for languages, and `inline code` nowhere near his desk. CJK mixed: 托尔金的中土世界构建极为完整，**精灵语**与`年表`混排，用来检查 CJK 字体与换行。
 
 # 4. Similar Books Recommendations
 
