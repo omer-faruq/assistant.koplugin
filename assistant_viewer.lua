@@ -140,9 +140,10 @@ ul li {
 table {
     margin: 0;
     padding: 0;
+    width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    font-size: 0.8em;
+    font-size: 0.7em;
 }
 
 table td, table th {
@@ -153,6 +154,7 @@ table td, table th {
 
 table th {
     white-space: nowrap;
+    background-color: #bbb;
 }
 
 .subtext {
