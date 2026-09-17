@@ -137,7 +137,9 @@ li {
     list-style-type: disc !important;
 }
 
-ul li a {
+/* Suggestion links render as tappable rows; plain links must stay
+   inline (MuPDF puts inline-block on its own line). */
+.suggestion-link {
     display: inline-block;
 }
 
@@ -995,6 +997,13 @@ function ChatGPTViewer:_renderMarkdown()
     logger.warn("ChatGPTViewer: could not generate HTML", err)
     -- Fallback to plain text if HTML generation fails
     html_body = self.text or "Missing text."
+  else
+    -- Mark #q: links as suggestion rows (tappable blocks), gated on
+    -- the follow-up switch; plain links stay inline.
+    if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+      html_body = html_body:gsub('<a href="#q:',
+          '<a class="suggestion-link" href="#q:')
+    end
   end
   return html_body
 end
