@@ -52,10 +52,14 @@ local SAMPLE = [[
 
 ## Mixed nesting (markers must follow the inner list type)
 
+Bullets holding numbered children (rare, shows discs: known limit):
+
 - Bullet parent
   1. Numbered child one
   2. Numbered child two
 - Bullet parent two
+
+Numbered holding bullet children:
 
 1. Numbered parent
    - Bullet child one

@@ -112,22 +112,6 @@ h2 {
     font-size: 1.2em;
 }
 
-ul {
-    list-style-type: disc;
-}
-
-ul ul {
-    list-style-type: disc !important;
-}
-
-ul ul ul {
-    list-style-type: disc !important;
-}
-
-ol li {
-    list-style-type: decimal !important;
-}
-
 ul li {
     list-style-type: disc !important;
 }
@@ -155,11 +139,6 @@ table td, table th {
 table th {
     white-space: nowrap;
     background-color: #bbb;
-}
-
-.subtext {
-    font-size: 0.75em;
-    color: gray;
 }
 ]]
 
