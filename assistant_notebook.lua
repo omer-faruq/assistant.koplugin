@@ -140,8 +140,9 @@ function M.getFolderBasename(folder)
 end
 
 -- Returns: folder, error, warning.
--- A configured notebooks folder must already exist. If it does not,
--- the default general_notebooks subfolder is used instead and a warning is returned.
+-- A missing configured notebooks folder is created on write; only if that
+-- fails is the default general_notebooks subfolder used instead (with a
+-- warning). Reads never create directories.
 function M.getFolder(assistant, for_write)
     local configured_folder = M.getConfiguredFolder(assistant)
     local warning
@@ -149,6 +150,12 @@ function M.getFolder(assistant, for_write)
     if configured_folder and configured_folder ~= "" then
         if isDirectory(configured_folder) then
             return configured_folder, nil, nil
+        end
+        if for_write then
+            pcall(util.makePath, configured_folder)
+            if isDirectory(configured_folder) then
+                return configured_folder, nil, nil
+            end
         end
         warning = T(_("Configured notebooks folder is not accessible: %1"), configured_folder)
     end
@@ -366,6 +373,79 @@ function M.getBookNotebookPath(assistant, book_file)
     return path
 end
 
+-- Returns the book-mode (reader, with doc_settings) notebook path.
+-- Priority: (a) multiple general notebooks enabled always wins, even when
+-- default_folder_for_logs is also set: <general_notebooks>/<book-stem>.md,
+-- persisted to the notebook_file setting so later saves, views and the Edit
+-- entry stay consistent; (b) default_folder_for_logs relocation;
+-- (c) the sidecar default plus .md enforcement.
+-- Only call in book mode; without doc_settings returns nil plus an error.
+-- On (a) failure returns nil plus an error so the caller can degrade to the
+-- legacy behavior instead of losing the conversation.
+-- Returns: path or nil, error.
+function M.getBookModeNotebookPath(assistant)
+    local doc_settings = util.tableGetValue(assistant, "ui", "doc_settings")
+    if not doc_settings then
+        return nil, _("Reader settings are not available.")
+    end
+    if M.isEnabled(assistant) then
+        local book_file = util.tableGetValue(assistant, "ui", "document", "file")
+            or doc_settings:readSetting("doc_path")
+        local path, err = M.getBookNotebookPath(assistant, book_file)
+        if not path then
+            return nil, err or _("No base folder is available for notebooks.")
+        end
+        doc_settings:saveSetting("notebook_file", path)
+        return path
+    end
+    local notebookfile = assistant.ui.bookinfo:getNotebookFile(doc_settings)
+    local default_folder = assistant.config:getFeature("default_folder_for_logs")
+    if notebookfile and default_folder and default_folder ~= "" then
+        if not notebookfile:find("^" .. default_folder:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")) then
+            if not util.pathExists(default_folder) then
+                UIManager:show(InfoMessage:new{
+                    icon = "notice-warning",
+                    text = ASUtils.bold_format(
+                        T(_("<b>Cannot access default folder for logs: %1</b>\nUsing original location."), default_folder)
+                    ),
+                    timeout = 5,
+                })
+            else
+                local original_filename = notebookfile:match("([^/\\]+)$")
+                if original_filename then
+                    original_filename = original_filename:gsub("%.[^.]*$", ".md")
+                else
+                    local doc_path = assistant.ui.document.file
+                    if doc_path then
+                        local doc_filename = doc_path:match("([^/\\]+)$")
+                        if doc_filename then
+                            original_filename = doc_filename..".md"
+                        else
+                            original_filename = "notebook.md"
+                        end
+                    else
+                        original_filename = "notebook.md"
+                    end
+                end
+                local new_notebookfile = default_folder .. "/" .. original_filename
+
+                assistant.ui.doc_settings:saveSetting("notebook_file", new_notebookfile)
+
+                notebookfile = new_notebookfile
+            end
+        end
+    end
+
+    if notebookfile and not notebookfile:find("%.md$") then
+        notebookfile = notebookfile:gsub("%.[^.]*$", ".md")
+        if not notebookfile:find("%.md$") then
+            notebookfile = notebookfile .. ".md"
+        end
+        assistant.ui.doc_settings:saveSetting("notebook_file", notebookfile)
+    end
+    return notebookfile
+end
+
 -- Returns: notebook, error, warning.
 function M.create(assistant, name)
     local filename, name_err = M.normalizeName(name)
@@ -423,51 +503,18 @@ function M.saveToNotebookFile(assistant, log_entry, notebook_path)
             and type(notebook_path) == "string" and notebook_path ~= "" then
             explicit_path = notebook_path
         end
-        local notebookfile = assistant.ui.bookinfo:getNotebookFile(assistant.ui.doc_settings)
-        local default_folder = assistant.config:getFeature("default_folder_for_logs")
+        local notebookfile
         if has_doc_settings then
-            if default_folder and default_folder ~= "" then
-                if not notebookfile:find("^" .. default_folder:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")) then
-                    if not util.pathExists(default_folder) then
-                        UIManager:show(InfoMessage:new{
-                            icon = "notice-warning",
-                            text = ASUtils.bold_format(
-                                T(_("<b>Cannot access default folder for logs: %1</b>\nUsing original location."), default_folder)
-                            ),
-                            timeout = 5,
-                        })
-                    else
-                        local original_filename = notebookfile:match("([^/\\]+)$")
-                        if original_filename then
-                            original_filename = original_filename:gsub("%.[^.]*$", ".md")
-                        else
-                            local doc_path = assistant.ui.document.file
-                            if doc_path then
-                                local doc_filename = doc_path:match("([^/\\]+)$")
-                                if doc_filename then
-                                    original_filename = doc_filename..".md"
-                                else
-                                    original_filename = "notebook.md"
-                                end
-                            else
-                                original_filename = "notebook.md"
-                            end
-                        end
-                        local new_notebookfile = default_folder .. "/" .. original_filename
-
-                        assistant.ui.doc_settings:saveSetting("notebook_file", new_notebookfile)
-
-                        notebookfile = new_notebookfile
-                    end
+            local ok, resolved, resolve_err = pcall(M.getBookModeNotebookPath, assistant)
+            if ok and type(resolved) == "string" and resolved ~= "" then
+                notebookfile = resolved
+            else
+                if not ok then
+                    logger.warn("Assistant: book notebook resolve failed:", resolved)
+                else
+                    logger.warn("Assistant: book notebook resolve failed:", resolve_err)
                 end
-            end
-
-            if notebookfile and not notebookfile:find("%.md$") then
-                notebookfile = notebookfile:gsub("%.[^.]*$", ".md")
-                if not notebookfile:find("%.md$") then
-                    notebookfile = notebookfile .. ".md"
-                end
-                assistant.ui.doc_settings:saveSetting("notebook_file", notebookfile)
+                notebookfile = assistant.ui.bookinfo:getNotebookFile(assistant.ui.doc_settings)
             end
         else
             if explicit_path then

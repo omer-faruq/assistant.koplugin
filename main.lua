@@ -266,7 +266,12 @@ function Assistant:addToMainMenu(menu_items)
                   if is_general_mode then
                     notebookfile = Notebook.getGeneralNotebookFilePath(self)
                   else
-                    notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
+                    local ok, resolved = pcall(Notebook.getBookModeNotebookPath, self)
+                    if ok and type(resolved) == "string" and resolved ~= "" then
+                      notebookfile = resolved
+                    else
+                      notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
+                    end
                   end
                   showNotebookFileDialog(
                     notebookfile,
