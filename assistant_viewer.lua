@@ -593,7 +593,7 @@ function ChatGPTViewer:saveToNotebook()
   -- Remove suggested question link
   text_to_log = text_to_log:gsub("%[(.-)%]%(%#q:.-%)", "%1") 
   
-  local log_entry = string.format("# [%s]%s\n## %s\n\n%s\n\n", timestamp, page_info, title_text, text_to_log)
+  local log_entry = string.format("---\n**✎ %s**%s\n## %s\n\n%s\n\n", timestamp, page_info, title_text, text_to_log)
   
   return Notebook.saveToNotebookFile(self.assistant, log_entry, self.notebook_path)
 end
