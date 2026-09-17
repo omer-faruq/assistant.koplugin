@@ -269,6 +269,9 @@ function ChatGPTViewer:init()
           notebook_subtitle = Notebook.getActiveDisplayName(self.assistant, 24)
       end
   end
+  if notebook_subtitle then
+      notebook_subtitle = "✎ " .. notebook_subtitle
+  end
 
   local titlebar = TitleBar:new {
     width = self.width,
@@ -480,7 +483,7 @@ function ChatGPTViewer:init()
 
                           if titlebar and titlebar.setSubTitle then
                               titlebar:setSubTitle(
-                                  Notebook.getActiveDisplayName(self.assistant, 24)
+                                  "✎ " .. Notebook.getActiveDisplayName(self.assistant, 24)
                               )
                           end
 
