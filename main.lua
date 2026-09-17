@@ -579,18 +579,24 @@ end
 -- Builds the FileManager long-press row with both AI buttons on one line.
 -- One row_func returns one row, so returning two buttons here keeps them
 -- side by side. Gate: directories and files without a document provider
--- return nil (no row). Progress is NOT checked here: it needs the BookList
--- cache and is judged inside onAskAIRecapForFile, keeping long-press cheap.
+-- return nil (no row). Missing files (e.g. deleted books still listed in
+-- History) stay visible but disabled, matching how native file-dialog
+-- buttons treat unavailable targets. Progress is NOT checked here: it
+-- needs the BookList cache and is judged inside onAskAIRecapForFile,
+-- keeping long-press cheap.
 function Assistant:_buildFileDialogAIRow(file, is_file, book_props)
   if not is_file then return nil end
+  if type(file) ~= "string" then return nil end
   local ok, DocumentRegistry = pcall(require, "document/documentregistry")
   if not ok or type(DocumentRegistry) ~= "table"
     or not DocumentRegistry:hasProvider(file) then
     return nil
   end
+  local enabled = koutil.pathExists(file)
   return {
     {
       text = _("Book Info (AI)"),
+      enabled = enabled,
       callback = function()
         self:_closeFileDialogs()
         self:onAskAIBookInfoForFile(file, book_props)
@@ -598,6 +604,7 @@ function Assistant:_buildFileDialogAIRow(file, is_file, book_props)
     },
     {
       text = _("Recap (AI)"),
+      enabled = enabled,
       callback = function()
         self:_closeFileDialogs()
         self:onAskAIRecapForFile(file, book_props)

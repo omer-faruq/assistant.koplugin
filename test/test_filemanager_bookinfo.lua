@@ -78,13 +78,17 @@ local tests = {
             'button text must be _("Book Info (AI)")')
     end),
 
-    test("row is gated on is_file and a document provider", function()
+    test("row hides for dirs, disables for deleted files", function()
         local src = read_main()
         assert.notNil(src, "could not read main.lua")
         assert_contains(src, "function Assistant:_buildFileDialogAIRow",
             "row builder must exist")
         assert_contains(src, "if not is_file then return nil",
             "directories must return nil (no row)")
+        assert_contains(src, "local enabled = koutil.pathExists(file)",
+            "deleted files must disable the buttons instead of hiding them")
+        assert_contains(src, "enabled = enabled",
+            "both buttons must carry the enabled flag")
         assert_contains(src, "DocumentRegistry:hasProvider(file)",
             "files without a document provider must return nil (no row)")
     end),
