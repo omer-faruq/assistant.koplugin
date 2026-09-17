@@ -153,7 +153,7 @@ print(hello("koreader"))
 
 #### ※ Deeply Thought
 
-```text
+```reasoning
 The user asks about a classic book, so internal knowledge suffices and no web search is needed. The answer follows the book_info structure with four sections.
 ```
 

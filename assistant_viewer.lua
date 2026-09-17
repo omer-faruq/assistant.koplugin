@@ -84,7 +84,7 @@ blockquote, dd {
 }
 
 pre {
-    margin: 1em 1.5em;
+    margin: 1em 0 3em 3em;
     font-size: 0.8em;
     color: gray;
     white-space: pre-wrap;
@@ -133,6 +133,7 @@ ul li {
 }
 
 .suggestion-link {
+    margin: 0.6em 0;
     display: inline-block;
 }
 

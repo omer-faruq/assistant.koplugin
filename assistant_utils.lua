@@ -755,10 +755,10 @@ function M.process_suggestions(content)
 
     -- Ignore <suggestions> inside the reasoning fence: search only after
     -- its closing fence (plain search)
-    local fence_open = string.find(content, "```text", 1, true)
+    local fence_open = string.find(content, "```reasoning", 1, true)
     local tag_start
     if fence_open then
-        local fence_close = string.find(content, "```", fence_open + 7, true)
+        local fence_close = string.find(content, "```", fence_open + 13, true)
         if not fence_close then return content end -- truncated reasoning, ignore
         tag_start = string.find(content, "<suggestions>", fence_close + 3, true)
         if not tag_start then return content end

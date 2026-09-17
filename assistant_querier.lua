@@ -1017,7 +1017,7 @@ function Querier:processStream(bgQuery, trunk_callback)
             -- incase the reasoning text included the suggestion tag
             reasoning = reasoning:gsub("</?suggestions>", "")
         end
-        ret = T('#### ※ %1\n\n```text\n%2\n```\n\n---\n\n%3', _("Deeply Thought"), reasoning, ret)
+        ret = T('#### ※ %1\n\n```reasoning\n%2\n```\n\n---\n\n%3', _("Deeply Thought"), reasoning, ret)
     end
     return ret, nil
 end
