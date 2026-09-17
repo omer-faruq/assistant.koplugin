@@ -78,12 +78,15 @@ body {
     padding: 0;
 }
 
-blockquote, dd, pre {
+blockquote, dd {
     margin: 0 1em;
     font-size: 0.8em;
 }
 
 pre {
+    margin: 1em 1.5em;
+    font-size: 0.8em;
+    color: gray;
     white-space: pre-wrap;
     overflow-wrap: break-word;
 }
@@ -101,10 +104,6 @@ h1, h2, h3, h4, h5, h6 {
     padding-left: 0;
 }
 
-/* Cap runaway model headings: MuPDF defaults render # / ## oversized on
-   e-ink. Prompts now use # / ## for sections, so these caps keep top-level
-   titles compact while preserving h1 > h2 > h3 order
-   (h3-h6 keep their default sizes). */
 h1 {
     font-size: 1.3em;
 }
@@ -113,14 +112,6 @@ h2 {
     font-size: 1.2em;
 }
 
-/* Use a small filled disc at every nesting level.
-   This viewer renders through MuPDF (ScrollHtmlWidget), whose built-in
-   stylesheet assigns list markers by depth (level 2 = hollow "circle",
-   level 3 = "square") and draws the hollow "circle" noticeably larger than
-   the text -- an oversized bullet. MuPDF applies these per-depth markers in a
-   way a plain author rule does not override, so !important is required. It
-   also does not support ::before/generated content, so a native
-   list-style-type is the only option. */
 ul {
     list-style-type: disc;
 }
@@ -133,12 +124,14 @@ ul ul ul {
     list-style-type: disc !important;
 }
 
-li {
+ol li {
+    list-style-type: decimal !important;
+}
+
+ul li {
     list-style-type: disc !important;
 }
 
-/* Suggestion links render as tappable rows; plain links must stay
-   inline (MuPDF puts inline-block on its own line). */
 .suggestion-link {
     display: inline-block;
 }
@@ -157,10 +150,6 @@ table td, table th {
     overflow-wrap: break-word;
 }
 
-/* Western mode: MuPDF breaks Latin only at spaces, so keeping headers on
-   one line raises each column's minimum and keeps label columns readable.
-   (CJK is intentionally out of scope: it breaks char-by-char and nowrap
-   cannot pin it.) */
 table th {
     white-space: nowrap;
 }
@@ -168,12 +157,6 @@ table th {
 .subtext {
     font-size: 0.75em;
     color: gray;
-}
-
-.reasoningtext {
-    font-size: 0.8em;
-    color: gray;
-    margin: 1em 1.5em;
 }
 ]]
 

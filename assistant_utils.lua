@@ -753,34 +753,16 @@ function M.process_suggestions(content)
         return content
     end
 
-    -- Ignore <suggestions> inside reasoning: search only after last reasoning close tag (plain search)
-    local function last_pos(tag)
-        local last, pos = nil, 1
-        while true do
-            local s = string.find(content, tag, pos, true)
-            if not s then break end
-            last = s
-            pos = s + 1
-        end
-        return last
-    end
-    local last_close_end
-    for _, tag in ipairs({ "</div>", "</pre>" }) do
-        local p = last_pos(tag)
-        if p then
-            local e = p + #tag - 1
-            if not last_close_end or e > last_close_end then last_close_end = e end
-        end
-    end
+    -- Ignore <suggestions> inside the reasoning fence: search only after
+    -- its closing fence (plain search)
+    local fence_open = string.find(content, "```text", 1, true)
     local tag_start
-    if last_close_end then
-        tag_start = string.find(content, "<suggestions>", last_close_end + 1, true)
+    if fence_open then
+        local fence_close = string.find(content, "```", fence_open + 7, true)
+        if not fence_close then return content end -- truncated reasoning, ignore
+        tag_start = string.find(content, "<suggestions>", fence_close + 3, true)
         if not tag_start then return content end
     else
-        if string.find(content, '<div class="reasoningtext">', 1, true)
-            or string.find(content, "<pre>", 1, true) then
-            return content -- has start but no close = truncated, ignore
-        end
         tag_start = string.find(content, "<suggestions>", 1, true)
         if not tag_start then return content end
     end

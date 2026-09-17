@@ -226,8 +226,6 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
         if show_for_this then
           assistant_content = ASUtils.process_suggestions(assistant_content)
         end
-        -- Remove code block markers before displaying
-        assistant_content = assistant_content:gsub("```", "\n")
       end
 
       return string.format("### ✦ %s\n\n%s\n\n", answer_type,assistant_content)

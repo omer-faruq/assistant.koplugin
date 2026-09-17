@@ -1010,26 +1010,14 @@ function Querier:processStream(bgQuery, trunk_callback)
     end
 
     local show_reasoning = self.settings:readSetting("show_reasoning", false)
-    local is_reasoning_in_ret = ret:sub(1, 7) == "<think>"
 
-    if show_reasoning then
-        if #reasoning_content_buffer > 0 then
-            local reasoning = reasoning_content_buffer:get():gsub("\n", "<br>")
-            if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
-                -- incase the reasoning text included the suggestion tag
-                reasoning = reasoning:gsub("</?suggestions>", "")
-            end
-            ret = T('#### ※ %1\n\n<div class="reasoningtext">%2</div>\n\n---\n\n%3', _("Deeply Thought"), reasoning, ret)
-        elseif is_reasoning_in_ret then
-            ret = ret
-                :gsub("<think>",  T("#### ※%1\n\n<pre>", _("Deeply Thought")), 1)
-                :gsub("</think>", "</pre>\n\n---\n\n", 1)
+    if show_reasoning and #reasoning_content_buffer > 0 then
+        local reasoning = reasoning_content_buffer:get()
+        if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
+            -- incase the reasoning text included the suggestion tag
+            reasoning = reasoning:gsub("</?suggestions>", "")
         end
-    elseif is_reasoning_in_ret then
-        local close_pos = ret:find("</think>", 8, true)  -- plain=true
-        if close_pos then
-            ret = ret:sub(close_pos + 8):gsub("^%s+", "", 1)
-        end
+        ret = T('#### ※ %1\n\n```text\n%2\n```\n\n---\n\n%3', _("Deeply Thought"), reasoning, ret)
     end
     return ret, nil
 end
