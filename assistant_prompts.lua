@@ -16,11 +16,12 @@ local T = require("ffi/util").template
 -- show_on_main_popup: if true, the button will be shown in the main popup dialog.
 -- show_suggestions: if true, suggested follow-up questions will be appended (requires global auto_prompt_suggest enabled).
 
-local markdown_format_prompt = [[
-### Formatting Constraint
-Do not use LaTeX math blocks (like $...$) for standard text or emphasis. Never wrap plain words in $\\textit{...}$ or $\\texttt{...}$. 
+local common_system_prompt = [[
+### Output Discipline
 Standard Markdown formatting (including quotes, tables, lists) is fully supported and encouraged where appropriate.
-Use hierarchical headings: `#` for top-level sections, `##` and `###` for subsections as needed; do not skip levels.
+Do not use LaTeX math blocks (like $...$) for standard text or emphasis. Never wrap plain words in $\\textit{...}$ or $\\texttt{...}$.
+Use a Markdown heading (`#`) for every section title; use hierarchical headings (`#` top-level, `##`/`###` for subsections, do not skip levels).
+Start directly with the answer; do not include introductory phrases, meta-commentary, or concluding commentary unless the task explicitly asks for it.
 ]]
 
 -- AI Dictionary output sections. The user prompt is composed from the enabled
@@ -50,7 +51,7 @@ local builtin_prompts = {
         show_suggestions = false,
         order = -20, -- negative number to not show on additional questions dialog
         desc = _("This prompt creates a structured system for generating context-aware definitions of words or phrases from literature by analyzing the highlighted term within its surrounding text to provide nuanced explanations that capture both literal meaning and contextual significance."),
-        system_prompt = markdown_format_prompt,
+        system_prompt = common_system_prompt,
         user_prompt = T([[
 ## Your Role
 You are a context-aware literary assistant for a reading app's "X-Ray" feature. Your task is to explain the highlighted term "{highlight}" specifically as it functions in "{title}" by {author}, strictly using the provided {context_sentence_count} chronological context sentences.
@@ -141,7 +142,7 @@ Briefly note what important information appears to be missing or what questions 
         order = 20,
         desc = _(
             "This prompt analyzes the grammar of the highlighted text, providing a detailed explanation of its structure and any grammatical errors."),
-        system_prompt = markdown_format_prompt,
+        system_prompt = common_system_prompt,
         user_prompt = T([[You are a Grammar Expert. Analyze the text below and output strictly in the following structure. 
         
 * **Language**: Render the *entire* response (including headers) completely in {language}.
@@ -197,7 +198,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 **Rules:**
 * **Language**: Render the *entire* response (including headers) completely in {language}.
 * **Content**: Capture all main points and essential details while eliminating all fluff and redundant info.
-* **Output**: Deliver only the direct summary without any introductory phrases or meta-commentary.
+* **Output**: Deliver only the direct summary.
 
 ---
 **Text to Summarize:**
@@ -237,7 +238,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 * **Content**: Capture all critical arguments, essential facts, and conclusions. Eliminate all fluff.
 * **Format**: Present as a well-organized, easy-to-read bulleted list. Each point must be concise and independent.
 * **Language**: Render the *entire* response (including headers) completely in {language}.
-* **Output**: Return only the bulleted list without any introductory text.
+* **Output**: Return only the bulleted list.
 
 **Output Structure:**
 # ★ %1
@@ -269,7 +270,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 * **Simplicity**: Strip away all jargon and technicalities. Use plain, everyday language and short sentences.
 * **Analogy**: Use a simple, relatable real-world analogy to make the core idea instantly clear.
 * **Language**: Render the *entire* response (including headers) completely in {language}.
-* **Output**: Be direct and concise. Return only the explanation without any conversational filler.
+* **Output**: Return only the explanation.
 
 **Output Structure:**
 # ● %1
@@ -297,8 +298,7 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 **Rules:**
 * **Depth**: Fully break down the meaning, including complex terms, underlying concepts, and implicit nuances. 
 * **Language**: Render the *entire* response (including headers) completely in {language}.
-* **Format**: Use a mix of fluid prose and clean Markdown structure (like bullet points) for maximum clarity. When splitting into sections, use a Markdown heading (`#`) for every section title.
-* **Output**: Start directly with the explanation; do not include introductory text or meta-commentary.
+* **Format**: Use a mix of fluid prose and clean Markdown structure (like bullet points) for maximum clarity.
 
 ---
 **Text to Explain:**
@@ -316,7 +316,6 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 
 **Rules:**
 * **Language**: Render the *entire* response (including headers) completely in {language}.
-* **Output**: Start directly with the analysis. Avoid introductory phrases or meta-commentary.
 
 **Output Structure:**
 # 1. %1
@@ -362,7 +361,6 @@ You are a summarization expert. Provide a concise and clear summary of the text 
 **Output:**
 
 * Provide structured, clear, and coherent content.
-* Use a Markdown heading (`#`) for every section title.
 * Deliver entirely in {language} (including headers).
 
 Topic to cover (from user selection): {highlight}]],
@@ -373,12 +371,12 @@ Topic to cover (from user selection): {highlight}]],
 local assistant_prompts = {
     default = {
         show_suggestions = true,
-        system_prompt = markdown_format_prompt,
+        system_prompt = common_system_prompt,
     },
     recap = {
         use_websearch = true,
         show_suggestions = true,
-        system_prompt = markdown_format_prompt,
+        system_prompt = common_system_prompt,
         user_prompt = [[
 You are a literary assistant helping a reader resume their book. They have read **{progress}%** of **"{title}"** by **{author}**.
 
@@ -390,13 +388,13 @@ You are a literary assistant helping a reader resume their book. They have read 
 * **Strict No Spoilers**: Summarize *only* the content leading up to the {progress}% mark. Never reveal future plot points.
 * **Style & Tone**: Focus on recent plot developments before this point to refresh their memory. Match the book's exact tone (e.g., humorous, dramatic, eerie, or adventurous). No emojis.
 * **Formatting**: Bold (**name/location**) key entities. Italicize (*major plot points*) critical events.
-* **Output**: Respond entirely in {language} (including headers). Return only the direct summary without introductory or meta-text.
+* **Output**: Respond entirely in {language} (including headers). Return only the direct summary.
 ]]
     },
     xray = {
         use_websearch = true,
         show_suggestions = true,
-        system_prompt = markdown_format_prompt,
+        system_prompt = common_system_prompt,
         user_prompt = T([[
 Your output must be spoiler‑free beyond the reader’s current progress.
 
@@ -456,7 +454,7 @@ Language: **{language}**.
     book_info = {
         use_websearch = true,
         show_suggestions = true,
-        system_prompt = markdown_format_prompt,
+        system_prompt = common_system_prompt,
         user_prompt = T([[You are an objective Informative Assistant for a reading app, providing structured information about books.
 
 **Core Rules:**
@@ -487,7 +485,6 @@ Render the *entire* response (including headers) completely in {language}.
 
 **Output Requirements:**
 * Neutral tone, clean formatting for a reading app UI.
-* Use a Markdown heading (`#`/`##`) for every section and sub-section title.
 * Transparent about missing info; never speculate.]],
             -- @translators book_info section headers and sub-fields
             _("Book Information"),
@@ -502,7 +499,7 @@ Render the *entire* response (including headers) completely in {language}.
     annotations = {
         use_websearch = false,
         show_suggestions = false,
-        system_prompt = markdown_format_prompt,
+        system_prompt = common_system_prompt,
         user_prompt = T([[
 You are given my notes and highlights.
 Your task is to carefully analyze this content and produce a structured summary that includes:
@@ -523,7 +520,7 @@ Your task is to carefully analyze this content and produce a structured summary 
 Output format:
 - Start with a concise executive summary (3-5 sentences).
 - Then provide detailed sections under "# %1" and "# %2".
-- End with "# %4" in bullet points. Use a Markdown heading (`#`) for every section title.
+- End with "# %4" in bullet points.
 
 Keep the tone clear, thoughtful, and practical.
 Render the *entire* response (including headers) completely in {language}.
@@ -537,7 +534,7 @@ Render the *entire* response (including headers) completely in {language}.
     summary_using_annotations = {
         use_websearch = true,
         show_suggestions = false,
-        system_prompt = markdown_format_prompt,
+        system_prompt = common_system_prompt,
         user_prompt = T([[
 You are a meticulous book summarizer and analyst.
 
@@ -571,7 +568,6 @@ STYLE & RULES:
    - If a highlight is not related to the book text (if it is not in the book text), ignore it.
 
 OUTPUT STRUCTURE:
-Use a Markdown heading (`#`) for every section title:
 # %1
 # %2
 # %3
@@ -595,7 +591,7 @@ Now begin the analysis with the provided book_text and highlights.]],
     dict = {
         use_websearch = true,
         show_suggestions = false,
-        system_prompt = markdown_format_prompt,
+        system_prompt = common_system_prompt,
     },
     suggestions_prompt = [[
 
