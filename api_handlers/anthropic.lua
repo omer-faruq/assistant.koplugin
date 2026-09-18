@@ -53,7 +53,7 @@ function AnthropicHandler:FetchModels()
         ["Content-Type"]  = "application/json",
         ["anthropic-version"] = "2023-06-01",
         ["x-api-key"]         = self.api_key,
-    }, infomsg, function(body) return self:extractErrorMessage(body) end)
+    }, infomsg, nil, nil, nil, function(body) return self:extractErrorMessage(body) end)
 
     if err then return nil, err end
     if models and models.data then

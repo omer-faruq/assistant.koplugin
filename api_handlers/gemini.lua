@@ -35,7 +35,7 @@ function GeminiHandler:FetchModels()
     local models, err = ASUtils.fetchJSON(model_url, {
         ["Content-Type"]  = "application/json",
         ["x-goog-api-key"] = self.api_key,
-    }, infomsg, function(body) return self:extractErrorMessage(body) end)
+    }, infomsg, nil, nil, nil, function(body) return self:extractErrorMessage(body) end)
 
     if err then return nil, err end
     if not models or not models.models or #models.models == 0 then
