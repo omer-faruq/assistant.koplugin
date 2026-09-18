@@ -41,15 +41,15 @@ local tests = {
     end),
 
     test("getFolderBasename: absolute path returns last segment", function()
-        assert.equal(Notebook.getFolderBasename("/home/user/books/general_notebooks"), "general_notebooks")
+        assert.equal(Notebook.getFolderBasename("/home/user/books/ai_notes"), "ai_notes")
     end),
 
     test("getFolderBasename: trailing slash is ignored", function()
-        assert.equal(Notebook.getFolderBasename("/home/user/books/general_notebooks/"), "general_notebooks")
+        assert.equal(Notebook.getFolderBasename("/home/user/books/ai_notes/"), "ai_notes")
     end),
 
     test("getFolderBasename: multiple trailing slashes are ignored", function()
-        assert.equal(Notebook.getFolderBasename("/home/user/books/general_notebooks//"), "general_notebooks")
+        assert.equal(Notebook.getFolderBasename("/home/user/books/ai_notes//"), "ai_notes")
     end),
 
     test("getFolderBasename: relative path returns last segment", function()
@@ -140,7 +140,7 @@ local tests = {
 
     test("getBookModeNotebookPath: multi enabled wins and persists setting", function()
         local base = (os.getenv("TMPDIR") or "/tmp") .. "/assistant_bookmode_multi_test"
-        local folder = base .. "/general_notebooks"
+        local folder = base .. "/ai_notes"
         pcall(function() lfs.rmdir(folder) end)
         pcall(function() lfs.rmdir(base) end)
         assert.isTrue(lfs.mkdir(base))
@@ -236,6 +236,29 @@ local tests = {
         local path, err = Notebook.getBookModeNotebookPath(assistant)
         assert.equal(path, nil)
         assert.notNil(err)
+    end),
+
+    -- =========================================================================
+    -- Defaults: legacy path and display name use AI Notes
+    -- =========================================================================
+
+    test("defaults: legacy path is ai_notes.md with AI Notes display name", function()
+        local base = (os.getenv("TMPDIR") or "/tmp") .. "/assistant_notebook_defaults_test"
+        pcall(function() lfs.mkdir(base) end)
+        local assistant = {
+            settings = {
+                readSetting = function() return nil end,
+            },
+            config = {
+                getFeature = function(_, key)
+                    if key == "default_folder_for_logs" then return base end
+                    return nil
+                end,
+            },
+        }
+        assert.equal(Notebook.getLegacyPath(assistant), base .. "/ai_notes.md")
+        assert.equal(Notebook.getActiveDisplayName(assistant), "AI Notes")
+        assert.isTrue(lfs.rmdir(base))
     end),
 
     -- =========================================================================

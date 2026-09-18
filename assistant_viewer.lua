@@ -508,7 +508,7 @@ function ChatGPTViewer:init()
 
               self:saveToNotebook()
               UIManager:show(InfoMessage:new{
-                  text = _("Conversation is saved to notebook"),
+                  text = _("Conversation is saved to AI Notes"),
                   timeout = 2
               })
           end

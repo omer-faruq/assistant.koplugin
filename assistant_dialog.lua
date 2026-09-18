@@ -514,9 +514,9 @@ function AssistantDialog:showAskDialog(highlightedText)
   local function getNotebookButtonText()
     local notebooks = Notebook.list(self.assistant)
     if not notebooks or #notebooks == 0 then
-      return _("Notebook")
+      return _("AI Notes")
     end
-    return T(_("Notebook: %1"), Notebook.getActiveDisplayName(self.assistant, 18))
+    return T(_("AI Notes: %1"), Notebook.getActiveDisplayName(self.assistant, 18))
   end
   local sorted_prompts = {}
   if is_highlighted then
@@ -593,7 +593,7 @@ function AssistantDialog:showAskDialog(highlightedText)
         end
 
         Notebook.showPicker(self.assistant, {
-          title = _("Select notebook"),
+          title = _("Select AI Note"),
           on_select = function()
             if not self.input_dialog then
               return

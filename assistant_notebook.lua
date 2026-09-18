@@ -12,8 +12,8 @@ local ASUtils = require("assistant_utils")
 
 local M = {}
 
-local GENERAL_NOTEBOOKS_DIR = "general_notebooks"
-local LEGACY_NOTEBOOK_FILENAME = "general_notebook.md"
+local GENERAL_NOTEBOOKS_DIR = "ai_notes"
+local LEGACY_NOTEBOOK_FILENAME = "ai_notes.md"
 local ACTIVE_NOTEBOOK_SETTING = "active_general_notebook"
 local MULTI_NOTEBOOK_SETTING = "use_multiple_general_notebooks"
 local FOLDER_SETTING = "general_notebooks_folder"
@@ -64,6 +64,9 @@ local function isFile(path)
 end
 
 local function displayName(filename)
+    if filename == LEGACY_NOTEBOOK_FILENAME then
+        return _("AI Notes")
+    end
     return filename:gsub("%.[mM][dD]$", "")
 end
 
@@ -140,8 +143,8 @@ function M.getFolderBasename(folder)
 end
 
 -- Returns: folder, error, warning.
--- A missing configured notebooks folder is created on write; only if that
--- fails is the default general_notebooks subfolder used instead (with a
+-- A missing configured AI Notes folder is created on write; only if that
+-- fails is the default ai_notes subfolder used instead (with a
 -- warning). Reads never create directories.
 function M.getFolder(assistant, for_write)
     local configured_folder = M.getConfiguredFolder(assistant)
@@ -157,12 +160,12 @@ function M.getFolder(assistant, for_write)
                 return configured_folder, nil, nil
             end
         end
-        warning = T(_("Configured notebooks folder is not accessible: %1"), configured_folder)
+        warning = T(_("Configured AI Notes folder is not accessible: %1"), configured_folder)
     end
 
     local base_dir = getCurrentBaseDirectory(assistant)
     if not base_dir then
-        return nil, _("No base folder is available for notebooks."), warning
+        return nil, _("No base folder is available for AI Notes."), warning
     end
 
     local folder = joinPath(base_dir, GENERAL_NOTEBOOKS_DIR)
@@ -171,7 +174,7 @@ function M.getFolder(assistant, for_write)
         return folder, nil, warning
     end
     if mode ~= nil then
-        return nil, T(_("Notebooks path is not a directory: %1"), folder), warning
+        return nil, T(_("AI Notes path is not a directory: %1"), folder), warning
     end
 
     if not for_write then
@@ -180,7 +183,7 @@ function M.getFolder(assistant, for_write)
 
     local ok, err = lfs.mkdir(folder)
     if not ok and not isDirectory(folder) then
-        return nil, T(_("Could not create notebooks folder: %1"), tostring(err)), warning
+        return nil, T(_("Could not create AI Notes folder: %1"), tostring(err)), warning
     end
 
     return folder, nil, warning
@@ -209,7 +212,7 @@ function M.list(assistant)
                 end
             end
         elseif not err then
-            err = T(_("Could not list notebooks folder: %1"), folder)
+            err = T(_("Could not list AI Notes folder: %1"), folder)
         end
     end
 
@@ -251,7 +254,7 @@ function M.getActive(assistant)
     -- may be temporarily unavailable; falling back must not destroy the sticky choice.
     local legacy_path = M.getLegacyPath(assistant)
     if not legacy_path then
-        return nil, folder_err or _("No path is available for the legacy notebook."), folder_warning
+        return nil, folder_err or _("No path is available for the default AI note."), folder_warning
     end
     return makeEntry(legacy_path, LEGACY_NOTEBOOK_FILENAME, true), folder_err, folder_warning
 end
@@ -261,7 +264,7 @@ function M.setActive(assistant, notebook)
         return nil, _("Assistant settings are not available.")
     end
     if type(notebook) ~= "table" then
-        return nil, _("Invalid notebook entry.")
+        return nil, _("Invalid AI note entry.")
     end
 
     if notebook.legacy then
@@ -271,7 +274,7 @@ function M.setActive(assistant, notebook)
     end
 
     if not validateStoredFilename(notebook.filename) then
-        return nil, _("Invalid notebook filename.")
+        return nil, _("Invalid AI note filename.")
     end
 
     assistant.settings:saveSetting(ACTIVE_NOTEBOOK_SETTING, notebook.filename)
@@ -292,24 +295,24 @@ end
 -- Returns a normalized Markdown filename or nil plus an error.
 function M.normalizeName(name)
     if type(name) ~= "string" then
-        return nil, _("Notebook name must be text.")
+        return nil, _("AI note name must be text.")
     end
 
     name = name:gsub("^%s+", ""):gsub("%s+$", "")
     if name == "" or name == "." or name == ".." then
-        return nil, _("Notebook name cannot be empty.")
+        return nil, _("AI note name cannot be empty.")
     end
     if name:find("[/\\]") then
-        return nil, _("Notebook name cannot contain path separators.")
+        return nil, _("AI note name cannot contain path separators.")
     end
     if name:find("..", 1, true) then
-        return nil, _("Notebook name cannot contain '..'.")
+        return nil, _("AI note name cannot contain '..'.")
     end
     if name:find('[<>:"|%?%*]') or name:find("[%z\1-\31]") then
-        return nil, _("Notebook name contains characters that are not supported by the filesystem.")
+        return nil, _("AI note name contains characters that are not supported by the filesystem.")
     end
     if name:match("[%.%s]$") and name:lower():sub(-3) ~= ".md" then
-        return nil, _("Notebook name cannot end with a space or dot.")
+        return nil, _("AI note name cannot end with a space or dot.")
     end
 
     if name:lower():sub(-3) == ".md" then
@@ -320,14 +323,14 @@ function M.normalizeName(name)
 
     local stem = name:sub(1, -4)
     if stem == "" then
-        return nil, _("Notebook name cannot be empty.")
+        return nil, _("AI note name cannot be empty.")
     end
 
     -- FAT/Windows reserved device names remain reserved even when followed
     -- by another extension, e.g. CON.txt or COM1.notes.
     local device_name = stem:match("^([^%.]+)") or stem
     if isReservedFilenameStem(device_name) then
-        return nil, _("Notebook name is reserved by the filesystem.")
+        return nil, _("AI note name is reserved by the filesystem.")
     end
 
     return name
@@ -345,9 +348,9 @@ function M.bookNotebookFilename(book_file, fallback)
     return stem .. ".md"
 end
 
--- Returns the per-book general notebook path for a file-manager book path:
--- <general_notebooks>/<book-stem>.md. Returns nil (caller falls back to
--- the legacy single-file behavior) when multiple general notebooks are
+-- Returns the per-book AI note path for a file-manager book path:
+-- <ai_notes>/<book-stem>.md. Returns nil (caller falls back to
+-- the legacy single-file behavior) when multiple AI notes are
 -- disabled. Only computes the path and ensures the folder exists; the file
 -- itself is created on append-open.
 -- Never changes the active notebook selection.
@@ -359,7 +362,7 @@ function M.getBookNotebookPath(assistant, book_file)
 
     local folder, err, warning = M.getFolder(assistant, true)
     if warning then
-        logger.warn("Assistant: General notebook warning:", warning)
+        logger.warn("Assistant: AI Notes warning:", warning)
     end
     if not folder then
         return nil, err or warning
@@ -368,14 +371,14 @@ function M.getBookNotebookPath(assistant, book_file)
     local filename = M.bookNotebookFilename(book_file, "Untitled")
     local path = joinPath(folder, filename)
     if not path then
-        return nil, _("No base folder is available for notebooks.")
+        return nil, _("No base folder is available for AI Notes.")
     end
     return path
 end
 
 -- Returns the book-mode (reader, with doc_settings) notebook path.
--- Priority: (a) multiple general notebooks enabled always wins, even when
--- default_folder_for_logs is also set: <general_notebooks>/<book-stem>.md,
+-- Priority: (a) multiple AI notes enabled always wins, even when
+-- default_folder_for_logs is also set: <ai_notes>/<book-stem>.md,
 -- persisted to the notebook_file setting so later saves, views and the Edit
 -- entry stay consistent; (b) default_folder_for_logs relocation;
 -- (c) the sidecar default plus .md enforcement.
@@ -393,7 +396,7 @@ function M.getBookModeNotebookPath(assistant)
             or doc_settings:readSetting("doc_path")
         local path, err = M.getBookNotebookPath(assistant, book_file)
         if not path then
-            return nil, err or _("No base folder is available for notebooks.")
+            return nil, err or _("No base folder is available for AI Notes.")
         end
         doc_settings:saveSetting("notebook_file", path)
         return path
@@ -461,13 +464,13 @@ function M.create(assistant, name)
     local path = joinPath(folder, filename)
     local mode = getMode(path)
     if mode and mode ~= "file" then
-        return nil, T(_("Notebook path is not a file: %1"), path), warning
+        return nil, T(_("AI note path is not a file: %1"), path), warning
     end
 
     if not mode then
         local file, open_err = io.open(path, "a")
         if not file then
-            return nil, T(_("Could not create notebook: %1"), tostring(open_err)), warning
+            return nil, T(_("Could not create AI note: %1"), tostring(open_err)), warning
         end
         file:close()
     end
@@ -523,7 +526,7 @@ function M.saveToNotebookFile(assistant, log_entry, notebook_path)
                 local general_warning
                 notebookfile, general_warning = M.getGeneralNotebookFilePath(assistant)
                 if general_warning then
-                    logger.warn("Assistant: General notebook warning:", general_warning)
+                    logger.warn("Assistant: AI Notes warning:", general_warning)
                     UIManager:show(InfoMessage:new{
                         icon = "notice-warning",
                         text = general_warning,
@@ -534,7 +537,7 @@ function M.saveToNotebookFile(assistant, log_entry, notebook_path)
         end
 
         if not notebookfile then
-            return nil, _("Notebook path is unavailable."), false
+            return nil, _("AI note path is unavailable."), false
         end
 
         local file, open_err = io.open(notebookfile, "a")
@@ -544,7 +547,7 @@ function M.saveToNotebookFile(assistant, log_entry, notebook_path)
         -- opened for append, fall back so the conversation is not lost:
         -- an explicit per-book path falls back to the general notebook path
         -- (active or legacy), otherwise fall back to the legacy
-        -- general_notebook.md.
+        -- ai_notes.md.
         if not file and not has_doc_settings and M.isEnabled(assistant) then
             local failed_path = notebookfile
             local fallback_path = nil
@@ -556,7 +559,7 @@ function M.saveToNotebookFile(assistant, log_entry, notebook_path)
 
             if fallback_path and fallback_path ~= failed_path then
                 logger.warn(
-                    "Assistant: Could not open general notebook:",
+                    "Assistant: Could not open AI Notes:",
                     failed_path,
                     open_err,
                     "- falling back to:",
@@ -570,27 +573,27 @@ function M.saveToNotebookFile(assistant, log_entry, notebook_path)
         end
 
         if not file then
-            logger.warn("Assistant: Could not open notebook file:", notebookfile, open_err)
-            return nil, open_err or _("Could not open notebook file."), false
+            logger.warn("Assistant: Could not open AI note file:", notebookfile, open_err)
+            return nil, open_err or _("Could not open AI note file."), false
         end
 
         local write_ok, write_err = file:write(log_entry)
         local close_ok, close_err = file:close()
         if not write_ok then
-            logger.warn("Assistant: Could not write notebook file:", notebookfile, write_err)
-            return nil, write_err or _("Could not write notebook file."), false
+            logger.warn("Assistant: Could not write AI note file:", notebookfile, write_err)
+            return nil, write_err or _("Could not write AI note file."), false
         end
         if close_ok == nil then
-            logger.warn("Assistant: Could not close notebook file:", notebookfile, close_err)
-            return nil, close_err or _("Could not close notebook file."), false
+            logger.warn("Assistant: Could not close AI note file:", notebookfile, close_err)
+            return nil, close_err or _("Could not close AI note file."), false
         end
 
         if fallback_used then
             UIManager:show(InfoMessage:new{
                 icon = "notice-warning",
                 text = T(
-                    _("Could not save to the selected notebook.\nSaved to: %1"),
-                    "general_notebook"
+                    _("Could not save to the selected AI note.\nSaved to: %1"),
+                    _("AI Notes")
                 ),
                 timeout = 5,
             })
@@ -603,7 +606,7 @@ function M.saveToNotebookFile(assistant, log_entry, notebook_path)
         logger.warn("Assistant: Error during notebook save:", saved_path)
         UIManager:show(InfoMessage:new{
             icon = "notice-warning",
-            text = _("Notebook save failed. Continuing..."),
+            text = _("AI Notes save failed. Continuing..."),
             timeout = 3,
         })
         return nil, saved_path, false
@@ -613,7 +616,7 @@ function M.saveToNotebookFile(assistant, log_entry, notebook_path)
     if not saved_path and not assistant.ui.doc_settings then
         UIManager:show(InfoMessage:new{
             icon = "notice-warning",
-            text = _("Notebook save failed. Continuing..."),
+            text = _("AI Notes save failed. Continuing..."),
             timeout = 3,
         })
     end
@@ -640,9 +643,9 @@ function M.showCreateDialog(assistant, options)
 
     local dialog
     dialog = InputDialog:new{
-        title = _("New notebook"),
-        input_hint = _("Notebook name"),
-        description = _("Create a notebook."),
+        title = _("New AI Note"),
+        input_hint = _("AI Note Name"),
+        description = _("Create an AI note."),
         buttons = {
             {
                 {
@@ -666,7 +669,7 @@ function M.showCreateDialog(assistant, options)
                         end
 
                         if not notebook then
-                            showMessage(err or _("Could not create notebook."), true)
+                            showMessage(err or _("Could not create AI note."), true)
                             return
                         end
 
@@ -718,7 +721,7 @@ function M.showPicker(assistant, options)
             callback = function()
                 local ok, set_err = M.setActive(assistant, notebook)
                 if not ok then
-                    showMessage(set_err or _("Could not select notebook."), true)
+                    showMessage(set_err or _("Could not select AI note."), true)
                     return
                 end
 
@@ -732,13 +735,13 @@ function M.showPicker(assistant, options)
 
     if #items == 0 then
         items[#items + 1] = {
-            text = _("No notebooks yet"),
+            text = _("No AI notes yet"),
             enabled = false,
         }
     end
 
     items[#items + 1] = {
-        text = _("New notebook..."),
+        text = _("New AI Note..."),
         callback = function()
             M.showCreateDialog(assistant, {
                 parent = menu,
@@ -752,7 +755,7 @@ function M.showPicker(assistant, options)
     end
 
     menu = Menu:new{
-        title = options.title or _("Notebooks"),
+        title = options.title or _("AI Notes"),
         subtitle = T(
             _("Active: %1"),
             M.getActiveDisplayName(assistant, 24)

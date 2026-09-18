@@ -268,7 +268,7 @@ local tests = {
         assert.notNil(src, "could not read main.lua")
         assert_contains(src, "showNotebookFileDialog",
             "notebook file dialog must be a reusable local function")
-        assert_contains(src, 'title = _("Notebooks")',
+        assert_contains(src, 'title = _("AI Notes")',
             "FM multi-notebook menu must open the notebook picker")
         assert_contains(src, "showNotebookFileDialog(notebook.path, false, false)",
             "picked notebook must reuse the file dialog without Switch")

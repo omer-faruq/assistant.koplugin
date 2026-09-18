@@ -493,15 +493,15 @@ local function genMenuSettings(assistant)
             end,
         },
         {
-            text = _("Notebook Settings"),
+            text = _("AI Notes Settings"),
             hold_callback = function ()
                 UIManager:show(InfoMessage:new{
-                    text = _("The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs.")
+                    text = _("AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs.")
                 })
             end,
             sub_item_table = {
                 {
-                    text = _("Auto-save Conversations to Notebook"),
+                    text = _("Auto-save Conversations to AI Notes"),
                     checked_func = function () return assistant.settings:readSetting("auto_save_to_notebook", false) end,
                     callback = function()
                         assistant.settings:toggle("auto_save_to_notebook")
@@ -509,7 +509,7 @@ local function genMenuSettings(assistant)
                     end
                 },
                 {
-                    text = _("Multiple Notebooks"),
+                    text = _("Multiple AI Notes"),
                     checked_func = function ()
                         return assistant.settings:readSetting("use_multiple_general_notebooks", false)
                     end,
@@ -519,7 +519,7 @@ local function genMenuSettings(assistant)
                     end,
                     hold_callback = function ()
                         UIManager:show(InfoMessage:new{
-                            text = _("Choose which notebook your notes are saved to.")
+                            text = _("Choose which AI note your notes are saved to.")
                         })
                     end
                 },
@@ -527,9 +527,9 @@ local function genMenuSettings(assistant)
                     text_func = function ()
                         local folder = Notebook.getFolder(assistant, false)
                         if folder then
-                            return T(_("Notebooks Folder: %1"), Notebook.getFolderBasename(folder))
+                            return T(_("AI Notes Folder: %1"), Notebook.getFolderBasename(folder))
                         end
-                        return _("Notebooks Folder")
+                        return _("AI Notes Folder")
                     end,
                     callback = function (touchmenu_instance)
                         Notebook.showFolderPicker(assistant, {
@@ -543,8 +543,8 @@ local function genMenuSettings(assistant)
                         local folder, folder_err = Notebook.getFolder(assistant, false)
                         UIManager:show(InfoMessage:new{
                             text = folder
-                                and T(_("Notebooks folder path:\n%1"), folder)
-                                or (folder_err or _("No notebooks folder is set."))
+                                and T(_("AI Notes folder path:\n%1"), folder)
+                                or (folder_err or _("No AI Notes folder is set."))
                         })
                     end,
                 },

@@ -27,7 +27,7 @@ function QuickNote:createNoteInputDialog(callback, highlighted_text)
   local description = nil
   if not self.assistant.ui.doc_settings and Notebook.isEnabled(self.assistant) then
     description = T(
-      _("Notebook: %1"),
+      _("AI Notes: %1"),
       Notebook.getActiveDisplayName(self.assistant, 24)
     )
   end

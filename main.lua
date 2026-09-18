@@ -156,7 +156,7 @@ function Assistant:addToMainMenu(menu_items)
                 end,
                 hold_callback = function ()
                   UIManager:show(InfoMessage:new{
-                    text = _("Take quick notes that will be saved to your notebook.")
+                    text = _("Take quick notes that will be saved to your AI Notes.")
                   })
                 end,
               },
@@ -164,11 +164,11 @@ function Assistant:addToMainMenu(menu_items)
                 text_func = function ()
                   if not self.ui.doc_settings and Notebook.isEnabled(self) then
                     return T(
-                      _("Notebook: %1"),
+                      _("AI Notes: %1"),
                       Notebook.getActiveDisplayName(self, 24)
                     )
                   end
-                  return _("Notebook (AI Conversation Log)")
+                  return _("AI Notes (AI Conversation Log)")
                 end,
                 callback = function ()
                   local is_general_mode = not self.ui.doc_settings
@@ -230,7 +230,7 @@ function Assistant:addToMainMenu(menu_items)
                       icon = "appbar.pageview",
                       face = Font:getFace("smallinfofont"),
                       text = ASUtils.bold_format(
-                          T(_("<b>Notebook file:</b>\n\n%1"), notebookfile)
+                          T(_("<b>AI Notes file:</b>\n\n%1"), notebookfile)
                       ),
                       ok_text = _("View"),
                       ok_callback = function()
@@ -252,7 +252,7 @@ function Assistant:addToMainMenu(menu_items)
                   -- picker itself is the selection, so no Switch button.
                   if is_general_mode and multi_enabled then
                     Notebook.showPicker(self, {
-                      title = _("Notebooks"),
+                      title = _("AI Notes"),
                       on_select = function(notebook)
                         if notebook and notebook.path then
                           showNotebookFileDialog(notebook.path, false, false)
@@ -389,7 +389,7 @@ function Assistant:addToMainMenu(menu_items)
                     end,
                     hold_callback = function ()
                       UIManager:show(InfoMessage:new{
-                        text = _("Analysis of your highlights, notes, and notebook content from the book.")
+                        text = _("Analysis of your highlights, notes, and AI Notes content from the book.")
                       })
                     end,
                   },
