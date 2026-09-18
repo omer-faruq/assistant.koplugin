@@ -47,7 +47,8 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 - `assistant_dialog.lua` — Ask AI popup + result formatting.
 - `assistant_featuredialog.lua` — book features: Recap/X-Ray/annotations.
 - `assistant_dictdialog.lua` — AI Dictionary + Term X-Ray.
-- `assistant_settings.lua` — provider/model settings.
+- `assistant_provider_dialog.lua` — provider/model settings (`ProviderDialog`, via `Assistant:showProviderDialog`).
+- `assistant_settings_menu.lua` — settings menu builders (`genMenuSettings`/`genWebSearchSubMenuItem`/`genDictionaryOutputMenu`).
 - `assistant_model_picker.lua` — `showPickerDialog`/`fetchModels`; call inside `Trapper:wrap`.
 - `assistant_viewer.lua` (`ChatGPTViewer`) — scrollable result viewer.
 - `assistant_quicknote.lua` — quick-note capture; `assistant_updater.lua` — GitHub release check; `assistant_mdparser.lua` — hoedown → markdown.lua fallback.

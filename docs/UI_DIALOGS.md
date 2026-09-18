@@ -20,7 +20,7 @@ Side-by-side rows: `HorizontalGroup{ HorizontalSpan(left_gap) + CheckButton(widt
 
 `InputDialog` **always** creates and renders an `InputText` — there is no flag to hide it. For checkbox-only / pure-picker forms, build the widget tree by hand. Reference: `Registry.showParametersDialog` in `assistant_provider_registry.lua`.
 
-Recipe (mirror `ConfirmBox`/`SettingsDialog`):
+Recipe (mirror `ConfirmBox`/`ProviderDialog`):
 
 `CenterContainer(full-screen Geom) → MovableContainer → FrameContainer(background COLOR_WHITE, radius/border) → VerticalGroup{ TitleBar, content widgets…, CenterContainer(ButtonTable) }`.
 

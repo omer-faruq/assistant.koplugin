@@ -760,7 +760,7 @@ function AssistantDialog:showAskDialog(highlightedText)
     title_bar_left_icon = "appbar.settings",
     title_bar_left_icon_tap_callback = function ()
         self.input_dialog:onCloseKeyboard()
-        self.assistant:showSettings()
+        self.assistant:showProviderDialog()
     end,
     close_callback = function () self:_close() end,
     dismiss_callback = function () self:_close() end

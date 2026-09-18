@@ -25,7 +25,8 @@ local N_ = _.ngettext
 local AssistantDialog = require("assistant_dialog")
 local Updater = require("assistant_updater")
 local Prompts = require("assistant_prompts")
-local SettingsDialog = require("assistant_settings")
+local ProviderDialog = require("assistant_provider_dialog")
+local SettingsMenu = require("assistant_settings_menu")
 local showDictionaryDialog = require("assistant_dictdialog")
 local Registry = require("assistant_provider_registry")
 local SearchRegistry = require("assistant_search_registry")
@@ -296,7 +297,7 @@ function Assistant:addToMainMenu(menu_items)
                   -- Remember the menu so a confirmed provider edit can dismiss
                   -- it (the menu stays open behind the dialogs).
                   self._menu_instance = touchmenu_instance
-                  self:showSettings(function ()
+                  self:showProviderDialog(function ()
                     touchmenu_instance:updateItems()
                   end)
                 end,
@@ -317,7 +318,7 @@ function Assistant:addToMainMenu(menu_items)
               {
                 text = _("Settings"),
                 sub_item_table_func = function ()
-                  return SettingsDialog.genMenuSettings(self)
+                  return SettingsMenu.genMenuSettings(self)
                 end,
                 hold_callback = function ()
                   self:showAboutDialog()
@@ -328,7 +329,7 @@ function Assistant:addToMainMenu(menu_items)
   -- append External Search tools menu item
   for _, n in ipairs(ToolExecutor.SEARCH_API_NAMES) do
     table.insert(common_items_table[5].sub_item_table,
-      SettingsDialog.genWebSearchSubMenuItem(self, n))
+      SettingsMenu.genWebSearchSubMenuItem(self, n))
   end
 
   local book_level_items = {
@@ -708,7 +709,7 @@ function BookLevelCustomPrompts(assistant)
   return sub_item_table
 end
 
-function Assistant:showSettings(close_callback)
+function Assistant:showProviderDialog(close_callback)
   if not self.config or not next(self.config:getProviderSettings()) then
     UIManager:show(InfoMessage:new{
       text = T(_("Add providers from the main menu:\n%1 -> AI Assistant -> Settings -> Provider API"), "⚙")
@@ -717,23 +718,23 @@ function Assistant:showSettings(close_callback)
   end
   if not self:isConfigured() then return end
 
-  if self._settings_dialog then
+  if self._provider_dialog then
     -- If settings dialog is already open, just show it again
-    UIManager:show(self._settings_dialog)
+    UIManager:show(self._provider_dialog)
     return
   end
 
   -- Reopens (after add/edit/delete provider) inherit the caller's refresh hook
   -- so the main menu label keeps tracking the active provider/model.
-  self._settings_close_callback = close_callback or self._settings_close_callback
+  self._provider_close_callback = close_callback or self._provider_close_callback
 
-  local settingDlg = SettingsDialog:new{
+  local settingDlg = ProviderDialog:new{
       assistant = self,
       settings = self.settings,
-      close_callback = self._settings_close_callback,
+      close_callback = self._provider_close_callback,
   }
 
-  self._settings_dialog = settingDlg -- store reference to the dialog
+  self._provider_dialog = settingDlg -- store reference to the dialog
   UIManager:show(settingDlg)
 end
 
@@ -818,10 +819,10 @@ function Assistant:_showAddWebSearchDialog(tool_key)
 
                     UIManager:close(dialog)
                     -- Refresh settings if open
-                    if self._settings_dialog then
-                        UIManager:close(self._settings_dialog)
-                        self._settings_dialog = nil
-                        UIManager:scheduleIn(0.15, function() self:showSettings() end)
+                    if self._provider_dialog then
+                        UIManager:close(self._provider_dialog)
+                        self._provider_dialog = nil
+                        UIManager:scheduleIn(0.15, function() self:showProviderDialog() end)
                     end
                 end,
             },

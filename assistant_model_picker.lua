@@ -59,7 +59,7 @@ local function resetModelSelection(assistant)
     assistant.querier.handler:SyncOptions(assistant.querier)
 end
 
--- Model picker dialog (extends InputDialog following SettingsDialog pattern)
+-- Model picker dialog (extends InputDialog following ProviderDialog pattern)
 local ModelPickerDialog = InputDialog:extend{
     title = "",
     assistant = nil,
@@ -301,7 +301,7 @@ function ModelPickerDialog:init()
     }
     local desc_h = desc_widget:getLineHeight() + Size.padding.tiny
 
-    -- Build vertical layout (same pattern as SettingsDialog)
+    -- Build vertical layout (same pattern as ProviderDialog)
     self.vgroup = VerticalGroup:new{
         align = "left",
         self.title_bar,

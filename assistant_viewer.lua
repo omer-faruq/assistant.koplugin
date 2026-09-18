@@ -1156,7 +1156,7 @@ function ChatGPTViewer:onShowMenu()
       align = "left",
       callback = function()
         UIManager:close(dialog)
-        self.assistant:showSettings()
+        self.assistant:showProviderDialog()
       end,
     }},
   }

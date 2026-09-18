@@ -30,7 +30,7 @@ Guidance for AI agents working in `assistant.koplugin` (KOReader AI assistant pl
 - `assistant_tool_executor.lua` — normalizes tool calls across the three wire formats; `assistant_exttools.lua` — search API clients.
 - `Registry` / `SearchRegistry` — UI provider/search CRUD + JSON settings.
 - `assistant_config.lua` — owns the effective `CONFIGURATION`.
-- UI: `assistant_dialog.lua`, `assistant_viewer.lua`, `assistant_featuredialog.lua`, `assistant_dictdialog.lua`, `assistant_settings.lua`, `assistant_model_picker.lua`, `assistant_quicknote.lua`, `assistant_mdparser.lua`.
+- UI: `assistant_dialog.lua`, `assistant_viewer.lua`, `assistant_featuredialog.lua`, `assistant_dictdialog.lua`, `assistant_provider_dialog.lua`, `assistant_settings_menu.lua`, `assistant_model_picker.lua`, `assistant_quicknote.lua`, `assistant_mdparser.lua`.
 - `assistant_term_xray.lua` — sentence splitting + term-anchor (keyword-in-context) extraction.
 Full flow, handlers, config, key files: `docs/ARCHITECTURE.md`.
 

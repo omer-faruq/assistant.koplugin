@@ -784,7 +784,7 @@ function Registry.showParametersDialog(assistant, provider_id)
     }}
 
     -- Hand-built dialog: plain InputDialog always renders an InputText, which
-    -- makes no sense for a checkbox-only form. Mirror ConfirmBox/SettingsDialog
+    -- makes no sense for a checkbox-only form. Mirror ConfirmBox/ProviderDialog
     -- composition: TitleBar -> notice -> CheckButtons -> ButtonTable inside a
     -- MovableContainer+FrameContainer, centered on screen.
     local screen_w, screen_h = Screen:getWidth(), Screen:getHeight()
@@ -1069,11 +1069,11 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                 -- Close any stale settings dialog, then open a fresh
                 -- Provider Settings window so the added/edited provider
                 -- is immediately visible and selectable.
-                if assistant._settings_dialog then
-                    UIManager:close(assistant._settings_dialog)
-                    assistant._settings_dialog = nil
+                if assistant._provider_dialog then
+                    UIManager:close(assistant._provider_dialog)
+                    assistant._provider_dialog = nil
                 end
-                UIManager:scheduleIn(0.15, function() assistant:showSettings() end)
+                UIManager:scheduleIn(0.15, function() assistant:showProviderDialog() end)
             end,
         },
     }}
@@ -1109,11 +1109,11 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                         dismissMenu(assistant)
                         -- Close any stale settings dialog, then open a fresh
                         -- Provider Settings window reflecting the deletion.
-                        if assistant._settings_dialog then
-                            UIManager:close(assistant._settings_dialog)
-                            assistant._settings_dialog = nil
+                        if assistant._provider_dialog then
+                            UIManager:close(assistant._provider_dialog)
+                            assistant._provider_dialog = nil
                         end
-                        UIManager:scheduleIn(0.15, function() assistant:showSettings() end)
+                        UIManager:scheduleIn(0.15, function() assistant:showProviderDialog() end)
                     end,
                 })
             end,

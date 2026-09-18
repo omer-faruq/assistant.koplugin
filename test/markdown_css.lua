@@ -201,7 +201,7 @@ local mock_assistant = {
         doc_settings = true,
     },
     ui_language_is_rtl = false,
-    showSettings = function() end,
+    showProviderDialog = function() end,
 }
 
 local viewer = ChatGPTViewer:new{

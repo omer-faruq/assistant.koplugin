@@ -1,38 +1,28 @@
 --[[--
-This widget displays a setting dialog.
+Settings menu builders: pure menu-item generators plus their local helpers.
 ]]
 
 local Trapper = require("ui/trapper")
 local koutil = require("util")
-local Blitbuffer = require("ffi/blitbuffer")
 local CenterContainer = require("ui/widget/container/centercontainer")
 local CheckButton = require("ui/widget/checkbutton")
 local FrameContainer = require("ui/widget/container/framecontainer")
 local Geom = require("ui/geometry")
-local HorizontalGroup = require("ui/widget/horizontalgroup")
-local HorizontalSpan = require("ui/widget/horizontalspan")
 local InfoMessage = require("ui/widget/infomessage")
 local Font = require("ui/font")
 local InputDialog = require("ui/widget/inputdialog")
-local LineWidget = require("ui/widget/linewidget")
 local MovableContainer = require("ui/widget/container/movablecontainer")
-local RadioButtonTable = require("ui/widget/radiobuttontable")
 local TextBoxWidget = require("ui/widget/textboxwidget")
 local SpinWidget = require("ui/widget/spinwidget")
 local Notification = require("ui/widget/notification")
 local Size = require("ui/size")
 local UIManager = require("ui/uimanager")
-local VerticalGroup = require("ui/widget/verticalgroup")
-local VerticalSpan = require("ui/widget/verticalspan")
 local ConfirmBox = require("ui/widget/confirmbox")
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
-local Device = require("device")
-local Screen = Device.screen
-local ffiutil = require("ffi/util")
+local Screen = require("device").screen
 local meta = require("_meta")
 local logger = require("logger")
-local koutil = require("util")
 local ToolExecutor = require("assistant_tool_executor")
 local ExtTools = require("assistant_exttools")
 local Updater = require("assistant_updater")
@@ -48,7 +38,7 @@ local CopyMultiInputDialog = MultiInputDialog:extend{}
 function CopyMultiInputDialog:onSwitchFocus(inputbox)
     MultiInputDialog.onSwitchFocus(self, inputbox)
     local vidx = inputbox.idx == 1 and 2 or 1
-    local vval = self.input_fields[vidx]:getText() 
+    local vval = self.input_fields[vidx]:getText()
     -- copy value from the other field
     if vval ~= "" and inputbox:getText() == "" then
         inputbox:addChars(vval)
@@ -58,7 +48,7 @@ function CopyMultiInputDialog:init()  -- fix the MultiInputDialog cannot move
     MultiInputDialog.init(self)
     local keyboard_height = self.keyboard_visible and self._input_widget:getKeyboardDimen().h or 0
     self[1] = CenterContainer:new{
-        dimen = Geom:new{ 
+        dimen = Geom:new{
             w = Screen:getWidth(),
             h = Screen:getHeight() - keyboard_height,
         },
@@ -151,28 +141,28 @@ local function LanguageSetting(assistant, close_callback)
 
     chkbtn_is_rtl = CheckButton:new{
         text = _("RTL written Language"),
-        face = Font:getFace("xx_smallinfofont"),  
+        face = Font:getFace("xx_smallinfofont"),
         checked = assistant.settings:readSetting("response_is_rtl") or assistant.ui_language_is_rtl,
         parent = langsetting,
     }
     langsetting:addWidget(FrameContainer:new{
-        padding = Size.padding.default,  
-        margin = Size.margin.small,  
-        bordersize = 0,  
+        padding = Size.padding.default,
+        margin = Size.margin.small,
+        bordersize = 0,
         chkbtn_is_rtl
     })
 
     if assistant.settings:has("dict_language") or
         assistant.settings:has("response_language") then
         -- show a notice when fields filled
-        langsetting:addWidget(FrameContainer:new{  
-            padding = Size.padding.default,  
-            margin = Size.margin.small,  
-            bordersize = 0,  
-            TextBoxWidget:new{  
+        langsetting:addWidget(FrameContainer:new{
+            padding = Size.padding.default,
+            margin = Size.margin.small,
+            bordersize = 0,
+            TextBoxWidget:new{
                 text = T(_("Leave these fields blank to use the UI language: %1"),  assistant.ui_language),
-                face = Font:getFace("x_smallinfofont"),  
-                width = math.floor(langsetting.width * 0.95),  
+                face = Font:getFace("x_smallinfofont"),
+                width = math.floor(langsetting.width * 0.95),
             }
         })
     end
@@ -180,271 +170,7 @@ local function LanguageSetting(assistant, close_callback)
     return langsetting
 end
 
-local SettingsDialog = InputDialog:extend{
-    title = _("Providers and Models"),
-
-    -- inited variables
-    assistant = nil, -- reference to the main assistant object
-    settings = nil,
-
-    -- widgets
-    buttons = nil,
-    radio_buttons = nil,
-}
-
-function SettingsDialog:init()
-
-    self.title_bar_left_icon = "notice-info"
-    self.title_bar_left_icon_tap_callback = function ()
-        self.assistant:showAboutDialog()
-    end
-
-    -- action buttons
-    self.buttons = {{
-        {
-            id = "close",
-            text = _("Close"),
-            callback = function() UIManager:close(self) end
-        },
-        {
-            id = "select_model",
-            text = _("Browse Models"),
-            enabled_func = function ()
-                return self.assistant.querier.handler.can_fetch_models
-            end,
-            callback = function() self:onBrowseModel() end,
-            hold_callback = function ()
-                UIManager:show(InfoMessage:new{
-                    alignment = "center",
-                    text = _("Browse available models from the current provider")
-                })
-            end
-        },
-        {
-            id = "edit_parameters",
-            text = _("Reasoning Option"),
-            enabled_func = function()
-                local cur = self.assistant.querier.provider_name
-                if not cur then return false end
-                local ps = self.assistant.config:getProvider(cur)
-                return Registry.hasReasoningOptions(cur, ps)
-            end,
-            callback = function()
-                local cur = self.assistant.querier.provider_name
-                if not cur then return end
-                Registry.showParametersDialog(self.assistant, cur)
-            end,
-        },
-        {
-            id = "edit_provider",
-            text = _("Edit"),
-            enabled_func = function()
-                local cur = self.assistant.querier.provider_name
-                if not cur then return false end
-                local ps = self.assistant.config:getProvider(cur)
-                return Registry.is_editable(ps)
-            end,
-            callback = function() self:onEditProvider() end,
-        },
-        {
-            -- OK only closes the dialog (provider selection is already
-            -- saved on radio-button select); kept on the right for UI
-            -- consistency (close left, action right).
-            id = "ok",
-            text = _("OK"),
-            callback = function() UIManager:close(self) end,
-        },
-    }}
-
-    -- init radio buttons for selecting AI Model provider
-    self.radio_buttons = {} -- init radio buttons table
-
-    local MAX_FOR_SINGLE_COLUMN = 12
-    -- 2 columns if more than MAX_FOR_SINGLE_COLUMN providers, otherwise 1 column
-    local columns = koutil.tableSize(self.assistant.config:getProviderSettings()) > MAX_FOR_SINGLE_COLUMN and 2 or 1
-    local buttonrow = {}
-    for key, tab in ffiutil.orderedPairs(self.assistant.config:getProviderSettings()) do
-        if self.assistant.querier:is_valid_provider(key, tab) then
-            if not (koutil.tableGetValue(tab, "visible") == false) then -- skip `visible = false` providers
-                if #buttonrow < columns then
-                    local seleted_model = self.settings:readSetting("selected_model_" .. key)
-                    local model_name = seleted_model or koutil.tableGetValue(tab, "model")
-                    local display_name = koutil.tableGetValue(tab, "display_name") or key
-                    local button_text = string.format("%s (%s)", display_name, model_name)
-                    table.insert(buttonrow, {
-                        text = button_text,
-                        provider = key, -- note: this `provider` field belongs to the RadioButton, not our AI Model provider.
-                        checked = (key == self.assistant.querier.provider_name),
-                    })
-                end
-                if #buttonrow == columns then
-                    table.insert(self.radio_buttons, buttonrow)
-                    buttonrow = {}
-                end
-            end
-        end
-    end
-
-    if #buttonrow > 0 then -- edge case: if there are remaining buttons in the last row
-        table.insert(self.radio_buttons, buttonrow)
-        buttonrow = {}
-    end
-
-    -- init title and buttons in base class
-    InputDialog.init(self)
-    --  adds a close button to the top right
-    self.title_bar.close_callback = function() UIManager:close(self) end
-    self.title_bar:init()
-    self.element_width = math.floor(self.width * 0.9)
-
-    self.radio_button_table = RadioButtonTable:new{
-        radio_buttons = self.radio_buttons,
-        width = self.element_width,
-        face = Font:getFace("cfont", 18),
-        zero_sep = true,
-        sep_width = 0,
-        focused = true,
-        scroll = false,
-        parent = self,
-        button_select_callback = function(btn)
-            self.settings:saveSetting("provider", btn.provider)
-            self.assistant.updated = true
-            self.assistant.querier:load_model(btn.provider)
-            self:updateSelectModelButton()
-            self:updateReasoningButton()
-        end
-    }
-    self.layout = {self.layout[#self.layout]} -- keep bottom buttons
-    self:mergeLayoutInVertical(self.radio_button_table, #self.layout) -- before bottom buttons
-
-    -- main dialog widget layout table
-    self.vgroup = VerticalGroup:new{
-        align = "left",
-        self.title_bar,         -- -- Title Bar
-        CenterContainer:new{    -- -- Provider radio buttons
-            dimen = Geom:new{
-                w = self.width,
-                h = self.radio_button_table:getSize().h,
-            },
-            self.radio_button_table,
-        },
-        CenterContainer:new{    -- -- Button at the bottom
-            dimen = Geom:new{
-                w = self.title_bar:getSize().w,
-                h = self.button_table:getSize().h,
-            },
-            self.button_table,
-        }
-    }
-
-    self.dialog_frame = FrameContainer:new{
-        radius = Size.radius.window,
-        bordersize = Size.border.window,
-        padding = 0,
-        margin = 0,
-        background = Blitbuffer.COLOR_WHITE,
-        self.vgroup,
-    }
-    self.movable = MovableContainer:new{
-        self.dialog_frame,
-    }
-    self[1] = CenterContainer:new{
-        dimen = Geom:new{
-            w = Screen:getWidth(),
-            h = Screen:getHeight(),
-        },
-        self.movable,
-    }
-    self:refocusWidget()
-end
-
-function SettingsDialog:updateSelectModelButton()
-    local btn = self.button_table:getButtonById("select_model")
-    if btn then
-        if self.assistant.querier.handler.can_fetch_models then
-            btn:enable()
-        else
-            btn:disable()
-        end
-        UIManager:setDirty(self, "ui")
-    end
-end
-
-function SettingsDialog:updateReasoningButton()
-    local btn = self.button_table:getButtonById("edit_parameters")
-    if btn then
-        local cur = self.assistant.querier.provider_name
-        local enabled = false
-        if cur then
-            local ps = self.assistant.config:getProvider(cur)
-            enabled = Registry.hasReasoningOptions(cur, ps)
-        end
-        if enabled then
-            btn:enable()
-        else
-            btn:disable()
-        end
-        UIManager:setDirty(self, "ui")
-    end
-end
-
-function SettingsDialog:onBrowseModel()
-    -- final check
-    if not self.assistant.querier.handler.can_fetch_models then
-        return
-    end
-
-    ASUtils.runWhenOnlineFast(function()
-        Trapper:wrap(function()
-            local handler = self.assistant.querier.handler
-            local models, err = handler:FetchModels()
-            if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
-                return  -- user dismissed the InfoMessage; keep settings window
-            end
-            if err or not models or #models == 0 then
-                -- keep the settings window open on failure
-                UIManager:show(InfoMessage:new{
-                    icon = "notice-warning",
-                    text = err or _("No models available."),
-                })
-                return
-            end
-            -- success: close settings and open the model picker. The menu
-            -- refresh rides along on every close (so the main menu label
-            -- updates even on long-press); the picker hands the window back
-            -- to Provider Settings on a normal dismissal only.
-            local menu_refresh = self.close_callback
-            UIManager:close(self)
-            local showPickerDialog = require("assistant_model_picker").showPickerDialog
-            showPickerDialog(self.assistant, models, menu_refresh, "", 1, nil, nil, nil, function()
-                UIManager:nextTick(function()
-                    self.assistant:showSettings(menu_refresh)
-                end)
-            end)
-        end)
-    end)
-end
-
-function SettingsDialog:onEditProvider()
-    local provider_name = self.assistant.querier.provider_name
-    local ps = self.assistant.config:getProvider(provider_name)
-    if not Registry.is_editable(ps) then return end
-
-    UIManager:close(self)
-    UIManager:nextTick(function()
-        self.assistant:_showAddProviderDialog(nil, nil, nil, nil, provider_name)
-    end)
-end
-
-function SettingsDialog:onCloseWidget()
-    InputDialog.onCloseWidget(self)
-    if self.close_callback then
-        self.close_callback()
-    end
-    self.assistant._settings_dialog = nil
-end
-
-SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
+local function genWebSearchSubMenuItem(assistant, key)
     return {
         text = ToolExecutor.ToolToText(key),
         radio = true,
@@ -497,7 +223,7 @@ SettingsDialog.genWebSearchSubMenuItem = function(assistant, key)
     }
 end
 
-SettingsDialog.genDictionaryOutputMenu = function(assistant)
+local function genDictionaryOutputMenu(assistant)
     local items = {}
     local function set_preset(preset)
         assistant.settings:saveSetting("dict_output_preset", preset)
@@ -613,7 +339,7 @@ SettingsDialog.genDictionaryOutputMenu = function(assistant)
     return items
 end
 
-SettingsDialog.genMenuSettings = function(assistant)
+local function genMenuSettings(assistant)
     local sub_item_table = {
         {
             text = _("Context Settings"),
@@ -763,7 +489,7 @@ SettingsDialog.genMenuSettings = function(assistant)
         {
             text = _("Dictionary Settings"),
             sub_item_table_func = function()
-                return SettingsDialog.genDictionaryOutputMenu(assistant)
+                return genDictionaryOutputMenu(assistant)
             end,
         },
         {
@@ -958,4 +684,8 @@ File configuration.lua will be preserved.]]),
 end
 
 
-return SettingsDialog
+return {
+    genWebSearchSubMenuItem = genWebSearchSubMenuItem,
+    genDictionaryOutputMenu = genDictionaryOutputMenu,
+    genMenuSettings = genMenuSettings,
+}
