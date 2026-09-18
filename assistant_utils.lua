@@ -1188,6 +1188,16 @@ function M.sleepWithInfo(seconds, template)
 end
 
 
+--- Fetch JSON over HTTP behind a cancellable trap widget.
+--- @param url string request URL
+--- @param header table|nil request headers
+--- @param string_or_widget string|table trap message, or widget closed afterwards
+--- @param timeout number|nil block timeout in seconds (defaults to 10)
+--- @param maxtime number|nil total timeout in seconds (defaults to 30; nil also skips the total-timeout sink)
+--- @param post_body table|string|nil POST body, JSON-encoded unless already a string
+--- @param extractor_fn function|nil per-handler extractor for non-200 bodies
+--- @return table|nil parsed JSON on success
+--- @return string|nil error code or message
 function M.fetchJSON(url, header, string_or_widget, timeout, maxtime, post_body, extractor_fn)
   
   local completed, success, code, body = Trapper:dismissableRunInSubprocess(function()
