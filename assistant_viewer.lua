@@ -980,11 +980,15 @@ function ChatGPTViewer:_buildCSS()
   return css
 end
 
--- Strip a ```reasoning fenced block (with its #### header and --- trailer)
--- plus any raw <think> block, so hiding reasoning also applies to text
--- received while it was shown. No-op when absent.
+-- Strip a ```reasoning fenced block (bare or with a legacy #### header,
+-- with an optional --- trailer) and any raw <think> block, so hiding
+-- reasoning also applies to text received while it was shown.
+-- No-op when absent.
 local function strip_reasoning(text)
   text = text:gsub("#### [^\n]*%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*", "")
+  text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*", "")
+  text = text:gsub("#### [^\n]*%s*```reasoning%s*[%s%S]-%s*```%s*", "")
+  text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
   text = text:gsub("<think>[%s%S]-</think>", "")
   -- Models that drop the opening tag: a leading run through the first
   -- </think> is thinking without an opener; drop it as well.

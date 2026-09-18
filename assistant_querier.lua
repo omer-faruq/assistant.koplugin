@@ -30,6 +30,7 @@ local function json_default(value, default_value)
     end
     return value
 end
+
 local Querier = {
     assistant = nil, -- reference to the main assistant object
     settings = nil,
@@ -1030,7 +1031,8 @@ function Querier:processStream(bgQuery, trunk_callback)
             -- incase the reasoning text included the suggestion tag
             reasoning = reasoning:gsub("</?suggestions>", "")
         end
-        ret = T('#### ※ %1\n\n```reasoning\n%2\n```\n\n---\n\n%3', _("Deeply Thought"), reasoning, ret)
+        reasoning = reasoning:gsub("```", "\n")
+        ret = T("```reasoning\n%1\n```\n\n%2", reasoning, ret)
     else
         -- Fallback for local models (Qwen3/QwQ/R1/GLM via bare Ollama/llama.cpp):
         -- thinking arrives inline in <think> tags with no structured channel.
@@ -1045,7 +1047,8 @@ function Querier:processStream(bgQuery, trunk_callback)
                 local reasoning = ret:sub(rs, think_close - 1)
                 ret = ret:sub(think_close + 8):gsub("^%s+", "", 1)
                 if show_reasoning then
-                    ret = T('#### ※ %1\n\n```reasoning\n%2\n```\n\n---\n\n%3', _("Deeply Thought"), reasoning, ret)
+                    reasoning = reasoning:gsub("```", "\n")
+                    ret = T("```reasoning\n%1\n```\n\n%2", reasoning, ret)
                 end
             end
         end

@@ -227,14 +227,30 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
           assistant_content = ASUtils.process_suggestions(assistant_content)
         end
 
-        -- Reasoning is stored inline at the top of the content as the
-        -- established `#### ※ Deeply Thought` fenced block
-        -- (assistant_querier.lua). Split it out so it renders before the
-        -- `### ✦ Response` header instead of after it.
-        local reasoning_block, reasoning_text, body = assistant_content:match(
-            "^(#### [^\n]*%s*```reasoning%s*([%s%S]-)%s*```%s*%-%-%-%s*)([%s%S]*)$")
-        if reasoning_block and reasoning_text and reasoning_text:find("%S") then
-          reasoning_section = reasoning_block
+        -- Reasoning arrives inline at the top as a ```reasoning fence
+        -- (assistant_querier.lua); the title is added here so history stays
+        -- clean. Older entries may still carry a `####` header; normalize it.
+        -- The `---` separator is optional (current output omits it), so the
+        -- `---`-requiring shapes run first: that keeps fenced code inside
+        -- legacy reasoning splitting at the right closing fence.
+        -- Split it out so it renders before the `### ✦ Response` header.
+        local reasoning_text, body = assistant_content:match(
+            "^```reasoning%s*([%s%S]-)%s*```%s*%-%-%-%s*([%s%S]*)$")
+        if not reasoning_text then
+          reasoning_text, body = assistant_content:match(
+              "^#### [^\n]*%s*```reasoning%s*([%s%S]-)%s*```%s*%-%-%-%s*([%s%S]*)$")
+        end
+        if not reasoning_text then
+          reasoning_text, body = assistant_content:match(
+              "^```reasoning%s*([%s%S]-)%s*```%s*([%s%S]*)$")
+        end
+        if not reasoning_text then
+          reasoning_text, body = assistant_content:match(
+              "^#### [^\n]*%s*```reasoning%s*([%s%S]-)%s*```%s*([%s%S]*)$")
+        end
+        if reasoning_text and reasoning_text:find("%S") then
+          reasoning_section = T("#### ※ %1\n\n```reasoning\n%2\n```\n\n---\n\n",
+              _("Deeply Thought"), reasoning_text)
           assistant_content = body
         end
       end
