@@ -6,8 +6,16 @@ This is the Python replacement for AI_TRANSLATE.sh. It avoids the truncation
 issue (finish_reason=length) by:
 
   * Communicating with the LLM via a strict JSON-in / JSON-out contract:
-    the model is asked to return {"translations": [...]} for a list of
-    msgids, instead of emitting an entire .po file as free-form text.
+    the model is asked to return {"translations": [...]} (a positional array,
+    one element per request item in order) for a list of msgids, instead of
+    emitting an entire .po file as free-form text.
+  * Constraining the output with a strict JSON Schema (object/array/string
+    types; lengths enforced by prompt + client validation), with automatic
+    fallback to {"type": "json_object"} when the endpoint rejects json_schema
+    (AI_JSON_SCHEMA=auto by default; off forces json_object, on forces
+    json_schema without fallback; AI_JSON_MODE=0 disables response_format).
+  * Sending compact request items (only id/msgid plus non-empty
+    msgctxt/msgid_plural/comments) as single-line JSON to save tokens.
   * Splitting the work into small chunks (default 20 msgids per request)
     so the per-response output is well below any provider's token cap.
   * On length-truncation, automatically bisecting the chunk and retrying.
@@ -205,20 +213,22 @@ Translate software/AI terminology using the established conventions of the targe
   - Feature names ("X-Ray", "Term X-Ray"): keep the rendering consistent across the file and follow any translator comments. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details); it is about one term, not the book-level "X-Ray".
   - API/product names ("Chat Completions API", "Responses API", "Messages API", "Gemini API", model names) always stay in English; translate only surrounding descriptors (e.g. "compatible" / "OpenAI-compatible").
 
-You will receive a JSON object describing the target language and a list of items to translate. Each item has:
-  - id: the index of the item (use this id verbatim in your response)
-  - msgctxt: optional context hint (may be null)
+You will receive a JSON object describing the target language and a list of items to translate. Each item always has:
+  - id: the index of the item (positional; the response must keep the same order, do not echo ids)
   - msgid: the English source string
-  - msgid_plural: optional plural form (only present for plural entries; otherwise null)
-  - comments: list of translator notes (may be empty)
+Optional fields appear only when applicable (absent means none):
+  - msgctxt: context hint
+  - msgid_plural: plural form (only present for plural entries)
+  - comments: list of translator notes
 
 Translate each item, taking into account the comments and msgctxt. Preserve all printf-style placeholders (e.g. %s, %d, %1$s), HTML/XML tags, newlines, and leading/trailing whitespace exactly as they appear in msgid.
 
 Output rules:
 - Reply with a single JSON object of the form {{"translations": [...]}}.
-- For each item, produce exactly one entry whose "id" matches the request.
-- For a non-plural item: return {{"id": <int>, "msgstr": "<translation>"}}.
-- For a plural item: return {{"id": <int>, "msgstr_plural": ["<form 0>", "<form 1>", ...]}}; the array length must equal the nplurals value supplied in the request.
+- "translations" must be an array with exactly the same length as the request items, in the same order (position i translates item i).
+- For a non-plural item (no msgid_plural): element i is a string "<translation>".
+- For a plural item (has msgid_plural): element i is an array ["<form 0>", "<form 1>", ...]; the array length must equal the nplurals value supplied in the request.
+- Do not echo ids and do not return an array of objects.
 - Do not return the msgid back unchanged as msgstr unless the source is a technical token (URL, format spec, brand name) that must stay in English.
 - Do not include any prose, markdown fences, or extra keys.
 """
@@ -229,7 +239,7 @@ nplurals: {nplurals}
 Items to translate:
 {items_json}
 
-Respond with JSON only, matching the contract in the system prompt."""
+Respond with JSON only: {{"translations": [...]}} with one element per input item in order (a string for singular items, an array of nplurals strings for plural items)."""
 
 
 # -------------------- Configuration --------------------
@@ -278,6 +288,15 @@ class Config:
         self.json_mode: bool = os.environ.get("AI_JSON_MODE", "1").lower() not in (
             "0", "false", "no",
         )
+        # JSON Schema strict-mode control for response_format:
+        #   auto (default): send json_schema, fall back to json_object once
+        #     on HTTP 400 mentioning response_format/json_schema/unsupported.
+        #   off: send {"type": "json_object"} directly.
+        #   on: force json_schema; a rejection raises without fallback.
+        # AI_JSON_MODE=0 still disables response_format entirely (escape hatch).
+        self.json_schema_mode: str = os.environ.get("AI_JSON_SCHEMA", "auto").strip().lower() or "auto"
+        if self.json_schema_mode not in ("auto", "off", "on"):
+            self.json_schema_mode = "auto"
 
     def require_api_key(self) -> None:
         if not self.api_key:
@@ -468,6 +487,51 @@ def _compute_backoff(
     return max(1.0, min(backoff, max(0.0, remaining - 1)))
 
 
+def _build_response_format(cfg: Config) -> dict[str, Any] | None:
+    """Build response_format for a chat completion request.
+
+    Returns None when cfg.json_mode is False (AI_JSON_MODE=0 escape hatch:
+    no response_format is sent). Otherwise returns either a strict
+    json_schema contract (default) or {"type": "json_object"} when
+    AI_JSON_SCHEMA=off.
+
+    The schema pins down object/array/string types only. Array lengths
+    (translations == request items, plural forms == nplurals) are enforced
+    by the prompt plus _validate_translations instead: strict-mode
+    providers reject length keywords like minItems/maxItems.
+    """
+    if not cfg.json_mode:
+        return None
+    if getattr(cfg, "json_schema_mode", "auto") == "off":
+        return {"type": "json_object"}
+    return {
+        "type": "json_schema",
+        "json_schema": {
+            "name": "po_translations",
+            "strict": True,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "translations": {
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {"type": "string"},
+                                {
+                                    "type": "array",
+                                    "items": {"type": "string"},
+                                },
+                            ]
+                        },
+                    }
+                },
+                "required": ["translations"],
+                "additionalProperties": False,
+            },
+        },
+    }
+
+
 def _post_chat(
     cfg: Config,
     messages: list[dict[str, str]],
@@ -481,6 +545,12 @@ def _post_chat(
     Caps total time spent on a single chunk at cfg.max_chunk_time seconds.
     Each retry logs a one-liner with reason, sleep duration, and elapsed
     time vs the chunk budget.
+
+    The output contract is enforced via response_format: strict json_schema
+    by default (AI_JSON_SCHEMA=auto), plain json_object when
+    AI_JSON_SCHEMA=off, and no response_format when AI_JSON_MODE=0. In auto
+    mode a 400 that mentions response_format/json_schema/unsupported (or
+    "not supported") falls back to json_object exactly once.
     """
     payload = {
         "model": cfg.api_model,
@@ -488,12 +558,16 @@ def _post_chat(
         "max_tokens": max_tokens or cfg.max_tokens,
         "messages": messages,
     }
-    if cfg.json_mode:
-        # Constrain the model to emit a JSON object. Supported by OpenAI and
-        # Gemini's OpenAI-compat endpoint; requires "json" to appear in the
-        # prompt (SYSTEM_PROMPT/USER_TEMPLATE already satisfy this). Set
-        # AI_JSON_MODE=0 for endpoints that reject this field.
-        payload["response_format"] = {"type": "json_object"}
+    response_format = _build_response_format(cfg)
+    if response_format is not None:
+        # Strict JSON Schema by default; requires "json" in the prompt
+        # (SYSTEM_PROMPT/USER_TEMPLATE already satisfy this). Set
+        # AI_JSON_MODE=0 for endpoints that reject response_format outright,
+        # or AI_JSON_SCHEMA=off to use plain {"type": "json_object"}.
+        payload["response_format"] = response_format
+    using_schema = isinstance(response_format, dict) and response_format.get("type") == "json_schema"
+    schema_mode = getattr(cfg, "json_schema_mode", "auto")
+    downgraded = False
 
     headers = _build_headers(cfg)
 
@@ -557,6 +631,27 @@ def _post_chat(
         retryable, retry_after, reason = _classify(resp, None)
         last_reason = reason
         if not retryable:
+            if (
+                resp.status_code == 400
+                and using_schema
+                and not downgraded
+                and schema_mode == "auto"
+            ):
+                body = (resp.text or "").lower()
+                if (
+                    "response_format" in body
+                    or "json_schema" in body
+                    or "unsupported" in body
+                    or "not supported" in body
+                ):
+                    log_http.warning(
+                        "json_schema rejected (HTTP 400); "
+                        "falling back to json_object once",
+                    )
+                    payload["response_format"] = {"type": "json_object"}
+                    using_schema = False
+                    downgraded = True
+                    continue
             raise RuntimeError(
                 f"{reason}: {resp.text[:2000]}"
             )
@@ -613,13 +708,17 @@ def _parse_response(resp: requests.Response) -> dict[str, Any]:
 # -------------------- Chunk translation --------------------
 
 def _entry_to_item(idx: int, entry: polib.POEntry) -> dict[str, Any]:
-    return {
+    item: dict[str, Any] = {
         "id": idx,
-        "msgctxt": entry.msgctxt or None,
         "msgid": entry.msgid,
-        "msgid_plural": entry.msgid_plural or None,
-        "comments": list(entry.tcomment or ""),
     }
+    if entry.msgctxt:
+        item["msgctxt"] = entry.msgctxt
+    if entry.msgid_plural:
+        item["msgid_plural"] = entry.msgid_plural
+    if entry.tcomment:
+        item["comments"] = list(entry.tcomment or "")
+    return item
 
 
 def _build_messages(
@@ -632,7 +731,7 @@ def _build_messages(
         language=lang_fullname,
         lang_code=lang_code,
         nplurals=nplurals,
-        items_json=json.dumps(items, ensure_ascii=False, indent=2),
+        items_json=json.dumps(items, ensure_ascii=False, separators=(",", ":")),
     )
     return [
         {"role": "system", "content": SYSTEM_PROMPT.format(
@@ -713,49 +812,87 @@ def _validate_translations(
     payload: dict[str, Any],
     nplurals: int,
 ) -> list[dict[str, Any]]:
-    """Ensure the response has a translation for every requested id."""
+    """Validate a positional translations array against the request items.
+
+    New contract: payload["translations"] is a list with len == len(items),
+    in the same order. A singular item expects a non-empty string; a plural
+    item (has msgid_plural) expects a list of nplurals non-empty strings.
+    Returns [{"id", "msgstr"/"msgstr_plural"}] for _apply_translations.
+
+    Old-format payloads (array of {"id", ...} dicts) are still accepted via
+    the legacy id-keyed validation path.
+    """
     translations = payload.get("translations")
     if not isinstance(translations, list):
         raise RuntimeError("response is missing 'translations' array")
 
-    expected_ids = {item["id"] for item in items}
-    seen_ids: set[int] = set()
-    by_id: dict[int, dict[str, Any]] = {}
-    for t in translations:
-        if not isinstance(t, dict) or "id" not in t:
-            raise RuntimeError(f"translation entry missing 'id': {t!r}")
-        tid = t["id"]
-        if tid in seen_ids:
-            raise RuntimeError(f"duplicate translation id: {tid}")
-        seen_ids.add(tid)
-        by_id[tid] = t
+    # Legacy compat: elements are {"id", "msgstr"/"msgstr_plural"} dicts.
+    if translations and isinstance(translations[0], dict) and "id" in translations[0]:
+        expected_ids = {item["id"] for item in items}
+        seen_ids: set[int] = set()
+        by_id: dict[int, dict[str, Any]] = {}
+        for t in translations:
+            if not isinstance(t, dict) or "id" not in t:
+                raise RuntimeError(f"translation entry missing 'id': {t!r}")
+            tid = t["id"]
+            if tid in seen_ids:
+                raise RuntimeError(f"duplicate translation id: {tid}")
+            seen_ids.add(tid)
+            by_id[tid] = t
 
-    missing = expected_ids - seen_ids
-    if missing:
-        raise RuntimeError(f"response missing ids: {sorted(missing)}")
+        missing = expected_ids - seen_ids
+        if missing:
+            raise RuntimeError(f"response missing ids: {sorted(missing)}")
 
-    out: list[dict[str, Any]] = []
-    for item in items:
-        t = by_id[item["id"]]
-        if item["msgid_plural"]:
-            forms = t.get("msgstr_plural")
-            if not isinstance(forms, list) or len(forms) != nplurals:
+        out: list[dict[str, Any]] = []
+        for item in items:
+            t = by_id[item["id"]]
+            if item.get("msgid_plural"):
+                forms = t.get("msgstr_plural")
+                if not isinstance(forms, list) or len(forms) != nplurals:
+                    raise RuntimeError(
+                        f"id {item['id']}: msgstr_plural must be a list of length "
+                        f"{nplurals}, got {t.get('msgstr_plural')!r}"
+                    )
+                if any(not isinstance(x, str) for x in forms):
+                    raise RuntimeError(f"id {item['id']}: msgstr_plural has non-string forms")
+                if any(not x.strip() for x in forms):
+                    raise RuntimeError(f"id {item['id']}: msgstr_plural has empty form")
+                out.append({"id": item["id"], "msgstr_plural": [_normalize_newlines(f) for f in forms]})
+            else:
+                msgstr = t.get("msgstr", "")
+                if not isinstance(msgstr, str):
+                    raise RuntimeError(f"id {item['id']}: msgstr must be a string")
+                if not msgstr.strip():
+                    raise RuntimeError(f"id {item['id']}: msgstr is empty")
+                out.append({"id": item["id"], "msgstr": _normalize_newlines(msgstr)})
+        return out
+
+    if len(translations) != len(items):
+        raise RuntimeError(
+            f"translations length {len(translations)} != items length {len(items)}"
+        )
+
+    out = []
+    for pos, (item, t) in enumerate(zip(items, translations)):
+        item_id = item["id"]
+        if item.get("msgid_plural"):
+            if not isinstance(t, list) or len(t) != nplurals:
                 raise RuntimeError(
-                    f"id {item['id']}: msgstr_plural must be a list of length "
-                    f"{nplurals}, got {t.get('msgstr_plural')!r}"
+                    f"id {item_id}: msgstr_plural must be a list of length "
+                    f"{nplurals}, got {t!r}"
                 )
-            if any(not isinstance(x, str) for x in forms):
-                raise RuntimeError(f"id {item['id']}: msgstr_plural has non-string forms")
-            if any(not x.strip() for x in forms):
-                raise RuntimeError(f"id {item['id']}: msgstr_plural has empty form")
-            out.append({"id": item["id"], "msgstr_plural": [_normalize_newlines(f) for f in forms]})
+            if any(not isinstance(x, str) for x in t):
+                raise RuntimeError(f"id {item_id}: msgstr_plural has non-string forms")
+            if any(not x.strip() for x in t):
+                raise RuntimeError(f"id {item_id}: msgstr_plural has empty form")
+            out.append({"id": item_id, "msgstr_plural": [_normalize_newlines(f) for f in t]})
         else:
-            msgstr = t.get("msgstr", "")
-            if not isinstance(msgstr, str):
-                raise RuntimeError(f"id {item['id']}: msgstr must be a string")
-            if not msgstr.strip():
-                raise RuntimeError(f"id {item['id']}: msgstr is empty")
-            out.append({"id": item["id"], "msgstr": _normalize_newlines(msgstr)})
+            if not isinstance(t, str):
+                raise RuntimeError(f"id {item_id}: msgstr must be a string, got {t!r}")
+            if not t.strip():
+                raise RuntimeError(f"id {item_id}: msgstr is empty")
+            out.append({"id": item_id, "msgstr": _normalize_newlines(t)})
     return out
 
 
