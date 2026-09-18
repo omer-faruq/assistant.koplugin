@@ -5,6 +5,8 @@ local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
 
+local BaseHandler = require("api_handlers.base")
+
 local function test(name, fn)
     return { name = name, fn = fn }
 end
@@ -48,6 +50,35 @@ local tests = {
 
     test("extractErrorMessage: numeric message becomes string", function()
         assert.equal(ASUtils.extractErrorMessage('{"error":{"message":429}}'), "429")
+    end),
+
+    test("prefixHttpCode: numeric code adds prefix", function()
+        assert.equal(BaseHandler.prefixHttpCode(400, "Bad Request"), "[400] Bad Request")
+        assert.equal(BaseHandler.prefixHttpCode(500, "oops"), "[500] oops")
+    end),
+
+    test("prefixHttpCode: string digit code adds prefix", function()
+        assert.equal(BaseHandler.prefixHttpCode("429", "slow"), "[429] slow")
+    end),
+
+    test("prefixHttpCode: USER_CANCELED passes through", function()
+        assert.equal(BaseHandler.prefixHttpCode("USER_CANCELED", "bye"), "bye")
+    end),
+
+    test("prefixHttpCode: missing/non-numeric code gets [0]", function()
+        assert.equal(BaseHandler.prefixHttpCode(nil, "timeout"), "[0] timeout")
+        assert.equal(BaseHandler.prefixHttpCode("NETWORK_ERROR", "down"), "[0] down")
+        assert.equal(BaseHandler.prefixHttpCode("wantread", "socket fail"), "[0] socket fail")
+    end),
+
+    test("prefixHttpCode: already prefixed is idempotent", function()
+        assert.equal(BaseHandler.prefixHttpCode(500, "[400] Bad Request"), "[400] Bad Request")
+        assert.equal(BaseHandler.prefixHttpCode(nil, "[0] timeout"), "[0] timeout")
+    end),
+
+    test("prefixHttpCode: non-string msg returned as-is", function()
+        assert.equal(BaseHandler.prefixHttpCode(400, nil), nil)
+        assert.equal(BaseHandler.prefixHttpCode(400, 42), 42)
     end),
 }
 

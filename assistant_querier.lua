@@ -986,7 +986,14 @@ function Querier:processStream(bgQuery, trunk_callback)
         -- Shared helper covers error/detail wrappers (see assistant_utils).
         local err_msg = ASUtils.extractErrorMessage(raw_body)
 
-        local err_header = T("%1: (%2)", status ~= "" and status or tostring(code ~= "" and code or "?"), endpoint)
+        -- First line carries the "[NNN]" HTTP code (helper falls back to "[0]").
+        local codeNum = tonumber(code) or tonumber(status:match("(%d%d%d)"))
+        local base = status ~= "" and status or endpoint
+        if endpoint ~= "" and base ~= endpoint then
+            base = base .. " (" .. endpoint .. ")"
+        end
+
+        local err_header = self.handler.prefixHttpCode(codeNum, base)
         if err_msg and #err_msg > 0 then
             err_header = T("%1\n\n<b>%2:</b>\n%3", err_header, _("Error Message"), err_msg)
         end

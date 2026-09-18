@@ -38,6 +38,26 @@ BaseHandler.CODE_SERVER_ERROR       = "SERVER_ERROR"
 BaseHandler.PROTOCOL_NON_200 = "X-NON-200-STATUS:"
 BaseHandler.MAX_RETRIES = 8
 
+--- Prefix an error message with its HTTP status code for quick triage.
+--- Numeric codes in the 100-599 range get a "[NNN] " prefix; failures
+--- without an HTTP code (nil, socket error strings, other internal codes)
+--- get a "[0] " prefix. USER_CANCELED passes through untouched (compared
+--- by literal to avoid coupling the helper to the CODE_* constants).
+--- Already-prefixed messages are returned as-is.
+--- @param code number|string|nil HTTP status or internal code
+--- @param msg any error message (non-strings returned untouched)
+--- @return any "[NNN] msg", "[0] msg", or the original msg
+function BaseHandler.prefixHttpCode(code, msg)
+    if type(msg) ~= "string" then return msg end
+    if msg:match("^%[%d+%]") then return msg end
+    if code == "USER_CANCELED" then return msg end
+    local num = tonumber(code)
+    if not num or num < 100 or num > 599 or math.floor(num) ~= num then
+        return "[0] " .. msg
+    end
+    return string.format("[%d] %s", num, msg)
+end
+
 -- ---------------------------------------------------------------------------
 -- 429 retry helpers (header/date parsing lives in assistant_utils)
 -- ---------------------------------------------------------------------------

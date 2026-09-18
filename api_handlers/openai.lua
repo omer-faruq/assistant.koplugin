@@ -165,10 +165,10 @@ function OpenAIHandler:query(message_history, query_option)
             local ok, rd = pcall(json.decode, response)
             if ok then
                 local err_msg = ASUtils.extractErrorMessage(rd)
-                if err_msg then return nil, err_msg end
+                if err_msg then return nil, BaseHandler.prefixHttpCode(code, err_msg) end
             end
         end
-        return nil, "Error: " .. tostring(self.model) .. "\n" .. self:getApiUrl() .. "\n- " .. tostring(code or "unknown") .. " - " .. tostring(response)
+        return nil, BaseHandler.prefixHttpCode(code, "Error: " .. tostring(self.model) .. "\n" .. self:getApiUrl() .. "\n- " .. tostring(code or "unknown") .. " - " .. tostring(response))
     end
 
     local ok, responseData = pcall(json.decode, response)

@@ -235,7 +235,7 @@ function GeminiHandler:query(message_history, query_option)
             "model:", model,
             "request_size:", #requestBody,
             "message_count:", #message_history)
-        return nil, "Error: Gemini API (" .. tostring(model) .. ")\n" .. url_sync .. "\n- " .. tostring(response)
+        return nil, BaseHandler.prefixHttpCode(code, "Error: Gemini API (" .. tostring(model) .. ")\n" .. url_sync .. "\n- " .. tostring(response))
     end
 
     local ok, parsed = pcall(json.decode, response)

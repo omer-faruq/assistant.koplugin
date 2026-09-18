@@ -597,12 +597,12 @@ function ResponsesHandler:query(message_history, query_option)
                 local err_msg = ASUtils.extractErrorMessage(rd)
                 if err_msg then
                     logger.warn(self.name, "HTTP", code, "error:", err_msg)
-                    return nil, err_msg
+                    return nil, BaseHandler.prefixHttpCode(code, err_msg)
                 end
             end
         end
         logger.warn(self.name, "HTTP request failed:", code, "response:", tostring(response):sub(1, 200))
-        return nil, "Error: " .. tostring(self.model) .. "\n" .. self.responses_url .. "\n- " .. tostring(code or "unknown") .. " - " .. tostring(response)
+        return nil, BaseHandler.prefixHttpCode(code, "Error: " .. tostring(self.model) .. "\n" .. self.responses_url .. "\n- " .. tostring(code or "unknown") .. " - " .. tostring(response))
     end
 
     local ok, responseData = pcall(json.decode, response)
