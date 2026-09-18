@@ -16,18 +16,18 @@ end
 -- (assistant_querier.lua). The real method needs a subprocess mock, so only
 -- its pure split/wrap logic is tested here, per AGENTS.md testing policy.
 local function split_think(ret, show_reasoning)
-    local think_open = ret:find("<think>", 1, true)
     local think_close = ret:find("</think>", 1, true)
-    if think_open == 1 and think_close then
-        local reasoning = ret:sub(8, think_close - 1)
-        ret = ret:sub(think_close + 8):gsub("^%s+", "", 1)
-        if show_reasoning then
-            ret = "```reasoning\n" .. reasoning .. "\n```\n\n" .. ret
+    if think_close then
+        local think_open = ret:find("<think>", 1, true)
+        if not think_open or think_open < think_close then
+            local rs = think_open and think_open + 7 or 1
+            local reasoning = ret:sub(rs, think_close - 1)
+            ret = ret:sub(think_close + 8):gsub("^%s+", "", 1)
+            if show_reasoning then
+                reasoning = reasoning:gsub("```", "\n")
+                ret = "```reasoning\n" .. reasoning .. "\n```\n\n" .. ret
+            end
         end
-    elseif show_reasoning and not think_open and think_close then
-        local reasoning = ret:sub(1, think_close - 1)
-        ret = ret:sub(think_close + 8):gsub("^%s+", "", 1)
-        ret = "```reasoning\n" .. reasoning .. "\n```\n\n" .. ret
     end
     return ret
 end
@@ -91,10 +91,11 @@ local tests = {
         assert.matches(split_think(input, true), "The answer%.$")
     end),
 
-    test("think: mid-text tags left untouched", function()
+    test("think: mid-text tags split at first close", function()
         local input = "Talk about <think>tags</think> here."
-        assert.equal(split_think(input, true), input)
-        assert.equal(split_think(input, false), input)
+        assert.equal(split_think(input, true),
+            "```reasoning\ntags\n```\n\nhere.")
+        assert.equal(split_think(input, false), "here.")
     end),
 
     test("think: unclosed tag leaves content untouched", function()

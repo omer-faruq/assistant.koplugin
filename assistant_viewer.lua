@@ -983,7 +983,8 @@ end
 -- Strip a ```reasoning fenced block and any raw <think> block, so hiding
 -- reasoning also applies to text received while it was shown. Two shapes:
 -- the titled block the dialog renders, and the bare fence the querier
--- stores. No-op when absent.
+-- stores. Raw <think> only arrives via the non-stream path, which bypasses
+-- the querier's <think> fallback. No-op when absent.
 local function strip_reasoning(text)
   text = text:gsub("#### [^\n]*%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*", "")
   text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
