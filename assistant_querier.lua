@@ -988,7 +988,13 @@ function Querier:processStream(bgQuery, trunk_callback)
 
         -- First line carries the "[NNN]" HTTP code (helper falls back to "[0]").
         local codeNum = tonumber(code) or tonumber(status:match("(%d%d%d)"))
-        local base = status ~= "" and status or endpoint
+        -- A non-numeric code is the socket-layer reason itself (e.g. "wantread"):
+        -- keep it visible, otherwise it vanishes under the "[0]" prefix.
+        local reason = status
+        if reason == "" and type(code) == "string" and not tonumber(code) and code ~= "" then
+            reason = code
+        end
+        local base = reason ~= "" and reason or endpoint
         if endpoint ~= "" and base ~= endpoint then
             base = base .. " (" .. endpoint .. ")"
         end
