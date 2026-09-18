@@ -9,8 +9,9 @@ local Event = require("ui/event")
 local koutil = require("util")
 local ASUtils = require("assistant_utils")
 local TermXray = require("assistant_term_xray")
-local dict_prompts = require("assistant_prompts").assistant_prompts.dict
 local Prompts = require("assistant_prompts")
+local dict_prompts = Prompts.assistant_prompts.dict
+local term_xray_prompts = Prompts.builtin_prompts.term_xray
 
 -- Original book text immediately before/after the selected word. Shared by the
 -- Dictionary excerpt and Term X-Ray so both can show and send the term's own
@@ -130,7 +131,6 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     if #message_history == 0 then
         local system_prompt
         if prompt_type == "term_xray" then
-            local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
             system_prompt = term_xray_prompts.system_prompt
         else
             system_prompt = dict_prompts.system_prompt
@@ -210,7 +210,6 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     -- Choose the appropriate prompt and context based on prompt type
     local user_prompt, context_content, title
     if prompt_type == "term_xray" then
-        local term_xray_prompts = require("assistant_prompts").builtin_prompts.term_xray
         user_prompt = term_xray_prompts.user_prompt
         -- Prepend the term's immediate surroundings to the anchor-selected
         -- context so the model always sees its own sentence.
