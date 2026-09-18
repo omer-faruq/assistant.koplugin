@@ -20,8 +20,10 @@ for mod_idx, modname in ipairs(MODULES) do
     saved_loaded[modname] = package.loaded[modname]
 end
 
--- Minimal upstream stand-in: only extend/init, which is all the subclass
--- module touches at load time.
+-- Upstream stand-in: extend plus a faithful minimal init mirroring
+-- TextViewer:init (format resolve, txt/html branch, outer css built from
+-- the justified/monospace flags, scroll widget holding body/css for
+-- setContent). Enough to replay open/toggle/Plain-text flows headlessly.
 local TextViewerStub = {}
 function TextViewerStub:extend(fields)
     local class = {}
@@ -33,7 +35,34 @@ function TextViewerStub:extend(fields)
 end
 function TextViewerStub:init(reinit)
     self._stub_init_reinit = reinit
+    local util = require("util")
+    self.text_format = self.text_format
+        or (self.file and string.lower(util.getFileNameSuffix(self.file))) or ""
+    self.is_txt = self.force_txt or not self.html_text_formats[self.text_format]
+    if self.is_txt then
+        return
+    end
+    local css = "body{margin:0;line-height:1.3;"
+        .. (self.justified and "text-align: justify;" or "")
+        .. (self.monospace_font and "font-family: monospace;" or "") .. "}"
+    local box = { _content = {} }
+    function box:setContent(body, css_arg)
+        self._content.body = body
+        self._content.css = css_arg
+    end
+    local scroll = {
+        css = css,
+        html_body = "BODY",
+        default_font_size = 20,
+        is_xhtml = false,
+        htmlbox_widget = box,
+        _updateScrollBar = function() end,
+    }
+    self.scroll_widget = scroll
+    self.box_widget = box
+    box:setContent(scroll.html_body, scroll.css)
 end
+TextViewerStub.html_text_formats = { html = true, htm = true, md = true }
 
 local function reset_modules(parser_fake)
     for mod_idx, modname in ipairs(MODULES) do
@@ -114,6 +143,49 @@ local tests = {
         assert.notNil(NotebookViewer, "assistant_notebook must expose NotebookViewer")
         -- Real lfs: attributes is nil, so no UI module is touched.
         NotebookViewer.openFile("/definitely/not/a/real_notebook.md")
+    end),
+
+    test("justify toggle keeps table css across reinit", function()
+        reset_modules(setmetatable({ _is_hoedown = true }, {
+            __call = function(_, text) return "<table><tr><td>" .. text .. "</td></tr></table>" end,
+        }))
+        local NotebookViewer = require("assistant_notebook").NotebookViewer
+        local inst = setmetatable({
+            file = "notes.md",
+            text = "# md",
+            text_type = "file_content",
+            justified = false,
+            monospace_font = false,
+            force_txt = nil,
+            text_format = nil,
+        }, { __index = NotebookViewer })
+        local function injected_css()
+            return inst.scroll_widget.htmlbox_widget._content.css or ""
+        end
+        -- Open: no justify fragment, table css present.
+        NotebookViewer.init(inst, nil)
+        assert.notMatches(injected_css(), "text%-align: justify", "open must not justify by default")
+        assert.matches(injected_css(), "border%-collapse", "open must inject table css")
+        -- Hamburger Justify toggle: reinit must keep both fragments.
+        inst.justified = true
+        NotebookViewer.init(inst, true)
+        assert.matches(injected_css(), "text%-align: justify", "toggle must survive table css injection")
+        assert.matches(injected_css(), "border%-collapse", "toggle must keep table css")
+        assert.isFalse(inst.is_txt, "toggle must stay in html mode")
+        -- Toggle off: justify fragment gone, table css stays.
+        inst.justified = false
+        NotebookViewer.init(inst, true)
+        assert.notMatches(injected_css(), "text%-align: justify", "toggle-off must drop justify")
+        assert.matches(injected_css(), "border%-collapse", "toggle-off must keep table css")
+        -- Plain-text roundtrip restores the md source without crashing.
+        inst.force_txt = true
+        NotebookViewer.init(inst, true)
+        assert.isTrue(inst.is_txt, "plain-text must switch to txt mode")
+        assert.equal(inst.text, "# md", "plain-text must show the md source")
+        inst.force_txt = false
+        NotebookViewer.init(inst, true)
+        assert.isFalse(inst.is_txt, "must return to html mode")
+        assert.matches(injected_css(), "border%-collapse", "return must re-inject table css")
     end),
 
     test("main.lua views notebooks through Notebook.openNotebookFile", function()

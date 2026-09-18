@@ -11,6 +11,7 @@ Displays some text in a scrollable view.
 local BD = require("ui/bidi")
 local Blitbuffer = require("ffi/blitbuffer")
 local ButtonTable = require("ui/widget/buttontable")
+local ButtonDialog = require("ui/widget/buttondialog")
 local CenterContainer = require("ui/widget/container/centercontainer")
 local Device = require("device")
 local logger = require("logger")
@@ -27,6 +28,7 @@ local MovableContainer = require("ui/widget/container/movablecontainer")
 local Notification = require("ui/widget/notification")
 local ScrollHtmlWidget = require("ui/widget/scrollhtmlwidget")
 local Size = require("ui/size")
+local SpinWidget = require("ui/widget/spinwidget")
 local TitleBar = require("ui/widget/titlebar")
 local UIManager = require("ui/uimanager")
 local VerticalGroup = require("ui/widget/verticalgroup")
@@ -277,7 +279,7 @@ function ChatGPTViewer:init()
       notebook_subtitle = "✎ " .. notebook_subtitle
   end
 
-  local titlebar = TitleBar:new {
+  self.titlebar = TitleBar:new {
     width = self.width,
     align = "left",
     with_bottom_line = true,
@@ -288,9 +290,9 @@ function ChatGPTViewer:init()
     title_shrink_font_to_fit = self.title_shrink_font_to_fit,
     close_callback = function() self:onClose() end,
     close_hold_callback = function() self:HoldClose() end,
-    left_icon = "appbar.settings",
+    left_icon = "appbar.menu",
     left_icon_tap_callback = function()
-      self.assistant:showSettings()
+      self:onShowMenu()
     end,
     show_parent = self,
   }
@@ -485,8 +487,8 @@ function ChatGPTViewer:init()
                           self.notebook_path = nil
                           local saved_path, _save_err, used_fallback = self:saveToNotebook()
 
-                          if titlebar and titlebar.setSubTitle then
-                              titlebar:setSubTitle(
+                          if self.titlebar and self.titlebar.setSubTitle then
+                              self.titlebar:setSubTitle(
                                   "✎ " .. Notebook.getActiveDisplayName(self.assistant, 24)
                               )
                           end
@@ -522,7 +524,7 @@ function ChatGPTViewer:init()
     show_parent = self,
   }
 
-  local textw_height = self.height - titlebar:getHeight() - self.button_table:getSize().h
+  local textw_height = self.height - self.titlebar:getHeight() - self.button_table:getSize().h
 
   self.scroll_text_w = self:_buildScrollWidget(textw_height)
 
@@ -539,7 +541,7 @@ function ChatGPTViewer:init()
     margin = 0,
     background = Blitbuffer.COLOR_WHITE,
     VerticalGroup:new {
-      titlebar,
+      self.titlebar,
       CenterContainer:new {
         dimen = Geom:new {
           w = self.width,
@@ -971,11 +973,29 @@ end
 function ChatGPTViewer:_buildCSS()
   local rtl = self.assistant.settings:readSetting("response_is_rtl")
            or self.assistant.ui_language_is_rtl
-  return VIEWER_CSS .. (rtl and RTL_CSS or "")
+  local css = VIEWER_CSS .. (rtl and RTL_CSS or "")
+  if self.assistant.settings:readSetting("response_justified", false) then
+    css = css .. "\nbody {\n    text-align: justify;\n}\n"
+  end
+  return css
+end
+
+-- Strip a ```reasoning fenced block (with its #### header and --- trailer)
+-- plus any raw <think> block, so hiding reasoning also applies to text
+-- received while it was shown. No-op when absent.
+local function strip_reasoning(text)
+  text = text:gsub("#### [^\n]*%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*", "")
+  text = text:gsub("<think>[%s%S]-</think>", "")
+  return text
 end
 
 function ChatGPTViewer:_renderMarkdown()
-  local html_body, err = MD(self.text)
+  local source = self.text
+  if type(source) == "string"
+      and not self.assistant.settings:readSetting("show_reasoning", false) then
+    source = strip_reasoning(source)
+  end
+  local html_body, err = MD(source)
   if err then
     logger.warn("ChatGPTViewer: could not generate HTML", err)
     -- Fallback to plain text if HTML generation fails
@@ -1030,6 +1050,124 @@ function ChatGPTViewer:update(new_text)
       self.scroll_text_w:scrollToPage(last_page_num)
     end)
   end
+end
+
+-- Rebuild the scroll widget in place after a display setting changed,
+-- keeping the current page (mirrors the rebuild in update()).
+function ChatGPTViewer:_refreshScrollWidget()
+  local last_page_num = self.scroll_text_w.htmlbox_widget.page_number or 1
+  self.scroll_text_w = self:_buildScrollWidget(self.textw:getSize().h)
+  self.textw:clear()
+  self.textw[1] = self.scroll_text_w
+  self.scroll_text_w:scrollToPage(last_page_num)
+  -- One-shot toggles get no continuous refreshes (unlike streaming in
+  -- update()), so force a repaint like TextViewer:reinit does.
+  UIManager:setDirty("all", "partial", self.frame.dimen)
+end
+
+-- Left-icon options menu, mirroring TextViewer:onShowMenu (ButtonDialog
+-- with text_func/checked_func closures, no manual setText).
+function ChatGPTViewer:onShowMenu()
+  local dialog
+  local buttons = {
+    {{
+      text_func = function()
+        return T(_("Text Size: %1"), self.assistant.settings:readSetting("response_font_size") or 20)
+      end,
+      align = "left",
+      callback = function()
+        UIManager:close(dialog)
+        local widget = SpinWidget:new{
+          title_text = _("Response Text Font Size"),
+          value = self.assistant.settings:readSetting("response_font_size") or 20,
+          value_min = 12, value_max = 30, default_value = 20,
+          callback = function(spin)
+            self.assistant.settings:saveSetting("response_font_size", spin.value)
+            self.assistant.updated = true
+            self:_refreshScrollWidget()
+          end,
+        }
+        UIManager:show(widget)
+      end,
+    }},
+    {{
+      text = _("RTL Layout"),
+      checked_func = function()
+        return self.assistant.settings:readSetting("response_is_rtl")
+          or self.assistant.ui_language_is_rtl
+      end,
+      align = "left",
+      callback = function()
+        -- Like upstream toggles: keep the menu open (no close), so the
+        -- close repaint cannot race the rebuild repaint and ghost the
+        -- tapped item on e-ink. The checkmark refreshes with the dialog.
+        local rtl = self.assistant.settings:readSetting("response_is_rtl")
+          or self.assistant.ui_language_is_rtl
+        self.assistant.settings:saveSetting("response_is_rtl", not rtl)
+        self.assistant.updated = true
+        self:_refreshScrollWidget()
+      end,
+    }},
+    {{
+      text = _("Justify"),
+      checked_func = function()
+        return self.assistant.settings:readSetting("response_justified", false)
+      end,
+      align = "left",
+      callback = function()
+        -- Kept open like upstream (see RTL Layout above).
+        local justified = self.assistant.settings:readSetting("response_justified", false)
+        self.assistant.settings:saveSetting("response_justified", not justified)
+        self.assistant.updated = true
+        self:_refreshScrollWidget()
+      end,
+    }},
+    {{
+      text = _("Show Reasoning"),
+      checked_func = function()
+        return self.assistant.settings:readSetting("show_reasoning", false)
+      end,
+      align = "left",
+      callback = function()
+        -- Kept open like upstream (see RTL Layout above).
+        local show = self.assistant.settings:readSetting("show_reasoning", false)
+        self.assistant.settings:saveSetting("show_reasoning", not show)
+        self.assistant.updated = true
+        self:_refreshScrollWidget()
+      end,
+    }},
+    {{
+      text = _("Show Follow-up Questions"),
+      checked_func = function()
+        return self.assistant.settings:readSetting("auto_prompt_suggest", false)
+      end,
+      align = "left",
+      callback = function()
+        -- Kept open like upstream (see RTL Layout above). Takes effect
+        -- on rebuild via _renderMarkdown's suggestion-link rewrite.
+        local show = self.assistant.settings:readSetting("auto_prompt_suggest", false)
+        self.assistant.settings:saveSetting("auto_prompt_suggest", not show)
+        self.assistant.updated = true
+        self:_refreshScrollWidget()
+      end,
+    }},
+    {{
+      text = _("Models"),
+      align = "left",
+      callback = function()
+        UIManager:close(dialog)
+        self.assistant:showSettings()
+      end,
+    }},
+  }
+  dialog = ButtonDialog:new{
+    shrink_unneeded_width = true,
+    buttons = buttons,
+    anchor = function()
+      return self.titlebar.left_button.image.dimen
+    end,
+  }
+  UIManager:show(dialog)
 end
 
 return ChatGPTViewer
