@@ -986,6 +986,12 @@ end
 local function strip_reasoning(text)
   text = text:gsub("#### [^\n]*%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*", "")
   text = text:gsub("<think>[%s%S]-</think>", "")
+  -- Models that drop the opening tag: a leading run through the first
+  -- </think> is thinking without an opener; drop it as well.
+  if not text:find("<think>", 1, true) then
+    local close = text:find("</think>", 1, true)
+    if close then text = text:sub(close + 8):gsub("^%s+", "", 1) end
+  end
   return text
 end
 
