@@ -14,6 +14,7 @@ local socket_url = require("socket.url")
 local socketutil = require("socketutil")
 local https = require("ssl.https")
 local json = require("rapidjson")
+local datetime = require("datetime")
 local Trapper = require("ui/trapper")
 local M = {}
 local shared_buf = strbuf.new()
@@ -1020,26 +1021,39 @@ local function zlib_uncompress_gzip(gzip_data, max_datalen)
     return nil, "Zlib core uncompress failed with severe code: " .. tostring(res)
 end
 
---- GET HTTP HEADER VALUE
---- @param headers table
---- @param header_name string
---- @return string|nil
-local function http_get_header(headers, header_name)
-    if not headers then return nil end
+--- Case-insensitive header lookup.
+function M.getHeader(headers, header_name)
+    if type(headers) ~= "table" then return nil end
+    if type(header_name) ~= "string" then return nil end
     local lower_name = header_name:lower()
 
     for k, v in pairs(headers) do
-        if k:lower() == lower_name then
+        if type(k) == "string" and k:lower() == lower_name then
             return v
         end
     end
     return nil
 end
 
+--- Local time to UTC epoch.
+local function _localToUtcEpoch(time)
+    local utc = os.date("!*t", time)
+    local diff = os.difftime(time, os.time(utc))
+    return time + diff
+end
+
+--- HTTP-date to epoch, nil if unparseable.
+function M.parseHttpDate(str)
+    if type(str) ~= "string" then return nil end
+    local ok, time = pcall(datetime.stringRFC1123ToSeconds, str)
+    if not ok or type(time) ~= "number" then return nil end
+    return _localToUtcEpoch(time)
+end
+
 --- 
 --- Checks content-encoding
 local function http_is_encoded(headers, encoding)
-    local value = http_get_header(headers, "content-encoding")
+    local value = M.getHeader(headers, "content-encoding")
     if not value then return false end
     return value:lower():find((encoding or "gzip"):lower()) ~= nil
 end
@@ -1110,7 +1124,7 @@ function M.httpRequest(url, timeout, maxtime, post_body, post_content_type, head
         return false, code, content or "Remote server error or unavailable"
     end
 
-    local http_len = http_get_header(resp_headers, "content-length")
+    local http_len = M.getHeader(resp_headers, "content-length")
     if http_len then
         if #content ~= tonumber(http_len) then
             return false, BaseHandler.CODE_INCOMPLETE, "Incomplete content received"

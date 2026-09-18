@@ -39,42 +39,8 @@ BaseHandler.PROTOCOL_NON_200 = "X-NON-200-STATUS:"
 BaseHandler.MAX_RETRIES = 8
 
 -- ---------------------------------------------------------------------------
--- 429 retry helpers
+-- 429 retry helpers (header/date parsing lives in assistant_utils)
 -- ---------------------------------------------------------------------------
-
-local MONTHS = {
-    Jan = 1, Feb = 2, Mar = 3, Apr = 4, May = 5, Jun = 6,
-    Jul = 7, Aug = 8, Sep = 9, Oct = 10, Nov = 11, Dec = 12,
-}
-
---- Case-insensitive header lookup.
-local function getHeader(headers, name)
-    if type(headers) ~= "table" then return nil end
-    local lower = name:lower()
-    for k, v in pairs(headers) do
-        if type(k) == "string" and k:lower() == lower then
-            return v
-        end
-    end
-    return nil
-end
-
---- Parse an RFC1123 HTTP-date ("Sun, 06 Nov 1994 08:49:37 GMT") into epoch seconds.
---- os.time() interprets a table as local time, so we convert the parsed UTC
---- clock back to an epoch by adding the local-vs-UTC offset.
-local function parseHttpDate(str)
-    if type(str) ~= "string" then return nil end
-    local day, mon, year, hh, mm, ss = str:match("(%d+)%s+(%a+)%s+(%d+)%s+(%d+):(%d+):(%d+)")
-    if not day then return nil end
-    local m = MONTHS[mon]
-    if not m then return nil end
-    local t = { year = tonumber(year), month = m, day = tonumber(day),
-                hour = tonumber(hh), min = tonumber(mm), sec = tonumber(ss) }
-    local time = os.time(t)
-    local utc = os.date("!*t", time)
-    local diff = os.difftime(time, os.time(utc))
-    return time + diff
-end
 
 --- Decode a response body (string or already-decoded table) into a table, or nil.
 local function decodeBody(body)
@@ -121,23 +87,23 @@ end
 --- @return number|nil seconds to wait, or nil if none could be determined.
 function BaseHandler:parseRetryAfter(headers, body)
     -- 1. retry-after-ms
-    local v = getHeader(headers, "retry-after-ms")
+    local v = ASUtils.getHeader(headers, "retry-after-ms")
     if v then
         local ms = tonumber(v)
         if ms then return ms / 1000 end
     end
     -- 2. x-ms-retry-after-ms
-    v = getHeader(headers, "x-ms-retry-after-ms")
+    v = ASUtils.getHeader(headers, "x-ms-retry-after-ms")
     if v then
         local ms = tonumber(v)
         if ms then return ms / 1000 end
     end
     -- 3. retry-after (delta-seconds or HTTP-date)
-    v = getHeader(headers, "retry-after")
+    v = ASUtils.getHeader(headers, "retry-after")
     if v then
         local secs = tonumber(v)
         if secs then return secs end
-        local date = parseHttpDate(v)
+        local date = ASUtils.parseHttpDate(v)
         if date then
             local delay = date - os.time()
             if delay < 0 then delay = 0 end
@@ -175,7 +141,7 @@ end
 --- and quotaExceeded/RESOURCE_EXHAUSTED that explicitly indicate daily/quota exhaustion.
 function BaseHandler:isRetryable429(code, headers, body)
     if tonumber(code) ~= 429 then return false end
-    local should_retry = getHeader(headers, "x-should-retry")
+    local should_retry = ASUtils.getHeader(headers, "x-should-retry")
     if should_retry and tostring(should_retry):lower() == "false" then
         return false
     end

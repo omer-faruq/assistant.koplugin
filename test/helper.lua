@@ -74,12 +74,16 @@ local stubs = {
         getSettingsDir = function() return "/tmp" end,
     },
     -- for assistant_gettext: gettext mock (language)
-    ["gettext"]                 = {
+    -- Callable + pgettext so frontend/datetime.lua loads headless.
+    ["gettext"]                 = setmetatable({
         current_lang = "C",
         changeLang = function() end,
         translation = {},
         wrapUntranslated = function(t) return t end,
-    },
+        pgettext = function(ctx, msgid) return msgid end,
+        ngettext = function(singular, plural) return singular end,
+        npgettext = function(ctx, singular, plural) return singular end,
+    }, { __call = function(_, msgid) return msgid end }),
     -- for socket (if not available)
     ["socket"]                  = {},
     ["socket.http"]             = {},
