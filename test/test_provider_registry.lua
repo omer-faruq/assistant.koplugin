@@ -6,6 +6,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local Registry = require("assistant_provider_registry")
+local BaseHandler = require("api_handlers.base")
 
 local function test(name, fn)
     return { name = name, fn = fn }
@@ -770,6 +771,78 @@ local tests = {
         local text = Registry.formatTestReport("openai", "https://api.test.com/v1", "gpt-4", report)
         assert.isTrue(text:find("(empty response body)", 1, true) ~= nil,
             "expected the empty-body marker")
+    end),
+
+    test("isEchoOk accepts OK with surrounding whitespace", function()
+        assert.isTrue(BaseHandler.isEchoOk("OK"))
+        assert.isTrue(BaseHandler.isEchoOk("  OK\n"))
+        assert.isTrue(BaseHandler.isEchoOk("OK!"))
+        -- thinking models may wrap the echo in reasoning
+        assert.isTrue(BaseHandler.isEchoOk("We must output only \"OK\".\nThink:\n\nOK"))
+    end),
+
+    test("isEchoOk rejects non-OK and non-string echoes", function()
+        assert.isFalse(BaseHandler.isEchoOk(nil))
+        assert.isFalse(BaseHandler.isEchoOk(42))
+        assert.isFalse(BaseHandler.isEchoOk(""))
+        assert.isFalse(BaseHandler.isEchoOk("ok"))
+        assert.isFalse(BaseHandler.isEchoOk("OKAY"))
+        assert.isFalse(BaseHandler.isEchoOk("BROKEN"))
+        assert.isFalse(BaseHandler.isEchoOk("Sure, here you go"))
+    end),
+
+    test("isConnectionTestOk passes 200 with an OK echo", function()
+        assert.isTrue(Registry.isConnectionTestOk({
+            url     = "https://api.test.com/v1/chat/completions",
+            body    = "{}",
+            status  = 200,
+            raw     = '{"choices":[{"message":{"content":"OK"}}]}',
+            content = "OK",
+        }))
+    end),
+
+    test("isConnectionTestOk passes 200 with a thinking-model echo", function()
+        assert.isTrue(Registry.isConnectionTestOk({
+            url     = "https://api.test.com/v1/chat/completions",
+            body    = "{}",
+            status  = 200,
+            raw     = "...",
+            content = "We must output only \"OK\".\nThink:\n\nOK",
+        }))
+    end),
+
+    test("isConnectionTestOk fails a 200 error body and the report shows the cause", function()
+        local report = {
+            url     = "https://api.test.com/v1/chat/completions",
+            body    = "{}",
+            status  = 200,
+            raw     = '{"error":{"message":"overloaded"}}',
+            content = nil,
+        }
+        assert.isFalse(Registry.isConnectionTestOk(report))
+        local text = Registry.formatTestReport("openai", "https://api.test.com/v1", "gpt-4", report)
+        assert.matches(text, "API error: overloaded")
+    end),
+
+    test("isConnectionTestOk fails a 200 with a non-OK echo", function()
+        assert.isFalse(Registry.isConnectionTestOk({
+            url     = "https://api.test.com/v1/chat/completions",
+            body    = "{}",
+            status  = 200,
+            raw     = "...",
+            content = "Sure, here you go",
+        }))
+    end),
+
+    test("isConnectionTestOk fails non-2xx even with an OK echo", function()
+        assert.isFalse(Registry.isConnectionTestOk({
+            url     = "https://api.test.com/v1/chat/completions",
+            body    = "{}",
+            status  = 401,
+            raw     = "",
+            content = "OK",
+        }))
+        assert.isFalse(Registry.isConnectionTestOk(nil))
     end),
 
     test("formatTestReport leads a failure with a bold verdict and a blank line", function()

@@ -362,6 +362,16 @@ end
 --- once. Sent to the API as-is — deliberately not a gettext string.
 BaseHandler.TEST_PROMPT = "Reply with exactly one word: OK"
 
+--- Connection-test echo verdict: TEST_PROMPT asks the model for "OK", but
+--- thinking models may wrap it in reasoning, so any standalone OK word
+--- counts (case-sensitive). Extraction stays in testRequest.
+--- @param content string|nil extracted assistant text from the report
+--- @return boolean true when the echo proves endpoint, key and model at once
+function BaseHandler.isEchoOk(content)
+    if type(content) ~= "string" then return false end
+    return content:find("%f[%w]OK%f[%W]") ~= nil
+end
+
 --- Connection test entry point; each wire-compatible handler overrides it
 --- with its own minimal request shape and calls self:testRequest().
 function BaseHandler:Test()

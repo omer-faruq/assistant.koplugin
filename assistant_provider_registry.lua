@@ -94,6 +94,18 @@ end
 -- Exposed for unit tests (pure formatting, no UI state).
 Registry.formatTestReport = formatTestReport
 
+--- Connection-test verdict: HTTP 2xx plus the model echoing OK.
+--- Pure (no UI) so tests can pin the pass condition; extraction stays in
+--- BaseHandler:testRequest, display stays in formatTestReport.
+local function isConnectionTestOk(report)
+    if type(report) ~= "table" then return false end
+    local status = report.status
+    if type(status) ~= "number" or status < 200 or status >= 300 then return false end
+    return require("api_handlers.base").isEchoOk(report.content)
+end
+-- Exposed for unit tests (pure verdict, no UI state).
+Registry.isConnectionTestOk = isConnectionTestOk
+
 --- Run a connection test against a provider configuration and report the
 --- result. Owns the online check and the Trapper wrap so callers are
 --- one-liners. Uses a throwaway handler instance (same pattern as
@@ -128,8 +140,7 @@ function Registry.testConnection(handler_name, base_url, api_key, model)
                 })
                 return
             end
-            local ok_status = report.status >= 200 and report.status < 300
-            if ok_status then
+            if isConnectionTestOk(report) then
                 -- Success stays on screen until acknowledged (the user ran a
                 -- test and is waiting on its result).
                 UIManager:show(InfoMessage:new{
