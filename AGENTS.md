@@ -34,6 +34,18 @@ Guidance for AI agents working in `assistant.koplugin` (KOReader AI assistant pl
 - `assistant_term_xray.lua` — sentence splitting + term-anchor (keyword-in-context) extraction.
 Full flow, handlers, config, key files: `docs/ARCHITECTURE.md`.
 
+## Core Principles
+
+- **Dependencies first**: lean on what is already in the project or upstream before writing your own implementation or adding packages. Check docs and type definitions first; do not assume a library lacks a capability.
+- **Long-term decisions**: make architectural decisions for the long term. No stopgaps that only work for now and are meant to be replaced later.
+- **Mature patterns first**: before designing a solution, study how mature products solve the same problem - especially KOReader's existing plugins and widgets - and adopt their proven patterns instead of inventing from scratch.
+
+## Refactoring and Compatibility
+
+- The plugin ships and updates atomically: never preserve backward compatibility for internal interfaces.
+- Target latest KOReader only: never code against old or hypothetical upstream APIs, and never add version fallbacks.
+- Internal modules may be freely refactored, renamed, or deleted. Do not add compatibility shims, fallbacks, or migration layers for internal-only code; update every call site in one go.
+
 ## Invariants (never break)
 
 1. **Config**: read/write `CONFIGURATION` only via `assistant.config` getters/mutators; UI provider/search CRUD only via `Registry`/`SearchRegistry`. Never touch `settings:saveSetting("ui_providers"/"ui_search_tools", ...)`.
@@ -44,12 +56,12 @@ Full flow, handlers, config, key files: `docs/ARCHITECTURE.md`.
 6. **Dialogs**: cancellation/close on the **left**, action buttons (Save/OK) on the **right**. Title Case labels; short words (`to`, `for`, `as`, `and`, `in`) lowercase.
 7. **Notifications**: `Notification:notify(msg, Notification.SOURCE_ALWAYS_SHOW)` only for transient success; errors/failures/ack → `UIManager:show(InfoMessage:new{...})`.
 8. **Credentials**: UI-entered `api_key`/`base_url` are trimmed and internal whitespace rejected in `Registry.validate`/`SearchRegistry.validate`. Normalize there — not per handler, not at header build.
-9. **No backward compatibility for internal code**: move code and update every call site in one go; no `Deprecated` wrappers. `require` the owning module directly (one hop); split by domain and keep module responsibilities explicit.
+9. **Module structure**: `require` the owning module directly (one hop); split by domain and keep module responsibilities explicit.
 10. **Style**: Lua 5.1 / LuaJIT 2.1; use `string.buffer` for hot loops. 4 spaces, never tabs (vendored `lib/` keeps upstream formatting); `snake_case` modules, `PascalCase` classes, `camelCase` methods, `UPPER_CASE` consts. Errors return `nil, err`.
 11. **Directions/formatting**: `T = require("ffi/util").template`; bold via `assistant_utils.bold_format(T(_("<b>Header:</b> %1"), val))`; message metadata via `assistant_utils.set_attr`/`get_attr`.
 12. **Scope**: exclude `l10n/` from code searches/reads (40+ languages, no code insight). Polish non-native English wording into idiomatic English without changing intent.
 13. **Widgets**: reuse existing scaffolding (`ChatGPTViewer`, `assistant_dialog.lua`); read `docs/UI_DIALOGS.md` before hand-building dialogs. KOReader widget internals only as a last resort.
-14. **Upstream first**: reuse helpers from `/usr/lib/koreader/` (`frontend/`, `ffi/util`, plugins) instead of reimplementing; drop the replaced local helper with no backward-compat shim.
+14. **Upstream helpers**: when a helper exists in `/usr/lib/koreader/` (`frontend/`, `ffi/util`, plugins), reuse it; drop the replaced local helper outright.
 
 ## Git / Versioning
 
