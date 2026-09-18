@@ -23,7 +23,7 @@ local BaseHandler = {
     name = "BASE",
     base_url = "", model = "", api_key = "",
     additional_parameters = {},
-    trap_widget = nil,  -- widget to trap the request
+    trap_widget = nil,
     can_fetch_models = false,
     has_builtin_websearch = false,
 }
@@ -52,8 +52,7 @@ local function decodeBody(body)
     return nil
 end
 
---- Return the error node from a decoded 429 body, unwrapping common
---- proxy wrappers like {"detail":{"error":{...}}} or {"detail":{...}}.
+--- Unwrap the error node from a decoded 429 body.
 --- @param decoded table|nil decoded JSON body
 --- @return table|string|nil error node
 local function getErrorNode(decoded)
@@ -81,9 +80,7 @@ function BaseHandler:getMaxRetries()
     return mr
 end
 
---- Parse the wait time for a 429 response, in priority order:
----   retry-after-ms > x-ms-retry-after-ms > retry-after (delta-seconds | HTTP-date)
----   > Gemini error.details[].retryDelay > error.message "try again in Xs".
+--- Parse the 429 wait time from retry headers, then body hints.
 --- @return number|nil seconds to wait, or nil if none could be determined.
 function BaseHandler:parseRetryAfter(headers, body)
     -- 1. retry-after-ms
@@ -123,7 +120,7 @@ function BaseHandler:parseRetryAfter(headers, body)
                 end
             end
         end
-        -- error message "try again in X.Xs" (shared helper covers wrappers)
+        -- error message "try again in X.Xs"
         local msg = ASUtils.extractErrorMessage(decoded)
         if type(msg) == "string" then
             local secs = msg:match("try again in ([%d%.]+)s")
@@ -137,8 +134,6 @@ function BaseHandler:parseRetryAfter(headers, body)
 end
 
 --- Decide whether a 429 is worth retrying.
---- Non-retryable: x-should-retry:false, insufficient_quota, billing_hard_limit_reached,
---- and quotaExceeded/RESOURCE_EXHAUSTED that explicitly indicate daily/quota exhaustion.
 function BaseHandler:isRetryable429(code, headers, body)
     if tonumber(code) ~= 429 then return false end
     local should_retry = ASUtils.getHeader(headers, "x-should-retry")
@@ -160,8 +155,7 @@ function BaseHandler:isRetryable429(code, headers, body)
             return false
         end
         if code_str == "quotaExceeded" or status == "RESOURCE_EXHAUSTED" then
-            -- Only the message/reason/status wording counts; the code itself
-            -- ("quotaExceeded") must not trigger the "quota" keyword match.
+            -- Match "daily"/"quota" in reason/status/message wording only, not the code itself.
             local combined = tostring(reason) .. " " .. tostring(status) .. " " .. tostring(msg)
             local lower = combined:lower()
             if lower:find("daily") or lower:find("quota") then
@@ -172,12 +166,7 @@ function BaseHandler:isRetryable429(code, headers, body)
     return true
 end
 
---- Compute the retry decision for a 429.
---- Progressive wait capped at 5s: the server hint (Retry-After etc.) is
---- only a floor; the actual delay is min(max(server_hint, backoff), 5).
---- This keeps repeated 429s with a tiny Retry-After (e.g. 1s x 8 = 8s)
---- from finishing too quickly (1, 2, 4, 5, 5, ...s + jitter), while never
---- making the user wait longer than 5s per retry.
+--- Compute the 429 retry decision with backoff capped at 5s.
 --- @return table { retryable=boolean, delay=number, reason=string }
 function BaseHandler:getRetryDelay(code, headers, body, attempt)
     if not self:isRetryable429(code, headers, body) then
@@ -185,8 +174,7 @@ function BaseHandler:getRetryDelay(code, headers, body, attempt)
     end
     attempt = tonumber(attempt) or 1
     if attempt < 1 then attempt = 1 end
-    -- Exponential backoff: base 1s * 2^(attempt-1), cap 5s, + jitter ±25%
-    -- (jitter output clamped to 5s so a capped retry is exactly 5s).
+    -- Exponential backoff: 1s * 2^(attempt-1), capped at 5s with ±25% jitter.
     local base = 1 * (2 ^ (attempt - 1))
     local capped = math.min(base, 5)
     local jitter = capped * 0.25
@@ -202,15 +190,11 @@ function BaseHandler:getRetryDelay(code, headers, body, attempt)
         end
         return { retryable = true, delay = delay, reason = "backoff" }
     end
-    -- No (or non-positive) server hint: pure backoff. A past HTTP-date
-    -- parses to 0 and lands here, so we never sleep 0s between retries.
+    -- Fall back to pure backoff without a positive server hint.
     return { retryable = true, delay = backoff, reason = "backoff" }
 end
 
---- Extract a short human-readable detail from a 429 response body for display.
---- Tries error.message / detail.error.message / message in decoded JSON,
---- falls back to raw text.
---- Result is single-line, truncated to ~200 chars, or nil when empty.
+--- Extract a short one-line detail from a 429 response body.
 --- @param body string|table|nil response body
 --- @return string|nil short detail
 function BaseHandler:extractRetryDetail(body)
@@ -238,9 +222,7 @@ function BaseHandler:extractRetryDetail(body)
     return msg
 end
 
---- Show a cancellable count-down while waiting to retry a 429.
---- Three-line countdown: bold PFT header + Attempts N/M — retry in
---- (countdown appended by sleepWithInfo) + optional Detail line.
+--- Show a cancellable retry countdown.
 --- @param delay number seconds to wait
 --- @param attempt number current attempt (1-based)
 --- @param max_retries number configured max retries
@@ -271,30 +253,21 @@ function BaseHandler:resetTrapWidget()
     return w
 end
 
--- Sync Options from the querier (provider_setting)
---  and the settings for models
+-- Sync provider and model options from the querier.
 function BaseHandler:SyncOptions(querier)
     self.provider_name = querier.provider_name
     self.handler_name = querier.handler_name
     koutil.tableMerge(self, querier.provider_setting)
-    -- model_parameters is never used on self; wipe it so no provider's
-    -- presets linger on this shared instance.
     self.model_parameters = nil
 
-    -- Normalize base_url: strip known API path suffixes for backward compatibility
     self:normalizeBaseUrl()
 
-    -- Apply user selected model override
     local selected_model = querier.settings:readSetting("selected_model_" .. self.provider_name)
     if selected_model then
         self.model = selected_model
     end
 
-    -- Rebuild request parameters from source on every sync: handlers are
-    -- long-lived module-level singletons shared by providers, so parameters
-    -- must never be read back from self — tableMerge leaves stale copies of
-    -- setting-only fields (e.g. model_parameters) when the next provider
-    -- does not define them.
+    -- Rebuild request parameters from the querier settings.
     local setting = querier.provider_setting
     local shared = json_default(setting.additional_parameters, {})
     if type(shared) ~= "table" then shared = {} end
@@ -306,14 +279,7 @@ function BaseHandler:SyncOptions(querier)
         self.additional_parameters = koutil.tableDeepCopy(shared)
     end
 
-    -- Runtime reasoning overlay (Reasoning Option dialog): shallow-merge the
-    -- selected catalog entries over same-name top-level keys. Stored in
-    -- settings under "reasoning_option_<provider_id>", never written back
-    -- to configuration. Must rebuild from querier.provider_setting above on
-    -- every sync (never read back from self): handlers are long-lived
-    -- singletons shared by providers, so stale overlay keys must not linger.
-    -- Only keys present in the current handler's PARAM_CATALOG are applied;
-    -- unknown/stale keys are silently skipped to avoid polluting the request.
+    -- Merge the runtime reasoning overlay over same-name top-level keys.
     local provider_id = querier.provider_name or self.provider_name or ""
     local Registry = require("assistant_provider_registry")
     local overlay_key = Registry.getReasoningKey(provider_id)
@@ -341,30 +307,23 @@ end
 function BaseHandler:FetchModels()
 end
 
---- Normalize base_url to a true base URL by stripping known API path suffixes.
---- Handles backward compatibility with old configs that included the full API path
---- (e.g. /chat/completions, /messages, /responses).
---- Called automatically from BaseHandler:SyncOptions; handlers append their own
---- API path suffix when constructing request URLs.
+--- Strip known API path suffixes from base_url.
 function BaseHandler:normalizeBaseUrl()
     if not self.base_url or self.base_url == "" then return end
     self.base_url = self.base_url
-        :gsub("/+$", "")                            -- strip trailing slashes
-        :gsub("/chat/completions$", "")             -- strip OpenAI chat path
-        :gsub("/messages$", "")                     -- strip Anthropic messages path
-        :gsub("/responses$", "")                    -- strip Responses API path
-        :gsub("/models/[^/]+:generateContent$", "") -- strip Gemini model:action suffix
-        :gsub("/+$", "")                            -- strip trailing slashes again
+        :gsub("/+$", "")
+        :gsub("/chat/completions$", "")
+        :gsub("/messages$", "")
+        :gsub("/responses$", "")
+        :gsub("/models/[^/]+:generateContent$", "")
+        :gsub("/+$", "")
 end
 
---- Static instruction for the provider connection test: the model must echo
---- it back verbatim, so one 2xx reply proves endpoint, key and model name at
---- once. Sent to the API as-is — deliberately not a gettext string.
+--- Connection-test instruction echoed back verbatim by the model.
+--- Sent to the API as-is.
 BaseHandler.TEST_PROMPT = "Reply with exactly one word: OK"
 
---- Connection-test echo verdict: TEST_PROMPT asks the model for "OK", but
---- thinking models may wrap it in reasoning, so any standalone OK word
---- counts (case-sensitive). Extraction stays in testRequest.
+--- Check whether the connection-test echo contains a standalone OK.
 --- @param content string|nil extracted assistant text from the report
 --- @return boolean true when the echo proves endpoint, key and model at once
 function BaseHandler.isEchoOk(content)
@@ -372,27 +331,20 @@ function BaseHandler.isEchoOk(content)
     return content:find("%f[%w]OK%f[%W]") ~= nil
 end
 
---- Connection test entry point; each wire-compatible handler overrides it
---- with its own minimal request shape and calls self:testRequest().
+--- Report that this handler does not support connection testing.
 function BaseHandler:Test()
     return nil, T(_("%1 handler does not support connection testing"), tostring(self.name))
 end
 
---- Shared Test plumbing for handler Test() implementations: POST the minimal
---- request and package the whole exchange into a displayable report for the
---- provider dialog. HTTP error statuses are NOT turned into nil, err — the
---- error body is exactly what a failed test must show, so it rides along in
---- the report (status/raw). Only transport failures (timeout, offline,
---- unsupported protocol) and user cancellation return nil, err.
---- @param url string       full endpoint URL
---- @param headers table    auth/content headers (the API key stays out of url/body)
---- @param body table       Lua request body (JSON-encoded here)
+--- POST the connection-test request and package the exchange into a report.
+--- @param url string full endpoint URL
+--- @param headers table auth/content headers
+--- @param body table Lua request body
 --- @param extract function decoded response table -> assistant text, or nil
 --- @return table|nil report { url, body, status, raw, content } @return string|nil err
 function BaseHandler:testRequest(url, headers, body, extract)
     local json_body = json.encode(body)
-    -- Dismissable wait indicator showing the exact endpoint being dialed
-    -- (same pattern as FetchModels); tapping it cancels the request.
+    -- Dismissable wait indicator; tapping it cancels the request.
     local infomsg = InfoMessage:new{
         face = Font:getFace("xx_smallinfofont"),
         text = ASUtils.bold_format(_("<b>Testing connection...</b>")) .. "\nPOST " .. url,
@@ -411,7 +363,7 @@ function BaseHandler:testRequest(url, headers, body, extract)
             -- transport-level failure: raw holds a readable reason
             return nil, tostring(raw or code)
         end
-        -- HTTP error: keep status + body so the dialog can surface the API error
+        -- HTTP error: keep status and body in the report.
         return { url = url, body = json_body, status = status, raw = raw or "" }
     end
     local report = {
@@ -427,29 +379,17 @@ function BaseHandler:testRequest(url, headers, body, extract)
     return report
 end
 
---- Query method to be implemented by specific handlers.
----
---- Behaviour depends on query_option.use_stream_mode:
----   stream=true  → build request body and return self:backgroundRequest(...) immediately
----                  (a function); never call makeRequest.
----   stream=false → call makeRequest; if LLM returned tool_calls return a table
----                  { tool_calls=<parsed>, messages_to_append=<list> } for the Querier
----                  to merge into message_history and loop; otherwise return the content
----                  string (or nil, err).
+--- Query the model; behavior depends on query_option.use_stream_mode.
 ---
 --- @param message_history  table   conversation history
 --- @param query_option     table   { use_stream_mode=boolean, use_websearch=string }
 --- @return string|function|table result, string|nil error
 function BaseHandler:query(message_history, query_option)
-    -- To be implemented by specific handlers
     error("query method must be implemented")
 end
 
 
---- Make a synchronous HTTP POST request, optionally through a dismissable subprocess.
---- Retries retryable 429 responses up to getMaxRetries() times, replaying the exact
---- same request. Intermediate 429s are not logged as errors; only the final failure
---- is returned (as success=false so handlers surface it as an error).
+--- POST synchronously, retrying retryable 429s up to getMaxRetries() times.
 function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
     local max_retries = self:getMaxRetries()
     local attempt = 0
@@ -482,18 +422,14 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
                 local detail = self:extractRetryDetail(content)
                 local finished = self:sleepWithRetryInfo(info.delay, attempt, max_retries, detail)
                 if not finished then
-                    -- user cancelled the wait → treat as user cancellation
                     return false, self.CODE_CANCELLED, self.CODE_CANCELLED
                 end
-                -- retry with the exact same request (loop continues; url/headers/body unchanged)
             else
-                -- not retryable → return the 429 as an error
                 return false, code, content
             end
         else
-            -- success, non-429 error, or 429 with retries exhausted
             if is_429 then
-                -- final 429 failure → return as an error (httpRequest reports success=true for 429)
+                -- Final 429 failure is returned as an error.
                 return false, code, content
             end
             return success, code, content
@@ -501,8 +437,7 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
     end
 end
 
---- Return a background-process function suitable for streaming (subprocess + pipe).
---- The returned function is passed to Querier:processStream via runInSubProcess.
+--- Build the streaming request function run in a subprocess.
 function BaseHandler:backgroundRequest(url, headers, body)
 
     local function wrap_fd(fd)
@@ -511,7 +446,7 @@ function BaseHandler:backgroundRequest(url, headers, body)
             ffiutil.writeToFD(fd, chunk)
             return self
         end
-        function fo:close() return true end -- mock close method
+        function fo:close() return true end
         return fo
     end
 
@@ -525,8 +460,7 @@ function BaseHandler:backgroundRequest(url, headers, body)
             https.cert_verify = false -- old devices cannot verify ssl certs
         end
 
-        -- Buffer the body (capped) so the error path can report raw_body for
-        -- 429 retry decisions (isRetryable429 / parseRetryAfter).
+        -- Buffer the body (capped) for the error path.
         local raw_body = strbuf.new()
         local MAX_ERR_BODY = 64 * 1024
         local sink = function(chunk)
@@ -548,10 +482,6 @@ function BaseHandler:backgroundRequest(url, headers, body)
         }
         local code, resp_headers, status = socket.skip(1, http.request(request))
         if code ~= 200 then
-            -- 429s may be retried by the Querier (getRetryDelay / isRetryable429);
-            -- an intermediate 429 is not an error, so demote it to debug here.
-            -- The final failure (non-retryable or retries exhausted) is logged
-            -- as a warning by the Querier itself.
             if tonumber(code) == 429 then
                 logger.dbg("Background request non-200 (429, may retry):", code, "status:", status, "url:", url)
             else
@@ -577,27 +507,7 @@ end
 -- Public interface: parseToolCalls
 -- ---------------------------------------------------------------------------
 
---- Parse a non-streaming LLM response and determine what to do next.
----
---- This is the unified interface called by Querier after every non-stream makeRequest.
---- It inspects the decoded JSON from the LLM and returns one of three outcomes:
----
----   1. The model returned a normal text answer:
----        returns  content_string, nil
----
----   2. The model issued a tool call (web_search):
----        returns  table {
----                   tool_call_id       = string,
----                   keywords           = string,
----                   messages_to_append = list-of-message-objects,  -- append to history
----                 }, nil
----      After appending messages_to_append the caller should repeat the LLM request.
----      The table also carries a  __is_tool_call = true  sentinel so Querier can
----      branch without inspecting the full structure.
----
----   3. An error occurred:
----        returns  nil, error_string
----
+--- Parse a non-streaming LLM response into text, a tool call, or an error.
 --- @param responseData  table   decoded JSON from the LLM (non-stream response)
 --- @param format        string  "openai" | "anthropic" | "gemini"
 --- @return string|table result, string|nil error
@@ -609,19 +519,14 @@ function BaseHandler:parseToolCalls(responseData, format)
         return nil, parse_err
     end
 
-    -- Model answered without a tool call
     if direct_content then
         return direct_content, nil
     end
 
-    -- Model issued a tool call but we have no search result yet.
-    -- Return a descriptor; the Querier will execute the search and loop.
     if tool_calls and #tool_calls > 0 then
-        -- Build placeholder messages_to_append (search result will be filled in by Querier).
-        -- We expose raw_assistant so the Querier can call buildToolResult() once it has results.
         return {
             __is_tool_call  = true,
-            raw_assistant   = raw_assistant,  -- opaque; pass back to buildToolResultMessages
+            raw_assistant   = raw_assistant,
             format          = format,
             tool_calls      = tool_calls,
         }, nil
