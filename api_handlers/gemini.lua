@@ -35,7 +35,7 @@ function GeminiHandler:FetchModels()
     local models, err = ASUtils.fetchJSON(model_url, {
         ["Content-Type"]  = "application/json",
         ["x-goog-api-key"] = self.api_key,
-    }, infomsg)
+    }, infomsg, function(body) return self:extractErrorMessage(body) end)
 
     if err then return nil, err end
     if not models or not models.models or #models.models == 0 then
@@ -54,6 +54,26 @@ function GeminiHandler:FetchModels()
         return a.id < b.id -- sort by id's alphabeta
     end)
     return model_list, nil
+end
+
+--- Extract a human-readable error message from an API response body.
+--- Gemini shape { error = { message = "...", code = N, status = "..." } }:
+--- error.message > flat error > bare message.
+--- @param body string|table|nil raw body or already-decoded JSON
+--- @return string|nil error message, or nil if none found
+function GeminiHandler:extractErrorMessage(body)
+    local decoded = body
+    if type(body) == "string" then
+        if #body == 0 then return nil end
+        local ok, j = pcall(json.decode, body)
+        if not ok or type(j) ~= "table" then return nil end
+        decoded = j
+    end
+    if type(decoded) ~= "table" then return nil end
+    local pick = BaseHandler.pickErrorValue
+    return pick(koutil.tableGetValue(decoded, "error", "message"))
+        or pick(decoded.error)
+        or pick(decoded.message)
 end
 
 --- Convert OpenAI-style message_history to Gemini contents + system_instruction.
@@ -235,12 +255,16 @@ function GeminiHandler:query(message_history, query_option)
             "model:", model,
             "request_size:", #requestBody,
             "message_count:", #message_history)
+        local err_msg = self:extractErrorMessage(response)
+        if err_msg then
+            return nil, BaseHandler.prefixHttpCode(code, err_msg)
+        end
         return nil, BaseHandler.prefixHttpCode(code, "Error: Gemini API (" .. tostring(model) .. ")\n" .. url_sync .. "\n- " .. tostring(response))
     end
 
     local ok, parsed = pcall(json.decode, response)
     if not ok or not parsed or not parsed.candidates then
-        local err = ASUtils.extractErrorMessage(parsed)
+        local err = self:extractErrorMessage(parsed)
         if err then
             return nil, err
         end

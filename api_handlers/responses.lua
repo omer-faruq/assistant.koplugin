@@ -89,7 +89,7 @@ function ResponsesHandler:FetchModels()
     local models, err = ASUtils.fetchJSON(model_url, {
         ["Content-Type"]  = "application/json",
         ["Authorization"] = "Bearer " .. self.api_key,
-    }, infomsg)
+    }, infomsg, function(body) return self:extractErrorMessage(body) end)
 
     if err then return nil, err end
     if models and models.data then
@@ -103,11 +103,26 @@ function ResponsesHandler:FetchModels()
 end
 
 -- ---------------------------------------------------------------------------
--- Error extraction helper
+-- Error extraction: error.message > flat error > bare message (no detail sweep).
 -- ---------------------------------------------------------------------------
 
--- Error messages are extracted via the shared ASUtils.extractErrorMessage
--- helper (see assistant_utils.lua); do not add local variants.
+--- Extract a human-readable error message from an API response body.
+--- @param body string|table|nil raw body or already-decoded JSON
+--- @return string|nil error message, or nil if none found
+function ResponsesHandler:extractErrorMessage(body)
+    local decoded = body
+    if type(body) == "string" then
+        if #body == 0 then return nil end
+        local ok, j = pcall(json.decode, body)
+        if not ok or type(j) ~= "table" then return nil end
+        decoded = j
+    end
+    if type(decoded) ~= "table" then return nil end
+    local pick = BaseHandler.pickErrorValue
+    return pick(koutil.tableGetValue(decoded, "error", "message"))
+        or pick(decoded.error)
+        or pick(decoded.message)
+end
 
 -- ---------------------------------------------------------------------------
 -- Message conversion: OpenAI-format message_history → Responses API input
@@ -594,7 +609,7 @@ function ResponsesHandler:query(message_history, query_option)
         if response and #response > 0 then
             local ok, rd = pcall(json.decode, response)
             if ok then
-                local err_msg = ASUtils.extractErrorMessage(rd)
+                local err_msg = self:extractErrorMessage(rd)
                 if err_msg then
                     logger.warn(self.name, "HTTP", code, "error:", err_msg)
                     return nil, BaseHandler.prefixHttpCode(code, err_msg)
@@ -612,7 +627,7 @@ function ResponsesHandler:query(message_history, query_option)
     end
 
     -- Check for API-level error (HTTP 4xx/5xx with JSON error body)
-    local api_err = ASUtils.extractErrorMessage(responseData)
+    local api_err = self:extractErrorMessage(responseData)
     if api_err then
         logger.warn(self.name, "API error (HTTP", code, "):", api_err, "| body:", tostring(response):sub(1, 200))
         return nil, api_err

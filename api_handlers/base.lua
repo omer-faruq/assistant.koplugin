@@ -100,6 +100,33 @@ function BaseHandler:getMaxRetries()
     return mr
 end
 
+--- Normalize a candidate error value: non-empty string as-is,
+--- number via tostring, anything else nil. Shared by all
+--- extractErrorMessage implementations (dot-call, no self).
+--- @param v any candidate value
+--- @return string|nil normalized message
+function BaseHandler.pickErrorValue(v)
+    if type(v) == "string" and #v > 0 then return v end
+    if type(v) == "number" then return tostring(v) end
+    return nil
+end
+
+--- Extract a human-readable error message from an API response body.
+--- Canonical default: deterministic order ONLY —
+---   error.message > flat error > bare message (3 lookups max).
+--- Wire-format-specific shapes (e.g. FastAPI-style detail.* proxies)
+--- belong in per-handler overrides, never here.
+--- @param body string|table|nil raw body or already-decoded JSON
+--- @return string|nil error message, or nil if none found
+function BaseHandler:extractErrorMessage(body)
+    local decoded = decodeBody(body)
+    if type(decoded) ~= "table" then return nil end
+    local pick = BaseHandler.pickErrorValue
+    return pick(koutil.tableGetValue(decoded, "error", "message"))
+        or pick(decoded.error)
+        or pick(decoded.message)
+end
+
 --- Parse the 429 wait time from retry headers, then body hints.
 --- @return number|nil seconds to wait, or nil if none could be determined.
 function BaseHandler:parseRetryAfter(headers, body)
@@ -141,7 +168,7 @@ function BaseHandler:parseRetryAfter(headers, body)
             end
         end
         -- error message "try again in X.Xs"
-        local msg = ASUtils.extractErrorMessage(decoded)
+        local msg = self:extractErrorMessage(decoded)
         if type(msg) == "string" then
             local secs = msg:match("try again in ([%d%.]+)s")
             if secs then
@@ -219,7 +246,7 @@ end
 --- @return string|nil short detail
 function BaseHandler:extractRetryDetail(body)
     local decoded = decodeBody(body)
-    local msg = ASUtils.extractErrorMessage(decoded or body)
+    local msg = self:extractErrorMessage(decoded or body)
     if type(msg) ~= "string" then
         -- No message shape (e.g. { error = { code = 429 } }): show the code.
         local e = decoded and getErrorNode(decoded) or nil

@@ -73,7 +73,15 @@ local BASE_URL_DESCRIPTIONS = {
 --- parameters, the exact request sent, and the API's own error message
 --- (shared extractor; full raw body as fallback). Never shows the API key.
 local function formatTestReport(handler_name, base_url, model, report)
-    local api_error = ASUtils.extractErrorMessage(report.raw)
+    -- Each handler owns its wire format; resolve it by name, no shared fallback.
+    local api_error
+    if type(handler_name) == "string" and handler_name ~= "" then
+        local ok_mod, mod = pcall(require, "api_handlers." .. handler_name)
+        if ok_mod and type(mod) == "table" and mod.extractErrorMessage then
+            local ok_ex, msg = pcall(function() return mod:extractErrorMessage(report.raw) end)
+            if ok_ex then api_error = msg end
+        end
+    end
     local response_text = api_error and T(_("API error: %1"), api_error)
         or report.raw ~= "" and report.raw
         or _("(empty response body)")

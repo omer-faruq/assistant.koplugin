@@ -1188,41 +1188,7 @@ function M.sleepWithInfo(seconds, template)
 end
 
 
---- Extract a human-readable error message from an API response body.
---- Single shared implementation; all modules must use this instead of
---- hand-rolled tableGetValue chains. Handles common shapes:
----   { error = { message = "..." } }  -- OpenAI/standard
----   { error = "..." }                -- flat string error
----   { detail = { error = { message = "..." } } }  -- proxied (e.g. DeepSeek)
----   { detail = { message = "..." } } / { detail = "..." }
----   { message = "..." }              -- bare message
---- @param body string|table|nil raw body or already-decoded JSON
---- @return string|nil error message, or nil if none found
-function M.extractErrorMessage(body)
-    local decoded = body
-    if type(body) == "string" then
-        if #body == 0 then return nil end
-        local ok, j = pcall(json.decode, body)
-        if not ok or type(j) ~= "table" then return nil end
-        decoded = j
-    end
-    if type(decoded) ~= "table" then return nil end
-    local function pick(v)
-        if type(v) == "string" and #v > 0 then return v end
-        if type(v) == "number" then return tostring(v) end
-        return nil
-    end
-    return pick(koutil.tableGetValue(decoded, "error", "message"))
-        or pick(decoded.error)
-        or pick(koutil.tableGetValue(decoded, "detail", "error", "message"))
-        or pick(koutil.tableGetValue(decoded, "detail", "error"))
-        or pick(koutil.tableGetValue(decoded, "detail", "message"))
-        or pick(decoded.detail)
-        or pick(decoded.message)
-end
-
-
-function M.fetchJSON(url, header, string_or_widget, timeout, maxtime, post_body)
+function M.fetchJSON(url, header, string_or_widget, timeout, maxtime, post_body, extractor_fn)
   
   local completed, success, code, body = Trapper:dismissableRunInSubprocess(function()
     return M.httpRequest(url, timeout, maxtime, post_body, "application/json", header or {})
@@ -1242,10 +1208,10 @@ function M.fetchJSON(url, header, string_or_widget, timeout, maxtime, post_body)
 
   if code ~= 200 then
     if body and #body > 0 then
-      local ok, parsed = pcall(json.decode, body)
-      if ok and parsed then
-        local err_msg = M.extractErrorMessage(parsed)
-        if err_msg then return nil, err_msg end
+      -- Per-handler extractor owns the wire format; no shared fallback.
+      if type(extractor_fn) == "function" then
+        local ok_ex, msg = pcall(extractor_fn, body)
+        if ok_ex and type(msg) == "string" and #msg > 0 then return nil, msg end
       end
       return nil, T("HTTP Status %1: %2", code, body)
     end

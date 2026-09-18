@@ -73,7 +73,7 @@ function OpenAIHandler:FetchModels()
     local models, err = ASUtils.fetchJSON(model_url, {
         ["Content-Type"]  = "application/json",
         ["Authorization"] = "Bearer " .. self.api_key,
-    }, infomsg)
+    }, infomsg, function(body) return self:extractErrorMessage(body) end)
 
     if err then return nil, err end
     if models and models.data then
@@ -84,6 +84,32 @@ function OpenAIHandler:FetchModels()
         return model_list, nil
     end
     return nil, _("Failed to fetch models")
+end
+
+--- Extract a human-readable error message from an API response body.
+--- Native error.message > flat error, then FastAPI-style proxied
+--- detail.error.message > detail.error > detail.message > detail string,
+--- then bare message. This is the ONLY place detail.* proxy fallback lives
+--- (proxies e.g. DeepSeek wrap upstream errors under detail).
+--- @param body string|table|nil raw body or already-decoded JSON
+--- @return string|nil error message, or nil if none found
+function OpenAIHandler:extractErrorMessage(body)
+    local decoded = body
+    if type(body) == "string" then
+        if #body == 0 then return nil end
+        local ok, j = pcall(json.decode, body)
+        if not ok or type(j) ~= "table" then return nil end
+        decoded = j
+    end
+    if type(decoded) ~= "table" then return nil end
+    local pick = BaseHandler.pickErrorValue
+    return pick(koutil.tableGetValue(decoded, "error", "message"))
+        or pick(decoded.error)
+        or pick(koutil.tableGetValue(decoded, "detail", "error", "message"))
+        or pick(koutil.tableGetValue(decoded, "detail", "error"))
+        or pick(koutil.tableGetValue(decoded, "detail", "message"))
+        or pick(decoded.detail)
+        or pick(decoded.message)
 end
 
 --- Connection test: minimal non-stream chat request with the static echo
@@ -164,7 +190,7 @@ function OpenAIHandler:query(message_history, query_option)
         if response and #response > 0 then
             local ok, rd = pcall(json.decode, response)
             if ok then
-                local err_msg = ASUtils.extractErrorMessage(rd)
+                local err_msg = self:extractErrorMessage(rd)
                 if err_msg then return nil, BaseHandler.prefixHttpCode(code, err_msg) end
             end
         end

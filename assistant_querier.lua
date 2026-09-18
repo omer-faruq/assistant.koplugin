@@ -890,7 +890,7 @@ function Querier:processStream(bgQuery, trunk_callback)
                         local ok, j = pcall(rapidjson.decode, line)
                         if ok and j then
                             -- log the json
-                            local err_message = ASUtils.extractErrorMessage(j)
+                            local err_message = self.handler:extractErrorMessage(j)
                             if err_message then
                                 result_buffer:put(err_message)
                             elseif j.error then
@@ -983,8 +983,8 @@ function Querier:processStream(bgQuery, trunk_callback)
         local code     = err_struct.code or ""
         local status   = err_struct.status or ""
 
-        -- Shared helper covers error/detail wrappers (see assistant_utils).
-        local err_msg = ASUtils.extractErrorMessage(raw_body)
+        -- Each handler owns its wire format via handler:extractErrorMessage.
+        local err_msg = self.handler:extractErrorMessage(raw_body)
 
         -- First line carries the "[NNN]" HTTP code (helper falls back to "[0]").
         local codeNum = tonumber(code) or tonumber(status:match("(%d%d%d)"))

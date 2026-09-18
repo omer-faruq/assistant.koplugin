@@ -7,6 +7,7 @@ local assert = helper.assert
 local ASUtils = helper.ASUtils
 
 local BaseHandler = require("api_handlers.base")
+local OpenAIHandler = require("api_handlers.openai")
 
 -- Captured before the makeRequest tests replace the module field with stubs.
 local realSleepWithInfo = ASUtils.sleepWithInfo
@@ -26,6 +27,12 @@ end
 
 local function newHandler(additional_parameters)
     return BaseHandler:new{ name = "test", additional_parameters = additional_parameters or {} }
+end
+
+-- OpenAI-compatible handler: the only layer with detail.* proxy fallback,
+-- so detail-wrapped 429 bodies are exercised here, not on the base default.
+local function newOpenAIHandler(additional_parameters)
+    return OpenAIHandler:new{ name = "test", additional_parameters = additional_parameters or {} }
 end
 
 -- Run fn(env) with the Trapper / UIManager / socket dependencies of
@@ -126,7 +133,7 @@ local tests = {
     end),
 
     test("parseRetryAfter: detail-wrapped 'try again in Xs'", function()
-        local h = newHandler()
+        local h = newOpenAIHandler()
         local body = '{"detail":{"error":{"message":"Busy. Please try again in 3s."}}}'
         assert.equal(h:parseRetryAfter({}, body), 3)
     end),
@@ -356,7 +363,7 @@ local tests = {
     end),
 
     test("extractRetryDetail: unwraps detail.error.message proxy wrapper", function()
-        local h = newHandler()
+        local h = newOpenAIHandler()
         local body = '{"detail":{"error":{"message":"Model \'DeepSeek-V4-Flash\' is at its concurrency limit (80)","type":"rate_limit_error"}}}'
         local d = h:extractRetryDetail(body)
         assert.notNil(d)
@@ -365,7 +372,7 @@ local tests = {
     end),
 
     test("extractRetryDetail: unwraps detail.message and string detail", function()
-        local h = newHandler()
+        local h = newOpenAIHandler()
         assert.matches(h:extractRetryDetail('{"detail":{"message":"slow down"}}'), "slow down")
         assert.matches(h:extractRetryDetail('{"detail":"just slow down"}'), "just slow down")
     end),
