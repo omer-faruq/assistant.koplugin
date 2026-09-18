@@ -22,35 +22,22 @@ local function split_think(ret, show_reasoning)
         local reasoning = ret:sub(8, think_close - 1)
         ret = ret:sub(think_close + 8):gsub("^%s+", "", 1)
         if show_reasoning then
-            ret = "```reasoning\n" .. reasoning .. "\n```\n\n---\n\n" .. ret
+            ret = "```reasoning\n" .. reasoning .. "\n```\n\n" .. ret
         end
     elseif show_reasoning and not think_open and think_close then
         local reasoning = ret:sub(1, think_close - 1)
         ret = ret:sub(think_close + 8):gsub("^%s+", "", 1)
-        ret = "```reasoning\n" .. reasoning .. "\n```\n\n---\n\n" .. ret
+        ret = "```reasoning\n" .. reasoning .. "\n```\n\n" .. ret
     end
     return ret
 end
 
 -- Inline mirror of the reasoning split in AssistantDialog:formatSingleMessage
--- (assistant_dialog.lua). The `---` separator is optional: `---`-requiring
--- shapes run first so fenced code inside legacy reasoning still splits at
--- the right closing fence. Returns reasoning, body; nil when absent.
+-- (assistant_dialog.lua): the single bare-fence shape the querier emits.
+-- Returns reasoning, body; nil when absent.
 local function split_reasoning_block(content)
     local reasoning, body = content:match(
-        "^```reasoning%s*([%s%S]-)%s*```%s*%-%-%-%s*([%s%S]*)$")
-    if not reasoning then
-        reasoning, body = content:match(
-            "^#### [^\n]*%s*```reasoning%s*([%s%S]-)%s*```%s*%-%-%-%s*([%s%S]*)$")
-    end
-    if not reasoning then
-        reasoning, body = content:match(
-            "^```reasoning%s*([%s%S]-)%s*```%s*([%s%S]*)$")
-    end
-    if not reasoning then
-        reasoning, body = content:match(
-            "^#### [^\n]*%s*```reasoning%s*([%s%S]-)%s*```%s*([%s%S]*)$")
-    end
+        "^```reasoning%s*([%s%S]-)%s*```%s*([%s%S]*)$")
     if reasoning and reasoning:find("%S") then
         return reasoning, body
     end
@@ -94,7 +81,7 @@ local tests = {
     test("think: prefixed pair wraps with show on, strips with show off", function()
         local input = "<think>Let me think.</think>\n\nThe answer."
         assert.equal(split_think(input, true),
-            "```reasoning\nLet me think.\n```\n\n---\n\nThe answer.")
+            "```reasoning\nLet me think.\n```\n\nThe answer.")
         assert.equal(split_think(input, false), "The answer.")
     end),
 
@@ -115,31 +102,10 @@ local tests = {
         assert.equal(split_think(input, true), input)
     end),
 
-    test("split: bare fence without separator splits", function()
+    test("split: bare fence splits", function()
         local reasoning, body = split_reasoning_block(
             "```reasoning\nthinking here\n```\n\nMain answer.")
         assert.equal(reasoning, "thinking here")
-        assert.equal(body, "Main answer.")
-    end),
-
-    test("split: bare fence with separator splits cleanly", function()
-        local reasoning, body = split_reasoning_block(
-            "```reasoning\nthinking here\n```\n\n---\n\nMain answer.")
-        assert.equal(reasoning, "thinking here")
-        assert.equal(body, "Main answer.")
-    end),
-
-    test("split: legacy titled fence splits", function()
-        local reasoning, body = split_reasoning_block(
-            "#### X\n\n```reasoning\nthinking here\n```\n\nMain answer.")
-        assert.equal(reasoning, "thinking here")
-        assert.equal(body, "Main answer.")
-    end),
-
-    test("split: legacy fence with inner code splits at separator", function()
-        local reasoning, body = split_reasoning_block(
-            "#### X\n\n```reasoning\nthink ```code``` more\n```\n\n---\n\nMain answer.")
-        assert.equal(reasoning, "think ```code``` more")
         assert.equal(body, "Main answer.")
     end),
 
