@@ -229,7 +229,7 @@ end
 --- @param detail string|nil optional API error text (already truncated)
 --- @return boolean true when the wait finished, false when the user cancelled.
 function BaseHandler:sleepWithRetryInfo(delay, attempt, max_retries, detail)
-    local raw = T(_("<b>API Busy</b>\nAttempts %1/%2 ... Retry in"), attempt, max_retries)
+    local raw = T(_("<b>API Busy</b>\nAttempts %1/%2 ... Retry in (%d secs)"), attempt, max_retries)
     if type(detail) == "string" and detail ~= "" then
         raw = T("%1\n\n%2 %3", raw, _("<b>Detail:</b>"), detail)
     end

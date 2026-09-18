@@ -1143,22 +1143,37 @@ function M.httpRequest(url, timeout, maxtime, post_body, post_content_type, head
     return true, code, content, resp_headers
 end
 
---- Display a count down (seconds) InfoMessage while waiting
---- for coroutine only (Trapper wrapped functions)
---- returns false when user pressed to cancel,
----         true when count down finished
-function M.sleepWithInfo(seconds, info_text)
+--- Show a cancellable countdown, filling the template %d with the remaining seconds each tick.
+--- Templates without %d keep the legacy " (N)" suffix. Returns false on cancel, true when finished.
+function M.sleepWithInfo(seconds, template)
     local _coroutine = coroutine.running()
-    local refresh_interval = 1
-    local remaining = seconds
-    while remaining > 0 do
-        local wait_time = math.min(remaining, refresh_interval)
-        local display_text = string.format("%s (%d)", info_text, math.ceil(remaining))
-        local go_on = Trapper:info(display_text, remaining < seconds)
+    -- Round up so the displayed total and the real wait agree.
+    local total = math.ceil(seconds)
+    local deadline = socket.gettime() + total
+    local first = true
+    while true do
+        local remaining = deadline - socket.gettime()
+        if remaining <= 0 then break end
+        local shown = math.ceil(remaining)
+        -- The first call creates the InfoMessage; later calls overwrite it in
+        -- place (same-size text) and skip Trapper's 100ms dismiss yield. A tap
+        -- still cancels at once via the widget's dismiss_callback.
+        local text = template
+        if type(template) == "string" and template:find("%d", 1, true) then
+            text = string.format(template, shown)
+        else
+            text = string.format("%s (%d)", template, shown)
+        end
+        local go_on = Trapper:info(text, not first, not first)
         if not go_on then
             Trapper:clear()
             return false
         end
+        first = false
+        -- Wake when the next number is due, not one second after the repaint,
+        -- so the slow e-ink refresh does not stretch the countdown.
+        local wait_time = deadline - socket.gettime() - (shown - 1)
+        if wait_time < 0.01 then wait_time = 0.01 end
         local resume_func = function() coroutine.resume(_coroutine, true) end
         UIManager:scheduleIn(wait_time, resume_func)
         local result = coroutine.yield()
@@ -1167,7 +1182,6 @@ function M.sleepWithInfo(seconds, info_text)
             Trapper:clear()
             return false
         end
-        remaining = remaining - wait_time
     end
     Trapper:clear()
     return true

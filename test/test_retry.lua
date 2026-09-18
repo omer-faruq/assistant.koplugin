@@ -8,6 +8,9 @@ local ASUtils = helper.ASUtils
 
 local BaseHandler = require("api_handlers.base")
 
+-- Captured before the makeRequest tests replace the module field with stubs.
+local realSleepWithInfo = ASUtils.sleepWithInfo
+
 local function test(name, fn)
     return { name = name, fn = fn }
 end
@@ -23,6 +26,40 @@ end
 
 local function newHandler(additional_parameters)
     return BaseHandler:new{ name = "test", additional_parameters = additional_parameters or {} }
+end
+
+-- Run fn(env) with the Trapper / UIManager / socket dependencies of
+-- sleepWithInfo replaced by a deterministic simulation, then restore them.
+-- `render` models the e-ink repaint cost inside Trapper:info.
+local function withSleepEnv(render, fn)
+    local Trapper = require("ui/trapper")
+    local UIManager = require("ui/uimanager")
+    local socket = require("socket")
+    local saved = {
+        gettime = socket.gettime,
+        info = Trapper.info,
+        clear = Trapper.clear,
+        scheduleIn = UIManager.scheduleIn,
+        unschedule = UIManager.unschedule,
+    }
+    local env = { now = 0, pending_at = nil, log = {}, cleared = false }
+    socket.gettime = function() return env.now end
+    UIManager.scheduleIn = function(_, delay) env.pending_at = env.now + delay end
+    UIManager.unschedule = function() env.pending_at = nil end
+    Trapper.info = function(_, text)
+        env.log[#env.log + 1] = text
+        env.now = env.now + render
+        return true
+    end
+    Trapper.clear = function() env.cleared = true end
+    local ok, err = pcall(fn, env)
+    socket.gettime = saved.gettime
+    Trapper.info = saved.info
+    Trapper.clear = saved.clear
+    UIManager.scheduleIn = saved.scheduleIn
+    UIManager.unschedule = saved.unschedule
+    if not ok then error(err, 0) end
+    return env
 end
 
 local tests = {
@@ -346,6 +383,56 @@ local tests = {
         assert.equal(multi, "line1 line2 hi")
     end),
 
+    -- ------------------------------------------------------------------
+    -- sleepWithInfo wall-clock countdown
+    -- ------------------------------------------------------------------
+    test("sleepWithInfo: template without %d keeps the legacy suffix", function()
+        local env = withSleepEnv(0.8, function(e)
+            local co = coroutine.create(function() return realSleepWithInfo(5, "Busy") end)
+            local _, finished = coroutine.resume(co)
+            while coroutine.status(co) == "suspended" do
+                assert.notNil(e.pending_at, "expected a scheduled resume")
+                e.now = e.pending_at
+                e.pending_at = nil
+                _, finished = coroutine.resume(co, true)
+            end
+            e.finished = finished
+        end)
+        assert.isTrue(env.finished)
+        assert.equal(table.concat(env.log, ","), "Busy (5),Busy (4),Busy (3),Busy (2),Busy (1)")
+        assert.equal(env.now, 5)
+    end),
+
+    test("sleepWithInfo: template %d is filled each tick", function()
+        local env = withSleepEnv(0.8, function(e)
+            local co = coroutine.create(function() return realSleepWithInfo(5, "Busy (%d)") end)
+            local _, finished = coroutine.resume(co)
+            while coroutine.status(co) == "suspended" do
+                assert.notNil(e.pending_at, "expected a scheduled resume")
+                e.now = e.pending_at
+                e.pending_at = nil
+                _, finished = coroutine.resume(co, true)
+            end
+            e.finished = finished
+        end)
+        assert.isTrue(env.finished)
+        assert.equal(table.concat(env.log, ","), "Busy (5),Busy (4),Busy (3),Busy (2),Busy (1)")
+        assert.equal(env.now, 5)
+    end),
+
+    test("sleepWithInfo: tap cancels before the countdown ends", function()
+        local env = withSleepEnv(0, function(e)
+            local co = coroutine.create(function() return realSleepWithInfo(5, "Busy") end)
+            coroutine.resume(co)
+            assert.notNil(e.pending_at)
+            -- A tap dismisses the InfoMessage, resuming the coroutine with false.
+            local _, cancelled = coroutine.resume(co, false)
+            e.cancelled = cancelled
+        end)
+        assert.isFalse(env.cancelled)
+        assert.isTrue(env.cleared)
+    end),
+
     test("sleepWithRetryInfo: shows API detail when present", function()
         local h = newHandler()
         local captured = nil
@@ -354,6 +441,7 @@ local tests = {
         assert.notNil(captured)
         assert.matches(captured, "API Busy")
         assert.matches(captured, "Rate limit abc")
+        assert.notNil(captured:find("%d", 1, true), "countdown placeholder belongs to the caller template")
         captured = nil
         h:sleepWithRetryInfo(1, 2, 8, nil)
         assert.notNil(captured)
