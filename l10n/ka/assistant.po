@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 03:58+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ქართული (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API დაკავებულია</b>\n"
-"მცდელობა %1/%2 ... ხელახლა ცდა"
+"მცდელობები %1/%2 ... ხელახლა ცდა (%d წამში)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>მოდელი:</b> %3\n"
 "\n"
 "სცადეთ სხვა პროვაიდერი პარამეტრების დიალოგში."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API-მ დააბრუნა შეცდომა</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>დაემატა</b> [%1 (AI)] მონიშვნის მენიუში."
@@ -243,6 +246,9 @@ msgstr "AI პასუხობს"
 msgid "API Key"
 msgstr "API გასაღები"
 
+msgid "API error: %1"
+msgstr "API შეცდომა: %1"
+
 msgid "API key is required for %1."
 msgstr "API გასაღები სავალდებულოა %1-ისთვის."
 
@@ -362,11 +368,11 @@ msgstr "საბაზო URL უნდა იწყებოდეს http:// 
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "საბაზო URL, მაგ. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "საბაზო URL: %1"
-
 msgid "Book Analysis"
 msgstr "წიგნის ანალიზი"
+
+msgid "Book Info (AI)"
+msgstr "წიგნის ინფორმაცია (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "დამმუშავებელი %1 მიუწვდომე�
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "დამმუშავებელი ვერ მოიძებნა: %1. გთხოვთ, შეამოწმოთ თქვენი configuration.lua ფაილი."
 
-msgid "Handler: %1"
-msgstr "დამმუშავებელი: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "მონიშვნებისა და შენიშვნების ანალიზი"
 
@@ -731,6 +734,9 @@ msgstr "რვეულის ჩანაწერი არასწორი�
 
 msgid "Invalid notebook filename."
 msgstr "რვეულის ფაილის სახელი არასწორია."
+
+msgid "Justify"
+msgstr "გასწორება"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "მოდელი"
 msgid "Model Built-In"
 msgstr "მოდელის ჩაშენებული"
 
-msgid "Model replied: %1"
-msgstr "მოდელმა უპასუხა: %1"
-
 msgid "Model reset: %1"
 msgstr "მოდელის გადატვირთვა: %1"
 
 msgid "Model: %1"
 msgstr "მოდელი: %1"
+
+msgid "Models"
+msgstr "მოდელები"
 
 msgid "Models: %1"
 msgstr "მოდელები: %1"
@@ -818,6 +824,9 @@ msgstr "აქტიური პროვაიდერი არ არის
 
 msgid "No base folder is available for notebooks."
 msgstr "რვეულებისთვის საბაზო საქაღალდე არ არის ხელმისაწვდომი."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "წიგნი არ არის გახსნილი. ფაილების მენეჯერში წიგნს ხანგრძლივად დააჭირეთ და აირჩიეთ წიგნის ინფორმაცია (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "დამმუშავებლისთვის %1 საერთო პარამეტრები არ არის ხელმისაწვდომი."
@@ -942,6 +951,9 @@ msgstr "OTA განახლება ვერ მოხერხდა: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "გამოიყენება მხოლოდ იმ პრომპტებისთვის, რომლებსაც წიგნის კონტექსტი აქვთ ჩართული (ნაგულისხმევად: ახსნა, ისტორიული კონტექსტი, შეჯამება, ძირითადი პუნქტები და ELI5). ჩართვისას მონიშნული გვერდის და მიმდებარე გვერდების ტექსტი ეგზავნება AI-ს როგორც ფონური მითითება. საჭიროებს ტექსტის მონიშვნას და ზრდის token-ების მოხმარებას."
 
+msgid "Open"
+msgstr "გახსნა"
+
 msgid "Open conflict or mystery:"
 msgstr "ღია კონფლიქტი ან საიდუმლო:"
 
@@ -972,6 +984,9 @@ msgstr "პლატფორმა"
 msgid "Please enter a note before saving."
 msgstr "შენახვამდე გთხოვთ შეიყვანოთ ჩანაწერი."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "გთხოვთ, გახსენით ეს წიგნი და დაიწყეთ კითხვა, სანამ შეჯამებას მოითხოვთ."
+
 msgid "Plot Summary"
 msgstr "სიუჟეტის შეჯამება"
 
@@ -990,6 +1005,9 @@ msgstr "გაბატონებული ემოციური მდგ�
 
 msgid "Protagonist's current objective:"
 msgstr "პროტაგონისტის ამჟამინდელი მიზანი:"
+
+msgid "Protocol: %1"
+msgstr "პროტოკოლი: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "პროვაიდერი %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "სწრაფი ჩანაწერი"
 msgid "Quick note saved successfully"
 msgstr "სწრაფი ჩანაწერი წარმატებით შეინახა"
 
+msgid "RTL Layout"
+msgstr "RTL განლაგება"
+
 msgid "RTL written Language"
 msgstr "RTL დამწერლობის ენა"
 
 msgid "Re-immersion"
 msgstr "ხელახალი ჩაძირვა"
+
+msgid "Reader settings are not available."
+msgstr "მკითხველის პარამეტრები მიუწვდომელია."
 
 msgid "Reasoning Option"
 msgstr "მსჯელობის პარამეტრი"
@@ -1057,6 +1081,9 @@ msgstr "მსჯელობის პარამეტრები - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "მიმოხილვა"
+
+msgid "Recap (AI)"
+msgstr "შეჯამება (AI)"
 
 msgid "Remove"
 msgstr "ამოღება"
@@ -1172,6 +1199,9 @@ msgstr "პარამეტრები"
 msgid "Show Follow-up Questions"
 msgstr "შემდგომი კითხვების ჩვენება"
 
+msgid "Show Reasoning"
+msgstr "მსჯელობის ჩვენება"
+
 msgid "Show Reasoning Text"
 msgstr "მსჯელობის ტექსტის ჩვენება"
 
@@ -1266,6 +1296,23 @@ msgstr "ნოუთბუქი არის თქვენი საუბრ
 msgid "This button creates a quick note with highlighted text."
 msgstr "ეს ღილაკი ქმნის სწრაფ ჩანაწერს მონიშნული ტექსტით."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"ეს ფაილი არის %2:\n"
+"\n"
+"%1\n"
+"\n"
+"დარწმუნებული ხართ, რომ გსურთ მისი გახსნა?\n"
+"\n"
+"დიდი ფაილების გახსნას შეიძლება გარკვეული დრო დასჭირდეს."
+
 msgid "This is a custom prompt"
 msgstr "ეს არის მორგებული პრომპტი"
 
@@ -1331,6 +1378,9 @@ msgstr "აკრიფეთ თქვენი შეკითხვა აქ
 
 msgid "Type your question here..."
 msgstr "აკრიფეთ თქვენი კითხვა აქ..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "უცნობი შეცდომა"

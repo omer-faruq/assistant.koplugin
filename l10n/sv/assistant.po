@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API upptaget</b>\n"
-"Försök %1/%2 ... Försök igen om"
+"<b>API:et är upptaget</b>\n"
+"Försök %1/%2 ... Försöker igen om (%d sek)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Modell:</b> %3\n"
 "\n"
 "Prova en annan provider i inställningsdialogen."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API:et returnerade ett fel</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Tillagt</b> [%1 (AI)] till markeringsmenyn."
@@ -243,6 +246,9 @@ msgstr "AI svarar"
 msgid "API Key"
 msgstr "API-nyckel"
 
+msgid "API error: %1"
+msgstr "API-fel: %1"
+
 msgid "API key is required for %1."
 msgstr "API-nyckel krävs för %1."
 
@@ -362,11 +368,11 @@ msgstr "Bas-URL måste börja med http:// eller https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Bas-URL, t.ex. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Bas-URL: %1"
-
 msgid "Book Analysis"
 msgstr "Bokanalys"
+
+msgid "Book Info (AI)"
+msgstr "Bokinfo (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Hanterare %1 är inte tillgänglig för provider: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Hanterare hittades inte för: %1. Kontrollera din configuration.lua-fil."
 
-msgid "Handler: %1"
-msgstr "Hanterare: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Analys av markeringar och anteckningar"
 
@@ -731,6 +734,9 @@ msgstr "Ogiltig anteckningsbokspost."
 
 msgid "Invalid notebook filename."
 msgstr "Ogiltigt filnamn för anteckningsbok."
+
+msgid "Justify"
+msgstr "Marginaljustera"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "Modell"
 msgid "Model Built-In"
 msgstr "Inbyggd modell"
 
-msgid "Model replied: %1"
-msgstr "Modellen svarade: %1"
-
 msgid "Model reset: %1"
 msgstr "Modell återställd: %1"
 
 msgid "Model: %1"
 msgstr "Modell: %1"
+
+msgid "Models"
+msgstr "Modeller"
 
 msgid "Models: %1"
 msgstr "Modeller: %1"
@@ -818,6 +824,9 @@ msgstr "Ingen aktiv leverantör har konfigurerats. Lägg till en i Inställninga
 
 msgid "No base folder is available for notebooks."
 msgstr "Ingen basmapp är tillgänglig för anteckningsböcker."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Ingen bok är öppen. Håll in en bok i filhanteraren och välj Bokinfo (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Inga gemensamma parametrar är tillgängliga för hanteraren %1."
@@ -942,6 +951,9 @@ msgstr "OTA-uppdateringen misslyckades: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Används endast av prompter som har valt att använda bokkontext (som standard: Förklara, Historisk kontext, Sammanfatta, Nyckelpunkter och ELI5). När detta är aktiverat skickas texten på den markerade sidan och intilliggande sidor till AI:n som bakgrundsreferens. Kräver en textmarkering och ökar tokenanvändningen."
 
+msgid "Open"
+msgstr "Öppna"
+
 msgid "Open conflict or mystery:"
 msgstr "Öppen konflikt eller gåta:"
 
@@ -972,6 +984,9 @@ msgstr "Plattform"
 msgid "Please enter a note before saving."
 msgstr "Ange en anteckning innan du sparar."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Öppna den här boken och börja läsa innan du begär en återblick."
+
 msgid "Plot Summary"
 msgstr "Handlingssammanfattning"
 
@@ -990,6 +1005,9 @@ msgstr "Rådande känsloläge/ton:"
 
 msgid "Protagonist's current objective:"
 msgstr "Huvudpersonens aktuella mål:"
+
+msgid "Protocol: %1"
+msgstr "Protokoll: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Leverantör %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "Snabbanteckning"
 msgid "Quick note saved successfully"
 msgstr "Snabbanteckningen sparades."
 
+msgid "RTL Layout"
+msgstr "Layout för höger-till-vänster"
+
 msgid "RTL written Language"
 msgstr "RTL-skrivet språk"
 
 msgid "Re-immersion"
 msgstr "Återinlevelse"
+
+msgid "Reader settings are not available."
+msgstr "Läsarinställningarna är inte tillgängliga."
 
 msgid "Reasoning Option"
 msgstr "Resoneringsalternativ"
@@ -1057,6 +1081,9 @@ msgstr "Resoneringsalternativ – %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Återblick"
+
+msgid "Recap (AI)"
+msgstr "Återblick (AI)"
 
 msgid "Remove"
 msgstr "Ta bort"
@@ -1172,6 +1199,9 @@ msgstr "Inställningar"
 msgid "Show Follow-up Questions"
 msgstr "Visa följdfrågor"
 
+msgid "Show Reasoning"
+msgstr "Visa resonemang"
+
 msgid "Show Reasoning Text"
 msgstr "Visa resonemangstext"
 
@@ -1266,6 +1296,23 @@ msgstr "Anteckningsboken är din konversationslogg: AI-svar och snabba antecknin
 msgid "This button creates a quick note with highlighted text."
 msgstr "Den här knappen skapar en snabbanteckning med markerad text."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Den här filen är %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Är du säker på att du vill öppna den?\n"
+"\n"
+"Att öppna stora filer kan ta en stund."
+
 msgid "This is a custom prompt"
 msgstr "Det här är en anpassad prompt"
 
@@ -1331,6 +1378,9 @@ msgstr "Skriv din fråga här"
 
 msgid "Type your question here..."
 msgstr "Skriv din fråga här..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Okänt fel"

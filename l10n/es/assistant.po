@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API ocupada</b>\n"
-"Intentos %1/%2 ... Reintentar en"
+"Intentos %1/%2... Reintentando en (%d s)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Modelo:</b> %3\n"
 "\n"
 "Prueba con otro proveedor en el diálogo de ajustes."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>La API devolvió un error</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Añadido</b> [%1 (AI)] al menú de resaltados."
@@ -243,6 +246,9 @@ msgstr "La IA está respondiendo"
 msgid "API Key"
 msgstr "Clave de API"
 
+msgid "API error: %1"
+msgstr "Error de la API: %1"
+
 msgid "API key is required for %1."
 msgstr "Se requiere clave de API para %1."
 
@@ -362,11 +368,11 @@ msgstr "La URL base debe comenzar con http:// o https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "URL base, p. ej. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "URL base: %1"
-
 msgid "Book Analysis"
 msgstr "Análisis del libro"
+
+msgid "Book Info (AI)"
+msgstr "Información del libro (IA)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "El manejador %1 no está disponible para el proveedor: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "No se encontró el manejador para: %1. Por favor, revisa tu archivo configuration.lua."
 
-msgid "Handler: %1"
-msgstr "Manejador: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Análisis de subrayados y notas"
 
@@ -731,6 +734,9 @@ msgstr "Entrada de cuaderno no válida."
 
 msgid "Invalid notebook filename."
 msgstr "Nombre de archivo de cuaderno no válido."
+
+msgid "Justify"
+msgstr "Justificar"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "Modelo"
 msgid "Model Built-In"
 msgstr "Modelo integrado"
 
-msgid "Model replied: %1"
-msgstr "El modelo respondió: %1"
-
 msgid "Model reset: %1"
 msgstr "Modelo restablecido: %1"
 
 msgid "Model: %1"
 msgstr "Modelo: %1"
+
+msgid "Models"
+msgstr "Modelos"
 
 msgid "Models: %1"
 msgstr "Modelos: %1"
@@ -818,6 +824,9 @@ msgstr "No hay ningún proveedor activo configurado. Añade uno en Configuració
 
 msgid "No base folder is available for notebooks."
 msgstr "No hay una carpeta base disponible para los cuadernos."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "No hay ningún libro abierto. Mantén pulsado un libro en el gestor de archivos y elige Información del libro (IA)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "No hay parámetros comunes disponibles para el manejador %1."
@@ -942,6 +951,9 @@ msgstr "Error en la actualización OTA: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Solo lo usan las indicaciones que optan por el contexto del libro (de forma predeterminada: Explicar, Contexto histórico, Resumir, Puntos clave y ELI5). Cuando está activado, el texto de la página resaltada y de las páginas adyacentes se envía a la IA como referencia de contexto. Requiere seleccionar texto y aumenta el uso de tokens."
 
+msgid "Open"
+msgstr "Abrir"
+
 msgid "Open conflict or mystery:"
 msgstr "Conflicto abierto o misterio:"
 
@@ -972,6 +984,9 @@ msgstr "Plataforma"
 msgid "Please enter a note before saving."
 msgstr "Por favor, introduce una nota antes de guardar."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Abre este libro y empieza a leer antes de solicitar un resumen."
+
 msgid "Plot Summary"
 msgstr "Resumen de la trama"
 
@@ -990,6 +1005,9 @@ msgstr "Estado emocional/tono predominante:"
 
 msgid "Protagonist's current objective:"
 msgstr "Objetivo actual del protagonista:"
+
+msgid "Protocol: %1"
+msgstr "Protocolo: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Proveedor %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "Nota rápida"
 msgid "Quick note saved successfully"
 msgstr "Nota rápida guardada correctamente"
 
+msgid "RTL Layout"
+msgstr "Diseño RTL"
+
 msgid "RTL written Language"
 msgstr "Idioma de escritura RTL"
 
 msgid "Re-immersion"
 msgstr "Reinmersión"
+
+msgid "Reader settings are not available."
+msgstr "La configuración del lector no está disponible."
 
 msgid "Reasoning Option"
 msgstr "Opción de razonamiento"
@@ -1057,6 +1081,9 @@ msgstr "Opciones de razonamiento - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Resumen"
+
+msgid "Recap (AI)"
+msgstr "Resumen (IA)"
 
 msgid "Remove"
 msgstr "Eliminar"
@@ -1171,6 +1198,9 @@ msgstr "Ajustes"
 msgid "Show Follow-up Questions"
 msgstr "Mostrar preguntas de seguimiento"
 
+msgid "Show Reasoning"
+msgstr "Mostrar razonamiento"
+
 msgid "Show Reasoning Text"
 msgstr "Mostrar texto de razonamiento"
 
@@ -1265,6 +1295,23 @@ msgstr "El cuaderno es tu registro de conversaciones: las respuestas de la IA y 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Este botón crea una nota rápida con el texto resaltado."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Este archivo es %2:\n"
+"\n"
+"%1\n"
+"\n"
+"¿Seguro que quieres abrirlo?\n"
+"\n"
+"Abrir archivos grandes puede tardar un poco."
+
 msgid "This is a custom prompt"
 msgstr "Este es un prompt personalizado"
 
@@ -1330,6 +1377,9 @@ msgstr "Escribe tu pregunta aquí"
 
 msgid "Type your question here..."
 msgstr "Escribe tu pregunta aquí..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Error desconocido"

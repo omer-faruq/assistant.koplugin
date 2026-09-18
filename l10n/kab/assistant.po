@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 04:13+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Taqbaylit (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API yedhel</b>\n"
-"Tikawin %1/%2 ... Aɛawed deg"
+"<b>API yecɣel</b>\n"
+"Iɛraḍen %1/%2 ... Ɛreḍ tikelt-nniḍen deg (%d n tesinin)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Amodel:</b> %3\n"
 "\n"
 "Ɛreḍ amseddar-nniḍen deg usfaylu n iɣewwaṛen."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API yerra-d tuccḍa</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Tettwarna</b> [%1 (AI)] ɣer umuɣ n usefreq."
@@ -243,6 +246,9 @@ msgstr "AI la yettirir."
 msgid "API Key"
 msgstr "Tasarut n API"
 
+msgid "API error: %1"
+msgstr "Tuccḍa n API: %1"
+
 msgid "API key is required for %1."
 msgstr "Tasarut n API teḥwaǧ i %1."
 
@@ -362,11 +368,11 @@ msgstr "URL agejdan yessefk ad yebdu s http:// neɣ https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Base URL, amedya: https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Base URL: %1"
-
 msgid "Book Analysis"
 msgstr "Taseftit n udlis."
+
+msgid "Book Info (AI)"
+msgstr "Talɣut n udlis (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Handler %1 ur yelli ara i umseddar: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Handler ur yettwaf i: %1. Ma ulac aɣilif, senqed afaylu configuration.lua."
 
-msgid "Handler: %1"
-msgstr "Aseqdac: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Asenqed n Usnen d Tizmilin"
 
@@ -731,6 +734,9 @@ msgstr "Aferdis n tadbelt ur yelli d ameɣtu."
 
 msgid "Invalid notebook filename."
 msgstr "Isem n ufaylu n tadbelt ur yelli d ameɣtu."
+
+msgid "Justify"
+msgstr "Semsawa"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "Aneggaf"
 msgid "Model Built-In"
 msgstr "Amudel i yebnan"
 
-msgid "Model replied: %1"
-msgstr "Aneggaf yerra: %1"
-
 msgid "Model reset: %1"
 msgstr "Amaḍel yettwales: %1"
 
 msgid "Model: %1"
 msgstr "Amaḍel: %1"
+
+msgid "Models"
+msgstr "Imudalen"
 
 msgid "Models: %1"
 msgstr "Imudellen: %1"
@@ -818,6 +824,9 @@ msgstr "Ulac amsudd yermed yettwasebded. Ttxil rnu yiwen deg Iɣewwaren."
 
 msgid "No base folder is available for notebooks."
 msgstr "Ulac akaram agejdan i tadbeltin."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Ulac adlis yeldin. Ḍḍef cwiṭ ɣef wedlis deg umsedday n yifuyla, syen fren Talɣut n udlis (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Ulac iɣewwaṛen imgarraden yellan i handler %1."
@@ -942,6 +951,9 @@ msgstr "Aleqqem OTA yexser: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Yettwaseqdec kan s tippemin i yeqbalen asatal n wedlis (s lexṣaṣ: Ssefhem, Asatal Amazray, Sgzu, Tixawaliyin Tigejdanin d ELI5). Mi yettwarmed, aḍris n usebter yettwasebgen akked isebtaren iqriben yettwazen ɣer AI d tamawt n ugilal. Yessefk ɣef ufran n uḍris yerna yessemɣar aseqdec n token."
 
+msgid "Open"
+msgstr "Ldi"
+
 msgid "Open conflict or mystery:"
 msgstr "Amennuɣ neɣ tabṛṛist yeldin:"
 
@@ -972,6 +984,9 @@ msgstr "Asallal"
 msgid "Please enter a note before saving."
 msgstr "Ttxil-k, sekcem tazmilt uqbel ad teskelseḍ."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Ttxil-k, ldi adlis-a, bdu tɣuri qbel ad tessutreḍ agzul."
+
 msgid "Plot Summary"
 msgstr "Agzul n temsalt"
 
@@ -990,6 +1005,9 @@ msgstr "Addad n wul / taneγruft i d-yezgan:"
 
 msgid "Protagonist's current objective:"
 msgstr "Taswiɛt tamirant n uneɣru:"
+
+msgid "Protocol: %1"
+msgstr "Aprotokol: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Amsudd %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "Tazmilt taruradt"
 msgid "Quick note saved successfully"
 msgstr "Tazmilt iɣewwaṛen tettwaskles akken iwata."
 
+msgid "RTL Layout"
+msgstr "Asuddem RTL"
+
 msgid "RTL written Language"
 msgstr "Tutlayt yettwarun s RTL"
 
 msgid "Re-immersion"
 msgstr "Anekcum i tikkelt-nni"
+
+msgid "Reader settings are not available."
+msgstr "Iɣewwaren n umɣer ur llin ara."
 
 msgid "Reasoning Option"
 msgstr "Aɣewwaṛ n tzemmert"
@@ -1057,6 +1081,9 @@ msgstr "Iɣewwaṛen n tzemmert - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Agzul"
+
+msgid "Recap (AI)"
+msgstr "Agzul (AI)"
 
 msgid "Remove"
 msgstr "Kkes"
@@ -1172,6 +1199,9 @@ msgstr "Iɣewwaṛen"
 msgid "Show Follow-up Questions"
 msgstr "Sken isteqsiyen n uḍfaṛ"
 
+msgid "Show Reasoning"
+msgstr "Sken axemmem"
+
 msgid "Show Reasoning Text"
 msgstr "Sken aḍris n uxemmem"
 
@@ -1266,6 +1296,23 @@ msgstr "Anagraw n tira d aɣmis n yimeslayen-ik: tiririyin n AI d tira tifessasi
 msgid "This button creates a quick note with highlighted text."
 msgstr "Asenqed-a yesskar tazmilt taruradt s udris yettwasemmen."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Afaylu-a d %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Tebɣiḍ s tidet ad t-teldiḍ?\n"
+"\n"
+"Teldi n yifuyla meqqren tezmer ad teṭṭef cwiṭ n wakud."
+
 msgid "This is a custom prompt"
 msgstr "Tawellit-agi tettwafels."
 
@@ -1331,6 +1378,9 @@ msgstr "Aru asteqsi nnwen dagi."
 
 msgid "Type your question here..."
 msgstr "Aru asteqsi-nnek dagi..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Tuccḍa ur nettwassen"

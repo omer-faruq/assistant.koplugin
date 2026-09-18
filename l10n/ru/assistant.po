@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API занят</b>\n"
-"Попытки %1/%2 ... Повтор через"
+"Попытки %1/%2 ... Повтор через (%d с)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Модель:</b> %3\n"
 "\n"
 "Попробуйте другого провайдера в диалоге настроек."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API вернул ошибку</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Добавлено</b> [%1 (ИИ)] в меню выделения."
@@ -243,6 +246,9 @@ msgstr "ИИ отвечает"
 msgid "API Key"
 msgstr "API-ключ"
 
+msgid "API error: %1"
+msgstr "Ошибка API: %1"
+
 msgid "API key is required for %1."
 msgstr "Для %1 требуется API-ключ."
 
@@ -362,11 +368,11 @@ msgstr "Базовый URL должен начинаться с http:// или h
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Базовый URL, например https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Базовый URL: %1"
-
 msgid "Book Analysis"
 msgstr "Анализ книги"
+
+msgid "Book Info (AI)"
+msgstr "Информация о книге (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Обработчик %1 недоступен для провайдера
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Обработчик не найден для: %1. Проверьте файл configuration.lua."
 
-msgid "Handler: %1"
-msgstr "Обработчик: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Анализ выделений и заметок"
 
@@ -731,6 +734,9 @@ msgstr "Недопустимая запись блокнота."
 
 msgid "Invalid notebook filename."
 msgstr "Недопустимое имя файла блокнота."
+
+msgid "Justify"
+msgstr "По ширине"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -785,14 +791,14 @@ msgstr "Модель"
 msgid "Model Built-In"
 msgstr "Встроено в модель"
 
-msgid "Model replied: %1"
-msgstr "Модель ответила: %1"
-
 msgid "Model reset: %1"
 msgstr "Модель сброшена: %1"
 
 msgid "Model: %1"
 msgstr "Модель: %1"
+
+msgid "Models"
+msgstr "Модели"
 
 msgid "Models: %1"
 msgstr "Модели: %1"
@@ -820,6 +826,9 @@ msgstr "Не настроен активный провайдер. Пожалу�
 
 msgid "No base folder is available for notebooks."
 msgstr "Нет доступной базовой папки для блокнотов."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Книга не открыта. Нажмите и удерживайте книгу в файловом менеджере и выберите «Информация о книге (AI)»."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Для обработчика %1 общие параметры недоступны."
@@ -944,6 +953,9 @@ msgstr "OTA-обновление не удалось: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Используется только теми промптами, для которых включён контекст книги (по умолчанию: Объяснить, Исторический контекст, Пересказать, Ключевые моменты и Объяснить как пятилетнему). При включении текст выделенной страницы и соседних страниц отправляется ИИ в качестве фоновой справки. Требуется выделение текста и увеличивает расход токенов."
 
+msgid "Open"
+msgstr "Открыть"
+
 msgid "Open conflict or mystery:"
 msgstr "Открытый конфликт или загадка:"
 
@@ -974,6 +986,9 @@ msgstr "Платформа"
 msgid "Please enter a note before saving."
 msgstr "Пожалуйста, введите заметку перед сохранением."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Пожалуйста, откройте эту книгу и начните читать, прежде чем запрашивать пересказ."
+
 msgid "Plot Summary"
 msgstr "Краткое содержание"
 
@@ -992,6 +1007,9 @@ msgstr "Преобладающее эмоциональное состояние
 
 msgid "Protagonist's current objective:"
 msgstr "Текущая цель главного героя:"
+
+msgid "Protocol: %1"
+msgstr "Протокол: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Провайдер %1 %2(%3)"
@@ -1044,11 +1062,17 @@ msgstr "Быстрая заметка"
 msgid "Quick note saved successfully"
 msgstr "Быстрая заметка успешно сохранена"
 
+msgid "RTL Layout"
+msgstr "Макет справа налево"
+
 msgid "RTL written Language"
 msgstr "Язык с письмом справа налево"
 
 msgid "Re-immersion"
 msgstr "Повторное погружение"
+
+msgid "Reader settings are not available."
+msgstr "Настройки программы чтения недоступны."
 
 msgid "Reasoning Option"
 msgstr "Параметр рассуждений"
@@ -1059,6 +1083,9 @@ msgstr "Параметры рассуждений - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Конспект"
+
+msgid "Recap (AI)"
+msgstr "Пересказ (AI)"
 
 msgid "Remove"
 msgstr "Удалить"
@@ -1173,6 +1200,9 @@ msgstr "Настройки"
 msgid "Show Follow-up Questions"
 msgstr "Показывать уточняющие вопросы"
 
+msgid "Show Reasoning"
+msgstr "Показывать рассуждения"
+
 msgid "Show Reasoning Text"
 msgstr "Показывать текст рассуждений"
 
@@ -1267,6 +1297,23 @@ msgstr "Блокнот — это журнал ваших бесед: ответ
 msgid "This button creates a quick note with highlighted text."
 msgstr "Эта кнопка создаёт быструю заметку с выделенным текстом."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Этот файл — %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Вы уверены, что хотите открыть его?\n"
+"\n"
+"Открытие больших файлов может занять некоторое время."
+
 msgid "This is a custom prompt"
 msgstr "Это пользовательский промпт"
 
@@ -1332,6 +1379,9 @@ msgstr "Введите ваш вопрос здесь"
 
 msgid "Type your question here..."
 msgstr "Введите ваш вопрос здесь..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Неизвестная ошибка"

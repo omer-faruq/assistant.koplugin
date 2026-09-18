@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 04:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Oʻzbekcha (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API band</b>\n"
-"Urinishlar %1/%2 ... Qayta urinish"
+"Urinishlar %1/%2 ... (%d soniyadan soʻng qayta urinish)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Model:</b> %3\n"
 "\n"
 "Sozlamalar oynasida boshqa provayderni sinab koʻring."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API xatolik qaytardi</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Qo'shildi</b> [%1 (AI)] Belgilash menyusiga."
@@ -243,6 +246,9 @@ msgstr "AI javob bermoqda"
 msgid "API Key"
 msgstr "API kaliti"
 
+msgid "API error: %1"
+msgstr "API xatosi: %1"
+
 msgid "API key is required for %1."
 msgstr "%1 uchun API kaliti talab qilinadi."
 
@@ -362,11 +368,11 @@ msgstr "Asosiy URL http:// yoki https:// bilan boshlanishi kerak."
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Ulanish muvaffaqiyatsiz tugadi: %1"
 
-msgid "Base URL: %1"
-msgstr "Asosiy URL: %1"
-
 msgid "Book Analysis"
 msgstr "Kitob tahlili"
+
+msgid "Book Info (AI)"
+msgstr "Kitob maʼlumotlari (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "%1 handleri %2 provayderi uchun mavjud emas."
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "%1 uchun handler topilmadi. Iltimos, configuration.lua faylingizni tekshiring."
 
-msgid "Handler: %1"
-msgstr "Ishlovchi: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Ajratish va eslatma tahlili"
 
@@ -731,6 +734,9 @@ msgstr "Notoʻgʻri daftar yozuvi."
 
 msgid "Invalid notebook filename."
 msgstr "Notoʻgʻri daftar fayl nomi."
+
+msgid "Justify"
+msgstr "Ikki tomonga tekislash"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "Model"
 msgid "Model Built-In"
 msgstr "Modelga o'rnatilgan"
 
-msgid "Model replied: %1"
-msgstr "Model javob berdi: %1"
-
 msgid "Model reset: %1"
 msgstr "Model qayta tiklandi: %1"
 
 msgid "Model: %1"
 msgstr "Model: %1"
+
+msgid "Models"
+msgstr "Modellar"
 
 msgid "Models: %1"
 msgstr "Modellar: %1"
@@ -818,6 +824,9 @@ msgstr "Faol provayder sozlanmagan. Iltimos, Sozlamalarda bittasini qo'shing."
 
 msgid "No base folder is available for notebooks."
 msgstr "Daftarlar uchun asosiy papka mavjud emas."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Hech qanday kitob ochilmagan. Fayl menejerida kitobni uzoq bosib, «Kitob maʼlumotlari (AI)» ni tanlang."
 
 msgid "No common parameters are available for handler %1."
 msgstr "%1 ishlovchisi uchun umumiy parametrlar mavjud emas."
@@ -942,6 +951,9 @@ msgstr "OTA yangilash muvaffaqiyatsiz tugadi: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Faqat kitob kontekstidan foydalanadigan soʻrovlar uchun ishlatiladi (standart boʻyicha: Explain, Historical Context, Summarize, Key Points va ELI5). Yoqilganda belgilangan sahifa va qoʻshni sahifalar matni AI ga fon maʼlumoti sifatida yuboriladi. Matn tanlanishini talab qiladi va token sarfini oshiradi."
 
+msgid "Open"
+msgstr "Ochish"
+
 msgid "Open conflict or mystery:"
 msgstr "Ochiq ziddiyat yoki sir:"
 
@@ -972,6 +984,9 @@ msgstr "Platforma"
 msgid "Please enter a note before saving."
 msgstr "Saqlashdan oldin eslatma kiriting."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Xulosa soʻrashdan oldin bu kitobni oching va oʻqishni boshlang."
+
 msgid "Plot Summary"
 msgstr "Syujet xulosasi"
 
@@ -990,6 +1005,9 @@ msgstr "Hukmron hissiy holat/ohang:"
 
 msgid "Protagonist's current objective:"
 msgstr "Bosh qahramonning hozirgi maqsadi:"
+
+msgid "Protocol: %1"
+msgstr "Protokol: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Provayder %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "Tezkor eslatma"
 msgid "Quick note saved successfully"
 msgstr "Tezkor eslatma muvaffaqiyatli saqlandi"
 
+msgid "RTL Layout"
+msgstr "RTL tartibi"
+
 msgid "RTL written Language"
 msgstr "RTL yoziladigan til"
 
 msgid "Re-immersion"
 msgstr "Qayta shoʻngʻish"
+
+msgid "Reader settings are not available."
+msgstr "Oʻquvchi sozlamalari mavjud emas."
 
 msgid "Reasoning Option"
 msgstr "Fikrlash varianti"
@@ -1057,6 +1081,9 @@ msgstr "Fikrlash variantlari - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Xulosa"
+
+msgid "Recap (AI)"
+msgstr "Xulosa (AI)"
 
 msgid "Remove"
 msgstr "Olib tashlash"
@@ -1171,6 +1198,9 @@ msgstr "Sozlamalar"
 msgid "Show Follow-up Questions"
 msgstr "Keyingi savollarni koʻrsatish"
 
+msgid "Show Reasoning"
+msgstr "Mulohazani koʻrsatish"
+
 msgid "Show Reasoning Text"
 msgstr "Mulohaza matnini koʻrsatish"
 
@@ -1265,6 +1295,23 @@ msgstr "Daftar sizning suhbat jurnalingiz: AI javoblari va tezkor eslatmalar ung
 msgid "This button creates a quick note with highlighted text."
 msgstr "Bu tugma ajratilgan matn bilan tezkor eslatma yaratadi."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Bu fayl %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Uni ochishga ishonchingiz komilmi?\n"
+"\n"
+"Katta fayllarni ochish biroz vaqt olishi mumkin."
+
 msgid "This is a custom prompt"
 msgstr "Bu maxsus prompt"
 
@@ -1330,6 +1377,9 @@ msgstr "Savolingizni shu yerga yozing"
 
 msgid "Type your question here..."
 msgstr "Savolingizni shu yerga yozing..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Nomaʼlum xato"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 02:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: 中文（台灣) (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API 忙碌中</b>\n"
-"嘗試 %1/%2 ... 重試於"
+"已嘗試 %1/%2 次 …… 將於 %d 秒後重試"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>模型：</b>%3\n"
 "\n"
 "請在設定對話方塊中嘗試其他提供者。"
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API 傳回錯誤</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>已新增</b> [%1 (AI)] 到反白選單。"
@@ -243,6 +246,9 @@ msgstr "AI 正在回應"
 msgid "API Key"
 msgstr "API 金鑰"
 
+msgid "API error: %1"
+msgstr "API 錯誤：%1"
+
 msgid "API key is required for %1."
 msgstr "%1 需要 API 金鑰。"
 
@@ -362,11 +368,11 @@ msgstr "Base URL 必須以 http:// 或 https:// 開頭。"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "基礎 URL，例如 https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "基礎 URL：%1"
-
 msgid "Book Analysis"
 msgstr "書籍分析"
+
+msgid "Book Info (AI)"
+msgstr "書籍資訊 (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "處理常式 %1 不適用於提供者：%2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "找不到 %1 的處理常式。請檢查您的 configuration.lua 檔案。"
 
-msgid "Handler: %1"
-msgstr "處理器：%1"
-
 msgid "Highlight & Note Analysis"
 msgstr "反白與筆記分析"
 
@@ -731,6 +734,9 @@ msgstr "無效的筆記本項目。"
 
 msgid "Invalid notebook filename."
 msgstr "無效的筆記本檔名。"
+
+msgid "Justify"
+msgstr "兩端對齊"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -782,14 +788,14 @@ msgstr "模型"
 msgid "Model Built-In"
 msgstr "模型內建"
 
-msgid "Model replied: %1"
-msgstr "模型回覆：%1"
-
 msgid "Model reset: %1"
 msgstr "模型已重設：%1"
 
 msgid "Model: %1"
 msgstr "模型：%1"
+
+msgid "Models"
+msgstr "模型"
 
 msgid "Models: %1"
 msgstr "模型：%1"
@@ -817,6 +823,9 @@ msgstr "未設定任何有效的提供者。請在設定中新增。"
 
 msgid "No base folder is available for notebooks."
 msgstr "沒有可用的筆記本基礎資料夾。"
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "目前沒有開啟的書籍。請在檔案管理中長按一本書，然後選擇「書籍資訊 (AI)」。"
 
 msgid "No common parameters are available for handler %1."
 msgstr "處理器 %1 沒有可用的通用參數。"
@@ -941,6 +950,9 @@ msgstr "OTA 更新失敗：%1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "僅供選擇啟用書籍上下文的提示詞使用（預設為：解釋、歷史背景、摘要、重點與 ELI5）。啟用後，標記頁面及其相鄰頁面的文字會傳送給 AI 作為背景參考。需要選取文字，且會增加 token 用量。"
 
+msgid "Open"
+msgstr "開啟"
+
 msgid "Open conflict or mystery:"
 msgstr "未解的衝突或謎團："
 
@@ -971,6 +983,9 @@ msgstr "平台"
 msgid "Please enter a note before saving."
 msgstr "儲存前請先輸入筆記。"
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "請先開啟這本書並開始閱讀，再要求前情提要。"
+
 msgid "Plot Summary"
 msgstr "劇情摘要"
 
@@ -989,6 +1004,9 @@ msgstr "主要情緒狀態／基調："
 
 msgid "Protagonist's current objective:"
 msgstr "主角目前的目標："
+
+msgid "Protocol: %1"
+msgstr "通訊協定：%1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "服務提供者 %1 %2(%3)"
@@ -1041,11 +1059,17 @@ msgstr "快速筆記"
 msgid "Quick note saved successfully"
 msgstr "快速筆記已成功儲存"
 
+msgid "RTL Layout"
+msgstr "由右至左版面配置"
+
 msgid "RTL written Language"
 msgstr "RTL 書寫語言"
 
 msgid "Re-immersion"
 msgstr "重新沉浸"
+
+msgid "Reader settings are not available."
+msgstr "閱讀器設定無法使用。"
 
 msgid "Reasoning Option"
 msgstr "推理選項"
@@ -1056,6 +1080,9 @@ msgstr "推理選項 - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "回顧"
+
+msgid "Recap (AI)"
+msgstr "前情提要 (AI)"
 
 msgid "Remove"
 msgstr "移除"
@@ -1171,6 +1198,9 @@ msgstr "設定"
 msgid "Show Follow-up Questions"
 msgstr "顯示後續問題"
 
+msgid "Show Reasoning"
+msgstr "顯示推理過程"
+
 msgid "Show Reasoning Text"
 msgstr "顯示推理文字"
 
@@ -1265,6 +1295,23 @@ msgstr "記事本為您的對話記錄：AI 回答和快速筆記會附加到其
 msgid "This button creates a quick note with highlighted text."
 msgstr "此按鈕會以反白文字建立快速筆記。"
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"這個檔案是 %2：\n"
+"\n"
+"%1\n"
+"\n"
+"確定要開啟嗎？\n"
+"\n"
+"開啟大型檔案可能需要一些時間。"
+
 msgid "This is a custom prompt"
 msgstr "這是自訂提示詞"
 
@@ -1330,6 +1377,9 @@ msgstr "在此輸入您的問題"
 
 msgid "Type your question here..."
 msgstr "在此輸入你的問題..."
+
+msgid "URL: %1"
+msgstr "URL：%1"
 
 msgid "Unknown error"
 msgstr "未知錯誤"

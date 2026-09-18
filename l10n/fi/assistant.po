@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API varattu</b>\n"
-"Yritykset %1/%2 ... Yritetään uudelleen"
+"<b>API on varattu</b>\n"
+"Yritykset %1/%2 ... Yritä uudelleen (%d s kuluttua)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Malli:</b> %3\n"
 "\n"
 "Kokeile toista palveluntarjoajaa asetusvalintaikkunassa."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API palautti virheen</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Lisätty</b> [%1 (AI)] korostusvalikkoon."
@@ -243,6 +246,9 @@ msgstr "Tekoäly vastaa"
 msgid "API Key"
 msgstr "API-avain"
 
+msgid "API error: %1"
+msgstr "API-virhe: %1"
+
 msgid "API key is required for %1."
 msgstr "API-avain vaaditaan palvelulle %1."
 
@@ -362,11 +368,11 @@ msgstr "Perus-URL-osoitteen on alettava http:// tai https://."
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Perus-URL, esim. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Perus-URL: %1"
-
 msgid "Book Analysis"
 msgstr "Kirja-analyysi"
+
+msgid "Book Info (AI)"
+msgstr "Kirjan tiedot (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Käsittelijä %1 ei ole käytettävissä palveluntarjoajalle: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Käsittelijää ei löytynyt kohteelle: %1. Tarkista configuration.lua-tiedostosi."
 
-msgid "Handler: %1"
-msgstr "Käsittelijä: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Korostusten ja muistiinpanojen analyysi"
 
@@ -731,6 +734,9 @@ msgstr "Virheellinen muistikirjamerkintä."
 
 msgid "Invalid notebook filename."
 msgstr "Virheellinen muistikirjan tiedostonimi."
+
+msgid "Justify"
+msgstr "Tasattu"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "Malli"
 msgid "Model Built-In"
 msgstr "Mallin sisäänrakennettu"
 
-msgid "Model replied: %1"
-msgstr "Malli vastasi: %1"
-
 msgid "Model reset: %1"
 msgstr "Malli nollattu: %1"
 
 msgid "Model: %1"
 msgstr "Malli: %1"
+
+msgid "Models"
+msgstr "Mallit"
 
 msgid "Models: %1"
 msgstr "Mallit: %1"
@@ -818,6 +824,9 @@ msgstr "Aktiivista palveluntarjoajaa ei ole määritetty. Lisää yksi Asetuksii
 
 msgid "No base folder is available for notebooks."
 msgstr "Muistikirjoille ei ole saatavilla peruskansiota."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Ei avointa kirjaa. Paina kirjaa pitkään tiedostoselaimessa ja valitse Kirjan tiedot (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Käsittelijälle %1 ei ole saatavilla yhteisiä parametreja."
@@ -942,6 +951,9 @@ msgstr "OTA-päivitys epäonnistui: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Käytetään vain kehotteissa, jotka ottavat kirjakontekstin käyttöön (oletuksena: Selitä, Historiallinen konteksti, Tiivistä, Keskeiset kohdat ja ELI5). Kun tämä on käytössä, korostetun sivun ja viereisten sivujen teksti lähetetään tekoälylle taustatiedoksi. Vaatii tekstivalinnan ja lisää tokenien käyttöä."
 
+msgid "Open"
+msgstr "Avaa"
+
 msgid "Open conflict or mystery:"
 msgstr "Avoin konflikti tai mysteeri:"
 
@@ -972,6 +984,9 @@ msgstr "Alusta"
 msgid "Please enter a note before saving."
 msgstr "Kirjoita muistiinpano ennen tallentamista."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Avaa tämä kirja ja aloita lukeminen ennen kertauksen pyytämistä."
+
 msgid "Plot Summary"
 msgstr "Juonitiivistelmä"
 
@@ -990,6 +1005,9 @@ msgstr "Vallitseva tunnetila/sävy:"
 
 msgid "Protagonist's current objective:"
 msgstr "Päähenkilön nykyinen tavoite:"
+
+msgid "Protocol: %1"
+msgstr "Protokolla: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Palveluntarjoaja %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "Pikamuistiinpano"
 msgid "Quick note saved successfully"
 msgstr "Pikamuistiinpano tallennettu onnistuneesti"
 
+msgid "RTL Layout"
+msgstr "RTL-asettelu"
+
 msgid "RTL written Language"
 msgstr "Oikealta vasemmalle kirjoitettu kieli"
 
 msgid "Re-immersion"
 msgstr "Paluu tarinaan"
+
+msgid "Reader settings are not available."
+msgstr "Lukijan asetukset eivät ole käytettävissä."
 
 msgid "Reasoning Option"
 msgstr "Päättelyvaihtoehto"
@@ -1057,6 +1081,9 @@ msgstr "Päättelyasetukset - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Yhteenveto"
+
+msgid "Recap (AI)"
+msgstr "Kertaus (AI)"
 
 msgid "Remove"
 msgstr "Poista"
@@ -1172,6 +1199,9 @@ msgstr "Asetukset"
 msgid "Show Follow-up Questions"
 msgstr "Näytä jatkokysymykset"
 
+msgid "Show Reasoning"
+msgstr "Näytä päättely"
+
 msgid "Show Reasoning Text"
 msgstr "Näytä päättelyteksti"
 
@@ -1266,6 +1296,23 @@ msgstr "Muistikirja on keskustelulokisi: AI-vastaukset ja pikamuistiinpanot lis�
 msgid "This button creates a quick note with highlighted text."
 msgstr "Tämä painike luo pikamuistiinpanon korostetusta tekstistä."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Tämä tiedosto on %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Haluatko varmasti avata sen?\n"
+"\n"
+"Suurten tiedostojen avaaminen voi kestää hetken."
+
 msgid "This is a custom prompt"
 msgstr "Tämä on mukautettu kehote"
 
@@ -1331,6 +1378,9 @@ msgstr "Kirjoita kysymyksesi tähän"
 
 msgid "Type your question here..."
 msgstr "Kirjoita kysymyksesi tähän..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Tuntematon virhe"

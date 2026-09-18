@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API optaget</b>\n"
-"Forsøg %1/%2 ... Prøv igen om"
+"Forsøg %1/%2 ... Prøv igen om (%d sek.)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Model:</b> %3\n"
 "\n"
 "Prøv en anden udbyder i indstillingsdialogen."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API returnerede en fejl</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Tilføjet</b> [%1 (AI)] til markeringsmenuen."
@@ -243,6 +246,9 @@ msgstr "AI svarer"
 msgid "API Key"
 msgstr "API-nøgle"
 
+msgid "API error: %1"
+msgstr "API-fejl: %1"
+
 msgid "API key is required for %1."
 msgstr "API-nøgle er påkrævet for %1."
 
@@ -362,11 +368,11 @@ msgstr "Basis-URL skal starte med http:// eller https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Basis-URL, f.eks. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Basis-URL: %1"
-
 msgid "Book Analysis"
 msgstr "Boganalyse"
+
+msgid "Book Info (AI)"
+msgstr "Boginfo (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Handler %1 er ikke tilgængelig for udbyder: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Handler blev ikke fundet for: %1. Kontrollér venligst din configuration.lua-fil."
 
-msgid "Handler: %1"
-msgstr "Handler: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Analyse af markeringer og noter"
 
@@ -731,6 +734,9 @@ msgstr "Ugyldig notesbogspost."
 
 msgid "Invalid notebook filename."
 msgstr "Ugyldigt notesbogsfilnavn."
+
+msgid "Justify"
+msgstr "Lige marginer"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "Model"
 msgid "Model Built-In"
 msgstr "Indbygget i modellen"
 
-msgid "Model replied: %1"
-msgstr "Modellen svarede: %1"
-
 msgid "Model reset: %1"
 msgstr "Model nulstillet: %1"
 
 msgid "Model: %1"
 msgstr "Model: %1"
+
+msgid "Models"
+msgstr "Modeller"
 
 msgid "Models: %1"
 msgstr "Modeller: %1"
@@ -818,6 +824,9 @@ msgstr "Ingen aktiv udbyder er konfigureret. Tilføj en i Indstillinger."
 
 msgid "No base folder is available for notebooks."
 msgstr "Der er ingen basismappe tilgængelig for notesbøger."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Der er ikke åbnet nogen bog. Langtryk på en bog i filhåndteringen, og vælg Boginfo (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Der er ingen fælles parametre tilgængelige for handler %1."
@@ -942,6 +951,9 @@ msgstr "OTA-opdatering mislykkedes: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Bruges kun af prompter, der tilvælger bogkontekst (som standard: Forklar, Historisk kontekst, Opsummer, Nøglepunkter og ELI5). Når den er aktiveret, sendes teksten fra den markerede side og de tilstødende sider til AI'en som baggrundsreference. Kræver en tekstmarkering og øger tokenforbruget."
 
+msgid "Open"
+msgstr "Åbn"
+
 msgid "Open conflict or mystery:"
 msgstr "Uafklaret konflikt eller mysterium:"
 
@@ -972,6 +984,9 @@ msgstr "Platform"
 msgid "Please enter a note before saving."
 msgstr "Indtast venligst en note, før du gemmer."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Åbn denne bog, og begynd at læse, før du anmoder om en opsummering."
+
 msgid "Plot Summary"
 msgstr "Handlingsresumé"
 
@@ -990,6 +1005,9 @@ msgstr "Dominerende følelsesmæssig tilstand/tone:"
 
 msgid "Protagonist's current objective:"
 msgstr "Protagonistens nuværende mål:"
+
+msgid "Protocol: %1"
+msgstr "Protokol: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Udbyder %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "Hurtig note"
 msgid "Quick note saved successfully"
 msgstr "Hurtig note gemt med succes."
 
+msgid "RTL Layout"
+msgstr "RTL-layout"
+
 msgid "RTL written Language"
 msgstr "RTL-skrevet sprog"
 
 msgid "Re-immersion"
 msgstr "Genindlevelse"
+
+msgid "Reader settings are not available."
+msgstr "Læserindstillingerne er ikke tilgængelige."
 
 msgid "Reasoning Option"
 msgstr "Reasoning-mulighed"
@@ -1057,6 +1081,9 @@ msgstr "Reasoning-muligheder - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Recap"
+
+msgid "Recap (AI)"
+msgstr "Opsummering (AI)"
 
 msgid "Remove"
 msgstr "Fjern"
@@ -1172,6 +1199,9 @@ msgstr "Indstillinger"
 msgid "Show Follow-up Questions"
 msgstr "Vis opfølgningsspørgsmål"
 
+msgid "Show Reasoning"
+msgstr "Vis ræsonnement"
+
 msgid "Show Reasoning Text"
 msgstr "Vis ræsonnementstekst"
 
@@ -1266,6 +1296,23 @@ msgstr "Notesbogen er din samtale-log: AI-svar og hurtige noter tilføjes til de
 msgid "This button creates a quick note with highlighted text."
 msgstr "Denne knap opretter en hurtig note med markeret tekst."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Denne fil er %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Er du sikker på, at du vil åbne den?\n"
+"\n"
+"Åbning af store filer kan tage noget tid."
+
 msgid "This is a custom prompt"
 msgstr "Dette er en brugerdefineret prompt"
 
@@ -1331,6 +1378,9 @@ msgstr "Skriv dit spørgsmål her"
 
 msgid "Type your question here..."
 msgstr "Skriv dit spørgsmål her..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Ukendt fejl"

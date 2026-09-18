@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API užimta</b>\n"
-"Bandymai %1/%2 ... Bandysime iš naujo po"
+"<b>API užimtas</b>\n"
+"Bandymai %1/%2 ... Bandyti dar kartą po (%d sek.)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Modelis:</b> %3\n"
 "\n"
 "Pabandykite pasirinkti kitą teikėją nustatymų dialogo lange."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API grąžino klaidą</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Pridėta</b> [%1 (AI)] į pažymėjimo meniu."
@@ -243,6 +246,9 @@ msgstr "AI atsako"
 msgid "API Key"
 msgstr "API raktas"
 
+msgid "API error: %1"
+msgstr "API klaida: %1"
+
 msgid "API key is required for %1."
 msgstr "API raktas reikalingas %1."
 
@@ -362,11 +368,11 @@ msgstr "Bazinis URL turi prasidėti http:// arba https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Pagrindinis URL, pvz., https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Pagrindinis URL: %1"
-
 msgid "Book Analysis"
 msgstr "Knygos analizė"
+
+msgid "Book Info (AI)"
+msgstr "Knygos informacija (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Tvarkyklė %1 neprieinama teikėjui: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Tvarkyklė nerasta: %1. Patikrinkite savo configuration.lua failą."
 
-msgid "Handler: %1"
-msgstr "Tvarkyklė: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Pažymėjimų ir pastabų analizė"
 
@@ -731,6 +734,9 @@ msgstr "Neteisingas užrašų knygos įrašas."
 
 msgid "Invalid notebook filename."
 msgstr "Neteisingas užrašų knygos failo pavadinimas."
+
+msgid "Justify"
+msgstr "Lygiuoti"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -785,14 +791,14 @@ msgstr "Modelis"
 msgid "Model Built-In"
 msgstr "Modelio įtaisytasis"
 
-msgid "Model replied: %1"
-msgstr "Modelis atsakė: %1"
-
 msgid "Model reset: %1"
 msgstr "Modelis atstatytas: %1"
 
 msgid "Model: %1"
 msgstr "Modelis: %1"
+
+msgid "Models"
+msgstr "Modeliai"
 
 msgid "Models: %1"
 msgstr "Modeliai: %1"
@@ -820,6 +826,9 @@ msgstr "Nesukonfigūruotas aktyvus paslaugų teikėjas. Prašome pridėti jį nu
 
 msgid "No base folder is available for notebooks."
 msgstr "Nėra prieinamo pagrindinio aplanko užrašų knygoms."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Nėra atidarytos knygos. Ilgai spauskite knygą failų tvarkyklėje ir pasirinkite „Knygos informacija (AI)“."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Nėra bendrų parametrų apdorojimo funkcijai %1."
@@ -944,6 +953,9 @@ msgstr "OTA naujinimas nepavyko: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Naudojama tik tų promptų, kurie įtraukia knygos kontekstą (pagal numatytuosius nustatymus: Paaiškinti, Istorinis kontekstas, Apibendrinti, Pagrindiniai punktai ir ELI5). Kai įjungta, pažymėto puslapio ir gretimų puslapių tekstas siunčiamas AI kaip foninė informacija. Reikia pasirinkti tekstą ir tai padidina žetonų sunaudojimą."
 
+msgid "Open"
+msgstr "Atidaryti"
+
 msgid "Open conflict or mystery:"
 msgstr "Atviras konfliktas ar paslaptis:"
 
@@ -974,6 +986,9 @@ msgstr "Platforma"
 msgid "Please enter a note before saving."
 msgstr "Prieš išsaugodami įveskite pastabą."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Prieš prašydami santraukos, atidarykite šią knygą ir pradėkite skaityti."
+
 msgid "Plot Summary"
 msgstr "Siužeto santrauka"
 
@@ -992,6 +1007,9 @@ msgstr "Vyraujanti emocinė būsena/tonas:"
 
 msgid "Protagonist's current objective:"
 msgstr "Pagrindinio veikėjo dabartinis tikslas:"
+
+msgid "Protocol: %1"
+msgstr "Protokolas: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Teikėjas %1 %2(%3)"
@@ -1044,11 +1062,17 @@ msgstr "Greitas užrašas"
 msgid "Quick note saved successfully"
 msgstr "Greita pastaba sėkmingai išsaugota"
 
+msgid "RTL Layout"
+msgstr "Iš dešinės į kairę išdėstymas"
+
 msgid "RTL written Language"
 msgstr "RTL rašto kalba"
 
 msgid "Re-immersion"
 msgstr "Pakartotinis įsitraukimas"
+
+msgid "Reader settings are not available."
+msgstr "Skaityklės nustatymai neprieinami."
 
 msgid "Reasoning Option"
 msgstr "Mąstymo parinktis"
@@ -1059,6 +1083,9 @@ msgstr "Mąstymo parinktys – %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Suvestinė"
+
+msgid "Recap (AI)"
+msgstr "Santrauka (AI)"
 
 msgid "Remove"
 msgstr "Pašalinti"
@@ -1173,6 +1200,9 @@ msgstr "Nustatymai"
 msgid "Show Follow-up Questions"
 msgstr "Rodyti tolesnius klausimus"
 
+msgid "Show Reasoning"
+msgstr "Rodyti samprotavimą"
+
 msgid "Show Reasoning Text"
 msgstr "Rodyti samprotavimo tekstą"
 
@@ -1267,6 +1297,23 @@ msgstr "Užrašų knygelė yra jūsų pokalbių žurnalas: prie jos pridedami AI
 msgid "This button creates a quick note with highlighted text."
 msgstr "Šis mygtukas sukuria greitą užrašą su paryškintu tekstu."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Šis failas yra %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Ar tikrai norite jį atidaryti?\n"
+"\n"
+"Didelių failų atidarymas gali užtrukti."
+
 msgid "This is a custom prompt"
 msgstr "Tai tinkinta užklausa."
 
@@ -1332,6 +1379,9 @@ msgstr "Įveskite savo klausimą čia"
 
 msgid "Type your question here..."
 msgstr "Įveskite klausimą čia..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Nežinoma klaida"

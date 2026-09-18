@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 02:47+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: عربى (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>الواجهة مشغولة</b>\n"
-"محاولات %1/%2 ... إعادة المحاولة خلال"
+"<b>API مشغول</b>\n"
+"المحاولات %1/%2 ... إعادة المحاولة خلال (%d ثانية)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>النموذج:</b> %3\n"
 "\n"
 "جرّب مزوّدًا آخر في نافذة الإعدادات."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>أعاد API خطأ</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>تمت الإضافة</b> [%1 (AI)] إلى قائمة التمييز."
@@ -243,6 +246,9 @@ msgstr "الذكاء الاصطناعي يرد"
 msgid "API Key"
 msgstr "مفتاح API"
 
+msgid "API error: %1"
+msgstr "خطأ API: %1"
+
 msgid "API key is required for %1."
 msgstr "مفتاح API مطلوب لـ %1."
 
@@ -362,11 +368,11 @@ msgstr "يجب أن يبدأ عنوان URL الأساسي بـ http:// أو htt
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "عنوان URL الأساسي، مثل: https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "عنوان URL الأساسي: %1"
-
 msgid "Book Analysis"
 msgstr "تحليل الكتاب"
+
+msgid "Book Info (AI)"
+msgstr "معلومات الكتاب (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "المعالج %1 غير متاح للمزوّد: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "لم يتم العثور على المعالج لـ: %1. يرجى التحقق من ملف configuration.lua الخاص بك."
 
-msgid "Handler: %1"
-msgstr "المعالج: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "تحليل التمييز والملاحظات"
 
@@ -731,6 +734,9 @@ msgstr "إدخال مفكرة غير صالح."
 
 msgid "Invalid notebook filename."
 msgstr "اسم ملف المفكرة غير صالح."
+
+msgid "Justify"
+msgstr "ضبط"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -787,14 +793,14 @@ msgstr "النموذج"
 msgid "Model Built-In"
 msgstr "النموذج المدمج"
 
-msgid "Model replied: %1"
-msgstr "رد النموذج: %1"
-
 msgid "Model reset: %1"
 msgstr "تمت إعادة تعيين النموذج: %1"
 
 msgid "Model: %1"
 msgstr "النموذج: %1"
+
+msgid "Models"
+msgstr "النماذج"
 
 msgid "Models: %1"
 msgstr "النماذج: %1"
@@ -822,6 +828,9 @@ msgstr "لا يوجد مزود خدمة نشط مُكوَّن. يرجى إضاف
 
 msgid "No base folder is available for notebooks."
 msgstr "لا يتوفر مجلد أساسي للمفكرات."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "لا يوجد كتاب مفتوح. اضغط مطولًا على كتاب في مدير الملفات ثم اختر معلومات الكتاب (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "النموذج"
@@ -946,6 +955,9 @@ msgstr "فشل تحديث OTA: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "تُستخدم فقط من قبل المطالبات التي تختار تفعيل سياق الكتاب (افتراضيًا: الشرح، السياق التاريخي، التلخيص، النقاط الرئيسية وELI5). عند التفعيل، يُرسَل نص الصفحة المظلَّل عليها والصفحات المجاورة إلى الذكاء الاصطناعي كمرجع خلفي. يتطلب تحديد نص ويزيد من استهلاك الرموز."
 
+msgid "Open"
+msgstr "فتح"
+
 msgid "Open conflict or mystery:"
 msgstr "الصراع أو اللغز المفتوح:"
 
@@ -976,6 +988,9 @@ msgstr "المنصة"
 msgid "Please enter a note before saving."
 msgstr "يرجى إدخال ملاحظة قبل الحفظ."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "يرجى فتح هذا الكتاب وبدء القراءة قبل طلب الموجز."
+
 msgid "Plot Summary"
 msgstr "ملخص الحبكة"
 
@@ -994,6 +1009,9 @@ msgstr "الحالة العاطفية/النبرة السائدة:"
 
 msgid "Protagonist's current objective:"
 msgstr "الهدف الحالي لبطل الرواية:"
+
+msgid "Protocol: %1"
+msgstr "البروتوكول: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "المزوّد %1 %2(%3)"
@@ -1046,11 +1064,17 @@ msgstr "ملاحظة سريعة"
 msgid "Quick note saved successfully"
 msgstr "تم حفظ الملاحظة السريعة بنجاح"
 
+msgid "RTL Layout"
+msgstr "تخطيط من اليمين إلى اليسار"
+
 msgid "RTL written Language"
 msgstr "لغة مكتوبة من اليمين إلى اليسار"
 
 msgid "Re-immersion"
 msgstr "إعادة الانغماس"
+
+msgid "Reader settings are not available."
+msgstr "إعدادات القارئ غير متاحة."
 
 msgid "Reasoning Option"
 msgstr "خيار الاستدلال"
@@ -1061,6 +1085,9 @@ msgstr "خيارات الاستدلال - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "ملخّص"
+
+msgid "Recap (AI)"
+msgstr "الموجز (AI)"
 
 msgid "Remove"
 msgstr "إزالة"
@@ -1175,6 +1202,9 @@ msgstr "الإعدادات"
 msgid "Show Follow-up Questions"
 msgstr "إظهار أسئلة المتابعة"
 
+msgid "Show Reasoning"
+msgstr "إظهار الاستدلال"
+
 msgid "Show Reasoning Text"
 msgstr "إظهار نص التفكير"
 
@@ -1269,6 +1299,23 @@ msgstr "دفتر الملاحظات هو سجل المحادثات الخاص ب
 msgid "This button creates a quick note with highlighted text."
 msgstr "ينشئ هذا الزر ملاحظة سريعة بالنص المميز."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"هذا الملف %2:\n"
+"\n"
+"%1\n"
+"\n"
+"هل أنت متأكد من فتحه؟\n"
+"\n"
+"قد يستغرق فتح الملفات الكبيرة بعض الوقت."
+
 msgid "This is a custom prompt"
 msgstr "هذا موجّه مخصص"
 
@@ -1334,6 +1381,9 @@ msgstr "اكتب سؤالك هنا"
 
 msgid "Type your question here..."
 msgstr "اكتب سؤالك هنا..."
+
+msgid "URL: %1"
+msgstr "الرابط: %1"
 
 msgid "Unknown error"
 msgstr "خطأ غير معروف"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.18\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,7 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 
 msgid "<b>Detail:</b>"
@@ -191,6 +191,9 @@ msgstr ""
 msgid " - p. %1/%2"
 msgstr ""
 
+msgid "Model: %1"
+msgstr ""
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr ""
@@ -198,10 +201,10 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-msgid "OK"
+msgid "Test"
 msgstr ""
 
-msgid "Model: %1"
+msgid "OK"
 msgstr ""
 
 msgid "Filter: \"%1\""
@@ -276,15 +279,18 @@ msgstr ""
 msgid "Notebook name is reserved by the filesystem."
 msgstr ""
 
-msgid "Notebook path is not a file: %1"
-msgstr ""
-
-msgid "Could not create notebook: %1"
+msgid "Reader settings are not available."
 msgstr ""
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
+msgstr ""
+
+msgid "Notebook path is not a file: %1"
+msgstr ""
+
+msgid "Could not create notebook: %1"
 msgstr ""
 
 msgid "Notebook path is unavailable."
@@ -335,6 +341,19 @@ msgid "Notebooks"
 msgstr ""
 
 msgid "Active: %1"
+msgstr ""
+
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+
+msgid "Open"
 msgstr ""
 
 msgid "Meaning & Usage"
@@ -529,10 +548,10 @@ msgstr ""
 msgid "Plot Summary"
 msgstr ""
 
-msgid "About the Author"
+msgid "Historical and Cultural Context"
 msgstr ""
 
-msgid "Historical and Cultural Context"
+msgid "About the Author"
 msgstr ""
 
 msgid "Similar Books Recommendations"
@@ -564,6 +583,24 @@ msgstr ""
 msgid "Contradictions / Open Questions"
 msgstr ""
 
+msgid "Providers and Models"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Browse Models"
+msgstr ""
+
+msgid "Browse available models from the current provider"
+msgstr ""
+
+msgid "Reasoning Option"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
 msgid "OpenAI-compatible Chat Completions API"
 msgstr ""
 
@@ -576,25 +613,34 @@ msgstr ""
 msgid "Anthropic Messages API"
 msgstr ""
 
-msgid "Model replied: %1"
+msgid "API error: %1"
 msgstr ""
 
 msgid "(empty response body)"
 msgstr ""
 
+msgid "<b>API returned an error</b>"
+msgstr ""
+
 msgid "<b>Parameters</b>"
 msgstr ""
 
-msgid "Handler: %1"
+msgid "Protocol: %1"
 msgstr ""
 
-msgid "Base URL: %1"
+msgid "URL: %1"
 msgstr ""
 
 msgid "<b>Request</b> - POST %1"
 msgstr ""
 
 msgid "<b>Response</b> - HTTP %1"
+msgstr ""
+
+msgid "Request failed: %1"
+msgstr ""
+
+msgid "Connection test successful."
 msgstr ""
 
 msgid "Provider record must be a table."
@@ -649,18 +695,6 @@ msgid "Add %1 Provider"
 msgstr ""
 
 msgid "Base URL, e.g. https://example.com/v1"
-msgstr ""
-
-msgid "Browse Models"
-msgstr ""
-
-msgid "Test"
-msgstr ""
-
-msgid "Request failed: %1"
-msgstr ""
-
-msgid "Connection test successful."
 msgstr ""
 
 msgid "Failed to save provider."
@@ -725,9 +759,6 @@ msgid "Unknown error"
 msgstr ""
 
 msgid "Settings"
-msgstr ""
-
-msgid "Close"
 msgstr ""
 
 msgid "Plugin is not configured."
@@ -826,9 +857,6 @@ msgstr ""
 msgid "%1 - choose an action"
 msgstr ""
 
-msgid "Edit"
-msgstr ""
-
 msgid "AI Response Language Setting"
 msgstr ""
 
@@ -845,15 +873,6 @@ msgid "RTL written Language"
 msgstr ""
 
 msgid "Leave these fields blank to use the UI language: %1"
-msgstr ""
-
-msgid "Providers and Models"
-msgstr ""
-
-msgid "Browse available models from the current provider"
-msgstr ""
-
-msgid "Reasoning Option"
 msgstr ""
 
 msgid ""
@@ -1159,6 +1178,18 @@ msgstr ""
 msgid "Selection copied to clipboard."
 msgstr ""
 
+msgid "RTL Layout"
+msgstr ""
+
+msgid "Justify"
+msgstr ""
+
+msgid "Show Reasoning"
+msgstr ""
+
+msgid "Models"
+msgstr ""
+
 msgid "Ask the AI a question"
 msgstr ""
 
@@ -1244,6 +1275,12 @@ msgstr ""
 msgid "Your own prompts defined in the configuration file"
 msgstr ""
 
+msgid "Book Info (AI)"
+msgstr ""
+
+msgid "Recap (AI)"
+msgstr ""
+
 msgid "This is a custom prompt"
 msgstr ""
 
@@ -1311,6 +1348,12 @@ msgid "Remove [%s] from Highlight Menu?"
 msgstr ""
 
 msgid "Remove"
+msgstr ""
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr ""
+
+msgid "Please open this book and start reading before requesting a recap."
 msgstr ""
 
 msgid ""

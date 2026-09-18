@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API on hõivatud</b>\n"
-"Katsed %1/%2 ... Uuesti proovimine"
+"Katsed %1/%2 ... Uus katse (%d sek pärast)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Mudel:</b> %3\n"
 "\n"
 "Proovige seadete dialoogis teist pakkujat."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API tagastas vea</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Lisatud</b> [%1 (AI)] esiletõstmise menüüsse."
@@ -243,6 +246,9 @@ msgstr "AI vastab"
 msgid "API Key"
 msgstr "API-võti"
 
+msgid "API error: %1"
+msgstr "API viga: %1"
+
 msgid "API key is required for %1."
 msgstr "API-võti on vajalik %1 jaoks."
 
@@ -362,11 +368,11 @@ msgstr "Baas-URL peab algama http:// või https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Baas-URL, nt https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Baas-URL: %1"
-
 msgid "Book Analysis"
 msgstr "Raamatu analüüs"
+
+msgid "Book Info (AI)"
+msgstr "Raamatu info (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Töötleja %1 ei ole pakkuja %2 jaoks saadaval."
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Töötlejat ei leitud: %1. Palun kontrollige oma configuration.lua faili."
 
-msgid "Handler: %1"
-msgstr "Töötleja: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Esiletõstmiste ja märkmete analüüs"
 
@@ -731,6 +734,9 @@ msgstr "Vigane märkmiku kirje."
 
 msgid "Invalid notebook filename."
 msgstr "Vigane märkmiku failinimi."
+
+msgid "Justify"
+msgstr "Rööpjoonda"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "Mudel"
 msgid "Model Built-In"
 msgstr "Mudeli sisseehitatud"
 
-msgid "Model replied: %1"
-msgstr "Mudel vastas: %1"
-
 msgid "Model reset: %1"
 msgstr "Mudel lähtestatud: %1"
 
 msgid "Model: %1"
 msgstr "Mudel: %1"
+
+msgid "Models"
+msgstr "Mudelid"
 
 msgid "Models: %1"
 msgstr "Mudelid: %1"
@@ -818,6 +824,9 @@ msgstr "Aktiivset teenusepakkujat pole konfigureeritud. Palun lisa see seadetes.
 
 msgid "No base folder is available for notebooks."
 msgstr "Märkmike jaoks pole põhikausta saadaval."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Ühtegi raamatut pole avatud. Vajuta failihalduris raamatule pikalt ja vali Raamatu info (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Töötleja %1 jaoks pole ühiseid parameetreid saadaval."
@@ -942,6 +951,9 @@ msgstr "OTA-värskendus ebaõnnestus: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Kasutavad ainult need promptid, mis kasutavad raamatu konteksti (vaikimisi: Selgita, Ajalooline kontekst, Kokkuvõte, Põhipunktid ja ELI5). Kui see on lubatud, saadetakse esiletõstetud lehekülje ja külgnevate lehekülgede tekst AI-le taustateabena. Nõuab teksti valimist ja suurendab tokenite kasutust."
 
+msgid "Open"
+msgstr "Ava"
+
 msgid "Open conflict or mystery:"
 msgstr "Avatud konflikt või mõistatus:"
 
@@ -972,6 +984,9 @@ msgstr "Platvorm"
 msgid "Please enter a note before saving."
 msgstr "Palun sisesta enne salvestamist märge."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Palun ava see raamat ja alusta lugemist enne kokkuvõtte küsimist."
+
 msgid "Plot Summary"
 msgstr "Süžee kokkuvõte"
 
@@ -990,6 +1005,9 @@ msgstr "Valitsev emotsionaalne seisund/toon:"
 
 msgid "Protagonist's current objective:"
 msgstr "Peategelase praegune eesmärk:"
+
+msgid "Protocol: %1"
+msgstr "Protokoll: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Teenusepakkuja %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "Kiirmärge"
 msgid "Quick note saved successfully"
 msgstr "Kiirmärge salvestati edukalt"
 
+msgid "RTL Layout"
+msgstr "RTL-paigutus"
+
 msgid "RTL written Language"
 msgstr "Paremalt vasakule kirjutatud keel"
 
 msgid "Re-immersion"
 msgstr "Uuesti sisseelamine"
+
+msgid "Reader settings are not available."
+msgstr "Lugeja seaded pole saadaval."
 
 msgid "Reasoning Option"
 msgstr "Arutlusvalik"
@@ -1057,6 +1081,9 @@ msgstr "Arutlusvalikud – %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Kokkuvõte"
+
+msgid "Recap (AI)"
+msgstr "Kokkuvõte (AI)"
 
 msgid "Remove"
 msgstr "Eemalda"
@@ -1172,6 +1199,9 @@ msgstr "Seaded"
 msgid "Show Follow-up Questions"
 msgstr "Näita järelküsimusi"
 
+msgid "Show Reasoning"
+msgstr "Näita arutluskäiku"
+
 msgid "Show Reasoning Text"
 msgstr "Näita arutluse teksti"
 
@@ -1266,6 +1296,23 @@ msgstr "Märkmik on sinu vestluslogi: AI vastused ja kiirmärkused lisatakse sin
 msgid "This button creates a quick note with highlighted text."
 msgstr "See nupp loob esiletõstetud tekstiga kiirmärke."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"See fail on %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Kas oled kindel, et soovid selle avada?\n"
+"\n"
+"Suurte failide avamine võib võtta aega."
+
 msgid "This is a custom prompt"
 msgstr "See on kohandatud päring"
 
@@ -1331,6 +1378,9 @@ msgstr "Sisesta oma küsimus siia"
 
 msgid "Type your question here..."
 msgstr "Sisesta oma küsimus siia..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Tundmatu viga"

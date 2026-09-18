@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>APIビジー</b>\n"
-"試行 %1/%2 ... 再試行まで"
+"試行 %1/%2 ... (%d秒後に再試行)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>モデル:</b> %3\n"
 "\n"
 "設定ダイアログで別のプロバイダーをお試しください。"
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>APIがエラーを返しました</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>追加しました</b> [%1 (AI)] をハイライトメニューに。"
@@ -243,6 +246,9 @@ msgstr "AIが応答中"
 msgid "API Key"
 msgstr "APIキー"
 
+msgid "API error: %1"
+msgstr "APIエラー: %1"
+
 msgid "API key is required for %1."
 msgstr "%1にはAPIキーが必要です。"
 
@@ -362,11 +368,11 @@ msgstr "ベースURLは http:// または https:// で始まる必要があり�
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "ベースURL（例: https://example.com/v1）"
 
-msgid "Base URL: %1"
-msgstr "ベースURL: %1"
-
 msgid "Book Analysis"
 msgstr "書籍分析"
+
+msgid "Book Info (AI)"
+msgstr "ブック情報 (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "ハンドラー %1 はプロバイダー %2 では利用できません�
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "ハンドラーが見つかりません: %1。configuration.lua ファイルを確認してください。"
 
-msgid "Handler: %1"
-msgstr "ハンドラー: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "ハイライトとノートの分析"
 
@@ -731,6 +734,9 @@ msgstr "無効なノートブックエントリです。"
 
 msgid "Invalid notebook filename."
 msgstr "無効なノートブックファイル名です。"
+
+msgid "Justify"
+msgstr "両端揃え"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -782,14 +788,14 @@ msgstr "モデル"
 msgid "Model Built-In"
 msgstr "モデル内蔵"
 
-msgid "Model replied: %1"
-msgstr "モデルの応答: %1"
-
 msgid "Model reset: %1"
 msgstr "モデルをリセットしました: %1"
 
 msgid "Model: %1"
 msgstr "モデル: %1"
+
+msgid "Models"
+msgstr "モデル"
 
 msgid "Models: %1"
 msgstr "モデル: %1"
@@ -817,6 +823,9 @@ msgstr "アクティブなプロバイダーが設定されていません。設
 
 msgid "No base folder is available for notebooks."
 msgstr "ノートブック用のベースフォルダがありません。"
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "本が開かれていません。ファイルマネージャーで本を長押しし、「ブック情報 (AI)」を選択してください。"
 
 msgid "No common parameters are available for handler %1."
 msgstr "ハンドラ %1 に利用可能な共通パラメータはありません。"
@@ -941,6 +950,9 @@ msgstr "OTAアップデートに失敗しました: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "書籍コンテキストを有効にしたプロンプトでのみ使用されます（デフォルト：解説、歴史的背景、要約、重要ポイント、ELI5）。有効にすると、ハイライトされたページと隣接ページのテキストが背景情報としてAIに送信されます。テキストの選択が必要で、トークン使用量が増加します。"
 
+msgid "Open"
+msgstr "開く"
+
 msgid "Open conflict or mystery:"
 msgstr "未解決の対立または謎："
 
@@ -971,6 +983,9 @@ msgstr "プラットフォーム"
 msgid "Please enter a note before saving."
 msgstr "保存する前にメモを入力してください。"
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "あらすじをリクエストする前に、この本を開いて読書を開始してください。"
+
 msgid "Plot Summary"
 msgstr "あらすじ"
 
@@ -989,6 +1004,9 @@ msgstr "支配的な感情状態・トーン："
 
 msgid "Protagonist's current objective:"
 msgstr "主人公の現在の目的："
+
+msgid "Protocol: %1"
+msgstr "プロトコル: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "プロバイダ %1 %2(%3)"
@@ -1041,11 +1059,17 @@ msgstr "クイックノート"
 msgid "Quick note saved successfully"
 msgstr "クイックノートを保存しました。"
 
+msgid "RTL Layout"
+msgstr "RTLレイアウト"
+
 msgid "RTL written Language"
 msgstr "RTL表記の言語"
 
 msgid "Re-immersion"
 msgstr "再没入"
+
+msgid "Reader settings are not available."
+msgstr "リーダー設定は利用できません。"
 
 msgid "Reasoning Option"
 msgstr "推論オプション"
@@ -1056,6 +1080,9 @@ msgstr "推論オプション - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "あらすじ"
+
+msgid "Recap (AI)"
+msgstr "あらすじ (AI)"
 
 msgid "Remove"
 msgstr "削除"
@@ -1170,6 +1197,9 @@ msgstr "設定"
 msgid "Show Follow-up Questions"
 msgstr "フォローアップ質問を表示"
 
+msgid "Show Reasoning"
+msgstr "推論を表示"
+
 msgid "Show Reasoning Text"
 msgstr "推論テキストを表示"
 
@@ -1264,6 +1294,23 @@ msgstr "ノートブックは会話ログです。AIの回答やクイックノ�
 msgid "This button creates a quick note with highlighted text."
 msgstr "このボタンは、選択したテキストを含むクイックノートを作成します。"
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"このファイルは%2です:\n"
+"\n"
+"%1\n"
+"\n"
+"本当に開きますか?\n"
+"\n"
+"大きなファイルを開くには時間がかかることがあります。"
+
 msgid "This is a custom prompt"
 msgstr "これはカスタムプロンプトです"
 
@@ -1329,6 +1376,9 @@ msgstr "ここに質問を入力してください"
 
 msgid "Type your question here..."
 msgstr "ここに質問を入力してください..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "不明なエラー"

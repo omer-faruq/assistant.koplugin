@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 03:19+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: فارسی (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API مشغول است</b>\n"
-"تلاش %1/%2 ... تلاش مجدد در"
+"تلاشها %1/%2 ... تلاش دوباره در (%d ثانیه)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>مدل:</b> %3\n"
 "\n"
 "در گفتگوی تنظیمات، ارائه‌دهنده دیگری را امتحان کنید."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API یک خطا برگرداند</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>افزوده شد</b> [%1 (AI)] به منوی هایلایت."
@@ -243,6 +246,9 @@ msgstr "هوش مصنوعی در حال پاسخگویی است"
 msgid "API Key"
 msgstr "کلید API"
 
+msgid "API error: %1"
+msgstr "خطای API: %1"
+
 msgid "API key is required for %1."
 msgstr "کلید API برای %1 الزامی است."
 
@@ -362,11 +368,11 @@ msgstr "آدرس پایه باید با http:// یا https:// شروع شود."
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "نشانی پایه، مثلاً https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "نشانی پایه: %1"
-
 msgid "Book Analysis"
 msgstr "تحلیل کتاب"
+
+msgid "Book Info (AI)"
+msgstr "اطلاعات کتاب (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "هندلر %1 برای ارائه‌دهنده %2 در دسترس نیس
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "هندلر برای %1 یافت نشد. لطفاً فایل configuration.lua خود را بررسی کنید."
 
-msgid "Handler: %1"
-msgstr "پردازنده: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "تحلیل هایلایت‌ها و یادداشت‌ها"
 
@@ -731,6 +734,9 @@ msgstr "مدخل نوتپد نامعتبر است."
 
 msgid "Invalid notebook filename."
 msgstr "نام فایل نوتپد نامعتبر است."
+
+msgid "Justify"
+msgstr "همتراز"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "مدل"
 msgid "Model Built-In"
 msgstr "مدل داخلی"
 
-msgid "Model replied: %1"
-msgstr "پاسخ مدل: %1"
-
 msgid "Model reset: %1"
 msgstr "بازنشانی مدل: %1"
 
 msgid "Model: %1"
 msgstr "مدل: %1"
+
+msgid "Models"
+msgstr "مدلها"
 
 msgid "Models: %1"
 msgstr "مدل‌ها: %1"
@@ -818,6 +824,9 @@ msgstr "هیچ ارائه‌دهنده فعالی پیکربندی نشده اس
 
 msgid "No base folder is available for notebooks."
 msgstr "هیچ پوشهٔ پایهای برای نوتپدها در دسترس نیست."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "هیچ کتابی باز نیست. در مدیر فایل، روی یک کتاب فشار طولانی دهید و «اطلاعات کتاب (AI)» را انتخاب کنید."
 
 msgid "No common parameters are available for handler %1."
 msgstr "هیچ پارامتر مشترکی برای هندلر %1 در دسترس نیست."
@@ -942,6 +951,9 @@ msgstr "به‌روزرسانی OTA ناموفق بود: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "فقط توسط پرامپت‌هایی استفاده می‌شود که زمینهٔ کتاب را فعال کرده‌اند (به‌صورت پیش‌فرض: توضیح، زمینهٔ تاریخی، خلاصه‌سازی، نکات کلیدی و ELI5). وقتی فعال باشد، متن صفحهٔ برجسته‌شده و صفحه‌های مجاور به‌عنوان مرجع زمینه‌ای برای هوش مصنوعی ارسال می‌شود. نیازمند انتخاب متن است و مصرف توکن را افزایش می‌دهد."
 
+msgid "Open"
+msgstr "باز کردن"
+
 msgid "Open conflict or mystery:"
 msgstr "کشمکش یا راز حل‌نشده:"
 
@@ -972,6 +984,9 @@ msgstr "پلتفرم"
 msgid "Please enter a note before saving."
 msgstr "لطفاً قبل از ذخیره، یک یادداشت وارد کنید."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "لطفاً پیش از درخواست خلاصه، این کتاب را باز کنید و شروع به خواندن کنید."
+
 msgid "Plot Summary"
 msgstr "خلاصه داستان"
 
@@ -990,6 +1005,9 @@ msgstr "حال‌وهوای عاطفی غالب:"
 
 msgid "Protagonist's current objective:"
 msgstr "هدف فعلی شخصیت اصلی:"
+
+msgid "Protocol: %1"
+msgstr "پروتکل: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "ارائهدهنده %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "یادداشت سریع"
 msgid "Quick note saved successfully"
 msgstr "یادداشت سریع با موفقیت ذخیره شد"
 
+msgid "RTL Layout"
+msgstr "چیدمان راستبهچپ"
+
 msgid "RTL written Language"
 msgstr "زبان نوشتاری راستبهچپ"
 
 msgid "Re-immersion"
 msgstr "بازغوطه‌وری"
+
+msgid "Reader settings are not available."
+msgstr "تنظیمات کتابخوان در دسترس نیست."
 
 msgid "Reasoning Option"
 msgstr "گزینهٔ استدلال"
@@ -1057,6 +1081,9 @@ msgstr "گزینه‌های استدلال - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "ریکپ"
+
+msgid "Recap (AI)"
+msgstr "خلاصه (AI)"
 
 msgid "Remove"
 msgstr "حذف"
@@ -1172,6 +1199,9 @@ msgstr "تنظیمات"
 msgid "Show Follow-up Questions"
 msgstr "نمایش سوالات پیگیری"
 
+msgid "Show Reasoning"
+msgstr "نمایش استدلال"
+
 msgid "Show Reasoning Text"
 msgstr "نمایش متن استدلال"
 
@@ -1266,6 +1296,23 @@ msgstr "دفترچه یادداشت، گزارش گفتگوهای شماست: پ
 msgid "This button creates a quick note with highlighted text."
 msgstr "این دکمه یک یادداشت سریع با متن هایلایت‌شده ایجاد می‌کند."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"این فایل %2 است:\n"
+"\n"
+"%1\n"
+"\n"
+"آیا مطمئن هستید که میخواهید آن را باز کنید؟\n"
+"\n"
+"باز کردن فایلهای بزرگ ممکن است کمی زمان ببرد."
+
 msgid "This is a custom prompt"
 msgstr "این یک پرامپت سفارشی است"
 
@@ -1331,6 +1378,9 @@ msgstr "سؤال خود را اینجا بنویسید"
 
 msgid "Type your question here..."
 msgstr "سؤال خود را اینجا بنویسید..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "خطای ناشناخته"

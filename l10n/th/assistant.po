@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 04:38+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ภาษาไทย (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API ไม่ว่าง</b>\n"
-"ความพยายาม %1/%2 ... ลองใหม่ใน"
+"ความพยายามครั้งที่ %1/%2 ... ลองใหม่ใน (%d วินาที)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>โมเดล:</b> %3\n"
 "\n"
 "ลองใช้ผู้ให้บริการอื่นในหน้าต่างการตั้งค่า"
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API ส่งคืนข้อผิดพลาด</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>เพิ่มแล้ว</b> [%1 (AI)] ลงในเมนูไฮไลต์"
@@ -243,6 +246,9 @@ msgstr "AI กำลังตอบกลับ"
 msgid "API Key"
 msgstr "คีย์ API"
 
+msgid "API error: %1"
+msgstr "ข้อผิดพลาด API: %1"
+
 msgid "API key is required for %1."
 msgstr "ต้องใช้คีย์ API สำหรับ %1"
 
@@ -362,11 +368,11 @@ msgstr "Base URL ต้องขึ้นต้นด้วย http:// หรื
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "URL ฐาน เช่น https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "URL ฐาน: %1"
-
 msgid "Book Analysis"
 msgstr "วิเคราะห์หนังสือ"
+
+msgid "Book Info (AI)"
+msgstr "ข้อมูลหนังสือ (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Handler %1 ไม่พร้อมใช้งานสำหรับ�
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "ไม่พบ Handler สำหรับ: %1 กรุณาตรวจสอบไฟล์ configuration.lua ของคุณ"
 
-msgid "Handler: %1"
-msgstr "ตัวจัดการ: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "การวิเคราะห์ไฮไลต์และบันทึก"
 
@@ -731,6 +734,9 @@ msgstr "รายการสมุดบันทึกไม่ถูกต้
 
 msgid "Invalid notebook filename."
 msgstr "ชื่อไฟล์สมุดบันทึกไม่ถูกต้อง"
+
+msgid "Justify"
+msgstr "จัดชิดขอบ"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -782,14 +788,14 @@ msgstr "โมเดล"
 msgid "Model Built-In"
 msgstr "โมเดลในตัว"
 
-msgid "Model replied: %1"
-msgstr "โมเดลตอบกลับ: %1"
-
 msgid "Model reset: %1"
 msgstr "รีเซ็ตโมเดลแล้ว: %1"
 
 msgid "Model: %1"
 msgstr "โมเดล: %1"
+
+msgid "Models"
+msgstr "โมเดล"
 
 msgid "Models: %1"
 msgstr "โมเดล: %1"
@@ -817,6 +823,9 @@ msgstr "ยังไม่ได้กำหนดค่าผู้ให้บ
 
 msgid "No base folder is available for notebooks."
 msgstr "ไม่มีโฟลเดอร์หลักสำหรับสมุดบันทึก"
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "ไม่มีหนังสือที่เปิดอยู่ กดค้างที่หนังสือในตัวจัดการไฟล์ แล้วเลือก ข้อมูลหนังสือ (AI)"
 
 msgid "No common parameters are available for handler %1."
 msgstr "ตัวเลือกการให้เหตุผล - %1"
@@ -941,6 +950,9 @@ msgstr "การอัปเดต OTA ล้มเหลว: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "ใช้เฉพาะกับพรอมต์ที่เลือกใช้บริบทของหนังสือ (ค่าเริ่มต้น: อธิบาย, บริบททางประวัติศาสตร์, สรุป, ประเด็นสำคัญ และ ELI5) เมื่อเปิดใช้งาน ข้อความของหน้าที่ไฮไลต์และหน้าถัดไปจะถูกส่งไปยัง AI เพื่อใช้อ้างอิงเป็นข้อมูลพื้นหลัง ต้องมีการเลือกข้อความ และจะทำให้การใช้โทเคนเพิ่มขึ้น"
 
+msgid "Open"
+msgstr "เปิด"
+
 msgid "Open conflict or mystery:"
 msgstr "ปมขัดแย้งหรือปริศนาที่ยังไม่คลี่คลาย:"
 
@@ -971,6 +983,9 @@ msgstr "แพลตฟอร์ม"
 msgid "Please enter a note before saving."
 msgstr "กรุณากรอกข้อความบันทึกก่อนบันทึก"
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "โปรดเปิดหนังสือเล่มนี้และเริ่มอ่านก่อนขอสรุปย้อนหลัง"
+
 msgid "Plot Summary"
 msgstr "บทสรุปเนื้อเรื่อง"
 
@@ -989,6 +1004,9 @@ msgstr "อารมณ์/โทนโดยรวม:"
 
 msgid "Protagonist's current objective:"
 msgstr "เป้าหมายปัจจุบันของตัวเอก:"
+
+msgid "Protocol: %1"
+msgstr "โปรโตคอล: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "ผู้ให้บริการ %1 %2(%3)"
@@ -1041,11 +1059,17 @@ msgstr "โน้ตด่วน"
 msgid "Quick note saved successfully"
 msgstr "บันทึกย่อถูกบันทึกเรียบร้อยแล้ว"
 
+msgid "RTL Layout"
+msgstr "เลย์เอาต์ RTL"
+
 msgid "RTL written Language"
 msgstr "ภาษาเขียนแบบ RTL"
 
 msgid "Re-immersion"
 msgstr "การกลับเข้าสู่เรื่องราว"
+
+msgid "Reader settings are not available."
+msgstr "การตั้งค่าโปรแกรมอ่านไม่พร้อมใช้งาน"
 
 msgid "Reasoning Option"
 msgstr "ตัวเลือกการให้เหตุผล"
@@ -1056,6 +1080,9 @@ msgstr "ตัวเลือกการให้เหตุผล - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "สรุปย้อนหลัง"
+
+msgid "Recap (AI)"
+msgstr "สรุปย้อนหลัง (AI)"
 
 msgid "Remove"
 msgstr "ลบ"
@@ -1171,6 +1198,9 @@ msgstr "การตั้งค่า"
 msgid "Show Follow-up Questions"
 msgstr "แสดงคำถามติดตาม"
 
+msgid "Show Reasoning"
+msgstr "แสดงการให้เหตุผล"
+
 msgid "Show Reasoning Text"
 msgstr "แสดงข้อความการให้เหตุผล"
 
@@ -1265,6 +1295,23 @@ msgstr "สมุดบันทึกคือบันทึกการสน
 msgid "This button creates a quick note with highlighted text."
 msgstr "ปุ่มนี้สร้างโน้ตด่วนพร้อมข้อความที่ไฮไลต์"
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"ไฟล์นี้เป็น %2:\n"
+"\n"
+"%1\n"
+"\n"
+"คุณแน่ใจหรือไม่ว่าต้องการเปิดไฟล์นี้?\n"
+"\n"
+"การเปิดไฟล์ขนาดใหญ่อาจใช้เวลาสักครู่"
+
 msgid "This is a custom prompt"
 msgstr "นี่คือพรอมป์ที่กำหนดเอง"
 
@@ -1330,6 +1377,9 @@ msgstr "พิมพ์คำถามของคุณที่นี่"
 
 msgid "Type your question here..."
 msgstr "พิมพ์คำถามของคุณที่นี่..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "ข้อผิดพลาดที่ไม่ทราบสาเหตุ"

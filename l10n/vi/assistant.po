@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API Bận</b>\n"
-"Lần thử %1/%2 ... Thử lại sau"
+"<b>API đang bận</b>\n"
+"Đã thử %1/%2 ... Thử lại sau (%d giây)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Mô hình:</b> %3\n"
 "\n"
 "Hãy thử nhà cung cấp khác trong hộp thoại cài đặt."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API trả về lỗi</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Đã thêm</b> [%1 (AI)] vào menu tô sáng."
@@ -243,6 +246,9 @@ msgstr "AI đang phản hồi"
 msgid "API Key"
 msgstr "Khóa API"
 
+msgid "API error: %1"
+msgstr "Lỗi API: %1"
+
 msgid "API key is required for %1."
 msgstr "Cần có khóa API cho %1."
 
@@ -362,11 +368,11 @@ msgstr "URL gốc phải bắt đầu bằng http:// hoặc https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Kiểm tra kết nối"
 
-msgid "Base URL: %1"
-msgstr "URL cơ sở: %1"
-
 msgid "Book Analysis"
 msgstr "Phân tích sách"
+
+msgid "Book Info (AI)"
+msgstr "Thông tin sách (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Trình xử lý %1 không khả dụng cho nhà cung cấp: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Không tìm thấy trình xử lý cho: %1. Vui lòng kiểm tra tệp configuration.lua của bạn."
 
-msgid "Handler: %1"
-msgstr "Trình xử lý: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Phân tích Đánh dấu & Ghi chú"
 
@@ -731,6 +734,9 @@ msgstr "Mục sổ ghi chép không hợp lệ."
 
 msgid "Invalid notebook filename."
 msgstr "Tên tệp sổ ghi chép không hợp lệ."
+
+msgid "Justify"
+msgstr "Căn đều"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -782,14 +788,14 @@ msgstr "Mô hình"
 msgid "Model Built-In"
 msgstr "Mô hình tích hợp sẵn"
 
-msgid "Model replied: %1"
-msgstr "Mô hình đã trả lời: %1"
-
 msgid "Model reset: %1"
 msgstr "Đã đặt lại mô hình: %1"
 
 msgid "Model: %1"
 msgstr "Mô hình: %1"
+
+msgid "Models"
+msgstr "Mô hình"
 
 msgid "Models: %1"
 msgstr "Mô hình: %1"
@@ -817,6 +823,9 @@ msgstr "Chưa cấu hình nhà cung cấp nào đang hoạt động. Vui lòng t
 
 msgid "No base folder is available for notebooks."
 msgstr "Không có thư mục cơ sở nào cho sổ ghi chép."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Không có sách nào đang mở. Nhấn giữ một cuốn sách trong trình quản lý tệp và chọn Thông tin sách (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Không có tham số chung nào khả dụng cho trình xử lý %1."
@@ -941,6 +950,9 @@ msgstr "Cập nhật OTA thất bại: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Chỉ được dùng bởi các prompt có bật ngữ cảnh sách (mặc định: Giải thích, Bối cảnh lịch sử, Tóm tắt, Điểm chính và ELI5). Khi bật, văn bản của trang được tô sáng và các trang liền kề sẽ được gửi tới AI làm tham chiếu nền. Yêu cầu phải chọn văn bản và làm tăng lượng token sử dụng."
 
+msgid "Open"
+msgstr "Mở"
+
 msgid "Open conflict or mystery:"
 msgstr "Xung đột hoặc bí ẩn còn bỏ ngỏ:"
 
@@ -971,6 +983,9 @@ msgstr "Nền tảng"
 msgid "Please enter a note before saving."
 msgstr "Vui lòng nhập ghi chú trước khi lưu."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Vui lòng mở sách này và bắt đầu đọc trước khi yêu cầu tóm tắt."
+
 msgid "Plot Summary"
 msgstr "Tóm tắt cốt truyện"
 
@@ -989,6 +1004,9 @@ msgstr "Trạng thái cảm xúc/giọng điệu bao trùm:"
 
 msgid "Protagonist's current objective:"
 msgstr "Mục tiêu hiện tại của nhân vật chính:"
+
+msgid "Protocol: %1"
+msgstr "Giao thức: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Nhà cung cấp %1 %2(%3)"
@@ -1041,11 +1059,17 @@ msgstr "Ghi chú nhanh"
 msgid "Quick note saved successfully"
 msgstr "Đã lưu ghi chú nhanh thành công"
 
+msgid "RTL Layout"
+msgstr "Bố cục RTL"
+
 msgid "RTL written Language"
 msgstr "Ngôn ngữ viết RTL"
 
 msgid "Re-immersion"
 msgstr "Tái hòa nhập"
+
+msgid "Reader settings are not available."
+msgstr "Cài đặt trình đọc không khả dụng."
 
 msgid "Reasoning Option"
 msgstr "Tùy chọn Lập luận"
@@ -1056,6 +1080,9 @@ msgstr "Tùy chọn Lập luận - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Tóm tắt"
+
+msgid "Recap (AI)"
+msgstr "Tóm tắt (AI)"
 
 msgid "Remove"
 msgstr "Xóa"
@@ -1170,6 +1197,9 @@ msgstr "Cài đặt"
 msgid "Show Follow-up Questions"
 msgstr "Hiển thị các câu hỏi tiếp theo"
 
+msgid "Show Reasoning"
+msgstr "Hiển thị suy luận"
+
 msgid "Show Reasoning Text"
 msgstr "Hiển thị văn bản suy luận"
 
@@ -1264,6 +1294,23 @@ msgstr "Sổ tay là nhật ký hội thoại của bạn: câu trả lời củ
 msgid "This button creates a quick note with highlighted text."
 msgstr "Nút này tạo một ghi chú nhanh với văn bản được tô sáng."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Tệp này là %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Bạn có chắc muốn mở tệp này không?\n"
+"\n"
+"Mở tệp lớn có thể mất một chút thời gian."
+
 msgid "This is a custom prompt"
 msgstr "Đây là một lời nhắc tùy chỉnh"
 
@@ -1329,6 +1376,9 @@ msgstr "Nhập câu hỏi của bạn tại đây"
 
 msgid "Type your question here..."
 msgstr "Nhập câu hỏi của bạn tại đây..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Lỗi không xác định"

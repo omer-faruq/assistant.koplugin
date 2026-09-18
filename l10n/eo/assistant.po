@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API Okupata</b>\n"
-"Provoj %1/%2 ... Reprovu post"
+"<b>API okupata</b>\n"
+"Provoj %1/%2 ... Reprovu post (%d sekundoj)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Modelo:</b> %3\n"
 "\n"
 "Provu alian provizanton en la agorda dialogo."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API redonis eraron</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Aldonita</b> [%1 (AI)] al la Marka Menuo."
@@ -244,6 +247,9 @@ msgstr "AI respondas"
 msgid "API Key"
 msgstr "API-ŝlosilo"
 
+msgid "API error: %1"
+msgstr "API-eraro: %1"
+
 msgid "API key is required for %1."
 msgstr "API-ŝlosilo estas postulata por %1."
 
@@ -363,11 +369,11 @@ msgstr "Baza URL devas komenciĝi per http:// aŭ https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Baza URL, ekz. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Baza URL: %1"
-
 msgid "Book Analysis"
 msgstr "Libro-analizo"
+
+msgid "Book Info (AI)"
+msgstr "Informoj pri libro (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -699,9 +705,6 @@ msgstr "Traktilo %1 ne disponeblas por provizanto: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Traktilo ne trovita por: %1. Bonvolu kontroli vian dosieron configuration.lua."
 
-msgid "Handler: %1"
-msgstr "Traktilo: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Analizo de Markoj kaj Notoj"
 
@@ -732,6 +735,9 @@ msgstr "Nevalida kajera ero."
 
 msgid "Invalid notebook filename."
 msgstr "Nevalida dosiernomo de kajero."
+
+msgid "Justify"
+msgstr "Ĝisrandigi"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -784,14 +790,14 @@ msgstr "Modelo"
 msgid "Model Built-In"
 msgstr "Enkonstruita Modelo"
 
-msgid "Model replied: %1"
-msgstr "Modelo respondis: %1"
-
 msgid "Model reset: %1"
 msgstr "Modelo restarigita: %1"
 
 msgid "Model: %1"
 msgstr "Modelo: %1"
+
+msgid "Models"
+msgstr "Modeloj"
 
 msgid "Models: %1"
 msgstr "Modeloj: %1"
@@ -819,6 +825,9 @@ msgstr "Neniu aktiva provizanto estas agordita. Bonvolu aldoni unu en Agordoj."
 
 msgid "No base folder is available for notebooks."
 msgstr "Ne disponeblas baza dosierujo por kajeroj."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Neniu libro estas malfermita. Longe premu libron en la dosieradministrilo kaj elektu Informoj pri libro (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Ne disponeblas komunaj parametroj por la traktilo %1."
@@ -943,6 +952,9 @@ msgstr "OTA-ĝisdatigo malsukcesis: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Uzata nur de promptoj, kiuj elektas uzi libro-kuntekston (defaŭlte: Klarigu, Historia kunteksto, Resumu, Ĉefaj punktoj kaj Klarigu por 5-jarulo). Kiam ebligite, la teksto de la elstarigita paĝo kaj de la apudaj paĝoj estas sendata al la AI kiel fona referenco. Postulas tekstan elekton kaj pliigas la uzon de tokenoj."
 
+msgid "Open"
+msgstr "Malfermi"
+
 msgid "Open conflict or mystery:"
 msgstr "Malferma konflikto aŭ mistero:"
 
@@ -973,6 +985,9 @@ msgstr "Platformo"
 msgid "Please enter a note before saving."
 msgstr "Bonvolu enigi noton antaŭ konservado."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Bonvolu malfermi ĉi tiun libron kaj komenci legi antaŭ ol peti resumon."
+
 msgid "Plot Summary"
 msgstr "Resumo de la intrigo"
 
@@ -991,6 +1006,9 @@ msgstr "Dominanta emocia stato/tono:"
 
 msgid "Protagonist's current objective:"
 msgstr "Nuna celo de la protagonisto:"
+
+msgid "Protocol: %1"
+msgstr "Protokolo: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Provizanto %1 %2(%3)"
@@ -1043,11 +1061,17 @@ msgstr "Rapida Noto"
 msgid "Quick note saved successfully"
 msgstr "Rapida noto sukcese konservita"
 
+msgid "RTL Layout"
+msgstr "RTL-aranĝo"
+
 msgid "RTL written Language"
 msgstr "RTL-skriba Lingvo"
 
 msgid "Re-immersion"
 msgstr "Replonĝo"
+
+msgid "Reader settings are not available."
+msgstr "Legilaj agordoj ne disponeblas."
 
 msgid "Reasoning Option"
 msgstr "Rezona opcio"
@@ -1058,6 +1082,9 @@ msgstr "Rezonaj opcioj - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Rekapitulo"
+
+msgid "Recap (AI)"
+msgstr "Resumo (AI)"
 
 msgid "Remove"
 msgstr "Forigi"
@@ -1171,6 +1198,9 @@ msgstr "Agordoj"
 msgid "Show Follow-up Questions"
 msgstr "Montri Sekvajn Demandojn"
 
+msgid "Show Reasoning"
+msgstr "Montri rezonadon"
+
 msgid "Show Reasoning Text"
 msgstr "Montri Rezonadan Tekston"
 
@@ -1265,6 +1295,23 @@ msgstr "La kajero estas via konversacia protokolo: AI-respondoj kaj rapidaj noto
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ĉi tiu butono kreas rapidan noton kun la markita teksto."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Ĉi tiu dosiero estas %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Ĉu vi certas, ke vi volas malfermi ĝin?\n"
+"\n"
+"Malfermo de grandaj dosieroj povas daŭri iom da tempo."
+
 msgid "This is a custom prompt"
 msgstr "Ĉi tio estas propra prompto."
 
@@ -1330,6 +1377,9 @@ msgstr "Tajpu vian demandon ĉi tie"
 
 msgid "Type your question here..."
 msgstr "Tajpu vian demandon ĉi tie..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Nekonata eraro"

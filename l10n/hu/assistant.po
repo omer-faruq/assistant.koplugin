@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API foglalt</b>\n"
-"Próbálkozások %1/%2 ... Újrapróbálás:"
+"<b>Az API foglalt</b>\n"
+"Kísérletek: %1/%2 ... Újrapróbálkozás (%d másodperc múlva)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Modell:</b> %3\n"
 "\n"
 "Próbáljon másik szolgáltatót a beállítások párbeszédablakában."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>Az API hibát adott vissza</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Hozzáadva</b>: [%1 (AI)] a kiemelés menühöz."
@@ -243,6 +246,9 @@ msgstr "Az AI válaszol"
 msgid "API Key"
 msgstr "API-kulcs"
 
+msgid "API error: %1"
+msgstr "API-hiba: %1"
+
 msgid "API key is required for %1."
 msgstr "API-kulcs szükséges a(z) %1 számára."
 
@@ -362,11 +368,11 @@ msgstr "Az alap URL-nek http:// vagy https:// előtaggal kell kezdődnie."
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Alap URL, pl. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Alap URL: %1"
-
 msgid "Book Analysis"
 msgstr "Könyv elemzése"
+
+msgid "Book Info (AI)"
+msgstr "Könyvinformációk (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "A(z) %1 kezelő nem érhető el a(z) %2 szolgáltatóhoz."
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "A(z) %1 kezelő nem található. Ellenőrizze a configuration.lua fájlt."
 
-msgid "Handler: %1"
-msgstr "Kezelő: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Kiemelések és jegyzetek elemzése"
 
@@ -731,6 +734,9 @@ msgstr "Érvénytelen jegyzetfüzet-bejegyzés."
 
 msgid "Invalid notebook filename."
 msgstr "Érvénytelen jegyzetfüzet-fájlnév."
+
+msgid "Justify"
+msgstr "Sorkizárt"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "Modell"
 msgid "Model Built-In"
 msgstr "Beépített modell"
 
-msgid "Model replied: %1"
-msgstr "A modell válasza: %1"
-
 msgid "Model reset: %1"
 msgstr "Modell visszaállítva: %1"
 
 msgid "Model: %1"
 msgstr "Modell: %1"
+
+msgid "Models"
+msgstr "Modellek"
 
 msgid "Models: %1"
 msgstr "Modellek: %1"
@@ -818,6 +824,9 @@ msgstr "Nincs aktív szolgáltató beállítva. Kérjük, adjon hozzá egyet a B
 
 msgid "No base folder is available for notebooks."
 msgstr "Nincs elérhető alapmappa a jegyzetfüzetek számára."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Nincs megnyitott könyv. Nyomja meg hosszan a fájlkezelőben a kívánt könyvet, és válassza a Könyvinformációk (AI) lehetőséget."
 
 msgid "No common parameters are available for handler %1."
 msgstr "A(z) %1 kezelőhöz nem állnak rendelkezésre közös paraméterek."
@@ -942,6 +951,9 @@ msgstr "OTA frissítés sikertelen: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Csak azok a promptok használják, amelyek igénylik a könyvkontextust (alapértelmezés szerint: Magyarázat, Történelmi háttér, Összefoglalás, Kulcspontok és ELI5). Ha engedélyezve van, a kijelölt oldal és a szomszédos oldalak szövege háttérreferenciaként kerül elküldésre az AI-nak. Szövegkijelölést igényel, és növeli a tokenhasználatot."
 
+msgid "Open"
+msgstr "Megnyitás"
+
 msgid "Open conflict or mystery:"
 msgstr "Nyitott konfliktus vagy rejtély:"
 
@@ -972,6 +984,9 @@ msgstr "Platform"
 msgid "Please enter a note before saving."
 msgstr "Mentés előtt adj meg egy jegyzetet."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Kérjük, nyissa meg ezt a könyvet, és kezdje el olvasni, mielőtt összefoglalót kér."
+
 msgid "Plot Summary"
 msgstr "Cselekmény összefoglalása"
 
@@ -990,6 +1005,9 @@ msgstr "Uralkodó érzelmi állapot/hangulat:"
 
 msgid "Protagonist's current objective:"
 msgstr "A főszereplő jelenlegi célja:"
+
+msgid "Protocol: %1"
+msgstr "Protokoll: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Szolgáltató %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "Gyors jegyzet"
 msgid "Quick note saved successfully"
 msgstr "A gyorsjegyzet sikeresen elmentve"
 
+msgid "RTL Layout"
+msgstr "Jobbról balra elrendezés"
+
 msgid "RTL written Language"
 msgstr "RTL írású nyelv"
 
 msgid "Re-immersion"
 msgstr "Visszamerülés"
+
+msgid "Reader settings are not available."
+msgstr "Az olvasó beállításai nem érhetők el."
 
 msgid "Reasoning Option"
 msgstr "Gondolkodási opció"
@@ -1057,6 +1081,9 @@ msgstr "Gondolkodási opciók – %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Összefoglaló"
+
+msgid "Recap (AI)"
+msgstr "Összefoglaló (AI)"
 
 msgid "Remove"
 msgstr "Eltávolítás"
@@ -1172,6 +1199,9 @@ msgstr "Beállítások"
 msgid "Show Follow-up Questions"
 msgstr "További kérdések megjelenítése"
 
+msgid "Show Reasoning"
+msgstr "Gondolatmenet megjelenítése"
+
 msgid "Show Reasoning Text"
 msgstr "Gondolkodási szöveg megjelenítése"
 
@@ -1266,6 +1296,23 @@ msgstr "A jegyzetfüzet a beszélgetési naplód: az AI-válaszok és a gyors je
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ez a gomb gyors jegyzetet hoz létre a kiemelt szöveggel."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Ez a fájl %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Biztosan meg akarja nyitni?\n"
+"\n"
+"A nagy fájlok megnyitása eltarthat egy ideig."
+
 msgid "This is a custom prompt"
 msgstr "Ez egy egyéni prompt."
 
@@ -1331,6 +1378,9 @@ msgstr "Írja be a kérdését ide"
 
 msgid "Type your question here..."
 msgstr "Írd ide a kérdésedet..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Ismeretlen hiba"

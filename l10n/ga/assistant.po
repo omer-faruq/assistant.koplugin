@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API Gnóthach</b>\n"
-"Iarrachtaí %1/%2 ... Fan arís i"
+"Iarrachtaí %1/%2 ... Atriail i gceann (%d soicind)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Múnla:</b> %3\n"
 "\n"
 "Bain triail as soláthraí eile sa dialóg socruithe."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>Thug an API earráid ar ais</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Curtha leis</b> [%1 (AI)] sa Roghchlár Aibhsithe."
@@ -243,6 +246,9 @@ msgstr "Tá AI ag freagairt"
 msgid "API Key"
 msgstr "Eochair API"
 
+msgid "API error: %1"
+msgstr "Earráid API: %1"
+
 msgid "API key is required for %1."
 msgstr "Tá eochair API ag teastáil le haghaidh %1."
 
@@ -362,11 +368,11 @@ msgstr "Caithfidh an bun-URL tosú le http:// nó https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Bonn URL, m.sh. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Bonn URL: %1"
-
 msgid "Book Analysis"
 msgstr "Anailís Leabhar"
+
+msgid "Book Info (AI)"
+msgstr "Eolas Leabhair (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Níl láimhseálaí %1 ar fáil don soláthraí: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Níor aimsíodh láimhseálaí do: %1. Seiceáil do chomhad configuration.lua le do thoil."
 
-msgid "Handler: %1"
-msgstr "Láimhseálaí: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Anailís ar Aibhsithe agus Nótaí"
 
@@ -731,6 +734,9 @@ msgstr "Iontráil neamhbhailí leabhair nótaí."
 
 msgid "Invalid notebook filename."
 msgstr "Ainm comhaid neamhbhailí don leabhar nótaí."
+
+msgid "Justify"
+msgstr "Comhfhadaigh"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -786,14 +792,14 @@ msgstr "Samhail"
 msgid "Model Built-In"
 msgstr "Samhail Ionsuite"
 
-msgid "Model replied: %1"
-msgstr "D'fhreagair an tsamhail: %1"
-
 msgid "Model reset: %1"
 msgstr "Samhail athshocraithe: %1"
 
 msgid "Model: %1"
 msgstr "Samhail: %1"
+
+msgid "Models"
+msgstr "Múnlaí"
 
 msgid "Models: %1"
 msgstr "Samhlacha: %1"
@@ -821,6 +827,9 @@ msgstr "Níl aon soláthraí gníomhach cumraithe. Cuir ceann leis i Socruithe l
 
 msgid "No base folder is available for notebooks."
 msgstr "Níl aon fhillteán bun ar fáil do na leabhair nótaí."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Níl aon leabhar oscailte. Brúigh go fada ar leabhar sa bhainisteoir comhad agus roghnaigh Eolas Leabhair (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Níl aon pharaiméadair choitianta ar fáil don láimhseálaí %1."
@@ -945,6 +954,9 @@ msgstr "Theip ar an nuashonrú OTA: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Ní úsáidtear é ach ag leideanna a roghnaíonn comhthéacs leabhair (de réir réamhshocraithe: Mínigh, Comhthéacs Stairiúil, Achoimrigh, Príomhphointí agus ELI5). Nuair a chumasaítear é, seoltar téacs an leathanaigh aibhsithe agus na leathanaigh in aice láimhe chuig an AI mar thagairt chúlra. Teastaíonn roghnú téacs agus méadaíonn sé úsáid token."
 
+msgid "Open"
+msgstr "Oscail"
+
 msgid "Open conflict or mystery:"
 msgstr "Coimhlint nó rúndiamhair gan réiteach:"
 
@@ -975,6 +987,9 @@ msgstr "Ardán"
 msgid "Please enter a note before saving."
 msgstr "Cuir isteach nóta sula sábhálann tú, le do thoil."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Oscail an leabhar seo agus tosaigh ag léamh sula n-iarrfaidh tú achoimre, le do thoil."
+
 msgid "Plot Summary"
 msgstr "Achoimre Plota"
 
@@ -993,6 +1008,9 @@ msgstr "Staid mhothúchánach/ton atá i réim:"
 
 msgid "Protagonist's current objective:"
 msgstr "Cuspóir reatha an phríomhcharachtair:"
+
+msgid "Protocol: %1"
+msgstr "Prótacal: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Soláthraí %1 %2(%3)"
@@ -1045,11 +1063,17 @@ msgstr "Nóta Tapa"
 msgid "Quick note saved successfully"
 msgstr "Sábháladh an nóta tapa go rathúil"
 
+msgid "RTL Layout"
+msgstr "Leagan Amach RTL"
+
 msgid "RTL written Language"
 msgstr "Teanga Scríofa RTL"
 
 msgid "Re-immersion"
 msgstr "Ath-thumadh"
+
+msgid "Reader settings are not available."
+msgstr "Níl socruithe an léitheora ar fáil."
 
 msgid "Reasoning Option"
 msgstr "Rogha Réasúnaíochta"
@@ -1060,6 +1084,9 @@ msgstr "Roghanna Réasúnaíochta - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Recap"
+
+msgid "Recap (AI)"
+msgstr "Achoimre (AI)"
 
 msgid "Remove"
 msgstr "Bain"
@@ -1173,6 +1200,9 @@ msgstr "Socruithe"
 msgid "Show Follow-up Questions"
 msgstr "Taispeáin Ceisteanna Leantacha"
 
+msgid "Show Reasoning"
+msgstr "Taispeáin Réasúnaíocht"
+
 msgid "Show Reasoning Text"
 msgstr "Taispeáin Téacs Réasúnaíochta"
 
@@ -1267,6 +1297,23 @@ msgstr "Is é an leabhar nótaí do log comhrá: cuirtear freagraí AI agus nót
 msgid "This button creates a quick note with highlighted text."
 msgstr "Cruthaíonn an cnaipe seo nóta tapa leis an téacs aibhsithe."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Tá an comhad seo %2:\n"
+"\n"
+"%1\n"
+"\n"
+"An bhfuil tú cinnte gur mhaith leat é a oscailt?\n"
+"\n"
+"Seans go dtógfaidh sé tamall comhaid mhóra a oscailt."
+
 msgid "This is a custom prompt"
 msgstr "Is pras saincheaptha é seo"
 
@@ -1332,6 +1379,9 @@ msgstr "Clóscríobh do cheist anseo"
 
 msgid "Type your question here..."
 msgstr "Scríobh do cheist anseo..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Earráid anaithnid"

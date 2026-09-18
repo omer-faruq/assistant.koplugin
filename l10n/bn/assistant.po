@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 02:53+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: বাংলা (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API ব্যস্ত</b>\n"
-"প্রচেষ্টা %1/%2 ... পুনরায় চেষ্টা করুন"
+"প্রচেষ্টা %1/%2 ... (%d সেকেন্ড পরে) আবার চেষ্টা করুন"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>মডেল:</b> %3\n"
 "\n"
 "সেটিংস ডায়ালগে অন্য প্রোভাইডার ব্যবহার করে দেখুন।"
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API একটি ত্রুটি ফিরিয়েছে</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>যোগ করা হয়েছে</b> [%1 (AI)] হাইলাইট মেনুতে।"
@@ -243,6 +246,9 @@ msgstr "AI সাড়া দিচ্ছে"
 msgid "API Key"
 msgstr "API কী"
 
+msgid "API error: %1"
+msgstr "API ত্রুটি: %1"
+
 msgid "API key is required for %1."
 msgstr "%1-এর জন্য API কী প্রয়োজন।"
 
@@ -362,11 +368,11 @@ msgstr "বেস URL অবশ্যই http:// বা https:// দিয়ে
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "বেস URL, যেমন https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "বেস URL: %1"
-
 msgid "Book Analysis"
 msgstr "বই বিশ্লেষণ"
+
+msgid "Book Info (AI)"
+msgstr "বইয়ের তথ্য (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "প্রোভাইডার %2-এর জন্য হ্যান্
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "হ্যান্ডলার পাওয়া যায়নি: %1। অনুগ্রহ করে আপনার configuration.lua ফাইলটি পরীক্ষা করুন।"
 
-msgid "Handler: %1"
-msgstr "হ্যান্ডলার: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "হাইলাইট ও নোট বিশ্লেষণ"
 
@@ -731,6 +734,9 @@ msgstr "অবৈধ নোটবুক এন্ট্রি।"
 
 msgid "Invalid notebook filename."
 msgstr "অবৈধ নোটবুক ফাইলনাম।"
+
+msgid "Justify"
+msgstr "জাস্টিফাই"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "মডেল"
 msgid "Model Built-In"
 msgstr "মডেলের অন্তর্নির্মিত"
 
-msgid "Model replied: %1"
-msgstr "মডেল উত্তর দিয়েছে: %1"
-
 msgid "Model reset: %1"
 msgstr "মডেল রিসেট হয়েছে: %1"
 
 msgid "Model: %1"
 msgstr "মডেল: %1"
+
+msgid "Models"
+msgstr "মডেল"
 
 msgid "Models: %1"
 msgstr "মডেল: %1"
@@ -818,6 +824,9 @@ msgstr "কোনো সক্রিয় প্রদানকারী কন
 
 msgid "No base folder is available for notebooks."
 msgstr "নোটবুকের জন্য কোনো মূল ফোল্ডার উপলব্ধ নেই।"
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "কোনো বই খোলা নেই। ফাইল ম্যানেজারে একটি বই দীর্ঘক্ষণ চেপে ধরে \"বইয়ের তথ্য (AI)\" নির্বাচন করুন।"
 
 msgid "No common parameters are available for handler %1."
 msgstr "হ্যান্ডলার %1-এর জন্য কোনো সাধারণ প্যারামিটার উপলব্ধ নেই।"
@@ -942,6 +951,9 @@ msgstr "OTA আপডেট ব্যর্থ হয়েছে: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "শুধু যেসব প্রম্পট বইয়ের প্রসঙ্গে অপ্ট-ইন করে সেগুলোতে ব্যবহৃত হয় (ডিফল্ট: ব্যাখ্যা, ঐতিহাসিক প্রেক্ষাপট, সারসংক্ষেপ, মূল পয়েন্ট এবং ELI5)। চালু থাকলে, হাইলাইট করা পৃষ্ঠা ও তার পাশের পৃষ্ঠাগুলোর লেখা AI-কে পটভূমির রেফারেন্স হিসেবে পাঠানো হয়। এটির জন্য টেক্সট নির্বাচন প্রয়োজন এবং টোকেন ব্যবহার বাড়ায়।"
 
+msgid "Open"
+msgstr "খুলুন"
+
 msgid "Open conflict or mystery:"
 msgstr "অমীমাংসিত দ্বন্দ্ব বা রহস্য:"
 
@@ -972,6 +984,9 @@ msgstr "প্ল্যাটফর্ম"
 msgid "Please enter a note before saving."
 msgstr "সংরক্ষণের আগে একটি নোট লিখুন।"
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "সারসংক্ষেপ চাওয়ার আগে অনুগ্রহ করে এই বইটি খুলে পড়া শুরু করুন।"
+
 msgid "Plot Summary"
 msgstr "প্লট সারসংক্ষেপ"
 
@@ -990,6 +1005,9 @@ msgstr "প্রচলিত আবেগগত অবস্থা/সুর:"
 
 msgid "Protagonist's current objective:"
 msgstr "নায়কের বর্তমান লক্ষ্য:"
+
+msgid "Protocol: %1"
+msgstr "প্রোটোকল: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "প্রদানকারী %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "দ্রুত নোট"
 msgid "Quick note saved successfully"
 msgstr "দ্রুত নোট সফলভাবে সংরক্ষিত হয়েছে"
 
+msgid "RTL Layout"
+msgstr "RTL লেআউট"
+
 msgid "RTL written Language"
 msgstr "RTL লেখার ভাষা"
 
 msgid "Re-immersion"
 msgstr "পুনঃনিমগ্নতা"
+
+msgid "Reader settings are not available."
+msgstr "রিডার সেটিংস উপলব্ধ নয়।"
 
 msgid "Reasoning Option"
 msgstr "যুক্তি বিকল্প"
@@ -1057,6 +1081,9 @@ msgstr "যুক্তি বিকল্প - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "রিক্যাপ"
+
+msgid "Recap (AI)"
+msgstr "রিক্যাপ (AI)"
 
 msgid "Remove"
 msgstr "সরান"
@@ -1171,6 +1198,9 @@ msgstr "সেটিংস"
 msgid "Show Follow-up Questions"
 msgstr "ফলো-আপ প্রশ্ন দেখান"
 
+msgid "Show Reasoning"
+msgstr "রিজনিং দেখান"
+
 msgid "Show Reasoning Text"
 msgstr "যুক্তি টেক্সট দেখান"
 
@@ -1265,6 +1295,23 @@ msgstr "নোটবুকটি আপনার কথোপকথনের ল
 msgid "This button creates a quick note with highlighted text."
 msgstr "এই বাটনটি হাইলাইট করা পাঠ্য সহ একটি দ্রুত নোট তৈরি করে।"
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"এই ফাইলটি %2:\n"
+"\n"
+"%1\n"
+"\n"
+"আপনি কি নিশ্চিত যে এটি খুলতে চান?\n"
+"\n"
+"বড় ফাইল খুলতে কিছু সময় লাগতে পারে।"
+
 msgid "This is a custom prompt"
 msgstr "এটি একটি কাস্টম প্রম্পট"
 
@@ -1330,6 +1377,9 @@ msgstr "আপনার প্রশ্ন এখানে লিখুন"
 
 msgid "Type your question here..."
 msgstr "এখানে আপনার প্রশ্ন লিখুন..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "অজানা ত্রুটি"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>ה-API עמוס</b>\n"
-"ניסיונות %1/%2 ... ניסיון חוזר בעוד"
+"<b>ה־API עמוס</b>\n"
+"ניסיונות %1/%2 ... ניסיון חוזר בעוד (%d שניות)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>דגם:</b> %3\n"
 "\n"
 "נסה ספק אחר בחלון ההגדרות."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>ה־API החזיר שגיאה</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>נוסף</b> [%1 (AI)] לתפריט ההדגשות."
@@ -243,6 +246,9 @@ msgstr "ה-AI מגיב"
 msgid "API Key"
 msgstr "מפתח API"
 
+msgid "API error: %1"
+msgstr "שגיאת API: %1"
+
 msgid "API key is required for %1."
 msgstr "מפתח API נדרש עבור %1."
 
@@ -362,11 +368,11 @@ msgstr "כתובת הבסיס חייבת להתחיל ב-http:// או https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "כתובת בסיס, למשל https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "כתובת בסיס: %1"
-
 msgid "Book Analysis"
 msgstr "ניתוח ספר"
+
+msgid "Book Info (AI)"
+msgstr "פרטי הספר (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "המטפל %1 אינו זמין עבור הספק: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "המטפל (Handler) לא נמצא עבור: %1. אנא בדוק את קובץ configuration.lua שלך."
 
-msgid "Handler: %1"
-msgstr "מטפל: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "ניתוח הדגשות והערות"
 
@@ -731,6 +734,9 @@ msgstr "רשומת מחברת לא תקינה."
 
 msgid "Invalid notebook filename."
 msgstr "שם קובץ מחברת לא תקין."
+
+msgid "Justify"
+msgstr "מיושר לשני הצדדים"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -785,14 +791,14 @@ msgstr "דגם"
 msgid "Model Built-In"
 msgstr "מובנה במודל"
 
-msgid "Model replied: %1"
-msgstr "הדגם השיב: %1"
-
 msgid "Model reset: %1"
 msgstr "איפוס מודל: %1"
 
 msgid "Model: %1"
 msgstr "מודל: %1"
+
+msgid "Models"
+msgstr "מודלים"
 
 msgid "Models: %1"
 msgstr "מודלים: %1"
@@ -820,6 +826,9 @@ msgstr "לא הוגדר ספק פעיל. הוסף אחד בהגדרות."
 
 msgid "No base folder is available for notebooks."
 msgstr "אין תיקיית בסיס זמינה למחברות."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "לא פתוח ספר כלשהו. לחצו לחיצה ארוכה על ספר במנהל הקבצים ובחרו בפרטי הספר (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "אין פרמטרים משותפים זמינים עבור המטפל %1."
@@ -944,6 +953,9 @@ msgstr "עדכון OTA נכשל: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "משמש רק בפרומפטים שמפעילים הקשר ספר (כברירת מחדל: הסבר, הקשר היסטורי, סיכום, נקודות עיקריות ו-ELI5). כשמופעל, הטקסט של העמוד המודגש והעמודים הסמוכים לו נשלח ל-AI כאסמכתא רקעית. דורש בחירת טקסט ומגדיל את צריכת הטוקנים."
 
+msgid "Open"
+msgstr "פתח"
+
 msgid "Open conflict or mystery:"
 msgstr "קונפליקט או תעלומה פתוחים:"
 
@@ -974,6 +986,9 @@ msgstr "פלטפורמה"
 msgid "Please enter a note before saving."
 msgstr "נא להזין הערה לפני השמירה."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "אנא פתחו את הספר הזה והתחילו לקרוא לפני בקשת Recap."
+
 msgid "Plot Summary"
 msgstr "תקציר עלילה"
 
@@ -992,6 +1007,9 @@ msgstr "המצב הרגשי/הטון השולט:"
 
 msgid "Protagonist's current objective:"
 msgstr "המטרה הנוכחית של הגיבור הראשי:"
+
+msgid "Protocol: %1"
+msgstr "פרוטוקול: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "ספק %1 %2(%3)"
@@ -1044,11 +1062,17 @@ msgstr "הערה מהירה"
 msgid "Quick note saved successfully"
 msgstr "ההערה המהירה נשמרה בהצלחה"
 
+msgid "RTL Layout"
+msgstr "פריסת RTL"
+
 msgid "RTL written Language"
 msgstr "שפה הנכתבת מימין לשמאל"
 
 msgid "Re-immersion"
 msgstr "התעמקות מחדש"
+
+msgid "Reader settings are not available."
+msgstr "הגדרות הקורא אינן זמינות."
 
 msgid "Reasoning Option"
 msgstr "אפשרות חשיבה"
@@ -1059,6 +1083,9 @@ msgstr "אפשרויות חשיבה - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "תקציר"
+
+msgid "Recap (AI)"
+msgstr "Recap (AI)"
 
 msgid "Remove"
 msgstr "הסר"
@@ -1173,6 +1200,9 @@ msgstr "הגדרות"
 msgid "Show Follow-up Questions"
 msgstr "הצג שאלות המשך"
 
+msgid "Show Reasoning"
+msgstr "הצג חשיבה"
+
 msgid "Show Reasoning Text"
 msgstr "הצג טקסט חשיבה"
 
@@ -1267,6 +1297,23 @@ msgstr "המחברת היא יומן השיחות שלך: תשובות AI והע
 msgid "This button creates a quick note with highlighted text."
 msgstr "כפתור זה יוצר הערה מהירה עם הטקסט המסומן."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"קובץ זה הוא %2:\n"
+"\n"
+"%1\n"
+"\n"
+"האם אתם בטוחים שברצונכם לפתח אותו?\n"
+"\n"
+"פתיחת קבצים גדולים עשויה להימשך זמן מה."
+
 msgid "This is a custom prompt"
 msgstr "זוהי הנחיה מותאמת אישית"
 
@@ -1332,6 +1379,9 @@ msgstr "הקלד את שאלתך כאן"
 
 msgid "Type your question here..."
 msgstr "הקלד את שאלתך כאן..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "שגיאה לא ידועה"

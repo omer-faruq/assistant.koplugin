@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Cymraeg (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API Brysur</b>\n"
-"Cynigion %1/%2 ... Ailgeisio mewn"
+"<b>API yn Brysur</b>\n"
+"Ymdrechion %1/%2 ... Ailgeisio mewn (%d eiliad)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Model:</b> %3\n"
 "\n"
 "Rhowch gynnig ar ddarparwr arall yn y deialog gosodiadau."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>Dychwelodd yr API wall</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Ychwanegwyd</b> [%1 (AI)] i'r Ddewislen Amlygu."
@@ -243,6 +246,9 @@ msgstr "Mae'r AI yn ymateb"
 msgid "API Key"
 msgstr "Allwedd API"
 
+msgid "API error: %1"
+msgstr "Gwall API: %1"
+
 msgid "API key is required for %1."
 msgstr "Mae angen allwedd API ar gyfer %1."
 
@@ -362,11 +368,11 @@ msgstr "Rhaid i'r URL sylfaenol ddechrau gyda http:// neu https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "URL Sylfaenol, e.e. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "URL Sylfaenol: %1"
-
 msgid "Book Analysis"
 msgstr "Dadansoddiad Llyfr"
+
+msgid "Book Info (AI)"
+msgstr "Gwybodaeth am y Llyfr (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Nid yw handler %1 ar gael ar gyfer darparwr: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Ni chafwyd hyd i handler ar gyfer: %1. Gwiriwch eich ffeil configuration.lua."
 
-msgid "Handler: %1"
-msgstr "Triniwr: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Dadansoddiad Amlygiadau a Nodiadau"
 
@@ -731,6 +734,9 @@ msgstr "Cofnod llyfr nodiadau annilys."
 
 msgid "Invalid notebook filename."
 msgstr "Enw ffeil llyfr nodiadau annilys."
+
+msgid "Justify"
+msgstr "Unioni"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -787,14 +793,14 @@ msgstr "Model"
 msgid "Model Built-In"
 msgstr "Model Adeiledig"
 
-msgid "Model replied: %1"
-msgstr "Atebodd y model: %1"
-
 msgid "Model reset: %1"
 msgstr "Model wedi'i ailosod: %1"
 
 msgid "Model: %1"
 msgstr "Model: %1"
+
+msgid "Models"
+msgstr "Modelau"
 
 msgid "Models: %1"
 msgstr "Modelau: %1"
@@ -822,6 +828,9 @@ msgstr "Nid oes darparwr gweithredol wedi'i ffurfweddu. Ychwanegwch un yn y Goso
 
 msgid "No base folder is available for notebooks."
 msgstr "Nid oes ffolder sylfaen ar gael ar gyfer llyfrau nodiadau."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Nid oes llyfr ar agor. Gwasgwch yn hir ar lyfr yn y rheolwr ffeiliau a dewiswch 'Gwybodaeth am y Llyfr (AI)'."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Model"
@@ -946,6 +955,9 @@ msgstr "Methodd y diweddariad OTA: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Dim ond anogiadau sy'n dewis cynnwys cyd-destun y llyfr sy'n ei ddefnyddio (yn ddiofyn: Esbonio, Cyd-destun Hanesyddol, Crynodeb, Prif Bwyntiau ac ELI5). Pan gaiff ei alluogi, anfonir testun y dudalen a amlygwyd a'r tudalennau cyfagos at yr AI fel cyfeirnod cefndir. Mae angen detholiad testun ac mae'n cynyddu'r defnydd o docynnau."
 
+msgid "Open"
+msgstr "Agor"
+
 msgid "Open conflict or mystery:"
 msgstr "Gwrthdaro agored neu ddirgelwch:"
 
@@ -976,6 +988,9 @@ msgstr "Llwyfan"
 msgid "Please enter a note before saving."
 msgstr "Rhowch nodyn cyn cadw."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Agorwch y llyfr hwn a dechreuwch ddarllen cyn gofyn am grynodeb."
+
 msgid "Plot Summary"
 msgstr "Crynodeb o'r Plot"
 
@@ -994,6 +1009,9 @@ msgstr "Cyflwr emosiynol/naws cyffredinol:"
 
 msgid "Protagonist's current objective:"
 msgstr "Amcan cyfredol y prif gymeriad:"
+
+msgid "Protocol: %1"
+msgstr "Protocol: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Darparwr %1 %2(%3)"
@@ -1046,11 +1064,17 @@ msgstr "Nodyn Cyflym"
 msgid "Quick note saved successfully"
 msgstr "Cafodd y nodyn cyflym ei gadw'n llwyddiannus"
 
+msgid "RTL Layout"
+msgstr "Cynllun RTL"
+
 msgid "RTL written Language"
 msgstr "Iaith ysgrifenedig RTL"
 
 msgid "Re-immersion"
 msgstr "Ail-ymgolli"
+
+msgid "Reader settings are not available."
+msgstr "Nid yw gosodiadau'r darllenydd ar gael."
 
 msgid "Reasoning Option"
 msgstr "Opsiwn Rhesymu"
@@ -1061,6 +1085,9 @@ msgstr "Opsiynau Rhesymu - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Crynodeb"
+
+msgid "Recap (AI)"
+msgstr "Crynodeb (AI)"
 
 msgid "Remove"
 msgstr "Dileu"
@@ -1176,6 +1203,9 @@ msgstr "Gosodiadau"
 msgid "Show Follow-up Questions"
 msgstr "Dangos Cwestiynau Dilynol"
 
+msgid "Show Reasoning"
+msgstr "Dangos Rhesymu"
+
 msgid "Show Reasoning Text"
 msgstr "Dangos Testun Rhesymu"
 
@@ -1270,6 +1300,23 @@ msgstr "Y llyfr nodiadau yw eich cofnod sgwrs: atebion AI a nodiadau cyflym yn c
 msgid "This button creates a quick note with highlighted text."
 msgstr "Mae'r botwm hwn yn creu nodyn cyflym gyda'r testun sydd wedi'i amlygu."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Y ffeil hon yw %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Ydych chi'n siŵr eich bod am ei hagor?\n"
+"\n"
+"Gall agor ffeiliau mawr gymryd peth amser."
+
 msgid "This is a custom prompt"
 msgstr "Mae hwn yn anogiad addasedig."
 
@@ -1335,6 +1382,9 @@ msgstr "Teipiwch eich cwestiwn yma"
 
 msgid "Type your question here..."
 msgstr "Teipiwch eich cwestiwn yma..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Gwall anhysbys"

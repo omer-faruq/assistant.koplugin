@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API зайнятий</b>\n"
-"Спроби %1/%2 ... Повтор через"
+"Спроби %1/%2 ... Повтор через (%d с)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Модель:</b> %3\n"
 "\n"
 "Спробуйте іншого провайдера в діалозі налаштувань."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API повернув помилку</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Додано</b> [%1 (AI)] до меню виділення."
@@ -235,6 +238,9 @@ msgstr "ШІ відповідає"
 msgid "API Key"
 msgstr "API-ключ"
 
+msgid "API error: %1"
+msgstr "Помилка API: %1"
+
 msgid "API key is required for %1."
 msgstr "Для %1 потрібен API-ключ."
 
@@ -354,11 +360,11 @@ msgstr "Базовий URL має починатися з http:// або https:/
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Базовий URL, напр. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Базовий URL: %1"
-
 msgid "Book Analysis"
 msgstr "Аналіз книги"
+
+msgid "Book Info (AI)"
+msgstr "Інформація про книгу (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -690,9 +696,6 @@ msgstr "Обробник %1 недоступний для провайдера: 
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Обробник для %1 не знайдено. Перевірте ваш файл configuration.lua."
 
-msgid "Handler: %1"
-msgstr "Обробник: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Аналіз виділень і нотаток"
 
@@ -723,6 +726,9 @@ msgstr "Недійсний запис у записнику."
 
 msgid "Invalid notebook filename."
 msgstr "Недійсне ім'я файлу записника."
+
+msgid "Justify"
+msgstr "По ширині"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -777,14 +783,14 @@ msgstr "Модель"
 msgid "Model Built-In"
 msgstr "Вбудовано в модель"
 
-msgid "Model replied: %1"
-msgstr "Модель відповіла: %1"
-
 msgid "Model reset: %1"
 msgstr "Модель скинуто: %1"
 
 msgid "Model: %1"
 msgstr "Модель: %1"
+
+msgid "Models"
+msgstr "Моделі"
 
 msgid "Models: %1"
 msgstr "Моделі: %1"
@@ -812,6 +818,9 @@ msgstr "Не налаштовано активного провайдера. Д�
 
 msgid "No base folder is available for notebooks."
 msgstr "Немає базової папки для записників."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Жодна книга не відкрита. Утримуйте книгу у файловому менеджері та виберіть «Інформація про книгу (AI)»."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Немає доступних параметрів для обробника %1."
@@ -936,6 +945,9 @@ msgstr "OTA-оновлення не вдалося: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Використовується лише промптами, які залучають контекст книги (типово: Пояснити, Історичний контекст, Підсумувати, Ключові моменти та ELI5). Коли ввімкнено, текст виділеної сторінки та сусідніх сторінок надсилається ШІ як довідковий матеріал. Потребує виділення тексту та збільшує використання токенів."
 
+msgid "Open"
+msgstr "Відкрити"
+
 msgid "Open conflict or mystery:"
 msgstr "Відкритий конфлікт або загадка:"
 
@@ -966,6 +978,9 @@ msgstr "Платформа"
 msgid "Please enter a note before saving."
 msgstr "Будь ласка, введіть нотатку перед збереженням."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Будь ласка, відкрийте цю книгу й почніть читати, перш ніж запитувати підсумок."
+
 msgid "Plot Summary"
 msgstr "Короткий зміст сюжету"
 
@@ -984,6 +999,9 @@ msgstr "Панівний емоційний стан/тон:"
 
 msgid "Protagonist's current objective:"
 msgstr "Поточна мета протагоніста:"
+
+msgid "Protocol: %1"
+msgstr "Протокол: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Провайдер %1 %2(%3)"
@@ -1036,11 +1054,17 @@ msgstr "Швидка нотатка"
 msgid "Quick note saved successfully"
 msgstr "Швидку нотатку успішно збережено"
 
+msgid "RTL Layout"
+msgstr "Макет справа наліво"
+
 msgid "RTL written Language"
 msgstr "Мова письма RTL"
 
 msgid "Re-immersion"
 msgstr "Повторне занурення"
+
+msgid "Reader settings are not available."
+msgstr "Налаштування читача недоступні."
 
 msgid "Reasoning Option"
 msgstr "Параметр міркування"
@@ -1051,6 +1075,9 @@ msgstr "Параметри міркування — %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Підсумок"
+
+msgid "Recap (AI)"
+msgstr "Підсумок (AI)"
 
 msgid "Remove"
 msgstr "Видалити"
@@ -1166,6 +1193,9 @@ msgstr "Налаштування"
 msgid "Show Follow-up Questions"
 msgstr "Показувати супутні запитання"
 
+msgid "Show Reasoning"
+msgstr "Показувати міркування"
+
 msgid "Show Reasoning Text"
 msgstr "Показувати текст міркувань"
 
@@ -1260,6 +1290,23 @@ msgstr "Записник — це ваш журнал розмов: відпов
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ця кнопка створює швидку нотатку з виділеним текстом."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Цей файл — %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Ви впевнені, що хочете його відкрити?\n"
+"\n"
+"Відкриття великих файлів може тривати деякий час."
+
 msgid "This is a custom prompt"
 msgstr "Це користувацький запит"
 
@@ -1325,6 +1372,9 @@ msgstr "Введіть ваше запитання тут"
 
 msgid "Type your question here..."
 msgstr "Введіть ваше запитання тут..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Невідома помилка"

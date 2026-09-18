@@ -647,7 +647,8 @@ def _post_chat(
                 ):
                     log_http.warning(
                         "json_schema rejected (HTTP 400); "
-                        "falling back to json_object once",
+                        "falling back to json_object once: %s",
+                        (resp.text or "")[:300],
                     )
                     payload["response_format"] = {"type": "json_object"}
                     using_schema = False

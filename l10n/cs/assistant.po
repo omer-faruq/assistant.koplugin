@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API je zaneprázdněno</b>\n"
-"Pokusy %1/%2 ... Opakování za"
+"<b>API je zaneprázdněné</b>\n"
+"Pokusy %1/%2 ... Opakovat za (%d s)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Model:</b> %3\n"
 "\n"
 "Zkuste v dialogu nastavení jiného poskytovatele."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API vrátilo chybu</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Přidáno</b> [%1 (AI)] do nabídky zvýraznění."
@@ -243,6 +246,9 @@ msgstr "AI odpovídá"
 msgid "API Key"
 msgstr "API klíč"
 
+msgid "API error: %1"
+msgstr "Chyba API: %1"
+
 msgid "API key is required for %1."
 msgstr "Pro %1 je vyžadován API klíč."
 
@@ -362,11 +368,11 @@ msgstr "Základní URL musí začínat http:// nebo https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Základní URL, např. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Základní URL: %1"
-
 msgid "Book Analysis"
 msgstr "Analýza knihy"
+
+msgid "Book Info (AI)"
+msgstr "Informace o knize (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Handler %1 není pro poskytovatele %2 dostupný."
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Handler nebyl nalezen pro: %1. Zkontrolujte prosím svůj soubor configuration.lua."
 
-msgid "Handler: %1"
-msgstr "Obsluha: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Analýza zvýraznění a poznámek"
 
@@ -731,6 +734,9 @@ msgstr "Neplatná položka zápisníku."
 
 msgid "Invalid notebook filename."
 msgstr "Neplatný název souboru zápisníku."
+
+msgid "Justify"
+msgstr "Zarovnat do bloku"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -784,14 +790,14 @@ msgstr "Model"
 msgid "Model Built-In"
 msgstr "Vestavěný model"
 
-msgid "Model replied: %1"
-msgstr "Model odpověděl: %1"
-
 msgid "Model reset: %1"
 msgstr "Model resetován: %1"
 
 msgid "Model: %1"
 msgstr "Model: %1"
+
+msgid "Models"
+msgstr "Modely"
 
 msgid "Models: %1"
 msgstr "Modely: %1"
@@ -819,6 +825,9 @@ msgstr "Není nakonfigurován žádný aktivní poskytovatel. Přidejte jej v Na
 
 msgid "No base folder is available for notebooks."
 msgstr "Pro zápisníky není k dispozici žádná základní složka."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Není otevřená žádná kniha. Dlouze stiskněte knihu ve správci souborů a zvolte Informace o knize (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Pro handlera %1 nejsou k dispozici žádné běžné parametry."
@@ -943,6 +952,9 @@ msgstr "OTA aktualizace se nezdařila: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Používá se pouze u promptů, které mají zapnutý kontext knihy (ve výchozím nastavení: Vysvětlit, Historický kontext, Shrnutí, Klíčové body a ELI5). Je-li povoleno, text zvýrazněné stránky a přilehlých stránek se odesílá AI jako referenční podklad. Vyžaduje výběr textu a zvyšuje spotřebu tokenů."
 
+msgid "Open"
+msgstr "Otevřít"
+
 msgid "Open conflict or mystery:"
 msgstr "Otevřený konflikt nebo záhada:"
 
@@ -973,6 +985,9 @@ msgstr "Platforma"
 msgid "Please enter a note before saving."
 msgstr "Před uložením zadejte poznámku."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Než požádáte o rekapitulaci, otevřete prosím tuto knihu a začněte ji číst."
+
 msgid "Plot Summary"
 msgstr "Shrnutí děje"
 
@@ -991,6 +1006,9 @@ msgstr "Převládající emocionální stav/tón:"
 
 msgid "Protagonist's current objective:"
 msgstr "Aktuální cíl protagonisty:"
+
+msgid "Protocol: %1"
+msgstr "Protokol: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Poskytovatel %1 %2(%3)"
@@ -1043,11 +1061,17 @@ msgstr "Rychlá poznámka"
 msgid "Quick note saved successfully"
 msgstr "Rychlá poznámka byla úspěšně uložena."
 
+msgid "RTL Layout"
+msgstr "Rozvržení RTL"
+
 msgid "RTL written Language"
 msgstr "Jazyk psaný zprava doleva"
 
 msgid "Re-immersion"
 msgstr "Znovuponoření"
+
+msgid "Reader settings are not available."
+msgstr "Nastavení čtečky nejsou k dispozici."
 
 msgid "Reasoning Option"
 msgstr "Možnost uvažování"
@@ -1058,6 +1082,9 @@ msgstr "Možnosti uvažování – %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Rekapitulace"
+
+msgid "Recap (AI)"
+msgstr "Rekapitulace (AI)"
 
 msgid "Remove"
 msgstr "Odebrat"
@@ -1173,6 +1200,9 @@ msgstr "Nastavení"
 msgid "Show Follow-up Questions"
 msgstr "Zobrazit navazující otázky"
 
+msgid "Show Reasoning"
+msgstr "Zobrazit odůvodnění"
+
 msgid "Show Reasoning Text"
 msgstr "Zobrazit text uvažování"
 
@@ -1267,6 +1297,23 @@ msgstr "Notebook je váš deník konverzace: odpovědi AI a rychlé poznámky se
 msgid "This button creates a quick note with highlighted text."
 msgstr "Toto tlačítko vytvoří rychlou poznámku se zvýrazněným textem."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Tento soubor je %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Opravdu jej chcete otevřít?\n"
+"\n"
+"Otevření velkých souborů může nějakou dobu trvat."
+
 msgid "This is a custom prompt"
 msgstr "Toto je vlastní prompt."
 
@@ -1332,6 +1379,9 @@ msgstr "Zde napište svou otázku"
 
 msgid "Type your question here..."
 msgstr "Zde napište svou otázku..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Neznámá chyba"

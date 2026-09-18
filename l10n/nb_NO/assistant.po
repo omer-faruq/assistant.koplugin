@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API opptatt</b>\n"
-"Forsøk %1/%2 ... Prøv igjen om"
+"<b>API-et er opptatt</b>\n"
+"Forsøk %1/%2 ... Prøver igjen om (%d sek)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Modell:</b> %3\n"
 "\n"
 "Prøv en annen leverandør i innstillingsdialogen."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API-et returnerte en feil</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Lagt til</b> [%1 (AI)] i markeringsmenyen."
@@ -243,6 +246,9 @@ msgstr "AI svarer"
 msgid "API Key"
 msgstr "API-nøkkel"
 
+msgid "API error: %1"
+msgstr "API-feil: %1"
+
 msgid "API key is required for %1."
 msgstr "API-nøkkel er påkrevd for %1."
 
@@ -362,11 +368,11 @@ msgstr "Grunn-URL må starte med http:// eller https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Base-URL"
 
-msgid "Base URL: %1"
-msgstr "Base-URL: %1"
-
 msgid "Book Analysis"
 msgstr "Bokanalyse"
+
+msgid "Book Info (AI)"
+msgstr "Bokinformasjon (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Behandler %1 er ikke tilgjengelig for leverandør: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Fant ikke behandler for: %1. Kontroller configuration.lua-filen din."
 
-msgid "Handler: %1"
-msgstr "Behandler: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Analyse av markeringer og notater"
 
@@ -731,6 +734,9 @@ msgstr "Ugyldig notatbokoppføring."
 
 msgid "Invalid notebook filename."
 msgstr "Ugyldig notatbokfilnavn."
+
+msgid "Justify"
+msgstr "Blokkjustert"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "Modell"
 msgid "Model Built-In"
 msgstr "Modellens innebygde"
 
-msgid "Model replied: %1"
-msgstr "Modellen svarte: %1"
-
 msgid "Model reset: %1"
 msgstr "Modell tilbakestilt: %1"
 
 msgid "Model: %1"
 msgstr "Modell: %1"
+
+msgid "Models"
+msgstr "Modeller"
 
 msgid "Models: %1"
 msgstr "Modeller: %1"
@@ -818,6 +824,9 @@ msgstr "Ingen aktiv leverandør er konfigurert. Legg til en i Innstillinger."
 
 msgid "No base folder is available for notebooks."
 msgstr "Ingen grunnmappe er tilgjengelig for notatbøker."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Ingen bok er åpen. Langtrykk på en bok i filbehandleren og velg Bokinformasjon (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Ingen vanlige parametere er tilgjengelige for behandleren %1."
@@ -942,6 +951,9 @@ msgstr "OTA-oppdateringen feilet: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Brukes bare av prompter som har aktivert bokkontekst (som standard: Forklar, Historisk kontekst, Oppsummer, Hovedpunkter og ELI5). Når dette er aktivert, sendes teksten på den uthevede siden og de tilstøtende sidene til AI-en som bakgrunnsreferanse. Krever en tekstmarkering og øker tokenbruken."
 
+msgid "Open"
+msgstr "Åpne"
+
 msgid "Open conflict or mystery:"
 msgstr "Åpen konflikt eller mysterium:"
 
@@ -972,6 +984,9 @@ msgstr "Plattform"
 msgid "Please enter a note before saving."
 msgstr "Vennligst skriv inn et notat før du lagrer."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Åpne denne boken og begynn å lese før du ber om en oppsummering."
+
 msgid "Plot Summary"
 msgstr "Handlingssammendrag"
 
@@ -990,6 +1005,9 @@ msgstr "Dominerende følelsesmessig tilstand/tone:"
 
 msgid "Protagonist's current objective:"
 msgstr "Protagonistens nåværende mål:"
+
+msgid "Protocol: %1"
+msgstr "Protokoll: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Leverandør %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "Hurtignotat"
 msgid "Quick note saved successfully"
 msgstr "Raskt notat lagret"
 
+msgid "RTL Layout"
+msgstr "RTL-oppsett"
+
 msgid "RTL written Language"
 msgstr "RTL-skriftspråk"
 
 msgid "Re-immersion"
 msgstr "Gjeninnlevelse"
+
+msgid "Reader settings are not available."
+msgstr "Leserinnstillingene er ikke tilgjengelige."
 
 msgid "Reasoning Option"
 msgstr "Resonneringsalternativ"
@@ -1057,6 +1081,9 @@ msgstr "Resonneringsalternativer – %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Oppsummering"
+
+msgid "Recap (AI)"
+msgstr "Oppsummering (AI)"
 
 msgid "Remove"
 msgstr "Fjern"
@@ -1171,6 +1198,9 @@ msgstr "Innstillinger"
 msgid "Show Follow-up Questions"
 msgstr "Vis oppfølgingsspørsmål"
 
+msgid "Show Reasoning"
+msgstr "Vis resonnement"
+
 msgid "Show Reasoning Text"
 msgstr "Vis resonneringstekst"
 
@@ -1265,6 +1295,23 @@ msgstr "Notatboken er samtaleloggen din: AI-svar og raske notater legges til den
 msgid "This button creates a quick note with highlighted text."
 msgstr "Denne knappen oppretter et hurtignotat med markert tekst."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Denne filen er %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Er du sikker på at du vil åpne den?\n"
+"\n"
+"Å åpne store filer kan ta litt tid."
+
 msgid "This is a custom prompt"
 msgstr "Dette er en egendefinert ledetekst"
 
@@ -1330,6 +1377,9 @@ msgstr "Skriv spørsmålet ditt her"
 
 msgid "Type your question here..."
 msgstr "Skriv inn spørsmålet ditt her..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Ukjent feil"

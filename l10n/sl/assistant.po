@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API zaseden</b>\n"
-"Poskusi %1/%2 ... Ponovni poskus čez"
+"<b>API je zaseden</b>\n"
+"Poskusi %1/%2 ... Ponovni poskus čez (%d s)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Model:</b> %3\n"
 "\n"
 "Poskusite drugega ponudnika v pogovornem oknu z nastavitvami."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API je vrnil napako</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Dodano</b> [%1 (AI)] v meni označb."
@@ -243,6 +246,9 @@ msgstr "AI odgovarja"
 msgid "API Key"
 msgstr "API ključ"
 
+msgid "API error: %1"
+msgstr "Napaka API: %1"
+
 msgid "API key is required for %1."
 msgstr "API ključ je obvezen za %1."
 
@@ -362,11 +368,11 @@ msgstr "Osnovni URL se mora začeti z http:// ali https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Osnovni URL, npr. https://example.com"
 
-msgid "Base URL: %1"
-msgstr "Osnovni URL: %1"
-
 msgid "Book Analysis"
 msgstr "Analiza knjige"
+
+msgid "Book Info (AI)"
+msgstr "Informacije o knjigi (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Upravljalnik %1 ni na voljo za ponudnika: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Upravljalnik za: %1 ni bil najden. Preverite datoteko configuration.lua."
 
-msgid "Handler: %1"
-msgstr "Upravljalnik: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Analiza označb in zapiskov"
 
@@ -731,6 +734,9 @@ msgstr "Neveljaven vnos beležnice."
 
 msgid "Invalid notebook filename."
 msgstr "Neveljavno ime datoteke beležnice."
+
+msgid "Justify"
+msgstr "Obojestransko"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -785,14 +791,14 @@ msgstr "Model"
 msgid "Model Built-In"
 msgstr "Vgrajeni model"
 
-msgid "Model replied: %1"
-msgstr "Model je odgovoril: %1"
-
 msgid "Model reset: %1"
 msgstr "Model ponastavljen: %1"
 
 msgid "Model: %1"
 msgstr "Model: %1"
+
+msgid "Models"
+msgstr "Modeli"
 
 msgid "Models: %1"
 msgstr "Modeli: %1"
@@ -820,6 +826,9 @@ msgstr "Ni nastavljenega aktivnega ponudnika. Prosimo, dodajte ga v Nastavitvah.
 
 msgid "No base folder is available for notebooks."
 msgstr "Na voljo ni osnovne mape za beležnice."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Nobena knjiga ni odprta. Dolgo pritisnite knjigo v upravitelju datotek in izberite Informacije o knjigi (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Model"
@@ -944,6 +953,9 @@ msgstr "Posodobitev OTA ni uspela: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Uporabljajo ga samo pozivi, ki vključijo kontekst knjige (privzeto: Razloži, Zgodovinski kontekst, Povzemi, Ključne točke in ELI5). Ko je omogočeno, se besedilo označene strani in sosednjih strani kot referenca v ozadju pošlje AI. Zahteva izbrano besedilo in poveča porabo žetonov."
 
+msgid "Open"
+msgstr "Odpri"
+
 msgid "Open conflict or mystery:"
 msgstr "Odprt konflikt ali skrivnost:"
 
@@ -974,6 +986,9 @@ msgstr "Platforma"
 msgid "Please enter a note before saving."
 msgstr "Prosimo, pred shranjevanjem vnesite opombo."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Prosimo, odprite to knjigo in začnite brati, preden zahtevate povzetek."
+
 msgid "Plot Summary"
 msgstr "Povzetek zgodbe"
 
@@ -992,6 +1007,9 @@ msgstr "Prevladujoče čustveno stanje/ton:"
 
 msgid "Protagonist's current objective:"
 msgstr "Protagonistov trenutni cilj:"
+
+msgid "Protocol: %1"
+msgstr "Protokol: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Ponudnik %1 %2(%3)"
@@ -1044,11 +1062,17 @@ msgstr "Hitra opomba"
 msgid "Quick note saved successfully"
 msgstr "Hitra opomba je bila uspešno shranjena."
 
+msgid "RTL Layout"
+msgstr "Postavitev RTL"
+
 msgid "RTL written Language"
 msgstr "Jezik, zapisan od desne proti levi (RTL)"
 
 msgid "Re-immersion"
 msgstr "Ponovna potopitev"
+
+msgid "Reader settings are not available."
+msgstr "Nastavitve bralnika niso na voljo."
 
 msgid "Reasoning Option"
 msgstr "Možnost sklepanja"
@@ -1059,6 +1083,9 @@ msgstr "Možnosti sklepanja - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Povzetek"
+
+msgid "Recap (AI)"
+msgstr "Povzetek (AI)"
 
 msgid "Remove"
 msgstr "Odstrani"
@@ -1174,6 +1201,9 @@ msgstr "Nastavitve"
 msgid "Show Follow-up Questions"
 msgstr "Prikaži nadaljnja vprašanja"
 
+msgid "Show Reasoning"
+msgstr "Pokaži sklepanje"
+
 msgid "Show Reasoning Text"
 msgstr "Prikaži besedilo razmišljanja"
 
@@ -1268,6 +1298,23 @@ msgstr "Beležnica je vaš dnevnik pogovorov: odgovori AI in hitre opombe se ji 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ta gumb ustvari hitro opombo z označenim besedilom."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Ta datoteka je %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Ali ste prepričani, da jo želite odpreti?\n"
+"\n"
+"Odpiranje velikih datotek lahko traja nekaj časa."
+
 msgid "This is a custom prompt"
 msgstr "To je prilagojen poziv."
 
@@ -1333,6 +1380,9 @@ msgstr "Vnesite svoje vprašanje tukaj."
 
 msgid "Type your question here..."
 msgstr "Vnesi svoje vprašanje tukaj..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Neznana napaka"

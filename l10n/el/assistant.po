@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>Απασχολημένο API</b>\n"
-"Προσπάθειες %1/%2 ... Επανάληψη σε"
+"<b>Το API είναι απασχολημένο</b>\n"
+"Προσπάθειες %1/%2 ... Νέα προσπάθεια σε (%d δευτ.)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Μοντέλο:</b> %3\n"
 "\n"
 "Δοκιμάστε άλλο πάροχο στον διάλογο ρυθμίσεων."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>Το API επέστρεψε σφάλμα</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Προστέθηκε</b> το [%1 (AI)] στο Μενού Επισήμανσης."
@@ -243,6 +246,9 @@ msgstr "Το AI απαντά"
 msgid "API Key"
 msgstr "Κλειδί API"
 
+msgid "API error: %1"
+msgstr "Σφάλμα API: %1"
+
 msgid "API key is required for %1."
 msgstr "Το κλειδί API απαιτείται για %1."
 
@@ -362,11 +368,11 @@ msgstr "Το βασικό URL πρέπει να ξεκινά με http:// ή htt
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Δοκιμή σύνδεσης…"
 
-msgid "Base URL: %1"
-msgstr "Βάση URL: %1"
-
 msgid "Book Analysis"
 msgstr "Ανάλυση Βιβλίου"
+
+msgid "Book Info (AI)"
+msgstr "Πληροφορίες βιβλίου (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Ο χειριστής %1 δεν είναι διαθέσιμος για �
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Δεν βρέθηκε χειριστής για: %1. Ελέγξτε το αρχείο configuration.lua."
 
-msgid "Handler: %1"
-msgstr "Χειριστής: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Ανάλυση Επισημάνσεων & Σημειώσεων"
 
@@ -731,6 +734,9 @@ msgstr "Μη έγκυρη καταχώριση σημειωματαρίου."
 
 msgid "Invalid notebook filename."
 msgstr "Μη έγκυρο όνομα αρχείου σημειωματαρίου."
+
+msgid "Justify"
+msgstr "Πλήρης στοίχιση"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "Μοντέλο"
 msgid "Model Built-In"
 msgstr "Ενσωματωμένο Μοντέλο"
 
-msgid "Model replied: %1"
-msgstr "Το μοντέλο απάντησε: %1"
-
 msgid "Model reset: %1"
 msgstr "Επαναφορά μοντέλου: %1"
 
 msgid "Model: %1"
 msgstr "Μοντέλο: %1"
+
+msgid "Models"
+msgstr "Μοντέλα"
 
 msgid "Models: %1"
 msgstr "Μοντέλα: %1"
@@ -818,6 +824,9 @@ msgstr "Δεν έχει ρυθμιστεί ενεργός πάροχος. Προ
 
 msgid "No base folder is available for notebooks."
 msgstr "Δεν υπάρχει διαθέσιμος βασικός φάκελος για τα σημειωματάρια."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Δεν υπάρχει ανοιχτό βιβλίο. Κρατήστε πατημένο ένα βιβλίο στη διαχείριση αρχείων και επιλέξτε Πληροφορίες βιβλίου (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Επιλογή Συλλογισμού"
@@ -942,6 +951,9 @@ msgstr "Η ενημέρωση OTA απέτυχε: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Χρησιμοποιείται μόνο από τις προτροπές που έχουν ενεργοποιήσει το πλαίσιο βιβλίου (από προεπιλογή: Εξήγηση, Ιστορικό Πλαίσιο, Σύνοψη, Βασικά Σημεία και ELI5). Όταν είναι ενεργό, το κείμενο της επισημασμένης σελίδας και των γειτονικών σελίδων αποστέλλεται στο AI ως υλικό αναφοράς. Απαιτεί επιλογή κειμένου και αυξάνει τη χρήση tokens."
 
+msgid "Open"
+msgstr "Άνοιγμα"
+
 msgid "Open conflict or mystery:"
 msgstr "Ανοιχτή σύγκρουση ή μυστήριο:"
 
@@ -972,6 +984,9 @@ msgstr "Πλατφόρμα"
 msgid "Please enter a note before saving."
 msgstr "Παρακαλώ εισάγετε μια σημείωση πριν την αποθήκευση."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Ανοίξτε αυτό το βιβλίο και ξεκινήστε να το διαβάζετε πριν ζητήσετε σύνοψη."
+
 msgid "Plot Summary"
 msgstr "Περίληψη Πλοκής"
 
@@ -990,6 +1005,9 @@ msgstr "Επικρατούσα συναισθηματική κατάσταση/�
 
 msgid "Protagonist's current objective:"
 msgstr "Τρέχων στόχος του πρωταγωνιστή:"
+
+msgid "Protocol: %1"
+msgstr "Πρωτόκολλο: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Πάροχος %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "Γρήγορη σημείωση"
 msgid "Quick note saved successfully"
 msgstr "Η γρήγορη σημείωση αποθηκεύτηκε επιτυχώς"
 
+msgid "RTL Layout"
+msgstr "Διάταξη RTL"
+
 msgid "RTL written Language"
 msgstr "Γλώσσα γραφής RTL"
 
 msgid "Re-immersion"
 msgstr "Επαναβύθιση"
+
+msgid "Reader settings are not available."
+msgstr "Οι ρυθμίσεις αναγνώστη δεν είναι διαθέσιμες."
 
 msgid "Reasoning Option"
 msgstr "Επιλογή Συλλογισμού"
@@ -1057,6 +1081,9 @@ msgstr "Επιλογές Συλλογισμού - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Ανακεφαλαίωση"
+
+msgid "Recap (AI)"
+msgstr "Σύνοψη (AI)"
 
 msgid "Remove"
 msgstr "Αφαίρεση"
@@ -1171,6 +1198,9 @@ msgstr "Ρυθμίσεις"
 msgid "Show Follow-up Questions"
 msgstr "Εμφάνιση επακόλουθων ερωτήσεων"
 
+msgid "Show Reasoning"
+msgstr "Εμφάνιση συλλογισμού"
+
 msgid "Show Reasoning Text"
 msgstr "Εμφάνιση κειμένου συλλογισμού"
 
@@ -1265,6 +1295,23 @@ msgstr "Το σημειωματάριο είναι το ημερολόγιο σ�
 msgid "This button creates a quick note with highlighted text."
 msgstr "Αυτό το κουμπί δημιουργεί μια γρήγορη σημείωση με το επισημασμένο κείμενο."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Αυτό το αρχείο είναι %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Είστε σίγουροι ότι θέλετε να το ανοίξετε;\n"
+"\n"
+"Το άνοιγμα μεγάλων αρχείων μπορεί να διαρκέσει λίγη ώρα."
+
 msgid "This is a custom prompt"
 msgstr "Αυτή είναι μια προσαρμοσμένη προτροπή"
 
@@ -1330,6 +1377,9 @@ msgstr "Πληκτρολογήστε την ερώτησή σας εδώ"
 
 msgid "Type your question here..."
 msgstr "Πληκτρολογήστε την ερώτησή σας εδώ..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Άγνωστο σφάλμα"

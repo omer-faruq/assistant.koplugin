@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 03:15+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Euskara (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API lanpetua</b>\n"
-"Saiakerak %1/%2 ... Berriro saiatu hemen"
+"<b>APIa lanpetuta</b>\n"
+"Saiakerak %1/%2 ... Berriro saiatu (%d segundotan)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Eredua:</b> %3\n"
 "\n"
 "Saiatu beste hornitzaile batekin ezarpenen elkarrizketan."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>APIak errore bat itzuli du</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Gehituta</b> [%1 (AI)] azpimarra-menuan."
@@ -243,6 +246,9 @@ msgstr "AI erantzuten ari da"
 msgid "API Key"
 msgstr "API gakoa"
 
+msgid "API error: %1"
+msgstr "API errorea: %1"
+
 msgid "API key is required for %1."
 msgstr "API gakoa beharrezkoa da %1rentzat."
 
@@ -362,11 +368,11 @@ msgstr "Oinarrizko URLak http:// edo https:// hasiera izan behar du."
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Oinarrizko URLa, adibidez https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Oinarrizko URLa: %1"
-
 msgid "Book Analysis"
 msgstr "Liburuaren analisia"
+
+msgid "Book Info (AI)"
+msgstr "Liburuaren informazioa (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "%1 handlerra ez dago erabilgarri %2 hornitzailearentzat."
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Ez da aurkitu %1-rentzako handlerra. Egiaztatu zure configuration.lua fitxategia."
 
-msgid "Handler: %1"
-msgstr "Kudeatzailea: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Nabarmenduen eta Oharren Azterketa"
 
@@ -731,6 +734,9 @@ msgstr "Koaderno-sarrera baliogabea."
 
 msgid "Invalid notebook filename."
 msgstr "Koadernoaren fitxategi-izena baliogabea."
+
+msgid "Justify"
+msgstr "Justifikatu"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "Eredua"
 msgid "Model Built-In"
 msgstr "Modelo Integratua"
 
-msgid "Model replied: %1"
-msgstr "Ereduak erantzun du: %1"
-
 msgid "Model reset: %1"
 msgstr "Eredua berrezarri da: %1"
 
 msgid "Model: %1"
 msgstr "Eredua: %1"
+
+msgid "Models"
+msgstr "Modeloak"
 
 msgid "Models: %1"
 msgstr "Modeloak: %1"
@@ -818,6 +824,9 @@ msgstr "Ez dago hornitzaile aktiborik konfiguratuta. Mesedez, gehitu bat Ezarpen
 
 msgid "No base folder is available for notebooks."
 msgstr "Ez dago koadernoetarako oinarrizko karpetarik eskuragarri."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Ez dago libururik irekita. Sakatu luze fitxategi-kudeatzailean liburu batean eta aukeratu Liburuaren informazioa (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Ez dago parametro komun erabilgarririk %1 kudeatzailearentzat."
@@ -942,6 +951,9 @@ msgstr "OTA eguneratzeak huts egin du: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Liburu-testuingurua gaituta duten promptek baino ez dute erabiltzen (lehenespenez: Azaldu, Testuinguru historikoa, Laburtu, Gako-puntuak eta ELI5). Gaituz gero, nabarmendutako orrialdearen eta alboko orrialdeen testua AIari bidaltzen zaio atzeko erreferentzia gisa. Testu-hautaketa bat behar du eta tokenen erabilera handitzen du."
 
+msgid "Open"
+msgstr "Ireki"
+
 msgid "Open conflict or mystery:"
 msgstr "Konpondu gabeko gatazka edo misterioa:"
 
@@ -972,6 +984,9 @@ msgstr "Plataforma"
 msgid "Please enter a note before saving."
 msgstr "Mesedez, idatzi ohar bat gorde aurretik."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Mesedez, ireki liburu hau eta hasi irakurtzen laburpena eskatu aurretik."
+
 msgid "Plot Summary"
 msgstr "Argumentuaren laburpena"
 
@@ -990,6 +1005,9 @@ msgstr "Emozio-egoera/tonu nagusia:"
 
 msgid "Protagonist's current objective:"
 msgstr "Protagonistaren egungo helburua:"
+
+msgid "Protocol: %1"
+msgstr "Protokoloa: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Hornitzailea %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "Ohar azkarra"
 msgid "Quick note saved successfully"
 msgstr "Ohar azkarra behar bezala gorde da"
 
+msgid "RTL Layout"
+msgstr "RTL diseinua"
+
 msgid "RTL written Language"
 msgstr "RTL idatzitako hizkuntza"
 
 msgid "Re-immersion"
 msgstr "Berriro murgiltzea"
+
+msgid "Reader settings are not available."
+msgstr "Irakurlearen ezarpenak ez daude erabilgarri."
 
 msgid "Reasoning Option"
 msgstr "Arrazoiketa aukera"
@@ -1057,6 +1081,9 @@ msgstr "Arrazoiketa aukerak - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Laburpena"
+
+msgid "Recap (AI)"
+msgstr "Laburpena (AI)"
 
 msgid "Remove"
 msgstr "Kendu"
@@ -1170,6 +1197,9 @@ msgstr "Ezarpenak"
 msgid "Show Follow-up Questions"
 msgstr "Erakutsi jarraipen-galderak"
 
+msgid "Show Reasoning"
+msgstr "Erakutsi arrazoiketa"
+
 msgid "Show Reasoning Text"
 msgstr "Erakutsi arrazoiketa-testua"
 
@@ -1264,6 +1294,23 @@ msgstr "Koadernoa zure elkarrizketa-erregistroa da: AIren erantzunak eta ohar az
 msgid "This button creates a quick note with highlighted text."
 msgstr "Botoi honek ohar azkar bat sortzen du nabarmendutako testuarekin."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Fitxategi hau %2 da:\n"
+"\n"
+"%1\n"
+"\n"
+"Ziur zaude ireki nahi duzula?\n"
+"\n"
+"Fitxategi handiak irekitzeak denbora har dezake."
+
 msgid "This is a custom prompt"
 msgstr "Prompt pertsonalizatu bat da."
 
@@ -1329,6 +1376,9 @@ msgstr "Idatzi zure galdera hemen"
 
 msgid "Type your question here..."
 msgstr "Idatzi zure galdera hemen..."
+
+msgid "URL: %1"
+msgstr "URLa: %1"
 
 msgid "Unknown error"
 msgstr "Errore ezezaguna"

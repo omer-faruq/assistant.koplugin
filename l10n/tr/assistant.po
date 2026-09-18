@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API Meşgul</b>\n"
-"Denemeler %1/%2 ... Yeniden deneme:"
+"<b>API meşgul</b>\n"
+"Deneme %1/%2 ... (%d sn içinde yeniden denenecek)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Model:</b> %3\n"
 "\n"
 "Ayarlar iletişim kutusunda başka bir sağlayıcı deneyin."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API bir hata döndürdü</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Eklendi</b> [%1 (AI)] Vurgu Menüsüne."
@@ -243,6 +246,9 @@ msgstr "Yapay zekâ yanıtlıyor"
 msgid "API Key"
 msgstr "API Anahtarı"
 
+msgid "API error: %1"
+msgstr "API hatası: %1"
+
 msgid "API key is required for %1."
 msgstr "%1 için API anahtarı gereklidir."
 
@@ -362,11 +368,11 @@ msgstr "Temel URL, http:// veya https:// ile başlamalıdır."
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Temel URL, örn. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Temel URL: %1"
-
 msgid "Book Analysis"
 msgstr "Kitap Analizi"
+
+msgid "Book Info (AI)"
+msgstr "Kitap Bilgisi (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "İşleyici %1, sağlayıcı %2 için kullanılamıyor."
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "İşleyici bulunamadı: %1. Lütfen configuration.lua dosyanızı kontrol edin."
 
-msgid "Handler: %1"
-msgstr "İşleyici: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Vurgu ve Not Analizi"
 
@@ -731,6 +734,9 @@ msgstr "Geçersiz defter girdisi."
 
 msgid "Invalid notebook filename."
 msgstr "Geçersiz defter dosya adı."
+
+msgid "Justify"
+msgstr "İki yana yasla"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "Model"
 msgid "Model Built-In"
 msgstr "Dahili Model"
 
-msgid "Model replied: %1"
-msgstr "Model yanıtı: %1"
-
 msgid "Model reset: %1"
 msgstr "Model sıfırlandı: %1"
 
 msgid "Model: %1"
 msgstr "Model: %1"
+
+msgid "Models"
+msgstr "Modeller"
 
 msgid "Models: %1"
 msgstr "Modeller: %1"
@@ -818,6 +824,9 @@ msgstr "Etkin sağlayıcı yapılandırılmadı. Lütfen Ayarlar'dan bir tane ek
 
 msgid "No base folder is available for notebooks."
 msgstr "Defterler için temel klasör mevcut değil."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Açık bir kitap yok. Dosya yöneticisinde bir kitaba uzun basın ve Kitap Bilgisi (AI) seçeneğini seçin."
 
 msgid "No common parameters are available for handler %1."
 msgstr "%1 için kullanılabilir parametre yok."
@@ -942,6 +951,9 @@ msgstr "OTA güncellemesi başarısız oldu: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Yalnızca kitap bağlamını kullanmayı seçen istemler tarafından kullanılır (varsayılan olarak: Açıkla, Tarihsel Bağlam, Özetle, Önemli Noktalar ve ELI5). Etkinleştirildiğinde, vurgulanan sayfanın ve komşu sayfaların metni arka plan referansı olarak yapay zekâya gönderilir. Bir metin seçimi gerektirir ve token kullanımını artırır."
 
+msgid "Open"
+msgstr "Aç"
+
 msgid "Open conflict or mystery:"
 msgstr "Çözülmemiş çatışma veya gizem:"
 
@@ -972,6 +984,9 @@ msgstr "Platform"
 msgid "Please enter a note before saving."
 msgstr "Kaydetmeden önce lütfen bir not girin."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Özet istemeden önce lütfen bu kitabı açıp okumaya başlayın."
+
 msgid "Plot Summary"
 msgstr "Konu Özeti"
 
@@ -990,6 +1005,9 @@ msgstr "Baskın duygu durumu/tonu:"
 
 msgid "Protagonist's current objective:"
 msgstr "Başkahramanın şu anki hedefi:"
+
+msgid "Protocol: %1"
+msgstr "Protokol: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Sağlayıcı %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "Hızlı Not"
 msgid "Quick note saved successfully"
 msgstr "Hızlı not başarıyla kaydedildi"
 
+msgid "RTL Layout"
+msgstr "Sağdan sola düzen"
+
 msgid "RTL written Language"
 msgstr "RTL Yazılan Dil"
 
 msgid "Re-immersion"
 msgstr "Hikâyeye Yeniden Dalış"
+
+msgid "Reader settings are not available."
+msgstr "Okuyucu ayarları kullanılamıyor."
 
 msgid "Reasoning Option"
 msgstr "Muhakeme Seçeneği"
@@ -1057,6 +1081,9 @@ msgstr "Muhakeme Seçenekleri - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Özet"
+
+msgid "Recap (AI)"
+msgstr "Özet (AI)"
 
 msgid "Remove"
 msgstr "Kaldır"
@@ -1171,6 +1198,9 @@ msgstr "Ayarlar"
 msgid "Show Follow-up Questions"
 msgstr "Devam Sorularını Göster"
 
+msgid "Show Reasoning"
+msgstr "Akıl yürütmeyi göster"
+
 msgid "Show Reasoning Text"
 msgstr "Akıl Yürütme Metnini Göster"
 
@@ -1265,6 +1295,23 @@ msgstr "Defter, sohbet kayıtlarınızdır: AI yanıtları ve hızlı notlar bur
 msgid "This button creates a quick note with highlighted text."
 msgstr "Bu düğme, vurgulanan metinle hızlı bir not oluşturur."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Bu dosya %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Açmak istediğinizden emin misiniz?\n"
+"\n"
+"Büyük dosyaların açılması biraz zaman alabilir."
+
 msgid "This is a custom prompt"
 msgstr "Bu özel bir istemdir"
 
@@ -1330,6 +1377,9 @@ msgstr "Sorunuzu buraya yazın"
 
 msgid "Type your question here..."
 msgstr "Sorunuzu buraya yazın..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Bilinmeyen hata"

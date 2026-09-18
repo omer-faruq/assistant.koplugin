@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 04:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: اردو (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API مصروف</b>\n"
-"کوششیں %1/%2 ... دوبارہ کوشش"
+"<b>API مصروف ہے</b>\n"
+"کوششیں %1/%2 ... دوبارہ کوشش (%d سیکنڈ میں)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>ماڈل:</b> %3\n"
 "\n"
 "سیٹنگز ڈائیلاگ میں کوئی اور فراہم کنندہ آزمائیں۔"
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API نے ایک خرابی واپس کی</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>شامل کیا گیا</b> [%1 (AI)] ہائی لائٹ مینیو میں۔"
@@ -243,6 +246,9 @@ msgstr "AI جواب دے رہا ہے"
 msgid "API Key"
 msgstr "API کلید"
 
+msgid "API error: %1"
+msgstr "API خرابی: %1"
+
 msgid "API key is required for %1."
 msgstr "%1 کے لیے API کلید درکار ہے۔"
 
@@ -362,11 +368,11 @@ msgstr "بیس URL کا آغاز http:// یا https:// سے ہونا چاہیے�
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "بیس یو آر ایل، مثلاً https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "بیس یو آر ایل: %1"
-
 msgid "Book Analysis"
 msgstr "کتاب کا تجزیہ"
+
+msgid "Book Info (AI)"
+msgstr "کتاب کی معلومات (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "ہینڈلر %1 فراہم کنندہ %2 کے لیے دستیاب نہی
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "ہینڈلر %1 کے لیے نہیں ملا۔ براہ کرم اپنی configuration.lua فائل چیک کریں۔"
 
-msgid "Handler: %1"
-msgstr "ہینڈلر: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "ہائی لائٹ اور نوٹ کا تجزیہ"
 
@@ -731,6 +734,9 @@ msgstr "غلط نوٹ بک اندراج۔"
 
 msgid "Invalid notebook filename."
 msgstr "غلط نوٹ بک فائل نام۔"
+
+msgid "Justify"
+msgstr "دونوں طرف سیدھ"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "ماڈل"
 msgid "Model Built-In"
 msgstr "ماڈل کا بلٹ ان"
 
-msgid "Model replied: %1"
-msgstr "ماڈل نے جواب دیا: %1"
-
 msgid "Model reset: %1"
 msgstr "ماڈل ری سیٹ: %1"
 
 msgid "Model: %1"
 msgstr "ماڈل: %1"
+
+msgid "Models"
+msgstr "ماڈلز"
 
 msgid "Models: %1"
 msgstr "ماڈلز: %1"
@@ -818,6 +824,9 @@ msgstr "کوئی فعال فراہم کنندہ ترتیب نہیں دیا گی�
 
 msgid "No base folder is available for notebooks."
 msgstr "نوٹ بکس کے لیے کوئی بنیادی فولڈر دستیاب نہیں ہے۔"
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "کوئی کتاب کھلی نہیں ہے۔ فائل مینیجر میں کسی کتاب پر طویل دبائیں اور کتاب کی معلومات (AI) منتخب کریں۔"
 
 msgid "No common parameters are available for handler %1."
 msgstr "ہینڈلر %1 کے لیے کوئی عام پیرامیٹرز دستیاب نہیں ہیں۔"
@@ -942,6 +951,9 @@ msgstr "OTA اپ ڈیٹ ناکام رہا: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "صرف ان پرامپٹس کے ذریعے استعمال ہوتا ہے جو کتاب کے سیاق و سباق کو شامل کرنے کا انتخاب کرتے ہیں (بطور ڈیفالٹ: وضاحت، تاریخی سیاق و سباق، خلاصہ، اہم نکات اور ELI5)۔ جب فعال ہو، تو ہائی لائٹ شدہ صفحے اور اس کے ملحقہ صفحات کا متن AI کو پس منظر کے حوالے کے طور پر بھیجا جاتا ہے۔ اس کے لیے متن کا انتخاب ضروری ہے اور یہ ٹوکن کے استعمال میں اضافہ کرتا ہے۔"
 
+msgid "Open"
+msgstr "کھولیں"
+
 msgid "Open conflict or mystery:"
 msgstr "کھلا تنازع یا معمہ:"
 
@@ -972,6 +984,9 @@ msgstr "پلیٹ فارم"
 msgid "Please enter a note before saving."
 msgstr "براہ کرم محفوظ کرنے سے پہلے ایک نوٹ درج کریں۔"
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "براہ کرم خلاصہ کی درخواست کرنے سے پہلے یہ کتاب کھولیں اور پڑھنا شروع کریں۔"
+
 msgid "Plot Summary"
 msgstr "پلاٹ کا خلاصہ"
 
@@ -990,6 +1005,9 @@ msgstr "غالب جذباتی کیفیت/لہجہ:"
 
 msgid "Protagonist's current objective:"
 msgstr "مرکزی کردار کا موجودہ مقصد:"
+
+msgid "Protocol: %1"
+msgstr "پروٹوکول: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "فراہم کنندہ %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "فوری نوٹ"
 msgid "Quick note saved successfully"
 msgstr "فوری نوٹ کامیابی سے محفوظ ہو گیا"
 
+msgid "RTL Layout"
+msgstr "دائیں سے بائیں ترتیب"
+
 msgid "RTL written Language"
 msgstr "RTL تحریری زبان"
 
 msgid "Re-immersion"
 msgstr "دوبارہ غوطہ زنی"
+
+msgid "Reader settings are not available."
+msgstr "ریڈر کی ترتیبات دستیاب نہیں ہیں۔"
 
 msgid "Reasoning Option"
 msgstr "استدلال کا اختیار"
@@ -1057,6 +1081,9 @@ msgstr "استدلال کے اختیارات - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "ری کیپ"
+
+msgid "Recap (AI)"
+msgstr "خلاصہ (AI)"
 
 msgid "Remove"
 msgstr "ہٹائیں"
@@ -1171,6 +1198,9 @@ msgstr "ترتیبات"
 msgid "Show Follow-up Questions"
 msgstr "مزید سوالات دکھائیں"
 
+msgid "Show Reasoning"
+msgstr "استدلال دکھائیں"
+
 msgid "Show Reasoning Text"
 msgstr "استدلال کا متن دکھائیں"
 
@@ -1265,6 +1295,23 @@ msgstr "نوٹ بک آپ کا گفتگو لاگ ہے: AI جوابات اور ف�
 msgid "This button creates a quick note with highlighted text."
 msgstr "یہ بٹن نمایاں کردہ متن کے ساتھ ایک فوری نوٹ تخلیق کرتا ہے۔"
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"یہ فائل %2 ہے:\n"
+"\n"
+"%1\n"
+"\n"
+"کیا آپ واقعی اسے کھولنا چاہتے ہیں؟\n"
+"\n"
+"بڑی فائلیں کھولنے میں کچھ وقت لگ سکتا ہے۔"
+
 msgid "This is a custom prompt"
 msgstr "یہ ایک حسبِ ضرورت پرامپٹ ہے"
 
@@ -1330,6 +1377,9 @@ msgstr "اپنا سوال یہاں لکھیں"
 
 msgid "Type your question here..."
 msgstr "اپنا سوال یہاں لکھیں..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "نامعلوم خرابی"

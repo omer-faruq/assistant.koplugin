@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 04:37+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: සිංහල (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API කාර්යබහුලයි</b>\n"
-"උත්සාහයන් %1/%2 ... නැවත උත්සාහ කරන්නේ"
+"උත්සාහ %1/%2 ... (%d තත්පරයකින්) නැවත උත්සාහ කරන්න"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>ආකෘතිය:</b> %3\n"
 "\n"
 "සැකසුම් සංවාදයේ වෙනත් සැපයුම්කරුවක් උත්සාහ කරන්න."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API මගින් දෝෂයක් ලබා දුන්නේය</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>එකතු කරන ලදී</b> [%1 (AI)] උද්දීපන මෙනුවට."
@@ -243,6 +246,9 @@ msgstr "AI ප්‍රතිචාර දක්වමින් ඇත"
 msgid "API Key"
 msgstr "API යතුර"
 
+msgid "API error: %1"
+msgstr "API දෝෂය: %1"
+
 msgid "API key is required for %1."
 msgstr "%1 සඳහා API යතුර අවශ්‍ය වේ."
 
@@ -362,11 +368,11 @@ msgstr "මූලික URL http:// හෝ https:// වලින් ආරම්
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "මාදිලිය"
 
-msgid "Base URL: %1"
-msgstr "මූලික URL: %1"
-
 msgid "Book Analysis"
 msgstr "පොත් විශ්ලේෂණය"
+
+msgid "Book Info (AI)"
+msgstr "පොත් තොරතුරු (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "%2 සැපයුම්කරු සඳහා %1 හැන්ඩ්ල�
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "%1 සඳහා හැන්ඩ්ලරය හමු නොවීය. කරුණාකර ඔබගේ configuration.lua ගොනුව පරීක්ෂා කරන්න."
 
-msgid "Handler: %1"
-msgstr "හැන්ඩ්ලරය: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "උද්දීපන සහ සටහන් විශ්ලේෂණය"
 
@@ -731,6 +734,9 @@ msgstr "වලංගු නොවන සටහන් පොත් ප්රව�
 
 msgid "Invalid notebook filename."
 msgstr "වලංගු නොවන සටහන් පොත් ගොනු නාමයකි."
+
+msgid "Justify"
+msgstr "දෙපසට සමපාත කරන්න"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "මාදිලිය"
 msgid "Model Built-In"
 msgstr "මාදිලියේ අන්තර්ගත"
 
-msgid "Model replied: %1"
-msgstr "ප්‍රතිචාර API"
-
 msgid "Model reset: %1"
 msgstr "ආකෘතිය යළි සකසන ලදී: %1"
 
 msgid "Model: %1"
 msgstr "ආකෘතිය: %1"
+
+msgid "Models"
+msgstr "ආකෘති"
 
 msgid "Models: %1"
 msgstr "මාදිලි: %1"
@@ -818,6 +824,9 @@ msgstr "සක්‍රීය සේවා සපයන්නෙකු වින
 
 msgid "No base folder is available for notebooks."
 msgstr "සටහන් පොත් සඳහා මූලික ෆෝල්ඩරයක් නොමැත."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "කිසිදු පොතක් විවෘතව නොමැත. ගොනු කළමනාකරු තුළ පොතක් මත දිගු එබීමක් කර, පොත් තොරතුරු (AI) තෝරන්න."
 
 msgid "No common parameters are available for handler %1."
 msgstr "සාමාන්‍ය පරාමිතීන් %1 හසුරුවන්නා සඳහා නොමැත."
@@ -942,6 +951,9 @@ msgstr "OTA යාවත්කාලීනය අසාර්ථකයි: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "පොත් සන්දර්භය භාවිතයට තෝරා ගන්නා ප්‍රොම්ප්ට් සඳහා පමණක් භාවිත වේ (පෙරනිමියෙන්: Explain, Historical Context, Summarize, Key Points සහ ELI5). සක්‍රීය කළ විට, ඉස්මතු කළ පිටුවේ සහ යාබද පිටුවල පෙළ පසුබිම් යොමුවක් ලෙස AI වෙත යවනු ලැබේ. මේ සඳහා පෙළ තේරීමක් අවශ්‍ය වන අතර ටෝකන් භාවිතය වැඩි වේ."
 
+msgid "Open"
+msgstr "විවෘත කරන්න"
+
 msgid "Open conflict or mystery:"
 msgstr "විවෘත ගැටුම හෝ අභිරහස:"
 
@@ -972,6 +984,9 @@ msgstr "වේදිකාව"
 msgid "Please enter a note before saving."
 msgstr "සුරැකීමට පෙර සටහනක් ඇතුළත් කරන්න."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "සාරාංශයක් ඉල්ලීමට පෙර මෙම පොත විවෘත කර කියවීම ආරම්භ කරන්න."
+
 msgid "Plot Summary"
 msgstr "කතා සාරාංශය"
 
@@ -990,6 +1005,9 @@ msgstr "පවතින චිත්තවේගීය තත්ත්වය/ස
 
 msgid "Protagonist's current objective:"
 msgstr "ප්රධාන චරිතයේ වර්තමාන ඉලක්කය:"
+
+msgid "Protocol: %1"
+msgstr "ප්‍රොටෝකෝලය: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "සේවා සපයන්නා %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "ඉක්මන් සටහන"
 msgid "Quick note saved successfully"
 msgstr "ඉක්මන් සටහන සාර්ථකව සුරැකිණි"
 
+msgid "RTL Layout"
+msgstr "RTL පිරිසැලසුම"
+
 msgid "RTL written Language"
 msgstr "RTL ලිඛිත භාෂාව"
 
 msgid "Re-immersion"
 msgstr "නැවත ගිලී යාම"
+
+msgid "Reader settings are not available."
+msgstr "කියවන්නාගේ සැකසුම් ලබාගත නොහැක."
 
 msgid "Reasoning Option"
 msgstr "තර්කන විකල්පය"
@@ -1057,6 +1081,9 @@ msgstr "තර්කන විකල්ප - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "සාරාංශය"
+
+msgid "Recap (AI)"
+msgstr "සාරාංශය (AI)"
 
 msgid "Remove"
 msgstr "ඉවත් කරන්න"
@@ -1172,6 +1199,9 @@ msgstr "සැකසුම්"
 msgid "Show Follow-up Questions"
 msgstr "අනුගාමී ප්‍රශ්න පෙන්වන්න"
 
+msgid "Show Reasoning"
+msgstr "තර්කනය පෙන්වන්න"
+
 msgid "Show Reasoning Text"
 msgstr "තර්කන පෙළ පෙන්වන්න"
 
@@ -1266,6 +1296,23 @@ msgstr "සටහන් පොත ඔබේ සංවාද ලොගයයි: 
 msgid "This button creates a quick note with highlighted text."
 msgstr "මෙම බොත්තම උද්දීපනය කළ පාඨය සමඟ ඉක්මන් සටහනක් නිර්මාණය කරයි."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"මෙම ගොනුව %2:\n"
+"\n"
+"%1\n"
+"\n"
+"එය විවෘත කිරීමට ඔබට විශ්වාසද?\n"
+"\n"
+"විශාල ගොනු විවෘත කිරීමට යම් කාලයක් ගත විය හැක."
+
 msgid "This is a custom prompt"
 msgstr "මෙය අභිරුචි ප්‍රොම්ප්ට් එකකි"
 
@@ -1331,6 +1378,9 @@ msgstr "ඔබේ ප්‍රශ්නය මෙහි ටයිප් කර�
 
 msgid "Type your question here..."
 msgstr "ඔබේ ප්රශ්නය මෙහි ටයිප් කරන්න..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "නොදන්නා දෝෂයකි"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 02:46+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Afrikaans (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API Besig</b>\n"
-"Pogings %1/%2 ... Herprobeer oor"
+"Pogings %1/%2 ... Probeer weer oor (%d sek.)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Model:</b> %3\n"
 "\n"
 "Probeer 'n ander verskaffer in die instellingsdialoog."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API het 'n fout teruggegee</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Bygevoeg</b> [%1 (AI)] by die beklemtoningskieslys."
@@ -238,6 +241,9 @@ msgstr "AI is besig om te antwoord"
 msgid "API Key"
 msgstr "API-sleutel"
 
+msgid "API error: %1"
+msgstr "API-fout: %1"
+
 msgid "API key is required for %1."
 msgstr "API-sleutel word vir %1 vereis."
 
@@ -357,11 +363,11 @@ msgstr "Basis-URL moet met http:// of https:// begin."
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Basis-URL"
 
-msgid "Base URL: %1"
-msgstr "Basis-URL: %1"
-
 msgid "Book Analysis"
 msgstr "Boekanalise"
+
+msgid "Book Info (AI)"
+msgstr "Boekinligting (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -693,9 +699,6 @@ msgstr "Hanteerder %1 is nie beskikbaar vir verskaffer: %2 nie."
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Hanteerder nie gevind vir: %1. Gaan asseblief jou configuration.lua-lêer na."
 
-msgid "Handler: %1"
-msgstr "Hanteerder: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Merker- en nota-analise"
 
@@ -726,6 +729,9 @@ msgstr "Ongeldige notaboekinskrywing."
 
 msgid "Invalid notebook filename."
 msgstr "Ongeldige notaboeklêernaam."
+
+msgid "Justify"
+msgstr "Regverdig"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -778,14 +784,14 @@ msgstr "Model"
 msgid "Model Built-In"
 msgstr "Model ingebou"
 
-msgid "Model replied: %1"
-msgstr "Model het geantwoord: %1"
-
 msgid "Model reset: %1"
 msgstr "Model teruggestel: %1"
 
 msgid "Model: %1"
 msgstr "Model: %1"
+
+msgid "Models"
+msgstr "Modelle"
 
 msgid "Models: %1"
 msgstr "Modelle: %1"
@@ -813,6 +819,9 @@ msgstr "Geen aktiewe verskaffer gekonfigureer nie. Voeg asseblief een by in Inst
 
 msgid "No base folder is available for notebooks."
 msgstr "Geen basismap is beskikbaar vir notaboeke nie."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Geen boek is oop nie. Druk lank op 'n boek in die lêerbestuurder en kies Boekinligting (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Geen algemene parameters is beskikbaar vir die hanteerder %1$s nie."
@@ -937,6 +946,9 @@ msgstr "OTA-opdatering het misluk: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Word slegs gebruik deur prompts wat by boekkonteks aansluit (by verstek: Verduidelik, Historiese Konteks, Opsom, Sleutelpunte en ELI5). Wanneer dit geaktiveer is, word die teks van die uitgeligte bladsy en die aangrensende bladsye as agtergrondverwysing aan die KI gestuur. Vereis 'n tekskeuse en verhoog token-verbruik."
 
+msgid "Open"
+msgstr "Open"
+
 msgid "Open conflict or mystery:"
 msgstr "Oop konflik of raaisel:"
 
@@ -967,6 +979,9 @@ msgstr "Platform"
 msgid "Please enter a note before saving."
 msgstr "Voer asseblief 'n nota in voordat jy stoor."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Maak asseblief hierdie boek oop en begin lees voordat jy 'n opsomming aanvra."
+
 msgid "Plot Summary"
 msgstr "Plotopsomming"
 
@@ -985,6 +1000,9 @@ msgstr "Heersende emosionele toestand/toon:"
 
 msgid "Protagonist's current objective:"
 msgstr "Protagonis se huidige doelwit:"
+
+msgid "Protocol: %1"
+msgstr "Protokol: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Verskaffer %1 %2(%3)"
@@ -1037,11 +1055,17 @@ msgstr "Vinnige nota"
 msgid "Quick note saved successfully"
 msgstr "Vinnige nota suksesvol gestoor"
 
+msgid "RTL Layout"
+msgstr "RTL-uitleg"
+
 msgid "RTL written Language"
 msgstr "RTL-geskrewe taal"
 
 msgid "Re-immersion"
 msgstr "Heronderdompeling"
+
+msgid "Reader settings are not available."
+msgstr "Leserinstellings is nie beskikbaar nie."
 
 msgid "Reasoning Option"
 msgstr "Redeneringsopsie"
@@ -1052,6 +1076,9 @@ msgstr "Redeneringsopsies - %1$s"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Opsomming"
+
+msgid "Recap (AI)"
+msgstr "Opsomming (AI)"
 
 msgid "Remove"
 msgstr "Verwyder"
@@ -1167,6 +1194,9 @@ msgstr "Instellings"
 msgid "Show Follow-up Questions"
 msgstr "Wys opvolgyrae"
 
+msgid "Show Reasoning"
+msgstr "Wys redenasie"
+
 msgid "Show Reasoning Text"
 msgstr "Wys redenasieteks"
 
@@ -1261,6 +1291,23 @@ msgstr "Die notaboek is jou gesprekslog: AI-antwoorde en vinnige notas word daar
 msgid "This button creates a quick note with highlighted text."
 msgstr "Hierdie knoppie skep 'n vinnige nota met uitgeligte teks."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Hierdie lêer is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Is jy seker jy wil dit oopmaak?\n"
+"\n"
+"Om groot lêers oop te maak kan 'n tydjie neem."
+
 msgid "This is a custom prompt"
 msgstr "Dit is 'n aangepaste prompt."
 
@@ -1326,6 +1373,9 @@ msgstr "Tik jou vraag hier"
 
 msgid "Type your question here..."
 msgstr "Tik jou vraag hier..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Onbekende fout"

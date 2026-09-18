@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
-"<b>API Ocupat</b>\n"
-"Încercări %1/%2 ... Reîncercare în"
+"<b>API ocupat</b>\n"
+"Încercări %1/%2 ... Reîncercare în (%d sec.)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Model:</b> %3\n"
 "\n"
 "Încercați alt furnizor în dialogul de setări."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API a returnat o eroare</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Adăugat</b> [%1 (AI)] în meniul de evidențiere."
@@ -243,6 +246,9 @@ msgstr "AI răspunde"
 msgid "API Key"
 msgstr "Cheie API"
 
+msgid "API error: %1"
+msgstr "Eroare API: %1"
+
 msgid "API key is required for %1."
 msgstr "Cheia API este necesară pentru %1."
 
@@ -362,11 +368,11 @@ msgstr "URL-ul de bază trebuie să înceapă cu http:// sau https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "URL de bază, ex. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "URL de bază: %1"
-
 msgid "Book Analysis"
 msgstr "Analiza cărții"
+
+msgid "Book Info (AI)"
+msgstr "Informații carte (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Handler-ul %1 nu este disponibil pentru furnizorul: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Handler-ul nu a fost găsit pentru: %1. Verificați fișierul configuration.lua."
 
-msgid "Handler: %1"
-msgstr "Handler: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Analiza evidențierilor și notelor"
 
@@ -731,6 +734,9 @@ msgstr "Intrare de caiet nevalidă."
 
 msgid "Invalid notebook filename."
 msgstr "Nume de fișier de caiet nevalid."
+
+msgid "Justify"
+msgstr "Justificat"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -784,14 +790,14 @@ msgstr "Model"
 msgid "Model Built-In"
 msgstr "Model încorporat"
 
-msgid "Model replied: %1"
-msgstr "Modelul a răspuns: %1"
-
 msgid "Model reset: %1"
 msgstr "Model resetat: %1"
 
 msgid "Model: %1"
 msgstr "Model: %1"
+
+msgid "Models"
+msgstr "Modele"
 
 msgid "Models: %1"
 msgstr "Modele: %1"
@@ -819,6 +825,9 @@ msgstr "Niciun furnizor activ configurat. Vă rugăm să adăugați unul în Set
 
 msgid "No base folder is available for notebooks."
 msgstr "Nu este disponibil niciun folder de bază pentru caiete."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Nicio carte nu este deschisă. Apăsați lung pe o carte în managerul de fișiere și alegeți Informații carte (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Niciun parametru disponibil pentru %1."
@@ -943,6 +952,9 @@ msgstr "Actualizarea OTA a eșuat: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Folosit doar de prompturile care activează contextul cărții (implicit: Explică, Context istoric, Rezumă, Puncte cheie și ELI5). Când este activat, textul paginii evidențiate și al paginilor adiacente este trimis la AI ca referință de context. Necesită o selecție de text și crește consumul de tokenuri."
 
+msgid "Open"
+msgstr "Deschide"
+
 msgid "Open conflict or mystery:"
 msgstr "Conflict deschis sau mister:"
 
@@ -973,6 +985,9 @@ msgstr "Platformă"
 msgid "Please enter a note before saving."
 msgstr "Vă rugăm să introduceți o notă înainte de salvare."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Vă rugăm să deschideți această carte și să începeți să citiți înainte de a solicita o recapitulare."
+
 msgid "Plot Summary"
 msgstr "Rezumatul acțiunii"
 
@@ -991,6 +1006,9 @@ msgstr "Starea emoțională/tonul predominant:"
 
 msgid "Protagonist's current objective:"
 msgstr "Obiectivul actual al protagonistului:"
+
+msgid "Protocol: %1"
+msgstr "Protocol: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Furnizor %1 %2(%3)"
@@ -1043,11 +1061,17 @@ msgstr "Notă rapidă"
 msgid "Quick note saved successfully"
 msgstr "Nota rapidă a fost salvată cu succes."
 
+msgid "RTL Layout"
+msgstr "Aspect RTL"
+
 msgid "RTL written Language"
 msgstr "Limbă scrisă RTL"
 
 msgid "Re-immersion"
 msgstr "Re-imersare"
+
+msgid "Reader settings are not available."
+msgstr "Setările cititorului nu sunt disponibile."
 
 msgid "Reasoning Option"
 msgstr "Opțiune de raționament"
@@ -1058,6 +1082,9 @@ msgstr "Opțiuni de raționament - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Rezumat"
+
+msgid "Recap (AI)"
+msgstr "Recapitulare (AI)"
 
 msgid "Remove"
 msgstr "Eliminați"
@@ -1173,6 +1200,9 @@ msgstr "Setări"
 msgid "Show Follow-up Questions"
 msgstr "Afișează întrebările de continuare"
 
+msgid "Show Reasoning"
+msgstr "Afișează raționamentul"
+
 msgid "Show Reasoning Text"
 msgstr "Afișează textul de raționament"
 
@@ -1267,6 +1297,23 @@ msgstr "Caietul este jurnalul conversațiilor dvs.: răspunsurile AI și notițe
 msgid "This button creates a quick note with highlighted text."
 msgstr "Acest buton creează o notă rapidă cu textul evidențiat."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Acest fișier este %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Sigur doriți să-l deschideți?\n"
+"\n"
+"Deschiderea fișierelor mari poate dura ceva timp."
+
 msgid "This is a custom prompt"
 msgstr "Acesta este un prompt personalizat."
 
@@ -1332,6 +1379,9 @@ msgstr "Scrie întrebarea ta aici"
 
 msgid "Type your question here..."
 msgstr "Scrie întrebarea ta aici..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Eroare necunoscută"

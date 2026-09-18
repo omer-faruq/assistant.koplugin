@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API заняты</b>\n"
-"Спробы %1/%2 ... Паўтор праз"
+"Спробы %1/%2 ... Паўтор праз (%d с)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Мадэль:</b> %3\n"
 "\n"
 "Паспрабуйце іншага правайдэра ў дыялогу наладак."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API вярнуў памылку</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Дададзена</b> [%1 (AI)] у меню вылучэння."
@@ -243,6 +246,9 @@ msgstr "ШІ адказвае"
 msgid "API Key"
 msgstr "API-ключ"
 
+msgid "API error: %1"
+msgstr "Памылка API: %1"
+
 msgid "API key is required for %1."
 msgstr "Для %1 патрабуецца API-ключ."
 
@@ -362,11 +368,11 @@ msgstr "Базавы URL павінен пачынацца з http:// або htt
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "Базавы URL, напр. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "Базавы URL: %1"
-
 msgid "Book Analysis"
 msgstr "Аналіз кнігі"
+
+msgid "Book Info (AI)"
+msgstr "Інфармацыя пра кнігу (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Апрацоўшчык %1 недаступны для правайдэр
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Апрацоўшчык не знойдзены для: %1. Калі ласка, праверце ваш файл configuration.lua."
 
-msgid "Handler: %1"
-msgstr "Апрацоўшчык: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Аналіз вылучэнняў і нататак"
 
@@ -731,6 +734,9 @@ msgstr "Несапраўдны запіс сшытка."
 
 msgid "Invalid notebook filename."
 msgstr "Несапраўднае імя файла сшытка."
+
+msgid "Justify"
+msgstr "Па шырыні"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -784,14 +790,14 @@ msgstr "Мадэль"
 msgid "Model Built-In"
 msgstr "Убудаваны ў мадэль"
 
-msgid "Model replied: %1"
-msgstr "Мадэль адказала: %1"
-
 msgid "Model reset: %1"
 msgstr "Мадэль скінута: %1"
 
 msgid "Model: %1"
 msgstr "Мадэль: %1"
+
+msgid "Models"
+msgstr "Мадэлі"
 
 msgid "Models: %1"
 msgstr "Мадэлі: %1"
@@ -819,6 +825,9 @@ msgstr "Не настроены актыўны правайдар. Калі ла
 
 msgid "No base folder is available for notebooks."
 msgstr "Няма базавай тэчкі для сшыткаў."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Ніводная кніга не адкрыта. Доўга націсніце кнігу ў файлавым менеджары і выберыце «Інфармацыя пра кнігу (AI)»."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Няма даступных агульных параметраў для апрацоўшчыка %1."
@@ -943,6 +952,9 @@ msgstr "OTA-абнаўленне не атрымалася: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Выкарыстоўваецца толькі промптамі, якія ўключаюць кантэкст кнігі (па змаўчанні: Тлумачэнне, Гістарычны кантэкст, Канспект, Ключавыя пункты і ELI5). Калі ўключана, тэкст выдзеленай старонкі і суседніх старонак адпраўляецца ШІ як даведачная інфармацыя. Патрабуе вылучэння тэксту і павялічвае выдаткаванне токенаў."
 
+msgid "Open"
+msgstr "Адкрыць"
+
 msgid "Open conflict or mystery:"
 msgstr "Адкрыты канфлікт ці загадка:"
 
@@ -973,6 +985,9 @@ msgstr "Платформа"
 msgid "Please enter a note before saving."
 msgstr "Калі ласка, увядзіце нататку перад захаваннем."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Калі ласка, адкрыйце гэтую кнігу і пачніце чытаць, перш чым запытваць пераказ."
+
 msgid "Plot Summary"
 msgstr "Кароткі змест"
 
@@ -991,6 +1006,9 @@ msgstr "Пераважны эмацыйны стан/тон:"
 
 msgid "Protagonist's current objective:"
 msgstr "Бягучая мэта галоўнага героя:"
+
+msgid "Protocol: %1"
+msgstr "Пратакол: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Правайдар %1 %2(%3)"
@@ -1043,11 +1061,17 @@ msgstr "Хуткая нататка"
 msgid "Quick note saved successfully"
 msgstr "Хуткая нататка паспяхова захавана"
 
+msgid "RTL Layout"
+msgstr "Выкладка справа налева"
+
 msgid "RTL written Language"
 msgstr "Мова напісання справа налева"
 
 msgid "Re-immersion"
 msgstr "Паўторнае акунанне"
+
+msgid "Reader settings are not available."
+msgstr "Налады чыталкі недаступныя."
 
 msgid "Reasoning Option"
 msgstr "Параметр разважання"
@@ -1058,6 +1082,9 @@ msgstr "Параметры разважання - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Агляд"
+
+msgid "Recap (AI)"
+msgstr "Пераказ (AI)"
 
 msgid "Remove"
 msgstr "Выдаліць"
@@ -1173,6 +1200,9 @@ msgstr "Налады"
 msgid "Show Follow-up Questions"
 msgstr "Паказваць дадатковыя пытанні"
 
+msgid "Show Reasoning"
+msgstr "Паказаць разважанні"
+
 msgid "Show Reasoning Text"
 msgstr "Паказваць тэкст разважанняў"
 
@@ -1267,6 +1297,23 @@ msgstr "Нататнік — гэта ваш журнал размоў: адка
 msgid "This button creates a quick note with highlighted text."
 msgstr "Гэтая кнопка стварае хуткую нататку з вылучаным тэкстам."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Гэты файл — %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Вы ўпэўнены, што хочаце адкрыць яго?\n"
+"\n"
+"Адкрыццё вялікіх файлаў можа заняць некаторы час."
+
 msgid "This is a custom prompt"
 msgstr "Гэта карыстальніцкі промпт."
 
@@ -1332,6 +1379,9 @@ msgstr "Увядзіце ваша пытанне тут"
 
 msgid "Type your question here..."
 msgstr "Увядзіце ваша пытанне тут..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Невядомая памылка"

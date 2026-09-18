@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 04:11+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Bahasa Melayu (AI translation)\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API Sibuk</b>\n"
-"Cubaan %1/%2 ... Cuba semula dalam"
+"Percubaan %1/%2 ... Cuba semula dalam (%d saat)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Model:</b> %3\n"
 "\n"
 "Cuba pembekal lain dalam dialog tetapan."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API memulangkan ralat</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Ditambah</b> [%1 (AI)] ke Menu Serlahan."
@@ -243,6 +246,9 @@ msgstr "AI sedang memberi respons"
 msgid "API Key"
 msgstr "Kunci API"
 
+msgid "API error: %1"
+msgstr "Ralat API: %1"
+
 msgid "API key is required for %1."
 msgstr "Kunci API diperlukan untuk %1."
 
@@ -362,11 +368,11 @@ msgstr "URL asas mesti bermula dengan http:// atau https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "URL Asas, cth. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "URL Asas: %1"
-
 msgid "Book Analysis"
 msgstr "Analisis Buku"
+
+msgid "Book Info (AI)"
+msgstr "Maklumat Buku (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "Pengendali %1 tidak tersedia untuk pembekal: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "Pengendali tidak ditemui untuk: %1. Sila semak fail configuration.lua anda."
 
-msgid "Handler: %1"
-msgstr "Pengendali: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Analisis Sorotan & Nota"
 
@@ -731,6 +734,9 @@ msgstr "Entri buku nota tidak sah."
 
 msgid "Invalid notebook filename."
 msgstr "Nama fail buku nota tidak sah."
+
+msgid "Justify"
+msgstr "Justifikasi"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -782,14 +788,14 @@ msgstr "Model"
 msgid "Model Built-In"
 msgstr "Model Terbina Dalam"
 
-msgid "Model replied: %1"
-msgstr "Model membalas: %1"
-
 msgid "Model reset: %1"
 msgstr "Model diset semula: %1"
 
 msgid "Model: %1"
 msgstr "Model: %1"
+
+msgid "Models"
+msgstr "Model"
 
 msgid "Models: %1"
 msgstr "Model: %1"
@@ -817,6 +823,9 @@ msgstr "Tiada pembekal aktif dikonfigurasikan. Sila tambah satu dalam Tetapan."
 
 msgid "No base folder is available for notebooks."
 msgstr "Tiada folder asas tersedia untuk buku nota."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "Tiada buku dibuka. Tekan lama pada buku dalam pengurus fail dan pilih Maklumat Buku (AI)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "Tiada parameter biasa tersedia untuk pengendali %1."
@@ -941,6 +950,9 @@ msgstr "Kemas kini OTA gagal: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Hanya digunakan oleh prompt yang memilih untuk menggunakan konteks buku (secara lalai: Jelaskan, Konteks Sejarah, Ringkaskan, Perkara Penting dan ELI5). Apabila diaktifkan, teks halaman yang disorot dan halaman bersebelahan dihantar kepada AI sebagai rujukan latar belakang. Memerlukan pemilihan teks dan meningkatkan penggunaan token."
 
+msgid "Open"
+msgstr "Buka"
+
 msgid "Open conflict or mystery:"
 msgstr "Konflik atau misteri terbuka:"
 
@@ -971,6 +983,9 @@ msgstr "Platform"
 msgid "Please enter a note before saving."
 msgstr "Sila masukkan nota sebelum menyimpan."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Sila buka buku ini dan mula membaca sebelum meminta rekap."
+
 msgid "Plot Summary"
 msgstr "Ringkasan Plot"
 
@@ -989,6 +1004,9 @@ msgstr "Keadaan emosi/nada yang dominan:"
 
 msgid "Protagonist's current objective:"
 msgstr "Objektif semasa protagonis:"
+
+msgid "Protocol: %1"
+msgstr "Protokol: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Pembekal %1 %2(%3)"
@@ -1041,11 +1059,17 @@ msgstr "Nota Pantas"
 msgid "Quick note saved successfully"
 msgstr "Nota pantas berjaya disimpan"
 
+msgid "RTL Layout"
+msgstr "Susun Atur RTL"
+
 msgid "RTL written Language"
 msgstr "Bahasa Tulisan RTL"
 
 msgid "Re-immersion"
 msgstr "Imersi Semula"
+
+msgid "Reader settings are not available."
+msgstr "Tetapan pembaca tidak tersedia."
 
 msgid "Reasoning Option"
 msgstr "Pilihan Penaakulan"
@@ -1056,6 +1080,9 @@ msgstr "Pilihan Penaakulan - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Rekap"
+
+msgid "Recap (AI)"
+msgstr "Rekap (AI)"
 
 msgid "Remove"
 msgstr "Buang"
@@ -1171,6 +1198,9 @@ msgstr "Tetapan"
 msgid "Show Follow-up Questions"
 msgstr "Papar Soalan Susulan"
 
+msgid "Show Reasoning"
+msgstr "Tunjukkan Penaakulan"
+
 msgid "Show Reasoning Text"
 msgstr "Papar Teks Penaakulan"
 
@@ -1265,6 +1295,23 @@ msgstr "Buku nota ialah log perbualan anda: jawapan AI dan nota pantas ditambahk
 msgid "This button creates a quick note with highlighted text."
 msgstr "Butang ini mencipta nota pantas dengan teks yang diserlahkan."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Fail ini ialah %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Adakah anda pasti mahu membukanya?\n"
+"\n"
+"Membuka fail besar mungkin mengambil sedikit masa."
+
 msgid "This is a custom prompt"
 msgstr "Ini ialah prompt tersuai"
 
@@ -1330,6 +1377,9 @@ msgstr "Taip soalan anda di sini"
 
 msgid "Type your question here..."
 msgstr "Taip soalan anda di sini..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Ralat tidak diketahui"

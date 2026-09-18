@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API ocupada</b>\n"
-"Intents %1/%2 ... Reintent en"
+"Intents %1/%2 ... Reintent en (%d s)"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>Model:</b> %3\n"
 "\n"
 "Proveu un altre proveïdor al diàleg de configuració."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>L'API ha retornat un error</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>Afegit</b> [%1 (AI)] al menú de subratllats."
@@ -243,6 +246,9 @@ msgstr "La IA està responent"
 msgid "API Key"
 msgstr "Clau de l'API"
 
+msgid "API error: %1"
+msgstr "Error de l'API: %1"
+
 msgid "API key is required for %1."
 msgstr "Es requereix una clau d'API per a %1."
 
@@ -362,11 +368,11 @@ msgstr "L'URL base ha de començar amb http:// o https://"
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "URL base, p. ex. https://example.com/v1"
 
-msgid "Base URL: %1"
-msgstr "URL base: %1"
-
 msgid "Book Analysis"
 msgstr "Anàlisi del llibre"
+
+msgid "Book Info (AI)"
+msgstr "Informació del llibre (IA)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "El gestor %1 no està disponible per al proveïdor: %2"
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "No s'ha trobat el gestor per a: %1. Comproveu el fitxer configuration.lua."
 
-msgid "Handler: %1"
-msgstr "Gestor: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "Anàlisi de ressaltats i notes"
 
@@ -731,6 +734,9 @@ msgstr "Entrada de quadern no vàlida."
 
 msgid "Invalid notebook filename."
 msgstr "Nom de fitxer de quadern no vàlid."
+
+msgid "Justify"
+msgstr "Justifica"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -783,14 +789,14 @@ msgstr "Model"
 msgid "Model Built-In"
 msgstr "Model integrat"
 
-msgid "Model replied: %1"
-msgstr "El model ha respost: %1"
-
 msgid "Model reset: %1"
 msgstr "Model restablert: %1"
 
 msgid "Model: %1"
 msgstr "Model: %1"
+
+msgid "Models"
+msgstr "Models"
 
 msgid "Models: %1"
 msgstr "Models: %1"
@@ -818,6 +824,9 @@ msgstr "No hi ha cap proveïdor actiu configurat. Afegeix-ne un a Configuració.
 
 msgid "No base folder is available for notebooks."
 msgstr "No hi ha cap carpeta base disponible per als quaderns."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "No hi ha cap llibre obert. Mantén premut un llibre al gestor de fitxers i tria Informació del llibre (IA)."
 
 msgid "No common parameters are available for handler %1."
 msgstr "No hi ha paràmetres comuns disponibles per al gestor %1."
@@ -942,6 +951,9 @@ msgstr "Ha fallat l'actualització OTA: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Només l'utilitzen els prompts que activen el context del llibre (per defecte: Explica, Context històric, Resumeix, Punts clau i ELI5). Quan s'activa, el text de la pàgina ressaltada i de les pàgines adjacents s'envia a la IA com a referència de fons. Requereix una selecció de text i augmenta el consum de tokens."
 
+msgid "Open"
+msgstr "Obre"
+
 msgid "Open conflict or mystery:"
 msgstr "Conflicte o misteri obert:"
 
@@ -972,6 +984,9 @@ msgstr "Plataforma"
 msgid "Please enter a note before saving."
 msgstr "Si us plau, escriu una nota abans de desar."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "Obre aquest llibre i comença a llegir-lo abans de demanar un resum."
+
 msgid "Plot Summary"
 msgstr "Resum de la trama"
 
@@ -990,6 +1005,9 @@ msgstr "Estat emocional/to predominant:"
 
 msgid "Protagonist's current objective:"
 msgstr "Objectiu actual del protagonista:"
+
+msgid "Protocol: %1"
+msgstr "Protocol: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "Proveïdor %1 %2(%3)"
@@ -1042,11 +1060,17 @@ msgstr "Nota ràpida"
 msgid "Quick note saved successfully"
 msgstr "Nota ràpida desada correctament"
 
+msgid "RTL Layout"
+msgstr "Disposició RTL"
+
 msgid "RTL written Language"
 msgstr "Idioma d'escriptura RTL"
 
 msgid "Re-immersion"
 msgstr "Reimmersió"
+
+msgid "Reader settings are not available."
+msgstr "La configuració del lector no està disponible."
 
 msgid "Reasoning Option"
 msgstr "Opció de raonament"
@@ -1057,6 +1081,9 @@ msgstr "Opcions de raonament - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "Recapitulació"
+
+msgid "Recap (AI)"
+msgstr "Resum (IA)"
 
 msgid "Remove"
 msgstr "Elimina"
@@ -1170,6 +1197,9 @@ msgstr "Configuració"
 msgid "Show Follow-up Questions"
 msgstr "Mostra les preguntes de seguiment"
 
+msgid "Show Reasoning"
+msgstr "Mostra el raonament"
+
 msgid "Show Reasoning Text"
 msgstr "Mostra el text de raonament"
 
@@ -1264,6 +1294,23 @@ msgstr "El quadern és el vostre registre de conversa: les respostes de la IA i 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Aquest botó crea una nota ràpida amb el text ressaltat."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"Aquest fitxer és %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Segur que el vols obrir?\n"
+"\n"
+"Obrir fitxers grans pot trigar una estona."
+
 msgid "This is a custom prompt"
 msgstr "Això és una indicació personalitzada"
 
@@ -1329,6 +1376,9 @@ msgstr "Escriu la teva pregunta aquí"
 
 msgid "Type your question here..."
 msgstr "Escriu la teva pregunta aquí..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "Error desconegut"

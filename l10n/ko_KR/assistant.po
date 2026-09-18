@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 11:29+0800\n"
+"POT-Creation-Date: 2026-09-18 15:03+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,10 +67,10 @@ msgstr ""
 
 msgid ""
 "<b>API Busy</b>\n"
-"Attempts %1/%2 ... Retry in"
+"Attempts %1/%2 ... Retry in (%d secs)"
 msgstr ""
 "<b>API 사용 중</b>\n"
-"시도 %1/%2 ... 재시도까지"
+"시도 %1/%2 ... %d초 후 재시도"
 
 msgid ""
 "<b>API Error</b>\n"
@@ -88,6 +88,9 @@ msgstr ""
 "<b>모델:</b> %3\n"
 "\n"
 "설정 대화상자에서 다른 공급자를 시도하세요."
+
+msgid "<b>API returned an error</b>"
+msgstr "<b>API에서 오류가 반환되었습니다</b>"
 
 msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
 msgstr "<b>추가됨</b>: [%1 (AI)]을(를) 하이라이트 메뉴에 추가했습니다."
@@ -243,6 +246,9 @@ msgstr "AI가 응답 중입니다"
 msgid "API Key"
 msgstr "API 키"
 
+msgid "API error: %1"
+msgstr "API 오류: %1"
+
 msgid "API key is required for %1."
 msgstr "%1에 API 키가 필요합니다."
 
@@ -362,11 +368,11 @@ msgstr "기본 URL은 http:// 또는 https://로 시작해야 합니다."
 msgid "Base URL, e.g. https://example.com/v1"
 msgstr "기본 URL (예: https://example.com)"
 
-msgid "Base URL: %1"
-msgstr "기본 URL: %1"
-
 msgid "Book Analysis"
 msgstr "책 분석"
+
+msgid "Book Info (AI)"
+msgstr "책 정보 (AI)"
 
 #. @translators book_info section headers and sub-fields
 msgid "Book Information"
@@ -698,9 +704,6 @@ msgstr "핸들러 %1은(는) 공급자 %2에서 사용할 수 없습니다."
 msgid "Handler not found for: %1. Please check your configuration.lua file."
 msgstr "%1에 대한 핸들러를 찾을 수 없습니다. configuration.lua 파일을 확인하세요."
 
-msgid "Handler: %1"
-msgstr "핸들러: %1"
-
 msgid "Highlight & Note Analysis"
 msgstr "하이라이트 및 메모 분석"
 
@@ -731,6 +734,9 @@ msgstr "잘못된 노트북 항목입니다."
 
 msgid "Invalid notebook filename."
 msgstr "잘못된 노트북 파일 이름입니다."
+
+msgid "Justify"
+msgstr "양쪽 정렬"
 
 msgid "KOReader"
 msgstr "KOReader"
@@ -782,14 +788,14 @@ msgstr "모델"
 msgid "Model Built-In"
 msgstr "모델 내장"
 
-msgid "Model replied: %1"
-msgstr "모델 응답: %1"
-
 msgid "Model reset: %1"
 msgstr "모델 초기화: %1"
 
 msgid "Model: %1"
 msgstr "모델: %1"
+
+msgid "Models"
+msgstr "모델"
 
 msgid "Models: %1"
 msgstr "모델: %1"
@@ -817,6 +823,9 @@ msgstr "활성 공급자가 구성되어 있지 않습니다. 설정에서 추�
 
 msgid "No base folder is available for notebooks."
 msgstr "노트북에 사용할 기본 폴더가 없습니다."
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgstr "열려 있는 책이 없습니다. 파일 관리자에서 책을 길게 눌러 책 정보 (AI)를 선택하세요."
 
 msgid "No common parameters are available for handler %1."
 msgstr "모델"
@@ -941,6 +950,9 @@ msgstr "OTA 업데이트 실패: %1"
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "책 컨텍스트를 사용하도록 설정된 프롬프트에서만 사용됩니다(기본값: 설명, 역사적 배경, 요약, 핵심 포인트, ELI5). 활성화하면 강조 표시된 페이지와 인접 페이지의 텍스트가 배경 참조 자료로 AI에 전송됩니다. 텍스트를 선택해야 하며 토큰 사용량이 증가합니다."
 
+msgid "Open"
+msgstr "열기"
+
 msgid "Open conflict or mystery:"
 msgstr "해결되지 않은 갈등 또는 미스터리:"
 
@@ -971,6 +983,9 @@ msgstr "플랫폼"
 msgid "Please enter a note before saving."
 msgstr "저장하기 전에 메모를 입력하세요."
 
+msgid "Please open this book and start reading before requesting a recap."
+msgstr "리캡을 요청하기 전에 이 책을 열고 읽기를 시작하세요."
+
 msgid "Plot Summary"
 msgstr "줄거리 요약"
 
@@ -989,6 +1004,9 @@ msgstr "지배적인 감정 상태/분위기:"
 
 msgid "Protagonist's current objective:"
 msgstr "주인공의 현재 목표:"
+
+msgid "Protocol: %1"
+msgstr "프로토콜: %1"
 
 msgid "Provider %1 %2(%3)"
 msgstr "제공자 %1 %2(%3)"
@@ -1041,11 +1059,17 @@ msgstr "빠른 메모"
 msgid "Quick note saved successfully"
 msgstr "빠른 메모가 성공적으로 저장되었습니다"
 
+msgid "RTL Layout"
+msgstr "RTL 레이아웃"
+
 msgid "RTL written Language"
 msgstr "RTL 작성 언어"
 
 msgid "Re-immersion"
 msgstr "재몰입"
+
+msgid "Reader settings are not available."
+msgstr "리더 설정을 사용할 수 없습니다."
 
 msgid "Reasoning Option"
 msgstr "추론 옵션"
@@ -1056,6 +1080,9 @@ msgstr "추론 옵션 - %1"
 #. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
 msgid "Recap"
 msgstr "요약"
+
+msgid "Recap (AI)"
+msgstr "리캡 (AI)"
 
 msgid "Remove"
 msgstr "제거"
@@ -1170,6 +1197,9 @@ msgstr "설정"
 msgid "Show Follow-up Questions"
 msgstr "후속 질문 표시"
 
+msgid "Show Reasoning"
+msgstr "추론 과정 표시"
+
 msgid "Show Reasoning Text"
 msgstr "추론 텍스트 표시"
 
@@ -1264,6 +1294,23 @@ msgstr "노트북은 대화 로그입니다. AI 답변과 빠른 메모가 여�
 msgid "This button creates a quick note with highlighted text."
 msgstr "이 버튼은 강조 표시된 텍스트로 빠른 메모를 만듭니다."
 
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+"이 파일은 %2입니다:\n"
+"\n"
+"%1\n"
+"\n"
+"정말 열겠습니까?\n"
+"\n"
+"큰 파일을 여는 데 시간이 걸릴 수 있습니다."
+
 msgid "This is a custom prompt"
 msgstr "사용자 정의 프롬프트입니다."
 
@@ -1329,6 +1376,9 @@ msgstr "질문을 입력하세요"
 
 msgid "Type your question here..."
 msgstr "여기에 질문을 입력하세요..."
+
+msgid "URL: %1"
+msgstr "URL: %1"
 
 msgid "Unknown error"
 msgstr "알 수 없는 오류"
