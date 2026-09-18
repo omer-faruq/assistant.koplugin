@@ -13,7 +13,6 @@ local DataStorage = require("datastorage")
 local ConfirmBox  = require("ui/widget/confirmbox")
 local T 		      = require("ffi/util").template
 local koutil = require("util")
-local TextViewer = require("ui/widget/textviewer")
 local ButtonDialog = require("ui/widget/buttondialog")
 local MultiInputDialog = require("ui/widget/multiinputdialog")
 local ffiutil = require("ffi/util")
@@ -240,7 +239,7 @@ function Assistant:addToMainMenu(menu_items)
                           })
                           return
                         end
-                        TextViewer.openFile(notebookfile)
+                        Notebook.openNotebookFile(notebookfile)
                       end,
                       other_buttons = { other_buttons },
                     }

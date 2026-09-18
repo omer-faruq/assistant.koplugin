@@ -791,4 +791,147 @@ function M.showFolderPicker(assistant, options)
     return path_chooser
 end
 
+-- Notebook Markdown viewer: a TextViewer subclass for notebook .md files.
+--
+-- Everything from the upstream TextViewer is inherited untouched (buttons,
+-- title bar, search, big-file confirm dialog, image base directory and the
+-- Plain-text toggle); only two things change:
+--   1. Markdown is rendered with the plugin parser (assistant_mdparser,
+--      hoedown when available; otherwise the native path is kept).
+--   2. Table CSS rides the outer ScrollHtmlWidget CSS channel and the
+--      content is re-set so MuPDF picks it up.
+-- No global monkey-patching. TextViewer is resolved with pcall so this
+-- module stays loadable where the UI stack is unavailable (then
+-- M.NotebookViewer is nil).
+local tv_ok, TextViewerBase = pcall(require, "ui/widget/textviewer")
+local md_ok, MDParser = pcall(require, "assistant_mdparser")
+if not md_ok then
+    MDParser = nil
+end
+
+if tv_ok and TextViewerBase then
+    M.NotebookViewer = TextViewerBase:extend{}
+
+    -- Black-and-white table rules for the outer CSS channel (subset of the
+    -- assistant viewer table rules in assistant_viewer.lua).
+    M.NotebookViewer.TABLE_CSS = [[
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table td, table th {
+    border: 1px solid black;
+}
+table th {
+    background-color: #bbb;
+}
+]]
+
+    -- Render Markdown with the plugin parser. Returns nil when hoedown is
+    -- unavailable so callers keep the native TextViewer path.
+    function M.NotebookViewer.renderMarkdown(text)
+        -- The pure-Lua fallback Parser is a plain function without the
+        -- _is_hoedown flag, hence the type check.
+        if type(MDParser) ~= "table" or not MDParser._is_hoedown then
+            return nil
+        end
+        local ok, html = pcall(MDParser, text)
+        if not ok or type(html) ~= "string" or html == "" then
+            logger.warn("NotebookViewer: plugin render failed, keeping native path")
+            return nil
+        end
+        return html
+    end
+
+    -- Re-set the scroll content with the table CSS appended. Changing the
+    -- css field alone does not re-render; setContent re-embeds the
+    -- stylesheet into the outer <head><style> that MuPDF honors.
+    function M.NotebookViewer:_injectTableCSS()
+        local scroll = self.scroll_widget
+        if scroll == nil or scroll.htmlbox_widget == nil then
+            return
+        end
+        local ok = pcall(function()
+            scroll.css = (scroll.css or "") .. M.NotebookViewer.TABLE_CSS
+            scroll.htmlbox_widget:setContent(
+                scroll.html_body, scroll.css, scroll.default_font_size,
+                scroll.is_xhtml, nil,
+                self.file and util.splitFilePathName(self.file))
+            if type(scroll._updateScrollBar) == "function" then
+                scroll:_updateScrollBar()
+            end
+        end)
+        if not ok then
+            logger.warn("NotebookViewer: table CSS injection failed")
+        end
+    end
+
+    function M.NotebookViewer:init(reinit)
+        -- Restore the Markdown source on re-entry: the Plain-text toggle
+        -- runs reinit, and self.text may currently hold rendered HTML.
+        if self._nb_md_source then
+            self.text = self._nb_md_source
+            self.text_format = self._nb_saved_format
+            self._nb_md_source = nil
+            self._nb_saved_format = nil
+        end
+        self._nb_md_rendered = false
+        local format = self.text_format
+            or (self.file and string.lower(util.getFileNameSuffix(self.file))) or ""
+        if format == "md" and not self.force_txt then
+            local html = M.NotebookViewer.renderMarkdown(self.text)
+            if html then
+                self._nb_md_source = self.text
+                self._nb_saved_format = self.text_format
+                self.text = html
+                self.text_format = "html"
+                self._nb_md_rendered = true
+            end
+        end
+        TextViewerBase.init(self, reinit)
+        if not self.is_txt and (self._nb_md_rendered or self.text_format == "md") then
+            self:_injectTableCSS()
+        end
+    end
+
+    -- Mirror of TextViewer.openFile (400KB confirm dialog included), but
+    -- builds a NotebookViewer instead of a TextViewer.
+    function M.NotebookViewer.openFile(file)
+        local function _openFile(file_path)
+            local file_handle = io.open(file_path, "rb")
+            if not file_handle then return end
+            local file_content = file_handle:read("*all")
+            file_handle:close()
+            UIManager:show(M.NotebookViewer:new{
+                file = file_path,
+                title_multilines = true,
+                text = file_content,
+                text_type = "file_content",
+            })
+        end
+        local attr = lfs.attributes(file)
+        if attr then
+            if attr.size > 400000 then
+                local ConfirmBox = require("ui/widget/confirmbox")
+                local BD = require("ui/bidi")
+                UIManager:show(ConfirmBox:new{
+                    text = T(_("This file is %2:\n\n%1\n\nAre you sure you want to open it?\n\nOpening big files may take some time."),
+                        BD.filepath(file), util.getFriendlySize(attr.size)),
+                    ok_text = _("Open"),
+                    ok_callback = function()
+                        _openFile(file)
+                    end,
+                })
+            else
+                _openFile(file)
+            end
+        end
+    end
+end
+
+-- Thin wrapper so callers never touch the viewer class directly.
+function M.openNotebookFile(file)
+    return M.NotebookViewer.openFile(file)
+end
+
 return M
