@@ -203,7 +203,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
 
       return user_message:get()
     elseif message.role == "assistant" then
-      local assistant_content, answer_type
+      local assistant_content, answer_type, reasoning_section
       local kw = ASUtils.get_attr(message, "search_keywords")
       if kw then
         answer_type = _("Search")
@@ -226,8 +226,22 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
         if show_for_this then
           assistant_content = ASUtils.process_suggestions(assistant_content)
         end
+
+        -- Reasoning is stored inline at the top of the content as the
+        -- established `#### ※ Deeply Thought` fenced block
+        -- (assistant_querier.lua). Split it out so it renders before the
+        -- `### ✦ Response` header instead of after it.
+        local reasoning_block, reasoning_text, body = assistant_content:match(
+            "^(#### [^\n]*%s*```reasoning%s*([%s%S]-)%s*```%s*%-%-%-%s*)([%s%S]*)$")
+        if reasoning_block and reasoning_text and reasoning_text:find("%S") then
+          reasoning_section = reasoning_block
+          assistant_content = body
+        end
       end
 
+      if reasoning_section then
+        return string.format("%s### ✦ %s\n\n%s\n\n", reasoning_section, answer_type, assistant_content)
+      end
       return string.format("### ✦ %s\n\n%s\n\n", answer_type,assistant_content)
     end
     return "" -- Should not happen for valid roles

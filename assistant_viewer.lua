@@ -86,9 +86,9 @@ blockquote, dd {
 }
 
 pre {
-    margin: 1em 0 3em 3em;
+    margin: 1em 0 1em 3em;
     font-size: 0.8em;
-    color: gray;
+    color: #333;
     white-space: pre-wrap;
     overflow-wrap: break-word;
 }
