@@ -259,9 +259,10 @@ class Config:
         # OpenCode Go/Zen (API_ENDPOINT containing "opencode.ai") requires an
         # `x-opencode-session` header carrying a stable opaque id for
         # routing/prompt caching. The Makefile generates one id per run and
-        # passes it via AI_OPENCODE_SESSION (explicit env wins); direct
+        # passes it via RANDOM_SESSION_ID (explicit env wins); direct
         # script runs without it fall back to a per-process id below.
-        self.opencode_session: str = os.environ.get("AI_OPENCODE_SESSION", "")
+        # Other endpoints never see this value (see _build_headers).
+        self.opencode_session: str = os.environ.get("RANDOM_SESSION_ID", "")
 
         # Model recommendations for bulk gettext translation (50+ languages,
         # many low-resource). Flash/mini-tier models are preferred: the quality
@@ -305,7 +306,7 @@ class Config:
 
 
 # Fallback id sent as `x-opencode-session` when neither the Makefile nor the
-# user provides AI_OPENCODE_SESSION (e.g. direct `./ai_translate.py <lang>`
+# user provides RANDOM_SESSION_ID (e.g. direct `./ai_translate.py <lang>`
 # runs). Same 16-char URL-safe style as the Makefile id. Note parallel make
 # jobs would each get their own id from this fallback, so prefer going
 # through make for shared caching/routing.
