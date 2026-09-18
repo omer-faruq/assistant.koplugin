@@ -49,13 +49,9 @@ ifeq ($(JOBS),)
 JOBS := $(shell if echo '$(MAKEFLAGS)' | grep -qE ' (-j|--jobs)( |$$)'; then nproc; else echo 4; fi)
 endif
 
-# One stable random session id per make invocation, shared by every
-# (possibly parallel) ai-translate job. ai_translate.py sends it as the
-# `x-opencode-session` header, but only when API_ENDPOINT contains
-# "opencode.ai". A 16-char URL-safe token (mixed case + digits) is enough:
-# opencode only needs a stable opaque string for routing, not a full UUID.
-# Explicit environment / command line (RANDOM_SESSION_ID=...) wins.
-RANDOM_SESSION_ID ?= $(shell python3 -c "import secrets; print(secrets.token_urlsafe(12))")
+# Stable `l10n`+alphanumeric session id per make run, shared by parallel jobs.
+# Sent as `x-opencode-session` only for opencode.ai endpoints.
+RANDOM_SESSION_ID ?= $(shell python3 -c "import secrets, string; print('l10n' + ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(12)))")
 export RANDOM_SESSION_ID
 
 # ── Targets ───────────────────────────────────────────────────────────
