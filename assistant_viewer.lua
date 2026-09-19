@@ -145,7 +145,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    font-size: 0.7em;
+    font-size: 0.85em;
 }
 
 table td, table th {

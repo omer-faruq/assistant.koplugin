@@ -818,9 +818,13 @@ if tv_ok and TextViewerBase then
     -- Black-and-white table rules for the outer CSS channel (subset of the
     -- assistant viewer table rules in assistant_viewer.lua).
     M.NotebookViewer.TABLE_CSS = [[
+p {
+    padding-left: 1em;
+}
 table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 0.85em;
 }
 table td, table th {
     border: 1px solid black;
