@@ -1325,12 +1325,7 @@ function M.lookup_mode_for_selection(text)
   return word_count <= WORD_LOOKUP_MAX_WORDS and "dictionary" or "translate"
 end
 
--- Strip inline <think> reasoning and optionally wrap it as a fence.
--- Plain case-sensitive `</think>` search only: no `</think>` means the text
--- is returned unchanged (an unclosed `<think>` alone is a no-op). Otherwise
--- the text splits at the FIRST close: the part before it (minus one optional
--- leading `<think>`) is the reasoning, the trimmed remainder is the answer.
--- Structured reasoning-channel text is merged in front.
+-- Split text at the first </think> into reasoning and answer.
 -- @param ret string answer text
 -- @param structured string|nil reasoning-channel text (may be nil or empty)
 -- @param show_reasoning boolean wrap reasoning as ```reasoning fence when true, strip when false
