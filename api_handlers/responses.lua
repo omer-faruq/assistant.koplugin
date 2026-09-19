@@ -586,7 +586,7 @@ function ResponsesHandler:query(message_history, query_option)
 
     if not status then
         if code == BaseHandler.CODE_CANCELLED then
-            return nil, response
+            return nil, BaseHandler.CODE_CANCELLED
         end
         -- Try to surface a structured error message from network-level failures
         if response and #response > 0 then

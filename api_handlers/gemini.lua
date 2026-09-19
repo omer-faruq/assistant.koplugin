@@ -231,7 +231,7 @@ function GeminiHandler:query(message_history, query_option)
     local success, code, response = self:makeRequest(url_sync, headers, json.encode(requestBody))
     if not success then
         if code == BaseHandler.CODE_CANCELLED then
-            return nil, response
+            return nil, BaseHandler.CODE_CANCELLED
         end
         logger.warn("Gemini API request failed:",
             "error:", tostring(response):sub(1, 200),

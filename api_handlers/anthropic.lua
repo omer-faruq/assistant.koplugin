@@ -182,7 +182,7 @@ function AnthropicHandler:query(message_history, query_option)
 
     if not success then
         if code == BaseHandler.CODE_CANCELLED then
-            return nil, response
+            return nil, BaseHandler.CODE_CANCELLED
         end
         local err_msg = self:extractErrorMessage(response)
         if err_msg then
