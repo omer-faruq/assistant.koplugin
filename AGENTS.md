@@ -12,6 +12,7 @@ Guidance for AI agents working in `assistant.koplugin` (KOReader AI assistant pl
 ## Environment
 
 - Debian/Ubuntu. Install KOReader from the official `.deb`; the runtime lands at `/usr/lib/koreader/`.
+- The plugin targets the latest KOReader stable only, currently `2026.07.1`. If the local install differs, fix the environment first — never adapt code to old or hypothetical upstream behavior.
 - Read `/usr/lib/koreader/` (`frontend/`, `plugins/`, the bundled `luajit`) for upstream APIs and reference implementations — **never modify anything there**.
 - `configuration.lua` is gitignored and holds real secrets: **never read or modify it**. Update `configuration.sample.lua` instead.
 
@@ -62,6 +63,7 @@ Full flow, handlers, config, key files: `docs/ARCHITECTURE.md`.
 12. **Scope**: exclude `l10n/` from code searches/reads (40+ languages, no code insight). Polish non-native English wording into idiomatic English without changing intent.
 13. **Widgets**: reuse existing scaffolding (`ChatGPTViewer`, `assistant_dialog.lua`); read `docs/UI_DIALOGS.md` before hand-building dialogs. KOReader widget internals only as a last resort.
 14. **Upstream helpers**: when a helper exists in `/usr/lib/koreader/` (`frontend/`, `ffi/util`, plugins), reuse it; drop the replaced local helper outright.
+15. **EmmyLua annotations**: new functions with more than 3 params must document every param/return in `---` EmmyLua style (`@param name type desc`, `@return type desc`), as in `assistant_utils.fetchJSON`.
 
 ## Git / Versioning
 
@@ -71,5 +73,5 @@ Full flow, handlers, config, key files: `docs/ARCHITECTURE.md`.
 
 ## Translation
 
-- Translation scripts are developer-run: **never** run `make template/update/translate/ai-translate`. Only `make check` when explicitly requested.
+- Translation scripts are developer-run: **never** run `make template/update/translate/ai-translate`. Only `make check` when explicitly requested. `make stats` is read-only (per-language DONE%/FUZZY/UNTRANSLATED table) — after changing many user-facing strings, run it and report the pending load (languages affected, remaining entries) to the developer.
 - Domain `assistant` (`assistant.pot`/`.po`/`.mo`); MO files are committed. See `l10n/Makefile`.
