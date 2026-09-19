@@ -1325,6 +1325,35 @@ function M.lookup_mode_for_selection(text)
   return word_count <= WORD_LOOKUP_MAX_WORDS and "dictionary" or "translate"
 end
 
+-- Strip inline <think> reasoning and optionally wrap it as a fence.
+-- Plain case-sensitive `</think>` search only: no `</think>` means the text
+-- is returned unchanged (an unclosed `<think>` alone is a no-op). Otherwise
+-- the text splits at the FIRST close: the part before it (minus one optional
+-- leading `<think>`) is the reasoning, the trimmed remainder is the answer.
+-- Structured reasoning-channel text is merged in front.
+-- @param ret string answer text
+-- @param structured string|nil reasoning-channel text (may be nil or empty)
+-- @param show_reasoning boolean wrap reasoning as ```reasoning fence when true, strip when false
+-- @return string final answer text
+function M.strip_think_tags(ret, structured, show_reasoning)
+    if type(ret) ~= "string" then return ret end
+    local close_s, close_e = ret:find("</think>", 1, true)
+    if not close_s then return ret end
+    local reasoning = ret:sub(1, close_s - 1):gsub("^%s*<think>%s*", "", 1)
+    local text = ret:sub(close_e + 1):gsub("^%s+", "", 1)
+    local combined = {}
+    if type(structured) == "string" and structured ~= "" then
+        table.insert(combined, structured)
+    end
+    if reasoning ~= "" then
+        table.insert(combined, reasoning)
+    end
+    if #combined == 0 then return text end
+    if not show_reasoning then return text end
+    reasoning = table.concat(combined, "\n"):gsub("```", "\n")
+    return T("```reasoning\n%1\n```\n\n%2", reasoning, text)
+end
+
 -- Resolve where a selection should go once the lookup mode is known.
 -- choice = stored user setting: nil = never asked, true = smart lookup
 -- enabled, false = disabled. Short ("dictionary") selections may prompt the

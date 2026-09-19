@@ -58,17 +58,13 @@ local function fmt_opts(history, idx, settings, default_config)
     }
 end
 
--- Inline mirror of strip_reasoning (assistant_viewer.lua): titled div
--- block, bare fence, <think> shapes.
+-- Strip helper for the viewer pipeline: titled div block first, then the
+-- bare fence the querier stores; think-tag handling is the real
+-- ASUtils.strip_think_tags (assistant_utils.lua, single source of truth).
 local function strip_reasoning(text)
     text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
     text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
-    text = text:gsub("<think>[%s%S]-</think>", "")
-    if not text:find("<think>", 1, true) then
-        local close = text:find("</think>", 1, true)
-        if close then text = text:sub(close + 8):gsub("^%s+", "", 1) end
-    end
-    return text
+    return ASUtils.strip_think_tags(text, nil, false)
 end
 
 local function test(name, fn)

@@ -626,6 +626,12 @@ function Querier:query(message_history, title)
 
         until type(res) == "string" or err ~= nil
         UIManager:close(self.handler:resetTrapWidget())
+
+        -- Non-stream bypasses processStream: strip inline <think> here.
+        if res ~= "" then
+            local show_reasoning = self.settings:readSetting("show_reasoning", false)
+            res = ASUtils.strip_think_tags(res, nil, show_reasoning)
+        end
     end
 
     if err == self.handler.CODE_CANCELLED then
@@ -1044,35 +1050,8 @@ function Querier:processStream(bgQuery, trunk_callback)
     end
 
     local show_reasoning = self.settings:readSetting("show_reasoning", false)
-
-    if show_reasoning and #reasoning_content_buffer > 0 then
-        local reasoning = reasoning_content_buffer:get()
-        if self.assistant.settings:readSetting("auto_prompt_suggest", false) then
-            -- incase the reasoning text included the suggestion tag
-            reasoning = reasoning:gsub("</?suggestions>", "")
-        end
-        reasoning = reasoning:gsub("```", "\n")
-        ret = T("```reasoning\n%1\n```\n\n%2", reasoning, ret)
-    else
-        -- Fallback for local models (Qwen3/QwQ/R1/GLM via bare Ollama/llama.cpp):
-        -- thinking arrives inline in <think> tags with no structured channel.
-        -- Some models drop the opening tag (or pad before it), so anything
-        -- through the first </think> is thinking. Always strip it;
-        -- show_reasoning only controls whether it is displayed.
-        local think_close = ret:find("</think>", 1, true)
-        if think_close then
-            local think_open = ret:find("<think>", 1, true)
-            if not think_open or think_open < think_close then
-                local rs = think_open and think_open + 7 or 1
-                local reasoning = ret:sub(rs, think_close - 1)
-                ret = ret:sub(think_close + 8):gsub("^%s+", "", 1)
-                if show_reasoning then
-                    reasoning = reasoning:gsub("```", "\n")
-                    ret = T("```reasoning\n%1\n```\n\n%2", reasoning, ret)
-                end
-            end
-        end
-    end
+    local structured = #reasoning_content_buffer > 0 and reasoning_content_buffer:get() or nil
+    ret = ASUtils.strip_think_tags(ret, structured, show_reasoning)
     return ret, nil
 end
 

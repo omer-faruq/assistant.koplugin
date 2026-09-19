@@ -995,26 +995,30 @@ end
 -- Strip a ```reasoning fenced block and any raw <think> block, so hiding
 -- reasoning also applies to text received while it was shown. Two shapes:
 -- the titled block the dialog renders, and the bare fence the querier
--- stores. Raw <think> only arrives via the non-stream path, which bypasses
--- the querier's <think> fallback. No-op when absent.
+-- stores. Raw <think> arrives via stored non-stream text; all pairs are
+-- stripped anywhere and a stray close drops everything through the last
+-- close when no opener remains. No-op when absent.
 local function strip_reasoning(text)
   text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
   text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
-  text = text:gsub("<think>[%s%S]-</think>", "")
-  -- Models that drop the opening tag: a leading run through the first
-  -- </think> is thinking without an opener; drop it as well.
-  if not text:find("<think>", 1, true) then
-    local close = text:find("</think>", 1, true)
-    if close then text = text:sub(close + 8):gsub("^%s+", "", 1) end
-  end
-  return text
+  return ASUtils.strip_think_tags(text, nil, false)
+end
+
+-- Wrap leftover raw <think> blocks as a ```reasoning fence so the show=true
+-- path never renders raw tags for non-stream stored text the querier missed.
+-- No-op when no complete block remains (unclosed <think> stays untouched).
+local function wrap_raw_think(text)
+  return ASUtils.strip_think_tags(text, nil, true)
 end
 
 function ChatGPTViewer:_renderMarkdown()
   local source = self.text
-  if type(source) == "string"
-      and not self.assistant.settings:readSetting("show_reasoning", false) then
-    source = strip_reasoning(source)
+  if type(source) == "string" then
+    if self.assistant.settings:readSetting("show_reasoning", false) then
+      source = wrap_raw_think(source)
+    else
+      source = strip_reasoning(source)
+    end
   end
   local html_body, err = MD(source)
   if err then

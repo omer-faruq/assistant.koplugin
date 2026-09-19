@@ -12,24 +12,10 @@ local function test(name, fn)
     return { name = name, fn = fn }
 end
 
--- Inline copy of the <think> fallback branch in Querier:processStream
--- (assistant_querier.lua). The real method needs a subprocess mock, so only
--- its pure split/wrap logic is tested here, per AGENTS.md testing policy.
-local function split_think(ret, show_reasoning)
-    local think_close = ret:find("</think>", 1, true)
-    if think_close then
-        local think_open = ret:find("<think>", 1, true)
-        if not think_open or think_open < think_close then
-            local rs = think_open and think_open + 7 or 1
-            local reasoning = ret:sub(rs, think_close - 1)
-            ret = ret:sub(think_close + 8):gsub("^%s+", "", 1)
-            if show_reasoning then
-                reasoning = reasoning:gsub("```", "\n")
-                ret = "```reasoning\n" .. reasoning .. "\n```\n\n" .. ret
-            end
-        end
-    end
-    return ret
+-- Think-tag handling lives in ASUtils.strip_think_tags
+-- (assistant_utils.lua, single source of truth); exercise it directly.
+local function split_think(ret, show_reasoning, structured)
+    return ASUtils.strip_think_tags(ret, structured, show_reasoning)
 end
 
 -- Inline mirror of the reasoning split in AssistantDialog:formatSingleMessage
@@ -91,16 +77,47 @@ local tests = {
         assert.matches(split_think(input, true), "The answer%.$")
     end),
 
-    test("think: mid-text tags split at first close", function()
+    test("think: mid-text splits at first close", function()
         local input = "Talk about <think>tags</think> here."
         assert.equal(split_think(input, true),
-            "```reasoning\ntags\n```\n\nhere.")
+            "```reasoning\nTalk about <think>tags\n```\n\nhere.")
         assert.equal(split_think(input, false), "here.")
     end),
 
     test("think: unclosed tag leaves content untouched", function()
         local input = "<think>Never ending thought."
         assert.equal(split_think(input, true), input)
+    end),
+
+    test("think: single split only, later blocks left in place", function()
+        local input = "<think>first</think> mid <think>second</think> answer"
+        assert.equal(split_think(input, false), "mid <think>second</think> answer")
+        assert.equal(split_think(input, true),
+            "```reasoning\nfirst\n```\n\nmid <think>second</think> answer")
+    end),
+
+    test("think: uppercase tags pass through untouched", function()
+        local input = "<THINK >loud thinking</THINK >\n\nThe answer."
+        assert.equal(split_think(input, true), input)
+        assert.equal(split_think(input, false), input)
+    end),
+
+    test("think: stray close splits at first close", function()
+        local input = "Real answer prefix </think> <think>thinking</think> rest"
+        assert.equal(split_think(input, false), "<think>thinking</think> rest")
+        assert.equal(split_think(input, true),
+            "```reasoning\nReal answer prefix \n```\n\n<think>thinking</think> rest")
+    end),
+
+    test("think: structured plus inline both stripped from answer", function()
+        local input = "<think>inline thinking</think>\n\nThe answer."
+        local out = split_think(input, true, "structured thinking")
+        assert.matches(out, "structured thinking")
+        assert.matches(out, "inline thinking")
+        assert.matches(out, "The answer%.$")
+        assert.notMatches(out, "<think>")
+        assert.equal(split_think(input, false, "structured thinking"),
+            "The answer.")
     end),
 
     test("split: bare fence splits", function()

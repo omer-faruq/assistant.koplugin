@@ -11,6 +11,7 @@
 -- mdparser platform probe runs.
 local helper = require("test.helper")
 local assert = helper.assert
+local ASUtils = helper.ASUtils
 
 -- assistant_mdparser probes Device:isDesktop/isEmulator/isAndroid at load;
 -- the headless stub only carries screen metrics, so add the predicates.
@@ -39,17 +40,13 @@ local function read_source(name)
     return src
 end
 
--- Inline mirror of strip_reasoning (assistant_viewer.lua): titled div block
--- first, then the bare fence the querier stores, then <think> shapes.
+-- Strip helper for the viewer pipeline: titled div block first, then the
+-- bare fence the querier stores; think-tag handling is the real
+-- ASUtils.strip_think_tags (assistant_utils.lua, single source of truth).
 local function strip_reasoning(text)
     text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
     text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
-    text = text:gsub("<think>[%s%S]-</think>", "")
-    if not text:find("<think>", 1, true) then
-        local close = text:find("</think>", 1, true)
-        if close then text = text:sub(close + 8):gsub("^%s+", "", 1) end
-    end
-    return text
+    return ASUtils.strip_think_tags(text, nil, false)
 end
 
 -- Inline mirror of the puremd unwrap (assistant_viewer.lua _renderMarkdown):
