@@ -112,6 +112,19 @@ function Querier:getProviderLabel(provider_setting, provider_name)
     return provider_name
 end
 
+--- Snapshot the provider/model pair naming one query.
+--- Read once per query: the loading toast, stream dialog and error box then
+--- always name the provider/model the request was frozen with, even if the
+--- shared handler singleton is updated mid-flight (the model picker writes
+--- the singleton without refreshing the deep-copied provider_setting).
+--- @return table identity { label: string, model: string }
+function Querier:getRequestIdentity()
+    return {
+        label = self:getProviderLabel() or "?",
+        model = self.handler and self.handler.model or "?",
+    }
+end
+
 --- Load provider model for the Querier.
 --- @param provider_name string
 --- @param force boolean|nil Re-read and re-sync even when this provider is
@@ -195,8 +208,9 @@ function Querier:showError(err, message_history)
     if self.user_interrupted then
         dialog = InfoMessage:new{ timeout = 3, text = err }
     else
-        local provider = self:getProviderLabel() or "?"
-        local model = self.handler and self.handler.model or "?"
+        local identity = self.last_request_identity or self:getRequestIdentity()
+        local provider = identity.label
+        local model = identity.model
         local text = ASUtils.bold_format(
             T(_("<b>API Error</b>\n%1\n\n<b>Provider:</b> %2\n<b>Model:</b> %3\n\nTry another provider in the settings dialog."),
               err or _("Unknown error"), provider, model)
@@ -326,6 +340,12 @@ function Querier:query(message_history, title)
                           and user_setting_ws or "none",
     }
 
+    -- Freeze the display pair once: every toast, dialog and error box of
+    -- this query names it, so a mid-flight provider/model switch cannot
+    -- desync what the user sees from what the frozen request carries.
+    local request_identity = self:getRequestIdentity()
+    self.last_request_identity = request_identity
+
     local is_added_maximum_prompt = false
 
     -- reuseable function for both strem mode / non-strem mode
@@ -415,7 +435,7 @@ function Querier:query(message_history, title)
                 break
             end
 
-            local ok, content, third = self:showStremDialog(bg_fn, request_title)
+            local ok, content, third = self:showStremDialog(bg_fn, request_title, request_identity)
             if not ok then
                 -- cancelled or stream error
                 res = nil
@@ -538,8 +558,8 @@ function Querier:query(message_history, title)
             loading_title = T("<b>%1</b>", _("Querying AI ..."))
         end
         local notify = ASUtils.bold_format(
-            T("%1\n☁️ %2\n⚡ %3%4", loading_title,
-                self:getProviderLabel(), self.handler.model,
+            T("%1\n✦ %2\n⚡ %3%4", loading_title,
+                request_identity.label, request_identity.model,
                 query_option.use_websearch ~= "none" and tool_notice or "")
         )
         local infomsg = InfoMessage:new{ icon = "book.opened", text = notify }
@@ -595,7 +615,7 @@ function Querier:query(message_history, title)
                 local follow_msg = InfoMessage:new{
                     icon = "book.opened",
                     text = ASUtils.bold_format(
-                        T("<b>%1</b>\n☁️ %2\n⚡ %3", _("Composing answer ..."), self:getProviderLabel(), self.handler.model)
+                        T("<b>%1</b>\n✦ %2/<b>%3</b>", _("Composing answer ..."), request_identity.label, request_identity.model)
                     ),
                 }
                 UIManager:show(follow_msg)
@@ -621,7 +641,7 @@ function Querier:query(message_history, title)
     end
     return res
 end
-function Querier:showStremDialog(res, request_title)
+function Querier:showStremDialog(res, request_title, request_identity)
 
     self.user_interrupted = false -- reset the stream interrupted flag
     local streamDialog
@@ -655,7 +675,7 @@ function Querier:showStremDialog(res, request_title)
     streamDialog = InputDialog:new{
         title = request_title or _("AI is responding"),
         description = ASUtils.bold_format(
-            T("☁ %1/<b>%2</b>", self:getProviderLabel(), self.handler.model)
+            T("✦ %1/<b>%2</b>", request_identity.label, request_identity.model)
         ),
         inputtext_class = StreamText, -- use our custom InputText class
         input_face = Font:getFace("infofont", self.settings:readSetting("response_font_size") or 20),
