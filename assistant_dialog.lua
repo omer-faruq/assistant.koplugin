@@ -164,7 +164,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
     if not message then return "" end
     if message.role == "user" then
       local user_message = strbuf.new()
-      user_message:put(T(_("### %1 Question\n"), "☺"))
+      user_message:put(T(_('<div class="assistant-label">%1 Question</div>\n\n'), "☺"))
 
       if title and title ~= "" then
         user_message:putf("➤ ‹ %s ›\n", title)
@@ -235,16 +235,16 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
         local reasoning_text, body = assistant_content:match(
             "^```reasoning%s*([%s%S]-)%s*```%s*([%s%S]*)$")
         if reasoning_text and reasoning_text:find("%S") then
-          reasoning_section = T("#### ※ %1\n\n```reasoning\n%2\n```\n\n---\n\n",
-              _("Deeply Thought"), reasoning_text)
+          reasoning_section = T(_('<div class="assistant-label assistant-label--thought">%1 Deeply Thought</div>\n\n```reasoning\n%2\n```\n\n---\n\n'),
+              "※", reasoning_text)
           assistant_content = body
         end
       end
 
       if reasoning_section then
-        return string.format("%s### ✦ %s\n\n%s\n\n", reasoning_section, answer_type, assistant_content)
+        return reasoning_section .. T(_('<div class="assistant-label">%1 %2</div>\n\n%3\n\n'), "✦", answer_type, assistant_content)
       end
-      return string.format("### ✦ %s\n\n%s\n\n", answer_type,assistant_content)
+      return T(_('<div class="assistant-label">%1 %2</div>\n\n%3\n\n'), "✦", answer_type, assistant_content)
     end
     return "" -- Should not happen for valid roles
   end
@@ -289,7 +289,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
   local last_user_message = message_history[#message_history - 1]
   local last_assistant_message = message_history[#message_history]
 
-  return previous_text .. "------------\n\n" ..
+  return previous_text .. "---\n\n" ..
       formatSingleMessage(last_user_message, title, #message_history - 1) .. formatSingleMessage(last_assistant_message, title, #message_history)
 end
 

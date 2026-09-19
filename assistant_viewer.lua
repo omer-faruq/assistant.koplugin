@@ -118,6 +118,18 @@ h2 {
     font-size: 1.2em;
 }
 
+.assistant-label {
+    padding-left: 0;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin: 0.8em 0 0.3em;
+}
+
+.assistant-label--thought {
+    font-size: 0.85em;
+    margin-top: 0.4em;
+}
+
 ul li {
     list-style-type: disc !important;
 }
@@ -986,7 +998,7 @@ end
 -- stores. Raw <think> only arrives via the non-stream path, which bypasses
 -- the querier's <think> fallback. No-op when absent.
 local function strip_reasoning(text)
-  text = text:gsub("#### [^\n]*%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*", "")
+  text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
   text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
   text = text:gsub("<think>[%s%S]-</think>", "")
   -- Models that drop the opening tag: a leading run through the first
@@ -1016,6 +1028,9 @@ function ChatGPTViewer:_renderMarkdown()
       html_body = html_body:gsub('<a href="#q:',
           '<a class="suggestion-link" href="#q:')
     end
+    -- puremd wraps raw HTML blocks in <p>: unwrap container labels so the
+    -- assistant-label CSS applies without paragraph indent (hoedown no-op).
+    html_body = html_body:gsub('<p>%s*<div class="(assistant%-label[^"]*)">(.-)</div>%s*</p>', '<div class="%1">%2</div>')
   end
   return html_body
 end
