@@ -550,19 +550,18 @@ function Querier:query(message_history, title)
         -- NON-STREAM PATH  — may loop for tool calls
         -- ---------------------------------------------------------------
         local tool_notice = T("\n🌐 %1", ToolExecutor.ToolToText(query_option.use_websearch))
-        -- First line names the request; only the request name is bold.
-        local loading_title
-        if request_title then
-            loading_title = T(_("Loading for <b>%1</b> ..."), request_title)
-        else
-            loading_title = T("<b>%1</b>", _("Querying AI ..."))
+        -- Loading toast: fixed headline, request title line (blank without
+        -- a title), provider/model line; websearch notice appended when on.
+        local title_line = ""
+        if request_title and request_title ~= "" then
+            title_line = T("☺ %1", request_title)
         end
         local notify = ASUtils.bold_format(
-            T("%1\n✦ %2\n⚡ %3%4", loading_title,
-                request_identity.label, request_identity.model,
+            T("<b>%1</b>\n%2\n✦ %3/<b>%4</b>%5", _("Composing answer ..."),
+                title_line, request_identity.label, request_identity.model,
                 query_option.use_websearch ~= "none" and tool_notice or "")
         )
-        local infomsg = InfoMessage:new{ icon = "book.opened", text = notify }
+        local infomsg = InfoMessage:new{ icon = "book.opened", text = notify, face = Font:getFace("smallinfofont") }
         UIManager:show(infomsg)
         self.handler:setTrapWidget(infomsg)
 
@@ -614,6 +613,7 @@ function Querier:query(message_history, title)
                 UIManager:close(self.handler:resetTrapWidget())
                 local follow_msg = InfoMessage:new{
                     icon = "book.opened",
+                    face = Font:getFace("smallinfofont"),
                     text = ASUtils.bold_format(
                         T("<b>%1</b>\n✦ %2/<b>%3</b>", _("Composing answer ..."), request_identity.label, request_identity.model)
                     ),
