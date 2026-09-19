@@ -2,7 +2,7 @@
 -- Usage: ./test/runui.sh markdown_css
 --
 -- SAMPLE is shared with the headless display test
--- (test/test_markdown_css.lua) via test/markdown_css_sample.lua: the first
+-- (test/test_markdown_css.lua) via test/markdown_css_sample.md (plain text,
 -- block keeps the generic LLM shapes (h1-h6/lists/tables/code/CJK/footnote)
 -- for CSS eyeballing, the tail is the two-round dialog output
 -- (Question/Thought/Response divs, reasoning fence, --- separators, Search
@@ -20,7 +20,9 @@ end
 local wb = require("test/wbuilder")
 local UIManager = wb.UIManager
 local ChatGPTViewer = require("assistant_viewer")
-local SAMPLE = require("test.markdown_css_sample")
+local sample_file = io.open(project_root .. "/test/markdown_css_sample.md", "r")
+local SAMPLE = sample_file:read("*a")
+sample_file:close()
 
 -- Minimal assistant mock: just enough for ChatGPTViewer:init().
 -- Notebook stays disabled (doc_settings set), Add Note skipped (no ui).

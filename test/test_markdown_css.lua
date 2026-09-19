@@ -1,7 +1,7 @@
 -- test_markdown_css.lua
 -- Display test for the dialog output shapes eyeballed via
 -- test/markdown_css.lua: renders the shared two-round sample
--- (test/markdown_css_sample.lua, same div/fence/---/keyword shapes
+-- (test/markdown_css_sample.md, same div/fence/---/keyword shapes
 -- AssistantDialog:_createResultText emits) through the real
 -- assistant_mdparser MD() and asserts what the viewer shows.
 -- Headless-safe: the widget-heavy assistant_dialog.lua and
@@ -28,7 +28,6 @@ if device.isAndroid == nil then
 end
 
 local MD = require("assistant_mdparser")
-local SAMPLE = require("test.markdown_css_sample")
 
 local project_root = debug.getinfo(1).source:match("@(.*/)test/")
 
@@ -39,6 +38,9 @@ local function read_source(name)
     f:close()
     return src
 end
+
+-- Shared sample is a plain .md file: paste new text straight in, no escaping.
+local SAMPLE = read_source("test/markdown_css_sample.md")
 
 -- Strip helper for the viewer pipeline: titled div block first, then the
 -- bare fence the querier stores; think-tag handling is the real
