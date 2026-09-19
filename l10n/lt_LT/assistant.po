@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - p. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" knygos santrauka, suskirstyta į konkrečius skyrius, tokius kaip Veikėjai, Vietos, Temos, Terminai ir sąvokos, Chronologija ir Pakartotinis įsigilinimas."
 
-msgid "### %1 Question\n"
-msgstr "### %1 klausimas\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Jums gali būti įdomios šios temos:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Pridėti šį mygtuką prie pažymėjimo meniu?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI užrašų failas:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Dar nesukonfigūruotas joks teikėjas.</b>\n"
 "Pridėkite teikėją nustatymuose arba configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Užrašų knygelės failas:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametrai</b>"
 
@@ -197,6 +194,43 @@ msgstr "Pagrindinis URL"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Nežinomas funkcijos tipas:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Gilus mąstymas</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Klausimas</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Yra nauja %1 papildinio versija (%2). Prašome atnaujinti!"
 
@@ -214,6 +248,43 @@ msgstr "AI žodynas"
 
 msgid "AI Language: "
 msgstr "AI kalba: "
+
+msgid "AI Note Name"
+msgstr "AI užrašo pavadinimas"
+
+msgid "AI Notes"
+msgstr "AI užrašai"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI užrašai (AI pokalbių žurnalas)"
+
+msgid "AI Notes Folder"
+msgstr "AI užrašų aplankas"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI užrašų aplankas: %1"
+
+msgid "AI Notes Settings"
+msgstr "AI užrašų nustatymai"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"AI užrašų aplanko kelias:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI užrašai yra jūsų pokalbių žurnalas: prie jo pridedami AI atsakymai ir greitosios pastabos. Galite sukurti kelis AI užrašus, kad galėtumėte tvarkyti savo žurnalus."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "AI užrašų kelias nėra katalogas: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "AI užrašų išsaugojimas nepavyko. Tęsiama..."
+
+msgid "AI Notes: %1"
+msgstr "AI užrašai: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI atsako"
+
+msgid "AI note name cannot be empty."
+msgstr "AI užrašo pavadinimas negali būti tuščias."
+
+msgid "AI note name cannot contain '..'."
+msgstr "AI užrašo pavadinime negali būti '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "AI užrašo pavadinime negali būti kelio atskyriklių."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "AI užrašo pavadinimas negali baigtis tarpu arba tašku."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "AI užrašo pavadinime yra simbolių, kurių nepalaiko failų sistema."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "AI užrašo pavadinimas yra rezervuotas failų sistemos."
+
+msgid "AI note name must be text."
+msgstr "AI užrašo pavadinimas turi būti tekstas."
+
+msgid "AI note path is not a file: %1"
+msgstr "AI užrašo kelias nėra failas: %1"
+
+msgid "AI note path is unavailable."
+msgstr "AI užrašo kelias nepasiekiamas."
 
 msgid "API Key"
 msgstr "API raktas"
@@ -295,8 +393,8 @@ msgstr ""
 "Pridėkite teikėjus iš pagrindinio meniu:\n"
 "%1 -> AI asistentas -> Nustatymai -> Teikėjo API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Knygos paryškinimų, pastabų ir užrašų knygelės turinio analizė."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Iš knygos surinktų jūsų pažymėjimų, pastabų ir AI užrašų turinio analizė."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Pridėti ankstesnį tekstą"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automatinė suvestinė atidarant ilgai neskaitytas knygas"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Automatiškai išsaugoti pokalbius užrašų knygelėje"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Automatiškai išsaugoti pokalbius į AI užrašus"
 
 msgid "Base URL"
 msgstr "Pagrindinis URL"
@@ -415,8 +513,8 @@ msgstr "Tikrinama, ar yra naujinimų..."
 msgid "Choose Definition Sections"
 msgstr "Pasirinkti apibrėžimų skyrius"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Pasirinkite, į kurią užrašų knygą bus išsaugomi jūsų užrašai."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Pasirinkite AI užrašą, į kurį bus išsaugomos jūsų pastabos."
 
 msgid "Clear"
 msgstr "Išvalyti"
@@ -436,8 +534,8 @@ msgstr "Konfigūracija nerasta. Pirmiausia nustatykite configuration.lua."
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Konfigūruoti AI LLM atsakymo kalbą. Pagal numatytuosius nustatymus naudojama KOReader sąsajos kalba."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Nustatytas užrašų knygų aplankas nepasiekiamas: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Nustatytas AI užrašų aplankas nepasiekiamas: %1"
 
 msgid "Connection test successful."
 msgstr "Ryšio testas sėkmingas."
@@ -461,8 +559,8 @@ msgstr "Kontekstinės pastabos / apmąstymai"
 msgid "Contradictions / Open Questions"
 msgstr "Prieštaravimai / atviri klausimai"
 
-msgid "Conversation is saved to notebook"
-msgstr "Pokalbis išsaugotas į užrašų knygą"
+msgid "Conversation is saved to AI Notes"
+msgstr "Pokalbis išsaugomas į AI užrašus"
 
 msgid "Copy"
 msgstr "Kopijuoti"
@@ -478,42 +576,42 @@ msgstr "Pagrindiniai argumentai"
 msgid "Core Idea"
 msgstr "Pagrindinė idėja"
 
-msgid "Could not close notebook file."
-msgstr "Nepavyko uždaryti užrašų knygos failo."
+msgid "Could not close AI note file."
+msgstr "Nepavyko uždaryti AI užrašo failo."
 
-msgid "Could not create notebook."
-msgstr "Nepavyko sukurti užrašų knygos."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Nepavyko sukurti AI užrašų aplanko: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Nepavyko sukurti užrašų knygos: %1"
+msgid "Could not create AI note."
+msgstr "Nepavyko sukurti AI užrašo."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Nepavyko sukurti užrašų knygų aplanko: %1"
+msgid "Could not create AI note: %1"
+msgstr "Nepavyko sukurti AI užrašo: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Nepavyko gauti užrašų knygų aplanko turinio: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Nepavyko išvardyti AI užrašų aplanko: %1"
 
-msgid "Could not open notebook file."
-msgstr "Nepavyko atidaryti užrašų knygos failo."
+msgid "Could not open AI note file."
+msgstr "Nepavyko atidaryti AI užrašo failo."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Nepavyko išsaugoti į pasirinktą užrašų knygą.\n"
-"Išsaugota į: %1"
+"Nepavyko išsaugoti į pasirinktą AI užrašą.\n"
+"Išsaugota: %1"
 
-msgid "Could not select notebook."
-msgstr "Nepavyko pasirinkti užrašų knygos."
+msgid "Could not select AI note."
+msgstr "Nepavyko pasirinkti AI užrašo."
 
-msgid "Could not write notebook file."
-msgstr "Nepavyko įrašyti užrašų knygos failo."
+msgid "Could not write AI note file."
+msgstr "Nepavyko įrašyti AI užrašo failo."
 
 msgid "Create"
 msgstr "Sukurti"
 
-msgid "Create a notebook."
-msgstr "Sukurti užrašų knygą."
+msgid "Create an AI note."
+msgstr "Sukurti AI užrašą."
 
 msgid "Cultural Significance"
 msgstr "Kultūrinė reikšmė"
@@ -530,9 +628,6 @@ msgstr "Pasirinktinis raginimas"
 
 msgid "Custom Prompts"
 msgstr "Pasirinktiniai promptai"
-
-msgid "Deeply Thought"
-msgstr "Gilus mąstymas"
 
 msgid "Delete"
 msgstr "Ištrinti"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Integruota santrauka"
 
-msgid "Invalid notebook entry."
-msgstr "Neteisingas užrašų knygos įrašas."
+msgid "Invalid AI note entry."
+msgstr "Neteisingas AI užrašo įrašas."
 
-msgid "Invalid notebook filename."
-msgstr "Neteisingas užrašų knygos failo pavadinimas."
+msgid "Invalid AI note filename."
+msgstr "Neteisingas AI užrašo failo vardas."
 
 msgid "Justify"
 msgstr "Lygiuoti"
@@ -766,9 +861,6 @@ msgstr "Palikite tuščią, kad būtų naudojama: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Palikite šiuos laukus tuščius, kad būtų naudojama sąsajos kalba: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Įkeliama knygai <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Vietos"
@@ -806,26 +898,32 @@ msgstr "Modeliai: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modeliai: %1 (sutampa)"
 
-msgid "Multiple Notebooks"
-msgstr "Keli užrašų bloknotai"
+msgid "Multiple AI Notes"
+msgstr "Keli AI užrašai"
 
 msgid "Narrative element in focus:"
 msgstr "Dėmesio centre esantis pasakojimo elementas:"
 
-msgid "New notebook"
-msgstr "Nauja užrašų knyga"
+msgid "New AI Note"
+msgstr "Naujas AI užrašas"
 
-msgid "New notebook..."
-msgstr "Naujas bloknotas..."
+msgid "New AI Note..."
+msgstr "Naujas AI užrašas..."
 
 msgid "No"
 msgstr "Ne"
 
+msgid "No AI Notes folder is set."
+msgstr "Nenustatytas AI užrašų aplankas."
+
+msgid "No AI notes yet"
+msgstr "Dar nėra AI užrašų"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Nesukonfigūruotas aktyvus paslaugų teikėjas. Prašome pridėti jį nustatymuose."
 
-msgid "No base folder is available for notebooks."
-msgstr "Nėra prieinamo pagrindinio aplanko užrašų knygoms."
+msgid "No base folder is available for AI Notes."
+msgstr "Nėra prieinamo pagrindinio aplanko AI užrašams."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nėra atidarytos knygos. Ilgai spauskite knygą failų tvarkyklėje ir pasirinkite „Knygos informacija (AI)“."
@@ -839,14 +937,8 @@ msgstr "Nėra prieinamų modelių."
 msgid "No models matching \"%1\"."
 msgstr "Nėra modelių, atitinkančių \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Nenustatytas užrašų bloknotų aplankas."
-
-msgid "No notebooks yet"
-msgstr "Dar nėra užrašų knygų"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Nėra kelio senajai užrašų knygai."
+msgid "No path is available for the default AI note."
+msgstr "Nėra prieinamo kelio numatytajam AI užrašui."
 
 msgid "No response received."
 msgstr "Atsakymas negautas."
@@ -865,70 +957,6 @@ msgstr "Nėra"
 
 msgid "Note added successfully"
 msgstr "Pastaba sėkmingai pridėta."
-
-msgid "Notebook"
-msgstr "Užrašinė"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Užrašų knyga (DI pokalbių žurnalas)"
-
-msgid "Notebook Settings"
-msgstr "Užrašų knygos nustatymai"
-
-msgid "Notebook name"
-msgstr "Užrašų knygos pavadinimas"
-
-msgid "Notebook name cannot be empty."
-msgstr "Užrašų knygos pavadinimas negali būti tuščias."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Užrašų knygos pavadinimas negali turėti „..“."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Užrašų knygos pavadinimas negali turėti kelio skyriklių."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Užrašų knygos pavadinimas negali baigtis tarpu ar tašku."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Užrašų knygos pavadinime yra simbolių, kurių failų sistema nepalaiko."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Užrašų knygos pavadinimas yra rezervuotas failų sistemos."
-
-msgid "Notebook name must be text."
-msgstr "Užrašų knygos pavadinimas turi būti tekstas."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Užrašų knygos kelias nėra failas: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Užrašų knygos kelias neprieinamas."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Nepavyko išsaugoti užrašų knygelėje. Tęsiama..."
-
-msgid "Notebook: %1"
-msgstr "Užrašų knyga: %1"
-
-msgid "Notebooks"
-msgstr "Užrašų knygos"
-
-msgid "Notebooks Folder"
-msgstr "Užrašų bloknotų aplankas"
-
-msgid "Notebooks Folder: %1"
-msgstr "Užrašų bloknotų aplankas: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Užrašų bloknotų aplanko kelias:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Užrašų knygų kelias nėra katalogas: %1"
 
 msgid "OK"
 msgstr "Gerai"
@@ -1052,9 +1080,6 @@ msgstr "Išvalyti"
 
 msgid "Purge Settings"
 msgstr "Išvalyti nustatymus"
-
-msgid "Querying AI ..."
-msgstr "Klausiama AI ..."
 
 msgid "Quick Note"
 msgstr "Greitas užrašas"
@@ -1185,11 +1210,11 @@ msgstr "Paieškos įrankio įrašas turi būti lentelė."
 msgid "Searching with %1 ... [%2]"
 msgstr "Ieškoma su %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Pasirinkti AI užrašą"
+
 msgid "Select a model:"
 msgstr "Pasirinkite modelį:"
-
-msgid "Select notebook"
-msgstr "Pasirinkti užrašų knygą"
 
 msgid "Selection copied to clipboard."
 msgstr "Pasirinkimas nukopijuotas į iškarpinę."
@@ -1268,8 +1293,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Sukurti greitas pastabas"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Užsirašykite trumpas pastabas, kurios bus išsaugotos jūsų užrašų knygelėje."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Užsirašykite greitus užrašus, kurie bus išsaugoti jūsų AI užrašuose."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1290,9 +1315,6 @@ msgstr "Tekstas nukopijuotas į iškarpinę"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Tvarkyklė, skirta %1, nebuvo rasta. Įsitikinkite, kad tvarkyklė yra api_handlers kataloge."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Užrašų knygelė yra jūsų pokalbių žurnalas: prie jos pridedami AI atsakymai ir greitieji užrašai. Galite sukurti kelias užrašų knygeles, kad susitvarkytumėte savo žurnalus."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Šis mygtukas sukuria greitą užrašą su paryškintu tekstu."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - עמ׳ %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "סיכום \"X-Ray\" לספר, הבנוי למקטעים ספציפיים כמו דמויות, מקומות, נושאים, מונחים ומושגים, ציר זמן והתעמקות חוזרת."
 
-msgid "### %1 Question\n"
-msgstr "### שאלה %1\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### ייתכן שתמצאו נושאים אלה מעניינים:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "להוסיף כפתור זה לתפריט ההדגשות?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>קובץ הערות AI:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>עדיין לא הוגדר ספק.</b>\n"
 "אנא הוסף ספק בהגדרות או ב-configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>קובץ מחברת:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>פרמטרים</b>"
 
@@ -197,6 +194,43 @@ msgstr "בודק חיבור..."
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>סוג תכונה לא ידוע:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 חשיבה מעמיקה</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 שאלה</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "קיימת גרסה חדשה של התוסף %1 (%2). נא לעדכן!"
 
@@ -214,6 +248,43 @@ msgstr "מילון AI"
 
 msgid "AI Language: "
 msgstr "שפת AI: "
+
+msgid "AI Note Name"
+msgstr "שם הערת AI"
+
+msgid "AI Notes"
+msgstr "הערות AI"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "הערות AI (יומן שיחות AI)"
+
+msgid "AI Notes Folder"
+msgstr "תיקיית הערות AI"
+
+msgid "AI Notes Folder: %1"
+msgstr "תיקיית הערות AI: %1"
+
+msgid "AI Notes Settings"
+msgstr "הגדרות הערות AI"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"נתיב תיקיית הערות AI:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "הערות AI הן יומן השיחות שלך: תשובות AI והערות מהירות מתווספות אליו. ניתן ליצור מספר הערות AI כדי לארגן את היומנים שלך."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "הנתיב של הערות AI אינו תיקייה: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "שמירת הערות AI נכשלה. ממשיך..."
+
+msgid "AI Notes: %1"
+msgstr "הערות AI: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "ה-AI מגיב"
+
+msgid "AI note name cannot be empty."
+msgstr "שם הערת AI לא יכול להיות ריק."
+
+msgid "AI note name cannot contain '..'."
+msgstr "שם הערת AI לא יכול להכיל '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "שם הערת AI לא יכול להכיל מפרידי נתיב."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "שם הערת AI לא יכול להסתיים ברווח או בנקודה."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "שם הערת AI מכיל תווים שאינם נתמכים על ידי מערכת הקבצים."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "שם הערת ה-AI שמור על ידי מערכת הקבצים."
+
+msgid "AI note name must be text."
+msgstr "שם הערת ה-AI חייב להיות טקסט."
+
+msgid "AI note path is not a file: %1"
+msgstr "נתיב הערת ה-AI אינו קובץ: %1"
+
+msgid "AI note path is unavailable."
+msgstr "נתיב הערת ה-AI אינו זמין."
 
 msgid "API Key"
 msgstr "מפתח API"
@@ -295,8 +393,8 @@ msgstr ""
 "הוסף ספקים מהתפריט הראשי:\n"
 "%1 -> עוזר AI -> הגדרות -> API של ספק"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "ניתוח של ההדגשות, ההערות ותוכן המחברת שלך מהספר."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "ניתוח ההדגשות, ההערות ותוכן הערות ה-AI שלך מהספר."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "צרף טקסט קודם"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "תקציר אוטומטי בפתיחת ספרים שלא נקראו מזה זמן רב"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "שמירה אוטומטית של שיחות למחברת"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "שמירה אוטומטית של שיחות בהערות AI"
 
 msgid "Base URL"
 msgstr "כתובת URL בסיסית"
@@ -415,8 +513,8 @@ msgstr "בודק עדכונים..."
 msgid "Choose Definition Sections"
 msgstr "בחירת מקטעי הגדרה"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "בחר לאיזו מחברת יישמרו ההערות שלך."
+msgid "Choose which AI note your notes are saved to."
+msgstr "בחר לאיזו הערת AI יישמרו ההערות שלך."
 
 msgid "Clear"
 msgstr "נקה"
@@ -436,8 +534,8 @@ msgstr "התצורה לא נמצאה. יש להגדיר את configuration.lua �
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "הגדר את שפת התגובה של מודל ה-AI (LLM). ברירת המחדל היא שפת הממשק של KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "תיקיית המחברות המוגדרת אינה נגישה: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "תיקיית הערות ה-AI המוגדרת אינה נגישה: %1"
 
 msgid "Connection test successful."
 msgstr "בדיקת החיבור עברה בהצלחה."
@@ -461,8 +559,8 @@ msgstr "הערות הקשר / הרהורים"
 msgid "Contradictions / Open Questions"
 msgstr "סתירות / שאלות פתוחות"
 
-msgid "Conversation is saved to notebook"
-msgstr "השיחה נשמרה למחברת"
+msgid "Conversation is saved to AI Notes"
+msgstr "השיחה נשמרת בהערות AI"
 
 msgid "Copy"
 msgstr "העתק"
@@ -478,42 +576,42 @@ msgstr "טיעונים מרכזיים"
 msgid "Core Idea"
 msgstr "רעיון מרכזי"
 
-msgid "Could not close notebook file."
-msgstr "לא ניתן היה לסגור את קובץ המחברת."
+msgid "Could not close AI note file."
+msgstr "לא ניתן לסגור את קובץ הערת ה-AI."
 
-msgid "Could not create notebook."
-msgstr "לא ניתן היה ליצור את המחברת."
+msgid "Could not create AI Notes folder: %1"
+msgstr "לא ניתן ליצור את תיקיית הערות ה-AI: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "לא ניתן היה ליצור את המחברת: %1"
+msgid "Could not create AI note."
+msgstr "לא ניתן ליצור הערת AI."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "לא ניתן היה ליצור את תיקיית המחברות: %1"
+msgid "Could not create AI note: %1"
+msgstr "לא ניתן ליצור הערת AI: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "לא ניתן היה לרשום את תיקיית המחברות: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "לא ניתן להציג את תיקיית הערות ה-AI: %1"
 
-msgid "Could not open notebook file."
-msgstr "לא ניתן היה לפתוח את קובץ המחברת."
+msgid "Could not open AI note file."
+msgstr "לא ניתן לפתוח את קובץ הערת ה-AI."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"לא ניתן היה לשמור למחברת שנבחרה.\n"
-"נשמר אל: %1"
+"לא ניתן לשמור בהערת ה-AI שנבחרה.\n"
+"נשמר ב: %1"
 
-msgid "Could not select notebook."
-msgstr "לא ניתן היה לבחור מחברת."
+msgid "Could not select AI note."
+msgstr "לא ניתן לבחור הערת AI."
 
-msgid "Could not write notebook file."
-msgstr "לא ניתן היה לכתוב לקובץ המחברת."
+msgid "Could not write AI note file."
+msgstr "לא ניתן לכתוב לקובץ הערת ה-AI."
 
 msgid "Create"
 msgstr "צור"
 
-msgid "Create a notebook."
-msgstr "צור מחברת."
+msgid "Create an AI note."
+msgstr "צור הערת AI."
 
 msgid "Cultural Significance"
 msgstr "משמעות תרבותית"
@@ -530,9 +628,6 @@ msgstr "הנחיה מותאמת אישית"
 
 msgid "Custom Prompts"
 msgstr "הנחיות מותאמות אישית"
-
-msgid "Deeply Thought"
-msgstr "חשיבה מעמיקה"
 
 msgid "Delete"
 msgstr "מחיקה"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "סיכום משולב"
 
-msgid "Invalid notebook entry."
-msgstr "רשומת מחברת לא תקינה."
+msgid "Invalid AI note entry."
+msgstr "רשומת הערת AI לא תקינה."
 
-msgid "Invalid notebook filename."
-msgstr "שם קובץ מחברת לא תקין."
+msgid "Invalid AI note filename."
+msgstr "שם קובץ הערת AI לא תקין."
 
 msgid "Justify"
 msgstr "מיושר לשני הצדדים"
@@ -766,9 +861,6 @@ msgstr "השאר ריק כדי להשתמש ב: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "השאר שדות אלה ריקים כדי להשתמש בשפת הממשק: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "טוען עבור <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "מקומות"
@@ -806,26 +898,32 @@ msgstr "מודלים: %1"
 msgid "Models: %1 (matched)"
 msgstr "מודלים: %1 (תואמים)"
 
-msgid "Multiple Notebooks"
-msgstr "מחברות מרובות"
+msgid "Multiple AI Notes"
+msgstr "הערות AI מרובות"
 
 msgid "Narrative element in focus:"
 msgstr "האלמנט הנרטיבי שבמוקד:"
 
-msgid "New notebook"
-msgstr "מחברת חדשה"
+msgid "New AI Note"
+msgstr "הערת AI חדשה"
 
-msgid "New notebook..."
-msgstr "מחברת חדשה..."
+msgid "New AI Note..."
+msgstr "הערת AI חדשה..."
 
 msgid "No"
 msgstr "לא"
 
+msgid "No AI Notes folder is set."
+msgstr "לא הוגדרה תיקיית הערות AI."
+
+msgid "No AI notes yet"
+msgstr "אין עדיין הערות AI"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "לא הוגדר ספק פעיל. הוסף אחד בהגדרות."
 
-msgid "No base folder is available for notebooks."
-msgstr "אין תיקיית בסיס זמינה למחברות."
+msgid "No base folder is available for AI Notes."
+msgstr "אין תיקיית בסיס זמינה עבור הערות AI."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "לא פתוח ספר כלשהו. לחצו לחיצה ארוכה על ספר במנהל הקבצים ובחרו בפרטי הספר (AI)."
@@ -839,14 +937,8 @@ msgstr "אין מודלים זמינים."
 msgid "No models matching \"%1\"."
 msgstr "אין מודלים תואמים ל-\"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "לא הוגדרה תיקיית מחברות."
-
-msgid "No notebooks yet"
-msgstr "אין עדיין מחברות"
-
-msgid "No path is available for the legacy notebook."
-msgstr "אין נתיב זמין למחברת הקודמת."
+msgid "No path is available for the default AI note."
+msgstr "אין נתיב זמין עבור הערת AI המוגדרת כברירת מחדל."
 
 msgid "No response received."
 msgstr "לא התקבלה תשובה."
@@ -865,70 +957,6 @@ msgstr "אין"
 
 msgid "Note added successfully"
 msgstr "ההערה נוספה בהצלחה"
-
-msgid "Notebook"
-msgstr "מחברת"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "מחברת (יומן שיחות AI)"
-
-msgid "Notebook Settings"
-msgstr "הגדרות מחברת"
-
-msgid "Notebook name"
-msgstr "שם המחברת"
-
-msgid "Notebook name cannot be empty."
-msgstr "שם המחברת לא יכול להיות ריק."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "שם המחברת לא יכול להכיל '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "שם המחברת אינו יכול להכיל מפרידי נתיב."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "שם המחברת לא יכול להסתיים ברווח או בנקודה."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "שם המחברת מכיל תווים שאינם נתמכים על ידי מערכת הקבצים."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "שם המחברת שמור במערכת הקבצים."
-
-msgid "Notebook name must be text."
-msgstr "שם המחברת חייב להיות טקסט."
-
-msgid "Notebook path is not a file: %1"
-msgstr "הנתיב למחברת אינו קובץ: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "הנתיב למחברת אינו זמין."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "שמירת המחברת נכשלה. ממשיך..."
-
-msgid "Notebook: %1"
-msgstr "מחברת: %1"
-
-msgid "Notebooks"
-msgstr "מחברות"
-
-msgid "Notebooks Folder"
-msgstr "תיקיית מחברות"
-
-msgid "Notebooks Folder: %1"
-msgstr "תיקיית מחברות: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"נתיב תיקיית המחברות:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "הנתיב למחברות אינו תיקייה: %1"
 
 msgid "OK"
 msgstr "אישור"
@@ -1052,9 +1080,6 @@ msgstr "נקה"
 
 msgid "Purge Settings"
 msgstr "מחיקת הגדרות"
-
-msgid "Querying AI ..."
-msgstr "שואל את ה-AI..."
 
 msgid "Quick Note"
 msgstr "הערה מהירה"
@@ -1185,11 +1210,11 @@ msgstr "רשומת כלי החיפוש חייבת להיות טבלה."
 msgid "Searching with %1 ... [%2]"
 msgstr "מחפש עם %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "בחר הערת AI"
+
 msgid "Select a model:"
 msgstr "בחר מודל:"
-
-msgid "Select notebook"
-msgstr "בחירת מחברת"
 
 msgid "Selection copied to clipboard."
 msgstr "הבחירה הועתקה ללוח."
@@ -1268,8 +1293,8 @@ msgstr "בקיצור"
 msgid "Take Quick Notes"
 msgstr "רשום הערות מהירות"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "רשום הערות מהירות שיישמרו במחברת שלך."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "רשום הערות מהירות שיישמרו בהערות ה-AI שלך."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1290,9 +1315,6 @@ msgstr "הטקסט הועתק ללוח הגזירים"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "המטפל עבור %1 לא נמצא. אנא ודא שהמטפל קיים בתיקיית api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "המחברת היא יומן השיחות שלך: תשובות AI והערות מהירות מתווספות אליה. ניתן ליצור מספר מחברות כדי לארגן את היומנים שלך."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "כפתור זה יוצר הערה מהירה עם הטקסט המסומן."

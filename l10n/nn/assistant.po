@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - s. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\"-samandrag for ei bok, strukturert i spesifikke seksjonar som karakterar, stader, tema, omgrep og konsept, tidslinje og gjeninnleving."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Spørsmål\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Du kan finne desse emna interessante:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Legg til denne knappen i markeringsmenyen?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI-notatfil:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Ingen leverandør er sett opp enno.</b>\n"
 "Legg til ein leverandør i Innstillingar eller configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Notatbokfil:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametrar</b>"
 
@@ -197,6 +194,43 @@ msgstr "Testing av tilkopling"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Ukjend funksjonstype:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Djup ettertanke</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Spørsmål</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Ein ny versjon av %1-programtillegget (%2) er tilgjengeleg. Ver venleg å oppdatere!"
 
@@ -214,6 +248,43 @@ msgstr "KI-ordbok"
 
 msgid "AI Language: "
 msgstr "KI-språk: "
+
+msgid "AI Note Name"
+msgstr "Namn på AI-notat"
+
+msgid "AI Notes"
+msgstr "AI-notat"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI-notat (AI-samtalelogg)"
+
+msgid "AI Notes Folder"
+msgstr "AI-notatmappe"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI-notatmappe: %1"
+
+msgid "AI Notes Settings"
+msgstr "Innstillingar for AI-notat"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Mappesti for AI-notat:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI-notatet er samtaleloggen din: AI-svar og snarnotat blir lagde til etter kvart. Du kan opprette fleire AI-notat for å organisere loggane dine."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Stien til AI-notatet er ikkje ei mappe: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Kunne ikkje lagre AI-notatet. Held fram …"
+
+msgid "AI Notes: %1"
+msgstr "AI-notat: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "KI svarar"
+
+msgid "AI note name cannot be empty."
+msgstr "Namnet på AI-notatet kan ikkje vere tomt."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Namnet på AI-notatet kan ikkje innehalde «..»."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Namnet på AI-notatet kan ikkje innehalde skiljeteikn for stiar."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Namnet på AI-notatet kan ikkje slutte med eit mellomrom eller eit punktum."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Namnet på AI-notatet inneheld teikn som ikkje er støtta av filsystemet."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Namnet på AI-notatet er reservert av filsystemet."
+
+msgid "AI note name must be text."
+msgstr "Namnet på AI-notatet må vere tekst."
+
+msgid "AI note path is not a file: %1"
+msgstr "Stien til AI-notatet er ikkje ei fil: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Stien til AI-notatet er utilgjengeleg."
 
 msgid "API Key"
 msgstr "API-nøkkel"
@@ -295,8 +393,8 @@ msgstr ""
 "Legg til leverandørar frå hovudmenyen:\n"
 "%1 -> AI-assistent -> Innstillingar -> Leverandør-API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Analyse av markeringane dine, notata dine og notatbokinnhaldet ditt frå boka."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Analyse av markeringane dine, notata dine og innhaldet i AI-notat frå boka."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Legg ved tidlegare tekst"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automatisk oppsummering når ein opnar bøker ein ikkje har lese i på lenge"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Lagre samtalar automatisk i notatboka"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Lagre samtalar automatisk til AI-notat"
 
 msgid "Base URL"
 msgstr "Base-URL"
@@ -415,8 +513,8 @@ msgstr "Sjekkjer etter oppdateringar..."
 msgid "Choose Definition Sections"
 msgstr "Vel definisjonsseksjonar"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Vel kva notatbok notata dine skal lagrast i."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Vel kva AI-notat notata dine blir lagra til."
 
 msgid "Clear"
 msgstr "Tøm"
@@ -436,8 +534,8 @@ msgstr "Konfigurasjonen vart ikkje funnen. Ver venleg å setje opp configuration
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Konfigurer responsspråket til AI-LLM-en. Standard er grensesnittspråket til KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Konfigurert notatbokmappe er ikkje tilgjengeleg: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Den konfigurerte AI-notat-mappa er ikkje tilgjengeleg: %1"
 
 msgid "Connection test successful."
 msgstr "Tilkoplingstesten lukkast."
@@ -461,8 +559,8 @@ msgstr "Kontekstnotat / refleksjonar"
 msgid "Contradictions / Open Questions"
 msgstr "Motsetnader / opne spørsmål"
 
-msgid "Conversation is saved to notebook"
-msgstr "Samtalen er lagra til notatboka."
+msgid "Conversation is saved to AI Notes"
+msgstr "Samtalen er lagra til AI-notat"
 
 msgid "Copy"
 msgstr "Kopier"
@@ -478,42 +576,42 @@ msgstr "Kjerneargument"
 msgid "Core Idea"
 msgstr "Kjerneidé"
 
-msgid "Could not close notebook file."
-msgstr "Kunne ikkje lukke notatbokfila."
+msgid "Could not close AI note file."
+msgstr "Klarte ikkje å lukke AI-notat-fila."
 
-msgid "Could not create notebook."
-msgstr "Kunne ikkje opprette notatbok."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Klarte ikkje å opprette AI-notat-mappa: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Kunne ikkje opprette notatbok: %1"
+msgid "Could not create AI note."
+msgstr "Klarte ikkje å opprette AI-notat."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Kunne ikkje opprette notatbokmappa: %1"
+msgid "Could not create AI note: %1"
+msgstr "Klarte ikkje å opprette AI-notat: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Kunne ikkje liste innhaldet i notatbokmappa: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Klarte ikkje å liste opp AI-notat-mappa: %1"
 
-msgid "Could not open notebook file."
-msgstr "Kunne ikkje opne notatbokfila."
+msgid "Could not open AI note file."
+msgstr "Klarte ikkje å opne AI-notat-fila."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Kunne ikkje lagre til den valde notatboka.\n"
+"Klarte ikkje å lagre til det valde AI-notatet.\n"
 "Lagra til: %1"
 
-msgid "Could not select notebook."
-msgstr "Kunne ikkje velje notatbok."
+msgid "Could not select AI note."
+msgstr "Klarte ikkje å velje AI-notat."
 
-msgid "Could not write notebook file."
-msgstr "Kunne ikkje skrive til notatbokfila."
+msgid "Could not write AI note file."
+msgstr "Klarte ikkje å skrive AI-notat-fila."
 
 msgid "Create"
 msgstr "Opprett"
 
-msgid "Create a notebook."
-msgstr "Opprett ei notatbok."
+msgid "Create an AI note."
+msgstr "Opprett eit AI-notat."
 
 msgid "Cultural Significance"
 msgstr "Kulturell tyding"
@@ -530,9 +628,6 @@ msgstr "Tilpassa prompt"
 
 msgid "Custom Prompts"
 msgstr "Egendefinerte promptar"
-
-msgid "Deeply Thought"
-msgstr "Djuptenkt"
 
 msgid "Delete"
 msgstr "Slett"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Integrert samandrag"
 
-msgid "Invalid notebook entry."
-msgstr "Ugyldig notatbokoppføring."
+msgid "Invalid AI note entry."
+msgstr "Ugyldig AI-notat-oppføring."
 
-msgid "Invalid notebook filename."
-msgstr "Ugyldig filnamn for notatbok."
+msgid "Invalid AI note filename."
+msgstr "Ugyldig filnamn for AI-notat."
 
 msgid "Justify"
 msgstr "Juster"
@@ -764,9 +859,6 @@ msgstr "Lat feltet stå tomt for å bruke: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Lat desse felta stå tomme for å bruke grensesnittspråket: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Lastar for <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Stader"
@@ -804,26 +896,32 @@ msgstr "Modellar: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modellar: %1 (samsvarande)"
 
-msgid "Multiple Notebooks"
-msgstr "Fleire notatbøker"
+msgid "Multiple AI Notes"
+msgstr "Fleire AI-notat"
 
 msgid "Narrative element in focus:"
 msgstr "Forteljeelement i fokus:"
 
-msgid "New notebook"
-msgstr "Ny notatbok"
+msgid "New AI Note"
+msgstr "Nytt AI-notat"
 
-msgid "New notebook..."
-msgstr "Ny notatbok..."
+msgid "New AI Note..."
+msgstr "Nytt AI-notat..."
 
 msgid "No"
 msgstr "Nei"
 
+msgid "No AI Notes folder is set."
+msgstr "Ingen mappe for AI-notat er sett opp."
+
+msgid "No AI notes yet"
+msgstr "Ingen AI-notat enno"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Ingen aktiv leverandør er konfigurert. Legg til ein i Innstillingar."
 
-msgid "No base folder is available for notebooks."
-msgstr "Ingen grunnmappe er tilgjengeleg for notatbøker."
+msgid "No base folder is available for AI Notes."
+msgstr "Ingen basismappe er tilgjengeleg for AI-notat."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Inga bok er open. Hald inne på ei bok i filhandsamaren og vel Bokinfo (AI)."
@@ -837,14 +935,8 @@ msgstr "Ingen modellar er tilgjengelege."
 msgid "No models matching \"%1\"."
 msgstr "Ingen modellar samsvarar med \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Inga notatbokmappe er sett."
-
-msgid "No notebooks yet"
-msgstr "Ingen notatbøker enno"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Ingen sti er tilgjengeleg for den gamle notatboka."
+msgid "No path is available for the default AI note."
+msgstr "Ingen sti er tilgjengeleg for standard-AI-notatet."
 
 msgid "No response received."
 msgstr "Ingen respons motteken."
@@ -863,70 +955,6 @@ msgstr "Ingen"
 
 msgid "Note added successfully"
 msgstr "Notatet vart lagt til"
-
-msgid "Notebook"
-msgstr "Notatbok"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Notatbok (AI-samtalelogg)"
-
-msgid "Notebook Settings"
-msgstr "Notatbokinnstillingar"
-
-msgid "Notebook name"
-msgstr "Notatboknamn"
-
-msgid "Notebook name cannot be empty."
-msgstr "Notatboknamnet kan ikkje vere tomt."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Notatboknamnet kan ikkje innehalde '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Notatboknamnet kan ikkje innehalde stiskiljeteikn."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Notatboknamnet kan ikkje slutte med mellomrom eller punktum."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Notatboknamnet inneheld teikn som ikkje er støtta av filsystemet."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Notatboknamnet er reservert av filsystemet."
-
-msgid "Notebook name must be text."
-msgstr "Notatboknamnet må vere tekst."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Stien til notatboka er ikkje ei fil: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Stien til notatboka er ikkje tilgjengeleg."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Lagring til NoteBook mislukkast. Held fram..."
-
-msgid "Notebook: %1"
-msgstr "Notatbok: %1"
-
-msgid "Notebooks"
-msgstr "Notatbøker"
-
-msgid "Notebooks Folder"
-msgstr "Notatbokmappe"
-
-msgid "Notebooks Folder: %1"
-msgstr "Notatbokmappe: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Sti til notatbokmappe:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Stien til notatbøker er ikkje ein mappe: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1050,9 +1078,6 @@ msgstr "Tøm"
 
 msgid "Purge Settings"
 msgstr "Tøm innstillingar"
-
-msgid "Querying AI ..."
-msgstr "Spør KI ..."
 
 msgid "Quick Note"
 msgstr "Snøggnotat"
@@ -1184,11 +1209,11 @@ msgstr "Søkeverktøy-oppføringa må vere ein tabell."
 msgid "Searching with %1 ... [%2]"
 msgstr "Søkjer med %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Vel AI-notat"
+
 msgid "Select a model:"
 msgstr "Vel ein modell:"
-
-msgid "Select notebook"
-msgstr "Vel notatbok"
 
 msgid "Selection copied to clipboard."
 msgstr "Markeringa kopiert til utklippstavla."
@@ -1267,8 +1292,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Ta snøggnotat"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Skriv snøgge notat som blir lagra i notatboka di."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Ta raske notat som blir lagra i AI-notata dine."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "Teksten vart kopiert til utklippstavla."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Fann ikkje handteraren for %1. Kontroller at handteraren finst i api_handlers-katalogen."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Notatboka er samtaleloggen din: AI-svar og snøggnotat vert lagde til i henne. Du kan oppretta fleire notatbøker for å organisera loggane dine."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Denne knappen lagar eit snøggnotat med markert tekst."

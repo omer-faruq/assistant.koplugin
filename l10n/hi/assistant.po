@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 03:34+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: हिन्दी (AI translation)\n"
@@ -38,9 +38,6 @@ msgstr " - पृ. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"एक्स-रे\" पुस्तक सारांश, जो विशिष्ट अनुभागों में संरचित है जैसे पात्र, स्थान, विषय, शब्द और अवधारणाएँ, समयरेखा, और पुनः-तल्लीनता।"
 
-msgid "### %1 Question\n"
-msgstr "### %1 प्रश्न\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### आपको ये विषय रोचक लग सकते हैं:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "इस बटन को हाइलाइट मेनू में जोड़ें?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI नोट्स फ़ाइल:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>अभी तक कोई प्रदाता सेट नहीं किया गया है।</b>\n"
 "कृपया सेटिंग्स या configuration.lua में प्रदाता जोड़ें।"
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>नोटबुक फ़ाइल:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>पैरामीटर</b>"
 
@@ -197,6 +194,43 @@ msgstr "आधार URL"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>अज्ञात फीचर प्रकार:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 गहन विचार</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 प्रश्न</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "%1 प्लगइन का नया संस्करण (%2) उपलब्ध है। कृपया अपडेट करें!"
 
@@ -214,6 +248,43 @@ msgstr "एआई शब्दकोश"
 
 msgid "AI Language: "
 msgstr "AI भाषा: "
+
+msgid "AI Note Name"
+msgstr "AI नोट का नाम"
+
+msgid "AI Notes"
+msgstr "AI नोट्स"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI नोट्स (AI वार्तालाप लॉग)"
+
+msgid "AI Notes Folder"
+msgstr "AI नोट्स फ़ोल्डर"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI नोट्स फ़ोल्डर: %1"
+
+msgid "AI Notes Settings"
+msgstr "AI नोट्स सेटिंग्स"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"AI नोट्स फ़ोल्डर पथ:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI नोट्स आपका वार्तालाप लॉग है: AI उत्तर और त्वरित नोट्स इसमें जोड़े जाते हैं। आप अपने लॉग व्यवस्थित करने के लिए कई AI नोट्स बना सकते हैं।"
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "AI नोट्स पथ एक निर्देशिका नहीं है: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "AI नोट्स सहेजना विफल रहा। जारी रखा जा रहा है..."
+
+msgid "AI Notes: %1"
+msgstr "AI नोट्स: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI एक्स-रे"
 
 msgid "AI is responding"
 msgstr "AI उत्तर दे रहा है"
+
+msgid "AI note name cannot be empty."
+msgstr "AI नोट का नाम खाली नहीं हो सकता।"
+
+msgid "AI note name cannot contain '..'."
+msgstr "AI नोट के नाम में '..' शामिल नहीं हो सकता।"
+
+msgid "AI note name cannot contain path separators."
+msgstr "AI नोट के नाम में पथ विभाजक शामिल नहीं हो सकते।"
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "AI नोट का नाम स्पेस या डॉट से समाप्त नहीं हो सकता।"
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "AI नोट के नाम में ऐसे वर्ण हैं जो फ़ाइलसिस्टम द्वारा समर्थित नहीं हैं।"
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "AI नोट का नाम फ़ाइलसिस्टम द्वारा आरक्षित है।"
+
+msgid "AI note name must be text."
+msgstr "AI नोट का नाम टेक्स्ट होना चाहिए।"
+
+msgid "AI note path is not a file: %1"
+msgstr "AI नोट का पथ फ़ाइल नहीं है: %1"
+
+msgid "AI note path is unavailable."
+msgstr "AI नोट का पथ उपलब्ध नहीं है।"
 
 msgid "API Key"
 msgstr "API कुंजी"
@@ -295,8 +393,8 @@ msgstr ""
 "मुख्य मेनू से प्रदाता जोड़ें:\n"
 "%1 -> AI Assistant -> Settings -> Provider API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "पुस्तक से आपके हाइलाइट्स, नोट्स और नोटबुक सामग्री का विश्लेषण।"
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "पुस्तक से आपके हाइलाइट्स, नोट्स और AI Notes सामग्री का विश्लेषण।"
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "पिछला पाठ संलग्न करें"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "लंबे समय से अनपढ़ी पुस्तकें खोलने पर स्वतः रीकैप"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "वार्तालापों को नोटबुक में स्वतः सहेजें"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "बातचीत को AI Notes में स्वतः सहेजें"
 
 msgid "Base URL"
 msgstr "बेस URL"
@@ -415,8 +513,8 @@ msgstr "अपडेट की जाँच की जा रही है..."
 msgid "Choose Definition Sections"
 msgstr "परिभाषा अनुभाग चुनें"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "चुनें कि आपके नोट किस नोटबुक में सहेजे जाएँ।"
+msgid "Choose which AI note your notes are saved to."
+msgstr "चुनें कि आपके नोट्स किस AI नोट में सहेजे जाएँ।"
 
 msgid "Clear"
 msgstr "साफ़ करें"
@@ -436,8 +534,8 @@ msgstr "कॉन्फ़िगरेशन नहीं मिला। कृ
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "AI LLM की प्रतिक्रिया भाषा कॉन्फ़िगर करें। डिफ़ॉल्ट रूप से KOReader इंटरफ़ेस भाषा का उपयोग होता है।"
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "कॉन्फ़िगर की गई नोटबुक फ़ोल्डर तक पहुँच संभव नहीं है: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "कॉन्फ़िगर किया गया AI Notes फ़ोल्डर सुलभ नहीं है: %1"
 
 msgid "Connection test successful."
 msgstr "कनेक्शन परीक्षण सफल।"
@@ -461,8 +559,8 @@ msgstr "प्रासंगिक टिप्पणियाँ / चिं�
 msgid "Contradictions / Open Questions"
 msgstr "विरोधाभास / अनुत्तरित प्रश्न"
 
-msgid "Conversation is saved to notebook"
-msgstr "वार्तालाप नोटबुक में सहेजा गया है"
+msgid "Conversation is saved to AI Notes"
+msgstr "बातचीत AI Notes में सहेजी गई"
 
 msgid "Copy"
 msgstr "कॉपी करें"
@@ -478,42 +576,42 @@ msgstr "मुख्य तर्क"
 msgid "Core Idea"
 msgstr "मुख्य विचार"
 
-msgid "Could not close notebook file."
-msgstr "नोटबुक फ़ाइल बंद नहीं की जा सकी।"
+msgid "Could not close AI note file."
+msgstr "AI नोट फ़ाइल बंद नहीं की जा सकी।"
 
-msgid "Could not create notebook."
-msgstr "नोटबुक नहीं बनाई जा सकी।"
+msgid "Could not create AI Notes folder: %1"
+msgstr "AI Notes फ़ोल्डर नहीं बनाया जा सका: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "नोटबुक नहीं बनाई जा सकी: %1"
+msgid "Could not create AI note."
+msgstr "AI नोट नहीं बनाया जा सका।"
 
-msgid "Could not create notebooks folder: %1"
-msgstr "नोटबुक फ़ोल्डर नहीं बनाया जा सका: %1"
+msgid "Could not create AI note: %1"
+msgstr "AI नोट नहीं बनाया जा सका: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "नोटबुक फ़ोल्डर की सूची नहीं बनाई जा सकी: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "AI Notes फ़ोल्डर की सूची नहीं बनाई जा सकी: %1"
 
-msgid "Could not open notebook file."
-msgstr "नोटबुक फ़ाइल नहीं खोली जा सकी।"
+msgid "Could not open AI note file."
+msgstr "AI नोट फ़ाइल खोली नहीं जा सकी।"
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"चयनित नोटबुक में सहेजा नहीं जा सका।\n"
-"इसमें सहेजा गया: %1"
+"चयनित AI नोट में सहेजा नहीं जा सका।\n"
+"यहाँ सहेजा गया: %1"
 
-msgid "Could not select notebook."
-msgstr "नोटबुक का चयन नहीं किया जा सका।"
+msgid "Could not select AI note."
+msgstr "AI नोट चुना नहीं जा सका।"
 
-msgid "Could not write notebook file."
-msgstr "नोटबुक फ़ाइल में नहीं लिखा जा सका।"
+msgid "Could not write AI note file."
+msgstr "AI नोट फ़ाइल लिखी नहीं जा सकी।"
 
 msgid "Create"
 msgstr "बनाएँ"
 
-msgid "Create a notebook."
-msgstr "एक नोटबुक बनाएँ।"
+msgid "Create an AI note."
+msgstr "एक AI नोट बनाएँ।"
 
 msgid "Cultural Significance"
 msgstr "सांस्कृतिक महत्व"
@@ -530,9 +628,6 @@ msgstr "कस्टम प्रॉम्प्ट"
 
 msgid "Custom Prompts"
 msgstr "कस्टम प्रॉम्प्ट"
-
-msgid "Deeply Thought"
-msgstr "गहन विचार"
 
 msgid "Delete"
 msgstr "हटाएँ"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "एकीकृत सारांश"
 
-msgid "Invalid notebook entry."
-msgstr "अमान्य नोटबुक प्रविष्टि।"
+msgid "Invalid AI note entry."
+msgstr "अमान्य AI नोट प्रविष्टि।"
 
-msgid "Invalid notebook filename."
-msgstr "अमान्य नोटबुक फ़ाइल नाम।"
+msgid "Invalid AI note filename."
+msgstr "अमान्य AI नोट फ़ाइलनाम।"
 
 msgid "Justify"
 msgstr "जस्टिफ़ाई"
@@ -764,9 +859,6 @@ msgstr "उपयोग करने के लिए खाली छोड़�
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "UI भाषा उपयोग करने के लिए इन फ़ील्ड्स को खाली छोड़ें: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "<b>%1</b> के लिए लोड हो रहा है ..."
 
 msgid "Locations"
 msgstr "स्थान"
@@ -804,26 +896,32 @@ msgstr "मॉडल: %1"
 msgid "Models: %1 (matched)"
 msgstr "मॉडल: %1 (संगत)"
 
-msgid "Multiple Notebooks"
-msgstr "एकाधिक नोटबुक"
+msgid "Multiple AI Notes"
+msgstr "एकाधिक AI नोट्स"
 
 msgid "Narrative element in focus:"
 msgstr "कथा का केन्द्रीय तत्व:"
 
-msgid "New notebook"
-msgstr "नई नोटबुक"
+msgid "New AI Note"
+msgstr "नया AI नोट"
 
-msgid "New notebook..."
-msgstr "नई नोटबुक..."
+msgid "New AI Note..."
+msgstr "नया AI नोट..."
 
 msgid "No"
 msgstr "नहीं"
 
+msgid "No AI Notes folder is set."
+msgstr "कोई AI नोट्स फ़ोल्डर सेट नहीं है।"
+
+msgid "No AI notes yet"
+msgstr "अभी तक कोई AI नोट नहीं"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "कोई सक्रिय प्रदाता कॉन्फ़िगर नहीं है। कृपया सेटिंग्स में एक जोड़ें।"
 
-msgid "No base folder is available for notebooks."
-msgstr "नोटबुक के लिए कोई आधार फ़ोल्डर उपलब्ध नहीं है।"
+msgid "No base folder is available for AI Notes."
+msgstr "AI नोट्स के लिए कोई आधार फ़ोल्डर उपलब्ध नहीं है।"
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "कोई पुस्तक खुली नहीं है। फ़ाइल मैनेजर में किसी पुस्तक को देर तक दबाएँ और पुस्तक जानकारी (AI) चुनें।"
@@ -837,14 +935,8 @@ msgstr "कोई मॉडल उपलब्ध नहीं है।"
 msgid "No models matching \"%1\"."
 msgstr "\"%1\" से मेल खाता कोई मॉडल नहीं मिला।"
 
-msgid "No notebooks folder is set."
-msgstr "कोई नोटबुक फ़ोल्डर सेट नहीं है।"
-
-msgid "No notebooks yet"
-msgstr "अभी तक कोई नोटबुक नहीं"
-
-msgid "No path is available for the legacy notebook."
-msgstr "पुराने नोटबुक के लिए कोई पथ उपलब्ध नहीं है।"
+msgid "No path is available for the default AI note."
+msgstr "डिफ़ॉल्ट AI नोट के लिए कोई पथ उपलब्ध नहीं है।"
 
 msgid "No response received."
 msgstr "कोई प्रतिक्रिया प्राप्त नहीं हुई।"
@@ -863,70 +955,6 @@ msgstr "कोई नहीं"
 
 msgid "Note added successfully"
 msgstr "नोट सफलतापूर्वक जोड़ा गया"
-
-msgid "Notebook"
-msgstr "नोटबुक"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "नोटबुक (AI वार्तालाप लॉग)"
-
-msgid "Notebook Settings"
-msgstr "नोटबुक सेटिंग्स"
-
-msgid "Notebook name"
-msgstr "नोटबुक का नाम"
-
-msgid "Notebook name cannot be empty."
-msgstr "नोटबुक का नाम खाली नहीं हो सकता।"
-
-msgid "Notebook name cannot contain '..'."
-msgstr "नोटबुक के नाम में '..' नहीं हो सकता।"
-
-msgid "Notebook name cannot contain path separators."
-msgstr "नोटबुक के नाम में पथ विभाजक नहीं हो सकते।"
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "नोटबुक का नाम स्थान या बिंदु के साथ समाप्त नहीं हो सकता।"
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "नोटबुक के नाम में ऐसे अक्षर हैं जो फ़ाइल सिस्टम द्वारा समर्थित नहीं हैं।"
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "नोटबुक का नाम फ़ाइल सिस्टम द्वारा आरक्षित है।"
-
-msgid "Notebook name must be text."
-msgstr "नोटबुक का नाम टेक्स्ट होना चाहिए।"
-
-msgid "Notebook path is not a file: %1"
-msgstr "नोटबुक पथ एक फ़ाइल नहीं है: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "नोटबुक पथ उपलब्ध नहीं है।"
-
-msgid "Notebook save failed. Continuing..."
-msgstr "नोटबुक सहेजना विफल रहा। जारी रखा जा रहा है..."
-
-msgid "Notebook: %1"
-msgstr "नोटबुक: %1"
-
-msgid "Notebooks"
-msgstr "नोटबुक"
-
-msgid "Notebooks Folder"
-msgstr "नोटबुक फ़ोल्डर"
-
-msgid "Notebooks Folder: %1"
-msgstr "नोटबुक फ़ोल्डर: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"नोटबुक फ़ोल्डर पथ:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "नोटबुक पथ एक निर्देशिका नहीं है: %1"
 
 msgid "OK"
 msgstr "ठीक है"
@@ -1050,9 +1078,6 @@ msgstr "हटाएँ"
 
 msgid "Purge Settings"
 msgstr "सेटिंग्स मिटाएँ"
-
-msgid "Querying AI ..."
-msgstr "AI से पूछताछ हो रही है ..."
 
 msgid "Quick Note"
 msgstr "त्वरित नोट"
@@ -1184,11 +1209,11 @@ msgstr "खोज टूल रिकॉर्ड एक तालिका ह�
 msgid "Searching with %1 ... [%2]"
 msgstr "%1 के साथ खोजा जा रहा है ... [%2]"
 
+msgid "Select AI Note"
+msgstr "AI नोट चुनें"
+
 msgid "Select a model:"
 msgstr "मॉडल चुनें:"
-
-msgid "Select notebook"
-msgstr "नोटबुक चुनें"
 
 msgid "Selection copied to clipboard."
 msgstr "चयन क्लिपबोर्ड पर कॉपी किया गया।"
@@ -1267,8 +1292,8 @@ msgstr "संक्षेप में"
 msgid "Take Quick Notes"
 msgstr "त्वरित नोट्स लें"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "त्वरित नोट्स लें जो आपकी नोटबुक में सहेजे जाएँगे।"
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "त्वरित नोट्स लें जो आपके AI नोट्स में सहेजे जाएँगे।"
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "टेक्स्ट क्लिपबोर्ड पर कॉपी
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 के लिए हैंडलर नहीं मिला। कृपया सुनिश्चित करें कि हैंडलर api_handlers निर्देशिका में मौजूद है।"
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "नोटबुक आपका संवाद लॉग है: AI उत्तर और त्वरित नोट्स इसमें जोड़े जाते हैं। अपने लॉग्स को व्यवस्थित करने के लिए आप कई नोटबुक बना सकते हैं।"
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "यह बटन हाइलाइट किए गए पाठ के साथ एक त्वरित नोट बनाता है।"

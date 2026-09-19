@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - с. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\"-рэзюмэ кнігі, структураванае па раздзелах, такіх як Персанажы, Месцы, Тэмы, Тэрміны і паняцці, Храналогія і Паўторнае апусканне."
 
-msgid "### %1 Question\n"
-msgstr "### Пытанне %1\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Магчыма, вам будуць цікавыя гэтыя тэмы:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Дадаць гэтую кнопку ў меню вылучэнняў?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Файл AI-нататак:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Яшчэ не наладжаны правайдар.</b>\n"
 "Калі ласка, дадайце правайдар у Наладах або ў configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Файл нататніка:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Параметры</b>"
 
@@ -197,6 +194,43 @@ msgstr "Праверка злучэння..."
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Невядомы тып функцыі:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Глыбокае разважанне</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Пытанне</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Даступная новая версія плагіна %1 (%2). Калі ласка, абнавіце!"
 
@@ -214,6 +248,43 @@ msgstr "ШІ-слоўнік"
 
 msgid "AI Language: "
 msgstr "Мова ШІ: "
+
+msgid "AI Note Name"
+msgstr "Назва AI-нататкі"
+
+msgid "AI Notes"
+msgstr "AI-нататкі"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI-нататкі (журнал размоў з AI)"
+
+msgid "AI Notes Folder"
+msgstr "Тэчка AI-нататак"
+
+msgid "AI Notes Folder: %1"
+msgstr "Тэчка AI-нататак: %1"
+
+msgid "AI Notes Settings"
+msgstr "Налады AI-нататак"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Шлях да тэчкі AI-нататак:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI-нататкі — гэта ваш журнал размоў: адказы AI і хуткія нататкі дадаюцца да яго. Вы можаце стварыць некалькі AI-нататак, каб упарадкаваць свае журналы."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Шлях да AI-нататак не з'яўляецца каталогам: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Не ўдалося захаваць AI-нататкі. Працягваем..."
+
+msgid "AI Notes: %1"
+msgstr "AI-нататкі: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "ШІ адказвае"
+
+msgid "AI note name cannot be empty."
+msgstr "Назва AI-нататкі не можа быць пустой."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Назва AI-нататкі не можа ўтрымліваць '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Назва AI-нататкі не можа ўтрымліваць раздзяляльнікі шляху."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Назва AI-нататкі не можа заканчвацца прабелам ці кропкай."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Назва AI-нататкі ўтрымлівае сімвалы, якія не падтрымліваюцца файлавай сістэмай."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Назва AI-нататкі зарэзервавана файлавай сістэмай."
+
+msgid "AI note name must be text."
+msgstr "Назва AI-нататкі павінна быць тэкстам."
+
+msgid "AI note path is not a file: %1"
+msgstr "Шлях да AI-нататкі не з'яўляецца файлам: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Шлях да AI-нататкі недаступны."
 
 msgid "API Key"
 msgstr "API-ключ"
@@ -295,8 +393,8 @@ msgstr ""
 "Дадайце правайдараў з галоўнага меню:\n"
 "%1 -> AI Assistant -> Налады -> API правайдара"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Аналіз вашых вылучэнняў, нататак і змесціва нататніка па кнізе."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Аналіз вашых вылучэнняў, нататак і зместу AI-нататак з кнігі."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Далучыць папярэдні тэкст"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Аўтаматычны агляд пры адкрыцці даўно не чытаных кніг"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Аўтазахаванне размоў у нататнік"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Аўтаматычна захоўваць размовы ў AI-нататкі"
 
 msgid "Base URL"
 msgstr "Базавы URL"
@@ -415,8 +513,8 @@ msgstr "Праверка абнаўленняў..."
 msgid "Choose Definition Sections"
 msgstr "Выберыце раздзелы азначэнняў"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Выберыце, у які сшытак будуць захоўвацца вашы нататкі."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Выберыце, у якую AI-нататку захоўваць вашыя нататкі."
 
 msgid "Clear"
 msgstr "Ачысціць"
@@ -436,8 +534,8 @@ msgstr "Канфігурацыя не знойдзена. Калі ласка, �
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Наладзіць мову адказаў ШІ-мадэлі. Па змаўчанні выкарыстоўваецца мова інтэрфейсу KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Настроеная тэчка сшыткаў недаступная: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Наладжаная тэчка AI-нататак недаступная: %1"
 
 msgid "Connection test successful."
 msgstr "Праверка злучэння паспяховая."
@@ -461,8 +559,8 @@ msgstr "Кантэкстныя нататкі / разважанні"
 msgid "Contradictions / Open Questions"
 msgstr "Супярэчнасці / адкрытыя пытанні"
 
-msgid "Conversation is saved to notebook"
-msgstr "Размова захавана ў сшытак"
+msgid "Conversation is saved to AI Notes"
+msgstr "Размова захавана ў AI-нататкі"
 
 msgid "Copy"
 msgstr "Капіраваць"
@@ -478,42 +576,42 @@ msgstr "Асноўныя аргументы"
 msgid "Core Idea"
 msgstr "Асноўная ідэя"
 
-msgid "Could not close notebook file."
-msgstr "Не атрымалася закрыць файл сшытка."
+msgid "Could not close AI note file."
+msgstr "Не ўдалося закрыць файл AI-нататкі."
 
-msgid "Could not create notebook."
-msgstr "Не атрымалася стварыць сшытак."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Не ўдалося стварыць тэчку AI-нататак: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Не атрымалася стварыць сшытак: %1"
+msgid "Could not create AI note."
+msgstr "Не ўдалося стварыць AI-нататку."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Не атрымалася стварыць тэчку сшыткаў: %1"
+msgid "Could not create AI note: %1"
+msgstr "Не ўдалося стварыць AI-нататку: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Не атрымалася пералічыць змесціва тэчкі сшыткаў: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Не ўдалося атрымаць спіс тэчкі AI-нататак: %1"
 
-msgid "Could not open notebook file."
-msgstr "Не атрымалася адкрыць файл сшытка."
+msgid "Could not open AI note file."
+msgstr "Не ўдалося адкрыць файл AI-нататкі."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Не атрымалася захаваць у выбраны сшытак.\n"
+"Не ўдалося захаваць у выбраную AI-нататку.\n"
 "Захавана ў: %1"
 
-msgid "Could not select notebook."
-msgstr "Не атрымалася выбраць сшытак."
+msgid "Could not select AI note."
+msgstr "Не ўдалося выбраць AI-нататку."
 
-msgid "Could not write notebook file."
-msgstr "Не атрымалася запісаць файл сшытка."
+msgid "Could not write AI note file."
+msgstr "Не ўдалося запісаць файл AI-нататкі."
 
 msgid "Create"
 msgstr "Стварыць"
 
-msgid "Create a notebook."
-msgstr "Стварыць сшытак."
+msgid "Create an AI note."
+msgstr "Стварыць AI-нататку."
 
 msgid "Cultural Significance"
 msgstr "Культурная значнасць"
@@ -530,9 +628,6 @@ msgstr "Уласны промпт"
 
 msgid "Custom Prompts"
 msgstr "Уласныя промпты"
-
-msgid "Deeply Thought"
-msgstr "Глыбокія развагі"
 
 msgid "Delete"
 msgstr "Выдаліць"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Інтэграванае рэзюмэ"
 
-msgid "Invalid notebook entry."
-msgstr "Несапраўдны запіс сшытка."
+msgid "Invalid AI note entry."
+msgstr "Няправільны запіс AI-нататкі."
 
-msgid "Invalid notebook filename."
-msgstr "Несапраўднае імя файла сшытка."
+msgid "Invalid AI note filename."
+msgstr "Няправільнае імя файла AI-нататкі."
 
 msgid "Justify"
 msgstr "Па шырыні"
@@ -765,9 +860,6 @@ msgstr "Пакіньце пустым, каб выкарыстоўваць: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Пакіньце гэтыя палі пустымі, каб выкарыстоўваць мову інтэрфейсу: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Загрузка для <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Месцы"
@@ -805,26 +897,32 @@ msgstr "Мадэлі: %1"
 msgid "Models: %1 (matched)"
 msgstr "Мадэлі: %1 (супадаючыя)"
 
-msgid "Multiple Notebooks"
-msgstr "Некалькі нататнікаў"
+msgid "Multiple AI Notes"
+msgstr "Некалькі AI-нататак"
 
 msgid "Narrative element in focus:"
 msgstr "Апавядальны элемент у цэнтры ўвагі:"
 
-msgid "New notebook"
-msgstr "Новы сшытак"
+msgid "New AI Note"
+msgstr "Новая AI-нататка"
 
-msgid "New notebook..."
-msgstr "Новы нататнік..."
+msgid "New AI Note..."
+msgstr "Новая AI-нататка..."
 
 msgid "No"
 msgstr "Не"
 
+msgid "No AI Notes folder is set."
+msgstr "Папка AI-нататак не зададзена."
+
+msgid "No AI notes yet"
+msgstr "Пакуль няма AI-нататак"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Не настроены актыўны правайдар. Калі ласка, дадайце яго ў Наладах."
 
-msgid "No base folder is available for notebooks."
-msgstr "Няма базавай тэчкі для сшыткаў."
+msgid "No base folder is available for AI Notes."
+msgstr "Няма даступнай базавай папкі для AI-нататак."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Ніводная кніга не адкрыта. Доўга націсніце кнігу ў файлавым менеджары і выберыце «Інфармацыя пра кнігу (AI)»."
@@ -838,14 +936,8 @@ msgstr "Няма даступных мадэляў."
 msgid "No models matching \"%1\"."
 msgstr "Няма мадэляў, якія адпавядаюць \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Папка нататнікаў не зададзена."
-
-msgid "No notebooks yet"
-msgstr "Яшчэ няма сшыткаў"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Няма шляху для састарэлага сшытка."
+msgid "No path is available for the default AI note."
+msgstr "Няма даступнага шляху для прадвызначанай AI-нататкі."
 
 msgid "No response received."
 msgstr "Адказ не атрыманы."
@@ -864,70 +956,6 @@ msgstr "Няма"
 
 msgid "Note added successfully"
 msgstr "Нататка паспяхова дададзена"
-
-msgid "Notebook"
-msgstr "Нататнік"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Сшытак (часопіс размоў AI)"
-
-msgid "Notebook Settings"
-msgstr "Налады сшытка"
-
-msgid "Notebook name"
-msgstr "Назва сшытка"
-
-msgid "Notebook name cannot be empty."
-msgstr "Назва сшытка не можа быць пустой."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Назва сшытка не можа ўтрымліваць '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Назва сшытка не можа ўтрымліваць раздзяляльнікі шляху."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Назва сшытка не можа заканчвацца на прабел або кропку."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Назва сшытка ўтрымлівае сімвалы, якія не падтрымліваюцца файлавай сістэмай."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Назва сшытка зарэзервавана файлавай сістэмай."
-
-msgid "Notebook name must be text."
-msgstr "Назва сшытка павінна быць тэкстам."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Шлях да сшытка не з'яўляецца файлам: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Шлях да сшытка недаступны."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Не атрымалася захаваць у NoteBook. Працягваем..."
-
-msgid "Notebook: %1"
-msgstr "Сшытак: %1"
-
-msgid "Notebooks"
-msgstr "Сшыткі"
-
-msgid "Notebooks Folder"
-msgstr "Папка нататнікаў"
-
-msgid "Notebooks Folder: %1"
-msgstr "Папка нататнікаў: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Шлях да папкі нататнікаў:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Шлях да сшыткаў не з'яўляецца каталогам: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1051,9 +1079,6 @@ msgstr "Ачысціць"
 
 msgid "Purge Settings"
 msgstr "Ачысціць налады"
-
-msgid "Querying AI ..."
-msgstr "Запыт да ШІ ..."
 
 msgid "Quick Note"
 msgstr "Хуткая нататка"
@@ -1185,11 +1210,11 @@ msgstr "Запіс пошукавага інструмента павінен б
 msgid "Searching with %1 ... [%2]"
 msgstr "Пошук з %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Выбраць AI-нататку"
+
 msgid "Select a model:"
 msgstr "Выберыце мадэль:"
-
-msgid "Select notebook"
-msgstr "Выбраць сшытак"
 
 msgid "Selection copied to clipboard."
 msgstr "Выдзяленне скапіравана ў буфер абмену."
@@ -1268,8 +1293,8 @@ msgstr "Карацей кажучы"
 msgid "Take Quick Notes"
 msgstr "Зрабіць хуткія нататкі"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Рабіце хуткія нататкі, якія будуць захаваны ў вашым нататніку."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Рабіце хуткія нататкі, якія будуць захаваны ў вашых AI-нататках."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1290,9 +1315,6 @@ msgstr "Тэкст скапіраваны ў буфер абмену"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Апрацоўшчык для %1 не знойдзены. Калі ласка, пераканайцеся, што апрацоўшчык існуе ў каталогу api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Нататнік — гэта ваш журнал размоў: адказы AI і хуткія нататкі дадаюцца да яго. Вы можаце стварыць некалькі нататнікаў для арганізацыі вашых журналаў."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Гэтая кнопка стварае хуткую нататку з вылучаным тэкстам."

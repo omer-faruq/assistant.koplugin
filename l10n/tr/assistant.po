@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - s. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" özeti; Karakterler, Mekânlar, Temalar, Terimler ve Kavramlar, Zaman Çizelgesi ve Yeniden Okuma gibi belirli bölümlere ayrılmıştır."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Soru\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Bu konular ilginizi çekebilir:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Bu düğme Vurgu Menüsü'ne eklensin mi?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI Notları dosyası:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Henüz sağlayıcı kurulmamış.</b>\n"
 "Lütfen Ayarlar'dan veya configuration.lua dosyasından bir sağlayıcı ekleyin."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Not defteri dosyası:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametreler</b>"
 
@@ -197,6 +194,43 @@ msgstr "<b>Bağlantı test ediliyor...</b>"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Bilinmeyen özellik türü:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Derin Düşünce</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Soru</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "%1 eklentisinin yeni bir sürümü (%2) mevcut. Lütfen güncelleyin!"
 
@@ -214,6 +248,43 @@ msgstr "Yapay Zekâ Sözlüğü"
 
 msgid "AI Language: "
 msgstr "Yapay Zekâ Dili: "
+
+msgid "AI Note Name"
+msgstr "AI Notu Adı"
+
+msgid "AI Notes"
+msgstr "AI Notları"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI Notları (AI Sohbet Günlüğü)"
+
+msgid "AI Notes Folder"
+msgstr "AI Notları Klasörü"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI Notları Klasörü: %1"
+
+msgid "AI Notes Settings"
+msgstr "AI Notları Ayarları"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"AI Notları klasör yolu:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI Notları sohbet günlüğünüzdür: AI yanıtları ve hızlı notlar buraya eklenir. Günlüklerinizi düzenlemek için birden fazla AI notu oluşturabilirsiniz."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "AI Notları yolu bir dizin değil: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "AI Notları kaydedilemedi. Devam ediliyor..."
+
+msgid "AI Notes: %1"
+msgstr "AI Notları: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "Yapay zekâ yanıtlıyor"
+
+msgid "AI note name cannot be empty."
+msgstr "AI notu adı boş olamaz."
+
+msgid "AI note name cannot contain '..'."
+msgstr "AI notu adı '..' içeremez."
+
+msgid "AI note name cannot contain path separators."
+msgstr "AI notu adı yol ayırıcıları içeremez."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "AI notu adı boşluk veya nokta ile bitemez."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "AI notu adı dosya sistemi tarafından desteklenmeyen karakterler içeriyor."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "AI notu adı dosya sistemi tarafından ayrılmış."
+
+msgid "AI note name must be text."
+msgstr "AI notu adı metin olmalı."
+
+msgid "AI note path is not a file: %1"
+msgstr "AI notu yolu bir dosya değil: %1"
+
+msgid "AI note path is unavailable."
+msgstr "AI notu yolu kullanılamıyor."
 
 msgid "API Key"
 msgstr "API Anahtarı"
@@ -295,8 +393,8 @@ msgstr ""
 "Ana menüden sağlayıcı ekleyin:\n"
 "%1 -> Yapay Zeka Asistanı -> Ayarlar -> Sağlayıcı API'si"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Kitaptaki vurgularınızın, notlarınızın ve not defteri içeriğinizin analizi."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Kitaptaki vurgularınızın, notlarınızın ve AI Notları içeriğinin analizi."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Önceki Metni Ekle"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Uzun Süredir Okunmayan Kitaplar Açıldığında Otomatik Özet"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Sohbetleri Deftere Otomatik Kaydet"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Sohbetleri AI Notlarına Otomatik Kaydet"
 
 msgid "Base URL"
 msgstr "Temel URL"
@@ -415,8 +513,8 @@ msgstr "Güncellemeler kontrol ediliyor..."
 msgid "Choose Definition Sections"
 msgstr "Tanım Bölümlerini Seçin"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Notlarınızın hangi deftere kaydedileceğini seçin."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Notlarınızın kaydedileceği AI notunu seçin."
 
 msgid "Clear"
 msgstr "Temizle"
@@ -436,8 +534,8 @@ msgstr "Yapılandırma bulunamadı. Lütfen önce configuration.lua dosyasını 
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Yapay zeka LLM'inin yanıt dilini yapılandırın. Varsayılan olarak KOReader arayüz dilini kullanır."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Yapılandırılan defterler klasörüne erişilemiyor: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Yapılandırılmış AI Notları klasörüne erişilemiyor: %1"
 
 msgid "Connection test successful."
 msgstr "Bağlantı testi başarılı."
@@ -461,8 +559,8 @@ msgstr "Bağlam Notları / Düşünceler"
 msgid "Contradictions / Open Questions"
 msgstr "Çelişkiler / Açık Sorular"
 
-msgid "Conversation is saved to notebook"
-msgstr "Sohbet deftere kaydedildi"
+msgid "Conversation is saved to AI Notes"
+msgstr "Sohbet AI Notlarına kaydedildi"
 
 msgid "Copy"
 msgstr "Kopyala"
@@ -478,42 +576,42 @@ msgstr "Temel Argümanlar"
 msgid "Core Idea"
 msgstr "Temel Fikir"
 
-msgid "Could not close notebook file."
-msgstr "Defter dosyası kapatılamadı."
+msgid "Could not close AI note file."
+msgstr "AI notu dosyası kapatılamadı."
 
-msgid "Could not create notebook."
-msgstr "Defter oluşturulamadı."
+msgid "Could not create AI Notes folder: %1"
+msgstr "AI Notları klasörü oluşturulamadı: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Defter oluşturulamadı: %1"
+msgid "Could not create AI note."
+msgstr "AI notu oluşturulamadı."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Defterler klasörü oluşturulamadı: %1"
+msgid "Could not create AI note: %1"
+msgstr "AI notu oluşturulamadı: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Defterler klasörü listelenemedi: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "AI Notları klasörü listelenemedi: %1"
 
-msgid "Could not open notebook file."
-msgstr "Defter dosyası açılamadı."
+msgid "Could not open AI note file."
+msgstr "AI notu dosyası açılamadı."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Seçilen deftere kaydedilemedi.\n"
-"Kaydedildi: %1"
+"Seçilen AI notuna kaydedilemedi.\n"
+"Şuraya kaydedildi: %1"
 
-msgid "Could not select notebook."
-msgstr "Defter seçilemedi."
+msgid "Could not select AI note."
+msgstr "AI notu seçilemedi."
 
-msgid "Could not write notebook file."
-msgstr "Defter dosyası yazılamadı."
+msgid "Could not write AI note file."
+msgstr "AI notu dosyası yazılamadı."
 
 msgid "Create"
 msgstr "Oluştur"
 
-msgid "Create a notebook."
-msgstr "Bir defter oluşturun."
+msgid "Create an AI note."
+msgstr "Bir AI notu oluştur."
 
 msgid "Cultural Significance"
 msgstr "Kültürel Önem"
@@ -530,9 +628,6 @@ msgstr "Özel İstem"
 
 msgid "Custom Prompts"
 msgstr "Özel İstemler"
-
-msgid "Deeply Thought"
-msgstr "Derin Düşünce"
 
 msgid "Delete"
 msgstr "Sil"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Bütünleşik Özet"
 
-msgid "Invalid notebook entry."
-msgstr "Geçersiz defter girdisi."
+msgid "Invalid AI note entry."
+msgstr "Geçersiz AI notu girdisi."
 
-msgid "Invalid notebook filename."
-msgstr "Geçersiz defter dosya adı."
+msgid "Invalid AI note filename."
+msgstr "Geçersiz yapay zeka notu dosya adı."
 
 msgid "Justify"
 msgstr "İki yana yasla"
@@ -764,9 +859,6 @@ msgstr "Kullanmak için boş bırakın: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Arayüz dilini kullanmak için bu alanları boş bırakın: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "<b>%1</b> için yükleniyor ..."
 
 msgid "Locations"
 msgstr "Mekânlar"
@@ -804,26 +896,32 @@ msgstr "Modeller: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modeller: %1 (eşleşen)"
 
-msgid "Multiple Notebooks"
-msgstr "Birden Çok Defter"
+msgid "Multiple AI Notes"
+msgstr "Birden Fazla Yapay Zeka Notu"
 
 msgid "Narrative element in focus:"
 msgstr "Odaktaki anlatı öğesi:"
 
-msgid "New notebook"
-msgstr "Yeni defter"
+msgid "New AI Note"
+msgstr "Yeni Yapay Zeka Notu"
 
-msgid "New notebook..."
-msgstr "Yeni defter..."
+msgid "New AI Note..."
+msgstr "Yeni Yapay Zeka Notu..."
 
 msgid "No"
 msgstr "Hayır"
 
+msgid "No AI Notes folder is set."
+msgstr "Yapay Zeka Notları klasörü ayarlanmamış."
+
+msgid "No AI notes yet"
+msgstr "Henüz yapay zeka notu yok"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Etkin sağlayıcı yapılandırılmadı. Lütfen Ayarlar'dan bir tane ekleyin."
 
-msgid "No base folder is available for notebooks."
-msgstr "Defterler için temel klasör mevcut değil."
+msgid "No base folder is available for AI Notes."
+msgstr "Yapay Zeka Notları için kullanılabilir bir temel klasör yok."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Açık bir kitap yok. Dosya yöneticisinde bir kitaba uzun basın ve Kitap Bilgisi (AI) seçeneğini seçin."
@@ -837,14 +935,8 @@ msgstr "Kullanılabilir model yok."
 msgid "No models matching \"%1\"."
 msgstr "\"%1\" ile eşleşen model yok."
 
-msgid "No notebooks folder is set."
-msgstr "Hiçbir defter klasörü ayarlanmamış."
-
-msgid "No notebooks yet"
-msgstr "Henüz defter yok"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Eski defter için yol mevcut değil."
+msgid "No path is available for the default AI note."
+msgstr "Varsayılan yapay zeka notu için kullanılabilir bir yol yok."
 
 msgid "No response received."
 msgstr "Yanıt alınmadı."
@@ -863,70 +955,6 @@ msgstr "Yok"
 
 msgid "Note added successfully"
 msgstr "Not başarıyla eklendi"
-
-msgid "Notebook"
-msgstr "Not Defteri"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Defter (AI Sohbet Günlüğü)"
-
-msgid "Notebook Settings"
-msgstr "Defter Ayarları"
-
-msgid "Notebook name"
-msgstr "Defter adı"
-
-msgid "Notebook name cannot be empty."
-msgstr "Defter adı boş olamaz."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Defter adı '..' içeremez."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Defter adı yol ayırıcıları içeremez."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Defter adı boşluk veya nokta ile bitemez."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Defter adı, dosya sistemi tarafından desteklenmeyen karakterler içeriyor."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Defter adı dosya sistemi tarafından ayrılmıştır."
-
-msgid "Notebook name must be text."
-msgstr "Defter adı metin olmalıdır."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Defter yolu bir dosya değil: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Defter yolu kullanılamıyor."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Notebook kaydetme başarısız oldu. Devam ediliyor..."
-
-msgid "Notebook: %1"
-msgstr "Defter: %1"
-
-msgid "Notebooks"
-msgstr "Defterler"
-
-msgid "Notebooks Folder"
-msgstr "Defter Klasörü"
-
-msgid "Notebooks Folder: %1"
-msgstr "Defter Klasörü: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Defter klasörü yolu:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Defterler yolu bir dizin değil: %1"
 
 msgid "OK"
 msgstr "Tamam"
@@ -1050,9 +1078,6 @@ msgstr "Temizle"
 
 msgid "Purge Settings"
 msgstr "Ayarları Temizle"
-
-msgid "Querying AI ..."
-msgstr "Yapay zekâ sorgulanıyor ..."
 
 msgid "Quick Note"
 msgstr "Hızlı Not"
@@ -1183,11 +1208,11 @@ msgstr "Arama aracı kaydı bir tablo olmalıdır."
 msgid "Searching with %1 ... [%2]"
 msgstr "%1 ile aranıyor ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Yapay Zeka Notu Seç"
+
 msgid "Select a model:"
 msgstr "Bir model seçin:"
-
-msgid "Select notebook"
-msgstr "Defter seç"
 
 msgid "Selection copied to clipboard."
 msgstr "Seçim panoya kopyalandı."
@@ -1266,8 +1291,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Hızlı Not Al"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Not defterinize kaydedilecek hızlı notlar alın."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Yapay Zeka Notlarınıza kaydedilecek hızlı notlar alın."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1288,9 +1313,6 @@ msgstr "Metin panoya kopyalandı"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 için işleyici bulunamadı. Lütfen işleyicinin api_handlers dizininde mevcut olduğundan emin olun."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Defter, sohbet kayıtlarınızdır: AI yanıtları ve hızlı notlar buraya eklenir. Kayıtlarınızı düzenlemek için birden çok defter oluşturabilirsiniz."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Bu düğme, vurgulanan metinle hızlı bir not oluşturur."

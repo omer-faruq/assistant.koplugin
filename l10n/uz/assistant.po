@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 04:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Oʻzbekcha (AI translation)\n"
@@ -38,9 +38,6 @@ msgstr " - b. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" xulosasi kitob uchun, Qahramonlar, Joylar, Mavzular, Atamalar va tushunchalar, Vaqt jadvali va Qayta kirish kabi aniq boʻlimlarga ajratilgan."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Savol\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Sizga quyidagi mavzular qiziq boʻlishi mumkin:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Bu tugmani Ajratish menyusiga qo'shilsinmi?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI eslatmalari fayli:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Hali provayder sozlanmagan.</b>\n"
 "Iltimos, Sozlamalar yoki configuration.lua faylida provayder qoʻshing."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Daftar fayli:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametrlar</b>"
 
@@ -197,6 +194,43 @@ msgstr "Ulanish muvaffaqiyatli."
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Noma'lum funksiya turi:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Chuqur mulohaza</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Savol</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "%1 plagining yangi versiyasi (%2) mavjud. Iltimos, yangilang!"
 
@@ -214,6 +248,43 @@ msgstr "AI Lug'at"
 
 msgid "AI Language: "
 msgstr "AI tili: "
+
+msgid "AI Note Name"
+msgstr "AI eslatma nomi"
+
+msgid "AI Notes"
+msgstr "AI eslatmalari"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI eslatmalari (AI suhbat jurnali)"
+
+msgid "AI Notes Folder"
+msgstr "AI eslatmalari papkasi"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI eslatmalari papkasi: %1"
+
+msgid "AI Notes Settings"
+msgstr "AI eslatmalari sozlamalari"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"AI eslatmalari papkasi yoʻli:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI eslatmalari — bu sizning suhbat jurnalingiz: AI javoblari va tezkor eslatmalar unga qoʻshib boriladi. Jurnallaringizni tartibga solish uchun bir nechta AI eslatma yaratishingiz mumkin."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "AI eslatmalari yoʻli papka emas: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "AI eslatmalarini saqlash amalga oshmadi. Davom etilmoqda..."
+
+msgid "AI Notes: %1"
+msgstr "AI eslatmalari: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI javob bermoqda"
+
+msgid "AI note name cannot be empty."
+msgstr "AI eslatma nomi boʻsh boʻlishi mumkin emas."
+
+msgid "AI note name cannot contain '..'."
+msgstr "AI eslatma nomi '..' belgilarini oʻz ichiga olishi mumkin emas."
+
+msgid "AI note name cannot contain path separators."
+msgstr "AI eslatma nomi yoʻl ajratgichlarini oʻz ichiga olishi mumkin emas."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "AI eslatma nomi boʻsh joy yoki nuqta bilan tugashi mumkin emas."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "AI eslatma nomida fayl tizimi qoʻllab-quvvatlamaydigan belgilar mavjud."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "AI eslatma nomi fayl tizimi tomonidan band qilingan."
+
+msgid "AI note name must be text."
+msgstr "AI eslatma nomi matn boʻlishi kerak."
+
+msgid "AI note path is not a file: %1"
+msgstr "AI eslatma yoʻli fayl emas: %1"
+
+msgid "AI note path is unavailable."
+msgstr "AI eslatma yoʻli mavjud emas."
 
 msgid "API Key"
 msgstr "API kaliti"
@@ -295,8 +393,8 @@ msgstr ""
 "Provayderlarni asosiy menyudan qo'shing:\n"
 "%1 -> AI Yordamchi -> Sozlamalar -> Provayder API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Kitobdagi ajratib koʻrsatilgan matnlaringiz, eslatmalaringiz va daftar tarkibingiz tahlili."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Kitobdagi belgilangan matnlar, eslatmalar va AI eslatmalari mazmunini tahlil qilish."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Oldingi matnni biriktirish"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Uzoq vaqt oʻqilmagan kitoblar ochilganda avtomatik xulosa"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Suhbatlarni daftarga avtomatik saqlash"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Suhbatlarni AI eslatmalariga avtomatik saqlash"
 
 msgid "Base URL"
 msgstr "Asosiy URL"
@@ -415,8 +513,8 @@ msgstr "Yangilanishlar tekshirilmoqda..."
 msgid "Choose Definition Sections"
 msgstr "Taʼrif boʻlimlarini tanlash"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Eslatmalaringiz qaysi daftarga saqlanishini tanlang."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Eslatmalaringiz qaysi AI eslatmasiga saqlanishini tanlang."
 
 msgid "Clear"
 msgstr "Tozalash"
@@ -436,8 +534,8 @@ msgstr "Konfiguratsiya topilmadi. Iltimos, avval configuration.lua ni sozlang."
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "AI LLM ning javob tilini sozlang. Odatiy holatda KOReader interfeys tili ishlatiladi."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Sozlangan daftarlar papkasiga kirish imkoni yoʻq: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Sozlangan AI eslatmalari jildiga kirish mumkin emas: %1"
 
 msgid "Connection test successful."
 msgstr "Ulanish testi muvaffaqiyatli."
@@ -461,8 +559,8 @@ msgstr "Kontekstual eslatmalar / Mulohazalar"
 msgid "Contradictions / Open Questions"
 msgstr "Qarama-qarshiliklar / Ochiq savollar"
 
-msgid "Conversation is saved to notebook"
-msgstr "Suhbat daftarga saqlandi"
+msgid "Conversation is saved to AI Notes"
+msgstr "Suhbat AI eslatmalariga saqlandi"
 
 msgid "Copy"
 msgstr "Nusxalash"
@@ -478,42 +576,42 @@ msgstr "Asosiy dalillar"
 msgid "Core Idea"
 msgstr "Asosiy gʻoya"
 
-msgid "Could not close notebook file."
-msgstr "Daftar faylini yopib boʻlmadi."
+msgid "Could not close AI note file."
+msgstr "AI eslatma faylini yopib boʻlmadi."
 
-msgid "Could not create notebook."
-msgstr "Daftarni yaratib boʻlmadi."
+msgid "Could not create AI Notes folder: %1"
+msgstr "AI eslatmalari jildini yaratib boʻlmadi: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Daftarni yaratib boʻlmadi: %1"
+msgid "Could not create AI note."
+msgstr "AI eslatma yaratib boʻlmadi."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Daftarlar papkasini yaratib boʻlmadi: %1"
+msgid "Could not create AI note: %1"
+msgstr "AI eslatma yaratib boʻlmadi: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Daftarlar papkasini roʻyxatlab boʻlmadi: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "AI eslatmalari jildini roʻyxatlab boʻlmadi: %1"
 
-msgid "Could not open notebook file."
-msgstr "Daftar faylini ochib boʻlmadi."
+msgid "Could not open AI note file."
+msgstr "AI eslatma faylini ochib boʻlmadi."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Tanlangan daftarga saqlab boʻlmadi.\n"
-"Saqlangan: %1"
+"Tanlangan AI eslatmaga saqlab boʻlmadi.\n"
+"Saqlangan joy: %1"
 
-msgid "Could not select notebook."
-msgstr "Daftarni tanlab boʻlmadi."
+msgid "Could not select AI note."
+msgstr "AI eslatmani tanlab boʻlmadi."
 
-msgid "Could not write notebook file."
-msgstr "Daftar faylini yozib boʻlmadi."
+msgid "Could not write AI note file."
+msgstr "AI eslatma fayliga yozib boʻlmadi."
 
 msgid "Create"
 msgstr "Yaratish"
 
-msgid "Create a notebook."
-msgstr "Daftar yarating."
+msgid "Create an AI note."
+msgstr "AI eslatma yaratish."
 
 msgid "Cultural Significance"
 msgstr "Madaniy ahamiyat"
@@ -530,9 +628,6 @@ msgstr "Maxsus prompt"
 
 msgid "Custom Prompts"
 msgstr "Maxsus promptlar"
-
-msgid "Deeply Thought"
-msgstr "Chuqur fikrlash"
 
 msgid "Delete"
 msgstr "Oʻchirish"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Integratsiyalashgan xulosa"
 
-msgid "Invalid notebook entry."
-msgstr "Notoʻgʻri daftar yozuvi."
+msgid "Invalid AI note entry."
+msgstr "AI eslatma yozuvi notoʻgʻri."
 
-msgid "Invalid notebook filename."
-msgstr "Notoʻgʻri daftar fayl nomi."
+msgid "Invalid AI note filename."
+msgstr "AI eslatmasi fayl nomi yaroqsiz."
 
 msgid "Justify"
 msgstr "Ikki tomonga tekislash"
@@ -764,9 +859,6 @@ msgstr "Boʻsh qoldiring, %1 ishlatiladi"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Bu maydonlarni boʻsh qoldiring, interfeys tili ishlatiladi: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "<b>%1</b> uchun yuklanmoqda ..."
 
 msgid "Locations"
 msgstr "Joylar"
@@ -804,26 +896,32 @@ msgstr "Modellar: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modellar: %1 (mos)"
 
-msgid "Multiple Notebooks"
-msgstr "Bir nechta daftarlar"
+msgid "Multiple AI Notes"
+msgstr "Bir nechta AI eslatmalari"
 
 msgid "Narrative element in focus:"
 msgstr "Diqqat markazidagi hikoya elementi:"
 
-msgid "New notebook"
-msgstr "Yangi daftar"
+msgid "New AI Note"
+msgstr "Yangi AI eslatmasi"
 
-msgid "New notebook..."
-msgstr "Yangi daftar..."
+msgid "New AI Note..."
+msgstr "Yangi AI eslatmasi..."
 
 msgid "No"
 msgstr "Yo'q"
 
+msgid "No AI Notes folder is set."
+msgstr "AI eslatmalari jildi belgilanmagan."
+
+msgid "No AI notes yet"
+msgstr "Hozircha AI eslatmalari yoʻq"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Faol provayder sozlanmagan. Iltimos, Sozlamalarda bittasini qo'shing."
 
-msgid "No base folder is available for notebooks."
-msgstr "Daftarlar uchun asosiy papka mavjud emas."
+msgid "No base folder is available for AI Notes."
+msgstr "AI eslatmalari uchun asosiy jild mavjud emas."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Hech qanday kitob ochilmagan. Fayl menejerida kitobni uzoq bosib, «Kitob maʼlumotlari (AI)» ni tanlang."
@@ -837,14 +935,8 @@ msgstr "Modellar mavjud emas."
 msgid "No models matching \"%1\"."
 msgstr "\"%1\"ga mos keladigan modellar yoʻq."
 
-msgid "No notebooks folder is set."
-msgstr "Daftarlar papkasi belgilanmagan."
-
-msgid "No notebooks yet"
-msgstr "Hozircha daftarlar yoʻq"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Eski daftar uchun yoʻl mavjud emas."
+msgid "No path is available for the default AI note."
+msgstr "Standart AI eslatmasi uchun yoʻl mavjud emas."
 
 msgid "No response received."
 msgstr "Hech qanday javob olinmadi."
@@ -863,70 +955,6 @@ msgstr "Hech biri"
 
 msgid "Note added successfully"
 msgstr "Eslatma muvaffaqiyatli qoʻshildi"
-
-msgid "Notebook"
-msgstr "Daftar"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Daftar (AI suhbatlar jurnali)"
-
-msgid "Notebook Settings"
-msgstr "Daftar sozlamalari"
-
-msgid "Notebook name"
-msgstr "Daftar nomi"
-
-msgid "Notebook name cannot be empty."
-msgstr "Daftar nomi boʻsh boʻlishi mumkin emas."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Daftar nomida '..' boʻlishi mumkin emas."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Daftar nomida yoʻl ajratgichlari boʻlishi mumkin emas."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Daftar nomi boʻsh joy yoki nuqta bilan tugashi mumkin emas."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Daftar nomida fayl tizimi qoʻllab-quvvatlamaydigan belgilar mavjud."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Daftar nomi fayl tizimi tomonidan band qilingan."
-
-msgid "Notebook name must be text."
-msgstr "Daftar nomi matn boʻlishi kerak."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Daftar yoʻli fayl emas: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Daftar yoʻli mavjud emas."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Notebook saqlash muvaffaqiyatsiz tugadi. Davom etilmoqda..."
-
-msgid "Notebook: %1"
-msgstr "Daftar: %1"
-
-msgid "Notebooks"
-msgstr "Daftarlar"
-
-msgid "Notebooks Folder"
-msgstr "Daftarlar papkasi"
-
-msgid "Notebooks Folder: %1"
-msgstr "Daftarlar papkasi: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Daftarlar papkasi yoʻli:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Daftarlar yoʻli katalog emas: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1050,9 +1078,6 @@ msgstr "Tozalash"
 
 msgid "Purge Settings"
 msgstr "Sozlamalarni tozalash"
-
-msgid "Querying AI ..."
-msgstr "AIga soʻrov yuborilmoqda ..."
 
 msgid "Quick Note"
 msgstr "Tezkor eslatma"
@@ -1183,11 +1208,11 @@ msgstr "Qidiruv vositasi yozuvi jadval boʻlishi kerak."
 msgid "Searching with %1 ... [%2]"
 msgstr "%1 bilan qidirilmoqda ... [%2]"
 
+msgid "Select AI Note"
+msgstr "AI eslatmasini tanlash"
+
 msgid "Select a model:"
 msgstr "Model tanlang:"
-
-msgid "Select notebook"
-msgstr "Daftarni tanlang"
 
 msgid "Selection copied to clipboard."
 msgstr "Tanlangan matn almashish buferiga nusxalandi"
@@ -1266,8 +1291,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Tezkor eslatma olish"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Daftaringizga saqlanadigan qisqa eslatmalar yozing"
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "AI eslatmalaringizga saqlanadigan tezkor eslatmalar oling."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1288,9 +1313,6 @@ msgstr "Matn almashish buferiga nusxalandi"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 uchun handler topilmadi. Iltimos, handler api_handlers katalogida mavjudligiga ishonch hosil qiling."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Daftar sizning suhbat jurnalingiz: AI javoblari va tezkor eslatmalar unga qoʻshiladi. Jurnallaringizni tartibga solish uchun bir nechta daftar yaratishingiz mumkin."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Bu tugma ajratilgan matn bilan tezkor eslatma yaratadi."

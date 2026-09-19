@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - lch. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Achoimre \"X-Ray\" do leabhar, struchtúrtha ina rannóga ar leith ar nós Carachtair, Suímh, Téamaí, Téarmaí & Coincheapa, Amlíne, agus Ath-thumadh."
 
-msgid "### %1 Question\n"
-msgstr "### Ceist %1\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### B'fhéidir go mbeidh na hábhair seo suimiúil duit:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "An gcuirfear an cnaipe seo leis an Roghchlár Aibhsithe?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Comhad Nótaí AI:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Níl aon soláthraí socraithe go fóill.</b>\n"
 "Cuir soláthraí leis i Socruithe nó i configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Comhad an leabhar nótaí:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Paraiméadair</b>"
 
@@ -197,6 +194,43 @@ msgstr "Bonn URL"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Cineál gné anaithnid:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Smaoineamh Domhain</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Ceist</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Tá leagan nua den bhreiseán %1 (%2) ar fáil. Nuashonraigh le do thoil!"
 
@@ -214,6 +248,43 @@ msgstr "Foclóir AI"
 
 msgid "AI Language: "
 msgstr "Teanga AI: "
+
+msgid "AI Note Name"
+msgstr "Ainm Nóta AI"
+
+msgid "AI Notes"
+msgstr "Nótaí AI"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "Nótaí AI (Loga Comhrá AI)"
+
+msgid "AI Notes Folder"
+msgstr "Fillteán Nótaí AI"
+
+msgid "AI Notes Folder: %1"
+msgstr "Fillteán Nótaí AI: %1"
+
+msgid "AI Notes Settings"
+msgstr "Socruithe Nótaí AI"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Cosán fillteáin Nótaí AI:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "Is iad Nótaí AI do loga comhrá: cuirtear freagraí AI agus nótaí tapa leis. Is féidir leat nótaí AI iolracha a chruthú chun do logaí a eagrú."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Ní fillteán é cosán Nótaí AI: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Theip ar shábháil Nótaí AI. Ag leanúint..."
+
+msgid "AI Notes: %1"
+msgstr "Nótaí AI: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "Tá AI ag freagairt"
+
+msgid "AI note name cannot be empty."
+msgstr "Ní féidir ainm nóta AI a bheith folamh."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Ní cheadaítear '..' in ainm nóta AI."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Ní cheadaítear deighilteoirí cosáin in ainm nóta AI."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Ní féidir le hainm nóta AI críochnú le spás nó ponc."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Tá carachtair in ainm nóta AI nach dtacaíonn an córas comhad leo."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Tá ainm an nóta AI curtha in áirithe ag an gcóras comhad."
+
+msgid "AI note name must be text."
+msgstr "Ní mór ainm an nóta AI a bheith ina théacs."
+
+msgid "AI note path is not a file: %1"
+msgstr "Níl cosán an nóta AI ina chomhad: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Níl cosán an nóta AI ar fáil."
 
 msgid "API Key"
 msgstr "Eochair API"
@@ -295,8 +393,8 @@ msgstr ""
 "Cuir soláthróirí leis ón bpríomh-roghchlár:\n"
 "%1 -> Cúntóir AI -> Socruithe -> API Soláthróra"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Anailís ar do chuid aibhsithe, nótaí, agus ábhar an leabhar nótaí ón leabhar."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Anailís ar do chuid aibhsithe, ar do chuid nótaí, agus ar ábhar Nótaí AI ón leabhar."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Ceangail Téacs Roimhe"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Uath-Recap nuair a Osclaítear Leabhair Nár Léadh le Fada"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Comhráite a shábháil go huathoibríoch sa leabhar nótaí"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Uathshábháil Comhráite chuig Nótaí AI"
 
 msgid "Base URL"
 msgstr "URL Bonn"
@@ -415,8 +513,8 @@ msgstr "Ag seiceáil le haghaidh nuashonruithe..."
 msgid "Choose Definition Sections"
 msgstr "Roghnaigh Ranna Sainmhínithe"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Roghnaigh cén leabhar nótaí a shábháiltear do nótaí ann."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Roghnaigh cén nóta AI a sábhálfar do chuid nótaí ann."
 
 msgid "Clear"
 msgstr "Glan"
@@ -436,8 +534,8 @@ msgstr "Níor aimsíodh an chumraíocht. Cumraigh configuration.lua ar dtús, le
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Cumraigh teanga freagartha an AI LLM. Réamhshocraítear go teanga chomhéadain KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Níl rochtain ar fhillteán na leabhar nótaí atá cumraithe: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Níl rochtain ar an bhfillteán Nótaí AI cumraithe: %1"
 
 msgid "Connection test successful."
 msgstr "D'éirigh leis an tástáil ceangail."
@@ -461,8 +559,8 @@ msgstr "Nótaí Comhthéacsúla / Machnaimh"
 msgid "Contradictions / Open Questions"
 msgstr "Contrárthachtaí / Ceisteanna Oscailte"
 
-msgid "Conversation is saved to notebook"
-msgstr "Tá an comhrá sábháilte sa leabhar nótaí."
+msgid "Conversation is saved to AI Notes"
+msgstr "Tá an comhrá sábháilte i Nótaí AI"
 
 msgid "Copy"
 msgstr "Cóipeáil"
@@ -478,42 +576,42 @@ msgstr "Croí-argóintí"
 msgid "Core Idea"
 msgstr "Croí-smaoineamh"
 
-msgid "Could not close notebook file."
-msgstr "Níorbh fhéidir comhad an leabhair nótaí a dhúnadh."
+msgid "Could not close AI note file."
+msgstr "Níorbh fhéidir comhad an nóta AI a dhúnadh."
 
-msgid "Could not create notebook."
-msgstr "Níorbh fhéidir leabhar nótaí a chruthú."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Níorbh fhéidir fillteán Nótaí AI a chruthú: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Níorbh fhéidir an leabhar nótaí a chruthú: %1"
+msgid "Could not create AI note."
+msgstr "Níorbh fhéidir nóta AI a chruthú."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Níorbh fhéidir fillteán na leabhar nótaí a chruthú: %1"
+msgid "Could not create AI note: %1"
+msgstr "Níorbh fhéidir nóta AI a chruthú: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Níorbh fhéidir fillteán na leabhar nótaí a liostú: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Níorbh fhéidir fillteán Nótaí AI a liostú: %1"
 
-msgid "Could not open notebook file."
-msgstr "Níorbh fhéidir comhad an leabhair nótaí a oscailt."
+msgid "Could not open AI note file."
+msgstr "Níorbh fhéidir comhad an nóta AI a oscailt."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Níorbh fhéidir sábháil chuig an leabhar nótaí roghnaithe.\n"
-"Sábháilte chuig: %1"
+"Níorbh fhéidir sábháil chuig an nóta AI roghnaithe.\n"
+"Sábháladh chuig: %1"
 
-msgid "Could not select notebook."
-msgstr "Níorbh fhéidir leabhar nótaí a roghnú."
+msgid "Could not select AI note."
+msgstr "Níorbh fhéidir nóta AI a roghnú."
 
-msgid "Could not write notebook file."
-msgstr "Níorbh fhéidir comhad an leabhair nótaí a scríobh."
+msgid "Could not write AI note file."
+msgstr "Níorbh fhéidir comhad an nóta AI a scríobh."
 
 msgid "Create"
 msgstr "Cruthaigh"
 
-msgid "Create a notebook."
-msgstr "Cruthaigh leabhar nótaí."
+msgid "Create an AI note."
+msgstr "Cruthaigh nóta AI."
 
 msgid "Cultural Significance"
 msgstr "Tábhacht Chultúrtha"
@@ -530,9 +628,6 @@ msgstr "Treoir Shaincheaptha"
 
 msgid "Custom Prompts"
 msgstr "Prómpaí Saincheaptha"
-
-msgid "Deeply Thought"
-msgstr "Machnamh Domhain"
 
 msgid "Delete"
 msgstr "Scrios"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Achoimre Chomhtháite"
 
-msgid "Invalid notebook entry."
-msgstr "Iontráil neamhbhailí leabhair nótaí."
+msgid "Invalid AI note entry."
+msgstr "Iontráil nóta AI neamhbhailí."
 
-msgid "Invalid notebook filename."
-msgstr "Ainm comhaid neamhbhailí don leabhar nótaí."
+msgid "Invalid AI note filename."
+msgstr "Ainm comhaid nóta AI neamhbhailí."
 
 msgid "Justify"
 msgstr "Comhfhadaigh"
@@ -767,9 +862,6 @@ msgstr "Fág bán le húsáid: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Fág na réimsí seo bán le teanga an chomhéadain a úsáid: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Á lódáil le haghaidh <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Áiteanna"
@@ -807,26 +899,32 @@ msgstr "Samhlacha: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modail: %1 (comhaileadh)"
 
-msgid "Multiple Notebooks"
-msgstr "Il-Leabhair Nótaí"
+msgid "Multiple AI Notes"
+msgstr "Nótaí AI Iolracha"
 
 msgid "Narrative element in focus:"
 msgstr "Gné insinte atá i bhfócas:"
 
-msgid "New notebook"
-msgstr "Leabhar nótaí nua"
+msgid "New AI Note"
+msgstr "Nóta AI Nua"
 
-msgid "New notebook..."
-msgstr "Leabhar nótaí nua..."
+msgid "New AI Note..."
+msgstr "Nóta AI Nua..."
 
 msgid "No"
 msgstr "Níl"
 
+msgid "No AI Notes folder is set."
+msgstr "Níl aon fhillteán Nótaí AI socraithe."
+
+msgid "No AI notes yet"
+msgstr "Níl aon nótaí AI fós."
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Níl aon soláthraí gníomhach cumraithe. Cuir ceann leis i Socruithe le do thoil."
 
-msgid "No base folder is available for notebooks."
-msgstr "Níl aon fhillteán bun ar fáil do na leabhair nótaí."
+msgid "No base folder is available for AI Notes."
+msgstr "Níl aon bhunfhillteán ar fáil do Nótaí AI."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Níl aon leabhar oscailte. Brúigh go fada ar leabhar sa bhainisteoir comhad agus roghnaigh Eolas Leabhair (AI)."
@@ -840,14 +938,8 @@ msgstr "Níl aon samhail ar fáil."
 msgid "No models matching \"%1\"."
 msgstr "Níl aon samhail ag teacht le \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Níl aon fhillteán leabhar nótaí socraithe."
-
-msgid "No notebooks yet"
-msgstr "Níl aon leabhar nótaí fós"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Níl aon chosán ar fáil don seanleabhar nótaí."
+msgid "No path is available for the default AI note."
+msgstr "Níl aon chonair ar fáil don nóta AI réamhshocraithe."
 
 msgid "No response received."
 msgstr "Ní bhfuarthas aon fhreagra."
@@ -866,70 +958,6 @@ msgstr "Dada"
 
 msgid "Note added successfully"
 msgstr "Cuireadh an nóta leis go rathúil"
-
-msgid "Notebook"
-msgstr "Leabhar Nótaí"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Leabhar nótaí (Loga Comhrá AI)"
-
-msgid "Notebook Settings"
-msgstr "Socruithe an leabhair nótaí"
-
-msgid "Notebook name"
-msgstr "Ainm an leabhair nótaí"
-
-msgid "Notebook name cannot be empty."
-msgstr "Ní féidir le hainm an leabhair nótaí a bheith folamh."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Ní féidir le hainm an leabhair nótaí '..' a bheith ann."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Ní féidir deighilteoirí cosáin a bheith in ainm an leabhair nótaí."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Ní féidir le hainm an leabhair nótaí críochnú le spás nó ponc."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Tá carachtair in ainm an leabhair nótaí nach dtacaíonn an córas comhad leo."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Tá ainm an leabhair nótaí forchoimeádta ag an gcóras comhad."
-
-msgid "Notebook name must be text."
-msgstr "Ní mór gur téacs é ainm an leabhair nótaí."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Ní comhad é cosán an leabhair nótaí: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Níl cosán an leabhair nótaí ar fáil."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Theip ar shábháil an Leabhar Nótaí. Ag leanúint ar aghaidh..."
-
-msgid "Notebook: %1"
-msgstr "Leabhar nótaí: %1"
-
-msgid "Notebooks"
-msgstr "Leabhair nótaí"
-
-msgid "Notebooks Folder"
-msgstr "Fillteán Leabhar Nótaí"
-
-msgid "Notebooks Folder: %1"
-msgstr "Fillteán Nótaí: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Cosán fillteáin nótaí:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Ní fillteán é cosán na leabhar nótaí: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1053,9 +1081,6 @@ msgstr "Glan"
 
 msgid "Purge Settings"
 msgstr "Glan Socruithe"
-
-msgid "Querying AI ..."
-msgstr "Ag fiosrú AI ..."
 
 msgid "Quick Note"
 msgstr "Nóta Tapa"
@@ -1185,11 +1210,11 @@ msgstr "Caithfidh taifead na huirlise cuardaigh a bheith ina thábla."
 msgid "Searching with %1 ... [%2]"
 msgstr "Ag cuardach le %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Roghnaigh Nóta AI"
+
 msgid "Select a model:"
 msgstr "Roghnaigh samhail:"
-
-msgid "Select notebook"
-msgstr "Roghnaigh leabhar nótaí"
 
 msgid "Selection copied to clipboard."
 msgstr "Cóipeáladh an roghnú go dtí an ghearrthaisce."
@@ -1268,8 +1293,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Tóg Nótaí Tapa"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Tóg nótaí tapa a shábhálfar i do leabhar nótaí."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Tóg nótaí tapa a shábhálfar i do Nótaí AI."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1290,9 +1315,6 @@ msgstr "Cóipeáladh an téacs chuig an ngearrthaisce."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Níor aimsíodh an láimhseálaí do %1. Déan cinnte go bhfuil an láimhseálaí san eolaire api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Is é an leabhar nótaí do log comhrá: cuirtear freagraí AI agus nótaí tapa leis. Is féidir leat níos mó ná leabhar nótaí amháin a chruthú chun do logaí a eagrú."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Cruthaíonn an cnaipe seo nóta tapa leis an téacs aibhsithe."

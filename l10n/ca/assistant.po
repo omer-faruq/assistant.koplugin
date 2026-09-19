@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - p. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Resum «X-Ray» d'un llibre, estructurat en seccions específiques com Personatges, Llocs, Temes, Termes i conceptes, Cronologia i Re-immersió."
 
-msgid "### %1 Question\n"
-msgstr "### Pregunta %1\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Potser aquests temes us resulten interessants:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Vols afegir aquest botó al menú de ressaltats?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Fitxer de notes de la IA:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Encara no hi ha cap proveïdor configurat.</b>\n"
 "Si us plau, afegiu un proveïdor a Configuració o a configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Fitxer del quadern:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Paràmetres</b>"
 
@@ -197,6 +194,43 @@ msgstr "<b>Provant la connexió...</b>"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Tipus de funció desconegut:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Pensament profund</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Pregunta</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Hi ha una nova versió del connector %1 (%2) disponible. Actualitzeu-lo!"
 
@@ -214,6 +248,43 @@ msgstr "Diccionari d'IA"
 
 msgid "AI Language: "
 msgstr "Idioma de la IA: "
+
+msgid "AI Note Name"
+msgstr "Nom de la nota de la IA"
+
+msgid "AI Notes"
+msgstr "Notes de la IA"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "Notes de la IA (registre de conversa de la IA)"
+
+msgid "AI Notes Folder"
+msgstr "Carpeta de notes de la IA"
+
+msgid "AI Notes Folder: %1"
+msgstr "Carpeta de notes de la IA: %1"
+
+msgid "AI Notes Settings"
+msgstr "Configuració de les notes de la IA"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Camí de la carpeta de notes de la IA:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "Les notes de la IA són el vostre registre de conversa: les respostes de la IA i les notes ràpides s'hi afegeixen. Podeu crear diverses notes de la IA per organitzar els vostres registres."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "El camí de les notes de la IA no és un directori: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "No s'han pogut desar les notes de la IA. Es continua..."
+
+msgid "AI Notes: %1"
+msgstr "Notes de la IA: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "X-Ray de la IA"
 
 msgid "AI is responding"
 msgstr "La IA està responent"
+
+msgid "AI note name cannot be empty."
+msgstr "El nom de la nota de la IA no pot estar buit."
+
+msgid "AI note name cannot contain '..'."
+msgstr "El nom de la nota de la IA no pot contenir '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "El nom de la nota de la IA no pot contenir separadors de camí."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "El nom de la nota de la IA no pot acabar amb un espai ni un punt."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "El nom de la nota de la IA conté caràcters que el sistema de fitxers no admet."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "El nom de la nota de la IA està reservat pel sistema de fitxers."
+
+msgid "AI note name must be text."
+msgstr "El nom de la nota de la IA ha de ser text."
+
+msgid "AI note path is not a file: %1"
+msgstr "La ruta de la nota de la IA no és un fitxer: %1"
+
+msgid "AI note path is unavailable."
+msgstr "La ruta de la nota de la IA no està disponible."
 
 msgid "API Key"
 msgstr "Clau de l'API"
@@ -295,8 +393,8 @@ msgstr ""
 "Afegeix proveïdors des del menú principal:\n"
 "%1 -> Assistent d'IA -> Configuració -> API de proveïdor"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Anàlisi dels teus subratllats, notes i contingut del quadern del llibre."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Anàlisi dels vostres ressaltats, notes i contingut de les Notes de la IA del llibre."
 
 msgid "Anthropic Messages API"
 msgstr "API de missatges d'Anthropic"
@@ -347,8 +445,8 @@ msgstr "Adjunta text anterior"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Recapitulació automàtica en obrir llibres que fa temps que no es llegeixen"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Desa automàticament les converses al quadern"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Desa automàticament les converses a les Notes de la IA"
 
 msgid "Base URL"
 msgstr "URL base"
@@ -415,8 +513,8 @@ msgstr "S'està comprovant si hi ha actualitzacions..."
 msgid "Choose Definition Sections"
 msgstr "Tria les seccions de definició"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Tria a quin quadern es desen les notes."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Trieu a quina nota de la IA es desen les vostres notes."
 
 msgid "Clear"
 msgstr "Neteja"
@@ -436,8 +534,8 @@ msgstr "No s'ha trobat la configuració. Si us plau, configureu primer configura
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Configura l'idioma de resposta del LLM d'IA. Per defecte, l'idioma de la interfície del KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "La carpeta de quaderns configurada no és accessible: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "La carpeta de Notes de la IA configurada no és accessible: %1"
 
 msgid "Connection test successful."
 msgstr "La prova de connexió ha estat correcta."
@@ -461,8 +559,8 @@ msgstr "Notes contextuals / Reflexions"
 msgid "Contradictions / Open Questions"
 msgstr "Contradiccions / Preguntes obertes"
 
-msgid "Conversation is saved to notebook"
-msgstr "La conversa s'ha desat al quadern."
+msgid "Conversation is saved to AI Notes"
+msgstr "La conversa es desa a les Notes de la IA"
 
 msgid "Copy"
 msgstr "Copia"
@@ -478,42 +576,42 @@ msgstr "Arguments principals"
 msgid "Core Idea"
 msgstr "Idea principal"
 
-msgid "Could not close notebook file."
-msgstr "No s'ha pogut tancar el fitxer del quadern."
+msgid "Could not close AI note file."
+msgstr "No s'ha pogut tancar el fitxer de la nota de la IA."
 
-msgid "Could not create notebook."
-msgstr "No s'ha pogut crear el quadern."
+msgid "Could not create AI Notes folder: %1"
+msgstr "No s'ha pogut crear la carpeta de Notes de la IA: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "No s'ha pogut crear el quadern: %1"
+msgid "Could not create AI note."
+msgstr "No s'ha pogut crear la nota de la IA."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "No s'ha pogut crear la carpeta de quaderns: %1"
+msgid "Could not create AI note: %1"
+msgstr "No s'ha pogut crear la nota de la IA: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "No s'ha pogut llistar la carpeta de quaderns: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "No s'ha pogut llistar la carpeta de Notes de la IA: %1"
 
-msgid "Could not open notebook file."
-msgstr "No s'ha pogut obrir el fitxer del quadern."
+msgid "Could not open AI note file."
+msgstr "No s'ha pogut obrir el fitxer de la nota de la IA."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"No s'ha pogut desar al quadern seleccionat.\n"
-"Desat a: %1"
+"No s'ha pogut desar a la nota de la IA seleccionada.\n"
+"S'ha desat a: %1"
 
-msgid "Could not select notebook."
-msgstr "No s'ha pogut seleccionar el quadern."
+msgid "Could not select AI note."
+msgstr "No s'ha pogut seleccionar la nota de la IA."
 
-msgid "Could not write notebook file."
-msgstr "No s'ha pogut escriure el fitxer del quadern."
+msgid "Could not write AI note file."
+msgstr "No s'ha pogut escriure el fitxer de la nota de la IA."
 
 msgid "Create"
 msgstr "Crea"
 
-msgid "Create a notebook."
-msgstr "Crea un quadern."
+msgid "Create an AI note."
+msgstr "Crea una nota de la IA."
 
 msgid "Cultural Significance"
 msgstr "Importància cultural"
@@ -530,9 +628,6 @@ msgstr "Prompt personalitzat"
 
 msgid "Custom Prompts"
 msgstr "Indicacions personalitzades"
-
-msgid "Deeply Thought"
-msgstr "Pensament profund"
 
 msgid "Delete"
 msgstr "Elimina"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Resum integrat"
 
-msgid "Invalid notebook entry."
-msgstr "Entrada de quadern no vàlida."
+msgid "Invalid AI note entry."
+msgstr "Entrada de nota de la IA no vàlida."
 
-msgid "Invalid notebook filename."
-msgstr "Nom de fitxer de quadern no vàlid."
+msgid "Invalid AI note filename."
+msgstr "Nom de fitxer de nota de la IA no vàlid."
 
 msgid "Justify"
 msgstr "Justifica"
@@ -764,9 +859,6 @@ msgstr "Deixa en blanc per utilitzar: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Deixa aquests camps en blanc per utilitzar l'idioma de la interfície: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "S'està carregant <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Llocs"
@@ -804,26 +896,32 @@ msgstr "Models: %1"
 msgid "Models: %1 (matched)"
 msgstr "Models: %1 (trobat)"
 
-msgid "Multiple Notebooks"
-msgstr "Múltiples quaderns"
+msgid "Multiple AI Notes"
+msgstr "Diverses notes de la IA"
 
 msgid "Narrative element in focus:"
 msgstr "Element narratiu central:"
 
-msgid "New notebook"
-msgstr "Quadern nou"
+msgid "New AI Note"
+msgstr "Nova nota de la IA"
 
-msgid "New notebook..."
-msgstr "Nou quadern..."
+msgid "New AI Note..."
+msgstr "Nova nota de la IA..."
 
 msgid "No"
 msgstr "No"
 
+msgid "No AI Notes folder is set."
+msgstr "No s'ha definit cap carpeta de Notes de la IA."
+
+msgid "No AI notes yet"
+msgstr "Encara no hi ha notes de la IA"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "No hi ha cap proveïdor actiu configurat. Afegeix-ne un a Configuració."
 
-msgid "No base folder is available for notebooks."
-msgstr "No hi ha cap carpeta base disponible per als quaderns."
+msgid "No base folder is available for AI Notes."
+msgstr "No hi ha cap carpeta base disponible per a les Notes de la IA."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "No hi ha cap llibre obert. Mantén premut un llibre al gestor de fitxers i tria Informació del llibre (IA)."
@@ -837,14 +935,8 @@ msgstr "No hi ha models disponibles."
 msgid "No models matching \"%1\"."
 msgstr "No hi ha cap model que coincideixi amb \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "No s'ha establert cap carpeta de quaderns."
-
-msgid "No notebooks yet"
-msgstr "Encara no hi ha quaderns"
-
-msgid "No path is available for the legacy notebook."
-msgstr "No hi ha cap ruta disponible per al quadern antic."
+msgid "No path is available for the default AI note."
+msgstr "No hi ha cap ruta disponible per a la nota de la IA per defecte."
 
 msgid "No response received."
 msgstr "No s'ha rebut cap resposta."
@@ -863,70 +955,6 @@ msgstr "Cap"
 
 msgid "Note added successfully"
 msgstr "Nota afegida correctament"
-
-msgid "Notebook"
-msgstr "Quadern"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Quadern (registre de converses d'IA)"
-
-msgid "Notebook Settings"
-msgstr "Configuració del quadern"
-
-msgid "Notebook name"
-msgstr "Nom del quadern"
-
-msgid "Notebook name cannot be empty."
-msgstr "El nom del quadern no pot estar buit."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "El nom del quadern no pot contenir '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "El nom del quadern no pot contenir separadors de ruta."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "El nom del quadern no pot acabar amb un espai o un punt."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "El nom del quadern conté caràcters que el sistema de fitxers no admet."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "El nom del quadern està reservat pel sistema de fitxers."
-
-msgid "Notebook name must be text."
-msgstr "El nom del quadern ha de ser text."
-
-msgid "Notebook path is not a file: %1"
-msgstr "La ruta del quadern no és un fitxer: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "La ruta del quadern no està disponible."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "No s'ha pogut desar el NoteBook. Es continua..."
-
-msgid "Notebook: %1"
-msgstr "Quadern: %1"
-
-msgid "Notebooks"
-msgstr "Quaderns"
-
-msgid "Notebooks Folder"
-msgstr "Carpeta de quaderns"
-
-msgid "Notebooks Folder: %1"
-msgstr "Carpeta de quaderns: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Ruta de la carpeta de quaderns:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "La ruta dels quaderns no és un directori: %1"
 
 msgid "OK"
 msgstr "D'acord"
@@ -1050,9 +1078,6 @@ msgstr "Purga"
 
 msgid "Purge Settings"
 msgstr "Purgar configuració"
-
-msgid "Querying AI ..."
-msgstr "Consultant la IA ..."
 
 msgid "Quick Note"
 msgstr "Nota ràpida"
@@ -1182,11 +1207,11 @@ msgstr "El registre de l'eina de cerca ha de ser una taula."
 msgid "Searching with %1 ... [%2]"
 msgstr "S'està cercant amb %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Selecciona una nota de la IA"
+
 msgid "Select a model:"
 msgstr "Selecciona un model:"
-
-msgid "Select notebook"
-msgstr "Selecciona el quadern"
 
 msgid "Selection copied to clipboard."
 msgstr "Selecció copiada al porta-retalls."
@@ -1265,8 +1290,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Pren notes ràpides"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Pren notes ràpides que es desaran al teu quadern."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Fes notes ràpides que es desaran a les teves Notes de la IA."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1287,9 +1312,6 @@ msgstr "S'ha copiat el text al porta-retalls."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "No s'ha trobat el gestor per a %1. Assegureu-vos que el gestor existeix al directori api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "El quadern és el vostre registre de conversa: les respostes de la IA i les notes ràpides s'hi afegeixen. Podeu crear múltiples quaderns per organitzar els vostres registres."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Aquest botó crea una nota ràpida amb el text ressaltat."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - p. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\"-samenvatting voor een boek, gestructureerd in specifieke secties zoals Personages, Locaties, Thema's, Termen en concepten, Tijdlijn en Herbeleving."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Vraag\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Mogelijk vind je deze onderwerpen interessant:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Deze knop toevoegen aan het markeermenu?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI Notes-bestand:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Er is nog geen provider ingesteld.</b>\n"
 "Voeg een provider toe in Instellingen of configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Notitieboekbestand:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parameters</b>"
 
@@ -197,6 +194,43 @@ msgstr "Basis-URL"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Onbekend functietype:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Diep nagedacht</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Vraag</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Er is een nieuwe versie van de %1-plugin (%2) beschikbaar. Werk bij!"
 
@@ -214,6 +248,43 @@ msgstr "AI-woordenboek"
 
 msgid "AI Language: "
 msgstr "AI-taal: "
+
+msgid "AI Note Name"
+msgstr "Naam van AI Notes"
+
+msgid "AI Notes"
+msgstr "AI Notes"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI Notes (AI-conversatielog)"
+
+msgid "AI Notes Folder"
+msgstr "AI Notes-map"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI Notes-map: %1"
+
+msgid "AI Notes Settings"
+msgstr "AI Notes-instellingen"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Pad naar de AI Notes-map:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI Notes is je conversatielog: AI-antwoorden en snelle notities worden eraan toegevoegd. Je kunt meerdere AI Notes aanmaken om je logs te organiseren."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Het pad naar AI Notes is geen map: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Opslaan van AI Notes mislukt. Doorgaan..."
+
+msgid "AI Notes: %1"
+msgstr "AI Notes: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI reageert"
+
+msgid "AI note name cannot be empty."
+msgstr "De naam van AI Notes mag niet leeg zijn."
+
+msgid "AI note name cannot contain '..'."
+msgstr "De naam van AI Notes mag geen '..' bevatten."
+
+msgid "AI note name cannot contain path separators."
+msgstr "De naam van AI Notes mag geen padscheidingstekens bevatten."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "De naam van AI Notes mag niet eindigen met een spatie of een punt."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "De naam van AI Notes bevat tekens die niet door het bestandssysteem worden ondersteund."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "De naam van de AI-notitie is gereserveerd door het bestandssysteem."
+
+msgid "AI note name must be text."
+msgstr "De naam van de AI-notitie moet tekst zijn."
+
+msgid "AI note path is not a file: %1"
+msgstr "Het pad naar de AI-notitie is geen bestand: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Het pad naar de AI-notitie is niet beschikbaar."
 
 msgid "API Key"
 msgstr "API-sleutel"
@@ -295,8 +393,8 @@ msgstr ""
 "Voeg providers toe vanuit het hoofdmenu:\n"
 "%1 -> AI Assistant -> Instellingen -> Provider API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Analyse van je markeringen, notities en notitieboekinhoud uit het boek."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Analyse van je markeringen, notities en de inhoud van AI-notities uit het boek."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Eerdere tekst bijvoegen"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automatische samenvatting bij openen van lang niet gelezen boeken"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Gesprekken automatisch opslaan in notitieblok"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Gesprekken automatisch opslaan in AI-notities"
 
 msgid "Base URL"
 msgstr "Basis-URL"
@@ -415,8 +513,8 @@ msgstr "Controleren op updates..."
 msgid "Choose Definition Sections"
 msgstr "Definitiesecties kiezen"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Kies in welk notitieboek je notities worden opgeslagen."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Kies in welke AI-notitie je notities worden opgeslagen."
 
 msgid "Clear"
 msgstr "Wissen"
@@ -436,8 +534,8 @@ msgstr "Configuratie niet gevonden. Stel eerst configuration.lua in."
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Configureer de antwoordtaal van de AI LLM. Standaard ingesteld op de KOReader-interface-taal."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Geconfigureerde map voor notitieboeken is niet toegankelijk: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "De geconfigureerde map voor AI-notities is niet toegankelijk: %1"
 
 msgid "Connection test successful."
 msgstr "Verbindingstest geslaagd."
@@ -461,8 +559,8 @@ msgstr "Contextuele notities / Reflecties"
 msgid "Contradictions / Open Questions"
 msgstr "Tegenstrijdigheden / Open vragen"
 
-msgid "Conversation is saved to notebook"
-msgstr "Gesprek is opgeslagen in notitieboek"
+msgid "Conversation is saved to AI Notes"
+msgstr "Het gesprek is opgeslagen in AI-notities."
 
 msgid "Copy"
 msgstr "Kopiëren"
@@ -478,42 +576,42 @@ msgstr "Kernargumenten"
 msgid "Core Idea"
 msgstr "Kernidee"
 
-msgid "Could not close notebook file."
-msgstr "Kan notitieboekbestand niet sluiten."
+msgid "Could not close AI note file."
+msgstr "Kon het AI-notitiebestand niet sluiten."
 
-msgid "Could not create notebook."
-msgstr "Kan notitieboek niet aanmaken."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Kon de map voor AI-notities niet aanmaken: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Kan notitieboek niet aanmaken: %1"
+msgid "Could not create AI note."
+msgstr "Kon de AI-notitie niet aanmaken."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Kan map voor notitieboeken niet aanmaken: %1"
+msgid "Could not create AI note: %1"
+msgstr "Kon de AI-notitie niet aanmaken: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Kan map voor notitieboeken niet lezen: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Kon de inhoud van de map voor AI-notities niet weergeven: %1"
 
-msgid "Could not open notebook file."
-msgstr "Kan notitieboekbestand niet openen."
+msgid "Could not open AI note file."
+msgstr "Kon het AI-notitiebestand niet openen."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Kan niet opslaan in het geselecteerde notitieboek.\n"
+"Kon niet opslaan in de geselecteerde AI-notitie.\n"
 "Opgeslagen in: %1"
 
-msgid "Could not select notebook."
-msgstr "Kan notitieboek niet selecteren."
+msgid "Could not select AI note."
+msgstr "Kon geen AI-notitie selecteren."
 
-msgid "Could not write notebook file."
-msgstr "Kan notitieboekbestand niet schrijven."
+msgid "Could not write AI note file."
+msgstr "Kon niet naar het AI-notitiebestand schrijven."
 
 msgid "Create"
 msgstr "Aanmaken"
 
-msgid "Create a notebook."
-msgstr "Maak een notitieboek aan."
+msgid "Create an AI note."
+msgstr "Een AI-notitie aanmaken."
 
 msgid "Cultural Significance"
 msgstr "Culturele betekenis"
@@ -530,9 +628,6 @@ msgstr "Aangepaste prompt"
 
 msgid "Custom Prompts"
 msgstr "Aangepaste prompts"
-
-msgid "Deeply Thought"
-msgstr "Diep nagedacht"
 
 msgid "Delete"
 msgstr "Verwijderen"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Geïntegreerde samenvatting"
 
-msgid "Invalid notebook entry."
-msgstr "Ongeldig notitieboekitem."
+msgid "Invalid AI note entry."
+msgstr "Ongeldige AI-notitievermelding."
 
-msgid "Invalid notebook filename."
-msgstr "Ongeldige notitieboekbestandsnaam."
+msgid "Invalid AI note filename."
+msgstr "Ongeldige bestandsnaam voor AI-notitie."
 
 msgid "Justify"
 msgstr "Uitvullen"
@@ -764,9 +859,6 @@ msgstr "Leeg laten om te gebruiken: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Laat deze velden leeg om de UI-taal te gebruiken: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Laden voor <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Locaties"
@@ -804,26 +896,32 @@ msgstr "Modellen: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modellen: %1 (overeenkomend)"
 
-msgid "Multiple Notebooks"
-msgstr "Meerdere notitieboeken"
+msgid "Multiple AI Notes"
+msgstr "Meerdere AI-notities"
 
 msgid "Narrative element in focus:"
 msgstr "Verhaalelement in focus:"
 
-msgid "New notebook"
-msgstr "Nieuw notitieboek"
+msgid "New AI Note"
+msgstr "Nieuwe AI-notitie"
 
-msgid "New notebook..."
-msgstr "Nieuw notitieboekje..."
+msgid "New AI Note..."
+msgstr "Nieuwe AI-notitie..."
 
 msgid "No"
 msgstr "Nee"
 
+msgid "No AI Notes folder is set."
+msgstr "Er is geen map voor AI-notities ingesteld."
+
+msgid "No AI notes yet"
+msgstr "Nog geen AI-notities"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Geen actieve provider geconfigureerd. Voeg er een toe in Instellingen."
 
-msgid "No base folder is available for notebooks."
-msgstr "Er is geen basismap beschikbaar voor notitieboeken."
+msgid "No base folder is available for AI Notes."
+msgstr "Er is geen basismap beschikbaar voor AI-notities."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Er is geen boek geopend. Houd een boek ingedrukt in de bestandsbeheerder en kies Boekinfo (AI)."
@@ -837,14 +935,8 @@ msgstr "Geen modellen beschikbaar."
 msgid "No models matching \"%1\"."
 msgstr "Geen modellen gevonden die overeenkomen met \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Er is geen map voor notitieboeken ingesteld."
-
-msgid "No notebooks yet"
-msgstr "Nog geen notitieboeken"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Er is geen pad beschikbaar voor het oude notitieboek."
+msgid "No path is available for the default AI note."
+msgstr "Er is geen pad beschikbaar voor de standaard AI-notitie."
 
 msgid "No response received."
 msgstr "Geen antwoord ontvangen."
@@ -863,70 +955,6 @@ msgstr "Geen"
 
 msgid "Note added successfully"
 msgstr "Notitie succesvol toegevoegd"
-
-msgid "Notebook"
-msgstr "Notitieboek"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Notitieboek (AI-gesprekslog)"
-
-msgid "Notebook Settings"
-msgstr "Notitieboekinstellingen"
-
-msgid "Notebook name"
-msgstr "Notitieboeknaam"
-
-msgid "Notebook name cannot be empty."
-msgstr "Notitieboeknaam mag niet leeg zijn."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Notitieboeknaam mag geen '..' bevatten."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Notitieboeknaam mag geen padscheidingstekens bevatten."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Notitieboeknaam mag niet eindigen met een spatie of punt."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Notitieboeknaam bevat tekens die niet worden ondersteund door het bestandssysteem."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Notitieboeknaam is gereserveerd door het bestandssysteem."
-
-msgid "Notebook name must be text."
-msgstr "Notitieboeknaam moet tekst zijn."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Notitieboekpad is geen bestand: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Notitieboekpad is niet beschikbaar."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Opslaan in notitieboek mislukt. Verdergaan..."
-
-msgid "Notebook: %1"
-msgstr "Notitieboek: %1"
-
-msgid "Notebooks"
-msgstr "Notitieboeken"
-
-msgid "Notebooks Folder"
-msgstr "Notebookmap"
-
-msgid "Notebooks Folder: %1"
-msgstr "Notebookmap: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Pad van notebookmap:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Pad voor notitieboeken is geen map: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1050,9 +1078,6 @@ msgstr "Wissen"
 
 msgid "Purge Settings"
 msgstr "Instellingen wissen"
-
-msgid "Querying AI ..."
-msgstr "AI wordt bevraagd ..."
 
 msgid "Quick Note"
 msgstr "Snelle notitie"
@@ -1184,11 +1209,11 @@ msgstr "Zoektoolrecord moet een tabel zijn."
 msgid "Searching with %1 ... [%2]"
 msgstr "Bezig met zoeken met %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Selecteer AI-notitie"
+
 msgid "Select a model:"
 msgstr "Selecteer een model:"
-
-msgid "Select notebook"
-msgstr "Selecteer notitieboek"
 
 msgid "Selection copied to clipboard."
 msgstr "Selectie gekopieerd naar klembord."
@@ -1267,8 +1292,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Snelle notities maken"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Maak snelle notities die in je notitieboek worden opgeslagen."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Maak snelle notities die in je AI-notities worden opgeslagen."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "Tekst naar het klembord gekopieerd"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "De handler voor %1 is niet gevonden. Zorg ervoor dat de handler in de map api_handlers bestaat."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Het notitieblok is uw gesprekslogboek: AI-antwoorden en snelle notities worden eraan toegevoegd. U kunt meerdere notitieblokken maken om uw logboeken te organiseren."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Deze knop maakt een snelle notitie met de gemarkeerde tekst."

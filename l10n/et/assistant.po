@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - lk. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" kokkuvõte raamatust, mis on jaotatud osadeks nagu tegelased, asukohad, teemad, terminid ja mõisted, ajatelg ning uuesti sisseelamine."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Küsimus\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Järgmised teemad võivad sulle huvi pakkuda:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Kas lisada see nupp esiletõstmise menüüsse?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI-märkmete fail:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Ühtegi teenusepakkujat pole veel seadistatud.</b>\n"
 "Palun lisage teenusepakkuja seadetes või configuration.lua failis."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Märkmiku fail:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parameetrid</b>"
 
@@ -197,6 +194,43 @@ msgstr "<b>Ühenduse testimine...</b>"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Tundmatu funktsiooni tüüp:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Põhjalik mõtlemine</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Küsimus</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Saadaval on %1 plugini uus versioon (%2). Palun värskenda!"
 
@@ -214,6 +248,43 @@ msgstr "AI-sõnaraamat"
 
 msgid "AI Language: "
 msgstr "AI keel: "
+
+msgid "AI Note Name"
+msgstr "AI-märkme nimi"
+
+msgid "AI Notes"
+msgstr "AI-märkmed"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI-märkmed (AI vestluse logi)"
+
+msgid "AI Notes Folder"
+msgstr "AI-märkmete kaust"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI-märkmete kaust: %1"
+
+msgid "AI Notes Settings"
+msgstr "AI-märkmete seaded"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"AI-märkmete kausta asukoht:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI-märkmed on sinu vestluse logi: AI vastused ja kiirmärkmed lisatakse sinna. Saad luua mitu AI-märget, et oma logisid korrastada."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "AI-märkmete asukoht ei ole kaust: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "AI-märkmete salvestamine ebaõnnestus. Jätkan..."
+
+msgid "AI Notes: %1"
+msgstr "AI-märkmed: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI vastab"
+
+msgid "AI note name cannot be empty."
+msgstr "AI-märkme nimi ei tohi olla tühi."
+
+msgid "AI note name cannot contain '..'."
+msgstr "AI-märkme nimi ei tohi sisaldada '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "AI-märkme nimi ei tohi sisaldada tee eraldajaid."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "AI-märkme nimi ei tohi lõppeda tühiku ega punktiga."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "AI-märkme nimi sisaldab märke, mida failisüsteem ei toeta."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "AI märkuse nimi on failisüsteemi poolt reserveeritud."
+
+msgid "AI note name must be text."
+msgstr "AI märkuse nimi peab olema tekst."
+
+msgid "AI note path is not a file: %1"
+msgstr "AI märkuse tee ei ole fail: %1"
+
+msgid "AI note path is unavailable."
+msgstr "AI märkuse tee ei ole saadaval."
 
 msgid "API Key"
 msgstr "API-võti"
@@ -295,8 +393,8 @@ msgstr ""
 "Lisa teenusepakkujad peamenüüst:\n"
 "%1 -> AI Assistant -> Seaded -> API-pakkuja"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Analüüs sinu raamatu esiletõstetud lõikudest, märkmetest ja märkmiku sisust."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Sinu esiletõstete, märkmete ja AI märkuste sisu analüüs raamatust."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Manusta eelnev tekst"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automaatne kokkuvõte kaua mitteloetud raamatute avamisel"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Vestluste automaatne salvestamine märkmikku"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Vestluste automaatne salvestamine AI märkustesse"
 
 msgid "Base URL"
 msgstr "Baas-URL"
@@ -415,8 +513,8 @@ msgstr "Värskenduste kontrollimine..."
 msgid "Choose Definition Sections"
 msgstr "Vali määratluse jaotised"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Vali, millisesse märkmikku oma märkmed salvestada."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Vali, millisesse AI märkusesse sinu märkmed salvestatakse."
 
 msgid "Clear"
 msgstr "Tühjenda"
@@ -436,8 +534,8 @@ msgstr "Konfiguratsiooni ei leitud. Palun seadistage esmalt configuration.lua."
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Seadista AI LLM-i vastuste keel. Vaikimisi on KOReaderi liidese keel."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Konfigureeritud märkmike kaust pole kättesaadav: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Seadistatud AI märkuste kaust ei ole kättesaadav: %1"
 
 msgid "Connection test successful."
 msgstr "Ühenduse test õnnestus."
@@ -461,8 +559,8 @@ msgstr "Kontekstuaalsed märkused / mõtisklused"
 msgid "Contradictions / Open Questions"
 msgstr "Vastuolud / lahtised küsimused"
 
-msgid "Conversation is saved to notebook"
-msgstr "Vestlus on salvestatud märkmikku"
+msgid "Conversation is saved to AI Notes"
+msgstr "Vestlus on salvestatud AI märkustesse"
 
 msgid "Copy"
 msgstr "Kopeeri"
@@ -478,42 +576,42 @@ msgstr "Põhiargumendid"
 msgid "Core Idea"
 msgstr "Põhiidee"
 
-msgid "Could not close notebook file."
-msgstr "Märkmiku faili ei õnnestunud sulgeda."
+msgid "Could not close AI note file."
+msgstr "AI märkuse faili ei õnnestunud sulgeda."
 
-msgid "Could not create notebook."
-msgstr "Märkmikku ei õnnestunud luua."
+msgid "Could not create AI Notes folder: %1"
+msgstr "AI märkuste kausta ei õnnestunud luua: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Märkmikku ei õnnestunud luua: %1"
+msgid "Could not create AI note."
+msgstr "AI märkust ei õnnestunud luua."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Märkmike kausta ei õnnestunud luua: %1"
+msgid "Could not create AI note: %1"
+msgstr "AI märkust ei õnnestunud luua: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Märkmike kausta ei õnnestunud loetleda: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "AI märkuste kausta ei õnnestunud loetleda: %1"
 
-msgid "Could not open notebook file."
-msgstr "Märkmiku faili ei õnnestunud avada."
+msgid "Could not open AI note file."
+msgstr "AI märkuse faili ei õnnestunud avada."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Valitud märkmikku ei õnnestunud salvestada.\n"
+"Valitud AI märkusesse ei õnnestunud salvestada.\n"
 "Salvestatud: %1"
 
-msgid "Could not select notebook."
-msgstr "Märkmikku ei õnnestunud valida."
+msgid "Could not select AI note."
+msgstr "AI märkust ei õnnestunud valida."
 
-msgid "Could not write notebook file."
-msgstr "Märkmiku faili ei õnnestunud kirjutada."
+msgid "Could not write AI note file."
+msgstr "AI märkuse faili ei õnnestunud kirjutada."
 
 msgid "Create"
 msgstr "Loo"
 
-msgid "Create a notebook."
-msgstr "Loo märkmik."
+msgid "Create an AI note."
+msgstr "Loo AI märkus."
 
 msgid "Cultural Significance"
 msgstr "Kultuuriline tähtsus"
@@ -530,9 +628,6 @@ msgstr "Kohandatud prompt"
 
 msgid "Custom Prompts"
 msgstr "Kohandatud päringud"
-
-msgid "Deeply Thought"
-msgstr "Sügav mõtlemine"
 
 msgid "Delete"
 msgstr "Kustuta"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Integreeritud kokkuvõte"
 
-msgid "Invalid notebook entry."
-msgstr "Vigane märkmiku kirje."
+msgid "Invalid AI note entry."
+msgstr "Vigane AI märkuse kirje."
 
-msgid "Invalid notebook filename."
-msgstr "Vigane märkmiku failinimi."
+msgid "Invalid AI note filename."
+msgstr "Vigane AI-märkme failinimi."
 
 msgid "Justify"
 msgstr "Rööpjoonda"
@@ -764,9 +859,6 @@ msgstr "Jäta tühjaks, et kasutada: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Jäta need väljad tühjaks, et kasutada kasutajaliidese keelt: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Laadimine: <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Asukohad"
@@ -804,26 +896,32 @@ msgstr "Mudelid: %1"
 msgid "Models: %1 (matched)"
 msgstr "Mudelid: %1 (vastavad)"
 
-msgid "Multiple Notebooks"
-msgstr "Mitu märkmikku"
+msgid "Multiple AI Notes"
+msgstr "Mitu AI-märget"
 
 msgid "Narrative element in focus:"
 msgstr "Fookuses olev narratiivne element:"
 
-msgid "New notebook"
-msgstr "Uus märkmik"
+msgid "New AI Note"
+msgstr "Uus AI-märge"
 
-msgid "New notebook..."
-msgstr "Uus märkmik..."
+msgid "New AI Note..."
+msgstr "Uus AI-märge..."
 
 msgid "No"
 msgstr "Ei"
 
+msgid "No AI Notes folder is set."
+msgstr "AI-märkmete kausta pole määratud."
+
+msgid "No AI notes yet"
+msgstr "AI-märkmeid veel pole"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Aktiivset teenusepakkujat pole konfigureeritud. Palun lisa see seadetes."
 
-msgid "No base folder is available for notebooks."
-msgstr "Märkmike jaoks pole põhikausta saadaval."
+msgid "No base folder is available for AI Notes."
+msgstr "AI-märkmete jaoks pole baaskausta saadaval."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Ühtegi raamatut pole avatud. Vajuta failihalduris raamatule pikalt ja vali Raamatu info (AI)."
@@ -837,14 +935,8 @@ msgstr "Mudeleid pole saadaval."
 msgid "No models matching \"%1\"."
 msgstr "Ühtegi mudelit, mis vastaks \"%1\", ei leitud."
 
-msgid "No notebooks folder is set."
-msgstr "Märkmike kausta pole määratud."
-
-msgid "No notebooks yet"
-msgstr "Märkmikke veel pole"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Pärandmärkmiku jaoks pole teed saadaval."
+msgid "No path is available for the default AI note."
+msgstr "Vaikimisi AI-märkme jaoks pole teed saadaval."
 
 msgid "No response received."
 msgstr "Vastust ei saadud."
@@ -863,70 +955,6 @@ msgstr "Puudub"
 
 msgid "Note added successfully"
 msgstr "Märge lisatud"
-
-msgid "Notebook"
-msgstr "Märkmik"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Märkmik (AI vestluslogi)"
-
-msgid "Notebook Settings"
-msgstr "Märkmiku sätted"
-
-msgid "Notebook name"
-msgstr "Märkmiku nimi"
-
-msgid "Notebook name cannot be empty."
-msgstr "Märkmiku nimi ei tohi olla tühi."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Märkmiku nimi ei tohi sisaldada '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Märkmiku nimi ei tohi sisaldada tee eraldusmärke."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Märkmiku nimi ei tohi lõppeda tühiku ega punktiga."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Märkmiku nimi sisaldab tähemärke, mida failisüsteem ei toeta."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Märkmiku nimi on failisüsteemi poolt reserveeritud."
-
-msgid "Notebook name must be text."
-msgstr "Märkmiku nimi peab olema tekst."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Märkmiku tee pole fail: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Märkmiku tee pole saadaval."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Märkmikusse salvestamine ebaõnnestus. Jätkan..."
-
-msgid "Notebook: %1"
-msgstr "Märkmik: %1"
-
-msgid "Notebooks"
-msgstr "Märkmikud"
-
-msgid "Notebooks Folder"
-msgstr "Märkmike kaust"
-
-msgid "Notebooks Folder: %1"
-msgstr "Märkmikute kaust: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Märkmikute kausta tee:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Märkmike tee pole kataloog: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1050,9 +1078,6 @@ msgstr "Puhasta"
 
 msgid "Purge Settings"
 msgstr "Puhasta sätted"
-
-msgid "Querying AI ..."
-msgstr "Päring AI-le ..."
 
 msgid "Quick Note"
 msgstr "Kiirmärge"
@@ -1184,11 +1209,11 @@ msgstr "Otsingutööriista kirje peab olema tabel."
 msgid "Searching with %1 ... [%2]"
 msgstr "Otsin: %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Vali AI-märge"
+
 msgid "Select a model:"
 msgstr "Vali mudel:"
-
-msgid "Select notebook"
-msgstr "Vali märkmik"
 
 msgid "Selection copied to clipboard."
 msgstr "Valik kopeeriti lõikelauale."
@@ -1267,8 +1292,8 @@ msgstr "Lühikokkuvõte"
 msgid "Take Quick Notes"
 msgstr "Tee kiirmärkmeid"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Tee kiirmärkmeid, mis salvestatakse sinu märkmikku."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Tee kiireid märkmeid, mis salvestatakse sinu AI-märkmetesse."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "Tekst kopeeriti lõikelauale"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Töötlejat %1 ei leitud. Palun veenduge, et töötleja on olemas api_handlers kataloogis."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Märkmik on sinu vestluslogi: AI vastused ja kiirmärkused lisatakse sinna. Sa võid luua mitu märkmikku oma logide korraldamiseks."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "See nupp loob esiletõstetud tekstiga kiirmärke."

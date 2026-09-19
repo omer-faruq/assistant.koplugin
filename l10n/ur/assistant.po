@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 04:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: اردو (AI translation)\n"
@@ -38,9 +38,6 @@ msgstr " - ص۔ %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "کتاب کے لیے \"X-Ray\" خلاصہ، مخصوص حصوں میں ترتیب شدہ جیسے کردار، مقامات، موضوعات، اصطلاحات و تصورات، ٹائم لائن، اور دوبارہ غوطہ۔"
 
-msgid "### %1 Question\n"
-msgstr "### %1 سوال\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### شاید یہ موضوعات آپ کے لیے دلچسپ ہوں:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "کیا یہ بٹن ہائی لائٹ مینیو میں شامل کیا جائے؟"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI نوٹس فائل:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>ابھی تک کوئی فراہم کنندہ ترتیب نہیں دیا گیا۔</b>\n"
 "براہ کرم ترتیبات یا configuration.lua میں فراہم کنندہ شامل کریں۔"
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>نوٹ بک فائل:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>پیرامیٹرز</b>"
 
@@ -197,6 +194,43 @@ msgstr "کنکشن ٹیسٹ ہو رہا ہے..."
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>نامعلوم فیچر کی قسم:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 گہرائی سے سوچا</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 سوال</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "%1 پلگ ان کا نیا ورژن (%2) دستیاب ہے۔ براہ کرم اپ ڈیٹ کریں!"
 
@@ -214,6 +248,43 @@ msgstr "AI لغت"
 
 msgid "AI Language: "
 msgstr "AI زبان: "
+
+msgid "AI Note Name"
+msgstr "AI نوٹ کا نام"
+
+msgid "AI Notes"
+msgstr "AI نوٹس"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI نوٹس (AI گفتگو لاگ)"
+
+msgid "AI Notes Folder"
+msgstr "AI نوٹس فولڈر"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI نوٹس فولڈر: %1"
+
+msgid "AI Notes Settings"
+msgstr "AI نوٹس کی ترتیبات"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"AI نوٹس فولڈر کا راستہ:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI نوٹس آپ کی گفتگو کا لاگ ہے: AI کے جوابات اور فوری نوٹس اس میں شامل کیے جاتے ہیں۔ آپ اپنے لاگز کو منظم کرنے کے لیے متعدد AI نوٹس بنا سکتے ہیں۔"
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "AI نوٹس کا راستہ ایک ڈائریکٹری نہیں ہے: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "AI نوٹس محفوظ کرنا ناکام ہو گیا۔ جاری ہے..."
+
+msgid "AI Notes: %1"
+msgstr "AI نوٹس: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI ایکس رے"
 
 msgid "AI is responding"
 msgstr "AI جواب دے رہا ہے"
+
+msgid "AI note name cannot be empty."
+msgstr "AI نوٹ کا نام خالی نہیں ہو سکتا۔"
+
+msgid "AI note name cannot contain '..'."
+msgstr "AI نوٹ کے نام میں '..' شامل نہیں ہو سکتا۔"
+
+msgid "AI note name cannot contain path separators."
+msgstr "AI نوٹ کے نام میں راستے کے جدا کرنے والے حروف شامل نہیں ہو سکتے۔"
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "AI نوٹ کا نام خالی جگہ یا نقطے پر ختم نہیں ہو سکتا۔"
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "AI نوٹ کے نام میں ایسے حروف شامل ہیں جو فائل سسٹم سپورٹ نہیں کرتا۔"
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "اے آئی نوٹ کا نام فائل سسٹم کے لیے مخصوص ہے۔"
+
+msgid "AI note name must be text."
+msgstr "اے آئی نوٹ کا نام متن ہونا چاہیے۔"
+
+msgid "AI note path is not a file: %1"
+msgstr "اے آئی نوٹ کا راستہ فائل نہیں ہے: %1"
+
+msgid "AI note path is unavailable."
+msgstr "اے آئی نوٹ کا راستہ دستیاب نہیں ہے۔"
 
 msgid "API Key"
 msgstr "API کلید"
@@ -295,8 +393,8 @@ msgstr ""
 "مرکزی مینو سے فراہم کنندگان شامل کریں:\n"
 "%1 -> AI اسسٹنٹ -> ترتیبات -> فراہم کنندہ API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "کتاب سے آپ کے ہائی لائٹس، نوٹس اور نوٹ بک مواد کا تجزیہ۔"
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "کتاب سے آپ کی ہائی لائٹس، نوٹس، اور اے آئی نوٹس کے مواد کا تجزیہ۔"
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "پچھلا متن منسلک کریں"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "طویل عرصے سے نہ پڑھی گئی کتابیں کھولنے پر خودکار ری کیپ"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "گفتگو کو خودکار طور پر نوٹ بک میں محفوظ کریں"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "گفتگو کو خودکار طور پر اے آئی نوٹس میں محفوظ کریں"
 
 msgid "Base URL"
 msgstr "بیس URL"
@@ -415,8 +513,8 @@ msgstr "اپ ڈیٹس کی جانچ ہو رہی ہے..."
 msgid "Choose Definition Sections"
 msgstr "تعریف کے حصے منتخب کریں"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "منتخب کریں کہ آپ کے نوٹ کس نوٹ بک میں محفوظ ہوں۔"
+msgid "Choose which AI note your notes are saved to."
+msgstr "منتخب کریں کہ آپ کے نوٹس کس اے آئی نوٹ میں محفوظ کیے جائیں۔"
 
 msgid "Clear"
 msgstr "صاف کریں"
@@ -436,8 +534,8 @@ msgstr "کنفیگریشن نہیں ملی۔ براہ کرم پہلے configurat
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "AI LLM کی جوابی زبان ترتیب دیں۔ ڈیفالٹ KOReader انٹرفیس زبان ہوتی ہے۔"
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "ترتیب شدہ نوٹ بکس فولڈر قابل رسائی نہیں ہے: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "کنفیگر شدہ اے آئی نوٹس فولڈر قابل رسائی نہیں ہے: %1"
 
 msgid "Connection test successful."
 msgstr "کنکشن ٹیسٹ کامیاب۔"
@@ -461,8 +559,8 @@ msgstr "سیاق و سباق کے نوٹس / غور و فکر"
 msgid "Contradictions / Open Questions"
 msgstr "تضادات / کھلے سوالات"
 
-msgid "Conversation is saved to notebook"
-msgstr "گفتگو نوٹ بک میں محفوظ ہو گئی ہے۔"
+msgid "Conversation is saved to AI Notes"
+msgstr "گفتگو اے آئی نوٹس میں محفوظ کر دی گئی ہے"
 
 msgid "Copy"
 msgstr "کاپی کریں"
@@ -478,42 +576,42 @@ msgstr "بنیادی دلائل"
 msgid "Core Idea"
 msgstr "بنیادی خیال"
 
-msgid "Could not close notebook file."
-msgstr "نوٹ بک فائل بند نہیں کی جا سکی۔"
+msgid "Could not close AI note file."
+msgstr "اے آئی نوٹ فائل کو بند نہیں کیا جا سکا۔"
 
-msgid "Could not create notebook."
-msgstr "نوٹ بک نہیں بنائی جا سکی۔"
+msgid "Could not create AI Notes folder: %1"
+msgstr "اے آئی نوٹس فولڈر نہیں بنایا جا سکا: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "نوٹ بک نہیں بنائی جا سکی: %1"
+msgid "Could not create AI note."
+msgstr "اے آئی نوٹ نہیں بنایا جا سکا۔"
 
-msgid "Could not create notebooks folder: %1"
-msgstr "نوٹ بکس فولڈر نہیں بنایا جا سکا: %1"
+msgid "Could not create AI note: %1"
+msgstr "اے آئی نوٹ نہیں بنایا جا سکا: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "نوٹ بکس فولڈر کی فہرست حاصل نہیں کی جا سکی: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "اے آئی نوٹس فولڈر کی فہرست نہیں بنائی جا سکی: %1"
 
-msgid "Could not open notebook file."
-msgstr "نوٹ بک فائل کھولی نہیں جا سکی۔"
+msgid "Could not open AI note file."
+msgstr "اے آئی نوٹ فائل نہیں کھولی جا سکی۔"
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"منتخب نوٹ بک میں محفوظ نہیں کیا جا سکا۔\n"
-"محفوظ شدہ: %1"
+"منتخب کردہ اے آئی نوٹ میں محفوظ نہیں کیا جا سکا۔\n"
+"محفوظ کیا گیا: %1"
 
-msgid "Could not select notebook."
-msgstr "نوٹ بک منتخب نہیں کی جا سکی۔"
+msgid "Could not select AI note."
+msgstr "اے آئی نوٹ منتخب نہیں کیا جا سکا۔"
 
-msgid "Could not write notebook file."
-msgstr "نوٹ بک فائل میں لکھا نہیں جا سکا۔"
+msgid "Could not write AI note file."
+msgstr "اے آئی نوٹ فائل میں لکھا نہیں جا سکا۔"
 
 msgid "Create"
 msgstr "بنائیں"
 
-msgid "Create a notebook."
-msgstr "ایک نوٹ بک بنائیں۔"
+msgid "Create an AI note."
+msgstr "ایک اے آئی نوٹ بنائیں۔"
 
 msgid "Cultural Significance"
 msgstr "ثقافتی اہمیت"
@@ -530,9 +628,6 @@ msgstr "کسٹم پرامپٹ"
 
 msgid "Custom Prompts"
 msgstr "حسب ضرورت پرامپٹس"
-
-msgid "Deeply Thought"
-msgstr "گہری سوچ"
 
 msgid "Delete"
 msgstr "حذف کریں"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "مربوط خلاصہ"
 
-msgid "Invalid notebook entry."
-msgstr "غلط نوٹ بک اندراج۔"
+msgid "Invalid AI note entry."
+msgstr "غلط اے آئی نوٹ اندراج۔"
 
-msgid "Invalid notebook filename."
-msgstr "غلط نوٹ بک فائل نام۔"
+msgid "Invalid AI note filename."
+msgstr "AI نوٹ فائل نام درست نہیں ہے۔"
 
 msgid "Justify"
 msgstr "دونوں طرف سیدھ"
@@ -764,9 +859,6 @@ msgstr "خالی چھوڑیں تاکہ استعمال ہو: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "UI زبان استعمال کرنے کے لیے ان خانوں کو خالی چھوڑیں: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "<b>%1</b> کے لیے لوڈ ہو رہا ہے ..."
 
 msgid "Locations"
 msgstr "مقامات"
@@ -804,26 +896,32 @@ msgstr "ماڈلز: %1"
 msgid "Models: %1 (matched)"
 msgstr "مآڈلز: %1 (مطابق)"
 
-msgid "Multiple Notebooks"
-msgstr "متعدد نوٹ بکس"
+msgid "Multiple AI Notes"
+msgstr "متعدد AI نوٹس"
 
 msgid "Narrative element in focus:"
 msgstr "زیرِ توجہ بیانیہ عنصر:"
 
-msgid "New notebook"
-msgstr "نئی نوٹ بک"
+msgid "New AI Note"
+msgstr "نیا AI نوٹ"
 
-msgid "New notebook..."
-msgstr "نئی نوٹ بک..."
+msgid "New AI Note..."
+msgstr "نیا AI نوٹ..."
 
 msgid "No"
 msgstr "نہیں"
 
+msgid "No AI Notes folder is set."
+msgstr "کوئی AI نوٹس فولڈر سیٹ نہیں ہے۔"
+
+msgid "No AI notes yet"
+msgstr "ابھی کوئی AI نوٹ نہیں"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "کوئی فعال فراہم کنندہ ترتیب نہیں دیا گیا۔ براہ کرم ترتیبات میں ایک شامل کریں۔"
 
-msgid "No base folder is available for notebooks."
-msgstr "نوٹ بکس کے لیے کوئی بنیادی فولڈر دستیاب نہیں ہے۔"
+msgid "No base folder is available for AI Notes."
+msgstr "AI نوٹس کے لیے کوئی بنیادی فولڈر دستیاب نہیں ہے۔"
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "کوئی کتاب کھلی نہیں ہے۔ فائل مینیجر میں کسی کتاب پر طویل دبائیں اور کتاب کی معلومات (AI) منتخب کریں۔"
@@ -837,14 +935,8 @@ msgstr "کوئی ماڈل دستیاب نہیں۔"
 msgid "No models matching \"%1\"."
 msgstr "\"%1\" سے مماثل کوئی ماڈل نہیں۔"
 
-msgid "No notebooks folder is set."
-msgstr "کوئی نوٹ بکس فولڈر مقرر نہیں ہے۔"
-
-msgid "No notebooks yet"
-msgstr "ابھی کوئی نوٹ بک نہیں"
-
-msgid "No path is available for the legacy notebook."
-msgstr "پرانی نوٹ بک کے لیے کوئی پاتھ دستیاب نہیں ہے۔"
+msgid "No path is available for the default AI note."
+msgstr "پہلے سے طے شدہ AI نوٹ کے لیے کوئی راستہ دستیاب نہیں ہے۔"
 
 msgid "No response received."
 msgstr "کوئی جواب موصول نہیں ہوا۔"
@@ -863,70 +955,6 @@ msgstr "کوئی نہیں"
 
 msgid "Note added successfully"
 msgstr "نوٹ کامیابی سے شامل ہو گیا"
-
-msgid "Notebook"
-msgstr "نوٹ بک"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "نوٹ بک (AI گفتگو لاگ)"
-
-msgid "Notebook Settings"
-msgstr "نوٹ بک کی ترتیبات"
-
-msgid "Notebook name"
-msgstr "نوٹ بک کا نام"
-
-msgid "Notebook name cannot be empty."
-msgstr "نوٹ بک کا نام خالی نہیں ہو سکتا۔"
-
-msgid "Notebook name cannot contain '..'."
-msgstr "نوٹ بک کا نام '..' پر مشتمل نہیں ہو سکتا۔"
-
-msgid "Notebook name cannot contain path separators."
-msgstr "نوٹ بک کا نام پاتھ الگ کرنے والے حروف پر مشتمل نہیں ہو سکتا۔"
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "نوٹ بک کا نام خالی جگہ یا نقطے پر ختم نہیں ہو سکتا۔"
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "نوٹ بک کے نام میں ایسے حروف ہیں جنہیں فائل سسٹم سپورٹ نہیں کرتا۔"
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "نوٹ بک کا نام فائل سسٹم کے لیے محفوظ ہے۔"
-
-msgid "Notebook name must be text."
-msgstr "نوٹ بک کا نام متن ہونا چاہیے۔"
-
-msgid "Notebook path is not a file: %1"
-msgstr "نوٹ بک کا پاتھ کوئی فائل نہیں ہے: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "نوٹ بک کا پاتھ دستیاب نہیں ہے۔"
-
-msgid "Notebook save failed. Continuing..."
-msgstr "نوٹ بک محفوظ کرنا ناکام رہا۔ جاری رکھا جا رہا ہے..."
-
-msgid "Notebook: %1"
-msgstr "نوٹ بک: %1"
-
-msgid "Notebooks"
-msgstr "نوٹ بکس"
-
-msgid "Notebooks Folder"
-msgstr "نوٹ بکس فولڈر"
-
-msgid "Notebooks Folder: %1"
-msgstr "نوٹ بکس فولڈر: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"نوٹ بکس فولڈر کا راستہ:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "نوٹ بکس کا پاتھ کوئی ڈائریکٹری نہیں ہے: %1"
 
 msgid "OK"
 msgstr "ٹھیک ہے"
@@ -1050,9 +1078,6 @@ msgstr "صاف کریں"
 
 msgid "Purge Settings"
 msgstr "ترتیبات صاف کریں"
-
-msgid "Querying AI ..."
-msgstr "AI سے استفسار ہو رہا ہے ..."
 
 msgid "Quick Note"
 msgstr "فوری نوٹ"
@@ -1183,11 +1208,11 @@ msgstr "سرچ ٹول کا ریکارڈ ایک جدول ہونا چاہیے۔"
 msgid "Searching with %1 ... [%2]"
 msgstr "%1 کے ساتھ تلاش جاری ہے ... [%2]"
 
+msgid "Select AI Note"
+msgstr "AI نوٹ منتخب کریں"
+
 msgid "Select a model:"
 msgstr "ایک ماڈل منتخب کریں:"
-
-msgid "Select notebook"
-msgstr "نوٹ بک منتخب کریں"
 
 msgid "Selection copied to clipboard."
 msgstr "انتخاب کلپ بورڈ پر کاپی ہو گیا۔"
@@ -1266,8 +1291,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "فوری نوٹس لیں"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "فوری نوٹس لیں جو آپ کی نوٹ بک میں محفوظ ہوں گے۔"
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "فوری نوٹس بنائیں جو آپ کے AI نوٹس میں محفوظ ہوں گے۔"
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1288,9 +1313,6 @@ msgstr "متن کلپ بورڈ پر کاپی کر دیا گیا"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 کے لیے ہینڈلر نہیں ملا۔ براہ کرم یقینی بنائیں کہ ہینڈلر api_handlers ڈائریکٹری میں موجود ہے۔"
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "نوٹ بک آپ کا گفتگو لاگ ہے: AI جوابات اور فوری نوٹس اس میں شامل کیے جاتے ہیں۔ اپنے لاگز کو منظم کرنے کے لیے آپ متعدد نوٹ بکس بنا سکتے ہیں۔"
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "یہ بٹن نمایاں کردہ متن کے ساتھ ایک فوری نوٹ تخلیق کرتا ہے۔"

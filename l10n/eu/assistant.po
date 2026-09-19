@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 03:15+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Euskara (AI translation)\n"
@@ -38,9 +38,6 @@ msgstr " - or. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Liburu baterako \"X-Ray\" laburpena, atal zehatzetan egituratua: Pertsonaiak, Kokapenak, Gaiak, Terminoak eta Kontzeptuak, Kronologia eta Berriro murgiltzea."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Galdera\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Baliteke gai hauek interesgarriak iruditzea:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Gehitu botoi hau Nabarmenduen Menuari?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI oharren fitxategia:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Oraindik ez da hornitzailerik konfiguratu.</b>\n"
 "Mesedez, gehitu hornitzaile bat Ezarpenetan edo configuration.lua fitxategian."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Koadernoaren fitxategia:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametroak</b>"
 
@@ -197,6 +194,43 @@ msgstr "<b>Konexioa probatzen...</b>"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Funtzio mota ezezaguna:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Pentsamendu sakona</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Galdera</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "%1 pluginaren bertsio berri bat (%2) eskuragarri dago. Mesedez, eguneratu!"
 
@@ -214,6 +248,43 @@ msgstr "AI Hiztegia"
 
 msgid "AI Language: "
 msgstr "AI hizkuntza: "
+
+msgid "AI Note Name"
+msgstr "AI oharraren izena"
+
+msgid "AI Notes"
+msgstr "AI oharrak"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI oharrak (AI elkarrizketa-erregistroa)"
+
+msgid "AI Notes Folder"
+msgstr "AI oharren karpeta"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI oharren karpeta: %1"
+
+msgid "AI Notes Settings"
+msgstr "AI oharren ezarpenak"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"AI oharren karpetaren bidea:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI oharrak zure elkarrizketa-erregistroa dira: AIaren erantzunak eta ohar azkarrak bertara gehitzen dira. Hainbat AI ohar sor ditzakezu zure erregistroak antolatzeko."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "AI oharren bidea ez da direktorio bat: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "AI oharrak ezin izan dira gorde. Jarraitzen..."
+
+msgid "AI Notes: %1"
+msgstr "AI oharrak: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI erantzuten ari da"
+
+msgid "AI note name cannot be empty."
+msgstr "AI oharraren izena ezin da hutsik egon."
+
+msgid "AI note name cannot contain '..'."
+msgstr "AI oharraren izenak ezin du '..' eduki."
+
+msgid "AI note name cannot contain path separators."
+msgstr "AI oharraren izenak ezin du bide-banatzailerik eduki."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "AI oharraren izena ezin da zuriune batekin edo puntu batekin amaitu."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "AI oharraren izenak fitxategi-sistemak onartzen ez dituen karaktereak ditu."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "AI oharraren izena fitxategi-sistemak erreserbatuta dauka."
+
+msgid "AI note name must be text."
+msgstr "AI oharraren izenak testua izan behar du."
+
+msgid "AI note path is not a file: %1"
+msgstr "AI oharraren bidea ez da fitxategi bat: %1"
+
+msgid "AI note path is unavailable."
+msgstr "AI oharraren bidea ez dago erabilgarri."
 
 msgid "API Key"
 msgstr "API gakoa"
@@ -295,8 +393,8 @@ msgstr ""
 "Gehitu hornitzaileak menu nagusitik:\n"
 "%1 -> AI Laguntzailea -> Ezarpenak -> Hornitzailearen APIa"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Liburuko zure nabarmendutakoen, oharren eta koadernoaren edukiaren analisia."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Liburuko zure nabarmendutakoen, oharren eta AI oharren edukiaren analisia."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Erantsi aurreko testua"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Laburpen automatikoa aspalditik irakurri gabeko liburuak irekitzean"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Gorde elkarrizketak automatikoki koadernoan"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Elkarrizketak automatikoki AI oharretan gorde"
 
 msgid "Base URL"
 msgstr "Oinarrizko URLa"
@@ -415,8 +513,8 @@ msgstr "Eguneraketak egiaztatzen..."
 msgid "Choose Definition Sections"
 msgstr "Aukeratu definizio-atalak"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Aukeratu zein koadernotan gordetzen diren zure oharrak."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Aukeratu zure oharrak zein AI oharretan gordetzen diren."
 
 msgid "Clear"
 msgstr "Garbitu"
@@ -436,8 +534,8 @@ msgstr "Konfigurazioa ez da aurkitu. Mesedez, konfiguratu configuration.lua lehe
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Konfiguratu AI LLMaren erantzun-hizkuntza. Lehenetsita, KOReader interfazearen hizkuntza erabiltzen da."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Konfiguratutako koaderno-karpeta ez da eskuragarria: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Konfiguratutako AI oharren karpeta ez dago eskuragarri: %1"
 
 msgid "Connection test successful."
 msgstr "Konexio-proba arrakastatsua izan da."
@@ -461,8 +559,8 @@ msgstr "Testuinguru-oharrak / Gogoetak"
 msgid "Contradictions / Open Questions"
 msgstr "Kontraesanak / Erantzun gabeko galderak"
 
-msgid "Conversation is saved to notebook"
-msgstr "Elkarrizketa koadernoan gorde da."
+msgid "Conversation is saved to AI Notes"
+msgstr "Elkarrizketa AI oharretan gorde da"
 
 msgid "Copy"
 msgstr "Kopiatu"
@@ -478,42 +576,42 @@ msgstr "Argudio nagusiak"
 msgid "Core Idea"
 msgstr "Ideia nagusia"
 
-msgid "Could not close notebook file."
-msgstr "Ezin izan da koaderno-fitxategia itxi."
+msgid "Could not close AI note file."
+msgstr "Ezin izan da AI ohar fitxategia itxi."
 
-msgid "Could not create notebook."
-msgstr "Ezin izan da koadernoa sortu."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Ezin izan da AI oharren karpeta sortu: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Ezin izan da koadernoa sortu: %1"
+msgid "Could not create AI note."
+msgstr "Ezin izan da AI oharra sortu."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Ezin izan da koaderno-karpeta sortu: %1"
+msgid "Could not create AI note: %1"
+msgstr "Ezin izan da AI oharra sortu: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Ezin izan da koaderno-karpeta zerrendatu: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Ezin izan da AI oharren karpeta zerrendatu: %1"
 
-msgid "Could not open notebook file."
-msgstr "Ezin izan da koaderno-fitxategia ireki."
+msgid "Could not open AI note file."
+msgstr "Ezin izan da AI ohar fitxategia ireki."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Ezin izan da hautatutako koadernoan gorde.\n"
-"Gordeta: %1"
+"Ezin izan da aukeratutako AI oharrean gorde.\n"
+"Hemen gorde da: %1"
 
-msgid "Could not select notebook."
-msgstr "Ezin izan da koadernoa hautatu."
+msgid "Could not select AI note."
+msgstr "Ezin izan da AI oharra aukeratu."
 
-msgid "Could not write notebook file."
-msgstr "Ezin izan da koaderno-fitxategia idatzi."
+msgid "Could not write AI note file."
+msgstr "Ezin izan da AI ohar fitxategia idatzi."
 
 msgid "Create"
 msgstr "Sortu"
 
-msgid "Create a notebook."
-msgstr "Sortu koaderno bat."
+msgid "Create an AI note."
+msgstr "Sortu AI ohar bat."
 
 msgid "Cultural Significance"
 msgstr "Garrantzi kulturala"
@@ -530,9 +628,6 @@ msgstr "Prompt pertsonalizatua"
 
 msgid "Custom Prompts"
 msgstr "Prompt pertsonalizatuak"
-
-msgid "Deeply Thought"
-msgstr "Sakon pentsatua"
 
 msgid "Delete"
 msgstr "Ezabatu"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Laburpen integratua"
 
-msgid "Invalid notebook entry."
-msgstr "Koaderno-sarrera baliogabea."
+msgid "Invalid AI note entry."
+msgstr "AI ohar sarrera baliogabea."
 
-msgid "Invalid notebook filename."
-msgstr "Koadernoaren fitxategi-izena baliogabea."
+msgid "Invalid AI note filename."
+msgstr "AI oharraren fitxategi-izen baliogabea."
 
 msgid "Justify"
 msgstr "Justifikatu"
@@ -764,9 +859,6 @@ msgstr "Utzi hutsik hau erabiltzeko: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Utzi eremu hauek hutsik interfazearen hizkuntza erabiltzeko: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "<b>%1</b> kargatzen ..."
 
 msgid "Locations"
 msgstr "Lekuak"
@@ -804,26 +896,32 @@ msgstr "Modeloak: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modeloak: %1 (lotuta)"
 
-msgid "Multiple Notebooks"
-msgstr "Koaderno anitz"
+msgid "Multiple AI Notes"
+msgstr "AI ohar anitzak"
 
 msgid "Narrative element in focus:"
 msgstr "Fokuan dagoen narrazio-elementua:"
 
-msgid "New notebook"
-msgstr "Koaderno berria"
+msgid "New AI Note"
+msgstr "AI ohar berria"
 
-msgid "New notebook..."
-msgstr "Koaderno berria..."
+msgid "New AI Note..."
+msgstr "AI ohar berria..."
 
 msgid "No"
 msgstr "Ez"
 
+msgid "No AI Notes folder is set."
+msgstr "Ez da AI oharren karpetarik ezarri."
+
+msgid "No AI notes yet"
+msgstr "Oraindik ez dago AI oharrik"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Ez dago hornitzaile aktiborik konfiguratuta. Mesedez, gehitu bat Ezarpenetan."
 
-msgid "No base folder is available for notebooks."
-msgstr "Ez dago koadernoetarako oinarrizko karpetarik eskuragarri."
+msgid "No base folder is available for AI Notes."
+msgstr "Ez dago oinarrizko karpetarik AI oharretarako."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Ez dago libururik irekita. Sakatu luze fitxategi-kudeatzailean liburu batean eta aukeratu Liburuaren informazioa (AI)."
@@ -837,14 +935,8 @@ msgstr "Ez dago eredu erabilgarririk."
 msgid "No models matching \"%1\"."
 msgstr "Ez dago \"%1\"(r)en pareko eredurik."
 
-msgid "No notebooks folder is set."
-msgstr "Ez da koaderno-karpetarik ezarri."
-
-msgid "No notebooks yet"
-msgstr "Oraindik ez dago koadernorik"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Ez dago biderik aurreko koadernoarentzat."
+msgid "No path is available for the default AI note."
+msgstr "Ez dago biderik lehenetsitako AI oharrarentzat."
 
 msgid "No response received."
 msgstr "Ez da erantzunik jaso."
@@ -863,70 +955,6 @@ msgstr "Bat ere ez"
 
 msgid "Note added successfully"
 msgstr "Oharra arrakastaz gehitu da."
-
-msgid "Notebook"
-msgstr "Koadernoa"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Koadernoa (AI elkarrizketa-erregistroa)"
-
-msgid "Notebook Settings"
-msgstr "Koadernoaren ezarpenak"
-
-msgid "Notebook name"
-msgstr "Koadernoaren izena"
-
-msgid "Notebook name cannot be empty."
-msgstr "Koadernoaren izena ezin da hutsik egon."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Koadernoaren izenak ezin du '..' eduki."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Koadernoaren izenak ezin du bide-bereizlerik eduki."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Koadernoaren izenak ezin du hutsune edo puntu batekin amaitu."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Koadernoaren izenak fitxategi-sistemak onartzen ez dituen karaktereak ditu."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Koadernoaren izena fitxategi-sistemak erreserbatuta dago."
-
-msgid "Notebook name must be text."
-msgstr "Koadernoaren izena testua izan behar da."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Koadernoaren bidea ez da fitxategi bat: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Koadernoaren bidea ez dago eskuragarri."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Notebook-en gordetzeak huts egin du. Jarraitzen..."
-
-msgid "Notebook: %1"
-msgstr "Koadernoa: %1"
-
-msgid "Notebooks"
-msgstr "Koadernoak"
-
-msgid "Notebooks Folder"
-msgstr "Koadernoen karpeta"
-
-msgid "Notebooks Folder: %1"
-msgstr "Koadernoak Karpeta: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Koadernoak karpetaren bidea:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Koaderno-bidea ez da direktorio bat: %1"
 
 msgid "OK"
 msgstr "Ados"
@@ -1050,9 +1078,6 @@ msgstr "Garbitu"
 
 msgid "Purge Settings"
 msgstr "Ezarpenak garbitu"
-
-msgid "Querying AI ..."
-msgstr "AIri galdetzen ..."
 
 msgid "Quick Note"
 msgstr "Ohar azkarra"
@@ -1182,11 +1207,11 @@ msgstr "Bilaketa-tresnaren erregistroa taula bat izan behar da."
 msgid "Searching with %1 ... [%2]"
 msgstr "Bilatzen %1-rekin ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Hautatu AI oharra"
+
 msgid "Select a model:"
 msgstr "Hautatu eredu bat:"
-
-msgid "Select notebook"
-msgstr "Hautatu koadernoa"
 
 msgid "Selection copied to clipboard."
 msgstr "Hautapena arbelean kopiatu da."
@@ -1265,8 +1290,8 @@ msgstr "Laburpena"
 msgid "Take Quick Notes"
 msgstr "Hartu ohar azkarrak"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Hartu ohar azkarrak, zure koadernoan gordeko direnak."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Hartu zure AI oharretan gordeko diren ohar azkarrak."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1287,9 +1312,6 @@ msgstr "Testua arbelean kopiatu da"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1-rentzako handlerra ez da aurkitu. Ziurtatu handlerra api_handlers direktorioan dagoela."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Koadernoa zure elkarrizketa-erregistroa da: AIren erantzunak eta ohar azkarrak gehitzen zaizkio. Hainbat koaderno sor ditzakezu zure erregistroak antolatzeko."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Botoi honek ohar azkar bat sortzen du nabarmendutako testuarekin."

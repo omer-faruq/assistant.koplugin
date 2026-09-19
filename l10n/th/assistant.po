@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 04:38+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ภาษาไทย (AI translation)\n"
@@ -38,9 +38,6 @@ msgstr " - น. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "สรุปแบบ \"X-Ray\" สำหรับหนังสือ โดยจัดโครงสร้างเป็นส่วนต่างๆ เช่น ตัวละคร สถานที่ แก่นเรื่อง คำศัพท์และแนวคิด ไทม์ไลน์ และการกลับเข้าสู่เรื่องราวอีกครั้ง"
 
-msgid "### %1 Question\n"
-msgstr "### คำถาม %1\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### คุณอาจสนใจหัวข้อเหล่านี้:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "เพิ่มปุ่มนี้ไปยังเมนูไฮไลต์หรือไม่?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>ไฟล์ AI Notes:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>ยังไม่มีผู้ให้บริการที่ตั้งค่าไว้</b>\n"
 "กรุณาเพิ่มผู้ให้บริการในการตั้งค่าหรือ configuration.lua"
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>ไฟล์สมุดบันทึก:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>พารามิเตอร์</b>"
 
@@ -197,6 +194,43 @@ msgstr "กำลังทดสอบการเชื่อมต่อ..."
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>ประเภทฟีเจอร์ไม่รู้จัก:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 คิดอย่างลึกซึ้ง</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 คำถาม</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "มีเวอร์ชันใหม่ของปลั๊กอิน %1 (%2) ให้อัปเดตแล้ว กรุณาอัปเดต!"
 
@@ -214,6 +248,43 @@ msgstr "พจนานุกรม AI"
 
 msgid "AI Language: "
 msgstr "ภาษา AI: "
+
+msgid "AI Note Name"
+msgstr "ชื่อ AI Note"
+
+msgid "AI Notes"
+msgstr "AI Notes"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI Notes (บันทึกการสนทนากับ AI)"
+
+msgid "AI Notes Folder"
+msgstr "โฟลเดอร์ AI Notes"
+
+msgid "AI Notes Folder: %1"
+msgstr "โฟลเดอร์ AI Notes: %1"
+
+msgid "AI Notes Settings"
+msgstr "การตั้งค่า AI Notes"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"พาธโฟลเดอร์ AI Notes:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI Notes คือบันทึกการสนทนาของคุณ คำตอบของ AI และโน้ตด่วนจะถูกเพิ่มต่อท้ายไว้ในนี้ คุณสามารถสร้าง AI Notes หลายรายการเพื่อจัดระเบียบบันทึกของคุณได้"
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "พาธ AI Notes ไม่ใช่ไดเรกทอรี: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "บันทึก AI Notes ไม่สำเร็จ กำลังดำเนินการต่อ..."
+
+msgid "AI Notes: %1"
+msgstr "AI Notes: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI กำลังตอบกลับ"
+
+msgid "AI note name cannot be empty."
+msgstr "ชื่อ AI Note ต้องไม่ว่างเปล่า"
+
+msgid "AI note name cannot contain '..'."
+msgstr "ชื่อ AI Note ต้องไม่มี '..'"
+
+msgid "AI note name cannot contain path separators."
+msgstr "ชื่อ AI Note ต้องไม่มีตัวคั่นพาธ"
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "ชื่อ AI Note ต้องไม่ลงท้ายด้วยช่องว่างหรือจุด"
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "ชื่อ AI Note มีอักขระที่ระบบไฟล์ไม่รองรับ"
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "ชื่อโน้ต AI เป็นชื่อที่ระบบไฟล์สงวนไว้"
+
+msgid "AI note name must be text."
+msgstr "ชื่อโน้ต AI ต้องเป็นข้อความ"
+
+msgid "AI note path is not a file: %1"
+msgstr "พาธของโน้ต AI ไม่ใช่ไฟล์: %1"
+
+msgid "AI note path is unavailable."
+msgstr "พาธของโน้ต AI ไม่พร้อมใช้งาน"
 
 msgid "API Key"
 msgstr "คีย์ API"
@@ -295,8 +393,8 @@ msgstr ""
 "เพิ่มผู้ให้บริการจากเมนูหลัก:\n"
 "%1 -> AI Assistant -> การตั้งค่า -> Provider API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "การวิเคราะห์ไฮไลต์ บันทึก และเนื้อหาในสมุดบันทึกของคุณจากหนังสือ"
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "การวิเคราะห์ไฮไลต์ โน้ต และเนื้อหาโน้ต AI ของคุณจากหนังสือเล่มนี้"
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "แนบข้อความก่อนหน้า"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "สรุปย้อนหลังอัตโนมัติเมื่อเปิดหนังสือที่ยังไม่ได้อ่านมาเป็นเวลานาน"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "บันทึกการสนทนาลงสมุดบันทึกอัตโนมัติ"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "บันทึกบทสนทนาลงโน้ต AI อัตโนมัติ"
 
 msgid "Base URL"
 msgstr "URL ฐาน"
@@ -415,8 +513,8 @@ msgstr "กำลังตรวจสอบอัปเดต..."
 msgid "Choose Definition Sections"
 msgstr "เลือกส่วนของคำนิยาม"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "เลือกสมุดบันทึกที่จะบันทึกโน้ตของคุณ"
+msgid "Choose which AI note your notes are saved to."
+msgstr "เลือกโน้ต AI ที่จะบันทึกโน้ตของคุณลงไป"
 
 msgid "Clear"
 msgstr "ล้าง"
@@ -436,8 +534,8 @@ msgstr "ไม่พบการกำหนดค่า กรุณาตั�
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "กำหนดภาษาสำหรับการตอบกลับของ AI LLM ค่าเริ่มต้นเป็นภาษาของอินเทอร์เฟซ KOReader"
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "ไม่สามารถเข้าถึงโฟลเดอร์สมุดบันทึกที่กำหนดค่าไว้: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "ไม่สามารถเข้าถึงโฟลเดอร์โน้ต AI ที่ตั้งค่าไว้: %1"
 
 msgid "Connection test successful."
 msgstr "การทดสอบการเชื่อมต่อสำเร็จ"
@@ -461,8 +559,8 @@ msgstr "บันทึกตามบริบท / ข้อสะท้อน
 msgid "Contradictions / Open Questions"
 msgstr "ข้อขัดแย้ง / คำถามที่ยังค้าง"
 
-msgid "Conversation is saved to notebook"
-msgstr "บันทึกบทสนทนาไปยังสมุดบันทึกแล้ว"
+msgid "Conversation is saved to AI Notes"
+msgstr "บันทึกบทสนทนาลงโน้ต AI แล้ว"
 
 msgid "Copy"
 msgstr "คัดลอก"
@@ -478,42 +576,42 @@ msgstr "ข้อโต้แย้งหลัก"
 msgid "Core Idea"
 msgstr "แนวคิดหลัก"
 
-msgid "Could not close notebook file."
-msgstr "ไม่สามารถปิดไฟล์สมุดบันทึกได้"
+msgid "Could not close AI note file."
+msgstr "ไม่สามารถปิดไฟล์โน้ต AI"
 
-msgid "Could not create notebook."
-msgstr "ไม่สามารถสร้างสมุดบันทึกได้"
+msgid "Could not create AI Notes folder: %1"
+msgstr "ไม่สามารถสร้างโฟลเดอร์โน้ต AI: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "ไม่สามารถสร้างสมุดบันทึก: %1"
+msgid "Could not create AI note."
+msgstr "ไม่สามารถสร้างโน้ต AI"
 
-msgid "Could not create notebooks folder: %1"
-msgstr "ไม่สามารถสร้างโฟลเดอร์สมุดบันทึก: %1"
+msgid "Could not create AI note: %1"
+msgstr "ไม่สามารถสร้างโน้ต AI: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "ไม่สามารถแสดงรายการโฟลเดอร์สมุดบันทึก: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "ไม่สามารถแสดงรายการในโฟลเดอร์โน้ต AI: %1"
 
-msgid "Could not open notebook file."
-msgstr "ไม่สามารถเปิดไฟล์สมุดบันทึกได้"
+msgid "Could not open AI note file."
+msgstr "ไม่สามารถเปิดไฟล์โน้ต AI"
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"ไม่สามารถบันทึกลงในสมุดบันทึกที่เลือกได้\n"
-"บันทึกไปที่: %1"
+"ไม่สามารถบันทึกไปยังโน้ต AI ที่เลือกไว้\n"
+"บันทึกไปยัง: %1"
 
-msgid "Could not select notebook."
-msgstr "ไม่สามารถเลือกสมุดบันทึกได้"
+msgid "Could not select AI note."
+msgstr "ไม่สามารถเลือกโน้ต AI"
 
-msgid "Could not write notebook file."
-msgstr "ไม่สามารถเขียนไฟล์สมุดบันทึกได้"
+msgid "Could not write AI note file."
+msgstr "ไม่สามารถเขียนไฟล์โน้ต AI"
 
 msgid "Create"
 msgstr "สร้าง"
 
-msgid "Create a notebook."
-msgstr "สร้างสมุดบันทึก"
+msgid "Create an AI note."
+msgstr "สร้างโน้ต AI"
 
 msgid "Cultural Significance"
 msgstr "ความสำคัญทางวัฒนธรรม"
@@ -530,9 +628,6 @@ msgstr "พรอมป์ต์ที่กำหนดเอง"
 
 msgid "Custom Prompts"
 msgstr "พรอมต์ที่กำหนดเอง"
-
-msgid "Deeply Thought"
-msgstr "คิดอย่างลึกซึ้ง"
 
 msgid "Delete"
 msgstr "ลบ"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "สรุปแบบบูรณาการ"
 
-msgid "Invalid notebook entry."
-msgstr "รายการสมุดบันทึกไม่ถูกต้อง"
+msgid "Invalid AI note entry."
+msgstr "รายการโน้ต AI ไม่ถูกต้อง"
 
-msgid "Invalid notebook filename."
-msgstr "ชื่อไฟล์สมุดบันทึกไม่ถูกต้อง"
+msgid "Invalid AI note filename."
+msgstr "ชื่อไฟล์โน้ต AI ไม่ถูกต้อง"
 
 msgid "Justify"
 msgstr "จัดชิดขอบ"
@@ -763,9 +858,6 @@ msgstr "ปล่อยว่างไว้เพื่อใช้: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "ปล่อยช่องเหล่านี้ว่างไว้เพื่อใช้ภาษาของอินเทอร์เฟซ: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "กำลังโหลดสำหรับ <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "สถานที่"
@@ -803,26 +895,32 @@ msgstr "โมเดล: %1"
 msgid "Models: %1 (matched)"
 msgstr "โมเดล: %1 (ที่ตรงกัน)"
 
-msgid "Multiple Notebooks"
-msgstr "สมุดบันทึกหลายเล่ม"
+msgid "Multiple AI Notes"
+msgstr "โน้ต AI หลายรายการ"
 
 msgid "Narrative element in focus:"
 msgstr "องค์ประกอบของเรื่องที่กำลังเป็นจุดสนใจ:"
 
-msgid "New notebook"
-msgstr "สมุดบันทึกใหม่"
+msgid "New AI Note"
+msgstr "โน้ต AI ใหม่"
 
-msgid "New notebook..."
-msgstr "สมุดบันทึกใหม่..."
+msgid "New AI Note..."
+msgstr "โน้ต AI ใหม่..."
 
 msgid "No"
 msgstr "ไม่"
 
+msgid "No AI Notes folder is set."
+msgstr "ยังไม่ได้ตั้งค่าโฟลเดอร์สำหรับโน้ต AI"
+
+msgid "No AI notes yet"
+msgstr "ยังไม่มีโน้ต AI"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "ยังไม่ได้กำหนดค่าผู้ให้บริการที่ใช้งานอยู่ โปรดเพิ่มในการตั้งค่า"
 
-msgid "No base folder is available for notebooks."
-msgstr "ไม่มีโฟลเดอร์หลักสำหรับสมุดบันทึก"
+msgid "No base folder is available for AI Notes."
+msgstr "ไม่มีโฟลเดอร์หลักที่ใช้ได้สำหรับโน้ต AI"
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "ไม่มีหนังสือที่เปิดอยู่ กดค้างที่หนังสือในตัวจัดการไฟล์ แล้วเลือก ข้อมูลหนังสือ (AI)"
@@ -836,14 +934,8 @@ msgstr "ไม่มีโมเดลที่พร้อมใช้งาน
 msgid "No models matching \"%1\"."
 msgstr "ไม่พบโมเดลที่ตรงกับ \"%1\""
 
-msgid "No notebooks folder is set."
-msgstr "ยังไม่ได้ตั้งค่าโฟลเดอร์สมุดบันทึก"
-
-msgid "No notebooks yet"
-msgstr "ยังไม่มีสมุดบันทึก"
-
-msgid "No path is available for the legacy notebook."
-msgstr "ไม่มีเส้นทางสำหรับสมุดบันทึกแบบเดิม"
+msgid "No path is available for the default AI note."
+msgstr "ไม่มีพาธที่ใช้ได้สำหรับโน้ต AI เริ่มต้น"
 
 msgid "No response received."
 msgstr "ไม่ได้รับการตอบกลับ"
@@ -862,70 +954,6 @@ msgstr "ไม่มี"
 
 msgid "Note added successfully"
 msgstr "เพิ่มบันทึกสำเร็จ"
-
-msgid "Notebook"
-msgstr "สมุดโน้ต"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "สมุดบันทึก (บันทึกบทสนทนา AI)"
-
-msgid "Notebook Settings"
-msgstr "การตั้งค่าสมุดบันทึก"
-
-msgid "Notebook name"
-msgstr "ชื่อสมุดบันทึก"
-
-msgid "Notebook name cannot be empty."
-msgstr "ชื่อสมุดบันทึกต้องไม่เว้นว่าง"
-
-msgid "Notebook name cannot contain '..'."
-msgstr "ชื่อสมุดบันทึกต้องไม่มี '..'"
-
-msgid "Notebook name cannot contain path separators."
-msgstr "ชื่อสมุดบันทึกต้องไม่มีตัวคั่นเส้นทาง"
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "ชื่อสมุดบันทึกต้องไม่ลงท้ายด้วยช่องว่างหรือจุด"
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "ชื่อสมุดบันทึกมีอักขระที่ระบบไฟล์ไม่รองรับ"
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "ชื่อสมุดบันทึกถูกสงวนไว้โดยระบบไฟล์"
-
-msgid "Notebook name must be text."
-msgstr "ชื่อสมุดบันทึกต้องเป็นข้อความ"
-
-msgid "Notebook path is not a file: %1"
-msgstr "เส้นทางของสมุดบันทึกไม่ใช่ไฟล์: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "เส้นทางของสมุดบันทึกไม่พร้อมใช้งาน"
-
-msgid "Notebook save failed. Continuing..."
-msgstr "บันทึก NoteBook ล้มเหลว กำลังดำเนินการต่อ..."
-
-msgid "Notebook: %1"
-msgstr "สมุดบันทึก: %1"
-
-msgid "Notebooks"
-msgstr "สมุดบันทึก"
-
-msgid "Notebooks Folder"
-msgstr "โฟลเดอร์สมุดบันทึก"
-
-msgid "Notebooks Folder: %1"
-msgstr "โฟลเดอร์สมุดบันทึก: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"เส้นทางโฟลเดอร์สมุดบันทึก:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "เส้นทางของสมุดบันทึกไม่ใช่ไดเรกทอรี: %1"
 
 msgid "OK"
 msgstr "ตกลง"
@@ -1049,9 +1077,6 @@ msgstr "ล้าง"
 
 msgid "Purge Settings"
 msgstr "ล้างการตั้งค่า"
-
-msgid "Querying AI ..."
-msgstr "กำลังสอบถาม AI ..."
 
 msgid "Quick Note"
 msgstr "โน้ตด่วน"
@@ -1183,11 +1208,11 @@ msgstr "ข้อมูลเครื่องมือค้นหาต้อ
 msgid "Searching with %1 ... [%2]"
 msgstr "กำลังค้นหาด้วย %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "เลือกโน้ต AI"
+
 msgid "Select a model:"
 msgstr "เลือกโมเดล:"
-
-msgid "Select notebook"
-msgstr "เลือกสมุดบันทึก"
 
 msgid "Selection copied to clipboard."
 msgstr "คัดลอกข้อความที่เลือกไปยังคลิปบอร์ดแล้ว"
@@ -1266,8 +1291,8 @@ msgstr "สรุปสั้นๆ"
 msgid "Take Quick Notes"
 msgstr "จดบันทึกย่อ"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "จดบันทึกย่อที่จะบันทึกลงในสมุดบันทึกของคุณ"
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "จดบันทึกด่วนที่จะบันทึกไปยังโน้ต AI ของคุณ"
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1288,9 +1313,6 @@ msgstr "คัดลอกข้อความไปยังคลิปบอ
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "ไม่พบ Handler สำหรับ %1 กรุณาตรวจสอบให้แน่ใจว่า Handler มีอยู่ในไดเรกทอรี api_handlers"
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "สมุดบันทึกคือบันทึกการสนทนาของคุณ: คำตอบจาก AI และบันทึกด่วนจะถูกเพิ่มต่อท้ายลงไป คุณสามารถสร้างสมุดบันทึกหลายรายการเพื่อจัดระเบียบบันทึกของคุณ"
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "ปุ่มนี้สร้างโน้ตด่วนพร้อมข้อความที่ไฮไลต์"

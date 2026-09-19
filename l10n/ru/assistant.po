@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - стр. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "«X-Ray»-сводка по книге, структурированная по разделам: персонажи, места, темы, термины и понятия, хронология и повторное погружение."
 
-msgid "### %1 Question\n"
-msgstr "### Вопрос %1\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Возможно, вам будут интересны эти темы:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Добавить эту кнопку в меню выделения?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Файл заметок ИИ:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Провайдер ещё не настроен.</b>\n"
 "Добавьте провайдера в Настройках или в configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Файл блокнота:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Параметры</b>"
 
@@ -197,6 +194,43 @@ msgstr "<b>Проверка соединения...</b>"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Неизвестный тип функции:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Глубокое размышление</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Вопрос</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Доступна новая версия плагина %1 (%2). Пожалуйста, обновите!"
 
@@ -214,6 +248,43 @@ msgstr "ИИ-словарь"
 
 msgid "AI Language: "
 msgstr "Язык ИИ: "
+
+msgid "AI Note Name"
+msgstr "Название заметки ИИ"
+
+msgid "AI Notes"
+msgstr "Заметки ИИ"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "Заметки ИИ (журнал диалогов с ИИ)"
+
+msgid "AI Notes Folder"
+msgstr "Папка заметок ИИ"
+
+msgid "AI Notes Folder: %1"
+msgstr "Папка заметок ИИ: %1"
+
+msgid "AI Notes Settings"
+msgstr "Настройки заметок ИИ"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Путь к папке заметок ИИ:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "Заметки ИИ — это ваш журнал диалогов: ответы ИИ и быстрые заметки добавляются в него. Вы можете создавать несколько заметок ИИ, чтобы упорядочить журналы."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Путь к заметкам ИИ не является каталогом: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Не удалось сохранить заметки ИИ. Продолжаем..."
+
+msgid "AI Notes: %1"
+msgstr "Заметки ИИ: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "ИИ X-Ray"
 
 msgid "AI is responding"
 msgstr "ИИ отвечает"
+
+msgid "AI note name cannot be empty."
+msgstr "Название заметки ИИ не может быть пустым."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Название заметки ИИ не может содержать '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Название заметки ИИ не может содержать разделители пути."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Название заметки ИИ не может заканчиваться пробелом или точкой."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Название заметки ИИ содержит символы, не поддерживаемые файловой системой."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Имя ИИ-заметки зарезервировано файловой системой."
+
+msgid "AI note name must be text."
+msgstr "Имя ИИ-заметки должно быть текстом."
+
+msgid "AI note path is not a file: %1"
+msgstr "Путь ИИ-заметки не является файлом: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Путь ИИ-заметки недоступен."
 
 msgid "API Key"
 msgstr "API-ключ"
@@ -295,8 +393,8 @@ msgstr ""
 "Добавьте провайдеров из главного меню:\n"
 "%1 -> AI Assistant -> Настройки -> API провайдера"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Анализ ваших выделений, заметок и содержимого блокнота по книге."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Анализ ваших выделений, заметок и содержимого ИИ-заметок из книги."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Прикрепить предыдущий текст"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Автоконспект при открытии давно не читанных книг"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Автосохранение бесед в блокнот"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Автосохранение диалогов в ИИ-заметки"
 
 msgid "Base URL"
 msgstr "Базовый URL"
@@ -415,8 +513,8 @@ msgstr "Проверка обновлений..."
 msgid "Choose Definition Sections"
 msgstr "Выбор разделов определений"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Выберите, в какой блокнот сохранять заметки."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Выберите ИИ-заметку, в которую сохраняются ваши заметки."
 
 msgid "Clear"
 msgstr "Очистить"
@@ -436,8 +534,8 @@ msgstr "Конфигурация не найдена. Пожалуйста, сн
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Настройте язык ответов языковой модели ИИ. По умолчанию используется язык интерфейса KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Настроенная папка блокнотов недоступна: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Настроенная папка ИИ-заметок недоступна: %1"
 
 msgid "Connection test successful."
 msgstr "Проверка соединения прошла успешно."
@@ -461,8 +559,8 @@ msgstr "Контекстные заметки / Размышления"
 msgid "Contradictions / Open Questions"
 msgstr "Противоречия / Открытые вопросы"
 
-msgid "Conversation is saved to notebook"
-msgstr "Диалог сохранён в блокнот"
+msgid "Conversation is saved to AI Notes"
+msgstr "Диалог сохранён в ИИ-заметки"
 
 msgid "Copy"
 msgstr "Копировать"
@@ -478,42 +576,42 @@ msgstr "Основные аргументы"
 msgid "Core Idea"
 msgstr "Основная идея"
 
-msgid "Could not close notebook file."
-msgstr "Не удалось закрыть файл блокнота."
+msgid "Could not close AI note file."
+msgstr "Не удалось закрыть файл ИИ-заметки."
 
-msgid "Could not create notebook."
-msgstr "Не удалось создать блокнот."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Не удалось создать папку ИИ-заметок: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Не удалось создать блокнот: %1"
+msgid "Could not create AI note."
+msgstr "Не удалось создать ИИ-заметку."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Не удалось создать папку блокнотов: %1"
+msgid "Could not create AI note: %1"
+msgstr "Не удалось создать ИИ-заметку: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Не удалось получить содержимое папки блокнотов: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Не удалось получить список содержимого папки ИИ-заметок: %1"
 
-msgid "Could not open notebook file."
-msgstr "Не удалось открыть файл блокнота."
+msgid "Could not open AI note file."
+msgstr "Не удалось открыть файл ИИ-заметки."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Не удалось сохранить в выбранный блокнот.\n"
+"Не удалось сохранить в выбранную ИИ-заметку.\n"
 "Сохранено в: %1"
 
-msgid "Could not select notebook."
-msgstr "Не удалось выбрать блокнот."
+msgid "Could not select AI note."
+msgstr "Не удалось выбрать ИИ-заметку."
 
-msgid "Could not write notebook file."
-msgstr "Не удалось записать файл блокнота."
+msgid "Could not write AI note file."
+msgstr "Не удалось записать файл ИИ-заметки."
 
 msgid "Create"
 msgstr "Создать"
 
-msgid "Create a notebook."
-msgstr "Создать блокнот."
+msgid "Create an AI note."
+msgstr "Создать ИИ-заметку."
 
 msgid "Cultural Significance"
 msgstr "Культурная значимость"
@@ -530,9 +628,6 @@ msgstr "Свой промпт"
 
 msgid "Custom Prompts"
 msgstr "Пользовательские промпты"
-
-msgid "Deeply Thought"
-msgstr "Глубокие размышления"
 
 msgid "Delete"
 msgstr "Удалить"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Интегрированное резюме"
 
-msgid "Invalid notebook entry."
-msgstr "Недопустимая запись блокнота."
+msgid "Invalid AI note entry."
+msgstr "Недопустимая запись ИИ-заметки."
 
-msgid "Invalid notebook filename."
-msgstr "Недопустимое имя файла блокнота."
+msgid "Invalid AI note filename."
+msgstr "Недопустимое имя файла ИИ-заметки."
 
 msgid "Justify"
 msgstr "По ширине"
@@ -766,9 +861,6 @@ msgstr "Оставьте пустым, чтобы использовать: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Оставьте эти поля пустыми, чтобы использовать язык интерфейса: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Загрузка для <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Локации"
@@ -806,26 +898,32 @@ msgstr "Модели: %1"
 msgid "Models: %1 (matched)"
 msgstr "Модели: %1 (совпадает)"
 
-msgid "Multiple Notebooks"
-msgstr "Несколько блокнотов"
+msgid "Multiple AI Notes"
+msgstr "Несколько ИИ-заметок"
 
 msgid "Narrative element in focus:"
 msgstr "Сюжетный элемент в фокусе:"
 
-msgid "New notebook"
-msgstr "Новый блокнот"
+msgid "New AI Note"
+msgstr "Новая ИИ-заметка"
 
-msgid "New notebook..."
-msgstr "Новый блокнот..."
+msgid "New AI Note..."
+msgstr "Новая ИИ-заметка..."
 
 msgid "No"
 msgstr "Нет"
 
+msgid "No AI Notes folder is set."
+msgstr "Папка для ИИ-заметок не задана."
+
+msgid "No AI notes yet"
+msgstr "Пока нет ИИ-заметок"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Не настроен активный провайдер. Пожалуйста, добавьте его в Настройках."
 
-msgid "No base folder is available for notebooks."
-msgstr "Нет доступной базовой папки для блокнотов."
+msgid "No base folder is available for AI Notes."
+msgstr "Для ИИ-заметок недоступна базовая папка."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Книга не открыта. Нажмите и удерживайте книгу в файловом менеджере и выберите «Информация о книге (AI)»."
@@ -839,14 +937,8 @@ msgstr "Нет доступных моделей."
 msgid "No models matching \"%1\"."
 msgstr "Нет моделей, соответствующих \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Папка блокнотов не задана."
-
-msgid "No notebooks yet"
-msgstr "Блокнотов пока нет"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Нет доступного пути для устаревшего блокнота."
+msgid "No path is available for the default AI note."
+msgstr "Недоступен путь для ИИ-заметки по умолчанию."
 
 msgid "No response received."
 msgstr "Ответ не получен."
@@ -865,70 +957,6 @@ msgstr "Нет"
 
 msgid "Note added successfully"
 msgstr "Заметка успешно добавлена"
-
-msgid "Notebook"
-msgstr "Блокнот"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Блокнот (журнал диалогов ИИ)"
-
-msgid "Notebook Settings"
-msgstr "Настройки блокнота"
-
-msgid "Notebook name"
-msgstr "Имя блокнота"
-
-msgid "Notebook name cannot be empty."
-msgstr "Имя блокнота не может быть пустым."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Имя блокнота не может содержать '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Имя блокнота не может содержать разделители пути."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Имя блокнота не может заканчиваться пробелом или точкой."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Имя блокнота содержит символы, не поддерживаемые файловой системой."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Имя блокнота зарезервировано файловой системой."
-
-msgid "Notebook name must be text."
-msgstr "Имя блокнота должно быть текстом."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Путь к блокноту не является файлом: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Путь к блокноту недоступен."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Не удалось сохранить в NoteBook. Продолжаем..."
-
-msgid "Notebook: %1"
-msgstr "Блокнот: %1"
-
-msgid "Notebooks"
-msgstr "Блокноты"
-
-msgid "Notebooks Folder"
-msgstr "Папка блокнотов"
-
-msgid "Notebooks Folder: %1"
-msgstr "Папка блокнотов: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Путь к папке блокнотов:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Путь к блокнотам не является каталогом: %1"
 
 msgid "OK"
 msgstr "ОК"
@@ -1052,9 +1080,6 @@ msgstr "Очистить"
 
 msgid "Purge Settings"
 msgstr "Очистить настройки"
-
-msgid "Querying AI ..."
-msgstr "Запрос к ИИ ..."
 
 msgid "Quick Note"
 msgstr "Быстрая заметка"
@@ -1185,11 +1210,11 @@ msgstr "Запись инструмента поиска должна быть �
 msgid "Searching with %1 ... [%2]"
 msgstr "Поиск с помощью %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Выбрать ИИ-заметку"
+
 msgid "Select a model:"
 msgstr "Выберите модель:"
-
-msgid "Select notebook"
-msgstr "Выбрать блокнот"
 
 msgid "Selection copied to clipboard."
 msgstr "Выделение скопировано в буфер обмена."
@@ -1268,8 +1293,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Быстрые заметки"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Делайте быстрые заметки — они будут сохранены в ваш блокнот."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Делайте быстрые заметки, которые будут сохраняться в ваши ИИ-заметки."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1290,9 +1315,6 @@ msgstr "Текст скопирован в буфер обмена"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Обработчик для %1 не найден. Убедитесь, что обработчик существует в каталоге api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Блокнот — это журнал ваших бесед: ответы ИИ и быстрые заметки добавляются в него. Можно создавать несколько блокнотов для организации журналов."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Эта кнопка создаёт быструю заметку с выделенным текстом."

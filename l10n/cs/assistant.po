@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - s. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" shrnutí knihy, strukturované do konkrétních sekcí, jako jsou Postavy, Místa, Témata, Pojmy a koncepty, Časová osa a Znovuponoření."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Otázka\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Mohla by vás zajímat tato témata:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Přidat toto tlačítko do nabídky zvýraznění?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Soubor AI poznámek:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Zatím není nastaven žádný poskytovatel.</b>\n"
 "Přidejte poskytovatele v Nastavení nebo v configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Soubor zápisníku:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametry</b>"
 
@@ -197,6 +194,43 @@ msgstr "Test připojení"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Neznámý typ funkce:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Hluboké zamyšlení</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Otázka</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Je dostupná nová verze pluginu %1 (%2). Aktualizujte prosím!"
 
@@ -214,6 +248,43 @@ msgstr "AI slovník"
 
 msgid "AI Language: "
 msgstr "Jazyk AI: "
+
+msgid "AI Note Name"
+msgstr "Název AI poznámky"
+
+msgid "AI Notes"
+msgstr "AI poznámky"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI poznámky (protokol konverzace s AI)"
+
+msgid "AI Notes Folder"
+msgstr "Složka AI poznámek"
+
+msgid "AI Notes Folder: %1"
+msgstr "Složka AI poznámek: %1"
+
+msgid "AI Notes Settings"
+msgstr "Nastavení AI poznámek"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Cesta ke složce AI poznámek:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI poznámky jsou váš protokol konverzace: odpovědi AI a rychlé poznámky se do nich připojují. Můžete vytvořit více AI poznámek pro uspořádání svých protokolů."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Cesta k AI poznámkám není adresář: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Uložení AI poznámek se nezdařilo. Pokračuji…"
+
+msgid "AI Notes: %1"
+msgstr "AI poznámky: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI odpovídá"
+
+msgid "AI note name cannot be empty."
+msgstr "Název AI poznámky nesmí být prázdný."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Název AI poznámky nesmí obsahovat '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Název AI poznámky nesmí obsahovat oddělovače cesty."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Název AI poznámky nesmí končit mezerou nebo tečkou."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Název AI poznámky obsahuje znaky, které souborový systém nepodporuje."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Název AI poznámky je vyhrazen souborovým systémem."
+
+msgid "AI note name must be text."
+msgstr "Název AI poznámky musí být text."
+
+msgid "AI note path is not a file: %1"
+msgstr "Cesta k AI poznámce není soubor: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Cesta k AI poznámce není dostupná."
 
 msgid "API Key"
 msgstr "API klíč"
@@ -295,8 +393,8 @@ msgstr ""
 "Přidejte poskytovatele z hlavní nabídky:\n"
 "%1 -> AI asistent -> Nastavení -> API poskytovatele"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Analýza vašich zvýraznění, poznámek a obsahu zápisníku z knihy."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Analýza vašich zvýraznění, poznámek a obsahu AI poznámek z knihy."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Připojit předchozí text"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automatická rekapitulace při otevření dlouho nečtených knih"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Automatické ukládání konverzací do poznámkového bloku"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Automaticky ukládat konverzace do AI poznámek"
 
 msgid "Base URL"
 msgstr "Základní URL"
@@ -415,8 +513,8 @@ msgstr "Kontrola aktualizací..."
 msgid "Choose Definition Sections"
 msgstr "Zvolit sekce definic"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Vyberte, do kterého zápisníku se vaše poznámky ukládají."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Vyberte, do které AI poznámky se mají vaše poznámky ukládat."
 
 msgid "Clear"
 msgstr "Vymazat"
@@ -436,8 +534,8 @@ msgstr "Konfigurace nebyla nalezena. Nejprve nastavte configuration.lua."
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Nastavte jazyk odpovědí modelu AI. Ve výchozím stavu se použije jazyk rozhraní KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Nakonfigurovaná složka zápisníků není přístupná: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Nakonfigurovaná složka AI poznámek není přístupná: %1"
 
 msgid "Connection test successful."
 msgstr "Test připojení byl úspěšný."
@@ -461,8 +559,8 @@ msgstr "Kontextové poznámky / Úvahy"
 msgid "Contradictions / Open Questions"
 msgstr "Rozpory / Otevřené otázky"
 
-msgid "Conversation is saved to notebook"
-msgstr "Konverzace je uložena do zápisníku"
+msgid "Conversation is saved to AI Notes"
+msgstr "Konverzace je uložena do AI poznámek"
 
 msgid "Copy"
 msgstr "Kopírovat"
@@ -478,42 +576,42 @@ msgstr "Hlavní argumenty"
 msgid "Core Idea"
 msgstr "Hlavní myšlenka"
 
-msgid "Could not close notebook file."
-msgstr "Nelze zavřít soubor zápisníku."
+msgid "Could not close AI note file."
+msgstr "Nepodařilo se zavřít soubor AI poznámky."
 
-msgid "Could not create notebook."
-msgstr "Nelze vytvořit zápisník."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Nepodařilo se vytvořit složku AI poznámek: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Nelze vytvořit zápisník: %1"
+msgid "Could not create AI note."
+msgstr "Nepodařilo se vytvořit AI poznámku."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Nelze vytvořit složku zápisníků: %1"
+msgid "Could not create AI note: %1"
+msgstr "Nepodařilo se vytvořit AI poznámku: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Nelze vypsat obsah složky zápisníků: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Nepodařilo se vypsat obsah složky AI poznámek: %1"
 
-msgid "Could not open notebook file."
-msgstr "Nelze otevřít soubor zápisníku."
+msgid "Could not open AI note file."
+msgstr "Nepodařilo se otevřít soubor AI poznámky."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Do vybraného zápisníku se nepodařilo uložit.\n"
+"Nepodařilo se uložit do vybrané AI poznámky.\n"
 "Uloženo do: %1"
 
-msgid "Could not select notebook."
-msgstr "Nelze vybrat zápisník."
+msgid "Could not select AI note."
+msgstr "Nepodařilo se vybrat AI poznámku."
 
-msgid "Could not write notebook file."
-msgstr "Nelze zapsat soubor zápisníku."
+msgid "Could not write AI note file."
+msgstr "Nepodařilo se zapsat soubor AI poznámky."
 
 msgid "Create"
 msgstr "Vytvořit"
 
-msgid "Create a notebook."
-msgstr "Vytvořit zápisník."
+msgid "Create an AI note."
+msgstr "Vytvořit AI poznámku."
 
 msgid "Cultural Significance"
 msgstr "Kulturní význam"
@@ -530,9 +628,6 @@ msgstr "Vlastní prompt"
 
 msgid "Custom Prompts"
 msgstr "Vlastní prompty"
-
-msgid "Deeply Thought"
-msgstr "Hluboké myšlení"
 
 msgid "Delete"
 msgstr "Smazat"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Integrované shrnutí"
 
-msgid "Invalid notebook entry."
-msgstr "Neplatná položka zápisníku."
+msgid "Invalid AI note entry."
+msgstr "Neplatný záznam AI poznámky."
 
-msgid "Invalid notebook filename."
-msgstr "Neplatný název souboru zápisníku."
+msgid "Invalid AI note filename."
+msgstr "Neplatný název souboru AI poznámky."
 
 msgid "Justify"
 msgstr "Zarovnat do bloku"
@@ -765,9 +860,6 @@ msgstr "Ponechte prázdné pro použití: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Ponechte tato pole prázdná pro použití jazyka rozhraní: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Načítání pro <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Místa"
@@ -805,26 +897,32 @@ msgstr "Modely: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modely: %1 (shodné)"
 
-msgid "Multiple Notebooks"
-msgstr "Více poznámkových bloků"
+msgid "Multiple AI Notes"
+msgstr "Více AI poznámek"
 
 msgid "Narrative element in focus:"
 msgstr "Narativní prvek v centru pozornosti:"
 
-msgid "New notebook"
-msgstr "Nový zápisník"
+msgid "New AI Note"
+msgstr "Nová AI poznámka"
 
-msgid "New notebook..."
-msgstr "Nový zápisník..."
+msgid "New AI Note..."
+msgstr "Nová AI poznámka..."
 
 msgid "No"
 msgstr "Ne"
 
+msgid "No AI Notes folder is set."
+msgstr "Složka AI poznámek není nastavena."
+
+msgid "No AI notes yet"
+msgstr "Zatím žádné AI poznámky"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Není nakonfigurován žádný aktivní poskytovatel. Přidejte jej v Nastavení."
 
-msgid "No base folder is available for notebooks."
-msgstr "Pro zápisníky není k dispozici žádná základní složka."
+msgid "No base folder is available for AI Notes."
+msgstr "Pro AI poznámky není k dispozici žádná základní složka."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Není otevřená žádná kniha. Dlouze stiskněte knihu ve správci souborů a zvolte Informace o knize (AI)."
@@ -838,14 +936,8 @@ msgstr "Žádné modely nejsou k dispozici."
 msgid "No models matching \"%1\"."
 msgstr "Žádné modely neodpovídají \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Není nastavena složka poznámkových bloků."
-
-msgid "No notebooks yet"
-msgstr "Zatím žádné zápisníky"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Pro starší zápisník není k dispozici žádná cesta."
+msgid "No path is available for the default AI note."
+msgstr "Pro výchozí AI poznámku není k dispozici žádná cesta."
 
 msgid "No response received."
 msgstr "Nebyla přijata žádná odpověď."
@@ -864,70 +956,6 @@ msgstr "Žádný"
 
 msgid "Note added successfully"
 msgstr "Poznámka byla úspěšně přidána."
-
-msgid "Notebook"
-msgstr "Poznámkový blok"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Zápisník (protokol konverzací AI)"
-
-msgid "Notebook Settings"
-msgstr "Nastavení zápisníku"
-
-msgid "Notebook name"
-msgstr "Název zápisníku"
-
-msgid "Notebook name cannot be empty."
-msgstr "Název zápisníku nemůže být prázdný."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Název zápisníku nemůže obsahovat '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Název zápisníku nemůže obsahovat oddělovače cest."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Název zápisníku nemůže končit mezerou nebo tečkou."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Název zápisníku obsahuje znaky, které souborový systém nepodporuje."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Název zápisníku je vyhrazen souborovým systémem."
-
-msgid "Notebook name must be text."
-msgstr "Název zápisníku musí být text."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Cesta k zápisníku není soubor: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Cesta k zápisníku není k dispozici."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Uložení do poznámkového bloku se nezdařilo. Pokračuji..."
-
-msgid "Notebook: %1"
-msgstr "Zápisník: %1"
-
-msgid "Notebooks"
-msgstr "Zápisníky"
-
-msgid "Notebooks Folder"
-msgstr "Složka poznámkových bloků"
-
-msgid "Notebooks Folder: %1"
-msgstr "Složka poznámkových bloků: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Cesta ke složce poznámkových bloků:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Cesta k zápisníkům není adresář: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1051,9 +1079,6 @@ msgstr "Vymazat"
 
 msgid "Purge Settings"
 msgstr "Vymazat nastavení"
-
-msgid "Querying AI ..."
-msgstr "Dotazuji se AI ..."
 
 msgid "Quick Note"
 msgstr "Rychlá poznámka"
@@ -1185,11 +1210,11 @@ msgstr "Záznam vyhledávacího nástroje musí být tabulka."
 msgid "Searching with %1 ... [%2]"
 msgstr "Vyhledávání pomocí %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Vybrat AI poznámku"
+
 msgid "Select a model:"
 msgstr "Vyberte model:"
-
-msgid "Select notebook"
-msgstr "Vybrat zápisník"
 
 msgid "Selection copied to clipboard."
 msgstr "Výběr byl zkopírován do schránky."
@@ -1268,8 +1293,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Rychlé poznámky"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Pořizujte rychlé poznámky, které budou uloženy do vašeho zápisníku."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Dělejte si rychlé poznámky, které se uloží do vašich AI poznámek."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1290,9 +1315,6 @@ msgstr "Text byl zkopírován do schránky."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handler pro %1 nebyl nalezen. Ujistěte se, že handler existuje v adresáři api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Notebook je váš deník konverzace: odpovědi AI a rychlé poznámky se do něj přidávají. Můžete vytvořit více notebooků pro uspořádání svých záznamů."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Toto tlačítko vytvoří rychlou poznámku se zvýrazněným textem."

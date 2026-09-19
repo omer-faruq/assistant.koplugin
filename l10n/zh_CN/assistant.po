@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 02:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: 简体中文 (AI translation)\n"
@@ -39,9 +39,6 @@ msgstr " - 第 %1/%2 页"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "书籍的“X-Ray”摘要，按特定部分组织，如人物、地点、主题、术语与概念、时间线和重新沉浸。"
 
-msgid "### %1 Question\n"
-msgstr "### %1 问题\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### 您可能会对这些主题感兴趣："
 
@@ -65,6 +62,15 @@ msgstr ""
 "<b>%1：</b> %2\n"
 "\n"
 "将此按钮添加到高亮菜单？"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI 笔记文件：</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -171,15 +177,6 @@ msgstr ""
 "<b>尚未设置服务提供商。</b>\n"
 "请在设置或 configuration.lua 中添加服务提供商。"
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>笔记本文件：</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>参数</b>"
 
@@ -198,6 +195,43 @@ msgstr "测试连接"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>未知功能类型：</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 深度思考</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 提问</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "检测到 %1 插件的新版本（%2）。请更新！"
 
@@ -215,6 +249,43 @@ msgstr "AI 词典"
 
 msgid "AI Language: "
 msgstr "AI 语言： "
+
+msgid "AI Note Name"
+msgstr "AI 笔记名称"
+
+msgid "AI Notes"
+msgstr "AI 笔记"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI 笔记（AI 对话记录）"
+
+msgid "AI Notes Folder"
+msgstr "AI 笔记文件夹"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI 笔记文件夹：%1"
+
+msgid "AI Notes Settings"
+msgstr "AI 笔记设置"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"AI 笔记文件夹路径：\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI 笔记就是你的对话记录：AI 的回答和速记会追加到其中。你可以创建多个 AI 笔记来整理记录。"
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "AI 笔记路径不是目录：%1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "AI 笔记保存失败，继续……"
+
+msgid "AI Notes: %1"
+msgstr "AI 笔记：%1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -243,6 +314,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI 正在响应"
+
+msgid "AI note name cannot be empty."
+msgstr "AI 笔记名称不能为空。"
+
+msgid "AI note name cannot contain '..'."
+msgstr "AI 笔记名称不能包含“..”。"
+
+msgid "AI note name cannot contain path separators."
+msgstr "AI 笔记名称不能包含路径分隔符。"
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "AI 笔记名称不能以空格或句点结尾。"
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "AI 笔记名称包含文件系统不支持的字符。"
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "AI 笔记名称已被文件系统保留。"
+
+msgid "AI note name must be text."
+msgstr "AI 笔记名称必须为文本。"
+
+msgid "AI note path is not a file: %1"
+msgstr "AI 笔记路径不是文件：%1"
+
+msgid "AI note path is unavailable."
+msgstr "AI 笔记路径不可用。"
 
 msgid "API Key"
 msgstr "API 密钥"
@@ -296,8 +394,8 @@ msgstr ""
 "从主菜单添加提供商：\n"
 "%1 -> AI 助手 -> 设置 -> API 提供商"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "对您在这本书中的高亮、笔记和笔记本内容的分析。"
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "对书中你的高亮、批注和 AI 笔记内容进行分析。"
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -348,8 +446,8 @@ msgstr "附加上文"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "打开长时间未读的图书时自动生成回顾"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "将对话自动保存到笔记本"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "自动将对话保存到 AI 笔记"
 
 msgid "Base URL"
 msgstr "基础 URL"
@@ -416,8 +514,8 @@ msgstr "正在检查更新..."
 msgid "Choose Definition Sections"
 msgstr "选择释义部分"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "选择你的笔记保存到哪个笔记本。"
+msgid "Choose which AI note your notes are saved to."
+msgstr "选择将笔记保存到哪个 AI 笔记。"
 
 msgid "Clear"
 msgstr "清除"
@@ -437,8 +535,8 @@ msgstr "未找到配置。请先设置 configuration.lua。"
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "配置 AI 大语言模型的回复语言。默认使用 KOReader 界面语言。"
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "配置的笔记本文件夹不可访问：%1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "配置的 AI 笔记文件夹无法访问：%1"
 
 msgid "Connection test successful."
 msgstr "连接测试成功。"
@@ -462,8 +560,8 @@ msgstr "情境笔记/反思"
 msgid "Contradictions / Open Questions"
 msgstr "矛盾/未解问题"
 
-msgid "Conversation is saved to notebook"
-msgstr "对话已保存到笔记本"
+msgid "Conversation is saved to AI Notes"
+msgstr "对话已保存到 AI 笔记"
 
 msgid "Copy"
 msgstr "复制"
@@ -479,42 +577,42 @@ msgstr "核心论点"
 msgid "Core Idea"
 msgstr "核心思想"
 
-msgid "Could not close notebook file."
-msgstr "无法关闭笔记本文件。"
+msgid "Could not close AI note file."
+msgstr "无法关闭 AI 笔记文件。"
 
-msgid "Could not create notebook."
-msgstr "无法创建笔记本。"
+msgid "Could not create AI Notes folder: %1"
+msgstr "无法创建 AI 笔记文件夹：%1"
 
-msgid "Could not create notebook: %1"
-msgstr "无法创建笔记本：%1"
+msgid "Could not create AI note."
+msgstr "无法创建 AI 笔记。"
 
-msgid "Could not create notebooks folder: %1"
-msgstr "无法创建笔记本文件夹：%1"
+msgid "Could not create AI note: %1"
+msgstr "无法创建 AI 笔记：%1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "无法列出笔记本文件夹：%1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "无法列出 AI 笔记文件夹：%1"
 
-msgid "Could not open notebook file."
-msgstr "无法打开笔记本文件。"
+msgid "Could not open AI note file."
+msgstr "无法打开 AI 笔记文件。"
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"无法保存到所选笔记本。\n"
+"无法保存到所选的 AI 笔记。\n"
 "已保存到：%1"
 
-msgid "Could not select notebook."
-msgstr "无法选择笔记本。"
+msgid "Could not select AI note."
+msgstr "无法选择 AI 笔记。"
 
-msgid "Could not write notebook file."
-msgstr "无法写入笔记本文件。"
+msgid "Could not write AI note file."
+msgstr "无法写入 AI 笔记文件。"
 
 msgid "Create"
 msgstr "创建"
 
-msgid "Create a notebook."
-msgstr "创建一个笔记本。"
+msgid "Create an AI note."
+msgstr "创建 AI 笔记。"
 
 msgid "Cultural Significance"
 msgstr "文化意义"
@@ -531,9 +629,6 @@ msgstr "自定义提示词"
 
 msgid "Custom Prompts"
 msgstr "自定义提示词"
-
-msgid "Deeply Thought"
-msgstr "深度思考"
 
 msgid "Delete"
 msgstr "删除"
@@ -730,11 +825,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "综合摘要"
 
-msgid "Invalid notebook entry."
-msgstr "无效的笔记本条目。"
+msgid "Invalid AI note entry."
+msgstr "无效的 AI 笔记条目。"
 
-msgid "Invalid notebook filename."
-msgstr "无效的笔记本文件名。"
+msgid "Invalid AI note filename."
+msgstr "无效的 AI 笔记文件名。"
 
 msgid "Justify"
 msgstr "两端对齐"
@@ -764,9 +859,6 @@ msgstr "留空以使用：%1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "将这些字段留空以使用界面语言：%1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "正在为 <b>%1</b> 加载……"
 
 msgid "Locations"
 msgstr "地点"
@@ -804,26 +896,32 @@ msgstr "模型：%1"
 msgid "Models: %1 (matched)"
 msgstr "模型: %1 (已匹配)"
 
-msgid "Multiple Notebooks"
-msgstr "多个笔记本"
+msgid "Multiple AI Notes"
+msgstr "多个 AI 笔记"
 
 msgid "Narrative element in focus:"
 msgstr "当前重点叙事元素："
 
-msgid "New notebook"
-msgstr "新建笔记本"
+msgid "New AI Note"
+msgstr "新建 AI 笔记"
 
-msgid "New notebook..."
-msgstr "新笔记本..."
+msgid "New AI Note..."
+msgstr "新建 AI 笔记..."
 
 msgid "No"
 msgstr "否"
 
+msgid "No AI Notes folder is set."
+msgstr "未设置 AI 笔记文件夹。"
+
+msgid "No AI notes yet"
+msgstr "还没有 AI 笔记"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "未配置有效的提供商。请在设置中添加一个。"
 
-msgid "No base folder is available for notebooks."
-msgstr "没有可用于笔记本的基础文件夹。"
+msgid "No base folder is available for AI Notes."
+msgstr "AI 笔记没有可用的基础文件夹。"
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "当前没有打开的书。请在文件管理器中长按一本书，然后选择“图书信息 (AI)”。"
@@ -837,14 +935,8 @@ msgstr "没有可用模型。"
 msgid "No models matching \"%1\"."
 msgstr "没有匹配“%1”的模型。"
 
-msgid "No notebooks folder is set."
-msgstr "未设置笔记本文件夹。"
-
-msgid "No notebooks yet"
-msgstr "尚无笔记本"
-
-msgid "No path is available for the legacy notebook."
-msgstr "旧版笔记本没有可用路径。"
+msgid "No path is available for the default AI note."
+msgstr "默认 AI 笔记没有可用的路径。"
 
 msgid "No response received."
 msgstr "未收到响应。"
@@ -863,70 +955,6 @@ msgstr "无"
 
 msgid "Note added successfully"
 msgstr "笔记添加成功"
-
-msgid "Notebook"
-msgstr "笔记本"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "笔记本（AI 对话记录）"
-
-msgid "Notebook Settings"
-msgstr "笔记本设置"
-
-msgid "Notebook name"
-msgstr "笔记本名称"
-
-msgid "Notebook name cannot be empty."
-msgstr "笔记本名称不能为空。"
-
-msgid "Notebook name cannot contain '..'."
-msgstr "笔记本名称不能包含“..”。"
-
-msgid "Notebook name cannot contain path separators."
-msgstr "笔记本名称不能包含路径分隔符。"
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "笔记本名称不能以空格或点结尾。"
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "笔记本名称包含文件系统不支持的字符。"
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "笔记本名称被文件系统保留。"
-
-msgid "Notebook name must be text."
-msgstr "笔记本名称必须是文本。"
-
-msgid "Notebook path is not a file: %1"
-msgstr "笔记本路径不是文件：%1"
-
-msgid "Notebook path is unavailable."
-msgstr "笔记本路径不可用。"
-
-msgid "Notebook save failed. Continuing..."
-msgstr "笔记本保存失败。继续..."
-
-msgid "Notebook: %1"
-msgstr "笔记本：%1"
-
-msgid "Notebooks"
-msgstr "笔记本"
-
-msgid "Notebooks Folder"
-msgstr "笔记本文件夹"
-
-msgid "Notebooks Folder: %1"
-msgstr "笔记本文件夹：%1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"笔记本文件夹路径：\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "笔记本路径不是目录：%1"
 
 msgid "OK"
 msgstr "确定"
@@ -1050,9 +1078,6 @@ msgstr "清除"
 
 msgid "Purge Settings"
 msgstr "清除设置"
-
-msgid "Querying AI ..."
-msgstr "正在查询 AI ..."
 
 msgid "Quick Note"
 msgstr "快速笔记"
@@ -1184,11 +1209,11 @@ msgstr "搜索工具记录必须是表格。"
 msgid "Searching with %1 ... [%2]"
 msgstr "正在使用 %1 搜索 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "选择 AI 笔记"
+
 msgid "Select a model:"
 msgstr "选择模型："
-
-msgid "Select notebook"
-msgstr "选择笔记本"
 
 msgid "Selection copied to clipboard."
 msgstr "所选内容已复制到剪贴板。"
@@ -1267,8 +1292,8 @@ msgstr "太长不看"
 msgid "Take Quick Notes"
 msgstr "快速笔记"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "记录快速笔记，这些笔记将保存到您的笔记本。"
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "快速记录笔记，将保存到你的 AI 笔记中。"
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "文本已复制到剪贴板"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "未找到 %1 的处理程序。请确保处理程序存在于 api_handlers 目录中。"
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "笔记本就是你的对话记录：AI 回答和快速笔记都会追加到其中。你可以创建多个笔记本对记录进行分类整理。"
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "此按钮使用高亮文本创建快速笔记。"

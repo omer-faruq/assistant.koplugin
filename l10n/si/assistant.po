@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 04:37+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: සිංහල (AI translation)\n"
@@ -38,9 +38,6 @@ msgstr " - පි. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "පොතක් සඳහා \"X-Ray\" සාරාංශය, චරිත, ස්ථාන, තේමා, පද සහ සංකල්ප, කාලරේඛාව සහ නැවත ගිල්වීම වැනි නිශ්චිත කොටස් වලට ව්‍යුහගත කර ඇත."
 
-msgid "### %1 Question\n"
-msgstr "### %1 ප්‍රශ්නය\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### මෙම මාතෘකා ඔබට සිත්ගන්නා සුළු විය හැක:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "මෙම බොත්තම උද්දීපන මෙනුවට එක් කරන්නද?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI සටහන් ගොනුව:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>තවම සැපයුම්කරුවෙකු සකසා නැත.</b>\n"
 "කරුණාකර සැකසුම් හෝ configuration.lua හි සැපයුම්කරුවෙකු එක් කරන්න."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>සටහන් පොත් ගොනුව:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>පරාමිති</b>"
 
@@ -197,6 +194,43 @@ msgstr "සේවා සපයන්නා"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>නොදන්නා විශේෂාංග වර්ගය:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 ගැඹුරින් සිතුවා</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 ප්‍රශ්නය</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "%1 ප්ලගිනයේ නව අනුවාදයක් (%2) තිබේ. කරුණාකර යාවත්කාලීන කරන්න!"
 
@@ -214,6 +248,43 @@ msgstr "AI ශබ්දකෝෂය"
 
 msgid "AI Language: "
 msgstr "AI භාෂාව: "
+
+msgid "AI Note Name"
+msgstr "AI සටහනේ නම"
+
+msgid "AI Notes"
+msgstr "AI සටහන්"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI සටහන් (AI සංවාද ලොගය)"
+
+msgid "AI Notes Folder"
+msgstr "AI සටහන් ෆෝල්ඩරය"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI සටහන් ෆෝල්ඩරය: %1"
+
+msgid "AI Notes Settings"
+msgstr "AI සටහන් සැකසුම්"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"AI සටහන් ෆෝල්ඩර මාර්ගය:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI සටහන් යනු ඔබේ සංවාද ලොගයයි: AI පිළිතුරු සහ ක්ෂණික සටහන් එයට එක් කෙරේ. ඔබේ ලොග් සංවිධානය කිරීම සඳහා ඔබට AI සටහන් කිහිපයක් සෑදිය හැක."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "AI සටහන් මාර්ගය ෆෝල්ඩරයක් නොවේ: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "AI සටහන් සුරැකීම අසාර්ථක විය. දිගටම කරගෙන යයි..."
+
+msgid "AI Notes: %1"
+msgstr "AI සටහන්: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI ප්‍රතිචාර දක්වමින් ඇත"
+
+msgid "AI note name cannot be empty."
+msgstr "AI සටහනේ නම හිස් විය නොහැක."
+
+msgid "AI note name cannot contain '..'."
+msgstr "AI සටහනේ නමේ '..' අඩංගු විය නොහැක."
+
+msgid "AI note name cannot contain path separators."
+msgstr "AI සටහනේ නමේ මාර්ග බෙදුම් ලකුණු අඩංගු විය නොහැක."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "AI සටහනේ නම හිස්තැනකින් හෝ තිතකින් අවසන් විය නොහැක."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "AI සටහනේ නමේ ගොනු පද්ධතිය විසින් සහාය නොදක්වන අක්ෂර අඩංගු වේ."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "AI සටහන් නාමය ගොනු පද්ධතිය විසින් වෙන් කර ඇත."
+
+msgid "AI note name must be text."
+msgstr "AI සටහන් නාමය පෙළක් විය යුතුය."
+
+msgid "AI note path is not a file: %1"
+msgstr "AI සටහන් මාර්ගය ගොනුවක් නොවේ: %1"
+
+msgid "AI note path is unavailable."
+msgstr "AI සටහන් මාර්ගය ලබාගත නොහැක."
 
 msgid "API Key"
 msgstr "API යතුර"
@@ -295,8 +393,8 @@ msgstr ""
 "ප්‍රධාන මෙනුවෙන් සේවා සපයන්නන් එක් කරන්න:\n"
 "%1 -> AI සහායක -> සැකසීම් -> සපයන්නා API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "පොතෙන් ඔබේ උද්දීපන, සටහන් සහ සටහන් පොත් අන්තර්ගතය පිළිබඳ විශ්ලේෂණය."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "පොතෙන් ඔබේ උද්දීපන, සටහන් සහ AI සටහන් අන්තර්ගතය පිළිබඳ විශ්ලේෂණය."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "පෙර පෙළ අමුණන්න"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "දිගු කලක් නොකියවූ පොත් විවෘත කිරීමේදී ස්වයංක්‍රීය සාරාංශය"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "සංවාද සටහන් පොතට ස්වයංක්රීයව සුරකින්න"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "සංවාද AI සටහන් වෙත ස්වයංක්‍රීයව සුරකින්න"
 
 msgid "Base URL"
 msgstr "මූලික URL"
@@ -415,8 +513,8 @@ msgstr "යාවත්කාලීන සඳහා පරීක්ෂා කර
 msgid "Choose Definition Sections"
 msgstr "නිර්වචන කොටස් තෝරන්න"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "ඔබේ සටහන් සුරැකෙන සටහන් පොත තෝරන්න."
+msgid "Choose which AI note your notes are saved to."
+msgstr "ඔබේ සටහන් සුරකින AI සටහන තෝරන්න."
 
 msgid "Clear"
 msgstr "හිස් කරන්න"
@@ -436,8 +534,8 @@ msgstr "වින්යාසය හමු නොවීය. කරුණාක�
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "AI LLM හි ප්රතිචාර භාෂාව වින්යාස කරන්න. KOReader අතුරුමුහුණත් භාෂාවට පෙරනිමියෙන් සකසයි."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "වින්යාස කළ සටහන් පොත් ෆෝල්ඩරයට ප්රවේශ විය නොහැක: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "වින්‍යාසගත AI සටහන් ෆෝල්ඩරයට ප්‍රවේශ විය නොහැක: %1"
 
 msgid "Connection test successful."
 msgstr "සම්බන්ධතා පරීක්ෂණය සාර්ථකයි."
@@ -461,8 +559,8 @@ msgstr "සන්දර්භීය සටහන් / පරාවර්තන"
 msgid "Contradictions / Open Questions"
 msgstr "පරස්පරතා / විවෘත ප්රශ්න"
 
-msgid "Conversation is saved to notebook"
-msgstr "සංවාදය සටහන් පොතට සුරකින ලදී"
+msgid "Conversation is saved to AI Notes"
+msgstr "සංවාදය AI සටහන් වෙත සුරකින ලදී"
 
 msgid "Copy"
 msgstr "පිටපත් කරන්න"
@@ -478,42 +576,42 @@ msgstr "මූලික තර්ක"
 msgid "Core Idea"
 msgstr "මූලික අදහස"
 
-msgid "Could not close notebook file."
-msgstr "සටහන් පොත් ගොනුව වසා දැමිය නොහැකි විය."
+msgid "Could not close AI note file."
+msgstr "AI සටහන් ගොනුව වැසීමට නොහැකි විය."
 
-msgid "Could not create notebook."
-msgstr "සටහන් පොත සෑදිය නොහැකි විය."
+msgid "Could not create AI Notes folder: %1"
+msgstr "AI සටහන් ෆෝල්ඩරය සෑදීමට නොහැකි විය: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "සටහන් පොත සෑදිය නොහැකි විය: %1"
+msgid "Could not create AI note."
+msgstr "AI සටහන සෑදීමට නොහැකි විය."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "සටහන් පොත් ෆෝල්ඩරය සෑදිය නොහැකි විය: %1"
+msgid "Could not create AI note: %1"
+msgstr "AI සටහන සෑදීමට නොහැකි විය: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "සටහන් පොත් ෆෝල්ඩරය ලැයිස්තුගත කළ නොහැකි විය: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "AI සටහන් ෆෝල්ඩරය ලැයිස්තුගත කිරීමට නොහැකි විය: %1"
 
-msgid "Could not open notebook file."
-msgstr "සටහන් පොත් ගොනුව විවෘත කළ නොහැකි විය."
+msgid "Could not open AI note file."
+msgstr "AI සටහන් ගොනුව විවෘත කිරීමට නොහැකි විය."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"තේරූ සටහන් පොතට සුරැකීමට නොහැකි විය.\n"
-"සුරකින ලදී: %1"
+"තෝරාගත් AI සටහනට සුරැකීමට නොහැකි විය.\n"
+"සුරකින ලද්දේ: %1"
 
-msgid "Could not select notebook."
-msgstr "සටහන් පොත තේරිය නොහැකි විය."
+msgid "Could not select AI note."
+msgstr "AI සටහන තෝරාගැනීමට නොහැකි විය."
 
-msgid "Could not write notebook file."
-msgstr "සටහන් පොත් ගොනුවට ලිවිය නොහැකි විය."
+msgid "Could not write AI note file."
+msgstr "AI සටහන් ගොනුව ලිවීමට නොහැකි විය."
 
 msgid "Create"
 msgstr "සාදන්න"
 
-msgid "Create a notebook."
-msgstr "සටහන් පොතක් සාදන්න."
+msgid "Create an AI note."
+msgstr "AI සටහනක් සාදන්න."
 
 msgid "Cultural Significance"
 msgstr "සංස්කෘතික වැදගත්කම"
@@ -530,9 +628,6 @@ msgstr "අභිරුචි ප්රොම්ප්ටය"
 
 msgid "Custom Prompts"
 msgstr "අභිරුචි ප්‍රොම්ප්ට්"
-
-msgid "Deeply Thought"
-msgstr "ගැඹුරු චින්තනය"
 
 msgid "Delete"
 msgstr "මකන්න"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "ඒකාබද්ධ සාරාංශය"
 
-msgid "Invalid notebook entry."
-msgstr "වලංගු නොවන සටහන් පොත් ප්රවේශයකි."
+msgid "Invalid AI note entry."
+msgstr "වලංගු නොවන AI සටහන් ඇතුළත් කිරීමක්."
 
-msgid "Invalid notebook filename."
-msgstr "වලංගු නොවන සටහන් පොත් ගොනු නාමයකි."
+msgid "Invalid AI note filename."
+msgstr "වලංගු නොවන AI සටහන් ගොනු නාමය."
 
 msgid "Justify"
 msgstr "දෙපසට සමපාත කරන්න"
@@ -764,9 +859,6 @@ msgstr "භාවිතා කිරීමට හිස්ව තබන්න: %
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "UI භාෂාව භාවිතා කිරීමට මෙම ක්ෂේත්‍ර හිස්ව තබන්න: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "<b>%1</b> සඳහා පූරණය වෙමින් ..."
 
 msgid "Locations"
 msgstr "ස්ථාන"
@@ -804,26 +896,32 @@ msgstr "මාදිලි: %1"
 msgid "Models: %1 (matched)"
 msgstr "මොඩල්: %1 (සම්බන්ධ)"
 
-msgid "Multiple Notebooks"
-msgstr "බහු සටහන් පොත්"
+msgid "Multiple AI Notes"
+msgstr "AI සටහන් කිහිපයක්"
 
 msgid "Narrative element in focus:"
 msgstr "අවධානයට ලක්වන ආඛ්යාන අංගය:"
 
-msgid "New notebook"
-msgstr "නව සටහන් පොත"
+msgid "New AI Note"
+msgstr "නව AI සටහන"
 
-msgid "New notebook..."
-msgstr "නව සටහන් පොත..."
+msgid "New AI Note..."
+msgstr "නව AI සටහන..."
 
 msgid "No"
 msgstr "නැත"
 
+msgid "No AI Notes folder is set."
+msgstr "AI සටහන් ෆෝල්ඩරයක් සකසා නැත."
+
+msgid "No AI notes yet"
+msgstr "තවම AI සටහන් නැත"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "සක්‍රීය සේවා සපයන්නෙකු වින්‍යාස කර නොමැත. කරුණාකර සැකසීම් තුළ එකක් එක් කරන්න."
 
-msgid "No base folder is available for notebooks."
-msgstr "සටහන් පොත් සඳහා මූලික ෆෝල්ඩරයක් නොමැත."
+msgid "No base folder is available for AI Notes."
+msgstr "AI සටහන් සඳහා මූලික ෆෝල්ඩරයක් නොමැත."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "කිසිදු පොතක් විවෘතව නොමැත. ගොනු කළමනාකරු තුළ පොතක් මත දිගු එබීමක් කර, පොත් තොරතුරු (AI) තෝරන්න."
@@ -837,14 +935,8 @@ msgstr "පවතින ආකෘති නොමැත."
 msgid "No models matching \"%1\"."
 msgstr "\"%1\" ට ගැලපෙන ආකෘති නොමැත."
 
-msgid "No notebooks folder is set."
-msgstr "සටහන් පොත් ෆෝල්ඩරයක් සකසා නැත."
-
-msgid "No notebooks yet"
-msgstr "තවම සටහන් පොත් නොමැත"
-
-msgid "No path is available for the legacy notebook."
-msgstr "පැරණි සටහන් පොත සඳහා මාර්ගයක් නොමැත."
+msgid "No path is available for the default AI note."
+msgstr "පෙරනිමි AI සටහන සඳහා මාර්ගයක් නොමැත."
 
 msgid "No response received."
 msgstr "කිසිදු ප්‍රතිචාරයක් නොලැබුණි."
@@ -863,70 +955,6 @@ msgstr "කිසිවක් නැත"
 
 msgid "Note added successfully"
 msgstr "සටහන සාර්ථකව එක් කරන ලදී"
-
-msgid "Notebook"
-msgstr "සටහන් පොත"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "සටහන් පොත (AI සංවාද ලොගය)"
-
-msgid "Notebook Settings"
-msgstr "සටහන් පොත් සැකසුම්"
-
-msgid "Notebook name"
-msgstr "සටහන් පොත් නාමය"
-
-msgid "Notebook name cannot be empty."
-msgstr "සටහන් පොත් නාමය හිස් විය නොහැක."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "සටහන් පොත් නාමයේ '..' අඩංගු විය නොහැක."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "සටහන් පොත් නාමයේ මාර්ග වෙන්කරන අක්ෂර අඩංගු විය නොහැක."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "සටහන් පොත් නාමය හිස්තැනකින් හෝ තිතකින් අවසන් විය නොහැක."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "සටහන් පොත් නාමයේ ගොනු පද්ධතිය මගින් සහාය නොදක්වන අක්ෂර අඩංගු වේ."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "සටහන් පොත් නාමය ගොනු පද්ධතිය මගින් වෙන් කර ඇත."
-
-msgid "Notebook name must be text."
-msgstr "සටහන් පොත් නාමය පෙළක් විය යුතුය."
-
-msgid "Notebook path is not a file: %1"
-msgstr "සටහන් පොත් මාර්ගය ගොනුවක් නොවේ: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "සටහන් පොත් මාර්ගය ලබා ගත නොහැක."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "NoteBook සුරැකීම අසාර්ථකයි. ඉදිරියට යමින්..."
-
-msgid "Notebook: %1"
-msgstr "සටහන් පොත: %1"
-
-msgid "Notebooks"
-msgstr "සටහන් පොත්"
-
-msgid "Notebooks Folder"
-msgstr "සටහන් පොත් ෆෝල්ඩරය"
-
-msgid "Notebooks Folder: %1"
-msgstr "සටහන් පොත් ෆෝල්ඩරය: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"සටහන් පොත් ෆෝල්ඩරයේ මාර්ගය:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "සටහන් පොත් මාර්ගය නාමාවලියක් නොවේ: %1"
 
 msgid "OK"
 msgstr "හරි"
@@ -1050,9 +1078,6 @@ msgstr "ඉවත් කරන්න"
 
 msgid "Purge Settings"
 msgstr "සැකසුම් හිස් කරන්න"
-
-msgid "Querying AI ..."
-msgstr "AI විමසමින් ..."
 
 msgid "Quick Note"
 msgstr "ඉක්මන් සටහන"
@@ -1184,11 +1209,11 @@ msgstr "සෙවුම් මෙවලම් වාර්තාව වගුව
 msgid "Searching with %1 ... [%2]"
 msgstr "%1 සමඟ සොයමින් ... [%2]"
 
+msgid "Select AI Note"
+msgstr "AI සටහන තෝරන්න"
+
 msgid "Select a model:"
 msgstr "ආකෘතියක් තෝරන්න:"
-
-msgid "Select notebook"
-msgstr "සටහන් පොත තෝරන්න"
 
 msgid "Selection copied to clipboard."
 msgstr "තේරීම ක්ලිප්බෝඩ් වෙත පිටපත් කරන ලදී."
@@ -1267,8 +1292,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "ඉක්මන් සටහන් ගන්න"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "ඔබේ සටහන් පොතට සුරැකෙන ඉක්මන් සටහන් ගන්න."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "ඔබේ AI සටහන්වලට සුරැකෙන ඉක්මන් සටහන් ගන්න."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "පෙළ ක්ලිප්බෝඩ් එකට පිටපත් �
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 සඳහා හැන්ඩ්ලරය හමු නොවීය. කරුණාකර api_handlers ඩිරෙක්ටරියේ හැන්ඩ්ලරය පවතින බවට සහතික වන්න."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "සටහන් පොත ඔබේ සංවාද ලොගයයි: AI පිළිතුරු සහ ඉක්මන් සටහන් එයට එක් කෙරේ. ඔබේ ලොග සංවිධානය කිරීමට ඔබට බහු සටහන් පොත් සෑදිය හැක."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "මෙම බොත්තම උද්දීපනය කළ පාඨය සමඟ ඉක්මන් සටහනක් නිර්මාණය කරයි."

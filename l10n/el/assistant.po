@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - σ. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Περίληψη «X-Ray» για ένα βιβλίο, δομημένη σε συγκεκριμένες ενότητες όπως Χαρακτήρες, Τοποθεσίες, Θέματα, Όροι & Έννοιες, Χρονοδιάγραμμα και Επαναβύθιση."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Ερώτηση\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Μπορεί να βρείτε αυτά τα θέματα ενδιαφέροντα:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Να προστεθεί αυτό το κουμπί στο Μενού Επισήμανσης;"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Αρχείο σημειώσεων AI:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Δεν έχει ρυθμιστεί ακόμα κάποιος πάροχος.</b>\n"
 "Προσθέστε έναν πάροχο στις Ρυθμίσεις ή στο configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Αρχείο σημειωματάριου:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Παράμετροι</b>"
 
@@ -197,6 +194,43 @@ msgstr "Δοκιμή σύνδεσης"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Άγνωστος τύπος δυνατότητας:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Βαθιά Σκέψη</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Ερώτηση</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Μια νέα έκδοση του πρόσθετου %1 (%2) είναι διαθέσιμη. Παρακαλώ ενημερώστε!"
 
@@ -214,6 +248,43 @@ msgstr "Λεξικό AI"
 
 msgid "AI Language: "
 msgstr "Γλώσσα AI: "
+
+msgid "AI Note Name"
+msgstr "Όνομα σημείωσης AI"
+
+msgid "AI Notes"
+msgstr "Σημειώσεις AI"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "Σημειώσεις AI (Αρχείο καταγραφής συνομιλίας AI)"
+
+msgid "AI Notes Folder"
+msgstr "Φάκελος σημειώσεων AI"
+
+msgid "AI Notes Folder: %1"
+msgstr "Φάκελος σημειώσεων AI: %1"
+
+msgid "AI Notes Settings"
+msgstr "Ρυθμίσεις σημειώσεων AI"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Διαδρομή φακέλου σημειώσεων AI:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "Οι Σημειώσεις AI είναι το αρχείο καταγραφής της συνομιλίας σας: οι απαντήσεις AI και οι γρήγορες σημειώσεις προσαρτώνται σε αυτό. Μπορείτε να δημιουργήσετε πολλαπλές σημειώσεις AI για να οργανώσετε τα αρχεία καταγραφής σας."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Η διαδρομή των Σημειώσεων AI δεν είναι φάκελος: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Η αποθήκευση των Σημειώσεων AI απέτυχε. Συνέχεια..."
+
+msgid "AI Notes: %1"
+msgstr "Σημειώσεις AI: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "Το AI απαντά"
+
+msgid "AI note name cannot be empty."
+msgstr "Το όνομα της σημείωσης AI δεν μπορεί να είναι κενό."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Το όνομα της σημείωσης AI δεν μπορεί να περιέχει '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Το όνομα της σημείωσης AI δεν μπορεί να περιέχει διαχωριστικά διαδρομής."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Το όνομα της σημείωσης AI δεν μπορεί να τελειώνει με κενό ή τελεία."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Το όνομα της σημείωσης AI περιέχει χαρακτήρες που δεν υποστηρίζονται από το σύστημα αρχείων."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Το όνομα της σημείωσης AI είναι δεσμευμένο από το σύστημα αρχείων."
+
+msgid "AI note name must be text."
+msgstr "Το όνομα της σημείωσης AI πρέπει να είναι κείμενο."
+
+msgid "AI note path is not a file: %1"
+msgstr "Η διαδρομή της σημείωσης AI δεν είναι αρχείο: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Η διαδρομή της σημείωσης AI δεν είναι διαθέσιμη."
 
 msgid "API Key"
 msgstr "Κλειδί API"
@@ -295,8 +393,8 @@ msgstr ""
 "Προσθέστε παρόχους από το κύριο μενού:\n"
 "%1 -> AI Assistant -> Ρυθμίσεις -> API Παρόχου"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Ανάλυση των επισημάνσεων, των σημειώσεων και του περιεχομένου του σημειωματάριου από το βιβλίο."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Ανάλυση του περιεχομένου των επισημάνσεων, των σημειώσεων και των Σημειώσεων AI σας από το βιβλίο."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Επισύναψη προηγούμενου κειμένου"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Αυτόματη ανακεφαλαίωση κατά το άνοιγμα βιβλίων που έχουν μείνει καιρό αδιάβαστα"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Αυτόματη αποθήκευση συνομιλιών στο σημειωματάριο"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Αυτόματη αποθήκευση συνομιλιών στις Σημειώσεις AI"
 
 msgid "Base URL"
 msgstr "Βασικό URL"
@@ -415,8 +513,8 @@ msgstr "Έλεγχος για ενημερώσεις..."
 msgid "Choose Definition Sections"
 msgstr "Επιλογή ενοτήτων ορισμών"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Επιλέξτε σε ποιο σημειωματάριο αποθηκεύονται οι σημειώσεις σας."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Επιλέξτε σε ποια σημείωση AI αποθηκεύονται οι σημειώσεις σας."
 
 msgid "Clear"
 msgstr "Εκκαθάριση"
@@ -436,8 +534,8 @@ msgstr "Δεν βρέθηκε διαμόρφωση. Παρακαλώ ρυθμί�
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Διαμόρφωση της γλώσσας απόκρισης του AI LLM. Από προεπιλογή ορίζεται η γλώσσα διεπαφής του KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Ο φάκελος σημειωματαρίων που έχει ρυθμιστεί δεν είναι προσβάσιμος: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Ο ρυθμισμένος φάκελος Σημειώσεων AI δεν είναι προσβάσιμος: %1"
 
 msgid "Connection test successful."
 msgstr "Η δοκιμή σύνδεσης ήταν επιτυχής."
@@ -461,8 +559,8 @@ msgstr "Σημειώσεις Πλαισίου / Σκέψεις"
 msgid "Contradictions / Open Questions"
 msgstr "Αντιφάσεις / Ανοιχτά Ερωτήματα"
 
-msgid "Conversation is saved to notebook"
-msgstr "Η συνομιλία αποθηκεύτηκε στο σημειωματάριο"
+msgid "Conversation is saved to AI Notes"
+msgstr "Η συνομιλία αποθηκεύεται στις Σημειώσεις AI"
 
 msgid "Copy"
 msgstr "Αντιγραφή"
@@ -478,42 +576,42 @@ msgstr "Βασικά επιχειρήματα"
 msgid "Core Idea"
 msgstr "Βασική ιδέα"
 
-msgid "Could not close notebook file."
-msgstr "Δεν ήταν δυνατό το κλείσιμο του αρχείου σημειωματαρίου."
+msgid "Could not close AI note file."
+msgstr "Δεν ήταν δυνατό το κλείσιμο του αρχείου σημείωσης AI."
 
-msgid "Could not create notebook."
-msgstr "Δεν ήταν δυνατή η δημιουργία σημειωματαρίου."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Δεν ήταν δυνατή η δημιουργία του φακέλου Σημειώσεων AI: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Δεν ήταν δυνατή η δημιουργία σημειωματαρίου: %1"
+msgid "Could not create AI note."
+msgstr "Δεν ήταν δυνατή η δημιουργία σημείωσης AI."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Δεν ήταν δυνατή η δημιουργία του φακέλου σημειωματαρίων: %1"
+msgid "Could not create AI note: %1"
+msgstr "Δεν ήταν δυνατή η δημιουργία σημείωσης AI: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Δεν ήταν δυνατή η απαρίθμηση του φακέλου σημειωματαρίων: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Δεν ήταν δυνατή η καταγραφή του φακέλου Σημειώσεων AI: %1"
 
-msgid "Could not open notebook file."
-msgstr "Δεν ήταν δυνατό το άνοιγμα του αρχείου σημειωματαρίου."
+msgid "Could not open AI note file."
+msgstr "Δεν ήταν δυνατό το άνοιγμα του αρχείου σημείωσης AI."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Δεν ήταν δυνατή η αποθήκευση στο επιλεγμένο σημειωματάριο.\n"
+"Δεν ήταν δυνατή η αποθήκευση στην επιλεγμένη σημείωση AI.\n"
 "Αποθηκεύτηκε σε: %1"
 
-msgid "Could not select notebook."
-msgstr "Δεν ήταν δυνατή η επιλογή σημειωματαρίου."
+msgid "Could not select AI note."
+msgstr "Δεν ήταν δυνατή η επιλογή σημείωσης AI."
 
-msgid "Could not write notebook file."
-msgstr "Δεν ήταν δυνατή η εγγραφή στο αρχείο σημειωματαρίου."
+msgid "Could not write AI note file."
+msgstr "Δεν ήταν δυνατή η εγγραφή του αρχείου σημείωσης AI."
 
 msgid "Create"
 msgstr "Δημιουργία"
 
-msgid "Create a notebook."
-msgstr "Δημιουργία σημειωματαρίου."
+msgid "Create an AI note."
+msgstr "Δημιουργία σημείωσης AI."
 
 msgid "Cultural Significance"
 msgstr "Πολιτιστική σημασία"
@@ -530,9 +628,6 @@ msgstr "Προσαρμοσμένη Προτροπή"
 
 msgid "Custom Prompts"
 msgstr "Προσαρμοσμένα Prompts"
-
-msgid "Deeply Thought"
-msgstr "Βαθιά σκέψη"
 
 msgid "Delete"
 msgstr "Διαγραφή"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Ενοποιημένη Περίληψη"
 
-msgid "Invalid notebook entry."
-msgstr "Μη έγκυρη καταχώριση σημειωματαρίου."
+msgid "Invalid AI note entry."
+msgstr "Μη έγκυρη καταχώριση σημείωσης AI."
 
-msgid "Invalid notebook filename."
-msgstr "Μη έγκυρο όνομα αρχείου σημειωματαρίου."
+msgid "Invalid AI note filename."
+msgstr "Μη έγκυρο όνομα αρχείου σημείωσης AI."
 
 msgid "Justify"
 msgstr "Πλήρης στοίχιση"
@@ -764,9 +859,6 @@ msgstr "Αφήστε κενό για χρήση: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Αφήστε αυτά τα πεδία κενά για να χρησιμοποιηθεί η γλώσσα διεπαφής: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Φόρτωση για <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Τοποθεσίες"
@@ -804,26 +896,32 @@ msgstr "Μοντέλα: %1"
 msgid "Models: %1 (matched)"
 msgstr "Μοντέλα: %1 (ταίριαζοντα)"
 
-msgid "Multiple Notebooks"
-msgstr "Πολλαπλά σημειωματάρια"
+msgid "Multiple AI Notes"
+msgstr "Πολλαπλές σημειώσεις AI"
 
 msgid "Narrative element in focus:"
 msgstr "Αφηγηματικό στοιχείο στο επίκεντρο:"
 
-msgid "New notebook"
-msgstr "Νέο σημειωματάριο"
+msgid "New AI Note"
+msgstr "Νέα σημείωση AI"
 
-msgid "New notebook..."
-msgstr "Νέο σημειωματάριο..."
+msgid "New AI Note..."
+msgstr "Νέα σημείωση AI..."
 
 msgid "No"
 msgstr "Όχι"
 
+msgid "No AI Notes folder is set."
+msgstr "Δεν έχει οριστεί φάκελος για τις σημειώσεις AI."
+
+msgid "No AI notes yet"
+msgstr "Δεν υπάρχουν ακόμη σημειώσεις AI"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Δεν έχει ρυθμιστεί ενεργός πάροχος. Προσθέστε έναν στις Ρυθμίσεις."
 
-msgid "No base folder is available for notebooks."
-msgstr "Δεν υπάρχει διαθέσιμος βασικός φάκελος για τα σημειωματάρια."
+msgid "No base folder is available for AI Notes."
+msgstr "Δεν υπάρχει διαθέσιμος βασικός φάκελος για τις σημειώσεις AI."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Δεν υπάρχει ανοιχτό βιβλίο. Κρατήστε πατημένο ένα βιβλίο στη διαχείριση αρχείων και επιλέξτε Πληροφορίες βιβλίου (AI)."
@@ -837,14 +935,8 @@ msgstr "Δεν υπάρχουν διαθέσιμα μοντέλα."
 msgid "No models matching \"%1\"."
 msgstr "Δεν βρέθηκαν μοντέλα που να ταιριάζουν με \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Δεν έχει οριστεί φάκελος σημειωματαρίων."
-
-msgid "No notebooks yet"
-msgstr "Κανένα σημειωματάριο ακόμα"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Δεν υπάρχει διαθέσιμη διαδρομή για το παλαιό σημειωματάριο."
+msgid "No path is available for the default AI note."
+msgstr "Δεν υπάρχει διαθέσιμη διαδρομή για την προεπιλεγμένη σημείωση AI."
 
 msgid "No response received."
 msgstr "Δεν λήφθηκε καμία απόκριση."
@@ -863,70 +955,6 @@ msgstr "Κανένα"
 
 msgid "Note added successfully"
 msgstr "Η σημείωση προστέθηκε επιτυχώς"
-
-msgid "Notebook"
-msgstr "Σημειωματάριο"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Σημειωματάριο (Αρχείο καταγραφής συνομιλιών AI)"
-
-msgid "Notebook Settings"
-msgstr "Ρυθμίσεις σημειωματαρίου"
-
-msgid "Notebook name"
-msgstr "Όνομα σημειωματαρίου"
-
-msgid "Notebook name cannot be empty."
-msgstr "Το όνομα σημειωματαρίου δεν μπορεί να είναι κενό."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Το όνομα σημειωματαρίου δεν μπορεί να περιέχει '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Το όνομα σημειωματαρίου δεν μπορεί να περιέχει διαχωριστικά διαδρομής."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Το όνομα σημειωματαρίου δεν μπορεί να τελειώνει με κενό ή τελεία."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Το όνομα σημειωματαρίου περιέχει χαρακτήρες που δεν υποστηρίζονται από το σύστημα αρχείων."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Το όνομα σημειωματαρίου είναι δεσμευμένο από το σύστημα αρχείων."
-
-msgid "Notebook name must be text."
-msgstr "Το όνομα σημειωματαρίου πρέπει να είναι κείμενο."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Η διαδρομή σημειωματαρίου δεν είναι αρχείο: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Η διαδρομή σημειωματαρίου δεν είναι διαθέσιμη."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Αποτυχία αποθήκευσης στο Σημειωματάριο. Συνεχίζεται..."
-
-msgid "Notebook: %1"
-msgstr "Σημειωματάριο: %1"
-
-msgid "Notebooks"
-msgstr "Σημειωματάρια"
-
-msgid "Notebooks Folder"
-msgstr "Φάκελος σημειωματαρίων"
-
-msgid "Notebooks Folder: %1"
-msgstr "Φάκελος σημειωματαρίων: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Διαδρομή φακέλου σημειωματαρίων:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Η διαδρομή των σημειωματαρίων δεν είναι κατάλογος: %1"
 
 msgid "OK"
 msgstr "Εντάξει"
@@ -1050,9 +1078,6 @@ msgstr "Εκκαθάριση"
 
 msgid "Purge Settings"
 msgstr "Εκκαθάριση Ρυθμίσεων"
-
-msgid "Querying AI ..."
-msgstr "Το AI ερωτάται ..."
 
 msgid "Quick Note"
 msgstr "Γρήγορη σημείωση"
@@ -1183,11 +1208,11 @@ msgstr "Η εγγραφή του εργαλείου αναζήτησης πρέ�
 msgid "Searching with %1 ... [%2]"
 msgstr "Αναζήτηση με %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Επιλογή σημείωσης AI"
+
 msgid "Select a model:"
 msgstr "Επιλέξτε ένα μοντέλο:"
-
-msgid "Select notebook"
-msgstr "Επιλογή σημειωματαρίου"
 
 msgid "Selection copied to clipboard."
 msgstr "Η επιλογή αντιγράφηκε στο πρόχειρο."
@@ -1266,8 +1291,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Γρήγορες σημειώσεις"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Κρατήστε γρήγορες σημειώσεις που θα αποθηκευτούν στο σημειωματάριό σας."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Κρατήστε γρήγορες σημειώσεις που θα αποθηκευτούν στις σημειώσεις AI σας."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1288,9 +1313,6 @@ msgstr "Το κείμενο αντιγράφηκε στο πρόχειρο"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Ο χειριστής για το %1 δεν βρέθηκε. Βεβαιωθείτε ότι ο χειριστής υπάρχει στον κατάλογο api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Το σημειωματάριο είναι το ημερολόγιο συνομιλίας σας: οι απαντήσεις του AI και οι γρήγορες σημειώσεις προστίθενται σε αυτό. Μπορείτε να δημιουργήσετε πολλά σημειωματάρια για να οργανώσετε τα ημερολόγιά σας."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Αυτό το κουμπί δημιουργεί μια γρήγορη σημείωση με το επισημασμένο κείμενο."

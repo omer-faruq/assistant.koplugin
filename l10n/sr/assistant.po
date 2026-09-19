@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - стр. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" сажетак за књигу, структурисан у посебне секције као што су Ликови, Локације, Теме, Појмови и концепти, Временска линија и Поновно урањање."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Питање\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Можда ће вас занимати ове теме:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Додати ово дугме у мени за истицање?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Датотека AI бележака:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Još nije podešen nijedan provajder.</b>\n"
 "Dodajte provajder u Podešavanjima ili u configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Датотека бележнице:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametri</b>"
 
@@ -197,6 +194,43 @@ msgstr "Тестирање"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Непознат тип функције:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Дубоко размишљање</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 питање</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Доступна је нова верзија додатка %1 (%2). Молимо ажурирајте!"
 
@@ -214,6 +248,43 @@ msgstr "AI речник"
 
 msgid "AI Language: "
 msgstr "AI jezik: "
+
+msgid "AI Note Name"
+msgstr "Назив AI белешке"
+
+msgid "AI Notes"
+msgstr "AI белешке"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI белешке (дневник AI разговора)"
+
+msgid "AI Notes Folder"
+msgstr "Фасцикла AI бележака"
+
+msgid "AI Notes Folder: %1"
+msgstr "Фасцикла AI бележака: %1"
+
+msgid "AI Notes Settings"
+msgstr "Подешавања AI бележака"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Путања фасцикле AI бележака:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI белешке су ваш дневник разговора: у њих се додају одговори AI-а и брзе белешке. Можете направити више AI бележака да организујете своје дневнике."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Путања AI бележака није директоријум: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Чување AI бележака није успело. Наставља се..."
+
+msgid "AI Notes: %1"
+msgstr "AI белешке: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI odgovara"
+
+msgid "AI note name cannot be empty."
+msgstr "Назив AI белешке не може бити празан."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Назив AI белешке не може садржати '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Назив AI белешке не може садржати сепараторе путање."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Назив AI белешке не може се завршити размаком или тачком."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Назив AI белешке садржи знакове које датотечни систем не подржава."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Име AI белешке је резервисано од стране фајл система."
+
+msgid "AI note name must be text."
+msgstr "Име AI белешке мора бити текст."
+
+msgid "AI note path is not a file: %1"
+msgstr "Путања AI белешке није датотека: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Путања AI белешке није доступна."
 
 msgid "API Key"
 msgstr "API кључ"
@@ -295,8 +393,8 @@ msgstr ""
 "Додајте провајдере из главног менија:\n"
 "%1 -> AI асистент -> Подешавања -> API провајдера"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Анализа ваших истакнутих делова, бележака и садржаја бележнице из књиге."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Анализа ваших истакнутих делова, бележака и садржаја AI бележака из књиге."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Приложи претходни текст"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Аутоматски резиме при отварању дуго нечитаних књига"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Automatski sačuvaj razgovore u notebook"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Аутоматско чување разговора у AI белешке"
 
 msgid "Base URL"
 msgstr "Основна URL адреса"
@@ -415,8 +513,8 @@ msgstr "Провера ажурирања..."
 msgid "Choose Definition Sections"
 msgstr "Izaberite odeljke definicije"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Изаберите у коју бележницу се чувају ваше белешке."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Изаберите AI белешку у коју се чувају ваше белешке."
 
 msgid "Clear"
 msgstr "Očisti"
@@ -436,8 +534,8 @@ msgstr "Конфигурација није пронађена. Молимо в�
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Konfiguriši jezik odgovora AI LLM-a. Podrazumevano koristi jezik KOReader interfejsa."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Подешена фасцикла за бележнице није доступна: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Подешена фасцикла AI бележака није доступна: %1"
 
 msgid "Connection test successful."
 msgstr "Тест повезивања је успео."
@@ -461,8 +559,8 @@ msgstr "Контекстуалне белешке / Размишљања"
 msgid "Contradictions / Open Questions"
 msgstr "Контрадикције / Отворена питања"
 
-msgid "Conversation is saved to notebook"
-msgstr "Разговор је сачуван у бележницу"
+msgid "Conversation is saved to AI Notes"
+msgstr "Разговор је сачуван у AI белешке"
 
 msgid "Copy"
 msgstr "Копирај"
@@ -478,42 +576,42 @@ msgstr "Главни аргументи"
 msgid "Core Idea"
 msgstr "Главна идеја"
 
-msgid "Could not close notebook file."
-msgstr "Не могу да затворим датотеку бележнице."
+msgid "Could not close AI note file."
+msgstr "Није могуће затворити датотеку AI белешке."
 
-msgid "Could not create notebook."
-msgstr "Не могу да креирам бележницу."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Није могуће креирати фасциклу AI бележака: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Не могу да креирам бележницу: %1"
+msgid "Could not create AI note."
+msgstr "Није могуће креирати AI белешку."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Не могу да креирам фасциклу за бележнице: %1"
+msgid "Could not create AI note: %1"
+msgstr "Није могуће креирати AI белешку: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Не могу да излистам фасциклу за бележнице: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Није могуће приказати садржај фасцикле AI бележака: %1"
 
-msgid "Could not open notebook file."
-msgstr "Не могу да отворим датотеку бележнице."
+msgid "Could not open AI note file."
+msgstr "Није могуће отворити датотеку AI белешке."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Не могу да сачувам у изабрану бележницу.\n"
+"Није могуће сачувати у изабрану AI белешку.\n"
 "Сачувано у: %1"
 
-msgid "Could not select notebook."
-msgstr "Не могу да изаберем бележницу."
+msgid "Could not select AI note."
+msgstr "Није могуће изабрати AI белешку."
 
-msgid "Could not write notebook file."
-msgstr "Не могу да запишем датотеку бележнице."
+msgid "Could not write AI note file."
+msgstr "Није могуће уписати у датотеку AI белешке."
 
 msgid "Create"
 msgstr "Креирај"
 
-msgid "Create a notebook."
-msgstr "Креирај бележницу."
+msgid "Create an AI note."
+msgstr "Креирај AI белешку."
 
 msgid "Cultural Significance"
 msgstr "Културни значај"
@@ -530,9 +628,6 @@ msgstr "Прилагођени промпт"
 
 msgid "Custom Prompts"
 msgstr "Prilagođeni promptovi"
-
-msgid "Deeply Thought"
-msgstr "Duboko razmišljanje"
 
 msgid "Delete"
 msgstr "Obriši"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Интегрисани сажетак"
 
-msgid "Invalid notebook entry."
-msgstr "Неисправан унос бележнице."
+msgid "Invalid AI note entry."
+msgstr "Неважећи унос AI белешке."
 
-msgid "Invalid notebook filename."
-msgstr "Неисправно име датотеке бележнице."
+msgid "Invalid AI note filename."
+msgstr "Неважеће име датотеке AI белешке."
 
 msgid "Justify"
 msgstr "Обострано поравнање"
@@ -765,9 +860,6 @@ msgstr "Ostavite prazno da se koristi: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Ostavite ova polja prazna da se koristi jezik interfejsa: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Учитавање за <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Локације"
@@ -805,26 +897,32 @@ msgstr "Модели: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modeli: %1 (poklopljeni)"
 
-msgid "Multiple Notebooks"
-msgstr "Više beležnica"
+msgid "Multiple AI Notes"
+msgstr "Више AI бележака"
 
 msgid "Narrative element in focus:"
 msgstr "Наративни елемент у фокусу:"
 
-msgid "New notebook"
-msgstr "Нова бележница"
+msgid "New AI Note"
+msgstr "Нова AI белешка"
 
-msgid "New notebook..."
-msgstr "Нова бележница..."
+msgid "New AI Note..."
+msgstr "Нова AI белешка..."
 
 msgid "No"
 msgstr "Не"
 
+msgid "No AI Notes folder is set."
+msgstr "Није подешена фасцикла за AI белешке."
+
+msgid "No AI notes yet"
+msgstr "Још нема AI бележака"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Није конфигурисан ниједан активни провајдер. Додајте га у Подешавањима."
 
-msgid "No base folder is available for notebooks."
-msgstr "Нема доступне основне фасцикле за бележнице."
+msgid "No base folder is available for AI Notes."
+msgstr "Није доступна основна фасцикла за AI белешке."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Ниједна књига није отворена. Дуго притисните књигу у управљачу датотекама и изаберите Информације о књизи (AI)."
@@ -838,14 +936,8 @@ msgstr "Нема доступних модела."
 msgid "No models matching \"%1\"."
 msgstr "Нема модела који одговарају \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Није постављена фасцикла за бележнице."
-
-msgid "No notebooks yet"
-msgstr "Још нема бележница"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Нема доступне путање за стару бележницу."
+msgid "No path is available for the default AI note."
+msgstr "Није доступна путања за подразумевану AI белешку."
 
 msgid "No response received."
 msgstr "Nije primljen odgovor."
@@ -864,70 +956,6 @@ msgstr "Ништа"
 
 msgid "Note added successfully"
 msgstr "Белешка је успешно додата"
-
-msgid "Notebook"
-msgstr "Бележница"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Бележница (дневник AI разговора)"
-
-msgid "Notebook Settings"
-msgstr "Подешавања бележнице"
-
-msgid "Notebook name"
-msgstr "Назив бележнице"
-
-msgid "Notebook name cannot be empty."
-msgstr "Назив бележнице не може бити празан."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Назив бележнице не може садржати '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Назив бележнице не може садржати сепараторе путање."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Назив бележнице не може да се завршава размаком или тачком."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Назив бележнице садржи знакове које датотечни систем не подржава."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Назив бележнице је резервисан од стране датотечног система."
-
-msgid "Notebook name must be text."
-msgstr "Назив бележнице мора бити текст."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Путања бележнице није датотека: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Путања бележнице није доступна."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Чување у NoteBook није успело. Настављам..."
-
-msgid "Notebook: %1"
-msgstr "Бележница: %1"
-
-msgid "Notebooks"
-msgstr "Бележнице"
-
-msgid "Notebooks Folder"
-msgstr "Фасцикла бележница"
-
-msgid "Notebooks Folder: %1"
-msgstr "Фасцикла бележница: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Путања фасцикле бележница:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Путања до бележница није директоријум: %1"
 
 msgid "OK"
 msgstr "У реду"
@@ -1051,9 +1079,6 @@ msgstr "Очисти"
 
 msgid "Purge Settings"
 msgstr "Очисти подешавања"
-
-msgid "Querying AI ..."
-msgstr "Postavljam upit AI-ju ..."
 
 msgid "Quick Note"
 msgstr "Брза белешка"
@@ -1185,11 +1210,11 @@ msgstr "Zapis alata za pretragu mora biti tabela."
 msgid "Searching with %1 ... [%2]"
 msgstr "Претражујем помоћу %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Изаберите AI белешку"
+
 msgid "Select a model:"
 msgstr "Изабери модел:"
-
-msgid "Select notebook"
-msgstr "Изабери бележницу"
 
 msgid "Selection copied to clipboard."
 msgstr "Избор је копиран у клипборд."
@@ -1268,8 +1293,8 @@ msgstr "Укратко"
 msgid "Take Quick Notes"
 msgstr "Zabeleži brze beleške"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Направите кратке белешке које ће бити сачуване у вашој бележници."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Правите брзе белешке које ће бити сачуване у вашим AI белешкама."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1290,9 +1315,6 @@ msgstr "Текст је копиран у клипборд"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Руковалац за %1 није пронађен. Уверите се да руковалац постоји у директоријуму api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Notebook je vaš dnevnik razgovora: AI odgovori i brze beleške se dodaju na njega. Možete kreirati više notebook-a da biste organizovali svoje dnevnike."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ово дугме креира брзу белешку са означеним текстом."

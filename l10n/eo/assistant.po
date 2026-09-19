@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - p. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\"-resumo por libro, strukturita en specifajn sekciojn kiel Roluloj, Lokoj, Temoj, Terminoj kaj Konceptoj, Kronologio, kaj Re-engaĝiĝo."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Demando\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Vi eble trovos ĉi tiujn temojn interesaj:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Ĉu aldoni ĉi tiun butonon al la Marka Menuo?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Dosiero de AI-notoj:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -171,15 +177,6 @@ msgstr ""
 "<b>Neniu provizanto estas agordita ankoraŭ.</b>\n"
 "Bonvolu aldoni provizanton en Agordoj aŭ configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Notlibra dosiero:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametroj</b>"
 
@@ -198,6 +195,43 @@ msgstr "<b>Testante konekton...</b>"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Nekonata speco de funkcio:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Profunde pripensita</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Demando</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Nova versio de la kromprogramo %1 (%2) estas havebla. Bonvolu ĝisdatigi!"
 
@@ -215,6 +249,43 @@ msgstr "AI Vortaro"
 
 msgid "AI Language: "
 msgstr "AI-Lingvo: "
+
+msgid "AI Note Name"
+msgstr "Nomo de AI-noto"
+
+msgid "AI Notes"
+msgstr "AI-notoj"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI-notoj (protokolo de AI-konversacio)"
+
+msgid "AI Notes Folder"
+msgstr "Dosierujo de AI-notoj"
+
+msgid "AI Notes Folder: %1"
+msgstr "Dosierujo de AI-notoj: %1"
+
+msgid "AI Notes Settings"
+msgstr "Agordoj de AI-notoj"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Vojo al dosierujo de AI-notoj:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI-notoj estas via konversacia protokolo: AI-respondoj kaj rapidaj notoj estas aldonataj al ĝi. Vi povas krei plurajn AI-notojn por organizi viajn protokolojn."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Vojo de AI-notoj ne estas dosierujo: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Konservo de AI-notoj malsukcesis. Daŭrigante..."
+
+msgid "AI Notes: %1"
+msgstr "AI-notoj: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -243,6 +314,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI respondas"
+
+msgid "AI note name cannot be empty."
+msgstr "Nomo de AI-noto ne povas esti malplena."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Nomo de AI-noto ne povas enhavi '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Nomo de AI-noto ne povas enhavi vojdisigilojn."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Nomo de AI-noto ne povas finiĝi per spaco aŭ punkto."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Nomo de AI-noto enhavas signojn, kiujn la dosiersistemo ne subtenas."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "La nomo de AI-noto estas rezervita de la dosiersistemo."
+
+msgid "AI note name must be text."
+msgstr "La nomo de AI-noto devas esti teksto."
+
+msgid "AI note path is not a file: %1"
+msgstr "La vojo de AI-noto ne estas dosiero: %1"
+
+msgid "AI note path is unavailable."
+msgstr "La vojo de AI-noto ne estas disponebla."
 
 msgid "API Key"
 msgstr "API-ŝlosilo"
@@ -296,8 +394,8 @@ msgstr ""
 "Aldonu provizantojn el la ĉefa menuo:\n"
 "%1 -> AI Asistanto -> Agordoj -> API de Provizanto"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Analizo de viaj elstarigoj, notoj kaj notlibra enhavo el la libro."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Analizo de viaj emfazoj, notoj, kaj enhavo de AI-notoj el la libro."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -348,8 +446,8 @@ msgstr "Alkroĉi antaŭan tekston"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Aŭtomata rekapitulo ĉe malfermo de longe nelegitaj libroj"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Aŭtomata konservo de konversacioj al kajero"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Aŭtomate konservi konversaciojn al AI-notoj"
 
 msgid "Base URL"
 msgstr "Baza URL"
@@ -416,8 +514,8 @@ msgstr "Kontrolante ĝisdatigojn..."
 msgid "Choose Definition Sections"
 msgstr "Elekti difinsekciojn"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Elektu, en kiun kajeron viaj notoj estas konservataj."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Elektu, al kiu AI-noto viaj notoj estas konservataj."
 
 msgid "Clear"
 msgstr "Malplenigi"
@@ -437,8 +535,8 @@ msgstr "Agordo ne trovita. Bonvolu agordi configuration.lua unue."
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Agordi la respondlingvon de la AI-LLM. Defaŭlte ĝi uzas la interfaclingvon de KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "La agordita dosierujo de kajeroj ne estas alirebla: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "La agordita dosierujo de AI-notoj ne estas alirebla: %1"
 
 msgid "Connection test successful."
 msgstr "Konekta testo sukcesis."
@@ -462,8 +560,8 @@ msgstr "Kuntekstaj notoj / Pripensoj"
 msgid "Contradictions / Open Questions"
 msgstr "Kontraŭdiroj / Malfermaj demandoj"
 
-msgid "Conversation is saved to notebook"
-msgstr "Konversacio estas konservita en kajero"
+msgid "Conversation is saved to AI Notes"
+msgstr "Konversacio estas konservita en AI-notoj"
 
 msgid "Copy"
 msgstr "Kopii"
@@ -479,42 +577,42 @@ msgstr "Kernaj Argumentoj"
 msgid "Core Idea"
 msgstr "Kerna Ideo"
 
-msgid "Could not close notebook file."
-msgstr "Ne eblis fermi la kajerdosieron."
+msgid "Could not close AI note file."
+msgstr "Ne eblis fermi la dosieron de AI-noto."
 
-msgid "Could not create notebook."
-msgstr "Ne eblis krei kajeron."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Ne eblis krei dosierujon de AI-notoj: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Ne eblis krei kajeron: %1"
+msgid "Could not create AI note."
+msgstr "Ne eblis krei AI-noton."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Ne eblis krei dosierujon de kajeroj: %1"
+msgid "Could not create AI note: %1"
+msgstr "Ne eblis krei AI-noton: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Ne eblis listigi la dosierujon de kajeroj: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Ne eblis listigi dosierujon de AI-notoj: %1"
 
-msgid "Could not open notebook file."
-msgstr "Ne eblis malfermi la kajerdosieron."
+msgid "Could not open AI note file."
+msgstr "Ne eblis malfermi dosieron de AI-noto."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Ne eblis konservi al la elektita kajero.\n"
+"Ne eblis konservi en la elektitan AI-noton.\n"
 "Konservita en: %1"
 
-msgid "Could not select notebook."
-msgstr "Ne eblis elekti kajeron."
+msgid "Could not select AI note."
+msgstr "Ne eblis elekti AI-noton."
 
-msgid "Could not write notebook file."
-msgstr "Ne eblis skribi la kajerdosieron."
+msgid "Could not write AI note file."
+msgstr "Ne eblis skribi dosieron de AI-noto."
 
 msgid "Create"
 msgstr "Krei"
 
-msgid "Create a notebook."
-msgstr "Kreu kajeron."
+msgid "Create an AI note."
+msgstr "Krei AI-noton."
 
 msgid "Cultural Significance"
 msgstr "Kultura Signifo"
@@ -531,9 +629,6 @@ msgstr "Propra Prompto"
 
 msgid "Custom Prompts"
 msgstr "Propraj Promptoj"
-
-msgid "Deeply Thought"
-msgstr "Profunda pensado"
 
 msgid "Delete"
 msgstr "Forigi"
@@ -730,11 +825,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Integrita resumo"
 
-msgid "Invalid notebook entry."
-msgstr "Nevalida kajera ero."
+msgid "Invalid AI note entry."
+msgstr "Nevalida enskribo de AI-noto."
 
-msgid "Invalid notebook filename."
-msgstr "Nevalida dosiernomo de kajero."
+msgid "Invalid AI note filename."
+msgstr "Nevalida dosiernomo de AI-noto."
 
 msgid "Justify"
 msgstr "Ĝisrandigi"
@@ -765,9 +860,6 @@ msgstr "Lasu malplena por uzi: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Lasu ĉi tiujn kampojn malplenaj por uzi la UI-lingvon: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Ŝargado por <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Lokoj"
@@ -805,26 +897,32 @@ msgstr "Modeloj: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modeloj: %1 (kompatibilaj)"
 
-msgid "Multiple Notebooks"
-msgstr "Pluraj Kajeroj"
+msgid "Multiple AI Notes"
+msgstr "Pluraj AI-notoj"
 
 msgid "Narrative element in focus:"
 msgstr "Rakonta elemento en fokuso:"
 
-msgid "New notebook"
-msgstr "Nova kajero"
+msgid "New AI Note"
+msgstr "Nova AI-noto"
 
-msgid "New notebook..."
-msgstr "Nova kajero..."
+msgid "New AI Note..."
+msgstr "Nova AI-noto..."
 
 msgid "No"
 msgstr "Ne"
 
+msgid "No AI Notes folder is set."
+msgstr "Neniu dosierujo por AI-notoj estas agordita."
+
+msgid "No AI notes yet"
+msgstr "Ankoraŭ neniuj AI-notoj"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Neniu aktiva provizanto estas agordita. Bonvolu aldoni unu en Agordoj."
 
-msgid "No base folder is available for notebooks."
-msgstr "Ne disponeblas baza dosierujo por kajeroj."
+msgid "No base folder is available for AI Notes."
+msgstr "Neniu baza dosierujo disponeblas por AI-notoj."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Neniu libro estas malfermita. Longe premu libron en la dosieradministrilo kaj elektu Informoj pri libro (AI)."
@@ -838,14 +936,8 @@ msgstr "Neniuj modeloj disponeblas."
 msgid "No models matching \"%1\"."
 msgstr "Neniuj modeloj kongruas kun \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Neniu dosierujo por notlibroj estas agordita."
-
-msgid "No notebooks yet"
-msgstr "Ankoraŭ ne estas kajeroj."
-
-msgid "No path is available for the legacy notebook."
-msgstr "Neniu vojo disponeblas por la malnova kajero."
+msgid "No path is available for the default AI note."
+msgstr "Neniu vojo disponeblas por la defaŭlta AI-noto."
 
 msgid "No response received."
 msgstr "Neniu respondo ricevita."
@@ -864,70 +956,6 @@ msgstr "Neniu"
 
 msgid "Note added successfully"
 msgstr "Noto sukcese aldonita."
-
-msgid "Notebook"
-msgstr "Kajero"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Kajero (AI-konversacia protokolo)"
-
-msgid "Notebook Settings"
-msgstr "Kajeraj agordoj"
-
-msgid "Notebook name"
-msgstr "Nomo de kajero"
-
-msgid "Notebook name cannot be empty."
-msgstr "La nomo de kajero ne povas esti malplena."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "La nomo de kajero ne povas enhavi '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "La nomo de kajero ne povas enhavi vojoseparilojn."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "La nomo de kajero ne povas finiĝi per spaco aŭ punkto."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "La nomo de kajero enhavas signojn, kiujn la dosiersistemo ne subtenas."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "La nomo de kajero estas rezervita de la dosiersistemo."
-
-msgid "Notebook name must be text."
-msgstr "La nomo de kajero devas esti teksto."
-
-msgid "Notebook path is not a file: %1"
-msgstr "La vojo de kajero ne estas dosiero: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "La vojo de kajero ne disponeblas."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Malsukcesis konservi al Notlibro. Daŭrigante..."
-
-msgid "Notebook: %1"
-msgstr "Kajero: %1"
-
-msgid "Notebooks"
-msgstr "Kajeroj"
-
-msgid "Notebooks Folder"
-msgstr "Dosierujo de notlibroj"
-
-msgid "Notebooks Folder: %1"
-msgstr "Dosierujo de kajeroj: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Vojo al dosierujo de kajeroj:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "La vojo al kajeroj ne estas dosierujo: %1"
 
 msgid "OK"
 msgstr "Bone"
@@ -1051,9 +1079,6 @@ msgstr "Purigi"
 
 msgid "Purge Settings"
 msgstr "Forigi Agordojn"
-
-msgid "Querying AI ..."
-msgstr "Demandante al AI ..."
 
 msgid "Quick Note"
 msgstr "Rapida Noto"
@@ -1183,11 +1208,11 @@ msgstr "Serĉila rekordo devas esti tabelo."
 msgid "Searching with %1 ... [%2]"
 msgstr "Serĉante per %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Elekti AI-noton"
+
 msgid "Select a model:"
 msgstr "Elektu modelon:"
-
-msgid "Select notebook"
-msgstr "Elekti kajeron"
 
 msgid "Selection copied to clipboard."
 msgstr "Elektitaĵo kopiita al tondujo."
@@ -1266,8 +1291,8 @@ msgstr "Resume"
 msgid "Take Quick Notes"
 msgstr "Fari rapidajn notojn"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Prenu rapidajn notojn, kiuj estos konservitaj en vian notlibron."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Faru rapidajn notojn, kiuj estos konservitaj en viaj AI-notoj."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1288,9 +1313,6 @@ msgstr "Teksto kopiita al la tondujo"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "La traktilo por %1 ne troviĝis. Bonvolu certigi, ke la traktilo ekzistas en la dosierujo api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "La kajero estas via konversacia protokolo: AI-respondoj kaj rapidaj notoj estas aldonataj al ĝi. Vi povas krei plurajn kajerojn por organizi viajn protokolojn."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ĉi tiu butono kreas rapidan noton kun la markita teksto."

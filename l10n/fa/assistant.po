@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 03:19+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: فارسی (AI translation)\n"
@@ -38,9 +38,6 @@ msgstr " - ص. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "خلاصه «X-Ray» برای یک کتاب، ساختاریافته در بخشهای مشخص مانند شخصیتها، مکانها، مضامین، اصطلاحات و مفاهیم، خط زمانی، و بازغوطهوری."
 
-msgid "### %1 Question\n"
-msgstr "### پرسش %1\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### ممکن است این موضوعات برایتان جالب باشند:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "این دکمه به منوی هایلایت اضافه شود؟"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>پروندهٔ یادداشت‌های هوش مصنوعی:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>هنوز هیچ ارائهدهندهای تنظیم نشده است.</b>\n"
 "لطفاً یک ارائهدهنده را در تنظیمات یا configuration.lua اضافه کنید."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>فایل دفترچه یادداشت:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>پارامترها</b>"
 
@@ -197,6 +194,43 @@ msgstr "<b>در حال آزمایش اتصال...</b>"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>نوع ویژگی ناشناخته:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 تفکر عمیق</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 پرسش</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "نسخه جدیدی از افزونه %1 (%2) در دسترس است. لطفاً به‌روزرسانی کنید!"
 
@@ -214,6 +248,43 @@ msgstr "دیکشنری هوش مصنوعی"
 
 msgid "AI Language: "
 msgstr "زبان هوش مصنوعی: "
+
+msgid "AI Note Name"
+msgstr "نام یادداشت هوش مصنوعی"
+
+msgid "AI Notes"
+msgstr "یادداشت‌های هوش مصنوعی"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "یادداشت‌های هوش مصنوعی (گزارش گفتگوی هوش مصنوعی)"
+
+msgid "AI Notes Folder"
+msgstr "پوشهٔ یادداشت‌های هوش مصنوعی"
+
+msgid "AI Notes Folder: %1"
+msgstr "پوشهٔ یادداشت‌های هوش مصنوعی: %1"
+
+msgid "AI Notes Settings"
+msgstr "تنظیمات یادداشت‌های هوش مصنوعی"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"مسیر پوشهٔ یادداشت‌های هوش مصنوعی:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "یادداشت‌های هوش مصنوعی گزارش گفتگوی شماست: پاسخ‌های هوش مصنوعی و یادداشت‌های سریع به آن افزوده می‌شوند. می‌توانید چندین یادداشت هوش مصنوعی بسازید تا گزارش‌های خود را سازمان‌دهی کنید."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "مسیر یادداشت‌های هوش مصنوعی یک پوشه نیست: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "ذخیرهٔ یادداشت‌های هوش مصنوعی ناموفق بود. ادامه می‌دهیم..."
+
+msgid "AI Notes: %1"
+msgstr "یادداشت‌های هوش مصنوعی: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "ایکسری هوش مصنوعی"
 
 msgid "AI is responding"
 msgstr "هوش مصنوعی در حال پاسخگویی است"
+
+msgid "AI note name cannot be empty."
+msgstr "نام یادداشت هوش مصنوعی نمی‌تواند خالی باشد."
+
+msgid "AI note name cannot contain '..'."
+msgstr "نام یادداشت هوش مصنوعی نمی‌تواند شامل «..» باشد."
+
+msgid "AI note name cannot contain path separators."
+msgstr "نام یادداشت هوش مصنوعی نمی‌تواند شامل جداکننده‌های مسیر باشد."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "نام یادداشت هوش مصنوعی نمی‌تواند با فاصله یا نقطه پایان یابد."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "نام یادداشت هوش مصنوعی شامل نویسه‌هایی است که سیستم فایل پشتیبانی نمی‌کند."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "نام یادداشت هوش مصنوعی توسط سیستم فایل رزرو شده است."
+
+msgid "AI note name must be text."
+msgstr "نام یادداشت هوش مصنوعی باید متن باشد."
+
+msgid "AI note path is not a file: %1"
+msgstr "مسیر یادداشت هوش مصنوعی یک فایل نیست: %1"
+
+msgid "AI note path is unavailable."
+msgstr "مسیر یادداشت هوش مصنوعی در دسترس نیست."
 
 msgid "API Key"
 msgstr "کلید API"
@@ -295,8 +393,8 @@ msgstr ""
 "ارائهدهندگان را از منوی اصلی اضافه کنید:\n"
 "%1 -> دستیار هوش مصنوعی -> تنظیمات -> API ارائهدهنده"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "تحلیل هایلایتها، یادداشتها و محتوای دفترچه یادداشت شما از کتاب."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "تحلیل هایلایت‌ها، یادداشت‌ها و محتوای یادداشت‌های هوش مصنوعی شما از کتاب."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "ضمیمه کردن متن قبلی"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "ریکپ خودکار هنگام باز کردن کتابهای مدتها خواندهنشده"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "ذخیرهٔ خودکار گفتگوها در دفترچه یادداشت"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "ذخیره خودکار گفتگوها در یادداشت‌های هوش مصنوعی"
 
 msgid "Base URL"
 msgstr "URL پایه"
@@ -415,8 +513,8 @@ msgstr "در حال بررسی به‌روزرسانی‌ها..."
 msgid "Choose Definition Sections"
 msgstr "انتخاب بخش‌های تعریف"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "انتخاب کنید یادداشت‌هایتان در کدام نوتپد ذخیره شوند."
+msgid "Choose which AI note your notes are saved to."
+msgstr "انتخاب کنید یادداشت‌های شما در کدام یادداشت هوش مصنوعی ذخیره می‌شوند."
 
 msgid "Clear"
 msgstr "پاک کردن"
@@ -436,8 +534,8 @@ msgstr "پیکربندی یافت نشد. لطفاً ابتدا configuration.lu
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "زبان پاسخ LLM هوش مصنوعی را پیکربندی کنید. پیش‌فرض زبان رابط کاربری KOReader است."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "پوشهٔ نوتپدهای پیکربندیشده در دسترس نیست: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "پوشه یادداشت‌های هوش مصنوعی پیکربندی‌شده قابل دسترسی نیست: %1"
 
 msgid "Connection test successful."
 msgstr "آزمایش اتصال موفق بود."
@@ -461,8 +559,8 @@ msgstr "یادداشت‌های زمینه‌ای / تأملات"
 msgid "Contradictions / Open Questions"
 msgstr "تناقض‌ها / پرسش‌های بی‌پاسخ"
 
-msgid "Conversation is saved to notebook"
-msgstr "گفتگو در نوتپد ذخیره شد."
+msgid "Conversation is saved to AI Notes"
+msgstr "گفتگو در یادداشت‌های هوش مصنوعی ذخیره شد."
 
 msgid "Copy"
 msgstr "کپی"
@@ -478,42 +576,42 @@ msgstr "استدلال‌های اصلی"
 msgid "Core Idea"
 msgstr "ایده اصلی"
 
-msgid "Could not close notebook file."
-msgstr "بستن فایل نوتپد ممکن نشد."
+msgid "Could not close AI note file."
+msgstr "بستن فایل یادداشت هوش مصنوعی ممکن نشد."
 
-msgid "Could not create notebook."
-msgstr "ایجاد نوتپد ممکن نشد."
+msgid "Could not create AI Notes folder: %1"
+msgstr "ایجاد پوشه یادداشت‌های هوش مصنوعی ممکن نشد: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "ایجاد نوتپد ممکن نشد: %1"
+msgid "Could not create AI note."
+msgstr "ایجاد یادداشت هوش مصنوعی ممکن نشد."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "ایجاد پوشهٔ نوتپدها ممکن نشد: %1"
+msgid "Could not create AI note: %1"
+msgstr "ایجاد یادداشت هوش مصنوعی ممکن نشد: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "فهرست‌کردن پوشهٔ نوتپدها ممکن نشد: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "فهرست کردن پوشه یادداشت‌های هوش مصنوعی ممکن نشد: %1"
 
-msgid "Could not open notebook file."
-msgstr "باز کردن فایل نوتپد ممکن نشد."
+msgid "Could not open AI note file."
+msgstr "باز کردن فایل یادداشت هوش مصنوعی ممکن نشد."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"ذخیره در نوتپد انتخاب‌شده ممکن نشد.\n"
+"ذخیره در یادداشت هوش مصنوعی انتخاب‌شده ممکن نشد.\n"
 "ذخیره‌شده در: %1"
 
-msgid "Could not select notebook."
-msgstr "انتخاب نوتپد ممکن نشد."
+msgid "Could not select AI note."
+msgstr "انتخاب یادداشت هوش مصنوعی ممکن نشد."
 
-msgid "Could not write notebook file."
-msgstr "نوشتن فایل نوتپد ممکن نشد."
+msgid "Could not write AI note file."
+msgstr "نوشتن فایل یادداشت هوش مصنوعی ممکن نشد."
 
 msgid "Create"
 msgstr "ایجاد"
 
-msgid "Create a notebook."
-msgstr "ایجاد یک نوتپد."
+msgid "Create an AI note."
+msgstr "یک یادداشت هوش مصنوعی ایجاد کنید."
 
 msgid "Cultural Significance"
 msgstr "اهمیت فرهنگی"
@@ -530,9 +628,6 @@ msgstr "پرامپت سفارشی"
 
 msgid "Custom Prompts"
 msgstr "پرامپتهای سفارشی"
-
-msgid "Deeply Thought"
-msgstr "تفکر عمیق"
 
 msgid "Delete"
 msgstr "حذف"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "خلاصه تلفیقی"
 
-msgid "Invalid notebook entry."
-msgstr "مدخل نوتپد نامعتبر است."
+msgid "Invalid AI note entry."
+msgstr "ورودی یادداشت هوش مصنوعی نامعتبر است."
 
-msgid "Invalid notebook filename."
-msgstr "نام فایل نوتپد نامعتبر است."
+msgid "Invalid AI note filename."
+msgstr "نام فایل یادداشت هوش مصنوعی نامعتبر است."
 
 msgid "Justify"
 msgstr "همتراز"
@@ -764,9 +859,6 @@ msgstr "برای استفاده از %1 خالی بگذارید"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "برای استفاده از زبان رابط کاربری (%1) این فیلدها را خالی بگذارید"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "در حال بارگذاری برای <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "مکان‌ها"
@@ -804,26 +896,32 @@ msgstr "مدل‌ها: %1"
 msgid "Models: %1 (matched)"
 msgstr "مدل‌ها: %1 (مطابق)"
 
-msgid "Multiple Notebooks"
-msgstr "چندین دفترچه یادداشت"
+msgid "Multiple AI Notes"
+msgstr "چندین یادداشت هوش مصنوعی"
 
 msgid "Narrative element in focus:"
 msgstr "عنصر روایی در کانون توجه:"
 
-msgid "New notebook"
-msgstr "نوتپد جدید"
+msgid "New AI Note"
+msgstr "یادداشت هوش مصنوعی جدید"
 
-msgid "New notebook..."
-msgstr "دفترچه یادداشت جدید..."
+msgid "New AI Note..."
+msgstr "یادداشت هوش مصنوعی جدید..."
 
 msgid "No"
 msgstr "خیر"
 
+msgid "No AI Notes folder is set."
+msgstr "هیچ پوشه‌ای برای یادداشت‌های هوش مصنوعی تنظیم نشده است."
+
+msgid "No AI notes yet"
+msgstr "هنوز هیچ یادداشت هوش مصنوعی ثبت نشده است"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "هیچ ارائه‌دهنده فعالی پیکربندی نشده است. لطفاً یکی را در تنظیمات اضافه کنید."
 
-msgid "No base folder is available for notebooks."
-msgstr "هیچ پوشهٔ پایهای برای نوتپدها در دسترس نیست."
+msgid "No base folder is available for AI Notes."
+msgstr "هیچ پوشهٔ پایه‌ای برای یادداشت‌های هوش مصنوعی در دسترس نیست."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "هیچ کتابی باز نیست. در مدیر فایل، روی یک کتاب فشار طولانی دهید و «اطلاعات کتاب (AI)» را انتخاب کنید."
@@ -837,14 +935,8 @@ msgstr "هیچ مدلی در دسترس نیست."
 msgid "No models matching \"%1\"."
 msgstr "هیچ مدلی مطابق «%1» یافت نشد."
 
-msgid "No notebooks folder is set."
-msgstr "هیچ پوشهای برای دفترچههای یادداشت تنظیم نشده است."
-
-msgid "No notebooks yet"
-msgstr "هنوز نوتپدی وجود ندارد"
-
-msgid "No path is available for the legacy notebook."
-msgstr "هیچ مسیری برای نوتپد قدیمی در دسترس نیست."
+msgid "No path is available for the default AI note."
+msgstr "هیچ مسیری برای یادداشت هوش مصنوعی پیش‌فرض در دسترس نیست."
 
 msgid "No response received."
 msgstr "پاسخی دریافت نشد."
@@ -863,70 +955,6 @@ msgstr "هیچ"
 
 msgid "Note added successfully"
 msgstr "یادداشت با موفقیت اضافه شد"
-
-msgid "Notebook"
-msgstr "دفترچه یادداشت"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "نوتپد (گزارش گفتگوی هوش مصنوعی)"
-
-msgid "Notebook Settings"
-msgstr "تنظیمات نوتپد"
-
-msgid "Notebook name"
-msgstr "نام نوتپد"
-
-msgid "Notebook name cannot be empty."
-msgstr "نام نوتپد نمی‌تواند خالی باشد."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "نام نوتپد نمی‌تواند شامل «..» باشد."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "نام نوتپد نمی‌تواند شامل جداکننده‌های مسیر باشد."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "نام نوتپد نمی‌تواند با فاصله یا نقطه پایان یابد."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "نام نوتپد شامل نویسه‌هایی است که توسط سیستم فایل پشتیبانی نمی‌شوند."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "نام نوتپد توسط سیستم فایل رزرو شده است."
-
-msgid "Notebook name must be text."
-msgstr "نام نوتپد باید متن باشد."
-
-msgid "Notebook path is not a file: %1"
-msgstr "مسیر نوتپد یک فایل نیست: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "مسیر نوتپد در دسترس نیست."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "ذخیره در دفترچه یادداشت ناموفق بود. در حال ادامه..."
-
-msgid "Notebook: %1"
-msgstr "نوتپد: %1"
-
-msgid "Notebooks"
-msgstr "نوتپدها"
-
-msgid "Notebooks Folder"
-msgstr "پوشهٔ دفترچهها"
-
-msgid "Notebooks Folder: %1"
-msgstr "پوشهٔ دفترچهها: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"مسیر پوشهٔ دفترچهها:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "مسیر نوتپدها یک پوشه نیست: %1"
 
 msgid "OK"
 msgstr "تأیید"
@@ -1050,9 +1078,6 @@ msgstr "پاکسازی"
 
 msgid "Purge Settings"
 msgstr "پاکسازی تنظیمات"
-
-msgid "Querying AI ..."
-msgstr "در حال پرسوجو از هوش مصنوعی ..."
 
 msgid "Quick Note"
 msgstr "یادداشت سریع"
@@ -1184,11 +1209,11 @@ msgstr "رکورد ابزار جستجو باید یک جدول باشد."
 msgid "Searching with %1 ... [%2]"
 msgstr "در حال جستجو با %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "انتخاب یادداشت هوش مصنوعی"
+
 msgid "Select a model:"
 msgstr "یک مدل انتخاب کنید:"
-
-msgid "Select notebook"
-msgstr "انتخاب نوتپد"
 
 msgid "Selection copied to clipboard."
 msgstr "انتخاب در کلیپبورد کپی شد."
@@ -1267,8 +1292,8 @@ msgstr "خلاصه"
 msgid "Take Quick Notes"
 msgstr "یادداشت سریع"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "یادداشتهای سریع بگیرید که در دفترچه یادداشت شما ذخیره میشوند."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "یادداشت‌برداری سریع کنید تا در یادداشت‌های هوش مصنوعی شما ذخیره شود."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "متن در کلیپ‌بورد کپی شد."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "هندلر برای %1 یافت نشد. لطفاً مطمئن شوید هندلر در پوشه api_handlers وجود دارد."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "دفترچه یادداشت، گزارش گفتگوهای شماست: پاسخهای هوش مصنوعی و یادداشتهای سریع به آن اضافه میشوند. میتوانید چندین دفترچه برای سازماندهی گزارشهای خود ایجاد کنید."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "این دکمه یک یادداشت سریع با متن هایلایت‌شده ایجاد می‌کند."

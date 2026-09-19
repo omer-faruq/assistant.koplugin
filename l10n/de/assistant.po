@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - S. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\"-Zusammenfassung für ein Buch, strukturiert in bestimmte Abschnitte wie Charaktere, Orte, Themen, Begriffe & Konzepte, Zeitleiste und Wiedereinstieg."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Frage\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Diese Themen könnten Sie interessieren:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Diesen Button zum Markierungsmenü hinzufügen?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>KI-Notizen-Datei:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Noch kein Anbieter eingerichtet.</b>\n"
 "Bitte fügen Sie einen Anbieter in den Einstellungen oder in configuration.lua hinzu."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Notizbuchdatei:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parameter</b>"
 
@@ -197,6 +194,43 @@ msgstr "<b>Verbindung wird getestet...</b>"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Unbekannter Funktionstyp:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Tiefgründig gedacht</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Frage</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Eine neue Version des Plugins %1 (%2) ist verfügbar. Bitte aktualisieren!"
 
@@ -214,6 +248,43 @@ msgstr "KI-Wörterbuch"
 
 msgid "AI Language: "
 msgstr "KI-Sprache: "
+
+msgid "AI Note Name"
+msgstr "KI-Notizname"
+
+msgid "AI Notes"
+msgstr "KI-Notizen"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "KI-Notizen (KI-Gesprächsprotokoll)"
+
+msgid "AI Notes Folder"
+msgstr "KI-Notizen-Ordner"
+
+msgid "AI Notes Folder: %1"
+msgstr "KI-Notizen-Ordner: %1"
+
+msgid "AI Notes Settings"
+msgstr "KI-Notizen-Einstellungen"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Pfad des KI-Notizen-Ordners:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "KI-Notizen sind das Gesprächsprotokoll: KI-Antworten und Schnellnotizen werden daran angehängt. Es können mehrere KI-Notizen erstellt werden, um die Protokolle zu organisieren."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Der Pfad der KI-Notizen ist kein Verzeichnis: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Speichern der KI-Notizen fehlgeschlagen. Fortsetzen..."
+
+msgid "AI Notes: %1"
+msgstr "KI-Notizen: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "KI-X-Ray"
 
 msgid "AI is responding"
 msgstr "KI antwortet"
+
+msgid "AI note name cannot be empty."
+msgstr "Der KI-Notizname darf nicht leer sein."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Der KI-Notizname darf nicht '..' enthalten."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Der KI-Notizname darf keine Pfadtrennzeichen enthalten."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Der KI-Notizname darf nicht mit einem Leerzeichen oder Punkt enden."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Der KI-Notizname enthält Zeichen, die vom Dateisystem nicht unterstützt werden."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Der Name der KI-Notiz ist vom Dateisystem reserviert."
+
+msgid "AI note name must be text."
+msgstr "Der Name der KI-Notiz muss Text sein."
+
+msgid "AI note path is not a file: %1"
+msgstr "Der Pfad der KI-Notiz ist keine Datei: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Der Pfad der KI-Notiz ist nicht verfügbar."
 
 msgid "API Key"
 msgstr "API-Schlüssel"
@@ -295,8 +393,8 @@ msgstr ""
 "Fügen Sie Anbieter über das Hauptmenü hinzu:\n"
 "%1 -> KI-Assistent -> Einstellungen -> Anbieter-API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Analyse deiner Markierungen, Notizen und Notizbuchinhalte aus dem Buch."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Analyse Ihrer Markierungen, Notizen und KI-Notizen-Inhalte aus dem Buch."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Vorherigen Text anhängen"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automatische Zusammenfassung beim Öffnen lange ungelesener Bücher"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Konversationen automatisch im Notizbuch speichern"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Unterhaltungen automatisch in KI-Notizen speichern"
 
 msgid "Base URL"
 msgstr "Basis-URL"
@@ -415,8 +513,8 @@ msgstr "Suche nach Updates..."
 msgid "Choose Definition Sections"
 msgstr "Definitionsabschnitte auswählen"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Wählen Sie, in welchem Notizbuch Ihre Notizen gespeichert werden."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Wählen Sie, in welcher KI-Notiz Ihre Notizen gespeichert werden."
 
 msgid "Clear"
 msgstr "Leeren"
@@ -436,8 +534,8 @@ msgstr "Konfiguration nicht gefunden. Bitte richten Sie zuerst configuration.lua
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Legt die Antwortsprache des KI-LLM fest. Standardmäßig wird die Sprache der KOReader-Oberfläche verwendet."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Der konfigurierte Notizbuch-Ordner ist nicht zugänglich: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Der konfigurierte KI-Notizen-Ordner ist nicht zugänglich: %1"
 
 msgid "Connection test successful."
 msgstr "Verbindungstest erfolgreich."
@@ -461,8 +559,8 @@ msgstr "Kontextnotizen / Reflexionen"
 msgid "Contradictions / Open Questions"
 msgstr "Widersprüche / Offene Fragen"
 
-msgid "Conversation is saved to notebook"
-msgstr "Die Unterhaltung wird im Notizbuch gespeichert."
+msgid "Conversation is saved to AI Notes"
+msgstr "Unterhaltung wird in KI-Notizen gespeichert"
 
 msgid "Copy"
 msgstr "Kopieren"
@@ -478,42 +576,42 @@ msgstr "Kernargumente"
 msgid "Core Idea"
 msgstr "Kernidee"
 
-msgid "Could not close notebook file."
-msgstr "Die Notizbuchdatei konnte nicht geschlossen werden."
+msgid "Could not close AI note file."
+msgstr "KI-Notizdatei konnte nicht geschlossen werden."
 
-msgid "Could not create notebook."
-msgstr "Das Notizbuch konnte nicht erstellt werden."
+msgid "Could not create AI Notes folder: %1"
+msgstr "KI-Notizen-Ordner konnte nicht erstellt werden: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Das Notizbuch konnte nicht erstellt werden: %1"
+msgid "Could not create AI note."
+msgstr "KI-Notiz konnte nicht erstellt werden."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Der Notizbuch-Ordner konnte nicht erstellt werden: %1"
+msgid "Could not create AI note: %1"
+msgstr "KI-Notiz konnte nicht erstellt werden: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Der Notizbuch-Ordner konnte nicht aufgelistet werden: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "KI-Notizen-Ordner konnte nicht aufgelistet werden: %1"
 
-msgid "Could not open notebook file."
-msgstr "Die Notizbuchdatei konnte nicht geöffnet werden."
+msgid "Could not open AI note file."
+msgstr "KI-Notizdatei konnte nicht geöffnet werden."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Speichern im ausgewählten Notizbuch fehlgeschlagen.\n"
+"Speichern in der ausgewählten KI-Notiz fehlgeschlagen.\n"
 "Gespeichert in: %1"
 
-msgid "Could not select notebook."
-msgstr "Das Notizbuch konnte nicht ausgewählt werden."
+msgid "Could not select AI note."
+msgstr "KI-Notiz konnte nicht ausgewählt werden."
 
-msgid "Could not write notebook file."
-msgstr "Die Notizbuchdatei konnte nicht geschrieben werden."
+msgid "Could not write AI note file."
+msgstr "KI-Notizdatei konnte nicht geschrieben werden."
 
 msgid "Create"
 msgstr "Erstellen"
 
-msgid "Create a notebook."
-msgstr "Ein Notizbuch erstellen."
+msgid "Create an AI note."
+msgstr "Eine KI-Notiz erstellen."
 
 msgid "Cultural Significance"
 msgstr "Kulturelle Bedeutung"
@@ -530,9 +628,6 @@ msgstr "Benutzerdefinierter Prompt"
 
 msgid "Custom Prompts"
 msgstr "Benutzerdefinierte Prompts"
-
-msgid "Deeply Thought"
-msgstr "Tiefgründig gedacht"
 
 msgid "Delete"
 msgstr "Löschen"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Integrierte Zusammenfassung"
 
-msgid "Invalid notebook entry."
-msgstr "Ungültiger Notizbucheintrag."
+msgid "Invalid AI note entry."
+msgstr "Ungültiger KI-Notiz-Eintrag."
 
-msgid "Invalid notebook filename."
-msgstr "Ungültiger Notizbuch-Dateiname."
+msgid "Invalid AI note filename."
+msgstr "Ungültiger Dateiname für KI-Notiz."
 
 msgid "Justify"
 msgstr "Blocksatz"
@@ -764,9 +859,6 @@ msgstr "Leer lassen, um zu verwenden: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Lassen Sie diese Felder leer, um die UI-Sprache zu verwenden: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Lade für <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Orte"
@@ -804,26 +896,32 @@ msgstr "Modelle: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modelle: %1 (übereinstimmend)"
 
-msgid "Multiple Notebooks"
-msgstr "Mehrere Notizbücher"
+msgid "Multiple AI Notes"
+msgstr "Mehrere KI-Notizen"
 
 msgid "Narrative element in focus:"
 msgstr "Im Fokus stehendes Erzählelement:"
 
-msgid "New notebook"
-msgstr "Neues Notizbuch"
+msgid "New AI Note"
+msgstr "Neue KI-Notiz"
 
-msgid "New notebook..."
-msgstr "Neues Notizbuch..."
+msgid "New AI Note..."
+msgstr "Neue KI-Notiz..."
 
 msgid "No"
 msgstr "Nein"
 
+msgid "No AI Notes folder is set."
+msgstr "Es ist kein KI-Notizen-Ordner festgelegt."
+
+msgid "No AI notes yet"
+msgstr "Noch keine KI-Notizen"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Kein aktiver Anbieter konfiguriert. Bitte fügen Sie einen in den Einstellungen hinzu."
 
-msgid "No base folder is available for notebooks."
-msgstr "Es ist kein Basisordner für Notizbücher verfügbar."
+msgid "No base folder is available for AI Notes."
+msgstr "Es ist kein Basisordner für KI-Notizen verfügbar."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Kein Buch geöffnet. Halten Sie ein Buch im Dateimanager gedrückt und wählen Sie Buchinfo (KI)."
@@ -837,14 +935,8 @@ msgstr "Keine Modelle verfügbar."
 msgid "No models matching \"%1\"."
 msgstr "Keine Modelle für \"%1\" gefunden."
 
-msgid "No notebooks folder is set."
-msgstr "Es ist kein Notizbuch-Ordner festgelegt."
-
-msgid "No notebooks yet"
-msgstr "Noch keine Notizbücher"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Für das bisherige Notizbuch ist kein Pfad verfügbar."
+msgid "No path is available for the default AI note."
+msgstr "Für die Standard-KI-Notiz ist kein Pfad verfügbar."
 
 msgid "No response received."
 msgstr "Keine Antwort erhalten."
@@ -863,70 +955,6 @@ msgstr "Keine"
 
 msgid "Note added successfully"
 msgstr "Notiz erfolgreich hinzugefügt."
-
-msgid "Notebook"
-msgstr "Notizbuch"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Notizbuch (KI-Unterhaltungsprotokoll)"
-
-msgid "Notebook Settings"
-msgstr "Notizbuch-Einstellungen"
-
-msgid "Notebook name"
-msgstr "Notizbuchname"
-
-msgid "Notebook name cannot be empty."
-msgstr "Der Notizbuchname darf nicht leer sein."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Der Notizbuchname darf nicht '..' enthalten."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Der Notizbuchname darf keine Pfadtrennzeichen enthalten."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Der Notizbuchname darf nicht mit einem Leerzeichen oder Punkt enden."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Der Notizbuchname enthält Zeichen, die vom Dateisystem nicht unterstützt werden."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Der Notizbuchname ist vom Dateisystem reserviert."
-
-msgid "Notebook name must be text."
-msgstr "Der Notizbuchname muss Text sein."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Der Notizbuch-Pfad ist keine Datei: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Der Notizbuch-Pfad ist nicht verfügbar."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Speichern im Notizbuch fehlgeschlagen. Fortfahren..."
-
-msgid "Notebook: %1"
-msgstr "Notizbuch: %1"
-
-msgid "Notebooks"
-msgstr "Notizbücher"
-
-msgid "Notebooks Folder"
-msgstr "Notizbuch-Ordner"
-
-msgid "Notebooks Folder: %1"
-msgstr "Notebooks-Ordner: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Pfad des Notebooks-Ordners:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Der Notizbuch-Pfad ist kein Verzeichnis: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1050,9 +1078,6 @@ msgstr "Zurücksetzen"
 
 msgid "Purge Settings"
 msgstr "Einstellungen zurücksetzen"
-
-msgid "Querying AI ..."
-msgstr "KI wird abgefragt ..."
 
 msgid "Quick Note"
 msgstr "Schnellnotiz"
@@ -1183,11 +1208,11 @@ msgstr "Der Suchtool-Datensatz muss eine Tabelle sein."
 msgid "Searching with %1 ... [%2]"
 msgstr "Suche mit %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "KI-Notiz auswählen"
+
 msgid "Select a model:"
 msgstr "Modell auswählen:"
-
-msgid "Select notebook"
-msgstr "Notizbuch auswählen"
 
 msgid "Selection copied to clipboard."
 msgstr "Auswahl in die Zwischenablage kopiert."
@@ -1266,8 +1291,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Schnellnotizen"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Mach schnelle Notizen, die in deinem Notizbuch gespeichert werden."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Erstellen Sie Schnellnotizen, die in Ihren KI-Notizen gespeichert werden."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1288,9 +1313,6 @@ msgstr "Text in die Zwischenablage kopiert"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Der Handler für %1 wurde nicht gefunden. Bitte stellen Sie sicher, dass der Handler im Verzeichnis api_handlers vorhanden ist."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Das Notizbuch ist Ihr Gesprächsprotokoll: KI-Antworten und Schnellnotizen werden daran angehängt. Sie können mehrere Notizbücher erstellen, um Ihre Protokolle zu organisieren."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Diese Schaltfläche erstellt eine Schnellnotiz mit markiertem Text."

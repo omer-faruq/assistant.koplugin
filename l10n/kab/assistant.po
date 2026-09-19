@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 04:13+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Taqbaylit (AI translation)\n"
@@ -38,9 +38,6 @@ msgstr " - sb. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Tazdeɣt \"X-Ray\" i udlis, i tettwabnan ɣer tigezmiyin timeẓyanin am Iseɣẓanen, Idigan, Isental, Tiwalin & Timusniwin, Azemz, akked Tunezgit."
 
-msgid "### %1 Question\n"
-msgstr "### Asteqsi %1\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Ahat ad tafed isental-agi d iɛejben:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Ad d-nernu aqeffar-agi ɣer Umuɣ n Usnen?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Afaylu n tizmilin AI:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Ulac amekki yettwasebded ar tura.</b>\n"
 "Ma ulac aɣilif, rnu amekki deg Iɣewwaṛen neɣ configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Afaylu n NoteBook:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Isefra</b>"
 
@@ -197,6 +194,43 @@ msgstr "Asqerred n tuqqna yedda."
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Anaw n tmahilt ur yettwassen:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Tixemmimt tunṭiqt</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Aseqsi</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Yella lqem amaynut n plugin %1 (%2). Ma ulac aɣilif, leqqem!"
 
@@ -214,6 +248,43 @@ msgstr "Amawal n AI"
 
 msgid "AI Language: "
 msgstr "Tutlayt n AI: "
+
+msgid "AI Note Name"
+msgstr "Isem n tazmilt AI"
+
+msgid "AI Notes"
+msgstr "Tizmilin AI"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "Tizmilin AI (Aɣmis n udiwenni AI)"
+
+msgid "AI Notes Folder"
+msgstr "Akaraw n tizmilin AI"
+
+msgid "AI Notes Folder: %1"
+msgstr "Akaraw n tizmilin AI: %1"
+
+msgid "AI Notes Settings"
+msgstr "Iɣewwaṛen n tizmilin AI"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Abrid n ukaraw n tizmilin AI:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "Tizmilin AI d aɣmis-ik n udiwenni: tiriritin n AI d tizmilin tiririyin ttwarnant ɣur-s. Tzemreḍ ad ternuḍ tizmilin AI aṭas i usuddem n iɣmisen-ik."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Abrid n tizmilin AI mačči d akaraw: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Asekles n tizmilin AI yecceḍ. Ad nkemmel..."
+
+msgid "AI Notes: %1"
+msgstr "Tizmilin AI: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI la yettirir."
+
+msgid "AI note name cannot be empty."
+msgstr "Isem n tazmilt AI ur yezmir ara ad yili d ilem."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Isem n tazmilt AI ur yezmir ara ad yegber '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Isem n tazmilt AI ur yezmir ara ad yegber imazdayen n yibriden."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Isem n tazmilt AI ur yezmir ara ad yemmed s tazunegt neɣ s tenqiṭ."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Isem n tazmilt AI yegber isekkilen ur ttwaqbalen ara seg unagraw n yifuyla."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Isem n tazmilt AI yettwaḥbes s anagraw n yifuyla."
+
+msgid "AI note name must be text."
+msgstr "Isem n tazmilt AI yessefk ad yili d aḍris."
+
+msgid "AI note path is not a file: %1"
+msgstr "Abrid n tazmilt AI mačči d afaylu: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Abrid n tazmilt AI ur yella ara."
 
 msgid "API Key"
 msgstr "Tasarut n API"
@@ -295,8 +393,8 @@ msgstr ""
 "Rnu imsudda seg umuɣ agejdan:\n"
 "%1 -> Amyinaw n AI -> Iɣewwaren -> API n Umsudd"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Taseftit n yimarkiyen-ik, tizmertin-ik, akked agbur n tazmert-ik seg udlis."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Tasleḍt n yisegziwen-ik, tizmilin-ik, d ugbur n Tizmilin AI seg udlis."
 
 msgid "Anthropic Messages API"
 msgstr "API n yiznan n Anthropic"
@@ -347,8 +445,8 @@ msgstr "Rnu aḍris izrin"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Agzul awurman mi ara ldin idlisen ur ttwaɣran ara seg zik."
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Asekles awurman n yisqerdecen ɣer unkaram"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Slekles adiwanniyin s wudem awurman ɣer Tizmilin AI"
 
 msgid "Base URL"
 msgstr "URL agejdan"
@@ -415,8 +513,8 @@ msgstr "La nsenqed i ileqman..."
 msgid "Choose Definition Sections"
 msgstr "Fren tigezmin n tabadut"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Fren tadbelt iwumi ara yettwaseklesen tizmilin-nnek."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Fren anta n tazmilt AI anida ara teskelseḍ tizmilin-ik."
 
 msgid "Clear"
 msgstr "Sfeḍ"
@@ -436,8 +534,8 @@ msgstr "Ur tettwaf ara configuration. Ma ulac aɣilif, sbadu configuration.lua s
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Sweṭṭeḍ tutlayt n tririt n LLM n AI. S lexṣas, d tutlayt n ugdil n KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Akaram n tadbeltin yettwasebded ur yettwasekcem ara: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Akaram n Tizmilin AI yettwasewlel ur yettwakcem ara: %1"
 
 msgid "Connection test successful."
 msgstr "Asqerred n tuqqna yedda."
@@ -461,8 +559,8 @@ msgstr "Timuɣliwin n usali / ineflisen"
 msgid "Contradictions / Open Questions"
 msgstr "Temgaradin / Isteqsiyen yeldin"
 
-msgid "Conversation is saved to notebook"
-msgstr "Aheddi yettwasekles ar tadbelt."
+msgid "Conversation is saved to AI Notes"
+msgstr "Adiwenni yettwasekles ɣer Tizmilin AI"
 
 msgid "Copy"
 msgstr "Nɣel"
@@ -478,42 +576,42 @@ msgstr "Timenna tigejdanin"
 msgid "Core Idea"
 msgstr "Tikta tagejdant"
 
-msgid "Could not close notebook file."
-msgstr "Ur yezmir ara ad ymedel afaylu n tadbelt."
+msgid "Could not close AI note file."
+msgstr "Ur yezmir ara ad yemdel afaylu n tazmilt AI."
 
-msgid "Could not create notebook."
-msgstr "Ur yezmir ara ad yexleq tadbelt."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Ur yezmir ara ad yexleq akaram n Tizmilin AI: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Ur yezmir ara ad yexleq tadbelt: %1"
+msgid "Could not create AI note."
+msgstr "Ur yezmir ara ad yexleq tazmilt AI."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Ur yezmir ara ad yexleq akaram n tadbeltin: %1"
+msgid "Could not create AI note: %1"
+msgstr "Ur yezmir ara ad yexleq tazmilt AI: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Ur yezmir ara ad yessefru akaram n tadbeltin: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Ur yezmir ara ad d-yebder akaram n Tizmilin AI: %1"
 
-msgid "Could not open notebook file."
-msgstr "Ur yezmir ara ad yeldi afaylu n tadbelt."
+msgid "Could not open AI note file."
+msgstr "Ur yezmir ara ad yeldi afaylu n tazmilt AI."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Ur yezmir ara ad yessekles ar tadbelt yettwafernen.\n"
-"Yettwasekles ar: %1"
+"Ur yezmir ara ad yessekles ɣer tazmilt AI yettwafernen.\n"
+"Yettwasekles ɣer: %1"
 
-msgid "Could not select notebook."
-msgstr "Ur yezmir ara ad yefren tadbelt."
+msgid "Could not select AI note."
+msgstr "Ur yezmir ara ad yefren tazmilt AI."
 
-msgid "Could not write notebook file."
-msgstr "Ur yezmir ara ad yaru afaylu n tadbelt."
+msgid "Could not write AI note file."
+msgstr "Ur yezmir ara ad yaru afaylu n tazmilt AI."
 
 msgid "Create"
 msgstr "Xleq"
 
-msgid "Create a notebook."
-msgstr "Xleq tadbelt."
+msgid "Create an AI note."
+msgstr "Xleq tazmilt AI."
 
 msgid "Cultural Significance"
 msgstr "Azal aḍelsan"
@@ -530,9 +628,6 @@ msgstr "Asuter i d-yettwaseknen"
 
 msgid "Custom Prompts"
 msgstr "Isumer udmawanen"
-
-msgid "Deeply Thought"
-msgstr "Anefki ameqqran"
 
 msgid "Delete"
 msgstr "Kkes"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Agzul yedduklen"
 
-msgid "Invalid notebook entry."
-msgstr "Aferdis n tadbelt ur yelli d ameɣtu."
+msgid "Invalid AI note entry."
+msgstr "Anekcum n tazmilt AI d arameɣtu."
 
-msgid "Invalid notebook filename."
-msgstr "Isem n ufaylu n tadbelt ur yelli d ameɣtu."
+msgid "Invalid AI note filename."
+msgstr "Isem n ufaylu n tira n AI d arameɣtu."
 
 msgid "Justify"
 msgstr "Semsawa"
@@ -764,9 +859,6 @@ msgstr "Eǧǧ it d ilem i useqdec: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Eǧǧ iẓefran-agi d ilem i useqdec n tutlayt n ugrudem: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Asali i <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Idgan"
@@ -804,26 +896,32 @@ msgstr "Imudellen: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modelen: %1 (tɣerret)"
 
-msgid "Multiple Notebooks"
-msgstr "Aṭas n yinkaramen"
+msgid "Multiple AI Notes"
+msgstr "Aṭas n tira n AI"
 
 msgid "Narrative element in focus:"
 msgstr "Aferdis n tneγruft i d-ittεessin:"
 
-msgid "New notebook"
-msgstr "Tadbelt tamaynut"
+msgid "New AI Note"
+msgstr "Tira n AI tamaynut"
 
-msgid "New notebook..."
-msgstr "Anagraw amaynut..."
+msgid "New AI Note..."
+msgstr "Tira n AI tamaynut..."
 
 msgid "No"
 msgstr "Uhu"
 
+msgid "No AI Notes folder is set."
+msgstr "Ulac akaram n tira n AI i yettwasbadu."
+
+msgid "No AI notes yet"
+msgstr "Mazal ulac tira n AI."
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Ulac amsudd yermed yettwasebded. Ttxil rnu yiwen deg Iɣewwaren."
 
-msgid "No base folder is available for notebooks."
-msgstr "Ulac akaram agejdan i tadbeltin."
+msgid "No base folder is available for AI Notes."
+msgstr "Ulac akaram azadur i tira n AI."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Ulac adlis yeldin. Ḍḍef cwiṭ ɣef wedlis deg umsedday n yifuyla, syen fren Talɣut n udlis (AI)."
@@ -837,14 +935,8 @@ msgstr "Ulac imḍalen yellan."
 msgid "No models matching \"%1\"."
 msgstr "Ulac imḍalen imṣadan ɣef \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Ulac akaram n yinkaramen yettwasbedden."
-
-msgid "No notebooks yet"
-msgstr "Mazal ulac tadbeltin."
-
-msgid "No path is available for the legacy notebook."
-msgstr "Ulac abrid i tadbelt taqdimt."
+msgid "No path is available for the default AI note."
+msgstr "Ulac abrid i tira n AI tamezwarut."
 
 msgid "No response received."
 msgstr "Ulac tiririt i d-yusan."
@@ -863,70 +955,6 @@ msgstr "Ulac"
 
 msgid "Note added successfully"
 msgstr "Tazmert tettwarna akken iwata."
-
-msgid "Notebook"
-msgstr "Adlis n tizmilin"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Tadbelt (Aɣmis n iheddjen n AI)"
-
-msgid "Notebook Settings"
-msgstr "Tiseɣtiwin n tadbeltin"
-
-msgid "Notebook name"
-msgstr "Isem n tadbelt"
-
-msgid "Notebook name cannot be empty."
-msgstr "Isem n tadbelt ur yezmir ara ad yili d ilem."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Isem n tadbelt ur yezmir ara ad yeṭṭef '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Isem n tadbelt ur yezmir ara ad yeṭṭef ifrazan n ubrid."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Isem n tadbelt ur yezmir ara ad yefru s tasunt neɣ taneqqiṭ."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Isem n tadbelt yeṭṭef isekkilen ur yettwasefrak ara s unagraw n ifayla."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Isem n tadbelt yettwajemmeɛ s unagraw n ifayla."
-
-msgid "Notebook name must be text."
-msgstr "Isem n tadbelt yessefk ad yili d aḍris."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Abrid n tadbelt ur yelli d afaylu: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Abrid n tadbelt ur yelli ara."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Askel n Notebook yexser. La nkemmel..."
-
-msgid "Notebook: %1"
-msgstr "Tadbelt: %1"
-
-msgid "Notebooks"
-msgstr "Tadbeltin"
-
-msgid "Notebooks Folder"
-msgstr "Akaram n yinkaramen"
-
-msgid "Notebooks Folder: %1"
-msgstr "Akaram n yinkaramen: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Abrid n ukaram n yinkaramen:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Abrid n tadbeltin ur yelli d akaram: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1050,9 +1078,6 @@ msgstr "Sfeḍ"
 
 msgid "Purge Settings"
 msgstr "Sfeḍ iɣewwaṛen"
-
-msgid "Querying AI ..."
-msgstr "La tettwasteqsi AI ..."
 
 msgid "Quick Note"
 msgstr "Tazmilt taruradt"
@@ -1184,11 +1209,11 @@ msgstr "Asektar n ufecku n unadi yessefk ad yili d tafelwit."
 msgid "Searching with %1 ... [%2]"
 msgstr "Anadi s %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Fren tira n AI"
+
 msgid "Select a model:"
 msgstr "Fren amaḍel:"
-
-msgid "Select notebook"
-msgstr "Fren tadbelt"
 
 msgid "Selection copied to clipboard."
 msgstr "Tafrant tettwaneɣlef ɣer clipboard."
@@ -1267,8 +1292,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Aru tizmilin iɣewwaṛen"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Aru tizmertin iɣezzifen ara yettwaseklesen ɣer udlis-ik n tizmertin."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Ari tira tiruradin ara yettwasekles ɣer tira-ik n AI."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "Aḍris yettwanɣel ɣer telwadt"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handler n %1 ur yettwaf. Ma ulac aɣilif, ḥeqqeq ad yili handler deg ukaram api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Anagraw n tira d aɣmis n yimeslayen-ik: tiririyin n AI d tira tifessasin ttemmarnant ɣur-s. Tzemred ad ternud aṭas n yimagrawen n tira akken ad tesmizzled iɣmisen-ik."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Asenqed-a yesskar tazmilt taruradt s udris yettwasemmen."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - стр. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" резюме за книга, структурирано в конкретни раздели като Герои, Места, Теми, Термини и понятия, Хронология и Повторно потапяне."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Въпрос\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Може да намерите тези теми за интересни:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Да се добави ли този бутон към менюто за маркиране?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Файл с AI бележки:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Все още няма настроен доставчик.</b>\n"
 "Моля, добавете доставчик в Настройки или configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Файл на бележника:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Параметри</b>"
 
@@ -197,6 +194,43 @@ msgstr "Базов URL"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Неизвестен тип функция:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Задълбочено мислене</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Въпрос</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Налична е нова версия на приставката %1 (%2). Моля, актуализирайте!"
 
@@ -214,6 +248,43 @@ msgstr "ИИ речник"
 
 msgid "AI Language: "
 msgstr "AI език: "
+
+msgid "AI Note Name"
+msgstr "Име на AI бележка"
+
+msgid "AI Notes"
+msgstr "AI бележки"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI бележки (Дневник на AI разговора)"
+
+msgid "AI Notes Folder"
+msgstr "Папка за AI бележки"
+
+msgid "AI Notes Folder: %1"
+msgstr "Папка за AI бележки: %1"
+
+msgid "AI Notes Settings"
+msgstr "Настройки на AI бележки"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Път до папката за AI бележки:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI бележките са вашият дневник на разговора: AI отговорите и бързите бележки се добавят към него. Можете да създадете няколко AI бележки, за да организирате дневниците си."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Пътят за AI бележки не е директория: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Неуспешно запазване на AI бележките. Продължава..."
+
+msgid "AI Notes: %1"
+msgstr "AI бележки: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "ИИ X-Ray"
 
 msgid "AI is responding"
 msgstr "AI отговаря"
+
+msgid "AI note name cannot be empty."
+msgstr "Името на AI бележката не може да бъде празно."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Името на AI бележката не може да съдържа '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Името на AI бележката не може да съдържа разделители на път."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Името на AI бележката не може да завършва с интервал или точка."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Името на AI бележката съдържа символи, които не се поддържат от файловата система."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Името на AI бележката е резервирано от файловата система."
+
+msgid "AI note name must be text."
+msgstr "Името на AI бележката трябва да е текст."
+
+msgid "AI note path is not a file: %1"
+msgstr "Пътят на AI бележката не е файл: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Пътят на AI бележката е недостъпен."
 
 msgid "API Key"
 msgstr "API ключ"
@@ -295,8 +393,8 @@ msgstr ""
 "Добавете доставчици от главното меню:\n"
 "%1 -> AI асистент -> Настройки -> API на доставчика"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Анализ на вашите маркирания, бележки и съдържанието на бележника от книгата."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Анализ на вашите маркирания, бележки и съдържанието на AI бележките от книгата."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Прикрепи предишен текст"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Автоматично резюме при отваряне на дълго нечетени книги"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Автоматично запазване на разговори в тефтер"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Автоматично запазване на разговорите в AI бележки"
 
 msgid "Base URL"
 msgstr "Базов URL"
@@ -415,8 +513,8 @@ msgstr "Проверка за актуализации..."
 msgid "Choose Definition Sections"
 msgstr "Избор на секции за определения"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Изберете в коя тетрадка да се запазват бележките ви."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Изберете в коя AI бележка да се запазват бележките ви."
 
 msgid "Clear"
 msgstr "Изчисти"
@@ -436,8 +534,8 @@ msgstr "Конфигурацията не е намерена. Моля, пър�
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Настройка на езика за отговор на AI LLM. По подразбиране е езикът на интерфейса на KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Конфигурираната папка за тетрадки не е достъпна: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Конфигурираната папка за AI бележки не е достъпна: %1"
 
 msgid "Connection test successful."
 msgstr "Тестът за връзка е успешен."
@@ -461,8 +559,8 @@ msgstr "Контекстуални бележки / Размисли"
 msgid "Contradictions / Open Questions"
 msgstr "Противоречия / Открити въпроси"
 
-msgid "Conversation is saved to notebook"
-msgstr "Разговорът е запазен в тетрадката"
+msgid "Conversation is saved to AI Notes"
+msgstr "Разговорът е запазен в AI бележки"
 
 msgid "Copy"
 msgstr "Копирай"
@@ -478,42 +576,42 @@ msgstr "Основни аргументи"
 msgid "Core Idea"
 msgstr "Основна идея"
 
-msgid "Could not close notebook file."
-msgstr "Не можа да се затвори файлът на тетрадката."
+msgid "Could not close AI note file."
+msgstr "Файлът на AI бележката не можа да бъде затворен."
 
-msgid "Could not create notebook."
-msgstr "Не можа да се създаде тетрадка."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Папката за AI бележки не можа да бъде създадена: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Не можа да се създаде тетрадка: %1"
+msgid "Could not create AI note."
+msgstr "AI бележка не можа да бъде създадена."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Не можа да се създаде папка за тетрадки: %1"
+msgid "Could not create AI note: %1"
+msgstr "AI бележка не можа да бъде създадена: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Не можа да се изведе списъкът на папката за тетрадки: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Съдържанието на папката за AI бележки не можа да бъде изброено: %1"
 
-msgid "Could not open notebook file."
-msgstr "Не можа да се отвори файлът на тетрадката."
+msgid "Could not open AI note file."
+msgstr "Файлът на AI бележката не можа да бъде отворен."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Не можа да се запази в избраната тетрадка.\n"
+"Не можа да се запази в избраната AI бележка.\n"
 "Запазено в: %1"
 
-msgid "Could not select notebook."
-msgstr "Не можа да се избере тетрадка."
+msgid "Could not select AI note."
+msgstr "AI бележка не можа да бъде избрана."
 
-msgid "Could not write notebook file."
-msgstr "Не можа да се запише файлът на тетрадката."
+msgid "Could not write AI note file."
+msgstr "Файлът на AI бележката не можа да бъде записан."
 
 msgid "Create"
 msgstr "Създай"
 
-msgid "Create a notebook."
-msgstr "Създай тетрадка."
+msgid "Create an AI note."
+msgstr "Създаване на AI бележка."
 
 msgid "Cultural Significance"
 msgstr "Културна значимост"
@@ -530,9 +628,6 @@ msgstr "Персонализиран промпт"
 
 msgid "Custom Prompts"
 msgstr "Персонализирани промпти"
-
-msgid "Deeply Thought"
-msgstr "Задълбочено мислене"
 
 msgid "Delete"
 msgstr "Изтриване"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Интегрирано резюме"
 
-msgid "Invalid notebook entry."
-msgstr "Невалиден запис за тетрадка."
+msgid "Invalid AI note entry."
+msgstr "Невалиден запис на AI бележка."
 
-msgid "Invalid notebook filename."
-msgstr "Невалидно име на файл за тетрадка."
+msgid "Invalid AI note filename."
+msgstr "Невалидно име на файл за AI бележка."
 
 msgid "Justify"
 msgstr "Двустранно подравняване"
@@ -764,9 +859,6 @@ msgstr "Оставете празно, за да се използва: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Оставете тези полета празни, за да се използва езикът на интерфейса: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Зареждане за <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Места"
@@ -804,26 +896,32 @@ msgstr "Модели: %1"
 msgid "Models: %1 (matched)"
 msgstr "Модели: %1 (съответстващи)"
 
-msgid "Multiple Notebooks"
-msgstr "Множество тефтери"
+msgid "Multiple AI Notes"
+msgstr "Множество AI бележки"
 
 msgid "Narrative element in focus:"
 msgstr "Наративен елемент във фокус:"
 
-msgid "New notebook"
-msgstr "Нова тетрадка"
+msgid "New AI Note"
+msgstr "Нова AI бележка"
 
-msgid "New notebook..."
-msgstr "Нов бележник..."
+msgid "New AI Note..."
+msgstr "Нова AI бележка..."
 
 msgid "No"
 msgstr "Не"
 
+msgid "No AI Notes folder is set."
+msgstr "Не е зададена папка за AI бележки."
+
+msgid "No AI notes yet"
+msgstr "Още няма AI бележки"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Няма конфигуриран активен доставчик. Моля, добавете такъв в Настройки."
 
-msgid "No base folder is available for notebooks."
-msgstr "Няма налична основна папка за тетрадки."
+msgid "No base folder is available for AI Notes."
+msgstr "Няма налична основна папка за AI бележки."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Няма отворена книга. Натиснете продължително върху книга във файловия мениджър и изберете Информация за книгата (AI)."
@@ -837,14 +935,8 @@ msgstr "Няма налични модели."
 msgid "No models matching \"%1\"."
 msgstr "Няма модели, съответстващи на \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Не е зададена папка за тефтери."
-
-msgid "No notebooks yet"
-msgstr "Все още няма тетрадки"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Няма наличен път за наследената тетрадка."
+msgid "No path is available for the default AI note."
+msgstr "Няма наличен път за AI бележката по подразбиране."
 
 msgid "No response received."
 msgstr "Не е получен отговор."
@@ -863,70 +955,6 @@ msgstr "Няма"
 
 msgid "Note added successfully"
 msgstr "Бележката е добавена успешно"
-
-msgid "Notebook"
-msgstr "Бележник"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Тетрадка (дневник на разговорите с ИИ)"
-
-msgid "Notebook Settings"
-msgstr "Настройки на тетрадката"
-
-msgid "Notebook name"
-msgstr "Име на тетрадката"
-
-msgid "Notebook name cannot be empty."
-msgstr "Името на тетрадката не може да бъде празно."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Името на тетрадката не може да съдържа '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Името на тетрадката не може да съдържа разделители на пътя."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Името на тетрадката не може да завършва с интервал или точка."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Името на тетрадката съдържа знаци, които не се поддържат от файловата система."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Името на тетрадката е запазено от файловата система."
-
-msgid "Notebook name must be text."
-msgstr "Името на тетрадката трябва да бъде текст."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Пътят за тетрадката не е файл: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Пътят за тетрадката е недостъпен."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Запазването в бележника не успя. Продължаване..."
-
-msgid "Notebook: %1"
-msgstr "Тетрадка: %1"
-
-msgid "Notebooks"
-msgstr "Тетрадки"
-
-msgid "Notebooks Folder"
-msgstr "Папка за тефтери"
-
-msgid "Notebooks Folder: %1"
-msgstr "Папка за тефтери: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Път до папката за тефтери:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Пътят за тетрадки не е директория: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1050,9 +1078,6 @@ msgstr "Изчисти"
 
 msgid "Purge Settings"
 msgstr "Изчистване на настройките"
-
-msgid "Querying AI ..."
-msgstr "Запитване към AI ..."
 
 msgid "Quick Note"
 msgstr "Бърза бележка"
@@ -1184,11 +1209,11 @@ msgstr "Записът на инструмента за търсене тряб�
 msgid "Searching with %1 ... [%2]"
 msgstr "Търсене с %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Избор на AI бележка"
+
 msgid "Select a model:"
 msgstr "Изберете модел:"
-
-msgid "Select notebook"
-msgstr "Избор на тетрадка"
 
 msgid "Selection copied to clipboard."
 msgstr "Избраното е копирано в клипборда."
@@ -1267,8 +1292,8 @@ msgstr "Накратко"
 msgid "Take Quick Notes"
 msgstr "Бързи бележки"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Пишете кратки бележки, които ще бъдат запазени в бележника ви."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Записвайте бързи бележки, които ще бъдат запазени в AI бележките ви."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "Текстът е копиран в клипборда."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Обработчикът за %1 не беше намерен. Моля, уверете се, че обработчикът съществува в директорията api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Тефтерът е вашият дневник на разговори: отговорите на AI и бързите бележки се добавят към него. Можете да създадете множество тефтери, за да организирате своите записи."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Този бутон създава бърза бележка с маркирания текст."

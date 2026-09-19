@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 04:11+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Bahasa Melayu (AI translation)\n"
@@ -38,9 +38,6 @@ msgstr " - ms. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Ringkasan \"X-Ray\" untuk buku, disusun mengikut bahagian khusus seperti Watak, Lokasi, Tema, Istilah & Konsep, Garis Masa, dan Imersi Semula."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Soalan\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Anda mungkin mendapati topik-topik ini menarik:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Tambahkan butang ini ke Menu Sorotan?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Fail Nota AI:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Belum ada pembekal disediakan.</b>\n"
 "Sila tambah pembekal dalam Tetapan atau configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Fail buku nota:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parameter</b>"
 
@@ -197,6 +194,43 @@ msgstr "<b>Menguji sambungan...</b>"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Jenis ciri tidak diketahui:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Pemikiran Mendalam</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Soalan</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Versi baharu plugin %1 (%2) tersedia. Sila kemas kini!"
 
@@ -214,6 +248,43 @@ msgstr "Kamus AI"
 
 msgid "AI Language: "
 msgstr "Bahasa AI: "
+
+msgid "AI Note Name"
+msgstr "Nama Nota AI"
+
+msgid "AI Notes"
+msgstr "Nota AI"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "Nota AI (Log Perbualan AI)"
+
+msgid "AI Notes Folder"
+msgstr "Folder Nota AI"
+
+msgid "AI Notes Folder: %1"
+msgstr "Folder Nota AI: %1"
+
+msgid "AI Notes Settings"
+msgstr "Tetapan Nota AI"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Laluan folder Nota AI:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "Nota AI ialah log perbualan anda: jawapan AI dan nota pantas ditambahkan padanya. Anda boleh mencipta berbilang nota AI untuk menyusun log anda."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Laluan Nota AI bukan direktori: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Gagal menyimpan Nota AI. Meneruskan..."
+
+msgid "AI Notes: %1"
+msgstr "Nota AI: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI sedang memberi respons"
+
+msgid "AI note name cannot be empty."
+msgstr "Nama nota AI tidak boleh kosong."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Nama nota AI tidak boleh mengandungi '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Nama nota AI tidak boleh mengandungi pemisah laluan."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Nama nota AI tidak boleh berakhir dengan ruang atau titik."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Nama nota AI mengandungi aksara yang tidak disokong oleh sistem fail."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Nama nota AI dikhaskan oleh sistem fail."
+
+msgid "AI note name must be text."
+msgstr "Nama nota AI mestilah teks."
+
+msgid "AI note path is not a file: %1"
+msgstr "Laluan nota AI bukan fail: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Laluan nota AI tidak tersedia."
 
 msgid "API Key"
 msgstr "Kunci API"
@@ -295,8 +393,8 @@ msgstr ""
 "Tambah pembekal dari menu utama:\n"
 "%1 -> AI Assistant -> Tetapan -> API Pembekal"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Analisis sorotan, nota, dan kandungan buku nota anda daripada buku tersebut."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Analisis sorotan, nota dan kandungan Nota AI anda daripada buku ini."
 
 msgid "Anthropic Messages API"
 msgstr "API Mesej Anthropic"
@@ -347,8 +445,8 @@ msgstr "Lampirkan Teks Sebelum"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Rekap automatik apabila Membuka Buku yang Lama Tidak Dibaca"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Simpan Automatik Perbualan ke Buku Nota"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Simpan Perbualan secara automatik ke Nota AI"
 
 msgid "Base URL"
 msgstr "URL Asas"
@@ -415,8 +513,8 @@ msgstr "Menyemak kemas kini..."
 msgid "Choose Definition Sections"
 msgstr "Pilih Bahagian Definisi"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Pilih buku nota tempat nota anda disimpan."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Pilih nota AI untuk menyimpan nota anda."
 
 msgid "Clear"
 msgstr "Kosongkan"
@@ -436,8 +534,8 @@ msgstr "Konfigurasi tidak ditemui. Sila sediakan configuration.lua dahulu."
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Konfigurasikan bahasa respons AI LLM. Lalai kepada bahasa antara muka KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Folder buku nota yang dikonfigurasi tidak boleh diakses: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Folder Nota AI yang dikonfigurasikan tidak boleh diakses: %1"
 
 msgid "Connection test successful."
 msgstr "Ujian sambungan berjaya."
@@ -461,8 +559,8 @@ msgstr "Nota Kontekstual / Refleksi"
 msgid "Contradictions / Open Questions"
 msgstr "Percanggahan / Soalan Terbuka"
 
-msgid "Conversation is saved to notebook"
-msgstr "Perbualan disimpan ke buku nota"
+msgid "Conversation is saved to AI Notes"
+msgstr "Perbualan disimpan ke Nota AI"
 
 msgid "Copy"
 msgstr "Salin"
@@ -478,42 +576,42 @@ msgstr "Hujah Utama"
 msgid "Core Idea"
 msgstr "Idea Utama"
 
-msgid "Could not close notebook file."
-msgstr "Tidak dapat menutup fail buku nota."
+msgid "Could not close AI note file."
+msgstr "Tidak dapat menutup fail nota AI."
 
-msgid "Could not create notebook."
-msgstr "Tidak dapat mencipta buku nota."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Tidak dapat mencipta folder Nota AI: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Tidak dapat mencipta buku nota: %1"
+msgid "Could not create AI note."
+msgstr "Tidak dapat mencipta nota AI."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Tidak dapat mencipta folder buku nota: %1"
+msgid "Could not create AI note: %1"
+msgstr "Tidak dapat mencipta nota AI: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Tidak dapat menyenaraikan folder buku nota: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Tidak dapat menyenaraikan folder Nota AI: %1"
 
-msgid "Could not open notebook file."
-msgstr "Tidak dapat membuka fail buku nota."
+msgid "Could not open AI note file."
+msgstr "Tidak dapat membuka fail nota AI."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Tidak dapat menyimpan ke buku nota yang dipilih.\n"
+"Tidak dapat menyimpan ke nota AI yang dipilih.\n"
 "Disimpan ke: %1"
 
-msgid "Could not select notebook."
-msgstr "Tidak dapat memilih buku nota."
+msgid "Could not select AI note."
+msgstr "Tidak dapat memilih nota AI."
 
-msgid "Could not write notebook file."
-msgstr "Tidak dapat menulis fail buku nota."
+msgid "Could not write AI note file."
+msgstr "Tidak dapat menulis fail nota AI."
 
 msgid "Create"
 msgstr "Cipta"
 
-msgid "Create a notebook."
-msgstr "Cipta buku nota."
+msgid "Create an AI note."
+msgstr "Cipta nota AI."
 
 msgid "Cultural Significance"
 msgstr "Kepentingan Budaya"
@@ -530,9 +628,6 @@ msgstr "Prompt Tersuai"
 
 msgid "Custom Prompts"
 msgstr "Prompt Tersuai"
-
-msgid "Deeply Thought"
-msgstr "Pemikiran Mendalam"
 
 msgid "Delete"
 msgstr "Padam"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Ringkasan Bersepadu"
 
-msgid "Invalid notebook entry."
-msgstr "Entri buku nota tidak sah."
+msgid "Invalid AI note entry."
+msgstr "Entri nota AI tidak sah."
 
-msgid "Invalid notebook filename."
-msgstr "Nama fail buku nota tidak sah."
+msgid "Invalid AI note filename."
+msgstr "Nama fail nota AI tidak sah."
 
 msgid "Justify"
 msgstr "Justifikasi"
@@ -763,9 +858,6 @@ msgstr "Biarkan kosong untuk menggunakan: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Biarkan medan ini kosong untuk menggunakan bahasa UI: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Memuatkan untuk <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Lokasi"
@@ -803,26 +895,32 @@ msgstr "Model: %1"
 msgid "Models: %1 (matched)"
 msgstr "Model: %1 (cocok)"
 
-msgid "Multiple Notebooks"
-msgstr "Berbilang Buku Nota"
+msgid "Multiple AI Notes"
+msgstr "Berbilang Nota AI"
 
 msgid "Narrative element in focus:"
 msgstr "Elemen naratif yang menjadi fokus:"
 
-msgid "New notebook"
-msgstr "Buku nota baharu"
+msgid "New AI Note"
+msgstr "Nota AI Baharu"
 
-msgid "New notebook..."
-msgstr "Buku nota baharu..."
+msgid "New AI Note..."
+msgstr "Nota AI Baharu..."
 
 msgid "No"
 msgstr "Tidak"
 
+msgid "No AI Notes folder is set."
+msgstr "Tiada folder Nota AI ditetapkan."
+
+msgid "No AI notes yet"
+msgstr "Belum ada nota AI"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Tiada pembekal aktif dikonfigurasikan. Sila tambah satu dalam Tetapan."
 
-msgid "No base folder is available for notebooks."
-msgstr "Tiada folder asas tersedia untuk buku nota."
+msgid "No base folder is available for AI Notes."
+msgstr "Tiada folder asas tersedia untuk Nota AI."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Tiada buku dibuka. Tekan lama pada buku dalam pengurus fail dan pilih Maklumat Buku (AI)."
@@ -836,14 +934,8 @@ msgstr "Tiada model tersedia."
 msgid "No models matching \"%1\"."
 msgstr "Tiada model yang sepadan dengan \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Tiada folder buku nota ditetapkan."
-
-msgid "No notebooks yet"
-msgstr "Belum ada buku nota"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Tiada laluan tersedia untuk buku nota warisan."
+msgid "No path is available for the default AI note."
+msgstr "Tiada laluan tersedia untuk nota AI lalai."
 
 msgid "No response received."
 msgstr "Tiada respons diterima."
@@ -862,70 +954,6 @@ msgstr "Tiada"
 
 msgid "Note added successfully"
 msgstr "Nota berjaya ditambah"
-
-msgid "Notebook"
-msgstr "Buku Nota"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Buku Nota (Log Perbualan AI)"
-
-msgid "Notebook Settings"
-msgstr "Tetapan Buku Nota"
-
-msgid "Notebook name"
-msgstr "Nama buku nota"
-
-msgid "Notebook name cannot be empty."
-msgstr "Nama buku nota tidak boleh kosong."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Nama buku nota tidak boleh mengandungi '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Nama buku nota tidak boleh mengandungi pemisah laluan."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Nama buku nota tidak boleh berakhir dengan ruang atau titik."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Nama buku nota mengandungi aksara yang tidak disokong oleh sistem fail."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Nama buku nota dikhaskan oleh sistem fail."
-
-msgid "Notebook name must be text."
-msgstr "Nama buku nota mestilah teks."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Laluan buku nota bukan fail: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Laluan buku nota tidak tersedia."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Penyimpanan Notebook gagal. Meneruskan..."
-
-msgid "Notebook: %1"
-msgstr "Buku nota: %1"
-
-msgid "Notebooks"
-msgstr "Buku nota"
-
-msgid "Notebooks Folder"
-msgstr "Folder Buku Nota"
-
-msgid "Notebooks Folder: %1"
-msgstr "Folder Buku Nota: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Laluan folder buku nota:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Laluan buku nota bukan direktori: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1049,9 +1077,6 @@ msgstr "Buang"
 
 msgid "Purge Settings"
 msgstr "Buang Tetapan"
-
-msgid "Querying AI ..."
-msgstr "Menghantar pertanyaan kepada AI ..."
 
 msgid "Quick Note"
 msgstr "Nota Pantas"
@@ -1183,11 +1208,11 @@ msgstr "Rekod alat carian mestilah jadual."
 msgid "Searching with %1 ... [%2]"
 msgstr "Mencari dengan %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Pilih Nota AI"
+
 msgid "Select a model:"
 msgstr "Pilih model:"
-
-msgid "Select notebook"
-msgstr "Pilih buku nota"
 
 msgid "Selection copied to clipboard."
 msgstr "Pilihan disalin ke papan keratan."
@@ -1266,8 +1291,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Ambil Nota Pantas"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Ambil nota ringkas yang akan disimpan ke buku nota anda."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Catat nota pantas yang akan disimpan ke dalam Nota AI anda."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1288,9 +1313,6 @@ msgstr "Teks disalin ke papan keratan"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Pengendali untuk %1 tidak ditemui. Sila pastikan pengendali tersebut wujud dalam direktori api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Buku nota ialah log perbualan anda: jawapan AI dan nota pantas ditambahkan padanya. Anda boleh mencipta pelbagai buku nota untuk menyusun log anda."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Butang ini mencipta nota pantas dengan teks yang diserlahkan."

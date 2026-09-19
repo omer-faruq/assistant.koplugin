@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - o. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" összefoglaló egy könyvhöz, meghatározott szakaszokra bontva, mint például Szereplők, Helyszínek, Témák, Kifejezések és fogalmak, Idővonal és Visszamerülés."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Kérdés\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Érdekesnek találhatja ezeket a témákat:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Hozzáadjuk ezt a gombot a Kiemelés menühöz?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI-jegyzetek fájlja:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Még nincs szolgáltató beállítva.</b>\n"
 "Adjon hozzá egy szolgáltatót a Beállításokban vagy a configuration.lua fájlban."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Jegyzetfüzet fájl:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Paraméterek</b>"
 
@@ -197,6 +194,43 @@ msgstr "<b>Kapcsolat tesztelése...</b>"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Ismeretlen funkciótípus:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Mélyen átgondolt</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Kérdés</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "A %1 plugin új verziója (%2) érhető el. Kérjük, frissítsen!"
 
@@ -214,6 +248,43 @@ msgstr "AI szótár"
 
 msgid "AI Language: "
 msgstr "AI nyelve: "
+
+msgid "AI Note Name"
+msgstr "AI-jegyzet neve"
+
+msgid "AI Notes"
+msgstr "AI-jegyzetek"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI-jegyzetek (AI-beszélgetésnapló)"
+
+msgid "AI Notes Folder"
+msgstr "AI-jegyzetek mappa"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI-jegyzetek mappa: %1"
+
+msgid "AI Notes Settings"
+msgstr "AI-jegyzetek beállításai"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Az AI-jegyzetek mappa elérési útja:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "Az AI-jegyzetek a beszélgetésnaplód: az AI válaszai és a gyorsjegyzetek hozzáfűződnek. Több AI-jegyzetet is létrehozhatsz a naplóid rendszerezéséhez."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Az AI-jegyzetek elérési útja nem mappa: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Az AI-jegyzetek mentése sikertelen. Folytatás..."
+
+msgid "AI Notes: %1"
+msgstr "AI-jegyzetek: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "Az AI válaszol"
+
+msgid "AI note name cannot be empty."
+msgstr "Az AI-jegyzet neve nem lehet üres."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Az AI-jegyzet neve nem tartalmazhat '..'-ot."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Az AI-jegyzet neve nem tartalmazhat elérésiút-elválasztókat."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Az AI-jegyzet neve nem végződhet szóközzel vagy ponttal."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Az AI-jegyzet neve olyan karaktereket tartalmaz, amelyeket a fájlrendszer nem támogat."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Az AI-jegyzet nevét a fájlrendszer lefoglalta."
+
+msgid "AI note name must be text."
+msgstr "Az AI-jegyzet nevének szövegnek kell lennie."
+
+msgid "AI note path is not a file: %1"
+msgstr "Az AI-jegyzet útvonala nem fájl: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Az AI-jegyzet útvonala nem érhető el."
 
 msgid "API Key"
 msgstr "API-kulcs"
@@ -295,8 +393,8 @@ msgstr ""
 "Adjon hozzá szolgáltatókat a főmenüből:\n"
 "%1 -> AI asszisztens -> Beállítások -> Szolgáltató API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "A könyvhöz kapcsolódó kiemelések, megjegyzések és jegyzetfüzet-tartalom elemzése."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "A könyvben található kiemelések, jegyzetek és AI-jegyzetek tartalmának elemzése."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Előző szöveg csatolása"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automatikus összefoglaló régóta nem olvasott könyvek megnyitásakor"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Beszélgetések automatikus mentése a jegyzetfüzetbe"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "A beszélgetések automatikus mentése AI-jegyzetekbe"
 
 msgid "Base URL"
 msgstr "Alap URL"
@@ -415,8 +513,8 @@ msgstr "Frissítések keresése..."
 msgid "Choose Definition Sections"
 msgstr "Definíciós szakaszok kiválasztása"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Válaszd ki, melyik jegyzetfüzetbe kerüljenek a jegyzeteid."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Válassza ki, melyik AI-jegyzetbe mentse a jegyzeteit."
 
 msgid "Clear"
 msgstr "Ürítés"
@@ -436,8 +534,8 @@ msgstr "A konfiguráció nem található. Kérlek, először állítsd be a conf
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Az AI LLM válasznyelvének beállítása. Alapértelmezés szerint a KOReader felületi nyelve."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "A beállított jegyzetfüzet-mappa nem érhető el: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "A beállított AI-jegyzetek mappa nem érhető el: %1"
 
 msgid "Connection test successful."
 msgstr "A kapcsolati teszt sikeres."
@@ -461,8 +559,8 @@ msgstr "Kontextuális jegyzetek / Reflexiók"
 msgid "Contradictions / Open Questions"
 msgstr "Ellentmondások / Nyitott kérdések"
 
-msgid "Conversation is saved to notebook"
-msgstr "A beszélgetés jegyzetfüzetbe mentve"
+msgid "Conversation is saved to AI Notes"
+msgstr "A beszélgetés mentve az AI-jegyzetekbe"
 
 msgid "Copy"
 msgstr "Másolás"
@@ -478,42 +576,42 @@ msgstr "Alapvető érvek"
 msgid "Core Idea"
 msgstr "Alapötlet"
 
-msgid "Could not close notebook file."
-msgstr "Nem sikerült bezárni a jegyzetfüzetfájlt."
+msgid "Could not close AI note file."
+msgstr "Nem sikerült bezárni az AI-jegyzet fájlt."
 
-msgid "Could not create notebook."
-msgstr "Nem sikerült létrehozni a jegyzetfüzetet."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Nem sikerült létrehozni az AI-jegyzetek mappát: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Nem sikerült létrehozni a jegyzetfüzetet: %1"
+msgid "Could not create AI note."
+msgstr "Nem sikerült létrehozni az AI-jegyzetet."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Nem sikerült létrehozni a jegyzetfüzet-mappát: %1"
+msgid "Could not create AI note: %1"
+msgstr "Nem sikerült létrehozni az AI-jegyzetet: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Nem sikerült listázni a jegyzetfüzet-mappa tartalmát: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Nem sikerült listázni az AI-jegyzetek mappát: %1"
 
-msgid "Could not open notebook file."
-msgstr "Nem sikerült megnyitni a jegyzetfüzetfájlt."
+msgid "Could not open AI note file."
+msgstr "Nem sikerült megnyitni az AI-jegyzet fájlt."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Nem sikerült menteni a kiválasztott jegyzetfüzetbe.\n"
+"Nem sikerült a kiválasztott AI-jegyzetbe menteni.\n"
 "Mentve ide: %1"
 
-msgid "Could not select notebook."
-msgstr "Nem sikerült kiválasztani a jegyzetfüzetet."
+msgid "Could not select AI note."
+msgstr "Nem sikerült kiválasztani az AI-jegyzetet."
 
-msgid "Could not write notebook file."
-msgstr "Nem sikerült írni a jegyzetfüzetfájlba."
+msgid "Could not write AI note file."
+msgstr "Nem sikerült írni az AI-jegyzet fájlt."
 
 msgid "Create"
 msgstr "Létrehozás"
 
-msgid "Create a notebook."
-msgstr "Jegyzetfüzet létrehozása."
+msgid "Create an AI note."
+msgstr "AI-jegyzet létrehozása."
 
 msgid "Cultural Significance"
 msgstr "Kulturális jelentőség"
@@ -530,9 +628,6 @@ msgstr "Egyéni prompt"
 
 msgid "Custom Prompts"
 msgstr "Egyéni promptok"
-
-msgid "Deeply Thought"
-msgstr "Mély gondolkodás"
 
 msgid "Delete"
 msgstr "Törlés"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Integrált összefoglaló"
 
-msgid "Invalid notebook entry."
-msgstr "Érvénytelen jegyzetfüzet-bejegyzés."
+msgid "Invalid AI note entry."
+msgstr "Érvénytelen AI-jegyzet bejegyzés."
 
-msgid "Invalid notebook filename."
-msgstr "Érvénytelen jegyzetfüzet-fájlnév."
+msgid "Invalid AI note filename."
+msgstr "Érvénytelen AI-jegyzet fájlnév."
 
 msgid "Justify"
 msgstr "Sorkizárt"
@@ -764,9 +859,6 @@ msgstr "Hagyd üresen a(z) %1 használatához"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Hagyd üresen ezeket a mezőket a felület nyelvének használatához: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Betöltés: <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Helyszínek"
@@ -804,26 +896,32 @@ msgstr "Modellek: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modellek: %1 (egyeztetett)"
 
-msgid "Multiple Notebooks"
-msgstr "Több jegyzetfüzet"
+msgid "Multiple AI Notes"
+msgstr "Több AI-jegyzet"
 
 msgid "Narrative element in focus:"
 msgstr "Fókuszban lévő narratív elem:"
 
-msgid "New notebook"
-msgstr "Új jegyzetfüzet"
+msgid "New AI Note"
+msgstr "Új AI-jegyzet"
 
-msgid "New notebook..."
-msgstr "Új jegyzetfüzet..."
+msgid "New AI Note..."
+msgstr "Új AI-jegyzet..."
 
 msgid "No"
 msgstr "Nem"
 
+msgid "No AI Notes folder is set."
+msgstr "Nincs beállítva AI-jegyzetek mappa."
+
+msgid "No AI notes yet"
+msgstr "Még nincsenek AI-jegyzetek"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Nincs aktív szolgáltató beállítva. Kérjük, adjon hozzá egyet a Beállításokban."
 
-msgid "No base folder is available for notebooks."
-msgstr "Nincs elérhető alapmappa a jegyzetfüzetek számára."
+msgid "No base folder is available for AI Notes."
+msgstr "Nincs elérhető alapmappa az AI-jegyzetekhez."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nincs megnyitott könyv. Nyomja meg hosszan a fájlkezelőben a kívánt könyvet, és válassza a Könyvinformációk (AI) lehetőséget."
@@ -837,14 +935,8 @@ msgstr "Nincs elérhető modell."
 msgid "No models matching \"%1\"."
 msgstr "Nincs a(z) \"%1\" kifejezésnek megfelelő modell."
 
-msgid "No notebooks folder is set."
-msgstr "Nincs jegyzetfüzet mappa beállítva."
-
-msgid "No notebooks yet"
-msgstr "Még nincsenek jegyzetfüzetek"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Nincs elérhető elérési út az örökölt jegyzetfüzethez."
+msgid "No path is available for the default AI note."
+msgstr "Nincs elérhető útvonal az alapértelmezett AI-jegyzethez."
 
 msgid "No response received."
 msgstr "Nem érkezett válasz."
@@ -863,70 +955,6 @@ msgstr "Nincs"
 
 msgid "Note added successfully"
 msgstr "Megjegyzés sikeresen hozzáadva."
-
-msgid "Notebook"
-msgstr "Jegyzetfüzet"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Jegyzetfüzet (AI beszélgetési napló)"
-
-msgid "Notebook Settings"
-msgstr "Jegyzetfüzet beállításai"
-
-msgid "Notebook name"
-msgstr "Jegyzetfüzet neve"
-
-msgid "Notebook name cannot be empty."
-msgstr "A jegyzetfüzet neve nem lehet üres."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "A jegyzetfüzet neve nem tartalmazhat '..' karaktereket."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "A jegyzetfüzet neve nem tartalmazhat elérésiút-elválasztó karaktereket."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "A jegyzetfüzet neve nem végződhet szóközzel vagy ponttal."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "A jegyzetfüzet neve olyan karaktereket tartalmaz, amelyeket a fájlrendszer nem támogat."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "A jegyzetfüzet neve fenn van tartva a fájlrendszer által."
-
-msgid "Notebook name must be text."
-msgstr "A jegyzetfüzet nevének szövegnek kell lennie."
-
-msgid "Notebook path is not a file: %1"
-msgstr "A jegyzetfüzet elérési útja nem fájl: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "A jegyzetfüzet elérési útja nem érhető el."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "A jegyzetfüzet mentése sikertelen. Folytatás..."
-
-msgid "Notebook: %1"
-msgstr "Jegyzetfüzet: %1"
-
-msgid "Notebooks"
-msgstr "Jegyzetfüzetek"
-
-msgid "Notebooks Folder"
-msgstr "Jegyzetfüzet mappa"
-
-msgid "Notebooks Folder: %1"
-msgstr "Jegyzetfüzetek mappája: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Jegyzetfüzetek mappa elérési útja:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "A jegyzetfüzetek elérési útja nem könyvtár: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1050,9 +1078,6 @@ msgstr "Törlés"
 
 msgid "Purge Settings"
 msgstr "Beállítások törlése"
-
-msgid "Querying AI ..."
-msgstr "AI lekérdezése ..."
 
 msgid "Quick Note"
 msgstr "Gyors jegyzet"
@@ -1184,11 +1209,11 @@ msgstr "A keresőeszköz rekordjának táblának kell lennie."
 msgid "Searching with %1 ... [%2]"
 msgstr "Keresés ezzel: %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "AI-jegyzet kiválasztása"
+
 msgid "Select a model:"
 msgstr "Válasszon modellt:"
-
-msgid "Select notebook"
-msgstr "Jegyzetfüzet kiválasztása"
 
 msgid "Selection copied to clipboard."
 msgstr "A kijelölés átmásolva a vágólapra."
@@ -1267,8 +1292,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Gyors jegyzetek készítése"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Készítsen gyors jegyzeteket, amelyek a jegyzetfüzetébe mentődnek."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Készíts gyorsjegyzeteket, amelyek az AI-jegyzeteidbe mentődnek."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "A szöveg a vágólapra másolva."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "A(z) %1 kezelő nem található. Győződjön meg róla, hogy a kezelő létezik az api_handlers könyvtárban."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "A jegyzetfüzet a beszélgetési naplód: az AI-válaszok és a gyors jegyzetek hozzáfűződnek. Több jegyzetfüzetet is létrehozhatsz a naplók rendszerezéséhez."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ez a gomb gyors jegyzetet hoz létre a kiemelt szöveggel."

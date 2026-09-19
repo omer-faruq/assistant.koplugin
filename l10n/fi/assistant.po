@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - s. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\"-tiivistelmä kirjasta, jäsenneltynä osioihin, kuten Hahmot, Tapahtumapaikat, Teemat, Termit ja käsitteet, Aikajana ja Uudelleen uppoutuminen."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Kysymys\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Nämä aiheet saattavat kiinnostaa sinua:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Lisätäänkö tämä painike korostusvalikkoon?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI-muistiinpanotiedosto:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Yhtään palveluntarjoajaa ei ole vielä määritetty.</b>\n"
 "Lisää palveluntarjoaja Asetuksista tai configuration.lua-tiedostosta."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Muistikirjatiedosto:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametrit</b>"
 
@@ -197,6 +194,43 @@ msgstr "<b>Testataan yhteyttä...</b>"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Tuntematon toimintotyyppi:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Syvällinen pohdinta</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Kysymys</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Liitännäisestä %1 on saatavilla uusi versio (%2). Päivitä!"
 
@@ -214,6 +248,43 @@ msgstr "AI-sanakirja"
 
 msgid "AI Language: "
 msgstr "Tekoälyn kieli: "
+
+msgid "AI Note Name"
+msgstr "AI-muistiinpanon nimi"
+
+msgid "AI Notes"
+msgstr "AI-muistiinpanot"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI-muistiinpanot (AI-keskusteluloki)"
+
+msgid "AI Notes Folder"
+msgstr "AI-muistiinpanojen kansio"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI-muistiinpanojen kansio: %1"
+
+msgid "AI Notes Settings"
+msgstr "AI-muistiinpanojen asetukset"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"AI-muistiinpanojen kansion polku:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI-muistiinpanot on keskustelulokisi: AI:n vastaukset ja pikamuistiinpanot lisätään siihen. Voit luoda useita AI-muistiinpanoja lokiesi järjestämiseksi."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "AI-muistiinpanojen polku ei ole hakemisto: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "AI-muistiinpanojen tallennus epäonnistui. Jatketaan..."
+
+msgid "AI Notes: %1"
+msgstr "AI-muistiinpanot: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "Tekoäly vastaa"
+
+msgid "AI note name cannot be empty."
+msgstr "AI-muistiinpanon nimi ei voi olla tyhjä."
+
+msgid "AI note name cannot contain '..'."
+msgstr "AI-muistiinpanon nimi ei voi sisältää merkkiä '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "AI-muistiinpanon nimi ei voi sisältää polun erottimia."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "AI-muistiinpanon nimi ei voi päättyä välilyöntiin tai pisteeseen."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "AI-muistiinpanon nimi sisältää merkkejä, joita tiedostojärjestelmä ei tue."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "AI-muistiinpanon nimi on tiedostojärjestelmän varaama."
+
+msgid "AI note name must be text."
+msgstr "AI-muistiinpanon nimen täytyy olla tekstiä."
+
+msgid "AI note path is not a file: %1"
+msgstr "AI-muistiinpanon polku ei ole tiedosto: %1"
+
+msgid "AI note path is unavailable."
+msgstr "AI-muistiinpanon polku ei ole käytettävissä."
 
 msgid "API Key"
 msgstr "API-avain"
@@ -295,8 +393,8 @@ msgstr ""
 "Lisää palveluntarjoajia päävalikosta:\n"
 "%1 -> AI Assistant -> Asetukset -> Palveluntarjoajan API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Analyysi kirjan korostuksista, muistiinpanoista ja muistikirjan sisällöstä."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Analyysi kirjan korostuksista, muistiinpanoista ja AI-muistiinpanojen sisällöstä."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Liitä aiempi teksti"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automaattinen yhteenveto, kun avataan pitkään lukematon kirja"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Keskustelujen automaattinen tallennus muistikirjaan"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Tallenna keskustelut automaattisesti AI-muistiinpanoihin"
 
 msgid "Base URL"
 msgstr "Perus-URL"
@@ -415,8 +513,8 @@ msgstr "Tarkistetaan päivityksiä..."
 msgid "Choose Definition Sections"
 msgstr "Valitse määritelmäosiot"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Valitse, mihin muistikirjaan muistiinpanosi tallennetaan."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Valitse, mihin AI-muistiinpanoon muistiinpanosi tallennetaan."
 
 msgid "Clear"
 msgstr "Tyhjennä"
@@ -436,8 +534,8 @@ msgstr "Konfiguraatiotiedostoa ei löytynyt. Määritä configuration.lua ensin.
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Määritä tekoäly-LLM:n vastauskieli. Oletuksena KOReaderin käyttöliittymän kieli."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Määritetty muistikirjojen kansio ei ole käytettävissä: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Määritetty AI-muistiinpanojen kansio ei ole käytettävissä: %1"
 
 msgid "Connection test successful."
 msgstr "Yhteyden testaus onnistui."
@@ -461,8 +559,8 @@ msgstr "Kontekstimuistiinpanot / pohdinnat"
 msgid "Contradictions / Open Questions"
 msgstr "Ristiriidat / avoimet kysymykset"
 
-msgid "Conversation is saved to notebook"
-msgstr "Keskustelu on tallennettu muistikirjaan"
+msgid "Conversation is saved to AI Notes"
+msgstr "Keskustelu on tallennettu AI-muistiinpanoihin"
 
 msgid "Copy"
 msgstr "Kopioi"
@@ -478,42 +576,42 @@ msgstr "Keskeiset argumentit"
 msgid "Core Idea"
 msgstr "Ydinajatus"
 
-msgid "Could not close notebook file."
-msgstr "Muistikirjatiedostoa ei voitu sulkea."
+msgid "Could not close AI note file."
+msgstr "AI-muistiinpanotiedostoa ei voitu sulkea."
 
-msgid "Could not create notebook."
-msgstr "Muistikirjaa ei voitu luoda."
+msgid "Could not create AI Notes folder: %1"
+msgstr "AI-muistiinpanojen kansiota ei voitu luoda: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Muistikirjaa ei voitu luoda: %1"
+msgid "Could not create AI note."
+msgstr "AI-muistiinpanoa ei voitu luoda."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Muistikirjojen kansiota ei voitu luoda: %1"
+msgid "Could not create AI note: %1"
+msgstr "AI-muistiinpanoa ei voitu luoda: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Muistikirjojen kansiota ei voitu listata: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "AI-muistiinpanojen kansiota ei voitu luetella: %1"
 
-msgid "Could not open notebook file."
-msgstr "Muistikirjatiedostoa ei voitu avata."
+msgid "Could not open AI note file."
+msgstr "AI-muistiinpanotiedostoa ei voitu avata."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Valittuun muistikirjaan ei voitu tallentaa.\n"
+"Valittuun AI-muistiinpanoon ei voitu tallentaa.\n"
 "Tallennettu: %1"
 
-msgid "Could not select notebook."
-msgstr "Muistikirjaa ei voitu valita."
+msgid "Could not select AI note."
+msgstr "AI-muistiinpanoa ei voitu valita."
 
-msgid "Could not write notebook file."
-msgstr "Muistikirjatiedostoon ei voitu kirjoittaa."
+msgid "Could not write AI note file."
+msgstr "AI-muistiinpanotiedostoa ei voitu kirjoittaa."
 
 msgid "Create"
 msgstr "Luo"
 
-msgid "Create a notebook."
-msgstr "Luo muistikirja."
+msgid "Create an AI note."
+msgstr "Luo AI-muistiinpano."
 
 msgid "Cultural Significance"
 msgstr "Kulttuurinen merkitys"
@@ -530,9 +628,6 @@ msgstr "Mukautettu kehote"
 
 msgid "Custom Prompts"
 msgstr "Mukautetut kehotteet"
-
-msgid "Deeply Thought"
-msgstr "Syvällinen ajattelu"
 
 msgid "Delete"
 msgstr "Poista"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Yhdistetty yhteenveto"
 
-msgid "Invalid notebook entry."
-msgstr "Virheellinen muistikirjamerkintä."
+msgid "Invalid AI note entry."
+msgstr "Virheellinen AI-muistiinpanomerkintä."
 
-msgid "Invalid notebook filename."
-msgstr "Virheellinen muistikirjan tiedostonimi."
+msgid "Invalid AI note filename."
+msgstr "Virheellinen AI-muistiinpanon tiedostonimi."
 
 msgid "Justify"
 msgstr "Tasattu"
@@ -764,9 +859,6 @@ msgstr "Jätä tyhjäksi käyttääksesi: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Jätä nämä kentät tyhjiksi käyttääksesi käyttöliittymän kieltä: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Ladataan: <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Paikat"
@@ -804,26 +896,32 @@ msgstr "Mallit: %1"
 msgid "Models: %1 (matched)"
 msgstr "Mallit: %1 (täsmääviä)"
 
-msgid "Multiple Notebooks"
-msgstr "Useita muistikirjoja"
+msgid "Multiple AI Notes"
+msgstr "Useita AI-muistiinpanoja"
 
 msgid "Narrative element in focus:"
 msgstr "Kerronnan keskiössä oleva elementti:"
 
-msgid "New notebook"
-msgstr "Uusi muistikirja"
+msgid "New AI Note"
+msgstr "Uusi AI-muistiinpano"
 
-msgid "New notebook..."
-msgstr "Uusi muistikirja..."
+msgid "New AI Note..."
+msgstr "Uusi AI-muistiinpano..."
 
 msgid "No"
 msgstr "Ei"
 
+msgid "No AI Notes folder is set."
+msgstr "AI-muistiinpanojen kansiota ei ole asetettu."
+
+msgid "No AI notes yet"
+msgstr "Ei vielä AI-muistiinpanoja"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Aktiivista palveluntarjoajaa ei ole määritetty. Lisää yksi Asetuksiin."
 
-msgid "No base folder is available for notebooks."
-msgstr "Muistikirjoille ei ole saatavilla peruskansiota."
+msgid "No base folder is available for AI Notes."
+msgstr "AI-muistiinpanoille ei ole käytettävissä peruskansiota."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Ei avointa kirjaa. Paina kirjaa pitkään tiedostoselaimessa ja valitse Kirjan tiedot (AI)."
@@ -837,14 +935,8 @@ msgstr "Ei malleja saatavilla."
 msgid "No models matching \"%1\"."
 msgstr "Ei hakua \"%1\" vastaavia malleja."
 
-msgid "No notebooks folder is set."
-msgstr "Muistikirjojen kansiota ei ole asetettu."
-
-msgid "No notebooks yet"
-msgstr "Ei vielä muistikirjoja"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Vanhalle muistikirjalle ei ole saatavilla polkua."
+msgid "No path is available for the default AI note."
+msgstr "Oletusarvoiselle AI-muistiinpanolle ei ole käytettävissä polkua."
 
 msgid "No response received."
 msgstr "Vastausta ei saatu."
@@ -863,70 +955,6 @@ msgstr "Ei mitään"
 
 msgid "Note added successfully"
 msgstr "Muistiinpano lisätty onnistuneesti"
-
-msgid "Notebook"
-msgstr "Muistikirja"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Muistikirja (AI-keskusteluloki)"
-
-msgid "Notebook Settings"
-msgstr "Muistikirjan asetukset"
-
-msgid "Notebook name"
-msgstr "Muistikirjan nimi"
-
-msgid "Notebook name cannot be empty."
-msgstr "Muistikirjan nimi ei voi olla tyhjä."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Muistikirjan nimi ei voi sisältää '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Muistikirjan nimi ei voi sisältää polun erottimia."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Muistikirjan nimi ei voi päättyä välilyöntiin tai pisteeseen."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Muistikirjan nimi sisältää merkkejä, joita tiedostojärjestelmä ei tue."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Muistikirjan nimi on tiedostojärjestelmän varaama."
-
-msgid "Notebook name must be text."
-msgstr "Muistikirjan nimen on oltava tekstiä."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Muistikirjan polku ei ole tiedosto: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Muistikirjan polku ei ole käytettävissä."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Muistikirjaan tallennus epäonnistui. Jatketaan..."
-
-msgid "Notebook: %1"
-msgstr "Muistikirja: %1"
-
-msgid "Notebooks"
-msgstr "Muistikirjat"
-
-msgid "Notebooks Folder"
-msgstr "Muistikirjojen kansio"
-
-msgid "Notebooks Folder: %1"
-msgstr "Muistikirjojen kansio: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Muistikirjojen kansion polku:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Muistikirjojen polku ei ole hakemisto: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1050,9 +1078,6 @@ msgstr "Tyhjennä"
 
 msgid "Purge Settings"
 msgstr "Tyhjennä asetukset"
-
-msgid "Querying AI ..."
-msgstr "Kysytään tekoälyltä ..."
 
 msgid "Quick Note"
 msgstr "Pikamuistiinpano"
@@ -1184,11 +1209,11 @@ msgstr "Hakutyökalun tietueen on oltava taulukko."
 msgid "Searching with %1 ... [%2]"
 msgstr "Haetaan hakusanalla %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Valitse AI-muistiinpano"
+
 msgid "Select a model:"
 msgstr "Valitse malli:"
-
-msgid "Select notebook"
-msgstr "Valitse muistikirja"
 
 msgid "Selection copied to clipboard."
 msgstr "Valinta kopioitu leikepöydälle."
@@ -1267,8 +1292,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Tee pikamuistiinpanoja"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Tee nopeita muistiinpanoja, jotka tallennetaan muistikirjaasi."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Tee pikamuistiinpanoja, jotka tallennetaan AI-muistiinpanoihisi."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "Teksti kopioitu leikepöydälle"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Käsittelijää kohteelle %1 ei löytynyt. Varmista, että käsittelijä on olemassa api_handlers-hakemistossa."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Muistikirja on keskustelulokisi: AI-vastaukset ja pikamuistiinpanot lisätään siihen. Voit luoda useita muistikirjoja järjestääksesi lokisi."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Tämä painike luo pikamuistiinpanon korostetusta tekstistä."

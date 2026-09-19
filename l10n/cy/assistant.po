@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Cymraeg (AI translation)\n"
@@ -38,9 +38,6 @@ msgstr " - t. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Crynodeb \"X-Ray\" ar gyfer llyfr, wedi'i strwythuro'n adrannau penodol fel Cymeriadau, Lleoliadau, Themâu, Termau a Chysyniadau, Llinell Amser, ac Ail-ymgolli."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Cwestiwn\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Efallai y bydd y pynciau hyn yn ddiddorol i chi:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Ychwanegu'r botwm hwn i'r Ddewislen Amlygu?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Ffeil Nodiadau AI:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Nid oes darparwr wedi'i sefydlu eto.</b>\n"
 "Ychwanegwch ddarparwr yn Gosodiadau neu configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Ffeil llyfr nodiadau:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Paramedrau</b>"
 
@@ -197,6 +194,43 @@ msgstr "Cysylltiad"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Math o nodwedd anhysbys:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Meddwl Dwys</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Cwestiwn</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Mae fersiwn newydd o'r ategyn %1 (%2) ar gael. Diweddarwch os gwelwch yn dda!"
 
@@ -214,6 +248,43 @@ msgstr "Geiriadur AI"
 
 msgid "AI Language: "
 msgstr "Iaith AI: "
+
+msgid "AI Note Name"
+msgstr "Enw Nodyn AI"
+
+msgid "AI Notes"
+msgstr "Nodiadau AI"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "Nodiadau AI (Log Sgwrs AI)"
+
+msgid "AI Notes Folder"
+msgstr "Ffolder Nodiadau AI"
+
+msgid "AI Notes Folder: %1"
+msgstr "Ffolder Nodiadau AI: %1"
+
+msgid "AI Notes Settings"
+msgstr "Gosodiadau Nodiadau AI"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Llwybr ffolder Nodiadau AI:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "Eich log sgwrs yw Nodiadau AI: caiff atebion AI a nodiadau cyflym eu hychwanegu ato. Gallwch greu sawl nodyn AI i drefnu eich logiau."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Nid yw llwybr Nodiadau AI yn gyfeiriadur: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Methodd cadw Nodiadau AI. Yn parhau..."
+
+msgid "AI Notes: %1"
+msgstr "Nodiadau AI: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "Mae'r AI yn ymateb"
+
+msgid "AI note name cannot be empty."
+msgstr "Ni all enw nodyn AI fod yn wag."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Ni all enw nodyn AI gynnwys '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Ni all enw nodyn AI gynnwys gwahanyddion llwybr."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Ni all enw nodyn AI ddod i ben â bwlch na dot."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Mae enw nodyn AI yn cynnwys nodau nad yw'r system ffeiliau yn eu cefnogi."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Mae enw nodyn AI wedi'i neilltuo gan y system ffeiliau."
+
+msgid "AI note name must be text."
+msgstr "Rhaid i enw nodyn AI fod yn destun."
+
+msgid "AI note path is not a file: %1"
+msgstr "Nid yw llwybr nodyn AI yn ffeil: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Nid yw llwybr nodyn AI ar gael."
 
 msgid "API Key"
 msgstr "Allwedd API"
@@ -295,8 +393,8 @@ msgstr ""
 "Ychwanegwch ddarparwyr o'r brif ddewislen:\n"
 "%1 -> Cynorthwyydd AI -> Gosodiadau -> API Darparwr"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Dadansoddiad o'ch amlygiadau, nodiadau, a chynnwys eich llyfr nodiadau o'r llyfr."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Dadansoddiad o'ch amlygiadau, eich nodiadau, a chynnwys Nodiadau AI o'r llyfr."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Atodi Testun Blaenorol"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Crynodeb awtomatig wrth agor llyfrau sydd heb eu darllen ers tro"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Cadw sgyrsiau yn awtomatig i'r llyfr nodiadau"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Cadw Sgyrsiau'n awtomatig i Nodiadau AI"
 
 msgid "Base URL"
 msgstr "URL Sylfaenol"
@@ -415,8 +513,8 @@ msgstr "Yn gwirio am ddiweddariadau..."
 msgid "Choose Definition Sections"
 msgstr "Dewis Adrannau Diffiniad"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Dewiswch i ba lyfr nodiadau y cedwir eich nodiadau."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Dewiswch i ba nodyn AI y caiff eich nodiadau eu cadw."
 
 msgid "Clear"
 msgstr "Clirio"
@@ -436,8 +534,8 @@ msgstr "Ni chafwyd hyd i'r cyfluniad. Sefydlwch configuration.lua yn gyntaf."
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Ffurfweddu iaith ymateb yr AI LLM. Yn defnyddio iaith rhyngwyneb KOReader yn ddiofyn."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Nid yw ffolder y llyfrau nodiadau wedi'i ffurfweddu yn hygyrch: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Nid yw'r blygell Nodiadau AI a ffurfweddwyd ar gael: %1"
 
 msgid "Connection test successful."
 msgstr "Llwyddodd y prawf cysylltiad."
@@ -461,8 +559,8 @@ msgstr "Nodiadau Cyd-destunol / Myfyrdodau"
 msgid "Contradictions / Open Questions"
 msgstr "Gwrthddywediadau / Cwestiynau Agored"
 
-msgid "Conversation is saved to notebook"
-msgstr "Mae'r sgwrs wedi'i chadw i'r llyfr nodiadau"
+msgid "Conversation is saved to AI Notes"
+msgstr "Mae'r sgwrs wedi'i chadw i Nodiadau AI"
 
 msgid "Copy"
 msgstr "Copïo"
@@ -478,42 +576,42 @@ msgstr "Prif Ddadleuon"
 msgid "Core Idea"
 msgstr "Prif Syniad"
 
-msgid "Could not close notebook file."
-msgstr "Methwyd cau ffeil y llyfr nodiadau."
+msgid "Could not close AI note file."
+msgstr "Methwyd cau ffeil nodyn AI."
 
-msgid "Could not create notebook."
-msgstr "Methwyd creu llyfr nodiadau."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Methwyd creu plygell Nodiadau AI: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Methwyd creu'r llyfr nodiadau: %1"
+msgid "Could not create AI note."
+msgstr "Methwyd creu nodyn AI."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Methwyd creu ffolder y llyfrau nodiadau: %1"
+msgid "Could not create AI note: %1"
+msgstr "Methwyd creu nodyn AI: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Methwyd rhestru ffolder y llyfrau nodiadau: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Methwyd rhestru plygell Nodiadau AI: %1"
 
-msgid "Could not open notebook file."
-msgstr "Methwyd agor ffeil y llyfr nodiadau."
+msgid "Could not open AI note file."
+msgstr "Methwyd agor ffeil nodyn AI."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Methwyd cadw i'r llyfr nodiadau a ddewiswyd.\n"
-"Wedi'i gadw i: %1"
+"Methwyd cadw i'r nodyn AI a ddewiswyd.\n"
+"Cadwyd i: %1"
 
-msgid "Could not select notebook."
-msgstr "Methwyd dewis llyfr nodiadau."
+msgid "Could not select AI note."
+msgstr "Methwyd dewis nodyn AI."
 
-msgid "Could not write notebook file."
-msgstr "Methwyd ysgrifennu ffeil y llyfr nodiadau."
+msgid "Could not write AI note file."
+msgstr "Methwyd ysgrifennu ffeil nodyn AI."
 
 msgid "Create"
 msgstr "Creu"
 
-msgid "Create a notebook."
-msgstr "Creu llyfr nodiadau."
+msgid "Create an AI note."
+msgstr "Crëwch nodyn AI."
 
 msgid "Cultural Significance"
 msgstr "Arwyddocâd Diwylliannol"
@@ -530,9 +628,6 @@ msgstr "Prompt Personol"
 
 msgid "Custom Prompts"
 msgstr "Prompts Personol"
-
-msgid "Deeply Thought"
-msgstr "Meddwl Dwys"
 
 msgid "Delete"
 msgstr "Dileu"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Crynodeb Integredig"
 
-msgid "Invalid notebook entry."
-msgstr "Cofnod llyfr nodiadau annilys."
+msgid "Invalid AI note entry."
+msgstr "Cofnod nodyn AI annilys."
 
-msgid "Invalid notebook filename."
-msgstr "Enw ffeil llyfr nodiadau annilys."
+msgid "Invalid AI note filename."
+msgstr "Enw ffeil annilys ar gyfer nodyn AI."
 
 msgid "Justify"
 msgstr "Unioni"
@@ -768,9 +863,6 @@ msgstr "Gadewch yn wag i ddefnyddio: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Gadewch y meysydd hyn yn wag i ddefnyddio iaith y rhyngwyneb: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Yn llwytho ar gyfer <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Lleoliadau"
@@ -808,26 +900,32 @@ msgstr "Modelau: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modeliau: %1 (cydnabyddedig)"
 
-msgid "Multiple Notebooks"
-msgstr "Nodiaduron Lluosog"
+msgid "Multiple AI Notes"
+msgstr "Nodiadau AI lluosog"
 
 msgid "Narrative element in focus:"
 msgstr "Elfen naratif dan sylw:"
 
-msgid "New notebook"
-msgstr "Llyfr nodiadau newydd"
+msgid "New AI Note"
+msgstr "Nodyn AI newydd"
 
-msgid "New notebook..."
-msgstr "Nodiadur newydd..."
+msgid "New AI Note..."
+msgstr "Nodyn AI newydd..."
 
 msgid "No"
 msgstr "Na"
 
+msgid "No AI Notes folder is set."
+msgstr "Nid oes ffolder Nodiadau AI wedi'i osod."
+
+msgid "No AI notes yet"
+msgstr "Dim nodiadau AI eto"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Nid oes darparwr gweithredol wedi'i ffurfweddu. Ychwanegwch un yn y Gosodiadau."
 
-msgid "No base folder is available for notebooks."
-msgstr "Nid oes ffolder sylfaen ar gael ar gyfer llyfrau nodiadau."
+msgid "No base folder is available for AI Notes."
+msgstr "Nid oes ffolder sylfaen ar gael ar gyfer Nodiadau AI."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nid oes llyfr ar agor. Gwasgwch yn hir ar lyfr yn y rheolwr ffeiliau a dewiswch 'Gwybodaeth am y Llyfr (AI)'."
@@ -841,14 +939,8 @@ msgstr "Dim modelau ar gael."
 msgid "No models matching \"%1\"."
 msgstr "Dim modelau'n cyfateb i \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Nid oes ffolder nodiaduron wedi'i osod."
-
-msgid "No notebooks yet"
-msgstr "Dim llyfrau nodiadau eto"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Nid oes llwybr ar gael ar gyfer y llyfr nodiadau etifeddol."
+msgid "No path is available for the default AI note."
+msgstr "Nid oes llwybr ar gael ar gyfer y nodyn AI diofyn."
 
 msgid "No response received."
 msgstr "Ni dderbyniwyd unrhyw ymateb."
@@ -867,70 +959,6 @@ msgstr "Dim"
 
 msgid "Note added successfully"
 msgstr "Ychwanegwyd y nodyn yn llwyddiannus"
-
-msgid "Notebook"
-msgstr "Llyfr Nodiadau"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Llyfr Nodiadau (Cofnod Sgwrs AI)"
-
-msgid "Notebook Settings"
-msgstr "Gosodiadau Llyfr Nodiadau"
-
-msgid "Notebook name"
-msgstr "Enw'r llyfr nodiadau"
-
-msgid "Notebook name cannot be empty."
-msgstr "Ni all enw'r llyfr nodiadau fod yn wag."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Ni all enw'r llyfr nodiadau gynnwys '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Ni all enw'r llyfr nodiadau gynnwys gwahanyddion llwybr."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Ni all enw'r llyfr nodiadau orffen gyda bwlch neu ddot."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Mae enw'r llyfr nodiadau yn cynnwys nodau nad yw'r system ffeiliau yn eu cefnogi."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Mae enw'r llyfr nodiadau wedi'i gadw gan y system ffeiliau."
-
-msgid "Notebook name must be text."
-msgstr "Rhaid i enw'r llyfr nodiadau fod yn destun."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Nid yw llwybr y llyfr nodiadau yn ffeil: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Nid yw llwybr y llyfr nodiadau ar gael."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Methodd cadw'r NoteBook. Yn parhau..."
-
-msgid "Notebook: %1"
-msgstr "Llyfr nodiadau: %1"
-
-msgid "Notebooks"
-msgstr "Llyfrau nodiadau"
-
-msgid "Notebooks Folder"
-msgstr "Ffolder Nodiaduron"
-
-msgid "Notebooks Folder: %1"
-msgstr "Ffolder Nodiadau: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Llwybr ffolder nodiadau:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Nid yw llwybr y llyfrau nodiadau yn gyfeiriadur: %1"
 
 msgid "OK"
 msgstr "Iawn"
@@ -1054,9 +1082,6 @@ msgstr "Clirio"
 
 msgid "Purge Settings"
 msgstr "Clirio Gosodiadau"
-
-msgid "Querying AI ..."
-msgstr "Yn holi'r AI ..."
 
 msgid "Quick Note"
 msgstr "Nodyn Cyflym"
@@ -1188,11 +1213,11 @@ msgstr "Rhaid i gofnod yr offeryn chwilio fod yn dabl."
 msgid "Searching with %1 ... [%2]"
 msgstr "Yn chwilio gyda %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Dewis nodyn AI"
+
 msgid "Select a model:"
 msgstr "Dewiswch fodel:"
-
-msgid "Select notebook"
-msgstr "Dewis llyfr nodiadau"
 
 msgid "Selection copied to clipboard."
 msgstr "Copïwyd y dewisiad i'r clipfwrdd."
@@ -1271,8 +1296,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Cymryd Nodiadau Cyflym"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Cymerwch nodiadau cyflym a fydd yn cael eu cadw i'ch llyfr nodiadau."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Tynnwch nodiadau cyflym a gaiff eu cadw yn eich Nodiadau AI."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1293,9 +1318,6 @@ msgstr "Copïwyd y testun i'r clipfwrdd"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Ni chafwyd hyd i'r handler ar gyfer %1. Sicrhewch fod y handler yn bodoli yn y cyfeiriadur api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Y llyfr nodiadau yw eich cofnod sgwrs: atebion AI a nodiadau cyflym yn cael eu hychwanegu ato. Gallwch greu llyfrau nodiadau lluosog i drefnu eich cofnodion."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Mae'r botwm hwn yn creu nodyn cyflym gyda'r testun sydd wedi'i amlygu."

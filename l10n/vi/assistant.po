@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - tr. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Bản tóm tắt \"X-Ray\" cho một cuốn sách, được cấu trúc thành các phần cụ thể như Nhân vật, Địa điểm, Chủ đề, Thuật ngữ & Khái niệm, Dòng thời gian và Tái hòa nhập."
 
-msgid "### %1 Question\n"
-msgstr "### Câu hỏi %1\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Bạn có thể thấy các chủ đề này thú vị:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Thêm nút này vào Menu Đánh dấu?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Tệp Ghi chú AI:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Chưa có nhà cung cấp nào được thiết lập.</b>\n"
 "Vui lòng thêm nhà cung cấp trong Cài đặt hoặc configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Tệp sổ ghi chú:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Tham số</b>"
 
@@ -197,6 +194,43 @@ msgstr "Kiểm tra kết nối..."
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Loại tính năng không xác định:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Suy nghĩ sâu</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Câu hỏi</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Có phiên bản mới của plugin %1 (%2). Vui lòng cập nhật!"
 
@@ -214,6 +248,43 @@ msgstr "Từ điển AI"
 
 msgid "AI Language: "
 msgstr "Ngôn ngữ AI: "
+
+msgid "AI Note Name"
+msgstr "Tên ghi chú AI"
+
+msgid "AI Notes"
+msgstr "Ghi chú AI"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "Ghi chú AI (Nhật ký hội thoại AI)"
+
+msgid "AI Notes Folder"
+msgstr "Thư mục Ghi chú AI"
+
+msgid "AI Notes Folder: %1"
+msgstr "Thư mục Ghi chú AI: %1"
+
+msgid "AI Notes Settings"
+msgstr "Cài đặt Ghi chú AI"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Đường dẫn thư mục Ghi chú AI:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "Ghi chú AI là nhật ký hội thoại của bạn: các câu trả lời của AI và ghi chú nhanh được thêm vào đó. Bạn có thể tạo nhiều ghi chú AI để sắp xếp nhật ký của mình."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Đường dẫn Ghi chú AI không phải là thư mục: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Lưu Ghi chú AI thất bại. Đang tiếp tục..."
+
+msgid "AI Notes: %1"
+msgstr "Ghi chú AI: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI đang phản hồi"
+
+msgid "AI note name cannot be empty."
+msgstr "Tên ghi chú AI không được để trống."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Tên ghi chú AI không được chứa '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Tên ghi chú AI không được chứa dấu phân cách đường dẫn."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Tên ghi chú AI không được kết thúc bằng dấu cách hoặc dấu chấm."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Tên ghi chú AI chứa các ký tự không được hệ thống tệp hỗ trợ."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Tên ghi chú AI bị hệ thống tệp dành riêng."
+
+msgid "AI note name must be text."
+msgstr "Tên ghi chú AI phải là văn bản."
+
+msgid "AI note path is not a file: %1"
+msgstr "Đường dẫn ghi chú AI không phải là tệp: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Đường dẫn ghi chú AI không khả dụng."
 
 msgid "API Key"
 msgstr "Khóa API"
@@ -295,8 +393,8 @@ msgstr ""
 "Thêm nhà cung cấp từ menu chính:\n"
 "%1 -> Trợ lý AI -> Cài đặt -> API Nhà cung cấp"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Phân tích các đoạn đánh dấu, ghi chú và nội dung sổ ghi chú của bạn từ cuốn sách."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Phân tích các đoạn tô sáng, ghi chú và nội dung Ghi chú AI của bạn từ cuốn sách."
 
 msgid "Anthropic Messages API"
 msgstr "API Tin nhắn Anthropic"
@@ -347,8 +445,8 @@ msgstr "Đính kèm văn bản trước đó"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Tự động tóm tắt khi mở sách lâu ngày chưa đọc"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Tự động lưu cuộc hội thoại vào sổ ghi chú"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Tự động lưu hội thoại vào Ghi chú AI"
 
 msgid "Base URL"
 msgstr "URL gốc"
@@ -415,8 +513,8 @@ msgstr "Đang kiểm tra cập nhật..."
 msgid "Choose Definition Sections"
 msgstr "Chọn mục định nghĩa"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Chọn sổ ghi chép để lưu ghi chú của bạn."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Chọn ghi chú AI mà ghi chú của bạn sẽ được lưu vào."
 
 msgid "Clear"
 msgstr "Xóa"
@@ -436,8 +534,8 @@ msgstr "Không tìm thấy cấu hình. Vui lòng thiết lập configuration.lu
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Định cấu hình ngôn ngữ phản hồi của AI LLM. Mặc định là ngôn ngữ giao diện KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Không thể truy cập thư mục sổ ghi chép đã cấu hình: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Thư mục Ghi chú AI đã cấu hình không thể truy cập: %1"
 
 msgid "Connection test successful."
 msgstr "Kiểm tra kết nối thành công."
@@ -461,8 +559,8 @@ msgstr "Ghi chú ngữ cảnh / Suy ngẫm"
 msgid "Contradictions / Open Questions"
 msgstr "Mâu thuẫn / Câu hỏi bỏ ngỏ"
 
-msgid "Conversation is saved to notebook"
-msgstr "Hội thoại đã được lưu vào sổ ghi chép"
+msgid "Conversation is saved to AI Notes"
+msgstr "Hội thoại đã được lưu vào Ghi chú AI"
 
 msgid "Copy"
 msgstr "Sao chép"
@@ -478,42 +576,42 @@ msgstr "Luận điểm cốt lõi"
 msgid "Core Idea"
 msgstr "Ý tưởng cốt lõi"
 
-msgid "Could not close notebook file."
-msgstr "Không thể đóng tệp sổ ghi chép."
+msgid "Could not close AI note file."
+msgstr "Không thể đóng tệp ghi chú AI."
 
-msgid "Could not create notebook."
-msgstr "Không thể tạo sổ ghi chép."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Không thể tạo thư mục Ghi chú AI: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Không thể tạo sổ ghi chép: %1"
+msgid "Could not create AI note."
+msgstr "Không thể tạo ghi chú AI."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Không thể tạo thư mục sổ ghi chép: %1"
+msgid "Could not create AI note: %1"
+msgstr "Không thể tạo ghi chú AI: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Không thể liệt kê thư mục sổ ghi chép: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Không thể liệt kê thư mục Ghi chú AI: %1"
 
-msgid "Could not open notebook file."
-msgstr "Không thể mở tệp sổ ghi chép."
+msgid "Could not open AI note file."
+msgstr "Không thể mở tệp ghi chú AI."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Không thể lưu vào sổ ghi chép đã chọn.\n"
+"Không thể lưu vào ghi chú AI đã chọn.\n"
 "Đã lưu vào: %1"
 
-msgid "Could not select notebook."
-msgstr "Không thể chọn sổ ghi chép."
+msgid "Could not select AI note."
+msgstr "Không thể chọn ghi chú AI."
 
-msgid "Could not write notebook file."
-msgstr "Không thể ghi tệp sổ ghi chép."
+msgid "Could not write AI note file."
+msgstr "Không thể ghi tệp ghi chú AI."
 
 msgid "Create"
 msgstr "Tạo"
 
-msgid "Create a notebook."
-msgstr "Tạo một sổ ghi chép."
+msgid "Create an AI note."
+msgstr "Tạo ghi chú AI."
 
 msgid "Cultural Significance"
 msgstr "Ý nghĩa văn hóa"
@@ -530,9 +628,6 @@ msgstr "Lời nhắc tùy chỉnh"
 
 msgid "Custom Prompts"
 msgstr "Prompt tùy chỉnh"
-
-msgid "Deeply Thought"
-msgstr "Suy nghĩ sâu sắc"
 
 msgid "Delete"
 msgstr "Xóa"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Tóm tắt tổng hợp"
 
-msgid "Invalid notebook entry."
-msgstr "Mục sổ ghi chép không hợp lệ."
+msgid "Invalid AI note entry."
+msgstr "Mục ghi chú AI không hợp lệ."
 
-msgid "Invalid notebook filename."
-msgstr "Tên tệp sổ ghi chép không hợp lệ."
+msgid "Invalid AI note filename."
+msgstr "Tên tệp ghi chú AI không hợp lệ."
 
 msgid "Justify"
 msgstr "Căn đều"
@@ -763,9 +858,6 @@ msgstr "Để trống để sử dụng: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Để trống các trường này để sử dụng ngôn ngữ giao diện: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Đang tải cho <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Địa điểm"
@@ -803,26 +895,32 @@ msgstr "Mô hình: %1"
 msgid "Models: %1 (matched)"
 msgstr "Mô hình: %1 (đã khớp)"
 
-msgid "Multiple Notebooks"
-msgstr "Nhiều sổ ghi chép"
+msgid "Multiple AI Notes"
+msgstr "Nhiều ghi chú AI"
 
 msgid "Narrative element in focus:"
 msgstr "Yếu tố tường thuật đang là trọng tâm:"
 
-msgid "New notebook"
-msgstr "Sổ ghi chép mới"
+msgid "New AI Note"
+msgstr "Ghi chú AI mới"
 
-msgid "New notebook..."
-msgstr "Sổ tay mới..."
+msgid "New AI Note..."
+msgstr "Ghi chú AI mới..."
 
 msgid "No"
 msgstr "Không"
 
+msgid "No AI Notes folder is set."
+msgstr "Chưa đặt thư mục Ghi chú AI."
+
+msgid "No AI notes yet"
+msgstr "Chưa có ghi chú AI nào"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Chưa cấu hình nhà cung cấp nào đang hoạt động. Vui lòng thêm trong Cài đặt."
 
-msgid "No base folder is available for notebooks."
-msgstr "Không có thư mục cơ sở nào cho sổ ghi chép."
+msgid "No base folder is available for AI Notes."
+msgstr "Không có thư mục gốc nào khả dụng cho Ghi chú AI."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Không có sách nào đang mở. Nhấn giữ một cuốn sách trong trình quản lý tệp và chọn Thông tin sách (AI)."
@@ -836,14 +934,8 @@ msgstr "Không có mô hình nào khả dụng."
 msgid "No models matching \"%1\"."
 msgstr "Không có mô hình nào khớp với \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Chưa đặt thư mục sổ ghi chép."
-
-msgid "No notebooks yet"
-msgstr "Chưa có sổ ghi chép nào"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Không có đường dẫn nào cho sổ ghi chép cũ."
+msgid "No path is available for the default AI note."
+msgstr "Không có đường dẫn nào khả dụng cho ghi chú AI mặc định."
 
 msgid "No response received."
 msgstr "Không nhận được phản hồi."
@@ -862,70 +954,6 @@ msgstr "Không có"
 
 msgid "Note added successfully"
 msgstr "Đã thêm ghi chú thành công"
-
-msgid "Notebook"
-msgstr "Sổ ghi chú"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Sổ ghi chép (Nhật ký hội thoại AI)"
-
-msgid "Notebook Settings"
-msgstr "Cài đặt sổ ghi chép"
-
-msgid "Notebook name"
-msgstr "Tên sổ ghi chép"
-
-msgid "Notebook name cannot be empty."
-msgstr "Tên sổ ghi chép không được để trống."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Tên sổ ghi chép không được chứa '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Tên sổ ghi chép không được chứa dấu phân cách đường dẫn."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Tên sổ ghi chép không được kết thúc bằng dấu cách hoặc dấu chấm."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Tên sổ ghi chép chứa ký tự không được hệ thống tệp hỗ trợ."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Tên sổ ghi chép bị hệ thống tệp dành riêng."
-
-msgid "Notebook name must be text."
-msgstr "Tên sổ ghi chép phải là văn bản."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Đường dẫn sổ ghi chép không phải là tệp: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Đường dẫn sổ ghi chép không khả dụng."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Lưu sổ ghi chú thất bại. Đang tiếp tục..."
-
-msgid "Notebook: %1"
-msgstr "Sổ ghi chép: %1"
-
-msgid "Notebooks"
-msgstr "Sổ ghi chép"
-
-msgid "Notebooks Folder"
-msgstr "Thư mục sổ ghi chép"
-
-msgid "Notebooks Folder: %1"
-msgstr "Thư mục sổ ghi chép: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Đường dẫn thư mục sổ ghi chép:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Đường dẫn sổ ghi chép không phải là thư mục: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1049,9 +1077,6 @@ msgstr "Xóa sạch"
 
 msgid "Purge Settings"
 msgstr "Xóa cài đặt"
-
-msgid "Querying AI ..."
-msgstr "Đang truy vấn AI ..."
 
 msgid "Quick Note"
 msgstr "Ghi chú nhanh"
@@ -1182,11 +1207,11 @@ msgstr "Bản ghi công cụ tìm kiếm phải là một bảng."
 msgid "Searching with %1 ... [%2]"
 msgstr "Đang tìm kiếm với %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Chọn ghi chú AI"
+
 msgid "Select a model:"
 msgstr "Chọn mô hình:"
-
-msgid "Select notebook"
-msgstr "Chọn sổ ghi chép"
 
 msgid "Selection copied to clipboard."
 msgstr "Đã sao chép vùng chọn vào bảng tạm."
@@ -1265,8 +1290,8 @@ msgstr "Tóm tắt nhanh"
 msgid "Take Quick Notes"
 msgstr "Ghi chú nhanh"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Ghi chú nhanh sẽ được lưu vào sổ ghi chú của bạn."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Ghi chú nhanh sẽ được lưu vào Ghi chú AI của bạn."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1287,9 +1312,6 @@ msgstr "Văn bản đã được sao chép vào bộ nhớ tạm"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Không tìm thấy trình xử lý cho %1. Vui lòng đảm bảo trình xử lý tồn tại trong thư mục api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Sổ tay là nhật ký hội thoại của bạn: câu trả lời của AI và ghi chú nhanh được thêm vào đó. Bạn có thể tạo nhiều sổ tay để tổ chức các nhật ký của mình."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Nút này tạo một ghi chú nhanh với văn bản được tô sáng."

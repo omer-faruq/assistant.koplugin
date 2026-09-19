@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 03:58+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ქართული (AI translation)\n"
@@ -38,9 +38,6 @@ msgstr " - გვ. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "„X-Ray“ შეჯამება წიგნისთვის, დაყოფილი კონკრეტულ სექციებად, როგორიცაა პერსონაჟები, ადგილები, თემები, ტერმინები და ცნებები, ქრონოლოგია და ხელახალი ჩაღრმავება."
 
-msgid "### %1 Question\n"
-msgstr "### %1 კითხვა\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### შესაძლოა დაგაინტერესოთ ეს თემები:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "დავამატოთ ეს ღილაკი მონიშვნის მენიუში?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI შენიშვნების ფაილი:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>ჯერ არცერთი პროვაიდერი არ არის დაყენებული.</b>\n"
 "გთხოვთ, დაამატოთ პროვაიდერი პარამეტრებში ან configuration.lua-ში."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>NoteBook-ის ფაილი:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>პარამეტრები</b>"
 
@@ -197,6 +194,43 @@ msgstr "<b>კავშირის ტესტირება...</b>"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>უცნობი ფუნქციის ტიპი:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 ღრმად გააზრებული</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 კითხვა</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "ხელმისაწვდომია %1 პლაგინის ახალი ვერსია (%2). გთხოვთ, განაახლოთ!"
 
@@ -214,6 +248,43 @@ msgstr "AI ლექსიკონი"
 
 msgid "AI Language: "
 msgstr "AI ენა: "
+
+msgid "AI Note Name"
+msgstr "AI შენიშვნის სახელი"
+
+msgid "AI Notes"
+msgstr "AI შენიშვნები"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI შენიშვნები (AI საუბრის ლოგი)"
+
+msgid "AI Notes Folder"
+msgstr "AI შენიშვნების საქაღალდე"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI შენიშვნების საქაღალდე: %1"
+
+msgid "AI Notes Settings"
+msgstr "AI შენიშვნების პარამეტრები"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"AI შენიშვნების საქაღალდის ბილიკი:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI შენიშვნები არის თქვენი საუბრის ლოგი: მას ემატება AI-ის პასუხები და სწრაფი შენიშვნები. შეგიძლიათ შექმნათ რამდენიმე AI შენიშვნა თქვენი ლოგების მოსაწყობად."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "AI შენიშვნების ბილიკი არ არის საქაღალდე: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "AI შენიშვნების შენახვა ვერ მოხერხდა. გრძელდება..."
+
+msgid "AI Notes: %1"
+msgstr "AI შენიშვნები: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI პასუხობს"
+
+msgid "AI note name cannot be empty."
+msgstr "AI შენიშვნის სახელი არ შეიძლება იყოს ცარიელი."
+
+msgid "AI note name cannot contain '..'."
+msgstr "AI შენიშვნის სახელი არ შეიძლება შეიცავდეს '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "AI შენიშვნის სახელი არ შეიძლება შეიცავდეს ბილიკის გამყოფებს."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "AI შენიშვნის სახელი არ შეიძლება დასრულდეს ინტერვალით ან წერტილით."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "AI შენიშვნის სახელი შეიცავს სიმბოლოებს, რომლებსაც ფაილური სისტემა არ უჭერს მხარს."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "AI შენიშვნის სახელი ფაილური სისტემის მიერაა დაკავებული."
+
+msgid "AI note name must be text."
+msgstr "AI შენიშვნის სახელი ტექსტური უნდა იყოს."
+
+msgid "AI note path is not a file: %1"
+msgstr "AI შენიშვნის ბილიკი ფაილი არ არის: %1"
+
+msgid "AI note path is unavailable."
+msgstr "AI შენიშვნის ბილიკი მიუწვდომელია."
 
 msgid "API Key"
 msgstr "API გასაღები"
@@ -295,8 +393,8 @@ msgstr ""
 "დაამატეთ პროვაიდერები მთავარი მენიუდან:\n"
 "%1 -> AI Assistant -> Settings -> Provider API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "თქვენი მონიშვნების, შენიშვნების და რვეულის შინაარსის ანალიზი წიგნიდან."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "წიგნიდან თქვენი მონიშვნების, შენიშვნებისა და AI შენიშვნების შიგთავსის ანალიზი."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "წინა ტექსტის მიმაგრება"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "ავტომიმოხილვა დიდი ხნის წაუკითხავი წიგნების გახსნისას"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "საუბრების ავტომატურად შენახვა რვეულში"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "საუბრების ავტომატური შენახვა AI შენიშვნებში"
 
 msgid "Base URL"
 msgstr "საბაზო URL"
@@ -415,8 +513,8 @@ msgstr "მიმდინარეობს განახლებები�
 msgid "Choose Definition Sections"
 msgstr "განმარტების სექციების არჩევა"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "აირჩიეთ, რომელ რვეულში შეინახება თქვენი ჩანაწერები."
+msgid "Choose which AI note your notes are saved to."
+msgstr "აირჩიეთ, რომელ AI შენიშვნაში უნდა შეინახოს თქვენი შენიშვნები."
 
 msgid "Clear"
 msgstr "გასუფთავება"
@@ -436,8 +534,8 @@ msgstr "კონფიგურაცია ვერ მოიძებნა.
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "დააკონფიგურირეთ AI LLM-ის პასუხის ენა. ნაგულისხმევია KOReader-ის ინტერფეისის ენა."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "კონფიგურირებული რვეულების საქაღალდე მიუწვდომელია: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "კონფიგურირებული AI შენიშვნების საქაღალდე მიუწვდომელია: %1"
 
 msgid "Connection test successful."
 msgstr "კავშირის ტესტი წარმატებულია."
@@ -461,8 +559,8 @@ msgstr "კონტექსტური შენიშვნები / რ�
 msgid "Contradictions / Open Questions"
 msgstr "წინააღმდეგობები / ღია კითხვები"
 
-msgid "Conversation is saved to notebook"
-msgstr "საუბარი შენახულია რვეულში"
+msgid "Conversation is saved to AI Notes"
+msgstr "საუბარი შენახულია AI შენიშვნებში"
 
 msgid "Copy"
 msgstr "კოპირება"
@@ -478,42 +576,42 @@ msgstr "ძირითადი არგუმენტები"
 msgid "Core Idea"
 msgstr "ძირითადი იდეა"
 
-msgid "Could not close notebook file."
-msgstr "რვეულის ფაილის დახურვა ვერ მოხერხდა."
+msgid "Could not close AI note file."
+msgstr "AI შენიშვნის ფაილის დახურვა ვერ მოხერხდა."
 
-msgid "Could not create notebook."
-msgstr "რვეულის შექმნა ვერ მოხერხდა."
+msgid "Could not create AI Notes folder: %1"
+msgstr "AI შენიშვნების საქაღალდის შექმნა ვერ მოხერხდა: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "რვეულის შექმნა ვერ მოხერხდა: %1"
+msgid "Could not create AI note."
+msgstr "AI შენიშვნის შექმნა ვერ მოხერხდა."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "რვეულების საქაღალდის შექმნა ვერ მოხერხდა: %1"
+msgid "Could not create AI note: %1"
+msgstr "AI შენიშვნის შექმნა ვერ მოხერხდა: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "რვეულების საქაღალდის სიის მიღება ვერ მოხერხდა: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "AI შენიშვნების საქაღალდის შიგთავსის ჩამოთვლა ვერ მოხერხდა: %1"
 
-msgid "Could not open notebook file."
-msgstr "რვეულის ფაილის გახსნა ვერ მოხერხდა."
+msgid "Could not open AI note file."
+msgstr "AI შენიშვნის ფაილის გახსნა ვერ მოხერხდა."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"არჩეულ რვეულში შენახვა ვერ მოხერხდა.\n"
+"არჩეულ AI შენიშვნაში შენახვა ვერ მოხერხდა.\n"
 "შენახულია: %1"
 
-msgid "Could not select notebook."
-msgstr "რვეულის არჩევა ვერ მოხერხდა."
+msgid "Could not select AI note."
+msgstr "AI შენიშვნის არჩევა ვერ მოხერხდა."
 
-msgid "Could not write notebook file."
-msgstr "რვეულის ფაილში ჩაწერა ვერ მოხერხდა."
+msgid "Could not write AI note file."
+msgstr "AI შენიშვნის ფაილში ჩაწერა ვერ მოხერხდა."
 
 msgid "Create"
 msgstr "შექმნა"
 
-msgid "Create a notebook."
-msgstr "შექმენით რვეული."
+msgid "Create an AI note."
+msgstr "AI შენიშვნის შექმნა."
 
 msgid "Cultural Significance"
 msgstr "კულტურული მნიშვნელობა"
@@ -530,9 +628,6 @@ msgstr "მორგებული პრომპტი"
 
 msgid "Custom Prompts"
 msgstr "მორგებული პრომპტები"
-
-msgid "Deeply Thought"
-msgstr "ღრმა ფიქრი"
 
 msgid "Delete"
 msgstr "წაშლა"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "ინტეგრირებული შეჯამება"
 
-msgid "Invalid notebook entry."
-msgstr "რვეულის ჩანაწერი არასწორია."
+msgid "Invalid AI note entry."
+msgstr "AI შენიშვნის არასწორი ჩანაწერი."
 
-msgid "Invalid notebook filename."
-msgstr "რვეულის ფაილის სახელი არასწორია."
+msgid "Invalid AI note filename."
+msgstr "არასწორი AI შენიშვნის ფაილის სახელი."
 
 msgid "Justify"
 msgstr "გასწორება"
@@ -764,9 +859,6 @@ msgstr "დატოვეთ ცარიელი, რომ გამოყ�
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "დატოვეთ ეს ველები ცარიელი, რომ გამოყენებულ იქნას ინტერფეისის ენა: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "იტვირთება <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "ადგილები"
@@ -804,26 +896,32 @@ msgstr "მოდელები: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modellebi: %1 (matched)"
 
-msgid "Multiple Notebooks"
-msgstr "მრავლობითი რვეულები"
+msgid "Multiple AI Notes"
+msgstr "მრავალი AI შენიშვნა"
 
 msgid "Narrative element in focus:"
 msgstr "ფოკუსში მყოფი ნარატიული ელემენტი:"
 
-msgid "New notebook"
-msgstr "ახალი რვეული"
+msgid "New AI Note"
+msgstr "ახალი AI შენიშვნა"
 
-msgid "New notebook..."
-msgstr "ახალი რვეული..."
+msgid "New AI Note..."
+msgstr "ახალი AI შენიშვნა..."
 
 msgid "No"
 msgstr "არა"
 
+msgid "No AI Notes folder is set."
+msgstr "AI შენიშვნების საქაღალდე არ არის დაყენებული."
+
+msgid "No AI notes yet"
+msgstr "AI შენიშვნები ჯერ არ არის"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "აქტიური პროვაიდერი არ არის კონფიგურირებული. გთხოვთ, დაამატეთ ერთი პარამეტრებში."
 
-msgid "No base folder is available for notebooks."
-msgstr "რვეულებისთვის საბაზო საქაღალდე არ არის ხელმისაწვდომი."
+msgid "No base folder is available for AI Notes."
+msgstr "AI შენიშვნებისთვის საბაზისო საქაღალდე არ არის ხელმისაწვდომი."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "წიგნი არ არის გახსნილი. ფაილების მენეჯერში წიგნს ხანგრძლივად დააჭირეთ და აირჩიეთ წიგნის ინფორმაცია (AI)."
@@ -837,14 +935,8 @@ msgstr "მოდელები არ არის ხელმისაწვ
 msgid "No models matching \"%1\"."
 msgstr "მოდელები, რომლებიც ემთხვევა \"%1\"-ს, არ არსებობს."
 
-msgid "No notebooks folder is set."
-msgstr "რვეულების საქაღალდე არ არის მითითებული."
-
-msgid "No notebooks yet"
-msgstr "ჯერ არ არის რვეულები"
-
-msgid "No path is available for the legacy notebook."
-msgstr "მემკვიდრეობითი რვეულისთვის ბილიკი არ არის ხელმისაწვდომი."
+msgid "No path is available for the default AI note."
+msgstr "ნაგულისხმევი AI შენიშვნისთვის ბილიკი არ არის ხელმისაწვდომი."
 
 msgid "No response received."
 msgstr "პასუხი არ მიღებულა."
@@ -863,70 +955,6 @@ msgstr "არცერთი"
 
 msgid "Note added successfully"
 msgstr "შენიშვნა წარმატებით დაემატა"
-
-msgid "Notebook"
-msgstr "რვეული"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "რვეული (AI საუბრის ჟურნალი)"
-
-msgid "Notebook Settings"
-msgstr "რვეულის პარამეტრები"
-
-msgid "Notebook name"
-msgstr "რვეულის სახელი"
-
-msgid "Notebook name cannot be empty."
-msgstr "რვეულის სახელი არ შეიძლება იყოს ცარიელი."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "რვეულის სახელი არ შეიძლება შეიცავდეს '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "რვეულის სახელი არ შეიძლება შეიცავდეს ბილიკის გამყოფებს."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "რვეულის სახელი არ შეიძლება მთავრდებოდეს ინტერვალით ან წერტილით."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "რვეულის სახელი შეიცავს სიმბოლოებს, რომლებიც არ არის მხარდაჭერილი ფაილური სისტემის მიერ."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "რვეულის სახელი დაცულია ფაილური სისტემის მიერ."
-
-msgid "Notebook name must be text."
-msgstr "რვეულის სახელი უნდა იყოს ტექსტი."
-
-msgid "Notebook path is not a file: %1"
-msgstr "რვეულის ბილიკი არ არის ფაილი: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "რვეულის ბილიკი მიუწვდომელია."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "NoteBook-ში შენახვა ვერ მოხერხდა. გრძელდება..."
-
-msgid "Notebook: %1"
-msgstr "რვეული: %1"
-
-msgid "Notebooks"
-msgstr "რვეულები"
-
-msgid "Notebooks Folder"
-msgstr "რვეულების საქაღალდე"
-
-msgid "Notebooks Folder: %1"
-msgstr "რვეულების საქაღალდე: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"რვეულების საქაღალდის გზა:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "რვეულების ბილიკი არ არის დირექტორია: %1"
 
 msgid "OK"
 msgstr "კარგი"
@@ -1050,9 +1078,6 @@ msgstr "გასუფთავება"
 
 msgid "Purge Settings"
 msgstr "პარამეტრების გასუფთავება"
-
-msgid "Querying AI ..."
-msgstr "მიმდინარეობს AI-ის მოთხოვნა ..."
 
 msgid "Quick Note"
 msgstr "სწრაფი ჩანაწერი"
@@ -1184,11 +1209,11 @@ msgstr "საძიებო ინსტრუმენტის ჩანა�
 msgid "Searching with %1 ... [%2]"
 msgstr "ძიება %1-ით ... [%2]"
 
+msgid "Select AI Note"
+msgstr "აირჩიეთ AI შენიშვნა"
+
 msgid "Select a model:"
 msgstr "აირჩიეთ მოდელი:"
-
-msgid "Select notebook"
-msgstr "რვეულის არჩევა"
 
 msgid "Selection copied to clipboard."
 msgstr "მონიშნული ტექსტი დაკოპირდა ბუფერში."
@@ -1267,8 +1292,8 @@ msgstr "მოკლედ"
 msgid "Take Quick Notes"
 msgstr "სწრაფი ჩანაწერების გაკეთება"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "გააკეთეთ სწრაფი შენიშვნები, რომლებიც შეინახება თქვენს რვეულში."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "გააკეთეთ სწრაფი შენიშვნები, რომლებიც შეინახება თქვენს AI შენიშვნებში."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "ტექსტი დაკოპირდა ბუფერში"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "დამმუშავებელი %1-ისთვის ვერ მოიძებნა. გთხოვთ, დარწმუნდით, რომ დამმუშავებელი არსებობს api_handlers დირექტორიაში."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "ნოუთბუქი არის თქვენი საუბრის ჟურნალი: AI პასუხები და სწრაფი ჩანაწერები ემატება მას. შეგიძლიათ შექმნათ მრავალი ნოუთბუქი თქვენი ჟურნალების ორგანიზებისთვის."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "ეს ღილაკი ქმნის სწრაფ ჩანაწერს მონიშნული ტექსტით."

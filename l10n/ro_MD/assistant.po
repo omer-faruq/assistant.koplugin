@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - p. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Rezumat „X-Ray” pentru o carte, structurat în secțiuni specifice precum Personaje, Locații, Teme, Termeni și concepte, Cronologie și Re-imersare."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Întrebare\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### S-ar putea să vă intereseze aceste subiecte:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Adaugă acest buton în meniul de evidențiere?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Fișierul Note AI:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Niciun furnizor configurat încă.</b>\n"
 "Vă rugăm să adăugați un furnizor în Setări sau în configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Fișier NoteBook:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametri</b>"
 
@@ -197,6 +194,43 @@ msgstr "Furnizor"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Tip de funcționalitate necunoscut:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Gândire profundă</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Întrebare</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "O nouă versiune a pluginului %1 (%2) este disponibilă. Vă rugăm să actualizați!"
 
@@ -214,6 +248,43 @@ msgstr "Dicționar AI"
 
 msgid "AI Language: "
 msgstr "Limbă AI: "
+
+msgid "AI Note Name"
+msgstr "Numele notei AI"
+
+msgid "AI Notes"
+msgstr "Note AI"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "Note AI (Jurnal de conversație AI)"
+
+msgid "AI Notes Folder"
+msgstr "Folderul Note AI"
+
+msgid "AI Notes Folder: %1"
+msgstr "Folderul Note AI: %1"
+
+msgid "AI Notes Settings"
+msgstr "Setările Note AI"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Calea către folderul Note AI:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "Note AI este jurnalul dvs. de conversație: răspunsurile AI și notele rapide sunt adăugate în el. Puteți crea mai multe note AI pentru a vă organiza jurnalele."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "Calea Note AI nu este un director: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Salvarea Note AI a eșuat. Se continuă..."
+
+msgid "AI Notes: %1"
+msgstr "Note AI: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI răspunde"
+
+msgid "AI note name cannot be empty."
+msgstr "Numele notei AI nu poate fi gol."
+
+msgid "AI note name cannot contain '..'."
+msgstr "Numele notei AI nu poate conține '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "Numele notei AI nu poate conține separatori de cale."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "Numele notei AI nu poate să se termine cu un spațiu sau un punct."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "Numele notei AI conține caractere care nu sunt acceptate de sistemul de fișiere."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "Numele notei AI este rezervat de sistemul de fișiere."
+
+msgid "AI note name must be text."
+msgstr "Numele notei AI trebuie să fie text."
+
+msgid "AI note path is not a file: %1"
+msgstr "Calea notei AI nu este un fișier: %1"
+
+msgid "AI note path is unavailable."
+msgstr "Calea notei AI nu este disponibilă."
 
 msgid "API Key"
 msgstr "Cheie API"
@@ -295,8 +393,8 @@ msgstr ""
 "Adăugați furnizori din meniul principal:\n"
 "%1 -> Asistent AI -> Setări -> Furnizor API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Analiza evidențierilor, notițelor și conținutului caietului din carte."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Analiza evidențierilor, notelor și conținutului din Note AI din carte."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Atașează textul anterior"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Rezumat automat la deschiderea cărților necitite de mult timp"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Salvare automată a conversațiilor în caiet"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Salvează automat conversațiile în Note AI"
 
 msgid "Base URL"
 msgstr "URL de bază"
@@ -415,8 +513,8 @@ msgstr "Se verifică actualizările..."
 msgid "Choose Definition Sections"
 msgstr "Alege secțiunile definiției"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Alege în ce caiet sunt salvate notițele tale."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Alege în care notă AI sunt salvate notele tale."
 
 msgid "Clear"
 msgstr "Șterge"
@@ -436,8 +534,8 @@ msgstr "Configurația nu a fost găsită. Vă rugăm să configurați mai întâ
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Configurați limba de răspuns a LLM-ului AI. Implicit, folosește limba interfeței KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Folderul configurat pentru caiete nu este accesibil: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Folderul Note AI configurat nu este accesibil: %1"
 
 msgid "Connection test successful."
 msgstr "Testul de conexiune a reușit."
@@ -461,8 +559,8 @@ msgstr "Note contextuale / Reflecții"
 msgid "Contradictions / Open Questions"
 msgstr "Contradicții / Întrebări deschise"
 
-msgid "Conversation is saved to notebook"
-msgstr "Conversația este salvată în caiet"
+msgid "Conversation is saved to AI Notes"
+msgstr "Conversația este salvată în Note AI"
 
 msgid "Copy"
 msgstr "Copiază"
@@ -478,42 +576,42 @@ msgstr "Argumente principale"
 msgid "Core Idea"
 msgstr "Ideea principală"
 
-msgid "Could not close notebook file."
-msgstr "Nu s-a putut închide fișierul caietului."
+msgid "Could not close AI note file."
+msgstr "Nu s-a putut închide fișierul notei AI."
 
-msgid "Could not create notebook."
-msgstr "Nu s-a putut crea caietul."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Nu s-a putut crea folderul Note AI: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Nu s-a putut crea caietul: %1"
+msgid "Could not create AI note."
+msgstr "Nu s-a putut crea nota AI."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Nu s-a putut crea folderul pentru caiete: %1"
+msgid "Could not create AI note: %1"
+msgstr "Nu s-a putut crea nota AI: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Nu s-a putut lista folderul pentru caiete: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Nu s-a putut lista folderul Note AI: %1"
 
-msgid "Could not open notebook file."
-msgstr "Nu s-a putut deschide fișierul caietului."
+msgid "Could not open AI note file."
+msgstr "Nu s-a putut deschide fișierul notei AI."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Nu s-a putut salva în caietul selectat.\n"
+"Nu s-a putut salva în nota AI selectată.\n"
 "Salvat în: %1"
 
-msgid "Could not select notebook."
-msgstr "Nu s-a putut selecta caietul."
+msgid "Could not select AI note."
+msgstr "Nu s-a putut selecta nota AI."
 
-msgid "Could not write notebook file."
-msgstr "Nu s-a putut scrie fișierul caietului."
+msgid "Could not write AI note file."
+msgstr "Nu s-a putut scrie fișierul notei AI."
 
 msgid "Create"
 msgstr "Creează"
 
-msgid "Create a notebook."
-msgstr "Creează un caiet."
+msgid "Create an AI note."
+msgstr "Creează o notă AI."
 
 msgid "Cultural Significance"
 msgstr "Semnificație culturală"
@@ -530,9 +628,6 @@ msgstr "Prompt personalizat"
 
 msgid "Custom Prompts"
 msgstr "Prompturi personalizate"
-
-msgid "Deeply Thought"
-msgstr "Gândire profundă"
 
 msgid "Delete"
 msgstr "Ștergere"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Rezumat integrat"
 
-msgid "Invalid notebook entry."
-msgstr "Intrare de caiet nevalidă."
+msgid "Invalid AI note entry."
+msgstr "Intrare invalidă pentru nota AI."
 
-msgid "Invalid notebook filename."
-msgstr "Nume de fișier de caiet nevalid."
+msgid "Invalid AI note filename."
+msgstr "Nume de fișier invalid pentru nota AI."
 
 msgid "Justify"
 msgstr "Justificat"
@@ -765,9 +860,6 @@ msgstr "Lăsați necompletat pentru a folosi: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Lăsați aceste câmpuri necompletate pentru a folosi limba interfeței: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Se încarcă pentru <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Locații"
@@ -805,26 +897,32 @@ msgstr "Modele: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modele: %1 (potrivite)"
 
-msgid "Multiple Notebooks"
-msgstr "Notebookuri multiple"
+msgid "Multiple AI Notes"
+msgstr "Note AI multiple"
 
 msgid "Narrative element in focus:"
 msgstr "Element narativ în centrul atenției:"
 
-msgid "New notebook"
-msgstr "Caiet nou"
+msgid "New AI Note"
+msgstr "Notă AI nouă"
 
-msgid "New notebook..."
-msgstr "Caiet nou..."
+msgid "New AI Note..."
+msgstr "Notă AI nouă..."
 
 msgid "No"
 msgstr "Nu"
 
+msgid "No AI Notes folder is set."
+msgstr "Nu este setat niciun dosar pentru notele AI."
+
+msgid "No AI notes yet"
+msgstr "Încă nu există note AI"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Niciun furnizor activ configurat. Vă rugăm să adăugați unul în Setări."
 
-msgid "No base folder is available for notebooks."
-msgstr "Nu este disponibil niciun folder de bază pentru caiete."
+msgid "No base folder is available for AI Notes."
+msgstr "Nu este disponibil niciun dosar de bază pentru notele AI."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nicio carte nu este deschisă. Apăsați lung pe o carte în managerul de fișiere și alegeți Informații carte (AI)."
@@ -838,14 +936,8 @@ msgstr "Niciun model disponibil."
 msgid "No models matching \"%1\"."
 msgstr "Niciun model care să corespundă \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Nu este setat niciun folder pentru notebookuri."
-
-msgid "No notebooks yet"
-msgstr "Încă nu există caiete"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Nu este disponibilă nicio cale pentru caietul legacy."
+msgid "No path is available for the default AI note."
+msgstr "Nu este disponibilă nicio cale pentru nota AI implicită."
 
 msgid "No response received."
 msgstr "Nu s-a primit niciun răspuns."
@@ -864,70 +956,6 @@ msgstr "Niciunul"
 
 msgid "Note added successfully"
 msgstr "Notă adăugată cu succes."
-
-msgid "Notebook"
-msgstr "Caiet de notițe"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Caiet (Jurnal de conversații AI)"
-
-msgid "Notebook Settings"
-msgstr "Setările caietului"
-
-msgid "Notebook name"
-msgstr "Numele caietului"
-
-msgid "Notebook name cannot be empty."
-msgstr "Numele caietului nu poate fi gol."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Numele caietului nu poate conține '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Numele caietului nu poate conține separatori de cale."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Numele caietului nu se poate termina cu spațiu sau punct."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Numele caietului conține caractere care nu sunt acceptate de sistemul de fișiere."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Numele caietului este rezervat de sistemul de fișiere."
-
-msgid "Notebook name must be text."
-msgstr "Numele caietului trebuie să fie text."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Calea caietului nu este un fișier: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Calea caietului nu este disponibilă."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Salvarea în Notebook a eșuat. Se continuă..."
-
-msgid "Notebook: %1"
-msgstr "Caiet: %1"
-
-msgid "Notebooks"
-msgstr "Caiete"
-
-msgid "Notebooks Folder"
-msgstr "Folder pentru notebookuri"
-
-msgid "Notebooks Folder: %1"
-msgstr "Folder pentru notebookuri: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Calea folderului pentru notebookuri:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Calea pentru caiete nu este un director: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1051,9 +1079,6 @@ msgstr "Șterge"
 
 msgid "Purge Settings"
 msgstr "Șterge setările"
-
-msgid "Querying AI ..."
-msgstr "Se interoghează AI ..."
 
 msgid "Quick Note"
 msgstr "Notă rapidă"
@@ -1185,11 +1210,11 @@ msgstr "Înregistrarea instrumentului de căutare trebuie să fie un tabel."
 msgid "Searching with %1 ... [%2]"
 msgstr "Se caută cu %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Selectați nota AI"
+
 msgid "Select a model:"
 msgstr "Selectați un model:"
-
-msgid "Select notebook"
-msgstr "Selectează caietul"
 
 msgid "Selection copied to clipboard."
 msgstr "Selecția a fost copiată în clipboard."
@@ -1268,8 +1293,8 @@ msgstr "Pe scurt"
 msgid "Take Quick Notes"
 msgstr "Note rapide"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Scrie notițe rapide care vor fi salvate în caietul tău."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Luați notițe rapide care vor fi salvate în notele dvs. AI."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1290,9 +1315,6 @@ msgstr "Textul a fost copiat în clipboard"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handler-ul pentru %1 nu a fost găsit. Asigurați-vă că handler-ul există în directorul api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Caietul este jurnalul conversațiilor dvs.: răspunsurile AI și notițele rapide sunt adăugate la el. Puteți crea mai multe caiete pentru a vă organiza jurnalele."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Acest buton creează o notă rapidă cu textul evidențiat."

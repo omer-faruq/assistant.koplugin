@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - p. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "Resumo \"X-Ray\" de um livro, estruturado em seções específicas como Personagens, Locais, Temas, Termos e Conceitos, Linha do tempo e Re-imersão."
 
-msgid "### %1 Question\n"
-msgstr "### Pergunta %1\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Você pode achar estes tópicos interessantes:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Adicionar este botão ao Menu de Destaques?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>Arquivo de Notas da IA:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Nenhum provedor configurado ainda.</b>\n"
 "Adicione um provedor nas Configurações ou no configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Arquivo do caderno:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parâmetros</b>"
 
@@ -197,6 +194,43 @@ msgstr "URL base"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Tipo de recurso desconhecido:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Pensamento Aprofundado</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Pergunta</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Uma nova versão do plugin %1 (%2) está disponível. Por favor, atualize!"
 
@@ -214,6 +248,43 @@ msgstr "Dicionário de IA"
 
 msgid "AI Language: "
 msgstr "Idioma da IA: "
+
+msgid "AI Note Name"
+msgstr "Nome da Nota da IA"
+
+msgid "AI Notes"
+msgstr "Notas da IA"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "Notas da IA (Registro de Conversa da IA)"
+
+msgid "AI Notes Folder"
+msgstr "Pasta de Notas da IA"
+
+msgid "AI Notes Folder: %1"
+msgstr "Pasta de Notas da IA: %1"
+
+msgid "AI Notes Settings"
+msgstr "Configurações das Notas da IA"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"Caminho da pasta de Notas da IA:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "As Notas da IA são o seu registro de conversa: as respostas da IA e as notas rápidas são anexadas a ele. Você pode criar várias notas da IA para organizar seus registros."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "O caminho das Notas da IA não é um diretório: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "Falha ao salvar as Notas da IA. Continuando..."
+
+msgid "AI Notes: %1"
+msgstr "Notas da IA: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "X-Ray da IA"
 
 msgid "AI is responding"
 msgstr "A IA está respondendo"
+
+msgid "AI note name cannot be empty."
+msgstr "O nome da nota da IA não pode estar vazio."
+
+msgid "AI note name cannot contain '..'."
+msgstr "O nome da nota da IA não pode conter '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "O nome da nota da IA não pode conter separadores de caminho."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "O nome da nota da IA não pode terminar com espaço ou ponto."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "O nome da nota da IA contém caracteres que não são suportados pelo sistema de arquivos."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "O nome da nota de IA é reservado pelo sistema de arquivos."
+
+msgid "AI note name must be text."
+msgstr "O nome da nota de IA deve ser texto."
+
+msgid "AI note path is not a file: %1"
+msgstr "O caminho da nota de IA não é um arquivo: %1"
+
+msgid "AI note path is unavailable."
+msgstr "O caminho da nota de IA não está disponível."
 
 msgid "API Key"
 msgstr "Chave da API"
@@ -295,8 +393,8 @@ msgstr ""
 "Adicione provedores pelo menu principal:\n"
 "%1 -> Assistente de IA -> Configurações -> API do Provedor"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Análise dos seus destaques, anotações e conteúdo do caderno do livro."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Análise dos seus destaques, notas e conteúdo das Notas de IA do livro."
 
 msgid "Anthropic Messages API"
 msgstr "API de Mensagens da Anthropic"
@@ -347,8 +445,8 @@ msgstr "Anexar Texto Anterior"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Recap automático ao abrir livros não lidos há muito tempo"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Salvar conversas automaticamente no caderno"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Salvar conversas automaticamente nas Notas de IA"
 
 msgid "Base URL"
 msgstr "URL base"
@@ -415,8 +513,8 @@ msgstr "Verificando atualizações..."
 msgid "Choose Definition Sections"
 msgstr "Escolher seções de definição"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Escolha em qual caderno suas notas são salvas."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Escolha em qual nota de IA suas notas serão salvas."
 
 msgid "Clear"
 msgstr "Limpar"
@@ -436,8 +534,8 @@ msgstr "Configuração não encontrada. Por favor, configure o configuration.lua
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Configure o idioma de resposta do LLM de IA. Por padrão, usa o idioma da interface do KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "A pasta de cadernos configurada não está acessível: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "A pasta de Notas de IA configurada não está acessível: %1"
 
 msgid "Connection test successful."
 msgstr "Teste de conexão bem-sucedido."
@@ -461,8 +559,8 @@ msgstr "Notas contextuais / Reflexões"
 msgid "Contradictions / Open Questions"
 msgstr "Contradições / Perguntas em aberto"
 
-msgid "Conversation is saved to notebook"
-msgstr "A conversa é salva no caderno"
+msgid "Conversation is saved to AI Notes"
+msgstr "Conversa salva nas Notas de IA"
 
 msgid "Copy"
 msgstr "Copiar"
@@ -478,42 +576,42 @@ msgstr "Argumentos centrais"
 msgid "Core Idea"
 msgstr "Ideia central"
 
-msgid "Could not close notebook file."
-msgstr "Não foi possível fechar o arquivo do caderno."
+msgid "Could not close AI note file."
+msgstr "Não foi possível fechar o arquivo da nota de IA."
 
-msgid "Could not create notebook."
-msgstr "Não foi possível criar o caderno."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Não foi possível criar a pasta de Notas de IA: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Não foi possível criar o caderno: %1"
+msgid "Could not create AI note."
+msgstr "Não foi possível criar a nota de IA."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Não foi possível criar a pasta de cadernos: %1"
+msgid "Could not create AI note: %1"
+msgstr "Não foi possível criar a nota de IA: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Não foi possível listar a pasta de cadernos: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Não foi possível listar a pasta de Notas de IA: %1"
 
-msgid "Could not open notebook file."
-msgstr "Não foi possível abrir o arquivo do caderno."
+msgid "Could not open AI note file."
+msgstr "Não foi possível abrir o arquivo da nota de IA."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Não foi possível salvar no caderno selecionado.\n"
+"Não foi possível salvar na nota de IA selecionada.\n"
 "Salvo em: %1"
 
-msgid "Could not select notebook."
-msgstr "Não foi possível selecionar o caderno."
+msgid "Could not select AI note."
+msgstr "Não foi possível selecionar a nota de IA."
 
-msgid "Could not write notebook file."
-msgstr "Não foi possível gravar o arquivo do caderno."
+msgid "Could not write AI note file."
+msgstr "Não foi possível gravar o arquivo da nota de IA."
 
 msgid "Create"
 msgstr "Criar"
 
-msgid "Create a notebook."
-msgstr "Criar um caderno."
+msgid "Create an AI note."
+msgstr "Criar uma nota de IA."
 
 msgid "Cultural Significance"
 msgstr "Importância cultural"
@@ -530,9 +628,6 @@ msgstr "Prompt Personalizado"
 
 msgid "Custom Prompts"
 msgstr "Prompts Personalizados"
-
-msgid "Deeply Thought"
-msgstr "Pensamento profundo"
 
 msgid "Delete"
 msgstr "Excluir"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Resumo integrado"
 
-msgid "Invalid notebook entry."
-msgstr "Entrada de caderno inválida."
+msgid "Invalid AI note entry."
+msgstr "Entrada de nota de IA inválida."
 
-msgid "Invalid notebook filename."
-msgstr "Nome de arquivo de caderno inválido."
+msgid "Invalid AI note filename."
+msgstr "Nome de arquivo de nota de IA inválido."
 
 msgid "Justify"
 msgstr "Justificar"
@@ -764,9 +859,6 @@ msgstr "Deixe em branco para usar: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Deixe estes campos em branco para usar o idioma da interface: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Carregando para <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Locais"
@@ -804,26 +896,32 @@ msgstr "Modelos: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modelos: %1 (correspondentes)"
 
-msgid "Multiple Notebooks"
-msgstr "Vários Cadernos"
+msgid "Multiple AI Notes"
+msgstr "Várias notas de IA"
 
 msgid "Narrative element in focus:"
 msgstr "Elemento narrativo em foco:"
 
-msgid "New notebook"
-msgstr "Novo caderno"
+msgid "New AI Note"
+msgstr "Nova nota de IA"
 
-msgid "New notebook..."
-msgstr "Novo caderno..."
+msgid "New AI Note..."
+msgstr "Nova nota de IA..."
 
 msgid "No"
 msgstr "Não"
 
+msgid "No AI Notes folder is set."
+msgstr "Nenhuma pasta de notas de IA está definida."
+
+msgid "No AI notes yet"
+msgstr "Ainda não há notas de IA"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Nenhum provedor ativo configurado. Adicione um em Configurações."
 
-msgid "No base folder is available for notebooks."
-msgstr "Nenhuma pasta base está disponível para os cadernos."
+msgid "No base folder is available for AI Notes."
+msgstr "Não há pasta base disponível para as notas de IA."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nenhum livro está aberto. Pressione e segure um livro no gerenciador de arquivos e escolha Informações do Livro (IA)."
@@ -837,14 +935,8 @@ msgstr "Nenhum modelo disponível."
 msgid "No models matching \"%1\"."
 msgstr "Nenhum modelo correspondente a \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Nenhuma pasta de cadernos está definida."
-
-msgid "No notebooks yet"
-msgstr "Nenhum caderno ainda"
-
-msgid "No path is available for the legacy notebook."
-msgstr "Nenhum caminho está disponível para o caderno legado."
+msgid "No path is available for the default AI note."
+msgstr "Não há caminho disponível para a nota de IA padrão."
 
 msgid "No response received."
 msgstr "Nenhuma resposta recebida."
@@ -863,70 +955,6 @@ msgstr "Nenhum"
 
 msgid "Note added successfully"
 msgstr "Nota adicionada com sucesso"
-
-msgid "Notebook"
-msgstr "Caderno"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Caderno (Registro de conversa de IA)"
-
-msgid "Notebook Settings"
-msgstr "Configurações do caderno"
-
-msgid "Notebook name"
-msgstr "Nome do caderno"
-
-msgid "Notebook name cannot be empty."
-msgstr "O nome do caderno não pode estar vazio."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "O nome do caderno não pode conter '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "O nome do caderno não pode conter separadores de caminho."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "O nome do caderno não pode terminar com espaço ou ponto."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "O nome do caderno contém caracteres não suportados pelo sistema de arquivos."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "O nome do caderno é reservado pelo sistema de arquivos."
-
-msgid "Notebook name must be text."
-msgstr "O nome do caderno deve ser texto."
-
-msgid "Notebook path is not a file: %1"
-msgstr "O caminho do caderno não é um arquivo: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "O caminho do caderno está indisponível."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Falha ao salvar no NoteBook. Continuando..."
-
-msgid "Notebook: %1"
-msgstr "Caderno: %1"
-
-msgid "Notebooks"
-msgstr "Cadernos"
-
-msgid "Notebooks Folder"
-msgstr "Pasta de Cadernos"
-
-msgid "Notebooks Folder: %1"
-msgstr "Pasta de Cadernos: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Caminho da pasta de cadernos:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "O caminho dos cadernos não é um diretório: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1050,9 +1078,6 @@ msgstr "Limpar"
 
 msgid "Purge Settings"
 msgstr "Limpar Configurações"
-
-msgid "Querying AI ..."
-msgstr "Consultando a IA ..."
 
 msgid "Quick Note"
 msgstr "Nota rápida"
@@ -1184,11 +1209,11 @@ msgstr "O registro da ferramenta de pesquisa deve ser uma tabela."
 msgid "Searching with %1 ... [%2]"
 msgstr "Pesquisando com %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Selecionar nota de IA"
+
 msgid "Select a model:"
 msgstr "Selecione um modelo:"
-
-msgid "Select notebook"
-msgstr "Selecionar caderno"
 
 msgid "Selection copied to clipboard."
 msgstr "Seleção copiada para a área de transferência."
@@ -1267,8 +1292,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Fazer anotações rápidas"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Faça anotações rápidas que serão salvas no seu caderno."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Faça anotações rápidas que serão salvas nas suas notas de IA."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "Texto copiado para a área de transferência"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "O handler para %1 não foi encontrado. Certifique-se de que o handler existe no diretório api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "O caderno é o seu registro de conversas: respostas da IA e notas rápidas são anexadas a ele. Você pode criar vários cadernos para organizar seus registros."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Este botão cria uma nota rápida com o texto destacado."

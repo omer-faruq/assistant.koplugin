@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - %1/%2ページ"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "「X-Ray」の書籍要約。登場人物、場所、テーマ、用語・概念、タイムライン、再没入などのセクションに分類されます。"
 
-msgid "### %1 Question\n"
-msgstr "### %1の質問\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### 以下のトピックに興味があるかもしれません:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "このボタンをハイライトメニューに追加しますか？"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AIノートファイル:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>プロバイダーがまだ設定されていません。</b>\n"
 "設定またはconfiguration.luaでプロバイダーを追加してください。"
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>ノートブックファイル:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>パラメータ</b>"
 
@@ -197,6 +194,43 @@ msgstr "<b>接続テスト中...</b>"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>不明な機能タイプ:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 熟考</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 質問</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "%1 プラグインの新しいバージョン (%2) が利用可能です。更新してください！"
 
@@ -214,6 +248,43 @@ msgstr "AI辞書"
 
 msgid "AI Language: "
 msgstr "AI言語: "
+
+msgid "AI Note Name"
+msgstr "AIノート名"
+
+msgid "AI Notes"
+msgstr "AIノート"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AIノート（AI会話ログ）"
+
+msgid "AI Notes Folder"
+msgstr "AIノートフォルダ"
+
+msgid "AI Notes Folder: %1"
+msgstr "AIノートフォルダ: %1"
+
+msgid "AI Notes Settings"
+msgstr "AIノート設定"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"AIノートフォルダのパス:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AIノートは会話ログです。AIの回答とクイックノートが追記されます。ログを整理するために複数のAIノートを作成できます。"
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "AIノートのパスがディレクトリではありません: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "AIノートの保存に失敗しました。続行します..."
+
+msgid "AI Notes: %1"
+msgstr "AIノート: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AIが応答中"
+
+msgid "AI note name cannot be empty."
+msgstr "AIノート名は空にできません。"
+
+msgid "AI note name cannot contain '..'."
+msgstr "AIノート名に「..」を含めることはできません。"
+
+msgid "AI note name cannot contain path separators."
+msgstr "AIノート名にパス区切り文字を含めることはできません。"
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "AIノート名はスペースまたはピリオドで終わることはできません。"
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "AIノート名にファイルシステムでサポートされていない文字が含まれています。"
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "AIノート名はファイルシステムで予約されています。"
+
+msgid "AI note name must be text."
+msgstr "AIノート名はテキストである必要があります。"
+
+msgid "AI note path is not a file: %1"
+msgstr "AIノートのパスはファイルではありません: %1"
+
+msgid "AI note path is unavailable."
+msgstr "AIノートのパスを利用できません。"
 
 msgid "API Key"
 msgstr "APIキー"
@@ -295,8 +393,8 @@ msgstr ""
 "メインメニューからプロバイダーを追加します:\n"
 "%1 -> AIアシスタント -> 設定 -> プロバイダーAPI"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "書籍からのハイライト、メモ、ノートブック内容の分析。"
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "本のハイライト、ノート、AIノートの内容を分析します。"
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "前のテキストを添付"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "長期間読んでいない本を開いたときに自動であらすじを作成"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "会話をノートブックに自動保存"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "会話をAIノートに自動保存"
 
 msgid "Base URL"
 msgstr "ベースURL"
@@ -415,8 +513,8 @@ msgstr "更新を確認中..."
 msgid "Choose Definition Sections"
 msgstr "定義セクションを選択"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "メモの保存先ノートブックを選択してください。"
+msgid "Choose which AI note your notes are saved to."
+msgstr "ノートを保存するAIノートを選択してください。"
 
 msgid "Clear"
 msgstr "クリア"
@@ -436,8 +534,8 @@ msgstr "設定が見つかりません。最初に configuration.lua を設定�
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "AI LLMの応答言語を設定します。デフォルトはKOReaderのインターフェース言語です。"
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "設定されたノートブックフォルダにアクセスできません: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "設定されたAIノートフォルダにアクセスできません: %1"
 
 msgid "Connection test successful."
 msgstr "接続テストに成功しました。"
@@ -461,8 +559,8 @@ msgstr "文脈ノート / 考察"
 msgid "Contradictions / Open Questions"
 msgstr "矛盾 / 未解決の疑問"
 
-msgid "Conversation is saved to notebook"
-msgstr "会話はノートブックに保存されています。"
+msgid "Conversation is saved to AI Notes"
+msgstr "会話をAIノートに保存しました"
 
 msgid "Copy"
 msgstr "コピー"
@@ -478,42 +576,42 @@ msgstr "中心となる主張"
 msgid "Core Idea"
 msgstr "核となるアイデア"
 
-msgid "Could not close notebook file."
-msgstr "ノートブックファイルを閉じられませんでした。"
+msgid "Could not close AI note file."
+msgstr "AIノートファイルを閉じられませんでした。"
 
-msgid "Could not create notebook."
-msgstr "ノートブックを作成できませんでした。"
+msgid "Could not create AI Notes folder: %1"
+msgstr "AIノートフォルダを作成できませんでした: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "ノートブックを作成できませんでした: %1"
+msgid "Could not create AI note."
+msgstr "AIノートを作成できませんでした。"
 
-msgid "Could not create notebooks folder: %1"
-msgstr "ノートブックフォルダを作成できませんでした: %1"
+msgid "Could not create AI note: %1"
+msgstr "AIノートを作成できませんでした: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "ノートブックフォルダを一覧表示できませんでした: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "AIノートフォルダの一覧を取得できませんでした: %1"
 
-msgid "Could not open notebook file."
-msgstr "ノートブックファイルを開けませんでした。"
+msgid "Could not open AI note file."
+msgstr "AIノートファイルを開けませんでした。"
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"選択したノートブックに保存できませんでした。\n"
+"選択したAIノートに保存できませんでした。\n"
 "保存先: %1"
 
-msgid "Could not select notebook."
-msgstr "ノートブックを選択できませんでした。"
+msgid "Could not select AI note."
+msgstr "AIノートを選択できませんでした。"
 
-msgid "Could not write notebook file."
-msgstr "ノートブックファイルを書き込めませんでした。"
+msgid "Could not write AI note file."
+msgstr "AIノートファイルに書き込めませんでした。"
 
 msgid "Create"
 msgstr "作成"
 
-msgid "Create a notebook."
-msgstr "ノートブックを作成します。"
+msgid "Create an AI note."
+msgstr "AIノートを作成します。"
 
 msgid "Cultural Significance"
 msgstr "文化的意義"
@@ -530,9 +628,6 @@ msgstr "カスタムプロンプト"
 
 msgid "Custom Prompts"
 msgstr "カスタムプロンプト"
-
-msgid "Deeply Thought"
-msgstr "思考内容"
 
 msgid "Delete"
 msgstr "削除"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "統合サマリー"
 
-msgid "Invalid notebook entry."
-msgstr "無効なノートブックエントリです。"
+msgid "Invalid AI note entry."
+msgstr "無効なAIノートエントリです。"
 
-msgid "Invalid notebook filename."
-msgstr "無効なノートブックファイル名です。"
+msgid "Invalid AI note filename."
+msgstr "AIノートのファイル名が無効です。"
 
 msgid "Justify"
 msgstr "両端揃え"
@@ -763,9 +858,6 @@ msgstr "空欄の場合は%1を使用します"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "これらのフィールドを空欄にすると、UI言語（%1）を使用します"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "<b>%1</b> を読み込み中..."
 
 msgid "Locations"
 msgstr "場所"
@@ -803,26 +895,32 @@ msgstr "モデル: %1"
 msgid "Models: %1 (matched)"
 msgstr "モデル: %1 (一致)"
 
-msgid "Multiple Notebooks"
-msgstr "複数のノートブック"
+msgid "Multiple AI Notes"
+msgstr "複数のAIノート"
 
 msgid "Narrative element in focus:"
 msgstr "焦点となっている物語要素："
 
-msgid "New notebook"
-msgstr "新しいノートブック"
+msgid "New AI Note"
+msgstr "新規AIノート"
 
-msgid "New notebook..."
-msgstr "新しいノートブック..."
+msgid "New AI Note..."
+msgstr "新規AIノート..."
 
 msgid "No"
 msgstr "いいえ"
 
+msgid "No AI Notes folder is set."
+msgstr "AIノートフォルダが設定されていません。"
+
+msgid "No AI notes yet"
+msgstr "AIノートはまだありません"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "アクティブなプロバイダーが設定されていません。設定で追加してください。"
 
-msgid "No base folder is available for notebooks."
-msgstr "ノートブック用のベースフォルダがありません。"
+msgid "No base folder is available for AI Notes."
+msgstr "AIノートに使用できるベースフォルダがありません。"
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "本が開かれていません。ファイルマネージャーで本を長押しし、「ブック情報 (AI)」を選択してください。"
@@ -836,14 +934,8 @@ msgstr "利用可能なモデルがありません。"
 msgid "No models matching \"%1\"."
 msgstr "\"%1\" に一致するモデルがありません。"
 
-msgid "No notebooks folder is set."
-msgstr "ノートブックフォルダが設定されていません。"
-
-msgid "No notebooks yet"
-msgstr "ノートブックはまだありません"
-
-msgid "No path is available for the legacy notebook."
-msgstr "レガシーノートブックのパスがありません。"
+msgid "No path is available for the default AI note."
+msgstr "デフォルトのAIノートに使用できるパスがありません。"
 
 msgid "No response received."
 msgstr "応答がありませんでした。"
@@ -862,70 +954,6 @@ msgstr "なし"
 
 msgid "Note added successfully"
 msgstr "ノートを追加しました"
-
-msgid "Notebook"
-msgstr "ノートブック"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "ノートブック（AI会話ログ）"
-
-msgid "Notebook Settings"
-msgstr "ノートブック設定"
-
-msgid "Notebook name"
-msgstr "ノートブック名"
-
-msgid "Notebook name cannot be empty."
-msgstr "ノートブック名は空にできません。"
-
-msgid "Notebook name cannot contain '..'."
-msgstr "ノートブック名に「..」を含めることはできません。"
-
-msgid "Notebook name cannot contain path separators."
-msgstr "ノートブック名にパス区切り文字を含めることはできません。"
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "ノートブック名はスペースまたはドットで終わらせることができません。"
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "ノートブック名にファイルシステムでサポートされていない文字が含まれています。"
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "ノートブック名はファイルシステムによって予約されています。"
-
-msgid "Notebook name must be text."
-msgstr "ノートブック名はテキストである必要があります。"
-
-msgid "Notebook path is not a file: %1"
-msgstr "ノートブックのパスはファイルではありません: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "ノートブックのパスを利用できません。"
-
-msgid "Notebook save failed. Continuing..."
-msgstr "ノートブックの保存に失敗しました。続行します..."
-
-msgid "Notebook: %1"
-msgstr "ノートブック: %1"
-
-msgid "Notebooks"
-msgstr "ノートブック"
-
-msgid "Notebooks Folder"
-msgstr "ノートブックフォルダ"
-
-msgid "Notebooks Folder: %1"
-msgstr "ノートブックフォルダ: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"ノートブックフォルダのパス:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "ノートブックのパスはディレクトリではありません: %1"
 
 msgid "OK"
 msgstr "OK"
@@ -1049,9 +1077,6 @@ msgstr "消去"
 
 msgid "Purge Settings"
 msgstr "設定を消去"
-
-msgid "Querying AI ..."
-msgstr "AIに問い合わせ中..."
 
 msgid "Quick Note"
 msgstr "クイックノート"
@@ -1182,11 +1207,11 @@ msgstr "検索ツールのレコードはテーブルである必要がありま
 msgid "Searching with %1 ... [%2]"
 msgstr "%1 で検索中 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "AIノートを選択"
+
 msgid "Select a model:"
 msgstr "モデルを選択:"
-
-msgid "Select notebook"
-msgstr "ノートブックを選択"
 
 msgid "Selection copied to clipboard."
 msgstr "選択範囲をクリップボードにコピーしました。"
@@ -1265,8 +1290,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "クイックノートを取る"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "ノートブックに保存される簡単なメモを取ります。"
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "クイックノートを作成すると、AIノートに保存されます。"
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1287,9 +1312,6 @@ msgstr "テキストをクリップボードにコピーしました"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 のハンドラーが見つかりませんでした。api_handlers ディレクトリにハンドラーが存在することを確認してください。"
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "ノートブックは会話ログです。AIの回答やクイックノートがここに追加されます。複数のノートブックを作成してログを整理できます。"
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "このボタンは、選択したテキストを含むクイックノートを作成します。"

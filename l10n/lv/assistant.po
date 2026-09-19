@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -38,9 +38,6 @@ msgstr " - lpp. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "\"X-Ray\" kopsavilkums grāmatai, strukturēts konkrētās sadaļās, piemēram, Tēli, Vietas, Tēmas, Termini un jēdzieni, Laika līnija un Atkārtota iegremdēšanās."
 
-msgid "### %1 Question\n"
-msgstr "### %1 Jautājums\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### Iespējams, šīs tēmas jums šķitīs interesantas:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "Pievienot šo pogu iezīmju izvēlnei?"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>AI piezīmju fails:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>Vēl nav iestatīts neviens pakalpojumu sniedzējs.</b>\n"
 "Lūdzu, pievienojiet pakalpojumu sniedzēju sadaļā Iestatījumi vai configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>Piezīmju grāmatiņas fails:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametri</b>"
 
@@ -197,6 +194,43 @@ msgstr "Pamata URL, piem., https://example.com/v1"
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Nezināms funkcijas veids:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Dziļi pārdomāts</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 Jautājums</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "Ir pieejama jauna %1 spraudņa versija (%2). Lūdzu, atjauniniet!"
 
@@ -214,6 +248,43 @@ msgstr "AI vārdnīca"
 
 msgid "AI Language: "
 msgstr "AI valoda: "
+
+msgid "AI Note Name"
+msgstr "AI piezīmes nosaukums"
+
+msgid "AI Notes"
+msgstr "AI piezīmes"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "AI piezīmes (AI sarunas žurnāls)"
+
+msgid "AI Notes Folder"
+msgstr "AI piezīmju mape"
+
+msgid "AI Notes Folder: %1"
+msgstr "AI piezīmju mape: %1"
+
+msgid "AI Notes Settings"
+msgstr "AI piezīmju iestatījumi"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"AI piezīmju mapes ceļš:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "AI piezīmes ir tavs sarunas žurnāls: tam tiek pievienotas AI atbildes un ātrās piezīmes. Vari veidot vairākas AI piezīmes, lai sakārtotu savus žurnālus."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "AI piezīmju ceļš nav direktorija: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "AI piezīmju saglabāšana neizdevās. Turpina..."
+
+msgid "AI Notes: %1"
+msgstr "AI piezīmes: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "AI X-Ray"
 
 msgid "AI is responding"
 msgstr "AI atbild"
+
+msgid "AI note name cannot be empty."
+msgstr "AI piezīmes nosaukums nevar būt tukšs."
+
+msgid "AI note name cannot contain '..'."
+msgstr "AI piezīmes nosaukums nedrīkst saturēt '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "AI piezīmes nosaukums nedrīkst saturēt ceļa atdalītājus."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "AI piezīmes nosaukums nedrīkst beigties ar atstarpi vai punktu."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "AI piezīmes nosaukums satur rakstzīmes, ko failsistēma neatbalsta."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "AI piezīmes nosaukums ir rezervēts failu sistēmā."
+
+msgid "AI note name must be text."
+msgstr "AI piezīmes nosaukumam ir jābūt tekstam."
+
+msgid "AI note path is not a file: %1"
+msgstr "AI piezīmes ceļš nav fails: %1"
+
+msgid "AI note path is unavailable."
+msgstr "AI piezīmes ceļš nav pieejams."
 
 msgid "API Key"
 msgstr "API atslēga"
@@ -295,8 +393,8 @@ msgstr ""
 "Pievienojiet pakalpojumu sniedzējus no galvenās izvēlnes:\n"
 "%1 -> AI palīgs -> Iestatījumi -> Pakalpojumu sniedzēja API"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "Jūsu iezīmējumu, piezīmju un piezīmju grāmatiņas satura analīze no grāmatas."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "Jūsu grāmatas izcēlumu, piezīmju un AI piezīmju satura analīze."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "Pievienot iepriekšējo tekstu"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Automātisks kopsavilkums, atverot ilgi nelasītas grāmatas"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "Automātiski saglabāt sarunas piezīmju grāmatā"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "Automātiski saglabāt sarunas AI piezīmēs"
 
 msgid "Base URL"
 msgstr "Bāzes URL"
@@ -415,8 +513,8 @@ msgstr "Notiek atjauninājumu pārbaude..."
 msgid "Choose Definition Sections"
 msgstr "Izvēlēties definīcijas sadaļas"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "Izvēlieties, kurā piezīmju kladē tiks saglabātas jūsu piezīmes."
+msgid "Choose which AI note your notes are saved to."
+msgstr "Izvēlieties AI piezīmi, kurā saglabāt jūsu piezīmes."
 
 msgid "Clear"
 msgstr "Notīrīt"
@@ -436,8 +534,8 @@ msgstr "Konfigurācija nav atrasta. Lūdzu, vispirms iestatiet configuration.lua
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Konfigurējiet AI LLM atbildes valodu. Pēc noklusējuma tiek izmantota KOReader saskarnes valoda."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "Konfigurētā piezīmju klažu mape nav pieejama: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "Konfigurētā AI piezīmju mape nav pieejama: %1"
 
 msgid "Connection test successful."
 msgstr "Savienojuma pārbaude veiksmīga."
@@ -461,8 +559,8 @@ msgstr "Konteksta piezīmes / pārdomas"
 msgid "Contradictions / Open Questions"
 msgstr "Pretrunas / atklātie jautājumi"
 
-msgid "Conversation is saved to notebook"
-msgstr "Saruna tiek saglabāta piezīmju kladē"
+msgid "Conversation is saved to AI Notes"
+msgstr "Saruna saglabāta AI piezīmēs"
 
 msgid "Copy"
 msgstr "Kopēt"
@@ -478,42 +576,42 @@ msgstr "Pamatargumenti"
 msgid "Core Idea"
 msgstr "Pamatideja"
 
-msgid "Could not close notebook file."
-msgstr "Neizdevās aizvērt piezīmju klades failu."
+msgid "Could not close AI note file."
+msgstr "Nevarēja aizvērt AI piezīmes failu."
 
-msgid "Could not create notebook."
-msgstr "Neizdevās izveidot piezīmju kladi."
+msgid "Could not create AI Notes folder: %1"
+msgstr "Nevarēja izveidot AI piezīmju mapi: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "Neizdevās izveidot piezīmju kladi: %1"
+msgid "Could not create AI note."
+msgstr "Nevarēja izveidot AI piezīmi."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "Neizdevās izveidot piezīmju klažu mapi: %1"
+msgid "Could not create AI note: %1"
+msgstr "Nevarēja izveidot AI piezīmi: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "Neizdevās nolasīt piezīmju klažu mapi: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "Nevarēja nolasīt AI piezīmju mapes saturu: %1"
 
-msgid "Could not open notebook file."
-msgstr "Neizdevās atvērt piezīmju klades failu."
+msgid "Could not open AI note file."
+msgstr "Nevarēja atvērt AI piezīmes failu."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"Neizdevās saglabāt atlasītajā piezīmju kladē.\n"
+"Nevarēja saglabāt izvēlētajā AI piezīmē.\n"
 "Saglabāts: %1"
 
-msgid "Could not select notebook."
-msgstr "Neizdevās atlasīt piezīmju kladi."
+msgid "Could not select AI note."
+msgstr "Nevarēja atlasīt AI piezīmi."
 
-msgid "Could not write notebook file."
-msgstr "Neizdevās ierakstīt piezīmju klades failu."
+msgid "Could not write AI note file."
+msgstr "Nevarēja ierakstīt AI piezīmes failā."
 
 msgid "Create"
 msgstr "Izveidot"
 
-msgid "Create a notebook."
-msgstr "Izveidot piezīmju kladi."
+msgid "Create an AI note."
+msgstr "Izveidot AI piezīmi."
 
 msgid "Cultural Significance"
 msgstr "Kultūras nozīme"
@@ -530,9 +628,6 @@ msgstr "Pielāgota uzvedne"
 
 msgid "Custom Prompts"
 msgstr "Pielāgoti prompti"
-
-msgid "Deeply Thought"
-msgstr "Padziļināta domāšana"
 
 msgid "Delete"
 msgstr "Dzēst"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "Integrēts kopsavilkums"
 
-msgid "Invalid notebook entry."
-msgstr "Nederīgs piezīmju klades ieraksts."
+msgid "Invalid AI note entry."
+msgstr "Nederīgs AI piezīmes ieraksts."
 
-msgid "Invalid notebook filename."
-msgstr "Nederīgs piezīmju klades faila nosaukums."
+msgid "Invalid AI note filename."
+msgstr "Nederīgs AI piezīmes faila nosaukums."
 
 msgid "Justify"
 msgstr "Aizlīdzināt"
@@ -765,9 +860,6 @@ msgstr "Atstājiet tukšu, lai izmantotu: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Atstājiet šos laukus tukšus, lai izmantotu saskarnes valodu: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "Notiek ielāde <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "Vietas"
@@ -805,26 +897,32 @@ msgstr "Modeļi: %1"
 msgid "Models: %1 (matched)"
 msgstr "Modeļi: %1 (atbilstoši)"
 
-msgid "Multiple Notebooks"
-msgstr "Vairākas piezīmju grāmatiņas"
+msgid "Multiple AI Notes"
+msgstr "Vairākas AI piezīmes"
 
 msgid "Narrative element in focus:"
 msgstr "Stāstījuma elements uzmanības centrā:"
 
-msgid "New notebook"
-msgstr "Jauna piezīmju klade"
+msgid "New AI Note"
+msgstr "Jauna AI piezīme"
 
-msgid "New notebook..."
-msgstr "Jauna piezīmju grāmatiņa..."
+msgid "New AI Note..."
+msgstr "Jauna AI piezīme..."
 
 msgid "No"
 msgstr "Nē"
 
+msgid "No AI Notes folder is set."
+msgstr "Nav iestatīta AI piezīmju mape."
+
+msgid "No AI notes yet"
+msgstr "Vēl nav AI piezīmju"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "Nav konfigurēts neviens aktīvs pakalpojumu sniedzējs. Lūdzu, pievienojiet to iestatījumos."
 
-msgid "No base folder is available for notebooks."
-msgstr "Nav pieejama pamata mape piezīmju kladēm."
+msgid "No base folder is available for AI Notes."
+msgstr "AI piezīmēm nav pieejama bāzes mape."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nav atvērta neviena grāmata. Failu pārvaldniekā ilgi piespiediet grāmatu un izvēlieties Grāmatas informācija (AI)."
@@ -838,14 +936,8 @@ msgstr "Nav pieejamu modeļu."
 msgid "No models matching \"%1\"."
 msgstr "Nav modeļu, kas atbilst \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "Nav iestatīta piezīmju grāmatiņu mape."
-
-msgid "No notebooks yet"
-msgstr "Pagaidām nav piezīmju klažu."
-
-msgid "No path is available for the legacy notebook."
-msgstr "Nav pieejams ceļš mantotajai piezīmju kladei."
+msgid "No path is available for the default AI note."
+msgstr "Noklusējuma AI piezīmei nav pieejams ceļš."
 
 msgid "No response received."
 msgstr "Nav saņemta atbilde."
@@ -864,70 +956,6 @@ msgstr "Nav"
 
 msgid "Note added successfully"
 msgstr "Piezīme veiksmīgi pievienota"
-
-msgid "Notebook"
-msgstr "Piezīmju grāmata"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "Piezīmju klade (AI sarunu žurnāls)"
-
-msgid "Notebook Settings"
-msgstr "Piezīmju klades iestatījumi"
-
-msgid "Notebook name"
-msgstr "Piezīmju klades nosaukums"
-
-msgid "Notebook name cannot be empty."
-msgstr "Piezīmju klades nosaukums nevar būt tukšs."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "Piezīmju klades nosaukums nevar saturēt '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "Piezīmju klades nosaukums nevar saturēt ceļa atdalītājus."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "Piezīmju klades nosaukums nevar beigties ar atstarpi vai punktu."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "Piezīmju klades nosaukums satur rakstzīmes, kuras failu sistēma neatbalsta."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "Piezīmju klades nosaukums ir rezervēts failu sistēmā."
-
-msgid "Notebook name must be text."
-msgstr "Piezīmju klades nosaukumam jābūt tekstam."
-
-msgid "Notebook path is not a file: %1"
-msgstr "Piezīmju klades ceļš nav fails: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "Piezīmju klades ceļš nav pieejams."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "Piezīmju grāmatiņas saglabāšana neizdevās. Turpinu..."
-
-msgid "Notebook: %1"
-msgstr "Piezīmju klade: %1"
-
-msgid "Notebooks"
-msgstr "Piezīmju klades"
-
-msgid "Notebooks Folder"
-msgstr "Piezīmju grāmatiņu mape"
-
-msgid "Notebooks Folder: %1"
-msgstr "Piezīmju grāmatiņu mape: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"Piezīmju grāmatiņu mapes ceļš:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "Piezīmju klažu ceļš nav mape: %1"
 
 msgid "OK"
 msgstr "Labi"
@@ -1051,9 +1079,6 @@ msgstr "Iztīrīt"
 
 msgid "Purge Settings"
 msgstr "Notīrīt iestatījumus"
-
-msgid "Querying AI ..."
-msgstr "Notiek AI vaicājums ..."
 
 msgid "Quick Note"
 msgstr "Ātrā piezīme"
@@ -1184,11 +1209,11 @@ msgstr "Meklēšanas rīka ierakstam jābūt tabulai."
 msgid "Searching with %1 ... [%2]"
 msgstr "Notiek meklēšana ar %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "Izvēlēties AI piezīmi"
+
 msgid "Select a model:"
 msgstr "Izvēlieties modeli:"
-
-msgid "Select notebook"
-msgstr "Atlasīt piezīmju kladi"
 
 msgid "Selection copied to clipboard."
 msgstr "Iezīmētais teksts nokopēts starpliktuvē."
@@ -1267,8 +1292,8 @@ msgstr "TL;DR"
 msgid "Take Quick Notes"
 msgstr "Veikt ātros pierakstus"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "Veidojiet ātras piezīmes, kas tiks saglabātas jūsu piezīmju grāmatiņā."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "Veiciet ātrās piezīmes, kas tiks saglabātas jūsu AI piezīmēs."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1289,9 +1314,6 @@ msgstr "Teksts kopēts starpliktuvē"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Apstrādātājs %1 netika atrasts. Lūdzu, pārliecinieties, ka apstrādātājs atrodas api_handlers direktorijā."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "Piezīmju grāmata ir jūsu sarunu žurnāls: AI atbildes un ātrās piezīmes tiek tai pievienotas. Varat izveidot vairākas piezīmju grāmatas, lai organizētu savus žurnālus."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Šī poga izveido ātro piezīmi ar iezīmēto tekstu."

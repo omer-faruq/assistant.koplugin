@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 15:03+0800\n"
+"POT-Creation-Date: 2026-09-19 17:39+0800\n"
 "PO-Revision-Date: 2026-08-13 02:47+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: عربى (AI translation)\n"
@@ -38,9 +38,6 @@ msgstr " - ص. %1/%2"
 msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
 msgstr "ملخص \"X-Ray\" لكتاب، منظم في أقسام محددة مثل الشخصيات، والأماكن، والمواضيع، والمصطلحات والمفاهيم، والخط الزمني، وإعادة الانغماس."
 
-msgid "### %1 Question\n"
-msgstr "### سؤال %1\n"
-
 msgid "##### You may find these topics interesting:"
 msgstr "##### قد تهمك هذه الموضوعات:"
 
@@ -64,6 +61,15 @@ msgstr ""
 "<b>%1:</b> %2\n"
 "\n"
 "هل تريد إضافة هذا الزر إلى قائمة التمييز؟"
+
+msgid ""
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+"<b>ملف ملاحظات الذكاء الاصطناعي:</b>\n"
+"\n"
+"%1"
 
 msgid ""
 "<b>API Busy</b>\n"
@@ -170,15 +176,6 @@ msgstr ""
 "<b>لم يتم إعداد أي مزوّد بعد.</b>\n"
 "يرجى إضافة مزوّد في الإعدادات أو configuration.lua."
 
-msgid ""
-"<b>Notebook file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-"<b>ملف دفتر الملاحظات:</b>\n"
-"\n"
-"%1"
-
 msgid "<b>Parameters</b>"
 msgstr "<b>المعلمات</b>"
 
@@ -197,6 +194,43 @@ msgstr "جارٍ اختبار الاتصال..."
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>نوع ميزة غير معروف:</b> %1"
 
+msgid ""
+"<div class=\"assistant-label assistant-label--thought\">%1 Deeply Thought</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label assistant-label--thought\">%1 تفكير عميق</div>\n"
+"\n"
+"```reasoning\n"
+"%2\n"
+"```\n"
+"\n"
+"---\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 %2</div>\n"
+"\n"
+"%3\n"
+"\n"
+
+msgid ""
+"<div class=\"assistant-label\">%1 Question</div>\n"
+"\n"
+msgstr ""
+"<div class=\"assistant-label\">%1 سؤال</div>\n"
+"\n"
+
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
 msgstr "تتوفر نسخة جديدة من الملحق %1 (الإصدار %2). يرجى التحديث!"
 
@@ -214,6 +248,43 @@ msgstr "قاموس الذكاء الاصطناعي"
 
 msgid "AI Language: "
 msgstr "لغة الذكاء الاصطناعي: "
+
+msgid "AI Note Name"
+msgstr "اسم ملاحظة الذكاء الاصطناعي"
+
+msgid "AI Notes"
+msgstr "ملاحظات الذكاء الاصطناعي"
+
+msgid "AI Notes (AI Conversation Log)"
+msgstr "ملاحظات الذكاء الاصطناعي (سجل محادثات الذكاء الاصطناعي)"
+
+msgid "AI Notes Folder"
+msgstr "مجلد ملاحظات الذكاء الاصطناعي"
+
+msgid "AI Notes Folder: %1"
+msgstr "مجلد ملاحظات الذكاء الاصطناعي: %1"
+
+msgid "AI Notes Settings"
+msgstr "إعدادات ملاحظات الذكاء الاصطناعي"
+
+msgid ""
+"AI Notes folder path:\n"
+"%1"
+msgstr ""
+"مسار مجلد ملاحظات الذكاء الاصطناعي:\n"
+"%1"
+
+msgid "AI Notes is your conversation log: AI answers and quick notes are appended to it. You can create multiple AI notes to organize your logs."
+msgstr "ملاحظات الذكاء الاصطناعي هي سجل محادثاتك: تُضاف إليها إجابات الذكاء الاصطناعي والملاحظات السريعة. يمكنك إنشاء عدة ملاحظات ذكاء اصطناعي لتنظيم سجلاتك."
+
+msgid "AI Notes path is not a directory: %1"
+msgstr "مسار ملاحظات الذكاء الاصطناعي ليس مجلدًا: %1"
+
+msgid "AI Notes save failed. Continuing..."
+msgstr "فشل حفظ ملاحظات الذكاء الاصطناعي. المتابعة..."
+
+msgid "AI Notes: %1"
+msgstr "ملاحظات الذكاء الاصطناعي: %1"
 
 #. @translators Confirmation notice. Same "Recap" feature: a brief spoiler-free summary of what was already read.
 msgid "AI Recap will be enabled the next time a long-unread book is opened."
@@ -242,6 +313,33 @@ msgstr "X-Ray للذكاء الاصطناعي"
 
 msgid "AI is responding"
 msgstr "الذكاء الاصطناعي يرد"
+
+msgid "AI note name cannot be empty."
+msgstr "لا يمكن أن يكون اسم ملاحظة الذكاء الاصطناعي فارغًا."
+
+msgid "AI note name cannot contain '..'."
+msgstr "لا يمكن أن يحتوي اسم ملاحظة الذكاء الاصطناعي على '..'."
+
+msgid "AI note name cannot contain path separators."
+msgstr "لا يمكن أن يحتوي اسم ملاحظة الذكاء الاصطناعي على فواصل المسار."
+
+msgid "AI note name cannot end with a space or dot."
+msgstr "لا يمكن أن ينتهي اسم ملاحظة الذكاء الاصطناعي بمسافة أو نقطة."
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr "يحتوي اسم ملاحظة الذكاء الاصطناعي على أحرف لا يدعمها نظام الملفات."
+
+msgid "AI note name is reserved by the filesystem."
+msgstr "اسم ملاحظة الذكاء الاصطناعي محجوز من قِبَل نظام الملفات."
+
+msgid "AI note name must be text."
+msgstr "يجب أن يكون اسم ملاحظة الذكاء الاصطناعي نصًا."
+
+msgid "AI note path is not a file: %1"
+msgstr "مسار ملاحظة الذكاء الاصطناعي ليس ملفًا: %1"
+
+msgid "AI note path is unavailable."
+msgstr "مسار ملاحظة الذكاء الاصطناعي غير متاح."
 
 msgid "API Key"
 msgstr "مفتاح API"
@@ -295,8 +393,8 @@ msgstr ""
 "أضف المزودين من القائمة الرئيسية:\n"
 "%1 -> مساعد الذكاء الاصطناعي -> الإعدادات -> API المزود"
 
-msgid "Analysis of your highlights, notes, and notebook content from the book."
-msgstr "تحليل لتمييزاتك وملاحظاتك ومحتوى دفتر ملاحظاتك من الكتاب."
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr "تحليل التظليلات والملاحظات ومحتوى ملاحظات الذكاء الاصطناعي من الكتاب."
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -347,8 +445,8 @@ msgstr "إرفاق النص السابق"
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "الملخّص التلقائي عند فتح كتب لم تُقرأ منذ فترة طويلة"
 
-msgid "Auto-save Conversations to Notebook"
-msgstr "حفظ المحادثات تلقائيًا في دفتر الملاحظات"
+msgid "Auto-save Conversations to AI Notes"
+msgstr "حفظ المحادثات تلقائيًا في ملاحظات الذكاء الاصطناعي"
 
 msgid "Base URL"
 msgstr "عنوان URL الأساسي"
@@ -415,8 +513,8 @@ msgstr "جارٍ التحقق من التحديثات..."
 msgid "Choose Definition Sections"
 msgstr "اختر أقسام التعريف"
 
-msgid "Choose which notebook your notes are saved to."
-msgstr "اختر المفكرة التي تُحفظ فيها ملاحظاتك."
+msgid "Choose which AI note your notes are saved to."
+msgstr "اختر ملاحظة الذكاء الاصطناعي التي تُحفظ فيها ملاحظاتك."
 
 msgid "Clear"
 msgstr "مسح"
@@ -436,8 +534,8 @@ msgstr "لم يتم العثور على الإعدادات. يرجى إعداد 
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "قم بتكوين لغة استجابة AI LLM. يتم تعيين الافتراضي على لغة واجهة KOReader."
 
-msgid "Configured notebooks folder is not accessible: %1"
-msgstr "مجلد المفكرات المُهيأ غير قابل للوصول: %1"
+msgid "Configured AI Notes folder is not accessible: %1"
+msgstr "مجلد ملاحظات الذكاء الاصطناعي المُهيَّأ غير قابل للوصول: %1"
 
 msgid "Connection test successful."
 msgstr "تم اختبار الاتصال بنجاح."
@@ -461,8 +559,8 @@ msgstr "ملاحظات سياقية / تأملات"
 msgid "Contradictions / Open Questions"
 msgstr "تناقضات / أسئلة مفتوحة"
 
-msgid "Conversation is saved to notebook"
-msgstr "تم حفظ المحادثة في المفكرة"
+msgid "Conversation is saved to AI Notes"
+msgstr "تم حفظ المحادثة في ملاحظات الذكاء الاصطناعي"
 
 msgid "Copy"
 msgstr "نسخ"
@@ -478,42 +576,42 @@ msgstr "الحجج الأساسية"
 msgid "Core Idea"
 msgstr "الفكرة الأساسية"
 
-msgid "Could not close notebook file."
-msgstr "تعذّر إغلاق ملف المفكرة."
+msgid "Could not close AI note file."
+msgstr "تعذّر إغلاق ملف ملاحظة الذكاء الاصطناعي."
 
-msgid "Could not create notebook."
-msgstr "تعذّر إنشاء المفكرة."
+msgid "Could not create AI Notes folder: %1"
+msgstr "تعذّر إنشاء مجلد ملاحظات الذكاء الاصطناعي: %1"
 
-msgid "Could not create notebook: %1"
-msgstr "تعذّر إنشاء المفكرة: %1"
+msgid "Could not create AI note."
+msgstr "تعذّر إنشاء ملاحظة الذكاء الاصطناعي."
 
-msgid "Could not create notebooks folder: %1"
-msgstr "تعذّر إنشاء مجلد المفكرات: %1"
+msgid "Could not create AI note: %1"
+msgstr "تعذّر إنشاء ملاحظة الذكاء الاصطناعي: %1"
 
-msgid "Could not list notebooks folder: %1"
-msgstr "تعذّر سرد مجلد المفكرات: %1"
+msgid "Could not list AI Notes folder: %1"
+msgstr "تعذّر سرد مجلد ملاحظات الذكاء الاصطناعي: %1"
 
-msgid "Could not open notebook file."
-msgstr "تعذّر فتح ملف المفكرة."
+msgid "Could not open AI note file."
+msgstr "تعذّر فتح ملف ملاحظة الذكاء الاصطناعي."
 
 msgid ""
-"Could not save to the selected notebook.\n"
+"Could not save to the selected AI note.\n"
 "Saved to: %1"
 msgstr ""
-"تعذّر الحفظ في المفكرة المحددة.\n"
+"تعذّر الحفظ في ملاحظة الذكاء الاصطناعي المحددة.\n"
 "تم الحفظ في: %1"
 
-msgid "Could not select notebook."
-msgstr "تعذّر تحديد المفكرة."
+msgid "Could not select AI note."
+msgstr "تعذّر تحديد ملاحظة الذكاء الاصطناعي."
 
-msgid "Could not write notebook file."
-msgstr "تعذّرت الكتابة في ملف المفكرة."
+msgid "Could not write AI note file."
+msgstr "تعذّر كتابة ملف ملاحظة الذكاء الاصطناعي."
 
 msgid "Create"
 msgstr "إنشاء"
 
-msgid "Create a notebook."
-msgstr "إنشاء مفكرة."
+msgid "Create an AI note."
+msgstr "إنشاء ملاحظة ذكاء اصطناعي."
 
 msgid "Cultural Significance"
 msgstr "الأهمية الثقافية"
@@ -530,9 +628,6 @@ msgstr "موجه مخصص"
 
 msgid "Custom Prompts"
 msgstr "الموجهات المخصصة"
-
-msgid "Deeply Thought"
-msgstr "تفكير عميق"
 
 msgid "Delete"
 msgstr "حذف"
@@ -729,11 +824,11 @@ msgstr ""
 msgid "Integrated Summary"
 msgstr "ملخص متكامل"
 
-msgid "Invalid notebook entry."
-msgstr "إدخال مفكرة غير صالح."
+msgid "Invalid AI note entry."
+msgstr "إدخال ملاحظة ذكاء اصطناعي غير صالح."
 
-msgid "Invalid notebook filename."
-msgstr "اسم ملف المفكرة غير صالح."
+msgid "Invalid AI note filename."
+msgstr "اسم ملف ملاحظة الذكاء الاصطناعي غير صالح."
 
 msgid "Justify"
 msgstr "ضبط"
@@ -768,9 +863,6 @@ msgstr "اتركه فارغًا لاستخدام: %1"
 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "اترك هذه الحقول فارغة لاستخدام لغة الواجهة: %1"
-
-msgid "Loading for <b>%1</b> ..."
-msgstr "جارٍ التحميل لـ <b>%1</b> ..."
 
 msgid "Locations"
 msgstr "الأماكن"
@@ -808,26 +900,32 @@ msgstr "النماذج: %1"
 msgid "Models: %1 (matched)"
 msgstr "النماذج: %1 (متطابقة)"
 
-msgid "Multiple Notebooks"
-msgstr "دفاتر ملاحظات متعددة"
+msgid "Multiple AI Notes"
+msgstr "ملاحظات ذكاء اصطناعي متعددة"
 
 msgid "Narrative element in focus:"
 msgstr "العنصر السردي المُركَّز عليه:"
 
-msgid "New notebook"
-msgstr "مفكرة جديدة"
+msgid "New AI Note"
+msgstr "ملاحظة ذكاء اصطناعي جديدة"
 
-msgid "New notebook..."
-msgstr "مفكرة جديدة..."
+msgid "New AI Note..."
+msgstr "ملاحظة ذكاء اصطناعي جديدة..."
 
 msgid "No"
 msgstr "لا"
 
+msgid "No AI Notes folder is set."
+msgstr "لم يتم تعيين مجلد ملاحظات الذكاء الاصطناعي."
+
+msgid "No AI notes yet"
+msgstr "لا توجد ملاحظات ذكاء اصطناعي بعد"
+
 msgid "No active provider configured. Please add one in Settings."
 msgstr "لا يوجد مزود خدمة نشط مُكوَّن. يرجى إضافة واحد في الإعدادات."
 
-msgid "No base folder is available for notebooks."
-msgstr "لا يتوفر مجلد أساسي للمفكرات."
+msgid "No base folder is available for AI Notes."
+msgstr "لا يتوفر مجلد أساسي لملاحظات الذكاء الاصطناعي."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "لا يوجد كتاب مفتوح. اضغط مطولًا على كتاب في مدير الملفات ثم اختر معلومات الكتاب (AI)."
@@ -841,14 +939,8 @@ msgstr "لا توجد نماذج متاحة."
 msgid "No models matching \"%1\"."
 msgstr "لا توجد نماذج تطابق \"%1\"."
 
-msgid "No notebooks folder is set."
-msgstr "لم يتم تعيين مجلد دفاتر الملاحظات."
-
-msgid "No notebooks yet"
-msgstr "لا توجد مفكرات بعد"
-
-msgid "No path is available for the legacy notebook."
-msgstr "لا يتوفر مسار للمفكرة القديمة."
+msgid "No path is available for the default AI note."
+msgstr "لا يتوفر مسار لملاحظة الذكاء الاصطناعي الافتراضية."
 
 msgid "No response received."
 msgstr "لم يتم تلقي أي استجابة."
@@ -867,70 +959,6 @@ msgstr "لا شيء"
 
 msgid "Note added successfully"
 msgstr "تمت إضافة الملاحظة بنجاح"
-
-msgid "Notebook"
-msgstr "دفتر الملاحظات"
-
-msgid "Notebook (AI Conversation Log)"
-msgstr "المفكرة (سجل محادثة الذكاء الاصطناعي)"
-
-msgid "Notebook Settings"
-msgstr "إعدادات المفكرة"
-
-msgid "Notebook name"
-msgstr "اسم المفكرة"
-
-msgid "Notebook name cannot be empty."
-msgstr "لا يمكن أن يكون اسم المفكرة فارغًا."
-
-msgid "Notebook name cannot contain '..'."
-msgstr "لا يمكن أن يحتوي اسم المفكرة على '..'."
-
-msgid "Notebook name cannot contain path separators."
-msgstr "لا يمكن أن يحتوي اسم المفكرة على محددات المسار."
-
-msgid "Notebook name cannot end with a space or dot."
-msgstr "لا يمكن أن ينتهي اسم المفكرة بمسافة أو نقطة."
-
-msgid "Notebook name contains characters that are not supported by the filesystem."
-msgstr "يحتوي اسم المفكرة على أحرف غير مدعومة من نظام الملفات."
-
-msgid "Notebook name is reserved by the filesystem."
-msgstr "اسم المفكرة محجوز من قبل نظام الملفات."
-
-msgid "Notebook name must be text."
-msgstr "يجب أن يكون اسم المفكرة نصًا."
-
-msgid "Notebook path is not a file: %1"
-msgstr "مسار المفكرة ليس ملفًا: %1"
-
-msgid "Notebook path is unavailable."
-msgstr "مسار المفكرة غير متاح."
-
-msgid "Notebook save failed. Continuing..."
-msgstr "فشل حفظ دفتر الملاحظات. المتابعة..."
-
-msgid "Notebook: %1"
-msgstr "المفكرة: %1"
-
-msgid "Notebooks"
-msgstr "المفكرات"
-
-msgid "Notebooks Folder"
-msgstr "مجلد دفاتر الملاحظات"
-
-msgid "Notebooks Folder: %1"
-msgstr "مجلد المفكرات: %1"
-
-msgid ""
-"Notebooks folder path:\n"
-"%1"
-msgstr ""
-"مسار مجلد المفكرات:\n"
-"%1"
-
-msgid "Notebooks path is not a directory: %1"
-msgstr "مسار المفكرات ليس مجلدًا: %1"
 
 msgid "OK"
 msgstr "موافق"
@@ -1054,9 +1082,6 @@ msgstr "مسح"
 
 msgid "Purge Settings"
 msgstr "مسح الإعدادات"
-
-msgid "Querying AI ..."
-msgstr "جارٍ الاستعلام من الذكاء الاصطناعي ..."
 
 msgid "Quick Note"
 msgstr "ملاحظة سريعة"
@@ -1187,11 +1212,11 @@ msgstr "يجب أن يكون سجل أداة البحث جدولًا."
 msgid "Searching with %1 ... [%2]"
 msgstr "جارٍ البحث باستخدام %1 ... [%2]"
 
+msgid "Select AI Note"
+msgstr "اختر ملاحظة ذكاء اصطناعي"
+
 msgid "Select a model:"
 msgstr "اختر نموذجًا:"
-
-msgid "Select notebook"
-msgstr "تحديد مفكرة"
 
 msgid "Selection copied to clipboard."
 msgstr "تم نسخ التحديد إلى الحافظة."
@@ -1270,8 +1295,8 @@ msgstr "باختصار"
 msgid "Take Quick Notes"
 msgstr "تدوين ملاحظات سريعة"
 
-msgid "Take quick notes that will be saved to your notebook."
-msgstr "دوّن ملاحظات سريعة سيتم حفظها في دفتر ملاحظاتك."
+msgid "Take quick notes that will be saved to your AI Notes."
+msgstr "دوّن ملاحظات سريعة ستُحفظ في ملاحظات الذكاء الاصطناعي."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 #. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
@@ -1292,9 +1317,6 @@ msgstr "تم نسخ النص إلى الحافظة"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "لم يتم العثور على المعالج لـ %1. يرجى التأكد من وجود المعالج في مجلد api_handlers."
-
-msgid "The notebook is your conversation log: AI answers and quick notes are appended to it. You can create multiple notebooks to organize your logs."
-msgstr "دفتر الملاحظات هو سجل المحادثات الخاص بك: يتم إلحاق إجابات الذكاء الاصطناعي والملاحظات السريعة به. يمكنك إنشاء دفاتر ملاحظات متعددة لتنظيم سجلاتك."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "ينشئ هذا الزر ملاحظة سريعة بالنص المميز."
