@@ -1,8 +1,9 @@
 -- test_error_message.lua
--- Tests for the per-handler extractErrorMessage implementations:
--- BaseHandler owns the canonical default (error.message > flat error >
--- bare message); OpenAIHandler alone adds the FastAPI-style detail.*
--- proxy fallback. No shared extractor lives in assistant_utils.
+-- Tests for the extractErrorMessage implementations:
+-- ASUtils.extractErrorMessage owns the canonical default (error.message >
+-- flat error > detail.* proxy fallback > bare message, plus the machine-code
+-- TAG suffix); BaseHandler delegates to it. OpenAIHandler alone keeps its own
+-- override (same message chain, plain human text, no TAG).
 local helper = require("test.helper")
 local assert = helper.assert
 
@@ -58,11 +59,23 @@ local tests = {
         assert.equal(h:extractErrorMessage('{"error":{"message":429}}'), "429")
     end),
 
-    test("base default: ignores detail-only body", function()
+    test("base default: machine-code suffix from top error object", function()
         local h = BaseHandler:new{}
-        assert.equal(h:extractErrorMessage('{"detail":{"error":{"message":"proxied"}}}'), nil)
-        assert.equal(h:extractErrorMessage('{"detail":{"message":"slow"}}'), nil)
-        assert.equal(h:extractErrorMessage('{"detail":"just slow"}'), nil)
+        assert.equal(h:extractErrorMessage('{"error":{"message":"boom","type":"invalid_request_error"}}'), "boom [invalid_request_error]")
+        assert.equal(h:extractErrorMessage('{"error":{"message":"x","status":"INVALID_ARGUMENT","code":400}}'), "x [INVALID_ARGUMENT/400]")
+        assert.equal(h:extractErrorMessage('{"error":{"message":"x","code":400,"status":400}}'), "x [400]")
+        assert.equal(h:extractErrorMessage('{"error":{"message":"x"},"status":"NOT_FOUND"}'), "x [NOT_FOUND]")
+    end),
+
+    test("base default: detail proxy fallback (no TAG on detail bodies)", function()
+        local h = BaseHandler:new{}
+        assert.equal(h:extractErrorMessage('{"detail":{"error":{"message":"proxied"}}}'), "proxied")
+        assert.equal(h:extractErrorMessage('{"detail":{"message":"slow"}}'), "slow")
+        assert.equal(h:extractErrorMessage('{"detail":"just slow"}'), "just slow")
+        assert.equal(h:extractErrorMessage('{"detail":{"error":"flat proxied"}}'), "flat proxied")
+        local ASUtils = require("assistant_utils")
+        assert.equal(ASUtils.extractErrorMessage('{"detail":{"error":{"message":"proxied"}}}'), "proxied")
+        assert.equal(ASUtils.extractErrorMessage('{"error":{"message":"boom","type":"invalid_request_error"}}'), "boom [invalid_request_error]")
     end),
 
     test("base default: nil/empty/garbage returns nil", function()
@@ -93,6 +106,14 @@ local tests = {
         assert.equal(h:extractErrorMessage(body), "native")
     end),
 
+    test("openai: ignores machine-code fields, returns plain message", function()
+        local h = OpenAIHandler:new{}
+        assert.equal(h:extractErrorMessage('{"error":{"message":"boom","type":"invalid_request_error"}}'), "boom")
+        assert.equal(h:extractErrorMessage('{"error":{"message":"bad","type":"invalid_request_error","code":"invalid_api_key"}}'), "bad")
+        assert.equal(h:extractErrorMessage('{"error":{"message":"bad","type":"same","code":"same"}}'), "bad")
+        assert.equal(h:extractErrorMessage('{"detail":{"error":{"message":"proxied"}}}'), "proxied")
+    end),
+
     test("anthropic: error.message", function()
         local h = AnthropicHandler:new{}
         assert.equal(h:extractErrorMessage('{"error":{"message":"invalid key"}}'), "invalid key")
@@ -102,7 +123,7 @@ local tests = {
 
     test("gemini: error.message", function()
         local h = GeminiHandler:new{}
-        assert.equal(h:extractErrorMessage('{"error":{"message":"API key not valid","code":400,"status":"INVALID_ARGUMENT"}}'), "API key not valid")
+        assert.equal(h:extractErrorMessage('{"error":{"message":"API key not valid","code":400,"status":"INVALID_ARGUMENT"}}'), "API key not valid [INVALID_ARGUMENT/400]")
         assert.equal(h:extractErrorMessage('{"message":"bare"}'), "bare")
     end),
 

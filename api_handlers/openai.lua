@@ -73,7 +73,7 @@ function OpenAIHandler:FetchModels()
     local models, err = ASUtils.fetchJSON(model_url, {
         ["Content-Type"]  = "application/json",
         ["Authorization"] = "Bearer " .. self.api_key,
-    }, infomsg, nil, nil, nil, function(body) return self:extractErrorMessage(body) end)
+    }, infomsg)
 
     if err then return nil, err end
     if models and models.data then

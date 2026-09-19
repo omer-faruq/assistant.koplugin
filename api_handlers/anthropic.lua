@@ -53,7 +53,7 @@ function AnthropicHandler:FetchModels()
         ["Content-Type"]  = "application/json",
         ["anthropic-version"] = "2023-06-01",
         ["x-api-key"]         = self.api_key,
-    }, infomsg, nil, nil, nil, function(body) return self:extractErrorMessage(body) end)
+    }, infomsg)
 
     if err then return nil, err end
     if models and models.data then
@@ -67,25 +67,8 @@ function AnthropicHandler:FetchModels()
     
 end
 
---- Extract a human-readable error message from an API response body.
---- Anthropic shape { error = { message = "..." } }:
---- error.message > flat error > bare message.
---- @param body string|table|nil raw body or already-decoded JSON
---- @return string|nil error message, or nil if none found
-function AnthropicHandler:extractErrorMessage(body)
-    local decoded = body
-    if type(body) == "string" then
-        if #body == 0 then return nil end
-        local ok, j = pcall(json.decode, body)
-        if not ok or type(j) ~= "table" then return nil end
-        decoded = j
-    end
-    if type(decoded) ~= "table" then return nil end
-    local pick = BaseHandler.pickErrorValue
-    return pick(koutil.tableGetValue(decoded, "error", "message"))
-        or pick(decoded.error)
-        or pick(decoded.message)
-end
+--- NOTE: error extraction inherits BaseHandler:extractErrorMessage
+--- (error.message > flat error > bare message). Only OpenAI overrides it.
 
 --- Convert OpenAI-style message_history into Anthropic's wire format.
 --- Returns { messages = [...], system = "..." }

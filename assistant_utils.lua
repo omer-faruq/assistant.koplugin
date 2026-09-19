@@ -1188,6 +1188,56 @@ function M.sleepWithInfo(seconds, template)
 end
 
 
+--- Extract a human-readable error message from an API response body.
+--- Canonical default (single source of truth): deterministic order --
+---   error.message > flat error > detail.error.message > detail.error >
+---   detail.message > detail string > bare message. The detail.* proxy
+---   fallback covers OpenAI-gateway bodies (proxies e.g. DeepSeek wrap
+---   upstream errors under detail). A machine-code suffix
+--- (unique non-empty error.type / error.status or top-level status /
+--- error.code joined with "/") is appended in ASCII brackets, untranslated.
+--- @param body string|table|nil raw body or already-decoded JSON
+--- @return string|nil error message, or nil if none found
+function M.extractErrorMessage(body)
+    local decoded = body
+    if type(body) == "string" then
+        if #body == 0 then return nil end
+        local ok, j = pcall(json.decode, body)
+        if not ok or type(j) ~= "table" then return nil end
+        decoded = j
+    end
+    if type(decoded) ~= "table" then return nil end
+    local function pick(v)
+        if type(v) == "string" and #v > 0 then return v end
+        if type(v) == "number" then return tostring(v) end
+        return nil
+    end
+    local msg = pick(koutil.tableGetValue(decoded, "error", "message"))
+        or pick(decoded.error)
+        or pick(koutil.tableGetValue(decoded, "detail", "error", "message"))
+        or pick(koutil.tableGetValue(decoded, "detail", "error"))
+        or pick(koutil.tableGetValue(decoded, "detail", "message"))
+        or pick(decoded.detail)
+        or pick(decoded.message)
+    if msg == nil then return nil end
+    local tag_parts = {}
+    local seen = {}
+    local candidates = {
+        pick(koutil.tableGetValue(decoded, "error", "type")),
+        pick(koutil.tableGetValue(decoded, "error", "status")) or pick(decoded.status),
+        pick(koutil.tableGetValue(decoded, "error", "code")),
+    }
+    for i = 1, 3 do
+        local v = candidates[i]
+        if v ~= nil and not seen[v] then
+            seen[v] = true
+            tag_parts[#tag_parts + 1] = v
+        end
+    end
+    if #tag_parts == 0 then return msg end
+    return msg .. " [" .. table.concat(tag_parts, "/") .. "]"
+end
+
 --- Fetch JSON over HTTP behind a cancellable trap widget.
 --- @param url string request URL
 --- @param header table|nil request headers
@@ -1195,10 +1245,9 @@ end
 --- @param timeout number|nil block timeout in seconds (defaults to 10)
 --- @param maxtime number|nil total timeout in seconds (defaults to 30; nil also skips the total-timeout sink)
 --- @param post_body table|string|nil POST body, JSON-encoded unless already a string
---- @param extractor_fn function|nil per-handler extractor for non-200 bodies
 --- @return table|nil parsed JSON on success
 --- @return string|nil error code or message
-function M.fetchJSON(url, header, string_or_widget, timeout, maxtime, post_body, extractor_fn)
+function M.fetchJSON(url, header, string_or_widget, timeout, maxtime, post_body)
   
   local completed, success, code, body = Trapper:dismissableRunInSubprocess(function()
     return M.httpRequest(url, timeout, maxtime, post_body, "application/json", header or {})
@@ -1218,11 +1267,8 @@ function M.fetchJSON(url, header, string_or_widget, timeout, maxtime, post_body,
 
   if code ~= 200 then
     if body and #body > 0 then
-      -- Per-handler extractor owns the wire format; no shared fallback.
-      if type(extractor_fn) == "function" then
-        local ok_ex, msg = pcall(extractor_fn, body)
-        if ok_ex and type(msg) == "string" and #msg > 0 then return nil, msg end
-      end
+      local ok_ex, msg = pcall(M.extractErrorMessage, body)
+      if ok_ex and type(msg) == "string" and #msg > 0 then return nil, msg end
       return nil, T("HTTP Status %1: %2", code, body)
     end
     return nil, T("HTTP Status %1", code)

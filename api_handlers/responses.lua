@@ -89,7 +89,7 @@ function ResponsesHandler:FetchModels()
     local models, err = ASUtils.fetchJSON(model_url, {
         ["Content-Type"]  = "application/json",
         ["Authorization"] = "Bearer " .. self.api_key,
-    }, infomsg, nil, nil, nil, function(body) return self:extractErrorMessage(body) end)
+    }, infomsg)
 
     if err then return nil, err end
     if models and models.data then
@@ -103,26 +103,9 @@ function ResponsesHandler:FetchModels()
 end
 
 -- ---------------------------------------------------------------------------
--- Error extraction: error.message > flat error > bare message (no detail sweep).
+-- Error extraction inherits BaseHandler:extractErrorMessage
+-- (error.message > flat error > bare message). Only OpenAI overrides it.
 -- ---------------------------------------------------------------------------
-
---- Extract a human-readable error message from an API response body.
---- @param body string|table|nil raw body or already-decoded JSON
---- @return string|nil error message, or nil if none found
-function ResponsesHandler:extractErrorMessage(body)
-    local decoded = body
-    if type(body) == "string" then
-        if #body == 0 then return nil end
-        local ok, j = pcall(json.decode, body)
-        if not ok or type(j) ~= "table" then return nil end
-        decoded = j
-    end
-    if type(decoded) ~= "table" then return nil end
-    local pick = BaseHandler.pickErrorValue
-    return pick(koutil.tableGetValue(decoded, "error", "message"))
-        or pick(decoded.error)
-        or pick(decoded.message)
-end
 
 -- ---------------------------------------------------------------------------
 -- Message conversion: OpenAI-format message_history → Responses API input

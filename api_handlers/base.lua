@@ -112,19 +112,12 @@ function BaseHandler.pickErrorValue(v)
 end
 
 --- Extract a human-readable error message from an API response body.
---- Canonical default: deterministic order ONLY —
----   error.message > flat error > bare message (3 lookups max).
---- Wire-format-specific shapes (e.g. FastAPI-style detail.* proxies)
---- belong in per-handler overrides, never here.
+--- Thin delegate to ASUtils.extractErrorMessage (single source);
+--- OpenAI overrides for detail.* proxy shapes.
 --- @param body string|table|nil raw body or already-decoded JSON
 --- @return string|nil error message, or nil if none found
 function BaseHandler:extractErrorMessage(body)
-    local decoded = decodeBody(body)
-    if type(decoded) ~= "table" then return nil end
-    local pick = BaseHandler.pickErrorValue
-    return pick(koutil.tableGetValue(decoded, "error", "message"))
-        or pick(decoded.error)
-        or pick(decoded.message)
+    return ASUtils.extractErrorMessage(body)
 end
 
 --- Parse the 429 wait time from retry headers, then body hints.

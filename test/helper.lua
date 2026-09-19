@@ -168,14 +168,14 @@ end
 
 -- Override ASUtils.fetchJSON with our mock
 local originalFetchJSON = ASUtils.fetchJSON
-function ASUtils.fetchJSON(url, header, trap_widget, timeout, maxtime, post_body, extractor_fn)
+function ASUtils.fetchJSON(url, header, trap_widget, timeout, maxtime, post_body)
     M.fetchJSON_call_index = (M.fetchJSON_call_index or 0) + 1
     local resp = M.fetchJSON_responses[M.fetchJSON_call_index]
     if resp then
         return resp.parsed, resp.err
     end
     -- fallback: call original (for integration tests)
-    return originalFetchJSON(url, header, trap_widget, timeout, maxtime, post_body, extractor_fn)
+    return originalFetchJSON(url, header, trap_widget, timeout, maxtime, post_body)
 end
 
 M.extools = extools
