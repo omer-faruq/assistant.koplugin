@@ -1,12 +1,15 @@
 -- test_dialog_markdown.lua
 -- Guards the container-label zero-heading scheme (dialog + viewer):
---   * dialog emits <div class="assistant-label"> carriers, never `###`/`####`
+--   * the shared assistant_message_format emitter produces
+--     <div class="assistant-label"> carriers, never `###`/`####`
 --     container headings; glyphs ride %1 outside ASCII msgids
+--   * dialog calls the shared emitter (no local fork); inter-round
+--     separator is `---`, not `------------`
 --   * inter-round separator is `---`, not `------------`
 --   * VIEWER_CSS styles .assistant-label; _renderMarkdown unwraps puremd's
 --     <p>-wrapped labels; strip_reasoning matches the new div shape
 -- Headless-safe: asserts on shipped sources plus a representative generated
--- sample (same shapes formatSingleMessage emits); assistant_dialog.lua itself
+-- sample (the shapes formatSingleMessage emits); assistant_dialog.lua itself
 -- is widget-heavy and never required here.
 local helper = require("test.helper")
 local assert = helper.assert
@@ -22,9 +25,10 @@ local function read_source(name)
 end
 
 local dialog_src = read_source("assistant_dialog.lua")
+local format_src = read_source("assistant_message_format.lua")
 local viewer_src = read_source("assistant_viewer.lua")
 
--- Representative two-round text, same shapes the dialog emits after T()
+-- Representative two-round text, the shapes the dialog emits after T()
 -- substitution (C locale: %1/%2/%3 replaced in order).
 local SAMPLE = table.concat({
     '<div class="assistant-label">\226\152\186 Question</div>\n\n',
@@ -84,20 +88,24 @@ end
 
 local tests = {
     test("dialog: question label is a div, no h3 container", function()
-        assert.matches(dialog_src, '<div class="assistant%-label">%%1 Question</div>', "question div missing")
+        assert.matches(dialog_src, 'require%("assistant_message_format"%)', "dialog must use the shared emitter")
+        assert.matches(format_src, '<div class="assistant%-label">%%1 Question</div>', "question div missing")
+        assert.notMatches(format_src, '### %%1 Question', "old h3 question heading still present")
         assert.notMatches(dialog_src, '### %%1 Question', "old h3 question heading still present")
     end),
 
     test("dialog: thought label is a div, glyph outside msgid", function()
-        assert.matches(dialog_src, 'assistant%-label assistant%-label%-%-thought', "thought div missing")
-        assert.matches(dialog_src, '%%1 Deeply Thought', "thought msgid shape missing")
-        assert.matches(dialog_src, '"\226\128\187", reasoning_text', "glyph must ride %%1 outside _()")
+        assert.matches(format_src, 'assistant%-label assistant%-label%-%-thought', "thought div missing")
+        assert.matches(format_src, '%%1 Deeply Thought', "thought msgid shape missing")
+        assert.matches(format_src, '"\226\128\187", reasoning_text', "glyph must ride %%1 outside _()")
+        assert.notMatches(format_src, '#### \226\128\187', "old h4 thought heading still present")
         assert.notMatches(dialog_src, '#### \226\128\187', "old h4 thought heading still present")
     end),
 
     test("dialog: response/search labels are divs via T, no h3", function()
-        assert.matches(dialog_src, '<div class="assistant%-label">%%1 %%2</div>', "response div missing")
-        assert.matches(dialog_src, '"\226\156\166", answer_type, assistant_content', "glyph must ride %%1 outside _()")
+        assert.matches(format_src, '<div class="assistant%-label">%%1 %%2</div>', "response div missing")
+        assert.matches(format_src, '"\226\156\166", answer_type, assistant_content', "glyph must ride %%1 outside _()")
+        assert.notMatches(format_src, '### \226\156\166 %%s', "old h3 response heading still present")
         assert.notMatches(dialog_src, '### \226\156\166 %%s', "old h3 response heading still present")
     end),
 

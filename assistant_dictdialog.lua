@@ -8,6 +8,7 @@ local T = require("ffi/util").template
 local Event = require("ui/event")
 local koutil = require("util")
 local ASUtils = require("assistant_utils")
+local MsgFormat = require("assistant_message_format")
 local TermXray = require("assistant_term_xray")
 local Prompts = require("assistant_prompts")
 local dict_prompts = Prompts.assistant_prompts.dict
@@ -236,6 +237,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
                 user_input = "",
             }),
         }
+        ASUtils.set_attr(context_message, "prompt_title", title)
         table.insert(message_history, context_message)
     else
         user_prompt = Prompts.build_dict_prompt(
@@ -253,6 +255,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
                 author = book_author,
             }),
         }
+        ASUtils.set_attr(context_message, "prompt_title", title)
         table.insert(message_history, context_message)
     end
 
@@ -263,18 +266,50 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         return
     end
 
-    local function createResultText(highlightedText, answer)
+    -- Suggestion switch for this prompt (off for dict and term_xray): the
+    -- shared formatter falls back to it when messages carry no attr.
+    local prompt_config = (prompt_type == "term_xray") and term_xray_prompts or dict_prompts
+
+    do
+        local assistant_msg = {
+            role = "assistant",
+            content = ret,
+        }
+        ASUtils.set_attr(assistant_msg, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, prompt_config))
+        table.insert(message_history, assistant_msg)
+    end
+
+    local function createResultText(highlightedText)
         -- Limit prev_context to last 100 bytes and next_context to first 100 bytes,
         -- backing off to UTF-8 character boundaries and snapping to word
         -- boundaries so no partial word is shown
         local prev_context_limited = TermXray.clip_excerpt(prev_context, 100, "tail")
         local next_context_limited = TermXray.clip_excerpt(next_context, 100, "head")
+        -- Walk the history past the system prompt and format each message
+        -- with assistant_message_format (Search/Thought/Response divs,
+        -- reasoning split, suggestion switch), so Search divs the querier
+        -- appended in place render alongside the answer.
+        local result_parts = {}
+        for idx = 2, #message_history do
+            local message = message_history[idx]
+            local is_context = ASUtils.get_attr(message, "is_context")
+            if not is_context then
+                table.insert(result_parts, MsgFormat.formatSingleMessage(message_history, message, {
+                    title = nil,
+                    msg_idx = idx,
+                    settings = assistant.settings,
+                    default_config = prompt_config,
+                }))
+            end
+        end
         -- Normalize the selection's whitespace before bolding it: a leading or
         -- trailing space in "** word **" stops Markdown from rendering bold.
-        return T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, koutil.cleanupSelectedText(highlightedText), next_context_limited, answer)
+        -- The %4 slot carries the formatted history; the msgid is unchanged
+        -- so existing translations keep matching.
+        return T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, koutil.cleanupSelectedText(highlightedText), next_context_limited, table.concat(result_parts))
     end
 
-    local result = createResultText(highlightedText, ret)
+    local result = createResultText(highlightedText)
     local chatgpt_viewer
 
     local function handleAddToNote()

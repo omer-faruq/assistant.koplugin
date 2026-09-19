@@ -24,6 +24,7 @@ local Device = require("device")
 local Screen = Device.screen
 local CheckButton = require("ui/widget/checkbutton")
 local ASUtils = require("assistant_utils")
+local MsgFormat = require("assistant_message_format")
 local Notebook = require("assistant_notebook")
 local extractBookTextForAnalysis = ASUtils.extractBookTextForAnalysis
 
@@ -159,94 +160,16 @@ function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText, user_in
 end
 
 function AssistantDialog:_createResultText(highlightedText, message_history, previous_text, title)
-  -- Helper function to format a single message (user or assistant)
-  local function formatSingleMessage(message, title, msg_idx)
-    if not message then return "" end
-    if message.role == "user" then
-      local user_message = strbuf.new()
-      user_message:put(T(_('<div class="assistant-label">%1 Question</div>\n\n'), "☺"))
-
-      if title and title ~= "" then
-        user_message:putf("➤ ‹ %s ›\n", title)
-
-        local user_input = ASUtils.get_attr(message, "user_input", "")
-
-        -- Check if user input is available
-        if user_input and user_input ~= "" then
-
-          if user_input:find("%[BOOK TEXT BEGIN%]") then
-            user_input = user_input:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
-          end
-
-          if user_input:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
-            user_input = user_input:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
-          end
-
-          user_message:put("➤")
-          user_message:put(user_input)
-          user_message:put("\n\n")
-        end
-      elseif message.content then
-        -- shows user input prompt
-        local content = message.content
-
-        if content:find("%[BOOK TEXT BEGIN%]") then
-          content = content:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
-        end
-
-        if content:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
-          content = content:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
-        end
-
-        user_message:putf("\n➤ %s\n\n", content)
-      end
-
-      return user_message:get()
-    elseif message.role == "assistant" then
-      local assistant_content, answer_type, reasoning_section
-      local kw = ASUtils.get_attr(message, "search_keywords")
-      if kw then
-        answer_type = _("Search")
-        assistant_content = string.format("%s\n\n", kw)
-      else
-        answer_type =  _("Response")
-        assistant_content = message.content or _("(No response)")
-        local show_for_this = ASUtils.get_attr(message, "show_suggestions")
-        if show_for_this == nil and msg_idx then
-          for j = msg_idx - 1, 1, -1 do
-            if message_history[j].role == "user" then
-              local v = ASUtils.get_attr(message_history[j], "show_suggestions")
-              if v ~= nil then show_for_this = v; break end
-            end
-          end
-        end
-        if show_for_this == nil then
-          show_for_this = Prompts.isSuggestionsEnabled(self.assistant.settings, Prompts.assistant_prompts.default)
-        end
-        if show_for_this then
-          assistant_content = ASUtils.process_suggestions(assistant_content)
-        end
-
-        -- Reasoning arrives inline at the top as a bare ```reasoning fence,
-        -- mirroring the wrapper in Querier:processStream
-        -- (assistant_querier.lua); the title and the `---` separator are
-        -- added here so history stays clean. Split it out so it renders
-        -- before the `### ✦ Response` header instead of after it.
-        local reasoning_text, body = assistant_content:match(
-            "^```reasoning%s*([%s%S]-)%s*```%s*([%s%S]*)$")
-        if reasoning_text and reasoning_text:find("%S") then
-          reasoning_section = T(_('<div class="assistant-label assistant-label--thought">%1 Deeply Thought</div>\n\n```reasoning\n%2\n```\n\n---\n\n'),
-              "※", reasoning_text)
-          assistant_content = body
-        end
-      end
-
-      if reasoning_section then
-        return reasoning_section .. T(_('<div class="assistant-label">%1 %2</div>\n\n%3\n\n'), "✦", answer_type, assistant_content)
-      end
-      return T(_('<div class="assistant-label">%1 %2</div>\n\n%3\n\n'), "✦", answer_type, assistant_content)
-    end
-    return "" -- Should not happen for valid roles
+  -- Single-message rendering lives in assistant_message_format (shared with
+  -- the feature dialog); call sites below pass history position plus the
+  -- dialog's settings and default suggestion config.
+  local function fmt(message, msg_idx)
+    return MsgFormat.formatSingleMessage(message_history, message, {
+      title = title,
+      msg_idx = msg_idx,
+      settings = self.assistant.settings,
+      default_config = Prompts.assistant_prompts.default,
+    })
   end
 
   -- first response message
@@ -280,7 +203,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
       local message = message_history[i]
       local is_context = ASUtils.get_attr(message, "is_context")
       if not is_context then
-        table.insert(result_parts, formatSingleMessage(message, title, i))
+        table.insert(result_parts, fmt(message, i))
       end
     end
     return table.concat(result_parts)
@@ -290,7 +213,7 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
   local last_assistant_message = message_history[#message_history]
 
   return previous_text .. "---\n\n" ..
-      formatSingleMessage(last_user_message, title, #message_history - 1) .. formatSingleMessage(last_assistant_message, title, #message_history)
+      fmt(last_user_message, #message_history - 1) .. fmt(last_assistant_message, #message_history)
 end
 
 -- Helper function to create and show ChatGPT viewer
@@ -349,6 +272,7 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
           }
           -- set these attributes in metatable (won't be encoded to API calls)
           ASUtils.set_attr(_user, "user_input", user_question.user_input)
+          ASUtils.set_attr(_user, "prompt_title", viewer_title)
           ASUtils.set_attr(_user, "use_websearch", user_question.use_websearch)
           pending_show_suggestions = Prompts.isSuggestionsEnabled(self.assistant.settings, user_question)
           ASUtils.set_attr(_user, "show_suggestions", pending_show_suggestions)
@@ -944,6 +868,7 @@ function AssistantDialog:runPrompt(highlightedText, prompt_id, user_input)
   }
   -- set attributes in metatable (won't be encoded to API calls)
   ASUtils.set_attr(_user, "user_input", user_input)
+  ASUtils.set_attr(_user, "prompt_title", title)
   ASUtils.set_attr(_user, "use_websearch", koutil.tableGetValue(prompt_config, "use_websearch") or false)
   ASUtils.set_attr(_user, "show_suggestions", Prompts.isSuggestionsEnabled(self.assistant.settings, prompt_config))
   table.insert(message_history, _user)

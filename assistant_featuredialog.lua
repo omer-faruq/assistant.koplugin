@@ -12,6 +12,7 @@ local ChatGPTViewer = require("assistant_viewer")
 local assistant_prompts = require("assistant_prompts").assistant_prompts
 local Prompts = require("assistant_prompts")
 local ASUtils = require("assistant_utils")
+local MsgFormat = require("assistant_message_format")
 local extractBookTextForAnalysis = ASUtils.extractBookTextForAnalysis
 local extractHighlightsNotesAndNotebook = ASUtils.extractHighlightsNotesAndNotebook
 
@@ -185,15 +186,11 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         content = user_content,
     }
     ASUtils.set_attr(context_message, "use_websearch", user_prompt_use_websearch)
+    ASUtils.set_attr(context_message, "prompt_title", feature_title)
     ASUtils.set_attr(context_message, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
     table.insert(message_history, context_message)
 
-    local function createResultText(answer)
-
-      local processed_answer = answer
-      if Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config) then
-        processed_answer = ASUtils.process_suggestions(processed_answer)
-      end
+    local function createResultText()
 
       local header_text = T(_([[
  - Title : %1
@@ -203,7 +200,25 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
 -----
 
 ]]), title, author, formatted_progress_percent)
-      return header_text .. processed_answer
+
+      -- Walk the history past the system prompt, skipping context messages;
+      -- each remaining message goes through the shared formatter, so Search
+      -- divs (search_keywords the querier appended in place) render.
+      -- The header above is emitted once; follow-ups append below instead.
+      local result_parts = { header_text }
+      for idx = 2, #message_history do
+        local message = message_history[idx]
+        local is_context = ASUtils.get_attr(message, "is_context")
+        if not is_context then
+          table.insert(result_parts, MsgFormat.formatSingleMessage(message_history, message, {
+            title = nil,
+            msg_idx = idx,
+            settings = assistant.settings,
+            default_config = feature_prompt_config,
+          }))
+        end
+      end
+      return table.concat(result_parts)
     end
 
     local function prepareMessageHistoryForAdditionalQuestion(message_history, user_question, title, author)
@@ -235,7 +250,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       assistant = assistant,
       ui = ui,
       title = feature_title,
-      text = createResultText(answer),
+      text = createResultText(),
       disable_add_note = true,
       message_history = message_history,
       notebook_path = notebook_path,
@@ -261,6 +276,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
               content = string.format("I'm reading something titled '%s' by %s. Only answer the following question, do not add any additional information or context that is not directly related to the question, the question is: %s", title, author, expanded_followup)
             }
             ASUtils.set_attr(followup_user, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
+            ASUtils.set_attr(followup_user, "prompt_title", viewer_title)
             table.insert(message_history, followup_user)
           end
         end
@@ -283,10 +299,24 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
               ASUtils.set_attr(assistant_msg, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
               table.insert(message_history, assistant_msg)
             end
-            if Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config) then
-              answer = ASUtils.process_suggestions(answer)
-            end
-            local additional_text = "\n\n### ⮞ User: \n" .. (type(user_question) == "string" and user_question or (user_question.text or user_question)) .. "\n\n### ⮞ Assistant:\n" .. answer
+            local last_user_message = message_history[#message_history - 1]
+            local last_assistant_message = message_history[#message_history]
+            -- Format the two new trailing messages through the shared
+            -- formatter (suggestions resolved from the message attrs); the
+            -- new answer is processed exactly once.
+            local additional_text = "---\n\n"
+                .. MsgFormat.formatSingleMessage(message_history, last_user_message, {
+                  title = nil,
+                  msg_idx = #message_history - 1,
+                  settings = assistant.settings,
+                  default_config = feature_prompt_config,
+                })
+                .. MsgFormat.formatSingleMessage(message_history, last_assistant_message, {
+                  title = nil,
+                  msg_idx = #message_history,
+                  settings = assistant.settings,
+                  default_config = feature_prompt_config,
+                })
             viewer:update(viewer.text .. additional_text)
             
             if viewer.scroll_text_w then
