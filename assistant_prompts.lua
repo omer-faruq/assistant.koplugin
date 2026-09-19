@@ -401,19 +401,24 @@ Your output must be spoiler‑free beyond the reader’s current progress.
 Required structure:
 
 # %1
+
 - **Name** — brief description(3 sentences) _<u>relationship(s) with others</u>_
 
 # %2
+
 - **Place** — brief description(3 sentences) _<u>notable event(s) there</u>_
 
 # %3
+
 - **Theme** — brief description(3 sentences) of how it appears up to now
 
 # %4
+
 - **Term** — concise definition / significance
 
 # %5
 List around 8 to 12 **key chapters or scenes** that were most important to the plot up to the current point.  Use this format:
+
 - **Chapter X:** one-sentence summary of the significant event.
 Do NOT list every chapter in order; only include meaningful turning points, character developments, or major events relevant to the ongoing story.
 
@@ -469,6 +474,7 @@ Generate information about "{title}" by {author} in the following structure,
 Render the *entire* response (including headers) completely in {language}.
 
 ### 1. %1
+
 - **%2**: 
 - **%3**: 
 - **%4**: 
@@ -478,6 +484,7 @@ Render the *entire* response (including headers) completely in {language}.
 * The context in which the book was written/set and how themes relate to it.
 
 # 3. %7
+
 * Brief biography, writing style, and other notable works.
 
 # 4. %8
@@ -505,19 +512,23 @@ You are given my notes and highlights.
 Your task is to carefully analyze this content and produce a structured summary that includes:
 
 # %1
+
    - Summarize the most important insights, lessons, or narrative developments.
    - Highlight recurring themes, turning points, or critical information.
 
 # %2
+
    - Based on the content and my notes, suggest practical actions, reflections, or follow-ups I should consider.
    - If the text is fictional, focus on intellectual or emotional takeaways (e.g., themes to reflect on, characters to analyze, related readings).
    - If the text is non-fiction, focus on actionable steps (e.g., habits to adopt, ideas to research, concepts to apply).
 
 # %3
+
    - Clarify connections between my highlights/notes and the broader narrative or arguments.
    - Point out any open questions or areas I may want to revisit in the earlier chapters.
 
 Output format:
+
 - Start with a concise executive summary (3-5 sentences).
 - Then provide detailed sections under "# %1" and "# %2".
 - End with "# %4" in bullet points.
@@ -539,6 +550,7 @@ Render the *entire* response (including headers) completely in {language}.
 You are a meticulous book summarizer and analyst.
 
 INPUTS:
+
 - book_text: the full text of the book (or a very large portion, potentially thousands of words)
 - highlights: a list of highlighted passages and my personal notes
 
@@ -550,24 +562,34 @@ STYLE & RULES:
 1. Language → Always respond in {language}.
 2. TL;DR → Begin with a 2–3 sentence overall summary of the book’s main message.
 3. Integrated Summary:
+
    - Provide a clear, logical summary of the book.
    - Each time you encounter a highlight, render the exact highlighted text in **bold**.
    - Immediately after the bold text, paraphrase it and explain why it matters in the context of the book.
    - If a highlight has a note, include it in *italic parentheses* right after your explanation.
    - Maintain flow: highlights must feel naturally embedded, not forced.
+
 4. Key Points:
+
    - After the integrated summary, list the 8–12 most important insights in bullet form.
    - Incorporate highlights into the list (again in **bold**), paraphrased where helpful.
+
 5. Actionable Takeaways:
+
    - Provide 5–8 clear, practical lessons or insights the reader can apply.
+
 6. Tone:
+
    - Clear, thoughtful, and practical.
    - Never copy the entire book verbatim; focus on essence and integration of highlights.
+
 7. Contradictions:
+
    - If a highlight conflicts with the book text, mark it with ⚠ and briefly note the possible interpretation.
    - If a highlight is not related to the book text (if it is not in the book text), ignore it.
 
 OUTPUT STRUCTURE:
+
 # %1
 # %2
 # %3
@@ -600,9 +622,11 @@ Write your full answer FIRST. At the very end of your response, provide 2-3 foll
 Wrap this entire section inside a `<suggestions>` tag, with each question on a new line starting with a dash (-).
 
 <suggestions>
+
 - [Question 1]
 - [Question 2]
 - [Question 3]
+
 </suggestions>
 
 ]],
