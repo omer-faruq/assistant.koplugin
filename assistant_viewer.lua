@@ -70,8 +70,8 @@ end
 -- Viewer CSS lives in assistant_css.lua (shared with the notebook viewer);
 -- _buildCSS() below is a thin wrapper resolving the display switches.
 
--- Builds the Add Note button for a viewer instance. Inserted second-to-last
--- to keep Close rightmost.
+-- Builds the Add Note button for a viewer instance. Placed in the action row
+-- (before Close, which always stays rightmost).
 local function createAddNoteButton(viewer)
     return {
         text = _("Annotate"),
@@ -157,15 +157,16 @@ local ChatGPTViewer = InputContainer:extend {
   text_padding = Size.padding.large,
   text_margin = Size.margin.small,
   button_padding = Size.padding.default,
-  -- Bottom row with Close, Find buttons. Also added when no caller's buttons defined.
+  -- Two default rows (navigation + actions) are appended when set, or when
+  -- no caller-supplied buttons table is given.
   add_default_buttons = nil,
-  default_hold_callback = nil,   -- on each default button
+  default_hold_callback = nil,   -- on the Close button
   find_centered_lines_count = 5, -- line with find results to be not far from the center
 
   onAskQuestion = nil, -- callback when the Ask Another Question button is pressed
   input_dialog = nil,
   is_show_addnote = true, -- when true, show the Add Note button
-  extra_buttons = nil, -- list of ButtonTable button specs {text, id, callback, hold_callback}, inserted second-to-last to keep Close rightmost
+  extra_buttons = nil, -- list of ButtonTable button specs {text, id, callback, hold_callback}, appended to the action row before Close
 }
 
 -- Global variables
@@ -183,7 +184,6 @@ function ChatGPTViewer:init()
   self.height = self.height or Screen:getHeight() - Screen:scaleBySize(30)
 
   self._find_next = false
-  self._find_next_button = false
   self._old_virtual_line_num = 1
 
   if Device:hasKeys() then
@@ -303,27 +303,79 @@ function ChatGPTViewer:init()
   end
   self._buttons_scroll_callback = function(low, high)
     if prev_at_top and low > 0 then
-      button_update("top", true)
+      button_update("prev_page", true)
       prev_at_top = false
     elseif not prev_at_top and low <= 0 then
-      button_update("top", false)
+      button_update("prev_page", false)
       prev_at_top = true
     end
     if prev_at_bottom and high < 1 then
-      button_update("bottom", true)
+      button_update("next_page", true)
       prev_at_bottom = false
     elseif not prev_at_bottom and high >= 1 then
-      button_update("bottom", false)
+      button_update("next_page", false)
       prev_at_bottom = true
     end
   end
 
-  -- buttons
-  local default_buttons = {}
-  
+  -- Buttons are laid out in two rows:
+  --   Navigation/clipboard: Prev page (◁◁), Find, Copy, Next page (▷▷)
+  --   Actions (Close rightmost): Ask Another Question?, Annotate?, Save?,
+  --                              caller extra_buttons, Close
+  local nav_row = {
+    {
+      text = "◁◁",
+      id = "prev_page",
+      callback = function()
+        self.scroll_text_w:scrollText(-1)
+      end,
+      hold_callback = function()
+        self.scroll_text_w:scrollToRatio(0)
+      end,
+      allow_hold_when_disabled = true,
+    },
+    {
+      text = _("Find"),
+      id = "find",
+      -- Always open the dialog: the main button never jumps to the next
+      -- match directly, and never falls back to a hold-to-close.
+      callback = function()
+        self:findDialog()
+      end,
+      hold_callback = function()
+        self:findDialog()
+      end,
+    },
+    {
+      text = _("Copy"),
+      callback = function()
+        if self.text and self.text ~= "" then
+          Device.input.setClipboardText(self.text)
+          UIManager:show(InfoMessage:new{
+            text = _("Text copied to the clipboard"),
+            timeout = 3,
+          })
+        end
+      end,
+    },
+    {
+      text = "▷▷",
+      id = "next_page",
+      callback = function()
+        self.scroll_text_w:scrollText(1)
+      end,
+      hold_callback = function()
+        self.scroll_text_w:scrollToRatio(1)
+      end,
+      allow_hold_when_disabled = true,
+    },
+  }
+
+  local action_row = {}
+
   -- Only add Ask Another Question button if showAskQuestion is true
   if self.onAskQuestion then
-    table.insert(default_buttons, {
+    table.insert(action_row, {
       -- @translators button text, keep it short, like: Ask Another
       text = _("Ask Another Question"),
       id = "ask_another_question",
@@ -332,29 +384,72 @@ function ChatGPTViewer:init()
       end,
     })
   end
-  
-  -- Add the rest of the default buttons
-  table.insert(default_buttons, {
-    text = "⇱",
-    id = "top",
-    callback = function()
-      self.scroll_text_w:scrollToRatio(0)
-    end,
-    hold_callback = self.default_hold_callback,
-    allow_hold_when_disabled = true,
-  })
-  
-  table.insert(default_buttons, {
-    text = "⇲",
-    id = "bottom",
-    callback = function()
-      self.scroll_text_w:scrollToRatio(1)
-    end,
-    hold_callback = self.default_hold_callback,
-    allow_hold_when_disabled = true,
-  })
-  
-  table.insert(default_buttons, {
+
+  -- Only add Annotate button if ui context is available and not disabled
+  if self.ui and self.is_show_addnote then
+    table.insert(action_row, createAddNoteButton(self))
+  end
+
+  -- Only add Save button if auto_save_to_notebook is disabled.
+  -- In general multi-notebook mode, let the user choose the destination at
+  -- save time; otherwise preserve the existing one-click Save behavior.
+  if not self.assistant.settings:readSetting("auto_save_to_notebook", false) then
+    table.insert(action_row, {
+      text = _("Save"),
+      callback = function()
+        if is_multi_general then
+          Notebook.showPicker(self.assistant, {
+            title = _("Save conversation to"),
+            on_select = function(notebook)
+              -- Explicit user choice wins over any per-book
+              -- path: clear it so the save follows active.
+              self.notebook_path = nil
+              local saved_path, _save_err, used_fallback = self:saveToNotebook()
+
+              if self.titlebar and self.titlebar.setSubTitle then
+                self.titlebar:setSubTitle(
+                  "✎ " .. Notebook.getActiveDisplayName(self.assistant, 24)
+                )
+              end
+
+              if saved_path and not used_fallback then
+                local saved_name = saved_path:match("([^/\\]+)$") or saved_path
+                saved_name = saved_name:gsub("%.md$", "")
+                UIManager:show(InfoMessage:new{
+                  text = T(_("Saved to: %1"), saved_name),
+                  timeout = 2,
+                })
+              end
+            end,
+          })
+          return
+        end
+
+        self:saveToNotebook()
+        UIManager:show(InfoMessage:new{
+          text = _("Conversation is saved to AI Notes"),
+          timeout = 2
+        })
+      end,
+      hold_callback = function()
+        UIManager:show(InfoMessage:new{
+          text = _("Saves the conversation to AI Notes"),
+        })
+      end
+    })
+  end
+
+  -- Caller-supplied extra buttons stay in the action row, in caller order,
+  -- right before Close. They never go to the navigation row.
+  local extra = self.extra_buttons
+  if type(extra) == "table" then
+    for i = 1, #extra do
+      table.insert(action_row, extra[i])
+    end
+  end
+
+  -- Close is always the last button, so it sits at the right of the action row.
+  table.insert(action_row, {
     text = _("Close"),
     id = "close",
     callback = function()
@@ -362,97 +457,14 @@ function ChatGPTViewer:init()
     end,
     hold_callback = self.default_hold_callback,
   })
-  
+
   local buttons = self.buttons_table or {}
   if self.add_default_buttons or not self.buttons_table then
-    table.insert(buttons, default_buttons)
+    table.insert(buttons, nav_row)
+    table.insert(buttons, action_row)
   end
   if buttons[#buttons] == nil then
     table.insert(buttons, {})
-  end
-
-  -- Add a copy button to the bottom button row
-  local copy_button = {
-      text = _("Copy"),
-      callback = function()
-          if self.text and self.text ~= "" then
-              Device.input.setClipboardText(self.text)
-              UIManager:show(InfoMessage:new{
-                  text = _("Text copied to the clipboard"),
-                  timeout = 3,
-              })
-          end
-      end
-  }
-
-  -- Insert the buttons into the existing buttons,
-  -- to keep close button on the right, insert into the second-to-last position
-  table.insert(buttons[#buttons], #(buttons[#buttons]), copy_button)
-
-  -- Only add Annotate button if ui context is available and not disabled
-  if self.ui and self.is_show_addnote then
-      local add_note_button = createAddNoteButton(self)
-      -- to keep close button on the right, insert into the second-to-last position
-      table.insert(buttons[#buttons], #(buttons[#buttons]), add_note_button)
-  end
-
-  -- Caller-supplied extra buttons go second-to-last to keep Close rightmost.
-  -- Button order after change: Copy, Annotate, extra_buttons, Save, Close.
-  if type(self.extra_buttons) == "table" and #self.extra_buttons >= 1 then
-      for idx, btn in ipairs(self.extra_buttons) do
-          table.insert(buttons[#buttons], #(buttons[#buttons]), btn)
-      end
-  end
-
-  -- Only add Save button if auto_save_to_notebook is disabled.
-  -- In general multi-notebook mode, let the user choose the destination at
-  -- save time; otherwise preserve the existing one-click Save behavior.
-  if not self.assistant.settings:readSetting("auto_save_to_notebook", false) then
-      local save_button = {
-          text = _("Save"),
-          callback = function()
-              if is_multi_general then
-                  Notebook.showPicker(self.assistant, {
-                      title = _("Save conversation to"),
-                      on_select = function(notebook)
-                          -- Explicit user choice wins over any per-book
-                          -- path: clear it so the save follows active.
-                          self.notebook_path = nil
-                          local saved_path, _save_err, used_fallback = self:saveToNotebook()
-
-                          if self.titlebar and self.titlebar.setSubTitle then
-                              self.titlebar:setSubTitle(
-                                  "✎ " .. Notebook.getActiveDisplayName(self.assistant, 24)
-                              )
-                          end
-
-                          if saved_path and not used_fallback then
-                              local saved_name = saved_path:match("([^/\\]+)$") or saved_path
-                              saved_name = saved_name:gsub("%.md$", "")
-                              UIManager:show(InfoMessage:new{
-                                  text = T(_("Saved to: %1"), saved_name),
-                                  timeout = 2,
-                              })
-                          end
-                      end,
-                  })
-                  return
-              end
-
-              self:saveToNotebook()
-              UIManager:show(InfoMessage:new{
-                  text = _("Conversation is saved to AI Notes"),
-                  timeout = 2
-              })
-          end,
-          hold_callback = function()
-              UIManager:show(InfoMessage:new{
-                  text = _("Saves the conversation to AI Notes"),
-              })
-          end
-      }
-      -- to keep close button on the right, insert into the second-to-last position
-      table.insert(buttons[#buttons], #(buttons[#buttons]), save_button)
   end
 
   self.button_table = ButtonTable:new {
@@ -966,6 +978,11 @@ function ChatGPTViewer:_buildScrollWidget(outer_height)
     width = self.width - 2 * self.text_padding - 2 * self.text_margin,
     height = outer_height - 2 * self.text_padding - 2 * self.text_margin,
     dialog = self,
+    -- Required for HtmlBoxWidget:_render to darken highlight_rects, so both
+    -- Find matches and text selections are visible (as TextViewer).
+    highlight_text_selection = true,
+    -- Enable/disable the prev/next page buttons at start/end (as TextViewer).
+    scroll_callback = self._buttons_scroll_callback,
     html_link_tapped_callback = function(link)
       self:html_link_tapped_callback(link)
     end,
@@ -1007,6 +1024,85 @@ function ChatGPTViewer:_refreshScrollWidget()
   -- One-shot toggles get no continuous refreshes (unlike streaming in
   -- update()), so force a repaint like TextViewer:reinit does.
   UIManager:setDirty("all", "partial", self.frame.dimen)
+end
+
+-- Find in the rendered HTML (TextViewer's HTML path). The main Find button
+-- always opens the dialog; its "Find first"/"Find next" buttons set
+-- _find_next, the direction flag consumed by findInHtml.
+function ChatGPTViewer:findDialog()
+  local input_dialog
+  input_dialog = InputDialog:new{
+    title = _("Enter text to search for"),
+    input = self.search_value,
+    buttons = {
+      {
+        {
+          text = _("Cancel"),
+          id = "close",
+          callback = function()
+            UIManager:close(input_dialog)
+          end,
+        },
+        {
+          text = _("Find first"),
+          callback = function()
+            self._find_next = false
+            self:findCallback(input_dialog)
+          end,
+        },
+        {
+          text = _("Find next"),
+          is_enter_default = true,
+          callback = function()
+            self._find_next = true
+            self:findCallback(input_dialog)
+          end,
+        },
+      },
+    },
+  }
+  UIManager:show(input_dialog)
+  input_dialog:onShowKeyboard(true)
+end
+
+function ChatGPTViewer:findCallback(input_dialog)
+  if input_dialog then
+    self.search_value = input_dialog:getInputText()
+    if self.search_value == "" then return end
+    -- Keep the dialog open for repeated "Find next": only dismiss the
+    -- on-screen keyboard so the highlighted match behind it is visible.
+    input_dialog:onCloseKeyboard()
+  end
+  self:findInHtml()
+  if not self._find_next then
+    UIManager:show(Notification:new{ text = _("Not found.") })
+  end
+end
+
+function ChatGPTViewer:findInHtml()
+  local box_widget = self.scroll_text_w.htmlbox_widget
+  local curr_page = box_widget.page_number
+  local found
+  if self._find_next then
+    if box_widget._match_page_list and box_widget.search_term == self.search_value then
+      found = box_widget:findTextNextPage(1)
+    else
+      found = box_widget:findText(self.search_value)
+    end
+  else -- find first
+    box_widget.page_number = 1
+    found = box_widget:findText(self.search_value)
+  end
+  if found then
+    self._find_next = true
+    if curr_page ~= box_widget.page_number then
+      self.scroll_text_w:_updateScrollBar(true)
+    end
+  else
+    self._find_next = false
+    box_widget.page_number = curr_page
+    box_widget:clearSearch(true)
+  end
 end
 
 -- Left-icon options menu, mirroring TextViewer:onShowMenu (ButtonDialog
