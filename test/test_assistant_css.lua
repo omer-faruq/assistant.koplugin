@@ -40,6 +40,7 @@ local tests = {
         assert.matches(css, '@page', "base @page block missing")
         assert.matches(css, '%.assistant%-label %s*{', ".assistant-label rule missing")
         assert.matches(css, 'border%-collapse', "table rules missing")
+        assert.matches(css, 'code%.language%-reasoning', "reasoning-only rule missing")
         assert.notMatches(css, 'direction: rtl', "rtl must stay off by default")
         assert.notMatches(css, 'text%-align: justify', "justify must stay off by default")
     end),

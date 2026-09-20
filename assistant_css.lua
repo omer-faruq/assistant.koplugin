@@ -44,11 +44,17 @@ blockquote, dd {
 }
 
 pre {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+/* Reasoning body only: hoedown tags the fence code with language-reasoning,
+   so plain code blocks stay generic while reasoning text keeps its look. */
+pre code.language-reasoning {
+    display: block;
     margin: 1em 0 1em 3em;
     font-size: 0.8em;
     color: #333;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
 }
 
 hr {

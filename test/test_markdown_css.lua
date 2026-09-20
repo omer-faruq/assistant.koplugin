@@ -137,6 +137,20 @@ local tests = {
         assert.matches(html, 'The Ring and Its Nature', "answer body must survive the strip")
     end),
 
+    test("render: thought label heads a pre block for reasoning text", function()
+        local html = unwrap_label(MD(SAMPLE))
+        assert.matches(html, 'assistant%-label%-%-thought">※ Deeply Thought</div>', "thought label must render")
+        assert.matches(html, '<pre', "reasoning fence must render as a pre block")
+        assert.matches(html, 'internal knowledge suffices', "reasoning body must survive rendering")
+        local label_pos = html:find('assistant-label--thought', 1, true)
+        assert.isTrue(label_pos ~= nil, "thought label must render")
+        -- The sample also carries a ```lua block up front, so anchor the
+        -- search past the thought label to reach the reasoning pre.
+        local pre_pos = html:find('<pre', label_pos, true)
+        assert.isTrue(pre_pos ~= nil and pre_pos > label_pos,
+            "a pre block must follow the thought label")
+    end),
+
     test("render: suggestion links kept, --- becomes hr", function()
         local html = apply_suggestion_class(unwrap_label(MD(SAMPLE)))
         assert.matches(html, '#q:', "suggestion href must be kept")

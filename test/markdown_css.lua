@@ -31,6 +31,9 @@ local mock_assistant = {
         readSetting = function(dummy, key, def)
             -- On: exercise .suggestion-link styling below.
             if key == "auto_prompt_suggest" then return true end
+            -- On: keep the reasoning block so .assistant-label--thought
+            -- styling shows (the viewer strips it when this is off).
+            if key == "show_reasoning" then return true end
             return def
         end,
     },
