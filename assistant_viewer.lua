@@ -184,6 +184,7 @@ function ChatGPTViewer:init()
   self.height = self.height or Screen:getHeight() - Screen:scaleBySize(30)
 
   self._find_next = false
+  self._find_next_button = false
   self._old_virtual_line_num = 1
 
   if Device:hasKeys() then
@@ -337,13 +338,23 @@ function ChatGPTViewer:init()
     {
       text = _("Find"),
       id = "find",
-      -- Always open the dialog: the main button never jumps to the next
-      -- match directly, and never falls back to a hold-to-close.
+      -- Tap jumps to the next match while a search is active, hold
+      -- reopens the dialog to change the search term.
       callback = function()
-        self:findDialog()
+        if self._find_next then
+          self:findCallback()
+        else
+          self:findDialog()
+        end
       end,
       hold_callback = function()
-        self:findDialog()
+        if self._find_next then
+          self:findDialog()
+        else
+          if self.default_hold_callback then
+            self.default_hold_callback()
+          end
+        end
       end,
     },
     {
@@ -1027,8 +1038,9 @@ function ChatGPTViewer:_refreshScrollWidget()
 end
 
 -- Find in the rendered HTML (TextViewer's HTML path). The main Find button
--- always opens the dialog; its "Find first"/"Find next" buttons set
--- _find_next, the direction flag consumed by findInHtml.
+-- taps into the next match while a search is active; the dialog's
+-- "Find first"/"Find next" buttons set _find_next, the direction flag
+-- consumed by findInHtml.
 function ChatGPTViewer:findDialog()
   local input_dialog
   input_dialog = InputDialog:new{
@@ -1069,11 +1081,20 @@ function ChatGPTViewer:findCallback(input_dialog)
   if input_dialog then
     self.search_value = input_dialog:getInputText()
     if self.search_value == "" then return end
-    -- Keep the dialog open for repeated "Find next": only dismiss the
-    -- on-screen keyboard so the highlighted match behind it is visible.
-    input_dialog:onCloseKeyboard()
+    UIManager:close(input_dialog)
+  elseif not self.search_value or self.search_value == "" then
+    return
   end
   self:findInHtml()
+  if self._find_next_button ~= self._find_next then
+    self._find_next_button = self._find_next
+    local button_text = self._find_next and _("Find next") or _("Find")
+    local find_button = self.button_table and self.button_table:getButtonById("find")
+    if find_button then
+      find_button:setText(button_text, find_button.width)
+      find_button:refresh()
+    end
+  end
   if not self._find_next then
     UIManager:show(Notification:new{ text = _("Not found.") })
   end
