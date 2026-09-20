@@ -1,9 +1,10 @@
 --- Single-message renderer shared by the Ask dialog and the feature dialog.
 ---
 --- Emits the div-carrier shapes (Question / Thought / Response / Search) so
---- both result paths stay identical; msgids here must stay byte-identical to
---- keep gettext lookups working. Headless-safe: only pure string transforms
---- plus assistant_utils / assistant_prompts (both load under test stubs).
+--- both result paths stay identical; the rendered HTML must stay
+--- byte-identical, while _() msgids carry only human-readable words (never
+--- markup). Headless-safe: only pure string transforms plus assistant_utils
+--- / assistant_prompts (both load under test stubs).
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local strbuf = require("string.buffer")
@@ -32,7 +33,7 @@ function M.formatSingleMessage(message_history, message, opts)
             title = prompt_title
         end
         if title and title ~= "" then
-            user_message:put(T(_('<div class="assistant-label">%1 Question</div>\n\n'), "☺"))
+            user_message:put(T('<div class="assistant-label">%1 %2</div>\n\n', "☺", _("Question")))
             user_message:putf("➤ ‹ %s ›\n", title)
 
             local user_input = ASUtils.get_attr(message, "user_input", "")
@@ -55,7 +56,7 @@ function M.formatSingleMessage(message_history, message, opts)
             return user_message:get()
         elseif type(message.content) == "string" then
             -- shows user input prompt
-            user_message:put(T(_('<div class="assistant-label">%1 Question</div>\n\n'), "☺"))
+            user_message:put(T('<div class="assistant-label">%1 %2</div>\n\n', "☺", _("Question")))
             local content = message.content
 
             if content:find("%[BOOK TEXT BEGIN%]") then
@@ -105,16 +106,16 @@ function M.formatSingleMessage(message_history, message, opts)
             local reasoning_text, body = assistant_content:match(
                 "^```reasoning%s*([%s%S]-)%s*```%s*([%s%S]*)$")
             if reasoning_text and reasoning_text:find("%S") then
-                reasoning_section = T(_('<div class="assistant-label assistant-label--thought">%1 Deeply Thought</div>\n\n```reasoning\n%2\n```\n\n---\n\n'),
-                    "※", reasoning_text)
+                reasoning_section = T('<div class="assistant-label assistant-label--thought">%1 %2</div>\n\n```reasoning\n%3\n```\n\n---\n\n',
+                    "※", _("Deeply Thought"), reasoning_text)
                 assistant_content = body
             end
         end
 
         if reasoning_section then
-            return reasoning_section .. T(_('<div class="assistant-label">%1 %2</div>\n\n%3\n\n'), "✦", answer_type, assistant_content)
+            return reasoning_section .. T('<div class="assistant-label">%1 %2</div>\n\n%3\n\n', "✦", answer_type, assistant_content)
         end
-        return T(_('<div class="assistant-label">%1 %2</div>\n\n%3\n\n'), "✦", answer_type, assistant_content)
+        return T('<div class="assistant-label">%1 %2</div>\n\n%3\n\n', "✦", answer_type, assistant_content)
     end
     return "" -- Should not happen for valid roles
 end

@@ -87,15 +87,18 @@ end
 local tests = {
     test("dialog: question label is a div, no h3 container", function()
         assert.matches(dialog_src, 'require%("assistant_message_format"%)', "dialog must use the shared emitter")
-        assert.matches(format_src, '<div class="assistant%-label">%%1 Question</div>', "question div missing")
+        assert.matches(format_src, '<div class="assistant%-label">%%1 %%2</div>', "question div missing")
+        assert.matches(format_src, '_%("Question"%)', "question word must be the msgid")
+        assert.notMatches(format_src, "_%('<div", "HTML must not enter _()")
         assert.notMatches(format_src, '### %%1 Question', "old h3 question heading still present")
         assert.notMatches(dialog_src, '### %%1 Question', "old h3 question heading still present")
     end),
 
     test("dialog: thought label is a div, glyph outside msgid", function()
         assert.matches(format_src, 'assistant%-label assistant%-label%-%-thought', "thought div missing")
-        assert.matches(format_src, '%%1 Deeply Thought', "thought msgid shape missing")
-        assert.matches(format_src, '"\226\128\187", reasoning_text', "glyph must ride %%1 outside _()")
+        assert.matches(format_src, '_%("Deeply Thought"%)', "thought words must be the msgid")
+        assert.matches(format_src, '"\226\128\187", _%("Deeply Thought"%), reasoning_text', "glyph and words must ride outside _()")
+        assert.notMatches(format_src, "_%('<div", "HTML must not enter _()")
         assert.notMatches(format_src, '#### \226\128\187', "old h4 thought heading still present")
         assert.notMatches(dialog_src, '#### \226\128\187', "old h4 thought heading still present")
     end),
@@ -103,6 +106,7 @@ local tests = {
     test("dialog: response/search labels are divs via T, no h3", function()
         assert.matches(format_src, '<div class="assistant%-label">%%1 %%2</div>', "response div missing")
         assert.matches(format_src, '"\226\156\166", answer_type, assistant_content', "glyph must ride %%1 outside _()")
+        assert.notMatches(format_src, "_%('<div", "HTML must not enter _()")
         assert.notMatches(format_src, '### \226\156\166 %%s', "old h3 response heading still present")
         assert.notMatches(dialog_src, '### \226\156\166 %%s', "old h3 response heading still present")
     end),
