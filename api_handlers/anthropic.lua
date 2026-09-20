@@ -92,18 +92,6 @@ local function prepareAnthropicMessages(message_history)
     return { messages = anthropic_messages, system = system_content }
 end
 
---- Extract plain text from Anthropic content-blocks array.
-local function extractTextFromContent(content_blocks)
-    if type(content_blocks) ~= "table" then return nil end
-    local chunks = {}
-    for _, block in ipairs(content_blocks) do
-        if type(block) == "table" and block.type == "text" and type(block.text) == "string" then
-            table.insert(chunks, block.text)
-        end
-    end
-    return #chunks > 0 and table.concat(chunks, "\n\n") or nil
-end
-
 --- Build a JSON request body for the Anthropic API.
 --- @param messages  table       message history (OpenAI style; will be converted)
 --- @param tools     table|nil   tool definitions to inject (nil → use settings.tools or none)
@@ -197,18 +185,7 @@ function AnthropicHandler:query(message_history, query_option)
         return nil, "Error: Failed to parse Anthropic API response"
     end
 
-    -- Fast-path: plain text answer (no tool calls)
-    local content = extractTextFromContent(parsed.content)
-    if type(content) == "string" and #content > 0 then
-        return content
-    end
-    -- Fallback scalar
-    local scalar = koutil.tableGetValue(parsed, "content", 1, "text")
-    if type(scalar) == "string" and #scalar > 0 then
-        return scalar
-    end
-
-    -- Delegate tool-call / error detection to the unified base method
+    -- Delegate text / thinking / tool-call extraction to the unified base method
     return self:parseToolCalls(parsed, "anthropic")
 end
 

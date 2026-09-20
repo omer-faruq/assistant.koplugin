@@ -237,48 +237,10 @@ function ResponsesHandler:buildRequestBody(messages, query_option, tools)
 end
 
 -- ---------------------------------------------------------------------------
--- Response parsing
--- ---------------------------------------------------------------------------
-
---- Extract text content from a Responses API output array.
---- Returns the concatenated text from all message-type output items.
---- @param output_items table  response.output array
---- @return string|nil text, table|nil tool_call_items
-local function parseOutputItems(output_items)
-    local text_parts = {}
-    local tool_calls = {}
-
-    for _, item in ipairs(output_items) do
-        local item_type = item.type
-
-        if item_type == "message" then
-            -- Extract text from content blocks
-            local content = item.content
-            if type(content) == "table" then
-                for _, block in ipairs(content) do
-                    if block.type == "output_text" and block.text then
-                        table.insert(text_parts, block.text)
-                    end
-                end
-            elseif type(content) == "string" then
-                table.insert(text_parts, content)
-            end
-        elseif item_type == "function_call" then
-            table.insert(tool_calls, {
-                tool_call_id = item.call_id,
-                name         = item.name,
-                arguments    = item.arguments or "{}",
-            })
-        end
-    end
-
-    local text = #text_parts > 0 and table.concat(text_parts, "\n\n") or nil
-    return text, #tool_calls > 0 and tool_calls or nil
-end
-
--- ---------------------------------------------------------------------------
 -- Stream mode: custom backgroundRequest with SSE transformation
 -- ---------------------------------------------------------------------------
+-- Non-stream parsing lives in BaseHandler:parseToolCalls via
+-- ToolExecutor.parseToolCallsResponse table; no local duplicate here.
 
 --- Custom background request function that transforms Responses API SSE events
 --- into Chat Completions SSE format that processChunk can parse.
@@ -622,44 +584,8 @@ function ResponsesHandler:query(message_history, query_option)
         return nil, "Unexpected API response: missing output"
     end
 
-    -- Extract text and tool calls from output array
-    local text_content, tool_call_items = parseOutputItems(responseData.output)
-
-    -- If no tool calls, return plain text
-    if not tool_call_items then
-        if text_content then
-            return text_content, nil
-        end
-        logger.warn(self.name, "no content in output (HTTP", code, "):", tostring(response):sub(1, 200))
-        return nil, "No content in API response"
-    end
-
-    -- Build raw_assistant in OpenAI format (for Querier tool-call loop compatibility)
-    -- and return a tool_call descriptor
-    local raw_tool_calls = {}
-    for _, tc in ipairs(tool_call_items) do
-        table.insert(raw_tool_calls, {
-            id        = tc.tool_call_id,
-            type      = "function",
-            ["function"] = {
-                name      = tc.name,
-                arguments = tc.arguments,
-            },
-        })
-    end
-
-    local raw_assistant = {
-        role       = "assistant",
-        content    = text_content,
-        tool_calls = raw_tool_calls,
-    }
-
-    return {
-        __is_tool_call = true,
-        raw_assistant  = raw_assistant,
-        format         = "openai", -- use OpenAI format for message building
-        tool_calls     = tool_call_items,
-    }, nil
+    -- Delegate text / reasoning / tool-call extraction to the unified base method
+    return self:parseToolCalls(responseData, "responses")
 end
 
 return ResponsesHandler

@@ -549,24 +549,31 @@ end
 
 --- Parse a non-streaming LLM response into text, a tool call, or an error.
 --- @param responseData  table   decoded JSON from the LLM (non-stream response)
---- @param format        string  "openai" | "anthropic" | "gemini"
---- @return string|table result, string|nil error
+--- @param format        string  "openai" | "anthropic" | "gemini" | "responses"
+--- @return string|table|nil result, string|nil error
 function BaseHandler:parseToolCalls(responseData, format)
-    local tool_calls, raw_assistant, direct_content, parse_err =
-        ToolExecutor.parseToolCallsResponse(responseData, format)
+    local parsed, parse_err = ToolExecutor.parseToolCallsResponse(responseData, format)
 
     if parse_err then
         return nil, parse_err
     end
-
-    if direct_content then
-        return direct_content, nil
+    if type(parsed) ~= "table" then
+        return nil, "parseToolCalls: unexpected response (no content, no tool call)"
     end
 
+    if parsed.content then
+        if type(parsed.reasoning) == "string" and parsed.reasoning ~= "" then
+            return T("```reasoning\n%1\n```\n\n%2",
+                (parsed.reasoning:gsub("```", "\n")), parsed.content), nil
+        end
+        return parsed.content, nil
+    end
+
+    local tool_calls = parsed.tool_calls
     if tool_calls and #tool_calls > 0 then
         return {
             __is_tool_call  = true,
-            raw_assistant   = raw_assistant,
+            raw_assistant   = parsed.raw_assistant,
             format          = format,
             tool_calls      = tool_calls,
         }, nil

@@ -334,33 +334,46 @@ end
 
 --- Parse a LLM response and extract tool call details. (for NON-STREAM response)
 ---
---- Returns: {tool_calls_array}, raw_assistant, direct_content, error
+--- @param responseData table decoded JSON body
+--- @param format string "openai" | "anthropic" | "gemini" | "responses"
+--- @return table|nil parsed { tool_calls=table|nil, raw_assistant=table|nil, content=string|nil, reasoning=string|nil }, string|nil err
 function ToolExecutor.parseToolCallsResponse(responseData, format)
     if format == "anthropic" then
         local content_blocks = responseData.content
         if type(content_blocks) ~= "table" then
             local errmsg = koutil.tableGetValue(responseData, "error", "message")
                         or "Anthropic stage-1: missing content array"
-            return nil, nil, nil, errmsg
+            return nil, errmsg
         end
 
         local text_block
+        local reasoning_parts = {}
         local toolcall_blocks = {}
-        for _, block in ipairs(content_blocks) do
+        for bdx, block in ipairs(content_blocks) do
             if type(block) == "table" then
                 if block.type == "text" then
                     text_block = block
+                elseif block.type == "thinking" then
+                    local thinking = koutil.tableGetValue(block, "thinking")
+                    if type(thinking) == "string" and thinking ~= "" then
+                        table.insert(reasoning_parts, thinking)
+                    end
+                    local text = koutil.tableGetValue(block, "text")
+                    if type(text) == "string" and text ~= "" then
+                        table.insert(reasoning_parts, text)
+                    end
                 end
                 if block.type == "tool_use" and block.input and block.input.keywords then
                     table.insert(toolcall_blocks, block)
                 end
             end
         end
+        local reasoning = #reasoning_parts > 0 and table.concat(reasoning_parts, "\n") or nil
         if text_block and #toolcall_blocks == 0 then
             local direct = text_block and text_block.text or nil
-            return nil, nil, direct, nil
+            return { content = direct, reasoning = reasoning }, nil
         end
-        return toolcall_blocks, content_blocks, nil, nil
+        return { tool_calls = toolcall_blocks, raw_assistant = content_blocks, reasoning = reasoning }, nil
 
     elseif format == "gemini" then
         local model_content = koutil.tableGetValue(responseData, "candidates", 1, "content")
@@ -369,11 +382,12 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
                          or koutil.tableGetValue(responseData, "message")
                          or "Gemini: missing content"
             logger.warn("Gemini parse, responseData:", select(2, pcall(json.encode, responseData)):sub(1, 200))
-            return nil, nil, nil, err_msg
+            return nil, err_msg
         end
         local tool_calls = {}
+        local reasoning_parts = {}
         local text_part
-        for _, part in ipairs(model_content.parts) do
+        for pdx, part in ipairs(model_content.parts) do
             if type(part) == "table" then
                 if part.functionCall then 
                     local fn_call   = part.functionCall 
@@ -382,15 +396,22 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
                         args = fn_call.args
                     })
                 end
-                if part.text         then text_part  = part              end
+                if part.text then
+                    if json_default(koutil.tableGetValue(part, "thought")) then
+                        if part.text ~= "" then table.insert(reasoning_parts, part.text) end
+                    else
+                        text_part = part
+                    end
+                end
             end
         end
+        local reasoning = #reasoning_parts > 0 and table.concat(reasoning_parts, "\n") or nil
 
         if #tool_calls == 0 then
             local direct = text_part and text_part.text or nil
-            return nil, model_content, direct, nil
+            return { raw_assistant = model_content, content = direct, reasoning = reasoning }, nil
         end
-        return tool_calls, model_content, nil, nil
+        return { tool_calls = tool_calls, raw_assistant = model_content, reasoning = reasoning }, nil
 
     elseif format == "responses" then
         -- OpenAI Responses API format: parse response.output array
@@ -398,12 +419,13 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
         if type(output_items) ~= "table" then
             local err_msg = koutil.tableGetValue(responseData, "error", "message")
                          or "Responses API stage-1: missing output array"
-            return nil, nil, nil, err_msg
+            return nil, err_msg
         end
 
         local tool_calls = {}
         local text_parts = {}
-        for _, item in ipairs(output_items) do
+        local reasoning_parts = {}
+        for idx, item in ipairs(output_items) do
             if type(item) == "table" then
                 if item.type == "function_call" then
                     table.insert(tool_calls, {
@@ -414,7 +436,7 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
                 elseif item.type == "message" then
                     local content = item.content
                     if type(content) == "table" then
-                        for _, block in ipairs(content) do
+                        for jdx, block in ipairs(content) do
                             if block.type == "output_text" and block.text then
                                 table.insert(text_parts, block.text)
                             end
@@ -422,19 +444,29 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
                     elseif type(content) == "string" then
                         table.insert(text_parts, content)
                     end
+                elseif item.type == "reasoning" then
+                    local summary = koutil.tableGetValue(item, "summary")
+                    if type(summary) == "string" and summary ~= "" then
+                        table.insert(reasoning_parts, summary)
+                    end
+                    local text = koutil.tableGetValue(item, "text")
+                    if type(text) == "string" and text ~= "" then
+                        table.insert(reasoning_parts, text)
+                    end
                 end
             end
         end
 
         -- Build a raw_assistant in OpenAI format for tool-call loop compatibility
         local raw_text = #text_parts > 0 and table.concat(text_parts, "\n\n") or nil
+        local reasoning = #reasoning_parts > 0 and table.concat(reasoning_parts, "\n") or nil
         if #tool_calls == 0 then
-            return nil, nil, raw_text, nil
+            return { content = raw_text, reasoning = reasoning }, nil
         end
 
         -- Build raw_assistant in OpenAI format
         local raw_tool_calls = {}
-        for _, tc in ipairs(tool_calls) do
+        for tdx, tc in ipairs(tool_calls) do
             table.insert(raw_tool_calls, {
                 id        = tc.tool_call_id,
                 type      = "function",
@@ -449,7 +481,7 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
             content    = raw_text,
             tool_calls = raw_tool_calls,
         }
-        return tool_calls, raw_assistant, nil, nil
+        return { tool_calls = tool_calls, raw_assistant = raw_assistant, reasoning = reasoning }, nil
 
     else  -- "openai" (default — shared by groq / openrouter / deepseek / mistral / etc.)
         local assistant_message = koutil.tableGetValue(responseData, "choices", 1, "message")
@@ -458,16 +490,38 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
                          or koutil.tableGetValue(responseData, "message")
                          or "OpenAI stage-1: no message in response"
             logger.warn("parse, responseData:", select(2, pcall(json.encode, responseData)):sub(1, 200))
-            return nil, nil, nil, err_msg
+            return nil, err_msg
         end
+        local reasoning_parts = {}
+        for rdx, key in ipairs({ "reasoning_content", "reasoning", "reasoning_details" }) do
+            local val = json_default(koutil.tableGetValue(assistant_message, key))
+            if type(val) == "string" and val ~= "" then
+                table.insert(reasoning_parts, val)
+            elseif type(val) == "table" then
+                for tdx, field in ipairs({ "content", "text", "summary" }) do
+                    local text = koutil.tableGetValue(val, field)
+                    if type(text) == "string" and text ~= "" then
+                        table.insert(reasoning_parts, text)
+                    end
+                end
+            end
+        end
+        for key, val in pairs(assistant_message) do
+            if type(key) == "string" and key:sub(1, 6) == "reason"
+                and type(val) == "string" and val ~= ""
+                and key ~= "reasoning_content" and key ~= "reasoning" and key ~= "reasoning_details" then
+                table.insert(reasoning_parts, val)
+            end
+        end
+        local reasoning = #reasoning_parts > 0 and table.concat(reasoning_parts, "\n") or nil
         local raw_calls = json_default(assistant_message.tool_calls)
         if not raw_calls then
             local direct = json_default(assistant_message.content)
-            return nil, nil, direct, nil
+            return { content = direct, reasoning = reasoning }, nil
         end
 
         local tool_calls = {}
-        for _, tc in ipairs(raw_calls) do
+        for tdx, tc in ipairs(raw_calls) do
             local arguments_str = koutil.tableGetValue(tc, "function", "arguments") or "{}"
             table.insert(tool_calls, {
                 tool_call_id = tc.id,
@@ -476,7 +530,7 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
             })
         end
 
-        return tool_calls, assistant_message, nil, nil
+        return { tool_calls = tool_calls, raw_assistant = assistant_message, reasoning = reasoning }, nil
     end
 end
 
