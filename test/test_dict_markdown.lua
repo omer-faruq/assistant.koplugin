@@ -57,6 +57,7 @@ local NO_SUGGEST = { show_suggestions = false }
 -- TextUtils.strip_think_tags (assistant_utils.lua, single source of truth).
 local function strip_reasoning(text)
     text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
+    text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*', "")
     text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
     return TextUtils.strip_think_tags(text, nil, false)
 end

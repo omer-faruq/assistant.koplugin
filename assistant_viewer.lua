@@ -893,9 +893,14 @@ function ChatGPTViewer:_buildCSS()
 end
 
 -- Strip the stored ```reasoning fence (with or without the dialog's title
--- label). Raw <think> leftovers are handled separately by strip_think_tags.
+-- label). The trailing `---` is optional: new text omits it, old history
+-- may still carry it. Raw <think> leftovers are handled separately by
+-- strip_think_tags.
 local function strip_reasoning_fence(text)
+  -- Old history carries a trailing `---` after the fence, new text omits
+  -- it: try the `---` shape first, then the bare div+fence shape.
   text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
+  text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*', "")
   return text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
 end
 

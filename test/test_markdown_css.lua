@@ -48,6 +48,7 @@ local SAMPLE = read_source("test/markdown_css_sample.md")
 -- TextUtils.strip_think_tags (assistant_utils.lua, single source of truth).
 local function strip_reasoning(text)
     text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
+    text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*', "")
     text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
     return TextUtils.strip_think_tags(text, nil, false)
 end
@@ -102,7 +103,7 @@ local tests = {
         assert.matches(SAMPLE, 'assistant%-label">✦ Search</div>', "Search div missing")
         assert.matches(SAMPLE, '⌗ Frodo Baggins Ring bearer Mordor', "Search keyword line missing")
         assert.matches(SAMPLE, '---\n\n<div class="assistant%-label">☺ Question</div>', "inter-round --- before round two missing")
-        assert.isTrue(count_sep_lines(SAMPLE) >= 3, "expect reasoning --- plus inter-round --- plus generic ---")
+        assert.isTrue(count_sep_lines(SAMPLE) >= 3, "expect inter-round --- plus generic ---")
         assert.equal(count_plain(SAMPLE, "#q:"), 2, "expect two suggestion links")
     end),
 

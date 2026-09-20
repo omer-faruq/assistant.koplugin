@@ -37,7 +37,7 @@ local SAMPLE = table.concat({
     '<div class="assistant-label">\226\152\186 Question</div>\n\n',
     '\226\158\164 What is the One Ring?\n\n',
     '<div class="assistant-label assistant-label--thought">\226\128\187 Deeply Thought</div>\n\n',
-    '```reasoning\nthinking here\n```\n\n---\n\n',
+    '```reasoning\nthinking here\n```\n\n',
     '<div class="assistant-label">\226\156\166 Response</div>\n\n',
     'The Ring rules them all.\n\n',
     '---\n\n',
@@ -52,6 +52,7 @@ local SAMPLE = table.concat({
 -- TextUtils.strip_think_tags (assistant_utils.lua, single source of truth).
 local function strip_reasoning(text)
     text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
+    text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*', "")
     text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
     return TextUtils.strip_think_tags(text, nil, false)
 end
@@ -153,7 +154,7 @@ local tests = {
     test("generated: labels present, --- count, fence kept", function()
         assert.matches(SAMPLE, 'assistant%-label', "assistant-label div missing")
         assert.matches(SAMPLE, 'assistant%-label%-%-thought', "thought div missing")
-        assert.equal(count_sep_lines(SAMPLE), 2, "expect 1 reasoning --- + 1 inter-round ---")
+        assert.equal(count_sep_lines(SAMPLE), 1, "expect only the inter-round ---, no reasoning ---")
         assert.matches(SAMPLE, '```reasoning\nthinking here\n```', "reasoning fence must be kept pre-strip")
     end),
 }

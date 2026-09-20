@@ -147,8 +147,6 @@ print(hello("koreader"))
 The user asks about a classic book, so internal knowledge suffices and no web search is needed. The answer follows the book_info structure with four sections.
 ```
 
----
-
 <div class="assistant-label">✦ Response</div>
 
 # The Ring and Its Nature

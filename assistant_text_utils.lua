@@ -358,15 +358,12 @@ function M.formatSingleMessage(message_history, message, opts)
                 assistant_content = M.process_suggestions(assistant_content)
             end
 
-            -- Reasoning arrives inline at the top as a bare ```reasoning fence,
-            -- mirroring the wrapper in Querier:processStream
-            -- (assistant_querier.lua); the title and the `---` separator are
-            -- added here so history stays clean. Split it out so it renders
-            -- before the `### ✦ Response` header instead of after it.
+            -- Bare ```reasoning fence stored by the querier: split it off so it
+            -- renders before the Response header (spacing comes from CSS).
             local reasoning_text, body = assistant_content:match(
                 "^```reasoning%s*([%s%S]-)%s*```%s*([%s%S]*)$")
             if reasoning_text and reasoning_text:find("%S") then
-                reasoning_section = T('<div class="assistant-label assistant-label--thought">%1 %2</div>\n\n```reasoning\n%3\n```\n\n---\n\n',
+                reasoning_section = T('<div class="assistant-label assistant-label--thought">%1 %2</div>\n\n```reasoning\n%3\n```\n\n',
                     "※", _("Deeply Thought"), reasoning_text)
                 assistant_content = body
             end
