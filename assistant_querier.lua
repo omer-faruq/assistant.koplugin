@@ -628,10 +628,9 @@ function Querier:query(message_history, title)
         until type(res) == "string" or err ~= nil
         UIManager:close(self.handler:resetTrapWidget())
 
-        -- Non-stream bypasses processStream: strip inline <think> here.
+        -- Fold inline <think> into the stored fence; the viewer gates display.
         if res ~= "" then
-            local show_reasoning = self.settings:readSetting("show_reasoning", false)
-            res = TextUtils.strip_think_tags(res, nil, show_reasoning)
+            res = TextUtils.strip_think_tags(res, nil, true)
         end
     end
 
@@ -1050,9 +1049,10 @@ function Querier:processStream(bgQuery, trunk_callback)
         return tc_content, tool_calls
     end
 
-    local show_reasoning = self.settings:readSetting("show_reasoning", false)
+    -- History always keeps reasoning (structured and/or inline <think>);
+    -- the viewer hides it per show_reasoning at render time.
     local structured = #reasoning_content_buffer > 0 and reasoning_content_buffer:get() or nil
-    ret = TextUtils.strip_think_tags(ret, structured, show_reasoning)
+    ret = TextUtils.strip_think_tags(ret, structured, true)
     return ret, nil
 end
 
