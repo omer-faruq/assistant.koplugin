@@ -1333,9 +1333,16 @@ end
 function M.strip_think_tags(ret, structured, show_reasoning)
     if type(ret) ~= "string" then return ret end
     local close_s, close_e = ret:find("</think>", 1, true)
-    if not close_s then return ret end
-    local reasoning = ret:sub(1, close_s - 1):gsub("^%s*<think>%s*", "", 1)
-    local text = ret:sub(close_e + 1):gsub("^%s+", "", 1)
+    local reasoning, text
+    if not close_s then
+        -- No inline </think>: answer is the whole ret, reasoning (if any)
+        -- comes only from the structured channel (reasoning_content/thought).
+        reasoning = ""
+        text = ret
+    else
+        reasoning = ret:sub(1, close_s - 1):gsub("^%s*<think>%s*", "", 1)
+        text = ret:sub(close_e + 1):gsub("^%s+", "", 1)
+    end
     local combined = {}
     if type(structured) == "string" and structured ~= "" then
         table.insert(combined, structured)
