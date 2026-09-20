@@ -446,7 +446,8 @@ end
 --- @param headers table auth/content headers
 --- @param body table Lua request body
 --- @param extract function decoded response table -> assistant text, or nil
---- @return table|nil report { url, body, status, raw, content } @return string|nil err
+--- @return table|nil report { url, body, status, raw, content } 
+--- @return string|nil err
 function BaseHandler:testRequest(url, headers, body, extract)
     local json_body = json.encode(body)
     -- Dismissable wait indicator; tapping it cancels the request.
