@@ -6,7 +6,7 @@
 --   * dialog calls the shared emitter (no local fork); inter-round
 --     separator is `---`, not `------------`
 --   * inter-round separator is `---`, not `------------`
---   * VIEWER_CSS styles .assistant-label; _renderMarkdown unwraps puremd's
+--   * assistant_css.lua styles .assistant-label; _renderMarkdown unwraps puremd's
 --     <p>-wrapped labels; strip_reasoning matches the new div shape
 -- Headless-safe: asserts on shipped sources plus a representative generated
 -- sample (the shapes formatSingleMessage emits); assistant_dialog.lua itself
@@ -28,6 +28,7 @@ end
 local dialog_src = read_source("assistant_dialog.lua")
 local format_src = read_source("assistant_message_format.lua")
 local viewer_src = read_source("assistant_viewer.lua")
+local css_src = read_source("assistant_css.lua")
 
 -- Representative two-round text, the shapes the dialog emits after T()
 -- substitution (C locale: %1/%2/%3 replaced in order).
@@ -112,10 +113,13 @@ local tests = {
     end),
 
     test("viewer css: label rules present, h1/h2 scale kept", function()
-        assert.matches(viewer_src, '%.assistant%-label %s*{', ".assistant-label rule missing")
-        assert.matches(viewer_src, '%.assistant%-label%-%-thought', ".assistant-label--thought rule missing")
-        assert.matches(viewer_src, 'font%-size: 1%.3em', "h1 1.3em must stay")
-        assert.matches(viewer_src, 'font%-size: 1%.2em', "h2 1.2em must stay")
+        assert.matches(viewer_src, 'require%("assistant_css"%)', "viewer must use the shared css module")
+        assert.matches(viewer_src, 'ViewerCSS%.build%(', "viewer css must build from the shared module")
+        assert.notMatches(viewer_src, 'local VIEWER_CSS', "viewer must not keep a local css fork")
+        assert.matches(css_src, '%.assistant%-label %s*{', ".assistant-label rule missing")
+        assert.matches(css_src, '%.assistant%-label%-%-thought', ".assistant-label--thought rule missing")
+        assert.matches(css_src, 'font%-size: 1%.3em', "h1 1.3em must stay")
+        assert.matches(css_src, 'font%-size: 1%.2em', "h2 1.2em must stay")
     end),
 
     test("viewer: p-wrapped label unwrap present and working", function()

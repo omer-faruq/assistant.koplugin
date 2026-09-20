@@ -41,6 +41,7 @@ local Screen = Device.screen
 local MD = require("assistant_mdparser")
 local Prompts = require("assistant_prompts")
 local ASUtils = require("assistant_utils")
+local ViewerCSS = require("assistant_css")
 local Notebook = require("assistant_notebook")
 local CheckButton = require("ui/widget/checkbutton")
 
@@ -65,107 +66,8 @@ ScrollHtmlWidget.scrollToPage = function(self, page_num)
   end
 end
 
--- Undo default margins and padding in ScrollHtmlWidget.
--- Based on ui/widget/dictquicklookup.
--- font-family order: https://github.com/koreader/koreader/blob/19f3278d6b2c4677ced5358b83dc9157a8210d33/frontend/document/credocument.lua#L59
-local VIEWER_CSS = [[
-@page {
-    margin: 0;
-    font-family: 'Noto Sans CJK TC', 'Noto Sans Arabic', 'Noto Sans Devanagari UI', 'Noto Sans Bengali UI', 'FreeSans', 'Noto Sans', sans-serif;
-}
-
-body {
-    margin: 0;
-    line-height: 1.25;
-    padding: 0;
-}
-
-blockquote, dd {
-    margin: 0 1em;
-    font-size: 0.8em;
-}
-
-pre {
-    margin: 1em 0 1em 3em;
-    font-size: 0.8em;
-    color: #333;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-}
-
-ol, ul, menu {
-    margin: 0;
-    padding-left: 2em;
-}
-
-p {
-    padding-left: 1em;
-}
-
-hr {
-    border-color: #BBB;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    padding-left: 0;
-}
-
-h1 {
-    font-size: 1.3em;
-}
-
-h2 {
-    font-size: 1.2em;
-}
-
-.assistant-label {
-    padding-left: 0;
-    font-weight: bold;
-    font-size: 1.1em;
-    margin: 0.8em 0 0.3em;
-}
-
-.assistant-label--thought {
-    font-size: 0.85em;
-    margin-top: 0.4em;
-}
-
-ul li {
-    list-style-type: disc !important;
-}
-
-.suggestion-link {
-    margin: 0.6em 0;
-    display: inline-block;
-}
-
-table {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    font-size: 0.85em;
-}
-
-table td, table th {
-    border: 1px solid black;
-    padding: 0;
-    overflow-wrap: break-word;
-}
-
-table th {
-    white-space: nowrap;
-    background-color: #bbb;
-}
-]]
-
-local RTL_CSS = [[
-body {
-    direction: rtl !important;
-    text-align: right !important;
-}
-]]
+-- Viewer CSS lives in assistant_css.lua (shared with the notebook viewer);
+-- _buildCSS() below is a thin wrapper resolving the display switches.
 
 local ChatGPTViewer = InputContainer:extend {
   title = nil,
@@ -985,11 +887,8 @@ end
 function ChatGPTViewer:_buildCSS()
   local rtl = self.assistant.settings:readSetting("response_is_rtl")
            or self.assistant.ui_language_is_rtl
-  local css = VIEWER_CSS .. (rtl and RTL_CSS or "")
-  if self.assistant.settings:readSetting("response_justified", false) then
-    css = css .. "\nbody {\n    text-align: justify;\n}\n"
-  end
-  return css
+  local justified = self.assistant.settings:readSetting("response_justified", false)
+  return ViewerCSS.build({ rtl = rtl, justified = justified })
 end
 
 -- Strip the stored ```reasoning fence (with or without the dialog's title

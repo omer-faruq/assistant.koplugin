@@ -103,8 +103,8 @@ local tests = {
         assert.isTrue(NotebookViewer.init ~= TextViewerStub.init, "must override init")
         assert.isTrue(type(NotebookViewer.openFile) == "function", "must provide openFile")
         assert.isTrue(type(NotebookViewer.renderMarkdown) == "function", "must provide renderMarkdown")
-        assert.isTrue(type(NotebookViewer.TABLE_CSS) == "string", "must carry table css")
-        assert_contains(NotebookViewer.TABLE_CSS, "border-collapse", "table css must collapse borders")
+        assert.isTrue(NotebookViewer.TABLE_CSS == nil, "must not keep an independent table css field")
+        assert.isTrue(type(NotebookViewer._resolveCSSOpts) == "function", "must resolve css switches")
     end),
 
     test("renderMarkdown uses hoedown output", function()
@@ -142,7 +142,7 @@ local tests = {
         local NotebookViewer = require("assistant_notebook").NotebookViewer
         assert.notNil(NotebookViewer, "assistant_notebook must expose NotebookViewer")
         -- Real lfs: attributes is nil, so no UI module is touched.
-        NotebookViewer.openFile("/definitely/not/a/real_notebook.md")
+        NotebookViewer.openFile(nil, "/definitely/not/a/real_notebook.md")
     end),
 
     test("justify toggle keeps table css across reinit", function()
@@ -188,16 +188,67 @@ local tests = {
         assert.matches(injected_css(), "border%-collapse", "return must re-inject table css")
     end),
 
+    test("css switches resolve from the passed-in assistant", function()
+        reset_modules(setmetatable({ _is_hoedown = true }, {
+            __call = function(_, text) return "<table><tr><td>" .. text .. "</td></tr></table>" end,
+        }))
+        local NotebookViewer = require("assistant_notebook").NotebookViewer
+        local stored = { response_is_rtl = true, response_justified = true }
+        local fake_assistant = {
+            ui_language_is_rtl = false,
+            settings = {
+                readSetting = function(_, key, default)
+                    if stored[key] ~= nil then return stored[key] end
+                    return default
+                end,
+            },
+        }
+        local inst = setmetatable({
+            file = "notes.md",
+            text = "# md",
+            text_type = "file_content",
+            justified = false,
+            monospace_font = false,
+            force_txt = nil,
+            text_format = nil,
+            _assistant = fake_assistant,
+        }, { __index = NotebookViewer })
+        local function injected_css()
+            return inst.scroll_widget.htmlbox_widget._content.css or ""
+        end
+        NotebookViewer.init(inst, nil)
+        assert.matches(injected_css(), "direction: rtl", "response_is_rtl must inject the rtl fragment")
+        assert.matches(injected_css(), "text%-align: justify", "response_justified must inject the justify fragment")
+        assert.matches(injected_css(), "border%-collapse", "shared base must keep table rules")
+        -- Switches off: fragments gone, base stays.
+        stored.response_is_rtl = nil
+        stored.response_justified = nil
+        NotebookViewer.init(inst, true)
+        assert.notMatches(injected_css(), "direction: rtl", "rtl fragment must drop with the switch off")
+        assert.notMatches(injected_css(), "text%-align: justify", "justify fragment must drop with the switch off")
+        assert.matches(injected_css(), "border%-collapse", "shared base must keep table rules")
+        -- UI locale RTL applies when the response switch is off.
+        fake_assistant.ui_language_is_rtl = true
+        NotebookViewer.init(inst, true)
+        assert.matches(injected_css(), "direction: rtl", "ui language rtl must inject the rtl fragment")
+        -- No assistant at all: safe degrade, no crash.
+        inst._assistant = nil
+        fake_assistant.ui_language_is_rtl = false
+        NotebookViewer.init(inst, true)
+        assert.notMatches(injected_css(), "direction: rtl", "must degrade without an assistant")
+        assert.matches(injected_css(), "border%-collapse", "must keep table rules without an assistant")
+    end),
+
     test("main.lua views notebooks through Notebook.openNotebookFile", function()
         local src = read_source("main.lua")
         assert.notNil(src, "could not read main.lua")
-        assert_contains(src, "Notebook.openNotebookFile(notebookfile)",
-            "View callback must open notebooks via the thin wrapper")
+        assert_contains(src, "Notebook.openNotebookFile(self, notebookfile)",
+            "View callback must open notebooks via the thin wrapper with assistant")
         local nb_src = read_source("assistant_notebook.lua")
         assert.notNil(nb_src, "could not read assistant_notebook.lua")
-        assert_contains(nb_src, "function M.openNotebookFile(file)",
+        assert_contains(nb_src, "function M.openNotebookFile(assistant, file)",
             "notebook module must expose the thin wrapper")
-        assert_contains(nb_src, "M.NotebookViewer.openFile(file)",
+        assert_contains(nb_src, "M.NotebookViewer.openFile(assistant, file)",
             "thin wrapper must forward to the viewer class")
     end),
 }

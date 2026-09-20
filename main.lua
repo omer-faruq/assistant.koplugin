@@ -240,7 +240,7 @@ function Assistant:addToMainMenu(menu_items)
                           })
                           return
                         end
-                        Notebook.openNotebookFile(notebookfile)
+                        Notebook.openNotebookFile(self, notebookfile)
                       end,
                       other_buttons = { other_buttons },
                     }

@@ -9,6 +9,7 @@ local InputDialog = require("ui/widget/inputdialog")
 local Menu = require("ui/widget/menu")
 local _ = require("assistant_gettext")
 local ASUtils = require("assistant_utils")
+local SharedCSS = require("assistant_css")
 
 local M = {}
 
@@ -815,25 +816,6 @@ end
 if tv_ok and TextViewerBase then
     M.NotebookViewer = TextViewerBase:extend{}
 
-    -- Black-and-white table rules for the outer CSS channel (subset of the
-    -- assistant viewer table rules in assistant_viewer.lua).
-    M.NotebookViewer.TABLE_CSS = [[
-p {
-    padding-left: 1em;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.85em;
-}
-table td, table th {
-    border: 1px solid black;
-}
-table th {
-    background-color: #bbb;
-}
-]]
-
     -- Render Markdown with the plugin parser. Returns nil when hoedown is
     -- unavailable so callers keep the native TextViewer path.
     function M.NotebookViewer.renderMarkdown(text)
@@ -850,16 +832,42 @@ table th {
         return html
     end
 
-    -- Re-set the scroll content with the table CSS appended. Changing the
-    -- css field alone does not re-render; setContent re-embeds the
-    -- stylesheet into the outer <head><style> that MuPDF honors.
+    -- Resolve the viewer CSS switches for this instance, mirroring
+    -- ChatGPTViewer:_buildCSS: response_is_rtl or the UI language direction
+    -- for RTL, response_justified (plus the TextViewer Justify toggle, which
+    -- the upstream stylesheet already honors, so OR-ing it here is
+    -- idempotent) for justification. Reads go through the passed-in
+    -- assistant like every other Notebook entry point; without one the
+    -- switches stay off instead of crashing.
+    function M.NotebookViewer:_resolveCSSOpts()
+        local settings = self._assistant and self._assistant.settings
+        local rtl = false
+        local justified = self.justified or false
+        if settings then
+            if settings:readSetting("response_is_rtl") then
+                rtl = true
+            end
+            if settings:readSetting("response_justified", false) then
+                justified = true
+            end
+        end
+        if not rtl and self._assistant and self._assistant.ui_language_is_rtl then
+            rtl = true
+        end
+        return { rtl = rtl, justified = justified }
+    end
+
+    -- Re-set the scroll content with the shared viewer CSS appended (same
+    -- BASE ChatGPTViewer builds from). Changing the css field alone does
+    -- not re-render; setContent re-embeds the stylesheet into the outer
+    -- <head><style> that MuPDF honors.
     function M.NotebookViewer:_injectTableCSS()
         local scroll = self.scroll_widget
         if scroll == nil or scroll.htmlbox_widget == nil then
             return
         end
         local ok = pcall(function()
-            scroll.css = (scroll.css or "") .. M.NotebookViewer.TABLE_CSS
+            scroll.css = (scroll.css or "") .. SharedCSS.build(self:_resolveCSSOpts())
             scroll.htmlbox_widget:setContent(
                 scroll.html_body, scroll.css, scroll.default_font_size,
                 scroll.is_xhtml, nil,
@@ -902,8 +910,10 @@ table th {
     end
 
     -- Mirror of TextViewer.openFile (400KB confirm dialog included), but
-    -- builds a NotebookViewer instead of a TextViewer.
-    function M.NotebookViewer.openFile(file)
+    -- builds a NotebookViewer instead of a TextViewer. Assistant first like
+    -- every other Notebook entry point; the instance keeps it for CSS
+    -- switch resolution.
+    function M.NotebookViewer.openFile(assistant, file)
         local function _openFile(file_path)
             local file_handle = io.open(file_path, "rb")
             if not file_handle then return end
@@ -914,6 +924,7 @@ table th {
                 title_multilines = true,
                 text = file_content,
                 text_type = "file_content",
+                _assistant = assistant,
             })
         end
         local attr = lfs.attributes(file)
@@ -937,8 +948,8 @@ table th {
 end
 
 -- Thin wrapper so callers never touch the viewer class directly.
-function M.openNotebookFile(file)
-    return M.NotebookViewer.openFile(file)
+function M.openNotebookFile(assistant, file)
+    return M.NotebookViewer.openFile(assistant, file)
 end
 
 return M
