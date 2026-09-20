@@ -1,16 +1,16 @@
 -- test_retry.lua
 -- Tests for the 429 retry mechanism in api_handlers/base.lua:
 --   getMaxRetries / parseRetryAfter / isRetryable429 / getRetryDelay
---   and the makeRequest retry loop (with a mocked ASUtils.httpRequest).
+--   and the makeRequest retry loop (with a mocked NetUtils.httpRequest).
 local helper = require("test.helper")
 local assert = helper.assert
-local ASUtils = helper.ASUtils
+local NetUtils = helper.NetUtils
 
 local BaseHandler = require("api_handlers.base")
 local OpenAIHandler = require("api_handlers.openai")
 
 -- Captured before the makeRequest tests replace the module field with stubs.
-local realSleepWithInfo = ASUtils.sleepWithInfo
+local realSleepWithInfo = BaseHandler.sleepWithInfo
 
 local function test(name, fn)
     return { name = name, fn = fn }
@@ -270,12 +270,12 @@ local tests = {
             { success = true, code = 429, content = '{"error":{"message":"busy"}}', headers = { ["retry-after"] = "1" } },
             { success = true, code = 200, content = '{"ok":true}', headers = {} },
         }
-        ASUtils.httpRequest = function()
+        NetUtils.httpRequest = function()
             calls = calls + 1
             local r = responses[calls]
             return r.success, r.code, r.content, r.headers
         end
-        ASUtils.sleepWithInfo = function() return true end
+        BaseHandler.sleepWithInfo = function() return true end
         local success, code, content = h:makeRequest("https://x", {}, "{}")
         assert.equal(calls, 3)
         assert.isTrue(success)
@@ -286,11 +286,11 @@ local tests = {
     test("makeRequest: exhausts retries and returns final 429 as error", function()
         local h = newHandler{ max_retries = 2 }
         local calls = 0
-        ASUtils.httpRequest = function()
+        NetUtils.httpRequest = function()
             calls = calls + 1
             return true, 429, '{"error":{"message":"busy"}}', { ["retry-after"] = "1" }
         end
-        ASUtils.sleepWithInfo = function() return true end
+        BaseHandler.sleepWithInfo = function() return true end
         local success, code, content = h:makeRequest("https://x", {}, "{}")
         assert.equal(calls, 3) -- 1 initial + 2 retries
         assert.isFalse(success)
@@ -301,7 +301,7 @@ local tests = {
     test("makeRequest: max_retries=0 disables retry", function()
         local h = newHandler{ max_retries = 0 }
         local calls = 0
-        ASUtils.httpRequest = function()
+        NetUtils.httpRequest = function()
             calls = calls + 1
             return true, 429, '{"error":{"message":"busy"}}', {}
         end
@@ -314,7 +314,7 @@ local tests = {
     test("makeRequest: non-retryable 429 returns immediately", function()
         local h = newHandler()
         local calls = 0
-        ASUtils.httpRequest = function()
+        NetUtils.httpRequest = function()
             calls = calls + 1
             return true, 429, '{"error":{"code":"insufficient_quota"}}', {}
         end
@@ -327,11 +327,11 @@ local tests = {
     test("makeRequest: user cancellation during wait returns CODE_CANCELLED", function()
         local h = newHandler()
         local calls = 0
-        ASUtils.httpRequest = function()
+        NetUtils.httpRequest = function()
             calls = calls + 1
             return true, 429, '{"error":{"message":"busy"}}', { ["retry-after"] = "1" }
         end
-        ASUtils.sleepWithInfo = function() return false end -- user cancels
+        BaseHandler.sleepWithInfo = function() return false end -- user cancels
         local success, code, content = h:makeRequest("https://x", {}, "{}")
         assert.equal(calls, 1)
         assert.isFalse(success)
@@ -342,7 +342,7 @@ local tests = {
     test("makeRequest: non-429 error passes through unchanged", function()
         local h = newHandler()
         local calls = 0
-        ASUtils.httpRequest = function()
+        NetUtils.httpRequest = function()
             calls = calls + 1
             return false, BaseHandler.CODE_TIMEOUT, "timed out", nil
         end
@@ -443,7 +443,7 @@ local tests = {
     test("sleepWithRetryInfo: shows API detail when present", function()
         local h = newHandler()
         local captured = nil
-        ASUtils.sleepWithInfo = function(_, text) captured = text return true end
+        BaseHandler.sleepWithInfo = function(_, text) captured = text return true end
         h:sleepWithRetryInfo(1, 2, 8, "Rate limit abc")
         assert.notNil(captured)
         assert.matches(captured, "API Busy")

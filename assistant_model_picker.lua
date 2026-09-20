@@ -22,7 +22,6 @@ local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local Screen = require("device").screen
 local logger = require("logger")
-local ASUtils = require("assistant_utils")
 local Registry = require("assistant_provider_registry")
 
 -- Forward declarations

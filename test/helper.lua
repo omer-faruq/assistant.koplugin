@@ -109,6 +109,9 @@ end
 
 -- 4. Import the real modules we need
 local ASUtils = require("assistant_utils")
+local NetUtils = require("assistant_net_utils")
+local TextUtils = require("assistant_text_utils")
+local DocUtils = require("assistant_doc_utils")
 local extools = require("assistant_exttools")
 
 -- 5. Assertion helpers
@@ -166,9 +169,9 @@ function M.mockFetchJSON(responses)
     M.fetchJSON_call_index = 0
 end
 
--- Override ASUtils.fetchJSON with our mock
-local originalFetchJSON = ASUtils.fetchJSON
-function ASUtils.fetchJSON(url, header, trap_widget, timeout, maxtime, post_body)
+-- Override NetUtils.fetchJSON with our mock
+local originalFetchJSON = NetUtils.fetchJSON
+function NetUtils.fetchJSON(url, header, trap_widget, timeout, maxtime, post_body)
     M.fetchJSON_call_index = (M.fetchJSON_call_index or 0) + 1
     local resp = M.fetchJSON_responses[M.fetchJSON_call_index]
     if resp then
@@ -180,6 +183,9 @@ end
 
 M.extools = extools
 M.ASUtils = ASUtils
+M.NetUtils = NetUtils
+M.TextUtils = TextUtils
+M.DocUtils = DocUtils
 
 -- 7. Test runner
 function M.runTests(name, tests)

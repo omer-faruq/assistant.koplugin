@@ -1,11 +1,12 @@
 -- test_error_message.lua
 -- Tests for the extractErrorMessage implementations:
--- ASUtils.extractErrorMessage owns the canonical default (error.message >
+-- NetUtils.extractErrorMessage owns the canonical default (error.message >
 -- flat error > detail.* proxy fallback > bare message, plus the machine-code
 -- TAG suffix); BaseHandler delegates to it. OpenAIHandler alone keeps its own
 -- override (same message chain, plain human text, no TAG).
 local helper = require("test.helper")
 local assert = helper.assert
+local NetUtils = helper.NetUtils
 
 local BaseHandler = require("api_handlers.base")
 local OpenAIHandler = require("api_handlers.openai")
@@ -73,9 +74,8 @@ local tests = {
         assert.equal(h:extractErrorMessage('{"detail":{"message":"slow"}}'), "slow")
         assert.equal(h:extractErrorMessage('{"detail":"just slow"}'), "just slow")
         assert.equal(h:extractErrorMessage('{"detail":{"error":"flat proxied"}}'), "flat proxied")
-        local ASUtils = require("assistant_utils")
-        assert.equal(ASUtils.extractErrorMessage('{"detail":{"error":{"message":"proxied"}}}'), "proxied")
-        assert.equal(ASUtils.extractErrorMessage('{"error":{"message":"boom","type":"invalid_request_error"}}'), "boom [invalid_request_error]")
+        assert.equal(NetUtils.extractErrorMessage('{"detail":{"error":{"message":"proxied"}}}'), "proxied")
+        assert.equal(NetUtils.extractErrorMessage('{"error":{"message":"boom","type":"invalid_request_error"}}'), "boom [invalid_request_error]")
     end),
 
     test("base default: nil/empty/garbage returns nil", function()

@@ -14,6 +14,7 @@ local strbuf = require("string.buffer")
 local json = require("rapidjson")
 local ExtTools = require("assistant_exttools")
 local ASUtils = require("assistant_utils")
+local TextUtils = require("assistant_text_utils")
 local json_default = ASUtils.json_default
 
 
@@ -144,7 +145,7 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round)
     local keywordmsg = InfoMessage:new({
         face = Font:getFace("smallinfofont"),
         icon = "appbar.search",
-        text = ASUtils.bold_format(
+        text = TextUtils.bold_format(
             T("<b>%1</b>\n\n<b>⌗ </b>%2", T(_("Searching with %1 ... [%2]"), ToolExecutor.ToolToText(ws_mode), tool_round), keywords)
         ),
     })

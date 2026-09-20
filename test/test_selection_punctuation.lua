@@ -1,5 +1,5 @@
 -- test_selection_punctuation.lua
--- Tests for ASUtils.strip_selection_punctuation in assistant_utils.lua.
+-- Tests for TextUtils.strip_selection_punctuation in assistant_text_utils.lua.
 --
 -- Context: a KOReader word selection can carry the sentence punctuation
 -- ("Docile."), which the AI Dictionary then looked up and bolded as the
@@ -7,14 +7,14 @@
 -- before the word is passed to the prompt.
 local helper = require("test.helper")
 local assert = helper.assert
-local ASUtils = helper.ASUtils
+local TextUtils = helper.TextUtils
 
 local function test(name, fn)
     return { name = name, fn = fn }
 end
 
 local function assertStripped(input, expected)
-    assert.equal(ASUtils.strip_selection_punctuation(input), expected,
+    assert.equal(TextUtils.strip_selection_punctuation(input), expected,
         "unexpected stripped value for " .. tostring(input))
 end
 
@@ -56,7 +56,7 @@ local tests = {
     end),
 
     test("non-string is returned unchanged", function()
-        assert.equal(ASUtils.strip_selection_punctuation(nil), nil)
+        assert.equal(TextUtils.strip_selection_punctuation(nil), nil)
     end),
 }
 

@@ -16,6 +16,7 @@ local ffi = require("ffi")
 local ffiutil = require("ffi/util")
 local Device = require("device")
 local ASUtils = require("assistant_utils")
+local TextUtils = require("assistant_text_utils")
 local ToolExecutor = require("assistant_tool_executor")
 local Screen = Device.screen
 local Prompts = require("assistant_prompts").assistant_prompts
@@ -211,7 +212,7 @@ function Querier:showError(err, message_history)
         local identity = self.last_request_identity or self:getRequestIdentity()
         local provider = identity.label
         local model = identity.model
-        local text = ASUtils.bold_format(
+        local text = TextUtils.bold_format(
             T(_("<b>API Error</b>\n%1\n\n<b>Provider:</b> %2\n<b>Model:</b> %3\n\nTry another provider in the settings dialog."),
               err or _("Unknown error"), provider, model)
         )
@@ -301,7 +302,7 @@ local function formatRequestTitle(text)
     if text == nil then return nil end
     text = tostring(text)
     if text == "" then return nil end
-    return ASUtils.truncateToHeadUtf8Safe(text:gsub("%s+", " "), 60)
+    return TextUtils.truncateToHeadUtf8Safe(text:gsub("%s+", " "), 60)
 end
 
 --- Query the AI with the provided message history.
@@ -556,7 +557,7 @@ function Querier:query(message_history, title)
         if request_title and request_title ~= "" then
             title_line = T("☺ %1", request_title)
         end
-        local notify = ASUtils.bold_format(
+        local notify = TextUtils.bold_format(
             T("<b>%1</b>\n%2\n✦ %3/<b>%4</b>%5", _("Composing answer ..."),
                 title_line, request_identity.label, request_identity.model,
                 query_option.use_websearch ~= "none" and tool_notice or "")
@@ -614,7 +615,7 @@ function Querier:query(message_history, title)
                 local follow_msg = InfoMessage:new{
                     icon = "book.opened",
                     face = Font:getFace("smallinfofont"),
-                    text = ASUtils.bold_format(
+                    text = TextUtils.bold_format(
                         T("<b>%1</b>\n✦ %2/<b>%3</b>", _("Composing answer ..."), request_identity.label, request_identity.model)
                     ),
                 }
@@ -630,7 +631,7 @@ function Querier:query(message_history, title)
         -- Non-stream bypasses processStream: strip inline <think> here.
         if res ~= "" then
             local show_reasoning = self.settings:readSetting("show_reasoning", false)
-            res = ASUtils.strip_think_tags(res, nil, show_reasoning)
+            res = TextUtils.strip_think_tags(res, nil, show_reasoning)
         end
     end
 
@@ -680,7 +681,7 @@ function Querier:showStremDialog(res, request_title, request_identity)
 
     streamDialog = InputDialog:new{
         title = request_title or _("AI is responding"),
-        description = ASUtils.bold_format(
+        description = TextUtils.bold_format(
             T("✦ %1/<b>%2</b>", request_identity.label, request_identity.model)
         ),
         inputtext_class = StreamText, -- use our custom InputText class
@@ -1051,7 +1052,7 @@ function Querier:processStream(bgQuery, trunk_callback)
 
     local show_reasoning = self.settings:readSetting("show_reasoning", false)
     local structured = #reasoning_content_buffer > 0 and reasoning_content_buffer:get() or nil
-    ret = ASUtils.strip_think_tags(ret, structured, show_reasoning)
+    ret = TextUtils.strip_think_tags(ret, structured, show_reasoning)
     return ret, nil
 end
 

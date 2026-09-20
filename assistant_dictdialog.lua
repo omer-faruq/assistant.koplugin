@@ -8,7 +8,8 @@ local T = require("ffi/util").template
 local Event = require("ui/event")
 local koutil = require("util")
 local ASUtils = require("assistant_utils")
-local MsgFormat = require("assistant_message_format")
+local TextUtils = require("assistant_text_utils")
+local DocUtils = require("assistant_doc_utils")
 local TermXray = require("assistant_term_xray")
 local Prompts = require("assistant_prompts")
 local dict_prompts = Prompts.assistant_prompts.dict
@@ -157,7 +158,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         -- Show the loading dialog immediately to avoid the app appearing frozen during the anchor scan
         local context_loading_msg = InfoMessage:new{
             icon = "book.opened",
-            text = ASUtils.bold_format(_("<b>Analyzing book context for Term X-Ray...</b>")),
+            text = TextUtils.bold_format(_("<b>Analyzing book context for Term X-Ray...</b>")),
         }
 
         -- The whole blocking analysis runs under pcall so a malformed book
@@ -169,11 +170,11 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             -- Include the page the reader is on (and a couple ahead): the
             -- extraction otherwise stops at the top of the current view, which
             -- would exclude the selected term's own occurrence.
-            local book_text = ASUtils.extractBookTextForAnalysis(assistant, 2)
+            local book_text = DocUtils.extractBookTextForAnalysis(assistant, 2)
 
             if book_text and #book_text > 100 then
                 local all_sentences = TermXray.split_sentences(book_text)
-                local term = ASUtils.strip_selection_punctuation(highlightedText)
+                local term = TextUtils.strip_selection_punctuation(highlightedText)
                 local term_indices = TermXray.find_term_indices(all_sentences, term)
                 local max_characters = assistant.config:getFeature("term_xray_max_characters", 60000)
                 local built = TermXray.build_anchor_context(all_sentences, term_indices, {
@@ -250,7 +251,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             content = string.gsub(user_prompt, "{([%w_]+)}", {
                 language = dict_language,
                 context = context_content,
-                word = ASUtils.strip_selection_punctuation(highlightedText),
+                word = TextUtils.strip_selection_punctuation(highlightedText),
                 title = book_title,
                 author = book_author,
             }),
@@ -286,7 +287,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         local prev_context_limited = TermXray.clip_excerpt(prev_context, 100, "tail")
         local next_context_limited = TermXray.clip_excerpt(next_context, 100, "head")
         -- Walk the history past the system prompt and format each message
-        -- with assistant_message_format (Search/Thought/Response divs,
+        -- with assistant_text_utils (Search/Thought/Response divs,
         -- reasoning split, suggestion switch), so Search divs the querier
         -- appended in place render alongside the answer.
         local result_parts = {}
@@ -294,7 +295,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             local message = message_history[idx]
             local is_context = ASUtils.get_attr(message, "is_context")
             if not is_context then
-                table.insert(result_parts, MsgFormat.formatSingleMessage(message_history, message, {
+                table.insert(result_parts, TextUtils.formatSingleMessage(message_history, message, {
                     title = nil,
                     msg_idx = idx,
                     settings = assistant.settings,

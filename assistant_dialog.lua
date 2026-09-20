@@ -24,21 +24,21 @@ local Device = require("device")
 local Screen = Device.screen
 local CheckButton = require("ui/widget/checkbutton")
 local ASUtils = require("assistant_utils")
-local MsgFormat = require("assistant_message_format")
+local TextUtils = require("assistant_text_utils")
+local DocUtils = require("assistant_doc_utils")
 local Notebook = require("assistant_notebook")
-local extractBookTextForAnalysis = ASUtils.extractBookTextForAnalysis
 
 --[[
   Extract the context text selected by the Ask dialog checkboxes.
   When `use_chapter` is set, narrow the context to the chapter containing
-  the current position (see ASUtils.extractCurrentChapterText); otherwise
+  the current position (see DocUtils.extractCurrentChapterText); otherwise
   fall back to the full "book text up to current position" extraction.
 --]]
 local function extractContextText(assistant, use_chapter)
   if use_chapter then
-    return ASUtils.extractCurrentChapterText(assistant)
+    return DocUtils.extractCurrentChapterText(assistant)
   end
-  return extractBookTextForAnalysis(assistant)
+  return DocUtils.extractBookTextForAnalysis(assistant)
 end
 
 --[[
@@ -93,7 +93,7 @@ function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText, user_in
   local text_to_use = highlightedText and highlightedText ~= "" and highlightedText or ""
   local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
   
-  -- Resolve live page number / total pages (mirrors ASUtils.getPageInfo internals)
+  -- Resolve live page number / total pages (mirrors DocUtils.getPageInfo internals)
   local function resolve_page()
     local ui = self.assistant.ui
     if not ui or not ui.highlight or not ui.highlight.selected_text
@@ -160,11 +160,11 @@ function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText, user_in
 end
 
 function AssistantDialog:_createResultText(highlightedText, message_history, previous_text, title)
-  -- Single-message rendering lives in assistant_message_format (shared with
+  -- Single-message rendering lives in assistant_text_utils (shared with
   -- the feature dialog); call sites below pass history position plus the
   -- dialog's settings and default suggestion config.
   local function fmt(message, msg_idx)
-    return MsgFormat.formatSingleMessage(message_history, message, {
+    return TextUtils.formatSingleMessage(message_history, message, {
       title = title,
       msg_idx = msg_idx,
       settings = self.assistant.settings,
@@ -287,7 +287,7 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
         end
 
         viewer:trimMessageHistory()
-        ASUtils.runWhenOnlineFast(function()
+        DocUtils.runWhenOnlineFast(function()
           Trapper:wrap(function()
             local answer, err = self.querier:query(message_history, request_title)
             
@@ -340,7 +340,7 @@ I have a question about this book.]], book.title, book.author)
   local buf = strbuf.new()
   buf:put(head)
 
-  local page_info = ASUtils.getPageInfo(self.assistant.ui)
+  local page_info = DocUtils.getPageInfo(self.assistant.ui)
   if page_info and page_info ~= "" then
     buf:put("\n\n", string.format("My current reading position is:%s.", page_info))
   end
@@ -348,7 +348,7 @@ I have a question about this book.]], book.title, book.author)
   if highlighted_text and highlighted_text ~= ""
       and self.assistant.settings:readSetting("include_page_text", false) then
     local max_chars = self.assistant.config:getFeature("max_page_context_chars", 6000)
-    local page_text = ASUtils.getPageRangeText(self.assistant.ui, 1, 1, max_chars)
+    local page_text = DocUtils.getPageRangeText(self.assistant.ui, 1, 1, max_chars)
     if page_text ~= "" then
       buf:put("\n\n", string.format(
         "Surrounding text from the book (for reference only - the task applies ONLY to the highlighted passage):\n```\n%s\n```",
@@ -495,7 +495,7 @@ function AssistantDialog:showAskDialog(highlightedText)
         local menukey = string.format("assistant_%02d_%s", quick_note_tab.order, quick_note_tab.idx)
         local settingkey = "showOnMain_" .. menukey
         UIManager:show(ConfirmBox:new{
-          text = ASUtils.bold_format(
+          text = TextUtils.bold_format(
             T(_("<b>%1:</b> %2\n\nAdd this button to the Highlight Menu?"), quick_note_tab.text, quick_note_tab.desc)
           ),
           ok_text = _("Add"),
@@ -635,7 +635,7 @@ function AssistantDialog:showAskDialog(highlightedText)
             local menukey = string.format("assistant_%02d_%s", tab.order, tab.idx)
             local settingkey = "showOnMain_" .. menukey
             UIManager:show(ConfirmBox:new{
-              text = ASUtils.bold_format(
+              text = TextUtils.bold_format(
                 T(_("<b>%1:</b> %2\n\nAdd this button to the Highlight Menu?"), tab.text, tab.desc)
               ),
               ok_text = _("Add"),
@@ -677,7 +677,7 @@ function AssistantDialog:showAskDialog(highlightedText)
       dialog_hint = _("Ask a question about the highlighted text")
       text_height = math.floor( 3 * Screen:scaleBySize(20) ) -- highlighted dialog is complicated
   elseif book.title then
-      dialog_hint = ASUtils.bold_format(
+      dialog_hint = TextUtils.bold_format(
           T(_("<b>Ask a question about this book:</b>\n%1 by %2"), book.title, book.author)
       )
   else
@@ -778,7 +778,7 @@ function AssistantDialog:showAskDialog(highlightedText)
   if book.title then
     -- Chapter limit is only offered when a TOC chapter covers the current
     -- position (no TOC / outside the TOC -> no option).
-    local chapter_range = ASUtils.getCurrentChapterRange(self.assistant.ui)
+    local chapter_range = DocUtils.getCurrentChapterRange(self.assistant.ui)
     use_book_text_checkbox = CheckButton:new{
       face = Font:getFace("smallffont"),
       text = "✉ " .. _("Attach Prior Text"),
@@ -889,7 +889,7 @@ function AssistantDialog:runPrompt(highlightedText, prompt_id, user_input)
 
   if not message_history or #message_history < 1 then
     UIManager:show(InfoMessage:new{
-        text = ASUtils.bold_format(_("<b>Error:</b> No response received")),
+        text = TextUtils.bold_format(_("<b>Error:</b> No response received")),
         icon = "notice-warning"
     })
     return

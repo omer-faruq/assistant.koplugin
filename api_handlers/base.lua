@@ -17,7 +17,69 @@ local _ = require("assistant_gettext")
 
 local ToolExecutor = require("assistant_tool_executor")
 local ASUtils = require("assistant_utils")
+local NetUtils = require("assistant_net_utils")
+local TextUtils = require("assistant_text_utils")
+local datetime = require("datetime")
 local json_default = ASUtils.json_default
+
+--- Local time to UTC epoch.
+local function _localToUtcEpoch(time)
+    local utc = os.date("!*t", time)
+    local diff = os.difftime(time, os.time(utc))
+    return time + diff
+end
+
+--- HTTP-date to epoch, nil if unparseable.
+local function parseHttpDate(str)
+    if type(str) ~= "string" then return nil end
+    local ok, time = pcall(datetime.stringRFC1123ToSeconds, str)
+    if not ok or type(time) ~= "number" then return nil end
+    return _localToUtcEpoch(time)
+end
+
+--- Show a cancellable countdown, filling the template %d with the remaining seconds each tick.
+--- Templates without %d keep the legacy " (N)" suffix. Returns false on cancel, true when finished.
+local function sleepWithInfo(seconds, template)
+    local _coroutine = coroutine.running()
+    -- Round up so the displayed total and the real wait agree.
+    local total = math.ceil(seconds)
+    local deadline = socket.gettime() + total
+    local first = true
+    while true do
+        local remaining = deadline - socket.gettime()
+        if remaining <= 0 then break end
+        local shown = math.ceil(remaining)
+        -- The first call creates the InfoMessage; later calls overwrite it in
+        -- place (same-size text) and skip Trapper's 100ms dismiss yield. A tap
+        -- still cancels at once via the widget's dismiss_callback.
+        local text = template
+        if type(template) == "string" and template:find("%d", 1, true) then
+            text = string.format(template, shown)
+        else
+            text = string.format("%s (%d)", template, shown)
+        end
+        local go_on = Trapper:info(text, not first, not first)
+        if not go_on then
+            Trapper:clear()
+            return false
+        end
+        first = false
+        -- Wake when the next number is due, not one second after the repaint,
+        -- so the slow e-ink refresh does not stretch the countdown.
+        local wait_time = deadline - socket.gettime() - (shown - 1)
+        if wait_time < 0.01 then wait_time = 0.01 end
+        local resume_func = function() coroutine.resume(_coroutine, true) end
+        UIManager:scheduleIn(wait_time, resume_func)
+        local result = coroutine.yield()
+        UIManager:unschedule(resume_func)
+        if not result then
+            Trapper:clear()
+            return false
+        end
+    end
+    Trapper:clear()
+    return true
+end
 
 local BaseHandler = {
     name = "BASE",
@@ -59,7 +121,7 @@ function BaseHandler.prefixHttpCode(code, msg)
 end
 
 -- ---------------------------------------------------------------------------
--- 429 retry helpers (header/date parsing lives in assistant_utils)
+-- 429 retry helpers (header/date parsing are locals above)
 -- ---------------------------------------------------------------------------
 
 --- Decode a response body (string or already-decoded table) into a table, or nil.
@@ -112,35 +174,35 @@ function BaseHandler.pickErrorValue(v)
 end
 
 --- Extract a human-readable error message from an API response body.
---- Thin delegate to ASUtils.extractErrorMessage (single source);
+--- Thin delegate to NetUtils.extractErrorMessage (single source);
 --- OpenAI overrides for detail.* proxy shapes.
 --- @param body string|table|nil raw body or already-decoded JSON
 --- @return string|nil error message, or nil if none found
 function BaseHandler:extractErrorMessage(body)
-    return ASUtils.extractErrorMessage(body)
+    return NetUtils.extractErrorMessage(body)
 end
 
 --- Parse the 429 wait time from retry headers, then body hints.
 --- @return number|nil seconds to wait, or nil if none could be determined.
 function BaseHandler:parseRetryAfter(headers, body)
     -- 1. retry-after-ms
-    local v = ASUtils.getHeader(headers, "retry-after-ms")
+    local v = NetUtils.getHeader(headers, "retry-after-ms")
     if v then
         local ms = tonumber(v)
         if ms then return ms / 1000 end
     end
     -- 2. x-ms-retry-after-ms
-    v = ASUtils.getHeader(headers, "x-ms-retry-after-ms")
+    v = NetUtils.getHeader(headers, "x-ms-retry-after-ms")
     if v then
         local ms = tonumber(v)
         if ms then return ms / 1000 end
     end
     -- 3. retry-after (delta-seconds or HTTP-date)
-    v = ASUtils.getHeader(headers, "retry-after")
+    v = NetUtils.getHeader(headers, "retry-after")
     if v then
         local secs = tonumber(v)
         if secs then return secs end
-        local date = ASUtils.parseHttpDate(v)
+        local date = parseHttpDate(v)
         if date then
             local delay = date - os.time()
             if delay < 0 then delay = 0 end
@@ -176,7 +238,7 @@ end
 --- Decide whether a 429 is worth retrying.
 function BaseHandler:isRetryable429(code, headers, body)
     if tonumber(code) ~= 429 then return false end
-    local should_retry = ASUtils.getHeader(headers, "x-should-retry")
+    local should_retry = NetUtils.getHeader(headers, "x-should-retry")
     if should_retry and tostring(should_retry):lower() == "false" then
         return false
     end
@@ -273,8 +335,11 @@ function BaseHandler:sleepWithRetryInfo(delay, attempt, max_retries, detail)
     if type(detail) == "string" and detail ~= "" then
         raw = T("%1\n\n%2 %3", raw, _("<b>Detail:</b>"), detail)
     end
-    return ASUtils.sleepWithInfo(delay, ASUtils.bold_format(raw))
+    return self.sleepWithInfo(delay, TextUtils.bold_format(raw))
 end
+
+-- Test hook: retry tests stub this to skip the wall-clock countdown.
+BaseHandler.sleepWithInfo = sleepWithInfo
 
 function BaseHandler:new(o)
     o = o or {}
@@ -387,7 +452,7 @@ function BaseHandler:testRequest(url, headers, body, extract)
     -- Dismissable wait indicator; tapping it cancels the request.
     local infomsg = InfoMessage:new{
         face = Font:getFace("xx_smallinfofont"),
-        text = ASUtils.bold_format(_("<b>Testing connection...</b>")) .. "\nPOST " .. url,
+        text = TextUtils.bold_format(_("<b>Testing connection...</b>")) .. "\nPOST " .. url,
     }
     UIManager:show(infomsg)
     self:setTrapWidget(infomsg)
@@ -446,13 +511,13 @@ function BaseHandler:makeRequest(url, headers, body, timeout, maxtime)
                 request_maxtime = maxtime or 120
             end
             completed, success, code, content, resp_headers = Trapper:dismissableRunInSubprocess(function()
-                    return ASUtils.httpRequest(url, request_timeout, request_maxtime, body, nil, headers)
+                    return NetUtils.httpRequest(url, request_timeout, request_maxtime, body, nil, headers)
                 end, self.trap_widget)
             if not completed then
                 return false, self.CODE_CANCELLED, content
             end
         else
-            success, code, content, resp_headers = ASUtils.httpRequest(url, timeout or 20, maxtime or 45, body, nil, headers)
+            success, code, content, resp_headers = NetUtils.httpRequest(url, timeout or 20, maxtime or 45, body, nil, headers)
         end
 
         local is_429 = tonumber(code) == 429

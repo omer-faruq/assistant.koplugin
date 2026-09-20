@@ -9,7 +9,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local TermXray = require("assistant_term_xray")
-local ASUtils = helper.ASUtils
+local TextUtils = helper.TextUtils
 
 local function test(name, fn)
     return { name = name, fn = fn }
@@ -215,8 +215,8 @@ local tests = {
         local cjk = string.rep("中", 40) -- 120 bytes
         local tail = TermXray.clip_excerpt(cjk, 100, "tail")
         local head = TermXray.clip_excerpt(cjk, 100, "head")
-        assert.equal(tail, ASUtils.truncateToTailUtf8Safe(cjk, 100))
-        assert.equal(head, ASUtils.truncateToHeadUtf8Safe(cjk, 100))
+        assert.equal(tail, TextUtils.truncateToTailUtf8Safe(cjk, 100))
+        assert.equal(head, TextUtils.truncateToHeadUtf8Safe(cjk, 100))
         assert.isTrue(#tail <= 100, "tail excerpt must stay within budget")
         assert.isTrue(#head <= 100, "head excerpt must stay within budget")
         assert.isTrue(#tail < #cjk, "tail excerpt must be truncated")
@@ -229,9 +229,9 @@ local tests = {
         for k = 1, 59 do
             local tail = TermXray.clip_excerpt(prev, k, "tail")
             local head = TermXray.clip_excerpt(next_ctx, k, "head")
-            assert.isTrue(#tail <= #ASUtils.truncateToTailUtf8Safe(prev, k),
+            assert.isTrue(#tail <= #TextUtils.truncateToTailUtf8Safe(prev, k),
                 "tail clip must not exceed the UTF-8-safe truncation")
-            assert.isTrue(#head <= #ASUtils.truncateToHeadUtf8Safe(next_ctx, k),
+            assert.isTrue(#head <= #TextUtils.truncateToHeadUtf8Safe(next_ctx, k),
                 "head clip must not exceed the UTF-8-safe truncation")
         end
     end),

@@ -59,11 +59,14 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 
 ## Shared utils & gettext
 
-- `assistant_utils.lua` — extraction, notebook I/O, `httpRequest`, `PLUGIN_DIR` (computed via `debug.getinfo` self-location, set once by `main.lua`).
+- `assistant_utils.lua` — slim core: `PLUGIN_DIR` (computed via `debug.getinfo` self-location, set once by `main.lua`), metatable attrs, JSON default.
+- `assistant_text_utils.lua` — truncation, selection cleanup, PTF bold, page-text flattening, single-message renderer.
+- `assistant_net_utils.lua` — `httpRequest`, JSON fetch, headers, error messages.
+- `assistant_doc_utils.lua` — book/chapter/page extraction, page info, online guard, dialog field trim/validate.
 - `assistant_gettext.lua` — isolated MO shim, `textdomain "assistant"`, reads `l10n/*/assistant.mo` (MO, not PO); exposes the same `_`/`N_`/`C_`/`NC_` API as upstream, keeping plugin strings out of KOReader's core catalog.
 - `assistant_prompts.lua` — prompt templates.
 - Helpers: prefer `koutil.tableGetValue`, `koutil.tableDeepCopy`/`tableSize`/`tableEquals` over manual table loops; `util.orderedPairs(t)` for deterministic key order. Error handling returns `nil, err` (or `false, err` for HTTP); callers check the first return value.
-- Formatting: bold runs via `assistant_utils.bold_format(T(_("<b>Header:</b> %1"), val))`; message metadata via `assistant_utils.set_attr`/`get_attr` for fields that must not serialize into API bodies (`use_websearch`, `is_context`, `search_keywords`).
+- Formatting: bold runs via `assistant_text_utils.bold_format(T(_("<b>Header:</b> %1"), val))`; message metadata via `assistant_utils.set_attr`/`get_attr` for fields that must not serialize into API bodies (`use_websearch`, `is_context`, `search_keywords`).
 - **PLUGIN_DIR**: runtime constant `assistant_utils.PLUGIN_DIR` computed in `main.lua` from its own source path with `lfs` existence checks + `DataStorage`/install-dir fallbacks; used by gettext (`l10n`) and mdparser (`lib`). OTA target remains `DataStorage:getFullDataDir()/plugins` (writable).
 - **Dependencies**: none beyond KOReader's standard libraries; the optional `hoedown` native library has a pure-Lua fallback. License: GPL-3.0 (see `LICENSE`).
 
@@ -79,5 +82,8 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 | `assistant_config.lua` | Effective `CONFIGURATION` |
 | `configuration.sample.lua` | Config template — update this, not `configuration.lua` |
 | `assistant_gettext.lua` | MO shim (assistant domain) |
-| `assistant_utils.lua` | `httpRequest`, `PLUGIN_DIR`, extraction, notebook I/O |
+| `assistant_utils.lua` | Slim core: `PLUGIN_DIR`, attrs, JSON default |
+| `assistant_text_utils.lua` | Text helpers + single-message renderer |
+| `assistant_net_utils.lua` | HTTP/fetch, headers, error messages |
+| `assistant_doc_utils.lua` | Book/page extraction, online guard, field trim |
 | `assistant_updater.lua` | GitHub release check |

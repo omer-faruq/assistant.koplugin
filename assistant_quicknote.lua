@@ -2,6 +2,7 @@
 -- Module for quick notes functionality
 
 local Device = require("device")
+local DocUtils = require("assistant_doc_utils")
 local InputDialog = require("ui/widget/inputdialog")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
@@ -9,7 +10,6 @@ local logger = require("logger")
 local T = require("ffi/util").template
 local util = require("util")
 local _ = require("assistant_gettext")
-local ASUtils = require("assistant_utils")
 local Notebook = require("assistant_notebook")
 
 local QuickNote = {}
@@ -110,7 +110,7 @@ function QuickNote:saveNote(note_text, highlighted_text)
   local user_lbl = _("User:")
   local quick_note_lbl = _("Quick Note")
 
-  local page_info = ASUtils.getPageInfo(self.assistant.ui)
+  local page_info = DocUtils.getPageInfo(self.assistant.ui)
   local processed_note = note_text:gsub("\n", "\n\n")
 
   local processed_highlighted = ""

@@ -4,6 +4,7 @@ local T = require("ffi/util").template
 local strbuf = require("string.buffer")
 local json = require("rapidjson")
 local ASUtils = require("assistant_utils")
+local NetUtils = require("assistant_net_utils")
 local json_default = ASUtils.json_default
 
 -- ---------------------------------------------------------------------------
@@ -38,10 +39,10 @@ function serpapi:SearchKeywords(keywords, trap_widget)
     local q        = koutil.urlEncode(keywords)
     local url      = T("%1?engine=google_ai_mode&api_key=%2&q=%3", search_url, key, q)
 
-    local parsed, err = ASUtils.fetchJSON(url, nil, trap_widget, 45, 120)
+    local parsed, err = NetUtils.fetchJSON(url, nil, trap_widget, 45, 120)
     if not parsed then
-        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
-            return false, ASUtils.HANDLERCODE.CODE_CANCELLED
+        if err == NetUtils.HANDLERCODE.CODE_CANCELLED then
+            return false, NetUtils.HANDLERCODE.CODE_CANCELLED
         end
         return false, err
     end
@@ -72,10 +73,10 @@ function serpapi:AccoutInfo()
     local acc_url  = self.base_url .. "/account"
     local key      = self.api_key
     local url      = T("%1?api_key=%2", acc_url, key)
-    local parsed, err = ASUtils.fetchJSON(url, nil, "loading...", 30, 60)
+    local parsed, err = NetUtils.fetchJSON(url, nil, "loading...", 30, 60)
     if not parsed then
-        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
-            return false, ASUtils.HANDLERCODE.CODE_CANCELLED
+        if err == NetUtils.HANDLERCODE.CODE_CANCELLED then
+            return false, NetUtils.HANDLERCODE.CODE_CANCELLED
         end
         return false, err
     end
@@ -104,10 +105,10 @@ function tavily:SearchKeywords(keywords, trap_widget)
     }
     local requestBody = json.encode(requestBodyTable)
 
-    local parsed, err = ASUtils.fetchJSON(search_url, nil, trap_widget, 45, 120, requestBody)
+    local parsed, err = NetUtils.fetchJSON(search_url, nil, trap_widget, 45, 120, requestBody)
     if not parsed then
-        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
-            return false, ASUtils.HANDLERCODE.CODE_CANCELLED
+        if err == NetUtils.HANDLERCODE.CODE_CANCELLED then
+            return false, NetUtils.HANDLERCODE.CODE_CANCELLED
         end
         return false, err
     end
@@ -137,10 +138,10 @@ end
 function tavily:AccoutInfo()
     local acc_url  = self.base_url .. "/usage"
     local reqHeaders = { ["Authorization"]="Bearer " .. self.api_key }
-    local parsed, err = ASUtils.fetchJSON(acc_url, reqHeaders, "loading...", 30, 60)
+    local parsed, err = NetUtils.fetchJSON(acc_url, reqHeaders, "loading...", 30, 60)
     if not parsed then
-        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
-            return false, ASUtils.HANDLERCODE.CODE_CANCELLED
+        if err == NetUtils.HANDLERCODE.CODE_CANCELLED then
+            return false, NetUtils.HANDLERCODE.CODE_CANCELLED
         end
         return false, err
     end
@@ -160,10 +161,10 @@ function searxng:SearchKeywords(keywords, trap_widget)
     local q        = koutil.urlEncode(keywords)
     local url      = T("%1?q=%2&format=json", search_url, q)
 
-    local parsed, err = ASUtils.fetchJSON(url, nil, trap_widget, 45, 120)
+    local parsed, err = NetUtils.fetchJSON(url, nil, trap_widget, 45, 120)
     if not parsed then
-        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
-            return false, ASUtils.HANDLERCODE.CODE_CANCELLED
+        if err == NetUtils.HANDLERCODE.CODE_CANCELLED then
+            return false, NetUtils.HANDLERCODE.CODE_CANCELLED
         end
         return false, err
     end
@@ -206,10 +207,10 @@ function exaai:SearchKeywords(keywords, trap_widget)
     local requestBody = json.encode(requestBodyTable)
     local reqHeaders = { ["x-api-key"] = self.api_key }
 
-    local parsed, err = ASUtils.fetchJSON(search_url, reqHeaders, trap_widget, 45, 120, requestBody)
+    local parsed, err = NetUtils.fetchJSON(search_url, reqHeaders, trap_widget, 45, 120, requestBody)
     if not parsed then
-        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
-            return false, ASUtils.HANDLERCODE.CODE_CANCELLED
+        if err == NetUtils.HANDLERCODE.CODE_CANCELLED then
+            return false, NetUtils.HANDLERCODE.CODE_CANCELLED
         end
         return false, err
     end

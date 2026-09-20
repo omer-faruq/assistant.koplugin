@@ -13,7 +13,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
-local MsgFormat = require("assistant_message_format")
+local TextUtils = require("assistant_text_utils")
 
 local project_root = debug.getinfo(1).source:match("@(.*/)test/")
 
@@ -28,7 +28,7 @@ end
 local dialog_src = read_source("assistant_dialog.lua")
 local feature_src = read_source("assistant_featuredialog.lua")
 local dict_src = read_source("assistant_dictdialog.lua")
-local format_src = read_source("assistant_message_format.lua")
+local format_src = read_source("assistant_text_utils.lua")
 
 local function make_settings()
     return {
@@ -83,7 +83,7 @@ local tests = {
             { role = "user", content = TEMPLATE },
         }
         ASUtils.set_attr(history[2], "prompt_title", "Book Info")
-        local out = MsgFormat.formatSingleMessage(history, history[2], fmt_opts(2, settings, nil))
+        local out = TextUtils.formatSingleMessage(history, history[2], fmt_opts(2, settings, nil))
         assert.matches(out, '➤ ‹ Book Info ›', "display name must render")
         assert.notMatches(out, 'meticulous book summarizer', "template body must not leak")
         assert.notMatches(out, '45%.20', "template details must not leak")
@@ -97,7 +97,7 @@ local tests = {
         }
         ASUtils.set_attr(history[2], "user_input", "focus on chapter 3")
         ASUtils.set_attr(history[2], "prompt_title", "Recap")
-        local out = MsgFormat.formatSingleMessage(history, history[2], fmt_opts(2, settings, "Some Book Title"))
+        local out = TextUtils.formatSingleMessage(history, history[2], fmt_opts(2, settings, "Some Book Title"))
         assert.matches(out, '➤ ‹ Recap ›', "tag must win over the title param")
         assert.notMatches(out, 'Some Book Title', "title param must not render when tagged")
         assert.matches(out, 'focus on chapter 3', "user_input must still append")
@@ -110,9 +110,9 @@ local tests = {
             { role = "system", content = "system" },
             { role = "user", content = "Why does the Ring corrupt its bearer?" },
         }
-        local out = MsgFormat.formatSingleMessage(history, history[2], fmt_opts(2, settings, nil))
+        local out = TextUtils.formatSingleMessage(history, history[2], fmt_opts(2, settings, nil))
         assert.matches(out, 'Why does the Ring corrupt its bearer%?', "free question text must render fully")
-        local titled = MsgFormat.formatSingleMessage(history, history[2], fmt_opts(2, settings, "Some Book Title"))
+        local titled = TextUtils.formatSingleMessage(history, history[2], fmt_opts(2, settings, "Some Book Title"))
         assert.matches(titled, '➤ ‹ Some Book Title ›', "title param path must keep working")
         assert.notMatches(titled, 'Why does the Ring', "titled path shows the title line, as before")
     end),

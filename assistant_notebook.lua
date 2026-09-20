@@ -1,4 +1,5 @@
 local FFIUtil = require("ffi/util")
+local TextUtils = require("assistant_text_utils")
 local T = FFIUtil.template
 local lfs = require("libs/libkoreader-lfs")
 local util = require("util")
@@ -8,7 +9,6 @@ local InfoMessage = require("ui/widget/infomessage")
 local InputDialog = require("ui/widget/inputdialog")
 local Menu = require("ui/widget/menu")
 local _ = require("assistant_gettext")
-local ASUtils = require("assistant_utils")
 local SharedCSS = require("assistant_css")
 
 local M = {}
@@ -409,7 +409,7 @@ function M.getBookModeNotebookPath(assistant)
             if not util.pathExists(default_folder) then
                 UIManager:show(InfoMessage:new{
                     icon = "notice-warning",
-                    text = ASUtils.bold_format(
+                    text = TextUtils.bold_format(
                         T(_("<b>Cannot access default folder for logs: %1</b>\nUsing original location."), default_folder)
                     ),
                     timeout = 5,

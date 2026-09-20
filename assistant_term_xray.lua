@@ -6,7 +6,7 @@
 -- tunable through `opts`.
 
 local util = require("util")
-local ASUtils = require("assistant_utils")
+local TextUtils = require("assistant_text_utils")
 
 local TermXray = {}
 
@@ -106,7 +106,7 @@ function TermXray.find_term_indices(sentences, term)
         return indices
     end
 
-    local stripped = ASUtils.strip_selection_punctuation(term)
+    local stripped = TextUtils.strip_selection_punctuation(term)
     if stripped and stripped ~= term then
         indices = scan(TermXray.normalize_for_match(stripped))
     end
@@ -217,7 +217,7 @@ function TermXray.clip_excerpt(text, max_len, side)
     if #text <= max_len then return text end
 
     if side == "head" then
-        local clipped = ASUtils.truncateToHeadUtf8Safe(text, max_len)
+        local clipped = TextUtils.truncateToHeadUtf8Safe(text, max_len)
         if clipped == "" then return clipped end
         local last = clipped:byte(#clipped)
         local after = text:byte(#clipped + 1)
@@ -231,7 +231,7 @@ function TermXray.clip_excerpt(text, max_len, side)
         return clipped
     end
 
-    local clipped = ASUtils.truncateToTailUtf8Safe(text, max_len)
+    local clipped = TextUtils.truncateToTailUtf8Safe(text, max_len)
     if clipped == "" then return clipped end
     local first = clipped:byte(1)
     local before = text:byte(#text - #clipped)

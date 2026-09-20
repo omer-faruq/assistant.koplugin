@@ -12,9 +12,72 @@ local ChatGPTViewer = require("assistant_viewer")
 local assistant_prompts = require("assistant_prompts").assistant_prompts
 local Prompts = require("assistant_prompts")
 local ASUtils = require("assistant_utils")
-local MsgFormat = require("assistant_message_format")
-local extractBookTextForAnalysis = ASUtils.extractBookTextForAnalysis
-local extractHighlightsNotesAndNotebook = ASUtils.extractHighlightsNotesAndNotebook
+local TextUtils = require("assistant_text_utils")
+local DocUtils = require("assistant_doc_utils")
+local json = require("rapidjson")
+local strbuf = require("string.buffer")
+local extractBookTextForAnalysis = DocUtils.extractBookTextForAnalysis
+
+local function extractHighlightsNotesAndNotebook(assistant, include_notebook)
+    local ui = assistant and assistant.ui
+    local highlights_and_notes = ""
+    if ui and ui.annotation and ui.annotation.annotations then
+        local buf = strbuf.new()
+        buf:reset()
+        for _i, annotation in ipairs(ui.annotation.annotations) do
+            if annotation.text and annotation.text ~= "" then
+                buf:put("Highlight: ", annotation.text, "\n")
+            end
+            if annotation.note and annotation.note ~= "" then
+                buf:put("Note: ", annotation.note, "\n")
+            end
+            if annotation.chapter then
+                buf:put("Chapter: ", annotation.chapter, "\n")
+            end
+            if annotation.pageno then
+                buf:put("Page: ", annotation.pageno, "\n")
+            end
+            buf:put("\n")
+        end
+        highlights_and_notes = buf:get()
+    end
+
+    local notebook_content = ""
+    if include_notebook then
+      pcall(function()
+          local notebookfile = ui.bookinfo:getNotebookFile(ui.doc_settings)
+          if notebookfile then
+              local file = io.open(notebookfile, "r")
+              if file then
+                  local content = file:read("*all")
+                  file:close()
+                  local success, data = pcall(json.decode, content)
+                  if success and data then
+                      notebook_content = "Notebook Data:\n" .. json.encode(data)
+                  else
+                      notebook_content = "Notebook Content (raw):\n" .. content
+                  end
+              end
+          end
+      end)
+    end
+
+    local combined = highlights_and_notes
+    if notebook_content ~= "" then
+        if combined ~= "" then
+            combined = combined .. "\n--- Notebook Content ---\n" .. notebook_content
+        else
+            combined = notebook_content
+        end
+    end
+
+    local max_text_length_for_analysis = assistant.config:getFeature("max_text_length_for_analysis", 100000)
+    if #combined > max_text_length_for_analysis then
+        combined = TextUtils.truncateToTailUtf8Safe(combined, max_text_length_for_analysis)
+    end
+
+    return combined
+end
 
 local function showFeatureDialog(assistant, feature_type, title, author, progress_percent, message_history, notebook_path)
     local Querier = assistant.querier
@@ -100,7 +163,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         if not feature_config then
             UIManager:show(InfoMessage:new{
                 icon = "notice-warning",
-                text = ASUtils.bold_format(
+                text = TextUtils.bold_format(
                     T(_("<b>Unknown feature type:</b> %1"), tostring(feature_type))
                 ),
             })
@@ -210,7 +273,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         local message = message_history[idx]
         local is_context = ASUtils.get_attr(message, "is_context")
         if not is_context then
-          table.insert(result_parts, MsgFormat.formatSingleMessage(message_history, message, {
+          table.insert(result_parts, TextUtils.formatSingleMessage(message_history, message, {
             title = nil,
             msg_idx = idx,
             settings = assistant.settings,
@@ -282,7 +345,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         end
 
         viewer:trimMessageHistory()
-        ASUtils.runWhenOnlineFast(function()
+        DocUtils.runWhenOnlineFast(function()
           Trapper:wrap(function()
             local answer, err = Querier:query(message_history, viewer_title ~= "" and viewer_title or feature_title)
             
@@ -305,13 +368,13 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
             -- formatter (suggestions resolved from the message attrs); the
             -- new answer is processed exactly once.
             local additional_text = "---\n\n"
-                .. MsgFormat.formatSingleMessage(message_history, last_user_message, {
+                .. TextUtils.formatSingleMessage(message_history, last_user_message, {
                   title = nil,
                   msg_idx = #message_history - 1,
                   settings = assistant.settings,
                   default_config = feature_prompt_config,
                 })
-                .. MsgFormat.formatSingleMessage(message_history, last_assistant_message, {
+                .. TextUtils.formatSingleMessage(message_history, last_assistant_message, {
                   title = nil,
                   msg_idx = #message_history,
                   settings = assistant.settings,

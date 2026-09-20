@@ -1,9 +1,10 @@
 local BaseHandler = require("api_handlers.base")
+local NetUtils = require("assistant_net_utils")
+local TextUtils = require("assistant_text_utils")
 local json = require("rapidjson")
 local koutil = require("util")
 local logger = require("logger")
 local ToolExecutor = require("assistant_tool_executor")
-local ASUtils = require("assistant_utils")
 local UIManager = require("ui/uimanager")
 local _ = require("assistant_gettext")
 local InfoMessage = require("ui/widget/infomessage")
@@ -46,10 +47,10 @@ function AnthropicHandler:FetchModels()
 
     local model_url = self.base_url .. "/models"
     local infomsg = InfoMessage:new{
-        text = ASUtils.bold_format(_("<b>Fetching models...</b>")),
+        text = TextUtils.bold_format(_("<b>Fetching models...</b>")),
     }
     UIManager:show(infomsg)
-    local models, err = ASUtils.fetchJSON(model_url, {
+    local models, err = NetUtils.fetchJSON(model_url, {
         ["Content-Type"]  = "application/json",
         ["anthropic-version"] = "2023-06-01",
         ["x-api-key"]         = self.api_key,

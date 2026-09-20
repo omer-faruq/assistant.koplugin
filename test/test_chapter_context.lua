@@ -1,12 +1,23 @@
 -- test_chapter_context.lua
--- Tests for the chapter-scoped context helpers in assistant_utils.lua:
--- getCurrentChapterRange and extractCurrentChapterText.
+-- Tests for the chapter-scoped context helpers in assistant_doc_utils.lua:
+-- getCurrentChapterRange and extractCurrentChapterText (plus the internal
+-- getDocumentEndXPointer ladder).
 local helper = require("test.helper")
 local assert = helper.assert
-local ASUtils = helper.ASUtils
+local DocUtils = helper.DocUtils
 
 local function test(name, fn)
     return { name = name, fn = fn }
+end
+
+local project_root = debug.getinfo(1).source:match("@(.*/)test/")
+
+local function read_source(name)
+    local f = io.open(project_root .. name, "r")
+    if not f then return nil end
+    local src = f:read("*all")
+    f:close()
+    return src
 end
 
 -- ---------------------------------------------------------------------------
@@ -134,32 +145,60 @@ end
 
 local tests = {
 
+    test("shape: doc_utils owns the chapter helpers, dialog delegates", function()
+        assert.notNil(project_root, "could not locate project root")
+        local lib = read_source("assistant_doc_utils.lua")
+        assert.notNil(lib, "could not read assistant_doc_utils.lua")
+        assert.matches(lib, "function M%.getCurrentChapterRange",
+            "doc_utils must export getCurrentChapterRange")
+        assert.matches(lib, "function M%.extractCurrentChapterText",
+            "doc_utils must export extractCurrentChapterText")
+        assert.matches(lib, "function M%.getPageRangeText",
+            "doc_utils must export getPageRangeText")
+        assert.matches(lib, "function M%.assemblePageContext",
+            "doc_utils must export assemblePageContext")
+        assert.matches(lib, "local function getDocumentEndXPointer",
+            "doc_utils must keep the end-xpointer ladder local")
+        local dlg = read_source("assistant_dialog.lua")
+        assert.notNil(dlg, "could not read assistant_dialog.lua")
+        assert.notMatches(dlg, "local function getCurrentChapterRange",
+            "no local copy may remain in the dialog")
+        assert.notMatches(dlg, "local function extractCurrentChapterText",
+            "no local copy may remain in the dialog")
+        assert.notMatches(dlg, "local function getPageRangeText",
+            "no local copy may remain in the dialog")
+        assert.notMatches(dlg, "local function assemblePageContext",
+            "no local copy may remain in the dialog")
+        assert.matches(dlg, "DocUtils%.extractCurrentChapterText",
+            "dialog must delegate chapter extraction to DocUtils")
+    end),
+
     -- =========================================================================
     -- getCurrentChapterRange: visibility gating (nil cases)
     -- =========================================================================
 
     test("range: nil when ui is nil", function()
-        assert.equal(ASUtils.getCurrentChapterRange(nil), nil)
+        assert.equal(DocUtils.getCurrentChapterRange(nil), nil)
     end),
 
     test("range: nil when document missing", function()
-        assert.equal(ASUtils.getCurrentChapterRange({ toc = makeToc(SAMPLE_TOC) }), nil)
+        assert.equal(DocUtils.getCurrentChapterRange({ toc = makeToc(SAMPLE_TOC) }), nil)
     end),
 
     test("range: nil when toc module missing", function()
         local ui = makeReflowableUI(SAMPLE_TOC)
         ui.toc = nil
-        assert.equal(ASUtils.getCurrentChapterRange(ui), nil)
+        assert.equal(DocUtils.getCurrentChapterRange(ui), nil)
     end),
 
     test("range: nil when TOC is empty after fillToc", function()
         local ui = makeReflowableUI(SAMPLE_TOC, { toc_opts = { empty_on_fill = true } })
-        assert.equal(ASUtils.getCurrentChapterRange(ui), nil)
+        assert.equal(DocUtils.getCurrentChapterRange(ui), nil)
     end),
 
     test("range: nil when user is before the first TOC entry (outside TOC)", function()
         local ui = makeReflowableUI(SAMPLE_TOC, { page = 3 })
-        assert.equal(ASUtils.getCurrentChapterRange(ui), nil)
+        assert.equal(DocUtils.getCurrentChapterRange(ui), nil)
     end),
 
     test("range: nil when toc index points past current page (defensive)", function()
@@ -169,7 +208,7 @@ local tests = {
             page = 3,
             toc_opts = { always_index_one = true },
         })
-        assert.equal(ASUtils.getCurrentChapterRange(ui), nil)
+        assert.equal(DocUtils.getCurrentChapterRange(ui), nil)
     end),
 
     -- =========================================================================
@@ -178,7 +217,7 @@ local tests = {
 
     test("range: reflowable page inside a chapter", function()
         local ui = makeReflowableUI(SAMPLE_TOC, { page = 55 })
-        local range = ASUtils.getCurrentChapterRange(ui)
+        local range = DocUtils.getCurrentChapterRange(ui)
         assert.notNil(range)
         assert.equal(range.start_page, 50)
         assert.equal(range.end_page, 79)
@@ -190,7 +229,7 @@ local tests = {
 
     test("range: reflowable exactly on a chapter start page", function()
         local ui = makeReflowableUI(SAMPLE_TOC, { page = 50 })
-        local range = ASUtils.getCurrentChapterRange(ui)
+        local range = DocUtils.getCurrentChapterRange(ui)
         assert.notNil(range)
         assert.equal(range.start_page, 50)
         assert.equal(range.end_page, 79)
@@ -200,7 +239,7 @@ local tests = {
 
     test("range: last chapter ends at page count with nil end_xp", function()
         local ui = makeReflowableUI(SAMPLE_TOC, { page = 90, page_count = 100 })
-        local range = ASUtils.getCurrentChapterRange(ui)
+        local range = DocUtils.getCurrentChapterRange(ui)
         assert.notNil(range)
         assert.equal(range.start_page, 80)
         assert.equal(range.end_page, 100)
@@ -211,7 +250,7 @@ local tests = {
 
     test("range: first chapter starts at first entry", function()
         local ui = makeReflowableUI(SAMPLE_TOC, { page = 10 })
-        local range = ASUtils.getCurrentChapterRange(ui)
+        local range = DocUtils.getCurrentChapterRange(ui)
         assert.notNil(range)
         assert.equal(range.start_page, 10)
         assert.equal(range.end_page, 49)
@@ -219,7 +258,7 @@ local tests = {
 
     test("range: paged document uses view.state.page", function()
         local ui = makePagedUI(SAMPLE_TOC, { page = 55 })
-        local range = ASUtils.getCurrentChapterRange(ui)
+        local range = DocUtils.getCurrentChapterRange(ui)
         assert.notNil(range)
         assert.equal(range.start_page, 50)
         assert.equal(range.end_page, 79)
@@ -232,7 +271,7 @@ local tests = {
 
     test("extract: reflowable uses entry xpointers and restores position", function()
         local ui, calls = makeReflowableUI(SAMPLE_TOC, { page = 55 })
-        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
+        local text = DocUtils.extractCurrentChapterText(mockAssistant(ui))
         assert.equal(text, "text:xp_c2->xp_c3")
         assert.equal(#calls.extractions, 1)
         assert.equal(calls.extractions[1].xp0, "xp_c2")
@@ -248,7 +287,7 @@ local tests = {
             { page = 50, title = "Chapter Two", depth = 1 },
         }
         local ui = makeReflowableUI(entries, { page = 20 })
-        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
+        local text = DocUtils.extractCurrentChapterText(mockAssistant(ui))
         -- end xpointer = start of next chapter's page: includes page 49 fully
         assert.equal(text, "text:xp_p10->xp_p50")
     end),
@@ -260,7 +299,7 @@ local tests = {
         -- Minimal mock: no isXPointerInDocument/compareXPointers/gotoPos,
         -- so the end-of-document ladder degrades to the last page xpointer.
         local ui = makeReflowableUI(entries, { page = 90, page_count = 100 })
-        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
+        local text = DocUtils.extractCurrentChapterText(mockAssistant(ui))
         assert.equal(text, "text:xp_p10->xp_p100")
     end),
 
@@ -278,7 +317,7 @@ local tests = {
                 return 1
             end,
         })
-        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
+        local text = DocUtils.extractCurrentChapterText(mockAssistant(ui))
         -- xpointer of the page after the last is accepted as document end
         assert.equal(text, "text:xp_p10->xp_p101")
         -- view position restored (ladder's own restore + extraction restore)
@@ -289,7 +328,7 @@ local tests = {
 
     test("extract: nil when chapter range unavailable", function()
         local ui = makeReflowableUI(SAMPLE_TOC, { page = 3 })
-        assert.equal(ASUtils.extractCurrentChapterText(mockAssistant(ui)), nil)
+        assert.equal(DocUtils.extractCurrentChapterText(mockAssistant(ui)), nil)
     end),
 
     test("extract: extraction error returns nil but still restores position", function()
@@ -297,7 +336,7 @@ local tests = {
             page = 55,
             fail_extraction = true,
         })
-        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
+        local text = DocUtils.extractCurrentChapterText(mockAssistant(ui))
         assert.equal(text, nil)
         assert.equal(#calls.restores, 1)
         assert.equal(calls.restores[1], "cur_xp")
@@ -306,7 +345,7 @@ local tests = {
     test("extract: tail truncation honors max_text_length_for_analysis", function()
         local big = string.rep("x", 5000)
         local ui = makeReflowableUI(SAMPLE_TOC, { page = 55, text = big })
-        local text = ASUtils.extractCurrentChapterText(
+        local text = DocUtils.extractCurrentChapterText(
             mockAssistant({ max_text_length_for_analysis = 1000 }, ui))
         assert.notNil(text)
         assert.equal(#text, 1000)
@@ -316,7 +355,7 @@ local tests = {
 
     test("extract: short chapter text is returned unmodified", function()
         local ui = makeReflowableUI(SAMPLE_TOC, { page = 55, text = "short chapter" })
-        local text = ASUtils.extractCurrentChapterText(
+        local text = DocUtils.extractCurrentChapterText(
             mockAssistant({ max_text_length_for_analysis = 1000 }, ui))
         assert.equal(text, "short chapter")
     end),
@@ -327,7 +366,7 @@ local tests = {
 
     test("extract: paged document concatenates chapter pages", function()
         local ui = makePagedUI(SAMPLE_TOC, { page = 55 })
-        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
+        local text = DocUtils.extractCurrentChapterText(mockAssistant(ui))
         assert.matches(text, "page50")
         assert.matches(text, "page79")
         assert.notMatches(text, "page49")
@@ -341,18 +380,18 @@ local tests = {
                 return { { { word = "Hello" }, { word = "page" }, { word = tostring(page) } } }
             end,
         })
-        local text = ASUtils.extractCurrentChapterText(mockAssistant(ui))
+        local text = DocUtils.extractCurrentChapterText(mockAssistant(ui))
         assert.matches(text, "Hello page 50")
         assert.matches(text, "Hello page 51")
     end),
 
     test("extract: paged document tail truncation", function()
         local ui = makePagedUI(SAMPLE_TOC, { page = 55 })
-        local text = ASUtils.extractCurrentChapterText(
+        local text = DocUtils.extractCurrentChapterText(
             mockAssistant({ max_text_length_for_analysis = 10 }, ui))
         assert.notNil(text)
         assert.equal(#text, 10)
     end),
 }
 
-return helper.runTests("assistant_utils.lua chapter context", tests)
+return helper.runTests("chapter context (doc_utils)", tests)

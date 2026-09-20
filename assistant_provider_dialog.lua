@@ -3,6 +3,8 @@ Provider selection dialog ("Providers and Models").
 ]]
 
 local Trapper = require("ui/trapper")
+local NetUtils = require("assistant_net_utils")
+local DocUtils = require("assistant_doc_utils")
 local koutil = require("util")
 local Blitbuffer = require("ffi/blitbuffer")
 local CenterContainer = require("ui/widget/container/centercontainer")
@@ -19,7 +21,6 @@ local VerticalGroup = require("ui/widget/verticalgroup")
 local _ = require("assistant_gettext")
 local Screen = require("device").screen
 local ffiutil = require("ffi/util")
-local ASUtils = require("assistant_utils")
 local Registry = require("assistant_provider_registry")
 
 local ProviderDialog = InputDialog:extend{
@@ -236,11 +237,11 @@ function ProviderDialog:onBrowseModel()
         return
     end
 
-    ASUtils.runWhenOnlineFast(function()
+    DocUtils.runWhenOnlineFast(function()
         Trapper:wrap(function()
             local handler = self.assistant.querier.handler
             local models, err = handler:FetchModels()
-            if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
+            if err == NetUtils.HANDLERCODE.CODE_CANCELLED then
                 return  -- user dismissed the InfoMessage; keep settings window
             end
             if err or not models or #models == 0 then

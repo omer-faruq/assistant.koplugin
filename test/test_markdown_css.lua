@@ -12,6 +12,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
+local TextUtils = helper.TextUtils
 
 -- assistant_mdparser probes Device:isDesktop/isEmulator/isAndroid at load;
 -- the headless stub only carries screen metrics, so add the predicates.
@@ -44,11 +45,11 @@ local SAMPLE = read_source("test/markdown_css_sample.md")
 
 -- Strip helper for the viewer pipeline: titled div block first, then the
 -- bare fence the querier stores; think-tag handling is the real
--- ASUtils.strip_think_tags (assistant_utils.lua, single source of truth).
+-- TextUtils.strip_think_tags (assistant_utils.lua, single source of truth).
 local function strip_reasoning(text)
     text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
     text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
-    return ASUtils.strip_think_tags(text, nil, false)
+    return TextUtils.strip_think_tags(text, nil, false)
 end
 
 -- Inline mirror of the puremd unwrap (assistant_viewer.lua _renderMarkdown):

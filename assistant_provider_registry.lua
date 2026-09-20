@@ -10,6 +10,9 @@
 -- File providers are imported as-is with source="file", immutable=true injected.
 
 local json = require("rapidjson")
+local NetUtils = require("assistant_net_utils")
+local DocUtils = require("assistant_doc_utils")
+local TextUtils = require("assistant_text_utils")
 local logger = require("logger")
 local koutil = require("util")
 local _ = require("assistant_gettext")
@@ -33,7 +36,6 @@ local Device = require("device")
 local Screen = Device.screen
 local MultiInputDialog = require("ui/widget/multiinputdialog")
 local Trapper = require("ui/trapper")
-local ASUtils = require("assistant_utils")
 local T = require("ffi/util").template
 
 local Registry = {}
@@ -86,16 +88,16 @@ local function formatTestReport(handler_name, base_url, model, report)
         or report.raw ~= "" and report.raw
         or _("(empty response body)")
     return table.concat({
-            ASUtils.bold_format(_("<b>API returned an error</b>")),
+            TextUtils.bold_format(_("<b>API returned an error</b>")),
             "",
-            ASUtils.bold_format(_("<b>Parameters</b>")),
+            TextUtils.bold_format(_("<b>Parameters</b>")),
             T(_("Protocol: %1"), handler_name),
             T(_("URL: %1"), base_url),
             T(_("Model: %1"), model),
             "",
-            ASUtils.bold_format(T(_("<b>Request</b> - POST %1"), report.url)),
+            TextUtils.bold_format(T(_("<b>Request</b> - POST %1"), report.url)),
             "",
-            ASUtils.bold_format(T(_("<b>Response</b> - HTTP %1"), report.status)),
+            TextUtils.bold_format(T(_("<b>Response</b> - HTTP %1"), report.status)),
             response_text,
         }, "\n")
 end
@@ -125,7 +127,7 @@ Registry.isConnectionTestOk = isConnectionTestOk
 --- @param api_key string    provider API key
 --- @param model string      model id to test against
 function Registry.testConnection(handler_name, base_url, api_key, model)
-    ASUtils.runWhenOnlineFast(function()
+    DocUtils.runWhenOnlineFast(function()
         Trapper:wrap(function()
             local handler_module = require("api_handlers." .. handler_name)
             local tester = handler_module:new{
@@ -137,7 +139,7 @@ function Registry.testConnection(handler_name, base_url, api_key, model)
             -- testRequest() owns the dismissable "Testing connection..."
             -- InfoMessage (shows the exact POST endpoint, tap to cancel).
             local report, err = tester:Test()
-            if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
+            if err == NetUtils.HANDLERCODE.CODE_CANCELLED then
                 return  -- user dismissed the InfoMessage
             end
             if not report then
@@ -348,7 +350,7 @@ function Registry.validate(record)
     end
 
     -- base_url
-    local ok, err = ASUtils.validate_credential_field(record, "base_url", {
+    local ok, err = DocUtils.validate_credential_field(record, "base_url", {
         required = _("Base URL is required."),
         scheme = _("Base URL must start with http:// or https://"),
         whitespace = _("Base URL must not contain spaces."),
@@ -358,7 +360,7 @@ function Registry.validate(record)
     end
 
     -- api_key
-    ok, err = ASUtils.validate_credential_field(record, "api_key", {
+    ok, err = DocUtils.validate_credential_field(record, "api_key", {
         required = _("API key is required."),
         whitespace = _("API key must not contain spaces or line breaks."),
     })
@@ -829,7 +831,7 @@ function Registry.showParametersDialog(assistant, provider_id)
             margin = Size.margin.small,
             bordersize = 0,
             TextBoxWidget:new{
-                text = ASUtils.bold_format(_("Generally do <b>NOT</b> select more than one - pick a parameter that matches your model and platform. A wrong parameter may cause API errors. \n\nSelected value overrides additional_parameters of configuration.")),
+                text = TextUtils.bold_format(_("Generally do <b>NOT</b> select more than one - pick a parameter that matches your model and platform. A wrong parameter may cause API errors. \n\nSelected value overrides additional_parameters of configuration.")),
                 face = Font:getFace("xx_smallinfofont"),
                 width = inner_width,
             },
@@ -959,7 +961,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
     local dialog_ref = {}  -- forward ref for enabled_func closure in buttons
     local dialog
     local function readFields()
-        return ASUtils.trimDialogFields(dialog)
+        return DocUtils.trimDialogFields(dialog)
     end
     local dialog_buttons = {{
         {
@@ -987,11 +989,11 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                 -- auth headers and post-processing itself, and runs the
                 -- request behind a dismissable InfoMessage so a stalled
                 -- network can be cancelled by tapping.
-                ASUtils.runWhenOnlineFast(function()
+                DocUtils.runWhenOnlineFast(function()
                     Trapper:wrap(function()
                         local mp = require("assistant_model_picker")
                         local model_list, err = mp.fetchModels(handler, url, api_key)
-                        if err == ASUtils.HANDLERCODE.CODE_CANCELLED then
+                        if err == NetUtils.HANDLERCODE.CODE_CANCELLED then
                             return  -- user dismissed the InfoMessage
                         end
                         if err or not model_list or #model_list == 0 then

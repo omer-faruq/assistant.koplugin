@@ -84,7 +84,7 @@ local tests = {
     end),
 
     test("SerpAPI: cancelled by user", function()
-        local CODE_CANCELLED = helper.ASUtils.HANDLERCODE.CODE_CANCELLED
+        local CODE_CANCELLED = helper.NetUtils.HANDLERCODE.CODE_CANCELLED
         helper.mockFetchJSON({
             { parsed = nil, err = CODE_CANCELLED },
         })
@@ -149,7 +149,7 @@ local tests = {
     end),
 
     test("Tavily: cancelled by user", function()
-        local CODE_CANCELLED = helper.ASUtils.HANDLERCODE.CODE_CANCELLED
+        local CODE_CANCELLED = helper.NetUtils.HANDLERCODE.CODE_CANCELLED
         helper.mockFetchJSON({
             { parsed = nil, err = CODE_CANCELLED },
         })
@@ -266,7 +266,7 @@ local tests = {
     end),
 
     test("Exa.ai: cancelled by user", function()
-        local CODE_CANCELLED = helper.ASUtils.HANDLERCODE.CODE_CANCELLED
+        local CODE_CANCELLED = helper.NetUtils.HANDLERCODE.CODE_CANCELLED
         helper.mockFetchJSON({
             { parsed = nil, err = CODE_CANCELLED },
         })

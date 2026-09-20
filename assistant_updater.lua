@@ -1,4 +1,6 @@
 local TrapWidget  = require("ui/widget/trapwidget")
+local NetUtils = require("assistant_net_utils")
+local TextUtils = require("assistant_text_utils")
 local Notification = require("ui/widget/notification")
 local InfoMessage = require("ui/widget/infomessage")
 local UIManager = require("ui/uimanager")
@@ -9,7 +11,6 @@ local _ = require("assistant_gettext")
 local FFIUtil = require("ffi/util")
 local T = FFIUtil.template
 local koutil = require("util")
-local ASUtils = require("assistant_utils")
 
 -- Variadic path join. Uses FFIUtil.joinPath so we don't sprinkle "/" literals
 -- and get the right separator handling for free.
@@ -201,7 +202,7 @@ local function checkForUpdates(assistant)
   local update_url = assistant.config:getFeature("update_check_url")
     or "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest"
 
-  local parsed_data, err = ASUtils.fetchJSON(update_url,
+  local parsed_data, err = NetUtils.fetchJSON(update_url,
       { ["Accept"] = "application/vnd.github.v3+json" },
       _("Checking for updates..."))
 
@@ -264,7 +265,7 @@ local function otaUpgrade(assistant, version)
   -- Phase 1: Download the archive (dismissable by user)
   local download_msg = InfoMessage:new{
     face = Font:getFace("xx_smallinfofont"),
-      text = ASUtils.bold_format(
+      text = TextUtils.bold_format(
       T(_("<b>Downloading ...</b>\n<b>Github: </b>%1\n<b>Repo: </b>%2\n<b>Branch/Tag: </b>%3"),
         GITHUB_BASE, GITHUB_REPO, version)
     ),
@@ -343,7 +344,7 @@ local function otaUpgrade(assistant, version)
 
   -- Phase 2: Extract and install (NOT dismissable)
   local extract_msg = InfoMessage:new{
-    text = ASUtils.bold_format(
+    text = TextUtils.bold_format(
           T(_("<b>Installing %1...</b>"), version)
       ),
   }

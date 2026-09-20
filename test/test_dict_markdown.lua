@@ -2,7 +2,7 @@
 -- Guards the dictionary/term_xray result shape:
 --   * the excerpt header (`... %1 **%2** %3 ...`) is emitted once, then the
 --     history past the system prompt renders through
---     assistant_message_format (Search/Thought/Response divs)
+--     assistant_text_utils (Search/Thought/Response divs)
 --   * the answer is appended to the history with this prompt's suggestion
 --     switch pinned, so no ad-hoc suggestion pass exists (both dict and
 --     term_xray configs keep suggestions off)
@@ -13,7 +13,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
-local MsgFormat = require("assistant_message_format")
+local TextUtils = require("assistant_text_utils")
 
 local project_root = debug.getinfo(1).source:match("@(.*/)test/")
 
@@ -54,11 +54,11 @@ local NO_SUGGEST = { show_suggestions = false }
 
 -- Strip helper for the viewer pipeline: titled div block first, then the
 -- bare fence the querier stores; think-tag handling is the real
--- ASUtils.strip_think_tags (assistant_utils.lua, single source of truth).
+-- TextUtils.strip_think_tags (assistant_utils.lua, single source of truth).
 local function strip_reasoning(text)
     text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
     text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
-    return ASUtils.strip_think_tags(text, nil, false)
+    return TextUtils.strip_think_tags(text, nil, false)
 end
 
 -- Header-plus-history assembly exercised by the tests below; the
@@ -68,7 +68,7 @@ local function build_result(history, excerpt, settings, default_config)
     for idx = 2, #history do
         local message = history[idx]
         if not ASUtils.get_attr(message, "is_context") then
-            table.insert(parts, MsgFormat.formatSingleMessage(history, message, fmt_opts(history, idx, settings, default_config)))
+            table.insert(parts, TextUtils.formatSingleMessage(history, message, fmt_opts(history, idx, settings, default_config)))
         end
     end
     return table.concat(parts)
@@ -80,7 +80,7 @@ end
 
 local tests = {
     test("shared emitter: dict requires it, header msgid intact, no fork", function()
-        assert.matches(dict_src, 'require%("assistant_message_format"%)', "dict must require the shared module")
+        assert.matches(dict_src, 'require%("assistant_text_utils"%)', "dict must require the shared module")
         assert.notMatches(dict_src, '<div class="assistant%-label">%%1', "dict must not copy div templates")
         assert.notMatches(dict_src, 'local function formatSingleMessage', "dict must not keep a local fork")
         assert.matches(dict_src, '%.%.%. %%1 %*%*%%2%*%* %%3 %.%.%.\\n\\n%%4', "excerpt header msgid must stay intact")

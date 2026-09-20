@@ -17,8 +17,46 @@ local ButtonDialog = require("ui/widget/buttondialog")
 local MultiInputDialog = require("ui/widget/multiinputdialog")
 local ffiutil = require("ffi/util")
 local ToolExecutor = require("assistant_tool_executor")
-local ASUtils = require("assistant_utils")
+local TextUtils = require("assistant_text_utils")
+local DocUtils = require("assistant_doc_utils")
 local Notebook = require("assistant_notebook")
+
+-- Route a highlight to the AI Dictionary or the full Translate action.
+-- Short selections get the dictionary; longer ones get translation.
+-- Script-aware thresholds (dc7a373, issues #207/#208): the old word count used
+-- util.splitToWords, whose greedy multi-byte pattern collapses a CJK run into a
+-- single token, so a whole CJK sentence counted as one "word" and was routed to
+-- the dictionary. CJK is therefore measured in characters instead.
+local CJK_LOOKUP_MAX_CHARS = 8
+local WORD_LOOKUP_MAX_WORDS = 5
+
+local function lookup_mode_for_selection(text)
+  if type(text) ~= "string" then return "translate" end
+  local trimmed = text:match("^%s*(.-)%s*$")
+  if trimmed == "" then return "translate" end
+
+  if koutil.hasCJKChar(trimmed) then
+    local count = 0
+    for char in trimmed:gmatch(koutil.UTF8_CHAR_PATTERN) do
+      count = count + 1
+    end
+    return count <= CJK_LOOKUP_MAX_CHARS and "dictionary" or "translate"
+  end
+
+  local word_count = select(2, trimmed:gsub("%S+", ""))
+  return word_count <= WORD_LOOKUP_MAX_WORDS and "dictionary" or "translate"
+end
+
+-- Resolve where a selection should go once the lookup mode is known.
+-- choice = stored user setting: nil = never asked, true = smart lookup
+-- enabled, false = disabled. Short ("dictionary") selections may prompt the
+-- explainer when the user has never chosen; once chosen, never asked again.
+-- Long ("translate") selections never prompt.
+local function resolve_translate_route(choice, mode)
+  if mode ~= "dictionary" then return "translate" end
+  if choice == nil then return "ask" end
+  return choice and "dictionary" or "translate"
+end
 
 local _ = require("assistant_gettext")
 local N_ = _.ngettext
@@ -229,7 +267,7 @@ function Assistant:addToMainMenu(menu_items)
                     notebook_dialog = ConfirmBox:new{
                       icon = "appbar.pageview",
                       face = Font:getFace("smallinfofont"),
-                      text = ASUtils.bold_format(
+                      text = TextUtils.bold_format(
                           T(_("<b>AI Notes file:</b>\n\n%1"), notebookfile)
                       ),
                       ok_text = _("View"),
@@ -676,7 +714,7 @@ function BookLevelCustomPrompts(assistant)
           Prompts.isWebSearchEnabled(assistant.settings)),
         callback = function()
           if not assistant:isConfigured() then return end
-          ASUtils.runWhenOnlineFast(function()
+          DocUtils.runWhenOnlineFast(function()
             local book = getDocumentInfo(assistant.ui.document)
             local showFeatureDialog = require("assistant_featuredialog")
             Trapper:wrap(function()
@@ -781,7 +819,7 @@ function Assistant:_showAddWebSearchDialog(tool_key)
     local dialog_ref = {}
     local dialog
     local function readFields()
-        return ASUtils.trimDialogFields(dialog)
+        return DocUtils.trimDialogFields(dialog)
     end
     dialog = MultiInputDialog:new{
         title = title,
@@ -847,7 +885,7 @@ function Assistant:onClose()
 end
 
 function Assistant:isConfigured()
-    local err_text = ASUtils.bold_format(
+    local err_text = TextUtils.bold_format(
         _("<b>No provider set up yet.</b>\nPlease add a provider in Settings or configuration.lua.")
     )
     local function show_config_error()
@@ -929,7 +967,7 @@ function Assistant:init()
             return
           end
 
-          ASUtils.runWhenOnlineFast(function()
+          DocUtils.runWhenOnlineFast(function()
             -- Throttled inside updater: only hits network if 48h passed since last check
             Updater.checkForUpdates(self)
             UIManager:nextTick(function()
@@ -1108,7 +1146,7 @@ function Assistant:addMainButton(prompt_idx, prompt)
             self.quicknote:saveNote(nil, _reader_highlight_instance.selected_text.text)
           end)
         else
-          ASUtils.runWhenOnlineFast(function()
+          DocUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
               if prompt.order == -10 and prompt_idx == "dictionary" then
                 -- Dictionary prompt, show dictionary dialog
@@ -1194,7 +1232,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
     callback = function(widget_instance)
         local popup = widget_instance or dict_popup_arg
         local word = popup and popup.word
-        ASUtils.runWhenOnlineFast(function()
+        DocUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
               if not self.assistant_dialog then return end -- dialog is created post-provider-load
               self.assistant_dialog:runPrompt(word, "wikipedia")
@@ -1216,7 +1254,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
     callback = function(widget_instance)
         local popup = widget_instance or dict_popup_arg
         local word = popup and popup.word
-        ASUtils.runWhenOnlineFast(function()
+        DocUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
               showDictionaryDialog(self, word, nil, "term_xray")
             end)
@@ -1231,7 +1269,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
     callback = function(widget_instance)
         local popup = widget_instance or dict_popup_arg
         local word = popup and popup.word
-        ASUtils.runWhenOnlineFast(function()
+        DocUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
               showDictionaryDialog(self, word)
             end)
@@ -1271,7 +1309,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
         callback = function(widget_instance)
             local popup = widget_instance or dict_popup_arg
             local word = popup and popup.word
-            ASUtils.runWhenOnlineFast(function()
+            DocUtils.runWhenOnlineFast(function()
                 Trapper:wrap(function()
                   if not self.assistant_dialog then return end -- dialog is created post-provider-load
                   self.assistant_dialog:runPrompt(word, prompt.id)
@@ -1403,7 +1441,7 @@ end
       return
     end
     
-    ASUtils.runWhenOnlineFast(function()
+    DocUtils.runWhenOnlineFast(function()
       -- Show dialog without highlighted text
       Trapper:wrap(function()
         if not self.assistant_dialog then return end -- dialog is created post-provider-load
@@ -1415,7 +1453,7 @@ end
 
   function Assistant:onAskAIRecap()
     if not self:isConfigured() then return end
-    ASUtils.runWhenOnlineFast(function()
+    DocUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1427,7 +1465,7 @@ end
 
   function Assistant:onAskAIXRay()
     if not self:isConfigured() then return end
-    ASUtils.runWhenOnlineFast(function()
+    DocUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1445,7 +1483,7 @@ end
       })
       return true
     end
-    ASUtils.runWhenOnlineFast(function()
+    DocUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1458,7 +1496,7 @@ end
   -- FileManager-side book_info: metadata comes from the file, not an open doc.
   function Assistant:onAskAIBookInfoForFile(file, book_props)
     if not self:isConfigured() then return end
-    ASUtils.runWhenOnlineFast(function()
+    DocUtils.runWhenOnlineFast(function()
       local book = self:getDocumentInfoForFile(file, book_props)
       local notebook_path
       if Notebook.isEnabled(self) then
@@ -1521,7 +1559,7 @@ end
         logger.warn("Assistant: Could not compute per-book notebook path:", path)
       end
     end
-    ASUtils.runWhenOnlineFast(function()
+    DocUtils.runWhenOnlineFast(function()
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
         showFeatureDialog(self, "recap", book.title, book.authors, percent, nil, notebook_path)
@@ -1532,7 +1570,7 @@ end
 
   function Assistant:onAskAIAnnotations()
     if not self:isConfigured() then return end
-    ASUtils.runWhenOnlineFast(function()
+    DocUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1544,7 +1582,7 @@ end
 
   function Assistant:onAskSummaryUsingAnnotations()
     if not self:isConfigured() then return end
-    ASUtils.runWhenOnlineFast(function()
+    DocUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1566,9 +1604,9 @@ end
   end
 
 -- Route a translate request through Smart Dictionary Lookup: short selections
--- may open the AI Dictionary instead (see ASUtils.lookup_mode_for_selection),
+-- may open the AI Dictionary instead (see lookup_mode_for_selection above),
 -- with a one-time three-way prompt on first use. Callers must already be inside
--- ASUtils.runWhenOnlineFast + Trapper:wrap.
+-- DocUtils.runWhenOnlineFast + Trapper:wrap.
 function Assistant:showTranslateOrDictionary(text)
   local function open_translation()
     if not self.assistant_dialog then return end -- dialog is created post-provider-load
@@ -1581,8 +1619,8 @@ function Assistant:showTranslateOrDictionary(text)
   -- No default: a truthy default would be written by LuaSettings:readSetting,
   -- destroying the "never asked" (nil) state.
   local choice = self.settings:readSetting("ai_smart_dictionary")
-  local mode = ASUtils.lookup_mode_for_selection(text)
-  local route = ASUtils.resolve_translate_route(choice, mode)
+  local mode = lookup_mode_for_selection(text)
+  local route = resolve_translate_route(choice, mode)
 
   if route == "ask" then
     -- Three-way first-run choice in a single button row:
@@ -1592,7 +1630,7 @@ function Assistant:showTranslateOrDictionary(text)
     --     so the next short selection asks again
     local ask_dialog
     ask_dialog = ButtonDialog:new{
-      title = ASUtils.bold_format(_("Dictionary or Translation?\n\nThis selection looks like a word or short phrase.\n\nYou can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'.")),
+      title = TextUtils.bold_format(_("Dictionary or Translation?\n\nThis selection looks like a word or short phrase.\n\nYou can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'.")),
       title_align = "left",
       info_face = Font:getFace("smallinfofont"),
       buttons = {{
@@ -1609,7 +1647,7 @@ function Assistant:showTranslateOrDictionary(text)
             self.settings:saveSetting("ai_smart_dictionary", false)
             self.updated = true -- persist choice on next FlushSettings
             UIManager:close(ask_dialog)
-            ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_translation) end)
+            DocUtils.runWhenOnlineFast(function() Trapper:wrap(open_translation) end)
           end,
         },
         {
@@ -1618,7 +1656,7 @@ function Assistant:showTranslateOrDictionary(text)
             self.settings:saveSetting("ai_smart_dictionary", true)
             self.updated = true -- persist choice on next FlushSettings
             UIManager:close(ask_dialog)
-            ASUtils.runWhenOnlineFast(function() Trapper:wrap(open_dictionary) end)
+            DocUtils.runWhenOnlineFast(function() Trapper:wrap(open_dictionary) end)
           end,
         },
       }},
@@ -1659,7 +1697,7 @@ function Assistant:syncTranslateOverride()
 
       -- Smart Dictionary Lookup may divert short selections to the AI
       -- Dictionary, with a one-time prompt (dc7a373 / #207/#208).
-      ASUtils.runWhenOnlineFast(function()
+      DocUtils.runWhenOnlineFast(function()
         Trapper:wrap(function()
           self:showTranslateOrDictionary(text)
         end)
@@ -1694,7 +1732,7 @@ function Assistant:onAssistantSetButton(btnconf, action)
     self.updated = true
     self:addMainButton(idx, prompt)
     UIManager:show(InfoMessage:new{
-      text = ASUtils.bold_format(
+      text = TextUtils.bold_format(
         T(_("<b>Added</b> [%1 (AI)] to Highlight Menu."), display_text)
       ),
       icon = "notice-info",
@@ -1705,7 +1743,7 @@ function Assistant:onAssistantSetButton(btnconf, action)
     self.updated = true
     self.ui.highlight:removeFromHighlightDialog(menukey)
     UIManager:show(InfoMessage:new{
-      text = ASUtils.bold_format(
+      text = TextUtils.bold_format(
         T(_("<b>Removed</b> [%1 (AI)] from Highlight Menu."), display_text)
       ),
       icon = "notice-info",
@@ -1760,7 +1798,7 @@ function Assistant:_hookRecap()
             text            = message,
             ok_text         = _("Yes"),
             ok_callback     = function()
-              ASUtils.runWhenOnlineFast(function()
+              DocUtils.runWhenOnlineFast(function()
                 local showFeatureDialog = require("assistant_featuredialog")
                 Trapper:wrap(function()
                   showFeatureDialog(assistant, "recap", title, authors, percent_finished)
@@ -1809,7 +1847,7 @@ function Assistant:showAboutDialog()
 
   UIManager:show(InfoMessage:new{
       show_icon = false,
-      text = ASUtils.bold_format(
+      text = TextUtils.bold_format(
         T("<b>%1 %2</b>\n――――――――――――――――\n<b>%3:</b> %4\n<b>%5:</b> %6\n<b>%7:</b> %8\n<b>%9:</b> %10/%11\n<b>%12:</b> %13",
           self.meta.fullname, self.meta.version,
           _("Markdown Engine"), md_renderer,

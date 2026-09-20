@@ -9,6 +9,8 @@ Displays some text in a scrollable view.
     UIManager:show(chatgptviewer)
 ]]
 local BD = require("ui/bidi")
+local DocUtils = require("assistant_doc_utils")
+local TextUtils = require("assistant_text_utils")
 local Blitbuffer = require("ffi/blitbuffer")
 local ButtonTable = require("ui/widget/buttontable")
 local ButtonDialog = require("ui/widget/buttondialog")
@@ -40,7 +42,6 @@ local InfoMessage = require("ui/widget/infomessage")
 local Screen = Device.screen
 local MD = require("assistant_mdparser")
 local Prompts = require("assistant_prompts")
-local ASUtils = require("assistant_utils")
 local ViewerCSS = require("assistant_css")
 local Notebook = require("assistant_notebook")
 local CheckButton = require("ui/widget/checkbutton")
@@ -497,7 +498,7 @@ function ChatGPTViewer:saveToNotebook()
   local timestamp = os.date("%Y-%m-%d %H:%M:%S")
   local highlighted_text_lbl = _("Highlighted text:")
   
-  local page_info = ASUtils.getPageInfo(self.ui)
+  local page_info = DocUtils.getPageInfo(self.ui)
 
   local title_text = (self.title and self.title or self.ui.document and _("Book Analysis") or _("General Conversation")) .. "\n"
   local text_to_log = self.text or ""
@@ -905,7 +906,7 @@ function ChatGPTViewer:_renderMarkdown()
     if not show then
       source = strip_reasoning_fence(source)
     end
-    source = ASUtils.strip_think_tags(source, nil, show)
+    source = TextUtils.strip_think_tags(source, nil, show)
   end
   local html_body, err = MD(source)
   if err then

@@ -1,6 +1,6 @@
 -- test_dialog_markdown.lua
 -- Guards the container-label zero-heading scheme (dialog + viewer):
---   * the shared assistant_message_format emitter produces
+--   * the shared assistant_text_utils emitter produces
 --     <div class="assistant-label"> carriers, never `###`/`####`
 --     container headings; glyphs ride %1 outside ASCII msgids
 --   * dialog calls the shared emitter (no local fork); inter-round
@@ -14,6 +14,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
+local TextUtils = helper.TextUtils
 
 local project_root = debug.getinfo(1).source:match("@(.*/)test/")
 
@@ -26,7 +27,7 @@ local function read_source(name)
 end
 
 local dialog_src = read_source("assistant_dialog.lua")
-local format_src = read_source("assistant_message_format.lua")
+local format_src = read_source("assistant_text_utils.lua")
 local viewer_src = read_source("assistant_viewer.lua")
 local css_src = read_source("assistant_css.lua")
 
@@ -48,11 +49,11 @@ local SAMPLE = table.concat({
 
 -- Strip helper for the viewer pipeline: titled div block first, then the
 -- bare fence the querier stores; think-tag handling is the real
--- ASUtils.strip_think_tags (assistant_utils.lua, single source of truth).
+-- TextUtils.strip_think_tags (assistant_utils.lua, single source of truth).
 local function strip_reasoning(text)
     text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
     text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
-    return ASUtils.strip_think_tags(text, nil, false)
+    return TextUtils.strip_think_tags(text, nil, false)
 end
 
 -- ata: puremd wraps raw HTML blocks in <p>; hoedown leaves them bare.
@@ -86,7 +87,7 @@ end
 
 local tests = {
     test("dialog: question label is a div, no h3 container", function()
-        assert.matches(dialog_src, 'require%("assistant_message_format"%)', "dialog must use the shared emitter")
+        assert.matches(dialog_src, 'require%("assistant_text_utils"%)', "dialog must use the shared emitter")
         assert.matches(format_src, '<div class="assistant%-label">%%1 %%2</div>', "question div missing")
         assert.matches(format_src, '_%("Question"%)', "question word must be the msgid")
         assert.notMatches(format_src, "_%('<div", "HTML must not enter _()")

@@ -1,7 +1,7 @@
 -- test_feature_markdown.lua
 -- Guards the feature dialog's sync to the div-carrier result shape:
 --   * first round walks message_history (system/is_context skipped, header
---     once) through the shared assistant_message_format pipeline, so
+--     once) through the shared assistant_text_utils pipeline, so
 --     Search divs the querier appended in place actually render
 --   * follow-ups append with the `---` separator through the shared
 --     formatter (no `### ⮞` headings, no ad-hoc second suggestion pass)
@@ -14,7 +14,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
-local MsgFormat = require("assistant_message_format")
+local TextUtils = require("assistant_text_utils")
 
 local project_root = debug.getinfo(1).source:match("@(.*/)test/")
 
@@ -60,11 +60,11 @@ end
 
 -- Strip helper for the viewer pipeline: titled div block first, then the
 -- bare fence the querier stores; think-tag handling is the real
--- ASUtils.strip_think_tags (assistant_utils.lua, single source of truth).
+-- TextUtils.strip_think_tags (assistant_utils.lua, single source of truth).
 local function strip_reasoning(text)
     text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
     text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
-    return ASUtils.strip_think_tags(text, nil, false)
+    return TextUtils.strip_think_tags(text, nil, false)
 end
 
 local function test(name, fn)
@@ -73,8 +73,8 @@ end
 
 local tests = {
     test("shared emitter: dialog and feature require it, no local fork", function()
-        assert.matches(dialog_src, 'require%("assistant_message_format"%)', "dialog must require the shared module")
-        assert.matches(feature_src, 'require%("assistant_message_format"%)', "feature must require the shared module")
+        assert.matches(dialog_src, 'require%("assistant_text_utils"%)', "dialog must require the shared module")
+        assert.matches(feature_src, 'require%("assistant_text_utils"%)', "feature must require the shared module")
         assert.notMatches(dialog_src, 'local function formatSingleMessage', "dialog must not keep a local fork")
         assert.notMatches(feature_src, 'local function formatSingleMessage', "feature must not keep a local fork")
         assert.notMatches(feature_src, 'local function createResultText%(answer%)', "feature must not keep the answer-only renderer")
@@ -96,7 +96,7 @@ local tests = {
         for idx = 2, #history do
             local message = history[idx]
             if not ASUtils.get_attr(message, "is_context") then
-                table.insert(parts, MsgFormat.formatSingleMessage(history, message, fmt_opts(history, idx, settings, { show_suggestions = false })))
+                table.insert(parts, TextUtils.formatSingleMessage(history, message, fmt_opts(history, idx, settings, { show_suggestions = false })))
             end
         end
         local out = table.concat(parts)
@@ -122,8 +122,8 @@ local tests = {
         ASUtils.set_attr(answer_msg, "show_suggestions", true)
         table.insert(history, answer_msg)
         local out = "---\n\n"
-            .. MsgFormat.formatSingleMessage(history, history[#history - 1], fmt_opts(history, #history - 1, settings, { show_suggestions = true }))
-            .. MsgFormat.formatSingleMessage(history, history[#history], fmt_opts(history, #history, settings, { show_suggestions = true }))
+            .. TextUtils.formatSingleMessage(history, history[#history - 1], fmt_opts(history, #history - 1, settings, { show_suggestions = true }))
+            .. TextUtils.formatSingleMessage(history, history[#history], fmt_opts(history, #history, settings, { show_suggestions = true }))
         assert.matches(out, '^%-%-%-\n\n<div', "follow-up must start with the --- separator")
         assert.matches(out, '#q:', "suggestions must be processed exactly once by the pipeline")
         assert.notMatches(out, '<suggestions>', "suggestion tags must be consumed")
@@ -136,7 +136,7 @@ local tests = {
         local answer_msg = make_msg("assistant", "```reasoning\nthinking here\n```\n\nThe Ring rules them all.")
         ASUtils.set_attr(answer_msg, "show_suggestions", false)
         table.insert(history, answer_msg)
-        local out = MsgFormat.formatSingleMessage(history, answer_msg, fmt_opts(history, 3, settings, { show_suggestions = false }))
+        local out = TextUtils.formatSingleMessage(history, answer_msg, fmt_opts(history, 3, settings, { show_suggestions = false }))
         assert.matches(out, 'assistant%-label%-%-thought">※ Deeply Thought</div>', "Thought div missing")
         assert.matches(out, '```reasoning\nthinking here\n```', "reasoning fence must be kept pre-strip")
         assert.matches(out, 'assistant%-label">✦ Response</div>', "Response div missing")
@@ -152,14 +152,14 @@ local tests = {
         ASUtils.set_attr(history[2], "show_suggestions", true)
         local answer_msg = make_msg("assistant", "Frodo does.\n<suggestions>\n- Why him?\n</suggestions>\n")
         table.insert(history, answer_msg)
-        local out = MsgFormat.formatSingleMessage(history, answer_msg, fmt_opts(history, 3, settings, { show_suggestions = false }))
+        local out = TextUtils.formatSingleMessage(history, answer_msg, fmt_opts(history, 3, settings, { show_suggestions = false }))
         assert.matches(out, '#q:', "inherited show_suggestions must trigger processing")
         local cold_settings = make_settings(true)
         local cold_history = make_history()
         local cold_answer = make_msg("assistant", "Frodo does.\n<suggestions>\n- Why him?\n</suggestions>\n")
         ASUtils.set_attr(cold_answer, "show_suggestions", false)
         table.insert(cold_history, cold_answer)
-        local cold_out = MsgFormat.formatSingleMessage(cold_history, cold_answer, fmt_opts(cold_history, 3, cold_settings, { show_suggestions = false }))
+        local cold_out = TextUtils.formatSingleMessage(cold_history, cold_answer, fmt_opts(cold_history, 3, cold_settings, { show_suggestions = false }))
         assert.notMatches(cold_out, '#q:', "explicit false must win over the fallback")
         assert.matches(cold_out, '<suggestions>', "untouched tags must stay when disabled")
     end),
@@ -169,11 +169,11 @@ local tests = {
         local history = make_history()
         local tool_user = { role = "user", content = { { type = "tool_result" } } }
         table.insert(history, tool_user)
-        local out = MsgFormat.formatSingleMessage(history, tool_user, fmt_opts(history, 3, settings, { show_suggestions = false }))
+        local out = TextUtils.formatSingleMessage(history, tool_user, fmt_opts(history, 3, settings, { show_suggestions = false }))
         assert.equal(out, "", "table content must not render a junk Question div")
         local parts_user = { role = "user" }
         table.insert(history, parts_user)
-        local parts_out = MsgFormat.formatSingleMessage(history, parts_user, fmt_opts(history, 4, settings, { show_suggestions = false }))
+        local parts_out = TextUtils.formatSingleMessage(history, parts_user, fmt_opts(history, 4, settings, { show_suggestions = false }))
         assert.equal(parts_out, "", "content-free tool message must render empty")
     end),
 }

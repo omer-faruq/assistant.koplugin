@@ -3,6 +3,8 @@ Settings menu builders: pure menu-item generators plus their local helpers.
 ]]
 
 local Trapper = require("ui/trapper")
+local DocUtils = require("assistant_doc_utils")
+local TextUtils = require("assistant_text_utils")
 local koutil = require("util")
 local CenterContainer = require("ui/widget/container/centercontainer")
 local CheckButton = require("ui/widget/checkbutton")
@@ -26,7 +28,6 @@ local logger = require("logger")
 local ToolExecutor = require("assistant_tool_executor")
 local ExtTools = require("assistant_exttools")
 local Updater = require("assistant_updater")
-local ASUtils = require("assistant_utils")
 local Registry = require("assistant_provider_registry")
 local SearchRegistry = require("assistant_search_registry")
 local Notebook = require("assistant_notebook")
@@ -645,7 +646,7 @@ File configuration.lua will be preserved.]]),
                     title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, current_version_display),
                     input = default_version,
                     input_hint = _("branch or tag name"),
-                    description = ASUtils.bold_format(desc_text),
+                    description = TextUtils.bold_format(desc_text),
                     buttons = {
                         -- The cancellation button should be kept on the left
                         -- and the button executing the action on the right.
@@ -659,7 +660,7 @@ File configuration.lua will be preserved.]]),
                             {
                                 text = _("Update"),
                                 callback = function()
-                                    ASUtils.runWhenOnlineFast(function()
+                                    DocUtils.runWhenOnlineFast(function()
                                         local version = version_input:getInputText()
                                         if version == "" then version = "main" end
                                         UIManager:close(version_input)

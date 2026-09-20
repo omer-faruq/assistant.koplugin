@@ -12,12 +12,12 @@
 -- injected. UI search tools override file config with the same tool key.
 
 local UIManager = require("ui/uimanager")
+local DocUtils = require("assistant_doc_utils")
 local ButtonDialog = require("ui/widget/buttondialog")
 local json = require("rapidjson")
 local logger = require("logger")
 local T = require("ffi/util").template
 local koutil = require("util")
-local ASUtils = require("assistant_utils")
 local _ = require("assistant_gettext")
 
 local SearchRegistry = {}
@@ -114,12 +114,12 @@ function SearchRegistry.validate(record, tool_key)
     local name = tool_def.display_name
     local ok, err
     if tool_def.needs == "api_key" then
-        ok, err = ASUtils.validate_credential_field(record, "api_key", {
+        ok, err = DocUtils.validate_credential_field(record, "api_key", {
             required = T(_("API key is required for %1."), name),
             whitespace = T(_("API key must not contain spaces or line breaks for %1."), name),
         })
     elseif tool_def.needs == "base_url" then
-        ok, err = ASUtils.validate_credential_field(record, "base_url", {
+        ok, err = DocUtils.validate_credential_field(record, "base_url", {
             required = T(_("Base URL is required for %1."), name),
             scheme = _("Base URL must start with http:// or https://"),
             whitespace = _("Base URL must not contain spaces."),
