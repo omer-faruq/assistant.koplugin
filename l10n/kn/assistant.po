@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 15:57+0800\n"
+"POT-Creation-Date: 2026-09-20 22:24+0800\n"
 "PO-Revision-Date: 2026-08-13 03:59+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ಕನ್ನಡ (AI translation)\n"
@@ -346,9 +346,6 @@ msgstr "ಪುಸ್ತಕದ ಮೆಟಾಡೇಟಾವನ್ನು ಸಂದ�
 msgid "Add Nearby Page Text as Context"
 msgstr "ಹತ್ತಿರದ ಪುಟದ ಪಠ್ಯವನ್ನು ಸಂದರ್ಭವಾಗಿ ಸೇರಿಸಿ"
 
-msgid "Add Note"
-msgstr "ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ"
-
 msgid ""
 "Add providers from the main menu:\n"
 "%1 -> AI Assistant -> Settings -> Provider API"
@@ -356,8 +353,17 @@ msgstr ""
 "ಮುಖ್ಯ ಮೆನುವಿನಿಂದ ಪ್ರೊವೈಡರ್ಗಳನ್ನು ಸೇರಿಸಿ:\n"
 "%1 -> AI ಸಹಾಯಕ -> ಸೆಟ್ಟಿಂಗ್ಗಳು -> ಪ್ರೊವೈಡರ್ API"
 
+msgid "Added to vocabulary builder"
+msgstr "ಪದಸಂಗ್ರಹಕ್ಕೆ ಸೇರಿಸಲಾಗಿದೆ"
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "ಪುಸ್ತಕದಿಂದ ನಿಮ್ಮ ಹೈಲೈಟ್ಗಳು, ಟಿಪ್ಪಣಿಗಳು ಮತ್ತು AI ಟಿಪ್ಪಣಿಗಳ ವಿಷಯದ ವಿಶ್ಲೇಷಣೆ."
+
+msgid "Annotate"
+msgstr "ಟಿಪ್ಪಣಿ ಮಾಡಿ"
+
+msgid "Annotation added successfully"
+msgstr "ಟಿಪ್ಪಣಿ ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ"
 
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
@@ -403,6 +409,9 @@ msgstr "ಸಹಾಯಕ ಸೆಟ್ಟಿಂಗ್ಗಳು ಲಭ್ಯವಿ�
 
 msgid "Attach Prior Text"
 msgstr "ಹಿಂದಿನ ಪಠ್ಯವನ್ನು ಲಗತ್ತಿಸಿ"
+
+msgid "Attaches the answer as a book note to the current highlight"
+msgstr "ಪ್ರಸ್ತುತ ಹೈಲೈಟ್‌ಗೆ ಉತ್ತರವನ್ನು ಪುಸ್ತಕ ಟಿಪ್ಪಣಿಯಾಗಿ ಲಗತ್ತಿಸುತ್ತದೆ"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -684,6 +693,9 @@ msgstr "AI ಗೆ ಕೇಳಲು ಪ್ರಶ್ನೆಯನ್ನು ನಮೂ
 msgid "Enter a word to look up..."
 msgstr "ಹುಡುಕಲು ಪದವನ್ನು ನಮೂದಿಸಿ..."
 
+msgid "Enter text to search for"
+msgstr "ಹುಡುಕಲು ಪಠ್ಯವನ್ನು ನಮೂದಿಸಿ"
+
 #. @translators historical_context section headers
 msgid "Era & Background"
 msgstr "ಯುಗ ಮತ್ತು ಹಿನ್ನೆಲೆ"
@@ -730,6 +742,15 @@ msgstr ""
 
 msgid "Filter: \"%1\""
 msgstr "ಫಿಲ್ಟರ್: \"%1\""
+
+msgid "Find"
+msgstr "ಹುಡುಕಿ"
+
+msgid "Find first"
+msgstr "ಮೊದಲನೆಯದನ್ನು ಹುಡುಕಿ"
+
+msgid "Find next"
+msgstr "ಮುಂದಿನದನ್ನು ಹುಡುಕಿ"
 
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "ವಿವರಗಳಿಗಾಗಿ, github ನಲ್ಲಿ 'Configuration' ವಿಕಿ ಪುಟವನ್ನು ಭೇಟಿ ಮಾಡಿ."
@@ -909,20 +930,23 @@ msgstr "ಡೀಫಾಲ್ಟ್ AI ಟಿಪ್ಪಣಿಗೆ ಯಾವುದ�
 msgid "No response received."
 msgstr "ಯಾವುದೇ ಪ್ರತಿಕ್ರಿಯೆ ಸ್ವೀಕರಿಸಲಾಗಿಲ್ಲ."
 
-msgid "No text left to add as note"
-msgstr "ಟಿಪ್ಪಣಿಯಾಗಿ ಸೇರಿಸಲು ಪಠ್ಯ ಉಳಿದಿಲ್ಲ"
+msgid "No text left to annotate"
+msgstr "ಟಿಪ್ಪಣಿ ಮಾಡಲು ಪಠ್ಯ ಉಳಿದಿಲ್ಲ"
 
-msgid "No text to add as note"
-msgstr "ಟಿಪ್ಪಣಿಯಾಗಿ ಸೇರಿಸಲು ಪಠ್ಯವಿಲ್ಲ"
+msgid "No text to annotate"
+msgstr "ಟಿಪ್ಪಣಿ ಮಾಡಲು ಯಾವುದೇ ಪಠ್ಯವಿಲ್ಲ"
 
 msgid "No valid custom prompt found"
 msgstr "ಮಾನ್ಯವಾದ ಕಸ್ಟಮ್ ಪ್ರಾಂಪ್ಟ್ ಕಂಡುಬಂದಿಲ್ಲ"
 
+msgid "No word to add"
+msgstr "ಸೇರಿಸಲು ಯಾವುದೇ ಪದವಿಲ್ಲ"
+
 msgid "None"
 msgstr "ಯಾವುದೂ ಇಲ್ಲ"
 
-msgid "Note added successfully"
-msgstr "ಟಿಪ್ಪಣಿ ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ"
+msgid "Not found."
+msgstr "ಕಂಡುಬಂದಿಲ್ಲ."
 
 msgid "OK"
 msgstr "ಸರಿ"
@@ -1155,6 +1179,12 @@ msgstr "ಸಂಭಾಷಣೆಯನ್ನು ಇಲ್ಲಿ ಉಳಿಸಿ"
 
 msgid "Saved to: %1"
 msgstr "ಇಲ್ಲಿ ಉಳಿಸಲಾಗಿದೆ: %1"
+
+msgid "Saves the conversation to AI Notes"
+msgstr "ಸಂಭಾಷಣೆಯನ್ನು AI ಟಿಪ್ಪಣಿಗಳಿಗೆ ಉಳಿಸುತ್ತದೆ"
+
+msgid "Saves the word to the vocabulary builder"
+msgstr "ಪದವನ್ನು ಪದಸಂಗ್ರಹಕ್ಕೆ ಉಳಿಸುತ್ತದೆ"
 
 msgid "Scroll"
 msgstr "ಸ್ಕ್ರಾಲ್"
