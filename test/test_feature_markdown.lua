@@ -138,7 +138,7 @@ local tests = {
         ASUtils.set_attr(answer_msg, "show_suggestions", false)
         table.insert(history, answer_msg)
         local out = TextUtils.formatSingleMessage(history, answer_msg, fmt_opts(history, 3, settings, { show_suggestions = false }))
-        assert.matches(out, 'assistant%-label%-%-thought">※ Deeply Thought</div>', "Thought div missing")
+        assert.matches(out, 'assistant%-label%-%-thought">❖ Deeply Thought</div>', "Thought div missing")
         assert.matches(out, '```reasoning\nthinking here\n```', "reasoning fence must be kept pre-strip")
         assert.matches(out, 'assistant%-label">✦ Response</div>', "Response div missing")
         local stripped = strip_reasoning(out)

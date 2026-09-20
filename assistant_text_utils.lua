@@ -364,7 +364,7 @@ function M.formatSingleMessage(message_history, message, opts)
                 "^```reasoning%s*([%s%S]-)%s*```%s*([%s%S]*)$")
             if reasoning_text and reasoning_text:find("%S") then
                 reasoning_section = T('<div class="assistant-label assistant-label--thought">%1 %2</div>\n\n```reasoning\n%3\n```\n\n',
-                    "※", _("Deeply Thought"), reasoning_text)
+                    "❖", _("Deeply Thought"), reasoning_text)
                 assistant_content = body
             end
         end

@@ -43,7 +43,7 @@ Check the public API first, then read the widget source under `/usr/lib/koreader
 
 Viewer HTML falls back through `Noto Sans CJK TC → … → FreeSans → Noto Sans`. Glyph coverage of the bundled fonts (checked with fontTools cmap over `noto/`, `freefont/`, `droid/`) decides what prompts may emit:
 
-- Safe: `★ ◆ ● ○ ※ ✓ ▪ ‣ ⚠ → ⇧ ⏎ ✦ ⮞` (all covered by FreeSans and/or Noto CJK).
+- Safe: `★ ◆ ● ○ ❖ ✓ ▪ ‣ ⚠ → ⇧ ⏎ ✦ ⮞` (all covered by FreeSans and/or Noto CJK).
 - Tofu: color emoji (`U+1F300` and up; only `U+1F4A1` exists in FreeSerif) and anything with `VS16` forcing emoji presentation — use bare `⚠`, never `⚠️`.
 - Noto Sans/Serif base cover almost none of the above; never rely on them alone.
 - Coverage is necessary but not sufficient — visually confirm with `./test/runui.sh unicode_icons`.

@@ -141,7 +141,7 @@ print(hello("koreader"))
 
 ➤ What is the One Ring?
 
-<div class="assistant-label assistant-label--thought">※ Deeply Thought</div>
+<div class="assistant-label assistant-label--thought">❖ Deeply Thought</div>
 
 ```reasoning
 The user asks about a classic book, so internal knowledge suffices and no web search is needed. The answer follows the book_info structure with four sections.

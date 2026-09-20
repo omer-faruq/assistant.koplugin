@@ -32,7 +32,7 @@ end
 
 local tests = {
     test("fence: trailing suggestions converted, fence kept", function()
-        local input = "#### ※ Deeply Thought\n\n```reasoning\nthinking here\n```\n\n---\n\nMain answer.\n<suggestions>\n- First question?\n- Second question?\n</suggestions>\n"
+        local input = "#### ❖ Deeply Thought\n\n```reasoning\nthinking here\n```\n\n---\n\nMain answer.\n<suggestions>\n- First question?\n- Second question?\n</suggestions>\n"
         local out = TextUtils.process_suggestions(input)
         assert.matches(out, "```reasoning\nthinking here\n```")
         assert.matches(out, "%[First question%?%]%(#q:")

@@ -97,7 +97,7 @@ local tests = {
             "expect 2x Question + 2x Response + 1x Search divs")
         assert.matches(SAMPLE, 'assistant%-label">☺ Question</div>', "Question div missing")
         assert.equal(count_plain(SAMPLE, "☺ Question"), 2, "expect two Question rounds")
-        assert.matches(SAMPLE, 'assistant%-label%-%-thought">※ Deeply Thought</div>', "Thought div missing")
+        assert.matches(SAMPLE, 'assistant%-label%-%-thought">❖ Deeply Thought</div>', "Thought div missing")
         assert.matches(SAMPLE, '```reasoning\nThe user asks', "reasoning fence missing")
         assert.matches(SAMPLE, 'assistant%-label">✦ Response</div>', "Response div missing")
         assert.matches(SAMPLE, 'assistant%-label">✦ Search</div>', "Search div missing")
@@ -141,7 +141,7 @@ local tests = {
 
     test("render: thought label heads a pre block for reasoning text", function()
         local html = unwrap_label(MD(SAMPLE))
-        assert.matches(html, 'assistant%-label%-%-thought">※ Deeply Thought</div>', "thought label must render")
+        assert.matches(html, 'assistant%-label%-%-thought">❖ Deeply Thought</div>', "thought label must render")
         assert.matches(html, '<pre', "reasoning fence must render as a pre block")
         assert.matches(html, 'internal knowledge suffices', "reasoning body must survive rendering")
         local label_pos = html:find('assistant-label--thought', 1, true)

@@ -36,7 +36,7 @@ local css_src = read_source("assistant_css.lua")
 local SAMPLE = table.concat({
     '<div class="assistant-label">\226\152\186 Question</div>\n\n',
     '\226\158\164 What is the One Ring?\n\n',
-    '<div class="assistant-label assistant-label--thought">\226\128\187 Deeply Thought</div>\n\n',
+    '<div class="assistant-label assistant-label--thought">\226\157\150 Deeply Thought</div>\n\n',
     '```reasoning\nthinking here\n```\n\n',
     '<div class="assistant-label">\226\156\166 Response</div>\n\n',
     'The Ring rules them all.\n\n',
@@ -99,10 +99,10 @@ local tests = {
     test("dialog: thought label is a div, glyph outside msgid", function()
         assert.matches(format_src, 'assistant%-label assistant%-label%-%-thought', "thought div missing")
         assert.matches(format_src, '_%("Deeply Thought"%)', "thought words must be the msgid")
-        assert.matches(format_src, '"\226\128\187", _%("Deeply Thought"%), reasoning_text', "glyph and words must ride outside _()")
+        assert.matches(format_src, '"\226\157\150", _%("Deeply Thought"%), reasoning_text', "glyph and words must ride outside _()")
         assert.notMatches(format_src, "_%('<div", "HTML must not enter _()")
-        assert.notMatches(format_src, '#### \226\128\187', "old h4 thought heading still present")
-        assert.notMatches(dialog_src, '#### \226\128\187', "old h4 thought heading still present")
+        assert.notMatches(format_src, '#### \226\157\150', "old h4 thought heading still present")
+        assert.notMatches(dialog_src, '#### \226\157\150', "old h4 thought heading still present")
     end),
 
     test("dialog: response/search labels are divs via T, no h3", function()
