@@ -126,28 +126,75 @@ function AnthropicHandler:buildRequestBody(messages, tools, stream)
     return body
 end
 
+--- Parse a non-stream response to a built-in web_search request.
+--- Builtin answers mix plain text with server-side blocks
+--- (server_tool_use / web_search_tool_result) that the model already
+--- summarized into the text: concatenate every text block, ignore the
+--- server blocks (never tool calls), and carry citations forward.
+--- @param responseData table decoded JSON body
+--- @return string|table|nil result, string|nil error
+function AnthropicHandler:parseBuiltinResponse(responseData)
+    local content_blocks = koutil.tableGetValue(responseData, "content")
+    if type(content_blocks) ~= "table" then
+        local errmsg = koutil.tableGetValue(responseData, "error", "message")
+            or "Anthropic: missing content array"
+        return nil, errmsg
+    end
+    local texts = {}
+    local citations = {}
+    for idx, block in ipairs(content_blocks) do
+        if type(block) == "table" and block.type == "text" then
+            local text = koutil.tableGetValue(block, "text")
+            if type(text) == "string" and text ~= "" then
+                table.insert(texts, text)
+            end
+            local block_citations = koutil.tableGetValue(block, "citations")
+            if type(block_citations) == "table" then
+                for cdx, citation in ipairs(block_citations) do
+                    table.insert(citations, citation)
+                end
+            end
+        end
+    end
+    if #texts == 0 then
+        return nil, "Anthropic: missing text content"
+    end
+    -- Collapse to the single-text shape the unified parser expects, so a
+    -- multi-text builtin answer is never truncated to its last block.
+    local merged = { content = { { type = "text", text = table.concat(texts) } } }
+    if #citations > 0 then
+        merged.content[1].citations = citations
+    end
+    return self:parseToolCalls(merged, "anthropic")
+end
+
 function AnthropicHandler:query(message_history, query_option)
 
+    local anthropic_version = koutil.tableGetValue(self, "additional_parameters", "anthropic_version")
+        or "2023-06-01"
     local headers = {
         ["Content-Type"]      = "application/json",
         ["x-api-key"]         = self.api_key,
+        ["anthropic-version"] = anthropic_version,
     }
 
-    if self.additional_parameters.anthropic_version then
-        headers["anthropic-version"] = self.additional_parameters.anthropic_version
-    end
-
     local ws_mode = query_option.use_websearch or "none"
+
+    -- Built-in server-side search vs external function-call search.
+    -- Shared by the stream and non-stream paths; nil keeps the legacy
+    -- behavior (additional_parameters.tools passthrough in buildRequestBody).
+    local tools = nil
+    if ws_mode == "builtin" then
+        tools = { { type = "web_search_20250305", name = "web_search", max_uses = 5 } }
+    elseif ToolExecutor.IsExtSearch(ws_mode) then
+        tools = { self:buildExternalSearchToolDef("anthropic") }
+    end
 
     -- -----------------------------------------------------------------------
     -- STREAM path
     -- -----------------------------------------------------------------------
     if query_option.use_stream_mode then
-        local stream_tools = nil
-        if ToolExecutor.IsExtSearch(ws_mode) then
-            stream_tools = { self:buildExternalSearchToolDef("anthropic") }
-        end
-        local body = self:buildRequestBody(message_history, stream_tools, true)
+        local body = self:buildRequestBody(message_history, tools, true)
         local requestBody = json.encode(body)
         headers["Accept"] = "text/event-stream"
         return self:backgroundRequest(self:getApiUrl(), headers, requestBody)
@@ -158,13 +205,7 @@ function AnthropicHandler:query(message_history, query_option)
     -- -----------------------------------------------------------------------
     -- In non-stream mode, inject tool definitions if web_search is enabled.
     -- Let the Querier handle the tool-call loop and search execution.
-    local requestBody
-    if ToolExecutor.IsExtSearch(ws_mode) then
-        local search_tool = { self:buildExternalSearchToolDef("anthropic") }
-        requestBody = self:buildRequestBody(message_history, search_tool, false)
-    else
-        requestBody = self:buildRequestBody(message_history, nil, false)
-    end
+    local requestBody = self:buildRequestBody(message_history, tools, false)
 
     local success, code, response = self:makeRequest(
         self:getApiUrl(), headers, json.encode(requestBody))
@@ -184,6 +225,12 @@ function AnthropicHandler:query(message_history, query_option)
     if not ok or not parsed then
         logger.warn("Anthropic: JSON decode error:", tostring(response):sub(1, 200))
         return nil, "Error: Failed to parse Anthropic API response"
+    end
+
+    -- Builtin answers carry server-side blocks; fold them here so the
+    -- unified parser only ever sees plain text (never a fake tool call).
+    if ws_mode == "builtin" then
+        return self:parseBuiltinResponse(parsed)
     end
 
     -- Delegate text / thinking / tool-call extraction to the unified base method
