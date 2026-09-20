@@ -313,31 +313,38 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     local result = createResultText(highlightedText)
     local chatgpt_viewer
 
-    local function handleAddToNote()
-        if ui.highlight and ui.highlight.saveHighlight then
-            local success, index = pcall(function()
-                return ui.highlight:saveHighlight(true)
-            end)
-            if success and index then
-                local a = ui.annotation.annotations[index]
-                a.note = result
-                ui:handleEvent(Event:new("AnnotationsModified",
-                                    { a, nb_highlights_added = -1, nb_notes_added = 1 }))
-            end
-        end
-
-        UIManager:close(chatgpt_viewer)
-        if ui.highlight and ui.highlight.onClose then
-            ui.highlight:onClose()
-        end
-    end
-
     chatgpt_viewer = ChatGPTViewer:new {
         assistant = assistant,
         ui = ui,
         title = title,
         text = result,
-        onAddToNote = handleAddToNote,
+        extra_buttons = {
+            {
+                text = _("Add to Vocabulary Builder"),
+                callback = function()
+                    if not ui then return end
+                    local word = TextUtils.strip_selection_punctuation(highlightedText)
+                    if not word or word == "" then
+                        UIManager:show(InfoMessage:new{
+                            icon = "notice-warning",
+                            text = _("No word to add"),
+                            timeout = 2,
+                        })
+                        return
+                    end
+                    ui:handleEvent(Event:new("WordLookedUp", word, book_title, true))
+                    UIManager:show(InfoMessage:new{
+                        text = _("Added to vocabulary builder"),
+                        timeout = 2,
+                    })
+                end,
+                hold_callback = function()
+                    UIManager:show(InfoMessage:new{
+                        text = _("Saves the word to the vocabulary builder"),
+                    })
+                end,
+            },
+        },
         default_hold_callback = function ()
             chatgpt_viewer:HoldClose()
         end,

@@ -226,8 +226,8 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
     text = result_text,
     assistant = self.assistant,
     ui = self.assistant.ui,
-    -- Hide Add Note button when invoked via gesture (no highlighted text)
-    disable_add_note = (not highlightedText or highlightedText == ""),
+    -- Show Add Note button only when invoked with highlighted text
+    is_show_addnote = (highlightedText ~= nil and highlightedText ~= ""),
     onAskQuestion = function(viewer, user_question, use_websearch) -- callback for user entered question
         -- Use viewer's own highlighted_text value
         local current_highlight = viewer.highlighted_text or highlightedText

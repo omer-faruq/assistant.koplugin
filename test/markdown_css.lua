@@ -48,7 +48,7 @@ local viewer = ChatGPTViewer:new{
     title = "Markdown CSS",
     text = SAMPLE,
     assistant = mock_assistant,
-    disable_add_note = true,
+    is_show_addnote = false,
     add_default_buttons = true,
 }
 

@@ -314,7 +314,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       ui = ui,
       title = feature_title,
       text = createResultText(),
-      disable_add_note = true,
+      is_show_addnote = false,
       message_history = message_history,
       notebook_path = notebook_path,
       onAskQuestion = function(viewer, user_question)

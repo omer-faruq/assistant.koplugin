@@ -70,6 +70,80 @@ end
 -- Viewer CSS lives in assistant_css.lua (shared with the notebook viewer);
 -- _buildCSS() below is a thin wrapper resolving the display switches.
 
+-- Builds the Add Note button for a viewer instance. Inserted second-to-last
+-- to keep Close rightmost.
+local function createAddNoteButton(viewer)
+    return {
+        text = _("Annotate"),
+        callback = function()
+            -- Check if ui is available in self
+            local ui = viewer.ui
+            if not ui or not ui.highlight then
+                UIManager:show(InfoMessage:new{
+                    icon = "notice-warning",
+                    text = _("Highlight functionality not available"),
+                    timeout = 2
+                })
+                return
+            end
+
+            if not viewer.text or viewer.text == "" then
+                UIManager:show(InfoMessage:new{
+                    icon = "notice-warning",
+                    text = _("No text to annotate"),
+                    timeout = 2
+                })
+                return
+            end
+
+            -- Get the selected text
+            local selected_text = viewer.highlighted_text or ""
+
+            -- Remove the selected text from the full text with multiple strategies
+            local note_text = viewer.text
+
+            -- First, try to remove only if the selected text is after "Highlighted text: "
+            local highlighted_start, highlighted_end = note_text:find('Highlighted text: "([^"]*)"')
+            if highlighted_start then
+                local highlighted_part = note_text:sub(highlighted_start, highlighted_end)
+                local selected_text_in_highlight = highlighted_part:match('"([^"]*)"')
+
+                if selected_text_in_highlight == selected_text then
+                    note_text = note_text:gsub('Highlighted text: "' .. selected_text:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1") .. '"', "")
+                end
+            end
+
+            -- Trim whitespace
+            note_text = note_text:gsub("^%s+", ""):gsub("%s+$", "")
+
+            if note_text == "" then
+                UIManager:show(InfoMessage:new{
+                    icon = "notice-warning",
+                    text = _("No text left to annotate"),
+                    timeout = 2
+                })
+                return
+            end
+
+            local index = ui.highlight:saveHighlight(true)
+            local a = ui.annotation.annotations[index]
+            a.note = note_text
+            ui:handleEvent(Event:new("AnnotationsModified",
+                                    { a, nb_highlights_added = -1, nb_notes_added = 1 }))
+
+            UIManager:show(InfoMessage:new{
+                text = _("Annotation added successfully"),
+                timeout = 2
+            })
+        end,
+        hold_callback = function()
+            UIManager:show(InfoMessage:new{
+                text = _("Attaches the answer as a book note to the current highlight"),
+            })
+        end
+    }
+end
+
 local ChatGPTViewer = InputContainer:extend {
   title = nil,
   text = nil,
@@ -90,7 +164,8 @@ local ChatGPTViewer = InputContainer:extend {
 
   onAskQuestion = nil, -- callback when the Ask Another Question button is pressed
   input_dialog = nil,
-  disable_add_note = false, -- when true, do not show the Add Note button
+  is_show_addnote = true, -- when true, show the Add Note button
+  extra_buttons = nil, -- list of ButtonTable button specs {text, id, callback, hold_callback}, inserted second-to-last to keep Close rightmost
 }
 
 -- Global variables
@@ -292,7 +367,10 @@ function ChatGPTViewer:init()
   if self.add_default_buttons or not self.buttons_table then
     table.insert(buttons, default_buttons)
   end
-  
+  if buttons[#buttons] == nil then
+    table.insert(buttons, {})
+  end
+
   -- Add a copy button to the bottom button row
   local copy_button = {
       text = _("Copy"),
@@ -306,84 +384,24 @@ function ChatGPTViewer:init()
           end
       end
   }
-  
-  -- Insert the buttons into the existing buttons, 
+
+  -- Insert the buttons into the existing buttons,
   -- to keep close button on the right, insert into the second-to-last position
   table.insert(buttons[#buttons], #(buttons[#buttons]), copy_button)
-  
-  -- Add a button to add notes
-  local function createAddNoteButton(self)
-      return {
-          text = _("Add Note"),
-          callback = function()
-              -- Check if ui is available in self
-              local ui = self.ui
-              if not ui or not ui.highlight then
-                  UIManager:show(InfoMessage:new{
-                      icon = "notice-warning",
-                      text = _("Highlight functionality not available"),
-                      timeout = 2
-                  })
-                  return
-              end
-              
-              if not self.text or self.text == "" then
-                  UIManager:show(InfoMessage:new{
-                      icon = "notice-warning",
-                      text = _("No text to add as note"),
-                      timeout = 2
-                  })
-                  return
-              end
-              
-              -- Get the selected text
-              local selected_text = self.highlighted_text or ""
-              
-              -- Remove the selected text from the full text with multiple strategies
-              local note_text = self.text
-              
-              -- First, try to remove only if the selected text is after "Highlighted text: "
-              local highlighted_start, highlighted_end = note_text:find('Highlighted text: "([^"]*)"')
-              if highlighted_start then
-                  local highlighted_part = note_text:sub(highlighted_start, highlighted_end)
-                  local selected_text_in_highlight = highlighted_part:match('"([^"]*)"')
-                  
-                  if selected_text_in_highlight == selected_text then
-                      note_text = note_text:gsub('Highlighted text: "' .. selected_text:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1") .. '"', "")
-                  end
-              end
-              
-              -- Trim whitespace
-              note_text = note_text:gsub("^%s+", ""):gsub("%s+$", "")
-                            
-              if note_text == "" then
-                  UIManager:show(InfoMessage:new{
-                      icon = "notice-warning",
-                      text = _("No text left to add as note"),
-                      timeout = 2
-                  })
-                  return
-              end
-              
-              local index = ui.highlight:saveHighlight(true)
-              local a = ui.annotation.annotations[index]
-              a.note = note_text
-              ui:handleEvent(Event:new("AnnotationsModified", 
-                                      { a, nb_highlights_added = -1, nb_notes_added = 1 }))
-              
-              UIManager:show(InfoMessage:new{
-                  text = _("Note added successfully"),
-                  timeout = 2
-              })
-          end
-      }
-  end
-  
-  -- Only add Add Note button if ui context is available and not disabled
-  if self.ui and not self.disable_add_note then
+
+  -- Only add Annotate button if ui context is available and not disabled
+  if self.ui and self.is_show_addnote then
       local add_note_button = createAddNoteButton(self)
       -- to keep close button on the right, insert into the second-to-last position
       table.insert(buttons[#buttons], #(buttons[#buttons]), add_note_button)
+  end
+
+  -- Caller-supplied extra buttons go second-to-last to keep Close rightmost.
+  -- Button order after change: Copy, Annotate, extra_buttons, Save, Close.
+  if type(self.extra_buttons) == "table" and #self.extra_buttons >= 1 then
+      for idx, btn in ipairs(self.extra_buttons) do
+          table.insert(buttons[#buttons], #(buttons[#buttons]), btn)
+      end
   end
 
   -- Only add Save button if auto_save_to_notebook is disabled.
@@ -425,6 +443,11 @@ function ChatGPTViewer:init()
               UIManager:show(InfoMessage:new{
                   text = _("Conversation is saved to AI Notes"),
                   timeout = 2
+              })
+          end,
+          hold_callback = function()
+              UIManager:show(InfoMessage:new{
+                  text = _("Saves the conversation to AI Notes"),
               })
           end
       }
