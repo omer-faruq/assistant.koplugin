@@ -64,8 +64,7 @@ function ResponsesHandler:SyncOptions(querier)
     self.responses_url = self.base_url .. "/responses"
 end
 
---- Connection test: minimal Responses API request with the static echo
---- instruction (plain string input, no tools/streaming).
+--- Connection test: minimal Responses API request with the static echo instruction.
 function ResponsesHandler:Test()
     local body = {
         model = self.model,
@@ -76,7 +75,11 @@ function ResponsesHandler:Test()
         ["Authorization"] = "Bearer " .. self.api_key,
     }
     return self:testRequest(self.base_url .. "/responses", headers, body, function(data)
-        return data.output_text
+        local top = koutil.tableGetValue(data, "output_text")
+        if type(top) == "string" and top ~= "" then return top end
+        local parsed = ToolExecutor.parseToolCallsResponse(data, "responses")
+        if type(parsed) == "table" then return parsed.content end
+        return nil
     end)
 end
 
