@@ -75,11 +75,16 @@ local ModelPickerDialog = InputDialog:extend{
                          -- falls back to the active provider when nil
 }
 
-function ModelPickerDialog:init()
-    -- dynamic calculate lines PER PAGE
+--- Lines per page, shared by the dialog layout and the fresh-open page jump.
+local function calcModelsPerPage()
     local item_height = Screen:scaleBySize(30) + 2*Size.padding.default -- radiobutton item_height
     local fixed_height = Screen:scaleBySize(135) + 2*Size.margin.default -- title bar, buttons row, etc
-    local MODELS_PER_PAGE = math.max(5, math.floor((Screen:getHeight() - fixed_height) / item_height))
+    return math.max(5, math.floor((Screen:getHeight() - fixed_height) / item_height))
+end
+
+function ModelPickerDialog:init()
+    -- dynamic calculate lines PER PAGE
+    local MODELS_PER_PAGE = calcModelsPerPage()
 
     local current_model = effectiveModel(self.assistant)
 
@@ -501,22 +506,22 @@ showManualInput = function(assistant, close_callback, on_select, reopen_callback
     UIManager:show(dialog)
 end
 
---- Main entry point: fetch models via querier's handler and show picker
-local function showModelPicker(assistant, close_callback, on_select)
-    local models, err = assistant.querier.handler:FetchModels()
-    if err then
-        UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err, })
-        return
+--- Fresh-open page: the page holding the model currently in effect, so the
+--- dialog opens on it with that row checked. Falls back to 1 when the model
+--- is absent from the list (custom id, other provider). Without the jump the
+--- dialog strands on page 1, where RadioButtonTable force-checks the first
+--- row even though nothing was staged.
+local function initialPage(assistant, all_models)
+    local model_id = effectiveModel(assistant)
+    if model_id and model_id ~= "" and type(all_models) == "table" then
+        local per_page = calcModelsPerPage()
+        for idx, m in ipairs(all_models) do
+            if type(m) == "table" and m.id == model_id then
+                return math.ceil(idx / per_page)
+            end
+        end
     end
-
-    if not models or #models == 0 then
-        UIManager:show(InfoMessage:new{
-            text = _("No models available."),
-        })
-        return
-    end
-   
-    showPickerDialog(assistant, models, close_callback, "", 1, on_select)
+    return 1
 end
 
 --- Build a temporary handler instance from provider fields and fetch the
@@ -544,7 +549,7 @@ local function fetchModels(handler_name, base_url, api_key)
 end
 
 return {
-    showModelPicker = showModelPicker,
     showPickerDialog = showPickerDialog,
     fetchModels = fetchModels,
+    initialPage = initialPage,
 }

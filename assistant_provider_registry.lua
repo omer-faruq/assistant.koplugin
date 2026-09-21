@@ -1003,7 +1003,8 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                             })
                             return
                         end
-                        mp.showPickerDialog(assistant, model_list, nil, "", 1,
+                        mp.showPickerDialog(assistant, model_list, nil, "",
+                            mp.initialPage(assistant, model_list),
                             function(model_id)
                                 if dialog.input_fields[4] then
                                     dialog.input_fields[4]:setText(model_id)

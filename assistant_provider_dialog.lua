@@ -258,8 +258,9 @@ function ProviderDialog:onBrowseModel()
             -- to Provider Settings on a normal dismissal only.
             local menu_refresh = self.close_callback
             UIManager:close(self)
-            local showPickerDialog = require("assistant_model_picker").showPickerDialog
-            showPickerDialog(self.assistant, models, menu_refresh, "", 1, nil, nil, nil, function()
+            local ModelPicker = require("assistant_model_picker")
+            ModelPicker.showPickerDialog(self.assistant, models, menu_refresh, "",
+                ModelPicker.initialPage(self.assistant, models), nil, nil, nil, function()
                 UIManager:nextTick(function()
                     self.assistant:showProviderDialog(menu_refresh)
                 end)

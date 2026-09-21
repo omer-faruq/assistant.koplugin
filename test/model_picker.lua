@@ -64,6 +64,8 @@ local ModelPicker = require("assistant_model_picker")
 mock_assistant.querier.handler.FetchModels = function()
     return test_models
 end
-ModelPicker.showModelPicker(mock_assistant)
+local models = mock_assistant.querier.handler:FetchModels()
+ModelPicker.showPickerDialog(mock_assistant, models, nil, "",
+    ModelPicker.initialPage(mock_assistant, models))
 
 UIManager:run()
