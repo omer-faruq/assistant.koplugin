@@ -126,7 +126,15 @@ local function createAddNoteButton(viewer)
             end
 
             local index = ui.highlight:saveHighlight(true)
-            local a = ui.annotation.annotations[index]
+            local a = index and ui.annotation and ui.annotation.annotations[index]
+            if not a then
+                UIManager:show(InfoMessage:new{
+                    icon = "notice-warning",
+                    text = _("No highlight to annotate"),
+                    timeout = 2,
+                })
+                return
+            end
             a.note = note_text
             ui:handleEvent(Event:new("AnnotationsModified",
                                     { a, nb_highlights_added = -1, nb_notes_added = 1 }))

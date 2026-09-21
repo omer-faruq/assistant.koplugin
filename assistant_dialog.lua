@@ -501,8 +501,8 @@ function AssistantDialog:showAskDialog(highlightedText)
           ok_text = _("Add"),
           ok_callback = function()
             self.assistant:handleEvent(Event:new("AssistantSetButton", {order=quick_note_tab.order, idx=quick_note_tab.idx}, "add"))
-            -- Close the stale menu and clear the selection.
-            self.assistant.ui.highlight:onClose()
+            -- Close the stale menu, keeping the selection.
+            self.assistant.ui.highlight:onClose(true)
           end,
         })
       end,
@@ -643,8 +643,8 @@ function AssistantDialog:showAskDialog(highlightedText)
               ok_text = _("Add"),
               ok_callback = function()
                 self.assistant:handleEvent(Event:new("AssistantSetButton", {order=tab.order, idx=tab.idx}, "add"))
-                -- Close the stale menu and clear the selection.
-                self.assistant.ui.highlight:onClose()
+                -- Close the stale menu, keeping the selection.
+                self.assistant.ui.highlight:onClose(true)
               end,
             })
           end
