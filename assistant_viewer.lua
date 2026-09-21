@@ -766,10 +766,15 @@ end
 -- close all active dialog back to the reading UI
 function ChatGPTViewer:HoldClose()
   self:onClose()
-  if self.assistant.ui.dictionary.dict_window then
-    self.assistant.ui.dictionary.dict_window:onClose()
+  -- FileManager registers dictionary but no highlight (no open book), so
+  -- both are optional here; every other ui.highlight access guards the same.
+  local ui = self.assistant.ui
+  if ui and ui.dictionary and ui.dictionary.dict_window then
+    ui.dictionary.dict_window:onClose()
   end
-  self.assistant.ui.highlight:onClose()
+  if ui and ui.highlight then
+    ui.highlight:onClose()
+  end
 end
 
 function ChatGPTViewer:onShow()
