@@ -1173,6 +1173,8 @@ function Assistant:addMainButton(prompt_idx, prompt)
             ok_text = _("Remove"),
             ok_callback = function()
               self:handleEvent(Event:new("AssistantSetButton", {order=prompt.order, idx=prompt_idx}, "remove"))
+              -- Close the stale menu and clear the selection.
+              self.ui.highlight:onClose()
             end
           })
         end)
