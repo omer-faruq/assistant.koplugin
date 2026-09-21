@@ -184,6 +184,7 @@ function GeminiHandler:Test()
     }
     local body = {
         contents = { { role = "user", parts = { { text = self.TEST_PROMPT } } } },
+        generationConfig = { maxOutputTokens = 64 },
     }
     return self:testRequest(url, headers, body, function(data)
         return koutil.tableGetValue(data, "candidates", 1, "content", "parts", 1, "text")

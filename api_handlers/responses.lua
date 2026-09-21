@@ -69,6 +69,7 @@ function ResponsesHandler:Test()
     local body = {
         model = self.model,
         input = self.TEST_PROMPT,
+        max_output_tokens = 64,
     }
     local headers = {
         ["Content-Type"]  = "application/json",
