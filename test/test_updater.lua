@@ -1,11 +1,13 @@
 -- test_updater.lua
--- Tests for the pure helper functions exported from assistant_updater.lua:
+-- Tests for the pure helper functions exported from assistant_updater.lua,
+-- plus the shared path helper from assistant_utils.lua:
 --   isVersionNewer, is_excluded, join
 --
 -- The destructive otaUpgrade function itself is not tested headlessly.
 local helper = require("test.helper")
 local assert = helper.assert
 local updater = require("assistant_updater")
+local utils = require("assistant_utils")
 
 local function test(name, fn)
     return { name = name, fn = fn }
@@ -127,21 +129,21 @@ local tests = {
     -- =========================================================================
 
     test("join: single path returns as-is", function()
-        assert.equal(updater.join("/foo"), "/foo")
+        assert.equal(utils.joinPath("/foo"), "/foo")
     end),
 
     test("join: two paths", function()
-        local result = updater.join("/foo", "bar")
+        local result = utils.joinPath("/foo", "bar")
         assert.isTrue(result:find("bar") ~= nil)
         assert.isTrue(result:find("foo") ~= nil)
     end),
 
     test("join: empty call returns empty string", function()
-        assert.equal(updater.join(), "")
+        assert.equal(utils.joinPath(), "")
     end),
 
     test("join: nil first arg returns empty string", function()
-        assert.equal(updater.join(nil), "")
+        assert.equal(utils.joinPath(nil), "")
     end),
 }
 

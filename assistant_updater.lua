@@ -11,18 +11,9 @@ local _ = require("assistant_gettext")
 local FFIUtil = require("ffi/util")
 local T = FFIUtil.template
 local koutil = require("util")
+local ASUtils = require("assistant_utils")
 
--- Variadic path join. Uses FFIUtil.joinPath so we don't sprinkle "/" literals
--- and get the right separator handling for free.
-local function join(...)
-    local args = { ... }
-    local result = args[1]
-    if not result then return "" end
-    for i = 2, #args do
-        result = FFIUtil.joinPath(result, args[i])
-    end
-    return result
-end
+local joinPath = ASUtils.joinPath
 
 local UPDATE_CHECK_INTERVAL = 48 * 3600 -- 48 hours in seconds
 local LAST_CHECK_KEY = "updater_last_check"
@@ -252,13 +243,13 @@ local function otaUpgrade(assistant, version)
 
   -- OTA target is intentionally DataStorage (writable) — not self-location (may be read-only install dir).
   local KOREADER_DIR = DataStorage:getFullDataDir()
-  local PLUGIN_DIR = join(KOREADER_DIR, "plugins")
-  local ASSISTANT_DIR = join(PLUGIN_DIR, PLUGIN_NAME)
-  local UPDATE_TMPDIR = join(KOREADER_DIR, "ota", PLUGIN_NAME .. ".update")
-  local UPDATE_BAKDIR = join(UPDATE_TMPDIR, "backup")
+  local PLUGIN_DIR = joinPath(KOREADER_DIR, "plugins")
+  local ASSISTANT_DIR = joinPath(PLUGIN_DIR, PLUGIN_NAME)
+  local UPDATE_TMPDIR = joinPath(KOREADER_DIR, "ota", PLUGIN_NAME .. ".update")
+  local UPDATE_BAKDIR = joinPath(UPDATE_TMPDIR, "backup")
   local TARGET_PLUGIN_PATH = ASSISTANT_DIR
-  local BACKUP_PLUGIN_PATH = join(UPDATE_BAKDIR, PLUGIN_NAME)
-  local DL_TAR = join(UPDATE_TMPDIR, string.format("SOURCE-%s-%s.zip", PLUGIN_NAME, version))
+  local BACKUP_PLUGIN_PATH = joinPath(UPDATE_BAKDIR, PLUGIN_NAME)
+  local DL_TAR = joinPath(UPDATE_TMPDIR, string.format("SOURCE-%s-%s.zip", PLUGIN_NAME, version))
 
   util.makePath(UPDATE_BAKDIR)
 
@@ -390,7 +381,7 @@ local function otaUpgrade(assistant, version)
       if is_excluded_with(entry.path, pats) then
         -- skip (dotfiles like .releaseignore already excluded via ".*" / legacy fallback)
       else
-        local dest_path = join(UPDATE_TMPDIR, entry.path)
+        local dest_path = joinPath(UPDATE_TMPDIR, entry.path)
         local parent_dir = dest_path:match("(.*)" .. package.config:sub(1,1))
         if parent_dir and not util.pathExists(parent_dir) then
           util.makePath(parent_dir)
@@ -409,7 +400,7 @@ local function otaUpgrade(assistant, version)
     local found_extracted_dir = nil
     for file in lfs.dir(UPDATE_TMPDIR) do
       if file:sub(1, #PLUGIN_NAME) == PLUGIN_NAME then
-        local candidate = join(UPDATE_TMPDIR, file)
+        local candidate = joinPath(UPDATE_TMPDIR, file)
         local is_dir = util.directoryExists(candidate)
         if is_dir then
           found_extracted_dir = candidate
@@ -444,8 +435,8 @@ local function otaUpgrade(assistant, version)
     if util.pathExists(BACKUP_PLUGIN_PATH) then
       local restore_targets = {"configuration.lua"}
       for _, filename in ipairs(restore_targets) do
-        local old_file = join(BACKUP_PLUGIN_PATH, filename)
-        local new_file = join(TARGET_PLUGIN_PATH, filename)
+        local old_file = joinPath(BACKUP_PLUGIN_PATH, filename)
+        local new_file = joinPath(TARGET_PLUGIN_PATH, filename)
         if util.pathExists(old_file) then
           if util.pathExists(new_file) then
             FFIUtil.purgeDir(new_file)
@@ -518,7 +509,6 @@ end
 return {
   isVersionNewer = isVersionNewer,
   is_excluded = is_excluded,
-  join = join,
   UPDATE_CHECK_INTERVAL = UPDATE_CHECK_INTERVAL,
   LAST_CHECK_KEY = LAST_CHECK_KEY,
   LATEST_VERSION_KEY = LATEST_VERSION_KEY,

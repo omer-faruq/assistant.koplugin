@@ -9,7 +9,7 @@ local Config = {}
 Config.__index = Config
 
 local koutil = require("util")
-local FFIUtil = require("ffi/util")
+local ASUtils = require("assistant_utils")
 
 ---------------------------------------------------------------------------
 -- Static (module-level) helpers — no instance required
@@ -32,17 +32,17 @@ end
 --- Uses DataStorage directly to avoid depending on Assistant.name.
 function Config.getAssistantDir()
     local DataStorage = require("datastorage")
-    return FFIUtil.joinPath(FFIUtil.joinPath(DataStorage:getDataDir(), "plugins"), "assistant.koplugin")
+    return ASUtils.joinPath(DataStorage:getDataDir(), "plugins", "assistant.koplugin")
 end
 
 --- Return the full path to configuration.lua.
 function Config.getConfigPath()
-    return FFIUtil.joinPath(Config.getAssistantDir(), "configuration.lua")
+    return ASUtils.joinPath(Config.getAssistantDir(), "configuration.lua")
 end
 
 --- Return the full path to _meta.lua.
 function Config.getMetaPath()
-    return FFIUtil.joinPath(Config.getAssistantDir(), "_meta.lua")
+    return ASUtils.joinPath(Config.getAssistantDir(), "_meta.lua")
 end
 
 --- Load the raw configuration table from configuration.lua.

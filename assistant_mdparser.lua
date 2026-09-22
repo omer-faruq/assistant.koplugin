@@ -9,6 +9,7 @@ local ffi = require("ffi")
 local ffiutil = require("ffi/util")
 local lfs = require("libs/libkoreader-lfs")
 local util = require("util")
+local ASUtils = require("assistant_utils")
 local plugin_dir = require("assistant_gettext").plugin_dir
 local plugin_lib_dir = (plugin_dir or ".") .. "/lib"
 local LibHoedown = nil
@@ -54,7 +55,7 @@ local function stage_android_library(source_path)
 
     local _, filename = util.splitFilePathName(source_path)
     local target_dir = android.dir .. "/plugins/assistant.koplugin/lib"
-    local target_path = target_dir .. "/" .. filename
+    local target_path = ASUtils.joinPath(target_dir, filename)
 
     local mk_ok, mk_err = util.makePath(target_dir)
     if not mk_ok then
@@ -91,7 +92,7 @@ if ok then LibHoedown = _lib end
 if not LibHoedown then
     local libdir = get_platform_libdir()
     if libdir then
-        local so_path = plugin_lib_dir .. "/" .. libdir .. "/libhoedown.so.3"
+        local so_path = ASUtils.joinPath(plugin_lib_dir, libdir, "libhoedown.so.3")
         if Device:isAndroid() then
             so_path = stage_android_library(so_path)
         end

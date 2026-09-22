@@ -1,4 +1,5 @@
 local FFIUtil = require("ffi/util")
+local ASUtils = require("assistant_utils")
 local TextUtils = require("assistant_text_utils")
 local T = FFIUtil.template
 local lfs = require("libs/libkoreader-lfs")
@@ -18,11 +19,6 @@ local LEGACY_NOTEBOOK_FILENAME = "ai_notes.md"
 local ACTIVE_NOTEBOOK_SETTING = "active_general_notebook"
 local MULTI_NOTEBOOK_SETTING = "use_multiple_general_notebooks"
 local FOLDER_SETTING = "general_notebooks_folder"
-
-local function joinPath(parent, child)
-    if not parent or parent == "" then return nil end
-    return FFIUtil.joinPath(parent, child)
-end
 
 local function getCurrentBaseDirectory(assistant)
     local default_folder = assistant.config:getFeature("default_folder_for_logs")
@@ -101,7 +97,7 @@ end
 
 function M.getLegacyPath(assistant)
     local target_dir = getCurrentBaseDirectory(assistant)
-    return target_dir and joinPath(target_dir, LEGACY_NOTEBOOK_FILENAME) or nil
+    return target_dir and ASUtils.joinPath(target_dir, LEGACY_NOTEBOOK_FILENAME) or nil
 end
 
 function M.getGeneralNotebookFilePath(assistant)
@@ -169,7 +165,7 @@ function M.getFolder(assistant, for_write)
         return nil, _("No base folder is available for AI Notes."), warning
     end
 
-    local folder = joinPath(base_dir, GENERAL_NOTEBOOKS_DIR)
+    local folder = ASUtils.joinPath(base_dir, GENERAL_NOTEBOOKS_DIR)
     local mode = getMode(folder)
     if mode == "directory" then
         return folder, nil, warning
@@ -206,7 +202,7 @@ function M.list(assistant)
         if ok and iter then
             for filename in iter, dir_obj do
                 if filename ~= "." and filename ~= ".." and filename:lower():sub(-3) == ".md" then
-                    local path = joinPath(folder, filename)
+                    local path = ASUtils.joinPath(folder, filename)
                     if path ~= legacy_path and isFile(path) then
                         notebooks[#notebooks + 1] = makeEntry(path, filename, false)
                     end
@@ -244,7 +240,7 @@ function M.getActive(assistant)
         local folder
         folder, folder_err, folder_warning = M.getFolder(assistant, false)
         if folder then
-            local path = joinPath(folder, filename)
+            local path = ASUtils.joinPath(folder, filename)
             if isFile(path) then
                 return makeEntry(path, filename, false), nil, folder_warning
             end
@@ -370,7 +366,7 @@ function M.getBookNotebookPath(assistant, book_file)
     end
 
     local filename = M.bookNotebookFilename(book_file, "Untitled")
-    local path = joinPath(folder, filename)
+    local path = ASUtils.joinPath(folder, filename)
     if not path then
         return nil, _("No base folder is available for AI Notes.")
     end
@@ -431,7 +427,7 @@ function M.getBookModeNotebookPath(assistant)
                         original_filename = "notebook.md"
                     end
                 end
-                local new_notebookfile = default_folder .. "/" .. original_filename
+                local new_notebookfile = ASUtils.joinPath(default_folder, original_filename)
 
                 assistant.ui.doc_settings:saveSetting("notebook_file", new_notebookfile)
 
@@ -462,7 +458,7 @@ function M.create(assistant, name)
         return nil, folder_err, warning
     end
 
-    local path = joinPath(folder, filename)
+    local path = ASUtils.joinPath(folder, filename)
     local mode = getMode(path)
     if mode and mode ~= "file" then
         return nil, T(_("AI note path is not a file: %1"), path), warning

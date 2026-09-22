@@ -2,7 +2,21 @@
 -- Network, text and document helpers live in assistant_net_utils,
 -- assistant_text_utils and assistant_doc_utils.
 local json = require("rapidjson")
+local FFIUtil = require("ffi/util")
 local M = {}
+
+--- Join filesystem path components using KOReader's platform-aware helper.
+---@param ... string|nil Path components
+---@return string path
+function M.joinPath(...)
+    local args = { ... }
+    local result = args[1]
+    if not result then return "" end
+    for i = 2, #args do
+        result = FFIUtil.joinPath(result, args[i])
+    end
+    return result
+end
 
 --- Sets a metadata attribute on an object
 --- The attribute is stored in the object's metatable under the __attr field

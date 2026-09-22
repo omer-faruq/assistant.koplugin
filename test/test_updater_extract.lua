@@ -36,6 +36,7 @@ end
 FFIUtil.purgeDir = safePurge
 
 local updater = require("assistant_updater")
+local ASUtils = require("assistant_utils")
 
 -- Local replicas of updater's internal helpers (do not rely on private export).
 local function normalize(path)
@@ -89,19 +90,12 @@ local function is_excluded_with(p, pats)
     return exc
 end
 
--- Helpers for isolated OTA paths (mirror otaUpgrade's join logic).
+-- Helpers for isolated OTA paths.
 local PLUGIN_NAME = "assistant.koplugin"
-local function join(...)
-    local args = { ... }
-    local result = args[1]
-    if not result then return "" end
-    for i = 2, #args do result = FFIUtil.joinPath(result, args[i]) end
-    return result
-end
-local UPDATE_TMPDIR = join(TMP, "ota", PLUGIN_NAME .. ".update")
-local TARGET_PLUGIN_PATH = join(TMP, "plugins", PLUGIN_NAME)
-local BACKUP_PLUGIN_PATH = join(UPDATE_TMPDIR, "backup", PLUGIN_NAME)
-local DL_TAR = join(UPDATE_TMPDIR, string.format("SOURCE-%s-test.zip", PLUGIN_NAME))
+local UPDATE_TMPDIR = ASUtils.joinPath(TMP, "ota", PLUGIN_NAME .. ".update")
+local TARGET_PLUGIN_PATH = ASUtils.joinPath(TMP, "plugins", PLUGIN_NAME)
+local BACKUP_PLUGIN_PATH = ASUtils.joinPath(UPDATE_TMPDIR, "backup", PLUGIN_NAME)
+local DL_TAR = ASUtils.joinPath(UPDATE_TMPDIR, string.format("SOURCE-%s-test.zip", PLUGIN_NAME))
 
 local function pathExists(p) return lfs.attributes(p, "mode") ~= nil end
 local function dirExists(p) return lfs.attributes(p, "mode") == "directory" end
@@ -114,7 +108,7 @@ local function ensureCleanTMP()
     DataStorage.getFullDataDir = function() return TMP end
     DataStorage.getDataDir = function() return TMP end
     util.makePath(UPDATE_TMPDIR)
-    util.makePath(join(UPDATE_TMPDIR, "backup"))
+    util.makePath(ASUtils.joinPath(UPDATE_TMPDIR, "backup"))
 end
 
 local function getReleaseIgnoreContent()
@@ -198,7 +192,7 @@ end
 -- Uses fresh Reader instances to avoid size=nil bug after close() without keep_info.
 local function doExtractFiltered(dl_tar, update_tmpdir)
     local Archiver = require("ffi/archiver")
-    local tmp_ignore = join(update_tmpdir, ".releaseignore.tmp")
+    local tmp_ignore = ASUtils.joinPath(update_tmpdir, ".releaseignore.tmp")
     if pathExists(tmp_ignore) then os.remove(tmp_ignore) end
     do
         local arc = Archiver.Reader:new()
@@ -227,7 +221,7 @@ local function doExtractFiltered(dl_tar, update_tmpdir)
         for entry in arc2:iterate() do
             local norm = normalize(entry.path)
             if norm ~= ".releaseignore" and norm ~= ".releaseignore.tmp" and not is_excluded_with(entry.path, pats) then
-                local dest_path = join(update_tmpdir, entry.path)
+                local dest_path = ASUtils.joinPath(update_tmpdir, entry.path)
                 local parent_dir = dest_path:match("(.*)" .. package.config:sub(1, 1))
                 if parent_dir and not pathExists(parent_dir) then util.makePath(parent_dir) end
                 local ok = arc2:extractToPath(entry.path, dest_path)
@@ -246,7 +240,7 @@ local function doExtractFiltered(dl_tar, update_tmpdir)
     local found = nil
     for file in lfs.dir(update_tmpdir) do
         if file:sub(1, #PLUGIN_NAME) == PLUGIN_NAME then
-            local candidate = join(update_tmpdir, file)
+            local candidate = ASUtils.joinPath(update_tmpdir, file)
             if dirExists(candidate) then found = candidate; break end
         end
     end
@@ -272,7 +266,7 @@ local tests = {
 
     test("is_excluded_with: patterns from .releaseignore filter correctly", function()
         ensureCleanTMP()
-        local tmp_ignore = join(UPDATE_TMPDIR, ".releaseignore.tmp")
+        local tmp_ignore = ASUtils.joinPath(UPDATE_TMPDIR, ".releaseignore.tmp")
         local f = io.open(tmp_ignore, "w")
         assert.notNil(f, "should create tmp ignore")
         f:write(RELEASEIGNORE_CONTENT)
@@ -326,7 +320,7 @@ local tests = {
         assert.notNil(found_dir, "found_extracted_dir should exist")
         assert.notNil(pats, "patterns should be loaded from .releaseignore")
         -- Helper to check existence under found_dir
-        local function inside(rel) return join(found_dir, rel) end
+        local function inside(rel) return ASUtils.joinPath(found_dir, rel) end
         assert.isTrue(fileExists(inside("main.lua")), "main.lua should be kept")
         assert.isTrue(fileExists(inside("assistant_updater.lua")), "assistant_updater.lua kept")
         assert.isTrue(fileExists(inside("l10n/fr/assistant.mo")), "mo kept")
@@ -349,16 +343,16 @@ local tests = {
         assert.isTrue(BACKUP_PLUGIN_PATH:sub(1, #TMP) == TMP, "BACKUP under TMP")
         -- Create a fake existing plugin to test backup isolation
         util.makePath(TARGET_PLUGIN_PATH)
-        local fake = io.open(join(TARGET_PLUGIN_PATH, "old.txt"), "w")
+        local fake = io.open(ASUtils.joinPath(TARGET_PLUGIN_PATH, "old.txt"), "w")
         fake:write("old")
         fake:close()
         -- Ensure real DataStorage path not touched
         local real = _origGetFull and _origGetFull() or "/tmp"
         -- real may be /tmp; but we assert our TMP is distinct and contains our fake
-        assert.isTrue(pathExists(join(TARGET_PLUGIN_PATH, "old.txt")))
+        assert.isTrue(pathExists(ASUtils.joinPath(TARGET_PLUGIN_PATH, "old.txt")))
         -- Cleanup will remove fake without affecting real plugin dir
         os.execute("rm -rf " .. TMP)
-        assert.isFalse(pathExists(join(TARGET_PLUGIN_PATH, "old.txt")))
+        assert.isFalse(pathExists(ASUtils.joinPath(TARGET_PLUGIN_PATH, "old.txt")))
         -- If real plugin dir exists, it should not have been deleted (when TMP != real)
         -- Only check when TMP != real to avoid false positive on /tmp mock
         if real ~= TMP then
@@ -370,18 +364,18 @@ local tests = {
     test(".releaseignore.tmp cleaned after extraction", function()
         ensureCleanTMP()
         assert.isTrue(createTestZip(DL_TAR))
-        local tmp_ignore = join(UPDATE_TMPDIR, ".releaseignore.tmp")
+        local tmp_ignore = ASUtils.joinPath(UPDATE_TMPDIR, ".releaseignore.tmp")
         local found_dir = doExtractFiltered(DL_TAR, UPDATE_TMPDIR)
         assert.notNil(found_dir)
         assert.isFalse(pathExists(tmp_ignore), ".releaseignore.tmp should be removed")
-        assert.isFalse(pathExists(join(UPDATE_TMPDIR, ".releaseignore.tmp")))
+        assert.isFalse(pathExists(ASUtils.joinPath(UPDATE_TMPDIR, ".releaseignore.tmp")))
         -- Second extraction should still find patterns correctly (re-reads archive)
         os.execute("rm -rf " .. TMP)
     end),
 
     test("is_excluded_with: direct pattern assertions mirror OTA", function()
         ensureCleanTMP()
-        local tmp_ignore = join(UPDATE_TMPDIR, ".releaseignore.tmp")
+        local tmp_ignore = ASUtils.joinPath(UPDATE_TMPDIR, ".releaseignore.tmp")
         local f = io.open(tmp_ignore, "w")
         f:write(RELEASEIGNORE_CONTENT)
         f:close()
