@@ -1735,7 +1735,7 @@ function Assistant:onAssistantSetButton(btnconf, action)
     self:addMainButton(idx, prompt)
     UIManager:show(InfoMessage:new{
       text = TextUtils.bold_format(
-        T(_("<b>Added</b> [%1 (AI)] to Highlight Menu."), display_text)
+        T(_("Added <b>[%1 (AI)]</b>"), display_text)
       ),
       icon = "notice-info",
       timeout = 3
@@ -1746,7 +1746,7 @@ function Assistant:onAssistantSetButton(btnconf, action)
     self.ui.highlight:removeFromHighlightDialog(menukey)
     UIManager:show(InfoMessage:new{
       text = TextUtils.bold_format(
-        T(_("<b>Removed</b> [%1 (AI)] from Highlight Menu."), display_text)
+        T(_("Removed <b>[%1 (AI)]</b>"), display_text)
       ),
       icon = "notice-info",
       timeout = 3

@@ -254,7 +254,7 @@ local function genDictionaryOutputMenu(assistant)
     end
 
     table.insert(items, {
-        text = _("Dictionary Popup"),
+        text = _("Dictionary Popup Buttons"),
         sub_item_table = popup_items,
     })
 
