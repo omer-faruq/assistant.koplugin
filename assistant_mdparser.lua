@@ -4,14 +4,12 @@
 local Parser = nil
 
 local logger = require("logger")
-local DataStorage = require("datastorage")
 local Device = require("device")
 local ffi = require("ffi")
 local ffiutil = require("ffi/util")
 local lfs = require("libs/libkoreader-lfs")
 local util = require("util")
-local gt_ok, gt = pcall(require, "assistant_gettext")
-local plugin_dir = gt_ok and gt and gt.plugin_dir or require("assistant_utils").getPluginDir()
+local plugin_dir = require("assistant_gettext").plugin_dir
 local plugin_lib_dir = (plugin_dir or ".") .. "/lib"
 local LibHoedown = nil
 
