@@ -4,6 +4,7 @@ Settings menu builders: pure menu-item generators plus their local helpers.
 
 local Trapper = require("ui/trapper")
 local DocUtils = require("assistant_doc_utils")
+local NetUtils = require("assistant_net_utils")
 local TextUtils = require("assistant_text_utils")
 local koutil = require("util")
 local CenterContainer = require("ui/widget/container/centercontainer")
@@ -660,7 +661,7 @@ File configuration.lua will be preserved.]]),
                             {
                                 text = _("Update"),
                                 callback = function()
-                                    DocUtils.runWhenOnlineFast(function()
+                                    NetUtils.runWhenOnlineFast(function()
                                         local version = version_input:getInputText()
                                         if version == "" then version = "main" end
                                         UIManager:close(version_input)

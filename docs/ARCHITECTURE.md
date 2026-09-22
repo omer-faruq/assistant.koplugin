@@ -60,10 +60,10 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 
 ## Shared utils & gettext
 
-- `assistant_utils.lua` — slim core: `PLUGIN_DIR` (computed via `debug.getinfo` self-location, set once by `main.lua`), metatable attrs, JSON default.
+- `assistant_utils.lua` — slim core: metatable attrs, JSON default, and shared path joining.
 - `assistant_text_utils.lua` — truncation, selection cleanup, PTF bold, page-text flattening, single-message renderer.
-- `assistant_net_utils.lua` — `httpRequest`, JSON fetch, headers, error messages.
-- `assistant_doc_utils.lua` — book/chapter/page extraction, page info, online guard, dialog field trim/validate.
+- `assistant_net_utils.lua` — `httpRequest`, JSON fetch, headers, error messages, online guard.
+- `assistant_doc_utils.lua` — book/chapter/page extraction, page info, dialog field trim/validate.
 - `assistant_gettext.lua` — isolated MO shim, `textdomain "assistant"`, reads `l10n/*/assistant.mo` (MO, not PO); exposes the same `_`/`N_`/`C_`/`NC_` API as upstream, keeping plugin strings out of KOReader's core catalog.
 - `assistant_prompts.lua` — prompt templates.
 - Helpers: prefer `koutil.tableGetValue`, `koutil.tableDeepCopy`/`tableSize`/`tableEquals` over manual table loops; `util.orderedPairs(t)` for deterministic key order. Error handling returns `nil, err` (or `false, err` for HTTP); callers check the first return value.

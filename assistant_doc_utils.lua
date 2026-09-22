@@ -100,24 +100,6 @@ function M.getPageInfo(ui)
   return page_info
 end
 
---- Like NetworkMgr:runWhenOnline(), but checks Wi-Fi radio state first.
--- NetworkMgr:runWhenOnline() calls isOnline(), which does a real DNS
--- resolution and can take up to ~20s to time out before falling back to
--- the "Do you want to turn on Wi-Fi?" prompt. When Wi-Fi is already off,
--- isWifiOn() is an instant local check that reaches the same prompt
--- without waiting on the network first.
--- NOTE: NetworkMgr is lazy-required inside the function body to avoid
--- pulling in the full KOReader UI/network stack during test suite init.
---- @param callback function run once online
-function M.runWhenOnlineFast(callback)
-  local NetworkMgr = require("ui/network/manager")
-  if not NetworkMgr:isWifiOn() then
-    NetworkMgr:promptWifiOn(callback)
-    return
-  end
-  NetworkMgr:runWhenOnline(callback)
-end
-
 --- Read every field of a MultiInputDialog and trim surrounding whitespace.
 --- Returns the trimmed values; the dialog's own widgets are not modified.
 ---@param dialog table A widget exposing getFields()

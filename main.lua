@@ -19,6 +19,7 @@ local ffiutil = require("ffi/util")
 local ToolExecutor = require("assistant_tool_executor")
 local TextUtils = require("assistant_text_utils")
 local DocUtils = require("assistant_doc_utils")
+local NetUtils = require("assistant_net_utils")
 local Notebook = require("assistant_notebook")
 
 -- Route a highlight to the AI Dictionary or the full Translate action.
@@ -712,7 +713,7 @@ function BookLevelCustomPrompts(assistant)
           Prompts.isWebSearchEnabled(assistant.settings)),
         callback = function()
           if not assistant:isConfigured() then return end
-          DocUtils.runWhenOnlineFast(function()
+          NetUtils.runWhenOnlineFast(function()
             local book = getDocumentInfo(assistant.ui.document)
             local showFeatureDialog = require("assistant_featuredialog")
             Trapper:wrap(function()
@@ -974,7 +975,7 @@ function Assistant:init()
             return
           end
 
-          DocUtils.runWhenOnlineFast(function()
+          NetUtils.runWhenOnlineFast(function()
             -- Throttled inside updater: only hits network if 48h passed since last check
             Updater.checkForUpdates(self)
             UIManager:nextTick(function()
@@ -1153,7 +1154,7 @@ function Assistant:addMainButton(prompt_idx, prompt)
             self.quicknote:saveNote(nil, _reader_highlight_instance.selected_text.text)
           end)
         else
-          DocUtils.runWhenOnlineFast(function()
+          NetUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
               if prompt.order == -10 and prompt_idx == "dictionary" then
                 -- Dictionary prompt, show dictionary dialog
@@ -1241,7 +1242,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
     callback = function(widget_instance)
         local popup = widget_instance or dict_popup_arg
         local word = popup and popup.word
-        DocUtils.runWhenOnlineFast(function()
+        NetUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
               if not self.assistant_dialog then return end -- dialog is created post-provider-load
               self.assistant_dialog:runPrompt(word, "wikipedia")
@@ -1263,7 +1264,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
     callback = function(widget_instance)
         local popup = widget_instance or dict_popup_arg
         local word = popup and popup.word
-        DocUtils.runWhenOnlineFast(function()
+        NetUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
               showDictionaryDialog(self, word, nil, "term_xray")
             end)
@@ -1278,7 +1279,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
     callback = function(widget_instance)
         local popup = widget_instance or dict_popup_arg
         local word = popup and popup.word
-        DocUtils.runWhenOnlineFast(function()
+        NetUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
               showDictionaryDialog(self, word)
             end)
@@ -1318,7 +1319,7 @@ function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
         callback = function(widget_instance)
             local popup = widget_instance or dict_popup_arg
             local word = popup and popup.word
-            DocUtils.runWhenOnlineFast(function()
+            NetUtils.runWhenOnlineFast(function()
                 Trapper:wrap(function()
                   if not self.assistant_dialog then return end -- dialog is created post-provider-load
                   self.assistant_dialog:runPrompt(word, prompt.id)
@@ -1450,7 +1451,7 @@ end
       return
     end
     
-    DocUtils.runWhenOnlineFast(function()
+    NetUtils.runWhenOnlineFast(function()
       -- Show dialog without highlighted text
       Trapper:wrap(function()
         if not self.assistant_dialog then return end -- dialog is created post-provider-load
@@ -1462,7 +1463,7 @@ end
 
   function Assistant:onAskAIRecap()
     if not self:isConfigured() then return end
-    DocUtils.runWhenOnlineFast(function()
+    NetUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1474,7 +1475,7 @@ end
 
   function Assistant:onAskAIXRay()
     if not self:isConfigured() then return end
-    DocUtils.runWhenOnlineFast(function()
+    NetUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1492,7 +1493,7 @@ end
       })
       return true
     end
-    DocUtils.runWhenOnlineFast(function()
+    NetUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1505,7 +1506,7 @@ end
   -- FileManager-side book_info: metadata comes from the file, not an open doc.
   function Assistant:onAskAIBookInfoForFile(file, book_props)
     if not self:isConfigured() then return end
-    DocUtils.runWhenOnlineFast(function()
+    NetUtils.runWhenOnlineFast(function()
       local book = self:getDocumentInfoForFile(file, book_props)
       local notebook_path
       if Notebook.isEnabled(self) then
@@ -1568,7 +1569,7 @@ end
         logger.warn("Assistant: Could not compute per-book notebook path:", path)
       end
     end
-    DocUtils.runWhenOnlineFast(function()
+    NetUtils.runWhenOnlineFast(function()
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
         showFeatureDialog(self, "recap", book.title, book.authors, percent, nil, notebook_path)
@@ -1579,7 +1580,7 @@ end
 
   function Assistant:onAskAIAnnotations()
     if not self:isConfigured() then return end
-    DocUtils.runWhenOnlineFast(function()
+    NetUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1591,7 +1592,7 @@ end
 
   function Assistant:onAskSummaryUsingAnnotations()
     if not self:isConfigured() then return end
-    DocUtils.runWhenOnlineFast(function()
+    NetUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui.document)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
@@ -1615,7 +1616,7 @@ end
 -- Route a translate request through Smart Dictionary Lookup: short selections
 -- may open the AI Dictionary instead (see lookup_mode_for_selection above),
 -- with a one-time three-way prompt on first use. Callers must already be inside
--- DocUtils.runWhenOnlineFast + Trapper:wrap.
+-- NetUtils.runWhenOnlineFast + Trapper:wrap.
 function Assistant:showTranslateOrDictionary(text)
   local function open_translation()
     if not self.assistant_dialog then return end -- dialog is created post-provider-load
@@ -1656,7 +1657,7 @@ function Assistant:showTranslateOrDictionary(text)
             self.settings:saveSetting("ai_smart_dictionary", false)
             self.updated = true -- persist choice on next FlushSettings
             UIManager:close(ask_dialog)
-            DocUtils.runWhenOnlineFast(function() Trapper:wrap(open_translation) end)
+            NetUtils.runWhenOnlineFast(function() Trapper:wrap(open_translation) end)
           end,
         },
         {
@@ -1665,7 +1666,7 @@ function Assistant:showTranslateOrDictionary(text)
             self.settings:saveSetting("ai_smart_dictionary", true)
             self.updated = true -- persist choice on next FlushSettings
             UIManager:close(ask_dialog)
-            DocUtils.runWhenOnlineFast(function() Trapper:wrap(open_dictionary) end)
+            NetUtils.runWhenOnlineFast(function() Trapper:wrap(open_dictionary) end)
           end,
         },
       }},

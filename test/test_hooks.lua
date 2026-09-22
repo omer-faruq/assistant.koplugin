@@ -97,12 +97,11 @@ end
 -- runWhenOnlineFast reaches for the real network stack, so swap in a
 -- pass-through around the callback invocation only, then restore.
 local function tap_button(btn)
-    local saved_docutils = package.loaded["assistant_doc_utils"]
-    package.loaded["assistant_doc_utils"] = {
-        runWhenOnlineFast = function(callback) callback() end,
-    }
+    local netutils = package.loaded["assistant_net_utils"]
+    local saved_run_when_online = netutils.runWhenOnlineFast
+    netutils.runWhenOnlineFast = function(callback) callback() end
     local ok, err = pcall(btn.callback)
-    package.loaded["assistant_doc_utils"] = saved_docutils
+    netutils.runWhenOnlineFast = saved_run_when_online
     if not ok then error(err) end
 end
 

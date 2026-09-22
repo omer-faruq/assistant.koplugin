@@ -14,6 +14,7 @@ local Prompts = require("assistant_prompts")
 local ASUtils = require("assistant_utils")
 local TextUtils = require("assistant_text_utils")
 local DocUtils = require("assistant_doc_utils")
+local NetUtils = require("assistant_net_utils")
 local json = require("rapidjson")
 local strbuf = require("string.buffer")
 local extractBookTextForAnalysis = DocUtils.extractBookTextForAnalysis
@@ -345,7 +346,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         end
 
         viewer:trimMessageHistory()
-        DocUtils.runWhenOnlineFast(function()
+        NetUtils.runWhenOnlineFast(function()
           Trapper:wrap(function()
             local answer, err = Querier:query(message_history, viewer_title ~= "" and viewer_title or feature_title)
             

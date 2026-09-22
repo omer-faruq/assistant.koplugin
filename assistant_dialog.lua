@@ -26,6 +26,7 @@ local CheckButton = require("ui/widget/checkbutton")
 local ASUtils = require("assistant_utils")
 local TextUtils = require("assistant_text_utils")
 local DocUtils = require("assistant_doc_utils")
+local NetUtils = require("assistant_net_utils")
 local Notebook = require("assistant_notebook")
 
 --[[
@@ -287,7 +288,7 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
         end
 
         viewer:trimMessageHistory()
-        DocUtils.runWhenOnlineFast(function()
+        NetUtils.runWhenOnlineFast(function()
           Trapper:wrap(function()
             local answer, err = self.querier:query(message_history, request_title)
             

@@ -17,6 +17,18 @@ local _ = require("assistant_gettext")
 
 local M = {}
 
+--- Run a callback once the network is available, avoiding a DNS timeout when
+--- the Wi-Fi radio is already off.
+---@param callback function run once online
+function M.runWhenOnlineFast(callback)
+    local NetworkMgr = require("ui/network/manager")
+    if not NetworkMgr:isWifiOn() then
+        NetworkMgr:promptWifiOn(callback)
+        return
+    end
+    NetworkMgr:runWhenOnline(callback)
+end
+
 require("ffi/zlib_h")
 local libz = ffi.loadlib("z", 1)
 local ZLIB_HEADER = "\x78\x9c"

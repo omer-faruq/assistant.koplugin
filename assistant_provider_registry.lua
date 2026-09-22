@@ -12,6 +12,7 @@
 local json = require("rapidjson")
 local NetUtils = require("assistant_net_utils")
 local DocUtils = require("assistant_doc_utils")
+local NetUtils = require("assistant_net_utils")
 local TextUtils = require("assistant_text_utils")
 local logger = require("logger")
 local koutil = require("util")
@@ -127,7 +128,7 @@ Registry.isConnectionTestOk = isConnectionTestOk
 --- @param api_key string    provider API key
 --- @param model string      model id to test against
 function Registry.testConnection(handler_name, base_url, api_key, model)
-    DocUtils.runWhenOnlineFast(function()
+    NetUtils.runWhenOnlineFast(function()
         Trapper:wrap(function()
             local handler_module = require("api_handlers." .. handler_name)
             local tester = handler_module:new{
@@ -989,7 +990,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                 -- auth headers and post-processing itself, and runs the
                 -- request behind a dismissable InfoMessage so a stalled
                 -- network can be cancelled by tapping.
-                DocUtils.runWhenOnlineFast(function()
+                NetUtils.runWhenOnlineFast(function()
                     Trapper:wrap(function()
                         local mp = require("assistant_model_picker")
                         local model_list, err = mp.fetchModels(handler, url, api_key)

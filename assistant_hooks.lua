@@ -14,6 +14,7 @@ local _ = require("assistant_gettext")
 local N_ = _.ngettext
 local T = require("ffi/util").template
 local DocUtils = require("assistant_doc_utils")
+local NetUtils = require("assistant_net_utils")
 
 local M = {}
 
@@ -119,7 +120,7 @@ function M.setupBookDescription(assistant)
                             -- during test-suite init (same reason DocUtils
                             -- lazy-requires NetworkMgr inside runWhenOnlineFast).
                             local DocUtils = require("assistant_doc_utils")
-                            DocUtils.runWhenOnlineFast(function()
+                            NetUtils.runWhenOnlineFast(function()
                                 Trapper:wrap(function()
                                     assistant.assistant_dialog:runPrompt(plain, "translate")
                                 end)
@@ -157,7 +158,7 @@ function M.syncTranslateOverride(assistant)
                 })
                 return
             end
-            DocUtils.runWhenOnlineFast(function()
+            NetUtils.runWhenOnlineFast(function()
                 Trapper:wrap(function()
                     assistant:showTranslateOrDictionary(text)
                 end)
@@ -200,7 +201,7 @@ function M.setupRecap(assistant)
                     text = message,
                     ok_text = _("Yes"),
                     ok_callback = function()
-                        DocUtils.runWhenOnlineFast(function()
+                        NetUtils.runWhenOnlineFast(function()
                             local showFeatureDialog = require("assistant_featuredialog")
                             Trapper:wrap(function()
                                 showFeatureDialog(assistant, "recap", title, authors, percent_finished)

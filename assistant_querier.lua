@@ -24,14 +24,6 @@ local Prompts = require("assistant_prompts").assistant_prompts
 local API_HANDLERS = {}
 local MAX_TOOL_ROUNDS = 3
 
--- default_value for rapidjson decoded object
-local function json_default(value, default_value)
-    if value == nil or value == rapidjson.null then
-        return default_value
-    end
-    return value
-end
-
 local Querier = {
     assistant = nil, -- reference to the main assistant object
     settings = nil,
@@ -106,7 +98,7 @@ end
 function Querier:getProviderLabel(provider_setting, provider_name)
     provider_setting = provider_setting or self.provider_setting
     provider_name = provider_name or self.provider_name
-    local display_name = json_default(provider_setting and provider_setting.display_name)
+    local display_name = ASUtils.json_default(provider_setting and provider_setting.display_name)
     if display_name and #display_name > 0 then
         return display_name
     end
@@ -1080,11 +1072,11 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
     -- 1. OpenAI-compatible handles (openai / groq / openrouter / deepseek / mistral …)
     if choices then
         for _, choice in ipairs(choices) do
-            stop_reason = json_default(choice.finish_reason)
+            stop_reason = ASUtils.json_default(choice.finish_reason)
             local cdelta = choice.delta
             if cdelta then
                 -- Accumulate tool_calls deltas: arguments arrive in pieces across chunks.
-                local tc_deltas = json_default(cdelta.tool_calls)
+                local tc_deltas = ASUtils.json_default(cdelta.tool_calls)
                 if tc_deltas then
 
                     if tool_call_acc.current == nil then
@@ -1099,25 +1091,25 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                             tool_call_acc.current = {}
                         end
 
-                        local tc_idx = json_default(tc.index)
+                        local tc_idx = ASUtils.json_default(tc.index)
                         if not tool_call_acc.current.index and tc_idx then
                             tool_call_acc.current.index = tc_idx
                         end
 
-                        local tc_id = json_default(tc.id)
+                        local tc_id = ASUtils.json_default(tc.id)
                         if not tool_call_acc.current.id and tc_id then
                             tool_call_acc.current.id = tc_id
                         end
 
-                        local fn = json_default(tc["function"])
+                        local fn = ASUtils.json_default(tc["function"])
                         if fn then
                             -- id / function name arrive only in the first delta for this call
-                            local fn_name = json_default(fn.name)
+                            local fn_name = ASUtils.json_default(fn.name)
                             if not tool_call_acc.current.name and fn_name then
                                 tool_call_acc.current.name = fn_name
                             end
 
-                            local fn_args = json_default(fn.arguments)
+                            local fn_args = ASUtils.json_default(fn.arguments)
                             if fn_args then
                                 if not tool_call_acc.current.arguments_parts then
                                     tool_call_acc.current.arguments_parts = strbuf.new()
@@ -1130,7 +1122,7 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                     return nil
                 end
 
-                result_content    = json_default(cdelta.content, "")
+                result_content    = ASUtils.json_default(cdelta.content, "")
                 if self.reasoning_key then
                     reasoning_key = self.reasoning_key
                 end
@@ -1141,38 +1133,38 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
                         then reasoning_key = k break end end
                     self.reasoning_key = reasoning_key
                 end
-                reasoning_content = json_default(cdelta[reasoning_key], "")
+                reasoning_content = ASUtils.json_default(cdelta[reasoning_key], "")
             end
         end
 
     -- 2. Gemini handles
     elseif candidates then
-        stop_reason = json_default(candidates[1].finishReason)
+        stop_reason = ASUtils.json_default(candidates[1].finishReason)
         local parts = koutil.tableGetValue(candidates, 1, "content", "parts") or {}
         for _, part in ipairs(parts) do
             if part.text then
-                if json_default(part.thought) then
+                if ASUtils.json_default(part.thought) then
                     reasoning_content = part.text
                 else
                     result_content = part.text
                 end
             end
             -- Gemini delivers a complete functionCall object in a single part
-            local fc = json_default(part.functionCall)
+            local fc = ASUtils.json_default(part.functionCall)
             if fc then
                 -- Push current if any, then create new one for Gemini
                 if tool_call_acc.current.id then
                     table.insert(tool_call_acc.tools, tool_call_acc.current)
                 end
                 tool_call_acc.current = {
-                    id = json_default(fc.id) or json_default(fc.name) or "fc_0",
-                    name = json_default(fc.name) or "assistant_web_search",
-                    args = json_default(fc.args) or {}
+                    id = ASUtils.json_default(fc.id) or ASUtils.json_default(fc.name) or "fc_0",
+                    name = ASUtils.json_default(fc.name) or "assistant_web_search",
+                    args = ASUtils.json_default(fc.args) or {}
                 }
                 stop_reason = "tool_calls"
             end
 
-            local signature = json_default(part.thoughtSignature)
+            local signature = ASUtils.json_default(part.thoughtSignature)
             if signature then
                 tool_call_acc.signature = signature
             end
@@ -1181,7 +1173,7 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
     -- 3. Anthropic handles
     elseif anthropic_type then
         if anthropic_type == "content_block_start" then
-            local cb = json_default(event.content_block)
+            local cb = ASUtils.json_default(event.content_block)
             if cb.type == "tool_use" then
                 if not (tool_call_acc.current and tool_call_acc.current.id) then
                     tool_call_acc.current = { id = cb.id, name = cb.name, index = event.index }
@@ -1191,9 +1183,9 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         elseif anthropic_type == "content_block_delta" then
             local delta = event.delta
             if delta.type == "text_delta" then
-                result_content    = json_default(delta.text, "")
+                result_content    = ASUtils.json_default(delta.text, "")
             elseif delta.type == "thinking_delta" then
-                reasoning_content = json_default(delta.thinking, "")
+                reasoning_content = ASUtils.json_default(delta.thinking, "")
             elseif delta.type == "input_json_delta" then
                 if not tool_call_acc.current.arguments_parts then
                     tool_call_acc.current.arguments_parts = strbuf.new()

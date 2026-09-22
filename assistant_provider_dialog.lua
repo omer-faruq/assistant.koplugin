@@ -5,6 +5,7 @@ Provider selection dialog ("Providers and Models").
 local Trapper = require("ui/trapper")
 local NetUtils = require("assistant_net_utils")
 local DocUtils = require("assistant_doc_utils")
+local NetUtils = require("assistant_net_utils")
 local koutil = require("util")
 local Blitbuffer = require("ffi/blitbuffer")
 local CenterContainer = require("ui/widget/container/centercontainer")
@@ -237,7 +238,7 @@ function ProviderDialog:onBrowseModel()
         return
     end
 
-    DocUtils.runWhenOnlineFast(function()
+    NetUtils.runWhenOnlineFast(function()
         Trapper:wrap(function()
             local handler = self.assistant.querier.handler
             local models, err = handler:FetchModels()
