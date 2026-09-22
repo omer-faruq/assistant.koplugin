@@ -69,6 +69,7 @@ local showDictionaryDialog = require("assistant_dictdialog")
 local Registry = require("assistant_provider_registry")
 local SearchRegistry = require("assistant_search_registry")
 local Config = require("assistant_config")
+local BookDesc = require("assistant_bookdesc")
 
 -- Single row id for the FileManager long-press AI buttons.
 -- One row_func returns one row, so both buttons share this id to sit
@@ -946,6 +947,11 @@ function Assistant:init()
 
   -- Register menu to main menu (under "tools") - for both reader and filemanager
   self.ui.menu:registerToMainMenu(self)
+
+  -- Book Description popup gains a "Translate (AI)" bottom button.
+  -- Provider-independent (the callback re-checks at tap time) and
+  -- sentinel-guarded, so one call covers both FileManager and Reader.
+  BookDesc.setup(self)
 
   if not self.ui.document then
     -- FileManager side (no open document): long-press "Book Info (AI)" button.
