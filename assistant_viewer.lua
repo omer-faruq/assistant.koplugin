@@ -46,27 +46,6 @@ local ViewerCSS = require("assistant_css")
 local Notebook = require("assistant_notebook")
 local CheckButton = require("ui/widget/checkbutton")
 
--- Inject scroll page method for ScrollHtmlWidget
-ScrollHtmlWidget.scrollToPage = function(self, page_num)
-  if page_num > self.htmlbox_widget.page_count then
-    page_num = self.htmlbox_widget.page_count 
-  end
-  self.htmlbox_widget:setPageNumber(page_num)
-  self:_updateScrollBar()
-  self.htmlbox_widget:freeBb()
-  self.htmlbox_widget:_render()
-  if self.dialog.movable and self.dialog.movable.alpha then
-      self.dialog.movable.alpha = nil
-      UIManager:setDirty(self.dialog, function()
-          return "partial", self.dialog.movable.dimen
-      end)
-  else
-      UIManager:setDirty(self.dialog, function()
-          return "partial", self.dimen
-      end)
-  end
-end
-
 -- Viewer CSS lives in assistant_css.lua (shared with the notebook viewer);
 -- _buildCSS() below is a thin wrapper resolving the display switches.
 

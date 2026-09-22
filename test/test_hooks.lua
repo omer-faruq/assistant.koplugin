@@ -1,5 +1,5 @@
 -- test_bookdesc.lua
--- Tests for assistant_bookdesc (Translate (AI) bottom button on the upstream
+-- Tests for assistant_hooks (Translate (AI) bottom button on the upstream
 -- Book Description popup): patch shape, description resolution, empty-state
 -- delegation, and the translate callback chain. Upstream modules are faked;
 -- the require environment is restored for the rest of the suite.
@@ -7,7 +7,7 @@ local helper = require("test.helper")
 local assert = helper.assert
 
 local MODULES = {
-    "assistant_bookdesc",
+    "assistant_hooks",
     "ui/widget/textviewer",
     "apps/filemanager/filemanagerbookinfo",
 }
@@ -46,7 +46,7 @@ function FakeBookInfo:onShowBookDescription(description, file)
 end
 package.preload["apps/filemanager/filemanagerbookinfo"] = function() return FakeBookInfo end
 
-local BookDesc = require("assistant_bookdesc")
+local Hooks = require("assistant_hooks")
 
 local runprompts = {}
 local fake_assistant = {
@@ -81,7 +81,7 @@ local function reset_state()
 end
 
 local function setup_once()
-    BookDesc.setup(fake_assistant)
+    Hooks.setupBookDescription(fake_assistant)
 end
 
 local function get_translate_button(viewer_opts)
@@ -234,22 +234,51 @@ local tests = {
             "hold notice must explain the button")
     end),
 
-    test("main.lua requires the module and runs setup in init", function()
+    test("main.lua delegates all KOReader patches to the hooks module", function()
         local src = read_source("main.lua")
         assert.notNil(src, "could not read main.lua")
-        assert_contains(src, 'require("assistant_bookdesc")',
-            "main.lua must require the bookdesc module")
-        assert_contains(src, "BookDesc.setup(self)",
-            "init must run the bookdesc setup")
+        assert_contains(src, 'require("assistant_hooks")',
+            "main.lua must require the hooks module")
+        assert_contains(src, "Hooks.setupBookDescription(self)",
+            "init must run the book description hook")
         local init_pos = src:find("function Assistant:init", 1, true)
-        local setup_pos = src:find("BookDesc.setup(self)", 1, true)
+        local setup_pos = src:find("Hooks.setupBookDescription(self)", 1, true)
         assert.isTrue(setup_pos > init_pos, "setup must run inside init")
         local ret_pos = src:find("if not next(self.config:getProviderSettings()) then return end", 1, true)
         assert.isTrue(setup_pos < ret_pos, "setup must run before the provider early-return")
+        assert_contains(src, "Hooks.syncTranslateOverride(self)",
+            "translation patch must be delegated to hooks")
+        assert_contains(src, "Hooks.setupRecap(self)",
+            "recap patch must be delegated to hooks")
+        assert_contains(src, "Hooks.setupMenuOrder()",
+            "menu order mutation must be delegated to hooks")
+        assert.isTrue(src:find('table.insert(require("ui/elements/reader_menu_order")', 1, true) == nil,
+            "reader menu order mutation must not remain in main.lua")
+        assert.isTrue(src:find('table.insert(require("ui/elements/filemanager_menu_order")', 1, true) == nil,
+            "file manager menu order mutation must not remain in main.lua")
+        assert.isTrue(src:find("function Assistant:syncTranslateOverride", 1, true) == nil,
+            "translation monkey patch must not remain in main.lua")
+        assert.isTrue(src:find("function Assistant:_hookRecap", 1, true) == nil,
+            "recap monkey patch must not remain in main.lua")
+    end),
+
+    test("hooks module owns the Translator and ReaderUI patches", function()
+        local src = read_source("assistant_hooks.lua")
+        assert.notNil(src, "could not read assistant_hooks.lua")
+        assert_contains(src, "function M.syncTranslateOverride",
+            "hooks must expose the translation patch")
+        assert_contains(src, "function M.setupRecap",
+            "hooks must expose the recap patch")
+        assert_contains(src, 'require("ui/translator")',
+            "hooks must own the Translator require")
+        assert_contains(src, 'require("apps/reader/readerui")',
+            "hooks must own the ReaderUI require")
+        assert_contains(src, "function M.setupMenuOrder",
+            "hooks must expose the menu order patch")
     end),
 }
 
-local result = helper.runTests("bookdesc", tests)
+local result = helper.runTests("hooks", tests)
 
 -- Restore the require environment for the rest of the suite.
 UIManager.show = saved_show

@@ -562,7 +562,7 @@ local function genMenuSettings(assistant)
                         assistant.settings:toggle("ai_translate_override")
                         assistant.updated = true
                         UIManager:nextTick(function ()
-                            assistant:syncTranslateOverride()
+                            require("assistant_hooks").syncTranslateOverride(assistant)
                         end)
                     end
                 },

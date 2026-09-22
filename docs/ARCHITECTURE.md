@@ -8,7 +8,7 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 
 ## Core
 
-- `main.lua` — plugin init, TouchMenu registration, dispatcher actions/gestures, translate-override + auto-recap hooks, dictionary-popup button. `Assistant:_showAddProviderDialog` / `_showAddWebSearchDialog` delegate to the registries.
+- `main.lua` — plugin init, TouchMenu registration, dispatcher actions/gestures, and dictionary-popup button. `assistant_hooks.lua` owns all KOReader monkey patches (Book Description translation button, built-in translation override, auto-recap, and ScrollHtmlWidget pagination). `Assistant:_showAddProviderDialog` / `_showAddWebSearchDialog` delegate to the registries.
 - `_meta.lua` — version (`X.Y-dev`), manually bumped on `main` after a release tag; CI rewrites it from the tag during packaging.
 - `assistant_querier.lua` (`Querier`) — loads handlers, drives stream/non-stream paths, runs the web-search tool loop (max 3 rounds feeding results back), and parses SSE into one unified format.
 - `assistant_tool_executor.lua` (`ToolExecutor`) — normalizes tool-calling across the `openai`/`anthropic`/`gemini` wire formats; loads enabled search tools from `SearchRegistry` at query time.
@@ -45,6 +45,7 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 ## UI / Dialogs
 
 - `assistant_dialog.lua` — Ask AI popup + result formatting.
+- `assistant_hooks.lua` — centralized, idempotent KOReader monkey patches.
 - `assistant_featuredialog.lua` — book features: Recap/X-Ray/annotations.
 - `assistant_dictdialog.lua` — AI Dictionary + Term X-Ray.
 - `assistant_provider_dialog.lua` — provider/model settings (`ProviderDialog`, via `Assistant:showProviderDialog`).

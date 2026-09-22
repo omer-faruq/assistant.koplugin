@@ -69,7 +69,7 @@ local showDictionaryDialog = require("assistant_dictdialog")
 local Registry = require("assistant_provider_registry")
 local SearchRegistry = require("assistant_search_registry")
 local Config = require("assistant_config")
-local BookDesc = require("assistant_bookdesc")
+local Hooks = require("assistant_hooks")
 
 -- Single row id for the FileManager long-press AI buttons.
 -- One row_func returns one row, so both buttons share this id to sit
@@ -172,9 +172,6 @@ function Assistant:onDispatcherRegisterActions()
   })
 end
 
--- tricky hack: make our menu be the first under tools menu
-table.insert(require("ui/elements/reader_menu_order").tools, 1, "ai_assistant")
-table.insert(require("ui/elements/filemanager_menu_order").tools, 1, "ai_assistant")
 function Assistant:addToMainMenu(menu_items)
   local common_items_table = {
               {
@@ -945,13 +942,17 @@ function Assistant:init()
   -- Register actions with dispatcher for gesture assignment
   self:onDispatcherRegisterActions()
 
+  Hooks.setupMenuOrder()
+
   -- Register menu to main menu (under "tools") - for both reader and filemanager
   self.ui.menu:registerToMainMenu(self)
+
+  Hooks.setupScrollHtmlWidget()
 
   -- Book Description popup gains a "Translate (AI)" bottom button.
   -- Provider-independent (the callback re-checks at tap time) and
   -- sentinel-guarded, so one call covers both FileManager and Reader.
-  BookDesc.setup(self)
+  Hooks.setupBookDescription(self)
 
   if not self.ui.document then
     -- FileManager side (no open document): long-press "Book Info (AI)" button.
@@ -1022,7 +1023,7 @@ function Assistant:init()
   end
 
   -- Conditionally override translate method based on user setting
-  self:syncTranslateOverride()
+  Hooks.syncTranslateOverride(self)
 
   -- Register Assistant buttons with new KOReader dict API (PR #15184+)
   -- Safe no-op on older versions where addToDictButtons doesn't exist.
@@ -1044,7 +1045,7 @@ function Assistant:init()
     -- Reader specific
     -- Auto Recap Feature (hook before a book is opened)
     if self.settings:readSetting("enable_auto_recap", false) then
-      self:_hookRecap()
+      Hooks.setupRecap(self)
     end
 
     self:_rebuildShowOnMainButtons()
@@ -1681,48 +1682,6 @@ function Assistant:showTranslateOrDictionary(text)
   end
 end
 
--- Sync Overriding translate method with setting
-function Assistant:syncTranslateOverride()
-
-  local Translator = require("ui/translator")
-  local should_override = self.settings:readSetting("ai_translate_override", false) -- default to false
-
-  if should_override then
-    -- Store original translate method if not already stored
-    if not Translator._original_showTranslation then
-      Translator._original_showTranslation = Translator.showTranslation
-    end
-
-    -- Override translate method with AI Assistant
-    Translator.showTranslation = function(ts_self, text, detailed_view, source_lang, target_lang, from_highlight, index)
-      if not self.config then
-        UIManager:show(InfoMessage:new{
-          icon = "notice-warning",
-          text = _("Configuration not found. Please set up configuration.lua first.")
-        })
-        return
-      end
-
-      -- Smart Dictionary Lookup may divert short selections to the AI
-      -- Dictionary, with a one-time prompt (dc7a373 / #207/#208).
-      DocUtils.runWhenOnlineFast(function()
-        Trapper:wrap(function()
-          self:showTranslateOrDictionary(text)
-        end)
-      end)
-    end
-    logger.info("Assistant: translate method overridden with AI Assistant")
-  else
-    -- Restore the override
-    if Translator._original_showTranslation then
-      -- Restore the original method
-      Translator.showTranslation = Translator._original_showTranslation
-      Translator._original_showTranslation = nil
-      logger.info("Assistant: translate method restored")
-    end
-  end
-end
-
 function Assistant:onAssistantSetButton(btnconf, action)
   local menukey = string.format("assistant_%02d_%s", btnconf.order, btnconf.idx)
   local settingkey = "showOnMain_" .. menukey
@@ -1762,64 +1721,6 @@ function Assistant:onAssistantSetButton(btnconf, action)
   end
 
   return true
-end
-
--- Adds hook on opening a book, the recap feature
-function Assistant:_hookRecap()
-  local ReaderUI    = require("apps/reader/readerui")
-  -- avoid recurive overrides here
-  -- pulgin is loaded on every time file opened
-  if not ReaderUI._original_doShowReader then 
-
-    -- Save a reference to the original doShowReader method.
-    ReaderUI._original_doShowReader = ReaderUI.doShowReader
-
-    local assistant = self -- reference to the Assistant instance
-    local lfs         = require("libs/libkoreader-lfs")   -- for file attributes
-    local DocSettings = require("docsettings")			      -- for document progress
-  
-    -- Override to hook into the reader's doShowReader method.
-    function ReaderUI:doShowReader(file, provider, seamless)
-
-      -- Get file metadata; here we use the file's "access" attribute.
-      local attr = lfs.attributes(file)
-      local lastAccess = attr and attr.access or nil
-  
-      if lastAccess and lastAccess > 0 then -- Has been opened
-        local doc_settings = DocSettings:open(file)
-        local percent_finished = doc_settings:readSetting("percent_finished") or 0
-        local timeDiffHours = math.floor((os.time() - lastAccess) / 3600)
-  
-        -- More than 28hrs since last open and less than 95% complete
-        -- percent = 0 may means the book is not started yet, the docsettings maybe empty
-        if timeDiffHours >= 28 and percent_finished > 0 and percent_finished <= 0.95 then 
-          -- Construct the message to display.
-          local doc_props = doc_settings:child("doc_props")
-          local title = doc_props:readSetting("title", "Unknown Title")
-          local authors = doc_props:readSetting("authors", "Unknown Author")
-          -- @translators Prompt offering a "Recap" (a brief spoiler-free summary of what was already read, to refresh memory after a break). %1 is the book title, %2 is the author.
-          local message = T(_("Do you want an AI Recap?\nFor %1 by %2.\n\n"), title, authors)
-                    .. T(N_("Last read an hour ago.", "Last read %1 hours ago.", timeDiffHours), timeDiffHours)
-  
-          -- Display the request popup using ConfirmBox.
-          UIManager:show(ConfirmBox:new{
-            text            = message,
-            ok_text         = _("Yes"),
-            ok_callback     = function()
-              DocUtils.runWhenOnlineFast(function()
-                local showFeatureDialog = require("assistant_featuredialog")
-                Trapper:wrap(function()
-                  showFeatureDialog(assistant, "recap", title, authors, percent_finished)
-                end)
-              end)
-            end,
-            cancel_text     = _("No"),
-          })
-        end
-      end
-      return ReaderUI._original_doShowReader(self, file, provider, seamless)
-    end
-  end
 end
 
 --- Sync the provider selection from configuration.lua into self.settings when
