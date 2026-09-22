@@ -320,7 +320,8 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         text = result,
         extra_buttons = {
             {
-                text = _("Vocabulary"),
+                -- @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+                text = _("Vocabulary Builder"),
                 callback = function()
                     if not ui then return end
                     local word = TextUtils.strip_selection_punctuation(highlightedText)
