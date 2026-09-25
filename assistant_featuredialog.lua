@@ -286,11 +286,12 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       return table.concat(result_parts)
     end
 
-    local function prepareMessageHistoryForAdditionalQuestion(message_history, user_question)
+    local function prepareMessageHistoryForAdditionalQuestion(message_history, user_question, use_websearch)
       local context = {
         role = "user",
         content = user_question
       }
+      ASUtils.set_attr(context, "use_websearch", use_websearch or false)
       ASUtils.set_attr(context, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
       table.insert(message_history, context)
     end
@@ -319,11 +320,11 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       is_show_addnote = false,
       message_history = message_history,
       notebook_path = notebook_path,
-      onAskQuestion = function(viewer, user_question)
+      onAskQuestion = function(viewer, user_question, use_websearch)
         local viewer_title = ""
 
         if type(user_question) == "string" then
-          prepareMessageHistoryForAdditionalQuestion(message_history, user_question)
+          prepareMessageHistoryForAdditionalQuestion(message_history, user_question, use_websearch)
         elseif type(user_question) == "table" then
           viewer_title = user_question.text or "Custom Prompt"
           local raw_followup = user_question.user_prompt or user_question
@@ -341,6 +342,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
               role = "user",
               content = expanded_followup
             }
+            ASUtils.set_attr(followup_user, "use_websearch", user_question.use_websearch or false)
             ASUtils.set_attr(followup_user, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
             ASUtils.set_attr(followup_user, "prompt_title", viewer_title)
             table.insert(message_history, followup_user)

@@ -90,6 +90,13 @@ local tests = {
         assert.matches(dialog_src, "I'm reading something titled", "new-question context must retain its book metadata prefix")
     end),
 
+    test("feature follow-up: preserves the web-search selection", function()
+        assert.matches(feature_src, 'onAskQuestion = function%(viewer, user_question, use_websearch%)', "feature viewer must receive the search checkbox value")
+        assert.matches(feature_src, 'prepareMessageHistoryForAdditionalQuestion%(message_history, user_question, use_websearch%)', "free follow-ups must forward the search value")
+        assert.matches(feature_src, 'set_attr%(context, "use_websearch", use_websearch or false%)', "free follow-ups must tag the last user message")
+        assert.matches(feature_src, 'set_attr%(followup_user, "use_websearch", user_question.use_websearch or false%)', "table follow-ups must tag the last user message")
+    end),
+
     test("generic viewer: context follows the entry source", function()
         assert.matches(dialog_src, 'self:_showResultViewer%(highlightedText, message_history, viewer_title, true%)', "free-question viewers must keep follow-up context")
         assert.matches(dialog_src, 'self:_showResultViewer%(highlightedText, message_history, title, false%)', "built-in prompt viewers must not duplicate follow-up context")
