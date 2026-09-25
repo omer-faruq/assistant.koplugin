@@ -156,6 +156,7 @@ function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText, user_in
     user_input = user_input,
     progress = formatted_progress,
     chapter = formatted_chapter,
+    koreader_version = Prompts.getKoreaderVersion(),
   })
 
 end
@@ -340,7 +341,7 @@ If the question is not clear enough, analyze the highlighted text.]],
     head = string.format([[I'm reading something titled '%s' by %s.
 I have a question about this book.]], book.title, book.author)
   else
-    head = string.format([[You are a helpful assistant. I have a question.]])
+    head = "You are the built-in AI assistant in KOReader. No book context is available for this question."
   end
 
   -- Append segments into a string buffer: avoids repeated `content = content ..`

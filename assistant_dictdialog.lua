@@ -236,6 +236,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
                 title = book_title,
                 author = book_author,
                 user_input = "",
+                koreader_version = Prompts.getKoreaderVersion(),
             }),
         }
         ASUtils.set_attr(context_message, "prompt_title", title)
@@ -254,6 +255,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
                 word = TextUtils.strip_selection_punctuation(highlightedText),
                 title = book_title,
                 author = book_author,
+                koreader_version = Prompts.getKoreaderVersion(),
             }),
         }
         ASUtils.set_attr(context_message, "prompt_title", title)

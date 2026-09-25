@@ -34,7 +34,7 @@ If the question is not clear enough, analyze the highlighted text.]],
     content = string.format([[I'm reading something titled '%s' by %s.
 I have a question about this book.]], book_title, book_author)
   else
-    content = string.format([[You are a helpful assistant. I have a question.]])
+    content = "You are the built-in AI assistant in KOReader. No book context is available for this question."
   end
   if page_info and page_info ~= "" then
     content = content .. string.format("\n\nMy current reading position is:%s.", page_info)
@@ -76,6 +76,22 @@ local tests = {
             assert.equal(M.builtin_prompts[key].use_book_context, false,
                 key .. ".use_book_context should be false")
         end
+    end),
+
+    test("default system prompt: describes KOReader context boundaries", function()
+        local prompt = M.assistant_prompts.default.system_prompt
+        assert.matches(prompt, "KOReader")
+        assert.matches(prompt, "If no book context")
+        assert.matches(prompt, "system state")
+        assert.matches(prompt, "Do not claim to have inspected or changed the user's")
+        assert.notMatches(prompt, "You are a helpful assistant")
+    end),
+
+    test("KOReader version: runtime revision is exposed to prompts", function()
+        local version = M.getKoreaderVersion()
+        assert.isTrue(type(version) == "string" and version ~= "")
+        assert.matches(M.assistant_prompts.default.system_prompt, "current KOReader runtime version is")
+        assert.matches(M.assistant_prompts.default.system_prompt, version)
     end),
 
     -- =========================================================================
@@ -131,7 +147,7 @@ local tests = {
 
     test("build_context_content: fallback branch when title/author absent", function()
         local c = build_context_content(nil, nil, nil, "")
-        assert.matches(c, "You are a helpful assistant. I have a question.")
+        assert.equal(c, "You are the built-in AI assistant in KOReader. No book context is available for this question.")
         assert.notMatches(c, "My Book")
         assert.notMatches(c, "My current reading position is:")
     end),

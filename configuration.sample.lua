@@ -188,7 +188,7 @@ local CONFIGURATION = {
         -- The `show_on_main_popup` determines if the prompt is shown in the main popup
         -- The `show_on_dictionary_popup` determines if the prompt is shown in the dictionary popup ( max 3 including the built-in ones)
         -- Set `visible = false` to hide the prompt from all popups.
-        -- Available placeholders to use in the prompts: {user_input},{highlight},{title},{author},{language},{progress},{chapter}
+        -- Available placeholders to use in the prompts: {user_input},{highlight},{title},{author},{language},{progress},{chapter},{koreader_version}
         -- Per-prompt override `use_book_context = true/false` (deep-merged over the built-in defaults below).
         -- When true, book metadata (title, author, current reading position incl. chapter) is prepended to the
         -- prompt so the AI can answer with awareness of the book. This is gated by the global master switch

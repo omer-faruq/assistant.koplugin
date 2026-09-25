@@ -240,7 +240,8 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       title = title,
       author = author,
       progress = formatted_progress_percent,
-      language = language
+      language = language,
+      koreader_version = Prompts.getKoreaderVersion()
     })
 
     user_content = user_content .. book_text_prompt .. highlights_notes_prompt
@@ -333,6 +334,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
             progress = formatted_progress_percent,
             language = language,
             user_input = user_question.user_input or "",
+            koreader_version = Prompts.getKoreaderVersion(),
           })
           do
             local followup_user = {
