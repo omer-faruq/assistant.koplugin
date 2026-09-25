@@ -218,7 +218,12 @@ function AssistantDialog:_createResultText(highlightedText, message_history, pre
 end
 
 -- Helper function to create and show ChatGPT viewer
-function AssistantDialog:_showResultViewer(highlightedText, message_history, title)
+---@param highlightedText string|nil Text selected when the viewer was opened
+---@param message_history table[] Conversation history passed to the viewer
+---@param title string|nil Display title for the viewer
+---@param include_book_context_for_followup boolean|nil Whether free follow-ups need a fresh book context
+function AssistantDialog:_showResultViewer(highlightedText, message_history, title, include_book_context_for_followup)
+  include_book_context_for_followup = include_book_context_for_followup ~= false
   local result_text = self:_createResultText(highlightedText, message_history, nil, title)
   
   local chatgpt_viewer 
@@ -244,7 +249,8 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
               if v ~= nil then inherited_suggestions = v; break end
             end
           end
-          self:_prepareMessageHistoryForUserQuery(message_history, current_highlight, user_question, use_websearch)
+          self:_prepareMessageHistoryForUserQuery(message_history, current_highlight, user_question, use_websearch,
+            include_book_context_for_followup)
           if inherited_suggestions ~= nil then
             pending_show_suggestions = inherited_suggestions
             -- _prepare already set inherited value, but ensure the last user reflects it
@@ -262,7 +268,8 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
           viewer_title = Prompts.getDisplayText(user_question.text or "Custom Prompt",
             user_question.use_websearch or false,
             Prompts.isWebSearchEnabled(self.assistant.settings))
-          if user_question.use_book_context == true
+          if include_book_context_for_followup
+              and user_question.use_book_context == true
               and self.assistant.settings:readSetting("prepend_book_metadata", true) then
             table.insert(message_history, self:_buildBookContextMessage(current_highlight))
           end
@@ -365,9 +372,17 @@ I have a question about this book.]], book.title, book.author)
   return msg
 end
 
-function AssistantDialog:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question, use_websearch)
-  local context = self:_buildBookContextMessage(highlightedText)
-  table.insert(message_history, context)
+---@param message_history table[] Conversation history to extend
+---@param highlightedText string|nil Current selected text
+---@param user_question string User-entered question
+---@param use_websearch boolean|nil Whether this follow-up requests web search
+---@param include_book_context boolean|nil Whether to prepend fresh book context
+function AssistantDialog:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question,
+    use_websearch, include_book_context)
+  if include_book_context ~= false then
+    local context = self:_buildBookContextMessage(highlightedText)
+    table.insert(message_history, context)
+  end
 
   -- inherit show_suggestions from last user message, fallback to default
   local inherited = nil
@@ -592,7 +607,8 @@ function AssistantDialog:showAskDialog(highlightedText)
 
           -- do not have a title to display user prompt
           local viewer_title = nil
-          self:_showResultViewer(highlightedText, message_history, viewer_title)
+          -- Free questions can start a new context, so keep the book prefix.
+          self:_showResultViewer(highlightedText, message_history, viewer_title, true)
         end)
       end
     })
@@ -900,7 +916,8 @@ function AssistantDialog:runPrompt(highlightedText, prompt_id, user_input)
     return
   end
 
-  self:_showResultViewer(highlightedText, message_history, title)
+  -- Built-in prompts already carry their book context; do not repeat it on follow-up.
+  self:_showResultViewer(highlightedText, message_history, title, false)
 end
 
 return AssistantDialog

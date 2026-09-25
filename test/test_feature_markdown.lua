@@ -81,6 +81,20 @@ local tests = {
         assert.notMatches(feature_src, 'local function createResultText%(answer%)', "feature must not keep the answer-only renderer")
     end),
 
+    test("feature follow-up: reuses existing context and passes the question through", function()
+        assert.notMatches(feature_src, "I'm reading something titled", "feature follow-ups must not repeat the book context prefix")
+        assert.notMatches(feature_src, "Only answer the following question", "feature follow-ups must not add a redundant instruction prefix")
+        assert.matches(feature_src, 'content = user_question', "free follow-ups must pass the question through unchanged")
+        assert.matches(feature_src, 'content = expanded_followup', "table follow-ups must pass the expanded prompt through unchanged")
+        assert.notMatches(feature_src, 'user_question, title, author', "feature follow-up helpers must not accept redundant book metadata")
+        assert.matches(dialog_src, "I'm reading something titled", "new-question context must retain its book metadata prefix")
+    end),
+
+    test("generic viewer: context follows the entry source", function()
+        assert.matches(dialog_src, 'self:_showResultViewer%(highlightedText, message_history, viewer_title, true%)', "free-question viewers must keep follow-up context")
+        assert.matches(dialog_src, 'self:_showResultViewer%(highlightedText, message_history, title, false%)', "built-in prompt viewers must not duplicate follow-up context")
+    end),
+
     test("feature first round: history walk with header once, Search renders", function()
         assert.matches(feature_src, 'for idx = 2, #message_history do', "first round must walk history from 2")
         assert.matches(feature_src, 'get_attr%(message, "is_context"%)', "first round must skip context messages")

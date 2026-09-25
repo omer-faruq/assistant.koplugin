@@ -285,10 +285,10 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       return table.concat(result_parts)
     end
 
-    local function prepareMessageHistoryForAdditionalQuestion(message_history, user_question, title, author)
+    local function prepareMessageHistoryForAdditionalQuestion(message_history, user_question)
       local context = {
         role = "user",
-        content = string.format("I'm reading something titled '%s' by %s. Only answer the following question, do not add any additional information or context that is not directly related to the question, the question is: %s", title, author, user_question)
+        content = user_question
       }
       ASUtils.set_attr(context, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
       table.insert(message_history, context)
@@ -322,7 +322,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         local viewer_title = ""
 
         if type(user_question) == "string" then
-          prepareMessageHistoryForAdditionalQuestion(message_history, user_question, title, author)
+          prepareMessageHistoryForAdditionalQuestion(message_history, user_question)
         elseif type(user_question) == "table" then
           viewer_title = user_question.text or "Custom Prompt"
           local raw_followup = user_question.user_prompt or user_question
@@ -337,7 +337,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
           do
             local followup_user = {
               role = "user",
-              content = string.format("I'm reading something titled '%s' by %s. Only answer the following question, do not add any additional information or context that is not directly related to the question, the question is: %s", title, author, expanded_followup)
+              content = expanded_followup
             }
             ASUtils.set_attr(followup_user, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
             ASUtils.set_attr(followup_user, "prompt_title", viewer_title)
