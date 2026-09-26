@@ -150,6 +150,10 @@ local ChatGPTViewer = InputContainer:extend {
   find_centered_lines_count = 5, -- line with find results to be not far from the center
 
   onAskQuestion = nil, -- callback when the Ask Another Question button is pressed
+  -- function(viewer) -> string, re-assembles the reply from the caller's
+  -- history. Required for a display switch to take effect on the turns that
+  -- are already on screen: they were assembled with the previous switch state.
+  rebuild_text = nil,
   input_dialog = nil,
   is_show_addnote = true, -- when true, show the Add Note button
   minimalist = nil, -- minimalist_mode setting: answer text plus a Close button
@@ -1023,6 +1027,17 @@ function ChatGPTViewer:update(new_text)
   end
 end
 
+-- Re-assemble the reply from the caller's history, then rebuild the scroll
+-- widget. A display switch (Reasoning / Follow-up Questions) shapes the text
+-- when the dialogs build it, so flipping one has to rebuild the text as well:
+-- re-rendering the stored string would keep the parts the switch just hid.
+function ChatGPTViewer:_refreshText()
+  if self.rebuild_text then
+    self.text = self.rebuild_text(self)
+  end
+  self:_refreshScrollWidget()
+end
+
 -- Rebuild the scroll widget in place after a display setting changed,
 -- keeping the current page (mirrors the rebuild in update()).
 function ChatGPTViewer:_refreshScrollWidget()
@@ -1193,13 +1208,12 @@ function ChatGPTViewer:onShowMenu()
       end,
       align = "left",
       callback = function()
-        -- Kept open like upstream (see RTL Layout above). The answer on screen
-        -- was produced without reasoning when the switch was off, so this
-        -- applies to the next answer; the rebuild keeps text size in sync.
+        -- Kept open like upstream (see RTL Layout above). Rebuilds the text so
+        -- the thinking of the turns already on screen follows the switch too.
         local show = self.assistant.settings:readSetting("show_reasoning", false)
         self.assistant.settings:saveSetting("show_reasoning", not show)
         self.assistant.updated = true
-        self:_refreshScrollWidget()
+        self:_refreshText()
       end,
     }},
     {{
@@ -1213,13 +1227,13 @@ function ChatGPTViewer:onShowMenu()
       end,
       align = "left",
       callback = function()
-        -- Kept open like upstream (see RTL Layout above). The switch reaches
-        -- the next answer: it decides both the system prompt and
-        -- process_suggestions, plus the suggestion-link styling on rebuild.
+        -- Kept open like upstream (see RTL Layout above). Rebuilds the text:
+        -- the switch decides both the system prompt of the next answer and
+        -- whether the follow-up questions of the current one are rendered.
         local show = self.assistant.settings:readSetting("auto_prompt_suggest", false)
         self.assistant.settings:saveSetting("auto_prompt_suggest", not show)
         self.assistant.updated = true
-        self:_refreshScrollWidget()
+        self:_refreshText()
       end,
     }},
     {{

@@ -325,6 +325,11 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
       end,
     highlighted_text = highlightedText,
     message_history = message_history,
+    -- Re-assemble the whole transcript from the (in-place grown) history so a
+    -- display switch in the viewer's menu can hide what it just turned off.
+    rebuild_text = function()
+      return self:_createResultText(highlightedText, message_history, nil, title)
+    end,
     default_hold_callback = function () chatgpt_viewer:HoldClose() end
   }
   

@@ -29,10 +29,12 @@ end
 local dialog_src = read_source("assistant_dialog.lua")
 local feature_src = read_source("assistant_featuredialog.lua")
 
-local function make_settings(suggest_on)
+-- Settings stub: follow-ups and (optionally) Reasoning Text on.
+local function make_settings(suggest_on, reasoning_on)
     return {
         readSetting = function(dummy, key, def)
             if key == "auto_prompt_suggest" then return suggest_on end
+            if key == "show_reasoning" then return reasoning_on or false end
             return def
         end,
     }
@@ -142,24 +144,25 @@ local tests = {
         assert.notMatches(out, '### ⮞', "no old headings in follow-up output")
     end),
 
-    test("pipeline: reasoning splits into Thought div, strip restores body", function()
-        local settings = make_settings(false)
+    test("pipeline: the Reasoning Text switch decides the Thought div", function()
         local history = make_history()
         local answer_msg = make_msg("assistant", "```reasoning\nthinking here\n```\n\nThe Ring rules them all.")
         ASUtils.set_attr(answer_msg, "show_suggestions", false)
         table.insert(history, answer_msg)
-        local out = TextUtils.formatSingleMessage(history, answer_msg, fmt_opts(history, 3, settings, { show_suggestions = false }))
+        -- Switch on: the stored fence becomes a Thought block above the answer.
+        local on = make_settings(false, true)
+        local out = TextUtils.formatSingleMessage(history, answer_msg, fmt_opts(history, 3, on, { show_suggestions = false }))
         assert.matches(out, 'assistant%-label%-%-thought">❖ Deeply Thought</div>', "Thought div missing")
         assert.matches(out, '```reasoning\nthinking here\n```', "reasoning fence must be kept")
         assert.matches(out, 'assistant%-label">✦ Response</div>', "Response div missing")
-        -- With Reasoning Text off the producer hands over a fence-free answer
-        -- (querier: strip_think_tags(_, _, false)), so no Thought block.
-        local plain_msg = make_msg("assistant", "The Ring rules them all.")
-        ASUtils.set_attr(plain_msg, "show_suggestions", false)
-        local plain = TextUtils.formatSingleMessage(history, plain_msg, fmt_opts(history, 3, settings, { show_suggestions = false }))
-        assert.notMatches(plain, 'assistant%-label%-%-thought', "no Thought block without a fence")
-        assert.matches(plain, 'assistant%-label">✦ Response</div>', "Response div still required")
-        assert.matches(plain, 'The Ring rules them all', "answer body must survive")
+        -- Switch off: a turn answered while it was on still carries its fence,
+        -- and must not resurrect the thinking once the switch is off.
+        local off = make_settings(false, false)
+        local hidden = TextUtils.formatSingleMessage(history, answer_msg, fmt_opts(history, 3, off, { show_suggestions = false }))
+        assert.notMatches(hidden, 'assistant%-label%-%-thought', "no Thought block while the switch is off")
+        assert.notMatches(hidden, '```reasoning', "no fence while the switch is off")
+        assert.matches(hidden, 'assistant%-label">✦ Response</div>', "Response div still required")
+        assert.matches(hidden, 'The Ring rules them all', "answer body must survive")
     end),
 
     test("pipeline: suggestion inheritance follows dialog rules", function()
@@ -177,7 +180,8 @@ local tests = {
         table.insert(cold_history, cold_answer)
         local cold_out = TextUtils.formatSingleMessage(cold_history, cold_answer, fmt_opts(cold_history, 3, cold_settings, { show_suggestions = false }))
         assert.notMatches(cold_out, '#q:', "explicit false must win over the fallback")
-        assert.matches(cold_out, '<suggestions>', "untouched tags must stay when disabled")
+        assert.notMatches(cold_out, '<suggestions>', "the raw block must not reach the page")
+        assert.matches(cold_out, 'Frodo does%.', "the answer body must survive")
     end),
 
     test("pipeline: tool-payload user messages render empty, never crash", function()

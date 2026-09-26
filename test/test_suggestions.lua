@@ -4,6 +4,7 @@
 --   * a <suggestions> literal inside the fence is ignored
 --   * an unclosed fence means truncated reasoning: content untouched
 --   * fenceless content keeps the plain behavior
+--   * formatSingleMessage follows the Reasoning Text switch for a stored fence
 local helper = require("test.helper")
 local assert = helper.assert
 local TextUtils = helper.TextUtils
@@ -133,10 +134,55 @@ local tests = {
         assert.equal(reasoning, nil)
     end),
 
+    test("strip: a leftover block is dropped, fence quoting is kept", function()
+        assert.equal(TextUtils.stripSuggestions("Answer.\n<suggestions>\n- Next?\n</suggestions>\n"),
+            "Answer.", "the block and everything after it must go")
+        assert.equal(TextUtils.stripSuggestions("Just an answer."), "Just an answer.",
+            "content without a block is untouched")
+        -- A tag quoted inside the reasoning fence is not a real block.
+        local quoted = "```reasoning\nnote about <suggestions> format\n```\n\nBody."
+        assert.equal(TextUtils.stripSuggestions(quoted), quoted, "fence quoting must survive")
+        assert.equal(TextUtils.stripSuggestions("```reasoning\ntruncated <suggestions>\n"),
+            "```reasoning\ntruncated <suggestions>\n", "truncated reasoning is left alone")
+    end),
+
     test("split: no fence left alone", function()
         local reasoning, body = split_reasoning_block("Just an answer.")
         assert.equal(reasoning, nil)
         assert.equal(body, "Just an answer.")
+    end),
+
+    test("split: the display switch decides Thought div vs answer only", function()
+        local history = {
+            { role = "system", content = "system prompt" },
+            { role = "user", content = "Why?" },
+            { role = "assistant",
+                content = "```reasoning\nthinking here\n```\n\nThe answer." },
+        }
+        local function fmt(show_reasoning)
+            return TextUtils.formatSingleMessage(history, history[3], {
+                msg_idx = 3,
+                settings = {
+                    readSetting = function(dummy, key, def)
+                        if key == "show_reasoning" then return show_reasoning end
+                        return def
+                    end,
+                },
+                default_config = { show_suggestions = false },
+            })
+        end
+        -- On: the stored fence becomes a Thought block above the Response.
+        local on = fmt(true)
+        assert.matches(on, 'assistant%-label%-%-thought">❖ Deeply Thought</div>',
+            "Thought div required while Reasoning Text is on")
+        assert.matches(on, '```reasoning\nthinking here\n```', "fence must be kept")
+        -- Off: a turn answered while it was on must not resurrect the thinking.
+        local off = fmt(false)
+        assert.notMatches(off, 'assistant%-label%-%-thought',
+            "no Thought block while Reasoning Text is off")
+        assert.notMatches(off, '```reasoning', "no fence while Reasoning Text is off")
+        assert.matches(off, 'assistant%-label">✦ Response</div>', "Response div still required")
+        assert.matches(off, 'The answer%.', "answer body must survive")
     end),
 }
 

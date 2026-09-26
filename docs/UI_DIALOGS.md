@@ -44,7 +44,12 @@ Pitfalls learned there:
 
 The switch is read at two points on purpose: when the result is **assembled** (the dialogs pass `minimal` into the formatter, so the text is built in the shape it is displayed) and when the **viewer** is built (the button rows). Turning it on clears `show_reasoning` / `auto_prompt_suggest` and greys both out in the menu, so the stored text can never disagree with the menu state.
 
-**Produce what you display.** Nothing filters the result afterwards: `Querier` folds reasoning into the answer only while `show_reasoning` is on (`strip_think_tags`), and the follow-up switch keeps `<suggestions>` out of the history. The renderer is left with styling only. A display switch that is flipped mid-conversation therefore applies to the *next* answer, not the one already on screen.
+**Produce what you display.** The renderer is left with styling only (`_renderMarkdown` does not filter); every display decision is taken upstream:
+
+- **At answer time** — `Querier` folds reasoning into the answer only while `show_reasoning` is on (`strip_think_tags`), and the follow-up switch keeps `<suggestions>` out of the history.
+- **At assembly time** — a turn answered before a switch was turned off still carries what the switch now hides, so the templates drop it: `TextUtils.splitReasoning` splits off a reasoning fence (`formatSingleMessage` emits the `❖ Deeply Thought` block only while the switch is on, `formatAnswerOnly` never does) and `TextUtils.stripSuggestions` removes a leftover `<suggestions>` block.
+
+Flipping a display switch calls `ChatGPTViewer:_refreshText()`, which re-assembles the reply through the caller's `rebuild_text` and repaints — so the change is immediate instead of waiting for the next answer. The rebuilt widget keeps the current page, clamped by `scrollToPage` when the text shrinks.
 
 ## KOReader widget internals (last resort)
 

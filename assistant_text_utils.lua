@@ -183,6 +183,40 @@ function M.bold_format(text)
     return out:get()
 end
 
+--- Locate a <suggestions> block, ignoring one quoted inside a reasoning fence.
+---
+--- A tag inside an unterminated fence means truncated reasoning, so there is no
+--- trustworthy block position and none is reported.
+--- @param content string assistant content
+--- @return number|nil start index of the tag, nil when there is no usable block
+function M.findSuggestionsBlock(content)
+    -- Ignore <suggestions> inside the reasoning fence: search only after
+    -- its closing fence (plain search)
+    local fence_open = string.find(content, "```reasoning", 1, true)
+    if fence_open then
+        local fence_close = string.find(content, "```", fence_open + 13, true)
+        if not fence_close then return nil end -- truncated reasoning, ignore
+        return string.find(content, "<suggestions>", fence_close + 3, true)
+    end
+    return string.find(content, "<suggestions>", 1, true)
+end
+
+--- Drop a <suggestions> block and everything after it.
+---
+--- Used when follow-up questions are off: a turn answered while the switch was
+--- on still carries the raw block, and it must not reach the page as literal
+--- markup.
+--- @param content string assistant content
+--- @return string content without the block (unchanged when there is none)
+function M.stripSuggestions(content)
+    if type(content) ~= "string" or content == "" then
+        return content
+    end
+    local tag_start = M.findSuggestionsBlock(content)
+    if not tag_start then return content end
+    return (content:sub(1, tag_start - 1):gsub("%s+$", ""))
+end
+
 --[[
     Processes the model content, converting everything after the <suggestions> tag
     into Markdown links. It safely handles cases where the closing </suggestions> tag is missing.
@@ -195,19 +229,8 @@ function M.process_suggestions(content)
         return content
     end
 
-    -- Ignore <suggestions> inside the reasoning fence: search only after
-    -- its closing fence (plain search)
-    local fence_open = string.find(content, "```reasoning", 1, true)
-    local tag_start
-    if fence_open then
-        local fence_close = string.find(content, "```", fence_open + 13, true)
-        if not fence_close then return content end -- truncated reasoning, ignore
-        tag_start = string.find(content, "<suggestions>", fence_close + 3, true)
-        if not tag_start then return content end
-    else
-        tag_start = string.find(content, "<suggestions>", 1, true)
-        if not tag_start then return content end
-    end
+    local tag_start = M.findSuggestionsBlock(content)
+    if not tag_start then return content end
 
     -- Extract the main text before the tag
     local main_body = string.sub(content, 1, tag_start - 1)
@@ -268,6 +291,23 @@ function M.strip_think_tags(ret, structured, show_reasoning)
     return T("```reasoning\n%1\n```\n\n%2", reasoning, text)
 end
 
+--- Split a stored ```reasoning fence off an assistant answer.
+---
+--- The querier folds reasoning into the answer only while Reasoning Text is
+--- on, but a turn answered before the switch was turned off still carries its
+--- fence, so the templates decide here what to do with it: show it as a
+--- Thought block or keep the answer body alone.
+--- @param content string stored assistant content
+--- @return string|nil reasoning text, nil when there is no fence
+--- @return string answer body (the whole content when there is no fence)
+function M.splitReasoning(content)
+    local reasoning, body = content:match("^```reasoning%s*([%s%S]-)%s*```%s*([%s%S]*)$")
+    if reasoning and reasoning:find("%S") then
+        return reasoning, body
+    end
+    return nil, content
+end
+
 --- Replace the bulky context blocks a user message may carry with a short
 --- placeholder, so the displayed question stays readable.
 --- @param text string user question or typed input
@@ -315,12 +355,13 @@ function M.formatAnswerOnly(message, opts)
         if kw then
             return string.format("%s\n\n", kw)
         end
-        -- The answer is already in the shape the display settings asked for:
-        -- the querier keeps the reasoning fence only while Reasoning Text is
-        -- on, and the follow-up switch keeps suggestions out of the history.
-        -- Nothing to cut here - the blank line is what kept the labelled
-        -- shape's blocks apart, so the next turn still starts a new block.
-        return (message.content or _("(No response)")) .. "\n\n"
+        -- Answer only, and that includes what a turn picked up before the mode
+        -- was switched on: a reasoning fence and a raw <suggestions> block.
+        local _, body = M.splitReasoning(message.content or _("(No response)"))
+        body = M.stripSuggestions(body)
+        -- The blank line is what kept the labelled shape's blocks apart, so the
+        -- next turn still starts a new markdown block.
+        return body .. "\n\n"
     end
     return "" -- Should not happen for valid roles
 end
@@ -330,8 +371,9 @@ end
 --- Emits the div-carrier shapes (Question / Thought / Response / Search) so
 --- both result paths stay identical; the rendered HTML must stay
 --- byte-identical, while _() msgids carry only human-readable words (never
---- markup). With `minimal` set (the Response Settings minimalist mode) the
---- answer-only template above is used instead.
+--- markup). The Reasoning Text switch decides whether a stored reasoning fence
+--- becomes a Thought block or is dropped. With `minimal` set (the Response
+--- Settings minimalist mode) the answer-only template above is used instead.
 --- @param message_history table full history, used for show_suggestions inheritance
 --- @param message table the user/assistant message to format
 --- @param opts table render options: title (string|nil book title),
@@ -399,16 +441,22 @@ function M.formatSingleMessage(message_history, message, opts)
             end
             if show_for_this then
                 assistant_content = M.process_suggestions(assistant_content)
+            else
+                -- A turn answered while follow-ups were on still carries the raw
+                -- block; with the switch off it must not reach the page.
+                assistant_content = M.stripSuggestions(assistant_content)
             end
 
-            -- Bare ```reasoning fence stored by the querier: split it off so it
-            -- renders before the Response header (spacing comes from CSS).
-            local reasoning_text, body = assistant_content:match(
-                "^```reasoning%s*([%s%S]-)%s*```%s*([%s%S]*)$")
-            if reasoning_text and reasoning_text:find("%S") then
-                reasoning_section = T('<div class="assistant-label assistant-label--thought">%1 %2</div>\n\n```reasoning\n%3\n```\n\n',
-                    "❖", _("Deeply Thought"), reasoning_text)
+            -- Stored ```reasoning fence: the Reasoning Text switch decides
+            -- whether it becomes a Thought block above the Response header
+            -- (spacing comes from CSS) or is dropped for an answer-only turn.
+            local reasoning_text, body = M.splitReasoning(assistant_content)
+            if reasoning_text then
                 assistant_content = body
+                if opts.settings and opts.settings:readSetting("show_reasoning", false) then
+                    reasoning_section = T('<div class="assistant-label assistant-label--thought">%1 %2</div>\n\n```reasoning\n%3\n```\n\n',
+                        "❖", _("Deeply Thought"), reasoning_text)
+                end
             end
         end
 

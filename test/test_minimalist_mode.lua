@@ -101,6 +101,14 @@ local tests = {
         assert.notMatches(out, "assistant%-label", "no Search carrier may survive")
     end),
 
+    test("minimal: a fence from before the mode was switched on is cut", function()
+        -- Answer-only is the mode's contract, so a leftover fence must not
+        -- reach the page even if the turn was produced with reasoning on.
+        local answer = make_msg("assistant", "```reasoning\nthinking hard\n```\n\nThe answer.")
+        local out = fmt(answer, { minimal = true })
+        assert.equal(out, "The answer.\n\n", "only the answer body may be emitted")
+    end),
+
     test("minimal: answer block ends so the next turn starts a new block", function()
         -- Without the trailing blank line a list item and the following
         -- question merge into one line once the labels are gone.
@@ -131,45 +139,82 @@ local tests = {
 
     test("querier: reasoning never reaches the UI while the switch is off", function()
         local querier_src = read_source("assistant_querier.lua")
-        -- Both answer producers (non-stream + stream) must read the switch...
+        -- The non-stream answer reads the switch; the streaming paths share one
+        -- per-stream snapshot instead of reading the settings per chunk.
         assert.equal(select(2, querier_src:gsub(
             "self%.settings:readSetting%(\"show_reasoning\", false%)%)", "")),
-            2, "both strip_think_tags call sites must honor Reasoning Text")
+            1, "only the non-stream answer may read the switch directly")
+        assert.matches(querier_src,
+            "self%.show_reasoning = self%.settings:readSetting%(\"show_reasoning\", false%)",
+            "the stream must snapshot the switch once")
         assert.notMatches(querier_src, "strip_think_tags%([^%s]%s*nil, true%)",
             "no producer may force the reasoning fence on")
         assert.notMatches(querier_src, "structured, true%)",
             "the stream answer must not force the fence on either")
-        -- ...and so must the streaming display path, or the composing window
-        -- would still print reasoning while minimalist mode waits for the answer.
-        assert.matches(querier_src,
-            "if trunk_callback and self%.settings:readSetting%(\"show_reasoning\", false%) then\n%s*trunk_callback%(reasoning_content",
-            "streamed reasoning must be gated before it reaches the composing window")
+        -- Streamed reasoning is display-only, so it must be gated before it
+        -- reaches the composing window.
+        assert.matches(querier_src, "if trunk_callback and self%.show_reasoning then",
+            "streamed reasoning must follow the snapshot")
+        assert.matches(querier_src, "trunk_callback%(reasoning_content, reasoning_content_buffer%)",
+            "the reasoning push must stay where the gate can see it")
     end),
 
     test("viewer: renders the text as produced", function()
-        assert.notMatches(viewer_src, "strip_reasoning", "the viewer must not filter the answer")
-        assert.notMatches(viewer_src, "strip_think_tags", "the querier already split think tags")
+        assert.matches(viewer_src, "local html_body, err = MD%(self%.text%)",
+            "the viewer must render the produced text as-is")
+        assert.notMatches(viewer_src, "strip_reasoning",
+            "the removed render-time reasoning filter must not come back")
     end),
 
     test("viewer: close is the only button in minimal mode", function()
         assert.matches(viewer_src,
             'self.minimalist = self.assistant.settings:readSetting%("minimalist_mode", false%)',
             "viewer must read the switch once in init()")
-        assert.matches(viewer_src, "if self.minimalist then\n      %-%- Answer text only[^\n]*\n      table.insert%(buttons, { new_close_button%(%) }%)",
-            "minimal rows must be a single Close button")
-        local nav_pos = viewer_src:find("table.insert(buttons, nav_row)", 1, true)
-        local action_pos = viewer_src:find("table.insert(buttons, action_row)", 1, true)
+        local min_branch = viewer_src:find("if self.minimalist then", 1, true)
+        assert.notNil(min_branch, "the minimal row branch must exist")
+        local close_only = viewer_src:find("table.insert(buttons, { new_close_button() })", min_branch, true)
+        assert.notNil(close_only, "minimal rows must be a single Close button")
+        local nav_pos = viewer_src:find("table.insert(buttons, nav_row)", min_branch, true)
+        local action_pos = viewer_src:find("table.insert(buttons, action_row)", min_branch, true)
         assert.notNil(nav_pos and action_pos, "both default rows must still be assembled")
         assert.isTrue(nav_pos < action_pos, "navigation row stays above the action row")
+        assert.isTrue(close_only < nav_pos,
+            "the default rows belong to the non-minimal branch, not the minimal one")
         local rows_start = viewer_src:find("local nav_row, action_row", 1, true)
         assert.notNil(rows_start, "rows must be declared outside the minimal branch")
-        assert.isTrue(rows_start < nav_pos, "the non-minimal branch must fill the declared rows")
+        assert.isTrue(rows_start < min_branch, "the non-minimal branch must fill the declared rows")
     end),
 
     test("viewer: page-button feedback is skipped in minimal mode", function()
         assert.matches(viewer_src,
             "if not self.minimalist then\n    local prev_at_top",
             "the scroll feedback must not be built without page buttons")
+    end),
+
+    test("viewer: a display switch re-assembles the text, not just re-renders", function()
+        -- The reply is shaped when the dialogs build it, so flipping Reasoning
+        -- or Follow-up must rebuild it; re-rendering the stored string would keep
+        -- the parts the switch just hid.
+        local refresh_text = viewer_src:find("function ChatGPTViewer:_refreshText", 1, true)
+        assert.notNil(refresh_text, "_refreshText must exist")
+        local refresh_end = viewer_src:find("\nend", refresh_text, true)
+        assert.notNil(refresh_end, "_refreshText must be a closed function")
+        local refresh_body = viewer_src:sub(refresh_text, refresh_end)
+        assert.matches(refresh_body, "self%.text = self%.rebuild_text%(self%)",
+            "_refreshText must re-assemble the reply")
+        assert.matches(refresh_body, "self:_refreshScrollWidget%(%)",
+            "_refreshText must repaint through the scroll widget rebuild")
+        local menu_start = viewer_src:find("function ChatGPTViewer:onShowMenu", 1, true)
+        local menu = viewer_src:sub(menu_start)
+        assert.equal(select(2, menu:gsub("self:_refreshText%(%)", "")),
+            2, "both display switches must rebuild the text")
+    end),
+
+    test("dialogs hand the viewer a re-assembly entry point", function()
+        for name, src in pairs({ dialog = dialog_src, feature = feature_src, dict = dict_src }) do
+            assert.matches(src, "rebuild_text = function",
+                name .. " must let the viewer re-assemble its result")
+        end
     end),
 
     test("viewer: reasoning and follow-up switches are greyed out", function()
@@ -193,10 +238,14 @@ local tests = {
         assert.matches(sub, 'readSetting%("minimalist_mode", false%)',
             "the switch must default to off")
         assert.matches(sub, 'saveSetting%("minimalist_mode", on%)', "the switch must be saved")
-        assert.matches(sub, 'if on then[^\n]*\n[^\n]*\n[^\n]*\n[^\n]*\n[^\n]*\n[^\n]*saveSetting%("show_reasoning", false%)',
-            "turning it on must clear Reasoning Text")
-        assert.matches(sub, 'saveSetting%("auto_prompt_suggest", false%)',
-            "turning it on must clear Follow-up Questions")
+        -- The two clears belong to the enable branch: anchor on their order, not
+        -- on how many lines the comment inside the branch takes.
+        local save_on = sub:find('saveSetting("minimalist_mode", on)', 1, true)
+        local guard = sub:find("if on then", save_on, true)
+        local clear_reasoning = sub:find('saveSetting("show_reasoning", false)', guard, true)
+        local clear_followup = sub:find('saveSetting("auto_prompt_suggest", false)', guard, true)
+        assert.notNil(guard and clear_reasoning and clear_followup,
+            "turning it on must clear Reasoning Text and Follow-up Questions")
         assert.equal(select(2, sub:gsub(
             "%) return not assistant.settings:readSetting%(\"minimalist_mode\", false%) end,", "")),
             2, "both sub-switches must be disabled while minimal mode is on")

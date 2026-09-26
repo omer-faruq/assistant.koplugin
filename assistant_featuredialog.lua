@@ -399,6 +399,11 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
           end)
         end)
       end,
+      -- Re-assemble the transcript so a display switch in the viewer's menu
+      -- can hide what it just turned off.
+      rebuild_text = function()
+        return createResultText()
+      end,
       default_hold_callback = function ()
         chatgpt_viewer:HoldClose()
       end,

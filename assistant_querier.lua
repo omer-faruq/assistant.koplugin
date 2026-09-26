@@ -33,6 +33,7 @@ local Querier = {
     provider_name = nil,
     interrupt_stream = nil,      -- function to interrupt the stream query
     user_interrupted = false,  -- flag to indicate if the stream was interrupted
+    show_reasoning = false,    -- per-stream snapshot of the Reasoning Text switch
 }
 
 --- Normalize tool call: merge arguments_parts into a single arguments string
@@ -824,6 +825,10 @@ function Querier:processStream(bgQuery, trunk_callback)
     local result_buffer = strbuf.new()  -- Buffer for storing results
     local reasoning_content_buffer = strbuf.new()  -- Buffer for storing reasoning content
     self.reasoning_phase_ended = false
+    -- One snapshot per stream, next to the other per-stream state: reading it
+    -- per chunk would let a mid-stream toggle split the composing window's
+    -- content (reasoning on screen, answer with the opposite rule).
+    self.show_reasoning = self.settings:readSetting("show_reasoning", false)
 
     while true do  
 
@@ -1048,8 +1053,7 @@ function Querier:processStream(bgQuery, trunk_callback)
     -- step has to filter a fence out again. (Tool-call rounds keep their
     -- reasoning regardless: there it is protocol data, not display.)
     local structured = #reasoning_content_buffer > 0 and reasoning_content_buffer:get() or nil
-    ret = TextUtils.strip_think_tags(ret, structured,
-        self.settings:readSetting("show_reasoning", false))
+    ret = TextUtils.strip_think_tags(ret, structured, self.show_reasoning)
     return ret, nil
 end
 
@@ -1230,7 +1234,7 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         -- so the composing window shows the answer being written and nothing
         -- else. The trunk callback cannot tell the channels apart, so the gate
         -- belongs here, where the channel is known.
-        if trunk_callback and self.settings:readSetting("show_reasoning", false) then
+        if trunk_callback and self.show_reasoning then
             trunk_callback(reasoning_content, reasoning_content_buffer)
         end
     elseif type(stop_reason) == "string" then

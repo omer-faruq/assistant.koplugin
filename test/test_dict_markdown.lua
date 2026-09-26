@@ -27,10 +27,12 @@ end
 
 local dict_src = read_source("assistant_dictdialog.lua")
 
-local function make_settings(suggest_on)
+-- Settings stub: follow-ups and (optionally) Reasoning Text on.
+local function make_settings(suggest_on, reasoning_on)
     return {
         readSetting = function(dummy, key, def)
             if key == "auto_prompt_suggest" then return suggest_on end
+            if key == "show_reasoning" then return reasoning_on or false end
             return def
         end,
     }
@@ -115,11 +117,11 @@ local tests = {
         table.insert(history, answer_msg)
         local out = build_result(history, "... prev **word** next ...\n\n", settings, NO_SUGGEST)
         assert.notMatches(out, '#q:', "no suggestion links when the prompt keeps them off")
-        assert.matches(out, '<suggestions>', "untouched tags must stay when disabled")
+        assert.notMatches(out, '<suggestions>', "the raw block must not reach the page")
+        assert.matches(out, 'A word%.', "the answer body must survive")
     end),
 
-    test("pipeline: a stored fence becomes a Thought div", function()
-        local settings = make_settings(false)
+    test("pipeline: the Reasoning Text switch decides the Thought div", function()
         local history = {
             make_msg("system", "system prompt"),
             make_msg("user", "Define the word."),
@@ -127,24 +129,19 @@ local tests = {
         local answer_msg = make_msg("assistant", "```reasoning\nthinking here\n```\n\nThe term names a ship.")
         ASUtils.set_attr(answer_msg, "show_suggestions", false)
         table.insert(history, answer_msg)
-        local out = build_result(history, "... prev **word** next ...\n\n", settings, NO_SUGGEST)
-        assert.matches(out, 'assistant%-label%-%-thought">❖ Deeply Thought</div>', "Thought div missing")
-        assert.matches(out, '```reasoning\nthinking here\n```', "reasoning fence must be kept")
-        assert.matches(out, 'The term names a ship', "answer body must survive")
-        -- With Reasoning Text off the producer hands over a fence-free answer
-        -- (querier: strip_think_tags(_, _, false)), so the excerpt header and
-        -- the answer are all that reach the renderer.
-        local plain_history = {
-            make_msg("system", "system prompt"),
-            make_msg("user", "Define the word."),
-        }
-        local plain_msg = make_msg("assistant", "The term names a ship.")
-        ASUtils.set_attr(plain_msg, "show_suggestions", false)
-        table.insert(plain_history, plain_msg)
-        local plain = build_result(plain_history, "... prev **word** next ...\n\n", settings, NO_SUGGEST)
-        assert.notMatches(plain, 'assistant%-label%-%-thought', "no Thought block without a fence")
-        assert.matches(plain, '%.%.%. prev %*%*word%*%* next %.%.%.', "excerpt header must survive")
-        assert.matches(plain, 'The term names a ship', "answer body must survive")
+        -- Switch on: the stored fence becomes a Thought block above the answer.
+        local on = build_result(history, "... prev **word** next ...\n\n", make_settings(false, true), NO_SUGGEST)
+        assert.matches(on, 'assistant%-label%-%-thought">❖ Deeply Thought</div>', "Thought div missing")
+        assert.matches(on, '```reasoning\nthinking here\n```', "reasoning fence must be kept")
+        assert.matches(on, 'The term names a ship', "answer body must survive")
+        -- Switch off: a turn answered while it was on still carries its fence,
+        -- and must not resurrect the thinking once the switch is off.
+        local off_settings = make_settings(false, false)
+        local off = build_result(history, "... prev **word** next ...\n\n", off_settings, NO_SUGGEST)
+        assert.notMatches(off, 'assistant%-label%-%-thought', "no Thought block while the switch is off")
+        assert.notMatches(off, '```reasoning', "no fence while the switch is off")
+        assert.matches(off, '%.%.%. prev %*%*word%*%* next %.%.%.', "excerpt header must survive")
+        assert.matches(off, 'The term names a ship', "answer body must survive")
     end),
 }
 

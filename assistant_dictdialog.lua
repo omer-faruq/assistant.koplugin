@@ -351,6 +351,11 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
                 end,
             },
         },
+        -- Re-assemble the result so a display switch in the viewer's menu can
+        -- hide what it just turned off.
+        rebuild_text = function()
+            return createResultText(highlightedText)
+        end,
         default_hold_callback = function ()
             chatgpt_viewer:HoldClose()
         end,
