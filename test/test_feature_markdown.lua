@@ -58,16 +58,6 @@ local function fmt_opts(history, idx, settings, default_config)
     }
 end
 
--- Strip helper for the viewer pipeline: titled div block first, then the
--- bare fence the querier stores; think-tag handling is the real
--- TextUtils.strip_think_tags (assistant_utils.lua, single source of truth).
-local function strip_reasoning(text)
-    text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
-    text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*', "")
-    text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
-    return TextUtils.strip_think_tags(text, nil, false)
-end
-
 local function test(name, fn)
     return { name = name, fn = fn }
 end
@@ -160,12 +150,16 @@ local tests = {
         table.insert(history, answer_msg)
         local out = TextUtils.formatSingleMessage(history, answer_msg, fmt_opts(history, 3, settings, { show_suggestions = false }))
         assert.matches(out, 'assistant%-label%-%-thought">❖ Deeply Thought</div>', "Thought div missing")
-        assert.matches(out, '```reasoning\nthinking here\n```', "reasoning fence must be kept pre-strip")
+        assert.matches(out, '```reasoning\nthinking here\n```', "reasoning fence must be kept")
         assert.matches(out, 'assistant%-label">✦ Response</div>', "Response div missing")
-        local stripped = strip_reasoning(out)
-        assert.notMatches(stripped, '```reasoning', "reasoning fence must be stripped")
-        assert.notMatches(stripped, 'assistant%-label%-%-thought', "thought label must be stripped")
-        assert.matches(stripped, 'The Ring rules them all', "answer body must survive the strip")
+        -- With Reasoning Text off the producer hands over a fence-free answer
+        -- (querier: strip_think_tags(_, _, false)), so no Thought block.
+        local plain_msg = make_msg("assistant", "The Ring rules them all.")
+        ASUtils.set_attr(plain_msg, "show_suggestions", false)
+        local plain = TextUtils.formatSingleMessage(history, plain_msg, fmt_opts(history, 3, settings, { show_suggestions = false }))
+        assert.notMatches(plain, 'assistant%-label%-%-thought', "no Thought block without a fence")
+        assert.matches(plain, 'assistant%-label">✦ Response</div>', "Response div still required")
+        assert.matches(plain, 'The Ring rules them all', "answer body must survive")
     end),
 
     test("pipeline: suggestion inheritance follows dialog rules", function()

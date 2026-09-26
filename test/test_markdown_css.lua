@@ -6,9 +6,9 @@
 -- assistant_mdparser MD() and asserts what the viewer shows.
 -- Headless-safe: the widget-heavy assistant_dialog.lua and
 -- assistant_viewer.lua are never required; their pure string transforms
--- (strip_reasoning, label unwrap, suggestion-link rewrite) are mirrored
--- inline per testing policy, and the device stub is enriched before the
--- mdparser platform probe runs.
+-- (label unwrap, suggestion-link rewrite) are mirrored inline per testing
+-- policy, and the device stub is enriched before the mdparser platform
+-- probe runs.
 local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
@@ -43,16 +43,11 @@ end
 -- Shared sample is a plain .md file: paste new text straight in, no escaping.
 local SAMPLE = read_source("test/markdown_css_sample.md")
 
--- Strip helper for the viewer pipeline: titled div block first, then the
--- bare fence the querier stores; think-tag handling is the real
--- TextUtils.strip_think_tags (assistant_utils.lua, single source of truth).
-local function strip_reasoning(text)
-    text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
-    text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*', "")
-    text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
-    return TextUtils.strip_think_tags(text, nil, false)
-end
-
+-- The sample is the Reasoning-Text-on shape. With the switch off the querier
+-- never folds reasoning into the answer at all (TextUtils.strip_think_tags
+-- with show_reasoning = false), so there is nothing for a renderer to strip:
+-- the sample is rendered as-is and only the styling is checked.
+--
 -- Inline mirror of the puremd unwrap (assistant_viewer.lua _renderMarkdown):
 -- puremd wraps raw HTML blocks in <p>; hoedown leaves them bare (no-op).
 local function unwrap_label(html)
@@ -127,16 +122,16 @@ local tests = {
         assert.matches(html, 'Why It Corrupts', "LLM h2 text must survive")
     end),
 
-    test("render: reasoning strip removes thought block, keeps answer", function()
-        local stripped = strip_reasoning(SAMPLE)
-        assert.notMatches(stripped, '```reasoning', "reasoning fence must be stripped")
-        assert.notMatches(stripped, 'assistant%-label%-%-thought', "thought label must be stripped")
-        assert.notMatches(stripped, 'no web search is needed', "thought body must be stripped")
-        assert.matches(stripped, '✦ Response</div>', "response label must survive the strip")
-        assert.matches(stripped, '⌗ Frodo Baggins', "search keywords must survive the strip")
-        local html = unwrap_label(MD(stripped))
-        assert.notMatches(html, '```reasoning', "rendered HTML must not contain the fence")
-        assert.matches(html, 'The Ring and Its Nature', "answer body must survive the strip")
+    test("render: Reasoning-Text-off never reaches the renderer", function()
+        -- The drop happens when the answer is produced, so the renderer only
+        -- ever sees the answer body (querier: strip_think_tags(_, _, false)).
+        local answer_only = TextUtils.strip_think_tags(
+            "<think>no web search is needed</think>\n\nThe Ring is corrupting.", nil, false)
+        assert.equal(answer_only, "The Ring is corrupting.", "think-tag reasoning must be dropped")
+        local html = unwrap_label(MD(answer_only))
+        assert.notMatches(html, '<think>', "rendered HTML must not contain think tags")
+        assert.notMatches(html, '```reasoning', "rendered HTML must not contain a fence")
+        assert.matches(html, 'The Ring is corrupting', "answer body must survive")
     end),
 
     test("render: thought label heads a pre block for reasoning text", function()

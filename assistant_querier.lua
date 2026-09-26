@@ -620,9 +620,11 @@ function Querier:query(message_history, title)
         until type(res) == "string" or err ~= nil
         UIManager:close(self.handler:resetTrapWidget())
 
-        -- Fold inline <think> into the stored fence; the viewer gates display.
+        -- Fold inline <think> into the answer, keeping the reasoning fence
+        -- only while Reasoning Text is on.
         if res ~= "" then
-            res = TextUtils.strip_think_tags(res, nil, true)
+            res = TextUtils.strip_think_tags(res, nil,
+                self.settings:readSetting("show_reasoning", false))
         end
     end
 
@@ -1041,10 +1043,13 @@ function Querier:processStream(bgQuery, trunk_callback)
         return tc_content, tool_calls
     end
 
-    -- History always keeps reasoning (structured and/or inline <think>);
-    -- the viewer hides it per show_reasoning at render time.
+    -- Reasoning belongs to the answer only while Reasoning Text is on, so the
+    -- stored history matches what the result window shows and no downstream
+    -- step has to filter a fence out again. (Tool-call rounds keep their
+    -- reasoning regardless: there it is protocol data, not display.)
     local structured = #reasoning_content_buffer > 0 and reasoning_content_buffer:get() or nil
-    ret = TextUtils.strip_think_tags(ret, structured, true)
+    ret = TextUtils.strip_think_tags(ret, structured,
+        self.settings:readSetting("show_reasoning", false))
     return ret, nil
 end
 
@@ -1220,7 +1225,14 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         if trunk_callback then trunk_callback(result_content, result_buffer) end
     elseif type(reasoning_content) == "string" and #reasoning_content > 0 then
         reasoning_content_buffer:put(reasoning_content)
-        if trunk_callback then trunk_callback(reasoning_content, reasoning_content_buffer) end
+        -- Streamed reasoning is display-only: with Reasoning Text off it stays
+        -- in the buffer (tool-call payloads need it) and never reaches the UI,
+        -- so the composing window shows the answer being written and nothing
+        -- else. The trunk callback cannot tell the channels apart, so the gate
+        -- belongs here, where the channel is known.
+        if trunk_callback and self.settings:readSetting("show_reasoning", false) then
+            trunk_callback(reasoning_content, reasoning_content_buffer)
+        end
     elseif type(stop_reason) == "string" then
         local prefix = stop_reason:sub(1, 3):lower()
         if prefix ~= "too" and              -- tool_call/tool_use

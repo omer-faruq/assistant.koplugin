@@ -10,7 +10,6 @@ Displays some text in a scrollable view.
 ]]
 local BD = require("ui/bidi")
 local DocUtils = require("assistant_doc_utils")
-local TextUtils = require("assistant_text_utils")
 local Blitbuffer = require("ffi/blitbuffer")
 local ButtonTable = require("ui/widget/buttontable")
 local ButtonDialog = require("ui/widget/buttondialog")
@@ -153,6 +152,7 @@ local ChatGPTViewer = InputContainer:extend {
   onAskQuestion = nil, -- callback when the Ask Another Question button is pressed
   input_dialog = nil,
   is_show_addnote = true, -- when true, show the Add Note button
+  minimalist = nil, -- minimalist_mode setting: answer text plus a Close button
   extra_buttons = nil, -- list of ButtonTable button specs {text, id, callback, hold_callback}, appended to the action row before Close
 }
 
@@ -173,6 +173,12 @@ function ChatGPTViewer:init()
   self._find_next = false
   self._find_next_button = false
   self._old_virtual_line_num = 1
+
+  -- Minimalist mode (Response Settings): the reply itself is the whole UI, so
+  -- the result window keeps a single Close button, drops the Question /
+  -- Response / Thought labels (built by the dialogs) and hides reasoning and
+  -- follow-up questions. Read once here: the button rows are built in init().
+  self.minimalist = self.assistant.settings:readSetting("minimalist_mode", false)
 
   if Device:hasKeys() then
     self.key_events.Close = { { Device.input.group.Back } }
@@ -275,191 +281,209 @@ function ChatGPTViewer:init()
     show_parent = self,
   }
 
-  -- Callback to enable/disable buttons, for at-top/at-bottom feedback
-  local prev_at_top = false -- Buttons were created enabled
-  local prev_at_bottom = false
-  local function button_update(id, enable)
-    local button = self.button_table:getButtonById(id)
-    if button then
-      if enable then
-        button:enable()
-      else
-        button:disable()
+  -- Callback to enable/disable buttons, for at-top/at-bottom feedback.
+  -- Minimalist mode has no page buttons, so the callback stays unset.
+  if not self.minimalist then
+    local prev_at_top = false -- Buttons were created enabled
+    local prev_at_bottom = false
+    local function button_update(id, enable)
+      local button = self.button_table:getButtonById(id)
+      if button then
+        if enable then
+          button:enable()
+        else
+          button:disable()
+        end
+        button:refresh()
       end
-      button:refresh()
+    end
+    self._buttons_scroll_callback = function(low, high)
+      if prev_at_top and low > 0 then
+        button_update("prev_page", true)
+        prev_at_top = false
+      elseif not prev_at_top and low <= 0 then
+        button_update("prev_page", false)
+        prev_at_top = true
+      end
+      if prev_at_bottom and high < 1 then
+        button_update("next_page", true)
+        prev_at_bottom = false
+      elseif not prev_at_bottom and high >= 1 then
+        button_update("next_page", false)
+        prev_at_bottom = true
+      end
     end
   end
-  self._buttons_scroll_callback = function(low, high)
-    if prev_at_top and low > 0 then
-      button_update("prev_page", true)
-      prev_at_top = false
-    elseif not prev_at_top and low <= 0 then
-      button_update("prev_page", false)
-      prev_at_top = true
-    end
-    if prev_at_bottom and high < 1 then
-      button_update("next_page", true)
-      prev_at_bottom = false
-    elseif not prev_at_bottom and high >= 1 then
-      button_update("next_page", false)
-      prev_at_bottom = true
-    end
+
+  -- Close is the one button every layout keeps; it stays last in the action
+  -- row and alone in the minimalist row.
+  local function new_close_button()
+    return {
+      text = _("Close"),
+      id = "close",
+      callback = function()
+        self:onClose()
+      end,
+      hold_callback = self.default_hold_callback,
+    }
   end
 
   -- Buttons are laid out in two rows:
   --   Navigation/clipboard: Prev page (◁◁), Find, Copy, Next page (▷▷)
   --   Actions (Close rightmost): Ask Another Question?, Annotate?, Save?,
   --                              caller extra_buttons, Close
-  local nav_row = {
-    {
-      text = "◁◁",
-      id = "prev_page",
-      callback = function()
-        self.scroll_text_w:scrollText(-1)
-      end,
-      hold_callback = function()
-        self.scroll_text_w:scrollToRatio(0)
-      end,
-      allow_hold_when_disabled = true,
-    },
-    {
-      text = _("Find"),
-      id = "find",
-      -- Tap jumps to the next match while a search is active, hold
-      -- reopens the dialog to change the search term.
-      callback = function()
-        if self._find_next then
-          self:findCallback()
-        else
-          self:findDialog()
-        end
-      end,
-      hold_callback = function()
-        if self._find_next then
-          self:findDialog()
-        else
-          if self.default_hold_callback then
-            self.default_hold_callback()
+  -- Minimalist mode builds neither row (see below): Close only.
+  local nav_row, action_row
+  if not self.minimalist then
+    nav_row = {
+      {
+        text = "◁◁",
+        id = "prev_page",
+        callback = function()
+          self.scroll_text_w:scrollText(-1)
+        end,
+        hold_callback = function()
+          self.scroll_text_w:scrollToRatio(0)
+        end,
+        allow_hold_when_disabled = true,
+      },
+      {
+        text = _("Find"),
+        id = "find",
+        -- Tap jumps to the next match while a search is active, hold
+        -- reopens the dialog to change the search term.
+        callback = function()
+          if self._find_next then
+            self:findCallback()
+          else
+            self:findDialog()
           end
-        end
-      end,
-    },
-    {
-      text = _("Copy"),
-      callback = function()
-        if self.text and self.text ~= "" then
-          Device.input.setClipboardText(self.text)
-          UIManager:show(InfoMessage:new{
-            text = _("Text copied to the clipboard"),
-            timeout = 3,
-          })
-        end
-      end,
-    },
-    {
-      text = "▷▷",
-      id = "next_page",
-      callback = function()
-        self.scroll_text_w:scrollText(1)
-      end,
-      hold_callback = function()
-        self.scroll_text_w:scrollToRatio(1)
-      end,
-      allow_hold_when_disabled = true,
-    },
-  }
+        end,
+        hold_callback = function()
+          if self._find_next then
+            self:findDialog()
+          else
+            if self.default_hold_callback then
+              self.default_hold_callback()
+            end
+          end
+        end,
+      },
+      {
+        text = _("Copy"),
+        callback = function()
+          if self.text and self.text ~= "" then
+            Device.input.setClipboardText(self.text)
+            UIManager:show(InfoMessage:new{
+              text = _("Text copied to the clipboard"),
+              timeout = 3,
+            })
+          end
+        end,
+      },
+      {
+        text = "▷▷",
+        id = "next_page",
+        callback = function()
+          self.scroll_text_w:scrollText(1)
+        end,
+        hold_callback = function()
+          self.scroll_text_w:scrollToRatio(1)
+        end,
+        allow_hold_when_disabled = true,
+      },
+    }
 
-  local action_row = {}
+    action_row = {}
 
-  -- Only add Ask Another Question button if showAskQuestion is true
-  if self.onAskQuestion then
-    table.insert(action_row, {
-      -- @translators button text, keep it short, like: Ask Another
-      text = _("Ask Another Question"),
-      id = "ask_another_question",
-      callback = function()
-        self:askAnotherQuestion()
-      end,
-    })
-  end
-
-  -- Only add Annotate button if ui context is available and not disabled
-  if self.ui and self.is_show_addnote then
-    table.insert(action_row, createAddNoteButton(self))
-  end
-
-  -- Only add Save button if auto_save_to_notebook is disabled.
-  -- In general multi-notebook mode, let the user choose the destination at
-  -- save time; otherwise preserve the existing one-click Save behavior.
-  if not self.assistant.settings:readSetting("auto_save_to_notebook", false) then
-    table.insert(action_row, {
-      text = _("Save"),
-      callback = function()
-        if is_multi_general then
-          Notebook.showPicker(self.assistant, {
-            title = _("Save conversation to"),
-            on_select = function(notebook)
-              -- Explicit user choice wins over any per-book
-              -- path: clear it so the save follows active.
-              self.notebook_path = nil
-              local saved_path, _save_err, used_fallback = self:saveToNotebook()
-
-              if self.titlebar and self.titlebar.setSubTitle then
-                self.titlebar:setSubTitle(
-                  "✎ " .. Notebook.getActiveDisplayName(self.assistant, 24)
-                )
-              end
-
-              if saved_path and not used_fallback then
-                local saved_name = saved_path:match("([^/\\]+)$") or saved_path
-                saved_name = saved_name:gsub("%.md$", "")
-                UIManager:show(InfoMessage:new{
-                  text = T(_("Saved to: %1"), saved_name),
-                  timeout = 2,
-                })
-              end
-            end,
-          })
-          return
-        end
-
-        self:saveToNotebook()
-        UIManager:show(InfoMessage:new{
-          text = _("Conversation is saved to AI Notes"),
-          timeout = 2
-        })
-      end,
-      hold_callback = function()
-        UIManager:show(InfoMessage:new{
-          text = _("Saves the conversation to AI Notes"),
-        })
-      end
-    })
-  end
-
-  -- Caller-supplied extra buttons stay in the action row, in caller order,
-  -- right before Close. They never go to the navigation row.
-  local extra = self.extra_buttons
-  if type(extra) == "table" then
-    for i = 1, #extra do
-      table.insert(action_row, extra[i])
+    -- Only add Ask Another Question button if showAskQuestion is true
+    if self.onAskQuestion then
+      table.insert(action_row, {
+        -- @translators button text, keep it short, like: Ask Another
+        text = _("Ask Another Question"),
+        id = "ask_another_question",
+        callback = function()
+          self:askAnotherQuestion()
+        end,
+      })
     end
-  end
 
-  -- Close is always the last button, so it sits at the right of the action row.
-  table.insert(action_row, {
-    text = _("Close"),
-    id = "close",
-    callback = function()
-      self:onClose()
-    end,
-    hold_callback = self.default_hold_callback,
-  })
+    -- Only add Annotate button if ui context is available and not disabled
+    if self.ui and self.is_show_addnote then
+      table.insert(action_row, createAddNoteButton(self))
+    end
+
+    -- Only add Save button if auto_save_to_notebook is disabled.
+    -- In general multi-notebook mode, let the user choose the destination at
+    -- save time; otherwise preserve the existing one-click Save behavior.
+    if not self.assistant.settings:readSetting("auto_save_to_notebook", false) then
+      table.insert(action_row, {
+        text = _("Save"),
+        callback = function()
+          if is_multi_general then
+            Notebook.showPicker(self.assistant, {
+              title = _("Save conversation to"),
+              on_select = function(notebook)
+                -- Explicit user choice wins over any per-book
+                -- path: clear it so the save follows active.
+                self.notebook_path = nil
+                local saved_path, _save_err, used_fallback = self:saveToNotebook()
+
+                if self.titlebar and self.titlebar.setSubTitle then
+                  self.titlebar:setSubTitle(
+                    "✎ " .. Notebook.getActiveDisplayName(self.assistant, 24)
+                  )
+                end
+
+                if saved_path and not used_fallback then
+                  local saved_name = saved_path:match("([^/\\]+)$") or saved_path
+                  saved_name = saved_name:gsub("%.md$", "")
+                  UIManager:show(InfoMessage:new{
+                    text = T(_("Saved to: %1"), saved_name),
+                    timeout = 2,
+                  })
+                end
+              end,
+            })
+            return
+          end
+
+          self:saveToNotebook()
+          UIManager:show(InfoMessage:new{
+            text = _("Conversation is saved to AI Notes"),
+            timeout = 2
+          })
+        end,
+        hold_callback = function()
+          UIManager:show(InfoMessage:new{
+            text = _("Saves the conversation to AI Notes"),
+          })
+        end
+      })
+    end
+
+    -- Caller-supplied extra buttons stay in the action row, in caller order,
+    -- right before Close. They never go to the navigation row.
+    local extra = self.extra_buttons
+    if type(extra) == "table" then
+      for i = 1, #extra do
+        table.insert(action_row, extra[i])
+      end
+    end
+
+    -- Close is always the last button, so it sits at the right of the action row.
+    table.insert(action_row, new_close_button())
+  end
 
   local buttons = self.buttons_table or {}
   if self.add_default_buttons or not self.buttons_table then
-    table.insert(buttons, nav_row)
-    table.insert(buttons, action_row)
+    if self.minimalist then
+      -- Answer text only: no navigation row, no Ask/Annotate/Save/actions.
+      table.insert(buttons, { new_close_button() })
+    else
+      table.insert(buttons, nav_row)
+      table.insert(buttons, action_row)
+    end
   end
   if buttons[#buttons] == nil then
     table.insert(buttons, {})
@@ -930,28 +954,11 @@ function ChatGPTViewer:_buildCSS()
   return ViewerCSS.build({ rtl = rtl, justified = justified })
 end
 
--- Strip the stored ```reasoning fence (with or without the dialog's title
--- label). The trailing `---` is optional: new text omits it, old history
--- may still carry it. Raw <think> leftovers are handled separately by
--- strip_think_tags.
-local function strip_reasoning_fence(text)
-  -- Old history carries a trailing `---` after the fence, new text omits
-  -- it: try the `---` shape first, then the bare div+fence shape.
-  text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
-  text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*', "")
-  return text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
-end
-
 function ChatGPTViewer:_renderMarkdown()
-  local source = self.text
-  if type(source) == "string" then
-    local show = self.assistant.settings:readSetting("show_reasoning", false)
-    if not show then
-      source = strip_reasoning_fence(source)
-    end
-    source = TextUtils.strip_think_tags(source, nil, show)
-  end
-  local html_body, err = MD(source)
+  -- The text arrives in display shape: the querier keeps the reasoning fence
+  -- only while Reasoning Text is on, and the follow-up switch keeps the
+  -- suggestions out of the history. The viewer only renders.
+  local html_body, err = MD(self.text)
   if err then
     logger.warn("ChatGPTViewer: could not generate HTML", err)
     -- Fallback to plain text if HTML generation fails
@@ -1177,12 +1184,18 @@ function ChatGPTViewer:onShowMenu()
     }},
     {{
       text = _("Show Reasoning"),
+      -- Minimalist mode never shows reasoning; keep the switch greyed out.
+      enabled_func = function()
+        return not self.minimalist
+      end,
       checked_func = function()
         return self.assistant.settings:readSetting("show_reasoning", false)
       end,
       align = "left",
       callback = function()
-        -- Kept open like upstream (see RTL Layout above).
+        -- Kept open like upstream (see RTL Layout above). The answer on screen
+        -- was produced without reasoning when the switch was off, so this
+        -- applies to the next answer; the rebuild keeps text size in sync.
         local show = self.assistant.settings:readSetting("show_reasoning", false)
         self.assistant.settings:saveSetting("show_reasoning", not show)
         self.assistant.updated = true
@@ -1191,13 +1204,18 @@ function ChatGPTViewer:onShowMenu()
     }},
     {{
       text = _("Show Follow-up Questions"),
+      -- Minimalist mode never shows follow-up questions (see above).
+      enabled_func = function()
+        return not self.minimalist
+      end,
       checked_func = function()
         return self.assistant.settings:readSetting("auto_prompt_suggest", false)
       end,
       align = "left",
       callback = function()
-        -- Kept open like upstream (see RTL Layout above). Takes effect
-        -- on rebuild via _renderMarkdown's suggestion-link rewrite.
+        -- Kept open like upstream (see RTL Layout above). The switch reaches
+        -- the next answer: it decides both the system prompt and
+        -- process_suggestions, plus the suggestion-link styling on rebuild.
         local show = self.assistant.settings:readSetting("auto_prompt_suggest", false)
         self.assistant.settings:saveSetting("auto_prompt_suggest", not show)
         self.assistant.updated = true

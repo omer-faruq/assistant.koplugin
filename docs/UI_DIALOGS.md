@@ -35,6 +35,17 @@ Pitfalls learned there:
 - **Declare locals before closures that use them**: button callbacks built in a `buttons` table close over dialog locals; a local declared *after* the table silently captures a nil **global** and crashes only when the button is tapped (`attempt to index global 'x' (a nil value)`). Declare shared locals (`dialog`, checkbox tables, …) above any closure that references them, and note why.
 - **Missing children crash at first paint, not construction**: a stale/nil child reference leaves a container without `[1]`; construction succeeds and the crash surfaces only on repaint (`framecontainer.lua:55 self[1]:getSize()`). Reproduce with a runui script: show the dialog, then `UIManager:scheduleIn(2, function() UIManager:forceRePaint(); UIManager:quit() end); UIManager:run()` — and exercise button callbacks programmatically (`button_table:getButtonById("ok").callback()`, or `buttons_layout[row][col]` positionally when the entry has no `id`) to cover tap-time paths headlessly.
 
+## Result viewer shapes (`assistant_viewer.lua`)
+
+`ChatGPTViewer` has two shapes, selected by the Response Settings `minimalist_mode` switch (default off):
+
+- **Standard** — two button rows (navigation/clipboard, then actions with Close rightmost) plus the page-button scroll feedback; the reply carries the `☺ Question` / `❖ Deeply Thought` / `✦ Response` / `✦ Search` carriers emitted by `TextUtils.formatSingleMessage`.
+- **Minimalist** — a single Close button, no navigation row, no Ask/Annotate/Save actions, no scroll feedback; the reply is assembled by `TextUtils.formatAnswerOnly` (no carriers, no prompt name, no reasoning block, no follow-up questions).
+
+The switch is read at two points on purpose: when the result is **assembled** (the dialogs pass `minimal` into the formatter, so the text is built in the shape it is displayed) and when the **viewer** is built (the button rows). Turning it on clears `show_reasoning` / `auto_prompt_suggest` and greys both out in the menu, so the stored text can never disagree with the menu state.
+
+**Produce what you display.** Nothing filters the result afterwards: `Querier` folds reasoning into the answer only while `show_reasoning` is on (`strip_think_tags`), and the follow-up switch keeps `<suggestions>` out of the history. The renderer is left with styling only. A display switch that is flipped mid-conversation therefore applies to the *next* answer, not the one already on screen.
+
 ## KOReader widget internals (last resort)
 
 Check the public API first, then read the widget source under `/usr/lib/koreader/frontend/ui/widget/` to trace the `widget[1]`/`[2]` tree; swap a sub-widget and nil `_size`/`_offsets`/`dimen` up the tree to re-layout. Always comment the widget-tree path.

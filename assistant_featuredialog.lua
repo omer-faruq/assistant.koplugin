@@ -270,6 +270,8 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       -- each remaining message goes through the shared formatter, so Search
       -- divs (search_keywords the querier appended in place) render.
       -- The header above is emitted once; follow-ups append below instead.
+      -- Minimalist mode assembles the answer-only shape (no carriers).
+      local minimal = assistant.settings:readSetting("minimalist_mode", false)
       local result_parts = { header_text }
       for idx = 2, #message_history do
         local message = message_history[idx]
@@ -280,6 +282,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
             msg_idx = idx,
             settings = assistant.settings,
             default_config = feature_prompt_config,
+            minimal = minimal,
           }))
         end
       end
@@ -372,18 +375,21 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
             -- Format the two new trailing messages through the shared
             -- formatter (suggestions resolved from the message attrs); the
             -- new answer is processed exactly once.
+            local minimal = assistant.settings:readSetting("minimalist_mode", false)
             local additional_text = "---\n\n"
                 .. TextUtils.formatSingleMessage(message_history, last_user_message, {
                   title = nil,
                   msg_idx = #message_history - 1,
                   settings = assistant.settings,
                   default_config = feature_prompt_config,
+                  minimal = minimal,
                 })
                 .. TextUtils.formatSingleMessage(message_history, last_assistant_message, {
                   title = nil,
                   msg_idx = #message_history,
                   settings = assistant.settings,
                   default_config = feature_prompt_config,
+                  minimal = minimal,
                 })
             viewer:update(viewer.text .. additional_text)
             

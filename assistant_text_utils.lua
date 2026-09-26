@@ -268,20 +268,82 @@ function M.strip_think_tags(ret, structured, show_reasoning)
     return T("```reasoning\n%1\n```\n\n%2", reasoning, text)
 end
 
+--- Replace the bulky context blocks a user message may carry with a short
+--- placeholder, so the displayed question stays readable.
+--- @param text string user question or typed input
+--- @return string same text with the book-text / notebook blocks collapsed
+function M.compact_context_blocks(text)
+    if text:find("%[BOOK TEXT BEGIN%]") then
+        text = text:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
+    end
+    if text:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
+        text = text:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
+    end
+    return text
+end
+
+--- Minimalist-mode renderer: the reply body only.
+---
+--- The Response Settings minimalist mode shows the answer as plain text, so
+--- this shape carries no Question/Thought/Response/Search carrier and no
+--- prompt name. Kept as a separate template (not a filter over the labelled
+--- one) so the result is assembled the way it will be displayed.
+--- @param message table the user/assistant message to format
+--- @param opts table render options: title (string|nil book title)
+--- @return string formatted markdown, "" when the message carries nothing to show
+function M.formatAnswerOnly(message, opts)
+    if not message then return "" end
+    if message.role == "user" then
+        -- A preset prompt tags its user message with its display name; the
+        -- template text behind that name is never shown, only what was typed.
+        local title = ASUtils.get_attr(message, "prompt_title")
+        if not (title and title ~= "") then
+            title = opts.title
+        end
+        local text
+        if title and title ~= "" then
+            text = ASUtils.get_attr(message, "user_input", "")
+        else
+            text = message.content
+        end
+        -- Tool-payload user messages (table content, parts-only) and
+        -- prompt-only turns (name dropped, nothing typed) show nothing.
+        if type(text) ~= "string" or text == "" then return "" end
+        return M.compact_context_blocks(text) .. "\n\n"
+    elseif message.role == "assistant" then
+        local kw = ASUtils.get_attr(message, "search_keywords")
+        if kw then
+            return string.format("%s\n\n", kw)
+        end
+        -- The answer is already in the shape the display settings asked for:
+        -- the querier keeps the reasoning fence only while Reasoning Text is
+        -- on, and the follow-up switch keeps suggestions out of the history.
+        -- Nothing to cut here - the blank line is what kept the labelled
+        -- shape's blocks apart, so the next turn still starts a new block.
+        return (message.content or _("(No response)")) .. "\n\n"
+    end
+    return "" -- Should not happen for valid roles
+end
+
 --- Single-message renderer shared by the Ask dialog and the feature dialog.
 ---
 --- Emits the div-carrier shapes (Question / Thought / Response / Search) so
 --- both result paths stay identical; the rendered HTML must stay
 --- byte-identical, while _() msgids carry only human-readable words (never
---- markup).
+--- markup). With `minimal` set (the Response Settings minimalist mode) the
+--- answer-only template above is used instead.
 --- @param message_history table full history, used for show_suggestions inheritance
 --- @param message table the user/assistant message to format
 --- @param opts table render options: title (string|nil book title),
 ---   msg_idx (integer|nil position in history), settings (KOReader settings),
----   default_config (table|nil suggestion fallback config)
+---   default_config (table|nil suggestion fallback config),
+---   minimal (boolean|nil minimalist mode: render the answer-only shape)
 --- @return string formatted markdown, "" when the message carries nothing to show
 function M.formatSingleMessage(message_history, message, opts)
     if not message then return "" end
+    if opts.minimal then
+        return M.formatAnswerOnly(message, opts)
+    end
     if message.role == "user" then
         local user_message = strbuf.new()
         -- A preset prompt tags its user message with its display name; the
@@ -300,34 +362,15 @@ function M.formatSingleMessage(message_history, message, opts)
 
             -- Check if user input is available
             if user_input and user_input ~= "" then
-
-                if user_input:find("%[BOOK TEXT BEGIN%]") then
-                    user_input = user_input:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
-                end
-
-                if user_input:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
-                    user_input = user_input:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
-                end
-
                 user_message:put("➤")
-                user_message:put(user_input)
+                user_message:put(M.compact_context_blocks(user_input))
                 user_message:put("\n\n")
             end
             return user_message:get()
         elseif type(message.content) == "string" then
             -- shows user input prompt
             user_message:put(T('<div class="assistant-label">%1 %2</div>\n\n', "☺", _("Question")))
-            local content = message.content
-
-            if content:find("%[BOOK TEXT BEGIN%]") then
-                content = content:gsub("%[BOOK TEXT BEGIN%].*%[BOOK TEXT END%]", "[BOOK TEXT]")
-            end
-
-            if content:find("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%]") then
-                content = content:gsub("%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT BEGIN%].*%[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT END%]", "[BOOK HIGHLIGHTS, NOTES AND NOTEBOOK CONTENT]")
-            end
-
-            user_message:putf("\n➤ %s\n\n", content)
+            user_message:putf("\n➤ %s\n\n", M.compact_context_blocks(message.content))
             return user_message:get()
         end
         -- Tool-payload user messages (table content, parts-only) carry no

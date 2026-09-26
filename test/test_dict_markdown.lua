@@ -52,16 +52,6 @@ end
 -- Dict/term_xray prompt configs both keep suggestions off.
 local NO_SUGGEST = { show_suggestions = false }
 
--- Strip helper for the viewer pipeline: titled div block first, then the
--- bare fence the querier stores; think-tag handling is the real
--- TextUtils.strip_think_tags (assistant_utils.lua, single source of truth).
-local function strip_reasoning(text)
-    text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
-    text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*', "")
-    text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
-    return TextUtils.strip_think_tags(text, nil, false)
-end
-
 -- Header-plus-history assembly exercised by the tests below; the
 -- widget-heavy dialog is never required headlessly.
 local function build_result(history, excerpt, settings, default_config)
@@ -128,7 +118,7 @@ local tests = {
         assert.matches(out, '<suggestions>', "untouched tags must stay when disabled")
     end),
 
-    test("pipeline: reasoning splits into Thought div, strip restores body", function()
+    test("pipeline: a stored fence becomes a Thought div", function()
         local settings = make_settings(false)
         local history = {
             make_msg("system", "system prompt"),
@@ -139,12 +129,22 @@ local tests = {
         table.insert(history, answer_msg)
         local out = build_result(history, "... prev **word** next ...\n\n", settings, NO_SUGGEST)
         assert.matches(out, 'assistant%-label%-%-thought">❖ Deeply Thought</div>', "Thought div missing")
-        assert.matches(out, '```reasoning\nthinking here\n```', "reasoning fence must be kept pre-strip")
-        local stripped = strip_reasoning(out)
-        assert.notMatches(stripped, '```reasoning', "reasoning fence must be stripped")
-        assert.notMatches(stripped, 'assistant%-label%-%-thought', "thought label must be stripped")
-        assert.matches(stripped, 'The term names a ship', "answer body must survive the strip")
-        assert.matches(stripped, '%.%.%. prev %*%*word%*%* next %.%.%.', "excerpt header must survive the strip")
+        assert.matches(out, '```reasoning\nthinking here\n```', "reasoning fence must be kept")
+        assert.matches(out, 'The term names a ship', "answer body must survive")
+        -- With Reasoning Text off the producer hands over a fence-free answer
+        -- (querier: strip_think_tags(_, _, false)), so the excerpt header and
+        -- the answer are all that reach the renderer.
+        local plain_history = {
+            make_msg("system", "system prompt"),
+            make_msg("user", "Define the word."),
+        }
+        local plain_msg = make_msg("assistant", "The term names a ship.")
+        ASUtils.set_attr(plain_msg, "show_suggestions", false)
+        table.insert(plain_history, plain_msg)
+        local plain = build_result(plain_history, "... prev **word** next ...\n\n", settings, NO_SUGGEST)
+        assert.notMatches(plain, 'assistant%-label%-%-thought', "no Thought block without a fence")
+        assert.matches(plain, '%.%.%. prev %*%*word%*%* next %.%.%.', "excerpt header must survive")
+        assert.matches(plain, 'The term names a ship', "answer body must survive")
     end),
 }
 

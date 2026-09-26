@@ -7,7 +7,7 @@
 --     separator is `---`, not `------------`
 --   * inter-round separator is `---`, not `------------`
 --   * assistant_css.lua styles .assistant-label; _renderMarkdown unwraps puremd's
---     <p>-wrapped labels; strip_reasoning matches the new div shape
+--     <p>-wrapped labels and filters nothing else
 -- Headless-safe: asserts on shipped sources plus a representative generated
 -- sample (the shapes formatSingleMessage emits); assistant_dialog.lua itself
 -- is widget-heavy and never required here.
@@ -47,17 +47,7 @@ local SAMPLE = table.concat({
     'Frodo Baggins.\n\n',
 })
 
--- Strip helper for the viewer pipeline: titled div block first, then the
--- bare fence the querier stores; think-tag handling is the real
--- TextUtils.strip_think_tags (assistant_utils.lua, single source of truth).
-local function strip_reasoning(text)
-    text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*%-%-%-%s*', "")
-    text = text:gsub('<div class="assistant%-label[^"]*">[^\n]*</div>%s*```reasoning%s*[%s%S]-%s*```%s*', "")
-    text = text:gsub("```reasoning%s*[%s%S]-%s*```%s*", "")
-    return TextUtils.strip_think_tags(text, nil, false)
-end
-
--- ata: puremd wraps raw HTML blocks in <p>; hoedown leaves them bare.
+-- puremd wraps raw HTML blocks in <p>; hoedown leaves them bare.
 local function unwrap_label(html)
     return html:gsub('<p>%s*<div class="(assistant%-label[^"]*)">(.-)</div>%s*</p>', '<div class="%1">%2</div>')
 end
@@ -136,14 +126,16 @@ local tests = {
         assert.equal(unwrap_label(bare), bare)
     end),
 
-    test("viewer: strip matches new div shape, old h4 gone", function()
-        assert.matches(viewer_src, 'assistant%%%-label', "new strip pattern missing")
+    test("viewer: no heading or reasoning strip left", function()
         assert.notMatches(viewer_src, '#### %[%^', "old #### strip pattern still present")
-        local stripped = strip_reasoning(SAMPLE)
-        assert.notMatches(stripped, '```reasoning', "reasoning fence must be stripped")
-        assert.notMatches(stripped, 'assistant%-label%-%-thought', "thought label must be stripped")
-        assert.matches(stripped, 'assistant%-label', "response/search labels must survive")
-        assert.matches(stripped, 'The Ring rules them all', "answer body must survive")
+        assert.notMatches(viewer_src, "strip_reasoning", "the viewer must not filter the answer")
+        assert.notMatches(viewer_src, "strip_think_tags", "the querier already split think tags")
+        assert.matches(viewer_src, 'assistant%%%-label', "label unwrap pattern must stay")
+        -- Reasoning is dropped when the answer is produced, so the sample is
+        -- rendered as-is: carriers and the reasoning block stay where they are.
+        assert.matches(SAMPLE, 'assistant%-label%-%-thought', "thought carrier is a producer shape")
+        assert.matches(SAMPLE, 'assistant%-label', "response/search labels must pass through")
+        assert.matches(SAMPLE, 'The Ring rules them all', "answer body must survive")
     end),
 
     test("generated: zero container heading lines", function()

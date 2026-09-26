@@ -461,7 +461,32 @@ local function genMenuSettings(assistant)
                     separator = true,
                 },
                 {
+                    -- Master switch of the display group below: it decides the
+                    -- reply shape and the two sub-switches, so it leads them.
+                    text = _("Minimalist Mode"),
+                    checked_func = function () return assistant.settings:readSetting("minimalist_mode", false) end,
+                    callback = function ()
+                        local on = not assistant.settings:readSetting("minimalist_mode", false)
+                        assistant.settings:saveSetting("minimalist_mode", on)
+                        if on then
+                            -- Reasoning and follow-up questions are part of the
+                            -- standard display, so minimal mode takes them over:
+                            -- clear both (the menu greys them out) instead of
+                            -- leaving stale "on" values behind.
+                            assistant.settings:saveSetting("show_reasoning", false)
+                            assistant.settings:saveSetting("auto_prompt_suggest", false)
+                        end
+                        assistant.updated = true
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _("Shows the answer alone: no User/Assistant titles, no first button row (only Close), no reasoning and no follow-up questions. Turns Reasoning Text and Follow-up Questions off while active.")
+                        })
+                    end
+                },
+                {
                     text = _("Show Reasoning Text"),
+                    enabled_func = function () return not assistant.settings:readSetting("minimalist_mode", false) end,
                     checked_func = function () return assistant.settings:readSetting("show_reasoning", false) end,
                     callback = function ()
                         assistant.settings:toggle("show_reasoning")
@@ -475,6 +500,7 @@ local function genMenuSettings(assistant)
                 },
                 {
                     text = _("Show Follow-up Questions"),
+                    enabled_func = function () return not assistant.settings:readSetting("minimalist_mode", false) end,
                     checked_func = function () return assistant.settings:readSetting("auto_prompt_suggest", false) end,
                     callback = function()
                         assistant.settings:toggle("auto_prompt_suggest")

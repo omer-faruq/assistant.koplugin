@@ -164,13 +164,16 @@ end
 function AssistantDialog:_createResultText(highlightedText, message_history, previous_text, title)
   -- Single-message rendering lives in assistant_text_utils (shared with
   -- the feature dialog); call sites below pass history position plus the
-  -- dialog's settings and default suggestion config.
+  -- dialog's settings and default suggestion config. The minimalist mode
+  -- switch is read here so the reply is assembled in its final shape.
+  local minimal = self.assistant.settings:readSetting("minimalist_mode", false)
   local function fmt(message, msg_idx)
     return TextUtils.formatSingleMessage(message_history, message, {
       title = title,
       msg_idx = msg_idx,
       settings = self.assistant.settings,
       default_config = Prompts.assistant_prompts.default,
+      minimal = minimal,
     })
   end
 

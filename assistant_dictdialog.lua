@@ -291,7 +291,9 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         -- Walk the history past the system prompt and format each message
         -- with assistant_text_utils (Search/Thought/Response divs,
         -- reasoning split, suggestion switch), so Search divs the querier
-        -- appended in place render alongside the answer.
+        -- appended in place render alongside the answer. Minimalist mode
+        -- assembles the answer-only shape (no carriers) instead.
+        local minimal = assistant.settings:readSetting("minimalist_mode", false)
         local result_parts = {}
         for idx = 2, #message_history do
             local message = message_history[idx]
@@ -302,6 +304,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
                     msg_idx = idx,
                     settings = assistant.settings,
                     default_config = prompt_config,
+                    minimal = minimal,
                 }))
             end
         end
