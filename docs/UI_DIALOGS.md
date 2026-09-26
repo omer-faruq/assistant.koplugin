@@ -40,7 +40,7 @@ Pitfalls learned there:
 `ChatGPTViewer` has two shapes, selected by the Response Settings `minimalist_mode` switch (default off):
 
 - **Standard** — two button rows (navigation/clipboard, then actions with Close rightmost) plus the page-button scroll feedback; the reply carries the `☺ Question` / `❖ Deeply Thought` / `✦ Response` / `✦ Search` carriers emitted by `TextUtils.formatSingleMessage`.
-- **Minimalist** — a single Close button, no navigation row, no Ask/Annotate/Save actions, no scroll feedback; the reply is assembled by `TextUtils.formatAnswerOnly` (no carriers, no prompt name, no reasoning block, no follow-up questions).
+- **Minimalist** — no navigation row (no page buttons, Find or Copy), no page-button scroll feedback, and an action row reduced to the actions that act on the answer itself: `Annotate` (when a highlight context exists), caller `extra_buttons` (the dictionary viewer adds `Vocabulary Builder`) and `Close`. `Ask Another Question` and `Save` are the chrome it removes. The reply is assembled by `TextUtils.formatAnswerOnly` (no carriers, no prompt name, no reasoning block, no follow-up questions).
 
 The switch is read at two points on purpose: when the result is **assembled** (the dialogs pass `minimal` into the formatter, so the text is built in the shape it is displayed) and when the **viewer** is built (the button rows). Turning it on clears `show_reasoning` / `auto_prompt_suggest` and greys both out in the menu, so the stored text can never disagree with the menu state.
 

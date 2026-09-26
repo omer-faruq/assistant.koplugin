@@ -480,7 +480,7 @@ local function genMenuSettings(assistant)
                     end,
                     hold_callback = function ()
                         UIManager:show(InfoMessage:new{
-                            text = _("Shows the answer alone: no User/Assistant titles, no first button row (only Close), no reasoning and no follow-up questions. Turns Reasoning Text and Follow-up Questions off while active.")
+                            text = _("Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active.")
                         })
                     end
                 },

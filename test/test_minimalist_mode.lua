@@ -174,23 +174,33 @@ local tests = {
             "the removed render-time reasoning filter must not come back")
     end),
 
-    test("viewer: close is the only button in minimal mode", function()
+    test("viewer: minimal mode drops the nav row and the chrome actions only", function()
         assert.matches(viewer_src,
             'self.minimalist = self.assistant.settings:readSetting%("minimalist_mode", false%)',
             "viewer must read the switch once in init()")
-        local min_branch = viewer_src:find("if self.minimalist then", 1, true)
-        assert.notNil(min_branch, "the minimal row branch must exist")
-        local close_only = viewer_src:find("table.insert(buttons, { new_close_button() })", min_branch, true)
-        assert.notNil(close_only, "minimal rows must be a single Close button")
-        local nav_pos = viewer_src:find("table.insert(buttons, nav_row)", min_branch, true)
-        local action_pos = viewer_src:find("table.insert(buttons, action_row)", min_branch, true)
-        assert.notNil(nav_pos and action_pos, "both default rows must still be assembled")
+        -- Only the navigation row is conditional: the action row is assembled
+        -- once and filtered, so Annotate / caller extra_buttons survive.
+        assert.matches(viewer_src, "local nav_row\n  if not self%.minimalist then\n    nav_row = {",
+            "the navigation row must not exist in minimal mode")
+        assert.matches(viewer_src, "if nav_row then\n      table%.insert%(buttons, nav_row%)\n    end",
+            "the navigation row must be inserted conditionally")
+        local nav_pos = viewer_src:find("table.insert(buttons, nav_row)", 1, true)
+        local action_pos = viewer_src:find("table.insert(buttons, action_row)", 1, true)
+        assert.notNil(nav_pos and action_pos, "both rows must be inserted")
         assert.isTrue(nav_pos < action_pos, "navigation row stays above the action row")
-        assert.isTrue(close_only < nav_pos,
-            "the default rows belong to the non-minimal branch, not the minimal one")
-        local rows_start = viewer_src:find("local nav_row, action_row", 1, true)
-        assert.notNil(rows_start, "rows must be declared outside the minimal branch")
-        assert.isTrue(rows_start < min_branch, "the non-minimal branch must fill the declared rows")
+        -- The two chrome actions are the only ones filtered out.
+        assert.matches(viewer_src, "local show_ask = not self%.minimalist and self%.onSubmit ~= nil",
+            "Ask Another Question must follow the mode")
+        assert.matches(viewer_src, "local show_annotate = self%.ui and self%.is_show_addnote",
+            "Annotate must not be filtered by the mode")
+        assert.matches(viewer_src, "local show_save = not self%.minimalist",
+            "Save must follow the mode")
+        assert.matches(viewer_src, "if show_annotate then\n    table%.insert%(action_row, createAddNoteButton%(self%)%)",
+            "Annotate must reach the action row in both shapes")
+        local extra_pos = viewer_src:find("table.insert(action_row, extra[i])", 1, true)
+        local close_pos = viewer_src:find("table.insert(action_row, new_close_button())", 1, true)
+        assert.notNil(extra_pos and close_pos, "extra buttons and Close must be inserted")
+        assert.isTrue(extra_pos < close_pos, "caller extra buttons stay right before Close")
     end),
 
     test("viewer: page-button feedback is skipped in minimal mode", function()

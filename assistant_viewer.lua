@@ -336,8 +336,16 @@ function ChatGPTViewer:init()
   --   Navigation/clipboard: Prev page (◁◁), Find, Copy, Next page (▷▷)
   --   Actions (Close rightmost): Ask Another Question?, Annotate?, Save?,
   --                              caller extra_buttons, Close
-  -- Minimalist mode builds neither row (see below): Close only.
-  local nav_row, action_row
+  -- Minimalist mode drops the navigation row and the two actions that only
+  -- add chrome (Ask Another Question, Save). What it keeps are the actions
+  -- that act on the answer itself: Annotate, and caller extra_buttons (the
+  -- dictionary viewer contributes Vocabulary Builder there).
+  local show_ask = not self.minimalist and self.onSubmit ~= nil
+  local show_annotate = self.ui and self.is_show_addnote
+  local show_save = not self.minimalist
+        and not self.assistant.settings:readSetting("auto_save_to_notebook", false)
+
+  local nav_row
   if not self.minimalist then
     nav_row = {
       {
@@ -397,97 +405,95 @@ function ChatGPTViewer:init()
         allow_hold_when_disabled = true,
       },
     }
-
-    action_row = {}
-
-    -- Only add Ask Another Question button if onSubmit is provided
-    if self.onSubmit then
-      table.insert(action_row, {
-        -- @translators button text, keep it short, like: Ask Another
-        text = _("Ask Another Question"),
-        id = "ask_another_question",
-        callback = function()
-          self:askAnotherQuestion()
-        end,
-      })
-    end
-
-    -- Only add Annotate button if ui context is available and not disabled
-    if self.ui and self.is_show_addnote then
-      table.insert(action_row, createAddNoteButton(self))
-    end
-
-    -- Only add Save button if auto_save_to_notebook is disabled.
-    -- In general multi-notebook mode, let the user choose the destination at
-    -- save time; otherwise preserve the existing one-click Save behavior.
-    if not self.assistant.settings:readSetting("auto_save_to_notebook", false) then
-      table.insert(action_row, {
-        text = _("Save"),
-        callback = function()
-          if is_multi_general then
-            Notebook.showPicker(self.assistant, {
-              title = _("Save conversation to"),
-              on_select = function(notebook)
-                -- Explicit user choice wins over any per-book
-                -- path: clear it so the save follows active.
-                self.notebook_path = nil
-                local saved_path, _save_err, used_fallback = self:saveToNotebook()
-
-                if self.titlebar and self.titlebar.setSubTitle then
-                  self.titlebar:setSubTitle(
-                    "✎ " .. Notebook.getActiveDisplayName(self.assistant, 24)
-                  )
-                end
-
-                if saved_path and not used_fallback then
-                  local saved_name = saved_path:match("([^/\\]+)$") or saved_path
-                  saved_name = saved_name:gsub("%.md$", "")
-                  UIManager:show(InfoMessage:new{
-                    text = T(_("Saved to: %1"), saved_name),
-                    timeout = 2,
-                  })
-                end
-              end,
-            })
-            return
-          end
-
-          self:saveToNotebook()
-          UIManager:show(InfoMessage:new{
-            text = _("Conversation is saved to AI Notes"),
-            timeout = 2
-          })
-        end,
-        hold_callback = function()
-          UIManager:show(InfoMessage:new{
-            text = _("Saves the conversation to AI Notes"),
-          })
-        end
-      })
-    end
-
-    -- Caller-supplied extra buttons stay in the action row, in caller order,
-    -- right before Close. They never go to the navigation row.
-    local extra = self.extra_buttons
-    if type(extra) == "table" then
-      for i = 1, #extra do
-        table.insert(action_row, extra[i])
-      end
-    end
-
-    -- Close is always the last button, so it sits at the right of the action row.
-    table.insert(action_row, new_close_button())
   end
+
+  local action_row = {}
+
+  -- Only add Ask Another Question button if onSubmit is provided
+  if show_ask then
+    table.insert(action_row, {
+      -- @translators button text, keep it short, like: Ask Another
+      text = _("Ask Another Question"),
+      id = "ask_another_question",
+      callback = function()
+        self:askAnotherQuestion()
+      end,
+    })
+  end
+
+  -- Only add Annotate button if ui context is available and not disabled
+  if show_annotate then
+    table.insert(action_row, createAddNoteButton(self))
+  end
+
+  -- Only add Save button if auto_save_to_notebook is disabled.
+  -- In general multi-notebook mode, let the user choose the destination at
+  -- save time; otherwise preserve the existing one-click Save behavior.
+  if show_save then
+    table.insert(action_row, {
+      text = _("Save"),
+      callback = function()
+        if is_multi_general then
+          Notebook.showPicker(self.assistant, {
+            title = _("Save conversation to"),
+            on_select = function(notebook)
+              -- Explicit user choice wins over any per-book
+              -- path: clear it so the save follows active.
+              self.notebook_path = nil
+              local saved_path, _save_err, used_fallback = self:saveToNotebook()
+
+              if self.titlebar and self.titlebar.setSubTitle then
+                self.titlebar:setSubTitle(
+                  "✎ " .. Notebook.getActiveDisplayName(self.assistant, 24)
+                )
+              end
+
+              if saved_path and not used_fallback then
+                local saved_name = saved_path:match("([^/\\]+)$") or saved_path
+                saved_name = saved_name:gsub("%.md$", "")
+                UIManager:show(InfoMessage:new{
+                  text = T(_("Saved to: %1"), saved_name),
+                  timeout = 2,
+                })
+              end
+            end,
+          })
+          return
+        end
+
+        self:saveToNotebook()
+        UIManager:show(InfoMessage:new{
+          text = _("Conversation is saved to AI Notes"),
+          timeout = 2
+        })
+      end,
+      hold_callback = function()
+        UIManager:show(InfoMessage:new{
+          text = _("Saves the conversation to AI Notes"),
+        })
+      end
+    })
+  end
+
+  -- Caller-supplied extra buttons stay in the action row, in caller order,
+  -- right before Close. They never go to the navigation row, and they survive
+  -- minimalist mode (the dictionary viewer adds Vocabulary Builder there).
+  local extra = self.extra_buttons
+  if type(extra) == "table" then
+    for i = 1, #extra do
+      table.insert(action_row, extra[i])
+    end
+  end
+
+  -- Close is always the last button, so it sits at the right of the action row.
+  table.insert(action_row, new_close_button())
 
   local buttons = self.buttons_table or {}
   if self.add_default_buttons or not self.buttons_table then
-    if self.minimalist then
-      -- Answer text only: no navigation row, no Ask/Annotate/Save/actions.
-      table.insert(buttons, { new_close_button() })
-    else
+    if nav_row then
       table.insert(buttons, nav_row)
-      table.insert(buttons, action_row)
     end
+    table.insert(buttons, action_row)
   end
   if buttons[#buttons] == nil then
     table.insert(buttons, {})
