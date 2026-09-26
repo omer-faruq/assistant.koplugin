@@ -11,6 +11,7 @@ local ASUtils = require("assistant_utils")
 local TextUtils = require("assistant_text_utils")
 local DocUtils = require("assistant_doc_utils")
 local TermXray = require("assistant_term_xray")
+local Conversation = require("assistant_conversation")
 local Prompts = require("assistant_prompts")
 local dict_prompts = Prompts.assistant_prompts.dict
 local term_xray_prompts = Prompts.builtin_prompts.term_xray
@@ -263,6 +264,8 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     end
 
     -- Query the AI with the message history
+    -- Dictionary does not set use_websearch on messages; the querier falls
+    -- back to the global setting when no explicit override is given.
     local ret, err = Querier:query(message_history, title)
     if err ~= nil then
         assistant.querier:showError(err, message_history)
@@ -273,14 +276,8 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     -- shared formatter falls back to it when messages carry no attr.
     local prompt_config = (prompt_type == "term_xray") and term_xray_prompts or dict_prompts
 
-    do
-        local assistant_msg = {
-            role = "assistant",
-            content = ret,
-        }
-        ASUtils.set_attr(assistant_msg, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, prompt_config))
-        table.insert(message_history, assistant_msg)
-    end
+    Conversation.append_answer(message_history, ret,
+        Prompts.isSuggestionsEnabled(assistant.settings, prompt_config))
 
     local function createResultText(highlightedText)
         -- Limit prev_context to last 100 bytes and next_context to first 100 bytes,
@@ -288,31 +285,17 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         -- boundaries so no partial word is shown
         local prev_context_limited = TermXray.clip_excerpt(prev_context, 100, "tail")
         local next_context_limited = TermXray.clip_excerpt(next_context, 100, "head")
-        -- Walk the history past the system prompt and format each message
-        -- with assistant_text_utils (Search/Thought/Response divs,
-        -- reasoning split, suggestion switch), so Search divs the querier
-        -- appended in place render alongside the answer. Minimalist mode
-        -- assembles the answer-only shape (no carriers) instead.
-        local minimal = assistant.settings:readSetting("minimalist_mode", false)
-        local result_parts = {}
-        for idx = 2, #message_history do
-            local message = message_history[idx]
-            local is_context = ASUtils.get_attr(message, "is_context")
-            if not is_context then
-                table.insert(result_parts, TextUtils.formatSingleMessage(message_history, message, {
-                    title = nil,
-                    msg_idx = idx,
-                    settings = assistant.settings,
-                    default_config = prompt_config,
-                    minimal = minimal,
-                }))
-            end
-        end
         -- Normalize the selection's whitespace before bolding it: a leading or
         -- trailing space in "** word **" stops Markdown from rendering bold.
-        -- The %4 slot carries the formatted history; the msgid is unchanged
-        -- so existing translations keep matching.
-        return T("... %1 **%2** %3 ...\n\n%4", prev_context_limited, koutil.cleanupSelectedText(highlightedText), next_context_limited, table.concat(result_parts))
+        -- The formatted history is appended by the shared Renderer.
+        local header = T("... %1 **%2** %3 ...\n\n", prev_context_limited, koutil.cleanupSelectedText(highlightedText), next_context_limited)
+        return Conversation.Renderer.render(message_history, {
+            header = header,
+            title = nil,
+            settings = assistant.settings,
+            default_config = prompt_config,
+            assistant = assistant,
+        })
     end
 
     local result = createResultText(highlightedText)
@@ -323,6 +306,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         ui = ui,
         title = title,
         text = result,
+        -- message_history is managed by the showDictionaryDialog closure,
         extra_buttons = {
             {
                 -- @translators Button text: adds the word to the Vocabulary Builder. Keep it short.

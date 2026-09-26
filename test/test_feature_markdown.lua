@@ -83,7 +83,7 @@ local tests = {
     end),
 
     test("feature follow-up: preserves the web-search selection", function()
-        assert.matches(feature_src, 'onAskQuestion = function%(viewer, user_question, use_websearch%)', "feature viewer must receive the search checkbox value")
+        assert.matches(feature_src, 'onSubmit = function%(viewer, user_question, use_websearch%)', "feature viewer must receive the search checkbox value")
         assert.matches(feature_src, 'prepareMessageHistoryForAdditionalQuestion%(message_history, user_question, use_websearch%)', "free follow-ups must forward the search value")
         assert.matches(feature_src, 'set_attr%(context, "use_websearch", use_websearch or false%)', "free follow-ups must tag the last user message")
         assert.matches(feature_src, 'set_attr%(followup_user, "use_websearch", user_question.use_websearch or false%)', "table follow-ups must tag the last user message")
@@ -95,8 +95,9 @@ local tests = {
     end),
 
     test("feature first round: history walk with header once, Search renders", function()
-        assert.matches(feature_src, 'for idx = 2, #message_history do', "first round must walk history from 2")
-        assert.matches(feature_src, 'get_attr%(message, "is_context"%)', "first round must skip context messages")
+        local conv_src = read_source("assistant_conversation.lua")
+        assert.matches(conv_src, 'for i = 2, #history do', "renderer must walk history from 2")
+        assert.matches(conv_src, 'get_attr%(msg, "is_context"%)', "renderer must skip context messages")
         assert.notMatches(feature_src, '##### You may find', "feature must not pre-process suggestions itself")
         local settings = make_settings(true)
         local history = make_history()
@@ -124,7 +125,8 @@ local tests = {
     end),
 
     test("feature follow-up: --- separator, no old h3, single suggestion pass", function()
-        assert.matches(feature_src, '"%-%-%-\\n\\n"%s*%.%.', "follow-up must join with ---")
+        local conv_src = read_source("assistant_conversation.lua")
+        assert.matches(conv_src, '"%-%-%-\\n\\n"', "follow-up must join with ---")
         assert.notMatches(feature_src, '### ⮞', "old ### User/Assistant headings must be gone")
         assert.notMatches(feature_src, 'process_suggestions%(answer%)', "ad-hoc second suggestion pass must be gone")
         local settings = make_settings(true)

@@ -99,20 +99,24 @@ end
 local ToolExecutor = {}
 ToolExecutor.SEARCH_API_NAMES = SEARCH_API_NAMES
 
---- Exposed func to set module variable via Assistant instance
+--- Build a request-level snapshot of search API credentials.
+--- Replaces the old mutable SetSearchAPIConfig pattern: each request reads
+--- a fresh snapshot instead of mutating module-level state.
 --- @param assistant table Assistant instance
-function ToolExecutor.SetSearchAPIConfig(assistant)
-    if not assistant then return end
+--- @return table snapshot { [api_key] = { api_key=..., base_url=... } }
+function ToolExecutor.getSearchConfig(assistant)
+    local snapshot = {}
+    if not assistant then return snapshot end
     for api, tool in pairs(ExtTools) do
         local c = assistant.config:getProvider(api)
-        if c then
-            if c.api_key then tool.api_key = c.api_key end
-            if c.base_url then tool.base_url = c.base_url:gsub("/+$", "") end -- trim the ending `/`
-        else
-            tool.api_key = nil
-            tool.base_url = nil -- clear stale if provider deleted
+        if c and c.api_key then
+            snapshot[api] = {
+                api_key = c.api_key,
+                base_url = c.base_url and c.base_url:gsub("/+$", "") or nil,
+            }
         end
     end
+    return snapshot
 end
 
 function ToolExecutor.IsExtSearch(key)
@@ -134,8 +138,9 @@ end
 --- @param ws_mode            string  "serpapi" | "tavilyapi"
 --- @param handler            table   BaseHandler instance with search methods
 --- @param tool_round         integer  Notice for the number of rounds the tool called
+--- @param config             table|nil  Request-level credential snapshot from getSearchConfig
 --- @return boolean success, string|nil result
-function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round)
+function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round, config)
     if not keywords or #keywords == 0 then
         return false, _("Search keywords are empty.")
     end
@@ -158,7 +163,7 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round)
         UIManager:close(keywordmsg)
         return false, "Unknown web-search mode: " .. tostring(ws_mode)
     end
-    search_ok, search_result = API:SearchKeywords(keywords, keywordmsg)
+    search_ok, search_result = API:SearchKeywords(keywords, keywordmsg, config and config[ws_mode])
     if search_ok and type(search_result) == "string" then
         -- remove URLs saving context length
         search_result = search_result:gsub("https?://[%w%-%.%?%&%=%/%~_#:;+,@!$%'()*]+", "")
@@ -246,27 +251,23 @@ function ToolExecutor.buildRawAssistantForToolCall(tool_calls, format, contents)
 end
 
 
---- Build tool result messages and append them to message history.
+--- Build tool result messages for a tool call.
+--- Returns the wire-format messages to append; the caller decides when to
+--- commit them to the canonical history (transactional tool loop).
 ---
---- @param message_history    table   conversation history (modified in place)
 --- @param tool_call_result   table   tool call descriptor with keywords, raw_assistant, format
---- @return boolean success, string|nil error
-function ToolExecutor.appendToolResult(message_history, tool_call_result)
-
+--- @return table|nil messages, string|nil error
+function ToolExecutor.buildToolResultMessages(tool_call_result)
     if not tool_call_result then
-        return false, "Invalid tool_call_result structure"
+        return nil, "Invalid tool_call_result structure"
     end
 
     local tool_msgs = buildToolResultMessages(tool_call_result)
     if not tool_msgs then
-        return false, "Failed to build tool result messages"
+        return nil, "Failed to build tool result messages"
     end
 
-    for _, msg in ipairs(tool_msgs) do
-        table.insert(message_history, msg)
-    end
-
-    return true, nil
+    return tool_msgs, nil
 end
 
 --- Extract keywords from tool call arguments (handles multiple formats).

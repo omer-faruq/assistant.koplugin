@@ -74,13 +74,16 @@ end
 local tests = {
     test("shared emitter: dict requires it, header msgid intact, no fork", function()
         assert.matches(dict_src, 'require%("assistant_text_utils"%)', "dict must require the shared module")
-        assert.notMatches(dict_src, '<div class="assistant%-label">%%1', "dict must not copy div templates")
+        assert.notMatches(dict_src, '<div class="assistant%-label">', "dict must not copy div templates")
         assert.notMatches(dict_src, 'local function formatSingleMessage', "dict must not keep a local fork")
-        assert.matches(dict_src, '%.%.%. %%1 %*%*%%2%*%* %%3 %.%.%.\\n\\n%%4', "excerpt header msgid must stay intact")
-        assert.matches(dict_src, 'for idx = 2, #message_history do', "result must walk history from 2")
-        assert.matches(dict_src, 'get_attr%(message, "is_context"%)', "result must skip context messages")
-        assert.matches(dict_src, 'table.insert%(message_history, assistant_msg%)', "answer must be appended to history")
-        assert.matches(dict_src, 'show_suggestions", Prompts.isSuggestionsEnabled%(assistant.settings, prompt_config%)', "answer must pin this prompt's switch")
+        -- Header no longer carries %4; history is rendered by the shared Renderer.
+        assert.isTrue(dict_src:find('T("...', 1, true) ~= nil, "excerpt header msgid must stay intact")
+        assert.matches(dict_src, 'Conversation%.Renderer%.render', "dict must use the shared renderer")
+        local conv_src = read_source("assistant_conversation.lua")
+        assert.matches(conv_src, 'for i = 2, #history do', "renderer must walk history from 2")
+        assert.matches(conv_src, 'get_attr%(msg, "is_context"%)', "renderer must skip context messages")
+        assert.matches(dict_src, 'Conversation%.append_answer%(message_history, ret', "answer must be appended to history")
+        assert.matches(dict_src, 'Conversation%.append_answer%(message_history, ret,%s*Prompts%.isSuggestionsEnabled%(assistant.settings, prompt_config%)', "answer must pin this prompt's switch")
         assert.notMatches(dict_src, 'process_suggestions', "no ad-hoc suggestion pass may remain")
     end),
 

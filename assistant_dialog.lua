@@ -28,6 +28,7 @@ local TextUtils = require("assistant_text_utils")
 local DocUtils = require("assistant_doc_utils")
 local NetUtils = require("assistant_net_utils")
 local Notebook = require("assistant_notebook")
+local Conversation = require("assistant_conversation")
 
 --[[
   Extract the context text selected by the Ask dialog checkboxes.
@@ -162,63 +163,19 @@ function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText, user_in
 end
 
 function AssistantDialog:_createResultText(highlightedText, message_history, previous_text, title)
-  -- Single-message rendering lives in assistant_text_utils (shared with
-  -- the feature dialog); call sites below pass history position plus the
-  -- dialog's settings and default suggestion config. The minimalist mode
-  -- switch is read here so the reply is assembled in its final shape.
-  local minimal = self.assistant.settings:readSetting("minimalist_mode", false)
-  local function fmt(message, msg_idx)
-    return TextUtils.formatSingleMessage(message_history, message, {
-      title = title,
-      msg_idx = msg_idx,
-      settings = self.assistant.settings,
-      default_config = Prompts.assistant_prompts.default,
-      minimal = minimal,
-    })
-  end
+  local opts = {
+    title = title,
+    settings = self.assistant.settings,
+    default_config = Prompts.assistant_prompts.default,
+    assistant = self.assistant,
+  }
 
-  -- first response message
   if not previous_text then
-    local result_text = ""
-    local show_highlighted_text = true
-
-    -- if highlightedText is nil or empty, don't show highlighted text
-    if not highlightedText or highlightedText == "" then
-      show_highlighted_text = false
-    end
-
-    -- won't show if `hide_highlighted_text` is set to false
-    if self.assistant.config:getFeature("hide_highlighted_text") then
-      show_highlighted_text = false
-    end
-
-    -- won't show if highlighted text is longer than threshold `long_highlight_threshold`
-    if show_highlighted_text and self.assistant.config:getFeature("hide_long_highlights") and
-        highlightedText and #highlightedText > self.assistant.config:getFeature("long_highlight_threshold", 99999) then
-      show_highlighted_text = false
-    end
-
-    local result_parts = {}
-    if show_highlighted_text then
-      table.insert(result_parts, string.format("__%s__\"%s\"\n\n", _("Highlighted text:"), highlightedText))
-    end
-    
-    -- skips the first message (system prompt)
-    for i = 2, #message_history do
-      local message = message_history[i]
-      local is_context = ASUtils.get_attr(message, "is_context")
-      if not is_context then
-        table.insert(result_parts, fmt(message, i))
-      end
-    end
-    return table.concat(result_parts)
+    opts.highlighted_text = highlightedText
+    return Conversation.Renderer.render(message_history, opts)
   end
 
-  local last_user_message = message_history[#message_history - 1]
-  local last_assistant_message = message_history[#message_history]
-
-  return previous_text .. "---\n\n" ..
-      fmt(last_user_message, #message_history - 1) .. fmt(last_assistant_message, #message_history)
+  return previous_text .. Conversation.Renderer.render_increment(message_history, opts)
 end
 
 -- Helper function to create and show ChatGPT viewer
@@ -238,7 +195,7 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
     ui = self.assistant.ui,
     -- Show Add Note button only when invoked with highlighted text
     is_show_addnote = (highlightedText ~= nil and highlightedText ~= ""),
-    onAskQuestion = function(viewer, user_question, use_websearch) -- callback for user entered question
+    onSubmit = function(viewer, user_question, use_websearch) -- callback for user follow-up
         -- Use viewer's own highlighted_text value
         local current_highlight = viewer.highlighted_text or highlightedText
         local viewer_title = ""
@@ -298,10 +255,11 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
           request_title = user_question
         end
 
-        viewer:trimMessageHistory()
         NetUtils.runWhenOnlineFast(function()
           Trapper:wrap(function()
-            local answer, err = self.querier:query(message_history, request_title)
+            local answer, err = self.querier:query(message_history, request_title, {
+              use_websearch = use_websearch and self.assistant.settings:readSetting("use_websearch", "none") or "none",
+            })
             
             -- Check if we got a valid response
             if err then
@@ -309,12 +267,7 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
               return
             end
             
-            local assistant_msg = {
-              role = "assistant",
-              content = answer
-            }
-            ASUtils.set_attr(assistant_msg, "show_suggestions", pending_show_suggestions)
-            table.insert(message_history, assistant_msg)
+            Conversation.append_answer(message_history, answer, pending_show_suggestions)
             viewer:update(self:_createResultText(current_highlight, message_history, viewer.text, viewer_title))
             
             if viewer.scroll_text_w then
@@ -324,7 +277,6 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
         end)
       end,
     highlighted_text = highlightedText,
-    message_history = message_history,
     -- Re-assemble the whole transcript from the (in-place grown) history so a
     -- display switch in the viewer's menu can hide what it just turned off.
     rebuild_text = function()
@@ -599,7 +551,9 @@ function AssistantDialog:showAskDialog(highlightedText)
         user_question = user_question .. book_text_prompt
         self:_prepareMessageHistoryForUserQuery(message_history, highlightedText, user_question, use_web_search_checkbox.checked)
         Trapper:wrap(function()
-          local answer, err = self.querier:query(message_history, request_title)
+          local answer, err = self.querier:query(message_history, request_title, {
+            use_websearch = use_web_search_checkbox.checked and self.assistant.settings:readSetting("use_websearch", "none") or "none",
+          })
 
           -- Check if we got a valid response
           if err then
@@ -903,7 +857,9 @@ function AssistantDialog:runPrompt(highlightedText, prompt_id, user_input)
   ASUtils.set_attr(_user, "show_suggestions", Prompts.isSuggestionsEnabled(self.assistant.settings, prompt_config))
   table.insert(message_history, _user)
   
-  local answer, err = self.querier:query(message_history, title or prompt_id)
+  local answer, err = self.querier:query(message_history, title or prompt_id, {
+    use_websearch = koutil.tableGetValue(prompt_config, "use_websearch") and self.assistant.settings:readSetting("use_websearch", "none") or "none",
+  })
   if err then
     self.querier:showError(err, message_history)
     return

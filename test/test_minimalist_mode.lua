@@ -129,12 +129,20 @@ local tests = {
     end),
 
     test("dialogs pass the switch into the shared formatter", function()
-        for name, src in pairs({ dialog = dialog_src, feature = feature_src, dict = dict_src }) do
-            assert.matches(src, 'readSetting%("minimalist_mode", false%)',
-                name .. " must read the switch when assembling the result")
-            assert.matches(src, "minimal = minimal",
-                name .. " must hand the switch to the shared formatter")
-        end
+        -- The minimal switch is now read once in Conversation.Renderer;
+        -- the dialogs no longer read it individually.
+        local conv_src = read_source("assistant_conversation.lua")
+        assert.matches(conv_src, 'readSetting%("minimalist_mode", false%)',
+            "renderer must read the switch when assembling the result")
+        assert.matches(conv_src, "minimal = minimal",
+            "renderer must hand the switch to the shared formatter")
+        -- Dialogs must NOT read the switch directly anymore.
+        assert.notMatches(dialog_src, 'readSetting%("minimalist_mode", false%)',
+            "dialog must not read the switch directly")
+        assert.notMatches(feature_src, 'readSetting%("minimalist_mode", false%)',
+            "feature must not read the switch directly")
+        assert.notMatches(dict_src, 'readSetting%("minimalist_mode", false%)',
+            "dict must not read the switch directly")
     end),
 
     test("querier: reasoning never reaches the UI while the switch is off", function()

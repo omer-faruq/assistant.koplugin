@@ -12,7 +12,7 @@ local json_default = ASUtils.json_default
 -- ---------------------------------------------------------------------------
 
 local SearchToolBase = {
-    name = "", base_url = "", api_key = "",
+    name = "",
     is_external = false,
 }
 function SearchToolBase:new(o)
@@ -21,23 +21,24 @@ function SearchToolBase:new(o)
     self.__index = self
     return o
 end
-function SearchToolBase:SearchKeywords(keywords, trap_widget)
+function SearchToolBase:SearchKeywords(keywords, trap_widget, config)
     return true, ""
 end
 function SearchToolBase:AccoutInfo()
-    return true, T("%1:\n%2", self.name, self.base_url)
+    return true, T("%1", self.name)
 end
 
 
-local serpapi = SearchToolBase:new({ 
-    name = "SerpAPI", base_url = "https://serpapi.com",
+local serpapi = SearchToolBase:new({
+    name = "SerpAPI",
     is_external = true,
 })
-function serpapi:SearchKeywords(keywords, trap_widget)
-    local search_url = self.base_url .. "/search"
-    local key      = self.api_key
-    local q        = koutil.urlEncode(keywords)
-    local url      = T("%1?engine=google_ai_mode&api_key=%2&q=%3", search_url, key, q)
+function serpapi:SearchKeywords(keywords, trap_widget, config)
+    config = config or {}
+    local search_url = (config.base_url or "https://serpapi.com") .. "/search"
+    local key       = config.api_key
+    local q         = koutil.urlEncode(keywords)
+    local url       = T("%1?engine=google_ai_mode&api_key=%2&q=%3", search_url, key, q)
 
     local parsed, err = NetUtils.fetchJSON(url, nil, trap_widget, 45, 120)
     if not parsed then
@@ -69,9 +70,10 @@ function serpapi:SearchKeywords(keywords, trap_widget)
     segments:put("\n")
     return true, segments:get()
 end
-function serpapi:AccoutInfo()
-    local acc_url  = self.base_url .. "/account"
-    local key      = self.api_key
+function serpapi:AccoutInfo(config)
+    config = config or {}
+    local acc_url  = (config.base_url or "https://serpapi.com") .. "/account"
+    local key      = config.api_key
     local url      = T("%1?api_key=%2", acc_url, key)
     local parsed, err = NetUtils.fetchJSON(url, nil, "loading...", 30, 60)
     if not parsed then
@@ -88,14 +90,15 @@ function serpapi:AccoutInfo()
     return true, ret
 end
 
-local tavily = SearchToolBase:new({ 
-    name = "Tavily", base_url = "https://api.tavily.com",
+local tavily = SearchToolBase:new({
+    name = "Tavily",
     is_external = true,
 })
-function tavily:SearchKeywords(keywords, trap_widget)
-    local search_url = self.base_url .. "/search"
+function tavily:SearchKeywords(keywords, trap_widget, config)
+    config = config or {}
+    local search_url = (config.base_url or "https://api.tavily.com") .. "/search"
     local requestBodyTable = {
-        api_key              = self.api_key,
+        api_key              = config.api_key,
         auto_parameters      = true,
         max_results          = 3,
         search_depth         = "basic",
@@ -135,9 +138,10 @@ function tavily:SearchKeywords(keywords, trap_widget)
     return true, segments:get()
 end
 
-function tavily:AccoutInfo()
-    local acc_url  = self.base_url .. "/usage"
-    local reqHeaders = { ["Authorization"]="Bearer " .. self.api_key }
+function tavily:AccoutInfo(config)
+    config = config or {}
+    local acc_url  = (config.base_url or "https://api.tavily.com") .. "/usage"
+    local reqHeaders = { ["Authorization"]="Bearer " .. config.api_key }
     local parsed, err = NetUtils.fetchJSON(acc_url, reqHeaders, "loading...", 30, 60)
     if not parsed then
         if err == NetUtils.HANDLERCODE.CODE_CANCELLED then
@@ -152,12 +156,13 @@ function tavily:AccoutInfo()
     return true, ret
 end
 
-local searxng = SearchToolBase:new({ 
-    name = "SearXNG", base_url = "http://localhost",
+local searxng = SearchToolBase:new({
+    name = "SearXNG",
     is_external = true,
 })
-function searxng:SearchKeywords(keywords, trap_widget)
-    local search_url = self.base_url .. "/search"
+function searxng:SearchKeywords(keywords, trap_widget, config)
+    config = config or {}
+    local search_url = (config.base_url or "http://localhost") .. "/search"
     local q        = koutil.urlEncode(keywords)
     local url      = T("%1?q=%2&format=json", search_url, q)
 
@@ -189,12 +194,13 @@ function searxng:SearchKeywords(keywords, trap_widget)
 end
 
 
-local exaai = SearchToolBase:new({ 
-    name = "Exa.ai", base_url = "https://api.exa.ai",
+local exaai = SearchToolBase:new({
+    name = "Exa.ai",
     is_external = true,
 })
-function exaai:SearchKeywords(keywords, trap_widget)
-    local search_url = self.base_url .. "/search"
+function exaai:SearchKeywords(keywords, trap_widget, config)
+    config = config or {}
+    local search_url = (config.base_url or "https://api.exa.ai") .. "/search"
     local requestBodyTable = {
         query      = keywords,
         type       = "auto",
@@ -205,7 +211,7 @@ function exaai:SearchKeywords(keywords, trap_widget)
         },
     }
     local requestBody = json.encode(requestBodyTable)
-    local reqHeaders = { ["x-api-key"] = self.api_key }
+    local reqHeaders = { ["x-api-key"] = config.api_key }
 
     local parsed, err = NetUtils.fetchJSON(search_url, reqHeaders, trap_widget, 45, 120, requestBody)
     if not parsed then
