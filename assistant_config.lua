@@ -231,7 +231,7 @@ function Config:setProvider(id, record)
             pcall(function() assistant.querier:load_model(id) end)
         end
     end
-    require("assistant_tool_executor").SetSearchAPIConfig(assistant)
+    -- Search credentials are read per-request; no module-level refresh needed.
     assistant.updated = true
     return true
 end
@@ -244,7 +244,7 @@ function Config:deleteProvider(id)
     local ps = koutil.tableGetValue(self._data, "provider_settings")
     if ps then
         ps[id] = nil
-        require("assistant_tool_executor").SetSearchAPIConfig(self._assistant)
+        -- Search credentials are read per-request; no module-level refresh needed.
         self._assistant.updated = true
     end
     return true

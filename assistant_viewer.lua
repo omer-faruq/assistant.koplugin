@@ -149,7 +149,7 @@ local ChatGPTViewer = InputContainer:extend {
   default_hold_callback = nil,   -- on the Close button
   find_centered_lines_count = 5, -- line with find results to be not far from the center
 
-  onAskQuestion = nil, -- callback when the Ask Another Question button is pressed
+  onSubmit = nil, -- callback(viewer: ChatGPTViewer, input: table) when the user submits a follow-up
   -- function(viewer) -> string, re-assembles the reply from the caller's
   -- history. Required for a display switch to take effect on the turns that
   -- are already on screen: they were assembled with the previous switch state.
@@ -400,8 +400,8 @@ function ChatGPTViewer:init()
 
     action_row = {}
 
-    -- Only add Ask Another Question button if showAskQuestion is true
-    if self.onAskQuestion then
+    -- Only add Ask Another Question button if onSubmit is provided
+    if self.onSubmit then
       table.insert(action_row, {
         -- @translators button text, keep it short, like: Ask Another
         text = _("Ask Another Question"),
@@ -584,9 +584,8 @@ function ChatGPTViewer:saveToNotebook()
 end
 
 function ChatGPTViewer:onCloseWidget()
-  -- Reset all history and context
+  -- Reset display state; history ownership stays with the entry adapter
   self.text = ""
-  self.message_history = nil
   self.highlighted_text = nil
   
   -- Reset the active window
@@ -651,8 +650,8 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
 
         local prompt_config = merged_prompts[tab.idx]
         prompt_config.user_input = input_text
-        if self.onAskQuestion then
-          self.onAskQuestion(self, prompt_config)
+        if self.onSubmit then
+          self.onSubmit(self, prompt_config)
         end
       end
     })
@@ -688,8 +687,8 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
         UIManager:close(self.input_dialog)
         self.input_dialog = nil
         
-        if self.onAskQuestion then
-          self.onAskQuestion(self, question, use_websearch) -- question is string (user input)
+        if self.onSubmit then
+          self.onSubmit(self, question, use_websearch) -- question is string (user input)
         end
       end
     }
@@ -932,14 +931,6 @@ function ChatGPTViewer:handleTextSelection(text, hold_duration, start_idx, end_i
           or _("Selection copied to clipboard."),
     })
   end
-end
-
-function ChatGPTViewer:trimMessageHistory()
-  if not self.message_history then return end
-
-  --- TODO: context should be compressed, not trimmed
-  --- 
-  return
 end
 
 function ChatGPTViewer:html_link_tapped_callback(link)

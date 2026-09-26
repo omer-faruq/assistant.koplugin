@@ -294,8 +294,28 @@ local tests = {
             local tool = extools[key]
             assert.notNil(tool, key .. " should exist")
             assert.notNil(tool.name, key .. " should have name")
-            assert.notNil(tool.base_url, key .. " should have base_url")
             assert.isTrue(tool.is_external, key .. " should be external")
+        end
+    end),
+
+    test("search tools accept request-level config snapshots", function()
+        -- Credentials are passed per-request via config, not stored on the
+        -- tool instances. Verify each SearchKeywords method accepts a config.
+        local config = {
+            serpapi = { api_key = "test-key", base_url = "https://serpapi.com" },
+            tavilyapi = { api_key = "test-key", base_url = "https://api.tavily.com" },
+            searxngapi = { base_url = "http://localhost:8888" },
+            exaapi = { api_key = "test-key", base_url = "https://api.exa.ai" },
+        }
+        helper.mockFetchJSON({
+            { parsed = { reconstructed_markdown = "result", references = {} } },
+            { parsed = { answer = "answer", results = {} } },
+            { parsed = { results = {} } },
+            { parsed = { results = {} } },
+        })
+        for _, key in ipairs({ "serpapi", "tavilyapi", "searxngapi", "exaapi" }) do
+            local ok, err = extools[key]:SearchKeywords("test query", nil, config[key])
+            assert.isTrue(ok, key .. " should accept config snapshot: " .. tostring(err))
         end
     end),
 }

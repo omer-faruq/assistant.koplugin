@@ -74,10 +74,7 @@ local function mockAssistantForInstall()
         if record ~= nil and assistant.querier and assistant.querier.load_model then
             pcall(function() assistant.querier:load_model(id) end)
         end
-        local ok, ToolExecutor = pcall(require, "assistant_tool_executor")
-        if ok and ToolExecutor.SetSearchAPIConfig then
-            ToolExecutor.SetSearchAPIConfig(assistant)
-        end
+        -- Search credentials are read per-request; no module-level refresh.
         assistant.updated = true
         return true
     end
@@ -85,10 +82,7 @@ local function mockAssistantForInstall()
         if not id or id == "" then return nil, "invalid id" end
         if config_data and config_data.provider_settings then
             config_data.provider_settings[id] = nil
-            local ok, ToolExecutor = pcall(require, "assistant_tool_executor")
-            if ok and ToolExecutor.SetSearchAPIConfig then
-                ToolExecutor.SetSearchAPIConfig(assistant)
-            end
+            -- Search credentials are read per-request; no module-level refresh.
             assistant.updated = true
         end
         return true

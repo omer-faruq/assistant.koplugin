@@ -18,11 +18,29 @@ local Device = require("device")
 local ASUtils = require("assistant_utils")
 local TextUtils = require("assistant_text_utils")
 local ToolExecutor = require("assistant_tool_executor")
+local Conversation = require("assistant_conversation")
 local Screen = Device.screen
 local Prompts = require("assistant_prompts").assistant_prompts
 
 local API_HANDLERS = {}
 local MAX_TOOL_ROUNDS = 3
+
+--- Build a merged view of canonical history + pending wire messages.
+--- Used to pass tool loop intermediate state to handler:query without
+--- committing it to the canonical history until the final answer arrives.
+---@param message_history table[] Canonical history
+---@param pending table[] Pending wire messages from QueryRun
+---@return table[] Combined view for handler:query
+local function merge_history_view(message_history, pending)
+    local view = {}
+    for i, msg in ipairs(message_history) do
+        view[i] = msg
+    end
+    for i, msg in ipairs(pending) do
+        view[#message_history + i] = msg
+    end
+    return view
+end
 
 local Querier = {
     assistant = nil, -- reference to the main assistant object
@@ -178,8 +196,8 @@ function Querier:load_model(provider_name, force)
     -- register hook to the handler module
     self.handler:SyncOptions(self)
 
-    -- register to the ToolExecutor module
-    ToolExecutor.SetSearchAPIConfig(self.assistant)
+    -- Search credentials are read per-request via ToolExecutor.getSearchConfig
+    -- inside Querier:query; no module-level mutable state to refresh here.
     return true
 end
 
@@ -315,23 +333,44 @@ end
 --- Stream tool-call loop (TODO: not fully shown here; stream does not support
 --- tool calls in the current architecture — use non-stream for websearch).
 ---
-function Querier:query(message_history, title)
+--- Query the AI with the provided message history.
+--- Handles both stream and non-stream modes, including multi-turn tool-call loops.
+---
+--- @param message_history table[]  full conversation history for this request
+--- @param title string|number|nil  label naming the request (prompt/feature name,
+---                                 or the user's question). Shown by the
+---                                 non-stream progress toast and the streaming
+---                                 dialog title.
+--- @param opts table|nil  explicit request options:
+---   - `use_websearch`: string — override the global use_websearch setting
+---     ("none" or a provider key). When nil, the global setting is used.
+---   - `use_stream_mode`: boolean — override the global stream setting.
+---
+--- Non-stream tool-call loop:
+---   handler:query() returns a table { __is_tool_call=true, keywords=..., ... }
+---   → Querier executes the appropriate search API
+---   → appends the tool result messages via ToolExecutor.appendToolResult()
+---   → repeats until a plain-string answer or an error
+---
+--- Stream tool-call loop (TODO: not fully shown here; stream does not support
+--- tool calls in the current architecture — use non-stream for websearch).
+---
+function Querier:query(message_history, title, opts)
     if not self:is_inited() then
         return nil, _("Plugin is not configured.")
     end
 
+    opts = opts or {}
     local request_title = formatRequestTitle(title)
 
-    -- prompt_websearch is a boolean (checkbox metadata on the last message);
-    -- query_option.use_websearch must be a string ("none" or a search provider key).
-    -- The expression below always yields a string: the boolean only gates whether
-    -- the user's configured search provider is used.
-    local prompt_websearch   = ASUtils.get_attr(message_history[#message_history], "use_websearch", false)
-    local user_setting_ws    = self.settings:readSetting("use_websearch", "none")
+    -- query_option.use_websearch is a string ("none" or a search provider key).
+    -- Explicit override (opts.use_websearch) wins; otherwise fall back to
+    -- the global setting. The implicit "last message carries use_websearch"
+    -- protocol is removed: callers must pass the mode explicitly.
+    local user_setting_ws = opts.use_websearch or self.settings:readSetting("use_websearch", "none")
     local query_option = {
-        use_stream_mode = self.settings:readSetting("use_stream_mode", true),
-        use_websearch   = (prompt_websearch and user_setting_ws ~= "none")
-                          and user_setting_ws or "none",
+        use_stream_mode = opts.use_stream_mode or self.settings:readSetting("use_stream_mode", true),
+        use_websearch   = user_setting_ws ~= "none" and user_setting_ws or "none",
     }
 
     -- Freeze the display pair once: every toast, dialog and error box of
@@ -339,6 +378,10 @@ function Querier:query(message_history, title)
     -- desync what the user sees from what the frozen request carries.
     local request_identity = self:getRequestIdentity()
     self.last_request_identity = request_identity
+
+    -- Request-level search credential snapshot: each query reads fresh
+    -- credentials instead of mutating module-level ExtTools state.
+    local search_config = ToolExecutor.getSearchConfig(self.assistant)
 
     local is_added_maximum_prompt = false
 
@@ -361,7 +404,7 @@ function Querier:query(message_history, title)
             if tool_rounds+i <= MAX_TOOL_ROUNDS then
                 search_ok, search_result = ToolExecutor.executeWebSearch(keywords,
                             query_option.use_websearch,
-                            self.handler, tool_rounds+i)
+                            self.handler, tool_rounds+i, search_config)
             else
                 is_added_maximum_prompt = true
                 search_ok = true
@@ -412,10 +455,12 @@ function Querier:query(message_history, title)
         local tool_rounds = 0
         local max_retries = self.handler:getMaxRetries()
         local retry_attempt = 0
+        local query_run = Conversation.QueryRun:new()
 
         repeat
             local bg_fn
-            bg_fn, err = self.handler:query(message_history, query_option)
+            local history_view = merge_history_view(message_history, query_run.wire_additions)
+            bg_fn, err = self.handler:query(history_view, query_option)
 
             if type(bg_fn) ~= "function" then
                 -- handler returned an error before even starting the stream
@@ -511,22 +556,26 @@ function Querier:query(message_history, title)
                         logger.warn("failed to executeSearch at round", tool_rounds, "DETAIL", tostring(search_results):sub(1, 200),
                                             "content=" .. tostring(content):sub(1, 200), "tool_calls=#" .. #tool_calls_array)
                     end
+                    query_run:rollback()
                     break
                 end
                 tool_rounds = tool_rounds + #search_results
 
-                local append_ok, append_err = ToolExecutor.appendToolResult(message_history, {
-                        raw_assistant  = raw_assistant,
-                        format         = format,
-                        search_results = search_results,
+                local tool_msgs, build_err = ToolExecutor.buildToolResultMessages({
+                    raw_assistant  = raw_assistant,
+                    format         = format,
+                    search_results = search_results,
                 })
 
-                if not append_ok then
+                if not tool_msgs then
                     res = nil
-                    err = append_err
-                    logger.warn("failed to appendToolResult", "content=" .. tostring(content):sub(1, 200), "tool_calls=#" .. #tool_calls_array, append_err)
+                    err = build_err
+                    logger.warn("failed to buildToolResultMessages", "content=" .. tostring(content):sub(1, 200), "tool_calls=#" .. #tool_calls_array, build_err)
+                    query_run:rollback()
                     break
                 end
+
+                query_run:add_wire_messages(tool_msgs)
 
                 -- query_option stays unchanged; loop will call handler:query again with augmented history
                 res = nil
@@ -534,6 +583,13 @@ function Querier:query(message_history, title)
             end
 
         until type(res) == "string" or (err ~= nil)
+
+        -- Commit tool messages on success; rollback on failure/cancel.
+        if type(res) == "string" and err == nil then
+            query_run:commit(message_history)
+        else
+            query_run:rollback()
+        end
 
         if self.user_interrupted then
             return nil, _("Request Cancelled by user.")
@@ -561,10 +617,15 @@ function Querier:query(message_history, title)
 
         -- Tool-call loop: keep calling the LLM until it returns a string answer.
         -- Bounded to a small iteration count to prevent runaway loops.
+        -- Tool messages are staged in a QueryRun and committed only when the
+        -- final answer arrives; on failure they are rolled back so the
+        -- canonical history is not polluted with half-complete tool exchanges.
         local tool_rounds = 0
+        local query_run = Conversation.QueryRun:new()
 
         repeat
-            res, err = self.handler:query(message_history, query_option)
+            local history_view = merge_history_view(message_history, query_run.wire_additions)
+            res, err = self.handler:query(history_view, query_option)
 
             if type(res) == "table" and res.__is_tool_call then
                 -- The LLM requested a tool call (web_search).
@@ -574,7 +635,7 @@ function Querier:query(message_history, title)
                     break
                 end
 
-                -- Build tool result and append to history
+                -- Build tool result and stage in QueryRun
                 local search_ok, search_results
                 if tool_rounds < MAX_TOOL_ROUNDS then
                     search_ok, search_results = executeSearch(res.tool_calls, tool_rounds)
@@ -585,23 +646,27 @@ function Querier:query(message_history, title)
                     if err ~= self.handler.CODE_CANCELLED then
                         logger.warn("failed to executeSearch", "res=" .. tostring(res):sub(1, 200))
                     end
+                    query_run:rollback()
                     break
                 end
                 tool_rounds = tool_rounds + #search_results
 
                 local format = ToolExecutor.getHandlerFormat(self.handler_name)
-                local append_ok, append_err = ToolExecutor.appendToolResult(message_history, {
-                        raw_assistant  = res.raw_assistant,
-                        format         = format,
-                        search_results = search_results,
+                local tool_msgs, build_err = ToolExecutor.buildToolResultMessages({
+                    raw_assistant  = res.raw_assistant,
+                    format         = format,
+                    search_results = search_results,
                 })
 
-                if not append_ok then
+                if not tool_msgs then
                     res = nil
-                    err = append_err
-                    logger.warn("failed to appendToolResult", "res=" .. tostring(res):sub(1, 200), append_err)
+                    err = build_err
+                    logger.warn("failed to buildToolResultMessages", "res=" .. tostring(res):sub(1, 200), build_err)
+                    query_run:rollback()
                     break
                 end
+
+                query_run:add_wire_messages(tool_msgs)
 
                 -- Refresh the loading indicator for the follow-up request
                 UIManager:close(self.handler:resetTrapWidget())
@@ -620,6 +685,13 @@ function Querier:query(message_history, title)
 
         until type(res) == "string" or err ~= nil
         UIManager:close(self.handler:resetTrapWidget())
+
+        -- Commit tool messages on success; rollback on failure/cancel.
+        if type(res) == "string" and err == nil then
+            query_run:commit(message_history)
+        else
+            query_run:rollback()
+        end
 
         -- Fold inline <think> into the answer, keeping the reasoning fence
         -- only while Reasoning Text is on.

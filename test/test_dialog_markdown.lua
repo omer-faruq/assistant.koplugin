@@ -104,7 +104,8 @@ local tests = {
     end),
 
     test("dialog: inter-round separator is ---", function()
-        assert.matches(dialog_src, '"%-%-%-\\n\\n" %.%.', "--- separator missing")
+        local conv_src = read_source("assistant_conversation.lua")
+        assert.matches(conv_src, '"%-%-%-\\n\\n"', "--- separator missing from renderer")
         assert.notMatches(dialog_src, '%-%-%-%-%-%-%-%-%-%-%-%s*\\n', "old ------------ separator still present")
     end),
 

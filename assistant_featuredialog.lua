@@ -17,6 +17,7 @@ local DocUtils = require("assistant_doc_utils")
 local NetUtils = require("assistant_net_utils")
 local json = require("rapidjson")
 local strbuf = require("string.buffer")
+local Conversation = require("assistant_conversation")
 local extractBookTextForAnalysis = DocUtils.extractBookTextForAnalysis
 
 local function extractHighlightsNotesAndNotebook(assistant, include_notebook)
@@ -266,27 +267,13 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
 
 ]]), title, author, formatted_progress_percent)
 
-      -- Walk the history past the system prompt, skipping context messages;
-      -- each remaining message goes through the shared formatter, so Search
-      -- divs (search_keywords the querier appended in place) render.
-      -- The header above is emitted once; follow-ups append below instead.
-      -- Minimalist mode assembles the answer-only shape (no carriers).
-      local minimal = assistant.settings:readSetting("minimalist_mode", false)
-      local result_parts = { header_text }
-      for idx = 2, #message_history do
-        local message = message_history[idx]
-        local is_context = ASUtils.get_attr(message, "is_context")
-        if not is_context then
-          table.insert(result_parts, TextUtils.formatSingleMessage(message_history, message, {
-            title = nil,
-            msg_idx = idx,
-            settings = assistant.settings,
-            default_config = feature_prompt_config,
-            minimal = minimal,
-          }))
-        end
-      end
-      return table.concat(result_parts)
+      return Conversation.Renderer.render(message_history, {
+        header = header_text,
+        title = nil,
+        settings = assistant.settings,
+        default_config = feature_prompt_config,
+        assistant = assistant,
+      })
     end
 
     local function prepareMessageHistoryForAdditionalQuestion(message_history, user_question, use_websearch)
@@ -299,7 +286,10 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       table.insert(message_history, context)
     end
 
-    local answer, err = Querier:query(message_history, feature_title)
+    local answer, err = Querier:query(message_history, feature_title, {
+        use_websearch = user_prompt_use_websearch and ws_enabled and Prompts.isWebSearchEnabled(assistant.settings)
+                          and assistant.settings:readSetting("use_websearch", "none") or "none",
+    })
     if err then
       assistant.querier:showError(err, message_history)
       return
@@ -321,9 +311,8 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       title = feature_title,
       text = createResultText(),
       is_show_addnote = false,
-      message_history = message_history,
       notebook_path = notebook_path,
-      onAskQuestion = function(viewer, user_question, use_websearch)
+      onSubmit = function(viewer, user_question, use_websearch)
         local viewer_title = ""
 
         if type(user_question) == "string" then
@@ -352,46 +341,25 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
           end
         end
 
-        viewer:trimMessageHistory()
         NetUtils.runWhenOnlineFast(function()
           Trapper:wrap(function()
-            local answer, err = Querier:query(message_history, viewer_title ~= "" and viewer_title or feature_title)
+            local answer, err = Querier:query(message_history, viewer_title ~= "" and viewer_title or feature_title, {
+                use_websearch = use_websearch and Prompts.isWebSearchEnabled(assistant.settings)
+                                and assistant.settings:readSetting("use_websearch", "none") or "none",
+            })
             
             if err then
               Querier:showError(err, message_history)
               return
             end
             
-            do
-              local assistant_msg = {
-                role = "assistant",
-                content = answer
-              }
-              ASUtils.set_attr(assistant_msg, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
-              table.insert(message_history, assistant_msg)
-            end
-            local last_user_message = message_history[#message_history - 1]
-            local last_assistant_message = message_history[#message_history]
-            -- Format the two new trailing messages through the shared
-            -- formatter (suggestions resolved from the message attrs); the
-            -- new answer is processed exactly once.
-            local minimal = assistant.settings:readSetting("minimalist_mode", false)
-            local additional_text = "---\n\n"
-                .. TextUtils.formatSingleMessage(message_history, last_user_message, {
-                  title = nil,
-                  msg_idx = #message_history - 1,
-                  settings = assistant.settings,
-                  default_config = feature_prompt_config,
-                  minimal = minimal,
-                })
-                .. TextUtils.formatSingleMessage(message_history, last_assistant_message, {
-                  title = nil,
-                  msg_idx = #message_history,
-                  settings = assistant.settings,
-                  default_config = feature_prompt_config,
-                  minimal = minimal,
-                })
-            viewer:update(viewer.text .. additional_text)
+            Conversation.append_answer(message_history, answer,
+                Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
+            viewer:update(viewer.text .. Conversation.Renderer.render_increment(message_history, {
+                title = nil,
+                settings = assistant.settings,
+                default_config = feature_prompt_config,
+            }))
             
             if viewer.scroll_text_w then
               viewer.scroll_text_w:resetScroll()
