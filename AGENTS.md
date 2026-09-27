@@ -8,6 +8,7 @@ Guidance for AI agents working in `assistant.koplugin` (KOReader AI assistant pl
 | modules, request flow, handlers, config | `docs/ARCHITECTURE.md` |
 | provider/search registry, UI settings CRUD | `docs/REGISTRIES.md` |
 | dialogs, widgets, layout | `docs/UI_DIALOGS.md` |
+| translations, `l10n/*.po`, `ai_translate.py`, gettext, msgids | `l10n/README.md` |
 
 ## Environment
 
@@ -76,4 +77,6 @@ Full flow, handlers, config, key files: `docs/ARCHITECTURE.md`.
 ## Translation
 
 - Translation scripts are developer-run: **never** run `make template/update/translate/ai-translate`. Only `make check` when explicitly requested. `make stats` is read-only (per-language DONE%/FUZZY/UNTRANSLATED table) — after changing many user-facing strings, run it and report the pending load (languages affected, remaining entries) to the developer.
-- Domain `assistant` (`assistant.pot`/`.po`/`.mo`); MO files are committed. See `l10n/Makefile`.
+- **Never hand-edit a `.po` to correct a translation — empty the msgstr** and let the next `make` refill it. `translate_file()` only fills *empty* msgstr, so a hand-patched or wrong-language string counts as done forever; a wrong `sk` catalogue shipped Slovenian for 13 `l10n: update translate` runs. `./check_mix.py --empty <lang> --peer <peer>` clears the entries a locale demonstrably got wrong. After changing msgids, run `make check-mix` — it catches wrong-language and wrong-slot strings that no reader of the catalogue would notice.
+- Per-locale terminology, style and confusion warnings belong in `l10n/<lang>/ai_note.txt` (appended to the prompt), not in `ai_translate.py`. An endonym alone is not a safe language identifier for a model: `LANG_MAP` said `Slovenčina` for `sk`, which is correct Slovak but reads as "Slovene", so Slovak came back in Slovenian. `LANG_EN` supplies the English name that anchors it.
+- Domain `assistant` (`assistant.pot`/`.po`/`.mo`); MO files are committed. See `l10n/Makefile` and `l10n/README.md`.
