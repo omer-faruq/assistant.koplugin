@@ -68,7 +68,7 @@ Consequences for the chat layout: a right-aligned bubble uses `margin-left: 38%`
 
 **`margin-left` doubles as `max-width`.** MuPDF shrink-to-fits a block within the width its margin leaves, so the margin is both the alignment offset and the width cap: `margin-left: 38%` right-aligns the bubble and caps it at 62% of the page, while a short turn still hugs its text. Lowering the margin widens long turns; raising it narrows them. This is the only working equivalent of `max-width` + `margin-left: auto`.
 
-**Do not set `width` on a bubble.** There is no `box-sizing`, so `width` is the content box: padding and border are added on top and overflow it. A `width: 50%` + `margin-left: 50%` bubble renders *narrower* than the shrink-to-fit one, and `width: 62%` bleeds off the right edge. Verified with `./test/runui.sh bubble_width`.
+**Do not set `width` on a bubble.** There is no `box-sizing`, so `width` is the content box: padding and border are added on top and overflow it. Measured: `width: 50%` + `margin-left: 50%` renders *narrower* than the shrink-to-fit bubble (the text wraps sooner, not later), `width: 62%` bleeds off the right edge, and a fixed width also defeats shrink-to-fit, so a one-line bubble still gets a full-width box.
 
 **`max-width` and `margin-left: auto` fail silently and together.** A plausible-looking `max-width: 50%; margin-left: auto` rule loses both properties and degrades to a full-width, left-aligned block with no error anywhere. This is why the CSS carries a test asserting neither property ever reappears.
 
@@ -100,6 +100,7 @@ Viewer HTML falls back through `Noto Sans CJK TC → … → FreeSans → Noto S
 
 - Safe: `★ ◆ ● ○ ❖ ✓ ▪ ‣ ⚠ → ⇧ ⏎ ✦ ⮞ ‹ ›` (all covered by FreeSans and/or Noto CJK).
 - `🌐` `U+1F310` renders too, and is the plugin's web-search icon (`Prompts.WEBSEARCH_ICON`, and the search-keyword marker in `assistant_tool_executor.lua`). It comes out monochrome from a text font rather than as color emoji, so it reads as a small text glyph — do not assume other `U+1F300`+ code points behave the same way.
-- Tofu: anything forcing **color emoji** presentation, which the bundled fonts lack. The usual culprit is `VS16` (a variation selector forces the emoji, color form): use bare `⚠`, never `⚠️`. `🔍`/`🔎` are tofu — for a magnifier use `U+2315` `⌕`, which draws a real lens and handle, or the globe above when the meaning is a web search. Verified with `./test/runui.sh magnifier_probe`.
+- Tofu: anything forcing **color emoji** presentation, which the bundled fonts lack. The usual culprit is `VS16` (a variation selector forces the emoji, color form): use bare `⚠`, never `⚠️`.
+- Magnifier glyphs, as measured: `U+1F50D`/`U+1F50E` are tofu, `U+2B58` draws as a bare circle with no handle, `U+26B2` as a gender symbol, and `U+2317` `⌗` renders but as a `#`, so it reads as a hash. `U+2315` `⌕` is the only candidate that draws a real lens and handle. When the meaning is a web search, prefer `🌐` `U+1F310` over any magnifier, since that is the icon the plugin already ships.
 - Noto Sans/Serif base cover almost none of the above; never rely on them alone.
-- Coverage is necessary but not sufficient — visually confirm with `./test/runui.sh unicode_icons`.
+- Coverage is necessary but not sufficient — visually confirm with `./test/runui.sh unicode_icons`. Exploratory one-off probes are not kept: record the measured rule here and delete the probe.
