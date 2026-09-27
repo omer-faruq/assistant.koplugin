@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Pealkiri: %1\n"
-" - Autor: %2\n"
-" - Lugemise edenemine: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - lk. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API tagastas vea</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Lisatud</b> [%1 (AI)] esiletõstmise menüüsse."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analüüsin raamatu konteksti Term X-Ray jaoks...</b>"
@@ -178,9 +160,6 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parameetrid</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Eemaldatud</b> [%1 (AI)] esiletõstmise menüüst."
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Päring</b> – POST %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Lisa teenusepakkujad peamenüüst:\n"
 "%1 -> AI Assistant -> Seaded -> API-pakkuja"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Lisatud <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Lisatud sõnavara koostajasse"
 
@@ -412,6 +394,9 @@ msgstr "Manusta eelnev tekst"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Lisab vastuse praeguse esiletõstu juurde raamatumärkusena"
+
+msgid "Author"
+msgstr "Autor"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Kohandatud prompt"
 msgid "Custom Prompts"
 msgstr "Kohandatud päringud"
 
-msgid "Deeply Thought"
-msgstr "Süvamõtlemine"
-
 msgid "Delete"
 msgstr "Kustuta"
 
@@ -630,8 +612,8 @@ msgstr "Sõnaraamat"
 msgid "Dictionary Language"
 msgstr "Sõnaraamatu keel"
 
-msgid "Dictionary Popup"
-msgstr "Sõnaraamatu hüpikaken"
+msgid "Dictionary Popup Buttons"
+msgstr "Sõnaraamatu hüpikakna nupud"
 
 msgid "Dictionary Settings"
 msgstr "Sõnaraamatu seaded"
@@ -864,6 +846,9 @@ msgstr "Markdowni mootor"
 msgid "Meaning & Usage"
 msgstr "Tähendus ja kasutus"
 
+msgid "Minimalist Mode"
+msgstr "Minimalistlik režiim"
+
 msgid "Model"
 msgstr "Mudel"
 
@@ -917,6 +902,9 @@ msgstr "Ühtegi raamatut pole avatud. Vajuta failihalduris raamatule pikalt ja v
 
 msgid "No common parameters are available for handler %1."
 msgstr "Töötleja %1 jaoks pole ühiseid parameetreid saadaval."
+
+msgid "No highlight to annotate"
+msgstr "Märkimiseks pole esiletõstetud teksti"
 
 msgid "No models available."
 msgstr "Mudeleid pole saadaval."
@@ -1071,9 +1059,6 @@ msgstr "Puhasta"
 msgid "Purge Settings"
 msgstr "Puhasta sätted"
 
-msgid "Question"
-msgstr "Küsimus"
-
 msgid "Quick Note"
 msgstr "Kiirmärge"
 
@@ -1091,6 +1076,9 @@ msgstr "Uuesti sisseelamine"
 
 msgid "Reader settings are not available."
 msgstr "Lugeja seaded pole saadaval."
+
+msgid "Reading progress"
+msgstr "Lugemise edenemine"
 
 msgid "Reasoning Option"
 msgstr "Arutlusvalik"
@@ -1111,6 +1099,9 @@ msgstr "Eemalda"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Eemaldada [%s] esiletõstmise menüüst?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Eemaldatud <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Kasutaja tühistas päringu."
@@ -1139,9 +1130,6 @@ msgstr ""
 "See taastab plugina tehasevaikeseaded. Teenusepakkujad, API-võtmed ja\n"
 "otsingutööriista mandaadid, mis on lisatud seadete kasutajaliidese kaudu, eemaldatakse.\n"
 "Fail configuration.lua säilitatakse."
-
-msgid "Response"
-msgstr "Vastus"
 
 msgid "Response Settings"
 msgstr "Vastuse sätted"
@@ -1236,6 +1224,9 @@ msgstr "Näita AI vastuse põhjalikku mõttekäiku (arutlust), kui see on olemas
 
 msgid "Show follow up questions related to the response content."
 msgstr "Näita vastuse sisuga seotud järelküsimusi."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Kuvab ainult vastust: ei kasutaja/assistendi pealkirju, esimest nuppude rida, arutluskäiku ega järelküsimusi. Alles jäävad vaid vastuse enda toimingud (Märkuse lisamine, Sõnavara koostaja) sulgemisnupu kõrval. Aktiivsena lülitab välja Arutluskäigu teksti ja Järelküsimused."
 
 msgid "Similar Books Recommendations"
 msgstr "Sarnaste raamatute soovitused"
@@ -1378,6 +1369,9 @@ msgstr "See prompt tõlgib esiletõstetud teksti teise keelde."
 msgid "Timeline"
 msgstr "Ajajoon"
 
+msgid "Title"
+msgstr "Pealkiri"
+
 msgid "To-Do / Action Items"
 msgstr "Tegevused / ülesanded"
 
@@ -1392,6 +1386,13 @@ msgstr "Tööriistakutse ei sisaldanud otsingumärksõnu."
 
 msgid "Translate"
 msgstr "Tõlgi"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Tõlgi (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Tõlgib raamatu kirjelduse AI abil."
 
 msgid "Translation"
 msgstr "Tõlge"
@@ -1472,6 +1473,10 @@ msgstr "Vaata"
 
 msgid "Vocabulary"
 msgstr "Sõnavara"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Sõnavara koostaja"
 
 msgid "Web Search"
 msgstr "Veebiotsing"

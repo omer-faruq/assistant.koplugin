@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 02:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: 简体中文 (AI translation)\n"
@@ -17,21 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - 标题 : %1\n"
-" - 作者: %2\n"
-" - 阅读进度: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - 第 %1/%2 页"
@@ -98,9 +83,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API 返回错误</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>已添加</b> [%1 (AI)] 到高亮菜单。"
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>正在为 Term X-Ray 分析书籍上下文...</b>"
@@ -180,9 +162,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>参数</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>已移除</b> [%1 (AI)] 从高亮菜单。"
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>请求</b> - POST %1"
 
@@ -190,7 +169,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>响应</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "测试连接"
+msgstr "<b>正在测试连接……</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>未知功能类型：</b> %1"
@@ -354,6 +333,9 @@ msgstr ""
 "从主菜单添加提供商：\n"
 "%1 -> AI 助手 -> 设置 -> API 提供商"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "已添加 <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "已添加到生词本"
 
@@ -413,6 +395,9 @@ msgstr "附加上文"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "将答案作为书籍笔记附加到当前高亮"
+
+msgid "Author"
+msgstr "作者"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -604,9 +589,6 @@ msgstr "自定义提示词"
 msgid "Custom Prompts"
 msgstr "自定义提示词"
 
-msgid "Deeply Thought"
-msgstr "深度思考"
-
 msgid "Delete"
 msgstr "删除"
 
@@ -631,8 +613,8 @@ msgstr "词典"
 msgid "Dictionary Language"
 msgstr "词典语言"
 
-msgid "Dictionary Popup"
-msgstr "词典弹窗"
+msgid "Dictionary Popup Buttons"
+msgstr "词典弹窗按钮"
 
 msgid "Dictionary Settings"
 msgstr "词典设置"
@@ -864,6 +846,9 @@ msgstr "Markdown 引擎"
 msgid "Meaning & Usage"
 msgstr "含义与用法"
 
+msgid "Minimalist Mode"
+msgstr "极简模式"
+
 msgid "Model"
 msgstr "模型"
 
@@ -917,6 +902,9 @@ msgstr "当前没有打开的书。请在文件管理器中长按一本书，然
 
 msgid "No common parameters are available for handler %1."
 msgstr "处理程序 %1 没有可用的通用参数。"
+
+msgid "No highlight to annotate"
+msgstr "没有可批注的高亮内容"
 
 msgid "No models available."
 msgstr "没有可用模型。"
@@ -1071,9 +1059,6 @@ msgstr "清除"
 msgid "Purge Settings"
 msgstr "清除设置"
 
-msgid "Question"
-msgstr "问题"
-
 msgid "Quick Note"
 msgstr "快速笔记"
 
@@ -1091,6 +1076,9 @@ msgstr "重新沉浸"
 
 msgid "Reader settings are not available."
 msgstr "阅读设置不可用。"
+
+msgid "Reading progress"
+msgstr "阅读进度"
 
 msgid "Reasoning Option"
 msgstr "推理选项"
@@ -1111,6 +1099,9 @@ msgstr "移除"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "从高亮菜单中移除 [%s]？"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "已移除 <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "请求已被用户取消。"
@@ -1139,9 +1130,6 @@ msgstr ""
 "这将把插件恢复到出厂默认状态。通过设置界面添加的提供商、API 密钥和\n"
 "搜索工具凭据将被删除。\n"
 "文件 configuration.lua 将被保留。"
-
-msgid "Response"
-msgstr "回答"
 
 msgid "Response Settings"
 msgstr "响应设置"
@@ -1236,6 +1224,9 @@ msgstr "如果 AI 响应中存在深度思考过程（推理），则显示。"
 
 msgid "Show follow up questions related to the response content."
 msgstr "显示与响应内容相关的后续问题。"
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "仅显示回答本身:不显示用户/助手标题、不显示首行按钮、不显示推理内容,也不显示追问。仅保留回答本身的操作(批注、生词本),与关闭按钮相邻。启用时会关闭推理文本和追问功能。"
 
 msgid "Similar Books Recommendations"
 msgstr "相似书籍推荐"
@@ -1378,6 +1369,9 @@ msgstr "此提示词将高亮文本翻译成另一种语言。"
 msgid "Timeline"
 msgstr "时间线"
 
+msgid "Title"
+msgstr "标题"
+
 msgid "To-Do / Action Items"
 msgstr "待办/行动事项"
 
@@ -1392,6 +1386,13 @@ msgstr "工具调用未包含搜索关键词。"
 
 msgid "Translate"
 msgstr "翻译"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "翻译 (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "使用 AI 翻译图书简介。"
 
 msgid "Translation"
 msgstr "翻译"
@@ -1472,6 +1473,10 @@ msgstr "查看"
 
 msgid "Vocabulary"
 msgstr "词汇"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "生词本"
 
 msgid "Web Search"
 msgstr "网络搜索"

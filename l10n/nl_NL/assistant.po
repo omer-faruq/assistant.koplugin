@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Titel : %1\n"
-" - Auteur: %2\n"
-" - Leesvoortgang: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - p. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API gaf een foutmelding</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Toegevoegd</b> [%1 (AI)] aan het markeermenu."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Boekcontext analyseren voor Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>Parameters</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Verwijderd</b> [%1 (AI)] uit het markeermenu."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Verzoek</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Reactie</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Basis-URL"
+msgstr "<b>Verbinding testen...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Onbekend functietype:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Voeg providers toe vanuit het hoofdmenu:\n"
 "%1 -> AI Assistant -> Instellingen -> Provider API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Toegevoegd <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Toegevoegd aan woordenschatbouwer"
 
@@ -412,6 +394,9 @@ msgstr "Eerdere tekst bijvoegen"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Voegt het antwoord als boeknotitie toe aan de huidige markering"
+
+msgid "Author"
+msgstr "Auteur"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Aangepaste prompt"
 msgid "Custom Prompts"
 msgstr "Aangepaste prompts"
 
-msgid "Deeply Thought"
-msgstr "Diep doordacht"
-
 msgid "Delete"
 msgstr "Verwijderen"
 
@@ -630,8 +612,8 @@ msgstr "Woordenboek"
 msgid "Dictionary Language"
 msgstr "Woordenboektaal"
 
-msgid "Dictionary Popup"
-msgstr "Woordenboekpop-up"
+msgid "Dictionary Popup Buttons"
+msgstr "Knoppen in woordenboekpop-up"
 
 msgid "Dictionary Settings"
 msgstr "Woordenboekinstellingen"
@@ -864,6 +846,9 @@ msgstr "Markdown-engine"
 msgid "Meaning & Usage"
 msgstr "Betekenis en gebruik"
 
+msgid "Minimalist Mode"
+msgstr "Minimalistische modus"
+
 msgid "Model"
 msgstr "Model"
 
@@ -917,6 +902,9 @@ msgstr "Er is geen boek geopend. Houd een boek ingedrukt in de bestandsbeheerder
 
 msgid "No common parameters are available for handler %1."
 msgstr "Er zijn geen algemene parameters beschikbaar voor handler %1."
+
+msgid "No highlight to annotate"
+msgstr "Geen markering om te annoteren"
 
 msgid "No models available."
 msgstr "Geen modellen beschikbaar."
@@ -1071,9 +1059,6 @@ msgstr "Wissen"
 msgid "Purge Settings"
 msgstr "Instellingen wissen"
 
-msgid "Question"
-msgstr "Vraag"
-
 msgid "Quick Note"
 msgstr "Snelle notitie"
 
@@ -1091,6 +1076,9 @@ msgstr "Herbeleving"
 
 msgid "Reader settings are not available."
 msgstr "Lezerinstellingen zijn niet beschikbaar."
+
+msgid "Reading progress"
+msgstr "Leesvoortgang"
 
 msgid "Reasoning Option"
 msgstr "Redeneringsoptie"
@@ -1111,6 +1099,9 @@ msgstr "Verwijderen"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Verwijder [%s] uit het markeermenu?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Verwijderd <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Verzoek geannuleerd door gebruiker."
@@ -1139,9 +1130,6 @@ msgstr ""
 "Dit herstelt de plugin naar de fabrieksinstellingen. Providers, API-sleutels en\n"
 "referenties voor zoekhulpmiddelen die via de instellingen-interface zijn toegevoegd, worden verwijderd.\n"
 "Het bestand configuration.lua blijft behouden."
-
-msgid "Response"
-msgstr "Antwoord"
 
 msgid "Response Settings"
 msgstr "Antwoordinstellingen"
@@ -1236,6 +1224,9 @@ msgstr "Toon het diepgaande denkproces (redenering) van het AI-antwoord, indien 
 
 msgid "Show follow up questions related to the response content."
 msgstr "Toon vervolgvragen die verband houden met de inhoud van het antwoord."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Toont alleen het antwoord: geen titels Gebruiker/Assistent, geen eerste knoppenrij, geen redenering en geen vervolgvragen. Behoudt alleen de acties op het antwoord zelf (Annoteren, Woordenschatbouwer) naast Sluiten. Schakelt Redeneringstekst en Vervolgvragen uit zolang dit actief is."
 
 msgid "Similar Books Recommendations"
 msgstr "Aanbevelingen voor soortgelijke boeken"
@@ -1378,6 +1369,9 @@ msgstr "Deze prompt vertaalt de gemarkeerde tekst naar een andere taal."
 msgid "Timeline"
 msgstr "Tijdlijn"
 
+msgid "Title"
+msgstr "Titel"
+
 msgid "To-Do / Action Items"
 msgstr "Te doen / Actiepunten"
 
@@ -1392,6 +1386,13 @@ msgstr "Toolaanroep bevatte geen zoekwoorden."
 
 msgid "Translate"
 msgstr "Vertalen"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Vertalen (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Vertaalt de boekbeschrijving met AI."
 
 msgid "Translation"
 msgstr "Vertaling"
@@ -1472,6 +1473,10 @@ msgstr "Bekijken"
 
 msgid "Vocabulary"
 msgstr "Woordenschat"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Woordenschatbouwer"
 
 msgid "Web Search"
 msgstr "Web zoeken"

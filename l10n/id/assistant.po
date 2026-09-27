@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Bahasa Indonesia (AI translation)\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Judul : %1\n"
-" - Penulis: %2\n"
-" - Kemajuan membaca: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - hlm. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API mengembalikan error</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Ditambahkan</b> [%1 (AI)] ke Menu Sorotan."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Menganalisis konteks buku untuk Term X-Ray...</b>"
@@ -178,9 +160,6 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parameter</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Dihapus</b> [%1 (AI)] dari Menu Sorotan."
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Permintaan</b> - POST %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Tambahkan penyedia dari menu utama:\n"
 "%1 -> AI Assistant -> Pengaturan -> Penyedia API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Ditambahkan <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Ditambahkan ke pembuat kosakata"
 
@@ -412,6 +394,9 @@ msgstr "Lampirkan Teks Sebelumnya"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Melampirkan jawaban sebagai catatan buku pada sorotan saat ini"
+
+msgid "Author"
+msgstr "Penulis"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Prompt Kustom"
 msgid "Custom Prompts"
 msgstr "Prompt Kustom"
 
-msgid "Deeply Thought"
-msgstr "Berpikir Mendalam"
-
 msgid "Delete"
 msgstr "Hapus"
 
@@ -630,8 +612,8 @@ msgstr "Kamus"
 msgid "Dictionary Language"
 msgstr "Bahasa Kamus"
 
-msgid "Dictionary Popup"
-msgstr "Pop-up Kamus"
+msgid "Dictionary Popup Buttons"
+msgstr "Tombol Popup Kamus"
 
 msgid "Dictionary Settings"
 msgstr "Pengaturan Kamus"
@@ -863,6 +845,9 @@ msgstr "Mesin Markdown"
 msgid "Meaning & Usage"
 msgstr "Arti & Penggunaan"
 
+msgid "Minimalist Mode"
+msgstr "Mode Minimalis"
+
 msgid "Model"
 msgstr "Model"
 
@@ -916,6 +901,9 @@ msgstr "Tidak ada buku yang terbuka. Tekan lama sebuah buku di pengelola berkas 
 
 msgid "No common parameters are available for handler %1."
 msgstr "Tidak ada parameter umum yang tersedia untuk handler %1."
+
+msgid "No highlight to annotate"
+msgstr "Tidak ada sorotan untuk dianotasi"
 
 msgid "No models available."
 msgstr "Tidak ada model yang tersedia."
@@ -1070,9 +1058,6 @@ msgstr "Bersihkan"
 msgid "Purge Settings"
 msgstr "Bersihkan Pengaturan"
 
-msgid "Question"
-msgstr "Pertanyaan"
-
 msgid "Quick Note"
 msgstr "Catatan Cepat"
 
@@ -1090,6 +1075,9 @@ msgstr "Re-immersi"
 
 msgid "Reader settings are not available."
 msgstr "Pengaturan pembaca tidak tersedia."
+
+msgid "Reading progress"
+msgstr "Progres membaca"
 
 msgid "Reasoning Option"
 msgstr "Opsi Penalaran"
@@ -1110,6 +1098,9 @@ msgstr "Hapus"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Hapus [%s] dari Menu Sorotan?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Dihapus <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Permintaan dibatalkan oleh pengguna."
@@ -1138,9 +1129,6 @@ msgstr ""
 "Ini akan mengembalikan plugin ke pengaturan bawaan pabrik. Penyedia, kunci API, dan\n"
 "kredensial alat pencarian yang ditambahkan melalui UI Pengaturan akan dihapus.\n"
 "File configuration.lua akan dipertahankan."
-
-msgid "Response"
-msgstr "Respons"
 
 msgid "Response Settings"
 msgstr "Pengaturan Respons"
@@ -1235,6 +1223,9 @@ msgstr "Tampilkan proses berpikir mendalam (penalaran) dari respons AI jika ada.
 
 msgid "Show follow up questions related to the response content."
 msgstr "Tampilkan pertanyaan lanjutan yang terkait dengan isi respons."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Menampilkan jawaban saja: tanpa judul Pengguna/Asisten, tanpa baris tombol pertama, tanpa penalaran, dan tanpa pertanyaan lanjutan. Hanya menyisakan tindakan pada jawaban itu sendiri (Anotasi, Pembuat Kosakata) di samping Tutup. Menonaktifkan Teks Penalaran dan Pertanyaan Lanjutan selama mode ini aktif."
 
 msgid "Similar Books Recommendations"
 msgstr "Rekomendasi Buku Serupa"
@@ -1377,6 +1368,9 @@ msgstr "Prompt ini menerjemahkan teks yang disorot ke bahasa lain."
 msgid "Timeline"
 msgstr "Linimasa"
 
+msgid "Title"
+msgstr "Judul"
+
 msgid "To-Do / Action Items"
 msgstr "Tugas / Rencana Aksi"
 
@@ -1391,6 +1385,13 @@ msgstr "Panggilan alat tidak menyertakan kata kunci pencarian."
 
 msgid "Translate"
 msgstr "Terjemahkan"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Terjemahkan (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Menerjemahkan deskripsi buku dengan AI."
 
 msgid "Translation"
 msgstr "Terjemahan"
@@ -1471,6 +1472,10 @@ msgstr "Lihat"
 
 msgid "Vocabulary"
 msgstr "Kosakata"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Pembuat Kosakata"
 
 msgid "Web Search"
 msgstr "Pencarian Web"

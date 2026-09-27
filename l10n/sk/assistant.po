@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -15,22 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Názov : %1\n"
-" - Autor: %2\n"
-" - Priebeh čítania: %3%\n"
-"\n"
-"-----\n"
-"\n"
+"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
 
 msgid " - p. %1/%2"
 msgstr " - s. %1/%2"
@@ -39,7 +24,7 @@ msgid "\"X-Ray\" summary for a book, structured into specific sections like Char
 msgstr "\"X-Ray\" zhrnutie knihy, štruktúrované do konkrétnych sekcií, ako sú Postavy, Miesta, Témy, Pojmy a koncepty, Časová os a Opätovné ponorenie."
 
 msgid "##### You may find these topics interesting:"
-msgstr "##### Morda vas bodo te teme zanimale:"
+msgstr "##### Tieto témy by vás mohli zaujímať:"
 
 msgid "%1 - choose an action"
 msgstr "%1 – vyberte akciu"
@@ -98,9 +83,6 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API vrátilo chybu</b>"
 
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Dodano</b> [%1 (AI)] v meni označb."
-
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analyzuje sa kontext knihy pre Term X-Ray...</b>"
 
@@ -127,10 +109,10 @@ msgid ""
 "<b>Repo: </b>%2\n"
 "<b>Branch/Tag: </b>%3"
 msgstr ""
-"<b>Prenašanje ...</b>\n"
+"<b>Sťahovanie ...</b>\n"
 "<b>Github: </b>%1\n"
-"<b>Repozitorij: </b>%2\n"
-"<b>Veja/Oznaka: </b>%3"
+"<b>Repo: </b>%2\n"
+"<b>Branch/Tag: </b>%3"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Chyba:</b> Nebola prijatá žiadna odpoveď"
@@ -167,7 +149,7 @@ msgstr ""
 "- Vývojová vetva: main"
 
 msgid "<b>Installing %1...</b>"
-msgstr "<b>Nameščanje %1...</b>"
+msgstr "<b>Inštalácia %1...</b>"
 
 msgid ""
 "<b>No provider set up yet.</b>\n"
@@ -177,10 +159,7 @@ msgstr ""
 "Prosimo, dodajte ponudnika v Nastavitvah ali configuration.lua."
 
 msgid "<b>Parameters</b>"
-msgstr "<b>Parametri</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Odstranjeno</b> [%1 (AI)] iz menija označb."
+msgstr "<b>Parametre</b>"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Zahteva</b> – POST %1"
@@ -189,13 +168,13 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Odgovor</b> – HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Osnovni URL"
+msgstr "<b>Testovanie pripojenia...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Neznámy typ funkcie:</b> %1"
 
 msgid "A new version of the %1 plugin (%2) is available. Please update!"
-msgstr "Na voljo je nova različica vtičnika %1 (%2). Prosimo, posodobite!"
+msgstr "Je k dispozícii nová verzia doplnku %1 (%2). Aktualizujte ho!"
 
 msgid "A very brief, spoiler-free summary of the book up to current reading progress."
 msgstr "Veľmi stručné zhrnutie knihy bez spoilerov až po aktuálny pokrok v čítaní."
@@ -329,7 +308,7 @@ msgid "Actionable Takeaways"
 msgstr "Praktické poznatky"
 
 msgid "Active: %1"
-msgstr "Aktivna: %1"
+msgstr "Aktívne: %1"
 
 msgid "Add"
 msgstr "Pridať"
@@ -341,10 +320,10 @@ msgid "Add %1 Provider"
 msgstr "Pridať poskytovateľa %1"
 
 msgid "Add Book Metadata as Context"
-msgstr "Dodaj metapodatke knjige kot kontekst"
+msgstr "Pridať metadáta knihy ako kontext"
 
 msgid "Add Nearby Page Text as Context"
-msgstr "Dodaj besedilo sosednjih strani kot kontekst"
+msgstr "Pridať text z blízkych strán ako kontext"
 
 msgid ""
 "Add providers from the main menu:\n"
@@ -352,6 +331,9 @@ msgid ""
 msgstr ""
 "Pridajte poskytovateľov z hlavnej ponuky:\n"
 "%1 -> Asistent AI -> Nastavenia -> API poskytovateľa"
+
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Pridané <b>[%1 (AI)]</b>"
 
 msgid "Added to vocabulary builder"
 msgstr "Pridané do slovnej zásoby"
@@ -374,20 +356,20 @@ msgid ""
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Ali ste prepričani, da želite počistiti nastavitve vtičnika asistenta? \n"
-"To ponastavi vtičnik asistenta na stanje ob prvi namestitvi.\n"
+"Ste si istí, že chcete vyčistiť nastavenia doplnku asistenta? \n"
+"Tým sa doplnok asistenta obnoví do stavu pri prvom nainštalovaní.\n"
 "\n"
-"configuration.lua je varen, počistijo se samo nastavitve."
+"configuration.lua zostane v poriadku, vyčistia sa iba nastavenia."
 
 msgid "Ask"
 msgstr "Opýtať sa"
 
 #. @translators button text, keep it short, like: Ask Another
 msgid "Ask Another Question"
-msgstr "Zastavi drugo vprašanje"
+msgstr "Ďalšia otázka"
 
 msgid "Ask a Question"
-msgstr "Zastavi vprašanje"
+msgstr "Položiť otázku"
 
 msgid "Ask a general question"
 msgstr "Položiť všeobecnú otázku"
@@ -405,13 +387,16 @@ msgid "Ask the AI a question"
 msgstr "Položte otázku AI"
 
 msgid "Assistant settings are not available."
-msgstr "Nastavitve asistenta niso na voljo."
+msgstr "Nastavenia asistenta nie sú dostupné."
 
 msgid "Attach Prior Text"
 msgstr "Pripojiť predchádzajúci text"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Pripojí odpoveď ako poznámku v knihe k aktuálnemu zvýrazneniu"
+
+msgid "Author"
+msgstr "Autor"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -449,13 +434,13 @@ msgid "Book Information"
 msgstr "Informácie o knihe"
 
 msgid "Book Insights"
-msgstr "Vpogledi v knjigo"
+msgstr "Postrehy o knihe"
 
 msgid "Book Summary & Recs"
 msgstr "Zhrnutie knihy a odporúčania"
 
 msgid "Branch/Tag \"%1\" was not found."
-msgstr "Veja/oznaka \"%1\" ni bila najdena."
+msgstr "Branch/Tag \"%1\" sa nenašiel."
 
 msgid "Browse Models"
 msgstr "Prehliadať modely"
@@ -482,7 +467,7 @@ msgid "Characters"
 msgstr "Postavy"
 
 msgid "Checking for updates..."
-msgstr "Preverjanje posodobitev..."
+msgstr "Kontrola aktualizácií..."
 
 msgid "Choose Definition Sections"
 msgstr "Vyberte sekcie definícií"
@@ -519,7 +504,7 @@ msgid "Context Limitations"
 msgstr "Obmedzenia kontextu"
 
 msgid "Context Settings"
-msgstr "Nastavitve konteksta"
+msgstr "Nastavenia kontextu"
 
 msgid "Contextual Connections"
 msgstr "Kontextové súvislosti"
@@ -537,10 +522,10 @@ msgid "Conversation is saved to AI Notes"
 msgstr "Konverzácia je uložená do AI poznámok"
 
 msgid "Copy"
-msgstr "Kopiraj"
+msgstr "Kopírovať"
 
 msgid "Copy to Clipboard"
-msgstr "Kopiraj v odložišče"
+msgstr "Kopírovať do schránky"
 
 #. @translators key_points section headers
 msgid "Core Arguments"
@@ -582,7 +567,7 @@ msgid "Could not write AI note file."
 msgstr "Nepodarilo sa zapísať súbor AI poznámky."
 
 msgid "Create"
-msgstr "Ustvari"
+msgstr "Vytvoriť"
 
 msgid "Create an AI note."
 msgstr "Vytvoriť AI poznámku."
@@ -595,16 +580,13 @@ msgstr "Iba aktuálna kapitola"
 
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
-msgstr "Po meri"
+msgstr "Vlastné"
 
 msgid "Custom Prompt"
 msgstr "Vlastný prompt"
 
 msgid "Custom Prompts"
 msgstr "Prilagojeni pozivi"
-
-msgid "Deeply Thought"
-msgstr "Hlboké zamyslenie"
 
 msgid "Delete"
 msgstr "Odstrániť"
@@ -622,7 +604,7 @@ msgid "Delete provider %1?"
 msgstr "Odstrániť poskytovateľa %1?"
 
 msgid "Device"
-msgstr "Naprava"
+msgstr "Zariadenie"
 
 msgid "Dictionary"
 msgstr "Slovník"
@@ -630,8 +612,8 @@ msgstr "Slovník"
 msgid "Dictionary Language"
 msgstr "Jazyk slovníka"
 
-msgid "Dictionary Popup"
-msgstr "Vyskakovacie okno slovníka"
+msgid "Dictionary Popup Buttons"
+msgstr "Tlačidlá vyskakovacieho okna slovníka"
 
 msgid "Dictionary Settings"
 msgstr "Nastavenia slovníka"
@@ -673,7 +655,7 @@ msgid "Edit %1"
 msgstr "Upraviť %1"
 
 msgid "Empty Error"
-msgstr "Prazna napaka"
+msgstr "Prázdna chyba"
 
 msgid "Enable Stream Response"
 msgstr "Omogoči pretakanje odgovora"
@@ -840,10 +822,9 @@ msgstr "Veliko okno pretakanja"
 
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
-msgstr[0] "Nazadnje prebrano pred eno uro."
-msgstr[1] "Nazadnje prebrano pred %1 urama."
-msgstr[2] "Nazadnje prebrano pred %1 urami."
-msgstr[3] "Nazadnje prebrano pred %1 urami."
+msgstr[0] "Naposledy čítané pred hodinou."
+msgstr[1] "Naposledy čítané pred %1 hodinami."
+msgstr[2] "Naposledy čítané pred %1 hodinami."
 
 msgid "Leave blank to use: %1"
 msgstr "Nechajte prázdne, aby sa použilo: %1"
@@ -865,6 +846,9 @@ msgstr "Markdown pogon"
 
 msgid "Meaning & Usage"
 msgstr "Význam a použitie"
+
+msgid "Minimalist Mode"
+msgstr "Minimalistický režim"
 
 msgid "Model"
 msgstr "Model"
@@ -900,7 +884,7 @@ msgid "New AI Note..."
 msgstr "Nová AI poznámka..."
 
 msgid "No"
-msgstr "Ne"
+msgstr "Nie"
 
 msgid "No AI Notes folder is set."
 msgstr "Nie je nastavený priečinok pre AI poznámky."
@@ -919,6 +903,9 @@ msgstr "Nie je otvorená žiadna kniha. Podržte prst na knihe v správcovi súb
 
 msgid "No common parameters are available for handler %1."
 msgstr "Možnosti sklepanja – %1"
+
+msgid "No highlight to annotate"
+msgstr "Žiadne zvýraznenie na anotáciu"
 
 msgid "No models available."
 msgstr "Nie sú k dispozícii žiadne modely."
@@ -951,7 +938,7 @@ msgid "Not found."
 msgstr "Nenájdené."
 
 msgid "OK"
-msgstr "V redu"
+msgstr "OK"
 
 msgid ""
 "OTA UPDATE OK.\n"
@@ -961,13 +948,13 @@ msgstr ""
 " Potreben je ponovni zagon."
 
 msgid "OTA Update"
-msgstr "Posodobitev OTA"
+msgstr "Aktualizácia OTA"
 
 msgid "OTA update canceled."
-msgstr "Posodobitev OTA je preklicana."
+msgstr "Aktualizácia OTA bola zrušená."
 
 msgid "OTA update failed: %1"
-msgstr "Posodobitev OTA ni uspela: %1"
+msgstr "Aktualizácia OTA zlyhala: %1"
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -992,7 +979,7 @@ msgid "Outstanding questions:"
 msgstr "Otvorené otázky:"
 
 msgid "Page"
-msgstr "Stran"
+msgstr "Strana"
 
 msgid "Parts of Speech & Tenses"
 msgstr "Slovné druhy a časy"
@@ -1041,7 +1028,7 @@ msgid "Provider API"
 msgstr "API poskytovateľa"
 
 msgid "Provider Name"
-msgstr "Ime ponudnika"
+msgstr "Názov poskytovateľa"
 
 msgid "Provider data not initialized."
 msgstr "Dáta poskytovateľa nie sú inicializované."
@@ -1068,13 +1055,10 @@ msgid "Publisher"
 msgstr "Vydavateľ"
 
 msgid "Purge"
-msgstr "Počisti"
+msgstr "Vyčistiť"
 
 msgid "Purge Settings"
-msgstr "Počisti nastavitve"
-
-msgid "Question"
-msgstr "Otázka"
+msgstr "Vyčistiť nastavenia"
 
 msgid "Quick Note"
 msgstr "Rýchla poznámka"
@@ -1094,8 +1078,11 @@ msgstr "Opätovné ponorenie"
 msgid "Reader settings are not available."
 msgstr "Nastavenia čítačky nie sú dostupné."
 
+msgid "Reading progress"
+msgstr "Priebeh čítania"
+
 msgid "Reasoning Option"
-msgstr "Možnost sklepanja"
+msgstr "Možnosť uvažovania"
 
 msgid "Reasoning Options - %1"
 msgstr "Možnosti sklepanja – %1"
@@ -1108,11 +1095,14 @@ msgid "Recap (AI)"
 msgstr "Rekapitulácia (AI)"
 
 msgid "Remove"
-msgstr "Odstrani"
+msgstr "Odstrániť"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Odstrani [%s] iz menija označb?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Odstránené <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Požiadavka zrušená používateľom."
@@ -1121,13 +1111,13 @@ msgid "Request cancelled by user."
 msgstr "Požiadavka zrušená používateľom."
 
 msgid "Request failed: %1"
-msgstr "Zahteva ni uspela: %1"
+msgstr "Požiadavka zlyhala: %1"
 
 msgid "Reset"
 msgstr "Resetovať"
 
 msgid "Reset Assistant Settings"
-msgstr "Ponastavi nastavitve asistenta"
+msgstr "Resetovať nastavenia asistenta"
 
 msgid ""
 "Reset all assistant.koplugin settings?\n"
@@ -1141,9 +1131,6 @@ msgstr ""
 "To vrne vtičnik na tovarniške privzete nastavitve. Ponudniki, ključi API in\n"
 "poverilnice orodja za iskanje, dodane prek uporabniškega vmesnika Nastavitve, bodo odstranjene.\n"
 "Datoteka configuration.lua bo ohranjena."
-
-msgid "Response"
-msgstr "Odpoveď"
 
 msgid "Response Settings"
 msgstr "Nastavitve odgovora"
@@ -1171,16 +1158,16 @@ msgstr ""
 "  preložia ako obvykle."
 
 msgid "Runtime"
-msgstr "Izvajalno okolje"
+msgstr "Behové prostredie"
 
 msgid "Save"
 msgstr "Uložiť"
 
 msgid "Save conversation to"
-msgstr "Shrani pogovor v"
+msgstr "Uložiť konverzáciu do"
 
 msgid "Saved to: %1"
-msgstr "Shranjeno v: %1"
+msgstr "Uložené do: %1"
 
 msgid "Saves the conversation to AI Notes"
 msgstr "Uloží konverzáciu do AI poznámok"
@@ -1210,7 +1197,7 @@ msgid "Search tool record must be a table."
 msgstr "Záznam vyhľadávacieho nástroja musí byť tabuľka."
 
 msgid "Searching with %1 ... [%2]"
-msgstr "Iskanje z %1 ... [%2]"
+msgstr "Vyhľadávanie pomocou %1 ... [%2]"
 
 msgid "Select AI Note"
 msgstr "Vybrať AI poznámku"
@@ -1225,19 +1212,22 @@ msgid "Settings"
 msgstr "Nastavenia"
 
 msgid "Show Follow-up Questions"
-msgstr "Prikaži nadaljnja vprašanja"
+msgstr "Zobraziť doplňujúce otázky"
 
 msgid "Show Reasoning"
 msgstr "Zobraziť uvažovanie"
 
 msgid "Show Reasoning Text"
-msgstr "Prikaži besedilo razmišljanja"
+msgstr "Zobraziť text odôvodnenia"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
 msgstr "Prikaži poglobljen miselni proces (razmišljanje) iz odgovora AI, če obstaja."
 
 msgid "Show follow up questions related to the response content."
 msgstr "Prikaži nadaljnja vprašanja, povezana z vsebino odgovora."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Zobrazuje iba odpoveď: žiadne nadpisy Používateľ/Asistent, žiadny prvý riadok tlačidiel, žiadne uvažovanie ani doplnkové otázky. Ponechá len akcie na samotnej odpovedi (Anotovať, Slovná zásoba) vedľa tlačidla Zavrieť. Počas aktívneho stavu vypína Text uvažovania a Doplnkové otázky."
 
 msgid "Similar Books Recommendations"
 msgstr "Odporúčania podobných kníh"
@@ -1258,7 +1248,7 @@ msgid "Stopped Reason: "
 msgstr "Dôvod zastavenia: "
 
 msgid "Stream Text Auto Scroll"
-msgstr "Samodejno drsenje pretakanega besedila"
+msgstr "Automatické posúvanie streamovaného textu"
 
 msgid "Stream ended with no content and no tool calls."
 msgstr "Stream sa skončil bez obsahu a bez volaní nástrojov."
@@ -1283,7 +1273,7 @@ msgid "Summary of the book, author biography, historical context, and a list of 
 msgstr "Zhrnutie knihy, životopis autora, historický kontext a zoznam podobných kníh s odporúčaniami a popismi."
 
 msgid "Switch"
-msgstr "Preklopi"
+msgstr "Prepnúť"
 
 msgid "Synonyms"
 msgstr "Synonymá"
@@ -1307,13 +1297,13 @@ msgid "Terms & Concepts"
 msgstr "Pojmy a koncepty"
 
 msgid "Test"
-msgstr "Preizkus"
+msgstr "Test"
 
 msgid "Text Size: %1"
 msgstr "Velikost besedila: %1"
 
 msgid "Text copied to the clipboard"
-msgstr "Besedilo je kopirano v odložišče."
+msgstr "Text skopírovaný do schránky"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handler pre %1 sa nenašiel. Uistite sa, že handler existuje v adresári api_handlers."
@@ -1380,6 +1370,9 @@ msgstr "Tento prompt preloží zvýraznený text do iného jazyka."
 msgid "Timeline"
 msgstr "Časová os"
 
+msgid "Title"
+msgstr "Názov"
+
 msgid "To-Do / Action Items"
 msgstr "Úlohy / Akčné body"
 
@@ -1387,13 +1380,20 @@ msgid "Too many tool-call rounds; aborting."
 msgstr "Príliš veľa kôl volaní nástrojov; prerušujem."
 
 msgid "Tool call did not include id."
-msgstr "Klic orodja ni vseboval ID-ja."
+msgstr "Volanie nástroja neobsahovalo id."
 
 msgid "Tool call did not include search keywords."
-msgstr "Klic orodja ni vseboval iskalnih ključnih besed."
+msgstr "Volanie nástroja neobsahovalo kľúčové slová vyhľadávania."
 
 msgid "Translate"
 msgstr "Preložiť"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Preložiť (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Preloží opis knihy pomocou AI."
 
 msgid "Translation"
 msgstr "Preklad"
@@ -1417,7 +1417,7 @@ msgid "Unsupported API protocol."
 msgstr "Nepodporovaný protokol API."
 
 msgid "Update"
-msgstr "Posodobi"
+msgstr "Aktualizovať"
 
 msgid ""
 "Usage Tips\n"
@@ -1467,12 +1467,16 @@ msgid "User:"
 msgstr "Používateľ:"
 
 msgid "Version Info"
-msgstr "Informacije o različici"
+msgstr "Informácie o verzii"
 
 msgid "View"
 msgstr "Zobraziť"
 
 msgid "Vocabulary"
+msgstr "Slovná zásoba"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
 msgstr "Slovná zásoba"
 
 msgid "Web Search"
@@ -1516,7 +1520,7 @@ msgid "X-Ray"
 msgstr "X-Ray"
 
 msgid "Yes"
-msgstr "Da"
+msgstr "Áno"
 
 msgid "Your API key"
 msgstr "Váš API kľúč"
@@ -1525,16 +1529,16 @@ msgid "Your own prompts defined in the configuration file"
 msgstr "Vaši lastni pozivi, definirani v konfiguracijski datoteki."
 
 msgid "branch or tag name"
-msgstr "ime veje ali oznake"
+msgstr "názov vetvy alebo značky"
 
 msgid "configuration.lua: model providers are invalid."
-msgstr "configuration.lua: ponudniki modelov so neveljavni."
+msgstr "configuration.lua: poskytovatelia modelov sú neplatní."
 
 msgid "e.g. google/gemini-3.0-flash-exp:free"
 msgstr "napr. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
-msgstr "fetchJSON: razčlenjevanje vrnjenih podatkov ni uspelo"
+msgstr "fetchJSON: nepodarilo sa analyzovať vrátené údaje"
 
 msgid "https://..."
 msgstr "https://..."

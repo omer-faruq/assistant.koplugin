@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 04:37+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: සිංහල (AI translation)\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - මාතෘකාව : %1\n"
-" - කර්තෘ: %2\n"
-" - කියවීමේ ප්රගතිය: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - පි. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API මගින් දෝෂයක් ලබා දුන්නේය</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>එකතු කරන ලදී</b> [%1 (AI)] උද්දීපන මෙනුවට."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Term X-Ray සඳහා පොත් සන්දර්භය විශ්ලේෂණය කරමින්...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>පරාමිති</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>ඉවත් කරන ලදී</b> [%1 (AI)] උද්දීපන මෙනුවෙන්."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>ඉල්ලීම</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>ප්‍රතිචාරය</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "සේවා සපයන්නා"
+msgstr "<b>සම්බන්ධතාවය පරීක්ෂා කරමින්...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>නොදන්නා විශේෂාංග වර්ගය:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "ප්‍රධාන මෙනුවෙන් සේවා සපයන්නන් එක් කරන්න:\n"
 "%1 -> AI සහායක -> සැකසීම් -> සපයන්නා API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "<b>[%1 (AI)]</b> එකතු කරන ලදි"
+
 msgid "Added to vocabulary builder"
 msgstr "වචන ගොඩනැගුමට එකතු කරන ලදි"
 
@@ -413,6 +395,9 @@ msgstr "පෙර පෙළ අමුණන්න"
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "පිළිතුර වත්මන් ඉස්මතු කිරීමට පොත් සටහනක් ලෙස අමුණයි"
 
+msgid "Author"
+msgstr "කර්තෘ"
+
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "දිගු කලක් නොකියවූ පොත් විවෘත කිරීමේදී ස්වයංක්‍රීය සාරාංශය"
@@ -436,7 +421,7 @@ msgid "Base URL must start with http:// or https://"
 msgstr "මූලික URL http:// හෝ https:// වලින් ආරම්භ විය යුතුය."
 
 msgid "Base URL, e.g. https://example.com/v1"
-msgstr "මාදිලිය"
+msgstr "මූලික URL, උදා: https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "පොත් විශ්ලේෂණය"
@@ -603,9 +588,6 @@ msgstr "අභිරුචි ප්රොම්ප්ටය"
 msgid "Custom Prompts"
 msgstr "අභිරුචි ප්‍රොම්ප්ට්"
 
-msgid "Deeply Thought"
-msgstr "ගැඹුරු සිතුවිල්ල"
-
 msgid "Delete"
 msgstr "මකන්න"
 
@@ -630,8 +612,8 @@ msgstr "ශබ්දකෝෂය"
 msgid "Dictionary Language"
 msgstr "ශබ්දකෝෂ භාෂාව"
 
-msgid "Dictionary Popup"
-msgstr "ශබ්දකෝෂ පොප්අප්"
+msgid "Dictionary Popup Buttons"
+msgstr "ශබ්දකෝෂ උත්පතන බොත්තම්"
 
 msgid "Dictionary Settings"
 msgstr "ශබ්දකෝෂ සැකසුම්"
@@ -864,6 +846,9 @@ msgstr "Markdown එන්ජිම"
 msgid "Meaning & Usage"
 msgstr "අර්ථය සහ භාවිතය"
 
+msgid "Minimalist Mode"
+msgstr "අවමතම ආකාරය"
+
 msgid "Model"
 msgstr "මාදිලිය"
 
@@ -917,6 +902,9 @@ msgstr "කිසිදු පොතක් විවෘතව නොමැත. �
 
 msgid "No common parameters are available for handler %1."
 msgstr "සාමාන්‍ය පරාමිතීන් %1 හසුරුවන්නා සඳහා නොමැත."
+
+msgid "No highlight to annotate"
+msgstr "සටහන් කිරීමට ඉස්මතු කිරීමක් නැත"
 
 msgid "No models available."
 msgstr "පවතින ආකෘති නොමැත."
@@ -1071,9 +1059,6 @@ msgstr "ඉවත් කරන්න"
 msgid "Purge Settings"
 msgstr "සැකසුම් හිස් කරන්න"
 
-msgid "Question"
-msgstr "ප්‍රශ්නය"
-
 msgid "Quick Note"
 msgstr "ඉක්මන් සටහන"
 
@@ -1091,6 +1076,9 @@ msgstr "නැවත ගිලී යාම"
 
 msgid "Reader settings are not available."
 msgstr "කියවන්නාගේ සැකසුම් ලබාගත නොහැක."
+
+msgid "Reading progress"
+msgstr "කියවීමේ ප්‍රගතිය"
 
 msgid "Reasoning Option"
 msgstr "තර්කන විකල්පය"
@@ -1111,6 +1099,9 @@ msgstr "ඉවත් කරන්න"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "උද්දීපන මෙනුවෙන් [%s] ඉවත් කරන්නද?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "<b>[%1 (AI)]</b> ඉවත් කරන ලදි"
 
 msgid "Request Cancelled by user."
 msgstr "ඉල්ලීම පරිශීලකයා විසින් අවලංගු කරන ලදී."
@@ -1139,9 +1130,6 @@ msgstr ""
 "මෙය ප්ලගිනය එහි කර්මාන්තශාලා පෙරනිමි තත්ත්වයට ප්රතිස්ථාපනය කරයි. සැකසුම් UI හරහා එක් කළ සේවා සපයන්නන්, API යතුරු සහ\n"
 "සෙවුම් මෙවලම් අක්තපත්ර ඉවත් කෙරේ.\n"
 "configuration.lua ගොනුව ආරක්ෂා වේ."
-
-msgid "Response"
-msgstr "ප්රතිචාරය"
 
 msgid "Response Settings"
 msgstr "ප්‍රතිචාර සැකසුම්"
@@ -1236,6 +1224,9 @@ msgstr "AI ප්‍රතිචාරයේ ඇත්නම් ගැඹුර�
 
 msgid "Show follow up questions related to the response content."
 msgstr "ප්‍රතිචාර අන්තර්ගතයට අදාළ අනුගාමී ප්‍රශ්න පෙන්වන්න."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "පිළිතුර පමණක් පෙන්වයි: පරිශීලක/සහායක ශීර්ෂක නැත, පළමු බොත්තම් පේළිය නැත, තර්කනය නැත, අනුගාමී ප්‍රශ්න නැත. වසන්න (Close) අසලින් පිළිතුරේම ඇති ක්‍රියා (සටහන් කරන්න, වචන ගොඩනංවනය) පමණක් තබා ගනී. සක්‍රීයව ඇති විට තර්කන පෙළ සහ අනුගාමී ප්‍රශ්න ක්‍රියාවිරහිත කරයි."
 
 msgid "Similar Books Recommendations"
 msgstr "සමාන පොත් නිර්දේශ"
@@ -1378,6 +1369,9 @@ msgstr "මෙම ප්රොම්ප්ටය උද්දීපනය කළ
 msgid "Timeline"
 msgstr "කාලරේඛාව"
 
+msgid "Title"
+msgstr "ශීර්ෂය"
+
 msgid "To-Do / Action Items"
 msgstr "කළ යුතු දේ / ක්රියාකාරී අයිතම"
 
@@ -1392,6 +1386,13 @@ msgstr "මෙවලම් ඇමතුමට සෙවුම් මූල ප�
 
 msgid "Translate"
 msgstr "පරිවර්තනය කරන්න"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "පරිවර්තනය (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "AI සමඟ පොතේ විස්තරය පරිවර්තනය කරයි."
 
 msgid "Translation"
 msgstr "පරිවර්තනය"
@@ -1472,6 +1473,10 @@ msgstr "බලන්න"
 
 msgid "Vocabulary"
 msgstr "වචන මාලාව"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "වචන ගොඩනංවනය"
 
 msgid "Web Search"
 msgstr "වෙබ් සෙවීම"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 02:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: 中文（台灣) (AI translation)\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - 標題：%1\n"
-" - 作者：%2\n"
-" - 閱讀進度：%3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - 第 %1/%2 頁"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API 傳回錯誤</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>已新增</b> [%1 (AI)] 到反白選單。"
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>正在分析書籍上下文以產生 Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>參數</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>已移除</b> [%1 (AI)] 從反白選單。"
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>請求</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>回應</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "測試連線中..."
+msgstr "<b>正在測試連線……</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>未知的功能類型：</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "從主選單新增提供者：\n"
 "%1 -> AI Assistant -> 設定 -> Provider API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "已新增 <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "已新增至詞彙庫"
 
@@ -412,6 +394,9 @@ msgstr "附加前文"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "將回答以書籍註記形式附加至目前的標記"
+
+msgid "Author"
+msgstr "作者"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "自訂提示"
 msgid "Custom Prompts"
 msgstr "自訂提示"
 
-msgid "Deeply Thought"
-msgstr "深度思考"
-
 msgid "Delete"
 msgstr "刪除"
 
@@ -630,8 +612,8 @@ msgstr "字典"
 msgid "Dictionary Language"
 msgstr "字典語言"
 
-msgid "Dictionary Popup"
-msgstr "字典彈出視窗"
+msgid "Dictionary Popup Buttons"
+msgstr "字典彈出視窗按鈕"
 
 msgid "Dictionary Settings"
 msgstr "字典設定"
@@ -863,6 +845,9 @@ msgstr "Markdown 引擎"
 msgid "Meaning & Usage"
 msgstr "含義與用法"
 
+msgid "Minimalist Mode"
+msgstr "極簡模式"
+
 msgid "Model"
 msgstr "模型"
 
@@ -916,6 +901,9 @@ msgstr "目前沒有開啟的書籍。請在檔案管理中長按一本書，然
 
 msgid "No common parameters are available for handler %1."
 msgstr "處理器 %1 沒有可用的通用參數。"
+
+msgid "No highlight to annotate"
+msgstr "沒有可註解的標記"
 
 msgid "No models available."
 msgstr "沒有可用的模型。"
@@ -1070,9 +1058,6 @@ msgstr "清除"
 msgid "Purge Settings"
 msgstr "清除設定"
 
-msgid "Question"
-msgstr "問題"
-
 msgid "Quick Note"
 msgstr "快速筆記"
 
@@ -1090,6 +1075,9 @@ msgstr "重新沉浸"
 
 msgid "Reader settings are not available."
 msgstr "閱讀器設定無法使用。"
+
+msgid "Reading progress"
+msgstr "閱讀進度"
 
 msgid "Reasoning Option"
 msgstr "推理選項"
@@ -1110,6 +1098,9 @@ msgstr "移除"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "要從反白選單移除 [%s] 嗎？"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "已移除 <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "要求已由使用者取消。"
@@ -1138,9 +1129,6 @@ msgstr ""
 "這會將外掛程式恢復為原廠預設值。透過設定介面新增的提供者、API 金鑰和\n"
 "搜尋工具憑證將被移除。\n"
 "configuration.lua 檔案將予以保留。"
-
-msgid "Response"
-msgstr "回應"
 
 msgid "Response Settings"
 msgstr "回覆設定"
@@ -1235,6 +1223,9 @@ msgstr "若 AI 回覆中有深度思考過程（推理），則顯示。"
 
 msgid "Show follow up questions related to the response content."
 msgstr "顯示與回覆內容相關的後續問題。"
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "只顯示回答本身：沒有使用者/助理標題、沒有第一列按鈕、沒有推理過程，也沒有後續問題。只保留回答本身的操作（註解、單字庫），並放在「關閉」旁邊。啟用時會關閉推理文字與後續問題。"
 
 msgid "Similar Books Recommendations"
 msgstr "類似書籍推薦"
@@ -1377,6 +1368,9 @@ msgstr "此提示詞會將反白文字翻譯成另一種語言。"
 msgid "Timeline"
 msgstr "時間軸"
 
+msgid "Title"
+msgstr "標題"
+
 msgid "To-Do / Action Items"
 msgstr "待辦事項／行動項目"
 
@@ -1391,6 +1385,13 @@ msgstr "工具呼叫未包含搜尋關鍵字。"
 
 msgid "Translate"
 msgstr "翻譯"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "翻譯 (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "使用 AI 翻譯書籍簡介。"
 
 msgid "Translation"
 msgstr "翻譯"
@@ -1471,6 +1472,10 @@ msgstr "檢視"
 
 msgid "Vocabulary"
 msgstr "詞彙"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "單字庫"
 
 msgid "Web Search"
 msgstr "網路搜尋"

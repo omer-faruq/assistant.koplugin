@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Název : %1\n"
-" - Autor: %2\n"
-" - Pokrok čtení: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - s. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API vrátilo chybu</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Přidáno</b> [%1 (AI)] do nabídky zvýraznění."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analyzuji kontext knihy pro Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametry</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Odebráno</b> [%1 (AI)] z nabídky zvýraznění."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Požadavek</b> – POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Odpověď</b> – HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Test připojení"
+msgstr "<b>Testování připojení...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Neznámý typ funkce:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Přidejte poskytovatele z hlavní nabídky:\n"
 "%1 -> AI asistent -> Nastavení -> API poskytovatele"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Přidáno <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Přidáno do slovníčku"
 
@@ -412,6 +394,9 @@ msgstr "Připojit předchozí text"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Připojí odpověď jako poznámku v knize k aktuálnímu zvýraznění"
+
+msgid "Author"
+msgstr "Autor"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Vlastní prompt"
 msgid "Custom Prompts"
 msgstr "Vlastní prompty"
 
-msgid "Deeply Thought"
-msgstr "Hluboká myšlenka"
-
 msgid "Delete"
 msgstr "Smazat"
 
@@ -630,8 +612,8 @@ msgstr "Slovník"
 msgid "Dictionary Language"
 msgstr "Jazyk slovníku"
 
-msgid "Dictionary Popup"
-msgstr "Vyskakovací okno slovníku"
+msgid "Dictionary Popup Buttons"
+msgstr "Tlačítka vyskakovacího slovníku"
 
 msgid "Dictionary Settings"
 msgstr "Nastavení slovníku"
@@ -865,6 +847,9 @@ msgstr "Markdown engine"
 msgid "Meaning & Usage"
 msgstr "Význam a použití"
 
+msgid "Minimalist Mode"
+msgstr "Minimalistický režim"
+
 msgid "Model"
 msgstr "Model"
 
@@ -918,6 +903,9 @@ msgstr "Není otevřená žádná kniha. Dlouze stiskněte knihu ve správci sou
 
 msgid "No common parameters are available for handler %1."
 msgstr "Pro handlera %1 nejsou k dispozici žádné běžné parametry."
+
+msgid "No highlight to annotate"
+msgstr "Žádné zvýraznění k anotaci"
 
 msgid "No models available."
 msgstr "Žádné modely nejsou k dispozici."
@@ -1072,9 +1060,6 @@ msgstr "Vymazat"
 msgid "Purge Settings"
 msgstr "Vymazat nastavení"
 
-msgid "Question"
-msgstr "Otázka"
-
 msgid "Quick Note"
 msgstr "Rychlá poznámka"
 
@@ -1092,6 +1077,9 @@ msgstr "Znovuponoření"
 
 msgid "Reader settings are not available."
 msgstr "Nastavení čtečky nejsou k dispozici."
+
+msgid "Reading progress"
+msgstr "Průběh čtení"
 
 msgid "Reasoning Option"
 msgstr "Možnost uvažování"
@@ -1112,6 +1100,9 @@ msgstr "Odebrat"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Odebrat [%s] z nabídky zvýraznění?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Odebráno <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Požadavek zrušen uživatelem."
@@ -1140,9 +1131,6 @@ msgstr ""
 "Tím se plugin vrátí do továrního nastavení. Poskytovatelé, API klíče a\n"
 "přihlašovací údaje pro vyhledávací nástroj přidané přes rozhraní nastavení budou odstraněny.\n"
 "Soubor configuration.lua bude zachován."
-
-msgid "Response"
-msgstr "Odpověď"
 
 msgid "Response Settings"
 msgstr "Nastavení odpovědí"
@@ -1237,6 +1225,9 @@ msgstr "Zobrazit hloubkový proces uvažování (reasoning) z odpovědi AI, poku
 
 msgid "Show follow up questions related to the response content."
 msgstr "Zobrazit navazující otázky související s obsahem odpovědi."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Zobrazí pouze odpověď: žádné titulky Uživatel/Asistent, žádná první řada tlačítek, žádné uvažování ani doplňující otázky. U samotné odpovědi ponechá jen akce (Anotovat, Slovníček) vedle tlačítka Zavřít. Pokud je aktivní, vypne Text uvažování a Doplňující otázky."
 
 msgid "Similar Books Recommendations"
 msgstr "Doporučení podobných knih"
@@ -1379,6 +1370,9 @@ msgstr "Tento prompt přeloží zvýrazněný text do jiného jazyka."
 msgid "Timeline"
 msgstr "Časová osa"
 
+msgid "Title"
+msgstr "Název"
+
 msgid "To-Do / Action Items"
 msgstr "Úkoly / Akční položky"
 
@@ -1393,6 +1387,13 @@ msgstr "Volání nástroje neobsahovalo klíčová slova pro vyhledávání."
 
 msgid "Translate"
 msgstr "Přeložit"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Přeložit (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Přeloží popis knihy pomocí AI."
 
 msgid "Translation"
 msgstr "Překlad"
@@ -1473,6 +1474,10 @@ msgstr "Zobrazit"
 
 msgid "Vocabulary"
 msgstr "Slovní zásoba"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Slovníček"
 
 msgid "Web Search"
 msgstr "Webové vyhledávání"

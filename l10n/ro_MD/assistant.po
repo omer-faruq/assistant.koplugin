@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Titlu : %1\n"
-" - Autor: %2\n"
-" - Progres lectură: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - p. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API a returnat o eroare</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Adăugat</b> [%1 (AI)] în meniul de evidențiere."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Se analizează contextul cărții pentru Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametri</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Eliminat</b> [%1 (AI)] din meniul de evidențiere."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Cerere</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Răspuns</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Furnizor"
+msgstr "<b>Se testează conexiunea...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Tip de funcționalitate necunoscut:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Adăugați furnizori din meniul principal:\n"
 "%1 -> Asistent AI -> Setări -> Furnizor API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Adăugat <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Adăugat în constructorul de vocabular"
 
@@ -412,6 +394,9 @@ msgstr "Atașează textul anterior"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Atașează răspunsul ca notă de carte la evidențierea curentă"
+
+msgid "Author"
+msgstr "Autor"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Prompt personalizat"
 msgid "Custom Prompts"
 msgstr "Prompturi personalizate"
 
-msgid "Deeply Thought"
-msgstr "Gândire profundă"
-
 msgid "Delete"
 msgstr "Ștergere"
 
@@ -630,8 +612,8 @@ msgstr "Dicționar"
 msgid "Dictionary Language"
 msgstr "Limba dicționarului"
 
-msgid "Dictionary Popup"
-msgstr "Fereastră pop-up a dicționarului"
+msgid "Dictionary Popup Buttons"
+msgstr "Butoanele pop-up ale dicționarului"
 
 msgid "Dictionary Settings"
 msgstr "Setări dicționar"
@@ -865,6 +847,9 @@ msgstr "Motor Markdown"
 msgid "Meaning & Usage"
 msgstr "Sens și utilizare"
 
+msgid "Minimalist Mode"
+msgstr "Mod minimalist"
+
 msgid "Model"
 msgstr "Model"
 
@@ -918,6 +903,9 @@ msgstr "Nicio carte nu este deschisă. Apăsați lung pe o carte în managerul d
 
 msgid "No common parameters are available for handler %1."
 msgstr "Niciun parametru disponibil pentru %1."
+
+msgid "No highlight to annotate"
+msgstr "Nu există evidențiere de adnotat"
 
 msgid "No models available."
 msgstr "Niciun model disponibil."
@@ -1072,9 +1060,6 @@ msgstr "Șterge"
 msgid "Purge Settings"
 msgstr "Șterge setările"
 
-msgid "Question"
-msgstr "Întrebare"
-
 msgid "Quick Note"
 msgstr "Notă rapidă"
 
@@ -1092,6 +1077,9 @@ msgstr "Re-imersare"
 
 msgid "Reader settings are not available."
 msgstr "Setările cititorului nu sunt disponibile."
+
+msgid "Reading progress"
+msgstr "Progres de lectură"
 
 msgid "Reasoning Option"
 msgstr "Opțiune de raționament"
@@ -1112,6 +1100,9 @@ msgstr "Eliminați"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Eliminați [%s] din meniul de evidențiere?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Eliminat <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Cerere anulată de utilizator."
@@ -1140,9 +1131,6 @@ msgstr ""
 "Aceasta restabilește pluginul la setările implicite din fabrică. Furnizorii, cheile API și\n"
 "credentialele instrumentului de căutare adăugate prin Interfața de Setări vor fi eliminate.\n"
 "Fișierul configuration.lua va fi păstrat."
-
-msgid "Response"
-msgstr "Răspuns"
 
 msgid "Response Settings"
 msgstr "Setări de răspuns"
@@ -1237,6 +1225,9 @@ msgstr "Afișează procesul de gândire profundă (raționamentul) din răspunsu
 
 msgid "Show follow up questions related to the response content."
 msgstr "Afișează întrebările de continuare legate de conținutul răspunsului."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Afișează doar răspunsul: fără titlurile Utilizator/Asistent, fără primul rând de butoane, fără raționament și fără întrebări de continuare. Păstrează doar acțiunile asupra răspunsului propriu-zis (Adnotează, Constructor de vocabular) lângă Închide. Dezactivează Textul raționamentului și Întrebările de continuare cât timp este activ."
 
 msgid "Similar Books Recommendations"
 msgstr "Recomandări de cărți similare"
@@ -1379,6 +1370,9 @@ msgstr "Acest prompt traduce textul evidențiat în altă limbă."
 msgid "Timeline"
 msgstr "Cronologie"
 
+msgid "Title"
+msgstr "Titlu"
+
 msgid "To-Do / Action Items"
 msgstr "De făcut / Acțiuni"
 
@@ -1393,6 +1387,13 @@ msgstr "Apelul de instrument nu a inclus cuvinte cheie de căutare."
 
 msgid "Translate"
 msgstr "Traduceți"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Tradu (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Traduce descrierea cărții cu ajutorul AI."
 
 msgid "Translation"
 msgstr "Traducere"
@@ -1473,6 +1474,10 @@ msgstr "Vizualizare"
 
 msgid "Vocabulary"
 msgstr "Vocabular"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Constructor de vocabular"
 
 msgid "Web Search"
 msgstr "Căutare web"

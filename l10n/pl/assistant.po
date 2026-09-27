@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Tytuł : %1\n"
-" - Autor: %2\n"
-" - Postęp czytania: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - s. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API zwróciło błąd</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Dodano</b> [%1 (AI)] do menu podświetleń."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analizowanie kontekstu książki dla Term X-Ray...</b>"
@@ -178,9 +160,6 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametry</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Usunięto</b> [%1 (AI)] z menu podświetleń."
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Żądanie</b> – POST %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Dodaj dostawców z menu głównego:\n"
 "%1 -> Asystent AI -> Ustawienia -> Dostawca API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Dodano <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Dodano do kreatora słownictwa"
 
@@ -412,6 +394,9 @@ msgstr "Dołącz poprzedni tekst"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Dołącza odpowiedź jako notatkę w książce do bieżącego podkreślenia"
+
+msgid "Author"
+msgstr "Autor"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Własny prompt"
 msgid "Custom Prompts"
 msgstr "Własne prompty"
 
-msgid "Deeply Thought"
-msgstr "Głębokie przemyślenie"
-
 msgid "Delete"
 msgstr "Usuń"
 
@@ -630,8 +612,8 @@ msgstr "Słownik"
 msgid "Dictionary Language"
 msgstr "Język słownika"
 
-msgid "Dictionary Popup"
-msgstr "Okno słownika"
+msgid "Dictionary Popup Buttons"
+msgstr "Przyciski w oknie słownika"
 
 msgid "Dictionary Settings"
 msgstr "Ustawienia słownika"
@@ -866,6 +848,9 @@ msgstr "Silnik Markdown"
 msgid "Meaning & Usage"
 msgstr "Znaczenie i użycie"
 
+msgid "Minimalist Mode"
+msgstr "Tryb minimalistyczny"
+
 msgid "Model"
 msgstr "Model"
 
@@ -919,6 +904,9 @@ msgstr "Żadna książka nie jest otwarta. Przytrzymaj książkę w menedżerze 
 
 msgid "No common parameters are available for handler %1."
 msgstr "Brak wspólnych parametrów dla obsługi %1."
+
+msgid "No highlight to annotate"
+msgstr "Brak wyróżnienia do dodania adnotacji"
 
 msgid "No models available."
 msgstr "Brak dostępnych modeli."
@@ -1073,9 +1061,6 @@ msgstr "Wyczyść"
 msgid "Purge Settings"
 msgstr "Wyczyść ustawienia"
 
-msgid "Question"
-msgstr "Pytanie"
-
 msgid "Quick Note"
 msgstr "Szybka notatka"
 
@@ -1093,6 +1078,9 @@ msgstr "Ponowne zanurzenie"
 
 msgid "Reader settings are not available."
 msgstr "Ustawienia czytnika są niedostępne."
+
+msgid "Reading progress"
+msgstr "Postęp czytania"
 
 msgid "Reasoning Option"
 msgstr "Opcja rozumowania"
@@ -1113,6 +1101,9 @@ msgstr "Usuń"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Usunąć [%s] z menu podświetleń?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Usunięto <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Żądanie anulowane przez użytkownika."
@@ -1141,9 +1132,6 @@ msgstr ""
 "Spowoduje to przywrócenie domyślnych ustawień fabrycznych wtyczki. Dostawcy, klucze API i\n"
 "poświadczenia narzędzia wyszukiwania dodane przez interfejs ustawień zostaną usunięte.\n"
 "Plik configuration.lua zostanie zachowany."
-
-msgid "Response"
-msgstr "Odpowiedź"
 
 msgid "Response Settings"
 msgstr "Ustawienia odpowiedzi"
@@ -1238,6 +1226,9 @@ msgstr "Pokaż głęboki proces myślowy (rozumowanie) z odpowiedzi AI, jeśli i
 
 msgid "Show follow up questions related to the response content."
 msgstr "Pokaż pytania uzupełniające związane z treścią odpowiedzi."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Pokazuje samą odpowiedź: bez nagłówków Użytkownik/Asystent, bez pierwszego rzędu przycisków, bez rozumowania i bez pytań uzupełniających. Zostawia tylko akcje dotyczące samej odpowiedzi (Adnotuj, Kreator słownictwa) obok Zamknij. Gdy jest aktywny, wyłącza Tekst rozumowania i Pytania uzupełniające."
 
 msgid "Similar Books Recommendations"
 msgstr "Rekomendacje podobnych książek"
@@ -1380,6 +1371,9 @@ msgstr "Ten prompt tłumaczy zaznaczony tekst na inny język."
 msgid "Timeline"
 msgstr "Oś czasu"
 
+msgid "Title"
+msgstr "Tytuł"
+
 msgid "To-Do / Action Items"
 msgstr "Do zrobienia / Zadania do wykonania"
 
@@ -1394,6 +1388,13 @@ msgstr "Wywołanie narzędzia nie zawierało słów kluczowych wyszukiwania."
 
 msgid "Translate"
 msgstr "Tłumacz"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Tłumacz (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Tłumaczy opis książki za pomocą AI."
 
 msgid "Translation"
 msgstr "Tłumaczenie"
@@ -1474,6 +1475,10 @@ msgstr "Podgląd"
 
 msgid "Vocabulary"
 msgstr "Słownictwo"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Kreator słownictwa"
 
 msgid "Web Search"
 msgstr "Wyszukiwanie internetowe"

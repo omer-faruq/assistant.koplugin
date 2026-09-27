@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Başlık : %1\n"
-" - Yazar: %2\n"
-" - Okuma ilerlemesi: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - s. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API bir hata döndürdü</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Eklendi</b> [%1 (AI)] Vurgu Menüsüne."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Terim X-Ray için kitap bağlamı analiz ediliyor...</b>"
@@ -178,9 +160,6 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametreler</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Kaldırıldı</b> [%1 (AI)] Vurgu Menüsünden."
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>İstek</b> - POST %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Ana menüden sağlayıcı ekleyin:\n"
 "%1 -> Yapay Zeka Asistanı -> Ayarlar -> Sağlayıcı API'si"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Eklendi <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Kelime dağarcığı oluşturucuya eklendi"
 
@@ -412,6 +394,9 @@ msgstr "Önceki Metni Ekle"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Yanıtı geçerli vurguya kitap notu olarak ekler"
+
+msgid "Author"
+msgstr "Yazar"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Özel İstem"
 msgid "Custom Prompts"
 msgstr "Özel İstemler"
 
-msgid "Deeply Thought"
-msgstr "Derin Düşünce"
-
 msgid "Delete"
 msgstr "Sil"
 
@@ -630,8 +612,8 @@ msgstr "Sözlük"
 msgid "Dictionary Language"
 msgstr "Sözlük Dili"
 
-msgid "Dictionary Popup"
-msgstr "Sözlük Açılır Penceresi"
+msgid "Dictionary Popup Buttons"
+msgstr "Sözlük Açılır Pencere Düğmeleri"
 
 msgid "Dictionary Settings"
 msgstr "Sözlük Ayarları"
@@ -864,6 +846,9 @@ msgstr "Markdown Motoru"
 msgid "Meaning & Usage"
 msgstr "Anlam ve Kullanım"
 
+msgid "Minimalist Mode"
+msgstr "Minimalist Mod"
+
 msgid "Model"
 msgstr "Model"
 
@@ -917,6 +902,9 @@ msgstr "Açık bir kitap yok. Dosya yöneticisinde bir kitaba uzun basın ve Kit
 
 msgid "No common parameters are available for handler %1."
 msgstr "%1 için kullanılabilir parametre yok."
+
+msgid "No highlight to annotate"
+msgstr "Not eklenecek vurgu yok"
 
 msgid "No models available."
 msgstr "Kullanılabilir model yok."
@@ -1071,9 +1059,6 @@ msgstr "Temizle"
 msgid "Purge Settings"
 msgstr "Ayarları Temizle"
 
-msgid "Question"
-msgstr "Soru"
-
 msgid "Quick Note"
 msgstr "Hızlı Not"
 
@@ -1091,6 +1076,9 @@ msgstr "Hikâyeye Yeniden Dalış"
 
 msgid "Reader settings are not available."
 msgstr "Okuyucu ayarları kullanılamıyor."
+
+msgid "Reading progress"
+msgstr "Okuma ilerlemesi"
 
 msgid "Reasoning Option"
 msgstr "Muhakeme Seçeneği"
@@ -1111,6 +1099,9 @@ msgstr "Kaldır"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "[%s] Vurgu Menüsünden kaldırılsın mı?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Kaldırıldı <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "İstek kullanıcı tarafından iptal edildi."
@@ -1138,9 +1129,6 @@ msgstr ""
 "\n"
 "Bu, eklentiyi fabrika varsayılanlarına döndürür. Ayarlar arayüzü üzerinden eklenen sağlayıcılar, API anahtarları ve arama aracı kimlik bilgileri kaldırılacaktır.\n"
 "configuration.lua dosyası korunacaktır."
-
-msgid "Response"
-msgstr "Yanıt"
 
 msgid "Response Settings"
 msgstr "Yanıt Ayarları"
@@ -1235,6 +1223,9 @@ msgstr "AI yanıtında varsa derin düşünme sürecini (akıl yürütme) göste
 
 msgid "Show follow up questions related to the response content."
 msgstr "Yanıt içeriğiyle ilgili devam sorularını göster."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Yanıtı tek başına gösterir: Kullanıcı/Asistan başlıkları, ilk düğme satırı, akıl yürütme ve takip soruları olmaz. Kapat'ın yanında yalnızca yanıtın kendisindeki eylemleri (Not Ekle, Kelime Dağarcığı) tutar. Etkinken Akıl Yürütme Metni ve Takip Soruları'nı devre dışı bırakır."
 
 msgid "Similar Books Recommendations"
 msgstr "Benzer Kitap Önerileri"
@@ -1377,6 +1368,9 @@ msgstr "Bu istem, vurgulanan metni başka bir dile çevirir."
 msgid "Timeline"
 msgstr "Zaman Çizelgesi"
 
+msgid "Title"
+msgstr "Başlık"
+
 msgid "To-Do / Action Items"
 msgstr "Yapılacaklar / Eylem Maddeleri"
 
@@ -1391,6 +1385,13 @@ msgstr "Araç çağrısı arama anahtar kelimeleri içermiyor."
 
 msgid "Translate"
 msgstr "Çevir"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Çevir (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Kitap açıklamasını AI ile çevirir."
 
 msgid "Translation"
 msgstr "Çeviri"
@@ -1471,6 +1472,10 @@ msgstr "Görüntüle"
 
 msgid "Vocabulary"
 msgstr "Kelime Bilgisi"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Kelime Dağarcığı"
 
 msgid "Web Search"
 msgstr "Web Araması"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 04:38+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ภาษาไทย (AI translation)\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - ชื่อเรื่อง : %1\n"
-" - ผู้แต่ง: %2\n"
-" - ความคืบหน้าการอ่าน: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - น. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API ส่งคืนข้อผิดพลาด</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>เพิ่มแล้ว</b> [%1 (AI)] ลงในเมนูไฮไลต์"
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>กำลังวิเคราะห์บริบทของหนังสือสำหรับ Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>พารามิเตอร์</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>ลบแล้ว</b> [%1 (AI)] ออกจากเมนูไฮไลต์"
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>คำขอ</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>การตอบกลับ</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "กำลังทดสอบการเชื่อมต่อ..."
+msgstr "<b>กำลังทดสอบการเชื่อมต่อ...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>ประเภทฟีเจอร์ไม่รู้จัก:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "เพิ่มผู้ให้บริการจากเมนูหลัก:\n"
 "%1 -> AI Assistant -> การตั้งค่า -> Provider API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "เพิ่ม <b>[%1 (AI)]</b> แล้ว"
+
 msgid "Added to vocabulary builder"
 msgstr "เพิ่มลงในตัวสร้างคำศัพท์แล้ว"
 
@@ -412,6 +394,9 @@ msgstr "แนบข้อความก่อนหน้า"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "แนบคำตอบเป็นหมายเหตุหนังสือไว้กับไฮไลต์ปัจจุบัน"
+
+msgid "Author"
+msgstr "ผู้เขียน"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "พรอมป์ต์ที่กำหนดเอง"
 msgid "Custom Prompts"
 msgstr "พรอมต์ที่กำหนดเอง"
 
-msgid "Deeply Thought"
-msgstr "คิดเชิงลึก"
-
 msgid "Delete"
 msgstr "ลบ"
 
@@ -630,8 +612,8 @@ msgstr "พจนานุกรม"
 msgid "Dictionary Language"
 msgstr "ภาษาพจนานุกรม"
 
-msgid "Dictionary Popup"
-msgstr "ป๊อปอัปพจนานุกรม"
+msgid "Dictionary Popup Buttons"
+msgstr "ปุ่มในป๊อปอัปพจนานุกรม"
 
 msgid "Dictionary Settings"
 msgstr "การตั้งค่าพจนานุกรม"
@@ -863,6 +845,9 @@ msgstr "เอนจิน Markdown"
 msgid "Meaning & Usage"
 msgstr "ความหมายและการใช้งาน"
 
+msgid "Minimalist Mode"
+msgstr "โหมดมินิมัล"
+
 msgid "Model"
 msgstr "โมเดล"
 
@@ -916,6 +901,9 @@ msgstr "ไม่มีหนังสือที่เปิดอยู่ �
 
 msgid "No common parameters are available for handler %1."
 msgstr "ตัวเลือกการให้เหตุผล - %1"
+
+msgid "No highlight to annotate"
+msgstr "ไม่มีไฮไลต์ให้บันทึกหมายเหตุ"
 
 msgid "No models available."
 msgstr "ไม่มีโมเดลที่พร้อมใช้งาน"
@@ -1070,9 +1058,6 @@ msgstr "ล้าง"
 msgid "Purge Settings"
 msgstr "ล้างการตั้งค่า"
 
-msgid "Question"
-msgstr "คำถาม"
-
 msgid "Quick Note"
 msgstr "โน้ตด่วน"
 
@@ -1090,6 +1075,9 @@ msgstr "การกลับเข้าสู่เรื่องราว"
 
 msgid "Reader settings are not available."
 msgstr "การตั้งค่าโปรแกรมอ่านไม่พร้อมใช้งาน"
+
+msgid "Reading progress"
+msgstr "ความคืบหน้าการอ่าน"
 
 msgid "Reasoning Option"
 msgstr "ตัวเลือกการให้เหตุผล"
@@ -1110,6 +1098,9 @@ msgstr "ลบ"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "ลบ [%s] ออกจากเมนูไฮไลต์?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "ลบ <b>[%1 (AI)]</b> แล้ว"
 
 msgid "Request Cancelled by user."
 msgstr "คำขอถูกยกเลิกโดยผู้ใช้"
@@ -1138,9 +1129,6 @@ msgstr ""
 "การดำเนินการนี้จะคืนค่าปลั๊กอินกลับเป็นค่าเริ่มต้นจากโรงงาน ผู้ให้บริการ คีย์ API และ\n"
 "ข้อมูลประจำตัวของเครื่องมือค้นหาที่เพิ่มผ่าน UI การตั้งค่าจะถูกลบ\n"
 "ไฟล์ configuration.lua จะถูกเก็บรักษาไว้"
-
-msgid "Response"
-msgstr "คำตอบ"
 
 msgid "Response Settings"
 msgstr "การตั้งค่าการตอบกลับ"
@@ -1235,6 +1223,9 @@ msgstr "แสดงกระบวนการคิดอย่างลึก
 
 msgid "Show follow up questions related to the response content."
 msgstr "แสดงคำถามติดตามที่เกี่ยวข้องกับเนื้อหาการตอบกลับ"
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "แสดงเฉพาะคำตอบ: ไม่มีป้ายชื่อผู้ใช้/ผู้ช่วย ไม่มีแถวปุ่มแรก ไม่มีข้อความเหตุผล และไม่มีคำถามติดตามผล คงไว้เฉพาะการดำเนินการบนคำตอบเอง (บันทึกหมายเหตุ, คลังคำศัพท์) ข้างปุ่มปิด โดยจะปิดข้อความเหตุผลและคำถามติดตามผลขณะที่เปิดใช้งานอยู่"
 
 msgid "Similar Books Recommendations"
 msgstr "คำแนะนำหนังสือที่คล้ายกัน"
@@ -1377,6 +1368,9 @@ msgstr "พรอมต์นี้แปลข้อความที่ไฮ
 msgid "Timeline"
 msgstr "ไทม์ไลน์"
 
+msgid "Title"
+msgstr "ชื่อเรื่อง"
+
 msgid "To-Do / Action Items"
 msgstr "สิ่งที่ต้องทำ / รายการปฏิบัติ"
 
@@ -1391,6 +1385,13 @@ msgstr "การเรียกใช้เครื่องมือ (tool ca
 
 msgid "Translate"
 msgstr "แปล"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "แปล (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "แปลคำอธิบายหนังสือด้วย AI"
 
 msgid "Translation"
 msgstr "คำแปล"
@@ -1471,6 +1472,10 @@ msgstr "ดู"
 
 msgid "Vocabulary"
 msgstr "คำศัพท์"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "คลังคำศัพท์"
 
 msgid "Web Search"
 msgstr "การค้นหาเว็บ"

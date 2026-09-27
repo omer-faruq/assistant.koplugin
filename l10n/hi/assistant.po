@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 03:34+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: हिन्दी (AI translation)\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - शीर्षक : %1\n"
-" - लेखक: %2\n"
-" - पठन प्रगति: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - पृ. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API से त्रुटि मिली</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>जोड़ा गया</b> [%1 (AI)] हाइलाइट मेनू में।"
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>टर्म एक्स-रे के लिए पुस्तक संदर्भ का विश्लेषण किया जा रहा है...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>पैरामीटर</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>हटाया गया</b> [%1 (AI)] हाइलाइट मेनू से।"
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>अनुरोध</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>प्रतिक्रिया</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "आधार URL"
+msgstr "<b>कनेक्शन का परीक्षण किया जा रहा है...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>अज्ञात फीचर प्रकार:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "मुख्य मेनू से प्रदाता जोड़ें:\n"
 "%1 -> AI Assistant -> Settings -> Provider API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "जोड़ा गया <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "शब्दावली बिल्डर में जोड़ा गया"
 
@@ -413,6 +395,9 @@ msgstr "पिछला पाठ संलग्न करें"
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "उत्तर को वर्तमान हाइलाइट पर पुस्तक नोट के रूप में जोड़ता है"
 
+msgid "Author"
+msgstr "लेखक"
+
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "लंबे समय से अनपढ़ी पुस्तकें खोलने पर स्वतः रीकैप"
@@ -436,7 +421,7 @@ msgid "Base URL must start with http:// or https://"
 msgstr "बेस URL http:// या https:// से शुरू होना चाहिए।"
 
 msgid "Base URL, e.g. https://example.com/v1"
-msgstr "आधार URL: %1"
+msgstr "बेस URL, जैसे https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "पुस्तक विश्लेषण"
@@ -603,9 +588,6 @@ msgstr "कस्टम प्रॉम्प्ट"
 msgid "Custom Prompts"
 msgstr "कस्टम प्रॉम्प्ट"
 
-msgid "Deeply Thought"
-msgstr "गहन विचार"
-
 msgid "Delete"
 msgstr "हटाएँ"
 
@@ -630,8 +612,8 @@ msgstr "शब्दकोश"
 msgid "Dictionary Language"
 msgstr "शब्दकोश भाषा"
 
-msgid "Dictionary Popup"
-msgstr "शब्दकोश पॉपअप"
+msgid "Dictionary Popup Buttons"
+msgstr "शब्दकोश पॉपअप बटन"
 
 msgid "Dictionary Settings"
 msgstr "शब्दकोश सेटिंग्स"
@@ -864,6 +846,9 @@ msgstr "मार्कडाउन इंजन"
 msgid "Meaning & Usage"
 msgstr "अर्थ और प्रयोग"
 
+msgid "Minimalist Mode"
+msgstr "मिनिमलिस्ट मोड"
+
 msgid "Model"
 msgstr "मॉडल"
 
@@ -917,6 +902,9 @@ msgstr "कोई पुस्तक खुली नहीं है। फ़�
 
 msgid "No common parameters are available for handler %1."
 msgstr "हैंडलर %1 के लिए कोई सामान्य पैरामीटर उपलब्ध नहीं हैं।"
+
+msgid "No highlight to annotate"
+msgstr "टिप्पणी के लिए कोई हाइलाइट नहीं"
 
 msgid "No models available."
 msgstr "कोई मॉडल उपलब्ध नहीं है।"
@@ -1071,9 +1059,6 @@ msgstr "हटाएँ"
 msgid "Purge Settings"
 msgstr "सेटिंग्स मिटाएँ"
 
-msgid "Question"
-msgstr "प्रश्न"
-
 msgid "Quick Note"
 msgstr "त्वरित नोट"
 
@@ -1091,6 +1076,9 @@ msgstr "पुनः तल्लीनता"
 
 msgid "Reader settings are not available."
 msgstr "रीडर सेटिंग्स उपलब्ध नहीं हैं।"
+
+msgid "Reading progress"
+msgstr "पठन प्रगति"
 
 msgid "Reasoning Option"
 msgstr "तर्क विकल्प"
@@ -1111,6 +1099,9 @@ msgstr "हटाएँ"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "हाइलाइट मेनू से [%s] हटाएँ?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "हटाया गया <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "अनुरोध उपयोगकर्ता द्वारा रद्द किया गया।"
@@ -1139,9 +1130,6 @@ msgstr ""
 "यह प्लगइन को उसकी फ़ैक्टरी डिफ़ॉल्ट सेटिंग्स पर पुनर्स्थापित करता है। सेटिंग्स UI के माध्यम से जोड़े गए प्रदाता, API कुंजियाँ और\n"
 "खोज टूल क्रेडेंशियल हटा दिए जाएंगे।\n"
 "फ़ाइल configuration.lua सहेजी जाएगी।"
-
-msgid "Response"
-msgstr "प्रतिक्रिया"
 
 msgid "Response Settings"
 msgstr "प्रतिक्रिया सेटिंग्स"
@@ -1236,6 +1224,9 @@ msgstr "यदि मौजूद हो, तो AI प्रतिक्रि�
 
 msgid "Show follow up questions related to the response content."
 msgstr "प्रतिक्रिया सामग्री से संबंधित फ़ॉलो-अप प्रश्न दिखाएँ।"
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "केवल उत्तर दिखाता है: कोई उपयोगकर्ता/सहायक शीर्षक नहीं, बटनों की पहली पंक्ति नहीं, कोई तर्क नहीं और कोई अनुवर्ती प्रश्न नहीं। बंद करें के बगल में केवल उत्तर पर मौजूद क्रियाएँ (टिप्पणी करें, शब्दावली निर्माता) रखता है। सक्रिय रहने पर तर्क पाठ और अनुवर्ती प्रश्न बंद कर देता है।"
 
 msgid "Similar Books Recommendations"
 msgstr "समान पुस्तकों की अनुशंसाएँ"
@@ -1378,6 +1369,9 @@ msgstr "यह प्रॉम्प्ट हाइलाइट किए ग�
 msgid "Timeline"
 msgstr "समयरेखा"
 
+msgid "Title"
+msgstr "शीर्षक"
+
 msgid "To-Do / Action Items"
 msgstr "कार्य सूची / कार्य आइटम"
 
@@ -1392,6 +1386,13 @@ msgstr "टूल कॉल में खोज कीवर्ड शामि�
 
 msgid "Translate"
 msgstr "अनुवाद करें"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "अनुवाद करें (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "AI की सहायता से पुस्तक विवरण का अनुवाद करता है।"
 
 msgid "Translation"
 msgstr "अनुवाद"
@@ -1472,6 +1473,10 @@ msgstr "देखें"
 
 msgid "Vocabulary"
 msgstr "शब्दावली"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "शब्दावली निर्माता"
 
 msgid "Web Search"
 msgstr "वेब खोज"

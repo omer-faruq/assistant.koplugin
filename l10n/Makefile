@@ -58,7 +58,7 @@ export RANDOM_SESSION_ID
 
 .DEFAULT_GOAL := all
 
-.PHONY: help all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-api stats clean init-dirs mo retranslate-fuzzy retranslate-msgid
+.PHONY: help all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-mix check-api stats clean init-dirs mo retranslate-fuzzy retranslate-msgid
 
 help:
 	@echo "Usage: make [target]"
@@ -70,6 +70,7 @@ help:
 	@echo "  check           msgfmt --check"
 	@echo "  check-api       Ping configured API endpoint"
 	@echo "  check-langs     Detect drift vs KOReader supported languages"
+	@echo "  check-mix       Detect translations written in the wrong language"
 	@echo "  stats           Estimate untranslated strings from current source (read-only)"
 	@echo "  clean           Remove intermediate files"
 	@echo "  ai-translate    Run AI translation (all or L10N_LANG=xx)"
@@ -137,15 +138,19 @@ update: init-dirs
 		$(MSGMERGE_BIN) --update --backup=none --no-wrap --no-location --sort-by-file $$po_file $(TEMPLATE_DIR)/$(DOMAIN).pot; \
 	done
 
+# Regenerate <dir>/untranslated.po when it is missing *or older than* the
+# catalogue it was derived from. Testing only for existence left a stale file
+# behind after a run that refilled assistant.po, and the next run then queued
+# entries that were already translated.
 extract-untranslated:
 	@set -x;for po_file in $(PO_FILES); do \
 		dir=$$(dirname $$po_file); \
-		if [ ! -f "$$dir/untranslated.po" ]; then \
+		if [ ! -f "$$dir/untranslated.po" ] || [ "$$po_file" -nt "$$dir/untranslated.po" ]; then \
 			$(MSGATTRIB_BIN) --no-wrap --no-location --untranslated --force-po $$po_file -o $$dir/_untranslated.po; \
 			$(MSGATTRIB_BIN) --no-wrap --no-location --fuzzy --clear-fuzzy --empty --force-po $$po_file -o $$dir/_fuzzy.po; \
 			$(MSGCAT_BIN) --no-wrap --no-location --use-first $$dir/_untranslated.po $$dir/_fuzzy.po -o $$dir/untranslated.po; \
 		else \
-			echo "Skipping extraction for $$dir, untranslated.po already exists."; \
+			echo "Skipping extraction for $$dir, untranslated.po is up to date."; \
 		fi; \
 	done
 
@@ -220,7 +225,16 @@ check-langs:
 	else \
 		echo "LANG_MAP and LANGS are consistent."; \
 	fi; \
+	echo "Checking LANG_MAP / LANG_EN / PLURAL_FORMS consistency..."; \
+	./check_mix.py --check-data || rc=1; \
 	exit $$rc
+
+# Read-only audit for translations written in the wrong language. Compares each
+# locale pair against KOReader's own reviewed catalogues (override the path with
+# KOREADER_L10N_DIR), so it needs no knowledge of the target language. Findings
+# are a triage list, not a verdict: read the report before acting on it.
+check-mix:
+	@./check_mix.py $(CHECK_MIX_ARGS)
 
 # Read-only estimate of the translation workload introduced by the current
 # source tree. Extracts a fresh POT straight from the Lua sources into a temp
@@ -295,7 +309,12 @@ ai-translate:
 		fi; \
 	fi
 
-ai-translate-%:
+# extract-untranslated is a prerequisite rather than a documented manual step:
+# ai_translate.py's scenario-2 path needs <lang>/untranslated.po to exist, and
+# without this dependency `make ai-translate L10N_LANG=xx` dies with
+# "translate files not ready". extract-untranslated is idempotent - it skips any
+# language whose untranslated.po is already there - so this is safe to depend on.
+ai-translate-%: extract-untranslated
 	@set -e; \
 	lang=$*; \
 	IS_NEW=0; if [ ! -f "$$lang/$(DOMAIN).po" ]; then IS_NEW=1; fi; \

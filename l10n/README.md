@@ -85,6 +85,11 @@ Detect drift between this project and KOReader's supported languages:
 
     make check-langs
 
+Audit every catalogue for translations written in the wrong language:
+
+    make check-mix
+    make check-mix CHECK_MIX_ARGS=--list
+
 Force a single-language run from the command line:
 
     L10N_LANG=de make ai-translate
@@ -94,6 +99,61 @@ empties it in all `.po` files, then runs it back through the pipeline):
 
     make retranslate-msgid MSGID="OpenAI-compatible Chat Completions API"
     L10N_LANG=ja make retranslate-msgid MSGID="OpenAI-compatible Chat Completions API"
+
+## Per-language translator notes
+
+`<LANG_CODE>/ai_note.txt` is optional. When present, its contents are appended
+to the system prompt for that language and take precedence over the general
+guidance. Use it for terminology, style rules, and — most importantly —
+warnings about a language the model is likely to confuse with a neighbour.
+
+The file is plain text with no required structure, so a native speaker can fix
+or extend their own locale's note without touching `ai_translate.py`. The
+prompt always names the language three ways (English name, endonym, locale
+code); a note is for what those three cannot express. See `sk/ai_note.txt` for
+the worked example: Slovak's endonym `slovenčina` reads literally as
+"Slovene", which is why the Slovak catalogue shipped Slovenian strings for
+months.
+
+`ai_note.txt` is excluded from the release archive in `.releaseignore`; it is
+tooling input, not runtime data.
+
+## Catching wrong-language translations
+
+`make translate` only fills **empty** msgstr. A string that came back in the
+wrong language counts as done forever, so contamination is self-sealing —
+this is how the Slovak catalogue ended up with roughly 54 Slovenian strings
+that survived thirteen `l10n: update translate` runs.
+
+`check_mix.py` (via `make check-mix`) is the guard against that. It needs no
+knowledge of the target language:
+
+- **Calibrated agreement** compares, for each pair of same-script locales, how
+  often *our* two catalogues agree against how often KOReader's own reviewed
+  `koreader.mo` catalogues agree. The upstream rate is the baseline two real
+  languages are expected to hit, so it self-normalizes per pair — no
+  dictionary, no hand-tuned threshold, no false positives from merely-related
+  languages. Set `KOREADER_L10N_DIR` if KOReader lives elsewhere.
+- **Sibling identical** is the raw count of msgstr shared byte-for-byte with
+  another locale. It needs no upstream and covers every entry, including the
+  ~90% of msgids that have no upstream counterpart.
+
+Findings are a **triage list, not a verdict**. A pair can score high while the
+flagged wording is correct for that language — `zh_CN` and `zh_TW` legitimately
+share many strings, and KOReader's own catalogues agree. Always read the
+`koreader <lang>` column before acting.
+
+To clear the entries a locale got wrong, so the next run refills them:
+
+    ./check_mix.py --empty sk --peer sl   # clears sk's Slovenian strings
+    make ai-translate && make mo
+
+`--peer` is required, and an entry is only cleared when all three hold: our
+two catalogues agree on it, KOReader's catalogue disagrees with it for the
+target language, and KOReader's catalogue confirms it for the peer. That is
+what keeps the innocent side of a pair from being emptied. Run
+`./check_mix.py --check-data` to validate the `LANG_MAP` / `LANG_EN` /
+`PLURAL_FORMS` tables against the catalogues on disk.
 
 ## Updating Translations
 
@@ -113,8 +173,18 @@ sync:
 - `Makefile`'s `LANGS` variable
 - `ai_translate.py`'s `LANG_MAP` dictionary
 
-Both should also match the directories under KOReader's `l10n/`
-installation (`/usr/lib/koreader/l10n/`). Use `make check-langs` to
-detect any drift, and override the reference path with
-`KOREADER_L10N_DIR=/path/to/l10n make check-langs` if KOReader is
-installed elsewhere.
+`LANG_EN` (English names) and `PLURAL_FORMS` must cover the same set; the
+prompt is built from all three. Both should also match the directories under
+KOReader's `l10n/` installation (`/usr/lib/koreader/l10n/`). Use
+`make check-langs` to detect any drift, and override the reference path with
+`KOREADER_L10N_DIR=/path/to/l10n make check-langs` if KOReader is installed
+elsewhere.
+
+Three `PLURAL_FORMS` entries are deliberately **not** copied from upstream:
+`sk`, `uk` and `lt_LT` all ship upstream as `nplurals=4` with a no-op
+`n % 1 == 0` guard wrapped around the Czech three-form rule, which makes form
+3 unreachable. Each is genuinely a three-form language. gettext reads
+`Plural-Forms` from the header of the catalogue being loaded and `msgfmt`
+bakes `nplurals` into the `.mo`, so a self-consistent header is all that
+matters.
+

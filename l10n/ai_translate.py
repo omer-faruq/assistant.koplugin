@@ -127,12 +127,88 @@ LANG_MAP: dict[str, str] = {
     "uz": "Oʻzbekcha",
     "vi": "Tiếng Việt",
     "zh_CN": "简体中文",
-    "zh_TW": "中文（台灣)",
+    "zh_TW": "中文（台灣）",
+}
+
+# English name of every supported language. The endonym alone is not a safe
+# language identifier for an LLM: "Slovenčina" is valid Slovak but reads
+# literally as "Slovene", which sent the Slovak locale out in Slovenian for
+# months (see l10n/sk/ai_note.txt). The English name is the disambiguating
+# anchor and is always included in the prompt.
+# Keep in sync with Makefile's LANGS and LANG_MAP; `make check-langs` verifies.
+LANG_EN: dict[str, str] = {
+    "af_ZA": "Afrikaans",
+    "ar": "Arabic",
+    "be": "Belarusian",
+    "bg_BG": "Bulgarian",
+    "bn": "Bengali",
+    "ca": "Catalan",
+    "cs": "Czech",
+    "cy": "Welsh",
+    "da": "Danish",
+    "de": "German",
+    "el": "Greek",
+    "eo": "Esperanto",
+    "es": "Spanish",
+    "et": "Estonian",
+    "eu": "Basque",
+    "fa": "Persian",
+    "fi": "Finnish",
+    "fr": "French",
+    "ga": "Irish",
+    "gl": "Galician",
+    "he": "Hebrew",
+    "hi": "Hindi",
+    "hr": "Croatian",
+    "hu": "Hungarian",
+    "ia": "Interlingua",
+    "id": "Indonesian",
+    "ie": "Interlingue",
+    "it_IT": "Italian",
+    "ja": "Japanese",
+    "ka": "Georgian",
+    "kab": "Kabyle",
+    "kn": "Kannada",
+    "ko_KR": "Korean",
+    "lt_LT": "Lithuanian",
+    "lv": "Latvian",
+    "mk": "Macedonian",
+    "ms": "Malay",
+    "nb_NO": "Norwegian Bokmål",
+    "nl_NL": "Dutch",
+    "nn": "Norwegian Nynorsk",
+    "or": "Odia",
+    "pl": "Polish",
+    "pt_BR": "Brazilian Portuguese",
+    "pt_PT": "European Portuguese",
+    "ro": "Romanian",
+    "ro_MD": "Romanian (Moldova)",
+    "ru": "Russian",
+    "si": "Sinhala",
+    "sk": "Slovak",
+    "sl": "Slovenian",
+    "sr": "Serbian",
+    "sv": "Swedish",
+    "th": "Thai",
+    "tr": "Turkish",
+    "uk": "Ukrainian",
+    "ur": "Urdu",
+    "uz": "Uzbek",
+    "vi": "Vietnamese",
+    "zh_CN": "Simplified Chinese",
+    "zh_TW": "Traditional Chinese (Taiwan)",
 }
 
 # Static Plural-Forms table extracted from KOReader's official translations
 # under /usr/lib/koreader/l10n/<lang>/koreader.po headers. Used when the
 # Python script generates a fresh assistant.po from a .pot (scenario 1).
+#
+# Three entries are corrected against CLDR rather than copied from upstream:
+# sk, uk and lt_LT all ship upstream as nplurals=4 with a no-op `n % 1 == 0`
+# guard wrapped around the Czech three-form rule, so form 3 is unreachable.
+# Each is genuinely a three-form language. gettext reads Plural-Forms from the
+# header of the catalogue being loaded, and msgfmt bakes nplurals into the
+# .mo, so a self-consistent header is all that matters here.
 PLURAL_FORMS: dict[str, str] = {
     "af_ZA": "nplurals=2; plural=(n != 1);",
     "ar": "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;",
@@ -167,7 +243,7 @@ PLURAL_FORMS: dict[str, str] = {
     "kab": "nplurals=2; plural=n > 1;",
     "kn": "nplurals=2; plural=n > 1;",
     "ko_KR": "nplurals=1; plural=0;",
-    "lt_LT": "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);",
+    "lt_LT": "nplurals=3; plural=((n % 10 == 1 && (n % 100 > 19 || n % 100 < 11)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9) && (n % 100 > 19 || n % 100 < 11)) ? 1 : 2);",
     "lv": "nplurals=3; plural=(n % 10 == 0 || n % 100 >= 11 && n % 100 <= 19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2);",
     "mk": "nplurals=2; plural=n==1 || n%10==1 ? 0 : 1;",
     "ms": "nplurals=1; plural=0;",
@@ -182,13 +258,13 @@ PLURAL_FORMS: dict[str, str] = {
     "ro_MD": "nplurals=3; plural=(n == 1) ? 0 : ((n == 0 || n != 1 && n % 100 >= 1 && n % 100 <= 19) ? 1 : 2);",
     "ru": "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);",
     "si": "nplurals=2; plural=n > 1;",
-    "sk": "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);",
+    "sk": "nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);",
     "sl": "nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;",
     "sr": "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);",
     "sv": "nplurals=2; plural=n != 1;",
     "th": "nplurals=1; plural=0;",
     "tr": "nplurals=2; plural=n > 1;",
-    "uk": "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);",
+    "uk": "nplurals=3; plural=((n % 1 == 0 && n % 10 == 1 && n % 100 != 11) ? 0 : (n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2);",
     "ur": "nplurals=2; plural=n != 1;",
     "uz": "nplurals=2; plural=n != 1;",
     "vi": "nplurals=1; plural=0;",
@@ -198,48 +274,83 @@ PLURAL_FORMS: dict[str, str] = {
 
 TEMPLATE_FILE = "templates/assistant.pot"
 
-SYSTEM_PROMPT = """You are an expert localization specialist translating user-facing strings for an AI assistant plugin in KOReader, an open-source e-book reader, into {language} ({lang_code}). The strings appear in menus, dialogs, buttons, settings, and error messages.
+# Directory holding the per-locale catalogues, resolved from this file so the
+# script works no matter which directory it is invoked from.
+LANG_DIR = os.path.dirname(os.path.abspath(__file__))
 
-Domain context: this plugin is an AI assistant for a reading app. It lets readers ask questions about their current book, get translations, summaries, and X-Ray/Recap-style analysis of the text, run web-search tool calls, and capture quick notes — using cloud AI providers (Anthropic, OpenAI, Gemini, DeepSeek, Ollama, Groq, Mistral, GigaChat, OpenRouter, Gemma) and configurable models.
+# Per-language translator notes, read from l10n/<lang>/ai_note.txt and appended
+# to the system prompt. The file is optional and its contents are free text, so
+# a native speaker can add terminology, style rules or confusion warnings for
+# their own locale without touching this file. Only languages that need a
+# warning carry one; see load_lang_note() and l10n/README.md.
+LANG_NOTE_FILE = "ai_note.txt"
 
-Translate software/AI terminology using the established conventions of the target language's software and AI community, not literal dictionary translations. In particular:
-  - "provider" / "AI provider" means an AI/API service provider (a company or self-hosted service supplying the model). Use the target language's standard term for a cloud/service provider (e.g. the equivalent of "service provider" / "vendor" in that language), not a literal "the one who provides".
+# Markup the translation must carry over from the msgid. AGENTS.md invariant 4:
+# <b> is parsed by bold_format, not real HTML, so a dropped tag is a rendering
+# bug, not a cosmetic one. A translation that also lost the tag is the visible
+# footprint of a wrong-slot answer - when the model replies with the
+# translation of some other msgid, the tags of the msgid it was actually given
+# are the ones that go missing. That is how "<b>Testing connection...</b>" came
+# to hold "Base URL" in a dozen locales.
+#
+# Only markup is enforced here, not printf placeholders: a language is allowed
+# to move a placeholder or attach a suffix to it (Afrikaans "%1$s nie",
+# Uzbek "%1ni"), so rejecting those would stall the pipeline on entries the
+# model is not wrong about. Placeholder integrity is left to check_mix.py.
+MARKUP_RE = re.compile(r"</?[a-zA-Z][^>]*>")
+
+# A %N index. KOReader's T() substitutes only these
+# (gsub(str, "%%([1-9][0-9]?)")), so an index the msgid never had can only
+# have been carried over from a different msgid - a wrong-slot answer. %s and
+# %d are deliberately not matched: the plugin mixes string.format with T(), so
+# the msgid's own conversion style is a per-call-site choice and cannot be
+# judged from the catalogue.
+PLACEHOLDER_RE = re.compile(r"%([1-9][0-9]?)")
+
+SYSTEM_PROMPT = """You are an expert localization specialist translating user-facing strings for an AI assistant plugin in KOReader, an open-source e-book reader.
+
+TARGET LANGUAGE: {language_en} ({lang_code}). The endonym for it is "{language}". Answer in {language_en} and in no other language. If an item looks like it belongs to a different locale than {language_en}, it is still {language_en} - translate it, do not switch language.
+
+Domain context: this plugin is an AI assistant for a reading app. It lets readers ask questions about their current book, get translations, summaries, and X-Ray/Recap-style analysis of the text, run web-search tool calls, and capture quick notes - using cloud AI providers (Anthropic, OpenAI, Gemini, DeepSeek, Ollama, Groq, Mistral, GigaChat, OpenRouter, Gemma) and configurable models.
+
+Translate software/AI terminology using the established conventions of {language_en}'s software and AI community, not literal dictionary translations. In particular:
+  - "provider" / "AI provider" means an AI/API service provider (a company or self-hosted service supplying the model). Use the standard term for a cloud/service provider in {language_en} (e.g. the equivalent of "service provider" / "vendor"), not a literal "the one who provides".
   - "model" means a machine-learning model, not "type/pattern/template".
   - "prompt" means the instruction text sent to an AI, not "hint/encouragement".
-  - "token" is an AI token; keep it or use the language's accepted AI term.
+  - "token" is an AI token; keep it or use the accepted AI term in {language_en}.
   - "streaming" means real-time streamed output.
   - "web search" means internet/online search; "tool calling" means the AI invoking external tools.
   - E-reader terms: "annotation" = a reader's margin note, "highlight" = selected/emphasized text, "notebook" = the note collection.
-  - Feature names ("X-Ray", "Term X-Ray"): keep the rendering consistent across the file and follow any translator comments. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details); it is about one term, not the book-level "X-Ray".
+  - Feature names ("X-Ray", "Term X-Ray", "Recap"): keep the rendering consistent across the file and follow any translator comments. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details); it is about one term, not the book-level "X-Ray".
   - API/product names ("Chat Completions API", "Responses API", "Messages API", "Gemini API", model names) always stay in English; translate only surrounding descriptors (e.g. "compatible" / "OpenAI-compatible").
-
+{lang_note}
 You will receive a JSON object describing the target language and a list of items to translate. Each item always has:
-  - id: the index of the item (positional; the response must keep the same order, do not echo ids)
+  - id: the item's number; repeat it on the object you answer with
   - msgid: the English source string
 Optional fields appear only when applicable (absent means none):
   - msgctxt: context hint
   - msgid_plural: plural form (only present for plural entries)
   - comments: list of translator notes
 
-Translate each item, taking into account the comments and msgctxt. Preserve all printf-style placeholders (e.g. %s, %d, %1$s), HTML/XML tags, newlines, and leading/trailing whitespace exactly as they appear in msgid.
+Translate each item, taking into account the comments and msgctxt. Preserve all printf-style placeholders (e.g. %s, %d), the <b> tags, newlines, and leading/trailing whitespace exactly as they appear in msgid. Never answer with the translation of a different item, and never drop a placeholder or a tag.
 
 Output rules:
 - Reply with a single JSON object of the form {{"translations": [...]}}.
-- "translations" must be an array with exactly the same length as the request items, in the same order (position i translates item i).
-- For a non-plural item (no msgid_plural): element i is a string "<translation>".
-- For a plural item (has msgid_plural): element i is an array ["<form 0>", "<form 1>", ...]; the array length must equal the nplurals value supplied in the request.
-- Do not echo ids and do not return an array of objects.
-- Do not return the msgid back unchanged as msgstr unless the source is a technical token (URL, format spec, brand name) that must stay in English.
+- "translations" is an array with one object per request item: {{"id": <the item's id>, "text": <the translation>}}.
+- "id" must be copied verbatim from the request item that "text" translates. The id is how your answer is matched to the question, so a missing, duplicated or invented id is rejected and the chunk is retried. Never renumber, never reuse another item's id.
+- "text" is a string for a non-plural item, and an array of exactly nplurals non-empty strings for a plural item (one that has msgid_plural).
+- The array may be in any order, but it must cover every requested id exactly once.
+- Do not return the msgid back unchanged as text unless the source is a technical token (URL, format spec, brand name) that must stay in English.
 - Do not include any prose, markdown fences, or extra keys.
 """
 
-USER_TEMPLATE = """Target language: {language} ({lang_code})
+USER_TEMPLATE = """Target language: {language_en} ({lang_code}), endonym "{language}"
 nplurals: {nplurals}
 
 Items to translate:
 {items_json}
 
-Respond with JSON only: {{"translations": [...]}} with one element per input item in order (a string for singular items, an array of nplurals strings for plural items)."""
+Respond with JSON only: {{"translations": [{{"id": <id>, "text": <translation>}}, ...]}} - one object per input item, each carrying that item's own id, and every requested id covered exactly once. "text" is a string, or an array of {nplurals} strings for an item that has msgid_plural."""
 
 
 # -------------------- Configuration --------------------
@@ -428,7 +539,9 @@ def decide_paths(lang_code: str) -> tuple[str | None, str | None, str | None]:
         return "translate", untranslated, updated_translated
 
     log.error(
-        "translate files not ready for %s: translated=%s untranslated=%s updated=%s",
+        "translate files not ready for %s: assistant.po=%s untranslated.po=%s "
+        "updated_translated.po=%s. Run `make extract-untranslated` first (the "
+        "ai-translate target does this for you, or use `make translate`).",
         lang_code, has_translated, has_untranslated, has_updated,
     )
     return "error", None, None
@@ -516,13 +629,18 @@ def _build_response_format(cfg: Config) -> dict[str, Any] | None:
                     "translations": {
                         "type": "array",
                         "items": {
-                            "anyOf": [
-                                {"type": "string"},
-                                {
-                                    "type": "array",
-                                    "items": {"type": "string"},
+                            "type": "object",
+                            "properties": {
+                                "id": {"type": "integer"},
+                                "text": {
+                                    "anyOf": [
+                                        {"type": "string"},
+                                        {"type": "array", "items": {"type": "string"}},
+                                    ]
                                 },
-                            ]
+                            },
+                            "required": ["id", "text"],
+                            "additionalProperties": False,
                         },
                     }
                 },
@@ -718,9 +836,42 @@ def _entry_to_item(idx: int, entry: polib.POEntry) -> dict[str, Any]:
         item["msgctxt"] = entry.msgctxt
     if entry.msgid_plural:
         item["msgid_plural"] = entry.msgid_plural
-    if entry.tcomment:
-        item["comments"] = list(entry.tcomment or "")
+    # `comment` is the extracted-comment field (#), which is where
+    # `xgettext --add-comments=@translators` puts the translator notes.
+    # `tcomment` is the hand-written `#.` field and is empty in these
+    # catalogues, so reading it silently dropped all 28 @translators notes.
+    if entry.comment:
+        item["comments"] = [c for c in entry.comment.split("\n") if c.strip()]
     return item
+
+
+_LANG_NOTE_CACHE: dict[str, str] = {}
+
+
+def load_lang_note(lang_code: str) -> str:
+    """Read the optional l10n/<lang_code>/ai_note.txt translator note.
+
+    Returns the file's contents formatted as a prompt section, or "" when the
+    locale ships no note. Read once per process and cached: the note is static
+    for the whole run, and this sits in the per-chunk request path.
+    """
+    if lang_code in _LANG_NOTE_CACHE:
+        return _LANG_NOTE_CACHE[lang_code]
+    path = os.path.join(LANG_DIR, lang_code, LANG_NOTE_FILE)
+    note = ""
+    if os.path.isfile(path):
+        try:
+            with open(path, encoding="utf-8") as fh:
+                body = fh.read().strip()
+            if body:
+                note = (
+                    "\nTranslator notes for this locale (authoritative - they "
+                    "override any general guidance above):\n" + body + "\n"
+                )
+        except OSError as exc:
+            log.warning("[%s] cannot read %s: %s", lang_code, path, exc)
+    _LANG_NOTE_CACHE[lang_code] = note
+    return note
 
 
 def _build_messages(
@@ -728,16 +879,21 @@ def _build_messages(
 ) -> list[dict[str, str]]:
     nplurals_match = re.search(r"nplurals\s*=\s*(\d+)", PLURAL_FORMS.get(lang_code, ""))
     nplurals = int(nplurals_match.group(1)) if nplurals_match else 1
+    lang_en = LANG_EN[lang_code]
 
     user = USER_TEMPLATE.format(
         language=lang_fullname,
+        language_en=lang_en,
         lang_code=lang_code,
         nplurals=nplurals,
         items_json=json.dumps(items, ensure_ascii=False, separators=(",", ":")),
     )
     return [
         {"role": "system", "content": SYSTEM_PROMPT.format(
-            language=lang_fullname, lang_code=lang_code
+            language=lang_fullname,
+            language_en=lang_en,
+            lang_code=lang_code,
+            lang_note=load_lang_note(lang_code),
         )},
         {"role": "user", "content": user},
     ]
@@ -809,92 +965,136 @@ def _normalize_newlines(s: str) -> str:
     return s.replace("\\n", "\n")
 
 
+def _check_markup(item: dict[str, Any], text: str, source: str,
+                  allowed: set[str] | None = None) -> None:
+    """Raise unless `text` preserves `source`'s markup and placeholders.
+
+    `source` is the msgid this particular string is the translation of: the
+    singular msgid for form 0, msgid_plural for the rest.
+    `allowed` is the set of placeholder indices any source form of this entry
+    may use, and defaults to `source`'s own. It exists because gettext picks
+    the form from n at runtime, so for a plural entry every form has to carry
+    whatever any of the source forms carries - a singular form that mentions
+    %1 is grammatical sloppiness, not a wrong-slot answer, and rejecting it
+    would retry a chunk that can never satisfy the check.
+
+    Called per item during validation so a bad answer fails the chunk here
+    rather than reaching the catalogue. The caller retries, then bisects, which
+    re-asks for the offending entry on its own - far more likely to come back
+    correct than the same entry inside a 20-item chunk.
+
+    Both checks are footprints of the same failure: the model answering with
+    the translation of some other msgid. "<b>Testing connection...</b>" came to
+    hold "Base URL" in a dozen locales, and "Base URL, e.g. ..." came to hold a
+    string with a %1 the msgid never had.
+    """
+    want = sorted(MARKUP_RE.findall(source))
+    if want:
+        got = sorted(MARKUP_RE.findall(text))
+        if got != want:
+            raise RuntimeError(
+                f"id {item['id']}: translation does not preserve the msgid's "
+                f"markup (expected {want}, got {got}). Copy the tags verbatim "
+                f"from the msgid; msgid={source[:60]!r} text={text[:60]!r}"
+            )
+    if allowed is None:
+        allowed = set(PLACEHOLDER_RE.findall(source))
+    ghost = sorted(set(PLACEHOLDER_RE.findall(text)) - allowed)
+    if ghost:
+        raise RuntimeError(
+            f"id {item['id']}: translation carries placeholder(s) "
+            f"{['%' + g for g in ghost]} that its msgid does not have, so it "
+            f"looks like the translation of a different msgid. "
+            f"msgid={source[:60]!r} text={text[:60]!r}"
+        )
+
+
 def _validate_translations(
     items: list[dict[str, Any]],
     payload: dict[str, Any],
     nplurals: int,
 ) -> list[dict[str, Any]]:
-    """Validate a positional translations array against the request items.
+    """Validate an id-keyed translations array against the request items.
 
-    New contract: payload["translations"] is a list with len == len(items),
-    in the same order. A singular item expects a non-empty string; a plural
-    item (has msgid_plural) expects a list of nplurals non-empty strings.
-    Returns [{"id", "msgstr"/"msgstr_plural"}] for _apply_translations.
+    Contract: payload["translations"] is a list of {"id", "text"} objects, one
+    per request item, carrying that item's own id. The id is load-bearing: a
+    positional array has the right length even when the model has translated a
+    different item, so a shifted answer used to pass validation silently and
+    land in the catalogue as a string belonging to some other msgid. Keying by
+    id turns that into a hard error the retry and bisect path already handles.
 
-    Old-format payloads (array of {"id", ...} dicts) are still accepted via
-    the legacy id-keyed validation path.
+    A singular item expects "text" to be a non-empty string; a plural item
+    (has msgid_plural) expects a list of nplurals non-empty strings. Order in
+    the response is irrelevant. Returns [{"id", "msgstr"/"msgstr_plural"}] for
+    _apply_translations.
     """
     translations = payload.get("translations")
     if not isinstance(translations, list):
         raise RuntimeError("response is missing 'translations' array")
 
-    # Legacy compat: elements are {"id", "msgstr"/"msgstr_plural"} dicts.
-    if translations and isinstance(translations[0], dict) and "id" in translations[0]:
-        expected_ids = {item["id"] for item in items}
-        seen_ids: set[int] = set()
-        by_id: dict[int, dict[str, Any]] = {}
-        for t in translations:
-            if not isinstance(t, dict) or "id" not in t:
-                raise RuntimeError(f"translation entry missing 'id': {t!r}")
-            tid = t["id"]
-            if tid in seen_ids:
-                raise RuntimeError(f"duplicate translation id: {tid}")
-            seen_ids.add(tid)
-            by_id[tid] = t
+    expected_ids = {item["id"] for item in items}
+    by_id: dict[int, Any] = {}
+    for t in translations:
+        if not isinstance(t, dict):
+            raise RuntimeError(
+                f"each translation must be an object with 'id' and 'text', "
+                f"got {t!r}"
+            )
+        if "id" not in t or "text" not in t:
+            raise RuntimeError(f"translation missing 'id' or 'text': {t!r}")
+        tid = t["id"]
+        if not isinstance(tid, int) or isinstance(tid, bool):
+            raise RuntimeError(f"translation id must be an integer, got {tid!r}")
+        if tid not in expected_ids:
+            raise RuntimeError(
+                f"translation id {tid} was not in the request "
+                f"(expected one of {sorted(expected_ids)})"
+            )
+        if tid in by_id:
+            raise RuntimeError(f"duplicate translation id: {tid}")
+        by_id[tid] = t["text"]
 
-        missing = expected_ids - seen_ids
-        if missing:
-            raise RuntimeError(f"response missing ids: {sorted(missing)}")
-
-        out: list[dict[str, Any]] = []
-        for item in items:
-            t = by_id[item["id"]]
-            if item.get("msgid_plural"):
-                forms = t.get("msgstr_plural")
-                if not isinstance(forms, list) or len(forms) != nplurals:
-                    raise RuntimeError(
-                        f"id {item['id']}: msgstr_plural must be a list of length "
-                        f"{nplurals}, got {t.get('msgstr_plural')!r}"
-                    )
-                if any(not isinstance(x, str) for x in forms):
-                    raise RuntimeError(f"id {item['id']}: msgstr_plural has non-string forms")
-                if any(not x.strip() for x in forms):
-                    raise RuntimeError(f"id {item['id']}: msgstr_plural has empty form")
-                out.append({"id": item["id"], "msgstr_plural": [_normalize_newlines(f) for f in forms]})
-            else:
-                msgstr = t.get("msgstr", "")
-                if not isinstance(msgstr, str):
-                    raise RuntimeError(f"id {item['id']}: msgstr must be a string")
-                if not msgstr.strip():
-                    raise RuntimeError(f"id {item['id']}: msgstr is empty")
-                out.append({"id": item["id"], "msgstr": _normalize_newlines(msgstr)})
-        return out
-
-    if len(translations) != len(items):
+    missing = expected_ids - set(by_id)
+    if missing:
         raise RuntimeError(
-            f"translations length {len(translations)} != items length {len(items)}"
+            f"response is missing {len(missing)} of {len(expected_ids)} items: "
+            f"ids {sorted(missing)}"
         )
 
-    out = []
-    for pos, (item, t) in enumerate(zip(items, translations)):
-        item_id = item["id"]
+    out: list[dict[str, Any]] = []
+    for item in items:
+        text = by_id[item["id"]]
         if item.get("msgid_plural"):
-            if not isinstance(t, list) or len(t) != nplurals:
+            if not isinstance(text, list):
                 raise RuntimeError(
-                    f"id {item_id}: msgstr_plural must be a list of length "
-                    f"{nplurals}, got {t!r}"
+                    f"id {item['id']}: plural item needs a list of "
+                    f"{nplurals} forms, got {type(text).__name__}"
                 )
-            if any(not isinstance(x, str) for x in t):
-                raise RuntimeError(f"id {item_id}: msgstr_plural has non-string forms")
-            if any(not x.strip() for x in t):
-                raise RuntimeError(f"id {item_id}: msgstr_plural has empty form")
-            out.append({"id": item_id, "msgstr_plural": [_normalize_newlines(f) for f in t]})
+            if len(text) != nplurals:
+                raise RuntimeError(
+                    f"id {item['id']}: plural item needs exactly {nplurals} "
+                    f"forms, got {len(text)}"
+                )
+            if any(not isinstance(x, str) for x in text):
+                raise RuntimeError(f"id {item['id']}: plural forms must be strings")
+            if any(not x.strip() for x in text):
+                raise RuntimeError(f"id {item['id']}: plural item has an empty form")
+            plural_ok = (set(PLACEHOLDER_RE.findall(item["msgid"]))
+                         | set(PLACEHOLDER_RE.findall(item.get("msgid_plural", ""))))
+            for i, form in enumerate(text):
+                source = item["msgid"] if i == 0 else item.get("msgid_plural", item["msgid"])
+                _check_markup(item, form, source, allowed=plural_ok)
+            out.append({"id": item["id"],
+                        "msgstr_plural": [_normalize_newlines(f) for f in text]})
         else:
-            if not isinstance(t, str):
-                raise RuntimeError(f"id {item_id}: msgstr must be a string, got {t!r}")
-            if not t.strip():
-                raise RuntimeError(f"id {item_id}: msgstr is empty")
-            out.append({"id": item_id, "msgstr": _normalize_newlines(t)})
+            if not isinstance(text, str):
+                raise RuntimeError(
+                    f"id {item['id']}: non-plural item needs a string, got {text!r}"
+                )
+            if not text.strip():
+                raise RuntimeError(f"id {item['id']}: translation is empty")
+            _check_markup(item, text, item["msgid"])
+            out.append({"id": item["id"], "msgstr": _normalize_newlines(text)})
     return out
 
 
@@ -1209,6 +1409,10 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.lang_code not in LANG_MAP:
         log.error("language code %r not supported", args.lang_code)
+        return 2
+    if args.lang_code not in LANG_EN:
+        log.error("language code %r has no LANG_EN entry; add its English "
+                  "name so the prompt can disambiguate the endonym", args.lang_code)
         return 2
 
     action, input_path, output_path = decide_paths(args.lang_code)

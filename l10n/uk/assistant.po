@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -15,22 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Назва : %1\n"
-" - Автор: %2\n"
-" - Прогрес читання: %3%\n"
-"\n"
-"-----\n"
-"\n"
+"Plural-Forms: nplurals=3; plural=((n % 1 == 0 && n % 10 == 1 && n % 100 != 11) ? 0 : (n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2);\n"
 
 msgid " - p. %1/%2"
 msgstr " - с. %1/%2"
@@ -98,9 +83,6 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API повернув помилку</b>"
 
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Додано</b> [%1 (AI)] до меню виділення."
-
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Аналіз контексту книги для Term X-Ray...</b>"
 
@@ -144,7 +126,12 @@ msgid ""
 "\n"
 "- Current version: %3\n"
 "- Development branch: main"
-msgstr "AI-асистент"
+msgstr ""
+"<b>URL на Github:</b>  %1\n"
+"<b>Репозиторій джерела:</b>  %2\n"
+"\n"
+"- Поточна версія: %3\n"
+"- Гілка розробки: main"
 
 msgid ""
 "<b>Github URL:</b>  %1\n"
@@ -154,9 +141,12 @@ msgid ""
 "- Latest version: <b>%4</b>\n"
 "- Development branch: main"
 msgstr ""
-"Поточна версія: %1\n"
-"Остання версія: %2\n"
-"Гілка розробки: main"
+"<b>URL на Github:</b>  %1\n"
+"<b>Репозиторій джерела:</b>  %2\n"
+"\n"
+"- Поточна версія: %3\n"
+"- Остання версія: <b>%4</b>\n"
+"- Гілка розробки: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Встановлення %1...</b>"
@@ -171,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>Параметри</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Видалено</b> [%1 (AI)] з меню виділення."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Запит</b> — POST %1"
 
@@ -181,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Відповідь</b> — HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Перевірка з'єднання..."
+msgstr "<b>Перевірка з'єднання...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Невідомий тип функції:</b> %1"
@@ -345,6 +332,9 @@ msgstr ""
 "Додайте провайдерів через головне меню:\n"
 "%1 -> AI-асистент -> Налаштування -> API провайдера"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Додано <b>[%1 (ШІ)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Додано до словника"
 
@@ -404,6 +394,9 @@ msgstr "Додати попередній текст"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Прикріплює відповідь як примітку в книзі до поточного виділення"
+
+msgid "Author"
+msgstr "Автор"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -595,9 +588,6 @@ msgstr "Власний промпт"
 msgid "Custom Prompts"
 msgstr "Власні промпти"
 
-msgid "Deeply Thought"
-msgstr "Глибокий роздум"
-
 msgid "Delete"
 msgstr "Видалити"
 
@@ -622,8 +612,8 @@ msgstr "Словник"
 msgid "Dictionary Language"
 msgstr "Мова словника"
 
-msgid "Dictionary Popup"
-msgstr "Спливаюче вікно словника"
+msgid "Dictionary Popup Buttons"
+msgstr "Кнопки спливаючого вікна словника"
 
 msgid "Dictionary Settings"
 msgstr "Налаштування словника"
@@ -832,10 +822,9 @@ msgstr "Велике вікно потокового виводу"
 
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
-msgstr[0] "Востаннє прочитано годину тому."
-msgstr[1] "Востаннє прочитано %1 години тому."
-msgstr[2] "Востаннє прочитано %1 годин тому."
-msgstr[3] "Востаннє прочитано %1 годин тому."
+msgstr[0] "Востаннє читали годину тому."
+msgstr[1] "Востаннє читали %1 години тому."
+msgstr[2] "Востаннє читали %1 годин тому."
 
 msgid "Leave blank to use: %1"
 msgstr "Залиште порожнім, щоб використовувати: %1"
@@ -857,6 +846,9 @@ msgstr "Рушій Markdown"
 
 msgid "Meaning & Usage"
 msgstr "Значення та вживання"
+
+msgid "Minimalist Mode"
+msgstr "Мінімалістичний режим"
 
 msgid "Model"
 msgstr "Модель"
@@ -911,6 +903,9 @@ msgstr "Жодна книга не відкрита. Утримуйте книг
 
 msgid "No common parameters are available for handler %1."
 msgstr "Немає доступних параметрів для обробника %1."
+
+msgid "No highlight to annotate"
+msgstr "Немає виділеного тексту для анотування"
 
 msgid "No models available."
 msgstr "Немає доступних моделей."
@@ -1065,9 +1060,6 @@ msgstr "Очистити"
 msgid "Purge Settings"
 msgstr "Очистити налаштування"
 
-msgid "Question"
-msgstr "Питання"
-
 msgid "Quick Note"
 msgstr "Швидка нотатка"
 
@@ -1085,6 +1077,9 @@ msgstr "Повторне занурення"
 
 msgid "Reader settings are not available."
 msgstr "Налаштування читача недоступні."
+
+msgid "Reading progress"
+msgstr "Прогрес читання"
 
 msgid "Reasoning Option"
 msgstr "Параметр міркування"
@@ -1105,6 +1100,9 @@ msgstr "Видалити"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Видалити [%s] з меню виділення?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Видалено <b>[%1 (ШІ)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Запит скасовано користувачем."
@@ -1133,9 +1131,6 @@ msgstr ""
 "Це відновлює заводські налаштування плагіна. Провайдери, API-ключі та\n"
 "облікові дані пошукового інструмента, додані через інтерфейс налаштувань, будуть видалені.\n"
 "Файл configuration.lua буде збережено."
-
-msgid "Response"
-msgstr "Відповідь"
 
 msgid "Response Settings"
 msgstr "Налаштування відповідей"
@@ -1230,6 +1225,9 @@ msgstr "Показувати глибокий процес мислення (м�
 
 msgid "Show follow up questions related to the response content."
 msgstr "Показувати супутні запитання, пов'язані зі змістом відповіді."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Показує лише відповідь: без заголовків «Користувач»/«Асистент», без першого рядка кнопок, без міркувань і без додаткових запитань. Залишає тільки дії для самої відповіді (Анотувати, Помічник словника) поруч із «Закрити». Вимкняє «Текст міркувань» і «Додаткові запитання», поки активний."
 
 msgid "Similar Books Recommendations"
 msgstr "Рекомендації схожих книг"
@@ -1372,6 +1370,9 @@ msgstr "Цей промпт перекладає виділений текст �
 msgid "Timeline"
 msgstr "Хронологія"
 
+msgid "Title"
+msgstr "Заголовок"
+
 msgid "To-Do / Action Items"
 msgstr "Завдання / Пункти дій"
 
@@ -1386,6 +1387,13 @@ msgstr "Виклик інструмента не містив ключових �
 
 msgid "Translate"
 msgstr "Перекласти"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Перекласти (ШІ)"
+
+msgid "Translates the book description with AI."
+msgstr "Перекладає опис книги за допомогою ШІ."
 
 msgid "Translation"
 msgstr "Переклад"
@@ -1466,6 +1474,10 @@ msgstr "Переглянути"
 
 msgid "Vocabulary"
 msgstr "Лексика"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Помічник словника"
 
 msgid "Web Search"
 msgstr "Вебпошук"

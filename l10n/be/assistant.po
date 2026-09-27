@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Назва: %1\n"
-" - Аўтар: %2\n"
-" - Прагрэс чытання: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - с. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API вярнуў памылку</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Дададзена</b> [%1 (AI)] у меню вылучэння."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Аналіз кантэксту кнігі для Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>Параметры</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Выдалена</b> [%1 (AI)] з меню вылучэння."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Запыт</b> — POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Адказ</b> — HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Праверка злучэння..."
+msgstr "<b>Праверка злучэння...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Невядомы тып функцыі:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Дадайце правайдараў з галоўнага меню:\n"
 "%1 -> AI Assistant -> Налады -> API правайдара"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Дададзена <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Дададзена ў слоўнікавы трэнажор"
 
@@ -412,6 +394,9 @@ msgstr "Далучыць папярэдні тэкст"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Далучае адказ як нататку ў кнізе да бягучага выдзялення"
+
+msgid "Author"
+msgstr "Аўтар"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Уласны промпт"
 msgid "Custom Prompts"
 msgstr "Уласныя промпты"
 
-msgid "Deeply Thought"
-msgstr "Глыбокае разважанне"
-
 msgid "Delete"
 msgstr "Выдаліць"
 
@@ -630,8 +612,8 @@ msgstr "Слоўнік"
 msgid "Dictionary Language"
 msgstr "Мова слоўніка"
 
-msgid "Dictionary Popup"
-msgstr "Усплывальнае акно слоўніка"
+msgid "Dictionary Popup Buttons"
+msgstr "Кнопкі ўсплывальнага акна слоўніка"
 
 msgid "Dictionary Settings"
 msgstr "Налады слоўніка"
@@ -865,6 +847,9 @@ msgstr "Рухавік Markdown"
 msgid "Meaning & Usage"
 msgstr "Значэнне і ўжыванне"
 
+msgid "Minimalist Mode"
+msgstr "Мінімалістычны рэжым"
+
 msgid "Model"
 msgstr "Мадэль"
 
@@ -918,6 +903,9 @@ msgstr "Ніводная кніга не адкрыта. Доўга націсн
 
 msgid "No common parameters are available for handler %1."
 msgstr "Няма даступных агульных параметраў для апрацоўшчыка %1."
+
+msgid "No highlight to annotate"
+msgstr "Няма выдзеленага тэксту для анатавання"
 
 msgid "No models available."
 msgstr "Няма даступных мадэляў."
@@ -1072,9 +1060,6 @@ msgstr "Ачысціць"
 msgid "Purge Settings"
 msgstr "Ачысціць налады"
 
-msgid "Question"
-msgstr "Пытанне"
-
 msgid "Quick Note"
 msgstr "Хуткая нататка"
 
@@ -1092,6 +1077,9 @@ msgstr "Паўторнае акунанне"
 
 msgid "Reader settings are not available."
 msgstr "Налады чыталкі недаступныя."
+
+msgid "Reading progress"
+msgstr "Прагрэс чытання"
 
 msgid "Reasoning Option"
 msgstr "Параметр разважання"
@@ -1112,6 +1100,9 @@ msgstr "Выдаліць"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Выдаліць [%s] з меню вылучэння?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Выдалена <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Запыт адменены карыстальнікам."
@@ -1140,9 +1131,6 @@ msgstr ""
 "Гэта верне плагін да заводскіх налад па змаўчанні. Пастаўшчыкі, API-ключы і\n"
 "уліковыя даныя пошукавага інструмента, дададзеныя праз інтэрфейс налад, будуць выдалены.\n"
 "Файл configuration.lua будзе захаваны."
-
-msgid "Response"
-msgstr "Адказ"
 
 msgid "Response Settings"
 msgstr "Налады адказу"
@@ -1237,6 +1225,9 @@ msgstr "Паказваць глыбокі працэс разважання (rea
 
 msgid "Show follow up questions related to the response content."
 msgstr "Паказваць дадатковыя пытанні, звязаныя са зместам адказу."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Паказвае толькі адказ: без загалоўкаў «Карыстальнік»/«Асістэнт», без першага рада кнопак, без разважанняў і без дадатковых пытанняў. Пакідае толькі дзеянні для самога адказу (Анатаваць, Слоўнікавы запас) побач з «Закрыць». Падчас актыўнасці адключае «Тэкст разважанняў» і «Дадатковыя пытанні»."
 
 msgid "Similar Books Recommendations"
 msgstr "Рэкамендацыі падобных кніг"
@@ -1379,6 +1370,9 @@ msgstr "Гэты запыт перакладае вылучаны тэкст н�
 msgid "Timeline"
 msgstr "Храналогія"
 
+msgid "Title"
+msgstr "Загаловак"
+
 msgid "To-Do / Action Items"
 msgstr "Задачы / пункты дзеянняў"
 
@@ -1393,6 +1387,13 @@ msgstr "Выклік інструмента не ўтрымліваў пошук
 
 msgid "Translate"
 msgstr "Перакласці"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Перакласці (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Перакладае апісанне кнігі з дапамогай AI."
 
 msgid "Translation"
 msgstr "Пераклад"
@@ -1473,6 +1474,10 @@ msgstr "Прагляд"
 
 msgid "Vocabulary"
 msgstr "Лексіка"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Слоўнікавы запас"
 
 msgid "Web Search"
 msgstr "Вэб-пошук"

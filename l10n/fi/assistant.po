@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Otsikko : %1\n"
-" - Tekijä: %2\n"
-" - Lukemisen edistyminen: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - s. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API palautti virheen</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Lisätty</b> [%1 (AI)] korostusvalikkoon."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analysoidaan kirjan kontekstia Term X-Ray -toimintoa varten...</b>"
@@ -178,9 +160,6 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametrit</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Poistettu</b> [%1 (AI)] korostusvalikosta."
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Pyyntö</b> – POST %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Lisää palveluntarjoajia päävalikosta:\n"
 "%1 -> AI Assistant -> Asetukset -> Palveluntarjoajan API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Lisätty <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Lisätty sanaston kartuttajaan"
 
@@ -412,6 +394,9 @@ msgstr "Liitä aiempi teksti"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Liittää vastauksen kirjamuistiinpanona nykyiseen korostukseen"
+
+msgid "Author"
+msgstr "Tekijä"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Mukautettu kehote"
 msgid "Custom Prompts"
 msgstr "Mukautetut kehotteet"
 
-msgid "Deeply Thought"
-msgstr "Syvällinen pohdinta"
-
 msgid "Delete"
 msgstr "Poista"
 
@@ -630,8 +612,8 @@ msgstr "Sanakirja"
 msgid "Dictionary Language"
 msgstr "Sanakirjan kieli"
 
-msgid "Dictionary Popup"
-msgstr "Sanakirjan ponnahdusikkuna"
+msgid "Dictionary Popup Buttons"
+msgstr "Sanakirjan ponnahdusikkunan painikkeet"
 
 msgid "Dictionary Settings"
 msgstr "Sanakirja-asetukset"
@@ -864,6 +846,9 @@ msgstr "Markdown-moottori"
 msgid "Meaning & Usage"
 msgstr "Merkitys ja käyttö"
 
+msgid "Minimalist Mode"
+msgstr "Minimalistinen tila"
+
 msgid "Model"
 msgstr "Malli"
 
@@ -917,6 +902,9 @@ msgstr "Ei avointa kirjaa. Paina kirjaa pitkään tiedostoselaimessa ja valitse 
 
 msgid "No common parameters are available for handler %1."
 msgstr "Käsittelijälle %1 ei ole saatavilla yhteisiä parametreja."
+
+msgid "No highlight to annotate"
+msgstr "Ei korostusta merkittäväksi"
 
 msgid "No models available."
 msgstr "Ei malleja saatavilla."
@@ -1071,9 +1059,6 @@ msgstr "Tyhjennä"
 msgid "Purge Settings"
 msgstr "Tyhjennä asetukset"
 
-msgid "Question"
-msgstr "Kysymys"
-
 msgid "Quick Note"
 msgstr "Pikamuistiinpano"
 
@@ -1091,6 +1076,9 @@ msgstr "Paluu tarinaan"
 
 msgid "Reader settings are not available."
 msgstr "Lukijan asetukset eivät ole käytettävissä."
+
+msgid "Reading progress"
+msgstr "Lukemisen edistyminen"
 
 msgid "Reasoning Option"
 msgstr "Päättelyvaihtoehto"
@@ -1111,6 +1099,9 @@ msgstr "Poista"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Poista [%s] korostusvalikosta?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Poistettu <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Pyyntö peruutettu käyttäjän toimesta."
@@ -1139,9 +1130,6 @@ msgstr ""
 "Tämä palauttaa liitännäisen tehdasasetuksiin. Palveluntarjoajat, API-avaimet ja\n"
 "tiedonhakutyökalujen tunnistetiedot, jotka on lisätty Asetukset-käyttöliittymän kautta, poistetaan.\n"
 "Tiedosto configuration.lua säilytetään."
-
-msgid "Response"
-msgstr "Vastaus"
 
 msgid "Response Settings"
 msgstr "Vastausasetukset"
@@ -1236,6 +1224,9 @@ msgstr "Näytä tekoälyvastauksen syvällinen ajatteluprosessi (päättely), jo
 
 msgid "Show follow up questions related to the response content."
 msgstr "Näytä vastauksen sisältöön liittyvät jatkokysymykset."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Näyttää vain vastauksen: ei Käyttäjä/Avustaja-otsikoita, ei ensimmäistä painikeriviä, ei päättelyä eikä jatkokysymyksiä. Säilyttää vain itse vastauksen toiminnot (Merkitse, Sanastotyökalu) Sulje-painikkeen vieressä. Kytkee päättelytekstin ja jatkokysymykset pois päältä, kun tämä tila on käytössä."
 
 msgid "Similar Books Recommendations"
 msgstr "Samankaltaisten kirjojen suositukset"
@@ -1378,6 +1369,9 @@ msgstr "Tämä kehote kääntää korostetun tekstin toiselle kielelle."
 msgid "Timeline"
 msgstr "Aikajana"
 
+msgid "Title"
+msgstr "Otsikko"
+
 msgid "To-Do / Action Items"
 msgstr "Tehtävät / toimenpiteet"
 
@@ -1392,6 +1386,13 @@ msgstr "Työkalukutsu ei sisältänyt hakusanoja."
 
 msgid "Translate"
 msgstr "Käännä"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Käännä (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Kääntää kirjan kuvauksen tekoälyllä."
 
 msgid "Translation"
 msgstr "Käännös"
@@ -1472,6 +1473,10 @@ msgstr "Näytä"
 
 msgid "Vocabulary"
 msgstr "Sanasto"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Sanastotyökalu"
 
 msgid "Web Search"
 msgstr "Verkkohaku"

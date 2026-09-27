@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Название: %1\n"
-" - Автор: %2\n"
-" - Прогресс чтения: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - стр. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API вернул ошибку</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Добавлено</b> [%1 (ИИ)] в меню выделения."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Анализ контекста книги для Term X-Ray...</b>"
@@ -178,9 +160,6 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Параметры</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Удалено</b> [%1 (ИИ)] из меню выделения."
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Запрос</b> — POST %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Добавьте провайдеров из главного меню:\n"
 "%1 -> AI Assistant -> Настройки -> API провайдера"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Добавлено <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Добавлено в словарный тренажёр"
 
@@ -412,6 +394,9 @@ msgstr "Прикрепить предыдущий текст"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Прикрепляет ответ к текущему выделению в виде заметки в книге"
+
+msgid "Author"
+msgstr "Автор"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Свой промпт"
 msgid "Custom Prompts"
 msgstr "Пользовательские промпты"
 
-msgid "Deeply Thought"
-msgstr "Глубокое размышление"
-
 msgid "Delete"
 msgstr "Удалить"
 
@@ -630,8 +612,8 @@ msgstr "Словарь"
 msgid "Dictionary Language"
 msgstr "Язык словаря"
 
-msgid "Dictionary Popup"
-msgstr "Всплывающее окно словаря"
+msgid "Dictionary Popup Buttons"
+msgstr "Кнопки во всплывающем окне словаря"
 
 msgid "Dictionary Settings"
 msgstr "Настройки словаря"
@@ -866,6 +848,9 @@ msgstr "Движок Markdown"
 msgid "Meaning & Usage"
 msgstr "Значение и употребление"
 
+msgid "Minimalist Mode"
+msgstr "Минималистичный режим"
+
 msgid "Model"
 msgstr "Модель"
 
@@ -919,6 +904,9 @@ msgstr "Книга не открыта. Нажмите и удерживайте
 
 msgid "No common parameters are available for handler %1."
 msgstr "Для обработчика %1 общие параметры недоступны."
+
+msgid "No highlight to annotate"
+msgstr "Нет выделения для аннотации"
 
 msgid "No models available."
 msgstr "Нет доступных моделей."
@@ -1073,9 +1061,6 @@ msgstr "Очистить"
 msgid "Purge Settings"
 msgstr "Очистить настройки"
 
-msgid "Question"
-msgstr "Вопрос"
-
 msgid "Quick Note"
 msgstr "Быстрая заметка"
 
@@ -1093,6 +1078,9 @@ msgstr "Повторное погружение"
 
 msgid "Reader settings are not available."
 msgstr "Настройки программы чтения недоступны."
+
+msgid "Reading progress"
+msgstr "Прогресс чтения"
 
 msgid "Reasoning Option"
 msgstr "Параметр рассуждений"
@@ -1113,6 +1101,9 @@ msgstr "Удалить"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Удалить [%s] из меню выделения?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Удалено <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Запрос отменён пользователем."
@@ -1140,9 +1131,6 @@ msgstr ""
 "\n"
 "Это вернёт плагину заводские настройки по умолчанию. Провайдеры, ключи API и учётные данные инструмента поиска, добавленные через интерфейс настроек, будут удалены.\n"
 "Файл configuration.lua будет сохранён."
-
-msgid "Response"
-msgstr "Ответ"
 
 msgid "Response Settings"
 msgstr "Настройки ответа"
@@ -1237,6 +1225,9 @@ msgstr "Показывать подробный процесс размышле�
 
 msgid "Show follow up questions related to the response content."
 msgstr "Показывать уточняющие вопросы, связанные с содержанием ответа."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Показывает только ответ: без заголовков «Пользователь»/«Ассистент», без первого ряда кнопок, без рассуждений и без уточняющих вопросов. Оставляет только действия над самим ответом (Аннотировать, Конструктор словаря) рядом с «Закрыть». Пока активен, отключает текст рассуждений и уточняющие вопросы."
 
 msgid "Similar Books Recommendations"
 msgstr "Рекомендации похожих книг"
@@ -1379,6 +1370,9 @@ msgstr "Этот промпт переводит выделенный текст
 msgid "Timeline"
 msgstr "Хронология"
 
+msgid "Title"
+msgstr "Название"
+
 msgid "To-Do / Action Items"
 msgstr "Задачи / Действия"
 
@@ -1393,6 +1387,13 @@ msgstr "Вызов инструмента не содержал ключевые
 
 msgid "Translate"
 msgstr "Перевести"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Перевести (ИИ)"
+
+msgid "Translates the book description with AI."
+msgstr "Переводит описание книги с помощью ИИ."
 
 msgid "Translation"
 msgstr "Перевод"
@@ -1473,6 +1474,10 @@ msgstr "Просмотр"
 
 msgid "Vocabulary"
 msgstr "Лексика"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Конструктор словаря"
 
 msgid "Web Search"
 msgstr "Веб-поиск"

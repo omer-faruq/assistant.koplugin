@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Заглавие : %1\n"
-" - Автор: %2\n"
-" - Напредък в четенето: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - стр. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API върна грешка</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Добавено</b> [%1 (AI)] към менюто за маркиране."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Анализиране на контекста на книгата за Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>Параметри</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Премахнато</b> [%1 (AI)] от менюто за маркиране."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Заявка</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Отговор</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Базов URL"
+msgstr "<b>Тестване на връзката...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Неизвестен тип функция:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Добавете доставчици от главното меню:\n"
 "%1 -> AI асистент -> Настройки -> API на доставчика"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Добавено <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Добавено в речниковия конструктор"
 
@@ -413,6 +395,9 @@ msgstr "Прикрепи предишен текст"
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Прикачва отговора като бележка в книгата към текущия маркиран текст"
 
+msgid "Author"
+msgstr "Автор"
+
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
 msgstr "Автоматично резюме при отваряне на дълго нечетени книги"
@@ -436,7 +421,7 @@ msgid "Base URL must start with http:// or https://"
 msgstr "Базовият URL трябва да започва с http:// или https://"
 
 msgid "Base URL, e.g. https://example.com/v1"
-msgstr "Базов URL: %1"
+msgstr "Базов URL, напр. https://example.com/v1"
 
 msgid "Book Analysis"
 msgstr "Анализ на книгата"
@@ -603,9 +588,6 @@ msgstr "Персонализиран промпт"
 msgid "Custom Prompts"
 msgstr "Персонализирани промпти"
 
-msgid "Deeply Thought"
-msgstr "Задълбочено обмисляне"
-
 msgid "Delete"
 msgstr "Изтриване"
 
@@ -630,8 +612,8 @@ msgstr "Речник"
 msgid "Dictionary Language"
 msgstr "Език на речника"
 
-msgid "Dictionary Popup"
-msgstr "Изскачащ прозорец на речника"
+msgid "Dictionary Popup Buttons"
+msgstr "Бутони в изскачащия прозорец на речника"
 
 msgid "Dictionary Settings"
 msgstr "Настройки на речника"
@@ -864,6 +846,9 @@ msgstr "Двигател за Markdown"
 msgid "Meaning & Usage"
 msgstr "Значение и употреба"
 
+msgid "Minimalist Mode"
+msgstr "Минималистичен режим"
+
 msgid "Model"
 msgstr "Модел"
 
@@ -917,6 +902,9 @@ msgstr "Няма отворена книга. Натиснете продълж�
 
 msgid "No common parameters are available for handler %1."
 msgstr "Няма налични общи параметри за манипулатора %1."
+
+msgid "No highlight to annotate"
+msgstr "Няма маркиран текст за анотиране"
 
 msgid "No models available."
 msgstr "Няма налични модели."
@@ -1071,9 +1059,6 @@ msgstr "Изчисти"
 msgid "Purge Settings"
 msgstr "Изчистване на настройките"
 
-msgid "Question"
-msgstr "Въпрос"
-
 msgid "Quick Note"
 msgstr "Бърза бележка"
 
@@ -1091,6 +1076,9 @@ msgstr "Повторно потапяне"
 
 msgid "Reader settings are not available."
 msgstr "Настройките на четеца не са налични."
+
+msgid "Reading progress"
+msgstr "Напредък в четенето"
 
 msgid "Reasoning Option"
 msgstr "Опция за разсъждение"
@@ -1111,6 +1099,9 @@ msgstr "Премахване"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Премахване на [%s] от менюто за маркиране?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Премахнато <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Заявката е отменена от потребителя."
@@ -1139,9 +1130,6 @@ msgstr ""
 "Това възстановява приставката до фабричните настройки. Доставчиците, API ключовете и\n"
 "удостоверенията за инструмента за търсене, добавени чрез интерфейса за настройки, ще бъдат премахнати.\n"
 "Файлът configuration.lua ще бъде запазен."
-
-msgid "Response"
-msgstr "Отговор"
 
 msgid "Response Settings"
 msgstr "Настройки на отговора"
@@ -1236,6 +1224,9 @@ msgstr "Показване на процеса на задълбочено ми�
 
 msgid "Show follow up questions related to the response content."
 msgstr "Показване на последващи въпроси, свързани със съдържанието на отговора."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Показва само отговора: без заглавия Потребител/Асистент, без първия ред с бутони, без разсъждения и без последващи въпроси. Запазва само действията върху самия отговор (Анотиране, Vocabulary Builder) до бутона Затваряне. Изключва Текст с разсъждения и Последващи въпроси, докато е активен."
 
 msgid "Similar Books Recommendations"
 msgstr "Препоръки за подобни книги"
@@ -1378,6 +1369,9 @@ msgstr "Тази подкана превежда маркирания текст
 msgid "Timeline"
 msgstr "Хронология"
 
+msgid "Title"
+msgstr "Заглавие"
+
 msgid "To-Do / Action Items"
 msgstr "Задачи / Действия"
 
@@ -1392,6 +1386,13 @@ msgstr "Извикването на инструмент не включва к�
 
 msgid "Translate"
 msgstr "Превод"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Превод (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Превежда описанието на книгата с помощта на AI."
 
 msgid "Translation"
 msgstr "Превод"
@@ -1472,6 +1473,10 @@ msgstr "Преглед"
 
 msgid "Vocabulary"
 msgstr "Лексика"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Vocabulary Builder"
 
 msgid "Web Search"
 msgstr "Уеб търсене"

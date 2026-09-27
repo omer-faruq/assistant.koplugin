@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 03:15+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Euskara (AI translation)\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Izenburua: %1\n"
-" - Egilea: %2\n"
-" - Irakurketa-progresua: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - or. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>APIak errore bat itzuli du</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Gehituta</b> [%1 (AI)] azpimarra-menuan."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Liburuaren testuingurua aztertzen Term X-Ray-rako...</b>"
@@ -178,9 +160,6 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametroak</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Kenduta</b> [%1 (AI)] azpimarra-menutik."
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Eskaera</b> - POST %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Gehitu hornitzaileak menu nagusitik:\n"
 "%1 -> AI Laguntzailea -> Ezarpenak -> Hornitzailearen APIa"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Gehitua <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Hiztegi-eraikitzailean gehituta"
 
@@ -412,6 +394,9 @@ msgstr "Erantsi aurreko testua"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Erantzuna liburu-ohar gisa eransten dio uneko nabarmenduari"
+
+msgid "Author"
+msgstr "Egilea"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Prompt pertsonalizatua"
 msgid "Custom Prompts"
 msgstr "Prompt pertsonalizatuak"
 
-msgid "Deeply Thought"
-msgstr "Pentsamendu sakona"
-
 msgid "Delete"
 msgstr "Ezabatu"
 
@@ -630,8 +612,8 @@ msgstr "Hiztegia"
 msgid "Dictionary Language"
 msgstr "Hiztegiaren hizkuntza"
 
-msgid "Dictionary Popup"
-msgstr "Hiztegi-leihoa"
+msgid "Dictionary Popup Buttons"
+msgstr "Hiztegi-popuparen botoiak"
 
 msgid "Dictionary Settings"
 msgstr "Hiztegiaren ezarpenak"
@@ -864,6 +846,9 @@ msgstr "Markdown motorra"
 msgid "Meaning & Usage"
 msgstr "Esanahia eta erabilera"
 
+msgid "Minimalist Mode"
+msgstr "Modu minimalista"
+
 msgid "Model"
 msgstr "Eredua"
 
@@ -917,6 +902,9 @@ msgstr "Ez dago libururik irekita. Sakatu luze fitxategi-kudeatzailean liburu ba
 
 msgid "No common parameters are available for handler %1."
 msgstr "Ez dago parametro komun erabilgarririk %1 kudeatzailearentzat."
+
+msgid "No highlight to annotate"
+msgstr "Ez dago oharpena egiteko nabarmendutako testurik"
 
 msgid "No models available."
 msgstr "Ez dago eredu erabilgarririk."
@@ -1071,9 +1059,6 @@ msgstr "Garbitu"
 msgid "Purge Settings"
 msgstr "Ezarpenak garbitu"
 
-msgid "Question"
-msgstr "Galdera"
-
 msgid "Quick Note"
 msgstr "Ohar azkarra"
 
@@ -1091,6 +1076,9 @@ msgstr "Berriro murgiltzea"
 
 msgid "Reader settings are not available."
 msgstr "Irakurlearen ezarpenak ez daude erabilgarri."
+
+msgid "Reading progress"
+msgstr "Irakurketa aurrerapena"
 
 msgid "Reasoning Option"
 msgstr "Arrazoiketa aukera"
@@ -1111,6 +1099,9 @@ msgstr "Kendu"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Kendu [%s] azpimarra-menutik?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Kendua <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Erabiltzaileak eskaera ezeztatu du."
@@ -1137,9 +1128,6 @@ msgstr ""
 "Berrezarri assistant.koplugin ezarpen guztiak?\n"
 "\n"
 "Honek plugin-a fabrikako lehenetsietara itzultzen du. Ezarpenen UI bidez gehitutako hornitzaileak, API gakoak eta bilaketa-tresnen kredentzialak kenduko dira. configuration.lua fitxategia gordeko da."
-
-msgid "Response"
-msgstr "Erantzuna"
 
 msgid "Response Settings"
 msgstr "Erantzunaren ezarpenak"
@@ -1234,6 +1222,9 @@ msgstr "Erakutsi AIaren erantzunaren pentsamendu-prozesu sakona (arrazoiketa), b
 
 msgid "Show follow up questions related to the response content."
 msgstr "Erakutsi erantzunaren edukiarekin lotutako jarraipen-galderak."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Erantzuna bakarrik erakusten du: ez erabiltzaile/laguntzaile izenbururik, ez lehen botoi-ilararik, ez arrazoiketarik eta ez jarraipen-galderarik. Erantzunaren gaineko ekintzak soilik mantentzen ditu (Oharpena, Hiztegi-eraikitzailea) Itxi botoiaren ondoan. Arrazoiketa-testua eta Jarraipen-galderak desaktibatzen ditu aktibo dagoen bitartean."
 
 msgid "Similar Books Recommendations"
 msgstr "Antzeko liburuen gomendioak"
@@ -1376,6 +1367,9 @@ msgstr "Prompt honek nabarmendutako testua beste hizkuntza batera itzultzen du."
 msgid "Timeline"
 msgstr "Denbora-lerroa"
 
+msgid "Title"
+msgstr "Izenburua"
+
 msgid "To-Do / Action Items"
 msgstr "Egitekoak / Ekintza-zerrenda"
 
@@ -1390,6 +1384,13 @@ msgstr "Tresna-deiak ez du bilaketa-hitzik barne hartzen."
 
 msgid "Translate"
 msgstr "Itzuli"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Itzuli (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Liburuaren deskribapena AIaren bidez itzultzen du."
 
 msgid "Translation"
 msgstr "Itzulpena"
@@ -1470,6 +1471,10 @@ msgstr "Ikusi"
 
 msgid "Vocabulary"
 msgstr "Hiztegia"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Hiztegi-eraikitzailea"
 
 msgid "Web Search"
 msgstr "Web bilaketa"

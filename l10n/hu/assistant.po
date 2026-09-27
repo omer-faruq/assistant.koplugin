@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Cím : %1\n"
-" - Szerző: %2\n"
-" - Olvasási haladás: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - o. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>Az API hibát adott vissza</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Hozzáadva</b>: [%1 (AI)] a kiemelés menühöz."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>A könyv kontextusának elemzése a Term X-Ray funkcióhoz...</b>"
@@ -178,9 +160,6 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Paraméterek</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Eltávolítva</b>: [%1 (AI)] a kiemelés menüből."
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Kérés</b> – POST %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Adjon hozzá szolgáltatókat a főmenüből:\n"
 "%1 -> AI asszisztens -> Beállítások -> Szolgáltató API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Hozzáadva: <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Hozzáadva a szókincsbővítőhöz"
 
@@ -412,6 +394,9 @@ msgstr "Előző szöveg csatolása"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "A választ könyvjegyzetként csatolja a jelenlegi kiemeléshez"
+
+msgid "Author"
+msgstr "Szerző"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Egyéni prompt"
 msgid "Custom Prompts"
 msgstr "Egyéni promptok"
 
-msgid "Deeply Thought"
-msgstr "Mély gondolat"
-
 msgid "Delete"
 msgstr "Törlés"
 
@@ -630,8 +612,8 @@ msgstr "Szótár"
 msgid "Dictionary Language"
 msgstr "Szótár nyelve"
 
-msgid "Dictionary Popup"
-msgstr "Szótár felugró ablaka"
+msgid "Dictionary Popup Buttons"
+msgstr "Szótár felugró ablak gombjai"
 
 msgid "Dictionary Settings"
 msgstr "Szótár beállításai"
@@ -864,6 +846,9 @@ msgstr "Markdown motor"
 msgid "Meaning & Usage"
 msgstr "Jelentés és használat"
 
+msgid "Minimalist Mode"
+msgstr "Minimalista mód"
+
 msgid "Model"
 msgstr "Modell"
 
@@ -917,6 +902,9 @@ msgstr "Nincs megnyitott könyv. Nyomja meg hosszan a fájlkezelőben a kívánt
 
 msgid "No common parameters are available for handler %1."
 msgstr "A(z) %1 kezelőhöz nem állnak rendelkezésre közös paraméterek."
+
+msgid "No highlight to annotate"
+msgstr "Nincs kijelölés a megjegyzéshez"
 
 msgid "No models available."
 msgstr "Nincs elérhető modell."
@@ -1071,9 +1059,6 @@ msgstr "Törlés"
 msgid "Purge Settings"
 msgstr "Beállítások törlése"
 
-msgid "Question"
-msgstr "Kérdés"
-
 msgid "Quick Note"
 msgstr "Gyors jegyzet"
 
@@ -1091,6 +1076,9 @@ msgstr "Visszamerülés"
 
 msgid "Reader settings are not available."
 msgstr "Az olvasó beállításai nem érhetők el."
+
+msgid "Reading progress"
+msgstr "Olvasási előrehaladás"
 
 msgid "Reasoning Option"
 msgstr "Gondolkodási opció"
@@ -1111,6 +1099,9 @@ msgstr "Eltávolítás"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Eltávolítod a(z) [%s] elemet a kiemelés menüből?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Eltávolítva: <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "A kérést a felhasználó megszakította."
@@ -1139,9 +1130,6 @@ msgstr ""
 "Ez a bővítményt gyári alapértékekre állítja vissza. A Beállítások felületen\n"
 "hozzáadott szolgáltatók, API-kulcsok és keresőeszköz hitelesítő adatok\n"
 "törlésre kerülnek. A configuration.lua fájl megmarad."
-
-msgid "Response"
-msgstr "Válasz"
 
 msgid "Response Settings"
 msgstr "Válaszbeállítások"
@@ -1236,6 +1224,9 @@ msgstr "Az AI válasz mély gondolkodási folyamatának (reasoning) megjelenít�
 
 msgid "Show follow up questions related to the response content."
 msgstr "A válasz tartalmához kapcsolódó további kérdések megjelenítése."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Csak a választ jeleníti meg: nincsenek Felhasználó/Asszisztens címek, nincs első gombsor, nincs érvelés és nincsenek utókérdések. A Bezárás mellett csak a válaszon lévő műveleteket (Megjegyzés, Szókincsépítő) tartja meg. Aktív állapotban kikapcsolja az Érvelési szöveget és az Utókérdéseket."
 
 msgid "Similar Books Recommendations"
 msgstr "Hasonló könyvek ajánlása"
@@ -1378,6 +1369,9 @@ msgstr "Ez a prompt lefordítja a kiemelt szöveget egy másik nyelvre."
 msgid "Timeline"
 msgstr "Idővonal"
 
+msgid "Title"
+msgstr "Cím"
+
 msgid "To-Do / Action Items"
 msgstr "Teendők / Feladatok"
 
@@ -1392,6 +1386,13 @@ msgstr "Az eszközhívás nem tartalmazott keresési kulcsszavakat."
 
 msgid "Translate"
 msgstr "Fordítás"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Fordítás (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "AI segítségével lefordítja a könyv leírását."
 
 msgid "Translation"
 msgstr "Fordítás"
@@ -1472,6 +1473,10 @@ msgstr "Megtekintés"
 
 msgid "Vocabulary"
 msgstr "Szókincs"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Szókincsépítő"
 
 msgid "Web Search"
 msgstr "Webes keresés"

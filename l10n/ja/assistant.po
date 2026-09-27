@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - タイトル : %1\n"
-" - 著者: %2\n"
-" - 読書進捗: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - %1/%2ページ"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>APIがエラーを返しました</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>追加しました</b> [%1 (AI)] をハイライトメニューに。"
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Term X-Rayのため、書籍のコンテキストを分析中...</b>"
@@ -178,9 +160,6 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>パラメータ</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>削除しました</b> [%1 (AI)] をハイライトメニューから。"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>リクエスト</b> - POST %1"
@@ -353,6 +332,9 @@ msgstr ""
 "メインメニューからプロバイダーを追加します:\n"
 "%1 -> AIアシスタント -> 設定 -> プロバイダーAPI"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "<b>[%1 (AI)]</b> を追加しました"
+
 msgid "Added to vocabulary builder"
 msgstr "単語帳に追加しました"
 
@@ -412,6 +394,9 @@ msgstr "前のテキストを添付"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "回答を現在のハイライトにブックノートとして添付します"
+
+msgid "Author"
+msgstr "著者"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "カスタムプロンプト"
 msgid "Custom Prompts"
 msgstr "カスタムプロンプト"
 
-msgid "Deeply Thought"
-msgstr "深く思考"
-
 msgid "Delete"
 msgstr "削除"
 
@@ -630,8 +612,8 @@ msgstr "辞書"
 msgid "Dictionary Language"
 msgstr "辞書の言語"
 
-msgid "Dictionary Popup"
-msgstr "辞書ポップアップ"
+msgid "Dictionary Popup Buttons"
+msgstr "辞書ポップアップのボタン"
 
 msgid "Dictionary Settings"
 msgstr "辞書設定"
@@ -863,6 +845,9 @@ msgstr "Markdownエンジン"
 msgid "Meaning & Usage"
 msgstr "意味と用法"
 
+msgid "Minimalist Mode"
+msgstr "ミニマリストモード"
+
 msgid "Model"
 msgstr "モデル"
 
@@ -916,6 +901,9 @@ msgstr "本が開かれていません。ファイルマネージャーで本を
 
 msgid "No common parameters are available for handler %1."
 msgstr "ハンドラ %1 に利用可能な共通パラメータはありません。"
+
+msgid "No highlight to annotate"
+msgstr "注釈を付けるハイライトがありません"
 
 msgid "No models available."
 msgstr "利用可能なモデルがありません。"
@@ -1070,9 +1058,6 @@ msgstr "消去"
 msgid "Purge Settings"
 msgstr "設定を消去"
 
-msgid "Question"
-msgstr "質問"
-
 msgid "Quick Note"
 msgstr "クイックノート"
 
@@ -1090,6 +1075,9 @@ msgstr "再没入"
 
 msgid "Reader settings are not available."
 msgstr "リーダー設定は利用できません。"
+
+msgid "Reading progress"
+msgstr "読書の進捗"
 
 msgid "Reasoning Option"
 msgstr "推論オプション"
@@ -1110,6 +1098,9 @@ msgstr "削除"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "ハイライトメニューから [%s] を削除しますか？"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "<b>[%1 (AI)]</b> を削除しました"
 
 msgid "Request Cancelled by user."
 msgstr "ユーザーによってリクエストがキャンセルされました。"
@@ -1137,9 +1128,6 @@ msgstr ""
 "\n"
 "プラグインを工場出荷時の既定値に戻します。設定 UI で追加したプロバイダー、API キー、検索ツールの認証情報は削除されます。\n"
 "configuration.lua ファイルは保持されます。"
-
-msgid "Response"
-msgstr "応答"
 
 msgid "Response Settings"
 msgstr "応答設定"
@@ -1234,6 +1222,9 @@ msgstr "AI応答に含まれる場合、深く考えた過程（推論）を表�
 
 msgid "Show follow up questions related to the response content."
 msgstr "応答内容に関連するフォローアップ質問を表示します。"
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "回答のみを表示します。ユーザー／アシスタントの見出し、最初のボタン行、推論、追加の質問は表示されません。「閉じる」の隣に、回答自体に対する操作（注釈、ボキャブラリービルダー）だけを残します。有効な間は「推論テキスト」と「追加の質問」をオフにします。"
 
 msgid "Similar Books Recommendations"
 msgstr "類似書籍のおすすめ"
@@ -1376,6 +1367,9 @@ msgstr "このプロンプトは、選択したテキストを別の言語に翻
 msgid "Timeline"
 msgstr "タイムライン"
 
+msgid "Title"
+msgstr "タイトル"
+
 msgid "To-Do / Action Items"
 msgstr "やること / アクション項目"
 
@@ -1390,6 +1384,13 @@ msgstr "ツール呼び出しに検索キーワードが含まれていません
 
 msgid "Translate"
 msgstr "翻訳"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "翻訳 (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "AI で書籍の説明を翻訳します。"
 
 msgid "Translation"
 msgstr "翻訳"
@@ -1470,6 +1471,10 @@ msgstr "表示"
 
 msgid "Vocabulary"
 msgstr "語彙"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "ボキャブラリービルダー"
 
 msgid "Web Search"
 msgstr "Web検索"

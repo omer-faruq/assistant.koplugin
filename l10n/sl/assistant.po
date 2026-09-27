@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Naslov: %1\n"
-" - Avtor: %2\n"
-" - Napredek branja: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - str. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API je vrnil napako</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Dodano</b> [%1 (AI)] v meni označb."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analiziranje konteksta knjige za Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametri</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Odstranjeno</b> [%1 (AI)] iz menija označb."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Zahteva</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Odgovor</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Preizkušam povezavo ..."
+msgstr "<b>Preizkušanje povezave ...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Neznana vrsta funkcije:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Dodajte ponudnike iz glavnega menija:\n"
 "%1 -> Pomočnik AI -> Nastavitve -> API ponudnika"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Dodano <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Dodano v graditelj besedišča"
 
@@ -412,6 +394,9 @@ msgstr "Priloži predhodno besedilo"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Odgovor priloži kot opombo v knjigi k trenutni oznaki"
+
+msgid "Author"
+msgstr "Avtor"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Prilagojeni poziv"
 msgid "Custom Prompts"
 msgstr "Pozivi po meri"
 
-msgid "Deeply Thought"
-msgstr "Poglobljeno razmišljanje"
-
 msgid "Delete"
 msgstr "Izbriši"
 
@@ -630,8 +612,8 @@ msgstr "Slovar"
 msgid "Dictionary Language"
 msgstr "Jezik slovarja"
 
-msgid "Dictionary Popup"
-msgstr "Pojavno okno slovarja"
+msgid "Dictionary Popup Buttons"
+msgstr "Gumbi pojavnega okna slovarja"
 
 msgid "Dictionary Settings"
 msgstr "Nastavitve slovarja"
@@ -866,6 +848,9 @@ msgstr "Pogon Markdown"
 msgid "Meaning & Usage"
 msgstr "Pomen in raba"
 
+msgid "Minimalist Mode"
+msgstr "Minimalistični način"
+
 msgid "Model"
 msgstr "Model"
 
@@ -919,6 +904,9 @@ msgstr "Nobena knjiga ni odprta. Dolgo pritisnite knjigo v upravitelju datotek i
 
 msgid "No common parameters are available for handler %1."
 msgstr "Model"
+
+msgid "No highlight to annotate"
+msgstr "Ni označbe za opombo"
 
 msgid "No models available."
 msgstr "Ni na voljo modelov."
@@ -1073,9 +1061,6 @@ msgstr "Počisti"
 msgid "Purge Settings"
 msgstr "Počisti nastavitve"
 
-msgid "Question"
-msgstr "Vprašanje"
-
 msgid "Quick Note"
 msgstr "Hitra opomba"
 
@@ -1093,6 +1078,9 @@ msgstr "Ponovna potopitev"
 
 msgid "Reader settings are not available."
 msgstr "Nastavitve bralnika niso na voljo."
+
+msgid "Reading progress"
+msgstr "Napredek branja"
 
 msgid "Reasoning Option"
 msgstr "Možnost sklepanja"
@@ -1113,6 +1101,9 @@ msgstr "Odstrani"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Odstranim [%s] iz menija označb?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Odstranjeno <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Zahteva preklicana s strani uporabnika."
@@ -1141,9 +1132,6 @@ msgstr ""
 "To obnovi vtičnik na tovarniške privzete vrednosti. Ponudniki, API ključi in\n"
 "poverilnice orodij za iskanje, dodane prek nastavitvenega vmesnika, bodo odstranjene.\n"
 "Datoteka configuration.lua bo ohranjena."
-
-msgid "Response"
-msgstr "Odgovor"
 
 msgid "Response Settings"
 msgstr "Nastavitve odziva"
@@ -1238,6 +1226,9 @@ msgstr "Prikaži poglobljeni miselni proces (razmišljanje) iz odziva AI, če ob
 
 msgid "Show follow up questions related to the response content."
 msgstr "Prikaži nadaljnja vprašanja, povezana z vsebino odziva."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Prikaže samo odgovor: brez naslovov Uporabnik/Pomočnik, brez prve vrstice gumbov, brez sklepanja in brez nadaljnjih vprašanj. Obdrži le dejanja na samem odgovoru (Dodaj opombo, Graditelj besedišča) poleg Zapri. Med delovanjem izklopi besedilo sklepanja in nadaljnja vprašanja."
 
 msgid "Similar Books Recommendations"
 msgstr "Priporočila podobnih knjig"
@@ -1380,6 +1371,9 @@ msgstr "Ta poziv prevede označeno besedilo v drug jezik."
 msgid "Timeline"
 msgstr "Časovnica"
 
+msgid "Title"
+msgstr "Naslov"
+
 msgid "To-Do / Action Items"
 msgstr "Opravki / Akcijske točke"
 
@@ -1394,6 +1388,13 @@ msgstr "Klic orodja ni vseboval iskalnih ključnih besed."
 
 msgid "Translate"
 msgstr "Prevedi"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Prevajdi (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Prevede opis knjige z AI."
 
 msgid "Translation"
 msgstr "Prevod"
@@ -1474,6 +1475,10 @@ msgstr "Ogled"
 
 msgid "Vocabulary"
 msgstr "Besedišče"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Graditelj besedišča"
 
 msgid "Web Search"
 msgstr "Spletno iskanje"

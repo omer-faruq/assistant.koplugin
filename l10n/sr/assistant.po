@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Наслов : %1\n"
-" - Аутор: %2\n"
-" - Напредак читања: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - стр. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API је вратио грешку</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Додато</b> [%1 (AI)] у мени за означавање."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Анализа контекста књиге за Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametri</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Уклоњено</b> [%1 (AI)] из менија за означавање."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Zahtev</b> – POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Odgovor</b> – HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Тестирање"
+msgstr "<b>Тестирање везе...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Непознат тип функције:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Додајте провајдере из главног менија:\n"
 "%1 -> AI асистент -> Подешавања -> API провајдера"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Додато <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Додато у градитељ вокабулара"
 
@@ -412,6 +394,9 @@ msgstr "Приложи претходни текст"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Прилаже одговор као напомену у књизи уз тренутни истакнути текст"
+
+msgid "Author"
+msgstr "Аутор"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Прилагођени промпт"
 msgid "Custom Prompts"
 msgstr "Prilagođeni promptovi"
 
-msgid "Deeply Thought"
-msgstr "Дубока мисао"
-
 msgid "Delete"
 msgstr "Obriši"
 
@@ -630,8 +612,8 @@ msgstr "Речник"
 msgid "Dictionary Language"
 msgstr "Jezik rečnika"
 
-msgid "Dictionary Popup"
-msgstr "Iskačući prozor rečnika"
+msgid "Dictionary Popup Buttons"
+msgstr "Дугмад у искачућем прозору речника"
 
 msgid "Dictionary Settings"
 msgstr "Podešavanja rečnika"
@@ -865,6 +847,9 @@ msgstr "Маркдаун енџин"
 msgid "Meaning & Usage"
 msgstr "Značenje i upotreba"
 
+msgid "Minimalist Mode"
+msgstr "Минималистички режим"
+
 msgid "Model"
 msgstr "Модел"
 
@@ -918,6 +903,9 @@ msgstr "Ниједна књига није отворена. Дуго прити
 
 msgid "No common parameters are available for handler %1."
 msgstr "Нема доступних заједничких параметара за руковаоца %1."
+
+msgid "No highlight to annotate"
+msgstr "Нема истакнутог дела за анотирање"
 
 msgid "No models available."
 msgstr "Нема доступних модела."
@@ -1072,9 +1060,6 @@ msgstr "Очисти"
 msgid "Purge Settings"
 msgstr "Очисти подешавања"
 
-msgid "Question"
-msgstr "Питање"
-
 msgid "Quick Note"
 msgstr "Брза белешка"
 
@@ -1092,6 +1077,9 @@ msgstr "Поновно урањање"
 
 msgid "Reader settings are not available."
 msgstr "Подешавања читача нису доступна."
+
+msgid "Reading progress"
+msgstr "Напредак читања"
 
 msgid "Reasoning Option"
 msgstr "Опција резоновања"
@@ -1112,6 +1100,9 @@ msgstr "Уклони"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Уклони [%s] из менија за означавање?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Уклоњено <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Zahtev je otkazao korisnik."
@@ -1140,9 +1131,6 @@ msgstr ""
 "Ovo vraća dodatak na podrazumevana podešavanja. Provajderi, API ključevi i\n"
 "akreditivi alata za pretragu dodati kroz interfejs podešavanja biće uklonjeni.\n"
 "Datoteka configuration.lua će biti sačuvana."
-
-msgid "Response"
-msgstr "Одговор"
 
 msgid "Response Settings"
 msgstr "Подешавања одговора"
@@ -1237,6 +1225,9 @@ msgstr "Прикажи дубоки процес размишљања (резо�
 
 msgid "Show follow up questions related to the response content."
 msgstr "Прикажи накнадна питања повезана са садржајем одговора."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Приказује само одговор: без наслова Корисник/Асистент, без првог реда дугмади, без образложења и без додатних питања. Задржава само радње на самом одговору (Анотирај, Градитељ речника) поред дугмета Затвори. Искључује текст образложења и додатна питања док је активан."
 
 msgid "Similar Books Recommendations"
 msgstr "Препоруке сличних књига"
@@ -1379,6 +1370,9 @@ msgstr "Овај промпт преводи означени текст на д
 msgid "Timeline"
 msgstr "Хронологија"
 
+msgid "Title"
+msgstr "Наслов"
+
 msgid "To-Do / Action Items"
 msgstr "Задаци / Акционе ставке"
 
@@ -1393,6 +1387,13 @@ msgstr "Позив алата није садржао кључне речи за
 
 msgid "Translate"
 msgstr "Преведи"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Преведи (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Преводи опис књиге помоћу AI."
 
 msgid "Translation"
 msgstr "Превод"
@@ -1473,6 +1474,10 @@ msgstr "Приказ"
 
 msgid "Vocabulary"
 msgstr "Вокабулар"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Градитељ речника"
 
 msgid "Web Search"
 msgstr "Веб претрага"

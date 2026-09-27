@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 02:46+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Afrikaans (AI translation)\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Titel : %1\n"
-" - Skrywer: %2\n"
-" - Leesvordering: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - bl. %1/%2"
@@ -98,9 +83,6 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API het 'n fout teruggegee</b>"
 
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Bygevoeg</b> [%1 (AI)] by die beklemtoningskieslys."
-
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Ontleed boekkonteks vir Term X-Ray...</b>"
 
@@ -144,7 +126,12 @@ msgid ""
 "\n"
 "- Current version: %3\n"
 "- Development branch: main"
-msgstr "KI-assistent: Kon nie die huidige boek laai nie: %1"
+msgstr ""
+"<b>GitHub-URL:</b>  %1\n"
+"<b>Bronbewaarplek:</b>  %2\n"
+"\n"
+"- Huidige weergawe: %3\n"
+"- Ontwikkelingstak: main"
 
 msgid ""
 "<b>Github URL:</b>  %1\n"
@@ -174,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>Parameters</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Verwyder</b> [%1 (AI)] uit die beklemtoningskieslys."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Versoek</b> - POST %1"
 
@@ -184,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Reaksie</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Toets verbinding"
+msgstr "<b>Besig om verbinding te toets...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Onbekende kenmerktipe:</b> %1"
@@ -348,6 +332,9 @@ msgstr ""
 "Voeg verskaffers by vanaf die hoofkieslys:\n"
 "%1 -> AI Assistant -> Instellings -> Verskaffer-API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Bygevoeg <b>[%1 (KI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Bygevoeg by woordeskatbouer"
 
@@ -407,6 +394,9 @@ msgstr "Heg Vorige Teks Aan"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Heg die antwoord as 'n boeknota aan die huidige gemerkte teks"
+
+msgid "Author"
+msgstr "Outeur"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -598,9 +588,6 @@ msgstr "Aangepaste opdrag"
 msgid "Custom Prompts"
 msgstr "Pasgemaakte opdragte"
 
-msgid "Deeply Thought"
-msgstr "Diep gedagte"
-
 msgid "Delete"
 msgstr "Verwyder"
 
@@ -625,8 +612,8 @@ msgstr "Woordeboek"
 msgid "Dictionary Language"
 msgstr "Woordeboektaal"
 
-msgid "Dictionary Popup"
-msgstr "Woordeboek-opspringvenster"
+msgid "Dictionary Popup Buttons"
+msgstr "Woordeboek-opspringknoppies"
 
 msgid "Dictionary Settings"
 msgstr "Woordeboek-instellings"
@@ -859,6 +846,9 @@ msgstr "Markdown-enjin"
 msgid "Meaning & Usage"
 msgstr "Betekenis en gebruik"
 
+msgid "Minimalist Mode"
+msgstr "Minimalistiese modus"
+
 msgid "Model"
 msgstr "Model"
 
@@ -912,6 +902,9 @@ msgstr "Geen boek is oop nie. Druk lank op 'n boek in die lêerbestuurder en kie
 
 msgid "No common parameters are available for handler %1."
 msgstr "Geen algemene parameters is beskikbaar vir die hanteerder %1$s nie."
+
+msgid "No highlight to annotate"
+msgstr "Geen merker om te annoteer nie"
 
 msgid "No models available."
 msgstr "Geen modelle beskikbaar nie."
@@ -1066,9 +1059,6 @@ msgstr "Suiwer"
 msgid "Purge Settings"
 msgstr "Instellings uitwis"
 
-msgid "Question"
-msgstr "Vraag"
-
 msgid "Quick Note"
 msgstr "Vinnige nota"
 
@@ -1086,6 +1076,9 @@ msgstr "Heronderdompeling"
 
 msgid "Reader settings are not available."
 msgstr "Leserinstellings is nie beskikbaar nie."
+
+msgid "Reading progress"
+msgstr "Leesvordering"
 
 msgid "Reasoning Option"
 msgstr "Redeneringsopsie"
@@ -1106,6 +1099,9 @@ msgstr "Verwyder"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Verwyder [%s] uit die beklemtoningskieslys?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Verwyder <b>[%1 (KI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Versoek deur gebruiker gekanselleer."
@@ -1134,9 +1130,6 @@ msgstr ""
 "Dit herstel die plugin na sy fabrieksverstek. Verskaffers, API-sleutels en\n"
 "soekinstrument-bewyse wat via die Instellings-koppelvlak bygevoeg is, sal verwyder word.\n"
 "Die lêer configuration.lua sal behoue bly."
-
-msgid "Response"
-msgstr "Antwoord"
 
 msgid "Response Settings"
 msgstr "Antwoordinstellings"
@@ -1231,6 +1224,9 @@ msgstr "Wys die diep denkproses (redenasie) van die AI-antwoord indien dit besta
 
 msgid "Show follow up questions related to the response content."
 msgstr "Wys opvolgyrae wat met die antwoordinhoud verband hou."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Wys net die antwoord: geen Gebruiker/Assistent-titels nie, geen eerste knoppiereeks nie, geen redenasie en geen opvolgvrae nie. Behou slegs die aksies op die antwoord self (Annoteer, Woordeskatbouer) langs Sluit. Skakel Redenasieteks en Opvolgvrae af terwyl dit aktief is."
 
 msgid "Similar Books Recommendations"
 msgstr "Aanbevelings vir soortgelyke boeke"
@@ -1373,6 +1369,9 @@ msgstr "Hierdie prompt vertaal die uitgeligte teks na 'n ander taal."
 msgid "Timeline"
 msgstr "Tydlyn"
 
+msgid "Title"
+msgstr "Titel"
+
 msgid "To-Do / Action Items"
 msgstr "Doenlys / Aksiepunte"
 
@@ -1387,6 +1386,13 @@ msgstr "Gereedskapoproep het nie soektrefwoorde ingesluit nie."
 
 msgid "Translate"
 msgstr "Vertaal"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Vertaal (KI)"
+
+msgid "Translates the book description with AI."
+msgstr "Vertaal die boekbeskrywing met KI."
 
 msgid "Translation"
 msgstr "Vertaling"
@@ -1467,6 +1473,10 @@ msgstr "Bekyk"
 
 msgid "Vocabulary"
 msgstr "Woordeskat"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Woordeskatbouer"
 
 msgid "Web Search"
 msgstr "Websoektog"

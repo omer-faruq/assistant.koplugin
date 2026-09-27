@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 04:01+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Interlingue (AI translation)\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Titul : %1\n"
-" - Autor: %2\n"
-" - Progress de lectura: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - p. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>Li API retornat un errore</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Adjuntet</b> [%1 (AI)] al menu de marcation."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analisant contextu del libre por Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametres</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Removet</b> [%1 (AI)] del menu de marcation."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Request</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Response</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Test de conexion"
+msgstr "<b>Testant li connexion...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Tip de caracteristica neconosset:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Adjunter providers del menú principal:\n"
 "%1 -> AI Assistant -> Configuration -> Provider API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Adjuntet <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Adjuntet al constructor de vocabularium"
 
@@ -412,6 +394,9 @@ msgstr "Atachar textu precedent"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Attacha li response quam nota de libre al actual emfase"
+
+msgid "Author"
+msgstr "Autor"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Prompt Personal"
 msgid "Custom Prompts"
 msgstr "Promptes personalisat"
 
-msgid "Deeply Thought"
-msgstr "Profondmen pensat"
-
 msgid "Delete"
 msgstr "Deleter"
 
@@ -630,8 +612,8 @@ msgstr "Dictionarium"
 msgid "Dictionary Language"
 msgstr "Lingue del dictionarium"
 
-msgid "Dictionary Popup"
-msgstr "Pop-up de dictionarium"
+msgid "Dictionary Popup Buttons"
+msgstr "Butones del popup de dictionarium"
 
 msgid "Dictionary Settings"
 msgstr "Parametres del dictionarium"
@@ -864,6 +846,9 @@ msgstr "Motore de Markdown"
 msgid "Meaning & Usage"
 msgstr "Signification e usage"
 
+msgid "Minimalist Mode"
+msgstr "Modus minimalistic"
+
 msgid "Model"
 msgstr "Model"
 
@@ -917,6 +902,9 @@ msgstr "Null libre es apertet. Long-presse un libre in li gerente de files e sel
 
 msgid "No common parameters are available for handler %1."
 msgstr "Null comun parametres es disponibil por li handler %1."
+
+msgid "No highlight to annotate"
+msgstr "Null text sublineat a annotar"
 
 msgid "No models available."
 msgstr "Null models disponibil."
@@ -1071,9 +1059,6 @@ msgstr "Purgar"
 msgid "Purge Settings"
 msgstr "Purgar configurationes"
 
-msgid "Question"
-msgstr "Question"
-
 msgid "Quick Note"
 msgstr "Nota rapid"
 
@@ -1091,6 +1076,9 @@ msgstr "Re-immersion"
 
 msgid "Reader settings are not available."
 msgstr "Parametres del lector ne es disponibil."
+
+msgid "Reading progress"
+msgstr "Progression de letura"
 
 msgid "Reasoning Option"
 msgstr "Option de Rationament"
@@ -1111,6 +1099,9 @@ msgstr "Remover"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Remover [%s] del menu de marcation?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Removet <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Requeste cancellat per li usator."
@@ -1137,9 +1128,6 @@ msgstr ""
 "Restabilir omni parametres de assistant.koplugin?\n"
 "\n"
 "To restora li pluigin a su standardes de fabrica. Providers, clave API e credentieles de instrument de sercha adjuntet per li UI de parametres va esser removet. Li file configuration.lua va esser preservat."
-
-msgid "Response"
-msgstr "Response"
 
 msgid "Response Settings"
 msgstr "Parametres de response"
@@ -1234,6 +1222,9 @@ msgstr "Monstrar li profund processu de pensada (rasonament) del response de IA,
 
 msgid "Show follow up questions related to the response content."
 msgstr "Monstrar questiones de sequentia relatet al contenete del response."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Monstra li response sol: null titules Usator/Assistent, null prim serie de butones, null rasonament e null questiones sequent. Conserva solmen li actiones sur li response self (Annotar, Constructer de Vocabularium) apu Cluder. Disactiva Textu de Rasonament e Questiones Sequent quande activ."
 
 msgid "Similar Books Recommendations"
 msgstr "Recommandationes de simil libres"
@@ -1376,6 +1367,9 @@ msgstr "Ti prompte traducte li marcat texte a un altri lingue."
 msgid "Timeline"
 msgstr "Cronologie"
 
+msgid "Title"
+msgstr "Titul"
+
 msgid "To-Do / Action Items"
 msgstr "A far / Actiones"
 
@@ -1390,6 +1384,13 @@ msgstr "Li appellation de instrument ne includet paroles-clave de recherche."
 
 msgid "Translate"
 msgstr "Traducter"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Traducter (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Traducte li descrition del libre per AI."
 
 msgid "Translation"
 msgstr "Traduction"
@@ -1470,6 +1471,10 @@ msgstr "Vider"
 
 msgid "Vocabulary"
 msgstr "Vocabularium"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Constructer de Vocabularium"
 
 msgid "Web Search"
 msgstr "Recerca sur li web"

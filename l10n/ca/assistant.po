@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Títol : %1\n"
-" - Autor: %2\n"
-" - Progrés de lectura: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - p. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>L'API ha retornat un error</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Afegit</b> [%1 (AI)] al menú de subratllats."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>S'està analitzant el context del llibre per al Term X-Ray...</b>"
@@ -178,9 +160,6 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Paràmetres</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Eliminat</b> [%1 (AI)] del menú de subratllats."
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Sol·licitud</b> - POST %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Afegeix proveïdors des del menú principal:\n"
 "%1 -> Assistent d'IA -> Configuració -> API de proveïdor"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Afegit <b>[%1 (IA)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Afegit al constructor de vocabulari"
 
@@ -412,6 +394,9 @@ msgstr "Adjunta text anterior"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Adjunta la resposta com a nota del llibre al subratllat actual"
+
+msgid "Author"
+msgstr "Autor"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Prompt personalitzat"
 msgid "Custom Prompts"
 msgstr "Indicacions personalitzades"
 
-msgid "Deeply Thought"
-msgstr "Pensament profund"
-
 msgid "Delete"
 msgstr "Elimina"
 
@@ -630,8 +612,8 @@ msgstr "Diccionari"
 msgid "Dictionary Language"
 msgstr "Idioma del diccionari"
 
-msgid "Dictionary Popup"
-msgstr "Finestra emergent del diccionari"
+msgid "Dictionary Popup Buttons"
+msgstr "Botons de la finestra del diccionari"
 
 msgid "Dictionary Settings"
 msgstr "Configuració del diccionari"
@@ -864,6 +846,9 @@ msgstr "Motor de Markdown"
 msgid "Meaning & Usage"
 msgstr "Significat i ús"
 
+msgid "Minimalist Mode"
+msgstr "Mode minimalista"
+
 msgid "Model"
 msgstr "Model"
 
@@ -917,6 +902,9 @@ msgstr "No hi ha cap llibre obert. Mantén premut un llibre al gestor de fitxers
 
 msgid "No common parameters are available for handler %1."
 msgstr "No hi ha paràmetres comuns disponibles per al gestor %1."
+
+msgid "No highlight to annotate"
+msgstr "No hi ha cap ressaltat per anotar"
 
 msgid "No models available."
 msgstr "No hi ha models disponibles."
@@ -1071,9 +1059,6 @@ msgstr "Purga"
 msgid "Purge Settings"
 msgstr "Purgar configuració"
 
-msgid "Question"
-msgstr "Pregunta"
-
 msgid "Quick Note"
 msgstr "Nota ràpida"
 
@@ -1091,6 +1076,9 @@ msgstr "Reimmersió"
 
 msgid "Reader settings are not available."
 msgstr "La configuració del lector no està disponible."
+
+msgid "Reading progress"
+msgstr "Progrés de lectura"
 
 msgid "Reasoning Option"
 msgstr "Opció de raonament"
@@ -1111,6 +1099,9 @@ msgstr "Elimina"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Voleu eliminar [%s] del menú de subratllats?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Eliminat <b>[%1 (IA)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Sol·licitud cancel·lada per l'usuari."
@@ -1137,9 +1128,6 @@ msgstr ""
 "Restableix tots els paràmetres d'assistant.koplugin?\n"
 "\n"
 "Això restaura el complement als seus valors predeterminats de fàbrica. Els proveïdors, les claus API i les credencials de l'eina de cerca afegits mitjançant la interfície de configuració s'eliminaran. El fitxer configuration.lua es conservarà."
-
-msgid "Response"
-msgstr "Resposta"
 
 msgid "Response Settings"
 msgstr "Configuració de la resposta"
@@ -1234,6 +1222,9 @@ msgstr "Mostra el procés de pensament profund (raonament) de la resposta de la 
 
 msgid "Show follow up questions related to the response content."
 msgstr "Mostra les preguntes de seguiment relacionades amb el contingut de la resposta."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Mostra només la resposta: sense títols d'Usuari/Assistent, sense la primera fila de botons, sense raonament ni preguntes de seguiment. Conserva només les accions de la mateixa resposta (Anota, Vocabulari) al costat de Tanca. Desactiva el text de raonament i les preguntes de seguiment mentre està actiu."
 
 msgid "Similar Books Recommendations"
 msgstr "Recomanacions de llibres similars"
@@ -1376,6 +1367,9 @@ msgstr "Aquesta indicació tradueix el text ressaltat a una altra llengua."
 msgid "Timeline"
 msgstr "Cronologia"
 
+msgid "Title"
+msgstr "Títol"
+
 msgid "To-Do / Action Items"
 msgstr "Tasques / Accions"
 
@@ -1390,6 +1384,13 @@ msgstr "La crida a l'eina no incloïa paraules clau de cerca."
 
 msgid "Translate"
 msgstr "Tradueix"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Tradueix (IA)"
+
+msgid "Translates the book description with AI."
+msgstr "Tradueix la descripció del llibre amb IA."
 
 msgid "Translation"
 msgstr "Traducció"
@@ -1469,6 +1470,10 @@ msgid "View"
 msgstr "Veure"
 
 msgid "Vocabulary"
+msgstr "Vocabulari"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
 msgstr "Vocabulari"
 
 msgid "Web Search"

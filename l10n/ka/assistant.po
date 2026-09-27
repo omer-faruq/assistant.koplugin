@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 03:58+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ქართული (AI translation)\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - სათაური: %1\n"
-" - ავტორი: %2\n"
-" - კითხვის პროგრესი: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - გვ. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API-მ დააბრუნა შეცდომა</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>დაემატა</b> [%1 (AI)] მონიშვნის მენიუში."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>მიმდინარეობს წიგნის კონტექსტის ანალიზი Term X-Ray-სთვის...</b>"
@@ -178,9 +160,6 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>პარამეტრები</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>ამოღებულია</b> [%1 (AI)] მონიშვნის მენიუდან."
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>მოთხოვნა</b> - POST %1"
@@ -353,6 +332,9 @@ msgstr ""
 "დაამატეთ პროვაიდერები მთავარი მენიუდან:\n"
 "%1 -> AI Assistant -> Settings -> Provider API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "დაემატა <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "დაემატა ლექსიკის შემგროვებელს"
 
@@ -412,6 +394,9 @@ msgstr "წინა ტექსტის მიმაგრება"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "პასუხს მიმდინარე ხაზგასმას წიგნის შენიშვნად მიამაგრებს"
+
+msgid "Author"
+msgstr "ავტორი"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "მორგებული პრომპტი"
 msgid "Custom Prompts"
 msgstr "მორგებული პრომპტები"
 
-msgid "Deeply Thought"
-msgstr "ღრმა ფიქრი"
-
 msgid "Delete"
 msgstr "წაშლა"
 
@@ -630,8 +612,8 @@ msgstr "ლექსიკონი"
 msgid "Dictionary Language"
 msgstr "ლექსიკონის ენა"
 
-msgid "Dictionary Popup"
-msgstr "ლექსიკონის ამომავალი ფანჯარა"
+msgid "Dictionary Popup Buttons"
+msgstr "ლექსიკონის ამომხტარი ფანჯრის ღილაკები"
 
 msgid "Dictionary Settings"
 msgstr "ლექსიკონის პარამეტრები"
@@ -864,6 +846,9 @@ msgstr "Markdown ძრავა"
 msgid "Meaning & Usage"
 msgstr "მნიშვნელობა და გამოყენება"
 
+msgid "Minimalist Mode"
+msgstr "მინიმალისტური რეჟიმი"
+
 msgid "Model"
 msgstr "მოდელი"
 
@@ -917,6 +902,9 @@ msgstr "წიგნი არ არის გახსნილი. ფაი�
 
 msgid "No common parameters are available for handler %1."
 msgstr "დამმუშავებლისთვის %1 საერთო პარამეტრები არ არის ხელმისაწვდომი."
+
+msgid "No highlight to annotate"
+msgstr "ანოტირებისთვის მონიშნული ტექსტი არ არის"
 
 msgid "No models available."
 msgstr "მოდელები არ არის ხელმისაწვდომი."
@@ -1071,9 +1059,6 @@ msgstr "გასუფთავება"
 msgid "Purge Settings"
 msgstr "პარამეტრების გასუფთავება"
 
-msgid "Question"
-msgstr "კითხვა"
-
 msgid "Quick Note"
 msgstr "სწრაფი ჩანაწერი"
 
@@ -1091,6 +1076,9 @@ msgstr "ხელახალი ჩაძირვა"
 
 msgid "Reader settings are not available."
 msgstr "მკითხველის პარამეტრები მიუწვდომელია."
+
+msgid "Reading progress"
+msgstr "კითხვის პროგრესი"
 
 msgid "Reasoning Option"
 msgstr "მსჯელობის პარამეტრი"
@@ -1111,6 +1099,9 @@ msgstr "ამოღება"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "ამოვიღოთ [%s] მონიშვნის მენიუდან?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "წაიშალა <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "მოთხოვნა გაუქმდა მომხმარებლის მიერ."
@@ -1139,9 +1130,6 @@ msgstr ""
 "ეს აღადგენს პლაგინს ქარხნულ პარამეტრებზე. პროვაიდერები, API გასაღებები და\n"
 "საძიებო ინსტრუმენტების ავტორიზაციის მონაცემები, რომლებიც დამატებულია პარამეტრების ინტერფეისიდან, წაიშლება.\n"
 "configuration.lua ფაილი შენარჩუნდება."
-
-msgid "Response"
-msgstr "პასუხი"
 
 msgid "Response Settings"
 msgstr "პასუხის პარამეტრები"
@@ -1236,6 +1224,9 @@ msgstr "აჩვენე AI პასუხის ღრმა მსჯელ
 
 msgid "Show follow up questions related to the response content."
 msgstr "აჩვენე პასუხის შინაარსთან დაკავშირებული შემდგომი კითხვები."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "აჩვენებს მხოლოდ პასუხს: არც მომხმარებლის/ასისტენტის სათაურები, არც ღილაკების პირველი რიგი, არც მსჯელობა და არც შემდგომი კითხვები. ინარჩუნებს მხოლოდ პასუხზე არსებულ მოქმედებებს (ანოტირება, სიტყვების შემგროვებელი) Close-ის გვერდით. აქტიური ყოფნისას თიშავს მსჯელობის ტექსტს და შემდგომ კითხვებს."
 
 msgid "Similar Books Recommendations"
 msgstr "მსგავსი წიგნების რეკომენდაციები"
@@ -1378,6 +1369,9 @@ msgstr "ეს პრომპტი თარგმნის მონიშნ
 msgid "Timeline"
 msgstr "ქრონოლოგია"
 
+msgid "Title"
+msgstr "სათაური"
+
 msgid "To-Do / Action Items"
 msgstr "ამოცანები / სამოქმედო პუნქტები"
 
@@ -1392,6 +1386,13 @@ msgstr "ხელსაწყოს გამოძახება არ შე
 
 msgid "Translate"
 msgstr "თარგმნა"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "თარგმნა (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "AI-ს დახმარებით თარგმნის წიგნის აღწერას."
 
 msgid "Translation"
 msgstr "თარგმანი"
@@ -1472,6 +1473,10 @@ msgstr "ნახვა"
 
 msgid "Vocabulary"
 msgstr "ლექსიკა"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "სიტყვების შემგროვებელი"
 
 msgid "Web Search"
 msgstr "ვებ-ძიება"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 02:47+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: عربى (AI translation)\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - العنوان: %1\n"
-" - المؤلف: %2\n"
-" - تقدم القراءة: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - ص. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>أعاد API خطأ</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>تمت الإضافة</b> [%1 (AI)] إلى قائمة التمييز."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>جارٍ تحليل سياق الكتاب لـ Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>المعلمات</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>تمت الإزالة</b> [%1 (AI)] من قائمة التمييز."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>الطلب</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>الاستجابة</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "جارٍ اختبار الاتصال..."
+msgstr "<b>جارٍ اختبار الاتصال...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>نوع ميزة غير معروف:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "أضف المزودين من القائمة الرئيسية:\n"
 "%1 -> مساعد الذكاء الاصطناعي -> الإعدادات -> API المزود"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "أُضيف <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "أُضيف إلى باني المفردات"
 
@@ -412,6 +394,9 @@ msgstr "إرفاق النص السابق"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "يُرفق الإجابة كملاحظة في الكتاب بالتظليل الحالي"
+
+msgid "Author"
+msgstr "المؤلف"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "موجه مخصص"
 msgid "Custom Prompts"
 msgstr "الموجهات المخصصة"
 
-msgid "Deeply Thought"
-msgstr "تفكير عميق"
-
 msgid "Delete"
 msgstr "حذف"
 
@@ -630,8 +612,8 @@ msgstr "القاموس"
 msgid "Dictionary Language"
 msgstr "لغة القاموس"
 
-msgid "Dictionary Popup"
-msgstr "نافذة القاموس المنبثقة"
+msgid "Dictionary Popup Buttons"
+msgstr "أزرار النافذة المنبثقة للقاموس"
 
 msgid "Dictionary Settings"
 msgstr "إعدادات القاموس"
@@ -868,6 +850,9 @@ msgstr "محرك ماركداون"
 msgid "Meaning & Usage"
 msgstr "المعنى والاستخدام"
 
+msgid "Minimalist Mode"
+msgstr "الوضع المبسّط"
+
 msgid "Model"
 msgstr "النموذج"
 
@@ -921,6 +906,9 @@ msgstr "لا يوجد كتاب مفتوح. اضغط مطولًا على كتاب
 
 msgid "No common parameters are available for handler %1."
 msgstr "النموذج"
+
+msgid "No highlight to annotate"
+msgstr "لا يوجد نص مميّز لتدوينه"
 
 msgid "No models available."
 msgstr "لا توجد نماذج متاحة."
@@ -1075,9 +1063,6 @@ msgstr "مسح"
 msgid "Purge Settings"
 msgstr "مسح الإعدادات"
 
-msgid "Question"
-msgstr "سؤال"
-
 msgid "Quick Note"
 msgstr "ملاحظة سريعة"
 
@@ -1095,6 +1080,9 @@ msgstr "إعادة الانغماس"
 
 msgid "Reader settings are not available."
 msgstr "إعدادات القارئ غير متاحة."
+
+msgid "Reading progress"
+msgstr "تقدّم القراءة"
 
 msgid "Reasoning Option"
 msgstr "خيار الاستدلال"
@@ -1115,6 +1103,9 @@ msgstr "إزالة"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "إزالة [%s] من قائمة التمييز؟"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "أُزيل <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "تم إلغاء الطلب من قبل المستخدم."
@@ -1142,9 +1133,6 @@ msgstr ""
 "\n"
 "سيؤدي هذا إلى استعادة الملحق إلى إعداداته الافتراضية. ستتم إزالة المزودين ومفاتيح API وبيانات اعتماد أداة البحث المضافة عبر واجهة الإعدادات.\n"
 "سيتم الاحتفاظ بملف configuration.lua."
-
-msgid "Response"
-msgstr "الرد"
 
 msgid "Response Settings"
 msgstr "إعدادات الاستجابة"
@@ -1239,6 +1227,9 @@ msgstr "إظهار عملية التفكير العميق (الاستدلال) �
 
 msgid "Show follow up questions related to the response content."
 msgstr "إظهار أسئلة متابعة متعلقة بمحتوى الاستجابة."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "يعرض الإجابة وحدها: بلا عنوانَي «المستخدم/المساعد»، وبلا صف الأزرار الأول، وبلا تفكير ولا أسئلة متابعة. يُبقي فقط الإجراءات على الإجابة نفسها (تدوين، بنّاء المفردات) بجانب «إغلاق». يُعطّل نص التفكير والأسئلة المتابعة أثناء تفعيله."
 
 msgid "Similar Books Recommendations"
 msgstr "توصيات بكتب مشابهة"
@@ -1381,6 +1372,9 @@ msgstr "يترجم هذا الموجّه النص المميز إلى لغة أ�
 msgid "Timeline"
 msgstr "الخط الزمني"
 
+msgid "Title"
+msgstr "العنوان"
+
 msgid "To-Do / Action Items"
 msgstr "المهام / بنود العمل"
 
@@ -1395,6 +1389,13 @@ msgstr "استدعاء الأداة لم يتضمن كلمات بحث."
 
 msgid "Translate"
 msgstr "ترجم"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "ترجمة (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "يترجم وصف الكتاب بالذكاء الاصطناعي."
 
 msgid "Translation"
 msgstr "الترجمة"
@@ -1475,6 +1476,10 @@ msgstr "عرض"
 
 msgid "Vocabulary"
 msgstr "المفردات"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "بنّاء المفردات"
 
 msgid "Web Search"
 msgstr "البحث على الويب"

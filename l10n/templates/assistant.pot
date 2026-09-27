@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: assistant.koplugin 1.18\n"
+"Project-Id-Version: assistant.koplugin 1.19\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,9 +42,6 @@ msgid "%1 handler does not support connection testing"
 msgstr ""
 
 msgid "<b>Testing connection...</b>"
-msgstr ""
-
-msgid "Highlighted text:"
 msgstr ""
 
 msgid "AI Notes"
@@ -132,7 +129,8 @@ msgstr ""
 msgid "Dictionary"
 msgstr ""
 
-msgid "Vocabulary"
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
 msgstr ""
 
 msgid "No word to add"
@@ -176,13 +174,41 @@ msgstr ""
 msgid "<b>Unknown feature type:</b> %1"
 msgstr ""
 
+msgid "Title"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "Reading progress"
+msgstr ""
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr ""
+
+msgid "Translates the book description with AI."
+msgstr ""
+
+msgid "Configuration not found. Please set up configuration.lua first."
+msgstr ""
+
+#. @translators Prompt offering a "Recap" (a brief spoiler-free summary of what was already read, to refresh memory after a break). %1 is the book title, %2 is the author.
 msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
+"Do you want an AI Recap?\n"
+"For %1 by %2.\n"
 "\n"
-"-----\n"
-"\n"
+msgstr ""
+
+msgid "Last read an hour ago."
+msgid_plural "Last read %1 hours ago."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
 msgstr ""
 
 msgid "Models: %1 (matched)"
@@ -232,9 +258,6 @@ msgid "Enter Model ID"
 msgstr ""
 
 msgid "e.g. google/gemini-3.0-flash-exp:free"
-msgstr ""
-
-msgid "No models available."
 msgstr ""
 
 msgid "fetchJSON: failed to parse returned data"
@@ -407,6 +430,9 @@ msgid "Quick Note"
 msgstr ""
 
 msgid "This button creates a quick note with highlighted text."
+msgstr ""
+
+msgid "Vocabulary"
 msgstr ""
 
 msgid "This prompt analyzes the vocabulary of the highlighted text, identifying complex words and providing definitions, synonyms, and usage examples."
@@ -602,6 +628,9 @@ msgid "Reasoning Option"
 msgstr ""
 
 msgid "Edit"
+msgstr ""
+
+msgid "No models available."
 msgstr ""
 
 msgid "OpenAI-compatible Chat Completions API"
@@ -815,6 +844,9 @@ msgstr ""
 msgid "Please enter a note before saving."
 msgstr ""
 
+msgid "Highlighted text:"
+msgstr ""
+
 msgid "User:"
 msgstr ""
 
@@ -886,7 +918,7 @@ msgstr ""
 msgid "Custom Prompts"
 msgstr ""
 
-msgid "Dictionary Popup"
+msgid "Dictionary Popup Buttons"
 msgstr ""
 
 msgid "Concise - reply in short sentences"
@@ -954,6 +986,12 @@ msgid "Stream Text Auto Scroll"
 msgstr ""
 
 msgid "Large Streaming Window"
+msgstr ""
+
+msgid "Minimalist Mode"
+msgstr ""
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
 msgstr ""
 
 msgid "Show Reasoning Text"
@@ -1067,16 +1105,7 @@ msgstr ""
 msgid "##### You may find these topics interesting:"
 msgstr ""
 
-msgid "Question"
-msgstr ""
-
-msgid "Response"
-msgstr ""
-
 msgid "(No response)"
-msgstr ""
-
-msgid "Deeply Thought"
 msgstr ""
 
 msgid "Search keywords are empty."
@@ -1137,6 +1166,9 @@ msgid "No text to annotate"
 msgstr ""
 
 msgid "No text left to annotate"
+msgstr ""
+
+msgid "No highlight to annotate"
 msgstr ""
 
 msgid "Annotation added successfully"
@@ -1386,31 +1418,10 @@ msgid ""
 "You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
 msgstr ""
 
-msgid "Configuration not found. Please set up configuration.lua first."
+msgid "Added <b>[%1 (AI)]</b>"
 msgstr ""
 
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr ""
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr ""
-
-#. @translators Prompt offering a "Recap" (a brief spoiler-free summary of what was already read, to refresh memory after a break). %1 is the book title, %2 is the author.
-msgid ""
-"Do you want an AI Recap?\n"
-"For %1 by %2.\n"
-"\n"
-msgstr ""
-
-msgid "Last read an hour ago."
-msgid_plural "Last read %1 hours ago."
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "Yes"
-msgstr ""
-
-msgid "No"
+msgid "Removed <b>[%1 (AI)]</b>"
 msgstr ""
 
 msgid "Markdown Engine"

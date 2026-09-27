@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Titel : %1\n"
-" - Författare: %2\n"
-" - Läsframsteg: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - s. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API:et returnerade ett fel</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Tillagt</b> [%1 (AI)] till markeringsmenyn."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analyserar bokkontext för Term X-Ray...</b>"
@@ -178,9 +160,6 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametrar</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Borttaget</b> [%1 (AI)] från markeringsmenyn."
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Begäran</b> – POST %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Lägg till leverantörer från huvudmenyn:\n"
 "%1 -> AI-assistent -> Inställningar -> Leverantörs-API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Tillagd <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Tillagd i ordförrådsbyggaren"
 
@@ -412,6 +394,9 @@ msgstr "Bifoga föregående text"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Bifogar svaret som en bokanteckning till den aktuella markeringen"
+
+msgid "Author"
+msgstr "Författare"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Anpassad prompt"
 msgid "Custom Prompts"
 msgstr "Anpassade prompts"
 
-msgid "Deeply Thought"
-msgstr "Djupt tänkande"
-
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -630,8 +612,8 @@ msgstr "Ordbok"
 msgid "Dictionary Language"
 msgstr "Ordboksspråk"
 
-msgid "Dictionary Popup"
-msgstr "Ordbokspopup"
+msgid "Dictionary Popup Buttons"
+msgstr "Knappar i ordbokspopup"
 
 msgid "Dictionary Settings"
 msgstr "Ordboksinställningar"
@@ -864,6 +846,9 @@ msgstr "Markdown-motor"
 msgid "Meaning & Usage"
 msgstr "Betydelse och användning"
 
+msgid "Minimalist Mode"
+msgstr "Minimalistiskt läge"
+
 msgid "Model"
 msgstr "Modell"
 
@@ -917,6 +902,9 @@ msgstr "Ingen bok är öppen. Håll in en bok i filhanteraren och välj Bokinfo 
 
 msgid "No common parameters are available for handler %1."
 msgstr "Inga gemensamma parametrar är tillgängliga för hanteraren %1."
+
+msgid "No highlight to annotate"
+msgstr "Ingen markering att anteckna"
 
 msgid "No models available."
 msgstr "Inga modeller tillgängliga."
@@ -1071,9 +1059,6 @@ msgstr "Rensa"
 msgid "Purge Settings"
 msgstr "Rensa inställningar"
 
-msgid "Question"
-msgstr "Fråga"
-
 msgid "Quick Note"
 msgstr "Snabbanteckning"
 
@@ -1091,6 +1076,9 @@ msgstr "Återinlevelse"
 
 msgid "Reader settings are not available."
 msgstr "Läsarinställningarna är inte tillgängliga."
+
+msgid "Reading progress"
+msgstr "Läsprogress"
 
 msgid "Reasoning Option"
 msgstr "Resoneringsalternativ"
@@ -1111,6 +1099,9 @@ msgstr "Ta bort"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Ta bort [%s] från markeringsmenyn?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Borttagen <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Begäran avbröts av användaren."
@@ -1139,9 +1130,6 @@ msgstr ""
 "Detta återställer plugin-programmet till fabriksinställningarna. Leverantörer, API-nycklar och\n"
 "inloggningsuppgifter för sökverktyg som lagts till via inställningsgränssnittet tas bort.\n"
 "Filen configuration.lua behålls."
-
-msgid "Response"
-msgstr "Svar"
 
 msgid "Response Settings"
 msgstr "Svarsinställningar"
@@ -1236,6 +1224,9 @@ msgstr "Visa den djupa tankeprocessen (resonemanget) från AI-svaret om det finn
 
 msgid "Show follow up questions related to the response content."
 msgstr "Visa följdfrågor relaterade till svarets innehåll."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Visar bara svaret: inga rubriker för Användare/Assistent, ingen första knapprad, inget resonemang och inga uppföljningsfrågor. Behåller endast åtgärderna på själva svaret (Anteckna, Ordförråd) intill Stäng. Stänger av Resonemangstext och Uppföljningsfrågor medan läget är aktivt."
 
 msgid "Similar Books Recommendations"
 msgstr "Rekommendationer av liknande böcker"
@@ -1378,6 +1369,9 @@ msgstr "Den här prompten översätter den markerade texten till ett annat språ
 msgid "Timeline"
 msgstr "Tidslinje"
 
+msgid "Title"
+msgstr "Titel"
+
 msgid "To-Do / Action Items"
 msgstr "Att göra / åtgärdspunkter"
 
@@ -1392,6 +1386,13 @@ msgstr "Verktygsanropet innehöll inga söknyckelord."
 
 msgid "Translate"
 msgstr "Översätt"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Översätt (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Översätter bokens beskrivning med AI."
 
 msgid "Translation"
 msgstr "Översättning"
@@ -1471,6 +1472,10 @@ msgid "View"
 msgstr "Visa"
 
 msgid "Vocabulary"
+msgstr "Ordförråd"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
 msgstr "Ordförråd"
 
 msgid "Web Search"

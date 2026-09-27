@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && n % 10 == 0) ? 2 : 3));\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - כותרת : %1\n"
-" - מחבר: %2\n"
-" - התקדמות קריאה: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - עמ׳ %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>ה־API החזיר שגיאה</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>נוסף</b> [%1 (AI)] לתפריט ההדגשות."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>מנתח את הקשר של הספר עבור Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>פרמטרים</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>הוסר</b> [%1 (AI)] מתפריט ההדגשות."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>בקשה</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>תגובה</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "בודק חיבור..."
+msgstr "<b>בודק חיבור...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>סוג תכונה לא ידוע:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "הוסף ספקים מהתפריט הראשי:\n"
 "%1 -> עוזר AI -> הגדרות -> API של ספק"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "נוסף <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "נוסף לבונה אוצר המילים"
 
@@ -412,6 +394,9 @@ msgstr "צרף טקסט קודם"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "מצרף את התשובה כהערת ספר להדגשה הנוכחית"
+
+msgid "Author"
+msgstr "מחבר"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "הנחיה מותאמת אישית"
 msgid "Custom Prompts"
 msgstr "הנחיות מותאמות אישית"
 
-msgid "Deeply Thought"
-msgstr "מחשבה מעמיקה"
-
 msgid "Delete"
 msgstr "מחיקה"
 
@@ -630,8 +612,8 @@ msgstr "מילון"
 msgid "Dictionary Language"
 msgstr "שפת מילון"
 
-msgid "Dictionary Popup"
-msgstr "חלונית מילון"
+msgid "Dictionary Popup Buttons"
+msgstr "כפתורי חלון המילון הקופץ"
 
 msgid "Dictionary Settings"
 msgstr "הגדרות מילון"
@@ -866,6 +848,9 @@ msgstr "מנוע Markdown"
 msgid "Meaning & Usage"
 msgstr "משמעות ושימוש"
 
+msgid "Minimalist Mode"
+msgstr "מצב מינימליסטי"
+
 msgid "Model"
 msgstr "דגם"
 
@@ -919,6 +904,9 @@ msgstr "לא פתוח ספר כלשהו. לחצו לחיצה ארוכה על ס�
 
 msgid "No common parameters are available for handler %1."
 msgstr "אין פרמטרים משותפים זמינים עבור המטפל %1."
+
+msgid "No highlight to annotate"
+msgstr "אין הדגשה להוספת הערה"
 
 msgid "No models available."
 msgstr "אין מודלים זמינים."
@@ -1073,9 +1061,6 @@ msgstr "נקה"
 msgid "Purge Settings"
 msgstr "מחיקת הגדרות"
 
-msgid "Question"
-msgstr "שאלה"
-
 msgid "Quick Note"
 msgstr "הערה מהירה"
 
@@ -1093,6 +1078,9 @@ msgstr "התעמקות מחדש"
 
 msgid "Reader settings are not available."
 msgstr "הגדרות הקורא אינן זמינות."
+
+msgid "Reading progress"
+msgstr "התקדמות הקריאה"
 
 msgid "Reasoning Option"
 msgstr "אפשרות חשיבה"
@@ -1113,6 +1101,9 @@ msgstr "הסר"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "להסיר את [%s] מתפריט ההדגשות?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "הוסר <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "הבקשה בוטלה על ידי המשתמש."
@@ -1140,9 +1131,6 @@ msgstr ""
 "\n"
 "פעולה זו משחזרת את ההגדרות לברירת המחדל של היצרן. ספקים, מפתחות API ופרטי כניסה לכלי חיפוש שנוספו דרך ממשק ההגדרות יוסרו.\n"
 "הקובץ configuration.lua יישמר."
-
-msgid "Response"
-msgstr "תשובה"
 
 msgid "Response Settings"
 msgstr "הגדרות תגובה"
@@ -1237,6 +1225,9 @@ msgstr "הצג תהליך חשיבה מעמיק (reasoning) מתגובת ה-AI, 
 
 msgid "Show follow up questions related to the response content."
 msgstr "הצג שאלות המשך הקשורות לתוכן התגובה."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "מציג את התשובה בלבד: ללא כותרות משתמש/עוזר, ללא שורת הכפתורים הראשונה, ללא הסקה וללא שאלות המשך. שומר רק על הפעולות שעל התשובה עצמה (הוספת הערה, בונה אוצר מילים) לצד סגירה. מכבה טקסט הסקה ושאלות המשך בזמן שהוא פעיל."
 
 msgid "Similar Books Recommendations"
 msgstr "המלצות לספרים דומים"
@@ -1379,6 +1370,9 @@ msgstr "הנחיה זו מתרגמת את הטקסט המסומן לשפה אח�
 msgid "Timeline"
 msgstr "ציר זמן"
 
+msgid "Title"
+msgstr "כותרת"
+
 msgid "To-Do / Action Items"
 msgstr "משימות / פעולות להמשך"
 
@@ -1393,6 +1387,13 @@ msgstr "קריאת הכלי לא כללה מילות חיפוש."
 
 msgid "Translate"
 msgstr "תרגם"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "תרגום (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "מתרגם את תיאור הספר באמצעות AI."
 
 msgid "Translation"
 msgstr "תרגום"
@@ -1473,6 +1474,10 @@ msgstr "צפייה"
 
 msgid "Vocabulary"
 msgstr "אוצר מילים"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "בונה אוצר מילים"
 
 msgid "Web Search"
 msgstr "חיפוש באינטרנט"

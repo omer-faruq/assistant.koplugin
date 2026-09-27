@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Tittel : %1\n"
-" - Forfattar: %2\n"
-" - Leseprogresjon: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - s. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API-et returnerte ein feil</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Lagt til</b> [%1 (AI)] i merkemenyen."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analyserer bokkonteksten for Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametrar</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Fjerna</b> [%1 (AI)] frå merkemenyen."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Førespurnad</b> – POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Svar</b> – HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Testing av tilkopling"
+msgstr "<b>Testar tilkoplinga...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Ukjend funksjonstype:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Legg til leverandørar frå hovudmenyen:\n"
 "%1 -> AI-assistent -> Innstillingar -> Leverandør-API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Lagt til <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Lagt til i ordforrådsbyggjaren"
 
@@ -412,6 +394,9 @@ msgstr "Legg ved tidlegare tekst"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Legg ved svaret som eit boknotat til den gjeldande uthevinga"
+
+msgid "Author"
+msgstr "Forfattar"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Tilpassa prompt"
 msgid "Custom Prompts"
 msgstr "Egendefinerte promptar"
 
-msgid "Deeply Thought"
-msgstr "Djupt tenkt"
-
 msgid "Delete"
 msgstr "Slett"
 
@@ -630,8 +612,8 @@ msgstr "Ordbok"
 msgid "Dictionary Language"
 msgstr "Ordbokspråk"
 
-msgid "Dictionary Popup"
-msgstr "Ordboksprettoppvindauge"
+msgid "Dictionary Popup Buttons"
+msgstr "Knappar i ordboksvindauget"
 
 msgid "Dictionary Settings"
 msgstr "Ordboksinnstillingar"
@@ -864,6 +846,9 @@ msgstr "Markdown-motor"
 msgid "Meaning & Usage"
 msgstr "Tyding og bruk"
 
+msgid "Minimalist Mode"
+msgstr "Minimalistmodus"
+
 msgid "Model"
 msgstr "Modell"
 
@@ -917,6 +902,9 @@ msgstr "Inga bok er open. Hald inne på ei bok i filhandsamaren og vel Bokinfo (
 
 msgid "No common parameters are available for handler %1."
 msgstr "Ingen vanlege parametrar er tilgjengelege for handterar %1."
+
+msgid "No highlight to annotate"
+msgstr "Inga utheving å kommentere"
 
 msgid "No models available."
 msgstr "Ingen modellar er tilgjengelege."
@@ -1071,9 +1059,6 @@ msgstr "Tøm"
 msgid "Purge Settings"
 msgstr "Tøm innstillingar"
 
-msgid "Question"
-msgstr "Spørsmål"
-
 msgid "Quick Note"
 msgstr "Snøggnotat"
 
@@ -1091,6 +1076,9 @@ msgstr "Gjeninnleving"
 
 msgid "Reader settings are not available."
 msgstr "Innstillingar for lesaren er ikkje tilgjengelege."
+
+msgid "Reading progress"
+msgstr "Leseframdrift"
 
 msgid "Reasoning Option"
 msgstr "Resonneringsval"
@@ -1111,6 +1099,9 @@ msgstr "Fjern"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Fjern [%s] frå merkemenyen?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Fjerna <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Førespurnaden vart avbroten av brukaren."
@@ -1139,9 +1130,6 @@ msgstr ""
 "Dette gjenopprettar programtillegget til standardinnstillingane frå fabrikken. Leverandørar, API-nøklar og\n"
 "innloggingar for søkeverktøy lagt til via innstillingsgrensesnittet vil bli fjerna.\n"
 "Filen configuration.lua vil bli bevart."
-
-msgid "Response"
-msgstr "Svar"
 
 msgid "Response Settings"
 msgstr "Svarinnstillingar"
@@ -1236,6 +1224,9 @@ msgstr "Vis djup tankeprosess (resonnering) frå AI-svaret dersom det finst."
 
 msgid "Show follow up questions related to the response content."
 msgstr "Vis oppfølgingsspørsmål knytte til innhaldet i svaret."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Visar berre svaret: ingen brukar-/assistenttitlar, inga fyrste knapperad, inga grunngjeving og ingen oppfølgingsspørsmål. Beheld berre handlingane på sjølve svaret (Kommenter, Ordforrådsbyggjar) ved sida av Lukke. Slår av grunngjevingstekst og oppfølgingsspørsmål medan det er aktivt."
 
 msgid "Similar Books Recommendations"
 msgstr "Tilrådingar for liknande bøker"
@@ -1378,6 +1369,9 @@ msgstr "Denne prompten omset den markerte teksten til eit anna språk."
 msgid "Timeline"
 msgstr "Tidslinje"
 
+msgid "Title"
+msgstr "Tittel"
+
 msgid "To-Do / Action Items"
 msgstr "Gjeremål / tiltak"
 
@@ -1392,6 +1386,13 @@ msgstr "Verktøykallet inneheldt ikkje søkeord."
 
 msgid "Translate"
 msgstr "Omset"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Omset (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Omset bokskildringa med AI."
 
 msgid "Translation"
 msgstr "Omsetjing"
@@ -1472,6 +1473,10 @@ msgstr "Vis"
 
 msgid "Vocabulary"
 msgstr "Vokabular"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Ordforrådsbyggjar"
 
 msgid "Web Search"
 msgstr "Nettsøk"

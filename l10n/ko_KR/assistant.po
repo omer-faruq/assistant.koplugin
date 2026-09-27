@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - 제목 : %1\n"
-" - 저자: %2\n"
-" - 읽기 진행률: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - %1/%2쪽"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API에서 오류가 반환되었습니다</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>추가됨</b>: [%1 (AI)]을(를) 하이라이트 메뉴에 추가했습니다."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Term X-Ray를 위해 책 컨텍스트를 분석하는 중...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>매개변수</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>제거됨</b>: [%1 (AI)]을(를) 하이라이트 메뉴에서 제거했습니다."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>요청</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>응답</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "연결 테스트 중..."
+msgstr "<b>연결 테스트 중...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>알 수 없는 기능 유형:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "메인 메뉴에서 공급자 추가:\n"
 "%1 -> AI 어시스턴트 -> 설정 -> 공급자 API"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "추가됨 <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "단어장에 추가됨"
 
@@ -412,6 +394,9 @@ msgstr "이전 텍스트 포함"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "답변을 현재 하이라이트에 책 노트로 첨부합니다"
+
+msgid "Author"
+msgstr "저자"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "사용자 지정 프롬프트"
 msgid "Custom Prompts"
 msgstr "사용자 정의 프롬프트"
 
-msgid "Deeply Thought"
-msgstr "심층 사고"
-
 msgid "Delete"
 msgstr "삭제"
 
@@ -630,8 +612,8 @@ msgstr "사전"
 msgid "Dictionary Language"
 msgstr "사전 언어"
 
-msgid "Dictionary Popup"
-msgstr "사전 팝업"
+msgid "Dictionary Popup Buttons"
+msgstr "사전 팝업 버튼"
 
 msgid "Dictionary Settings"
 msgstr "사전 설정"
@@ -863,6 +845,9 @@ msgstr "마크다운 엔진"
 msgid "Meaning & Usage"
 msgstr "의미 및 용법"
 
+msgid "Minimalist Mode"
+msgstr "미니멀 모드"
+
 msgid "Model"
 msgstr "모델"
 
@@ -916,6 +901,9 @@ msgstr "열려 있는 책이 없습니다. 파일 관리자에서 책을 길게 
 
 msgid "No common parameters are available for handler %1."
 msgstr "모델"
+
+msgid "No highlight to annotate"
+msgstr "주석을 달 하이라이트가 없습니다"
 
 msgid "No models available."
 msgstr "사용 가능한 모델이 없습니다."
@@ -1070,9 +1058,6 @@ msgstr "초기화"
 msgid "Purge Settings"
 msgstr "설정 초기화"
 
-msgid "Question"
-msgstr "질문"
-
 msgid "Quick Note"
 msgstr "빠른 메모"
 
@@ -1090,6 +1075,9 @@ msgstr "재몰입"
 
 msgid "Reader settings are not available."
 msgstr "리더 설정을 사용할 수 없습니다."
+
+msgid "Reading progress"
+msgstr "읽기 진행률"
 
 msgid "Reasoning Option"
 msgstr "추론 옵션"
@@ -1110,6 +1098,9 @@ msgstr "제거"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "하이라이트 메뉴에서 [%s]을(를) 제거하시겠습니까?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "제거됨 <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "사용자가 요청을 취소했습니다."
@@ -1137,9 +1128,6 @@ msgstr ""
 "\n"
 "이 작업은 플러그인을 공장 기본값으로 복원합니다. 설정 UI를 통해 추가된 공급자, API 키 및 검색 도구 자격 증명이 제거됩니다.\n"
 "configuration.lua 파일은 보존됩니다."
-
-msgid "Response"
-msgstr "응답"
 
 msgid "Response Settings"
 msgstr "응답 설정"
@@ -1234,6 +1222,9 @@ msgstr "AI 응답에 추론(깊은 사고 과정)이 포함된 경우 표시합�
 
 msgid "Show follow up questions related to the response content."
 msgstr "응답 내용과 관련된 후속 질문을 표시합니다."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "답변만 표시합니다. 사용자/어시스턴트 제목, 첫 번째 버튼 행, 추론, 후속 질문이 모두 표시되지 않습니다. 닫기 옆에 답변 자체에 대한 작업(주석 달기, 단어장)만 유지합니다. 활성화하면 추론 텍스트와 후속 질문이 꺼집니다."
 
 msgid "Similar Books Recommendations"
 msgstr "비슷한 책 추천"
@@ -1376,6 +1367,9 @@ msgstr "이 프롬프트는 강조 표시된 텍스트를 다른 언어로 번�
 msgid "Timeline"
 msgstr "타임라인"
 
+msgid "Title"
+msgstr "제목"
+
 msgid "To-Do / Action Items"
 msgstr "할 일 / 실행 항목"
 
@@ -1390,6 +1384,13 @@ msgstr "도구 호출에 검색 키워드가 포함되지 않았습니다."
 
 msgid "Translate"
 msgstr "번역"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "번역 (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "AI로 책 설명을 번역합니다."
 
 msgid "Translation"
 msgstr "번역"
@@ -1470,6 +1471,10 @@ msgstr "보기"
 
 msgid "Vocabulary"
 msgstr "어휘"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "단어장"
 
 msgid "Web Search"
 msgstr "웹 검색"

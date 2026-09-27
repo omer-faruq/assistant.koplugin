@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :(n>6 && n<11) ? 3 : 4;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Teideal : %1\n"
-" - Údar: %2\n"
-" - Dul chun cinn léitheoireachta: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - lch. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>Thug an API earráid ar ais</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Curtha leis</b> [%1 (AI)] sa Roghchlár Aibhsithe."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Ag anailísiú comhthéacs an leabhair do Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>Paraiméadair</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Bainte</b> [%1 (AI)] den Roghchlár Aibhsithe."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Iarratas</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Freagra</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Bonn URL"
+msgstr "<b>Ag tástáil an naisc...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Cineál gné anaithnid:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Cuir soláthróirí leis ón bpríomh-roghchlár:\n"
 "%1 -> Cúntóir AI -> Socruithe -> API Soláthróra"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Curtha leis <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Curtha leis an Tógálaí Stór Focal"
 
@@ -412,6 +394,9 @@ msgstr "Ceangail Téacs Roimhe"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Ceanglaíonn sé an freagra mar nóta leabhair leis an aibhsiú reatha."
+
+msgid "Author"
+msgstr "Údar"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Treoir Shaincheaptha"
 msgid "Custom Prompts"
 msgstr "Prómpaí Saincheaptha"
 
-msgid "Deeply Thought"
-msgstr "Smaoineamh Domhain"
-
 msgid "Delete"
 msgstr "Scrios"
 
@@ -630,8 +612,8 @@ msgstr "Foclóir"
 msgid "Dictionary Language"
 msgstr "Teanga Foclóra"
 
-msgid "Dictionary Popup"
-msgstr "Preabfhuinneog Foclóra"
+msgid "Dictionary Popup Buttons"
+msgstr "Cnaipí Preabfhuinneoige Foclóra"
 
 msgid "Dictionary Settings"
 msgstr "Socruithe Foclóra"
@@ -867,6 +849,9 @@ msgstr "Inneall Markdown"
 msgid "Meaning & Usage"
 msgstr "Brí & Úsáid"
 
+msgid "Minimalist Mode"
+msgstr "Mód Minimalach"
+
 msgid "Model"
 msgstr "Samhail"
 
@@ -920,6 +905,9 @@ msgstr "Níl aon leabhar oscailte. Brúigh go fada ar leabhar sa bhainisteoir co
 
 msgid "No common parameters are available for handler %1."
 msgstr "Níl aon pharaiméadair choitianta ar fáil don láimhseálaí %1."
+
+msgid "No highlight to annotate"
+msgstr "Níl aon aibhsiú le hanóta a chur leis"
 
 msgid "No models available."
 msgstr "Níl aon samhail ar fáil."
@@ -1074,9 +1062,6 @@ msgstr "Glan"
 msgid "Purge Settings"
 msgstr "Glan Socruithe"
 
-msgid "Question"
-msgstr "Ceist"
-
 msgid "Quick Note"
 msgstr "Nóta Tapa"
 
@@ -1094,6 +1079,9 @@ msgstr "Ath-thumadh"
 
 msgid "Reader settings are not available."
 msgstr "Níl socruithe an léitheora ar fáil."
+
+msgid "Reading progress"
+msgstr "Dul chun cinn léitheoireachta"
 
 msgid "Reasoning Option"
 msgstr "Rogha Réasúnaíochta"
@@ -1114,6 +1102,9 @@ msgstr "Bain"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Bain [%s] den Roghchlár Aibhsithe?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Bainte <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Cealaíodh an t-iarratas ag an úsáideoir."
@@ -1140,9 +1131,6 @@ msgstr ""
 "Athshocraigh gach socrú assistant.koplugin?\n"
 "\n"
 "Athchóireálann sé seo an breiseán go dtí a réamhshocruithe monarchan. Bainfear soláthróirí, eochracha API agus dintiúir uirlis chuardaigh a cuireadh leis trí Chomhéadan na Socruithe. Caomhnófar an comhad configuration.lua."
-
-msgid "Response"
-msgstr "Freagra"
 
 msgid "Response Settings"
 msgstr "Socruithe Freagra"
@@ -1237,6 +1225,9 @@ msgstr "Taispeáin próiseas domhain smaointeoireachta (réasúnaíocht) ó fhre
 
 msgid "Show follow up questions related to the response content."
 msgstr "Taispeáin ceisteanna leantacha a bhaineann le hábhar an fhreagra."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Taispeánann sé an freagra ina aonar: gan teidil Úsáideora/Cúntóra, gan aon chéad ró cnaipí, gan aon réasúnaíocht agus gan aon cheisteanna leantacha. Ní choinníonn sé ach na gníomhartha ar an bhfreagra féin (Anótaigh, Tógálaí Foclóra) in aice le Dún. Cuireann sé Téacs Réasúnaíochta agus Ceisteanna Leantacha as feidhm agus é gníomhach."
 
 msgid "Similar Books Recommendations"
 msgstr "Moltaí do Leabhair Chomhchosúla"
@@ -1379,6 +1370,9 @@ msgstr "Aistríonn an pras seo an téacs aibhsithe go teanga eile."
 msgid "Timeline"
 msgstr "Amlíne"
 
+msgid "Title"
+msgstr "Teideal"
+
 msgid "To-Do / Action Items"
 msgstr "Le Déanamh / Gníomhartha"
 
@@ -1393,6 +1387,13 @@ msgstr "Ní raibh eochairfhocail chuardaigh san áireamh sa ghlao uirlise."
 
 msgid "Translate"
 msgstr "Aistrigh"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Aistrigh (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Aistríonn sé cur síos an leabhair le AI."
 
 msgid "Translation"
 msgstr "Aistriúchán"
@@ -1473,6 +1474,10 @@ msgstr "Féach"
 
 msgid "Vocabulary"
 msgstr "Stór Focal"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Tógálaí Foclóra"
 
 msgid "Web Search"
 msgstr "Cuardach Gréasáin"

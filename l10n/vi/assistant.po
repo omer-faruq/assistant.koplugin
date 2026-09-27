@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Tiêu đề : %1\n"
-" - Tác giả: %2\n"
-" - Tiến độ đọc: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - tr. %1/%2"
@@ -97,9 +82,6 @@ msgstr ""
 
 msgid "<b>API returned an error</b>"
 msgstr "<b>API trả về lỗi</b>"
-
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Đã thêm</b> [%1 (AI)] vào menu tô sáng."
 
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Đang phân tích ngữ cảnh sách cho Term X-Ray...</b>"
@@ -179,9 +161,6 @@ msgstr ""
 msgid "<b>Parameters</b>"
 msgstr "<b>Tham số</b>"
 
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Đã xóa</b> [%1 (AI)] khỏi menu tô sáng."
-
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Yêu cầu</b> - POST %1"
 
@@ -189,7 +168,7 @@ msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Phản hồi</b> - HTTP %1"
 
 msgid "<b>Testing connection...</b>"
-msgstr "Kiểm tra kết nối..."
+msgstr "<b>Đang kiểm tra kết nối...</b>"
 
 msgid "<b>Unknown feature type:</b> %1"
 msgstr "<b>Loại tính năng không xác định:</b> %1"
@@ -353,6 +332,9 @@ msgstr ""
 "Thêm nhà cung cấp từ menu chính:\n"
 "%1 -> Trợ lý AI -> Cài đặt -> API Nhà cung cấp"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Đã thêm <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Đã thêm vào trình tạo từ vựng"
 
@@ -412,6 +394,9 @@ msgstr "Đính kèm văn bản trước đó"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Đính kèm câu trả lời làm ghi chú sách vào phần đánh dấu hiện tại"
+
+msgid "Author"
+msgstr "Tác giả"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -603,9 +588,6 @@ msgstr "Lời nhắc tùy chỉnh"
 msgid "Custom Prompts"
 msgstr "Prompt tùy chỉnh"
 
-msgid "Deeply Thought"
-msgstr "Suy nghĩ sâu"
-
 msgid "Delete"
 msgstr "Xóa"
 
@@ -630,8 +612,8 @@ msgstr "Từ điển"
 msgid "Dictionary Language"
 msgstr "Ngôn ngữ từ điển"
 
-msgid "Dictionary Popup"
-msgstr "Cửa sổ bật lên Từ điển"
+msgid "Dictionary Popup Buttons"
+msgstr "Các nút popup từ điển"
 
 msgid "Dictionary Settings"
 msgstr "Cài đặt từ điển"
@@ -863,6 +845,9 @@ msgstr "Công cụ Markdown"
 msgid "Meaning & Usage"
 msgstr "Ý nghĩa & Cách dùng"
 
+msgid "Minimalist Mode"
+msgstr "Chế độ tối giản"
+
 msgid "Model"
 msgstr "Mô hình"
 
@@ -916,6 +901,9 @@ msgstr "Không có sách nào đang mở. Nhấn giữ một cuốn sách trong 
 
 msgid "No common parameters are available for handler %1."
 msgstr "Không có tham số chung nào khả dụng cho trình xử lý %1."
+
+msgid "No highlight to annotate"
+msgstr "Không có đoạn đánh dấu để chú thích"
 
 msgid "No models available."
 msgstr "Không có mô hình nào khả dụng."
@@ -1070,9 +1058,6 @@ msgstr "Xóa sạch"
 msgid "Purge Settings"
 msgstr "Xóa cài đặt"
 
-msgid "Question"
-msgstr "Câu hỏi"
-
 msgid "Quick Note"
 msgstr "Ghi chú nhanh"
 
@@ -1090,6 +1075,9 @@ msgstr "Tái hòa nhập"
 
 msgid "Reader settings are not available."
 msgstr "Cài đặt trình đọc không khả dụng."
+
+msgid "Reading progress"
+msgstr "Tiến độ đọc"
 
 msgid "Reasoning Option"
 msgstr "Tùy chọn Lập luận"
@@ -1110,6 +1098,9 @@ msgstr "Xóa"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Xóa [%s] khỏi menu tô sáng?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Đã xóa <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Yêu cầu đã bị người dùng hủy."
@@ -1137,9 +1128,6 @@ msgstr ""
 "\n"
 "Thao tác này sẽ khôi phục plugin về cài đặt gốc. Các nhà cung cấp, khóa API và thông tin xác thực công cụ tìm kiếm được thêm qua giao diện Cài đặt sẽ bị xóa.\n"
 "Tệp configuration.lua sẽ được giữ nguyên."
-
-msgid "Response"
-msgstr "Phản hồi"
 
 msgid "Response Settings"
 msgstr "Cài đặt phản hồi"
@@ -1234,6 +1222,9 @@ msgstr "Hiển thị quá trình suy nghĩ sâu (suy luận) từ phản hồi c
 
 msgid "Show follow up questions related to the response content."
 msgstr "Hiển thị các câu hỏi tiếp theo liên quan đến nội dung phản hồi."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Chỉ hiển thị riêng câu trả lời: không có tiêu đề Người dùng/Trợ lý, không có hàng nút đầu tiên, không có phần suy luận và không có câu hỏi tiếp theo. Chỉ giữ lại các hành động trên chính câu trả lời (Chú thích, Xây dựng từ vựng) bên cạnh nút Đóng. Tắt Văn bản suy luận và Câu hỏi tiếp theo khi chế độ này đang bật."
 
 msgid "Similar Books Recommendations"
 msgstr "Gợi ý sách tương tự"
@@ -1376,6 +1367,9 @@ msgstr "Lời nhắc này dịch văn bản được tô sáng sang ngôn ngữ 
 msgid "Timeline"
 msgstr "Dòng thời gian"
 
+msgid "Title"
+msgstr "Tiêu đề"
+
 msgid "To-Do / Action Items"
 msgstr "Việc cần làm / Mục hành động"
 
@@ -1390,6 +1384,13 @@ msgstr "Lệnh gọi công cụ không bao gồm từ khóa tìm kiếm."
 
 msgid "Translate"
 msgstr "Dịch"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Dịch (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Dịch mô tả sách bằng AI."
 
 msgid "Translation"
 msgstr "Bản dịch"
@@ -1470,6 +1471,10 @@ msgstr "Xem"
 
 msgid "Vocabulary"
 msgstr "Từ vựng"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Xây dựng từ vựng"
 
 msgid "Web Search"
 msgstr "Tìm kiếm web"

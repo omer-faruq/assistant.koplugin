@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 22:24+0800\n"
+"POT-Creation-Date: 2026-09-27 23:55+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,21 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid ""
-" - Title : %1\n"
-" - Author: %2\n"
-" - Reading progress: %3%\n"
-"\n"
-"-----\n"
-"\n"
-msgstr ""
-" - Titolo : %1\n"
-" - Aŭtoro: %2\n"
-" - Lega progreso: %3%\n"
-"\n"
-"-----\n"
-"\n"
 
 msgid " - p. %1/%2"
 msgstr " - p. %1/%2"
@@ -98,9 +83,6 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API redonis eraron</b>"
 
-msgid "<b>Added</b> [%1 (AI)] to Highlight Menu."
-msgstr "<b>Aldonita</b> [%1 (AI)] al la Marka Menuo."
-
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analizas libran kuntekston por Term X-Ray...</b>"
 
@@ -145,11 +127,10 @@ msgid ""
 "- Current version: %3\n"
 "- Development branch: main"
 msgstr ""
-"<b>Github URL:</b> %1\n"
-"<b>Source Repo:</b> %2\n"
+"<b>Github URL:</b>  %1\n"
+"<b>Fonta deponejo:</b>  %2\n"
 "\n"
 "- Nuna versio: %3\n"
-"- Lasta versio: <b>%4</b>\n"
 "- Disvolva branĉo: main"
 
 msgid ""
@@ -179,9 +160,6 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametroj</b>"
-
-msgid "<b>Removed</b> [%1 (AI)] from Highlight Menu."
-msgstr "<b>Forigita</b> [%1 (AI)] el la Marka Menuo."
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Petro</b> - POST %1"
@@ -354,6 +332,9 @@ msgstr ""
 "Aldonu provizantojn el la ĉefa menuo:\n"
 "%1 -> AI Asistanto -> Agordoj -> API de Provizanto"
 
+msgid "Added <b>[%1 (AI)]</b>"
+msgstr "Aldonita <b>[%1 (AI)]</b>"
+
 msgid "Added to vocabulary builder"
 msgstr "Aldonita al la vortkonstruilo"
 
@@ -413,6 +394,9 @@ msgstr "Alkroĉi antaŭan tekston"
 
 msgid "Attaches the answer as a book note to the current highlight"
 msgstr "Alkroĉas la respondon kiel libronoton al la nuna emfazo"
+
+msgid "Author"
+msgstr "Aŭtoro"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -604,9 +588,6 @@ msgstr "Propra Prompto"
 msgid "Custom Prompts"
 msgstr "Propraj Promptoj"
 
-msgid "Deeply Thought"
-msgstr "Profunda Penso"
-
 msgid "Delete"
 msgstr "Forigi"
 
@@ -631,8 +612,8 @@ msgstr "Vortaro"
 msgid "Dictionary Language"
 msgstr "Vortara Lingvo"
 
-msgid "Dictionary Popup"
-msgstr "Vortara ŝprucfenestro"
+msgid "Dictionary Popup Buttons"
+msgstr "Butonoj de la vortara ŝprucfenestro"
 
 msgid "Dictionary Settings"
 msgstr "Vortaraj agordoj"
@@ -865,6 +846,9 @@ msgstr "Markdown-Motoro"
 msgid "Meaning & Usage"
 msgstr "Signifo kaj uzado"
 
+msgid "Minimalist Mode"
+msgstr "Minimumisma reĝimo"
+
 msgid "Model"
 msgstr "Modelo"
 
@@ -918,6 +902,9 @@ msgstr "Neniu libro estas malfermita. Longe premu libron en la dosieradministril
 
 msgid "No common parameters are available for handler %1."
 msgstr "Ne disponeblas komunaj parametroj por la traktilo %1."
+
+msgid "No highlight to annotate"
+msgstr "Neniu markita teksto por komenti"
 
 msgid "No models available."
 msgstr "Neniuj modeloj disponeblas."
@@ -1072,9 +1059,6 @@ msgstr "Purigi"
 msgid "Purge Settings"
 msgstr "Forigi Agordojn"
 
-msgid "Question"
-msgstr "Demando"
-
 msgid "Quick Note"
 msgstr "Rapida Noto"
 
@@ -1092,6 +1076,9 @@ msgstr "Replonĝo"
 
 msgid "Reader settings are not available."
 msgstr "Legilaj agordoj ne disponeblas."
+
+msgid "Reading progress"
+msgstr "Legprogreso"
 
 msgid "Reasoning Option"
 msgstr "Rezona opcio"
@@ -1112,6 +1099,9 @@ msgstr "Forigi"
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
 msgstr "Ĉu forigi [%s] el la Marka Menuo?"
+
+msgid "Removed <b>[%1 (AI)]</b>"
+msgstr "Forigita <b>[%1 (AI)]</b>"
 
 msgid "Request Cancelled by user."
 msgstr "Peto nuligita de uzanto."
@@ -1138,9 +1128,6 @@ msgstr ""
 "Ĉu restarigi ĉiujn agordojn de assistant.koplugin?\n"
 "\n"
 "Ĉi tio revenigos la kromprogramon al ĝiaj fabrikaj defaŭltoj. Provizantoj, API-ŝlosiloj kaj akreditaĵoj de serĉilo aldonitaj per la Agorda Interfaco estos forigitaj. La dosiero configuration.lua estos konservita."
-
-msgid "Response"
-msgstr "Respondo"
 
 msgid "Response Settings"
 msgstr "Respondaj Agordoj"
@@ -1235,6 +1222,9 @@ msgstr "Montri la profundan pensprocezon (rezonadon) el la AI-respondo, se ĝi e
 
 msgid "Show follow up questions related to the response content."
 msgstr "Montri sekvajn demandojn rilatajn al la enhavo de la respondo."
+
+msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
+msgstr "Montras nur la respondon: neniuj titoloj Uzanto/Asistanto, neniu unua butonvico, neniu rezonado kaj neniuj sekvaj demandoj. Konservas nur la agojn sur la respondo mem (Komenti, Vortproviza Konstruilo) apud Fermi. Malŝaltas Rezonadan Tekston kaj Sekvajn Demandojn dum ĝi estas aktiva."
 
 msgid "Similar Books Recommendations"
 msgstr "Rekomendoj de similaj libroj"
@@ -1377,6 +1367,9 @@ msgstr "Ĉi tiu prompto tradukas la markitan tekston al alia lingvo."
 msgid "Timeline"
 msgstr "Kronologio"
 
+msgid "Title"
+msgstr "Titolo"
+
 msgid "To-Do / Action Items"
 msgstr "Taskoj / Agaj eroj"
 
@@ -1391,6 +1384,13 @@ msgstr "Ilo-voko ne inkluzivis serĉajn ŝlosilvortojn."
 
 msgid "Translate"
 msgstr "Traduki"
+
+#. @translators Button text: translates the book description with AI. Keep it short.
+msgid "Translate (AI)"
+msgstr "Traduki (AI)"
+
+msgid "Translates the book description with AI."
+msgstr "Tradukas la priskribon de la libro per AI."
 
 msgid "Translation"
 msgstr "Traduko"
@@ -1471,6 +1471,10 @@ msgstr "Vidi"
 
 msgid "Vocabulary"
 msgstr "Vortprovizo"
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr "Vortproviza Konstruilo"
 
 msgid "Web Search"
 msgstr "Retserĉo"
