@@ -130,11 +130,15 @@ local tests = {
 
     test("viewer css: right alignment uses what MuPDF honors", function()
         -- MuPDF's property table has no max-width and no auto margin, so the
-        -- bubble right-aligns with a fixed percentage margin-left.
-        assert.matches(css_src, 'margin%-left: 50%%', "bubble must right-align via margin-left: 50%")
+        -- bubble right-aligns with a fixed percentage margin-left, which also
+        -- caps how wide it can grow.
+        assert.matches(css_src, 'margin%-left: 38%%', "bubble must right-align via a percentage margin-left")
         assert.notMatches(css_src, 'margin%-left: auto', "MuPDF does not honor an auto margin")
         assert.notMatches(css_src, 'max%-width', "MuPDF does not honor max-width")
         assert.notMatches(css_src, 'border%-radius', "MuPDF does not honor border-radius")
+        -- A width would fix the box and, with no box-sizing, let padding and
+        -- border overflow it; the bubble must stay shrink-to-fit.
+        assert.notMatches(css_src, '%.user%-bubble %s*{[^}]*width:', "the bubble must not set a width")
     end),
 
     test("viewer: p-wrapped bubble unwrap present and working", function()

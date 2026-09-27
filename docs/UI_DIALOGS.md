@@ -64,7 +64,13 @@ Supported: `background-color`, `border` + `border-{top,right,bottom,left}` + `-c
 - `max-width`, `box-shadow`, `opacity`, `flex`, `grid`, `transform`, `border-image`, `outline`, `box-sizing`.
 - Selector: only `:root`, `:empty`, `:first-child`, `:nth-child`, `:link` — no `:hover`.
 
-Consequences for the chat layout: a right-aligned bubble uses `margin-left: 50%` (a fixed percentage, which MuPDF honors) — not `margin-left: auto`, not `max-width`. `text-align: right` right-aligns the *text* but the element's background still spans the full width, so it cannot substitute for the margin trick. `float` and `display: table` both misbehave (float needs a clearing element; display-table backgrounds over-extend). Rectangular backgrounds with a `border-left` accent are the substitute for rounded corners.
+Consequences for the chat layout: a right-aligned bubble uses `margin-left: 38%` (a fixed percentage, which MuPDF honors) — not `margin-left: auto`, not `max-width`. `text-align: right` right-aligns the *text* but the element's background still spans the full width, so it cannot substitute for the margin trick. `float` and `display: table` both misbehave (float needs a clearing element; display-table backgrounds over-extend). Rectangular backgrounds with a `border-left` accent are the substitute for rounded corners.
+
+**`margin-left` doubles as `max-width`.** MuPDF shrink-to-fits a block within the width its margin leaves, so the margin is both the alignment offset and the width cap: `margin-left: 38%` right-aligns the bubble and caps it at 62% of the page, while a short turn still hugs its text. Lowering the margin widens long turns; raising it narrows them. This is the only working equivalent of `max-width` + `margin-left: auto`.
+
+**Do not set `width` on a bubble.** There is no `box-sizing`, so `width` is the content box: padding and border are added on top and overflow it. A `width: 50%` + `margin-left: 50%` bubble renders *narrower* than the shrink-to-fit one, and `width: 62%` bleeds off the right edge. Verified with `./test/runui.sh bubble_width`.
+
+**`max-width` and `margin-left: auto` fail silently and together.** A plausible-looking `max-width: 50%; margin-left: auto` rule loses both properties and degrades to a full-width, left-aligned block with no error anywhere. This is why the CSS carries a test asserting neither property ever reappears.
 
 ## Screenshotting a UI test (WSL2)
 

@@ -77,9 +77,12 @@ ul li {
 
 /* Plugin components */
 
-/* User message bubble: right-aligned via margin-left, gray bg, left border accent */
+/* User message bubble: right-aligned via margin-left, gray bg, left border accent.
+   margin-left doubles as the max width: MuPDF shrink-to-fits the bubble within
+   whatever the margin leaves, so 38% caps it at 62% of the page while a short
+   turn still hugs its text. */
 .user-bubble {
-    margin-left: 50%;
+    margin-left: 38%;
     margin-top: 0.8em;
     margin-bottom: 2em;
     padding: 0.5em 0.8em;
