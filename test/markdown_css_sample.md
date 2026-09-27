@@ -41,8 +41,8 @@ Bullets holding numbered children (rare, shows discs: known limit):
 Numbered holding bullet children:
 
 1. Numbered parent
-   - Bullet child one
-   - Bullet child two
+    - Bullet child one
+    - Bullet child two
 2. Numbered parent two
 
 # Timeline
@@ -137,17 +137,9 @@ print(hello("koreader"))
 
 ---
 
-<div class="assistant-label">☺ Question</div>
+<div class="user-bubble">What is the One Ring?</div>
 
-➤ What is the One Ring?
-
-<div class="assistant-label assistant-label--thought">❖ Deeply Thought</div>
-
-```reasoning
-The user asks about a classic book, so internal knowledge suffices and no web search is needed. The answer follows the book_info structure with four sections.
-```
-
-<div class="assistant-label">✦ Response</div>
+<div class="thought-block">The user asks about a classic book, so internal knowledge suffices and no web search is needed. The answer follows the book_info structure with four sections.</div>
 
 # The Ring and Its Nature
 
@@ -162,15 +154,9 @@ It amplifies the bearer's desires: power promises to the strong, escape to the f
 
 ---
 
-<div class="assistant-label">☺ Question</div>
-
-➤ Who carries it to Mordor?
-
-<div class="assistant-label">✦ Search</div>
+<div class="user-bubble">Who carries it to Mordor?</div>
 
 ⌗ Frodo Baggins Ring bearer Mordor
-
-<div class="assistant-label">✦ Response</div>
 
 Frodo Baggins carries the Ring to Mordor with Samwise Gamgee.
 

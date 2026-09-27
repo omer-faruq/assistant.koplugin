@@ -98,7 +98,7 @@ local tests = {
         local out = fmt(search, { minimal = true })
         assert.equal(out, string.format("%s\n\n", "⌗ Frodo Baggins\n\n"),
             "keyword line must survive as content")
-        assert.notMatches(out, "assistant%-label", "no Search carrier may survive")
+        assert.notMatches(out, "user%-bubble", "minimalist mode must not wrap the answer")
     end),
 
     test("minimal: a fence from before the mode was switched on is cut", function()
@@ -119,13 +119,17 @@ local tests = {
             "blocks must stay separated")
     end),
 
-    test("standard shape still renders the carriers", function()
+    test("standard shape still renders the bubbles", function()
         local user = make_msg("user", "Why this?")
         local answer = make_msg("assistant", "Because.")
         local out = fmt(user, { settings = make_settings(false) })
             .. fmt(answer, { settings = make_settings(false) })
-        assert.matches(out, 'assistant%-label">☺ Question</div>', "Question div required")
-        assert.matches(out, 'assistant%-label">✦ Response</div>', "Response div required")
+        assert.matches(out, '<div class="user%-bubble">Why this%?</div>', "user bubble required")
+        assert.matches(out, "Because%.", "answer body required")
+        -- The carriers the minimalist mode removes are gone from the standard
+        -- shape too: the bubble replaces the Question label outright.
+        assert.notMatches(out, "assistant%-label", "no carrier may survive")
+        assert.notMatches(out, "➤", "the question marker is chrome")
     end),
 
     test("dialogs pass the switch into the shared formatter", function()

@@ -177,11 +177,9 @@ Conversation.Renderer = {}
 ---@param history table[] Full message history (system prompt at [1])
 ---@param opts table
 ---   - `header string|nil` — prepended header text (e.g. book info, word excerpt)
----   - `highlighted_text string|nil` — highlighted text to show before history
 ---   - `title string|nil` — title for formatSingleMessage
 ---   - `settings table` — assistant settings
 ---   - `default_config table` — default suggestion config
----   - `assistant table|nil` — for feature flag checks (hide_highlighted_text etc.)
 ---@return string
 function Conversation.Renderer.render(history, opts)
     local TextUtils = require("assistant_text_utils")
@@ -196,24 +194,8 @@ function Conversation.Renderer.render(history, opts)
         table.insert(parts, opts.header)
     end
 
-    -- Highlighted text (dialog only)
-    if opts.highlighted_text and opts.highlighted_text ~= "" then
-        local show_highlighted = true
-        -- Check hide_highlighted_text feature flag
-        if opts.assistant and opts.assistant.config:getFeature("hide_highlighted_text") then
-            show_highlighted = false
-        end
-        -- Check long highlight threshold
-        if show_highlighted and opts.assistant and opts.assistant.config:getFeature("hide_long_highlights") then
-            local threshold = opts.assistant.config:getFeature("long_highlight_threshold", 99999)
-            if #opts.highlighted_text > threshold then
-                show_highlighted = false
-            end
-        end
-        if show_highlighted then
-            table.insert(parts, string.format("__%s__\"%s\"\n\n", _("Highlighted text:"), opts.highlighted_text))
-        end
-    end
+    -- The selection is not rendered here: each user turn carries its own as the
+    -- highlight_text attribute, which TextUtils shows in that turn's bubble.
 
     -- History: skip [1] (system prompt) and is_context messages
     for i = 2, #history do

@@ -33,7 +33,7 @@ end
 
 local tests = {
     test("fence: trailing suggestions converted, fence kept", function()
-        local input = "#### ❖ Deeply Thought\n\n```reasoning\nthinking here\n```\n\n---\n\nMain answer.\n<suggestions>\n- First question?\n- Second question?\n</suggestions>\n"
+        local input = "```reasoning\nthinking here\n```\n\nMain answer.\n<suggestions>\n- First question?\n- Second question?\n</suggestions>\n"
         local out = TextUtils.process_suggestions(input)
         assert.matches(out, "```reasoning\nthinking here\n```")
         assert.matches(out, "%[First question%?%]%(#q:")
@@ -173,15 +173,14 @@ local tests = {
         end
         -- On: the stored fence becomes a Thought block above the Response.
         local on = fmt(true)
-        assert.matches(on, 'assistant%-label%-%-thought">❖ Deeply Thought</div>',
-            "Thought div required while Reasoning Text is on")
-        assert.matches(on, '```reasoning\nthinking here\n```', "fence must be kept")
+        assert.matches(on, '<div class="thought%-block">',
+            "Thought block required while Reasoning Text is on")
+        assert.matches(on, 'thinking here', "reasoning body must be kept")
         -- Off: a turn answered while it was on must not resurrect the thinking.
         local off = fmt(false)
-        assert.notMatches(off, 'assistant%-label%-%-thought',
+        assert.notMatches(off, 'thought%-block',
             "no Thought block while Reasoning Text is off")
         assert.notMatches(off, '```reasoning', "no fence while Reasoning Text is off")
-        assert.matches(off, 'assistant%-label">✦ Response</div>', "Response div still required")
         assert.matches(off, 'The answer%.', "answer body must survive")
     end),
 }

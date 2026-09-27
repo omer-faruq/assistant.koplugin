@@ -38,9 +38,11 @@ local tests = {
     test("build: default keeps base, labels and table rules", function()
         local css = CSS.build()
         assert.matches(css, '@page', "base @page block missing")
-        assert.matches(css, '%.assistant%-label %s*{', ".assistant-label rule missing")
+        assert.matches(css, '%.user%-bubble %s*{', ".user-bubble rule missing")
+        assert.matches(css, '%.thought%-block %s*{', ".thought-block rule missing")
         assert.matches(css, 'border%-collapse', "table rules missing")
-        assert.matches(css, 'code%.language%-reasoning', "reasoning-only rule missing")
+        assert.notMatches(css, 'code%.language%-reasoning',
+            "the reasoning fence is unwrapped upstream, so its indent rule must stay gone")
         assert.notMatches(css, 'direction: rtl', "rtl must stay off by default")
         assert.notMatches(css, 'text%-align: justify', "justify must stay off by default")
     end),

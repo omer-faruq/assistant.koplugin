@@ -12,6 +12,11 @@ local Prompts = require("assistant_prompts")
 
 local M = {}
 
+-- Byte budget for the selection shown in a user-bubble caption. The caption is
+-- the only place a selection is displayed, so it carries a full paragraph
+-- rather than a phrase; only a runaway selection is cut.
+local HIGHLIGHT_CAPTION_MAX = 500
+
 --- Convert a getPageText() result (string or table-of-blocks) into a plain string.
 --- Mirrors the table handling used in extractBookTextForAnalysis.
 --- @param t string|table|nil getPageText() result
@@ -260,6 +265,23 @@ function M.process_suggestions(content)
     return buf:get()
 end
 
+--- Build the selection suffix of a user-bubble caption: the text flattened to
+--- one line and cut to fit, prefixed with a space. Empty when there is none.
+--- @param text string|nil the selected text
+--- @return string caption suffix (leading space included), "" when there is nothing to append
+function M.caption_highlight(text)
+    if type(text) ~= "string" then return "" end
+    -- Collapse runs of whitespace, then trim: a selection that is only
+    -- whitespace leaves nothing to caption.
+    local flat = (text:gsub("%s+", " ")):match("^%s*(.-)%s*$")
+    if flat == "" then return "" end
+    if #flat > HIGHLIGHT_CAPTION_MAX then
+        flat = M.truncateToHeadUtf8Safe(flat, HIGHLIGHT_CAPTION_MAX - 3) .. "..."
+    end
+    -- A bare space separator: no msgid needed, there are no words to translate.
+    return " " .. flat
+end
+
 -- Split text at the first </think> into reasoning and answer.
 -- @param ret string answer text
 -- @param structured string|nil reasoning-channel text (may be nil or empty)
@@ -387,51 +409,48 @@ function M.formatSingleMessage(message_history, message, opts)
         return M.formatAnswerOnly(message, opts)
     end
     if message.role == "user" then
-        local user_message = strbuf.new()
-        -- A preset prompt tags its user message with its display name; the
-        -- viewer then shows the name instead of the full template text.
-        -- Free questions carry no tag and use the title/content below.
+        -- One right-aligned bubble per turn. A preset prompt tags the turn with
+        -- its name and, when the turn had a selection, that text too; both head
+        -- the bubble, e.g. "< Translate > mount Doom".
+        -- Free questions carry no tag and show their content alone.
         local prompt_title = ASUtils.get_attr(message, "prompt_title")
         local title = opts.title
         if prompt_title and prompt_title ~= "" then
             title = prompt_title
         end
+        local body
         if title and title ~= "" then
-            user_message:put(T('<div class="assistant-label">%1 %2</div>\n\n', "☺", _("Question")))
-            user_message:putf("➤ ‹ %s ›\n", title)
-
-            local user_input = ASUtils.get_attr(message, "user_input", "")
-
-            -- Check if user input is available
-            if user_input and user_input ~= "" then
-                user_message:put("➤")
-                user_message:put(M.compact_context_blocks(user_input))
-                user_message:put("\n\n")
-            end
-            return user_message:get()
+            body = M.compact_context_blocks(ASUtils.get_attr(message, "user_input", ""))
         elseif type(message.content) == "string" then
-            -- shows user input prompt
-            user_message:put(T('<div class="assistant-label">%1 %2</div>\n\n', "☺", _("Question")))
-            user_message:putf("\n➤ %s\n\n", M.compact_context_blocks(message.content))
-            return user_message:get()
+            body = M.compact_context_blocks(message.content)
         end
         -- Tool-payload user messages (table content, parts-only) carry no
-        -- question text; a bare Question div would be junk, so show nothing.
-        return ""
+        -- question text; a bare user-bubble div would be junk, so show nothing.
+        if not (title and title ~= "") and not body then
+            return ""
+        end
+        -- The angle quotes are non-ASCII, so they ride outside _().
+        local caption = ""
+        if title and title ~= "" then
+            caption = T('<div class="user-bubble-title">‹ %1 ›%2</div>\n',
+                title, M.caption_highlight(ASUtils.get_attr(message, "highlight_text")))
+        end
+        return T('<div class="user-bubble">%1%2</div>\n\n', caption, body or "")
     elseif message.role == "assistant" then
-        local assistant_content, answer_type, reasoning_section
+        local assistant_content, reasoning_section
         local kw = ASUtils.get_attr(message, "search_keywords")
         if kw then
-            answer_type = _("Search")
             assistant_content = string.format("%s\n\n", kw)
         else
-            answer_type = _("Response")
             assistant_content = message.content or _("(No response)")
             local show_for_this = ASUtils.get_attr(message, "show_suggestions")
             if show_for_this == nil and opts.msg_idx then
+                -- msg_idx may sit past the end of the history we were handed,
+                -- so read the turn defensively (invariant: never index blindly).
                 for j = opts.msg_idx - 1, 1, -1 do
-                    if message_history[j].role == "user" then
-                        local v = ASUtils.get_attr(message_history[j], "show_suggestions")
+                    local prev = message_history[j]
+                    if prev and prev.role == "user" then
+                        local v = ASUtils.get_attr(prev, "show_suggestions")
                         if v ~= nil then show_for_this = v; break end
                     end
                 end
@@ -448,22 +467,20 @@ function M.formatSingleMessage(message_history, message, opts)
             end
 
             -- Stored ```reasoning fence: the Reasoning Text switch decides
-            -- whether it becomes a Thought block above the Response header
-            -- (spacing comes from CSS) or is dropped for an answer-only turn.
+            -- whether it becomes a thought block above the answer or is dropped.
             local reasoning_text, body = M.splitReasoning(assistant_content)
             if reasoning_text then
                 assistant_content = body
                 if opts.settings and opts.settings:readSetting("show_reasoning", false) then
-                    reasoning_section = T('<div class="assistant-label assistant-label--thought">%1 %2</div>\n\n```reasoning\n%3\n```\n\n',
-                        "❖", _("Deeply Thought"), reasoning_text)
+                    reasoning_section = T('<div class="thought-block">%1</div>\n\n', reasoning_text)
                 end
             end
         end
 
         if reasoning_section then
-            return reasoning_section .. T('<div class="assistant-label">%1 %2</div>\n\n%3\n\n', "✦", answer_type, assistant_content)
+            return reasoning_section .. assistant_content .. "\n\n"
         end
-        return T('<div class="assistant-label">%1 %2</div>\n\n%3\n\n', "✦", answer_type, assistant_content)
+        return assistant_content .. "\n\n"
     end
     return "" -- Should not happen for valid roles
 end

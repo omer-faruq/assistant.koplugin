@@ -48,6 +48,13 @@ local CheckButton = require("ui/widget/checkbutton")
 -- Viewer CSS lives in assistant_css.lua (shared with the notebook viewer);
 -- _buildCSS() below is a thin wrapper resolving the display switches.
 
+-- Container divs styled by assistant_css.lua, and the puremd wrapper the
+-- viewer strips from around them. The class is captured and checked against
+-- CONTAINER_CLASSES so one pass handles every container while leaving any
+-- other div (e.g. hoedown's footnotes block) wrapped as the parser emitted it.
+local CONTAINER_CLASSES = { ["user-bubble"] = true, ["thought-block"] = true }
+local UNWRAP_CONTAINERS = '<p>%s*<div class="([^"]+)">(.-)</div>%s*</p>'
+
 -- Builds the Add Note button for a viewer instance. Placed in the action row
 -- (before Close, which always stays rightmost).
 local function createAddNoteButton(viewer)
@@ -971,9 +978,19 @@ function ChatGPTViewer:_renderMarkdown()
       html_body = html_body:gsub('<a href="#q:',
           '<a class="suggestion-link" href="#q:')
     end
-    -- puremd wraps raw HTML blocks in <p>: unwrap container labels so the
-    -- assistant-label CSS applies without paragraph indent (hoedown no-op).
-    html_body = html_body:gsub('<p>%s*<div class="(assistant%-label[^"]*)">(.-)</div>%s*</p>', '<div class="%1">%2</div>')
+    -- puremd wraps raw HTML blocks in <p>, which would add a paragraph indent
+    -- to our styled containers; hoedown leaves them bare, so a no-op there.
+    -- Gated on a plain scan: a reply usually carries no container at all, and
+    -- plain find costs far less than a pattern match over the whole body.
+    if html_body:find('<div class="user-bubble">', 1, true)
+        or html_body:find('<div class="thought-block">', 1, true) then
+      html_body = html_body:gsub(UNWRAP_CONTAINERS, function(class, inner)
+        if CONTAINER_CLASSES[class] then
+          return T('<div class="%1">%2</div>', class, inner)
+        end
+        return nil
+      end)
+    end
   end
   return html_body
 end

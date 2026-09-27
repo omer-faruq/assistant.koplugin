@@ -116,11 +116,10 @@ local tests = {
         end
         local out = table.concat(parts)
         assert.matches(out, '^HEADER', "header must lead once")
-        assert.matches(out, 'assistant%-label">☺ Question</div>', "user turn must render a Question div")
-        assert.matches(out, 'assistant%-label">✦ Search</div>', "tool turn must render a Search div")
+        assert.matches(out, '<div class="user%-bubble">', "user turn must render a bubble")
         assert.matches(out, '⌗ Frodo Baggins', "search keywords must render")
-        assert.matches(out, 'assistant%-label">✦ Response</div>', "answer must render a Response div")
         assert.matches(out, 'Frodo carries the Ring', "answer body must survive")
+        assert.notMatches(out, 'assistant%-label', "no carrier may survive")
         assert.notMatches(out, '### ', "no h3 container headings may appear")
     end),
 
@@ -154,16 +153,15 @@ local tests = {
         -- Switch on: the stored fence becomes a Thought block above the answer.
         local on = make_settings(false, true)
         local out = TextUtils.formatSingleMessage(history, answer_msg, fmt_opts(history, 3, on, { show_suggestions = false }))
-        assert.matches(out, 'assistant%-label%-%-thought">❖ Deeply Thought</div>', "Thought div missing")
-        assert.matches(out, '```reasoning\nthinking here\n```', "reasoning fence must be kept")
-        assert.matches(out, 'assistant%-label">✦ Response</div>', "Response div missing")
+        assert.matches(out, '<div class="thought%-block">', "Thought block missing")
+        assert.matches(out, 'thinking here', "reasoning body must be kept")
+        assert.matches(out, 'The Ring rules them all', "answer body must survive")
         -- Switch off: a turn answered while it was on still carries its fence,
         -- and must not resurrect the thinking once the switch is off.
         local off = make_settings(false, false)
         local hidden = TextUtils.formatSingleMessage(history, answer_msg, fmt_opts(history, 3, off, { show_suggestions = false }))
-        assert.notMatches(hidden, 'assistant%-label%-%-thought', "no Thought block while the switch is off")
+        assert.notMatches(hidden, 'thought%-block', "no Thought block while the switch is off")
         assert.notMatches(hidden, '```reasoning', "no fence while the switch is off")
-        assert.matches(hidden, 'assistant%-label">✦ Response</div>', "Response div still required")
         assert.matches(hidden, 'The Ring rules them all', "answer body must survive")
     end),
 

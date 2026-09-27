@@ -39,17 +39,50 @@ Pitfalls learned there:
 
 `ChatGPTViewer` has two shapes, selected by the Response Settings `minimalist_mode` switch (default off):
 
-- **Standard** — two button rows (navigation/clipboard, then actions with Close rightmost) plus the page-button scroll feedback; the reply carries the `☺ Question` / `❖ Deeply Thought` / `✦ Response` / `✦ Search` carriers emitted by `TextUtils.formatSingleMessage`.
-- **Minimalist** — no navigation row (no page buttons, Find or Copy), no page-button scroll feedback, and an action row reduced to the actions that act on the answer itself: `Annotate` (when a highlight context exists), caller `extra_buttons` (the dictionary viewer adds `Vocabulary Builder`) and `Close`. `Ask Another Question` and `Save` are the chrome it removes. The reply is assembled by `TextUtils.formatAnswerOnly` (no carriers, no prompt name, no reasoning block, no follow-up questions).
+- **Standard** — two button rows (navigation/clipboard, then actions with Close rightmost) plus the page-button scroll feedback; the reply is a chat transcript emitted by `TextUtils.formatSingleMessage`: each user turn is a right-aligned `<div class="user-bubble">` (titled by the preset prompt name when one ran, then the typed text), reasoning is a `<div class="thought-block">`, and the answer is bare, left-aligned body text. There are no per-turn carrier labels.
+- **Minimalist** — no navigation row (no page buttons, Find or Copy), no page-button scroll feedback, and an action row reduced to the actions that act on the answer itself: `Annotate` (when a highlight context exists), caller `extra_buttons` (the dictionary viewer adds `Vocabulary Builder`) and `Close`. `Ask Another Question` and `Save` are the chrome it removes. The reply is assembled by `TextUtils.formatAnswerOnly` (no bubbles, no prompt name, no reasoning block, no follow-up questions).
 
 The switch is read at two points on purpose: when the result is **assembled** (the dialogs pass `minimal` into the formatter, so the text is built in the shape it is displayed) and when the **viewer** is built (the button rows). Turning it on clears `show_reasoning` / `auto_prompt_suggest` and greys both out in the menu, so the stored text can never disagree with the menu state.
 
 **Produce what you display.** The renderer is left with styling only (`_renderMarkdown` does not filter); every display decision is taken upstream:
 
 - **At answer time** — `Querier` folds reasoning into the answer only while `show_reasoning` is on (`strip_think_tags`), and the follow-up switch keeps `<suggestions>` out of the history.
-- **At assembly time** — a turn answered before a switch was turned off still carries what the switch now hides, so the templates drop it: `TextUtils.splitReasoning` splits off a reasoning fence (`formatSingleMessage` emits the `❖ Deeply Thought` block only while the switch is on, `formatAnswerOnly` never does) and `TextUtils.stripSuggestions` removes a leftover `<suggestions>` block.
+- **At assembly time** — a turn answered before a switch was turned off still carries what the switch now hides, so the templates drop it: `TextUtils.splitReasoning` splits off a reasoning fence (`formatSingleMessage` wraps it in a `.thought-block` only while the switch is on, `formatAnswerOnly` never does) and `TextUtils.stripSuggestions` removes a leftover `<suggestions>` block.
 
 Flipping a display switch calls `ChatGPTViewer:_refreshText()`, which re-assembles the reply through the caller's `rebuild_text` and repaints — so the change is immediate instead of waiting for the next answer. The rebuilt widget keeps the current page, clamped by `scrollToPage` when the text shrinks.
+
+## MuPDF CSS support (viewer constraint)
+
+The viewer HTML goes through MuPDF's own engine (`source/html/` in ArtifexSoftware/mupdf), whose entire property table is `css-properties.gperf` — **85 entries, no more**. `ScrollHtmlWidget` embeds our CSS in a `<head><style>`, so anything absent from that table is silently dropped. Design viewer CSS against that list, not against a browser's.
+
+Supported: `background-color`, `border` + `border-{top,right,bottom,left}` + `-color`/`-style`/`-width`, `color`, `display` (block/inline only), `font-*`, `height`, `letter-spacing`, `line-height`, `list-style-*`, `margin` + `margin-*`, `overflow-wrap`, `padding` + `padding-*`, `text-align`, `text-decoration`, `text-indent`, `text-transform`, `vertical-align`, `white-space`, `width`, `word-spacing`, `direction`, `float`, `clear`, `position`/`top`/`right`/`bottom`/`left`.
+
+**Not supported** — do not design around them:
+
+- `border-radius`: absent from the property table entirely. No CSS-level workaround either. Tracked upstream as koreader/koreader#8183 (open since 2021, still unsupported in 2026.3). Only real options are Unicode `╭╮╰╯` glyphs (Noto Sans/Serif do **not** carry them — needs `font-family: 'FreeSans'` or DejaVu) or painting the panel in Lua outside the HTML flow.
+- `background-image`: explicitly unimplemented (`html-imp.h`, `css-apply.c` `add_shorthand_background()`); kills the image-based workaround.
+- `max-width`, `box-shadow`, `opacity`, `flex`, `grid`, `transform`, `border-image`, `outline`, `box-sizing`.
+- Selector: only `:root`, `:empty`, `:first-child`, `:nth-child`, `:link` — no `:hover`.
+
+Consequences for the chat layout: a right-aligned bubble uses `margin-left: 50%` (a fixed percentage, which MuPDF honors) — not `margin-left: auto`, not `max-width`. `text-align: right` right-aligns the *text* but the element's background still spans the full width, so it cannot substitute for the margin trick. `float` and `display: table` both misbehave (float needs a clearing element; display-table backgrounds over-extend). Rectangular backgrounds with a `border-left` accent are the substitute for rounded corners.
+
+## Screenshotting a UI test (WSL2)
+
+`Screen:shot()` does not exist on the SDL3 backend (`frontend/device/sdl/device.lua` implements only `init/resize/_newBB/_render/refreshFullImp/setWindowTitle/setWindowIcon/close`), so `screenshoter.lua` cannot be reused. Read the framebuffer directly instead:
+
+```lua
+UIManager:scheduleIn(2, function()
+    UIManager:forceRePaint()
+    UIManager:scheduleIn(0.5, function()
+        Screen.bb:writeToFile("/tmp/shot.png", "png")
+        UIManager:quit()
+    end)
+end)
+```
+
+Note the `forceRePaint` + follow-up tick: the blitbuffer only holds painted pixels, so screenshotting on the same tick as `UIManager:show` yields a stale or blank frame.
+
+System-level capture is unavailable under WSL2 — WSLg's weston never paints the X root drawable, so `scrot`, `import -window root`, and `ffmpeg -f x11grab` all return solid black. Per-window X11 capture (`import -window <id>`) or a Windows-side PowerShell capture both work; the framebuffer route above is simpler and is what the runui scripts use.
 
 ## KOReader widget internals (last resort)
 

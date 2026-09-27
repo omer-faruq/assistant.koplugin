@@ -240,7 +240,9 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
                 koreader_version = Prompts.getKoreaderVersion(),
             }),
         }
-        ASUtils.set_attr(context_message, "prompt_title", title)
+        -- is_context: the user never typed this, and the excerpt header above
+        -- already shows the word in its sentence, so no user bubble is drawn.
+        ASUtils.set_attr(context_message, "is_context", true)
         table.insert(message_history, context_message)
     else
         user_prompt = Prompts.build_dict_prompt(
@@ -259,7 +261,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
                 koreader_version = Prompts.getKoreaderVersion(),
             }),
         }
-        ASUtils.set_attr(context_message, "prompt_title", title)
+        ASUtils.set_attr(context_message, "is_context", true)
         table.insert(message_history, context_message)
     end
 
@@ -285,16 +287,19 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         -- boundaries so no partial word is shown
         local prev_context_limited = TermXray.clip_excerpt(prev_context, 100, "tail")
         local next_context_limited = TermXray.clip_excerpt(next_context, 100, "head")
-        -- Normalize the selection's whitespace before bolding it: a leading or
-        -- trailing space in "** word **" stops Markdown from rendering bold.
+        -- Raw book text, so escape it: a markdown paragraph would be escaped by
+        -- the renderer, but a raw HTML block is passed through verbatim and a
+        -- "<" in the text would be eaten as a tag.
         -- The formatted history is appended by the shared Renderer.
-        local header = T("... %1 **%2** %3 ...\n\n", prev_context_limited, koutil.cleanupSelectedText(highlightedText), next_context_limited)
+        local header = T('<div class="dict-excerpt">... %1 <b>%2</b> %3 ...</div>\n\n',
+            koutil.htmlEscape(prev_context_limited),
+            koutil.htmlEscape(koutil.cleanupSelectedText(highlightedText)),
+            koutil.htmlEscape(next_context_limited))
         return Conversation.Renderer.render(message_history, {
             header = header,
             title = nil,
             settings = assistant.settings,
             default_config = prompt_config,
-            assistant = assistant,
         })
     end
 

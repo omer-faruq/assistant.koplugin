@@ -48,15 +48,6 @@ pre {
     overflow-wrap: break-word;
 }
 
-/* Reasoning body only: hoedown tags the fence code with language-reasoning,
-   so plain code blocks stay generic while reasoning text keeps its look. */
-pre code.language-reasoning {
-    display: block;
-    margin: 1em 0 1em 3em;
-    font-size: 0.8em;
-    color: #333;
-}
-
 hr {
     border-color: #BBB;
 }
@@ -85,16 +76,45 @@ ul li {
 }
 
 /* Plugin components */
-.assistant-label {
-    padding-left: 0;
-    font-weight: bold;
-    font-size: 1.1em;
-    margin: 0.8em 0 0.3em;
+
+/* User message bubble: right-aligned via margin-left, gray bg, left border accent */
+.user-bubble {
+    margin-left: 50%;
+    margin-top: 0.8em;
+    margin-bottom: 2em;
+    padding: 0.5em 0.8em;
+    background-color: #E4E4E4;
+    border-left: 3px solid #999;
 }
 
-.assistant-label--thought {
+/* The word in its surrounding sentence, shown once above the definition. */
+.dict-excerpt {
+    margin: 0 0 0.8em;
+    padding: 0.5em 0.8em;
+    font-size: 0.9em;
+    color: #555;
+    background-color: #F0F0F0;
+    border-left: 3px solid #C8C8C8;
+}
+
+/* Which preset prompt produced the turn, and what it was pointed at. The
+   formatter supplies the angle quotes (U+2039/U+203A) and the selection that
+   follows them; this is the whole caption. */
+.user-bubble-title {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 0.3em;
+}
+
+/* Thought block: left-aligned, smaller font, gray bg, left border */
+.thought-block {
+    margin: 0.5em 0;
+    padding: 0.5em 0.8em;
     font-size: 0.85em;
-    margin-top: 0.4em;
+    color: #555;
+    background-color: #F0F0F0;
+    border-left: 3px solid #C8C8C8;
 }
 
 .suggestion-link {

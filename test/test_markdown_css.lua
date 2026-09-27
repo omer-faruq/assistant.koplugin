@@ -50,8 +50,18 @@ local SAMPLE = read_source("test/markdown_css_sample.md")
 --
 -- Inline mirror of the puremd unwrap (assistant_viewer.lua _renderMarkdown):
 -- puremd wraps raw HTML blocks in <p>; hoedown leaves them bare (no-op).
+local CONTAINER_CLASSES = { ["user-bubble"] = true, ["thought-block"] = true }
 local function unwrap_label(html)
-    return html:gsub('<p>%s*<div class="(assistant%-label[^"]*)">(.-)</div>%s*</p>', '<div class="%1">%2</div>')
+    if html:find('<div class="user-bubble">', 1, true)
+        or html:find('<div class="thought-block">', 1, true) then
+        html = html:gsub('<p>%s*<div class="([^"]+)">(.-)</div>%s*</p>', function(class, inner)
+            if CONTAINER_CLASSES[class] then
+                return '<div class="' .. class .. '">' .. inner .. '</div>'
+            end
+            return nil
+        end)
+    end
+    return html
 end
 
 -- Inline mirror of the suggestion-link rewrite (_renderMarkdown): #q: links
@@ -88,30 +98,30 @@ end
 
 local tests = {
     test("sample: two-round dialog shape with divs, fence, keywords", function()
-        assert.equal(count_plain(SAMPLE, '<div class="assistant-label">'), 5,
-            "expect 2x Question + 2x Response + 1x Search divs")
-        assert.matches(SAMPLE, 'assistant%-label">☺ Question</div>', "Question div missing")
-        assert.equal(count_plain(SAMPLE, "☺ Question"), 2, "expect two Question rounds")
-        assert.matches(SAMPLE, 'assistant%-label%-%-thought">❖ Deeply Thought</div>', "Thought div missing")
-        assert.matches(SAMPLE, '```reasoning\nThe user asks', "reasoning fence missing")
-        assert.matches(SAMPLE, 'assistant%-label">✦ Response</div>', "Response div missing")
-        assert.matches(SAMPLE, 'assistant%-label">✦ Search</div>', "Search div missing")
+        assert.equal(count_plain(SAMPLE, '<div class="user-bubble">'), 2,
+            "expect 2x user-bubble divs")
+        assert.matches(SAMPLE, '<div class="user%-bubble">', "user-bubble div missing")
+        assert.equal(count_plain(SAMPLE, "user-bubble"), 2, "expect two user-bubble rounds")
+        assert.matches(SAMPLE, '<div class="thought%-block">', "thought-block div missing")
+        assert.matches(SAMPLE, 'The user asks', "reasoning text missing")
+        assert.notMatches(SAMPLE, 'assistant%-label', "no assistant-label divs in new format")
+        assert.notMatches(SAMPLE, '☺', "no Question label in new format")
+        assert.notMatches(SAMPLE, '✦', "no Response label in new format")
         assert.matches(SAMPLE, '⌗ Frodo Baggins Ring bearer Mordor', "Search keyword line missing")
-        assert.matches(SAMPLE, '---\n\n<div class="assistant%-label">☺ Question</div>', "inter-round --- before round two missing")
+        assert.matches(SAMPLE, '---\n\n<div class="user%-bubble">', "inter-round --- before round two missing")
         assert.isTrue(count_sep_lines(SAMPLE) >= 3, "expect inter-round --- plus generic ---")
         assert.equal(count_plain(SAMPLE, "#q:"), 2, "expect two suggestion links")
     end),
 
-    test("render: labels survive as top-level divs after unwrap", function()
+    test("render: container divs survive as top-level divs after unwrap", function()
         local html = MD(SAMPLE)
         assert.notNil(html, "MD() must render the sample")
         assert.isTrue(type(html) == "string", "MD() must return HTML text")
         local unwrapped = unwrap_label(html)
-        assert.matches(unwrapped, '<div class="assistant%-label">☺ Question</div>', "Question div lost in render")
-        assert.matches(unwrapped, 'assistant%-label%-%-thought', "Thought div lost in render")
-        assert.matches(unwrapped, '✦ Search</div>', "Search div lost in render")
-        assert.matches(unwrapped, '✦ Response</div>', "Response div lost in render")
-        assert.notMatches(unwrapped, '<p>%s*<div class="assistant%-label', "no p-wrapped label may remain")
+        assert.matches(unwrapped, '<div class="user%-bubble">', "user-bubble div lost in render")
+        assert.matches(unwrapped, '<div class="thought%-block">', "thought-block div lost in render")
+        assert.notMatches(unwrapped, '<p>%s*<div class="user-bubble', "no p-wrapped user-bubble may remain")
+        assert.notMatches(unwrapped, '<p>%s*<div class="thought-block', "no p-wrapped thought-block may remain")
     end),
 
     test("render: LLM h1/h2 headings survive inside Response", function()
@@ -134,18 +144,12 @@ local tests = {
         assert.matches(html, 'The Ring is corrupting', "answer body must survive")
     end),
 
-    test("render: thought label heads a pre block for reasoning text", function()
+    test("render: thought block carries reasoning text", function()
         local html = unwrap_label(MD(SAMPLE))
-        assert.matches(html, 'assistant%-label%-%-thought">❖ Deeply Thought</div>', "thought label must render")
-        assert.matches(html, '<pre', "reasoning fence must render as a pre block")
+        assert.matches(html, '<div class="thought%-block">', "thought block must render")
         assert.matches(html, 'internal knowledge suffices', "reasoning body must survive rendering")
-        local label_pos = html:find('assistant-label--thought', 1, true)
-        assert.isTrue(label_pos ~= nil, "thought label must render")
-        -- The sample also carries a ```lua block up front, so anchor the
-        -- search past the thought label to reach the reasoning pre.
-        local pre_pos = html:find('<pre', label_pos, true)
-        assert.isTrue(pre_pos ~= nil and pre_pos > label_pos,
-            "a pre block must follow the thought label")
+        local block_pos = html:find('thought-block', 1, true)
+        assert.isTrue(block_pos ~= nil, "thought block must render")
     end),
 
     test("render: suggestion links kept, --- becomes hr", function()
@@ -157,10 +161,10 @@ local tests = {
         assert.matches(html, 'Tom Bombadil', "suggestion text must survive")
     end),
 
-    test("unwrap: puremd p-wrapped labels collapse, bare divs pass through", function()
-        local wrapped = '<p><div class="assistant-label">X</div></p>'
-        assert.equal(unwrap_label(wrapped), '<div class="assistant-label">X</div>')
-        local bare = '<div class="assistant-label">X</div>'
+    test("unwrap: puremd p-wrapped container divs collapse, bare divs pass through", function()
+        local wrapped = '<p><div class="user-bubble">X</div></p>'
+        assert.equal(unwrap_label(wrapped), '<div class="user-bubble">X</div>')
+        local bare = '<div class="thought-block">X</div>'
         assert.equal(unwrap_label(bare), bare)
     end),
 

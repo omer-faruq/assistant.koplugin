@@ -162,16 +162,14 @@ function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText, user_in
 
 end
 
-function AssistantDialog:_createResultText(highlightedText, message_history, previous_text, title)
+function AssistantDialog:_createResultText(message_history, previous_text, title)
   local opts = {
     title = title,
     settings = self.assistant.settings,
     default_config = Prompts.assistant_prompts.default,
-    assistant = self.assistant,
   }
 
   if not previous_text then
-    opts.highlighted_text = highlightedText
     return Conversation.Renderer.render(message_history, opts)
   end
 
@@ -185,7 +183,7 @@ end
 ---@param include_book_context_for_followup boolean|nil Whether free follow-ups need a fresh book context
 function AssistantDialog:_showResultViewer(highlightedText, message_history, title, include_book_context_for_followup)
   include_book_context_for_followup = include_book_context_for_followup ~= false
-  local result_text = self:_createResultText(highlightedText, message_history, nil, title)
+  local result_text = self:_createResultText(message_history, nil, title)
   
   local chatgpt_viewer 
   chatgpt_viewer = ChatGPTViewer:new {
@@ -242,6 +240,8 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
           -- set these attributes in metatable (won't be encoded to API calls)
           ASUtils.set_attr(_user, "user_input", user_question.user_input)
           ASUtils.set_attr(_user, "prompt_title", viewer_title)
+          -- The bubble caption names what this turn was pointed at.
+          ASUtils.set_attr(_user, "highlight_text", current_highlight)
           ASUtils.set_attr(_user, "use_websearch", user_question.use_websearch)
           pending_show_suggestions = Prompts.isSuggestionsEnabled(self.assistant.settings, user_question)
           ASUtils.set_attr(_user, "show_suggestions", pending_show_suggestions)
@@ -268,7 +268,7 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
             end
             
             Conversation.append_answer(message_history, answer, pending_show_suggestions)
-            viewer:update(self:_createResultText(current_highlight, message_history, viewer.text, viewer_title))
+            viewer:update(self:_createResultText(message_history, viewer.text, viewer_title))
             
             if viewer.scroll_text_w then
               viewer.scroll_text_w:resetScroll()
@@ -280,7 +280,7 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
     -- Re-assemble the whole transcript from the (in-place grown) history so a
     -- display switch in the viewer's menu can hide what it just turned off.
     rebuild_text = function()
-      return self:_createResultText(highlightedText, message_history, nil, title)
+      return self:_createResultText(message_history, nil, title)
     end,
     default_hold_callback = function () chatgpt_viewer:HoldClose() end
   }
@@ -853,6 +853,8 @@ function AssistantDialog:runPrompt(highlightedText, prompt_id, user_input)
   -- set attributes in metatable (won't be encoded to API calls)
   ASUtils.set_attr(_user, "user_input", user_input)
   ASUtils.set_attr(_user, "prompt_title", title)
+  -- The bubble caption names what this turn was pointed at.
+  ASUtils.set_attr(_user, "highlight_text", highlightedText)
   ASUtils.set_attr(_user, "use_websearch", koutil.tableGetValue(prompt_config, "use_websearch") or false)
   ASUtils.set_attr(_user, "show_suggestions", Prompts.isSuggestionsEnabled(self.assistant.settings, prompt_config))
   table.insert(message_history, _user)

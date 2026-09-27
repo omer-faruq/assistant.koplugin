@@ -272,7 +272,6 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         title = nil,
         settings = assistant.settings,
         default_config = feature_prompt_config,
-        assistant = assistant,
       })
     end
 
