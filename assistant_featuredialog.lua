@@ -253,22 +253,18 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     }
     ASUtils.set_attr(context_message, "use_websearch", user_prompt_use_websearch)
     ASUtils.set_attr(context_message, "prompt_title", feature_title)
+    -- Only the labels are msgids; the percent rides on the value, since a
+    -- "%" in a T template is a substitution escape.
+    ASUtils.set_attr(context_message, "bubble_meta",
+        T('<div class="user-bubble-meta"><p><b>%1</b>: %2</p><p><b>%3</b>: %4</p><p><b>%5</b>: %6</p></div>\n',
+            _("Title"), title,
+            _("Author"), author,
+            _("Reading progress"), formatted_progress_percent .. "%"))
     ASUtils.set_attr(context_message, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
     table.insert(message_history, context_message)
 
     local function createResultText()
-
-      local header_text = T(_([[
- - Title : %1
- - Author: %2
- - Reading progress: %3%
-
------
-
-]]), title, author, formatted_progress_percent)
-
       return Conversation.Renderer.render(message_history, {
-        header = header_text,
         title = nil,
         settings = assistant.settings,
         default_config = feature_prompt_config,

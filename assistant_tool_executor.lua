@@ -54,7 +54,7 @@ local function buildToolResultMessages(tool_call_result)
                     tool_use_id = result.tool_call_id,
                     content     = result.search_result,
                 })
-            keywords:putf("⌗ %s\n\n", result.search_keywords)
+            keywords:putf("🌐 %s\n\n", result.search_keywords)
         end
 
         ASUtils.set_attr(msgs[#msgs], "search_keywords", keywords:get())
@@ -74,7 +74,7 @@ local function buildToolResultMessages(tool_call_result)
                         response = { result = result.search_result },
                     },
                 })
-            keywords:putf("⌗ %s\n\n", result.search_keywords)
+            keywords:putf("🌐 %s\n\n", result.search_keywords)
         end
         ASUtils.set_attr(msgs[#msgs], "search_keywords", keywords:get())
         table.insert(msgs, { role  = "user", parts = parts, })
@@ -88,7 +88,7 @@ local function buildToolResultMessages(tool_call_result)
                 tool_call_id = result.tool_call_id,
                 content      = result.search_result,
             })
-            keywords:putf("⌗ %s\n\n", result.search_keywords)
+            keywords:putf("🌐 %s\n\n", result.search_keywords)
         end
         ASUtils.set_attr(msgs[pos], "search_keywords", keywords:get())
     end
@@ -151,7 +151,7 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round, c
         face = Font:getFace("smallinfofont"),
         icon = "appbar.search",
         text = TextUtils.bold_format(
-            T("<b>%1</b>\n\n<b>⌗ </b>%2", T(_("Searching with %1 ... [%2]"), ToolExecutor.ToolToText(ws_mode), tool_round), keywords)
+            T("<b>%1</b>\n\n<b>🌐 </b>%2", T(_("Searching with %1 ... [%2]"), ToolExecutor.ToolToText(ws_mode), tool_round), keywords)
         ),
     })
     UIManager:show(keywordmsg)

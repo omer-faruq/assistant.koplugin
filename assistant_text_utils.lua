@@ -430,12 +430,14 @@ function M.formatSingleMessage(message_history, message, opts)
             return ""
         end
         -- The angle quotes are non-ASCII, so they ride outside _().
-        local caption = ""
+        local caption, meta = "", ""
         if title and title ~= "" then
             caption = T('<div class="user-bubble-title">‹ %1 ›%2</div>\n',
                 title, M.caption_highlight(ASUtils.get_attr(message, "highlight_text")))
+            -- Markup built by the dialog.
+            meta = ASUtils.get_attr(message, "bubble_meta") or ""
         end
-        return T('<div class="user-bubble">%1%2</div>\n\n', caption, body or "")
+        return T('<div class="user-bubble">%1%2%3</div>\n\n', caption, meta, body or "")
     elseif message.role == "assistant" then
         local assistant_content, reasoning_section
         local kw = ASUtils.get_attr(message, "search_keywords")

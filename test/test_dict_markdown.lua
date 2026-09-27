@@ -131,7 +131,7 @@ local tests = {
         ASUtils.set_attr(ctx, "is_context", true) -- as the dict dialog marks it
         local history = { make_msg("system", "system prompt"), ctx }
         local search_msg = make_msg("assistant", "raw assistant turn")
-        ASUtils.set_attr(search_msg, "search_keywords", "⌗ xray term context\n\n")
+        ASUtils.set_attr(search_msg, "search_keywords", "🌐 xray term context\n\n")
         table.insert(history, search_msg)
         local answer_msg = make_msg("assistant", "The term names a ship.")
         ASUtils.set_attr(answer_msg, "show_suggestions", false)
@@ -139,7 +139,7 @@ local tests = {
         local out = build_result(history, '<div class="dict-excerpt">... prev <b>word</b> next ...</div>\n\n', settings, NO_SUGGEST)
         assert.matches(out, '^<div class="dict%-excerpt">%.%.%. prev <b>word</b> next %.%.%.</div>',
             "excerpt header must lead once, as a styled div")
-        assert.matches(out, '⌗ xray term context', "search keywords must render")
+        assert.matches(out, '🌐 xray term context', "search keywords must render")
         assert.matches(out, 'The term names a ship', "answer body must survive")
         assert.notMatches(out, '<div class="user%-bubble">', "dict must not draw a user bubble")
         assert.notMatches(out, 'assistant%-label', "no carrier may survive")

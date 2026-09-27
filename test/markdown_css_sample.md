@@ -156,7 +156,7 @@ It amplifies the bearer's desires: power promises to the strong, escape to the f
 
 <div class="user-bubble">Who carries it to Mordor?</div>
 
-⌗ Frodo Baggins Ring bearer Mordor
+🌐 Frodo Baggins Ring bearer Mordor
 
 Frodo Baggins carries the Ring to Mordor with Samwise Gamgee.
 

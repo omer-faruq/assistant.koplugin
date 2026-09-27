@@ -107,7 +107,7 @@ local tests = {
         assert.notMatches(SAMPLE, 'assistant%-label', "no assistant-label divs in new format")
         assert.notMatches(SAMPLE, '☺', "no Question label in new format")
         assert.notMatches(SAMPLE, '✦', "no Response label in new format")
-        assert.matches(SAMPLE, '⌗ Frodo Baggins Ring bearer Mordor', "Search keyword line missing")
+        assert.matches(SAMPLE, '🌐 Frodo Baggins Ring bearer Mordor', "Search keyword line missing")
         assert.matches(SAMPLE, '---\n\n<div class="user%-bubble">', "inter-round --- before round two missing")
         assert.isTrue(count_sep_lines(SAMPLE) >= 3, "expect inter-round --- plus generic ---")
         assert.equal(count_plain(SAMPLE, "#q:"), 2, "expect two suggestion links")

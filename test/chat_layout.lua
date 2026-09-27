@@ -56,6 +56,30 @@ ASUtils.set_attr(epic, "highlight_text",
 local answer3 = { role = "assistant", content = "No natural English equivalent survives." }
 
 local parts = {}
+-- A book prompt: title, author and reading position now ride inside the
+-- bubble, under the caption line, instead of as a block above everything.
+local book = { role = "user", content = "TEMPLATE MUST NOT LEAK" }
+ASUtils.set_attr(book, "prompt_title", "Book Summary & Recs")
+ASUtils.set_attr(book, "bubble_meta",
+    '<div class="user-bubble-meta"><p><b>Title</b>: The Lord of the Rings</p>'
+    .. '<p><b>Author</b>: J.R.R. Tolkien</p><p><b>Reading progress</b>: 45%</p></div>\n')
+parts[#parts + 1] = TextUtils.formatSingleMessage({}, book, {
+    settings = settings, default_config = { show_suggestions = true }, msg_idx = 1,
+})
+parts[#parts + 1] = TextUtils.formatSingleMessage({}, { role = "assistant",
+    content = "Frodo inherits the Ring and sets out for Mordor." }, {
+    settings = settings, default_config = { show_suggestions = true }, msg_idx = 2,
+})
+parts[#parts + 1] = "\n---\n\n"
+
+-- A search turn: the keyword line leads with the globe used for web search.
+parts[#parts + 1] = "\u{1F310} Frodo Baggins Ring bearer Mordor\n\n"
+parts[#parts + 1] = TextUtils.formatSingleMessage({}, { role = "assistant",
+    content = "Frodo was a hobbit of the Shire who carried the One Ring to Mordor." }, {
+    settings = settings, default_config = { show_suggestions = true }, msg_idx = 3,
+})
+parts[#parts + 1] = "\n---\n\n"
+
 -- The dict dialog's excerpt header, exactly as createResultText emits it.
 parts[#parts + 1] = T('<div class="dict-excerpt">... %1 <b>%2</b> %3 ...</div>\n\n',
     "he said &lt;Turned&gt; and &amp; waited",

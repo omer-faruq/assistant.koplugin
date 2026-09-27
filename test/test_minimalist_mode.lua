@@ -94,9 +94,9 @@ local tests = {
 
     test("minimal: search turn keeps the keyword line, loses the label", function()
         local search = make_msg("assistant", "raw")
-        ASUtils.set_attr(search, "search_keywords", "⌗ Frodo Baggins\n\n")
+        ASUtils.set_attr(search, "search_keywords", "🌐 Frodo Baggins\n\n")
         local out = fmt(search, { minimal = true })
-        assert.equal(out, string.format("%s\n\n", "⌗ Frodo Baggins\n\n"),
+        assert.equal(out, string.format("%s\n\n", "🌐 Frodo Baggins\n\n"),
             "keyword line must survive as content")
         assert.notMatches(out, "user%-bubble", "minimalist mode must not wrap the answer")
     end),

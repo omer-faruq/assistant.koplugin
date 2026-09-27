@@ -94,6 +94,70 @@ local tests = {
         assert.matches(dialog_src, 'self:_showResultViewer%(highlightedText, message_history, title, false%)', "built-in prompt viewers must not duplicate follow-up context")
     end),
 
+    test("book identity rides inside the bubble, not above the transcript", function()
+        -- The old shape was a markdown block prepended as the renderer's
+        -- header; it now rides in the turn's bubble under the caption line.
+        assert.matches(feature_src, 'set_attr%(context_message, "bubble_meta"', "meta must be tagged on the turn")
+        assert.notMatches(feature_src, 'header = header_text', "the block header must be gone")
+        assert.notMatches(feature_src, 'Reading progress: %%3%%', "the old block msgid must be gone")
+        -- One template; only the labels are msgids, so each is a bare word that
+        -- a target language can order as it likes. Plain find: a leading "-"
+        -- would be read as a Lua pattern quantifier.
+        for _, msgid in ipairs({ '"Title"', '"Author"', '"Reading progress"' }) do
+            assert.isTrue(feature_src:find("_(" .. msgid .. ")", 1, true) ~= nil,
+                "label must be its own msgid: " .. msgid)
+        end
+        assert.notMatches(feature_src, '_%(%- Title', "the label must not carry its punctuation")
+        -- One <p> per line, no bullet prefix.
+        assert.matches(feature_src, 'user%-bubble%-meta"><p><b>%%1</b>: %%2</p>',
+            "each meta line must be a paragraph")
+        assert.notMatches(feature_src, '<div>%- %%1', "no dash prefix on the meta lines")
+        -- The percent must ride on the value: a bare "%" in a T template is a
+        -- substitution escape, and "%%" would emit two of them.
+        assert.isTrue(feature_src:find('formatted_progress_percent .. "%"', 1, true) ~= nil,
+            "the percent sign must be appended to the value")
+
+        local settings = make_settings(false)
+        local ctx = make_msg("user", "PROMPT TEMPLATE THAT MUST NOT LEAK")
+        ASUtils.set_attr(ctx, "prompt_title", "Book Summary & Recs")
+        ASUtils.set_attr(ctx, "bubble_meta",
+            '<div class="user-bubble-meta"><p><b>Title</b>: The Lord of the Rings</p>'
+            .. '<p><b>Author</b>: J.R.R. Tolkien</p><p><b>Reading progress</b>: 45%</p></div>\n')
+        local history = { make_msg("system", "system prompt"), ctx }
+        local answer_msg = make_msg("assistant", "Frodo carries the Ring.")
+        ASUtils.set_attr(answer_msg, "show_suggestions", false)
+        table.insert(history, answer_msg)
+
+        local parts = {}
+        for idx = 2, #history do
+            if not ASUtils.get_attr(history[idx], "is_context") then
+                table.insert(parts, TextUtils.formatSingleMessage(history, history[idx],
+                    fmt_opts(history, idx, settings, { show_suggestions = false })))
+            end
+        end
+        local out = table.concat(parts)
+        local bubble = out:match('<div class="user%-bubble">(.-)</div>\n\n')
+        assert.notNil(bubble, "a user bubble must be rendered")
+        assert.matches(bubble, 'user%-bubble%-title">‹ Book Summary & Recs ›</div>',
+            "the caption must come first")
+        assert.isTrue(bubble:find('user%-bubble%-title') < bubble:find('user%-bubble%-meta'),
+            "the meta must follow the caption line, not precede it")
+        -- Plain find: a trailing "%" would be read as a dangling escape.
+        assert.isTrue(bubble:find("<b>Reading progress</b>: 45%", 1, true) ~= nil,
+            "the meta must carry the reading position")
+        assert.notMatches(out, 'PROMPT TEMPLATE', "the prompt template must never reach the page")
+    end),
+
+    test("a turn without meta renders no meta block", function()
+        local settings = make_settings(false)
+        local ctx = make_msg("user", "Free question.")
+        ASUtils.set_attr(ctx, "prompt_title", "Translate")
+        local history = { make_msg("system", "system prompt"), ctx }
+        local out = TextUtils.formatSingleMessage(history, ctx,
+            fmt_opts(history, 2, settings, { show_suggestions = false }))
+        assert.notMatches(out, 'user%-bubble%-meta', "no meta block without the attr")
+    end),
+
     test("feature first round: history walk with header once, Search renders", function()
         local conv_src = read_source("assistant_conversation.lua")
         assert.matches(conv_src, 'for i = 2, #history do', "renderer must walk history from 2")
@@ -102,7 +166,7 @@ local tests = {
         local settings = make_settings(true)
         local history = make_history()
         local search_msg = make_msg("assistant", "raw assistant turn")
-        ASUtils.set_attr(search_msg, "search_keywords", "⌗ Frodo Baggins\n\n")
+        ASUtils.set_attr(search_msg, "search_keywords", "🌐 Frodo Baggins\n\n")
         table.insert(history, search_msg)
         local answer_msg = make_msg("assistant", "Frodo carries the Ring.")
         ASUtils.set_attr(answer_msg, "show_suggestions", false)
@@ -117,7 +181,7 @@ local tests = {
         local out = table.concat(parts)
         assert.matches(out, '^HEADER', "header must lead once")
         assert.matches(out, '<div class="user%-bubble">', "user turn must render a bubble")
-        assert.matches(out, '⌗ Frodo Baggins', "search keywords must render")
+        assert.matches(out, '🌐 Frodo Baggins', "search keywords must render")
         assert.matches(out, 'Frodo carries the Ring', "answer body must survive")
         assert.notMatches(out, 'assistant%-label', "no carrier may survive")
         assert.notMatches(out, '### ', "no h3 container headings may appear")

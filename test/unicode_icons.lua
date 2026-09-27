@@ -382,6 +382,9 @@ local sections = {
         {"‰", "U+2030", "per mille sign"},
     }},
     { title = "Emoji (likely tofu, for reference)", items = {
+        -- 🌐 is the exception: it renders, monochrome, and ships as the
+        -- web-search icon, so it is listed with the rest for comparison.
+        {"🌐", "U+1F310", "globe with meridians (renders, ships as web-search icon)"},
         {"😀", "U+1F600", "grinning face"},
         {"😂", "U+1F602", "face with tears of joy"},
         {"👍", "U+1F44D", "thumbs up"},

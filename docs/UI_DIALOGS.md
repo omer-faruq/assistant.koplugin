@@ -98,7 +98,8 @@ Check the public API first, then read the widget source under `/usr/lib/koreader
 
 Viewer HTML falls back through `Noto Sans CJK TC → … → FreeSans → Noto Sans`. Glyph coverage of the bundled fonts (checked with fontTools cmap over `noto/`, `freefont/`, `droid/`) decides what prompts may emit:
 
-- Safe: `★ ◆ ● ○ ❖ ✓ ▪ ‣ ⚠ → ⇧ ⏎ ✦ ⮞` (all covered by FreeSans and/or Noto CJK).
-- Tofu: color emoji (`U+1F300` and up; only `U+1F4A1` exists in FreeSerif) and anything with `VS16` forcing emoji presentation — use bare `⚠`, never `⚠️`.
+- Safe: `★ ◆ ● ○ ❖ ✓ ▪ ‣ ⚠ → ⇧ ⏎ ✦ ⮞ ‹ ›` (all covered by FreeSans and/or Noto CJK).
+- `🌐` `U+1F310` renders too, and is the plugin's web-search icon (`Prompts.WEBSEARCH_ICON`, and the search-keyword marker in `assistant_tool_executor.lua`). It comes out monochrome from a text font rather than as color emoji, so it reads as a small text glyph — do not assume other `U+1F300`+ code points behave the same way.
+- Tofu: anything forcing **color emoji** presentation, which the bundled fonts lack. The usual culprit is `VS16` (a variation selector forces the emoji, color form): use bare `⚠`, never `⚠️`. `🔍`/`🔎` are tofu — for a magnifier use `U+2315` `⌕`, which draws a real lens and handle, or the globe above when the meaning is a web search. Verified with `./test/runui.sh magnifier_probe`.
 - Noto Sans/Serif base cover almost none of the above; never rely on them alone.
 - Coverage is necessary but not sufficient — visually confirm with `./test/runui.sh unicode_icons`.

@@ -86,7 +86,7 @@ ul li {
     margin-top: 0.8em;
     margin-bottom: 2em;
     padding: 0.5em 0.8em;
-    background-color: #E4E4E4;
+    background-color: #f4f4f4;
     border-left: 3px solid #999;
 }
 
@@ -108,6 +108,18 @@ ul li {
     font-weight: bold;
     color: #666;
     margin-bottom: 0.3em;
+}
+
+/* p resets: the base paragraph margin and indent would space these like body text */
+.user-bubble-meta {
+    font-size: 0.75em;
+    color: #666;
+    margin-bottom: 0.2em;
+}
+
+.user-bubble-meta p {
+    margin: 0;
+    padding-left: 0;
 }
 
 /* Thought block: left-aligned, smaller font, gray bg, left border */
