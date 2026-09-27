@@ -113,6 +113,15 @@ local tests = {
         assert.equal(count_plain(SAMPLE, "#q:"), 2, "expect two suggestion links")
     end),
 
+    test("render: the search keyword line is the smallest heading", function()
+        -- h6 is the smallest heading, and the base CSS zeroes the indent on
+        -- every heading, so the keyword line sits flush left where a paragraph
+        -- would carry the 1em indent.
+        local html = unwrap_label(MD("###### \u{1F310} frodo mordor\n\n"))
+        assert.matches(html, '<h6[^>]*>', "the keyword line must render as a heading")
+        assert.notMatches(html, '<p>\u{1F310}', "it must not stay a paragraph")
+    end),
+
     test("render: container divs survive as top-level divs after unwrap", function()
         local html = MD(SAMPLE)
         assert.notNil(html, "MD() must render the sample")

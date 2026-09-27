@@ -72,8 +72,9 @@ parts[#parts + 1] = TextUtils.formatSingleMessage({}, { role = "assistant",
 })
 parts[#parts + 1] = "\n---\n\n"
 
--- A search turn: the keyword line leads with the globe used for web search.
-parts[#parts + 1] = "\u{1F310} Frodo Baggins Ring bearer Mordor\n\n"
+-- A search turn: the keyword line is the smallest heading, so it sits flush
+-- left with no paragraph indent.
+parts[#parts + 1] = "###### \u{1F310} Frodo Baggins Ring bearer Mordor\n\n"
 parts[#parts + 1] = TextUtils.formatSingleMessage({}, { role = "assistant",
     content = "Frodo was a hobbit of the Shire who carried the One Ring to Mordor." }, {
     settings = settings, default_config = { show_suggestions = true }, msg_idx = 3,

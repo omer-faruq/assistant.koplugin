@@ -54,7 +54,7 @@ local function buildToolResultMessages(tool_call_result)
                     tool_use_id = result.tool_call_id,
                     content     = result.search_result,
                 })
-            keywords:putf("🌐 %s\n\n", result.search_keywords)
+            keywords:putf("###### 🌐 %s\n\n", result.search_keywords)
         end
 
         ASUtils.set_attr(msgs[#msgs], "search_keywords", keywords:get())
@@ -74,7 +74,7 @@ local function buildToolResultMessages(tool_call_result)
                         response = { result = result.search_result },
                     },
                 })
-            keywords:putf("🌐 %s\n\n", result.search_keywords)
+            keywords:putf("###### 🌐 %s\n\n", result.search_keywords)
         end
         ASUtils.set_attr(msgs[#msgs], "search_keywords", keywords:get())
         table.insert(msgs, { role  = "user", parts = parts, })
@@ -88,7 +88,7 @@ local function buildToolResultMessages(tool_call_result)
                 tool_call_id = result.tool_call_id,
                 content      = result.search_result,
             })
-            keywords:putf("🌐 %s\n\n", result.search_keywords)
+            keywords:putf("###### 🌐 %s\n\n", result.search_keywords)
         end
         ASUtils.set_attr(msgs[pos], "search_keywords", keywords:get())
     end
