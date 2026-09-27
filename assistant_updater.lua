@@ -225,6 +225,30 @@ local function checkForUpdates(assistant)
   end
 end
 
+-- Interprets the first two values of `socket.skip(1, http.request{...})`.
+-- socket.http.request returns `1, code, headers, status` on success but `nil, err`
+-- on failure, so the skip drops the leading `1` on success and shifts the error
+-- string into the first slot on failure. Anything non-numeric is a transport
+-- error, never an HTTP status, so it must be reported before any comparison.
+-- @treturn boolean true if the download succeeded
+-- @treturn string|nil failure message, nil on success
+local function interpretDownloadResult(status_code, headers, version)
+  if type(status_code) ~= "number" then
+    return false, "Download failed: " .. tostring(status_code)
+  end
+  if status_code == 200 then
+    return true, nil
+  end
+  if status_code == 404 then
+    return false, T(_("Branch/Tag \"%1\" was not found."), version)
+  end
+  if status_code >= 300 and status_code < 400 then
+    local loc = headers and (headers.location or headers.Location or headers["Location"] or headers["location"])
+    return false, "Download failed: HTTP " .. tostring(status_code) .. " redirect to " .. tostring(loc)
+  end
+  return false, "Download failed: HTTP " .. tostring(status_code)
+end
+
 local function otaUpgrade(assistant, version)
   local PLUGIN_NAME = "assistant.koplugin"
 
@@ -292,16 +316,10 @@ local function otaUpgrade(assistant, version)
 
       local size = lfs.attributes(DL_TAR, "size")
 
-      if status_code ~= 200 then
+      local http_ok, http_err = interpretDownloadResult(status_code, headers, version)
+      if not http_ok then
         sub_logger.warn("[OTA] download failed: status_code=" .. tostring(status_code) .. " url=" .. tostring(RELEASE_URL) .. " size=" .. tostring(size))
-        if status_code == 404 then
-          return false, T(_("Branch/Tag \"%1\" was not found."), version)
-        end
-        if status_code and status_code >= 300 and status_code < 400 then
-          local loc = headers and (headers.location or headers.Location or headers["Location"] or headers["location"])
-          return false, "Download failed: HTTP " .. tostring(status_code) .. " redirect to " .. tostring(loc)
-        end
-        return false, "Download failed: HTTP " .. tostring(status_code)
+        return false, http_err
       end
 
       if not size or size == 0 then
@@ -312,8 +330,10 @@ local function otaUpgrade(assistant, version)
       return true, nil
     end, debug.traceback)
     if not _ok then
+      -- The full traceback goes to the log; the UI only gets its first line,
+      -- so a failure never shows a multi-line stack dump.
       sub_logger.warn("[OTA] Phase 1 task exception: " .. tostring(_r1))
-      return false, tostring(_r1)
+      return false, tostring(_r1):match("^[^\n]*")
     end
     return _r1, _r2
   end, download_msg)
@@ -509,6 +529,7 @@ end
 return {
   isVersionNewer = isVersionNewer,
   is_excluded = is_excluded,
+  interpretDownloadResult = interpretDownloadResult,
   UPDATE_CHECK_INTERVAL = UPDATE_CHECK_INTERVAL,
   LAST_CHECK_KEY = LAST_CHECK_KEY,
   LATEST_VERSION_KEY = LATEST_VERSION_KEY,
