@@ -40,7 +40,9 @@ local _ = require("assistant_gettext")
 local InfoMessage = require("ui/widget/infomessage")
 local Screen = Device.screen
 local MD = require("assistant_mdparser")
+local NetUtils = require("assistant_net_utils")
 local Prompts = require("assistant_prompts")
+local Trapper = require("ui/trapper")
 local ViewerCSS = require("assistant_css")
 local Notebook = require("assistant_notebook")
 local CheckButton = require("ui/widget/checkbutton")
@@ -162,13 +164,38 @@ local ChatGPTViewer = InputContainer:extend {
   -- are already on screen: they were assembled with the previous switch state.
   rebuild_text = nil,
   input_dialog = nil,
+  closing = nil, -- set in onClose(): blocks a late selection menu
   is_show_addnote = true, -- when true, show the Add Note button
   minimalist = nil, -- minimalist_mode setting: answer text plus a Close button
   extra_buttons = nil, -- list of ButtonTable button specs {text, id, callback, hold_callback}, appended to the action row before Close
 }
 
--- Global variables
-local active_chatgpt_viewer = nil
+-- Open viewers, oldest first; the last entry is the topmost one.
+--
+-- Viewers nest rather than replace each other: asking a follow-up question
+-- about text picked inside a result (the selection menu's Dictionary /
+-- Wikipedia) opens its own result window on top of the one it was asked
+-- from, and closing it drops back into that conversation. This used to be a
+-- single `active_chatgpt_viewer` slot that closed the previous viewer in
+-- init(), which made viewers mutually exclusive and destroyed the parent
+-- conversation on every recursive query.
+--
+-- Lifecycle: init() pushes, onCloseWidget() pops (UIManager:close dispatches
+-- "CloseWidget" for every close path, including a Close that never came
+-- through onClose()).
+local viewer_stack = {}
+
+-- @param viewer table the viewer to test
+-- @return boolean true when no other viewer is open
+local function is_only_viewer(viewer)
+  return #viewer_stack == 1 and viewer_stack[1] == viewer
+end
+
+-- @param viewer table the viewer to look for
+-- @return boolean true when viewer is the topmost one
+local function is_topmost_viewer(viewer)
+  return viewer_stack[#viewer_stack] == viewer
+end
 
 function ChatGPTViewer:init()
   -- calculate window dimension
@@ -238,9 +265,12 @@ function ChatGPTViewer:init()
           ges = "hold_release",
           range = range,
         },
-        -- callback function when HoldReleaseText is handled as args
-        args = function(text, hold_duration, start_idx, end_idx, to_source_index_func)
-          self:handleTextSelection(text, hold_duration, start_idx, end_idx, to_source_index_func)
+        -- callback function when HoldReleaseText is handled as args.
+        -- The text widget calls it back with the selection it made; for the
+        -- answer text that is the HtmlBoxWidget, which only knows the text
+        -- and the hold duration (no character indices, unlike TextBoxWidget).
+        args = function(text, hold_duration)
+          self:handleTextSelection(text, hold_duration)
         end
       },
       -- These will be forwarded to MovableContainer after some checks
@@ -250,12 +280,11 @@ function ChatGPTViewer:init()
     }
   end
 
-  -- If another ChatGPTViewer is open, close it
-  if active_chatgpt_viewer and active_chatgpt_viewer ~= self then
-    UIManager:close(active_chatgpt_viewer)
+  -- Open on top of whatever is already showing (see viewer_stack); a
+  -- recursive query must leave its parent conversation intact.
+  if not is_topmost_viewer(self) then
+    table.insert(viewer_stack, self)
   end
-  
-  active_chatgpt_viewer = self
 
   local is_multi_general =
       not self.assistant.ui.doc_settings and Notebook.isEnabled(self.assistant)
@@ -601,11 +630,15 @@ function ChatGPTViewer:onCloseWidget()
   self.text = ""
   self.highlighted_text = nil
   
-  -- Reset the active window
-  if active_chatgpt_viewer == self then
-    active_chatgpt_viewer = nil
+  -- Pop out of the stack. Normally the top, but a HoldClose unwinding several
+  -- viewers removes them one by one, and a viewer may also already be gone.
+  for idx = #viewer_stack, 1, -1 do
+    if viewer_stack[idx] == self then
+      table.remove(viewer_stack, idx)
+      break
+    end
   end
-  
+
   -- Call InputContainer's default onCloseWidget method
   if InputContainer.onCloseWidget then
     InputContainer.onCloseWidget(self)
@@ -792,7 +825,16 @@ end
 
 -- close all active dialog back to the reading UI
 function ChatGPTViewer:HoldClose()
-  self:onClose()
+  -- Every viewer, not just this one: the point of the hold is to get back to
+  -- the reading UI from wherever the nested queries have led. onClose() pops
+  -- the stack through onCloseWidget, so walk a copy, topmost first.
+  local viewers = {}
+  for idx = #viewer_stack, 1, -1 do
+    viewers[#viewers + 1] = viewer_stack[idx]
+  end
+  for _, viewer in ipairs(viewers) do
+    viewer:onClose()
+  end
   -- FileManager registers dictionary but no highlight (no open book), so
   -- both are optional here; every other ui.highlight access guards the same.
   local ui = self.assistant.ui
@@ -812,6 +854,13 @@ function ChatGPTViewer:onShow()
 end
 
 function ChatGPTViewer:onTapClose(arg, ges_ev)
+  -- A stacked viewer is draggable, so a parent window can end up exposed under
+  -- a child that was moved aside. Tapping that exposed region must not close
+  -- the parent while the child is still up. The tap-outside affordance is not
+  -- lost: the topmost viewer covers the tap and closes itself.
+  if not is_topmost_viewer(self) then
+    return false
+  end
   if self.button_table then
     for _, button_row in ipairs(self.button_table.buttons) do
       for _, button in ipairs(button_row) do
@@ -838,12 +887,24 @@ function ChatGPTViewer:onClose()
   if self.assistant.settings:readSetting("auto_save_to_notebook", false) then
     self:saveToNotebook()
   end
-  
+
+  -- Keep a late selection gesture from popping a menu over the closing viewer
+  self.closing = true
+
+  -- Decided before the close: UIManager:close pops self off the stack, so
+  -- afterwards every viewer looks like it is closing alone.
+  local was_the_last_viewer = is_only_viewer(self)
+
   UIManager:close(self)
   if self.close_callback then self.close_callback() end
 
-  -- clear the text selection when plugin is called without a highlight or dict dialog
-  if self.assistant.ui.highlight then
+  -- Clear the text selection when the plugin was called without a highlight or
+  -- dict dialog. Not while a parent viewer is still open: it can still issue
+  -- queries, and those resolve the page number from the live selection
+  -- (assistant_dialog.lua resolve_page, DocUtils.getPageNumber), so clearing
+  -- here would silently drop the page context of a conversation that is still
+  -- on screen. The last viewer out does clear it, as before.
+  if self.assistant.ui.highlight and was_the_last_viewer then
     if not (self.assistant.ui.highlight.highlight_dialog or self.assistant.ui.dictionary.dict_window) then
       self.assistant.ui.highlight:clear()
     end
@@ -932,18 +993,137 @@ function ChatGPTViewer:onForwardingPanRelease(arg, ges)
   return self.movable:onMovablePanRelease(arg, ges)
 end
 
-function ChatGPTViewer:handleTextSelection(text, hold_duration, start_idx, end_idx, to_source_index_func)
-  if self.text_selection_callback then
-    self.text_selection_callback(text, hold_duration, start_idx, end_idx, to_source_index_func)
+-- Label of a selection-menu prompt, taken from the merged prompt table so it
+-- follows the user's own renames (and the web search indicator) instead of
+-- repeating the wording kept in assistant_prompts.lua.
+-- @param prompt_id string id of the prompt in the merged prompt table
+-- @return string text for the menu button
+function ChatGPTViewer:_selectionPromptLabel(prompt_id)
+  local merged = Prompts.getMergedPrompts(self.assistant.config:getFeature("prompts")) or {}
+  local prompt = koutil.tableGetValue(merged, prompt_id)
+  return Prompts.getDisplayText(koutil.tableGetValue(prompt, "text") or prompt_id,
+    koutil.tableGetValue(prompt, "use_websearch") or false,
+    Prompts.isWebSearchEnabled(self.assistant.settings))
+end
+
+-- Run a prompt on the selected text, through the same wrapper the highlight
+-- dialog buttons use (online check first, then trapped, so the query dialogs
+-- can show their progress).
+-- @param prompt_id string id of the prompt to run
+-- @param selected_text string the text the user selected in the answer
+function ChatGPTViewer:_runSelectionPrompt(prompt_id, selected_text)
+  NetUtils.runWhenOnlineFast(function()
+    Trapper:wrap(function()
+      -- The query dialog is created post-provider-load, so it may be missing.
+      if not self.assistant.assistant_dialog then
+        UIManager:show(InfoMessage:new{
+          icon = "notice-warning",
+          text = _("Plugin is not configured."),
+          timeout = 2,
+        })
+        return
+      end
+      self.assistant.assistant_dialog:runPrompt(selected_text, prompt_id)
+    end)
+  end)
+end
+
+-- @param text string the text to copy
+function ChatGPTViewer:_copySelectionToClipboard(text)
+  if not Device:hasClipboard() then return end
+  Device.input.setClipboardText(text)
+  UIManager:show(Notification:new { text = _("Copied to clipboard.") })
+end
+
+-- Screen position to open the selection menu at: the top-left of the first
+-- selection rect. The widget tree of the answer text is
+--   viewer.textw -> viewer.scroll_text_w -> horizontal group -> htmlbox_widget
+-- and the rects of HtmlBoxWidget:updateHighlight are widget-local (the page
+-- is drawn at 0,0), so the widget's own dimen translates them to the screen.
+-- Anything missing along that path yields no anchor, and ButtonDialog then
+-- centers itself: a wrong placement is worse than no placement.
+-- @return table|nil Geom to anchor the menu at, or nil to center it
+function ChatGPTViewer:_selectionAnchor()
+  local htmlbox = koutil.tableGetValue(self, "scroll_text_w", "htmlbox_widget")
+  local rect = koutil.tableGetValue(htmlbox, "highlight_rects", 1)
+  local widget_x = koutil.tableGetValue(htmlbox, "dimen", "x")
+  local widget_y = koutil.tableGetValue(htmlbox, "dimen", "y")
+  if not rect or not widget_x or not widget_y then return nil end
+  -- Fresh Geom: MovableContainer:ensureAnchor fills in the missing fields.
+  return Geom:new{
+    x = widget_x + (rect.x or 0),
+    y = widget_y + (rect.y or 0),
+  }
+end
+
+-- A long press inside the answer selects a word (tap-and-hold) or a span
+-- (hold and pan). On release we offer the two lookups a reader reaches for
+-- on an unfamiliar term, plus a copy.
+-- @param text string the selected text
+-- @param hold_duration number seconds the press was held
+function ChatGPTViewer:handleTextSelection(text, hold_duration)
+  local selected = koutil.trim(text or "")
+  if selected == "" then
+    UIManager:show(InfoMessage:new{
+      icon = "notice-warning",
+      text = _("No text selected"),
+      timeout = 2,
+    })
     return
   end
-  if Device:hasClipboard() then
-    -- translator.copyToClipboard(text)
-    UIManager:show(Notification:new {
-      text = start_idx == end_idx and _("Word copied to clipboard.")
-          or _("Selection copied to clipboard."),
-    })
-  end
+  -- A follow-up input or keyboard is up, or we are on our way out: no menu.
+  if self.input_dialog or self.closing then return end
+
+  local dialog
+  local buttons = {
+    {
+      {
+        text = _("Dictionary"),
+        callback = function()
+          UIManager:close(dialog)
+          -- assistant_dictdialog requires this module, so it is pulled in on
+          -- first use rather than at load time (the top-level require would
+          -- close the cycle).
+          local showDictionaryDialog = require("assistant_dictdialog")
+          NetUtils.runWhenOnlineFast(function()
+            Trapper:wrap(function()
+              showDictionaryDialog(self.assistant, selected)
+            end)
+          end)
+        end,
+      },
+      {
+        text = self:_selectionPromptLabel("wikipedia"),
+        callback = function()
+          UIManager:close(dialog)
+          self:_runSelectionPrompt("wikipedia", selected)
+        end,
+      },
+    },
+    {
+      {
+        text = _("Copy"),
+        callback = function()
+          UIManager:close(dialog)
+          self:_copySelectionToClipboard(selected)
+        end,
+      },
+      {
+        text = _("Cancel"),
+        callback = function()
+          UIManager:close(dialog)
+        end,
+      },
+    },
+  }
+  dialog = ButtonDialog:new{
+    shrink_unneeded_width = true,
+    buttons = buttons,
+    anchor = function()
+      return self:_selectionAnchor()
+    end,
+  }
+  UIManager:show(dialog)
 end
 
 function ChatGPTViewer:html_link_tapped_callback(link)
