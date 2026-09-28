@@ -64,7 +64,6 @@ local stubs = {
     ["ui/widget/buttondialog"]  = { new = function(_, o) return o end },
     ["ui/widget/menu"]          = {},
     ["ui/widget/confirmbox"]    = {},
-    ["ui/widget/buttontable"]   = {},
     ["ui"]                      = {},
     ["android"]                 = {},
     -- for assistant_gettext: datastorage mock

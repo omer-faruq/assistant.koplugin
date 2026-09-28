@@ -128,6 +128,12 @@ end
 Conversation.Session = {}
 Conversation.Session.__index = Conversation.Session
 
+-- What a caller passes to Session:new. The remaining fields are seeded by the
+-- constructor, so they are not the caller's to supply.
+---@class Conversation.SessionInit
+---@field assistant table The plugin's assistant instance
+---@field title string|nil
+
 ---@class Conversation.Session
 ---@field assistant table The plugin's assistant instance
 ---@field title string|nil
@@ -137,7 +143,7 @@ Conversation.Session.__index = Conversation.Session
 ---@field active_turn table|nil
 ---@field cancel boolean
 
----@param opts Conversation.Session
+---@param opts Conversation.SessionInit
 function Conversation.Session:new(opts)
     local self = setmetatable({}, Conversation.Session)
     self.assistant = opts.assistant
