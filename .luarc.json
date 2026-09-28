@@ -1,0 +1,62 @@
+{
+  // KOReader plugins run on LuaJIT (Lua 5.1 + FFI), not stock Lua 5.4. Without
+  // this, `jit.os`/`jit.arch` report as undefined globals and `string.buffer`
+  // is not a known type.
+  "runtime.version": "LuaJIT",
+
+  // Resolve `require("ui/widget/...")`, `require("ffi/...")` and friends against
+  // the KOReader runtime. Its location is fixed by the environment, not a
+  // per-machine choice: the .deb lands in /usr/lib/koreader, and without it the
+  // plugin cannot run at all (see AGENTS.md "Environment").
+  "runtime.path": [
+    "/usr/lib/koreader/frontend/?.lua",
+    "/usr/lib/koreader/frontend/?/init.lua",
+    "/usr/lib/koreader/common/?.lua"
+  ],
+  "workspace.library": [
+    "/usr/lib/koreader/frontend/?.lua",
+    "/usr/lib/koreader/frontend/?/init.lua",
+    "/usr/lib/koreader/common/?.lua"
+  ],
+  "workspace.checkThirdParty": false,
+
+  // l10n/ is 40+ locales with no code insight; lib/ is vendored and keeps
+  // upstream formatting. test/ is deliberately NOT ignored -- an
+  // `ignoreDir: test` pass is what hid the Session init-type regression.
+  "workspace.ignoreDir": ["l10n", "lib", "docs", ".github", ".git"],
+
+  // User-owned file holding real secrets; never read or type-check it.
+  "workspace.ignoreGlobs": ["configuration.lua"],
+
+  "diagnostics.library": "LuaJIT",
+  "diagnostics.globals": ["G_reader_settings", "Device", "Screen", "UIManager", "InfoMessage", "Notification", "vim", "self"],
+
+  // Checks that are pure noise here. duplicate-index and missing-fields stay
+  // on: they each caught a real defect (a doubled table key in the test stubs,
+  // an over-strict Session class).
+  //   undefined-field        KOReader widgets subclass through extend/metatable
+  //                          and are not fully annotated; 86 hits, 0 actionable.
+  //   need-check-nil         75 hits, all in test/, which deliberately deep-index
+  //                          nested stub tables to poke widget internals.
+  //   duplicate-set-field    Re-assigning a stub between test phases is the
+  //                          intended idiom, unlike duplicate-index, where a
+  //                          doubled key loses the earlier value outright.
+  "diagnostics.disable": [
+    "codestyle-check",
+    "lowercase-global",
+    "trailing-space",
+    "unused-local",
+    "unused-function",
+    "unused-label",
+    "unused-vararg",
+    "redefined-local",
+    "global-in-nil-env",
+    "close-non-object",
+    "await-in-sync",
+    "not-yieldable",
+    "ambiguity-1",
+    "undefined-field",
+    "need-check-nil",
+    "duplicate-set-field"
+  ]
+}
