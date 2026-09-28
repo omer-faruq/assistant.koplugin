@@ -225,34 +225,6 @@ local function checkForUpdates(assistant)
   end
 end
 
--- Interprets the return values of `socket.http.request{...}`.
--- A completed exchange yields `1, code, headers, status`; a transport failure
--- yields `nil, err`. The leading `1` is therefore the transport signal, and
--- `code` is an HTTP status only once `result` proves the exchange completed,
--- so the error string a failure leaves in that slot is never compared.
--- @param result number|nil the leading `1` of a completed exchange
--- @param code number|string|nil HTTP status, or the transport error message
--- @param headers table|nil response headers; LuaSocket lowercases every key
--- @param version string branch/tag being downloaded
--- @treturn boolean true if the download succeeded
--- @treturn string|nil failure message, nil on success
-local function interpretDownloadResult(result, code, headers, version)
-  if not result then
-    return false, "Download failed: " .. tostring(code)
-  end
-  if code == 200 then
-    return true, nil
-  end
-  if code == 404 then
-    return false, T(_("Branch/Tag \"%1\" was not found."), version)
-  end
-  if code >= 300 and code < 400 then
-    local loc = headers and headers.location
-    return false, "Download failed: HTTP " .. tostring(code) .. " redirect to " .. tostring(loc)
-  end
-  return false, "Download failed: HTTP " .. tostring(code)
-end
-
 local function otaUpgrade(assistant, version)
   local PLUGIN_NAME = "assistant.koplugin"
 
@@ -321,10 +293,26 @@ local function otaUpgrade(assistant, version)
 
       local size = lfs.attributes(DL_TAR, "size")
 
-      local http_ok, http_err = interpretDownloadResult(result, status_code, headers, version)
-      if not http_ok then
+      -- socket.http.request yields `nil, err` when the exchange never completed
+      -- and `1, code, headers, status` when it did, so `result` alone tells a
+      -- transport error from an HTTP status. A missing result leaves the error
+      -- string in status_code; it is reported here and never compared.
+      if not result then
+        sub_logger.warn("[OTA] transport error: " .. tostring(status_code) .. " url=" .. tostring(RELEASE_URL))
+        return false, "Download failed: " .. tostring(status_code)
+      end
+
+      if status_code ~= 200 then
         sub_logger.warn("[OTA] download failed: status_code=" .. tostring(status_code) .. " url=" .. tostring(RELEASE_URL) .. " size=" .. tostring(size))
-        return false, http_err
+        if status_code == 404 then
+          return false, T(_("Branch/Tag \"%1\" was not found."), version)
+        end
+        -- LuaSocket lowercases every header name, so `location` is the only key.
+        if status_code >= 300 and status_code < 400 then
+          return false, "Download failed: HTTP " .. tostring(status_code) ..
+            " redirect to " .. tostring(headers and headers.location)
+        end
+        return false, "Download failed: HTTP " .. tostring(status_code)
       end
 
       if not size or size == 0 then
@@ -534,7 +522,6 @@ end
 return {
   isVersionNewer = isVersionNewer,
   is_excluded = is_excluded,
-  interpretDownloadResult = interpretDownloadResult,
   UPDATE_CHECK_INTERVAL = UPDATE_CHECK_INTERVAL,
   LAST_CHECK_KEY = LAST_CHECK_KEY,
   LATEST_VERSION_KEY = LATEST_VERSION_KEY,
