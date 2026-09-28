@@ -260,8 +260,25 @@ local function genDictionaryOutputMenu(assistant)
     })
 
     table.insert(items, {
-        text = _("Concise - reply in short sentences"),
+        -- @translators Settings switch: sends every looked-up word to the Vocabulary Builder on its own, so the result window needs no button for it. Keep it short.
+        text = _("Auto Add Word to Vocabulary Builder"),
         separator = true,
+        checked_func = function()
+            return assistant.settings:readSetting("dict_auto_add_vocab", false)
+        end,
+        callback = function()
+            assistant.settings:toggle("dict_auto_add_vocab")
+            assistant.updated = true
+        end,
+        hold_callback = function()
+            UIManager:show(InfoMessage:new{
+                text = _("Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears, and hides the Vocabulary Builder button from the result window."),
+            })
+        end,
+    })
+
+    table.insert(items, {
+        text = _("Concise - reply in short sentences"),
         checked_func = function()
             return assistant.settings:readSetting("dict_concise", false)
         end,

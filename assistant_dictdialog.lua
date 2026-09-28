@@ -306,32 +306,45 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     local result = createResultText(highlightedText)
     local chatgpt_viewer
 
-    chatgpt_viewer = ChatGPTViewer:new {
-        assistant = assistant,
-        ui = ui,
-        title = title,
-        text = result,
-        -- message_history is managed by the showDictionaryDialog closure,
+    -- Shared by the button and the auto-add path, so the WordLookedUp event
+    -- is fired from exactly one place.
+    local function add_word_to_vocabulary(show_notification)
+        if not ui then return end
+        local word = TextUtils.strip_selection_punctuation(highlightedText)
+        if not word or word == "" then
+            if show_notification then
+                UIManager:show(InfoMessage:new{
+                    icon = "notice-warning",
+                    text = _("No word to add"),
+                    timeout = 2,
+                })
+            end
+            return
+        end
+        -- is_manual = true: the user opted in through our own switch, so the
+        -- Vocabulary Builder's own "capture while reading" setting must not
+        -- veto the add.
+        ui:handleEvent(Event:new("WordLookedUp", word, book_title, true))
+        if show_notification then
+            UIManager:show(InfoMessage:new{
+                text = _("Added to vocabulary builder"),
+                timeout = 2,
+            })
+        end
+    end
+
+    local auto_add_vocab = assistant.settings:readSetting("dict_auto_add_vocab", false)
+
+    -- With the switch on there is nothing left for the button to do, so the
+    -- viewer is given no extra buttons at all.
+    local extra_buttons
+    if not auto_add_vocab then
         extra_buttons = {
             {
                 -- @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
                 text = _("Vocabulary Builder"),
                 callback = function()
-                    if not ui then return end
-                    local word = TextUtils.strip_selection_punctuation(highlightedText)
-                    if not word or word == "" then
-                        UIManager:show(InfoMessage:new{
-                            icon = "notice-warning",
-                            text = _("No word to add"),
-                            timeout = 2,
-                        })
-                        return
-                    end
-                    ui:handleEvent(Event:new("WordLookedUp", word, book_title, true))
-                    UIManager:show(InfoMessage:new{
-                        text = _("Added to vocabulary builder"),
-                        timeout = 2,
-                    })
+                    add_word_to_vocabulary(true)
                 end,
                 hold_callback = function()
                     UIManager:show(InfoMessage:new{
@@ -339,7 +352,16 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
                     })
                 end,
             },
-        },
+        }
+    end
+
+    chatgpt_viewer = ChatGPTViewer:new {
+        assistant = assistant,
+        ui = ui,
+        title = title,
+        text = result,
+        -- message_history is managed by the showDictionaryDialog closure,
+        extra_buttons = extra_buttons,
         -- Re-assemble the result so a display switch in the viewer's menu can
         -- hide what it just turned off.
         rebuild_text = function()
@@ -351,6 +373,12 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     }
 
     UIManager:show(chatgpt_viewer)
+
+    -- Fired after the show so a Vocabulary Builder dialog for an
+    -- already-known word stacks on top of the result window, not under it.
+    if auto_add_vocab then
+        add_word_to_vocabulary(false)
+    end
 end
 
 return showDictionaryDialog
