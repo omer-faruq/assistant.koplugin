@@ -489,7 +489,8 @@ end
 ---
 --- @param message_history  table   conversation history
 --- @param query_option     table   { use_stream_mode=boolean, use_websearch=string }
---- @return string|function|table result, string|nil error
+--- @return string|function|table result
+--- @return string|nil error
 function BaseHandler:query(message_history, query_option)
     error("query method must be implemented")
 end
@@ -616,7 +617,8 @@ end
 --- Parse a non-streaming LLM response into text, a tool call, or an error.
 --- @param responseData  table   decoded JSON from the LLM (non-stream response)
 --- @param format        string  "openai" | "anthropic" | "gemini" | "responses"
---- @return string|table|nil result, string|nil error
+--- @return string|table|nil result
+--- @return string|nil error
 function BaseHandler:parseToolCalls(responseData, format)
     local parsed, parse_err = ToolExecutor.parseToolCallsResponse(responseData, format)
 

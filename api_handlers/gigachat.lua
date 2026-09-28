@@ -86,7 +86,8 @@ function GigaChatHandler:backgroundRequest(url, headers, body)
 end
 
 --- Get access token for GigaChat API
---- @return string? accessToken, string? error
+--- @return string? accessToken
+--- @return string? error
 function GigaChatHandler:getAccessToken()
     -- Return cached token if valid
     if self.tokenInfo and self.tokenInfo.accessToken and self.tokenInfo.expiresAt and self.tokenInfo.expiresAt > os.time() then
@@ -108,7 +109,8 @@ function GigaChatHandler:getAccessToken()
 end
 
 --- Authorize with GigaChat to obtain an access token
---- @return table? response, string? error
+--- @return table? response
+--- @return string? error
 function GigaChatHandler:authorize()
     if not self.api_key then
         return nil, "Missing authorizationKey (or api_key) in gigachat settings"

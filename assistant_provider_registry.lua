@@ -726,7 +726,8 @@ end
 --- (not the effective/base parameters) so save/load round-trips stably.
 ---@param assistant table The Assistant instance
 ---@param provider_id string The provider ID (file key or UI "custom:N")
----@return table dialog The shown dialog widget (for tests/inspectors)
+---@return table|nil dialog The shown dialog widget, or nil when the provider
+---                        is unknown or has no common parameters
 function Registry.showParametersDialog(assistant, provider_id)
     local ps = assistant.config:getProvider(provider_id)
     if not ps then return end

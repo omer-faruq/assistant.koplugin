@@ -139,7 +139,8 @@ end
 --- @param handler            table   BaseHandler instance with search methods
 --- @param tool_round         integer  Notice for the number of rounds the tool called
 --- @param config             table|nil  Request-level credential snapshot from getSearchConfig
---- @return boolean success, string|nil result
+--- @return boolean success
+--- @return string|nil result
 function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round, config)
     if not keywords or #keywords == 0 then
         return false, _("Search keywords are empty.")
@@ -183,7 +184,8 @@ end
 --- @param tool_calls    table  The search tool_call_array
 --- @param format        string  "openai" | "anthropic" | "gemini"
 --- @param contents      table|nil   table contains "content", "reasoning_content"
---- @return boolean ok, table|string raw_assistant structure ready for buildToolResultMessages
+--- @return boolean ok
+--- @return table|string raw_assistant structure ready for buildToolResultMessages
 function ToolExecutor.buildRawAssistantForToolCall(tool_calls, format, contents)
     format = format or "openai"
     
@@ -256,7 +258,8 @@ end
 --- commit them to the canonical history (transactional tool loop).
 ---
 --- @param tool_call_result   table   tool call descriptor with keywords, raw_assistant, format
---- @return table|nil messages, string|nil error
+--- @return table|nil messages
+--- @return string|nil error
 function ToolExecutor.buildToolResultMessages(tool_call_result)
     if not tool_call_result then
         return nil, "Invalid tool_call_result structure"
@@ -277,7 +280,9 @@ end
 --- - OpenAI/Anthropic: arguments is a JSON string
 ---
 --- @param tool_call       table   single tool call object
---- @return string|nil id, string|nil keywords, string|nil error
+--- @return string|nil id
+--- @return string|nil keywords
+--- @return string|nil error
 function ToolExecutor.extractKeywords(tool_call)
     local keywords = nil
     local id = nil
@@ -338,7 +343,8 @@ end
 ---
 --- @param responseData table decoded JSON body
 --- @param format string "openai" | "anthropic" | "gemini" | "responses"
---- @return table|nil parsed { tool_calls=table|nil, raw_assistant=table|nil, content=string|nil, reasoning=string|nil }, string|nil err
+--- @return table|nil parsed { tool_calls=table|nil, raw_assistant=table|nil, content=string|nil, reasoning=string|nil }
+--- @return string|nil err
 function ToolExecutor.parseToolCallsResponse(responseData, format)
     if format == "anthropic" then
         local content_blocks = responseData.content

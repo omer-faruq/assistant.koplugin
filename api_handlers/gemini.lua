@@ -65,7 +65,8 @@ end
 --- (role="model") or functionResponse user turns (role="user", .parts set).
 ---
 --- @param messages table
---- @return table contents, string system_content
+--- @return table contents
+--- @return string system_content
 local function toGeminiContents(messages)
     local contents      = {}
     local system_parts = {}

@@ -319,23 +319,6 @@ end
 --- Query the AI with the provided message history.
 --- Handles both stream and non-stream modes, including multi-turn tool-call loops.
 ---
---- @param title string|number|nil  label naming the request (prompt/feature name,
----                                 or the user's question). Shown by the
----                                 non-stream progress toast and the streaming
----                                 dialog title.
----
---- Non-stream tool-call loop:
----   handler:query() returns a table { __is_tool_call=true, keywords=..., ... }
----   → Querier executes the appropriate search API
----   → appends the tool result messages via ToolExecutor.appendToolResult()
----   → repeats until a plain-string answer or an error
----
---- Stream tool-call loop (TODO: not fully shown here; stream does not support
---- tool calls in the current architecture — use non-stream for websearch).
----
---- Query the AI with the provided message history.
---- Handles both stream and non-stream modes, including multi-turn tool-call loops.
----
 --- @param message_history table[]  full conversation history for this request
 --- @param title string|number|nil  label naming the request (prompt/feature name,
 ---                                 or the user's question). Shown by the
@@ -1132,9 +1115,9 @@ end
 --- processChunk: parse one SSE event and update the running buffers.
 ---
 --- @param event              table   decoded JSON of one SSE chunk
---- @param trunk_callback     func    called with each new text fragment (may be nil)
---- @param result_buffer      strbuf  accumulates final answer text
---- @param reasoning_content_buffer strbuf  accumulates reasoning/thinking text
+--- @param trunk_callback     function|nil called with each new text fragment
+--- @param result_buffer      string.buffer  accumulates final answer text
+--- @param reasoning_content_buffer string.buffer  accumulates reasoning/thinking text
 --- @param tool_call_acc      table   mutable state containing:
 ---                                   { current={id, name, arguments_parts[]}, tools=[] }
 ---                                   - current: the tool_call being accumulated in this chunk stream

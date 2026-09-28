@@ -132,7 +132,8 @@ end
 --- summarized into the text: concatenate every text block, ignore the
 --- server blocks (never tool calls), and carry citations forward.
 --- @param responseData table decoded JSON body
---- @return string|table|nil result, string|nil error
+--- @return string|table|nil result
+--- @return string|nil error
 function AnthropicHandler:parseBuiltinResponse(responseData)
     local content_blocks = koutil.tableGetValue(responseData, "content")
     if type(content_blocks) ~= "table" then

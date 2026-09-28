@@ -125,7 +125,8 @@ end
 ---   assistant (with tool_calls) → { type = "function_call", call_id, name, arguments }
 ---   tool      → { type = "function_call_output", call_id, output }
 --- @param messages table  OpenAI-format message_history
---- @return table input_items, string instructions
+--- @return table input_items
+--- @return string|nil instructions
 local function convertMessagesToInput(messages)
     local input_items = {}
     local instructions_parts = {}

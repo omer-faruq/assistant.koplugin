@@ -17,13 +17,15 @@ local Conversation = {}
 Conversation.TurnInput = {}
 Conversation.TurnInput.__index = Conversation.TurnInput
 
----@param opts table
----@param opts.kind string "free" | "preset" | "feature"
----@param opts.origin string "typed" | "suggested" | "prompt_button"
----@param opts.text string The user question or expanded prompt
----@param opts.prompt_config table|nil Must be a copy, never the cached object
----@param opts.user_input string|nil
----@param opts.web_search_intent boolean|nil Whether this request wants search
+---@class Conversation.TurnInput
+---@field kind string "free" | "preset" | "feature"
+---@field origin string "typed" | "suggested" | "prompt_button"
+---@field text string The user question or expanded prompt
+---@field prompt_config table|nil Must be a copy, never the cached object
+---@field user_input string|nil
+---@field web_search_intent boolean|nil Whether this request wants search
+
+---@param opts Conversation.TurnInput
 function Conversation.TurnInput:new(opts)
     local self = setmetatable({}, Conversation.TurnInput)
     self.kind = opts.kind
@@ -42,11 +44,13 @@ end
 Conversation.TurnPolicy = {}
 Conversation.TurnPolicy.__index = Conversation.TurnPolicy
 
----@param opts table
----@param opts.tool_requested boolean Whether user/prompt wants search
----@param opts.tool_mode string "none" | "builtin" | external search key
----@param opts.suggestions boolean Whether to show follow-up suggestions
----@param opts.context_mode string "none" | "reuse" | "refresh"
+---@class Conversation.TurnPolicy
+---@field tool_requested boolean Whether user/prompt wants search
+---@field tool_mode string "none" | "builtin" | external search key
+---@field suggestions boolean Whether to show follow-up suggestions
+---@field context_mode string "none" | "reuse" | "refresh"
+
+---@param opts Conversation.TurnPolicy
 function Conversation.TurnPolicy:new(opts)
     local self = setmetatable({}, Conversation.TurnPolicy)
     self.tool_requested = opts.tool_requested
@@ -63,8 +67,9 @@ end
 ---@return Conversation.TurnPolicy
 function Conversation.TurnPolicy.resolve(input, settings, global_web_search)
     local tool_requested = false
-    if input.web_search_intent ~= nil then
-        tool_requested = input.web_search_intent
+    local intent = input.web_search_intent
+    if intent ~= nil then
+        tool_requested = intent
     elseif input.prompt_config and input.prompt_config.use_websearch ~= nil then
         tool_requested = input.prompt_config.use_websearch
     end
@@ -98,12 +103,14 @@ end
 Conversation.QueryRequest = {}
 Conversation.QueryRequest.__index = Conversation.QueryRequest
 
----@param opts table
----@param opts.messages table[] Wire history copy for this request
----@param opts.stream boolean
----@param opts.tool_mode string Resolved tool mode ("none" or provider key)
----@param opts.title string|nil
----@param opts.identity table Provider/model display snapshot
+---@class Conversation.QueryRequest
+---@field messages table[] Wire history copy for this request
+---@field stream boolean
+---@field tool_mode string Resolved tool mode ("none" or provider key)
+---@field title string|nil
+---@field identity table Provider/model display snapshot
+
+---@param opts Conversation.QueryRequest
 function Conversation.QueryRequest:new(opts)
     local self = setmetatable({}, Conversation.QueryRequest)
     self.messages = opts.messages
@@ -121,9 +128,16 @@ end
 Conversation.Session = {}
 Conversation.Session.__index = Conversation.Session
 
----@param opts table
----@param opts.assistant table The plugin's assistant instance
----@param opts.title string|nil
+---@class Conversation.Session
+---@field assistant table The plugin's assistant instance
+---@field title string|nil
+---@field history table[]
+---@field state string
+---@field generation integer
+---@field active_turn table|nil
+---@field cancel boolean
+
+---@param opts Conversation.Session
 function Conversation.Session:new(opts)
     local self = setmetatable({}, Conversation.Session)
     self.assistant = opts.assistant
@@ -257,6 +271,11 @@ end
 
 Conversation.QueryRun = {}
 Conversation.QueryRun.__index = Conversation.QueryRun
+
+---@class Conversation.QueryRun
+---@field wire_additions table[] messages pending until commit
+---@field tool_events table[] search progress events
+---@field state string pending | committed | rolled_back
 
 function Conversation.QueryRun:new()
     local self = setmetatable({}, Conversation.QueryRun)
