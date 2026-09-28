@@ -423,21 +423,6 @@ function Registry.delete(data, id)
     return true
 end
 
---- Edit an existing UI provider in place.  Only mutable fields are updated;
---- the handler, additional_parameters, and stable ID are preserved.
----@param data table The full UI data structure (from load())
----@param id string The provider's stable ID
----@param fields table { display_name, base_url, api_key, model }
----@return boolean ok
----@return string|nil err
-function Registry.edit(data, id)
-    local existing = data.providers[id]
-    if not existing then
-        return false, _("Provider not found.")
-    end
-    return true
-end
-
 --- Convenience: check whether a merged provider record is editable (or deletable).
 --- Same condition: source="ui" and not immutable.
 ---@param provider table A merged provider_settings entry

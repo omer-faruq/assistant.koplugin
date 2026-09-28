@@ -407,27 +407,6 @@ local tests = {
         assert.equal(Registry.is_deletable(nil), nil)
     end),
 
-    test("Registry.edit returns false for non-existent provider", function()
-        local data = { providers = {}, _next_id = 1 }
-        local ok, err = Registry.edit(data, "custom:999", {})
-        assert.isFalse(ok)
-        assert.notNil(err)
-    end),
-
-    test("Registry.edit returns true for existing provider", function()
-        local data = { providers = {}, _next_id = 1 }
-        local id = Registry.add(data, {
-            display_name = "Test",
-            handler = "openai",
-            model = "auto",
-            base_url = "https://api.test.com/v1",
-            api_key = "key",
-        })
-        assert.notNil(id)
-        local ok, err = Registry.edit(data, id, {})
-        assert.isTrue(ok)
-    end),
-
     test("updateProvider updates fields without generating new ID", function()
         local assistant = mockAssistantForInstall()
         -- First install a provider
