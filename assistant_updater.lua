@@ -225,28 +225,32 @@ local function checkForUpdates(assistant)
   end
 end
 
--- Interprets the first two values of `socket.skip(1, http.request{...})`.
--- socket.http.request returns `1, code, headers, status` on success but `nil, err`
--- on failure, so the skip drops the leading `1` on success and shifts the error
--- string into the first slot on failure. Anything non-numeric is a transport
--- error, never an HTTP status, so it must be reported before any comparison.
+-- Interprets the return values of `socket.http.request{...}`.
+-- A completed exchange yields `1, code, headers, status`; a transport failure
+-- yields `nil, err`. The leading `1` is therefore the transport signal, and
+-- `code` is an HTTP status only once `result` proves the exchange completed,
+-- so the error string a failure leaves in that slot is never compared.
+-- @param result number|nil the leading `1` of a completed exchange
+-- @param code number|string|nil HTTP status, or the transport error message
+-- @param headers table|nil response headers; LuaSocket lowercases every key
+-- @param version string branch/tag being downloaded
 -- @treturn boolean true if the download succeeded
 -- @treturn string|nil failure message, nil on success
-local function interpretDownloadResult(status_code, headers, version)
-  if type(status_code) ~= "number" then
-    return false, "Download failed: " .. tostring(status_code)
+local function interpretDownloadResult(result, code, headers, version)
+  if not result then
+    return false, "Download failed: " .. tostring(code)
   end
-  if status_code == 200 then
+  if code == 200 then
     return true, nil
   end
-  if status_code == 404 then
+  if code == 404 then
     return false, T(_("Branch/Tag \"%1\" was not found."), version)
   end
-  if status_code >= 300 and status_code < 400 then
-    local loc = headers and (headers.location or headers.Location or headers["Location"] or headers["location"])
-    return false, "Download failed: HTTP " .. tostring(status_code) .. " redirect to " .. tostring(loc)
+  if code >= 300 and code < 400 then
+    local loc = headers and headers.location
+    return false, "Download failed: HTTP " .. tostring(code) .. " redirect to " .. tostring(loc)
   end
-  return false, "Download failed: HTTP " .. tostring(status_code)
+  return false, "Download failed: HTTP " .. tostring(code)
 end
 
 local function otaUpgrade(assistant, version)
@@ -290,7 +294,6 @@ local function otaUpgrade(assistant, version)
   local completed, dl_result, dl_err = Trapper:dismissableRunInSubprocess(function()
     local sub_logger = require("logger")
     local _ok, _r1, _r2 = xpcall(function()
-      local socket = require("socket")
       local http = require("socket.http")
       local ltn12 = require("ltn12")
       local lfs = require("libs/libkoreader-lfs")
@@ -302,11 +305,13 @@ local function otaUpgrade(assistant, version)
       end
 
       local sink = ltn12.sink.file(file_handle)
-      local status_code, headers, status_line = socket.skip(1, http.request{
+      -- Keep the leading `1`: it is the transport-success signal, which is what
+      -- separates a real HTTP status from a transport error.
+      local result, status_code, headers = http.request{
         url = RELEASE_URL,
         method = "GET",
         sink = sink,
-      })
+      }
 
       -- Ensure file is flushed and closed so Archiver can read it
       -- ltn12 sink.file auto-closes handle on EOF (chunk==nil); explicit close must be pcall-guarded to avoid "attempt to use a closed file"
@@ -316,7 +321,7 @@ local function otaUpgrade(assistant, version)
 
       local size = lfs.attributes(DL_TAR, "size")
 
-      local http_ok, http_err = interpretDownloadResult(status_code, headers, version)
+      local http_ok, http_err = interpretDownloadResult(result, status_code, headers, version)
       if not http_ok then
         sub_logger.warn("[OTA] download failed: status_code=" .. tostring(status_code) .. " url=" .. tostring(RELEASE_URL) .. " size=" .. tostring(size))
         return false, http_err
