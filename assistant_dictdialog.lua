@@ -307,18 +307,18 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     local chatgpt_viewer
 
     -- Shared by the button and the auto-add path, so the WordLookedUp event
-    -- is fired from exactly one place.
+    -- is fired from exactly one place. `show_notification` gates the success
+    -- ack only: the auto path adds silently, but a failure is always reported,
+    -- since a silently skipped add would look like the switch is broken.
     local function add_word_to_vocabulary(show_notification)
         if not ui then return end
         local word = TextUtils.strip_selection_punctuation(highlightedText)
         if not word or word == "" then
-            if show_notification then
-                UIManager:show(InfoMessage:new{
-                    icon = "notice-warning",
-                    text = _("No word to add"),
-                    timeout = 2,
-                })
-            end
+            UIManager:show(InfoMessage:new{
+                icon = "notice-warning",
+                text = _("No word to add"),
+                timeout = 2,
+            })
             return
         end
         -- is_manual = true: the user opted in through our own switch, so the

@@ -5,6 +5,8 @@
 --   * the Vocabulary Builder extra button only exists while the switch is off
 --   * with the switch on the add fires silently right after the result window
 --     is shown, through the same local the button uses
+--   * the "no word to add" failure is reported on both paths, never gated on
+--     the success notification
 -- Headless-safe: the widget-heavy dialog is never required here, only scanned.
 local helper = require("test.helper")
 local assert = helper.assert
@@ -74,6 +76,22 @@ local tests = {
             "the add must fire after the show, so its dialog stacks on top")
     end),
 
+    test("a failure is reported on both paths, never gated", function()
+        -- "No word to add" is an error, so the auto path must not swallow it:
+        -- a silently skipped add is indistinguishable from a broken switch.
+        -- The guard is the InfoMessage sitting outside any show_notification
+        -- check, before the WordLookedUp event.
+        local empty = dict_src:find('if not word or word == "" then', 1, true)
+        local event = dict_src:find('Event:new("WordLookedUp"', 1, true)
+        assert.notNil(empty, "the empty-word guard must exist")
+        assert.notNil(event, "the add must still fire the event")
+        local region = dict_src:sub(empty, event)
+        assert.isTrue(region:find('_("No word to add")', 1, true) ~= nil,
+            "the no-word error must be reported")
+        assert.isTrue(region:find("show_notification", 1, true) == nil,
+            "the error must not be gated on show_notification")
+    end),
+
     test("one firing site, shared by both paths", function()
         assert.isTrue(dict_src:find("add_word_to_vocabulary(true)", 1, true) ~= nil,
             "the button must go through the shared local")
@@ -81,6 +99,10 @@ local tests = {
             "the WordLookedUp event must be fired from exactly one place")
         assert.isTrue(dict_src:find('Event:new("WordLookedUp", word, book_title, true)', 1, true) ~= nil,
             "the add must pass is_manual = true, or the capture-while-reading setting vetoes it")
+        -- Only the success ack is optional, so show_notification must still
+        -- guard exactly one thing: the "Added to vocabulary builder" dialog.
+        assert.equal(count_plain(dict_src, "if show_notification then"), 1,
+            "show_notification must gate the success ack only")
     end),
 }
 
