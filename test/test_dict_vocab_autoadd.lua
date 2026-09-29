@@ -2,12 +2,13 @@
 -- Guards the dictionary's "Auto Add Word to Vocabulary Builder" switch:
 --   * the Dictionary Settings menu owns the setting key
 --   * the dictionary dialog reads the same key, so menu and dialog cannot drift
---   * the Vocabulary Builder extra button only exists while the switch is off
+--   * the Vocabulary Builder extra button is always offered
 --   * the switch fires the shared add with notifications off
 --   * the "no word to add" failure is reported on both paths, never gated on
 --     the success notification
--- That the add fires after the result window is shown is a runtime ordering
--- property, covered behaviorally by test/ui/dict_vocab_autoadd.lua.
+-- That the add fires after the result window is shown, and that the button is
+-- offered on both switch states, are runtime properties covered behaviorally
+-- by test/ui/dict_vocab_autoadd.lua.
 -- Headless-safe: the widget-heavy dialog is never required here, only scanned.
 local helper = require("test.helper")
 local assert = helper.assert
@@ -53,17 +54,6 @@ local tests = {
     test("menu and dialog share one setting key", function()
         assert.isTrue(dict_src:find('readSetting("dict_auto_add_vocab", false)', 1, true) ~= nil,
             "the dialog must read the very same key as the menu")
-    end),
-
-    test("the Vocabulary Builder button is gated on the switch", function()
-        local gate = dict_src:find("if not auto_add_vocab then", 1, true)
-        local button = dict_src:find('text = _("Vocabulary Builder")', 1, true)
-        assert.notNil(gate, "the button must sit behind an if not auto_add_vocab then")
-        assert.notNil(button, "the Vocabulary Builder button must still exist")
-        assert.isTrue(gate < button,
-            "the gate must come before the button, or the button is never dropped")
-        assert.matches(dict_src, 'extra_buttons = extra_buttons,',
-            "the conditional table must be what the viewer receives")
     end),
 
     test("the switch fires the add without notifying", function()

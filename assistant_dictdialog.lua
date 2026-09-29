@@ -335,25 +335,23 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
 
     local auto_add_vocab = assistant.settings:readSetting("dict_auto_add_vocab", false)
 
-    -- With the switch on there is nothing left for the button to do, so the
-    -- viewer is given no extra buttons at all.
-    local extra_buttons
-    if not auto_add_vocab then
-        extra_buttons = {
-            {
-                -- @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
-                text = _("Vocabulary Builder"),
-                callback = function()
-                    add_word_to_vocabulary(true)
-                end,
-                hold_callback = function()
-                    UIManager:show(InfoMessage:new{
-                        text = _("Saves the word to the vocabulary builder"),
-                    })
-                end,
-            },
-        }
-    end
+    -- The button is always offered: the auto-add fires a lookup for a word the
+    -- Vocabulary Builder may already know, and its own dialog answers that, so
+    -- pressing the button again is a real action and not a no-op.
+    local extra_buttons = {
+        {
+            -- @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+            text = _("Vocabulary Builder"),
+            callback = function()
+                add_word_to_vocabulary(true)
+            end,
+            hold_callback = function()
+                UIManager:show(InfoMessage:new{
+                    text = _("Saves the word to the vocabulary builder"),
+                })
+            end,
+        },
+    }
 
     result_viewer = ResultViewer:new {
         assistant = assistant,

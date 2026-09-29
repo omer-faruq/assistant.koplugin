@@ -260,7 +260,7 @@ local function genDictionaryOutputMenu(assistant)
     })
 
     table.insert(items, {
-        -- @translators Settings switch: sends every looked-up word to the Vocabulary Builder on its own, so the result window needs no button for it. Keep it short.
+        -- @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
         text = _("Auto Add Word to Vocabulary Builder"),
         separator = true,
         checked_func = function()
@@ -272,7 +272,7 @@ local function genDictionaryOutputMenu(assistant)
         end,
         hold_callback = function()
             UIManager:show(InfoMessage:new{
-                text = _("Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears, and hides the Vocabulary Builder button from the result window."),
+                text = _("Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."),
             })
         end,
     })

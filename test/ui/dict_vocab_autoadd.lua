@@ -5,6 +5,10 @@
 -- real UIManager:show and the fake ui:handleEvent append to one log, so the
 -- order of the two calls is observed, not inferred from the source.
 --
+-- The switch only adds the word on its own; the Vocabulary Builder button is
+-- offered either way, since that same lookup already raises the builder's own
+-- dialog for a word it already knows.
+--
 -- Usage: ./test/runui.sh ui/dict_vocab_autoadd
 --
 -- Dev-only: test/ is excluded from release zips.
@@ -238,8 +242,17 @@ do
     eq("switch on: the success notification is suppressed", messages(rec), 0)
 
     UIManager:forceRePaint()
-    check("switch on: no Vocabulary Builder button, nothing left to press",
-        viewers[1] and find_button(viewers[1], _("Vocabulary Builder")) == nil)
+    local btn = viewers[1] and find_button(viewers[1], _("Vocabulary Builder"))
+    check("switch on: the Vocabulary Builder button is still offered", btn ~= nil)
+    if btn and btn.callback then
+        -- The auto-add already fired one lookup. Pressing again is a real add,
+        -- answered by the Vocabulary Builder with its own dialog.
+        btn.callback()
+        eq("switch on: pressing it again fires a second lookup", #rec.events, 2)
+    else
+        check("switch on: pressing it again fires a second lookup", false,
+            "no Vocabulary Builder callback to press")
+    end
     cleanup(rec)
 end
 
