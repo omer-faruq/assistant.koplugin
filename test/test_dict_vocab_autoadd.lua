@@ -3,10 +3,11 @@
 --   * the Dictionary Settings menu owns the setting key
 --   * the dictionary dialog reads the same key, so menu and dialog cannot drift
 --   * the Vocabulary Builder extra button only exists while the switch is off
---   * with the switch on the add fires silently right after the result window
---     is shown, through the same local the button uses
+--   * the switch fires the shared add with notifications off
 --   * the "no word to add" failure is reported on both paths, never gated on
 --     the success notification
+-- That the add fires after the result window is shown is a runtime ordering
+-- property, covered behaviorally by test/ui/dict_vocab_autoadd.lua.
 -- Headless-safe: the widget-heavy dialog is never required here, only scanned.
 local helper = require("test.helper")
 local assert = helper.assert
@@ -65,15 +66,11 @@ local tests = {
             "the conditional table must be what the viewer receives")
     end),
 
-    test("the switch fires the add silently after the window is shown", function()
+    test("the switch fires the add without notifying", function()
         assert.isTrue(dict_src:find("add_word_to_vocabulary(false)", 1, true) ~= nil,
             "the auto path must not notify")
-        local shown = dict_src:find("UIManager:show(result_viewer)", 1, true)
-        local auto = dict_src:find("if auto_add_vocab then", 1, true)
-        assert.notNil(shown, "the viewer must still be shown")
-        assert.notNil(auto, "the auto-add block must exist")
-        assert.isTrue(shown < auto,
-            "the add must fire after the show, so its dialog stacks on top")
+        assert.isTrue(dict_src:find("if auto_add_vocab then", 1, true) ~= nil,
+            "the auto-add block must exist")
     end),
 
     test("a failure is reported on both paths, never gated", function()
