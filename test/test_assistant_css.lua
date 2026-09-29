@@ -2,7 +2,7 @@
 -- Guards the shared viewer CSS module (assistant_css.lua): a single BASE
 -- (table rules included) built by build(), RTL/justify fragments attaching
 -- only when switched on, and both viewers building from that same BASE
--- (ChatGPTViewer via ViewerCSS.build, NotebookViewer via SharedCSS.build).
+-- (ResultViewer via ViewerCSS.build, NotebookViewer via SharedCSS.build).
 -- Headless-safe: the module is pure Lua with no KOReader requires; wiring
 -- is asserted on shipped sources.
 local helper = require("test.helper")

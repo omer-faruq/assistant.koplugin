@@ -4,9 +4,8 @@
 -- top of the one it was asked from; closing the child must return the reader
 -- to the parent conversation.
 --
--- This used to be a module-level `active_chatgpt_viewer` singleton that
--- closed the previous viewer in init(), so the parent was destroyed the moment
--- the child was built.
+-- A single shared viewer slot would make viewers mutually exclusive, so the
+-- parent would be destroyed the moment the child is built.
 --
 -- Usage: ./test/runui.sh ui/viewer_stacking
 --
@@ -20,7 +19,7 @@ end
 local wb = require("test/wbuilder")
 local UIManager = wb.UIManager
 local Geom = require("ui/geometry")
-local ChatGPTViewer = require("assistant_viewer")
+local ResultViewer = require("assistant_viewer")
 
 -- ── Minimal assertion helpers (this test runs outside test/helper.lua, which
 -- stubs the very widgets the viewer needs) ──
@@ -76,7 +75,7 @@ local assistant = {
 }
 
 local function make_viewer(text)
-    return ChatGPTViewer:new{ assistant = assistant, text = text }
+    return ResultViewer:new{ assistant = assistant, text = text }
 end
 
 -- UIManager:close dispatches "CloseWidget" -> onCloseWidget, which is what pops

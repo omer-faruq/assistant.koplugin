@@ -46,7 +46,7 @@ function M.setupMenuOrder()
     insertFirst(filemanager_order)
 end
 
---- Add the page navigation helper used by ChatGPTViewer to KOReader's
+--- Add the page navigation helper used by ResultViewer to KOReader's
 --- ScrollHtmlWidget class.
 function M.setupScrollHtmlWidget()
     local ScrollHtmlWidget = require("ui/widget/scrollhtmlwidget")

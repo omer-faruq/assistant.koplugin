@@ -68,7 +68,7 @@ local tests = {
     test("the switch fires the add silently after the window is shown", function()
         assert.isTrue(dict_src:find("add_word_to_vocabulary(false)", 1, true) ~= nil,
             "the auto path must not notify")
-        local shown = dict_src:find("UIManager:show(chatgpt_viewer)", 1, true)
+        local shown = dict_src:find("UIManager:show(result_viewer)", 1, true)
         local auto = dict_src:find("if auto_add_vocab then", 1, true)
         assert.notNil(shown, "the viewer must still be shown")
         assert.notNil(auto, "the auto-add block must exist")

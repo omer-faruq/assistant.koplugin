@@ -180,7 +180,7 @@ local tests = {
     test("ui script: runui entry uses the shared sample", function()
         local ui_src = read_source("test/markdown_css.lua")
         assert.matches(ui_src, 'markdown_css_sample', "UI script must require the shared sample")
-        assert.matches(ui_src, 'ChatGPTViewer:new', "UI script must still build the viewer")
+        assert.matches(ui_src, 'ResultViewer:new', "UI script must still build the viewer")
         assert.matches(ui_src, 'UIManager:run%(%)', "UI script must end with UIManager:run()")
         assert.notMatches(ui_src, 'SAMPLE = %[%[', "UI script must not carry a forked inline SAMPLE")
     end),

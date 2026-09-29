@@ -23,7 +23,7 @@ local wb = require("test.wbuilder")
 local UIManager = wb.UIManager
 local Geom = require("ui/geometry")
 local Event = require("ui/event")
-local ChatGPTViewer = require("assistant_viewer")
+local ResultViewer = require("assistant_viewer")
 
 -- ── Minimal assertion helpers (this test runs outside test/helper.lua, which
 -- stubs the very widgets the viewer needs) ──
@@ -79,7 +79,7 @@ local ANSWER = "The Ring was forged in Mount Doom to rule the other Rings of Pow
 local SELECTION = "forged in Mount Doom"
 
 local function make_viewer(text)
-    return ChatGPTViewer:new{ assistant = assistant, text = text or ANSWER }
+    return ResultViewer:new{ assistant = assistant, text = text or ANSWER }
 end
 
 -- Showing a widget does not lay it out: frame.dimen and the button dimens are

@@ -4,7 +4,7 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 
 ## Request flow
 
-`main.lua` → `Assistant:query` → `Querier:query` → exactly one handler `query` → optional tool loop (`ToolExecutor`) → results shown in `ChatGPTViewer` / `assistant_dialog.lua`.
+`main.lua` → `Assistant:query` → `Querier:query` → exactly one handler `query` → optional tool loop (`ToolExecutor`) → results shown in `ResultViewer` / `assistant_dialog.lua`.
 
 ## Core
 
@@ -51,7 +51,7 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 - `assistant_provider_dialog.lua` — provider/model settings (`ProviderDialog`, via `Assistant:showProviderDialog`).
 - `assistant_settings_menu.lua` — settings menu builders (`genMenuSettings`/`genWebSearchSubMenuItem`/`genDictionaryOutputMenu`).
 - `assistant_model_picker.lua` — `showPickerDialog`/`fetchModels`; call inside `Trapper:wrap`.
-- `assistant_viewer.lua` (`ChatGPTViewer`) — scrollable result viewer.
+- `assistant_viewer.lua` (`ResultViewer`) — scrollable result viewer.
 - `assistant_quicknote.lua` — quick-note capture; `assistant_updater.lua` — GitHub release check; `assistant_mdparser.lua` — hoedown → markdown.lua fallback.
 
 ## Config

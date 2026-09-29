@@ -8,7 +8,7 @@ local Geom = require("ui/geometry")
 local Blitbuffer = require("ffi/blitbuffer")
 local Size = require("ui/size")
 local InputDialog = require("ui/widget/inputdialog")
-local ChatGPTViewer = require("assistant_viewer")
+local ResultViewer = require("assistant_viewer")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local ConfirmBox = require("ui/widget/confirmbox")
@@ -176,7 +176,7 @@ function AssistantDialog:_createResultText(message_history, previous_text, title
   return previous_text .. Conversation.Renderer.render_increment(message_history, opts)
 end
 
--- Helper function to create and show ChatGPT viewer
+-- Helper function to create and show ResultViewer
 ---@param highlightedText string|nil Text selected when the viewer was opened
 ---@param message_history table[] Conversation history passed to the viewer
 ---@param title string|nil Display title for the viewer
@@ -185,8 +185,8 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
   include_book_context_for_followup = include_book_context_for_followup ~= false
   local result_text = self:_createResultText(message_history, nil, title)
   
-  local chatgpt_viewer 
-  chatgpt_viewer = ChatGPTViewer:new {
+  local result_viewer 
+  result_viewer = ResultViewer:new {
     title = title,
     text = result_text,
     assistant = self.assistant,
@@ -282,10 +282,10 @@ function AssistantDialog:_showResultViewer(highlightedText, message_history, tit
     rebuild_text = function()
       return self:_createResultText(message_history, nil, title)
     end,
-    default_hold_callback = function () chatgpt_viewer:HoldClose() end
+    default_hold_callback = function () result_viewer:HoldClose() end
   }
   
-  UIManager:show(chatgpt_viewer)
+  UIManager:show(result_viewer)
 end
 
 

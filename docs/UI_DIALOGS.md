@@ -1,6 +1,6 @@
 # UI / Dialogs
 
-KOReader UI is niche. **Reuse existing scaffolding** (`ChatGPTViewer`, `assistant_dialog.lua`, `assistant_provider_registry.lua`) rather than building new widget trees. When hand-building, scan `/usr/lib/koreader/frontend/ui/widget/` and `/usr/lib/koreader/plugins/` for reference patterns first.
+KOReader UI is niche. **Reuse existing scaffolding** (`ResultViewer`, `assistant_dialog.lua`, `assistant_provider_registry.lua`) rather than building new widget trees. When hand-building, scan `/usr/lib/koreader/frontend/ui/widget/` and `/usr/lib/koreader/plugins/` for reference patterns first.
 
 ## General conventions
 
@@ -37,7 +37,7 @@ Pitfalls learned there:
 
 ## Result viewer shapes (`assistant_viewer.lua`)
 
-`ChatGPTViewer` has two shapes, selected by the Response Settings `minimalist_mode` switch (default off):
+`ResultViewer` has two shapes, selected by the Response Settings `minimalist_mode` switch (default off):
 
 - **Standard** — two button rows (navigation/clipboard, then actions with Close rightmost) plus the page-button scroll feedback; the reply is a chat transcript emitted by `TextUtils.formatSingleMessage`: each user turn is a right-aligned `<div class="user-bubble">` (titled by the preset prompt name when one ran, then the typed text), reasoning is a `<div class="thought-block">`, and the answer is bare, left-aligned body text. There are no per-turn carrier labels.
 - **Minimalist** — no navigation row (no page buttons, Find or Copy), no page-button scroll feedback, and an action row reduced to the actions that act on the answer itself: `Annotate` (when a highlight context exists), caller `extra_buttons` (the dictionary viewer adds `Vocabulary Builder`) and `Close`. `Ask Another Question` and `Save` are the chrome it removes. The reply is assembled by `TextUtils.formatAnswerOnly` (no bubbles, no prompt name, no reasoning block, no follow-up questions).
@@ -51,7 +51,7 @@ The switch is read at two points on purpose: when the result is **assembled** (t
 - **At answer time** — `Querier` folds reasoning into the answer only while `show_reasoning` is on (`strip_think_tags`), and the follow-up switch keeps `<suggestions>` out of the history.
 - **At assembly time** — a turn answered before a switch was turned off still carries what the switch now hides, so the templates drop it: `TextUtils.splitReasoning` splits off a reasoning fence (`formatSingleMessage` wraps it in a `.thought-block` only while the switch is on, `formatAnswerOnly` never does) and `TextUtils.stripSuggestions` removes a leftover `<suggestions>` block.
 
-Flipping a display switch calls `ChatGPTViewer:_refreshText()`, which re-assembles the reply through the caller's `rebuild_text` and repaints — so the change is immediate instead of waiting for the next answer. The rebuilt widget keeps the current page, clamped by `scrollToPage` when the text shrinks.
+Flipping a display switch calls `ResultViewer:_refreshText()`, which re-assembles the reply through the caller's `rebuild_text` and repaints — so the change is immediate instead of waiting for the next answer. The rebuilt widget keeps the current page, clamped by `scrollToPage` when the text shrinks.
 
 ## MuPDF CSS support (viewer constraint)
 

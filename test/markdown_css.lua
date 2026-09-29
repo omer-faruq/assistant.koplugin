@@ -18,12 +18,12 @@ end
 
 local wb = require("test/wbuilder")
 local UIManager = wb.UIManager
-local ChatGPTViewer = require("assistant_viewer")
+local ResultViewer = require("assistant_viewer")
 local sample_file = io.open(project_root .. "/test/markdown_css_sample.md", "r")
 local SAMPLE = sample_file:read("*a")
 sample_file:close()
 
--- Minimal assistant mock: just enough for ChatGPTViewer:init().
+-- Minimal assistant mock: just enough for ResultViewer:init().
 -- Notebook stays disabled (doc_settings set), Add Note skipped (no ui).
 local mock_assistant = {
     settings = {
@@ -43,7 +43,7 @@ local mock_assistant = {
     showProviderDialog = function() end,
 }
 
-local viewer = ChatGPTViewer:new{
+local viewer = ResultViewer:new{
     title = "Markdown CSS",
     text = SAMPLE,
     assistant = mock_assistant,

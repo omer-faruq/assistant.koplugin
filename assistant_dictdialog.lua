@@ -1,6 +1,6 @@
 local logger = require("logger")
 local InputDialog = require("ui/widget/inputdialog")
-local ChatGPTViewer = require("assistant_viewer")
+local ResultViewer = require("assistant_viewer")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local _ = require("assistant_gettext")
@@ -304,7 +304,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     end
 
     local result = createResultText(highlightedText)
-    local chatgpt_viewer
+    local result_viewer
 
     -- Shared by the button and the auto-add path, so the WordLookedUp event
     -- is fired from exactly one place. `show_notification` gates the success
@@ -355,7 +355,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         }
     end
 
-    chatgpt_viewer = ChatGPTViewer:new {
+    result_viewer = ResultViewer:new {
         assistant = assistant,
         ui = ui,
         title = title,
@@ -368,11 +368,11 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
             return createResultText(highlightedText)
         end,
         default_hold_callback = function ()
-            chatgpt_viewer:HoldClose()
+            result_viewer:HoldClose()
         end,
     }
 
-    UIManager:show(chatgpt_viewer)
+    UIManager:show(result_viewer)
 
     -- Fired after the show so a Vocabulary Builder dialog for an
     -- already-known word stacks on top of the result window, not under it.

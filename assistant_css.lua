@@ -2,7 +2,7 @@
 --
 -- Shared CSS for the plugin's HTML viewers. Single source of truth for the
 -- viewer base style (black-and-white table rules included) plus the RTL and
--- justify fragments. Both ChatGPTViewer and NotebookViewer build from this
+-- justify fragments. Both ResultViewer and NotebookViewer build from this
 -- same BASE via build().
 --
 -- Pure functions only: no settings are read here, callers pass
@@ -168,7 +168,7 @@ body {
 
 local JUSTIFY_CSS = "\nbody {\n    text-align: justify;\n}\n"
 
--- Full viewer CSS, shared by ChatGPTViewer and NotebookViewer.
+-- Full viewer CSS, shared by ResultViewer and NotebookViewer.
 -- build() with no opts returns just the grouped base below.
 function M.build(opts)
     opts = opts or {}

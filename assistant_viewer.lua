@@ -2,11 +2,11 @@
 Displays some text in a scrollable view.
 
 @usage
-    local chatgptviewer = ChatGPTViewer:new{
+    local resultviewer = ResultViewer:new{
         title = _("I can scroll!"),
         text = _("I'll need to be longer than this example to scroll."),
     }
-    UIManager:show(chatgptviewer)
+    UIManager:show(resultviewer)
 ]]
 local BD = require("ui/bidi")
 local DocUtils = require("assistant_doc_utils")
@@ -139,7 +139,7 @@ local function createAddNoteButton(viewer)
     }
 end
 
-local ChatGPTViewer = InputContainer:extend {
+local ResultViewer = InputContainer:extend {
   title = nil,
   text = nil,
   width = nil,
@@ -158,7 +158,7 @@ local ChatGPTViewer = InputContainer:extend {
   default_hold_callback = nil,   -- on the Close button
   find_centered_lines_count = 5, -- line with find results to be not far from the center
 
-  onSubmit = nil, -- callback(viewer: ChatGPTViewer, input: table) when the user submits a follow-up
+  onSubmit = nil, -- callback(viewer: ResultViewer, input: table) when the user submits a follow-up
   -- function(viewer) -> string, re-assembles the reply from the caller's
   -- history. Required for a display switch to take effect on the turns that
   -- are already on screen: they were assembled with the previous switch state.
@@ -175,10 +175,9 @@ local ChatGPTViewer = InputContainer:extend {
 -- Viewers nest rather than replace each other: asking a follow-up question
 -- about text picked inside a result (the selection menu's Dictionary /
 -- Wikipedia) opens its own result window on top of the one it was asked
--- from, and closing it drops back into that conversation. This used to be a
--- single `active_chatgpt_viewer` slot that closed the previous viewer in
--- init(), which made viewers mutually exclusive and destroyed the parent
--- conversation on every recursive query.
+-- from, and closing it drops back into that conversation. A single shared
+-- viewer slot would instead make viewers mutually exclusive and destroy the
+-- parent conversation on every recursive query.
 --
 -- Lifecycle: init() pushes, onCloseWidget() pops (UIManager:close dispatches
 -- "CloseWidget" for every close path, including a Close that never came
@@ -197,7 +196,7 @@ local function is_topmost_viewer(viewer)
   return viewer_stack[#viewer_stack] == viewer
 end
 
-function ChatGPTViewer:init()
+function ResultViewer:init()
   -- calculate window dimension
   self.align = "center"
   self.region = Geom:new {
@@ -597,7 +596,7 @@ function ChatGPTViewer:init()
   }
 end
 
-function ChatGPTViewer:saveToNotebook()
+function ResultViewer:saveToNotebook()
   local timestamp = os.date("%Y-%m-%d %H:%M:%S")
   local highlighted_text_lbl = _("Highlighted text:")
   
@@ -625,7 +624,7 @@ function ChatGPTViewer:saveToNotebook()
   return Notebook.saveToNotebookFile(self.assistant, log_entry, self.notebook_path)
 end
 
-function ChatGPTViewer:onCloseWidget()
+function ResultViewer:onCloseWidget()
   -- Reset display state; history ownership stays with the entry adapter
   self.text = ""
   self.highlighted_text = nil
@@ -649,7 +648,7 @@ function ChatGPTViewer:onCloseWidget()
   end)
 end
 
-function ChatGPTViewer:askAnotherQuestion(simple_mode)
+function ResultViewer:askAnotherQuestion(simple_mode)
   -- Prevent multiple dialogs
   if self.input_dialog and self.input_dialog.dialog_open then
     return
@@ -824,7 +823,7 @@ function ChatGPTViewer:askAnotherQuestion(simple_mode)
 end
 
 -- close all active dialog back to the reading UI
-function ChatGPTViewer:HoldClose()
+function ResultViewer:HoldClose()
   -- Every viewer, not just this one: the point of the hold is to get back to
   -- the reading UI from wherever the nested queries have led. onClose() pops
   -- the stack through onCloseWidget, so walk a copy, topmost first.
@@ -846,14 +845,14 @@ function ChatGPTViewer:HoldClose()
   end
 end
 
-function ChatGPTViewer:onShow()
+function ResultViewer:onShow()
   UIManager:setDirty(self, function()
     return "partial", self.frame.dimen
   end)
   return true
 end
 
-function ChatGPTViewer:onTapClose(arg, ges_ev)
+function ResultViewer:onTapClose(arg, ges_ev)
   -- A stacked viewer is draggable, so a parent window can end up exposed under
   -- a child that was moved aside. Tapping that exposed region must not close
   -- the parent while the child is still up. The tap-outside affordance is not
@@ -887,7 +886,7 @@ end
 
 -- Drop a live text selection of the answer, if there is one.
 -- @return boolean true if a selection was live and has now been cleared
-function ChatGPTViewer:_clearTextSelection()
+function ResultViewer:_clearTextSelection()
   local scroll_widget = self.scroll_text_w
   if not scroll_widget then return false end
   local htmlbox = scroll_widget.htmlbox_widget
@@ -901,7 +900,7 @@ function ChatGPTViewer:_clearTextSelection()
   return true
 end
 
-function ChatGPTViewer:onClose()
+function ResultViewer:onClose()
   -- Export chat log if enabled
   if self.assistant.settings:readSetting("auto_save_to_notebook", false) then
     self:saveToNotebook()
@@ -932,7 +931,7 @@ function ChatGPTViewer:onClose()
   return true
 end
 
-function ChatGPTViewer:onMultiSwipe(arg, ges_ev)
+function ResultViewer:onMultiSwipe(arg, ges_ev)
   -- For consistency with other fullscreen widgets where swipe south can't be
   -- used to close and where we then allow any multiswipe to close, allow any
   -- multiswipe to close this widget too.
@@ -940,7 +939,7 @@ function ChatGPTViewer:onMultiSwipe(arg, ges_ev)
   return true
 end
 
-function ChatGPTViewer:onSwipe(arg, ges)
+function ResultViewer:onSwipe(arg, ges)
   if ges.pos:intersectWith(self.textw.dimen) then
     local direction = BD.flipDirectionIfMirroredUILayout(ges.direction)
     if direction == "west" then
@@ -964,13 +963,13 @@ end
 -- The following handlers are similar to the ones in DictQuickLookup:
 -- we just forward to our MoveableContainer the events that our
 -- TextBoxWidget has not handled with text selection.
-function ChatGPTViewer:onHoldStartText(_, ges)
+function ResultViewer:onHoldStartText(_, ges)
   -- Forward Hold events not processed by TextBoxWidget event handler
   -- to our MovableContainer
   return self.movable:onMovableHold(_, ges)
 end
 
-function ChatGPTViewer:onHoldPanText(_, ges)
+function ResultViewer:onHoldPanText(_, ges)
   -- Forward Hold events not processed by TextBoxWidget event handler
   -- to our MovableContainer
   -- We only forward it if we did forward the Touch
@@ -979,7 +978,7 @@ function ChatGPTViewer:onHoldPanText(_, ges)
   end
 end
 
-function ChatGPTViewer:onHoldReleaseText(_, ges)
+function ResultViewer:onHoldReleaseText(_, ges)
   -- Forward Hold events not processed by TextBoxWidget event handler
   -- to our MovableContainer
   return self.movable:onMovableHoldRelease(_, ges)
@@ -989,7 +988,7 @@ end
 -- to our MovableContainer, under certain conditions, to avoid
 -- unwanted moves of the window while we are selecting text in
 -- the definition widget.
-function ChatGPTViewer:onForwardingTouch(arg, ges)
+function ResultViewer:onForwardingTouch(arg, ges)
   -- This Touch may be used as the Hold we don't get (for example,
   -- when we start our Hold on the bottom buttons)
   if not ges.pos:intersectWith(self.textw.dimen) then
@@ -1000,14 +999,14 @@ function ChatGPTViewer:onForwardingTouch(arg, ges)
   end
 end
 
-function ChatGPTViewer:onForwardingPan(arg, ges)
+function ResultViewer:onForwardingPan(arg, ges)
   -- We only forward it if we did forward the Touch or are currently moving
   if self.movable._touch_pre_pan_was_inside or self.movable._moving then
     return self.movable:onMovablePan(arg, ges)
   end
 end
 
-function ChatGPTViewer:onForwardingPanRelease(arg, ges)
+function ResultViewer:onForwardingPanRelease(arg, ges)
   -- We can forward onMovablePanRelease() does enough checks
   return self.movable:onMovablePanRelease(arg, ges)
 end
@@ -1017,7 +1016,7 @@ end
 -- repeating the wording kept in assistant_prompts.lua.
 -- @param prompt_id string id of the prompt in the merged prompt table
 -- @return string text for the menu button
-function ChatGPTViewer:_selectionPromptLabel(prompt_id)
+function ResultViewer:_selectionPromptLabel(prompt_id)
   local merged = Prompts.getMergedPrompts(self.assistant.config:getFeature("prompts")) or {}
   local prompt = koutil.tableGetValue(merged, prompt_id)
   return Prompts.getDisplayText(koutil.tableGetValue(prompt, "text") or prompt_id,
@@ -1030,7 +1029,7 @@ end
 -- can show their progress).
 -- @param prompt_id string id of the prompt to run
 -- @param selected_text string the text the user selected in the answer
-function ChatGPTViewer:_runSelectionPrompt(prompt_id, selected_text)
+function ResultViewer:_runSelectionPrompt(prompt_id, selected_text)
   NetUtils.runWhenOnlineFast(function()
     Trapper:wrap(function()
       -- The query dialog is created post-provider-load, so it may be missing.
@@ -1048,7 +1047,7 @@ function ChatGPTViewer:_runSelectionPrompt(prompt_id, selected_text)
 end
 
 -- @param text string the text to copy
-function ChatGPTViewer:_copySelectionToClipboard(text)
+function ResultViewer:_copySelectionToClipboard(text)
   if not Device:hasClipboard() then return end
   Device.input.setClipboardText(text)
   UIManager:show(Notification:new { text = _("Copied to clipboard.") })
@@ -1062,7 +1061,7 @@ end
 -- Anything missing along that path yields no anchor, and ButtonDialog then
 -- centers itself: a wrong placement is worse than no placement.
 -- @return table|nil Geom to anchor the menu at, or nil to center it
-function ChatGPTViewer:_selectionAnchor()
+function ResultViewer:_selectionAnchor()
   local htmlbox = koutil.tableGetValue(self, "scroll_text_w", "htmlbox_widget")
   local rect = koutil.tableGetValue(htmlbox, "highlight_rects", 1)
   local widget_x = koutil.tableGetValue(htmlbox, "dimen", "x")
@@ -1080,7 +1079,7 @@ end
 -- on an unfamiliar term, plus a copy.
 -- @param text string the selected text
 -- @param hold_duration number seconds the press was held
-function ChatGPTViewer:handleTextSelection(text, hold_duration)
+function ResultViewer:handleTextSelection(text, hold_duration)
   local selected = koutil.trim(text or "")
   if selected == "" then
     UIManager:show(InfoMessage:new{
@@ -1145,7 +1144,7 @@ function ChatGPTViewer:handleTextSelection(text, hold_duration)
   UIManager:show(dialog)
 end
 
-function ChatGPTViewer:html_link_tapped_callback(link)
+function ResultViewer:html_link_tapped_callback(link)
   local SUGGESTION_PREFIX = "#q:"
   if link.uri and koutil.stringStartsWith(link.uri, SUGGESTION_PREFIX) then
     self:askAnotherQuestion(true) -- simple_mode
@@ -1154,20 +1153,20 @@ function ChatGPTViewer:html_link_tapped_callback(link)
   end
 end
 
-function ChatGPTViewer:_buildCSS()
+function ResultViewer:_buildCSS()
   local rtl = self.assistant.settings:readSetting("response_is_rtl")
            or self.assistant.ui_language_is_rtl
   local justified = self.assistant.settings:readSetting("response_justified", false)
   return ViewerCSS.build({ rtl = rtl, justified = justified })
 end
 
-function ChatGPTViewer:_renderMarkdown()
+function ResultViewer:_renderMarkdown()
   -- The text arrives in display shape: the querier keeps the reasoning fence
   -- only while Reasoning Text is on, and the follow-up switch keeps the
   -- suggestions out of the history. The viewer only renders.
   local html_body, err = MD(self.text)
   if err then
-    logger.warn("ChatGPTViewer: could not generate HTML", err)
+    logger.warn("ResultViewer: could not generate HTML", err)
     -- Fallback to plain text if HTML generation fails
     html_body = self.text or "Missing text."
   else
@@ -1196,7 +1195,7 @@ end
 
 -- Build a ScrollHtmlWidget for the current text.
 -- @param outer_height total available height (before subtracting text padding/margin)
-function ChatGPTViewer:_buildScrollWidget(outer_height)
+function ResultViewer:_buildScrollWidget(outer_height)
   return ScrollHtmlWidget:new{
     html_body = self:_renderMarkdown(),
     css = self:_buildCSS(),
@@ -1216,7 +1215,7 @@ function ChatGPTViewer:_buildScrollWidget(outer_height)
   }
 end
 
-function ChatGPTViewer:update(new_text)
+function ResultViewer:update(new_text)
   -- Check if the new text is substantially different from the current text
   if not self.text or #new_text > #self.text then
     -- Update the text
@@ -1244,7 +1243,7 @@ end
 -- widget. A display switch (Reasoning / Follow-up Questions) shapes the text
 -- when the dialogs build it, so flipping one has to rebuild the text as well:
 -- re-rendering the stored string would keep the parts the switch just hid.
-function ChatGPTViewer:_refreshText()
+function ResultViewer:_refreshText()
   if self.rebuild_text then
     self.text = self.rebuild_text(self)
   end
@@ -1253,7 +1252,7 @@ end
 
 -- Rebuild the scroll widget in place after a display setting changed,
 -- keeping the current page (mirrors the rebuild in update()).
-function ChatGPTViewer:_refreshScrollWidget()
+function ResultViewer:_refreshScrollWidget()
   local last_page_num = self.scroll_text_w.htmlbox_widget.page_number or 1
   self.scroll_text_w = self:_buildScrollWidget(self.textw:getSize().h)
   self.textw:clear()
@@ -1268,7 +1267,7 @@ end
 -- taps into the next match while a search is active; the dialog's
 -- "Find first"/"Find next" buttons set _find_next, the direction flag
 -- consumed by findInHtml.
-function ChatGPTViewer:findDialog()
+function ResultViewer:findDialog()
   local input_dialog
   input_dialog = InputDialog:new{
     title = _("Enter text to search for"),
@@ -1304,7 +1303,7 @@ function ChatGPTViewer:findDialog()
   input_dialog:onShowKeyboard(true)
 end
 
-function ChatGPTViewer:findCallback(input_dialog)
+function ResultViewer:findCallback(input_dialog)
   if input_dialog then
     self.search_value = input_dialog:getInputText()
     if self.search_value == "" then return end
@@ -1327,7 +1326,7 @@ function ChatGPTViewer:findCallback(input_dialog)
   end
 end
 
-function ChatGPTViewer:findInHtml()
+function ResultViewer:findInHtml()
   local box_widget = self.scroll_text_w.htmlbox_widget
   local curr_page = box_widget.page_number
   local found
@@ -1355,7 +1354,7 @@ end
 
 -- Left-icon options menu, mirroring TextViewer:onShowMenu (ButtonDialog
 -- with text_func/checked_func closures, no manual setText).
-function ChatGPTViewer:onShowMenu()
+function ResultViewer:onShowMenu()
   local dialog
   local buttons = {
     {{
@@ -1468,4 +1467,4 @@ function ChatGPTViewer:onShowMenu()
   UIManager:show(dialog)
 end
 
-return ChatGPTViewer
+return ResultViewer

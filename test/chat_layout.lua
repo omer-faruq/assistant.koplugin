@@ -11,7 +11,7 @@ end
 local wb = require("test/wbuilder")
 local UIManager = wb.UIManager
 local Screen = wb.Screen
-local ChatGPTViewer = require("assistant_viewer")
+local ResultViewer = require("assistant_viewer")
 local TextUtils = require("assistant_text_utils")
 local ASUtils = require("assistant_utils")
 local T = require("ffi/util").template
@@ -126,7 +126,7 @@ local mock_assistant = {
     showProviderDialog = function() end,
 }
 
-local viewer = ChatGPTViewer:new{
+local viewer = ResultViewer:new{
     title = "Chat Layout",
     text = text,
     assistant = mock_assistant,

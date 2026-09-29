@@ -829,7 +829,7 @@ if tv_ok and TextViewerBase then
     end
 
     -- Resolve the viewer CSS switches for this instance, mirroring
-    -- ChatGPTViewer:_buildCSS: response_is_rtl or the UI language direction
+    -- ResultViewer:_buildCSS: response_is_rtl or the UI language direction
     -- for RTL, response_justified (plus the TextViewer Justify toggle, which
     -- the upstream stylesheet already honors, so OR-ing it here is
     -- idempotent) for justification. Reads go through the passed-in
@@ -854,7 +854,7 @@ if tv_ok and TextViewerBase then
     end
 
     -- Re-set the scroll content with the shared viewer CSS appended (same
-    -- BASE ChatGPTViewer builds from). Changing the css field alone does
+    -- BASE ResultViewer builds from). Changing the css field alone does
     -- not re-render; setContent re-embeds the stylesheet into the outer
     -- <head><style> that MuPDF honors.
     function M.NotebookViewer:_injectTableCSS()

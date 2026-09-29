@@ -1,7 +1,7 @@
 -- UI check: which buttons each result-viewer shape actually gets.
 -- Usage: ./test/runui.sh minimal_buttons
 --
--- Builds two real ChatGPTViewer instances through the KOReader widget stack
+-- Builds two real ResultViewer instances through the KOReader widget stack
 -- (wbuilder) and prints the resulting button rows: the standard shape and
 -- minimalist mode. The dict-shaped viewer is simulated by passing
 -- extra_buttons + is_show_addnote = false, i.e. the dictionary viewer's
@@ -16,7 +16,7 @@ end
 
 local wb = require("test/wbuilder")
 local UIManager = wb.UIManager
-local ChatGPTViewer = require("assistant_viewer")
+local ResultViewer = require("assistant_viewer")
 
 local TEXT = "The ring is a corrupting artifact."
 
@@ -45,7 +45,7 @@ local function ui_context()
 end
 
 local function report(label, opts)
-    local viewer = ChatGPTViewer:new(opts)
+    local viewer = ResultViewer:new(opts)
     UIManager:show(viewer)
     local names = {}
     for _, row in ipairs(viewer.button_table.buttons) do

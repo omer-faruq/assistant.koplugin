@@ -8,7 +8,7 @@ local _ = require("assistant_gettext")
 local T = require("ffi/util").template
 local Trapper = require("ui/trapper")
 local koutil = require("util")
-local ChatGPTViewer = require("assistant_viewer")
+local ResultViewer = require("assistant_viewer")
 local assistant_prompts = require("assistant_prompts").assistant_prompts
 local Prompts = require("assistant_prompts")
 local ASUtils = require("assistant_utils")
@@ -299,8 +299,8 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
       table.insert(message_history, assistant_msg)
     end
 
-    local chatgpt_viewer
-    chatgpt_viewer = ChatGPTViewer:new {
+    local result_viewer
+    result_viewer = ResultViewer:new {
       assistant = assistant,
       ui = ui,
       title = feature_title,
@@ -368,11 +368,11 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
         return createResultText()
       end,
       default_hold_callback = function ()
-        chatgpt_viewer:HoldClose()
+        result_viewer:HoldClose()
       end,
     }
 
-    UIManager:show(chatgpt_viewer)
+    UIManager:show(result_viewer)
 end
 
 return showFeatureDialog

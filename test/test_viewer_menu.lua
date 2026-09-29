@@ -1,5 +1,5 @@
 -- test_viewer_menu.lua
--- Static guards for ChatGPTViewer:onShowMenu refresh behavior.
+-- Static guards for ResultViewer:onShowMenu refresh behavior.
 -- Toggle items (RTL/Justify/Reasoning) must not close the menu: like the
 -- upstream TextViewer toggles they save + rebuild in place, so the menu
 -- close repaint cannot race the rebuild repaint and ghost the tapped item
@@ -23,7 +23,7 @@ local function read_viewer()
 end
 
 local function menu_body(src)
-    local start = src:find("function ChatGPTViewer:onShowMenu", 1, true)
+    local start = src:find("function ResultViewer:onShowMenu", 1, true)
     assert.notNil(start, "onShowMenu must exist")
     return src:sub(start)
 end

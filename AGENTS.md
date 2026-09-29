@@ -64,7 +64,7 @@ Full flow, handlers, config, key files: `docs/ARCHITECTURE.md`.
 10. **Style**: Lua 5.1 / LuaJIT 2.1; use `string.buffer` for hot loops. 4 spaces, never tabs (vendored `lib/` keeps upstream formatting); `snake_case` modules, `PascalCase` classes, `camelCase` methods, `UPPER_CASE` consts. Errors return `nil, err`.
 11. **Directions/formatting**: `T = require("ffi/util").template`; bold via `assistant_text_utils.bold_format(T(_("<b>Header:</b> %1"), val))`; message metadata via `assistant_utils.set_attr`/`get_attr`.
 12. **Scope**: exclude `l10n/` from code searches/reads (40+ languages, no code insight). Polish non-native English wording into idiomatic English without changing intent.
-13. **Widgets**: reuse existing scaffolding (`ChatGPTViewer`, `assistant_dialog.lua`); read `docs/UI_DIALOGS.md` before hand-building dialogs. KOReader widget internals only as a last resort.
+13. **Widgets**: reuse existing scaffolding (`ResultViewer`, `assistant_dialog.lua`); read `docs/UI_DIALOGS.md` before hand-building dialogs. KOReader widget internals only as a last resort.
 14. **Upstream helpers**: when a helper exists in `/usr/lib/koreader/` (`frontend/`, `ffi/util`, plugins), reuse it; drop the replaced local helper outright.
 15. **EmmyLua annotations**: new functions with more than 3 params must document every param/return in `---` EmmyLua style (`@param name type desc`, `@return type desc`), as in `assistant_net_utils.fetchJSON`.
 

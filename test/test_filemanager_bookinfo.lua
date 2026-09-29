@@ -249,7 +249,7 @@ local tests = {
         assert_contains(src, "message_history, notebook_path",
             "showFeatureDialog must accept a notebook path")
         assert_contains(src, "notebook_path = notebook_path",
-            "notebook path must reach ChatGPTViewer")
+            "notebook path must reach ResultViewer")
     end),
 
     test("viewer saves through its notebook path", function()

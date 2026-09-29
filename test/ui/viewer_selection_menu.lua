@@ -1,6 +1,6 @@
 -- test/ui/viewer_selection_menu.lua
 -- Headless UI test for the selection action menu of the result viewer
--- (ChatGPTViewer:handleTextSelection): a long press in the answer text must
+-- (ResultViewer:handleTextSelection): a long press in the answer text must
 -- offer Dictionary / Wikipedia / Copy / Cancel in a 2x2 grid, Dictionary must
 -- reach the shared dictionary dialog, and Wikipedia must reach
 -- AssistantDialog:runPrompt with the selected text and its own prompt id.
@@ -18,7 +18,7 @@ local wb = require("test.wbuilder")
 local UIManager = wb.UIManager
 local Device = require("device")
 local NetUtils = require("assistant_net_utils")
-local ChatGPTViewer = require("assistant_viewer")
+local ResultViewer = require("assistant_viewer")
 local InfoMessage = require("ui/widget/infomessage")
 
 local ANSWER = "The Ring was forged in Mount Doom to rule the other Rings of Power."
@@ -115,7 +115,7 @@ local function make_viewer()
     dict_calls = {}
     shown = {}
     clipboard = nil
-    return ChatGPTViewer:new{
+    return ResultViewer:new{
         assistant = assistant,
         text = ANSWER,
     }

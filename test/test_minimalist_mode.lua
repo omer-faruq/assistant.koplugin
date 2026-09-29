@@ -217,7 +217,7 @@ local tests = {
         -- The reply is shaped when the dialogs build it, so flipping Reasoning
         -- or Follow-up must rebuild it; re-rendering the stored string would keep
         -- the parts the switch just hid.
-        local refresh_text = viewer_src:find("function ChatGPTViewer:_refreshText", 1, true)
+        local refresh_text = viewer_src:find("function ResultViewer:_refreshText", 1, true)
         assert.notNil(refresh_text, "_refreshText must exist")
         local refresh_end = viewer_src:find("\nend", refresh_text, true)
         assert.notNil(refresh_end, "_refreshText must be a closed function")
@@ -226,7 +226,7 @@ local tests = {
             "_refreshText must re-assemble the reply")
         assert.matches(refresh_body, "self:_refreshScrollWidget%(%)",
             "_refreshText must repaint through the scroll widget rebuild")
-        local menu_start = viewer_src:find("function ChatGPTViewer:onShowMenu", 1, true)
+        local menu_start = viewer_src:find("function ResultViewer:onShowMenu", 1, true)
         local menu = viewer_src:sub(menu_start)
         assert.equal(select(2, menu:gsub("self:_refreshText%(%)", "")),
             2, "both display switches must rebuild the text")
@@ -243,7 +243,7 @@ local tests = {
         -- NOTE: this LuaJIT's string.find returns start *and* end, so never
         -- nest it inside another call (s:sub(s:find(..)) would pass the end
         -- index as the second argument of sub).
-        local menu_start = viewer_src:find("function ChatGPTViewer:onShowMenu", 1, true)
+        local menu_start = viewer_src:find("function ResultViewer:onShowMenu", 1, true)
         assert.notNil(menu_start, "onShowMenu must exist")
         local menu = viewer_src:sub(menu_start)
         assert.equal(select(2, menu:gsub("return not self.minimalist", "")),
