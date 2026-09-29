@@ -861,25 +861,44 @@ function ChatGPTViewer:onTapClose(arg, ges_ev)
   if not is_topmost_viewer(self) then
     return false
   end
-  if self.button_table then
-    for _, button_row in ipairs(self.button_table.buttons) do
-      for _, button in ipairs(button_row) do
-        if button.id == "close" and button.dimen then
-          if ges_ev.pos:intersectWith(button.dimen) then
-            self:onClose()
-            return true
-          end
-        end
-      end
-    end
+  -- The Close button is looked up by id: ButtonTable builds its Button widgets
+  -- from a fixed field list that does not carry the entry id, so walking
+  -- self.button_table.buttons and reading button.id never matches anything.
+  local close_button = self.button_table and self.button_table:getButtonById("close")
+  if close_button and close_button.dimen and ges_ev.pos:intersectWith(close_button.dimen) then
+    self:onClose()
+    return true
   end
-  
+
   if ges_ev.pos:notIntersectWith(self.frame.dimen) then
     self:onClose()
     return true
   end
-  
+
+  -- Dismiss a live selection. Nothing else clears the answer's highlight rects,
+  -- so without this the picked text stays darkened for the window's lifetime.
+  -- The tap is consumed so it cannot also turn the page.
+  if self:_clearTextSelection() then
+    return true
+  end
+
   return false
+end
+
+-- Drop a live text selection of the answer, if there is one.
+-- @return boolean true if a selection was live and has now been cleared
+function ChatGPTViewer:_clearTextSelection()
+  local scroll_widget = self.scroll_text_w
+  if not scroll_widget then return false end
+  local htmlbox = scroll_widget.htmlbox_widget
+  if not htmlbox then return false end
+  -- Either one still set means the highlight is painted (updateHighlight()
+  -- nils both when nothing is held).
+  if not htmlbox.highlight_text and not htmlbox.highlight_rects then return false end
+  if htmlbox:clearHighlight() then
+    htmlbox:redrawHighlight()
+  end
+  return true
 end
 
 function ChatGPTViewer:onClose()
