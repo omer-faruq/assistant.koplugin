@@ -1,45 +1,27 @@
 -- test_prompts.lua
--- Tests for the Phase-1 prompt-context feature:
+-- Tests for assistant_prompts.lua:
 --   * built-in prompt flag defaults (use_book_context)
 --   * deep-merge override semantics via M.getMergedPrompts
---   * inline copy of AssistantDialog:_buildBookContextMessage content assembly
---   * ASUtils.set_attr/get_attr roundtrip for is_context metadata
--- Tests for the Phase-2 nearby-page-text feature:
---   * DocUtils.getPageRangeText availability guards
---   * DocUtils.assemblePageContext budget assembly
---   * inline copy of the page-text injection decision logic
+--   * the two global feature switches (isSuggestionsEnabled / isWebSearchEnabled)
+--   * the AI Dictionary output sections, presets and prompt builder
+-- Chapter and page-text extraction are covered by test_chapter_context.lua.
 local helper = require("test.helper")
 local assert = helper.assert
 local M = require("assistant_prompts")
-local ASUtils = helper.ASUtils
-local TextUtils = helper.TextUtils
-local DocUtils = helper.DocUtils
-
+local SearchTools = require("assistant_search_tools")
 
 local function test(name, fn)
     return { name = name, fn = fn }
 end
 
--- Inline copy of AssistantDialog:_buildBookContextMessage pure content-assembly
--- logic (assistant_dialog.lua:305-331). The real method is a dialog method with
--- UI deps, so we test only its pure logic here, per AGENTS.md testing policy.
-local function build_context_content(book_title, book_author, highlighted_text, page_info)
-  local content
-  if highlighted_text and highlighted_text ~= "" then
-    content = string.format([[I'm reading something titled '%s' by %s.
-I have a question about the following highlighted text: ```%s```.
-If the question is not clear enough, analyze the highlighted text.]],
-      book_title, book_author, highlighted_text)
-  elseif book_title and book_author then
-    content = string.format([[I'm reading something titled '%s' by %s.
-I have a question about this book.]], book_title, book_author)
-  else
-    content = "You are the built-in AI assistant in KOReader. No book context is available for this question."
-  end
-  if page_info and page_info ~= "" then
-    content = content .. string.format("\n\nMy current reading position is:%s.", page_info)
-  end
-  return content
+-- Fake LuaSettings returning a fixed value for one key.
+local function settingsWith(value, key)
+    return {
+        readSetting = function(_, k, def)
+            if k == key then return value end
+            return def
+        end,
+    }
 end
 
 local tests = {
@@ -54,14 +36,15 @@ local tests = {
             "translate", "summarize", "simplify", "key_points", "ELI5",
             "explain", "historical_context", "wikipedia",
         }
-        for _, key in ipairs(keys) do
+        for idx, key in ipairs(keys) do
+            -- `idx` rather than `_`: the gettext guard forbids a discarded `_`.
             assert.notNil(M.builtin_prompts[key], "builtin_prompts." .. key .. " should exist")
         end
     end),
 
     test("builtin_prompts: use_book_context == true on the 5 expected keys", function()
         local true_keys = { "summarize", "key_points", "ELI5", "explain", "historical_context" }
-        for _, key in ipairs(true_keys) do
+        for idx, key in ipairs(true_keys) do
             assert.equal(M.builtin_prompts[key].use_book_context, true,
                 key .. ".use_book_context should be true")
         end
@@ -72,7 +55,7 @@ local tests = {
             "term_xray", "dictionary", "quick_note", "vocabulary", "grammar",
             "translate", "simplify", "wikipedia",
         }
-        for _, key in ipairs(false_keys) do
+        for idx, key in ipairs(false_keys) do
             assert.equal(M.builtin_prompts[key].use_book_context, false,
                 key .. ".use_book_context should be false")
         end
@@ -87,11 +70,15 @@ local tests = {
         assert.notMatches(prompt, "You are a helpful assistant")
     end),
 
-    test("KOReader version: runtime revision is exposed to prompts", function()
+    test("KOReader version: system prompt carries the reported runtime revision", function()
         local version = M.getKoreaderVersion()
-        assert.isTrue(type(version) == "string" and version ~= "")
-        assert.matches(M.assistant_prompts.default.system_prompt, "current KOReader runtime version is")
-        assert.matches(M.assistant_prompts.default.system_prompt, version)
+        assert.isTrue(type(version) == "string" and version ~= "",
+            "getKoreaderVersion must report a non-empty string")
+        local prompt = M.assistant_prompts.default.system_prompt
+        assert.matches(prompt, "current KOReader runtime version is")
+        -- Plain find: the revision may contain Lua pattern magic characters.
+        assert.isTrue(prompt:find(version, 1, true) ~= nil,
+            "the reported revision must appear verbatim in the system prompt")
     end),
 
     -- =========================================================================
@@ -125,191 +112,93 @@ local tests = {
     end),
 
     -- =========================================================================
-    -- 3. Context-content assembly snippet
+    -- 3. Feature switches: M.isSuggestionsEnabled
     -- =========================================================================
 
-    test("build_context_content: highlighted branch includes title/author/highlight", function()
-        local c = build_context_content("My Book", "Jane Doe", "some highlight", "")
-        assert.matches(c, "My Book")
-        assert.matches(c, "Jane Doe")
-        assert.matches(c, "some highlight")
-        assert.notMatches(c, "My current reading position is:")
+    test("isSuggestionsEnabled: global true, no prompt_config -> built-in default", function()
+        -- With the global switch on and no per-prompt override, the built-in
+        -- default for the "default" prompt decides.
+        assert.equal(M.assistant_prompts.default.show_suggestions, true,
+            "the built-in default prompt is expected to enable suggestions")
+        assert.isTrue(M.isSuggestionsEnabled(settingsWith(true, "auto_prompt_suggest"), nil))
     end),
 
-    test("build_context_content: book-only branch when highlight empty", function()
-        local c = build_context_content("My Book", "Jane Doe", "", "")
-        assert.matches(c, "My Book")
-        assert.matches(c, "Jane Doe")
-        assert.matches(c, "I have a question about this book.")
-        assert.notMatches(c, "highlighted text")
-        assert.notMatches(c, "My current reading position is:")
+    test("isSuggestionsEnabled: explicit false overrides the global true", function()
+        assert.isFalse(M.isSuggestionsEnabled(settingsWith(true, "auto_prompt_suggest"),
+            { show_suggestions = false }),
+            "an explicit per-prompt false must win over the global true")
     end),
 
-    test("build_context_content: fallback branch when title/author absent", function()
-        local c = build_context_content(nil, nil, nil, "")
-        assert.equal(c, "You are the built-in AI assistant in KOReader. No book context is available for this question.")
-        assert.notMatches(c, "My Book")
-        assert.notMatches(c, "My current reading position is:")
+    test("isSuggestionsEnabled: explicit true overrides the global true", function()
+        assert.isTrue(M.isSuggestionsEnabled(settingsWith(true, "auto_prompt_suggest"),
+            { show_suggestions = true }))
     end),
 
-    test("build_context_content: non-empty page_info appends position sentence", function()
-        local c = build_context_content("My Book", "Jane Doe", "hl", " (Page 12 - 34%) - Chapter Title")
-        assert.matches(c, "My current reading position is:")
-        assert.matches(c, "Chapter Title")
+    test("isSuggestionsEnabled: the global switch gates every prompt_config", function()
+        local off = settingsWith(false, "auto_prompt_suggest")
+        assert.isFalse(M.isSuggestionsEnabled(off, { show_suggestions = true }),
+            "no prompt_config may re-enable suggestions while the global switch is off")
+        assert.isFalse(M.isSuggestionsEnabled(off, nil))
+        -- An unset global switch (readSetting default false) is off too.
+        assert.isFalse(M.isSuggestionsEnabled({ readSetting = function(_, _, def) return def end },
+            { show_suggestions = true }))
     end),
 
-    test("build_context_content: empty page_info omits position sentence", function()
-        local c = build_context_content("My Book", "Jane Doe", "hl", "")
-        assert.notMatches(c, "My current reading position is:")
-    end),
-
-    test("build_context_content: nil page_info omits position sentence", function()
-        local c = build_context_content("My Book", "Jane Doe", "hl", nil)
-        assert.notMatches(c, "My current reading position is:")
+    test("isSuggestionsEnabled: a missing setting reads as off", function()
+        local unset = { readSetting = function(_, _, def) return def end }
+        assert.isFalse(M.isSuggestionsEnabled(unset, nil))
+        assert.isFalse(M.isSuggestionsEnabled(unset, { show_suggestions = true }))
     end),
 
     -- =========================================================================
-    -- 4. ASUtils.set_attr/get_attr roundtrip (is_context metadata)
+    -- 4. Feature switches: M.isWebSearchEnabled
     -- =========================================================================
 
-    test("ASUtils.set_attr/get_attr roundtrip (is_context=true)", function()
-        local msg = { role = "user", content = "hi" }
-        ASUtils.set_attr(msg, "is_context", true)
-        assert.isTrue(ASUtils.get_attr(msg, "is_context") == true,
-            "is_context should roundtrip as true")
+    test("isWebSearchEnabled: 'none' disables", function()
+        assert.isFalse(M.isWebSearchEnabled(settingsWith("none", "use_websearch")))
+    end),
+
+    test("isWebSearchEnabled: an unset setting disables", function()
+        local unset = { readSetting = function(_, _, def) return def end }
+        assert.isFalse(M.isWebSearchEnabled(unset))
+    end),
+
+    test("isWebSearchEnabled: the builtin engine enables", function()
+        assert.isTrue(M.isWebSearchEnabled(settingsWith("builtin", "use_websearch")))
+    end),
+
+    test("isWebSearchEnabled: an external tool key enables", function()
+        assert.isTrue(M.isWebSearchEnabled(settingsWith("tavilyapi", "use_websearch")))
+    end),
+
+    -- Failing closed is the whole point of the predicate: an unrecognized value
+    -- must never route book text and questions to a search provider.
+    test("isWebSearchEnabled: an unknown key disables", function()
+        assert.isFalse(M.isWebSearchEnabled(settingsWith("nonexistent", "use_websearch")),
+            "an unrecognized value must not enable web search")
+    end),
+
+    test("isWebSearchEnabled: the whitelist is exact (near misses disable)", function()
+        assert.isFalse(M.isWebSearchEnabled(settingsWith("tavily", "use_websearch")))
+        assert.isFalse(M.isWebSearchEnabled(settingsWith("serpapi ", "use_websearch")))
+        assert.isFalse(M.isWebSearchEnabled(settingsWith(" builtin", "use_websearch")))
+        assert.isFalse(M.isWebSearchEnabled(settingsWith("BUILTIN", "use_websearch")))
+        assert.isFalse(M.isWebSearchEnabled(settingsWith("", "use_websearch")))
+        assert.isFalse(M.isWebSearchEnabled(settingsWith(nil, "use_websearch")))
+        assert.isFalse(M.isWebSearchEnabled(settingsWith(false, "use_websearch")))
+    end),
+
+    test("isWebSearchEnabled: every catalog tool key enables", function()
+        for i, tool_key in ipairs(SearchTools.TOOL_KEYS) do
+            assert.isTrue(M.isWebSearchEnabled(settingsWith(tool_key, "use_websearch")),
+                tool_key .. " should enable web search")
+        end
     end),
 
     -- =========================================================================
-    -- 5. Phase-2: getPageRangeText availability guards (shared export)
+    -- 5. AI Dictionary output sections / presets
     -- =========================================================================
 
-    test("getPageRangeText: nil ui returns empty string", function()
-        assert.equal(DocUtils.getPageRangeText(nil, 1, 1, 6000), "",
-            "nil ui should yield empty string")
-    end),
-
-    test("getPageRangeText: ui without document returns empty string", function()
-        assert.equal(DocUtils.getPageRangeText({}, 1, 1, 6000), "",
-            "missing ui.document should yield empty string")
-    end),
-
-    test("getPageRangeText: document without selection pos0 returns empty string", function()
-        assert.equal(DocUtils.getPageRangeText({ document = {} }, 1, 1, 6000), "",
-            "missing selection pos0 should yield empty string")
-    end),
-}
-
--- =========================================================================
--- 6. Phase-2: budget-assembly helper (shared export, exercised directly)
--- =========================================================================
-
-local phase2_tests = {
-    test("assemblePageContext: all empty returns empty string", function()
-        assert.equal(DocUtils.assemblePageContext("", "", "", 6000), "",
-            "all-empty input should yield empty string")
-        assert.equal(DocUtils.assemblePageContext(nil, nil, nil, 6000), "",
-            "nil inputs should yield empty string")
-    end),
-
-    test("assemblePageContext: only current within budget returned unchanged", function()
-        assert.equal(DocUtils.assemblePageContext("", "hello world", "", 6000), "hello world",
-            "current-only text should pass through unchanged")
-    end),
-
-    test("assemblePageContext: short segments joined in order with blank lines", function()
-        local out = DocUtils.assemblePageContext("PREV", "CUR", "NEXT", 6000)
-        assert.equal(out, "PREV\n\nCUR\n\nNEXT",
-            "segments should join prev/current/next separated by blank lines")
-    end),
-
-    test("assemblePageContext: over-budget sides keep tail-of-prev / head-of-next", function()
-        local prev = string.rep("p", 100)
-        local next = string.rep("n", 100)
-        local out = DocUtils.assemblePageContext(prev, "CUR", next, 200)
-        -- remaining = 197, half = 98 -> prev keeps last 98 chars, next keeps first 98
-        local expected = string.rep("p", 98) .. "\n\nCUR\n\n" .. string.rep("n", 98)
-        assert.equal(out, expected,
-            "prev should be tail-truncated and next head-truncated to half budget each")
-    end),
-
-    test("assemblePageContext: current alone exceeding budget keeps head only", function()
-        local out = DocUtils.assemblePageContext("", string.rep("c", 300), "", 100)
-        assert.equal(out, string.rep("c", 100),
-            "over-budget current should keep exactly max_chars head bytes")
-    end),
-
-    test("assemblePageContext: UTF-8 truncation does not crash and respects budget", function()
-        local current = string.rep("你", 100) -- 300 bytes
-        local ok, out = pcall(DocUtils.assemblePageContext, "", current, "", 100)
-        assert.isTrue(ok, "mid-character truncation should not error")
-        assert.isTrue(#out <= 101, "output should stay within budget (small fixup slack)")
-        assert.matches(out, string.rep("你", 33),
-            "complete leading characters should be preserved")
-    end),
-
-    test("assemblePageContext: zero side-budget drops side segments gracefully", function()
-        -- remaining = 1 -> half = 0 -> prev cannot fit and is dropped without error
-        local out = DocUtils.assemblePageContext("pp", string.rep("c", 9), "", 10)
-        assert.equal(out, string.rep("c", 9),
-            "side segment with zero budget should be dropped, current intact")
-    end),
-}
-
--- =========================================================================
--- 7. Phase-2: inline copy of the page-text injection decision logic
--- (from AssistantDialog:_buildBookContextMessage, assistant_dialog.lua:325-334)
--- =========================================================================
-
-local function append_page_text_block(highlighted_text, include_page_text, page_text)
-  if highlighted_text and highlighted_text ~= ""
-      and include_page_text then
-    if page_text ~= "" then
-      return string.format(
-        "\n\nSurrounding text from the book (for reference only - the task applies ONLY to the highlighted passage):\n```\n%s\n```",
-        page_text)
-    end
-  end
-  return ""
-end
-
-table.insert(phase2_tests,
-    test("page-text injection: skipped when highlight is empty", function()
-        assert.equal(append_page_text_block("", true, "some text"), "",
-            "no highlight should mean no page-text block")
-    end))
-
-table.insert(phase2_tests,
-    test("page-text injection: skipped when switch is off", function()
-        assert.equal(append_page_text_block("hl", false, "some text"), "",
-            "include_page_text=false should mean no page-text block")
-    end))
-
-table.insert(phase2_tests,
-    test("page-text injection: skipped when extracted text is empty", function()
-        assert.equal(append_page_text_block("hl", true, ""), "",
-            "empty extraction (e.g. scanned PDF) should mean no page-text block")
-    end))
-
-table.insert(phase2_tests,
-    test("page-text injection: appended block is fenced and scope-limited", function()
-        local out = append_page_text_block("hl", true, "nearby book text")
-        assert.matches(out, "Surrounding text from the book",
-            "block should carry the surrounding-text marker sentence")
-        assert.matches(out, "ONLY to the highlighted passage",
-            "block must instruct the model to apply the task only to the highlight")
-        assert.matches(out, "```", "block should wrap the text in a code fence")
-        assert.matches(out, "nearby book text", "block should contain the extracted text")
-    end))
-
-for _, t in ipairs(phase2_tests) do
-    table.insert(tests, t)
-end
-
--- =========================================================================
--- 8. AI Dictionary output sections / presets
--- =========================================================================
-
-local dict_tests = {
     test("dict_presets: standard/full exact lists and no concise preset", function()
         assert.equal(M.dict_presets.concise, nil, "concise is no longer a preset")
 
@@ -349,7 +238,7 @@ local dict_tests = {
         assert.matches(p, "Word%-Form Analysis %(required%)")
     end),
 
-    test("build_dict_prompt: concise omits word-form task and analysis rules", function()
+    test("build_dict_prompt: a section subset omits word-form task and analysis rules", function()
         local p = M.build_dict_prompt({ "meaning", "translation" })
         assert.notMatches(p, "Word%-Form Analysis %(required%)")
         assert.matches(p, "## Task: Book%-Aware Dictionary")
@@ -454,9 +343,5 @@ local dict_tests = {
         assert.matches(p, "Word Form & Lemma")
     end),
 }
-
-for _, t in ipairs(dict_tests) do
-    table.insert(tests, t)
-end
 
 return helper.runTests("assistant_prompts.lua", tests)

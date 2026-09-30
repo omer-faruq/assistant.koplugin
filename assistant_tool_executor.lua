@@ -15,18 +15,8 @@ local json = require("rapidjson")
 local ExtTools = require("assistant_exttools")
 local ASUtils = require("assistant_utils")
 local TextUtils = require("assistant_text_utils")
+local SearchTools = require("assistant_search_tools")
 local json_default = ASUtils.json_default
-
-
--- MENU order of search tools
-local SEARCH_API_NAMES = {
-    "none",
-    "builtin",
-    "serpapi",
-    "tavilyapi",
-    "exaapi",
-    "searxngapi",
- }
 
 ---- Build the messages_to_append list once a search result is available.
 ---- Called by Querier after it has executed the search API.
@@ -97,7 +87,10 @@ end
 
 
 local ToolExecutor = {}
-ToolExecutor.SEARCH_API_NAMES = SEARCH_API_NAMES
+
+--- Every selectable "use_websearch" value, in menu order, as owned by the
+--- search tool catalog.
+ToolExecutor.SEARCH_API_NAMES = SearchTools.MENU_ORDER
 
 --- Build a request-level snapshot of search API credentials.
 --- Replaces the old mutable SetSearchAPIConfig pattern: each request reads

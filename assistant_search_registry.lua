@@ -5,14 +5,18 @@
 -- file-based search tool config from configuration.lua into a unified
 -- CONFIGURATION.provider_settings table.
 --
--- Each UI search tool record uses a fixed tool key (serpapi, tavilyapi, exaapi,
--- searxngapi) and fields: api_key or base_url (display_name is NOT stored).
+-- The set of tool keys, their required credential field and their display names
+-- live in assistant_search_tools (the UI-free catalog); this module only
+-- persists and validates credentials for them. Each stored record holds exactly
+-- the one credential field the catalog declares for its tool - never both, and
+-- never an empty string.
 --
 -- File search tools are imported as-is with source="file", immutable=true
 -- injected. UI search tools override file config with the same tool key.
 
 local UIManager = require("ui/uimanager")
 local DocUtils = require("assistant_doc_utils")
+local SearchTools = require("assistant_search_tools")
 local ButtonDialog = require("ui/widget/buttondialog")
 local json = require("rapidjson")
 local logger = require("logger")
@@ -25,17 +29,34 @@ local SearchRegistry = {}
 -- Current schema version for forward compatibility
 local SCHEMA_VERSION = 1
 
---- Fixed search tool definitions.
---- `needs` indicates the required credential field for each tool.
-SearchRegistry.SEARCH_TOOLS = {
-    serpapi    = { needs = "api_key",  display_name = "SerpAPI" },
-    tavilyapi  = { needs = "api_key",  display_name = "Tavily" },
-    exaapi     = { needs = "api_key",  display_name = "Exa.ai" },
-    searxngapi = { needs = "base_url", display_name = "SearXNG" },
-}
+--- Extract the credential a tool actually uses from a record, normalizing an
+--- empty string to absent. Yields an empty table when the field is missing or
+--- blank, so a record can never carry a credential the tool ignores.
+---@param record table A candidate record
+---@param needs string The catalog field the tool declares ("api_key"/"base_url")
+---@return table normalized A table holding at most `needs`
+local function credentialOnly(record, needs)
+    local value = record[needs]
+    if type(value) ~= "string" or value == "" then
+        return {}
+    end
+    return { [needs] = value }
+end
 
--- All fixed tool keys as an ordered list
-SearchRegistry.TOOL_KEYS = { "serpapi", "tavilyapi", "exaapi", "searxngapi" }
+--- Same as `credentialOnly`, plus the source tag the in-memory config needs.
+---@param record table A stored UI record
+---@param tool_key string The fixed tool key
+---@param source string The source tag to inject ("ui")
+---@return table|nil A config-ready record, or nil for an unknown tool key
+local function toConfigRecord(record, tool_key, source)
+    local def = SearchTools.getDefinition(tool_key)
+    if not def then
+        return nil
+    end
+    local out = credentialOnly(record, def.needs)
+    out.source = source
+    return out
+end
 
 ----------------------------------------------------------------------
 -- Load / Save
@@ -105,7 +126,7 @@ function SearchRegistry.validate(record, tool_key)
         return false, _("Search tool record must be a table.")
     end
 
-    local tool_def = SearchRegistry.SEARCH_TOOLS[tool_key]
+    local tool_def = SearchTools.getDefinition(tool_key)
     if not tool_def then
         return false, T(_("Unknown search tool: %1"), tostring(tool_key))
     end
@@ -148,7 +169,7 @@ function SearchRegistry.merge(file_config, ui_data)
 
     -- 1. Import file search tools (shallow copy, inject metadata)
     if file_config and file_config.provider_settings then
-        for _, key in ipairs(SearchRegistry.TOOL_KEYS) do
+        for idx, key in ipairs(SearchTools.TOOL_KEYS) do
             local record = file_config.provider_settings[key]
             if type(record) == "table" then
                 local copy = {}
@@ -163,7 +184,7 @@ function SearchRegistry.merge(file_config, ui_data)
     -- 2. Import UI search tools (shallow copy, override file records)
     if ui_data and ui_data.tools then
         for key, record in pairs(ui_data.tools) do
-            if type(record) == "table" and SearchRegistry.SEARCH_TOOLS[key] then
+            if type(record) == "table" and SearchTools.isExternalTool(key) then
                 local copy = {}
                 koutil.tableMerge(copy, record)
                 copy.source = "ui"
@@ -180,14 +201,16 @@ end
 ----------------------------------------------------------------------
 
 --- Upsert a UI search tool: insert or update the record for a fixed tool key.
---- Validates the record before saving.
+--- Validates the record before saving, then stores only the credential field
+--- the catalog declares for that tool - so a field the caller supplied but the
+--- tool never uses is dropped instead of being persisted.
 ---@param data table The full UI data structure (from load())
 ---@param tool_key string The fixed tool key
 ---@param record table { api_key?, base_url? }
 ---@return boolean ok
 ---@return string|nil err
 function SearchRegistry.upsert(data, tool_key, record)
-    local tool_def = SearchRegistry.SEARCH_TOOLS[tool_key]
+    local tool_def = SearchTools.getDefinition(tool_key)
     if not tool_def then
         return false, T(_("Unknown search tool: %1"), tostring(tool_key))
     end
@@ -197,10 +220,7 @@ function SearchRegistry.upsert(data, tool_key, record)
         return false, err
     end
 
-    data.tools[tool_key] = {
-        api_key = record.api_key,
-        base_url = record.base_url,
-    }
+    data.tools[tool_key] = credentialOnly(record, tool_def.needs)
 
     return true
 end
@@ -254,12 +274,8 @@ function SearchRegistry.installSearchTool(assistant, tool_key, api_key, base_url
     end
 
     SearchRegistry.save(assistant.settings, assistant._ui_search_data)
-    local rec = {
-        api_key = record.api_key,
-        base_url = record.base_url,
-        source = "ui",
-    }
-    assistant.config:setSearchTool(tool_key, rec)
+    assistant.config:setSearchTool(tool_key,
+        toConfigRecord(assistant._ui_search_data.tools[tool_key], tool_key, "ui"))
 
     return true
 end
@@ -299,8 +315,8 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
         keep_menu_open = true,
         sub_item_table_func = function()
             local items = {}
-            for i, tool_key in ipairs(SearchRegistry.TOOL_KEYS) do
-                local def = SearchRegistry.SEARCH_TOOLS[tool_key]
+            for i, tool_key in ipairs(SearchTools.TOOL_KEYS) do
+                local def = SearchTools.getDefinition(tool_key)
                 table.insert(items, {
                     text_func = function()
                         local merged = assistant.config:getProvider(tool_key)

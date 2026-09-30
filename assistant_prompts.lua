@@ -1,5 +1,6 @@
 local _ = require("assistant_gettext")
 local T = require("ffi/util").template
+local SearchTools = require("assistant_search_tools")
 local version_ok, Version = pcall(require, "version")
 
 -- KOReader exposes its exact runtime revision through the version module.
@@ -802,8 +803,13 @@ M.build_dict_prompt = function(enabled_ids, opts)
     return table.concat(p, "\n")
 end
 
+--- Whether the plugin-wide "use_websearch" setting selects a search backend.
+--- Fails closed: only the "builtin" sentinel and a recognized external tool key
+--- count, so a typo'd or stale value cannot silently send text to a provider.
+---@param settings table LuaSettings instance
+---@return boolean
 M.isWebSearchEnabled = function(settings)
-    return settings:readSetting("use_websearch", "none") ~= "none"
+    return SearchTools.isEnabledMode(settings:readSetting("use_websearch", SearchTools.NONE))
 end
 
 M.isSuggestionsEnabled = function(settings, prompt_config)
