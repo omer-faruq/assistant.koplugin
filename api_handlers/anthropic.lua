@@ -29,7 +29,7 @@ end
 function AnthropicHandler:Test()
     local body = {
         model      = self.model,
-        max_tokens = 64,
+        max_tokens = self.TEST_MAX_OUTPUT_TOKENS,
         messages   = { { role = "user", content = self.TEST_PROMPT } },
     }
     local headers = {
@@ -39,7 +39,9 @@ function AnthropicHandler:Test()
                                  or "2023-06-01",
     }
     return self:testRequest(self:getApiUrl(), headers, body, function(data)
-        return koutil.tableGetValue(data, "content", 1, "text")
+        local parsed = ToolExecutor.parseToolCallsResponse(data, "anthropic")
+        if type(parsed) == "table" then return parsed.content, parsed.reasoning end
+        return nil
     end)
 end
 

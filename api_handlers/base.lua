@@ -428,6 +428,10 @@ end
 --- Sent to the API as-is.
 BaseHandler.TEST_PROMPT = "Reply with exactly one word: OK"
 
+--- Token budget for the connection-test request. High enough to leave room for
+--- a reasoning chain, so a thinking model still emits the final answer.
+BaseHandler.TEST_MAX_OUTPUT_TOKENS = 2048
+
 --- Check whether the connection-test echo contains a standalone OK.
 --- @param content string|nil extracted assistant text from the report
 --- @return boolean true when the echo proves endpoint, key and model at once
@@ -445,8 +449,8 @@ end
 --- @param url string full endpoint URL
 --- @param headers table auth/content headers
 --- @param body table Lua request body
---- @param extract function decoded response table -> assistant text, or nil
---- @return table|nil report { url, body, status, raw, content } 
+--- @param extract function decoded response table -> assistant text and reasoning, or nil
+--- @return table|nil report { url, body, status, raw, content, reasoning }
 --- @return string|nil err
 function BaseHandler:testRequest(url, headers, body, extract)
     local json_body = json.encode(body)
@@ -480,7 +484,7 @@ function BaseHandler:testRequest(url, headers, body, extract)
     }
     local ok, decoded = pcall(json.decode, report.raw)
     if ok and type(decoded) == "table" then
-        report.content = extract(decoded)
+        report.content, report.reasoning = extract(decoded)
     end
     return report
 end

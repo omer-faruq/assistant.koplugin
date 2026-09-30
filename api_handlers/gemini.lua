@@ -185,10 +185,12 @@ function GeminiHandler:Test()
     }
     local body = {
         contents = { { role = "user", parts = { { text = self.TEST_PROMPT } } } },
-        generationConfig = { maxOutputTokens = 64 },
+        generationConfig = { maxOutputTokens = self.TEST_MAX_OUTPUT_TOKENS },
     }
     return self:testRequest(url, headers, body, function(data)
-        return koutil.tableGetValue(data, "candidates", 1, "content", "parts", 1, "text")
+        local parsed = ToolExecutor.parseToolCallsResponse(data, "gemini")
+        if type(parsed) == "table" then return parsed.content, parsed.reasoning end
+        return nil
     end)
 end
 

@@ -990,14 +990,68 @@ local tests = {
         assert.matches(text, "API error: overloaded")
     end),
 
-    test("isConnectionTestOk fails a 200 with a non-OK echo", function()
-        assert.isFalse(Registry.isConnectionTestOk({
+    test("isConnectionTestOk passes a 200 with a non-OK answer", function()
+        -- Any non-empty answer proves the connection; echoing OK is not required.
+        assert.isTrue(Registry.isConnectionTestOk({
             url     = "https://api.test.com/v1/chat/completions",
             body    = "{}",
             status  = 200,
             raw     = "...",
             content = "Sure, here you go",
         }))
+    end),
+
+    test("isConnectionTestOk fails a 200 without usable answer text", function()
+        local cases = {
+            { content = "" },
+            { content = "   " },
+            { content = nil },
+        }
+        for i, case in ipairs(cases) do
+            local report = {
+                url     = "https://api.test.com/v1/chat/completions",
+                body    = "{}",
+                status  = 200,
+                raw     = '{"output":[]}',
+                content = case.content,
+            }
+            assert.isFalse(Registry.isConnectionTestOk(report),
+                "empty/whitespace/nil content must fail the verdict")
+            local text = Registry.formatTestReport("openai", "https://api.test.com/v1", "gpt-4", report)
+            assert.notMatches(text, "API returned an error",
+                "a 2xx body is not an API error")
+            assert.matches(text, "no usable answer",
+                "the report must say the 2xx body had no usable answer")
+        end
+    end),
+
+    test("formatTestReport surfaces reasoning when a 2xx has no final answer", function()
+        local report = {
+            url       = "https://api.test.com/v1/responses",
+            body      = "{}",
+            status    = 200,
+            raw       = '{"output":[{"type":"reasoning"}]}',
+            content   = nil,
+            reasoning = "The user asked for OK but I ran out of budget.",
+        }
+        local text = Registry.formatTestReport("openai", "https://api.test.com/v1", "gpt-4", report)
+        assert.notMatches(text, "API returned an error")
+        assert.matches(text, "no usable answer")
+        assert.matches(text, "Reasoning %(no final answer%)")
+        assert.matches(text, "ran out of budget")
+    end),
+
+    test("formatTestSuccess prints a plain confirmation on an OK echo", function()
+        local text = Registry.formatTestSuccess("OK")
+        assert.matches(text, "Connection test successful")
+        assert.notMatches(text, "Model reply")
+    end),
+
+    test("formatTestSuccess appends the model reply when it is not an OK echo", function()
+        local text = Registry.formatTestSuccess("Sure, here you go")
+        assert.matches(text, "Connection test successful")
+        assert.matches(text, "Model reply")
+        assert.matches(text, "Sure, here you go")
     end),
 
     test("isConnectionTestOk fails non-2xx even with an OK echo", function()

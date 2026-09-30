@@ -438,21 +438,52 @@ function ToolExecutor.parseToolCallsResponse(responseData, format)
                     local content = item.content
                     if type(content) == "table" then
                         for jdx, block in ipairs(content) do
-                            if block.type == "output_text" and block.text then
-                                table.insert(text_parts, block.text)
+                            if type(block) == "table" then
+                                local btype = block.type
+                                if (btype == "output_text" or btype == "text") and block.text then
+                                    table.insert(text_parts, block.text)
+                                end
                             end
                         end
                     elseif type(content) == "string" then
                         table.insert(text_parts, content)
                     end
                 elseif item.type == "reasoning" then
+                    -- Reasoning text arrives in several shapes across proxies:
+                    -- a plain string or an array of strings/blocks in "summary",
+                    -- a plain string in "text", or reasoning_text/summary_text
+                    -- blocks nested under "content".
                     local summary = koutil.tableGetValue(item, "summary")
                     if type(summary) == "string" and summary ~= "" then
                         table.insert(reasoning_parts, summary)
+                    elseif type(summary) == "table" then
+                        for sdx, entry in ipairs(summary) do
+                            if type(entry) == "string" and entry ~= "" then
+                                table.insert(reasoning_parts, entry)
+                            elseif type(entry) == "table" then
+                                local entry_text = koutil.tableGetValue(entry, "text")
+                                if type(entry_text) == "string" and entry_text ~= "" then
+                                    table.insert(reasoning_parts, entry_text)
+                                end
+                            end
+                        end
                     end
                     local text = koutil.tableGetValue(item, "text")
                     if type(text) == "string" and text ~= "" then
                         table.insert(reasoning_parts, text)
+                    end
+                    local content = koutil.tableGetValue(item, "content")
+                    if type(content) == "table" then
+                        for cdx, block in ipairs(content) do
+                            if type(block) == "table" then
+                                local btype = block.type
+                                local btext = block.text
+                                if type(btext) == "string" and btext ~= ""
+                                    and (btype == "reasoning_text" or btype == "summary_text") then
+                                    table.insert(reasoning_parts, btext)
+                                end
+                            end
+                        end
                     end
                 end
             end

@@ -69,7 +69,7 @@ function ResponsesHandler:Test()
     local body = {
         model = self.model,
         input = self.TEST_PROMPT,
-        max_output_tokens = 64,
+        max_output_tokens = self.TEST_MAX_OUTPUT_TOKENS,
     }
     local headers = {
         ["Content-Type"]  = "application/json",
@@ -79,7 +79,7 @@ function ResponsesHandler:Test()
         local top = koutil.tableGetValue(data, "output_text")
         if type(top) == "string" and top ~= "" then return top end
         local parsed = ToolExecutor.parseToolCallsResponse(data, "responses")
-        if type(parsed) == "table" then return parsed.content end
+        if type(parsed) == "table" then return parsed.content, parsed.reasoning end
         return nil
     end)
 end

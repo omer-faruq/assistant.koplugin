@@ -126,7 +126,9 @@ function OpenAIHandler:Test()
         ["Authorization"] = "Bearer " .. self.api_key,
     }
     return self:testRequest(self:getApiUrl(), headers, body, function(data)
-        return koutil.tableGetValue(data, "choices", 1, "message", "content")
+        local parsed = ToolExecutor.parseToolCallsResponse(data, "openai")
+        if type(parsed) == "table" then return parsed.content, parsed.reasoning end
+        return nil
     end)
 end
 

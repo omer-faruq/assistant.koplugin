@@ -73,8 +73,10 @@ local BASE_URL_DESCRIPTIONS = {
 }
 
 --- Connection-test failure report for the provider dialog: bold verdict, then
---- parameters, the exact request sent, and the API's own error message
---- (shared extractor; full raw body as fallback). Never shows the API key.
+--- parameters, the exact request sent, and the response body. A body that
+--- carries an API error (any status) shows the extracted message; a 2xx body
+--- with no usable answer is reported as such, surfacing its reasoning when the
+--- response has one. Never shows the API key.
 local function formatTestReport(handler_name, base_url, model, report)
     -- Each handler owns its wire format; resolve it by name, no shared fallback.
     local api_error
@@ -85,11 +87,30 @@ local function formatTestReport(handler_name, base_url, model, report)
             if ok_ex then api_error = msg end
         end
     end
-    local response_text = api_error and T(_("API error: %1"), api_error)
-        or report.raw ~= "" and report.raw
-        or _("(empty response body)")
+
+    local status = report.status
+    local is_2xx = type(status) == "number" and status >= 200 and status < 300
+    local header, response_text
+    if api_error then
+        header = TextUtils.bold_format(_("<b>API returned an error</b>"))
+        response_text = T(_("API error: %1"), api_error)
+    elseif is_2xx then
+        header = TextUtils.bold_format(_("<b>API returned no usable answer</b>"))
+        local raw_fallback = report.raw ~= "" and report.raw or _("(empty response body)")
+        local reasoning = report.reasoning
+        if type(reasoning) == "string" and reasoning ~= "" then
+            response_text = TextUtils.bold_format(T(_("<b>Reasoning (no final answer)</b> - %1"), reasoning))
+                .. "\n\n" .. raw_fallback
+        else
+            response_text = raw_fallback
+        end
+    else
+        header = TextUtils.bold_format(_("<b>API returned an error</b>"))
+        response_text = report.raw ~= "" and report.raw or _("(empty response body)")
+    end
+
     return table.concat({
-            TextUtils.bold_format(_("<b>API returned an error</b>")),
+            header,
             "",
             TextUtils.bold_format(_("<b>Parameters</b>")),
             T(_("Protocol: %1"), handler_name),
@@ -105,14 +126,30 @@ end
 -- Exposed for unit tests (pure formatting, no UI state).
 Registry.formatTestReport = formatTestReport
 
---- Connection-test verdict: HTTP 2xx plus the model echoing OK.
---- Pure (no UI) so tests can pin the pass condition; extraction stays in
---- BaseHandler:testRequest, display stays in formatTestReport.
+--- Connection-test success text: a plain confirmation, extended with the model
+--- reply when it did not echo OK. Pure (no UI) so tests can pin it.
+--- @param content string|nil extracted assistant text (non-empty on success)
+--- @return string
+local function formatTestSuccess(content)
+    if require("api_handlers.base").isEchoOk(content) then
+        return _("Connection test successful.")
+    end
+    return _("Connection test successful.") .. "\n\n"
+        .. TextUtils.bold_format(T(_("<b>Model reply:</b> %1"), content))
+end
+-- Exposed for unit tests (pure formatting, no UI state).
+Registry.formatTestSuccess = formatTestSuccess
+
+--- Connection-test verdict: HTTP 2xx plus a non-empty extracted answer.
+--- Echoing OK is not required - any non-whitespace content proves the
+--- connection. Pure (no UI) so tests can pin the pass condition; extraction
+--- stays in BaseHandler:testRequest, display stays in formatTestReport.
 local function isConnectionTestOk(report)
     if type(report) ~= "table" then return false end
     local status = report.status
     if type(status) ~= "number" or status < 200 or status >= 300 then return false end
-    return require("api_handlers.base").isEchoOk(report.content)
+    local content = report.content
+    return type(content) == "string" and content:find("%S") ~= nil
 end
 -- Exposed for unit tests (pure verdict, no UI state).
 Registry.isConnectionTestOk = isConnectionTestOk
@@ -156,7 +193,7 @@ function Registry.testConnection(handler_name, base_url, api_key, model)
                 -- test and is waiting on its result).
                 UIManager:show(InfoMessage:new{
                     face = Font:getFace("xx_smallinfofont"),
-                    text = _("Connection test successful."),
+                    text = formatTestSuccess(report.content),
                 })
             else
                 -- Failure: full dump (parameters, request, raw API error body)
