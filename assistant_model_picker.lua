@@ -58,12 +58,9 @@ local function resetModelSelection(assistant)
     assistant.querier.handler:SyncOptions(assistant.querier)
 end
 
---- RadioButtonTable with a legal zero-checked state. The upstream table
---- force-checks its first row whenever no row is checked and assumes a
---- checked button on every later tap. A picker page whose staged choice (or
---- model in effect) lives on another page must instead show zero checked
---- rows: the check names the model the Test and OK buttons act on, so a
---- forced first-row check would advertise a model they ignore.
+--- RadioButtonTable with a legal zero-checked state: a table built without
+--- a checked entry keeps zero checked rows, and checkButton moves the check
+--- even when no button is currently checked.
 local OptionalRadioButtonTable = RadioButtonTable:extend{}
 
 function OptionalRadioButtonTable:init()
@@ -76,7 +73,7 @@ function OptionalRadioButtonTable:init()
     end
     RadioButtonTable.init(self)
     if not any_checked then
-        -- Drop the first-row check the parent just installed.
+        -- RadioButtonTable.init force-checks the first row when none is checked.
         self.checked_button:toggleCheck()
         self.checked_button = nil
     end

@@ -48,7 +48,8 @@ Full flow, handlers, config, key files: `docs/ARCHITECTURE.md`.
 - The plugin ships and updates atomically: never preserve backward compatibility for internal interfaces.
 - Target latest KOReader only: never code against old or hypothetical upstream APIs, and never add version fallbacks.
 - Internal modules may be freely refactored, renamed, or deleted. Do not add compatibility shims, fallbacks, or migration layers for internal-only code; update every call site in one go.
-- Comments describe what the code is now, never its change history (no "moved from X", "formerly", "no shim left").
+- Comments describe what the code is now, never its change history (no "moved from X", "formerly", "no shim left"). Objective and brief: state what the current code does, not how it got that way (no "now allows", "used to", "instead of"); the commit message owns the why.
+- Keep comments short: a `---` doc comment states the contract in 1-3 lines; inline comments only where the code cannot speak for itself.
 
 ## Invariants (never break)
 
@@ -70,7 +71,7 @@ Full flow, handlers, config, key files: `docs/ARCHITECTURE.md`.
 
 ## Git / Versioning
 
-- `main`; Conventional Commits, one topic per commit. Commit directly when asked. Prefixes: `fix:` (defect), `refactor:` (behavior-preserving restructure), `add:` (new capability or tooling), `feat:` (user-visible feature), `test:` (tests only), `docs:` (documentation only).
+- `main`; Conventional Commits, one topic per commit. Commit directly when asked. Prefixes: `fix:` (defect), `refactor:` (behavior-preserving restructure), `add:` (new capability or tooling), `feat:` (user-visible feature), `test:` (tests only), `docs:` (documentation, including comment-only changes).
 - Subject line: imperative mood, lowercase first word, no trailing period (`fix: stop API connection tests failing on reasoning models`). Two facets of one change join with `;` (`add: fail closed on an unrecognized web-search key; one credential per tool`).
 - Body after a blank line, wrapped at ~76 columns: lead with **why** (the defect or rule behind the change), then what changed. Prose paragraphs for `fix:`/`add:`/`refactor:`/`feat:`; `- ` bullets when the commit covers several topics (`docs:`, `test:`). ASCII only (`->`, `-`, `...`).
 - `_meta.lua` holds `X.Y-dev`. Release: tag `vX.Y` on the matching commit; CI rewrites the packaged `_meta.lua` from the tag (repo stays `X.Y-dev`), then bump the repo to `X.(Y+1)-dev` and commit.
