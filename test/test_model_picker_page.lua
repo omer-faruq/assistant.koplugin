@@ -1,8 +1,8 @@
 -- test_model_picker_page.lua
 -- Guards the picker fresh-open page jump (assistant_model_picker.lua):
 -- the dialog must open on the page holding the model in effect, with that
--- row checked -- otherwise it strands on page 1 where RadioButtonTable
--- force-checks the first row though nothing was staged.
+-- row checked -- otherwise it strands on page 1 with no checked row to
+-- anchor the model in effect.
 -- Headless-safe: the picker module cannot be required here (it pulls the
 -- focus manager, which needs a live UI), so the index -> page logic
 -- (ModelPicker.initialPage) has no executable path in this suite. What is

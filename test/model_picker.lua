@@ -16,11 +16,17 @@ local UIManager = wb.UIManager
 local mock_assistant = {
     querier = {
         provider_name = "test_provider",
+        handler_name = "openai",
         provider_settings = { model = "gpt-4o" },
-        provider_setting = { model = "gpt-4o" },
+        provider_setting = {
+            model = "gpt-4o",
+            base_url = "https://api.example.com/v1",
+            api_key = "demo-key",
+        },
         handler = {
             SyncOptions = function() end,
         },
+        getProviderLabel = function() return "Demo Provider" end,
     },
     config = {
         _data = {
@@ -65,6 +71,8 @@ mock_assistant.querier.handler.FetchModels = function()
     return test_models
 end
 local models = mock_assistant.querier.handler:FetchModels()
+-- Open with the model in effect checked; it must be one from the list.
+mock_assistant.querier.provider_setting.model = test_models[3].id
 ModelPicker.showPickerDialog(mock_assistant, models, nil, "",
     ModelPicker.initialPage(mock_assistant, models))
 

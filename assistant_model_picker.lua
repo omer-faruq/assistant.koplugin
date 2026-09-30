@@ -58,6 +58,39 @@ local function resetModelSelection(assistant)
     assistant.querier.handler:SyncOptions(assistant.querier)
 end
 
+--- RadioButtonTable with a legal zero-checked state. The upstream table
+--- force-checks its first row whenever no row is checked and assumes a
+--- checked button on every later tap. A picker page whose staged choice (or
+--- model in effect) lives on another page must instead show zero checked
+--- rows: the check names the model the Test and OK buttons act on, so a
+--- forced first-row check would advertise a model they ignore.
+local OptionalRadioButtonTable = RadioButtonTable:extend{}
+
+function OptionalRadioButtonTable:init()
+    local any_checked = false
+    for r = 1, #self.radio_buttons do
+        local row = self.radio_buttons[r]
+        for c = 1, #row do
+            if row[c].checked then any_checked = true end
+        end
+    end
+    RadioButtonTable.init(self)
+    if not any_checked then
+        -- Drop the first-row check the parent just installed.
+        self.checked_button:toggleCheck()
+        self.checked_button = nil
+    end
+end
+
+function OptionalRadioButtonTable:checkButton(button)
+    if button.checked then return end
+    if self.checked_button then
+        self.checked_button:toggleCheck()
+    end
+    button:toggleCheck()
+    self.checked_button = button
+end
+
 -- Model picker dialog (extends InputDialog following ProviderDialog pattern)
 local ModelPickerDialog = InputDialog:extend{
     title = "",
@@ -244,14 +277,15 @@ function ModelPickerDialog:init()
         },
     }
 
-    -- Build radio buttons for current page only
+    -- Build radio buttons for current page only. The checked row is the
+    -- model Test and OK act on: the staged choice wins, otherwise the model
+    -- in effect. When neither lives on this page, no row is checked.
     local start_idx = (self.page - 1) * MODELS_PER_PAGE + 1
     local end_idx = math.min(self.page * MODELS_PER_PAGE, model_count)
 
     self.radio_buttons = {}
     for i = start_idx, end_idx do
         local m = self.models[i]
-        -- Staged selection wins; otherwise highlight the effective model.
         local checked
         if self.selected_model then
             checked = (m.id == self.selected_model)
@@ -272,8 +306,9 @@ function ModelPickerDialog:init()
 
     self.element_width = math.floor(self.width * 0.9)
 
-    -- Create RadioButtonTable for current page (no scroll needed)
-    self.radio_button_table = RadioButtonTable:new{
+    -- Radio table for the current page (no scroll needed); zero checked
+    -- rows are legal (see OptionalRadioButtonTable)
+    self.radio_button_table = OptionalRadioButtonTable:new{
         radio_buttons = self.radio_buttons,
         width = self.element_width,
         face = Font:getFace("cfont", 16),
@@ -508,9 +543,8 @@ end
 
 --- Fresh-open page: the page holding the model currently in effect, so the
 --- dialog opens on it with that row checked. Falls back to 1 when the model
---- is absent from the list (custom id, other provider). Without the jump the
---- dialog strands on page 1, where RadioButtonTable force-checks the first
---- row even though nothing was staged.
+--- is absent from the list (custom id, other provider), where the page then
+--- shows no checked row.
 local function initialPage(assistant, all_models)
     local model_id = effectiveModel(assistant)
     if model_id and model_id ~= "" and type(all_models) == "table" then
