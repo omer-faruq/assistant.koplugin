@@ -64,6 +64,7 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 - `assistant_text_utils.lua` — truncation, selection cleanup, PTF bold, page-text flattening, single-message renderer.
 - `assistant_net_utils.lua` — `httpRequest`, JSON fetch, headers, error messages, online guard.
 - `assistant_doc_utils.lua` — book/chapter/page extraction, page info, dialog field trim/validate.
+- `assistant_lookup.lua` — selection routing: `lookup_mode_for_selection` (CJK runs are measured in characters, not words, because `koutil.splitToWords` collapses a CJK run into one token) and `resolve_translate_route` (whether a short selection may prompt the explainer). Consumed by `main.lua`'s `showTranslateOrDictionary`.
 - `assistant_gettext.lua` — isolated MO shim, `textdomain "assistant"`, reads `l10n/*/assistant.mo` (MO, not PO); exposes the same `_`/`N_`/`C_`/`NC_` API as upstream, keeping plugin strings out of KOReader's core catalog.
 - `assistant_prompts.lua` — prompt templates.
 - Helpers: prefer `koutil.tableGetValue`, `koutil.tableDeepCopy`/`tableSize`/`tableEquals` over manual table loops; `util.orderedPairs(t)` for deterministic key order. Error handling returns `nil, err` (or `false, err` for HTTP); callers check the first return value.
@@ -87,4 +88,5 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 | `assistant_text_utils.lua` | Text helpers + single-message renderer |
 | `assistant_net_utils.lua` | HTTP/fetch, headers, error messages |
 | `assistant_doc_utils.lua` | Book/page extraction, online guard, field trim |
+| `assistant_lookup.lua` | Selection routing: lookup mode + explainer route |
 | `assistant_updater.lua` | GitHub release check |
