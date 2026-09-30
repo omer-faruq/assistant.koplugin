@@ -522,6 +522,8 @@ end
 return {
   isVersionNewer = isVersionNewer,
   is_excluded = is_excluded,
+  is_excluded_with = is_excluded_with,
+  parse_ignore_content = parse_ignore_content,
   UPDATE_CHECK_INTERVAL = UPDATE_CHECK_INTERVAL,
   LAST_CHECK_KEY = LAST_CHECK_KEY,
   LATEST_VERSION_KEY = LATEST_VERSION_KEY,

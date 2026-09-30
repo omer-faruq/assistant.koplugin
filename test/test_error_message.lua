@@ -19,35 +19,6 @@ local function test(name, fn)
 end
 
 local tests = {
-    test("prefixHttpCode: numeric code adds prefix", function()
-        assert.equal(BaseHandler.prefixHttpCode(400, "Bad Request"), "[400] Bad Request")
-        assert.equal(BaseHandler.prefixHttpCode(500, "oops"), "[500] oops")
-    end),
-
-    test("prefixHttpCode: string digit code adds prefix", function()
-        assert.equal(BaseHandler.prefixHttpCode("429", "slow"), "[429] slow")
-    end),
-
-    test("prefixHttpCode: USER_CANCELED passes through", function()
-        assert.equal(BaseHandler.prefixHttpCode("USER_CANCELED", "bye"), "bye")
-    end),
-
-    test("prefixHttpCode: missing/non-numeric code gets [0]", function()
-        assert.equal(BaseHandler.prefixHttpCode(nil, "timeout"), "[0] timeout")
-        assert.equal(BaseHandler.prefixHttpCode("NETWORK_ERROR", "down"), "[0] down")
-        assert.equal(BaseHandler.prefixHttpCode("wantread", "socket fail"), "[0] socket fail")
-    end),
-
-    test("prefixHttpCode: already prefixed is idempotent", function()
-        assert.equal(BaseHandler.prefixHttpCode(500, "[400] Bad Request"), "[400] Bad Request")
-        assert.equal(BaseHandler.prefixHttpCode(nil, "[0] timeout"), "[0] timeout")
-    end),
-
-    test("prefixHttpCode: non-string msg returned as-is", function()
-        assert.equal(BaseHandler.prefixHttpCode(400, nil), nil)
-        assert.equal(BaseHandler.prefixHttpCode(400, 42), 42)
-    end),
-
     test("base default: error.message wins over bare message", function()
         local h = BaseHandler:new{}
         assert.equal(h:extractErrorMessage('{"error":{"message":"boom"},"message":"ignored"}'), "boom")
@@ -114,24 +85,51 @@ local tests = {
         assert.equal(h:extractErrorMessage('{"detail":{"error":{"message":"proxied"}}}'), "proxied")
     end),
 
-    test("anthropic: error.message", function()
-        local h = AnthropicHandler:new{}
-        assert.equal(h:extractErrorMessage('{"error":{"message":"invalid key"}}'), "invalid key")
-        assert.equal(h:extractErrorMessage('{"error":"flat bad"}'), "flat bad")
-        assert.equal(h:extractErrorMessage('{"message":"bare"}'), "bare")
+    test("only openai overrides extractErrorMessage", function()
+        -- The other wire formats must keep inheriting the canonical base
+        -- implementation; an own copy could silently diverge from it. The
+        -- handler classes inherit through __index, so check the class table
+        -- itself with rawget.
+        assert.equal(rawget(AnthropicHandler, "extractErrorMessage"), nil)
+        assert.equal(rawget(GeminiHandler, "extractErrorMessage"), nil)
+        assert.equal(rawget(ResponsesHandler, "extractErrorMessage"), nil)
+        assert.notNil(rawget(OpenAIHandler, "extractErrorMessage"))
+        assert.notNil(rawget(BaseHandler, "extractErrorMessage"))
     end),
 
-    test("gemini: error.message", function()
-        local h = GeminiHandler:new{}
-        assert.equal(h:extractErrorMessage('{"error":{"message":"API key not valid","code":400,"status":"INVALID_ARGUMENT"}}'), "API key not valid [INVALID_ARGUMENT/400]")
-        assert.equal(h:extractErrorMessage('{"message":"bare"}'), "bare")
+    test("base default: detail table without error/message/code/status returns nil", function()
+        local h = BaseHandler:new{}
+        assert.equal(h:extractErrorMessage('{"detail":{"foo":"bar"}}'), nil)
+        assert.equal(h:extractErrorMessage('{"detail":{}}'), nil)
+        assert.equal(NetUtils.extractErrorMessage({ detail = { foo = "bar" } }), nil)
     end),
 
-    test("responses: error.message", function()
-        local h = ResponsesHandler:new{}
-        assert.equal(h:extractErrorMessage('{"error":{"message":"model not found"}}'), "model not found")
-        assert.equal(h:extractErrorMessage('{"error":"flat bad"}'), "flat bad")
-        assert.equal(h:extractErrorMessage('{"message":"bare"}'), "bare")
+    test("prefixHttpCode: numeric code, non-numeric code, and no code", function()
+        -- A 100..599 integer gets its own prefix; anything else (socket
+        -- reason strings, nil, empty) falls back to [0] so the reason stays
+        -- visible instead of vanishing.
+        assert.equal(BaseHandler.prefixHttpCode(400, "Bad Request"), "[400] Bad Request")
+        assert.equal(BaseHandler.prefixHttpCode("429", "slow"), "[429] slow")
+        assert.equal(BaseHandler.prefixHttpCode("wantread", "wantread"), "[0] wantread")
+        assert.equal(BaseHandler.prefixHttpCode(nil, "timeout"), "[0] timeout")
+        assert.equal(BaseHandler.prefixHttpCode("", "timeout"), "[0] timeout")
+    end),
+
+    test("prefixHttpCode: base text appends the endpoint only when it differs", function()
+        -- Mirrors the err_header base composition in assistant_querier.lua:
+        -- the endpoint is appended after the reason, and only when the base
+        -- is not the endpoint itself (no "url (url)" duplication).
+        local function base_text(reason, endpoint)
+            local base = reason ~= "" and reason or endpoint
+            if endpoint ~= "" and base ~= endpoint then
+                base = base .. " (" .. endpoint .. ")"
+            end
+            return base
+        end
+        assert.equal(BaseHandler.prefixHttpCode(400, base_text("Bad Request", "https://host/api")),
+            "[400] Bad Request (https://host/api)")
+        assert.equal(BaseHandler.prefixHttpCode(nil, base_text("", "https://host/api")),
+            "[0] https://host/api")
     end),
 }
 

@@ -9,11 +9,23 @@ local NetUtils = helper.NetUtils
 local BaseHandler = require("api_handlers.base")
 local OpenAIHandler = require("api_handlers.openai")
 
--- Captured before the makeRequest tests replace the module field with stubs.
+-- test/run_tests.lua runs every test_*.lua alphabetically in ONE shared
+-- process, so a stub installed into a module field outlives this file and
+-- follows every later test. The real implementations are captured once and
+-- put back after each case by test() below -- including when an assertion
+-- fires mid-test, which is why the restore runs through pcall.
+local realHttpRequest = NetUtils.httpRequest
 local realSleepWithInfo = BaseHandler.sleepWithInfo
 
+local function withRestoredModuleFields(fn)
+    local ok, err = pcall(fn)
+    NetUtils.httpRequest = realHttpRequest
+    BaseHandler.sleepWithInfo = realSleepWithInfo
+    if not ok then error(err, 0) end
+end
+
 local function test(name, fn)
-    return { name = name, fn = fn }
+    return { name = name, fn = function() withRestoredModuleFields(fn) end }
 end
 
 -- Format an epoch timestamp as an RFC1123 HTTP-date (UTC).
@@ -201,15 +213,27 @@ local tests = {
         assert.isTrue(h:isRetryable429(429, {}, body))
     end),
 
+    test("isRetryable429: detail table without error/message/code/status is retryable", function()
+        local h = newHandler()
+        -- getErrorNode yields no error node for such a body, so nothing can
+        -- classify it as quota exhaustion.
+        assert.isTrue(h:isRetryable429(429, {}, '{"detail":{"foo":"bar"}}'))
+    end),
+
     -- ------------------------------------------------------------------
     -- getRetryDelay
     -- ------------------------------------------------------------------
-    test("getRetryDelay: retry-after is capped at 5s", function()
+    test("getRetryDelay: server retry-after is capped at 5s", function()
         local h = newHandler()
-        local info = h:getRetryDelay(429, { ["retry-after"] = "10" }, "", 1)
-        assert.isTrue(info.retryable)
-        assert.equal(info.delay, 5)
-        assert.equal(info.reason, "retry-after")
+        -- Both a mid-range and a far-future hint clamp to the 5s ceiling and
+        -- keep the server as the reason (a low backoff must not win here).
+        local hints = { "10", "30" }
+        for i = 1, #hints do
+            local info = h:getRetryDelay(429, { ["retry-after"] = hints[i] }, "", 1)
+            assert.isTrue(info.retryable)
+            assert.equal(info.delay, 5)
+            assert.equal(info.reason, "retry-after")
+        end
     end),
 
     test("getRetryDelay: backoff fallback stays within jitter range", function()
@@ -220,37 +244,17 @@ local tests = {
         assert.isTrue(info.delay >= 0.75 and info.delay <= 1.25, "delay ~= " .. tostring(info.delay))
     end),
 
-    test("getRetryDelay: backoff caps at 5s", function()
+    test("getRetryDelay: backoff caps at 5s and lifts a small server hint", function()
         local h = newHandler()
-        local info = h:getRetryDelay(429, {}, "", 10)
-        assert.isTrue(info.delay >= 3.75 and info.delay <= 5, "delay ~= " .. tostring(info.delay))
-    end),
-
-    test("getRetryDelay: small retry-after still backs off progressively", function()
-        local h = newHandler()
+        -- Pure backoff on a high attempt: base 2^9 clamped to 5s +/-25%.
+        local capped = h:getRetryDelay(429, {}, "", 10)
+        assert.equal(capped.reason, "backoff")
+        assert.isTrue(capped.delay >= 3.75 and capped.delay <= 5, "delay ~= " .. tostring(capped.delay))
         -- Retry-After:1 alone would finish 8 retries in 8s; backoff must lift it.
-        local info = h:getRetryDelay(429, { ["retry-after"] = "1" }, "", 5)
-        assert.isTrue(info.retryable)
-        assert.equal(info.reason, "backoff")
-        -- attempt 5 backoff base 5s +/-25% clamped to 5 => 3.75..5s
-        assert.isTrue(info.delay >= 3.75 and info.delay <= 5, "delay ~= " .. tostring(info.delay))
-    end),
-
-    test("getRetryDelay: large retry-after is capped at 5s", function()
-        local h = newHandler()
-        local info = h:getRetryDelay(429, { ["retry-after"] = "30" }, "", 1)
-        assert.isTrue(info.retryable)
-        assert.equal(info.delay, 5)
-        assert.equal(info.reason, "retry-after")
-    end),
-
-    test("getRetryDelay: zero server hint falls back to backoff", function()
-        local h = newHandler()
-        local past = os.time() - 60
-        local info = h:getRetryDelay(429, { ["retry-after"] = formatHttpDate(past) }, "", 1)
-        assert.isTrue(info.retryable)
-        assert.equal(info.reason, "backoff")
-        assert.isTrue(info.delay >= 0.75 and info.delay <= 1.25, "delay ~= " .. tostring(info.delay))
+        local lifted = h:getRetryDelay(429, { ["retry-after"] = "1" }, "", 5)
+        assert.isTrue(lifted.retryable)
+        assert.equal(lifted.reason, "backoff")
+        assert.isTrue(lifted.delay >= 3.75 and lifted.delay <= 5, "delay ~= " .. tostring(lifted.delay))
     end),
 
     test("getRetryDelay: non-retryable 429 returns retryable=false", function()

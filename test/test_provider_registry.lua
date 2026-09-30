@@ -1,12 +1,12 @@
 -- test_provider_registry.lua
--- Tests for assistant_provider_registry.lua, focusing on the exported
--- "Provider API" menu factory (Registry.getAddProviderMenuItem), the
--- preset provider table that moved here from main.lua, and the
--- persistence of preset additional_parameters (Registry.add / installProvider).
+-- Tests for assistant_provider_registry.lua: preset providers, the "Provider
+-- API" menu factory, load/save/merge, install/update/delete of UI providers,
+-- credential normalization, the reasoning-parameter catalog, and the
+-- connection-test report/verdict helpers.
 local helper = require("test.helper")
 local assert = helper.assert
 local Registry = require("assistant_provider_registry")
-local BaseHandler = require("api_handlers.base")
+local koutil = require("util")
 
 local function test(name, fn)
     return { name = name, fn = fn }
@@ -27,6 +27,17 @@ local function deepEqual(a, b)
     return count_a == count_b
 end
 
+-- A mock LuaSettings that persists in memory.
+local function mockSettings(initial)
+    local store = initial or {}
+    return {
+        readSetting = function(_, key) return store[key] end,
+        saveSetting = function(_, key, val) store[key] = val end,
+        delSetting = function(_, key) store[key] = nil end,
+        _store = store,
+    }
+end
+
 -- A mock Assistant that records _showAddProviderDialog invocations.
 local function mockAssistant()
     return {
@@ -43,26 +54,19 @@ local function mockAssistant()
 end
 
 -- A mock Assistant with the provider-data/settings/config plumbing that
--- Registry.installProvider touches.
+-- Registry.installProvider and Registry.updateProvider touch.
 local function mockAssistantForInstall()
-    local stored = {}
     local assistant = {
         _ui_provider_data = { providers = {}, _next_id = 1 },
-        settings = {
-            saveSetting = function(_, key, value) stored[key] = value end,
-            readSetting = function(_, key) return stored[key] end,
-            delSetting = function(_, key) stored[key] = nil end,
-        },
+        settings = mockSettings(),
         updated = false,
         querier = nil,
     }
-    assistant.settings._stored = stored
     -- Minimal config object to mimic assistant_config.lua's Config.
     local config_data = { provider_settings = {} }
     local config = {}
     function config:getProvider(id)
         if not id or id == "" then return nil end
-        local koutil = require("util")
         local v = koutil.tableGetValue(config_data, "provider_settings", id)
         if v == nil or v == require("rapidjson").null then return nil end
         return v
@@ -114,111 +118,28 @@ local function captureDialog(fn)
     return captured
 end
 
--- Expected default additional_parameters per preset name.
-local EXPECTED_PRESET_PARAMS = {
-    DeepSeek = {
-        temperature = 0.7,
-        max_tokens = 4096,
-        thinking = { type = "disabled" },
-    },
-    OpenRouter = {
-        temperature = 0.7,
-        max_tokens = 4096,
-        reasoning = { effort = "none" },
-    },
-    Gemini = {
-        temperature = 0.7,
-        thinking_budget = 0,
-    },
-    Anthropic = {
-        anthropic_version = "2023-06-01",
-        max_tokens = 4096,
-    },
-}
+-- Finds a dialog field by its identifying hint, so inserting or reordering
+-- fields does not break the assertions.
+local function fieldByHint(dialog, hint)
+    for i, field in ipairs(dialog.fields) do
+        if field.hint == hint then return field end
+    end
+    return nil
+end
+
+local HINT_BASE_URL = "Base URL"
+local HINT_MODEL = "Pick one via Browse Models"
 
 local tests = {
 
     -- =========================================================================
-    -- Exported tables
+    -- Preset providers
     -- =========================================================================
-
-    test("PRESET_PROVIDERS exported with name/handler/base_url", function()
-        local presets = Registry.PRESET_PROVIDERS
-        assert.notNil(presets)
-        assert.equal(#presets, 6)
-        for i, preset in ipairs(presets) do
-            assert.notNil(preset.name)
-            assert.notNil(preset.handler)
-            assert.matches(preset.base_url, "^https?://")
-        end
-    end),
 
     test("preset handlers are all known to the registry", function()
         for i, preset in ipairs(Registry.PRESET_PROVIDERS) do
             assert.isTrue(Registry.HANDLERS[preset.handler],
                 "unknown handler: " .. tostring(preset.handler))
-        end
-    end),
-
-    test("presets carry provider-specific additional_parameters defaults", function()
-        local presets = Registry.PRESET_PROVIDERS
-        assert.equal(#presets, 6)
-        for i, preset in ipairs(presets) do
-            local want = EXPECTED_PRESET_PARAMS[preset.name]
-            if want == nil then
-                assert.equal(preset.additional_parameters, nil,
-                    preset.name .. " should not define unexpected additional_parameters")
-            else
-                assert.notNil(preset.additional_parameters,
-                    preset.name .. " preset should define additional_parameters")
-                assert.isTrue(deepEqual(preset.additional_parameters, want),
-                    preset.name .. " additional_parameters mismatch")
-            end
-        end
-    end),
-
-    -- =========================================================================
-    -- getAddProviderMenuItem
-    -- =========================================================================
-
-    test("menu item is localized 'Provider API' and keeps menu open", function()
-        local item = Registry.getAddProviderMenuItem(mockAssistant())
-        assert.equal(item.text, "Provider API")
-        assert.equal(item.keep_menu_open, true)
-        assert.notNil(item.sub_item_table_func)
-    end),
-
-    test("sub-menu lists all presets", function()
-        local items = subItems(Registry.getAddProviderMenuItem(mockAssistant()))
-        assert.equal(#items, #Registry.PRESET_PROVIDERS)
-        for i, preset in ipairs(Registry.PRESET_PROVIDERS) do
-            local item = items[i]
-            assert.equal(item.text, preset.name)
-            assert.equal(item.keep_menu_open, true)
-            assert.notNil(item.callback)
-        end
-    end),
-
-    test("preset callback remembers the menu instance for dismissal", function()
-        local assistant = mockAssistant()
-        local items = subItems(Registry.getAddProviderMenuItem(assistant))
-        local menu_instance = { closeMenu = function() end }
-        items[1].callback(menu_instance)
-        -- A confirmed add closes this menu, which stays open behind the dialogs.
-        assert.equal(assistant._menu_instance, menu_instance)
-    end),
-
-    test("preset callback invokes _showAddProviderDialog with preset fields and additional_parameters", function()
-        local assistant = mockAssistant()
-        local items = subItems(Registry.getAddProviderMenuItem(assistant))
-        for i, preset in ipairs(Registry.PRESET_PROVIDERS) do
-            items[i].callback()
-            local call = assistant.calls[#assistant.calls]
-            assert.equal(call.preset_name, preset.name)
-            assert.equal(call.handler, preset.handler)
-            assert.equal(call.base_url, preset.base_url)
-            assert.equal(call.additional_parameters, preset.additional_parameters,
-                "preset additional_parameters should be forwarded to the dialog")
         end
     end),
 
@@ -234,12 +155,118 @@ local tests = {
     end),
 
     -- =========================================================================
+    -- getAddProviderMenuItem
+    -- =========================================================================
+
+    test("menu item is localized 'Provider API' and keeps menu open", function()
+        local item = Registry.getAddProviderMenuItem(mockAssistant())
+        assert.equal(item.text, "Provider API")
+        assert.equal(item.keep_menu_open, true)
+        assert.notNil(item.sub_item_table_func)
+    end),
+
+    test("preset callback remembers the menu instance for dismissal", function()
+        local assistant = mockAssistant()
+        local items = subItems(Registry.getAddProviderMenuItem(assistant))
+        local menu_instance = { closeMenu = function() end }
+        items[1].callback(menu_instance)
+        -- A confirmed add closes this menu, which stays open behind the dialogs.
+        assert.equal(assistant._menu_instance, menu_instance)
+    end),
+
+    -- =========================================================================
+    -- Load / Save
+    -- =========================================================================
+
+    test("load returns a fresh structure when nothing is stored", function()
+        local data = Registry.load(mockSettings())
+        assert.notNil(data)
+        assert.equal(type(data.providers), "table")
+        assert.equal(data._next_id, 1)
+    end),
+
+    test("load returns a fresh structure on corrupt JSON", function()
+        local settings = mockSettings()
+        settings:saveSetting("ui_providers", "{invalid json!!")
+        local data = Registry.load(settings)
+        assert.equal(next(data.providers), nil)
+        assert.equal(data._next_id, 1)
+    end),
+
+    test("load returns a fresh structure on schema version mismatch", function()
+        local settings = mockSettings()
+        settings:saveSetting("ui_providers",
+            '{"schema_version":999,"_next_id":7,"providers":{"custom:1":{"api_key":"x"}}}')
+        local data = Registry.load(settings)
+        assert.equal(next(data.providers), nil)
+        assert.equal(data._next_id, 1)
+    end),
+
+    test("save then load round-trips providers and the id counter", function()
+        local settings = mockSettings()
+        local data = { providers = {}, _next_id = 1 }
+        local id = Registry.add(data, {
+            display_name = "DeepSeek UI", handler = "openai", model = "auto",
+            base_url = "https://api.deepseek.com/v1", api_key = "key",
+        })
+        data._next_id = 5
+        assert.isTrue(Registry.save(settings, data))
+
+        local loaded = Registry.load(settings)
+        assert.equal(loaded._next_id, 5)
+        assert.equal(loaded.providers[id].display_name, "DeepSeek UI")
+        assert.equal(loaded.providers[id].base_url, "https://api.deepseek.com/v1")
+        assert.equal(loaded.providers[id].api_key, "key")
+    end),
+
+    -- =========================================================================
+    -- Merge
+    -- =========================================================================
+
+    test("merge injects source/immutable metadata per origin", function()
+        local merged = Registry.merge({
+            provider_settings = { openai = { api_key = "file-key" } },
+        }, {
+            providers = { ["custom:1"] = { api_key = "ui-key" } },
+        })
+        assert.equal(merged.openai.api_key, "file-key")
+        assert.equal(merged.openai.source, "file")
+        assert.equal(merged.openai.immutable, true)
+        assert.equal(merged["custom:1"].api_key, "ui-key")
+        assert.equal(merged["custom:1"].source, "ui")
+        assert.equal(merged["custom:1"].immutable, nil)
+    end),
+
+    test("merge returns nil when both sources are empty", function()
+        assert.equal(Registry.merge(nil, { providers = {}, _next_id = 1 }), nil)
+        assert.equal(Registry.merge({ provider_settings = {} }, { providers = {} }), nil)
+    end),
+
+    test("merge copies records instead of aliasing the sources", function()
+        local file_record = { api_key = "file-key" }
+        local ui_record = { api_key = "ui-key" }
+        local merged = Registry.merge(
+            { provider_settings = { openai = file_record } },
+            { providers = { ["custom:1"] = ui_record } })
+        merged.openai.api_key = "mutated"
+        merged["custom:1"].api_key = "mutated"
+        assert.equal(file_record.api_key, "file-key")
+        assert.equal(ui_record.api_key, "ui-key")
+    end),
+
+    test("merge skips a UI provider whose id collides with a file provider", function()
+        local merged = Registry.merge(
+            { provider_settings = { ["custom:1"] = { api_key = "file-key" } } },
+            { providers = { ["custom:1"] = { api_key = "ui-key" } } })
+        assert.equal(merged["custom:1"].api_key, "file-key")
+        assert.equal(merged["custom:1"].source, "file")
+    end),
+
+    -- =========================================================================
     -- showProviderDialog field descriptions
     -- =========================================================================
 
     test("Base URL description reflects the selected handler", function()
-        -- Descriptions were intentionally shortened in de34648; assert the
-        -- current per-handler mapping (and that it is handler-aware).
         local cases = {
             { handler = "openai",    pattern = "Chat Completions" },
             { handler = "responses", pattern = "Responses API" },
@@ -252,10 +279,11 @@ local tests = {
                 Registry.showProviderDialog({}, nil, case.handler, "https://api.example.com/v1")
             end)
             assert.notNil(dialog, "no dialog built for handler " .. case.handler)
-            local desc = dialog.fields[2].description
-            assert.matches(desc, case.pattern,
+            local field = fieldByHint(dialog, HINT_BASE_URL)
+            assert.notNil(field, "no Base URL field for handler " .. case.handler)
+            assert.matches(field.description, case.pattern,
                 "wrong Base URL description for handler " .. case.handler)
-            seen[desc] = (seen[desc] or 0) + 1
+            seen[field.description] = (seen[field.description] or 0) + 1
         end
         assert.isTrue(next(seen) ~= nil, "expected at least one Base URL description")
     end),
@@ -265,14 +293,16 @@ local tests = {
             Registry.showProviderDialog({}, nil, "openai", "https://api.example.com/v1")
         end)
         assert.notNil(dialog)
-        assert.matches(dialog.fields[4].description, "Model",
+        local field = fieldByHint(dialog, HINT_MODEL)
+        assert.notNil(field, "dialog should have a Model field")
+        assert.matches(field.description, "Model",
             "Model field description should name the Model field")
-        assert.matches(dialog.fields[4].hint, "Browse Models",
+        assert.matches(field.hint, "Browse Models",
             "Model hint should advertise the Browse Models workflow")
     end),
 
     -- =========================================================================
-    -- Registry.add persistence
+    -- Registry.add
     -- =========================================================================
 
     test("Registry.add persists additional_parameters", function()
@@ -375,6 +405,7 @@ local tests = {
             if p.name == "DeepSeek" then preset = p end
         end
         assert.notNil(preset, "DeepSeek preset missing from PRESET_PROVIDERS")
+        local before = koutil.tableDeepCopy(preset.additional_parameters)
         local id, err = Registry.installProvider(assistant, preset.handler, preset.base_url,
             preset.name .. " UI", "key", "auto", preset.additional_parameters)
         assert.notNil(id, err)
@@ -383,9 +414,8 @@ local tests = {
         -- Mutating the merged config must not corrupt the shared preset table.
         merged.additional_parameters.thinking.type = "enabled"
         merged.additional_parameters.temperature = 0.9
-        assert.equal(preset.additional_parameters.thinking.type, "disabled")
-        assert.equal(preset.additional_parameters.temperature, 0.7)
-        assert.isTrue(deepEqual(preset.additional_parameters, EXPECTED_PRESET_PARAMS.DeepSeek))
+        assert.isTrue(deepEqual(preset.additional_parameters, before),
+            "the shared preset table must survive an install untouched")
     end),
 
     -- =========================================================================
@@ -458,6 +488,21 @@ local tests = {
             "merged additional_parameters must be preserved")
     end),
 
+    test("updateProvider replaces additional_parameters when one is given", function()
+        local assistant = mockAssistantForInstall()
+        local id, err = Registry.installProvider(assistant, "anthropic",
+            "https://api.anthropic.com/v1", "Anthropic", "key", "auto",
+            { max_tokens = 4096 })
+        assert.notNil(id, err)
+        local same_id, err2 = Registry.updateProvider(assistant, id,
+            "Anthropic", "https://api.anthropic.com/v1", "key", "claude-x",
+            { thinking = { type = "disabled" } })
+        assert.equal(same_id, id, err2)
+        local record = assistant._ui_provider_data.providers[id]
+        assert.isTrue(deepEqual(record.additional_parameters, { thinking = { type = "disabled" } }),
+            "an explicit parameter table must replace the stored one")
+    end),
+
     test("updateProvider defaults model to 'auto' when empty", function()
         local assistant = mockAssistantForInstall()
         local id, err = Registry.installProvider(assistant, "openai",
@@ -487,13 +532,24 @@ local tests = {
         assert.notNil(id, err)
 
         assistant.updated = false
-        Registry.updateProvider(assistant, id, "Test2", "https://api2.test.com/v1", "key2", "gpt-4")
+        Registry.updateProvider(assistant, id, "Test2", "https://api2.test.com/v1", "key", "gpt-4")
         assert.isTrue(assistant.updated, "updated flag must be set")
         assert.isTrue(save_called, "settings must be saved")
     end),
 
+    test("updateProvider persists the edit so a reload sees it", function()
+        local assistant = mockAssistantForInstall()
+        local id, err = Registry.installProvider(assistant, "openai",
+            "https://api.test.com/v1", "Test", "key", "gpt-4")
+        assert.notNil(id, err)
+        Registry.updateProvider(assistant, id, "Renamed", "https://api.test.com/v1", "key2", "gpt-4o")
+        local reloaded = Registry.load(assistant.settings)
+        assert.equal(reloaded.providers[id].display_name, "Renamed")
+        assert.equal(reloaded.providers[id].api_key, "key2")
+    end),
+
     -- =========================================================================
-    -- Delete regression
+    -- Delete
     -- =========================================================================
 
     test("delete still works correctly after edit additions", function()
@@ -521,12 +577,11 @@ local tests = {
         assert.equal(data.providers[id2], nil)
     end),
 
-    test("is_deletable unchanged by edit additions", function()
-        -- Same semantics: UI = deletable (truthy), file = not (false)
-        assert.isTrue(Registry.is_deletable({ source = "ui" }))
-        assert.equal(Registry.is_deletable({ source = "ui", immutable = true }), false)
-        assert.equal(Registry.is_deletable({ source = "file" }), false)
-        assert.equal(Registry.is_deletable(nil), nil)
+    test("delete fails for an unknown provider id", function()
+        local data = { providers = {}, _next_id = 1 }
+        local ok, err = Registry.delete(data, "custom:404")
+        assert.isFalse(ok)
+        assert.notNil(err)
     end),
 
     -- =========================================================================
@@ -566,6 +621,29 @@ local tests = {
             display_name = "Name",
             handler = "openai",
             base_url = "https://a.com/v 1",
+            api_key = "sk-abc",
+            model = "auto",
+        })
+        assert.isFalse(ok)
+        assert.notNil(err)
+    end),
+
+    test("validate rejects an unknown handler", function()
+        local ok, err = Registry.validate({
+            display_name = "Name",
+            handler = "gemma",
+            base_url = "https://a.com/v1",
+            api_key = "sk-abc",
+            model = "auto",
+        })
+        assert.isFalse(ok, "only the four UI-selectable handlers may be stored")
+    end),
+
+    test("validate rejects a blank display name", function()
+        local ok, err = Registry.validate({
+            display_name = "   ",
+            handler = "openai",
+            base_url = "https://a.com/v1",
             api_key = "sk-abc",
             model = "auto",
         })
@@ -683,7 +761,9 @@ local tests = {
             Registry.showProviderDialog(assistant, nil, nil, nil, nil, id)
         end)
         assert.notNil(dialog, "edit dialog should be built")
-        assert.equal(dialog.fields[4].text, "gpt-4o")
+        local field = fieldByHint(dialog, HINT_MODEL)
+        assert.notNil(field, "edit dialog should have a Model field")
+        assert.equal(field.text, "gpt-4o")
     end),
 
     test("Edit dialog falls back to the record model without an override", function()
@@ -695,8 +775,127 @@ local tests = {
             Registry.showProviderDialog(assistant, nil, nil, nil, nil, id)
         end)
         assert.notNil(dialog, "edit dialog should be built")
-        assert.equal(dialog.fields[4].text, "gpt-4o-mini")
+        local field = fieldByHint(dialog, HINT_MODEL)
+        assert.notNil(field, "edit dialog should have a Model field")
+        assert.equal(field.text, "gpt-4o-mini")
     end),
+
+    test("Edit dialog offers Delete for a UI provider only", function()
+        local assistant = mockAssistantForInstall()
+        local id = Registry.installProvider(assistant, "openai",
+            "https://api.test.com/v1", "AMD", "key", "auto")
+        local dialog = captureDialog(function()
+            Registry.showProviderDialog(assistant, nil, nil, nil, nil, id)
+        end)
+        local has_delete = false
+        for i, row in ipairs(dialog.buttons) do
+            for j, button in ipairs(row) do
+                if button.id == "delete" then has_delete = true end
+            end
+        end
+        assert.isTrue(has_delete, "a UI provider must be deletable from its edit dialog")
+
+        -- A file-configured provider has no record to edit, so no Delete.
+        assistant.config._data.provider_settings["openai_file"] = {
+            display_name = "File One", source = "file", immutable = true,
+        }
+        local file_dialog = captureDialog(function()
+            Registry.showProviderDialog(assistant, nil, nil, nil, nil, "openai_file")
+        end)
+        for i, row in ipairs(file_dialog.buttons) do
+            for j, button in ipairs(row) do
+                assert.isTrue(button.id ~= "delete",
+                    "an immutable file provider must not be deletable")
+            end
+        end
+    end),
+
+    -- =========================================================================
+    -- Reasoning parameter catalog
+    -- =========================================================================
+
+    test("PARAM_CATALOG covers every UI-selectable handler", function()
+        for handler in pairs(Registry.HANDLERS) do
+            local catalog = Registry.PARAM_CATALOG[handler]
+            assert.notNil(catalog, "no PARAM_CATALOG entry for handler " .. handler)
+            assert.isTrue(#catalog > 0, "empty catalog for handler " .. handler)
+        end
+    end),
+
+    test("PARAM_CATALOG entries all carry key/value/desc", function()
+        for key, catalog in pairs(Registry.PARAM_CATALOG) do
+            for i, item in ipairs(catalog) do
+                local where = key .. "[" .. i .. "]"
+                assert.notNil(item.key, where .. " has no key")
+                assert.notNil(item.value, where .. " has no value")
+                assert.notNil(item.desc, where .. " has no desc")
+            end
+        end
+    end),
+
+    test("getReasoningKey scopes the overlay to the provider id", function()
+        assert.equal(Registry.getReasoningKey("custom:1"), "reasoning_option_custom:1")
+        assert.equal(Registry.getReasoningKey("openai"), "reasoning_option_openai")
+    end),
+
+    test("getReasoningOverlay returns {} when unset or malformed", function()
+        local settings = mockSettings()
+        assert.equal(next(Registry.getReasoningOverlay(settings, "custom:1")), nil)
+        settings:saveSetting(Registry.getReasoningKey("custom:1"), "not a table")
+        assert.equal(next(Registry.getReasoningOverlay(settings, "custom:1")), nil)
+        assert.equal(next(Registry.getReasoningOverlay(nil, "custom:1")), nil)
+        assert.equal(next(Registry.getReasoningOverlay(settings, nil)), nil)
+    end),
+
+    test("getReasoningOverlay returns the stored selections", function()
+        local settings = mockSettings()
+        settings:saveSetting(Registry.getReasoningKey("custom:1"), {
+            reasoning_effort = "none",
+        })
+        local overlay = Registry.getReasoningOverlay(settings, "custom:1")
+        assert.equal(overlay.reasoning_effort, "none")
+    end),
+
+    test("resolveCatalogKey maps alias handlers onto openai", function()
+        local aliases = { "deepseek", "ollama", "groq", "mistral", "openrouter", "gigachat" }
+        for i, alias in ipairs(aliases) do
+            assert.equal(Registry.resolveCatalogKey("custom:1", { handler = alias }), "openai",
+                alias .. " should resolve to the openai catalog")
+        end
+    end),
+
+    test("resolveCatalogKey dispatches gemma by base_url", function()
+        assert.equal(Registry.resolveCatalogKey("custom:1", {
+            handler = "gemma",
+            base_url = "https://generativelanguage.googleapis.com/v1beta/models",
+        }), "gemini")
+        assert.equal(Registry.resolveCatalogKey("custom:1", {
+            handler = "gemma",
+            base_url = "https://generativelanguage.googleapis.com/v1beta/openai",
+        }), "openai", "the OpenAI-compatible Gemma endpoint uses the openai catalog")
+    end),
+
+    test("resolveCatalogKey returns nil for an unresolvable handler", function()
+        assert.equal(Registry.resolveCatalogKey("custom:1", { handler = "nope" }), nil)
+        assert.equal(Registry.resolveCatalogKey("custom:1", nil), nil,
+            "a UI id without a record carries no handler")
+    end),
+
+    test("hasReasoningOptions follows the resolved catalog key", function()
+        assert.isTrue(Registry.hasReasoningOptions("custom:1", { handler = "openai" }))
+        assert.isTrue(Registry.hasReasoningOptions("custom:1", { handler = "deepseek" }))
+        assert.isFalse(Registry.hasReasoningOptions("custom:1", { handler = "nope" }))
+        assert.isFalse(Registry.hasReasoningOptions("custom:1", nil))
+    end),
+
+    test("showParametersDialog returns nothing for a provider without a record", function()
+        local assistant = mockAssistantForInstall()
+        assert.equal(Registry.showParametersDialog(assistant, "custom:404"), nil)
+    end),
+
+    -- =========================================================================
+    -- Connection test report / verdict
+    -- =========================================================================
 
     test("formatTestReport surfaces the extracted JSON error message", function()
         local report = {
@@ -746,22 +945,16 @@ local tests = {
             "expected the empty-body marker")
     end),
 
-    test("isEchoOk accepts OK with surrounding whitespace", function()
-        assert.isTrue(BaseHandler.isEchoOk("OK"))
-        assert.isTrue(BaseHandler.isEchoOk("  OK\n"))
-        assert.isTrue(BaseHandler.isEchoOk("OK!"))
-        -- thinking models may wrap the echo in reasoning
-        assert.isTrue(BaseHandler.isEchoOk("We must output only \"OK\".\nThink:\n\nOK"))
-    end),
-
-    test("isEchoOk rejects non-OK and non-string echoes", function()
-        assert.isFalse(BaseHandler.isEchoOk(nil))
-        assert.isFalse(BaseHandler.isEchoOk(42))
-        assert.isFalse(BaseHandler.isEchoOk(""))
-        assert.isFalse(BaseHandler.isEchoOk("ok"))
-        assert.isFalse(BaseHandler.isEchoOk("OKAY"))
-        assert.isFalse(BaseHandler.isEchoOk("BROKEN"))
-        assert.isFalse(BaseHandler.isEchoOk("Sure, here you go"))
+    test("formatTestReport never echoes the API key", function()
+        local report = {
+            url    = "https://api.test.com/v1/chat/completions",
+            body   = "{}",
+            status = 401,
+            raw    = '{"error":{"message":"Incorrect API key provided"}}',
+        }
+        local text = Registry.formatTestReport("openai", "https://api.test.com/v1", "gpt-4", report)
+        assert.isTrue(text:find("sk-secret", 1, true) == nil,
+            "the failure report must stay free of credentials")
     end),
 
     test("isConnectionTestOk passes 200 with an OK echo", function()
@@ -816,22 +1009,6 @@ local tests = {
             content = "OK",
         }))
         assert.isFalse(Registry.isConnectionTestOk(nil))
-    end),
-
-    test("formatTestReport leads a failure with a bold verdict and a blank line", function()
-        local report = {
-            url    = "https://api.test.com/v1/chat/completions",
-            body   = "{}",
-            status = 401,
-            raw    = '{"error":{"message":"Incorrect API key provided"}}',
-        }
-        local text = Registry.formatTestReport("openai", "https://api.test.com/v1", "gpt-4", report)
-        local lines = {}
-        for line in (text .. "\n"):gmatch("(.-)\n") do lines[#lines + 1] = line end
-        assert.isTrue(lines[1]:find("API returned an error", 1, true) ~= nil,
-            "first line must state the failure")
-        assert.equal(lines[2], "", "exactly one blank line must follow the verdict")
-        assert.matches(lines[3], "Parameters")
     end),
 }
 

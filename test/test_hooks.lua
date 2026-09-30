@@ -1,4 +1,4 @@
--- test_bookdesc.lua
+-- test_hooks.lua
 -- Tests for assistant_hooks (Translate (AI) bottom button on the upstream
 -- Book Description popup): patch shape, description resolution, empty-state
 -- delegation, and the translate callback chain. Upstream modules are faked;
@@ -259,21 +259,6 @@ local tests = {
             "translation monkey patch must not remain in main.lua")
         assert.isTrue(src:find("function Assistant:_hookRecap", 1, true) == nil,
             "recap monkey patch must not remain in main.lua")
-    end),
-
-    test("hooks module owns the Translator and ReaderUI patches", function()
-        local src = read_source("assistant_hooks.lua")
-        assert.notNil(src, "could not read assistant_hooks.lua")
-        assert_contains(src, "function M.syncTranslateOverride",
-            "hooks must expose the translation patch")
-        assert_contains(src, "function M.setupRecap",
-            "hooks must expose the recap patch")
-        assert_contains(src, 'require("ui/translator")',
-            "hooks must own the Translator require")
-        assert_contains(src, 'require("apps/reader/readerui")',
-            "hooks must own the ReaderUI require")
-        assert_contains(src, "function M.setupMenuOrder",
-            "hooks must expose the menu order patch")
     end),
 }
 

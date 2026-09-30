@@ -1,18 +1,30 @@
 -- test_term_xray.lua
--- Tests for the occurrence-anchored Term X-Ray extractor:
---   * find_term_indices: case-insensitive, punctuation-stripped fallback
+-- Owns the occurrence-anchored Term X-Ray extractor:
+--   * split_sentences / find_term_indices: ASCII and CJK sentence splitting,
+--     case-insensitive and punctuation-stripped matching
 --   * build_anchor_context: anchor windows, occurrence sampling, document order
 --     and the skip-not-stop character budget
+--   * clip_excerpt: the dictionary excerpt clipping used by
+--     assistant_dictdialog.lua -- word-boundary snapping, the byte budget, and
+--     the CJK fallback to plain character-boundary truncation.
+--     The underlying byte-boundary matrix of the truncation helpers it builds
+--     on lives in test_utf8_truncate.lua.
 --
--- The CJK case guards the original bug: a byte-wise sentence scanner raised a
--- comparison error on Chinese text with no ASCII punctuation.
+-- The CJK case guards a byte-wise sentence scanner that raised a comparison
+-- error on Chinese text with no ASCII punctuation.
 local helper = require("test.helper")
 local assert = helper.assert
 local TermXray = require("assistant_term_xray")
 local TextUtils = helper.TextUtils
+local util = require("util")
 
 local function test(name, fn)
     return { name = name, fn = fn }
+end
+
+-- True when `s` is well-formed UTF-8 (a replacement sentinel must not appear).
+local function is_valid_utf8(s)
+    return util.fixUtf8(s, "\1") == s
 end
 
 -- Sentences are single tokens ("s1".."sN") so a word count equals the number of
@@ -175,6 +187,34 @@ local tests = {
         local sentences = { "The office on Vasil\194\160Levski\194\160Boulevard was closed." }
         local indices = TermXray.find_term_indices(sentences, "Vasil Levski Boulevard")
         assert.equal(#indices, 1, "non-breaking spaces must not prevent matching")
+    end),
+
+    test("clip_excerpt: mid-word cuts never split a word in the excerpt header", function()
+        -- The dictionary dialog renders "... prev **word** next ...". At the
+        -- 100-byte budget each side must stay whole-word: a fragment like
+        -- "r him" when prev ends "...for him" would be visible garbage.
+        local prev = "text before " .. string.rep("lorem ipsum dolor ", 6) .. "said for him"
+        local next_ctx = "worldwide " .. string.rep("amet consectetur ", 6) .. "after"
+        local prev_lim = TermXray.clip_excerpt(prev, 100, "tail")
+        local next_lim = TermXray.clip_excerpt(next_ctx, 100, "head")
+        local header = "... " .. prev_lim .. " **word** " .. next_lim .. " ..."
+
+        assert.isTrue(#prev_lim <= 100, "prev excerpt must stay within budget")
+        assert.isTrue(#next_lim <= 100, "next excerpt must stay within budget")
+        assert.isTrue(is_valid_utf8(header), "excerpt header must be valid UTF-8")
+        -- Invariant: when truncated, the cut must not fall inside a word.
+        if #prev > 100 then
+            local before = prev:sub(#prev - #prev_lim, #prev - #prev_lim)
+            local first = prev_lim:sub(1, 1)
+            local both_word = before:match("[%w'%-]") and first:match("[%w'%-]")
+            assert.isTrue(not both_word, "prev excerpt must start on a word boundary")
+        end
+        if #next_ctx > 100 then
+            local last = next_lim:sub(-1)
+            local after = next_ctx:sub(#next_lim + 1, #next_lim + 1)
+            local both_word = last:match("[%w'%-]") and after:match("[%w'%-]")
+            assert.isTrue(not both_word, "next excerpt must end on a word boundary")
+        end
     end),
 
     test("clip_excerpt tail: cut inside a word snaps to the next whole word", function()

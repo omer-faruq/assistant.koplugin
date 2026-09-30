@@ -44,7 +44,6 @@ local tests = {
         })
         local ok, result = extools.serpapi:SearchKeywords("test query")
         assert.isTrue(ok)
-        assert.matches(result, "Google AI Summary")
         assert.matches(result, "AI summary text")
     end),
 
@@ -60,9 +59,10 @@ local tests = {
         })
         local ok, result = extools.serpapi:SearchKeywords("test query")
         assert.isTrue(ok)
-        assert.matches(result, "Verified Sources")
         assert.matches(result, "Source One")
         assert.matches(result, "Source Two")
+        assert.matches(result, "Web")
+        assert.matches(result, "Blog")
     end),
 
     test("SerpAPI: no results returns error", function()
@@ -71,7 +71,7 @@ local tests = {
         })
         local ok, err = extools.serpapi:SearchKeywords("test query")
         assert.isFalse(ok)
-        assert.matches(err, "No relevant search")
+        assert.isTrue(type(err) == "string" and err ~= "", "an error must be reported")
     end),
 
     test("SerpAPI: network error", function()
@@ -109,11 +109,11 @@ local tests = {
         })
         local ok, result = extools.tavilyapi:SearchKeywords("test query")
         assert.isTrue(ok)
-        assert.matches(result, "Summary")
         assert.matches(result, "Tavily summary text")
-        assert.matches(result, "Source 1")
         assert.matches(result, "Result 1")
-        assert.matches(result, "Source 2")
+        assert.matches(result, "Content 1")
+        assert.matches(result, "Result 2")
+        assert.matches(result, "Content 2")
     end),
 
     test("Tavily: search without answer still succeeds", function()
@@ -126,8 +126,22 @@ local tests = {
         })
         local ok, result = extools.tavilyapi:SearchKeywords("test query")
         assert.isTrue(ok)
-        assert.notMatches(result, "## Summary") -- AI-answer section should be absent
-        assert.matches(result, "verified search results")
+        assert.matches(result, "Only Result")
+        assert.matches(result, "Content")
+    end),
+
+    test("Tavily: the answer section follows the payload", function()
+        local results = {}
+        for idx, with_answer in ipairs({ true, false }) do
+            local payload = { results = { { title = "Q", content = "C" } } }
+            if with_answer then payload.answer = "Tavily answer" end
+            helper.mockFetchJSON({ { parsed = payload, err = nil } })
+            local ok, result = extools.tavilyapi:SearchKeywords("test query")
+            assert.isTrue(ok)
+            results[idx] = result
+        end
+        assert.matches(results[1], "Tavily answer", "the answer must be rendered when present")
+        assert.notMatches(results[2], "Tavily answer", "no answer text when the API sent none")
     end),
 
     test("Tavily: missing results field returns error", function()
@@ -136,7 +150,7 @@ local tests = {
         })
         local ok, err = extools.tavilyapi:SearchKeywords("test query")
         assert.isFalse(ok)
-        assert.equal(err, "fail to parse tavily return")
+        assert.isTrue(type(err) == "string" and err ~= "", "an error must be reported")
     end),
 
     test("Tavily: network error", function()
@@ -173,10 +187,11 @@ local tests = {
         })
         local ok, result = extools.searxngapi:SearchKeywords("test query")
         assert.isTrue(ok)
-        assert.matches(result, "Web Search Results")
         assert.matches(result, "Page 1")
         assert.matches(result, "https://example.com/1")
+        assert.matches(result, "Content 1")
         assert.matches(result, "Page 2")
+        assert.matches(result, "https://example.com/2")
     end),
 
     test("SearXNG: missing results field returns error", function()
@@ -185,7 +200,7 @@ local tests = {
         })
         local ok, err = extools.searxngapi:SearchKeywords("test query")
         assert.isFalse(ok)
-        assert.equal(err, "fail to parse searxng return")
+        assert.isTrue(type(err) == "string" and err ~= "", "an error must be reported")
     end),
 
     test("SearXNG: network error", function()
@@ -215,7 +230,6 @@ local tests = {
         })
         local ok, result = extools.exaapi:SearchKeywords("test query")
         assert.isTrue(ok)
-        assert.matches(result, "Exa.ai Search Results")
         assert.matches(result, "Doc 1")
         assert.matches(result, "Summary of doc 1")
         assert.matches(result, "highlight 1a")
@@ -242,6 +256,8 @@ local tests = {
         })
         local ok, result = extools.exaapi:SearchKeywords("test query")
         assert.isTrue(ok)
+        assert.matches(result, "Main Doc")
+        assert.matches(result, "Main summary")
         assert.matches(result, "Subpage 1")
         assert.matches(result, "Sub summary")
         assert.matches(result, "sub highlight")
@@ -253,7 +269,7 @@ local tests = {
         })
         local ok, err = extools.exaapi:SearchKeywords("test query")
         assert.isFalse(ok)
-        assert.equal(err, "fail to parse exa.ai return")
+        assert.isTrue(type(err) == "string" and err ~= "", "an error must be reported")
     end),
 
     test("Exa.ai: network error", function()

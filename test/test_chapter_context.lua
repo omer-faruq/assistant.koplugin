@@ -1,23 +1,14 @@
 -- test_chapter_context.lua
--- Tests for the chapter-scoped context helpers in assistant_doc_utils.lua:
--- getCurrentChapterRange and extractCurrentChapterText (plus the internal
--- getDocumentEndXPointer ladder).
+-- Owner of the chapter- and page-text extraction coverage for
+-- assistant_doc_utils.lua: getCurrentChapterRange, extractCurrentChapterText
+-- (plus the internal getDocumentEndXPointer ladder), and the nearby-page-text
+-- helpers getPageRangeText and assemblePageContext.
 local helper = require("test.helper")
 local assert = helper.assert
 local DocUtils = helper.DocUtils
 
 local function test(name, fn)
     return { name = name, fn = fn }
-end
-
-local project_root = debug.getinfo(1).source:match("@(.*/)test/")
-
-local function read_source(name)
-    local f = io.open(project_root .. name, "r")
-    if not f then return nil end
-    local src = f:read("*all")
-    f:close()
-    return src
 end
 
 -- ---------------------------------------------------------------------------
@@ -145,32 +136,77 @@ end
 
 local tests = {
 
-    test("shape: doc_utils owns the chapter helpers, dialog delegates", function()
-        assert.notNil(project_root, "could not locate project root")
-        local lib = read_source("assistant_doc_utils.lua")
-        assert.notNil(lib, "could not read assistant_doc_utils.lua")
-        assert.matches(lib, "function M%.getCurrentChapterRange",
-            "doc_utils must export getCurrentChapterRange")
-        assert.matches(lib, "function M%.extractCurrentChapterText",
-            "doc_utils must export extractCurrentChapterText")
-        assert.matches(lib, "function M%.getPageRangeText",
-            "doc_utils must export getPageRangeText")
-        assert.matches(lib, "function M%.assemblePageContext",
-            "doc_utils must export assemblePageContext")
-        assert.matches(lib, "local function getDocumentEndXPointer",
-            "doc_utils must keep the end-xpointer ladder local")
-        local dlg = read_source("assistant_dialog.lua")
-        assert.notNil(dlg, "could not read assistant_dialog.lua")
-        assert.notMatches(dlg, "local function getCurrentChapterRange",
-            "no local copy may remain in the dialog")
-        assert.notMatches(dlg, "local function extractCurrentChapterText",
-            "no local copy may remain in the dialog")
-        assert.notMatches(dlg, "local function getPageRangeText",
-            "no local copy may remain in the dialog")
-        assert.notMatches(dlg, "local function assemblePageContext",
-            "no local copy may remain in the dialog")
-        assert.matches(dlg, "DocUtils%.extractCurrentChapterText",
-            "dialog must delegate chapter extraction to DocUtils")
+    -- =========================================================================
+    -- getPageRangeText: availability guards
+    -- =========================================================================
+
+    test("page range: nil ui returns empty string", function()
+        assert.equal(DocUtils.getPageRangeText(nil, 1, 1, 6000), "",
+            "nil ui should yield empty string")
+    end),
+
+    test("page range: ui without document returns empty string", function()
+        assert.equal(DocUtils.getPageRangeText({}, 1, 1, 6000), "",
+            "missing ui.document should yield empty string")
+    end),
+
+    test("page range: document without selection pos0 returns empty string", function()
+        assert.equal(DocUtils.getPageRangeText({ document = {} }, 1, 1, 6000), "",
+            "missing selection pos0 should yield empty string")
+    end),
+
+    -- =========================================================================
+    -- assemblePageContext: budget assembly
+    -- =========================================================================
+
+    test("assemble: all empty returns empty string", function()
+        assert.equal(DocUtils.assemblePageContext("", "", "", 6000), "",
+            "all-empty input should yield empty string")
+        assert.equal(DocUtils.assemblePageContext(nil, nil, nil, 6000), "",
+            "nil inputs should yield empty string")
+    end),
+
+    test("assemble: only current within budget returned unchanged", function()
+        assert.equal(DocUtils.assemblePageContext("", "hello world", "", 6000), "hello world",
+            "current-only text should pass through unchanged")
+    end),
+
+    test("assemble: short segments joined in order with blank lines", function()
+        local out = DocUtils.assemblePageContext("PREV", "CUR", "NEXT", 6000)
+        assert.equal(out, "PREV\n\nCUR\n\nNEXT",
+            "segments should join prev/current/next separated by blank lines")
+    end),
+
+    test("assemble: over-budget sides keep tail-of-prev / head-of-next", function()
+        local prev = string.rep("p", 100)
+        local next = string.rep("n", 100)
+        local out = DocUtils.assemblePageContext(prev, "CUR", next, 200)
+        -- remaining = 197, half = 98 -> prev keeps last 98 chars, next keeps first 98
+        local expected = string.rep("p", 98) .. "\n\nCUR\n\n" .. string.rep("n", 98)
+        assert.equal(out, expected,
+            "prev should be tail-truncated and next head-truncated to half budget each")
+    end),
+
+    test("assemble: current alone exceeding budget keeps head only", function()
+        local out = DocUtils.assemblePageContext("", string.rep("c", 300), "", 100)
+        assert.equal(out, string.rep("c", 100),
+            "over-budget current should keep exactly max_chars head bytes")
+    end),
+
+    test("assemble: UTF-8 truncation does not crash and respects budget", function()
+        local current = string.rep("\228\184\173", 100) -- 300 bytes
+        local ok, out = pcall(DocUtils.assemblePageContext, "", current, "", 100)
+        assert.isTrue(ok, "mid-character truncation should not error")
+        assert.isTrue(#out <= 101, "output should stay within budget (small fixup slack)")
+        assert.matches(out, string.rep("\228\184\173", 33),
+            "complete leading characters should be preserved")
+    end),
+
+    test("assemble: zero side-budget drops side segments gracefully", function()
+        -- remaining = 1 -> half = 0 -> prev cannot fit and is dropped without error
+        local out = DocUtils.assemblePageContext("pp", string.rep("c", 9), "", 10)
+        assert.equal(out, string.rep("c", 9),
+            "side segment with zero budget should be dropped, current intact")
     end),
 
     -- =========================================================================

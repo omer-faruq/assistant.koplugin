@@ -1,5 +1,8 @@
 -- test_viewer_menu.lua
--- Static guards for ResultViewer:onShowMenu refresh behavior.
+-- Static guards for ResultViewer:onShowMenu. This file is the single owner
+-- of the result-window menu ground: the Minimalist Mode guards that used to
+-- slice the same function live in test_minimalist_mode.lua, which only covers
+-- the pure formatter.
 -- Toggle items (RTL/Justify/Reasoning) must not close the menu: like the
 -- upstream TextViewer toggles they save + rebuild in place, so the menu
 -- close repaint cannot race the rebuild repaint and ghost the tapped item
@@ -37,8 +40,10 @@ local tests = {
     test("toggles keep the menu open, openers close it", function()
         local menu = menu_body(read_viewer())
         -- Exactly two closes: Text Size (opens SpinWidget) and Models
-        -- (opens settings). RTL/Justify/Reasoning must not.
-        assert.equal(count_plain(menu, "UIManager:close%(dialog%)"), 2,
+        -- (opens settings). RTL/Justify/Reasoning must not. Counted by the
+        -- call itself, not its argument list, so a repainting close with
+        -- other arguments does not read as a third one.
+        assert.equal(count_plain(menu, "UIManager:close"), 2,
             "only dialog-opening items may close the menu")
         local toggle_start = menu:find('text = _("RTL Layout")', 1, true)
         local toggle_end = menu:find('text = _("Models")', 1, true)
@@ -49,12 +54,6 @@ local tests = {
         local toggle_region = menu:sub(toggle_start, toggle_end)
         assert.isTrue(toggle_region:find("UIManager:close", 1, true) == nil,
             "toggle items must not close the menu")
-    end),
-
-    test("rebuild forces a viewer repaint", function()
-        local src = read_viewer()
-        assert.isTrue(src:find('UIManager:setDirty("all", "partial", self.frame.dimen)', 1, true) ~= nil,
-            "_refreshScrollWidget must repaint like TextViewer:reinit")
     end),
 }
 

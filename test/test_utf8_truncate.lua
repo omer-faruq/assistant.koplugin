@@ -1,14 +1,13 @@
 -- test_utf8_truncate.lua
--- Regression tests for UTF-8-safe truncation helpers in assistant_text_utils.lua.
---
--- Context: assistant_dictdialog.lua shows a short excerpt of book text around
--- the looked-up word. It used raw string.sub, which sliced multi-byte
--- characters in half and displayed trailing garbage. The excerpt must now be
--- cut on a UTF-8 character boundary.
+-- Owns the UTF-8 byte-boundary matrix for the truncation helpers in
+-- assistant_text_utils.lua (truncateToTailUtf8Safe / truncateToHeadUtf8Safe):
+-- how a budget of any size lands on a character boundary for 2-, 3- and 4-byte
+-- sequences, and that a cut never leaves invalid bytes or a replacement mark.
+-- Word-boundary snapping of a dictionary excerpt is TermXray.clip_excerpt and
+-- is covered by test_term_xray.lua.
 local helper = require("test.helper")
 local assert = helper.assert
 local TextUtils = helper.TextUtils
-local TermXray = require("assistant_term_xray")
 local util = require("util")
 
 local function test(name, fn)
@@ -83,9 +82,16 @@ local tests = {
         assert.equal(TextUtils.truncateToTailUtf8Safe(EMOJI, 11), EMOJI:sub(113))
     end),
 
-    test("dictionary excerpt header stays valid UTF-8", function()
-        -- Mirrors createResultText in assistant_dictdialog.lua: prev kept from
-        -- its tail, next kept from its head, both capped to 100 bytes.
+    test("tail: never leaves a replacement artifact", function()
+        local out = TextUtils.truncateToTailUtf8Safe(EMOJI, 11)
+        assert.isTrue(is_valid_utf8(out), "tail result must be valid UTF-8")
+        assert.notMatches(out, "_", "tail result must not contain a '_' artifact")
+    end),
+
+    test("excerpt header composed from both truncation sides stays valid UTF-8", function()
+        -- The dictionary header shape: a prev-context excerpt kept from its
+        -- tail, the looked-up word, and a next-context excerpt kept from its
+        -- head -- both capped to the same byte budget.
         local prev = string.rep("字", 50)
         local next_ctx = string.rep("词", 40)
         local prev_lim = TextUtils.truncateToTailUtf8Safe(prev, 100)
@@ -97,71 +103,6 @@ local tests = {
         assert.isTrue(is_valid_utf8(header), "excerpt header must be valid UTF-8")
         assert.notMatches(next_lim, "_", "next excerpt must not end in a '_' artifact")
         assert.equal(next_lim, next_ctx:sub(1, 99))
-    end),
-
-    test("dictionary excerpt clips mid-word cuts to whole words", function()
-        -- Mirrors createResultText in assistant_dictdialog.lua, now via
-        -- TermXray.clip_excerpt: the 100-byte budget must not leave a
-        -- fragment like "r him" when prev ends "...for him".
-        local prev = "text before " .. string.rep("lorem ipsum dolor ", 6) .. "said for him"
-        local next_ctx = "worldwide " .. string.rep("amet consectetur ", 6) .. "after"
-        local prev_lim = TermXray.clip_excerpt(prev, 100, "tail")
-        local next_lim = TermXray.clip_excerpt(next_ctx, 100, "head")
-        local header = "... " .. prev_lim .. " **word** " .. next_lim .. " ..."
-
-        assert.isTrue(#prev_lim <= 100, "prev excerpt must stay within budget")
-        assert.isTrue(#next_lim <= 100, "next excerpt must stay within budget")
-        assert.isTrue(is_valid_utf8(header), "excerpt header must be valid UTF-8")
-        -- Invariant: when truncated, the cut must not fall inside a word.
-        if #prev > 100 then
-            local before = prev:sub(#prev - #prev_lim, #prev - #prev_lim)
-            local first = prev_lim:sub(1, 1)
-            local both_word = before:match("[%w'%-]") and first:match("[%w'%-]")
-            assert.isTrue(not both_word, "prev excerpt must start on a word boundary")
-        end
-        if #next_ctx > 100 then
-            local last = next_lim:sub(-1)
-            local after = next_ctx:sub(#next_lim + 1, #next_lim + 1)
-            local both_word = last:match("[%w'%-]") and after:match("[%w'%-]")
-            assert.isTrue(not both_word, "next excerpt must end on a word boundary")
-        end
-    end),
-
-    test("dictionary excerpt head snaps a partial leading word away", function()
-        -- "wor|ld ..." must end before the fragment, not inside it.
-        local next_ctx = "hello world " .. string.rep("x ", 60)
-        local clipped = TermXray.clip_excerpt(next_ctx, 8, "head")
-        assert.equal(clipped, "hello")
-    end),
-
-    test("dictionary excerpt tail snaps a partial trailing word away", function()
-        local prev = "ab for him"
-        assert.equal(TermXray.clip_excerpt(prev, 5, "tail"), "him")
-    end),
-
-    test("dictionary excerpt leaves clean and short cuts unchanged", function()
-        assert.equal(TermXray.clip_excerpt("aa bb cc", 5, "tail"), "bb cc")
-        assert.equal(TermXray.clip_excerpt("aa bb cc", 5, "head"), "aa bb")
-        assert.equal(TermXray.clip_excerpt("abc", 100, "tail"), "abc")
-        assert.equal(TermXray.clip_excerpt("abc", 100, "head"), "abc")
-    end),
-
-    test("dictionary excerpt keeps a single over-long token visible", function()
-        assert.equal(TermXray.clip_excerpt("abcdefghij", 5, "tail"), "fghij")
-        assert.equal(TermXray.clip_excerpt("abcdefghij", 5, "head"), "abcde")
-    end),
-
-    test("dictionary excerpt CJK still cuts on the character boundary", function()
-        local prev = string.rep("字", 50)
-        local next_ctx = string.rep("词", 40)
-        local prev_lim = TermXray.clip_excerpt(prev, 100, "tail")
-        local next_lim = TermXray.clip_excerpt(next_ctx, 100, "head")
-        assert.equal(prev_lim, TextUtils.truncateToTailUtf8Safe(prev, 100))
-        assert.equal(next_lim, TextUtils.truncateToHeadUtf8Safe(next_ctx, 100))
-        assert.isTrue(#prev_lim <= 100, "prev excerpt must stay within budget")
-        assert.isTrue(#next_lim <= 100, "next excerpt must stay within budget")
-        assert.isTrue(is_valid_utf8(prev_lim), "prev excerpt must be valid UTF-8")
-        assert.isTrue(is_valid_utf8(next_lim), "next excerpt must be valid UTF-8")
     end),
 }
 

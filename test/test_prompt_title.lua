@@ -5,31 +5,15 @@
 --     the full template text never reaches the viewer
 --   * free questions carry no tag and keep the existing rendering (title
 --     param, otherwise full content)
---   * the tag wins over the title param when both are present
---   * every preset user-message builder tags its message; free-question
---     builders set no tag
--- Headless-safe: the widget-heavy dialogs are never required here; the pure
--- formatter module loads under helper stubs and is exercised directly,
--- builder shapes via source scan.
+--   * the tag wins over the title param when both are present, and the
+--     selected text follows the quotes, space separated
+-- Headless-safe: the pure formatter module loads under helper stubs and is
+-- exercised directly; the widget-heavy dialogs that tag the turns are never
+-- required here.
 local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
 local TextUtils = require("assistant_text_utils")
-
-local project_root = debug.getinfo(1).source:match("@(.*/)test/")
-
-local function read_source(name)
-    local f = io.open(project_root .. name, "r")
-    assert.notNil(f, "cannot open " .. name)
-    local src = f:read("*a")
-    f:close()
-    return src
-end
-
-local dialog_src = read_source("assistant_dialog.lua")
-local feature_src = read_source("assistant_featuredialog.lua")
-local dict_src = read_source("assistant_dictdialog.lua")
-local format_src = read_source("assistant_text_utils.lua")
 
 local function make_settings()
     return {
@@ -48,18 +32,6 @@ local function fmt_opts(idx, settings, title)
     }
 end
 
-local function count_plain(text, needle)
-    local n = 0
-    local init = 1
-    while true do
-        local hit = text:find(needle, init, true)
-        if not hit then break end
-        n = n + 1
-        init = hit + 1
-    end
-    return n
-end
-
 local TEMPLATE = "You are a meticulous book summarizer. INPUTS: the full book text up to 45.20 percent. TASK: produce key points now."
 
 local function test(name, fn)
@@ -67,28 +39,6 @@ local function test(name, fn)
 end
 
 local tests = {
-    test("builders: every preset user message is tagged, free ones are not", function()
-        assert.matches(format_src, 'get_attr%(message, "prompt_title"%)', "formatter must read the tag")
-        assert.equal(count_plain(dialog_src, 'set_attr(_user, "prompt_title"'), 2, "dialog must tag runPrompt and table-prompt messages")
-        assert.matches(feature_src, 'set_attr%(context_message, "prompt_title", feature_title%)', "feature must tag its first-round message")
-        assert.matches(feature_src, 'set_attr%(followup_user, "prompt_title", viewer_title%)', "feature must tag table follow-ups")
-        assert.equal(count_plain(feature_src, '"prompt_title"'), 2, "feature string follow-ups (free questions) must stay untagged")
-        assert.equal(count_plain(dialog_src, '"prompt_title"'), 2, "dialog free questions must stay untagged")
-        -- Dict and Term X-Ray are context, not user turns: they tag nothing, and
-        -- the renderer skips them, so no bubble is drawn for either.
-        assert.equal(count_plain(dict_src, '"prompt_title"'), 0, "dict must not tag a prompt name")
-        assert.equal(count_plain(dict_src, '"is_context"'), 2, "both dict branches must be marked as context")
-    end),
-
-    test("tagged: the name is wrapped in angle quotes, outside _()", function()
-        -- The quotes are U+2039/U+203A, verified glyphs (test/unicode_icons.lua).
-        -- They mark the bubble as an invoked function, so they must stay glued
-        -- to the name in the formatter, never inside a msgid.
-        assert.matches(format_src, 'user%-bubble%-title">\226\128\185 %%1 \226\128\186%%2<',
-            "the name must render as < name >, with a slot for the selection")
-        assert.notMatches(format_src, '_%("‹', "the angle quotes must not enter a msgid")
-    end),
-
     test("tagged: full template text never leaks, only the name shows", function()
         local settings = make_settings()
         local history = {
@@ -188,33 +138,6 @@ local tests = {
         end
         assert.isTrue(bad == nil, "a cut selection must not split a UTF-8 character")
         assert.equal((#cut - PREFIX) % 3, 0, "the cut must hold whole 3-byte characters")
-    end),
-
-    test("the top highlight block and its feature flags are gone", function()
-        local conv_src = read_source("assistant_conversation.lua")
-        local css_src = read_source("assistant_css.lua")
-        local sample_src = read_source("configuration.sample.lua")
-        for name, src in pairs({ conv = conv_src, css = css_src, sample = sample_src }) do
-            assert.notMatches(src, 'hide_highlighted_text', name .. " must not read hide_highlighted_text")
-            assert.notMatches(src, 'hide_long_highlights', name .. " must not read hide_long_highlights")
-            assert.notMatches(src, 'long_highlight_threshold', name .. " must not read long_highlight_threshold")
-        end
-        -- The renderer no longer takes the selection: the turn's bubble owns it.
-        assert.notMatches(conv_src, 'opts%.highlighted_text', "render must not take a selection")
-        assert.notMatches(conv_src, 'Highlighted text:', "the top block is gone")
-        assert.notMatches(css_src, 'highlight%-block', "its styling is gone too")
-    end),
-
-    test("builders: the dialogs tag the turn with their selection", function()
-        -- The feature dialogs work on the book's whole highlight/notes set,
-        -- not one selection, so they carry no highlight_text on purpose. Dict
-        -- and Term X-Ray are context turns the renderer skips, so they neither.
-        assert.equal(count_plain(dialog_src, 'set_attr(_user, "highlight_text"'), 2,
-            "dialog must tag both the preset-prompt and follow-up turns")
-        assert.equal(count_plain(dict_src, '"highlight_text"'), 0,
-            "dict must not tag a selection")
-        assert.equal(count_plain(feature_src, '"highlight_text"'), 0,
-            "feature dialogs must not claim a single selection")
     end),
 }
 

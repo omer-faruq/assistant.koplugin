@@ -1,8 +1,12 @@
 -- test_anthropic_websearch.lua
 -- Tests for AnthropicHandler builtin web_search support:
--- builtin/ext/none tool wiring across stream and non-stream paths,
+-- builtin/ext/none tool wiring in the request body (the non-stream cases
+-- assert the tool definition field by field), the stream path handing
+-- backgroundRequest the streamed body and returning its callback,
 -- the anthropic-version header default, and builtin non-stream parsing
 -- (all text blocks concatenated, server blocks never tool calls).
+-- The handler emits no SSE of its own -- the frame stream is what
+-- backgroundRequest hands back, and it is parsed by the querier.
 local helper = require("test.helper")
 local assert = helper.assert
 local json = require("rapidjson")
@@ -38,14 +42,16 @@ local function stubRequest(handler, response_table)
     return captured
 end
 
--- Stub instance:backgroundRequest; records call args.
+-- Stub instance:backgroundRequest; records call args and the returned
+-- (no-op) stream callback, standing in for the server's SSE byte source.
 local function stubStream(handler)
     local captured = {}
     handler.backgroundRequest = function(self, url, headers, body)
         captured.url = url
         captured.headers = headers
         captured.body = json.decode(body)
-        return function() end
+        captured.callback = function() end
+        return captured.callback
     end
     return captured
 end
@@ -142,22 +148,25 @@ local tests = {
         assert.equal("2024-01-01", captured.headers["anthropic-version"])
     end),
 
-    test("stream: builtin/ext/none share the tools variable", function()
-        local h_builtin = makeHandler()
-        local cap_builtin = stubStream(h_builtin)
-        h_builtin:query(MESSAGES, { use_websearch = "builtin", use_stream_mode = true })
-        assert.equal("web_search_20250305", cap_builtin.body.tools[1].type)
-        assert.equal("2023-06-01", cap_builtin.headers["anthropic-version"])
+    test("stream: hands the streamed body and the stream callback to backgroundRequest", function()
+        -- The tool definition itself is asserted in the non-stream cases; what
+        -- only the stream path can do is flag the body as streamed, ask for an
+        -- event stream, and return backgroundRequest's callback unchanged.
+        local function stream(mode)
+            local h = makeHandler()
+            local captured = stubStream(h)
+            local res = h:query(MESSAGES, { use_websearch = mode, use_stream_mode = true })
+            assert.equal(captured.callback, res,
+                "query must return backgroundRequest's stream callback unchanged")
+            assert.isTrue(captured.body.stream, "the request body must be flagged as streamed")
+            assert.equal("text/event-stream", captured.headers["Accept"])
+            assert.equal("2023-06-01", captured.headers["anthropic-version"])
+            return captured
+        end
 
-        local h_ext = makeHandler()
-        local cap_ext = stubStream(h_ext)
-        h_ext:query(MESSAGES, { use_websearch = "tavilyapi", use_stream_mode = true })
-        assert.equal("assistant_web_search", cap_ext.body.tools[1].name)
-
-        local h_none = makeHandler()
-        local cap_none = stubStream(h_none)
-        h_none:query(MESSAGES, { use_websearch = "none", use_stream_mode = true })
-        assert.equal(nil, cap_none.body.tools)
+        assert.notNil(stream("builtin").body.tools)
+        assert.notNil(stream("tavilyapi").body.tools)
+        assert.equal(nil, stream("none").body.tools)
     end),
 }
 

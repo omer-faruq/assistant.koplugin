@@ -1,13 +1,31 @@
 -- test_updater.lua
--- Tests for the pure helper functions exported from assistant_updater.lua,
--- plus the shared path helper from assistant_utils.lua:
---   isVersionNewer, is_excluded, join
+-- Tests for the pure helper functions exported from assistant_updater.lua:
+--   isVersionNewer, is_excluded_with, parse_ignore_content
 --
--- The destructive otaUpgrade function itself is not tested headlessly.
+-- The ignore tests parse the real .releaseignore from the project root and
+-- feed the resulting patterns to is_excluded_with, so they exercise the same
+-- matcher the OTA installer uses. The destructive otaUpgrade/do_install path
+-- itself is not tested headlessly.
 local helper = require("test.helper")
 local assert = helper.assert
 local updater = require("assistant_updater")
-local utils = require("assistant_utils")
+
+local project_root = debug.getinfo(1).source:match("@(.*/)test/")
+
+local function read_releaseignore()
+    local f = io.open(project_root .. ".releaseignore", "r")
+    if not f then return nil end
+    local content = f:read("*a")
+    f:close()
+    return content
+end
+
+local release_pats = updater.parse_ignore_content(read_releaseignore())
+
+local function excluded(path)
+    assert.isTrue(release_pats ~= nil, ".releaseignore must be readable and parse to patterns")
+    return updater.is_excluded_with(path, release_pats)
+end
 
 local function test(name, fn)
     return { name = name, fn = fn }
@@ -81,69 +99,99 @@ local tests = {
     end),
 
     -- =========================================================================
-    -- is_excluded
+    -- parse_ignore_content
     -- =========================================================================
 
-    test("is_excluded: dotfiles excluded", function()
-        assert.isTrue(updater.is_excluded(".gitignore"))
-        assert.isTrue(updater.is_excluded(".hidden"))
-        assert.isTrue(updater.is_excluded(".github/workflows/release.yml"))
-        -- purely dot prefixes via path:find("/%.")
-        assert.isTrue(updater.is_excluded("assistant.koplugin/.hidden"))
+    test("parse_ignore_content: nil/empty content yields nil", function()
+        assert.isTrue(updater.parse_ignore_content(nil) == nil)
+        assert.isTrue(updater.parse_ignore_content("") == nil)
     end),
 
-    test("is_excluded: markdown files excluded", function()
-        assert.isTrue(updater.is_excluded("README.md"))
-        assert.isTrue(updater.is_excluded("docs/guide.md"))
-        assert.isTrue(updater.is_excluded("AGENTS.md"))
+    test("parse_ignore_content: skips blanks, comments and trims", function()
+        local pats = updater.parse_ignore_content("# comment\n\n   docs/   \n\t\n*.md\n")
+        assert.equal(2, #pats)
+        assert.equal("docs", pats[1].core)
+        assert.isTrue(pats[1].is_dir)
+        assert.equal("*.md", pats[2].core)
+        assert.isFalse(pats[2].is_dir)
+        assert.isFalse(pats[2].neg)
     end),
 
-    test("is_excluded: l10n non-mo files excluded", function()
-        assert.isTrue(updater.is_excluded("l10n/Makefile"))
-        assert.isTrue(updater.is_excluded("l10n/translate.py"))
-        assert.isTrue(updater.is_excluded("l10n/template.pot"))
-        assert.isTrue(updater.is_excluded("l10n/fr/assistant.po"))
-        assert.isFalse(updater.is_excluded("l10n/fr/assistant.mo"))
-        assert.isFalse(updater.is_excluded("l10n/zh_CN/assistant.mo"))
-    end),
-
-    test("is_excluded: test directory excluded", function()
-        assert.isTrue(updater.is_excluded("test/run.sh"))
-        assert.isTrue(updater.is_excluded("test/helper.lua"))
-        assert.isTrue(updater.is_excluded("assistant.koplugin/test/run.sh"))
-    end),
-
-    test("is_excluded: normal source files NOT excluded", function()
-        assert.isFalse(updater.is_excluded("main.lua"))
-        assert.isFalse(updater.is_excluded("assistant_utils.lua"))
-        assert.isFalse(updater.is_excluded("api_handlers/openai.lua"))
-        assert.isFalse(updater.is_excluded("lib/libhoedown.so.3"))
-    end),
-
-    test("is_excluded: configuration.lua NOT excluded", function()
-        assert.isFalse(updater.is_excluded("configuration.lua"))
+    test("parse_ignore_content: '!' marks a negation and drops the marker", function()
+        local pats = updater.parse_ignore_content("*.mo\n!l10n/fr/assistant.mo\n")
+        assert.equal(2, #pats)
+        assert.isFalse(pats[1].neg)
+        assert.isTrue(pats[2].neg)
+        assert.equal("l10n/fr/assistant.mo", pats[2].core)
     end),
 
     -- =========================================================================
-    -- join
+    -- is_excluded_with against the real .releaseignore
     -- =========================================================================
 
-    test("join: single path returns as-is", function()
-        assert.equal(utils.joinPath("/foo"), "/foo")
+    test("is_excluded_with: plain pattern from .releaseignore", function()
+        -- ".*" entry excludes dot-prefixed names
+        assert.isTrue(excluded(".gitignore"))
+        assert.isTrue(excluded(".github/workflows/release.yml"))
+        assert.isFalse(excluded("main.lua"))
     end),
 
-    test("join: two paths", function()
-        local result = utils.joinPath("/foo", "bar")
-        assert.isTrue(result:find("bar") ~= nil)
-        assert.isTrue(result:find("foo") ~= nil)
+    test("is_excluded_with: glob crossing '/' from .releaseignore", function()
+        -- '*' matches any chars including '/', so "*.md" hits at any depth
+        assert.isTrue(excluded("README.md"))
+        assert.isTrue(excluded("docs/ARCHITECTURE.md"))
+        -- and '**' spans several path segments
+        assert.isTrue(excluded("l10n/fr/assistant.pot"))
+        assert.isTrue(excluded("l10n/nested/deeper/assistant.pot"))
     end),
 
-    test("join: empty call returns empty string", function()
-        assert.equal(utils.joinPath(), "")
+    test("is_excluded_with: directory-prefix entries from .releaseignore", function()
+        assert.isTrue(excluded("docs/guide.md"))
+        assert.isTrue(excluded("test/run.sh"))
+        assert.isTrue(excluded("l10n/Makefile"))
+        assert.isFalse(excluded("l10n/fr/assistant.mo"))
     end),
 
-    test("join: nil first arg returns empty string", function()
-        assert.equal(utils.joinPath(nil), "")
+    test("is_excluded_with: shippable sources are kept", function()
+        assert.isFalse(excluded("main.lua"))
+        assert.isFalse(excluded("assistant_updater.lua"))
+        assert.isFalse(excluded("api_handlers/openai.lua"))
+        assert.isFalse(excluded("configuration.lua"))
+        assert.isFalse(excluded("lib/libhoedown.so.3"))
+    end),
+
+    test("is_excluded_with: strips ./, leading / and plugin-dir prefix", function()
+        assert.isTrue(excluded("./README.md"))
+        assert.isTrue(excluded("/docs/ARCHITECTURE.md"))
+        assert.isTrue(excluded("assistant.koplugin-1.16/README.md"))
+    end),
+
+    -- =========================================================================
+    -- is_excluded_with with caller-supplied patterns
+    -- =========================================================================
+
+    test("is_excluded_with: explicit patterns, last match wins", function()
+        local pats = updater.parse_ignore_content("*.mo\n!l10n/fr/assistant.mo\n")
+        assert.isTrue(updater.is_excluded_with("l10n/de/assistant.mo", pats))
+        assert.isFalse(updater.is_excluded_with("l10n/fr/assistant.mo", pats))
+        assert.isFalse(updater.is_excluded_with("l10n/fr/assistant.po", pats))
+    end),
+
+    test("is_excluded_with: negation after a directory rule re-includes", function()
+        local pats = updater.parse_ignore_content("l10n/\n!l10n/fr/\n")
+        assert.isTrue(updater.is_excluded_with("l10n/de/assistant.mo", pats))
+        assert.isTrue(updater.is_excluded_with("l10n/de/nested/assistant.po", pats))
+        assert.isFalse(updater.is_excluded_with("l10n/fr/assistant.mo", pats))
+        assert.isFalse(updater.is_excluded_with("main.lua", pats))
+    end),
+
+    test("is_excluded_with: empty path and nil patterns", function()
+        local pats = updater.parse_ignore_content("*.md\n")
+        assert.isFalse(updater.is_excluded_with("", pats))
+        assert.isFalse(updater.is_excluded_with(nil, pats))
+        -- no patterns -> legacy fallback rules
+        assert.isTrue(updater.is_excluded_with("README.md", nil))
+        assert.isFalse(updater.is_excluded_with("main.lua", nil))
     end),
 }
 
