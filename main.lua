@@ -22,42 +22,9 @@ local DocUtils = require("assistant_doc_utils")
 local NetUtils = require("assistant_net_utils")
 local Notebook = require("assistant_notebook")
 
--- Route a highlight to the AI Dictionary or the full Translate action.
--- Short selections get the dictionary; longer ones get translation.
--- Script-aware thresholds (dc7a373, issues #207/#208): the old word count used
--- util.splitToWords, whose greedy multi-byte pattern collapses a CJK run into a
--- single token, so a whole CJK sentence counted as one "word" and was routed to
--- the dictionary. CJK is therefore measured in characters instead.
-local CJK_LOOKUP_MAX_CHARS = 8
-local WORD_LOOKUP_MAX_WORDS = 5
-
-local function lookup_mode_for_selection(text)
-  if type(text) ~= "string" then return "translate" end
-  local trimmed = text:match("^%s*(.-)%s*$")
-  if trimmed == "" then return "translate" end
-
-  if koutil.hasCJKChar(trimmed) then
-    local count = 0
-    for char in trimmed:gmatch(koutil.UTF8_CHAR_PATTERN) do
-      count = count + 1
-    end
-    return count <= CJK_LOOKUP_MAX_CHARS and "dictionary" or "translate"
-  end
-
-  local word_count = select(2, trimmed:gsub("%S+", ""))
-  return word_count <= WORD_LOOKUP_MAX_WORDS and "dictionary" or "translate"
-end
-
--- Resolve where a selection should go once the lookup mode is known.
--- choice = stored user setting: nil = never asked, true = smart lookup
--- enabled, false = disabled. Short ("dictionary") selections may prompt the
--- explainer when the user has never chosen; once chosen, never asked again.
--- Long ("translate") selections never prompt.
-local function resolve_translate_route(choice, mode)
-  if mode ~= "dictionary" then return "translate" end
-  if choice == nil then return "ask" end
-  return choice and "dictionary" or "translate"
-end
+-- Smart Dictionary Lookup routing (a highlight -> AI Dictionary or the full
+-- Translate action) lives in assistant_lookup.lua.
+local Lookup = require("assistant_lookup")
 
 local _ = require("assistant_gettext")
 local N_ = _.ngettext
@@ -69,6 +36,7 @@ local SettingsMenu = require("assistant_settings_menu")
 local showDictionaryDialog = require("assistant_dictdialog")
 local Registry = require("assistant_provider_registry")
 local SearchRegistry = require("assistant_search_registry")
+local SearchTools = require("assistant_search_tools")
 local Config = require("assistant_config")
 local Hooks = require("assistant_hooks")
 
@@ -786,10 +754,10 @@ end
 --- Reuses MultiInputDialog style. Only shows the credential field:
 ---   - API key tools (SerpAPI, Tavily, Exa): API Key field only
 ---   - Base URL tools (SearXNG): Base URL field only
---- The display name comes from SEARCH_TOOLS and is not user-editable.
+--- The display name comes from the search tool catalog and is not user-editable.
 ---@param tool_key string The fixed tool key (serpapi, tavilyapi, exaapi, searxngapi)
 function Assistant:_showAddWebSearchDialog(tool_key)
-    local tool_def = SearchRegistry.SEARCH_TOOLS[tool_key]
+    local tool_def = SearchTools.getDefinition(tool_key)
     if not tool_def then return end
 
     -- Pre-fill from existing UI record if present
@@ -1614,7 +1582,7 @@ end
   end
 
 -- Route a translate request through Smart Dictionary Lookup: short selections
--- may open the AI Dictionary instead (see lookup_mode_for_selection above),
+-- may open the AI Dictionary instead (see assistant_lookup.lua),
 -- with a one-time three-way prompt on first use. Callers must already be inside
 -- NetUtils.runWhenOnlineFast + Trapper:wrap.
 function Assistant:showTranslateOrDictionary(text)
@@ -1629,8 +1597,8 @@ function Assistant:showTranslateOrDictionary(text)
   -- No default: a truthy default would be written by LuaSettings:readSetting,
   -- destroying the "never asked" (nil) state.
   local choice = self.settings:readSetting("ai_smart_dictionary")
-  local mode = lookup_mode_for_selection(text)
-  local route = resolve_translate_route(choice, mode)
+  local mode = Lookup.lookup_mode_for_selection(text)
+  local route = Lookup.resolve_translate_route(choice, mode)
 
   if route == "ask" then
     -- Three-way first-run choice in a single button row:
