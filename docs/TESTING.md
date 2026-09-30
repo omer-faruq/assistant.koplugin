@@ -31,6 +31,12 @@ The suite runs inside KOReader's LuaJIT runtime via `setupkoenv` with UI modules
 - **Never assert on source text** (`io.open` + `src:find`, magic character windows) to stand in for behavior. Such a test breaks on a rename that preserves behavior and passes when the feature is deleted. If the target is unreachable headlessly, either shim the load chain (see `test/test_filemanager_bookinfo.lua`) or verify it visually (see below) — do not grep.
 - `test/` is excluded from release zips/OTA packages — source only, never shipped.
 
+## Test-code cleanup (proportionality)
+
+- Test code must be proportionate to the change it guards: a small fix does not earn large scaffolding. When a change carries more test code than production code, cut back to the smallest check that can go red — or to none at all when the maintainer accepts the trade-off.
+- Verification aids written to eyeball a fix (screenshot scripts, throwaway repro scripts) are deleted once the fix is confirmed and never committed. The permanent demos (`./test/runui.sh <name>`) are the manual re-check path.
+- A dropped guard is a deliberate trade-off, not an oversight: say so in the commit message, and only bring a guard back when the behavior bites again.
+
 ## Stub discipline
 
 - A new `require` chain reaching a real KOReader widget module crashes the headless suite (the empty `android` stub makes `device.lua` pick the Android impl). Add a stub in `helper.lua`'s `stubs` table when one is pulled in: `device` needs `screen = { getWidth/getHeight }` for layout math; `buttontable`/`titlebar`/containers can be `{}`.
