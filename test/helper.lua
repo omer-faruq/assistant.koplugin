@@ -51,6 +51,8 @@ local stubs = {
     ["ui/widget/container/movablecontainer"] = {},
     ["ui/widget/container/inputcontainer"] = {},
     ["ui/widget/verticalgroup"] = {},
+    ["ui/widget/horizontalgroup"] = {},
+    ["ui/widget/horizontalspan"]  = {},
     ["ui/widget/titlebar"]      = {},
     ["ffi/blitbuffer"]          = { COLOR_WHITE = {}, COLOR_BLACK = {} },
     -- headless screen metrics for hand-built dialogs

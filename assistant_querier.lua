@@ -5,6 +5,9 @@ local InfoMessage = require("ui/widget/infomessage")
 local ConfirmBox  = require("ui/widget/confirmbox")
 local InputDialog = require("ui/widget/inputdialog")
 local InputText = require("ui/widget/inputtext")
+local TextWidget = require("ui/widget/textwidget")
+local HorizontalGroup = require("ui/widget/horizontalgroup")
+local HorizontalSpan = require("ui/widget/horizontalspan")
 local UIManager = require("ui/uimanager")
 local Font = require("ui/font")
 local Size = require("ui/size")
@@ -213,6 +216,57 @@ function StreamText:initTextBox(text, char_added)
     InputText.initTextBox(self, text, char_added)
     UIManager:setDirty(self.parent, function() return "ui", self.dimen end)
     self.for_measurement_only = false
+end
+
+-- Status row labels, keyed by self.stream_phase. The leading glyphs stay
+-- outside _() (non-ASCII msgids corrupt through gettext).
+local STREAM_STATUS_LABELS = {
+    waiting   = "⌛ " .. _("Waiting for the model ..."),
+    reasoning = "☕ " .. _("Thinking ..."),
+    answer    = "✍ " .. _("Composing answer ..."),
+}
+
+-- InputDialog with a live status row below the title bar. InputDialog has no
+-- hook for an extra title-area row, so init() reserves the row's height through
+-- the `_added_widgets` budget, then moves it from above the buttons to vgroup[2].
+local StreamDialog = InputDialog:extend{}
+
+--- Set the status row text. An unchanged label is a no-op.
+--- @param label string
+function StreamDialog:setStatus(label)
+    if label == self.status_label then return end
+    self.status_label = label
+    if self._status_widget then
+        self._status_widget:setText(label)
+        UIManager:setDirty(self, function() return "ui", self.dialog_frame.dimen end)
+    end
+end
+
+function StreamDialog:init()
+    -- Rebuild the row on every init (reinit() frees the previous widget tree).
+    self._status_widget = TextWidget:new{
+        text = self.status_label or "",
+        face = Font:getFace("x_smallinfofont"),
+        max_width = self.width - 2*Size.padding.large,
+        truncate_with_ellipsis = true,
+    }
+    -- Indent to align with the title bar's description line (title_h_padding).
+    self._status_row = HorizontalGroup:new{
+        HorizontalSpan:new{ width = Size.padding.large },
+        self._status_widget,
+    }
+    -- Budget the row through _added_widgets, then move it under the title bar.
+    self._added_widgets = { self._status_row }
+    InputDialog.init(self)
+    self._added_widgets = nil
+    for i = 2, #self.vgroup do
+        if self.vgroup[i] == self._status_row then
+            table.remove(self.vgroup, i)
+            table.insert(self.vgroup, 2, self._status_row)
+            break
+        end
+    end
+    self.vgroup:resetLayout()
 end
 
 function Querier:showError(err, message_history)
@@ -700,6 +754,7 @@ end
 function Querier:showStremDialog(res, request_title, request_identity)
 
     self.user_interrupted = false -- reset the stream interrupted flag
+    self.stream_phase = nil       -- reset the status row to "waiting"
     local streamDialog
     local animation_task = nil -- Will be set during animation setup
 
@@ -728,7 +783,7 @@ function Querier:showStremDialog(res, request_title, request_identity)
 
     local stream_mode_auto_scroll = self.settings:readSetting("stream_mode_auto_scroll", true)
 
-    streamDialog = InputDialog:new{
+    streamDialog = StreamDialog:new{
         title = request_title or _("AI is responding"),
         description = TextUtils.bold_format(
             T("✦ %1/<b>%2</b>", request_identity.label, request_identity.model)
@@ -774,6 +829,16 @@ function Querier:showStremDialog(res, request_title, request_identity)
     streamDialog.title_bar:init()
     UIManager:show(streamDialog)
 
+    -- Reflect self.stream_phase in the status row; defaults to "waiting".
+    local last_status
+    local function updateStatusRow()
+        local phase = self.stream_phase or "waiting"
+        if phase == last_status then return end
+        last_status = phase
+        streamDialog:setStatus(STREAM_STATUS_LABELS[phase])
+    end
+    updateStatusRow()
+
     -- Set up waiting animation
     local animation = createWaitingAnimation()
     local first_content_received = false
@@ -798,6 +863,7 @@ function Querier:showStremDialog(res, request_title, request_identity)
         updateStreamText(streamDialog, delta, stream_mode_auto_scroll)
     end
     local ok, content, tool_calls_or_err, err_struct = pcall(self.processStream, self, res, function (content, buffer)
+        updateStatusRow()
         if not first_content_received and content and #content > 0 then
             first_content_received = true
             if animation_task then
@@ -880,6 +946,7 @@ function Querier:processStream(bgQuery, trunk_callback)
     local result_buffer = strbuf.new()  -- Buffer for storing results
     local reasoning_content_buffer = strbuf.new()  -- Buffer for storing reasoning content
     self.reasoning_phase_ended = false
+    self.stream_phase = nil  -- "reasoning"/"answer" once content starts (drives the status row)
     -- One snapshot per stream, next to the other per-stream state: reading it
     -- per chunk would let a mid-stream toggle split the composing window's
     -- content (reasoning on screen, answer with the opposite rule).
@@ -1280,9 +1347,11 @@ function Querier:processChunk(event, trunk_callback, result_buffer, reasoning_co
         if not self.reasoning_phase_ended and #reasoning_content_buffer > 0 then
             self.reasoning_phase_ended = true
         end
+        self.stream_phase = "answer"
         result_buffer:put(result_content)
         if trunk_callback then trunk_callback(result_content, result_buffer) end
     elseif type(reasoning_content) == "string" and #reasoning_content > 0 then
+        self.stream_phase = "reasoning"
         reasoning_content_buffer:put(reasoning_content)
         -- Streamed reasoning is display-only: with Reasoning Text off it stays
         -- in the buffer (tool-call payloads need it) and never reaches the UI,
