@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 02:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: 简体中文 (AI translation)\n"
@@ -84,6 +84,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API 返回错误</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API 未返回可用的回答</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>正在为 Term X-Ray 分析书籍上下文...</b>"
 
@@ -152,6 +155,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>正在安装 %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>模型回复：</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -161,6 +167,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>参数</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>推理过程（无最终回答）</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>请求</b> - POST %1"
@@ -339,6 +348,9 @@ msgstr "已添加 <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "已添加到生词本"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "只要查询结果一出现，就将你在词典中查询的每个单词添加到生词本。"
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "对书中你的高亮、批注和 AI 笔记内容进行分析。"
 
@@ -398,6 +410,13 @@ msgstr "将答案作为书籍笔记附加到当前高亮"
 
 msgid "Author"
 msgstr "作者"
+
+msgid "Auto"
+msgstr "自动"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "自动将单词加入生词本"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -522,6 +541,9 @@ msgstr "矛盾/未解问题"
 msgid "Conversation is saved to AI Notes"
 msgstr "对话已保存到 AI 笔记"
 
+msgid "Copied to clipboard."
+msgstr "已复制到剪贴板。"
+
 msgid "Copy"
 msgstr "复制"
 
@@ -588,6 +610,9 @@ msgstr "自定义提示词"
 
 msgid "Custom Prompts"
 msgstr "自定义提示词"
+
+msgid "Default"
+msgstr "默认"
 
 msgid "Delete"
 msgstr "删除"
@@ -831,6 +856,9 @@ msgstr "留空以使用：%1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "将这些字段留空以使用界面语言：%1"
 
+msgid "Left to Right"
+msgstr "从左到右"
+
 msgid "Locations"
 msgstr "地点"
 
@@ -920,6 +948,9 @@ msgstr "未收到响应。"
 
 msgid "No text left to annotate"
 msgstr "没有可批注的文本了"
+
+msgid "No text selected"
+msgstr "未选中文本"
 
 msgid "No text to annotate"
 msgstr "没有可批注的文本"
@@ -1065,12 +1096,6 @@ msgstr "快速笔记"
 msgid "Quick note saved successfully"
 msgstr "快速笔记保存成功"
 
-msgid "RTL Layout"
-msgstr "从右到左布局"
-
-msgid "RTL written Language"
-msgstr "RTL 书写语言"
-
 msgid "Re-immersion"
 msgstr "重新沉浸"
 
@@ -1131,11 +1156,17 @@ msgstr ""
 "搜索工具凭据将被删除。\n"
 "文件 configuration.lua 将被保留。"
 
+msgid "Response Font: %1"
+msgstr "回复字体：%1"
+
 msgid "Response Settings"
 msgstr "响应设置"
 
 msgid "Response Text Font Size"
 msgstr "回复文本字号"
+
+msgid "Right to Left"
+msgstr "从右到左"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1203,9 +1234,6 @@ msgstr "选择 AI 笔记"
 
 msgid "Select a model:"
 msgstr "选择模型："
-
-msgid "Selection copied to clipboard."
-msgstr "所选内容已复制到剪贴板。"
 
 msgid "Settings"
 msgstr "设置"
@@ -1298,6 +1326,9 @@ msgstr "术语与概念"
 msgid "Test"
 msgstr "测试"
 
+msgid "Text Direction: %1"
+msgstr "文字方向：%1"
+
 msgid "Text Size: %1"
 msgstr "字号：%1"
 
@@ -1306,6 +1337,9 @@ msgstr "文本已复制到剪贴板"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "未找到 %1 的处理程序。请确保处理程序存在于 api_handlers 目录中。"
+
+msgid "Thinking ..."
+msgstr "思考中……"
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "此按钮使用高亮文本创建快速笔记。"
@@ -1478,6 +1512,9 @@ msgstr "词汇"
 msgid "Vocabulary Builder"
 msgstr "生词本"
 
+msgid "Waiting for the model ..."
+msgstr "正在等待模型……"
+
 msgid "Web Search"
 msgstr "网络搜索"
 
@@ -1508,9 +1545,6 @@ msgstr "词形与词元"
 
 msgid "Word Origin"
 msgstr "词源"
-
-msgid "Word copied to clipboard."
-msgstr "单词已复制到剪贴板。"
 
 msgid "Write quick notes here"
 msgstr "在此输入快速笔记"

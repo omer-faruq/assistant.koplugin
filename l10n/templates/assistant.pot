@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.19\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,14 +129,14 @@ msgstr ""
 msgid "Dictionary"
 msgstr ""
 
-#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
-msgid "Vocabulary Builder"
-msgstr ""
-
 msgid "No word to add"
 msgstr ""
 
 msgid "Added to vocabulary builder"
+msgstr ""
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
 msgstr ""
 
 msgid "Saves the word to the vocabulary builder"
@@ -645,13 +645,19 @@ msgstr ""
 msgid "Anthropic Messages API"
 msgstr ""
 
+msgid "<b>API returned an error</b>"
+msgstr ""
+
 msgid "API error: %1"
+msgstr ""
+
+msgid "<b>API returned no usable answer</b>"
 msgstr ""
 
 msgid "(empty response body)"
 msgstr ""
 
-msgid "<b>API returned an error</b>"
+msgid "<b>Reasoning (no final answer)</b> - %1"
 msgstr ""
 
 msgid "<b>Parameters</b>"
@@ -669,10 +675,13 @@ msgstr ""
 msgid "<b>Response</b> - HTTP %1"
 msgstr ""
 
-msgid "Request failed: %1"
+msgid "Connection test successful."
 msgstr ""
 
-msgid "Connection test successful."
+msgid "<b>Model reply:</b> %1"
+msgstr ""
+
+msgid "Request failed: %1"
 msgstr ""
 
 msgid "Provider record must be a table."
@@ -777,6 +786,15 @@ msgstr ""
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr ""
 
+msgid "Waiting for the model ..."
+msgstr ""
+
+msgid "Thinking ..."
+msgstr ""
+
+msgid "Composing answer ..."
+msgstr ""
+
 msgid ""
 "<b>API Error</b>\n"
 "%1\n"
@@ -806,9 +824,6 @@ msgid "Stream ended with no content and no tool calls."
 msgstr ""
 
 msgid "Request Cancelled by user."
-msgstr ""
-
-msgid "Composing answer ..."
 msgstr ""
 
 msgid "Request cancelled by user."
@@ -895,9 +910,6 @@ msgstr ""
 msgid "Dictionary Language"
 msgstr ""
 
-msgid "RTL written Language"
-msgstr ""
-
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr ""
 
@@ -921,6 +933,13 @@ msgstr ""
 msgid "Dictionary Popup Buttons"
 msgstr ""
 
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr ""
+
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr ""
+
 msgid "Concise - reply in short sentences"
 msgstr ""
 
@@ -937,6 +956,9 @@ msgid "Preset list of AI Dictionary sections."
 msgstr ""
 
 msgid "Choose Definition Sections"
+msgstr ""
+
+msgid "Default"
 msgstr ""
 
 msgid "Context Settings"
@@ -977,6 +999,12 @@ msgid "Text Size: %1"
 msgstr ""
 
 msgid "Response Text Font Size"
+msgstr ""
+
+msgid "Text Direction: %1"
+msgstr ""
+
+msgid "Response Font: %1"
 msgstr ""
 
 msgid "Enable Stream Response"
@@ -1108,6 +1136,15 @@ msgstr ""
 msgid "(No response)"
 msgstr ""
 
+msgid "Right to Left"
+msgstr ""
+
+msgid "Left to Right"
+msgstr ""
+
+msgid "Auto"
+msgstr ""
+
 msgid "Search keywords are empty."
 msgstr ""
 
@@ -1214,10 +1251,10 @@ msgstr ""
 msgid "Use web search"
 msgstr ""
 
-msgid "Word copied to clipboard."
+msgid "Copied to clipboard."
 msgstr ""
 
-msgid "Selection copied to clipboard."
+msgid "No text selected"
 msgstr ""
 
 msgid "Enter text to search for"
@@ -1230,9 +1267,6 @@ msgid "Find next"
 msgstr ""
 
 msgid "Not found."
-msgstr ""
-
-msgid "RTL Layout"
 msgstr ""
 
 msgid "Justify"

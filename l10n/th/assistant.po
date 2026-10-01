@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 04:38+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ภาษาไทย (AI translation)\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API ส่งคืนข้อผิดพลาด</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API ไม่ส่งคำตอบที่ใช้งานได้กลับมา</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>กำลังวิเคราะห์บริบทของหนังสือสำหรับ Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>กำลังติดตั้ง %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>คำตอบจากโมเดล:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>พารามิเตอร์</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>การคิดวิเคราะห์ (ไม่มีคำตอบสุดท้าย)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>คำขอ</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "เพิ่ม <b>[%1 (AI)]</b> แล้ว"
 msgid "Added to vocabulary builder"
 msgstr "เพิ่มลงในตัวสร้างคำศัพท์แล้ว"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "เพิ่มทุกคำที่คุณค้นในพจนานุกรมเข้า Vocabulary Builder ทันทีที่ผลลัพธ์ปรากฏขึ้น"
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "การวิเคราะห์ไฮไลต์ โน้ต และเนื้อหาโน้ต AI ของคุณจากหนังสือเล่มนี้"
 
@@ -397,6 +409,13 @@ msgstr "แนบคำตอบเป็นหมายเหตุหนัง
 
 msgid "Author"
 msgstr "ผู้เขียน"
+
+msgid "Auto"
+msgstr "อัตโนมัติ"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "เพิ่มคำเข้า Vocabulary Builder อัตโนมัติ"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "ข้อขัดแย้ง / คำถามที่ยังค้
 msgid "Conversation is saved to AI Notes"
 msgstr "บันทึกบทสนทนาลงโน้ต AI แล้ว"
 
+msgid "Copied to clipboard."
+msgstr "คัดลอกไปยังคลิปบอร์ดแล้ว"
+
 msgid "Copy"
 msgstr "คัดลอก"
 
@@ -587,6 +609,9 @@ msgstr "พรอมป์ต์ที่กำหนดเอง"
 
 msgid "Custom Prompts"
 msgstr "พรอมต์ที่กำหนดเอง"
+
+msgid "Default"
+msgstr "ค่าเริ่มต้น"
 
 msgid "Delete"
 msgstr "ลบ"
@@ -830,6 +855,9 @@ msgstr "ปล่อยว่างไว้เพื่อใช้: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "ปล่อยช่องเหล่านี้ว่างไว้เพื่อใช้ภาษาของอินเทอร์เฟซ: %1"
 
+msgid "Left to Right"
+msgstr "ซ้ายไปขวา"
+
 msgid "Locations"
 msgstr "สถานที่"
 
@@ -919,6 +947,9 @@ msgstr "ไม่ได้รับการตอบกลับ"
 
 msgid "No text left to annotate"
 msgstr "ไม่มีข้อความเหลือให้เพิ่มหมายเหตุ"
+
+msgid "No text selected"
+msgstr "ไม่ได้เลือกข้อความ"
 
 msgid "No text to annotate"
 msgstr "ไม่มีข้อความให้เพิ่มหมายเหตุ"
@@ -1064,12 +1095,6 @@ msgstr "โน้ตด่วน"
 msgid "Quick note saved successfully"
 msgstr "บันทึกย่อถูกบันทึกเรียบร้อยแล้ว"
 
-msgid "RTL Layout"
-msgstr "เลย์เอาต์ RTL"
-
-msgid "RTL written Language"
-msgstr "ภาษาเขียนแบบ RTL"
-
 msgid "Re-immersion"
 msgstr "การกลับเข้าสู่เรื่องราว"
 
@@ -1130,11 +1155,17 @@ msgstr ""
 "ข้อมูลประจำตัวของเครื่องมือค้นหาที่เพิ่มผ่าน UI การตั้งค่าจะถูกลบ\n"
 "ไฟล์ configuration.lua จะถูกเก็บรักษาไว้"
 
+msgid "Response Font: %1"
+msgstr "ฟอนต์คำตอบ: %1"
+
 msgid "Response Settings"
 msgstr "การตั้งค่าการตอบกลับ"
 
 msgid "Response Text Font Size"
 msgstr "ขนาดตัวอักษรข้อความตอบกลับ"
+
+msgid "Right to Left"
+msgstr "ขวาไปซ้าย"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1202,9 +1233,6 @@ msgstr "เลือกโน้ต AI"
 
 msgid "Select a model:"
 msgstr "เลือกโมเดล:"
-
-msgid "Selection copied to clipboard."
-msgstr "คัดลอกข้อความที่เลือกไปยังคลิปบอร์ดแล้ว"
 
 msgid "Settings"
 msgstr "การตั้งค่า"
@@ -1297,6 +1325,9 @@ msgstr "คำศัพท์และแนวคิด"
 msgid "Test"
 msgstr "ทดสอบ"
 
+msgid "Text Direction: %1"
+msgstr "ทิศทางข้อความ: %1"
+
 msgid "Text Size: %1"
 msgstr "ขนาดตัวอักษร: %1"
 
@@ -1305,6 +1336,9 @@ msgstr "คัดลอกข้อความไปยังคลิปบอ
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "ไม่พบ Handler สำหรับ %1 กรุณาตรวจสอบให้แน่ใจว่า Handler มีอยู่ในไดเรกทอรี api_handlers"
+
+msgid "Thinking ..."
+msgstr "กำลังคิด ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "ปุ่มนี้สร้างโน้ตด่วนพร้อมข้อความที่ไฮไลต์"
@@ -1477,6 +1511,9 @@ msgstr "คำศัพท์"
 msgid "Vocabulary Builder"
 msgstr "คลังคำศัพท์"
 
+msgid "Waiting for the model ..."
+msgstr "กำลังรอโมเดล ..."
+
 msgid "Web Search"
 msgstr "การค้นหาเว็บ"
 
@@ -1507,9 +1544,6 @@ msgstr "รูปคำและคำตั้งต้น"
 
 msgid "Word Origin"
 msgstr "ที่มาของคำ"
-
-msgid "Word copied to clipboard."
-msgstr "คัดลอกคำไปยังคลิปบอร์ดแล้ว"
 
 msgid "Write quick notes here"
 msgstr "เขียนบันทึกย่อที่นี่"

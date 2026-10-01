@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>APIがエラーを返しました</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>APIから有効な回答が返されませんでした</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Term X-Rayのため、書籍のコンテキストを分析中...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 をインストール中...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>モデルの回答:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>パラメータ</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>推論（最終回答なし）</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>リクエスト</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "<b>[%1 (AI)]</b> を追加しました"
 msgid "Added to vocabulary builder"
 msgstr "単語帳に追加しました"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "辞書で調べたすべての単語を、結果が表示され次第すぐに語彙ビルダーに追加します。"
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "本のハイライト、ノート、AIノートの内容を分析します。"
 
@@ -397,6 +409,13 @@ msgstr "回答を現在のハイライトにブックノートとして添付し
 
 msgid "Author"
 msgstr "著者"
+
+msgid "Auto"
+msgstr "自動"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "単語を語彙ビルダーに自動追加"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "矛盾 / 未解決の疑問"
 msgid "Conversation is saved to AI Notes"
 msgstr "会話をAIノートに保存しました"
 
+msgid "Copied to clipboard."
+msgstr "クリップボードにコピーしました。"
+
 msgid "Copy"
 msgstr "コピー"
 
@@ -587,6 +609,9 @@ msgstr "カスタムプロンプト"
 
 msgid "Custom Prompts"
 msgstr "カスタムプロンプト"
+
+msgid "Default"
+msgstr "デフォルト"
 
 msgid "Delete"
 msgstr "削除"
@@ -830,6 +855,9 @@ msgstr "空欄の場合は%1を使用します"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "これらのフィールドを空欄にすると、UI言語（%1）を使用します"
 
+msgid "Left to Right"
+msgstr "左から右"
+
 msgid "Locations"
 msgstr "場所"
 
@@ -919,6 +947,9 @@ msgstr "応答がありませんでした。"
 
 msgid "No text left to annotate"
 msgstr "注記するテキストが残っていません"
+
+msgid "No text selected"
+msgstr "テキストが選択されていません"
 
 msgid "No text to annotate"
 msgstr "注記するテキストがありません"
@@ -1064,12 +1095,6 @@ msgstr "クイックノート"
 msgid "Quick note saved successfully"
 msgstr "クイックノートを保存しました。"
 
-msgid "RTL Layout"
-msgstr "RTLレイアウト"
-
-msgid "RTL written Language"
-msgstr "RTL表記の言語"
-
 msgid "Re-immersion"
 msgstr "再没入"
 
@@ -1129,11 +1154,17 @@ msgstr ""
 "プラグインを工場出荷時の既定値に戻します。設定 UI で追加したプロバイダー、API キー、検索ツールの認証情報は削除されます。\n"
 "configuration.lua ファイルは保持されます。"
 
+msgid "Response Font: %1"
+msgstr "応答フォント: %1"
+
 msgid "Response Settings"
 msgstr "応答設定"
 
 msgid "Response Text Font Size"
 msgstr "応答テキストのフォントサイズ"
+
+msgid "Right to Left"
+msgstr "右から左"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1201,9 +1232,6 @@ msgstr "AIノートを選択"
 
 msgid "Select a model:"
 msgstr "モデルを選択:"
-
-msgid "Selection copied to clipboard."
-msgstr "選択範囲をクリップボードにコピーしました。"
 
 msgid "Settings"
 msgstr "設定"
@@ -1296,6 +1324,9 @@ msgstr "用語と概念"
 msgid "Test"
 msgstr "テスト"
 
+msgid "Text Direction: %1"
+msgstr "テキストの方向: %1"
+
 msgid "Text Size: %1"
 msgstr "テキストサイズ: %1"
 
@@ -1304,6 +1335,9 @@ msgstr "テキストをクリップボードにコピーしました"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 のハンドラーが見つかりませんでした。api_handlers ディレクトリにハンドラーが存在することを確認してください。"
+
+msgid "Thinking ..."
+msgstr "思考中..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "このボタンは、選択したテキストを含むクイックノートを作成します。"
@@ -1476,6 +1510,9 @@ msgstr "語彙"
 msgid "Vocabulary Builder"
 msgstr "ボキャブラリービルダー"
 
+msgid "Waiting for the model ..."
+msgstr "モデルを待機中..."
+
 msgid "Web Search"
 msgstr "Web検索"
 
@@ -1506,9 +1543,6 @@ msgstr "語形と見出し語"
 
 msgid "Word Origin"
 msgstr "語源"
-
-msgid "Word copied to clipboard."
-msgstr "単語をクリップボードにコピーしました。"
 
 msgid "Write quick notes here"
 msgstr "ここにクイックノートを入力してください"

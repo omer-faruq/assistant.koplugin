@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API redonis eraron</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API redonis neniun uzeblan respondon</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analizas libran kuntekston por Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Instalante %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Respondo de la modelo:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametroj</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Rezonado (neniu fina respondo)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Petro</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "Aldonita <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Aldonita al la vortkonstruilo"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Aldonas ĉiun vorton, kiun vi serĉas en la vortaro, al la Vortprovizo-Konstruilo tuj kiam la rezulto aperas."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Analizo de viaj emfazoj, notoj, kaj enhavo de AI-notoj el la libro."
 
@@ -397,6 +409,13 @@ msgstr "Alkroĉas la respondon kiel libronoton al la nuna emfazo"
 
 msgid "Author"
 msgstr "Aŭtoro"
+
+msgid "Auto"
+msgstr "Aŭtomata"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Aŭtomate aldoni vorton al Vortprovizo-Konstruilo"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Kontraŭdiroj / Malfermaj demandoj"
 msgid "Conversation is saved to AI Notes"
 msgstr "Konversacio estas konservita en AI-notoj"
 
+msgid "Copied to clipboard."
+msgstr "Kopiita al tondujo."
+
 msgid "Copy"
 msgstr "Kopii"
 
@@ -587,6 +609,9 @@ msgstr "Propra Prompto"
 
 msgid "Custom Prompts"
 msgstr "Propraj Promptoj"
+
+msgid "Default"
+msgstr "Defaŭlta"
 
 msgid "Delete"
 msgstr "Forigi"
@@ -831,6 +856,9 @@ msgstr "Lasu malplena por uzi: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Lasu ĉi tiujn kampojn malplenaj por uzi la UI-lingvon: %1"
 
+msgid "Left to Right"
+msgstr "De maldekstre dekstren"
+
 msgid "Locations"
 msgstr "Lokoj"
 
@@ -920,6 +948,9 @@ msgstr "Neniu respondo ricevita."
 
 msgid "No text left to annotate"
 msgstr "Neniu teksto restas por noti"
+
+msgid "No text selected"
+msgstr "Neniu teksto elektita"
 
 msgid "No text to annotate"
 msgstr "Neniu teksto por noti"
@@ -1065,12 +1096,6 @@ msgstr "Rapida Noto"
 msgid "Quick note saved successfully"
 msgstr "Rapida noto sukcese konservita"
 
-msgid "RTL Layout"
-msgstr "RTL-aranĝo"
-
-msgid "RTL written Language"
-msgstr "RTL-skriba Lingvo"
-
 msgid "Re-immersion"
 msgstr "Replonĝo"
 
@@ -1129,11 +1154,17 @@ msgstr ""
 "\n"
 "Ĉi tio revenigos la kromprogramon al ĝiaj fabrikaj defaŭltoj. Provizantoj, API-ŝlosiloj kaj akreditaĵoj de serĉilo aldonitaj per la Agorda Interfaco estos forigitaj. La dosiero configuration.lua estos konservita."
 
+msgid "Response Font: %1"
+msgstr "Responda tiparo: %1"
+
 msgid "Response Settings"
 msgstr "Respondaj Agordoj"
 
 msgid "Response Text Font Size"
 msgstr "Tipara Grandeco de Responda Teksto"
+
+msgid "Right to Left"
+msgstr "De dekstre maldekstren"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1201,9 +1232,6 @@ msgstr "Elekti AI-noton"
 
 msgid "Select a model:"
 msgstr "Elektu modelon:"
-
-msgid "Selection copied to clipboard."
-msgstr "Elektitaĵo kopiita al tondujo."
 
 msgid "Settings"
 msgstr "Agordoj"
@@ -1296,6 +1324,9 @@ msgstr "Terminoj kaj konceptoj"
 msgid "Test"
 msgstr "Testi"
 
+msgid "Text Direction: %1"
+msgstr "Teksta direkto: %1"
+
 msgid "Text Size: %1"
 msgstr "Grandeco de Teksto: %1"
 
@@ -1304,6 +1335,9 @@ msgstr "Teksto kopiita al la tondujo"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "La traktilo por %1 ne troviĝis. Bonvolu certigi, ke la traktilo ekzistas en la dosierujo api_handlers."
+
+msgid "Thinking ..."
+msgstr "Pensante ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ĉi tiu butono kreas rapidan noton kun la markita teksto."
@@ -1476,6 +1510,9 @@ msgstr "Vortprovizo"
 msgid "Vocabulary Builder"
 msgstr "Vortproviza Konstruilo"
 
+msgid "Waiting for the model ..."
+msgstr "Atendante la modelon ..."
+
 msgid "Web Search"
 msgstr "Retserĉo"
 
@@ -1506,9 +1543,6 @@ msgstr "Vortoformo kaj lemo"
 
 msgid "Word Origin"
 msgstr "Deveno de la vorto"
-
-msgid "Word copied to clipboard."
-msgstr "Vorto kopiita al tondujo."
 
 msgid "Write quick notes here"
 msgstr "Skribu rapidajn notojn ĉi tie"

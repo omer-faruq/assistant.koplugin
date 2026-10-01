@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>Thug an API earráid ar ais</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>Níor chuir an API aon fhreagra inúsáidte ar ais</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Ag anailísiú comhthéacs an leabhair do Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Ag suiteáil %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Freagra na samhla:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Paraiméadair</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Réasúnaíocht (gan freagra deiridh)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Iarratas</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "Curtha leis <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Curtha leis an Tógálaí Stór Focal"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Cuireann sé gach focal a chuardaítear sa fhoclóir leis an Tógálaí Stór Focal a luaithe a thagann an toradh."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Anailís ar do chuid aibhsithe, ar do chuid nótaí, agus ar ábhar Nótaí AI ón leabhar."
 
@@ -397,6 +409,13 @@ msgstr "Ceanglaíonn sé an freagra mar nóta leabhair leis an aibhsiú reatha."
 
 msgid "Author"
 msgstr "Údar"
+
+msgid "Auto"
+msgstr "Uathoibríoch"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Cuir Focal leis an Tógálaí Stór Focal go Huathoibríoch"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Contrárthachtaí / Ceisteanna Oscailte"
 msgid "Conversation is saved to AI Notes"
 msgstr "Tá an comhrá sábháilte i Nótaí AI"
 
+msgid "Copied to clipboard."
+msgstr "Cóipeáilte chuig an ghearrthaisce."
+
 msgid "Copy"
 msgstr "Cóipeáil"
 
@@ -587,6 +609,9 @@ msgstr "Treoir Shaincheaptha"
 
 msgid "Custom Prompts"
 msgstr "Prómpaí Saincheaptha"
+
+msgid "Default"
+msgstr "Réamhshocrú"
 
 msgid "Delete"
 msgstr "Scrios"
@@ -834,6 +859,9 @@ msgstr "Fág bán le húsáid: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Fág na réimsí seo bán le teanga an chomhéadain a úsáid: %1"
 
+msgid "Left to Right"
+msgstr "Clé go Deas"
+
 msgid "Locations"
 msgstr "Áiteanna"
 
@@ -923,6 +951,9 @@ msgstr "Ní bhfuarthas aon fhreagra."
 
 msgid "No text left to annotate"
 msgstr "Níl aon téacs fágtha le hanóta a dhéanamh"
+
+msgid "No text selected"
+msgstr "Níl aon téacs roghnaithe"
 
 msgid "No text to annotate"
 msgstr "Níl aon téacs le hanóta a dhéanamh"
@@ -1068,12 +1099,6 @@ msgstr "Nóta Tapa"
 msgid "Quick note saved successfully"
 msgstr "Sábháladh an nóta tapa go rathúil"
 
-msgid "RTL Layout"
-msgstr "Leagan Amach RTL"
-
-msgid "RTL written Language"
-msgstr "Teanga Scríofa RTL"
-
 msgid "Re-immersion"
 msgstr "Ath-thumadh"
 
@@ -1132,11 +1157,17 @@ msgstr ""
 "\n"
 "Athchóireálann sé seo an breiseán go dtí a réamhshocruithe monarchan. Bainfear soláthróirí, eochracha API agus dintiúir uirlis chuardaigh a cuireadh leis trí Chomhéadan na Socruithe. Caomhnófar an comhad configuration.lua."
 
+msgid "Response Font: %1"
+msgstr "Cló Freagartha: %1"
+
 msgid "Response Settings"
 msgstr "Socruithe Freagra"
 
 msgid "Response Text Font Size"
 msgstr "Méid Cló Téacs Freagra"
+
+msgid "Right to Left"
+msgstr "Deas go Clé"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1204,9 +1235,6 @@ msgstr "Roghnaigh Nóta AI"
 
 msgid "Select a model:"
 msgstr "Roghnaigh samhail:"
-
-msgid "Selection copied to clipboard."
-msgstr "Cóipeáladh an roghnú go dtí an ghearrthaisce."
 
 msgid "Settings"
 msgstr "Socruithe"
@@ -1299,6 +1327,9 @@ msgstr "Téarmaí & Coincheapa"
 msgid "Test"
 msgstr "Tástáil"
 
+msgid "Text Direction: %1"
+msgstr "Treo an Téacs: %1"
+
 msgid "Text Size: %1"
 msgstr "Méid Téacs: %1"
 
@@ -1307,6 +1338,9 @@ msgstr "Cóipeáladh an téacs chuig an ngearrthaisce."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Níor aimsíodh an láimhseálaí do %1. Déan cinnte go bhfuil an láimhseálaí san eolaire api_handlers."
+
+msgid "Thinking ..."
+msgstr "Ag smaoineamh ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Cruthaíonn an cnaipe seo nóta tapa leis an téacs aibhsithe."
@@ -1479,6 +1513,9 @@ msgstr "Stór Focal"
 msgid "Vocabulary Builder"
 msgstr "Tógálaí Foclóra"
 
+msgid "Waiting for the model ..."
+msgstr "Ag fanacht leis an tsamhail ..."
+
 msgid "Web Search"
 msgstr "Cuardach Gréasáin"
 
@@ -1509,9 +1546,6 @@ msgstr "Foirm Fhocail & Leama"
 
 msgid "Word Origin"
 msgstr "Bunús an Fhocail"
-
-msgid "Word copied to clipboard."
-msgstr "Cóipeáladh an focal go dtí an ghearrthaisce."
 
 msgid "Write quick notes here"
 msgstr "Scríobh nótaí tapa anseo"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API vrátilo chybu</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API nevrátilo použitelnou odpověď</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analyzuji kontext knihy pro Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Instaluji %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Odpověď modelu:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametry</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Uvažování (bez konečné odpovědi)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Požadavek</b> – POST %1"
@@ -338,6 +347,9 @@ msgstr "Přidáno <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Přidáno do slovníčku"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Přidá každé slovo vyhledané ve slovníku do Vocabulary Builderu, jakmile se objeví výsledek."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Analýza vašich zvýraznění, poznámek a obsahu AI poznámek z knihy."
 
@@ -397,6 +409,13 @@ msgstr "Připojí odpověď jako poznámku v knize k aktuálnímu zvýraznění"
 
 msgid "Author"
 msgstr "Autor"
+
+msgid "Auto"
+msgstr "Automaticky"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Automaticky přidávat slova do Vocabulary Builderu"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Rozpory / Otevřené otázky"
 msgid "Conversation is saved to AI Notes"
 msgstr "Konverzace je uložena do AI poznámek"
 
+msgid "Copied to clipboard."
+msgstr "Zkopírováno do schránky."
+
 msgid "Copy"
 msgstr "Kopírovat"
 
@@ -587,6 +609,9 @@ msgstr "Vlastní prompt"
 
 msgid "Custom Prompts"
 msgstr "Vlastní prompty"
+
+msgid "Default"
+msgstr "Výchozí"
 
 msgid "Delete"
 msgstr "Smazat"
@@ -832,6 +857,9 @@ msgstr "Ponechte prázdné pro použití: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Ponechte tato pole prázdná pro použití jazyka rozhraní: %1"
 
+msgid "Left to Right"
+msgstr "Zleva doprava"
+
 msgid "Locations"
 msgstr "Místa"
 
@@ -921,6 +949,9 @@ msgstr "Nebyla přijata žádná odpověď."
 
 msgid "No text left to annotate"
 msgstr "Nezbývá žádný text k anotaci"
+
+msgid "No text selected"
+msgstr "Není vybrán žádný text"
 
 msgid "No text to annotate"
 msgstr "Žádný text k anotaci"
@@ -1066,12 +1097,6 @@ msgstr "Rychlá poznámka"
 msgid "Quick note saved successfully"
 msgstr "Rychlá poznámka byla úspěšně uložena."
 
-msgid "RTL Layout"
-msgstr "Rozvržení RTL"
-
-msgid "RTL written Language"
-msgstr "Jazyk psaný zprava doleva"
-
 msgid "Re-immersion"
 msgstr "Znovuponoření"
 
@@ -1132,11 +1157,17 @@ msgstr ""
 "přihlašovací údaje pro vyhledávací nástroj přidané přes rozhraní nastavení budou odstraněny.\n"
 "Soubor configuration.lua bude zachován."
 
+msgid "Response Font: %1"
+msgstr "Písmo odpovědi: %1"
+
 msgid "Response Settings"
 msgstr "Nastavení odpovědí"
 
 msgid "Response Text Font Size"
 msgstr "Velikost písma textu odpovědi"
+
+msgid "Right to Left"
+msgstr "Zprava doleva"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1204,9 +1235,6 @@ msgstr "Vybrat AI poznámku"
 
 msgid "Select a model:"
 msgstr "Vyberte model:"
-
-msgid "Selection copied to clipboard."
-msgstr "Výběr byl zkopírován do schránky."
 
 msgid "Settings"
 msgstr "Nastavení"
@@ -1299,6 +1327,9 @@ msgstr "Pojmy a koncepty"
 msgid "Test"
 msgstr "Test"
 
+msgid "Text Direction: %1"
+msgstr "Směr textu: %1"
+
 msgid "Text Size: %1"
 msgstr "Velikost textu: %1"
 
@@ -1307,6 +1338,9 @@ msgstr "Text byl zkopírován do schránky."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handler pro %1 nebyl nalezen. Ujistěte se, že handler existuje v adresáři api_handlers."
+
+msgid "Thinking ..."
+msgstr "Přemýšlím ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Toto tlačítko vytvoří rychlou poznámku se zvýrazněným textem."
@@ -1479,6 +1513,9 @@ msgstr "Slovní zásoba"
 msgid "Vocabulary Builder"
 msgstr "Slovníček"
 
+msgid "Waiting for the model ..."
+msgstr "Čekám na model ..."
+
 msgid "Web Search"
 msgstr "Webové vyhledávání"
 
@@ -1509,9 +1546,6 @@ msgstr "Tvar slova a lemma"
 
 msgid "Word Origin"
 msgstr "Původ slova"
-
-msgid "Word copied to clipboard."
-msgstr "Slovo bylo zkopírováno do schránky."
 
 msgid "Write quick notes here"
 msgstr "Sem napište rychlé poznámky"

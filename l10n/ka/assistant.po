@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 03:58+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ქართული (AI translation)\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API-მ დააბრუნა შეცდომა</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API-მ გამოსადეგი პასუხი არ დააბრუნა</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>მიმდინარეობს წიგნის კონტექსტის ანალიზი Term X-Ray-სთვის...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>მიმდინარეობს %1-ის დაყენება...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>მოდელის პასუხი:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>პარამეტრები</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>მსჯელობა (საბოლოო პასუხის გარეშე)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>მოთხოვნა</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "დაემატა <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "დაემატა ლექსიკის შემგროვებელს"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "ყოველ სიტყვას, რომელსაც ლექსიკონში მოძებნით, შედეგის გამოჩენისთანავე ემატება ლექსიკის შემგროვებელს."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "წიგნიდან თქვენი მონიშვნების, შენიშვნებისა და AI შენიშვნების შიგთავსის ანალიზი."
 
@@ -397,6 +409,13 @@ msgstr "პასუხს მიმდინარე ხაზგასმა�
 
 msgid "Author"
 msgstr "ავტორი"
+
+msgid "Auto"
+msgstr "ავტო"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "სიტყვის ავტომატური დამატება ლექსიკის შემგროვებელში"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "წინააღმდეგობები / ღია კითხ�
 msgid "Conversation is saved to AI Notes"
 msgstr "საუბარი შენახულია AI შენიშვნებში"
 
+msgid "Copied to clipboard."
+msgstr "დაკოპირდა ბუფერში."
+
 msgid "Copy"
 msgstr "კოპირება"
 
@@ -587,6 +609,9 @@ msgstr "მორგებული პრომპტი"
 
 msgid "Custom Prompts"
 msgstr "მორგებული პრომპტები"
+
+msgid "Default"
+msgstr "ნაგულისხმევი"
 
 msgid "Delete"
 msgstr "წაშლა"
@@ -831,6 +856,9 @@ msgstr "დატოვეთ ცარიელი, რომ გამოყ�
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "დატოვეთ ეს ველები ცარიელი, რომ გამოყენებულ იქნას ინტერფეისის ენა: %1"
 
+msgid "Left to Right"
+msgstr "მარცხნიდან მარჯვნივ"
+
 msgid "Locations"
 msgstr "ადგილები"
 
@@ -920,6 +948,9 @@ msgstr "პასუხი არ მიღებულა."
 
 msgid "No text left to annotate"
 msgstr "ანოტირებისთვის ტექსტი აღარ დარჩა"
+
+msgid "No text selected"
+msgstr "ტექსტი არ არის მონიშნული"
 
 msgid "No text to annotate"
 msgstr "ანოტირებისთვის ტექსტი არ არის"
@@ -1065,12 +1096,6 @@ msgstr "სწრაფი ჩანაწერი"
 msgid "Quick note saved successfully"
 msgstr "სწრაფი ჩანაწერი წარმატებით შეინახა"
 
-msgid "RTL Layout"
-msgstr "RTL განლაგება"
-
-msgid "RTL written Language"
-msgstr "RTL დამწერლობის ენა"
-
 msgid "Re-immersion"
 msgstr "ხელახალი ჩაძირვა"
 
@@ -1131,11 +1156,17 @@ msgstr ""
 "საძიებო ინსტრუმენტების ავტორიზაციის მონაცემები, რომლებიც დამატებულია პარამეტრების ინტერფეისიდან, წაიშლება.\n"
 "configuration.lua ფაილი შენარჩუნდება."
 
+msgid "Response Font: %1"
+msgstr "პასუხის შრიფტი: %1"
+
 msgid "Response Settings"
 msgstr "პასუხის პარამეტრები"
 
 msgid "Response Text Font Size"
 msgstr "პასუხის ტექსტის შრიფტის ზომა"
+
+msgid "Right to Left"
+msgstr "მარჯვნიდან მარცხნივ"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1203,9 +1234,6 @@ msgstr "აირჩიეთ AI შენიშვნა"
 
 msgid "Select a model:"
 msgstr "აირჩიეთ მოდელი:"
-
-msgid "Selection copied to clipboard."
-msgstr "მონიშნული ტექსტი დაკოპირდა ბუფერში."
 
 msgid "Settings"
 msgstr "პარამეტრები"
@@ -1298,6 +1326,9 @@ msgstr "ტერმინები და ცნებები"
 msgid "Test"
 msgstr "ტესტი"
 
+msgid "Text Direction: %1"
+msgstr "ტექსტის მიმართულება: %1"
+
 msgid "Text Size: %1"
 msgstr "ტექსტის ზომა: %1"
 
@@ -1306,6 +1337,9 @@ msgstr "ტექსტი დაკოპირდა ბუფერში"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "დამმუშავებელი %1-ისთვის ვერ მოიძებნა. გთხოვთ, დარწმუნდით, რომ დამმუშავებელი არსებობს api_handlers დირექტორიაში."
+
+msgid "Thinking ..."
+msgstr "ფიქრობს ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "ეს ღილაკი ქმნის სწრაფ ჩანაწერს მონიშნული ტექსტით."
@@ -1478,6 +1512,9 @@ msgstr "ლექსიკა"
 msgid "Vocabulary Builder"
 msgstr "სიტყვების შემგროვებელი"
 
+msgid "Waiting for the model ..."
+msgstr "მოდელის მოლოდინში ..."
+
 msgid "Web Search"
 msgstr "ვებ-ძიება"
 
@@ -1508,9 +1545,6 @@ msgstr "სიტყვის ფორმა და ლემა"
 
 msgid "Word Origin"
 msgstr "სიტყვის წარმოშობა"
-
-msgid "Word copied to clipboard."
-msgstr "სიტყვა დაკოპირდა ბუფერში."
 
 msgid "Write quick notes here"
 msgstr "ჩაწერეთ სწრაფი ჩანაწერები აქ"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 02:47+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: عربى (AI translation)\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>أعاد API خطأ</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>لم يُرجع API أي إجابة قابلة للاستخدام</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>جارٍ تحليل سياق الكتاب لـ Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>جارٍ تثبيت %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>رد النموذج:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>المعلمات</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>الاستدلال (لا توجد إجابة نهائية)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>الطلب</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "أُضيف <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "أُضيف إلى باني المفردات"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "يضيف كل كلمة تبحث عنها في القاموس إلى باني المفردات بمجرد ظهور النتيجة."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "تحليل التظليلات والملاحظات ومحتوى ملاحظات الذكاء الاصطناعي من الكتاب."
 
@@ -397,6 +409,13 @@ msgstr "يُرفق الإجابة كملاحظة في الكتاب بالتظل�
 
 msgid "Author"
 msgstr "المؤلف"
+
+msgid "Auto"
+msgstr "تلقائي"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "إضافة الكلمات تلقائيًا إلى باني المفردات"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "تناقضات / أسئلة مفتوحة"
 msgid "Conversation is saved to AI Notes"
 msgstr "تم حفظ المحادثة في ملاحظات الذكاء الاصطناعي"
 
+msgid "Copied to clipboard."
+msgstr "تم النسخ إلى الحافظة."
+
 msgid "Copy"
 msgstr "نسخ"
 
@@ -587,6 +609,9 @@ msgstr "موجه مخصص"
 
 msgid "Custom Prompts"
 msgstr "الموجهات المخصصة"
+
+msgid "Default"
+msgstr "افتراضي"
 
 msgid "Delete"
 msgstr "حذف"
@@ -835,6 +860,9 @@ msgstr "اتركه فارغًا لاستخدام: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "اترك هذه الحقول فارغة لاستخدام لغة الواجهة: %1"
 
+msgid "Left to Right"
+msgstr "من اليسار إلى اليمين"
+
 msgid "Locations"
 msgstr "الأماكن"
 
@@ -924,6 +952,9 @@ msgstr "لم يتم تلقي أي استجابة."
 
 msgid "No text left to annotate"
 msgstr "لا يتبقى نص لإضافة تعليق عليه"
+
+msgid "No text selected"
+msgstr "لم يتم تحديد أي نص"
 
 msgid "No text to annotate"
 msgstr "لا يوجد نص لإضافة تعليق عليه"
@@ -1069,12 +1100,6 @@ msgstr "ملاحظة سريعة"
 msgid "Quick note saved successfully"
 msgstr "تم حفظ الملاحظة السريعة بنجاح"
 
-msgid "RTL Layout"
-msgstr "تخطيط من اليمين إلى اليسار"
-
-msgid "RTL written Language"
-msgstr "لغة مكتوبة من اليمين إلى اليسار"
-
 msgid "Re-immersion"
 msgstr "إعادة الانغماس"
 
@@ -1134,11 +1159,17 @@ msgstr ""
 "سيؤدي هذا إلى استعادة الملحق إلى إعداداته الافتراضية. ستتم إزالة المزودين ومفاتيح API وبيانات اعتماد أداة البحث المضافة عبر واجهة الإعدادات.\n"
 "سيتم الاحتفاظ بملف configuration.lua."
 
+msgid "Response Font: %1"
+msgstr "خط الرد: %1"
+
 msgid "Response Settings"
 msgstr "إعدادات الاستجابة"
 
 msgid "Response Text Font Size"
 msgstr "حجم خط نص الرد"
+
+msgid "Right to Left"
+msgstr "من اليمين إلى اليسار"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1206,9 +1237,6 @@ msgstr "اختر ملاحظة ذكاء اصطناعي"
 
 msgid "Select a model:"
 msgstr "اختر نموذجًا:"
-
-msgid "Selection copied to clipboard."
-msgstr "تم نسخ التحديد إلى الحافظة."
 
 msgid "Settings"
 msgstr "الإعدادات"
@@ -1301,6 +1329,9 @@ msgstr "المصطلحات والمفاهيم"
 msgid "Test"
 msgstr "اختبار"
 
+msgid "Text Direction: %1"
+msgstr "اتجاه النص: %1"
+
 msgid "Text Size: %1"
 msgstr "حجم النص: %1"
 
@@ -1309,6 +1340,9 @@ msgstr "تم نسخ النص إلى الحافظة"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "لم يتم العثور على المعالج لـ %1. يرجى التأكد من وجود المعالج في مجلد api_handlers."
+
+msgid "Thinking ..."
+msgstr "جارٍ التفكير ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "ينشئ هذا الزر ملاحظة سريعة بالنص المميز."
@@ -1481,6 +1515,9 @@ msgstr "المفردات"
 msgid "Vocabulary Builder"
 msgstr "بنّاء المفردات"
 
+msgid "Waiting for the model ..."
+msgstr "في انتظار النموذج ..."
+
 msgid "Web Search"
 msgstr "البحث على الويب"
 
@@ -1511,9 +1548,6 @@ msgstr "صيغة الكلمة والأصل"
 
 msgid "Word Origin"
 msgstr "أصل الكلمة"
-
-msgid "Word copied to clipboard."
-msgstr "تم نسخ الكلمة إلى الحافظة."
 
 msgid "Write quick notes here"
 msgstr "اكتب ملاحظات سريعة هنا"

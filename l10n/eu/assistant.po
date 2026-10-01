@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 03:15+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Euskara (AI translation)\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>APIak errore bat itzuli du</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>APIak ez du erantzun erabilgarririk itzuli</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Liburuaren testuingurua aztertzen Term X-Ray-rako...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Instalatzen %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Modeloaren erantzuna:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametroak</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Arrazoiketa (azken erantzunik gabe)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Eskaera</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "Gehitua <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Hiztegi-eraikitzailean gehituta"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Hiztegian kontsultatzen duzun hitz bakoitza Hiztegi Eraikitzailean gehitzen du emaitza agertzen den bezain laster."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Liburuko zure nabarmendutakoen, oharren eta AI oharren edukiaren analisia."
 
@@ -397,6 +409,13 @@ msgstr "Erantzuna liburu-ohar gisa eransten dio uneko nabarmenduari"
 
 msgid "Author"
 msgstr "Egilea"
+
+msgid "Auto"
+msgstr "Automatikoa"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Gehitu hitza automatikoki Hiztegi Eraikitzailean"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Kontraesanak / Erantzun gabeko galderak"
 msgid "Conversation is saved to AI Notes"
 msgstr "Elkarrizketa AI oharretan gorde da"
 
+msgid "Copied to clipboard."
+msgstr "Arbelera kopiatuta."
+
 msgid "Copy"
 msgstr "Kopiatu"
 
@@ -587,6 +609,9 @@ msgstr "Prompt pertsonalizatua"
 
 msgid "Custom Prompts"
 msgstr "Prompt pertsonalizatuak"
+
+msgid "Default"
+msgstr "Lehenetsia"
 
 msgid "Delete"
 msgstr "Ezabatu"
@@ -831,6 +856,9 @@ msgstr "Utzi hutsik hau erabiltzeko: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Utzi eremu hauek hutsik interfazearen hizkuntza erabiltzeko: %1"
 
+msgid "Left to Right"
+msgstr "Ezkerretik eskuinera"
+
 msgid "Locations"
 msgstr "Lekuak"
 
@@ -920,6 +948,9 @@ msgstr "Ez da erantzunik jaso."
 
 msgid "No text left to annotate"
 msgstr "Ez da anotatzeko testurik geratzen"
+
+msgid "No text selected"
+msgstr "Ez da testurik hautatu"
 
 msgid "No text to annotate"
 msgstr "Ez dago anotatzeko testurik"
@@ -1065,12 +1096,6 @@ msgstr "Ohar azkarra"
 msgid "Quick note saved successfully"
 msgstr "Ohar azkarra behar bezala gorde da"
 
-msgid "RTL Layout"
-msgstr "RTL diseinua"
-
-msgid "RTL written Language"
-msgstr "RTL idatzitako hizkuntza"
-
 msgid "Re-immersion"
 msgstr "Berriro murgiltzea"
 
@@ -1129,11 +1154,17 @@ msgstr ""
 "\n"
 "Honek plugin-a fabrikako lehenetsietara itzultzen du. Ezarpenen UI bidez gehitutako hornitzaileak, API gakoak eta bilaketa-tresnen kredentzialak kenduko dira. configuration.lua fitxategia gordeko da."
 
+msgid "Response Font: %1"
+msgstr "Erantzunaren letra-tipoa: %1"
+
 msgid "Response Settings"
 msgstr "Erantzunaren ezarpenak"
 
 msgid "Response Text Font Size"
 msgstr "Erantzun Testuaren Letra-tamaina"
+
+msgid "Right to Left"
+msgstr "Eskuinetik ezkerrera"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1201,9 +1232,6 @@ msgstr "Hautatu AI oharra"
 
 msgid "Select a model:"
 msgstr "Hautatu eredu bat:"
-
-msgid "Selection copied to clipboard."
-msgstr "Hautapena arbelean kopiatu da."
 
 msgid "Settings"
 msgstr "Ezarpenak"
@@ -1296,6 +1324,9 @@ msgstr "Terminoak eta kontzeptuak"
 msgid "Test"
 msgstr "Proba"
 
+msgid "Text Direction: %1"
+msgstr "Testuaren norabidea: %1"
+
 msgid "Text Size: %1"
 msgstr "Testu-tamaina: %1"
 
@@ -1304,6 +1335,9 @@ msgstr "Testua arbelean kopiatu da"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1-rentzako handlerra ez da aurkitu. Ziurtatu handlerra api_handlers direktorioan dagoela."
+
+msgid "Thinking ..."
+msgstr "Pentsatzen ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Botoi honek ohar azkar bat sortzen du nabarmendutako testuarekin."
@@ -1476,6 +1510,9 @@ msgstr "Hiztegia"
 msgid "Vocabulary Builder"
 msgstr "Hiztegi-eraikitzailea"
 
+msgid "Waiting for the model ..."
+msgstr "Modeloaren zain ..."
+
 msgid "Web Search"
 msgstr "Web bilaketa"
 
@@ -1506,9 +1543,6 @@ msgstr "Hitz forma eta lema"
 
 msgid "Word Origin"
 msgstr "Hitzaren jatorria"
-
-msgid "Word copied to clipboard."
-msgstr "Hitza arbelean kopiatu da."
 
 msgid "Write quick notes here"
 msgstr "Idatzi ohar azkarrak hemen"

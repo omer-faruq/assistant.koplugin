@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API-ul a returnat o eroare</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API-ul nu a returnat niciun răspuns utilizabil</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Se analizează contextul cărții pentru Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Se instalează %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Răspunsul modelului:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametri</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Raționament (fără răspuns final)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Cerere</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "Adăugat <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Adăugat în constructorul de vocabular"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Adaugă în Constructorul de vocabular fiecare cuvânt căutat în dicționar, imediat ce apare rezultatul."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Analiză a evidențierilor, notițelor și conținutului Notițelor AI din carte."
 
@@ -397,6 +409,13 @@ msgstr "Atașează răspunsul ca notă în carte la evidențierea curentă"
 
 msgid "Author"
 msgstr "Autor"
+
+msgid "Auto"
+msgstr "Automat"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Adăugare automată a cuvântului în Constructorul de vocabular"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Contradicții / Întrebări deschise"
 msgid "Conversation is saved to AI Notes"
 msgstr "Conversația este salvată în Notițe AI"
 
+msgid "Copied to clipboard."
+msgstr "Copiat în clipboard."
+
 msgid "Copy"
 msgstr "Copiază"
 
@@ -587,6 +609,9 @@ msgstr "Prompt personalizat"
 
 msgid "Custom Prompts"
 msgstr "Prompturi personalizate"
+
+msgid "Default"
+msgstr "Implicit"
 
 msgid "Delete"
 msgstr "Ștergere"
@@ -832,6 +857,9 @@ msgstr "Lasă gol pentru a folosi: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Lasă aceste câmpuri goale pentru a folosi limba interfeței: %1"
 
+msgid "Left to Right"
+msgstr "De la stânga la dreapta"
+
 msgid "Locations"
 msgstr "Locații"
 
@@ -921,6 +949,9 @@ msgstr "Nu s-a primit niciun răspuns."
 
 msgid "No text left to annotate"
 msgstr "Nu mai există text de adnotat"
+
+msgid "No text selected"
+msgstr "Niciun text selectat"
 
 msgid "No text to annotate"
 msgstr "Nu există text de adnotat"
@@ -1066,12 +1097,6 @@ msgstr "Notă rapidă"
 msgid "Quick note saved successfully"
 msgstr "Nota rapidă a fost salvată cu succes."
 
-msgid "RTL Layout"
-msgstr "Aspect RTL"
-
-msgid "RTL written Language"
-msgstr "Limbă cu scriere RTL"
-
 msgid "Re-immersion"
 msgstr "Reimersiune"
 
@@ -1132,11 +1157,17 @@ msgstr ""
 "credențialele instrumentului de căutare adăugate prin interfața de setări vor fi eliminate.\n"
 "Fișierul configuration.lua va fi păstrat."
 
+msgid "Response Font: %1"
+msgstr "Font răspuns: %1"
+
 msgid "Response Settings"
 msgstr "Setări de răspuns"
 
 msgid "Response Text Font Size"
 msgstr "Dimensiunea fontului pentru textul de răspuns"
+
+msgid "Right to Left"
+msgstr "De la dreapta la stânga"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1204,9 +1235,6 @@ msgstr "Selectați nota AI"
 
 msgid "Select a model:"
 msgstr "Selectează un model:"
-
-msgid "Selection copied to clipboard."
-msgstr "Selecție copiată în clipboard."
 
 msgid "Settings"
 msgstr "Setări"
@@ -1299,6 +1327,9 @@ msgstr "Termeni și concepte"
 msgid "Test"
 msgstr "Test"
 
+msgid "Text Direction: %1"
+msgstr "Direcția textului: %1"
+
 msgid "Text Size: %1"
 msgstr "Dimensiune text: %1"
 
@@ -1307,6 +1338,9 @@ msgstr "Textul a fost copiat în clipboard"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handlerul pentru %1 nu a fost găsit. Asigurați-vă că handlerul există în directorul api_handlers."
+
+msgid "Thinking ..."
+msgstr "Se procesează ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Acest buton creează o notă rapidă cu textul evidențiat."
@@ -1479,6 +1513,9 @@ msgstr "Vocabular"
 msgid "Vocabulary Builder"
 msgstr "Constructor de vocabular"
 
+msgid "Waiting for the model ..."
+msgstr "Se așteaptă modelul ..."
+
 msgid "Web Search"
 msgstr "Căutare web"
 
@@ -1509,9 +1546,6 @@ msgstr "Formă cuvânt & Lemă"
 
 msgid "Word Origin"
 msgstr "Originea cuvântului"
-
-msgid "Word copied to clipboard."
-msgstr "Cuvânt copiat în clipboard."
 
 msgid "Write quick notes here"
 msgstr "Scrie note rapide aici"

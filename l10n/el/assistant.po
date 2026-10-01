@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>Το API επέστρεψε σφάλμα</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>Το API δεν επέστρεψε αξιοποιήσιμη απάντηση</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Ανάλυση του πλαισίου του βιβλίου για Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Εγκατάσταση %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Απάντηση μοντέλου:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Παράμετροι</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Συλλογισμός (χωρίς τελική απάντηση)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Αίτημα</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "Προστέθηκε <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Προστέθηκε στο εργαλείο λεξιλογίου"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Προσθέτει κάθε λέξη που αναζητάτε στο λεξικό στη Δόμηση Λεξιλογίου μόλις εμφανιστεί το αποτέλεσμα."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Ανάλυση του περιεχομένου των επισημάνσεων, των σημειώσεων και των Σημειώσεων AI σας από το βιβλίο."
 
@@ -397,6 +409,13 @@ msgstr "Επισυνάπτει την απάντηση ως σημείωση β�
 
 msgid "Author"
 msgstr "Συγγραφέας"
+
+msgid "Auto"
+msgstr "Αυτόματα"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Αυτόματη προσθήκη λέξης στη Δόμηση Λεξιλογίου"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Αντιφάσεις / Ανοιχτά Ερωτήματα"
 msgid "Conversation is saved to AI Notes"
 msgstr "Η συνομιλία αποθηκεύεται στις Σημειώσεις AI"
 
+msgid "Copied to clipboard."
+msgstr "Αντιγράφηκε στο πρόχειρο."
+
 msgid "Copy"
 msgstr "Αντιγραφή"
 
@@ -587,6 +609,9 @@ msgstr "Προσαρμοσμένη Προτροπή"
 
 msgid "Custom Prompts"
 msgstr "Προσαρμοσμένα Prompts"
+
+msgid "Default"
+msgstr "Προεπιλογή"
 
 msgid "Delete"
 msgstr "Διαγραφή"
@@ -831,6 +856,9 @@ msgstr "Αφήστε κενό για χρήση: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Αφήστε αυτά τα πεδία κενά για να χρησιμοποιηθεί η γλώσσα διεπαφής: %1"
 
+msgid "Left to Right"
+msgstr "Αριστερά προς δεξιά"
+
 msgid "Locations"
 msgstr "Τοποθεσίες"
 
@@ -920,6 +948,9 @@ msgstr "Δεν λήφθηκε καμία απόκριση."
 
 msgid "No text left to annotate"
 msgstr "Δεν απομένει κείμενο για σχολιασμό"
+
+msgid "No text selected"
+msgstr "Δεν έχει επιλεγεί κείμενο"
 
 msgid "No text to annotate"
 msgstr "Δεν υπάρχει κείμενο για σχολιασμό"
@@ -1065,12 +1096,6 @@ msgstr "Γρήγορη σημείωση"
 msgid "Quick note saved successfully"
 msgstr "Η γρήγορη σημείωση αποθηκεύτηκε επιτυχώς"
 
-msgid "RTL Layout"
-msgstr "Διάταξη RTL"
-
-msgid "RTL written Language"
-msgstr "Γλώσσα γραφής RTL"
-
 msgid "Re-immersion"
 msgstr "Επαναβύθιση"
 
@@ -1130,11 +1155,17 @@ msgstr ""
 "Αυτό επαναφέρει το πρόσθετο στις προεπιλογές εργοστασίου. Οι πάροχοι, τα κλειδιά API και τα διαπιστευτήρια εργαλείου αναζήτησης που προστέθηκαν μέσω της διεπαφής ρυθμίσεων θα καταργηθούν.\n"
 "Το αρχείο configuration.lua θα διατηρηθεί."
 
+msgid "Response Font: %1"
+msgstr "Γραμματοσειρά απάντησης: %1"
+
 msgid "Response Settings"
 msgstr "Ρυθμίσεις απόκρισης"
 
 msgid "Response Text Font Size"
 msgstr "Μέγεθος γραμματοσειράς κειμένου απόκρισης"
+
+msgid "Right to Left"
+msgstr "Δεξιά προς αριστερά"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1202,9 +1233,6 @@ msgstr "Επιλογή σημείωσης AI"
 
 msgid "Select a model:"
 msgstr "Επιλέξτε ένα μοντέλο:"
-
-msgid "Selection copied to clipboard."
-msgstr "Η επιλογή αντιγράφηκε στο πρόχειρο."
 
 msgid "Settings"
 msgstr "Ρυθμίσεις"
@@ -1297,6 +1325,9 @@ msgstr "Όροι & Έννοιες"
 msgid "Test"
 msgstr "Δοκιμή"
 
+msgid "Text Direction: %1"
+msgstr "Κατεύθυνση κειμένου: %1"
+
 msgid "Text Size: %1"
 msgstr "Μέγεθος κειμένου: %1"
 
@@ -1305,6 +1336,9 @@ msgstr "Το κείμενο αντιγράφηκε στο πρόχειρο"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Ο χειριστής για το %1 δεν βρέθηκε. Βεβαιωθείτε ότι ο χειριστής υπάρχει στον κατάλογο api_handlers."
+
+msgid "Thinking ..."
+msgstr "Σκέφτομαι ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Αυτό το κουμπί δημιουργεί μια γρήγορη σημείωση με το επισημασμένο κείμενο."
@@ -1477,6 +1511,9 @@ msgstr "Λεξιλόγιο"
 msgid "Vocabulary Builder"
 msgstr "Εμπλουτισμός Λεξιλογίου"
 
+msgid "Waiting for the model ..."
+msgstr "Αναμονή για το μοντέλο ..."
+
 msgid "Web Search"
 msgstr "Αναζήτηση στο διαδίκτυο"
 
@@ -1507,9 +1544,6 @@ msgstr "Μορφή λέξης & Λήμμα"
 
 msgid "Word Origin"
 msgstr "Προέλευση Λέξης"
-
-msgid "Word copied to clipboard."
-msgstr "Η λέξη αντιγράφηκε στο πρόχειρο."
 
 msgid "Write quick notes here"
 msgstr "Γράψτε γρήγορες σημειώσεις εδώ"

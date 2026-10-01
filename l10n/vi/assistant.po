@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API trả về lỗi</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API không trả về câu trả lời khả dụng</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Đang phân tích ngữ cảnh sách cho Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Đang cài đặt %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Phản hồi của mô hình:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Tham số</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Suy luận (không có câu trả lời cuối cùng)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Yêu cầu</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "Đã thêm <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Đã thêm vào trình tạo từ vựng"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Tự động thêm mọi từ bạn tra trong từ điển vào Sổ từ vựng ngay khi kết quả xuất hiện."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Phân tích các đoạn tô sáng, ghi chú và nội dung Ghi chú AI của bạn từ cuốn sách."
 
@@ -397,6 +409,13 @@ msgstr "Đính kèm câu trả lời làm ghi chú sách vào phần đánh dấ
 
 msgid "Author"
 msgstr "Tác giả"
+
+msgid "Auto"
+msgstr "Tự động"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Tự động thêm từ vào Sổ từ vựng"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Mâu thuẫn / Câu hỏi bỏ ngỏ"
 msgid "Conversation is saved to AI Notes"
 msgstr "Hội thoại đã được lưu vào Ghi chú AI"
 
+msgid "Copied to clipboard."
+msgstr "Đã sao chép vào bộ nhớ tạm."
+
 msgid "Copy"
 msgstr "Sao chép"
 
@@ -587,6 +609,9 @@ msgstr "Lời nhắc tùy chỉnh"
 
 msgid "Custom Prompts"
 msgstr "Prompt tùy chỉnh"
+
+msgid "Default"
+msgstr "Mặc định"
 
 msgid "Delete"
 msgstr "Xóa"
@@ -830,6 +855,9 @@ msgstr "Để trống để sử dụng: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Để trống các trường này để sử dụng ngôn ngữ giao diện: %1"
 
+msgid "Left to Right"
+msgstr "Trái sang phải"
+
 msgid "Locations"
 msgstr "Địa điểm"
 
@@ -919,6 +947,9 @@ msgstr "Không nhận được phản hồi."
 
 msgid "No text left to annotate"
 msgstr "Không còn văn bản để chú thích"
+
+msgid "No text selected"
+msgstr "Chưa chọn văn bản nào"
 
 msgid "No text to annotate"
 msgstr "Không có văn bản để chú thích"
@@ -1064,12 +1095,6 @@ msgstr "Ghi chú nhanh"
 msgid "Quick note saved successfully"
 msgstr "Đã lưu ghi chú nhanh thành công"
 
-msgid "RTL Layout"
-msgstr "Bố cục RTL"
-
-msgid "RTL written Language"
-msgstr "Ngôn ngữ viết RTL"
-
 msgid "Re-immersion"
 msgstr "Tái hòa nhập"
 
@@ -1129,11 +1154,17 @@ msgstr ""
 "Thao tác này sẽ khôi phục plugin về cài đặt gốc. Các nhà cung cấp, khóa API và thông tin xác thực công cụ tìm kiếm được thêm qua giao diện Cài đặt sẽ bị xóa.\n"
 "Tệp configuration.lua sẽ được giữ nguyên."
 
+msgid "Response Font: %1"
+msgstr "Phông chữ phản hồi: %1"
+
 msgid "Response Settings"
 msgstr "Cài đặt phản hồi"
 
 msgid "Response Text Font Size"
 msgstr "Cỡ chữ văn bản phản hồi"
+
+msgid "Right to Left"
+msgstr "Phải sang trái"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1201,9 +1232,6 @@ msgstr "Chọn ghi chú AI"
 
 msgid "Select a model:"
 msgstr "Chọn mô hình:"
-
-msgid "Selection copied to clipboard."
-msgstr "Đã sao chép vùng chọn vào bảng tạm."
 
 msgid "Settings"
 msgstr "Cài đặt"
@@ -1296,6 +1324,9 @@ msgstr "Thuật ngữ & Khái niệm"
 msgid "Test"
 msgstr "Kiểm tra"
 
+msgid "Text Direction: %1"
+msgstr "Hướng văn bản: %1"
+
 msgid "Text Size: %1"
 msgstr "Cỡ chữ: %1"
 
@@ -1304,6 +1335,9 @@ msgstr "Văn bản đã được sao chép vào bộ nhớ tạm"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Không tìm thấy trình xử lý cho %1. Vui lòng đảm bảo trình xử lý tồn tại trong thư mục api_handlers."
+
+msgid "Thinking ..."
+msgstr "Đang suy luận ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Nút này tạo một ghi chú nhanh với văn bản được tô sáng."
@@ -1476,6 +1510,9 @@ msgstr "Từ vựng"
 msgid "Vocabulary Builder"
 msgstr "Xây dựng từ vựng"
 
+msgid "Waiting for the model ..."
+msgstr "Đang chờ mô hình ..."
+
 msgid "Web Search"
 msgstr "Tìm kiếm web"
 
@@ -1506,9 +1543,6 @@ msgstr "Dạng từ & Từ gốc"
 
 msgid "Word Origin"
 msgstr "Nguồn gốc từ"
-
-msgid "Word copied to clipboard."
-msgstr "Đã sao chép từ vào bảng tạm."
 
 msgid "Write quick notes here"
 msgstr "Viết ghi chú nhanh tại đây"

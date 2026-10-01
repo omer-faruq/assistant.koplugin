@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API atgrieza kļūdu</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API neatgrieza derīgu atbildi</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Notiek grāmatas konteksta analīze Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Notiek %1 instalēšana...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Modeļa atbilde:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametri</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Spriešana (nav galīgās atbildes)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Pieprasījums</b> — POST %1"
@@ -338,6 +347,9 @@ msgstr "Pievienots <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Pievienots vārdu krājuma veidotājam"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Pievieno katru vārdnīcā meklēto vārdu vārdu krājuma veidotājam, tiklīdz parādās rezultāts."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Jūsu grāmatas izcēlumu, piezīmju un AI piezīmju satura analīze."
 
@@ -397,6 +409,13 @@ msgstr "Pievieno atbildi kā grāmatas piezīmi pašreizējam izcēlumam"
 
 msgid "Author"
 msgstr "Autors"
+
+msgid "Auto"
+msgstr "Automātiski"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Automātiski pievienot vārdu vārdu krājuma veidotājam"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Pretrunas / atklātie jautājumi"
 msgid "Conversation is saved to AI Notes"
 msgstr "Saruna saglabāta AI piezīmēs"
 
+msgid "Copied to clipboard."
+msgstr "Nokopēts starpliktuvē."
+
 msgid "Copy"
 msgstr "Kopēt"
 
@@ -587,6 +609,9 @@ msgstr "Pielāgota uzvedne"
 
 msgid "Custom Prompts"
 msgstr "Pielāgoti prompti"
+
+msgid "Default"
+msgstr "Noklusējums"
 
 msgid "Delete"
 msgstr "Dzēst"
@@ -832,6 +857,9 @@ msgstr "Atstājiet tukšu, lai izmantotu: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Atstājiet šos laukus tukšus, lai izmantotu saskarnes valodu: %1"
 
+msgid "Left to Right"
+msgstr "No kreisās uz labo"
+
 msgid "Locations"
 msgstr "Vietas"
 
@@ -921,6 +949,9 @@ msgstr "Nav saņemta atbilde."
 
 msgid "No text left to annotate"
 msgstr "Vairs nav teksta, ko anotēt"
+
+msgid "No text selected"
+msgstr "Nav atlasīts teksts"
 
 msgid "No text to annotate"
 msgstr "Nav teksta, ko anotēt"
@@ -1066,12 +1097,6 @@ msgstr "Ātrā piezīme"
 msgid "Quick note saved successfully"
 msgstr "Ātrais pieraksts veiksmīgi saglabāts"
 
-msgid "RTL Layout"
-msgstr "RTL izkārtojums"
-
-msgid "RTL written Language"
-msgstr "RTL rakstu valoda"
-
 msgid "Re-immersion"
 msgstr "Atgriešanās stāstā"
 
@@ -1131,11 +1156,17 @@ msgstr ""
 "Tas atjaunos spraudņa rūpnīcas noklusējuma iestatījumus. Pakalpojumu sniedzēji, API atslēgas un meklēšanas rīka akreditācijas dati, kas pievienoti, izmantojot iestatījumu saskarni, tiks noņemti.\n"
 "Fails configuration.lua tiks saglabāts."
 
+msgid "Response Font: %1"
+msgstr "Atbildes fonts: %1"
+
 msgid "Response Settings"
 msgstr "Atbildes iestatījumi"
 
 msgid "Response Text Font Size"
 msgstr "Atbildes teksta fonta lielums"
+
+msgid "Right to Left"
+msgstr "No labās uz kreiso"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1203,9 +1234,6 @@ msgstr "Izvēlēties AI piezīmi"
 
 msgid "Select a model:"
 msgstr "Izvēlieties modeli:"
-
-msgid "Selection copied to clipboard."
-msgstr "Iezīmētais teksts nokopēts starpliktuvē."
 
 msgid "Settings"
 msgstr "Iestatījumi"
@@ -1298,6 +1326,9 @@ msgstr "Termini un jēdzieni"
 msgid "Test"
 msgstr "Pārbaudīt"
 
+msgid "Text Direction: %1"
+msgstr "Teksta virziens: %1"
+
 msgid "Text Size: %1"
 msgstr "Fonta lielums: %1"
 
@@ -1306,6 +1337,9 @@ msgstr "Teksts kopēts starpliktuvē"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Apstrādātājs %1 netika atrasts. Lūdzu, pārliecinieties, ka apstrādātājs atrodas api_handlers direktorijā."
+
+msgid "Thinking ..."
+msgstr "Domā ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Šī poga izveido ātro piezīmi ar iezīmēto tekstu."
@@ -1478,6 +1512,9 @@ msgstr "Vārdu krājums"
 msgid "Vocabulary Builder"
 msgstr "Vārdu krājums"
 
+msgid "Waiting for the model ..."
+msgstr "Gaida modeli ..."
+
 msgid "Web Search"
 msgstr "Tīmekļa meklēšana"
 
@@ -1508,9 +1545,6 @@ msgstr "Vārda forma un lema"
 
 msgid "Word Origin"
 msgstr "Vārda izcelsme"
-
-msgid "Word copied to clipboard."
-msgstr "Vārds nokopēts starpliktuvē."
 
 msgid "Write quick notes here"
 msgstr "Rakstiet ātros pierakstus šeit"

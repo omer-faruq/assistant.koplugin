@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 03:19+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: فارسی (AI translation)\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API یک خطا برگرداند</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API پاسخ قابلاستفادهای برنگرداند</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>در حال تحلیل زمینهٔ کتاب برای Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>در حال نصب %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>پاسخ مدل:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>پارامترها</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>استدلال (بدون پاسخ نهایی)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>درخواست</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "افزوده شد <b>[%1 (هوش مصنوعی)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "به واژه‌ساز افزوده شد"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "هر واژهای را که در فرهنگ لغت جستوجو کنید، بهمحض ظاهرشدن نتیجه به واژهساز اضافه میکند."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "تحلیل هایلایت‌ها، یادداشت‌ها و محتوای یادداشت‌های هوش مصنوعی شما از کتاب."
 
@@ -397,6 +409,13 @@ msgstr "پاسخ را به‌عنوان یادداشت کتاب به برجست�
 
 msgid "Author"
 msgstr "نویسنده"
+
+msgid "Auto"
+msgstr "خودکار"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "افزودن خودکار واژه به واژهساز"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "تناقض‌ها / پرسش‌های بی‌پاسخ"
 msgid "Conversation is saved to AI Notes"
 msgstr "گفتگو در یادداشت‌های هوش مصنوعی ذخیره شد."
 
+msgid "Copied to clipboard."
+msgstr "در کلیپبورد کپی شد."
+
 msgid "Copy"
 msgstr "کپی"
 
@@ -587,6 +609,9 @@ msgstr "پرامپت سفارشی"
 
 msgid "Custom Prompts"
 msgstr "پرامپتهای سفارشی"
+
+msgid "Default"
+msgstr "پیشفرض"
 
 msgid "Delete"
 msgstr "حذف"
@@ -831,6 +856,9 @@ msgstr "برای استفاده از %1 خالی بگذارید"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "برای استفاده از زبان رابط کاربری (%1) این فیلدها را خالی بگذارید"
 
+msgid "Left to Right"
+msgstr "چپ به راست"
+
 msgid "Locations"
 msgstr "مکان‌ها"
 
@@ -920,6 +948,9 @@ msgstr "پاسخی دریافت نشد."
 
 msgid "No text left to annotate"
 msgstr "متنی برای یادداشت‌گذاری باقی نمانده است"
+
+msgid "No text selected"
+msgstr "متنی انتخاب نشده است"
 
 msgid "No text to annotate"
 msgstr "متنی برای یادداشت‌گذاری وجود ندارد"
@@ -1065,12 +1096,6 @@ msgstr "یادداشت سریع"
 msgid "Quick note saved successfully"
 msgstr "یادداشت سریع با موفقیت ذخیره شد"
 
-msgid "RTL Layout"
-msgstr "چیدمان راستبهچپ"
-
-msgid "RTL written Language"
-msgstr "زبان نوشتاری راستبهچپ"
-
 msgid "Re-immersion"
 msgstr "بازغوطه‌وری"
 
@@ -1131,11 +1156,17 @@ msgstr ""
 "اعتبارنامههای ابزار جستوجو که از طریق رابط کاربری تنظیمات اضافه شدهاند حذف خواهند شد.\n"
 "فایل configuration.lua حفظ خواهد شد."
 
+msgid "Response Font: %1"
+msgstr "قلم پاسخ: %1"
+
 msgid "Response Settings"
 msgstr "تنظیمات پاسخ"
 
 msgid "Response Text Font Size"
 msgstr "اندازه قلم متن پاسخ"
+
+msgid "Right to Left"
+msgstr "راست به چپ"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1203,9 +1234,6 @@ msgstr "انتخاب یادداشت هوش مصنوعی"
 
 msgid "Select a model:"
 msgstr "یک مدل انتخاب کنید:"
-
-msgid "Selection copied to clipboard."
-msgstr "انتخاب در کلیپبورد کپی شد."
 
 msgid "Settings"
 msgstr "تنظیمات"
@@ -1298,6 +1326,9 @@ msgstr "اصطلاحات و مفاهیم"
 msgid "Test"
 msgstr "آزمایش"
 
+msgid "Text Direction: %1"
+msgstr "جهت متن: %1"
+
 msgid "Text Size: %1"
 msgstr "اندازه قلم: %1"
 
@@ -1306,6 +1337,9 @@ msgstr "متن در کلیپ‌بورد کپی شد."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "هندلر برای %1 یافت نشد. لطفاً مطمئن شوید هندلر در پوشه api_handlers وجود دارد."
+
+msgid "Thinking ..."
+msgstr "در حال تفکر ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "این دکمه یک یادداشت سریع با متن هایلایت‌شده ایجاد می‌کند."
@@ -1478,6 +1512,9 @@ msgstr "واژگان"
 msgid "Vocabulary Builder"
 msgstr "واژگانساز"
 
+msgid "Waiting for the model ..."
+msgstr "در انتظار مدل ..."
+
 msgid "Web Search"
 msgstr "جستجوی وب"
 
@@ -1508,9 +1545,6 @@ msgstr "صورت واژه و بُن‌واژه"
 
 msgid "Word Origin"
 msgstr "ریشه واژه"
-
-msgid "Word copied to clipboard."
-msgstr "واژه در کلیپبورد کپی شد."
 
 msgid "Write quick notes here"
 msgstr "یادداشتهای سریع را اینجا بنویسید"

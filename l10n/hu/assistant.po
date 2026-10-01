@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>Az API hibát adott vissza</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>Az API nem adott használható választ</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>A könyv kontextusának elemzése a Term X-Ray funkcióhoz...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Telepítés: %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>A modell válasza:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Paraméterek</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Gondolkodás (nincs végső válasz)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Kérés</b> – POST %1"
@@ -338,6 +347,9 @@ msgstr "Hozzáadva: <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Hozzáadva a szókincsbővítőhöz"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Minden szót, amit a szótárban megkeresel, azonnal hozzáad a Szókincsépítőhöz, amint megjelenik az eredmény."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "A könyvben található kiemelések, jegyzetek és AI-jegyzetek tartalmának elemzése."
 
@@ -397,6 +409,13 @@ msgstr "A választ könyvjegyzetként csatolja a jelenlegi kiemeléshez"
 
 msgid "Author"
 msgstr "Szerző"
+
+msgid "Auto"
+msgstr "Automatikus"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Szó automatikus hozzáadása a Szókincsépítőhöz"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Ellentmondások / Nyitott kérdések"
 msgid "Conversation is saved to AI Notes"
 msgstr "A beszélgetés mentve az AI-jegyzetekbe"
 
+msgid "Copied to clipboard."
+msgstr "Vágólapra másolva."
+
 msgid "Copy"
 msgstr "Másolás"
 
@@ -587,6 +609,9 @@ msgstr "Egyéni prompt"
 
 msgid "Custom Prompts"
 msgstr "Egyéni promptok"
+
+msgid "Default"
+msgstr "Alapértelmezett"
 
 msgid "Delete"
 msgstr "Törlés"
@@ -831,6 +856,9 @@ msgstr "Hagyd üresen a(z) %1 használatához"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Hagyd üresen ezeket a mezőket a felület nyelvének használatához: %1"
 
+msgid "Left to Right"
+msgstr "Balról jobbra"
+
 msgid "Locations"
 msgstr "Helyszínek"
 
@@ -920,6 +948,9 @@ msgstr "Nem érkezett válasz."
 
 msgid "No text left to annotate"
 msgstr "Nincs több jegyzetelhető szöveg"
+
+msgid "No text selected"
+msgstr "Nincs kijelölt szöveg"
 
 msgid "No text to annotate"
 msgstr "Nincs jegyzetelhető szöveg"
@@ -1065,12 +1096,6 @@ msgstr "Gyors jegyzet"
 msgid "Quick note saved successfully"
 msgstr "A gyorsjegyzet sikeresen elmentve"
 
-msgid "RTL Layout"
-msgstr "Jobbról balra elrendezés"
-
-msgid "RTL written Language"
-msgstr "RTL írású nyelv"
-
 msgid "Re-immersion"
 msgstr "Visszamerülés"
 
@@ -1131,11 +1156,17 @@ msgstr ""
 "hozzáadott szolgáltatók, API-kulcsok és keresőeszköz hitelesítő adatok\n"
 "törlésre kerülnek. A configuration.lua fájl megmarad."
 
+msgid "Response Font: %1"
+msgstr "Válasz betűtípusa: %1"
+
 msgid "Response Settings"
 msgstr "Válaszbeállítások"
 
 msgid "Response Text Font Size"
 msgstr "Válasz szövegének betűmérete"
+
+msgid "Right to Left"
+msgstr "Jobbról balra"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1203,9 +1234,6 @@ msgstr "AI-jegyzet kiválasztása"
 
 msgid "Select a model:"
 msgstr "Válasszon modellt:"
-
-msgid "Selection copied to clipboard."
-msgstr "A kijelölés átmásolva a vágólapra."
 
 msgid "Settings"
 msgstr "Beállítások"
@@ -1298,6 +1326,9 @@ msgstr "Kifejezések és fogalmak"
 msgid "Test"
 msgstr "Teszt"
 
+msgid "Text Direction: %1"
+msgstr "Szövegirány: %1"
+
 msgid "Text Size: %1"
 msgstr "Betűméret: %1"
 
@@ -1306,6 +1337,9 @@ msgstr "A szöveg a vágólapra másolva."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "A(z) %1 kezelő nem található. Győződjön meg róla, hogy a kezelő létezik az api_handlers könyvtárban."
+
+msgid "Thinking ..."
+msgstr "Gondolkodás ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ez a gomb gyors jegyzetet hoz létre a kiemelt szöveggel."
@@ -1478,6 +1512,9 @@ msgstr "Szókincs"
 msgid "Vocabulary Builder"
 msgstr "Szókincsépítő"
 
+msgid "Waiting for the model ..."
+msgstr "Várakozás a modellre ..."
+
 msgid "Web Search"
 msgstr "Webes keresés"
 
@@ -1508,9 +1545,6 @@ msgstr "Szóalak és lemma"
 
 msgid "Word Origin"
 msgstr "Szóeredet"
-
-msgid "Word copied to clipboard."
-msgstr "A szó átmásolva a vágólapra."
 
 msgid "Write quick notes here"
 msgstr "Írj ide gyors jegyzeteket"

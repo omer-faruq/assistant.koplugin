@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API grąžino klaidą</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API negrąžino tinkamo atsakymo</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analizuojamas knygos kontekstas, skirtas Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Diegiama %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Modelio atsakymas:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametrai</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Mąstymas (nėra galutinio atsakymo)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Užklausa</b> – POST %1"
@@ -338,6 +347,9 @@ msgstr "Pridėta <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Pridėta į žodyno kaupiklį"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Prideda kiekvieną žodyne ieškomą žodį į „Vocabulary Builder“ iškart, kai tik pasirodo rezultatas."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Iš knygos surinktų jūsų pažymėjimų, pastabų ir AI užrašų turinio analizė."
 
@@ -397,6 +409,13 @@ msgstr "Prisega atsakymą kaip knygos pastabą prie esamo paryškinimo"
 
 msgid "Author"
 msgstr "Autorius"
+
+msgid "Auto"
+msgstr "Automatiškai"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Automatiškai pridėti žodį į „Vocabulary Builder“"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Prieštaravimai / atviri klausimai"
 msgid "Conversation is saved to AI Notes"
 msgstr "Pokalbis išsaugomas į AI užrašus"
 
+msgid "Copied to clipboard."
+msgstr "Nukopijuota į iškarpinę."
+
 msgid "Copy"
 msgstr "Kopijuoti"
 
@@ -587,6 +609,9 @@ msgstr "Pasirinktinis raginimas"
 
 msgid "Custom Prompts"
 msgstr "Pasirinktiniai promptai"
+
+msgid "Default"
+msgstr "Numatytasis"
 
 msgid "Delete"
 msgstr "Ištrinti"
@@ -832,6 +857,9 @@ msgstr "Palikite tuščią, kad būtų naudojama: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Palikite šiuos laukus tuščius, kad būtų naudojama sąsajos kalba: %1"
 
+msgid "Left to Right"
+msgstr "Iš kairės į dešinę"
+
 msgid "Locations"
 msgstr "Vietos"
 
@@ -921,6 +949,9 @@ msgstr "Atsakymas negautas."
 
 msgid "No text left to annotate"
 msgstr "Nebėra teksto, kurį būtų galima anotuoti"
+
+msgid "No text selected"
+msgstr "Nepasirinktas joks tekstas"
 
 msgid "No text to annotate"
 msgstr "Nėra teksto, kurį būtų galima anotuoti"
@@ -1066,12 +1097,6 @@ msgstr "Greitas užrašas"
 msgid "Quick note saved successfully"
 msgstr "Greita pastaba sėkmingai išsaugota"
 
-msgid "RTL Layout"
-msgstr "Iš dešinės į kairę išdėstymas"
-
-msgid "RTL written Language"
-msgstr "RTL rašto kalba"
-
 msgid "Re-immersion"
 msgstr "Pakartotinis įsitraukimas"
 
@@ -1131,11 +1156,17 @@ msgstr ""
 "Tai grąžina papildinį į gamyklinius numatytuosius nustatymus. Paslaugų teikėjai, API raktai ir paieškos įrankio kredencialai, pridėti per Nustatymų sąsają, bus pašalinti.\n"
 "Failas configuration.lua bus išsaugotas."
 
+msgid "Response Font: %1"
+msgstr "Atsakymo šriftas: %1"
+
 msgid "Response Settings"
 msgstr "Atsakymo nustatymai"
 
 msgid "Response Text Font Size"
 msgstr "Atsakymo teksto šrifto dydis"
+
+msgid "Right to Left"
+msgstr "Iš dešinės į kairę"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1203,9 +1234,6 @@ msgstr "Pasirinkti AI užrašą"
 
 msgid "Select a model:"
 msgstr "Pasirinkite modelį:"
-
-msgid "Selection copied to clipboard."
-msgstr "Pasirinkimas nukopijuotas į iškarpinę."
 
 msgid "Settings"
 msgstr "Nustatymai"
@@ -1298,6 +1326,9 @@ msgstr "Terminai ir sąvokos"
 msgid "Test"
 msgstr "Testas"
 
+msgid "Text Direction: %1"
+msgstr "Teksto kryptis: %1"
+
 msgid "Text Size: %1"
 msgstr "Teksto dydis: %1"
 
@@ -1306,6 +1337,9 @@ msgstr "Tekstas nukopijuotas į iškarpinę"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Tvarkyklė, skirta %1, nebuvo rasta. Įsitikinkite, kad tvarkyklė yra api_handlers kataloge."
+
+msgid "Thinking ..."
+msgstr "Mąstoma ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Šis mygtukas sukuria greitą užrašą su paryškintu tekstu."
@@ -1478,6 +1512,9 @@ msgstr "Žodynas"
 msgid "Vocabulary Builder"
 msgstr "Žodyno kūrėjas"
 
+msgid "Waiting for the model ..."
+msgstr "Laukiama modelio ..."
+
 msgid "Web Search"
 msgstr "Interneto paieška"
 
@@ -1508,9 +1545,6 @@ msgstr "Žodžio forma ir lema"
 
 msgid "Word Origin"
 msgstr "Žodžio kilmė"
-
-msgid "Word copied to clipboard."
-msgstr "Žodis nukopijuotas į iškarpinę."
 
 msgid "Write quick notes here"
 msgstr "Rašykite greitas pastabas čia"

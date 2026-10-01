@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API tagastas vea</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API ei tagastanud kasutatavat vastust</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analüüsin raamatu konteksti Term X-Ray jaoks...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Installimine: %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Mudeli vastus:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parameetrid</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Arutluskäik (lõplikku vastust pole)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Päring</b> – POST %1"
@@ -338,6 +347,9 @@ msgstr "Lisatud <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Lisatud sõnavara koostajasse"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Lisab iga sõnaraamatust otsitud sõna Vocabulary Builderisse niipea, kui tulemus ilmub."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Sinu esiletõstete, märkmete ja AI märkuste sisu analüüs raamatust."
 
@@ -397,6 +409,13 @@ msgstr "Lisab vastuse praeguse esiletõstu juurde raamatumärkusena"
 
 msgid "Author"
 msgstr "Autor"
+
+msgid "Auto"
+msgstr "Automaatne"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Lisa sõna automaatselt Vocabulary Builderisse"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Vastuolud / lahtised küsimused"
 msgid "Conversation is saved to AI Notes"
 msgstr "Vestlus on salvestatud AI märkustesse"
 
+msgid "Copied to clipboard."
+msgstr "Lõikelauale kopeeritud."
+
 msgid "Copy"
 msgstr "Kopeeri"
 
@@ -587,6 +609,9 @@ msgstr "Kohandatud prompt"
 
 msgid "Custom Prompts"
 msgstr "Kohandatud päringud"
+
+msgid "Default"
+msgstr "Vaikimisi"
 
 msgid "Delete"
 msgstr "Kustuta"
@@ -831,6 +856,9 @@ msgstr "Jäta tühjaks, et kasutada: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Jäta need väljad tühjaks, et kasutada kasutajaliidese keelt: %1"
 
+msgid "Left to Right"
+msgstr "Vasakult paremale"
+
 msgid "Locations"
 msgstr "Asukohad"
 
@@ -920,6 +948,9 @@ msgstr "Vastust ei saadud."
 
 msgid "No text left to annotate"
 msgstr "Pole enam teksti, mida annoteerida"
+
+msgid "No text selected"
+msgstr "Teksti pole valitud"
 
 msgid "No text to annotate"
 msgstr "Pole teksti, mida annoteerida"
@@ -1065,12 +1096,6 @@ msgstr "Kiirmärge"
 msgid "Quick note saved successfully"
 msgstr "Kiirmärge salvestati edukalt"
 
-msgid "RTL Layout"
-msgstr "RTL-paigutus"
-
-msgid "RTL written Language"
-msgstr "Paremalt vasakule kirjutatud keel"
-
 msgid "Re-immersion"
 msgstr "Uuesti sisseelamine"
 
@@ -1131,11 +1156,17 @@ msgstr ""
 "otsingutööriista mandaadid, mis on lisatud seadete kasutajaliidese kaudu, eemaldatakse.\n"
 "Fail configuration.lua säilitatakse."
 
+msgid "Response Font: %1"
+msgstr "Vastuse font: %1"
+
 msgid "Response Settings"
 msgstr "Vastuse sätted"
 
 msgid "Response Text Font Size"
 msgstr "Vastuse teksti kirjasuurus"
+
+msgid "Right to Left"
+msgstr "Paremalt vasakule"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1203,9 +1234,6 @@ msgstr "Vali AI-märge"
 
 msgid "Select a model:"
 msgstr "Vali mudel:"
-
-msgid "Selection copied to clipboard."
-msgstr "Valik kopeeriti lõikelauale."
 
 msgid "Settings"
 msgstr "Seaded"
@@ -1298,6 +1326,9 @@ msgstr "Terminid ja mõisted"
 msgid "Test"
 msgstr "Testi"
 
+msgid "Text Direction: %1"
+msgstr "Teksti suund: %1"
+
 msgid "Text Size: %1"
 msgstr "Teksti suurus: %1"
 
@@ -1306,6 +1337,9 @@ msgstr "Tekst kopeeriti lõikelauale"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Töötlejat %1 ei leitud. Palun veenduge, et töötleja on olemas api_handlers kataloogis."
+
+msgid "Thinking ..."
+msgstr "Mõtleb ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "See nupp loob esiletõstetud tekstiga kiirmärke."
@@ -1478,6 +1512,9 @@ msgstr "Sõnavara"
 msgid "Vocabulary Builder"
 msgstr "Sõnavara koostaja"
 
+msgid "Waiting for the model ..."
+msgstr "Ootan mudelit ..."
+
 msgid "Web Search"
 msgstr "Veebiotsing"
 
@@ -1508,9 +1545,6 @@ msgstr "Sõnavorm ja lemma"
 
 msgid "Word Origin"
 msgstr "Sõna päritolu"
-
-msgid "Word copied to clipboard."
-msgstr "Sõna kopeeriti lõikelauale."
 
 msgid "Write quick notes here"
 msgstr "Kirjuta siia kiirmärkmeid"

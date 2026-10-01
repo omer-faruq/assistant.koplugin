@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API palautti virheen</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API ei palauttanut käyttökelpoista vastausta</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analysoidaan kirjan kontekstia Term X-Ray -toimintoa varten...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Asennetaan %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Mallin vastaus:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametrit</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Päättely (ei lopullista vastausta)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Pyyntö</b> – POST %1"
@@ -338,6 +347,9 @@ msgstr "Lisätty <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Lisätty sanaston kartuttajaan"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Lisää jokaisen sanakirjasta hakemasi sanan Sanastokirjaan heti, kun tulos ilmestyy."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Analyysi kirjan korostuksista, muistiinpanoista ja AI-muistiinpanojen sisällöstä."
 
@@ -397,6 +409,13 @@ msgstr "Liittää vastauksen kirjamuistiinpanona nykyiseen korostukseen"
 
 msgid "Author"
 msgstr "Tekijä"
+
+msgid "Auto"
+msgstr "Automaattinen"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Lisää sana automaattisesti Sanastokirjaan"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Ristiriidat / avoimet kysymykset"
 msgid "Conversation is saved to AI Notes"
 msgstr "Keskustelu on tallennettu AI-muistiinpanoihin"
 
+msgid "Copied to clipboard."
+msgstr "Kopioitu leikepöydälle."
+
 msgid "Copy"
 msgstr "Kopioi"
 
@@ -587,6 +609,9 @@ msgstr "Mukautettu kehote"
 
 msgid "Custom Prompts"
 msgstr "Mukautetut kehotteet"
+
+msgid "Default"
+msgstr "Oletus"
 
 msgid "Delete"
 msgstr "Poista"
@@ -831,6 +856,9 @@ msgstr "Jätä tyhjäksi käyttääksesi: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Jätä nämä kentät tyhjiksi käyttääksesi käyttöliittymän kieltä: %1"
 
+msgid "Left to Right"
+msgstr "Vasemmalta oikealle"
+
 msgid "Locations"
 msgstr "Paikat"
 
@@ -920,6 +948,9 @@ msgstr "Vastausta ei saatu."
 
 msgid "No text left to annotate"
 msgstr "Ei enää tekstiä merkittäväksi"
+
+msgid "No text selected"
+msgstr "Tekstiä ei ole valittu"
 
 msgid "No text to annotate"
 msgstr "Ei tekstiä merkittäväksi"
@@ -1065,12 +1096,6 @@ msgstr "Pikamuistiinpano"
 msgid "Quick note saved successfully"
 msgstr "Pikamuistiinpano tallennettu onnistuneesti"
 
-msgid "RTL Layout"
-msgstr "RTL-asettelu"
-
-msgid "RTL written Language"
-msgstr "Oikealta vasemmalle kirjoitettu kieli"
-
 msgid "Re-immersion"
 msgstr "Paluu tarinaan"
 
@@ -1131,11 +1156,17 @@ msgstr ""
 "tiedonhakutyökalujen tunnistetiedot, jotka on lisätty Asetukset-käyttöliittymän kautta, poistetaan.\n"
 "Tiedosto configuration.lua säilytetään."
 
+msgid "Response Font: %1"
+msgstr "Vastausfontti: %1"
+
 msgid "Response Settings"
 msgstr "Vastausasetukset"
 
 msgid "Response Text Font Size"
 msgstr "Vastetekstin fonttikoko"
+
+msgid "Right to Left"
+msgstr "Oikealta vasemmalle"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1203,9 +1234,6 @@ msgstr "Valitse AI-muistiinpano"
 
 msgid "Select a model:"
 msgstr "Valitse malli:"
-
-msgid "Selection copied to clipboard."
-msgstr "Valinta kopioitu leikepöydälle."
 
 msgid "Settings"
 msgstr "Asetukset"
@@ -1298,6 +1326,9 @@ msgstr "Termit ja käsitteet"
 msgid "Test"
 msgstr "Testaa"
 
+msgid "Text Direction: %1"
+msgstr "Tekstin suunta: %1"
+
 msgid "Text Size: %1"
 msgstr "Tekstikoko: %1"
 
@@ -1306,6 +1337,9 @@ msgstr "Teksti kopioitu leikepöydälle"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Käsittelijää kohteelle %1 ei löytynyt. Varmista, että käsittelijä on olemassa api_handlers-hakemistossa."
+
+msgid "Thinking ..."
+msgstr "Ajattelee ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Tämä painike luo pikamuistiinpanon korostetusta tekstistä."
@@ -1478,6 +1512,9 @@ msgstr "Sanasto"
 msgid "Vocabulary Builder"
 msgstr "Sanastotyökalu"
 
+msgid "Waiting for the model ..."
+msgstr "Odotetaan mallia ..."
+
 msgid "Web Search"
 msgstr "Verkkohaku"
 
@@ -1508,9 +1545,6 @@ msgstr "Sananmuoto ja lemma"
 
 msgid "Word Origin"
 msgstr "Sanan alkuperä"
-
-msgid "Word copied to clipboard."
-msgstr "Sana kopioitu leikepöydälle."
 
 msgid "Write quick notes here"
 msgstr "Kirjoita pikamuistiinpanoja tähän"

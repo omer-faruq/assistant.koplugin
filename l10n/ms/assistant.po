@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 04:11+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Bahasa Melayu (AI translation)\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API memulangkan ralat</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API tidak mengembalikan jawapan yang boleh digunakan</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Menganalisis konteks buku untuk Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Memasang %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Balasan model:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parameter</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Penaakulan (tiada jawapan akhir)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Permintaan</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "Ditambah <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Ditambah ke pembina kosa kata"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Menambah setiap perkataan yang anda cari dalam kamus ke Pembina Perbendaharaan Kata sebaik sahaja hasilnya muncul."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Analisis sorotan, nota dan kandungan Nota AI anda daripada buku ini."
 
@@ -397,6 +409,13 @@ msgstr "Melampirkan jawapan sebagai nota buku pada sorotan semasa"
 
 msgid "Author"
 msgstr "Pengarang"
+
+msgid "Auto"
+msgstr "Auto"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Tambah Perkataan Secara Auto ke Pembina Perbendaharaan Kata"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Percanggahan / Soalan Terbuka"
 msgid "Conversation is saved to AI Notes"
 msgstr "Perbualan disimpan ke Nota AI"
 
+msgid "Copied to clipboard."
+msgstr "Disalin ke papan klip."
+
 msgid "Copy"
 msgstr "Salin"
 
@@ -587,6 +609,9 @@ msgstr "Prompt Tersuai"
 
 msgid "Custom Prompts"
 msgstr "Prompt Tersuai"
+
+msgid "Default"
+msgstr "Lalai"
 
 msgid "Delete"
 msgstr "Padam"
@@ -830,6 +855,9 @@ msgstr "Biarkan kosong untuk menggunakan: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Biarkan medan ini kosong untuk menggunakan bahasa UI: %1"
 
+msgid "Left to Right"
+msgstr "Kiri ke Kanan"
+
 msgid "Locations"
 msgstr "Lokasi"
 
@@ -919,6 +947,9 @@ msgstr "Tiada respons diterima."
 
 msgid "No text left to annotate"
 msgstr "Tiada teks lagi untuk dianotasi"
+
+msgid "No text selected"
+msgstr "Tiada teks dipilih"
 
 msgid "No text to annotate"
 msgstr "Tiada teks untuk dianotasi"
@@ -1064,12 +1095,6 @@ msgstr "Nota Pantas"
 msgid "Quick note saved successfully"
 msgstr "Nota pantas berjaya disimpan"
 
-msgid "RTL Layout"
-msgstr "Susun Atur RTL"
-
-msgid "RTL written Language"
-msgstr "Bahasa Tulisan RTL"
-
 msgid "Re-immersion"
 msgstr "Imersi Semula"
 
@@ -1130,11 +1155,17 @@ msgstr ""
 "bukti kelayakan alat carian yang ditambah melalui UI Tetapan akan dialih keluar.\n"
 "Fail configuration.lua akan dikekalkan."
 
+msgid "Response Font: %1"
+msgstr "Fon Jawapan: %1"
+
 msgid "Response Settings"
 msgstr "Tetapan Respons"
 
 msgid "Response Text Font Size"
 msgstr "Saiz Fon Teks Respons"
+
+msgid "Right to Left"
+msgstr "Kanan ke Kiri"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1202,9 +1233,6 @@ msgstr "Pilih Nota AI"
 
 msgid "Select a model:"
 msgstr "Pilih model:"
-
-msgid "Selection copied to clipboard."
-msgstr "Pilihan disalin ke papan keratan."
 
 msgid "Settings"
 msgstr "Tetapan"
@@ -1297,6 +1325,9 @@ msgstr "Istilah & Konsep"
 msgid "Test"
 msgstr "Uji"
 
+msgid "Text Direction: %1"
+msgstr "Arah Teks: %1"
+
 msgid "Text Size: %1"
 msgstr "Saiz Teks: %1"
 
@@ -1305,6 +1336,9 @@ msgstr "Teks disalin ke papan keratan"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Pengendali untuk %1 tidak ditemui. Sila pastikan pengendali tersebut wujud dalam direktori api_handlers."
+
+msgid "Thinking ..."
+msgstr "Sedang berfikir ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Butang ini mencipta nota pantas dengan teks yang diserlahkan."
@@ -1477,6 +1511,9 @@ msgstr "Kosa Kata"
 msgid "Vocabulary Builder"
 msgstr "Pembina Perbendaharaan Kata"
 
+msgid "Waiting for the model ..."
+msgstr "Menunggu model ..."
+
 msgid "Web Search"
 msgstr "Carian Web"
 
@@ -1507,9 +1544,6 @@ msgstr "Bentuk Kata & Lemma"
 
 msgid "Word Origin"
 msgstr "Asal Usul Kata"
-
-msgid "Word copied to clipboard."
-msgstr "Perkataan disalin ke papan keratan."
 
 msgid "Write quick notes here"
 msgstr "Tulis nota pantas di sini"

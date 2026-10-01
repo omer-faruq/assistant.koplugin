@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API gaf een foutmelding</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API gaf geen bruikbaar antwoord</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Boekcontext analyseren voor Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Bezig met installeren van %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Antwoord van model:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parameters</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Redenering (geen definitief antwoord)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Verzoek</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "Toegevoegd <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Toegevoegd aan woordenschatbouwer"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Voegt elk woord dat je in het woordenboek opzoekt direct toe aan de Woordenschatbuilder zodra het resultaat verschijnt."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Analyse van je markeringen, notities en de inhoud van AI-notities uit het boek."
 
@@ -397,6 +409,13 @@ msgstr "Voegt het antwoord als boeknotitie toe aan de huidige markering"
 
 msgid "Author"
 msgstr "Auteur"
+
+msgid "Auto"
+msgstr "Auto"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Woord automatisch toevoegen aan Woordenschatbuilder"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Tegenstrijdigheden / Open vragen"
 msgid "Conversation is saved to AI Notes"
 msgstr "Het gesprek is opgeslagen in AI-notities."
 
+msgid "Copied to clipboard."
+msgstr "Gekopieerd naar klembord."
+
 msgid "Copy"
 msgstr "Kopiëren"
 
@@ -587,6 +609,9 @@ msgstr "Aangepaste prompt"
 
 msgid "Custom Prompts"
 msgstr "Aangepaste prompts"
+
+msgid "Default"
+msgstr "Standaard"
 
 msgid "Delete"
 msgstr "Verwijderen"
@@ -831,6 +856,9 @@ msgstr "Leeg laten om te gebruiken: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Laat deze velden leeg om de UI-taal te gebruiken: %1"
 
+msgid "Left to Right"
+msgstr "Van links naar rechts"
+
 msgid "Locations"
 msgstr "Locaties"
 
@@ -920,6 +948,9 @@ msgstr "Geen antwoord ontvangen."
 
 msgid "No text left to annotate"
 msgstr "Geen tekst meer om te annoteren"
+
+msgid "No text selected"
+msgstr "Geen tekst geselecteerd"
 
 msgid "No text to annotate"
 msgstr "Geen tekst om te annoteren"
@@ -1065,12 +1096,6 @@ msgstr "Snelle notitie"
 msgid "Quick note saved successfully"
 msgstr "Snelle notitie succesvol opgeslagen"
 
-msgid "RTL Layout"
-msgstr "RTL-indeling"
-
-msgid "RTL written Language"
-msgstr "RTL-geschreven taal"
-
 msgid "Re-immersion"
 msgstr "Herbeleving"
 
@@ -1131,11 +1156,17 @@ msgstr ""
 "referenties voor zoekhulpmiddelen die via de instellingen-interface zijn toegevoegd, worden verwijderd.\n"
 "Het bestand configuration.lua blijft behouden."
 
+msgid "Response Font: %1"
+msgstr "Lettertype van antwoord: %1"
+
 msgid "Response Settings"
 msgstr "Antwoordinstellingen"
 
 msgid "Response Text Font Size"
 msgstr "Lettergrootte van antwoordtekst"
+
+msgid "Right to Left"
+msgstr "Van rechts naar links"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1203,9 +1234,6 @@ msgstr "Selecteer AI-notitie"
 
 msgid "Select a model:"
 msgstr "Selecteer een model:"
-
-msgid "Selection copied to clipboard."
-msgstr "Selectie gekopieerd naar klembord."
 
 msgid "Settings"
 msgstr "Instellingen"
@@ -1298,6 +1326,9 @@ msgstr "Termen en concepten"
 msgid "Test"
 msgstr "Test"
 
+msgid "Text Direction: %1"
+msgstr "Tekstrichting: %1"
+
 msgid "Text Size: %1"
 msgstr "Lettergrootte: %1"
 
@@ -1306,6 +1337,9 @@ msgstr "Tekst naar het klembord gekopieerd"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "De handler voor %1 is niet gevonden. Zorg ervoor dat de handler in de map api_handlers bestaat."
+
+msgid "Thinking ..."
+msgstr "Aan het denken ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Deze knop maakt een snelle notitie met de gemarkeerde tekst."
@@ -1478,6 +1512,9 @@ msgstr "Woordenschat"
 msgid "Vocabulary Builder"
 msgstr "Woordenschatbouwer"
 
+msgid "Waiting for the model ..."
+msgstr "Wachten op het model ..."
+
 msgid "Web Search"
 msgstr "Web zoeken"
 
@@ -1508,9 +1545,6 @@ msgstr "Woordvorm en lemma"
 
 msgid "Word Origin"
 msgstr "Woordherkomst"
-
-msgid "Word copied to clipboard."
-msgstr "Woord gekopieerd naar klembord."
 
 msgid "Write quick notes here"
 msgstr "Schrijf hier snelle notities"

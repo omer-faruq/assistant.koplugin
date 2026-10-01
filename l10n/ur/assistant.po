@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 04:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: اردو (AI translation)\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API نے ایک خرابی واپس کی</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API نے کوئی قابلِ استعمال جواب نہیں دیا</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Term X-Ray کے لیے کتاب کے سیاق و سباق کا تجزیہ کیا جا رہا ہے...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 انسٹال ہو رہا ہے...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>ماڈل کا جواب:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>پیرامیٹرز</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>استدلال (کوئی حتمی جواب نہیں)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>درخواست</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "<b>[%1 (AI)]</b> شامل کر دیا گیا"
 msgid "Added to vocabulary builder"
 msgstr "ذخیرۂ الفاظ بنانے والے میں شامل کر دیا گیا"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "آپ词典 میں جو بھی لفظ دیکھیں، اس کا نتیجہ ظاہر ہوتے ہی اسے Vocabulary Builder میں شامل کر دیتا ہے۔"
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "کتاب سے آپ کی ہائی لائٹس، نوٹس، اور اے آئی نوٹس کے مواد کا تجزیہ۔"
 
@@ -397,6 +409,13 @@ msgstr "جواب کو موجودہ نمایاں متن پر کتابی نوٹ ک
 
 msgid "Author"
 msgstr "مصنف"
+
+msgid "Auto"
+msgstr "خودکار"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "خودکار طور پر لفظ Vocabulary Builder میں شامل کریں"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "تضادات / کھلے سوالات"
 msgid "Conversation is saved to AI Notes"
 msgstr "گفتگو اے آئی نوٹس میں محفوظ کر دی گئی ہے"
 
+msgid "Copied to clipboard."
+msgstr "کلپ بورڈ پر کاپی ہو گیا۔"
+
 msgid "Copy"
 msgstr "کاپی کریں"
 
@@ -587,6 +609,9 @@ msgstr "کسٹم پرامپٹ"
 
 msgid "Custom Prompts"
 msgstr "حسب ضرورت پرامپٹس"
+
+msgid "Default"
+msgstr "طے شدہ"
 
 msgid "Delete"
 msgstr "حذف کریں"
@@ -831,6 +856,9 @@ msgstr "خالی چھوڑیں تاکہ استعمال ہو: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "UI زبان استعمال کرنے کے لیے ان خانوں کو خالی چھوڑیں: %1"
 
+msgid "Left to Right"
+msgstr "بائیں سے دائیں"
+
 msgid "Locations"
 msgstr "مقامات"
 
@@ -920,6 +948,9 @@ msgstr "کوئی جواب موصول نہیں ہوا۔"
 
 msgid "No text left to annotate"
 msgstr "حاشیہ لگانے کے لیے کوئی متن باقی نہیں"
+
+msgid "No text selected"
+msgstr "کوئی متن منتخب نہیں"
 
 msgid "No text to annotate"
 msgstr "حاشیہ لگانے کے لیے کوئی متن نہیں"
@@ -1065,12 +1096,6 @@ msgstr "فوری نوٹ"
 msgid "Quick note saved successfully"
 msgstr "فوری نوٹ کامیابی سے محفوظ ہو گیا"
 
-msgid "RTL Layout"
-msgstr "دائیں سے بائیں ترتیب"
-
-msgid "RTL written Language"
-msgstr "RTL تحریری زبان"
-
 msgid "Re-immersion"
 msgstr "دوبارہ غوطہ زنی"
 
@@ -1130,11 +1155,17 @@ msgstr ""
 "یہ پلگن کو اس کی فیکٹری ڈیفالٹس پر بحال کر دیتا ہے۔ پرووائیڈرز، API کلیدیں اور تلاش کے آلے کی اسناد جو سیٹنگز UI کے ذریعے شامل کی گئی ہیں ہٹا دی جائیں گی۔\n"
 "فائل configuration.lua محفوظ رہے گی۔"
 
+msgid "Response Font: %1"
+msgstr "جواب کا فونٹ: %1"
+
 msgid "Response Settings"
 msgstr "جواب کی ترتیبات"
 
 msgid "Response Text Font Size"
 msgstr "جوابی متن کا فونٹ سائز"
+
+msgid "Right to Left"
+msgstr "دائیں سے بائیں"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1202,9 +1233,6 @@ msgstr "AI نوٹ منتخب کریں"
 
 msgid "Select a model:"
 msgstr "ایک ماڈل منتخب کریں:"
-
-msgid "Selection copied to clipboard."
-msgstr "انتخاب کلپ بورڈ پر کاپی ہو گیا۔"
 
 msgid "Settings"
 msgstr "ترتیبات"
@@ -1297,6 +1325,9 @@ msgstr "اصطلاحات اور تصورات"
 msgid "Test"
 msgstr "ٹیسٹ"
 
+msgid "Text Direction: %1"
+msgstr "متن کی سمت: %1"
+
 msgid "Text Size: %1"
 msgstr "متن کا سائز: %1"
 
@@ -1305,6 +1336,9 @@ msgstr "متن کلپ بورڈ پر کاپی کر دیا گیا"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 کے لیے ہینڈلر نہیں ملا۔ براہ کرم یقینی بنائیں کہ ہینڈلر api_handlers ڈائریکٹری میں موجود ہے۔"
+
+msgid "Thinking ..."
+msgstr "سوچ رہا ہے ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "یہ بٹن نمایاں کردہ متن کے ساتھ ایک فوری نوٹ تخلیق کرتا ہے۔"
@@ -1477,6 +1511,9 @@ msgstr "ذخیرہ الفاظ"
 msgid "Vocabulary Builder"
 msgstr "ذخیرۂ الفاظ"
 
+msgid "Waiting for the model ..."
+msgstr "ماڈل کا انتظار ..."
+
 msgid "Web Search"
 msgstr "ویب سرچ"
 
@@ -1507,9 +1544,6 @@ msgstr "لفظ کی شکل اور لمّا"
 
 msgid "Word Origin"
 msgstr "لفظ کی اصل"
-
-msgid "Word copied to clipboard."
-msgstr "لفظ کلپ بورڈ پر کاپی ہو گیا۔"
 
 msgid "Write quick notes here"
 msgstr "یہاں فوری نوٹس لکھیں"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 04:37+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: සිංහල (AI translation)\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API මගින් දෝෂයක් ලබා දුන්නේය</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API මගින් භාවිතයට ගත හැකි පිළිතුරක් ලබා දුන්නේ නැත</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Term X-Ray සඳහා පොත් සන්දර්භය විශ්ලේෂණය කරමින්...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 ස්ථාපනය වෙමින්...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>ආකෘති පිළිතුර:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>පරාමිති</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>තර්කනය (අවසාන පිළිතුරක් නැත)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>ඉල්ලීම</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "<b>[%1 (AI)]</b> එකතු කරන ලදි"
 msgid "Added to vocabulary builder"
 msgstr "වචන ගොඩනැගුමට එකතු කරන ලදි"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "ඔබ ශබ්දකෝෂයේ සොයන සෑම වචනයක්ම ප්රතිඵලය පෙනෙන විගසම Vocabulary Builder වෙත එක් කරයි."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "පොතෙන් ඔබේ උද්දීපන, සටහන් සහ AI සටහන් අන්තර්ගතය පිළිබඳ විශ්ලේෂණය."
 
@@ -397,6 +409,13 @@ msgstr "පිළිතුර වත්මන් ඉස්මතු කිරී
 
 msgid "Author"
 msgstr "කර්තෘ"
+
+msgid "Auto"
+msgstr "ස්වයංක්රීය"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "වචනය ස්වයංක්රීයව Vocabulary Builder වෙත එක් කරන්න"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "පරස්පරතා / විවෘත ප්රශ්න"
 msgid "Conversation is saved to AI Notes"
 msgstr "සංවාදය AI සටහන් වෙත සුරකින ලදී"
 
+msgid "Copied to clipboard."
+msgstr "පසුරු පුවරුවට පිටපත් කරන ලදී."
+
 msgid "Copy"
 msgstr "පිටපත් කරන්න"
 
@@ -587,6 +609,9 @@ msgstr "අභිරුචි ප්රොම්ප්ටය"
 
 msgid "Custom Prompts"
 msgstr "අභිරුචි ප්‍රොම්ප්ට්"
+
+msgid "Default"
+msgstr "පෙරනිමි"
 
 msgid "Delete"
 msgstr "මකන්න"
@@ -831,6 +856,9 @@ msgstr "භාවිතා කිරීමට හිස්ව තබන්න: %
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "UI භාෂාව භාවිතා කිරීමට මෙම ක්ෂේත්‍ර හිස්ව තබන්න: %1"
 
+msgid "Left to Right"
+msgstr "වමේ සිට දකුණට"
+
 msgid "Locations"
 msgstr "ස්ථාන"
 
@@ -920,6 +948,9 @@ msgstr "කිසිදු ප්‍රතිචාරයක් නොලැබ�
 
 msgid "No text left to annotate"
 msgstr "සටහන් කිරීමට පෙළ ඉතිරි නැත"
+
+msgid "No text selected"
+msgstr "පෙළක් තෝරා නැත"
 
 msgid "No text to annotate"
 msgstr "සටහන් කිරීමට පෙළ නැත"
@@ -1065,12 +1096,6 @@ msgstr "ඉක්මන් සටහන"
 msgid "Quick note saved successfully"
 msgstr "ඉක්මන් සටහන සාර්ථකව සුරැකිණි"
 
-msgid "RTL Layout"
-msgstr "RTL පිරිසැලසුම"
-
-msgid "RTL written Language"
-msgstr "RTL ලිඛිත භාෂාව"
-
 msgid "Re-immersion"
 msgstr "නැවත ගිලී යාම"
 
@@ -1131,11 +1156,17 @@ msgstr ""
 "සෙවුම් මෙවලම් අක්තපත්ර ඉවත් කෙරේ.\n"
 "configuration.lua ගොනුව ආරක්ෂා වේ."
 
+msgid "Response Font: %1"
+msgstr "ප්රතිචාර අකුරු: %1"
+
 msgid "Response Settings"
 msgstr "ප්‍රතිචාර සැකසුම්"
 
 msgid "Response Text Font Size"
 msgstr "ප්‍රතිචාර පෙළෙහි අකුරු ප්‍රමාණය"
+
+msgid "Right to Left"
+msgstr "දකුණේ සිට වමට"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1203,9 +1234,6 @@ msgstr "AI සටහන තෝරන්න"
 
 msgid "Select a model:"
 msgstr "ආකෘතියක් තෝරන්න:"
-
-msgid "Selection copied to clipboard."
-msgstr "තේරීම ක්ලිප්බෝඩ් වෙත පිටපත් කරන ලදී."
 
 msgid "Settings"
 msgstr "සැකසුම්"
@@ -1298,6 +1326,9 @@ msgstr "පද සහ සංකල්ප"
 msgid "Test"
 msgstr "පරීක්ෂාව"
 
+msgid "Text Direction: %1"
+msgstr "පෙළ දිශාව: %1"
+
 msgid "Text Size: %1"
 msgstr "අකුරු ප්‍රමාණය: %1"
 
@@ -1306,6 +1337,9 @@ msgstr "පෙළ ක්ලිප්බෝඩ් එකට පිටපත් �
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 සඳහා හැන්ඩ්ලරය හමු නොවීය. කරුණාකර api_handlers ඩිරෙක්ටරියේ හැන්ඩ්ලරය පවතින බවට සහතික වන්න."
+
+msgid "Thinking ..."
+msgstr "සිතමින් ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "මෙම බොත්තම උද්දීපනය කළ පාඨය සමඟ ඉක්මන් සටහනක් නිර්මාණය කරයි."
@@ -1478,6 +1512,9 @@ msgstr "වචන මාලාව"
 msgid "Vocabulary Builder"
 msgstr "වචන ගොඩනංවනය"
 
+msgid "Waiting for the model ..."
+msgstr "ආකෘතිය එනතෙක් රැඳී සිටිමින් ..."
+
 msgid "Web Search"
 msgstr "වෙබ් සෙවීම"
 
@@ -1508,9 +1545,6 @@ msgstr "වචන ස්වරූපය සහ මූල පදය"
 
 msgid "Word Origin"
 msgstr "වචනයේ මූලාරම්භය"
-
-msgid "Word copied to clipboard."
-msgstr "වචනය ක්ලිප්බෝඩ් වෙත පිටපත් කරන ලදී."
 
 msgid "Write quick notes here"
 msgstr "ඉක්මන් සටහන් මෙහි ලියන්න"

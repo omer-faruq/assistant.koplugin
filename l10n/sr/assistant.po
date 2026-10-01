@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API је вратио грешку</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API nije vratio nijedan upotrebljiv odgovor</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Анализа контекста књиге за Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Инсталирање %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Odgovor modela:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametri</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Rezonovanje (bez konačnog odgovora)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Zahtev</b> – POST %1"
@@ -338,6 +347,9 @@ msgstr "Додато <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Додато у градитељ вокабулара"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Dodaje svaku reč koju potražite u rečniku u Sakupljač reči čim se rezultat pojavi."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Анализа ваших истакнутих делова, бележака и садржаја AI бележака из књиге."
 
@@ -397,6 +409,13 @@ msgstr "Прилаже одговор као напомену у књизи уз
 
 msgid "Author"
 msgstr "Аутор"
+
+msgid "Auto"
+msgstr "Automatski"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Automatski dodaj reč u Sakupljač reči"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Контрадикције / Отворена питања"
 msgid "Conversation is saved to AI Notes"
 msgstr "Разговор је сачуван у AI белешке"
 
+msgid "Copied to clipboard."
+msgstr "Kopirano u ostavu."
+
 msgid "Copy"
 msgstr "Копирај"
 
@@ -587,6 +609,9 @@ msgstr "Прилагођени промпт"
 
 msgid "Custom Prompts"
 msgstr "Prilagođeni promptovi"
+
+msgid "Default"
+msgstr "Podrazumevano"
 
 msgid "Delete"
 msgstr "Obriši"
@@ -832,6 +857,9 @@ msgstr "Ostavite prazno da se koristi: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Ostavite ova polja prazna da se koristi jezik interfejsa: %1"
 
+msgid "Left to Right"
+msgstr "S leva na desno"
+
 msgid "Locations"
 msgstr "Локације"
 
@@ -921,6 +949,9 @@ msgstr "Nije primljen odgovor."
 
 msgid "No text left to annotate"
 msgstr "Нема преосталог текста за додавање напомене"
+
+msgid "No text selected"
+msgstr "Nije izabran nikakav tekst"
 
 msgid "No text to annotate"
 msgstr "Нема текста за додавање напомене"
@@ -1066,12 +1097,6 @@ msgstr "Брза белешка"
 msgid "Quick note saved successfully"
 msgstr "Brza beleška je uspešno sačuvana"
 
-msgid "RTL Layout"
-msgstr "Распоред здесна налево"
-
-msgid "RTL written Language"
-msgstr "RTL jezik pisanja"
-
 msgid "Re-immersion"
 msgstr "Поновно урањање"
 
@@ -1132,11 +1157,17 @@ msgstr ""
 "akreditivi alata za pretragu dodati kroz interfejs podešavanja biće uklonjeni.\n"
 "Datoteka configuration.lua će biti sačuvana."
 
+msgid "Response Font: %1"
+msgstr "Font odgovora: %1"
+
 msgid "Response Settings"
 msgstr "Подешавања одговора"
 
 msgid "Response Text Font Size"
 msgstr "Veličina fonta teksta odgovora"
+
+msgid "Right to Left"
+msgstr "S desna na levo"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1204,9 +1235,6 @@ msgstr "Изаберите AI белешку"
 
 msgid "Select a model:"
 msgstr "Изабери модел:"
-
-msgid "Selection copied to clipboard."
-msgstr "Избор је копиран у клипборд."
 
 msgid "Settings"
 msgstr "Podešavanja"
@@ -1299,6 +1327,9 @@ msgstr "Појмови и концепти"
 msgid "Test"
 msgstr "Test"
 
+msgid "Text Direction: %1"
+msgstr "Smer teksta: %1"
+
 msgid "Text Size: %1"
 msgstr "Veličina teksta: %1"
 
@@ -1307,6 +1338,9 @@ msgstr "Текст је копиран у клипборд"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Руковалац за %1 није пронађен. Уверите се да руковалац постоји у директоријуму api_handlers."
+
+msgid "Thinking ..."
+msgstr "Razmišljam ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ово дугме креира брзу белешку са означеним текстом."
@@ -1479,6 +1513,9 @@ msgstr "Вокабулар"
 msgid "Vocabulary Builder"
 msgstr "Градитељ речника"
 
+msgid "Waiting for the model ..."
+msgstr "Čekanje na model ..."
+
 msgid "Web Search"
 msgstr "Веб претрага"
 
@@ -1509,9 +1546,6 @@ msgstr "Облик речи и лема"
 
 msgid "Word Origin"
 msgstr "Порекло речи"
-
-msgid "Word copied to clipboard."
-msgstr "Реч је копирана у клипборд."
 
 msgid "Write quick notes here"
 msgstr "Pišite brze beleške ovde"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API bir hata döndürdü</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API kullanılabilir bir yanıt döndürmedi</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Terim X-Ray için kitap bağlamı analiz ediliyor...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 yükleniyor...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Model yanıtı:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametreler</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Akıl yürütme (nihai yanıt yok)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>İstek</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "Eklendi <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Kelime dağarcığı oluşturucuya eklendi"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Sözlükte aradığınız her sözcüğü, sonuç görünür görünmez Kelime Hazinesi Oluşturucu'ya ekler."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Kitaptaki vurgularınızın, notlarınızın ve AI Notları içeriğinin analizi."
 
@@ -397,6 +409,13 @@ msgstr "Yanıtı geçerli vurguya kitap notu olarak ekler"
 
 msgid "Author"
 msgstr "Yazar"
+
+msgid "Auto"
+msgstr "Otomatik"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Kelimeyi Kelime Hazinesi Oluşturucu'ya Otomatik Ekle"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Çelişkiler / Açık Sorular"
 msgid "Conversation is saved to AI Notes"
 msgstr "Sohbet AI Notlarına kaydedildi"
 
+msgid "Copied to clipboard."
+msgstr "Panoya kopyalandı."
+
 msgid "Copy"
 msgstr "Kopyala"
 
@@ -587,6 +609,9 @@ msgstr "Özel İstem"
 
 msgid "Custom Prompts"
 msgstr "Özel İstemler"
+
+msgid "Default"
+msgstr "Varsayılan"
 
 msgid "Delete"
 msgstr "Sil"
@@ -831,6 +856,9 @@ msgstr "Kullanmak için boş bırakın: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Arayüz dilini kullanmak için bu alanları boş bırakın: %1"
 
+msgid "Left to Right"
+msgstr "Soldan Sağa"
+
 msgid "Locations"
 msgstr "Mekânlar"
 
@@ -920,6 +948,9 @@ msgstr "Yanıt alınmadı."
 
 msgid "No text left to annotate"
 msgstr "Not eklenecek metin kalmadı"
+
+msgid "No text selected"
+msgstr "Metin seçilmedi"
 
 msgid "No text to annotate"
 msgstr "Not eklenecek metin yok"
@@ -1065,12 +1096,6 @@ msgstr "Hızlı Not"
 msgid "Quick note saved successfully"
 msgstr "Hızlı not başarıyla kaydedildi"
 
-msgid "RTL Layout"
-msgstr "Sağdan sola düzen"
-
-msgid "RTL written Language"
-msgstr "RTL Yazılan Dil"
-
 msgid "Re-immersion"
 msgstr "Hikâyeye Yeniden Dalış"
 
@@ -1130,11 +1155,17 @@ msgstr ""
 "Bu, eklentiyi fabrika varsayılanlarına döndürür. Ayarlar arayüzü üzerinden eklenen sağlayıcılar, API anahtarları ve arama aracı kimlik bilgileri kaldırılacaktır.\n"
 "configuration.lua dosyası korunacaktır."
 
+msgid "Response Font: %1"
+msgstr "Yanıt Yazı Tipi: %1"
+
 msgid "Response Settings"
 msgstr "Yanıt Ayarları"
 
 msgid "Response Text Font Size"
 msgstr "Yanıt Metni Yazı Boyutu"
+
+msgid "Right to Left"
+msgstr "Sağdan Sola"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1202,9 +1233,6 @@ msgstr "Yapay Zeka Notu Seç"
 
 msgid "Select a model:"
 msgstr "Bir model seçin:"
-
-msgid "Selection copied to clipboard."
-msgstr "Seçim panoya kopyalandı."
 
 msgid "Settings"
 msgstr "Ayarlar"
@@ -1297,6 +1325,9 @@ msgstr "Terimler ve Kavramlar"
 msgid "Test"
 msgstr "Test"
 
+msgid "Text Direction: %1"
+msgstr "Metin Yönü: %1"
+
 msgid "Text Size: %1"
 msgstr "Yazı Boyutu: %1"
 
@@ -1305,6 +1336,9 @@ msgstr "Metin panoya kopyalandı"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 için işleyici bulunamadı. Lütfen işleyicinin api_handlers dizininde mevcut olduğundan emin olun."
+
+msgid "Thinking ..."
+msgstr "Düşünüyor ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Bu düğme, vurgulanan metinle hızlı bir not oluşturur."
@@ -1477,6 +1511,9 @@ msgstr "Kelime Bilgisi"
 msgid "Vocabulary Builder"
 msgstr "Kelime Dağarcığı"
 
+msgid "Waiting for the model ..."
+msgstr "Model bekleniyor ..."
+
 msgid "Web Search"
 msgstr "Web Araması"
 
@@ -1507,9 +1544,6 @@ msgstr "Kelime Formu ve Lemma"
 
 msgid "Word Origin"
 msgstr "Kelime Kökeni"
-
-msgid "Word copied to clipboard."
-msgstr "Kelime panoya kopyalandı."
 
 msgid "Write quick notes here"
 msgstr "Buraya hızlı notlar yazın"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API повернув помилку</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API не повернув придатної відповіді</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Аналіз контексту книги для Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Встановлення %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Відповідь моделі:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Параметри</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Міркування (без остаточної відповіді)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Запит</b> — POST %1"
@@ -338,6 +347,9 @@ msgstr "Додано <b>[%1 (ШІ)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Додано до словника"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Додає кожне слово, яке ви шукаєте у словнику, до Vocabulary Builder, щойно з'явиться результат."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Аналіз ваших виділень, нотаток і вмісту нотаток ШІ з книги."
 
@@ -397,6 +409,13 @@ msgstr "Прикріплює відповідь як примітку в кни�
 
 msgid "Author"
 msgstr "Автор"
+
+msgid "Auto"
+msgstr "Авто"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Автододавання слів до Vocabulary Builder"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Суперечності / Відкриті питання"
 msgid "Conversation is saved to AI Notes"
 msgstr "Розмову збережено в нотатки ШІ"
 
+msgid "Copied to clipboard."
+msgstr "Скопійовано до буфера обміну."
+
 msgid "Copy"
 msgstr "Копіювати"
 
@@ -587,6 +609,9 @@ msgstr "Власний промпт"
 
 msgid "Custom Prompts"
 msgstr "Власні промпти"
+
+msgid "Default"
+msgstr "Типово"
 
 msgid "Delete"
 msgstr "Видалити"
@@ -832,6 +857,9 @@ msgstr "Залиште порожнім, щоб використовувати: 
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Залиште ці поля порожніми, щоб використовувати мову інтерфейсу: %1"
 
+msgid "Left to Right"
+msgstr "Зліва направо"
+
 msgid "Locations"
 msgstr "Локації"
 
@@ -921,6 +949,9 @@ msgstr "Відповідь не отримано."
 
 msgid "No text left to annotate"
 msgstr "Не залишилося тексту для анотування"
+
+msgid "No text selected"
+msgstr "Текст не вибрано"
 
 msgid "No text to annotate"
 msgstr "Немає тексту для анотування"
@@ -1066,12 +1097,6 @@ msgstr "Швидка нотатка"
 msgid "Quick note saved successfully"
 msgstr "Швидку нотатку успішно збережено"
 
-msgid "RTL Layout"
-msgstr "Макет справа наліво"
-
-msgid "RTL written Language"
-msgstr "Мова письма RTL"
-
 msgid "Re-immersion"
 msgstr "Повторне занурення"
 
@@ -1132,11 +1157,17 @@ msgstr ""
 "облікові дані пошукового інструмента, додані через інтерфейс налаштувань, будуть видалені.\n"
 "Файл configuration.lua буде збережено."
 
+msgid "Response Font: %1"
+msgstr "Шрифт відповіді: %1"
+
 msgid "Response Settings"
 msgstr "Налаштування відповідей"
 
 msgid "Response Text Font Size"
 msgstr "Розмір шрифту відповіді"
+
+msgid "Right to Left"
+msgstr "Справа наліво"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1204,9 +1235,6 @@ msgstr "Виберіть нотатку ШІ"
 
 msgid "Select a model:"
 msgstr "Виберіть модель:"
-
-msgid "Selection copied to clipboard."
-msgstr "Виділення скопійовано в буфер обміну."
 
 msgid "Settings"
 msgstr "Налаштування"
@@ -1299,6 +1327,9 @@ msgstr "Терміни та поняття"
 msgid "Test"
 msgstr "Тест"
 
+msgid "Text Direction: %1"
+msgstr "Напрямок тексту: %1"
+
 msgid "Text Size: %1"
 msgstr "Розмір шрифту: %1"
 
@@ -1307,6 +1338,9 @@ msgstr "Текст скопійовано в буфер обміну"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Обробник для %1 не знайдено. Переконайтеся, що обробник існує в каталозі api_handlers."
+
+msgid "Thinking ..."
+msgstr "Думаю ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ця кнопка створює швидку нотатку з виділеним текстом."
@@ -1479,6 +1513,9 @@ msgstr "Лексика"
 msgid "Vocabulary Builder"
 msgstr "Помічник словника"
 
+msgid "Waiting for the model ..."
+msgstr "Очікування відповіді моделі ..."
+
 msgid "Web Search"
 msgstr "Вебпошук"
 
@@ -1509,9 +1546,6 @@ msgstr "Форма слова та лема"
 
 msgid "Word Origin"
 msgstr "Походження слова"
-
-msgid "Word copied to clipboard."
-msgstr "Слово скопійовано в буфер обміну."
 
 msgid "Write quick notes here"
 msgstr "Введіть швидкі нотатки тут"

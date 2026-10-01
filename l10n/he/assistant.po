@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>ה־API החזיר שגיאה</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>ה-API לא החזיר תשובה שמישה</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>מנתח את הקשר של הספר עבור Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>מתקין את %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>תשובת המודל:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>פרמטרים</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>חשיבה (ללא תשובה סופית)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>בקשה</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "נוסף <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "נוסף לבונה אוצר המילים"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "מוסיף כל מילה שתחפשו במילון לבונה אוצר המילים ברגע שהתוצאה מופיעה."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "ניתוח ההדגשות, ההערות ותוכן הערות ה-AI שלך מהספר."
 
@@ -397,6 +409,13 @@ msgstr "מצרף את התשובה כהערת ספר להדגשה הנוכחית
 
 msgid "Author"
 msgstr "מחבר"
+
+msgid "Auto"
+msgstr "אוטומטי"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "הוספה אוטומטית של מילים לבונה אוצר המילים"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "סתירות / שאלות פתוחות"
 msgid "Conversation is saved to AI Notes"
 msgstr "השיחה נשמרת בהערות AI"
 
+msgid "Copied to clipboard."
+msgstr "הועתק ללוח."
+
 msgid "Copy"
 msgstr "העתק"
 
@@ -587,6 +609,9 @@ msgstr "הנחיה מותאמת אישית"
 
 msgid "Custom Prompts"
 msgstr "הנחיות מותאמות אישית"
+
+msgid "Default"
+msgstr "ברירת מחדל"
 
 msgid "Delete"
 msgstr "מחיקה"
@@ -833,6 +858,9 @@ msgstr "השאר ריק כדי להשתמש ב: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "השאר שדות אלה ריקים כדי להשתמש בשפת הממשק: %1"
 
+msgid "Left to Right"
+msgstr "משמאל לימין"
+
 msgid "Locations"
 msgstr "מקומות"
 
@@ -922,6 +950,9 @@ msgstr "לא התקבלה תשובה."
 
 msgid "No text left to annotate"
 msgstr "לא נותר טקסט להוספת הערה"
+
+msgid "No text selected"
+msgstr "לא נבחר טקסט"
 
 msgid "No text to annotate"
 msgstr "אין טקסט להוספת הערה"
@@ -1067,12 +1098,6 @@ msgstr "הערה מהירה"
 msgid "Quick note saved successfully"
 msgstr "ההערה המהירה נשמרה בהצלחה"
 
-msgid "RTL Layout"
-msgstr "פריסת RTL"
-
-msgid "RTL written Language"
-msgstr "שפה הנכתבת מימין לשמאל"
-
 msgid "Re-immersion"
 msgstr "התעמקות מחדש"
 
@@ -1132,11 +1157,17 @@ msgstr ""
 "פעולה זו משחזרת את ההגדרות לברירת המחדל של היצרן. ספקים, מפתחות API ופרטי כניסה לכלי חיפוש שנוספו דרך ממשק ההגדרות יוסרו.\n"
 "הקובץ configuration.lua יישמר."
 
+msgid "Response Font: %1"
+msgstr "גופן התשובה: %1"
+
 msgid "Response Settings"
 msgstr "הגדרות תגובה"
 
 msgid "Response Text Font Size"
 msgstr "גודל גופן טקסט התשובה"
+
+msgid "Right to Left"
+msgstr "מימין לשמאל"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1204,9 +1235,6 @@ msgstr "בחר הערת AI"
 
 msgid "Select a model:"
 msgstr "בחר מודל:"
-
-msgid "Selection copied to clipboard."
-msgstr "הבחירה הועתקה ללוח."
 
 msgid "Settings"
 msgstr "הגדרות"
@@ -1299,6 +1327,9 @@ msgstr "מונחים ומושגים"
 msgid "Test"
 msgstr "בדיקה"
 
+msgid "Text Direction: %1"
+msgstr "כיוון הטקסט: %1"
+
 msgid "Text Size: %1"
 msgstr "גודל טקסט: %1"
 
@@ -1307,6 +1338,9 @@ msgstr "הטקסט הועתק ללוח הגזירים"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "המטפל עבור %1 לא נמצא. אנא ודא שהמטפל קיים בתיקיית api_handlers."
+
+msgid "Thinking ..."
+msgstr "חושב ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "כפתור זה יוצר הערה מהירה עם הטקסט המסומן."
@@ -1479,6 +1513,9 @@ msgstr "אוצר מילים"
 msgid "Vocabulary Builder"
 msgstr "בונה אוצר מילים"
 
+msgid "Waiting for the model ..."
+msgstr "ממתין למודל ..."
+
 msgid "Web Search"
 msgstr "חיפוש באינטרנט"
 
@@ -1509,9 +1546,6 @@ msgstr "צורת מילה ולמה"
 
 msgid "Word Origin"
 msgstr "מקור המילה"
-
-msgid "Word copied to clipboard."
-msgstr "המילה הועתקה ללוח."
 
 msgid "Write quick notes here"
 msgstr "כתוב הערות מהירות כאן"

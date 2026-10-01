@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 04:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Oʻzbekcha (AI translation)\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API xatolik qaytardi</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API foydalanish mumkin boʻlgan javob qaytarmadi</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Term X-Ray uchun kitob konteksti tahlil qilinmoqda...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 oʻrnatilmoqda...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Model javobi:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametrlar</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Mulohaza (yakuniy javob yoʻq)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>So‘rov</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "Qoʻshildi <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Lugʻat quruvchiga qoʻshildi"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Lugʻatda izlagan har bir soʻzingizni natija paydo boʻlishi bilanoq Soʻz boyligiga qoʻshadi."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Kitobdagi belgilangan matnlar, eslatmalar va AI eslatmalari mazmunini tahlil qilish."
 
@@ -397,6 +409,13 @@ msgstr "Javobni kitob izohi sifatida joriy belgilangan matnga biriktiradi"
 
 msgid "Author"
 msgstr "Muallif"
+
+msgid "Auto"
+msgstr "Avto"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Soʻzni Soʻz boyligiga avtomatik qoʻshish"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Qarama-qarshiliklar / Ochiq savollar"
 msgid "Conversation is saved to AI Notes"
 msgstr "Suhbat AI eslatmalariga saqlandi"
 
+msgid "Copied to clipboard."
+msgstr "Vaqtinchalik xotiraga nusxalandi."
+
 msgid "Copy"
 msgstr "Nusxalash"
 
@@ -587,6 +609,9 @@ msgstr "Maxsus prompt"
 
 msgid "Custom Prompts"
 msgstr "Maxsus promptlar"
+
+msgid "Default"
+msgstr "Standart"
 
 msgid "Delete"
 msgstr "Oʻchirish"
@@ -831,6 +856,9 @@ msgstr "Boʻsh qoldiring, %1 ishlatiladi"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Bu maydonlarni boʻsh qoldiring, interfeys tili ishlatiladi: %1"
 
+msgid "Left to Right"
+msgstr "Chapdan oʻngga"
+
 msgid "Locations"
 msgstr "Joylar"
 
@@ -920,6 +948,9 @@ msgstr "Hech qanday javob olinmadi."
 
 msgid "No text left to annotate"
 msgstr "Izoh qoʻshish uchun matn qolmadi"
+
+msgid "No text selected"
+msgstr "Matn tanlanmagan"
 
 msgid "No text to annotate"
 msgstr "Izoh qoʻshish uchun matn yoʻq"
@@ -1065,12 +1096,6 @@ msgstr "Tezkor eslatma"
 msgid "Quick note saved successfully"
 msgstr "Tezkor eslatma muvaffaqiyatli saqlandi"
 
-msgid "RTL Layout"
-msgstr "RTL tartibi"
-
-msgid "RTL written Language"
-msgstr "RTL yoziladigan til"
-
 msgid "Re-immersion"
 msgstr "Qayta shoʻngʻish"
 
@@ -1130,11 +1155,17 @@ msgstr ""
 "Bu plagin zavod sozlamalariga qaytariladi. Sozlamalar interfeysi orqali qoʻshilgan provayderlar, API kalitlari va qidiruv vositasi hisob maʻlumotlari olib tashlanadi.\n"
 "configuration.lua fayli saqlanadi."
 
+msgid "Response Font: %1"
+msgstr "Javob shrifti: %1"
+
 msgid "Response Settings"
 msgstr "Javob sozlamalari"
 
 msgid "Response Text Font Size"
 msgstr "Javob matni shrift oʻlchami"
+
+msgid "Right to Left"
+msgstr "Oʻngdan chapga"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1202,9 +1233,6 @@ msgstr "AI eslatmasini tanlash"
 
 msgid "Select a model:"
 msgstr "Model tanlang:"
-
-msgid "Selection copied to clipboard."
-msgstr "Tanlangan matn almashish buferiga nusxalandi"
 
 msgid "Settings"
 msgstr "Sozlamalar"
@@ -1297,6 +1325,9 @@ msgstr "Atamalar va tushunchalar"
 msgid "Test"
 msgstr "Sinov"
 
+msgid "Text Direction: %1"
+msgstr "Matn yoʻnalishi: %1"
+
 msgid "Text Size: %1"
 msgstr "Matn oʻlchami: %1"
 
@@ -1305,6 +1336,9 @@ msgstr "Matn almashish buferiga nusxalandi"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 uchun handler topilmadi. Iltimos, handler api_handlers katalogida mavjudligiga ishonch hosil qiling."
+
+msgid "Thinking ..."
+msgstr "Oʻylanmoqda ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Bu tugma ajratilgan matn bilan tezkor eslatma yaratadi."
@@ -1477,6 +1511,9 @@ msgstr "Soʻz boyligi"
 msgid "Vocabulary Builder"
 msgstr "Soʻz boyligi"
 
+msgid "Waiting for the model ..."
+msgstr "Model kutilmoqda ..."
+
 msgid "Web Search"
 msgstr "Veb-qidiruv"
 
@@ -1507,9 +1544,6 @@ msgstr "So'z shakli va lemma"
 
 msgid "Word Origin"
 msgstr "Soʻzning kelib chiqishi"
-
-msgid "Word copied to clipboard."
-msgstr "Soʻz almashish buferiga nusxalandi"
 
 msgid "Write quick notes here"
 msgstr "Tezkor eslatmalarni shu yerga yozing"

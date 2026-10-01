@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API вернул ошибку</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API не вернул пригодного ответа</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Анализ контекста книги для Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Установка %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Ответ модели:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Параметры</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Рассуждения (без финального ответа)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Запрос</b> — POST %1"
@@ -338,6 +347,9 @@ msgstr "Добавлено <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Добавлено в словарный тренажёр"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Добавляет каждое слово, которое вы ищете в словаре, в «Конструктор словаря», как только появляется результат."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Анализ ваших выделений, заметок и содержимого ИИ-заметок из книги."
 
@@ -397,6 +409,13 @@ msgstr "Прикрепляет ответ к текущему выделению
 
 msgid "Author"
 msgstr "Автор"
+
+msgid "Auto"
+msgstr "Авто"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Автодобавление слов в «Конструктор словаря»"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Противоречия / Открытые вопросы"
 msgid "Conversation is saved to AI Notes"
 msgstr "Диалог сохранён в ИИ-заметки"
 
+msgid "Copied to clipboard."
+msgstr "Скопировано в буфер обмена."
+
 msgid "Copy"
 msgstr "Копировать"
 
@@ -587,6 +609,9 @@ msgstr "Свой промпт"
 
 msgid "Custom Prompts"
 msgstr "Пользовательские промпты"
+
+msgid "Default"
+msgstr "По умолчанию"
 
 msgid "Delete"
 msgstr "Удалить"
@@ -833,6 +858,9 @@ msgstr "Оставьте пустым, чтобы использовать: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Оставьте эти поля пустыми, чтобы использовать язык интерфейса: %1"
 
+msgid "Left to Right"
+msgstr "Слева направо"
+
 msgid "Locations"
 msgstr "Локации"
 
@@ -922,6 +950,9 @@ msgstr "Ответ не получен."
 
 msgid "No text left to annotate"
 msgstr "Не осталось текста для аннотирования"
+
+msgid "No text selected"
+msgstr "Текст не выделен"
 
 msgid "No text to annotate"
 msgstr "Нет текста для аннотирования"
@@ -1067,12 +1098,6 @@ msgstr "Быстрая заметка"
 msgid "Quick note saved successfully"
 msgstr "Быстрая заметка успешно сохранена"
 
-msgid "RTL Layout"
-msgstr "Макет справа налево"
-
-msgid "RTL written Language"
-msgstr "Язык с письмом справа налево"
-
 msgid "Re-immersion"
 msgstr "Повторное погружение"
 
@@ -1132,11 +1157,17 @@ msgstr ""
 "Это вернёт плагину заводские настройки по умолчанию. Провайдеры, ключи API и учётные данные инструмента поиска, добавленные через интерфейс настроек, будут удалены.\n"
 "Файл configuration.lua будет сохранён."
 
+msgid "Response Font: %1"
+msgstr "Шрифт ответа: %1"
+
 msgid "Response Settings"
 msgstr "Настройки ответа"
 
 msgid "Response Text Font Size"
 msgstr "Размер шрифта текста ответа"
+
+msgid "Right to Left"
+msgstr "Справа налево"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1204,9 +1235,6 @@ msgstr "Выбрать ИИ-заметку"
 
 msgid "Select a model:"
 msgstr "Выберите модель:"
-
-msgid "Selection copied to clipboard."
-msgstr "Выделение скопировано в буфер обмена."
 
 msgid "Settings"
 msgstr "Настройки"
@@ -1299,6 +1327,9 @@ msgstr "Термины и понятия"
 msgid "Test"
 msgstr "Проверить"
 
+msgid "Text Direction: %1"
+msgstr "Направление текста: %1"
+
 msgid "Text Size: %1"
 msgstr "Размер шрифта: %1"
 
@@ -1307,6 +1338,9 @@ msgstr "Текст скопирован в буфер обмена"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Обработчик для %1 не найден. Убедитесь, что обработчик существует в каталоге api_handlers."
+
+msgid "Thinking ..."
+msgstr "Размышление ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Эта кнопка создаёт быструю заметку с выделенным текстом."
@@ -1479,6 +1513,9 @@ msgstr "Лексика"
 msgid "Vocabulary Builder"
 msgstr "Конструктор словаря"
 
+msgid "Waiting for the model ..."
+msgstr "Ожидание ответа модели ..."
+
 msgid "Web Search"
 msgstr "Веб-поиск"
 
@@ -1509,9 +1546,6 @@ msgstr "Словоформа и лемма"
 
 msgid "Word Origin"
 msgstr "Происхождение слова"
-
-msgid "Word copied to clipboard."
-msgstr "Слово скопировано в буфер обмена."
 
 msgid "Write quick notes here"
 msgstr "Введите быстрые заметки здесь"

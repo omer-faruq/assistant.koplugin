@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Cymraeg (AI translation)\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>Dychwelodd yr API wall</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>Ni ddychwelodd yr API unrhyw ateb defnyddiadwy</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Yn dadansoddi cyd-destun y llyfr ar gyfer Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Yn gosod %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Ateb y model:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Paramedrau</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Rhesymu (dim ateb terfynol)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Cais</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "Ychwanegwyd <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Ychwanegwyd at Adeiladwr Geirfa"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Yn ychwanegu pob gair y chwiliwch amdano yn y geiriadur i'r Adeiladwr Geirfa cyn gynted ag y daw'r canlyniad i'r golwg."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Dadansoddiad o'ch amlygiadau, eich nodiadau, a chynnwys Nodiadau AI o'r llyfr."
 
@@ -397,6 +409,13 @@ msgstr "Yn atodi'r ateb fel nod llyfr i'r amlygiad cyfredol"
 
 msgid "Author"
 msgstr "Awdur"
+
+msgid "Auto"
+msgstr "Awtomatig"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Ychwanegu Gair yn Awtomatig at yr Adeiladwr Geirfa"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Gwrthddywediadau / Cwestiynau Agored"
 msgid "Conversation is saved to AI Notes"
 msgstr "Mae'r sgwrs wedi'i chadw i Nodiadau AI"
 
+msgid "Copied to clipboard."
+msgstr "Wedi copïo i'r clipfwrdd."
+
 msgid "Copy"
 msgstr "Copïo"
 
@@ -587,6 +609,9 @@ msgstr "Prompt Personol"
 
 msgid "Custom Prompts"
 msgstr "Prompts Personol"
+
+msgid "Default"
+msgstr "Rhagosodedig"
 
 msgid "Delete"
 msgstr "Dileu"
@@ -835,6 +860,9 @@ msgstr "Gadewch yn wag i ddefnyddio: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Gadewch y meysydd hyn yn wag i ddefnyddio iaith y rhyngwyneb: %1"
 
+msgid "Left to Right"
+msgstr "Chwith i'r Dde"
+
 msgid "Locations"
 msgstr "Lleoliadau"
 
@@ -924,6 +952,9 @@ msgstr "Ni dderbyniwyd unrhyw ymateb."
 
 msgid "No text left to annotate"
 msgstr "Dim testun ar ôl i'w anodi"
+
+msgid "No text selected"
+msgstr "Dim testun wedi'i ddewis"
 
 msgid "No text to annotate"
 msgstr "Dim testun i'w anodi"
@@ -1069,12 +1100,6 @@ msgstr "Nodyn Cyflym"
 msgid "Quick note saved successfully"
 msgstr "Cafodd y nodyn cyflym ei gadw'n llwyddiannus"
 
-msgid "RTL Layout"
-msgstr "Cynllun RTL"
-
-msgid "RTL written Language"
-msgstr "Iaith ysgrifenedig RTL"
-
 msgid "Re-immersion"
 msgstr "Ail-ymgolli"
 
@@ -1135,11 +1160,17 @@ msgstr ""
 "credentials offer chwilio a ychwanegwyd drwy'r UI Gosodiadau yn cael eu tynnu.\n"
 "Bydd y ffeil configuration.lua yn cael ei chadw."
 
+msgid "Response Font: %1"
+msgstr "Ffont yr Ateb: %1"
+
 msgid "Response Settings"
 msgstr "Gosodiadau Ymateb"
 
 msgid "Response Text Font Size"
 msgstr "Maint Ffont Testun Ateb"
+
+msgid "Right to Left"
+msgstr "Dde i'r Chwith"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1207,9 +1238,6 @@ msgstr "Dewis nodyn AI"
 
 msgid "Select a model:"
 msgstr "Dewiswch fodel:"
-
-msgid "Selection copied to clipboard."
-msgstr "Copïwyd y dewisiad i'r clipfwrdd."
 
 msgid "Settings"
 msgstr "Gosodiadau"
@@ -1302,6 +1330,9 @@ msgstr "Termau a Chysyniadau"
 msgid "Test"
 msgstr "Profi"
 
+msgid "Text Direction: %1"
+msgstr "Cyfeiriad Testun: %1"
+
 msgid "Text Size: %1"
 msgstr "Maint Testun: %1"
 
@@ -1310,6 +1341,9 @@ msgstr "Copïwyd y testun i'r clipfwrdd"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Ni chafwyd hyd i'r handler ar gyfer %1. Sicrhewch fod y handler yn bodoli yn y cyfeiriadur api_handlers."
+
+msgid "Thinking ..."
+msgstr "Yn meddwl ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Mae'r botwm hwn yn creu nodyn cyflym gyda'r testun sydd wedi'i amlygu."
@@ -1482,6 +1516,9 @@ msgstr "Geirfa"
 msgid "Vocabulary Builder"
 msgstr "Adeiladwr Geirfa"
 
+msgid "Waiting for the model ..."
+msgstr "Yn aros am y model ..."
+
 msgid "Web Search"
 msgstr "Chwiliad Gwe"
 
@@ -1512,9 +1549,6 @@ msgstr "Ffurf Gair a Lemma"
 
 msgid "Word Origin"
 msgstr "Tarddiad y Gair"
-
-msgid "Word copied to clipboard."
-msgstr "Copïwyd y gair i'r clipfwrdd."
 
 msgid "Write quick notes here"
 msgstr "Ysgrifennwch nodiadau cyflym yma"

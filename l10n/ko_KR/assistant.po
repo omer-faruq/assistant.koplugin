@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API에서 오류가 반환되었습니다</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API가 사용 가능한 답변을 반환하지 않았습니다</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Term X-Ray를 위해 책 컨텍스트를 분석하는 중...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 설치 중...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>모델 응답:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>매개변수</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>추론 (최종 답변 없음)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>요청</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "추가됨 <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "단어장에 추가됨"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "사전에서 찾아본 모든 단어를 결과가 표시되는 즉시 단어장에 추가합니다."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "책의 하이라이트, 메모 및 AI 노트 콘텐츠를 분석합니다."
 
@@ -397,6 +409,13 @@ msgstr "답변을 현재 하이라이트에 책 노트로 첨부합니다"
 
 msgid "Author"
 msgstr "저자"
+
+msgid "Auto"
+msgstr "자동"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "단어를 단어장에 자동 추가"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "모순 / 미해결 질문"
 msgid "Conversation is saved to AI Notes"
 msgstr "대화가 AI 노트에 저장되었습니다"
 
+msgid "Copied to clipboard."
+msgstr "클립보드에 복사되었습니다."
+
 msgid "Copy"
 msgstr "복사"
 
@@ -587,6 +609,9 @@ msgstr "사용자 지정 프롬프트"
 
 msgid "Custom Prompts"
 msgstr "사용자 정의 프롬프트"
+
+msgid "Default"
+msgstr "기본값"
 
 msgid "Delete"
 msgstr "삭제"
@@ -830,6 +855,9 @@ msgstr "비워 두면 사용: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "이 필드를 비워 두면 UI 언어를 사용합니다: %1"
 
+msgid "Left to Right"
+msgstr "왼쪽에서 오른쪽"
+
 msgid "Locations"
 msgstr "장소"
 
@@ -919,6 +947,9 @@ msgstr "응답을 받지 못했습니다."
 
 msgid "No text left to annotate"
 msgstr "주석을 달 텍스트가 남아 있지 않습니다"
+
+msgid "No text selected"
+msgstr "선택된 텍스트 없음"
 
 msgid "No text to annotate"
 msgstr "주석을 달 텍스트가 없습니다"
@@ -1064,12 +1095,6 @@ msgstr "빠른 메모"
 msgid "Quick note saved successfully"
 msgstr "빠른 메모가 성공적으로 저장되었습니다"
 
-msgid "RTL Layout"
-msgstr "RTL 레이아웃"
-
-msgid "RTL written Language"
-msgstr "RTL 작성 언어"
-
 msgid "Re-immersion"
 msgstr "재몰입"
 
@@ -1129,11 +1154,17 @@ msgstr ""
 "이 작업은 플러그인을 공장 기본값으로 복원합니다. 설정 UI를 통해 추가된 공급자, API 키 및 검색 도구 자격 증명이 제거됩니다.\n"
 "configuration.lua 파일은 보존됩니다."
 
+msgid "Response Font: %1"
+msgstr "응답 글꼴: %1"
+
 msgid "Response Settings"
 msgstr "응답 설정"
 
 msgid "Response Text Font Size"
 msgstr "응답 텍스트 글꼴 크기"
+
+msgid "Right to Left"
+msgstr "오른쪽에서 왼쪽"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1201,9 +1232,6 @@ msgstr "AI 노트 선택"
 
 msgid "Select a model:"
 msgstr "모델 선택:"
-
-msgid "Selection copied to clipboard."
-msgstr "선택 영역이 클립보드에 복사되었습니다."
 
 msgid "Settings"
 msgstr "설정"
@@ -1296,6 +1324,9 @@ msgstr "용어 및 개념"
 msgid "Test"
 msgstr "테스트"
 
+msgid "Text Direction: %1"
+msgstr "텍스트 방향: %1"
+
 msgid "Text Size: %1"
 msgstr "글꼴 크기: %1"
 
@@ -1304,6 +1335,9 @@ msgstr "텍스트가 클립보드에 복사되었습니다."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1에 대한 핸들러를 찾을 수 없습니다. api_handlers 디렉터리에 핸들러가 있는지 확인하세요."
+
+msgid "Thinking ..."
+msgstr "생각 중 ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "이 버튼은 강조 표시된 텍스트로 빠른 메모를 만듭니다."
@@ -1476,6 +1510,9 @@ msgstr "어휘"
 msgid "Vocabulary Builder"
 msgstr "단어장"
 
+msgid "Waiting for the model ..."
+msgstr "모델 대기 중 ..."
+
 msgid "Web Search"
 msgstr "웹 검색"
 
@@ -1506,9 +1543,6 @@ msgstr "단어 형태 및 표제어"
 
 msgid "Word Origin"
 msgstr "어원"
-
-msgid "Word copied to clipboard."
-msgstr "단어가 클립보드에 복사되었습니다."
 
 msgid "Write quick notes here"
 msgstr "여기에 빠른 메모를 작성하세요"

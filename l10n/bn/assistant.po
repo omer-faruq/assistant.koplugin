@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 02:53+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: বাংলা (AI translation)\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API একটি ত্রুটি ফিরিয়েছে</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API কোনো ব্যবহারযোগ্য উত্তর দেয়নি</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Term X-Ray-এর জন্য বইয়ের প্রসঙ্গ বিশ্লেষণ করা হচ্ছে...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 ইনস্টল করা হচ্ছে...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>মডেলের উত্তর:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>প্যারামিটার</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>যুক্তি (চূড়ান্ত উত্তর নেই)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>অনুরোধ</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "<b>[%1 (AI)]</b> যোগ করা হয়েছে"
 msgid "Added to vocabulary builder"
 msgstr "শব্দভাণ্ডার বিল্ডারে যোগ করা হয়েছে"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "অভিধানে আপনি যে শব্দ খোঁজেন, ফলাফল প্রকাশিত হওয়ামাত্র সেটি Vocabulary Builder-এ যোগ করে।"
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "বই থেকে আপনার হাইলাইট, নোট এবং AI নোটের বিষয়বস্তুর বিশ্লেষণ।"
 
@@ -397,6 +409,13 @@ msgstr "বর্তমান হাইলাইটে বইয়ের নো
 
 msgid "Author"
 msgstr "লেখক"
+
+msgid "Auto"
+msgstr "স্বয়ংক্রিয়"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Vocabulary Builder-এ স্বয়ংক্রিয়ভাবে শব্দ যোগ"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "বিরোধ / অমীমাংসিত প্রশ্ন"
 msgid "Conversation is saved to AI Notes"
 msgstr "কথোপকথন AI নোটে সংরক্ষিত হয়েছে"
 
+msgid "Copied to clipboard."
+msgstr "ক্লিপবোর্ডে অনুলিপি করা হয়েছে।"
+
 msgid "Copy"
 msgstr "কপি"
 
@@ -587,6 +609,9 @@ msgstr "কাস্টম প্রম্পট"
 
 msgid "Custom Prompts"
 msgstr "কাস্টম প্রম্পট"
+
+msgid "Default"
+msgstr "ডিফল্ট"
 
 msgid "Delete"
 msgstr "মুছুন"
@@ -831,6 +856,9 @@ msgstr "%1 ব্যবহার করতে ফাঁকা রাখুন"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "UI ভাষা ব্যবহার করতে এই ক্ষেত্রগুলো ফাঁকা রাখুন: %1"
 
+msgid "Left to Right"
+msgstr "বাম থেকে ডানে"
+
 msgid "Locations"
 msgstr "অবস্থান"
 
@@ -920,6 +948,9 @@ msgstr "কোনো সাড়া পাওয়া যায়নি।"
 
 msgid "No text left to annotate"
 msgstr "টীকা করার জন্য আর কোনো লেখা নেই"
+
+msgid "No text selected"
+msgstr "কোনো টেক্সট নির্বাচন করা হয়নি"
 
 msgid "No text to annotate"
 msgstr "টীকা করার জন্য কোনো লেখা নেই"
@@ -1065,12 +1096,6 @@ msgstr "দ্রুত নোট"
 msgid "Quick note saved successfully"
 msgstr "দ্রুত নোট সফলভাবে সংরক্ষিত হয়েছে"
 
-msgid "RTL Layout"
-msgstr "RTL লেআউট"
-
-msgid "RTL written Language"
-msgstr "RTL লেখার ভাষা"
-
 msgid "Re-immersion"
 msgstr "পুনঃনিমগ্নতা"
 
@@ -1130,11 +1155,17 @@ msgstr ""
 "এটি প্লাগইনটিকে তার ফ্যাক্টরি ডিফল্টে ফিরিয়ে নেবে। সেটিংস UI-এর মাধ্যমে যোগ করা প্রোভাইডার, API কী এবং সার্চ টুলের শংসাপত্র মুছে ফেলা হবে।\n"
 "configuration.lua ফাইলটি সংরক্ষিত থাকবে।"
 
+msgid "Response Font: %1"
+msgstr "উত্তরের ফন্ট: %1"
+
 msgid "Response Settings"
 msgstr "প্রতিক্রিয়া সেটিংস"
 
 msgid "Response Text Font Size"
 msgstr "উত্তরের পাঠ্য ফন্টের আকার"
+
+msgid "Right to Left"
+msgstr "ডান থেকে বামে"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1202,9 +1233,6 @@ msgstr "AI নোট নির্বাচন করুন"
 
 msgid "Select a model:"
 msgstr "একটি মডেল নির্বাচন করুন:"
-
-msgid "Selection copied to clipboard."
-msgstr "নির্বাচিত অংশ ক্লিপবোর্ডে কপি করা হয়েছে।"
 
 msgid "Settings"
 msgstr "সেটিংস"
@@ -1297,6 +1325,9 @@ msgstr "শব্দ ও ধারণা"
 msgid "Test"
 msgstr "পরীক্ষা"
 
+msgid "Text Direction: %1"
+msgstr "টেক্সটের দিক: %1"
+
 msgid "Text Size: %1"
 msgstr "পাঠ্যের আকার: %1"
 
@@ -1305,6 +1336,9 @@ msgstr "টেক্সট ক্লিপবোর্ডে কপি করা
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1-এর জন্য হ্যান্ডলার পাওয়া যায়নি। অনুগ্রহ করে নিশ্চিত করুন যে হ্যান্ডলারটি api_handlers ডিরেক্টরিতে আছে।"
+
+msgid "Thinking ..."
+msgstr "ভাবছে ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "এই বাটনটি হাইলাইট করা পাঠ্য সহ একটি দ্রুত নোট তৈরি করে।"
@@ -1477,6 +1511,9 @@ msgstr "শব্দভাণ্ডার"
 msgid "Vocabulary Builder"
 msgstr "শব্দভাণ্ডার বিল্ডার"
 
+msgid "Waiting for the model ..."
+msgstr "মডেলের জন্য অপেক্ষা করা হচ্ছে ..."
+
 msgid "Web Search"
 msgstr "ওয়েব অনুসন্ধান"
 
@@ -1507,9 +1544,6 @@ msgstr "শব্দরূপ ও লেমা"
 
 msgid "Word Origin"
 msgstr "শব্দের উৎপত্তি"
-
-msgid "Word copied to clipboard."
-msgstr "শব্দটি ক্লিপবোর্ডে কপি করা হয়েছে।"
 
 msgid "Write quick notes here"
 msgstr "এখানে দ্রুত নোট লিখুন"

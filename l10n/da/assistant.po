@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API returnerede en fejl</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API'et returnerede intet brugbart svar</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Analyserer bogkontekst til Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Installerer %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Modelsvar:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametre</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Ræsonnement (intet endeligt svar)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Anmodning</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "Tilføjet <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Tilføjet til ordforrådsopbyggeren"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Tilføjer hvert ord, du slår op i ordbogen, til Vocabulary Builder, så snart resultatet vises."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Analyse af dine markeringer, noter og AI-noters indhold fra bogen."
 
@@ -397,6 +409,13 @@ msgstr "Vedhæfter svaret som en note i bogen til den aktuelle markering"
 
 msgid "Author"
 msgstr "Forfatter"
+
+msgid "Auto"
+msgstr "Auto"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Tilføj automatisk ord til Vocabulary Builder"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Modsigelser / åbne spørgsmål"
 msgid "Conversation is saved to AI Notes"
 msgstr "Samtalen er gemt i AI-noter"
 
+msgid "Copied to clipboard."
+msgstr "Kopieret til udklipsholderen."
+
 msgid "Copy"
 msgstr "Kopiér"
 
@@ -587,6 +609,9 @@ msgstr "Brugerdefineret prompt"
 
 msgid "Custom Prompts"
 msgstr "Brugerdefinerede prompter"
+
+msgid "Default"
+msgstr "Standard"
 
 msgid "Delete"
 msgstr "Slet"
@@ -831,6 +856,9 @@ msgstr "Lad stå tom for at bruge: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Lad disse felter stå tomme for at bruge UI-sproget: %1"
 
+msgid "Left to Right"
+msgstr "Venstre mod højre"
+
 msgid "Locations"
 msgstr "Steder"
 
@@ -920,6 +948,9 @@ msgstr "Ingen respons modtaget."
 
 msgid "No text left to annotate"
 msgstr "Ingen tekst tilbage at annotere"
+
+msgid "No text selected"
+msgstr "Ingen tekst valgt"
 
 msgid "No text to annotate"
 msgstr "Ingen tekst at annotere"
@@ -1065,12 +1096,6 @@ msgstr "Hurtig note"
 msgid "Quick note saved successfully"
 msgstr "Hurtig note gemt med succes."
 
-msgid "RTL Layout"
-msgstr "RTL-layout"
-
-msgid "RTL written Language"
-msgstr "RTL-skrevet sprog"
-
 msgid "Re-immersion"
 msgstr "Genindlevelse"
 
@@ -1131,11 +1156,17 @@ msgstr ""
 "legitimationsoplysninger til søgeværktøjer, der er tilføjet via indstillingsgrænsefladen, fjernes.\n"
 "Fil configuration.lua bevares."
 
+msgid "Response Font: %1"
+msgstr "Svarets skrifttype: %1"
+
 msgid "Response Settings"
 msgstr "Svarindstillinger"
 
 msgid "Response Text Font Size"
 msgstr "Svartekstens skriftstørrelse"
+
+msgid "Right to Left"
+msgstr "Højre mod venstre"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1203,9 +1234,6 @@ msgstr "Vælg AI-note"
 
 msgid "Select a model:"
 msgstr "Vælg en model:"
-
-msgid "Selection copied to clipboard."
-msgstr "Markeringen er kopieret til udklipsholderen."
 
 msgid "Settings"
 msgstr "Indstillinger"
@@ -1298,6 +1326,9 @@ msgstr "Begreber og koncepter"
 msgid "Test"
 msgstr "Test"
 
+msgid "Text Direction: %1"
+msgstr "Tekstretning: %1"
+
 msgid "Text Size: %1"
 msgstr "Tekststørrelse: %1"
 
@@ -1306,6 +1337,9 @@ msgstr "Tekst kopieret til udklipsholderen"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handleren for %1 blev ikke fundet. Sørg for, at handleren findes i api_handlers-mappen."
+
+msgid "Thinking ..."
+msgstr "Tænker ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Denne knap opretter en hurtig note med markeret tekst."
@@ -1478,6 +1512,9 @@ msgstr "Ordforråd"
 msgid "Vocabulary Builder"
 msgstr "Ordforråd"
 
+msgid "Waiting for the model ..."
+msgstr "Venter på modellen ..."
+
 msgid "Web Search"
 msgstr "Websøgning"
 
@@ -1508,9 +1545,6 @@ msgstr "Ordform og lemma"
 
 msgid "Word Origin"
 msgstr "Ordens oprindelse"
-
-msgid "Word copied to clipboard."
-msgstr "Ordet er kopieret til udklipsholderen."
 
 msgid "Write quick notes here"
 msgstr "Skriv hurtige noter her"

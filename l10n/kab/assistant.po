@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 23:55+0800\n"
+"POT-Creation-Date: 2026-10-02 01:38+0800\n"
 "PO-Revision-Date: 2026-08-13 04:13+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Taqbaylit (AI translation)\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "<b>API returned an error</b>"
 msgstr "<b>API yerra-d tuccḍa</b>"
 
+msgid "<b>API returned no usable answer</b>"
+msgstr "<b>API ur d-yerri ara tiririt i izemren ad tettwaseqdec</b>"
+
 msgid "<b>Analyzing book context for Term X-Ray...</b>"
 msgstr "<b>Asenqed n tanzeggit n udlis i Term X-Ray...</b>"
 
@@ -151,6 +154,9 @@ msgstr ""
 msgid "<b>Installing %1...</b>"
 msgstr "<b>La nsebded %1...</b>"
 
+msgid "<b>Model reply:</b> %1"
+msgstr "<b>Tiririt n temudemt:</b> %1"
+
 msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
@@ -160,6 +166,9 @@ msgstr ""
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Isefra</b>"
+
+msgid "<b>Reasoning (no final answer)</b> - %1"
+msgstr "<b>Tixeyyest (ulac tiririt taneggarut)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
 msgstr "<b>Tuttrut</b> - POST %1"
@@ -338,6 +347,9 @@ msgstr "Yettwarna <b>[%1 (AI)]</b>"
 msgid "Added to vocabulary builder"
 msgstr "Yettwarna ɣer usegraw n wawalen"
 
+msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
+msgstr "Yerna yal awal i tenadiḍ deg umawal ɣer Umeggez n Umawal akken kan ara d-iban ugmuḍ."
+
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Tasleḍt n yisegziwen-ik, tizmilin-ik, d ugbur n Tizmilin AI seg udlis."
 
@@ -397,6 +409,13 @@ msgstr "Iqqen tiririt d tazmilt n udlis ɣer ufrir amiran"
 
 msgid "Author"
 msgstr "Ameskar"
+
+msgid "Auto"
+msgstr "Awurman"
+
+#. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
+msgid "Auto Add Word to Vocabulary Builder"
+msgstr "Rnu awal s wudem awurman ɣer Umeggez n Umawal"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -521,6 +540,9 @@ msgstr "Temgaradin / Isteqsiyen yeldin"
 msgid "Conversation is saved to AI Notes"
 msgstr "Adiwenni yettwasekles ɣer Tizmilin AI"
 
+msgid "Copied to clipboard."
+msgstr "Yettwanɣel ɣer uklibord."
+
 msgid "Copy"
 msgstr "Nɣel"
 
@@ -587,6 +609,9 @@ msgstr "Asuter i d-yettwaseknen"
 
 msgid "Custom Prompts"
 msgstr "Isumer udmawanen"
+
+msgid "Default"
+msgstr "Amezwer"
 
 msgid "Delete"
 msgstr "Kkes"
@@ -831,6 +856,9 @@ msgstr "Eǧǧ it d ilem i useqdec: %1"
 msgid "Leave these fields blank to use the UI language: %1"
 msgstr "Eǧǧ iẓefran-agi d ilem i useqdec n tutlayt n ugrudem: %1"
 
+msgid "Left to Right"
+msgstr "Si zelmeḍ ɣer yeffus"
+
 msgid "Locations"
 msgstr "Idgan"
 
@@ -920,6 +948,9 @@ msgstr "Ulac tiririt i d-yusan."
 
 msgid "No text left to annotate"
 msgstr "Ulac aḍris i d-ibeqqen ara yettwazmel"
+
+msgid "No text selected"
+msgstr "Ulac aḍris yettwafren"
 
 msgid "No text to annotate"
 msgstr "Ulac aḍris ara yettwazmel"
@@ -1065,12 +1096,6 @@ msgstr "Tazmilt taruradt"
 msgid "Quick note saved successfully"
 msgstr "Tazmilt iɣewwaṛen tettwaskles akken iwata."
 
-msgid "RTL Layout"
-msgstr "Asuddem RTL"
-
-msgid "RTL written Language"
-msgstr "Tutlayt yettwarun s RTL"
-
 msgid "Re-immersion"
 msgstr "Anekcum i tikkelt-nni"
 
@@ -1131,11 +1156,17 @@ msgstr ""
 "isallen n wallalen n unadi yettwarnan s UI n Iɣewwaren ad ttwaɣḍlen.\n"
 "Afaylu configuration.lua ad yeqqim."
 
+msgid "Response Font: %1"
+msgstr "Tasefsit n tiririt: %1"
+
 msgid "Response Settings"
 msgstr "Iɣewwaṛen n tririt"
 
 msgid "Response Text Font Size"
 msgstr "Teɣzi n tira n uḍris n tiririt"
+
+msgid "Right to Left"
+msgstr "Si yeffus ɣer zelmeḍ"
 
 #. @translators term_xray: "Role & Function" section header
 msgid "Role & Function"
@@ -1203,9 +1234,6 @@ msgstr "Fren tira n AI"
 
 msgid "Select a model:"
 msgstr "Fren amaḍel:"
-
-msgid "Selection copied to clipboard."
-msgstr "Tafrant tettwaneɣlef ɣer clipboard."
 
 msgid "Settings"
 msgstr "Iɣewwaṛen"
@@ -1298,6 +1326,9 @@ msgstr "Iwalen d timsal"
 msgid "Test"
 msgstr "Ajeṛṛeb"
 
+msgid "Text Direction: %1"
+msgstr "Tanila n uḍris: %1"
+
 msgid "Text Size: %1"
 msgstr "Teɣzi n uḍris: %1"
 
@@ -1306,6 +1337,9 @@ msgstr "Aḍris yettwanɣel ɣer telwadt"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handler n %1 ur yettwaf. Ma ulac aɣilif, ḥeqqeq ad yili handler deg ukaram api_handlers."
+
+msgid "Thinking ..."
+msgstr "La yettxemmem ..."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Asenqed-a yesskar tazmilt taruradt s udris yettwasemmen."
@@ -1478,6 +1512,9 @@ msgstr "Tigemmi n wawalen"
 msgid "Vocabulary Builder"
 msgstr "Ambani n Umawal"
 
+msgid "Waiting for the model ..."
+msgstr "La yettṛaǧu tamudemt ..."
+
 msgid "Web Search"
 msgstr "Anadi n Web"
 
@@ -1508,9 +1545,6 @@ msgstr "Talɣa n wawal & Aẓar"
 
 msgid "Word Origin"
 msgstr "Aẓar n wawal"
-
-msgid "Word copied to clipboard."
-msgstr "Awal yettwaneɣlef ɣer clipboard."
 
 msgid "Write quick notes here"
 msgstr "Aru tizmilin iɣewwaṛen dagi"
