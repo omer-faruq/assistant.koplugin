@@ -161,9 +161,9 @@ local tests = {
         assert.equal(injected_css(inst), SharedCSS.build({}), "the stylesheet must be re-injected")
     end),
 
-    test("injected CSS follows the switches resolved from the passed-in assistant", function()
+    test("display switches follow the modes resolved from the passed-in assistant", function()
         reset_modules(table_parser)
-        local stored = { response_is_rtl = true, response_justified = true }
+        local stored = { response_direction = "rtl", response_justified = true }
         local inst = make_instance({ _assistant = {
             ui_language_is_rtl = false,
             settings = {
@@ -174,26 +174,47 @@ local tests = {
             },
         } })
         inst:init(nil)
-        local opts = inst:_resolveCSSOpts()
-        assert.isTrue(opts.rtl, "response_is_rtl must resolve to rtl")
+        local opts = inst:_displayOpts()
+        assert.equal(opts.mode, "rtl", "response_direction must resolve to its stored mode")
         assert.isTrue(opts.justified, "response_justified must resolve to justified")
         inst.scroll_widget.css = "" -- measure one injection from a clean channel
         inst:_injectTableCSS()
-        assert.equal(injected_css(inst), SharedCSS.build({ rtl = true, justified = true }),
+        assert.equal(injected_css(inst), SharedCSS.build({ justified = true }),
             "the injected rules must match the resolved switches")
         -- The upstream Justify toggle ORs into the same switch.
         inst.justified = true
         stored.response_justified = nil
-        assert.isTrue(inst:_resolveCSSOpts().justified, "the viewer Justify toggle must hold justification")
-        -- With the response switches off, the UI language direction takes over.
-        stored.response_is_rtl = nil
+        assert.isTrue(inst:_displayOpts().justified, "the viewer Justify toggle must hold justification")
+        -- With the mode unset, the UI language direction decides.
+        stored.response_direction = nil
         inst._assistant.ui_language_is_rtl = true
-        assert.isTrue(inst:_resolveCSSOpts().rtl, "an rtl UI locale must resolve to rtl")
+        assert.equal(inst:_displayOpts().mode, "auto", "an rtl UI locale must start on auto")
+        -- An explicit ltr wins over the RTL UI locale.
+        stored.response_direction = "ltr"
+        assert.equal(inst:_displayOpts().mode, "ltr", "an explicit ltr must resolve to ltr")
+        -- An explicit auto is stored state too, and it wins the other way.
+        stored.response_direction = "auto"
+        inst._assistant.ui_language_is_rtl = false
+        assert.equal(inst:_displayOpts().mode, "auto", "an explicit auto must survive a non-rtl locale")
+        -- Unset with a non-rtl locale: the pipeline stays out of the way.
+        stored.response_direction = nil
+        assert.equal(inst:_displayOpts().mode, "ltr", "a non-rtl UI locale must start on ltr")
+        -- A value the UI never writes is ignored, not passed through.
+        stored.response_direction = "sideways"
+        stored.response_is_rtl = true
+        assert.equal(inst:_displayOpts().mode, "auto",
+            "an unknown stored mode must fall through to the legacy switch")
+        stored.response_direction = nil
+        -- A legacy boolean still reads: true handled the RTL reply per block.
+        stored.response_is_rtl = true
+        assert.equal(inst:_displayOpts().mode, "auto", "a legacy true must resolve to auto")
+        stored.response_is_rtl = false
+        assert.equal(inst:_displayOpts().mode, "ltr", "a legacy false must resolve to ltr")
         -- No assistant at all: the base stylesheet, no crash.
         inst.justified = false
         inst._assistant = nil
-        local bare = inst:_resolveCSSOpts()
-        assert.isFalse(bare.rtl, "no assistant means no rtl")
+        local bare = inst:_displayOpts()
+        assert.equal(bare.mode, "ltr", "no assistant means no pipeline")
         assert.isFalse(bare.justified, "no assistant means no justification")
         inst.scroll_widget.css = ""
         inst:_injectTableCSS()

@@ -5,10 +5,10 @@ Settings menu builders: pure menu-item generators plus their local helpers.
 local Trapper = require("ui/trapper")
 local DocUtils = require("assistant_doc_utils")
 local NetUtils = require("assistant_net_utils")
+local ASUtils = require("assistant_utils")
 local TextUtils = require("assistant_text_utils")
 local koutil = require("util")
 local CenterContainer = require("ui/widget/container/centercontainer")
-local CheckButton = require("ui/widget/checkbutton")
 local FrameContainer = require("ui/widget/container/framecontainer")
 local Geom = require("ui/geometry")
 local InfoMessage = require("ui/widget/infomessage")
@@ -69,7 +69,6 @@ end
 
 local function LanguageSetting(assistant, close_callback)
     local langsetting
-    local chkbtn_is_rtl
     langsetting = CopyMultiInputDialog:new{
         description_margin = Size.margin.tiny,
         description_padding = Size.padding.tiny,
@@ -101,10 +100,6 @@ local function LanguageSetting(assistant, close_callback)
                         for i, f in ipairs(langsetting.input_fields) do
                             f:setText("")
                         end
-                        if chkbtn_is_rtl then
-                            chkbtn_is_rtl.checked = assistant.ui_language_is_rtl
-                            chkbtn_is_rtl:init()
-                        end
 
                         UIManager:setDirty(langsetting, function()
                             return "ui", langsetting.dialog_frame.dimen
@@ -122,13 +117,6 @@ local function LanguageSetting(assistant, close_callback)
                                 assistant.settings:saveSetting(key, fields[i])
                             end
                         end
-
-                        if chkbtn_is_rtl then
-                            local checked = chkbtn_is_rtl.checked
-                            if checked ~= (assistant.settings:readSetting("response_is_rtl") or false) then
-                                assistant.settings:saveSetting("response_is_rtl", checked)
-                            end
-                        end
                         assistant.updated = true
                         UIManager:close(langsetting)
                         if close_callback then
@@ -140,19 +128,6 @@ local function LanguageSetting(assistant, close_callback)
         },
 
     }
-
-    chkbtn_is_rtl = CheckButton:new{
-        text = _("RTL written Language"),
-        face = Font:getFace("xx_smallinfofont"),
-        checked = assistant.settings:readSetting("response_is_rtl") or assistant.ui_language_is_rtl,
-        parent = langsetting,
-    }
-    langsetting:addWidget(FrameContainer:new{
-        padding = Size.padding.default,
-        margin = Size.margin.small,
-        bordersize = 0,
-        chkbtn_is_rtl
-    })
 
     if assistant.settings:has("dict_language") or
         assistant.settings:has("response_language") then
@@ -358,6 +333,75 @@ local function genDictionaryOutputMenu(assistant)
     return items
 end
 
+-- Text Direction submenu: how a reply's blocks get their base direction.
+-- All three states stay reachable from the UI (Auto returns after any
+-- choice), which is why the setting is a string and not a tri-state boolean.
+local function genTextDirectionItems(assistant)
+    local items = {}
+    for i, mode in ipairs(TextUtils.DIRECTION_MODES) do
+        items[#items + 1] = {
+            text = TextUtils.direction_label(mode),
+            radio = true,
+            checked_func = function()
+                return ASUtils.response_direction(assistant.settings,
+                    assistant.ui_language_is_rtl) == mode
+            end,
+            callback = function()
+                assistant.settings:saveSetting("response_direction", mode)
+                assistant.updated = true
+            end,
+        }
+    end
+    return items
+end
+
+-- Response Font submenu: every font installed for KOReader (its fonts/ dir
+-- and the system fonts), each row shown in its own face as the reader font
+-- menu does. "Default" is the viewer stylesheet's own family stack; a chosen
+-- family is registered with MuPDF as @font-face (see assistant_css.build).
+local function genResponseFontItems(assistant)
+    local items = {
+        {
+            text = _("Default"),
+            radio = true,
+            checked_func = function()
+                return assistant.settings:readSetting("response_font_face") == nil
+            end,
+            callback = function()
+                assistant.settings:delSetting("response_font_face")
+                assistant.updated = true
+            end,
+        },
+    }
+    local cre = require("document/credocument"):engineInit()
+    local fonts = cre.getFontFaces()
+    table.sort(fonts)
+    for i, name in ipairs(fonts) do
+        local font_filename, font_faceindex = cre.getFontFaceFilenameAndFaceIndex(name)
+        if not font_filename then
+            -- The font may be available only in italic, for example script/cursive fonts
+            font_filename, font_faceindex = cre.getFontFaceFilenameAndFaceIndex(name, nil, true)
+        end
+        items[#items + 1] = {
+            text = name,
+            radio = true,
+            checked_func = function()
+                return assistant.settings:readSetting("response_font_face") == name
+            end,
+            callback = function()
+                assistant.settings:saveSetting("response_font_face", name)
+                assistant.updated = true
+            end,
+            font_func = function(size)
+                if font_filename and font_faceindex then
+                    return Font:getFace(font_filename, size, font_faceindex)
+                end
+            end,
+        }
+    end
+    return items
+end
+
 local function genMenuSettings(assistant)
     local sub_item_table = {
         {
@@ -446,6 +490,25 @@ local function genMenuSettings(assistant)
                             end
                         }
                         UIManager:show(widget)
+                    end,
+                    keep_menu_open = true,
+                },
+                {
+                    text_func = function ()
+                        return T(_("Text Direction: %1"),
+                            TextUtils.direction_label(ASUtils.response_direction(
+                                assistant.settings, assistant.ui_language_is_rtl)))
+                    end,
+                    sub_item_table = genTextDirectionItems(assistant),
+                    keep_menu_open = true,
+                },
+                {
+                    text_func = function ()
+                        return T(_("Response Font: %1"),
+                            assistant.settings:readSetting("response_font_face") or _("Default"))
+                    end,
+                    sub_item_table_func = function ()
+                        return genResponseFontItems(assistant)
                     end,
                     keep_menu_open = true,
                     separator = true,

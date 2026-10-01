@@ -388,6 +388,294 @@ function M.formatAnswerOnly(message, opts)
     return "" -- Should not happen for valid roles
 end
 
+-- RTL display pipeline: per-block direction annotation for rendered HTML.
+--
+-- MuPDF takes a block's base direction from its `dir` attribute (the CSS
+-- `direction` property would inherit and suppress it), and it swaps
+-- text-align left/right logically while `markup_dir` is RTL, so a block
+-- marked `dir="rtl"` right-aligns on `text-align: left` (the default) and
+-- puts a justified last line on the right. The caller resolves the text
+-- direction mode (assistant_utils.response_direction) and runs this pass for
+-- "auto" and "rtl"; "ltr" leaves the HTML untouched.
+
+-- Bidi-strong direction of a codepoint: "r" for the RTL scripts (Hebrew,
+-- Arabic and its supplements/presentation forms, Syriac, Thaana, NKo), "l"
+-- for the common LTR scripts. nil for neutrals (digits, punctuation,
+-- symbols, emoji), which never decide a direction on their own.
+local function direction_class(cp)
+    if (cp >= 0x0590 and cp <= 0x05FF)      -- Hebrew
+        or (cp >= 0x0620 and cp <= 0x064A)  -- Arabic letters
+        or (cp >= 0x066E and cp <= 0x06D3)  -- Arabic letters
+        or (cp >= 0x06FA and cp <= 0x06FF)  -- Arabic letters
+        or (cp >= 0x0700 and cp <= 0x074F)  -- Syriac
+        or (cp >= 0x0750 and cp <= 0x077F)  -- Arabic Supplement
+        or (cp >= 0x0780 and cp <= 0x07BF)  -- Thaana
+        or (cp >= 0x07C0 and cp <= 0x07FF)  -- NKo
+        or (cp >= 0x08A0 and cp <= 0x08FF)  -- Arabic Extended-A
+        or (cp >= 0xFB1D and cp <= 0xFB4F)  -- Hebrew presentation forms
+        or (cp >= 0xFB50 and cp <= 0xFDFF)  -- Arabic Presentation Forms-A
+        or (cp >= 0xFE70 and cp <= 0xFEFF)  -- Arabic Presentation Forms-B
+    then
+        return "r"
+    end
+    if (cp >= 0x0041 and cp <= 0x005A) or (cp >= 0x0061 and cp <= 0x007A)
+        or (cp >= 0x00C0 and cp <= 0x02AF)  -- Latin-1 letters + Latin extensions
+        or (cp >= 0x0370 and cp <= 0x058F)  -- Greek, Cyrillic, Armenian
+        or (cp >= 0x0900 and cp <= 0x0DFF)  -- Indic scripts
+        or (cp >= 0x0E00 and cp <= 0x0E7F)  -- Thai
+        or (cp >= 0x0F00 and cp <= 0x0FFF)  -- Tibetan
+        or (cp >= 0x1000 and cp <= 0x10FF)  -- Myanmar, Georgian
+        or (cp >= 0x1100 and cp <= 0x11FF)  -- Hangul Jamo
+        or (cp >= 0x1E00 and cp <= 0x1EFF)  -- Latin Extended Additional
+        or (cp >= 0x3040 and cp <= 0x30FF)  -- Kana
+        or (cp >= 0x3400 and cp <= 0x9FFF)  -- CJK
+        or (cp >= 0xAC00 and cp <= 0xD7AF)  -- Hangul syllables
+        or (cp >= 0xF900 and cp <= 0xFAFF)  -- CJK compatibility
+        or (cp >= 0xFF21 and cp <= 0xFF3A) or (cp >= 0xFF41 and cp <= 0xFF5A)
+    then
+        return "l"
+    end
+    return nil
+end
+
+-- Decode one UTF-8 character at byte i; returns codepoint and next index.
+local function utf8_next(s, i)
+    local b = s:byte(i)
+    if not b then return nil, i + 1 end
+    if b < 0x80 then return b, i + 1 end
+    local len = utf8_char_len(b)
+    local cp
+    if len == 2 then cp = b - 0xC0
+    elseif len == 3 then cp = b - 0xE0
+    elseif len == 4 then cp = b - 0xF0
+    else return nil, i + 1 end
+    for j = i + 1, i + len - 1 do
+        local c = s:byte(j)
+        if not c or c < 0x80 or c > 0xBF then return nil, i + 1 end
+        cp = cp * 64 + (c - 0x80)
+    end
+    return cp, i + len
+end
+
+-- Direction class of a word: the first strong character it carries.
+local function word_class(word)
+    local i = 1
+    while i <= #word do
+        local cp, next_i = utf8_next(word, i)
+        if not cp then break end
+        local cls = direction_class(cp)
+        if cls then return cls end
+        i = next_i
+    end
+    return nil
+end
+
+-- Base direction of a block's plain text, plus whether it carries RTL script.
+--
+-- Word majority first (a sentence is Persian because its function words are
+-- Persian, not because of raw letter counts), first strong character as the
+-- tiebreak, and the caller's default when the block has no strong character
+-- at all (a table of numbers, a bare date).
+local function text_direction(text, default_rtl)
+    text = text:gsub("&[#%w]+;", " ")
+    local rtl_words, ltr_words = 0, 0
+    for word in text:gmatch("%S+") do
+        local cls = word_class(word)
+        if cls == "r" then
+            rtl_words = rtl_words + 1
+        elseif cls == "l" then
+            ltr_words = ltr_words + 1
+        end
+    end
+    local first_strong, has_rtl_script = nil, false
+    local i = 1
+    while i <= #text do
+        local cp, next_i = utf8_next(text, i)
+        if not cp then break end
+        local cls = direction_class(cp)
+        if cls then
+            if not first_strong then first_strong = cls end
+            if cls == "r" then has_rtl_script = true end
+        end
+        i = next_i
+    end
+    local rtl
+    if rtl_words > ltr_words then
+        rtl = true
+    elseif ltr_words > rtl_words then
+        rtl = false
+    elseif first_strong then
+        rtl = first_strong == "r"
+    else
+        rtl = default_rtl
+    end
+    return rtl, has_rtl_script
+end
+
+-- Arabic script needs the extra leading: its ascenders, descenders and
+-- diacritics clip at the shared body line-height of 1.25.
+local RTL_LINE_HEIGHT = "line-height:1.35"
+
+-- Inline mirror of the base stylesheet's left insets (see assistant_css
+-- BASE): MuPDF has no logical properties and no attribute selectors, so an
+-- RTL block carries its own mirrored padding.
+local RTL_MIRROR_PADDING = {
+    p = "1em",
+    ul = "2em",
+    ol = "2em",
+    menu = "2em",
+}
+
+-- Block elements that carry a direction of their own. Lists are included
+-- because MuPDF places list markers by the element's own markup direction.
+local DIRECTION_TAGS = {
+    p = true, div = true, li = true, td = true, th = true, blockquote = true,
+    pre = true, ul = true, ol = true, menu = true,
+    h1 = true, h2 = true, h3 = true, h4 = true, h5 = true, h6 = true,
+}
+
+-- End of a tag, honoring quoted attribute values (a `>` inside alt="..." is
+-- text, not the end of the tag).
+local function find_tag_end(s, start_pos)
+    local in_quote
+    for i = start_pos, #s do
+        local c = s:byte(i)
+        if in_quote then
+            if c == in_quote then in_quote = nil end
+        elseif c == 34 or c == 39 then
+            in_quote = c
+        elseif c == 62 then
+            return i
+        end
+    end
+    return nil
+end
+
+-- Rebuild an opening tag carrying the block's direction, the RTL script
+-- line-height and the mirrored inset. Any dir= already on the tag is
+-- replaced, and the styles are merged into an existing style attribute
+-- rather than duplicating it.
+local function annotate_open_tag(tag_html, name, rtl, has_rtl_script)
+    local head, attrs, tail = tag_html:match("^(<%s*[%w:]+)(.-)(/?>)$")
+    if not head then return tag_html end
+    attrs = attrs:gsub("%s*dir%s*=%s*\"[^\"]*\"", "")
+        :gsub("%s*dir%s*=%s*'[^']*'", "")
+    local styles = {}
+    if has_rtl_script then
+        styles[#styles + 1] = RTL_LINE_HEIGHT
+    end
+    local inset = rtl and RTL_MIRROR_PADDING[name]
+    if inset then
+        styles[#styles + 1] = "padding-left:0;padding-right:" .. inset
+    end
+    if #styles > 0 then
+        local style = table.concat(styles, ";")
+        if attrs:find('style%s*=%s*"[^"]*"') then
+            attrs = attrs:gsub('style%s*=%s*"([^"]*)"', 'style="%1;' .. style .. '"', 1)
+        elseif attrs:find("style%s*=%s*'[^']*'") then
+            attrs = attrs:gsub("style%s*=%s*'([^']*)'", "style='%1;" .. style .. "'", 1)
+        else
+            attrs = attrs .. ' style="' .. style .. '"'
+        end
+    end
+    return head .. attrs .. ' dir="' .. (rtl and "rtl" or "ltr") .. '"' .. tail
+end
+
+--- Annotate the block elements of rendered HTML with a per-block direction.
+---
+--- Modes: "auto" gives each block the base direction of its own text
+--- (descendants included), so a Persian answer with an English quote block
+--- renders each side correctly; "rtl" forces every block RTL; "ltr" returns
+--- the HTML untouched. Code blocks stay LTR in every mode. RTL blocks also
+--- carry the Arabic line-height and the mirrored inset. The output otherwise
+--- reproduces the input verbatim.
+--- @param html string rendered HTML
+--- @param mode string "auto" | "rtl" | "ltr"
+--- @param fallback_rtl boolean direction for blocks without any strong character (auto mode)
+--- @return string annotated HTML
+function M.apply_block_directions(html, mode, fallback_rtl)
+    if type(html) ~= "string" or html == "" or mode == "ltr" then return html end
+    local chunks = {}
+    -- Open annotated elements, innermost last: tag, the chunk holding the
+    -- opening tag (patched at close time) and the text seen so far.
+    local stack = {}
+    local pos = 1
+    while true do
+        local lt = html:find("<", pos, true)
+        local text
+        if lt then
+            text = html:sub(pos, lt - 1)
+        else
+            text = html:sub(pos)
+        end
+        if text ~= "" then
+            chunks[#chunks + 1] = text
+            for i = 1, #stack do
+                local texts = stack[i].texts
+                texts[#texts + 1] = text
+            end
+        end
+        if not lt then break end
+        local gt = find_tag_end(html, lt + 1)
+        if not gt then
+            chunks[#chunks + 1] = html:sub(lt)
+            break
+        end
+        local tag_html = html:sub(lt, gt)
+        local closing, name = tag_html:match("^<%s*(/?)%s*([%w]+)")
+        if not name then
+            chunks[#chunks + 1] = tag_html
+        elseif closing == "/" then
+            name = name:lower()
+            for i = #stack, 1, -1 do
+                if stack[i].tag == name then
+                    local entry = table.remove(stack, i)
+                    local rtl, has_rtl_script
+                    if name == "pre" then
+                        -- Code is LTR whatever the answer language is.
+                        rtl, has_rtl_script = false, false
+                    elseif mode == "rtl" then
+                        rtl = true
+                        has_rtl_script = select(2, text_direction(table.concat(entry.texts), true))
+                    else
+                        rtl, has_rtl_script = text_direction(
+                            table.concat(entry.texts), not not fallback_rtl)
+                    end
+                    chunks[entry.chunk_idx] = annotate_open_tag(
+                        chunks[entry.chunk_idx], name, rtl, has_rtl_script)
+                    break
+                end
+            end
+            chunks[#chunks + 1] = tag_html
+        else
+            chunks[#chunks + 1] = tag_html
+            name = name:lower()
+            local self_closing = tag_html:sub(-2) == "/>"
+            if DIRECTION_TAGS[name] and not self_closing then
+                stack[#stack + 1] = { tag = name, chunk_idx = #chunks, texts = {} }
+            end
+        end
+        pos = gt + 1
+    end
+    return table.concat(chunks)
+end
+
+--- Display label of a text direction mode for the settings UI.
+--- @param mode string "auto" | "rtl" | "ltr"
+--- @return string localized label
+function M.direction_label(mode)
+    if mode == "rtl" then return _("Right to Left") end
+    if mode == "ltr" then return _("Left to Right") end
+    return _("Auto")
+end
+
+-- The text direction modes, in menu order. The settings radio list builds
+-- from this, so every mode stays reachable.
+M.DIRECTION_MODES = { "auto", "rtl", "ltr" }
+
+-- The next mode of the viewer menu's cycling row: auto -> rtl -> ltr -> auto.
+M.DIRECTION_CYCLE = { auto = "rtl", rtl = "ltr", ltr = "auto" }
+
 --- Single-message renderer shared by the Ask dialog and the feature dialog.
 ---
 --- Emits the div-carrier shapes (Question / Thought / Response / Search) so

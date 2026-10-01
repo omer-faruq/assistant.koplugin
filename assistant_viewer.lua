@@ -42,6 +42,8 @@ local Screen = Device.screen
 local MD = require("assistant_mdparser")
 local NetUtils = require("assistant_net_utils")
 local Prompts = require("assistant_prompts")
+local ASUtils = require("assistant_utils")
+local TextUtils = require("assistant_text_utils")
 local Trapper = require("ui/trapper")
 local ViewerCSS = require("assistant_css")
 local Notebook = require("assistant_notebook")
@@ -1153,11 +1155,49 @@ function ResultViewer:html_link_tapped_callback(link)
   end
 end
 
+-- The reply text direction mode (see assistant_utils.response_direction):
+-- "auto" runs the per-block detection, "rtl" forces every block RTL, "ltr"
+-- keeps the whole RTL display pipeline out of the way.
+function ResultViewer:_responseDirection()
+  return ASUtils.response_direction(self.assistant.settings,
+    self.assistant.ui_language_is_rtl)
+end
+
+-- Resolve the Response Font to the font files MuPDF registers: family names
+-- alone do not resolve. crengine hands out the paths; the same file seen
+-- twice means a synthesized face, which MuPDF synthesizes itself (as
+-- upstream footnotewidget does).
+local function resolveResponseFont(family)
+  if not family or family == "" then return nil end
+  local cre = require("document/credocument"):engineInit()
+  local faces = {}
+  local seen = {}
+  for i = 1, 4 do
+    local bold = i >= 3
+    local italic = i == 2 or i == 4
+    local path = cre.getFontFaceFilenameAndFaceIndex(family, bold, italic)
+    if path and not seen[path] then
+      seen[path] = true
+      faces[#faces + 1] = {
+        path = path,
+        weight = bold and "bold" or "normal",
+        style = italic and "italic" or "normal",
+      }
+    end
+  end
+  if #faces == 0 then
+    logger.warn("ResultViewer: response font has no usable face", family)
+    return nil
+  end
+  return { family = family, faces = faces }
+end
+
 function ResultViewer:_buildCSS()
-  local rtl = self.assistant.settings:readSetting("response_is_rtl")
-           or self.assistant.ui_language_is_rtl
   local justified = self.assistant.settings:readSetting("response_justified", false)
-  return ViewerCSS.build({ rtl = rtl, justified = justified })
+  return ViewerCSS.build({
+    justified = justified,
+    font = resolveResponseFont(self.assistant.settings:readSetting("response_font_face")),
+  })
 end
 
 function ResultViewer:_renderMarkdown()
@@ -1189,6 +1229,13 @@ function ResultViewer:_renderMarkdown()
         return nil
       end)
     end
+  end
+  -- RTL pipeline: one direction per block, so mixed answers (a Persian reply
+  -- quoting English) render each block in its own base direction.
+  local mode = self:_responseDirection()
+  if mode ~= "ltr" then
+    html_body = TextUtils.apply_block_directions(html_body, mode,
+      self.assistant.ui_language_is_rtl)
   end
   return html_body
 end
@@ -1378,19 +1425,17 @@ function ResultViewer:onShowMenu()
       end,
     }},
     {{
-      text = _("RTL Layout"),
-      checked_func = function()
-        return self.assistant.settings:readSetting("response_is_rtl")
-          or self.assistant.ui_language_is_rtl
+      text_func = function()
+        return T(_("Text Direction: %1"),
+          TextUtils.direction_label(self:_responseDirection()))
       end,
       align = "left",
       callback = function()
         -- Like upstream toggles: keep the menu open (no close), so the
         -- close repaint cannot race the rebuild repaint and ghost the
-        -- tapped item on e-ink. The checkmark refreshes with the dialog.
-        local rtl = self.assistant.settings:readSetting("response_is_rtl")
-          or self.assistant.ui_language_is_rtl
-        self.assistant.settings:saveSetting("response_is_rtl", not rtl)
+        -- tapped item on e-ink. The label refreshes with the dialog.
+        self.assistant.settings:saveSetting("response_direction",
+          TextUtils.DIRECTION_CYCLE[self:_responseDirection()])
         self.assistant.updated = true
         self:_refreshScrollWidget()
       end,
@@ -1402,7 +1447,7 @@ function ResultViewer:onShowMenu()
       end,
       align = "left",
       callback = function()
-        -- Kept open like upstream (see RTL Layout above).
+        -- Kept open like upstream (see Text Direction above).
         local justified = self.assistant.settings:readSetting("response_justified", false)
         self.assistant.settings:saveSetting("response_justified", not justified)
         self.assistant.updated = true
@@ -1420,7 +1465,7 @@ function ResultViewer:onShowMenu()
       end,
       align = "left",
       callback = function()
-        -- Kept open like upstream (see RTL Layout above). Rebuilds the text so
+        -- Kept open like upstream (see Text Direction above). Rebuilds the text so
         -- the thinking of the turns already on screen follows the switch too.
         local show = self.assistant.settings:readSetting("show_reasoning", false)
         self.assistant.settings:saveSetting("show_reasoning", not show)
@@ -1439,7 +1484,7 @@ function ResultViewer:onShowMenu()
       end,
       align = "left",
       callback = function()
-        -- Kept open like upstream (see RTL Layout above). Rebuilds the text:
+        -- Kept open like upstream (see Text Direction above). Rebuilds the text:
         -- the switch decides both the system prompt of the next answer and
         -- whether the follow-up questions of the current one are rendered.
         local show = self.assistant.settings:readSetting("auto_prompt_suggest", false)

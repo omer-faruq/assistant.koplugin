@@ -84,4 +84,29 @@ function M.json_default(value, default_value)
     return value
 end
 
+-- Reply text-direction modes for the RTL display pipeline.
+local DIRECTION_MODES = { auto = true, rtl = true, ltr = true }
+
+--- Resolve the reply text direction mode: "auto", "rtl" or "ltr".
+---
+--- "auto" runs the per-block detection (see assistant_text_utils), "rtl"
+--- forces every block RTL, "ltr" keeps the plain LTR pipeline out of the way
+--- entirely. An unset switch follows the UI language direction, and a legacy
+--- boolean response_is_rtl is still honored (true -> "auto", the per-block
+--- handling an RTL reply needs; false -> "ltr").
+--- @param settings table settings object exposing readSetting(key)
+--- @param ui_language_is_rtl boolean|nil whether the UI language is RTL
+--- @return string "auto" | "rtl" | "ltr"
+function M.response_direction(settings, ui_language_is_rtl)
+    local mode = settings:readSetting("response_direction")
+    if DIRECTION_MODES[mode] then
+        return mode
+    end
+    local legacy = settings:readSetting("response_is_rtl")
+    if legacy ~= nil then
+        return legacy and "auto" or "ltr"
+    end
+    return ui_language_is_rtl and "auto" or "ltr"
+end
+
 return M

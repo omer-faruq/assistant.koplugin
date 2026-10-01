@@ -1,12 +1,12 @@
 -- assistant_css.lua
 --
 -- Shared CSS for the plugin's HTML viewers. Single source of truth for the
--- viewer base style (black-and-white table rules included) plus the RTL and
--- justify fragments. Both ResultViewer and NotebookViewer build from this
--- same BASE via build().
+-- viewer base style (black-and-white table rules included) plus the justify
+-- fragment and the Response Font registration. Both ResultViewer and
+-- NotebookViewer build from this same BASE via build().
 --
 -- Pure functions only: no settings are read here, callers pass
--- opts = { rtl = bool, justified = bool } explicitly so the outputs stay
+-- opts = { justified = bool, font = table|nil } explicitly so the outputs stay
 -- unit-testable. The base carries the same rule set as the historical
 -- viewer CSS, grouped by category for readability.
 --
@@ -159,25 +159,42 @@ table th {
 }
 ]]
 
-local RTL_CSS = [[
-body {
-    direction: rtl !important;
-    text-align: right !important;
-}
-]]
+-- The RTL pipeline carries its direction, line-height and mirrored insets
+-- per block (dir= and inline styles, see assistant_text_utils), so this
+-- stylesheet holds no `direction` property: it would inherit and suppress
+-- the dir attributes, and MuPDF swaps text-align left/right logically under
+-- RTL markup anyway (the default already right-aligns an RTL block).
 
 local JUSTIFY_CSS = "\nbody {\n    text-align: justify;\n}\n"
 
+-- Response Font: MuPDF registers font files, not family names, so the caller
+-- resolves the installed faces and build() emits the @font-face rules.
+-- Both @page and body carry the family (as upstream footnotewidget does).
+local function font_css(font)
+    local parts = {}
+    for i = 1, #font.faces do
+        local face = font.faces[i]
+        parts[#parts + 1] = string.format(
+            "\n@font-face {\n    font-family: '%s';\n    src: url('%s');\n    font-weight: %s;\n    font-style: %s;\n}",
+            font.family, face.path, face.weight, face.style)
+    end
+    parts[#parts + 1] = string.format(
+        "\n@page { font-family: '%s'; }\nbody { font-family: '%s'; }\n",
+        font.family, font.family)
+    return table.concat(parts)
+end
+
 -- Full viewer CSS, shared by ResultViewer and NotebookViewer.
 -- build() with no opts returns just the grouped base below.
+-- opts = { justified = bool, font = { family, faces }|nil }
 function M.build(opts)
     opts = opts or {}
     local css = BASE_CSS
-    if opts.rtl then
-        css = css .. RTL_CSS
-    end
     if opts.justified then
         css = css .. JUSTIFY_CSS
+    end
+    if opts.font and opts.font.family and opts.font.faces then
+        css = css .. font_css(opts.font)
     end
     return css
 end

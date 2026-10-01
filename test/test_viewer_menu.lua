@@ -3,10 +3,10 @@
 -- of the result-window menu ground: the Minimalist Mode guards that used to
 -- slice the same function live in test_minimalist_mode.lua, which only covers
 -- the pure formatter.
--- Toggle items (RTL/Justify/Reasoning) must not close the menu: like the
--- upstream TextViewer toggles they save + rebuild in place, so the menu
--- close repaint cannot race the rebuild repaint and ghost the tapped item
--- on e-ink. Items opening another dialog (Text Size, Models) keep
+-- Toggle items (Text Direction/Justify/Reasoning) must not close the menu:
+-- like the upstream TextViewer toggles they save + rebuild in place, so the
+-- menu close repaint cannot race the rebuild repaint and ghost the tapped
+-- item on e-ink. Items opening another dialog (Text Size, Models) keep
 -- their explicit close.
 local helper = require("test.helper")
 local assert = helper.assert
@@ -45,9 +45,9 @@ local tests = {
         -- other arguments does not read as a third one.
         assert.equal(count_plain(menu, "UIManager:close"), 2,
             "only dialog-opening items may close the menu")
-        local toggle_start = menu:find('text = _("RTL Layout")', 1, true)
+        local toggle_start = menu:find('_("Text Direction: %1")', 1, true)
         local toggle_end = menu:find('text = _("Models")', 1, true)
-        assert.notNil(toggle_start, "RTL item must exist")
+        assert.notNil(toggle_start, "Text Direction item must exist")
         assert.notNil(toggle_end, "Models item must exist")
         assert.notNil(menu:find('text = _("Show Follow-up Questions")', 1, true),
             "Follow-up item must exist")

@@ -1,7 +1,7 @@
 -- test_assistant_css.lua
 -- The shared viewer CSS module (assistant_css.lua): a single BASE (table rules
--- included) built by build(), with the RTL and justify fragments attaching
--- only when switched on.
+-- included) built by build(), with the RTL mirror, the justify fragment and
+-- the Response Font @font-face rules attaching only when asked.
 --
 -- The MuPDF constraints (see docs/UI_DIALOGS.md) are asserted against the
 -- built CSS rather than the source file, and the rendered result is checked by
@@ -47,17 +47,46 @@ local tests = {
     end),
 
     test("build: explicit false opts equal the default", function()
-        assert.equal(CSS.build({ rtl = false, justified = false }), CSS.build())
+        assert.equal(CSS.build({ justified = false }), CSS.build())
     end),
 
-    test("build: rtl and justify attach only when on", function()
-        assert.matches(CSS.build({ rtl = true }), 'direction: rtl', "rtl fragment missing")
-        assert.notMatches(CSS.build({ rtl = true }), 'text%-align: justify', "justify must not ride along with rtl")
+    test("build: no CSS direction, no logical alignment", function()
+        -- Blocks carry their direction inline (dir= and mirrored insets, see
+        -- assistant_text_utils), so the stylesheet must hold no `direction`:
+        -- it would inherit and suppress those attributes. `text-align: right`
+        -- is out too -- MuPDF swaps left/right logically under RTL markup, so
+        -- the default already right-aligns an RTL block.
+        local css = CSS.build()
+        assert.notMatches(css, 'direction:', "no rule may set a CSS direction")
+        assert.notMatches(css, 'text%-align: right', "MuPDF swaps text-align logically under RTL markup")
+        assert.notMatches(css, 'text%-align%-last', "MuPDF has no text-align-last")
+    end),
+
+    test("build: justify attaches only when asked", function()
+        assert.notMatches(CSS.build(), 'text%-align: justify', "justify must stay off by default")
         assert.matches(CSS.build({ justified = true }), 'text%-align: justify', "justify fragment missing")
-        assert.notMatches(CSS.build({ justified = true }), 'direction: rtl', "rtl must not ride along with justify")
-        local both = CSS.build({ rtl = true, justified = true })
-        assert.matches(both, 'direction: rtl', "rtl fragment missing with both on")
-        assert.matches(both, 'text%-align: justify', "justify fragment missing with both on")
+    end),
+
+    test("build: the response font registers files with MuPDF", function()
+        -- MuPDF resolves @font-face by file path; a family name alone falls
+        -- back to its built-in fonts. Both @page and body carry the family.
+        local css = CSS.build({ font = {
+            family = "Vazirmatn",
+            faces = {
+                { path = "/fonts/Vazirmatn-Regular.ttf", weight = "normal", style = "normal" },
+                { path = "/fonts/Vazirmatn-Bold.ttf", weight = "bold", style = "normal" },
+            },
+        } })
+        assert.matches(css, '@font%-face', "the faces must be registered")
+        assert.matches(css, "Vazirmatn%-Regular%.ttf", "the regular file must be registered")
+        assert.matches(css, "Vazirmatn%-Bold%.ttf", "the bold file must be registered")
+        assert.matches(css, 'font%-weight: bold', "the bold face must carry its weight")
+        assert.matches(css, '@page { font%-family: \'Vazirmatn\'; }', "@page must carry the family")
+        assert.matches(css, 'body { font%-family: \'Vazirmatn\'; }', "body must carry the family")
+        -- No font, no font rules: the default stack is the base @page rule.
+        local plain = CSS.build()
+        assert.notMatches(plain, '@font%-face', "no font means no registration")
+        assert.matches(plain, '@page', "the base @page block must stay")
     end),
 
     test("build: heading scale is capped at h1/h2", function()

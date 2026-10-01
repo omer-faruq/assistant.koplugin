@@ -828,29 +828,27 @@ if tv_ok and TextViewerBase then
         return html
     end
 
-    -- Resolve the viewer CSS switches for this instance, mirroring
-    -- ResultViewer:_buildCSS: response_is_rtl or the UI language direction
-    -- for RTL, response_justified (plus the TextViewer Justify toggle, which
-    -- the upstream stylesheet already honors, so OR-ing it here is
-    -- idempotent) for justification. Reads go through the passed-in
-    -- assistant like every other Notebook entry point; without one the
-    -- switches stay off instead of crashing.
-    function M.NotebookViewer:_resolveCSSOpts()
+    -- Resolve the display switches for this instance, mirroring
+    -- ResultViewer:_responseDirection: the text direction mode (assistant_utils
+    -- .response_direction, per-block pipeline for "auto"/"rtl") plus
+    -- justification -- response_justified OR the TextViewer Justify toggle,
+    -- which the upstream stylesheet already honors, so OR-ing it here is
+    -- idempotent. Reads go through the passed-in assistant like every other
+    -- Notebook entry point; without one the switches stay off instead of
+    -- crashing.
+    function M.NotebookViewer:_displayOpts()
         local settings = self._assistant and self._assistant.settings
-        local rtl = false
+        local mode
         local justified = self.justified or false
         if settings then
-            if settings:readSetting("response_is_rtl") then
-                rtl = true
-            end
+            mode = ASUtils.response_direction(settings, self._assistant.ui_language_is_rtl)
             if settings:readSetting("response_justified", false) then
                 justified = true
             end
+        else
+            mode = self._assistant and self._assistant.ui_language_is_rtl and "auto" or "ltr"
         end
-        if not rtl and self._assistant and self._assistant.ui_language_is_rtl then
-            rtl = true
-        end
-        return { rtl = rtl, justified = justified }
+        return { mode = mode, justified = justified }
     end
 
     -- Re-set the scroll content with the shared viewer CSS appended (same
@@ -863,7 +861,8 @@ if tv_ok and TextViewerBase then
             return
         end
         local ok = pcall(function()
-            scroll.css = (scroll.css or "") .. SharedCSS.build(self:_resolveCSSOpts())
+            local opts = self:_displayOpts()
+            scroll.css = (scroll.css or "") .. SharedCSS.build({ justified = opts.justified })
             scroll.htmlbox_widget:setContent(
                 scroll.html_body, scroll.css, scroll.default_font_size,
                 scroll.is_xhtml, nil,
@@ -892,6 +891,13 @@ if tv_ok and TextViewerBase then
         if format == "md" and not self.force_txt then
             local html = M.NotebookViewer.renderMarkdown(self.text)
             if html then
+                -- RTL pipeline (as ResultViewer:_renderMarkdown): one
+                -- direction per block for mixed-language notes.
+                local opts = self:_displayOpts()
+                if opts.mode ~= "ltr" then
+                    html = TextUtils.apply_block_directions(html, opts.mode,
+                        self._assistant and self._assistant.ui_language_is_rtl)
+                end
                 self._nb_md_source = self.text
                 self._nb_saved_format = self.text_format
                 self.text = html

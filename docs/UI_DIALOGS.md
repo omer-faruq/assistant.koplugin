@@ -68,6 +68,16 @@ Supported: `background-color`, `border` + `border-{top,right,bottom,left}` + `-c
 
 Consequences for the chat layout: a right-aligned bubble uses `margin-left: 38%` (a fixed percentage, which MuPDF honors) — not `margin-left: auto`, not `max-width`. `text-align: right` right-aligns the *text* but the element's background still spans the full width, so it cannot substitute for the margin trick. `float` and `display: table` both misbehave (float needs a clearing element; display-table backgrounds over-extend). Rectangular backgrounds with a `border-left` accent are the substitute for rounded corners.
 
+## MuPDF bidi (RTL pipeline)
+
+Three source-level facts (`source/html/` in ArtifexSoftware/mupdf) shape every RTL decision; the rendered result is checked by `SDL_VIDEODRIVER=dummy ./test/runui.sh ui/rtl_render`.
+
+- **`text-align: left/right` are logical while the block's markup direction is RTL** (`html-layout.c`: `markup_dir == FZ_BIDI_RTL` swaps TA_LEFT/TA_RIGHT and puts a justified last line on the right). So an RTL block right-aligns on the *default* `text-align: left`, and never write `text-align: right` for RTL — it lands on the physical left. `text-align-last` is not in the property table at all and MuPDF already places the justified last line correctly, so it is both dropped and redundant.
+- **The CSS `direction` property inherits and suppresses `dir` attributes** (`html-parse.c` only reads `dir` when `style->direction` is UNSET). The stylesheet must therefore carry no `direction`: the per-block `dir="rtl"|"ltr"` written by `assistant_text_utils.apply_block_directions` is the only direction input.
+- **`dir="auto"` is not enough**: it maps to `FZ_BIDI_NEUTRAL`, which resolves the block's direction from its text but triggers none of the RTL alignment behavior above (the block stays physically left-aligned). The plugin detects the direction itself (word majority, first strong character as tiebreak) and writes an explicit `dir` per block.
+
+With `dir` set, MuPDF places list markers by the element's own markup direction, and Arabic script needs `line-height: 1.35` (its ascenders/descenders/diacritics clip at the base 1.25) plus the mirrored inset (`padding-left: 0; padding-right: ...`) — MuPDF has no logical properties and no attribute selectors, so those two ride inline on the block's own `style`. Code blocks (`pre`) stay `dir="ltr"` in every mode.
+
 **`margin-left` doubles as `max-width`.** MuPDF shrink-to-fits a block within the width its margin leaves, so the margin is both the alignment offset and the width cap: `margin-left: 38%` right-aligns the bubble and caps it at 62% of the page, while a short turn still hugs its text. Lowering the margin widens long turns; raising it narrows them. This is the only working equivalent of `max-width` + `margin-left: auto`.
 
 **Do not set `width` on a bubble.** There is no `box-sizing`, so `width` is the content box: padding and border are added on top and overflow it. Measured: `width: 50%` + `margin-left: 50%` renders *narrower* than the shrink-to-fit bubble (the text wraps sooner, not later), `width: 62%` bleeds off the right edge, and a fixed width also defeats shrink-to-fit, so a one-line bubble still gets a full-width box.
