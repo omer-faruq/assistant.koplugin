@@ -766,7 +766,7 @@ function M.formatSingleMessage(message_history, message, opts)
             local flat = flatten_whitespace(selection)
             if flat ~= "" then
                 source = T('<div class="source-text">%1</div>\n',
-                    T(_("<b>%1</b> %2"), _("Highlighted text:"),
+                    T('<b>%1</b> %2', _("Highlighted text:"),
                         util.htmlEscape(flat)))
             end
         end
