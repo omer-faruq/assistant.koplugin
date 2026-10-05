@@ -1425,6 +1425,7 @@ function ResultViewer:onShowMenu()
       end,
     }},
     {{
+      id = "text_direction",
       text_func = function()
         return T(_("Text Direction: %1"),
           TextUtils.direction_label(self:_responseDirection()))
@@ -1433,11 +1434,17 @@ function ResultViewer:onShowMenu()
       callback = function()
         -- Like upstream toggles: keep the menu open (no close), so the
         -- close repaint cannot race the rebuild repaint and ghost the
-        -- tapped item on e-ink. The label refreshes with the dialog.
+        -- tapped item on e-ink. The label comes from text_func at
+        -- construction, so the dialog is rebuilt for the row to show the
+        -- new mode -- a checkmark refreshes itself, a label does not.
         self.assistant.settings:saveSetting("response_direction",
           TextUtils.DIRECTION_CYCLE[self:_responseDirection()])
         self.assistant.updated = true
         self:_refreshScrollWidget()
+        dialog:reinit()
+        UIManager:setDirty(dialog, function()
+          return "ui", dialog.movable.dimen
+        end)
       end,
     }},
     {{
