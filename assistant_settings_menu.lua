@@ -472,45 +472,52 @@ local function genMenuSettings(assistant)
                         })
                     end
                 },
+                -- Size, direction and font all shape how the reply text
+                -- itself reads, so they ride one submenu.
                 {
-                    text_func = function ()
-                        return T(_("Text Size: %1"), assistant.settings:readSetting("response_font_size") or 20)
-                    end,
-                    callback = function (touchmenu_instance)
-                        local widget = SpinWidget:new{
-                            title_text = _("Response Text Font Size"),
-                            value = assistant.settings:readSetting("response_font_size") or 20,
-                            value_min = 12, value_max = 30, default_value = 20,
-                            callback = function(spin)
-                                assistant.settings:saveSetting("response_font_size", spin.value)
-                                assistant.updated = true
+                    text = _("Text Appearance"),
+                    sub_item_table = {
+                        {
+                            text_func = function ()
+                                return T(_("Text Size: %1"), assistant.settings:readSetting("response_font_size") or 20)
                             end,
-                            close_callback = function ()
-                                touchmenu_instance:updateItems()
-                            end
-                        }
-                        UIManager:show(widget)
-                    end,
-                    keep_menu_open = true,
-                },
-                {
-                    text_func = function ()
-                        return T(_("Text Direction: %1"),
-                            TextUtils.direction_label(ASUtils.response_direction(
-                                assistant.settings, assistant.ui_language_is_rtl)))
-                    end,
-                    sub_item_table = genTextDirectionItems(assistant),
-                    keep_menu_open = true,
-                },
-                {
-                    text_func = function ()
-                        return T(_("Response Font: %1"),
-                            assistant.settings:readSetting("response_font_face") or _("Default"))
-                    end,
-                    sub_item_table_func = function ()
-                        return genResponseFontItems(assistant)
-                    end,
-                    keep_menu_open = true,
+                            callback = function (touchmenu_instance)
+                                local widget = SpinWidget:new{
+                                    title_text = _("Response Text Font Size"),
+                                    value = assistant.settings:readSetting("response_font_size") or 20,
+                                    value_min = 12, value_max = 30, default_value = 20,
+                                    callback = function(spin)
+                                        assistant.settings:saveSetting("response_font_size", spin.value)
+                                        assistant.updated = true
+                                    end,
+                                    close_callback = function ()
+                                        touchmenu_instance:updateItems()
+                                    end
+                                }
+                                UIManager:show(widget)
+                            end,
+                            keep_menu_open = true,
+                        },
+                        {
+                            text_func = function ()
+                                return T(_("Text Direction: %1"),
+                                    TextUtils.direction_label(ASUtils.response_direction(
+                                        assistant.settings, assistant.ui_language_is_rtl)))
+                            end,
+                            sub_item_table = genTextDirectionItems(assistant),
+                            keep_menu_open = true,
+                        },
+                        {
+                            text_func = function ()
+                                return T(_("Response Font: %1"),
+                                    assistant.settings:readSetting("response_font_face") or _("Default"))
+                            end,
+                            sub_item_table_func = function ()
+                                return genResponseFontItems(assistant)
+                            end,
+                            keep_menu_open = true,
+                        },
+                    },
                     separator = true,
                 },
                 {
