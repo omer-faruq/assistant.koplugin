@@ -20,6 +20,9 @@ local settings = {
     readSetting = function(_, key, def)
         if key == "show_reasoning" then return true end
         if key == "auto_prompt_suggest" then return true end
+        -- The selection rides in its own block above the question, so the
+        -- bubble caption stops repeating it.
+        if key == "show_source_text" then return true end
         return def
     end,
 }

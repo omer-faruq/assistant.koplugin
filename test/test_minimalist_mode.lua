@@ -106,7 +106,7 @@ local tests = {
         local answer = make_msg("assistant", "Because.")
         local out = fmt(user, { settings = make_settings(false) })
             .. fmt(answer, { settings = make_settings(false) })
-        assert.matches(out, '<div class="user%-bubble">Why this%?</div>', "user bubble required")
+        assert.matches(out, '<div class="user%-bubble[^"]*">Why this%?</div>', "user bubble required")
         assert.matches(out, "Because%.", "answer body required")
         -- The carriers the minimalist mode removes are gone from the standard
         -- shape too: the bubble replaces the Question label outright.

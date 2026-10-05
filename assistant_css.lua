@@ -77,10 +77,11 @@ ul li {
 
 /* Plugin components */
 
-/* User message bubble: right-aligned via margin-left, gray bg, left border accent.
-   margin-left doubles as the max width: MuPDF shrink-to-fits the bubble within
-   whatever the margin leaves, so 38% caps it at 62% of the page while a short
-   turn still hugs its text. */
+/* User message bubble: gray bg, left border accent, right-aligned via
+   margin-left. margin-left doubles as the max width: MuPDF shrink-to-fits the
+   bubble within whatever the margin leaves, so 38% caps it at 62% of the page
+   while a short turn still hugs its text. A long turn drops the margin
+   (long-text); see BUBBLE_SHORT_MAX in assistant_text_utils. */
 .user-bubble {
     margin-left: 38%;
     margin-top: 0.8em;
@@ -88,6 +89,36 @@ ul li {
     padding: 0.5em 0.8em;
     background-color: #f4f4f4;
     border-left: 3px solid #999;
+}
+
+/* The length marker the formatter writes for a one-line turn. The default
+   rule above carries the same margin, so a bubble that arrives without a
+   length class still reads as chat. */
+.short-text {
+    margin-left: 38%;
+}
+
+/* A longer turn gets nearly the whole page, since the narrow cap would wrap
+   it into a column. */
+.long-text {
+    margin-left: 6%;
+}
+
+/* The selection a prompt was pointed at, when the Response Settings switch
+   asks for it: its own muted band above the question, quieter than the
+   answer (the window is still about the reply). */
+.source-text {
+    margin: 0.6em 0 0.2em;
+    padding: 0.3em 0.6em;
+    font-size: 0.8em;
+    color: #666;
+    background-color: #F7F7F7;
+    border-left: 3px solid #DDD;
+}
+
+.source-text p {
+    margin: 0;
+    padding-left: 0;
 }
 
 /* The word in its surrounding sentence, shown once above the definition. */

@@ -15,9 +15,10 @@ local assert = helper.assert
 local ASUtils = helper.ASUtils
 local TextUtils = require("assistant_text_utils")
 
-local function make_settings()
+local function make_settings(overrides)
     return {
         readSetting = function(dummy, key, def)
+            if overrides and overrides[key] ~= nil then return overrides[key] end
             return def
         end,
     }
@@ -138,6 +139,60 @@ local tests = {
         end
         assert.isTrue(bad == nil, "a cut selection must not split a UTF-8 character")
         assert.equal((#cut - PREFIX) % 3, 0, "the cut must hold whole 3-byte characters")
+    end),
+    test("bubble width follows the turn length", function()
+        local settings = make_settings()
+        local history = { { role = "system", content = "system" } }
+        local short = { role = "user", content = "Why?" }
+        table.insert(history, short)
+        assert.matches(TextUtils.formatSingleMessage(history, short, fmt_opts(2, settings, nil)),
+            '<div class="user%-bubble short%-text">', "a one-liner keeps the chat shape")
+
+        local long = { role = "user", content = string.rep("word ", 30) }
+        history[2] = long
+        assert.matches(TextUtils.formatSingleMessage(history, long, fmt_opts(2, settings, nil)),
+            '<div class="user%-bubble long%-text">', "a long turn gets the page")
+    end),
+
+    test("a long selection widens the bubble unless the source block carries it", function()
+        local history = { { role = "system", content = "system" } }
+        local msg = { role = "user", content = "TEMPLATE" }
+        ASUtils.set_attr(msg, "prompt_title", "Translate")
+        ASUtils.set_attr(msg, "highlight_text", string.rep("selection ", 12))
+        table.insert(history, msg)
+        -- Riding in the caption, the selection counts towards the turn length...
+        local in_caption = TextUtils.formatSingleMessage(history, msg, fmt_opts(2, make_settings(), nil))
+        assert.matches(in_caption, '<div class="user%-bubble long%-text">',
+            "a long caption must widen the bubble")
+        -- ...in its own block it does not, so the bubble is a one-liner again.
+        local as_block = TextUtils.formatSingleMessage(history, msg,
+            fmt_opts(2, make_settings({ show_source_text = true }), nil))
+        assert.matches(as_block, '<div class="user%-bubble short%-text">',
+            "the bubble must narrow once the selection moves out")
+    end),
+
+    test("source block: the selection rides outside the bubble, escaped", function()
+        local history = { { role = "system", content = "system" } }
+        local msg = { role = "user", content = "TEMPLATE" }
+        ASUtils.set_attr(msg, "prompt_title", "Translate")
+        ASUtils.set_attr(msg, "highlight_text", "mount <b>Doom</b>\n\nand beyond")
+        table.insert(history, msg)
+        local out = TextUtils.formatSingleMessage(history, msg,
+            fmt_opts(2, make_settings({ show_source_text = true }), nil))
+        assert.matches(out, '<div class="source%-text">', "the selection must ride in its own block")
+        assert.matches(out, 'Highlighted text:', "the block must be labelled")
+        assert.matches(out, 'mount &lt;b&gt;Doom', "the selection must be escaped")
+        assert.notMatches(out, 'mount <b>Doom', "raw markup from the selection must not survive")
+        assert.matches(out, 'and beyond', "the selection must be flattened onto one line")
+        assert.matches(out, '<div class="user%-bubble%-title">‹ Translate ›</div>',
+            "the caption must stop at the quotes once the block carries the selection")
+        assert.notMatches(out, '‹ Translate › mount', "the selection must not be repeated")
+
+        -- Off (the default): no block, and the caption keeps the selection.
+        local off = TextUtils.formatSingleMessage(history, msg, fmt_opts(2, make_settings(), nil))
+        assert.notMatches(off, 'source%-text', "no block unless the switch asks for it")
+        assert.matches(off, '<div class="user%-bubble%-title">‹ Translate › mount',
+            "the caption carries the selection by default")
     end),
 }
 

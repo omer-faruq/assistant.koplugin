@@ -105,7 +105,7 @@ local tests = {
             "the excerpt header must lead once, as a styled div")
         assert.matches(out, '\u{1F310} xray term context', "search keywords must render")
         assert.matches(out, 'The term names a ship', "answer body must survive")
-        assert.notMatches(out, '<div class="user%-bubble">', "dict must not draw a user bubble")
+        assert.notMatches(out, '<div class="user%-bubble', "dict must not draw a user bubble")
         assert.notMatches(out, '### ⮞', "no old container headings may appear")
     end),
 
@@ -120,7 +120,7 @@ local tests = {
         table.insert(history, answer_msg)
         local out = render(history, '<div class="dict-excerpt">... <b>word</b> ...</div>\n\n')
         assert.notMatches(out, 'PROMPT TEMPLATE', "the prompt template must never reach the page")
-        assert.equal(count_plain(out, '<div class="user-bubble">'), 0,
+        assert.equal(count_plain(out, '<div class="user-bubble'), 0,
             "a context turn must not draw a bubble")
         assert.matches(out, 'The term names a ship', "the answer still renders")
         -- Without the tag the renderer would walk straight into the prompt

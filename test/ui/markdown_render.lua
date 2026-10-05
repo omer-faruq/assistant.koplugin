@@ -330,7 +330,76 @@ shot.run({
         end,
     },
 
-    -- 6. The real viewer window paints: title bar, page and both bubbles. A
+    -- 6. A long user turn takes the page: the 38% chat margin would wrap it
+    --    into a narrow column, so the long-text class drops it to 6%. The
+    --    short turn above is the perturbation: it must keep the 38% margin,
+    --    so the two cases bracket the length classes.
+    {
+        name = "long turn width",
+        shots = {
+            { name = "long", build = function()
+                local history = { msg("system", "system prompt"),
+                    msg("user", string.rep("Why does the Ring corrupt its bearer? ", 4)) }
+                push_answer(history, ANSWER)
+                return page(render(history))
+            end },
+        },
+        verify = function(ctx)
+            local fp = ctx.shots.long
+            local list = boxes(fp)
+            ctx.check("the long turn paints one bubble", #list == 1,
+                "panel boxes: " .. #list .. "\n" .. shot.describe(fp))
+            if #list == 1 then
+                local bubble = list[1]
+                ctx.check("a long turn's bubble takes the page",
+                    bubble.x0 <= 0.12 * W and bubble.width > 0.7 * W,
+                    string.format("bubble x0 %d width %d of %d", bubble.x0, bubble.width, W))
+            end
+        end,
+    },
+
+    -- 7. Show Highlighted Text: the selection rides in its own band above the
+    --    question bubble, and the bubble narrows back to the chat shape (its
+    --    caption no longer carries the selection). The window still ends with
+    --    the answer.
+    {
+        name = "source block above the turn",
+        shots = {
+            { name = "source", build = function()
+                switches.show_source_text = true
+                local history = { msg("system", "system prompt") }
+                local question = msg("user", "TEMPLATE MUST NOT LEAK")
+                ASUtils.set_attr(question, "prompt_title", "Translate")
+                ASUtils.set_attr(question, "highlight_text",
+                    "All the world went ashen and the sun darkened, and the moon, they say, was wan and cold")
+                table.insert(history, question)
+                push_answer(history, ANSWER)
+                local widget = page(render(history))
+                switches.show_source_text = false
+                return widget
+            end },
+        },
+        verify = function(ctx)
+            local fp = ctx.shots.source
+            local list = boxes(fp)
+            ctx.check("the turn paints the source band and the bubble", #list == 2,
+                "panel boxes: " .. #list .. "\n" .. shot.describe(fp))
+            if #list == 2 then
+                local band, bubble = list[1], list[2]
+                ctx.check("the source band rides above the question bubble",
+                    band.y1 < bubble.y0,
+                    string.format("band ends %d, bubble starts %d", band.y1, bubble.y0))
+                ctx.check("the bubble keeps the chat shape once the selection moves out",
+                    bubble.x0 >= LEFT_INDENT * W,
+                    "bubble x0 " .. bubble.x0 .. " of " .. W)
+                ctx.check("the answer is painted below the turn",
+                    fp.last_marked_row and fp.last_marked_row > bubble.y1,
+                    "answer ends at " .. tostring(fp.last_marked_row))
+            end
+        end,
+    },
+
+    -- 8. The real viewer window paints: title bar, page and both bubbles. A
     --    broken paint hook leaves the framebuffer empty, which no string
     --    assertion can see. The empty reply is the control: same window, same
     --    chrome, no transcript, so the difference is the transcript.

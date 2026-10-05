@@ -81,7 +81,7 @@ local tests = {
         local out = render(history, { header = "HEADER\n\n" })
         assert.matches(out, '^HEADER', "the header must lead exactly once")
         assert.equal(count_plain(out, "HEADER"), 1, "the header must not be repeated per turn")
-        assert.matches(out, '<div class="user%-bubble">', "the user turn must render a bubble")
+        assert.matches(out, '<div class="user%-bubble[^"]*">', "the user turn must render a bubble")
         assert.matches(out, 'Frodo carries the Ring', "the answer body must survive")
         assert.notMatches(out, 'system prompt', "the system prompt must never reach the page")
     end),
@@ -89,7 +89,7 @@ local tests = {
     test("render: no header, no leading newline", function()
         local history = make_history()
         local out = render(history)
-        assert.matches(out, '^<div class="user%-bubble">', "the first thing on the page must be the bubble")
+        assert.matches(out, '^<div class="user%-bubble[^"]*">', "the first thing on the page must be the bubble")
     end),
 
     test("render: a context message is skipped, a free turn is not", function()
@@ -106,7 +106,7 @@ local tests = {
         table.insert(history, answer_msg)
         local out = render(history, { header = "HEADER\n\n" })
         assert.notMatches(out, 'PROMPT TEMPLATE', "the prompt template must never reach the page")
-        assert.equal(count_plain(out, '<div class="user-bubble">'), 1, "only the free follow-up may draw a bubble")
+        assert.equal(count_plain(out, '<div class="user-bubble'), 1, "only the free follow-up may draw a bubble")
         assert.matches(out, 'Who carries it', "the free turn must render")
         assert.matches(out, 'Frodo does', "the answer must render")
     end),
@@ -124,7 +124,7 @@ local tests = {
         table.insert(history, answer_msg)
 
         local out = render(history)
-        local bubble = out:match('<div class="user%-bubble">(.-)</div>\n\n')
+        local bubble = out:match('<div class="user%-bubble[^"]*">(.-)</div>\n\n')
         assert.notNil(bubble, "a user bubble must be rendered")
         local title_pos = bubble:find("user%-bubble%-title")
         local meta_pos = bubble:find("user%-bubble%-meta")
@@ -145,7 +145,7 @@ local tests = {
         ASUtils.set_attr(ctx, "prompt_title", "Translate")
         local history = { make_msg("system", "system prompt"), ctx }
         local out = render(history)
-        assert.matches(out, '<div class="user%-bubble">', "the turn must still draw a bubble")
+        assert.matches(out, '<div class="user%-bubble[^"]*">', "the turn must still draw a bubble")
         assert.notMatches(out, 'user%-bubble%-meta', "no meta block without the attr")
     end),
 
@@ -162,7 +162,7 @@ local tests = {
         table.insert(history, answer_msg)
         local out = render(history, { header = "HEADER\n\n", settings = settings })
         assert.matches(out, '^HEADER', "the header must lead once")
-        assert.matches(out, '<div class="user%-bubble">', "the user turn must render a bubble")
+        assert.matches(out, '<div class="user%-bubble[^"]*">', "the user turn must render a bubble")
         assert.matches(out, '\u{1F310} Frodo Baggins', "the search keywords must render")
         assert.matches(out, 'Frodo carries the Ring', "the answer body must survive")
         assert.notMatches(out, '### ', "no h3 container headings may appear")
@@ -181,7 +181,7 @@ local tests = {
         table.insert(history, answer_msg)
         -- The page as it stood before the follow-up was asked.
         local before = render(make_history(), { header = "HEADER\n\n" })
-        assert.equal(count_plain(before, '<div class="user-bubble">'), 1, "one turn on the page so far")
+        assert.equal(count_plain(before, '<div class="user-bubble'), 1, "one turn on the page so far")
 
         local inc = Conversation.Renderer.render_increment(history, {
             title = nil,
@@ -197,7 +197,7 @@ local tests = {
         -- The increment is appended to what is already on the page, so it must
         -- add the new turns and not repeat the earlier ones.
         local full = before .. inc
-        assert.equal(count_plain(full, '<div class="user-bubble">'), 2,
+        assert.equal(count_plain(full, '<div class="user-bubble'), 2,
             "appending the increment must add exactly one more bubble")
         assert.equal(count_plain(full, 'Recap the story so far'), 1,
             "the increment must not repeat the earlier turn")
@@ -251,7 +251,7 @@ local tests = {
         ASUtils.set_attr(answer_msg, "show_suggestions", false)
         table.insert(history, answer_msg)
         local out = render(history)
-        assert.equal(count_plain(out, '<div class="user-bubble">'), 0,
+        assert.equal(count_plain(out, '<div class="user-bubble'), 0,
             "tool-payload user messages must not render a junk bubble")
         assert.matches(out, 'Done%.', "the answer must still render")
     end),
@@ -271,7 +271,7 @@ local tests = {
             "```reasoning\nthinking here\n```\n\nFrodo carries the Ring.\n<suggestions>\n- Why him?\n</suggestions>\n")
         table.insert(history, answer_msg)
         local out = render(history, { settings = settings })
-        assert.notMatches(out, '<div class="user%-bubble">', "no bubble in minimalist mode")
+        assert.notMatches(out, '<div class="user%-bubble[^"]*">', "no bubble in minimalist mode")
         assert.notMatches(out, '<div class="thought%-block">', "no Thought block in minimalist mode")
         assert.notMatches(out, '#q:', "no follow-up suggestions in minimalist mode")
         assert.notMatches(out, 'Book Summary', "no prompt name in minimalist mode")

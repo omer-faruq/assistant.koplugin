@@ -32,8 +32,9 @@ local tests = {
     test("build: default keeps base, carriers and table rules", function()
         local css = CSS.build()
         assert.matches(css, '@page', "base @page block missing")
-        local carriers = { "user-bubble", "thought-block", "dict-excerpt",
-            "user-bubble-title", "user-bubble-meta", "suggestion-link" }
+        local carriers = { "user-bubble", "short-text", "long-text", "source-text",
+            "thought-block", "dict-excerpt", "user-bubble-title", "user-bubble-meta",
+            "suggestion-link" }
         for carrier_idx = 1, #carriers do
             local class = carriers[carrier_idx]
             assert.isTrue(find(css, "." .. class .. " {"),
@@ -112,6 +113,20 @@ local tests = {
         local rule = css:match("%.user%-bubble%s*{(.-)}")
         assert.notNil(rule, "the .user-bubble rule must exist")
         assert.notMatches(rule, "width:", "the bubble must not set a width")
+    end),
+
+    test("build: the bubble width classes and the source band", function()
+        -- MuPDF has no max-width, so margin-left is the width cap: the length
+        -- classes differ only in how much of the page they yield.
+        local css = CSS.build()
+        assert.matches(css, '%.short%-text%s*{[^}]*margin%-left: 38%%',
+            "the chat shape must keep the 38% margin")
+        assert.matches(css, '%.long%-text%s*{[^}]*margin%-left: 6%%',
+            "a long turn must get the page")
+        local rule = css:match('%.source%-text%s*{(.-)}')
+        assert.notNil(rule, "the source block must be styled")
+        assert.matches(rule, 'font%-size: 0%.8em',
+            "the source block must stay subordinate to the answer")
     end),
 
     test("build: the carriers are the only backgrounded blocks", function()
