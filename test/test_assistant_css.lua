@@ -32,7 +32,7 @@ local tests = {
     test("build: default keeps base, carriers and table rules", function()
         local css = CSS.build()
         assert.matches(css, '@page', "base @page block missing")
-        local carriers = { "user-bubble", "short-text", "long-text", "source-text",
+        local carriers = { "user-bubble", "tiny-text", "short-text", "long-text", "source-text",
             "thought-block", "dict-excerpt", "user-bubble-title", "user-bubble-meta",
             "suggestion-link" }
         for carrier_idx = 1, #carriers do
@@ -119,6 +119,8 @@ local tests = {
         -- MuPDF has no max-width, so margin-left is the width cap: the length
         -- classes differ only in how much of the page they yield.
         local css = CSS.build()
+        assert.matches(css, '%.tiny%-text%s*{[^}]*margin%-left: 70%%',
+            "an action label must hug the right edge")
         assert.matches(css, '%.short%-text%s*{[^}]*margin%-left: 38%%',
             "the chat shape must keep the 38% margin")
         assert.matches(css, '%.long%-text%s*{[^}]*margin%-left: 6%%',

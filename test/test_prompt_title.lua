@@ -143,15 +143,39 @@ local tests = {
     test("bubble width follows the turn length", function()
         local settings = make_settings()
         local history = { { role = "system", content = "system" } }
-        local short = { role = "user", content = "Why?" }
-        table.insert(history, short)
-        assert.matches(TextUtils.formatSingleMessage(history, short, fmt_opts(2, settings, nil)),
+        local function render(msg)
+            history[2] = msg
+            return TextUtils.formatSingleMessage(history, msg, fmt_opts(2, settings, nil))
+        end
+
+        -- An action label alone hugs the right edge.
+        local label_only = { role = "user", content = "TEMPLATE" }
+        ASUtils.set_attr(label_only, "prompt_title", "Translate")
+        assert.matches(render(label_only), '<div class="user%-bubble tiny%-text">',
+            "a prompt name alone must hug the right edge")
+
+        -- A one-line question keeps the chat shape.
+        assert.matches(render({ role = "user", content = "Who carries the Ring to Mordor?" }),
             '<div class="user%-bubble short%-text">', "a one-liner keeps the chat shape")
 
-        local long = { role = "user", content = string.rep("word ", 30) }
-        history[2] = long
-        assert.matches(TextUtils.formatSingleMessage(history, long, fmt_opts(2, settings, nil)),
+        -- Anything longer takes the page.
+        assert.matches(render({ role = "user", content = string.rep("word ", 30) }),
             '<div class="user%-bubble long%-text">', "a long turn gets the page")
+    end),
+
+    test("a bubble carrying a meta block is never an action label", function()
+        -- The caption may be a bare prompt name while the meta lines carry
+        -- title/author text: those must not be squeezed into the tight width.
+        local history = { { role = "system", content = "system" } }
+        local msg = { role = "user", content = "TEMPLATE" }
+        ASUtils.set_attr(msg, "prompt_title", "Book Info")
+        ASUtils.set_attr(msg, "bubble_meta",
+            '<div class="user-bubble-meta"><p><b>Title</b>: The Lord of the Rings</p></div>\n')
+        table.insert(history, msg)
+        local out = TextUtils.formatSingleMessage(history, msg, fmt_opts(2, make_settings(), nil))
+        assert.notMatches(out, 'tiny%-text', "the meta block must keep the bubble off the tight width")
+        assert.matches(out, '<div class="user%-bubble long%-text">',
+            "the meta lines must get room to lay out")
     end),
 
     test("a long selection widens the bubble unless the source block carries it", function()
@@ -167,8 +191,8 @@ local tests = {
         -- ...in its own block it does not, so the bubble is a one-liner again.
         local as_block = TextUtils.formatSingleMessage(history, msg,
             fmt_opts(2, make_settings({ show_source_text = true }), nil))
-        assert.matches(as_block, '<div class="user%-bubble short%-text">',
-            "the bubble must narrow once the selection moves out")
+        assert.matches(as_block, '<div class="user%-bubble tiny%-text">',
+            "the bubble must tighten to the caption once the selection moves out")
     end),
 
     test("source block: the selection rides outside the bubble, escaped", function()

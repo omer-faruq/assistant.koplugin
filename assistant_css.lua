@@ -91,6 +91,12 @@ ul li {
     border-left: 3px solid #999;
 }
 
+/* An action label alone (a prompt name, with the selection living in its own
+   band): hug the right edge, the way a short chat message does. */
+.tiny-text {
+    margin-left: 70%;
+}
+
 /* The length marker the formatter writes for a one-line turn. The default
    rule above carries the same margin, so a bubble that arrives without a
    length class still reads as chat. */

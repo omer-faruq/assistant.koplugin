@@ -17,11 +17,12 @@ local M = {}
 -- rather than a phrase; only a runaway selection is cut.
 local HIGHLIGHT_CAPTION_MAX = 500
 
--- A turn that fits about one line of the narrow chat bubble keeps the chat
--- shape (short-text); longer text takes the page (long-text). MuPDF has no
--- max-width, so this decides how much of the page a user bubble may use
--- (see assistant_css). Counted in codepoints, an approximation: glyph
--- widths vary with the script.
+-- Chat bubble widths by turn length (see assistant_css): an action label
+-- alone hugs the right edge, a one-liner keeps the chat shape, and anything
+-- longer takes the page. MuPDF has no max-width, so this decides how much of
+-- the page a user bubble may use. Counted in codepoints, an approximation:
+-- glyph widths vary with the script.
+local BUBBLE_TINY_MAX = 18
 local BUBBLE_SHORT_MAX = 40
 
 -- Collapse whitespace runs to single spaces, then trim. A chat caption is one
@@ -769,12 +770,18 @@ function M.formatSingleMessage(message_history, message, opts)
                         util.htmlEscape(flat)))
             end
         end
-        -- Width by turn length: a one-liner keeps the chat shape on the right,
-        -- a longer turn gets the page (see the classes in assistant_css).
-        local visible_len = utf8_length(title or "")
-            + utf8_length(caption_selection) + utf8_length(body or "")
-        local bubble_class = visible_len > BUBBLE_SHORT_MAX
-            and "user-bubble long-text" or "user-bubble short-text"
+        -- Width by turn length: an action label alone hugs the right edge, a
+        -- one-liner keeps the chat shape, a longer turn gets the page. The
+        -- meta block counts too: a bubble carrying title/author lines is not
+        -- an action label, whatever its caption says.
+        local visible_len = utf8_length(title or "") + utf8_length(caption_selection)
+            + utf8_length(body or "") + utf8_length((meta:gsub("<[^>]*>", " ")))
+        local bubble_class = "user-bubble tiny-text"
+        if visible_len > BUBBLE_SHORT_MAX then
+            bubble_class = "user-bubble long-text"
+        elseif visible_len > BUBBLE_TINY_MAX then
+            bubble_class = "user-bubble short-text"
+        end
         return T('%1<div class="%2">%3%4%5</div>\n\n',
             source, bubble_class, caption, meta, body or "")
     elseif message.role == "assistant" then

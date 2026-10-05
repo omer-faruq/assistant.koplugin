@@ -389,8 +389,8 @@ shot.run({
                 ctx.check("the source band rides above the question bubble",
                     band.y1 < bubble.y0,
                     string.format("band ends %d, bubble starts %d", band.y1, bubble.y0))
-                ctx.check("the bubble keeps the chat shape once the selection moves out",
-                    bubble.x0 >= LEFT_INDENT * W,
+                ctx.check("the caption-only bubble hugs the right edge",
+                    bubble.x0 >= 0.6 * W,
                     "bubble x0 " .. bubble.x0 .. " of " .. W)
                 ctx.check("the answer is painted below the turn",
                     fp.last_marked_row and fp.last_marked_row > bubble.y1,
