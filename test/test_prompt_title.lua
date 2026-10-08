@@ -174,8 +174,8 @@ local tests = {
         table.insert(history, msg)
         local out = TextUtils.formatSingleMessage(history, msg, fmt_opts(2, make_settings(), nil))
         assert.notMatches(out, 'tiny%-text', "the meta block must keep the bubble off the tight width")
-        assert.matches(out, '<div class="user%-bubble long%-text">',
-            "the meta lines must get room to lay out")
+        assert.matches(out, '<div class="user%-bubble short%-text">',
+            "the meta card keeps the chat shape")
     end),
 
     test("a long selection widens the bubble unless the source block carries it", function()

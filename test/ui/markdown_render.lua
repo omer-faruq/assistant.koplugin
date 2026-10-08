@@ -358,7 +358,40 @@ shot.run({
         end,
     },
 
-    -- 7. Show Highlighted Text: the selection rides in its own band above the
+    -- 7. A keyword query (what the web-search features put in the user turn)
+    --    is a chat-length turn: it keeps the 38% chat margin even though it
+    --    wraps. The long turn above is the perturbation: both go through the
+    --    same length test, and a threshold low enough to catch this turn shows
+    --    up here as a full-page bubble.
+    {
+        name = "keyword turn width",
+        shots = {
+            { name = "keyword", build = function()
+                local history = { msg("system", "system prompt") }
+                local question = msg("user", "TEMPLATE MUST NOT LEAK")
+                ASUtils.set_attr(question, "prompt_title", "Book Information")
+                ASUtils.set_attr(question, "user_input",
+                    "Tokyo Ink Ann Vremont book author publisher plot genre")
+                table.insert(history, question)
+                push_answer(history, ANSWER)
+                return page(render(history))
+            end },
+        },
+        verify = function(ctx)
+            local fp = ctx.shots.keyword
+            local list = boxes(fp)
+            ctx.check("the turn paints one bubble", #list == 1,
+                "panel boxes: " .. #list .. "\n" .. shot.describe(fp))
+            if #list == 1 then
+                local bubble = list[1]
+                ctx.check("the keyword turn keeps the chat shape",
+                    bubble.x0 >= LEFT_INDENT * W and bubble.width < 0.75 * W,
+                    string.format("bubble x0 %d width %d of %d", bubble.x0, bubble.width, W))
+            end
+        end,
+    },
+
+    -- 8. Show Highlighted Text: the selection rides in its own band above the
     --    question bubble, and the bubble narrows back to the chat shape (its
     --    caption no longer carries the selection). The window still ends with
     --    the answer.
@@ -399,7 +432,7 @@ shot.run({
         end,
     },
 
-    -- 8. The real viewer window paints: title bar, page and both bubbles. A
+    -- 9. The real viewer window paints: title bar, page and both bubbles. A
     --    broken paint hook leaves the framebuffer empty, which no string
     --    assertion can see. The empty reply is the control: same window, same
     --    chrome, no transcript, so the difference is the transcript.

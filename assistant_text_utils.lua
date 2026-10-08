@@ -18,12 +18,16 @@ local M = {}
 local HIGHLIGHT_CAPTION_MAX = 500
 
 -- Chat bubble widths by turn length (see assistant_css): an action label
--- alone hugs the right edge, a one-liner keeps the chat shape, and anything
--- longer takes the page. MuPDF has no max-width, so this decides how much of
--- the page a user bubble may use. Counted in codepoints, an approximation:
--- glyph widths vary with the script.
+-- alone hugs the right edge, a question keeps the chat shape, and anything
+-- longer takes the page. MuPDF has no max-width and fills whatever the margin
+-- leaves, so the class is the bubble's share of the page, and a long turn in
+-- the chat width would stack into a tall narrow column. The turn is measured
+-- in body-text display units (a full-width glyph costs two, see
+-- display_units): the chat width wraps about 30 units per line at the default
+-- font, so 100 units is three to four lines. An approximation: glyph widths
+-- vary with the script and the reader's font size.
 local BUBBLE_TINY_MAX = 18
-local BUBBLE_SHORT_MAX = 40
+local BUBBLE_SHORT_MAX = 100
 
 -- Collapse whitespace runs to single spaces, then trim. A chat caption is one
 -- line, and a blank line inside a raw HTML block would end the block.
@@ -66,15 +70,22 @@ local function utf8_char_len(byte)
   return 0
 end
 
--- Codepoints in text, for the chat-length test (see BUBBLE_SHORT_MAX).
-local function utf8_length(text)
-    local count, i = 0, 1
+-- Display width of text in Latin-glyph units, for the chat-length test (see
+-- BUBBLE_SHORT_MAX): a CJK glyph renders twice as wide and costs two.
+local function display_units(text)
+    local units, i = 0, 1
     while i <= #text do
         local len = utf8_char_len(text:byte(i))
-        i = i + (len > 0 and len or 1)
-        count = count + 1
+        if len == 0 then
+            -- A stray continuation byte: count it and move on.
+            i = i + 1
+            units = units + 1
+        else
+            units = units + (util.isCJKChar(text:sub(i, i + len - 1)) and 2 or 1)
+            i = i + len
+        end
     end
-    return count
+    return units
 end
 
 --- Keep the tail of text within max_len bytes on a UTF-8 boundary.
@@ -770,16 +781,18 @@ function M.formatSingleMessage(message_history, message, opts)
                         util.htmlEscape(flat)))
             end
         end
-        -- Width by turn length: an action label alone hugs the right edge, a
-        -- one-liner keeps the chat shape, a longer turn gets the page. The
-        -- meta block counts too: a bubble carrying title/author lines is not
-        -- an action label, whatever its caption says.
-        local visible_len = utf8_length(title or "") + utf8_length(caption_selection)
-            + utf8_length(body or "") + utf8_length((meta:gsub("<[^>]*>", " ")))
+        -- Width by turn length (see BUBBLE_SHORT_MAX), in body-text units:
+        -- the caption and meta render smaller (0.8em / 0.75em in
+        -- assistant_css), so their text costs less width. The meta block
+        -- counts at all because a bubble carrying title/author lines is not an
+        -- action label, whatever its caption says.
+        local visible_units = display_units(body or "")
+            + 0.8 * display_units((title or "") .. caption_selection)
+            + 0.75 * display_units((meta:gsub("<[^>]*>", " ")))
         local bubble_class = "user-bubble tiny-text"
-        if visible_len > BUBBLE_SHORT_MAX then
+        if visible_units > BUBBLE_SHORT_MAX then
             bubble_class = "user-bubble long-text"
-        elseif visible_len > BUBBLE_TINY_MAX then
+        elseif visible_units > BUBBLE_TINY_MAX then
             bubble_class = "user-bubble short-text"
         end
         return T('%1<div class="%2">%3%4%5</div>\n\n',
