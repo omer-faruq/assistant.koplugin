@@ -73,6 +73,9 @@ local stubs = {
         getDataDir = function() return "/tmp" end,
         getFullDataDir = function() return "/tmp" end,
         getSettingsDir = function() return "/tmp" end,
+        getHistoryDir = function() return "/tmp" end,
+        getDocSettingsDir = function() return "/tmp" end,
+        getDocSettingsHashDir = function() return "/tmp" end,
     },
     -- for assistant_gettext: gettext mock (language)
     -- Callable + pgettext so frontend/datetime.lua loads headless.

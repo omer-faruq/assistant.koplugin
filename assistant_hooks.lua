@@ -12,7 +12,9 @@ local logger = require("logger")
 local koutil = require("util")
 local _ = require("assistant_gettext")
 local N_ = _.ngettext
-local T = require("ffi/util").template
+local ffiutil = require("ffi/util")
+local T = ffiutil.template
+local lfs = require("libs/libkoreader-lfs")
 local DocUtils = require("assistant_doc_utils")
 local NetUtils = require("assistant_net_utils")
 
@@ -173,6 +175,42 @@ function M.syncTranslateOverride(assistant)
     end
 end
 
+--- Resolve when a book was last read without relying on file atime:
+--- KOReader's history entry time, else the sidecar metadata mtime, as epoch
+--- seconds. Returns nil when neither source is available.
+local function get_last_read_time(file)
+    local ReadHistory = require("readhistory")
+    local resolved = ffiutil.realpath(file)
+    local candidates = { file }
+    if resolved and resolved ~= file then
+        candidates = { resolved, file }
+    end
+    for i = 1, #candidates do
+        local index = ReadHistory:getIndexByFile(candidates[i])
+        local entry = index and ReadHistory.hist[index]
+        if entry and type(entry.time) == "number" and entry.time > 0 then
+            return entry.time
+        end
+    end
+    local sidecar
+    local DocSettings = require("docsettings")
+    if type(DocSettings.findSidecarFile) == "function" then
+        sidecar = DocSettings:findSidecarFile(file)
+    elseif type(DocSettings.getSidecarDir) == "function"
+        and type(DocSettings.getSidecarFilename) == "function" then
+        sidecar = ffiutil.joinPath(
+            DocSettings:getSidecarDir(file),
+            DocSettings.getSidecarFilename(file))
+    end
+    if sidecar then
+        local mtime = lfs.attributes(sidecar, "modification")
+        if type(mtime) == "number" and mtime > 0 then
+            return mtime
+        end
+    end
+    return nil
+end
+
 --- Install the AI recap prompt before KOReader opens a book.
 --- @param assistant table plugin instance
 function M.setupRecap(assistant)
@@ -181,15 +219,14 @@ function M.setupRecap(assistant)
     ReaderUI[READER_PATCH] = true
     ReaderUI._assistant_original_doShowReader = ReaderUI.doShowReader
 
-    local lfs = require("libs/libkoreader-lfs")
     local DocSettings = require("docsettings")
     ReaderUI.doShowReader = function(self, file, provider, seamless)
-        local attr = lfs.attributes(file)
-        local last_access = attr and attr.access or nil
-        if last_access and last_access > 0 then
+        local last_read = get_last_read_time(file)
+        if last_read then
             local doc_settings = DocSettings:open(file)
             local percent_finished = doc_settings:readSetting("percent_finished") or 0
-            local time_diff_hours = math.floor((os.time() - last_access) / 3600)
+            local time_diff_hours = math.floor((os.time() - last_read) / 3600)
+            if time_diff_hours < 0 then time_diff_hours = 0 end
             if time_diff_hours >= 28 and percent_finished > 0 and percent_finished <= 0.95 then
                 local doc_props = doc_settings:child("doc_props")
                 local title = doc_props:readSetting("title", "Unknown Title")
