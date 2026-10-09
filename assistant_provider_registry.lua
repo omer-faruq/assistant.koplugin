@@ -611,43 +611,56 @@ end
 -- Per-handler reasoning presets ("dialects"): each entry carries that
 -- platform's exact parameter shape. Selections live in a runtime overlay
 -- (settings key "reasoning_option_<id>"), merged over the base config in
--- BaseHandler:SyncOptions. All presets disable reasoning except Anthropic,
--- where thinking is opt-in.
--- NOTE: desc strings are intentionally not _()-wrapped — platform names and
--- verbatim parameter names, nothing worth translating.
+-- BaseHandler:SyncOptions. Graded keys offer a "none" (reasoning off) and a
+-- "low" (minimal reasoning) preset; boolean-only dialects offer their "none"
+-- (off) preset alone - they have no low level to offer.
+-- NOTE: desc strings are intentionally not _()-wrapped — verbatim parameter
+-- names and values only, nothing worth translating.
 Registry.PARAM_CATALOG = {
     openai = {
         { key = "reasoning_effort", value = "none",
-          desc = "OpenAI/xAI: reasoning_effort = none" },
+          desc = "reasoning_effort = none" },
         { key = "reasoning_effort", value = "low",
-          desc = "GLM: reasoning_effort = low" },
+          desc = "reasoning_effort = low" },
         { key = "thinking", value = { type = "disabled" },
-          desc = "DeepSeek: thinking = {type = disabled}" },
+          desc = "thinking = {type = disabled}" },
         { key = "enable_thinking", value = false,
-          desc = "Qwen: enable_thinking = false" },
+          desc = "enable_thinking = false" },
         { key = "think", value = false,
-          desc = "Ollama: think = false" },
+          desc = "think = false" },
         { key = "reasoning", value = { effort = "none" },
-          desc = "OpenRouter: reasoning = {effort = none}" },
+          desc = "reasoning = {effort = none}" },
+        { key = "reasoning", value = { effort = "low" },
+          desc = "reasoning = {effort = low}" },
     },
     responses = {
         { key = "reasoning", value = { effort = "none" },
-          desc = "Responses: reasoning = {effort = none}" },
+          desc = "reasoning = {effort = none}" },
+        { key = "reasoning", value = { effort = "low" },
+          desc = "reasoning = {effort = low}" },
     },
     anthropic = {
-        { key = "thinking", value = { type = "enabled", budget_tokens = 10240 },
-          desc = "Anthropic: thinking = {type = enabled, budget_tokens = 10240} (must be < max_tokens)" },
         { key = "thinking", value = { type = "disabled" },
-          desc = "Anthropic: thinking = {type = disabled}" },
+          desc = "thinking = {type = disabled}" },
+        { key = "thinking", value = { type = "enabled", budget_tokens = 1024 },
+          desc = "thinking = {type = enabled, budget_tokens = 1024} (must be < max_tokens)" },
+        { key = "thinking", value = { type = "enabled", budget_tokens = 10240 },
+          desc = "thinking = {type = enabled, budget_tokens = 10240} (must be < max_tokens)" },
     },
     gemini = {
-        -- Independent options per series — pick one, not both: thinking_budget
-        -- for 2.5 (0 disables thinking), thinkingConfig for Gemini 3 / Gemma-4
-        -- (minimal minimizes thinking; 3+ cannot fully disable it).
+        -- Independent parameter shapes — pick the one the model accepts:
+        -- thinking_budget takes a token count (0 disables thinking);
+        -- thinkingConfig takes a thinking level. Level-based models cannot
+        -- always disable thinking, so their lowest level is the practical
+        -- "none" and the next level up is "low".
         { key = "thinking_budget", value = 0,
-          desc = "Gemini(2.5): thinkingBudget = 0" },
+          desc = "thinking_budget = 0" },
+        { key = "thinking_budget", value = 1024,
+          desc = "thinking_budget = 1024" },
         { key = "thinkingConfig", value = { thinkingLevel = "minimal" },
-          desc = "Gemini(3/Gemma-4): thinkingLevel = minimal" },
+          desc = "thinkingConfig = {thinkingLevel = minimal}" },
+        { key = "thinkingConfig", value = { thinkingLevel = "low" },
+          desc = "thinkingConfig = {thinkingLevel = low}" },
     },
 }
 

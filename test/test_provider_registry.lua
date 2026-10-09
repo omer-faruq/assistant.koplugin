@@ -833,6 +833,55 @@ local tests = {
         end
     end),
 
+    test("PARAM_CATALOG gives graded keys a none and a low preset", function()
+        local function is_off(value)
+            if value == false or value == 0 or value == "none" then return true end
+            if type(value) == "table" then
+                return value.type == "disabled"
+                    or value.effort == "none"
+                    or value.thinkingLevel == "minimal"
+            end
+            return false
+        end
+        for catalog_key, catalog in pairs(Registry.PARAM_CATALOG) do
+            local by_key = {}
+            for i, item in ipairs(catalog) do
+                by_key[item.key] = by_key[item.key] or {}
+                table.insert(by_key[item.key], item.value)
+            end
+            for key, values in pairs(by_key) do
+                if #values == 1 then
+                    assert.isTrue(is_off(values[1]),
+                        catalog_key .. "." .. key .. " single preset must be reasoning-off")
+                else
+                    local has_off = false
+                    for vidx, value in ipairs(values) do
+                        if is_off(value) then has_off = true end
+                    end
+                    assert.isTrue(has_off,
+                        catalog_key .. "." .. key .. " must keep a reasoning-off preset")
+                    assert.isTrue(not deepEqual(values[1], values[2]),
+                        catalog_key .. "." .. key .. " none and low presets must differ")
+                end
+            end
+        end
+    end),
+
+    test("PARAM_CATALOG descs name the parameter, not a platform", function()
+        local platforms = {
+            "OpenAI", "Anthropic", "Gemini", "Gemma", "DeepSeek",
+            "Qwen", "GLM", "Ollama", "OpenRouter", "Responses", "xAI",
+        }
+        for catalog_key, catalog in pairs(Registry.PARAM_CATALOG) do
+            for i, item in ipairs(catalog) do
+                for pidx, platform in ipairs(platforms) do
+                    assert.notMatches(item.desc, platform,
+                        catalog_key .. "[" .. i .. "] desc must not name " .. platform)
+                end
+            end
+        end
+    end),
+
     test("getReasoningKey scopes the overlay to the provider id", function()
         assert.equal(Registry.getReasoningKey("custom:1"), "reasoning_option_custom:1")
         assert.equal(Registry.getReasoningKey("openai"), "reasoning_option_openai")
