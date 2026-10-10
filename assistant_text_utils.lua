@@ -754,8 +754,9 @@ function M.formatSingleMessage(message_history, message, opts)
         end
         local selection = ASUtils.get_attr(message, "highlight_text")
         if type(selection) ~= "string" then selection = nil end
-        -- The Show Highlighted Text switch moves the selection out of the
-        -- caption into its own block, so the bubble stops repeating it.
+        -- The Show Highlighted Text at Top switch moves the selection out of
+        -- the caption into its own block ahead of the turn, so the bubble
+        -- stops repeating it.
         local show_source = opts.settings
             and opts.settings:readSetting("show_source_text", false)
 

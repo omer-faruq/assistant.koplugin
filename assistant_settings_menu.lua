@@ -600,7 +600,7 @@ local function genMenuSettings(assistant)
                     end
                 },
                 {
-                    text = _("Show Highlighted Text"),
+                    text = _("Show Highlighted Text at Top"),
                     enabled_func = function () return not assistant.settings:readSetting("minimalist_mode", false) end,
                     checked_func = function () return assistant.settings:readSetting("show_source_text", false) end,
                     callback = function()
@@ -609,7 +609,7 @@ local function genMenuSettings(assistant)
                     end,
                     hold_callback = function ()
                         UIManager:show(InfoMessage:new{
-                            text = _("Gives the text a prompt was pointed at its own block above the question, so the original can be compared with the answer. The question bubble then stops repeating it.")
+                            text = _("Shows the text a prompt was pointed at as its own block at the top of the turn, above the question, so the original can be compared with the answer. The question bubble then stops repeating it.")
                         })
                     end
                 },
