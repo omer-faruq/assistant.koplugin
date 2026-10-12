@@ -54,11 +54,16 @@ l10n/<lang>/jev_note.txt, which names the peer locale and adds distinguishing
 guidance; a locale without a hook is skipped before any request.
 `--jev <lang> --retranslate-jev` is the single-command repair path: it empties
 only the confident peer-language entries and refills them through the existing
-per-locale Make pipeline. See README.md.
+per-locale Make pipeline. `--jev <lang> --jev-clear-only` is the clear step
+alone, without the nested pipeline: it is what `make translate` runs for every
+hooked locale, emptying the confident entries so the ordinary pipeline it is
+already part of refills them. It is best-effort - any failure clears nothing and
+exits 0 so the outer pipeline continues. See README.md.
 
     ./check_mix.py --jev sk                     report; peer from sk's hook
     ./check_mix.py --jev sk --limit 50 --list
     ./check_mix.py --jev sk --retranslate-jev   clear + refill via the pipeline
+    ./check_mix.py --jev sk --jev-clear-only    clear only; outer pipeline refills
 
 Env (via python-dotenv, read from l10n/.env) - Jev mode only:
     API_JEV_ENDPOINT   SystemOne endpoint; required, else the run is skipped
@@ -801,6 +806,20 @@ def target_dirty(lang: str) -> list[str]:
     return [ln for ln in proc.stdout.splitlines() if ln.strip()]
 
 
+def target_write_blockers(lang: str) -> list[str]:
+    """Reasons the target catalogue cannot be cleared safely, or an empty list.
+
+    Combines the uncommitted-work check with the pending-intermediate check, in
+    the human-readable form the callers print. `target_dirty` raises JevError
+    when git cannot prove the target clean, so the caller decides whether that
+    is fatal (--retranslate-jev) or a skip (--jev-clear-only).
+    """
+    blockers = [f"git: {line}" for line in target_dirty(lang)]
+    blockers += [f"intermediate: {lang}/{name}"
+                 for name in pending_intermediates(lang)]
+    return blockers
+
+
 def pipeline_command(lang: str) -> list[str]:
     """The per-locale Make command that refills a cleared catalogue."""
     return ["make", "-C", LANG_DIR, "retranslate-jev", f"L10N_LANG={lang}"]
@@ -1084,6 +1103,26 @@ def plural_forms_by_entry(lang: str) -> dict[tuple[str, str], set[str]]:
     return out
 
 
+def flagged_keys(lang: str, flagged: list[dict[str, Any]]) -> set[Key]:
+    """The (msgctxt, msgid, form) keys to empty for a set of flagged rows.
+
+    A flagged plural form empties every form the raw entry declares, not just
+    the audited one: collect_entries() drops identical/format-only forms, and a
+    leftover nonempty form would keep the entry wrong forever because
+    ai_translate.py refills it only once all of its forms are empty.
+    """
+    raw_forms = plural_forms_by_entry(lang)
+    keys: set[Key] = set()
+    for row in flagged:
+        msgctxt, msgid, form = row["msgctxt"], row["msgid"], row["form"]
+        if form:
+            for other in raw_forms.get((msgctxt, msgid), {form}):
+                keys.add((msgctxt, msgid, other))
+        else:
+            keys.add((msgctxt, msgid, ""))
+    return keys
+
+
 def is_audit_token(msgid: str, msgstr: str) -> bool:
     """Skip only identical or format-only strings, not prose mentioning API/URL."""
     if msgstr.strip() == msgid.strip():
@@ -1249,22 +1288,37 @@ def audit_entries(
                     requested, len(to_send), stopped)
 
 
+def _jev_prepass_fail(args: argparse.Namespace, message: str) -> int:
+    """Report a Jev setup problem; the clear-only prepass only warns.
+
+    Report and retranslate modes are direct, deliberate invocations, so a
+    misconfiguration is a hard error (exit 2). --jev-clear-only runs
+    automatically inside `make translate`, so it is best-effort: a setup problem
+    warns, clears nothing and exits 0 so the ordinary pipeline continues.
+    """
+    if args.jev_clear_only:
+        print(f"check_mix: {message}; skipping the Jev clear prepass (nothing "
+              f"cleared, no request sent). The outer pipeline continues.",
+              file=sys.stderr)
+        return 0
+    print(f"check_mix: {message}", file=sys.stderr)
+    return 2
+
+
 def run_jev(args: argparse.Namespace) -> int:
     """Report-only Jev audit, or --retranslate-jev: clear then refill."""
     lang = args.jev
     lang_en = _lang_en()
     if lang not in lang_en:
-        print(f"check_mix: unsupported locale {lang!r}", file=sys.stderr)
-        return 2
+        return _jev_prepass_fail(args, f"unsupported locale {lang!r}")
 
     # Only locales that ship the hook opt in. Without it there is no peer to
     # test against and no guidance for the model, so skip before any request.
     try:
         hook = load_jev_note(lang)
     except OSError as exc:
-        print(f"check_mix: cannot read {lang}/{JEV_NOTE_FILE}: {exc}",
-              file=sys.stderr)
-        return 2
+        return _jev_prepass_fail(
+            args, f"cannot read {lang}/{JEV_NOTE_FILE}: {exc}")
     if hook is None:
         print(f"check_mix: no {lang}/{JEV_NOTE_FILE} hook; skipping (no "
               f"request sent, nothing written). Add that file to opt this "
@@ -1278,22 +1332,18 @@ def run_jev(args: argparse.Namespace) -> int:
     # The question only means something against a named peer, so a locale that
     # names none fails before a single request is sent.
     if peer is None:
-        print(f"check_mix: {lang} names no peer to test against; add "
-              f"`peer: <code>` to {lang}/{JEV_NOTE_FILE} or pass --peer. "
-              f"Nothing sent.", file=sys.stderr)
-        return 2
+        return _jev_prepass_fail(
+            args, f"{lang} names no peer to test against; add "
+                  f"`peer: <code>` to {lang}/{JEV_NOTE_FILE} or pass --peer")
     if peer not in lang_en:
-        print(f"check_mix: unsupported peer locale {peer!r}", file=sys.stderr)
-        return 2
+        return _jev_prepass_fail(args, f"unsupported peer locale {peer!r}")
     if peer == lang:
-        print("check_mix: --peer must differ from --jev", file=sys.stderr)
-        return 2
+        return _jev_prepass_fail(args, "--peer must differ from --jev")
 
     try:
         cfg = JevConfig()
     except JevConfigError as exc:
-        print(f"check_mix: {exc}", file=sys.stderr)
-        return 2
+        return _jev_prepass_fail(args, str(exc))
     if args.model:
         cfg.model = args.model.strip() or cfg.model
 
@@ -1306,7 +1356,30 @@ def run_jev(args: argparse.Namespace) -> int:
               f"(no request sent).", file=sys.stderr)
         return 0
 
-    if args.retranslate_jev:
+    # --jev-clear-only runs inside the full pipeline, so it must not send a
+    # request when clearing would be unsafe anyway: the outer Make would then
+    # stop on work it cannot see. Preflight here, before any request; recheck
+    # inside _clear_only_jev just before writing. A git failure is a skip here
+    # (not the fatal abort --retranslate-jev keeps), because the outer pipeline
+    # already owns the catalogue's state.
+    if args.jev_clear_only:
+        try:
+            blockers = target_write_blockers(lang)
+        except JevError as exc:
+            print(f"check_mix: {exc}; skipping the Jev clear prepass without "
+                  f"clearing (no request sent). The outer pipeline continues.",
+                  file=sys.stderr)
+            return 0
+        if blockers:
+            print("check_mix: the target locale has uncommitted or pending "
+                  "work, so the Jev clear prepass is skipped without clearing "
+                  "(no request sent). The outer pipeline continues; resolve "
+                  "these first to re-enable the prepass:")
+            for line in blockers:
+                print(f"  {line}")
+            return 0
+
+    if args.retranslate_jev or args.jev_clear_only:
         min_confidence = args.retranslate_min_confidence
         min_probability = args.retranslate_min_probability
     else:
@@ -1336,6 +1409,9 @@ def run_jev(args: argparse.Namespace) -> int:
     if args.retranslate_jev:
         print("mode      : --retranslate-jev (clears flagged entries, then runs "
               "the scoped pipeline)")
+    elif args.jev_clear_only:
+        print("mode      : --jev-clear-only (clears flagged entries; the outer "
+              "pipeline refills them under ai_translate.py's own validation)")
     else:
         print("mode      : report-only (no catalogue is modified)")
 
@@ -1409,13 +1485,15 @@ def run_jev(args: argparse.Namespace) -> int:
           f"{len(ambiguous)} ambiguous, "
           f"{len(unclear)} unclear, {len(errors)} error(s).")
 
-    if not args.retranslate_jev:
-        print("Report-only; the model's output is a triage hint, not a verdict. "
-              "Review every flagged row; re-run with --retranslate-jev to clear "
-              "the confident ones and refill them through the pipeline.")
-        return 1 if errors else 0
+    if args.retranslate_jev:
+        return _retranslate_jev(lang, peer, flagged, errors)
+    if args.jev_clear_only:
+        return _clear_only_jev(lang, peer, flagged, errors)
 
-    return _retranslate_jev(lang, peer, flagged, errors)
+    print("Report-only; the model's output is a triage hint, not a verdict. "
+          "Review every flagged row; re-run with --retranslate-jev to clear "
+          "the confident ones and refill them through the pipeline.")
+    return 1 if errors else 0
 
 
 def _retranslate_jev(
@@ -1461,24 +1539,12 @@ def _retranslate_jev(
         return 1
 
     try:
-        raw_forms = plural_forms_by_entry(lang)
+        keys: set[Key] = flagged_keys(lang, flagged)
     except (OSError, ValueError) as exc:
         print(f"aborting: cannot read the raw plural forms from {lang}/"
               f"{DOMAIN}.po ({exc}); nothing cleared and the pipeline was not "
               f"started.")
         return 1
-
-    keys: set[Key] = set()
-    for row in flagged:
-        msgctxt, msgid, form = row["msgctxt"], row["msgid"], row["form"]
-        if form:
-            # Clear every form the raw entry declares, not just the audited
-            # ones: collect_entries() drops identical/format-only forms, and a
-            # leftover nonempty form would keep the entry wrong forever.
-            for other in raw_forms.get((msgctxt, msgid), {form}):
-                keys.add((msgctxt, msgid, other))
-        else:
-            keys.add((msgctxt, msgid, ""))
 
     po_path = os.path.join(LANG_DIR, lang, f"{DOMAIN}.po")
     changed = empty_flags(po_path, keys)
@@ -1498,6 +1564,67 @@ def _retranslate_jev(
         print(f"pipeline failed (exit {rc}); the catalogue and any partial "
               f"progress are preserved. Resume with:\n  {command}")
     return rc
+
+
+def _clear_only_jev(
+    lang: str,
+    peer: str,
+    flagged: list[dict[str, Any]],
+    errors: list[dict[str, Any]],
+) -> int:
+    """Clear the confidently peer-language entries; the outer pipeline refills.
+
+    Runs inside `make translate`, so unlike --retranslate-jev it never starts
+    Make itself: the ordinary pipeline that invoked it refills the emptied
+    entries through ai_translate.py's own validation. The prepass is
+    best-effort: any failure - a failed Jev request, a dirty target, pending
+    intermediates - clears nothing and exits 0, so the ordinary pipeline
+    continues. A failed or incomplete audit is never partially applied.
+    """
+    _section(f"CLEAR-ONLY {lang} vs {peer}")
+
+    if errors:
+        print(f"warning: {len(errors)} Jev request(s) failed, so no entry can "
+              f"be trusted; nothing cleared. Continuing with normal "
+              f"translation.")
+        return 0
+    if not flagged:
+        print("no entry cleared the mutation thresholds; nothing cleared.")
+        return 0
+
+    # Recheck right before writing: classification above takes time, and the
+    # outer pipeline could have touched the catalogue in the meantime.
+    try:
+        blockers = target_write_blockers(lang)
+    except JevError as exc:
+        print(f"skipping: {exc}; nothing cleared. The outer pipeline continues "
+              f"and translates the catalogue as it stands.")
+        return 0
+    if blockers:
+        print("skipping: the target locale has uncommitted or pending work, so "
+              "clearing would overwrite it; nothing cleared. Resolve these "
+              "first to re-enable the Jev prepass:")
+        for line in blockers:
+            print(f"  {line}")
+        return 0
+
+    try:
+        keys: set[Key] = flagged_keys(lang, flagged)
+    except (OSError, ValueError) as exc:
+        print(f"warning: cannot read the raw plural forms from {lang}/"
+              f"{DOMAIN}.po ({exc}); nothing cleared. Continuing with normal "
+              f"translation.")
+        return 0
+
+    po_path = os.path.join(LANG_DIR, lang, f"{DOMAIN}.po")
+    changed = empty_flags(po_path, keys)
+    noun = "entry" if len(changed) == 1 else "entries"
+    print(f"emptied {len(keys)} key(s) across {len(changed)} {noun} "
+          f"(msgstr emptied, never hand-edited); the outer pipeline will refill "
+          f"them under ai_translate.py's own validation:")
+    for line in changed:
+        print(f"  cleared {line}")
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -1537,6 +1664,11 @@ def main(argv: list[str] | None = None) -> int:
                     help="with --jev, empty the confidently peer-language "
                          "entries and run the existing per-locale Make pipeline "
                          "to refill them; never writes a translation itself")
+    ap.add_argument("--jev-clear-only", action="store_true",
+                    help="with --jev, empty the confidently peer-language "
+                         "entries but start no translator: the outer pipeline "
+                         "(make translate) refills them under ai_translate.py's "
+                         "own validation")
     ap.add_argument("--limit", type=int, default=None, metavar="N",
                     help="with --jev, audit at most N entries in msgid order; "
                          "omitted audits all; must be >= 0; not allowed with "
@@ -1570,6 +1702,18 @@ def main(argv: list[str] | None = None) -> int:
     if args.retranslate_jev and args.jev is None:
         print("check_mix: --retranslate-jev requires --jev <lang>.",
               file=sys.stderr)
+        return 2
+    if args.jev_clear_only and args.jev is None:
+        print("check_mix: --jev-clear-only requires --jev <lang>.",
+              file=sys.stderr)
+        return 2
+    if args.jev_clear_only and args.retranslate_jev:
+        print("check_mix: --jev-clear-only cannot be combined with "
+              "--retranslate-jev.", file=sys.stderr)
+        return 2
+    if args.jev_clear_only and args.limit is not None:
+        print("check_mix: --jev-clear-only cannot be combined with --limit; it "
+              "audits the whole catalogue.", file=sys.stderr)
         return 2
     if args.limit is not None and args.jev is None:
         print("check_mix: --limit is only valid with --jev <lang>.",

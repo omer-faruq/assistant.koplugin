@@ -105,9 +105,19 @@ clean tree. `extract-untranslated` skips a language whose `untranslated.po` is
 already newer than its catalogue, so naming one language repeatedly does not
 re-translate what is already done.
 
-Run the full pipeline (extract → translate → merge → check → clean → mo):
+Run the full pipeline (template → jev-clear → update → extract → translate →
+import → check → clean → mo). `make` alone runs the same pipeline (`all` depends
+on `translate`):
 
     make translate
+    make
+
+Bare `make` also runs a Jev *clear-only* prepass for every locale that opts in
+with `<LANG_CODE>/jev_note.txt`; it empties the entries the classifier
+confidently places in the peer language so the ordinary pipeline re-translates
+them. It makes Jev requests only for those hooked locales, and only when
+`API_JEV_ENDPOINT` and `API_KEY` are set. `make check` and `make check-mix` never
+make a Jev request. See `Clear-only mode (the pipeline prepass)` below.
 
 Detect drift between this project and KOReader's supported languages, and
 validate the `LANG_MAP` / `LANG_EN` / `PLURAL_FORMS` tables against the
@@ -122,11 +132,12 @@ wrong slot:
     make check-mix CHECK_MIX_ARGS=--list
 
 Audit one locale for translations written in a *different* language with the
-optional Jev classifier (opt-in per locale, report-only unless
-`--retranslate-jev` is given; see `Language audit with Jev SystemOne` below):
+optional Jev classifier (opt-in per locale, report-only unless `--retranslate-jev`
+or `--jev-clear-only` is given; see `Language audit with Jev SystemOne` below):
 
     ./check_mix.py --jev sk
     ./check_mix.py --jev sk --retranslate-jev
+    ./check_mix.py --jev sk --jev-clear-only
 
 Retranslate one exact msgid everywhere (e.g. after a terminology fix — empties it
 in all `.po` files, then runs it back through the pipeline):
@@ -236,8 +247,8 @@ credential is not accepted there.
 
 A locale opts in by shipping `l10n/<LANG_CODE>/jev_note.txt`, the Jev analogue
 of `ai_note.txt`. Without that file the locale is skipped: no request is sent
-and nothing is written, in either report or retranslate mode. One locale (and
-its hook-defined peer) is handled per invocation; there is no sweep across
+and nothing is written, in report, retranslate or clear-only mode. One locale
+(and its hook-defined peer) is handled per invocation; there is no sweep across
 locales.
 
 The file is free text. One directive is recognized, `peer: <code>`, naming the
@@ -366,6 +377,54 @@ The run fails closed - clearing nothing and starting no translator - when:
   a previous run left pending intermediates such as `untranslated.po` or
   `updated_translated.po.partial` that clearing would overwrite.
 
+#### Clear-only mode (the pipeline prepass)
+
+    ./check_mix.py --jev sk --jev-clear-only
+
+This is the clear step of retranslate mode **without** the nested pipeline. It
+classifies the whole catalogue under exactly the same batch and paid-fallback
+mechanics and the same stricter mutation thresholds (`>= 0.85` confidence and
+`>= 0.90` peer probability), then empties only the confident peer-language
+msgstr. It never starts Make: the ordinary pipeline it is already part of
+refills the emptied entries under `ai_translate.py`'s own validation.
+
+Clear-only is **best-effort**: it exists only to hand the outer pipeline a few
+more entries to re-translate, so nothing it does may stop a translation run. A
+failed or incomplete audit always clears nothing (the clear is all-or-nothing,
+applied only after every request succeeds), and the outer pipeline continues.
+
+`--jev-clear-only` requires `--jev <lang>` and cannot be combined with
+`--retranslate-jev`, `--limit`, `--empty` or `--structural`. It runs the whole
+catalogue, so no `--limit`. The manual `--retranslate-jev` command keeps its
+strict fail-closed contract; only this prepass is lenient.
+
+`make translate` runs it for every hooked locale as its second step, after the
+template is generated and before `update`/`extract-untranslated` (so `msgmerge`
+cannot overwrite a clear, and the extraction/LLM path that follows is what
+refills it). The prepass loops only locales that ship both
+`l10n/<LANG_CODE>/jev_note.txt` and an existing `assistant.po`, intersected with
+`LANGS` (currently only `sk`). Each is invoked as:
+
+    ./check_mix.py --jev <lang> --jev-clear-only
+
+and `jev-clear-hooked` catches any nonzero exit from that command (despite
+`set -e`) and warns, then continues to the normal translation steps:
+
+- **Jev setup, API, network or paid-fallback failure** - warns, clears nothing
+  and exits `0`; a nonzero exit (for example an unexpected crash) is caught by
+  the Make target and also continues. A failed or incomplete audit never clears
+  anything.
+- **Missing hook or missing Jev credential** (`API_JEV_ENDPOINT` / `API_KEY`) -
+  skips; no request is sent and nothing is cleared.
+- **No entry clears the thresholds** - success/no-op.
+- **Dirty catalogue or pending intermediates** - skips the clear with an
+  explanatory message (checked before the Jev requests and rechecked just before
+  writing), so the prepass never overwrites work the outer pipeline already
+  owns. Resolve the changes to re-enable it.
+
+The same applies to a `git status` that cannot be run: a skip here, rather than
+the fatal abort `--retranslate-jev` keeps.
+
 #### Pipeline scope and recovery
 
 The pipeline is invoked as `make retranslate-jev L10N_LANG=<lang>`. It validates
@@ -389,15 +448,19 @@ There is no automatic commit; review the diff first.
 
 #### Data flow
 
-Report and retranslate send the target `msgid`, its current `msgstr`, the
-locale metadata and the hook's guidance to the SystemOne endpoint
+Report, retranslate and clear-only send the target `msgid`, its current `msgstr`,
+the locale metadata and the hook's guidance to the SystemOne endpoint
 (`API_JEV_ENDPOINT`) with the `API_KEY` Bearer credential - nothing else. On
-successful classification, retranslate mode then hands the emptied entries to
-the existing translation pipeline, which sends them to the configured
-`API_ENDPOINT` / `API_MODEL`. The default `jev-1.13-free` model is free only
-while its quota lasts; when the free quota is exhausted the audit falls back to
-the paid `jev-1.13` model (see "Free model, paid fallback"), so check the
-provider's terms and current pricing before relying on it.
+successful classification, retranslate mode hands the emptied entries to the
+pipeline it starts itself, and clear-only mode leaves them for the `make`
+pipeline that invoked it; both then send them to the configured `API_ENDPOINT` /
+`API_MODEL`. The default `jev-1.13-free` model is free only while its quota
+lasts; when the free quota is exhausted the audit falls back to the paid
+`jev-1.13` model, so a bare `make` whose hooked locale has exhausted its free
+quota can make **paid** Jev requests. Paid fallback requests are capped by
+`JEV_MAX_PAID_REQUESTS` (default `100`, counting real HTTP attempts) - a request
+guard, not a dollar cap - so check the provider's terms and current pricing
+before relying on it.
 
 ## Updating Translations
 
@@ -405,6 +468,11 @@ When the source code changes, new strings might be added or modified. To update
 all language files:
 
     make
+
+`make` (default goal `translate`) runs the Jev clear-only prepass for hooked
+locales before `update`/translation; locales without a hook, or without a Jev
+credential, are skipped without a request, and `make check` / `make check-mix`
+never make a Jev request.
 
 If the run is interrupted (Ctrl-C, network failure, etc.), just re-run `make`;
 the Python script resumes from the most recent partial state for any language
