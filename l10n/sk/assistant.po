@@ -30,7 +30,7 @@ msgid "%1 - choose an action"
 msgstr "%1 – vyberte akciu"
 
 msgid "%1 handler does not support connection testing"
-msgstr "Obdelovalnik %1 ne podpira testiranja povezave"
+msgstr "Obsluha %1 nepodporuje testovanie pripojenia"
 
 msgid "(No response)"
 msgstr "(Žiadna odpoveď)"
@@ -100,8 +100,8 @@ msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
 "Using original location."
 msgstr ""
-"<b>Ni mogoče dostopati do privzete mape za dnevnike: %1</b>\n"
-"Uporabljam prvotno lokacijo."
+"<b>Nedá sa získať prístup k predvolenému priečinku pre záznamy: %1</b>\n"
+"Použije sa pôvodné umiestnenie."
 
 msgid "<b>Detail:</b>"
 msgstr "<b>Podrobnosti:</b>"
@@ -161,8 +161,8 @@ msgid ""
 "<b>No provider set up yet.</b>\n"
 "Please add a provider in Settings or configuration.lua."
 msgstr ""
-"<b>Noben ponudnik še ni nastavljen.</b>\n"
-"Prosimo, dodajte ponudnika v Nastavitvah ali configuration.lua."
+"<b>Zatiaľ nie je nastavený žiadny poskytovateľ.</b>\n"
+"Pridajte poskytovateľa v Nastaveniach alebo v configuration.lua."
 
 msgid "<b>Parameters</b>"
 msgstr "<b>Parametre</b>"
@@ -171,7 +171,7 @@ msgid "<b>Reasoning (no final answer)</b> - %1"
 msgstr "<b>Zdôvodnenie (bez konečnej odpovede)</b> - %1"
 
 msgid "<b>Request</b> - POST %1"
-msgstr "<b>Zahteva</b> – POST %1"
+msgstr "<b>Požiadavka</b> - POST %1"
 
 msgid "<b>Response</b> - HTTP %1"
 msgstr "<b>Odgovor</b> – HTTP %1"
@@ -507,7 +507,7 @@ msgid "Concise - reply in short sentences"
 msgstr "Stručné – odpovedať krátkymi vetami"
 
 msgid "Configuration not found. Please set up configuration.lua first."
-msgstr "Konfiguracija ni bila najdena. Prosimo, najprej nastavite configuration.lua."
+msgstr "Konfigurácia sa nenašla. Najprv nastavte configuration.lua."
 
 msgid "Configure the response language of the AI LLM. Defaults to the KOReader interface language."
 msgstr "Nastavi jezik odgovorov AI LLM. Privzeto se uporabi jezik vmesnika KOReader."
@@ -516,7 +516,7 @@ msgid "Configured AI Notes folder is not accessible: %1"
 msgstr "Nastavený priečinok AI poznámok nie je dostupný: %1"
 
 msgid "Connection test successful."
-msgstr "Test povezave je uspel."
+msgstr "Test pripojenia bol úspešný."
 
 #. @translators term_xray: "Context Limitations" section header
 msgid "Context Limitations"
@@ -683,7 +683,7 @@ msgid "Empty Error"
 msgstr "Prázdna chyba"
 
 msgid "Enable Stream Response"
-msgstr "Omogoči pretakanje odgovora"
+msgstr "Povoliť streamovanie odpovede"
 
 msgid "Enhance your KOReader experience with AI"
 msgstr "Vylepšite si zážitok z KOReader pomocou AI"
@@ -802,7 +802,7 @@ msgid "Highlight & Note Analysis"
 msgstr "Analýza zvýraznení a poznámok"
 
 msgid "Highlight functionality not available"
-msgstr "Funkcija označevanja ni na voljo."
+msgstr "Funkcia zvýrazňovania nie je dostupná"
 
 msgid "Highlighted text:"
 msgstr "Zvýraznený text:"
@@ -846,7 +846,7 @@ msgid "Key Takeaways"
 msgstr "Kľúčové poznatky"
 
 msgid "Large Streaming Window"
-msgstr "Veliko okno pretakanja"
+msgstr "Veľké okno streamovania"
 
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
@@ -960,7 +960,7 @@ msgid "No text to annotate"
 msgstr "Žiadny text na anotovanie"
 
 msgid "No valid custom prompt found"
-msgstr "Ni najdenega veljavnega prilagojenega poziva."
+msgstr "Nenašiel sa žiadny platný vlastný prompt"
 
 msgid "No word to add"
 msgstr "Žiadne slovo na pridanie"
@@ -978,8 +978,8 @@ msgid ""
 "OTA UPDATE OK.\n"
 " Restart is required."
 msgstr ""
-"POSODOBITEV OTA JE USPEŠNA.\n"
-" Potreben je ponovni zagon."
+"AKTUALIZÁCIA OTA OK.\n"
+" Vyžaduje sa reštart."
 
 msgid "OTA Update"
 msgstr "Aktualizácia OTA"
@@ -1019,7 +1019,7 @@ msgid "Parts of Speech & Tenses"
 msgstr "Slovné druhy a časy"
 
 msgid "Pick one via Browse Models"
-msgstr "Izberite enega prek Brskaj po modelih"
+msgstr "Vyberte jeden cez Prehľadávať modely"
 
 msgid "Platform"
 msgstr "Platforma"
@@ -1127,7 +1127,7 @@ msgstr "Odstrániť"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
-msgstr "Odstrani [%s] iz menija označb?"
+msgstr "Odstrániť [%s] z ponuky zvýraznenia?"
 
 msgid "Removed <b>[%1 (AI)]</b>"
 msgstr "Odstránené <b>[%1 (AI)]</b>"
@@ -1154,17 +1154,17 @@ msgid ""
 "search tool credentials added via the Settings UI will be removed.\n"
 "File configuration.lua will be preserved."
 msgstr ""
-"Ponastavim vse nastavitve assistant.koplugin?\n"
+"Obnoviť všetky nastavenia assistant.koplugin?\n"
 "\n"
-"To vrne vtičnik na tovarniške privzete nastavitve. Ponudniki, ključi API in\n"
-"poverilnice orodja za iskanje, dodane prek uporabniškega vmesnika Nastavitve, bodo odstranjene.\n"
-"Datoteka configuration.lua bo ohranjena."
+"Týmto sa doplnok obnoví na výrobné nastavenia. Poskytovatelia, API kľúče a\n"
+"prihlasovacie údaje vyhľadávacieho nástroja pridané cez rozhranie Nastavení budú odstránené.\n"
+"Súbor configuration.lua bude zachovaný."
 
 msgid "Response Font: %1"
 msgstr "Písmo odpovede: %1"
 
 msgid "Response Settings"
-msgstr "Nastavitve odgovora"
+msgstr "Nastavenia odpovede"
 
 msgid "Response Text Font Size"
 msgstr "Velikost pisave besedila odgovora"
@@ -1219,7 +1219,7 @@ msgid "Search Models"
 msgstr "Hľadať modely"
 
 msgid "Search keywords are empty."
-msgstr "Iskalne ključne besede so prazne."
+msgstr "Kľúčové slová vyhľadávania sú prázdne."
 
 msgid "Search tool data not initialized."
 msgstr "Dáta vyhľadávacieho nástroja nie sú inicializované."
@@ -1255,10 +1255,10 @@ msgid "Show Reasoning Text"
 msgstr "Zobraziť text odôvodnenia"
 
 msgid "Show deeply thought process (reasoning) from the AI response if exists."
-msgstr "Prikaži poglobljen miselni proces (razmišljanje) iz odgovora AI, če obstaja."
+msgstr "Zobraziť proces hlbokého uvažovania (reasoning) z odpovede AI, ak existuje."
 
 msgid "Show follow up questions related to the response content."
-msgstr "Prikaži nadaljnja vprašanja, povezana z vsebino odgovora."
+msgstr "Zobraziť doplňujúce otázky súvisiace s obsahom odpovede."
 
 msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
 msgstr "Zobrazuje iba odpoveď: žiadne nadpisy Používateľ/Asistent, žiadny prvý riadok tlačidiel, žiadne uvažovanie ani doplnkové otázky. Ponechá len akcie na samotnej odpovedi (Anotovať, Slovná zásoba) vedľa tlačidla Zavrieť. Počas aktívneho stavu vypína Text uvažovania a Doplnkové otázky."
