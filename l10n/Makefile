@@ -38,7 +38,7 @@ LANGS      := zh_CN zh_TW ja id ms ko_KR vi th \
 MO_FILES   := $(LANGS:%=%/$(DOMAIN).mo)
 PO_FILES   := $(wildcard */$(DOMAIN).po)
 
-# Locales that opt into the Jev clear prepass: they ship both a catalogue and
+# Locales that opt into the Jev check: they ship both a catalogue and
 # the per-locale hook l10n/<lang>/jev_note.txt, and are a supported LANGS entry.
 # `translate` loops exactly these; a locale without the hook is never contacted.
 JEV_HOOKED := $(shell for lang in $(LANGS); do if [ -f "$$lang/$(DOMAIN).po" ] && [ -f "$$lang/jev_note.txt" ]; then echo $$lang; fi; done)
@@ -69,14 +69,14 @@ export RANDOM_SESSION_ID
 
 .DEFAULT_GOAL := all
 
-.PHONY: help all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-mix check-api stats clean init-dirs mo retranslate-fuzzy retranslate-msgid retranslate-jev jev-clear-hooked \
+.PHONY: help all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-mix check-api stats clean init-dirs mo retranslate-fuzzy retranslate-msgid retranslate-jev jev-check-translated \
 	$(EXTRACT_LOCALE_TARGETS) $(IMPORT_LOCALE_TARGETS) $(AI_TRANSLATE_TARGETS)
 
 help:
 	@echo "Usage: make [target]"
 	@echo ""
 	@echo "  mo              Compile .po -> .mo (offline, incremental)"
-	@echo "  translate       Full pipeline: template -> jev-clear -> update -> extract -> ai-translate -> import -> check -> clean -> mo (needs .env)"
+	@echo "  translate       Full pipeline: template -> update -> extract -> ai-translate -> jev-check -> import -> check -> clean -> mo (needs .env)"
 	@echo "  template        Regenerate templates/assistant.pot"
 	@echo "  update          Merge pot into po"
 	@echo "  check           msgfmt --check"
@@ -89,7 +89,7 @@ help:
 	@echo "  retranslate-fuzzy  Re-extract and re-translate fuzzy entries (all or L10N_LANG=xx)"
 	@echo "  retranslate-msgid  Empty one MSGID everywhere and re-translate it: make retranslate-msgid MSGID=\"...\" [L10N_LANG=xx]"
 	@echo "  retranslate-jev  Refill one locale after check_mix.py --jev --retranslate-jev emptied it: make retranslate-jev L10N_LANG=xx"
-	@echo "  jev-clear-hooked  Empty confident peer-language entries for hooked locales (Jev prepass; run by translate)"
+	@echo "  jev-check-translated  Jev-check AI output and retranslate flagged entries for hooked locales (run by translate)"
 	@echo "  init-dirs       Create missing language directories"
 
 # Default target: full pipeline + MO compilation (virtual)
@@ -104,11 +104,10 @@ mo: $(MO_FILES)
 
 # This target runs the full translation pipeline:
 # 1. Extracts strings from source code into a .pot template.
-# 2. Clears the entries the Jev classifier confidently places in a peer
-#    language (hooked locales only), so the refill below re-translates them.
-# 3. Merges the template into language .po files.
-# 4. Extracts all untranslated strings.
-# 5. Runs the AI translation script on them and verifies output files.
+# 2. Merges the template into language .po files.
+# 3. Extracts all untranslated strings.
+# 4. Runs the AI translation script on them, writing updated_translated.po.
+# 5. Jev-checks that output and refills the entries it flags (hooked locales).
 # 6. Merges the new translations back into the .po files.
 # 7. Checks the syntax of the final .po files.
 # 8. Cleans up all intermediate files.
@@ -121,14 +120,14 @@ translate:
 	fi
 	@echo "[1/9] Generating POT template file..."
 	@$(MAKE) template
-	@echo "[2/9] Clearing confident peer-language entries (Jev prepass, hooked locales)..."
-	@$(MAKE) jev-clear-hooked
-	@echo "[3/9] Merging POT file into PO files..."
+	@echo "[2/9] Merging POT file into PO files..."
 	@$(MAKE) update
-	@echo "[4/9] Generating untranslated files..."
+	@echo "[3/9] Generating untranslated files..."
 	@$(MAKE) extract-untranslated
-	@echo "[5/9] Running AI translation and verifying results..."
+	@echo "[4/9] Running AI translation and verifying results..."
 	@$(MAKE) ai-translate
+	@echo "[5/9] Jev-checking AI output (hooked locales)..."
+	@$(MAKE) jev-check-translated
 	@echo "[6/9] Merging untranslated files..."
 	@$(MAKE) import-translation
 	@echo "[7/9] Checking PO files..."
@@ -140,29 +139,38 @@ translate:
 	@echo "\nTranslation process completed successfully!"
 
 
-# Jev clear-only prepass, run by `translate` after the template is generated and
-# before `update`/`extract-untranslated`, so msgmerge cannot overwrite a clear
-# and the extraction/LLM path refills it. For every hooked locale it empties the
-# msgstr the Jev classifier confidently places in the peer language; it never
-# starts Make itself. The prepass is best-effort: check_mix.py skips a locale
-# with exit 0 when no Jev credential is configured, when the catalogue is dirty
-# or has pending intermediates, or when nothing clears the thresholds, and a
-# per-locale failure is caught and warned about here so the normal translation
-# below still runs. Only locales that ship l10n/<lang>/jev_note.txt and an
-# existing catalogue are looped (JEV_HOOKED, intersected with LANGS).
-jev-clear-hooked:
+# Jev check of the AI output, run by `translate` after ai-translate and before
+# import-translation. For every hooked locale it audits <lang>/updated_translated.po
+# and empties the msgstr the classifier confidently places in the peer language.
+# If anything was emptied, the catalogue goes back through ai_translate.py as its
+# untranslated input: only empty msgstr are filled, so good translations are kept
+# and the flagged ones are retranslated. The result replaces updated_translated.po,
+# so import-translation picks up the corrected version. A Jev audit failure only
+# warns and keeps the AI output; a failed refill stops the run like any other
+# ai-translate failure. Only locales that ship l10n/<lang>/jev_note.txt are looped.
+jev-check-translated:
 	@set -e; \
-	if [ -z "$(JEV_HOOKED)" ]; then \
-		echo "No locale ships a Jev hook; skipping the Jev clear prepass."; \
-	else \
-		for lang in $(JEV_HOOKED); do \
-			echo "  [jev] clearing confident peer-language entries for $$lang..."; \
-			if ! ./check_mix.py --jev $$lang --jev-clear-only; then \
-				echo "\033[0;33m[jev] clear prepass for $$lang failed; continuing with normal translation.\033[0m"; \
-			fi; \
-		done; \
-	fi
-
+		if [ -z "$(JEV_HOOKED)" ]; then \
+			echo "No locale ships a Jev hook; skipping the Jev check."; \
+		else \
+			for lang in $(JEV_HOOKED); do \
+				if [ ! -f "$$lang/updated_translated.po" ]; then \
+					echo "  [jev] $$lang: no updated_translated.po this run; nothing to check."; \
+					continue; \
+				fi; \
+				echo "  [jev] checking $$lang/updated_translated.po..."; \
+				if ! ./check_mix.py --jev $$lang --jev-clear-only --intermediate; then \
+					echo "\033[0;33m[jev] check for $$lang failed; keeping the AI output.\033[0m"; \
+					continue; \
+				fi; \
+				cleared=$$(LC_ALL=C $(MSGFMT_BIN) --statistics -o /dev/null "$$lang/updated_translated.po" 2>&1 | grep -oE '[0-9]+ untranslated' | grep -oE '[0-9]+' | head -1); \
+				if [ "$${cleared:-0}" -gt 0 ]; then \
+					echo "  [jev] $$lang: $$cleared entries cleared; retranslating them."; \
+					mv "$$lang/updated_translated.po" "$$lang/untranslated.po"; \
+					./ai_translate.py $$lang; \
+				fi; \
+			done; \
+		fi
 
 init-dirs: template
 	@echo "Ensuring language directories and initial .po files exist..."

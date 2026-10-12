@@ -179,6 +179,9 @@ JEV_NOTE_FILE = "jev_note.txt"
 # Intermediates the Make pipeline writes inside a locale directory. Their
 # presence means a previous run was interrupted, so --retranslate-jev refuses
 # to start and overwrite them; the user resumes or clears them first.
+# The LLM output of `make translate`, audited by the Jev step before import.
+INTERMEDIATE_NAME = "updated_translated.po"
+
 PENDING_INTERMEDIATES = (
     "untranslated.po",
     "_untranslated.po",
@@ -767,6 +770,12 @@ def load_jev_note(lang: str) -> JevNote | None:
     return JevNote(peer=peer, guidance="\n".join(guidance_lines).strip())
 
 
+def catalogue_path(lang: str, intermediate: bool = False) -> str:
+    """The catalogue a Jev run audits: assistant.po, or the translated intermediate."""
+    name = INTERMEDIATE_NAME if intermediate else f"{DOMAIN}.po"
+    return os.path.join(LANG_DIR, lang, name)
+
+
 def pending_intermediates(lang: str) -> list[str]:
     """Names of pending translation intermediates in the locale directory."""
     lang_dir = os.path.join(LANG_DIR, lang)
@@ -806,14 +815,17 @@ def target_dirty(lang: str) -> list[str]:
     return [ln for ln in proc.stdout.splitlines() if ln.strip()]
 
 
-def target_write_blockers(lang: str) -> list[str]:
+def target_write_blockers(lang: str, intermediate: bool = False) -> list[str]:
     """Reasons the target catalogue cannot be cleared safely, or an empty list.
 
     Combines the uncommitted-work check with the pending-intermediate check, in
     the human-readable form the callers print. `target_dirty` raises JevError
     when git cannot prove the target clean, so the caller decides whether that
-    is fatal (--retranslate-jev) or a skip (--jev-clear-only).
+    is fatal (--retranslate-jev) or a skip (--jev-clear-only). The intermediate
+    is itself the work the pipeline is about to refill, so it is never blocked.
     """
+    if intermediate:
+        return []
     blockers = [f"git: {line}" for line in target_dirty(lang)]
     blockers += [f"intermediate: {lang}/{name}"
                  for name in pending_intermediates(lang)]
@@ -1049,13 +1061,12 @@ def _chunks(items: list[Any], size: int) -> Iterator[list[Any]]:
         yield items[start:start + size]
 
 
-def collect_entries(lang: str) -> list[dict[str, Any]]:
+def collect_entries(path: str) -> list[dict[str, Any]]:
     """Every translated, non-format-only msgstr, in msgid order.
 
     Plural forms carry their `msgid_plural` alongside `form`, so the request
     state can hold the source plural the model needs to judge the form against.
     """
-    path = os.path.join(LANG_DIR, lang, f"{DOMAIN}.po")
     po = polib.pofile(path)
     out: list[dict[str, Any]] = []
     for e in po:
@@ -1084,7 +1095,7 @@ def collect_entries(lang: str) -> list[dict[str, Any]]:
     return out
 
 
-def plural_forms_by_entry(lang: str) -> dict[tuple[str, str], set[str]]:
+def plural_forms_by_entry(path: str) -> dict[tuple[str, str], set[str]]:
     """Every plural form index in the raw catalogue, keyed by entry.
 
     collect_entries() drops forms identical to the msgid or format-only, but
@@ -1093,7 +1104,6 @@ def plural_forms_by_entry(lang: str) -> dict[tuple[str, str], set[str]]:
     filtered audit list - an unfilled identical form would otherwise keep the
     whole entry wrong forever.
     """
-    path = os.path.join(LANG_DIR, lang, f"{DOMAIN}.po")
     po = polib.pofile(path)
     out: dict[tuple[str, str], set[str]] = {}
     for e in po:
@@ -1103,7 +1113,7 @@ def plural_forms_by_entry(lang: str) -> dict[tuple[str, str], set[str]]:
     return out
 
 
-def flagged_keys(lang: str, flagged: list[dict[str, Any]]) -> set[Key]:
+def flagged_keys(path: str, flagged: list[dict[str, Any]]) -> set[Key]:
     """The (msgctxt, msgid, form) keys to empty for a set of flagged rows.
 
     A flagged plural form empties every form the raw entry declares, not just
@@ -1111,7 +1121,7 @@ def flagged_keys(lang: str, flagged: list[dict[str, Any]]) -> set[Key]:
     leftover nonempty form would keep the entry wrong forever because
     ai_translate.py refills it only once all of its forms are empty.
     """
-    raw_forms = plural_forms_by_entry(lang)
+    raw_forms = plural_forms_by_entry(path)
     keys: set[Key] = set()
     for row in flagged:
         msgctxt, msgid, form = row["msgctxt"], row["msgid"], row["form"]
@@ -1362,9 +1372,14 @@ def run_jev(args: argparse.Namespace) -> int:
     # inside _clear_only_jev just before writing. A git failure is a skip here
     # (not the fatal abort --retranslate-jev keeps), because the outer pipeline
     # already owns the catalogue's state.
+    audit_path = catalogue_path(lang, args.intermediate)
+    if args.intermediate and not os.path.isfile(audit_path):
+        return _jev_prepass_fail(
+            args, f"no {lang}/{INTERMEDIATE_NAME} to audit")
+
     if args.jev_clear_only:
         try:
-            blockers = target_write_blockers(lang)
+            blockers = target_write_blockers(lang, args.intermediate)
         except JevError as exc:
             print(f"check_mix: {exc}; skipping the Jev clear prepass without "
                   f"clearing (no request sent). The outer pipeline continues.",
@@ -1386,12 +1401,12 @@ def run_jev(args: argparse.Namespace) -> int:
         min_confidence = args.min_confidence
         min_probability = args.min_probability
 
-    all_entries = collect_entries(lang)
+    all_entries = collect_entries(audit_path)
     entries = all_entries
     if args.limit:
         entries = entries[:args.limit]
 
-    print(f"catalogue : {os.path.join(LANG_DIR, lang, DOMAIN + '.po')}")
+    print(f"catalogue : {audit_path}")
     print(f"language  : {lang} ({lang_en[lang]})  peer: {peer} "
           f"({lang_en[peer]})")
     print(f"model     : {cfg.model}")
@@ -1488,7 +1503,7 @@ def run_jev(args: argparse.Namespace) -> int:
     if args.retranslate_jev:
         return _retranslate_jev(lang, peer, flagged, errors)
     if args.jev_clear_only:
-        return _clear_only_jev(lang, peer, flagged, errors)
+        return _clear_only_jev(lang, peer, flagged, errors, args.intermediate)
 
     print("Report-only; the model's output is a triage hint, not a verdict. "
           "Review every flagged row; re-run with --retranslate-jev to clear "
@@ -1539,7 +1554,7 @@ def _retranslate_jev(
         return 1
 
     try:
-        keys: set[Key] = flagged_keys(lang, flagged)
+        keys: set[Key] = flagged_keys(catalogue_path(lang), flagged)
     except (OSError, ValueError) as exc:
         print(f"aborting: cannot read the raw plural forms from {lang}/"
               f"{DOMAIN}.po ({exc}); nothing cleared and the pipeline was not "
@@ -1571,6 +1586,7 @@ def _clear_only_jev(
     peer: str,
     flagged: list[dict[str, Any]],
     errors: list[dict[str, Any]],
+    intermediate: bool,
 ) -> int:
     """Clear the confidently peer-language entries; the outer pipeline refills.
 
@@ -1595,7 +1611,7 @@ def _clear_only_jev(
     # Recheck right before writing: classification above takes time, and the
     # outer pipeline could have touched the catalogue in the meantime.
     try:
-        blockers = target_write_blockers(lang)
+        blockers = target_write_blockers(lang, intermediate)
     except JevError as exc:
         print(f"skipping: {exc}; nothing cleared. The outer pipeline continues "
               f"and translates the catalogue as it stands.")
@@ -1608,15 +1624,15 @@ def _clear_only_jev(
             print(f"  {line}")
         return 0
 
+    po_path = catalogue_path(lang, intermediate)
     try:
-        keys: set[Key] = flagged_keys(lang, flagged)
+        keys: set[Key] = flagged_keys(po_path, flagged)
     except (OSError, ValueError) as exc:
-        print(f"warning: cannot read the raw plural forms from {lang}/"
-              f"{DOMAIN}.po ({exc}); nothing cleared. Continuing with normal "
-              f"translation.")
+        print(f"warning: cannot read the raw plural forms from "
+              f"{os.path.basename(po_path)} ({exc}); nothing cleared. Continuing "
+              f"with normal translation.")
         return 0
 
-    po_path = os.path.join(LANG_DIR, lang, f"{DOMAIN}.po")
     changed = empty_flags(po_path, keys)
     noun = "entry" if len(changed) == 1 else "entries"
     print(f"emptied {len(keys)} key(s) across {len(changed)} {noun} "
@@ -1669,6 +1685,11 @@ def main(argv: list[str] | None = None) -> int:
                          "entries but start no translator: the outer pipeline "
                          "(make translate) refills them under ai_translate.py's "
                          "own validation")
+    ap.add_argument("--intermediate", action="store_true",
+                    help=f"with --jev, audit (and with --jev-clear-only, clear) "
+                         f"<LANG>/{INTERMEDIATE_NAME} instead of {DOMAIN}.po: the "
+                         f"fresh LLM output that make translate checks before "
+                         f"import; not allowed with --retranslate-jev")
     ap.add_argument("--limit", type=int, default=None, metavar="N",
                     help="with --jev, audit at most N entries in msgid order; "
                          "omitted audits all; must be >= 0; not allowed with "
@@ -1710,6 +1731,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.jev_clear_only and args.retranslate_jev:
         print("check_mix: --jev-clear-only cannot be combined with "
               "--retranslate-jev.", file=sys.stderr)
+        return 2
+    if args.intermediate and args.jev is None:
+        print("check_mix: --intermediate requires --jev <lang>.", file=sys.stderr)
+        return 2
+    if args.intermediate and args.retranslate_jev:
+        print("check_mix: --intermediate cannot be combined with "
+              "--retranslate-jev; the full-catalogue retranslate owns "
+              f"{DOMAIN}.po.", file=sys.stderr)
         return 2
     if args.jev_clear_only and args.limit is not None:
         print("check_mix: --jev-clear-only cannot be combined with --limit; it "
