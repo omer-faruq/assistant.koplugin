@@ -207,11 +207,21 @@ as part of its language-drift check.
 
 `./check_mix.py --jev <lang>` is a third, opt-in audit that answers the one
 question the signals above cannot: *is this msgstr actually written in the
-target language?* It sends each translated msgstr (except strings identical to
-the English msgid or containing only format placeholders) to the Jev SystemOne
-decision model as one typed `choice` question - target language / peer language
-/ unclear - and reports the entries the model confidently places in the peer
-language.
+target language?* It sends translated msgstrs (except strings identical to the
+English msgid or containing only format placeholders) to the Jev SystemOne
+decision model, each as its own typed `choice` question - target language / peer
+language / unclear - and reports the entries the model confidently places in the
+peer language.
+
+To cut the request count, independent per-msgstr questions are packed into
+batches of `JEV_BATCH_SIZE` (default 10, see below). Batching is a transport
+optimisation only: every entry keeps its own question and its own answer, so one
+entry's verdict never affects another's. It is **not** a screening gate - there
+is no "is any entry in this batch wrong?" step that could pass a bad string
+because its neighbours are clean. A batch reply is matched by question id; if
+the answer map is missing an id, carries an extra one, or is otherwise
+malformed, the whole batch fails closed and every entry in it is reported as an
+error (never silently treated as clean), and no further requests are sent.
 
 SystemOne is not a chat-completions API: a request carries a `state` and a map
 of typed `questions`, and the answer is keyed by the question id. See
@@ -256,13 +266,48 @@ reused from the block above as the Bearer credential:
 
 Optional tuning variables (defaults shown):
 
-    JEV_REQUEST_TIMEOUT=60  # per-request HTTP timeout, in seconds (> 0, finite)
-    JEV_MAX_RETRIES=5       # retries on 429 / 529 / 5xx / network errors (>= 1)
+    JEV_REQUEST_TIMEOUT=60    # per-request HTTP timeout, in seconds (> 0, finite)
+    JEV_MAX_RETRIES=5         # retries on 429 / 529 / 5xx / network errors (>= 1)
+    JEV_BATCH_SIZE=10         # independent questions per request (1-100, default 10)
+    JEV_MAX_RETRY_AFTER=60    # cap on a server Retry-After, in seconds (>= 0)
+    JEV_MAX_PAID_REQUESTS=100 # paid-fallback HTTP attempt cap (>= 1)
 
-A malformed `JEV_REQUEST_TIMEOUT` or `JEV_MAX_RETRIES` exits `2` with a
-diagnostic naming the variable, before any request is sent. When
-`API_JEV_ENDPOINT` or `API_KEY` is unset, the run prints a skip message and
-exits `0` without sending a request. It never prints the key.
+A malformed `JEV_REQUEST_TIMEOUT`, `JEV_MAX_RETRIES`, `JEV_BATCH_SIZE`,
+`JEV_MAX_RETRY_AFTER` or `JEV_MAX_PAID_REQUESTS` exits `2` with a diagnostic
+naming the variable, before any request is sent. When `API_JEV_ENDPOINT` or
+`API_KEY` is unset, the run prints a skip message and exits `0` without sending
+a request. It never prints the key.
+
+`JEV_MAX_RETRY_AFTER` bounds how long the audit will wait when a retryable
+response (429 / 529 / 5xx) carries a `Retry-After`. A `Retry-After` longer than
+this exits with a diagnostic instead of sleeping hours. A large `Retry-After`
+is only ever an ordinary retryable response: it is never read as a quota signal
+and never triggers a model switch.
+
+#### Free model, paid fallback
+
+The default `jev-1.13-free` is free only while its quota lasts. When an HTTP
+`429` response's JSON body carries `error.type == "FreeUsageLimitError"` **and**
+the active model is exactly `jev-1.13-free`, the run switches to the paid
+`jev-1.13` model and restarts the **entire** audit from the first batch. Every
+free-model judgment is discarded, so no mutation can mix the two models; each
+classified row records the model that produced its verdict. The switch is
+reported explicitly. It happens at most once per invocation: if the paid pass
+also fails, the run ends as a normal failed batch (`--retranslate-jev` then
+aborts before clearing anything).
+
+Only that exact discriminator triggers the switch. A `429` whose `error.type`
+is `RateLimitError` (a transient burst limit) retries the same model after
+`Retry-After`/backoff; a non-JSON body, a differently shaped body, or any other
+`error.type` is an ordinary retryable response and never falls back. The audit
+never switches on HTTP status or `Retry-After` magnitude alone.
+
+Paid fallback requests are capped by `JEV_MAX_PAID_REQUESTS` (default `100`),
+counting real HTTP attempts (retries included) made by the paid fallback in one
+invocation; free-model requests are never counted. The cap is a request guard,
+not a dollar cap: paid input is billed at the provider's current pricing, so
+the fallback stops before exceeding the cap rather than promising a spend
+ceiling.
 
 #### Report mode (read-only)
 
@@ -311,7 +356,9 @@ because the pipeline only refills an entry once all of its forms are empty.
 
 The run fails closed - clearing nothing and starting no translator - when:
 
-- any Jev request failed (a partial verdict is not trusted)
+- any Jev request failed (a partial verdict is not trusted). A failed batch
+  records every entry in it as an error and stops all further requests, so a
+  rate-limited endpoint is not hammered
 - no entry cleared the mutation thresholds
 - `git status` cannot be run or exits non-zero, so the target cannot be proven
   clean
@@ -348,7 +395,9 @@ locale metadata and the hook's guidance to the SystemOne endpoint
 successful classification, retranslate mode then hands the emptied entries to
 the existing translation pipeline, which sends them to the configured
 `API_ENDPOINT` / `API_MODEL`. The default `jev-1.13-free` model is free only
-for a limited time; check the provider's terms before relying on it.
+while its quota lasts; when the free quota is exhausted the audit falls back to
+the paid `jev-1.13` model (see "Free model, paid fallback"), so check the
+provider's terms and current pricing before relying on it.
 
 ## Updating Translations
 
