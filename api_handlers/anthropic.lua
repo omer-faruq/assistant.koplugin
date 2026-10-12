@@ -25,13 +25,16 @@ function AnthropicHandler:getApiUrl()
 end
 
 --- Connection test: minimal non-stream messages request with the static echo
---- instruction (max_tokens is a required Anthropic field).
+--- instruction (max_tokens is a required Anthropic field). Whitelisted
+--- additional_parameters ride along and win over the test defaults, so a
+--- configured max_tokens keeps a thinking budget legal.
 function AnthropicHandler:Test()
     local body = {
         model      = self.model,
         max_tokens = self.TEST_MAX_OUTPUT_TOKENS,
         messages   = { { role = "user", content = self.TEST_PROMPT } },
     }
+    self:mergeSupportedOptions(body)
     local headers = {
         ["Content-Type"]       = "application/json",
         ["x-api-key"]          = self.api_key,
@@ -108,11 +111,7 @@ function AnthropicHandler:buildRequestBody(messages, tools, stream)
         messages   = prepared.messages,
         stream     = stream or false,
     }
-    if type(self.additional_parameters) == "table" and next(self.additional_parameters) then
-        for o, v in pairs(self.additional_parameters) do
-            if self.SupportedOptions[o] then body[o] = v end
-        end
-    end
+    self:mergeSupportedOptions(body)
 
     if tools then
         -- Injected tools (e.g. from Querier's web_search support)

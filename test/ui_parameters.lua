@@ -41,19 +41,51 @@ local mock_assistant = {
 
 local dialog = Registry.showParametersDialog(mock_assistant, "custom:1")
 
--- Exercise the OK (apply) callback programmatically (regression: it once
--- indexed a nil global after a refactor). Nothing is checked, so the
--- record's additional_parameters must stay an empty table after applying.
+-- Exercise the Test (probe) callback: it must run against the checked
+-- selection without persisting anything. The probe itself is stubbed (no
+-- network in a widget test); the wiring and the "no save" contract are not.
 UIManager:scheduleIn(1, function()
     local vgroup = dialog[1][1][1][1] -- CenterContainer > Movable > Frame > VerticalGroup
     local button_table = vgroup[#vgroup][1]
-    button_table:getButtonById("ok").callback()
-    local params = mock_record.additional_parameters or {}
-    assert(type(params) == "table", "additional_parameters should stay a table")
-    for k in pairs(params) do
-        error("unexpected param saved without checkboxes: " .. k)
+    -- Flip the first catalog checkbox so the probe carries real content.
+    vgroup[3][1]:toggleCheck()
+
+    local probed
+    local real_probe = Registry.testReasoningOptions
+    Registry.testReasoningOptions = function(assistant, provider_id, overlay)
+        probed = { provider_id = provider_id, overlay = overlay }
     end
-    print("ui_parameters: OK callback ran, record unchanged")
+    local saved = false
+    local real_save = mock_assistant.settings.saveSetting
+    local real_del = mock_assistant.settings.delSetting
+    mock_assistant.settings.saveSetting = function() saved = true end
+    mock_assistant.settings.delSetting = function() saved = true end
+
+    button_table:getButtonById("test").callback()
+
+    Registry.testReasoningOptions = real_probe
+    mock_assistant.settings.saveSetting = real_save
+    mock_assistant.settings.delSetting = real_del
+
+    assert(probed, "Test must run the probe")
+    assert(probed.provider_id == "custom:1", "Test must probe the dialog's provider")
+    assert(probed.overlay and probed.overlay.reasoning_effort == "none",
+        "Test must probe the checked selection")
+    assert(not saved, "Test must not persist the overlay")
+    print("ui_parameters: Test callback probed the checked selection without saving")
+end)
+
+-- Exercise the OK (apply) callback programmatically (regression: it once
+-- indexed a nil global after a refactor). The first catalog entry was checked
+-- by the probe above, so applying must persist exactly that one option.
+UIManager:scheduleIn(1.5, function()
+    local vgroup = dialog[1][1][1][1]
+    local button_table = vgroup[#vgroup][1]
+    button_table:getButtonById("ok").callback()
+    local store = mock_assistant.settings:readSetting("reasoning_option_custom:1")
+    assert(type(store) == "table", "OK must persist the overlay")
+    assert(store.reasoning_effort == "none", "OK must persist the checked option")
+    print("ui_parameters: OK callback ran, overlay persisted")
 end)
 
 -- Auto-quit: first paint reproduces any layout crash; 2s gives time to eyeball it.

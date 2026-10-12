@@ -17,12 +17,12 @@ local function FormatByURL(base_url)
     return "openai"
 end
 
-function GemmaHandler:SyncOptions(querier)
+function GemmaHandler:SyncOptions(querier, overlay)
     local base_url = querier.provider_setting.base_url
     local metatab = PARENT_METATABLES[FormatByURL(base_url)]
     setmetatable(self, metatab)
     self.__parent_handler = metatab.__index
-    self.__parent_handler.SyncOptions(self, querier)
+    self.__parent_handler.SyncOptions(self, querier, overlay)
 end
 
 local function filterThoughtTags(content)

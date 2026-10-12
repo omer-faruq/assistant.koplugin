@@ -358,8 +358,12 @@ function BaseHandler:resetTrapWidget()
     return w
 end
 
--- Sync provider and model options from the querier.
-function BaseHandler:SyncOptions(querier)
+--- Sync provider and model options from the querier. The reasoning overlay is
+--- read from settings unless the caller passes one explicitly (the Reasoning
+--- Options dialog probes a not-yet-saved selection that way).
+--- @param querier table provider state (provider_name, provider_setting, settings)
+--- @param overlay table|nil reasoning overlay to apply instead of the stored one
+function BaseHandler:SyncOptions(querier, overlay)
     self.provider_name = querier.provider_name
     self.handler_name = querier.handler_name
     koutil.tableMerge(self, querier.provider_setting)
@@ -387,11 +391,8 @@ function BaseHandler:SyncOptions(querier)
     -- Merge the runtime reasoning overlay over same-name top-level keys.
     local provider_id = querier.provider_name or self.provider_name or ""
     local Registry = require("assistant_provider_registry")
-    local overlay_key = Registry.getReasoningKey(provider_id)
-    local overlay
-    if querier.settings and querier.settings.readSetting then
-        local ok, val = pcall(function() return querier.settings:readSetting(overlay_key) end)
-        if ok then overlay = val end
+    if overlay == nil then
+        overlay = Registry.getReasoningOverlay(querier.settings, provider_id)
     end
     if type(overlay) == "table" then
         local ps = querier.provider_setting
@@ -427,6 +428,18 @@ end
 --- Connection-test instruction echoed back verbatim by the model.
 --- Sent to the API as-is.
 BaseHandler.TEST_PROMPT = "Reply with exactly one word: OK"
+
+--- Fold the handler's whitelisted additional_parameters into a request body
+--- (in place). Shared by the query builders and the connection-test requests,
+--- so a test sends exactly the options a real query would send.
+--- @param body table request body extended in place
+function BaseHandler:mergeSupportedOptions(body)
+    if type(self.additional_parameters) ~= "table" then return end
+    local supported = self.SupportedOptions or {}
+    for o, v in pairs(self.additional_parameters) do
+        if supported[o] then body[o] = v end
+    end
+end
 
 --- Token budget for the connection-test request. High enough to leave room for
 --- a reasoning chain, so a thinking model still emits the final answer.

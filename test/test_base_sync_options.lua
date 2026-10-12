@@ -291,6 +291,44 @@ local tests = {
         assert.equal("disabled", overlay.thinking.type,
             "handler mutation must not leak back into the stored overlay")
     end),
+
+    test("SyncOptions: an explicit overlay shadows the stored one", function()
+        -- The Reasoning Options dialog probes a selection that is not saved
+        -- yet, so the passed overlay must win over settings.
+        local setting = {
+            model = "model-a",
+            base_url = "https://example.com/v1",
+            handler = "openai",
+            additional_parameters = { temperature = 0.7 },
+        }
+        local querier = makeQuerier("p9", setting)
+        querier.settings.readSetting = function(_, key)
+            if key == "reasoning_option_p9" then return { reasoning_effort = "high" } end
+            return nil
+        end
+        local handler = BaseHandler:new{}
+        handler:SyncOptions(querier, { reasoning_effort = "low" })
+        assert.equal("low", handler.additional_parameters.reasoning_effort)
+    end),
+
+    test("SyncOptions: an empty explicit overlay probes with no options at all", function()
+        local setting = {
+            model = "model-a",
+            base_url = "https://example.com/v1",
+            handler = "openai",
+            additional_parameters = { temperature = 0.7 },
+        }
+        local querier = makeQuerier("p10", setting)
+        querier.settings.readSetting = function(_, key)
+            if key == "reasoning_option_p10" then return { reasoning_effort = "high" } end
+            return nil
+        end
+        local handler = BaseHandler:new{}
+        handler:SyncOptions(querier, {})
+        assert.equal(nil, handler.additional_parameters.reasoning_effort,
+            "the selection under test must win over the stored overlay")
+        assert.equal(0.7, handler.additional_parameters.temperature)
+    end),
 }
 
 return helper.runTests("test_base_sync_options", tests)

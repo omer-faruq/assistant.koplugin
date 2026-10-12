@@ -175,6 +175,9 @@ end
 
 --- Connection test: minimal generateContent request with the static echo
 --- instruction. base_url must keep the /models segment (same rule as query).
+--- The generation config comes from the same builder a real query uses, so
+--- the tested thinking options take their production shape; only the token
+--- budget defaults to the test limit.
 function GeminiHandler:Test()
     local base_url = (self.base_url or "https://generativelanguage.googleapis.com/v1beta/models")
                        :gsub("/+$", "")
@@ -183,9 +186,11 @@ function GeminiHandler:Test()
         ["Content-Type"]   = "application/json",
         ["x-goog-api-key"] = self.api_key,
     }
+    local gc = buildGenerationConfig(self.additional_parameters) or {}
+    gc.maxOutputTokens = gc.maxOutputTokens or self.TEST_MAX_OUTPUT_TOKENS
     local body = {
         contents = { { role = "user", parts = { { text = self.TEST_PROMPT } } } },
-        generationConfig = { maxOutputTokens = self.TEST_MAX_OUTPUT_TOKENS },
+        generationConfig = gc,
     }
     return self:testRequest(url, headers, body, function(data)
         local parsed = ToolExecutor.parseToolCallsResponse(data, "gemini")

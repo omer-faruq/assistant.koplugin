@@ -49,8 +49,8 @@ OpenAIHandler.SupportedOptions = {
     -- DeepSeek:   https://api-docs.deepseek.com/guides/thinking_mode
 }
 
-function OpenAIHandler:SyncOptions(querier)
-    BaseHandler.SyncOptions(self, querier)
+function OpenAIHandler:SyncOptions(querier, overlay)
+    BaseHandler.SyncOptions(self, querier, overlay)
     self.reasoning_key = nil
 end
 
@@ -115,12 +115,15 @@ end
 
 --- Connection test: minimal non-stream chat request with the static echo
 --- instruction. Inherited by the OpenAI-compatible aliases (deepseek,
---- ollama, openrouter, mistral, groq, gigachat).
+--- ollama, openrouter, mistral, groq, gigachat). Whitelisted
+--- additional_parameters ride along, so the request carries the same
+--- reasoning options a real query would send.
 function OpenAIHandler:Test()
     local body = {
         model    = self.model,
         messages = { { role = "user", content = self.TEST_PROMPT } },
     }
+    self:mergeSupportedOptions(body)
     local headers = {
         ["Content-Type"]  = "application/json",
         ["Authorization"] = "Bearer " .. self.api_key,
@@ -141,11 +144,7 @@ function OpenAIHandler:buildRequestBody(messages, query_option, tools)
         model      = self.model,
         messages   = messages,
     }
-    if type(self.additional_parameters) == "table" and next(self.additional_parameters) then
-        for o, v in pairs(self.additional_parameters) do
-            if self.SupportedOptions[o] then body[o] = v end
-        end
-    end
+    self:mergeSupportedOptions(body)
     if tools then
         body.tools       = tools
         body.tool_choice = "auto"

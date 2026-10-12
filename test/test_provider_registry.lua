@@ -1103,6 +1103,28 @@ local tests = {
         assert.matches(text, "Sure, here you go")
     end),
 
+    test("formatReasoningTestSuccess keeps the reasoning text and the model reply", function()
+        local text = Registry.formatReasoningTestSuccess("OK", "The user wants one word.")
+        assert.matches(text, "Connection test successful")
+        assert.matches(text, "Reasoning")
+        assert.matches(text, "one word")
+        assert.matches(text, "Model reply")
+        assert.matches(text, "OK")
+    end),
+
+    test("formatReasoningTestSuccess marks missing halves instead of dropping them", function()
+        local no_reasoning = Registry.formatReasoningTestSuccess("OK", "")
+        assert.matches(no_reasoning, "Reasoning")
+        assert.matches(no_reasoning, "Model reply")
+        assert.matches(no_reasoning, "%(none%)")
+        assert.matches(no_reasoning, "OK")
+
+        local no_reply = Registry.formatReasoningTestSuccess(nil, "budget spent before the answer")
+        assert.matches(no_reply, "Reasoning")
+        assert.matches(no_reply, "budget spent")
+        assert.matches(no_reply, "%(none%)")
+    end),
+
     test("isConnectionTestOk fails non-2xx even with an OK echo", function()
         assert.isFalse(Registry.isConnectionTestOk({
             url     = "https://api.test.com/v1/chat/completions",

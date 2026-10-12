@@ -13,8 +13,8 @@ local GigaChatHandler = OpenAIHandler:new({
     can_fetch_models = false,
 })
 
-function GigaChatHandler:SyncOptions(querier)
-    OpenAIHandler.SyncOptions(self, querier)
+function GigaChatHandler:SyncOptions(querier, overlay)
+    OpenAIHandler.SyncOptions(self, querier, overlay)
     self.auth_url = querier.provider_setting.auth_url
 end
 

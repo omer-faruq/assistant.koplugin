@@ -59,26 +59,32 @@ ResponsesHandler.SupportedOptions = {
     ["store"]                = true,
 }
 
-function ResponsesHandler:SyncOptions(querier)
-    BaseHandler.SyncOptions(self, querier)
+function ResponsesHandler:SyncOptions(querier, overlay)
+    BaseHandler.SyncOptions(self, querier, overlay)
     self.responses_url = self.base_url .. "/responses"
 end
 
---- Connection test: minimal Responses API request with the static echo instruction.
+--- Connection test: minimal Responses API request with the static echo
+--- instruction. Whitelisted additional_parameters ride along, so the request
+--- carries the same reasoning options a real query would send.
 function ResponsesHandler:Test()
     local body = {
         model = self.model,
         input = self.TEST_PROMPT,
         max_output_tokens = self.TEST_MAX_OUTPUT_TOKENS,
     }
+    self:mergeSupportedOptions(body)
     local headers = {
         ["Content-Type"]  = "application/json",
         ["Authorization"] = "Bearer " .. self.api_key,
     }
     return self:testRequest(self.base_url .. "/responses", headers, body, function(data)
-        local top = koutil.tableGetValue(data, "output_text")
-        if type(top) == "string" and top ~= "" then return top end
         local parsed = ToolExecutor.parseToolCallsResponse(data, "responses")
+        local reasoning = type(parsed) == "table" and parsed.reasoning or nil
+        local top = koutil.tableGetValue(data, "output_text")
+        if type(top) == "string" and top ~= "" then
+            return top, reasoning
+        end
         if type(parsed) == "table" then return parsed.content, parsed.reasoning end
         return nil
     end)
@@ -221,13 +227,7 @@ function ResponsesHandler:buildRequestBody(messages, query_option, tools)
     end
 
     -- Apply additional_parameters (SupportedOptions filter)
-    if type(self.additional_parameters) == "table" and next(self.additional_parameters) then
-        for o, v in pairs(self.additional_parameters) do
-            if self.SupportedOptions[o] then
-                body[o] = v
-            end
-        end
-    end
+    self:mergeSupportedOptions(body)
 
     -- Tools configuration
     if tools then
