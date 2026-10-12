@@ -1,0 +1,16 @@
+# Jev audit hook for Slovak (sk). Its presence opts sk into check_mix.py --jev;
+# without it the locale is skipped. `peer:` names the contaminating language
+# the classifier tests for, and every other non-comment line is guidance passed
+# to the model's question. See l10n/README.md.
+peer: sl
+
+The msgstr is taken from the Slovak locale. Slovak ("slovenčina", spoken in
+Slovakia) is a different language from Slovenian ("slovenščina", locale "sl").
+Tell them apart:
+- Slovak uses the letters ľ, ĺ, ŕ, ô, ť, ď, ň. Slovenian never uses them.
+- Slovak declines with a genitive ("Nastavenia", "ponuka zvýraznenia");
+  Slovenian uses a dative ("Nastavitve", "označba").
+- Slovenian-only wording that is not Slovak: V redu, Posodobi, Nastavitve,
+  Odstrani, Ustvari, Naprava, Počisti, Prevajdi, Kopiraj, Izberi.
+- The same words in Slovak: OK, Aktualizovať, Nastavenia, Odstrániť,
+  Vytvoriť, Zariadenie, Vyčistiť, Preložiť, Kopírovať, Vybrať.

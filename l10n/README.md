@@ -121,6 +121,13 @@ wrong slot:
     make check-mix
     make check-mix CHECK_MIX_ARGS=--list
 
+Audit one locale for translations written in a *different* language with the
+optional Jev classifier (opt-in per locale, report-only unless
+`--retranslate-jev` is given; see `Language audit with Jev SystemOne` below):
+
+    ./check_mix.py --jev sk
+    ./check_mix.py --jev sk --retranslate-jev
+
 Retranslate one exact msgid everywhere (e.g. after a terminology fix — empties it
 in all `.po` files, then runs it back through the pipeline):
 
@@ -195,6 +202,153 @@ you delete the correct translations.
 Run `./check_mix.py --check-data` to validate the `LANG_MAP` / `LANG_EN` /
 `PLURAL_FORMS` tables against the catalogues on disk; `make check-langs` runs it
 as part of its language-drift check.
+
+### Language audit with Jev SystemOne (optional)
+
+`./check_mix.py --jev <lang>` is a third, opt-in audit that answers the one
+question the signals above cannot: *is this msgstr actually written in the
+target language?* It sends each translated msgstr (except strings identical to
+the English msgid or containing only format placeholders) to the Jev SystemOne
+decision model as one typed `choice` question - target language / peer language
+/ unclear - and reports the entries the model confidently places in the peer
+language.
+
+SystemOne is not a chat-completions API: a request carries a `state` and a map
+of typed `questions`, and the answer is keyed by the question id. See
+<https://jevapi.io/jev-api/> for the wire format. The configured endpoint and
+key must be authorized for SystemOne; a Go or chat-completions subscription
+credential is not accepted there.
+
+`requests`, `python-dotenv` and the language tables are imported only when
+`--jev` is used, so the deterministic A/B/C checks keep working without them.
+
+#### Per-locale opt-in hook
+
+A locale opts in by shipping `l10n/<LANG_CODE>/jev_note.txt`, the Jev analogue
+of `ai_note.txt`. Without that file the locale is skipped: no request is sent
+and nothing is written, in either report or retranslate mode. One locale (and
+its hook-defined peer) is handled per invocation; there is no sweep across
+locales.
+
+The file is free text. One directive is recognized, `peer: <code>`, naming the
+contaminating locale to test against; every other non-blank, non-`#` line is
+distinguishing guidance embedded in the model's question. `sk/jev_note.txt` is
+the worked example - it declares `peer: sl` and lists the Slovak/Slovenian
+tells (the letters `ľ ĺ ŕ ô ť ď ň`, the genitive-vs-dative ending, and a short
+Slovenian-only word list). A native speaker can extend their locale's hook
+without touching Python. `--peer` overrides the hook's peer for an experiment.
+
+A locale that ships a hook but names no peer (and is not given `--peer`) fails
+before any request is sent: without a peer there is nothing to classify against.
+
+`jev_note.txt` is excluded from the release archive in `.releaseignore`; it is
+tooling input, not runtime data.
+
+#### Setup
+
+Prerequisites are the same as `ai_translate.py` (`python3-requests`,
+`python3-polib`, `python3-dotenv`). Add the endpoint to `.env`; `API_KEY` is
+reused from the block above as the Bearer credential:
+
+    API_JEV_ENDPOINT=https://.../v1/systemone   # required for check_mix.py --jev
+    API_KEY=sk-...                              # required, shared with ai_translate
+    API_JEV_MODEL=jev-1.13-free                 # optional (default shown)
+
+Optional tuning variables (defaults shown):
+
+    JEV_REQUEST_TIMEOUT=60  # per-request HTTP timeout, in seconds (> 0, finite)
+    JEV_MAX_RETRIES=5       # retries on 429 / 529 / 5xx / network errors (>= 1)
+
+A malformed `JEV_REQUEST_TIMEOUT` or `JEV_MAX_RETRIES` exits `2` with a
+diagnostic naming the variable, before any request is sent. When
+`API_JEV_ENDPOINT` or `API_KEY` is unset, the run prints a skip message and
+exits `0` without sending a request. It never prints the key.
+
+#### Report mode (read-only)
+
+    ./check_mix.py --jev sk                          # report; peer from sk's hook
+    ./check_mix.py --jev de --peer en                # override the hook's peer
+    ./check_mix.py --jev sk --limit 50 --min-confidence 0.9
+    ./check_mix.py --jev sk --list                   # print target/unclear rows too
+
+Report mode never edits, empties or saves a catalogue and starts no translator.
+`--limit N` audits at most `N` entries in msgid order (omitted audits all, and
+an explicit `0` means the same) and is valid only in report mode; a negative
+limit is rejected. `--min-confidence` and `--min-probability` (both default
+`0.8`, and each must lie within `[0, 1]`) gate what counts as a confident peer
+hit. A msgstr shorter than four characters - `Da` and `Ne` are the same word in
+Slovak and Slovenian - is always reported as ambiguous and never flagged, and a
+choice the model invents (anything other than target/peer/unclear) is treated
+as unclear rather than a verdict.
+
+#### Retranslate mode (opt-in, mutating)
+
+    ./check_mix.py --jev sk --retranslate-jev
+
+This is the single-command repair path. It classifies the whole catalogue
+first, then, only if every request succeeded and at least one entry clears the
+stricter mutation thresholds, empties exactly those entries and runs the
+existing per-locale Make pipeline to refill them. It never writes a translation
+itself: the msgstr is emptied (never hand-edited) and `ai_translate.py` refills
+it under its own validation.
+
+The mutation thresholds are higher than the report's, because clearing a good
+translation costs a retranslation: by default the model's overall confidence
+must be `>= 0.85` **and** the peer option's own probability `>= 0.90`
+(`--retranslate-min-confidence` / `--retranslate-min-probability` override
+them, and like the report thresholds each must lie within `[0, 1]`). Both
+signals are required, so the known genuine Slovenian strings in
+`sk` (confidence `.86`, `p(peer) .91`) qualify while a coin-flip between the
+two languages does not. These are a starting point, not a law: if the peer
+probability drifts (a model change, a different contaminant), re-check the
+flagged rows by hand and recalibrate the two thresholds rather than trusting
+the defaults blindly.
+
+Only entries the model places in the peer language can be emptied; too-short,
+identical, format-only, below-threshold, unclear and target rows are never
+touched. When any plural form is flagged, every form of that entry is emptied,
+because the pipeline only refills an entry once all of its forms are empty.
+
+The run fails closed - clearing nothing and starting no translator - when:
+
+- any Jev request failed (a partial verdict is not trusted)
+- no entry cleared the mutation thresholds
+- `git status` cannot be run or exits non-zero, so the target cannot be proven
+  clean
+- `git status` reports staged or unstaged changes to the target catalogue, or
+  a previous run left pending intermediates such as `untranslated.po` or
+  `updated_translated.po.partial` that clearing would overwrite.
+
+#### Pipeline scope and recovery
+
+The pipeline is invoked as `make retranslate-jev L10N_LANG=<lang>`. It validates
+the locale against `LANGS` and its catalogue before running anything, then
+runs only the per-locale steps: `extract-untranslated-<lang>` ->
+`ai-translate-<lang>` -> `import-translation-<lang>` -> `make check` ->
+`<lang>/assistant.mo`. Extraction and import are scoped to the one locale, so
+no other locale's intermediates, catalogue or `.mo` is touched, and the global
+`make clean` is never run.
+
+`make check` covers the whole tree and its failure is not swallowed: the target
+still compiles `<lang>/assistant.mo`, then exits non-zero with a warning. The
+locale's intermediates (`untranslated.po`, `_untranslated.po`, `_fuzzy.po`,
+`updated_translated.po`, `updated.po`) are removed only after every step
+succeeds. On any failure they are preserved and the exact resume command is
+printed:
+
+    make retranslate-jev L10N_LANG=sk
+
+There is no automatic commit; review the diff first.
+
+#### Data flow
+
+Report and retranslate send the target `msgid`, its current `msgstr`, the
+locale metadata and the hook's guidance to the SystemOne endpoint
+(`API_JEV_ENDPOINT`) with the `API_KEY` Bearer credential - nothing else. On
+successful classification, retranslate mode then hands the emptied entries to
+the existing translation pipeline, which sends them to the configured
+`API_ENDPOINT` / `API_MODEL`. The default `jev-1.13-free` model is free only
+for a limited time; check the provider's terms before relying on it.
 
 ## Updating Translations
 

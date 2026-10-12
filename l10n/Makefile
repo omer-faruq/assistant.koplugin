@@ -38,6 +38,12 @@ LANGS      := zh_CN zh_TW ja id ms ko_KR vi th \
 MO_FILES   := $(LANGS:%=%/$(DOMAIN).mo)
 PO_FILES   := $(wildcard */$(DOMAIN).po)
 
+# Per-locale pattern targets, expanded here so .PHONY names every concrete
+# target make derives from a pattern rule (the pattern itself cannot be listed).
+EXTRACT_LOCALE_TARGETS := $(patsubst %/$(DOMAIN).po,extract-untranslated-%,$(PO_FILES))
+IMPORT_LOCALE_TARGETS  := $(patsubst %/$(DOMAIN).po,import-translation-%,$(PO_FILES))
+AI_TRANSLATE_TARGETS   := $(LANGS:%=ai-translate-%)
+
 # Effective parallelism for ai-translate.
 # Priority: explicit -jN / --jobs=N on the command line > bare -j (nproc) > 4.
 # GNU Make 4.4's .MAKEFLAGS directive does not actually inject a default
@@ -58,7 +64,8 @@ export RANDOM_SESSION_ID
 
 .DEFAULT_GOAL := all
 
-.PHONY: help all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-mix check-api stats clean init-dirs mo retranslate-fuzzy retranslate-msgid
+.PHONY: help all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-mix check-api stats clean init-dirs mo retranslate-fuzzy retranslate-msgid retranslate-jev \
+	$(EXTRACT_LOCALE_TARGETS) $(IMPORT_LOCALE_TARGETS) $(AI_TRANSLATE_TARGETS)
 
 help:
 	@echo "Usage: make [target]"
@@ -76,6 +83,7 @@ help:
 	@echo "  ai-translate    Run AI translation (all or L10N_LANG=xx)"
 	@echo "  retranslate-fuzzy  Re-extract and re-translate fuzzy entries (all or L10N_LANG=xx)"
 	@echo "  retranslate-msgid  Empty one MSGID everywhere and re-translate it: make retranslate-msgid MSGID=\"...\" [L10N_LANG=xx]"
+	@echo "  retranslate-jev  Refill one locale after check_mix.py --jev --retranslate-jev emptied it: make retranslate-jev L10N_LANG=xx"
 	@echo "  init-dirs       Create missing language directories"
 
 # Default target: full pipeline + MO compilation (virtual)
@@ -142,27 +150,60 @@ update: init-dirs
 # catalogue it was derived from. Testing only for existence left a stale file
 # behind after a run that refilled assistant.po, and the next run then queued
 # entries that were already translated.
-extract-untranslated:
-	@set -x;for po_file in $(PO_FILES); do \
-		dir=$$(dirname $$po_file); \
-		if [ ! -f "$$dir/untranslated.po" ] || [ "$$po_file" -nt "$$dir/untranslated.po" ]; then \
-			$(MSGATTRIB_BIN) --no-wrap --no-location --untranslated --force-po $$po_file -o $$dir/_untranslated.po; \
-			$(MSGATTRIB_BIN) --no-wrap --no-location --fuzzy --clear-fuzzy --empty --force-po $$po_file -o $$dir/_fuzzy.po; \
-			$(MSGCAT_BIN) --no-wrap --no-location --use-first $$dir/_untranslated.po $$dir/_fuzzy.po -o $$dir/untranslated.po; \
-		else \
-			echo "Skipping extraction for $$dir, untranslated.po is up to date."; \
-		fi; \
-	done
+#
+# The aggregate composes the per-locale pattern target for every catalogue, so
+# a single-locale refill (retranslate-jev) reuses the same recipe without
+# touching any other locale's intermediate files.
+extract-untranslated: $(EXTRACT_LOCALE_TARGETS)
 
-import-translation:
-	@for po_file in $(PO_FILES); do \
-		dir=$$(dirname $$po_file); \
-		if [ -f "$$dir/updated_translated.po" ]; then \
-			$(MSGCAT_BIN) --no-location --no-wrap --use-first --sort-output $$dir/updated_translated.po $$po_file -o $$dir/updated.po; \
-			$(MSGATTRIB_BIN) --no-obsolete --no-wrap --no-location --sort-by-file $$dir/updated.po -o $$po_file; \
-			rm -f $$dir/updated.po; \
-		fi; \
-	done
+# The recipe is shared by the static rule (concrete locales known at parse time,
+# so .PHONY applies) and the implicit pattern rule (a brand-new locale the
+# pipeline is creating, not yet in PO_FILES).
+define EXTRACT_UNTRANSLATED_RECIPE
+	@set -e; dir=$*; \
+	if [ ! -f "$$dir/$(DOMAIN).po" ]; then \
+		echo "No catalogue $$dir/$(DOMAIN).po yet; skipping extraction for a new locale."; \
+	elif [ ! -f "$$dir/untranslated.po" ] || [ "$$dir/$(DOMAIN).po" -nt "$$dir/untranslated.po" ]; then \
+		$(MSGATTRIB_BIN) --no-wrap --no-location --untranslated --force-po "$$dir/$(DOMAIN).po" -o "$$dir/_untranslated.po"; \
+		$(MSGATTRIB_BIN) --no-wrap --no-location --fuzzy --clear-fuzzy --empty --force-po "$$dir/$(DOMAIN).po" -o "$$dir/_fuzzy.po"; \
+		$(MSGCAT_BIN) --no-wrap --no-location --use-first "$$dir/_untranslated.po" "$$dir/_fuzzy.po" -o "$$dir/untranslated.po"; \
+	else \
+		echo "Skipping extraction for $$dir, untranslated.po is up to date."; \
+	fi
+endef
+
+# Static pattern rule: each concrete locale target gets an explicit rule (so
+# .PHONY applies without disabling it) while `$*` still carries the locale.
+$(EXTRACT_LOCALE_TARGETS): extract-untranslated-%:
+	$(EXTRACT_UNTRANSLATED_RECIPE)
+
+extract-untranslated-%:
+	$(EXTRACT_UNTRANSLATED_RECIPE)
+
+# The aggregate imports every locale's updated_translated.po. The pattern rule
+# below is the same work scoped to one locale, so a single-locale refill never
+# imports another locale's leftover intermediates.
+import-translation: $(IMPORT_LOCALE_TARGETS)
+
+define IMPORT_TRANSLATION_RECIPE
+	@set -e; lang=$*; \
+	if [ ! -f "$$lang/$(DOMAIN).po" ]; then \
+		echo "\033[0;31mError: no catalogue $$lang/$(DOMAIN).po to import into.\033[0m"; exit 1; \
+	fi; \
+	if [ -f "$$lang/updated_translated.po" ]; then \
+		tmp="$$lang/$(DOMAIN).po.new"; \
+		$(MSGCAT_BIN) --no-location --no-wrap --use-first --sort-output "$$lang/updated_translated.po" "$$lang/$(DOMAIN).po" -o "$$lang/updated.po"; \
+		$(MSGATTRIB_BIN) --no-obsolete --no-wrap --no-location --sort-by-file "$$lang/updated.po" -o "$$tmp"; \
+		mv "$$tmp" "$$lang/$(DOMAIN).po"; \
+		rm -f "$$lang/updated.po"; \
+	fi
+endef
+
+$(IMPORT_LOCALE_TARGETS): import-translation-%:
+	$(IMPORT_TRANSLATION_RECIPE)
+
+import-translation-%:
+	$(IMPORT_TRANSLATION_RECIPE)
 
 check:
 	@echo "Checking syntax of existing .po files..."
@@ -309,12 +350,14 @@ ai-translate:
 		fi; \
 	fi
 
-# extract-untranslated is a prerequisite rather than a documented manual step:
-# ai_translate.py's scenario-2 path needs <lang>/untranslated.po to exist, and
-# without this dependency `make ai-translate L10N_LANG=xx` dies with
-# "translate files not ready". extract-untranslated is idempotent - it skips any
-# language whose untranslated.po is already there - so this is safe to depend on.
-ai-translate-%: extract-untranslated
+# extract-untranslated-% is a prerequisite rather than a documented manual
+# step: ai_translate.py's scenario-2 path needs <lang>/untranslated.po to
+# exist, and without this dependency `make ai-translate L10N_LANG=xx` dies with
+# "translate files not ready". The per-locale target is idempotent - it skips a
+# language whose untranslated.po is already there - so this is safe to depend
+# on, and scoping it to the one locale keeps the job from touching any other
+# locale's intermediates.
+$(AI_TRANSLATE_TARGETS): ai-translate-%: extract-untranslated-%
 	@set -e; \
 	lang=$*; \
 	IS_NEW=0; if [ ! -f "$$lang/$(DOMAIN).po" ]; then IS_NEW=1; fi; \
@@ -377,6 +420,53 @@ retranslate-msgid:
 	@$(MAKE) clean
 	@echo "Compiling .mo files..."
 	@$(MAKE) mo
+
+# Refill exactly one locale after check_mix.py --jev --retranslate-jev has
+# emptied the entries it confidently placed in the peer language. Scoped to
+# L10N_LANG so no other locale's catalogue, pending import or .mo is touched;
+# unlike retranslate-msgid it never runs the global `clean`. The locale is
+# validated against LANGS and an existing catalogue before any step runs. On
+# failure the target stops where it is, keeps the partials for that locale, and
+# prints the exact resume command; the locale's intermediates are removed only
+# after every step (including `make check`) succeeds.
+retranslate-jev:
+	@set -e; \
+	if [ -z "$(L10N_LANG)" ]; then \
+		echo "Usage: make retranslate-jev L10N_LANG=xx"; \
+		exit 1; \
+	fi; \
+	if ! printf '%s\n' $(LANGS) | grep -qxF '$(L10N_LANG)'; then \
+		echo "\033[0;31mError: '$(L10N_LANG)' is not a supported locale (see LANGS).\033[0m"; \
+		exit 1; \
+	fi; \
+	if [ ! -f "$(L10N_LANG)/$(DOMAIN).po" ]; then \
+		echo "\033[0;31mError: no catalogue $(L10N_LANG)/$(DOMAIN).po to refill.\033[0m"; \
+		exit 1; \
+	fi; \
+	if [ ! -f .env ]; then \
+		echo "\033[0;31mError: AI access environment file \`.env' is not found.\033[0m"; \
+		echo "Please set it before running retranslation. See: README.md"; \
+		exit 1; \
+	fi; \
+	lang=$(L10N_LANG); \
+	echo "[1/5] Extracting untranslated entries for $$lang..."; \
+	$(MAKE) extract-untranslated-$$lang; \
+	echo "[2/5] Translating $$lang..."; \
+	$(MAKE) ai-translate-$$lang; \
+	echo "[3/5] Importing $$lang translations..."; \
+	$(MAKE) import-translation-$$lang; \
+	echo "[4/5] Checking PO files..."; \
+	check_rc=0; \
+	$(MAKE) check || check_rc=$$?; \
+	echo "[5/5] Compiling $$lang/$(DOMAIN).mo..."; \
+	$(MAKE) "$$lang/$(DOMAIN).mo"; \
+	if [ $$check_rc -ne 0 ]; then \
+		echo "\033[0;31mError: 'make check' failed (exit $$check_rc); $$lang intermediates are preserved.\033[0m"; \
+		echo "Resume with: make retranslate-jev L10N_LANG=$$lang"; \
+		exit $$check_rc; \
+	fi; \
+	echo "Cleaning up intermediates for $$lang..."; \
+	rm -f "$$lang/untranslated.po" "$$lang/_untranslated.po" "$$lang/_fuzzy.po" "$$lang/updated_translated.po" "$$lang/updated.po"
 
 template:
 	mkdir -p $(TEMPLATE_DIR)
