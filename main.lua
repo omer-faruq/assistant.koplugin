@@ -779,7 +779,7 @@ function Assistant:_showAddWebSearchDialog(tool_key)
         }
     else  -- base_url
         fields = {
-            { description = _("Base URL"), hint = _("https://..."), text = default_url },
+            { description = _("Base URL"), hint = "https://...", text = default_url },
         }
     end
 
