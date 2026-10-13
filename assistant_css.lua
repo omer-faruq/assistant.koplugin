@@ -159,14 +159,17 @@ ul li {
     padding-left: 0;
 }
 
-/* Thought block: left-aligned, smaller font, gray bg, left border */
+/* Thought block: left-aligned band capped at the widest the user bubble
+   ever gets (a long turn's 94%: margin-right mirrors .long-text's 6%),
+   smaller font, gray bg, right border accent -- opposite side from the
+   user bubble's left accent, so the two are told apart at a glance. */
 .thought-block {
-    margin: 0.5em 0;
+    margin: 0.5em 6% 0.5em 0;
     padding: 0.5em 0.8em;
     font-size: 0.85em;
     color: #555;
     background-color: #F0F0F0;
-    border-left: 3px solid #C8C8C8;
+    border-right: 3px solid #C8C8C8;
 }
 
 .suggestion-link {
