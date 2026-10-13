@@ -759,11 +759,11 @@ function Querier:showStremDialog(res, request_title, request_identity)
     local animation_task = nil -- Will be set during animation setup
 
     local function _closeStreamDialog()
-        if self.interrupt_stream then self.interrupt_stream() end
         if animation_task then
             UIManager:unschedule(animation_task)
             animation_task = nil
         end
+        if self.interrupt_stream then self.interrupt_stream() end
         UIManager:close(streamDialog)
     end
 
@@ -848,10 +848,12 @@ function Querier:showStremDialog(res, request_title, request_identity)
     local function updateAnimation()
         if not first_content_received then
             streamDialog._input_widget:setText(animation:getNextFrame(), true)
-            animation_task = UIManager:scheduleIn(0.4, updateAnimation)
+            UIManager:scheduleIn(0.4, updateAnimation)
         end
     end
-    animation_task = UIManager:scheduleIn(0.4, updateAnimation)
+    -- scheduleIn returns nothing; keep the function reference so unschedule can cancel it
+    animation_task = updateAnimation
+    UIManager:scheduleIn(0.4, animation_task)
 
     local pending_delta = strbuf.new()  -- delta since the last UI flush
     local flush_scheduled = false
@@ -890,6 +892,11 @@ function Querier:showStremDialog(res, request_title, request_identity)
             end
         end
     end)
+    -- Cancel the waiting animation on every exit path (error, empty, tool-only, exception)
+    if animation_task then
+        UIManager:unschedule(animation_task)
+        animation_task = nil
+    end
     local err
     if flush_scheduled then
         UIManager:unschedule(flush_to_ui)
