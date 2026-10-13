@@ -1378,6 +1378,7 @@ def _set_header_metadata(po: polib.POFile, lang_code: str, lang_fullname: str) -
     values from `msginit` (e.g. "nplurals=INTEGER; plural=EXPRESSION;").
     """
     po.metadata["Language"] = lang_code
+    po.metadata["Content-Type"] = "text/plain; charset=UTF-8"
     po.metadata["Plural-Forms"] = PLURAL_FORMS.get(
         lang_code, "nplurals=2; plural=(n != 1);"
     )
@@ -1403,6 +1404,18 @@ def translate_file(
         po = polib.pofile(partial_path, wrapwidth=0)
     else:
         po = polib.pofile(input_path, wrapwidth=0)
+
+    # Guarantee UTF-8 output: polib saves with the header-declared encoding,
+    # and an emptied catalogue is pure ASCII, so gettext tools may have
+    # rewritten its header to `charset=ASCII`, which fails on the first
+    # non-ASCII translation.
+    po.encoding = "UTF-8"
+    content_type = po.metadata.get("Content-Type", "")
+    if "charset=" not in content_type:
+        po.metadata["Content-Type"] = "text/plain; charset=UTF-8"
+    elif "charset=utf-8" not in content_type.lower():
+        head, _, _ = content_type.partition("charset=")
+        po.metadata["Content-Type"] = f"{head}charset=UTF-8"
 
     # Detect whether the header is a fresh `msginit` placeholder (scenario 1
     # new language, or scenario 2 update whose untranslated.po was regenerated
