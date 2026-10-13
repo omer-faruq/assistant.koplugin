@@ -11,4 +11,9 @@ __pycache__
 **/.codewhale/*
 !**/.codewhale/constitution.json
 .deepseek/
-/.opencode/
+# Ignore everything under .opencode/ except the read-only reviewer agent, which
+# must ship with the repo so Make has it on every clone.
+/.opencode/*
+!/.opencode/agents/
+/.opencode/agents/*
+!/.opencode/agents/l10n-review.md

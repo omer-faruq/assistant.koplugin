@@ -2,18 +2,36 @@
 """
 ai_translate.py - Drive a gettext .po translation pipeline through an LLM API.
 
-This is the Python replacement for AI_TRANSLATE.sh. It avoids the truncation
-issue (finish_reason=length) by:
+This is the Python replacement for AI_TRANSLATE.sh. Transport is the official
+OpenAI Python SDK, so one HTTP/retry/timeout policy covers both wire formats
+the project uses:
+
+  * `chat_completions` (default): `client.chat.completions.create`, the
+    OpenAI-compatible Chat Completions API.
+  * `responses`: `client.responses.create`, the OpenAI Responses API. Select
+    it globally with API_PROTOCOL=responses in l10n/.env, or per locale with
+    API_PROTOCOL in l10n/<lang>/.env. Protocol is explicit config, never
+    inferred from the base URL.
+
+Each locale may carry its own l10n/<lang>/.env (e.g. l10n/sk/.env) that
+overrides the global l10n/.env. API_BASE / API_PROTOCOL / API_MODEL / API_KEY
+resolve from the exported process environment first, then the locale file,
+then the global file; a blank value is ignored so it cannot erase a lower
+layer. API_BASE is the base URL of the OpenAI-compatible API and defaults to
+https://api.openai.com/v1; the protocol appends its own path, so a configured
+base never carries /chat/completions or /responses.
+
+It avoids the truncation issue (finish_reason=length) by:
 
   * Communicating with the LLM via a strict JSON-in / JSON-out contract:
-    the model is asked to return {"translations": [...]} (a positional array,
-    one element per request item in order) for a list of msgids, instead of
-    emitting an entire .po file as free-form text.
+    the model is asked to return {"translations": [...]} (an id-keyed array,
+    one element per request item) for a list of msgids, instead of emitting
+    an entire .po file as free-form text.
   * Constraining the output with a strict JSON Schema (object/array/string
     types; lengths enforced by prompt + client validation), with automatic
     fallback to {"type": "json_object"} when the endpoint rejects json_schema
     (AI_JSON_SCHEMA=auto by default; off forces json_object, on forces
-    json_schema without fallback; AI_JSON_MODE=0 disables response_format).
+    json_schema without fallback; AI_JSON_MODE=0 disables the format).
   * Sending compact request items (only id/msgid plus non-empty
     msgctxt/msgid_plural/comments) as single-line JSON to save tokens.
   * Splitting the work into small chunks (default 20 msgids per request)
@@ -21,6 +39,9 @@ issue (finish_reason=length) by:
   * On length-truncation, automatically bisecting the chunk and retrying.
   * Persisting progress as `<output>.partial` after every chunk, so a
     crash, Ctrl-C, or API failure never loses already-completed work.
+
+Retries and request timeouts are delegated to the SDK's own policy
+(max_retries, timeout); the SDK owns backoff and the per-request deadline.
 """
 
 from __future__ import annotations
@@ -40,8 +61,7 @@ import time
 from typing import Any, Iterable
 
 import polib
-import requests
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 
 # -------------------- Logging --------------------
 
@@ -278,6 +298,43 @@ TEMPLATE_FILE = "templates/assistant.pot"
 # script works no matter which directory it is invoked from.
 LANG_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# Settings files. The global file is l10n/.env; a locale may add
+# l10n/<lang>/.env to override it. Both are resolved from LANG_DIR, and both
+# are gitignored and release-excluded, so real credentials never get committed.
+GLOBAL_ENV_FILE = os.path.join(LANG_DIR, ".env")
+LOCALE_ENV_NAME = ".env"
+
+
+def locale_env_file(lang_code: str) -> str:
+    """Absolute path of a locale's optional settings file."""
+    return os.path.join(LANG_DIR, lang_code, LOCALE_ENV_NAME)
+
+
+def load_settings(lang_code: str | None = None) -> dict[str, str]:
+    """Resolve effective settings for a locale.
+
+    Precedence, highest first: exported process environment, l10n/<lang>/.env
+    (when lang_code is given), l10n/.env. Files are read with dotenv_values, so
+    the process environment is never mutated as a side effect. A blank value is
+    dropped at every layer, so an empty entry in a locale file cannot erase the
+    global value it was meant to leave alone. Missing keys are simply absent.
+    """
+    merged: dict[str, str] = {}
+    paths = [GLOBAL_ENV_FILE]
+    if lang_code:
+        paths.append(locale_env_file(lang_code))
+    for path in paths:
+        for key, value in dotenv_values(path).items():
+            if value is None or value == "":
+                continue
+            merged[key] = value
+    for key, value in os.environ.items():
+        if value == "":
+            continue
+        merged[key] = value
+    return merged
+
+
 # Per-language translator notes, read from l10n/<lang>/ai_note.txt and appended
 # to the system prompt. The file is optional and its contents are free text, so
 # a native speaker can add terminology, style rules or confusion warnings for
@@ -293,10 +350,12 @@ LANG_NOTE_FILE = "ai_note.txt"
 # are the ones that go missing. That is how "<b>Testing connection...</b>" came
 # to hold "Base URL" in a dozen locales.
 #
-# Only markup is enforced here, not printf placeholders: a language is allowed
-# to move a placeholder or attach a suffix to it (Afrikaans "%1$s nie",
-# Uzbek "%1ni"), so rejecting those would stall the pipeline on entries the
-# model is not wrong about. Placeholder integrity is left to check_mix.py.
+# _check_markup enforces both this markup and the %N indices: a language may
+# move a placeholder or attach a suffix to it (Afrikaans "%1$s nie", Uzbek
+# "%1ni") and may use %s/%d, but it may not carry a %N index that no source
+# form of the msgid has. Rejecting the former would stall the pipeline on
+# entries the model is not wrong about; rejecting the latter catches a
+# wrong-slot answer at request time instead of writing it to the catalogue.
 MARKUP_RE = re.compile(r"</?[a-zA-Z][^>]*>")
 
 # A %N index. KOReader's T() substitutes only these
@@ -355,25 +414,92 @@ Respond with JSON only: {{"translations": [{{"id": <id>, "text": <translation>}}
 
 # -------------------- Configuration --------------------
 
-class Config:
-    """Runtime configuration loaded from .env and environment variables."""
+# Wire formats the SDK adapter speaks. `chat_completions` is the default for
+# every locale; `responses` is the OpenAI Responses API. The selector is
+# explicit config (API_PROTOCOL), read from l10n/.env or the locale's
+# l10n/<lang>/.env, never derived from the base URL.
+PROTOCOLS: tuple[str, ...] = ("chat_completions", "responses")
 
-    def __init__(self) -> None:
-        load_dotenv(".env", override=False)
+# Base URL of the OpenAI-compatible API, used when API_BASE is unset. The
+# protocol selects the path appended to it to form the full endpoint.
+DEFAULT_BASE_URL = "https://api.openai.com/v1"
 
-        self.api_key: str = os.environ.get("API_KEY", "")
-        self.api_endpoint: str = os.environ.get(
-            "API_ENDPOINT", "https://api.openai.com/v1/chat/completions"
+# Path appended to API_BASE for each protocol to build the full endpoint.
+PROTOCOL_PATHS: dict[str, str] = {
+    "chat_completions": "/chat/completions",
+    "responses": "/responses",
+}
+DEFAULT_MODEL = "gpt-4o-mini"
+
+# Project-identifying User-Agent. OpenCode's Go inference docs require a
+# stable client identity for routing/analytics.
+USER_AGENT = "assistant.koplugin-l10n/1.0 (+https://github.com/omer-faruq/assistant.koplugin)"
+
+
+def _normalize_protocol(value: str | None) -> str:
+    """Return a known protocol name, defaulting to chat_completions."""
+    v = (value or "chat_completions").strip().lower()
+    if v not in PROTOCOLS:
+        raise ValueError(
+            f"unsupported API_PROTOCOL {value!r}; use one of {', '.join(PROTOCOLS)}"
         )
-        self.api_model: str = os.environ.get("API_MODEL", "gpt-4o-mini")
+    return v
 
-        # OpenCode Go/Zen (API_ENDPOINT containing "opencode.ai") requires an
+
+def _endpoint_for(base_url: str, protocol: str) -> str:
+    """Build the full endpoint from API_BASE and the protocol's path.
+
+    API_BASE is a bare base URL; the protocol appends its own path. A trailing
+    slash is removed first, so "https://host/v1" and "https://host/v1/" yield
+    the same endpoint.
+    """
+    return (base_url or "").rstrip("/") + PROTOCOL_PATHS[protocol]
+
+
+class Route:
+    """A resolved per-locale API route (protocol, credentials, base URL, model)."""
+
+    __slots__ = ("lang_code", "protocol", "api_key", "base_url", "endpoint", "model")
+
+    def __init__(
+        self, lang_code: str | None, protocol: str, api_key: str,
+        base_url: str, model: str,
+    ) -> None:
+        self.lang_code = lang_code
+        self.protocol = protocol
+        self.api_key = api_key
+        self.base_url = base_url
+        self.endpoint = _endpoint_for(base_url, protocol)
+        self.model = model
+
+
+class Config:
+    """Runtime configuration resolved for one locale from its settings.
+
+    A locale-bound Config merges l10n/.env with l10n/<lang>/.env; a global
+    Config (lang_code=None) reads l10n/.env only. Both layer the exported
+    process environment on top.
+    """
+
+    def __init__(self, lang_code: str | None = None) -> None:
+        self.lang_code = lang_code
+        settings = load_settings(lang_code)
+
+        self.api_key: str = settings.get("API_KEY", "")
+        self.api_protocol: str = _normalize_protocol(settings.get("API_PROTOCOL"))
+        self.api_base: str = settings.get("API_BASE", "") or DEFAULT_BASE_URL
+        self.api_model: str = settings.get("API_MODEL", "") or DEFAULT_MODEL
+
+        self._route: Route | None = None
+        self._clients: dict[tuple[str, str, str], Any] = {}
+
+        # OpenCode Go/Zen (API_BASE containing "opencode.ai") requires an
         # `x-opencode-session` header carrying a stable opaque id for
         # routing/prompt caching. The Makefile generates one id per run and
         # passes it via RANDOM_SESSION_ID (explicit env wins); direct
         # script runs without it fall back to a per-process id below.
-        # Other endpoints never see this value (see _build_headers).
-        self.opencode_session: str = os.environ.get("RANDOM_SESSION_ID", "")
+        # Other endpoints never see this value (see get_client).
+        self.opencode_session: str = settings.get("RANDOM_SESSION_ID", "")
 
         # Model recommendations for bulk gettext translation (50+ languages,
         # many low-resource). Flash/mini-tier models are preferred: the quality
@@ -381,7 +507,7 @@ class Config:
         # cost 10-20x more for no practical gain here.
         #
         #   - Gemini 2.5 Flash (or Flash-Lite): best multilingual coverage and
-        #     cost/latency for low-resource languages. Point API_ENDPOINT at
+        #     cost/latency for low-resource languages. Point API_BASE at
         #     Google's OpenAI-compat layer or use OpenRouter.
         #   - GPT-4.1-mini / GPT-5-mini: stay on the OpenAI-native endpoint,
         #     better JSON adherence and translation quality than gpt-4o-mini at
@@ -392,28 +518,70 @@ class Config:
         #
         # Avoid gpt-4o / Claude Sonnet-tier models for batch translation.
 
-        self.chunk_size: int = int(os.environ.get("AI_CHUNK_SIZE", "20"))
-        self.max_tokens: int = int(os.environ.get("AI_MAX_TOKENS", "8192"))
-        self.request_timeout: int = int(os.environ.get("AI_REQUEST_TIMEOUT", "120"))
-        self.max_retries: int = int(os.environ.get("AI_MAX_RETRIES", "8"))
-        self.max_chunk_time: int = int(os.environ.get("AI_MAX_CHUNK_TIME", "900"))
-        self.json_mode: bool = os.environ.get("AI_JSON_MODE", "1").lower() not in (
+        self.chunk_size: int = int(settings.get("AI_CHUNK_SIZE", "20"))
+        self.max_tokens: int = int(settings.get("AI_MAX_TOKENS", "8192"))
+        self.request_timeout: int = int(settings.get("AI_REQUEST_TIMEOUT", "120"))
+        self.max_retries: int = int(settings.get("AI_MAX_RETRIES", "8"))
+        self.json_mode: bool = settings.get("AI_JSON_MODE", "1").lower() not in (
             "0", "false", "no",
         )
-        # JSON Schema strict-mode control for response_format:
+        # JSON Schema strict-mode control:
         #   auto (default): send json_schema, fall back to json_object once
         #     on HTTP 400 mentioning response_format/json_schema/unsupported.
         #   off: send {"type": "json_object"} directly.
         #   on: force json_schema; a rejection raises without fallback.
-        # AI_JSON_MODE=0 still disables response_format entirely (escape hatch).
-        self.json_schema_mode: str = os.environ.get("AI_JSON_SCHEMA", "auto").strip().lower() or "auto"
+        # AI_JSON_MODE=0 still disables the format entirely (escape hatch).
+        self.json_schema_mode: str = settings.get(
+            "AI_JSON_SCHEMA", "auto"
+        ).strip().lower() or "auto"
         if self.json_schema_mode not in ("auto", "off", "on"):
             self.json_schema_mode = "auto"
 
-    def require_api_key(self) -> None:
-        if not self.api_key:
-            log.error("API_KEY environment variable not set.")
-            sys.exit(1)
+    def get_route(self) -> Route:
+        """Return the route for this Config's settings, built once and cached.
+
+        The global and locale files were already merged in __init__, so the
+        route is whatever API_PROTOCOL / API_BASE / API_MODEL / API_KEY
+        resolved to for this Config's locale.
+        """
+        if self._route is None:
+            self._route = Route(
+                lang_code=self.lang_code,
+                protocol=self.api_protocol,
+                api_key=self.api_key,
+                base_url=self.api_base,
+                model=self.api_model,
+            )
+        return self._route
+
+    def get_client(self, route: Route) -> Any:
+        """Return a cached SDK client for the route (built once per run)."""
+        key = (route.protocol, route.base_url, route.api_key)
+        client = self._clients.get(key)
+        if client is None:
+            client = _build_client(self, route)
+            self._clients[key] = client
+        return client
+
+    def require_api_key(self, route: Route) -> None:
+        """Exit unless the route carries an API key.
+
+        The key comes from the route's resolved settings (process environment
+        or the relevant .env file); only the route this invocation actually
+        uses has to be set.
+        """
+        if route.api_key:
+            return
+        if self.lang_code:
+            log.error(
+                "API_KEY not set (checked the process environment, "
+                "l10n/%s/.env and l10n/.env).", self.lang_code,
+            )
+        else:
+            log.error(
+                "API_KEY not set (checked the process environment and l10n/.env)."
+            )
+        sys.exit(1)
 
 
 # Fallback id sent as `x-opencode-session` when neither the Makefile nor the
@@ -424,84 +592,79 @@ class Config:
 _RUN_SESSION_ID = secrets.token_urlsafe(12)
 
 
-def _is_opencode_api(endpoint: str) -> bool:
-    return "opencode.ai" in (endpoint or "").lower()
+def _is_opencode_api(base_url: str) -> bool:
+    return "opencode.ai" in (base_url or "").lower()
 
 
-def _build_headers(cfg: Config) -> dict[str, str]:
-    """Request headers, adding `x-opencode-session` for the opencode API."""
-    headers = {
-        "Authorization": f"Bearer {cfg.api_key}",
-        "Content-Type": "application/json",
-    }
-    if _is_opencode_api(cfg.api_endpoint):
+def _import_openai():
+    """Import the OpenAI SDK lazily so pure-config paths stay import-light."""
+    try:
+        import openai
+    except ImportError as exc:
+        raise RuntimeError(
+            "the 'openai' package is required; install it with 'pip install openai'"
+        ) from exc
+    return openai
+
+
+def _build_client(cfg: Config, route: Route) -> Any:
+    """Build an SDK client for a route.
+
+    Deliberately one client per run/route: the SDK owns timeouts and retries
+    (cfg.request_timeout, cfg.max_retries), so there is no second HTTP loop.
+    """
+    openai = _import_openai()
+    headers = {"User-Agent": USER_AGENT}
+    if _is_opencode_api(route.base_url):
         headers["x-opencode-session"] = cfg.opencode_session or _RUN_SESSION_ID
-    return headers
+    return openai.OpenAI(
+        api_key=route.api_key,
+        base_url=route.base_url,
+        timeout=float(cfg.request_timeout),
+        max_retries=cfg.max_retries,
+        default_headers=headers,
+    )
 
 
 # -------------------- Connectivity check --------------------
 
 def check_api(cfg: Config) -> int:
-    """Send a minimal request to verify API connectivity."""
-    log.info("Checking API connectivity...")
-    log.info("  Endpoint: %s", cfg.api_endpoint)
-    log.info("  Model:    %s", cfg.api_model)
+    """Send a minimal request to verify the configured route's connectivity.
 
-    payload = {
-        "model": cfg.api_model,
-        "temperature": 0,
-        "max_tokens": 256,
-        "messages": [
-            {
-                "role": "system",
-                "content": "You are a connectivity test. Reply with exactly the word OK.",
-            },
-            {"role": "user", "content": "ping"},
-        ],
-    }
+    The route is whatever cfg resolved for its locale: a global Config tests
+    the default route, a locale-bound Config (e.g. one built for --check-api-lang
+    sk) tests that locale's merged settings.
+    """
+    route = cfg.get_route()
+    label = f" [{cfg.lang_code}]" if cfg.lang_code else ""
+    log.info("Checking API connectivity%s...", label)
+    log.info("  Protocol: %s", route.protocol)
+    log.info("  Endpoint: %s", route.endpoint)
+    log.info("  Model:    %s", route.model)
+
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a connectivity test. Reply with exactly the word OK.",
+        },
+        {"role": "user", "content": "ping"},
+    ]
 
     start = time.time()
     try:
-        response = requests.post(
-            cfg.api_endpoint,
-            json=payload,
-            headers=_build_headers(cfg),
-            timeout=30,
-        )
-    except requests.RequestException as exc:
-        log.error("FAIL: network error: %s", exc)
+        result = _request(cfg, messages, max_tokens=256, json_format=False)
+    except Exception as exc:
+        log.error("FAIL: %s", exc)
         return 1
     elapsed = int(time.time() - start)
 
-    if not (200 <= response.status_code < 300):
-        log.error("FAIL: HTTP %d (%ds)", response.status_code, elapsed)
-        log.error("Response body (first 2KB):\n%s", response.text[:2000])
+    if result["finish_reason"] not in ("stop", "end_turn"):
+        log.error("FAIL: unexpected finish_reason=%s (%ds)",
+                  result["finish_reason"], elapsed)
         return 1
 
-    try:
-        data = response.json()
-    except ValueError as exc:
-        log.error("FAIL: invalid JSON response (%ds): %s", elapsed, exc)
-        log.error("%s", response.text[:2000])
-        return 1
-
-    if "error" in data:
-        err = data["error"]
-        msg = err.get("message", str(err)) if isinstance(err, dict) else str(err)
-        log.error("FAIL: API error: %s", msg)
-        return 1
-
-    try:
-        choices = data.get("choices") or [{}]
-        message = choices[0].get("message") or {}
-        reply = message.get("content") or ""
-    except (KeyError, IndexError, TypeError, AttributeError):
-        log.error("FAIL: malformed response (%ds)", elapsed)
-        log.error("%s", json.dumps(data, indent=2)[:2000])
-        return 1
-
-    summary = re.sub(r"\s+", " ", reply).strip()[:120]
-    log.info("OK: HTTP %d in %ds", response.status_code, elapsed)
+    summary = re.sub(r"\s+", " ", result["content"]).strip()[:120]
+    log.info("OK: in %ds", elapsed)
     log.info("  Reply: %s", summary)
     return 0
 
@@ -549,70 +712,53 @@ def decide_paths(lang_code: str) -> tuple[str | None, str | None, str | None]:
 
 # -------------------- LLM call --------------------
 
-def _parse_retry_after(resp: requests.Response) -> float | None:
-    """Extract the Retry-After header (in seconds) if present and numeric."""
-    raw = resp.headers.get("Retry-After")
-    if not raw:
-        return None
-    try:
-        return max(0.0, float(raw))
-    except ValueError:
-        return None
+# The JSON Schema for the {"translations": [...]} answer. It pins down
+# object/array/string types only: strict-mode providers reject length keywords
+# like minItems/maxItems, so array lengths (translations == request items,
+# plural forms == nplurals) are enforced by the prompt plus
+# _validate_translations instead.
+TRANSLATIONS_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "properties": {
+        "translations": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "integer"},
+                    "text": {
+                        "anyOf": [
+                            {"type": "string"},
+                            {"type": "array", "items": {"type": "string"}},
+                        ]
+                    },
+                },
+                "required": ["id", "text"],
+                "additionalProperties": False,
+            },
+        }
+    },
+    "required": ["translations"],
+    "additionalProperties": False,
+}
 
 
-def _classify(
-    resp: requests.Response | None, exc: BaseException | None
-) -> tuple[bool, float | None, str]:
-    """Return (is_retryable, retry_after_seconds, reason_string)."""
-    if exc is not None:
-        if isinstance(
-            exc,
-            (requests.ReadTimeout, requests.ConnectTimeout,
-             requests.ConnectionError, requests.exceptions.ChunkedEncodingError),
-        ):
-            return True, None, f"network:{type(exc).__name__}"
-        if isinstance(exc, ValueError):
-            # JSON decode error on a 2xx response: rare, but worth one retry.
-            return True, None, "json_decode"
-        return False, None, f"fatal:{type(exc).__name__}"
-    assert resp is not None
-    if resp.status_code == 429:
-        return True, _parse_retry_after(resp), "HTTP 429"
-    if 500 <= resp.status_code < 600:
-        return True, None, f"HTTP {resp.status_code}"
-    if 400 <= resp.status_code < 500:
-        return False, None, f"HTTP {resp.status_code} (client error)"
-    return False, None, f"HTTP {resp.status_code}"
+def _get(obj: Any, name: str, default: Any = None) -> Any:
+    """Read a field from either an SDK object or a plain dict."""
+    if obj is None:
+        return default
+    if isinstance(obj, dict):
+        return obj.get(name, default)
+    return getattr(obj, name, default)
 
 
-def _compute_backoff(
-    attempt: int,
-    retry_after: float | None,
-    chunk_start: float,
-    cfg: Config,
-) -> float:
-    """Exponential backoff with jitter, respecting Retry-After and time budget."""
-    base = min(2 ** attempt, 60)  # 2, 4, 8, 16, 32, 60, 60, 60 ...
-    jitter = random.uniform(0, base * 0.25)
-    backoff = base + jitter
-    if retry_after is not None:
-        backoff = max(backoff, retry_after)
-    remaining = cfg.max_chunk_time - (time.time() - chunk_start)
-    return max(1.0, min(backoff, max(0.0, remaining - 1)))
+def _json_format_spec(cfg: Config) -> dict[str, Any] | None:
+    """Protocol-neutral JSON output-format spec.
 
-
-def _build_response_format(cfg: Config) -> dict[str, Any] | None:
-    """Build response_format for a chat completion request.
-
-    Returns None when cfg.json_mode is False (AI_JSON_MODE=0 escape hatch:
-    no response_format is sent). Otherwise returns either a strict
-    json_schema contract (default) or {"type": "json_object"} when
-    AI_JSON_SCHEMA=off.
-
-    The schema pins down object/array/string types only. Array lengths
-    (translations == request items, plural forms == nplurals) are enforced
-    by the prompt plus _validate_translations instead: strict-mode
-    providers reject length keywords like minItems/maxItems.
+    Returns None when cfg.json_mode is False (AI_JSON_MODE=0: no format is
+    sent), {"type": "json_object"} when AI_JSON_SCHEMA=off, or a
+    Responses-style json_schema format otherwise. Callers adapt it to their
+    wire format.
     """
     if not cfg.json_mode:
         return None
@@ -620,209 +766,205 @@ def _build_response_format(cfg: Config) -> dict[str, Any] | None:
         return {"type": "json_object"}
     return {
         "type": "json_schema",
+        "name": "po_translations",
+        "strict": True,
+        "schema": TRANSLATIONS_SCHEMA,
+    }
+
+
+def _chat_response_format(spec: dict[str, Any] | None) -> dict[str, Any] | None:
+    """Convert a neutral spec to a Chat Completions response_format."""
+    if spec is None:
+        return None
+    if spec["type"] == "json_object":
+        return {"type": "json_object"}
+    return {
+        "type": "json_schema",
         "json_schema": {
-            "name": "po_translations",
-            "strict": True,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "translations": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "id": {"type": "integer"},
-                                "text": {
-                                    "anyOf": [
-                                        {"type": "string"},
-                                        {"type": "array", "items": {"type": "string"}},
-                                    ]
-                                },
-                            },
-                            "required": ["id", "text"],
-                            "additionalProperties": False,
-                        },
-                    }
-                },
-                "required": ["translations"],
-                "additionalProperties": False,
-            },
+            "name": spec["name"],
+            "strict": spec["strict"],
+            "schema": spec["schema"],
         },
     }
 
 
-def _post_chat(
-    cfg: Config,
+def _split_messages(
     messages: list[dict[str, str]],
-    max_tokens: int | None = None,
-) -> dict[str, Any]:
-    """POST a chat completion request with retry on transient errors.
+) -> tuple[str | None, list[dict[str, str]]]:
+    """Map chat messages to Responses `instructions` + `input`."""
+    instructions: list[str] = []
+    input_items: list[dict[str, str]] = []
+    for message in messages:
+        if message.get("role") == "system":
+            instructions.append(message.get("content", ""))
+        else:
+            input_items.append(
+                {"role": message.get("role"), "content": message.get("content", "")}
+            )
+    return ("\n\n".join(instructions) or None), input_items
 
-    Retries on: network errors (Read/Connect/Connection/ChunkedEncoding),
-    HTTP 429 (respecting Retry-After), HTTP 5xx, and JSON decode failures
-    on 2xx responses. Hard-fails on 4xx (other than 429) without retry.
-    Caps total time spent on a single chunk at cfg.max_chunk_time seconds.
-    Each retry logs a one-liner with reason, sleep duration, and elapsed
-    time vs the chunk budget.
 
-    The output contract is enforced via response_format: strict json_schema
-    by default (AI_JSON_SCHEMA=auto), plain json_object when
-    AI_JSON_SCHEMA=off, and no response_format when AI_JSON_MODE=0. In auto
-    mode a 400 that mentions response_format/json_schema/unsupported (or
-    "not supported") falls back to json_object exactly once.
-    """
-    payload = {
-        "model": cfg.api_model,
-        "temperature": 0.2,
-        "max_tokens": max_tokens or cfg.max_tokens,
-        "messages": messages,
+def _chat_result(completion: Any) -> dict[str, Any]:
+    """Normalize a ChatCompletion into finish_reason/content/raw."""
+    choices = _get(completion, "choices", None) or []
+    if not choices:
+        raise RuntimeError("chat completion returned no choices")
+    choice = choices[0]
+    message = _get(choice, "message", None)
+    refusal = _get(message, "refusal", None)
+    if refusal:
+        raise RuntimeError(f"chat completion refused the request: {refusal[:200]}")
+    return {
+        "finish_reason": _get(choice, "finish_reason", None) or "stop",
+        "content": _get(message, "content", None) or "",
+        "raw": completion,
     }
-    response_format = _build_response_format(cfg)
-    if response_format is not None:
-        # Strict JSON Schema by default; requires "json" in the prompt
-        # (SYSTEM_PROMPT/USER_TEMPLATE already satisfy this). Set
-        # AI_JSON_MODE=0 for endpoints that reject response_format outright,
-        # or AI_JSON_SCHEMA=off to use plain {"type": "json_object"}.
-        payload["response_format"] = response_format
-    using_schema = isinstance(response_format, dict) and response_format.get("type") == "json_schema"
-    schema_mode = getattr(cfg, "json_schema_mode", "auto")
-    downgraded = False
 
-    headers = _build_headers(cfg)
 
-    chunk_start = time.time()
-    last_reason = "unknown"
-    resp: requests.Response | None = None
-
-    for attempt in range(1, cfg.max_retries + 1):
-        if time.time() - chunk_start >= cfg.max_chunk_time:
-            raise RuntimeError(
-                f"chunk exceeded AI_MAX_CHUNK_TIME={cfg.max_chunk_time}s "
-                f"after {attempt - 1} attempts; last reason: {last_reason}"
-            )
-
-        try:
-            resp = requests.post(
-                cfg.api_endpoint,
-                json=payload,
-                headers=headers,
-                timeout=cfg.request_timeout,
-            )
-        except requests.RequestException as exc:
-            retryable, retry_after, reason = _classify(None, exc)
-            last_reason = reason
-            if not retryable:
-                raise RuntimeError(f"non-retryable network error: {exc}") from exc
-            if attempt >= cfg.max_retries:
-                raise RuntimeError(
-                    f"exhausted {cfg.max_retries} retries on {reason}: {exc}"
-                ) from exc
-            sleep_for = _compute_backoff(attempt, retry_after, chunk_start, cfg)
-            elapsed = int(time.time() - chunk_start)
-            log_http.info(
-                "[retry %d/%d] reason=%s sleep=%.1fs (elapsed=%ds/%ds)",
-                attempt, cfg.max_retries, reason, sleep_for,
-                elapsed, cfg.max_chunk_time,
-            )
-            time.sleep(sleep_for)
+def _responses_refusal(response: Any) -> str | None:
+    """Return the refusal text from a Responses output, if any."""
+    for item in _get(response, "output", None) or []:
+        if _get(item, "type", None) != "message":
             continue
+        for part in _get(item, "content", None) or []:
+            if _get(part, "type", None) == "refusal":
+                return _get(part, "refusal", "") or ""
+    return None
 
-        # Response received. Decide what to do.
-        if 200 <= resp.status_code < 300:
-            try:
-                return _parse_response(resp)
-            except (ValueError, RuntimeError) as parse_exc:
-                # JSON decode errors on 2xx are worth retrying a couple of times.
-                if attempt >= min(3, cfg.max_retries):
-                    raise
-                last_reason = "json_decode"
-                sleep_for = _compute_backoff(attempt, None, chunk_start, cfg)
-                elapsed = int(time.time() - chunk_start)
-                log_http.info(
-                    "[retry %d/%d] reason=json_decode sleep=%.1fs "
-                    "(elapsed=%ds/%ds)",
-                    attempt, cfg.max_retries, sleep_for,
-                    elapsed, cfg.max_chunk_time,
-                )
-                time.sleep(sleep_for)
-                continue
 
-        retryable, retry_after, reason = _classify(resp, None)
-        last_reason = reason
-        if not retryable:
-            if (
-                resp.status_code == 400
-                and using_schema
-                and not downgraded
-                and schema_mode == "auto"
-            ):
-                body = (resp.text or "").lower()
-                if (
-                    "response_format" in body
-                    or "json_schema" in body
-                    or "unsupported" in body
-                    or "not supported" in body
-                ):
-                    log_http.warning(
-                        "json_schema rejected (HTTP 400); "
-                        "falling back to json_object once: %s",
-                        (resp.text or "")[:300],
-                    )
-                    payload["response_format"] = {"type": "json_object"}
-                    using_schema = False
-                    downgraded = True
-                    continue
-            raise RuntimeError(
-                f"{reason}: {resp.text[:2000]}"
-            )
-        if attempt >= cfg.max_retries:
-            raise RuntimeError(
-                f"exhausted {cfg.max_retries} retries on {reason}: "
-                f"{resp.text[:500]}"
-            )
-        sleep_for = _compute_backoff(attempt, retry_after, chunk_start, cfg)
-        elapsed = int(time.time() - chunk_start)
-        log_http.info(
-            "[retry %d/%d] reason=%s sleep=%.1fs (elapsed=%ds/%ds)",
-            attempt, cfg.max_retries, reason, sleep_for,
-            elapsed, cfg.max_chunk_time,
+def _responses_result(response: Any) -> dict[str, Any]:
+    """Normalize a Response into finish_reason/content/raw.
+
+    A refusal or a failed response raises (never accepted as a translation);
+    an incomplete response truncated by max_output_tokens maps to
+    finish_reason=length so the existing bisection path handles it.
+    """
+    refusal = _responses_refusal(response)
+    if refusal is not None:
+        raise RuntimeError(f"Responses API refused the request: {refusal[:200]}")
+
+    status = _get(response, "status", None)
+    text = _get(response, "output_text", None) or ""
+    if status == "incomplete":
+        details = _get(response, "incomplete_details", None)
+        reason = _get(details, "reason", None)
+        if reason == "max_output_tokens":
+            return {"finish_reason": "length", "content": text, "raw": response}
+        raise RuntimeError(
+            f"Responses API response incomplete: {reason or 'unknown'}"
         )
-        time.sleep(sleep_for)
+    if status == "failed":
+        error = _get(response, "error", None)
+        message = _get(error, "message", None) or error
+        raise RuntimeError(f"Responses API response failed: {message}")
+    if status not in (None, "completed"):
+        raise RuntimeError(f"Responses API unexpected status: {status}")
+    return {"finish_reason": "stop", "content": text, "raw": response}
 
-    # Defensive: if we exit the loop without returning, treat as exhausted.
-    raise RuntimeError(
-        f"exhausted {cfg.max_retries} retries; last reason: {last_reason}"
+
+def _is_schema_rejection(exc: BaseException) -> bool:
+    """True for an HTTP 400 that blames json_schema/response_format."""
+    if getattr(exc, "status_code", None) != 400:
+        return False
+    body = str(exc).lower()
+    return (
+        "response_format" in body
+        or "json_schema" in body
+        or "unsupported" in body
+        or "not supported" in body
     )
 
 
-def _parse_response(resp: requests.Response) -> dict[str, Any]:
-    if not (200 <= resp.status_code < 300):
-        raise RuntimeError(
-            f"HTTP {resp.status_code}: {resp.text[:2000]}"
-        )
-    try:
-        data = resp.json()
-    except ValueError as exc:
-        raise RuntimeError(f"invalid JSON: {exc}; body={resp.text[:500]!r}")
+def _as_runtime_error(exc: BaseException) -> RuntimeError:
+    if isinstance(exc, RuntimeError):
+        return exc
+    return RuntimeError(f"{type(exc).__name__}: {exc}")
 
-    if "error" in data:
-        err = data["error"]
-        msg = err.get("message", str(err)) if isinstance(err, dict) else str(err)
-        raise RuntimeError(f"API error: {msg}")
 
-    try:
-        choice = data["choices"][0]
-    except (KeyError, IndexError, TypeError):
-        raise RuntimeError(f"malformed response: {json.dumps(data)[:500]}")
-
-    finish_reason = choice.get("finish_reason", "stop")
-    content = (choice.get("message") or {}).get("content") or ""
-
-    return {
-        "finish_reason": finish_reason,
-        "content": content,
-        "raw": data,
+def _call_chat(
+    route: Route,
+    client: Any,
+    messages: list[dict[str, str]],
+    spec: dict[str, Any] | None,
+    max_tokens: int,
+) -> dict[str, Any]:
+    kwargs: dict[str, Any] = {
+        "model": route.model,
+        "messages": messages,
+        "max_tokens": max_tokens,
+        # Chat Completions keeps the project's low-temperature setting; the
+        # Responses path omits it because Grok rejects the parameter.
+        "temperature": 0.2,
     }
+    response_format = _chat_response_format(spec)
+    if response_format is not None:
+        kwargs["response_format"] = response_format
+    completion = client.chat.completions.create(**kwargs)
+    return _chat_result(completion)
+
+
+def _call_responses(
+    route: Route,
+    client: Any,
+    messages: list[dict[str, str]],
+    spec: dict[str, Any] | None,
+    max_output_tokens: int,
+) -> dict[str, Any]:
+    instructions, input_items = _split_messages(messages)
+    kwargs: dict[str, Any] = {
+        "model": route.model,
+        "input": input_items,
+        "max_output_tokens": max_output_tokens,
+    }
+    if instructions is not None:
+        kwargs["instructions"] = instructions
+    if spec is not None:
+        kwargs["text"] = {"format": spec}
+    response = client.responses.create(**kwargs)
+    return _responses_result(response)
+
+
+def _request(
+    cfg: Config,
+    messages: list[dict[str, str]],
+    max_tokens: int | None = None,
+    json_format: bool = True,
+) -> dict[str, Any]:
+    """Send one request over the config's route; return finish_reason/content/raw.
+
+    Transport errors, retries and the request timeout are the SDK's job
+    (OpenAI(timeout=..., max_retries=...)), so this makes exactly one call per
+    attempt and only adds the json_schema -> json_object downgrade, which the
+    SDK does not perform.
+    """
+    route = cfg.get_route()
+    client = cfg.get_client(route)
+    spec = _json_format_spec(cfg) if json_format else None
+    budget = max_tokens or cfg.max_tokens
+    downgraded = False
+
+    while True:
+        try:
+            if route.protocol == "responses":
+                return _call_responses(route, client, messages, spec, budget)
+            return _call_chat(route, client, messages, spec, budget)
+        except Exception as exc:
+            if (
+                spec is not None
+                and spec.get("type") == "json_schema"
+                and not downgraded
+                and getattr(cfg, "json_schema_mode", "auto") == "auto"
+                and _is_schema_rejection(exc)
+            ):
+                log_http.warning(
+                    "json_schema rejected (HTTP 400); falling back to "
+                    "json_object once: %s",
+                    str(exc)[:300],
+                )
+                spec = {"type": "json_object"}
+                downgraded = True
+                continue
+            raise _as_runtime_error(exc)
 
 
 # -------------------- Chunk translation --------------------
@@ -1139,7 +1281,7 @@ def _translate_chunk(
         max_tokens: int | None = None,
     ) -> list[dict[str, Any]]:
         messages = _build_messages(cfg, lang_code, lang_fullname, payload_items)
-        result = _post_chat(cfg, messages, max_tokens=max_tokens)
+        result = _request(cfg, messages, max_tokens=max_tokens)
         if result["finish_reason"] not in ("stop", "end_turn"):
             raise _LengthTruncation(result["finish_reason"], result["content"])
         payload = _extract_json(result["content"])
@@ -1250,7 +1392,11 @@ def translate_file(
     lang_fullname = LANG_MAP[lang_code]
     partial_path = output_path + ".partial"
 
-    log_translate.info("[%s] translating %s", lang_code, lang_fullname)
+    route = cfg.get_route()
+    log_translate.info(
+        "[%s] translating %s (protocol=%s endpoint=%s model=%s)",
+        lang_code, lang_fullname, route.protocol, route.endpoint, route.model,
+    )
 
     if os.path.isfile(partial_path):
         log_translate.warning("[%s] resuming from existing partial: %s", lang_code, partial_path)
@@ -1354,6 +1500,72 @@ def translate_file(
     return 0
 
 
+# -------------------- Static data check --------------------
+
+def catalogue_codes() -> list[str]:
+    """Locales that ship an assistant.po catalogue, sorted."""
+    return [name for name in sorted(os.listdir(LANG_DIR))
+            if os.path.isfile(os.path.join(LANG_DIR, name, "assistant.po"))]
+
+
+def check_data() -> int:
+    """Validate the static language tables against the catalogues on disk.
+
+    Offline and deterministic: it reads LANG_MAP, LANG_EN, PLURAL_FORMS and the
+    per-locale assistant.po headers, so it needs no SDK, API key or .env. It
+    verifies:
+      - LANG_MAP, LANG_EN and PLURAL_FORMS all cover the same set of locales
+      - every .po header agrees with PLURAL_FORMS on nplurals (msgfmt enforces
+        this too, but the message here names the language)
+      - every plural entry declares exactly nplurals forms
+      - which locales ship a translator note
+    """
+    ok = True
+    codes = catalogue_codes()
+    missing_en = sorted(set(LANG_MAP) - set(LANG_EN))
+    missing_pf = sorted(set(LANG_MAP) - set(PLURAL_FORMS))
+    extra_en = sorted(set(LANG_EN) - set(LANG_MAP))
+    on_disk_only = sorted(set(codes) - set(LANG_MAP))
+    for label, vals in (("LANG_MAP without LANG_EN", missing_en),
+                        ("LANG_MAP without PLURAL_FORMS", missing_pf),
+                        ("LANG_EN without LANG_MAP", extra_en),
+                        ("catalogue without LANG_MAP", on_disk_only)):
+        if vals:
+            ok = False
+            print(f"FAIL {label}: {', '.join(vals)}")
+
+    print("plural forms (PLURAL_FORMS vs the .po header):")
+    for lang in codes:
+        want = PLURAL_FORMS.get(lang)
+        if not want:
+            continue
+        want_n = re.search(r"nplurals\s*=\s*(\d+)", want)
+        have = polib.pofile(os.path.join(LANG_DIR, lang, "assistant.po"))
+        have_pf = have.metadata.get("Plural-Forms", "")
+        have_n = re.search(r"nplurals\s*=\s*(\d+)", have_pf)
+        if not have_n or not want_n:
+            ok = False
+            print(f"  FAIL {lang}: header has no nplurals")
+        elif have_n.group(1) != want_n.group(1):
+            ok = False
+            print(f"  FAIL {lang}: header nplurals={have_n.group(1)} but "
+                  f"PLURAL_FORMS says {want_n.group(1)}")
+        # nplurals must also match the number of forms actually present
+        for e in have:
+            if e.msgid_plural and len(e.msgstr_plural) != int(want_n.group(1)):
+                ok = False
+                print(f"  FAIL {lang}: {e.msgid[:40]!r} has "
+                      f"{len(e.msgstr_plural)} forms, expected "
+                      f"{want_n.group(1)}")
+
+    notes = sorted(d for d in codes
+                   if os.path.isfile(os.path.join(LANG_DIR, d, LANG_NOTE_FILE)))
+    print(f"\nlanguages with a translator note ({len(notes)}): "
+          f"{', '.join(notes) or 'none'}")
+    print("OK" if ok else "FAILED")
+    return 0 if ok else 1
+
+
 # -------------------- CLI --------------------
 
 def build_parser() -> argparse.ArgumentParser:
@@ -1368,7 +1580,17 @@ def build_parser() -> argparse.ArgumentParser:
     )
     g.add_argument(
         "--check-api", "--ping", "-t", dest="check_api", action="store_true",
-        help="Send a minimal request to verify API connectivity.",
+        help="Send a minimal request to verify the default route's connectivity.",
+    )
+    g.add_argument(
+        "--check-api-lang", dest="check_api_lang", metavar="LANG_CODE",
+        help="Verify connectivity using a locale's merged settings "
+             "(l10n/<lang>/.env over l10n/.env; e.g. --check-api-lang sk).",
+    )
+    g.add_argument(
+        "--check-data", dest="check_data", action="store_true",
+        help="Validate LANG_MAP/LANG_EN/PLURAL_FORMS against the catalogues "
+             "on disk and exit (offline; needs no API key).",
     )
     p.add_argument(
         "--log-level",
@@ -1395,25 +1617,53 @@ def main(argv: list[str] | None = None) -> int:
     if args.log_level:
         _apply_log_level(args.log_level)
 
-    cfg = Config()
-    cfg.require_api_key()
+    # The static-table check is offline and must not build a Config: it needs
+    # no API key, endpoint or .env, so short-circuit before any of that.
+    if args.check_data:
+        return check_data()
 
-    log.info("API endpoint: %s", cfg.api_endpoint)
-    log.info("API model:    %s", cfg.api_model)
-    if _is_opencode_api(cfg.api_endpoint):
+    # Resolve the target locale before building the Config: a locale-bound
+    # Config merges l10n/<lang>/.env over l10n/.env, while --check-api uses the
+    # global settings only (lang_code=None).
+    lang_code: str | None
+    if args.check_api:
+        lang_code = None
+    elif args.check_api_lang is not None:
+        if args.check_api_lang not in LANG_MAP:
+            log.error("language code %r not supported", args.check_api_lang)
+            return 2
+        lang_code = args.check_api_lang
+    else:
+        if args.lang_code not in LANG_MAP:
+            log.error("language code %r not supported", args.lang_code)
+            return 2
+        if args.lang_code not in LANG_EN:
+            log.error("language code %r has no LANG_EN entry; add its English "
+                      "name so the prompt can disambiguate the endonym", args.lang_code)
+            return 2
+        lang_code = args.lang_code
+
+    try:
+        cfg = Config(lang_code)
+    except ValueError as exc:
+        log.error("%s", exc)
+        return 2
+
+    route = cfg.get_route()
+    cfg.require_api_key(route)
+
+    log.info("API protocol: %s", route.protocol)
+    log.info("API endpoint: %s", route.endpoint)
+    log.info("API model:    %s", route.model)
+    if _is_opencode_api(route.base_url):
         log.info("opencode API detected; x-opencode-session=%s",
                  cfg.opencode_session or _RUN_SESSION_ID)
 
     if args.check_api:
         return check_api(cfg)
 
-    if args.lang_code not in LANG_MAP:
-        log.error("language code %r not supported", args.lang_code)
-        return 2
-    if args.lang_code not in LANG_EN:
-        log.error("language code %r has no LANG_EN entry; add its English "
-                  "name so the prompt can disambiguate the endonym", args.lang_code)
-        return 2
+    if args.check_api_lang is not None:
+        return check_api(cfg)
 
     action, input_path, output_path = decide_paths(args.lang_code)
     if action == "skip":

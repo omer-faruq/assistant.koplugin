@@ -11,37 +11,97 @@ The localization process uses standard `gettext` tools (`.pot` template file and
 - `<LANG_CODE>/assistant.mo`: The compiled catalogue, committed alongside the `.po` and shipped in the release.
 
 The `Makefile` automates the gettext part of the pipeline (extract → merge → compile
-→ check). AI translation is handled by `ai_translate.py`; `check_mix.py` audits
-the results. See `Auditing the catalogues` below.
+→ check). AI translation is handled by `ai_translate.py`, which also validates the
+static language tables offline; `review_translations.py` runs the optional LLM
+review for every locale that ships a `review_note.txt`. See `Auditing the
+catalogues` below.
 
 ## Env and Tools
 
-Install the system and Python dependencies (Debian/Ubuntu):
+Install the system packages and create a small l10n tooling environment
+(Debian/Ubuntu):
 
-    sudo apt install gettext make python3 python3-dotenv python3-requests python3-polib
+    sudo apt install gettext make python3 python3-venv python3-dotenv python3-polib
+    python3 -m venv --system-site-packages "$HOME/.venvs/assistant-l10n"
+    . "$HOME/.venvs/assistant-l10n/bin/activate"
+    python -m pip install openai
+
+`ai_translate.py` talks to the API through the official `openai` Python SDK, so
+`python3-requests` is no longer needed. Activate this environment before running
+the Makefile; the scripts use the active `python3` via their shebang.
 
 Create an `.env` file in this directory with the following variables
 (required unless noted):
 
-    API_ENDPOINT=https://api.openai.com/v1/chat/completions
+    API_PROTOCOL=chat_completions   # chat_completions (default) or responses
+    API_BASE=https://api.openai.com/v1
     API_MODEL=gpt-4o-mini
     API_KEY=sk-...
 
-Optional tuning variables (defaults shown):
+`API_PROTOCOL` selects the wire format the SDK adapter uses: `chat_completions`
+(default) calls the Chat Completions API, `responses` calls the OpenAI Responses
+API. It is explicit config, never inferred from the base URL. `API_BASE` is the
+base URL of the OpenAI-compatible API and defaults to
+`https://api.openai.com/v1`; the protocol appends its own path
+(`/chat/completions` or `/responses`) to form the full endpoint. The base must
+not already carry those path suffixes.
+
+`.env` is gitignored (see `.gitignore`) and excluded from the release archive, so
+real keys never get committed. Create the file locally and do not commit it.
+
+### Per-locale overrides
+
+A locale may override any of the global values with its own `.env` next to its
+catalogue, `l10n/<lang>/.env` (for example `l10n/sk/.env`). It uses the same
+variable names as the global file - `API_PROTOCOL`, `API_BASE`,
+`API_MODEL`, `API_KEY` - not a `_<LANG>` suffix.
+
+`ai_translate.py` resolves each setting with this precedence, highest first:
+
+1. the exported process environment,
+2. `l10n/<lang>/.env` when one exists for the locale,
+3. the global `l10n/.env`.
+
+A blank value is ignored at every layer, so an empty entry in a locale file
+leaves the global value in place rather than erasing it. Only the route an
+invocation actually uses has to be complete.
+
+For example, the Slovak route migrates to the Responses API against OpenCode
+while every other locale keeps the globals. Put this in `l10n/sk/.env`:
+
+    API_PROTOCOL=responses
+    API_BASE=https://opencode.ai/inference/go/v1
+    API_MODEL=grok-4.7
+    # API_KEY unset: the global API_KEY is used
+
+`./ai_translate.py sk` reads `l10n/sk/.env` layered over `l10n/.env`; every
+other locale reads the global file alone. The global `API_PROTOCOL=...` selects
+the wire format for every locale that does not override it, and a locale's own
+`API_PROTOCOL` overrides it for that locale only. Ping one locale's route with
+`./ai_translate.py --check-api-lang sk`, or the global default with
+`./ai_translate.py --check-api`.
+
+Optional tuning variables (defaults shown). These may be exported, or placed in
+the global `.env` or a locale's `.env`; the same precedence applies:
 
     AI_CHUNK_SIZE=20        # msgids per API request (smaller = safer, slower)
     AI_MAX_TOKENS=8192      # max response tokens per chunk
-    AI_REQUEST_TIMEOUT=120  # per-request HTTP timeout, in seconds
-    AI_MAX_RETRIES=8        # retries on 429 / 5xx / network errors
-    AI_MAX_CHUNK_TIME=900   # hard cap on total seconds spent per chunk
+    AI_REQUEST_TIMEOUT=120  # per-request timeout handed to the SDK, in seconds
+    AI_MAX_RETRIES=8        # retries the SDK performs on 429 / 5xx / network errors
     RANDOM_SESSION_ID=      # stable id sent as x-opencode-session, only when
-                             # API_ENDPOINT contains "opencode.ai". The Makefile
+                             # API_BASE contains "opencode.ai". The Makefile
                              # generates one per run; direct script runs get a
                              # per-process fallback.
 
-On any retry, the script logs a one-liner with the reason (e.g. `HTTP 429`,
-`network:ReadTimeout`) and the backoff duration, so long runs remain
-observable.
+There is no `AI_MAX_CHUNK_TIME`: `ai_translate.py` hands the request timeout and
+the retry count to the SDK, which owns backoff and the per-request deadline, so
+the script no longer enforces a separate wall-clock cap per chunk. Set
+`AI_LOG_LEVEL=DEBUG` (or `AI_DEBUG=1`) to surface the SDK's own retry logs.
+
+The optional LLM reviewer runs through the OpenCode CLI, not this SDK. Its model
+defaults to `opencode-go/claude-haiku-5-5` and is configurable with
+`L10N_REVIEW_MODEL` (process environment, `l10n/<lang>/.env` or `l10n/.env`); see
+`LLM review of the AI output` below.
 
 ## The response contract
 
@@ -94,7 +154,8 @@ a chunk that can never satisfy the check:
 
 Verify the API works before kicking off a batch:
 
-    make check-api        # or: ./ai_translate.py --check-api
+    make check-api                          # or: ./ai_translate.py --check-api
+    ./ai_translate.py --check-api-lang sk   # a locale's own protocol/route
 
 Translate a single language:
 
@@ -105,20 +166,19 @@ clean tree. `extract-untranslated` skips a language whose `untranslated.po` is
 already newer than its catalogue, so naming one language repeatedly does not
 re-translate what is already done.
 
-Run the full pipeline (template → update → extract → translate → jev-check →
+Run the full pipeline (template → update → extract → translate → review →
 import → check → clean → mo). `make` alone runs the same pipeline (`all` depends
 on `translate`):
 
     make translate
     make
 
-Bare `make` also Jev-checks the AI output of every locale that opts in with
-`<LANG_CODE>/jev_note.txt`. It audits `updated_translated.po` right after
-`ai-translate`, empties the entries the classifier confidently places in the
-peer language, and sends only those back through `ai_translate.py`. It makes Jev
-requests only for those hooked locales, and only when `API_JEV_ENDPOINT` and
-`API_KEY` are set. `make check` and `make check-mix` never make a Jev request.
-See `Jev check of the AI output (the pipeline step)` below.
+Bare `make` also reviews the AI output of every locale that ships a
+`review_note.txt`. For each such locale it reviews `<LANG_CODE>/updated_translated.po`
+with the OpenCode CLI right after `ai-translate`, empties exactly the entries a
+reviewer confidently marks `repair`, and sends only those back through
+`ai_translate.py`. A locale without a note is never reviewed or touched.
+`make check` never runs the reviewer. See `LLM review of the AI output` below.
 
 Detect drift between this project and KOReader's supported languages, and
 validate the `LANG_MAP` / `LANG_EN` / `PLURAL_FORMS` tables against the
@@ -126,19 +186,14 @@ catalogues on disk:
 
     make check-langs
 
-Audit every catalogue for translations written in the wrong language or in the
-wrong slot:
+Review a locale's LLM output for wrong-language or wrong-meaning entries with the
+OpenCode CLI (the normal pipeline refills what it flags; only locales with a
+`review_note.txt` are reviewed, see `LLM review of the AI output` below):
 
-    make check-mix
-    make check-mix CHECK_MIX_ARGS=--list
-
-Audit one locale for translations written in a *different* language with the
-optional Jev classifier (opt-in per locale, report-only unless `--retranslate-jev`
-or `--jev-clear-only` is given; see `Language audit with Jev SystemOne` below):
-
-    ./check_mix.py --jev sk
-    ./check_mix.py --jev sk --retranslate-jev
-    ./check_mix.py --jev sk --jev-clear-only
+    ./review_translations.py                 # review sk/updated_translated.po (default lang)
+    ./review_translations.py --lang sl       # review sl/updated_translated.po
+    ./review_translations.py --full          # read-only audit of sk/assistant.po
+    make review-hooked                       # full read-only audit of every hooked locale
 
 Retranslate one exact msgid everywhere (e.g. after a terminology fix — empties it
 in all `.po` files, then runs it back through the pipeline):
@@ -176,301 +231,142 @@ forever. Both failure modes are self-sealing, and nothing in the pipeline
 distinguishes a hand-patched or wrong-language string from a good one.
 
 **Never hand-edit a `.po` to correct a translation. Empty the msgstr** and let
-the pipeline refill it.
+the pipeline refill it: clear the wrong msgstr (by hand, or let the LLM reviewer
+do it — see below), then re-run `make ai-translate` and `make mo`.
 
-`check_mix.py` (via `make check-mix`) is the guard. All three of its signals need
-no knowledge of the target language:
+Two deterministic checks guard what can be judged without knowing the target
+language:
 
-- **A. Calibrated agreement** compares, for each pair of same-script locales, how
-  often *our* two catalogues agree against how often KOReader's own reviewed
-  `koreader.mo` catalogues agree. The upstream rate is the baseline two real
-  languages are expected to hit, so it self-normalizes per pair — no dictionary,
-  no hand-tuned threshold, no false positives from merely-related languages. Set
-  `KOREADER_L10N_DIR` if KOReader lives elsewhere.
-- **B. Sibling identical** is the raw count of msgstr shared byte-for-byte with
-  another locale. It needs no upstream and covers every entry, including the
-  ~90% of msgids that have no upstream counterpart.
-- **C. Structural loss** flags a msgstr that dropped a `<b>` tag the msgid has, or
-  that carries a `%N` no source form of the msgid has. This is the offline mirror
-  of `ai_translate._check_markup`, and it is what surfaces a wrong-slot answer.
+- **Wrong-slot answers** are caught at request time. `ai_translate.py` validates
+  every answer against the msgid it claims to translate (`_check_markup`): the
+  translation must carry the msgid's `<b>` tags and must not carry a `%N` index
+  that no source form of the msgid has. Both are the footprint of the model
+  answering with a different msgid's translation. A bad answer fails the chunk
+  and is retried, then bisected, so it never reaches the catalogue. Placeholder
+  movement and `%s` / `%d` are left alone — the plugin mixes `string.format`
+  with `T()`, so a msgid's own conversion style is a per-call-site choice.
+- **The static language tables** are checked offline by
+  `./ai_translate.py --check-data`, which `make check-langs` runs. It confirms
+  `LANG_MAP`, `LANG_EN` and `PLURAL_FORMS` all cover the same locales, that every
+  `.po` header agrees with `PLURAL_FORMS` on `nplurals`, and that every plural
+  entry declares exactly `nplurals` forms.
 
-Findings are a **triage list, not a verdict**. A pair can score high while the
-flagged wording is correct for that language — `es` and `gl` share 21 of 39
-strings and every one of them is the same word in both, and KOReader's own
-catalogues agree. Always read the `koreader <lang>` column before acting.
+Neither catches a translation that is simply in the wrong language or says the
+wrong thing; that is what the LLM review below is for.
 
-To clear the entries a locale got wrong, so the next run refills them:
+### LLM review of the AI output (OpenCode CLI)
 
-    ./check_mix.py --empty sk --peer sl           # sk's Slovenian strings
-    ./check_mix.py --empty de --structural       # dropped <b> tags
-    make ai-translate && make mo
+`make translate` runs `review-translations` as its fifth step, after
+`ai-translate` and before `import-translation`. For every locale that ships
+`l10n/<LANG_CODE>/review_note.txt` (currently only `sk`) it reviews the LLM output
+`<LANG_CODE>/updated_translated.po` with the OpenCode CLI and repairs what the
+reviewer is confident about. A locale without a note is never discovered, looped
+or reviewed, and its catalogue ships unchanged. A hooked locale with no
+intermediate this run is skipped.
 
-`--peer` is required, and an entry is only cleared when all three hold: our two
-catalogues agree on it, KOReader's catalogue disagrees with it for the target
-language, and KOReader's catalogue confirms it for the peer. That is what keeps
-the innocent side of a pair from being emptied — run it the wrong way round and
-you delete the correct translations.
+Unlike the deterministic signals above, this is a model judgement. It answers one
+question - is this msgstr correct for the target language? - and returns only a
+per-entry verdict, never a rewritten translation:
 
-Run `./check_mix.py --check-data` to validate the `LANG_MAP` / `LANG_EN` /
-`PLURAL_FORMS` tables against the catalogues on disk; `make check-langs` runs it
-as part of its language-drift check.
+- `pass` - correct in the target language and meaning what the msgid says.
+- `repair` - a strong, explicit wrong-language or wrong-meaning finding. Reserved
+  for that; a short or ambiguous string abstains instead.
+- `abstain` - too short, a proper noun or a technical token, or otherwise not
+  judgeable with confidence.
 
-### Language audit with Jev SystemOne (optional)
+`review_translations.py` sends the whole catalogue to the model in **one
+invocation** per pass, not one call per msgid. The prompt (the target language
+name from `LANG_EN`, the locale's `review_note.txt`, and the compact entry list)
+goes over stdin, never in argv. The reply is read from the CLI's NDJSON event
+stream; a missing, extra or duplicate id, a malformed reply or an error event
+fails the pass closed.
 
-`./check_mix.py --jev <lang>` is a third, opt-in audit that answers the one
-question the signals above cannot: *is this msgstr actually written in the
-target language?* It sends translated msgstrs (except strings identical to the
-English msgid or containing only format placeholders) to the Jev SystemOne
-decision model, each as its own typed `choice` question - target language / peer
-language / unclear - and reports the entries the model confidently places in the
-peer language.
+An entry is only ever emptied, never hand-edited. The msgstr flagged `repair` is
+cleared in the intermediate and `ai_translate.py` refills it under its own
+validation - only empty msgstr are filled, so good translations stay. A run is:
 
-To cut the request count, independent per-msgstr questions are packed into
-batches of `JEV_BATCH_SIZE` (default 10, see below). Batching is a transport
-optimisation only: every entry keeps its own question and its own answer, so one
-entry's verdict never affects another's. It is **not** a screening gate - there
-is no "is any entry in this batch wrong?" step that could pass a bad string
-because its neighbours are clean. A batch reply is matched by question id; if
-the answer map is missing an id, carries an extra one, or is otherwise
-malformed, the whole batch fails closed and every entry in it is reported as an
-error (never silently treated as clean), and no further requests are sent.
+1. **no `repair` verdicts** - one CLI call; import continues with the AI output.
+2. **`repair` verdicts** - clear exactly those msgstr, run `ai_translate.py
+   <LANG_CODE>` once, then make one final CLI call. A `repair` verdict that
+   survives the refill stops the run **before import** (exit 3) and preserves the
+   intermediate. It never loops.
+3. **a setup failure** - no `review_note.txt`, no `opencode` on `PATH`, an
+   authentication error, a timeout or an invalid reply - warns and keeps the AI
+   output. The review is best-effort: it hands the pipeline a better catalogue
+   and never stops a translation run for its own problems.
 
-SystemOne is not a chat-completions API: a request carries a `state` and a map
-of typed `questions`, and the answer is keyed by the question id. See
-<https://jevapi.io/jev-api/> for the wire format. The configured endpoint and
-key must be authorized for SystemOne; a Go or chat-completions subscription
-credential is not accepted there.
+A locale is reviewed only when it ships a `review_note.txt`, so `make check` never
+invokes the CLI; the deterministic checks in `ai_translate.py` and
+`make check-langs` keep working with no model, network or OpenCode account.
 
-`requests`, `python-dotenv` and the language tables are imported only when
-`--jev` is used, so the deterministic A/B/C checks keep working without them.
+#### Per-locale review note
 
-#### Per-locale opt-in hook
+`l10n/<LANG_CODE>/review_note.txt` is the opt-in: a locale is reviewed only when
+it ships one. The note carries the guidance the reviewer needs to tell the target
+language apart from the languages it is confused with, and its format is free
+text. `sk/review_note.txt` is the worked example - it warns that the endonym
+`slovenčina` reads like "Slovene", lists the Slovak-only letters (`ľ ĺ ŕ ô ť ď
+ň`) and the genitive-vs-dative ending, and gives the Slovenian-only words that
+justify a `wrong_language` verdict (`Uporabi`, `Prevajanje`, `Prilagojeni
+pozivi`) against their Slovak equivalents (`Použiť`, `Preklad`/`Preložiť`,
+`Vlastné prompty`). A native speaker can add or fix their own locale's note
+without touching Python. The translator note (`<LANG_CODE>/ai_note.txt`) is
+separate; it feeds `ai_translate.py`, not the reviewer.
 
-A locale opts in by shipping `l10n/<LANG_CODE>/jev_note.txt`, the Jev analogue
-of `ai_note.txt`. Without that file the locale is skipped: no request is sent
-and nothing is written, in report, retranslate or clear-only mode. One locale
-(and its hook-defined peer) is handled per invocation; there is no sweep across
-locales.
+The `Makefile` hook set, `REVIEW_HOOKED`, is every `LANGS` entry that has both
+`review_note.txt` and `assistant.po`; the pipeline and the `review-*` targets
+operate on exactly that set.
 
-The file is free text. One directive is recognized, `peer: <code>`, naming the
-contaminating locale to test against; every other non-blank, non-`#` line is
-distinguishing guidance embedded in the model's question. `sk/jev_note.txt` is
-the worked example - it declares `peer: sl` and lists the Slovak/Slovenian
-tells (the letters `ľ ĺ ŕ ô ť ď ň`, the genitive-vs-dative ending, and a short
-Slovenian-only word list). A native speaker can extend their locale's hook
-without touching Python. `--peer` overrides the hook's peer for an experiment.
-
-A locale that ships a hook but names no peer (and is not given `--peer`) fails
-before any request is sent: without a peer there is nothing to classify against.
-
-`jev_note.txt` is excluded from the release archive in `.releaseignore`; it is
+`review_note.txt` is excluded from the release archive in `.releaseignore`; it is
 tooling input, not runtime data.
 
-#### Setup
+#### Reviewer, model and CLI
 
-Prerequisites are the same as `ai_translate.py` (`python3-requests`,
-`python3-polib`, `python3-dotenv`). Add the endpoint to `.env`; `API_KEY` is
-reused from the block above as the Bearer credential:
+The reviewer is the OpenCode CLI agent `l10n-review`
+(`.opencode/agents/l10n-review.md`), a read-only primary agent whose permissions
+deny every tool: it classifies from the prompt alone and cannot edit files or
+call anything. The agent names no language; the target language and the confusion
+guidance both arrive in the prompt, from `LANG_EN` and the locale's note. The
+script runs it as:
 
-    API_JEV_ENDPOINT=https://.../v1/systemone   # required for check_mix.py --jev
-    API_KEY=sk-...                              # required, shared with ai_translate
-    API_JEV_MODEL=jev-1.13-free                 # optional (default shown)
+    opencode run --standalone --agent l10n-review --model <model> --format json
 
-Optional tuning variables (defaults shown):
+The model defaults to `opencode-go/claude-haiku-5-5` and is configurable with
+`L10N_REVIEW_MODEL`, resolved through the same loader as `ai_translate.py`
+(process environment, then `l10n/<LANG_CODE>/.env`, then `l10n/.env`); the
+script's `--model` overrides it. The locale is selected with `--lang <code>`
+(default `sk`). `L10N_REVIEW_TIMEOUT` (default `600`, in seconds) caps a single
+invocation.
 
-    JEV_REQUEST_TIMEOUT=60    # per-request HTTP timeout, in seconds (> 0, finite)
-    JEV_MAX_RETRIES=5         # retries on 429 / 529 / 5xx / network errors (>= 1)
-    JEV_BATCH_SIZE=10         # independent questions per request (1-100, default 10)
-    JEV_MAX_RETRY_AFTER=60    # cap on a server Retry-After, in seconds (>= 0)
-    JEV_MAX_PAID_REQUESTS=100 # paid-fallback HTTP attempt cap (>= 1)
+The CLI runs under the **user's own configured OpenCode account and model
+access**, not the `.env` block above; it needs no key from this repository. The
+review sends the locale's public UI strings and the context around them to that
+provider, so OpenCode's (and the underlying model provider's) data-retention and
+billing policy applies to the review. Opt a locale in only when that is
+acceptable.
 
-A malformed `JEV_REQUEST_TIMEOUT`, `JEV_MAX_RETRIES`, `JEV_BATCH_SIZE`,
-`JEV_MAX_RETRY_AFTER` or `JEV_MAX_PAID_REQUESTS` exits `2` with a diagnostic
-naming the variable, before any request is sent. When `API_JEV_ENDPOINT` or
-`API_KEY` is unset, the run prints a skip message and exits `0` without sending
-a request. It never prints the key.
+#### Full-catalogue audit (read-only)
 
-`JEV_MAX_RETRY_AFTER` bounds how long the audit will wait when a retryable
-response (429 / 529 / 5xx) carries a `Retry-After`. A `Retry-After` longer than
-this exits with a diagnostic instead of sleeping hours. A large `Retry-After`
-is only ever an ordinary retryable response: it is never read as a quota signal
-and never triggers a model switch.
+The normal pipeline reviews only the fresh intermediate, never the committed
+catalogue. To audit the whole historical catalogue of every hooked locale once:
 
-#### Free model, paid fallback
+    make review-hooked                 # one CLI call per hooked locale, no writes
+    ./review_translations.py --lang sk --full
 
-The default `jev-1.13-free` is free only while its quota lasts. When an HTTP
-`429` response's JSON body carries `error.type == "FreeUsageLimitError"` **and**
-the active model is exactly `jev-1.13-free`, the run switches to the paid
-`jev-1.13` model and restarts the **entire** audit from the first batch. Every
-free-model judgment is discarded, so no mutation can mix the two models; each
-classified row records the model that produced its verdict. The switch is
-reported explicitly. It happens at most once per invocation: if the paid pass
-also fails, the run ends as a normal failed batch (`--retranslate-jev` then
-aborts before clearing anything).
+`--full` reviews `<LANG_CODE>/assistant.po` and prints the per-status report; it
+clears nothing and runs no translator. The report is a triage list, not a
+verdict: read the `repair` rows before acting. **No full retranslation has been
+run against the result of this audit** - it is a historical check, and acting on
+it is a separate, deliberate step.
 
-Only that exact discriminator triggers the switch. A `429` whose `error.type`
-is `RateLimitError` (a transient burst limit) retries the same model after
-`Retry-After`/backoff; a non-JSON body, a differently shaped body, or any other
-`error.type` is an ordinary retryable response and never falls back. The audit
-never switches on HTTP status or `Retry-After` magnitude alone.
+#### Outages and failures
 
-Paid fallback requests are capped by `JEV_MAX_PAID_REQUESTS` (default `100`),
-counting real HTTP attempts (retries included) made by the paid fallback in one
-invocation; free-model requests are never counted. The cap is a request guard,
-not a dollar cap: paid input is billed at the provider's current pricing, so
-the fallback stops before exceeding the cap rather than promising a spend
-ceiling.
-
-#### Report mode (read-only)
-
-    ./check_mix.py --jev sk                          # report; peer from sk's hook
-    ./check_mix.py --jev de --peer en                # override the hook's peer
-    ./check_mix.py --jev sk --limit 50 --min-confidence 0.9
-    ./check_mix.py --jev sk --list                   # print target/unclear rows too
-
-Report mode never edits, empties or saves a catalogue and starts no translator.
-`--limit N` audits at most `N` entries in msgid order (omitted audits all, and
-an explicit `0` means the same) and is valid only in report mode; a negative
-limit is rejected. `--min-confidence` and `--min-probability` (both default
-`0.8`, and each must lie within `[0, 1]`) gate what counts as a confident peer
-hit. A msgstr shorter than four characters - `Da` and `Ne` are the same word in
-Slovak and Slovenian - is always reported as ambiguous and never flagged, and a
-choice the model invents (anything other than target/peer/unclear) is treated
-as unclear rather than a verdict.
-
-#### Retranslate mode (opt-in, mutating)
-
-    ./check_mix.py --jev sk --retranslate-jev
-
-This is the single-command repair path. It classifies the whole catalogue
-first, then, only if every request succeeded and at least one entry clears the
-stricter mutation thresholds, empties exactly those entries and runs the
-existing per-locale Make pipeline to refill them. It never writes a translation
-itself: the msgstr is emptied (never hand-edited) and `ai_translate.py` refills
-it under its own validation.
-
-The mutation thresholds are higher than the report's, because clearing a good
-translation costs a retranslation: by default the model's overall confidence
-must be `>= 0.85` **and** the peer option's own probability `>= 0.90`
-(`--retranslate-min-confidence` / `--retranslate-min-probability` override
-them, and like the report thresholds each must lie within `[0, 1]`). Both
-signals are required, so the known genuine Slovenian strings in
-`sk` (confidence `.86`, `p(peer) .91`) qualify while a coin-flip between the
-two languages does not. These are a starting point, not a law: if the peer
-probability drifts (a model change, a different contaminant), re-check the
-flagged rows by hand and recalibrate the two thresholds rather than trusting
-the defaults blindly.
-
-Only entries the model places in the peer language can be emptied; too-short,
-identical, format-only, below-threshold, unclear and target rows are never
-touched. When any plural form is flagged, every form of that entry is emptied,
-because the pipeline only refills an entry once all of its forms are empty.
-
-The run fails closed - clearing nothing and starting no translator - when:
-
-- any Jev request failed (a partial verdict is not trusted). A failed batch
-  records every entry in it as an error and stops all further requests, so a
-  rate-limited endpoint is not hammered
-- no entry cleared the mutation thresholds
-- `git status` cannot be run or exits non-zero, so the target cannot be proven
-  clean
-- `git status` reports staged or unstaged changes to the target catalogue, or
-  a previous run left pending intermediates such as `untranslated.po` or
-  `updated_translated.po.partial` that clearing would overwrite.
-
-#### Clear-only mode (the pipeline step)
-
-    ./check_mix.py --jev sk --jev-clear-only
-    ./check_mix.py --jev sk --jev-clear-only --intermediate
-
-This is the clear step of retranslate mode **without** the nested pipeline. It
-classifies the whole catalogue under exactly the same batch and paid-fallback
-mechanics and the same stricter mutation thresholds (`>= 0.85` confidence and
-`>= 0.90` peer probability), then empties only the confident peer-language
-msgstr. It never starts Make: the ordinary pipeline it is already part of
-refills the emptied entries under `ai_translate.py`'s own validation.
-
-Clear-only is **best-effort**: it exists only to hand the outer pipeline a few
-more entries to re-translate, so nothing it does may stop a translation run. A
-failed or incomplete audit always clears nothing (the clear is all-or-nothing,
-applied only after every request succeeds), and the outer pipeline continues.
-
-`--jev-clear-only` requires `--jev <lang>` and cannot be combined with
-`--retranslate-jev`, `--limit`, `--empty` or `--structural`. It runs the whole
-catalogue, so no `--limit`. The manual `--retranslate-jev` command keeps its
-strict fail-closed contract; only this pipeline step is lenient.
-
-#### Jev check of the AI output (the pipeline step)
-
-`make translate` runs `jev-check-translated` as its fifth step, after
-`ai-translate` and before `import-translation`. It audits the LLM output
-`<lang>/updated_translated.po`, not the live `assistant.po`, so the git-clean
-gate does not apply: that catalogue is the pipeline's own intermediate. For each
-hooked locale (`l10n/<LANG_CODE>/jev_note.txt`, currently only `sk`) it runs:
-
-    ./check_mix.py --jev <lang> --jev-clear-only --intermediate
-
-If that empties any msgstr, the whole `updated_translated.po` goes back through
-`ai_translate.py` as its untranslated input. Only empty msgstr are filled, so
-good translations stay and the flagged entries are retranslated. The refilled
-file replaces `updated_translated.po`, and `import-translation` merges it.
-Retranslation runs once; it is not audited again.
-
-- **Jev setup, API, network or paid-fallback failure** - warns and keeps the AI
-  output. A failed or incomplete audit never clears anything.
-- **Missing hook, missing Jev credential, or no `updated_translated.po`** -
-  skips; no request is sent.
-- **No entry clears the thresholds** - no-op; the AI output is imported as is.
-- **Failed refill** - stops the run like any other `ai-translate` failure.
-
-`--intermediate` also works in report mode (`./check_mix.py --jev sk
---intermediate`), so the flagged rows can be read before import.
-
-#### Full-catalogue audit and retranslate (`assistant.po`)
-
-`./check_mix.py --jev <lang> --retranslate-jev` is the manual, whole-catalogue
-entry. It audits the live `assistant.po`, empties the confident peer-language
-entries, and runs `make retranslate-jev` to refill them. It fails closed: it
-clears nothing if any request failed, no entry met the thresholds, git cannot
-prove `assistant.po` clean, or intermediates are pending. `--intermediate` is
-not accepted with it.
-
-#### Pipeline scope and recovery
-
-The pipeline is invoked as `make retranslate-jev L10N_LANG=<lang>`. It validates
-the locale against `LANGS` and its catalogue before running anything, then
-runs only the per-locale steps: `extract-untranslated-<lang>` ->
-`ai-translate-<lang>` -> `import-translation-<lang>` -> `make check` ->
-`<lang>/assistant.mo`. Extraction and import are scoped to the one locale, so
-no other locale's intermediates, catalogue or `.mo` is touched, and the global
-`make clean` is never run.
-
-`make check` covers the whole tree and its failure is not swallowed: the target
-still compiles `<lang>/assistant.mo`, then exits non-zero with a warning. The
-locale's intermediates (`untranslated.po`, `_untranslated.po`, `_fuzzy.po`,
-`updated_translated.po`, `updated.po`) are removed only after every step
-succeeds. On any failure they are preserved and the exact resume command is
-printed:
-
-    make retranslate-jev L10N_LANG=sk
-
-There is no automatic commit; review the diff first.
-
-#### Data flow
-
-Report, retranslate and clear-only send the target `msgid`, its current `msgstr`,
-the locale metadata and the hook's guidance to the SystemOne endpoint
-(`API_JEV_ENDPOINT`) with the `API_KEY` Bearer credential - nothing else. On
-successful classification, retranslate mode hands the emptied entries to the
-pipeline it starts itself, and clear-only mode leaves them for the `make`
-pipeline that invoked it; both then send them to the configured `API_ENDPOINT` /
-`API_MODEL`. The default `jev-1.13-free` model is free only while its quota
-lasts; when the free quota is exhausted the audit falls back to the paid
-`jev-1.13` model, so a bare `make` whose hooked locale has exhausted its free
-quota can make **paid** Jev requests. Paid fallback requests are capped by
-`JEV_MAX_PAID_REQUESTS` (default `100`, counting real HTTP attempts) - a request
-guard, not a dollar cap - so check the provider's terms and current pricing
-before relying on it.
+The review is optional and never blocks a normal `make`. If the CLI is missing or
+unauthenticated, the account is out of quota, the call times out, or the reply is
+malformed, the step prints a warning and the pipeline imports the AI output
+unchanged. The only non-zero outcome is a `repair` verdict that survives the
+single refill, which stops the run before import so the flagged intermediate can
+be inspected. There is no retry loop.
 
 ## Updating Translations
 
@@ -479,10 +375,10 @@ all language files:
 
     make
 
-`make` (default goal `translate`) Jev-checks the AI output for hooked locales
-after `ai-translate`; locales without a hook, or without a Jev credential, are
-skipped without a request, and `make check` / `make check-mix` never make a Jev
-request.
+`make` (default goal `translate`) reviews the AI output of every locale that
+ships a `review_note.txt` after `ai-translate`; a locale without a note, or a run
+without the OpenCode CLI, is skipped with a warning, and `make check` never runs
+the reviewer.
 
 If the run is interrupted (Ctrl-C, network failure, etc.), just re-run `make`;
 the Python script resumes from the most recent partial state for any language

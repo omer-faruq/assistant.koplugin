@@ -19,5 +19,7 @@ l10n/**/*.po
 l10n/**/*.pot
 # Per-locale translator notes: developer-run tooling input, not needed at runtime
 l10n/**/ai_note.txt
-# Per-locale Jev audit hooks (check_mix.py --jev opt-in): tooling input, not shipped
-l10n/**/jev_note.txt
+# Per-locale LLM review notes (review_translations.py opt-in): tooling input, not shipped
+l10n/**/review_note.txt
+# OpenCode reviewer agent definition (review_translations.py): dev tooling, not shipped
+.opencode/agents/l10n-review.md

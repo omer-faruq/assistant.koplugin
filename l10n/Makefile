@@ -38,10 +38,11 @@ LANGS      := zh_CN zh_TW ja id ms ko_KR vi th \
 MO_FILES   := $(LANGS:%=%/$(DOMAIN).mo)
 PO_FILES   := $(wildcard */$(DOMAIN).po)
 
-# Locales that opt into the Jev check: they ship both a catalogue and
-# the per-locale hook l10n/<lang>/jev_note.txt, and are a supported LANGS entry.
-# `translate` loops exactly these; a locale without the hook is never contacted.
-JEV_HOOKED := $(shell for lang in $(LANGS); do if [ -f "$$lang/$(DOMAIN).po" ] && [ -f "$$lang/jev_note.txt" ]; then echo $$lang; fi; done)
+# Locales opted into the LLM review: a LANGS entry that ships both a
+# review_note.txt (the per-locale guidance the reviewer needs) and a committed
+# catalogue. Derived once at parse time so the pipeline and the review targets
+# agree on the same set; a locale without a note is never reviewed.
+REVIEW_HOOKED := $(strip $(foreach lang,$(LANGS),$(if $(wildcard $(lang)/review_note.txt),$(if $(wildcard $(lang)/$(DOMAIN).po),$(lang)))))
 
 # Per-locale pattern targets, expanded here so .PHONY names every concrete
 # target make derives from a pattern rule (the pattern itself cannot be listed).
@@ -69,27 +70,26 @@ export RANDOM_SESSION_ID
 
 .DEFAULT_GOAL := all
 
-.PHONY: help all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-mix check-api stats clean init-dirs mo retranslate-fuzzy retranslate-msgid retranslate-jev jev-check-translated \
+.PHONY: help all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-api stats clean init-dirs mo retranslate-fuzzy retranslate-msgid review-translations review-hooked \
 	$(EXTRACT_LOCALE_TARGETS) $(IMPORT_LOCALE_TARGETS) $(AI_TRANSLATE_TARGETS)
 
 help:
 	@echo "Usage: make [target]"
 	@echo ""
 	@echo "  mo              Compile .po -> .mo (offline, incremental)"
-	@echo "  translate       Full pipeline: template -> update -> extract -> ai-translate -> jev-check -> import -> check -> clean -> mo (needs .env)"
+	@echo "  translate       Full pipeline: template -> update -> extract -> ai-translate -> review -> import -> check -> clean -> mo (needs .env)"
 	@echo "  template        Regenerate templates/assistant.pot"
 	@echo "  update          Merge pot into po"
 	@echo "  check           msgfmt --check"
 	@echo "  check-api       Ping configured API endpoint"
 	@echo "  check-langs     Detect drift vs KOReader supported languages"
-	@echo "  check-mix       Detect translations written in the wrong language"
 	@echo "  stats           Estimate untranslated strings from current source (read-only)"
 	@echo "  clean           Remove intermediate files"
 	@echo "  ai-translate    Run AI translation (all or L10N_LANG=xx)"
 	@echo "  retranslate-fuzzy  Re-extract and re-translate fuzzy entries (all or L10N_LANG=xx)"
 	@echo "  retranslate-msgid  Empty one MSGID everywhere and re-translate it: make retranslate-msgid MSGID=\"...\" [L10N_LANG=xx]"
-	@echo "  retranslate-jev  Refill one locale after check_mix.py --jev --retranslate-jev emptied it: make retranslate-jev L10N_LANG=xx"
-	@echo "  jev-check-translated  Jev-check AI output and retranslate flagged entries for hooked locales (run by translate)"
+	@echo "  review-translations  Review the AI output of every note-hooked locale with the OpenCode CLI and refill flagged entries (run by translate)"
+	@echo "  review-hooked   Read-only full-catalogue audit of every note-hooked locale (one CLI call each, no writes)"
 	@echo "  init-dirs       Create missing language directories"
 
 # Default target: full pipeline + MO compilation (virtual)
@@ -107,7 +107,8 @@ mo: $(MO_FILES)
 # 2. Merges the template into language .po files.
 # 3. Extracts all untranslated strings.
 # 4. Runs the AI translation script on them, writing updated_translated.po.
-# 5. Jev-checks that output and refills the entries it flags (hooked locales).
+# 5. Reviews each note-hooked locale's output with the OpenCode CLI and refills
+#    flagged entries.
 # 6. Merges the new translations back into the .po files.
 # 7. Checks the syntax of the final .po files.
 # 8. Cleans up all intermediate files.
@@ -126,8 +127,8 @@ translate:
 	@$(MAKE) extract-untranslated
 	@echo "[4/9] Running AI translation and verifying results..."
 	@$(MAKE) ai-translate
-	@echo "[5/9] Jev-checking AI output (hooked locales)..."
-	@$(MAKE) jev-check-translated
+	@echo "[5/9] Reviewing AI output of note-hooked locales..."
+	@$(MAKE) review-translations
 	@echo "[6/9] Merging untranslated files..."
 	@$(MAKE) import-translation
 	@echo "[7/9] Checking PO files..."
@@ -139,38 +140,43 @@ translate:
 	@echo "\nTranslation process completed successfully!"
 
 
-# Jev check of the AI output, run by `translate` after ai-translate and before
-# import-translation. For every hooked locale it audits <lang>/updated_translated.po
-# and empties the msgstr the classifier confidently places in the peer language.
-# If anything was emptied, the catalogue goes back through ai_translate.py as its
-# untranslated input: only empty msgstr are filled, so good translations are kept
-# and the flagged ones are retranslated. The result replaces updated_translated.po,
-# so import-translation picks up the corrected version. A Jev audit failure only
-# warns and keeps the AI output; a failed refill stops the run like any other
-# ai-translate failure. Only locales that ship l10n/<lang>/jev_note.txt are looped.
-jev-check-translated:
+# LLM review of the AI output, run by `translate` after ai-translate and before
+# import-translation. A locale opts in by shipping l10n/<lang>/review_note.txt
+# (REVIEW_HOOKED); for each such locale it reviews the fresh
+# <lang>/updated_translated.po with the OpenCode CLI (one call per pass) and,
+# when entries are marked `repair`, empties exactly those msgstr, refills them
+# once through ai_translate.py and reviews the result a second time. A repair
+# verdict that survives the refill stops the run before import so the
+# intermediate is preserved; a setup failure (no CLI, no note, timeout, invalid
+# reply) only warns and keeps the AI output. A hooked locale with no intermediate
+# this run is skipped; no other locale is touched.
+review-translations:
 	@set -e; \
-		if [ -z "$(JEV_HOOKED)" ]; then \
-			echo "No locale ships a Jev hook; skipping the Jev check."; \
-		else \
-			for lang in $(JEV_HOOKED); do \
-				if [ ! -f "$$lang/updated_translated.po" ]; then \
-					echo "  [jev] $$lang: no updated_translated.po this run; nothing to check."; \
-					continue; \
-				fi; \
-				echo "  [jev] checking $$lang/updated_translated.po..."; \
-				if ! ./check_mix.py --jev $$lang --jev-clear-only --intermediate; then \
-					echo "\033[0;33m[jev] check for $$lang failed; keeping the AI output.\033[0m"; \
-					continue; \
-				fi; \
-				cleared=$$(LC_ALL=C $(MSGFMT_BIN) --statistics -o /dev/null "$$lang/updated_translated.po" 2>&1 | grep -oE '[0-9]+ untranslated' | grep -oE '[0-9]+' | head -1); \
-				if [ "$${cleared:-0}" -gt 0 ]; then \
-					echo "  [jev] $$lang: $$cleared entries cleared; retranslating them."; \
-					mv "$$lang/updated_translated.po" "$$lang/untranslated.po"; \
-					./ai_translate.py $$lang; \
-				fi; \
-			done; \
-		fi
+		for lang in $(REVIEW_HOOKED); do \
+			if [ ! -f "$$lang/updated_translated.po" ]; then \
+				echo "  [review] $$lang: no updated_translated.po this run; skipping."; \
+				continue; \
+			fi; \
+			echo "  [review] reviewing $$lang/updated_translated.po..."; \
+			if ! ./review_translations.py --lang $$lang; then \
+				echo "\033[0;31m[review] $$lang: repair verdicts survived the refill; stopping before import (intermediate preserved).\033[0m"; \
+				exit 1; \
+			fi; \
+		done
+
+# Read-only full-catalogue audit of every hooked locale: one OpenCode CLI call
+# per <lang>/assistant.po, no writes to any file. For the historical
+# contamination audit; the normal `make` never scans the whole old catalogue.
+review-hooked:
+	@set -e; \
+		if [ -z "$(REVIEW_HOOKED)" ]; then \
+			echo "  [review] no locale ships a review_note.txt; nothing to audit."; \
+			exit 0; \
+		fi; \
+		for lang in $(REVIEW_HOOKED); do \
+			echo "  [review] full read-only audit of $$lang/$(DOMAIN).po..."; \
+			./review_translations.py --lang $$lang --full; \
+		done
 
 init-dirs: template
 	@echo "Ensuring language directories and initial .po files exist..."
@@ -193,8 +199,8 @@ update: init-dirs
 # entries that were already translated.
 #
 # The aggregate composes the per-locale pattern target for every catalogue, so
-# a single-locale refill (retranslate-jev) reuses the same recipe without
-# touching any other locale's intermediate files.
+# a single-locale refill reuses the same recipe without touching any other
+# locale's intermediate files.
 extract-untranslated: $(EXTRACT_LOCALE_TARGETS)
 
 # The recipe is shared by the static rule (concrete locales known at parse time,
@@ -308,15 +314,8 @@ check-langs:
 		echo "LANG_MAP and LANGS are consistent."; \
 	fi; \
 	echo "Checking LANG_MAP / LANG_EN / PLURAL_FORMS consistency..."; \
-	./check_mix.py --check-data || rc=1; \
+	./ai_translate.py --check-data || rc=1; \
 	exit $$rc
-
-# Read-only audit for translations written in the wrong language. Compares each
-# locale pair against KOReader's own reviewed catalogues (override the path with
-# KOREADER_L10N_DIR), so it needs no knowledge of the target language. Findings
-# are a triage list, not a verdict: read the report before acting on it.
-check-mix:
-	@./check_mix.py $(CHECK_MIX_ARGS)
 
 # Read-only estimate of the translation workload introduced by the current
 # source tree. Extracts a fresh POT straight from the Lua sources into a temp
@@ -462,52 +461,6 @@ retranslate-msgid:
 	@echo "Compiling .mo files..."
 	@$(MAKE) mo
 
-# Refill exactly one locale after check_mix.py --jev --retranslate-jev has
-# emptied the entries it confidently placed in the peer language. Scoped to
-# L10N_LANG so no other locale's catalogue, pending import or .mo is touched;
-# unlike retranslate-msgid it never runs the global `clean`. The locale is
-# validated against LANGS and an existing catalogue before any step runs. On
-# failure the target stops where it is, keeps the partials for that locale, and
-# prints the exact resume command; the locale's intermediates are removed only
-# after every step (including `make check`) succeeds.
-retranslate-jev:
-	@set -e; \
-	if [ -z "$(L10N_LANG)" ]; then \
-		echo "Usage: make retranslate-jev L10N_LANG=xx"; \
-		exit 1; \
-	fi; \
-	if ! printf '%s\n' $(LANGS) | grep -qxF '$(L10N_LANG)'; then \
-		echo "\033[0;31mError: '$(L10N_LANG)' is not a supported locale (see LANGS).\033[0m"; \
-		exit 1; \
-	fi; \
-	if [ ! -f "$(L10N_LANG)/$(DOMAIN).po" ]; then \
-		echo "\033[0;31mError: no catalogue $(L10N_LANG)/$(DOMAIN).po to refill.\033[0m"; \
-		exit 1; \
-	fi; \
-	if [ ! -f .env ]; then \
-		echo "\033[0;31mError: AI access environment file \`.env' is not found.\033[0m"; \
-		echo "Please set it before running retranslation. See: README.md"; \
-		exit 1; \
-	fi; \
-	lang=$(L10N_LANG); \
-	echo "[1/5] Extracting untranslated entries for $$lang..."; \
-	$(MAKE) extract-untranslated-$$lang; \
-	echo "[2/5] Translating $$lang..."; \
-	$(MAKE) ai-translate-$$lang; \
-	echo "[3/5] Importing $$lang translations..."; \
-	$(MAKE) import-translation-$$lang; \
-	echo "[4/5] Checking PO files..."; \
-	check_rc=0; \
-	$(MAKE) check || check_rc=$$?; \
-	echo "[5/5] Compiling $$lang/$(DOMAIN).mo..."; \
-	$(MAKE) "$$lang/$(DOMAIN).mo"; \
-	if [ $$check_rc -ne 0 ]; then \
-		echo "\033[0;31mError: 'make check' failed (exit $$check_rc); $$lang intermediates are preserved.\033[0m"; \
-		echo "Resume with: make retranslate-jev L10N_LANG=$$lang"; \
-		exit $$check_rc; \
-	fi; \
-	echo "Cleaning up intermediates for $$lang..."; \
-	rm -f "$$lang/untranslated.po" "$$lang/_untranslated.po" "$$lang/_fuzzy.po" "$$lang/updated_translated.po" "$$lang/updated.po"
 
 template:
 	mkdir -p $(TEMPLATE_DIR)
