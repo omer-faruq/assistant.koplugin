@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.21\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-13 18:06+0800\n"
+"POT-Creation-Date: 2026-10-14 11:27+0800\n"
 "PO-Revision-Date: 2026-10-13 18:06+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -124,7 +124,7 @@ msgid "<b>Error:</b> No response received"
 msgstr "<b>Chyba:</b> Neprišla žiadna odpoveď"
 
 msgid "<b>Fetching models...</b>"
-msgstr "<b>Načítavajú sa models...</b>"
+msgstr "<b>Načítavajú sa modely...</b>"
 
 msgid ""
 "<b>Github URL:</b>  %1\n"
@@ -158,7 +158,7 @@ msgid "<b>Installing %1...</b>"
 msgstr "<b>Inštaluje sa %1...</b>"
 
 msgid "<b>Model reply:</b> %1"
-msgstr "<b>Odpoveď model:</b> %1"
+msgstr "<b>Odpoveď modelu:</b> %1"
 
 msgid ""
 "<b>No provider set up yet.</b>\n"
@@ -351,10 +351,10 @@ msgid "Added <b>[%1 (AI)]</b>"
 msgstr "Pridané <b>[%1 (AI)]</b>"
 
 msgid "Added to vocabulary builder"
-msgstr "Pridané do budovania slovnej zásoby"
+msgstr "Pridané do Tvorby slovnej zásoby"
 
 msgid "Adds every word you look up in the dictionary to the Vocabulary Builder as soon as the result appears."
-msgstr "Pridá každé slovo, ktoré vyhľadáte v slovníku, do Vocabulary Builder hneď, ako sa zobrazí výsledok."
+msgstr "Každé slovo vyhľadané v slovníku pridá do Tvorby slovnej zásoby hneď, ako sa zobrazí výsledok."
 
 msgid "Analysis of your highlights, notes, and AI Notes content from the book."
 msgstr "Analýza vašich zvýraznení, poznámok a obsahu AI poznámok z knihy."
@@ -421,7 +421,7 @@ msgstr "Auto"
 
 #. @translators Settings switch: sends every looked-up word to the Vocabulary Builder as soon as its result appears. Keep it short.
 msgid "Auto Add Word to Vocabulary Builder"
-msgstr "Automaticky pridať slovo do Vocabulary Builder"
+msgstr "Automaticky pridať slovo do Tvorby slovnej zásoby"
 
 #. @translators Settings option. "Recap" is a brief spoiler-free summary offered when reopening a long-unread book. Keep consistent with "Recap" / "AI Recap" elsewhere.
 msgid "Auto-recap on Opening Long-unread Books"
@@ -733,7 +733,7 @@ msgid "Explain"
 msgstr "Vysvetliť"
 
 msgid "Failed to fetch models"
-msgstr "Nepodarilo sa načítať models"
+msgstr "Nepodarilo sa načítať modely"
 
 msgid "Failed to save provider."
 msgstr "Nepodarilo sa uložiť poskytovateľa."
@@ -839,7 +839,7 @@ msgid "KOReader"
 msgstr "KOReader"
 
 msgid "Keep dictionary answers short: at most one or two sentences per section."
-msgstr "Udržuj odpovede slovníka krátke: najviac jedna alebo dve vety na sekciu."
+msgstr "Udržujte odpovede slovníka krátke: najviac jedna alebo dve vety v každej časti."
 
 msgid "Key Points"
 msgstr "Kľúčové body"
@@ -897,7 +897,7 @@ msgid "Model: %1"
 msgstr "Model: %1"
 
 msgid "Models"
-msgstr "Models"
+msgstr "Modely"
 
 msgid "Models: %1"
 msgstr "Modely: %1"
@@ -995,7 +995,7 @@ msgstr "Aktualizácia OTA zlyhala: %1"
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
-msgstr "Používa sa len pre prompty, ktoré využívajú kontext knihy (predvolene: Explain, Historical Context, Summarize, Key Points a ELI5). Po zapnutí sa text zvýraznenej strany a susedných strán odošle AI ako referenčné pozadie. Vyžaduje výber textu a zvyšuje spotrebu tokenov."
+msgstr "Používa sa len pri promptoch, ktoré využívajú kontext knihy (predvolene: Vysvetliť, Historický kontext, Zhrnúť, Kľúčové body a ELI5). Po zapnutí sa text zvýraznenej stránky a susedných stránok odošle AI ako referenčné pozadie. Vyžaduje výber textu a zvyšuje spotrebu tokenov."
 
 msgid "Open"
 msgstr "Otvoriť"
@@ -1041,7 +1041,7 @@ msgstr "Doplnok nie je nakonfigurovaný."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Prepends book metadata (title, author and current reading position incl. chapter) to prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). Per-prompt behavior can be overridden with use_book_context in the configuration file."
-msgstr "Pridá metadáta knihy (názov, autor a aktuálna pozícia čítania vrátane kapitoly) na začiatok promptov, ktoré používajú knižný kontext (predvolene: Explain, Historical Context, Summarize, Key Points a ELI5). Správanie jednotlivých promptov možno prepísať pomocou use_book_context v konfiguračnom súbore."
+msgstr "Na začiatok promptov, ktoré využívajú kontext knihy (predvolene: Vysvetliť, Historický kontext, Zhrnúť, Kľúčové body a ELI5), pridá metadáta knihy (názov, autora a aktuálnu pozíciu čítania vrát. kapitoly). Správanie jednotlivých promptov možno prepísať pomocou use_book_context v konfiguračnom súbore."
 
 msgid "Preset list of AI Dictionary sections."
 msgstr "Prednastavený zoznam sekcií AI slovníka."
@@ -1092,10 +1092,10 @@ msgid "Publisher"
 msgstr "Vydavateľ"
 
 msgid "Purge"
-msgstr "Vyčistiť"
+msgstr "Vymazať všetko"
 
 msgid "Purge Settings"
-msgstr "Vyčistiť nastavenia"
+msgstr "Vymazať nastavenia"
 
 msgid "Quick Note"
 msgstr "Rýchla poznámka"
@@ -1210,7 +1210,7 @@ msgid "Saves the conversation to AI Notes"
 msgstr "Uloží konverzáciu do AI poznámok"
 
 msgid "Saves the word to the vocabulary builder"
-msgstr "Uloží slovo do budovania slovnej zásoby"
+msgstr "Uloží slovo do Tvorby slovnej zásoby"
 
 msgid "Scroll"
 msgstr "Posúvať"
@@ -1264,7 +1264,7 @@ msgid "Show follow up questions related to the response content."
 msgstr "Zobraziť doplňujúce otázky súvisiace s obsahom odpovede."
 
 msgid "Shows the answer alone: no User/Assistant titles, no first button row, no reasoning and no follow-up questions. Keeps only the actions on the answer itself (Annotate, Vocabulary Builder) next to Close. Turns Reasoning Text and Follow-up Questions off while active."
-msgstr "Zobrazí len samotnú odpoveď: bez nadpisov Používateľ/Asistent, bez prvého riadka tlačidiel, bez uvažovania a bez doplňujúcich otázok. Ponechá len akcie pri samotnej odpovedi (Anotovať, Tvorca slovnej zásoby) vedľa tlačidla Zavrieť. Počas aktivity vypne možnosti Zobraziť text uvažovania a Zobraziť doplňujúce otázky."
+msgstr "Zobrazí len samotnú odpoveď: bez nadpisov Používateľ/Asistent, bez prvého riadka tlačidiel, bez uvažovania a bez nadväzujúcich otázok. Ponechá vedľa Zavrieť len akcie vzťahujúce sa na samotnú odpoveď (Anotovať, Tvorba slovnej zásoby). Počas aktivity vypne Text uvažovania a Nadväzujúce otázky."
 
 msgid "Shows the text a prompt was pointed at as its own block at the top of the turn, above the question, so the original can be compared with the answer. The question bubble then stops repeating it."
 msgstr "Zobrazí text, na ktorý prompt odkazoval, ako samostatný blok navrchu príspevku, nad otázkou, aby bolo možné porovnať originál s odpoveďou. Bublina s otázkou ho potom prestane opakovať."
@@ -1526,7 +1526,7 @@ msgstr "Slovná zásoba"
 
 #. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
 msgid "Vocabulary Builder"
-msgstr "Budovanie slovnej zásoby"
+msgstr "Tvorba slovnej zásoby"
 
 msgid "Waiting for the model ..."
 msgstr "Čakanie na model ..."
@@ -1588,6 +1588,3 @@ msgstr "napr. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: nepodarilo sa spracovať vrátené údaje"
-
-msgid "https://..."
-msgstr "https://..."

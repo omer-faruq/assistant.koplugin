@@ -28,3 +28,13 @@ Many correct Slovak strings share a word or a form with Slovenian: "da", "ne",
 from the list above, or one of the Slovak-only letters used in a Slovenian
 context, justifies a wrong_language verdict. When the signal is not explicit,
 abstain rather than repair.
+
+English leftovers (repair, issue class "other", language "English"): an English
+common noun left where the terminology (see l10n/sk/ai_note.txt) requires
+Slovak counts as an English leftover. Concretely: "models" where "modely" is
+required, "Vocabulary Builder" where "Tvorba slovnej zásoby" is required, and
+the English prompt names "Explain", "Historical Context", "Summarize" and
+"Key Points" where their Slovak UI forms ("Vysvetliť", "Historický kontext",
+"Zhrnúť", "Kľúčové body") are required. (Issue class: use `wrong_language` with
+language "Slovenian" only for Slovenian per the rule above; for English leftovers
+use issue "other", matching the e187 precedent.)
