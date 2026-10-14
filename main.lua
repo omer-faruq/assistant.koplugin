@@ -99,6 +99,15 @@ function Assistant:onDispatcherRegisterActions()
     general = true
   })
   
+  -- Register AI identify-book action (reader-side metadata inference)
+  Dispatcher:registerAction("ai_identify_book", {
+    category = "none",
+    event = "AskAIIdentifyBook",
+    -- @translators Action title: infer a book's title/author from its opening text.
+    title = _("Identify This Book"),
+    general = true
+  })
+
   -- Register AI X-Ray action (available for gesture binding)
   Dispatcher:registerAction("ai_xray", {
     category = "none",
@@ -384,6 +393,20 @@ function Assistant:addToMainMenu(menu_items)
                     hold_callback = function ()
                       UIManager:show(InfoMessage:new{
                         text = _("A very brief, spoiler-free summary of the book up to current reading progress.")
+                      })
+                    end,
+                  },
+                  {
+                    text_func = function()
+                      return Prompts.getDisplayText(_("Identify This Book"), false,
+                        Prompts.isWebSearchEnabled(self.settings))
+                    end,
+                    callback = function ()
+                      self:onAskAIIdentifyBook()
+                    end,
+                    hold_callback = function ()
+                      UIManager:show(InfoMessage:new{
+                        text = _("Infer the open book's title and author from its opening text and save them as custom metadata.")
                       })
                     end,
                   },
@@ -1457,6 +1480,108 @@ end
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
         showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished)
+      end)
+    end)
+    return true
+  end
+
+  function Assistant:onAskAIIdentifyBook()
+    if not self:isConfigured() then return end
+    if not koutil.tableGetValue(self, "ui", "document") then
+      UIManager:show(InfoMessage:new{
+        text = _("No book is open.")
+      })
+      return true
+    end
+    NetUtils.runWhenOnlineFast(function()
+      Trapper:wrap(function()
+        local ui = self.ui
+        local file = ui.document.file
+        local DocUtils = require("assistant_doc_utils")
+        local opening = DocUtils.getOpeningText(ui, 3000)
+        if opening == "" then
+          UIManager:show(InfoMessage:new{
+            text = _("Could not extract text from this book.")
+          })
+          return
+        end
+
+        local system_prompt = Prompts.withResponseLanguage(
+            koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book", "system_prompt")
+                or Prompts.assistant_prompts.default.system_prompt,
+            self.settings:readSetting("response_language") or self.ui_language)
+
+        local user_instructions = koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book", "user_prompt")
+            or "Identify the book."
+        local user_content = DocUtils.buildIdentifyUserMessage(user_instructions, opening)
+
+        local message_history = {
+          { role = "system", content = system_prompt },
+          { role = "user", content = user_content },
+        }
+
+        local identified, answer = DocUtils.identifyWithRetry(function(history)
+            return self.querier:query(history, _("Identify This Book"), {
+                use_websearch = "none",
+            })
+        end, message_history, "Reply ONLY with lines in this format:\n::title{...}::\n::author{...}::\n::note{...}::\nNo other text.")
+
+        if not identified then
+          if answer then end
+        end
+
+        if not identified then
+          local snippet = (answer or ""):gsub("%s+", " ")
+          if #snippet > 120 then
+            snippet = string.sub(snippet, 1, 120)
+          end
+          UIManager:show(InfoMessage:new{
+            text = _("Could not parse the identification result.") .. " " .. snippet
+          })
+          return
+        end
+        if not identified.title and not identified.authors then
+          UIManager:show(InfoMessage:new{
+            text = _("The model could not identify this book.")
+          })
+          return
+        end
+
+        local message = T(_("Set book metadata?\nTitle: %1\nAuthor: %2\n%3"),
+            identified.title or _("Unknown Title"),
+            identified.authors or _("Unknown Author"),
+            identified.note)
+        UIManager:show(ConfirmBox:new{
+          text = message,
+          ok_text = _("Set"),
+          cancel_text = _("Cancel"),
+          ok_callback = function()
+            local book_props = ui.doc_props or {}
+            local bi = ui.bookinfo
+            if type(bi) ~= "table" or type(bi.setCustomMetadata) ~= "function" then
+              local ok_mod, BookInfo = pcall(require, "apps/filemanager/filemanagerbookinfo")
+              if ok_mod and type(BookInfo) == "table" then
+                bi = BookInfo:new{ ui = ui }
+              end
+            end
+            if type(bi) ~= "table" or type(bi.setCustomMetadata) ~= "function" then
+              UIManager:show(InfoMessage:new{ text = _("Metadata could not be saved.") })
+              return
+            end
+            if identified.title then
+              pcall(bi.setCustomMetadata, bi, file, book_props, "title", identified.title)
+            end
+            if identified.authors then
+              pcall(bi.setCustomMetadata, bi, file, book_props, "authors", identified.authors)
+            end
+            local ok_fb, FB = pcall(require, "apps/filemanager/filemanagerbookinfo")
+            if ok_fb and type(FB) == "table" and type(FB.extendProps) == "function" then
+              ui.doc_props = FB.extendProps(ui.doc_props or book_props, file)
+            end
+            UIManager:broadcastEvent(Event:new("BookMetadataChanged"))
+            Notification:notify(_("Book metadata updated."), Notification.SOURCE_ALWAYS_SHOW)
+          end,
+        })
       end)
     end)
     return true

@@ -44,7 +44,7 @@ local stubs = {
     -- empty android stub above, making device.lua load the Android
     -- implementation and crash. Stub them so the real device module is
     -- never required by the test chain.
-    ["ui/widget/inputdialog"]   = {},
+    ["ui/widget/inputdialog"]   = { extend = function(self, sub) return setmetatable(sub or {}, {__index=self}) end, new = function(_, o) return o or {} end },
     ["ui/widget/checkbutton"]   = {},
     ["ui/widget/container/framecontainer"] = {},
     ["ui/widget/container/centercontainer"] = {},
@@ -60,12 +60,18 @@ local stubs = {
         screen = {
             getWidth = function() return 600 end,
             getHeight = function() return 800 end,
+            scaleBySize = function(x) return x end,
         },
     },
     ["ui/widget/buttontable"]   = { new = function(_, o) return o end, getButtonById = function() end },
     ["ui/widget/buttondialog"]  = { new = function(_, o) return o end },
     ["ui/widget/menu"]          = {},
     ["ui/widget/confirmbox"]    = {},
+    ["ui/widget/focusmanager"]    = { extend = function(self, sub) return setmetatable(sub or {}, {__index=self}) end },
+    ["dbg"]                     = { levels = {}, guard = function() end },
+    ["ui/widget/verticalscrollbar"] = { extend = function(self, sub) return setmetatable(sub or {}, {__index=self}) end, padding = function() return 0 end },
+    ["ui/widget/container/inputcontainer"] = { extend = function(self, sub) return setmetatable(sub or {}, {__index=self}) end },
+    ["ui/widget/inputtext"]      = { extend = function(self, sub) return setmetatable(sub or {}, {__index=self}) end, padding = function() return 0 end },
     ["ui"]                      = {},
     ["android"]                 = {},
     -- for assistant_gettext: datastorage mock

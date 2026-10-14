@@ -314,8 +314,13 @@ I have a question about this book.]], DocUtils.describeBook(book))
     buf:put("\n\n", string.format("My current reading position is:%s.", page_info))
   end
 
+  local include_page_text = self.assistant.settings:readSetting("include_page_text", false)
+  local metadata_missing = not book.title and not book.author
+  if metadata_missing and not self.assistant.settings:has("include_page_text") then
+    include_page_text = true
+  end
   if highlighted_text and highlighted_text ~= ""
-      and self.assistant.settings:readSetting("include_page_text", false) then
+      and include_page_text then
     local max_chars = self.assistant.config:getFeature("max_page_context_chars", 6000)
     local page_text = DocUtils.getPageRangeText(self.assistant.ui, 1, 1, max_chars)
     if page_text ~= "" then

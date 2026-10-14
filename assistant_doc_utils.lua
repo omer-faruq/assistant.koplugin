@@ -67,12 +67,37 @@ function M.getPageInfo(ui)
   local percentage = 0
   local total_pages = nil
   local chapter_title = nil
+  local rolling_percent = nil
   if ui.highlight and ui.highlight.selected_text and ui.highlight.selected_text.pos0 then
     if ui.paging then
       page_number = ui.highlight.selected_text.pos0.page
     else
-      -- For rolling mode, we could get page number using document:getPageFromXPointer
+      -- Reflowable/rolling documents: page numbers are device-dependent, so
+      -- prefer a progress percentage sourced from the sidecar/BookList cache.
       page_number = ui.document:getPageFromXPointer(ui.highlight.selected_text.pos0)
+      local file = ui.document and ui.document.file
+      local ok_booklist, BookList = pcall(require, "ui/widget/booklist")
+      if ok_booklist and type(BookList) == "table"
+          and type(BookList.getBookInfo) == "function" and file then
+        local ok_info, info = pcall(BookList.getBookInfo, file)
+        if ok_info and type(info) == "table"
+            and type(info.percent_finished) == "number" then
+          rolling_percent = info.percent_finished * 100
+        end
+      end
+      if rolling_percent == nil and file then
+        local ok_ds, doc_settings = pcall(function()
+          return require("docsettings"):open(file)
+        end)
+        if ok_ds and doc_settings then
+          local ok_p, v = pcall(function()
+            return doc_settings:readSetting("percent_finished")
+          end)
+          if ok_p and type(v) == "number" then
+            rolling_percent = v * 100
+          end
+        end
+      end
     end
 
     total_pages = ui.document.info.number_of_pages
@@ -87,8 +112,12 @@ function M.getPageInfo(ui)
 
   local page_lbl = _("Page")
   local page_info = ""
-  if page_number and total_pages then
+  if (not ui or ui.paging) and page_number and total_pages then
     page_info = string.format(" (%s %s - %s%%)", page_lbl, page_number, percentage)
+  elseif (not ui or ui.paging) and page_number then
+    page_info = string.format(" (%s %s)", page_lbl, page_number)
+  elseif rolling_percent ~= nil then
+    page_info = string.format(" (%s%%)", math.floor(rolling_percent + 0.5))
   elseif page_number then
     page_info = string.format(" (%s %s)", page_lbl, page_number)
   end
@@ -685,4 +714,221 @@ function M.describeBook(book)
     end
 end
 
+
+
+--- Extract the opening text of a document (first `max_chars` characters).
+--- @param ui table KOReader ui object
+--- @param max_chars number|nil maximum characters (default 3000)
+--- @return string
+function M.getOpeningText(ui, max_chars)
+    max_chars = max_chars or 3000
+    local out = ""
+    if not ui or not ui.document or not ui.document.info then
+        return out
+    end
+    if ui.document.info.has_pages then
+        local buf = strbuf.new()
+        buf:reset()
+        local total = ui.document:getPageCount() or 0
+        local len = 0
+        for page = 1, total do
+            if len >= max_chars then break end
+            local t = TextUtils.pageTextToString(ui.document:getPageText(page))
+            buf:put(t, "\n")
+            len = len + #t
+            if len >= max_chars then break end
+        end
+        out = buf:get()
+    else
+        local saved = ui.document:getXPointer()
+        pcall(function()
+            ui.document:gotoPos(0)
+            local start_xp = ui.document:getXPointer()
+            ui.document:gotoPos(max_chars)
+            local end_xp = ui.document:getXPointer()
+            out = ui.document:getTextFromXPointers(start_xp, end_xp) or ""
+        end)
+        pcall(function()
+            if saved then ui.document:gotoXPointer(saved) end
+        end)
+    end
+    if #out > max_chars then
+        out = string.sub(out, 1, max_chars)
+    end
+    return out or ""
+end
+
+--- Parse and normalize an "identify this book" model answer. Template-first
+--- (::key{value}::), with JSON as a silent fallback; fail-closed on unusable
+--- input. Returns nil when no usable title/authors are present.
+--- @param raw string|nil
+--- @return table|nil { title, authors, note }
+function M.parseIdentifiedBook(raw)
+    if type(raw) ~= "string" then
+        return nil
+    end
+
+    -- Template scan first: line-tagged fields anywhere in the reply.
+    do
+        local title = nil
+        local note = ""
+        local author_parts = {}
+        for key, value in (raw or ""):gmatch("::(%a+){(.-)}::") do
+            local k = string.lower(key)
+            local v = koutil.trim(value)
+            if v ~= "" then
+                if k == "title" then
+                    title = v
+                elseif k == "author" or k == "authors" then
+                    for part in v:gmatch("[^;]+") do
+                        local name = koutil.trim(part)
+                        if name ~= "" then
+                            table.insert(author_parts, name)
+                        end
+                    end
+                elseif k == "note" then
+                    note = v
+                end
+            end
+        end
+        if title or #author_parts > 0 then
+            local authors = nil
+            if #author_parts > 0 then
+                authors = table.concat(author_parts, ", ")
+            end
+            return { title = title, authors = authors, note = note }
+        end
+    end
+
+    local function normalize(data)
+        if type(data) ~= "table" then return nil end
+        local title = (type(data.title) == "string" and data.title ~= "") and data.title or nil
+        local authors = nil
+        if type(data.authors) == "table" then
+            local parts = {}
+            for _, v in ipairs(data.authors) do
+                if type(v) == "string" and v ~= "" then
+                    table.insert(parts, v)
+                end
+            end
+            if #parts > 0 then authors = table.concat(parts, ", ") end
+        elseif type(data.authors) == "string" and data.authors ~= "" then
+            authors = data.authors
+        end
+        local note = (type(data.note) == "string") and data.note or ""
+        if not title and not authors then
+            return nil
+        end
+        return { title = title, authors = authors, note = note }
+    end
+
+    local function try_decode(text)
+        text = text:match("^%s*(.-)%s*$") or ""
+        if text == "" then return nil end
+        -- Strip a single wrapping code fence pair if present.
+        if text:match("^```") then
+            text = text:gsub("^```[%w]*%s*\n?", "")
+            text = text:gsub("\n?```%s*$", "")
+            text = text:match("^%s*(.-)%s*$") or ""
+        end
+        if text == "" then return nil end
+        local rapidjson = require("rapidjson")
+        local ok, data = pcall(rapidjson.decode, text)
+        local res = normalize(data)
+        if res then return res end
+        -- Tolerate trailing commas before } or ].
+        local fixed = text:gsub(",(%s*[}%]])", "%1")
+        if fixed ~= text then
+            local rapidjson = require("rapidjson")
+            local ok2, data2 = pcall(rapidjson.decode, fixed)
+            return normalize(data2)
+        end
+        return nil
+    end
+
+    -- Fast path: whole (trimmed / fence-stripped) text.
+    local whole = try_decode(raw)
+    if whole then return whole end
+
+    -- Scan for balanced JSON objects (prose/fences/trailing notes tolerated).
+    local text = raw or ""
+    local n = #text
+    for i = 1, n do
+        if text:sub(i, i) == "{" then
+            local depth = 0
+            local in_str = false
+            local esc = false
+            local jend = nil
+            for j = i, n do
+                local c = text:sub(j, j)
+                if in_str then
+                    if esc then
+                        esc = false
+                    elseif c == "\\" then
+                        esc = true
+                    elseif c == "\"" then
+                        in_str = false
+                    end
+                else
+                    if c == "\"" then
+                        in_str = true
+                    elseif c == "{" then
+                        depth = depth + 1
+                    elseif c == "}" then
+                        depth = depth - 1
+                        if depth == 0 then
+                            jend = j
+                            break
+                        end
+                    end
+                end
+            end
+            if jend then
+                local cand = text:sub(i, jend)
+                local res = try_decode(cand)
+                if res then return res end
+            end
+        end
+    end
+
+    return nil
+end
+
+
+--- Build the identify-book user message by concatenation, keeping the opening
+--- excerpt as a single factual block (never substituted into prose).
+--- @param instructions string|nil instruction block
+--- @param opening string|nil opening text
+--- @return string
+function M.buildIdentifyUserMessage(instructions, opening)
+    instructions = (type(instructions) == "string") and instructions or ""
+    opening = (type(opening) == "string") and opening or ""
+    return instructions .. "\n\nOpening excerpt:\n" .. opening
+end
+
+
+
+
+--- Run an identify query with a single corrective retry on unparseable output.
+--- @param query_fn function(history) -> (answer, err)
+--- @param message_history table[]
+--- @param corrective_text string
+--- @return table|nil parsed, string|nil last_answer
+function M.identifyWithRetry(query_fn, message_history, corrective_text)
+    message_history = message_history or {}
+    local answer, err = query_fn(message_history)
+    local parsed = M.parseIdentifiedBook(answer)
+    if parsed then
+        return parsed, answer
+    end
+    if err then
+        return nil, answer
+    end
+    local retry_history = message_history
+    table.insert(retry_history, { role = "assistant", content = answer or "" })
+    table.insert(retry_history, { role = "user", content = corrective_text or "Reply ONLY with lines in this format:\n::title{...}::\n::author{...}::\n::note{...}::\nNo other text." })
+    local answer2, err2 = query_fn(retry_history)
+    local parsed2 = M.parseIdentifiedBook(answer2)
+    return parsed2, answer2
+end
 return M

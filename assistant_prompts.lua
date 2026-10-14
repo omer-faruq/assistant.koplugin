@@ -523,6 +523,31 @@ Render the *entire* response (including headers) completely in {language}.
             _("About the Author"),
             _("Similar Books Recommendations"))
     },
+    identify_book = {
+        -- action-only prompt: driven by the menu/dispatcher, never a prompt button.
+        visible = false,
+        use_websearch = false,
+        use_book_context = false,
+        show_suggestions = false,
+        order = 110,
+        desc = _("Ask the AI to identify the open book's title and author from its opening text."),
+        system_prompt = "You identify books from their opening text. Follow the user's output format exactly.",
+        user_prompt = [[You are a book identification assistant. Given the opening text of a book, identify its title and author.
+
+Reply using EXACTLY this line format, one field per line, and no other text or markdown:
+::title{<title>}::
+::author{<author>}::
+::note{<note>}::
+
+Rules:
+* One ::title{...}:: line with your best-guess title; omit the line (or leave {} empty) if unknown.
+* One ::author{...}:: line per author; repeat the line for multiple authors, or put several names separated by ";" in a single line.
+* ::note{...}:: is optional: one short sentence on confidence or caveats.
+* Values must stay on a single line; do not add code fences or extra prose.
+* Do not describe the task, plan, or the user's intent; output only the tagged lines, no narration.
+
+Opening excerpt follows.]],
+    },
     annotations = {
         use_websearch = false,
         show_suggestions = false,

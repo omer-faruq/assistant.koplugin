@@ -392,6 +392,25 @@ end
 --- Stream tool-call loop (TODO: not fully shown here; stream does not support
 --- tool calls in the current architecture — use non-stream for websearch).
 ---
+--- Normalize a use_websearch option into the wire value. Exported for tests.
+--- @param ws_opt any caller option (boolean/string/nil)
+--- @param setting_value string configured global setting
+--- @return string
+function Querier.resolveWebSearchMode(ws_opt, setting_value)
+    setting_value = (type(setting_value) == "string") and setting_value or "none"
+    if ws_opt == false then
+        return "none"
+    elseif ws_opt == true then
+        return setting_value
+    elseif type(ws_opt) == "string" then
+        return ws_opt
+    elseif ws_opt == nil then
+        return setting_value
+    else
+        return "none"
+    end
+end
+
 function Querier:query(message_history, title, opts)
     if not self:is_inited() then
         return nil, _("Plugin is not configured.")
@@ -404,7 +423,9 @@ function Querier:query(message_history, title, opts)
     -- Explicit override (opts.use_websearch) wins; otherwise fall back to
     -- the global setting. The implicit "last message carries use_websearch"
     -- protocol is removed: callers must pass the mode explicitly.
-    local user_setting_ws = opts.use_websearch or self.settings:readSetting("use_websearch", "none")
+    local user_setting_ws = Querier.resolveWebSearchMode(
+        opts.use_websearch,
+        self.settings:readSetting("use_websearch", "none"))
     local query_option = {
         use_stream_mode = opts.use_stream_mode or self.settings:readSetting("use_stream_mode", true),
         use_websearch   = user_setting_ws ~= "none" and user_setting_ws or "none",
