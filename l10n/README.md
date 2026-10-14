@@ -348,10 +348,23 @@ for translation:
                                          # (default 50; a non-numeric or
                                          # non-positive value warns and falls
                                          # back to the default)
+    L10N_REVIEW_CONCURRENCY=4            # review requests run in parallel
+                                         # (default 4; a non-numeric or
+                                         # non-positive value warns and falls
+                                         # back to the default)
+    L10N_REVIEW_MAX_RETRIES=2            # retries per failed review chunk
+                                         # (default 2, i.e. up to 3 attempts;
+                                         # a non-numeric or non-positive value
+                                         # warns and falls back to the default)
 
 Each request carries at most this many entries, so a large catalogue is reviewed
 as several self-contained requests instead of one that can overflow the model's
-output budget. The script's `--model` and `--timeout` override the route's model
+output budget. The requests run concurrently up to `L10N_REVIEW_CONCURRENCY`
+(default 4). A chunk that fails (transport error, truncation, refusal, empty or
+invalid verdicts) is retried up to `L10N_REVIEW_MAX_RETRIES` times (default 2,
+so up to 3 attempts) before it fails the whole pass; cancellation of requests
+that have not yet started but leaving in-flight ones to finish stays as
+described above. The script's `--model` and `--timeout` override the route's model
 and the request timeout; the locale is selected with `--lang <code>` (default
 `sk`).
 

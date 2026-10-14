@@ -48,12 +48,16 @@ read from L10N_REVIEW_API_PROTOCOL / L10N_REVIEW_API_BASE / L10N_REVIEW_API_MODE
 / L10N_REVIEW_API_KEY, resolved through the shared loader (process environment,
 then l10n/<LANG>/.env, then l10n/.env); the JSON-schema mode and timeout/retry
 policy are the shared AI_JSON_SCHEMA / AI_REQUEST_TIMEOUT / AI_MAX_RETRIES knobs,
-and L10N_REVIEW_CHUNK_SIZE sets how many entries each request carries.
+and L10N_REVIEW_CHUNK_SIZE sets how many entries each request carries;
+L10N_REVIEW_CONCURRENCY (default 4) sets how many review requests run in
+parallel; L10N_REVIEW_MAX_RETRIES (default 2) sets how many times a failed
+chunk is retried before the pass fails.
 See l10n/README.md.
 """
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import os
 import re
@@ -92,6 +96,17 @@ DEFAULT_PROTOCOL = "responses"
 # Overridable with L10N_REVIEW_CHUNK_SIZE through the shared settings loader.
 DEFAULT_CHUNK_SIZE = 50
 CHUNK_SIZE_KEY = "L10N_REVIEW_CHUNK_SIZE"
+
+# Reviewer requests run concurrently. Fixed default (not CPU-derived): the
+# limit is about API/provider concurrency, not local cores.
+DEFAULT_CONCURRENCY = 4
+CONCURRENCY_KEY = "L10N_REVIEW_CONCURRENCY"
+
+# Retries per failed chunk: run_review + empty-reply + parse_verdicts is retried
+# this many times on top of the first attempt, so a default of 2 means up to 3
+# attempts per chunk.
+DEFAULT_MAX_RETRIES = 2
+MAX_RETRIES_KEY = "L10N_REVIEW_MAX_RETRIES"
 
 STATUS_PASS = "pass"
 STATUS_REPAIR = "repair"
@@ -255,6 +270,60 @@ def resolve_chunk_size(lang: str) -> int:
             f"{CHUNK_SIZE_KEY}={raw!r} must be > 0; using {DEFAULT_CHUNK_SIZE}."
         )
         return DEFAULT_CHUNK_SIZE
+    return value
+
+
+def resolve_concurrency(lang: str) -> int:
+    """Worker count for the review pass, from L10N_REVIEW_CONCURRENCY or default.
+
+    The key resolves through the shared loader (process environment, then
+    l10n/<lang>/.env, then l10n/.env). A non-numeric or non-positive value
+    warns and falls back to DEFAULT_CONCURRENCY rather than failing the review.
+    """
+    raw = ai_translate.load_settings(lang).get(CONCURRENCY_KEY, "")
+    if raw == "":
+        return DEFAULT_CONCURRENCY
+    try:
+        value = int(raw)
+    except ValueError:
+        _warn(
+            f"{CONCURRENCY_KEY}={raw!r} is not an integer; "
+            f"using {DEFAULT_CONCURRENCY}."
+        )
+        return DEFAULT_CONCURRENCY
+    if value <= 0:
+        _warn(
+            f"{CONCURRENCY_KEY}={raw!r} must be > 0; "
+            f"using {DEFAULT_CONCURRENCY}."
+        )
+        return DEFAULT_CONCURRENCY
+    return value
+
+
+def resolve_max_retries(lang: str) -> int:
+    """Per-chunk retry count, from L10N_REVIEW_MAX_RETRIES or the default.
+
+    The key resolves through the shared loader (process environment, then
+    l10n/<lang>/.env, then l10n/.env). A non-numeric or non-positive value
+    warns and falls back to DEFAULT_MAX_RETRIES rather than failing the review.
+    """
+    raw = ai_translate.load_settings(lang).get(MAX_RETRIES_KEY, "")
+    if raw == "":
+        return DEFAULT_MAX_RETRIES
+    try:
+        value = int(raw)
+    except ValueError:
+        _warn(
+            f"{MAX_RETRIES_KEY}={raw!r} is not an integer; "
+            f"using {DEFAULT_MAX_RETRIES}."
+        )
+        return DEFAULT_MAX_RETRIES
+    if value <= 0:
+        _warn(
+            f"{MAX_RETRIES_KEY}={raw!r} must be > 0; "
+            f"using {DEFAULT_MAX_RETRIES}."
+        )
+        return DEFAULT_MAX_RETRIES
     return value
 
 
@@ -441,47 +510,125 @@ def parse_verdicts(text: str, expected_ids: list[str]) -> dict[str, dict]:
     return out
 
 
+def _run_review_chunk(index: int, total: int, chunk: list[dict],
+                      lang: str, cfg: ai_translate.Config,
+                      note: str, language: str,
+                      max_retries: int):
+    """Send one review chunk with retries; return its validated verdicts.
+
+    One attempt covers run_review (transport/SDK errors, truncation, refusal),
+    the empty-reply check and parse_verdicts (malformed verdicts). Any of those
+    failures retries the whole attempt; only after all attempts are exhausted
+    does the chunk fail the pass.
+    """
+    attempts = max_retries + 1
+    ids = [entry["id"] for entry in chunk]
+    for attempt in range(1, attempts + 1):
+        prompt = build_prompt(chunk, note, lang, language)
+        started = time.monotonic()
+        try:
+            text = run_review(prompt, cfg)
+            elapsed = time.monotonic() - started
+            if not text.strip():
+                raise ReviewError(
+                    f"chunk {index}/{total}: the reviewer produced no text reply"
+                )
+            chunk_verdicts = parse_verdicts(text, ids)
+            _log(
+                f"{lang}: chunk {index}/{total}: reply after {elapsed:.0f}s, "
+                f"{len(chunk_verdicts)} verdicts OK"
+            )
+            return chunk_verdicts
+        except Exception as exc:
+            reason = str(exc) or type(exc).__name__
+            if attempt < attempts:
+                _log(
+                    f"{lang}: chunk {index}/{total}: attempt {attempt}/{attempts} "
+                    f"failed ({reason}); retrying..."
+                )
+                time.sleep(2 * attempt)
+            else:
+                _log(
+                    f"{lang}: chunk {index}/{total}: failed after {attempts} "
+                    f"attempts ({reason})"
+                )
+                raise ReviewError(
+                    f"chunk {index}/{total}: failed after {attempts} attempts "
+                    f"({reason})"
+                ) from exc
+
+
 def review_pass(note: str, path: str, cfg: ai_translate.Config,
                 lang: str, language: str,
-                chunk_size: int | None = None):
+                chunk_size: int | None = None,
+                concurrency: int | None = None,
+                max_retries: int | None = None):
     """One review pass over path, one request per chunk. Returns (entries, verdicts).
 
     The catalogue is split into chunks of L10N_REVIEW_CHUNK_SIZE entries so a
     large catalogue cannot overflow the reviewer's output budget; each chunk is
     sent as its own self-contained request (same locale header and note, its
-    entry slice) and validated against its own ids. Verdicts merge back into
-    catalogue order. A truncated, refused or invalid chunk fails the whole pass.
+    entry slice) and validated against its own ids. Requests run concurrently
+    up to L10N_REVIEW_CONCURRENCY. Verdicts merge back into catalogue order.
+    A truncated, refused or invalid chunk is retried up to
+    L10N_REVIEW_MAX_RETRIES times; only after all attempts fail does the pass
+    raise ReviewError: not-yet-started futures are cancelled and no further
+    chunks are dispatched, but in-flight requests are left to finish.
     """
     entries = collect_entries(path)
     if not entries:
         raise ReviewError("no translated entries to review")
     if chunk_size is None:
         chunk_size = resolve_chunk_size(lang)
+    if concurrency is None:
+        concurrency = resolve_concurrency(lang)
+    if max_retries is None:
+        max_retries = resolve_max_retries(lang)
     chunks = [
         entries[start:start + chunk_size]
         for start in range(0, len(entries), chunk_size)
     ]
+    total = len(chunks)
     _log(
-        f"{lang}: sending {len(entries)} entries in {len(chunks)} chunk(s) of up "
-        f"to {chunk_size}; the reply can take a few minutes, please wait..."
+        f"{lang}: sending {len(entries)} entries in {total} chunk(s) of up "
+        f"to {chunk_size}, concurrency {concurrency}; the reply can take a few "
+        f"minutes, please wait..."
     )
     verdicts: dict[str, dict] = {}
-    for index, chunk in enumerate(chunks, 1):
-        prompt = build_prompt(chunk, note, lang, language)
-        _log(f"{lang}: chunk {index}/{len(chunks)}: sending {len(chunk)} entries...")
-        started = time.monotonic()
-        text = run_review(prompt, cfg)
-        elapsed = time.monotonic() - started
-        if not text.strip():
-            raise ReviewError(
-                f"chunk {index}/{len(chunks)}: the reviewer produced no text reply"
-            )
-        chunk_verdicts = parse_verdicts(text, [entry["id"] for entry in chunk])
-        _log(
-            f"{lang}: chunk {index}/{len(chunks)}: reply after {elapsed:.0f}s, "
-            f"{len(chunk_verdicts)} verdicts OK"
-        )
-        verdicts.update(chunk_verdicts)
+    futures_map: dict = {}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=concurrency) as executor:
+        pending = iter(list(enumerate(chunks, 1)))
+
+        def dispatch():
+            while len(futures_map) < concurrency:
+                try:
+                    index, chunk = next(pending)
+                except StopIteration:
+                    return
+                _log(
+                    f"{lang}: chunk {index}/{total}: sending {len(chunk)} "
+                    f"entries..."
+                )
+                future = executor.submit(
+                    _run_review_chunk, index, total, chunk, lang, cfg, note, language,
+                    max_retries,
+                )
+                futures_map[future] = (index, chunk)
+
+        dispatch()
+        try:
+            while futures_map:
+                done, _ = concurrent.futures.wait(
+                    futures_map, return_when=concurrent.futures.FIRST_COMPLETED,
+                )
+                for future in done:
+                    futures_map.pop(future)
+                    verdicts.update(future.result())
+                dispatch()
+        except Exception:
+            for future in list(futures_map):
+                future.cancel()
+            raise
     return entries, {entry["id"]: verdicts[entry["id"]] for entry in entries}
 
 

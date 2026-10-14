@@ -57,6 +57,7 @@ import shutil
 import signal
 import sys
 import tempfile
+import threading
 import time
 from typing import Any, Iterable
 
@@ -515,6 +516,7 @@ class Config:
 
         self._route: Route | None = None
         self._clients: dict[tuple[str, str, str], Any] = {}
+        self._client_lock = threading.Lock()
 
         # OpenCode Go/Zen (API_BASE containing "opencode.ai") requires an
         # `x-opencode-session` header carrying a stable opaque id for
@@ -580,11 +582,12 @@ class Config:
     def get_client(self, route: Route) -> Any:
         """Return a cached SDK client for the route (built once per run)."""
         key = (route.protocol, route.base_url, route.api_key)
-        client = self._clients.get(key)
-        if client is None:
-            client = _build_client(self, route)
-            self._clients[key] = client
-        return client
+        with self._client_lock:
+            client = self._clients.get(key)
+            if client is None:
+                client = _build_client(self, route)
+                self._clients[key] = client
+            return client
 
     def require_api_key(self, route: Route) -> None:
         """Exit unless the route carries an API key.
