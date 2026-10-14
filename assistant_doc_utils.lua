@@ -556,4 +556,133 @@ function M.extractCurrentChapterText(assistant)
   return book_text
 end
 
+
+
+--[[
+  Resolve book metadata through one unified chain that honors user-edited
+  (custom) metadata. Missing fields stay nil (no fabrication).
+  Returns { title, authors, display_title, file }.
+--]]
+--- @param ui table|nil KOReader ui object
+--- @param file string|nil document file path
+--- @return table
+function M.getBookMeta(ui, file)
+    if (not file or file == "") and ui and ui.document and ui.document.file then
+        file = ui.document.file
+    end
+    local meta = { title = nil, authors = nil, display_title = nil, file = file }
+
+    local function norm_authors(value)
+        if type(value) == "table" then
+            local parts = {}
+            for _, v in ipairs(value) do
+                if type(v) == "string" and v ~= "" then
+                    table.insert(parts, v)
+                end
+            end
+            if #parts > 0 then
+                return table.concat(parts, ", ")
+            end
+            return nil
+        elseif type(value) == "string" and value ~= "" then
+            return value
+        end
+        return nil
+    end
+
+    local props = nil
+    if ui and type(ui.doc_props) == "table" then
+        props = ui.doc_props
+    end
+
+    if (props == nil) and type(ui) == "table"
+        and type(ui.bookinfo) == "table"
+        and type(ui.bookinfo.getDocProps) == "function"
+        and file then
+        local ok, p = pcall(ui.bookinfo.getDocProps, ui.bookinfo, file, nil, true)
+        if ok and type(p) == "table" then
+            props = p
+        end
+    end
+
+    if type(props) == "table" then
+        if type(props.title) == "string" and props.title ~= "" then
+            meta.title = props.title
+        end
+        local a = norm_authors(props.authors)
+        if a then meta.authors = a end
+        if type(props.display_title) == "string" and props.display_title ~= "" then
+            meta.display_title = props.display_title
+        end
+    end
+
+    -- Sidecar fallback.
+    if (not meta.title or not meta.authors) and file then
+        local ok, doc_settings = pcall(function()
+            return require("docsettings"):open(file)
+        end)
+        if ok and doc_settings then
+            local ok_child, doc_props = pcall(function()
+                return doc_settings:child("doc_props")
+            end)
+            if ok_child and doc_props then
+                if not meta.title then
+                    local ok_t, v = pcall(function() return doc_props:readSetting("title") end)
+                    if ok_t and type(v) == "string" and v ~= "" then
+                        meta.title = v
+                    end
+                end
+                if not meta.authors then
+                    local ok_a, v = pcall(function() return doc_props:readSetting("authors") end)
+                    if ok_a then
+                        local na = norm_authors(v)
+                        if na then meta.authors = na end
+                    end
+                end
+            end
+            if not meta.display_title and meta.title then
+                meta.display_title = meta.title
+            end
+        end
+    end
+
+    -- Last resort: filename stem as display_title only.
+    if not meta.display_title then
+        if meta.title then
+            meta.display_title = meta.title
+        elseif file then
+            local ok_name, name = pcall(function()
+                return require("apps/filemanager/filemanagerutil").splitFileNameType(file)
+            end)
+            if ok_name and type(name) == "string" and name ~= "" then
+                meta.display_title = name
+            end
+        end
+    end
+
+    return meta
+end
+
+
+--- Build the honest "I'm reading something ..." fragment for a book context,
+--- using only metadata that is actually known. Never fabricates title/author.
+--- @param book table { title, author, display_title }
+--- @return string
+function M.describeBook(book)
+    book = book or {}
+    if book.title and book.author then
+        return string.format("titled '%s' by %s", book.title, book.author)
+    elseif book.title then
+        return string.format("titled '%s'", book.title)
+    elseif book.author then
+        return string.format("by %s", book.author)
+    else
+        local note = "whose title/author metadata is unavailable"
+        if book.display_title then
+            note = note .. " (file name: " .. book.display_title .. ", not the title)"
+        end
+        return note
+    end
+end
+
 return M

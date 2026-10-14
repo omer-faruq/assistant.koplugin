@@ -472,16 +472,25 @@ function Assistant:addToMainMenu(menu_items)
     end
 end
 
-local function getDocumentInfo(document)
+local function getDocumentInfo(ui)
+  local DocUtils = require("assistant_doc_utils")
   local DocSettings = require("docsettings")
-  local doc_settings = DocSettings:open(document.file)
-  local percent_finished = doc_settings:readSetting("percent_finished") or 0
-  local doc_props = doc_settings:child("doc_props")
-  local title = doc_props:readSetting("title") or document:getProps().title or "Unknown Title"
-  local authors = doc_props:readSetting("authors") or document:getProps().authors or "Unknown Author"
+  local document = ui and ui.document
+  local file = document and document.file
+  local doc_settings
+  local percent_finished = 0
+  if file then
+    local ok, ds = pcall(function() return DocSettings:open(file) end)
+    if ok then doc_settings = ds end
+    if doc_settings then
+      local ok_p, v = pcall(function() return doc_settings:readSetting("percent_finished") end)
+      if ok_p and type(v) == "number" then percent_finished = v end
+    end
+  end
+  local meta = DocUtils.getBookMeta(ui, file)
   return {
-    title = title,
-    authors = authors,
+    title = meta.title,
+    authors = meta.authors,
     percent_finished = percent_finished,
   }
 end
@@ -493,31 +502,44 @@ end
 -- (metadata only, no open) -> sidecar DocSettings doc_props -> filename.
 -- Reading progress comes from the sidecar percent_finished, or 0.
 function Assistant:getDocumentInfoForFile(file, book_props)
+  -- @doc FileManager-side metadata for book_info: no open document exists,
+  -- and book_info only needs title/author/language, so this never opens the
+  -- document (no body/toc/cover needed).
+  -- Returns title/authors exactly as resolved (nil when unknown) plus
+  -- display_title (filename stem is factual as a display label, never a title).
+  -- Priority: long-press book_props -> DocUtils.getBookMeta chain (which
+  -- covers bookinfo:getDocProps, sidecar doc_props, filename stem) ->
+  -- BookList percent cache. No fabricated metadata, no document open.
+
   local function normAuthors(value)
     if type(value) == "table" then
-      return table.concat(value, ", ")
-    end
-    return value
-  end
-
-  local title = koutil.tableGetValue(book_props, "title")
-  local authors = normAuthors(koutil.tableGetValue(book_props, "authors"))
-
-  if (not title or title == "") or (not authors or authors == "") then
-    local bookinfo = koutil.tableGetValue(self, "ui", "bookinfo")
-    if type(bookinfo) == "table" and type(bookinfo.getDocProps) == "function" then
-      local ok, props = pcall(bookinfo.getDocProps, bookinfo, file, nil, true)
-      if ok and type(props) == "table" then
-        if not title or title == "" then
-          title = koutil.tableGetValue(props, "title")
-            or koutil.tableGetValue(props, "display_title")
-        end
-        if not authors or authors == "" then
-          authors = normAuthors(koutil.tableGetValue(props, "authors"))
+      local parts = {}
+      for _, v in ipairs(value) do
+        if type(v) == "string" and v ~= "" then
+          table.insert(parts, v)
         end
       end
+      if #parts > 0 then return table.concat(parts, ", ") end
+      return nil
+    elseif type(value) == "string" and value ~= "" then
+      return value
     end
+    return nil
   end
+
+  local raw_title = koutil.tableGetValue(book_props, "title")
+  local title = (type(raw_title) == "string" and raw_title ~= "") and raw_title or nil
+  local authors = normAuthors(koutil.tableGetValue(book_props, "authors"))
+
+  local DocUtils = require("assistant_doc_utils")
+  local meta = DocUtils.getBookMeta(self.ui, file)
+  if not title then
+    title = meta.title
+  end
+  if not authors then
+    authors = meta.authors
+  end
+  local display_title = meta.display_title
 
   local percent_finished = 0
   -- Prefer the BookList cache when available (cheap, synchronous): it is the
@@ -539,24 +561,6 @@ function Assistant:getDocumentInfoForFile(file, book_props)
     return require("docsettings"):open(file)
   end)
   if ok_settings and doc_settings then
-    if (not title or title == "") or (not authors or authors == "") then
-      local ok_child, doc_props = pcall(function()
-        return doc_settings:child("doc_props")
-      end)
-      if ok_child and doc_props then
-        if not title or title == "" then
-          local ok_t, v = pcall(function() return doc_props:readSetting("title") end)
-          if ok_t and type(v) == "string" and v ~= "" then title = v end
-        end
-        if not authors or authors == "" then
-          local ok_a, v = pcall(function() return doc_props:readSetting("authors") end)
-          if ok_a then
-            local norm = normAuthors(v)
-            if type(norm) == "string" and norm ~= "" then authors = norm end
-          end
-        end
-      end
-    end
     local ok_p, v = pcall(function()
       return doc_settings:readSetting("percent_finished")
     end)
@@ -565,24 +569,11 @@ function Assistant:getDocumentInfoForFile(file, book_props)
     end
   end
 
-  if not title or title == "" then
-    local ok_name, name = pcall(function()
-      return require("apps/filemanager/filemanagerutil").splitFileNameType(file)
-    end)
-    if ok_name and type(name) == "string" and name ~= "" then
-      title = name
-    else
-      title = file
-    end
-  end
-  if not authors or authors == "" then
-    authors = "Unknown Author"
-  end
-
   return {
     title = title,
     authors = authors,
     percent_finished = percent_finished,
+    display_title = display_title,
   }
 end
 
@@ -682,7 +673,7 @@ function BookLevelCustomPrompts(assistant)
         callback = function()
           if not assistant:isConfigured() then return end
           NetUtils.runWhenOnlineFast(function()
-            local book = getDocumentInfo(assistant.ui.document)
+            local book = getDocumentInfo(assistant.ui)
             local showFeatureDialog = require("assistant_featuredialog")
             Trapper:wrap(function()
               showFeatureDialog(assistant, prompt_config, book.title, book.authors, book.percent_finished)
@@ -1432,7 +1423,7 @@ end
   function Assistant:onAskAIRecap()
     if not self:isConfigured() then return end
     NetUtils.runWhenOnlineFast(function()
-      local book = getDocumentInfo(self.ui.document)
+      local book = getDocumentInfo(self.ui)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
         showFeatureDialog(self, "recap", book.title, book.authors, book.percent_finished)
@@ -1444,7 +1435,7 @@ end
   function Assistant:onAskAIXRay()
     if not self:isConfigured() then return end
     NetUtils.runWhenOnlineFast(function()
-      local book = getDocumentInfo(self.ui.document)
+      local book = getDocumentInfo(self.ui)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
         showFeatureDialog(self, "xray", book.title, book.authors, book.percent_finished)
@@ -1462,7 +1453,7 @@ end
       return true
     end
     NetUtils.runWhenOnlineFast(function()
-      local book = getDocumentInfo(self.ui.document)
+      local book = getDocumentInfo(self.ui)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
         showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished)
@@ -1549,7 +1540,7 @@ end
   function Assistant:onAskAIAnnotations()
     if not self:isConfigured() then return end
     NetUtils.runWhenOnlineFast(function()
-      local book = getDocumentInfo(self.ui.document)
+      local book = getDocumentInfo(self.ui)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
         showFeatureDialog(self, "annotations", book.title, book.authors, book.percent_finished)
@@ -1561,7 +1552,7 @@ end
   function Assistant:onAskSummaryUsingAnnotations()
     if not self:isConfigured() then return end
     NetUtils.runWhenOnlineFast(function()
-      local book = getDocumentInfo(self.ui.document)
+      local book = getDocumentInfo(self.ui)
       local showFeatureDialog = require("assistant_featuredialog")
       Trapper:wrap(function()
         showFeatureDialog(self, "summary_using_annotations", book.title, book.authors, book.percent_finished)

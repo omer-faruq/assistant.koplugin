@@ -824,6 +824,17 @@ M.isSuggestionsEnabled = function(settings, prompt_config)
     return true
 end
 
+--- Append an explicit response-language directive to a (possibly user-overridden)
+--- system prompt. LLM-facing English text (not gettexted).
+--- @param system_prompt string|nil
+--- @param language string|nil configured response language
+--- @return string
+M.withResponseLanguage = function(system_prompt, language)
+    local lang = (type(language) == "string" and language ~= "") and language or "English"
+    local base = (type(system_prompt) == "string") and system_prompt or ""
+    return base .. "\n\nUnless the question is written in another language, respond in " .. lang .. "."
+end
+
 M.getDisplayText = function(text, use_websearch, web_search_enabled)
     if use_websearch and web_search_enabled then
         return WEBSEARCH_ICON .. text

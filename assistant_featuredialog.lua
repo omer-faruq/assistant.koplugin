@@ -218,6 +218,7 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     if Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config) then
       system_prompt = system_prompt .. assistant_prompts.suggestions_prompt
     end
+    system_prompt = Prompts.withResponseLanguage(system_prompt, language)
     
     local book_text_prompt = ""
     if book_text then
@@ -238,8 +239,8 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     
     -- Format the user prompt with variables
     local user_content = user_prompt_template:gsub("{([%w_]+)}", {
-      title = title,
-      author = author,
+      title = title or "title unavailable",
+      author = author or "author unavailable",
       progress = formatted_progress_percent,
       language = language,
       koreader_version = Prompts.getKoreaderVersion()
@@ -257,8 +258,8 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     -- "%" in a T template is a substitution escape.
     ASUtils.set_attr(context_message, "bubble_meta",
         T('<div class="user-bubble-meta"><p><b>%1</b>: %2</p><p><b>%3</b>: %4</p><p><b>%5</b>: %6</p></div>\n',
-            _("Title"), title,
-            _("Author"), author,
+            _("Title"), title or _("Unknown Title"),
+            _("Author"), author or _("Unknown Author"),
             _("Reading progress"), formatted_progress_percent .. "%"))
     ASUtils.set_attr(context_message, "show_suggestions", Prompts.isSuggestionsEnabled(assistant.settings, feature_prompt_config))
     table.insert(message_history, context_message)
@@ -317,8 +318,8 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
           local raw_followup = user_question.user_prompt or user_question
           -- Expand {title}/{author}/{progress}/{language}/{user_input} so custom templates don't leak raw placeholders
           local expanded_followup = raw_followup:gsub("{([%w_]+)}", {
-            title = title,
-            author = author,
+            title = title or "title unavailable",
+            author = author or "author unavailable",
             progress = formatted_progress_percent,
             language = language,
             user_input = user_question.user_input or "",

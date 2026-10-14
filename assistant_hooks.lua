@@ -228,9 +228,10 @@ function M.setupRecap(assistant)
             local time_diff_hours = math.floor((os.time() - last_read) / 3600)
             if time_diff_hours < 0 then time_diff_hours = 0 end
             if time_diff_hours >= 28 and percent_finished > 0 and percent_finished <= 0.95 then
-                local doc_props = doc_settings:child("doc_props")
-                local title = doc_props:readSetting("title", "Unknown Title")
-                local authors = doc_props:readSetting("authors", "Unknown Author")
+                local DocUtils = require("assistant_doc_utils")
+                local meta = DocUtils.getBookMeta(assistant and assistant.ui, file)
+                local title = meta.title or meta.display_title or _("Unknown Title")
+                local authors = meta.authors or _("Unknown Author")
                 -- @translators Prompt offering a "Recap" (a brief spoiler-free summary of what was already read, to refresh memory after a break). %1 is the book title, %2 is the author.
                 local message = T(_("Do you want an AI Recap?\nFor %1 by %2.\n\n"), title, authors)
                     .. T(N_("Last read an hour ago.", "Last read %1 hours ago.", time_diff_hours), time_diff_hours)

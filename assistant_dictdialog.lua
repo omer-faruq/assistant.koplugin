@@ -138,6 +138,8 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         else
             system_prompt = dict_prompts.system_prompt
         end
+        local language = assistant.settings:readSetting("response_language") or assistant.ui_language
+        system_prompt = Prompts.withResponseLanguage(system_prompt, language)
 
         table.insert(message_history, {
             role = "system",
@@ -206,9 +208,10 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     end
 
     -- Get book information (shared by both branches)
-    local prop = ui.document:getProps() or {}
-    local book_title = prop.title or "Unknown Title"
-    local book_author = prop.authors or "Unknown Author"
+    local DocUtils = require("assistant_doc_utils")
+    local meta = DocUtils.getBookMeta(ui, ui and ui.document and ui.document.file)
+    local book_title = meta.title or "title unavailable"
+    local book_author = meta.authors or "author unavailable"
 
     -- Choose the appropriate prompt and context based on prompt type
     local user_prompt, context_content, title

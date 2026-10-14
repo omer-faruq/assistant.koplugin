@@ -150,8 +150,8 @@ function AssistantDialog:_formatUserPrompt(user_prompt, highlightedText, user_in
 
   -- replace placeholders in the user prompt
   return user_prompt:gsub("{([%w%_]+)}", {
-    title = book.title,
-    author = book.author,
+    title = book.title or "title unavailable",
+    author = book.author or "author unavailable",
     language = language,
     highlight = text_to_use,
     user_input = user_input,
@@ -293,13 +293,13 @@ function AssistantDialog:_buildBookContextMessage(highlighted_text)
   local book = self:_getBookContext()
   local head
   if highlighted_text and highlighted_text ~= "" then
-    head = string.format([[I'm reading something titled '%s' by %s.
+    head = string.format([[I'm reading something %s.
 I have a question about the following highlighted text: ```%s```.
 If the question is not clear enough, analyze the highlighted text.]],
-      book.title, book.author, highlighted_text)
-  elseif book.title and book.author then
-    head = string.format([[I'm reading something titled '%s' by %s.
-I have a question about this book.]], book.title, book.author)
+      DocUtils.describeBook(book), highlighted_text)
+  elseif book.title or book.author or book.display_title then
+    head = string.format([[I'm reading something %s.
+I have a question about this book.]], DocUtils.describeBook(book))
   else
     head = "You are the built-in AI assistant in KOReader. No book context is available for this question."
   end
@@ -370,19 +370,9 @@ end
 
 function AssistantDialog:_getBookContext()
   local ui = self.assistant and self.assistant.ui
-  if not ui or not ui.document then
-    return { title = nil, author = nil }
-  end
-
-  local ok, props = pcall(function() return ui.document:getProps() end)
-  if not ok or not props then
-    return { title = nil, author = nil }
-  end
-
-  return {
-    title = props.title or "Unknown Title",
-    author = props.authors or "Unknown Author",
-  }
+  local DocUtils = require("assistant_doc_utils")
+  local meta = DocUtils.getBookMeta(ui, ui and ui.document and ui.document.file)
+  return { title = meta.title, author = meta.authors, display_title = meta.display_title }
 end
 
 -- When clicked [Assistant] button in main select popup,
@@ -398,10 +388,12 @@ function AssistantDialog:showAskDialog(highlightedText)
   local book = self:_getBookContext()
   local use_multi_general_notebooks =
       not self.assistant.ui.doc_settings and Notebook.isEnabled(self.assistant)
+  local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
   local system_prompt = self.assistant.config:getFeature("system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
   if Prompts.isSuggestionsEnabled(self.assistant.settings, Prompts.assistant_prompts.default) then
     system_prompt = system_prompt .. Prompts.assistant_prompts.suggestions_prompt
   end
+  system_prompt = Prompts.withResponseLanguage(system_prompt, language)
 
   local message_history = {{
     role = "system",
@@ -656,20 +648,23 @@ function AssistantDialog:showAskDialog(highlightedText)
   -- Show the dialog with the button rows
   local dialog_hint
   local text_height
+  local has_book_context = self.assistant.ui and self.assistant.ui.document
   text_height = math.floor( 5 * Screen:scaleBySize(20) ) -- about 5 lines of text
   if is_highlighted then
       dialog_hint = _("Ask a question about the highlighted text")
       text_height = math.floor( 3 * Screen:scaleBySize(20) ) -- highlighted dialog is complicated
-  elseif book.title then
-      dialog_hint = TextUtils.bold_format(
-          T(_("<b>Ask a question about this book:</b>\n%1 by %2"), book.title, book.author)
-      )
   else
-      dialog_hint = _("Ask a general question")
+      if has_book_context then
+          dialog_hint = TextUtils.bold_format(
+              T(_("<b>Ask a question about this book:</b>\n%1"), book.title or book.author or book.display_title or "")
+          )
+      else
+          dialog_hint = _("Ask a general question")
+      end
   end
-  local input_hint = is_highlighted and 
-      _("Type your question here...") or 
-      book.title and _("Ask anything about this book...")
+  local input_hint = is_highlighted and
+      _("Type your question here...") or
+      has_book_context and _("Ask anything about this book...")
       or _("Ask anything...")  
   
   self.input_dialog = InputDialog:new{
@@ -755,11 +750,10 @@ function AssistantDialog:showAskDialog(highlightedText)
   })
   checkbox_pos = checkbox_pos + 1
 
-  -- Both checkboxes live under the `book.title` guard: the chapter option
-  -- depends on the "Include Text Read So Far" checkbox, and `_getBookContext`
-  -- falls back to "Unknown Title", so this guard is only bypassed when the
-  -- document props fail entirely (in which case hiding both is correct).
-  if book.title then
+  -- Attach Prior Text stays available whenever a document is open, even
+  -- without metadata (txt books need it most).
+  local ui = self.assistant.ui
+  if ui and ui.document then
     -- Chapter limit is only offered when a TOC chapter covers the current
     -- position (no TOC / outside the TOC -> no option).
     local chapter_range = DocUtils.getCurrentChapterRange(self.assistant.ui)
@@ -830,11 +824,13 @@ function AssistantDialog:runPrompt(highlightedText, prompt_id, user_input)
   highlightedText = highlightedText:gsub("\n", "\n\n") -- ensure newlines are doubled (LLM presumes markdown input)
 
   local user_content = self:_formatUserPrompt(koutil.tableGetValue(prompt_config, "user_prompt"), highlightedText, user_input or "")
+  local language = self.assistant.settings:readSetting("response_language") or self.assistant.ui_language
   local system_prompt = koutil.tableGetValue(prompt_config, "system_prompt") or koutil.tableGetValue(Prompts, "assistant_prompts", "default", "system_prompt")
 
   if Prompts.isSuggestionsEnabled(self.assistant.settings, prompt_config) then
     system_prompt = system_prompt .. Prompts.assistant_prompts.suggestions_prompt
   end
+  system_prompt = Prompts.withResponseLanguage(system_prompt, language)
 
   local message_history = {{
     role = "system",

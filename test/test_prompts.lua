@@ -342,6 +342,13 @@ local tests = {
         assert.notMatches(p, "Book%-Awareness")
         assert.matches(p, "Word Form & Lemma")
     end),
+    test("withResponseLanguage appends directive", function()
+        local out = M.withResponseLanguage("SYS", "Spanish")
+        assert.matches(out, "Unless the question is written in another language, respond in Spanish.")
+        assert.matches(out, "SYS")
+        local out2 = M.withResponseLanguage(nil, nil)
+        assert.matches(out2, "respond in English.")
+    end),
 }
 
 return helper.runTests("assistant_prompts.lua", tests)

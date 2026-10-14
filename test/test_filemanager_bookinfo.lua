@@ -404,7 +404,8 @@ local tests = {
             getDocProps = function() return { display_title = "Shown Title" } end,
         }
         local info = instance:getDocumentInfoForFile("book.epub", nil)
-        assert.equal(info.title, "Shown Title", "display_title must be used when title is absent")
+        assert.equal(info.title, nil, "title stays nil when absent")
+        assert.equal(info.display_title, "Shown Title", "display_title must be used when title is absent")
     end),
 
     test("sidecar props are the last metadata source before the file name", function()
@@ -417,11 +418,12 @@ local tests = {
         assert.equal(info.percent_finished, 0.25, "sidecar progress must be used")
     end),
 
-    test("the file name is the final title fallback", function()
+    test("the file name is display_title, never title, when metadata missing", function()
         reset_state()
         local info = instance:getDocumentInfoForFile("/books/My Great Novel.epub", nil)
-        assert.equal(info.title, "My Great Novel", "title must fall back to the file name")
-        assert.equal(info.authors, "Unknown Author", "author must have a default")
+        assert.equal(info.title, nil, "title must stay nil when metadata missing")
+        assert.equal(info.authors, nil, "authors must stay nil when metadata missing")
+        assert.equal(info.display_title, "My Great Novel", "display_title holds the file name")
         assert.equal(info.percent_finished, 0, "progress must default to zero")
     end),
 
@@ -432,7 +434,7 @@ local tests = {
             splitFileNameType = function() return nil end,
         }
         local info = instance:getDocumentInfoForFile("/books/weird", nil)
-        assert.equal(info.title, "/books/weird", "title must fall back to the file path")
+        assert.equal(info.title, nil, "title must stay nil when metadata missing")
         package.loaded["apps/filemanager/filemanagerutil"] = saved
     end),
 
@@ -456,7 +458,8 @@ local tests = {
     test("a missing sidecar is not an error", function()
         reset_state()
         local info = instance:getDocumentInfoForFile("/books/Nothing Here.epub", nil)
-        assert.equal(info.title, "Nothing Here", "metadata still resolves without a sidecar")
+        assert.equal(info.title, nil, "title stays nil without a sidecar")
+        assert.equal(info.display_title, "Nothing Here", "display_title holds the file name")
         assert.equal(info.percent_finished, 0, "progress defaults to zero without a sidecar")
     end),
 }
