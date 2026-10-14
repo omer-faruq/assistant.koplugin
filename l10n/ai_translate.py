@@ -479,16 +479,39 @@ class Config:
     A locale-bound Config merges l10n/.env with l10n/<lang>/.env; a global
     Config (lang_code=None) reads l10n/.env only. Both layer the exported
     process environment on top.
+
+    route_prefix selects a parallel set of route keys without touching the
+    shared AI_* knobs: the reviewer builds its Config with "L10N_REVIEW_", so
+    it reads L10N_REVIEW_API_KEY/PROTOCOL/BASE/MODEL while still honouring the
+    same AI_JSON_SCHEMA, timeout and retry settings as the translator. An
+    unset prefixed key falls back to the unprefixed translator key (API_*),
+    then to the built-in default, so an unconfigured reviewer silently shares
+    the translator's route. default_protocol is used when neither the prefixed
+    nor the unprefixed API_PROTOCOL key is set.
     """
 
-    def __init__(self, lang_code: str | None = None) -> None:
+    def __init__(
+        self,
+        lang_code: str | None = None,
+        route_prefix: str = "",
+        default_protocol: str | None = None,
+    ) -> None:
         self.lang_code = lang_code
         settings = load_settings(lang_code)
 
-        self.api_key: str = settings.get("API_KEY", "")
-        self.api_protocol: str = _normalize_protocol(settings.get("API_PROTOCOL"))
-        self.api_base: str = settings.get("API_BASE", "") or DEFAULT_BASE_URL
-        self.api_model: str = settings.get("API_MODEL", "") or DEFAULT_MODEL
+        def _route_key(name: str) -> str:
+            if route_prefix:
+                return settings.get(f"{route_prefix}{name}", "") or settings.get(
+                    name, ""
+                )
+            return settings.get(name, "")
+
+        self.api_key: str = _route_key("API_KEY")
+        self.api_protocol: str = _normalize_protocol(
+            _route_key("API_PROTOCOL") or default_protocol
+        )
+        self.api_base: str = _route_key("API_BASE") or DEFAULT_BASE_URL
+        self.api_model: str = _route_key("API_MODEL") or DEFAULT_MODEL
 
         self._route: Route | None = None
         self._clients: dict[tuple[str, str, str], Any] = {}
@@ -752,13 +775,18 @@ def _get(obj: Any, name: str, default: Any = None) -> Any:
     return getattr(obj, name, default)
 
 
-def _json_format_spec(cfg: Config) -> dict[str, Any] | None:
+def _json_format_spec(
+    cfg: Config,
+    schema: dict[str, Any] | None = None,
+    name: str = "po_translations",
+) -> dict[str, Any] | None:
     """Protocol-neutral JSON output-format spec.
 
     Returns None when cfg.json_mode is False (AI_JSON_MODE=0: no format is
     sent), {"type": "json_object"} when AI_JSON_SCHEMA=off, or a
     Responses-style json_schema format otherwise. Callers adapt it to their
-    wire format.
+    wire format. schema/name default to the translation contract; the reviewer
+    passes its own verdict schema.
     """
     if not cfg.json_mode:
         return None
@@ -766,9 +794,9 @@ def _json_format_spec(cfg: Config) -> dict[str, Any] | None:
         return {"type": "json_object"}
     return {
         "type": "json_schema",
-        "name": "po_translations",
+        "name": name,
         "strict": True,
-        "schema": TRANSLATIONS_SCHEMA,
+        "schema": schema if schema is not None else TRANSLATIONS_SCHEMA,
     }
 
 
@@ -929,17 +957,20 @@ def _request(
     messages: list[dict[str, str]],
     max_tokens: int | None = None,
     json_format: bool = True,
+    schema: dict[str, Any] | None = None,
+    schema_name: str = "po_translations",
 ) -> dict[str, Any]:
     """Send one request over the config's route; return finish_reason/content/raw.
 
     Transport errors, retries and the request timeout are the SDK's job
     (OpenAI(timeout=..., max_retries=...)), so this makes exactly one call per
     attempt and only adds the json_schema -> json_object downgrade, which the
-    SDK does not perform.
+    SDK does not perform. schema/schema_name override the structured-output
+    contract (the reviewer sends its verdict schema).
     """
     route = cfg.get_route()
     client = cfg.get_client(route)
-    spec = _json_format_spec(cfg) if json_format else None
+    spec = _json_format_spec(cfg, schema, schema_name) if json_format else None
     budget = max_tokens or cfg.max_tokens
     downgraded = False
 

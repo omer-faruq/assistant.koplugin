@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Review l10n catalogues with the OpenCode CLI and repair what it flags.
+"""Review l10n catalogues with a second model and repair what it flags.
 
 Why this exists: ai_translate.py only fills *empty* msgstr, so a translation
 that came back in the wrong language, or with the wrong meaning, counts as done
@@ -11,12 +11,12 @@ the target language? - and, when it confidently says no, empties exactly those
 msgstr so the normal pipeline refills them. It never writes a translation
 itself.
 
-One OpenCode CLI invocation reviews every entry of one catalogue; the reply is a
-compact per-entry verdict (`pass`, `repair` or `abstain`), not one call per
-msgid. `repair` is reserved for a strong, explicit wrong-language or
-wrong-meaning finding; a short or ambiguous string abstains instead. An entry
-whose msgstr equals its msgid or is nothing but format placeholders is never
-sent: it is not prose to judge.
+One request reviews every entry of one catalogue; the reply is a compact
+per-entry verdict (`pass`, `repair` or `abstain`), not one call per msgid.
+`repair` is reserved for a strong, explicit wrong-language or wrong-meaning
+finding; a short or ambiguous string abstains instead. An entry whose msgstr
+equals its msgid or is nothing but format placeholders is never sent: it is not
+prose to judge.
 
 Modes:
     review_translations.py [--lang LANG]            review LANG/updated_translated.po
@@ -36,14 +36,16 @@ that survives the refill stops the run before import (exit 3) and preserves the
 intermediate. It never loops.
 
 Every failure that is not a surviving repair verdict is best-effort: a missing
-review note, a missing `opencode` binary, an authentication error, a timeout or
-an invalid reply warns and leaves the pipeline running (exit 0). The point is to
-hand the outer pipeline a better catalogue, never to stop a translation run.
+review note, a missing reviewer credential, an authentication error, a timeout
+or an invalid reply warns and leaves the pipeline running (exit 0). The point is
+to hand the outer pipeline a better catalogue, never to stop a translation run.
 
-The reviewer runs under the user's own OpenCode account with the model selected
-by L10N_REVIEW_MODEL (default opencode-go/claude-haiku-5-5), read from the
-process environment or from l10n/.env / l10n/<LANG>/.env. OpenCode's
-data-retention and billing policy applies to the public UI strings it is sent.
+The reviewer is a second model reached through the same OpenAI-compatible SDK
+layer as ai_translate.py, defaulting to the Responses protocol. Its route is
+read from L10N_REVIEW_API_PROTOCOL / L10N_REVIEW_API_BASE / L10N_REVIEW_API_MODEL
+/ L10N_REVIEW_API_KEY, resolved through the shared loader (process environment,
+then l10n/<LANG>/.env, then l10n/.env); the JSON-schema mode and timeout/retry
+policy are the shared AI_JSON_SCHEMA / AI_REQUEST_TIMEOUT / AI_MAX_RETRIES knobs.
 See l10n/README.md.
 """
 from __future__ import annotations
@@ -58,7 +60,8 @@ import sys
 
 import polib
 
-from ai_translate import LANG_EN, load_settings
+import ai_translate
+from ai_translate import LANG_EN
 
 LANG_DIR = os.path.dirname(os.path.abspath(__file__))
 DOMAIN = "assistant"
@@ -67,13 +70,17 @@ REVIEW_NOTE_FILE = "review_note.txt"
 AI_TRANSLATE = os.path.join(LANG_DIR, "ai_translate.py")
 
 # A locale is reviewed only when it ships its own review_note.txt; the default
-# keeps a bare invocation convenient. The reviewer agent
-# (.opencode/agents/l10n-review.md) is language-agnostic: the target language
-# and the confusion guidance both come from the prompt.
+# keeps a bare invocation convenient.
 DEFAULT_LANG = "sk"
-DEFAULT_MODEL = "opencode-go/claude-haiku-5-5"
-REVIEW_AGENT = "l10n-review"
-DEFAULT_TIMEOUT = 600.0
+
+# The reviewer route: a dedicated L10N_REVIEW_* key set so a second model can
+# sit behind its own base URL, model and credential, defaulting to the
+# Responses protocol. Any L10N_REVIEW_* key left unset falls back to the
+# translator's API_* key, so an unconfigured reviewer shares its route. The
+# shared AI_* knobs (schema mode, timeout, retries) still apply through
+# ai_translate.Config.
+ROUTE_PREFIX = "L10N_REVIEW_"
+DEFAULT_PROTOCOL = "responses"
 
 STATUS_PASS = "pass"
 STATUS_REPAIR = "repair"
@@ -102,6 +109,67 @@ EXIT_OK = 0
 # Repair verdicts survived the single refill. The caller stops before import and
 # keeps the intermediate; the harness never loops.
 EXIT_BLOCK = 3
+
+# The reviewer's instructions: the judgement rubric and the output contract,
+# sent as the model's system message. The target language and per-locale
+# guidance arrive in the user message (build_prompt), so this text names no
+# language. The JSON shape is enforced by VERDICT_SCHEMA; the prose states the
+# semantics the schema cannot (reason is required on a repair, null elsewhere).
+REVIEW_SYSTEM_PROMPT = """You are a localization reviewer for the user-facing strings of an open-source e-book reader's AI assistant plugin. A caller sends you one catalogue of translated strings and asks you to judge whether each translation is correct for the target language.
+
+The caller names the target language and, when the locale ships one, provides authoritative locale guidance: which languages its catalogue is commonly confused with, and the words or letters that tell them apart. Treat that guidance as authoritative over your own priors, and never assume a language from the locale code alone.
+
+Judge each entry against its source (msgid) and the target language:
+
+- `pass` - the msgstr is a correct translation in the target language and says what the msgid says.
+- `repair` - a strong, explicit defect: the msgstr is in a different language, means something the msgid does not, drops required markup, or belongs to another msgid's slot. Name the telling word or form in `reason`.
+- `abstain` - too short, a proper noun, a technical token, or otherwise not judgeable with confidence.
+
+Reserve `repair` for a defect you can point at; when the only signal is that a translation "reads oddly", or the string is short or ambiguous, answer `abstain`. Never write, suggest or rewrite a translation.
+
+Output contract:
+
+- One review element per id you were sent, each id exactly once, in any order.
+- `status` is mandatory and is one of `pass`, `repair`, `abstain`.
+- `language` is the detected language, set only when it is not the target.
+- `issue` classifies a `repair`: one of `wrong_language`, `wrong_meaning`, `markup_loss`, `wrong_slot`, `ambiguous`, `other`.
+- `reason` is one short factual sentence naming the telling word or form, with no hedging. A `repair` must carry a `reason`.
+- Set `language`, `issue` and `reason` to null when they do not apply.
+"""
+
+# The JSON Schema for the {"reviews": [...]} answer, the structured-output
+# contract. It pins the object/array/string types and the status/issue enums;
+# like TRANSLATIONS_SCHEMA it uses no length or conditional keywords, because
+# strict-mode providers reject them, so "one element per sent id" and
+# "reason required on a repair" are enforced by parse_verdicts instead. Every
+# property is required, with null for the ones that do not apply.
+VERDICT_SCHEMA: dict = {
+    "type": "object",
+    "properties": {
+        "reviews": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "string"},
+                    "status": {"type": "string", "enum": list(STATUSES)},
+                    "language": {"anyOf": [{"type": "string"}, {"type": "null"}]},
+                    "issue": {
+                        "anyOf": [
+                            {"type": "string", "enum": sorted(ISSUE_CLASSES)},
+                            {"type": "null"},
+                        ]
+                    },
+                    "reason": {"anyOf": [{"type": "string"}, {"type": "null"}]},
+                },
+                "required": ["id", "status", "language", "issue", "reason"],
+                "additionalProperties": False,
+            },
+        }
+    },
+    "required": ["reviews"],
+    "additionalProperties": False,
+}
 
 
 class ReviewError(RuntimeError):
@@ -140,25 +208,17 @@ def language_name(lang: str) -> str:
     return LANG_EN.get(lang, lang)
 
 
-def default_model(lang: str) -> str:
-    """The reviewer model: L10N_REVIEW_MODEL, else the built-in default.
+def review_config(lang: str) -> ai_translate.Config:
+    """The reviewer's Config: the L10N_REVIEW_* route, Responses by default.
 
-    Read through the shared settings loader, so the process environment,
-    l10n/<lang>/.env and l10n/.env are consulted in that order without relying
-    on any file having been loaded into the process environment already.
+    Built through the shared ai_translate.Config, so the reviewer reuses the
+    same client construction, protocol handling, JSON-schema downgrade and
+    timeout/retry policy as the translator, layering l10n/.env and
+    l10n/<lang>/.env the same way. Raises ValueError on an unknown protocol.
     """
-    return load_settings(lang).get("L10N_REVIEW_MODEL", "").strip() or DEFAULT_MODEL
-
-
-def default_timeout(lang: str) -> float:
-    raw = load_settings(lang).get("L10N_REVIEW_TIMEOUT", "").strip()
-    if not raw:
-        return DEFAULT_TIMEOUT
-    try:
-        value = float(raw)
-    except ValueError:
-        return DEFAULT_TIMEOUT
-    return value if value > 0 else DEFAULT_TIMEOUT
+    return ai_translate.Config(
+        lang, route_prefix=ROUTE_PREFIX, default_protocol=DEFAULT_PROTOCOL
+    )
 
 
 def _is_token(msgid: str, msgstr: str) -> bool:
@@ -213,8 +273,9 @@ def _compact(entry: dict) -> dict:
 def build_prompt(entries: list[dict], note: str, lang: str, language: str) -> str:
     """The user message: locale metadata, the note, and the batch of entries.
 
-    The verdict contract lives in the agent's system prompt; the message fixes
-    the target language, the locale's guidance and the entries sent.
+    The verdict contract lives in the system message (REVIEW_SYSTEM_PROMPT);
+    this message fixes the target language, the locale's guidance and the
+    entries sent.
     """
     header = (
         f"Target language: {language} (locale {lang}).\n"
@@ -227,7 +288,7 @@ def build_prompt(entries: list[dict], note: str, lang: str, language: str) -> st
         )
     header += (
         f"\nReview every entry below for {language}. Answer each id exactly "
-        "once, following your output contract. Never write a translation.\n"
+        "once, following the output contract. Never write a translation.\n"
     )
     payload = json.dumps(
         [_compact(entry) for entry in entries],
@@ -237,100 +298,45 @@ def build_prompt(entries: list[dict], note: str, lang: str, language: str) -> st
     return header + "\nEntries (JSON array):\n" + payload + "\n"
 
 
-def _event_error(event: dict) -> str:
-    error = event.get("error")
-    if isinstance(error, dict):
-        data = error.get("data")
-        if isinstance(data, dict) and isinstance(data.get("message"), str):
-            return " ".join(data["message"].split())[:300]
-        for key in ("message", "name"):
-            value = error.get(key)
-            if isinstance(value, str):
-                return " ".join(value.split())[:300]
-    if isinstance(error, str):
-        return " ".join(error.split())[:300]
-    return "unknown error"
+def run_review(prompt: str, cfg: ai_translate.Config) -> str:
+    """Run one review request over the config's route; return its reply text.
 
-
-def _text_from_events(stdout: str) -> str:
-    """Concatenate the `text` payloads of an NDJSON event stream, in order.
-
-    Fails closed on a malformed line or an error event. There is no streaming to
-    reassemble: `opencode run --format json` emits one complete text block per
-    step, so the payloads are joined verbatim.
+    The prompt goes as the user message, never in argv, so a whole catalogue
+    cannot exhaust the argument list. A missing credential, a transport error,
+    a refusal or a truncation raises ReviewError; the caller treats any of them
+    as an unrun review.
     """
-    chunks: list[str] = []
-    for lineno, line in enumerate(stdout.splitlines(), 1):
-        if not line.strip():
-            continue
-        try:
-            event = json.loads(line)
-        except ValueError as exc:
-            raise ReviewError(
-                f"opencode emitted a malformed event on line {lineno}"
-            ) from exc
-        if not isinstance(event, dict):
-            raise ReviewError(f"opencode event {lineno} is not a JSON object")
-        event_type = event.get("type")
-        if event_type == "error":
-            raise ReviewError(f"opencode reported an error: {_event_error(event)}")
-        if event_type != "text":
-            continue
-        part = event.get("part")
-        text = part.get("text") if isinstance(part, dict) else event.get("text")
-        if isinstance(text, str):
-            chunks.append(text)
-    return "".join(chunks)
-
-
-def run_review(prompt: str, model: str, timeout: float) -> str:
-    """Run one OpenCode CLI review, returning its concatenated text reply.
-
-    The prompt goes over stdin, never in argv, so a whole catalogue cannot
-    exhaust the argument list. A missing binary, a timeout or a nonzero exit is
-    a ReviewError; the caller treats any of them as an unrun review.
-    """
-    command = [
-        "opencode", "run",
-        "--standalone",
-        "--agent", REVIEW_AGENT,
-        "--model", model,
-        "--format", "json",
+    route = cfg.get_route()
+    if not route.api_key:
+        raise ReviewError(f"{ROUTE_PREFIX}API_KEY is not set")
+    messages = [
+        {"role": "system", "content": REVIEW_SYSTEM_PROMPT},
+        {"role": "user", "content": prompt},
     ]
     try:
-        proc = subprocess.run(
-            command,
-            input=prompt,
-            capture_output=True,
-            text=True,
-            timeout=timeout,
+        result = ai_translate._request(
+            cfg,
+            messages,
+            schema=VERDICT_SCHEMA,
+            schema_name="review_verdicts",
         )
-    except FileNotFoundError as exc:
-        raise ReviewError("the 'opencode' CLI is not on PATH") from exc
-    except subprocess.TimeoutExpired as exc:
-        raise ReviewError(f"opencode timed out after {timeout:g}s") from exc
-    except OSError as exc:
-        raise ReviewError(f"cannot run the 'opencode' CLI: {exc}") from exc
-    if proc.returncode != 0:
-        detail = " ".join((proc.stderr or proc.stdout or "").split())[:300]
-        raise ReviewError(
-            f"opencode exited {proc.returncode}" + (f": {detail}" if detail else "")
-        )
-    return _text_from_events(proc.stdout)
+    except Exception as exc:
+        raise ReviewError(f"review request failed: {exc}") from exc
+    if result.get("finish_reason") == "length":
+        raise ReviewError("the reviewer reply was truncated (finish_reason=length)")
+    return result.get("content") or ""
 
 
 def _extract_json(text: str) -> dict:
-    """Parse the reviewer's JSON object, tolerating stray markdown fences.
+    """Parse the reviewer's JSON object.
 
-    Strict: the reply must parse as one JSON object, so prose around it or a
-    truncated stream fails the pass instead of being partially trusted.
+    Structured output guarantees a bare JSON object - json_schema, or
+    json_object on the automatic downgrade - so the reply must parse as one:
+    prose around it or a truncated stream fails the pass instead of being
+    partially trusted.
     """
-    body = text.strip()
-    if body.startswith("```"):
-        body = re.sub(r"^```(?:json)?\s*", "", body, count=1)
-        body = re.sub(r"\s*```\s*$", "", body, count=1)
     try:
-        parsed = json.loads(body)
+        parsed = json.loads(text)
     except ValueError as exc:
         raise ReviewError("reply is not valid JSON") from exc
     if not isinstance(parsed, dict):
@@ -398,16 +404,16 @@ def parse_verdicts(text: str, expected_ids: list[str]) -> dict[str, dict]:
     return out
 
 
-def review_pass(note: str, path: str, model: str, timeout: float,
+def review_pass(note: str, path: str, cfg: ai_translate.Config,
                 lang: str, language: str):
-    """One CLI invocation over path. Returns (entries, verdicts)."""
+    """One reviewer request over path. Returns (entries, verdicts)."""
     entries = collect_entries(path)
     if not entries:
         raise ReviewError("no translated entries to review")
     prompt = build_prompt(entries, note, lang, language)
-    text = run_review(prompt, model, timeout)
+    text = run_review(prompt, cfg)
     if not text.strip():
-        raise ReviewError("opencode produced no text reply")
+        raise ReviewError("the reviewer produced no text reply")
     verdicts = parse_verdicts(text, [entry["id"] for entry in entries])
     return entries, verdicts
 
@@ -511,9 +517,9 @@ def _print_report(entries: list[dict], verdicts: dict[str, dict], lang: str) -> 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="review_translations.py",
-        description="Review an l10n catalogue that ships a review note with the "
-                    "OpenCode CLI and empty the msgstr a reviewer confidently "
-                    "marks as needing repair.",
+        description="Review an l10n catalogue that ships a review note with a "
+                    "second model and empty the msgstr it confidently marks as "
+                    "needing repair.",
     )
     parser.add_argument(
         "--lang", default=DEFAULT_LANG,
@@ -527,18 +533,18 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--full", action="store_true",
-        help=f"report-only audit of <LANG>/{DOMAIN}.po: one CLI call, no "
+        help=f"report-only audit of <LANG>/{DOMAIN}.po: one reviewer call, no "
              f"changes to any file",
     )
     parser.add_argument(
         "--model", default=None,
-        help=f"reviewer model (default: L10N_REVIEW_MODEL from the locale's "
-             f"settings, then {DEFAULT_MODEL})",
+        help=f"reviewer model (default: {ROUTE_PREFIX}API_MODEL from the "
+             f"locale's settings, then the shared default)",
     )
     parser.add_argument(
         "--timeout", type=float, default=None,
-        help=f"per-invocation timeout in seconds (default: L10N_REVIEW_TIMEOUT, "
-             f"then {DEFAULT_TIMEOUT:g})",
+        help=f"per-request timeout in seconds (default: AI_REQUEST_TIMEOUT from "
+             f"the locale's settings)",
     )
     args = parser.parse_args(argv)
 
@@ -552,15 +558,20 @@ def main(argv: list[str] | None = None) -> int:
     if note is None:
         _warn(f"{lang}: no {REVIEW_NOTE_FILE}; skipping the review.")
         return EXIT_OK
-    if shutil.which("opencode") is None:
-        _warn("the 'opencode' CLI is not on PATH; skipping the review.")
-        return EXIT_OK
 
-    timeout = args.timeout if args.timeout else default_timeout(lang)
-    if timeout <= 0:
-        _warn(f"--timeout must be > 0, got {timeout!r}; skipping the review.")
+    try:
+        cfg = review_config(lang)
+    except ValueError as exc:
+        _warn(f"{lang}: {exc}; skipping the review.")
         return EXIT_OK
-    model = args.model.strip() if args.model else default_model(lang)
+    if args.timeout is not None:
+        if args.timeout <= 0:
+            _warn(f"--timeout must be > 0, got {args.timeout!r}; skipping the review.")
+            return EXIT_OK
+        cfg.request_timeout = args.timeout
+    if args.model:
+        cfg.api_model = args.model.strip()
+    model = cfg.get_route().model
 
     if args.po:
         path = args.po
@@ -576,10 +587,9 @@ def main(argv: list[str] | None = None) -> int:
         return EXIT_OK
 
     if args.full:
-        _log(f"{lang}: read-only audit of {path} (one CLI call)")
+        _log(f"{lang}: read-only audit of {path} (model {model})")
         try:
-            entries, verdicts = review_pass(note, path, model, timeout,
-                                            lang, language)
+            entries, verdicts = review_pass(note, path, cfg, lang, language)
         except ReviewError as exc:
             _warn(f"{lang}: review failed ({exc}); no report produced.")
             return EXIT_OK
@@ -589,8 +599,7 @@ def main(argv: list[str] | None = None) -> int:
 
     _log(f"{lang}: reviewing {path} (model {model})")
     try:
-        entries, verdicts = review_pass(note, path, model, timeout,
-                                        lang, language)
+        entries, verdicts = review_pass(note, path, cfg, lang, language)
     except ReviewError as exc:
         _warn(
             f"{lang}: review failed ({exc}); keeping the AI output, "
@@ -631,8 +640,7 @@ def main(argv: list[str] | None = None) -> int:
 
     _log(f"{lang}: refill done; final review pass...")
     try:
-        entries, verdicts = review_pass(note, path, model, timeout,
-                                        lang, language)
+        entries, verdicts = review_pass(note, path, cfg, lang, language)
     except ReviewError as exc:
         _warn(
             f"{lang}: final review failed ({exc}); import continues with the "

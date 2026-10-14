@@ -98,10 +98,13 @@ the retry count to the SDK, which owns backoff and the per-request deadline, so
 the script no longer enforces a separate wall-clock cap per chunk. Set
 `AI_LOG_LEVEL=DEBUG` (or `AI_DEBUG=1`) to surface the SDK's own retry logs.
 
-The optional LLM reviewer runs through the OpenCode CLI, not this SDK. Its model
-defaults to `opencode-go/claude-haiku-5-5` and is configurable with
-`L10N_REVIEW_MODEL` (process environment, `l10n/<lang>/.env` or `l10n/.env`); see
-`LLM review of the AI output` below.
+The optional LLM reviewer is a second model reached through the same SDK layer as
+`ai_translate.py`, defaulting to the Responses protocol. Its route comes from the
+dedicated `L10N_REVIEW_API_PROTOCOL` / `L10N_REVIEW_API_BASE` /
+`L10N_REVIEW_API_MODEL` / `L10N_REVIEW_API_KEY` keys (process environment,
+`l10n/<lang>/.env` or `l10n/.env`), while the JSON-schema mode and timeout/retry
+policy are the shared `AI_JSON_SCHEMA` / `AI_REQUEST_TIMEOUT` / `AI_MAX_RETRIES`
+knobs; see `LLM review of the AI output` below.
 
 ## The response contract
 
@@ -175,7 +178,7 @@ on `translate`):
 
 Bare `make` also reviews the AI output of every locale that ships a
 `review_note.txt`. For each such locale it reviews `<LANG_CODE>/updated_translated.po`
-with the OpenCode CLI right after `ai-translate`, empties exactly the entries a
+with a second model right after `ai-translate`, empties exactly the entries a
 reviewer confidently marks `repair`, and sends only those back through
 `ai_translate.py`. A locale without a note is never reviewed or touched.
 `make check` never runs the reviewer. See `LLM review of the AI output` below.
@@ -186,8 +189,8 @@ catalogues on disk:
 
     make check-langs
 
-Review a locale's LLM output for wrong-language or wrong-meaning entries with the
-OpenCode CLI (the normal pipeline refills what it flags; only locales with a
+Review a locale's LLM output for wrong-language or wrong-meaning entries with a
+second model (the normal pipeline refills what it flags; only locales with a
 `review_note.txt` are reviewed, see `LLM review of the AI output` below):
 
     ./review_translations.py                 # review sk/updated_translated.po (default lang)
@@ -254,12 +257,12 @@ language:
 Neither catches a translation that is simply in the wrong language or says the
 wrong thing; that is what the LLM review below is for.
 
-### LLM review of the AI output (OpenCode CLI)
+### LLM review of the AI output (second model)
 
 `make translate` runs `review-translations` as its fifth step, after
 `ai-translate` and before `import-translation`. For every locale that ships
 `l10n/<LANG_CODE>/review_note.txt` (currently only `sk`) it reviews the LLM output
-`<LANG_CODE>/updated_translated.po` with the OpenCode CLI and repairs what the
+`<LANG_CODE>/updated_translated.po` with a second model and repairs what the
 reviewer is confident about. A locale without a note is never discovered, looped
 or reviewed, and its catalogue ships unchanged. A hooked locale with no
 intermediate this run is skipped.
@@ -275,29 +278,31 @@ per-entry verdict, never a rewritten translation:
   judgeable with confidence.
 
 `review_translations.py` sends the whole catalogue to the model in **one
-invocation** per pass, not one call per msgid. The prompt (the target language
+request** per pass, not one call per msgid. The system message carries the
+judgement rubric and the output contract; the user message (the target language
 name from `LANG_EN`, the locale's `review_note.txt`, and the compact entry list)
-goes over stdin, never in argv. The reply is read from the CLI's NDJSON event
-stream; a missing, extra or duplicate id, a malformed reply or an error event
-fails the pass closed.
+carries the data. The answer is requested as structured output against a strict
+verdict schema, so the reply is a bare JSON object; a missing, extra or
+duplicate id, a malformed reply or a truncated stream fails the pass closed.
 
 An entry is only ever emptied, never hand-edited. The msgstr flagged `repair` is
 cleared in the intermediate and `ai_translate.py` refills it under its own
 validation - only empty msgstr are filled, so good translations stay. A run is:
 
-1. **no `repair` verdicts** - one CLI call; import continues with the AI output.
+1. **no `repair` verdicts** - one reviewer request; import continues with the AI
+   output.
 2. **`repair` verdicts** - clear exactly those msgstr, run `ai_translate.py
-   <LANG_CODE>` once, then make one final CLI call. A `repair` verdict that
-   survives the refill stops the run **before import** (exit 3) and preserves the
-   intermediate. It never loops.
-3. **a setup failure** - no `review_note.txt`, no `opencode` on `PATH`, an
+   <LANG_CODE>` once, then make one final reviewer request. A `repair` verdict
+   that survives the refill stops the run **before import** (exit 3) and
+   preserves the intermediate. It never loops.
+3. **a setup failure** - no `review_note.txt`, no `L10N_REVIEW_API_KEY`, an
    authentication error, a timeout or an invalid reply - warns and keeps the AI
    output. The review is best-effort: it hands the pipeline a better catalogue
    and never stops a translation run for its own problems.
 
 A locale is reviewed only when it ships a `review_note.txt`, so `make check` never
-invokes the CLI; the deterministic checks in `ai_translate.py` and
-`make check-langs` keep working with no model, network or OpenCode account.
+invokes the reviewer; the deterministic checks in `ai_translate.py` and
+`make check-langs` keep working with no model, network or API account.
 
 #### Per-locale review note
 
@@ -320,37 +325,37 @@ operate on exactly that set.
 `review_note.txt` is excluded from the release archive in `.releaseignore`; it is
 tooling input, not runtime data.
 
-#### Reviewer, model and CLI
+#### Reviewer route and model
 
-The reviewer is the OpenCode CLI agent `l10n-review`
-(`.opencode/agents/l10n-review.md`), a read-only primary agent whose permissions
-deny every tool: it classifies from the prompt alone and cannot edit files or
-call anything. The agent names no language; the target language and the confusion
-guidance both arrive in the prompt, from `LANG_EN` and the locale's note. The
-script runs it as:
+The reviewer is a second model, reached through the same OpenAI-compatible SDK
+layer as `ai_translate.py` (`ai_translate.Config` + `_request`) rather than a
+CLI. It defaults to the **Responses** protocol and reads a dedicated route:
 
-    opencode run --standalone --agent l10n-review --model <model> --format json
+    L10N_REVIEW_API_PROTOCOL=responses   # chat_completions or responses
+    L10N_REVIEW_API_BASE=<base URL>      # defaults to https://api.openai.com/v1
+    L10N_REVIEW_API_MODEL=<model>        # the second model
+    L10N_REVIEW_API_KEY=<key>
 
-The model defaults to `opencode-go/claude-haiku-5-5` and is configurable with
-`L10N_REVIEW_MODEL`, resolved through the same loader as `ai_translate.py`
-(process environment, then `l10n/<LANG_CODE>/.env`, then `l10n/.env`); the
-script's `--model` overrides it. The locale is selected with `--lang <code>`
-(default `sk`). `L10N_REVIEW_TIMEOUT` (default `600`, in seconds) caps a single
-invocation.
+These resolve through the same loader as the translator (process environment,
+then `l10n/<LANG_CODE>/.env`, then `l10n/.env`), so a locale can point its review
+at a different provider or model than its translation. The shared
+`AI_JSON_SCHEMA`, `AI_REQUEST_TIMEOUT` and `AI_MAX_RETRIES` knobs control the
+structured-output mode, the per-request timeout and the retry policy, exactly as
+for translation. The script's `--model` and `--timeout` override the route's
+model and the request timeout; the locale is selected with `--lang <code>`
+(default `sk`).
 
-The CLI runs under the **user's own configured OpenCode account and model
-access**, not the `.env` block above; it needs no key from this repository. The
+The reviewer needs no OpenCode account: it uses the key you configure above. The
 review sends the locale's public UI strings and the context around them to that
-provider, so OpenCode's (and the underlying model provider's) data-retention and
-billing policy applies to the review. Opt a locale in only when that is
-acceptable.
+provider, so its data-retention and billing policy applies. Opt a locale in only
+when that is acceptable.
 
 #### Full-catalogue audit (read-only)
 
 The normal pipeline reviews only the fresh intermediate, never the committed
 catalogue. To audit the whole historical catalogue of every hooked locale once:
 
-    make review-hooked                 # one CLI call per hooked locale, no writes
+    make review-hooked                 # one reviewer call per hooked locale, no writes
     ./review_translations.py --lang sk --full
 
 `--full` reviews `<LANG_CODE>/assistant.po` and prints the per-status report; it
@@ -361,12 +366,12 @@ it is a separate, deliberate step.
 
 #### Outages and failures
 
-The review is optional and never blocks a normal `make`. If the CLI is missing or
-unauthenticated, the account is out of quota, the call times out, or the reply is
-malformed, the step prints a warning and the pipeline imports the AI output
-unchanged. The only non-zero outcome is a `repair` verdict that survives the
-single refill, which stops the run before import so the flagged intermediate can
-be inspected. There is no retry loop.
+The review is optional and never blocks a normal `make`. If the reviewer route's
+key is missing or rejected, the account is out of quota, the call times out, or
+the reply is malformed, the step prints a warning and the pipeline imports the AI
+output unchanged. The only non-zero outcome is a `repair` verdict that survives
+the single refill, which stops the run before import so the flagged intermediate
+can be inspected. There is no retry loop.
 
 ## Updating Translations
 
@@ -377,8 +382,8 @@ all language files:
 
 `make` (default goal `translate`) reviews the AI output of every locale that
 ships a `review_note.txt` after `ai-translate`; a locale without a note, or a run
-without the OpenCode CLI, is skipped with a warning, and `make check` never runs
-the reviewer.
+without a configured reviewer route, is skipped with a warning, and `make check`
+never runs the reviewer.
 
 If the run is interrupted (Ctrl-C, network failure, etc.), just re-run `make`;
 the Python script resumes from the most recent partial state for any language

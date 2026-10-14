@@ -88,8 +88,8 @@ help:
 	@echo "  ai-translate    Run AI translation (all or L10N_LANG=xx)"
 	@echo "  retranslate-fuzzy  Re-extract and re-translate fuzzy entries (all or L10N_LANG=xx)"
 	@echo "  retranslate-msgid  Empty one MSGID everywhere and re-translate it: make retranslate-msgid MSGID=\"...\" [L10N_LANG=xx]"
-	@echo "  review-translations  Review the AI output of every note-hooked locale with the OpenCode CLI and refill flagged entries (run by translate)"
-	@echo "  review-hooked   Read-only full-catalogue audit of every note-hooked locale (one CLI call each, no writes)"
+	@echo "  review-translations  Review the AI output of every note-hooked locale with a second model and refill flagged entries (run by translate)"
+	@echo "  review-hooked   Read-only full-catalogue audit of every note-hooked locale (one reviewer call each, no writes)"
 	@echo "  init-dirs       Create missing language directories"
 
 # Default target: full pipeline + MO compilation (virtual)
@@ -107,7 +107,7 @@ mo: $(MO_FILES)
 # 2. Merges the template into language .po files.
 # 3. Extracts all untranslated strings.
 # 4. Runs the AI translation script on them, writing updated_translated.po.
-# 5. Reviews each note-hooked locale's output with the OpenCode CLI and refills
+# 5. Reviews each note-hooked locale's output with a second model and refills
 #    flagged entries.
 # 6. Merges the new translations back into the .po files.
 # 7. Checks the syntax of the final .po files.
@@ -143,13 +143,13 @@ translate:
 # LLM review of the AI output, run by `translate` after ai-translate and before
 # import-translation. A locale opts in by shipping l10n/<lang>/review_note.txt
 # (REVIEW_HOOKED); for each such locale it reviews the fresh
-# <lang>/updated_translated.po with the OpenCode CLI (one call per pass) and,
+# <lang>/updated_translated.po with a second model (one request per pass) and,
 # when entries are marked `repair`, empties exactly those msgstr, refills them
 # once through ai_translate.py and reviews the result a second time. A repair
 # verdict that survives the refill stops the run before import so the
-# intermediate is preserved; a setup failure (no CLI, no note, timeout, invalid
-# reply) only warns and keeps the AI output. A hooked locale with no intermediate
-# this run is skipped; no other locale is touched.
+# intermediate is preserved; a setup failure (no note, no credential, timeout,
+# invalid reply) only warns and keeps the AI output. A hooked locale with no
+# intermediate this run is skipped; no other locale is touched.
 review-translations:
 	@set -e; \
 		for lang in $(REVIEW_HOOKED); do \
@@ -164,7 +164,7 @@ review-translations:
 			fi; \
 		done
 
-# Read-only full-catalogue audit of every hooked locale: one OpenCode CLI call
+# Read-only full-catalogue audit of every hooked locale: one reviewer request
 # per <lang>/assistant.po, no writes to any file. For the historical
 # contamination audit; the normal `make` never scans the whole old catalogue.
 review-hooked:
