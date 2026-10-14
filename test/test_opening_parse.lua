@@ -27,7 +27,7 @@ local tests = {
         local r = DocUtils.parseIdentifiedBook('{"title":"T","authors":["A","B"],"note":"n"}')
         assert.equal(r.title, "T")
         assert.equal(r.authors, "A, B")
-        assert.equal(r.note, "n")
+        assert.equal(r.description, "n")
     end),
 
     test("parseIdentifiedBook strips code fences", function()
@@ -112,7 +112,7 @@ local tests = {
         assert.notNil(r)
         assert.equal(r.title, "T")
         assert.equal(r.authors, "A")
-        assert.equal(r.note, "n")
+        assert.equal(r.description, "n")
     end),
 
     test("template: multiple author lines join with comma", function()
@@ -182,6 +182,30 @@ local tests = {
         assert.equal(r.authors, "A")
     end),
 
+    test("template description key parsed", function()
+        local r = DocUtils.parseIdentifiedBook("::title{T}::\n::description{Desc}::\n::author{A}::")
+        assert.notNil(r)
+        assert.equal(r.description, "Desc")
+    end),
+
+    test("template note alias fills description when description absent", function()
+        local r = DocUtils.parseIdentifiedBook("::title{T}::\n::note{Note}::")
+        assert.notNil(r)
+        assert.equal(r.description, "Note")
+    end),
+
+    test("template description wins when both present", function()
+        local r = DocUtils.parseIdentifiedBook("::title{T}::\n::description{Desc}::\n::note{Note}::")
+        assert.notNil(r)
+        assert.equal(r.description, "Desc")
+    end),
+
+    test("template empty description braces -> nil", function()
+        local r = DocUtils.parseIdentifiedBook("::title{T}::\n::description{}::")
+        assert.notNil(r)
+        assert.equal(r.description, nil)
+    end),
+
     test("template garbage -> nil", function()
         assert.equal(DocUtils.parseIdentifiedBook('no usable content here'), nil)
     end),
@@ -248,6 +272,28 @@ local tests = {
         assert.equal(r("none", "tavilyapi"), "none")
         assert.equal(r("tavilyapi", "x"), "tavilyapi")
         assert.equal(r(nil, "tavilyapi"), "tavilyapi")
+    end),
+
+    test("buildIdentifyConfirmMessage: description appended outside placeholders", function()
+        local msg = DocUtils.buildIdentifyConfirmMessage(
+            { title = "T", authors = "A", description = "D" })
+        assert.matches(msg, "Title: T")
+        assert.matches(msg, "Author: A")
+        assert.matches(msg, "\nD")
+        assert.notMatches(msg, "%%")
+    end),
+
+    test("buildIdentifyConfirmMessage: missing description leaves no %N", function()
+        local msg = DocUtils.buildIdentifyConfirmMessage({ title = "T", authors = "A" })
+        assert.notMatches(msg, "%%")
+        assert.notMatches(msg, "\nD")
+    end),
+
+    test("buildIdentifyConfirmMessage: unknown fields fall back", function()
+        local msg = DocUtils.buildIdentifyConfirmMessage({})
+        assert.matches(msg, "Title: Unknown Title")
+        assert.matches(msg, "Author: Unknown Author")
+        assert.notMatches(msg, "%%")
     end),
 }
 return helper.runTests("opening_parse", tests)

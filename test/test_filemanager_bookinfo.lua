@@ -760,6 +760,126 @@ end))
 -- Run, then restore the require environment for the rest of the suite
 --------------------------------------------------------------------------------
 
+
+local notification_mod = package.loaded["ui/widget/notification"]
+local identify_tests = {
+    test("identify commit happy path writes and refreshes", function()
+        reset_state()
+        local ui = {}
+        ui.document = { file = "book.epub" }
+        ui.doc_props = {}
+        local writes = {}
+        ui.bookinfo = {
+            setCustomMetadata = function(self, file, props, key, value)
+                table.insert(writes, { key = key, value = value })
+            end,
+        }
+        instance.ui = ui
+
+        local broadcast_count = 0
+        local show_info = false
+        local notify_count = 0
+        local saved_notify = notification_mod.notify
+        notification_mod.notify = function(msg, src) notify_count = notify_count + 1 end
+
+        local UIManager = require("ui/uimanager")
+        local orig_show = UIManager.show
+        local orig_broadcast = UIManager.broadcastEvent
+        UIManager.show = function(self, w)
+            if type(w) == "table" and type(w.text) == "string"
+                and w.text:find("could not be saved", 1, true) then
+                show_info = true
+            end
+        end
+        UIManager.broadcastEvent = function(self, e) broadcast_count = broadcast_count + 1 end
+
+        local FB = require("apps/filemanager/filemanagerbookinfo")
+        local orig_extend = FB.extendProps
+        FB.extendProps = function(props, file) return { refreshed = true } end
+
+        instance:commitIdentifiedMetadata(ui, "book.epub", { title = "T", authors = "A", description = "D" })
+
+        local title_ok, author_ok, desc_ok = false, false, false
+        for _, w in ipairs(writes) do
+            if w.key == "title" and w.value == "T" then title_ok = true end
+            if w.key == "authors" and w.value == "A" then author_ok = true end
+            if w.key == "description" and w.value == "D" then desc_ok = true end
+        end
+        assert.isTrue(title_ok, "title write")
+        assert.isTrue(author_ok, "author write")
+        assert.isTrue(desc_ok, "description write")
+        assert.isTrue(ui.doc_props.refreshed == true, "doc_props refreshed")
+        assert.isTrue(broadcast_count > 0, "broadcast")
+        assert.isTrue(notify_count > 0, "notify")
+        assert.isFalse(show_info, "no error info")
+
+        UIManager.show = orig_show
+        UIManager.broadcastEvent = orig_broadcast
+        FB.extendProps = orig_extend
+        notification_mod.notify = saved_notify
+    end),
+
+    test("identify commit title only", function()
+        reset_state()
+        local ui = {}
+        ui.doc_props = {}
+        local writes = {}
+        ui.bookinfo = {
+            setCustomMetadata = function(self, file, props, key, value)
+                table.insert(writes, { key = key, value = value })
+            end,
+        }
+        instance.ui = ui
+
+        local notify_count = 0
+        local saved_notify = notification_mod.notify
+        notification_mod.notify = function() notify_count = notify_count + 1 end
+        local UIManager = require("ui/uimanager")
+        UIManager.broadcastEvent = function() end
+        local FB = require("apps/filemanager/filemanagerbookinfo")
+        FB.extendProps = function(props, file) return {} end
+
+        instance:commitIdentifiedMetadata(ui, "book.epub", { title = "T" })
+
+        assert.equal(#writes, 1, "only one write")
+        assert.equal(writes[1].key, "title")
+        assert.equal(writes[1].value, "T")
+
+        notification_mod.notify = saved_notify
+    end),
+
+    test("identify commit missing setCustomMetadata shows InfoMessage", function()
+        reset_state()
+        local ui = {}
+        ui.doc_props = {}
+        ui.bookinfo = {}
+        instance.ui = ui
+
+        local show_info = false
+        local notify_count = 0
+        local saved_notify = notification_mod.notify
+        notification_mod.notify = function() notify_count = notify_count + 1 end
+        local UIManager = require("ui/uimanager")
+        local orig_show = UIManager.show
+        UIManager.show = function(self, w)
+            if type(w) == "table" and type(w.text) == "string"
+                and w.text:find("could not be saved", 1, true) then
+                show_info = true
+            end
+        end
+        UIManager.broadcastEvent = function() end
+
+        instance:commitIdentifiedMetadata(ui, "book.epub", { title = "T" })
+
+        assert.isTrue(show_info, "InfoMessage expected")
+        assert.equal(notify_count, 0, "no notify")
+
+        UIManager.show = orig_show
+        notification_mod.notify = saved_notify
+    end),
+}
+
+helper.runTests("assistant_identify_commit", identify_tests)
 local result = helper.runTests("assistant_filemanager_bookinfo", tests)
 
 UIManager.show = function() end

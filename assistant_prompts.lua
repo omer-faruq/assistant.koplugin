@@ -537,12 +537,12 @@ Render the *entire* response (including headers) completely in {language}.
 Reply using EXACTLY this line format, one field per line, and no other text or markdown:
 ::title{<title>}::
 ::author{<author>}::
-::note{<note>}::
+::description{<description>}::
 
 Rules:
 * One ::title{...}:: line with your best-guess title; omit the line (or leave {} empty) if unknown.
 * One ::author{...}:: line per author; repeat the line for multiple authors, or put several names separated by ";" in a single line.
-* ::note{...}:: is optional: one short sentence on confidence or caveats.
+* ::description{...}:: is optional: one or two sentences describing the book (subject, genre, or what it is about), based only on the opening excerpt; no confidence commentary.
 * Values must stay on a single line; do not add code fences or extra prose.
 * Do not describe the task, plan, or the user's intent; output only the tagged lines, no narration.
 

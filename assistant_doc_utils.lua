@@ -2,6 +2,7 @@
 local koutil = require("util")
 local strbuf = require("string.buffer")
 local TextUtils = require("assistant_text_utils")
+local T = require("ffi/util").template
 local _ = require("assistant_gettext")
 
 local M = {}
@@ -762,7 +763,7 @@ end
 --- (::key{value}::), with JSON as a silent fallback; fail-closed on unusable
 --- input. Returns nil when no usable title/authors are present.
 --- @param raw string|nil
---- @return table|nil { title, authors, note }
+--- @return table|nil { title, authors, description }
 function M.parseIdentifiedBook(raw)
     if type(raw) ~= "string" then
         return nil
@@ -771,7 +772,8 @@ function M.parseIdentifiedBook(raw)
     -- Template scan first: line-tagged fields anywhere in the reply.
     do
         local title = nil
-        local note = ""
+        local description = nil
+        local note_alias = nil
         local author_parts = {}
         for key, value in (raw or ""):gmatch("::(%a+){(.-)}::") do
             local k = string.lower(key)
@@ -786,17 +788,22 @@ function M.parseIdentifiedBook(raw)
                             table.insert(author_parts, name)
                         end
                     end
+                elseif k == "description" then
+                    description = v
                 elseif k == "note" then
-                    note = v
+                    note_alias = v
                 end
             end
+        end
+        if description == nil then
+            description = note_alias
         end
         if title or #author_parts > 0 then
             local authors = nil
             if #author_parts > 0 then
                 authors = table.concat(author_parts, ", ")
             end
-            return { title = title, authors = authors, note = note }
+            return { title = title, authors = authors, description = description }
         end
     end
 
@@ -815,11 +822,14 @@ function M.parseIdentifiedBook(raw)
         elseif type(data.authors) == "string" and data.authors ~= "" then
             authors = data.authors
         end
-        local note = (type(data.note) == "string") and data.note or ""
+        local description = (type(data.description) == "string" and data.description ~= "") and data.description or nil
+        if description == nil and type(data.note) == "string" and data.note ~= "" then
+            description = data.note
+        end
         if not title and not authors then
             return nil
         end
-        return { title = title, authors = authors, note = note }
+        return { title = title, authors = authors, description = description }
     end
 
     local function try_decode(text)
@@ -906,6 +916,23 @@ function M.buildIdentifyUserMessage(instructions, opening)
     return instructions .. "\n\nOpening excerpt:\n" .. opening
 end
 
+--- Build the metadata-confirmation dialog text from identified fields.
+--- Missing parts are appended as fallbacks or omitted, so no template
+--- placeholder can survive into the dialog.
+--- @param identified table|nil { title, authors, description }
+--- @return string
+function M.buildIdentifyConfirmMessage(identified)
+    identified = identified or {}
+    local head = T(_("Set book metadata?\nTitle: %1\nAuthor: %2"),
+        identified.title or _("Unknown Title"),
+        identified.authors or _("Unknown Author"))
+    local description = identified.description
+    if type(description) == "string" and description ~= "" then
+        return head .. "\n" .. description
+    end
+    return head
+end
+
 
 
 
@@ -926,7 +953,7 @@ function M.identifyWithRetry(query_fn, message_history, corrective_text)
     end
     local retry_history = message_history
     table.insert(retry_history, { role = "assistant", content = answer or "" })
-    table.insert(retry_history, { role = "user", content = corrective_text or "Reply ONLY with lines in this format:\n::title{...}::\n::author{...}::\n::note{...}::\nNo other text." })
+    table.insert(retry_history, { role = "user", content = corrective_text or "Reply ONLY with lines in this format:\n::title{...}::\n::author{...}::\n::description{...}::\nNo other text." })
     local answer2, err2 = query_fn(retry_history)
     local parsed2 = M.parseIdentifiedBook(answer2)
     return parsed2, answer2

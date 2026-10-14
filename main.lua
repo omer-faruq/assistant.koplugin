@@ -11,6 +11,7 @@ local Language = require("ui/language")
 local LuaSettings = require("luasettings")
 local DataStorage = require("datastorage")
 local ConfirmBox  = require("ui/widget/confirmbox")
+local Notification = require("ui/widget/notification")
 local T 		      = require("ffi/util").template
 local koutil = require("util")
 local ButtonDialog = require("ui/widget/buttondialog")
@@ -1485,6 +1486,38 @@ end
     return true
   end
 
+
+  function Assistant:commitIdentifiedMetadata(ui, file, identified)
+    identified = identified or {}
+    local book_props = ui.doc_props or {}
+    local bi = ui.bookinfo
+    if type(bi) ~= "table" or type(bi.setCustomMetadata) ~= "function" then
+      local ok_mod, BookInfo = pcall(require, "apps/filemanager/filemanagerbookinfo")
+      if ok_mod and type(BookInfo) == "table" then
+        bi = BookInfo:new{ ui = ui }
+      end
+    end
+    if type(bi) ~= "table" or type(bi.setCustomMetadata) ~= "function" then
+      UIManager:show(InfoMessage:new{ text = _("Metadata could not be saved.") })
+      return
+    end
+    if identified.title then
+      pcall(bi.setCustomMetadata, bi, file, book_props, "title", identified.title)
+    end
+    if identified.authors then
+      pcall(bi.setCustomMetadata, bi, file, book_props, "authors", identified.authors)
+    end
+    if identified.description then
+      pcall(bi.setCustomMetadata, bi, file, book_props, "description", identified.description)
+    end
+    local ok_fb, FB = pcall(require, "apps/filemanager/filemanagerbookinfo")
+    if ok_fb and type(FB) == "table" and type(FB.extendProps) == "function" then
+      ui.doc_props = FB.extendProps(ui.doc_props or book_props, file)
+    end
+    UIManager:broadcastEvent(Event:new("BookMetadataChanged"))
+    Notification:notify(_("Book metadata updated."), Notification.SOURCE_ALWAYS_SHOW)
+  end
+
   function Assistant:onAskAIIdentifyBook()
     if not self:isConfigured() then return end
     if not koutil.tableGetValue(self, "ui", "document") then
@@ -1524,7 +1557,7 @@ end
             return self.querier:query(history, _("Identify This Book"), {
                 use_websearch = "none",
             })
-        end, message_history, "Reply ONLY with lines in this format:\n::title{...}::\n::author{...}::\n::note{...}::\nNo other text.")
+        end, message_history, "Reply ONLY with lines in this format:\n::title{...}::\n::author{...}::\n::description{...}::\nNo other text.")
 
         if not identified then
           if answer then end
@@ -1547,39 +1580,13 @@ end
           return
         end
 
-        local message = T(_("Set book metadata?\nTitle: %1\nAuthor: %2\n%3"),
-            identified.title or _("Unknown Title"),
-            identified.authors or _("Unknown Author"),
-            identified.note)
+        local message = DocUtils.buildIdentifyConfirmMessage(identified)
         UIManager:show(ConfirmBox:new{
           text = message,
           ok_text = _("Set"),
           cancel_text = _("Cancel"),
           ok_callback = function()
-            local book_props = ui.doc_props or {}
-            local bi = ui.bookinfo
-            if type(bi) ~= "table" or type(bi.setCustomMetadata) ~= "function" then
-              local ok_mod, BookInfo = pcall(require, "apps/filemanager/filemanagerbookinfo")
-              if ok_mod and type(BookInfo) == "table" then
-                bi = BookInfo:new{ ui = ui }
-              end
-            end
-            if type(bi) ~= "table" or type(bi.setCustomMetadata) ~= "function" then
-              UIManager:show(InfoMessage:new{ text = _("Metadata could not be saved.") })
-              return
-            end
-            if identified.title then
-              pcall(bi.setCustomMetadata, bi, file, book_props, "title", identified.title)
-            end
-            if identified.authors then
-              pcall(bi.setCustomMetadata, bi, file, book_props, "authors", identified.authors)
-            end
-            local ok_fb, FB = pcall(require, "apps/filemanager/filemanagerbookinfo")
-            if ok_fb and type(FB) == "table" and type(FB.extendProps) == "function" then
-              ui.doc_props = FB.extendProps(ui.doc_props or book_props, file)
-            end
-            UIManager:broadcastEvent(Event:new("BookMetadataChanged"))
-            Notification:notify(_("Book metadata updated."), Notification.SOURCE_ALWAYS_SHOW)
+            self:commitIdentifiedMetadata(ui, file, identified)
           end,
         })
       end)
