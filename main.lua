@@ -399,7 +399,9 @@ function Assistant:addToMainMenu(menu_items)
                   },
                   {
                     text_func = function()
-                      return Prompts.getDisplayText(_("Identify This Book"), false,
+                      local identify_prompt_config = koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book") or {}
+                      local identify_ws_flag = koutil.tableGetValue(identify_prompt_config, "use_websearch") and true or false
+                      return Prompts.getDisplayText(_("Identify This Book"), identify_ws_flag,
                         Prompts.isWebSearchEnabled(self.settings))
                     end,
                     callback = function ()
@@ -1553,9 +1555,13 @@ end
           { role = "user", content = user_content },
         }
 
+        local identify_prompt_config = koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book") or {}
+        local identify_ws_mode = koutil.tableGetValue(identify_prompt_config, "use_websearch")
+            and self.settings:readSetting("use_websearch", "none") or "none"
+
         local identified, answer = DocUtils.identifyWithRetry(function(history)
             return self.querier:query(history, _("Identify This Book"), {
-                use_websearch = "none",
+                use_websearch = identify_ws_mode,
             })
         end, message_history, "Reply ONLY with lines in this format:\n::title{...}::\n::author{...}::\n::description{...}::\nNo other text.")
 

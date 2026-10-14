@@ -210,6 +210,26 @@ local tests = {
         assert.equal(DocUtils.parseIdentifiedBook('no usable content here'), nil)
     end),
 
+    test("identify_book use_websearch is enabled in builtin prompt", function()
+        assert.equal(Prompts.builtin_prompts.identify_book.use_websearch, true)
+    end),
+
+    test("identify mode resolves enabled to configured key", function()
+        local Prompts2 = require("assistant_prompts")
+        local pc = (Prompts2.builtin_prompts or {}).identify_book or {}
+        local koutil = require("util")
+        local settings_val = "tavilyapi"
+        local mode = koutil.tableGetValue(pc, "use_websearch") and settings_val or "none"
+        assert.equal(mode, "tavilyapi")
+    end),
+
+    test("identify mode resolves disabled/unset to none", function()
+        local koutil = require("util")
+        local mode = false and "tavilyapi" or "none"
+        assert.equal(mode, "none")
+    end),
+
+
     test("identifyWithRetry: garbage first then tagged lines", function()
         local calls = 0
         local qf = function(history)

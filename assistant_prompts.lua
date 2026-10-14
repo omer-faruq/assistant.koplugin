@@ -355,6 +355,33 @@ You are a summarization expert. Provide a concise and clear summary of the text 
             _("Contextual Connections"),
             _("Cultural Significance"))
     },
+    identify_book = {
+        -- action-only prompt: driven by the menu/dispatcher, never a prompt button.
+        visible = false,
+        use_websearch = true,
+        use_book_context = false,
+        show_suggestions = false,
+        order = 110,
+        desc = _("Ask the AI to identify the open book's title and author from its opening text."),
+        system_prompt = "You identify books from their opening text. Follow the user's output format exactly.",
+        user_prompt = [[You are a book identification assistant. Given the opening text of a book, identify its title and author.
+
+Reply using EXACTLY this line format, one field per line, and no other text or markdown:
+::title{<title>}::
+::author{<author>}::
+::description{<description>}::
+
+Rules:
+* One ::title{...}:: line with your best-guess title; omit the line (or leave {} empty) if unknown.
+* One ::author{...}:: line per author; repeat the line for multiple authors, or put several names separated by ";" in a single line.
+* ::description{...}:: is optional: one or two sentences describing the book (subject, genre, or what it is about), based on the opening excerpt (and verified search results, if any); no confidence commentary.
+* Values must stay on a single line; do not add code fences or extra prose.
+* You may call assistant_web_search to verify the identification (canonical title, full author names) before answering; keep it efficient (1-2 queries).
+* If search conflicts with the excerpt, trust the excerpt.
+* Do not describe the task, plan, or the user's intent; output only the tagged lines, no narration.
+
+Opening excerpt follows.]],
+    },
     wikipedia = {
         text = _("Wikipedia"),
         use_websearch = true,
@@ -522,31 +549,6 @@ Render the *entire* response (including headers) completely in {language}.
             _("Historical and Cultural Context"),
             _("About the Author"),
             _("Similar Books Recommendations"))
-    },
-    identify_book = {
-        -- action-only prompt: driven by the menu/dispatcher, never a prompt button.
-        visible = false,
-        use_websearch = false,
-        use_book_context = false,
-        show_suggestions = false,
-        order = 110,
-        desc = _("Ask the AI to identify the open book's title and author from its opening text."),
-        system_prompt = "You identify books from their opening text. Follow the user's output format exactly.",
-        user_prompt = [[You are a book identification assistant. Given the opening text of a book, identify its title and author.
-
-Reply using EXACTLY this line format, one field per line, and no other text or markdown:
-::title{<title>}::
-::author{<author>}::
-::description{<description>}::
-
-Rules:
-* One ::title{...}:: line with your best-guess title; omit the line (or leave {} empty) if unknown.
-* One ::author{...}:: line per author; repeat the line for multiple authors, or put several names separated by ";" in a single line.
-* ::description{...}:: is optional: one or two sentences describing the book (subject, genre, or what it is about), based only on the opening excerpt; no confidence commentary.
-* Values must stay on a single line; do not add code fences or extra prose.
-* Do not describe the task, plan, or the user's intent; output only the tagged lines, no narration.
-
-Opening excerpt follows.]],
     },
     annotations = {
         use_websearch = false,
