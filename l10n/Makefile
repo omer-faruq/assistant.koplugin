@@ -89,7 +89,7 @@ help:
 	@echo "  retranslate-fuzzy  Re-extract and re-translate fuzzy entries (all or L10N_LANG=xx)"
 	@echo "  retranslate-msgid  Empty one MSGID everywhere and re-translate it: make retranslate-msgid MSGID=\"...\" [L10N_LANG=xx]"
 	@echo "  review-translations  Review the AI output of every note-hooked locale with a second model and refill flagged entries (run by translate)"
-	@echo "  review-hooked   Read-only full-catalogue audit of every note-hooked locale (one reviewer call each, no writes)"
+	@echo "  review-hooked   Read-only full-catalogue audit of every note-hooked locale (chunked reviewer pass each, no writes)"
 	@echo "  init-dirs       Create missing language directories"
 
 # Default target: full pipeline + MO compilation (virtual)
@@ -143,8 +143,9 @@ translate:
 # LLM review of the AI output, run by `translate` after ai-translate and before
 # import-translation. A locale opts in by shipping l10n/<lang>/review_note.txt
 # (REVIEW_HOOKED); for each such locale it reviews the fresh
-# <lang>/updated_translated.po with a second model (one request per pass) and,
-# when entries are marked `repair`, empties exactly those msgstr, refills them
+# <lang>/updated_translated.po with a second model in chunks (one request per
+# L10N_REVIEW_CHUNK_SIZE entries) and, when entries are marked `repair`, empties
+# exactly those msgstr, refills them
 # once through ai_translate.py and reviews the result a second time. A repair
 # verdict that survives the refill stops the run before import so the
 # intermediate is preserved; a setup failure (no note, no credential, timeout,
@@ -164,8 +165,8 @@ review-translations:
 			fi; \
 		done
 
-# Read-only full-catalogue audit of every hooked locale: one reviewer request
-# per <lang>/assistant.po, no writes to any file. For the historical
+# Read-only full-catalogue audit of every hooked locale: one chunked reviewer
+# pass per <lang>/assistant.po, no writes to any file. For the historical
 # contamination audit; the normal `make` never scans the whole old catalogue.
 review-hooked:
 	@set -e; \

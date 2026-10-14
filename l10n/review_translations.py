@@ -6,17 +6,19 @@ that came back in the wrong language, or with the wrong meaning, counts as done
 forever. Its output-time checks catch a wrong-slot answer (lost markup or a
 ghost %N), but a msgid whose translation is simply in the wrong language, or
 says the wrong thing, still ships wrong. This harness asks a reviewer model one
-question about the whole catalogue - is this translation actually correct for
-the target language? - and, when it confidently says no, empties exactly those
-msgstr so the normal pipeline refills them. It never writes a translation
-itself.
+question - is this translation actually correct for the target language? - and,
+when it confidently says no, empties exactly those msgstr so the normal pipeline
+refills them. It never writes a translation itself.
 
-One request reviews every entry of one catalogue; the reply is a compact
-per-entry verdict (`pass`, `repair` or `abstain`), not one call per msgid.
-`repair` is reserved for a strong, explicit wrong-language or wrong-meaning
-finding; a short or ambiguous string abstains instead. An entry whose msgstr
-equals its msgid or is nothing but format placeholders is never sent: it is not
-prose to judge.
+The catalogue is reviewed in chunks (L10N_REVIEW_CHUNK_SIZE, default 50
+entries), each chunk sent as its own request and answered with a compact
+per-entry verdict (`pass`, `repair` or `abstain`), not one call per msgid. A
+whole catalogue in one request can overflow the reviewer's output budget, so
+chunking keeps each verdict set small; a truncated or malformed chunk fails the
+whole pass. `repair` is reserved for a strong, explicit wrong-language or
+wrong-meaning finding; a short or ambiguous string abstains instead. An entry
+whose msgstr equals its msgid or is nothing but format placeholders is never
+sent: it is not prose to judge.
 
 Modes:
     review_translations.py [--lang LANG]            review LANG/updated_translated.po
@@ -45,7 +47,8 @@ layer as ai_translate.py, defaulting to the Responses protocol. Its route is
 read from L10N_REVIEW_API_PROTOCOL / L10N_REVIEW_API_BASE / L10N_REVIEW_API_MODEL
 / L10N_REVIEW_API_KEY, resolved through the shared loader (process environment,
 then l10n/<LANG>/.env, then l10n/.env); the JSON-schema mode and timeout/retry
-policy are the shared AI_JSON_SCHEMA / AI_REQUEST_TIMEOUT / AI_MAX_RETRIES knobs.
+policy are the shared AI_JSON_SCHEMA / AI_REQUEST_TIMEOUT / AI_MAX_RETRIES knobs,
+and L10N_REVIEW_CHUNK_SIZE sets how many entries each request carries.
 See l10n/README.md.
 """
 from __future__ import annotations
@@ -57,6 +60,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 
 import polib
 
@@ -81,6 +85,13 @@ DEFAULT_LANG = "sk"
 # ai_translate.Config.
 ROUTE_PREFIX = "L10N_REVIEW_"
 DEFAULT_PROTOCOL = "responses"
+
+# Entries per reviewer request. A whole catalogue in one request can overflow
+# the model's output budget on large catalogues (finish_reason=length), so each
+# request carries a slice small enough that the verdict JSON fits comfortably.
+# Overridable with L10N_REVIEW_CHUNK_SIZE through the shared settings loader.
+DEFAULT_CHUNK_SIZE = 50
+CHUNK_SIZE_KEY = "L10N_REVIEW_CHUNK_SIZE"
 
 STATUS_PASS = "pass"
 STATUS_REPAIR = "repair"
@@ -221,6 +232,32 @@ def review_config(lang: str) -> ai_translate.Config:
     )
 
 
+def resolve_chunk_size(lang: str) -> int:
+    """Entries per reviewer request, from L10N_REVIEW_CHUNK_SIZE or the default.
+
+    The key resolves through the shared loader (process environment, then
+    l10n/<lang>/.env, then l10n/.env). A non-numeric or non-positive value warns
+    and falls back to DEFAULT_CHUNK_SIZE rather than failing the review.
+    """
+    raw = ai_translate.load_settings(lang).get(CHUNK_SIZE_KEY, "")
+    if raw == "":
+        return DEFAULT_CHUNK_SIZE
+    try:
+        value = int(raw)
+    except ValueError:
+        _warn(
+            f"{CHUNK_SIZE_KEY}={raw!r} is not an integer; "
+            f"using {DEFAULT_CHUNK_SIZE}."
+        )
+        return DEFAULT_CHUNK_SIZE
+    if value <= 0:
+        _warn(
+            f"{CHUNK_SIZE_KEY}={raw!r} must be > 0; using {DEFAULT_CHUNK_SIZE}."
+        )
+        return DEFAULT_CHUNK_SIZE
+    return value
+
+
 def _is_token(msgid: str, msgstr: str) -> bool:
     if msgstr.strip() == msgid.strip():
         return True
@@ -301,8 +338,8 @@ def build_prompt(entries: list[dict], note: str, lang: str, language: str) -> st
 def run_review(prompt: str, cfg: ai_translate.Config) -> str:
     """Run one review request over the config's route; return its reply text.
 
-    The prompt goes as the user message, never in argv, so a whole catalogue
-    cannot exhaust the argument list. A missing credential, a transport error,
+    The prompt goes as the user message, never in argv, so a chunk cannot
+    exhaust the argument list. A missing credential, a transport error,
     a refusal or a truncation raises ReviewError; the caller treats any of them
     as an unrun review.
     """
@@ -405,17 +442,47 @@ def parse_verdicts(text: str, expected_ids: list[str]) -> dict[str, dict]:
 
 
 def review_pass(note: str, path: str, cfg: ai_translate.Config,
-                lang: str, language: str):
-    """One reviewer request over path. Returns (entries, verdicts)."""
+                lang: str, language: str,
+                chunk_size: int | None = None):
+    """One review pass over path, one request per chunk. Returns (entries, verdicts).
+
+    The catalogue is split into chunks of L10N_REVIEW_CHUNK_SIZE entries so a
+    large catalogue cannot overflow the reviewer's output budget; each chunk is
+    sent as its own self-contained request (same locale header and note, its
+    entry slice) and validated against its own ids. Verdicts merge back into
+    catalogue order. A truncated, refused or invalid chunk fails the whole pass.
+    """
     entries = collect_entries(path)
     if not entries:
         raise ReviewError("no translated entries to review")
-    prompt = build_prompt(entries, note, lang, language)
-    text = run_review(prompt, cfg)
-    if not text.strip():
-        raise ReviewError("the reviewer produced no text reply")
-    verdicts = parse_verdicts(text, [entry["id"] for entry in entries])
-    return entries, verdicts
+    if chunk_size is None:
+        chunk_size = resolve_chunk_size(lang)
+    chunks = [
+        entries[start:start + chunk_size]
+        for start in range(0, len(entries), chunk_size)
+    ]
+    _log(
+        f"{lang}: sending {len(entries)} entries in {len(chunks)} chunk(s) of up "
+        f"to {chunk_size}; the reply can take a few minutes, please wait..."
+    )
+    verdicts: dict[str, dict] = {}
+    for index, chunk in enumerate(chunks, 1):
+        prompt = build_prompt(chunk, note, lang, language)
+        _log(f"{lang}: chunk {index}/{len(chunks)}: sending {len(chunk)} entries...")
+        started = time.monotonic()
+        text = run_review(prompt, cfg)
+        elapsed = time.monotonic() - started
+        if not text.strip():
+            raise ReviewError(
+                f"chunk {index}/{len(chunks)}: the reviewer produced no text reply"
+            )
+        chunk_verdicts = parse_verdicts(text, [entry["id"] for entry in chunk])
+        _log(
+            f"{lang}: chunk {index}/{len(chunks)}: reply after {elapsed:.0f}s, "
+            f"{len(chunk_verdicts)} verdicts OK"
+        )
+        verdicts.update(chunk_verdicts)
+    return entries, {entry["id"]: verdicts[entry["id"]] for entry in entries}
 
 
 def clear_entries(path: str, entries: list[dict], repair_ids: set[str]) -> list[str]:
@@ -533,8 +600,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--full", action="store_true",
-        help=f"report-only audit of <LANG>/{DOMAIN}.po: one reviewer call, no "
-             f"changes to any file",
+        help=f"report-only audit of <LANG>/{DOMAIN}.po: one chunked reviewer "
+             f"pass, no changes to any file",
     )
     parser.add_argument(
         "--model", default=None,

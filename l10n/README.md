@@ -277,23 +277,24 @@ per-entry verdict, never a rewritten translation:
 - `abstain` - too short, a proper noun or a technical token, or otherwise not
   judgeable with confidence.
 
-`review_translations.py` sends the whole catalogue to the model in **one
-request** per pass, not one call per msgid. The system message carries the
-judgement rubric and the output contract; the user message (the target language
-name from `LANG_EN`, the locale's `review_note.txt`, and the compact entry list)
-carries the data. The answer is requested as structured output against a strict
-verdict schema, so the reply is a bare JSON object; a missing, extra or
-duplicate id, a malformed reply or a truncated stream fails the pass closed.
+`review_translations.py` reviews the catalogue in **chunks**
+(`L10N_REVIEW_CHUNK_SIZE`, default 50 entries), one request per chunk, not one
+call per msgid. The system message carries the judgement rubric and the output
+contract; each user message carries the target language name from `LANG_EN`, the
+locale's `review_note.txt` and its slice of the compact entry list, so every
+chunk is self-contained. The answer is requested as structured output against a
+strict verdict schema, so the reply is a bare JSON object; a missing, extra or
+duplicate id, a malformed reply or a truncated chunk fails the whole pass closed.
 
 An entry is only ever emptied, never hand-edited. The msgstr flagged `repair` is
 cleared in the intermediate and `ai_translate.py` refills it under its own
 validation - only empty msgstr are filled, so good translations stay. A run is:
 
-1. **no `repair` verdicts** - one reviewer request; import continues with the AI
-   output.
+1. **no `repair` verdicts** - one chunked reviewer pass; import continues with
+   the AI output.
 2. **`repair` verdicts** - clear exactly those msgstr, run `ai_translate.py
-   <LANG_CODE>` once, then make one final reviewer request. A `repair` verdict
-   that survives the refill stops the run **before import** (exit 3) and
+   <LANG_CODE>` once, then make one final chunked reviewer pass. A `repair`
+   verdict that survives the refill stops the run **before import** (exit 3) and
    preserves the intermediate. It never loops.
 3. **a setup failure** - no `review_note.txt`, no `L10N_REVIEW_API_KEY`, an
    authentication error, a timeout or an invalid reply - warns and keeps the AI
@@ -341,9 +342,18 @@ then `l10n/<LANG_CODE>/.env`, then `l10n/.env`), so a locale can point its revie
 at a different provider or model than its translation. The shared
 `AI_JSON_SCHEMA`, `AI_REQUEST_TIMEOUT` and `AI_MAX_RETRIES` knobs control the
 structured-output mode, the per-request timeout and the retry policy, exactly as
-for translation. The script's `--model` and `--timeout` override the route's
-model and the request timeout; the locale is selected with `--lang <code>`
-(default `sk`).
+for translation:
+
+    L10N_REVIEW_CHUNK_SIZE=50            # entries per reviewer request
+                                         # (default 50; a non-numeric or
+                                         # non-positive value warns and falls
+                                         # back to the default)
+
+Each request carries at most this many entries, so a large catalogue is reviewed
+as several self-contained requests instead of one that can overflow the model's
+output budget. The script's `--model` and `--timeout` override the route's model
+and the request timeout; the locale is selected with `--lang <code>` (default
+`sk`).
 
 The reviewer needs no OpenCode account: it uses the key you configure above. The
 review sends the locale's public UI strings and the context around them to that
@@ -355,7 +365,7 @@ when that is acceptable.
 The normal pipeline reviews only the fresh intermediate, never the committed
 catalogue. To audit the whole historical catalogue of every hooked locale once:
 
-    make review-hooked                 # one reviewer call per hooked locale, no writes
+    make review-hooked                 # chunked reviewer pass per hooked locale, no writes
     ./review_translations.py --lang sk --full
 
 `--full` reviews `<LANG_CODE>/assistant.po` and prints the per-status report; it
