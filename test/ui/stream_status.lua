@@ -72,14 +72,15 @@ local mock_assistant = {
 ---showStremDialog closes the dialog before it returns (every code path does),
 --- so UIManager.close is muted for the duration of the call and the widget is
 --- kept on screen for the harness to shoot.
----@param phase string|nil value for self.stream_phase (nil == "waiting")
----@param text string|nil chunk handed to the trunk callback
----@return table the live StreamDialog
+--- kept on screen for the harness to shoot.
 
 -- Dialogs built so far: the shots are captured on later ticks, so the widget
 -- the geometry comes from has to outlive its build function.
 local built = {}
 
+--- @param phase string|nil value for self.stream_phase (nil == "waiting")
+--- @param text string|nil chunk handed to the trunk callback
+--- @return table the live StreamDialog
 local function build_stream_dialog(phase, text)
     local captured
     local saved_show = UIManager.show

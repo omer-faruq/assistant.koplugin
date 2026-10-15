@@ -138,7 +138,7 @@ end
 ---                               top to bottom
 ---@param path string PNG file path
 ---@param opts table|nil optional thresholds/resolutions
----@return table fingerprint, string|nil err
+---@return table|nil fingerprint, string|nil err
 function M.fingerprint(path, opts)
     opts = opts or {}
     local ink_max = opts.ink_max or M.INK_MAX

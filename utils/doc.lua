@@ -764,6 +764,7 @@ end
 --- input. Returns nil when no usable title/authors are present.
 --- @param raw string|nil
 --- @return table|nil { title, authors, description }
+--- @return string|nil status
 function M.parseIdentifiedBook(raw)
     if type(raw) ~= "string" then
         return nil, "unparseable"
@@ -961,7 +962,9 @@ end
 --- @param query_fn function(history) -> (answer, err)
 --- @param message_history table[]
 --- @param corrective_text string
---- @return table|nil parsed, string|nil last_answer
+--- @return table|nil parsed
+--- @return string|nil last_answer
+--- @return string|nil status
 function M.identifyWithRetry(query_fn, message_history, corrective_text)
     message_history = message_history or {}
     local answer, err = query_fn(message_history)

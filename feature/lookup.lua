@@ -38,7 +38,7 @@ end
 --- explainer when the user has never chosen; once chosen, never asked again.
 --- Long ("translate") selections never prompt.
 ---@param choice boolean|nil Stored smart-lookup setting
----@param string mode Result of M.lookup_mode_for_selection
+---@param mode string Result of M.lookup_mode_for_selection
 ---@return string route One of "ask", "dictionary" or "translate"
 function M.resolve_translate_route(choice, mode)
     if mode ~= "dictionary" then return "translate" end

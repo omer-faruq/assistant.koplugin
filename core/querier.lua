@@ -380,28 +380,6 @@ local function formatRequestTitle(text)
     return TextUtils.truncateToHeadUtf8Safe(text:gsub("%s+", " "), 60)
 end
 
---- Query the AI with the provided message history.
---- Handles both stream and non-stream modes, including multi-turn tool-call loops.
----
---- @param message_history table[]  full conversation history for this request
---- @param title string|number|nil  label naming the request (prompt/feature name,
----                                 or the user's question). Shown by the
----                                 non-stream progress toast and the streaming
----                                 dialog title.
---- @param opts table|nil  explicit request options:
----   - `use_websearch`: string — override the global use_websearch setting
----     ("none" or a provider key). When nil, the global setting is used.
----   - `use_stream_mode`: boolean — override the global stream setting.
----
---- Non-stream tool-call loop:
----   handler:query() returns a table { __is_tool_call=true, keywords=..., ... }
----   → Querier executes the appropriate search API
----   → appends the tool result messages via ToolExecutor.appendToolResult()
----   → repeats until a plain-string answer or an error
----
---- Stream tool-call loop (TODO: not fully shown here; stream does not support
---- tool calls in the current architecture — use non-stream for websearch).
----
 --- Normalize a use_websearch option into the wire value. Exported for tests.
 --- @param ws_opt any caller option (boolean/string/nil)
 --- @param setting_value string configured global setting
