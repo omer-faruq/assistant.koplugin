@@ -8,7 +8,7 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 
 ## Core
 
-- `main.lua` — plugin init, TouchMenu registration, dispatcher actions/gestures, and dictionary-popup button. `core/hooks.lua` owns all KOReader monkey patches (Book Description translation button, built-in translation override, auto-recap, and ScrollHtmlWidget pagination). `Assistant:_showAddProviderDialog` / `_showAddWebSearchDialog` delegate to the registries.
+- `main.lua` — slim plugin entry: init, dispatcher actions and 1-line delegates to owning modules. `feature/book_actions.lua` owns book features, identification and the FileManager long-press row; `core/hooks.lua` owns all KOReader monkey patches (Book Description translation button, built-in translation override, auto-recap, ScrollHtmlWidget pagination, highlight-menu and dictionary-popup buttons); `dialogs/settings_menu.lua` owns the main menu, provider dialog and help/about dialogs. `Assistant:_showAddProviderDialog` / `_showAddWebSearchDialog` delegate to the registries.
 - `_meta.lua` — version (`X.Y-dev`), manually bumped on `main` after a release tag; CI rewrites it from the tag during packaging.
 - `core/querier.lua` (`Querier`) — loads handlers, drives stream/non-stream paths, runs the web-search tool loop (max 3 rounds feeding results back), and parses SSE into one unified format.
 - `core/tool_executor.lua` (`ToolExecutor`) — normalizes tool-calling across the `openai`/`anthropic`/`gemini` wire formats; loads enabled search tools from `SearchRegistry` at query time.
@@ -49,7 +49,7 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 - `dialogs/feature.lua` — book features: Recap/X-Ray/annotations.
 - `dialogs/dict.lua` — AI Dictionary + Term X-Ray.
 - `dialogs/provider.lua` — provider/model settings (`ProviderDialog`, via `Assistant:showProviderDialog`).
-- `dialogs/settings_menu.lua` — settings menu builders (`genMenuSettings`/`genWebSearchSubMenuItem`/`genDictionaryOutputMenu`).
+- `dialogs/settings_menu.lua` — settings menu builders (`genMenuSettings`/`genWebSearchSubMenuItem`/`genDictionaryOutputMenu`) plus main menu, provider dialog and help/about dialogs.
 - `dialogs/model_picker.lua` — `showPickerDialog`/`fetchModels`; call inside `Trapper:wrap`.
 - `dialogs/viewer.lua` (`ResultViewer`) — scrollable result viewer.
 - `dialogs/quicknote.lua` — quick-note capture; `core/updater.lua` — GitHub release check; `dialogs/mdparser.lua` — hoedown → markdown.lua fallback.
@@ -64,7 +64,7 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 - `utils/text.lua` — truncation, selection cleanup, PTF bold, page-text flattening, single-message renderer.
 - `utils/net.lua` — `httpRequest`, JSON fetch, headers, error messages, online guard.
 - `utils/doc.lua` — book/chapter/page extraction, page info, dialog field trim/validate.
-- `feature/lookup.lua` — selection routing: `lookup_mode_for_selection` (CJK runs are measured in characters, not words, because `koutil.splitToWords` collapses a CJK run into one token) and `resolve_translate_route` (whether a short selection may prompt the explainer). Consumed by `main.lua`'s `showTranslateOrDictionary`.
+- `feature/lookup.lua` — selection routing: `lookup_mode_for_selection` (CJK runs are measured in characters, not words, because `koutil.splitToWords` collapses a CJK run into one token) and `resolve_translate_route` (whether a short selection may prompt the explainer), plus `showTranslateOrDictionary`.
 - `core/gettext.lua` — isolated MO shim, `textdomain "assistant"`, reads `l10n/*/assistant.mo` (MO, not PO); exposes the same `_`/`N_`/`C_`/`NC_` API as upstream, keeping plugin strings out of KOReader's core catalog.
 - `core/prompts.lua` — prompt templates.
 - Helpers: prefer `koutil.tableGetValue`, `koutil.tableDeepCopy`/`tableSize`/`tableEquals` over manual table loops; `util.orderedPairs(t)` for deterministic key order. Error handling returns `nil, err` (or `false, err` for HTTP); callers check the first return value.
@@ -76,7 +76,8 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 
 | Path | Purpose |
 |---|---|
-| `main.lua` | Plugin entry, dispatcher actions, menu hooks |
+| `main.lua` | Slim plugin entry, dispatcher actions, init, delegates |
+| `feature/book_actions.lua` | Book features, identification flow, FileManager row |
 | `core/querier.lua` | Core query engine, handler loading, SSE parsing, tool loop |
 | `api_handlers/base.lua` | Handler base class |
 | `core/provider_registry.lua` | UI provider add/edit/merge/validate |

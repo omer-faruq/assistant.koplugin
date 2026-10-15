@@ -17,6 +17,10 @@ local T = ffiutil.template
 local lfs = require("libs/libkoreader-lfs")
 local DocUtils = require("utils/doc")
 local NetUtils = require("utils/net")
+local Prompts = require("core/prompts")
+local TextUtils = require("utils/text")
+local Device = require("device")
+local Event = require("ui/event")
 
 local M = {}
 
@@ -252,6 +256,410 @@ function M.setupRecap(assistant)
         end
         return ReaderUI._assistant_original_doShowReader(self, file, provider, seamless)
     end
+end
+
+--- Register the reader highlight-dialog entry point.
+---@param assistant table plugin instance
+function M.setupHighlightMainButton(assistant)
+  assistant.ui.highlight:addToHighlightDialog("ai_assistant", function(_reader_highlight_instance)
+    return {
+      text = _("AI Assistant"),
+      enabled = Device:hasClipboard(),
+      callback = function()
+        if not assistant:isConfigured() then
+          return
+        end
+
+        NetUtils.runWhenOnlineFast(function()
+          local Updater = require("core/updater")
+          Updater.checkForUpdates(assistant)
+          UIManager:nextTick(function()
+            if not assistant.assistant_dialog then return end
+            assistant.assistant_dialog:showAskDialog(_reader_highlight_instance.selected_text.text)
+          end)
+        end)
+      end,
+      hold_callback = function()
+        assistant:_help_dialog()
+      end,
+    }
+  end)
+end
+
+--- Rebuild the highlight-menu buttons from the current showOnMain settings.
+---@param assistant table plugin instance
+function M.rebuildShowOnMainButtons(assistant)
+  if not assistant.ui.document then return end
+
+  Prompts.invalidateCache()
+  Prompts.getMergedPrompts(assistant.config:getFeature("prompts"))
+
+  local showOnMain = Prompts.getSortedPrompts(function (prompt, idx)
+    if prompt.visible == false then
+      return false
+    end
+
+    local menukey = string.format("assistant_%02d_%s", prompt.order or 1000, idx)
+    local settingkey = "showOnMain_" .. menukey
+    if assistant.settings:has(settingkey) then
+      return assistant.settings:isTrue(settingkey)
+    end
+
+    if prompt.show_on_main_popup then
+      return true
+    end
+
+    return false
+  end, Prompts.isWebSearchEnabled(assistant.settings)) or {}
+
+  for _, tab in ipairs(showOnMain) do
+    M.addMainButton(assistant, tab.idx, tab)
+  end
+end
+
+---@param assistant table plugin instance
+---@param prompt_idx string prompt key
+---@param prompt table prompt config
+function M.addMainButton(assistant, prompt_idx, prompt)
+  local menukey = string.format("assistant_%02d_%s", prompt.order, prompt_idx)
+  assistant.ui.highlight:removeFromHighlightDialog(menukey)
+  assistant.ui.highlight:addToHighlightDialog(menukey, function(_reader_highlight_instance)
+    local ws_enabled = Prompts.isWebSearchEnabled(assistant.settings)
+    local btntext = Prompts.getDisplayText(prompt.text or prompt_idx,
+      prompt.use_websearch or false, ws_enabled) .. " (AI)"
+    return {
+      text = btntext,
+      callback = function()
+        if prompt_idx == "quick_note" then
+          Trapper:wrap(function()
+            if not assistant.quicknote then
+              local QuickNote = require("dialogs/quicknote")
+              assistant.quicknote = QuickNote:new(assistant)
+            end
+            assistant.quicknote:saveNote(nil, _reader_highlight_instance.selected_text.text)
+          end)
+        else
+          NetUtils.runWhenOnlineFast(function()
+            Trapper:wrap(function()
+              if prompt.order == -10 and prompt_idx == "dictionary" then
+                local showDictionaryDialog = require("dialogs/dict")
+                showDictionaryDialog(assistant, _reader_highlight_instance.selected_text.text)
+              elseif prompt_idx == "term_xray" then
+                local showDictionaryDialog = require("dialogs/dict")
+                showDictionaryDialog(assistant, _reader_highlight_instance.selected_text.text, nil, "term_xray")
+              elseif prompt_idx == "translate" then
+                assistant:showTranslateOrDictionary(_reader_highlight_instance.selected_text.text)
+              else
+                if not assistant.assistant_dialog then return end
+                assistant.assistant_dialog:runPrompt(_reader_highlight_instance.selected_text.text, prompt_idx)
+              end
+            end)
+          end)
+        end
+      end,
+      hold_callback = function()
+        UIManager:nextTick(function()
+          UIManager:show(ConfirmBox:new{
+            text = string.format(_("Remove [%s] from Highlight Menu?"), btntext),
+            ok_text = _("Remove"),
+            ok_callback = function()
+              assistant:handleEvent(Event:new("AssistantSetButton", {order=prompt.order, idx=prompt_idx}, "remove"))
+              assistant.ui.highlight:onClose(true)
+            end
+          })
+        end)
+      end,
+    }
+  end)
+end
+
+---@param assistant table plugin instance
+---@param btnconf table { order: number, idx: string }
+---@param action string "add" or "remove"
+function M.onAssistantSetButton(assistant, btnconf, action)
+  local menukey = string.format("assistant_%02d_%s", btnconf.order, btnconf.idx)
+  local settingkey = "showOnMain_" .. menukey
+
+  local idx = btnconf.idx
+  local prompt = Prompts.getMergedPrompts(
+    assistant.config:getFeature("prompts"))[idx]
+  local ws_enabled = Prompts.isWebSearchEnabled(assistant.settings)
+  local display_text = Prompts.getDisplayText(prompt.text or idx, prompt.use_websearch or false, ws_enabled)
+
+  if action == "add" then
+    assistant.settings:makeTrue(settingkey)
+    assistant.updated = true
+    M.addMainButton(assistant, idx, prompt)
+    UIManager:show(InfoMessage:new{
+      text = TextUtils.bold_format(
+        T(_("Added <b>[%1 (AI)]</b>"), display_text)
+      ),
+      icon = "notice-info",
+      timeout = 3
+    })
+  elseif action == "remove" then
+    assistant.settings:makeFalse(settingkey)
+    assistant.updated = true
+    assistant.ui.highlight:removeFromHighlightDialog(menukey)
+    UIManager:show(InfoMessage:new{
+      text = TextUtils.bold_format(
+        T(_("Removed <b>[%1 (AI)]</b>"), display_text)
+      ),
+      icon = "notice-info",
+      timeout = 3
+    })
+  else
+    logger.warn("wrong event args", menukey, action)
+  end
+
+  return true
+end
+
+--- Register Assistant buttons with the dict popup API when available.
+---@param assistant table plugin instance
+function M.setupDictButtons(assistant)
+  if assistant.ui and assistant.ui.dictionary
+      and type(assistant.ui.dictionary.addToDictButtons) == "function" then
+    local button_ids = {}
+    for _, button in ipairs(M.buildAssistantDictButtons(assistant, nil, true)) do
+      assistant.ui.dictionary:addToDictButtons(button)
+      table.insert(button_ids, button.id)
+    end
+    M.groupDictButtonsInDefaultLayout(assistant, button_ids)
+    M.restoreDictButtonsInUserLayout(assistant, button_ids)
+  end
+end
+
+-- Is `button_id` used anywhere in a dict button layout (a list of rows of ids)?
+local function layoutHasButtonId(layout, button_id)
+  for _, row in ipairs(layout or {}) do
+    for _, id in ipairs(row) do
+      if id == button_id then return true end
+    end
+  end
+  return false
+end
+
+---@param assistant table plugin instance
+---@param dict_popup_arg table|nil popup for the legacy hook
+---@param live boolean|nil true when registering via the new API
+---@return table specs button specs
+function M.buildAssistantDictButtons(assistant, dict_popup_arg, live)
+  if not assistant.config then return {} end
+
+  local plugin_buttons = {}
+  local enabled_count = 0
+
+  local function addButton(setting_key, default, spec)
+    if assistant.settings:readSetting(setting_key, default) then
+      enabled_count = enabled_count + 1
+    elseif not live then
+      return
+    end
+    if live then
+      spec.menu_text = spec.menu_text or spec.text
+      spec.show_func = function()
+        return assistant.settings:readSetting(setting_key, default) and true or false
+      end
+    end
+    table.insert(plugin_buttons, spec)
+  end
+
+  local function displayText(label, use_websearch)
+    return Prompts.getDisplayText(label, use_websearch or false,
+      Prompts.isWebSearchEnabled(assistant.settings)) .. " (AI)"
+  end
+
+  addButton("dict_popup_show_wikipedia", true, {
+    id = "assistant_wikipedia",
+    font_bold = true,
+    menu_text = _("Wikipedia") .. " (AI)",
+    text_func = function()
+      return displayText(_("Wikipedia"),
+        koutil.tableGetValue(Prompts.builtin_prompts, "wikipedia", "use_websearch"))
+    end,
+    callback = function(widget_instance)
+        local popup = widget_instance or dict_popup_arg
+        local word = popup and popup.word
+        NetUtils.runWhenOnlineFast(function()
+            Trapper:wrap(function()
+              if not assistant.assistant_dialog then return end
+              assistant.assistant_dialog:runPrompt(word, "wikipedia")
+            end)
+        end)
+    end,
+  })
+
+  addButton("dict_popup_show_term_xray", false, {
+    id = "assistant_term_xray",
+    font_bold = true,
+    menu_text = _("Term X-Ray") .. " (AI)",
+    text_func = function()
+      return displayText(_("Term X-Ray"),
+        koutil.tableGetValue(Prompts.builtin_prompts, "term_xray", "use_websearch"))
+    end,
+    callback = function(widget_instance)
+        local popup = widget_instance or dict_popup_arg
+        local word = popup and popup.word
+        NetUtils.runWhenOnlineFast(function()
+            Trapper:wrap(function()
+              local showDictionaryDialog = require("dialogs/dict")
+              showDictionaryDialog(assistant, word, nil, "term_xray")
+            end)
+        end)
+    end,
+  })
+
+  addButton("dict_popup_show_dictionary", true, {
+    id = "assistant_dictionary",
+    font_bold = true,
+    text = _("Dictionary") .. " (AI)",
+    callback = function(widget_instance)
+        local popup = widget_instance or dict_popup_arg
+        local word = popup and popup.word
+        NetUtils.runWhenOnlineFast(function()
+            Trapper:wrap(function()
+              local showDictionaryDialog = require("dialogs/dict")
+              showDictionaryDialog(assistant, word)
+            end)
+        end)
+    end,
+  })
+
+  if live or assistant.settings:readSetting("dict_popup_show_custom_prompts", false) then
+    local custom_prompts = {}
+    local prompts = assistant.config:getFeature("prompts")
+    if prompts then
+      for prompt_key, prompt_config in pairs(prompts) do
+        if prompt_config.show_on_dictionary_popup == true and prompt_config.visible ~= false then
+          table.insert(custom_prompts, {
+            id = prompt_key,
+            config = prompt_config
+          })
+        end
+      end
+    end
+
+    local max_custom_to_add = math.max(0, 3 - enabled_count)
+    local custom_to_add = math.min(#custom_prompts, max_custom_to_add)
+
+    for i = 1, custom_to_add do
+      local prompt = custom_prompts[i]
+      addButton("dict_popup_show_custom_prompts", false, {
+        id = "assistant_" .. prompt.id,
+        font_bold = true,
+        menu_text = (prompt.config.text or prompt.id) .. " (AI)",
+        text_func = function()
+          return displayText(prompt.config.text or prompt.id, prompt.config.use_websearch)
+        end,
+        callback = function(widget_instance)
+            local popup = widget_instance or dict_popup_arg
+            local word = popup and popup.word
+            NetUtils.runWhenOnlineFast(function()
+                Trapper:wrap(function()
+                  if not assistant.assistant_dialog then return end
+                  assistant.assistant_dialog:runPrompt(word, prompt.id)
+                end)
+            end)
+        end,
+      })
+    end
+  end
+
+  if not live then
+    for _, spec in ipairs(plugin_buttons) do
+      if spec.text_func then
+        spec.text = spec.text_func()
+        spec.text_func = nil
+      end
+    end
+  end
+
+  return plugin_buttons
+end
+
+---@param assistant table plugin instance
+---@param button_ids table button ids
+function M.groupDictButtonsInDefaultLayout(assistant, button_ids)
+  local default_layout = assistant.ui.dictionary.default_layout
+  if not default_layout then return end
+
+  local row = {}
+  for _, id in ipairs(button_ids) do
+    if not layoutHasButtonId(default_layout, id) then
+      table.insert(row, id)
+      if #row == 3 then
+        table.insert(default_layout, 2, row)
+        row = {}
+      end
+    end
+  end
+  if #row > 0 then
+    table.insert(default_layout, 2, row)
+  end
+end
+
+---@param assistant table plugin instance
+---@param button_ids table button ids
+function M.restoreDictButtonsInUserLayout(assistant, button_ids)
+  local config = G_reader_settings:readSetting("dict_button_config")
+  if not (config and config.layout) then return end
+
+  local layout_changed = false
+  for _, id in ipairs(button_ids) do
+    local restore_flag = "dict_button_restored_" .. id
+    if not assistant.settings:isTrue(restore_flag) then
+      assistant.settings:saveSetting(restore_flag, true)
+      assistant.updated = true
+      if not layoutHasButtonId(config.layout, id) then
+        local last_idx = #config.layout
+        local row = config.layout[last_idx]
+        local max_in_row = koutil.tableGetValue(config, "row_count", last_idx) or 3
+        if not row or #row >= max_in_row then
+          row = {}
+          table.insert(config.layout, row)
+          if config.row_count then
+            config.row_count[#config.layout] = 3
+          end
+        end
+        table.insert(row, id)
+        if config.order and not layoutHasButtonId({ config.order }, id) then
+          table.insert(config.order, id)
+        end
+        layout_changed = true
+      end
+    end
+  end
+
+  if layout_changed then
+    G_reader_settings:saveSetting("dict_button_config", config)
+  end
+end
+
+---@param assistant table plugin instance
+---@param dict_popup table popup widget
+---@param dict_buttons table mutable button list
+function M.onDictButtonsReady(assistant, dict_popup, dict_buttons)
+  if not assistant.config then return end
+  if assistant.ui and assistant.ui.dictionary
+      and type(assistant.ui.dictionary.addToDictButtons) == "function" then
+    return
+  end
+
+  local plugin_buttons = {}
+  local buttons = M.buildAssistantDictButtons(assistant, dict_popup)
+  for _, btn in ipairs(buttons) do
+    table.insert(plugin_buttons, {
+      id = btn.id,
+      font_bold = btn.font_bold,
+      text = btn.text,
+      callback = function() btn.callback(nil) end,
+    })
+  end
+
+  if #plugin_buttons > 0 and #dict_buttons > 1 then
+    table.insert(dict_buttons, 2, plugin_buttons)
+  end
 end
 
 return M

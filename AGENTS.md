@@ -26,7 +26,8 @@ Guidance for AI agents working in `assistant.koplugin` (KOReader AI assistant pl
 
 ## Architecture (map)
 
-- `main.lua` — plugin entry, dispatcher actions/gestures, menu + popup hooks.
+- `main.lua` — slim plugin entry (dispatcher actions, init, 1-line delegates).
+- `feature/book_actions.lua` — book features, identification flow, FileManager long-press row.
 - `core/querier.lua` — query engine: handler loading, stream/SSE, web-search tool loop (max 3 rounds).
 - `api_handlers/` — one file per wire format; `base.lua` = `BaseHandler`; `openai`/`anthropic`/`gemini`/`responses` are UI-selectable, deltas/wrappers are not.
 - `core/tool_executor.lua` — normalizes tool calls across the three wire formats; `core/exttools.lua` — search API clients.

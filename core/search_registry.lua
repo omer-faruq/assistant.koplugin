@@ -371,4 +371,89 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
     }
 end
 
+--- Show a dialog for adding or editing a web search API tool.
+--- Reuses MultiInputDialog style. Only shows the credential field:
+---   - API key tools (SerpAPI, Tavily, Exa): API Key field only
+---   - Base URL tools (SearXNG): Base URL field only
+--- The display name comes from the search tool catalog and is not user-editable.
+---@param assistant table The Assistant instance
+---@param tool_key string The fixed tool key (serpapi, tavilyapi, exaapi, searxngapi)
+function SearchRegistry.showWebSearchDialog(assistant, tool_key)
+    local tool_def = SearchTools.getDefinition(tool_key)
+    if not tool_def then return end
+
+    -- Pre-fill from existing UI record if present
+    local existing = assistant._ui_search_data and assistant._ui_search_data.tools[tool_key]
+    local default_key = existing and existing.api_key or ""
+    local default_url = existing and existing.base_url or ""
+
+    local is_edit = SearchRegistry.is_deletable(
+        assistant.config:getProvider(tool_key))
+
+    local title = is_edit and T(_("Edit %1"), tool_def.display_name)
+        or T(_("Add %1"), tool_def.display_name)
+
+    -- Build fields based on credential type (no display_name field)
+    local fields
+    if tool_def.needs == "api_key" then
+        fields = {
+            { description = _("API Key"), hint = _("Your API key"), text = default_key },
+        }
+    else  -- base_url
+        fields = {
+            { description = _("Base URL"), hint = "https://...", text = default_url },
+        }
+    end
+
+    local MultiInputDialog = require("ui/widget/multiinputdialog")
+    local InfoMessage = require("ui/widget/infomessage")
+    local dialog
+    local function readFields()
+        return DocUtils.trimDialogFields(dialog)
+    end
+    dialog = MultiInputDialog:new{
+        title = title,
+        fields = fields,
+        buttons = {{
+            {
+                text = _("Cancel"),
+                callback = function() UIManager:close(dialog) end,
+            },
+            {
+                text = _("OK"),
+                is_enter_default = true,
+                callback = function()
+                    local input_fields = readFields()
+
+                    local api_key, base_url
+                    if tool_def.needs == "api_key" then
+                        api_key = input_fields[1]
+                    else
+                        base_url = input_fields[1]
+                    end
+
+                    local ok, err = SearchRegistry.installSearchTool(
+                        assistant, tool_key, api_key, base_url)
+                    if not ok then
+                        UIManager:show(InfoMessage:new{
+                            icon = "notice-warning",
+                            text = err or _("Failed to save search tool."),
+                        })
+                        return
+                    end
+
+                    UIManager:close(dialog)
+                    -- Refresh settings if open
+                    if assistant._provider_dialog then
+                        UIManager:close(assistant._provider_dialog)
+                        assistant._provider_dialog = nil
+                        UIManager:scheduleIn(0.15, function() assistant:showProviderDialog() end)
+                    end
+                end,
+            },
+        }},
+    }
+    UIManager:show(dialog)
+end
+
 return SearchRegistry

@@ -46,4 +46,74 @@ function M.resolve_translate_route(choice, mode)
     return choice and "dictionary" or "translate"
 end
 
+--- Route a translate request through Smart Dictionary Lookup: short selections
+--- may open the AI Dictionary instead, with a one-time three-way prompt on
+--- first use. Callers must already be inside runWhenOnlineFast + Trapper:wrap.
+---@param assistant table The Assistant instance
+---@param text string Selection text
+function M.showTranslateOrDictionary(assistant, text)
+  local function open_translation()
+    if not assistant.assistant_dialog then return end
+    assistant.assistant_dialog:runPrompt(text, "translate")
+  end
+  local function open_dictionary()
+    local showDictionaryDialog = require("dialogs/dict")
+    showDictionaryDialog(assistant, text)
+  end
+
+  local choice = assistant.settings:readSetting("ai_smart_dictionary")
+  local mode = M.lookup_mode_for_selection(text)
+  local route = M.resolve_translate_route(choice, mode)
+
+  if route == "ask" then
+    local ButtonDialog = require("ui/widget/buttondialog")
+    local Font = require("ui/font")
+    local UIManager = require("ui/uimanager")
+    local Trapper = require("ui/trapper")
+    local NetUtils = require("utils/net")
+    local TextUtils = require("utils/text")
+    local _ = require("core/gettext")
+    local ask_dialog
+    ask_dialog = ButtonDialog:new{
+      title = TextUtils.bold_format(_("Dictionary or Translation?\n\nThis selection looks like a word or short phrase.\n\nYou can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'.")),
+      title_align = "left",
+      info_face = Font:getFace("smallinfofont"),
+      buttons = {{
+        {
+          text = _("Cancel"),
+          callback = function()
+            UIManager:close(ask_dialog)
+          end,
+        },
+        {
+          text = _("Translate"),
+          callback = function()
+            assistant.settings:saveSetting("ai_smart_dictionary", false)
+            assistant.updated = true
+            UIManager:close(ask_dialog)
+            NetUtils.runWhenOnlineFast(function() Trapper:wrap(open_translation) end)
+          end,
+        },
+        {
+          text = _("Dictionary"),
+          callback = function()
+            assistant.settings:saveSetting("ai_smart_dictionary", true)
+            assistant.updated = true
+            UIManager:close(ask_dialog)
+            NetUtils.runWhenOnlineFast(function() Trapper:wrap(open_dictionary) end)
+          end,
+        },
+      }},
+      dismissable = true,
+      tap_close_callback = function()
+      end,
+    }
+    UIManager:show(ask_dialog)
+  elseif route == "dictionary" then
+    open_dictionary()
+  else
+    open_translation()
+  end
+end
+
 return M

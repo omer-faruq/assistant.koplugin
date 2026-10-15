@@ -33,6 +33,10 @@ local Registry = require("core/provider_registry")
 local SearchRegistry = require("core/search_registry")
 local Notebook = require("feature/notebook")
 local Prompts = require("core/prompts")
+local Event = require("ui/event")
+local Device = require("device")
+local ProviderDialog = require("dialogs/provider")
+local ffiutil = require("ffi/util")
 
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
@@ -812,9 +816,487 @@ File configuration.lua will be preserved.]]),
     return sub_item_table
 end
 
+local function BookLevelCustomPrompts(assistant)
+  local sub_item_table = {}
+
+  -- Read book_level_prompts from configuration
+  local book_level_prompts = assistant.config:getFeature("book_level_prompts") or {}
+
+  for key, prompt_config in ffiutil.orderedPairs(book_level_prompts) do
+    if prompt_config.visible == true and prompt_config.type == "feature" then
+      local button = {
+        text = Prompts.getDisplayText(prompt_config.text or key,
+          koutil.tableGetValue(prompt_config, "use_websearch") or false,
+          Prompts.isWebSearchEnabled(assistant.settings)),
+        callback = function()
+          if not assistant:isConfigured() then return end
+          NetUtils.runWhenOnlineFast(function()
+            local book = require("feature/book_actions").getDocumentInfo(assistant.ui)
+            local showFeatureDialog = require("dialogs/feature")
+            Trapper:wrap(function()
+              showFeatureDialog(assistant, prompt_config, book.title, book.authors, book.percent_finished)
+            end)
+          end)
+        end,
+        hold_callback = function()
+          UIManager:show(InfoMessage:new{
+            text = prompt_config.description or _("This is a custom prompt")
+          })
+        end,
+      }
+      table.insert(sub_item_table, button)
+    end
+  end
+
+  if #sub_item_table == 0 then
+    local button = {
+      text = _("No valid custom prompt found"),
+      enabled = false,
+    }
+    table.insert(sub_item_table, button)
+    local button2 = {
+      text = _("For details, visit the 'Configuration' wiki page on github."),
+      enabled = false,
+    }
+    table.insert(sub_item_table, button2)
+  end
+  return sub_item_table
+end
+
+local function addToMainMenu(assistant, menu_items)
+  local common_items_table = {
+              {
+                text = _("Ask a Question"),
+                callback = function ()
+                  assistant:onAskAIQuestion()
+                end,
+                hold_callback = function ()
+                  UIManager:show(InfoMessage:new{
+                    text = _("Enter a question to ask the AI.")
+                  })
+                end
+              },
+              {
+                text = _("Take Quick Notes"),
+                callback = function ()
+                  assistant:onAskAIQuickNote()
+                end,
+                hold_callback = function ()
+                  UIManager:show(InfoMessage:new{
+                    text = _("Take quick notes that will be saved to your AI Notes.")
+                  })
+                end,
+              },
+              {
+                text_func = function ()
+                  if not assistant.ui.doc_settings and Notebook.isEnabled(assistant) then
+                    return T(
+                      _("AI Notes: %1"),
+                      Notebook.getActiveDisplayName(assistant, 24)
+                    )
+                  end
+                  return _("AI Notes (AI Conversation Log)")
+                end,
+                callback = function ()
+                  local is_general_mode = not assistant.ui.doc_settings
+                  local multi_enabled = Notebook.isEnabled(assistant)
+
+                  local function showNotebookFileDialog(notebookfile, include_switch, include_edit)
+                    local other_buttons = {}
+                    local notebook_dialog
+
+                    if include_switch then
+                      table.insert(other_buttons, {
+                        text = _("Switch"),
+                        callback = function ()
+                          Notebook.showPicker(assistant, {
+                            on_select = function ()
+                              if notebook_dialog then
+                                UIManager:close(notebook_dialog)
+                              end
+                            end,
+                          })
+                        end
+                      })
+                    end
+
+                    table.insert(other_buttons, {
+                      text = _("Delete"),
+                      callback = function ()
+                        UIManager:show(ConfirmBox:new{
+                          text = T(_("Delete file?\n%1\nThis operation is not reversible."), notebookfile),
+                          ok_text = _("Delete"),
+                          ok_callback = function ()
+                            local ok, err = koutil.removeFile(notebookfile)
+                            if not ok then
+                              UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
+                              return
+                            end
+                            if notebook_dialog then
+                              UIManager:close(notebook_dialog)
+                            end
+                          end
+                        })
+                      end
+                    })
+
+                    if include_edit then
+                      table.insert(other_buttons, {
+                        text = _("Edit"),
+                        callback = function ()
+                          UIManager:broadcastEvent(Event:new("ShowNotebookFile"))
+                        end
+                      })
+                    end
+
+                    notebook_dialog = ConfirmBox:new{
+                      icon = "appbar.pageview",
+                      face = Font:getFace("smallinfofont"),
+                      text = TextUtils.bold_format(
+                          T(_("<b>AI Notes file:</b>\n\n%1"), notebookfile)
+                      ),
+                      ok_text = _("View"),
+                      ok_callback = function()
+                        if not koutil.pathExists(notebookfile) then
+                          UIManager:show(InfoMessage:new{
+                            text = T(_("File does not exist.\n\n%1"), notebookfile)
+                          })
+                          return
+                        end
+                        Notebook.openNotebookFile(assistant, notebookfile)
+                      end,
+                      other_buttons = { other_buttons },
+                    }
+                    UIManager:show(notebook_dialog)
+                  end
+
+                  if is_general_mode and multi_enabled then
+                    Notebook.showPicker(assistant, {
+                      title = _("AI Notes"),
+                      on_select = function(notebook)
+                        if notebook and notebook.path then
+                          showNotebookFileDialog(notebook.path, false, false)
+                        end
+                      end,
+                    })
+                    return
+                  end
+
+                  local notebookfile
+                  if is_general_mode then
+                    notebookfile = Notebook.getGeneralNotebookFilePath(assistant)
+                  else
+                    local ok, resolved = pcall(Notebook.getBookModeNotebookPath, assistant)
+                    if ok and type(resolved) == "string" and resolved ~= "" then
+                      notebookfile = resolved
+                    else
+                      notebookfile = assistant.ui.bookinfo:getNotebookFile(assistant.ui.doc_settings)
+                    end
+                  end
+                  showNotebookFileDialog(
+                    notebookfile,
+                    is_general_mode and multi_enabled,
+                    not is_general_mode
+                  )
+                end,
+                separator = true,
+              },
+              {
+                text_func = function ()
+                  if not assistant.querier or not assistant.querier.handler then
+                    return T(_("Provider %1 NOT CONFIGURED"), "▸")
+                  end
+                  local provider = assistant.querier.provider_setting
+                      and assistant.querier.provider_setting.display_name
+                      or assistant.querier.provider_name
+                  local effective = assistant.querier.getEffectiveModel
+                      and assistant.querier:getEffectiveModel() or ""
+                  local model = effective ~= "" and effective
+                      or assistant.querier.handler.model or "?"
+                  return T(_("Provider %1 %2(%3)"), "▸", provider, model)
+                end,
+                keep_menu_open = true,
+                callback = function (touchmenu_instance)
+                  assistant._menu_instance = touchmenu_instance
+                  assistant:showProviderDialog(function ()
+                    touchmenu_instance:updateItems()
+                  end)
+                end,
+              },
+              {
+                  text_func = function ()
+                    local key = assistant.settings:readSetting("use_websearch", "none")
+                    local text = ToolExecutor.ToolToText(key)
+                      return T(_("Web Search %1 %2"), "▸", text)
+                  end,
+                  hold_callback = function ()
+                      UIManager:show(InfoMessage:new{
+                          text = _("Improves response accuracy with real-time web results. \nNote: Higher token usage and additional API charges apply.")
+                      })
+                  end,
+                  sub_item_table = {},
+              },
+              {
+                text = _("Settings"),
+                sub_item_table_func = function ()
+                  return genMenuSettings(assistant)
+                end,
+                hold_callback = function ()
+                  assistant:showAboutDialog()
+                end
+              }
+            }
+
+  for _, n in ipairs(ToolExecutor.SEARCH_API_NAMES) do
+    table.insert(common_items_table[5].sub_item_table,
+      genWebSearchSubMenuItem(assistant, n))
+  end
+
+  local book_level_items = {
+              {
+                text = _("Book Insights"),
+                sub_item_table = {
+                  {
+                    text_func = function()
+                      return Prompts.getDisplayText(_("Book Summary & Recs"),
+                        koutil.tableGetValue(Prompts.assistant_prompts, "book_info", "use_websearch") or false,
+                        Prompts.isWebSearchEnabled(assistant.settings))
+                    end,
+                    callback = function ()
+                      assistant:onAskAIBookInfo()
+                    end,
+                    hold_callback = function ()
+                      UIManager:show(InfoMessage:new{
+                        text = _("Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions.")
+                      })
+                    end
+                  },
+                  {
+                    text_func = function()
+                      return Prompts.getDisplayText(_("AI X-Ray"),
+                        koutil.tableGetValue(Prompts.assistant_prompts, "xray", "use_websearch") or false,
+                        Prompts.isWebSearchEnabled(assistant.settings))
+                    end,
+                    callback = function ()
+                      assistant:onAskAIXRay()
+                    end,
+                    hold_callback = function ()
+                      UIManager:show(InfoMessage:new{
+                        text = _("\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion.")
+                      })
+                    end
+                  },
+                  {
+                    text_func = function()
+                      return Prompts.getDisplayText(_("AI Recaps"),
+                        koutil.tableGetValue(Prompts.assistant_prompts, "recap", "use_websearch") or false,
+                        Prompts.isWebSearchEnabled(assistant.settings))
+                    end,
+                    callback = function ()
+                      assistant:onAskAIRecap()
+                    end,
+                    hold_callback = function ()
+                      UIManager:show(InfoMessage:new{
+                        text = _("A very brief, spoiler-free summary of the book up to current reading progress.")
+                      })
+                    end,
+                  },
+                  {
+                    text_func = function()
+                      local identify_prompt_config = koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book") or {}
+                      local identify_ws_flag = koutil.tableGetValue(identify_prompt_config, "use_websearch") and true or false
+                      return Prompts.getDisplayText(_("Identify This Book"), identify_ws_flag,
+                        Prompts.isWebSearchEnabled(assistant.settings))
+                    end,
+                    callback = function ()
+                      assistant:onAskAIIdentifyBook()
+                    end,
+                    hold_callback = function ()
+                      UIManager:show(InfoMessage:new{
+                        text = _("Infer the open book's title and author from its opening text and save them as custom metadata.")
+                      })
+                    end,
+                  },
+                  {
+                    text = _("Highlight & Note Analysis"),
+                    callback = function ()
+                      assistant:onAskAIAnnotations()
+                    end,
+                    hold_callback = function ()
+                      UIManager:show(InfoMessage:new{
+                        text = _("Analysis of your highlights, notes, and AI Notes content from the book.")
+                      })
+                    end,
+                  },
+                  {
+                    text_func = function()
+                      return Prompts.getDisplayText(_("Summary Using Highlights & Notes"),
+                        koutil.tableGetValue(Prompts.assistant_prompts, "summary_using_annotations", "use_websearch") or false,
+                        Prompts.isWebSearchEnabled(assistant.settings))
+                    end,
+                    callback = function ()
+                      assistant:onAskSummaryUsingAnnotations()
+                    end,
+                    hold_callback = function ()
+                      UIManager:show(InfoMessage:new{
+                        text = _("Summary of the book using your highlights and notes.")
+                      })
+                    end,
+                  },
+                }
+              },
+            }
+
+  if assistant.config:getFeature("book_level_prompts") then
+    table.insert(book_level_items, {
+              text = _("Custom Prompts"),
+              sub_item_table_func = function ()
+                return BookLevelCustomPrompts(assistant)
+              end,
+              hold_callback = function ()
+                UIManager:show(InfoMessage:new{
+                  text = _("Your own prompts defined in the configuration file")
+                })
+              end,
+              separator = true,
+            })
+  else
+    book_level_items[1].separator = true
+  end
+
+    local reader_items_table = {}
+    table.move(common_items_table, 1, #common_items_table, 1, reader_items_table)
+    for i = #book_level_items,1,-1 do
+      table.insert(reader_items_table, 2, book_level_items[i])
+    end
+
+    if assistant.ui.document then
+        common_items_table[1].separator = false
+        menu_items.ai_assistant = {
+            text = _("AI Assistant"),
+            sorting_hint = "tools",
+            hold_callback = function ()
+              assistant:_help_dialog()
+            end,
+            sub_item_table = reader_items_table
+          }
+    else
+        common_items_table[1].separator = true
+        menu_items.ai_assistant = {
+            text = _("AI Assistant"),
+            sorting_hint = "tools",
+            hold_callback = function ()
+              assistant:_help_dialog()
+            end,
+            sub_item_table = common_items_table
+        }
+    end
+end
+
+local function showProviderDialog(assistant, close_callback)
+  if not assistant.config or not next(assistant.config:getProviderSettings()) then
+    UIManager:show(InfoMessage:new{
+      text = T(_("Add providers from the main menu:\n%1 -> AI Assistant -> Settings -> Provider API"), "⚙")
+    })
+    return
+  end
+  if not assistant:isConfigured() then return end
+
+  if assistant._provider_dialog then
+    UIManager:show(assistant._provider_dialog)
+    return
+  end
+
+  assistant._provider_close_callback = close_callback or assistant._provider_close_callback
+
+  local settingDlg = ProviderDialog:new{
+      assistant = assistant,
+      settings = assistant.settings,
+      close_callback = assistant._provider_close_callback,
+  }
+
+  assistant._provider_dialog = settingDlg
+  UIManager:show(settingDlg)
+end
+
+local function showHelpDialog(assistant)
+    local info_text = string.format("%s %s  ", assistant.meta.fullname, assistant.meta.version) .. T(_([[Usage Tips
+
+Select:
+Highlight text (or a word) in the book, then press [AI assistant] in the poped up menu.
+
+Long Press:
+- On a Prompt Button: Add to the highlight menu.
+- On a highlight menu button to remove it.
+- On the Close button to go back to the book in 1 step.
+
+Very-Long Press (over 3 seconds):
+On a single word in the book to show the highlight menu (instead of the dictionary).
+
+Multi-Swipe (e.g., %1, %2, %3):
+On the result dialog to close (as the Close button is far to reach).
+]]), "⮠", "⮡", "↺")
+    UIManager:show(ConfirmBox:new{
+        icon = "info",
+        text = info_text,
+        face = Font:getFace("xx_smallinfofont"),
+        other_buttons = {{
+          {
+            text = _("Version Info"),
+            callback = function()
+              assistant:showAboutDialog()
+            end,
+          },
+        }},
+        ok_text = _("Purge Settings"),
+        ok_callback = function()
+          UIManager:show(ConfirmBox:new{
+            text = _([[Are you sure to purge the assistant plugin settings?
+This resets the assistant plugin to the status the first time you installed it.
+
+configuration.lua is safe, only the settings are purged.]]),
+            ok_text = _("Purge"),
+            ok_callback = function()
+              assistant.settings:reset({})
+              assistant.settings:flush()
+              UIManager:askForRestart()
+            end
+          })
+        end
+    })
+end
+
+local function showAboutDialog(assistant)
+  local md_renderer = "Pure MD"
+  local ok, parser = pcall(require, "dialogs/mdparser")
+  if ok and parser and parser._is_hoedown then
+    md_renderer = "libhoedown"
+  end
+
+  local Version = require("version")
+
+  UIManager:show(InfoMessage:new{
+      show_icon = false,
+      text = TextUtils.bold_format(
+        T("<b>%1 %2</b>\n――――――――――――――――\n<b>%3:</b> %4\n<b>%5:</b> %6\n<b>%7:</b> %8\n<b>%9:</b> %10/%11\n<b>%12:</b> %13",
+          assistant.meta.fullname, assistant.meta.version,
+          _("Markdown Engine"), md_renderer,
+          _("KOReader"), Version:getShortVersion(),
+          _("Device"), Device.model or "?",
+          _("Platform"), jit.os, jit.arch,
+          _("Runtime"), jit.version
+        )
+      ),
+  })
+end
+
 
 return {
     genWebSearchSubMenuItem = genWebSearchSubMenuItem,
     genDictionaryOutputMenu = genDictionaryOutputMenu,
     genMenuSettings = genMenuSettings,
+    addToMainMenu = addToMainMenu,
+    showProviderDialog = showProviderDialog,
+    showHelpDialog = showHelpDialog,
+    showAboutDialog = showAboutDialog,
 }

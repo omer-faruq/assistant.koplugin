@@ -1,88 +1,24 @@
-local Device = require("device")
-local logger = require("logger")
-local Event = require("ui/event")
 local InputContainer = require("ui/widget/container/inputcontainer")
 local Dispatcher = require("dispatcher")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
-local Font = require("ui/font")
 local Trapper = require("ui/trapper")
 local Language = require("ui/language")
 local LuaSettings = require("luasettings")
 local DataStorage = require("datastorage")
 local ConfirmBox  = require("ui/widget/confirmbox")
-local Notification = require("ui/widget/notification")
-local T 		      = require("ffi/util").template
-local koutil = require("util")
-local ButtonDialog = require("ui/widget/buttondialog")
-local MultiInputDialog = require("ui/widget/multiinputdialog")
-local ffiutil = require("ffi/util")
-local ToolExecutor = require("core/tool_executor")
+local T = require("ffi/util").template
 local TextUtils = require("utils/text")
-local DocUtils = require("utils/doc")
 local NetUtils = require("utils/net")
-local Notebook = require("feature/notebook")
-
--- Smart Dictionary Lookup routing (a highlight -> AI Dictionary or the full
--- Translate action) lives in feature/lookup.lua.
 local Lookup = require("feature/lookup")
-
+local BookActions = require("feature/book_actions")
 local _ = require("core/gettext")
-local N_ = _.ngettext
 local AssistantDialog = require("dialogs/dialog")
-local Updater = require("core/updater")
-local Prompts = require("core/prompts")
-local ProviderDialog = require("dialogs/provider")
 local SettingsMenu = require("dialogs/settings_menu")
-local showDictionaryDialog = require("dialogs/dict")
 local Registry = require("core/provider_registry")
 local SearchRegistry = require("core/search_registry")
-local SearchTools = require("core/search_tools")
 local Config = require("core/config")
 local Hooks = require("core/hooks")
-
--- Single row id for the FileManager long-press AI buttons.
--- One row_func returns one row, so both buttons share this id to sit
--- on the same line.
-local FM_AI_ROW_ID = "assistant_ai"
-
--- Browser widgets sharing the FileManager long-press file_dialog mechanism.
--- coverbrowser.koplugin registers its rows on the same four classes.
-local FILE_DIALOG_WIDGET_MODULES = {
-  "apps/filemanager/filemanager",
-  "apps/filemanager/filemanagerhistory",
-  "apps/filemanager/filemanagercollection",
-  "apps/filemanager/filemanagerfilesearcher",
-}
-
--- Requires the browser widget classes (best effort: a tree may miss some),
--- returning an array of widget tables.
-local function getFileDialogWidgets()
-  local widgets = {}
-  for i, name in ipairs(FILE_DIALOG_WIDGET_MODULES) do
-    local ok, widget = pcall(require, name)
-    if ok and type(widget) == "table" then
-      table.insert(widgets, widget)
-    end
-  end
-  return widgets
-end
-
--- Resolves the live Assistant instance at tap time, mirroring upstream
--- FileManagerHistory/Collection/FileSearcher.getMenuInstance: the long-press
--- row is registered on the browser class tables and deduped by row id, so a
--- closure that bound the registering instance would keep serving the first
--- FileManager's stale querier/config after a book open/close cycle.
-local function liveAssistant()
-  local ui
-  local ok_fm, FM = pcall(require, "apps/filemanager/filemanager")
-  if ok_fm and type(FM) == "table" then ui = FM.instance end
-  if not ui then
-    local ok_ru, ReaderUI = pcall(require, "apps/reader/readerui")
-    if ok_ru and type(ReaderUI) == "table" then ui = ReaderUI.instance end
-  end
-  return ui and ui.assistant
-end
 
 -- One LuaSettings per file shared across Assistant instances: the plugin is
 -- instantiated per UI (FileManager and ReaderUI), and separate LuaSettings:open
@@ -99,37 +35,32 @@ end
 
 local Assistant = InputContainer:new {
   name = "assistant",
-  meta = nil,           -- reference to the _meta module
-  is_doc_only = false,   -- available in both doc and filemanager models
+  meta = nil,
+  is_doc_only = false,
   settings_file = DataStorage:getSettingsDir() .. "/assistant.lua",
   settings = nil,
   querier = nil,
-  updated = false, -- flag to track if settings were updated
-  assistant_dialog = nil, -- reference to the main dialog instance
+  updated = false,
+  assistant_dialog = nil,
   ui_language = nil,
   ui_language_is_rtl = nil,
-  config = nil,  -- Config object (core/config.lua)
+  config = nil,
 }
 
 function Assistant:onDispatcherRegisterActions()
-  -- Register main AI ask action
   Dispatcher:registerAction("ai_ask_question", {
-    category = "none", 
-    event = "AskAIQuestion", 
-    title = _("Ask the AI a question"), 
+    category = "none",
+    event = "AskAIQuestion",
+    title = _("Ask the AI a question"),
     general = true
   })
-  
-  -- Register AI recap action
   Dispatcher:registerAction("ai_recap", {
-    category = "none", 
-    event = "AskAIRecap", 
+    category = "none",
+    event = "AskAIRecap",
     -- @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-    title = _("AI Recaps"), 
+    title = _("AI Recaps"),
     general = true
   })
-  
-  -- Register AI identify-book action (reader-side metadata inference)
   Dispatcher:registerAction("ai_identify_book", {
     category = "none",
     event = "AskAIIdentifyBook",
@@ -137,40 +68,30 @@ function Assistant:onDispatcherRegisterActions()
     title = _("Identify This Book"),
     general = true
   })
-
-  -- Register AI X-Ray action (available for gesture binding)
   Dispatcher:registerAction("ai_xray", {
     category = "none",
     event = "AskAIXRay",
     title = _("AI X-Ray"),
     general = true
   })
-
-  -- Register Quick Notes action (available for gesture binding)
   Dispatcher:registerAction("ai_quick_note", {
-    category = "none", 
-    event = "AskAIQuickNote", 
-    title = _("Take Quick Notes"), 
+    category = "none",
+    event = "AskAIQuickNote",
+    title = _("Take Quick Notes"),
     general = true
   })
-
-  -- Register Book Information action (available for gesture binding)
   Dispatcher:registerAction("ai_book_info", {
     category = "none",
     event = "AskAIBookInfo",
     title = _("Book Summary & Recs"),
     general = true
   })
-
-  -- Register Annotations Analysis action (available for gesture binding)
   Dispatcher:registerAction("ai_annotations", {
     category = "none",
     event = "AskAIAnnotations",
     title = _("Highlight & Note Analysis"),
     general = true
   })
-
-  -- Register Annotations Analysis action (available for gesture binding)
   Dispatcher:registerAction("ai_summary_using_annotations", {
     category = "none",
     event = "AskSummaryUsingAnnotations",
@@ -181,729 +102,138 @@ function Assistant:onDispatcherRegisterActions()
 end
 
 function Assistant:addToMainMenu(menu_items)
-  local common_items_table = {
-              {
-                text = _("Ask a Question"),
-                callback = function ()
-                  self:onAskAIQuestion()
-                end,
-                hold_callback = function ()
-                  UIManager:show(InfoMessage:new{
-                    text = _("Enter a question to ask the AI.")
-                  })
-                end
-              },
-              {
-                text = _("Take Quick Notes"),
-                callback = function ()
-                  self:onAskAIQuickNote()
-                end,
-                hold_callback = function ()
-                  UIManager:show(InfoMessage:new{
-                    text = _("Take quick notes that will be saved to your AI Notes.")
-                  })
-                end,
-              },
-              {
-                text_func = function ()
-                  if not self.ui.doc_settings and Notebook.isEnabled(self) then
-                    return T(
-                      _("AI Notes: %1"),
-                      Notebook.getActiveDisplayName(self, 24)
-                    )
-                  end
-                  return _("AI Notes (AI Conversation Log)")
-                end,
-                callback = function ()
-                  local is_general_mode = not self.ui.doc_settings
-                  local multi_enabled = Notebook.isEnabled(self)
-
-                  local function showNotebookFileDialog(notebookfile, include_switch, include_edit)
-                    local other_buttons = {}
-                    local notebook_dialog
-
-                    if include_switch then
-                      table.insert(other_buttons, {
-                        text = _("Switch"),
-                        callback = function ()
-                          Notebook.showPicker(self, {
-                            on_select = function ()
-                              -- Close the old details dialog because it still
-                              -- refers to the previously active notebook.
-                              if notebook_dialog then
-                                UIManager:close(notebook_dialog)
-                              end
-                            end,
-                          })
-                        end
-                      })
-                    end
-
-                    table.insert(other_buttons, {
-                      text = _("Delete"),
-                      callback = function ()
-                        UIManager:show(ConfirmBox:new{
-                          text = T(_("Delete file?\n%1\nThis operation is not reversible."), notebookfile),
-                          ok_text = _("Delete"),
-                          ok_callback = function ()
-                            local ok, err = koutil.removeFile(notebookfile)
-                            if not ok then
-                              UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
-                              return
-                            end
-                            if notebook_dialog then
-                              UIManager:close(notebook_dialog)
-                            end
-                          end
-                        })
-                      end
-                    })
-
-                    -- KOReader's ShowNotebookFile event edits the current book
-                    -- notebook. Do not expose it for a general notebook path.
-                    if include_edit then
-                      table.insert(other_buttons, {
-                        text = _("Edit"),
-                        callback = function ()
-                          UIManager:broadcastEvent(Event:new("ShowNotebookFile"))
-                        end
-                      })
-                    end
-
-                    notebook_dialog = ConfirmBox:new{
-                      icon = "appbar.pageview",
-                      face = Font:getFace("smallinfofont"),
-                      text = TextUtils.bold_format(
-                          T(_("<b>AI Notes file:</b>\n\n%1"), notebookfile)
-                      ),
-                      ok_text = _("View"),
-                      ok_callback = function()
-                        if not koutil.pathExists(notebookfile) then
-                          UIManager:show(InfoMessage:new{
-                            text = T(_("File does not exist.\n\n%1"), notebookfile)
-                          })
-                          return
-                        end
-                        Notebook.openNotebookFile(self, notebookfile)
-                      end,
-                      other_buttons = { other_buttons },
-                    }
-                    UIManager:show(notebook_dialog)
-                  end
-
-                  -- FileManager without an open book in multi-notebook mode:
-                  -- pick the notebook first, then show its file dialog. The
-                  -- picker itself is the selection, so no Switch button.
-                  if is_general_mode and multi_enabled then
-                    Notebook.showPicker(self, {
-                      title = _("AI Notes"),
-                      on_select = function(notebook)
-                        if notebook and notebook.path then
-                          showNotebookFileDialog(notebook.path, false, false)
-                        end
-                      end,
-                    })
-                    return
-                  end
-
-                  local notebookfile
-                  if is_general_mode then
-                    notebookfile = Notebook.getGeneralNotebookFilePath(self)
-                  else
-                    local ok, resolved = pcall(Notebook.getBookModeNotebookPath, self)
-                    if ok and type(resolved) == "string" and resolved ~= "" then
-                      notebookfile = resolved
-                    else
-                      notebookfile = self.ui.bookinfo:getNotebookFile(self.ui.doc_settings)
-                    end
-                  end
-                  showNotebookFileDialog(
-                    notebookfile,
-                    is_general_mode and multi_enabled,
-                    not is_general_mode
-                  )
-                end,
-                separator = true,
-              },
-              {
-                text_func = function ()
-                  if not self.querier or not self.querier.handler then
-                    return T(_("Provider %1 NOT CONFIGURED"), "▸")
-                  end
-                  local provider = self.querier.provider_setting
-                      and self.querier.provider_setting.display_name
-                      or self.querier.provider_name
-                  local effective = self.querier.getEffectiveModel
-                      and self.querier:getEffectiveModel() or ""
-                  local model = effective ~= "" and effective
-                      or self.querier.handler.model or "?"
-                  return T(_("Provider %1 %2(%3)"), "▸", provider, model)
-                end,
-                keep_menu_open = true,
-                callback = function (touchmenu_instance)
-                  -- Remember the menu so a confirmed provider edit can dismiss
-                  -- it (the menu stays open behind the dialogs).
-                  self._menu_instance = touchmenu_instance
-                  self:showProviderDialog(function ()
-                    touchmenu_instance:updateItems()
-                  end)
-                end,
-              },
-              {
-                  text_func = function ()
-                    local key = self.settings:readSetting("use_websearch", "none")
-                    local text = ToolExecutor.ToolToText(key)
-                      return T(_("Web Search %1 %2"), "▸", text)
-                  end,
-                  hold_callback = function ()
-                      UIManager:show(InfoMessage:new{
-                          text = _("Improves response accuracy with real-time web results. \nNote: Higher token usage and additional API charges apply.")
-                      })
-                  end,
-                  sub_item_table = {},
-              },
-              {
-                text = _("Settings"),
-                sub_item_table_func = function ()
-                  return SettingsMenu.genMenuSettings(self)
-                end,
-                hold_callback = function ()
-                  self:showAboutDialog()
-                end
-              }
-            }
-          
-  -- append External Search tools menu item
-  for _, n in ipairs(ToolExecutor.SEARCH_API_NAMES) do
-    table.insert(common_items_table[5].sub_item_table,
-      SettingsMenu.genWebSearchSubMenuItem(self, n))
-  end
-
-  local book_level_items = {
-              {
-                text = _("Book Insights"),
-                sub_item_table = {
-                  {
-                    text_func = function()
-                      return Prompts.getDisplayText(_("Book Summary & Recs"),
-                        koutil.tableGetValue(Prompts.assistant_prompts, "book_info", "use_websearch") or false,
-                        Prompts.isWebSearchEnabled(self.settings))
-                    end,
-                    callback = function ()
-                      self:onAskAIBookInfo()
-                    end,
-                    hold_callback = function ()
-                      UIManager:show(InfoMessage:new{
-                        text = _("Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions.")
-                      })
-                    end
-                  },
-                  {
-                    text_func = function()
-                      return Prompts.getDisplayText(_("AI X-Ray"),
-                        koutil.tableGetValue(Prompts.assistant_prompts, "xray", "use_websearch") or false,
-                        Prompts.isWebSearchEnabled(self.settings))
-                    end,
-                    callback = function ()
-                      self:onAskAIXRay()
-                    end,
-                    hold_callback = function ()
-                      UIManager:show(InfoMessage:new{
-                        text = _("\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion.")
-                      })
-                    end
-                  },
-                  {
-                    text_func = function()
-                      -- @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
-                      return Prompts.getDisplayText(_("AI Recaps"),
-                        koutil.tableGetValue(Prompts.assistant_prompts, "recap", "use_websearch") or false,
-                        Prompts.isWebSearchEnabled(self.settings))
-                    end,
-                    callback = function ()
-                      self:onAskAIRecap()
-                    end,
-                    hold_callback = function ()
-                      UIManager:show(InfoMessage:new{
-                        text = _("A very brief, spoiler-free summary of the book up to current reading progress.")
-                      })
-                    end,
-                  },
-                  {
-                    text_func = function()
-                      local identify_prompt_config = koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book") or {}
-                      local identify_ws_flag = koutil.tableGetValue(identify_prompt_config, "use_websearch") and true or false
-                      return Prompts.getDisplayText(_("Identify This Book"), identify_ws_flag,
-                        Prompts.isWebSearchEnabled(self.settings))
-                    end,
-                    callback = function ()
-                      self:onAskAIIdentifyBook()
-                    end,
-                    hold_callback = function ()
-                      UIManager:show(InfoMessage:new{
-                        text = _("Infer the open book's title and author from its opening text and save them as custom metadata.")
-                      })
-                    end,
-                  },
-                  {
-                    text = _("Highlight & Note Analysis"),
-                    callback = function ()
-                      self:onAskAIAnnotations()
-                    end,
-                    hold_callback = function ()
-                      UIManager:show(InfoMessage:new{
-                        text = _("Analysis of your highlights, notes, and AI Notes content from the book.")
-                      })
-                    end,
-                  },
-                  {
-                    text_func = function()
-                      return Prompts.getDisplayText(_("Summary Using Highlights & Notes"),
-                        koutil.tableGetValue(Prompts.assistant_prompts, "summary_using_annotations", "use_websearch") or false,
-                        Prompts.isWebSearchEnabled(self.settings))
-                    end,
-                    callback = function ()
-                      self:onAskSummaryUsingAnnotations()
-                    end,
-                    hold_callback = function ()
-                      UIManager:show(InfoMessage:new{
-                        text = _("Summary of the book using your highlights and notes.")
-                      })
-                    end,
-                  },
-                }
-              },
-            }
-
-  -- Only show the Custom Prompts entry when book_level_prompts are actually
-  -- configured. When absent, mark the Book Insights group with a trailing
-  -- separator so it doesn't visually run into the next menu item.
-  if self.config:getFeature("book_level_prompts") then
-    table.insert(book_level_items, {
-              text = _("Custom Prompts"),
-              sub_item_table_func = function ()
-                return BookLevelCustomPrompts(self)
-              end,
-              hold_callback = function ()
-                UIManager:show(InfoMessage:new{
-                  text = _("Your own prompts defined in the configuration file")
-                })
-              end,
-              separator = true,
-            })
-  else
-    book_level_items[1].separator = true
-  end
-
-    local reader_items_table = {}
-    -- shallow copy of the common_items_table
-    table.move(common_items_table, 1, #common_items_table, 1, reader_items_table)
-    for i = #book_level_items,1,-1 do
-      table.insert(reader_items_table, 2, book_level_items[i])
-    end
-
-    if self.ui.document then
-        -- Reader menu. No separator after "Ask a Question": the book-level
-        -- items carry the trailing separator (on Custom Prompts when
-        -- configured, otherwise on Book Insights).
-        common_items_table[1].separator = false
-        menu_items.ai_assistant = {
-            text = _("AI Assistant"),
-            sorting_hint = "tools",
-            hold_callback = function ()
-              self:_help_dialog()
-            end,
-            sub_item_table = reader_items_table
-          }
-    else
-        -- Filemanager menu. Separate "Ask a Question" from the notebook
-        -- items that follow it.
-        common_items_table[1].separator = true
-        menu_items.ai_assistant = {
-            text = _("AI Assistant"),
-            sorting_hint = "tools",
-            hold_callback = function ()
-              self:_help_dialog()
-            end,
-            sub_item_table = common_items_table
-        }
-    end
-end
-
-local function getDocumentInfo(ui)
-  local DocUtils = require("utils/doc")
-  local DocSettings = require("docsettings")
-  local document = ui and ui.document
-  local file = document and document.file
-  local doc_settings
-  local percent_finished = 0
-  if file then
-    local ok, ds = pcall(function() return DocSettings:open(file) end)
-    if ok then doc_settings = ds end
-    if doc_settings then
-      local ok_p, v = pcall(function() return doc_settings:readSetting("percent_finished") end)
-      if ok_p and type(v) == "number" then percent_finished = v end
-    end
-  end
-  local meta = DocUtils.getBookMeta(ui, file)
-  return {
-    title = meta.title,
-    authors = meta.authors,
-    percent_finished = percent_finished,
-  }
-end
-
--- FileManager-side metadata for book_info: no open document exists, and
--- book_info only needs title/author/language, so this never opens the
--- document (no body/toc/cover needed).
--- Priority: long-press book_props -> bookinfo:getDocProps(file, nil, true)
--- (metadata only, no open) -> sidecar DocSettings doc_props -> filename.
--- Reading progress comes from the sidecar percent_finished, or 0.
-function Assistant:getDocumentInfoForFile(file, book_props)
-  -- @doc FileManager-side metadata for book_info: no open document exists,
-  -- and book_info only needs title/author/language, so this never opens the
-  -- document (no body/toc/cover needed).
-  -- Returns title/authors exactly as resolved (nil when unknown) plus
-  -- display_title (filename stem is factual as a display label, never a title).
-  -- Priority: long-press book_props -> DocUtils.getBookMeta chain (which
-  -- covers bookinfo:getDocProps, sidecar doc_props, filename stem) ->
-  -- BookList percent cache. No fabricated metadata, no document open.
-
-  local function normAuthors(value)
-    if type(value) == "table" then
-      local parts = {}
-      for _, v in ipairs(value) do
-        if type(v) == "string" and v ~= "" then
-          table.insert(parts, v)
-        end
-      end
-      if #parts > 0 then return table.concat(parts, ", ") end
-      return nil
-    elseif type(value) == "string" and value ~= "" then
-      return value
-    end
-    return nil
-  end
-
-  local raw_title = koutil.tableGetValue(book_props, "title")
-  local title = (type(raw_title) == "string" and raw_title ~= "") and raw_title or nil
-  local authors = normAuthors(koutil.tableGetValue(book_props, "authors"))
-
-  local DocUtils = require("utils/doc")
-  local meta = DocUtils.getBookMeta(self.ui, file)
-  if not title then
-    title = meta.title
-  end
-  if not authors then
-    authors = meta.authors
-  end
-  local display_title = meta.display_title
-
-  local percent_finished = 0
-  -- Prefer the BookList cache when available (cheap, synchronous): it is the
-  -- most reliable progress source. Fall back to sidecar DocSettings below.
-  local booklist_percent = nil
-  local ok_booklist, BookList = pcall(require, "ui/widget/booklist")
-  if ok_booklist and type(BookList) == "table"
-    and type(BookList.getBookInfo) == "function" then
-    local ok_info, info = pcall(BookList.getBookInfo, file)
-    if ok_info and type(info) == "table"
-      and type(info.percent_finished) == "number" then
-      booklist_percent = info.percent_finished
-    end
-  end
-  if type(booklist_percent) == "number" then
-    percent_finished = booklist_percent
-  end
-  local ok_settings, doc_settings = pcall(function()
-    return require("docsettings"):open(file)
-  end)
-  if ok_settings and doc_settings then
-    local ok_p, v = pcall(function()
-      return doc_settings:readSetting("percent_finished")
-    end)
-    if type(booklist_percent) ~= "number" and ok_p and type(v) == "number" then
-      percent_finished = v
-    end
-  end
-
-  return {
-    title = title,
-    authors = authors,
-    percent_finished = percent_finished,
-    display_title = display_title,
-  }
-end
-
--- Builds the FileManager long-press row with the AI buttons on one line.
--- One row_func returns one row, so returning two buttons here keeps them
--- side by side. Gate: directories and files without a document provider
--- return nil (no row). Missing files (e.g. deleted books still listed in
--- History) stay visible but disabled, matching how native file-dialog
--- buttons treat unavailable targets. Progress is NOT checked here: it
--- needs the BookList cache and is judged inside onAskAIRecapForFile,
--- keeping long-press cheap.
-function Assistant:_buildFileDialogAIRow(file, is_file, book_props)
-  if not is_file then return nil end
-  if type(file) ~= "string" then return nil end
-  local ok, DocumentRegistry = pcall(require, "document/documentregistry")
-  if not ok or type(DocumentRegistry) ~= "table"
-    or not DocumentRegistry:hasProvider(file) then
-    return nil
-  end
-  local enabled = koutil.pathExists(file)
-  return {
-    {
-      text = _("Book Info (AI)"),
-      enabled = enabled,
-      callback = function()
-        self:_closeFileDialogs()
-        self:onAskAIBookInfoForFile(file, book_props)
-      end,
-    },
-    {
-      text = _("Recap (AI)"),
-      enabled = enabled,
-      callback = function()
-        self:_closeFileDialogs()
-        self:onAskAIRecapForFile(file, book_props)
-      end,
-    },
-    {
-      text = _("Identify (AI)"),
-      enabled = enabled,
-      callback = function()
-        self:_closeFileDialogs()
-        self:onAskAIIdentifyBookForFile(file, book_props)
-      end,
-    },
-  }
-end
-
--- Close any open long-press file dialog before running book_info, so the
--- result viewer is not stacked behind it. The dialog owner varies by browser
--- (FileManager, History, Collections, FileSearcher), so try each widget's
--- current menu instance.
-function Assistant:_closeFileDialogs()
-  for i, widget in ipairs(getFileDialogWidgets()) do
-    if type(widget.getMenuInstance) == "function" then
-      local ok, menu = pcall(widget.getMenuInstance)
-      if ok and type(menu) == "table" and menu.file_dialog then
-        UIManager:close(menu.file_dialog)
-      end
-    end
-  end
-end
-
--- FileManager-side long-press AI buttons on one row (no book open).
--- Registered on every browser widget available, mirroring coverbrowser.
-function Assistant:_registerFileDialogButtons()
-  local ok, FileManager = pcall(require, "apps/filemanager/filemanager")
-  if not ok or type(FileManager) ~= "table"
-    or type(FileManager.addFileDialogButtons) ~= "function" then
-    return
-  end
-  for i, widget in ipairs(getFileDialogWidgets()) do
-    FileManager.addFileDialogButtons(widget, FM_AI_ROW_ID,
-      function(file, is_file, dialog_book_props)
-        local live = liveAssistant()
-        if not live then return nil end
-        return live:_buildFileDialogAIRow(file, is_file, dialog_book_props)
-      end)
-  end
-end
-
--- Paired with _registerFileDialogButtons: row_id is globally unique, and
--- addFileDialogButtons already dedupes, so re-registration is safe.
-function Assistant:_removeFileDialogButtons()
-  local ok, FileManager = pcall(require, "apps/filemanager/filemanager")
-  if not ok or type(FileManager) ~= "table"
-    or type(FileManager.removeFileDialogButtons) ~= "function" then
-    return
-  end
-  for i, widget in ipairs(getFileDialogWidgets()) do
-    FileManager.removeFileDialogButtons(widget, FM_AI_ROW_ID)
-  end
-end
-
-function BookLevelCustomPrompts(assistant)
-  local sub_item_table = {}
-
-  -- Read book_level_prompts from configuration
-  local book_level_prompts = assistant.config:getFeature("book_level_prompts") or {}
-
-  for key, prompt_config in ffiutil.orderedPairs(book_level_prompts) do
-    if prompt_config.visible == true and prompt_config.type == "feature" then
-      local button = {
-        text = Prompts.getDisplayText(prompt_config.text or key,
-          koutil.tableGetValue(prompt_config, "use_websearch") or false,
-          Prompts.isWebSearchEnabled(assistant.settings)),
-        callback = function()
-          if not assistant:isConfigured() then return end
-          NetUtils.runWhenOnlineFast(function()
-            local book = getDocumentInfo(assistant.ui)
-            local showFeatureDialog = require("dialogs/feature")
-            Trapper:wrap(function()
-              showFeatureDialog(assistant, prompt_config, book.title, book.authors, book.percent_finished)
-            end)
-          end)
-        end,
-        hold_callback = function()
-          UIManager:show(InfoMessage:new{
-            text = prompt_config.description or _("This is a custom prompt")
-          })
-        end,
-      }
-      table.insert(sub_item_table, button)
-    end
-  end
-
-  if #sub_item_table == 0 then
-    local button = {
-      text = _("No valid custom prompt found"),
-      enabled = false,
-    }
-    table.insert(sub_item_table, button)
-    local button = {
-      text = _("For details, visit the 'Configuration' wiki page on github."),
-      enabled = false,
-    }
-    table.insert(sub_item_table, button)
-  end
-  return sub_item_table
+  SettingsMenu.addToMainMenu(self, menu_items)
 end
 
 function Assistant:showProviderDialog(close_callback)
-  if not self.config or not next(self.config:getProviderSettings()) then
-    UIManager:show(InfoMessage:new{
-      text = T(_("Add providers from the main menu:\n%1 -> AI Assistant -> Settings -> Provider API"), "⚙")
-    })
-    return
-  end
-  if not self:isConfigured() then return end
-
-  if self._provider_dialog then
-    -- If settings dialog is already open, just show it again
-    UIManager:show(self._provider_dialog)
-    return
-  end
-
-  -- Reopens (after add/edit/delete provider) inherit the caller's refresh hook
-  -- so the main menu label keeps tracking the active provider/model.
-  self._provider_close_callback = close_callback or self._provider_close_callback
-
-  local settingDlg = ProviderDialog:new{
-      assistant = self,
-      settings = self.settings,
-      close_callback = self._provider_close_callback,
-  }
-
-  self._provider_dialog = settingDlg -- store reference to the dialog
-  UIManager:show(settingDlg)
+  SettingsMenu.showProviderDialog(self, close_callback)
 end
 
---- Show the unified add/edit provider dialog.
---- Implementation lives in Registry.showProviderDialog; this thin wrapper
---- keeps a stable entry point for settings/menu callers.
+function Assistant:_help_dialog()
+  SettingsMenu.showHelpDialog(self)
+end
+
+function Assistant:showAboutDialog()
+  SettingsMenu.showAboutDialog(self)
+end
+
 function Assistant:_showAddProviderDialog(preset_name, handler, base_url, additional_parameters, edit_id)
-    Registry.showProviderDialog(self, preset_name, handler, base_url, additional_parameters, edit_id)
+  Registry.showProviderDialog(self, preset_name, handler, base_url, additional_parameters, edit_id)
 end
 
---- Show a dialog for adding or editing a web search API tool.
---- Reuses MultiInputDialog style. Only shows the credential field:
----   - API key tools (SerpAPI, Tavily, Exa): API Key field only
----   - Base URL tools (SearXNG): Base URL field only
---- The display name comes from the search tool catalog and is not user-editable.
----@param tool_key string The fixed tool key (serpapi, tavilyapi, exaapi, searxngapi)
 function Assistant:_showAddWebSearchDialog(tool_key)
-    local tool_def = SearchTools.getDefinition(tool_key)
-    if not tool_def then return end
-
-    -- Pre-fill from existing UI record if present
-    local existing = self._ui_search_data and self._ui_search_data.tools[tool_key]
-    local default_key = existing and existing.api_key or ""
-    local default_url = existing and existing.base_url or ""
-
-    local is_edit = SearchRegistry.is_deletable(
-        self.config:getProvider(tool_key))
-
-    local title = is_edit and T(_("Edit %1"), tool_def.display_name)
-        or T(_("Add %1"), tool_def.display_name)
-
-    -- Build fields based on credential type (no display_name field)
-    local fields
-    if tool_def.needs == "api_key" then
-        fields = {
-            { description = _("API Key"), hint = _("Your API key"), text = default_key },
-        }
-    else  -- base_url
-        fields = {
-            { description = _("Base URL"), hint = "https://...", text = default_url },
-        }
-    end
-
-    local dialog_ref = {}
-    local dialog
-    local function readFields()
-        return DocUtils.trimDialogFields(dialog)
-    end
-    dialog = MultiInputDialog:new{
-        title = title,
-        fields = fields,
-        buttons = {{
-            {
-                text = _("Cancel"),
-                callback = function() UIManager:close(dialog) end,
-            },
-            {
-                text = _("OK"),
-                is_enter_default = true,
-                callback = function()
-                    local input_fields = readFields()
-
-                    local api_key, base_url
-                    if tool_def.needs == "api_key" then
-                        api_key = input_fields[1]
-                    else
-                        base_url = input_fields[1]
-                    end
-
-                    -- SearchRegistry.validate (through installSearchTool) is the
-                    -- shared normalization gate: it trims and rejects empty or
-                    -- whitespace-laden credentials, returning the message.
-                    local ok, err = SearchRegistry.installSearchTool(
-                        self, tool_key, api_key, base_url)
-                    if not ok then
-                        UIManager:show(InfoMessage:new{
-                            icon = "notice-warning",
-                            text = err or _("Failed to save search tool."),
-                        })
-                        return
-                    end
-
-                    UIManager:close(dialog)
-                    -- Refresh settings if open
-                    if self._provider_dialog then
-                        UIManager:close(self._provider_dialog)
-                        self._provider_dialog = nil
-                        UIManager:scheduleIn(0.15, function() self:showProviderDialog() end)
-                    end
-                end,
-            },
-        }},
-    }
-    dialog_ref[1] = dialog
-    UIManager:show(dialog)
+  SearchRegistry.showWebSearchDialog(self, tool_key)
 end
 
--- Effective configuration accessors are in core/config.lua (Config object).
--- Mounted as self.config during init(); all callers use self.config:get* etc.
+function Assistant:getDocumentInfoForFile(file, book_props)
+  return BookActions.getDocumentInfoForFile(self, file, book_props)
+end
+
+function Assistant:_buildFileDialogAIRow(file, is_file, book_props)
+  return BookActions.buildFileDialogAIRow(self, file, is_file, book_props)
+end
+
+function Assistant:_closeFileDialogs()
+  BookActions.closeFileDialogs()
+end
+
+function Assistant:_registerFileDialogButtons()
+  BookActions.registerFileDialogButtons()
+end
+
+function Assistant:_removeFileDialogButtons()
+  BookActions.removeFileDialogButtons()
+end
+
+function Assistant:confirmMissingMetadata(launch)
+  BookActions.confirmMissingMetadata(self, launch)
+end
+
+function Assistant:commitIdentifiedMetadata(ui, file, identified)
+  BookActions.commitIdentifiedMetadata(self, ui, file, identified)
+end
+
+function Assistant:_identifyBookFlow(opening, file, commit_ui)
+  BookActions.identifyBookFlow(self, opening, file, commit_ui)
+end
+
+function Assistant:onAskAIIdentifyBook()
+  return BookActions.onAskAIIdentifyBook(self)
+end
+
+function Assistant:onAskAIIdentifyBookForFile(file, book_props)
+  return BookActions.onAskAIIdentifyBookForFile(self, file, book_props)
+end
+
+function Assistant:onAskAIBookInfoForFile(file, book_props)
+  return BookActions.onAskAIBookInfoForFile(self, file, book_props)
+end
+
+function Assistant:onAskAIRecapForFile(file, book_props)
+  return BookActions.onAskAIRecapForFile(self, file, book_props)
+end
+
+function Assistant:onAskAIRecap()
+  return BookActions.onAskAIRecap(self)
+end
+
+function Assistant:onAskAIXRay()
+  return BookActions.onAskAIXRay(self)
+end
+
+function Assistant:onAskAIBookInfo()
+  return BookActions.onAskAIBookInfo(self)
+end
+
+function Assistant:onAskAIAnnotations()
+  return BookActions.onAskAIAnnotations(self)
+end
+
+function Assistant:onAskSummaryUsingAnnotations()
+  return BookActions.onAskSummaryUsingAnnotations(self)
+end
+
+function Assistant:showTranslateOrDictionary(text)
+  Lookup.showTranslateOrDictionary(self, text)
+end
+
+function Assistant:_rebuildShowOnMainButtons()
+  Hooks.rebuildShowOnMainButtons(self)
+end
+
+function Assistant:addMainButton(prompt_idx, prompt)
+  Hooks.addMainButton(self, prompt_idx, prompt)
+end
+
+function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
+  return Hooks.buildAssistantDictButtons(self, dict_popup_arg, live)
+end
+
+function Assistant:_groupDictButtonsInDefaultLayout(button_ids)
+  Hooks.groupDictButtonsInDefaultLayout(self, button_ids)
+end
+
+function Assistant:_restoreDictButtonsInUserLayout(button_ids)
+  Hooks.restoreDictButtonsInUserLayout(self, button_ids)
+end
+
+function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
+  Hooks.onDictButtonsReady(self, dict_popup, dict_buttons)
+end
+
+function Assistant:onAssistantSetButton(btnconf, action)
+  return Hooks.onAssistantSetButton(self, btnconf, action)
+end
+
+function Assistant:syncProviderSelectionFromConfig()
+  if self.config then self.config:syncProviderSelection() end
+end
 
 function Assistant:onFlushSettings()
-    if self.updated then
-        self.settings:flush()
-        self.updated = nil
-    end
+  if self.updated then
+    self.settings:flush()
+    self.updated = nil
+  end
 end
 
 function Assistant:onClose()
@@ -911,1159 +241,107 @@ function Assistant:onClose()
 end
 
 function Assistant:isConfigured()
-    local err_text = TextUtils.bold_format(
-        _("<b>No provider set up yet.</b>\nPlease add a provider in Settings or configuration.lua.")
-    )
-    local function show_config_error()
-      UIManager:show(ConfirmBox:new{
-        icon = "notice-warning",
-        text = err_text,
-        ok_text = _("OK"),
-        ok_callback = function()
-          UIManager:show(InfoMessage:new{
-            text = T(_("Add providers from the main menu:\n%1 -> AI Assistant -> Settings -> Provider API"), "⚙")
-          })
-        end,
-        cancel_text = _("Cancel"),
-      })
-    end
-
-    -- handle error message during loading
-    local loadError = self.config and self.config:getLoadError()
-    if loadError and type(loadError) == "string" then
-      -- keep the error message clean
-      local cut = loadError:find("configuration.lua", 1, true) or 0 -- find as plain
-      err_text = string.format("%s\n\n%s", err_text,
-              (cut > 0) and loadError:sub(cut) or loadError)
-      show_config_error()
-      return nil
-    end
-
-    if not self.config or not self.querier or not self.querier.handler then
-      show_config_error()
-      return nil
-    end
-  
-    return true
+  local err_text = TextUtils.bold_format(
+    _("<b>No provider set up yet.</b>\nPlease add a provider in Settings or configuration.lua.")
+  )
+  local function show_config_error()
+    UIManager:show(ConfirmBox:new{
+      icon = "notice-warning",
+      text = err_text,
+      ok_text = _("OK"),
+      ok_callback = function()
+        UIManager:show(InfoMessage:new{
+          text = T(_("Add providers from the main menu:\n%1 -> AI Assistant -> Settings -> Provider API"), "⚙")
+        })
+      end,
+      cancel_text = _("Cancel"),
+    })
+  end
+  local loadError = self.config and self.config:getLoadError()
+  if loadError and type(loadError) == "string" then
+    local cut = loadError:find("configuration.lua", 1, true) or 0
+    err_text = string.format("%s\n\n%s", err_text,
+      (cut > 0) and loadError:sub(cut) or loadError)
+    show_config_error()
+    return nil
+  end
+  if not self.config or not self.querier or not self.querier.handler then
+    show_config_error()
+    return nil
+  end
+  return true
 end
 
 function Assistant:init()
-  -- loading our own _meta.lua
   self.meta = dofile(Config.getMetaPath())
-
-  -- init settings
   self.settings = openSharedSettings(self.settings_file)
-
-  -- Initialize UI state independently of provider configuration. Menus and
-  -- Settings can be opened before a provider is added through the UI.
   local ui_locale = G_reader_settings:readSetting("language") or "en"
   self.ui_language = Language:getLanguageName(ui_locale) or "English"
   self.ui_language_is_rtl = Language:isLanguageRTL(ui_locale)
-
-  -- Build effective CONFIGURATION.
-  -- RAW is the configuration loaded via dofile(configuration.lua);
-  -- shallow-copies RAW tables (e.g. features) while provider_settings is rebuilt.
   local rawConfig, loadError = Config.loadRawConfig()
   self.config = Config:new{ assistant = self, data = rawConfig or {}, loadError = loadError }
   self.config:buildEffectiveConfig()
-
-  -- Register actions with dispatcher for gesture assignment
   self:onDispatcherRegisterActions()
-
   Hooks.setupMenuOrder()
-
-  -- Register menu to main menu (under "tools") - for both reader and filemanager
   self.ui.menu:registerToMainMenu(self)
-
   Hooks.setupScrollHtmlWidget()
-
-  -- Book Description popup gains a "Translate (AI)" bottom button.
-  -- Provider-independent (the callback re-checks at tap time) and
-  -- sentinel-guarded, so one call covers both FileManager and Reader.
   Hooks.setupBookDescription(self)
-
   if not self.ui.document then
-    -- FileManager side (no open document): long-press "Book Info (AI)" button.
-    -- Registered before the provider early-return below so the entry exists
-    -- even when providers are added later through the UI; the callback itself
-    -- re-checks isConfigured().
     self:_registerFileDialogButtons()
   end
-
   if self.ui.document then
-    -- Reader specific initialization
-    -- Assistant button in highlight dialog
-    self.ui.highlight:addToHighlightDialog("ai_assistant", function(_reader_highlight_instance)
-      return {
-        text = _("AI Assistant"),
-        enabled = Device:hasClipboard(),
-        callback = function()
-          if not self:isConfigured() then
-            return
-          end
-
-          NetUtils.runWhenOnlineFast(function()
-            -- Throttled inside updater: only hits network if 48h passed since last check
-            Updater.checkForUpdates(self)
-            UIManager:nextTick(function()
-              if not self.assistant_dialog then return end -- dialog is created post-provider-load
-              -- Show the main AI dialog with highlighted text
-              self.assistant_dialog:showAskDialog(_reader_highlight_instance.selected_text.text)
-            end)
-          end)
-        end,
-        hold_callback = function()
-          self:_help_dialog()
-        end,
-      }
-    end)
+    Hooks.setupHighlightMainButton(self)
   end
-
-  -- skip initialization if no provider is configured (file or UI)
   if not next(self.config:getProviderSettings()) then return end
-
-  -- A missing/optional configuration.lua leaves a stale load error in
-  -- self.config._loadError.  With at least one provider available (e.g.
-  -- UI-only) the plugin is configured, so clear it before provider
-  -- selection/querier validation below (those paths re-set the error on failure).
   self.config:clearLoadError()
-
-  -- Sync provider selection from configuration if configuration provider changed
   self:syncProviderSelectionFromConfig()
-
   local model_provider = self.config:getActiveProviderId()
   if not model_provider then
     self.config:setLoadError(_("configuration.lua: model providers are invalid."))
     return
   end
-
-  -- Load the model provider from settings or default configuration
   self.querier = require("core/querier"):new({
     assistant = self,
     settings = self.settings,
   })
-
   local ok, err = self.querier:load_model(model_provider)
   if not ok then
     self.config:setLoadError(err)
     UIManager:show(InfoMessage:new{ icon = "notice-warning", text = err })
     return
   end
-
-  -- Conditionally override translate method based on user setting
   Hooks.syncTranslateOverride(self)
-
-  -- Register Assistant buttons with new KOReader dict API (PR #15184+)
-  -- Safe no-op on older versions where addToDictButtons doesn't exist.
-  if self.ui and self.ui.dictionary
-      and type(self.ui.dictionary.addToDictButtons) == "function" then
-    local button_ids = {}
-    for _, button in ipairs(self:_buildAssistantDictButtons(nil, true)) do
-      self.ui.dictionary:addToDictButtons(button)
-      table.insert(button_ids, button.id)
-    end
-    self:_groupDictButtonsInDefaultLayout(button_ids)
-    self:_restoreDictButtonsInUserLayout(button_ids)
-  end
-
-
+  Hooks.setupDictButtons(self)
   self.assistant_dialog = AssistantDialog:new(self)
-
   if self.ui.document then
-    -- Reader specific
-    -- Auto Recap Feature (hook before a book is opened)
     if self.settings:readSetting("enable_auto_recap", false) then
       Hooks.setupRecap(self)
     end
-
     self:_rebuildShowOnMainButtons()
   end
 end
 
--- Rebuild the highlight-menu buttons from the current showOnMain settings.
--- Called at init() and whenever web search setting changes (so the 🌐 icon
--- stays in sync).  addMainButton already calls removeFromHighlightDialog
--- before re-adding, so re-registering existing keys is safe.
-function Assistant:_rebuildShowOnMainButtons()
-  if not self.ui.document then return end
-
-  Prompts.invalidateCache()
-  Prompts.getMergedPrompts(self.config:getFeature("prompts"))
-
-  local showOnMain = Prompts.getSortedPrompts(function (prompt, idx)
-    if prompt.visible == false then
-      return false
-    end
-
-    --  set in runtime settings (by holding the prompt button)
-    local menukey = string.format("assistant_%02d_%s", prompt.order or 1000, idx)
-    local settingkey = "showOnMain_" .. menukey
-    if self.settings:has(settingkey) then
-      return self.settings:isTrue(settingkey)
-    end
-
-    -- set in configure file
-    if prompt.show_on_main_popup then
-      return true
-    end
-
-    return false -- only show if `show_on_main_popup` is true
-  end, Prompts.isWebSearchEnabled(self.settings)) or {}
-
-  for _, tab in ipairs(showOnMain) do
-    self:addMainButton(tab.idx, tab)
-  end
-end
-
-function Assistant:_help_dialog()
-    local info_text = string.format("%s %s  ", self.meta.fullname, self.meta.version) .. T(_([[Usage Tips
-
-Select:
-Highlight text (or a word) in the book, then press [AI assistant] in the poped up menu.
-
-Long Press:
-- On a Prompt Button: Add to the highlight menu.
-- On a highlight menu button to remove it.
-- On the Close button to go back to the book in 1 step.
-
-Very-Long Press (over 3 seconds):
-On a single word in the book to show the highlight menu (instead of the dictionary).
-
-Multi-Swipe (e.g., %1, %2, %3):
-On the result dialog to close (as the Close button is far to reach).
-]]), "⮠", "⮡", "↺")
-    UIManager:show(ConfirmBox:new{
-        icon = "info",
-        text = info_text,
-        face = Font:getFace("xx_smallinfofont"),
-        other_buttons = {{
-          {
-            text = _("Version Info"),
-            callback = function()
-              self:showAboutDialog()
-            end,
-          },
-        }},
-        ok_text = _("Purge Settings"),
-        ok_callback = function()
-          UIManager:show(ConfirmBox:new{
-            text = _([[Are you sure to purge the assistant plugin settings? 
-This resets the assistant plugin to the status the first time you installed it.
-
-configuration.lua is safe, only the settings are purged.]]),
-            ok_text = _("Purge"),
-            ok_callback = function()
-              self.settings:reset({})
-              self.settings:flush()
-              UIManager:askForRestart()
-            end
-          })
-        end
-    })
-end
-
-function Assistant:addMainButton(prompt_idx, prompt)
-  local menukey = string.format("assistant_%02d_%s", prompt.order, prompt_idx)
-  self.ui.highlight:removeFromHighlightDialog(menukey) -- avoid duplication
-  self.ui.highlight:addToHighlightDialog(menukey, function(_reader_highlight_instance)
-    local ws_enabled = Prompts.isWebSearchEnabled(self.settings)
-    local btntext = Prompts.getDisplayText(prompt.text or prompt_idx,
-      prompt.use_websearch or false, ws_enabled) .. " (AI)"  -- append "(AI)" to identify as our function
-    return {
-      text = btntext,
-      callback = function()
-        if prompt_idx == "quick_note" then
-          Trapper:wrap(function()
-            if not self.quicknote then
-              local QuickNote = require("dialogs/quicknote")
-              self.quicknote = QuickNote:new(self)
-            end
-            self.quicknote:saveNote(nil, _reader_highlight_instance.selected_text.text)
-          end)
-        else
-          NetUtils.runWhenOnlineFast(function()
-            Trapper:wrap(function()
-              if prompt.order == -10 and prompt_idx == "dictionary" then
-                -- Dictionary prompt, show dictionary dialog
-                showDictionaryDialog(self, _reader_highlight_instance.selected_text.text)
-              elseif prompt_idx == "term_xray" then
-                -- Special case for term_xray prompt - use dictionary dialog with enhanced context
-                showDictionaryDialog(self, _reader_highlight_instance.selected_text.text, nil, "term_xray")
-              elseif prompt_idx == "translate" then
-                -- Same Smart Dictionary Lookup routing as KOReader's built-in Translate
-                self:showTranslateOrDictionary(_reader_highlight_instance.selected_text.text)
-              else
-                -- For other prompts, show the custom prompt dialog
-                if not self.assistant_dialog then return end -- dialog is created post-provider-load
-                self.assistant_dialog:runPrompt(_reader_highlight_instance.selected_text.text, prompt_idx)
-              end
-            end)
-          end)
-        end
-      end,
-      hold_callback = function() -- hold to remove
-        UIManager:nextTick(function()
-          UIManager:show(ConfirmBox:new{
-            text = string.format(_("Remove [%s] from Highlight Menu?"), btntext),
-            ok_text = _("Remove"),
-            ok_callback = function()
-              self:handleEvent(Event:new("AssistantSetButton", {order=prompt.order, idx=prompt_idx}, "remove"))
-              -- Close the stale menu, keeping the selection.
-              self.ui.highlight:onClose(true)
-            end
-          })
-        end)
-      end,
-    }
-  end)
-end
-
--- Builds the Assistant button specs for the dict popup.
--- Used by both the new addToDictButtons API and the legacy onDictButtonsReady hook.
--- Returns an array of button specs.
---
--- `live` is set for the new API: the specs are registered once at init(), so
--- our settings must be read through show_func/text_func to let every popup see
--- their current value.  The legacy hook runs for each popup, so there the
--- settings are simply resolved right here.
-function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
-  if not self.config then return {} end
-
-  local plugin_buttons = {}
-  local enabled_count = 0
-
-  -- Appends a spec, gated by one of our `dict_popup_show_*` settings.
-  local function addButton(setting_key, default, spec)
-    if self.settings:readSetting(setting_key, default) then
-      enabled_count = enabled_count + 1
-    elseif not live then
-      return -- legacy hook: hidden buttons are simply not built
-    end
-    if live then
-      -- `menu_text` is what puts the button in KOReader's "Customize buttons"
-      -- selector.  Without it the selector doesn't know the button, and the
-      -- first time the user sorts/toggles anything there our buttons are
-      -- dropped from the saved dict_button_config for good.
-      spec.menu_text = spec.menu_text or spec.text
-      spec.show_func = function()
-        return self.settings:readSetting(setting_key, default) and true or false
-      end
-    end
-    table.insert(plugin_buttons, spec)
-  end
-
-  -- Label with the web search indicator resolved at call time.
-  local function displayText(label, use_websearch)
-    return Prompts.getDisplayText(label, use_websearch or false,
-      Prompts.isWebSearchEnabled(self.settings)) .. " (AI)"
-  end
-
-  addButton("dict_popup_show_wikipedia", true, {
-    id = "assistant_wikipedia",
-    font_bold = true,
-    menu_text = _("Wikipedia") .. " (AI)",
-    text_func = function()
-      return displayText(_("Wikipedia"),
-        koutil.tableGetValue(Prompts.builtin_prompts, "wikipedia", "use_websearch"))
-    end,
-    callback = function(widget_instance)
-        local popup = widget_instance or dict_popup_arg
-        local word = popup and popup.word
-        NetUtils.runWhenOnlineFast(function()
-            Trapper:wrap(function()
-              if not self.assistant_dialog then return end -- dialog is created post-provider-load
-              self.assistant_dialog:runPrompt(word, "wikipedia")
-            end)
-        end)
-    end,
-  })
-
-  addButton("dict_popup_show_term_xray", false, {
-    id = "assistant_term_xray",
-    font_bold = true,
-    -- @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
-    menu_text = _("Term X-Ray") .. " (AI)",
-    text_func = function()
-      -- @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
-      return displayText(_("Term X-Ray"),
-        koutil.tableGetValue(Prompts.builtin_prompts, "term_xray", "use_websearch"))
-    end,
-    callback = function(widget_instance)
-        local popup = widget_instance or dict_popup_arg
-        local word = popup and popup.word
-        NetUtils.runWhenOnlineFast(function()
-            Trapper:wrap(function()
-              showDictionaryDialog(self, word, nil, "term_xray")
-            end)
-        end)
-    end,
-  })
-
-  addButton("dict_popup_show_dictionary", true, {
-    id = "assistant_dictionary",
-    font_bold = true,
-    text = _("Dictionary") .. " (AI)",
-    callback = function(widget_instance)
-        local popup = widget_instance or dict_popup_arg
-        local word = popup and popup.word
-        NetUtils.runWhenOnlineFast(function()
-            Trapper:wrap(function()
-              showDictionaryDialog(self, word)
-            end)
-        end)
-    end,
-  })
-
-  if live or self.settings:readSetting("dict_popup_show_custom_prompts", false) then
-    -- Collect custom prompts with show_on_dictionary_popup = true
-    local custom_prompts = {}
-    local prompts = self.config:getFeature("prompts")
-    if prompts then
-      for prompt_key, prompt_config in pairs(prompts) do
-        if prompt_config.show_on_dictionary_popup == true and prompt_config.visible ~= false then
-          table.insert(custom_prompts, {
-            id = prompt_key,
-            config = prompt_config
-          })
-        end
-      end
-    end
-
-    -- Calculate how many custom prompts to add (max 3 total buttons)
-    local max_custom_to_add = math.max(0, 3 - enabled_count)
-    local custom_to_add = math.min(#custom_prompts, max_custom_to_add)
-
-    -- Add custom prompts as buttons
-    for i = 1, custom_to_add do
-      local prompt = custom_prompts[i]
-      addButton("dict_popup_show_custom_prompts", false, {
-        id = "assistant_" .. prompt.id,
-        font_bold = true,
-        menu_text = (prompt.config.text or prompt.id) .. " (AI)",
-        text_func = function()
-          return displayText(prompt.config.text or prompt.id, prompt.config.use_websearch)
-        end,
-        callback = function(widget_instance)
-            local popup = widget_instance or dict_popup_arg
-            local word = popup and popup.word
-            NetUtils.runWhenOnlineFast(function()
-                Trapper:wrap(function()
-                  if not self.assistant_dialog then return end -- dialog is created post-provider-load
-                  self.assistant_dialog:runPrompt(word, prompt.id)
-                end)
-            end)
-        end,
-      })
-    end
-  end
-
-  if not live then
-    -- The legacy hook builds plain buttons: resolve the labels now.
-    for _, spec in ipairs(plugin_buttons) do
-      if spec.text_func then
-        spec.text = spec.text_func()
-        spec.text_func = nil
-      end
-    end
-  end
-
-  return plugin_buttons
-end
-
--- Is `button_id` used anywhere in a dict button layout (a list of rows of ids)?
-local function layoutHasButtonId(layout, button_id)
-  for _, row in ipairs(layout or {}) do
-    for _, id in ipairs(row) do
-      if id == button_id then return true end
-    end
-  end
-  return false
-end
-
--- KOReader appends one full width row per plugin button to its default layout.
--- Claim a single shared row instead (as the pre-addToDictButtons hook did), so
--- a fresh install doesn't get a popup stacked with one-button rows.
--- Only affects users who never customized their dictionary buttons.
-function Assistant:_groupDictButtonsInDefaultLayout(button_ids)
-  local default_layout = self.ui.dictionary.default_layout
-  if not default_layout then return end
-
-  local row = {}
-  for _, id in ipairs(button_ids) do
-    if not layoutHasButtonId(default_layout, id) then
-      table.insert(row, id)
-      if #row == 3 then -- keep rows at KOReader's default width
-        table.insert(default_layout, 2, row)
-        row = {}
-      end
-    end
-  end
-  if #row > 0 then
-    table.insert(default_layout, 2, row)
-  end
-end
-
--- One time repair of the saved dictionary button layout.
--- Our buttons used to be registered without a `menu_text`, so KOReader's
--- "Customize buttons" selector didn't list them: as soon as the user sorted or
--- toggled any dictionary button, the regenerated dict_button_config silently
--- lost the Assistant buttons, with no way to get them back (that layout lives
--- in KOReader's global settings, so even reinstalling the plugin doesn't help).
--- Re-add each id once; whether the button is actually drawn stays under our own
--- `dict_popup_show_*` settings (show_func), and removing it again in the
--- selector now sticks.
-function Assistant:_restoreDictButtonsInUserLayout(button_ids)
-  local config = G_reader_settings:readSetting("dict_button_config")
-  if not (config and config.layout) then return end -- never customized, nothing to repair
-
-  local layout_changed = false
-  for _, id in ipairs(button_ids) do
-    local restore_flag = "dict_button_restored_" .. id
-    if not self.settings:isTrue(restore_flag) then
-      self.settings:saveSetting(restore_flag, true)
-      self.updated = true
-      if not layoutHasButtonId(config.layout, id) then
-        local last_idx = #config.layout
-        local row = config.layout[last_idx]
-        local max_in_row = koutil.tableGetValue(config, "row_count", last_idx) or 3
-        if not row or #row >= max_in_row then
-          row = {}
-          table.insert(config.layout, row)
-          if config.row_count then
-            config.row_count[#config.layout] = 3
-          end
-        end
-        table.insert(row, id)
-        if config.order and not layoutHasButtonId({ config.order }, id) then
-          table.insert(config.order, id) -- `order` is a flat list, i.e. a single row
-        end
-        layout_changed = true
-      end
-    end
-  end
-
-  if layout_changed then
-    G_reader_settings:saveSetting("dict_button_config", config)
-  end
-end
-
-function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
-  if not self.config then return end
-  -- If new KOReader API is present, we already registered at init() time.
-  -- This hook won't be called on new KOReader anyway, but guard for safety.
-  if self.ui and self.ui.dictionary
-      and type(self.ui.dictionary.addToDictButtons) == "function" then
+function Assistant:onAskAIQuestion()
+  if not self:isConfigured() then
     return
   end
-
-  local plugin_buttons = {}
-  local buttons = self:_buildAssistantDictButtons(dict_popup)
-  for _, btn in ipairs(buttons) do
-    table.insert(plugin_buttons, {
-      id = btn.id,
-      font_bold = btn.font_bold,
-      text = btn.text,
-      callback = function() btn.callback(nil) end,
-    })
-  end
-
-  if #plugin_buttons > 0 and #dict_buttons > 1 then
-    table.insert(dict_buttons, 2, plugin_buttons)
-  end
-end
-
-  -- Event handlers for gesture-triggered actions
-  function Assistant:onAskAIQuestion()
-    if not self:isConfigured() then
-      return
-    end
-    
-    NetUtils.runWhenOnlineFast(function()
-      -- Show dialog without highlighted text
-      Trapper:wrap(function()
-        if not self.assistant_dialog then return end -- dialog is created post-provider-load
-        self.assistant_dialog:showAskDialog()
-      end)
+  NetUtils.runWhenOnlineFast(function()
+    Trapper:wrap(function()
+      if not self.assistant_dialog then return end
+      self.assistant_dialog:showAskDialog()
     end)
-    return true
-  end
-
-  function Assistant:onAskAIRecap()
-    if not self:isConfigured() then return end
-    NetUtils.runWhenOnlineFast(function()
-      local book = getDocumentInfo(self.ui)
-      local showFeatureDialog = require("dialogs/feature")
-      Trapper:wrap(function()
-        showFeatureDialog(self, "recap", book.title, book.authors, book.percent_finished)
-      end)
-    end)
-    return true
-  end
-
-  function Assistant:onAskAIXRay()
-    if not self:isConfigured() then return end
-    NetUtils.runWhenOnlineFast(function()
-      local book = getDocumentInfo(self.ui)
-      local showFeatureDialog = require("dialogs/feature")
-      Trapper:wrap(function()
-        showFeatureDialog(self, "xray", book.title, book.authors, book.percent_finished)
-      end)
-    end)
-    return true
-  end
-
-  function Assistant:onAskAIBookInfo()
-    if not self:isConfigured() then return end
-    if not koutil.tableGetValue(self, "ui", "document") then
-      UIManager:show(InfoMessage:new{
-        text = _("No book is open. Long-press a book in the file manager and choose Book Info (AI).")
-      })
-      return true
-    end
-    NetUtils.runWhenOnlineFast(function()
-      local book = getDocumentInfo(self.ui)
-      local showFeatureDialog = require("dialogs/feature")
-      Trapper:wrap(function()
-        showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished)
-      end)
-    end)
-    return true
-  end
-
-
-  function Assistant:confirmMissingMetadata(launch)
-    UIManager:show(ConfirmBox:new{
-      text = _("Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."),
-      ok_text = _("Continue"),
-      cancel_text = _("Cancel"),
-      ok_callback = launch,
-    })
-  end
-
-  function Assistant:commitIdentifiedMetadata(ui, file, identified)
-    identified = identified or {}
-    ui = ui or self.ui
-    local book_props
-    if ui and ui.document and ui.document.file == file then
-      book_props = ui.doc_props or {}
-    else
-      local bi0 = ui and ui.bookinfo
-      local get_doc_props = type(bi0) == "table" and bi0.getDocProps
-      if type(get_doc_props) ~= "function" then
-        local ok_mod, BookInfo = pcall(require, "apps/filemanager/filemanagerbookinfo")
-        if ok_mod and type(BookInfo) == "table" then
-          bi0 = BookInfo:new{ ui = ui }
-          get_doc_props = type(bi0) == "table" and bi0.getDocProps
-        end
-      end
-      if type(get_doc_props) == "function" then
-        local ok_props, props = pcall(get_doc_props, bi0, file, nil, true)
-        if ok_props and type(props) == "table" then
-          book_props = props
-        end
-      end
-      if book_props == nil then book_props = {} end
-    end
-    local bi = ui and ui.bookinfo
-    if type(bi) ~= "table" or type(bi.setCustomMetadata) ~= "function" then
-      local ok_mod, BookInfo = pcall(require, "apps/filemanager/filemanagerbookinfo")
-      if ok_mod and type(BookInfo) == "table" then
-        bi = BookInfo:new{ ui = ui }
-      end
-    end
-    if type(bi) ~= "table" or type(bi.setCustomMetadata) ~= "function" then
-      UIManager:show(InfoMessage:new{ text = _("Metadata could not be saved.") })
-      return
-    end
-    -- Upstream setCustomMetadata ends in updateBookInfo(), which refreshes the
-    -- Book Information dialog (kvp_widget, show). That dialog does not exist in
-    -- this headless flow, so the writes run on a proxy that shadows the UI tail
-    -- and keeps the primed settings cache on itself instead of the shared widget.
-    bi = setmetatable({ updateBookInfo = function() end }, { __index = bi })
-    -- Prime the cache like upstream bookInfo() so consecutive writes accumulate
-    -- into one object instead of each overwriting the file from scratch.
-    if bi.custom_doc_settings == nil then
-      local ok_ds, DocSettings = pcall(require, "docsettings")
-      if ok_ds and type(DocSettings) == "table" then
-        local existing_file = nil
-        if type(DocSettings.findCustomMetadataFile) == "function" then
-          pcall(function() existing_file = DocSettings:findCustomMetadataFile(file) end)
-        end
-        if type(DocSettings.openSettingsFile) == "function" then
-          local ok_open, opened = pcall(DocSettings.openSettingsFile, existing_file)
-          if ok_open and type(opened) == "table" then
-            bi.custom_doc_settings = opened
-          end
-        end
-      end
-    end
-    local succeeded = 0
-    local calls = {}
-    if identified.title then
-      table.insert(calls, { "title", identified.title })
-    end
-    if identified.authors then
-      table.insert(calls, { "authors", identified.authors })
-    end
-    if identified.description then
-      table.insert(calls, { "description", identified.description })
-    end
-    for _, call in ipairs(calls) do
-      local ok_call = pcall(bi.setCustomMetadata, bi, file, book_props, call[1], call[2])
-      if ok_call then succeeded = succeeded + 1 end
-      -- Reload from disk so the next write in the batch accumulates instead of
-      -- starting from an empty object.
-      local ok_ds, DocSettings = pcall(require, "docsettings")
-      if ok_ds and type(DocSettings) == "table" and type(DocSettings.openSettingsFile) == "function" then
-        local existing_file = nil
-        if type(DocSettings.findCustomMetadataFile) == "function" then
-          pcall(function() existing_file = DocSettings:findCustomMetadataFile(file) end)
-        end
-        local ok_open, opened = pcall(DocSettings.openSettingsFile, existing_file)
-        if ok_open and type(opened) == "table" then
-          bi.custom_doc_settings = opened
-        elseif bi.custom_doc_settings == nil then
-          local ok_ds2, DocSettings2 = pcall(require, "docsettings")
-          if ok_ds2 and type(DocSettings2) == "table" and type(DocSettings2.openSettingsFile) == "function" then
-            local ok_o, opened2 = pcall(DocSettings2.openSettingsFile, nil)
-            if ok_o and type(opened2) == "table" then
-              bi.custom_doc_settings = opened2
-            end
-          end
-        end
-      end
-    end
-    if ui and ui.document and ui.document.file == file then
-      local ok_fb, FB = pcall(require, "apps/filemanager/filemanagerbookinfo")
-      if ok_fb and type(FB) == "table" and type(FB.extendProps) == "function" then
-        ui.doc_props = FB.extendProps(ui.doc_props or book_props, file)
-      end
-    end
-    UIManager:broadcastEvent(Event:new("InvalidateMetadataCache", file))
-    UIManager:broadcastEvent(Event:new("BookMetadataChanged"))
-    if succeeded > 0 then
-      Notification:notify(_("Book metadata updated."), Notification.SOURCE_ALWAYS_SHOW)
-    else
-      UIManager:show(InfoMessage:new{ text = _("Metadata could not be saved.") })
-    end
-  end
-
-  function Assistant:_identifyBookFlow(opening, file, commit_ui)
-    local ui = commit_ui
-    local DocUtils = require("utils/doc")
-
-    local system_prompt = Prompts.withResponseLanguage(
-        koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book", "system_prompt")
-            or Prompts.assistant_prompts.default.system_prompt,
-        self.settings:readSetting("response_language") or self.ui_language)
-
-    local user_instructions = koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book", "user_prompt")
-        or "Identify the book."
-    local user_content = DocUtils.buildIdentifyUserMessage(user_instructions, opening)
-
-    local message_history = {
-      { role = "system", content = system_prompt },
-      { role = "user", content = user_content },
-    }
-
-    local identify_prompt_config = koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book") or {}
-    local identify_ws_mode = koutil.tableGetValue(identify_prompt_config, "use_websearch")
-        and self.settings:readSetting("use_websearch", "none") or "none"
-
-    local identified, answer, status = DocUtils.identifyWithRetry(function(history)
-        return self.querier:query(history, _("Identify This Book"), {
-            use_websearch = identify_ws_mode,
-        })
-    end, message_history, "Reply ONLY with lines in this format:\n::title{...}::\n::author{...}::\n::description{...}::\nNo other text.")
-
-    if not identified then
-      if status == "no_data" then
-        UIManager:show(InfoMessage:new{
-          text = _("The model could not identify this book.")
-        })
-      else
-        local snippet = (answer or ""):gsub("%s+", " ")
-        if #snippet > 120 then
-          snippet = string.sub(snippet, 1, 120)
-        end
-        UIManager:show(InfoMessage:new{
-          text = _("Could not parse the identification result.") .. " " .. snippet
-        })
-      end
-      return
-    end
-    if not identified.title and not identified.authors then
-      UIManager:show(InfoMessage:new{
-        text = _("The model could not identify this book.")
-      })
-      return
-    end
-
-    local message = DocUtils.buildIdentifyConfirmMessage(identified)
-    UIManager:show(ConfirmBox:new{
-      text = message,
-      ok_text = _("Set"),
-      cancel_text = _("Cancel"),
-      ok_callback = function()
-        self:commitIdentifiedMetadata(ui, file, identified)
-      end,
-    })
-  end
-
-  function Assistant:onAskAIIdentifyBook()
-    if not self:isConfigured() then return end
-    if not koutil.tableGetValue(self, "ui", "document") then
-      UIManager:show(InfoMessage:new{
-        text = _("No book is open.")
-      })
-      return true
-    end
-    NetUtils.runWhenOnlineFast(function()
-      Trapper:wrap(function()
-        local ui = self.ui
-        local file = ui.document.file
-        local DocUtils = require("utils/doc")
-        local opening = DocUtils.getOpeningText(ui, 3000)
-        if opening == "" then
-          UIManager:show(InfoMessage:new{
-            text = _("Could not extract text from this book.")
-          })
-          return
-        end
-        self:_identifyBookFlow(opening, file, ui)
-      end)
-    end)
-    return true
-  end
-
-  function Assistant:onAskAIIdentifyBookForFile(file, book_props)
-    if not self:isConfigured() then return end
-    local ui = self.ui
-    NetUtils.runWhenOnlineFast(function()
-      Trapper:wrap(function()
-        local DocUtils = require("utils/doc")
-        local opening = ""
-        local doc
-        local ok_reg, DocumentRegistry = pcall(require, "document/documentregistry")
-        if ok_reg and type(DocumentRegistry) == "table"
-          and type(DocumentRegistry.hasProvider) == "function"
-          and type(DocumentRegistry.openDocument) == "function" then
-          if DocumentRegistry:hasProvider(file) then
-            doc = DocumentRegistry:openDocument(file)
-          end
-        end
-        if doc then
-          local loaded = true
-          local ok_load = pcall(function()
-            if type(doc.loadDocument) == "function" then
-              if not doc:loadDocument(false) then
-                loaded = false
-              end
-            end
-          end)
-          if not ok_load then loaded = false end
-          if loaded then
-            local ok_extract, res = pcall(DocUtils.getOpeningText, { document = doc }, 3000)
-            if ok_extract and type(res) == "string" then
-              opening = res
-            end
-          end
-          pcall(function()
-            if type(doc.close) == "function" then doc:close() end
-          end)
-        end
-
-        if opening == "" then
-          UIManager:show(InfoMessage:new{
-            text = _("Could not extract text from this book.")
-          })
-          return
-        end
-        self:_identifyBookFlow(opening, file, ui)
-      end)
-    end)
-    return true
-  end
-
-  -- FileManager-side book_info: metadata comes from the file, not an open doc.
-  function Assistant:onAskAIBookInfoForFile(file, book_props)
-    if not self:isConfigured() then return end
-    local book = self:getDocumentInfoForFile(file, book_props)
-    local function launch()
-      NetUtils.runWhenOnlineFast(function()
-        local notebook_path
-        if Notebook.isEnabled(self) then
-          local ok, path = pcall(Notebook.getBookNotebookPath, self, file)
-          if ok and type(path) == "string" and path ~= "" then
-            notebook_path = path
-          elseif not ok then
-            logger.warn("Assistant: Could not compute per-book notebook path:", path)
-          end
-        end
-        local showFeatureDialog = require("dialogs/feature")
-        Trapper:wrap(function()
-          showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished, nil, notebook_path)
-        end)
-      end)
-    end
-    if not book or not book.title or not book.authors then
-      self:confirmMissingMetadata(launch)
-      return true
-    end
-    launch()
-    return true
-  end
-
-  -- FileManager-side recap: degraded version without book text (no document
-  -- open), so require proof the book was opened and started. Never opens the
-  -- document here.
-  function Assistant:onAskAIRecapForFile(file, book_props)
-    if not self:isConfigured() then return end
-    local book = self:getDocumentInfoForFile(file, book_props)
-    local been_opened = nil
-    local list_percent = nil
-    local ok_list, BookList = pcall(require, "ui/widget/booklist")
-    if ok_list and type(BookList) == "table"
-      and type(BookList.getBookInfo) == "function" then
-      local ok_info, info = pcall(BookList.getBookInfo, file)
-      if ok_info and type(info) == "table" then
-        been_opened = info.been_opened
-        if type(info.percent_finished) == "number" then
-          list_percent = info.percent_finished
-        end
-      end
-    end
-    local percent = list_percent
-    if type(percent) ~= "number" then
-      percent = book.percent_finished
-    end
-    if type(percent) ~= "number" then
-      percent = 0
-    end
-    if been_opened == nil then
-      been_opened = percent > 0
-    end
-    if not been_opened or percent <= 0 then
-      UIManager:show(InfoMessage:new{
-        text = _("Please open this book and start reading before requesting a recap.")
-      })
-      return true
-    end
-    local notebook_path
-    if Notebook.isEnabled(self) then
-      local ok, path = pcall(Notebook.getBookNotebookPath, self, file)
-      if ok and type(path) == "string" and path ~= "" then
-        notebook_path = path
-      elseif not ok then
-        logger.warn("Assistant: Could not compute per-book notebook path:", path)
-      end
-    end
-    local function launch()
-      NetUtils.runWhenOnlineFast(function()
-        local showFeatureDialog = require("dialogs/feature")
-        Trapper:wrap(function()
-          showFeatureDialog(self, "recap", book.title, book.authors, percent, nil, notebook_path)
-        end)
-      end)
-    end
-    if not book or not book.title or not book.authors then
-      self:confirmMissingMetadata(launch)
-      return true
-    end
-    launch()
-    return true
-  end
-
-  function Assistant:onAskAIAnnotations()
-    if not self:isConfigured() then return end
-    NetUtils.runWhenOnlineFast(function()
-      local book = getDocumentInfo(self.ui)
-      local showFeatureDialog = require("dialogs/feature")
-      Trapper:wrap(function()
-        showFeatureDialog(self, "annotations", book.title, book.authors, book.percent_finished)
-      end)
-    end)
-    return true
-  end
-
-  function Assistant:onAskSummaryUsingAnnotations()
-    if not self:isConfigured() then return end
-    NetUtils.runWhenOnlineFast(function()
-      local book = getDocumentInfo(self.ui)
-      local showFeatureDialog = require("dialogs/feature")
-      Trapper:wrap(function()
-        showFeatureDialog(self, "summary_using_annotations", book.title, book.authors, book.percent_finished)
-      end)
-    end)
-    return true
-  end
-
-  function Assistant:onAskAIQuickNote()
-    if not self:isConfigured() then return end
-    -- Initialize quicknote if not already done
-    if not self.quicknote then
-      local QuickNote = require("dialogs/quicknote")
-      self.quicknote = QuickNote:new(self)
-    end
-    self.quicknote:show()
-    return true
-  end
-
--- Route a translate request through Smart Dictionary Lookup: short selections
--- may open the AI Dictionary instead (see feature/lookup.lua),
--- with a one-time three-way prompt on first use. Callers must already be inside
--- NetUtils.runWhenOnlineFast + Trapper:wrap.
-function Assistant:showTranslateOrDictionary(text)
-  local function open_translation()
-    if not self.assistant_dialog then return end -- dialog is created post-provider-load
-    self.assistant_dialog:runPrompt(text, "translate")
-  end
-  local function open_dictionary()
-    showDictionaryDialog(self, text)
-  end
-
-  -- No default: a truthy default would be written by LuaSettings:readSetting,
-  -- destroying the "never asked" (nil) state.
-  local choice = self.settings:readSetting("ai_smart_dictionary")
-  local mode = Lookup.lookup_mode_for_selection(text)
-  local route = Lookup.resolve_translate_route(choice, mode)
-
-  if route == "ask" then
-    -- Three-way first-run choice in a single button row:
-    --   Translate  -> persist "off", never ask again
-    --   Dictionary -> persist "on", never ask again
-    --   Cancel / dismiss -> abort this action; leave the setting unset
-    --     so the next short selection asks again
-    local ask_dialog
-    ask_dialog = ButtonDialog:new{
-      title = TextUtils.bold_format(_("Dictionary or Translation?\n\nThis selection looks like a word or short phrase.\n\nYou can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'.")),
-      title_align = "left",
-      info_face = Font:getFace("smallinfofont"),
-      buttons = {{
-        {
-          text = _("Cancel"),
-          callback = function()
-            -- Abort: no translation, no persistence.
-            UIManager:close(ask_dialog)
-          end,
-        },
-        {
-          text = _("Translate"),
-          callback = function()
-            self.settings:saveSetting("ai_smart_dictionary", false)
-            self.updated = true -- persist choice on next FlushSettings
-            UIManager:close(ask_dialog)
-            NetUtils.runWhenOnlineFast(function() Trapper:wrap(open_translation) end)
-          end,
-        },
-        {
-          text = _("Dictionary"),
-          callback = function()
-            self.settings:saveSetting("ai_smart_dictionary", true)
-            self.updated = true -- persist choice on next FlushSettings
-            UIManager:close(ask_dialog)
-            NetUtils.runWhenOnlineFast(function() Trapper:wrap(open_dictionary) end)
-          end,
-        },
-      }},
-      dismissable = true,
-      tap_close_callback = function()
-        -- Tap outside / back: abort, no persistence.
-      end,
-    }
-    UIManager:show(ask_dialog)
-  elseif route == "dictionary" then
-    open_dictionary()
-  else
-    open_translation()
-  end
-end
-
-function Assistant:onAssistantSetButton(btnconf, action)
-  local menukey = string.format("assistant_%02d_%s", btnconf.order, btnconf.idx)
-  local settingkey = "showOnMain_" .. menukey
-
-  local idx = btnconf.idx
-  -- use merged prompts: prompts defined only in configuration.lua
-  -- are absent from the built-in `builtin_prompts` table
-  local prompt = Prompts.getMergedPrompts(
-    self.config:getFeature("prompts"))[idx]
-  local ws_enabled = Prompts.isWebSearchEnabled(self.settings)
-  local display_text = Prompts.getDisplayText(prompt.text or idx, prompt.use_websearch or false, ws_enabled)
-
-  if action == "add" then
-    self.settings:makeTrue(settingkey)
-    self.updated = true
-    self:addMainButton(idx, prompt)
-    UIManager:show(InfoMessage:new{
-      text = TextUtils.bold_format(
-        T(_("Added <b>[%1 (AI)]</b>"), display_text)
-      ),
-      icon = "notice-info",
-      timeout = 3
-    })
-  elseif action == "remove" then
-    self.settings:makeFalse(settingkey)
-    self.updated = true
-    self.ui.highlight:removeFromHighlightDialog(menukey)
-    UIManager:show(InfoMessage:new{
-      text = TextUtils.bold_format(
-        T(_("Removed <b>[%1 (AI)]</b>"), display_text)
-      ),
-      icon = "notice-info",
-      timeout = 3
-    })
-  else
-    logger.warn("wrong event args", menukey, action)
-  end
-
+  end)
   return true
 end
 
---- Sync the provider selection from configuration.lua into self.settings when
---- the configuration.lua provider changes compared to the last remembered value.
---- Mutates only self.settings; configuration.lua is never written.
-function Assistant:syncProviderSelectionFromConfig()
-  -- Sync the selected provider from configuration.lua into settings only when
-  -- configuration provider changes compared to the last remembered value.
-  -- The remembered value is stored in settings as "previous_config_ai_provider".
-  local conf = self.config and self.config._data
-  if not conf then return end
-
-  local config_provider = koutil.tableGetValue(conf, "provider")
-  if not config_provider or config_provider == "" then return end
-
-  local previous_config_ai_provider = self.settings:readSetting("previous_config_ai_provider")
-  if previous_config_ai_provider ~= config_provider then
-    -- Config changed (or first install). Mark config's provider as selected and remember it.
-    self.settings:saveSetting("provider", config_provider)
-    self.settings:saveSetting("previous_config_ai_provider", config_provider)
-    self.updated = true
+function Assistant:onAskAIQuickNote()
+  if not self:isConfigured() then return end
+  if not self.quicknote then
+    local QuickNote = require("dialogs/quicknote")
+    self.quicknote = QuickNote:new(self)
   end
-end
-
-function Assistant:showAboutDialog()
-  local md_renderer = "Pure MD"
-  local ok, parser = pcall(require, "dialogs/mdparser")
-  if ok and parser and parser._is_hoedown then
-    md_renderer = "libhoedown"
-  end
-
-  local Version = require("version")
-
-  UIManager:show(InfoMessage:new{
-      show_icon = false,
-      text = TextUtils.bold_format(
-        T("<b>%1 %2</b>\n――――――――――――――――\n<b>%3:</b> %4\n<b>%5:</b> %6\n<b>%7:</b> %8\n<b>%9:</b> %10/%11\n<b>%12:</b> %13",
-          self.meta.fullname, self.meta.version,
-          _("Markdown Engine"), md_renderer,
-          _("KOReader"), Version:getShortVersion(),
-          _("Device"), Device.model or "?",
-          _("Platform"), jit.os, jit.arch,
-          _("Runtime"), jit.version
-        )
-      ),
-  })
+  self.quicknote:show()
+  return true
 end
 
 return Assistant

@@ -267,6 +267,25 @@ function Config:deleteSearchTool(tool_key)
     return self:deleteProvider(tool_key)
 end
 
+--- Sync the provider selection from configuration.lua into settings when
+--- the configuration.lua provider changes compared to the last remembered value.
+--- Mutates only settings; configuration.lua is never written.
+function Config:syncProviderSelection()
+    local conf = self._data
+    if not conf then return end
+
+    local config_provider = koutil.tableGetValue(conf, "provider")
+    if not config_provider or config_provider == "" then return end
+
+    local assistant = self._assistant
+    local previous_config_ai_provider = assistant.settings:readSetting("previous_config_ai_provider")
+    if previous_config_ai_provider ~= config_provider then
+        assistant.settings:saveSetting("provider", config_provider)
+        assistant.settings:saveSetting("previous_config_ai_provider", config_provider)
+        assistant.updated = true
+    end
+end
+
 --- Build the effective CONFIGURATION table from the raw dofile() result of
 --- configuration.lua merged with UI registries persisted in assistant.settings.
 --- Updates self._data to the effective table and returns it.
