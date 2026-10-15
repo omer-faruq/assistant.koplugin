@@ -1,7 +1,7 @@
 -- test_filemanager_bookinfo.lua
 -- Runtime tests for the FileManager long-press AI row in main.lua:
 -- getDocumentInfoForFile (metadata resolution without opening the document),
--- _buildFileDialogAIRow (one row, two buttons, gates, callbacks),
+-- _buildFileDialogAIRow (one row, 3 buttons, gates, callbacks, identify),
 -- _registerFileDialogButtons / _removeFileDialogButtons (paired row id), and
 -- the onAskAI*ForFile / onAskAIBookInfo entry points.
 --
@@ -493,7 +493,7 @@ table.insert(tests, test("a readable book produces two buttons in one row", func
     local path = touch("Row Book.epub")
     local row = instance:_buildFileDialogAIRow(path, true, { title = "Row Book" })
     assert.notNil(row, "a supported existing file must produce a row")
-    assert.equal(#row, 2, "both AI buttons must share the one row")
+    assert.equal(#row, 3, "AI buttons must share the one row")
     for idx = 1, 2 do
         assert.notNil(row[idx].callback, "button " .. idx .. " must have a callback")
         assert.isTrue(row[idx].enabled == true, "button " .. idx .. " must be enabled")
@@ -507,7 +507,7 @@ table.insert(tests, test("a deleted file keeps a disabled row", function()
     reset_state()
     local row = instance:_buildFileDialogAIRow(book_file("gone.epub"), true, nil)
     assert.notNil(row, "a deleted file must still show the row")
-    assert.equal(#row, 2, "both buttons stay visible")
+    assert.equal(#row, 3, "buttons stay visible")
     for idx = 1, 2 do
         assert.isFalse(row[idx].enabled, "button " .. idx .. " must be disabled for a missing file")
     end
@@ -596,7 +596,7 @@ table.insert(tests, test("the registered row_func builds the same row", function
     instance:_registerFileDialogButtons()
     local path = touch("Registered Book.epub")
     local row = added_rows[1].row_func(path, true, { title = "Registered Book" })
-    assert.equal(#row, 2, "the registered callback must build both buttons")
+    assert.equal(#row, 3, "the registered callback must build the buttons")
     local direct = instance:_buildFileDialogAIRow(path, true, { title = "Registered Book" })
     assert.equal(row[1].text, direct[1].text, "registered and direct rows must match")
     assert.equal(row[2].text, direct[2].text, "registered and direct rows must match")
@@ -904,6 +904,213 @@ local identify_tests = {
 }
 
 helper.runTests("assistant_identify_commit", identify_tests)
+
+table.insert(tests, test("row identify button closes dialogs and launches handler", function()
+    reset_state()
+    local path = touch("Identify Row.epub")
+    local row = instance:_buildFileDialogAIRow(path, true, { title = "Row Book" })
+    assert.equal(#row, 3, "three button specs")
+    local events = {}
+    instance._closeFileDialogs = function() table.insert(events, "close") end
+    instance.onAskAIIdentifyBookForFile = function(_, file) table.insert(events, "identify:" .. file) end
+
+    row[3].callback()
+    assert.equal(#events, 2, "identify must run both steps")
+    assert.equal(events[1], "close", "dialogs close first")
+    assert.equal(events[2], "identify:" .. path, "identify runs for the file")
+
+    instance._closeFileDialogs = nil
+    instance.onAskAIIdentifyBookForFile = nil
+end))
+
+table.insert(tests, test("metadata gate ConfirmBox for both FM handlers", function()
+    reset_state()
+    local ConfirmBox = require("ui/widget/confirmbox")
+    local saved_new = ConfirmBox.new
+    ConfirmBox.new = function(_, opts) return opts end
+
+    for _h, handler_name in ipairs({ "onAskAIBookInfoForFile", "onAskAIRecapForFile" }) do
+        for _m, missing in ipairs({ "title", "authors" }) do
+            reset_state()
+            booklist_info = { been_opened = true, percent_finished = 0.5 }
+            if missing == "title" then
+                instance.getDocumentInfoForFile = function()
+                    return { title = nil, authors = "A", percent_finished = 0.5 }
+                end
+            else
+                instance.getDocumentInfoForFile = function()
+                    return { title = "T", authors = nil, percent_finished = 0.5 }
+                end
+            end
+            local before = #feature_runs
+            local returned = instance[handler_name](instance, "/books/gated.epub", nil)
+            assert.isTrue(returned == true, "handler must report handled")
+            assert.equal(#shown_widgets, 1, "ConfirmBox must be shown")
+            local cb = shown_widgets[1]
+            assert.equal(cb.ok_text, "Continue", "Continue label")
+            assert.equal(cb.cancel_text, "Cancel", "Cancel label")
+            assert.equal(#feature_runs, before, "flow must not run before Continue")
+
+            cb.ok_callback()
+            assert.equal(#feature_runs, before + 1, "Continue runs the flow")
+
+            instance.getDocumentInfoForFile = nil
+        end
+
+        -- both present: no ConfirmBox, flow runs directly
+        reset_state()
+        booklist_info = { been_opened = true, percent_finished = 0.5 }
+        instance.getDocumentInfoForFile = function()
+            return { title = "T", authors = "A", percent_finished = 0.5 }
+        end
+        instance[handler_name](instance, "/books/ok.epub", nil)
+        assert.equal(#shown_widgets, 0, "no gate when metadata is present")
+        assert.equal(#feature_runs, 1, "flow runs directly")
+        instance.getDocumentInfoForFile = nil
+    end
+
+    ConfirmBox.new = saved_new
+end))
+
+table.insert(tests, test("FM identify always closes the document", function()
+    reset_state()
+    local doc = { close_count = 0 }
+    doc.loadDocument = function() return true end
+    function doc:close() self.close_count = self.close_count + 1 end
+    local reg = package.loaded["document/documentregistry"]
+    local open_calls = 0
+    reg.hasProvider = function() return true end
+    reg.openDocument = function() open_calls = open_calls + 1; return doc end
+
+    -- getOpeningText success
+    local DocUtils = require("assistant_doc_utils")
+    local orig_get = DocUtils.getOpeningText
+    local get_calls = 0
+    DocUtils.getOpeningText = function(ui, n) get_calls = get_calls + 1; return "OPENING" end
+
+    instance.ui = {}
+    instance.settings = { readSetting = function(_, k, d) return d end }
+    local answer_calls = 0
+    instance.querier = { handler = {}, query = function(self, history, title, opts)
+        answer_calls = answer_calls + 1
+        return "::title{T}:: ::author{A}:: ::description{D}::", nil
+    end }
+
+    local DR = require("document/documentregistry")
+    instance:onAskAIIdentifyBookForFile("/books/id.epub", nil)
+    assert.equal(open_calls, 1, "document must open once")
+    assert.equal(get_calls, 1, "opening must be extracted once")
+    assert.equal(answer_calls, 1, "prompt must be sent once")
+
+    -- loadDocument error: still closes, no extraction
+    doc.close_count = 0
+    doc.loadDocument = function() error("boom") end
+    get_calls = 0
+    answer_calls = 0
+    shown_widgets = {}
+    instance:onAskAIIdentifyBookForFile("/books/id2.epub", nil)
+    assert.equal(doc.close_count, 1, "document closes on load error")
+
+    -- getOpeningText error: still closes
+    doc.close_count = 0
+    doc.loadDocument = function() return true end
+    DocUtils.getOpeningText = function() error("extract boom") end
+    get_calls = 0
+    shown_widgets = {}
+    instance:onAskAIIdentifyBookForFile("/books/id3.epub", nil)
+    assert.equal(doc.close_count, 1, "document closes on extract error")
+
+    DocUtils.getOpeningText = orig_get
+    reg.openDocument = nil
+    reg.hasProvider = function() return true end
+end))
+
+table.insert(tests, test("FM identify commit refreshes doc_props only when open matches", function()
+    reset_state()
+    local ConfirmBox = require("ui/widget/confirmbox")
+    local saved_new = ConfirmBox.new
+    ConfirmBox.new = function(_, opts) return opts end
+
+    local DocUtils = require("assistant_doc_utils")
+    local orig_get = DocUtils.getOpeningText
+    DocUtils.getOpeningText = function() return "OPENING" end
+
+    instance.settings = { readSetting = function(_, k, d) return d end }
+    instance.querier = { handler = {}, query = function(self, history, title, opts)
+        return "::title{T}:: ::author{A}:: ::description{D}::", nil
+    end }
+
+    local FB = require("apps/filemanager/filemanagerbookinfo")
+    local orig_extend = FB.extendProps
+    FB.extendProps = function(props, file) return { refreshed = true } end
+
+    -- ui.document.file does not match: doc_props untouched, but broadcast
+    do
+        local ui = {}
+        ui.document = { file = "other.epub" }
+        ui.doc_props = { existing = true }
+        local writes = {}
+        ui.bookinfo = { setCustomMetadata = function(self, file, props, key, value)
+            table.insert(writes, key)
+        end, getDocProps = function() return {} end }
+        local reg = package.loaded["document/documentregistry"]
+        local doc = { loadDocument = function() return true end, close = function() end }
+        reg.hasProvider = function() return true end
+        reg.openDocument = function() return doc end
+        instance.ui = ui
+        local broadcast_count = 0
+        local UIManager = require("ui/uimanager")
+        local orig_broadcast = UIManager.broadcastEvent
+        UIManager.broadcastEvent = function(self, e) broadcast_count = broadcast_count + 1 end
+
+        instance:onAskAIIdentifyBookForFile("book.epub", nil)
+        assert.equal(#shown_widgets, 1)
+        shown_widgets[1].ok_callback()
+        assert.isTrue(ui.doc_props.existing == true, "doc_props untouched when file differs")
+        assert.isTrue(ui.doc_props.refreshed == nil, "no refresh when file differs")
+        assert.isTrue(broadcast_count > 0, "broadcast when file differs")
+
+        UIManager.broadcastEvent = orig_broadcast
+    end
+
+    -- ui.document.file matches: doc_props refreshed
+    do
+        reset_state()
+        DocUtils.getOpeningText = function() return "OPENING" end
+        instance.settings = { readSetting = function(_, k, d) return d end }
+        instance.querier = { handler = {}, query = function(self, history, title, opts)
+            return "::title{T}:: ::author{A}:: ::description{D}::", nil
+        end }
+        local ui = {}
+        ui.document = { file = "book.epub" }
+        ui.doc_props = {}
+        local writes = {}
+        ui.bookinfo = { setCustomMetadata = function(self, file, props, key, value)
+            table.insert(writes, key)
+        end, getDocProps = function() return {} end }
+        local reg = package.loaded["document/documentregistry"]
+        local doc = { loadDocument = function() return true end, close = function() end }
+        reg.hasProvider = function() return true end
+        reg.openDocument = function() return doc end
+        instance.ui = ui
+        local broadcast_count = 0
+        local UIManager = require("ui/uimanager")
+        local orig_broadcast = UIManager.broadcastEvent
+        UIManager.broadcastEvent = function(self, e) broadcast_count = broadcast_count + 1 end
+
+        instance:onAskAIIdentifyBookForFile("book.epub", nil)
+        shown_widgets[1].ok_callback()
+        assert.isTrue(ui.doc_props.refreshed == true, "doc_props refreshed when file matches")
+        assert.isTrue(broadcast_count > 0, "broadcast when file matches")
+
+        UIManager.broadcastEvent = orig_broadcast
+    end
+
+    DocUtils.getOpeningText = orig_get
+    FB.extendProps = orig_extend
+    ConfirmBox.new = saved_new
+end))
+
 local result = helper.runTests("assistant_filemanager_bookinfo", tests)
 
 UIManager.show = function() end

@@ -635,7 +635,7 @@ function Assistant:getDocumentInfoForFile(file, book_props)
   }
 end
 
--- Builds the FileManager long-press row with both AI buttons on one line.
+-- Builds the FileManager long-press row with the AI buttons on one line.
 -- One row_func returns one row, so returning two buttons here keeps them
 -- side by side. Gate: directories and files without a document provider
 -- return nil (no row). Missing files (e.g. deleted books still listed in
@@ -667,6 +667,14 @@ function Assistant:_buildFileDialogAIRow(file, is_file, book_props)
       callback = function()
         self:_closeFileDialogs()
         self:onAskAIRecapForFile(file, book_props)
+      end,
+    },
+    {
+      text = _("Identify (AI)"),
+      enabled = enabled,
+      callback = function()
+        self:_closeFileDialogs()
+        self:onAskAIIdentifyBookForFile(file, book_props)
       end,
     },
   }
@@ -1523,10 +1531,40 @@ end
   end
 
 
+  function Assistant:confirmMissingMetadata(launch)
+    UIManager:show(ConfirmBox:new{
+      text = _("Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."),
+      ok_text = _("Continue"),
+      cancel_text = _("Cancel"),
+      ok_callback = launch,
+    })
+  end
+
   function Assistant:commitIdentifiedMetadata(ui, file, identified)
     identified = identified or {}
-    local book_props = ui.doc_props or {}
-    local bi = ui.bookinfo
+    ui = ui or self.ui
+    local book_props
+    if ui and ui.document and ui.document.file == file then
+      book_props = ui.doc_props or {}
+    else
+      local bi0 = ui and ui.bookinfo
+      local get_doc_props = type(bi0) == "table" and bi0.getDocProps
+      if type(get_doc_props) ~= "function" then
+        local ok_mod, BookInfo = pcall(require, "apps/filemanager/filemanagerbookinfo")
+        if ok_mod and type(BookInfo) == "table" then
+          bi0 = BookInfo:new{ ui = ui }
+          get_doc_props = type(bi0) == "table" and bi0.getDocProps
+        end
+      end
+      if type(get_doc_props) == "function" then
+        local ok_props, props = pcall(get_doc_props, bi0, file, nil, true)
+        if ok_props and type(props) == "table" then
+          book_props = props
+        end
+      end
+      if book_props == nil then book_props = {} end
+    end
+    local bi = ui and ui.bookinfo
     if type(bi) ~= "table" or type(bi.setCustomMetadata) ~= "function" then
       local ok_mod, BookInfo = pcall(require, "apps/filemanager/filemanagerbookinfo")
       if ok_mod and type(BookInfo) == "table" then
@@ -1546,12 +1584,76 @@ end
     if identified.description then
       pcall(bi.setCustomMetadata, bi, file, book_props, "description", identified.description)
     end
-    local ok_fb, FB = pcall(require, "apps/filemanager/filemanagerbookinfo")
-    if ok_fb and type(FB) == "table" and type(FB.extendProps) == "function" then
-      ui.doc_props = FB.extendProps(ui.doc_props or book_props, file)
+    if ui and ui.document and ui.document.file == file then
+      local ok_fb, FB = pcall(require, "apps/filemanager/filemanagerbookinfo")
+      if ok_fb and type(FB) == "table" and type(FB.extendProps) == "function" then
+        ui.doc_props = FB.extendProps(ui.doc_props or book_props, file)
+      end
     end
     UIManager:broadcastEvent(Event:new("BookMetadataChanged"))
     Notification:notify(_("Book metadata updated."), Notification.SOURCE_ALWAYS_SHOW)
+  end
+
+  function Assistant:_identifyBookFlow(opening, file, commit_ui)
+    local ui = commit_ui
+    local DocUtils = require("assistant_doc_utils")
+
+    local system_prompt = Prompts.withResponseLanguage(
+        koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book", "system_prompt")
+            or Prompts.assistant_prompts.default.system_prompt,
+        self.settings:readSetting("response_language") or self.ui_language)
+
+    local user_instructions = koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book", "user_prompt")
+        or "Identify the book."
+    local user_content = DocUtils.buildIdentifyUserMessage(user_instructions, opening)
+
+    local message_history = {
+      { role = "system", content = system_prompt },
+      { role = "user", content = user_content },
+    }
+
+    local identify_prompt_config = koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book") or {}
+    local identify_ws_mode = koutil.tableGetValue(identify_prompt_config, "use_websearch")
+        and self.settings:readSetting("use_websearch", "none") or "none"
+
+    local identified, answer, status = DocUtils.identifyWithRetry(function(history)
+        return self.querier:query(history, _("Identify This Book"), {
+            use_websearch = identify_ws_mode,
+        })
+    end, message_history, "Reply ONLY with lines in this format:\n::title{...}::\n::author{...}::\n::description{...}::\nNo other text.")
+
+    if not identified then
+      if status == "no_data" then
+        UIManager:show(InfoMessage:new{
+          text = _("The model could not identify this book.")
+        })
+      else
+        local snippet = (answer or ""):gsub("%s+", " ")
+        if #snippet > 120 then
+          snippet = string.sub(snippet, 1, 120)
+        end
+        UIManager:show(InfoMessage:new{
+          text = _("Could not parse the identification result.") .. " " .. snippet
+        })
+      end
+      return
+    end
+    if not identified.title and not identified.authors then
+      UIManager:show(InfoMessage:new{
+        text = _("The model could not identify this book.")
+      })
+      return
+    end
+
+    local message = DocUtils.buildIdentifyConfirmMessage(identified)
+    UIManager:show(ConfirmBox:new{
+      text = message,
+      ok_text = _("Set"),
+      cancel_text = _("Cancel"),
+      ok_callback = function()
+        self:commitIdentifiedMetadata(ui, file, identified)
+      end,
+    })
   end
 
   function Assistant:onAskAIIdentifyBook()
@@ -1574,63 +1676,56 @@ end
           })
           return
         end
+        self:_identifyBookFlow(opening, file, ui)
+      end)
+    end)
+    return true
+  end
 
-        local system_prompt = Prompts.withResponseLanguage(
-            koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book", "system_prompt")
-                or Prompts.assistant_prompts.default.system_prompt,
-            self.settings:readSetting("response_language") or self.ui_language)
-
-        local user_instructions = koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book", "user_prompt")
-            or "Identify the book."
-        local user_content = DocUtils.buildIdentifyUserMessage(user_instructions, opening)
-
-        local message_history = {
-          { role = "system", content = system_prompt },
-          { role = "user", content = user_content },
-        }
-
-        local identify_prompt_config = koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book") or {}
-        local identify_ws_mode = koutil.tableGetValue(identify_prompt_config, "use_websearch")
-            and self.settings:readSetting("use_websearch", "none") or "none"
-
-        local identified, answer, status = DocUtils.identifyWithRetry(function(history)
-            return self.querier:query(history, _("Identify This Book"), {
-                use_websearch = identify_ws_mode,
-            })
-        end, message_history, "Reply ONLY with lines in this format:\n::title{...}::\n::author{...}::\n::description{...}::\nNo other text.")
-
-        if not identified then
-          if status == "no_data" then
-            UIManager:show(InfoMessage:new{
-              text = _("The model could not identify this book.")
-            })
-          else
-            local snippet = (answer or ""):gsub("%s+", " ")
-            if #snippet > 120 then
-              snippet = string.sub(snippet, 1, 120)
-            end
-            UIManager:show(InfoMessage:new{
-              text = _("Could not parse the identification result.") .. " " .. snippet
-            })
+  function Assistant:onAskAIIdentifyBookForFile(file, book_props)
+    if not self:isConfigured() then return end
+    local ui = self.ui
+    NetUtils.runWhenOnlineFast(function()
+      Trapper:wrap(function()
+        local DocUtils = require("assistant_doc_utils")
+        local opening = ""
+        local doc
+        local ok_reg, DocumentRegistry = pcall(require, "document/documentregistry")
+        if ok_reg and type(DocumentRegistry) == "table"
+          and type(DocumentRegistry.hasProvider) == "function"
+          and type(DocumentRegistry.openDocument) == "function" then
+          if DocumentRegistry:hasProvider(file) then
+            doc = DocumentRegistry:openDocument(file)
           end
-          return
         end
-        if not identified.title and not identified.authors then
+        if doc then
+          local loaded = true
+          local ok_load = pcall(function()
+            if type(doc.loadDocument) == "function" then
+              if not doc:loadDocument(false) then
+                loaded = false
+              end
+            end
+          end)
+          if not ok_load then loaded = false end
+          if loaded then
+            local ok_extract, res = pcall(DocUtils.getOpeningText, { document = doc }, 3000)
+            if ok_extract and type(res) == "string" then
+              opening = res
+            end
+          end
+          pcall(function()
+            if type(doc.close) == "function" then doc:close() end
+          end)
+        end
+
+        if opening == "" then
           UIManager:show(InfoMessage:new{
-            text = _("The model could not identify this book.")
+            text = _("Could not extract text from this book.")
           })
           return
         end
-
-        local message = DocUtils.buildIdentifyConfirmMessage(identified)
-        UIManager:show(ConfirmBox:new{
-          text = message,
-          ok_text = _("Set"),
-          cancel_text = _("Cancel"),
-          ok_callback = function()
-            self:commitIdentifiedMetadata(ui, file, identified)
-          end,
-        })
+        self:_identifyBookFlow(opening, file, ui)
       end)
     end)
     return true
@@ -1639,22 +1734,29 @@ end
   -- FileManager-side book_info: metadata comes from the file, not an open doc.
   function Assistant:onAskAIBookInfoForFile(file, book_props)
     if not self:isConfigured() then return end
-    NetUtils.runWhenOnlineFast(function()
-      local book = self:getDocumentInfoForFile(file, book_props)
-      local notebook_path
-      if Notebook.isEnabled(self) then
-        local ok, path = pcall(Notebook.getBookNotebookPath, self, file)
-        if ok and type(path) == "string" and path ~= "" then
-          notebook_path = path
-        elseif not ok then
-          logger.warn("Assistant: Could not compute per-book notebook path:", path)
+    local book = self:getDocumentInfoForFile(file, book_props)
+    local function launch()
+      NetUtils.runWhenOnlineFast(function()
+        local notebook_path
+        if Notebook.isEnabled(self) then
+          local ok, path = pcall(Notebook.getBookNotebookPath, self, file)
+          if ok and type(path) == "string" and path ~= "" then
+            notebook_path = path
+          elseif not ok then
+            logger.warn("Assistant: Could not compute per-book notebook path:", path)
+          end
         end
-      end
-      local showFeatureDialog = require("assistant_featuredialog")
-      Trapper:wrap(function()
-        showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished, nil, notebook_path)
+        local showFeatureDialog = require("assistant_featuredialog")
+        Trapper:wrap(function()
+          showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished, nil, notebook_path)
+        end)
       end)
-    end)
+    end
+    if not book or not book.title or not book.authors then
+      self:confirmMissingMetadata(launch)
+      return true
+    end
+    launch()
     return true
   end
 
@@ -1702,12 +1804,19 @@ end
         logger.warn("Assistant: Could not compute per-book notebook path:", path)
       end
     end
-    NetUtils.runWhenOnlineFast(function()
-      local showFeatureDialog = require("assistant_featuredialog")
-      Trapper:wrap(function()
-        showFeatureDialog(self, "recap", book.title, book.authors, percent, nil, notebook_path)
+    local function launch()
+      NetUtils.runWhenOnlineFast(function()
+        local showFeatureDialog = require("assistant_featuredialog")
+        Trapper:wrap(function()
+          showFeatureDialog(self, "recap", book.title, book.authors, percent, nil, notebook_path)
+        end)
       end)
-    end)
+    end
+    if not book or not book.title or not book.authors then
+      self:confirmMissingMetadata(launch)
+      return true
+    end
+    launch()
     return true
   end
 
