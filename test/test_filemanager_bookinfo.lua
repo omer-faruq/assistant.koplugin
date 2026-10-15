@@ -871,9 +871,18 @@ local identify_tests = {
         end
         local DocSettings_mock = {
             open = function() return sidecar end,
-            findCustomMetadataFile = function() return nil end,
+            -- The custom metadata file exists once a write has flushed it.
+            findCustomMetadataFile = function(_, path)
+                return file_disk[path] and (path .. ".custom.lua") or nil
+            end,
             openSettingsFile = function(path)
-                return { data = { custom_props = {} } }
+                local data = { custom_props = {} }
+                if path then
+                    for k, v in pairs((file_disk[FILE] or {}).custom_props or {}) do
+                        data.custom_props[k] = v
+                    end
+                end
+                return { data = data }
             end,
         }
         local saved_ds = package.loaded["docsettings"]
@@ -884,8 +893,16 @@ local identify_tests = {
         local UIManager = require("ui/uimanager")
         local orig_show = UIManager.show
         local orig_broadcast = UIManager.broadcastEvent
+        local events = {}
         UIManager.show = function() end
-        UIManager.broadcastEvent = function() end
+        UIManager.broadcastEvent = function(self, e) table.insert(events, e) end
+        -- The harness stubs ui/event with a field-less new(); give the commit
+        -- path the real event shape so broadcasts can be identified.
+        local Event = require("ui/event")
+        local orig_event_new = Event.new
+        Event.new = function(_, name, ...)
+            return { handler = "on" .. name, args = { ... } }
+        end
         local FB = require("apps/filemanager/filemanagerbookinfo")
         local orig_extend = FB.extendProps
         FB.extendProps = function(props, file) return props end
@@ -902,16 +919,18 @@ local identify_tests = {
             assert.equal(props1.authors, "A", "authors must persist alongside the later fields")
             assert.equal(props1.description, "D", "description must persist")
 
+            local saw_invalidate = false
+            for i = 1, #events do
+                local e = events[i]
+                if type(e) == "table" and e.handler == "onInvalidateMetadataCache"
+                    and e.args and e.args[1] == FILE then
+                    saw_invalidate = true
+                end
+            end
+            assert.isTrue(saw_invalidate, "metadata cache must be invalidated so the new values surface")
+
             -- Second batch with a fresh BookInfo (uncached): existing fields load
             -- and updates accumulate instead of replacing the whole metadata.
-            DocSettings_mock.findCustomMetadataFile = function() return FILE .. ".custom.lua" end
-            DocSettings_mock.openSettingsFile = function(path)
-                local data = { custom_props = {} }
-                for k, v in pairs((file_disk[FILE] or {}).custom_props or {}) do
-                    data.custom_props[k] = v
-                end
-                return { data = data }
-            end
             local ui2 = { bookinfo = new_bookinfo() }
             instance.ui = ui2
             instance:commitIdentifiedMetadata(ui2, FILE, { title = "T2", authors = "A2" })
@@ -923,6 +942,7 @@ local identify_tests = {
 
         UIManager.show = orig_show
         UIManager.broadcastEvent = orig_broadcast
+        Event.new = orig_event_new
         FB.extendProps = orig_extend
         notification_mod.notify = saved_notify
         package.loaded["docsettings"] = saved_ds

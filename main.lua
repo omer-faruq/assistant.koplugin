@@ -1639,6 +1639,7 @@ end
         ui.doc_props = FB.extendProps(ui.doc_props or book_props, file)
       end
     end
+    UIManager:broadcastEvent(Event:new("InvalidateMetadataCache", file))
     UIManager:broadcastEvent(Event:new("BookMetadataChanged"))
     if succeeded > 0 then
       Notification:notify(_("Book metadata updated."), Notification.SOURCE_ALWAYS_SHOW)
