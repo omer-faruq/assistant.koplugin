@@ -38,6 +38,8 @@ local Device = require("device")
 local ProviderDialog = require("dialogs/provider")
 local ffiutil = require("ffi/util")
 
+local showProviderDialog, showHelpDialog, showAboutDialog
+
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
 local CopyMultiInputDialog = MultiInputDialog:extend{}
@@ -1193,7 +1195,7 @@ local function addToMainMenu(assistant, menu_items)
     end
 end
 
-local function showProviderDialog(assistant, close_callback)
+function showProviderDialog(assistant, close_callback)
   if not assistant.config or not next(assistant.config:getProviderSettings()) then
     UIManager:show(InfoMessage:new{
       text = T(_("Add providers from the main menu:\n%1 -> AI Assistant -> Settings -> Provider API"), "⚙")
@@ -1219,7 +1221,7 @@ local function showProviderDialog(assistant, close_callback)
   UIManager:show(settingDlg)
 end
 
-local function showHelpDialog(assistant)
+function showHelpDialog(assistant)
     local info_text = string.format("%s %s  ", assistant.meta.fullname, assistant.meta.version) .. T(_([[Usage Tips
 
 Select:
@@ -1266,7 +1268,7 @@ configuration.lua is safe, only the settings are purged.]]),
     })
 end
 
-local function showAboutDialog(assistant)
+function showAboutDialog(assistant)
   local md_renderer = "Pure MD"
   local ok, parser = pcall(require, "dialogs/mdparser")
   if ok and parser and parser._is_hoedown then
