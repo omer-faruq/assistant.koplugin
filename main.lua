@@ -157,8 +157,6 @@ function Assistant:onClose()
   BookActions.removeFileDialogButtons()
 end
 
--- UI-guarded entry: keeps ConfirmBox/InfoMessage body here (do not move UI
--- widget requires into core/config).
 function Assistant:isConfigured()
   local err_text = TextUtils.bold_format(
     _("<b>No provider set up yet.</b>\nPlease add a provider in Settings or configuration.lua.")

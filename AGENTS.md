@@ -50,7 +50,7 @@ Full flow, handlers, config, key files: `docs/ARCHITECTURE.md`.
 - Target latest KOReader only: never code against old or hypothetical upstream APIs, and never add version fallbacks.
 - Internal modules may be freely refactored, renamed, or deleted. Do not add compatibility shims, fallbacks, or migration layers for internal-only code; update every call site in one go.
 - Comments describe what the code is now, never its change history (no "moved from X", "formerly", "no shim left"). Objective and brief: state what the current code does, not how it got that way (no "now allows", "used to", "instead of"); the commit message owns the why.
-- Keep comments short: a `---` doc comment states the contract in 1-3 lines; inline comments only where the code cannot speak for itself.
+- Keep comments short: a `---` doc comment states the contract in 1-3 lines; inline comments only where the code cannot speak for itself. Delete comments that restate the code; never narrate history or process.
 
 ## Invariants (never break)
 
