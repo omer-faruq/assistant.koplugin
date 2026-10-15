@@ -68,6 +68,35 @@ local function getFileDialogWidgets()
   return widgets
 end
 
+-- Resolves the live Assistant instance at tap time, mirroring upstream
+-- FileManagerHistory/Collection/FileSearcher.getMenuInstance: the long-press
+-- row is registered on the browser class tables and deduped by row id, so a
+-- closure that bound the registering instance would keep serving the first
+-- FileManager's stale querier/config after a book open/close cycle.
+local function liveAssistant()
+  local ui
+  local ok_fm, FM = pcall(require, "apps/filemanager/filemanager")
+  if ok_fm and type(FM) == "table" then ui = FM.instance end
+  if not ui then
+    local ok_ru, ReaderUI = pcall(require, "apps/reader/readerui")
+    if ok_ru and type(ReaderUI) == "table" then ui = ReaderUI.instance end
+  end
+  return ui and ui.assistant
+end
+
+-- One LuaSettings per file shared across Assistant instances: the plugin is
+-- instantiated per UI (FileManager and ReaderUI), and separate LuaSettings:open
+-- snapshots of the same file diverge - the last flush clobbers the other's keys.
+local SHARED_SETTINGS = {}
+local function openSharedSettings(file)
+  local settings = SHARED_SETTINGS[file]
+  if not settings then
+    settings = LuaSettings:open(file)
+    SHARED_SETTINGS[file] = settings
+  end
+  return settings
+end
+
 local Assistant = InputContainer:new {
   name = "assistant",
   meta = nil,           -- reference to the _meta module
@@ -304,7 +333,10 @@ function Assistant:addToMainMenu(menu_items)
                   local provider = self.querier.provider_setting
                       and self.querier.provider_setting.display_name
                       or self.querier.provider_name
-                  local model = self.querier.handler.model or "?"
+                  local effective = self.querier.getEffectiveModel
+                      and self.querier:getEffectiveModel() or ""
+                  local model = effective ~= "" and effective
+                      or self.querier.handler.model or "?"
                   return T(_("Provider %1 %2(%3)"), "▸", provider, model)
                 end,
                 keep_menu_open = true,
@@ -666,7 +698,9 @@ function Assistant:_registerFileDialogButtons()
   for i, widget in ipairs(getFileDialogWidgets()) do
     FileManager.addFileDialogButtons(widget, FM_AI_ROW_ID,
       function(file, is_file, dialog_book_props)
-        return self:_buildFileDialogAIRow(file, is_file, dialog_book_props)
+        local live = liveAssistant()
+        if not live then return nil end
+        return live:_buildFileDialogAIRow(file, is_file, dialog_book_props)
       end)
   end
 end
@@ -910,7 +944,7 @@ function Assistant:init()
   self.meta = dofile(Config.getMetaPath())
 
   -- init settings
-  self.settings = LuaSettings:open(self.settings_file)
+  self.settings = openSharedSettings(self.settings_file)
 
   -- Initialize UI state independently of provider configuration. Menus and
   -- Settings can be opened before a provider is added through the UI.

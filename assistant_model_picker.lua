@@ -27,16 +27,11 @@ local Registry = require("assistant_provider_registry")
 -- Forward declarations
 local showPickerDialog, showManualInput
 
---- Model currently in effect for the active provider: the runtime override
---- (selected_model_<id>) wins over the provider record, mirroring
---- BaseHandler:SyncOptions.
+--- Model currently in effect for the active provider: delegates to the querier.
 local function effectiveModel(assistant)
-    local querier = assistant.querier
-    if not querier then return "" end
-    local override = querier.provider_name and assistant.settings
-        and assistant.settings:readSetting("selected_model_" .. querier.provider_name)
-    if override and override ~= "" then return override end
-    return koutil.tableGetValue(querier, "provider_setting", "model") or ""
+    local querier = assistant and assistant.querier
+    if not querier or not querier.getEffectiveModel then return "" end
+    return querier:getEffectiveModel()
 end
 
 --- Save selected model to settings and apply to current session

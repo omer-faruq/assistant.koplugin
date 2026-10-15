@@ -53,8 +53,11 @@ local function mockAssistant()
     }
 end
 
+local Config = require("assistant_config")
+
 -- A mock Assistant with the provider-data/settings/config plumbing that
--- Registry.installProvider and Registry.updateProvider touch.
+-- Registry.installProvider and Registry.updateProvider touch. Uses the real
+-- Config module so its active-provider guard on setProvider is exercised.
 local function mockAssistantForInstall()
     local assistant = {
         _ui_provider_data = { providers = {}, _next_id = 1 },
@@ -62,40 +65,10 @@ local function mockAssistantForInstall()
         updated = false,
         querier = nil,
     }
-    -- Minimal config object to mimic assistant_config.lua's Config.
-    local config_data = { provider_settings = {} }
-    local config = {}
-    function config:getProvider(id)
-        if not id or id == "" then return nil end
-        local v = koutil.tableGetValue(config_data, "provider_settings", id)
-        if v == nil or v == require("rapidjson").null then return nil end
-        return v
-    end
-    function config:setProvider(id, record)
-        if not id or id == "" then return nil, "invalid id" end
-        config_data.provider_settings = config_data.provider_settings or {}
-        config_data.provider_settings[id] = record
-        if record ~= nil and assistant.querier and assistant.querier.load_model then
-            pcall(function() assistant.querier:load_model(id) end)
-        end
-        -- Search credentials are read per-request; no module-level refresh.
-        assistant.updated = true
-        return true
-    end
-    function config:deleteProvider(id)
-        if not id or id == "" then return nil, "invalid id" end
-        if config_data and config_data.provider_settings then
-            config_data.provider_settings[id] = nil
-            -- Search credentials are read per-request; no module-level refresh.
-            assistant.updated = true
-        end
-        return true
-    end
-    config.setSearchTool = config.setProvider
-    config.deleteSearchTool = config.deleteProvider
-    -- Expose the raw data table for direct assertions in tests.
-    config._data = config_data
-    assistant.config = config
+    assistant.config = Config:new{
+        assistant = assistant,
+        data = { provider_settings = {} },
+    }
     return assistant
 end
 
@@ -737,18 +710,23 @@ local tests = {
 
     test("updateProvider leaves an inactive provider's handler alone", function()
         local assistant = mockAssistantForInstall()
-        local id = Registry.installProvider(assistant, "openai",
-            "https://api.test.com/v1", "AMD", "key", "auto")
-        local forced = {}
+        local inactive_id = Registry.installProvider(assistant, "openai",
+            "https://api.test.com/v1", "First", "key", "auto")
+        local active_id = Registry.installProvider(assistant, "openai",
+            "https://api.test.com/v1", "Second", "key", "auto")
+        local loads = {}
         assistant.querier = {
-            provider_name = "custom:99",
-            load_model = function(_, name, force) forced[#forced + 1] = force end,
+            provider_name = active_id,
+            load_model = function(_, name, force) loads[#loads + 1] = { name = name, force = force } end,
         }
 
-        local same_id, err = Registry.updateProvider(assistant, id,
-            "AMD", "https://api.test.com/v1", "key", "gpt-4o-mini")
-        assert.equal(same_id, id, err)
-        assert.equal(#forced, 0, "only the active provider should be reloaded")
+        local same_id, err = Registry.updateProvider(assistant, inactive_id,
+            "First", "https://api.test.com/v1", "key", "gpt-4o-mini")
+        assert.equal(same_id, inactive_id, err)
+        assert.equal(#loads, 0, "editing an inactive provider must not switch or reload the querier")
+
+        assistant.config:setSearchTool("tavilyapi", { api_key = "tvly-test", source = "ui" })
+        assert.equal(#loads, 0, "saving a search tool must never touch the querier")
     end),
 
     test("Edit dialog pre-fills the runtime-selected model over the record", function()

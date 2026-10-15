@@ -217,7 +217,7 @@ function Config:getActiveProviderId()
 end
 
 --- Write a provider record into the effective CONFIGURATION.provider_settings,
---- then hot-reload the querier and ToolExecutor.
+--- and refresh the querier when this record is the active provider.
 --- Mutates only the in-memory CONFIGURATION and marks assistant.updated;
 --- configuration.lua is never written.
 function Config:setProvider(id, record)
@@ -226,9 +226,12 @@ function Config:setProvider(id, record)
     self._data.provider_settings = self._data.provider_settings or {}
     self._data.provider_settings[id] = record
     local assistant = self._assistant
-    if record ~= nil then
+    -- Only the active provider is loaded into the querier: saving or editing
+    -- any other record (including search tools, which share this table) must
+    -- not switch the request path away from the selection in settings.
+    if record ~= nil and id == self:getActiveProviderId() then
         if assistant.querier and assistant.querier.load_model then
-            pcall(function() assistant.querier:load_model(id) end)
+            pcall(function() assistant.querier:load_model(id, true) end)
         end
     end
     -- Search credentials are read per-request; no module-level refresh needed.

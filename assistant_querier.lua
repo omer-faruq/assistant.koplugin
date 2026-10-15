@@ -127,6 +127,17 @@ function Querier:getProviderLabel(provider_setting, provider_name)
     return provider_name
 end
 
+--- Model in effect for the loaded provider: the runtime override
+--- (selected_model_<id>) wins over the provider record, mirroring
+--- BaseHandler:SyncOptions.
+--- @return string
+function Querier:getEffectiveModel()
+    local override = self.provider_name and self.settings
+        and self.settings:readSetting("selected_model_" .. self.provider_name)
+    if override and override ~= "" then return override end
+    return koutil.tableGetValue(self, "provider_setting", "model") or ""
+end
+
 --- Snapshot the provider/model pair naming one query.
 --- Read once per query: the loading toast, stream dialog and error box then
 --- always name the provider/model the request was frozen with, even if the
@@ -415,6 +426,10 @@ function Querier:query(message_history, title, opts)
     if not self:is_inited() then
         return nil, _("Plugin is not configured.")
     end
+
+    -- Handler modules are require-cached singletons shared across querier
+    -- instances; re-assert this querier's options before freezing the request.
+    self.handler:SyncOptions(self)
 
     opts = opts or {}
     local request_title = formatRequestTitle(title)

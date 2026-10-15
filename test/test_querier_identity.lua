@@ -28,11 +28,15 @@ local function test(name, fn)
 end
 
 local tests = {
-    test("query: snapshot is taken before the first bg_fn build", function()
+    test("query: handler options are re-synced before the snapshot and first bg_fn build", function()
+        local sync_pos = querier_src:find("self.handler:SyncOptions(self)",
+            querier_src:find("function Querier:query(", 1, true), true)
+        assert.notNil(sync_pos, "query must re-sync handler options")
         local snap_pos = querier_src:find("request_identity = self:getRequestIdentity()", 1, true)
         assert.notNil(snap_pos, "query must capture the snapshot")
         local bg_pos = querier_src:find("bg_fn, err = self.handler:query", 1, true)
         assert.notNil(bg_pos, "stream bg_fn build site missing")
+        assert.isTrue(sync_pos < snap_pos, "handler re-sync must precede the identity snapshot")
         assert.isTrue(snap_pos < bg_pos, "snapshot must precede the first bg_fn build")
         assert.matches(querier_src, 'self%.last_request_identity = request_identity', "snapshot must be kept for the error box")
     end),

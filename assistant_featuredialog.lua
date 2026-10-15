@@ -85,11 +85,9 @@ local function showFeatureDialog(assistant, feature_type, title, author, progres
     local Querier = assistant.querier
     local ui = assistant.ui
 
-    -- Prefer already-loaded querier; fallback to getActiveProviderId.
-    local provider = (assistant.querier and assistant.querier.provider_name
-                      and assistant.querier:is_inited())
-                     and assistant.querier.provider_name
-                     or assistant.config:getActiveProviderId()
+    -- The persisted selection is the source of truth; load_model below re-reads
+    -- the record and re-syncs the handler when the querier is on another provider.
+    local provider = assistant.config:getActiveProviderId()
     if not provider then
         UIManager:show(InfoMessage:new{ icon = "notice-warning",
             text = _("No active provider configured. Please add one in Settings.") })

@@ -618,15 +618,8 @@ function Registry.updateProvider(assistant, id, display_name, base_url, api_key,
         additional_parameters = existing.additional_parameters or {},
         source = "ui",
     }
+    -- setProvider force-reloads the querier when `id` is the active provider.
     assistant.config:setProvider(id, newRecord)
-
-    -- setProvider -> load_model early-returns because this provider is already
-    -- loaded, leaving the querier's provider_setting copy stale. Force a
-    -- re-read so an edit to the active provider reaches the handler/menu.
-    if assistant.querier and assistant.querier.provider_name == id
-            and assistant.querier.load_model then
-        assistant.querier:load_model(id, true)
-    end
 
     return id
 end
@@ -672,12 +665,11 @@ function Registry.installProvider(assistant, handler, base_url, display_name, ap
         additional_parameters = stored and stored.additional_parameters or {},
         source = "ui",
     }
-    assistant.config:setProvider(id, newRecord)
 
-    -- setProvider already loaded the new provider into the querier, so persist
-    -- the selection too: getActiveProviderId reads this key, and without it the
-    -- next reload (opening a book) falls back to the previously active provider.
+    -- Persist the selection before the config write: setProvider only hot-loads
+    -- the active provider, so the new record must already be selected.
     assistant.settings:saveSetting("provider", id)
+    assistant.config:setProvider(id, newRecord)
 
     return id
 end

@@ -332,6 +332,7 @@ local function reset_state()
     for _, widget in ipairs(file_dialog_widgets) do
         widget.file_dialog_added_buttons = nil
     end
+    file_dialog_widgets[1].instance = { assistant = instance }
 end
 
 -- A sidecar stand-in: values are read through readSetting/child exactly as
@@ -599,6 +600,29 @@ table.insert(tests, test("the registered row_func builds the same row", function
     local direct = instance:_buildFileDialogAIRow(path, true, { title = "Registered Book" })
     assert.equal(row[1].text, direct[1].text, "registered and direct rows must match")
     assert.equal(row[2].text, direct[2].text, "registered and direct rows must match")
+end))
+
+table.insert(tests, test("the registered row_func serves the live instance after a rotation", function()
+    reset_state()
+    -- First FileManager registers; a later book open/close cycle spins up a
+    -- second Assistant whose re-registration is deduped out by row_id.
+    instance:_registerFileDialogButtons()
+    local second = setmetatable(configured(), { __index = Assistant })
+    second.ui = {}
+    second:_registerFileDialogButtons()
+    file_dialog_widgets[1].instance = { assistant = second }
+
+    local ran_on = {}
+    instance.onAskAIBookInfoForFile = function() table.insert(ran_on, "stale") end
+    second.onAskAIBookInfoForFile = function() table.insert(ran_on, "live") end
+
+    local path = touch("Rotated Book.epub")
+    local row = added_rows[1].row_func(path, true, { title = "Rotated Book" })
+    row[1].callback()
+    instance.onAskAIBookInfoForFile = nil
+
+    assert.equal(#ran_on, 1, "exactly one instance must handle the tap")
+    assert.equal(ran_on[1], "live", "the live FileManager's assistant must serve the row")
 end))
 
 table.insert(tests, test("registration is a no-op without the file manager module", function()
