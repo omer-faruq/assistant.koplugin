@@ -1179,6 +1179,35 @@ table.insert(tests, test("FM identify always closes the document", function()
     reg.hasProvider = function() return true end
 end))
 
+table.insert(tests, test("FM identify points at the reader when no text can be read", function()
+    reset_state()
+    local doc = { loadDocument = function() return true end, close = function() end }
+    document_registry.openDocument = function() return doc end
+
+    local DocUtils = require("utils/doc")
+    local orig_get = DocUtils.getOpeningText
+    DocUtils.getOpeningText = function() return "" end
+
+    local answer_calls = 0
+    instance.querier = { handler = {}, query = function()
+        answer_calls = answer_calls + 1
+        return "::title{T}::", nil
+    end }
+
+    instance:onAskAIIdentifyBookForFile("/books/closed.epub", nil)
+
+    assert.equal(answer_calls, 0, "no prompt may be sent without any book text")
+    assert.equal(#shown_widgets, 1, "the reader must be told what to do")
+    assert.notNil(shown_widgets[1].text, "the notice must carry text")
+    assert.isTrue(shown_widgets[1].text:lower():find("file manager") ~= nil,
+        "the notice must say the file manager cannot read it")
+    assert.isTrue(shown_widgets[1].text:lower():find("open the book") ~= nil,
+        "the notice must point at the reader")
+
+    DocUtils.getOpeningText = orig_get
+    document_registry.openDocument = nil
+end))
+
 table.insert(tests, test("FM identify commit refreshes doc_props only when open matches", function()
     reset_state()
     local ConfirmBox = require("ui/widget/confirmbox")

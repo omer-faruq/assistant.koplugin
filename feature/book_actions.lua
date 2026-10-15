@@ -505,8 +505,11 @@ function M.onAskAIIdentifyBookForFile(assistant, file, book_props)
       end
 
       if opening == "" then
+        -- Only plain-text formats yield a readable document from the file
+        -- manager; everything else loads metadata only, so send the user to
+        -- the reader, where the opening text is available.
         UIManager:show(InfoMessage:new{
-          text = _("Could not extract text from this book.")
+          text = _("This book's text cannot be read from the file manager. Open the book and use Identify This Book.")
         })
         return
       end
