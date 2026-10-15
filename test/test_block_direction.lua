@@ -1,5 +1,5 @@
 -- test_block_direction.lua
--- The RTL pipeline's per-block direction pass (assistant_text_utils
+-- The RTL pipeline's per-block direction pass (utils/text
 -- apply_block_directions): word-majority direction with the first strong
 -- character as tiebreak in "auto", a forced direction in "rtl", and a
 -- byte-identical passthrough in "ltr".
@@ -11,7 +11,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 
-local TextUtils = require("assistant_text_utils")
+local TextUtils = require("utils/text")
 
 local function test(name, fn)
     return { name = name, fn = fn }

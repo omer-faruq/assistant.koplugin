@@ -1,6 +1,6 @@
 # UI / Dialogs
 
-KOReader UI is niche. **Reuse existing scaffolding** (`ResultViewer`, `assistant_dialog.lua`, `assistant_provider_registry.lua`) rather than building new widget trees. When hand-building, scan `/usr/lib/koreader/frontend/ui/widget/` and `/usr/lib/koreader/plugins/` for reference patterns first.
+KOReader UI is niche. **Reuse existing scaffolding** (`ResultViewer`, `dialogs/dialog.lua`, `core/provider_registry.lua`) rather than building new widget trees. When hand-building, scan `/usr/lib/koreader/frontend/ui/widget/` and `/usr/lib/koreader/plugins/` for reference patterns first.
 
 ## General conventions
 
@@ -8,7 +8,7 @@ KOReader UI is niche. **Reuse existing scaffolding** (`ResultViewer`, `assistant
 - Menu/UI labels: Title Case for titles, settings items, checkboxes, dialog labels; keep short words (`to`, `for`, `as`, `and`, `in`) lowercase.
 - Success/confirmation → `Notification:notify(msg, Notification.SOURCE_ALWAYS_SHOW)` (non-blocking). Errors/failures/ack → `UIManager:show(InfoMessage:new{...})` (blocks).
 
-## Ask dialog checkbox layout (`assistant_dialog.lua`)
+## Ask dialog checkbox layout (`dialogs/dialog.lua`)
 
 Side-by-side rows: `HorizontalGroup{ HorizontalSpan(left_gap) + CheckButton(width=half_w) + HorizontalSpan(gap) + CheckButton(width=half_w) }`.
 
@@ -18,7 +18,7 @@ Side-by-side rows: `HorizontalGroup{ HorizontalSpan(left_gap) + CheckButton(widt
 
 ## Hand-built dialogs (no input field)
 
-`InputDialog` **always** creates and renders an `InputText` — there is no flag to hide it. For checkbox-only / pure-picker forms, build the widget tree by hand. Reference: `Registry.showParametersDialog` in `assistant_provider_registry.lua`.
+`InputDialog` **always** creates and renders an `InputText` — there is no flag to hide it. For checkbox-only / pure-picker forms, build the widget tree by hand. Reference: `Registry.showParametersDialog` in `core/provider_registry.lua`.
 
 Recipe (mirror `ConfirmBox`/`ProviderDialog`):
 
@@ -35,7 +35,7 @@ Pitfalls learned there:
 - **Declare locals before closures that use them**: button callbacks built in a `buttons` table close over dialog locals; a local declared *after* the table silently captures a nil **global** and crashes only when the button is tapped (`attempt to index global 'x' (a nil value)`). Declare shared locals (`dialog`, checkbox tables, …) above any closure that references them, and note why.
 - **Missing children crash at first paint, not construction**: a stale/nil child reference leaves a container without `[1]`; construction succeeds and the crash surfaces only on repaint (`framecontainer.lua:55 self[1]:getSize()`). Reproduce with a runui script: show the dialog, then `UIManager:scheduleIn(2, function() UIManager:forceRePaint(); UIManager:quit() end); UIManager:run()` — and exercise button callbacks programmatically (`button_table:getButtonById("ok").callback()`, or `buttons_layout[row][col]` positionally when the entry has no `id`) to cover tap-time paths headlessly.
 
-## Result viewer shapes (`assistant_viewer.lua`)
+## Result viewer shapes (`dialogs/viewer.lua`)
 
 `ResultViewer` has two shapes, selected by the Response Settings `minimalist_mode` switch (default off):
 
@@ -66,14 +66,14 @@ Supported: `background-color`, `border` + `border-{top,right,bottom,left}` + `-c
 - `max-width`, `box-shadow`, `opacity`, `flex`, `grid`, `transform`, `border-image`, `outline`, `box-sizing`.
 - Selector: only `:root`, `:empty`, `:first-child`, `:nth-child`, `:link` — no `:hover`.
 
-Consequences for the chat layout: a right-aligned bubble uses a fixed percentage `margin-left` (which MuPDF honors) — not `margin-left: auto`, not `max-width`. The percentage is the width, so the turn length picks the class: `.tiny-text` keeps 70% for an action label alone (a prompt name with the selection in its own band), `.short-text` keeps 38% (a question of a few chat lines stays a chat bubble on the right), `.long-text` drops to 6% so a long turn gets the page instead of a narrow column (`BUBBLE_TINY_MAX` and `BUBBLE_SHORT_MAX` in `assistant_text_utils` decide, counted in display units where a CJK glyph costs two). The optional `.source-text` band carries a turn's selection in muted, smaller type above the bubble, when the Response Settings switch asks for it. `text-align: right` right-aligns the *text* but the element's background still spans the full width, so it cannot substitute for the margin trick. `float` and `display: table` both misbehave (float needs a clearing element; display-table backgrounds over-extend). Rectangular backgrounds with a `border-left` accent are the substitute for rounded corners (the `.thought-block` accents on the right instead, so its bar never reads as the user bubble's).
+Consequences for the chat layout: a right-aligned bubble uses a fixed percentage `margin-left` (which MuPDF honors) — not `margin-left: auto`, not `max-width`. The percentage is the width, so the turn length picks the class: `.tiny-text` keeps 70% for an action label alone (a prompt name with the selection in its own band), `.short-text` keeps 38% (a question of a few chat lines stays a chat bubble on the right), `.long-text` drops to 6% so a long turn gets the page instead of a narrow column (`BUBBLE_TINY_MAX` and `BUBBLE_SHORT_MAX` in `utils/text` decide, counted in display units where a CJK glyph costs two). The optional `.source-text` band carries a turn's selection in muted, smaller type above the bubble, when the Response Settings switch asks for it. `text-align: right` right-aligns the *text* but the element's background still spans the full width, so it cannot substitute for the margin trick. `float` and `display: table` both misbehave (float needs a clearing element; display-table backgrounds over-extend). Rectangular backgrounds with a `border-left` accent are the substitute for rounded corners (the `.thought-block` accents on the right instead, so its bar never reads as the user bubble's).
 
 ## MuPDF bidi (RTL pipeline)
 
 Three source-level facts (`source/html/` in ArtifexSoftware/mupdf) shape every RTL decision; the rendered result is checked by `SDL_VIDEODRIVER=dummy ./test/runui.sh ui/rtl_render`.
 
 - **`text-align: left/right` are logical while the block's markup direction is RTL** (`html-layout.c`: `markup_dir == FZ_BIDI_RTL` swaps TA_LEFT/TA_RIGHT and puts a justified last line on the right). So an RTL block right-aligns on the *default* `text-align: left`, and never write `text-align: right` for RTL — it lands on the physical left. `text-align-last` is not in the property table at all and MuPDF already places the justified last line correctly, so it is both dropped and redundant.
-- **The CSS `direction` property inherits and suppresses `dir` attributes** (`html-parse.c` only reads `dir` when `style->direction` is UNSET). The stylesheet must therefore carry no `direction`: the per-block `dir="rtl"|"ltr"` written by `assistant_text_utils.apply_block_directions` is the only direction input.
+- **The CSS `direction` property inherits and suppresses `dir` attributes** (`html-parse.c` only reads `dir` when `style->direction` is UNSET). The stylesheet must therefore carry no `direction`: the per-block `dir="rtl"|"ltr"` written by `utils/text.apply_block_directions` is the only direction input.
 - **`dir="auto"` is not enough**: it maps to `FZ_BIDI_NEUTRAL`, which resolves the block's direction from its text but triggers none of the RTL alignment behavior above (the block stays physically left-aligned). The plugin detects the direction itself (word majority, first strong character as tiebreak) and writes an explicit `dir` per block.
 
 With `dir` set, MuPDF places list markers by the element's own markup direction, and Arabic script needs `line-height: 1.35` (its ascenders/descenders/diacritics clip at the base 1.25) plus the mirrored inset (`padding-left: 0; padding-right: ...`) — MuPDF has no logical properties and no attribute selectors, so those two ride inline on the block's own `style`. Code blocks (`pre`) stay `dir="ltr"` in every mode.
@@ -111,7 +111,7 @@ Check the public API first, then read the widget source under `/usr/lib/koreader
 Viewer HTML falls back through `Noto Sans CJK TC → … → FreeSans → Noto Sans`. Glyph coverage of the bundled fonts (checked with fontTools cmap over `noto/`, `freefont/`, `droid/`) decides what prompts may emit:
 
 - Safe: `★ ◆ ● ○ ❖ ✓ ▪ ‣ ⚠ → ⇧ ⏎ ✦ ⮞ ‹ ›` (all covered by FreeSans and/or Noto CJK).
-- `🌐` `U+1F310` renders too, and is the plugin's web-search icon (`Prompts.WEBSEARCH_ICON`, and the search-keyword marker in `assistant_tool_executor.lua`). It comes out monochrome from a text font rather than as color emoji, so it reads as a small text glyph — do not assume other `U+1F300`+ code points behave the same way.
+- `🌐` `U+1F310` renders too, and is the plugin's web-search icon (`Prompts.WEBSEARCH_ICON`, and the search-keyword marker in `core/tool_executor.lua`). It comes out monochrome from a text font rather than as color emoji, so it reads as a small text glyph — do not assume other `U+1F300`+ code points behave the same way.
 - Tofu: anything forcing **color emoji** presentation, which the bundled fonts lack. The usual culprit is `VS16` (a variation selector forces the emoji, color form): use bare `⚠`, never `⚠️`.
 - Magnifier glyphs, as measured: `U+1F50D`/`U+1F50E` are tofu, `U+2B58` draws as a bare circle with no handle, `U+26B2` as a gender symbol, and `U+2317` `⌗` renders but as a `#`, so it reads as a hash. `U+2315` `⌕` is the only candidate that draws a real lens and handle. When the meaning is a web search, prefer `🌐` `U+1F310` over any magnifier, since that is the icon the plugin already ships.
 - Noto Sans/Serif base cover almost none of the above; never rely on them alone.

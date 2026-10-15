@@ -1,6 +1,6 @@
 -- test_credential_validation.lua
 -- Tests for the shared credential/field normalization helpers in
--- assistant_doc_utils.lua (validate_credential_field / trimDialogFields).
+-- utils/doc.lua (validate_credential_field / trimDialogFields).
 local helper = require("test.helper")
 local assert = helper.assert
 local DocUtils = helper.DocUtils

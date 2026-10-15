@@ -38,8 +38,8 @@ local stubs = {
     ["ui/size"]                 = {},
     ["ui/widget/trapwidget"]    = {},
     ["ui/widget/notification"]  = { notify = function() end, SOURCE_ALWAYS_SHOW = 1 },
-    -- Real widget modules pulled in by assistant_utils -> assistant_notebook
-    -- and assistant_search_registry. They require the real "device" module,
+    -- Real widget modules pulled in by utils/base -> feature/notebook
+    -- and core/search_registry. They require the real "device" module,
     -- whose android probe (pcall(require, "android")) is satisfied by the
     -- empty android stub above, making device.lua load the Android
     -- implementation and crash. Stub them so the real device module is
@@ -121,11 +121,11 @@ for modname, stub in pairs(stubs) do
 end
 
 -- 4. Import the real modules we need
-local ASUtils = require("assistant_utils")
-local NetUtils = require("assistant_net_utils")
-local TextUtils = require("assistant_text_utils")
-local DocUtils = require("assistant_doc_utils")
-local extools = require("assistant_exttools")
+local ASUtils = require("utils/base")
+local NetUtils = require("utils/net")
+local TextUtils = require("utils/text")
+local DocUtils = require("utils/doc")
+local extools = require("core/exttools")
 
 -- 5. Assertion helpers
 local M = {}

@@ -10,13 +10,13 @@
 -- File providers are imported as-is with source="file", immutable=true injected.
 
 local json = require("rapidjson")
-local NetUtils = require("assistant_net_utils")
-local DocUtils = require("assistant_doc_utils")
-local NetUtils = require("assistant_net_utils")
-local TextUtils = require("assistant_text_utils")
+local NetUtils = require("utils/net")
+local DocUtils = require("utils/doc")
+local NetUtils = require("utils/net")
+local TextUtils = require("utils/text")
 local logger = require("logger")
 local koutil = require("util")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local ConfirmBox = require("ui/widget/confirmbox")
@@ -1117,7 +1117,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                 -- network can be cancelled by tapping.
                 NetUtils.runWhenOnlineFast(function()
                     Trapper:wrap(function()
-                        local mp = require("assistant_model_picker")
+                        local mp = require("dialogs/model_picker")
                         local model_list, err = mp.fetchModels(handler, url, api_key)
                         if err == NetUtils.HANDLERCODE.CODE_CANCELLED then
                             return  -- user dismissed the InfoMessage

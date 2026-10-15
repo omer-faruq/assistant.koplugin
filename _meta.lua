@@ -1,4 +1,4 @@
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 return {
     fullname = _("AI Assistant"),
     description = "💡 " .. _("Enhance your KOReader experience with AI"),

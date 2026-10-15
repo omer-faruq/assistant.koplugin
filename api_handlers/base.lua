@@ -13,12 +13,12 @@ local ffiutil = require("ffi/util")
 local koutil = require("util")
 local strbuf = require("string.buffer")
 local T = ffiutil.template
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 
-local ToolExecutor = require("assistant_tool_executor")
-local ASUtils = require("assistant_utils")
-local NetUtils = require("assistant_net_utils")
-local TextUtils = require("assistant_text_utils")
+local ToolExecutor = require("core/tool_executor")
+local ASUtils = require("utils/base")
+local NetUtils = require("utils/net")
+local TextUtils = require("utils/text")
 local datetime = require("datetime")
 local json_default = ASUtils.json_default
 
@@ -390,7 +390,7 @@ function BaseHandler:SyncOptions(querier, overlay)
 
     -- Merge the runtime reasoning overlay over same-name top-level keys.
     local provider_id = querier.provider_name or self.provider_name or ""
-    local Registry = require("assistant_provider_registry")
+    local Registry = require("core/provider_registry")
     if overlay == nil then
         overlay = Registry.getReasoningOverlay(querier.settings, provider_id)
     end

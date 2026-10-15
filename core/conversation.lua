@@ -1,12 +1,12 @@
--- assistant_conversation.lua
+-- core/conversation.lua
 -- Unified conversation layer: session, turn policy, and query request.
 --
 -- Replaces the implicit "last message carries control state" protocol
 -- with explicit TurnInput -> TurnPolicy -> QueryRequest flow.
 
 local koutil = require("util")
-local ASUtils = require("assistant_utils")
-local Prompts = require("assistant_prompts")
+local ASUtils = require("utils/base")
+local Prompts = require("core/prompts")
 
 local Conversation = {}
 
@@ -202,9 +202,9 @@ Conversation.Renderer = {}
 ---   - `default_config table` — default suggestion config
 ---@return string
 function Conversation.Renderer.render(history, opts)
-    local TextUtils = require("assistant_text_utils")
-    local ASUtils = require("assistant_utils")
-    local _ = require("assistant_gettext")
+    local TextUtils = require("utils/text")
+    local ASUtils = require("utils/base")
+    local _ = require("core/gettext")
 
     local minimal = opts.settings:readSetting("minimalist_mode", false)
     local parts = {}
@@ -240,8 +240,8 @@ end
 ---@param opts table Same as render(), but `header` and `highlighted_text` are ignored
 ---@return string The increment text (starts with --- separator)
 function Conversation.Renderer.render_increment(history, opts)
-    local TextUtils = require("assistant_text_utils")
-    local ASUtils = require("assistant_utils")
+    local TextUtils = require("utils/text")
+    local ASUtils = require("utils/base")
 
     local minimal = opts.settings:readSetting("minimalist_mode", false)
     local parts = { "---\n\n" }

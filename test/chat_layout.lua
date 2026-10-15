@@ -11,9 +11,9 @@ end
 local wb = require("test/wbuilder")
 local UIManager = wb.UIManager
 local Screen = wb.Screen
-local ResultViewer = require("assistant_viewer")
-local TextUtils = require("assistant_text_utils")
-local ASUtils = require("assistant_utils")
+local ResultViewer = require("dialogs/viewer")
+local TextUtils = require("utils/text")
+local ASUtils = require("utils/base")
 local T = require("ffi/util").template
 
 local settings = {

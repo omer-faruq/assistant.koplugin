@@ -1,6 +1,6 @@
 local FFIUtil = require("ffi/util")
-local ASUtils = require("assistant_utils")
-local TextUtils = require("assistant_text_utils")
+local ASUtils = require("utils/base")
+local TextUtils = require("utils/text")
 local T = FFIUtil.template
 local lfs = require("libs/libkoreader-lfs")
 local util = require("util")
@@ -9,8 +9,8 @@ local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local InputDialog = require("ui/widget/inputdialog")
 local Menu = require("ui/widget/menu")
-local _ = require("assistant_gettext")
-local SharedCSS = require("assistant_css")
+local _ = require("core/gettext")
+local SharedCSS = require("dialogs/css")
 
 local M = {}
 
@@ -796,7 +796,7 @@ end
 -- Everything from the upstream TextViewer is inherited untouched (buttons,
 -- title bar, search, big-file confirm dialog, image base directory and the
 -- Plain-text toggle); only two things change:
---   1. Markdown is rendered with the plugin parser (assistant_mdparser,
+--   1. Markdown is rendered with the plugin parser (dialogs/mdparser,
 --      hoedown when available; otherwise the native path is kept).
 --   2. Table CSS rides the outer ScrollHtmlWidget CSS channel and the
 --      content is re-set so MuPDF picks it up.
@@ -804,7 +804,7 @@ end
 -- module stays loadable where the UI stack is unavailable (then
 -- M.NotebookViewer is nil).
 local tv_ok, TextViewerBase = pcall(require, "ui/widget/textviewer")
-local md_ok, MDParser = pcall(require, "assistant_mdparser")
+local md_ok, MDParser = pcall(require, "dialogs/mdparser")
 if not md_ok then
     MDParser = nil
 end
@@ -829,7 +829,7 @@ if tv_ok and TextViewerBase then
     end
 
     -- Resolve the display switches for this instance, mirroring
-    -- ResultViewer:_responseDirection: the text direction mode (assistant_utils
+    -- ResultViewer:_responseDirection: the text direction mode (utils/base
     -- .response_direction, per-block pipeline for "auto"/"rtl") plus
     -- justification -- response_justified OR the TextViewer Justify toggle,
     -- which the upstream stylesheet already honors, so OR-ing it here is

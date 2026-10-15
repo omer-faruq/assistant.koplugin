@@ -19,9 +19,9 @@ end
 
 local shot = require("test/screenshot")
 
--- Installed before the viewer is required: assistant_viewer binds the parser at
+-- Installed before the viewer is required: dialogs/viewer binds the parser at
 -- load time, so a later swap would not reach it.
-shot.fake("assistant_mdparser", function()
+shot.fake("dialogs/mdparser", function()
     local puremd = require("apps/filemanager/lib/md")
     return setmetatable({}, { __call = function(_, text) return puremd(text) end })
 end)
@@ -31,8 +31,8 @@ local Screen = wb.Screen
 local ScrollHtmlWidget = require("ui/widget/scrollhtmlwidget")
 local CenterContainer = require("ui/widget/container/centercontainer")
 local Geom = require("ui/geometry")
-local ResultViewer = require("assistant_viewer")
-local MD = require("assistant_mdparser")
+local ResultViewer = require("dialogs/viewer")
+local MD = require("dialogs/mdparser")
 
 local W, H = Screen:getWidth(), Screen:getHeight()
 local RIGHT_EDGE = 0.9

@@ -21,9 +21,9 @@ end
 local wb = require("test.wbuilder")
 local UIManager = wb.UIManager
 local InfoMessage = require("ui/widget/infomessage")
-local ResultViewer = require("assistant_viewer")
-local _ = require("assistant_gettext")
-local showDictionaryDialog = require("assistant_dictdialog")
+local ResultViewer = require("dialogs/viewer")
+local _ = require("core/gettext")
+local showDictionaryDialog = require("dialogs/dict")
 
 -- ── Minimal assertion helpers (this test runs outside test/helper.lua, which
 -- stubs the very widgets the viewer needs) ──

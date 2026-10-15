@@ -1,5 +1,5 @@
 -- test_recap_time.lua
--- Runtime tests for the recap last-read-time source in assistant_hooks:
+-- Runtime tests for the recap last-read-time source in core/hooks:
 -- setupRecap must derive the elapsed time from KOReader's read history, then
 -- from the sidecar metadata mtime, and never from the document's atime.
 -- Read history, DocSettings, lfs and ReaderUI are faked; the require
@@ -7,7 +7,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 
-local MODULES = { "assistant_hooks", "ui/widget/textviewer" }
+local MODULES = { "core/hooks", "ui/widget/textviewer" }
 
 local saved_preload = {}
 local saved_loaded = {}
@@ -27,11 +27,11 @@ require("ui/widget/infomessage")
 require("ui/trapper")
 require("logger")
 require("util")
-require("assistant_gettext")
-require("assistant_doc_utils")
-require("assistant_net_utils")
+require("core/gettext")
+require("utils/doc")
+require("utils/net")
 
--- assistant_hooks captures ReadHistory/DocSettings/lfs at load time, so the
+-- core/hooks captures ReadHistory/DocSettings/lfs at load time, so the
 -- fakes must be installed before requiring it (but after the real UI modules
 -- above, or their transitive lfs would be poisoned).
 local fake_readerui = {
@@ -72,10 +72,10 @@ package.loaded["readhistory"] = fake_history
 package.loaded["docsettings"] = fake_docsettings
 package.loaded["libs/libkoreader-lfs"] = fake_lfs
 
--- assistant_hooks requires TextViewer at load time; a bare stub is enough.
+-- core/hooks requires TextViewer at load time; a bare stub is enough.
 package.preload["ui/widget/textviewer"] = function() return {} end
 
-local Hooks = require("assistant_hooks")
+local Hooks = require("core/hooks")
 
 -- Stub the already-loaded UI modules (same tables the hooks captured).
 local saved_show = UIManager.show

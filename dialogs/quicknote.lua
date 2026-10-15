@@ -1,16 +1,16 @@
--- assistant_quicknote.lua
+-- dialogs/quicknote.lua
 -- Module for quick notes functionality
 
 local Device = require("device")
-local DocUtils = require("assistant_doc_utils")
+local DocUtils = require("utils/doc")
 local InputDialog = require("ui/widget/inputdialog")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local logger = require("logger")
 local T = require("ffi/util").template
 local util = require("util")
-local _ = require("assistant_gettext")
-local Notebook = require("assistant_notebook")
+local _ = require("core/gettext")
+local Notebook = require("feature/notebook")
 
 local QuickNote = {}
 

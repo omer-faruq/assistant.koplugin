@@ -1,11 +1,11 @@
 -- test/ui/stream_status.lua
 -- Renders the real streaming dialog (Querier:showStremDialog in
--- assistant_querier.lua) and asserts on the pixels that the status row is
+-- core/querier.lua) and asserts on the pixels that the status row is
 -- there, that it sits in the gap between the title bar and the composing
 -- window, and that each phase paints its own label.
 --
 -- The phase -> label table (STREAM_STATUS_LABELS) is a file-local in
--- assistant_querier.lua and is only ever read from inside the updateStatusRow
+-- core/querier.lua and is only ever read from inside the updateStatusRow
 -- closure, so it cannot be called as a function from anywhere. This script
 -- therefore drives the shipped entry point instead: it hands showStremDialog a
 -- stub processStream that records one phase and pushes one chunk, which is
@@ -32,7 +32,7 @@ local shot = require("test/screenshot")
 local wb = require("test/wbuilder")
 local UIManager = wb.UIManager
 local Screen = wb.Screen
-local Querier = require("assistant_querier")
+local Querier = require("core/querier")
 local InputDialog = require("ui/widget/inputdialog")
 
 local W, H = Screen:getWidth(), Screen:getHeight()

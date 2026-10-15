@@ -283,7 +283,7 @@ end
 
 -- Feature dialog invocations.
 local feature_runs = {}
-package.loaded["assistant_featuredialog"] = setmetatable({}, {
+package.loaded["dialogs/feature"] = setmetatable({}, {
     __call = function(_, assistant, feature, title, authors, percent, extra, notebook_path)
         table.insert(feature_runs, {
             feature = feature, title = title, authors = authors,
@@ -669,7 +669,7 @@ table.insert(tests, test("book info for a file uses the per-book notebook when e
         end,
     }
     local asked_for = nil
-    local Notebook = require("assistant_notebook")
+    local Notebook = require("feature/notebook")
     local saved = Notebook.getBookNotebookPath
     Notebook.getBookNotebookPath = function(_, file)
         asked_for = file
@@ -1134,7 +1134,7 @@ table.insert(tests, test("FM identify always closes the document", function()
     reg.openDocument = function() open_calls = open_calls + 1; return doc end
 
     -- getOpeningText success
-    local DocUtils = require("assistant_doc_utils")
+    local DocUtils = require("utils/doc")
     local orig_get = DocUtils.getOpeningText
     local get_calls = 0
     DocUtils.getOpeningText = function(ui, n) get_calls = get_calls + 1; return "OPENING" end
@@ -1182,7 +1182,7 @@ table.insert(tests, test("FM identify commit refreshes doc_props only when open 
     local saved_new = ConfirmBox.new
     ConfirmBox.new = function(_, opts) return opts end
 
-    local DocUtils = require("assistant_doc_utils")
+    local DocUtils = require("utils/doc")
     local orig_get = DocUtils.getOpeningText
     DocUtils.getOpeningText = function() return "OPENING" end
 

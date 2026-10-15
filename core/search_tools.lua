@@ -8,12 +8,12 @@
 --   - the menu order of every selectable mode
 --
 -- It is deliberately UI-free (it requires nothing at all) so that pure-logic
--- consumers - notably assistant_prompts.lua, which is loaded early by the
+-- consumers - notably core/prompts.lua, which is loaded early by the
 -- menu and the dialogs - can ask "is this setting a recognized enabled mode?"
 -- without pulling in a dialog module.
 --
--- Persistence of the credentials themselves lives in assistant_search_registry;
--- the API clients live in assistant_exttools.
+-- Persistence of the credentials themselves lives in core/search_registry;
+-- the API clients live in core/exttools.
 
 local SearchTools = {}
 

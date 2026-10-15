@@ -11,7 +11,7 @@ end
 local wb = require("test/wbuilder")
 local UIManager = wb.UIManager
 local LuaSettings = require("luasettings")
-local Registry = require("assistant_provider_registry")
+local Registry = require("core/provider_registry")
 
 -- ── Mock assistant object ──
 

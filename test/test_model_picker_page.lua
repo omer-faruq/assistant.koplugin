@@ -1,5 +1,5 @@
 -- test_model_picker_page.lua
--- Guards the picker fresh-open page jump (assistant_model_picker.lua):
+-- Guards the picker fresh-open page jump (dialogs/model_picker.lua):
 -- the dialog must open on the page holding the model in effect, with that
 -- row checked -- otherwise it strands on page 1 with no checked row to
 -- anchor the model in effect.
@@ -28,13 +28,13 @@ end
 
 local tests = {
     test("fresh entries wire initialPage, nav passes explicit pages", function()
-        local picker_src = read_source("assistant_model_picker.lua")
+        local picker_src = read_source("dialogs/model_picker.lua")
         assert.matches(picker_src, "showPickerDialog = function",
             "showPickerDialog stays the single dialog entry")
-        local registry_src = read_source("assistant_provider_registry.lua")
+        local registry_src = read_source("core/provider_registry.lua")
         assert.matches(registry_src, "mp%.initialPage%(assistant, model_list%)",
             "Browse Models must jump to the model in effect")
-        local provider_src = read_source("assistant_provider_dialog.lua")
+        local provider_src = read_source("dialogs/provider.lua")
         assert.matches(provider_src, "ModelPicker%.initialPage%(self%.assistant, models%)",
             "Provider Settings browse must jump to the model in effect")
     end),

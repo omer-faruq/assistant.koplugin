@@ -9,7 +9,7 @@ Displays some text in a scrollable view.
     UIManager:show(resultviewer)
 ]]
 local BD = require("ui/bidi")
-local DocUtils = require("assistant_doc_utils")
+local DocUtils = require("utils/doc")
 local Blitbuffer = require("ffi/blitbuffer")
 local ButtonTable = require("ui/widget/buttontable")
 local ButtonDialog = require("ui/widget/buttondialog")
@@ -36,23 +36,23 @@ local VerticalGroup = require("ui/widget/verticalgroup")
 local WidgetContainer = require("ui/widget/container/widgetcontainer")
 local T = require("ffi/util").template
 local koutil = require("util")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local InfoMessage = require("ui/widget/infomessage")
 local Screen = Device.screen
-local MD = require("assistant_mdparser")
-local NetUtils = require("assistant_net_utils")
-local Prompts = require("assistant_prompts")
-local ASUtils = require("assistant_utils")
-local TextUtils = require("assistant_text_utils")
+local MD = require("dialogs/mdparser")
+local NetUtils = require("utils/net")
+local Prompts = require("core/prompts")
+local ASUtils = require("utils/base")
+local TextUtils = require("utils/text")
 local Trapper = require("ui/trapper")
-local ViewerCSS = require("assistant_css")
-local Notebook = require("assistant_notebook")
+local ViewerCSS = require("dialogs/css")
+local Notebook = require("feature/notebook")
 local CheckButton = require("ui/widget/checkbutton")
 
--- Viewer CSS lives in assistant_css.lua (shared with the notebook viewer);
+-- Viewer CSS lives in dialogs/css.lua (shared with the notebook viewer);
 -- _buildCSS() below is a thin wrapper resolving the display switches.
 
--- Container divs styled by assistant_css.lua, and the puremd wrapper the
+-- Container divs styled by dialogs/css.lua, and the puremd wrapper the
 -- viewer strips from around them. The class is captured and checked against
 -- CONTAINER_CLASSES so one pass handles every container while leaving any
 -- other div (e.g. hoedown's footnotes block) wrapped as the parser emitted it.
@@ -688,7 +688,7 @@ function ResultViewer:askAnotherQuestion(simple_mode)
         -- Special case for Quick Note - save directly instead of asking AI
         if tab.idx == "quick_note" then
           if not self.assistant.quicknote then
-            local QuickNote = require("assistant_quicknote")
+            local QuickNote = require("dialogs/quicknote")
             self.assistant.quicknote = QuickNote:new(self.assistant)
           end
           self.assistant.quicknote:saveNote(input_text, self.highlighted_text)
@@ -921,7 +921,7 @@ function ResultViewer:onClose()
   -- Clear the text selection when the plugin was called without a highlight or
   -- dict dialog. Not while a parent viewer is still open: it can still issue
   -- queries, and those resolve the page number from the live selection
-  -- (assistant_dialog.lua resolve_page, DocUtils.getPageNumber), so clearing
+  -- (dialogs/dialog.lua resolve_page, DocUtils.getPageNumber), so clearing
   -- here would silently drop the page context of a conversation that is still
   -- on screen. The last viewer out does clear it, as before.
   if self.assistant.ui.highlight and was_the_last_viewer then
@@ -1015,7 +1015,7 @@ end
 
 -- Label of a selection-menu prompt, taken from the merged prompt table so it
 -- follows the user's own renames (and the web search indicator) instead of
--- repeating the wording kept in assistant_prompts.lua.
+-- repeating the wording kept in core/prompts.lua.
 -- @param prompt_id string id of the prompt in the merged prompt table
 -- @return string text for the menu button
 function ResultViewer:_selectionPromptLabel(prompt_id)
@@ -1101,10 +1101,10 @@ function ResultViewer:handleTextSelection(text, hold_duration)
         text = _("Dictionary"),
         callback = function()
           UIManager:close(dialog)
-          -- assistant_dictdialog requires this module, so it is pulled in on
+          -- dialogs/dict requires this module, so it is pulled in on
           -- first use rather than at load time (the top-level require would
           -- close the cycle).
-          local showDictionaryDialog = require("assistant_dictdialog")
+          local showDictionaryDialog = require("dialogs/dict")
           NetUtils.runWhenOnlineFast(function()
             Trapper:wrap(function()
               showDictionaryDialog(self.assistant, selected)
@@ -1155,7 +1155,7 @@ function ResultViewer:html_link_tapped_callback(link)
   end
 end
 
--- The reply text direction mode (see assistant_utils.response_direction):
+-- The reply text direction mode (see utils/base.response_direction):
 -- "auto" runs the per-block detection, "rtl" forces every block RTL, "ltr"
 -- keeps the whole RTL display pipeline out of the way.
 function ResultViewer:_responseDirection()

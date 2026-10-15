@@ -18,7 +18,7 @@ end
 
 local wb = require("test/wbuilder")
 local UIManager = wb.UIManager
-local ResultViewer = require("assistant_viewer")
+local ResultViewer = require("dialogs/viewer")
 local sample_file = io.open(project_root .. "/test/markdown_css_sample.md", "r")
 local SAMPLE = sample_file:read("*a")
 sample_file:close()

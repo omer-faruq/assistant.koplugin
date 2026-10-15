@@ -18,11 +18,11 @@ local Trapper = require("ui/trapper")
 local UIManager = require("ui/uimanager")
 local VerticalGroup = require("ui/widget/verticalgroup")
 local koutil = require("util")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local T = require("ffi/util").template
 local Screen = require("device").screen
 local logger = require("logger")
-local Registry = require("assistant_provider_registry")
+local Registry = require("core/provider_registry")
 
 -- Forward declarations
 local showPickerDialog, showManualInput

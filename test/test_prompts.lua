@@ -1,5 +1,5 @@
 -- test_prompts.lua
--- Tests for assistant_prompts.lua:
+-- Tests for core/prompts.lua:
 --   * built-in prompt flag defaults (use_book_context)
 --   * deep-merge override semantics via M.getMergedPrompts
 --   * the two global feature switches (isSuggestionsEnabled / isWebSearchEnabled)
@@ -7,8 +7,8 @@
 -- Chapter and page-text extraction are covered by test_chapter_context.lua.
 local helper = require("test.helper")
 local assert = helper.assert
-local M = require("assistant_prompts")
-local SearchTools = require("assistant_search_tools")
+local M = require("core/prompts")
+local SearchTools = require("core/search_tools")
 
 local function test(name, fn)
     return { name = name, fn = fn }
@@ -351,4 +351,4 @@ local tests = {
     end),
 }
 
-return helper.runTests("assistant_prompts.lua", tests)
+return helper.runTests("core/prompts.lua", tests)

@@ -8,14 +8,14 @@ local koutil = require("util")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local Font = require("ui/font")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local T = require("ffi/util").template
 local strbuf = require("string.buffer")
 local json = require("rapidjson")
-local ExtTools = require("assistant_exttools")
-local ASUtils = require("assistant_utils")
-local TextUtils = require("assistant_text_utils")
-local SearchTools = require("assistant_search_tools")
+local ExtTools = require("core/exttools")
+local ASUtils = require("utils/base")
+local TextUtils = require("utils/text")
+local SearchTools = require("core/search_tools")
 local json_default = ASUtils.json_default
 
 ---- Build the messages_to_append list once a search result is available.

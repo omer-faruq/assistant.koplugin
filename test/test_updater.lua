@@ -1,5 +1,5 @@
 -- test_updater.lua
--- Tests for the pure helper functions exported from assistant_updater.lua:
+-- Tests for the pure helper functions exported from core/updater.lua:
 --   isVersionNewer, is_excluded_with, parse_ignore_content
 --
 -- The ignore tests parse the real .releaseignore from the project root and
@@ -8,7 +8,7 @@
 -- itself is not tested headlessly.
 local helper = require("test.helper")
 local assert = helper.assert
-local updater = require("assistant_updater")
+local updater = require("core/updater")
 
 local project_root = debug.getinfo(1).source:match("@(.*/)test/")
 
@@ -154,7 +154,7 @@ local tests = {
 
     test("is_excluded_with: shippable sources are kept", function()
         assert.isFalse(excluded("main.lua"))
-        assert.isFalse(excluded("assistant_updater.lua"))
+        assert.isFalse(excluded("core/updater.lua"))
         assert.isFalse(excluded("api_handlers/openai.lua"))
         assert.isFalse(excluded("configuration.lua"))
         assert.isFalse(excluded("lib/libhoedown.so.3"))
@@ -195,4 +195,4 @@ local tests = {
     end),
 }
 
-return helper.runTests("assistant_updater.lua", tests)
+return helper.runTests("core/updater.lua", tests)

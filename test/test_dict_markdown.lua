@@ -9,7 +9,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
-local Conversation = require("assistant_conversation")
+local Conversation = require("core/conversation")
 local T = require("ffi/util").template
 local koutil = require("util")
 
@@ -23,7 +23,7 @@ local function read_source(name)
     return src
 end
 
-local dict_src = read_source("assistant_dictdialog.lua")
+local dict_src = read_source("dialogs/dict.lua")
 
 -- Settings stub: follow-ups and (optionally) Reasoning Text on.
 local function make_settings(suggest_on, reasoning_on)

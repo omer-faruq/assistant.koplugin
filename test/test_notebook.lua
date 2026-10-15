@@ -1,12 +1,12 @@
 -- test_notebook.lua
--- Tests for the helper functions exported from assistant_notebook.lua:
+-- Tests for the helper functions exported from feature/notebook.lua:
 -- getFolderBasename, bookNotebookFilename, getFolder,
 -- getBookModeNotebookPath, getLegacyPath, getActiveDisplayName. The
 -- filesystem-dependent ones run against unique tmp directories.
 local helper = require("test.helper")
 local assert = helper.assert
 local lfs = require("libs/libkoreader-lfs")
-local Notebook = require("assistant_notebook")
+local Notebook = require("feature/notebook")
 
 -- Unique per run, so a leftover directory or a parallel run cannot collide
 -- with a half-created one from a previous failure.
@@ -253,4 +253,4 @@ local tests = {
     end),
 }
 
-return helper.runTests("assistant_notebook.lua", tests)
+return helper.runTests("feature/notebook.lua", tests)

@@ -1,6 +1,6 @@
 --- Slim shared core: metatable attrs and JSON default.
--- Network, text and document helpers live in assistant_net_utils,
--- assistant_text_utils and assistant_doc_utils.
+-- Network, text and document helpers live in utils/net,
+-- utils/text and utils/doc.
 local json = require("rapidjson")
 local FFIUtil = require("ffi/util")
 local M = {}
@@ -89,7 +89,7 @@ local DIRECTION_MODES = { auto = true, rtl = true, ltr = true }
 
 --- Resolve the reply text direction mode: "auto", "rtl" or "ltr".
 ---
---- "auto" runs the per-block detection (see assistant_text_utils), "rtl"
+--- "auto" runs the per-block detection (see utils/text), "rtl"
 --- forces every block RTL, "ltr" keeps the plain LTR pipeline out of the way
 --- entirely. An unset switch follows the UI language direction, and a legacy
 --- boolean response_is_rtl is still honored (true -> "auto", the per-block

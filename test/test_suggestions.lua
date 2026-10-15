@@ -1,5 +1,5 @@
 -- test_suggestions.lua
--- Tests for the reasoning fence handling in TextUtils (assistant_text_utils):
+-- Tests for the reasoning fence handling in TextUtils (utils/text):
 --   * strip_think_tags turns <think> blocks into a ```reasoning fence with
 --     Reasoning Text on, and drops them with it off
 --   * a <suggestions> literal inside the fence is ignored
@@ -16,7 +16,7 @@ local function test(name, fn)
 end
 
 -- Think-tag handling lives in TextUtils.strip_think_tags
--- (assistant_text_utils.lua, single source of truth); exercise it directly.
+-- (utils/text.lua, single source of truth); exercise it directly.
 local function split_think(ret, show_reasoning, structured)
     return TextUtils.strip_think_tags(ret, structured, show_reasoning)
 end

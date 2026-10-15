@@ -1,7 +1,7 @@
 -- test_markdown_css.lua
 -- The markdown the viewer's HTML is built from: everything here goes through
--- the shipped assistant_mdparser (hoedown, or the pure-Lua fallback) and the
--- shipped assistant_text_utils pipeline. Nothing asserts on a copy of a
+-- the shipped dialogs/mdparser (hoedown, or the pure-Lua fallback) and the
+-- shipped utils/text pipeline. Nothing asserts on a copy of a
 -- production function.
 --
 -- The display transform itself (ResultViewer._renderMarkdown, which unwraps the
@@ -12,15 +12,15 @@ local helper = require("test.helper")
 local assert = helper.assert
 local TextUtils = helper.TextUtils
 
--- assistant_mdparser probes Device:isDesktop/isEmulator/isAndroid at load;
+-- dialogs/mdparser probes Device:isDesktop/isEmulator/isAndroid at load;
 -- the headless stub only carries screen metrics, so add the predicates.
 local device = package.loaded["device"] or require("device")
 if device.isDesktop == nil then device.isDesktop = function() return true end end
 if device.isEmulator == nil then device.isEmulator = function() return false end end
 if device.isAndroid == nil then device.isAndroid = function() return false end end
 
-local MD = require("assistant_mdparser")
-local CSS = require("assistant_css")
+local MD = require("dialogs/mdparser")
+local CSS = require("dialogs/css")
 
 local project_root = debug.getinfo(1).source:match("@(.*/)test/")
 

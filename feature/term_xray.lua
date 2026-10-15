@@ -6,7 +6,7 @@
 -- tunable through `opts`.
 
 local util = require("util")
-local TextUtils = require("assistant_text_utils")
+local TextUtils = require("utils/text")
 
 local TermXray = {}
 

@@ -116,7 +116,7 @@ local tests = {
     end),
 
     test("prefixHttpCode: base text appends the endpoint only when it differs", function()
-        -- Mirrors the err_header base composition in assistant_querier.lua:
+        -- Mirrors the err_header base composition in core/querier.lua:
         -- the endpoint is appended after the reason, and only when the base
         -- is not the endpoint itself (no "url (url)" duplication).
         local function base_text(reason, endpoint)

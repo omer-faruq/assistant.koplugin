@@ -102,6 +102,10 @@ local function collect_source_files()
     end
     add_dir(project_root)
     add_dir(project_root .. "api_handlers/")
+    add_dir(project_root .. "core/")
+    add_dir(project_root .. "feature/")
+    add_dir(project_root .. "dialogs/")
+    add_dir(project_root .. "utils/")
     return files
 end
 

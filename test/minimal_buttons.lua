@@ -16,7 +16,7 @@ end
 
 local wb = require("test/wbuilder")
 local UIManager = wb.UIManager
-local ResultViewer = require("assistant_viewer")
+local ResultViewer = require("dialogs/viewer")
 
 local TEXT = "The ring is a corrupting artifact."
 

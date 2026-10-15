@@ -66,7 +66,7 @@ end
 
 -- ── Show Model Picker ──
 
-local ModelPicker = require("assistant_model_picker")
+local ModelPicker = require("dialogs/model_picker")
 mock_assistant.querier.handler.FetchModels = function()
     return test_models
 end

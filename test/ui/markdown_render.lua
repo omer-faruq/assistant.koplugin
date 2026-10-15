@@ -2,7 +2,7 @@
 -- Renders real replies and asserts on the pixels: the shipped renderer
 -- (Conversation.Renderer), the shipped viewer transform
 -- (ResultViewer:_renderMarkdown / :_buildCSS), the shipped CSS
--- (assistant_css.build) and MuPDF.
+-- (dialogs/css.build) and MuPDF.
 --
 -- What the headless suite can only check as a string is checked here as
 -- geometry: where the bubble sits, whether the Thought block is painted at
@@ -28,9 +28,9 @@ local Screen = wb.Screen
 local ScrollHtmlWidget = require("ui/widget/scrollhtmlwidget")
 local CenterContainer = require("ui/widget/container/centercontainer")
 local Geom = require("ui/geometry")
-local ResultViewer = require("assistant_viewer")
-local Conversation = require("assistant_conversation")
-local ASUtils = require("assistant_utils")
+local ResultViewer = require("dialogs/viewer")
+local Conversation = require("core/conversation")
+local ASUtils = require("utils/base")
 
 local W, H = Screen:getWidth(), Screen:getHeight()
 

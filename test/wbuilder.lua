@@ -71,7 +71,7 @@ if project_root then
 end
 
 -- Override _ with our plugin's gettext so widgets use our translations
-local plugin_gettext = require("assistant_gettext")
+local plugin_gettext = require("core/gettext")
 _ = plugin_gettext
 
 return {

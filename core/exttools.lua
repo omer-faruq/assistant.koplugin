@@ -1,10 +1,10 @@
 local koutil = require("util")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local T = require("ffi/util").template
 local strbuf = require("string.buffer")
 local json = require("rapidjson")
-local ASUtils = require("assistant_utils")
-local NetUtils = require("assistant_net_utils")
+local ASUtils = require("utils/base")
+local NetUtils = require("utils/net")
 local json_default = ASUtils.json_default
 
 -- ---------------------------------------------------------------------------

@@ -21,7 +21,7 @@ local function read_source(name)
     return src
 end
 
-local querier_src = read_source("assistant_querier.lua")
+local querier_src = read_source("core/querier.lua")
 
 local function test(name, fn)
     return { name = name, fn = fn }

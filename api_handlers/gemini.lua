@@ -1,12 +1,12 @@
 local BaseHandler = require("api_handlers.base")
-local NetUtils = require("assistant_net_utils")
-local TextUtils = require("assistant_text_utils")
+local NetUtils = require("utils/net")
+local TextUtils = require("utils/text")
 local json = require("rapidjson")
 local koutil = require("util")
 local logger = require("logger")
-local ToolExecutor = require("assistant_tool_executor")
+local ToolExecutor = require("core/tool_executor")
 local UIManager = require("ui/uimanager")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local InfoMessage = require("ui/widget/infomessage")
 
 local GeminiHandler = BaseHandler:new({

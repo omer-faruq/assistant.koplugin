@@ -1,5 +1,5 @@
 -- test_hooks.lua
--- Tests for assistant_hooks (Translate (AI) bottom button on the upstream
+-- Tests for core/hooks (Translate (AI) bottom button on the upstream
 -- Book Description popup): patch shape, description resolution, empty-state
 -- delegation, and the translate callback chain. Upstream modules are faked;
 -- the require environment is restored for the rest of the suite.
@@ -7,7 +7,7 @@ local helper = require("test.helper")
 local assert = helper.assert
 
 local MODULES = {
-    "assistant_hooks",
+    "core/hooks",
     "ui/widget/textviewer",
     "apps/filemanager/filemanagerbookinfo",
 }
@@ -46,7 +46,7 @@ function FakeBookInfo:onShowBookDescription(description, file)
 end
 package.preload["apps/filemanager/filemanagerbookinfo"] = function() return FakeBookInfo end
 
-local Hooks = require("assistant_hooks")
+local Hooks = require("core/hooks")
 
 local runprompts = {}
 local fake_assistant = {
@@ -97,7 +97,7 @@ end
 -- runWhenOnlineFast reaches for the real network stack, so swap in a
 -- pass-through around the callback invocation only, then restore.
 local function tap_button(btn)
-    local netutils = package.loaded["assistant_net_utils"]
+    local netutils = package.loaded["utils/net"]
     local saved_run_when_online = netutils.runWhenOnlineFast
     netutils.runWhenOnlineFast = function(callback) callback() end
     local ok, err = pcall(btn.callback)
@@ -236,7 +236,7 @@ local tests = {
     test("main.lua delegates all KOReader patches to the hooks module", function()
         local src = read_source("main.lua")
         assert.notNil(src, "could not read main.lua")
-        assert_contains(src, 'require("assistant_hooks")',
+        assert_contains(src, 'require("core/hooks")',
             "main.lua must require the hooks module")
         assert_contains(src, "Hooks.setupBookDescription(self)",
             "init must run the book description hook")

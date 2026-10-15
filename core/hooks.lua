@@ -1,4 +1,4 @@
--- assistant_hooks.lua
+-- core/hooks.lua
 -- Centralizes monkey patches against KOReader classes. Each patch is
 -- idempotent and keeps the upstream method available for restoration or
 -- delegation. This module is the only place where the plugin modifies
@@ -10,13 +10,13 @@ local Trapper = require("ui/trapper")
 local UIManager = require("ui/uimanager")
 local logger = require("logger")
 local koutil = require("util")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local N_ = _.ngettext
 local ffiutil = require("ffi/util")
 local T = ffiutil.template
 local lfs = require("libs/libkoreader-lfs")
-local DocUtils = require("assistant_doc_utils")
-local NetUtils = require("assistant_net_utils")
+local DocUtils = require("utils/doc")
+local NetUtils = require("utils/net")
 
 local M = {}
 
@@ -121,7 +121,7 @@ function M.setupBookDescription(assistant)
                             -- Lazy require: avoids pulling the network stack
                             -- during test-suite init (same reason DocUtils
                             -- lazy-requires NetworkMgr inside runWhenOnlineFast).
-                            local DocUtils = require("assistant_doc_utils")
+                            local DocUtils = require("utils/doc")
                             NetUtils.runWhenOnlineFast(function()
                                 Trapper:wrap(function()
                                     assistant.assistant_dialog:runPrompt(plain, "translate")
@@ -228,7 +228,7 @@ function M.setupRecap(assistant)
             local time_diff_hours = math.floor((os.time() - last_read) / 3600)
             if time_diff_hours < 0 then time_diff_hours = 0 end
             if time_diff_hours >= 28 and percent_finished > 0 and percent_finished <= 0.95 then
-                local DocUtils = require("assistant_doc_utils")
+                local DocUtils = require("utils/doc")
                 local meta = DocUtils.getBookMeta(assistant and assistant.ui, file)
                 local title = meta.title or meta.display_title or _("Unknown Title")
                 local authors = meta.authors or _("Unknown Author")
@@ -240,7 +240,7 @@ function M.setupRecap(assistant)
                     ok_text = _("Yes"),
                     ok_callback = function()
                         NetUtils.runWhenOnlineFast(function()
-                            local showFeatureDialog = require("assistant_featuredialog")
+                            local showFeatureDialog = require("dialogs/feature")
                             Trapper:wrap(function()
                                 showFeatureDialog(assistant, "recap", title, authors, percent_finished)
                             end)

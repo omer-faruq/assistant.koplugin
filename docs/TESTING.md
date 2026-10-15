@@ -44,8 +44,8 @@ The suite runs inside KOReader's LuaJIT runtime via `setupkoenv` with UI modules
 
 ## Headless pitfalls
 
-- `G_reader_settings` is a global created by `setupkoenv` / `run_tests.lua`. A bare `luajit -e "require('assistant_utils')"` outside `./test/run.sh` fails with `attempt to index global 'G_reader_settings' (a nil value)` (the `device`/`fontlist` chain). Verify modules via `assert(loadfile(...))` (syntax) or `./test/run.sh` (runtime); do **not** `require` UI-touching modules with raw `luajit -e`.
-- Prefer `assistant_utils.PLUGIN_DIR` over `DataStorage:getDataDir().."/plugins/..."` directly; the latter diverges under `MULTIUSER`/extra_plugin_paths.
+- `G_reader_settings` is a global created by `setupkoenv` / `run_tests.lua`. A bare `luajit -e "require('utils/base')"` outside `./test/run.sh` fails with `attempt to index global 'G_reader_settings' (a nil value)` (the `device`/`fontlist` chain). Verify modules via `assert(loadfile(...))` (syntax) or `./test/run.sh` (runtime); do **not** `require` UI-touching modules with raw `luajit -e`.
+- Prefer `utils/base.PLUGIN_DIR` over `DataStorage:getDataDir().."/plugins/..."` directly; the latter diverges under `MULTIUSER`/extra_plugin_paths.
 
 ## Static guards
 

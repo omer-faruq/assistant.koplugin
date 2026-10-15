@@ -1,5 +1,5 @@
--- test_assistant_css.lua
--- The shared viewer CSS module (assistant_css.lua): a single BASE (table rules
+-- test_dialogs/css.lua
+-- The shared viewer CSS module (dialogs/css.lua): a single BASE (table rules
 -- included) built by build(), with the RTL mirror, the justify fragment and
 -- the Response Font @font-face rules attaching only when asked.
 --
@@ -10,7 +10,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 
-local CSS = require("assistant_css")
+local CSS = require("dialogs/css")
 
 -- MuPDF's css-properties.gperf is the whole property table: anything outside it
 -- is dropped silently, so these are the properties the viewer layout depends on.
@@ -53,7 +53,7 @@ local tests = {
 
     test("build: no CSS direction, no logical alignment", function()
         -- Blocks carry their direction inline (dir= and mirrored insets, see
-        -- assistant_text_utils), so the stylesheet must hold no `direction`:
+        -- utils/text), so the stylesheet must hold no `direction`:
         -- it would inherit and suppress those attributes. `text-align: right`
         -- is out too -- MuPDF swaps left/right logically under RTL markup, so
         -- the default already right-aligns an RTL block.
@@ -141,4 +141,4 @@ local tests = {
     end),
 }
 
-return helper.runTests("assistant_css", tests)
+return helper.runTests("dialogs/css", tests)

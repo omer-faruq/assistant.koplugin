@@ -3,10 +3,10 @@ Settings menu builders: pure menu-item generators plus their local helpers.
 ]]
 
 local Trapper = require("ui/trapper")
-local DocUtils = require("assistant_doc_utils")
-local NetUtils = require("assistant_net_utils")
-local ASUtils = require("assistant_utils")
-local TextUtils = require("assistant_text_utils")
+local DocUtils = require("utils/doc")
+local NetUtils = require("utils/net")
+local ASUtils = require("utils/base")
+local TextUtils = require("utils/text")
 local koutil = require("util")
 local CenterContainer = require("ui/widget/container/centercontainer")
 local FrameContainer = require("ui/widget/container/framecontainer")
@@ -21,18 +21,18 @@ local Notification = require("ui/widget/notification")
 local Size = require("ui/size")
 local UIManager = require("ui/uimanager")
 local ConfirmBox = require("ui/widget/confirmbox")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local T = require("ffi/util").template
 local Screen = require("device").screen
 local meta = require("_meta")
 local logger = require("logger")
-local ToolExecutor = require("assistant_tool_executor")
-local ExtTools = require("assistant_exttools")
-local Updater = require("assistant_updater")
-local Registry = require("assistant_provider_registry")
-local SearchRegistry = require("assistant_search_registry")
-local Notebook = require("assistant_notebook")
-local Prompts = require("assistant_prompts")
+local ToolExecutor = require("core/tool_executor")
+local ExtTools = require("core/exttools")
+local Updater = require("core/updater")
+local Registry = require("core/provider_registry")
+local SearchRegistry = require("core/search_registry")
+local Notebook = require("feature/notebook")
+local Prompts = require("core/prompts")
 
 -- Custom Widget: auto fill the empty field
 local MultiInputDialog = require("ui/widget/multiinputdialog")
@@ -358,7 +358,7 @@ end
 -- Response Font submenu: every font installed for KOReader (its fonts/ dir
 -- and the system fonts), each row shown in its own face as the reader font
 -- menu does. "Default" is the viewer stylesheet's own family stack; a chosen
--- family is registered with MuPDF as @font-face (see assistant_css.build).
+-- family is registered with MuPDF as @font-face (see dialogs/css.build).
 local function genResponseFontItems(assistant)
     local items = {
         {
@@ -690,7 +690,7 @@ local function genMenuSettings(assistant)
                         assistant.settings:toggle("ai_translate_override")
                         assistant.updated = true
                         UIManager:nextTick(function ()
-                            require("assistant_hooks").syncTranslateOverride(assistant)
+                            require("core/hooks").syncTranslateOverride(assistant)
                         end)
                     end
                 },

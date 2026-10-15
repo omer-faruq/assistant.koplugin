@@ -5,7 +5,7 @@
 --   * build_anchor_context: anchor windows, occurrence sampling, document order
 --     and the skip-not-stop character budget
 --   * clip_excerpt: the dictionary excerpt clipping used by
---     assistant_dictdialog.lua -- word-boundary snapping, the byte budget, and
+--     dialogs/dict.lua -- word-boundary snapping, the byte budget, and
 --     the CJK fallback to plain character-boundary truncation.
 --     The underlying byte-boundary matrix of the truncation helpers it builds
 --     on lives in test_utf8_truncate.lua.
@@ -14,7 +14,7 @@
 -- error on Chinese text with no ASCII punctuation.
 local helper = require("test.helper")
 local assert = helper.assert
-local TermXray = require("assistant_term_xray")
+local TermXray = require("feature/term_xray")
 local TextUtils = helper.TextUtils
 local util = require("util")
 

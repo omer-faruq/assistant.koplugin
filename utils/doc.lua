@@ -1,9 +1,9 @@
 --- KOReader support helpers: book extraction, page info, online guard, fields.
 local koutil = require("util")
 local strbuf = require("string.buffer")
-local TextUtils = require("assistant_text_utils")
+local TextUtils = require("utils/text")
 local T = require("ffi/util").template
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 
 local M = {}
 

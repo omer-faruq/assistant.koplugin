@@ -1,5 +1,5 @@
 -- test_conversation.lua
--- Unit tests for the new assistant_conversation module:
+-- Unit tests for the new core/conversation module:
 --   * TurnPolicy.resolve computes tool_mode from web_search_intent + global setting
 --   * TurnPolicy respects explicit prompt_config.use_websearch
 --   * TurnPolicy falls back to global web_search when no intent given
@@ -8,7 +8,7 @@
 --   * Session.append + freeze_request produce a clean request snapshot
 local helper = require("test.helper")
 local assert = helper.assert
-local Conversation = require("assistant_conversation")
+local Conversation = require("core/conversation")
 local koutil = require("util")
 
 local function test(name, fn)

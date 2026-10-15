@@ -1,17 +1,17 @@
 local TrapWidget  = require("ui/widget/trapwidget")
-local NetUtils = require("assistant_net_utils")
-local TextUtils = require("assistant_text_utils")
+local NetUtils = require("utils/net")
+local TextUtils = require("utils/text")
 local Notification = require("ui/widget/notification")
 local InfoMessage = require("ui/widget/infomessage")
 local UIManager = require("ui/uimanager")
 local Trapper = require("ui/trapper")
 local Font = require("ui/font")
 local logger = require("logger")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local FFIUtil = require("ffi/util")
 local T = FFIUtil.template
 local koutil = require("util")
-local ASUtils = require("assistant_utils")
+local ASUtils = require("utils/base")
 
 local joinPath = ASUtils.joinPath
 

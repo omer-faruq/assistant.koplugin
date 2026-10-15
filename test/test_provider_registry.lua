@@ -1,11 +1,11 @@
 -- test_provider_registry.lua
--- Tests for assistant_provider_registry.lua: preset providers, the "Provider
+-- Tests for core/provider_registry.lua: preset providers, the "Provider
 -- API" menu factory, load/save/merge, install/update/delete of UI providers,
 -- credential normalization, the reasoning-parameter catalog, and the
 -- connection-test report/verdict helpers.
 local helper = require("test.helper")
 local assert = helper.assert
-local Registry = require("assistant_provider_registry")
+local Registry = require("core/provider_registry")
 local koutil = require("util")
 
 local function test(name, fn)
@@ -53,7 +53,7 @@ local function mockAssistant()
     }
 end
 
-local Config = require("assistant_config")
+local Config = require("core/config")
 
 -- A mock Assistant with the provider-data/settings/config plumbing that
 -- Registry.installProvider and Registry.updateProvider touch. Uses the real
@@ -1115,4 +1115,4 @@ local tests = {
     end),
 }
 
-return helper.runTests("assistant_provider_registry", tests)
+return helper.runTests("core/provider_registry", tests)

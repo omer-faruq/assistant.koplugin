@@ -6,7 +6,7 @@
 -- CONFIGURATION.provider_settings table.
 --
 -- The set of tool keys, their required credential field and their display names
--- live in assistant_search_tools (the UI-free catalog); this module only
+-- live in core/search_tools (the UI-free catalog); this module only
 -- persists and validates credentials for them. Each stored record holds exactly
 -- the one credential field the catalog declares for its tool - never both, and
 -- never an empty string.
@@ -15,14 +15,14 @@
 -- injected. UI search tools override file config with the same tool key.
 
 local UIManager = require("ui/uimanager")
-local DocUtils = require("assistant_doc_utils")
-local SearchTools = require("assistant_search_tools")
+local DocUtils = require("utils/doc")
+local SearchTools = require("core/search_tools")
 local ButtonDialog = require("ui/widget/buttondialog")
 local json = require("rapidjson")
 local logger = require("logger")
 local T = require("ffi/util").template
 local koutil = require("util")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 
 local SearchRegistry = {}
 

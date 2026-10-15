@@ -8,27 +8,27 @@ local Geom = require("ui/geometry")
 local Blitbuffer = require("ffi/blitbuffer")
 local Size = require("ui/size")
 local InputDialog = require("ui/widget/inputdialog")
-local ResultViewer = require("assistant_viewer")
+local ResultViewer = require("dialogs/viewer")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local ConfirmBox = require("ui/widget/confirmbox")
 local Event = require("ui/event")
 local Font = require("ui/font")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local T = require("ffi/util").template
 local Trapper = require("ui/trapper")
-local Prompts = require("assistant_prompts")
+local Prompts = require("core/prompts")
 local koutil = require("util")
 local strbuf = require("string.buffer")
 local Device = require("device")
 local Screen = Device.screen
 local CheckButton = require("ui/widget/checkbutton")
-local ASUtils = require("assistant_utils")
-local TextUtils = require("assistant_text_utils")
-local DocUtils = require("assistant_doc_utils")
-local NetUtils = require("assistant_net_utils")
-local Notebook = require("assistant_notebook")
-local Conversation = require("assistant_conversation")
+local ASUtils = require("utils/base")
+local TextUtils = require("utils/text")
+local DocUtils = require("utils/doc")
+local NetUtils = require("utils/net")
+local Notebook = require("feature/notebook")
+local Conversation = require("core/conversation")
 
 --[[
   Extract the context text selected by the Ask dialog checkboxes.
@@ -375,7 +375,7 @@ end
 
 function AssistantDialog:_getBookContext()
   local ui = self.assistant and self.assistant.ui
-  local DocUtils = require("assistant_doc_utils")
+  local DocUtils = require("utils/doc")
   local meta = DocUtils.getBookMeta(ui, ui and ui.document and ui.document.file)
   return { title = meta.title, author = meta.authors, display_title = meta.display_title }
 end
@@ -458,7 +458,7 @@ function AssistantDialog:showAskDialog(highlightedText)
         Trapper:wrap(function()
           -- Special case for quick note prompt
           if not self.assistant.quicknote then
-            local QuickNote = require("assistant_quicknote")
+            local QuickNote = require("dialogs/quicknote")
             self.assistant.quicknote = QuickNote:new(self.assistant)
           end
           -- Save note with highlighted text
@@ -592,11 +592,11 @@ function AssistantDialog:showAskDialog(highlightedText)
             Trapper:wrap(function()
               if tab.order == -10 and tab.idx == "dictionary" then
                 -- Special case for dictionary prompt
-                local showDictionaryDialog = require("assistant_dictdialog")
+                local showDictionaryDialog = require("dialogs/dict")
                 showDictionaryDialog(self.assistant, highlightedText)
               elseif tab.idx == "term_xray" then
                 -- Special case for term_xray prompt - use dictionary dialog with enhanced context
-                local showDictionaryDialog = require("assistant_dictdialog")
+                local showDictionaryDialog = require("dialogs/dict")
                 showDictionaryDialog(self.assistant, highlightedText, nil, "term_xray")
               else
                 local book_text_prompt = ""

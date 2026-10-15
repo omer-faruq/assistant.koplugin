@@ -1,6 +1,6 @@
 -- test_bubble_width.lua
 -- Guards the user-bubble width class: the class is the bubble's share of the
--- page (assistant_css fills whatever margin-left leaves), and the formatter
+-- page (dialogs/css fills whatever margin-left leaves), and the formatter
 -- picks it from the turn's display length. An action label alone hugs the
 -- right edge (tiny-text), a question of a few chat lines keeps the chat shape
 -- (short-text), and only a genuinely long turn takes the page (long-text).
@@ -11,7 +11,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
-local TextUtils = require("assistant_text_utils")
+local TextUtils = require("utils/text")
 
 local function fmt_opts(idx)
     return {

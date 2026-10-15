@@ -19,13 +19,13 @@ end
 local wb = require("test.wbuilder")
 local UIManager = wb.UIManager
 local T = require("ffi/util").template
-local _ = require("assistant_gettext")
-local TextUtils = require("assistant_text_utils")
-local ResultViewer = require("assistant_viewer")
+local _ = require("core/gettext")
+local TextUtils = require("utils/text")
+local ResultViewer = require("dialogs/viewer")
 
 -- The viewer rebuilds its scroll widget through the plugin's own
 -- ScrollHtmlWidget.scrollToPage patch, which main.lua installs at startup.
-require("assistant_hooks").setupScrollHtmlWidget()
+require("core/hooks").setupScrollHtmlWidget()
 
 -- The label the row builds, in whatever language this run is set to.
 local function label_for(mode)

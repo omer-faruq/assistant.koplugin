@@ -1,4 +1,4 @@
--- assistant_config.lua
+-- core/config.lua
 -- Encapsulates the effective configuration table and its accessors.
 -- Config owns the in-memory CONFIGURATION (built from configuration.lua
 -- merged with UI registries persisted in settings). All read/write helpers
@@ -9,7 +9,7 @@ local Config = {}
 Config.__index = Config
 
 local koutil = require("util")
-local ASUtils = require("assistant_utils")
+local ASUtils = require("utils/base")
 
 ---------------------------------------------------------------------------
 -- Static (module-level) helpers — no instance required
@@ -274,8 +274,8 @@ end
 --- Registry/SearchRegistry merges. configuration.lua remains read-only.
 function Config:buildEffectiveConfig(rawConfig)
     rawConfig = rawConfig or self._data
-    local Registry = require("assistant_provider_registry")
-    local SearchRegistry = require("assistant_search_registry")
+    local Registry = require("core/provider_registry")
+    local SearchRegistry = require("core/search_registry")
     local assistant = self._assistant
 
     local ui_data = Registry.load(assistant.settings)

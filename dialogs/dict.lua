@@ -1,18 +1,18 @@
 local logger = require("logger")
 local InputDialog = require("ui/widget/inputdialog")
-local ResultViewer = require("assistant_viewer")
+local ResultViewer = require("dialogs/viewer")
 local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local T = require("ffi/util").template
 local Event = require("ui/event")
 local koutil = require("util")
-local ASUtils = require("assistant_utils")
-local TextUtils = require("assistant_text_utils")
-local DocUtils = require("assistant_doc_utils")
-local TermXray = require("assistant_term_xray")
-local Conversation = require("assistant_conversation")
-local Prompts = require("assistant_prompts")
+local ASUtils = require("utils/base")
+local TextUtils = require("utils/text")
+local DocUtils = require("utils/doc")
+local TermXray = require("feature/term_xray")
+local Conversation = require("core/conversation")
+local Prompts = require("core/prompts")
 local dict_prompts = Prompts.assistant_prompts.dict
 local term_xray_prompts = Prompts.builtin_prompts.term_xray
 
@@ -206,7 +206,7 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
     end
 
     -- Get book information (shared by both branches)
-    local DocUtils = require("assistant_doc_utils")
+    local DocUtils = require("utils/doc")
     local meta = DocUtils.getBookMeta(ui, ui and ui.document and ui.document.file)
     local book_title = meta.title or "title unavailable"
     local book_author = meta.authors or "author unavailable"

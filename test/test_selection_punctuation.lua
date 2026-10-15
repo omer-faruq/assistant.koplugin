@@ -1,5 +1,5 @@
 -- test_selection_punctuation.lua
--- Tests for TextUtils.strip_selection_punctuation in assistant_text_utils.lua.
+-- Tests for TextUtils.strip_selection_punctuation in utils/text.lua.
 --
 -- Context: a KOReader word selection can carry the sentence punctuation
 -- ("Docile."), which the AI Dictionary then looked up and bolded as the

@@ -1,14 +1,14 @@
 --- Text helpers: truncation, selection cleanup, PTF bold, page-text flattening,
 --- plus the single-message renderer (suggestions / think-tags / div carriers).
 ---
---- Headless-safe: only pure string transforms plus assistant_utils /
---- assistant_prompts (both load under test stubs). No heavy UI requires.
+--- Headless-safe: only pure string transforms plus utils/base /
+--- core/prompts (both load under test stubs). No heavy UI requires.
 local util = require("util")
 local strbuf = require("string.buffer")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local T = require("ffi/util").template
-local ASUtils = require("assistant_utils")
-local Prompts = require("assistant_prompts")
+local ASUtils = require("utils/base")
+local Prompts = require("core/prompts")
 
 local M = {}
 
@@ -17,7 +17,7 @@ local M = {}
 -- rather than a phrase; only a runaway selection is cut.
 local HIGHLIGHT_CAPTION_MAX = 500
 
--- Chat bubble widths by turn length (see assistant_css): an action label
+-- Chat bubble widths by turn length (see dialogs/css): an action label
 -- alone hugs the right edge, a question keeps the chat shape, and anything
 -- longer takes the page. MuPDF has no max-width and fills whatever the margin
 -- leaves, so the class is the bubble's share of the page, and a long turn in
@@ -430,7 +430,7 @@ end
 -- text-align left/right logically while `markup_dir` is RTL, so a block
 -- marked `dir="rtl"` right-aligns on `text-align: left` (the default) and
 -- puts a justified last line on the right. The caller resolves the text
--- direction mode (assistant_utils.response_direction) and runs this pass for
+-- direction mode (utils/base.response_direction) and runs this pass for
 -- "auto" and "rtl"; "ltr" leaves the HTML untouched.
 
 -- Bidi-strong direction of a codepoint: "r" for the RTL scripts (Hebrew,
@@ -551,7 +551,7 @@ end
 -- diacritics clip at the shared body line-height of 1.25.
 local RTL_LINE_HEIGHT = "line-height:1.35"
 
--- Inline mirror of the base stylesheet's left insets (see assistant_css
+-- Inline mirror of the base stylesheet's left insets (see dialogs/css
 -- BASE): MuPDF has no logical properties and no attribute selectors, so an
 -- RTL block carries its own mirrored padding.
 local RTL_MIRROR_PADDING = {
@@ -784,7 +784,7 @@ function M.formatSingleMessage(message_history, message, opts)
         end
         -- Width by turn length (see BUBBLE_SHORT_MAX), in body-text units:
         -- the caption and meta render smaller (0.8em / 0.75em in
-        -- assistant_css), so their text costs less width. The meta block
+        -- dialogs/css), so their text costs less width. The meta block
         -- counts at all because a bubble carrying title/author lines is not an
         -- action label, whatever its caption says.
         local visible_units = display_units(body or "")

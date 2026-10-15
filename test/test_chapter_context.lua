@@ -1,6 +1,6 @@
 -- test_chapter_context.lua
 -- Owner of the chapter- and page-text extraction coverage for
--- assistant_doc_utils.lua: getCurrentChapterRange, extractCurrentChapterText
+-- utils/doc.lua: getCurrentChapterRange, extractCurrentChapterText
 -- (plus the internal getDocumentEndXPointer ladder), and the nearby-page-text
 -- helpers getPageRangeText and assemblePageContext.
 local helper = require("test.helper")

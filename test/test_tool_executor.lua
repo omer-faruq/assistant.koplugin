@@ -5,7 +5,7 @@
 -- blocks) and the message content block types.
 local helper = require("test.helper")
 local assert = helper.assert
-local ToolExecutor = require("assistant_tool_executor")
+local ToolExecutor = require("core/tool_executor")
 
 local function test(name, fn)
     return { name = name, fn = fn }
@@ -128,4 +128,4 @@ local tests = {
     end),
 }
 
-return helper.runTests("assistant_tool_executor", tests)
+return helper.runTests("core/tool_executor", tests)

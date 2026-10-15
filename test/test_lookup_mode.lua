@@ -1,11 +1,11 @@
 -- test_lookup_mode.lua
--- Tests for the Smart Dictionary Lookup routing helpers in assistant_lookup.lua:
+-- Tests for the Smart Dictionary Lookup routing helpers in feature/lookup.lua:
 -- script-aware routing of a highlight to the AI Dictionary (short) or the full
 -- Translate action (long). CJK is counted by UTF-8 characters (no word
 -- separators); other scripts by whitespace-delimited words.
 local helper = require("test.helper")
 local assert = helper.assert
-local Lookup = require("assistant_lookup")
+local Lookup = require("feature/lookup")
 local CJK_MAX = Lookup.CJK_LOOKUP_MAX_CHARS
 local WORD_MAX = Lookup.WORD_LOOKUP_MAX_WORDS
 
@@ -29,13 +29,13 @@ end
 
 local tests = {
 
-    test("main.lua consumes assistant_lookup", function()
+    test("main.lua consumes feature/lookup", function()
         -- The shipped module table, not a copy of it, must drive routing.
-        assert.equal(type(Lookup), "table", "assistant_lookup must export a table")
+        assert.equal(type(Lookup), "table", "feature/lookup must export a table")
         assert.equal(type(Lookup.lookup_mode_for_selection), "function",
-            "assistant_lookup must export lookup_mode_for_selection")
+            "feature/lookup must export lookup_mode_for_selection")
         assert.equal(type(Lookup.resolve_translate_route), "function",
-            "assistant_lookup must export resolve_translate_route")
+            "feature/lookup must export resolve_translate_route")
         assert.equal(Lookup.lookup_mode_for_selection(words(WORD_MAX)), "dictionary",
             "the exported function must be the live implementation")
     end),

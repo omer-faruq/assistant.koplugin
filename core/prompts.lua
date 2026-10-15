@@ -1,6 +1,6 @@
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local T = require("ffi/util").template
-local SearchTools = require("assistant_search_tools")
+local SearchTools = require("core/search_tools")
 local version_ok, Version = pcall(require, "version")
 
 -- KOReader exposes its exact runtime revision through the version module.

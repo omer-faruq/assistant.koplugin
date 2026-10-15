@@ -1,4 +1,4 @@
--- assistant_css.lua
+-- dialogs/css.lua
 --
 -- Shared CSS for the plugin's HTML viewers. Single source of truth for the
 -- viewer base style (black-and-white table rules included) plus the justify
@@ -81,7 +81,7 @@ ul li {
    margin-left. MuPDF fills whatever the margin leaves, so margin-left is the
    width and the alignment in one: 38% gives the bubble 62% of the page. Which
    cap a turn gets is the formatter's length test (BUBBLE_SHORT_MAX in
-   assistant_text_utils); a long turn drops the margin (long-text). */
+   utils/text); a long turn drops the margin (long-text). */
 .user-bubble {
     margin-left: 38%;
     margin-top: 0.8em;
@@ -200,7 +200,7 @@ table th {
 ]]
 
 -- The RTL pipeline carries its direction, line-height and mirrored insets
--- per block (dir= and inline styles, see assistant_text_utils), so this
+-- per block (dir= and inline styles, see utils/text), so this
 -- stylesheet holds no `direction` property: it would inherit and suppress
 -- the dir attributes, and MuPDF swaps text-align left/right logically under
 -- RTL markup anyway (the default already right-aligns an RTL block).

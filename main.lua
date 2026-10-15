@@ -17,29 +17,29 @@ local koutil = require("util")
 local ButtonDialog = require("ui/widget/buttondialog")
 local MultiInputDialog = require("ui/widget/multiinputdialog")
 local ffiutil = require("ffi/util")
-local ToolExecutor = require("assistant_tool_executor")
-local TextUtils = require("assistant_text_utils")
-local DocUtils = require("assistant_doc_utils")
-local NetUtils = require("assistant_net_utils")
-local Notebook = require("assistant_notebook")
+local ToolExecutor = require("core/tool_executor")
+local TextUtils = require("utils/text")
+local DocUtils = require("utils/doc")
+local NetUtils = require("utils/net")
+local Notebook = require("feature/notebook")
 
 -- Smart Dictionary Lookup routing (a highlight -> AI Dictionary or the full
--- Translate action) lives in assistant_lookup.lua.
-local Lookup = require("assistant_lookup")
+-- Translate action) lives in feature/lookup.lua.
+local Lookup = require("feature/lookup")
 
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local N_ = _.ngettext
-local AssistantDialog = require("assistant_dialog")
-local Updater = require("assistant_updater")
-local Prompts = require("assistant_prompts")
-local ProviderDialog = require("assistant_provider_dialog")
-local SettingsMenu = require("assistant_settings_menu")
-local showDictionaryDialog = require("assistant_dictdialog")
-local Registry = require("assistant_provider_registry")
-local SearchRegistry = require("assistant_search_registry")
-local SearchTools = require("assistant_search_tools")
-local Config = require("assistant_config")
-local Hooks = require("assistant_hooks")
+local AssistantDialog = require("dialogs/dialog")
+local Updater = require("core/updater")
+local Prompts = require("core/prompts")
+local ProviderDialog = require("dialogs/provider")
+local SettingsMenu = require("dialogs/settings_menu")
+local showDictionaryDialog = require("dialogs/dict")
+local Registry = require("core/provider_registry")
+local SearchRegistry = require("core/search_registry")
+local SearchTools = require("core/search_tools")
+local Config = require("core/config")
+local Hooks = require("core/hooks")
 
 -- Single row id for the FileManager long-press AI buttons.
 -- One row_func returns one row, so both buttons share this id to sit
@@ -108,7 +108,7 @@ local Assistant = InputContainer:new {
   assistant_dialog = nil, -- reference to the main dialog instance
   ui_language = nil,
   ui_language_is_rtl = nil,
-  config = nil,  -- Config object (assistant_config.lua)
+  config = nil,  -- Config object (core/config.lua)
 }
 
 function Assistant:onDispatcherRegisterActions()
@@ -531,7 +531,7 @@ function Assistant:addToMainMenu(menu_items)
 end
 
 local function getDocumentInfo(ui)
-  local DocUtils = require("assistant_doc_utils")
+  local DocUtils = require("utils/doc")
   local DocSettings = require("docsettings")
   local document = ui and ui.document
   local file = document and document.file
@@ -589,7 +589,7 @@ function Assistant:getDocumentInfoForFile(file, book_props)
   local title = (type(raw_title) == "string" and raw_title ~= "") and raw_title or nil
   local authors = normAuthors(koutil.tableGetValue(book_props, "authors"))
 
-  local DocUtils = require("assistant_doc_utils")
+  local DocUtils = require("utils/doc")
   local meta = DocUtils.getBookMeta(self.ui, file)
   if not title then
     title = meta.title
@@ -742,7 +742,7 @@ function BookLevelCustomPrompts(assistant)
           if not assistant:isConfigured() then return end
           NetUtils.runWhenOnlineFast(function()
             local book = getDocumentInfo(assistant.ui)
-            local showFeatureDialog = require("assistant_featuredialog")
+            local showFeatureDialog = require("dialogs/feature")
             Trapper:wrap(function()
               showFeatureDialog(assistant, prompt_config, book.title, book.authors, book.percent_finished)
             end)
@@ -896,7 +896,7 @@ function Assistant:_showAddWebSearchDialog(tool_key)
     UIManager:show(dialog)
 end
 
--- Effective configuration accessors are in assistant_config.lua (Config object).
+-- Effective configuration accessors are in core/config.lua (Config object).
 -- Mounted as self.config during init(); all callers use self.config:get* etc.
 
 function Assistant:onFlushSettings()
@@ -1038,7 +1038,7 @@ function Assistant:init()
   end
 
   -- Load the model provider from settings or default configuration
-  self.querier = require("assistant_querier"):new({
+  self.querier = require("core/querier"):new({
     assistant = self,
     settings = self.settings,
   })
@@ -1175,7 +1175,7 @@ function Assistant:addMainButton(prompt_idx, prompt)
         if prompt_idx == "quick_note" then
           Trapper:wrap(function()
             if not self.quicknote then
-              local QuickNote = require("assistant_quicknote")
+              local QuickNote = require("dialogs/quicknote")
               self.quicknote = QuickNote:new(self)
             end
             self.quicknote:saveNote(nil, _reader_highlight_instance.selected_text.text)
@@ -1492,7 +1492,7 @@ end
     if not self:isConfigured() then return end
     NetUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui)
-      local showFeatureDialog = require("assistant_featuredialog")
+      local showFeatureDialog = require("dialogs/feature")
       Trapper:wrap(function()
         showFeatureDialog(self, "recap", book.title, book.authors, book.percent_finished)
       end)
@@ -1504,7 +1504,7 @@ end
     if not self:isConfigured() then return end
     NetUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui)
-      local showFeatureDialog = require("assistant_featuredialog")
+      local showFeatureDialog = require("dialogs/feature")
       Trapper:wrap(function()
         showFeatureDialog(self, "xray", book.title, book.authors, book.percent_finished)
       end)
@@ -1522,7 +1522,7 @@ end
     end
     NetUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui)
-      local showFeatureDialog = require("assistant_featuredialog")
+      local showFeatureDialog = require("dialogs/feature")
       Trapper:wrap(function()
         showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished)
       end)
@@ -1650,7 +1650,7 @@ end
 
   function Assistant:_identifyBookFlow(opening, file, commit_ui)
     local ui = commit_ui
-    local DocUtils = require("assistant_doc_utils")
+    local DocUtils = require("utils/doc")
 
     local system_prompt = Prompts.withResponseLanguage(
         koutil.tableGetValue(Prompts, "builtin_prompts", "identify_book", "system_prompt")
@@ -1722,7 +1722,7 @@ end
       Trapper:wrap(function()
         local ui = self.ui
         local file = ui.document.file
-        local DocUtils = require("assistant_doc_utils")
+        local DocUtils = require("utils/doc")
         local opening = DocUtils.getOpeningText(ui, 3000)
         if opening == "" then
           UIManager:show(InfoMessage:new{
@@ -1741,7 +1741,7 @@ end
     local ui = self.ui
     NetUtils.runWhenOnlineFast(function()
       Trapper:wrap(function()
-        local DocUtils = require("assistant_doc_utils")
+        local DocUtils = require("utils/doc")
         local opening = ""
         local doc
         local ok_reg, DocumentRegistry = pcall(require, "document/documentregistry")
@@ -1800,7 +1800,7 @@ end
             logger.warn("Assistant: Could not compute per-book notebook path:", path)
           end
         end
-        local showFeatureDialog = require("assistant_featuredialog")
+        local showFeatureDialog = require("dialogs/feature")
         Trapper:wrap(function()
           showFeatureDialog(self, "book_info", book.title, book.authors, book.percent_finished, nil, notebook_path)
         end)
@@ -1860,7 +1860,7 @@ end
     end
     local function launch()
       NetUtils.runWhenOnlineFast(function()
-        local showFeatureDialog = require("assistant_featuredialog")
+        local showFeatureDialog = require("dialogs/feature")
         Trapper:wrap(function()
           showFeatureDialog(self, "recap", book.title, book.authors, percent, nil, notebook_path)
         end)
@@ -1878,7 +1878,7 @@ end
     if not self:isConfigured() then return end
     NetUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui)
-      local showFeatureDialog = require("assistant_featuredialog")
+      local showFeatureDialog = require("dialogs/feature")
       Trapper:wrap(function()
         showFeatureDialog(self, "annotations", book.title, book.authors, book.percent_finished)
       end)
@@ -1890,7 +1890,7 @@ end
     if not self:isConfigured() then return end
     NetUtils.runWhenOnlineFast(function()
       local book = getDocumentInfo(self.ui)
-      local showFeatureDialog = require("assistant_featuredialog")
+      local showFeatureDialog = require("dialogs/feature")
       Trapper:wrap(function()
         showFeatureDialog(self, "summary_using_annotations", book.title, book.authors, book.percent_finished)
       end)
@@ -1902,7 +1902,7 @@ end
     if not self:isConfigured() then return end
     -- Initialize quicknote if not already done
     if not self.quicknote then
-      local QuickNote = require("assistant_quicknote")
+      local QuickNote = require("dialogs/quicknote")
       self.quicknote = QuickNote:new(self)
     end
     self.quicknote:show()
@@ -1910,7 +1910,7 @@ end
   end
 
 -- Route a translate request through Smart Dictionary Lookup: short selections
--- may open the AI Dictionary instead (see assistant_lookup.lua),
+-- may open the AI Dictionary instead (see feature/lookup.lua),
 -- with a one-time three-way prompt on first use. Callers must already be inside
 -- NetUtils.runWhenOnlineFast + Trapper:wrap.
 function Assistant:showTranslateOrDictionary(text)
@@ -2044,7 +2044,7 @@ end
 
 function Assistant:showAboutDialog()
   local md_renderer = "Pure MD"
-  local ok, parser = pcall(require, "assistant_mdparser")
+  local ok, parser = pcall(require, "dialogs/mdparser")
   if ok and parser and parser._is_hoedown then
     md_renderer = "libhoedown"
   end

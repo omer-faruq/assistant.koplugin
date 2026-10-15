@@ -9,8 +9,8 @@ local ffi = require("ffi")
 local ffiutil = require("ffi/util")
 local lfs = require("libs/libkoreader-lfs")
 local util = require("util")
-local ASUtils = require("assistant_utils")
-local plugin_dir = require("assistant_gettext").plugin_dir
+local ASUtils = require("utils/base")
+local plugin_dir = require("core/gettext").plugin_dir
 local plugin_lib_dir = (plugin_dir or ".") .. "/lib"
 local LibHoedown = nil
 

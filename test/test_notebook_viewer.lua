@@ -1,6 +1,6 @@
 -- test_notebook_viewer.lua
--- Tests for assistant_notebook.NotebookViewer (TextViewer subclass for
--- notebooks, defined at the tail of assistant_notebook.lua).
+-- Tests for feature/notebook.NotebookViewer (TextViewer subclass for
+-- notebooks, defined at the tail of feature/notebook.lua).
 -- Headless-safe: the upstream TextViewer is replaced by a stand-in that only
 -- hands the subclass a scroll widget with an empty CSS channel, so the rules
 -- observed afterwards are the ones NotebookViewer itself injected. What is
@@ -10,11 +10,11 @@
 -- here.
 local helper = require("test.helper")
 local assert = helper.assert
-local SharedCSS = require("assistant_css")
+local SharedCSS = require("dialogs/css")
 
 local MODULES = {
-    "assistant_notebook",
-    "assistant_mdparser",
+    "feature/notebook",
+    "dialogs/mdparser",
     "ui/widget/textviewer",
 }
 
@@ -60,7 +60,7 @@ local function reset_modules(parser_fake)
     end
     package.preload["ui/widget/textviewer"] = function() return TextViewerStub end
     if parser_fake then
-        package.preload["assistant_mdparser"] = function() return parser_fake end
+        package.preload["dialogs/mdparser"] = function() return parser_fake end
     end
 end
 
@@ -70,7 +70,7 @@ end
 
 -- A viewer instance with just the fields the real init reads.
 local function make_instance(fields)
-    local NotebookViewer = require("assistant_notebook").NotebookViewer
+    local NotebookViewer = require("feature/notebook").NotebookViewer
     local inst = {
         file = "notes.md",
         text = "# md",
@@ -99,8 +99,8 @@ local table_parser = setmetatable({ _is_hoedown = true }, {
 local tests = {
     test("renderMarkdown uses hoedown output", function()
         reset_modules(table_parser)
-        local NotebookViewer = require("assistant_notebook").NotebookViewer
-        assert.notNil(NotebookViewer, "assistant_notebook must expose NotebookViewer")
+        local NotebookViewer = require("feature/notebook").NotebookViewer
+        assert.notNil(NotebookViewer, "feature/notebook must expose NotebookViewer")
         local html = NotebookViewer.renderMarkdown("| a |\n|---|\n| b |")
         assert.notNil(html, "hoedown output must be used")
         assert.isTrue(html:find("<table>", 1, true) ~= nil, "rendered html must keep tables")
@@ -109,8 +109,8 @@ local tests = {
     test("renderMarkdown falls back without hoedown", function()
         -- Pure-Lua backend: plain function without _is_hoedown.
         reset_modules(function(text) return "<p>" .. text .. "</p>" end)
-        local NotebookViewer = require("assistant_notebook").NotebookViewer
-        assert.notNil(NotebookViewer, "assistant_notebook must expose NotebookViewer")
+        local NotebookViewer = require("feature/notebook").NotebookViewer
+        assert.notNil(NotebookViewer, "feature/notebook must expose NotebookViewer")
         assert.equal(NotebookViewer.renderMarkdown("# Hi"), nil, "must decline so callers keep the native path")
     end),
 
@@ -118,16 +118,16 @@ local tests = {
         reset_modules(setmetatable({ _is_hoedown = true }, {
             __call = function() error("boom") end,
         }))
-        local NotebookViewer = require("assistant_notebook").NotebookViewer
-        assert.notNil(NotebookViewer, "assistant_notebook must expose NotebookViewer")
+        local NotebookViewer = require("feature/notebook").NotebookViewer
+        assert.notNil(NotebookViewer, "feature/notebook must expose NotebookViewer")
         assert.equal(NotebookViewer.renderMarkdown("# Hi"), nil, "must not propagate render errors")
     end),
 
     test("openFile shows nothing for a missing file", function()
         reset_modules(table_parser)
         local UIManager = require("ui/uimanager")
-        local NotebookViewer = require("assistant_notebook").NotebookViewer
-        assert.notNil(NotebookViewer, "assistant_notebook must expose NotebookViewer")
+        local NotebookViewer = require("feature/notebook").NotebookViewer
+        assert.notNil(NotebookViewer, "feature/notebook must expose NotebookViewer")
         local shown = 0
         local saved_show = UIManager.show
         UIManager.show = function() shown = shown + 1 end

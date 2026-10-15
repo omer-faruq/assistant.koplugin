@@ -1,7 +1,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local DocUtils = helper.DocUtils
-local Prompts = require("assistant_prompts")
+local Prompts = require("core/prompts")
 
 local function test(name, fn)
     return { name = name, fn = fn }
@@ -215,7 +215,7 @@ local tests = {
     end),
 
     test("identify mode resolves enabled to configured key", function()
-        local Prompts2 = require("assistant_prompts")
+        local Prompts2 = require("core/prompts")
         local pc = (Prompts2.builtin_prompts or {}).identify_book or {}
         local koutil = require("util")
         local settings_val = "tavilyapi"
@@ -285,7 +285,7 @@ local tests = {
 
     test("resolveWebSearchMode normalization", function()
         -- access via module table
-        local Querier = require("assistant_querier")
+        local Querier = require("core/querier")
         local r = Querier.resolveWebSearchMode
         assert.equal(r(false, "tavilyapi"), "none")
         assert.equal(r(true, "tavilyapi"), "tavilyapi")

@@ -1,12 +1,12 @@
 -- test_search_registry.lua
--- Tests for assistant_search_registry.lua: load/save, validate, merge, upsert,
+-- Tests for core/search_registry.lua: load/save, validate, merge, upsert,
 -- delete/deleteSearchTool, installSearchTool and the WebSearch API menu factory.
 -- The tool catalog itself (tool keys, `needs`, display names) lives in
--- assistant_search_tools.lua and is asserted through the registry consumers.
+-- core/search_tools.lua and is asserted through the registry consumers.
 local helper = require("test.helper")
 local assert = helper.assert
-local SearchRegistry = require("assistant_search_registry")
-local SearchTools = require("assistant_search_tools")
+local SearchRegistry = require("core/search_registry")
+local SearchTools = require("core/search_tools")
 
 local function test(name, fn)
     return { name = name, fn = fn }
@@ -83,7 +83,7 @@ end
 local tests = {
 
     -- =========================================================================
-    -- Search tool catalog (assistant_search_tools)
+    -- Search tool catalog (core/search_tools)
     -- =========================================================================
 
     test("TOOL_KEYS lists the four fixed tool keys in order", function()
@@ -689,4 +689,4 @@ local tests = {
     end),
 }
 
-return helper.runTests("assistant_search_registry", tests)
+return helper.runTests("core/search_registry", tests)

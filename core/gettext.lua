@@ -120,16 +120,16 @@ end
 -- Derive l10n dir from this file's location (install dir), not DataStorage.
 -- DataStorage:getDataDir() is the writable data dir (MULTIUSER / AppImage),
 -- which does NOT contain the plugin's l10n. The plugin lives alongside this file.
--- This must stay self-contained: requiring assistant_utils here would create a
+-- This must stay self-contained: requiring utils/base here would create a
 -- circular require (utils -> gettext -> utils) that breaks any module loaded
--- before main.lua has finished (e.g. assistant_exttools).
+-- before main.lua has finished (e.g. core/exttools).
 -- self-contained plugin dir (no utils require to avoid cycle)
 local plugin_dir
 do
   local info = debug.getinfo(1, "S")
-  local src = info and info.source and info.source:match("^@(.+)$") or "assistant_gettext.lua"
+  local src = info and info.source and info.source:match("^@(.+)$") or "core/gettext.lua"
   plugin_dir = src:match("(.*/)") or ""
-  plugin_dir = plugin_dir:gsub("/$", "")
+  plugin_dir = plugin_dir:gsub("/$", ""):gsub("/?core$", "")
   if plugin_dir == "" then
     local ok, DataStorage = pcall(require, "datastorage")
     if ok and DataStorage then

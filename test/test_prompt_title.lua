@@ -13,7 +13,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
-local TextUtils = require("assistant_text_utils")
+local TextUtils = require("utils/text")
 
 local function make_settings(overrides)
     return {

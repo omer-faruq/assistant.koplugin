@@ -18,8 +18,8 @@ local function test(name, fn)
 end
 
 local function read_viewer()
-    local f = io.open(project_root .. "assistant_viewer.lua", "r")
-    assert.notNil(f, "could not read assistant_viewer.lua")
+    local f = io.open(project_root .. "dialogs/viewer.lua", "r")
+    assert.notNil(f, "could not read dialogs/viewer.lua")
     local src = f:read("*a")
     f:close()
     return src

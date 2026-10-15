@@ -23,7 +23,7 @@ local Screen = wb.Screen
 local ScrollHtmlWidget = require("ui/widget/scrollhtmlwidget")
 local CenterContainer = require("ui/widget/container/centercontainer")
 local Geom = require("ui/geometry")
-local ResultViewer = require("assistant_viewer")
+local ResultViewer = require("dialogs/viewer")
 
 local W, H = Screen:getWidth(), Screen:getHeight()
 

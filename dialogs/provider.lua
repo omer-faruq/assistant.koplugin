@@ -3,9 +3,9 @@ Provider selection dialog ("Providers and Models").
 ]]
 
 local Trapper = require("ui/trapper")
-local NetUtils = require("assistant_net_utils")
-local DocUtils = require("assistant_doc_utils")
-local NetUtils = require("assistant_net_utils")
+local NetUtils = require("utils/net")
+local DocUtils = require("utils/doc")
+local NetUtils = require("utils/net")
 local koutil = require("util")
 local Blitbuffer = require("ffi/blitbuffer")
 local CenterContainer = require("ui/widget/container/centercontainer")
@@ -19,10 +19,10 @@ local RadioButtonTable = require("ui/widget/radiobuttontable")
 local Size = require("ui/size")
 local UIManager = require("ui/uimanager")
 local VerticalGroup = require("ui/widget/verticalgroup")
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local Screen = require("device").screen
 local ffiutil = require("ffi/util")
-local Registry = require("assistant_provider_registry")
+local Registry = require("core/provider_registry")
 
 local ProviderDialog = InputDialog:extend{
     title = _("Providers and Models"),
@@ -259,7 +259,7 @@ function ProviderDialog:onBrowseModel()
             -- to Provider Settings on a normal dismissal only.
             local menu_refresh = self.close_callback
             UIManager:close(self)
-            local ModelPicker = require("assistant_model_picker")
+            local ModelPicker = require("dialogs/model_picker")
             ModelPicker.showPickerDialog(self.assistant, models, menu_refresh, "",
                 ModelPicker.initialPage(self.assistant, models), nil, nil, nil, function()
                 UIManager:nextTick(function()

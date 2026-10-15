@@ -23,7 +23,7 @@ local wb = require("test.wbuilder")
 local UIManager = wb.UIManager
 local Geom = require("ui/geometry")
 local Event = require("ui/event")
-local ResultViewer = require("assistant_viewer")
+local ResultViewer = require("dialogs/viewer")
 
 -- ── Minimal assertion helpers (this test runs outside test/helper.lua, which
 -- stubs the very widgets the viewer needs) ──

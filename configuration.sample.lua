@@ -179,7 +179,7 @@ local CONFIGURATION = {
         -- 120000 chars: Comprehensive context, uses more of the context window
         term_xray_max_characters = 60000,
 
-        -- These are prompts defined in `assistant_prompts.lua`, can be overriden here.
+        -- These are prompts defined in `core/prompts.lua`, can be overriden here.
         -- each prompt shown as a button in the main dialog.
         -- The `order` determines the position in the main popup.
         -- The `show_on_main_popup` determines if the prompt is shown in the main popup

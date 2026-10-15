@@ -1,5 +1,5 @@
 -- test_exttools.lua
--- Tests for assistant_exttools.lua: SerpAPI, Tavily, SearXNG, Exa.ai, and SearchToolBase.
+-- Tests for core/exttools.lua: SerpAPI, Tavily, SearXNG, Exa.ai, and SearchToolBase.
 local helper = require("test.helper")
 local assert = helper.assert
 local extools = helper.extools
@@ -336,4 +336,4 @@ local tests = {
     end),
 }
 
-return helper.runTests("assistant_exttools.lua", tests)
+return helper.runTests("core/exttools.lua", tests)

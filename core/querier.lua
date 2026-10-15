@@ -1,5 +1,5 @@
 --- Querier module for handling AI queries with dynamic provider loading
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 local T = require("ffi/util").template
 local InfoMessage = require("ui/widget/infomessage")
 local ConfirmBox  = require("ui/widget/confirmbox")
@@ -18,12 +18,12 @@ local strbuf = require("string.buffer")
 local ffi = require("ffi")
 local ffiutil = require("ffi/util")
 local Device = require("device")
-local ASUtils = require("assistant_utils")
-local TextUtils = require("assistant_text_utils")
-local ToolExecutor = require("assistant_tool_executor")
-local Conversation = require("assistant_conversation")
+local ASUtils = require("utils/base")
+local TextUtils = require("utils/text")
+local ToolExecutor = require("core/tool_executor")
+local Conversation = require("core/conversation")
 local Screen = Device.screen
-local Prompts = require("assistant_prompts").assistant_prompts
+local Prompts = require("core/prompts").assistant_prompts
 
 local API_HANDLERS = {}
 local MAX_TOOL_ROUNDS = 3

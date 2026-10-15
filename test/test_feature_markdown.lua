@@ -1,7 +1,7 @@
 -- test_feature_markdown.lua
 -- The feature dialog's result shape, driven through the shipped renderer:
 -- Conversation.Renderer.render / render_increment, which in turn call
--- assistant_text_utils.formatSingleMessage. No production function is copied
+-- utils/text.formatSingleMessage. No production function is copied
 -- into this file and no production file is scanned for its own text: the only
 -- source scan left is the web-search wiring, which is a property of the
 -- dialog's own closures and cannot be observed from the renderer.
@@ -10,7 +10,7 @@
 local helper = require("test.helper")
 local assert = helper.assert
 local ASUtils = helper.ASUtils
-local Conversation = require("assistant_conversation")
+local Conversation = require("core/conversation")
 
 local project_root = debug.getinfo(1).source:match("@(.*/)test/")
 
@@ -22,7 +22,7 @@ local function read_source(name)
     return src
 end
 
-local feature_src = read_source("assistant_featuredialog.lua")
+local feature_src = read_source("dialogs/feature.lua")
 
 -- Settings stub: follow-ups and (optionally) Reasoning Text on.
 local function make_settings(suggest_on, reasoning_on)

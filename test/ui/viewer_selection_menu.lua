@@ -17,8 +17,8 @@ end
 local wb = require("test.wbuilder")
 local UIManager = wb.UIManager
 local Device = require("device")
-local NetUtils = require("assistant_net_utils")
-local ResultViewer = require("assistant_viewer")
+local NetUtils = require("utils/net")
+local ResultViewer = require("dialogs/viewer")
 local InfoMessage = require("ui/widget/infomessage")
 
 local ANSWER = "The Ring was forged in Mount Doom to rule the other Rings of Power."
@@ -96,9 +96,9 @@ NetUtils.runWhenOnlineFast = function(callback)
     callback()
 end
 
--- The viewer pulls assistant_dictdialog in lazily; stand it in so the routing
+-- The viewer pulls dialogs/dict in lazily; stand it in so the routing
 -- is observable without a live querier behind the real dictionary dialog.
-package.loaded["assistant_dictdialog"] = function(assistant_arg, highlighted_text)
+package.loaded["dialogs/dict"] = function(assistant_arg, highlighted_text)
     dict_calls[#dict_calls + 1] =
         { assistant = assistant_arg, text = highlighted_text }
 end
@@ -295,7 +295,7 @@ end
 
 NetUtils.runWhenOnlineFast = real_run_when_online
 UIManager.show, UIManager.close = real_show, real_close
-package.loaded["assistant_dictdialog"] = nil
+package.loaded["dialogs/dict"] = nil
 
 print(string.format("\nviewer_selection_menu: %d passed, %d failed", passed, failed))
 if failed > 0 then

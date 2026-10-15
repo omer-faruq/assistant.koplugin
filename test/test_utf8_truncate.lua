@@ -1,6 +1,6 @@
 -- test_utf8_truncate.lua
 -- Owns the UTF-8 byte-boundary matrix for the truncation helpers in
--- assistant_text_utils.lua (truncateToTailUtf8Safe / truncateToHeadUtf8Safe):
+-- utils/text.lua (truncateToTailUtf8Safe / truncateToHeadUtf8Safe):
 -- how a budget of any size lands on a character boundary for 2-, 3- and 4-byte
 -- sequences, and that a cut never leaves invalid bytes or a replacement mark.
 -- Word-boundary snapping of a dictionary excerpt is TermXray.clip_excerpt and

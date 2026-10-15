@@ -13,7 +13,7 @@ local ffi = require("ffi")
 local koutil = require("util")
 local strbuf = require("string.buffer")
 local T = require("ffi/util").template
-local _ = require("assistant_gettext")
+local _ = require("core/gettext")
 
 local M = {}
 
