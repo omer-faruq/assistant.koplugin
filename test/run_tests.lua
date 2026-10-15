@@ -57,22 +57,27 @@ local all_errors = {}
 print("=== assistant.koplugin Test Suite ===")
 print(string.format("  Running %d test file(s)", #test_files))
 
+local helper = require("test.helper")
+
 for _, test_file in ipairs(test_files) do
-    -- Each test file returns helper.runTests(...) as a single result table
-    -- (require only propagates one return value, so counts must live in it).
-    local ok, result = pcall(require, test_file)
+    -- Each test file may run several suites via helper.runTests; require()
+    -- propagates only one return value, so the counts are drained from the
+    -- helper registry after the file has been loaded.
+    local ok, err = pcall(require, test_file)
+    local results = helper.drainResults()
     if not ok then
-        print("  ERROR loading " .. test_file .. ": " .. tostring(result))
+        print("  ERROR loading " .. test_file .. ": " .. tostring(err))
         total_failed = total_failed + 1
-    elseif type(result) == "table" then
+    elseif #results == 0 then
+        print("  ERROR loading " .. test_file .. ": no tests ran")
+        total_failed = total_failed + 1
+    end
+    for _, result in ipairs(results) do
         total_passed = total_passed + (result.passed or 0)
         total_failed = total_failed + (result.failed or 0)
         for _, e in ipairs(result.errors or {}) do
             table.insert(all_errors, { file = test_file, name = e.name, error = e.error })
         end
-    else
-        print("  ERROR loading " .. test_file .. ": expected result table, got " .. type(result))
-        total_failed = total_failed + 1
     end
 end
 

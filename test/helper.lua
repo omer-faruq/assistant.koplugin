@@ -201,11 +201,13 @@ M.TextUtils = TextUtils
 M.DocUtils = DocUtils
 
 -- 7. Test runner
+--- Results of every runTests() call, drained by the runner per test file.
+M.results = {}
+
 function M.runTests(name, tests)
     local passed = 0
     local failed = 0
     local errors = {}
-
     print("\n== " .. name .. " ==")
 
     for _, test in ipairs(tests) do
@@ -228,7 +230,19 @@ function M.runTests(name, tests)
     print(string.format("\n%s: %d passed, %d failed", name, passed, failed))
     -- Return a single result table: Lua 5.1's require() only propagates the
     -- first return value, so multiple returns would drop the failure counts.
-    return { passed = passed, failed = failed, errors = errors }
+    local result = { passed = passed, failed = failed, errors = errors }
+    table.insert(M.results, result)
+    return result
+end
+
+--- Collect and clear the results of every runTests() executed since the last
+--- drain. A file may run several suites; require() propagates only one return
+--- value, so the runner counts through this registry instead.
+--- @return table[] list of result tables
+M.drainResults = function()
+    local collected = M.results
+    M.results = {}
+    return collected
 end
 
 return M
