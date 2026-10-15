@@ -1299,7 +1299,7 @@ end
 --- Build the "Provider API" menu item used by the Settings dialog.
 --- Returns a TouchMenu item with a sub-menu listing the preset providers.
 --- Selecting an entry opens the add-provider dialog through
---- assistant:_showAddProviderDialog; the fields remain editable so users
+--- Registry.showProviderDialog; the fields remain editable so users
 --- can point a preset at a custom base URL.
 ---@param assistant table The Assistant instance
 ---@return table menu item spec
@@ -1316,7 +1316,7 @@ function Registry.getAddProviderMenuItem(assistant)
                     callback = function(touchmenu_instance)
                         -- Remember the menu so a confirmed add can dismiss it.
                         assistant._menu_instance = touchmenu_instance
-                        assistant:_showAddProviderDialog(preset.name, preset.handler, preset.base_url,
+                        Registry.showProviderDialog(assistant, preset.name, preset.handler, preset.base_url,
                             preset.additional_parameters)
                     end,
                 })

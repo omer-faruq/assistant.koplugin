@@ -593,9 +593,10 @@ local tests = {
 
     test("sub-menu entry opens the web-search dialog for its own tool", function()
         local assistant = mockAssistant()
-        assistant.calls = {}
-        assistant._showAddWebSearchDialog = function(self, tool_key)
-            self.calls[#self.calls + 1] = tool_key
+        local calls = {}
+        local orig = SearchRegistry.showWebSearchDialog
+        SearchRegistry.showWebSearchDialog = function(a, tool_key)
+            calls[#calls + 1] = tool_key
         end
         local sub_items = SearchRegistry.getAddWebSearchMenuItem(assistant).sub_item_table_func()
         for i, sub_item in ipairs(sub_items) do
@@ -603,9 +604,10 @@ local tests = {
             assert.isTrue(sub_item.keep_menu_open, "sub_item " .. i .. " should keep the menu open")
             sub_item.callback()
         end
-        assert.equal(#assistant.calls, #SearchTools.TOOL_KEYS)
+        SearchRegistry.showWebSearchDialog = orig
+        assert.equal(#calls, #SearchTools.TOOL_KEYS)
         for i, key in ipairs(SearchTools.TOOL_KEYS) do
-            assert.equal(assistant.calls[i], key,
+            assert.equal(calls[i], key,
                 "sub_item " .. i .. " must open the dialog for " .. key)
         end
     end),

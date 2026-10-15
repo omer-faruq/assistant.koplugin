@@ -328,7 +328,7 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
                     end,
                     keep_menu_open = true,
                     callback = function()
-                        assistant:_showAddWebSearchDialog(tool_key)
+                        SearchRegistry.showWebSearchDialog(assistant, tool_key)
                     end,
                     hold_callback = function()
                         local merged = assistant.config:getProvider(tool_key)
@@ -348,7 +348,7 @@ function SearchRegistry.getAddWebSearchMenuItem(assistant)
                                     text = _("Edit"),
                                     callback = function()
                                         UIManager:close(dialog)
-                                        assistant:_showAddWebSearchDialog(tool_key)
+                                        SearchRegistry.showWebSearchDialog(assistant, tool_key)
                                     end,
                                 },
                                 {

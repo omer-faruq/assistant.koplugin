@@ -277,7 +277,7 @@ function ProviderDialog:onEditProvider()
 
     UIManager:close(self)
     UIManager:nextTick(function()
-        self.assistant:_showAddProviderDialog(nil, nil, nil, nil, provider_name)
+        Registry.showProviderDialog(self.assistant, nil, nil, nil, nil, provider_name)
     end)
 end
 

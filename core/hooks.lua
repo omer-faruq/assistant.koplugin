@@ -280,7 +280,7 @@ function M.setupHighlightMainButton(assistant)
         end)
       end,
       hold_callback = function()
-        assistant:_help_dialog()
+        require("dialogs/settings_menu").showHelpDialog(assistant)
       end,
     }
   end)

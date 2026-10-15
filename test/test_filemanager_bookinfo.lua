@@ -221,6 +221,7 @@ end)
 --------------------------------------------------------------------------------
 
 local Assistant = require("main")
+local BookActions = require("feature/book_actions")
 
 -- BookList cache: getDocumentInfoForFile and onAskAIRecapForFile both read it.
 local booklist_info = nil
@@ -471,27 +472,27 @@ local tests = {
 
 table.insert(tests, test("a directory gets no AI row", function()
     reset_state()
-    local row = instance:_buildFileDialogAIRow(tmp_dir, false, nil)
+    local row = BookActions.buildFileDialogAIRow(instance, tmp_dir, false, nil)
     assert.isTrue(row == nil, "a directory must not produce a row")
 end))
 
 table.insert(tests, test("a non-string target gets no AI row", function()
     reset_state()
-    local row = instance:_buildFileDialogAIRow(nil, true, nil)
+    local row = BookActions.buildFileDialogAIRow(instance, nil, true, nil)
     assert.isTrue(row == nil, "a missing file must not produce a row")
 end))
 
 table.insert(tests, test("a file without a document provider gets no AI row", function()
     reset_state()
     document_registry.hasProvider = function() return false end
-    local row = instance:_buildFileDialogAIRow(touch("plain.txt"), true, nil)
+    local row = BookActions.buildFileDialogAIRow(instance, touch("plain.txt"), true, nil)
     assert.isTrue(row == nil, "an unsupported file must not produce a row")
 end))
 
 table.insert(tests, test("a readable book produces two buttons in one row", function()
     reset_state()
     local path = touch("Row Book.epub")
-    local row = instance:_buildFileDialogAIRow(path, true, { title = "Row Book" })
+    local row = BookActions.buildFileDialogAIRow(instance, path, true, { title = "Row Book" })
     assert.notNil(row, "a supported existing file must produce a row")
     assert.equal(#row, 3, "AI buttons must share the one row")
     for idx = 1, 2 do
@@ -505,7 +506,7 @@ end))
 
 table.insert(tests, test("a deleted file keeps a disabled row", function()
     reset_state()
-    local row = instance:_buildFileDialogAIRow(book_file("gone.epub"), true, nil)
+    local row = BookActions.buildFileDialogAIRow(instance, book_file("gone.epub"), true, nil)
     assert.notNil(row, "a deleted file must still show the row")
     assert.equal(#row, 3, "buttons stay visible")
     for idx = 1, 2 do
@@ -516,9 +517,10 @@ end))
 table.insert(tests, test("each button closes the dialogs before running its action", function()
     reset_state()
     local path = touch("Callback Book.epub")
-    local row = instance:_buildFileDialogAIRow(path, true, { title = "Callback Book" })
+    local row = BookActions.buildFileDialogAIRow(instance, path, true, { title = "Callback Book" })
     local events = {}
-    instance._closeFileDialogs = function() table.insert(events, "close") end
+    local saved_close_dialogs = BookActions.closeFileDialogs
+    BookActions.closeFileDialogs = function() table.insert(events, "close") end
     instance.onAskAIBookInfoForFile = function(_, file) table.insert(events, "book_info:" .. file) end
     instance.onAskAIRecapForFile = function(_, file) table.insert(events, "recap:" .. file) end
 
@@ -532,7 +534,7 @@ table.insert(tests, test("each button closes the dialogs before running its acti
     assert.equal(events[1], "close", "the file dialog must close first")
     assert.equal(events[2], "recap:" .. path, "recap must run for the file")
 
-    instance._closeFileDialogs = nil
+    BookActions.closeFileDialogs = saved_close_dialogs
     instance.onAskAIBookInfoForFile = nil
     instance.onAskAIRecapForFile = nil
 end))
@@ -545,7 +547,7 @@ table.insert(tests, test("the row builder closes every browser file dialog", fun
     local closed = 0
     local saved_close = UIManager.close
     UIManager.close = function() closed = closed + 1 end
-    instance:_closeFileDialogs()
+    BookActions.closeFileDialogs()
     UIManager.close = saved_close
     for _, widget in ipairs(file_dialog_widgets) do widget.getMenuInstance = nil end
     assert.equal(closed, #file_dialog_widgets, "every browser file dialog must be closed")
@@ -557,7 +559,7 @@ end))
 
 table.insert(tests, test("registration and removal use one row id on every browser", function()
     reset_state()
-    instance:_registerFileDialogButtons()
+    BookActions.registerFileDialogButtons()
     assert.equal(#added_rows, #file_dialog_widgets, "every browser widget must be registered")
     local row_id = added_rows[1].row_id
     assert.notNil(row_id, "a row id is required")
@@ -567,7 +569,7 @@ table.insert(tests, test("registration and removal use one row id on every brows
             "every browser must use the same row id so the buttons stay on one line")
     end
 
-    instance:_removeFileDialogButtons()
+    BookActions.removeFileDialogButtons()
     assert.equal(#removed_rows, #file_dialog_widgets, "every browser must be unregistered")
     for idx, entry in ipairs(removed_rows) do
         assert.equal(entry.widget, file_dialog_widgets[idx], "removal must match the browser")
@@ -581,23 +583,23 @@ end))
 
 table.insert(tests, test("re-registering the same id adds no second row", function()
     reset_state()
-    instance:_registerFileDialogButtons()
-    instance:_registerFileDialogButtons()
+    BookActions.registerFileDialogButtons()
+    BookActions.registerFileDialogButtons()
     for _, widget in ipairs(file_dialog_widgets) do
         assert.equal(#widget.file_dialog_added_buttons, 1,
             "the " .. widget.name .. " row must not be duplicated")
     end
-    instance:_removeFileDialogButtons()
+    BookActions.removeFileDialogButtons()
     assert.equal(#removed_rows, #file_dialog_widgets, "one removal per browser")
 end))
 
 table.insert(tests, test("the registered row_func builds the same row", function()
     reset_state()
-    instance:_registerFileDialogButtons()
+    BookActions.registerFileDialogButtons()
     local path = touch("Registered Book.epub")
     local row = added_rows[1].row_func(path, true, { title = "Registered Book" })
     assert.equal(#row, 3, "the registered callback must build the buttons")
-    local direct = instance:_buildFileDialogAIRow(path, true, { title = "Registered Book" })
+    local direct = BookActions.buildFileDialogAIRow(instance, path, true, { title = "Registered Book" })
     assert.equal(row[1].text, direct[1].text, "registered and direct rows must match")
     assert.equal(row[2].text, direct[2].text, "registered and direct rows must match")
 end))
@@ -606,10 +608,10 @@ table.insert(tests, test("the registered row_func serves the live instance after
     reset_state()
     -- First FileManager registers; a later book open/close cycle spins up a
     -- second Assistant whose re-registration is deduped out by row_id.
-    instance:_registerFileDialogButtons()
+    BookActions.registerFileDialogButtons()
     local second = setmetatable(configured(), { __index = Assistant })
     second.ui = {}
-    second:_registerFileDialogButtons()
+    BookActions.registerFileDialogButtons()
     file_dialog_widgets[1].instance = { assistant = second }
 
     local ran_on = {}
@@ -629,8 +631,8 @@ table.insert(tests, test("registration is a no-op without the file manager modul
     reset_state()
     shim("apps/filemanager/filemanager", function() error("unavailable") end)
     local ok, err = pcall(function()
-        instance:_registerFileDialogButtons()
-        instance:_removeFileDialogButtons()
+        BookActions.registerFileDialogButtons()
+        BookActions.removeFileDialogButtons()
     end)
     package.loaded["apps/filemanager/filemanager"] = file_dialog_widgets[1]
     assert.isTrue(ok, "a missing file manager module must not raise: " .. tostring(err))
@@ -1059,10 +1061,11 @@ helper.runTests("assistant_identify_commit", identify_tests)
 table.insert(tests, test("row identify button closes dialogs and launches handler", function()
     reset_state()
     local path = touch("Identify Row.epub")
-    local row = instance:_buildFileDialogAIRow(path, true, { title = "Row Book" })
+    local row = BookActions.buildFileDialogAIRow(instance, path, true, { title = "Row Book" })
     assert.equal(#row, 3, "three button specs")
     local events = {}
-    instance._closeFileDialogs = function() table.insert(events, "close") end
+    local saved_close_dialogs = BookActions.closeFileDialogs
+    BookActions.closeFileDialogs = function() table.insert(events, "close") end
     instance.onAskAIIdentifyBookForFile = function(_, file) table.insert(events, "identify:" .. file) end
 
     row[3].callback()
@@ -1070,7 +1073,7 @@ table.insert(tests, test("row identify button closes dialogs and launches handle
     assert.equal(events[1], "close", "dialogs close first")
     assert.equal(events[2], "identify:" .. path, "identify runs for the file")
 
-    instance._closeFileDialogs = nil
+    BookActions.closeFileDialogs = saved_close_dialogs
     instance.onAskAIIdentifyBookForFile = nil
 end))
 

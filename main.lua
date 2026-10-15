@@ -15,8 +15,6 @@ local BookActions = require("feature/book_actions")
 local _ = require("core/gettext")
 local AssistantDialog = require("dialogs/dialog")
 local SettingsMenu = require("dialogs/settings_menu")
-local Registry = require("core/provider_registry")
-local SearchRegistry = require("core/search_registry")
 local Config = require("core/config")
 local Hooks = require("core/hooks")
 
@@ -109,40 +107,12 @@ function Assistant:showProviderDialog(close_callback)
   SettingsMenu.showProviderDialog(self, close_callback)
 end
 
-function Assistant:_help_dialog()
-  SettingsMenu.showHelpDialog(self)
-end
-
 function Assistant:showAboutDialog()
   SettingsMenu.showAboutDialog(self)
 end
 
-function Assistant:_showAddProviderDialog(preset_name, handler, base_url, additional_parameters, edit_id)
-  Registry.showProviderDialog(self, preset_name, handler, base_url, additional_parameters, edit_id)
-end
-
-function Assistant:_showAddWebSearchDialog(tool_key)
-  SearchRegistry.showWebSearchDialog(self, tool_key)
-end
-
 function Assistant:getDocumentInfoForFile(file, book_props)
   return BookActions.getDocumentInfoForFile(self, file, book_props)
-end
-
-function Assistant:_buildFileDialogAIRow(file, is_file, book_props)
-  return BookActions.buildFileDialogAIRow(self, file, is_file, book_props)
-end
-
-function Assistant:_closeFileDialogs()
-  BookActions.closeFileDialogs()
-end
-
-function Assistant:_registerFileDialogButtons()
-  BookActions.registerFileDialogButtons()
-end
-
-function Assistant:_removeFileDialogButtons()
-  BookActions.removeFileDialogButtons()
 end
 
 function Assistant:confirmMissingMetadata(launch)
@@ -151,10 +121,6 @@ end
 
 function Assistant:commitIdentifiedMetadata(ui, file, identified)
   BookActions.commitIdentifiedMetadata(self, ui, file, identified)
-end
-
-function Assistant:_identifyBookFlow(opening, file, commit_ui)
-  BookActions.identifyBookFlow(self, opening, file, commit_ui)
 end
 
 function Assistant:onAskAIIdentifyBook()
@@ -197,24 +163,8 @@ function Assistant:showTranslateOrDictionary(text)
   Lookup.showTranslateOrDictionary(self, text)
 end
 
-function Assistant:_rebuildShowOnMainButtons()
-  Hooks.rebuildShowOnMainButtons(self)
-end
-
 function Assistant:addMainButton(prompt_idx, prompt)
   Hooks.addMainButton(self, prompt_idx, prompt)
-end
-
-function Assistant:_buildAssistantDictButtons(dict_popup_arg, live)
-  return Hooks.buildAssistantDictButtons(self, dict_popup_arg, live)
-end
-
-function Assistant:_groupDictButtonsInDefaultLayout(button_ids)
-  Hooks.groupDictButtonsInDefaultLayout(self, button_ids)
-end
-
-function Assistant:_restoreDictButtonsInUserLayout(button_ids)
-  Hooks.restoreDictButtonsInUserLayout(self, button_ids)
 end
 
 function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
@@ -237,7 +187,7 @@ function Assistant:onFlushSettings()
 end
 
 function Assistant:onClose()
-  self:_removeFileDialogButtons()
+  BookActions.removeFileDialogButtons()
 end
 
 function Assistant:isConfigured()
@@ -287,7 +237,7 @@ function Assistant:init()
   Hooks.setupScrollHtmlWidget()
   Hooks.setupBookDescription(self)
   if not self.ui.document then
-    self:_registerFileDialogButtons()
+    BookActions.registerFileDialogButtons()
   end
   if self.ui.document then
     Hooks.setupHighlightMainButton(self)
@@ -317,7 +267,7 @@ function Assistant:init()
     if self.settings:readSetting("enable_auto_recap", false) then
       Hooks.setupRecap(self)
     end
-    self:_rebuildShowOnMainButtons()
+    Hooks.rebuildShowOnMainButtons(self)
   end
 end
 

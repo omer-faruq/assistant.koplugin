@@ -38,18 +38,11 @@ local function mockSettings(initial)
     }
 end
 
--- A mock Assistant that records _showAddProviderDialog invocations.
+-- A mock Assistant used for menu construction.
 local function mockAssistant()
     return {
         calls = {},
-        _showAddProviderDialog = function(self, preset_name, handler, base_url, additional_parameters)
-            table.insert(self.calls, {
-                preset_name = preset_name,
-                handler = handler,
-                base_url = base_url,
-                additional_parameters = additional_parameters,
-            })
-        end,
+        _menu_instance = nil,
     }
 end
 
@@ -140,11 +133,26 @@ local tests = {
 
     test("preset callback remembers the menu instance for dismissal", function()
         local assistant = mockAssistant()
+        local calls = {}
+        local orig = Registry.showProviderDialog
+        Registry.showProviderDialog = function(a, preset_name, handler, base_url, additional_parameters, edit_id)
+            table.insert(calls, {
+                assistant = a,
+                preset_name = preset_name,
+                handler = handler,
+                base_url = base_url,
+                additional_parameters = additional_parameters,
+                edit_id = edit_id,
+            })
+        end
         local items = subItems(Registry.getAddProviderMenuItem(assistant))
         local menu_instance = { closeMenu = function() end }
         items[1].callback(menu_instance)
+        Registry.showProviderDialog = orig
         -- A confirmed add closes this menu, which stays open behind the dialogs.
         assert.equal(assistant._menu_instance, menu_instance)
+        -- The preset callback opens the add-provider dialog with the preset data.
+        assert.equal(#calls, 1)
     end),
 
     -- =========================================================================

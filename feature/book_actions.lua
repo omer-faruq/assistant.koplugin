@@ -193,7 +193,7 @@ function M.buildFileDialogAIRow(assistant, file, is_file, book_props)
       text = _("Book Info (AI)"),
       enabled = enabled,
       callback = function()
-        assistant:_closeFileDialogs()
+        M.closeFileDialogs()
         assistant:onAskAIBookInfoForFile(file, book_props)
       end,
     },
@@ -201,7 +201,7 @@ function M.buildFileDialogAIRow(assistant, file, is_file, book_props)
       text = _("Recap (AI)"),
       enabled = enabled,
       callback = function()
-        assistant:_closeFileDialogs()
+        M.closeFileDialogs()
         assistant:onAskAIRecapForFile(file, book_props)
       end,
     },
@@ -209,7 +209,7 @@ function M.buildFileDialogAIRow(assistant, file, is_file, book_props)
       text = _("Identify (AI)"),
       enabled = enabled,
       callback = function()
-        assistant:_closeFileDialogs()
+        M.closeFileDialogs()
         assistant:onAskAIIdentifyBookForFile(file, book_props)
       end,
     },
@@ -244,7 +244,7 @@ function M.registerFileDialogButtons()
       function(file, is_file, dialog_book_props)
         local live = liveAssistant()
         if not live then return nil end
-        return live:_buildFileDialogAIRow(file, is_file, dialog_book_props)
+        return M.buildFileDialogAIRow(live, file, is_file, dialog_book_props)
       end)
   end
 end
@@ -461,7 +461,7 @@ function M.onAskAIIdentifyBook(assistant)
         })
         return
       end
-      assistant:_identifyBookFlow(opening, file, ui)
+      M.identifyBookFlow(assistant, opening, file, ui)
     end)
   end)
   return true
@@ -510,7 +510,7 @@ function M.onAskAIIdentifyBookForFile(assistant, file, book_props)
         })
         return
       end
-      assistant:_identifyBookFlow(opening, file, ui)
+      M.identifyBookFlow(assistant, opening, file, ui)
     end)
   end)
   return true

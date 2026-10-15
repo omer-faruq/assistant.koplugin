@@ -166,7 +166,7 @@ local function genWebSearchSubMenuItem(assistant, key)
             -- boundary: the 🌐 icon visibility depends solely on whether web
             -- search is enabled at all, not on which specific tool is selected.
             if (old_key == "none") ~= (key == "none") then
-                assistant:_rebuildShowOnMainButtons()
+                require("core/hooks").rebuildShowOnMainButtons(assistant)
             end
         end,
         enabled_func = function ()
@@ -1176,7 +1176,7 @@ local function addToMainMenu(assistant, menu_items)
             text = _("AI Assistant"),
             sorting_hint = "tools",
             hold_callback = function ()
-              assistant:_help_dialog()
+              showHelpDialog(assistant)
             end,
             sub_item_table = reader_items_table
           }
@@ -1186,7 +1186,7 @@ local function addToMainMenu(assistant, menu_items)
             text = _("AI Assistant"),
             sorting_hint = "tools",
             hold_callback = function ()
-              assistant:_help_dialog()
+              showHelpDialog(assistant)
             end,
             sub_item_table = common_items_table
         }
