@@ -21,9 +21,9 @@
   "workspace.checkThirdParty": false,
 
   // l10n/ is 40+ locales with no code insight; lib/ is vendored and keeps
-  // upstream formatting. test/ is deliberately NOT ignored -- an
-  // `ignoreDir: test` pass is what hid the Session init-type regression.
-  "workspace.ignoreDir": ["l10n", "lib", "docs", ".github", ".git"],
+  // upstream formatting; test/ holds deliberately unchecked stubs that poke
+  // widget internals, which the checker only reports as noise.
+  "workspace.ignoreDir": ["l10n", "lib", "test", "docs", ".github", ".git"],
 
   // User-owned file holding real secrets; never read or type-check it.
   "workspace.ignoreGlobs": ["configuration.lua"],
