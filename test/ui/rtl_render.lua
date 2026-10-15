@@ -51,7 +51,6 @@ local mock_assistant = {
     },
     ui = { doc_settings = true },
     ui_language_is_rtl = true,
-    showProviderDialog = function() end,
     assistant_dialog = { runPrompt = function() end },
     querier = { provider_name = "test-provider", is_inited = function() return true end },
 }

@@ -110,7 +110,6 @@ local function make_assistant(auto_add_vocab)
         ui = ui,
         ui_language = "en",
         ui_language_is_rtl = false,
-        showProviderDialog = function() end,
         assistant_dialog = { runPrompt = function() end },
         querier = {
             provider_name = "test-provider",

@@ -64,7 +64,6 @@ local assistant = {
     config = config,
     ui = { doc_settings = true },
     ui_language_is_rtl = false,
-    showProviderDialog = function() end,
     assistant_dialog = {
         runPrompt = function(_, highlighted_text, prompt_id)
             runprompt_calls[#runprompt_calls + 1] =

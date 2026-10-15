@@ -24,7 +24,6 @@ local ToolExecutor = require("core/tool_executor")
 local Conversation = require("core/conversation")
 local Screen = Device.screen
 local Prompts = require("core/prompts").assistant_prompts
-
 local API_HANDLERS = {}
 local MAX_TOOL_ROUNDS = 3
 
@@ -296,7 +295,7 @@ function Querier:showError(err, message_history)
             face = Font:getFace("xx_smallinfofont"),
             text = text,
             ok_text = _("Settings"),
-            ok_callback = function() self.assistant:showProviderDialog() end,
+            ok_callback = function() require("dialogs/settings_menu").showProviderDialog(self.assistant) end,
             cancel_text = _("Close"),
         }
         logger.dbg("API Error", tostring(err):sub(1, 200), "provider", self.provider_name or "?", "model", model, "message_history", type(message_history) == "table" and #message_history or 0)
@@ -828,7 +827,7 @@ function Querier:showStremDialog(res, request_title, request_identity)
         input_face = Font:getFace("infofont", self.settings:readSetting("response_font_size") or 20),
         title_bar_left_icon = "appbar.settings",
         title_bar_left_icon_tap_callback = function ()
-            self.assistant:showProviderDialog()
+            require("dialogs/settings_menu").showProviderDialog(self.assistant)
         end,
 
         -- size parameters

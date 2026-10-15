@@ -126,7 +126,6 @@ local mock_assistant = {
     settings = settings,
     ui = { doc_settings = true },
     ui_language_is_rtl = false,
-    showProviderDialog = function() end,
 }
 
 local viewer = ResultViewer:new{

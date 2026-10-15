@@ -31,7 +31,6 @@ local function make_assistant(minimalist, auto_save)
         },
         ui = { doc_settings = true },
         ui_language_is_rtl = false,
-        showProviderDialog = function() end,
     }
 end
 

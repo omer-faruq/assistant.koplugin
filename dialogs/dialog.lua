@@ -9,7 +9,7 @@ local Blitbuffer = require("ffi/blitbuffer")
 local Size = require("ui/size")
 local InputDialog = require("ui/widget/inputdialog")
 local ResultViewer = require("dialogs/viewer")
-local UIManager = require("ui/uimanager")
+local SettingsMenu = require("dialogs/settings_menu")local UIManager = require("ui/uimanager")
 local InfoMessage = require("ui/widget/infomessage")
 local ConfirmBox = require("ui/widget/confirmbox")
 local Event = require("ui/event")
@@ -684,7 +684,7 @@ function AssistantDialog:showAskDialog(highlightedText)
     title_bar_left_icon = "appbar.settings",
     title_bar_left_icon_tap_callback = function ()
         self.input_dialog:onCloseKeyboard()
-        self.assistant:showProviderDialog()
+        SettingsMenu.showProviderDialog(self.assistant)
     end,
     close_callback = function () self:_close() end,
     dismiss_callback = function () self:_close() end

@@ -436,7 +436,7 @@ function M.identifyBookFlow(assistant, opening, file, commit_ui)
     ok_text = _("Set"),
     cancel_text = _("Cancel"),
     ok_callback = function()
-      assistant:commitIdentifiedMetadata(ui, file, identified)
+      M.commitIdentifiedMetadata(assistant, ui, file, identified)
     end,
   })
 end
@@ -519,7 +519,7 @@ end
 -- FileManager-side book_info: metadata comes from the file, not an open doc.
 function M.onAskAIBookInfoForFile(assistant, file, book_props)
   if not assistant:isConfigured() then return end
-  local book = assistant:getDocumentInfoForFile(file, book_props)
+  local book = M.getDocumentInfoForFile(assistant, file, book_props)
   local function launch()
     NetUtils.runWhenOnlineFast(function()
       local notebook_path
@@ -538,7 +538,7 @@ function M.onAskAIBookInfoForFile(assistant, file, book_props)
     end)
   end
   if not book or not book.title or not book.authors then
-    assistant:confirmMissingMetadata(launch)
+    M.confirmMissingMetadata(assistant, launch)
     return true
   end
   launch()
@@ -550,7 +550,7 @@ end
 -- document here.
 function M.onAskAIRecapForFile(assistant, file, book_props)
   if not assistant:isConfigured() then return end
-  local book = assistant:getDocumentInfoForFile(file, book_props)
+  local book = M.getDocumentInfoForFile(assistant, file, book_props)
   local been_opened = nil
   local list_percent = nil
   local ok_list, BookList = pcall(require, "ui/widget/booklist")
@@ -598,7 +598,7 @@ function M.onAskAIRecapForFile(assistant, file, book_props)
     end)
   end
   if not book or not book.title or not book.authors then
-    assistant:confirmMissingMetadata(launch)
+    M.confirmMissingMetadata(assistant, launch)
     return true
   end
   launch()

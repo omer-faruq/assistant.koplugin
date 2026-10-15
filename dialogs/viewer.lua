@@ -46,7 +46,7 @@ local ASUtils = require("utils/base")
 local TextUtils = require("utils/text")
 local Trapper = require("ui/trapper")
 local ViewerCSS = require("dialogs/css")
-local Notebook = require("feature/notebook")
+local SettingsMenu = require("dialogs/settings_menu")local Notebook = require("feature/notebook")
 local CheckButton = require("ui/widget/checkbutton")
 
 -- Viewer CSS lives in dialogs/css.lua (shared with the notebook viewer);
@@ -1505,7 +1505,7 @@ function ResultViewer:onShowMenu()
       align = "left",
       callback = function()
         UIManager:close(dialog)
-        self.assistant:showProviderDialog()
+        SettingsMenu.showProviderDialog(self.assistant)
       end,
     }},
   }

@@ -68,7 +68,8 @@ Full flow, handlers, config, key files: `docs/ARCHITECTURE.md`.
 12. **Scope**: exclude `l10n/` from code searches/reads (40+ languages, no code insight). Polish non-native English wording into idiomatic English without changing intent.
 13. **Widgets**: reuse existing scaffolding (`ResultViewer`, `dialogs/dialog.lua`); read `docs/UI_DIALOGS.md` before hand-building dialogs. KOReader widget internals only as a last resort.
 14. **Upstream helpers**: when a helper exists in `/usr/lib/koreader/` (`frontend/`, `ffi/util`, plugins), reuse it; drop the replaced local helper outright.
-15. **EmmyLua annotations**: new functions with more than 3 params must document every param/return in `---` EmmyLua style (`@param name type desc`, `@return type desc`), as in `utils/net.fetchJSON`.
+15. **Thin delegates**: `main.lua` keeps only KOReader entry points (init, addToMainMenu, onDispatcherRegisterActions, onClose, onFlushSettings, on* event handlers, isConfigured); all other logic lives in owning modules and is invoked directly; no thin Assistant delegates. Where a top-level require would cycle (settings_menu<->provider_registry/search_registry/provider) or break headless loads (hooks/settings_menu), use function-local inline require following existing precedent.
+16. **EmmyLua annotations**: new functions with more than 3 params must document every param/return in `---` EmmyLua style (`@param name type desc`, `@return type desc`), as in `utils/net.fetchJSON`.
 
 ## Git / Versioning
 

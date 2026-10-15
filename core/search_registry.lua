@@ -447,7 +447,7 @@ function SearchRegistry.showWebSearchDialog(assistant, tool_key)
                     if assistant._provider_dialog then
                         UIManager:close(assistant._provider_dialog)
                         assistant._provider_dialog = nil
-                        UIManager:scheduleIn(0.15, function() assistant:showProviderDialog() end)
+                        UIManager:scheduleIn(0.15, function() require("dialogs/settings_menu").showProviderDialog(assistant) end)
                     end
                 end,
             },

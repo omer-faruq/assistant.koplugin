@@ -40,7 +40,7 @@ function ProviderDialog:init()
 
     self.title_bar_left_icon = "notice-info"
     self.title_bar_left_icon_tap_callback = function ()
-        self.assistant:showAboutDialog()
+        require("dialogs/settings_menu").showAboutDialog(self.assistant)
     end
 
     -- action buttons
@@ -263,8 +263,7 @@ function ProviderDialog:onBrowseModel()
             ModelPicker.showPickerDialog(self.assistant, models, menu_refresh, "",
                 ModelPicker.initialPage(self.assistant, models), nil, nil, nil, function()
                 UIManager:nextTick(function()
-                    self.assistant:showProviderDialog(menu_refresh)
-                end)
+                    require("dialogs/settings_menu").showProviderDialog(self.assistant, menu_refresh)                end)
             end)
         end)
     end)

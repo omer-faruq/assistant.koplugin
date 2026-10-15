@@ -67,7 +67,6 @@ local assistant = {
         dictionary = { dict_window = nil },
     },
     ui_language_is_rtl = false,
-    showProviderDialog = function() end,
     assistant_dialog = {
         runPrompt = function() end,
     },

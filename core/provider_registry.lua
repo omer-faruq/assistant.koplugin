@@ -1210,7 +1210,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                     UIManager:close(assistant._provider_dialog)
                     assistant._provider_dialog = nil
                 end
-                UIManager:scheduleIn(0.15, function() assistant:showProviderDialog() end)
+                UIManager:scheduleIn(0.15, function() require("dialogs/settings_menu").showProviderDialog(assistant) end)
             end,
         },
     }}
@@ -1250,7 +1250,7 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                             UIManager:close(assistant._provider_dialog)
                             assistant._provider_dialog = nil
                         end
-                        UIManager:scheduleIn(0.15, function() assistant:showProviderDialog() end)
+                        UIManager:scheduleIn(0.15, function() require("dialogs/settings_menu").showProviderDialog(assistant) end)
                     end,
                 })
             end,

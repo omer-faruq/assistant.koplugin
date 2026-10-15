@@ -1018,7 +1018,7 @@ local function addToMainMenu(assistant, menu_items)
                 keep_menu_open = true,
                 callback = function (touchmenu_instance)
                   assistant._menu_instance = touchmenu_instance
-                  assistant:showProviderDialog(function ()
+                  showProviderDialog(assistant, function ()
                     touchmenu_instance:updateItems()
                   end)
                 end,
@@ -1042,7 +1042,7 @@ local function addToMainMenu(assistant, menu_items)
                   return genMenuSettings(assistant)
                 end,
                 hold_callback = function ()
-                  assistant:showAboutDialog()
+                  showAboutDialog(assistant)
                 end
               }
             }
@@ -1244,7 +1244,7 @@ On the result dialog to close (as the Close button is far to reach).
           {
             text = _("Version Info"),
             callback = function()
-              assistant:showAboutDialog()
+              showAboutDialog(assistant)
             end,
           },
         }},

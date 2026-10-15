@@ -19,7 +19,7 @@ local DocUtils = require("utils/doc")
 local NetUtils = require("utils/net")
 local Prompts = require("core/prompts")
 local TextUtils = require("utils/text")
-local Device = require("device")
+local Lookup = require("feature/lookup")local Device = require("device")
 local Event = require("ui/event")
 
 local M = {}
@@ -166,7 +166,7 @@ function M.syncTranslateOverride(assistant)
             end
             NetUtils.runWhenOnlineFast(function()
                 Trapper:wrap(function()
-                    assistant:showTranslateOrDictionary(text)
+                    Lookup.showTranslateOrDictionary(assistant, text)
                 end)
             end)
         end
@@ -348,7 +348,7 @@ function M.addMainButton(assistant, prompt_idx, prompt)
                 local showDictionaryDialog = require("dialogs/dict")
                 showDictionaryDialog(assistant, _reader_highlight_instance.selected_text.text, nil, "term_xray")
               elseif prompt_idx == "translate" then
-                assistant:showTranslateOrDictionary(_reader_highlight_instance.selected_text.text)
+                Lookup.showTranslateOrDictionary(assistant, _reader_highlight_instance.selected_text.text)
               else
                 if not assistant.assistant_dialog then return end
                 assistant.assistant_dialog:runPrompt(_reader_highlight_instance.selected_text.text, prompt_idx)

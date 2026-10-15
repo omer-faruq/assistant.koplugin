@@ -64,7 +64,6 @@ local mock_settings = {
 
 local mock_assistant = {
     settings = mock_settings,
-    showProviderDialog = function() end,
 }
 
 -- ── Drivers ─────────────────────────────────────────────────────────────

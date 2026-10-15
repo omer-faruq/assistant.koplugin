@@ -375,7 +375,7 @@ local tests = {
         instance.ui.bookinfo = {
             getDocProps = function() error("must not be consulted when props are complete") end,
         }
-        local info = instance:getDocumentInfoForFile("book.epub",
+        local info = BookActions.getDocumentInfoForFile(instance, "book.epub",
             { title = "From Dialog", authors = "Dialog Author" })
         assert.equal(info.title, "From Dialog", "long-press title must win")
         assert.equal(info.authors, "Dialog Author", "long-press author must win")
@@ -390,7 +390,7 @@ local tests = {
                 return { title = "File Title", authors = { "Ann", "Bo" } }
             end,
         }
-        local info = instance:getDocumentInfoForFile("book.epub", { title = "From Dialog" })
+        local info = BookActions.getDocumentInfoForFile(instance, "book.epub", { title = "From Dialog" })
         assert.equal(info.title, "From Dialog", "the supplied title stays")
         assert.equal(info.authors, "Ann, Bo", "missing authors come from the file props")
         assert.notNil(props_args, "book info must be consulted for the missing field")
@@ -405,7 +405,7 @@ local tests = {
         instance.ui.bookinfo = {
             getDocProps = function() return { display_title = "Shown Title" } end,
         }
-        local info = instance:getDocumentInfoForFile("book.epub", nil)
+        local info = BookActions.getDocumentInfoForFile(instance, "book.epub", nil)
         assert.equal(info.title, nil, "title stays nil when absent")
         assert.equal(info.display_title, "Shown Title", "display_title must be used when title is absent")
     end),
@@ -414,7 +414,7 @@ local tests = {
         reset_state()
         instance.ui.bookinfo = { getDocProps = function() return {} end }
         sidecar = make_sidecar({ title = "Sidecar Title", authors = "Sidecar Author" }, 0.25)
-        local info = instance:getDocumentInfoForFile("book.epub", nil)
+        local info = BookActions.getDocumentInfoForFile(instance, "book.epub", nil)
         assert.equal(info.title, "Sidecar Title", "sidecar title must be used")
         assert.equal(info.authors, "Sidecar Author", "sidecar author must be used")
         assert.equal(info.percent_finished, 0.25, "sidecar progress must be used")
@@ -422,7 +422,7 @@ local tests = {
 
     test("the file name is display_title, never title, when metadata missing", function()
         reset_state()
-        local info = instance:getDocumentInfoForFile("/books/My Great Novel.epub", nil)
+        local info = BookActions.getDocumentInfoForFile(instance, "/books/My Great Novel.epub", nil)
         assert.equal(info.title, nil, "title must stay nil when metadata missing")
         assert.equal(info.authors, nil, "authors must stay nil when metadata missing")
         assert.equal(info.display_title, "My Great Novel", "display_title holds the file name")
@@ -435,7 +435,7 @@ local tests = {
         package.loaded["apps/filemanager/filemanagerutil"] = {
             splitFileNameType = function() return nil end,
         }
-        local info = instance:getDocumentInfoForFile("/books/weird", nil)
+        local info = BookActions.getDocumentInfoForFile(instance, "/books/weird", nil)
         assert.equal(info.title, nil, "title must stay nil when metadata missing")
         package.loaded["apps/filemanager/filemanagerutil"] = saved
     end),
@@ -444,7 +444,7 @@ local tests = {
         reset_state()
         booklist_info = { percent_finished = 0.7 }
         sidecar = make_sidecar({}, 0.25)
-        local info = instance:getDocumentInfoForFile("book.epub", nil)
+        local info = BookActions.getDocumentInfoForFile(instance, "book.epub", nil)
         assert.equal(info.percent_finished, 0.7, "the BookList cache is the progress source")
     end),
 
@@ -452,14 +452,14 @@ local tests = {
         reset_state()
         booklist_info = { percent_finished = "unknown" }
         sidecar = make_sidecar({}, 0.25)
-        local info = instance:getDocumentInfoForFile("book.epub", nil)
+        local info = BookActions.getDocumentInfoForFile(instance, "book.epub", nil)
         assert.equal(info.percent_finished, 0.25,
             "sidecar progress must be used when the cache has no number")
     end),
 
     test("a missing sidecar is not an error", function()
         reset_state()
-        local info = instance:getDocumentInfoForFile("/books/Nothing Here.epub", nil)
+        local info = BookActions.getDocumentInfoForFile(instance, "/books/Nothing Here.epub", nil)
         assert.equal(info.title, nil, "title stays nil without a sidecar")
         assert.equal(info.display_title, "Nothing Here", "display_title holds the file name")
         assert.equal(info.percent_finished, 0, "progress defaults to zero without a sidecar")
@@ -645,7 +645,7 @@ end))
 
 table.insert(tests, test("book info for a file runs the feature dialog with the file metadata", function()
     reset_state()
-    instance.getDocumentInfoForFile = function()
+    BookActions.getDocumentInfoForFile = function()
         return { title = "Resolved Title", authors = "Resolved Author", percent_finished = 0.42 }
     end
     local returned = instance:onAskAIBookInfoForFile("/books/Resolved.epub", nil)
@@ -657,7 +657,7 @@ table.insert(tests, test("book info for a file runs the feature dialog with the 
     assert.equal(feature_runs[1].percent, 0.42, "the resolved progress must reach the dialog")
     assert.isTrue(feature_runs[1].notebook_path == nil,
         "without multi-notebook there is no per-book path")
-    instance.getDocumentInfoForFile = nil
+    BookActions.getDocumentInfoForFile = nil
 end))
 
 table.insert(tests, test("book info for a file uses the per-book notebook when enabled", function()
@@ -677,12 +677,12 @@ table.insert(tests, test("book info for a file uses the per-book notebook when e
         asked_for = file
         return wanted
     end
-    instance.getDocumentInfoForFile = function()
+    BookActions.getDocumentInfoForFile = function()
         return { title = "T", authors = "A", percent_finished = 0 }
     end
     instance:onAskAIBookInfoForFile("/books/resolved.epub", nil)
     Notebook.getBookNotebookPath = saved
-    instance.getDocumentInfoForFile = nil
+    BookActions.getDocumentInfoForFile = nil
     instance.settings = nil
     assert.equal(asked_for, "/books/resolved.epub", "the path must be resolved for the book")
     assert.equal(#feature_runs, 1, "the feature dialog must still run once")
@@ -691,7 +691,7 @@ end))
 
 table.insert(tests, test("recap refuses a book that was never opened", function()
     reset_state()
-    instance.getDocumentInfoForFile = function()
+    BookActions.getDocumentInfoForFile = function()
         return { title = "Unread", authors = "A", percent_finished = 0 }
     end
     local returned = instance:onAskAIRecapForFile("/books/unread.epub", nil)
@@ -701,17 +701,17 @@ table.insert(tests, test("recap refuses a book that was never opened", function(
     assert.notNil(shown_widgets[1].text, "the notice must carry text")
     assert.matches(shown_widgets[1].text, "open this book",
         "the notice must ask the reader to open the book")
-    instance.getDocumentInfoForFile = nil
+    BookActions.getDocumentInfoForFile = nil
 end))
 
 table.insert(tests, test("recap gates on the BookList cache, not the sidecar", function()
     reset_state()
-    instance.getDocumentInfoForFile = function()
+    BookActions.getDocumentInfoForFile = function()
         return { title = "Sidecar Progress", authors = "A", percent_finished = 0.25 }
     end
     booklist_info = { been_opened = true, percent_finished = 0.8 }
     instance:onAskAIRecapForFile("/books/opened.epub", nil)
-    instance.getDocumentInfoForFile = nil
+    BookActions.getDocumentInfoForFile = nil
     assert.equal(#feature_runs, 1, "recap must run for an opened book")
     assert.equal(feature_runs[1].feature, "recap", "the recap feature must run")
     assert.equal(feature_runs[1].percent, 0.8, "the BookList cache must supply the progress")
@@ -719,24 +719,24 @@ end))
 
 table.insert(tests, test("recap infers been_opened from the progress when the cache is silent", function()
     reset_state()
-    instance.getDocumentInfoForFile = function()
+    BookActions.getDocumentInfoForFile = function()
         return { title = "T", authors = "A", percent_finished = 0.3 }
     end
     booklist_info = {}
     instance:onAskAIRecapForFile("/books/partly.epub", nil)
-    instance.getDocumentInfoForFile = nil
+    BookActions.getDocumentInfoForFile = nil
     assert.equal(#feature_runs, 1, "a book with progress must be recapable")
     assert.equal(feature_runs[1].percent, 0.3, "the file progress must be used")
 end))
 
 table.insert(tests, test("a never-opened cache entry blocks recap despite file progress", function()
     reset_state()
-    instance.getDocumentInfoForFile = function()
+    BookActions.getDocumentInfoForFile = function()
         return { title = "T", authors = "A", percent_finished = 0.6 }
     end
     booklist_info = { been_opened = false, percent_finished = 0 }
     instance:onAskAIRecapForFile("/books/unread2.epub", nil)
-    instance.getDocumentInfoForFile = nil
+    BookActions.getDocumentInfoForFile = nil
     assert.equal(#feature_runs, 0, "been_opened = false must block the recap")
     assert.equal(#shown_widgets, 1, "the reader must be told why")
 end))
@@ -823,7 +823,7 @@ local identify_tests = {
         local orig_extend = FB.extendProps
         FB.extendProps = function(props, file) return { refreshed = true } end
 
-        instance:commitIdentifiedMetadata(ui, "book.epub", { title = "T", authors = "A", description = "D" })
+        BookActions.commitIdentifiedMetadata(instance, ui, "book.epub", { title = "T", authors = "A", description = "D" })
 
         local title_ok, author_ok, desc_ok = false, false, false
         for _, w in ipairs(writes) do
@@ -915,7 +915,7 @@ local identify_tests = {
             -- First write batch: no custom metadata file exists yet.
             local ui = { bookinfo = new_bookinfo() }
             instance.ui = ui
-            instance:commitIdentifiedMetadata(ui, FILE, { title = "T", authors = "A", description = "D" })
+            BookActions.commitIdentifiedMetadata(instance, ui, FILE, { title = "T", authors = "A", description = "D" })
             local props1 = file_disk[FILE] and file_disk[FILE].custom_props or {}
             assert.equal(props1.title, "T", "title must persist alongside the later fields")
             assert.equal(props1.authors, "A", "authors must persist alongside the later fields")
@@ -935,7 +935,7 @@ local identify_tests = {
             -- and updates accumulate instead of replacing the whole metadata.
             local ui2 = { bookinfo = new_bookinfo() }
             instance.ui = ui2
-            instance:commitIdentifiedMetadata(ui2, FILE, { title = "T2", authors = "A2" })
+            BookActions.commitIdentifiedMetadata(instance, ui2, FILE, { title = "T2", authors = "A2" })
             local props2 = file_disk[FILE] and file_disk[FILE].custom_props or {}
             assert.equal(props2.title, "T2", "title updated")
             assert.equal(props2.authors, "A2", "authors updated")
@@ -984,7 +984,7 @@ local identify_tests = {
         }
         instance.ui = ui
         local ok, err = pcall(function()
-            instance:commitIdentifiedMetadata(ui, FILE, { title = "T" })
+            BookActions.commitIdentifiedMetadata(instance, ui, FILE, { title = "T" })
         end)
 
         UIManager.show = orig_show
@@ -1016,7 +1016,7 @@ local identify_tests = {
         local FB = require("apps/filemanager/filemanagerbookinfo")
         FB.extendProps = function(props, file) return {} end
 
-        instance:commitIdentifiedMetadata(ui, "book.epub", { title = "T" })
+        BookActions.commitIdentifiedMetadata(instance, ui, "book.epub", { title = "T" })
 
         assert.equal(#writes, 1, "only one write")
         assert.equal(writes[1].key, "title")
@@ -1046,7 +1046,7 @@ local identify_tests = {
         end
         UIManager.broadcastEvent = function() end
 
-        instance:commitIdentifiedMetadata(ui, "book.epub", { title = "T" })
+        BookActions.commitIdentifiedMetadata(instance, ui, "book.epub", { title = "T" })
 
         assert.isTrue(show_info, "InfoMessage expected")
         assert.equal(notify_count, 0, "no notify")
@@ -1088,11 +1088,11 @@ table.insert(tests, test("metadata gate ConfirmBox for both FM handlers", functi
             reset_state()
             booklist_info = { been_opened = true, percent_finished = 0.5 }
             if missing == "title" then
-                instance.getDocumentInfoForFile = function()
+                BookActions.getDocumentInfoForFile = function()
                     return { title = nil, authors = "A", percent_finished = 0.5 }
                 end
             else
-                instance.getDocumentInfoForFile = function()
+                BookActions.getDocumentInfoForFile = function()
                     return { title = "T", authors = nil, percent_finished = 0.5 }
                 end
             end
@@ -1108,19 +1108,19 @@ table.insert(tests, test("metadata gate ConfirmBox for both FM handlers", functi
             cb.ok_callback()
             assert.equal(#feature_runs, before + 1, "Continue runs the flow")
 
-            instance.getDocumentInfoForFile = nil
+            BookActions.getDocumentInfoForFile = nil
         end
 
         -- both present: no ConfirmBox, flow runs directly
         reset_state()
         booklist_info = { been_opened = true, percent_finished = 0.5 }
-        instance.getDocumentInfoForFile = function()
+        BookActions.getDocumentInfoForFile = function()
             return { title = "T", authors = "A", percent_finished = 0.5 }
         end
         instance[handler_name](instance, "/books/ok.epub", nil)
         assert.equal(#shown_widgets, 0, "no gate when metadata is present")
         assert.equal(#feature_runs, 1, "flow runs directly")
-        instance.getDocumentInfoForFile = nil
+        BookActions.getDocumentInfoForFile = nil
     end
 
     ConfirmBox.new = saved_new
@@ -1294,7 +1294,7 @@ local feedback_tests = {
         end
         UIManager.broadcastEvent = function() end
 
-        instance:commitIdentifiedMetadata(ui, "book.epub", { title = "T" })
+        BookActions.commitIdentifiedMetadata(instance, ui, "book.epub", { title = "T" })
 
         assert.equal(notify_count, 0, "no notify on failure")
         assert.isTrue(show_info, "failure InfoMessage shown")
@@ -1328,7 +1328,7 @@ local feedback_tests = {
         end
         UIManager.broadcastEvent = function() end
 
-        instance:commitIdentifiedMetadata(ui, "book.epub", { title = "T" })
+        BookActions.commitIdentifiedMetadata(instance, ui, "book.epub", { title = "T" })
 
         assert.equal(notify_count, 1, "notify once on success")
         assert.isFalse(show_info, "no failure InfoMessage")

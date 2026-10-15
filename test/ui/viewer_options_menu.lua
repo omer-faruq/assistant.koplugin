@@ -66,7 +66,6 @@ local assistant = {
     config = { getFeature = function() return nil end },
     ui = { doc_settings = true },
     ui_language_is_rtl = false,
-    showProviderDialog = function() end,
     assistant_dialog = { runPrompt = function() end },
 }
 

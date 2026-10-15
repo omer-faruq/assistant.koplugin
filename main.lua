@@ -10,7 +10,6 @@ local ConfirmBox  = require("ui/widget/confirmbox")
 local T = require("ffi/util").template
 local TextUtils = require("utils/text")
 local NetUtils = require("utils/net")
-local Lookup = require("feature/lookup")
 local BookActions = require("feature/book_actions")
 local _ = require("core/gettext")
 local AssistantDialog = require("dialogs/dialog")
@@ -103,26 +102,6 @@ function Assistant:addToMainMenu(menu_items)
   SettingsMenu.addToMainMenu(self, menu_items)
 end
 
-function Assistant:showProviderDialog(close_callback)
-  SettingsMenu.showProviderDialog(self, close_callback)
-end
-
-function Assistant:showAboutDialog()
-  SettingsMenu.showAboutDialog(self)
-end
-
-function Assistant:getDocumentInfoForFile(file, book_props)
-  return BookActions.getDocumentInfoForFile(self, file, book_props)
-end
-
-function Assistant:confirmMissingMetadata(launch)
-  BookActions.confirmMissingMetadata(self, launch)
-end
-
-function Assistant:commitIdentifiedMetadata(ui, file, identified)
-  BookActions.commitIdentifiedMetadata(self, ui, file, identified)
-end
-
 function Assistant:onAskAIIdentifyBook()
   return BookActions.onAskAIIdentifyBook(self)
 end
@@ -159,24 +138,12 @@ function Assistant:onAskSummaryUsingAnnotations()
   return BookActions.onAskSummaryUsingAnnotations(self)
 end
 
-function Assistant:showTranslateOrDictionary(text)
-  Lookup.showTranslateOrDictionary(self, text)
-end
-
-function Assistant:addMainButton(prompt_idx, prompt)
-  Hooks.addMainButton(self, prompt_idx, prompt)
-end
-
 function Assistant:onDictButtonsReady(dict_popup, dict_buttons)
   Hooks.onDictButtonsReady(self, dict_popup, dict_buttons)
 end
 
 function Assistant:onAssistantSetButton(btnconf, action)
   return Hooks.onAssistantSetButton(self, btnconf, action)
-end
-
-function Assistant:syncProviderSelectionFromConfig()
-  if self.config then self.config:syncProviderSelection() end
 end
 
 function Assistant:onFlushSettings()
@@ -190,6 +157,8 @@ function Assistant:onClose()
   BookActions.removeFileDialogButtons()
 end
 
+-- UI-guarded entry: keeps ConfirmBox/InfoMessage body here (do not move UI
+-- widget requires into core/config).
 function Assistant:isConfigured()
   local err_text = TextUtils.bold_format(
     _("<b>No provider set up yet.</b>\nPlease add a provider in Settings or configuration.lua.")
@@ -244,7 +213,7 @@ function Assistant:init()
   end
   if not next(self.config:getProviderSettings()) then return end
   self.config:clearLoadError()
-  self:syncProviderSelectionFromConfig()
+  if self.config then self.config:syncProviderSelection() end
   local model_provider = self.config:getActiveProviderId()
   if not model_provider then
     self.config:setLoadError(_("configuration.lua: model providers are invalid."))
