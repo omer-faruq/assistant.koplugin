@@ -741,17 +741,24 @@ function M.getOpeningText(ui, max_chars)
         end
         out = buf:get()
     else
-        local saved = ui.document:getXPointer()
+        -- Reflowable documents: read the text by walking forward one character
+        -- at a time from the first page, so a document shorter than one screen
+        -- still yields its full text, capped at max_chars.
+        local buf = strbuf.new()
+        buf:reset()
+        local len = 0
         pcall(function()
-            ui.document:gotoPos(0)
-            local start_xp = ui.document:getXPointer()
-            ui.document:gotoPos(max_chars)
-            local end_xp = ui.document:getXPointer()
-            out = ui.document:getTextFromXPointers(start_xp, end_xp) or ""
+            local cur = ui.document:getPageXPointer(1)
+            while cur and len < max_chars do
+                local nxt = ui.document:getNextVisibleChar(cur)
+                if not nxt or nxt == cur then break end
+                local t = ui.document:getTextFromXPointers(cur, nxt) or ""
+                buf:put(t)
+                len = len + #t
+                cur = nxt
+            end
         end)
-        pcall(function()
-            if saved then ui.document:gotoXPointer(saved) end
-        end)
+        out = buf:get()
     end
     if #out > max_chars then
         out = string.sub(out, 1, max_chars)

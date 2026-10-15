@@ -23,6 +23,66 @@ local tests = {
         assert.equal(#txt, 12)
     end),
 
+    test("getOpeningText walks reflowable text character by character", function()
+        local text = string.rep("abcdefghij", 10) -- 100 chars
+        local pos = 0
+        local ui = {
+            document = {
+                info = { has_pages = false },
+                getPageXPointer = function() return 0 end,
+                getNextVisibleChar = function(self, cur)
+                    if pos >= #text then return nil end
+                    pos = pos + 1
+                    return pos
+                end,
+                getTextFromXPointers = function(self, from, to)
+                    return string.sub(text, from + 1, to)
+                end,
+            },
+        }
+        local out = DocUtils.getOpeningText(ui, 12)
+        assert.equal(out, "abcdefghijab", "the walk must start at the document start and stop at max chars")
+
+        pos = 0
+        out = DocUtils.getOpeningText(ui, 3000)
+        assert.equal(out, text, "a long document must be capped by max chars, not by the walk")
+        assert.equal(#out, 100)
+    end),
+
+    test("getOpeningText returns a document shorter than one screen in full", function()
+        -- Regression: gotoPos() is a scroll offset, so a one-screen document
+        -- used to collapse to a single character.
+        local text = "Short poem."
+        local pos = 0
+        local ui = {
+            document = {
+                info = { has_pages = false },
+                getPageXPointer = function() return 0 end,
+                getNextVisibleChar = function(self, cur)
+                    if pos >= #text then return nil end
+                    pos = pos + 1
+                    return pos
+                end,
+                getTextFromXPointers = function(self, from, to)
+                    return string.sub(text, from + 1, to)
+                end,
+            },
+        }
+        assert.equal(DocUtils.getOpeningText(ui, 3000), text)
+    end),
+
+    test("getOpeningText yields nothing without a start position", function()
+        local ui = {
+            document = {
+                info = { has_pages = false },
+                getPageXPointer = function() return nil end,
+                getNextVisibleChar = function() error("must not walk without a start") end,
+                getTextFromXPointers = function() error("must not extract without a start") end,
+            },
+        }
+        assert.equal(DocUtils.getOpeningText(ui, 3000), "")
+    end),
+
     test("parseIdentifiedBook handles clean JSON", function()
         local r = DocUtils.parseIdentifiedBook('{"title":"T","authors":["A","B"],"note":"n"}')
         assert.equal(r.title, "T")
