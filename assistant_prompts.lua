@@ -376,6 +376,7 @@ Rules:
 * One ::author{...}:: line per author; repeat the line for multiple authors, or put several names separated by ";" in a single line.
 * ::description{...}:: is optional: one or two sentences describing the book (subject, genre, or what it is about), based on the opening excerpt (and verified search results, if any); no confidence commentary.
 * Values must stay on a single line; do not add code fences or extra prose.
+* Never write the <...> placeholder text itself; if unknown, leave the braces empty or omit the line.
 * You may call assistant_web_search to verify the identification (canonical title, full author names) before answering; keep it efficient (1-2 queries).
 * If search conflicts with the excerpt, trust the excerpt.
 * Do not describe the task, plan, or the user's intent; output only the tagged lines, no narration.

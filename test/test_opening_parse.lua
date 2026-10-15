@@ -299,14 +299,14 @@ local tests = {
             { title = "T", authors = "A", description = "D" })
         assert.matches(msg, "Title: T")
         assert.matches(msg, "Author: A")
-        assert.matches(msg, "\nD")
+        assert.matches(msg, "Description: D")
         assert.notMatches(msg, "%%")
     end),
 
     test("buildIdentifyConfirmMessage: missing description leaves no %N", function()
         local msg = DocUtils.buildIdentifyConfirmMessage({ title = "T", authors = "A" })
         assert.notMatches(msg, "%%")
-        assert.notMatches(msg, "\nD")
+        assert.notMatches(msg, "Description:")
     end),
 
     test("buildIdentifyConfirmMessage: unknown fields fall back", function()
@@ -316,4 +316,70 @@ local tests = {
         assert.notMatches(msg, "%%")
     end),
 }
+
+local maturity_tests = {
+test("parse: empty template -> nil, no_data", function()
+        local p, st = DocUtils.parseIdentifiedBook("::title{}::\n::author{}::")
+        assert.equal(p, nil)
+        assert.equal(st, "no_data")
+    end),
+
+    test("parse: placeholder-echo template -> nil, no_data", function()
+        local p, st = DocUtils.parseIdentifiedBook("::title{<title>}::\n::author{<author>}::\n::description{<description>}::")
+        assert.equal(p, nil)
+        assert.equal(st, "no_data")
+    end),
+
+    test("parse: JSON with placeholder values -> nil, no_data", function()
+        local p, st = DocUtils.parseIdentifiedBook('{"title":"<title>","authors":"<author>","description":"<description>"}')
+        assert.equal(p, nil)
+        assert.equal(st, "no_data")
+    end),
+
+    test("parse: all-null JSON -> nil, no_data", function()
+        local p, st = DocUtils.parseIdentifiedBook('{"title":null,"authors":null,"description":null}')
+        assert.equal(p, nil)
+        assert.equal(st, "no_data")
+    end),
+
+    test("parse: garbage -> nil, unparseable", function()
+        local p, st = DocUtils.parseIdentifiedBook('no json here at all')
+        assert.equal(p, nil)
+        assert.equal(st, "unparseable")
+    end),
+
+    test("parse: mixed empty template + real JSON -> JSON used, ok", function()
+        local p, st = DocUtils.parseIdentifiedBook('::title{}::\n{"title":"Real","authors":"Auth","description":"Desc"}')
+        assert.notNil(p)
+        assert.equal(st, "ok")
+        assert.equal(p.title, "Real")
+        assert.equal(p.description, "Desc")
+    end),
+
+    test("identifyWithRetry: no_data first reply makes no retry", function()
+        local calls = 0
+        local qf = function(history)
+            calls = calls + 1
+            return "::title{}::\n::author{}::", nil
+        end
+        local parsed, answer, status = DocUtils.identifyWithRetry(qf, {}, "corrective")
+        assert.equal(parsed, nil)
+        assert.equal(status, "no_data")
+        assert.equal(calls, 1)
+    end),
+
+    test("identifyWithRetry: garbage then tagged lines retries and succeeds", function()
+        local calls = 0
+        local qf = function(history)
+            calls = calls + 1
+            if calls == 1 then return "The user wants ... Likely they want to ...", nil end
+            return "::title{T}::\n::author{A}::", nil
+        end
+        local parsed, answer, status = DocUtils.identifyWithRetry(qf, {}, "corrective")
+        assert.notNil(parsed)
+        assert.equal(status, "ok")
+        assert.equal(calls, 2)
+    end),
+}
+helper.runTests("opening_parse_maturity", maturity_tests)
 return helper.runTests("opening_parse", tests)

@@ -766,8 +766,42 @@ end
 --- @return table|nil { title, authors, description }
 function M.parseIdentifiedBook(raw)
     if type(raw) ~= "string" then
-        return nil
+        return nil, "unparseable"
     end
+
+    local function is_placeholder(v)
+        return type(v) == "string" and v:match("^<.*>$") ~= nil
+    end
+
+    local function normalize(data)
+        if type(data) ~= "table" then return nil end
+        local title = (type(data.title) == "string" and data.title ~= "") and data.title or nil
+        if title and is_placeholder(title) then title = nil end
+        local authors = nil
+        if type(data.authors) == "table" then
+            local parts = {}
+            for _, v in ipairs(data.authors) do
+                if type(v) == "string" and v ~= "" and not is_placeholder(v) then
+                    table.insert(parts, v)
+                end
+            end
+            if #parts > 0 then authors = table.concat(parts, ", ") end
+        elseif type(data.authors) == "string" and data.authors ~= "" and not is_placeholder(data.authors) then
+            authors = data.authors
+        end
+        local description = nil
+        if type(data.description) == "string" and data.description ~= "" and not is_placeholder(data.description) then
+            description = data.description
+        elseif type(data.note) == "string" and data.note ~= "" and not is_placeholder(data.note) then
+            description = data.note
+        end
+        if not title and not authors then
+            return nil
+        end
+        return { title = title, authors = authors, description = description }
+    end
+
+    local any_structured = false
 
     -- Template scan first: line-tagged fields anywhere in the reply.
     do
@@ -775,16 +809,19 @@ function M.parseIdentifiedBook(raw)
         local description = nil
         local note_alias = nil
         local author_parts = {}
+        local matched = false
         for key, value in (raw or ""):gmatch("::(%a+){(.-)}::") do
+            matched = true
+            any_structured = true
             local k = string.lower(key)
             local v = koutil.trim(value)
-            if v ~= "" then
+            if v ~= "" and not is_placeholder(v) then
                 if k == "title" then
                     title = v
                 elseif k == "author" or k == "authors" then
                     for part in v:gmatch("[^;]+") do
                         local name = koutil.trim(part)
-                        if name ~= "" then
+                        if name ~= "" and not is_placeholder(name) then
                             table.insert(author_parts, name)
                         end
                     end
@@ -798,44 +835,19 @@ function M.parseIdentifiedBook(raw)
         if description == nil then
             description = note_alias
         end
-        if title or #author_parts > 0 then
+        if matched and (title or #author_parts > 0) then
             local authors = nil
             if #author_parts > 0 then
                 authors = table.concat(author_parts, ", ")
             end
-            return { title = title, authors = authors, description = description }
+            return { title = title, authors = authors, description = description }, "ok"
         end
     end
 
-    local function normalize(data)
-        if type(data) ~= "table" then return nil end
-        local title = (type(data.title) == "string" and data.title ~= "") and data.title or nil
-        local authors = nil
-        if type(data.authors) == "table" then
-            local parts = {}
-            for _, v in ipairs(data.authors) do
-                if type(v) == "string" and v ~= "" then
-                    table.insert(parts, v)
-                end
-            end
-            if #parts > 0 then authors = table.concat(parts, ", ") end
-        elseif type(data.authors) == "string" and data.authors ~= "" then
-            authors = data.authors
-        end
-        local description = (type(data.description) == "string" and data.description ~= "") and data.description or nil
-        if description == nil and type(data.note) == "string" and data.note ~= "" then
-            description = data.note
-        end
-        if not title and not authors then
-            return nil
-        end
-        return { title = title, authors = authors, description = description }
-    end
-
+    -- JSON fallback: whole then balanced objects.
     local function try_decode(text)
         text = text:match("^%s*(.-)%s*$") or ""
         if text == "" then return nil end
-        -- Strip a single wrapping code fence pair if present.
         if text:match("^```") then
             text = text:gsub("^```[%w]*%s*\n?", "")
             text = text:gsub("\n?```%s*$", "")
@@ -844,23 +856,27 @@ function M.parseIdentifiedBook(raw)
         if text == "" then return nil end
         local rapidjson = require("rapidjson")
         local ok, data = pcall(rapidjson.decode, text)
-        local res = normalize(data)
-        if res then return res end
-        -- Tolerate trailing commas before } or ].
+        if ok and type(data) == "table" then
+            any_structured = true
+            return normalize(data)
+        end
         local fixed = text:gsub(",(%s*[}%]])", "%1")
         if fixed ~= text then
-            local rapidjson = require("rapidjson")
-            local ok2, data2 = pcall(rapidjson.decode, fixed)
-            return normalize(data2)
+            local rapidjson2 = require("rapidjson")
+            local ok2, data2 = pcall(rapidjson2.decode, fixed)
+            if ok2 and type(data2) == "table" then
+                any_structured = true
+                return normalize(data2)
+            end
         end
         return nil
     end
 
-    -- Fast path: whole (trimmed / fence-stripped) text.
-    local whole = try_decode(raw)
-    if whole then return whole end
-
-    -- Scan for balanced JSON objects (prose/fences/trailing notes tolerated).
+    local res = try_decode(raw)
+    if res then
+        return res, "ok"
+    end
+    -- balanced scan
     local text = raw or ""
     local n = #text
     for i = 1, n do
@@ -895,13 +911,18 @@ function M.parseIdentifiedBook(raw)
             end
             if jend then
                 local cand = text:sub(i, jend)
-                local res = try_decode(cand)
-                if res then return res end
+                local r = try_decode(cand)
+                if r then
+                    return r, "ok"
+                end
             end
         end
     end
 
-    return nil
+    if any_structured then
+        return nil, "no_data"
+    end
+    return nil, "unparseable"
 end
 
 
@@ -928,7 +949,7 @@ function M.buildIdentifyConfirmMessage(identified)
         identified.authors or _("Unknown Author"))
     local description = identified.description
     if type(description) == "string" and description ~= "" then
-        return head .. "\n" .. description
+        return head .. "\n" .. T(_("Description: %1"), description)
     end
     return head
 end
@@ -944,18 +965,29 @@ end
 function M.identifyWithRetry(query_fn, message_history, corrective_text)
     message_history = message_history or {}
     local answer, err = query_fn(message_history)
-    local parsed = M.parseIdentifiedBook(answer)
+    local parsed, status = M.parseIdentifiedBook(answer)
     if parsed then
-        return parsed, answer
+        return parsed, answer, "ok"
+    end
+    if status ~= "unparseable" then
+        -- no_data: a retry cannot create knowledge
+        if status == nil then status = "no_data" end
+        return nil, answer, status
     end
     if err then
-        return nil, answer
+        return nil, answer, "unparseable"
     end
     local retry_history = message_history
     table.insert(retry_history, { role = "assistant", content = answer or "" })
     table.insert(retry_history, { role = "user", content = corrective_text or "Reply ONLY with lines in this format:\n::title{...}::\n::author{...}::\n::description{...}::\nNo other text." })
     local answer2, err2 = query_fn(retry_history)
-    local parsed2 = M.parseIdentifiedBook(answer2)
-    return parsed2, answer2
+    local parsed2, status2 = M.parseIdentifiedBook(answer2)
+    if parsed2 then
+        return parsed2, answer2, "ok"
+    end
+    if status2 then
+        return nil, answer2, status2
+    end
+    return nil, answer2, "unparseable"
 end
 return M

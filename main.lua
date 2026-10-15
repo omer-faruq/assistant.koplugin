@@ -1559,24 +1559,26 @@ end
         local identify_ws_mode = koutil.tableGetValue(identify_prompt_config, "use_websearch")
             and self.settings:readSetting("use_websearch", "none") or "none"
 
-        local identified, answer = DocUtils.identifyWithRetry(function(history)
+        local identified, answer, status = DocUtils.identifyWithRetry(function(history)
             return self.querier:query(history, _("Identify This Book"), {
                 use_websearch = identify_ws_mode,
             })
         end, message_history, "Reply ONLY with lines in this format:\n::title{...}::\n::author{...}::\n::description{...}::\nNo other text.")
 
         if not identified then
-          if answer then end
-        end
-
-        if not identified then
-          local snippet = (answer or ""):gsub("%s+", " ")
-          if #snippet > 120 then
-            snippet = string.sub(snippet, 1, 120)
+          if status == "no_data" then
+            UIManager:show(InfoMessage:new{
+              text = _("The model could not identify this book.")
+            })
+          else
+            local snippet = (answer or ""):gsub("%s+", " ")
+            if #snippet > 120 then
+              snippet = string.sub(snippet, 1, 120)
+            end
+            UIManager:show(InfoMessage:new{
+              text = _("Could not parse the identification result.") .. " " .. snippet
+            })
           end
-          UIManager:show(InfoMessage:new{
-            text = _("Could not parse the identification result.") .. " " .. snippet
-          })
           return
         end
         if not identified.title and not identified.authors then
