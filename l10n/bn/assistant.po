@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 02:53+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: বাংলা (AI translation)\n"
@@ -94,10 +94,10 @@ msgstr "<b>Term X-Ray-এর জন্য বইয়ের প্রসঙ্�
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
-"<b>এই বই সম্পর্কে একটি প্রশ্ন জিজ্ঞাসা করুন:</b>\n"
-"%1, লিখেছেন %2"
+"<b>এই বইটি সম্পর্কে একটি প্রশ্ন করুন:</b>\n"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "দীর্ঘদিন পড়া হয়নি এমন একটি বই পরের বার খোলা হলে AI রিক্যাপ সক্রিয় হবে।"
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AI রিক্যাপ"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"আপনি কি নিশ্চিত যে সহকারী প্লাগইনের সেটিংস মুছে ফেলতে চান? \n"
-"এটি সহকারী প্লাগইনকে প্রথম ইনস্টল করার সময়ের অবস্থায় ফিরিয়ে নেবে।\n"
+"আপনি কি নিশ্চিত যে অ্যাসিস্ট্যান্ট প্লাগইনের সেটিংস মুছে ফেলবেন?\n"
+"এটি অ্যাসিস্ট্যান্ট প্লাগইনকে আপনি প্রথমবার ইনস্টল করার সময়ের অবস্থায় ফিরিয়ে নেবে।\n"
 "\n"
-"configuration.lua নিরাপদ, শুধুমাত্র সেটিংস মুছে ফেলা হবে।"
+"configuration.lua নিরাপদ, শুধু সেটিংসগুলো মুছে ফেলা হবে।"
 
 msgid "Ask"
 msgstr "জিজ্ঞাসা করুন"
@@ -403,6 +402,9 @@ msgstr "যেকোনো কিছু জিজ্ঞাসা করুন...
 
 msgid "Ask the AI a question"
 msgstr "এআই-কে একটি প্রশ্ন করুন"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "খোলা বইয়ের শুরুর লেখা থেকে তার শিরোনাম ও লেখক শনাক্ত করতে AI-কে অনুরোধ করুন।"
 
 msgid "Assistant settings are not available."
 msgstr "সহায়ক সেটিংস উপলব্ধ নেই।"
@@ -463,6 +465,9 @@ msgstr "বইয়ের অন্তর্দৃষ্টি"
 
 msgid "Book Summary & Recs"
 msgstr "বইয়ের সারসংক্ষেপ ও সুপারিশ"
+
+msgid "Book metadata updated."
+msgstr "বইয়ের মেটাডেটা হালনাগাদ করা হয়েছে।"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ব্রাঞ্চ/ট্যাগ \"%1\" পাওয়া যায়নি।"
@@ -540,6 +545,9 @@ msgstr "প্রাসঙ্গিক নোট"
 msgid "Contextual Notes / Reflections"
 msgstr "প্রাসঙ্গিক নোট / প্রতিফলন"
 
+msgid "Continue"
+msgstr "চালিয়ে যান"
+
 msgid "Contradictions / Open Questions"
 msgstr "বিরোধ / অমীমাংসিত প্রশ্ন"
 
@@ -575,11 +583,17 @@ msgstr "AI নোট তৈরি করা যায়নি।"
 msgid "Could not create AI note: %1"
 msgstr "AI নোট তৈরি করা যায়নি: %1"
 
+msgid "Could not extract text from this book."
+msgstr "এই বই থেকে লেখা বের করা যায়নি।"
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "AI নোট ফোল্ডার তালিকাভুক্ত করা যায়নি: %1"
 
 msgid "Could not open AI note file."
 msgstr "AI নোট ফাইল খোলা যায়নি।"
+
+msgid "Could not parse the identification result."
+msgstr "শনাক্তকরণের ফলাফল বিশ্লেষণ করা যায়নি।"
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "প্রদানকারী %1 মুছবেন?"
+
+msgid "Description: %1"
+msgstr "বিবরণ: %1"
 
 msgid "Device"
 msgstr "ডিভাইস"
@@ -816,12 +833,22 @@ msgstr "ঐতিহাসিক প্রেক্ষাপট"
 msgid "Historical and Cultural Context"
 msgstr "ঐতিহাসিক ও সাংস্কৃতিক প্রেক্ষাপট"
 
+msgid "Identify (AI)"
+msgstr "শনাক্ত করুন (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "এই বইটি শনাক্ত করুন"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "রিয়েল-টাইম ওয়েব ফলাফলের মাধ্যমে উত্তরের নির্ভুলতা উন্নত করে। \n"
 "দ্রষ্টব্য: উচ্চতর টোকেন ব্যবহার এবং অতিরিক্ত API চার্জ প্রযোজ্য।"
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "খোলা বইয়ের শুরুর লেখা থেকে তার শিরোনাম ও লেখক অনুমান করুন এবং কাস্টম মেটাডেটা হিসেবে সংরক্ষণ করুন।"
 
 msgid "Integrated Summary"
 msgstr "সমন্বিত সারসংক্ষেপ"
@@ -880,6 +907,9 @@ msgstr "মার্কডাউন ইঞ্জিন"
 msgid "Meaning & Usage"
 msgstr "অর্থ ও ব্যবহার"
 
+msgid "Metadata could not be saved."
+msgstr "মেটাডেটা সংরক্ষণ করা যায়নি।"
+
 msgid "Minimalist Mode"
 msgstr "মিনিমালিস্ট মোড"
 
@@ -930,6 +960,9 @@ msgstr "কোনো সক্রিয় প্রদানকারী কন
 
 msgid "No base folder is available for AI Notes."
 msgstr "AI নোটের জন্য কোনো বেস ফোল্ডার উপলব্ধ নেই।"
+
+msgid "No book is open."
+msgstr "কোনো বই খোলা নেই।"
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "কোনো বই খোলা নেই। ফাইল ম্যানেজারে একটি বই দীর্ঘক্ষণ চেপে ধরে \"বইয়ের তথ্য (AI)\" নির্বাচন করুন।"
@@ -1240,6 +1273,18 @@ msgstr "AI নোট নির্বাচন করুন"
 msgid "Select a model:"
 msgstr "একটি মডেল নির্বাচন করুন:"
 
+msgid "Set"
+msgstr "সেট করুন"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"বইয়ের মেটাডেটা সেট করবেন?\n"
+"শিরোনাম: %1\n"
+"লেখক: %2"
+
 msgid "Settings"
 msgstr "সেটিংস"
 
@@ -1327,7 +1372,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "দ্রুত নোট নিন যা আপনার AI নোটে সংরক্ষিত হবে।"
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "টার্ম X-Ray"
 
@@ -1351,6 +1395,9 @@ msgstr "টেক্সট ক্লিপবোর্ডে কপি করা
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1-এর জন্য হ্যান্ডলার পাওয়া যায়নি। অনুগ্রহ করে নিশ্চিত করুন যে হ্যান্ডলারটি api_handlers ডিরেক্টরিতে আছে।"
+
+msgid "The model could not identify this book."
+msgstr "মডেলটি এই বইটি শনাক্ত করতে পারেনি।"
 
 msgid "Thinking ..."
 msgstr "ভাবছে ..."
@@ -1420,6 +1467,9 @@ msgstr "সময়রেখা"
 msgid "Title"
 msgstr "শিরোনাম"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "শিরোনাম বা লেখকের মেটাডেটা অনুপস্থিত বা অসম্পূর্ণ, তাই AI-এর ফলাফল নির্ভরযোগ্য নাও হতে পারে। প্রথমে Identify (AI) ব্যবহার করে তা সেট করুন।"
+
 msgid "To-Do / Action Items"
 msgstr "করণীয় / কর্মপদক্ষেপ"
 
@@ -1453,6 +1503,12 @@ msgstr "এখানে আপনার প্রশ্ন লিখুন..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "অজানা লেখক"
+
+msgid "Unknown Title"
+msgstr "অজানা শিরোনাম"
 
 msgid "Unknown error"
 msgstr "অজানা ত্রুটি"
@@ -1586,6 +1642,3 @@ msgstr "যেমন: google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: ফেরত আসা ডেটা পার্স করা ব্যর্থ হয়েছে"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

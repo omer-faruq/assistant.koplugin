@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -94,10 +94,10 @@ msgstr "<b>Term X-Ray를 위해 책 컨텍스트를 분석하는 중...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
-"<b>이 책에 대해 질문하기:</b>\n"
-"%1 (지은이: %2)"
+"<b>이 책에 대해 질문하세요:</b>\n"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "AI 요약은 다음번에 오랫동안 읽지 않은 책을 열 때 활성화됩니다."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AI 요약"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"어시스턴트 플러그인 설정을 초기화하시겠습니까?\n"
-"이 작업은 어시스턴트 플러그인을 처음 설치했을 때의 상태로 되돌립니다.\n"
+"어시스턴트 플러그인 설정을 삭제하시겠습니까?\n"
+"이 작업은 어시스턴트 플러그인을 처음 설치했을 때의 상태로 초기화합니다.\n"
 "\n"
-"configuration.lua는 안전하며 설정만 초기화됩니다."
+"configuration.lua는 안전하며, 설정만 삭제됩니다."
 
 msgid "Ask"
 msgstr "질문하기"
@@ -403,6 +402,9 @@ msgstr "무엇이든 물어보세요..."
 
 msgid "Ask the AI a question"
 msgstr "AI에게 질문하기"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "AI에게 열린 책의 첫 부분 텍스트를 바탕으로 책 제목과 저자를 식별하도록 요청합니다."
 
 msgid "Assistant settings are not available."
 msgstr "어시스턴트 설정을 사용할 수 없습니다."
@@ -463,6 +465,9 @@ msgstr "책 인사이트"
 
 msgid "Book Summary & Recs"
 msgstr "책 요약 및 추천"
+
+msgid "Book metadata updated."
+msgstr "책 메타데이터가 업데이트되었습니다."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "브랜치/태그 \"%1\"을(를) 찾을 수 없습니다."
@@ -540,6 +545,9 @@ msgstr "맥락 메모"
 msgid "Contextual Notes / Reflections"
 msgstr "맥락 메모 / 성찰"
 
+msgid "Continue"
+msgstr "계속"
+
 msgid "Contradictions / Open Questions"
 msgstr "모순 / 미해결 질문"
 
@@ -575,11 +583,17 @@ msgstr "AI 노트를 만들 수 없습니다."
 msgid "Could not create AI note: %1"
 msgstr "AI 노트를 만들 수 없습니다: %1"
 
+msgid "Could not extract text from this book."
+msgstr "이 책에서 텍스트를 추출할 수 없습니다."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "AI 노트 폴더의 목록을 나열할 수 없습니다: %1"
 
 msgid "Could not open AI note file."
 msgstr "AI 노트 파일을 열 수 없습니다."
+
+msgid "Could not parse the identification result."
+msgstr "식별 결과를 분석할 수 없습니다."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "공급자 %1을(를) 삭제하시겠습니까?"
+
+msgid "Description: %1"
+msgstr "설명: %1"
 
 msgid "Device"
 msgstr "기기"
@@ -816,12 +833,22 @@ msgstr "역사적 맥락"
 msgid "Historical and Cultural Context"
 msgstr "역사적·문화적 배경"
 
+msgid "Identify (AI)"
+msgstr "식별 (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "이 책 식별하기"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "실시간 웹 검색 결과로 응답 정확도를 향상시킵니다. \n"
 "참고: 더 많은 토큰 사용량과 추가 API 비용이 발생합니다."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "열린 책의 첫 부분 텍스트에서 제목과 저자를 추론하여 사용자 지정 메타데이터로 저장합니다."
 
 msgid "Integrated Summary"
 msgstr "통합 요약"
@@ -879,6 +906,9 @@ msgstr "마크다운 엔진"
 msgid "Meaning & Usage"
 msgstr "의미 및 용법"
 
+msgid "Metadata could not be saved."
+msgstr "메타데이터를 저장할 수 없습니다."
+
 msgid "Minimalist Mode"
 msgstr "미니멀 모드"
 
@@ -929,6 +959,9 @@ msgstr "활성 공급자가 구성되어 있지 않습니다. 설정에서 추�
 
 msgid "No base folder is available for AI Notes."
 msgstr "AI 노트에 사용할 기본 폴더가 없습니다."
+
+msgid "No book is open."
+msgstr "열려 있는 책이 없습니다."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "열려 있는 책이 없습니다. 파일 관리자에서 책을 길게 눌러 책 정보 (AI)를 선택하세요."
@@ -1239,6 +1272,18 @@ msgstr "AI 노트 선택"
 msgid "Select a model:"
 msgstr "모델 선택:"
 
+msgid "Set"
+msgstr "설정"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"책 메타데이터를 설정할까요?\n"
+"제목: %1\n"
+"저자: %2"
+
 msgid "Settings"
 msgstr "설정"
 
@@ -1326,7 +1371,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "AI 노트에 저장할 빠른 메모를 작성하세요."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "용어 X-Ray"
 
@@ -1350,6 +1394,9 @@ msgstr "텍스트가 클립보드에 복사되었습니다."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1에 대한 핸들러를 찾을 수 없습니다. api_handlers 디렉터리에 핸들러가 있는지 확인하세요."
+
+msgid "The model could not identify this book."
+msgstr "모델이 이 책을 식별할 수 없습니다."
 
 msgid "Thinking ..."
 msgstr "생각 중 ..."
@@ -1419,6 +1466,9 @@ msgstr "타임라인"
 msgid "Title"
 msgstr "제목"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "제목 또는 저자 메타데이터가 없거나 불완전하여 AI 결과가 부정확할 수 있습니다. 먼저 식별 (AI)을 사용하여 설정하세요."
+
 msgid "To-Do / Action Items"
 msgstr "할 일 / 실행 항목"
 
@@ -1452,6 +1502,12 @@ msgstr "여기에 질문을 입력하세요..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "알 수 없는 저자"
+
+msgid "Unknown Title"
+msgstr "알 수 없는 제목"
 
 msgid "Unknown error"
 msgstr "알 수 없는 오류"
@@ -1585,6 +1641,3 @@ msgstr "예: google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: 반환된 데이터를 파싱하지 못했습니다."
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

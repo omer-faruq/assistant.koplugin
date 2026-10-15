@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 04:01+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Interlingue (AI translation)\n"
@@ -94,10 +94,10 @@ msgstr "<b>Analisant contextu del libre por Term X-Ray...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
-"<b>Questionar pri ti libre:</b>\n"
-"%1 de %2"
+"<b>Posa un question pri ti-ci libre:</b>\n"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "IA-Recapitulation va esser activat li proxim vez quande un longmen ne-leet libre es apertet."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "IA-Recapitulationes"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Es tu cert que tu vole purgar li configurationes del plugin assistente? \n"
-"To reinitialisa li plugin assistente al statu del unesim vez que tu installat it.\n"
+"Esque tu es cert de purgar li parametres del plugin assistente?\n"
+"To reinitialisa li plugin assistente al state del unesim vez que tu installat it.\n"
 "\n"
-"configuration.lua es secur, solmen li configurationes es purgat."
+"configuration.lua es secur, solmen li parametres es purgat."
 
 msgid "Ask"
 msgstr "Questionar"
@@ -403,6 +402,9 @@ msgstr "Questionar alquicos..."
 
 msgid "Ask the AI a question"
 msgstr "Pose un question al AI"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "Questionar li IA por identicar li titul e li autor del libre apert per su text inicial."
 
 msgid "Assistant settings are not available."
 msgstr "Li parametres del assistente ne es disponibil."
@@ -463,6 +465,9 @@ msgstr "Perspicacias del libre"
 
 msgid "Book Summary & Recs"
 msgstr "Resume del libre & Recomendationes"
+
+msgid "Book metadata updated."
+msgstr "Li metadatas del libre esset actualisat."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Branche/Tag \"%1\" ne esset trovat."
@@ -540,6 +545,9 @@ msgstr "Contextual notes"
 msgid "Contextual Notes / Reflections"
 msgstr "Contextual notes / Reflectiones"
 
+msgid "Continue"
+msgstr "Continuar"
+
 msgid "Contradictions / Open Questions"
 msgstr "Contradictiones / Questiones apert"
 
@@ -575,11 +583,17 @@ msgstr "Ne posset crear un nota IA."
 msgid "Could not create AI note: %1"
 msgstr "Ne posset crear un nota IA: %1"
 
+msgid "Could not extract text from this book."
+msgstr "Ne posset extracter text de ti-ci libre."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "Ne posset listar li plica de Notas IA: %1"
 
 msgid "Could not open AI note file."
 msgstr "Ne posset aperter li file de nota IA."
+
+msgid "Could not parse the identification result."
+msgstr "Ne posset analysar li resultate del identification."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "Deleter fornitor %1?"
+
+msgid "Description: %1"
+msgstr "Descrition: %1"
 
 msgid "Device"
 msgstr "Aparate"
@@ -816,12 +833,22 @@ msgstr "Historic Contextu"
 msgid "Historical and Cultural Context"
 msgstr "Historic e cultural context"
 
+msgid "Identify (AI)"
+msgstr "Identicar (IA)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "Identicar ti-ci libre"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "Meliora li exactitá del response con resultates de web in real témpor. \n"
 "Nota: Un plu alt usage de tokens e additional custus de API aplica se."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "Deducer li titul e li autor del libre apert de su text inicial e salvar les quam personal metadatas."
 
 msgid "Integrated Summary"
 msgstr "Integrat resume"
@@ -880,6 +907,9 @@ msgstr "Motore de Markdown"
 msgid "Meaning & Usage"
 msgstr "Signification e usage"
 
+msgid "Metadata could not be saved."
+msgstr "Li metadatas ne posset esser salvat."
+
 msgid "Minimalist Mode"
 msgstr "Modus minimalistic"
 
@@ -930,6 +960,9 @@ msgstr "Necun provider activ es configurat. Ples adjunter un in Configuration."
 
 msgid "No base folder is available for AI Notes."
 msgstr "Null fólder de base es disponibil por Notas de IA."
+
+msgid "No book is open."
+msgstr "Null libre es apert."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Null libre es apertet. Long-presse un libre in li gerente de files e selecte Information pri li libre (IA)."
@@ -1239,6 +1272,18 @@ msgstr "Selecter Nota de IA"
 msgid "Select a model:"
 msgstr "Selecte un model:"
 
+msgid "Set"
+msgstr "Fixar"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"Fixar li metadatas del libre?\n"
+"Titul: %1\n"
+"Autor: %2"
+
 msgid "Settings"
 msgstr "Parametres"
 
@@ -1326,7 +1371,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Prender rapid notas quel va esser salvate in tui Notas de IA."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "Termin X-Ray"
 
@@ -1350,6 +1394,9 @@ msgstr "Texte copiat al clipboard"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Li handler por %1 ne esset trovat. Ples assecura que li handler existe in li directoria api_handlers."
+
+msgid "The model could not identify this book."
+msgstr "Li model ne posset identificar ti-ci libre."
 
 msgid "Thinking ..."
 msgstr "Pensa ..."
@@ -1419,6 +1466,9 @@ msgstr "Cronologie"
 msgid "Title"
 msgstr "Titul"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "Li metadatas de titul o autor manca o es íntelet, dunc li resultate del IA posse esser íncert. Usa Identicar (IA) por fixar les ante."
+
 msgid "To-Do / Action Items"
 msgstr "A far / Actiones"
 
@@ -1452,6 +1502,12 @@ msgstr "Scri tui question ci..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "Autor ínconosset"
+
+msgid "Unknown Title"
+msgstr "Titul ínconosset"
 
 msgid "Unknown error"
 msgstr "Errore neconosset"
@@ -1585,6 +1641,3 @@ msgstr "p. ex. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: fallette analisar li retornat data"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

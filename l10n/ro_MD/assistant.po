@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -94,10 +94,10 @@ msgstr "<b>Se analizează contextul cărții pentru Term X-Ray...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
 "<b>Pune o întrebare despre această carte:</b>\n"
-"%1 de %2"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "Rezumatul AI va fi activat data următoare când se deschide o carte necitită de mult timp."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "Rezumate AI"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Sigur doriți să ștergeți setările pluginului asistent? \n"
-"Aceasta resetează pluginul asistent la starea din momentul primei instalări.\n"
+"Sigur vrei să cureți setările pluginului asistent?\n"
+"Aceasta resetează pluginul asistent la starea de la prima instalare.\n"
 "\n"
-"configuration.lua rămâne intact, doar setările sunt șterse."
+"configuration.lua este în siguranță, doar setările sunt curățate."
 
 msgid "Ask"
 msgstr "Întreabă"
@@ -403,6 +402,9 @@ msgstr "Pune orice întrebare..."
 
 msgid "Ask the AI a question"
 msgstr "Pune o întrebare AI-ului"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "Cere IA să identifice titlul și autorul cărții deschise din textul ei de început."
 
 msgid "Assistant settings are not available."
 msgstr "Setările asistentului nu sunt disponibile."
@@ -463,6 +465,9 @@ msgstr "Perspective asupra cărții"
 
 msgid "Book Summary & Recs"
 msgstr "Rezumatul cărții și recomandări"
+
+msgid "Book metadata updated."
+msgstr "Metadatele cărții au fost actualizate."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Branch/Tag \"%1\" nu a fost găsit."
@@ -540,6 +545,9 @@ msgstr "Note contextuale"
 msgid "Contextual Notes / Reflections"
 msgstr "Note contextuale / Reflecții"
 
+msgid "Continue"
+msgstr "Continuă"
+
 msgid "Contradictions / Open Questions"
 msgstr "Contradicții / Întrebări deschise"
 
@@ -575,11 +583,17 @@ msgstr "Nu s-a putut crea nota AI."
 msgid "Could not create AI note: %1"
 msgstr "Nu s-a putut crea nota AI: %1"
 
+msgid "Could not extract text from this book."
+msgstr "Nu s-a putut extrage textul din această carte."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "Nu s-a putut lista folderul Note AI: %1"
 
 msgid "Could not open AI note file."
 msgstr "Nu s-a putut deschide fișierul notei AI."
+
+msgid "Could not parse the identification result."
+msgstr "Nu s-a putut interpreta rezultatul identificării."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "Ștergeți furnizorul %1?"
+
+msgid "Description: %1"
+msgstr "Descriere: %1"
 
 msgid "Device"
 msgstr "Dispozitiv"
@@ -816,12 +833,22 @@ msgstr "Context istoric"
 msgid "Historical and Cultural Context"
 msgstr "Context istoric și cultural"
 
+msgid "Identify (AI)"
+msgstr "Identifică (IA)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "Identifică această carte"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "Îmbunătățește acuratețea răspunsurilor cu rezultate web în timp real. \n"
 "Notă: Se aplică un consum mai mare de tokenuri și costuri API suplimentare."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "Deduce titlul și autorul cărții deschise din textul ei de început și salvează-le ca metadate personalizate."
 
 msgid "Integrated Summary"
 msgstr "Rezumat integrat"
@@ -881,6 +908,9 @@ msgstr "Motor Markdown"
 msgid "Meaning & Usage"
 msgstr "Sens și utilizare"
 
+msgid "Metadata could not be saved."
+msgstr "Metadatele nu au putut fi salvate."
+
 msgid "Minimalist Mode"
 msgstr "Mod minimalist"
 
@@ -931,6 +961,9 @@ msgstr "Niciun furnizor activ configurat. Vă rugăm să adăugați unul în Set
 
 msgid "No base folder is available for AI Notes."
 msgstr "Nu este disponibil niciun dosar de bază pentru notele AI."
+
+msgid "No book is open."
+msgstr "Nu este nicio carte deschisă."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nicio carte nu este deschisă. Apăsați lung pe o carte în managerul de fișiere și alegeți Informații carte (AI)."
@@ -1242,6 +1275,18 @@ msgstr "Selectați nota AI"
 msgid "Select a model:"
 msgstr "Selectați un model:"
 
+msgid "Set"
+msgstr "Setează"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"Setezi metadatele cărții?\n"
+"Titlu: %1\n"
+"Autor: %2"
+
 msgid "Settings"
 msgstr "Setări"
 
@@ -1329,7 +1374,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Luați notițe rapide care vor fi salvate în notele dvs. AI."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "X-Ray pentru termeni"
 
@@ -1353,6 +1397,9 @@ msgstr "Textul a fost copiat în clipboard"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handler-ul pentru %1 nu a fost găsit. Asigurați-vă că handler-ul există în directorul api_handlers."
+
+msgid "The model could not identify this book."
+msgstr "Modelul nu a putut identifica această carte."
 
 msgid "Thinking ..."
 msgstr "Se gândește ..."
@@ -1422,6 +1469,9 @@ msgstr "Cronologie"
 msgid "Title"
 msgstr "Titlu"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "Metadatele de titlu sau autor lipsesc ori sunt incomplete, așa că rezultatul IA poate fi nesigur. Folosește Identifică (IA) pentru a le seta mai întâi."
+
 msgid "To-Do / Action Items"
 msgstr "De făcut / Acțiuni"
 
@@ -1455,6 +1505,12 @@ msgstr "Scrie întrebarea ta aici..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "Autor necunoscut"
+
+msgid "Unknown Title"
+msgstr "Titlu necunoscut"
 
 msgid "Unknown error"
 msgstr "Eroare necunoscută"
@@ -1588,6 +1644,3 @@ msgstr "de ex. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: nu s-a reușit parsarea datelor returnate"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

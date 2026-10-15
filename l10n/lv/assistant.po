@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -94,10 +94,10 @@ msgstr "<b>Notiek grāmatas konteksta analīze Term X-Ray...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
-"<b>Uzdot jautājumu par šo grāmatu:</b>\n"
-"%1 — %2"
+"<b>Uzdodiet jautājumu par šo grāmatu:</b>\n"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "AI kopsavilkums tiks iespējots nākamajā reizē, kad tiks atvērta ilgi nelasīta grāmata."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AI kopsavilkumi"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Vai tiešām vēlaties notīrīt asistenta spraudņa iestatījumus? \n"
-"Tādējādi asistenta spraudnis tiks atiestatīts uz stāvokli, kāds tas bija, kad to pirmo reizi instalējāt.\n"
+"Vai tiešām notīrīt asistenta spraudņa iestatījumus?\n"
+"Tas atiestatīs asistenta spraudni uz stāvokli, kāds tas bija pēc pirmās instalēšanas.\n"
 "\n"
-"configuration.lua ir drošs, tiek notīrīti tikai iestatījumi."
+"configuration.lua ir drošībā, tiek notīrīti tikai iestatījumi."
 
 msgid "Ask"
 msgstr "Jautāt"
@@ -403,6 +402,9 @@ msgstr "Jautājiet jebko..."
 
 msgid "Ask the AI a question"
 msgstr "Uzdodiet AI jautājumu"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "Lūgt AI noteikt atvērtās grāmatas nosaukumu un autoru pēc tās sākuma teksta."
 
 msgid "Assistant settings are not available."
 msgstr "Asistenta iestatījumi nav pieejami."
@@ -463,6 +465,9 @@ msgstr "Grāmatas ieskati"
 
 msgid "Book Summary & Recs"
 msgstr "Grāmatas kopsavilkums un ieteikumi"
+
+msgid "Book metadata updated."
+msgstr "Grāmatas metadati atjaunināti."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Zars/birka \"%1\" netika atrasts."
@@ -540,6 +545,9 @@ msgstr "Konteksta piezīmes"
 msgid "Contextual Notes / Reflections"
 msgstr "Konteksta piezīmes / pārdomas"
 
+msgid "Continue"
+msgstr "Turpināt"
+
 msgid "Contradictions / Open Questions"
 msgstr "Pretrunas / atklātie jautājumi"
 
@@ -575,11 +583,17 @@ msgstr "Nevarēja izveidot AI piezīmi."
 msgid "Could not create AI note: %1"
 msgstr "Nevarēja izveidot AI piezīmi: %1"
 
+msgid "Could not extract text from this book."
+msgstr "Neizdevās izgūt tekstu no šīs grāmatas."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "Nevarēja nolasīt AI piezīmju mapes saturu: %1"
 
 msgid "Could not open AI note file."
 msgstr "Nevarēja atvērt AI piezīmes failu."
+
+msgid "Could not parse the identification result."
+msgstr "Neizdevās apstrādāt identificēšanas rezultātu."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "Dzēst pakalpojumu sniedzēju %1?"
+
+msgid "Description: %1"
+msgstr "Apraksts: %1"
 
 msgid "Device"
 msgstr "Ierīce"
@@ -816,12 +833,22 @@ msgstr "Vēsturiskais konteksts"
 msgid "Historical and Cultural Context"
 msgstr "Vēsturiskais un kultūras konteksts"
 
+msgid "Identify (AI)"
+msgstr "Identificēt (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "Identificēt šo grāmatu"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "Uzlabo atbilžu precizitāti, izmantojot reāllaika tīmekļa rezultātus. \n"
 "Piezīme: tiek piemērots lielāks tokenu patēriņš un papildu API maksas."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "Noteikt atvērtās grāmatas nosaukumu un autoru pēc tās sākuma teksta un saglabāt tos kā pielāgotus metadatus."
 
 msgid "Integrated Summary"
 msgstr "Integrēts kopsavilkums"
@@ -881,6 +908,9 @@ msgstr "Markdown dzinis"
 msgid "Meaning & Usage"
 msgstr "Nozīme un lietojums"
 
+msgid "Metadata could not be saved."
+msgstr "Neizdevās saglabāt metadatus."
+
 msgid "Minimalist Mode"
 msgstr "Minimālisma režīms"
 
@@ -931,6 +961,9 @@ msgstr "Nav konfigurēts neviens aktīvs pakalpojumu sniedzējs. Lūdzu, pievien
 
 msgid "No base folder is available for AI Notes."
 msgstr "AI piezīmēm nav pieejama bāzes mape."
+
+msgid "No book is open."
+msgstr "Nav atvērta neviena grāmata."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nav atvērta neviena grāmata. Failu pārvaldniekā ilgi piespiediet grāmatu un izvēlieties Grāmatas informācija (AI)."
@@ -1241,6 +1274,18 @@ msgstr "Izvēlēties AI piezīmi"
 msgid "Select a model:"
 msgstr "Izvēlieties modeli:"
 
+msgid "Set"
+msgstr "Iestatīt"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"Iestatīt grāmatas metadatus?\n"
+"Nosaukums: %1\n"
+"Autors: %2"
+
 msgid "Settings"
 msgstr "Iestatījumi"
 
@@ -1328,7 +1373,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Veiciet ātrās piezīmes, kas tiks saglabātas jūsu AI piezīmēs."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "Termina X-Ray"
 
@@ -1352,6 +1396,9 @@ msgstr "Teksts kopēts starpliktuvē"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Apstrādātājs %1 netika atrasts. Lūdzu, pārliecinieties, ka apstrādātājs atrodas api_handlers direktorijā."
+
+msgid "The model could not identify this book."
+msgstr "Modelis nevarēja identificēt šo grāmatu."
 
 msgid "Thinking ..."
 msgstr "Domā ..."
@@ -1421,6 +1468,9 @@ msgstr "Laika līnija"
 msgid "Title"
 msgstr "Virsraksts"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "Nosaukuma vai autora metadati trūkst vai ir nepilnīgi, tāpēc AI rezultāts var būt neuzticams. Vispirms izmantojiet \"Identificēt (AI)\", lai tos iestatītu."
+
 msgid "To-Do / Action Items"
 msgstr "Uzdevumi / rīcības punkti"
 
@@ -1454,6 +1504,12 @@ msgstr "Ierakstiet savu jautājumu šeit..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "Nezināms autors"
+
+msgid "Unknown Title"
+msgstr "Nezināms nosaukums"
 
 msgid "Unknown error"
 msgstr "Nezināma kļūda"
@@ -1587,6 +1643,3 @@ msgstr "piem., google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: neizdevās parsēt atgrieztos datus"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

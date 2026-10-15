@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Bahasa Indonesia (AI translation)\n"
@@ -94,10 +94,10 @@ msgstr "<b>Menganalisis konteks buku untuk Term X-Ray...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
 "<b>Ajukan pertanyaan tentang buku ini:</b>\n"
-"%1 oleh %2"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "Rekap AI akan diaktifkan saat buku yang lama tidak dibaca dibuka berikutnya."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "Rekap AI"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Yakin ingin membersihkan pengaturan plugin asisten? \n"
-"Ini akan mengembalikan plugin asisten ke status saat pertama kali Anda menginstalnya.\n"
+"Apakah Anda yakin ingin menghapus setelan plugin asisten?\n"
+"Ini mengembalikan plugin asisten ke status saat pertama kali Anda memasangnya.\n"
 "\n"
-"configuration.lua aman, hanya pengaturannya yang dibersihkan."
+"configuration.lua aman, hanya setelannya yang dihapus."
 
 msgid "Ask"
 msgstr "Tanya"
@@ -403,6 +402,9 @@ msgstr "Tanyakan apa saja..."
 
 msgid "Ask the AI a question"
 msgstr "Ajukan pertanyaan ke AI"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "Minta AI mengidentifikasi judul dan penulis buku yang sedang dibuka dari teks awalnya."
 
 msgid "Assistant settings are not available."
 msgstr "Pengaturan asisten tidak tersedia."
@@ -463,6 +465,9 @@ msgstr "Wawasan Buku"
 
 msgid "Book Summary & Recs"
 msgstr "Ringkasan Buku & Rekomendasi"
+
+msgid "Book metadata updated."
+msgstr "Metadata buku diperbarui."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Cabang/Tag \"%1\" tidak ditemukan."
@@ -540,6 +545,9 @@ msgstr "Catatan Kontekstual"
 msgid "Contextual Notes / Reflections"
 msgstr "Catatan Kontekstual / Refleksi"
 
+msgid "Continue"
+msgstr "Lanjutkan"
+
 msgid "Contradictions / Open Questions"
 msgstr "Kontradiksi / Pertanyaan Terbuka"
 
@@ -575,11 +583,17 @@ msgstr "Tidak dapat membuat catatan AI."
 msgid "Could not create AI note: %1"
 msgstr "Tidak dapat membuat catatan AI: %1"
 
+msgid "Could not extract text from this book."
+msgstr "Tidak dapat mengekstrak teks dari buku ini."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "Tidak dapat menampilkan isi folder Catatan AI: %1"
 
 msgid "Could not open AI note file."
 msgstr "Tidak dapat membuka berkas catatan AI."
+
+msgid "Could not parse the identification result."
+msgstr "Tidak dapat mengurai hasil identifikasi."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "Hapus penyedia %1?"
+
+msgid "Description: %1"
+msgstr "Deskripsi: %1"
 
 msgid "Device"
 msgstr "Perangkat"
@@ -816,12 +833,22 @@ msgstr "Konteks Sejarah"
 msgid "Historical and Cultural Context"
 msgstr "Konteks Sejarah dan Budaya"
 
+msgid "Identify (AI)"
+msgstr "Identifikasi (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "Identifikasi Buku Ini"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "Meningkatkan akurasi respons dengan hasil web real-time. \n"
 "Catatan: Penggunaan token lebih tinggi dan biaya API tambahan berlaku."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "Simpulkan judul dan penulis buku yang sedang dibuka dari teks awalnya, lalu simpan sebagai metadata khusus."
 
 msgid "Integrated Summary"
 msgstr "Ringkasan Terintegrasi"
@@ -879,6 +906,9 @@ msgstr "Mesin Markdown"
 msgid "Meaning & Usage"
 msgstr "Arti & Penggunaan"
 
+msgid "Metadata could not be saved."
+msgstr "Metadata tidak dapat disimpan."
+
 msgid "Minimalist Mode"
 msgstr "Mode Minimalis"
 
@@ -929,6 +959,9 @@ msgstr "Tidak ada penyedia aktif yang dikonfigurasi. Silakan tambahkan satu di P
 
 msgid "No base folder is available for AI Notes."
 msgstr "Tidak ada folder dasar yang tersedia untuk Catatan AI."
+
+msgid "No book is open."
+msgstr "Tidak ada buku yang terbuka."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Tidak ada buku yang terbuka. Tekan lama sebuah buku di pengelola berkas lalu pilih Info Buku (AI)."
@@ -1240,6 +1273,18 @@ msgstr "Pilih Catatan AI"
 msgid "Select a model:"
 msgstr "Pilih model:"
 
+msgid "Set"
+msgstr "Setel"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"Setel metadata buku?\n"
+"Judul: %1\n"
+"Penulis: %2"
+
 msgid "Settings"
 msgstr "Pengaturan"
 
@@ -1327,7 +1372,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Buat catatan cepat yang akan disimpan ke Catatan AI Anda."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
@@ -1351,6 +1395,9 @@ msgstr "Teks disalin ke papan klip"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handler untuk %1 tidak ditemukan. Pastikan handler tersebut ada di direktori api_handlers."
+
+msgid "The model could not identify this book."
+msgstr "Model tidak dapat mengidentifikasi buku ini."
 
 msgid "Thinking ..."
 msgstr "Sedang berpikir ..."
@@ -1420,6 +1467,9 @@ msgstr "Linimasa"
 msgid "Title"
 msgstr "Judul"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "Metadata judul atau penulis tidak ada atau tidak lengkap, sehingga hasil AI mungkin tidak dapat diandalkan. Gunakan Identifikasi (AI) untuk menyetelnya terlebih dahulu."
+
 msgid "To-Do / Action Items"
 msgstr "Tugas / Rencana Aksi"
 
@@ -1453,6 +1503,12 @@ msgstr "Ketik pertanyaan Anda di sini..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "Penulis Tidak Diketahui"
+
+msgid "Unknown Title"
+msgstr "Judul Tidak Diketahui"
 
 msgid "Unknown error"
 msgstr "Kesalahan tidak diketahui"
@@ -1586,6 +1642,3 @@ msgstr "mis. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: gagal mengurai data yang dikembalikan"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

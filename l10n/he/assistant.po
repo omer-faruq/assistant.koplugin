@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -94,10 +94,10 @@ msgstr "<b>מנתח את הקשר של הספר עבור Term X-Ray...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
-"<b>שאל שאלה על ספר זה:</b>\n"
-"%1 מאת %2"
+"<b>שאל שאלה על הספר הזה:</b>\n"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "תקציר AI יופעל בפעם הבאה שייפתח ספר שלא נקרא מזה זמן רב."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "תקצירי AI"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"האם אתה בטוח שברצונך למחוק את הגדרות תוסף העוזר? \n"
-"פעולה זו מאפסת את תוסף העוזר למצב שבו היה בהתקנה הראשונה.\n"
+"האם אתה בטוח שברצונך למחוק את הגדרות תוסף העוזר?\n"
+"פעולה זו מאפסת את תוסף העוזר למצבו בעת ההתקנה הראשונה.\n"
 "\n"
-"configuration.lua לא ייפגע, רק ההגדרות יימחקו."
+"הקובץ configuration.lua נשמר, ורק ההגדרות נמחקות."
 
 msgid "Ask"
 msgstr "שאל"
@@ -403,6 +402,9 @@ msgstr "שאל כל דבר..."
 
 msgid "Ask the AI a question"
 msgstr "שאל את ה-AI שאלה"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "בקשו מה-AI לזהות את שם הספר הפתוח ואת מחברו מתוך טקסט הפתיחה שלו."
 
 msgid "Assistant settings are not available."
 msgstr "הגדרות העוזר אינן זמינות."
@@ -463,6 +465,9 @@ msgstr "תובנות ספר"
 
 msgid "Book Summary & Recs"
 msgstr "סיכום ספר והמלצות"
+
+msgid "Book metadata updated."
+msgstr "מטא-נתוני הספר עודכנו."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "הענף/התג \"%1\" לא נמצא."
@@ -540,6 +545,9 @@ msgstr "הערות הקשר"
 msgid "Contextual Notes / Reflections"
 msgstr "הערות הקשר / הרהורים"
 
+msgid "Continue"
+msgstr "המשך"
+
 msgid "Contradictions / Open Questions"
 msgstr "סתירות / שאלות פתוחות"
 
@@ -575,11 +583,17 @@ msgstr "לא ניתן ליצור הערת AI."
 msgid "Could not create AI note: %1"
 msgstr "לא ניתן ליצור הערת AI: %1"
 
+msgid "Could not extract text from this book."
+msgstr "לא ניתן היה לחלץ טקסט מהספר הזה."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "לא ניתן להציג את תיקיית הערות ה-AI: %1"
 
 msgid "Could not open AI note file."
 msgstr "לא ניתן לפתוח את קובץ הערת ה-AI."
+
+msgid "Could not parse the identification result."
+msgstr "לא ניתן היה לפענח את תוצאת הזיהוי."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "למחוק את הספק %1?"
+
+msgid "Description: %1"
+msgstr "תיאור: %1"
 
 msgid "Device"
 msgstr "מכשיר"
@@ -816,12 +833,22 @@ msgstr "הקשר היסטורי"
 msgid "Historical and Cultural Context"
 msgstr "הקשר היסטורי ותרבותי"
 
+msgid "Identify (AI)"
+msgstr "זיהוי (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "זהה את הספר הזה"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "משפר את דיוק התשובות עם תוצאות אינטרנט בזמן אמת. \n"
 "הערה: צריכת טוקנים גבוהה יותר וחיובי API נוספים חלים."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "הסק את שם הספר הפתוח ואת מחברו מטקסט הפתיחה ושמור אותם כמטא-נתונים מותאמים אישית."
 
 msgid "Integrated Summary"
 msgstr "סיכום משולב"
@@ -882,6 +909,9 @@ msgstr "מנוע Markdown"
 msgid "Meaning & Usage"
 msgstr "משמעות ושימוש"
 
+msgid "Metadata could not be saved."
+msgstr "לא ניתן היה לשמור את המטא-נתונים."
+
 msgid "Minimalist Mode"
 msgstr "מצב מינימליסטי"
 
@@ -932,6 +962,9 @@ msgstr "לא הוגדר ספק פעיל. הוסף אחד בהגדרות."
 
 msgid "No base folder is available for AI Notes."
 msgstr "אין תיקיית בסיס זמינה עבור הערות AI."
+
+msgid "No book is open."
+msgstr "אין ספר פתוח."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "לא פתוח ספר כלשהו. לחצו לחיצה ארוכה על ספר במנהל הקבצים ובחרו בפרטי הספר (AI)."
@@ -1242,6 +1275,18 @@ msgstr "בחר הערת AI"
 msgid "Select a model:"
 msgstr "בחר מודל:"
 
+msgid "Set"
+msgstr "הגדר"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"להגדיר מטא-נתונים לספר?\n"
+"כותרת: %1\n"
+"מחבר: %2"
+
 msgid "Settings"
 msgstr "הגדרות"
 
@@ -1329,7 +1374,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "רשום הערות מהירות שיישמרו בהערות ה-AI שלך."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "X-Ray למונח"
 
@@ -1353,6 +1397,9 @@ msgstr "הטקסט הועתק ללוח הגזירים"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "המטפל עבור %1 לא נמצא. אנא ודא שהמטפל קיים בתיקיית api_handlers."
+
+msgid "The model could not identify this book."
+msgstr "המודל לא הצליח לזהות את הספר הזה."
 
 msgid "Thinking ..."
 msgstr "חושב ..."
@@ -1422,6 +1469,9 @@ msgstr "ציר זמן"
 msgid "Title"
 msgstr "כותרת"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "מטא-נתוני הכותרת או המחבר חסרים או חלקיים, ולכן תוצאת ה-AI עשויה להיות לא מהימנה. יש להשתמש ב\"זיהוי (AI)\" כדי להגדירם תחילה."
+
 msgid "To-Do / Action Items"
 msgstr "משימות / פעולות להמשך"
 
@@ -1455,6 +1505,12 @@ msgstr "הקלד את שאלתך כאן..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "מחבר לא ידוע"
+
+msgid "Unknown Title"
+msgstr "כותרת לא ידועה"
 
 msgid "Unknown error"
 msgstr "שגיאה לא ידועה"
@@ -1588,6 +1644,3 @@ msgstr "לדוגמה: google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: נכשל בניתוח הנתונים שהוחזרו"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

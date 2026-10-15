@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -94,10 +94,10 @@ msgstr "<b>Analizuojamas knygos kontekstas, skirtas Term X-Ray...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
 "<b>Užduokite klausimą apie šią knygą:</b>\n"
-"%1, parašė %2"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "AI suvestinė bus įjungta kitą kartą atidarius ilgai neskaitytą knygą."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AI suvestinės"
 
@@ -369,13 +368,13 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Ar tikrai norite išvalyti asistento įskiepio nustatymus? \n"
-"Tai atstatys asistento įskiepį į būseną, kokia buvo pirmą kartą jį įdiegus.\n"
+"Ar tikrai norite išvalyti asistento papildinio nustatymus?\n"
+"Taip asistento papildinys atstatomas į būseną, buvusią jį pirmą kartą įdiegus.\n"
 "\n"
 "configuration.lua yra saugus, išvalomi tik nustatymai."
 
@@ -403,6 +402,9 @@ msgstr "Klauskite ko tik norite..."
 
 msgid "Ask the AI a question"
 msgstr "Užduokite klausimą AI"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "Paprašyti AI atpažinti atidarytos knygos pavadinimą ir autorių iš jos pradinio teksto."
 
 msgid "Assistant settings are not available."
 msgstr "Asistento nustatymai neprieinami."
@@ -463,6 +465,9 @@ msgstr "Knygos įžvalgos"
 
 msgid "Book Summary & Recs"
 msgstr "Knygos santrauka ir rekomendacijos"
+
+msgid "Book metadata updated."
+msgstr "Knygos metaduomenys atnaujinti."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Šaka/Žyma \"%1\" nerasta."
@@ -540,6 +545,9 @@ msgstr "Kontekstinės pastabos"
 msgid "Contextual Notes / Reflections"
 msgstr "Kontekstinės pastabos / apmąstymai"
 
+msgid "Continue"
+msgstr "Tęsti"
+
 msgid "Contradictions / Open Questions"
 msgstr "Prieštaravimai / atviri klausimai"
 
@@ -575,11 +583,17 @@ msgstr "Nepavyko sukurti AI užrašo."
 msgid "Could not create AI note: %1"
 msgstr "Nepavyko sukurti AI užrašo: %1"
 
+msgid "Could not extract text from this book."
+msgstr "Nepavyko iš šios knygos išgauti teksto."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "Nepavyko išvardyti AI užrašų aplanko: %1"
 
 msgid "Could not open AI note file."
 msgstr "Nepavyko atidaryti AI užrašo failo."
+
+msgid "Could not parse the identification result."
+msgstr "Nepavyko apdoroti atpažinimo rezultato."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "Ištrinti teikėją %1?"
+
+msgid "Description: %1"
+msgstr "Aprašymas: %1"
 
 msgid "Device"
 msgstr "Įrenginys"
@@ -816,12 +833,22 @@ msgstr "Istorinis kontekstas"
 msgid "Historical and Cultural Context"
 msgstr "Istorinis ir kultūrinis kontekstas"
 
+msgid "Identify (AI)"
+msgstr "Atpažinti (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "Atpažinti šią knygą"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "Pagerina atsakymų tikslumą naudojant realaus laiko interneto rezultatus. \n"
 "Pastaba: taikomas didesnis tokenų suvartojimas ir papildomi API mokesčiai."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "Nustatyti atidarytos knygos pavadinimą ir autorių iš jos pradinio teksto bei išsaugoti juos kaip pasirinktinius metaduomenis."
 
 msgid "Integrated Summary"
 msgstr "Integruota santrauka"
@@ -881,6 +908,9 @@ msgstr "Markdown variklis"
 msgid "Meaning & Usage"
 msgstr "Reikšmė ir vartosena"
 
+msgid "Metadata could not be saved."
+msgstr "Nepavyko išsaugoti metaduomenų."
+
 msgid "Minimalist Mode"
 msgstr "Minimalistinis režimas"
 
@@ -931,6 +961,9 @@ msgstr "Nesukonfigūruotas aktyvus paslaugų teikėjas. Prašome pridėti jį nu
 
 msgid "No base folder is available for AI Notes."
 msgstr "Nėra prieinamo pagrindinio aplanko AI užrašams."
+
+msgid "No book is open."
+msgstr "Nėra atidarytos knygos."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nėra atidarytos knygos. Ilgai spauskite knygą failų tvarkyklėje ir pasirinkite „Knygos informacija (AI)“."
@@ -1241,6 +1274,18 @@ msgstr "Pasirinkti AI užrašą"
 msgid "Select a model:"
 msgstr "Pasirinkite modelį:"
 
+msgid "Set"
+msgstr "Nustatyti"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"Nustatyti knygos metaduomenis?\n"
+"Pavadinimas: %1\n"
+"Autorius: %2"
+
 msgid "Settings"
 msgstr "Nustatymai"
 
@@ -1328,7 +1373,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Užsirašykite greitus užrašus, kurie bus išsaugoti jūsų AI užrašuose."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "Termino X-Ray"
 
@@ -1352,6 +1396,9 @@ msgstr "Tekstas nukopijuotas į iškarpinę"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Tvarkyklė, skirta %1, nebuvo rasta. Įsitikinkite, kad tvarkyklė yra api_handlers kataloge."
+
+msgid "The model could not identify this book."
+msgstr "Modeliui nepavyko atpažinti šios knygos."
 
 msgid "Thinking ..."
 msgstr "Mąstoma ..."
@@ -1421,6 +1468,9 @@ msgstr "Laiko juosta"
 msgid "Title"
 msgstr "Pavadinimas"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "Trūksta pavadinimo ar autoriaus metaduomenų arba jie neišsamūs, todėl AI rezultatas gali būti nepatikimas. Pirmiausia naudokite „Atpažinti (AI)“, kad juos nustatytumėte."
+
 msgid "To-Do / Action Items"
 msgstr "Užduotys / veiksmų punktai"
 
@@ -1454,6 +1504,12 @@ msgstr "Įveskite klausimą čia..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "Nežinomas autorius"
+
+msgid "Unknown Title"
+msgstr "Nežinomas pavadinimas"
 
 msgid "Unknown error"
 msgstr "Nežinoma klaida"
@@ -1587,6 +1643,3 @@ msgstr "pvz. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: nepavyko išanalizuoti gautų duomenų"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -94,10 +94,10 @@ msgstr "<b>Анализиране на контекста на книгата з
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
-"<b>Задай въпрос за тази книга:</b>\n"
-"%1 от %2"
+"<b>Задайте въпрос за тази книга:</b>\n"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "AI резюмето ще бъде активирано при следващото отваряне на дълго нечетена книга."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AI резюмета"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Сигурни ли сте, че искате да изчистите настройките на приставката за асистент? \n"
-"Това връща приставката за асистент към състоянието, в което е била при първото ѝ инсталиране.\n"
+"Сигурни ли сте, че искате да изчистите настройките на приставката за асистента?\n"
+"Това връща приставката за асистента в състоянието от първото ѝ инсталиране.\n"
 "\n"
-"configuration.lua е безопасен, изчистват се само настройките."
+"configuration.lua е в безопасност, изчистват се само настройките."
 
 msgid "Ask"
 msgstr "Питай"
@@ -403,6 +402,9 @@ msgstr "Попитай каквото и да е..."
 
 msgid "Ask the AI a question"
 msgstr "Задайте въпрос на ИИ"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "Помолете AI да разпознае заглавието и автора на отворената книга от началния ѝ текст."
 
 msgid "Assistant settings are not available."
 msgstr "Настройките на асистента не са налични."
@@ -463,6 +465,9 @@ msgstr "Прозрения за книгата"
 
 msgid "Book Summary & Recs"
 msgstr "Резюме на книгата и препоръки"
+
+msgid "Book metadata updated."
+msgstr "Метаданните на книгата са обновени."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Клон/таг \"%1\" не беше намерен."
@@ -540,6 +545,9 @@ msgstr "Контекстуални бележки"
 msgid "Contextual Notes / Reflections"
 msgstr "Контекстуални бележки / Размисли"
 
+msgid "Continue"
+msgstr "Продължи"
+
 msgid "Contradictions / Open Questions"
 msgstr "Противоречия / Открити въпроси"
 
@@ -575,11 +583,17 @@ msgstr "AI бележка не можа да бъде създадена."
 msgid "Could not create AI note: %1"
 msgstr "AI бележка не можа да бъде създадена: %1"
 
+msgid "Could not extract text from this book."
+msgstr "Неуспешно извличане на текст от тази книга."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "Съдържанието на папката за AI бележки не можа да бъде изброено: %1"
 
 msgid "Could not open AI note file."
 msgstr "Файлът на AI бележката не можа да бъде отворен."
+
+msgid "Could not parse the identification result."
+msgstr "Резултатът от разпознаването не можа да бъде анализиран."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "Да се изтрие ли доставчикът %1?"
+
+msgid "Description: %1"
+msgstr "Описание: %1"
 
 msgid "Device"
 msgstr "Устройство"
@@ -816,12 +833,22 @@ msgstr "Исторически контекст"
 msgid "Historical and Cultural Context"
 msgstr "Исторически и културен контекст"
 
+msgid "Identify (AI)"
+msgstr "Разпознай (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "Разпознай тази книга"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "Подобрява точността на отговорите с резултати от интернет в реално време. \n"
 "Забележка: Прилагат се по-висок разход на токени и допълнителни такси за API."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "Определя заглавието и автора на отворената книга от началния ѝ текст и ги запазва като потребителски метаданни."
 
 msgid "Integrated Summary"
 msgstr "Интегрирано резюме"
@@ -880,6 +907,9 @@ msgstr "Двигател за Markdown"
 msgid "Meaning & Usage"
 msgstr "Значение и употреба"
 
+msgid "Metadata could not be saved."
+msgstr "Метаданните не можаха да бъдат запазени."
+
 msgid "Minimalist Mode"
 msgstr "Минималистичен режим"
 
@@ -930,6 +960,9 @@ msgstr "Няма конфигуриран активен доставчик. М�
 
 msgid "No base folder is available for AI Notes."
 msgstr "Няма налична основна папка за AI бележки."
+
+msgid "No book is open."
+msgstr "Няма отворена книга."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Няма отворена книга. Натиснете продължително върху книга във файловия мениджър и изберете Информация за книгата (AI)."
@@ -1241,6 +1274,18 @@ msgstr "Избор на AI бележка"
 msgid "Select a model:"
 msgstr "Изберете модел:"
 
+msgid "Set"
+msgstr "Задай"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"Да се зададат ли метаданните на книгата?\n"
+"Заглавие: %1\n"
+"Автор: %2"
+
 msgid "Settings"
 msgstr "Настройки"
 
@@ -1328,7 +1373,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Записвайте бързи бележки, които ще бъдат запазени в AI бележките ви."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "Термин X-Ray"
 
@@ -1352,6 +1396,9 @@ msgstr "Текстът е копиран в клипборда."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Обработчикът за %1 не беше намерен. Моля, уверете се, че обработчикът съществува в директорията api_handlers."
+
+msgid "The model could not identify this book."
+msgstr "Моделът не успя да разпознае тази книга."
 
 msgid "Thinking ..."
 msgstr "Мислене ..."
@@ -1421,6 +1468,9 @@ msgstr "Хронология"
 msgid "Title"
 msgstr "Заглавие"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "Метаданните за заглавие или автор липсват или са непълни, затова резултатът от AI може да е ненадежден. Използвайте „Разпознай (AI)“, за да ги зададете първо."
+
 msgid "To-Do / Action Items"
 msgstr "Задачи / Действия"
 
@@ -1454,6 +1504,12 @@ msgstr "Въведете въпроса си тук..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "Неизвестен автор"
+
+msgid "Unknown Title"
+msgstr "Неизвестно заглавие"
 
 msgid "Unknown error"
 msgstr "Неизвестна грешка"
@@ -1587,6 +1643,3 @@ msgstr "напр. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: неуспешно разчитане на върнатите данни"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

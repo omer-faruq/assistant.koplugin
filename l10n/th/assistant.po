@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 04:38+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ภาษาไทย (AI translation)\n"
@@ -94,10 +94,10 @@ msgstr "<b>กำลังวิเคราะห์บริบทของห
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
 "<b>ถามคำถามเกี่ยวกับหนังสือเล่มนี้:</b>\n"
-"%1 โดย %2"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "สรุปย้อนหลังด้วย AI จะเปิดใช้งานในครั้งถัดไปที่เปิดหนังสือที่ยังไม่ได้อ่านมาเป็นเวลานาน"
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "สรุปย้อนหลังด้วย AI"
 
@@ -369,13 +368,13 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"คุณแน่ใจหรือไม่ที่จะล้างการตั้งค่าของปลั๊กอินผู้ช่วย? \n"
-"การดำเนินการนี้จะรีเซ็ตปลั๊กอินผู้ช่วยกลับสู่สถานะเมื่อคุณติดตั้งครั้งแรก\n"
+"คุณแน่ใจหรือไม่ว่าต้องการล้างการตั้งค่าของปลั๊กอินผู้ช่วย?\n"
+"การดำเนินการนี้จะรีเซ็ตปลั๊กอินผู้ช่วยกลับไปสู่สถานะเมื่อคุณติดตั้งครั้งแรก\n"
 "\n"
 "configuration.lua ปลอดภัย มีเพียงการตั้งค่าเท่านั้นที่ถูกล้าง"
 
@@ -403,6 +402,9 @@ msgstr "ถามอะไรก็ได้..."
 
 msgid "Ask the AI a question"
 msgstr "ถามคำถามกับ AI"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "ให้ AI ระบุชื่อเรื่องและผู้แต่งของหนังสือที่เปิดอยู่จากข้อความช่วงต้น"
 
 msgid "Assistant settings are not available."
 msgstr "ไม่มีการตั้งค่าผู้ช่วย"
@@ -463,6 +465,9 @@ msgstr "ข้อมูลเชิงลึกของหนังสือ"
 
 msgid "Book Summary & Recs"
 msgstr "สรุปหนังสือและคำแนะนำ"
+
+msgid "Book metadata updated."
+msgstr "อัปเดตข้อมูลเมตาของหนังสือแล้ว"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ไม่พบ Branch/Tag \"%1\""
@@ -540,6 +545,9 @@ msgstr "บันทึกตามบริบท"
 msgid "Contextual Notes / Reflections"
 msgstr "บันทึกตามบริบท / ข้อสะท้อนคิด"
 
+msgid "Continue"
+msgstr "ดำเนินการต่อ"
+
 msgid "Contradictions / Open Questions"
 msgstr "ข้อขัดแย้ง / คำถามที่ยังค้าง"
 
@@ -575,11 +583,17 @@ msgstr "ไม่สามารถสร้างโน้ต AI"
 msgid "Could not create AI note: %1"
 msgstr "ไม่สามารถสร้างโน้ต AI: %1"
 
+msgid "Could not extract text from this book."
+msgstr "ไม่สามารถดึงข้อความจากหนังสือเล่มนี้ได้"
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "ไม่สามารถแสดงรายการในโฟลเดอร์โน้ต AI: %1"
 
 msgid "Could not open AI note file."
 msgstr "ไม่สามารถเปิดไฟล์โน้ต AI"
+
+msgid "Could not parse the identification result."
+msgstr "ไม่สามารถแยกวิเคราะห์ผลลัพธ์การระบุได้"
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "ลบผู้ให้บริการ %1 หรือไม่?"
+
+msgid "Description: %1"
+msgstr "คำอธิบาย: %1"
 
 msgid "Device"
 msgstr "อุปกรณ์"
@@ -816,12 +833,22 @@ msgstr "บริบททางประวัติศาสตร์"
 msgid "Historical and Cultural Context"
 msgstr "บริบททางประวัติศาสตร์และวัฒนธรรม"
 
+msgid "Identify (AI)"
+msgstr "ระบุ (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "ระบุหนังสือเล่มนี้"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "ช่วยเพิ่มความแม่นยำของคำตอบด้วยผลการค้นหาเว็บแบบเรียลไทม์ \n"
 "หมายเหตุ: มีการใช้ token มากขึ้นและมีค่าใช้จ่าย API เพิ่มเติม"
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "อนุมานชื่อเรื่องและผู้แต่งของหนังสือที่เปิดอยู่จากข้อความช่วงต้น แล้วบันทึกเป็นข้อมูลเมตากำหนดเอง"
 
 msgid "Integrated Summary"
 msgstr "สรุปแบบบูรณาการ"
@@ -879,6 +906,9 @@ msgstr "เอนจิน Markdown"
 msgid "Meaning & Usage"
 msgstr "ความหมายและการใช้งาน"
 
+msgid "Metadata could not be saved."
+msgstr "ไม่สามารถบันทึกข้อมูลเมตาได้"
+
 msgid "Minimalist Mode"
 msgstr "โหมดมินิมัล"
 
@@ -929,6 +959,9 @@ msgstr "ยังไม่ได้กำหนดค่าผู้ให้บ
 
 msgid "No base folder is available for AI Notes."
 msgstr "ไม่มีโฟลเดอร์หลักที่ใช้ได้สำหรับโน้ต AI"
+
+msgid "No book is open."
+msgstr "ไม่มีหนังสือที่เปิดอยู่"
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "ไม่มีหนังสือที่เปิดอยู่ กดค้างที่หนังสือในตัวจัดการไฟล์ แล้วเลือก ข้อมูลหนังสือ (AI)"
@@ -1240,6 +1273,18 @@ msgstr "เลือกโน้ต AI"
 msgid "Select a model:"
 msgstr "เลือกโมเดล:"
 
+msgid "Set"
+msgstr "ตั้งค่า"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"ตั้งค่าข้อมูลเมตาของหนังสือหรือไม่\n"
+"ชื่อเรื่อง: %1\n"
+"ผู้แต่ง: %2"
+
 msgid "Settings"
 msgstr "การตั้งค่า"
 
@@ -1327,7 +1372,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "จดบันทึกด่วนที่จะบันทึกไปยังโน้ต AI ของคุณ"
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
@@ -1351,6 +1395,9 @@ msgstr "คัดลอกข้อความไปยังคลิปบอ
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "ไม่พบ Handler สำหรับ %1 กรุณาตรวจสอบให้แน่ใจว่า Handler มีอยู่ในไดเรกทอรี api_handlers"
+
+msgid "The model could not identify this book."
+msgstr "โมเดลไม่สามารถระบุหนังสือเล่มนี้ได้"
 
 msgid "Thinking ..."
 msgstr "กำลังคิด ..."
@@ -1420,6 +1467,9 @@ msgstr "ไทม์ไลน์"
 msgid "Title"
 msgstr "ชื่อเรื่อง"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "ข้อมูลเมตาของชื่อเรื่องหรือผู้แต่งขาดหายหรือไม่สมบูรณ์ ผลลัพธ์จาก AI อาจไม่น่าเชื่อถือ ใช้ ระบุ (AI) เพื่อตั้งค่าก่อน"
+
 msgid "To-Do / Action Items"
 msgstr "สิ่งที่ต้องทำ / รายการปฏิบัติ"
 
@@ -1453,6 +1503,12 @@ msgstr "พิมพ์คำถามของคุณที่นี่..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "ไม่ทราบผู้แต่ง"
+
+msgid "Unknown Title"
+msgstr "ไม่ทราบชื่อเรื่อง"
 
 msgid "Unknown error"
 msgstr "ข้อผิดพลาดที่ไม่ทราบสาเหตุ"
@@ -1586,6 +1642,3 @@ msgstr "เช่น google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: ไม่สามารถแยกวิเคราะห์ข้อมูลที่ส่งกลับมา"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

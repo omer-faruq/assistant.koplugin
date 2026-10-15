@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 03:58+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ქართული (AI translation)\n"
@@ -94,10 +94,10 @@ msgstr "<b>მიმდინარეობს წიგნის კონტ�
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
-"<b>დასვით კითხვა ამ წიგნზე:</b>\n"
-"%1, ავტორი: %2"
+"<b>დასვით კითხვა ამ წიგნის შესახებ:</b>\n"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "AI მიმოხილვა ჩაირთვება შემდეგ ჯერზე, როცა დიდი ხნის წაუკითხავი წიგნი გაიხსნება."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AI მიმოხილვები"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"დარწმუნებული ხართ, რომ გსურთ ასისტენტის პლაგინის პარამეტრების გასუფთავება? \n"
-"ეს ასისტენტის პლაგინს დააბრუნებს იმ მდგომარეობაში, რომელშიც პირველად დააყენეთ.\n"
+"დარწმუნებული ხართ, რომ გსურთ ასისტენტის დანამატის პარამეტრების გასუფთავება?\n"
+"ეს აბრუნებს ასისტენტის დანამატს იმ მდგომარეობაში, როგორიც იყო მისი პირველად დაყენებისას.\n"
 "\n"
-"configuration.lua უსაფრთხოა, მხოლოდ პარამეტრები იწმინდება."
+"configuration.lua უსაფრთხოა, მხოლოდ პარამეტრები იშლება."
 
 msgid "Ask"
 msgstr "კითხვა"
@@ -403,6 +402,9 @@ msgstr "დასვით ნებისმიერი კითხვა..."
 
 msgid "Ask the AI a question"
 msgstr "დაუსვით შეკითხვა AI-ს"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "სთხოვეთ AI-ს, გახსნილი წიგნის შესავალი ტექსტიდან დაადგინოს მისი სათაური და ავტორი."
 
 msgid "Assistant settings are not available."
 msgstr "ასისტენტის პარამეტრები ხელმისაწვდომი არ არის."
@@ -463,6 +465,9 @@ msgstr "წიგნის ანალიზი"
 
 msgid "Book Summary & Recs"
 msgstr "წიგნის შეჯამება და რეკომენდაციები"
+
+msgid "Book metadata updated."
+msgstr "წიგნის მეტამონაცემები განახლდა."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ბრანჩი/ტეგი \"%1\" ვერ მოიძებნა."
@@ -540,6 +545,9 @@ msgstr "კონტექსტური შენიშვნები"
 msgid "Contextual Notes / Reflections"
 msgstr "კონტექსტური შენიშვნები / რეფლექსიები"
 
+msgid "Continue"
+msgstr "გაგრძელება"
+
 msgid "Contradictions / Open Questions"
 msgstr "წინააღმდეგობები / ღია კითხვები"
 
@@ -575,11 +583,17 @@ msgstr "AI შენიშვნის შექმნა ვერ მოხე
 msgid "Could not create AI note: %1"
 msgstr "AI შენიშვნის შექმნა ვერ მოხერხდა: %1"
 
+msgid "Could not extract text from this book."
+msgstr "ამ წიგნიდან ტექსტის ამოღება ვერ მოხერხდა."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "AI შენიშვნების საქაღალდის შიგთავსის ჩამოთვლა ვერ მოხერხდა: %1"
 
 msgid "Could not open AI note file."
 msgstr "AI შენიშვნის ფაილის გახსნა ვერ მოხერხდა."
+
+msgid "Could not parse the identification result."
+msgstr "იდენტიფიკაციის შედეგის დამუშავება ვერ მოხერხდა."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "წავშალოთ პროვაიდერი %1?"
+
+msgid "Description: %1"
+msgstr "აღწერა: %1"
 
 msgid "Device"
 msgstr "მოწყობილობა"
@@ -816,12 +833,22 @@ msgstr "ისტორიული კონტექსტი"
 msgid "Historical and Cultural Context"
 msgstr "ისტორიული და კულტურული კონტექსტი"
 
+msgid "Identify (AI)"
+msgstr "იდენტიფიცირება (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "ამ წიგნის იდენტიფიცირება"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "აუმჯობესებს პასუხების სიზუსტეს რეალურ დროში ვებ-შედეგებით. \n"
 "შენიშვნა: მეტი ტოკენის გამოყენება და დამატებითი API გადასახადი მოქმედებს."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "გახსნილი წიგნის შესავალი ტექსტიდან დაადგინეთ სათაური და ავტორი და შეინახეთ ისინი როგორც მორგებული მეტამონაცემები."
 
 msgid "Integrated Summary"
 msgstr "ინტეგრირებული შეჯამება"
@@ -880,6 +907,9 @@ msgstr "Markdown ძრავა"
 msgid "Meaning & Usage"
 msgstr "მნიშვნელობა და გამოყენება"
 
+msgid "Metadata could not be saved."
+msgstr "მეტამონაცემების შენახვა ვერ მოხერხდა."
+
 msgid "Minimalist Mode"
 msgstr "მინიმალისტური რეჟიმი"
 
@@ -930,6 +960,9 @@ msgstr "აქტიური პროვაიდერი არ არის
 
 msgid "No base folder is available for AI Notes."
 msgstr "AI შენიშვნებისთვის საბაზისო საქაღალდე არ არის ხელმისაწვდომი."
+
+msgid "No book is open."
+msgstr "წიგნი გახსნილი არ არის."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "წიგნი არ არის გახსნილი. ფაილების მენეჯერში წიგნს ხანგრძლივად დააჭირეთ და აირჩიეთ წიგნის ინფორმაცია (AI)."
@@ -1241,6 +1274,18 @@ msgstr "აირჩიეთ AI შენიშვნა"
 msgid "Select a model:"
 msgstr "აირჩიეთ მოდელი:"
 
+msgid "Set"
+msgstr "დაყენება"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"დავაყენოთ წიგნის მეტამონაცემები?\n"
+"სათაური: %1\n"
+"ავტორი: %2"
+
 msgid "Settings"
 msgstr "პარამეტრები"
 
@@ -1328,7 +1373,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "გააკეთეთ სწრაფი შენიშვნები, რომლებიც შეინახება თქვენს AI შენიშვნებში."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "ტერმინის X-Ray"
 
@@ -1352,6 +1396,9 @@ msgstr "ტექსტი დაკოპირდა ბუფერში"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "დამმუშავებელი %1-ისთვის ვერ მოიძებნა. გთხოვთ, დარწმუნდით, რომ დამმუშავებელი არსებობს api_handlers დირექტორიაში."
+
+msgid "The model could not identify this book."
+msgstr "მოდელმა ეს წიგნი ვერ იდენტიფიცირა."
 
 msgid "Thinking ..."
 msgstr "ფიქრობს ..."
@@ -1421,6 +1468,9 @@ msgstr "ქრონოლოგია"
 msgid "Title"
 msgstr "სათაური"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "სათაურის ან ავტორის მეტამონაცემები აკლია ან არასრულია, ამიტომ AI-ის შედეგი შესაძლოა არასანდო იყოს. ჯერ გამოიყენეთ „იდენტიფიცირება (AI)“, რომ დააყენოთ ისინი."
+
 msgid "To-Do / Action Items"
 msgstr "ამოცანები / სამოქმედო პუნქტები"
 
@@ -1454,6 +1504,12 @@ msgstr "აკრიფეთ თქვენი კითხვა აქ..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "უცნობი ავტორი"
+
+msgid "Unknown Title"
+msgstr "უცნობი სათაური"
 
 msgid "Unknown error"
 msgstr "უცნობი შეცდომა"
@@ -1587,6 +1643,3 @@ msgstr "მაგალითად, google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: დაბრუნებული მონაცემების გარჩევა ვერ მოხერხდა"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

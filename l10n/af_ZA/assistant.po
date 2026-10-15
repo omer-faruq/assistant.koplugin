@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 02:46+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Afrikaans (AI translation)\n"
@@ -94,10 +94,10 @@ msgstr "<b>Ontleed boekkonteks vir Term X-Ray...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
 "<b>Vra 'n vraag oor hierdie boek:</b>\n"
-"%1 deur %2"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "AI-opsomming sal die volgende keer wat 'n lang ongeleesde boek oopgemaak word, geaktiveer word."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AI-opsommings"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Is jy seker jy wil die assistent-inpropinstellings uitwis? \n"
-"Dit stel die assistent-inprop terug na die status toe jy dit die eerste keer geïnstalleer het.\n"
+"Is jy seker jy wil die instellings van die assistent-inprop uitvee?\n"
+"Dit herstel die assistent-inprop na die toestand toe jy dit die eerste keer geïnstalleer het.\n"
 "\n"
-"configuration.lua is veilig, slegs die instellings word uitgewis."
+"configuration.lua is veilig; slegs die instellings word uitgevee."
 
 msgid "Ask"
 msgstr "Vra"
@@ -403,6 +402,9 @@ msgstr "Vra enigiets..."
 
 msgid "Ask the AI a question"
 msgstr "Vra die AI 'n vraag"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "Vra die KI om die oop boek se titel en outeur uit sy aanvangsteks te identifiseer."
 
 msgid "Assistant settings are not available."
 msgstr "Assistent-instellings is nie beskikbaar nie."
@@ -463,6 +465,9 @@ msgstr "Boek-insigte"
 
 msgid "Book Summary & Recs"
 msgstr "Boekopsomming en aanbevelings"
+
+msgid "Book metadata updated."
+msgstr "Boekmetadata opgedateer."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Tak/Tag \"%1\" is nie gevind nie."
@@ -540,6 +545,9 @@ msgstr "Kontekstuele notas"
 msgid "Contextual Notes / Reflections"
 msgstr "Kontekstuele notas / Refleksies"
 
+msgid "Continue"
+msgstr "Gaan voort"
+
 msgid "Contradictions / Open Questions"
 msgstr "Teenstrydighede / Oop vrae"
 
@@ -575,11 +583,17 @@ msgstr "Kon nie KI-nota skep nie."
 msgid "Could not create AI note: %1"
 msgstr "Kon nie KI-nota skep nie: %1"
 
+msgid "Could not extract text from this book."
+msgstr "Kon nie teks uit hierdie boek onttrek nie."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "Kon nie KI-notas-gids lys nie: %1"
 
 msgid "Could not open AI note file."
 msgstr "Kon nie KI-notalêer oopmaak nie."
+
+msgid "Could not parse the identification result."
+msgstr "Kon nie die identifikasieresultaat ontleed nie."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "Verskaffer %1 verwyder?"
+
+msgid "Description: %1"
+msgstr "Beskrywing: %1"
 
 msgid "Device"
 msgstr "Toestel"
@@ -816,12 +833,22 @@ msgstr "Historiese konteks"
 msgid "Historical and Cultural Context"
 msgstr "Historiese en kulturele konteks"
 
+msgid "Identify (AI)"
+msgstr "Identifiseer (KI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "Identifiseer hierdie boek"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "Verbeter antwoordakkuraatheid met intydse webresultate. \n"
 "Let wel: Hoër token-gebruik en bykomende API-koste is van toepassing."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "Lei die oop boek se titel en outeur uit sy aanvangsteks af en stoor dit as pasgemaakte metadata."
 
 msgid "Integrated Summary"
 msgstr "Geïntegreerde opsomming"
@@ -880,6 +907,9 @@ msgstr "Markdown-enjin"
 msgid "Meaning & Usage"
 msgstr "Betekenis en gebruik"
 
+msgid "Metadata could not be saved."
+msgstr "Metadata kon nie gestoor word nie."
+
 msgid "Minimalist Mode"
 msgstr "Minimalistiese modus"
 
@@ -930,6 +960,9 @@ msgstr "Geen aktiewe verskaffer gekonfigureer nie. Voeg asseblief een by in Inst
 
 msgid "No base folder is available for AI Notes."
 msgstr "Geen basislêergids is vir KI-notas beskikbaar nie."
+
+msgid "No book is open."
+msgstr "Geen boek is oop nie."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Geen boek is oop nie. Druk lank op 'n boek in die lêerbestuurder en kies Boekinligting (AI)."
@@ -1241,6 +1274,18 @@ msgstr "Kies KI-nota"
 msgid "Select a model:"
 msgstr "Kies 'n model:"
 
+msgid "Set"
+msgstr "Stel"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"Stel boekmetadata?\n"
+"Titel: %1\n"
+"Outeur: %2"
+
 msgid "Settings"
 msgstr "Instellings"
 
@@ -1328,7 +1373,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Maak vinnige notas wat in jou KI-notas gestoor sal word."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
@@ -1352,6 +1396,9 @@ msgstr "Teks na die knipbord gekopieer"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Die hanteerder vir %1 is nie gevind nie. Maak asseblief seker dat die hanteerder in die api_handlers-gids bestaan."
+
+msgid "The model could not identify this book."
+msgstr "Die model kon nie hierdie boek identifiseer nie."
 
 msgid "Thinking ..."
 msgstr "Dink ..."
@@ -1421,6 +1468,9 @@ msgstr "Tydlyn"
 msgid "Title"
 msgstr "Titel"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "Titel- of outeursmetadata ontbreek of is onvolledig, dus die KI-resultaat kan onbetroubaar wees. Gebruik Identifiseer (KI) om dit eers te stel."
+
 msgid "To-Do / Action Items"
 msgstr "Doenlys / Aksiepunte"
 
@@ -1454,6 +1504,12 @@ msgstr "Tik jou vraag hier..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "Onbekende outeur"
+
+msgid "Unknown Title"
+msgstr "Onbekende titel"
 
 msgid "Unknown error"
 msgstr "Onbekende fout"
@@ -1587,6 +1643,3 @@ msgstr "bv. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: kon nie teruggekeerde data ontleed nie"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

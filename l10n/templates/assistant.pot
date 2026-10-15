@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.21\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:32+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,143 +44,10 @@ msgstr ""
 msgid "<b>Testing connection...</b>"
 msgstr ""
 
-msgid "AI Notes"
-msgstr ""
-
-msgid "AI Notes: %1"
-msgstr ""
-
-msgid "Cancel"
-msgstr ""
-
-msgid ""
-"<b>%1:</b> %2\n"
-"\n"
-"Add this button to the Highlight Menu?"
-msgstr ""
-
-msgid "Add"
-msgstr ""
-
-msgid "Select AI Note"
-msgstr ""
-
-msgid "Ask"
-msgstr ""
-
-msgid "Enter a question before proceeding."
-msgstr ""
-
-msgid "Ask a question about the highlighted text"
-msgstr ""
-
-msgid ""
-"<b>Ask a question about this book:</b>\n"
-"%1 by %2"
-msgstr ""
-
-msgid "Ask a general question"
-msgstr ""
-
-msgid "Type your question here..."
-msgstr ""
-
-msgid "Ask anything about this book..."
-msgstr ""
-
-msgid "Ask anything..."
-msgstr ""
-
-msgid "Web Search"
-msgstr ""
-
-msgid "Copy to Clipboard"
-msgstr ""
-
-msgid "Attach Prior Text"
-msgstr ""
-
-msgid "Current Chapter Only"
-msgstr ""
-
-msgid "<b>Error:</b> No response received"
-msgstr ""
-
-msgid "No active provider configured. Please add one in Settings."
-msgstr ""
-
-msgid "AI Dictionary"
-msgstr ""
-
-msgid "Enter a word to look up..."
-msgstr ""
-
-msgid "Look Up"
-msgstr ""
-
-msgid "<b>Analyzing book context for Term X-Ray...</b>"
-msgstr ""
-
-#. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
-msgid "Term X-Ray"
-msgstr ""
-
-msgid "Dictionary"
-msgstr ""
-
-msgid "No word to add"
-msgstr ""
-
-msgid "Added to vocabulary builder"
-msgstr ""
-
-#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
-msgid "Vocabulary Builder"
-msgstr ""
-
-msgid "Saves the word to the vocabulary builder"
-msgstr ""
-
-msgid "Page"
-msgstr ""
-
 msgid "None"
 msgstr ""
 
 msgid "Model Built-In"
-msgstr ""
-
-msgid "Custom Prompt"
-msgstr ""
-
-#. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
-msgid "Recap"
-msgstr ""
-
-msgid "X-Ray"
-msgstr ""
-
-#. @translators book_info section headers and sub-fields
-msgid "Book Information"
-msgstr ""
-
-msgid "Highlight & Note Analysis"
-msgstr ""
-
-msgid "Summary Using Highlights & Notes"
-msgstr ""
-
-msgid "<b>Unknown feature type:</b> %1"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "Author"
-msgstr ""
-
-msgid "Reading progress"
 msgstr ""
 
 #. @translators Button text: translates the book description with AI. Keep it short.
@@ -191,6 +58,12 @@ msgid "Translates the book description with AI."
 msgstr ""
 
 msgid "Configuration not found. Please set up configuration.lua first."
+msgstr ""
+
+msgid "Unknown Title"
+msgstr ""
+
+msgid "Unknown Author"
 msgstr ""
 
 #. @translators Prompt offering a "Recap" (a brief spoiler-free summary of what was already read, to refresh memory after a break). %1 is the book title, %2 is the author.
@@ -211,178 +84,27 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-msgid "Models: %1 (matched)"
+#, lua-format
+msgid "Remove [%s] from Highlight Menu?"
 msgstr ""
 
-msgid "Models: %1"
+msgid "Remove"
 msgstr ""
 
-msgid " - p. %1/%2"
+msgid "Added <b>[%1 (AI)]</b>"
 msgstr ""
 
-msgid "Model: %1"
+msgid "Removed <b>[%1 (AI)]</b>"
 msgstr ""
 
-msgid "Search"
+msgid "Wikipedia"
 msgstr ""
 
-#. @translators Button text: means custom input, keep translation short
-msgid "Custom"
+#. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
+msgid "Term X-Ray"
 msgstr ""
 
-msgid "Reset"
-msgstr ""
-
-msgid "Test"
-msgstr ""
-
-msgid "OK"
-msgstr ""
-
-msgid "Filter: \"%1\""
-msgstr ""
-
-msgid "Select a model:"
-msgstr ""
-
-msgid "Search Models"
-msgstr ""
-
-msgid "Model reset: %1"
-msgstr ""
-
-msgid "No models matching \"%1\"."
-msgstr ""
-
-msgid "Enter Model ID"
-msgstr ""
-
-msgid "e.g. google/gemini-3.0-flash-exp:free"
-msgstr ""
-
-msgid "fetchJSON: failed to parse returned data"
-msgstr ""
-
-msgid "Configured AI Notes folder is not accessible: %1"
-msgstr ""
-
-msgid "No base folder is available for AI Notes."
-msgstr ""
-
-msgid "AI Notes path is not a directory: %1"
-msgstr ""
-
-msgid "Could not create AI Notes folder: %1"
-msgstr ""
-
-msgid "Could not list AI Notes folder: %1"
-msgstr ""
-
-msgid "No path is available for the default AI note."
-msgstr ""
-
-msgid "Assistant settings are not available."
-msgstr ""
-
-msgid "Invalid AI note entry."
-msgstr ""
-
-msgid "Invalid AI note filename."
-msgstr ""
-
-msgid "AI note name must be text."
-msgstr ""
-
-msgid "AI note name cannot be empty."
-msgstr ""
-
-msgid "AI note name cannot contain path separators."
-msgstr ""
-
-msgid "AI note name cannot contain '..'."
-msgstr ""
-
-msgid "AI note name contains characters that are not supported by the filesystem."
-msgstr ""
-
-msgid "AI note name cannot end with a space or dot."
-msgstr ""
-
-msgid "AI note name is reserved by the filesystem."
-msgstr ""
-
-msgid "Reader settings are not available."
-msgstr ""
-
-msgid ""
-"<b>Cannot access default folder for logs: %1</b>\n"
-"Using original location."
-msgstr ""
-
-msgid "AI note path is not a file: %1"
-msgstr ""
-
-msgid "Could not create AI note: %1"
-msgstr ""
-
-msgid "AI note path is unavailable."
-msgstr ""
-
-msgid "Could not open AI note file."
-msgstr ""
-
-msgid "Could not write AI note file."
-msgstr ""
-
-msgid "Could not close AI note file."
-msgstr ""
-
-msgid ""
-"Could not save to the selected AI note.\n"
-"Saved to: %1"
-msgstr ""
-
-msgid "AI Notes save failed. Continuing..."
-msgstr ""
-
-msgid "New AI Note"
-msgstr ""
-
-msgid "AI Note Name"
-msgstr ""
-
-msgid "Create an AI note."
-msgstr ""
-
-msgid "Create"
-msgstr ""
-
-msgid "Could not create AI note."
-msgstr ""
-
-msgid "Could not select AI note."
-msgstr ""
-
-msgid "No AI notes yet"
-msgstr ""
-
-msgid "New AI Note..."
-msgstr ""
-
-msgid "Active: %1"
-msgstr ""
-
-msgid ""
-"This file is %2:\n"
-"\n"
-"%1\n"
-"\n"
-"Are you sure you want to open it?\n"
-"\n"
-"Opening big files may take some time."
-msgstr ""
-
-msgid "Open"
+msgid "Dictionary"
 msgstr ""
 
 msgid "Meaning & Usage"
@@ -521,7 +243,7 @@ msgstr ""
 msgid "Cultural Significance"
 msgstr ""
 
-msgid "Wikipedia"
+msgid "Ask the AI to identify the open book's title and author from its opening text."
 msgstr ""
 
 msgid "This prompt generates a comprehensive Wikipedia-style article based on the highlighted text, ensuring factual accuracy and neutrality."
@@ -563,6 +285,10 @@ msgid "Prevailing emotional state/tone:"
 msgstr ""
 
 msgid "Outstanding questions:"
+msgstr ""
+
+#. @translators book_info section headers and sub-fields
+msgid "Book Information"
 msgstr ""
 
 msgid "Genre"
@@ -612,27 +338,6 @@ msgstr ""
 msgid "Contradictions / Open Questions"
 msgstr ""
 
-msgid "Providers and Models"
-msgstr ""
-
-msgid "Close"
-msgstr ""
-
-msgid "Browse Models"
-msgstr ""
-
-msgid "Browse available models from the current provider"
-msgstr ""
-
-msgid "Reasoning Option"
-msgstr ""
-
-msgid "Edit"
-msgstr ""
-
-msgid "No models available."
-msgstr ""
-
 msgid "OpenAI-compatible Chat Completions API"
 msgstr ""
 
@@ -667,6 +372,9 @@ msgid "Protocol: %1"
 msgstr ""
 
 msgid "URL: %1"
+msgstr ""
+
+msgid "Model: %1"
 msgstr ""
 
 msgid "<b>Request</b> - POST %1"
@@ -729,6 +437,15 @@ msgstr ""
 msgid "No common parameters are available for handler %1."
 msgstr ""
 
+msgid "Cancel"
+msgstr ""
+
+msgid "Test"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
 msgid ""
 "Generally do <b>NOT</b> select more than one - pick a parameter that matches your model and platform. A wrong parameter may cause API errors. \n"
 "\n"
@@ -745,6 +462,12 @@ msgid "Add %1 Provider"
 msgstr ""
 
 msgid "Base URL, e.g. https://example.com/v1"
+msgstr ""
+
+msgid "Browse Models"
+msgstr ""
+
+msgid "No models available."
 msgstr ""
 
 msgid "Failed to save provider."
@@ -817,6 +540,9 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
+msgid "Close"
+msgstr ""
+
 msgid "Plugin is not configured."
 msgstr ""
 
@@ -856,27 +582,6 @@ msgstr ""
 msgid "Stopped Reason: "
 msgstr ""
 
-msgid "Take Quick Notes"
-msgstr ""
-
-msgid "Write quick notes here"
-msgstr ""
-
-msgid "Please enter a note before saving."
-msgstr ""
-
-msgid "Highlighted text:"
-msgstr ""
-
-msgid "User:"
-msgstr ""
-
-msgid "Saved to: %1"
-msgstr ""
-
-msgid "Quick note saved successfully"
-msgstr ""
-
 msgid "Search tool record must be a table."
 msgstr ""
 
@@ -902,6 +607,245 @@ msgid "WebSearch API"
 msgstr ""
 
 msgid "%1 - choose an action"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Failed to save search tool."
+msgstr ""
+
+msgid "Search keywords are empty."
+msgstr ""
+
+msgid "Searching with %1 ... [%2]"
+msgstr ""
+
+msgid "Tool call did not include id."
+msgstr ""
+
+msgid "Tool call did not include search keywords."
+msgstr ""
+
+msgid "Checking for updates..."
+msgstr ""
+
+msgid "AI Assistant: Failed to check updates: %1"
+msgstr ""
+
+msgid "Empty Error"
+msgstr ""
+
+msgid "A new version of the %1 plugin (%2) is available. Please update!"
+msgstr ""
+
+msgid ""
+"<b>Downloading ...</b>\n"
+"<b>Github: </b>%1\n"
+"<b>Repo: </b>%2\n"
+"<b>Branch/Tag: </b>%3"
+msgstr ""
+
+msgid "Branch/Tag \"%1\" was not found."
+msgstr ""
+
+msgid "OTA update canceled."
+msgstr ""
+
+msgid "OTA update failed: %1"
+msgstr ""
+
+msgid "<b>Installing %1...</b>"
+msgstr ""
+
+msgid ""
+"OTA UPDATE OK.\n"
+" Restart is required."
+msgstr ""
+
+msgid "AI Notes"
+msgstr ""
+
+msgid "AI Notes: %1"
+msgstr ""
+
+msgid ""
+"<b>%1:</b> %2\n"
+"\n"
+"Add this button to the Highlight Menu?"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Select AI Note"
+msgstr ""
+
+msgid "Ask"
+msgstr ""
+
+msgid "Enter a question before proceeding."
+msgstr ""
+
+msgid "Ask a question about the highlighted text"
+msgstr ""
+
+msgid ""
+"<b>Ask a question about this book:</b>\n"
+"%1"
+msgstr ""
+
+msgid "Ask a general question"
+msgstr ""
+
+msgid "Type your question here..."
+msgstr ""
+
+msgid "Ask anything about this book..."
+msgstr ""
+
+msgid "Ask anything..."
+msgstr ""
+
+msgid "Web Search"
+msgstr ""
+
+msgid "Copy to Clipboard"
+msgstr ""
+
+msgid "Attach Prior Text"
+msgstr ""
+
+msgid "Current Chapter Only"
+msgstr ""
+
+msgid "<b>Error:</b> No response received"
+msgstr ""
+
+msgid "No active provider configured. Please add one in Settings."
+msgstr ""
+
+msgid "AI Dictionary"
+msgstr ""
+
+msgid "Enter a word to look up..."
+msgstr ""
+
+msgid "Look Up"
+msgstr ""
+
+msgid "<b>Analyzing book context for Term X-Ray...</b>"
+msgstr ""
+
+msgid "No word to add"
+msgstr ""
+
+msgid "Added to vocabulary builder"
+msgstr ""
+
+#. @translators Button text: adds the word to the Vocabulary Builder. Keep it short.
+msgid "Vocabulary Builder"
+msgstr ""
+
+msgid "Saves the word to the vocabulary builder"
+msgstr ""
+
+msgid "Custom Prompt"
+msgstr ""
+
+#. @translators Feature name, short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "AI Recaps" / "AI Recap" elsewhere.
+msgid "Recap"
+msgstr ""
+
+msgid "X-Ray"
+msgstr ""
+
+msgid "Highlight & Note Analysis"
+msgstr ""
+
+msgid "Summary Using Highlights & Notes"
+msgstr ""
+
+msgid "<b>Unknown feature type:</b> %1"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "Reading progress"
+msgstr ""
+
+msgid "Models: %1 (matched)"
+msgstr ""
+
+msgid "Models: %1"
+msgstr ""
+
+msgid " - p. %1/%2"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+#. @translators Button text: means custom input, keep translation short
+msgid "Custom"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Filter: \"%1\""
+msgstr ""
+
+msgid "Select a model:"
+msgstr ""
+
+msgid "Search Models"
+msgstr ""
+
+msgid "Model reset: %1"
+msgstr ""
+
+msgid "No models matching \"%1\"."
+msgstr ""
+
+msgid "Enter Model ID"
+msgstr ""
+
+msgid "e.g. google/gemini-3.0-flash-exp:free"
+msgstr ""
+
+msgid "Providers and Models"
+msgstr ""
+
+msgid "Browse available models from the current provider"
+msgstr ""
+
+msgid "Reasoning Option"
+msgstr ""
+
+msgid "Take Quick Notes"
+msgstr ""
+
+msgid "Write quick notes here"
+msgstr ""
+
+msgid "Please enter a note before saving."
+msgstr ""
+
+msgid "Highlighted text:"
+msgstr ""
+
+msgid "User:"
+msgstr ""
+
+msgid "Saved to: %1"
+msgstr ""
+
+msgid "Quick note saved successfully"
 msgstr ""
 
 msgid "AI Response Language Setting"
@@ -1145,67 +1089,155 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-msgid "##### You may find these topics interesting:"
+msgid "This is a custom prompt"
 msgstr ""
 
-msgid "(No response)"
+msgid "No valid custom prompt found"
 msgstr ""
 
-msgid "Right to Left"
+msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr ""
 
-msgid "Left to Right"
+msgid "Ask a Question"
 msgstr ""
 
-msgid "Auto"
+msgid "Enter a question to ask the AI."
 msgstr ""
 
-msgid "Search keywords are empty."
+msgid "Take quick notes that will be saved to your AI Notes."
 msgstr ""
 
-msgid "Searching with %1 ... [%2]"
+msgid "AI Notes (AI Conversation Log)"
 msgstr ""
 
-msgid "Tool call did not include id."
-msgstr ""
-
-msgid "Tool call did not include search keywords."
-msgstr ""
-
-msgid "Checking for updates..."
-msgstr ""
-
-msgid "AI Assistant: Failed to check updates: %1"
-msgstr ""
-
-msgid "Empty Error"
-msgstr ""
-
-msgid "A new version of the %1 plugin (%2) is available. Please update!"
+msgid "Switch"
 msgstr ""
 
 msgid ""
-"<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
-msgstr ""
-
-msgid "Branch/Tag \"%1\" was not found."
-msgstr ""
-
-msgid "OTA update canceled."
-msgstr ""
-
-msgid "OTA update failed: %1"
-msgstr ""
-
-msgid "<b>Installing %1...</b>"
+"Delete file?\n"
+"%1\n"
+"This operation is not reversible."
 msgstr ""
 
 msgid ""
-"OTA UPDATE OK.\n"
-" Restart is required."
+"<b>AI Notes file:</b>\n"
+"\n"
+"%1"
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid ""
+"File does not exist.\n"
+"\n"
+"%1"
+msgstr ""
+
+msgid "Provider %1 NOT CONFIGURED"
+msgstr ""
+
+msgid "Provider %1 %2(%3)"
+msgstr ""
+
+msgid "Web Search %1 %2"
+msgstr ""
+
+msgid ""
+"Improves response accuracy with real-time web results. \n"
+"Note: Higher token usage and additional API charges apply."
+msgstr ""
+
+msgid "Book Insights"
+msgstr ""
+
+msgid "Book Summary & Recs"
+msgstr ""
+
+msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
+msgstr ""
+
+msgid "AI X-Ray"
+msgstr ""
+
+msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
+msgstr ""
+
+#. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
+msgid "AI Recaps"
+msgstr ""
+
+msgid "A very brief, spoiler-free summary of the book up to current reading progress."
+msgstr ""
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr ""
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr ""
+
+msgid "Analysis of your highlights, notes, and AI Notes content from the book."
+msgstr ""
+
+msgid "Summary of the book using your highlights and notes."
+msgstr ""
+
+msgid "Your own prompts defined in the configuration file"
+msgstr ""
+
+msgid ""
+"Add providers from the main menu:\n"
+"%1 -> AI Assistant -> Settings -> Provider API"
+msgstr ""
+
+msgid ""
+"Usage Tips\n"
+"\n"
+"Select:\n"
+"Highlight text (or a word) in the book, then press [AI assistant] in the poped up menu.\n"
+"\n"
+"Long Press:\n"
+"- On a Prompt Button: Add to the highlight menu.\n"
+"- On a highlight menu button to remove it.\n"
+"- On the Close button to go back to the book in 1 step.\n"
+"\n"
+"Very-Long Press (over 3 seconds):\n"
+"On a single word in the book to show the highlight menu (instead of the dictionary).\n"
+"\n"
+"Multi-Swipe (e.g., %1, %2, %3):\n"
+"On the result dialog to close (as the Close button is far to reach).\n"
+msgstr ""
+
+msgid "Version Info"
+msgstr ""
+
+msgid "Purge Settings"
+msgstr ""
+
+msgid ""
+"Are you sure to purge the assistant plugin settings?\n"
+"This resets the assistant plugin to the status the first time you installed it.\n"
+"\n"
+"configuration.lua is safe, only the settings are purged."
+msgstr ""
+
+msgid "Purge"
+msgstr ""
+
+msgid "Markdown Engine"
+msgstr ""
+
+msgid "KOReader"
+msgstr ""
+
+msgid "Device"
+msgstr ""
+
+msgid "Platform"
+msgstr ""
+
+msgid "Runtime"
 msgstr ""
 
 msgid "Annotate"
@@ -1293,167 +1325,46 @@ msgstr ""
 msgid "Models"
 msgstr ""
 
-msgid "Ask the AI a question"
-msgstr ""
-
-#. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
-msgid "AI Recaps"
-msgstr ""
-
-msgid "AI X-Ray"
-msgstr ""
-
-msgid "Book Summary & Recs"
-msgstr ""
-
-msgid "Ask a Question"
-msgstr ""
-
-msgid "Enter a question to ask the AI."
-msgstr ""
-
-msgid "Take quick notes that will be saved to your AI Notes."
-msgstr ""
-
-msgid "AI Notes (AI Conversation Log)"
-msgstr ""
-
-msgid "Switch"
-msgstr ""
-
-msgid ""
-"Delete file?\n"
-"%1\n"
-"This operation is not reversible."
-msgstr ""
-
-msgid ""
-"<b>AI Notes file:</b>\n"
-"\n"
-"%1"
-msgstr ""
-
-msgid "View"
-msgstr ""
-
-msgid ""
-"File does not exist.\n"
-"\n"
-"%1"
-msgstr ""
-
-msgid "Provider %1 NOT CONFIGURED"
-msgstr ""
-
-msgid "Provider %1 %2(%3)"
-msgstr ""
-
-msgid "Web Search %1 %2"
-msgstr ""
-
-msgid ""
-"Improves response accuracy with real-time web results. \n"
-"Note: Higher token usage and additional API charges apply."
-msgstr ""
-
-msgid "Book Insights"
-msgstr ""
-
-msgid "Summary of the book, author biography, historical context, and a list of similar book recommendations with descriptions."
-msgstr ""
-
-msgid "\"X-Ray\" summary for a book, structured into specific sections like Characters, Locations, Themes, Terms & Concepts, Timeline, and Re-immersion."
-msgstr ""
-
-msgid "A very brief, spoiler-free summary of the book up to current reading progress."
-msgstr ""
-
-msgid "Analysis of your highlights, notes, and AI Notes content from the book."
-msgstr ""
-
-msgid "Summary of the book using your highlights and notes."
-msgstr ""
-
-msgid "Your own prompts defined in the configuration file"
-msgstr ""
-
 msgid "Book Info (AI)"
 msgstr ""
 
 msgid "Recap (AI)"
 msgstr ""
 
-msgid "This is a custom prompt"
+msgid "Identify (AI)"
 msgstr ""
 
-msgid "No valid custom prompt found"
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr ""
 
-msgid "For details, visit the 'Configuration' wiki page on github."
+msgid "Continue"
 msgstr ""
 
-msgid ""
-"Add providers from the main menu:\n"
-"%1 -> AI Assistant -> Settings -> Provider API"
+msgid "Metadata could not be saved."
 msgstr ""
 
-msgid "Failed to save search tool."
+msgid "Book metadata updated."
 msgstr ""
 
-msgid ""
-"<b>No provider set up yet.</b>\n"
-"Please add a provider in Settings or configuration.lua."
+msgid "The model could not identify this book."
 msgstr ""
 
-msgid "configuration.lua: model providers are invalid."
+msgid "Could not parse the identification result."
 msgstr ""
 
-msgid ""
-"Usage Tips\n"
-"\n"
-"Select:\n"
-"Highlight text (or a word) in the book, then press [AI assistant] in the poped up menu.\n"
-"\n"
-"Long Press:\n"
-"- On a Prompt Button: Add to the highlight menu.\n"
-"- On a highlight menu button to remove it.\n"
-"- On the Close button to go back to the book in 1 step.\n"
-"\n"
-"Very-Long Press (over 3 seconds):\n"
-"On a single word in the book to show the highlight menu (instead of the dictionary).\n"
-"\n"
-"Multi-Swipe (e.g., %1, %2, %3):\n"
-"On the result dialog to close (as the Close button is far to reach).\n"
+msgid "Set"
 msgstr ""
 
-msgid "Version Info"
+msgid "No book is open."
 msgstr ""
 
-msgid "Purge Settings"
-msgstr ""
-
-msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
-"This resets the assistant plugin to the status the first time you installed it.\n"
-"\n"
-"configuration.lua is safe, only the settings are purged."
-msgstr ""
-
-msgid "Purge"
-msgstr ""
-
-#, lua-format
-msgid "Remove [%s] from Highlight Menu?"
-msgstr ""
-
-msgid "Remove"
-msgstr ""
-
-msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
+msgid "Could not extract text from this book."
 msgstr ""
 
 msgid "Please open this book and start reading before requesting a recap."
+msgstr ""
+
+msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr ""
 
 msgid ""
@@ -1464,23 +1375,165 @@ msgid ""
 "You can change this later in Settings > Other Settings > Smart Dictionary Lookup for 'Translate'."
 msgstr ""
 
-msgid "Added <b>[%1 (AI)]</b>"
+msgid "Configured AI Notes folder is not accessible: %1"
 msgstr ""
 
-msgid "Removed <b>[%1 (AI)]</b>"
+msgid "No base folder is available for AI Notes."
 msgstr ""
 
-msgid "Markdown Engine"
+msgid "AI Notes path is not a directory: %1"
 msgstr ""
 
-msgid "KOReader"
+msgid "Could not create AI Notes folder: %1"
 msgstr ""
 
-msgid "Device"
+msgid "Could not list AI Notes folder: %1"
 msgstr ""
 
-msgid "Platform"
+msgid "No path is available for the default AI note."
 msgstr ""
 
-msgid "Runtime"
+msgid "Assistant settings are not available."
+msgstr ""
+
+msgid "Invalid AI note entry."
+msgstr ""
+
+msgid "Invalid AI note filename."
+msgstr ""
+
+msgid "AI note name must be text."
+msgstr ""
+
+msgid "AI note name cannot be empty."
+msgstr ""
+
+msgid "AI note name cannot contain path separators."
+msgstr ""
+
+msgid "AI note name cannot contain '..'."
+msgstr ""
+
+msgid "AI note name contains characters that are not supported by the filesystem."
+msgstr ""
+
+msgid "AI note name cannot end with a space or dot."
+msgstr ""
+
+msgid "AI note name is reserved by the filesystem."
+msgstr ""
+
+msgid "Reader settings are not available."
+msgstr ""
+
+msgid ""
+"<b>Cannot access default folder for logs: %1</b>\n"
+"Using original location."
+msgstr ""
+
+msgid "AI note path is not a file: %1"
+msgstr ""
+
+msgid "Could not create AI note: %1"
+msgstr ""
+
+msgid "AI note path is unavailable."
+msgstr ""
+
+msgid "Could not open AI note file."
+msgstr ""
+
+msgid "Could not write AI note file."
+msgstr ""
+
+msgid "Could not close AI note file."
+msgstr ""
+
+msgid ""
+"Could not save to the selected AI note.\n"
+"Saved to: %1"
+msgstr ""
+
+msgid "AI Notes save failed. Continuing..."
+msgstr ""
+
+msgid "New AI Note"
+msgstr ""
+
+msgid "AI Note Name"
+msgstr ""
+
+msgid "Create an AI note."
+msgstr ""
+
+msgid "Create"
+msgstr ""
+
+msgid "Could not create AI note."
+msgstr ""
+
+msgid "Could not select AI note."
+msgstr ""
+
+msgid "No AI notes yet"
+msgstr ""
+
+msgid "New AI Note..."
+msgstr ""
+
+msgid "Active: %1"
+msgstr ""
+
+msgid ""
+"This file is %2:\n"
+"\n"
+"%1\n"
+"\n"
+"Are you sure you want to open it?\n"
+"\n"
+"Opening big files may take some time."
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Ask the AI a question"
+msgstr ""
+
+msgid ""
+"<b>No provider set up yet.</b>\n"
+"Please add a provider in Settings or configuration.lua."
+msgstr ""
+
+msgid "configuration.lua: model providers are invalid."
+msgstr ""
+
+msgid "Page"
+msgstr ""
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+
+msgid "Description: %1"
+msgstr ""
+
+msgid "fetchJSON: failed to parse returned data"
+msgstr ""
+
+msgid "##### You may find these topics interesting:"
+msgstr ""
+
+msgid "(No response)"
+msgstr ""
+
+msgid "Right to Left"
+msgstr ""
+
+msgid "Left to Right"
+msgstr ""
+
+msgid "Auto"
 msgstr ""

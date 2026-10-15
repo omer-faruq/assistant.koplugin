@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 04:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Oʻzbekcha (AI translation)\n"
@@ -94,10 +94,10 @@ msgstr "<b>Term X-Ray uchun kitob konteksti tahlil qilinmoqda...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
-"<b>Ushbu kitob haqida savol so'rang:</b>\n"
-"%1, %2 tomonidan"
+"<b>Bu kitob haqida savol bering:</b>\n"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "AI xulosasi uzoq vaqt oʻqilmagan kitob keyingi safar ochilganda yoqiladi."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AI xulosalari"
 
@@ -369,13 +368,13 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Assistant plagin sozlamalarini tozalashga ishonchingiz komilmi? \n"
-"Bu assistant plaginini birinchi marta o'rnatganingizdagi holatiga qaytaradi.\n"
+"Yordamchi plagin sozlamalarini tozalashga ishonchingiz komilmi?\n"
+"Bu yordamchi plaginni birinchi oʻrnatganingizdagi holatiga qaytaradi.\n"
 "\n"
 "configuration.lua xavfsiz, faqat sozlamalar tozalanadi."
 
@@ -403,6 +402,9 @@ msgstr "Istalgan savolni so'rang..."
 
 msgid "Ask the AI a question"
 msgstr "AI'dan savol soʻrang"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "AI'dan ochiq kitobning sarlavhasi va muallifini uning boshlangʻich matni asosida aniqlashni soʻrang."
 
 msgid "Assistant settings are not available."
 msgstr "Yordamchi sozlamalari mavjud emas."
@@ -463,6 +465,9 @@ msgstr "Kitob tahlillari"
 
 msgid "Book Summary & Recs"
 msgstr "Kitob xulosasi va tavsiyalar"
+
+msgid "Book metadata updated."
+msgstr "Kitob metamaʼlumotlari yangilandi."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "\"%1\" branch/tag topilmadi."
@@ -540,6 +545,9 @@ msgstr "Kontekstual eslatmalar"
 msgid "Contextual Notes / Reflections"
 msgstr "Kontekstual eslatmalar / Mulohazalar"
 
+msgid "Continue"
+msgstr "Davom etish"
+
 msgid "Contradictions / Open Questions"
 msgstr "Qarama-qarshiliklar / Ochiq savollar"
 
@@ -575,11 +583,17 @@ msgstr "AI eslatma yaratib boʻlmadi."
 msgid "Could not create AI note: %1"
 msgstr "AI eslatma yaratib boʻlmadi: %1"
 
+msgid "Could not extract text from this book."
+msgstr "Bu kitobdan matn ajratib boʻlmadi."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "AI eslatmalari jildini roʻyxatlab boʻlmadi: %1"
 
 msgid "Could not open AI note file."
 msgstr "AI eslatma faylini ochib boʻlmadi."
+
+msgid "Could not parse the identification result."
+msgstr "Aniqlash natijasini tahlil qilib boʻlmadi."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "%1 provayderini oʻchirish?"
+
+msgid "Description: %1"
+msgstr "Tavsif: %1"
 
 msgid "Device"
 msgstr "Qurilma"
@@ -816,12 +833,22 @@ msgstr "Tarixiy kontekst"
 msgid "Historical and Cultural Context"
 msgstr "Tarixiy va madaniy kontekst"
 
+msgid "Identify (AI)"
+msgstr "Aniqlash (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "Bu kitobni aniqlash"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "Javob aniqligini real vaqt rejimidagi veb natijalari bilan yaxshilaydi. \n"
 "Eslatma: Koʻproq token sarfi va qoʻshimcha API toʻlovlari qoʻllaniladi."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "Ochiq kitobning sarlavhasi va muallifini uning boshlangʻich matni asosida aniqlab, ularni maxsus metamaʼlumot sifatida saqlang."
 
 msgid "Integrated Summary"
 msgstr "Integratsiyalashgan xulosa"
@@ -880,6 +907,9 @@ msgstr "Markdown dvijogi"
 msgid "Meaning & Usage"
 msgstr "Maʼno va qoʻllanish"
 
+msgid "Metadata could not be saved."
+msgstr "Metamaʼlumotlarni saqlab boʻlmadi."
+
 msgid "Minimalist Mode"
 msgstr "Minimal rejim"
 
@@ -930,6 +960,9 @@ msgstr "Faol provayder sozlanmagan. Iltimos, Sozlamalarda bittasini qo'shing."
 
 msgid "No base folder is available for AI Notes."
 msgstr "AI eslatmalari uchun asosiy jild mavjud emas."
+
+msgid "No book is open."
+msgstr "Hech qanday kitob ochiq emas."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Hech qanday kitob ochilmagan. Fayl menejerida kitobni uzoq bosib, «Kitob maʼlumotlari (AI)» ni tanlang."
@@ -1240,6 +1273,18 @@ msgstr "AI eslatmasini tanlash"
 msgid "Select a model:"
 msgstr "Model tanlang:"
 
+msgid "Set"
+msgstr "Oʻrnatish"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"Kitob metamaʼlumotlari oʻrnatilsinmi?\n"
+"Sarlavha: %1\n"
+"Muallif: %2"
+
 msgid "Settings"
 msgstr "Sozlamalar"
 
@@ -1327,7 +1372,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "AI eslatmalaringizga saqlanadigan tezkor eslatmalar oling."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
@@ -1351,6 +1395,9 @@ msgstr "Matn almashish buferiga nusxalandi"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 uchun handler topilmadi. Iltimos, handler api_handlers katalogida mavjudligiga ishonch hosil qiling."
+
+msgid "The model could not identify this book."
+msgstr "Model bu kitobni aniqlay olmadi."
 
 msgid "Thinking ..."
 msgstr "Oʻylanmoqda ..."
@@ -1420,6 +1467,9 @@ msgstr "Vaqt chizigʻi"
 msgid "Title"
 msgstr "Sarlavha"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "Sarlavha yoki muallif metamaʼlumotlari yoʻq yoki toʻliq emas, shuning uchun AI natijasi ishonchsiz boʻlishi mumkin. Avval ularni oʻrnatish uchun Aniqlash (AI) dan foydalaning."
+
 msgid "To-Do / Action Items"
 msgstr "Vazifalar / Harakatlar"
 
@@ -1453,6 +1503,12 @@ msgstr "Savolingizni shu yerga yozing..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "Muallif nomaʼlum"
+
+msgid "Unknown Title"
+msgstr "Sarlavha nomaʼlum"
 
 msgid "Unknown error"
 msgstr "Nomaʼlum xato"
@@ -1586,6 +1642,3 @@ msgstr "Masalan: google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: qaytarilgan maʼlumotlarni tahlil qilib boʻlmadi"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

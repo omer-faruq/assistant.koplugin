@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -94,10 +94,10 @@ msgstr "<b>Term X-Rayのため、書籍のコンテキストを分析中...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
 "<b>この本について質問する:</b>\n"
-"%1（著者: %2）"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "長期間読んでいない本を次に開いたときに、AIあらすじが有効になります。"
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AIあらすじ"
 
@@ -369,13 +368,13 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
 "アシスタントプラグインの設定を消去してもよろしいですか？\n"
-"これにより、アシスタントプラグインは初回インストール時の状態にリセットされます。\n"
+"これにより、アシスタントプラグインは最初にインストールしたときの状態にリセットされます。\n"
 "\n"
 "configuration.lua は安全です。消去されるのは設定のみです。"
 
@@ -403,6 +402,9 @@ msgstr "何でも質問してください..."
 
 msgid "Ask the AI a question"
 msgstr "AIに質問する"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "開いている本の冒頭テキストからタイトルと著者をAIに特定させます。"
 
 msgid "Assistant settings are not available."
 msgstr "アシスタント設定を利用できません。"
@@ -463,6 +465,9 @@ msgstr "ブックインサイト"
 
 msgid "Book Summary & Recs"
 msgstr "書籍の要約とおすすめ"
+
+msgid "Book metadata updated."
+msgstr "本のメタデータを更新しました。"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ブランチ/タグ \"%1\" が見つかりませんでした。"
@@ -540,6 +545,9 @@ msgstr "文脈ノート"
 msgid "Contextual Notes / Reflections"
 msgstr "文脈ノート / 考察"
 
+msgid "Continue"
+msgstr "続行"
+
 msgid "Contradictions / Open Questions"
 msgstr "矛盾 / 未解決の疑問"
 
@@ -575,11 +583,17 @@ msgstr "AIノートを作成できませんでした。"
 msgid "Could not create AI note: %1"
 msgstr "AIノートを作成できませんでした: %1"
 
+msgid "Could not extract text from this book."
+msgstr "この本からテキストを抽出できませんでした。"
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "AIノートフォルダの一覧を取得できませんでした: %1"
 
 msgid "Could not open AI note file."
 msgstr "AIノートファイルを開けませんでした。"
+
+msgid "Could not parse the identification result."
+msgstr "特定結果を解析できませんでした。"
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "プロバイダー%1を削除しますか？"
+
+msgid "Description: %1"
+msgstr "説明: %1"
 
 msgid "Device"
 msgstr "デバイス"
@@ -816,12 +833,22 @@ msgstr "歴史的背景"
 msgid "Historical and Cultural Context"
 msgstr "歴史的・文化的背景"
 
+msgid "Identify (AI)"
+msgstr "特定 (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "この本を特定"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "リアルタイムのウェブ検索結果で応答精度が向上します。\n"
 "注: トークン使用量が増え、追加のAPI費用がかかります。"
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "開いている本の冒頭テキストからタイトルと著者を推定し、カスタムメタデータとして保存します。"
 
 msgid "Integrated Summary"
 msgstr "統合サマリー"
@@ -879,6 +906,9 @@ msgstr "Markdownエンジン"
 msgid "Meaning & Usage"
 msgstr "意味と用法"
 
+msgid "Metadata could not be saved."
+msgstr "メタデータを保存できませんでした。"
+
 msgid "Minimalist Mode"
 msgstr "ミニマリストモード"
 
@@ -929,6 +959,9 @@ msgstr "アクティブなプロバイダーが設定されていません。設
 
 msgid "No base folder is available for AI Notes."
 msgstr "AIノートに使用できるベースフォルダがありません。"
+
+msgid "No book is open."
+msgstr "本が開かれていません。"
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "本が開かれていません。ファイルマネージャーで本を長押しし、「ブック情報 (AI)」を選択してください。"
@@ -1239,6 +1272,18 @@ msgstr "AIノートを選択"
 msgid "Select a model:"
 msgstr "モデルを選択:"
 
+msgid "Set"
+msgstr "設定"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"本のメタデータを設定しますか？\n"
+"タイトル: %1\n"
+"著者: %2"
+
 msgid "Settings"
 msgstr "設定"
 
@@ -1326,7 +1371,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "クイックノートを作成すると、AIノートに保存されます。"
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "用語X-Ray"
 
@@ -1350,6 +1394,9 @@ msgstr "テキストをクリップボードにコピーしました"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 のハンドラーが見つかりませんでした。api_handlers ディレクトリにハンドラーが存在することを確認してください。"
+
+msgid "The model could not identify this book."
+msgstr "モデルはこの本を特定できませんでした。"
 
 msgid "Thinking ..."
 msgstr "思考中..."
@@ -1419,6 +1466,9 @@ msgstr "タイムライン"
 msgid "Title"
 msgstr "タイトル"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "タイトルまたは著者のメタデータが欠落しているか不完全なため、AIの結果は信頼できない可能性があります。先に「特定 (AI)」で設定してください。"
+
 msgid "To-Do / Action Items"
 msgstr "やること / アクション項目"
 
@@ -1452,6 +1502,12 @@ msgstr "ここに質問を入力してください..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "著者不明"
+
+msgid "Unknown Title"
+msgstr "タイトル不明"
 
 msgid "Unknown error"
 msgstr "不明なエラー"
@@ -1585,6 +1641,3 @@ msgstr "例: google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: 返されたデータの解析に失敗しました"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

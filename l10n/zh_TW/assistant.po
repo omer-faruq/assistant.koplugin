@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 02:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: 中文（台灣) (AI translation)\n"
@@ -94,10 +94,10 @@ msgstr "<b>正在分析書籍上下文以產生 Term X-Ray...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
 "<b>詢問關於這本書的問題：</b>\n"
-"%1 作者 %2"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "下次開啟久未閱讀的書籍時，就會啟用 AI 回顧。"
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AI 回顧"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"確定要清除助理外掛的設定嗎？\n"
-"這會將助理外掛重設為您第一次安裝時的狀態。\n"
+"確定要清除小幫手外掛的設定嗎？\n"
+"這會將小幫手外掛重設為首次安裝時的狀態。\n"
 "\n"
-"configuration.lua 不會受影響，只會清除設定。"
+"configuration.lua 不受影響，只會清除設定。"
 
 msgid "Ask"
 msgstr "詢問"
@@ -403,6 +402,9 @@ msgstr "詢問任何問題..."
 
 msgid "Ask the AI a question"
 msgstr "向 AI 提問"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "請 AI 從書籍的開頭文字辨識這本開啟中書籍的書名與作者。"
 
 msgid "Assistant settings are not available."
 msgstr "助理設定目前無法使用。"
@@ -463,6 +465,9 @@ msgstr "書籍洞察"
 
 msgid "Book Summary & Recs"
 msgstr "書籍摘要與推薦"
+
+msgid "Book metadata updated."
+msgstr "書籍中繼資料已更新。"
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "找不到分支/標籤「%1」。"
@@ -540,6 +545,9 @@ msgstr "情境註記"
 msgid "Contextual Notes / Reflections"
 msgstr "情境註記／反思"
 
+msgid "Continue"
+msgstr "繼續"
+
 msgid "Contradictions / Open Questions"
 msgstr "矛盾／未解問題"
 
@@ -575,11 +583,17 @@ msgstr "無法建立 AI 筆記。"
 msgid "Could not create AI note: %1"
 msgstr "無法建立 AI 筆記：%1"
 
+msgid "Could not extract text from this book."
+msgstr "無法從這本書擷取文字。"
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "無法列出 AI 筆記資料夾：%1"
 
 msgid "Could not open AI note file."
 msgstr "無法開啟 AI 筆記檔案。"
+
+msgid "Could not parse the identification result."
+msgstr "無法解析辨識結果。"
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "刪除供應商 %1？"
+
+msgid "Description: %1"
+msgstr "說明：%1"
 
 msgid "Device"
 msgstr "裝置"
@@ -816,12 +833,22 @@ msgstr "歷史背景"
 msgid "Historical and Cultural Context"
 msgstr "歷史與文化背景"
 
+msgid "Identify (AI)"
+msgstr "辨識（AI）"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "辨識這本書"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "透過即時網路結果提升回覆準確度。\n"
 "注意：會消耗更多 token，並產生額外的 API 費用。"
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "從開啟中書籍的開頭文字推斷書名與作者，並儲存為自訂中繼資料。"
 
 msgid "Integrated Summary"
 msgstr "整合摘要"
@@ -879,6 +906,9 @@ msgstr "Markdown 引擎"
 msgid "Meaning & Usage"
 msgstr "含義與用法"
 
+msgid "Metadata could not be saved."
+msgstr "無法儲存中繼資料。"
+
 msgid "Minimalist Mode"
 msgstr "極簡模式"
 
@@ -929,6 +959,9 @@ msgstr "未設定任何有效的提供者。請在設定中新增。"
 
 msgid "No base folder is available for AI Notes."
 msgstr "沒有可用的 AI 筆記基礎資料夾。"
+
+msgid "No book is open."
+msgstr "沒有開啟任何書籍。"
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "目前沒有開啟的書籍。請在檔案管理中長按一本書，然後選擇「書籍資訊 (AI)」。"
@@ -1240,6 +1273,18 @@ msgstr "選擇 AI 筆記"
 msgid "Select a model:"
 msgstr "選擇模型："
 
+msgid "Set"
+msgstr "設定"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"要設定書籍中繼資料嗎？\n"
+"書名：%1\n"
+"作者：%2"
+
 msgid "Settings"
 msgstr "設定"
 
@@ -1327,7 +1372,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "快速記下筆記，將儲存至你的 AI 筆記。"
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "詞彙 X-Ray"
 
@@ -1351,6 +1395,9 @@ msgstr "文字已複製到剪貼簿"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "找不到 %1 的處理常式。請確認該處理常式存在於 api_handlers 目錄中。"
+
+msgid "The model could not identify this book."
+msgstr "模型無法辨識這本書。"
 
 msgid "Thinking ..."
 msgstr "思考中…"
@@ -1420,6 +1467,9 @@ msgstr "時間軸"
 msgid "Title"
 msgstr "標題"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "書名或作者的中繼資料缺失或不完整，因此 AI 結果可能不可靠。請先使用「辨識（AI）」設定。"
+
 msgid "To-Do / Action Items"
 msgstr "待辦事項／行動項目"
 
@@ -1453,6 +1503,12 @@ msgstr "在此輸入你的問題..."
 
 msgid "URL: %1"
 msgstr "URL：%1"
+
+msgid "Unknown Author"
+msgstr "未知作者"
+
+msgid "Unknown Title"
+msgstr "未知書名"
 
 msgid "Unknown error"
 msgstr "未知錯誤"
@@ -1586,6 +1642,3 @@ msgstr "例如：google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON：無法解析回傳的資料"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

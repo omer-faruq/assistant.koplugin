@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -94,10 +94,10 @@ msgstr "<b>Analyserer bokkonteksten for Term X-Ray...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
-"<b>Spør om denne boka:</b>\n"
-"%1 av %2"
+"<b>Still eit spørsmål om denne boka:</b>\n"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "AI-oppsummering blir slått på neste gong ei bok ein ikkje har lese i på lenge, blir opna."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AI-oppsummeringar"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Er du sikker på at du vil tømme innstillingane til assistentpluginen? \n"
-"Dette tilbakestiller assistentpluginen til slik han var første gongen du installerte han.\n"
+"Er du sikker på at du vil tømme innstillingane for assistent-pluginen?\n"
+"Dette nullstiller assistent-pluginen til slik han var første gongen du installerte han.\n"
 "\n"
-"configuration.lua er trygg, berre innstillingane blir tømte."
+"configuration.lua er trygg, berre innstillingane blir tømde."
 
 msgid "Ask"
 msgstr "Spør"
@@ -403,6 +402,9 @@ msgstr "Spør om kva som helst..."
 
 msgid "Ask the AI a question"
 msgstr "Spør AI-en eit spørsmål"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "Be AI-en om å identifisere tittelen og forfattaren til den opne boka ut frå opningsteksten."
 
 msgid "Assistant settings are not available."
 msgstr "Assistentinnstillingane er ikkje tilgjengelege."
@@ -463,6 +465,9 @@ msgstr "Bokinnsikt"
 
 msgid "Book Summary & Recs"
 msgstr "Boksamandrag og tilrådingar"
+
+msgid "Book metadata updated."
+msgstr "Bokmetadata er oppdaterte."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Grein/Tag \"%1\" vart ikkje funnen."
@@ -540,6 +545,9 @@ msgstr "Kontekstnotat"
 msgid "Contextual Notes / Reflections"
 msgstr "Kontekstnotat / refleksjonar"
 
+msgid "Continue"
+msgstr "Hald fram"
+
 msgid "Contradictions / Open Questions"
 msgstr "Motsetnader / opne spørsmål"
 
@@ -575,11 +583,17 @@ msgstr "Klarte ikkje å opprette AI-notat."
 msgid "Could not create AI note: %1"
 msgstr "Klarte ikkje å opprette AI-notat: %1"
 
+msgid "Could not extract text from this book."
+msgstr "Klarte ikkje å hente ut tekst frå denne boka."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "Klarte ikkje å liste opp AI-notat-mappa: %1"
 
 msgid "Could not open AI note file."
 msgstr "Klarte ikkje å opne AI-notat-fila."
+
+msgid "Could not parse the identification result."
+msgstr "Klarte ikkje å tolke identifiseringsresultatet."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "Slette leverandøren %1?"
+
+msgid "Description: %1"
+msgstr "Skildring: %1"
 
 msgid "Device"
 msgstr "Eining"
@@ -816,12 +833,22 @@ msgstr "Historisk kontekst"
 msgid "Historical and Cultural Context"
 msgstr "Historisk og kulturell kontekst"
 
+msgid "Identify (AI)"
+msgstr "Identifiser (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "Identifiser denne boka"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "Betrar nøyaktigheita i svara med sanntidsresultat frå nettet. \n"
 "Merk: Høgare token-bruk og ekstra API-kostnader gjeld."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "Finn tittelen og forfattaren til den opne boka ut frå opningsteksten og lagre dei som eigne metadata."
 
 msgid "Integrated Summary"
 msgstr "Integrert samandrag"
@@ -880,6 +907,9 @@ msgstr "Markdown-motor"
 msgid "Meaning & Usage"
 msgstr "Tyding og bruk"
 
+msgid "Metadata could not be saved."
+msgstr "Klarte ikkje å lagre metadata."
+
 msgid "Minimalist Mode"
 msgstr "Minimalistmodus"
 
@@ -930,6 +960,9 @@ msgstr "Ingen aktiv leverandør er konfigurert. Legg til ein i Innstillingar."
 
 msgid "No base folder is available for AI Notes."
 msgstr "Ingen basismappe er tilgjengeleg for AI-notat."
+
+msgid "No book is open."
+msgstr "Inga bok er open."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Inga bok er open. Hald inne på ei bok i filhandsamaren og vel Bokinfo (AI)."
@@ -1241,6 +1274,18 @@ msgstr "Vel AI-notat"
 msgid "Select a model:"
 msgstr "Vel ein modell:"
 
+msgid "Set"
+msgstr "Set"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"Setje bokmetadata?\n"
+"Tittel: %1\n"
+"Forfattar: %2"
+
 msgid "Settings"
 msgstr "Innstillingar"
 
@@ -1328,7 +1373,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Ta raske notat som blir lagra i AI-notata dine."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
@@ -1352,6 +1396,9 @@ msgstr "Teksten vart kopiert til utklippstavla."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Fann ikkje handteraren for %1. Kontroller at handteraren finst i api_handlers-katalogen."
+
+msgid "The model could not identify this book."
+msgstr "Modellen klarte ikkje å identifisere denne boka."
 
 msgid "Thinking ..."
 msgstr "Tenkjer ..."
@@ -1421,6 +1468,9 @@ msgstr "Tidslinje"
 msgid "Title"
 msgstr "Tittel"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "Metadata for tittel eller forfattar manglar eller er ufullstendige, så AI-resultatet kan vere upåliteleg. Bruk «Identifiser (AI)» til å setje dei først."
+
 msgid "To-Do / Action Items"
 msgstr "Gjeremål / tiltak"
 
@@ -1454,6 +1504,12 @@ msgstr "Skriv spørsmålet ditt her..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "Ukjend forfattar"
+
+msgid "Unknown Title"
+msgstr "Ukjend tittel"
 
 msgid "Unknown error"
 msgstr "Ukjend feil"
@@ -1587,6 +1643,3 @@ msgstr "t.d. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: klarte ikkje å tolke returnerte data"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

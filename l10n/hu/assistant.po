@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -94,10 +94,10 @@ msgstr "<b>A könyv kontextusának elemzése a Term X-Ray funkcióhoz...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
-"<b>Tegyél fel kérdést erről a könyvről:</b>\n"
-"%1 – %2"
+"<b>Kérdezz erről a könyvről:</b>\n"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "Az AI-összefoglaló a következő alkalommal lesz engedélyezve, amikor egy régóta nem olvasott könyvet megnyit."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AI-összefoglalók"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Biztosan törlöd az asszisztens plugin beállításait?\n"
-"Ez visszaállítja az asszisztens plugint az első telepítéskori állapotára.\n"
+"Biztosan törli az asszisztens bővítmény beállításait?\n"
+"Ezzel az asszisztens bővítmény visszaáll a legelső telepítéskori állapotára.\n"
 "\n"
-"A configuration.lua biztonságban marad, csak a beállítások törlődnek."
+"A configuration.lua érintetlen marad, csak a beállítások törlődnek."
 
 msgid "Ask"
 msgstr "Kérdezés"
@@ -403,6 +402,9 @@ msgstr "Kérdezz bármit..."
 
 msgid "Ask the AI a question"
 msgstr "Tegyen fel egy kérdést az AI-nak"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "Kérd meg az AI-t, hogy a megnyitott könyv nyitószövege alapján azonosítsa a könyv címét és szerzőjét."
 
 msgid "Assistant settings are not available."
 msgstr "Az asszisztens beállításai nem érhetők el."
@@ -463,6 +465,9 @@ msgstr "Könyv betekintések"
 
 msgid "Book Summary & Recs"
 msgstr "Könyv összefoglaló és ajánlások"
+
+msgid "Book metadata updated."
+msgstr "A könyv metaadatai frissítve."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "A \"%1\" ág/címke nem található."
@@ -540,6 +545,9 @@ msgstr "Kontextuális jegyzetek"
 msgid "Contextual Notes / Reflections"
 msgstr "Kontextuális jegyzetek / Reflexiók"
 
+msgid "Continue"
+msgstr "Folytatás"
+
 msgid "Contradictions / Open Questions"
 msgstr "Ellentmondások / Nyitott kérdések"
 
@@ -575,11 +583,17 @@ msgstr "Nem sikerült létrehozni az AI-jegyzetet."
 msgid "Could not create AI note: %1"
 msgstr "Nem sikerült létrehozni az AI-jegyzetet: %1"
 
+msgid "Could not extract text from this book."
+msgstr "Nem sikerült szöveget kinyerni ebből a könyvből."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "Nem sikerült listázni az AI-jegyzetek mappát: %1"
 
 msgid "Could not open AI note file."
 msgstr "Nem sikerült megnyitni az AI-jegyzet fájlt."
+
+msgid "Could not parse the identification result."
+msgstr "Nem sikerült feldolgozni az azonosítás eredményét."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "Törlöd a(z) %1 szolgáltatót?"
+
+msgid "Description: %1"
+msgstr "Leírás: %1"
 
 msgid "Device"
 msgstr "Eszköz"
@@ -816,12 +833,22 @@ msgstr "Történelmi kontextus"
 msgid "Historical and Cultural Context"
 msgstr "Történelmi és kulturális kontextus"
 
+msgid "Identify (AI)"
+msgstr "Azonosítás (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "Könyv azonosítása"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "Javítja a válaszok pontosságát valós idejű webes eredményekkel. \n"
 "Megjegyzés: Magasabb tokenfelhasználás és további API-költségek érvényesek."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "A megnyitott könyv nyitószövege alapján következtesd ki a könyv címét és szerzőjét, majd mentse el azokat egyéni metaadatként."
 
 msgid "Integrated Summary"
 msgstr "Integrált összefoglaló"
@@ -880,6 +907,9 @@ msgstr "Markdown motor"
 msgid "Meaning & Usage"
 msgstr "Jelentés és használat"
 
+msgid "Metadata could not be saved."
+msgstr "A metaadatok mentése nem sikerült."
+
 msgid "Minimalist Mode"
 msgstr "Minimalista mód"
 
@@ -930,6 +960,9 @@ msgstr "Nincs aktív szolgáltató beállítva. Kérjük, adjon hozzá egyet a B
 
 msgid "No base folder is available for AI Notes."
 msgstr "Nincs elérhető alapmappa az AI-jegyzetekhez."
+
+msgid "No book is open."
+msgstr "Nincs megnyitott könyv."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nincs megnyitott könyv. Nyomja meg hosszan a fájlkezelőben a kívánt könyvet, és válassza a Könyvinformációk (AI) lehetőséget."
@@ -1241,6 +1274,18 @@ msgstr "AI-jegyzet kiválasztása"
 msgid "Select a model:"
 msgstr "Válasszon modellt:"
 
+msgid "Set"
+msgstr "Beállítás"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"Beállítja a könyv metaadatait?\n"
+"Cím: %1\n"
+"Szerző: %2"
+
 msgid "Settings"
 msgstr "Beállítások"
 
@@ -1328,7 +1373,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Készíts gyorsjegyzeteket, amelyek az AI-jegyzeteidbe mentődnek."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
@@ -1352,6 +1396,9 @@ msgstr "A szöveg a vágólapra másolva."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "A(z) %1 kezelő nem található. Győződjön meg róla, hogy a kezelő létezik az api_handlers könyvtárban."
+
+msgid "The model could not identify this book."
+msgstr "A modell nem tudta azonosítani ezt a könyvet."
 
 msgid "Thinking ..."
 msgstr "Gondolkodás ..."
@@ -1421,6 +1468,9 @@ msgstr "Idővonal"
 msgid "Title"
 msgstr "Cím"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "A cím vagy a szerző metaadatai hiányoznak vagy hiányosak, ezért az AI eredménye megbízhatatlan lehet. Először használd az Azonosítás (AI) funkciót a beállításukhoz."
+
 msgid "To-Do / Action Items"
 msgstr "Teendők / Feladatok"
 
@@ -1454,6 +1504,12 @@ msgstr "Írd ide a kérdésedet..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "Ismeretlen szerző"
+
+msgid "Unknown Title"
+msgstr "Ismeretlen cím"
 
 msgid "Unknown error"
 msgstr "Ismeretlen hiba"
@@ -1587,6 +1643,3 @@ msgstr "pl. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: nem sikerült elemezni a visszakapott adatokat"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

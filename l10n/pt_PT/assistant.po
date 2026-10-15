@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -94,10 +94,10 @@ msgstr "<b>A analisar o contexto do livro para o Term X-Ray...</b>"
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
-"<b>Fazer uma pergunta sobre este livro:</b>\n"
-"%1 por %2"
+"<b>Faça uma pergunta sobre este livro:</b>\n"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "A Recapitulação por IA será ativada na próxima vez que abrir um livro que não lê há muito tempo."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "Recapitulações por IA"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"Tem a certeza de que pretende limpar as definições do plugin do assistente? \n"
-"Isto repõe o plugin do assistente ao estado em que estava quando o instalou pela primeira vez.\n"
+"Tem a certeza de que pretende eliminar as configurações do plugin do assistente?\n"
+"Isto repõe o plugin do assistente no estado em que estava quando o instalou pela primeira vez.\n"
 "\n"
-"configuration.lua está seguro, apenas as definições são limpas."
+"O configuration.lua está seguro, apenas as configurações são eliminadas."
 
 msgid "Ask"
 msgstr "Perguntar"
@@ -403,6 +402,9 @@ msgstr "Pergunte o que quiser..."
 
 msgid "Ask the AI a question"
 msgstr "Faça uma pergunta à IA"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "Peça à IA para identificar o título e o autor do livro aberto a partir do texto inicial."
 
 msgid "Assistant settings are not available."
 msgstr "As definições do assistente não estão disponíveis."
@@ -463,6 +465,9 @@ msgstr "Análises do Livro"
 
 msgid "Book Summary & Recs"
 msgstr "Resumo do Livro e Recomendações"
+
+msgid "Book metadata updated."
+msgstr "Metadados do livro atualizados."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "O ramo/etiqueta \"%1\" não foi encontrado."
@@ -540,6 +545,9 @@ msgstr "Notas Contextuais"
 msgid "Contextual Notes / Reflections"
 msgstr "Notas Contextuais / Reflexões"
 
+msgid "Continue"
+msgstr "Continuar"
+
 msgid "Contradictions / Open Questions"
 msgstr "Contradições / Perguntas em Aberto"
 
@@ -575,11 +583,17 @@ msgstr "Não foi possível criar a nota de IA."
 msgid "Could not create AI note: %1"
 msgstr "Não foi possível criar a nota de IA: %1"
 
+msgid "Could not extract text from this book."
+msgstr "Não foi possível extrair texto deste livro."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "Não foi possível listar a pasta de notas de IA: %1"
 
 msgid "Could not open AI note file."
 msgstr "Não foi possível abrir o ficheiro da nota de IA."
+
+msgid "Could not parse the identification result."
+msgstr "Não foi possível analisar o resultado da identificação."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "Eliminar o fornecedor %1?"
+
+msgid "Description: %1"
+msgstr "Descrição: %1"
 
 msgid "Device"
 msgstr "Dispositivo"
@@ -816,12 +833,22 @@ msgstr "Contexto Histórico"
 msgid "Historical and Cultural Context"
 msgstr "Contexto Histórico e Cultural"
 
+msgid "Identify (AI)"
+msgstr "Identificar (IA)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "Identificar este livro"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "Melhora a precisão das respostas com resultados da Web em tempo real. \n"
 "Nota: A utilização de tokens é maior e aplicam-se custos adicionais de API."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "Inferir o título e o autor do livro aberto a partir do texto inicial e guardá-los como metadados personalizados."
 
 msgid "Integrated Summary"
 msgstr "Resumo Integrado"
@@ -880,6 +907,9 @@ msgstr "Motor Markdown"
 msgid "Meaning & Usage"
 msgstr "Significado e utilização"
 
+msgid "Metadata could not be saved."
+msgstr "Não foi possível guardar os metadados."
+
 msgid "Minimalist Mode"
 msgstr "Modo minimalista"
 
@@ -930,6 +960,9 @@ msgstr "Nenhum fornecedor ativo configurado. Adicione um nas Definições."
 
 msgid "No base folder is available for AI Notes."
 msgstr "Não está disponível nenhuma pasta base para Notas de IA."
+
+msgid "No book is open."
+msgstr "Nenhum livro está aberto."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nenhum livro está aberto. Mantenha premido um livro no gestor de ficheiros e escolha Informações do Livro (IA)."
@@ -1241,6 +1274,18 @@ msgstr "Selecionar Nota de IA"
 msgid "Select a model:"
 msgstr "Selecione um modelo:"
 
+msgid "Set"
+msgstr "Definir"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"Definir os metadados do livro?\n"
+"Título: %1\n"
+"Autor: %2"
+
 msgid "Settings"
 msgstr "Definições"
 
@@ -1328,7 +1373,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Tome notas rápidas que serão guardadas nas suas Notas de IA."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
 
@@ -1352,6 +1396,9 @@ msgstr "Texto copiado para a área de transferência"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "O handler para %1 não foi encontrado. Certifique-se de que o handler existe no diretório api_handlers."
+
+msgid "The model could not identify this book."
+msgstr "O modelo não conseguiu identificar este livro."
 
 msgid "Thinking ..."
 msgstr "A pensar ..."
@@ -1421,6 +1468,9 @@ msgstr "Cronologia"
 msgid "Title"
 msgstr "Título"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "Os metadados do título ou do autor estão em falta ou incompletos, pelo que o resultado da IA pode não ser fiável. Utilize Identificar (IA) para os definir primeiro."
+
 msgid "To-Do / Action Items"
 msgstr "Tarefas / Itens de Ação"
 
@@ -1454,6 +1504,12 @@ msgstr "Escreva a sua pergunta aqui..."
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "Autor desconhecido"
+
+msgid "Unknown Title"
+msgstr "Título desconhecido"
 
 msgid "Unknown error"
 msgstr "Erro desconhecido"
@@ -1587,6 +1643,3 @@ msgstr "ex.: google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: falha ao analisar os dados devolvidos"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 11:27+0800\n"
+"POT-Creation-Date: 2026-10-15 17:10+0800\n"
 "PO-Revision-Date: 2026-08-13 03:59+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ಕನ್ನಡ (AI translation)\n"
@@ -94,10 +94,10 @@ msgstr "<b>Term X-Ray ಗಾಗಿ ಪುಸ್ತಕದ ಸಂದರ್ಭವ�
 
 msgid ""
 "<b>Ask a question about this book:</b>\n"
-"%1 by %2"
+"%1"
 msgstr ""
 "<b>ಈ ಪುಸ್ತಕದ ಬಗ್ಗೆ ಪ್ರಶ್ನೆ ಕೇಳಿ:</b>\n"
-"%1 ರಿಂದ %2"
+"%1"
 
 msgid ""
 "<b>Cannot access default folder for logs: %1</b>\n"
@@ -248,7 +248,6 @@ msgid "AI Recap will be enabled the next time a long-unread book is opened."
 msgstr "ದೀರ್ಘಕಾಲ ಓದದ ಪುಸ್ತಕವನ್ನು ಮುಂದಿನ ಬಾರಿ ತೆರೆದಾಗ AI ಮರುಸಾರಾಂಶ ಸಕ್ರಿಯಗೊಳ್ಳುತ್ತದೆ."
 
 #. @translators Action title. "Recap" is short for "recapitulation": a brief spoiler-free summary of what the reader has already read, to refresh memory. Keep consistent with "Recap" / "AI Recap" elsewhere.
-#. @translators Menu entry. Same "Recap" feature as elsewhere: a brief spoiler-free summary of what the reader has already read. Keep consistent with "Recap" / "AI Recap".
 msgid "AI Recaps"
 msgstr "AI ಮರುಸಾರಾಂಶಗಳು"
 
@@ -369,15 +368,15 @@ msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
 msgid ""
-"Are you sure to purge the assistant plugin settings? \n"
+"Are you sure to purge the assistant plugin settings?\n"
 "This resets the assistant plugin to the status the first time you installed it.\n"
 "\n"
 "configuration.lua is safe, only the settings are purged."
 msgstr ""
-"ನೀವು ಸಹಾಯಕ ಪ್ಲಗಿನ್ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ತೆರವುಗೊಳಿಸಲು ಖಚಿತವಾಗಿದ್ದೀರಾ? \n"
-"ಇದು ಸಹಾಯಕ ಪ್ಲಗಿನ್ ಅನ್ನು ನೀವು ಮೊದಲ ಬಾರಿ ಸ್ಥಾಪಿಸಿದ ಸ್ಥಿತಿಗೆ ಮರುಹೊಂದಿಸುತ್ತದೆ.\n"
+"ಸಹಾಯಕ ಪ್ಲಗಿನ್ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ಅಳಿಸಿಹಾಕುವುದು ಖಚಿತವೇ?\n"
+"ಇದು ಸಹಾಯಕ ಪ್ಲಗಿನ್ ಅನ್ನು ನೀವು ಮೊದಲ ಬಾರಿಗೆ ಸ್ಥಾಪಿಸಿದ ಸ್ಥಿತಿಗೆ ಮರುಹೊಂದಿಸುತ್ತದೆ.\n"
 "\n"
-"configuration.lua ಸುರಕ್ಷಿತವಾಗಿದೆ, ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ಮಾತ್ರ ತೆರವುಗೊಳಿಸಲಾಗುತ್ತದೆ."
+"configuration.lua ಸುರಕ್ಷಿತವಾಗಿದೆ, ಕೇವಲ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ಮಾತ್ರ ಅಳಿಸಲಾಗುತ್ತದೆ."
 
 msgid "Ask"
 msgstr "ಕೇಳಿ"
@@ -403,6 +402,9 @@ msgstr "ಏನಾದರೂ ಕೇಳಿ..."
 
 msgid "Ask the AI a question"
 msgstr "AI ಗೆ ಪ್ರಶ್ನೆ ಕೇಳಿ"
+
+msgid "Ask the AI to identify the open book's title and author from its opening text."
+msgstr "ತೆರೆದ ಪುಸ್ತಕದ ಶೀರ್ಷಿಕೆ ಮತ್ತು ಲೇಖಕರನ್ನು ಅದರ ಆರಂಭಿಕ ಪಠ್ಯದಿಂದ ಗುರುತಿಸಲು AI ಗೆ ಕೇಳಿ."
 
 msgid "Assistant settings are not available."
 msgstr "ಸಹಾಯಕ ಸೆಟ್ಟಿಂಗ್ಗಳು ಲಭ್ಯವಿಲ್ಲ."
@@ -463,6 +465,9 @@ msgstr "ಪುಸ್ತಕದ ಒಳನೋಟಗಳು"
 
 msgid "Book Summary & Recs"
 msgstr "ಪುಸ್ತಕ ಸಾರಾಂಶ ಮತ್ತು ಶಿಫಾರಸುಗಳು"
+
+msgid "Book metadata updated."
+msgstr "ಪುಸ್ತಕದ ಮೆಟಾಡೇಟಾ ನವೀಕರಿಸಲಾಗಿದೆ."
 
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ಬ್ರಾಂಚ್/ಟ್ಯಾಗ್ \"%1\" ಕಂಡುಬಂದಿಲ್ಲ."
@@ -540,6 +545,9 @@ msgstr "ಸಂದರ್ಭೋಚಿತ ಟಿಪ್ಪಣಿಗಳು"
 msgid "Contextual Notes / Reflections"
 msgstr "ಸಂದರ್ಭೋಚಿತ ಟಿಪ್ಪಣಿಗಳು / ಚಿಂತನೆಗಳು"
 
+msgid "Continue"
+msgstr "ಮುಂದುವರಿಸಿ"
+
 msgid "Contradictions / Open Questions"
 msgstr "ವಿರೋಧಾಭಾಸಗಳು / ಬಗೆಹರಿಯದ ಪ್ರಶ್ನೆಗಳು"
 
@@ -575,11 +583,17 @@ msgstr "AI ಟಿಪ್ಪಣಿ ರಚಿಸಲಾಗಲಿಲ್ಲ."
 msgid "Could not create AI note: %1"
 msgstr "AI ಟಿಪ್ಪಣಿ ರಚಿಸಲಾಗಲಿಲ್ಲ: %1"
 
+msgid "Could not extract text from this book."
+msgstr "ಈ ಪುಸ್ತಕದಿಂದ ಪಠ್ಯವನ್ನು ಹೊರತೆಗೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
+
 msgid "Could not list AI Notes folder: %1"
 msgstr "AI ಟಿಪ್ಪಣಿಗಳ ಫೋಲ್ಡರ್ ಪಟ್ಟಿ ಮಾಡಲಾಗಲಿಲ್ಲ: %1"
 
 msgid "Could not open AI note file."
 msgstr "AI ಟಿಪ್ಪಣಿ ಫೈಲ್ ತೆರೆಯಲಾಗಲಿಲ್ಲ."
+
+msgid "Could not parse the identification result."
+msgstr "ಗುರುತಿಸುವಿಕೆಯ ಫಲಿತಾಂಶವನ್ನು ವಿಶ್ಲೇಷಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
 
 msgid ""
 "Could not save to the selected AI note.\n"
@@ -633,6 +647,9 @@ msgstr ""
 
 msgid "Delete provider %1?"
 msgstr "ಪ್ರೊವೈಡರ್ %1 ಅನ್ನು ಅಳಿಸುವುದೇ?"
+
+msgid "Description: %1"
+msgstr "ವಿವರಣೆ: %1"
 
 msgid "Device"
 msgstr "ಸಾಧನ"
@@ -816,12 +833,22 @@ msgstr "ಐತಿಹಾಸಿಕ ಸಂದರ್ಭ"
 msgid "Historical and Cultural Context"
 msgstr "ಐತಿಹಾಸಿಕ ಮತ್ತು ಸಾಂಸ್ಕೃತಿಕ ಸಂದರ್ಭ"
 
+msgid "Identify (AI)"
+msgstr "ಗುರುತಿಸಿ (AI)"
+
+#. @translators Action title: infer a book's title/author from its opening text.
+msgid "Identify This Book"
+msgstr "ಈ ಪುಸ್ತಕವನ್ನು ಗುರುತಿಸಿ"
+
 msgid ""
 "Improves response accuracy with real-time web results. \n"
 "Note: Higher token usage and additional API charges apply."
 msgstr ""
 "ನೈಜ-ಸಮಯದ ವೆಬ್ ಫಲಿತಾಂಶಗಳೊಂದಿಗೆ ಪ್ರತಿಕ್ರಿಯೆಯ ನಿಖರತೆಯನ್ನು ಸುಧಾರಿಸುತ್ತದೆ. \n"
 "ಗಮನಿಸಿ: ಹೆಚ್ಚಿನ ಟೋಕನ್ ಬಳಕೆ ಮತ್ತು ಹೆಚ್ಚುವರಿ API ಶುಲ್ಕಗಳು ಅನ್ವಯಿಸುತ್ತವೆ."
+
+msgid "Infer the open book's title and author from its opening text and save them as custom metadata."
+msgstr "ತೆರೆದ ಪುಸ್ತಕದ ಶೀರ್ಷಿಕೆ ಮತ್ತು ಲೇಖಕರನ್ನು ಅದರ ಆರಂಭಿಕ ಪಠ್ಯದಿಂದ ಅನುಮಾನಿಸಿ, ಅವುಗಳನ್ನು ಕಸ್ಟಮ್ ಮೆಟಾಡೇಟಾ ಆಗಿ ಉಳಿಸಿ."
 
 msgid "Integrated Summary"
 msgstr "ಸಮಗ್ರ ಸಾರಾಂಶ"
@@ -880,6 +907,9 @@ msgstr "ಮಾರ್ಕ್ಡೌನ್ ಎಂಜಿನ್"
 msgid "Meaning & Usage"
 msgstr "ಅರ್ಥ ಮತ್ತು ಬಳಕೆ"
 
+msgid "Metadata could not be saved."
+msgstr "ಮೆಟಾಡೇಟಾವನ್ನು ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
+
 msgid "Minimalist Mode"
 msgstr "ಮಿನಿಮಲಿಸ್ಟ್ ಮೋಡ್"
 
@@ -930,6 +960,9 @@ msgstr "ಯಾವುದೇ ಸಕ್ರಿಯ ಪೂರೈಕೆದಾರ ಕಾ
 
 msgid "No base folder is available for AI Notes."
 msgstr "AI ಟಿಪ್ಪಣಿಗಳಿಗೆ ಯಾವುದೇ ಮೂಲ ಫೋಲ್ಡರ್ ಲಭ್ಯವಿಲ್ಲ."
+
+msgid "No book is open."
+msgstr "ಯಾವುದೇ ಪುಸ್ತಕ ತೆರೆದಿಲ್ಲ."
 
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "ಯಾವುದೇ ಪುಸ್ತಕ ತೆರೆದಿಲ್ಲ. ಫೈಲ್ ಮ್ಯಾನೇಜರ್‌ನಲ್ಲಿ ಪುಸ್ತಕವನ್ನು ದೀರ್ಘವಾಗಿ ಒತ್ತಿ ನಂತರ ಪುಸ್ತಕ ಮಾಹಿತಿ (AI) ಆಯ್ಕೆಮಾಡಿ."
@@ -1241,6 +1274,18 @@ msgstr "AI ಟಿಪ್ಪಣಿ ಆಯ್ಕೆಮಾಡಿ"
 msgid "Select a model:"
 msgstr "ಮಾದರಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ:"
 
+msgid "Set"
+msgstr "ಹೊಂದಿಸಿ"
+
+msgid ""
+"Set book metadata?\n"
+"Title: %1\n"
+"Author: %2"
+msgstr ""
+"ಪುಸ್ತಕದ ಮೆಟಾಡೇಟಾ ಹೊಂದಿಸುವುದೇ?\n"
+"ಶೀರ್ಷಿಕೆ: %1\n"
+"ಲೇಖಕ: %2"
+
 msgid "Settings"
 msgstr "ಸೆಟ್ಟಿಂಗ್ಗಳು"
 
@@ -1328,7 +1373,6 @@ msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "ನಿಮ್ಮ AI ಟಿಪ್ಪಣಿಗಳಿಗೆ ಉಳಿಸಲಾಗುವ ತ್ವರಿತ ಟಿಪ್ಪಣಿಗಳನ್ನು ಬರೆಯಿರಿ."
 
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
-#. @translators Button label. Same "Term X-Ray" feature as elsewhere: explains the selected word by scanning every occurrence across the book. Translate consistently with the other "Term X-Ray" button. Keep it short.
 msgid "Term X-Ray"
 msgstr "ಪದ X-Ray"
 
@@ -1352,6 +1396,9 @@ msgstr "ಪಠ್ಯವನ್ನು ಕ್ಲಿಪ್ಬೋರ್ಡ್ಗೆ �
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 ಗಾಗಿ ಹ್ಯಾಂಡ್ಲರ್ ಕಂಡುಬಂದಿಲ್ಲ. ದಯವಿಟ್ಟು api_handlers ಡೈರೆಕ್ಟರಿಯಲ್ಲಿ ಹ್ಯಾಂಡ್ಲರ್ ಇದೆಯೇ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ."
+
+msgid "The model could not identify this book."
+msgstr "ಮಾದರಿಯು ಈ ಪುಸ್ತಕವನ್ನು ಗುರುತಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
 
 msgid "Thinking ..."
 msgstr "ಯೋಚಿಸುತ್ತಿದೆ ..."
@@ -1421,6 +1468,9 @@ msgstr "ಕಾಲರೇಖೆ"
 msgid "Title"
 msgstr "ಶೀರ್ಷಿಕೆ"
 
+msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
+msgstr "ಶೀರ್ಷಿಕೆ ಅಥವಾ ಲೇಖಕರ ಮೆಟಾಡೇಟಾ ಕಾಣೆಯಾಗಿದೆ ಅಥವಾ ಅಪೂರ್ಣವಾಗಿದೆ, ಆದ್ದರಿಂದ AI ಫಲಿತಾಂಶವು ವಿಶ್ವಾಸಾರ್ಹವಾಗಿರದೇ ಇರಬಹುದು. ಮೊದಲು ಅದನ್ನು ಹೊಂದಿಸಲು ಗುರುತಿಸಿ (AI) ಬಳಸಿ."
+
 msgid "To-Do / Action Items"
 msgstr "ಮಾಡಬೇಕಾದ ಕಾರ್ಯಗಳು / ಕ್ರಿಯಾ ಐಟಂಗಳು"
 
@@ -1454,6 +1504,12 @@ msgstr "ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಇಲ್ಲಿ ಟ
 
 msgid "URL: %1"
 msgstr "URL: %1"
+
+msgid "Unknown Author"
+msgstr "ಅಜ್ಞಾತ ಲೇಖಕ"
+
+msgid "Unknown Title"
+msgstr "ಅಜ್ಞಾತ ಶೀರ್ಷಿಕೆ"
 
 msgid "Unknown error"
 msgstr "ಅಜ್ಞಾತ ದೋಷ"
@@ -1587,6 +1643,3 @@ msgstr "ಉದಾ. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: ಹಿಂದಿರುಗಿದ ಡೇಟಾವನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ"
-
-#~ msgid "https://..."
-#~ msgstr "https://..."
