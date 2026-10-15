@@ -1575,14 +1575,63 @@ end
       UIManager:show(InfoMessage:new{ text = _("Metadata could not be saved.") })
       return
     end
+    -- Upstream setCustomMetadata ends in updateBookInfo(), which refreshes the
+    -- Book Information dialog (kvp_widget, show). That dialog does not exist in
+    -- this headless flow, so the writes run on a proxy that shadows the UI tail
+    -- and keeps the primed settings cache on itself instead of the shared widget.
+    bi = setmetatable({ updateBookInfo = function() end }, { __index = bi })
+    -- Prime the cache like upstream bookInfo() so consecutive writes accumulate
+    -- into one object instead of each overwriting the file from scratch.
+    if bi.custom_doc_settings == nil then
+      local ok_ds, DocSettings = pcall(require, "docsettings")
+      if ok_ds and type(DocSettings) == "table" then
+        local existing_file = nil
+        if type(DocSettings.findCustomMetadataFile) == "function" then
+          pcall(function() existing_file = DocSettings:findCustomMetadataFile(file) end)
+        end
+        if type(DocSettings.openSettingsFile) == "function" then
+          local ok_open, opened = pcall(DocSettings.openSettingsFile, existing_file)
+          if ok_open and type(opened) == "table" then
+            bi.custom_doc_settings = opened
+          end
+        end
+      end
+    end
+    local succeeded = 0
+    local calls = {}
     if identified.title then
-      pcall(bi.setCustomMetadata, bi, file, book_props, "title", identified.title)
+      table.insert(calls, { "title", identified.title })
     end
     if identified.authors then
-      pcall(bi.setCustomMetadata, bi, file, book_props, "authors", identified.authors)
+      table.insert(calls, { "authors", identified.authors })
     end
     if identified.description then
-      pcall(bi.setCustomMetadata, bi, file, book_props, "description", identified.description)
+      table.insert(calls, { "description", identified.description })
+    end
+    for _, call in ipairs(calls) do
+      local ok_call = pcall(bi.setCustomMetadata, bi, file, book_props, call[1], call[2])
+      if ok_call then succeeded = succeeded + 1 end
+      -- Reload from disk so the next write in the batch accumulates instead of
+      -- starting from an empty object.
+      local ok_ds, DocSettings = pcall(require, "docsettings")
+      if ok_ds and type(DocSettings) == "table" and type(DocSettings.openSettingsFile) == "function" then
+        local existing_file = nil
+        if type(DocSettings.findCustomMetadataFile) == "function" then
+          pcall(function() existing_file = DocSettings:findCustomMetadataFile(file) end)
+        end
+        local ok_open, opened = pcall(DocSettings.openSettingsFile, existing_file)
+        if ok_open and type(opened) == "table" then
+          bi.custom_doc_settings = opened
+        elseif bi.custom_doc_settings == nil then
+          local ok_ds2, DocSettings2 = pcall(require, "docsettings")
+          if ok_ds2 and type(DocSettings2) == "table" and type(DocSettings2.openSettingsFile) == "function" then
+            local ok_o, opened2 = pcall(DocSettings2.openSettingsFile, nil)
+            if ok_o and type(opened2) == "table" then
+              bi.custom_doc_settings = opened2
+            end
+          end
+        end
+      end
     end
     if ui and ui.document and ui.document.file == file then
       local ok_fb, FB = pcall(require, "apps/filemanager/filemanagerbookinfo")
@@ -1591,7 +1640,11 @@ end
       end
     end
     UIManager:broadcastEvent(Event:new("BookMetadataChanged"))
-    Notification:notify(_("Book metadata updated."), Notification.SOURCE_ALWAYS_SHOW)
+    if succeeded > 0 then
+      Notification:notify(_("Book metadata updated."), Notification.SOURCE_ALWAYS_SHOW)
+    else
+      UIManager:show(InfoMessage:new{ text = _("Metadata could not be saved.") })
+    end
   end
 
   function Assistant:_identifyBookFlow(opening, file, commit_ui)

@@ -843,6 +843,137 @@ local identify_tests = {
         notification_mod.notify = saved_notify
     end),
 
+    test("commitIdentifiedMetadata accumulates all fields in the custom metadata file", function()
+        -- Faithful model of upstream BookInfo:setCustomMetadata (filemanagerbookinfo.lua:546):
+        -- writes accumulate only through self.custom_doc_settings; when it is
+        -- unset each call starts from an empty DocSettings.openSettingsFile()
+        -- object and flushCustomMetadata replaces the whole file, so uncached
+        -- consecutive writes clobber each other.
+        local FILE = "book.txt"
+        local file_disk = {}
+        local function new_bookinfo()
+            local bi = { custom_doc_settings = nil }
+            function bi:getDocProps() return {} end
+            function bi:setCustomMetadata(file, book_props, key, value)
+                local settings = self.custom_doc_settings
+                if not settings then
+                    settings = { data = {} }
+                end
+                local custom_props = {}
+                for k, v in pairs(settings.data.custom_props or {}) do custom_props[k] = v end
+                custom_props[key] = value
+                settings.data.custom_props = custom_props
+                local stored = { custom_props = {} }
+                for k, v in pairs(custom_props) do stored.custom_props[k] = v end
+                file_disk[file] = stored
+            end
+            return bi
+        end
+        local DocSettings_mock = {
+            open = function() return sidecar end,
+            findCustomMetadataFile = function() return nil end,
+            openSettingsFile = function(path)
+                return { data = { custom_props = {} } }
+            end,
+        }
+        local saved_ds = package.loaded["docsettings"]
+        package.loaded["docsettings"] = DocSettings_mock
+
+        local saved_notify = notification_mod.notify
+        notification_mod.notify = function() end
+        local UIManager = require("ui/uimanager")
+        local orig_show = UIManager.show
+        local orig_broadcast = UIManager.broadcastEvent
+        UIManager.show = function() end
+        UIManager.broadcastEvent = function() end
+        local FB = require("apps/filemanager/filemanagerbookinfo")
+        local orig_extend = FB.extendProps
+        FB.extendProps = function(props, file) return props end
+
+        -- Cleanup must run even when an assertion fails, or the stubs leak
+        -- into the remaining suites.
+        local ok, err = pcall(function()
+            -- First write batch: no custom metadata file exists yet.
+            local ui = { bookinfo = new_bookinfo() }
+            instance.ui = ui
+            instance:commitIdentifiedMetadata(ui, FILE, { title = "T", authors = "A", description = "D" })
+            local props1 = file_disk[FILE] and file_disk[FILE].custom_props or {}
+            assert.equal(props1.title, "T", "title must persist alongside the later fields")
+            assert.equal(props1.authors, "A", "authors must persist alongside the later fields")
+            assert.equal(props1.description, "D", "description must persist")
+
+            -- Second batch with a fresh BookInfo (uncached): existing fields load
+            -- and updates accumulate instead of replacing the whole metadata.
+            DocSettings_mock.findCustomMetadataFile = function() return FILE .. ".custom.lua" end
+            DocSettings_mock.openSettingsFile = function(path)
+                local data = { custom_props = {} }
+                for k, v in pairs((file_disk[FILE] or {}).custom_props or {}) do
+                    data.custom_props[k] = v
+                end
+                return { data = data }
+            end
+            local ui2 = { bookinfo = new_bookinfo() }
+            instance.ui = ui2
+            instance:commitIdentifiedMetadata(ui2, FILE, { title = "T2", authors = "A2" })
+            local props2 = file_disk[FILE] and file_disk[FILE].custom_props or {}
+            assert.equal(props2.title, "T2", "title updated")
+            assert.equal(props2.authors, "A2", "authors updated")
+            assert.equal(props2.description, "D", "untouched description survives the update")
+        end)
+
+        UIManager.show = orig_show
+        UIManager.broadcastEvent = orig_broadcast
+        FB.extendProps = orig_extend
+        notification_mod.notify = saved_notify
+        package.loaded["docsettings"] = saved_ds
+        if not ok then error(err, 0) end
+    end),
+
+    test("headless writes never reach the Book Information dialog refresh", function()
+        -- Upstream setCustomMetadata ends in updateBookInfo(), which indexes the
+        -- dialog's kvp_widget. The commit path must shadow that tail, or every
+        -- write reports failure although the metadata file is already written.
+        local FILE = "book.txt"
+        local saved_notify = notification_mod.notify
+        local notify_count = 0
+        notification_mod.notify = function() notify_count = notify_count + 1 end
+        local UIManager = require("ui/uimanager")
+        local orig_show = UIManager.show
+        local orig_broadcast = UIManager.broadcastEvent
+        local show_info = false
+        UIManager.show = function(self, w)
+            if type(w) == "table" and type(w.text) == "string"
+                and w.text:find("could not be saved", 1, true) then
+                show_info = true
+            end
+        end
+        UIManager.broadcastEvent = function() end
+        local FB = require("apps/filemanager/filemanagerbookinfo")
+        local orig_extend = FB.extendProps
+        FB.extendProps = function(props, file) return props end
+
+        local ui = {
+            bookinfo = {
+                updateBookInfo = function() error("kvp_widget is nil outside the dialog") end,
+                setCustomMetadata = function(self, file, book_props, key, value)
+                    self.updateBookInfo(file, book_props, key, value) -- upstream tail
+                end,
+            },
+        }
+        instance.ui = ui
+        local ok, err = pcall(function()
+            instance:commitIdentifiedMetadata(ui, FILE, { title = "T" })
+        end)
+
+        UIManager.show = orig_show
+        UIManager.broadcastEvent = orig_broadcast
+        FB.extendProps = orig_extend
+        notification_mod.notify = saved_notify
+        if not ok then error(err, 0) end
+        assert.equal(notify_count, 1, "the write must count as a success")
+        assert.isFalse(show_info, "no failure message")
+    end),
+
     test("identify commit title only", function()
         reset_state()
         local ui = {}
@@ -1110,6 +1241,82 @@ table.insert(tests, test("FM identify commit refreshes doc_props only when open 
     FB.extendProps = orig_extend
     ConfirmBox.new = saved_new
 end))
+
+
+
+local notification_mod = package.loaded["ui/widget/notification"]
+
+local feedback_tests = {
+    test("identify commit reports failure when setCustomMetadata errors", function()
+        reset_state()
+        local ui = {}
+        ui.doc_props = {}
+        ui.bookinfo = {
+            setCustomMetadata = function() error("boom") end,
+        }
+        instance.ui = ui
+
+        local notify_count = 0
+        local saved_notify = notification_mod.notify
+        notification_mod.notify = function() notify_count = notify_count + 1 end
+        local UIManager = require("ui/uimanager")
+        local orig_show = UIManager.show
+        local orig_broadcast = UIManager.broadcastEvent
+        local show_info = false
+        UIManager.show = function(self, w)
+            if type(w) == "table" and type(w.text) == "string"
+                and w.text:find("could not be saved", 1, true) then
+                show_info = true
+            end
+        end
+        UIManager.broadcastEvent = function() end
+
+        instance:commitIdentifiedMetadata(ui, "book.epub", { title = "T" })
+
+        assert.equal(notify_count, 0, "no notify on failure")
+        assert.isTrue(show_info, "failure InfoMessage shown")
+
+        UIManager.show = orig_show
+        UIManager.broadcastEvent = orig_broadcast
+        notification_mod.notify = saved_notify
+    end),
+
+    test("identify commit notifies once on success", function()
+        reset_state()
+        local ui = {}
+        ui.doc_props = {}
+        ui.bookinfo = {
+            setCustomMetadata = function() end,
+        }
+        instance.ui = ui
+
+        local notify_count = 0
+        local saved_notify = notification_mod.notify
+        notification_mod.notify = function() notify_count = notify_count + 1 end
+        local UIManager = require("ui/uimanager")
+        local orig_show = UIManager.show
+        local orig_broadcast = UIManager.broadcastEvent
+        local show_info = false
+        UIManager.show = function(self, w)
+            if type(w) == "table" and type(w.text) == "string"
+                and w.text:find("could not be saved", 1, true) then
+                show_info = true
+            end
+        end
+        UIManager.broadcastEvent = function() end
+
+        instance:commitIdentifiedMetadata(ui, "book.epub", { title = "T" })
+
+        assert.equal(notify_count, 1, "notify once on success")
+        assert.isFalse(show_info, "no failure InfoMessage")
+
+        UIManager.show = orig_show
+        UIManager.broadcastEvent = orig_broadcast
+        notification_mod.notify = saved_notify
+    end),
+}
+
+helper.runTests("assistant_identify_feedback", feedback_tests)
 
 local result = helper.runTests("assistant_filemanager_bookinfo", tests)
 
