@@ -231,7 +231,7 @@ function M.setupRecap(assistant)
             local percent_finished = doc_settings:readSetting("percent_finished") or 0
             local time_diff_hours = math.floor((os.time() - last_read) / 3600)
             if time_diff_hours < 0 then time_diff_hours = 0 end
-            if time_diff_hours >= 28 and percent_finished > 0 and percent_finished <= 0.95 then
+            if time_diff_hours >= 28 and percent_finished >= 0.03 and percent_finished <= 0.95 then
                 local DocUtils = require("utils/doc")
                 local meta = DocUtils.getBookMeta(assistant and assistant.ui, file)
                 local title = meta.title or meta.display_title or _("Unknown Title")

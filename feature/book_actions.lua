@@ -583,28 +583,43 @@ function M.onAskAIRecapForFile(assistant, file, book_props)
     })
     return true
   end
-  local notebook_path
-  if Notebook.isEnabled(assistant) then
-    local ok, path = pcall(Notebook.getBookNotebookPath, assistant, file)
-    if ok and type(path) == "string" and path ~= "" then
-      notebook_path = path
-    elseif not ok then
-      logger.warn("Assistant: Could not compute per-book notebook path:", path)
+
+  local function continue_with_recap()
+    local notebook_path
+    if Notebook.isEnabled(assistant) then
+      local ok, path = pcall(Notebook.getBookNotebookPath, assistant, file)
+      if ok and type(path) == "string" and path ~= "" then
+        notebook_path = path
+      elseif not ok then
+        logger.warn("Assistant: Could not compute per-book notebook path:", path)
+      end
     end
-  end
-  local function launch()
-    NetUtils.runWhenOnlineFast(function()
-      local showFeatureDialog = require("dialogs/feature")
-      Trapper:wrap(function()
-        showFeatureDialog(assistant, "recap", book.title, book.authors, percent, nil, notebook_path)
+    local function launch()
+      NetUtils.runWhenOnlineFast(function()
+        local showFeatureDialog = require("dialogs/feature")
+        Trapper:wrap(function()
+          showFeatureDialog(assistant, "recap", book.title, book.authors, percent, nil, notebook_path)
+        end)
       end)
-    end)
+    end
+    if not book or not book.title or not book.authors then
+      M.confirmMissingMetadata(assistant, launch)
+      return
+    end
+    launch()
   end
-  if not book or not book.title or not book.authors then
-    M.confirmMissingMetadata(assistant, launch)
+
+  if percent > 0 and percent < 0.03 then
+    UIManager:show(ConfirmBox:new{
+      text = _("You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"),
+      ok_text = _("Continue"),
+      cancel_text = _("Cancel"),
+      ok_callback = continue_with_recap,
+    })
     return true
   end
-  launch()
+
+  continue_with_recap()
   return true
 end
 
