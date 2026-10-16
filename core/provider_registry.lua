@@ -1182,7 +1182,8 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                     UIManager:show(InfoMessage:new{ text = _("API key is required.") })
                     return
                 end
-                if is_edit then
+                if is_edit and edit_id then
+                    ---@cast edit_id string
                     local saved, err = Registry.updateProvider(assistant, edit_id, name, url, api_key, model)
                     if not saved then
                         UIManager:show(InfoMessage:new{
@@ -1229,11 +1230,13 @@ function Registry.showProviderDialog(assistant, preset_name, handler, base_url, 
                     ok_text = _("Delete"),
                     ok_callback = function()
                         local ui_data = assistant._ui_provider_data
+                        ---@cast edit_id string
                         Registry.delete(ui_data, edit_id)
                         Registry.save(assistant.settings, ui_data)
                         assistant.config:deleteProvider(edit_id)
 
                         -- Clean up reasoning overlay for the deleted provider.
+                        ---@cast edit_id string
                         assistant.settings:delSetting(Registry.getReasoningKey(edit_id))
 
                         -- Fallback: reselect a valid provider

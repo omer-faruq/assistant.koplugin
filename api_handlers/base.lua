@@ -25,6 +25,7 @@ local json_default = ASUtils.json_default
 --- Local time to UTC epoch.
 local function _localToUtcEpoch(time)
     local utc = os.date("!*t", time)
+    ---@cast utc osdate
     local diff = os.difftime(time, os.time(utc))
     return time + diff
 end

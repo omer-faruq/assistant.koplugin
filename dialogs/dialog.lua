@@ -67,6 +67,8 @@ local function buildBookTextPrompt(use_chapter, book_text)
 end
 
 -- main dialog class
+---@class AssistantDialog
+---@field assistant any
 local AssistantDialog = {
   assistant = nil,
   querier = nil,

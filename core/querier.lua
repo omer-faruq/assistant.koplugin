@@ -1000,6 +1000,7 @@ function Querier:processStream(bgQuery, trunk_callback)
                 completed = true
                 break
             else
+                ---@cast bytes_read integer
                 partial_data:commit(bytes_read)
 
                 -- Process complete lines: serialize once, then split in a single pass.
