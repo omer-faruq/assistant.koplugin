@@ -268,6 +268,28 @@ function StreamDialog:init()
     -- Budget the row through _added_widgets, then move it under the title bar.
     self._added_widgets = { self._status_row }
     InputDialog.init(self)
+    -- Stash Provider/Model for reinit.
+    if self.description then
+        self._provider_subtitle = self.description
+        self.description = nil
+    end
+    -- Provider/Model subtitle.
+    local TitleBar = require("ui/widget/titlebar")
+    self.title_bar = TitleBar:new{
+        width = self.width,
+        align = "left",
+        with_bottom_line = true,
+        title = self.title,
+        subtitle = self._provider_subtitle,
+        subtitle_face = Font:getFace("xx_smallinfofont", 16),
+        title_multilines = true,
+        bottom_v_padding = self.bottom_v_padding,
+        title_face = self.title_face,
+        left_icon = self.title_bar_left_icon,
+        left_icon_tap_callback = self.title_bar_left_icon_tap_callback,
+        show_parent = self,
+    }
+    self.vgroup[1] = self.title_bar
     self._added_widgets = nil
     for i = 2, #self.vgroup do
         if self.vgroup[i] == self._status_row then
@@ -798,9 +820,7 @@ function Querier:showStremDialog(res, request_title, request_identity)
 
     streamDialog = StreamDialog:new{
         title = request_title or _("AI is responding"),
-        description = TextUtils.bold_format(
-            T("✦ %1/<b>%2</b>", request_identity.label, request_identity.model)
-        ),
+        description = T("✦ %1/%2", request_identity.label, request_identity.model),
         inputtext_class = StreamText, -- use our custom InputText class
         input_face = Font:getFace("infofont", self.settings:readSetting("response_font_size") or 20),
         title_bar_left_icon = "appbar.settings",
