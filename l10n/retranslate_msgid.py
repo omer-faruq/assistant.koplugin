@@ -1,26 +1,48 @@
 #!/usr/bin/env python3
 """Empty one msgid's translation so the next pipeline run retranslates it.
 
-Usage:
-    ./retranslate_msgid.py <lang_dir> <msgid>
+Usage: ./retranslate_msgid.py <lang_dir> <msgid>
 
-Loads <lang_dir>/assistant.po, clears the msgstr (or msgstr_plural) and any
-fuzzy flag of the entry whose msgid matches exactly, and saves the file in
-place. The Makefile's `retranslate-msgid` target calls this for every
-language, then re-runs extract -> ai-translate -> import for just that entry.
+<lang_dir> is a locale directory holding assistant.po (e.g. `ja`); <msgid>
+is matched exactly, including <b> markup and %N placeholders. The matching
+entry's msgstr (or msgstr_plural) and fuzzy flag are cleared, and the file
+is saved in place. Normally run via `make retranslate-msgid MSGID="..."
+[L10N_LANG=xx]`, which retranslates the emptied entries afterwards.
 
-Exit status is 0 when there is nothing to do (file/entry missing, or the
-entry is already untranslated); non-zero only on parse/write errors.
+Exit status: 0 on success and when there is nothing to do (missing file or
+entry, already untranslated); non-zero on bad arguments and catalogues that
+cannot be read or parsed.
 """
 
+from __future__ import annotations
+
+import argparse
 import os
 import sys
 
 import polib
 
 
-def main(argv: list[str]) -> int:
-    lang_dir, msgid = argv[1], argv[2]
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        prog="retranslate_msgid.py",
+        description="Empty one exact msgid's translation in a locale's "
+                    "assistant.po so the next pipeline run retranslates it.",
+        epilog="Normally run via `make retranslate-msgid MSGID=\"...\" "
+               "[L10N_LANG=xx]`.",
+    )
+    parser.add_argument(
+        "lang_dir",
+        help="locale directory holding assistant.po, e.g. 'ja' (resolved "
+             "against the current directory)",
+    )
+    parser.add_argument(
+        "msgid",
+        help="exact msgid to empty, including <b> markup and %%N placeholders",
+    )
+    args = parser.parse_args(argv)
+    lang_dir, msgid = args.lang_dir, args.msgid
+
     path = f"{lang_dir}/assistant.po"
     if not os.path.isfile(path):
         print(f"[{lang_dir}] no assistant.po, skipped")
@@ -57,7 +79,4 @@ def main(argv: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print(__doc__.strip().splitlines()[2].strip())
-        sys.exit(2)
-    sys.exit(main(sys.argv))
+    sys.exit(main())
