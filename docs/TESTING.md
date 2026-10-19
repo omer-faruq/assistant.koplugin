@@ -11,7 +11,8 @@ The suite runs inside KOReader's LuaJIT runtime via `setupkoenv` with UI modules
 - UI widget test: `./test/runui.sh model_picker` (add `-w=1072 -h=1448 -d=300` or `-s=kobo-clara` to simulate a device)
 - Visual/screenshot test: `SDL_VIDEODRIVER=dummy ./test/runui.sh ui/<script>` (see [Visual verification](#visual-verification-preferred-over-source-scans))
 - Translation (only when explicitly requested): `cd l10n && make check`
-- Before committing: `./test/run.sh` — CI ships without running tests.
+- Static diagnostics: `./test/run_diagnose.sh [level]` — run after the unit suite (see [Static diagnostics](#static-diagnostics-lua-language-server))
+- Before committing: `./test/run.sh`, then `./test/run_diagnose.sh` — CI ships without running tests.
 
 ## How it works
 
@@ -53,6 +54,15 @@ Some invariants are enforced by source-scanning tests rather than runtime checks
 
 - `test/test_gettext_loop_shadow.lua` — no `_()` call inside a `for _,` loop body (`_` gets shadowed by the loop variable).
 - `test/test_gettext_ascii_msgids.lua` — every `_()`/`N_()`/`C_()`/`NC_()` msgid is US-ASCII. Non-ASCII msgids trigger gettext's msgattrib header-loss bug and corrupt glyphs (commit `0353186`); the offenders spanned U+2011 (‑) through U+1F4A1 (💡). Put Unicode punctuation/symbols/emoji outside `_()`.
+
+## Static diagnostics (lua-language-server)
+
+`./test/run_diagnose.sh` runs a `lua-language-server --check` pass over the source tree with `.luarc.json` — the same whole-project diagnostics an editor shows. Run it after the unit suite, not instead of it.
+
+- Default check level is `Warning`; pass a level to widen or narrow the scan: `./test/run_diagnose.sh Information`.
+- The server is not part of KOReader's runtime. The script searches PATH and a few common per-user locations first; when none is found it prints `lua-language-server not found; skipping diagnostic scan.` and exits 0, so `./test/run.sh && ./test/run_diagnose.sh` is safe to always run.
+- Clean scan exits 0; any problem exits non-zero, with the diagnostics printed before the `Diagnostic scan: problems found` line. Detailed logs and metadata go to `${TMPDIR:-/tmp}/assistant_luaserver_log` and `..._meta`.
+- `workspace.ignoreDir` in `.luarc.json` keeps `l10n/`, `lib/` and `test/` out of the scan; a warning that still appears is worth fixing.
 
 ## UI test scripts
 

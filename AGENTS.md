@@ -22,7 +22,7 @@ Guidance for AI agents working in `assistant.koplugin` (KOReader AI assistant pl
 - No build step; Lua files run directly.
 - Syntax: `/usr/lib/koreader/luajit -e "assert(loadfile('main.lua'))"`. **Never** `luajit -bl` (stripped build lacks `jit.*`).
 - Tests: `./test/run.sh` (all) or `./test/run.sh <module>`. UI: `./test/runui.sh <name>`. Translation: `cd l10n && make check` (only when explicitly requested). Full detail: `docs/TESTING.md`.
-- Run `./test/run.sh` before committing — CI ships without running tests.
+- Before committing: `./test/run.sh`, then `./test/run_diagnose.sh` (lua-language-server scan; skips when absent) — CI ships without running tests.
 
 ## Architecture (map)
 
