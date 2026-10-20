@@ -52,7 +52,7 @@ local tests = {
             { parsed = {
                 reconstructed_markdown = nil,
                 references = {
-                    { index = 1, title = "Source One", source = "Web" },
+                    { index = 1, title = "Source One", source = "Web", snippet = "Fallback snippet" },
                     { index = 2, title = "Source Two", source = "Blog" },
                 },
             }, err = nil },
@@ -60,9 +60,23 @@ local tests = {
         local ok, result = extools.serpapi:SearchKeywords("test query")
         assert.isTrue(ok)
         assert.matches(result, "Source One")
-        assert.matches(result, "Source Two")
-        assert.matches(result, "Web")
-        assert.matches(result, "Blog")
+        assert.matches(result, "Fallback snippet")
+        assert.matches(result, "\n%[2%] Source Two %(Blog%)\n")
+    end),
+
+    test("SerpAPI: falls back to text_blocks when reconstructed_markdown is absent", function()
+        helper.mockFetchJSON({
+            { parsed = {
+                text_blocks = {
+                    { type = "paragraph", snippet = "Block paragraph." },
+                    { type = "list", list = { { snippet = "Item A" } } },
+                },
+            }, err = nil },
+        })
+        local ok, result = extools.serpapi:SearchKeywords("test query")
+        assert.isTrue(ok)
+        assert.matches(result, "Block paragraph.")
+        assert.matches(result, "- Item A\n")
     end),
 
     test("SerpAPI: no results returns error", function()
@@ -176,22 +190,29 @@ local tests = {
     -- SearXNG: SearchKeywords
     -- =========================================================================
 
-    test("SearXNG: successful search with results", function()
+    test("SearXNG: successful search with results caps count and extracts domain", function()
+        local items = {}
+        for i = 1, 7 do
+            items[i] = {
+                title = "Page " .. i,
+                url = "https://www.example.com/path/" .. i,
+                content = "Content " .. i,
+            }
+        end
         helper.mockFetchJSON({
             { parsed = {
-                results = {
-                    { title = "Page 1", url = "https://example.com/1", content = "Content 1" },
-                    { title = "Page 2", url = "https://example.com/2", content = "Content 2" },
-                },
+                answers = { "Direct answer" },
+                results = items,
             }, err = nil },
         })
         local ok, result = extools.searxngapi:SearchKeywords("test query")
         assert.isTrue(ok)
-        assert.matches(result, "Page 1")
-        assert.matches(result, "https://example.com/1")
-        assert.matches(result, "Content 1")
-        assert.matches(result, "Page 2")
-        assert.matches(result, "https://example.com/2")
+        assert.matches(result, "Direct answer")
+        assert.matches(result, "### Source 1: Page 1 %(example%.com%)\n")
+        assert.matches(result, "Content 1\n")
+        assert.matches(result, "Page 5")
+        assert.notMatches(result, "Page 6")
+        assert.notMatches(result, "https://www.example.com/path/1")
     end),
 
     test("SearXNG: missing results field returns error", function()
@@ -236,31 +257,25 @@ local tests = {
         assert.matches(result, "highlight 1b")
     end),
 
-    test("Exa.ai: search with subpages", function()
+    test("Exa.ai: formats domain, date, and handles rapidjson.null fields", function()
+        local json = require("rapidjson")
         helper.mockFetchJSON({
             { parsed = {
                 results = {
                     {
                         title = "Main Doc",
-                        summary = "Main summary",
-                        subpages = {
-                            {
-                                title = "Subpage 1",
-                                summary = "Sub summary",
-                                highlights = { "sub highlight" },
-                            },
-                        },
+                        url = "https://docs.exa.ai/reference/search",
+                        publishedDate = "2026-03-15T10:00:00Z",
+                        summary = json.null,
+                        highlights = { "excerpt one", "excerpt two" },
                     },
                 },
             }, err = nil },
         })
         local ok, result = extools.exaapi:SearchKeywords("test query")
         assert.isTrue(ok)
-        assert.matches(result, "Main Doc")
-        assert.matches(result, "Main summary")
-        assert.matches(result, "Subpage 1")
-        assert.matches(result, "Sub summary")
-        assert.matches(result, "sub highlight")
+        assert.matches(result, "### Source 1: Main Doc %(docs%.exa%.ai, 2026%-03%-15%)\n")
+        assert.matches(result, "  %- excerpt one\n  %- excerpt two\n")
     end),
 
     test("Exa.ai: missing results field returns error", function()

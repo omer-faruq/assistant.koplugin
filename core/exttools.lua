@@ -11,6 +11,73 @@ local json_default = ASUtils.json_default
 -- Search API helpers
 -- ---------------------------------------------------------------------------
 
+local MAX_SERPAPI_REFS    = 5
+local MAX_SEARXNG_RESULTS = 5
+
+local function extract_domain(url)
+    url = json_default(url)
+    if type(url) ~= "string" then
+        return nil
+    end
+    local host = url:match("^https?://([^/:?#]+)")
+    if host then
+        host = host:gsub("^www%.", "")
+    end
+    return (host and host ~= "") and host or nil
+end
+
+local function trim_date(date_str)
+    date_str = json_default(date_str)
+    if type(date_str) ~= "string" or date_str == "" then
+        return nil
+    end
+    return date_str:match("^(%d%d%d%d%-%d%d%-%d%d)") or date_str
+end
+
+local function put_source_header(segments, idx, title, source, date)
+    title = json_default(title, "Untitled")
+    source = json_default(source)
+    date = trim_date(date)
+    segments:put("---\n")
+    if source and source ~= "" and date then
+        segments:putf("### Source %d: %s (%s, %s)\n", idx, title, source, date)
+    elseif source and source ~= "" then
+        segments:putf("### Source %d: %s (%s)\n", idx, title, source)
+    elseif date then
+        segments:putf("### Source %d: %s (%s)\n", idx, title, date)
+    else
+        segments:putf("### Source %d: %s\n", idx, title)
+    end
+end
+
+local function extract_text_blocks(blocks)
+    if type(blocks) ~= "table" then
+        return nil
+    end
+    local buf = strbuf.new()
+    for idx, block in ipairs(blocks) do
+        if type(block) == "table" then
+            local snippet = json_default(block.snippet)
+            if type(snippet) == "string" and snippet ~= "" then
+                buf:put(snippet)
+                buf:put("\n")
+            end
+            if type(block.list) == "table" then
+                for ldx, item in ipairs(block.list) do
+                    if type(item) == "table" then
+                        local item_snippet = json_default(item.snippet)
+                        if type(item_snippet) == "string" and item_snippet ~= "" then
+                            buf:putf("- %s\n", item_snippet)
+                        end
+                    end
+                end
+            end
+        end
+    end
+    local out = buf:get()
+    return out ~= "" and out or nil
+end
+
 local SearchToolBase = {
     name = "",
     is_external = false,
@@ -36,9 +103,11 @@ local serpapi = SearchToolBase:new({
 function serpapi:SearchKeywords(keywords, trap_widget, config)
     config = config or {}
     local search_url = (config.base_url or "https://serpapi.com") .. "/search"
-    local key       = config.api_key
-    local q         = koutil.urlEncode(keywords)
-    local url       = T("%1?engine=google_ai_mode&api_key=%2&q=%3", search_url, key, q)
+    local key        = config.api_key
+    local q          = koutil.urlEncode(keywords)
+    local restrictor = "reconstructed_markdown,text_blocks,references,error"
+    local url        = T("%1?engine=google_ai_mode&json_restrictor=%2&api_key=%3&q=%4",
+        search_url, restrictor, key, q)
 
     local parsed, err = NetUtils.fetchJSON(url, nil, trap_widget, 45, 120)
     if not parsed then
@@ -48,23 +117,37 @@ function serpapi:SearchKeywords(keywords, trap_widget, config)
         return false, err
     end
 
-    if not parsed.reconstructed_markdown and not parsed.references then
+    local summary = json_default(parsed.reconstructed_markdown)
+    if type(summary) ~= "string" or summary == "" then
+        summary = extract_text_blocks(parsed.text_blocks)
+    end
+    local refs = type(parsed.references) == "table" and parsed.references or nil
+
+    if not summary and not refs then
         return false, "No relevant search or AI summary results found."
     end
 
     local segments = strbuf.new()
-    if json_default(parsed.reconstructed_markdown) then
+    if summary then
         segments:put("## Google AI Summary:\n")
-        segments:put(parsed.reconstructed_markdown)
+        segments:put(summary)
         segments:put("\n")
     end
-    if parsed.references and #parsed.references > 0 then
-        segments:put( "## Verified Sources (References):")
-        for _, ref in ipairs(parsed.references) do
-            local idx         = json_default(ref.index, 0)
-            local title       = json_default(ref.title, "Untitled Source")
-            local source_name = json_default(ref.source, "Web")
-            segments:putf("[%d] %s (%s)", idx, title, source_name)
+    if refs and #refs > 0 then
+        segments:put("## Verified Sources (References):\n")
+        for i = 1, math.min(#refs, MAX_SERPAPI_REFS) do
+            local ref = refs[i]
+            if type(ref) == "table" then
+                local idx         = json_default(ref.index, i)
+                local title       = json_default(ref.title, "Untitled Source")
+                local source_name = json_default(ref.source) or extract_domain(ref.link) or "Web"
+                local snippet     = not summary and json_default(ref.snippet) or nil
+                if type(snippet) == "string" and snippet ~= "" then
+                    segments:putf("[%d] %s (%s): %s\n", idx, title, source_name, snippet)
+                else
+                    segments:putf("[%d] %s (%s)\n", idx, title, source_name)
+                end
+            end
         end
     end
     segments:put("\n")
@@ -99,8 +182,8 @@ function tavily:SearchKeywords(keywords, trap_widget, config)
     local search_url = (config.base_url or "https://api.tavily.com") .. "/search"
     local requestBodyTable = {
         api_key              = config.api_key,
-        auto_parameters      = true,
         max_results          = 3,
+        chunks_per_source    = 2,
         search_depth         = "basic",
         include_answer       = true,
         include_raw_content  = false,
@@ -115,24 +198,28 @@ function tavily:SearchKeywords(keywords, trap_widget, config)
         end
         return false, err
     end
-    if not parsed.results then
+    if type(parsed.results) ~= "table" then
         return false, "fail to parse tavily return"
     end
 
     local segments = strbuf.new()
-    if json_default(parsed.answer) then
+    local answer = json_default(parsed.answer)
+    if type(answer) == "string" and answer ~= "" then
         segments:put("## Summary\n")
-        segments:put(parsed.answer)
+        segments:put(answer)
         segments:put("\n")
     end
     segments:put("Here are the verified search results:\n")
     for i, item in ipairs(parsed.results) do
-        segments:put("---")
-        segments:putf("### Source %d: %s", i, json_default(item.title, "Untitled"))
-        -- segments:put( string.format("* URL: %s", json_default(item.url, "N/A")))
-        segments:put("* Summary: ")
-        segments:put(json_default(item.content, ""))
-        segments:put("\n")
+        if type(item) == "table" then
+            put_source_header(segments, i, item.title, extract_domain(item.url), item.published_date)
+            local content = json_default(item.content, "")
+            if content ~= "" then
+                segments:put("* Summary: ")
+                segments:put(content)
+                segments:put("\n")
+            end
+        end
     end
     segments:put("\n")
     return true, segments:get()
@@ -173,21 +260,59 @@ function searxng:SearchKeywords(keywords, trap_widget, config)
         end
         return false, err
     end
-    if not parsed.results then
+    if type(parsed.results) ~= "table" then
         return false, "fail to parse searxng return"
     end
 
     local segments = strbuf.new()
+    if type(parsed.answers) == "table" and #parsed.answers > 0 then
+        segments:put("## Direct Answers:\n")
+        for idx, ans in ipairs(parsed.answers) do
+            local text = type(ans) == "table" and json_default(ans.answer) or json_default(ans)
+            if type(text) == "string" and text ~= "" then
+                segments:putf("- %s\n", text)
+            end
+        end
+    end
+    local infobox = koutil.tableGetValue(parsed, "infoboxes", 1)
+    if type(infobox) == "table" then
+        local ib_title   = json_default(infobox.infobox)
+        local ib_content = json_default(infobox.content)
+        if type(ib_content) == "string" and ib_content ~= "" then
+            if type(ib_title) == "string" and ib_title ~= "" then
+                segments:putf("## Infobox: %s\n%s\n", ib_title, ib_content)
+            else
+                segments:putf("## Infobox:\n%s\n", ib_content)
+            end
+        end
+    end
+
     segments:put("## Web Search Results:\n")
+    local count = 0
     for i, item in ipairs(parsed.results) do
-        segments:put("---")
-        segments:putf("### Source %d: %s", i, json_default(item.title, "Untitled"))
-        segments:put("* URL: ")
-        segments:put(json_default(item.url, "N/A"))
-        segments:put("\n")
-        segments:put("* Summary: ")
-        segments:put(json_default(item.content, ""))
-        segments:put("\n")
+        if type(item) == "table" then
+            local content = json_default(item.content, "")
+            local title = json_default(item.title)
+            if content ~= "" or title then
+                count = count + 1
+                local host = json_default(koutil.tableGetValue(item, "parsed_url", 2))
+                if type(host) == "string" then
+                    host = host:gsub("^www%.", "")
+                else
+                    host = extract_domain(item.url)
+                end
+                local pub_date = json_default(item.publishedDate) or json_default(item.pubdate)
+                put_source_header(segments, count, title, host, pub_date)
+                if content ~= "" then
+                    segments:put("* Summary: ")
+                    segments:put(content)
+                    segments:put("\n")
+                end
+                if count >= MAX_SEARXNG_RESULTS then
+                    break
+                end
+            end
+        end
     end
     segments:put("\n")
     return true, segments:get()
@@ -206,8 +331,9 @@ function exaai:SearchKeywords(keywords, trap_widget, config)
         type       = "auto",
         numResults = 5,
         contents   = {
-            highlights = true,
-            summary    = true,
+            highlights = {
+                maxCharacters = 800,
+            },
         },
     }
     local requestBody = json.encode(requestBodyTable)
@@ -220,46 +346,32 @@ function exaai:SearchKeywords(keywords, trap_widget, config)
         end
         return false, err
     end
-    if not parsed.results then
+    if type(parsed.results) ~= "table" then
         return false, "fail to parse exa.ai return"
     end
 
     local segments = strbuf.new()
     segments:put("## Exa.ai Search Results:\n\n")
     for i, item in ipairs(parsed.results) do
-        segments:put("---")
-        segments:putf("### Source %d: %s", i, json_default(item.title, "Untitled"))
-        -- segments:put("* URL: ")
-        -- segments:put(json_default(item.url, "N/A"))
-        segments:put("\n")
-        if item.summary then
-            segments:put("* Summary: ")
-            segments:put(item.summary)
-            segments:put("\n")
-        end
-        if item.highlights and #item.highlights > 0 then
-            segments:put("* Key Excerpts:\n")
-            for _, hl in ipairs(item.highlights) do
-                segments:putf("  - %s", hl)
-            end
-        end
-        if item.subpages and #item.subpages > 0 then
-            segments:put("* Subpages:\n")
-            for j, sub in ipairs(item.subpages) do
-                segments:putf("    %d. **%s**", j, json_default(sub.title, "Untitled"))
+        if type(item) == "table" then
+            put_source_header(segments, i, item.title, extract_domain(item.url), item.publishedDate)
+            local summary = json_default(item.summary)
+            if type(summary) == "string" and summary ~= "" then
+                segments:put("* Summary: ")
+                segments:put(summary)
                 segments:put("\n")
-                if sub.summary then
-                    segments:putf("       Summary: %s\n", sub.summary)
-                end
-                if sub.highlights and #sub.highlights > 0 then
-                    segments:put("       Excerpts:\n")
-                    for _, hl in ipairs(sub.highlights) do
-                        segments:putf("         - %s\n", hl)
+            end
+            if type(item.highlights) == "table" and #item.highlights > 0 then
+                segments:put("* Key Excerpts:\n")
+                for hdx, hl in ipairs(item.highlights) do
+                    local excerpt = json_default(hl)
+                    if type(excerpt) == "string" and excerpt ~= "" then
+                        segments:putf("  - %s\n", excerpt)
                     end
                 end
             end
+            segments:put("\n")
         end
-        segments:put("\n")
     end
     segments:put("\n")
     return true, segments:get()

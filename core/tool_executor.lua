@@ -123,6 +123,26 @@ function ToolExecutor.ToolToText(key)
 end
 
 
+--- Strip inline HTTP(S) URLs from search results while keeping markdown link labels.
+--- @param text string
+--- @return string
+function ToolExecutor.stripUrls(text)
+    if type(text) ~= "string" then
+        return text
+    end
+    text = text:gsub("%[([^%]]+)%](%b())", function(label, paren)
+        if paren:match("^%(https?://[^%s]+%)$") then
+            return label
+        end
+    end)
+    text = text:gsub("%b()", function(paren)
+        if paren:match("^%(https?://[^%s]+%)$") then
+            return ""
+        end
+    end)
+    return (text:gsub("https?://[%w%%%-%.%?%&%=%/%~_#:;+,@!$%'*]+", ""))
+end
+
 --- Execute a web search using the configured search service.
 ---
 --- Handles UI feedback (keyword search indicator) internally.
@@ -159,8 +179,7 @@ function ToolExecutor.executeWebSearch(keywords, ws_mode, handler, tool_round, c
     end
     search_ok, search_result = API:SearchKeywords(keywords, keywordmsg, config and config[ws_mode])
     if search_ok and type(search_result) == "string" then
-        -- remove URLs saving context length
-        search_result = search_result:gsub("https?://[%w%-%.%?%&%=%/%~_#:;+,@!$%'()*]+", "")
+        search_result = ToolExecutor.stripUrls(search_result)
     end
 
     UIManager:close(keywordmsg)

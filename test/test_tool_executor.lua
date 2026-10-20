@@ -126,6 +126,16 @@ local tests = {
         assert.notNil(result.raw_assistant)
         assert.equal(result.raw_assistant.role, "assistant")
     end),
+
+    test("stripUrls: removes percent-encoded URLs and unwraps markdown links", function()
+        local raw = "See [Wikipedia](https://zh.wikipedia.org/wiki/%E9%B2%81%E8%BF%85_(%E4%BD%9C%E5%AE%B6)) "
+            .. "and (https://example.com/a%20b) or https://example.com/path?q=%E4%B8%AD%E6%96%87."
+        local cleaned = ToolExecutor.stripUrls(raw)
+        assert.matches(cleaned, "See Wikipedia")
+        assert.notMatches(cleaned, "https://")
+        assert.notMatches(cleaned, "%%E9")
+        assert.notMatches(cleaned, "%%E4")
+    end),
 }
 
 return helper.runTests("core/tool_executor", tests)
