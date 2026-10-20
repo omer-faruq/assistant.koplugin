@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Review l10n catalogues with a second model and repair what it flags.
 
-Why this exists: ai_translate.py only fills *empty* msgstr, so a translation
+Why this exists: helper/ai_translate.py only fills *empty* msgstr, so a translation
 that came back in the wrong language, or with the wrong meaning, counts as done
 forever. Its output-time checks catch a wrong-slot answer (lost markup or a
 ghost %N), but a msgid whose translation is simply in the wrong language, or
@@ -21,9 +21,9 @@ whose msgstr equals its msgid or is nothing but format placeholders is never
 sent: it is not prose to judge.
 
 Modes:
-    review_translations.py [--lang LANG]            review LANG/updated_translated.po
-    review_translations.py [--lang LANG] --po PATH  review PATH instead
-    review_translations.py [--lang LANG] --full      audit LANG/assistant.po, report-only
+    helper/review_translations.py [--lang LANG]            review LANG/updated_translated.po
+    helper/review_translations.py [--lang LANG] --po PATH  review PATH instead
+    helper/review_translations.py [--lang LANG] --full      audit LANG/assistant.po, report-only
 
 A locale opts into the review by shipping l10n/<LANG>/review_note.txt: the note
 is its distinguishing guidance (which languages its catalogue is confused with,
@@ -33,7 +33,7 @@ per-language code.
 
 Normal mode reviews the LLM intermediate produced by `make translate`. When it
 flags entries it empties their msgstr in the intermediate, refills them once
-through ai_translate.py, and reviews the result a second time; a repair verdict
+through helper/ai_translate.py, and reviews the result a second time; a repair verdict
 that survives the refill stops the run before import (exit 3) and preserves the
 intermediate. It never loops.
 
@@ -43,8 +43,8 @@ or an invalid reply warns and leaves the pipeline running (exit 0). The point is
 to hand the outer pipeline a better catalogue, never to stop a translation run.
 
 The reviewer is a second model reached through the same OpenAI-compatible SDK
-layer as ai_translate.py, defaulting to the Responses protocol. Its route is
-read from L10N_REVIEW_API_PROTOCOL / L10N_REVIEW_API_BASE / L10N_REVIEW_API_MODEL
+layer as the translator (helper/ai_translate.py), defaulting to the Responses
+protocol. Its route is read from L10N_REVIEW_API_PROTOCOL / L10N_REVIEW_API_BASE / L10N_REVIEW_API_MODEL
 / L10N_REVIEW_API_KEY, resolved through the shared loader (process environment,
 then l10n/<LANG>/.env, then l10n/.env); the JSON-schema mode and timeout/retry
 policy are the shared AI_JSON_SCHEMA / AI_REQUEST_TIMEOUT / AI_MAX_RETRIES knobs,
@@ -66,16 +66,14 @@ import subprocess
 import sys
 import time
 
-import polib
+from lang_data import LANG_EN, L10N_DIR
+from llm_client import Config, load_settings, request
+from po_ops import clear_entry, load
 
-import ai_translate
-from ai_translate import LANG_EN
-
-LANG_DIR = os.path.dirname(os.path.abspath(__file__))
 DOMAIN = "assistant"
 INTERMEDIATE_NAME = "updated_translated.po"
 REVIEW_NOTE_FILE = "review_note.txt"
-AI_TRANSLATE = os.path.join(LANG_DIR, "ai_translate.py")
+AI_TRANSLATE = os.path.join(L10N_DIR, "helper", "ai_translate.py")
 
 # A locale is reviewed only when it ships its own review_note.txt; the default
 # keeps a bare invocation convenient.
@@ -86,7 +84,7 @@ DEFAULT_LANG = "sk"
 # Responses protocol. Any L10N_REVIEW_* key left unset falls back to the
 # translator's API_* key, so an unconfigured reviewer shares its route. The
 # shared AI_* knobs (schema mode, timeout, retries) still apply through
-# ai_translate.Config.
+# Config.
 ROUTE_PREFIX = "L10N_REVIEW_"
 DEFAULT_PROTOCOL = "responses"
 
@@ -217,7 +215,7 @@ def load_review_note(lang: str) -> str | None:
     catalogue is confused with, and the tells that resolve them). Without it
     the review is skipped.
     """
-    path = os.path.join(LANG_DIR, lang, REVIEW_NOTE_FILE)
+    path = os.path.join(L10N_DIR, lang, REVIEW_NOTE_FILE)
     if not os.path.isfile(path):
         return None
     with open(path, encoding="utf-8") as handle:
@@ -225,7 +223,7 @@ def load_review_note(lang: str) -> str | None:
 
 
 def language_name(lang: str) -> str:
-    """The English name of the target language, from ai_translate.LANG_EN.
+    """The English name of the target language, from lang_data.LANG_EN.
 
     The prompt names the language by name so the reviewer cannot infer it from
     the locale code alone. A locale missing from the table falls back to its
@@ -234,15 +232,15 @@ def language_name(lang: str) -> str:
     return LANG_EN.get(lang, lang)
 
 
-def review_config(lang: str) -> ai_translate.Config:
+def review_config(lang: str) -> Config:
     """The reviewer's Config: the L10N_REVIEW_* route, Responses by default.
 
-    Built through the shared ai_translate.Config, so the reviewer reuses the
+    Built through the shared Config, so the reviewer reuses the
     same client construction, protocol handling, JSON-schema downgrade and
     timeout/retry policy as the translator, layering l10n/.env and
     l10n/<lang>/.env the same way. Raises ValueError on an unknown protocol.
     """
-    return ai_translate.Config(
+    return Config(
         lang, route_prefix=ROUTE_PREFIX, default_protocol=DEFAULT_PROTOCOL
     )
 
@@ -254,7 +252,7 @@ def resolve_chunk_size(lang: str) -> int:
     l10n/<lang>/.env, then l10n/.env). A non-numeric or non-positive value warns
     and falls back to DEFAULT_CHUNK_SIZE rather than failing the review.
     """
-    raw = ai_translate.load_settings(lang).get(CHUNK_SIZE_KEY, "")
+    raw = load_settings(lang).get(CHUNK_SIZE_KEY, "")
     if raw == "":
         return DEFAULT_CHUNK_SIZE
     try:
@@ -280,7 +278,7 @@ def resolve_concurrency(lang: str) -> int:
     l10n/<lang>/.env, then l10n/.env). A non-numeric or non-positive value
     warns and falls back to DEFAULT_CONCURRENCY rather than failing the review.
     """
-    raw = ai_translate.load_settings(lang).get(CONCURRENCY_KEY, "")
+    raw = load_settings(lang).get(CONCURRENCY_KEY, "")
     if raw == "":
         return DEFAULT_CONCURRENCY
     try:
@@ -307,7 +305,7 @@ def resolve_max_retries(lang: str) -> int:
     l10n/<lang>/.env, then l10n/.env). A non-numeric or non-positive value
     warns and falls back to DEFAULT_MAX_RETRIES rather than failing the review.
     """
-    raw = ai_translate.load_settings(lang).get(MAX_RETRIES_KEY, "")
+    raw = load_settings(lang).get(MAX_RETRIES_KEY, "")
     if raw == "":
         return DEFAULT_MAX_RETRIES
     try:
@@ -341,7 +339,7 @@ def collect_entries(path: str) -> list[dict]:
     the source. The id is assigned in catalogue order and is reused to clear the
     exact msgstr after the pass.
     """
-    po = polib.pofile(path)
+    po = load(path)
     out: list[dict] = []
     for entry in po:
         if entry.obsolete:
@@ -404,7 +402,7 @@ def build_prompt(entries: list[dict], note: str, lang: str, language: str) -> st
     return header + "\nEntries (JSON array):\n" + payload + "\n"
 
 
-def run_review(prompt: str, cfg: ai_translate.Config) -> str:
+def run_review(prompt: str, cfg: Config) -> str:
     """Run one review request over the config's route; return its reply text.
 
     The prompt goes as the user message, never in argv, so a chunk cannot
@@ -420,7 +418,7 @@ def run_review(prompt: str, cfg: ai_translate.Config) -> str:
         {"role": "user", "content": prompt},
     ]
     try:
-        result = ai_translate._request(
+        result = request(
             cfg,
             messages,
             schema=VERDICT_SCHEMA,
@@ -511,7 +509,7 @@ def parse_verdicts(text: str, expected_ids: list[str]) -> dict[str, dict]:
 
 
 def _run_review_chunk(index: int, total: int, chunk: list[dict],
-                      lang: str, cfg: ai_translate.Config,
+                      lang: str, cfg: Config,
                       note: str, language: str,
                       max_retries: int):
     """Send one review chunk with retries; return its validated verdicts.
@@ -558,7 +556,7 @@ def _run_review_chunk(index: int, total: int, chunk: list[dict],
                 ) from exc
 
 
-def review_pass(note: str, path: str, cfg: ai_translate.Config,
+def review_pass(note: str, path: str, cfg: Config,
                 lang: str, language: str,
                 chunk_size: int | None = None,
                 concurrency: int | None = None,
@@ -636,8 +634,8 @@ def clear_entries(path: str, entries: list[dict], repair_ids: set[str]) -> list[
     """Empty the exact msgstr the reviewer flagged, in place.
 
     A flagged plural form empties every form the entry declares, because
-    ai_translate.py refills a plural entry only once all of its forms are empty.
-    Returns one label per changed entry.
+    helper/ai_translate.py refills a plural entry only once all of its forms
+    are empty. Returns one label per changed entry.
     """
     wanted: dict[tuple[str, str], set[str]] = {}
     for entry in entries:
@@ -645,7 +643,7 @@ def clear_entries(path: str, entries: list[dict], repair_ids: set[str]) -> list[
             wanted.setdefault((entry["msgctxt"], entry["msgid"]), set()).add(
                 entry["form"]
             )
-    po = polib.pofile(path, wrapwidth=0)
+    po = load(path)
     changed: list[str] = []
     for entry in po:
         forms = wanted.get((entry.msgctxt or "", entry.msgid))
@@ -656,11 +654,10 @@ def clear_entries(path: str, entries: list[dict], repair_ids: set[str]) -> list[
             if not indices:
                 continue
             if any((entry.msgstr_plural.get(i) or "").strip() for i in indices):
-                for i in entry.msgstr_plural:
-                    entry.msgstr_plural[i] = ""
+                clear_entry(entry)
                 changed.append(f"{entry.msgid[:60]!r} [plural]")
         elif entry.msgstr.strip():
-            entry.msgstr = ""
+            clear_entry(entry)
             changed.append(f"{entry.msgid[:60]!r}")
         if "fuzzy" in entry.flags:
             entry.flags.remove("fuzzy")
@@ -670,28 +667,28 @@ def clear_entries(path: str, entries: list[dict], repair_ids: set[str]) -> list[
 
 
 def refill(intermediate_path: str, lang: str) -> None:
-    """Refill the cleared intermediate through ai_translate.py, once.
+    """Refill the cleared intermediate through helper/ai_translate.py, once.
 
-    ai_translate.py decides its paths from disk: it translates
+    helper/ai_translate.py decides its paths from disk: it translates
     <lang>/untranslated.po into <lang>/updated_translated.po. The cleared
-    intermediate is moved into untranslated.po and ai_translate.py runs once;
+    intermediate is moved into untranslated.po and helper/ai_translate.py runs once;
     the refilled catalogue lands back at intermediate_path. The caller owns the
     backup of the pre-review intermediate and restores it if this raises.
     """
-    untranslated = os.path.join(LANG_DIR, lang, "untranslated.po")
+    untranslated = os.path.join(L10N_DIR, lang, "untranslated.po")
     shutil.move(intermediate_path, untranslated)
     try:
         proc = subprocess.run(
             [sys.executable, AI_TRANSLATE, lang],
-            cwd=LANG_DIR,
+            cwd=L10N_DIR,
         )
     except OSError as exc:
-        raise ReviewError(f"cannot run ai_translate.py: {exc}") from exc
+        raise ReviewError(f"cannot run helper/ai_translate.py: {exc}") from exc
     if proc.returncode != 0:
         partial = intermediate_path + ".partial"
         if os.path.isfile(partial):
             os.remove(partial)
-        raise ReviewError(f"ai_translate.py exited {proc.returncode}")
+        raise ReviewError(f"helper/ai_translate.py exited {proc.returncode}")
 
 
 def _repaired_ids(entries: list[dict], verdicts: dict[str, dict]) -> list[str]:
@@ -789,13 +786,13 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.po:
         path = args.po
-        lang_dir = os.path.abspath(os.path.join(LANG_DIR, lang))
+        lang_dir = os.path.abspath(os.path.join(L10N_DIR, lang))
         if os.path.dirname(os.path.abspath(path)) != lang_dir:
             _warn(f"--po must point inside {lang}/; skipping the review.")
             return EXIT_OK
     else:
         name = f"{DOMAIN}.po" if args.full else INTERMEDIATE_NAME
-        path = os.path.join(LANG_DIR, lang, name)
+        path = os.path.join(L10N_DIR, lang, name)
     if not os.path.isfile(path):
         _warn(f"{path}: not found; nothing to review.")
         return EXIT_OK

@@ -146,7 +146,7 @@ translate:
 # <lang>/updated_translated.po with a second model in chunks (one request per
 # L10N_REVIEW_CHUNK_SIZE entries) and, when entries are marked `repair`, empties
 # exactly those msgstr, refills them
-# once through ai_translate.py and reviews the result a second time. A repair
+# once through helper/ai_translate.py and reviews the result a second time. A repair
 # verdict that survives the refill stops the run before import so the
 # intermediate is preserved; a setup failure (no note, no credential, timeout,
 # invalid reply) only warns and keeps the AI output. A hooked locale with no
@@ -159,7 +159,7 @@ review-translations:
 				continue; \
 			fi; \
 			echo "  [review] reviewing $$lang/updated_translated.po..."; \
-			if ! ./review_translations.py --lang $$lang; then \
+			if ! ./helper/review_translations.py --lang $$lang; then \
 				echo "\033[0;31m[review] $$lang: repair verdicts survived the refill; stopping before import (intermediate preserved).\033[0m"; \
 				exit 1; \
 			fi; \
@@ -176,7 +176,7 @@ review-hooked:
 		fi; \
 		for lang in $(REVIEW_HOOKED); do \
 			echo "  [review] full read-only audit of $$lang/$(DOMAIN).po..."; \
-			./review_translations.py --lang $$lang --full; \
+			./helper/review_translations.py --lang $$lang --full; \
 		done
 
 init-dirs: template
@@ -272,18 +272,18 @@ check:
 # authentication, and model availability. Useful for debugging before running
 # a full translation batch.
 check-api:
-	@./ai_translate.py --check-api
+	@./helper/ai_translate.py --check-api
 
 # Detect drift between this project's supported languages and KOReader's.
 # - Set KOREADER_L10N_DIR to override the default reference path.
-# - Also verifies LANGS (Makefile) is consistent with LANG_MAP (ai_translate.py).
+# - Also verifies LANGS (Makefile) is consistent with LANG_MAP (helper/lang_data.py).
 # Read-only: this target never modifies any files.
 check-langs:
 	@ref="$(KOREADER_L10N_DIR)"; \
 	[ -z "$$ref" ] && ref=/usr/lib/koreader/l10n; \
 	tmp=$$(mktemp -d) && trap "rm -rf $$tmp" EXIT; \
 	echo "$(LANGS)" | tr ' ' '\n' | sort -u > "$$tmp/langs"; \
-	python3 -c "from ai_translate import LANG_MAP; [print(k) for k in LANG_MAP]" \
+	python3 -c "import sys; sys.path.insert(0, 'helper'); from lang_data import LANG_MAP; [print(k) for k in LANG_MAP]" \
 		| sort -u > "$$tmp/map"; \
 	rc=0; \
 	if [ ! -d "$$ref" ]; then \
@@ -307,7 +307,7 @@ check-langs:
 	only_map=$$(comm -23 "$$tmp/map" "$$tmp/langs"); \
 	only_langs=$$(comm -13 "$$tmp/map" "$$tmp/langs"); \
 	if [ -n "$$only_map" ] || [ -n "$$only_langs" ]; then \
-		echo "\033[0;31mLANG_MAP (ai_translate.py) is out of sync with LANGS (Makefile):\033[0m"; \
+		echo "\033[0;31mLANG_MAP (helper/lang_data.py) is out of sync with LANGS (Makefile):\033[0m"; \
 		[ -n "$$only_map" ]   && { echo "  Only in LANG_MAP:"; echo "$$only_map"   | sed 's/^/    /'; }; \
 		[ -n "$$only_langs" ] && { echo "  Only in LANGS:";    echo "$$only_langs" | sed 's/^/    /'; }; \
 		rc=1; \
@@ -315,7 +315,7 @@ check-langs:
 		echo "LANG_MAP and LANGS are consistent."; \
 	fi; \
 	echo "Checking LANG_MAP / LANG_EN / PLURAL_FORMS consistency..."; \
-	./ai_translate.py --check-data || rc=1; \
+	./helper/ai_translate.py --check-data || rc=1; \
 	exit $$rc
 
 # Read-only estimate of the translation workload introduced by the current
@@ -392,7 +392,7 @@ ai-translate:
 	fi
 
 # extract-untranslated-% is a prerequisite rather than a documented manual
-# step: ai_translate.py's scenario-2 path needs <lang>/untranslated.po to
+# step: helper/ai_translate.py's scenario-2 path needs <lang>/untranslated.po to
 # exist, and without this dependency `make ai-translate L10N_LANG=xx` dies with
 # "translate files not ready". The per-locale target is idempotent - it skips a
 # language whose untranslated.po is already there - so this is safe to depend
@@ -402,7 +402,7 @@ $(AI_TRANSLATE_TARGETS): ai-translate-%: extract-untranslated-%
 	@set -e; \
 	lang=$*; \
 	IS_NEW=0; if [ ! -f "$$lang/$(DOMAIN).po" ]; then IS_NEW=1; fi; \
-	./ai_translate.py $$lang && { \
+	./helper/ai_translate.py $$lang && { \
 		if [ $$IS_NEW -eq 1 ]; then \
 			if [ ! -f "$$lang/$(DOMAIN).po" ]; then \
 				echo "\033[0;31mError: AI translation for new language '$$lang' failed. File '$$lang/$(DOMAIN).po' not created.\033[0m"; exit 1; \
@@ -446,7 +446,7 @@ retranslate-msgid:
 	@echo "Emptying msgid for retranslation: $(MSGID)"
 	@for lang in $(LANGS); do \
 		if [ -n "$(L10N_LANG)" ] && [ "$$lang" != "$(L10N_LANG)" ]; then continue; fi; \
-		./retranslate_msgid.py "$$lang" "$(MSGID)" || exit 1; \
+		./helper/retranslate_msgid.py "$$lang" "$(MSGID)" || exit 1; \
 	done
 	@for lang in $(LANGS); do \
 		if [ -n "$(L10N_LANG)" ] && [ "$$lang" != "$(L10N_LANG)" ]; then continue; fi; \

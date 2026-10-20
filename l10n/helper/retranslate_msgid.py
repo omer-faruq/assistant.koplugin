@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Empty one msgid's translation so the next pipeline run retranslates it.
 
-Usage: ./retranslate_msgid.py <lang_dir> <msgid>
+Usage: ./helper/retranslate_msgid.py <lang_dir> <msgid>
 
 <lang_dir> is a locale directory holding assistant.po (e.g. `ja`); <msgid>
 is matched exactly, including <b> markup and %N placeholders. The matching
@@ -20,7 +20,7 @@ import argparse
 import os
 import sys
 
-import polib
+from po_ops import clear_entry, load
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -48,7 +48,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"[{lang_dir}] no assistant.po, skipped")
         return 0
     try:
-        po = polib.pofile(path, wrapwidth=0)
+        po = load(path)
     except OSError as exc:
         print(f"[{lang_dir}] cannot parse {path}: {exc}")
         return 2
@@ -58,19 +58,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"[{lang_dir}] msgid not found, skipped")
         return 0
 
-    changed = False
-    if "fuzzy" in entry.flags:
-        entry.flags.remove("fuzzy")
-        changed = True
-    if entry.msgid_plural:
-        if any(v.strip() for v in entry.msgstr_plural.values()):
-            entry.msgstr_plural = {i: "" for i in entry.msgstr_plural}
-            changed = True
-    elif entry.msgstr.strip():
-        entry.msgstr = ""
-        changed = True
-
-    if not changed:
+    if not clear_entry(entry):
         print(f"[{lang_dir}] already untranslated, skipped")
         return 0
     po.save()

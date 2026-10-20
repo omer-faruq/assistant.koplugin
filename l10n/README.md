@@ -11,10 +11,13 @@ The localization process uses standard `gettext` tools (`.pot` template file and
 - `<LANG_CODE>/assistant.mo`: The compiled catalogue, committed alongside the `.po` and shipped in the release.
 
 The `Makefile` automates the gettext part of the pipeline (extract → merge → compile
-→ check). AI translation is handled by `ai_translate.py`, which also validates the
-static language tables offline; `review_translations.py` runs the optional LLM
-review for every locale that ships a `review_note.txt`. See `Auditing the
-catalogues` below.
+→ check). AI translation is handled by `helper/ai_translate.py`, which also
+validates the static language tables offline; `helper/review_translations.py`
+runs the optional LLM review for every locale that ships a `review_note.txt`.
+See `Auditing the catalogues` below.
+
+The Python tools live in `helper/`; the `Makefile` targets are the supported
+entry point. Direct `helper/...` invocations below are for debugging.
 
 ## Env and Tools
 
@@ -26,7 +29,7 @@ Install the system packages and create a small l10n tooling environment
     . "$HOME/.venvs/assistant-l10n/bin/activate"
     python -m pip install openai
 
-`ai_translate.py` talks to the API through the official `openai` Python SDK, so
+`helper/ai_translate.py` talks to the API through the official `openai` Python SDK, so
 `python3-requests` is no longer needed. Activate this environment before running
 the Makefile; the scripts use the active `python3` via their shebang.
 
@@ -56,7 +59,7 @@ catalogue, `l10n/<lang>/.env` (for example `l10n/sk/.env`). It uses the same
 variable names as the global file - `API_PROTOCOL`, `API_BASE`,
 `API_MODEL`, `API_KEY` - not a `_<LANG>` suffix.
 
-`ai_translate.py` resolves each setting with this precedence, highest first:
+`helper/ai_translate.py` resolves each setting with this precedence, highest first:
 
 1. the exported process environment,
 2. `l10n/<lang>/.env` when one exists for the locale,
@@ -74,12 +77,12 @@ while every other locale keeps the globals. Put this in `l10n/sk/.env`:
     API_MODEL=grok-4.7
     # API_KEY unset: the global API_KEY is used
 
-`./ai_translate.py sk` reads `l10n/sk/.env` layered over `l10n/.env`; every
+`./helper/ai_translate.py sk` reads `l10n/sk/.env` layered over `l10n/.env`; every
 other locale reads the global file alone. The global `API_PROTOCOL=...` selects
 the wire format for every locale that does not override it, and a locale's own
 `API_PROTOCOL` overrides it for that locale only. Ping one locale's route with
-`./ai_translate.py --check-api-lang sk`, or the global default with
-`./ai_translate.py --check-api`.
+`./helper/ai_translate.py --check-api-lang sk`, or the global default with
+`./helper/ai_translate.py --check-api`.
 
 Optional tuning variables (defaults shown). These may be exported, or placed in
 the global `.env` or a locale's `.env`; the same precedence applies:
@@ -93,13 +96,13 @@ the global `.env` or a locale's `.env`; the same precedence applies:
                              # generates one per run; direct script runs get a
                              # per-process fallback.
 
-There is no `AI_MAX_CHUNK_TIME`: `ai_translate.py` hands the request timeout and
+There is no `AI_MAX_CHUNK_TIME`: `helper/ai_translate.py` hands the request timeout and
 the retry count to the SDK, which owns backoff and the per-request deadline, so
 the script no longer enforces a separate wall-clock cap per chunk. Set
 `AI_LOG_LEVEL=DEBUG` (or `AI_DEBUG=1`) to surface the SDK's own retry logs.
 
 The optional LLM reviewer is a second model reached through the same SDK layer as
-`ai_translate.py`, defaulting to the Responses protocol. Its route comes from the
+`helper/ai_translate.py`, defaulting to the Responses protocol. Its route comes from the
 dedicated `L10N_REVIEW_API_PROTOCOL` / `L10N_REVIEW_API_BASE` /
 `L10N_REVIEW_API_MODEL` / `L10N_REVIEW_API_KEY` keys (process environment,
 `l10n/<lang>/.env` or `l10n/.env`), while the JSON-schema mode and timeout/retry
@@ -157,8 +160,8 @@ a chunk that can never satisfy the check:
 
 Verify the API works before kicking off a batch:
 
-    make check-api                          # or: ./ai_translate.py --check-api
-    ./ai_translate.py --check-api-lang sk   # a locale's own protocol/route
+    make check-api                          # or: ./helper/ai_translate.py --check-api
+    ./helper/ai_translate.py --check-api-lang sk   # a locale's own protocol/route
 
 Translate a single language:
 
@@ -180,7 +183,7 @@ Bare `make` also reviews the AI output of every locale that ships a
 `review_note.txt`. For each such locale it reviews `<LANG_CODE>/updated_translated.po`
 with a second model right after `ai-translate`, empties exactly the entries a
 reviewer confidently marks `repair`, and sends only those back through
-`ai_translate.py`. A locale without a note is never reviewed or touched.
+`helper/ai_translate.py`. A locale without a note is never reviewed or touched.
 `make check` never runs the reviewer. See `LLM review of the AI output` below.
 
 Detect drift between this project and KOReader's supported languages, and
@@ -193,9 +196,9 @@ Review a locale's LLM output for wrong-language or wrong-meaning entries with a
 second model (the normal pipeline refills what it flags; only locales with a
 `review_note.txt` are reviewed, see `LLM review of the AI output` below):
 
-    ./review_translations.py                 # review sk/updated_translated.po (default lang)
-    ./review_translations.py --lang sl       # review sl/updated_translated.po
-    ./review_translations.py --full          # read-only audit of sk/assistant.po
+    ./helper/review_translations.py                 # review sk/updated_translated.po (default lang)
+    ./helper/review_translations.py --lang sl       # review sl/updated_translated.po
+    ./helper/review_translations.py --full          # read-only audit of sk/assistant.po
     make review-hooked                       # full read-only audit of every hooked locale
 
 Retranslate one exact msgid everywhere (e.g. after a terminology fix — empties it
@@ -212,7 +215,7 @@ Use it for terminology, style rules, and — most importantly — warnings about
 language the model is likely to confuse with a neighbour.
 
 The file is plain text with no required structure, so a native speaker can fix or
-extend their own locale's note without touching `ai_translate.py`. That is the
+extend their own locale's note without touching `helper/ai_translate.py`. That is the
 point: diagnosing a wrong-language catalogue needs someone who reads the
 language, and it should not require them to edit Python.
 
@@ -240,7 +243,7 @@ do it — see below), then re-run `make ai-translate` and `make mo`.
 Two deterministic checks guard what can be judged without knowing the target
 language:
 
-- **Wrong-slot answers** are caught at request time. `ai_translate.py` validates
+- **Wrong-slot answers** are caught at request time. `helper/ai_translate.py` validates
   every answer against the msgid it claims to translate (`_check_markup`): the
   translation must carry the msgid's `<b>` tags and must not carry a `%N` index
   that no source form of the msgid has. Both are the footprint of the model
@@ -249,7 +252,7 @@ language:
   movement and `%s` / `%d` are left alone — the plugin mixes `string.format`
   with `T()`, so a msgid's own conversion style is a per-call-site choice.
 - **The static language tables** are checked offline by
-  `./ai_translate.py --check-data`, which `make check-langs` runs. It confirms
+  `./helper/ai_translate.py --check-data`, which `make check-langs` runs. It confirms
   `LANG_MAP`, `LANG_EN` and `PLURAL_FORMS` all cover the same locales, that every
   `.po` header agrees with `PLURAL_FORMS` on `nplurals`, and that every plural
   entry declares exactly `nplurals` forms.
@@ -277,7 +280,7 @@ per-entry verdict, never a rewritten translation:
 - `abstain` - too short, a proper noun or a technical token, or otherwise not
   judgeable with confidence.
 
-`review_translations.py` reviews the catalogue in **chunks**
+`helper/review_translations.py` reviews the catalogue in **chunks**
 (`L10N_REVIEW_CHUNK_SIZE`, default 50 entries), one request per chunk, not one
 call per msgid. The system message carries the judgement rubric and the output
 contract; each user message carries the target language name from `LANG_EN`, the
@@ -287,12 +290,12 @@ strict verdict schema, so the reply is a bare JSON object; a missing, extra or
 duplicate id, a malformed reply or a truncated chunk fails the whole pass closed.
 
 An entry is only ever emptied, never hand-edited. The msgstr flagged `repair` is
-cleared in the intermediate and `ai_translate.py` refills it under its own
+cleared in the intermediate and `helper/ai_translate.py` refills it under its own
 validation - only empty msgstr are filled, so good translations stay. A run is:
 
 1. **no `repair` verdicts** - one chunked reviewer pass; import continues with
    the AI output.
-2. **`repair` verdicts** - clear exactly those msgstr, run `ai_translate.py
+2. **`repair` verdicts** - clear exactly those msgstr, run `helper/ai_translate.py
    <LANG_CODE>` once, then make one final chunked reviewer pass. A `repair`
    verdict that survives the refill stops the run **before import** (exit 3) and
    preserves the intermediate. It never loops.
@@ -302,7 +305,7 @@ validation - only empty msgstr are filled, so good translations stay. A run is:
    and never stops a translation run for its own problems.
 
 A locale is reviewed only when it ships a `review_note.txt`, so `make check` never
-invokes the reviewer; the deterministic checks in `ai_translate.py` and
+invokes the reviewer; the deterministic checks in `helper/ai_translate.py` and
 `make check-langs` keep working with no model, network or API account.
 
 #### Per-locale review note
@@ -317,7 +320,7 @@ justify a `wrong_language` verdict (`Uporabi`, `Prevajanje`, `Prilagojeni
 pozivi`) against their Slovak equivalents (`Použiť`, `Preklad`/`Preložiť`,
 `Vlastné prompty`). A native speaker can add or fix their own locale's note
 without touching Python. The translator note (`<LANG_CODE>/ai_note.txt`) is
-separate; it feeds `ai_translate.py`, not the reviewer.
+separate; it feeds `helper/ai_translate.py`, not the reviewer.
 
 The `Makefile` hook set, `REVIEW_HOOKED`, is every `LANGS` entry that has both
 `review_note.txt` and `assistant.po`; the pipeline and the `review-*` targets
@@ -329,7 +332,7 @@ tooling input, not runtime data.
 #### Reviewer route and model
 
 The reviewer is a second model, reached through the same OpenAI-compatible SDK
-layer as `ai_translate.py` (`ai_translate.Config` + `_request`) rather than a
+layer as the translator (`llm_client.Config` + `request`) rather than a
 CLI. It defaults to the **Responses** protocol and reads a dedicated route:
 
     L10N_REVIEW_API_PROTOCOL=responses   # chat_completions or responses
@@ -379,7 +382,7 @@ The normal pipeline reviews only the fresh intermediate, never the committed
 catalogue. To audit the whole historical catalogue of every hooked locale once:
 
     make review-hooked                 # chunked reviewer pass per hooked locale, no writes
-    ./review_translations.py --lang sk --full
+    ./helper/review_translations.py --lang sk --full
 
 `--full` reviews `<LANG_CODE>/assistant.po` and prints the per-status report; it
 clears nothing and runs no translator. The report is a triage list, not a
@@ -415,7 +418,7 @@ that did not complete.
 ## Notes on KOReader language sync
 
 The list of supported languages lives in `Makefile`'s `LANGS` and in
-`ai_translate.py`'s `LANG_MAP`, and must stay in sync with each other and with
+`helper/lang_data.py`'s `LANG_MAP`, and must stay in sync with each other and with
 the directories under KOReader's `l10n/` installation (`/usr/lib/koreader/l10n/`).
 `LANG_EN` (English names) and `PLURAL_FORMS` must cover the same set; the prompt
 is built from all four. `make check-langs` detects any drift, and
