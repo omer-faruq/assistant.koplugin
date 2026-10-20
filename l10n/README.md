@@ -124,7 +124,7 @@ each answer is checked before it reaches the catalogue. Four layers:
    20), keeping output well under any provider's token cap.
 4. **Bisection on truncation.** A chunk that comes back `finish_reason=length`
    is split in half and retried until every entry is translated. Progress is
-   saved after every chunk to `<output>.partial`, so any crash, Ctrl-C or
+   saved after every chunk to `<LANG_CODE>/assistant.po.partial`, so any crash, Ctrl-C or
    network failure is fully resumable — just re-run `make translate`.
 
 ### Why id-keying, and what else is validated
@@ -165,26 +165,24 @@ Verify the API works before kicking off a batch:
 
 Translate a single language:
 
-    L10N_LANG=fr make ai-translate      # or: make ai-translate-fr
+    L10N_LANG=fr make ai-translate
 
-Both forms depend on `extract-untranslated`, so a single-language run works on a
-clean tree. `extract-untranslated` skips a language whose `untranslated.po` is
-already newer than its catalogue, so naming one language repeatedly does not
-re-translate what is already done.
+`ai-translate` translates every locale whose catalogue has empty or fuzzy
+entries; a locale with nothing pending is skipped. Run `make update` first (or
+`make translate`) so the catalogue reflects the current source.
 
-Run the full pipeline (template → update → extract → translate → review →
-import → check → clean → mo). `make` alone runs the same pipeline (`all` depends
-on `translate`):
+Run the full pipeline (template → update → translate → review → check → clean →
+mo). `make` alone runs the same pipeline (`all` depends on `translate`):
 
     make translate
     make
 
-Bare `make` also reviews the AI output of every locale that ships a
-`review_note.txt`. For each such locale it reviews `<LANG_CODE>/updated_translated.po`
-with a second model right after `ai-translate`, empties exactly the entries a
-reviewer confidently marks `repair`, and sends only those back through
-`helper/ai_translate.py`. A locale without a note is never reviewed or touched.
-`make check` never runs the reviewer. See `LLM review of the AI output` below.
+Bare `make` also reviews the entries changed by the run in every locale that
+ships a `review_note.txt`. The reviewer works on `<LANG_CODE>/assistant.po`,
+empties exactly the entries it confidently marks `repair`, and sends only those
+back through `helper/ai_translate.py`. A locale without a note is never reviewed
+or touched. `make check` never runs the reviewer. See `LLM review of the AI
+output` below.
 
 Detect drift between this project and KOReader's supported languages, and
 validate the `LANG_MAP` / `LANG_EN` / `PLURAL_FORMS` tables against the
@@ -196,8 +194,8 @@ Review a locale's LLM output for wrong-language or wrong-meaning entries with a
 second model (the normal pipeline refills what it flags; only locales with a
 `review_note.txt` are reviewed, see `LLM review of the AI output` below):
 
-    ./helper/review_translations.py                 # review sk/updated_translated.po (default lang)
-    ./helper/review_translations.py --lang sl       # review sl/updated_translated.po
+    ./helper/review_translations.py                 # review sk/assistant.po (default lang)
+    ./helper/review_translations.py --lang sl       # review sl/assistant.po
     ./helper/review_translations.py --full          # read-only audit of sk/assistant.po
     make review-hooked                       # full read-only audit of every hooked locale
 
@@ -231,7 +229,7 @@ tooling input, not runtime data.
 
 ## Auditing the catalogues
 
-`make translate` only fills **empty** msgstr, so a string that came back wrong —
+`make translate` only fills **empty or fuzzy** msgstr, so a string that came back wrong —
 in the wrong language, or the translation of a different msgid — counts as done
 forever. Both failure modes are self-sealing, and nothing in the pipeline
 distinguishes a hand-patched or wrong-language string from a good one.
@@ -262,13 +260,13 @@ wrong thing; that is what the LLM review below is for.
 
 ### LLM review of the AI output (second model)
 
-`make translate` runs `review-translations` as its fifth step, after
-`ai-translate` and before `import-translation`. For every locale that ships
-`l10n/<LANG_CODE>/review_note.txt` (currently only `sk`) it reviews the LLM output
-`<LANG_CODE>/updated_translated.po` with a second model and repairs what the
-reviewer is confident about. A locale without a note is never discovered, looped
-or reviewed, and its catalogue ships unchanged. A hooked locale with no
-intermediate this run is skipped.
+`make translate` runs `review-translations` as its fourth step, after
+`ai-translate` and before `check`. `ai-translate` leaves a pre-run copy at
+`<LANG_CODE>/assistant.po.pre-ai`, so for every locale that ships
+`l10n/<LANG_CODE>/review_note.txt` (currently only `sk`) the reviewer sees only
+the entries this run changed, not the whole catalogue. A locale without a note
+is never discovered, looped or reviewed, and its catalogue ships unchanged. A
+hooked locale with no changed entries this run is skipped.
 
 Unlike the deterministic signals above, this is a model judgement. It answers one
 question - is this msgstr correct for the target language? - and returns only a
@@ -290,15 +288,15 @@ strict verdict schema, so the reply is a bare JSON object; a missing, extra or
 duplicate id, a malformed reply or a truncated chunk fails the whole pass closed.
 
 An entry is only ever emptied, never hand-edited. The msgstr flagged `repair` is
-cleared in the intermediate and `helper/ai_translate.py` refills it under its own
-validation - only empty msgstr are filled, so good translations stay. A run is:
+cleared in the catalogue and `helper/ai_translate.py` refills it under its own
+validation - only empty or fuzzy entries are filled, so good translations stay. A run is:
 
-1. **no `repair` verdicts** - one chunked reviewer pass; import continues with
-   the AI output.
+1. **no `repair` verdicts** - one chunked reviewer pass; check continues with
+   the translated catalogue.
 2. **`repair` verdicts** - clear exactly those msgstr, run `helper/ai_translate.py
    <LANG_CODE>` once, then make one final chunked reviewer pass. A `repair`
-   verdict that survives the refill stops the run **before import** (exit 3) and
-   preserves the intermediate. It never loops.
+   verdict that survives the refill stops the run **before check** (exit 3) and
+   preserves the catalogue. It never loops.
 3. **a setup failure** - no `review_note.txt`, no `L10N_REVIEW_API_KEY`, an
    authentication error, a timeout or an invalid reply - warns and keeps the AI
    output. The review is best-effort: it hands the pipeline a better catalogue
@@ -378,8 +376,8 @@ when that is acceptable.
 
 #### Full-catalogue audit (read-only)
 
-The normal pipeline reviews only the fresh intermediate, never the committed
-catalogue. To audit the whole historical catalogue of every hooked locale once:
+The normal pipeline reviews only the entries changed by this run, never the whole
+committed catalogue. To audit the whole historical catalogue of every hooked locale once:
 
     make review-hooked                 # chunked reviewer pass per hooked locale, no writes
     ./helper/review_translations.py --lang sk --full
@@ -396,8 +394,8 @@ The review is optional and never blocks a normal `make`. If the reviewer route's
 key is missing or rejected, the account is out of quota, the call times out, or
 the reply is malformed, the step prints a warning and the pipeline imports the AI
 output unchanged. The only non-zero outcome is a `repair` verdict that survives
-the single refill, which stops the run before import so the flagged intermediate
-can be inspected. There is no retry loop.
+the single refill, which stops the run before check so the flagged catalogue can
+be inspected. There is no retry loop.
 
 ## Updating Translations
 
@@ -406,8 +404,8 @@ all language files:
 
     make
 
-`make` (default goal `translate`) reviews the AI output of every locale that
-ships a `review_note.txt` after `ai-translate`; a locale without a note, or a run
+`make` (default goal `translate`) reviews the entries changed by the run in every
+locale that ships a `review_note.txt` after `ai-translate`; a locale without a note, or a run
 without a configured reviewer route, is skipped with a warning, and `make check`
 never runs the reviewer.
 

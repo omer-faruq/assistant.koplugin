@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Review l10n catalogues with a second model and repair what it flags.
 
-Why this exists: helper/ai_translate.py only fills *empty* msgstr, so a translation
+Why this exists: helper/ai_translate.py only fills empty or fuzzy msgstr, so a translation
 that came back in the wrong language, or with the wrong meaning, counts as done
 forever. Its output-time checks catch a wrong-slot answer (lost markup or a
 ghost %N), but a msgid whose translation is simply in the wrong language, or
@@ -21,9 +21,10 @@ whose msgstr equals its msgid or is nothing but format placeholders is never
 sent: it is not prose to judge.
 
 Modes:
-    helper/review_translations.py [--lang LANG]            review LANG/updated_translated.po
-    helper/review_translations.py [--lang LANG] --po PATH  review PATH instead
-    helper/review_translations.py [--lang LANG] --full      audit LANG/assistant.po, report-only
+    helper/review_translations.py [--lang LANG]                 review LANG/assistant.po
+    helper/review_translations.py [--lang LANG] --changed-from P
+                                                                review only entries changed since P
+    helper/review_translations.py [--lang LANG] --full          audit LANG/assistant.po, report-only
 
 A locale opts into the review by shipping l10n/<LANG>/review_note.txt: the note
 is its distinguishing guidance (which languages its catalogue is confused with,
@@ -31,11 +32,13 @@ and the tells that resolve them), and the prompt names the target language from
 LANG_EN. No locale without a note is ever reviewed, so the harness carries no
 per-language code.
 
-Normal mode reviews the LLM intermediate produced by `make translate`. When it
-flags entries it empties their msgstr in the intermediate, refills them once
-through helper/ai_translate.py, and reviews the result a second time; a repair verdict
-that survives the refill stops the run before import (exit 3) and preserves the
-intermediate. It never loops.
+Normal mode reviews the catalogue written by `make translate`. With
+`--changed-from`, it reviews only entries whose translation changed since that
+snapshot; the Makefile passes the pre-run copy so a full catalogue is not
+re-reviewed every time. When it flags entries it empties their msgstr, refills
+them once through helper/ai_translate.py, and reviews the result a second time;
+a repair verdict that survives the refill stops the run before check (exit 3).
+It never loops.
 
 Every failure that is not a surviving repair verdict is best-effort: a missing
 review note, a missing reviewer credential, an authentication error, a timeout
@@ -71,7 +74,6 @@ from llm_client import Config, load_settings, request
 from po_ops import clear_entry, load
 
 DOMAIN = "assistant"
-INTERMEDIATE_NAME = "updated_translated.po"
 REVIEW_NOTE_FILE = "review_note.txt"
 AI_TRANSLATE = os.path.join(L10N_DIR, "helper", "ai_translate.py")
 
@@ -130,8 +132,8 @@ MAX_LANGUAGE = 80
 TOKEN_MSGSTR = re.compile(r"%(?:\d+\$)?[sd]|%s|%d")
 
 EXIT_OK = 0
-# Repair verdicts survived the single refill. The caller stops before import and
-# keeps the intermediate; the harness never loops.
+# Repair verdicts survived the single refill. The caller stops before check and
+# keeps the catalogue; the harness never loops.
 EXIT_BLOCK = 3
 
 # The reviewer's instructions: the judgement rubric and the output contract,
@@ -363,6 +365,25 @@ def collect_entries(path: str) -> list[dict]:
     return out
 
 
+def changed_keys(old_path: str, new_path: str) -> set[tuple[str, str]]:
+    """Return (msgctxt, msgid) pairs whose translation changed between two files."""
+    previous = {(e.msgctxt or "", e.msgid): e for e in load(old_path)}
+    changed: set[tuple[str, str]] = set()
+    for entry in load(new_path):
+        if entry.obsolete:
+            continue
+        key = (entry.msgctxt or "", entry.msgid)
+        before = previous.get(key)
+        if (
+            before is None
+            or before.msgstr != entry.msgstr
+            or before.msgstr_plural != entry.msgstr_plural
+            or ("fuzzy" in before.flags) != ("fuzzy" in entry.flags)
+        ):
+            changed.add(key)
+    return changed
+
+
 def _compact(entry: dict) -> dict:
     """The reviewer-facing record: only the fields that carry information."""
     item = {"id": entry["id"], "msgid": entry["msgid"], "msgstr": entry["msgstr"]}
@@ -558,6 +579,7 @@ def _run_review_chunk(index: int, total: int, chunk: list[dict],
 
 def review_pass(note: str, path: str, cfg: Config,
                 lang: str, language: str,
+                only: set[tuple[str, str]] | None = None,
                 chunk_size: int | None = None,
                 concurrency: int | None = None,
                 max_retries: int | None = None):
@@ -574,6 +596,11 @@ def review_pass(note: str, path: str, cfg: Config,
     chunks are dispatched, but in-flight requests are left to finish.
     """
     entries = collect_entries(path)
+    if only is not None:
+        entries = [e for e in entries if (e["msgctxt"], e["msgid"]) in only]
+        if not entries:
+            _log(f"{lang}: no changed entries to review.")
+            return [], {}
     if not entries:
         raise ReviewError("no translated entries to review")
     if chunk_size is None:
@@ -666,17 +693,13 @@ def clear_entries(path: str, entries: list[dict], repair_ids: set[str]) -> list[
     return changed
 
 
-def refill(intermediate_path: str, lang: str) -> None:
-    """Refill the cleared intermediate through helper/ai_translate.py, once.
+def refill(lang: str) -> None:
+    """Refill the cleared entries by running the translator once.
 
-    helper/ai_translate.py decides its paths from disk: it translates
-    <lang>/untranslated.po into <lang>/updated_translated.po. The cleared
-    intermediate is moved into untranslated.po and helper/ai_translate.py runs once;
-    the refilled catalogue lands back at intermediate_path. The caller owns the
-    backup of the pre-review intermediate and restores it if this raises.
+    The translator fills empty and fuzzy entries in <lang>/assistant.po in
+    place. The caller owns the backup of the pre-review catalogue and restores
+    it if this raises.
     """
-    untranslated = os.path.join(L10N_DIR, lang, "untranslated.po")
-    shutil.move(intermediate_path, untranslated)
     try:
         proc = subprocess.run(
             [sys.executable, AI_TRANSLATE, lang],
@@ -685,7 +708,7 @@ def refill(intermediate_path: str, lang: str) -> None:
     except OSError as exc:
         raise ReviewError(f"cannot run helper/ai_translate.py: {exc}") from exc
     if proc.returncode != 0:
-        partial = intermediate_path + ".partial"
+        partial = os.path.join(L10N_DIR, lang, f"{DOMAIN}.po.partial")
         if os.path.isfile(partial):
             os.remove(partial)
         raise ReviewError(f"helper/ai_translate.py exited {proc.returncode}")
@@ -738,9 +761,9 @@ def main(argv: list[str] | None = None) -> int:
              f"<LANG>/{REVIEW_NOTE_FILE} opts it in",
     )
     parser.add_argument(
-        "--po", default=None,
-        help=f"catalogue inside the locale directory to review (default: "
-             f"<LANG>/{INTERMEDIATE_NAME}, or <LANG>/{DOMAIN}.po with --full)",
+        "--changed-from", default=None, metavar="PATH",
+        help="review only entries whose translation changed since PATH "
+             "(the Makefile passes the pre-translation snapshot)",
     )
     parser.add_argument(
         "--full", action="store_true",
@@ -770,6 +793,28 @@ def main(argv: list[str] | None = None) -> int:
         _warn(f"{lang}: no {REVIEW_NOTE_FILE}; skipping the review.")
         return EXIT_OK
 
+    path = os.path.join(L10N_DIR, lang, f"{DOMAIN}.po")
+    if not os.path.isfile(path):
+        _warn(f"{path}: not found; nothing to review.")
+        return EXIT_OK
+
+    only = None
+    if args.changed_from and not args.full:
+        if not os.path.isfile(args.changed_from):
+            _warn(f"{args.changed_from}: not found; reviewing the whole catalogue.")
+        else:
+            try:
+                only = changed_keys(args.changed_from, path)
+            except OSError as exc:
+                _warn(
+                    f"{args.changed_from}: cannot read ({exc}); reviewing the "
+                    f"whole catalogue."
+                )
+                only = None
+            if only is not None and not only:
+                _log(f"{lang}: no changed entries; nothing to review.")
+                return EXIT_OK
+
     try:
         cfg = review_config(lang)
     except ValueError as exc:
@@ -784,23 +829,10 @@ def main(argv: list[str] | None = None) -> int:
         cfg.api_model = args.model.strip()
     model = cfg.get_route().model
 
-    if args.po:
-        path = args.po
-        lang_dir = os.path.abspath(os.path.join(L10N_DIR, lang))
-        if os.path.dirname(os.path.abspath(path)) != lang_dir:
-            _warn(f"--po must point inside {lang}/; skipping the review.")
-            return EXIT_OK
-    else:
-        name = f"{DOMAIN}.po" if args.full else INTERMEDIATE_NAME
-        path = os.path.join(L10N_DIR, lang, name)
-    if not os.path.isfile(path):
-        _warn(f"{path}: not found; nothing to review.")
-        return EXIT_OK
-
     if args.full:
         _log(f"{lang}: read-only audit of {path} (model {model})")
         try:
-            entries, verdicts = review_pass(note, path, cfg, lang, language)
+            entries, verdicts = review_pass(note, path, cfg, lang, language, only)
         except ReviewError as exc:
             _warn(f"{lang}: review failed ({exc}); no report produced.")
             return EXIT_OK
@@ -810,7 +842,7 @@ def main(argv: list[str] | None = None) -> int:
 
     _log(f"{lang}: reviewing {path} (model {model})")
     try:
-        entries, verdicts = review_pass(note, path, cfg, lang, language)
+        entries, verdicts = review_pass(note, path, cfg, lang, language, only)
     except ReviewError as exc:
         _warn(
             f"{lang}: review failed ({exc}); keeping the AI output, "
@@ -838,11 +870,11 @@ def main(argv: list[str] | None = None) -> int:
         _warn(f"{lang}: nothing was cleared; keeping the AI output.")
         return EXIT_OK
     try:
-        refill(path, lang)
+        refill(lang)
     except ReviewError as exc:
         os.replace(backup, path)
         _warn(
-            f"{lang}: refill failed ({exc}); the pre-review intermediate "
+            f"{lang}: refill failed ({exc}); the pre-review catalogue "
             f"is restored."
         )
         return EXIT_OK
@@ -851,10 +883,10 @@ def main(argv: list[str] | None = None) -> int:
 
     _log(f"{lang}: refill done; final review pass...")
     try:
-        entries, verdicts = review_pass(note, path, cfg, lang, language)
+        entries, verdicts = review_pass(note, path, cfg, lang, language, only)
     except ReviewError as exc:
         _warn(
-            f"{lang}: final review failed ({exc}); import continues with the "
+            f"{lang}: final review failed ({exc}); the run continues with the "
             f"refilled catalogue."
         )
         return EXIT_OK
@@ -864,7 +896,7 @@ def main(argv: list[str] | None = None) -> int:
         _print_report(entries, verdicts, lang)
         _log(
             f"{lang}: {len(remaining)} repair verdict(s) survived the refill; "
-            f"stopping before import so {os.path.basename(path)} is preserved."
+            f"stopping before check so {os.path.basename(path)} is preserved."
         )
         return EXIT_BLOCK
     _log(f"{lang}: the refill resolved every repair verdict.")

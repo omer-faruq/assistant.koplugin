@@ -37,7 +37,7 @@ It avoids the truncation issue (finish_reason=length) by:
   * Splitting the work into small chunks (default 20 msgids per request)
     so the per-response output is well below any provider's token cap.
   * On length-truncation, automatically bisecting the chunk and retrying.
-  * Persisting progress as `<output>.partial` after every chunk, so a
+  * Persisting progress as `<catalogue>.partial` after every chunk, so a
     crash, Ctrl-C, or API failure never loses already-completed work.
 
 Retries and request timeouts are delegated to the SDK's own policy
@@ -52,7 +52,6 @@ import logging
 import os
 import random
 import re
-import shutil
 import sys
 import tempfile
 import time
@@ -79,7 +78,7 @@ log_translate = logging.getLogger("ai_translate.translate")
 # -------------------- Constants --------------------
 
 
-TEMPLATE_FILE = "templates/assistant.pot"
+PO_FILE = "assistant.po"
 
 # Markup the translation must carry over from the msgid. AGENTS.md invariant 4:
 # <b> is parsed by bold_format, not real HTML, so a dropped tag is a rendering
@@ -192,47 +191,6 @@ def check_api(cfg: Config) -> int:
     log.info("OK: in %ds", elapsed)
     log.info("  Reply: %s", summary)
     return 0
-
-
-# -------------------- File-path decisions --------------------
-
-def decide_paths(lang_code: str) -> tuple[str | None, str | None, str | None]:
-    """Return (action, input_path, output_path).
-
-    action is one of:
-      - "translate": translate input_path and write to output_path
-      - "skip":      both files already exist; nothing to do
-      - "error":     inconsistent state on disk
-    """
-    translated = os.path.join(lang_code, "assistant.po")
-    untranslated = os.path.join(lang_code, "untranslated.po")
-    updated_translated = os.path.join(lang_code, "updated_translated.po")
-
-    has_translated = os.path.isfile(translated)
-    has_untranslated = os.path.isfile(untranslated)
-    has_updated = os.path.isfile(updated_translated)
-
-    if has_translated and has_updated:
-        return "skip", None, None
-    if not has_translated and not has_untranslated:
-        # Scenario 1: new language; copy the template into place first.
-        if not os.path.isfile(TEMPLATE_FILE):
-            log.error("template file '%s' not found.", TEMPLATE_FILE)
-            return "error", None, None
-        os.makedirs(lang_code, exist_ok=True)
-        shutil.copyfile(TEMPLATE_FILE, untranslated)
-        return "translate", untranslated, translated
-    if has_translated and has_untranslated:
-        # Scenario 2: update an existing language.
-        return "translate", untranslated, updated_translated
-
-    log.error(
-        "translate files not ready for %s: assistant.po=%s untranslated.po=%s "
-        "updated_translated.po=%s. Run `make extract-untranslated` first (the "
-        "ai-translate target does this for you, or use `make translate`).",
-        lang_code, has_translated, has_untranslated, has_updated,
-    )
-    return "error", None, None
 
 
 # -------------------- Chunk translation --------------------
@@ -519,6 +477,10 @@ def _apply_translations(
             entry.msgstr_plural = {i: v for i, v in enumerate(t["msgstr_plural"])}
         else:
             entry.msgstr = t["msgstr"]
+        # A translated entry is no longer a "needs review" marker; msgfmt
+        # otherwise leaves it out of the .mo.
+        if "fuzzy" in entry.flags:
+            entry.flags.remove("fuzzy")
 
 
 JSON_RETRIES = 3
@@ -641,9 +603,9 @@ def _chunk(seq: list, size: int) -> Iterable[list]:
 def _set_header_metadata(po: polib.POFile, lang_code: str, lang_fullname: str) -> None:
     """Populate the .po file header with language metadata.
 
-    Used for scenario 1 (new language) where we generated the .po from the .pot,
-    and for scenario 2 where the source untranslated.po has placeholder header
-    values from `msginit` (e.g. "nplurals=INTEGER; plural=EXPRESSION;").
+    Used when a catalogue was just created from the .pot by `msginit` and still
+    has placeholder header values (e.g. "nplurals=INTEGER;
+    plural=EXPRESSION;").
     """
     po.metadata["Language"] = lang_code
     po.metadata["Content-Type"] = "text/plain; charset=UTF-8"
@@ -655,11 +617,10 @@ def _set_header_metadata(po: polib.POFile, lang_code: str, lang_fullname: str) -
     po.metadata["PO-Revision-Date"] = time.strftime("%Y-%m-%d %H:%M+0000", time.gmtime())
 
 
-def translate_file(
-    cfg: Config, lang_code: str, input_path: str, output_path: str
-) -> int:
+def translate_file(cfg: Config, lang_code: str, path: str) -> int:
+    """Fill the empty and fuzzy entries of one catalogue in place."""
     lang_fullname = LANG_MAP[lang_code]
-    partial_path = output_path + ".partial"
+    partial_path = path + ".partial"
 
     route = cfg.get_route()
     log_translate.info(
@@ -667,11 +628,12 @@ def translate_file(
         lang_code, lang_fullname, route.protocol, route.endpoint, route.model,
     )
 
-    if os.path.isfile(partial_path):
+    resumed = os.path.isfile(partial_path)
+    if resumed:
         log_translate.warning("[%s] resuming from existing partial: %s", lang_code, partial_path)
         po = load_po(partial_path)
     else:
-        po = load_po(input_path)
+        po = load_po(path)
 
     # Guarantee UTF-8 output: polib saves with the header-declared encoding,
     # and an emptied catalogue is pure ASCII, so gettext tools may have
@@ -685,22 +647,26 @@ def translate_file(
         head, _, _ = content_type.partition("charset=")
         po.metadata["Content-Type"] = f"{head}charset=UTF-8"
 
-    # Detect whether the header is a fresh `msginit` placeholder (scenario 1
-    # new language, or scenario 2 update whose untranslated.po was regenerated
-    # by the Makefile and still has placeholder values). In both cases we need
-    # to overwrite Language / Plural-Forms / Language-Team / Last-Translator
-    # before saving the final output. Existing non-placeholder headers (e.g.
-    # the real assistant.po copied from upstream) are preserved untouched.
+    # Detect whether the header is a fresh `msginit` placeholder (new locale)
+    # and needs Language / Plural-Forms / Language-Team / Last-Translator
+    # filled in before saving. Existing headers are preserved untouched.
     existing_plural = po.metadata.get("Plural-Forms", "")
     header_is_placeholder = "INTEGER" in existing_plural or not existing_plural
     needs_header_fix = (
         not po.metadata.get("Language") or header_is_placeholder
     )
 
-    pending: list[polib.POEntry] = [e for e in po if is_empty(e)]
+    pending: list[polib.POEntry] = [
+        e for e in po if not e.obsolete and (is_empty(e) or "fuzzy" in e.flags)
+    ]
 
     if not pending:
         log_translate.info("[%s] nothing to translate; all entries are already filled", lang_code)
+        # Do not rewrite a clean catalogue: `make ai-translate` walks every
+        # locale, and an untouched file must not churn. A resumed partial still
+        # needs the final rename, and a placeholder header still needs fixing.
+        if not resumed and not needs_header_fix:
+            return 0
     else:
         total = len(pending)
         chunks = list(_chunk(pending, cfg.chunk_size))
@@ -759,12 +725,12 @@ def translate_file(
 
     # Atomic rename partial -> final.
     tmp_fd, tmp_path = tempfile.mkstemp(
-        prefix=".ai_translate.", suffix=".tmp", dir=os.path.dirname(output_path) or "."
+        prefix=".ai_translate.", suffix=".tmp", dir=os.path.dirname(path) or "."
     )
     os.close(tmp_fd)
     try:
         po.save(tmp_path)
-        os.replace(tmp_path, output_path)
+        os.replace(tmp_path, path)
     except Exception:
         if os.path.isfile(tmp_path):
             os.unlink(tmp_path)
@@ -782,8 +748,9 @@ def translate_file(
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="ai_translate.py",
-        description="Translate gettext .po files using an LLM API, with chunked "
-                    "JSON-in/JSON-out requests to avoid output truncation.",
+        description="Translate a locale's assistant.po in place using an LLM API, "
+                    "with chunked JSON-in/JSON-out requests to avoid output "
+                    "truncation.",
     )
     g = p.add_mutually_exclusive_group(required=True)
     g.add_argument(
@@ -876,20 +843,18 @@ def main(argv: list[str] | None = None) -> int:
     if args.check_api_lang is not None:
         return check_api(cfg)
 
-    action, input_path, output_path = decide_paths(args.lang_code)
-    if action == "skip":
-        log.info(
-            "skip %s: translation already complete", args.lang_code,
+    path = os.path.join(args.lang_code, PO_FILE)
+    if not os.path.isfile(path):
+        log.error(
+            "catalogue %s not found; run `make update` first (it creates "
+            "missing locales from the template).", path,
         )
-        return 0
-    if action == "error":
         return 2
 
-    assert input_path is not None and output_path is not None
     try:
-        return translate_file(cfg, args.lang_code, input_path, output_path)
+        return translate_file(cfg, args.lang_code, path)
     except KeyboardInterrupt:
-        partial = output_path + ".partial"
+        partial = path + ".partial"
         if os.path.isfile(partial):
             log.warning(
                 "interrupted by user; partial output saved at %s — "

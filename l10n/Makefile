@@ -6,7 +6,6 @@ MSGINIT_BIN   = msginit
 MSGFMT_BIN    = msgfmt
 MSGMERGE_BIN  = msgmerge
 MSGATTRIB_BIN = msgattrib
-MSGCAT_BIN    = msgcat
 XGETTEXT_BIN  = xgettext
 
 # Shared xgettext options so `template` (writes templates/$(DOMAIN).pot) and
@@ -44,18 +43,12 @@ PO_FILES   := $(wildcard */$(DOMAIN).po)
 # agree on the same set; a locale without a note is never reviewed.
 REVIEW_HOOKED := $(strip $(foreach lang,$(LANGS),$(if $(wildcard $(lang)/review_note.txt),$(if $(wildcard $(lang)/$(DOMAIN).po),$(lang)))))
 
-# Per-locale pattern targets, expanded here so .PHONY names every concrete
-# target make derives from a pattern rule (the pattern itself cannot be listed).
-EXTRACT_LOCALE_TARGETS := $(patsubst %/$(DOMAIN).po,extract-untranslated-%,$(PO_FILES))
-IMPORT_LOCALE_TARGETS  := $(patsubst %/$(DOMAIN).po,import-translation-%,$(PO_FILES))
-AI_TRANSLATE_TARGETS   := $(LANGS:%=ai-translate-%)
-
 # Effective parallelism for ai-translate.
 # Priority: explicit -jN / --jobs=N on the command line > bare -j (nproc) > 4.
 # GNU Make 4.4's .MAKEFLAGS directive does not actually inject a default
 # -jN into MAKEFLAGS when the user didn't pass one, so we extract the
 # effective value from MAKEFLAGS ourselves and pass it explicitly to the
-# sub-make.
+# xargs worker pool.
 JOBS := $(shell echo '$(MAKEFLAGS)' | sed -nE 's/.*-j ?([0-9]+).*/\1/p' | head -1)
 ifeq ($(JOBS),)
 JOBS := $(shell if echo '$(MAKEFLAGS)' | grep -qE ' (-j|--jobs)( |$$)'; then nproc; else echo 4; fi)
@@ -70,25 +63,24 @@ export RANDOM_SESSION_ID
 
 .DEFAULT_GOAL := all
 
-.PHONY: help all translate template update extract-untranslated ai-translate check-ai-results import-translation check check-langs check-api stats clean init-dirs mo retranslate-fuzzy retranslate-msgid review-translations review-hooked \
-	$(EXTRACT_LOCALE_TARGETS) $(IMPORT_LOCALE_TARGETS) $(AI_TRANSLATE_TARGETS)
+.PHONY: help all translate template update ai-translate check check-langs check-api stats clean init-dirs mo retranslate-fuzzy retranslate-msgid review-translations review-hooked
 
 help:
 	@echo "Usage: make [target]"
 	@echo ""
 	@echo "  mo              Compile .po -> .mo (offline, incremental)"
-	@echo "  translate       Full pipeline: template -> update -> extract -> ai-translate -> review -> import -> check -> clean -> mo (needs .env)"
+	@echo "  translate       Full pipeline: template -> update -> ai-translate -> review -> check -> clean -> mo (needs .env)"
 	@echo "  template        Regenerate templates/assistant.pot"
 	@echo "  update          Merge pot into po"
 	@echo "  check           msgfmt --check"
 	@echo "  check-api       Ping configured API endpoint"
 	@echo "  check-langs     Detect drift vs KOReader supported languages"
 	@echo "  stats           Estimate untranslated strings from current source (read-only)"
-	@echo "  clean           Remove intermediate files"
+	@echo "  clean           Remove transient translation files"
 	@echo "  ai-translate    Run AI translation (all or L10N_LANG=xx)"
-	@echo "  retranslate-fuzzy  Re-extract and re-translate fuzzy entries (all or L10N_LANG=xx)"
+	@echo "  retranslate-fuzzy  Re-translate fuzzy entries (all or L10N_LANG=xx)"
 	@echo "  retranslate-msgid  Empty one MSGID everywhere and re-translate it: make retranslate-msgid MSGID=\"...\" [L10N_LANG=xx]"
-	@echo "  review-translations  Review the AI output of every note-hooked locale with a second model and refill flagged entries (run by translate)"
+	@echo "  review-translations  Review the entries changed by this run in every note-hooked locale (run by translate)"
 	@echo "  review-hooked   Read-only full-catalogue audit of every note-hooked locale (chunked reviewer pass each, no writes)"
 	@echo "  init-dirs       Create missing language directories"
 
@@ -104,66 +96,58 @@ mo: $(MO_FILES)
 
 # This target runs the full translation pipeline:
 # 1. Extracts strings from source code into a .pot template.
-# 2. Merges the template into language .po files.
-# 3. Extracts all untranslated strings.
-# 4. Runs the AI translation script on them, writing updated_translated.po.
-# 5. Reviews each note-hooked locale's output with a second model and refills
+# 2. Merges the template into each language .po (msgmerge).
+# 3. Translates empty and fuzzy entries in each .po in place.
+# 4. Reviews the entries changed by this run with a second model and refills
 #    flagged entries.
-# 6. Merges the new translations back into the .po files.
-# 7. Checks the syntax of the final .po files.
-# 8. Cleans up all intermediate files.
-# 9. Compiles the final .po files into .mo files.
+# 5. Checks the syntax of the final .po files.
+# 6. Removes transient files.
+# 7. Compiles the final .po files into .mo files.
 translate:
 	@if [ ! -f .env ]; then \
 		echo "\033[0;31mError: AI access environment file \`.env' is not found.\033[0m"; \
 		echo "Please set it before running translation. See: README.md"; \
 		exit 1; \
 	fi
-	@echo "[1/9] Generating POT template file..."
+	@echo "[1/7] Generating POT template file..."
 	@$(MAKE) template
-	@echo "[2/9] Merging POT file into PO files..."
+	@echo "[2/7] Merging POT file into PO files..."
 	@$(MAKE) update
-	@echo "[3/9] Generating untranslated files..."
-	@$(MAKE) extract-untranslated
-	@echo "[4/9] Running AI translation and verifying results..."
+	@echo "[3/7] Translating empty and fuzzy entries..."
 	@$(MAKE) ai-translate
-	@echo "[5/9] Reviewing AI output of note-hooked locales..."
+	@echo "[4/7] Reviewing changed entries of note-hooked locales..."
 	@$(MAKE) review-translations
-	@echo "[6/9] Merging untranslated files..."
-	@$(MAKE) import-translation
-	@echo "[7/9] Checking PO files..."
+	@echo "[5/7] Checking PO files..."
 	@$(MAKE) check
-	@echo "[8/9] Cleaning up intermediate files..."
+	@echo "[6/7] Cleaning transient files..."
 	@$(MAKE) clean
-	@echo "[9/9] Compiling .mo files..."
+	@echo "[7/7] Compiling .mo files..."
 	@$(MAKE) mo
 	@echo "\nTranslation process completed successfully!"
 
 
-# LLM review of the AI output, run by `translate` after ai-translate and before
-# import-translation. A locale opts in by shipping l10n/<lang>/review_note.txt
-# (REVIEW_HOOKED); for each such locale it reviews the fresh
-# <lang>/updated_translated.po with a second model in chunks (one request per
-# L10N_REVIEW_CHUNK_SIZE entries) and, when entries are marked `repair`, empties
-# exactly those msgstr, refills them
-# once through helper/ai_translate.py and reviews the result a second time. A repair
-# verdict that survives the refill stops the run before import so the
-# intermediate is preserved; a setup failure (no note, no credential, timeout,
-# invalid reply) only warns and keeps the AI output. A hooked locale with no
-# intermediate this run is skipped; no other locale is touched.
+# LLM review of the entries changed by this translation run, run by `translate`
+# after ai-translate. A locale opts in by shipping l10n/<lang>/review_note.txt
+# (REVIEW_HOOKED); ai-translate leaves <lang>/assistant.po.pre-ai as the
+# pre-run snapshot, so the reviewer sees only the entries this run changed
+# instead of re-reviewing the whole catalogue. A repair verdict that survives
+# the refill stops the run before check, with the catalogue preserved; a setup
+# failure (no note, no credential, timeout, invalid reply) only warns and keeps
+# the AI output.
 review-translations:
 	@set -e; \
-		for lang in $(REVIEW_HOOKED); do \
-			if [ ! -f "$$lang/updated_translated.po" ]; then \
-				echo "  [review] $$lang: no updated_translated.po this run; skipping."; \
-				continue; \
-			fi; \
-			echo "  [review] reviewing $$lang/updated_translated.po..."; \
-			if ! ./helper/review_translations.py --lang $$lang; then \
-				echo "\033[0;31m[review] $$lang: repair verdicts survived the refill; stopping before import (intermediate preserved).\033[0m"; \
-				exit 1; \
-			fi; \
-		done
+	for lang in $(REVIEW_HOOKED); do \
+		if [ -n "$(L10N_LANG)" ] && [ "$$lang" != "$(L10N_LANG)" ]; then continue; fi; \
+		if [ ! -f "$$lang/$(DOMAIN).po.pre-ai" ]; then \
+			echo "  [review] $$lang: no pre-run snapshot; run 'make ai-translate' first; skipping."; \
+			continue; \
+		fi; \
+		echo "  [review] reviewing changed entries of $$lang/$(DOMAIN).po..."; \
+		if ! ./helper/review_translations.py --lang $$lang --changed-from "$$lang/$(DOMAIN).po.pre-ai"; then \
+			echo "\033[0;31m[review] $$lang: repair verdicts survived the refill; stopping before check (catalogue preserved).\033[0m"; \
+			exit 1; \
+		fi; \
+	done
 
 # Read-only full-catalogue audit of every hooked locale: one chunked reviewer
 # pass per <lang>/assistant.po, no writes to any file. For the historical
@@ -189,69 +173,16 @@ init-dirs: template
 		fi; \
 	done
 
+# Merge the fresh POT into every catalogue. msgmerge keeps existing translations
+# and marks changed entries fuzzy, which is the state the translator consumes.
+# msgattrib drops obsolete entries so the committed catalogues stay clean.
 update: init-dirs
-	@set -x;for po_file in $(PO_FILES); do \
-		$(MSGMERGE_BIN) --update --backup=none --no-wrap --no-location --sort-by-file $$po_file $(TEMPLATE_DIR)/$(DOMAIN).pot; \
+	@set -e; for lang in $(LANGS); do \
+		po_file="$$lang/$(DOMAIN).po"; \
+		$(MSGMERGE_BIN) --update --backup=none --no-wrap --no-location --sort-by-file "$$po_file" $(TEMPLATE_DIR)/$(DOMAIN).pot; \
+		$(MSGATTRIB_BIN) --no-obsolete --no-wrap --no-location --sort-by-file "$$po_file" -o "$$po_file.tmp"; \
+		mv "$$po_file.tmp" "$$po_file"; \
 	done
-
-# Regenerate <dir>/untranslated.po when it is missing *or older than* the
-# catalogue it was derived from. Testing only for existence left a stale file
-# behind after a run that refilled assistant.po, and the next run then queued
-# entries that were already translated.
-#
-# The aggregate composes the per-locale pattern target for every catalogue, so
-# a single-locale refill reuses the same recipe without touching any other
-# locale's intermediate files.
-extract-untranslated: $(EXTRACT_LOCALE_TARGETS)
-
-# The recipe is shared by the static rule (concrete locales known at parse time,
-# so .PHONY applies) and the implicit pattern rule (a brand-new locale the
-# pipeline is creating, not yet in PO_FILES).
-define EXTRACT_UNTRANSLATED_RECIPE
-	@set -e; dir=$*; \
-	if [ ! -f "$$dir/$(DOMAIN).po" ]; then \
-		echo "No catalogue $$dir/$(DOMAIN).po yet; skipping extraction for a new locale."; \
-	elif [ ! -f "$$dir/untranslated.po" ] || [ "$$dir/$(DOMAIN).po" -nt "$$dir/untranslated.po" ]; then \
-		$(MSGATTRIB_BIN) --no-wrap --no-location --untranslated --force-po "$$dir/$(DOMAIN).po" -o "$$dir/_untranslated.po"; \
-		$(MSGATTRIB_BIN) --no-wrap --no-location --fuzzy --clear-fuzzy --empty --force-po "$$dir/$(DOMAIN).po" -o "$$dir/_fuzzy.po"; \
-		$(MSGCAT_BIN) --no-wrap --no-location --use-first "$$dir/_untranslated.po" "$$dir/_fuzzy.po" -o "$$dir/untranslated.po"; \
-	else \
-		echo "Skipping extraction for $$dir, untranslated.po is up to date."; \
-	fi
-endef
-
-# Static pattern rule: each concrete locale target gets an explicit rule (so
-# .PHONY applies without disabling it) while `$*` still carries the locale.
-$(EXTRACT_LOCALE_TARGETS): extract-untranslated-%:
-	$(EXTRACT_UNTRANSLATED_RECIPE)
-
-extract-untranslated-%:
-	$(EXTRACT_UNTRANSLATED_RECIPE)
-
-# The aggregate imports every locale's updated_translated.po. The pattern rule
-# below is the same work scoped to one locale, so a single-locale refill never
-# imports another locale's leftover intermediates.
-import-translation: $(IMPORT_LOCALE_TARGETS)
-
-define IMPORT_TRANSLATION_RECIPE
-	@set -e; lang=$*; \
-	if [ ! -f "$$lang/$(DOMAIN).po" ]; then \
-		echo "\033[0;31mError: no catalogue $$lang/$(DOMAIN).po to import into.\033[0m"; exit 1; \
-	fi; \
-	if [ -f "$$lang/updated_translated.po" ]; then \
-		tmp="$$lang/$(DOMAIN).po.new"; \
-		$(MSGCAT_BIN) --no-location --no-wrap --use-first --sort-output "$$lang/updated_translated.po" "$$lang/$(DOMAIN).po" -o "$$lang/updated.po"; \
-		$(MSGATTRIB_BIN) --no-obsolete --no-wrap --no-location --sort-by-file "$$lang/updated.po" -o "$$tmp"; \
-		mv "$$tmp" "$$lang/$(DOMAIN).po"; \
-		rm -f "$$lang/updated.po"; \
-	fi
-endef
-
-$(IMPORT_LOCALE_TARGETS): import-translation-%:
-	$(IMPORT_TRANSLATION_RECIPE)
-
-import-translation-%:
-	$(IMPORT_TRANSLATION_RECIPE)
 
 check:
 	@echo "Checking syntax of existing .po files..."
@@ -356,88 +287,43 @@ stats:
 	printf "%-8s %6d%% %7d %13d\n" "TOTAL" "$$gpct" "$$tf" "$$tu"; \
 	echo "Remaining: $$((tu+tf)) entries across $$touched language(s), up to $$maxu per language."
 
+# Remove transient files left by a run: resumable partials, pre-translation
+# snapshots used by the reviewer, and the legacy intermediate .po files from
+# the old extract/import pipeline.
 clean:
-	@echo "Cleaning intermediate translation files..."
-	# Keep the current domain's .po ($(DOMAIN).po) and the legacy koreader.po
-	# (still present during the migration window) — delete all other .po files.
-	@find . -type f -name "*.po" ! -name "$(DOMAIN).po" ! -name "koreader.po" -print -delete
+	@echo "Cleaning transient translation files..."
+	@find . -type f \( \
+		-name '*.partial' -o -name '*.pre-ai' -o -name '*.review-orig' \
+		-o -name 'untranslated.po' -o -name '_untranslated.po' -o -name '_fuzzy.po' \
+		-o -name 'updated_translated.po' -o -name 'updated.po' -o -name '*.po.tmp' \
+	\) -print -delete
 
+# Translate every selected locale in place. The pre-translation copy is what
+# `review-translations` diffs against, so the reviewer only sees entries this
+# run touched; keeping an existing .pre-ai preserves that baseline across a
+# resumed run until `clean` removes it.
 ai-translate:
 	@set -e; \
-	if [ -n "$(L10N_LANG)" ]; then \
-		echo "Translating single language $(L10N_LANG)..."; \
-		$(MAKE) ai-translate-$(L10N_LANG); \
-	else \
-		TO_TRANSLATE=$$(for lang in $(LANGS); do if [ -s "$$lang/untranslated.po" ]; then echo $$lang; fi; done); \
-		if [ -z "$$TO_TRANSLATE" ]; then \
-			echo "All languages are up to date. Nothing to translate."; \
-		else \
-			TO_TRANSLATE_TARGETS=$$(for lang in $$TO_TRANSLATE; do echo "ai-translate-$$lang"; done); \
-			TOTAL_LANGS=$$(echo $$TO_TRANSLATE | wc -w); \
-			echo "Starting parallel translation for $$TOTAL_LANGS language(s), cheapest first:" $$TO_TRANSLATE; \
-			L10N_TO_LIST="$$TO_TRANSLATE"; export L10N_TO_LIST; \
-			if ! $(MAKE) -k -j $(JOBS) $$TO_TRANSLATE_TARGETS; then \
-				FAILED=$$(for lang in $$TO_TRANSLATE; do \
-					if [ -s "$$lang/untranslated.po" ] && [ ! -f "$$lang/updated_translated.po" ] && [ ! -f "$$lang/$(DOMAIN).po.new" ]; then \
-						if [ ! -f "$$lang/$(DOMAIN).po" ] || [ "$$lang/untranslated.po" -nt "$$lang/$(DOMAIN).po" ]; then \
-							echo $$lang; \
-						fi; \
-					fi; \
-				done); \
-				echo "\033[0;33mSome languages failed to translate. Re-run 'make translate' (or 'make ai-translate') to resume.\033[0m"; \
-				if [ -n "$$FAILED" ]; then echo "Failed languages: $$FAILED"; fi; \
-				exit 1; \
-			fi; \
+	langs="$(LANGS)"; \
+	if [ -n "$(L10N_LANG)" ]; then langs="$(L10N_LANG)"; fi; \
+	for lang in $$langs; do \
+		if [ -f "$$lang/$(DOMAIN).po" ] && [ ! -f "$$lang/$(DOMAIN).po.pre-ai" ]; then \
+			cp "$$lang/$(DOMAIN).po" "$$lang/$(DOMAIN).po.pre-ai"; \
 		fi; \
-	fi
+	done; \
+	echo "$$langs" | tr ' ' '\n' | xargs -r -P $(JOBS) -n1 ./helper/ai_translate.py
 
-# extract-untranslated-% is a prerequisite rather than a documented manual
-# step: helper/ai_translate.py's scenario-2 path needs <lang>/untranslated.po to
-# exist, and without this dependency `make ai-translate L10N_LANG=xx` dies with
-# "translate files not ready". The per-locale target is idempotent - it skips a
-# language whose untranslated.po is already there - so this is safe to depend
-# on, and scoping it to the one locale keeps the job from touching any other
-# locale's intermediates.
-$(AI_TRANSLATE_TARGETS): ai-translate-%: extract-untranslated-%
-	@set -e; \
-	lang=$*; \
-	IS_NEW=0; if [ ! -f "$$lang/$(DOMAIN).po" ]; then IS_NEW=1; fi; \
-	./helper/ai_translate.py $$lang && { \
-		if [ $$IS_NEW -eq 1 ]; then \
-			if [ ! -f "$$lang/$(DOMAIN).po" ]; then \
-				echo "\033[0;31mError: AI translation for new language '$$lang' failed. File '$$lang/$(DOMAIN).po' not created.\033[0m"; exit 1; \
-			fi; \
-		elif [ -s "$$lang/untranslated.po" ] && [ ! -f "$$lang/updated_translated.po" ]; then \
-			echo "\033[0;31mError: AI translation for '$$lang' failed. File '$$lang/updated_translated.po' not created.\033[0m"; exit 1; \
-		fi; \
-		if [ -n "$${L10N_TO_LIST:-}" ]; then \
-			done_n=0; total_n=0; \
-			for l in $${L10N_TO_LIST}; do \
-				total_n=$$((total_n+1)); \
-				if [ ! -s "$$l/untranslated.po" ] || [ -f "$$l/updated_translated.po" ] || \
-				   { [ -f "$$l/$(DOMAIN).po" ] && [ "$$l/$(DOMAIN).po" -nt "$$l/untranslated.po" ]; }; then \
-					done_n=$$((done_n+1)); \
-				fi; \
-			done; \
-			echo "\033[0;32m[$$lang] done. Progress: $$done_n/$$total_n languages translated, $$((total_n - done_n)) remaining.\033[0m"; \
-		fi; \
-	} || exit 1
-
+# Fuzzy entries (msgmerge's "needs review" marker) are part of the normal
+# pending set, so a plain translation run re-translates them.
 retranslate-fuzzy:
-	@echo "Forcing re-translation of fuzzy entries..."
-	@for lang in $(LANGS); do \
-		if [ -n "$(L10N_LANG)" ] && [ "$$lang" != "$(L10N_LANG)" ]; then continue; fi; \
-		rm -f $$lang/untranslated.po $$lang/_untranslated.po $$lang/_fuzzy.po $$lang/updated_translated.po; \
-	done
-	@$(MAKE) extract-untranslated
+	@echo "Re-translating fuzzy entries..."
 	@$(MAKE) ai-translate
-	@$(MAKE) import-translation
-	@echo "Fuzzy re-translation imported; running 'make check'..."
 	@$(MAKE) check || true
+	@$(MAKE) clean
 
-# Empty one exact MSGID in every (or one L10N_LANG) .po file and run it back
-# through the pipeline, so a terminology fix is retranslated by the script
-# instead of hand-edited in 60 files. Needs .env (ai-translate step).
+# Empty one exact MSGID in every (or one L10N_LANG) .po file and run the
+# translator once to refill it, so a terminology fix is retranslated by the
+# script instead of hand-edited in 60 files. Needs .env (ai-translate step).
 retranslate-msgid:
 	@if [ -z "$(MSGID)" ]; then \
 		echo "Usage: make retranslate-msgid MSGID=\"<exact msgid>\" [L10N_LANG=xx]"; \
@@ -448,19 +334,13 @@ retranslate-msgid:
 		if [ -n "$(L10N_LANG)" ] && [ "$$lang" != "$(L10N_LANG)" ]; then continue; fi; \
 		./helper/retranslate_msgid.py "$$lang" "$(MSGID)" || exit 1; \
 	done
-	@for lang in $(LANGS); do \
-		if [ -n "$(L10N_LANG)" ] && [ "$$lang" != "$(L10N_LANG)" ]; then continue; fi; \
-		rm -f $$lang/untranslated.po $$lang/_untranslated.po $$lang/_fuzzy.po $$lang/updated_translated.po; \
-	done
-	@$(MAKE) extract-untranslated
 	@$(MAKE) ai-translate
-	@$(MAKE) import-translation
-	@echo "Retranslation imported; running 'make check'..."
+	@echo "Refilled; running 'make check'..."
 	@$(MAKE) check || true
-	@echo "Cleaning up intermediate files..."
 	@$(MAKE) clean
 	@echo "Compiling .mo files..."
 	@$(MAKE) mo
+
 
 
 template:
