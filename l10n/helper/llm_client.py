@@ -569,3 +569,23 @@ def request(
                 downgraded = True
                 continue
             raise _as_runtime_error(exc)
+
+
+def list_models(cfg: Config) -> list[str]:
+    """Return sorted model IDs exposed by the route's /models endpoint."""
+    route = cfg.get_route()
+    client = cfg.get_client(route)
+    try:
+        page = client.models.list()
+    except Exception as exc:
+        raise _as_runtime_error(exc)
+    items = _get(page, "data", None)
+    if items is None:
+        items = list(page)
+    ids = {
+        mid.strip()
+        for item in items
+        for mid in [item if isinstance(item, str) else _get(item, "id", "")]
+        if isinstance(mid, str) and mid.strip()
+    }
+    return sorted(ids)

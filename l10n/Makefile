@@ -63,7 +63,7 @@ export RANDOM_SESSION_ID
 
 .DEFAULT_GOAL := all
 
-.PHONY: help all translate template update ai-translate check check-langs check-api stats clean init-dirs mo retranslate-fuzzy retranslate-msgid review-translations review-hooked
+.PHONY: help all translate template update ai-translate check check-langs check-api list-models stats clean init-dirs mo retranslate-fuzzy retranslate-msgid review-translations review-hooked
 
 help:
 	@echo "Usage: make [target]"
@@ -74,6 +74,7 @@ help:
 	@echo "  update          Merge pot into po"
 	@echo "  check           msgfmt --check"
 	@echo "  check-api       Ping configured API endpoint"
+	@echo "  list-models     List models available on the configured endpoint (or L10N_LANG=xx)"
 	@echo "  check-langs     Detect drift vs KOReader supported languages"
 	@echo "  stats           Estimate untranslated strings from current source (read-only)"
 	@echo "  clean           Remove transient translation files"
@@ -204,6 +205,11 @@ check:
 # a full translation batch.
 check-api:
 	@./helper/ai_translate.py --check-api
+
+# List models exposed by the configured API endpoint (or a locale's route with
+# L10N_LANG=xx).
+list-models:
+	@./helper/ai_translate.py --list-models $(L10N_LANG)
 
 # Detect drift between this project's supported languages and KOReader's.
 # - Set KOREADER_L10N_DIR to override the default reference path.

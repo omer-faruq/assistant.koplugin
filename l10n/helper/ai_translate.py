@@ -67,7 +67,15 @@ from lang_data import (
     PLURAL_FORMS,
     check_data,
 )
-from llm_client import Config, RUN_SESSION_ID, is_opencode_api, log, log_http, request
+from llm_client import (
+    Config,
+    RUN_SESSION_ID,
+    is_opencode_api,
+    list_models,
+    log,
+    log_http,
+    request,
+)
 from po_ops import is_empty, load as load_po
 
 # -------------------- Logging --------------------
@@ -190,6 +198,25 @@ def check_api(cfg: Config) -> int:
     summary = re.sub(r"\s+", " ", result["content"]).strip()[:120]
     log.info("OK: in %ds", elapsed)
     log.info("  Reply: %s", summary)
+    return 0
+
+
+def run_list_models(cfg: Config) -> int:
+    """Fetch and print the models available on the configured route."""
+    route = cfg.get_route()
+    label = f" [{cfg.lang_code}]" if cfg.lang_code else ""
+    log.info("Listing models%s from %s...", label, route.base_url)
+    try:
+        models = list_models(cfg)
+    except Exception as exc:
+        log.error("FAIL: %s", exc)
+        return 1
+    if not models:
+        log.warning("No models returned by %s", route.base_url)
+        return 0
+    log.info("Found %d model(s) (configured: %s):", len(models), route.model)
+    for model_id in models:
+        print(model_id)
     return 0
 
 
@@ -766,6 +793,12 @@ def build_parser() -> argparse.ArgumentParser:
              "(l10n/<lang>/.env over l10n/.env; e.g. --check-api-lang sk).",
     )
     g.add_argument(
+        "--list-models", dest="list_models", nargs="?", const="",
+        metavar="LANG_CODE",
+        help="List models available on the configured endpoint "
+             "(optionally using LANG_CODE's merged settings).",
+    )
+    g.add_argument(
         "--check-data", dest="check_data", action="store_true",
         help="Validate LANG_MAP/LANG_EN/PLURAL_FORMS against the catalogues "
              "on disk and exit (offline; needs no API key).",
@@ -804,13 +837,18 @@ def main(argv: list[str] | None = None) -> int:
     # Config merges l10n/<lang>/.env over l10n/.env, while --check-api uses the
     # global settings only (lang_code=None).
     lang_code: str | None
-    if args.check_api:
+    if args.check_api or args.list_models == "":
         lang_code = None
-    elif args.check_api_lang is not None:
-        if args.check_api_lang not in LANG_MAP:
-            log.error("language code %r not supported", args.check_api_lang)
+    elif args.check_api_lang is not None or args.list_models is not None:
+        target_lang = (
+            args.check_api_lang
+            if args.check_api_lang is not None
+            else args.list_models
+        )
+        if target_lang not in LANG_MAP:
+            log.error("language code %r not supported", target_lang)
             return 2
-        lang_code = args.check_api_lang
+        lang_code = target_lang
     else:
         if args.lang_code not in LANG_MAP:
             log.error("language code %r not supported", args.lang_code)
@@ -837,11 +875,11 @@ def main(argv: list[str] | None = None) -> int:
         log.info("opencode API detected; x-opencode-session=%s",
                  cfg.opencode_session or RUN_SESSION_ID)
 
-    if args.check_api:
+    if args.check_api or args.check_api_lang is not None:
         return check_api(cfg)
 
-    if args.check_api_lang is not None:
-        return check_api(cfg)
+    if args.list_models is not None:
+        return run_list_models(cfg)
 
     path = os.path.join(args.lang_code, PO_FILE)
     if not os.path.isfile(path):

@@ -162,6 +162,7 @@ Verify the API works before kicking off a batch:
 
     make check-api                          # or: ./helper/ai_translate.py --check-api
     ./helper/ai_translate.py --check-api-lang sk   # a locale's own protocol/route
+    make list-models                        # or: ./helper/ai_translate.py --list-models [lang]
 
 Translate a single language:
 
