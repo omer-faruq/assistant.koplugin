@@ -21,17 +21,12 @@ entry point. Direct `helper/...` invocations below are for debugging.
 
 ## Env and Tools
 
-Install the system packages and create a small l10n tooling environment
-(Debian/Ubuntu):
+Install the system packages (Debian/Ubuntu):
 
-    sudo apt install gettext make python3 python3-venv python3-dotenv python3-polib
-    python3 -m venv --system-site-packages "$HOME/.venvs/assistant-l10n"
-    . "$HOME/.venvs/assistant-l10n/bin/activate"
-    python -m pip install openai
+    sudo apt install gettext make python3 python3-dotenv python3-polib python3-openai
 
-`helper/ai_translate.py` talks to the API through the official `openai` Python SDK, so
-`python3-requests` is no longer needed. Activate this environment before running
-the Makefile; the scripts use the active `python3` via their shebang.
+`helper/ai_translate.py` talks to the API through the official `openai` Python SDK.
+The scripts use the system `python3` via their shebang.
 
 Create an `.env` file in this directory with the following variables
 (required unless noted):
