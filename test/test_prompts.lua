@@ -30,11 +30,11 @@ local tests = {
     -- 1. Built-in flag defaults
     -- =========================================================================
 
-    test("builtin_prompts: all 13 keys exist", function()
+    test("builtin_prompts: all 14 keys exist", function()
         local keys = {
             "term_xray", "dictionary", "quick_note", "vocabulary", "grammar",
             "translate", "summarize", "simplify", "key_points", "ELI5",
-            "explain", "historical_context", "wikipedia",
+            "explain", "historical_context", "wikipedia", "flashcards",
         }
         for idx, key in ipairs(keys) do
             -- `idx` rather than `_`: the gettext guard forbids a discarded `_`.
@@ -42,12 +42,21 @@ local tests = {
         end
     end),
 
-    test("builtin_prompts: use_book_context == true on the 5 expected keys", function()
-        local true_keys = { "summarize", "key_points", "ELI5", "explain", "historical_context" }
+    test("builtin_prompts: use_book_context == true on the 6 expected keys", function()
+        local true_keys = { "summarize", "key_points", "ELI5", "explain", "historical_context", "flashcards" }
         for idx, key in ipairs(true_keys) do
             assert.equal(M.builtin_prompts[key].use_book_context, true,
                 key .. ".use_book_context should be true")
         end
+    end),
+
+    test("flashcards: does not use web search or follow-up suggestions", function()
+        local prompt = M.builtin_prompts.flashcards
+        assert.equal(prompt.use_websearch, false)
+        assert.equal(prompt.show_suggestions, false)
+        assert.matches(prompt.user_prompt, '"cards"')
+        assert.matches(prompt.user_prompt, '"question"')
+        assert.matches(prompt.user_prompt, '"answer"')
     end),
 
     test("builtin_prompts: use_book_context == false on the other 8 keys", function()
