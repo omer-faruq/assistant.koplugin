@@ -208,13 +208,14 @@ local tests = {
         assert.equal(M.dict_presets.standard[3], "synonyms")
 
         local full = M.dict_presets.full
-        assert.equal(#full, 6, "full should have 6 sections")
+        assert.equal(#full, 7, "full should have 7 sections")
         assert.equal(full[1], "meaning")
-        assert.equal(full[2], "translation")
-        assert.equal(full[3], "synonyms")
-        assert.equal(full[4], "word_form")
-        assert.equal(full[5], "example")
-        assert.equal(full[6], "origin")
+        assert.equal(full[2], "pronunciation")
+        assert.equal(full[3], "translation")
+        assert.equal(full[4], "synonyms")
+        assert.equal(full[5], "word_form")
+        assert.equal(full[6], "example")
+        assert.equal(full[7], "origin")
     end),
 
     test("build_dict_prompt: standard has three sections and omits the rest", function()
@@ -227,9 +228,10 @@ local tests = {
         assert.notMatches(p, "Word Origin")
     end),
 
-    test("build_dict_prompt: full has all six sections and word-form rules", function()
+    test("build_dict_prompt: full has all seven sections and word-form rules", function()
         local p = M.build_dict_prompt(M.dict_presets.full)
         assert.matches(p, "Meaning & Usage")
+        assert.matches(p, "Pronunciation")
         assert.matches(p, "Translation")
         assert.matches(p, "Synonyms")
         assert.matches(p, "Word Form & Lemma")
@@ -287,10 +289,11 @@ local tests = {
         local store = { dict_output_preset = "full" }
         local settings = { readSetting = function(self, k, d) return store[k] or d end }
         local result = M.resolveDictSections(settings)
-        assert.equal(#result, 6)
-        assert.equal(result[4], "word_form")
-        assert.equal(result[5], "example")
-        assert.equal(result[6], "origin")
+        assert.equal(#result, 7)
+        assert.equal(result[2], "pronunciation")
+        assert.equal(result[5], "word_form")
+        assert.equal(result[6], "example")
+        assert.equal(result[7], "origin")
     end),
 
     test("resolveDictSections: custom reads the saved section map in order", function()

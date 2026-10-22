@@ -49,6 +49,7 @@ Answer directly, in the language requested by the user or prompt, and distinguis
 -- localized and later rendered by the model in the response language.
 local dict_sections = {
     { id = "meaning", header = _("Meaning & Usage"), body = [[Give the literal, context-free meaning of the word or expression, then explain how "{word}" is specifically used in THIS BOOK and what it suggests about the characters, tone, or themes.]], body_concise = [[Give the literal, context-free meaning of "{word}" in one sentence, then at most one short sentence on how it is used in THIS BOOK.]] },
+    { id = "pronunciation", header = _("Pronunciation"), body = [[Give the standard pronunciation of "{word}" in the notation conventional for its script and language (e.g. pinyin for Simplified Chinese, Bopomofo/Zhuyin for Traditional Chinese, kana for Japanese kanji, IPA for less transparent scripts). If the spelling is already phonetic or transparent, write "N/A (transparent spelling)". Keep it to one line.]], body_concise = [[One-line pronunciation in the conventional notation for the word's script/language, or "N/A (transparent spelling)" if already phonetic.]] },
     { id = "translation", header = _("Translation"), body = [[Translate the whole sentence containing the word into fluent, natural {language}. Bold the translated equivalent together with the original in parentheses as one unit, e.g. **<translated> ("{word}")**, keeping the bold markers tight with no extra spaces.]] },
     { id = "synonyms", header = _("Synonyms"), body = [[Give up to 3 simple synonyms and briefly note which one(s) best fit the book's usage.]] },
     { id = "word_form", header = _("Word Form & Lemma"), body = [[State the surface form, any correction, part of speech, grammatical features, lemma/dictionary form, and morphological base or source lexeme when applicable. Explicitly show the relationship between the selected form and its base form.]] },
@@ -58,7 +59,7 @@ local dict_sections = {
 
 local dict_presets = {
     standard = { "meaning", "translation", "synonyms" },
-    full = { "meaning", "translation", "synonyms", "word_form", "example", "origin" },
+    full = { "meaning", "pronunciation", "translation", "synonyms", "word_form", "example", "origin" },
 }
 
 -- prompts attributes can be overridden in the configuration file.
