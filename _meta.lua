@@ -2,5 +2,5 @@ local _ = require("core/gettext")
 return {
     fullname = _("AI Assistant"),
     description = "💡 " .. _("Enhance your KOReader experience with AI"),
-    version = "1.21-dev",
+    version = "1.22-dev",
 }
