@@ -758,8 +758,7 @@ File configuration.lua will be preserved.]]),
         {
             text = _("OTA Update"),
             callback = function(touchmenu_instance)
-                local ota_github_base = assistant.config:getFeature("ota_github_base", "https://github.com")
-                local ota_github_repo = assistant.config:getFeature("ota_github_repo", "omer-faruq/assistant.koplugin")
+                local ota_github_url = assistant.config:getFeature("ota_github_url", "https://codeload.github.com/omer-faruq/assistant.koplugin")
                 local version_input
                 local default_version = Updater.getDefaultOtaInput(assistant) or "main"
                 local current_version = tostring(meta.version)
@@ -770,11 +769,11 @@ File configuration.lua will be preserved.]]),
                 local has_update = latest_tag and latest_tag ~= "" and Updater.isVersionNewer(latest_tag, current_version)
                 local desc_text
                 if has_update then
-                    desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\n- Current version: %3\n- Latest version: <b>%4</b>\n- Development branch: main"),
-                        ota_github_base, ota_github_repo, current_version_display, latest_tag)
+                    desc_text = T(_("<b>OTA URL:</b>  %1\n\n- Current version: %2\n- Latest version: <b>%3</b>\n- Development branch: main"),
+                        ota_github_url, current_version_display, latest_tag)
                 else
-                    desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\n- Current version: %3\n- Development branch: main"),
-                        ota_github_base, ota_github_repo, current_version_display)
+                    desc_text = T(_("<b>OTA URL:</b>  %1\n\n- Current version: %2\n- Development branch: main"),
+                        ota_github_url, current_version_display)
                 end
                 version_input = InputDialog:new{
                     title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, current_version_display),

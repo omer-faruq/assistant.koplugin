@@ -228,13 +228,12 @@ end
 local function otaUpgrade(assistant, version)
   local PLUGIN_NAME = "assistant.koplugin"
 
-  local GITHUB_BASE = assistant.config:getFeature("ota_github_base")
-    or "https://github.com"
-  local GITHUB_REPO = assistant.config:getFeature("ota_github_repo")
-    or "omer-faruq/assistant.koplugin"
+  local OTA_URL = assistant.config:getFeature("ota_github_url")
+    or "https://codeload.github.com/omer-faruq/assistant.koplugin"
+  OTA_URL = OTA_URL:gsub("/+$", "")
 
   local REPO_REF = version:sub(1, 1) == "v" and "tags" or "heads"
-  local RELEASE_URL = string.format("%s/%s/archive/refs/%s/%s.zip", GITHUB_BASE, GITHUB_REPO, REPO_REF, version)
+  local RELEASE_URL = string.format("%s/zip/refs/%s/%s", OTA_URL, REPO_REF, version)
 
   local DataStorage = require("datastorage")
   local lfs = require("libs/libkoreader-lfs")
@@ -257,8 +256,8 @@ local function otaUpgrade(assistant, version)
   local download_msg = InfoMessage:new{
     face = Font:getFace("xx_smallinfofont"),
       text = TextUtils.bold_format(
-      T(_("<b>Downloading ...</b>\n<b>Github: </b>%1\n<b>Repo: </b>%2\n<b>Branch/Tag: </b>%3"),
-        GITHUB_BASE, GITHUB_REPO, version)
+      T(_("<b>Downloading ...</b>\n<b>URL: </b>%1\n<b>Branch/Tag: </b>%2"),
+        OTA_URL, version)
     ),
   }
   UIManager:show(download_msg)
