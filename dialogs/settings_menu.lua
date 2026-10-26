@@ -767,13 +767,17 @@ File configuration.lua will be preserved.]]),
                 local current_version_display = "v" .. (current_version:match("^v?(.*)$") or current_version)
                 local latest_tag = Updater.getSavedLatestVersion(assistant)
                 local has_update = latest_tag and latest_tag ~= "" and Updater.isVersionNewer(latest_tag, current_version)
+                local current_version_label = _("Current version:")
+                local latest_version_label = _("Latest version:")
+                local dev_branch_label = _("Development branch:")
                 local desc_text
                 if has_update then
-                    desc_text = T(_("<b>OTA URL:</b>  %1\n\n- Current version: %2\n- Latest version: <b>%3</b>\n- Development branch: main"),
-                        ota_github_url, current_version_display, latest_tag)
+                    desc_text = T("<b>OTA URL:</b>  %1\n\n- %2 %3\n- %4 <b>%5</b>\n- %6 main",
+                        ota_github_url, current_version_label, current_version_display,
+                        latest_version_label, latest_tag, dev_branch_label)
                 else
-                    desc_text = T(_("<b>OTA URL:</b>  %1\n\n- Current version: %2\n- Development branch: main"),
-                        ota_github_url, current_version_display)
+                    desc_text = T("<b>OTA URL:</b>  %1\n\n- %2 %3\n- %4 main",
+                        ota_github_url, current_version_label, current_version_display, dev_branch_label)
                 end
                 version_input = InputDialog:new{
                     title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, current_version_display),
