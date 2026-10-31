@@ -76,6 +76,7 @@ local MAX_TEXT_CHARS = 16000    -- longest page text sent to the AI
 local MIN_WORDS = 6             -- pages with fewer words are not worth a request
 local FLUSH_DELAY = 30          -- s of quiet before the cache is written to disk
 local MAX_HINTS_PER_BOOK = 15000
+local MENU_WAIT_MAX = 90         -- s: longest wait for an open settings menu before fetching anyway
 local READ_CHUNK = 16384
 
 local WordWise = {}
@@ -471,7 +472,7 @@ end
 ---------------------------------------------------------------------------
 
 --- Call after changing level / language / density / "all occurrences".
-function WordWise:onRequestSettingsChanged()
+function WordWise:onRequestSettingsChanged(delay)
   if not self:isEnabled() then return end
   self:abortAll()
   self:flushCache()
@@ -481,7 +482,7 @@ function WordWise:onRequestSettingsChanged()
   self.offline_prompted = false
   self:invalidateLayout()
   self:refresh()
-  self:schedulePlan(0.3)
+  self:schedulePlan(delay or 0.3)
 end
 
 --- Call after the AI provider or model changed (Word Wise provider, AI Assistant
@@ -491,7 +492,8 @@ function WordWise:onModelChanged()
   if not self.running then return end
   -- Nothing to do when Word Wise uses its own provider and that did not change.
   if self.sig and self:signature() == self.sig then return end
-  self:onRequestSettingsChanged()
+  -- A short pause: the thinking depth is often changed right after the model.
+  self:onRequestSettingsChanged(3)
 end
 
 --- Call after changing size / offset / length / color.
@@ -667,6 +669,18 @@ end
 
 --- True while the user is selecting text. Extracting page text goes through
 --- crengine's selection machinery, which must not clobber a live selection.
+--- True while the reader's settings menu is open: changes made there (provider,
+--- model, thinking depth, level ...) are applied together once it is closed.
+--- Defensive on purpose: if the menu cannot be inspected this is simply false.
+function WordWise:settingsOpen()
+  local ok, shown = pcall(function()
+    local menu = self.ui and self.ui.menu
+    local container = menu and menu.menu_container
+    return container ~= nil and UIManager:isWidgetShown(container) == true
+  end)
+  return ok and shown or false
+end
+
 function WordWise:isUserBusy()
   local hl = self.ui.highlight
   return hl and (hl.hold_pos ~= nil or hl.selected_text ~= nil) or false
@@ -720,6 +734,12 @@ function WordWise:plan()
   if not (self.running and self:isEnabled() and self.store) then return end
   -- The model may have changed in a way nobody told us about (edited provider, ...).
   if self:signature() ~= self.sig then return self:onRequestSettingsChanged() end
+  -- Wait while the settings menu is open (it may take several changes), but not forever.
+  if self:settingsOpen() then
+    self.menu_wait_since = self.menu_wait_since or now()
+    if now() - self.menu_wait_since < MENU_WAIT_MAX then return self:schedulePlan(1.5) end
+  end
+  self.menu_wait_since = nil
   if self:isUserBusy() then return self:schedulePlan(1.5) end
   if self:pagedBlocked() then
     if not self.reflow_notified then
