@@ -302,6 +302,84 @@ local function knownCount(assistant)
   return n
 end
 
+--- Alphabetical list of the words marked as known.
+local function knownList(assistant)
+  local known = assistant.settings:readSetting("wordwise_known")
+  local list = {}
+  if type(known) == "table" then
+    for word, on in pairs(known) do
+      if on == true and type(word) == "string" then list[#list + 1] = word end
+    end
+  end
+  table.sort(list)
+  return list
+end
+
+local genKnownItems
+
+--- Rebuild the open "Known Words" list after a change, keeping the menu open.
+local function refreshKnownList(assistant, touchmenu_instance)
+  if not touchmenu_instance then return end
+  pcall(function()
+    local items = genKnownItems(assistant)
+    touchmenu_instance.item_table = items
+    local perpage = touchmenu_instance.perpage
+    if type(perpage) == "number" and perpage > 0 and type(touchmenu_instance.page) == "number" then
+      local last = math.max(1, math.ceil(#items / perpage))
+      if touchmenu_instance.page > last then touchmenu_instance.page = last end
+    end
+    touchmenu_instance:updateItems()
+  end)
+end
+
+--- Items of Settings -> Word Wise -> Known Words: "Forget all", then one entry per word.
+--- Tapping a word asks for confirmation and removes only that word.
+genKnownItems = function(assistant)
+  local items = {
+    {
+      text = _("Forget all words"),
+      enabled_func = function() return knownCount(assistant) > 0 end,
+      keep_menu_open = true,
+      separator = true,
+      callback = function(touchmenu_instance)
+        UIManager:show(ConfirmBox:new {
+          text = _("Forget all words you marked as known? They will be hinted again."),
+          ok_text = _("Forget"),
+          ok_callback = function()
+            assistant.settings:saveSetting("wordwise_known", {})
+            assistant.updated = true
+            appearanceChanged(assistant)
+            refreshKnownList(assistant, touchmenu_instance)
+          end,
+        })
+      end,
+    },
+  }
+  for _i, word in ipairs(knownList(assistant)) do
+    items[#items + 1] = {
+      text = word,
+      keep_menu_open = true,
+      callback = function(touchmenu_instance)
+        UIManager:show(ConfirmBox:new {
+          text = T(_("Hint \"%1\" again?"), word),
+          ok_text = _("Hint again"),
+          ok_callback = function()
+            local known = assistant.settings:readSetting("wordwise_known")
+            if type(known) == "table" then
+              known[word] = nil
+              assistant.settings:saveSetting("wordwise_known", known)
+              assistant.updated = true
+            end
+            appearanceChanged(assistant)
+            refreshKnownList(assistant, touchmenu_instance)
+          end,
+        })
+      end,
+    }
+  end
+  return items
+end
+
 --- The "Word Wise" entry of the Settings menu.
 function M.gen(assistant)
   local function ww() return assistant.wordwise end
@@ -402,20 +480,9 @@ Works with reflowable books and PDF files that have a text layer. In a PDF the h
     {
       text_func = function() return T(_("Known Words: %1"), knownCount(assistant)) end,
       enabled_func = function() return knownCount(assistant) > 0 end,
-      callback = function(touchmenu_instance)
-        UIManager:show(ConfirmBox:new {
-          text = _("Forget all words you marked as known? They will be hinted again."),
-          ok_text = _("Forget"),
-          ok_callback = function()
-            assistant.settings:saveSetting("wordwise_known", {})
-            appearanceChanged(assistant)
-            if touchmenu_instance then touchmenu_instance:updateItems() end
-          end,
-        })
-      end,
-      keep_menu_open = true,
+      sub_item_table_func = function() return genKnownItems(assistant) end,
       hold_callback = function()
-        info(_("Select a word in the book and tap \"Word Wise: known\" in the popup to stop hinting it (the button then turns into \"Word Wise: unknown\" to undo it). The list is shared by all books."))
+        info(_("Select a word in the book and tap \"Word Wise: known\" in the popup to stop hinting it (the button then turns into \"Word Wise: unknown\" to undo it). Tap Known Words to see the list and remove a single word. The list is shared by all books."))
       end,
       separator = true,
     },
