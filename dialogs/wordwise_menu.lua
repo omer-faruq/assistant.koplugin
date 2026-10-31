@@ -465,10 +465,14 @@ Works with reflowable books and PDF files that have a text layer. In a PDF the h
         if not id then return end
         local Registry = require("core/provider_registry")
         -- After saving: forget errors and the waiting time, fetch missing pages again.
-        Registry.showParametersDialog(assistant, id, function()
+        local dialog = Registry.showParametersDialog(assistant, id, function()
           requestSettingChanged(assistant)
         end)
+        -- No requests while the dialog is open (also when the menu has closed behind it).
+        local w = ww()
+        if dialog and w then w:holdWhileShown(dialog) end
       end,
+      keep_menu_open = true,
       hold_callback = function()
         info(_("Thinking depth of the provider Word Wise uses. It is stored per provider, so with \"Same as the AI Assistant\" it is the same setting as in the AI Assistant. Choose a separate provider to give Word Wise its own. Hints that are already cached are kept; use Clear Cached Hints to make them again."))
       end,

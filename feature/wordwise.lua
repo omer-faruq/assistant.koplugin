@@ -669,11 +669,23 @@ end
 
 --- True while the user is selecting text. Extracting page text goes through
 --- crengine's selection machinery, which must not clobber a live selection.
---- True while the reader's settings menu is open: changes made there (provider,
---- model, thinking depth, level ...) are applied together once it is closed.
---- Defensive on purpose: if the menu cannot be inspected this is simply false.
+--- Keep fetching on hold while `widget` (a dialog opened from the settings menu,
+--- for example Reasoning Option) is still on screen.
+function WordWise:holdWhileShown(widget)
+  self.hold_widget = widget
+end
+
+--- True while the reader's settings menu or a dialog opened from it is open:
+--- changes made there (provider, model, thinking depth, level ...) are applied
+--- together once it is closed. Defensive on purpose: if the menu cannot be
+--- inspected this is simply false.
 function WordWise:settingsOpen()
   local ok, shown = pcall(function()
+    local held = self.hold_widget
+    if held then
+      if UIManager:isWidgetShown(held) then return true end
+      self.hold_widget = nil
+    end
     local menu = self.ui and self.ui.menu
     local container = menu and menu.menu_container
     return container ~= nil and UIManager:isWidgetShown(container) == true
