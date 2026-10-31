@@ -32,7 +32,7 @@ local function setCfg(assistant, key, value)
 end
 
 --- Setting that changes WHAT is requested (level, language, density, ...):
---- cached hints of other variants stay on disk, new ones are fetched.
+--- new hints are fetched; the cache keeps only the variant in use.
 local function requestSettingChanged(assistant)
   local ww = assistant.wordwise
   if ww then ww:onRequestSettingsChanged() end
@@ -204,13 +204,27 @@ local function providerLabel(assistant, id, setting)
   return id
 end
 
+--- Provider whose reasoning option applies to Word Wise requests: the one chosen
+--- for Word Wise, else the one of the AI Assistant.
+local function reasoningProviderId(assistant)
+  local id = cfg(assistant, "provider") or ""
+  if id ~= "" and assistant.config and assistant.config:isProviderEnabled(id) then
+    return id
+  end
+  local q = assistant.querier
+  return q and q.provider_name or nil
+end
+
 local function genProviderItems(assistant)
   local items = {
     {
       text = _("Same as the AI Assistant"),
       radio = true,
       checked_func = function() return (cfg(assistant, "provider") or "") == "" end,
-      callback = function() setCfg(assistant, "provider", "") end,
+      callback = function()
+        setCfg(assistant, "provider", "")
+        requestSettingChanged(assistant)
+      end,
       separator = true,
     },
   }
@@ -226,7 +240,10 @@ local function genProviderItems(assistant)
       text = providerLabel(assistant, id, settings[id]),
       radio = true,
       checked_func = function() return cfg(assistant, "provider") == id end,
-      callback = function() setCfg(assistant, "provider", id) end,
+      callback = function()
+        setCfg(assistant, "provider", id)
+        requestSettingChanged(assistant)
+      end,
     }
   end
   return items
@@ -433,6 +450,27 @@ Works with reflowable books and PDF files that have a text layer. In a PDF the h
       sub_item_table_func = function() return genProviderItems(assistant) end,
       hold_callback = function()
         info(_("Use a different (for example cheaper and faster) provider for Word Wise than for the rest of the AI Assistant."))
+      end,
+    },
+    {
+      text = _("Reasoning Option"),
+      enabled_func = function()
+        local id = reasoningProviderId(assistant)
+        if not id or not assistant.config then return false end
+        local Registry = require("core/provider_registry")
+        return Registry.hasReasoningOptions(id, assistant.config:getProvider(id))
+      end,
+      callback = function()
+        local id = reasoningProviderId(assistant)
+        if not id then return end
+        local Registry = require("core/provider_registry")
+        -- After saving: forget errors and the waiting time, fetch missing pages again.
+        Registry.showParametersDialog(assistant, id, function()
+          requestSettingChanged(assistant)
+        end)
+      end,
+      hold_callback = function()
+        info(_("Thinking depth of the provider Word Wise uses. It is stored per provider, so with \"Same as the AI Assistant\" it is the same setting as in the AI Assistant. Choose a separate provider to give Word Wise its own. Hints that are already cached are kept; use Clear Cached Hints to make them again."))
       end,
       separator = true,
     },

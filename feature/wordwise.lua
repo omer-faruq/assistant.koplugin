@@ -263,11 +263,31 @@ function WordWise:prepareBook()
   self:raiseLineSpacing()
 end
 
---- Cache signature: hints made with other settings are kept apart.
+--- Provider and model Word Wise requests hints with right now (the Word Wise
+--- provider if one is chosen, else the one of the AI Assistant, including the
+--- model picked in the model picker).
+function WordWise:modelId()
+  local a = self.assistant
+  local id = self:cfg("provider")
+  if id and id ~= "" and a.config and a.config:isProviderEnabled(id) then
+    local ps = a.config:getProvider(id) or {}
+    local m = a.settings:readSetting("selected_model_" .. id)
+    if m == nil or m == "" then m = ps.model end
+    return id .. ":" .. tostring(m or "")
+  end
+  local q = a.querier
+  if q and q.provider_name then
+    local ok, m = pcall(function() return q:getEffectiveModel() end)
+    return q.provider_name .. ":" .. tostring(ok and m or "")
+  end
+  return "none"
+end
+
+--- Cache signature: hints made with other settings (or another AI model) are kept apart.
 function WordWise:signature()
   return table.concat({
     self:cfg("level"), self:cfg("lang"), self:cfg("density"), self:cfg("style"),
-    self:cfg("all") and "all" or "first", Core.PROMPT_VERSION,
+    self:cfg("all") and "all" or "first", Core.PROMPT_VERSION, self:modelId(),
   }, "|")
 end
 
@@ -409,17 +429,11 @@ end
 function WordWise:flushCache()
   UIManager:unschedule(self.flush_fn)
   if not (self.cache_ls and self.store and self.cache_dirty) then return end
-  local stores = self.cache_ls:readSetting("stores") or {}
-  stores[self.sig] = self.store:dump()
-  stores[self.sig].used = now()
-  -- Keep the three most recently used signatures.
-  local sigs = {}
-  for s, d in pairs(stores) do sigs[#sigs + 1] = { s = s, used = d.used or 0 } end
-  if #sigs > 3 then
-    table.sort(sigs, function(a, b) return a.used > b.used end)
-    for i = 4, #sigs do stores[sigs[i].s] = nil end
-  end
-  self.cache_ls:saveSetting("stores", stores)
+  -- Only the variant in use is kept: hints made with other settings or by another
+  -- model are dropped as soon as the current variant is written.
+  local data = self.store:dump()
+  data.used = now()
+  self.cache_ls:saveSetting("stores", { [self.sig] = data })
   local ok, err = pcall(function() self.cache_ls:flush() end)
   if ok then
     self.cache_dirty = false
@@ -462,9 +476,22 @@ function WordWise:onRequestSettingsChanged()
   self:abortAll()
   self:flushCache()
   self:openCache()
+  -- Fresh start: errors and the waiting time after them belong to the old settings.
+  self.failures, self.retry_at = 0, 0
+  self.offline_prompted = false
   self:invalidateLayout()
   self:refresh()
   self:schedulePlan(0.3)
+end
+
+--- Call after the AI provider or model changed (Word Wise provider, AI Assistant
+--- provider, model picker). Hints of the new model are fetched; the old model's
+--- hints are removed from the cache once the first new ones are saved.
+function WordWise:onModelChanged()
+  if not self.running then return end
+  -- Nothing to do when Word Wise uses its own provider and that did not change.
+  if self.sig and self:signature() == self.sig then return end
+  self:onRequestSettingsChanged()
 end
 
 --- Call after changing size / offset / length / color.
@@ -691,6 +718,8 @@ end
 
 function WordWise:plan()
   if not (self.running and self:isEnabled() and self.store) then return end
+  -- The model may have changed in a way nobody told us about (edited provider, ...).
+  if self:signature() ~= self.sig then return self:onRequestSettingsChanged() end
   if self:isUserBusy() then return self:schedulePlan(1.5) end
   if self:pagedBlocked() then
     if not self.reflow_notified then
