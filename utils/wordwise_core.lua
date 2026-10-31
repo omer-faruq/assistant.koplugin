@@ -639,6 +639,12 @@ local function strip_wrappers(raw)
   return raw
 end
 
+--- The answer text left after removing reasoning blocks and code fences (for diagnostics).
+function Core.answerText(raw)
+  if type(raw) ~= "string" then return "" end
+  return (strip_wrappers(raw):gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", ""))
+end
+
 --- Extract balanced top-level {...} chunks (string-aware). Works on truncated
 --- or chatty answers: every complete object is salvaged.
 local function scan_objects(raw)
@@ -684,8 +690,8 @@ local function scan_objects(raw)
   return out
 end
 
-local KEYS_T = { "t", "text", "phrase", "word", "expression" }
-local KEYS_H = { "h", "hint", "gloss", "meaning", "synonym" }
+local KEYS_T = { "t", "text", "phrase", "word", "expression", "term", "original", "source" }
+local KEYS_H = { "h", "hint", "gloss", "meaning", "synonym", "definition", "explanation", "translation", "simple" }
 local KEYS_L = { "l", "level", "cefr" }
 
 local function pick(obj, keys)

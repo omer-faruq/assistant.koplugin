@@ -943,7 +943,15 @@ function WordWise:finishJob(job, data, timed_out)
 
   local items = Core.parseResponse(body, rapidjson.decode)
   if #items == 0 and not body:find("%[%s*%]") then
-    self:onFailure(_("the AI answer could not be understood"))
+    local text = Core.answerText(body)
+    -- Show in the log what the model actually sent, so the cause can be found.
+    logger.warn(string.format("Word Wise: unreadable AI answer (%d chars, %d after cleanup): %s",
+      #body, #text, text ~= "" and text:sub(1, 300) or body:gsub("%s+", " "):sub(1, 300)))
+    if text == "" then
+      self:onFailure(_("the model spent its whole answer on thinking: set Reasoning to Low or use another model"))
+    else
+      self:onFailure(_("the AI answer could not be understood"))
+    end
     return
   end
 
