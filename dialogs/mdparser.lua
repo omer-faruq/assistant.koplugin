@@ -85,30 +85,6 @@ end
 local ok, _lib = pcall(ffi.loadlib, "hoedown", 3)
 if ok then LibHoedown = _lib end
 
--- Probe a candidate .so in a forked child: SIGILL/SIGSEGV can't be caught by
--- pcall in-process. Child returns "OK" only if load + render succeed.
-local function probe_native_hoedown(so_path)
-    local pid, read_fd = ffiutil.runInSubProcess(function(child_pid, write_fd)
-        local ok = pcall(function()
-            local ffi = require("ffi")
-            ffi.cdef("void hoedown_version(int *major, int *minor, int *revision);")
-            local lib = ffi.load(so_path)
-            lib.hoedown_version(ffi.new("int[1]"), ffi.new("int[1]"), ffi.new("int[1]"))
-        end)
-        if ok then
-            ffiutil.writeToFD(write_fd, "OK", true)
-        else
-            ffiutil.writeToFD(write_fd, "", true)
-        end
-    end, true)
-    if not pid then
-        logger.warn("Assistant: could not fork to probe libhoedown:", read_fd)
-        return false
-    end
-    local output = ffiutil.readAllFromFD(read_fd)
-    return output == "OK"
-end
-
 -- check if hoedown is available in the plugin directory
 -- in order to use native hoedown, a "lib" directory containing per-platform
 -- "libhoedown.so.3" files and resty-hoedown should be present in the plugin
@@ -120,7 +96,7 @@ if not LibHoedown then
         if Device:isAndroid() then
             so_path = stage_android_library(so_path)
         end
-        if so_path and probe_native_hoedown(so_path) then
+        if so_path then
             local load_ok, lib_or_err = pcall(ffi.load, so_path)
             if load_ok then
                 LibHoedown = lib_or_err
@@ -128,8 +104,6 @@ if not LibHoedown then
             else
                 logger.warn("Assistant: failed to load libhoedown.so.3", lib_or_err)
             end
-        elseif so_path then
-            logger.warn("Assistant: native libhoedown probe failed for lib/" .. libdir .. "; using pure-Lua fallback")
         end
     else
         logger.info("Assistant: no prebuilt libhoedown.so.3 for this platform")

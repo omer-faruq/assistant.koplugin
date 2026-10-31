@@ -16,6 +16,7 @@ local AssistantDialog = require("dialogs/dialog")
 local SettingsMenu = require("dialogs/settings_menu")
 local Config = require("core/config")
 local Hooks = require("core/hooks")
+local WordWise = require("feature/wordwise")
 
 -- One LuaSettings per file shared across Assistant instances: the plugin is
 -- instantiated per UI (FileManager and ReaderUI), and separate LuaSettings:open
@@ -157,6 +158,42 @@ function Assistant:onClose()
   BookActions.removeFileDialogButtons()
 end
 
+-- Word Wise: the reader events it needs. None of these handlers returns true,
+-- so the events keep propagating to the other modules.
+function Assistant:onReaderReady()
+  if self.wordwise then self.wordwise:start() end
+end
+
+function Assistant:onCloseDocument()
+  if self.wordwise then self.wordwise:stop() end
+end
+
+function Assistant:onPageUpdate()
+  if self.wordwise then self.wordwise:onPageChanged() end
+end
+
+function Assistant:onDocumentRerendered()
+  if self.wordwise then self.wordwise:onRerendered() end
+end
+Assistant.onDocumentPartiallyRerendered = Assistant.onDocumentRerendered
+
+-- PDF in continuous scroll mode: scrolling reveals pages without a page turn.
+function Assistant:onViewRecalculate()
+  if self.wordwise then self.wordwise:onViewChanged() end
+end
+
+function Assistant:onNetworkConnected()
+  if self.wordwise then self.wordwise:onNetworkConnected() end
+end
+
+function Assistant:onSuspend()
+  if self.wordwise then self.wordwise:onSuspend() end
+end
+
+function Assistant:onResume()
+  if self.wordwise then self.wordwise:onResume() end
+end
+
 function Assistant:isConfigured()
   local err_text = TextUtils.bold_format(
     _("<b>No provider set up yet.</b>\nPlease add a provider in Settings or configuration.lua.")
@@ -203,6 +240,10 @@ function Assistant:init()
   self.ui.menu:registerToMainMenu(self)
   Hooks.setupScrollHtmlWidget()
   Hooks.setupBookDescription(self)
+  if self.ui.document then
+    -- Word Wise (hints above difficult words). Started on ReaderReady.
+    self.wordwise = WordWise:new(self)
+  end
   if not self.ui.document then
     BookActions.registerFileDialogButtons()
   end

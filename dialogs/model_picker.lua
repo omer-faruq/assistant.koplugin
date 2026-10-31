@@ -41,6 +41,7 @@ local function saveModelSelection(assistant, model_id)
     assistant.updated = true
 
     assistant.querier.handler:SyncOptions(assistant.querier)
+    if assistant.wordwise then assistant.wordwise:onModelChanged() end
 end
 
 --- Reset model override — revert to configuration.lua default
@@ -51,6 +52,7 @@ local function resetModelSelection(assistant)
 
     -- Restore model from provider settings
     assistant.querier.handler:SyncOptions(assistant.querier)
+    if assistant.wordwise then assistant.wordwise:onModelChanged() end
 end
 
 --- RadioButtonTable with a legal zero-checked state: a table built without
