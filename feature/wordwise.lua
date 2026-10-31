@@ -814,7 +814,7 @@ function WordWise:startJob(job)
     density = self:cfg("density"),
     style = self:cfg("style"),
     max_chars = self:cfg("max_chars"),
-    max_hints = Core.maxHintsFor(nwords, self:cfg("density")),
+    max_hints = Core.maxHintsFor(nwords, self:cfg("density"), self:cfg("level")),
     book = Core.bookLine(koutil.tableGetValue(self.ui.doc_props or {}, "display_title")
       or koutil.tableGetValue(self.ui.doc_props or {}, "title"),
       koutil.tableGetValue(self.ui.doc_props or {}, "authors")),
@@ -953,7 +953,7 @@ function WordWise:finishJob(job, data, timed_out)
       local words = self:walk(job.a, job.b)
       local cands, stats = Core.resolve(items, words, {
         all_occurrences = self:cfg("all"),
-        max_hints = Core.maxHintsFor(#words, self:cfg("density")) + 3,
+        max_hints = Core.maxHintsFor(#words, self:cfg("density"), self:cfg("level")) + 3,
         level = self:cfg("level"),
         density = self:cfg("density"),
       })
@@ -967,6 +967,11 @@ function WordWise:finishJob(job, data, timed_out)
         "Word Wise: %d picks -> %d hints (too easy %d, not found on page %d, duplicate %d, overlap %d, over cap %d, invalid %d)",
         stats.asked, #records, stats.too_easy, stats.unmatched, stats.duplicate,
         stats.overlap, stats.capped, stats.invalid))
+      local function names(list) return #list > 0 and table.concat(list, ", ", 1, math.min(#list, 12)) or nil end
+      for what, label in pairs({ unmatched = "not found", capped = "over cap", easy = "too easy" }) do
+        local n = names(stats.lost[what])
+        if n then logger.info("Word Wise: " .. label .. ": " .. n) end
+      end
     end
     self.store:addRange(job.a, job.b, records)
   end)
