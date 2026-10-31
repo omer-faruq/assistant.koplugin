@@ -415,7 +415,7 @@ Works with reflowable books and PDF files that have a text layer. In a PDF the h
       end,
       keep_menu_open = true,
       hold_callback = function()
-        info(_("Select a word in the book and tap \"Word Wise: known\" in the popup to stop hinting it. The list is shared by all books."))
+        info(_("Select a word in the book and tap \"Word Wise: known\" in the popup to stop hinting it (the button then turns into \"Word Wise: unknown\" to undo it). The list is shared by all books."))
       end,
       separator = true,
     },

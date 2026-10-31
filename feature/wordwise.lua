@@ -1181,6 +1181,21 @@ function WordWise:knownWords()
   return type(known) == "table" and known or {}
 end
 
+--- Is this word/expression on the known list?
+function WordWise:isKnown(text)
+  local ok, res = pcall(function()
+    local key = normKey(text)
+    return key ~= "" and self:knownWords()[key] == true
+  end)
+  return ok and res == true
+end
+
+--- Visible confirmation: an InfoMessage (like the Vocabulary Builder button), because a
+--- Notification toast is easily missed and may be hidden behind the result window.
+local function confirmMessage(msg)
+  UIManager:show(InfoMessage:new{ text = msg, timeout = 2 })
+end
+
 --- "I know this word": it is never hinted again (in any book) until the list is cleared.
 function WordWise:markKnown(text)
   local key = normKey(text)
@@ -1191,7 +1206,31 @@ function WordWise:markKnown(text)
   self.assistant.updated = true
   self:invalidateLayout()
   self:refresh()
-  Notification:notify(T(_("Word Wise: \"%1\" will not be hinted any more"), key))
+  confirmMessage(T(_("Word Wise: \"%1\" will not be hinted any more"), key))
+end
+
+--- Undo of markKnown: the word is hinted again.
+function WordWise:unmarkKnown(text)
+  local key = normKey(text)
+  if key == "" then return end
+  local known = self:knownWords()
+  if known[key] == nil then return end
+  known[key] = nil
+  self.settings:saveSetting("wordwise_known", known)
+  self.assistant.updated = true
+  self:invalidateLayout()
+  self:refresh()
+  confirmMessage(T(_("Word Wise: \"%1\" will be hinted again"), key))
+end
+
+--- Toggle; returns true when the word is known afterwards.
+function WordWise:toggleKnown(text)
+  if self:isKnown(text) then
+    self:unmarkKnown(text)
+    return false
+  end
+  self:markKnown(text)
+  return true
 end
 
 --- May the "known" button be offered for this text (Word Wise on, 1 to 4 words)?
@@ -1245,10 +1284,10 @@ function WordWise:registerHighlightButton()
       local text = this and this.selected_text and this.selected_text.text or ""
       local n = #Core.tokenize(type(text) == "string" and text or "")
       return {
-        text = _("Word Wise: known"),
+        text = self:isKnown(text) and _("Word Wise: unknown") or _("Word Wise: known"),
         enabled = (self.running and self:isEnabled() and n >= 1 and n <= 4) and true or false,
         callback = function()
-          self:markKnown(text)
+          self:toggleKnown(text)
           pcall(function() this:onClose() end)
         end,
       }
