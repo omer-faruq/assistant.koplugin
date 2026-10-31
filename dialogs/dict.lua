@@ -354,6 +354,20 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         },
     }
 
+    -- Word Wise: the highlight menu may be replaced by the Assistant (long press), so
+    -- the word can also be marked as known from here. Never raises.
+    pcall(function()
+        local ww = assistant.wordwise
+        if ww and ww.canMarkKnown and ww:canMarkKnown(highlightedText) then
+            table.insert(extra_buttons, {
+                text = _("Word Wise: known"),
+                callback = function()
+                    pcall(function() ww:markKnown(highlightedText) end)
+                end,
+            })
+        end
+    end)
+
     result_viewer = ResultViewer:new {
         assistant = assistant,
         ui = ui,

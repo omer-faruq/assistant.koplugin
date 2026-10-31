@@ -465,6 +465,7 @@ Works with reflowable books and PDF files that have a text layer. In a PDF the h
           title = _("Move hints down (+) or up (-), in pixels"),
           min = -20, max = 20,
           apply = appearanceChanged,
+          help = _("Negative values move hints up, together with their line and notch. While \"Line Above Hinted Word\" is on, positive values (down) have no effect, because the line would run into the word."),
         }),
         spinItem(assistant, {
           key = "pdf_squeeze", label = _("PDF: Squeeze Hints Closer: %1"), suffix = "%",

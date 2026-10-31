@@ -66,7 +66,7 @@ local DEFAULTS = {
   pdf_squeeze = 35,  -- PDF: % of a line's height a hint may borrow from the line above (descender zone)
   repeat_hints = "always", -- "always" | "once": hide a hint (same word, same meaning) after its first showing in the book
   tap_hint = false,  -- tapping a hint opens the AI explanation of that word (off: may clash with tap-to-turn)
-  connector = "off", -- "off" | "line": thin line above the hinted word
+  connector = "line", -- "off" | "line": rule under the hint with a notch pointing at the hinted word
 }
 
 local DEBOUNCE = 0.4            -- s to wait after a page turn before requesting
@@ -1194,6 +1194,15 @@ function WordWise:markKnown(text)
   Notification:notify(T(_("Word Wise: \"%1\" will not be hinted any more"), key))
 end
 
+--- May the "known" button be offered for this text (Word Wise on, 1 to 4 words)?
+function WordWise:canMarkKnown(text)
+  local ok, res = pcall(function()
+    local n = #Core.tokenize(type(text) == "string" and text or "")
+    return self.running and self:isEnabled() and n >= 1 and n <= 4
+  end)
+  return ok and res == true
+end
+
 --- Drop hints of known words and, when asked, hints already shown once in the book.
 --- A repeat is a hint with the same word and the same meaning at another place.
 --- Never raises: on any error the hints are returned unchanged.
@@ -1312,6 +1321,14 @@ function WordWise:showExplanation(text)
     end)
   end)
   if not ok then logger.warn("Word Wise: could not open the explanation:", err) end
+end
+
+--- Vertical offset (px) of the hints. With the marker on, a downward shift is ignored:
+--- the marker may not sink onto the word, so the hint would run into its own rule.
+function WordWise:hintOffset()
+  local o = tonumber(self:cfg("offset")) or 0
+  if o > 0 and self:cfg("connector") == "line" then o = 0 end
+  return o
 end
 
 --- Depth (px) of the little caret that points from a hint down to its word.
@@ -1465,7 +1482,7 @@ function WordWise:buildPagedLayout(pages)
     min_x = lo,
     max_x = hi,
     gap = Screen:scaleBySize(3),
-    offset = self:cfg("offset"),
+    offset = self:hintOffset(),
   })
   local kept = {}
   for _, e in ipairs(placed) do kept[e] = true end
@@ -1587,7 +1604,7 @@ function WordWise:buildLayout(a, b)
     min_x = min_x,
     max_x = max_x,
     gap = Screen:scaleBySize(3),
-    offset = self:cfg("offset"),
+    offset = self:hintOffset(),
   })
   local kept = {}
   for _, e in ipairs(placed) do kept[e] = true end

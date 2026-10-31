@@ -94,7 +94,7 @@ function Assistant:onDispatcherRegisterActions()
     category = "none",
     event = "ToggleWordWise",
     title = _("Toggle Word Wise"),
-    reader = true
+    general = true
   })
   Dispatcher:registerAction("ai_summary_using_annotations", {
     category = "none",
