@@ -90,6 +90,12 @@ function Assistant:onDispatcherRegisterActions()
     title = _("Highlight & Note Analysis"),
     general = true
   })
+  Dispatcher:registerAction("ai_wordwise_toggle", {
+    category = "none",
+    event = "ToggleWordWise",
+    title = _("Toggle Word Wise"),
+    reader = true
+  })
   Dispatcher:registerAction("ai_summary_using_annotations", {
     category = "none",
     event = "AskSummaryUsingAnnotations",
@@ -121,6 +127,18 @@ end
 
 function Assistant:onAskAIRecap()
   return BookActions.onAskAIRecap(self)
+end
+
+--- Gesture action: Word Wise on/off without going through the menu.
+function Assistant:onToggleWordWise()
+  local ww = self.wordwise
+  if not (ww and ww:isSupported()) then return true end
+  local on = not ww:isEnabled()
+  local ok = ww:setEnabled(on)
+  if ok then
+    require("ui/widget/notification"):notify(on and _("Word Wise: on") or _("Word Wise: off"))
+  end
+  return true
 end
 
 function Assistant:onAskAIXRay()

@@ -64,6 +64,9 @@ local DEFAULTS = {
   provider = "",     -- "" = same provider as the AI Assistant
   pdf_min_size = 8,  -- PDF: smallest hint font (px) before a hint is left out for lack of room
   pdf_squeeze = 35,  -- PDF: % of a line's height a hint may borrow from the line above (descender zone)
+  repeat_hints = "always", -- "always" | "once": hide a hint (same word, same meaning) after its first showing in the book
+  tap_hint = false,  -- tapping a hint opens the AI explanation of that word (off: may clash with tap-to-turn)
+  connector = "off", -- "off" | "line": thin line above the hinted word
 }
 
 local DEBOUNCE = 0.4            -- s to wait after a page turn before requesting
@@ -315,13 +318,17 @@ function WordWise:stop()
   UIManager:unschedule(self.plan_fn)
   UIManager:unschedule(self.poll_fn)
   UIManager:unschedule(self.flush_fn)
+  self:unregisterHighlightButton()
   self.running = false
   self.store = nil
   self.cache_ls = nil
+  self.seen = nil
 end
 
 --- Load the cache and start planning requests.
 function WordWise:activate()
+  self:registerHighlightButton()
+  self:registerTapZone()
   self:openCache()
   self:prepareBook()
   self.failures, self.retry_at = 0, 0
@@ -359,6 +366,7 @@ Tip: a fast model without "thinking" gives the quickest hints.]]),
     end
   else
     self:setCfg("enabled", false)
+    self:unregisterHighlightButton()
     self:abortAll()
     self:flushCache()
     self:freeLayout()
@@ -403,6 +411,10 @@ function WordWise:openCache()
   if not self.cache_ls then
     self.cache_ls = LuaSettings:open(path)
   end
+  if type(self.seen) ~= "table" then
+    local seen = self.cache_ls:readSetting("seen")
+    self.seen = type(seen) == "table" and seen or {}
+  end
   self.sig = self:signature()
   local stores = self.cache_ls:readSetting("stores") or {}
   local data = stores[self.sig]
@@ -435,6 +447,7 @@ function WordWise:flushCache()
   local data = self.store:dump()
   data.used = now()
   self.cache_ls:saveSetting("stores", { [self.sig] = data })
+  if type(self.seen) == "table" then self.cache_ls:saveSetting("seen", self.seen) end
   local ok, err = pcall(function() self.cache_ls:flush() end)
   if ok then
     self.cache_dirty = false
@@ -452,9 +465,11 @@ end
 --- Forget all hints of this book (all settings variants).
 function WordWise:clearCache()
   self:abortAll()
+  self.seen = {}
   if self.store then self.store:clear() end
   if self.cache_ls then
     self.cache_ls:saveSetting("stores", {})
+    self.cache_ls:saveSetting("seen", {})
     pcall(function() self.cache_ls:flush() end)
   end
   self.cache_dirty = false
@@ -1151,6 +1166,195 @@ local function wordMatchesHint(word, hint_text)
   return t:sub(1, #w) == w
 end
 
+---------------------------------------------------------------------------
+-- Known words, repeated hints, tapping a hint
+---------------------------------------------------------------------------
+
+--- Words/expressions compare by their lower-case tokens ("Solemn." == "solemn").
+local function normKey(text)
+  if type(text) ~= "string" then return "" end
+  return table.concat(Core.tokenize(text), " ")
+end
+
+function WordWise:knownWords()
+  local known = self.settings:readSetting("wordwise_known")
+  return type(known) == "table" and known or {}
+end
+
+--- "I know this word": it is never hinted again (in any book) until the list is cleared.
+function WordWise:markKnown(text)
+  local key = normKey(text)
+  if key == "" then return end
+  local known = self:knownWords()
+  known[key] = true
+  self.settings:saveSetting("wordwise_known", known)
+  self.assistant.updated = true
+  self:invalidateLayout()
+  self:refresh()
+  Notification:notify(T(_("Word Wise: \"%1\" will not be hinted any more"), key))
+end
+
+--- Drop hints of known words and, when asked, hints already shown once in the book.
+--- A repeat is a hint with the same word and the same meaning at another place.
+--- Never raises: on any error the hints are returned unchanged.
+function WordWise:filterHints(hints)
+  local ok, res = pcall(function()
+    local known = self:knownWords()
+    local once = self:cfg("repeat_hints") == "once" and type(self.seen) == "table"
+    if not once and next(known) == nil then return hints end
+    local out, changed = {}, false
+    for _i, h in ipairs(hints) do
+      local nk = normKey(h.t)
+      local drop = known[nk] == true
+      if not drop and once then
+        local hk = nk .. "|" .. normKey(h.h)
+        local first = self.seen[hk]
+        if first == nil then
+          self.seen[hk] = h.p0 -- stable position of this occurrence, survives re-layout
+          changed = true
+        elseif first ~= h.p0 then
+          drop = true
+        end
+      end
+      if not drop then out[#out + 1] = h end
+    end
+    if changed then self:markCacheDirty() end
+    return out
+  end)
+  if ok and type(res) == "table" then return res end
+  return hints
+end
+
+--- Button "Word Wise: known" in the popup that appears after selecting text.
+--- An extra button only: the AI Assistant buttons and long press are untouched.
+function WordWise:registerHighlightButton()
+  pcall(function()
+    local hl = self.ui and self.ui.highlight
+    if not (hl and hl.addToHighlightDialog) then return end
+    if hl.removeFromHighlightDialog then hl:removeFromHighlightDialog("wordwise_known") end
+    hl:addToHighlightDialog("wordwise_known", function(this)
+      local text = this and this.selected_text and this.selected_text.text or ""
+      local n = #Core.tokenize(type(text) == "string" and text or "")
+      return {
+        text = _("Word Wise: known"),
+        enabled = (self.running and self:isEnabled() and n >= 1 and n <= 4) and true or false,
+        callback = function()
+          self:markKnown(text)
+          pcall(function() this:onClose() end)
+        end,
+      }
+    end)
+  end)
+end
+
+function WordWise:unregisterHighlightButton()
+  pcall(function()
+    local hl = self.ui and self.ui.highlight
+    if hl and hl.removeFromHighlightDialog then hl:removeFromHighlightDialog("wordwise_known") end
+  end)
+end
+
+--- One full-screen tap zone that only reacts (returns true) when a hint is hit;
+--- every other tap goes on to page turning, links and the rest as before.
+function WordWise:registerTapZone()
+  if self.zone_registered or not (self.ui and self.ui.registerTouchZones) then return end
+  local function zone(with_overrides)
+    return {
+      id = "wordwise_hint_tap",
+      ges = "tap",
+      screen_zone = { ratio_x = 0, ratio_y = 0, ratio_w = 1, ratio_h = 1 },
+      overrides = with_overrides and { "readerhighlight_tap", "tap_forward", "tap_backward" } or nil,
+      handler = function(ges) return self:onHintTap(ges) end,
+    }
+  end
+  local ok = pcall(function() self.ui:registerTouchZones({ zone(true) }) end)
+  if not ok then
+    ok = pcall(function() self.ui:registerTouchZones({ zone(false) }) end)
+  end
+  if ok then self.zone_registered = true else logger.warn("Word Wise: tap zone not registered") end
+end
+
+function WordWise:onHintTap(ges)
+  local ok, res = pcall(function()
+    if not (self.running and self.store and self:isEnabled() and self:cfg("tap_hint") == true) then
+      return false
+    end
+    local pos = ges and ges.pos
+    if not pos then return false end
+    local ox, oy = self.paint_x or 0, self.paint_y or 0
+    local pad = Screen:scaleBySize(2)
+    for _i, e in ipairs(self.layout) do
+      if e.t and e.x and e.y then
+        local x0, y0 = ox + e.x - pad, oy + e.y - pad
+        if pos.x >= x0 and pos.x <= x0 + e.tw + 2 * pad and pos.y >= y0 and pos.y <= y0 + e.th + 2 * pad then
+          self:showExplanation(e.t)
+          return true
+        end
+      end
+    end
+    return false
+  end)
+  return ok and res == true
+end
+
+--- The AI dictionary of the assistant, the same one as after selecting a word.
+function WordWise:showExplanation(text)
+  local a = self.assistant
+  if not (a and a:isConfigured()) then return end
+  local ok, err = pcall(function()
+    local NetUtils = require("utils/net")
+    local Trapper = require("ui/trapper")
+    NetUtils.runWhenOnlineFast(function()
+      Trapper:wrap(function()
+        local showDictionaryDialog = require("dialogs/dict")
+        showDictionaryDialog(a, text)
+      end)
+    end)
+  end)
+  if not ok then logger.warn("Word Wise: could not open the explanation:", err) end
+end
+
+--- Depth (px) of the little caret that points from a hint down to its word.
+local function caretDepth(th)
+  return math.max(3, math.floor(th * 0.3 + 0.5))
+end
+
+--- Room (px) a hint must leave between its text and the top of the word when the
+--- connector is on: the rule under the hint plus the caret.
+local function connectorReserve(th)
+  return caretDepth(th) + 2
+end
+
+--- Paint one hint and, when enabled, a Kindle-style marker under it: a thin rule
+--- as wide as the hint with a small V-shaped notch that points down at the word.
+--- The notch sits above the centre of the hinted word, so a hint that had to move
+--- sideways (because of its neighbours) still shows which word it belongs to.
+function WordWise:paintHint(bb, x, y, e, line)
+  e.widget:paintTo(bb, x + e.x, y + e.y)
+  if not (line and e.wx0 and e.wx1 and e.word_top) then return end
+  local thick = math.max(1, Screen:scaleBySize(1))
+  local half = caretDepth(e.th)
+  local color = e.color or Blitbuffer.COLOR_DARK_GRAY
+  -- rule: the width of the hint (at least wide enough to hold the notch)
+  local x0, x1 = x + e.x, x + e.x + e.tw
+  if x1 - x0 < 2 * half + 2 then
+    local mid = (x0 + x1) / 2
+    x0, x1 = math.floor(mid - half - 1), math.ceil(mid + half + 1)
+  end
+  x0, x1 = math.floor(x0), math.floor(x1)
+  -- notch: above the middle of the word, but inside the rule
+  local cx = math.floor(x + (e.wx0 + e.wx1) / 2 + 0.5)
+  cx = math.max(x0 + half, math.min(x1 - half, cx))
+  -- just under the hint text, never lower than the notch tip may go above the word
+  local ytop = math.min(math.floor(y + e.y + e.th + 1), math.floor(y + e.word_top) - half - thick - 1)
+  if cx - half > x0 then bb:paintRect(x0, ytop, (cx - half) - x0, thick, color) end
+  if x1 > cx + half then bb:paintRect(cx + half, ytop, x1 - (cx + half), thick, color) end
+  for i = 0, half do
+    bb:paintRect(cx - half + i, ytop + i, thick, thick, color)
+    bb:paintRect(cx + half - i, ytop + i, thick, thick, color)
+  end
+end
+
 --- Layout of the hints of the PDF page(s) on screen. Every hint goes into the gap
 --- above its line; the text is made smaller until it fits, and the hint is left out
 --- when it would have to be smaller than the "smallest hint size" setting.
@@ -1163,6 +1367,7 @@ function WordWise:buildPagedLayout(pages)
   local max_chars = self:cfg("max_chars")
   local bold = self:cfg("bold") ~= false
   local position = self:cfg("position")
+  local with_line = self:cfg("connector") == "line"
   local size_pct = tonumber(self:cfg("size")) or 65
   local min_font = Screen:scaleBySize(tonumber(self:cfg("pdf_min_size")) or 8)
   local squeeze = math.max(0, math.min(100, tonumber(self:cfg("pdf_squeeze")) or 35)) / 100
@@ -1172,7 +1377,7 @@ function WordWise:buildPagedLayout(pages)
   for _, page in ipairs(pages) do
     local a, b = self:pageRange(page)
     if not self.store:covers(a, b) then waiting = true end
-    local hints = self.store:query(a, b)
+    local hints = self:filterHints(self.store:query(a, b))
     local boxes = #hints > 0 and self:pageBoxes(page) or nil
     if boxes then
       -- Text column of the page, so that hints never stick out into the margin.
@@ -1217,9 +1422,10 @@ function WordWise:buildPagedLayout(pages)
             local widget = build(px)
             local size = widget:getSize()
             local tries = 0
-            while widget and size.h > gap - 1 and tries < 4 do
+            local function reserve() return with_line and connectorReserve(size.h) or 0 end
+            while widget and size.h > gap - 1 - reserve() and tries < 4 do
               tries = tries + 1
-              local smaller = math.min(px - 1, math.floor(px * (gap - 1) / size.h))
+              local smaller = math.min(px - 1, math.floor(px * (gap - 1 - reserve()) / size.h))
               widget:free()
               widget = nil
               if smaller < min_font then break end
@@ -1227,13 +1433,19 @@ function WordWise:buildPagedLayout(pages)
               widget = build(px)
               size = widget:getSize()
             end
-            if widget and size.h <= gap - 1 then
+            if widget and size.h <= gap - 1 - reserve() then
+              local close = math.floor(rect.y - 1 + inner)
+              local bottom = PDF.hintBottom(rect.y, gap, size.h, position, inner)
+              if with_line then bottom = math.min(bottom, close - connectorReserve(size.h)) end
               list[#list + 1] = {
                 cx = rect.x + rect.w / 2,
                 top = rect.y, -- line key for collision handling
-                bottom = PDF.hintBottom(rect.y, gap, size.h, position, inner),
+                bottom = bottom,
                 tw = size.w, th = size.h,
                 widget = widget,
+                t = h.t, hint = h.h,
+                wx0 = rect.x, wx1 = rect.x + rect.w, wy = rect.y,
+                word_top = close + 1, color = color,
               }
             elseif widget then
               widget:free()
@@ -1302,8 +1514,9 @@ function WordWise:paintPaged(bb, x, y)
       self.layout_key = key -- set first: a failing build is not retried on every repaint
       self:buildPagedLayout(pages)
     end
+    local line = self:cfg("connector") == "line"
     for _, e in ipairs(self.layout) do
-      e.widget:paintTo(bb, x + e.x, y + e.y)
+      self:paintHint(bb, x, y, e, line)
     end
   end)
   if not ok then
@@ -1314,7 +1527,7 @@ end
 function WordWise:buildLayout(a, b)
   self:freeLayout()
   local doc = self.ui.document
-  local hints = self.store:query(a, b)
+  local hints = self:filterHints(self.store:query(a, b))
   self.waiting_current = not self.store:covers(a, b)
   if #hints == 0 then return end
 
@@ -1340,6 +1553,7 @@ function WordWise:buildLayout(a, b)
   local bold = self:cfg("bold") ~= false
   local position = self:cfg("position")
   local spacing = self:lineSpacing()
+  local with_line = self:cfg("connector") == "line"
   local list = {}
   for _, f in ipairs(found) do
     local box = f.box
@@ -1352,12 +1566,20 @@ function WordWise:buildLayout(a, b)
       max_width = math.max(1, max_x - min_x), -- a hint never wider than the text column
     }
     local size = widget:getSize()
+    -- top of the glyphs of the hinted line: the hint (and its marker) stays above it
+    local close = Core.hintBottom(box.y, box.h, spacing, size.h, "close")
+    local word_top = close + 1
+    local bottom = Core.hintBottom(box.y, box.h, spacing, size.h, position)
+    if with_line then bottom = math.min(bottom, close - connectorReserve(size.h)) end
     list[#list + 1] = {
       cx = box.x + box.w / 2,
       top = box.y, -- line key for collision handling
-      bottom = Core.hintBottom(box.y, box.h, spacing, size.h, position),
+      bottom = bottom,
       tw = size.w, th = size.h,
       widget = widget,
+      t = f.h.t, hint = f.h.h,
+      wx0 = box.x, wx1 = box.x + box.w, wy = box.y,
+      word_top = word_top, color = color,
     }
   end
 
@@ -1381,6 +1603,7 @@ function WordWise:paintTo(bb, x, y)
   if not (self.running and self.store and self:isEnabled()) then return end
   local view = self.view
   if not view then return end
+  self.paint_x, self.paint_y = x, y -- origin of the hints, used to find a tapped hint
   if self:isPaged() then return self:paintPaged(bb, x, y) end
   if view.view_mode ~= "page" then return end
   local ok, err = pcall(function()
@@ -1391,8 +1614,9 @@ function WordWise:paintTo(bb, x, y)
       self.layout_key = key -- set first: a failing build is not retried on every repaint
       self:buildLayout(a, b)
     end
+    local line = self:cfg("connector") == "line"
     for _, e in ipairs(self.layout) do
-      e.widget:paintTo(bb, x + e.x, y + e.y)
+      self:paintHint(bb, x, y, e, line)
     end
   end)
   if not ok then

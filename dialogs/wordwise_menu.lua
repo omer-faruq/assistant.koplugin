@@ -293,6 +293,15 @@ local function showLanguageDialog(assistant, touchmenu_instance)
   dialog:onShowKeyboard()
 end
 
+local function knownCount(assistant)
+  local known = assistant.settings:readSetting("wordwise_known")
+  local n = 0
+  if type(known) == "table" then
+    for _k in pairs(known) do n = n + 1 end
+  end
+  return n
+end
+
 --- The "Word Wise" entry of the Settings menu.
 function M.gen(assistant)
   local function ww() return assistant.wordwise end
@@ -368,6 +377,46 @@ Works with reflowable books and PDF files that have a text layer. In a PDF the h
       hold_callback = function()
         info(_("By default an expression is hinted only the first time it appears on a page. Turn this on to hint up to three occurrences."))
       end,
+    },
+    {
+      text = _("Show Repeated Hints Only Once"),
+      checked_func = function() return cfg(assistant, "repeat_hints") == "once" end,
+      callback = function()
+        setCfg(assistant, "repeat_hints", cfg(assistant, "repeat_hints") == "once" and "always" or "once")
+        appearanceChanged(assistant)
+      end,
+      hold_callback = function()
+        info(_("A word with the same meaning is hinted only where you meet it first in the book, so you have to remember it. A word with another meaning gets a new hint. Clear Cached Hints starts the count again. Nothing is deleted when you turn this off."))
+      end,
+    },
+    {
+      text = _("Tap on a Hint for Explanation"),
+      checked_func = function() return cfg(assistant, "tap_hint") == true end,
+      callback = function()
+        setCfg(assistant, "tap_hint", not (cfg(assistant, "tap_hint") == true))
+      end,
+      hold_callback = function()
+        info(_("Tapping a hint opens the AI dictionary of the assistant for that word. Off by default: a tap on a hint no longer turns the page, which may get in the way if you turn pages by tapping."))
+      end,
+    },
+    {
+      text_func = function() return T(_("Known Words: %1"), knownCount(assistant)) end,
+      enabled_func = function() return knownCount(assistant) > 0 end,
+      callback = function(touchmenu_instance)
+        UIManager:show(ConfirmBox:new {
+          text = _("Forget all words you marked as known? They will be hinted again."),
+          ok_text = _("Forget"),
+          ok_callback = function()
+            assistant.settings:saveSetting("wordwise_known", {})
+            appearanceChanged(assistant)
+            if touchmenu_instance then touchmenu_instance:updateItems() end
+          end,
+        })
+      end,
+      keep_menu_open = true,
+      hold_callback = function()
+        info(_("Select a word in the book and tap \"Word Wise: known\" in the popup to stop hinting it. The list is shared by all books."))
+      end,
       separator = true,
     },
     {
@@ -392,6 +441,17 @@ Works with reflowable books and PDF files that have a text layer. In a PDF the h
           callback = function()
             setCfg(assistant, "bold", not (cfg(assistant, "bold") ~= false))
             appearanceChanged(assistant)
+          end,
+        },
+        {
+          text = _("Line Above Hinted Word"),
+          checked_func = function() return cfg(assistant, "connector") == "line" end,
+          callback = function()
+            setCfg(assistant, "connector", cfg(assistant, "connector") == "line" and "off" or "line")
+            appearanceChanged(assistant)
+          end,
+          hold_callback = function()
+            info(_("Draws a thin rule under each hint with a small notch pointing down at the hinted word, as in Kindle Word Wise. This shows which word a hint belongs to even when it had to move sideways. It needs a few pixels more room above the word, so you may want a slightly larger line spacing."))
           end,
         },
         {
