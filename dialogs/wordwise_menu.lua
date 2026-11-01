@@ -1,0 +1,849 @@
+--[[--
+Settings menu of the Word Wise feature (Settings -> Word Wise).
+
+The menu works with or without a running controller: inside a book the
+controller (assistant.wordwise) applies changes immediately; in the file
+manager only the stored settings are changed and the next book picks them up.
+]]
+
+local ConfirmBox = require("ui/widget/confirmbox")
+local InfoMessage = require("ui/widget/infomessage")
+local InputDialog = require("ui/widget/inputdialog")
+local SpinWidget = require("ui/widget/spinwidget")
+local UIManager = require("ui/uimanager")
+local ffiutil = require("ffi/util")
+local _ = require("core/gettext")
+local Core = require("utils/wordwise_core")
+local Dict = require("utils/wordwise_dict")
+local WordWise = require("feature/wordwise")
+
+local T = ffiutil.template
+
+local M = {}
+
+local function cfg(assistant, key)
+  local v = assistant.settings:readSetting("wordwise_" .. key)
+  if v == nil then return WordWise.DEFAULTS[key] end
+  return v
+end
+
+local function setCfg(assistant, key, value)
+  assistant.settings:saveSetting("wordwise_" .. key, value)
+  assistant.updated = true
+end
+
+--- Setting that changes WHAT is requested (level, language, density, ...):
+--- new hints are fetched; the cache keeps only the variant in use.
+local function requestSettingChanged(assistant)
+  local ww = assistant.wordwise
+  if ww then ww:onRequestSettingsChanged() end
+end
+
+--- Setting that only changes how hints LOOK.
+local function appearanceChanged(assistant)
+  local ww = assistant.wordwise
+  if ww then ww:onAppearanceChanged() end
+end
+
+local function info(text)
+  UIManager:show(InfoMessage:new { text = text })
+end
+
+local function levelLabel(level)
+  local labels = {
+    A1 = _("A1 - beginner"),
+    A2 = _("A2 - elementary"),
+    B1 = _("B1 - intermediate"),
+    B2 = _("B2 - upper-intermediate"),
+    C1 = _("C1 - advanced"),
+    C2 = _("C2 - near-native"),
+  }
+  return labels[level] or level
+end
+
+local function densityLabel(density)
+  local labels = {
+    low = _("Low"),
+    medium = _("Medium"),
+    high = _("High"),
+  }
+  return labels[density] or density
+end
+
+local function spinItem(assistant, o)
+  return {
+    text_func = function()
+      return T(o.label, cfg(assistant, o.key) .. (o.suffix or ""))
+    end,
+    callback = function(touchmenu_instance)
+      UIManager:show(SpinWidget:new {
+        title_text = o.title,
+        value = cfg(assistant, o.key),
+        value_min = o.min,
+        value_max = o.max,
+        value_step = o.step or 1,
+        default_value = WordWise.DEFAULTS[o.key],
+        callback = function(spin)
+          setCfg(assistant, o.key, spin.value)
+          o.apply(assistant)
+        end,
+        close_callback = function()
+          if touchmenu_instance then touchmenu_instance:updateItems() end
+        end,
+      })
+    end,
+    keep_menu_open = true,
+    enabled_func = o.enabled_func,
+    hold_callback = o.help and function() info(o.help) end or nil,
+  }
+end
+
+local function genLevelItems(assistant)
+  local items = {}
+  for _i, level in ipairs(Core.LEVELS) do
+    items[#items + 1] = {
+      text = levelLabel(level),
+      radio = true,
+      checked_func = function() return cfg(assistant, "level") == level end,
+      callback = function()
+        setCfg(assistant, "level", level)
+        requestSettingChanged(assistant)
+      end,
+    }
+  end
+  return items
+end
+
+local function genDensityItems(assistant)
+  local items = {}
+  for _i, density in ipairs(Core.DENSITIES) do
+    items[#items + 1] = {
+      text = densityLabel(density),
+      radio = true,
+      checked_func = function() return cfg(assistant, "density") == density end,
+      callback = function()
+        setCfg(assistant, "density", density)
+        requestSettingChanged(assistant)
+      end,
+    }
+  end
+  return items
+end
+
+local function styleLabel(style)
+  if style == "definition" then return _("Short explanation") end
+  return _("Synonym")
+end
+
+local function genStyleItems(assistant)
+  local items = {}
+  for _i, style in ipairs(Core.STYLES) do
+    items[#items + 1] = {
+      text = styleLabel(style),
+      radio = true,
+      checked_func = function() return (cfg(assistant, "style") or "synonym") == style end,
+      callback = function()
+        setCfg(assistant, "style", style)
+        requestSettingChanged(assistant)
+      end,
+    }
+  end
+  return items
+end
+
+local function positionLabel(position)
+  if position == "high" then return _("Higher") end
+  if position == "middle" then return _("Middle") end
+  return _("Close to the word")
+end
+
+local function genPositionItems(assistant)
+  local items = {}
+  for _i, position in ipairs(Core.POSITIONS) do
+    items[#items + 1] = {
+      text = positionLabel(position),
+      radio = true,
+      checked_func = function() return (cfg(assistant, "position") or "close") == position end,
+      callback = function()
+        setCfg(assistant, "position", position)
+        appearanceChanged(assistant)
+      end,
+    }
+  end
+  return items
+end
+
+local function genColorItems(assistant)
+  return {
+    {
+      text = _("Gray"),
+      radio = true,
+      checked_func = function() return cfg(assistant, "color") ~= "black" end,
+      callback = function()
+        setCfg(assistant, "color", "gray")
+        appearanceChanged(assistant)
+      end,
+    },
+    {
+      text = _("Black"),
+      radio = true,
+      checked_func = function() return cfg(assistant, "color") == "black" end,
+      callback = function()
+        setCfg(assistant, "color", "black")
+        appearanceChanged(assistant)
+      end,
+    },
+  }
+end
+
+local function providerLabel(assistant, id, setting)
+  local q = assistant.querier
+  if q and q.getProviderLabel then
+    local ok, label = pcall(q.getProviderLabel, q, setting, id)
+    if ok and type(label) == "string" and label ~= "" then return label end
+  end
+  return id
+end
+
+--- Provider whose reasoning option applies to Word Wise requests: the one chosen
+--- for Word Wise, else the one of the AI Assistant.
+local function reasoningProviderId(assistant)
+  local id = cfg(assistant, "provider") or ""
+  if id ~= "" and assistant.config and assistant.config:isProviderEnabled(id) then
+    return id
+  end
+  local q = assistant.querier
+  return q and q.provider_name or nil
+end
+
+local function genProviderItems(assistant)
+  local items = {
+    {
+      text = _("Same as the AI Assistant"),
+      radio = true,
+      checked_func = function() return (cfg(assistant, "provider") or "") == "" end,
+      callback = function()
+        setCfg(assistant, "provider", "")
+        requestSettingChanged(assistant)
+      end,
+      separator = true,
+    },
+  }
+  local config = assistant.config
+  local settings = config and config:getProviderSettings() or {}
+  local ids = {}
+  for id in pairs(settings) do
+    if config:isProviderEnabled(id) then ids[#ids + 1] = id end
+  end
+  table.sort(ids)
+  for _i, id in ipairs(ids) do
+    items[#items + 1] = {
+      text = providerLabel(assistant, id, settings[id]),
+      radio = true,
+      checked_func = function() return cfg(assistant, "provider") == id end,
+      callback = function()
+        setCfg(assistant, "provider", id)
+        requestSettingChanged(assistant)
+      end,
+    }
+  end
+  return items
+end
+
+local function showLanguageDialog(assistant, touchmenu_instance)
+  local dialog
+  dialog = InputDialog:new {
+    title = _("Hint Language"),
+    input = cfg(assistant, "lang"),
+    input_hint = _("English"),
+    description = _("Language the hints are written in. English gives synonyms and short definitions in the book's own language; any other language gives translations."),
+    buttons = {
+      {
+        {
+          text = _("Cancel"),
+          id = "close",
+          callback = function() UIManager:close(dialog) end,
+        },
+        {
+          text = _("Use English"),
+          callback = function()
+            UIManager:close(dialog)
+            setCfg(assistant, "lang", WordWise.DEFAULTS.lang)
+            requestSettingChanged(assistant)
+            if touchmenu_instance then touchmenu_instance:updateItems() end
+          end,
+        },
+        {
+          text = _("Save"),
+          is_enter_default = true,
+          callback = function()
+            local text = (dialog:getInputText() or ""):gsub("^%s+", ""):gsub("%s+$", "")
+            UIManager:close(dialog)
+            if text == "" then text = WordWise.DEFAULTS.lang end
+            if text ~= cfg(assistant, "lang") then
+              setCfg(assistant, "lang", text)
+              requestSettingChanged(assistant)
+            end
+            if touchmenu_instance then touchmenu_instance:updateItems() end
+          end,
+        },
+      },
+    },
+  }
+  UIManager:show(dialog)
+  dialog:onShowKeyboard()
+end
+
+---------------------------------------------------------------------------
+-- Hint source and offline dictionary
+---------------------------------------------------------------------------
+
+local SOURCES = { "ai", "auto", "offline" }
+
+--- The chosen source; anything unknown is "ai", the default.
+local function sourceOf(assistant)
+  local s = cfg(assistant, "source")
+  if s == "auto" or s == "offline" then return s end
+  return "ai"
+end
+
+local function sourceLabel(source)
+  local labels = {
+    ai = _("AI"),
+    auto = _("AI + Offline"),
+    offline = _("Offline"),
+  }
+  return labels[source] or labels.ai
+end
+
+local function noDictionaryText()
+  return _("No offline dictionary was found. Reinstall the plugin (it contains data/wordwise_offline.db) or put a dictionary of your own into the wordwise folder of KOReader's data directory.")
+end
+
+local function setSource(assistant, source)
+  local prev = sourceOf(assistant)
+  if source == prev then return end
+  if source ~= "ai" and not Dict.available() then
+    info(noDictionaryText())
+    return
+  end
+  setCfg(assistant, "source", source)
+  -- The gesture goes back to the last source that was not "offline".
+  if source == "offline" then
+    setCfg(assistant, "source_prev", prev)
+  else
+    setCfg(assistant, "source_prev", source)
+  end
+  local ww = assistant.wordwise
+  if ww then ww:onSourceChanged() end
+end
+
+local function genSourceItems(assistant)
+  local items = {}
+  for _i, source in ipairs(SOURCES) do
+    items[#items + 1] = {
+      text = sourceLabel(source),
+      radio = true,
+      checked_func = function() return sourceOf(assistant) == source end,
+      callback = function() setSource(assistant, source) end,
+    }
+  end
+  return items
+end
+
+--- Text for "About the Dictionary": which dictionary is used and how to replace it.
+local function describeDictionary()
+  local lines = {}
+  local db = Dict.open()
+  if db then
+    local kind = db.kind == "user" and _("a dictionary of your own") or _("the dictionary built into the plugin")
+    lines[#lines + 1] = T(_("In use: %1"), kind)
+    local n = db:count()
+    if n then lines[#lines + 1] = T(_("Words: %1"), tostring(n)) end
+    lines[#lines + 1] = db.path
+    db:close()
+  else
+    lines[#lines + 1] = _("No offline dictionary found.")
+  end
+  lines[#lines + 1] = ""
+  lines[#lines + 1] = _("It knows rare English words only and gives one meaning per word, without looking at the sentence, so it is less precise than the AI. Hints are always English.")
+  local dir = Dict.userDir()
+  if dir then
+    lines[#lines + 1] = ""
+    lines[#lines + 1] = T(_("A dictionary of your own (SQLite, the format of wordwise.koplugin) replaces the built-in one when it is saved as:\n%1/wordwise.db"), dir)
+  end
+  return table.concat(lines, "\n")
+end
+
+--- Convert Kindle's own Word Wise data into the offline dictionary (once).
+local function convertKindle(assistant, touchmenu_instance)
+  UIManager:show(ConfirmBox:new {
+    text = _("Kindle's own Word Wise data was found on this device. Convert it into the offline dictionary? It stays on this device and is for your personal use only. This can take a few minutes, and KOReader may seem frozen meanwhile."),
+    ok_text = _("Convert"),
+    ok_callback = function()
+      local msg = InfoMessage:new { text = _("Converting Kindle's Word Wise data... Please wait.") }
+      UIManager:show(msg)
+      UIManager:forceRePaint()
+      local ok = Dict.convertKindle()
+      UIManager:close(msg)
+      local w = assistant.wordwise
+      if w then w:reloadDictionary() end
+      info(ok and _("Done. The converted dictionary is used from now on.")
+        or _("The conversion failed. Details are in the KOReader log."))
+      if touchmenu_instance then touchmenu_instance:updateItems() end
+    end,
+  })
+end
+
+local function genDictionaryItems(assistant)
+  return {
+    {
+      text = _("About the Dictionary"),
+      callback = function() info(describeDictionary()) end,
+      keep_menu_open = true,
+    },
+    {
+      text = _("Use Kindle's Word Wise Data"),
+      enabled_func = function() return Dict.kindleAvailable() and not Dict.hasUserDb() end,
+      callback = function(touchmenu_instance) convertKindle(assistant, touchmenu_instance) end,
+      keep_menu_open = true,
+      hold_callback = function()
+        info(_("Only on a Kindle that has its own Word Wise data on it (it appears once Kindle's Word Wise was used). The data is converted once into a dictionary of your own and never leaves the device."))
+      end,
+    },
+  }
+end
+
+local function knownCount(assistant)
+  local known = assistant.settings:readSetting("wordwise_known")
+  local n = 0
+  if type(known) == "table" then
+    for _k in pairs(known) do n = n + 1 end
+  end
+  return n
+end
+
+--- Alphabetical list of the words marked as known.
+local function knownList(assistant)
+  local known = assistant.settings:readSetting("wordwise_known")
+  local list = {}
+  if type(known) == "table" then
+    for word, on in pairs(known) do
+      if on == true and type(word) == "string" then list[#list + 1] = word end
+    end
+  end
+  table.sort(list)
+  return list
+end
+
+local genKnownItems
+
+--- Rebuild the open "Known Words" list after a change, keeping the menu open.
+local function refreshKnownList(assistant, touchmenu_instance)
+  if not touchmenu_instance then return end
+  pcall(function()
+    local items = genKnownItems(assistant)
+    touchmenu_instance.item_table = items
+    local perpage = touchmenu_instance.perpage
+    if type(perpage) == "number" and perpage > 0 and type(touchmenu_instance.page) == "number" then
+      local last = math.max(1, math.ceil(#items / perpage))
+      if touchmenu_instance.page > last then touchmenu_instance.page = last end
+    end
+    touchmenu_instance:updateItems()
+  end)
+end
+
+--- Items of Settings -> Word Wise -> Known Words: "Forget all", then one entry per word.
+--- Tapping a word asks for confirmation and removes only that word.
+genKnownItems = function(assistant)
+  local items = {
+    {
+      text = _("Forget all words"),
+      enabled_func = function() return knownCount(assistant) > 0 end,
+      keep_menu_open = true,
+      separator = true,
+      callback = function(touchmenu_instance)
+        UIManager:show(ConfirmBox:new {
+          text = _("Forget all words you marked as known? They will be hinted again."),
+          ok_text = _("Forget"),
+          ok_callback = function()
+            assistant.settings:saveSetting("wordwise_known", {})
+            assistant.updated = true
+            appearanceChanged(assistant)
+            refreshKnownList(assistant, touchmenu_instance)
+          end,
+        })
+      end,
+    },
+  }
+  for _i, word in ipairs(knownList(assistant)) do
+    items[#items + 1] = {
+      text = word,
+      keep_menu_open = true,
+      callback = function(touchmenu_instance)
+        UIManager:show(ConfirmBox:new {
+          text = T(_("Hint \"%1\" again?"), word),
+          ok_text = _("Hint again"),
+          ok_callback = function()
+            local known = assistant.settings:readSetting("wordwise_known")
+            if type(known) == "table" then
+              known[word] = nil
+              assistant.settings:saveSetting("wordwise_known", known)
+              assistant.updated = true
+            end
+            appearanceChanged(assistant)
+            refreshKnownList(assistant, touchmenu_instance)
+          end,
+        })
+      end,
+    }
+  end
+  return items
+end
+
+--- The "Word Wise" entry of the Settings menu.
+function M.gen(assistant)
+  local function ww() return assistant.wordwise end
+  local function inReader() return assistant.ui and assistant.ui.document ~= nil end
+
+  local items = {
+    {
+      text = _("Show Hints While Reading"),
+      checked_func = function() return cfg(assistant, "enabled") == true end,
+      callback = function(touchmenu_instance)
+        local on = cfg(assistant, "enabled") ~= true
+        if on and inReader() and not (ww() and ww():isSupported()) then
+          info(_("Word Wise works with reflowable books (EPUB, FB2, MOBI, HTML ...) and with PDF files that have a text layer. This document type is not supported."))
+          return
+        end
+        if on and not WordWise.canTurnOn(assistant) then return end
+        if ww() then
+          ww():setEnabled(on)
+        else
+          setCfg(assistant, "enabled", on)
+          if on then
+            info(_("Word Wise is on. Open a reflowable book to see the hints."))
+          end
+        end
+        if touchmenu_instance then touchmenu_instance:updateItems() end
+      end,
+      keep_menu_open = true,
+      hold_callback = function()
+        info(_([[Prints a short hint above difficult words, phrasal verbs and idioms while you read, like Kindle's Word Wise.
+
+The AI reads each page, decides what is hard for your level and answers with short hints. Pages are fetched in the background and a few pages ahead, so the hints are normally ready when you turn the page. Hints are cached per book.
+
+Works with reflowable books and PDF files that have a text layer. In a PDF the hints go into the gap above each line and are left out where it is too small. An internet connection and an AI provider are needed.]]))
+      end,
+    },
+    {
+      text_func = function() return T(_("Hint Source: %1"), sourceLabel(sourceOf(assistant))) end,
+      sub_item_table = genSourceItems(assistant),
+      hold_callback = function()
+        info(_([[Where the hints come from.
+
+AI: the AI of your provider, as described above. Needs internet.
+
+AI + Offline (default): the AI as usual; while there is no connection or the AI fails, the offline dictionary of the plugin gives simpler hints. The AI takes over again by itself, and its hints replace the dictionary's.
+
+Offline: no AI and no internet at all. Hints are instant and free but less precise: the dictionary knows rare English words only and gives one meaning per word, without looking at the sentence. Hints are always English.
+
+The dictionary works with level and density like the AI does (a higher level means fewer, harder words). In the gesture manager the action "Word Wise: Switch Hint Source" goes one step further each time: AI, AI + Offline, Offline, and around again.]]))
+      end,
+    },
+    {
+      text = _("Offline Dictionary"),
+      sub_item_table_func = function() return genDictionaryItems(assistant) end,
+      separator = true,
+    },
+    {
+      text_func = function() return T(_("My Level: %1"), cfg(assistant, "level")) end,
+      sub_item_table = genLevelItems(assistant),
+      hold_callback = function()
+        info(_("Your proficiency in the language of the book. The AI skips the words you should already know, so a lower level means more hints."))
+      end,
+    },
+    {
+      text_func = function() return T(_("Hint Language: %1"), cfg(assistant, "lang")) end,
+      callback = function(touchmenu_instance) showLanguageDialog(assistant, touchmenu_instance) end,
+      keep_menu_open = true,
+      hold_callback = function()
+        info(_("English (default) gives synonyms and short explanations in the language of the book. Enter another language to get translations instead."))
+      end,
+    },
+    {
+      text_func = function() return T(_("Hint Density: %1"), densityLabel(cfg(assistant, "density"))) end,
+      sub_item_table = genDensityItems(assistant),
+      hold_callback = function()
+        info(_("How many hints at most the AI may add per page."))
+      end,
+    },
+    {
+      text_func = function() return T(_("Hint Style: %1"), styleLabel(cfg(assistant, "style") or "synonym")) end,
+      sub_item_table = genStyleItems(assistant),
+      hold_callback = function()
+        info(_("Synonym: a very short word or paraphrase. Short explanation: a few words saying what it means here (raise Maximum Length in Hint Appearance if hints get cut off). Changing it fetches new hints."))
+      end,
+    },
+    {
+      text = _("Hint Every Occurrence on a Page"),
+      checked_func = function() return cfg(assistant, "all") == true end,
+      callback = function()
+        setCfg(assistant, "all", not (cfg(assistant, "all") == true))
+        requestSettingChanged(assistant)
+      end,
+      hold_callback = function()
+        info(_("On: an expression is hinted up to three times on a page. Off: only the first time it appears on a page. Note: with \"Show Repeated Hints Only Once\" on, a word is hinted only where you meet it first in the book, so that setting wins."))
+      end,
+    },
+    {
+      text = _("Show Repeated Hints Only Once"),
+      checked_func = function() return cfg(assistant, "repeat_hints") == "once" end,
+      callback = function()
+        setCfg(assistant, "repeat_hints", cfg(assistant, "repeat_hints") == "once" and "always" or "once")
+        appearanceChanged(assistant)
+      end,
+      hold_callback = function()
+        info(_("A word with the same meaning is hinted only where you meet it first in the book, so you have to remember it. A word with another meaning gets a new hint. Clear Cached Hints starts the count again. Nothing is deleted when you turn this off."))
+      end,
+    },
+    {
+      text = _("Tap on a Hint for Explanation"),
+      checked_func = function() return cfg(assistant, "tap_hint") == true end,
+      callback = function()
+        setCfg(assistant, "tap_hint", not (cfg(assistant, "tap_hint") == true))
+      end,
+      hold_callback = function()
+        info(_("Tapping a hint opens the AI dictionary of the assistant for that word. While this is on, a tap on a hint does not turn the page, which may get in the way if you turn pages by tapping. Turn it off to turn pages with a tap anywhere."))
+      end,
+    },
+    {
+      text_func = function() return T(_("Known Words: %1"), knownCount(assistant)) end,
+      enabled_func = function() return knownCount(assistant) > 0 end,
+      sub_item_table_func = function() return genKnownItems(assistant) end,
+      hold_callback = function()
+        info(_("Select a word in the book and tap \"Word Wise: known\" in the popup to stop hinting it (the button then turns into \"Word Wise: unknown\" to undo it). Tap Known Words to see the list and remove a single word. The list is shared by all books."))
+      end,
+      separator = true,
+    },
+    {
+      text = _("Hint Appearance"),
+      sub_item_table = {
+        spinItem(assistant, {
+          key = "size", label = _("Text Size: %1"), suffix = "%",
+          title = _("Hint text size (% of the book font)"),
+          min = 30, max = 100, step = 5,
+          apply = appearanceChanged,
+        }),
+        spinItem(assistant, {
+          key = "max_chars", label = _("Maximum Length: %1"),
+          title = _("Longest hint, in characters"),
+          min = 8, max = 40,
+          apply = requestSettingChanged,
+          help = _("Hints are requested no longer than this. Changing it fetches new hints."),
+        }),
+        {
+          text = _("Bold Text"),
+          checked_func = function() return cfg(assistant, "bold") ~= false end,
+          callback = function()
+            setCfg(assistant, "bold", not (cfg(assistant, "bold") ~= false))
+            appearanceChanged(assistant)
+          end,
+        },
+        {
+          text = _("Line Above Hinted Word"),
+          checked_func = function() return cfg(assistant, "connector") == "line" end,
+          callback = function()
+            setCfg(assistant, "connector", cfg(assistant, "connector") == "line" and "off" or "line")
+            appearanceChanged(assistant)
+          end,
+          hold_callback = function()
+            info(_("Draws a thin rule under each hint with a small notch pointing down at the hinted word, as in Kindle Word Wise. This shows which word a hint belongs to even when it had to move sideways. It needs a few pixels more room above the word, so you may want a slightly larger line spacing."))
+          end,
+        },
+        {
+          text_func = function()
+            return T(_("Position: %1"), positionLabel(cfg(assistant, "position") or "close"))
+          end,
+          sub_item_table = genPositionItems(assistant),
+        },
+        spinItem(assistant, {
+          key = "offset", label = _("Vertical Offset: %1"),
+          title = _("Move hints down (+) or up (-), in pixels"),
+          min = -20, max = 20,
+          apply = appearanceChanged,
+          help = _("Negative values move hints up, together with their line and notch. While \"Line Above Hinted Word\" is on, positive values (down) have no effect, because the line would run into the word."),
+        }),
+        spinItem(assistant, {
+          key = "pdf_squeeze", label = _("PDF: Squeeze Hints Closer: %1"), suffix = "%",
+          title = _("How far a hint may dip into the line above (% of a line)"),
+          min = 0, max = 80, step = 5,
+          apply = appearanceChanged,
+          help = _("In a PDF the lines are set tightly, but there is usually free space between the letters of one line and the capitals of the next; only descenders (g, p, y) reach down into it. A higher value lets hints use more of that space, so more hints fit, but they may touch the letters above. 0 keeps hints strictly inside the measured gap."),
+        }),
+        spinItem(assistant, {
+          key = "pdf_min_size", label = _("PDF: Smallest Hint Size: %1"),
+          title = _("Smallest hint text in a PDF (pixels)"),
+          min = 5, max = 16,
+          apply = appearanceChanged,
+          help = _("A PDF has a fixed layout, so a hint has to fit into the gap above its line. The text is made smaller until it fits; a hint that would have to be smaller than this is left out. Lower values show more hints but they get harder to read."),
+        }),
+        {
+          text_func = function()
+            return T(_("Color: %1"), cfg(assistant, "color") == "black" and _("Black") or _("Gray"))
+          end,
+          sub_item_table = genColorItems(assistant),
+        },
+      },
+    },
+    spinItem(assistant, {
+      key = "prefetch", label = _("Pre-fetch Pages: %1"),
+      title = _("Pages to prepare ahead of the one you read"),
+      min = 0, max = 6,
+      apply = function(a)
+        local w = a.wordwise
+        if w and w:isEnabled() then w:schedulePlan(0.3) end
+      end,
+      help = _("More pages ahead means hints are ready sooner after a quick page turn, at the cost of more API requests."),
+    }),
+    {
+      text_func = function()
+        local w = ww()
+        local done, total
+        if w then done, total = w:prepareStatus() end
+        if done then return T(_("Preparing Pages: %1/%2 (tap to stop)"), done, total) end
+        return T(_("Prepare Pages Ahead: %1"), cfg(assistant, "prepare_pages"))
+      end,
+      enabled_func = function() return ww() ~= nil and ww():isEnabled() end,
+      callback = function(touchmenu_instance)
+        local w = ww()
+        if not w then return end
+        if w:prepareStatus() then
+          UIManager:show(ConfirmBox:new {
+            text = _("Stop preparing pages? What is done stays in the cache."),
+            ok_text = _("Stop"),
+            ok_callback = function()
+              w:cancelPrepare(_("Word Wise: preparing stopped"))
+              if touchmenu_instance then touchmenu_instance:updateItems() end
+            end,
+          })
+          return
+        end
+        w:askPrepare({
+          on_started = function(n)
+            info(T(_("Preparing the next %1 pages. It starts when you close the menu and runs in the background, one request after another."), n))
+          end,
+          on_failed = function(why) info(WordWise.prepareReasonText(why)) end,
+          close_callback = function()
+            if touchmenu_instance then touchmenu_instance:updateItems() end
+          end,
+        })
+      end,
+      keep_menu_open = true,
+      hold_callback = function()
+        info(_("Gets the AI hints of the next pages now, for example before you go offline. They are kept in the cache of the book and shown when you read those pages, also without internet (AI + Offline mode shows them; Offline mode uses the dictionary only). Uses the normal safeguards: two requests at a time, at most 30 a minute, a pause after errors, and it stops by itself after repeated errors. Pages you read always come first. Prepare them with the level, density, style, language and model you will read with: changing them makes new hints necessary. The same action is in the gesture manager as \"Word Wise: Prepare Pages Ahead\": it asks how many pages, just like here, and stops preparing when it is already running. It needs the AI or AI + Offline source and offers to turn Wi-Fi on when there is no connection."))
+      end,
+    },
+    {
+      text_func = function()
+        local id = cfg(assistant, "provider") or ""
+        local label = _("Same as the AI Assistant")
+        if id ~= "" then
+          label = providerLabel(assistant, id, assistant.config and assistant.config:getProvider(id))
+        end
+        return T(_("Provider: %1"), label)
+      end,
+      sub_item_table_func = function() return genProviderItems(assistant) end,
+      hold_callback = function()
+        info(_("Use a different (for example cheaper and faster) provider for Word Wise than for the rest of the AI Assistant."))
+      end,
+    },
+    {
+      text = _("Reasoning Option"),
+      enabled_func = function()
+        local id = reasoningProviderId(assistant)
+        if not id or not assistant.config then return false end
+        local Registry = require("core/provider_registry")
+        return Registry.hasReasoningOptions(id, assistant.config:getProvider(id))
+      end,
+      callback = function()
+        local id = reasoningProviderId(assistant)
+        if not id then return end
+        local Registry = require("core/provider_registry")
+        -- After saving: forget errors and the waiting time, fetch missing pages again.
+        local dialog = Registry.showParametersDialog(assistant, id, function()
+          requestSettingChanged(assistant)
+        end)
+        -- No requests while the dialog is open (also when the menu has closed behind it).
+        local w = ww()
+        if dialog and w then w:holdWhileShown(dialog) end
+      end,
+      keep_menu_open = true,
+      hold_callback = function()
+        info(_("Thinking depth of the provider Word Wise uses. It is stored per provider, so with \"Same as the AI Assistant\" it is the same setting as in the AI Assistant. Choose a separate provider to give Word Wise its own. Hints that are already cached are kept; use Clear Cached Hints to make them again."))
+      end,
+      separator = true,
+    },
+    {
+      text = _("Change Line Spacing Automatically"),
+      checked_func = function() return cfg(assistant, "auto_spacing") ~= false end,
+      callback = function()
+        setCfg(assistant, "auto_spacing", not (cfg(assistant, "auto_spacing") ~= false))
+        local w = ww()
+        if w then w:onSpacingSettingChanged() end
+      end,
+      hold_callback = function()
+        info(_("Hints are printed in the gap above each line. When this is on, the line spacing of the book is raised (the font itself is never changed) and restored when Word Wise is turned off. Turn it off to keep your own spacing and set it yourself in the Typeset menu; with tight spacing hints may overlap the line above."))
+      end,
+    },
+    spinItem(assistant, {
+      key = "spacing", label = _("Line Spacing for Hints: %1"), suffix = "%",
+      title = _("Line spacing that leaves room for hints (%)"),
+      min = 100, max = 200, step = 10,
+      enabled_func = function() return cfg(assistant, "auto_spacing") ~= false end,
+      apply = function(a)
+        local w = a.wordwise
+        if w then w:onSpacingSettingChanged() end
+      end,
+    }),
+    {
+      text = _("Make Room for Hints (Line Spacing)"),
+      enabled_func = function() return ww() ~= nil and ww():isReflowable() and true or false end,
+      callback = function()
+        local w = ww()
+        if not w then return end
+        if not w:raiseLineSpacing() then
+          info(_("The line spacing of this book already leaves enough room for the hints."))
+        end
+      end,
+      hold_callback = function()
+        info(_("Hints are printed in the gap above each line. This raises the line spacing of the open book if it is too tight. It is done automatically the first time hints are shown in a book."))
+      end,
+    },
+    {
+      text_func = function()
+        local w = ww()
+        return T(_("Clear Cached Hints (%1)"), w and w:cachedCount() or 0)
+      end,
+      enabled_func = function() return ww() ~= nil and ww():isSupported() end,
+      callback = function(touchmenu_instance)
+        UIManager:show(ConfirmBox:new {
+          text = _("Delete all cached hints of this book? They will be fetched again as you read."),
+          ok_text = _("Clear"),
+          ok_callback = function()
+            if ww() then ww():clearCache() end
+            if touchmenu_instance then touchmenu_instance:updateItems() end
+          end,
+        })
+      end,
+      keep_menu_open = true,
+    },
+  }
+
+  return {
+    text = _("Word Wise"),
+    sub_item_table = items,
+  }
+end
+
+return M

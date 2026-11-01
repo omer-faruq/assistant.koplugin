@@ -36,6 +36,7 @@ local Prompts = require("core/prompts")
 local Event = require("ui/event")
 local Device = require("device")
 local ProviderDialog = require("dialogs/provider")
+local WordWiseMenu = require("dialogs/wordwise_menu")
 local ffiutil = require("ffi/util")
 
 local showProviderDialog, showHelpDialog, showAboutDialog
@@ -758,7 +759,8 @@ File configuration.lua will be preserved.]]),
         {
             text = _("OTA Update"),
             callback = function(touchmenu_instance)
-                local ota_github_url = assistant.config:getFeature("ota_github_url", "https://codeload.github.com/omer-faruq/assistant.koplugin")
+                local ota_github_base = assistant.config:getFeature("ota_github_base", "https://github.com")
+                local ota_github_repo = assistant.config:getFeature("ota_github_repo", "omer-faruq/assistant.koplugin")
                 local version_input
                 local default_version = Updater.getDefaultOtaInput(assistant) or "main"
                 local current_version = tostring(meta.version)
@@ -767,17 +769,13 @@ File configuration.lua will be preserved.]]),
                 local current_version_display = "v" .. (current_version:match("^v?(.*)$") or current_version)
                 local latest_tag = Updater.getSavedLatestVersion(assistant)
                 local has_update = latest_tag and latest_tag ~= "" and Updater.isVersionNewer(latest_tag, current_version)
-                local current_version_label = _("Current version:")
-                local latest_version_label = _("Latest version:")
-                local dev_branch_label = _("Development branch:")
                 local desc_text
                 if has_update then
-                    desc_text = T("<b>OTA URL:</b>  %1\n\n- %2 %3\n- %4 <b>%5</b>\n- %6 main",
-                        ota_github_url, current_version_label, current_version_display,
-                        latest_version_label, latest_tag, dev_branch_label)
+                    desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\n- Current version: %3\n- Latest version: <b>%4</b>\n- Development branch: main"),
+                        ota_github_base, ota_github_repo, current_version_display, latest_tag)
                 else
-                    desc_text = T("<b>OTA URL:</b>  %1\n\n- %2 %3\n- %4 main",
-                        ota_github_url, current_version_label, current_version_display, dev_branch_label)
+                    desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\n- Current version: %3\n- Development branch: main"),
+                        ota_github_base, ota_github_repo, current_version_display)
                 end
                 version_input = InputDialog:new{
                     title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, current_version_display),
@@ -814,6 +812,9 @@ File configuration.lua will be preserved.]]),
             keep_menu_open = true,
         },
     }
+
+    -- after "Dictionary Settings"
+    table.insert(sub_item_table, 4, WordWiseMenu.gen(assistant))
 
     table.insert(sub_item_table, 1, Registry.getAddProviderMenuItem(assistant))
     table.insert(sub_item_table, 2, SearchRegistry.getAddWebSearchMenuItem(assistant))

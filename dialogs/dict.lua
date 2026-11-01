@@ -354,6 +354,38 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
         },
     }
 
+    -- Word Wise: the highlight menu may be replaced by the Assistant (long press), so
+    -- the word can also be marked as known from here. Never raises.
+    pcall(function()
+        local ww = assistant.wordwise
+        if ww and ww.canMarkKnown and ww:canMarkKnown(highlightedText) then
+            local function known_label()
+                return ww:isKnown(highlightedText) and _("Word Wise: unknown") or _("Word Wise: known")
+            end
+            table.insert(extra_buttons, {
+                id = "wordwise_known",
+                text = known_label(),
+                callback = function()
+                    pcall(function() ww:toggleKnown(highlightedText) end)
+                    -- Flip the label so the state is visible and the action can be undone.
+                    pcall(function()
+                        local btn = result_viewer and result_viewer.button_table
+                            and result_viewer.button_table:getButtonById("wordwise_known")
+                        if btn then
+                            btn:setText(known_label(), btn.width)
+                            btn:refresh()
+                        end
+                    end)
+                end,
+                hold_callback = function()
+                    UIManager:show(InfoMessage:new{
+                        text = _("Toggles whether Word Wise hints this word. Marked words are never hinted, in any book."),
+                    })
+                end,
+            })
+        end
+    end)
+
     result_viewer = ResultViewer:new {
         assistant = assistant,
         ui = ui,

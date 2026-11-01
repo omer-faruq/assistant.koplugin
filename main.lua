@@ -16,6 +16,7 @@ local AssistantDialog = require("dialogs/dialog")
 local SettingsMenu = require("dialogs/settings_menu")
 local Config = require("core/config")
 local Hooks = require("core/hooks")
+local WordWise = require("feature/wordwise")
 
 -- One LuaSettings per file shared across Assistant instances: the plugin is
 -- instantiated per UI (FileManager and ReaderUI), and separate LuaSettings:open
@@ -89,6 +90,26 @@ function Assistant:onDispatcherRegisterActions()
     title = _("Highlight & Note Analysis"),
     general = true
   })
+  Dispatcher:registerAction("ai_wordwise_toggle", {
+    category = "none",
+    event = "ToggleWordWise",
+    title = _("Toggle Word Wise"),
+    general = true
+  })
+  Dispatcher:registerAction("ai_wordwise_prepare", {
+    category = "none",
+    event = "WordWisePrepare",
+    -- @translators Action title: fetch the Word Wise hints of the next pages in advance (for reading offline).
+    title = _("Word Wise: Prepare Pages Ahead"),
+    general = true
+  })
+  Dispatcher:registerAction("ai_wordwise_offline_toggle", {
+    category = "none",
+    event = "ToggleWordWiseOffline",
+    -- @translators Action title: switch the source of the Word Wise hints one step: AI, AI + offline dictionary, offline dictionary only.
+    title = _("Word Wise: Switch Hint Source (AI / AI + Offline / Offline)"),
+    general = true
+  })
   Dispatcher:registerAction("ai_summary_using_annotations", {
     category = "none",
     event = "AskSummaryUsingAnnotations",
@@ -120,6 +141,52 @@ end
 
 function Assistant:onAskAIRecap()
   return BookActions.onAskAIRecap(self)
+end
+
+--- Gesture action: Word Wise on/off without going through the menu.
+function Assistant:onToggleWordWise()
+  local ww = self.wordwise
+  if not (ww and ww:isSupported()) then return true end
+  local on = not ww:isEnabled()
+  local ok = ww:setEnabled(on)
+  if ok then
+    require("ui/widget/notification"):notify(on and _("Word Wise: on") or _("Word Wise: off"))
+  end
+  return true
+end
+
+--- Gesture action: switch the Word Wise hint source one step (AI, AI + Offline,
+--- Offline, and around again). Works in the file manager as well.
+function Assistant:onToggleWordWiseOffline()
+  local Notification = require("ui/widget/notification")
+  local source, why = WordWise.toggleOffline(self)
+  if not source then
+    if why == "no_dictionary" then
+      Notification:notify(_("Word Wise: no offline dictionary found"), Notification.SOURCE_ALWAYS_SHOW)
+    end
+    return true
+  end
+  local label = _("Word Wise: AI")
+  if source == "offline" then
+    label = _("Word Wise: Offline")
+  elseif source == "auto" then
+    label = _("Word Wise: AI + Offline")
+  end
+  Notification:notify(label, Notification.SOURCE_ALWAYS_SHOW)
+  return true
+end
+
+--- Gesture action: stops preparing when it is running; otherwise asks how many pages
+--- and fetches the Word Wise hints of the next pages (needs the AI; offers Wi-Fi if needed).
+function Assistant:onWordWisePrepare()
+  local ww = self.wordwise
+  if not (ww and ww.running and ww:isSupported()) then return true end
+  if ww.prep then
+    ww:togglePrepare() -- stops
+  else
+    ww:askPrepare()
+  end
+  return true
 end
 
 function Assistant:onAskAIXRay()
@@ -155,6 +222,42 @@ end
 
 function Assistant:onClose()
   BookActions.removeFileDialogButtons()
+end
+
+-- Word Wise: the reader events it needs. None of these handlers returns true,
+-- so the events keep propagating to the other modules.
+function Assistant:onReaderReady()
+  if self.wordwise then self.wordwise:start() end
+end
+
+function Assistant:onCloseDocument()
+  if self.wordwise then self.wordwise:stop() end
+end
+
+function Assistant:onPageUpdate()
+  if self.wordwise then self.wordwise:onPageChanged() end
+end
+
+function Assistant:onDocumentRerendered()
+  if self.wordwise then self.wordwise:onRerendered() end
+end
+Assistant.onDocumentPartiallyRerendered = Assistant.onDocumentRerendered
+
+-- PDF in continuous scroll mode: scrolling reveals pages without a page turn.
+function Assistant:onViewRecalculate()
+  if self.wordwise then self.wordwise:onViewChanged() end
+end
+
+function Assistant:onNetworkConnected()
+  if self.wordwise then self.wordwise:onNetworkConnected() end
+end
+
+function Assistant:onSuspend()
+  if self.wordwise then self.wordwise:onSuspend() end
+end
+
+function Assistant:onResume()
+  if self.wordwise then self.wordwise:onResume() end
 end
 
 function Assistant:isConfigured()
@@ -203,6 +306,10 @@ function Assistant:init()
   self.ui.menu:registerToMainMenu(self)
   Hooks.setupScrollHtmlWidget()
   Hooks.setupBookDescription(self)
+  if self.ui.document then
+    -- Word Wise (hints above difficult words). Started on ReaderReady.
+    self.wordwise = WordWise:new(self)
+  end
   if not self.ui.document then
     BookActions.registerFileDialogButtons()
   end
