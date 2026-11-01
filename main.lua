@@ -96,6 +96,13 @@ function Assistant:onDispatcherRegisterActions()
     title = _("Toggle Word Wise"),
     general = true
   })
+  Dispatcher:registerAction("ai_wordwise_offline_toggle", {
+    category = "none",
+    event = "ToggleWordWiseOffline",
+    -- @translators Action title: switch the Word Wise hints between the AI and the dictionary that works without internet.
+    title = _("Word Wise: Switch AI / Offline"),
+    general = true
+  })
   Dispatcher:registerAction("ai_summary_using_annotations", {
     category = "none",
     event = "AskSummaryUsingAnnotations",
@@ -138,6 +145,27 @@ function Assistant:onToggleWordWise()
   if ok then
     require("ui/widget/notification"):notify(on and _("Word Wise: on") or _("Word Wise: off"))
   end
+  return true
+end
+
+--- Gesture action: Word Wise hints from the offline dictionary (no internet, no AI),
+--- or back to what was used before. Works in the file manager as well.
+function Assistant:onToggleWordWiseOffline()
+  local Notification = require("ui/widget/notification")
+  local source, why = WordWise.toggleOffline(self)
+  if not source then
+    if why == "no_dictionary" then
+      Notification:notify(_("Word Wise: no offline dictionary found"), Notification.SOURCE_ALWAYS_SHOW)
+    end
+    return true
+  end
+  local label = _("Word Wise: AI")
+  if source == "offline" then
+    label = _("Word Wise: Offline")
+  elseif source == "auto" then
+    label = _("Word Wise: AI + Offline")
+  end
+  Notification:notify(label, Notification.SOURCE_ALWAYS_SHOW)
   return true
 end
 

@@ -19,6 +19,13 @@ How it works
     their boxes come from the text layer (utils/wordwise_pdf), a position is a
     "page:line:word" key instead of an xpointer, and a hint is drawn into the gap
     above its line, shrunk to fit. Where the gap is too small the hint is left out.
+  * Offline dictionary (optional, setting "source"): instead of the AI, the hints
+    of a page come from a local dictionary (utils/wordwise_dict) - no internet, no
+    provider. The AI stays the default. "auto" uses the AI and falls back to the
+    dictionary while there is no connection or the AI fails. Dictionary hints go
+    through the same placement (Core.resolve), level and density as AI hints, but
+    live in memory only: they cost milliseconds to make, and the per-book AI cache
+    is never touched by them.
 ]]
 
 local Blitbuffer = require("ffi/blitbuffer")
@@ -42,6 +49,7 @@ local _ = require("core/gettext")
 local Core = require("utils/wordwise_core")
 local Store = require("utils/wordwise_store")
 local PDF = require("utils/wordwise_pdf")
+local Dict = require("utils/wordwise_dict")
 
 local Screen = Device.screen
 
@@ -67,7 +75,12 @@ local DEFAULTS = {
   repeat_hints = "always", -- "always" | "once": hide a hint (same word, same meaning) after its first showing in the book
   tap_hint = false,  -- tapping a hint opens the AI explanation of that word (off: may clash with tap-to-turn)
   connector = "line", -- "off" | "line": rule under the hint with a notch pointing at the hinted word
+  source = "ai",      -- "ai" | "auto" (AI, dictionary while offline) | "offline" (dictionary only)
+  source_prev = "ai", -- what the gesture returns to when it leaves "offline"
 }
+
+-- The hint sources, in the order of the menu.
+local SOURCES = { "ai", "auto", "offline" }
 
 local DEBOUNCE = 0.4            -- s to wait after a page turn before requesting
 local POLL_INTERVAL = 0.2       -- s between checks of running requests
@@ -81,6 +94,9 @@ local FLUSH_DELAY = 30          -- s of quiet before the cache is written to dis
 local MAX_HINTS_PER_BOOK = 15000
 local MENU_WAIT_MAX = 90         -- s: longest wait for an open settings menu before fetching anyway
 local READ_CHUNK = 16384
+local DICT_MAX_PREFETCH = 2     -- pages ahead for the offline dictionary (a page costs a little CPU)
+local DICT_STEP_DELAY = 0.03    -- s between two pages of dictionary work, so the UI stays responsive
+local DICT_VERSION = "d1"       -- bump when the dictionary logic changes the hints it makes
 
 local WordWise = {}
 WordWise.__index = WordWise
@@ -141,6 +157,14 @@ function WordWise:new(assistant)
   o.cache_ls = nil
   o.cache_dirty = false
   o.waiting_current = false   -- the page on screen still lacks its hints
+  o.showing_dict = false      -- the page on screen shows dictionary hints although the AI is allowed
+  o.dict = nil                -- open offline dictionary (utils/wordwise_dict)
+  o.off_store = nil           -- dictionary hints (memory only, see "Offline dictionary" above)
+  o.off_sig = nil
+  o.off_queue = {}            -- pages waiting for dictionary hints
+  o.empty_store = nil
+  o.book_lang = nil
+  o.off_fn = function() o:offlineStep() end
   o.plan_fn = function() o:plan() end
   o.poll_fn = function()
     o.poll_scheduled = false
@@ -296,6 +320,196 @@ function WordWise:signature()
 end
 
 ---------------------------------------------------------------------------
+-- Hint source: AI, offline dictionary, or both
+---------------------------------------------------------------------------
+
+--- "ai" | "auto" | "offline". Anything unknown counts as "ai", the default.
+function WordWise:source()
+  local s = self:cfg("source")
+  if s == "auto" or s == "offline" then return s end
+  return "ai"
+end
+
+--- Is there an AI provider that could answer? Quiet: unlike Assistant:isConfigured()
+--- this never opens a dialog.
+function WordWise:hasProvider()
+  local ok, res = pcall(function() return self:resolveProvider() ~= nil end)
+  return ok and res == true
+end
+
+--- May Word Wise be turned on with the chosen hint source? "ai" needs a provider
+--- (the Assistant asks to set one up), the dictionary sources need the dictionary.
+--- Works without a book (file manager), too.
+function WordWise.canTurnOn(assistant)
+  local src = assistant.settings:readSetting("wordwise_source")
+  if src ~= "auto" and src ~= "offline" then src = "ai" end
+  if src ~= "ai" then
+    if Dict.available() then return true end
+    if src == "auto" then return assistant:isConfigured() ~= nil end -- AI, as before
+    UIManager:show(InfoMessage:new{
+      text = _("No offline dictionary was found. Reinstall the plugin (it contains data/wordwise_offline.db) or put a dictionary of your own into the wordwise folder of KOReader's data directory."),
+    })
+    return false
+  end
+  return assistant:isConfigured() ~= nil
+end
+
+--- Gesture: switch to the offline dictionary, or back to what was used before.
+--- Works without a book, too (the setting is global).
+--- @return string|nil the new source; nil (and a reason) when there is no dictionary
+function WordWise.toggleOffline(assistant)
+  local settings = assistant.settings
+  local function read(key)
+    local v = settings:readSetting("wordwise_" .. key)
+    if v == nil then return DEFAULTS[key] end
+    return v
+  end
+  local cur = read("source")
+  local nxt
+  if cur == "offline" then
+    nxt = read("source_prev")
+    if nxt ~= "ai" and nxt ~= "auto" then nxt = "ai" end
+  else
+    if not Dict.available() then return nil, "no_dictionary" end
+    settings:saveSetting("wordwise_source_prev", (cur == "auto") and "auto" or "ai")
+    nxt = "offline"
+  end
+  settings:saveSetting("wordwise_source", nxt)
+  assistant.updated = true
+  local ww = assistant.wordwise
+  if ww then ww:onSourceChanged() end
+  return nxt
+end
+
+--- Does the dictionary supply the hints right now? "offline": always. "auto": while
+--- the AI cannot answer - no provider, no connection, or waiting after a failure.
+function WordWise:dictionaryActive()
+  local src = self:source()
+  if src == "offline" then return true end
+  if src ~= "auto" then return false end
+  return not self:hasProvider() or not self:isOnline() or now() < self.retry_at
+end
+
+--- Language of the book: "en", "other", or "unknown" when the file does not say.
+function WordWise:bookLanguage()
+  local lang
+  pcall(function()
+    local props = self.ui.doc_props
+    lang = props and props.language
+    if (type(lang) ~= "string" or lang == "") and self.ui.document and self.ui.document.getProps then
+      local p = self.ui.document:getProps()
+      lang = p and p.language
+    end
+  end)
+  if type(lang) ~= "string" then return "unknown" end
+  lang = lang:lower():gsub("^%s+", ""):gsub("%s+$", "")
+  if lang == "" or lang == "und" or lang == "unknown" then return "unknown" end
+  if lang == "en" or lang:match("^en[%-_]") or lang:match("^eng") then return "en" end
+  return "other"
+end
+
+--- The open dictionary (opened on first use), or nil.
+function WordWise:openDict()
+  if self.dict then return self.dict end
+  local ok, d = pcall(Dict.open)
+  if ok and d then self.dict = d end
+  return self.dict
+end
+
+function WordWise:closeDict()
+  if self.dict then pcall(function() self.dict:close() end) end
+  self.dict = nil
+end
+
+--- Forget the dictionary hints of this session (they are cheap to make again).
+function WordWise:dropDictHints()
+  self.off_store, self.off_sig, self.off_queue = nil, nil, {}
+  UIManager:unschedule(self.off_fn)
+end
+
+--- The dictionary file changed (converted, replaced): start over with the new one.
+function WordWise:reloadDictionary()
+  self:closeDict()
+  self:dropDictHints()
+  self.dict_notified, self.lang_notified = nil, nil
+  if self.running and self:isEnabled() then
+    self:invalidateLayout()
+    self:refresh()
+    self:schedulePlan(0.2)
+  end
+end
+
+--- Dictionary hints depend on these; the AI settings (model, style, language) do not.
+function WordWise:dictSignature()
+  local d = self:openDict()
+  return table.concat({
+    self:cfg("level"), self:cfg("density"), self:cfg("all") and "all" or "first",
+    tostring(self:cfg("max_chars")), d and d.path or "none", DICT_VERSION,
+  }, "|")
+end
+
+--- The store of dictionary hints, made anew when the settings behind it changed.
+function WordWise:dictStore()
+  local sig = self:dictSignature()
+  if self.off_store and self.off_sig == sig then return self.off_store end
+  self.off_store = Store.new(self:cmp())
+  self.off_sig = sig
+  self.off_queue = {}
+  return self.off_store
+end
+
+-- What is painted when the source is "auto": the AI's hints on pages the AI has
+-- analysed, the dictionary's on the others.
+local Combined = {}
+Combined.__index = Combined
+
+function Combined.new(ai, dict)
+  return setmetatable({ ai = ai, dict = dict }, Combined)
+end
+
+function Combined:covers(a, b)
+  return self.ai:covers(a, b) or self.dict:covers(a, b)
+end
+
+function Combined:query(a, b)
+  if self.ai:covers(a, b) then return self.ai:query(a, b) end
+  return self.dict:query(a, b)
+end
+
+--- Are the hints of [a, b) the dictionary's although the AI is allowed (so they
+--- have to be replaced when the AI's arrive)?
+function Combined:usesDict(a, b)
+  return not self.ai:covers(a, b) and self.dict:covers(a, b)
+end
+
+--- The hints to paint for the current source.
+function WordWise:viewStore()
+  local src = self:source()
+  if src == "ai" then return self.store end
+  local d = self.off_store
+  if not d then
+    self.empty_store = self.empty_store or Store.new(self:cmp())
+    d = self.empty_store
+  end
+  if src == "offline" then return d end
+  return Combined.new(self.store, d)
+end
+
+--- The hint source was changed (menu, gesture): apply it at once.
+function WordWise:onSourceChanged()
+  if not self.running then return end
+  self:abortAll()
+  self.failures, self.retry_at = 0, 0
+  self.offline_prompted = false
+  self.lang_notified = nil
+  self:invalidateLayout()
+  if self:isEnabled() then
+    self:refresh()
+    self:schedulePlan(0.2)
+  end
+end
+
+---------------------------------------------------------------------------
 -- Lifecycle
 ---------------------------------------------------------------------------
 
@@ -323,6 +537,10 @@ function WordWise:stop()
   self.store = nil
   self.cache_ls = nil
   self.seen = nil
+  self:dropDictHints()
+  self:closeDict()
+  self.empty_store = nil
+  self.dict_notified, self.lang_notified = nil, nil
 end
 
 --- Load the cache and start planning requests.
@@ -331,38 +549,63 @@ function WordWise:activate()
   self:registerTapZone()
   self:openCache()
   self:prepareBook()
+  self:dropDictHints()
   self.failures, self.retry_at = 0, 0
   self.offline_prompted = false
   self:invalidateLayout()
   self:schedulePlan(0.1)
 end
 
-function WordWise:setEnabled(on)
-  if not self:isSupported() then return false end
-  if on then
-    if not self.assistant:isConfigured() then return false end
-    self:setCfg("enabled", true)
-    self:activate()
-    if self:isPaged() and not self.settings:readSetting("wordwise_pdf_tip_shown") then
-      self.settings:saveSetting("wordwise_pdf_tip_shown", true)
-      UIManager:show(InfoMessage:new{
-        text = _([[Word Wise is on.
+--- The "Word Wise is on" message of the first time hints are turned on in a kind of
+--- document. With the AI as the source these are the original texts (and their
+--- translations); with the dictionary they say what is different.
+--- @param kind string "pdf" | "reflow"
+function WordWise:tipText(kind)
+  local src = self:source()
+  if src == "ai" then
+    if kind == "pdf" then
+      return _([[Word Wise is on.
 
 Hints are fetched from your AI provider while you read, so an internet connection is needed. Pages you have already seen are cached and cost nothing.
 
-A PDF has a fixed layout, so hints can only go into the gap above a line, a little over the lower part of the line above. Where even that is too small for readable text, the hint is left out. You can tune this in Hint Appearance (PDF: Squeeze Hints Closer, PDF: Smallest Hint Size). Zooming in does not help, as the gaps grow with the text. Scanned PDFs without a text layer are not supported, and neither is Reflow mode.]]),
-      })
-    elseif self:isReflowable() and not self.settings:readSetting("wordwise_tip_shown") then
-      self.settings:saveSetting("wordwise_tip_shown", true)
-      UIManager:show(InfoMessage:new{
-        text = _([[Word Wise is on.
+A PDF has a fixed layout, so hints can only go into the gap above a line, a little over the lower part of the line above. Where even that is too small for readable text, the hint is left out. You can tune this in Hint Appearance (PDF: Squeeze Hints Closer, PDF: Smallest Hint Size). Zooming in does not help, as the gaps grow with the text. Scanned PDFs without a text layer are not supported, and neither is Reflow mode.]])
+    end
+    return _([[Word Wise is on.
 
 Hints are fetched from your AI provider while you read, so an internet connection is needed. Pages you have already seen are cached and cost nothing.
 
 Hints sit in the gap above each word, so the line spacing of the book was raised a little to leave room for them. You can change it any time in the Typeset menu.
 
-Tip: a fast model without "thinking" gives the quickest hints.]]),
-      })
+Tip: a fast model without "thinking" gives the quickest hints.]])
+  end
+  local intro
+  if src == "offline" then
+    intro = _([[Word Wise is on.
+
+Hints come from the offline dictionary of the plugin, so no internet connection and no AI provider are needed. The dictionary knows rare English words only and cannot tell from the sentence which meaning is meant, so it is less precise than the AI. It is for English books; hints are always English.]])
+  else
+    intro = _([[Word Wise is on.
+
+Hints are fetched from your AI provider while you read. Without a connection, or while the AI fails, the offline dictionary of the plugin gives simpler hints for English books until the AI is back. Pages the AI has already done are cached and cost nothing.]])
+  end
+  if kind == "pdf" then
+    return intro .. "\n\n" .. _([[A PDF has a fixed layout, so hints can only go into the gap above a line, and where it is too small for readable text the hint is left out. You can tune this in Hint Appearance. Scanned PDFs without a text layer are not supported, and neither is Reflow mode.]])
+  end
+  return intro .. "\n\n" .. _([[Hints sit in the gap above each word, so the line spacing of the book was raised a little to leave room for them. You can change it any time in the Typeset menu.]])
+end
+
+function WordWise:setEnabled(on)
+  if not self:isSupported() then return false end
+  if on then
+    if not WordWise.canTurnOn(self.assistant) then return false end
+    self:setCfg("enabled", true)
+    self:activate()
+    if self:isPaged() and not self.settings:readSetting("wordwise_pdf_tip_shown") then
+      self.settings:saveSetting("wordwise_pdf_tip_shown", true)
+      UIManager:show(InfoMessage:new{ text = self:tipText("pdf") })
+    elseif self:isReflowable() and not self.settings:readSetting("wordwise_tip_shown") then
+      self.settings:saveSetting("wordwise_tip_shown", true)
+      UIManager:show(InfoMessage:new{ text = self:tipText("reflow") })
     end
   else
     self:setCfg("enabled", false)
@@ -370,6 +613,7 @@ Tip: a fast model without "thinking" gives the quickest hints.]]),
     self:abortAll()
     self:flushCache()
     self:freeLayout()
+    self:dropDictHints()
     UIManager:unschedule(self.plan_fn)
     self:restoreLineSpacing()
   end
@@ -443,21 +687,28 @@ function WordWise:flushCache()
   UIManager:unschedule(self.flush_fn)
   if not (self.cache_ls and self.store and self.cache_dirty) then return end
   -- Only the variant in use is kept: hints made with other settings or by another
-  -- model are dropped as soon as the current variant is written.
-  local data = self.store:dump()
-  data.used = now()
-  self.cache_ls:saveSetting("stores", { [self.sig] = data })
+  -- model are dropped as soon as the current variant is written. When only the
+  -- list of shown hints changed (dictionary hints, "show once"), the AI hints on
+  -- disk are left exactly as they are.
+  if self.store_dirty then
+    local data = self.store:dump()
+    data.used = now()
+    self.cache_ls:saveSetting("stores", { [self.sig] = data })
+  end
   if type(self.seen) == "table" then self.cache_ls:saveSetting("seen", self.seen) end
   local ok, err = pcall(function() self.cache_ls:flush() end)
   if ok then
     self.cache_dirty = false
+    self.store_dirty = false
   else
     logger.warn("Word Wise: cache write failed:", err)
   end
 end
 
-function WordWise:markCacheDirty()
+--- @param seen_only boolean|nil true when only the "shown once" list changed, not the AI hints
+function WordWise:markCacheDirty(seen_only)
   self.cache_dirty = true
+  if not seen_only then self.store_dirty = true end
   UIManager:unschedule(self.flush_fn)
   UIManager:scheduleIn(FLUSH_DELAY, self.flush_fn)
 end
@@ -465,6 +716,7 @@ end
 --- Forget all hints of this book (all settings variants).
 function WordWise:clearCache()
   self:abortAll()
+  self:dropDictHints()
   self.seen = {}
   if self.store then self.store:clear() end
   if self.cache_ls then
@@ -473,6 +725,7 @@ function WordWise:clearCache()
     pcall(function() self.cache_ls:flush() end)
   end
   self.cache_dirty = false
+  self.store_dirty = false
   self:invalidateLayout()
   self:refresh()
   self:schedulePlan(0.1)
@@ -490,6 +743,7 @@ end
 function WordWise:onRequestSettingsChanged(delay)
   if not self:isEnabled() then return end
   self:abortAll()
+  self:dropDictHints()
   self:flushCache()
   self:openCache()
   -- Fresh start: errors and the waiting time after them belong to the old settings.
@@ -776,13 +1030,30 @@ function WordWise:plan()
     return
   end
 
+  local src = self:source()
+  if src == "offline" then return self:planDictionary() end
+
   local t = now()
-  if t < self.retry_at then
-    return self:schedulePlan(self.retry_at - t + 0.5)
-  end
-  if not self:isOnline() then
-    self:handleOffline()
-    return -- onNetworkConnected resumes
+  if src == "auto" then
+    -- The AI first. The dictionary takes over while the AI cannot answer; the AI
+    -- comes back by itself (after the waiting time, or on onNetworkConnected).
+    local online = self:isOnline()
+    local waiting = t < self.retry_at
+    local provider = self:hasProvider()
+    if waiting or not online or not provider then
+      if not online and #self.active > 0 then self:abortAll() end
+      self:planDictionary()
+      if provider and waiting then self:schedulePlan(self.retry_at - t + 0.5) end
+      return
+    end
+  else
+    if t < self.retry_at then
+      return self:schedulePlan(self.retry_at - t + 0.5)
+    end
+    if not self:isOnline() then
+      self:handleOffline()
+      return -- onNetworkConnected resumes
+    end
   end
 
   local doc = self.ui.document
@@ -830,6 +1101,106 @@ function WordWise:pump()
     local started = self:startJob(job)
     if started == "failed" then return end
   end
+end
+
+---------------------------------------------------------------------------
+-- Offline dictionary: hints of a page without AI
+---------------------------------------------------------------------------
+
+--- Can dictionary hints be made for this book? Says why not, once per book.
+function WordWise:dictionaryReady()
+  if not self:openDict() then
+    if not self.dict_notified then
+      self.dict_notified = true
+      Notification:notify(_("Word Wise: no offline dictionary found"), Notification.SOURCE_ALWAYS_SHOW)
+    end
+    return false
+  end
+  self.book_lang = self:bookLanguage()
+  if self.book_lang == "other" then
+    if not self.lang_notified then
+      self.lang_notified = true
+      Notification:notify(_("Word Wise: the offline dictionary is English only"), Notification.SOURCE_ALWAYS_SHOW)
+    end
+    return false
+  end
+  return true
+end
+
+--- Queue the pages on screen and the next few for dictionary hints. Cheap: only
+--- pages that have no hints yet (from the AI cache, in "auto") are queued.
+function WordWise:planDictionary()
+  if not self:dictionaryReady() then return end
+  local auto = self:source() == "auto"
+  local ok, err = pcall(function()
+    local total = self.ui.document:getPageCount()
+    local store = self:dictStore()
+    local wanted = {}
+    local prefetch = math.min(tonumber(self:cfg("prefetch")) or 2, DICT_MAX_PREFETCH)
+    for _k, p in ipairs(self:pagesToPlan(prefetch)) do
+      if p > total then break end
+      local a, b = self:pageRange(p)
+      local covered = store:covers(a, b) or (auto and self.store:covers(a, b))
+      if not covered then wanted[#wanted + 1] = { a = a, b = b } end
+    end
+    -- Replace the queue: pages the reader has left are no longer interesting.
+    self.off_queue = wanted
+  end)
+  if not ok then
+    logger.warn("Word Wise: dictionary plan failed:", err)
+    return
+  end
+  if #self.off_queue > 0 then self:scheduleDictStep(0) end
+end
+
+function WordWise:scheduleDictStep(delay)
+  UIManager:unschedule(self.off_fn)
+  UIManager:scheduleIn(delay or DICT_STEP_DELAY, self.off_fn)
+end
+
+--- One page of dictionary work per call, so reading is never blocked for long.
+function WordWise:offlineStep()
+  if not (self.running and self:isEnabled() and self.store) then return end
+  if self:isUserBusy() then return self:scheduleDictStep(1.5) end
+  local job = table.remove(self.off_queue, 1)
+  if not job then return end
+  local ok, err = pcall(function() self:runDictJob(job) end)
+  if not ok then
+    -- Mark the page as done without hints: one broken page must not stall the rest.
+    logger.warn("Word Wise: dictionary hints failed:", err)
+    pcall(function() self:dictStore():addRange(job.a, job.b, {}) end)
+  end
+  if self.waiting_current or self.showing_dict then
+    self:invalidateLayout()
+    self:refresh()
+  end
+  if #self.off_queue > 0 then self:scheduleDictStep(DICT_STEP_DELAY) end
+end
+
+--- Dictionary hints of the page [a, b): the hard words of the page, resolved and
+--- placed exactly like the AI's picks (level, density, occurrences, cap).
+function WordWise:runDictJob(job)
+  local store = self:dictStore()
+  local words = self:walk(job.a, job.b)
+  local records = {}
+  if #words >= MIN_WORDS and (self.book_lang == "en" or Dict.looksEnglish(words)) then
+    local dict = self:openDict()
+    local items = dict and dict:items(words, { max_chars = tonumber(self:cfg("max_chars")) or 24 }) or {}
+    if #items > 0 then
+      local cands = Core.resolve(items, words, {
+        all_occurrences = self:cfg("all"),
+        max_hints = Core.maxHintsFor(#words, self:cfg("density"), self:cfg("level")) + 3,
+        level = self:cfg("level"),
+        density = self:cfg("density"),
+      })
+      for _i, c in ipairs(cands) do
+        records[#records + 1] = {
+          p0 = words[c.w0].xp0, p1 = words[c.w1].xp1, t = c.text, h = c.hint,
+        }
+      end
+    end
+  end
+  store:addRange(job.a, job.b, records)
 end
 
 ---------------------------------------------------------------------------
@@ -982,6 +1353,8 @@ end
 --- Kill every running request and empty the queue.
 function WordWise:abortAll()
   self.queue = {}
+  self.off_queue = {}
+  UIManager:unschedule(self.off_fn)
   for _, job in ipairs(self.active) do
     killProcess(job.pid)
     pcall(ffi.C.close, job.fd)
@@ -1001,7 +1374,12 @@ function WordWise:onFailure(msg)
     if #short > 140 then short = short:sub(1, 140) .. "…" end
     Notification:notify(T(_("Word Wise: %1"), short), Notification.SOURCE_ALWAYS_SHOW)
   end
-  self:schedulePlan(delay + 0.5)
+  if self:source() == "auto" then
+    -- The dictionary steps in at once; plan() brings the AI back after the waiting time.
+    self:schedulePlan(0.3)
+  else
+    self:schedulePlan(delay + 0.5)
+  end
 end
 
 function WordWise:finishJob(job, data, timed_out)
@@ -1072,7 +1450,7 @@ function WordWise:finishJob(job, data, timed_out)
   end
   self:markCacheDirty()
 
-  if self.waiting_current then
+  if self.waiting_current or self.showing_dict then
     self:invalidateLayout()
     self:refresh()
   end
@@ -1266,7 +1644,7 @@ function WordWise:filterHints(hints)
       end
       if not drop then out[#out + 1] = h end
     end
-    if changed then self:markCacheDirty() end
+    if changed then self:markCacheDirty(true) end
     return out
   end)
   if ok and type(res) == "table" then return res end
@@ -1345,8 +1723,28 @@ function WordWise:onHintTap(ges)
   return ok and res == true
 end
 
---- The AI dictionary of the assistant, the same one as after selecting a word.
+--- The definition of the offline dictionary, in a small popup. Used instead of the
+--- AI explanation while the dictionary is the source (no connection needed).
+function WordWise:showOfflineExplanation(text)
+  local ok, err = pcall(function()
+    local dict = self:openDict()
+    local tok = Core.tokenize(text or "")[1]
+    local r = dict and tok and dict:lookup(tok)
+    local msg
+    if r then
+      msg = tok .. (r.pos and (" (" .. r.pos .. ")") or "") .. "\n\n" .. r.gloss
+    else
+      msg = T(_("No definition of \"%1\" in the offline dictionary."), tostring(text))
+    end
+    UIManager:show(InfoMessage:new{ text = msg })
+  end)
+  if not ok then logger.warn("Word Wise: could not open the definition:", err) end
+end
+
+--- The AI dictionary of the assistant, the same one as after selecting a word
+--- (the offline dictionary's definition while that is the source).
 function WordWise:showExplanation(text)
+  if self:dictionaryActive() then return self:showOfflineExplanation(text) end
   local a = self.assistant
   if not (a and a:isConfigured()) then return end
   local ok, err = pcall(function()
@@ -1427,13 +1825,15 @@ function WordWise:buildPagedLayout(pages)
   local size_pct = tonumber(self:cfg("size")) or 65
   local min_font = Screen:scaleBySize(tonumber(self:cfg("pdf_min_size")) or 8)
   local squeeze = math.max(0, math.min(100, tonumber(self:cfg("pdf_squeeze")) or 35)) / 100
-  local list, waiting = {}, false
+  local list, waiting, dict_shown = {}, false, false
   local min_x, max_x
+  local vs = self:viewStore()
 
   for _, page in ipairs(pages) do
     local a, b = self:pageRange(page)
-    if not self.store:covers(a, b) then waiting = true end
-    local hints = self:filterHints(self.store:query(a, b))
+    if not vs:covers(a, b) then waiting = true end
+    if vs.usesDict and vs:usesDict(a, b) then dict_shown = true end
+    local hints = self:filterHints(vs:query(a, b))
     local boxes = #hints > 0 and self:pageBoxes(page) or nil
     if boxes then
       -- Text column of the page, so that hints never stick out into the margin.
@@ -1512,6 +1912,7 @@ function WordWise:buildPagedLayout(pages)
     end
   end
   self.waiting_current = waiting
+  self.showing_dict = dict_shown
   if #list == 0 then return end
 
   local lo = math.max(margin, min_x or 0)
@@ -1562,6 +1963,7 @@ function WordWise:paintPaged(bb, x, y)
       -- Reflow mode / rotated pages: the text boxes do not match what is on screen.
       if #self.layout > 0 then self:freeLayout() end
       self.waiting_current = false
+      self.showing_dict = false
       return
     end
     local pages = self:visiblePages()
@@ -1583,8 +1985,10 @@ end
 function WordWise:buildLayout(a, b)
   self:freeLayout()
   local doc = self.ui.document
-  local hints = self:filterHints(self.store:query(a, b))
-  self.waiting_current = not self.store:covers(a, b)
+  local vs = self:viewStore()
+  local hints = self:filterHints(vs:query(a, b))
+  self.waiting_current = not vs:covers(a, b)
+  self.showing_dict = (vs.usesDict and vs:usesDict(a, b)) or false
   if #hints == 0 then return end
 
   -- Screen boxes of the hinted words first: they give the text column.

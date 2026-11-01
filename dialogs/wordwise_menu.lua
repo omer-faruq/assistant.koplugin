@@ -14,6 +14,7 @@ local UIManager = require("ui/uimanager")
 local ffiutil = require("ffi/util")
 local _ = require("core/gettext")
 local Core = require("utils/wordwise_core")
+local Dict = require("utils/wordwise_dict")
 local WordWise = require("feature/wordwise")
 
 local T = ffiutil.template
@@ -293,6 +294,126 @@ local function showLanguageDialog(assistant, touchmenu_instance)
   dialog:onShowKeyboard()
 end
 
+---------------------------------------------------------------------------
+-- Hint source and offline dictionary
+---------------------------------------------------------------------------
+
+local SOURCES = { "ai", "auto", "offline" }
+
+--- The chosen source; anything unknown is "ai", the default.
+local function sourceOf(assistant)
+  local s = cfg(assistant, "source")
+  if s == "auto" or s == "offline" then return s end
+  return "ai"
+end
+
+local function sourceLabel(source)
+  local labels = {
+    ai = _("AI"),
+    auto = _("AI + Offline"),
+    offline = _("Offline"),
+  }
+  return labels[source] or labels.ai
+end
+
+local function noDictionaryText()
+  return _("No offline dictionary was found. Reinstall the plugin (it contains data/wordwise_offline.db) or put a dictionary of your own into the wordwise folder of KOReader's data directory.")
+end
+
+local function setSource(assistant, source)
+  local prev = sourceOf(assistant)
+  if source == prev then return end
+  if source ~= "ai" and not Dict.available() then
+    info(noDictionaryText())
+    return
+  end
+  setCfg(assistant, "source", source)
+  -- The gesture goes back to the last source that was not "offline".
+  if source == "offline" then
+    setCfg(assistant, "source_prev", prev)
+  else
+    setCfg(assistant, "source_prev", source)
+  end
+  local ww = assistant.wordwise
+  if ww then ww:onSourceChanged() end
+end
+
+local function genSourceItems(assistant)
+  local items = {}
+  for _i, source in ipairs(SOURCES) do
+    items[#items + 1] = {
+      text = sourceLabel(source),
+      radio = true,
+      checked_func = function() return sourceOf(assistant) == source end,
+      callback = function() setSource(assistant, source) end,
+    }
+  end
+  return items
+end
+
+--- Text for "About the Dictionary": which dictionary is used and how to replace it.
+local function describeDictionary()
+  local lines = {}
+  local db = Dict.open()
+  if db then
+    local kind = db.kind == "user" and _("a dictionary of your own") or _("the dictionary built into the plugin")
+    lines[#lines + 1] = T(_("In use: %1"), kind)
+    local n = db:count()
+    if n then lines[#lines + 1] = T(_("Words: %1"), tostring(n)) end
+    lines[#lines + 1] = db.path
+    db:close()
+  else
+    lines[#lines + 1] = _("No offline dictionary found.")
+  end
+  lines[#lines + 1] = ""
+  lines[#lines + 1] = _("It knows rare English words only and gives one meaning per word, without looking at the sentence, so it is less precise than the AI. Hints are always English.")
+  local dir = Dict.userDir()
+  if dir then
+    lines[#lines + 1] = ""
+    lines[#lines + 1] = T(_("A dictionary of your own (SQLite, the format of wordwise.koplugin) replaces the built-in one when it is saved as:\n%1/wordwise.db"), dir)
+  end
+  return table.concat(lines, "\n")
+end
+
+--- Convert Kindle's own Word Wise data into the offline dictionary (once).
+local function convertKindle(assistant, touchmenu_instance)
+  UIManager:show(ConfirmBox:new {
+    text = _("Kindle's own Word Wise data was found on this device. Convert it into the offline dictionary? It stays on this device and is for your personal use only. This can take a few minutes, and KOReader may seem frozen meanwhile."),
+    ok_text = _("Convert"),
+    ok_callback = function()
+      local msg = InfoMessage:new { text = _("Converting Kindle's Word Wise data... Please wait.") }
+      UIManager:show(msg)
+      UIManager:forceRePaint()
+      local ok = Dict.convertKindle()
+      UIManager:close(msg)
+      local w = assistant.wordwise
+      if w then w:reloadDictionary() end
+      info(ok and _("Done. The converted dictionary is used from now on.")
+        or _("The conversion failed. Details are in the KOReader log."))
+      if touchmenu_instance then touchmenu_instance:updateItems() end
+    end,
+  })
+end
+
+local function genDictionaryItems(assistant)
+  return {
+    {
+      text = _("About the Dictionary"),
+      callback = function() info(describeDictionary()) end,
+      keep_menu_open = true,
+    },
+    {
+      text = _("Use Kindle's Word Wise Data"),
+      enabled_func = function() return Dict.kindleAvailable() and not Dict.hasUserDb() end,
+      callback = function(touchmenu_instance) convertKindle(assistant, touchmenu_instance) end,
+      keep_menu_open = true,
+      hold_callback = function()
+        info(_("Only on a Kindle that has its own Word Wise data on it (it appears once Kindle's Word Wise was used). The data is converted once into a dictionary of your own and never leaves the device."))
+      end,
+    },
+  }
+end
+
 local function knownCount(assistant)
   local known = assistant.settings:readSetting("wordwise_known")
   local n = 0
@@ -395,7 +516,7 @@ function M.gen(assistant)
           info(_("Word Wise works with reflowable books (EPUB, FB2, MOBI, HTML ...) and with PDF files that have a text layer. This document type is not supported."))
           return
         end
-        if on and not assistant:isConfigured() then return end
+        if on and not WordWise.canTurnOn(assistant) then return end
         if ww() then
           ww():setEnabled(on)
         else
@@ -414,6 +535,25 @@ The AI reads each page, decides what is hard for your level and answers with sho
 
 Works with reflowable books and PDF files that have a text layer. In a PDF the hints go into the gap above each line and are left out where it is too small. An internet connection and an AI provider are needed.]]))
       end,
+    },
+    {
+      text_func = function() return T(_("Hint Source: %1"), sourceLabel(sourceOf(assistant))) end,
+      sub_item_table = genSourceItems(assistant),
+      hold_callback = function()
+        info(_([[Where the hints come from.
+
+AI (default): the AI of your provider, as described above. Needs internet.
+
+AI + Offline: the AI as usual; while there is no connection or the AI fails, the offline dictionary of the plugin gives simpler hints. The AI takes over again by itself, and its hints replace the dictionary's.
+
+Offline: no AI and no internet at all. Hints are instant and free but less precise: the dictionary knows rare English words only and gives one meaning per word, without looking at the sentence. Hints are always English.
+
+The dictionary works with level and density like the AI does (a higher level means fewer, harder words). In the gesture manager the action "Word Wise: Switch AI / Offline" switches between Offline and the source you had before.]]))
+      end,
+    },
+    {
+      text = _("Offline Dictionary"),
+      sub_item_table_func = function() return genDictionaryItems(assistant) end,
       separator = true,
     },
     {
