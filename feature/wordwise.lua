@@ -77,6 +77,7 @@ local DEFAULTS = {
   connector = "line", -- "off" | "line": rule under the hint with a notch pointing at the hinted word
   source = "ai",      -- "ai" | "auto" (AI, dictionary while offline) | "offline" (dictionary only)
   source_prev = "ai", -- what the gesture returns to when it leaves "offline"
+  prepare_pages = 20, -- "Prepare Pages Ahead": how many pages after the current one
 }
 
 -- The hint sources, in the order of the menu.
@@ -96,6 +97,8 @@ local MENU_WAIT_MAX = 90         -- s: longest wait for an open settings menu be
 local READ_CHUNK = 16384
 local DICT_MAX_PREFETCH = 2     -- pages ahead for the offline dictionary (a page costs a little CPU)
 local DICT_STEP_DELAY = 0.03    -- s between two pages of dictionary work, so the UI stays responsive
+local PREPARE_MAX = 100          -- most pages one "Prepare Pages Ahead" may queue
+local PREPARE_MAX_FAILURES = 3  -- consecutive AI errors after which preparing stops
 local DICT_VERSION = "d1"       -- bump when the dictionary logic changes the hints it makes
 
 local WordWise = {}
@@ -165,6 +168,7 @@ function WordWise:new(assistant)
   o.empty_store = nil
   o.book_lang = nil
   o.off_fn = function() o:offlineStep() end
+  o.prep = nil                -- "Prepare Pages Ahead" in progress: { ranges, total, started }
   o.plan_fn = function() o:plan() end
   o.poll_fn = function()
     o.poll_scheduled = false
@@ -498,6 +502,9 @@ end
 --- The hint source was changed (menu, gesture): apply it at once.
 function WordWise:onSourceChanged()
   if not self.running then return end
+  if self:source() == "offline" then
+    self:cancelPrepare(_("Word Wise: preparing stopped (Offline needs no preparing)"))
+  end
   self:abortAll()
   self.failures, self.retry_at = 0, 0
   self.offline_prompted = false
@@ -534,6 +541,7 @@ function WordWise:stop()
   UIManager:unschedule(self.flush_fn)
   self:unregisterHighlightButton()
   self.running = false
+  self.prep = nil
   self.store = nil
   self.cache_ls = nil
   self.seen = nil
@@ -609,6 +617,7 @@ function WordWise:setEnabled(on)
     end
   else
     self:setCfg("enabled", false)
+    self.prep = nil
     self:unregisterHighlightButton()
     self:abortAll()
     self:flushCache()
@@ -715,6 +724,7 @@ end
 
 --- Forget all hints of this book (all settings variants).
 function WordWise:clearCache()
+  self.prep = nil
   self:abortAll()
   self:dropDictHints()
   self.seen = {}
@@ -742,6 +752,8 @@ end
 --- Call after changing level / language / density / "all occurrences".
 function WordWise:onRequestSettingsChanged(delay)
   if not self:isEnabled() then return end
+  -- the hints being prepared would be made with the old settings
+  self:cancelPrepare(_("Word Wise: preparing stopped because the settings changed"))
   self:abortAll()
   self:dropDictHints()
   self:flushCache()
@@ -1061,6 +1073,7 @@ function WordWise:plan()
     local total = doc:getPageCount()
     local wanted = {}
     local running = {}
+    local queued = {}
     for _, j in ipairs(self.active) do running[j.key] = true end
     for k, p in ipairs(self:pagesToPlan(self:cfg("prefetch"))) do
       if p > total then break end
@@ -1069,6 +1082,20 @@ function WordWise:plan()
         local key = jobKey(a, b)
         if not running[key] then
           wanted[#wanted + 1] = { a = a, b = b, key = key, sig = self.sig, prio = k - 1 }
+          queued[key] = true
+        end
+      end
+    end
+    -- "Prepare Pages Ahead": after the pages being read, never before them.
+    self:checkPrepare()
+    if self.prep then
+      for i, r in ipairs(self.prep.ranges) do
+        if not self.store:covers(r.a, r.b) then
+          local key = jobKey(r.a, r.b)
+          if not running[key] and not queued[key] then
+            wanted[#wanted + 1] = { a = r.a, b = r.b, key = key, sig = self.sig, prio = 100 + i }
+            queued[key] = true
+          end
         end
       end
     end
@@ -1201,6 +1228,118 @@ function WordWise:runDictJob(job)
     end
   end
   store:addRange(job.a, job.b, records)
+end
+
+---------------------------------------------------------------------------
+-- Prepare pages ahead (AI hints for the next N pages, e.g. before going offline)
+---------------------------------------------------------------------------
+-- Runs through the normal request queue, so every safeguard of normal reading
+-- applies: two requests at a time, at most MAX_PER_MINUTE per minute, waiting
+-- after errors, a request is never sent while you select text. The page being
+-- read and its normal pre-fetch always go first. The result is the ordinary
+-- per-book cache, so it is shown whenever those pages are read (also offline).
+
+--- Why preparing cannot start: reason code -> text.
+function WordWise.prepareReasonText(why)
+  local texts = {
+    off = _("Turn on Word Wise first."),
+    blocked = _("Hints are not available in PDF Reflow mode."),
+    offline_source = _("Switch the hint source to AI or AI + Offline first. Offline needs no preparing."),
+    no_provider = _("No AI provider set up yet."),
+    no_internet = _("An internet connection is needed to prepare pages."),
+    end_of_book = _("There are no pages left after this one."),
+  }
+  return texts[why] or texts.off
+end
+
+--- The next `n` pages after the one on screen, as { a, b } text ranges. Ranges (not
+--- page numbers) stay valid when the font or margins change.
+function WordWise:aheadRanges(n)
+  local doc = self.ui.document
+  local total = doc:getPageCount()
+  local first, step
+  if self:isPaged() then
+    local shown = self:visiblePages()
+    first, step = shown[#shown] + 1, 1
+  else
+    step = doc:getVisiblePageCount() or 1
+    first = doc:getCurrentPage() + step
+  end
+  local out = {}
+  for k = 0, n - 1 do
+    local p = first + k * step
+    if p > total then break end
+    local a, b = self:pageRange(p)
+    out[#out + 1] = { a = a, b = b }
+  end
+  return out
+end
+
+--- Start preparing the next pages.
+--- @param n number|nil how many (default: the "Prepare Pages Ahead" setting)
+--- @return number|nil pages queued; nil and a reason code when it cannot start
+function WordWise:startPrepare(n)
+  n = math.floor(tonumber(n) or tonumber(self:cfg("prepare_pages")) or 20)
+  n = math.max(1, math.min(PREPARE_MAX, n))
+  if not (self.running and self:isEnabled()) then return nil, "off" end
+  if self:pagedBlocked() then return nil, "blocked" end
+  if self:source() == "offline" then return nil, "offline_source" end
+  if not self:hasProvider() then return nil, "no_provider" end
+  if not self:isOnline() then return nil, "no_internet" end
+  local ok, ranges = pcall(self.aheadRanges, self, n)
+  if not ok or type(ranges) ~= "table" or #ranges == 0 then return nil, "end_of_book" end
+  self.prep = { ranges = ranges, total = #ranges, started = now() }
+  self.failures, self.retry_at = 0, 0
+  self:schedulePlan(0.2)
+  return #ranges
+end
+
+--- Pages done and pages in all, or nil when nothing is being prepared.
+function WordWise:prepareStatus()
+  local p = self.prep
+  if not (p and self.store) then return nil end
+  local done = 0
+  for _i, r in ipairs(p.ranges) do
+    if self.store:covers(r.a, r.b) then done = done + 1 end
+  end
+  return done, p.total
+end
+
+--- Called after every answer: tell when everything is ready.
+function WordWise:checkPrepare()
+  if not self.prep then return end
+  local ok, done, total = pcall(self.prepareStatus, self)
+  if ok and done and done >= total then
+    self.prep = nil
+    Notification:notify(T(_("Word Wise: the next %1 pages are ready"), total), Notification.SOURCE_ALWAYS_SHOW)
+  end
+end
+
+--- Stop preparing (what is done stays in the cache).
+--- @param msg string|nil shown to the reader
+function WordWise:cancelPrepare(msg)
+  if not self.prep then return end
+  local ok, done, total = pcall(self.prepareStatus, self)
+  self.prep = nil
+  if msg then
+    -- say how far it got: "... (12 of 30 pages ready)"
+    if ok and done then msg = msg .. " " .. T(_("(%1 of %2 pages ready)"), done, total) end
+    Notification:notify(msg, Notification.SOURCE_ALWAYS_SHOW)
+  end
+end
+
+--- Gesture: start preparing, or stop when it is running.
+function WordWise:togglePrepare()
+  if self.prep then
+    self:cancelPrepare(_("Word Wise: preparing stopped"))
+    return
+  end
+  local n, why = self:startPrepare()
+  if n then
+    Notification:notify(T(_("Word Wise: preparing the next %1 pages"), n), Notification.SOURCE_ALWAYS_SHOW)
+  else
+    Notification:notify(T(_("Word Wise: %1"), WordWise.prepareReasonText(why)), Notification.SOURCE_ALWAYS_SHOW)
+  end
 end
 
 ---------------------------------------------------------------------------
@@ -1369,6 +1508,9 @@ function WordWise:onFailure(msg)
   local delay = math.min(600, 15 * 2 ^ (self.failures - 1))
   self.retry_at = now() + delay
   logger.warn("Word Wise: request failed:", msg, "- retry in", delay, "s")
+  if self.prep and self.failures >= PREPARE_MAX_FAILURES then
+    self:cancelPrepare(_("Word Wise: preparing stopped after repeated AI errors"))
+  end
   if self.failures == 1 or self.failures % 5 == 0 then
     local short = tostring(msg):gsub("%s+", " ")
     if #short > 140 then short = short:sub(1, 140) .. "…" end
@@ -1449,6 +1591,7 @@ function WordWise:finishJob(job, data, timed_out)
     self.store:clear()
   end
   self:markCacheDirty()
+  self:checkPrepare()
 
   if self.waiting_current or self.showing_dict then
     self:invalidateLayout()

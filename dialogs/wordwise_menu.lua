@@ -708,6 +708,57 @@ The dictionary works with level and density like the AI does (a higher level mea
     }),
     {
       text_func = function()
+        local w = ww()
+        local done, total
+        if w then done, total = w:prepareStatus() end
+        if done then return T(_("Preparing Pages: %1/%2 (tap to stop)"), done, total) end
+        return T(_("Prepare Pages Ahead: %1"), cfg(assistant, "prepare_pages"))
+      end,
+      enabled_func = function() return ww() ~= nil and ww():isEnabled() end,
+      callback = function(touchmenu_instance)
+        local w = ww()
+        if not w then return end
+        if w:prepareStatus() then
+          UIManager:show(ConfirmBox:new {
+            text = _("Stop preparing pages? What is done stays in the cache."),
+            ok_text = _("Stop"),
+            ok_callback = function()
+              w:cancelPrepare(_("Word Wise: preparing stopped"))
+              if touchmenu_instance then touchmenu_instance:updateItems() end
+            end,
+          })
+          return
+        end
+        UIManager:show(SpinWidget:new {
+          title_text = _("Pages to prepare after this one"),
+          info_text = _("One AI request per page. Useful before reading without internet."),
+          value = cfg(assistant, "prepare_pages"),
+          value_min = 5,
+          value_max = 100,
+          value_step = 5,
+          default_value = WordWise.DEFAULTS.prepare_pages,
+          ok_text = _("Prepare"),
+          callback = function(spin)
+            setCfg(assistant, "prepare_pages", spin.value)
+            local n, why = w:startPrepare(spin.value)
+            if n then
+              info(T(_("Preparing the next %1 pages. It starts when you close the menu and runs in the background, one request after another."), n))
+            else
+              info(WordWise.prepareReasonText(why))
+            end
+          end,
+          close_callback = function()
+            if touchmenu_instance then touchmenu_instance:updateItems() end
+          end,
+        })
+      end,
+      keep_menu_open = true,
+      hold_callback = function()
+        info(_("Gets the AI hints of the next pages now, for example before you go offline. They are kept in the cache of the book and shown when you read those pages, also without internet (AI + Offline mode shows them; Offline mode uses the dictionary only). Uses the normal safeguards: two requests at a time, at most 30 a minute, a pause after errors, and it stops by itself after repeated errors. Pages you read always come first. Prepare them with the level, density, style, language and model you will read with: changing them makes new hints necessary. The same action is in the gesture manager as \"Word Wise: Prepare Pages Ahead\"."))
+      end,
+    },
+    {
+      text_func = function()
         local id = cfg(assistant, "provider") or ""
         local label = _("Same as the AI Assistant")
         if id ~= "" then

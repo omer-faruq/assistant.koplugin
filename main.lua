@@ -96,6 +96,13 @@ function Assistant:onDispatcherRegisterActions()
     title = _("Toggle Word Wise"),
     general = true
   })
+  Dispatcher:registerAction("ai_wordwise_prepare", {
+    category = "none",
+    event = "WordWisePrepare",
+    -- @translators Action title: fetch the Word Wise hints of the next pages in advance (for reading offline).
+    title = _("Word Wise: Prepare Pages Ahead"),
+    general = true
+  })
   Dispatcher:registerAction("ai_wordwise_offline_toggle", {
     category = "none",
     event = "ToggleWordWiseOffline",
@@ -166,6 +173,14 @@ function Assistant:onToggleWordWiseOffline()
     label = _("Word Wise: AI + Offline")
   end
   Notification:notify(label, Notification.SOURCE_ALWAYS_SHOW)
+  return true
+end
+
+--- Gesture action: fetch the Word Wise hints of the next pages now (starts, or stops when running).
+function Assistant:onWordWisePrepare()
+  local ww = self.wordwise
+  if not (ww and ww.running and ww:isSupported()) then return true end
+  ww:togglePrepare()
   return true
 end
 
