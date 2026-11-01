@@ -542,9 +542,9 @@ Works with reflowable books and PDF files that have a text layer. In a PDF the h
       hold_callback = function()
         info(_([[Where the hints come from.
 
-AI (default): the AI of your provider, as described above. Needs internet.
+AI: the AI of your provider, as described above. Needs internet.
 
-AI + Offline: the AI as usual; while there is no connection or the AI fails, the offline dictionary of the plugin gives simpler hints. The AI takes over again by itself, and its hints replace the dictionary's.
+AI + Offline (default): the AI as usual; while there is no connection or the AI fails, the offline dictionary of the plugin gives simpler hints. The AI takes over again by itself, and its hints replace the dictionary's.
 
 Offline: no AI and no internet at all. Hints are instant and free but less precise: the dictionary knows rare English words only and gives one meaning per word, without looking at the sentence. Hints are always English.
 
@@ -593,7 +593,7 @@ The dictionary works with level and density like the AI does (a higher level mea
         requestSettingChanged(assistant)
       end,
       hold_callback = function()
-        info(_("By default an expression is hinted only the first time it appears on a page. Turn this on to hint up to three occurrences."))
+        info(_("On: an expression is hinted up to three times on a page. Off: only the first time it appears on a page. Note: with \"Show Repeated Hints Only Once\" on, a word is hinted only where you meet it first in the book, so that setting wins."))
       end,
     },
     {
@@ -614,7 +614,7 @@ The dictionary works with level and density like the AI does (a higher level mea
         setCfg(assistant, "tap_hint", not (cfg(assistant, "tap_hint") == true))
       end,
       hold_callback = function()
-        info(_("Tapping a hint opens the AI dictionary of the assistant for that word. Off by default: a tap on a hint no longer turns the page, which may get in the way if you turn pages by tapping."))
+        info(_("Tapping a hint opens the AI dictionary of the assistant for that word. While this is on, a tap on a hint does not turn the page, which may get in the way if you turn pages by tapping. Turn it off to turn pages with a tap anywhere."))
       end,
     },
     {

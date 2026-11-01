@@ -61,22 +61,22 @@ local DEFAULTS = {
   prefetch = 2,
   size = 65,         -- hint font size, % of the book font
   offset = 0,        -- extra vertical offset in px (positive = lower)
-  max_chars = 24,
-  all = false,       -- hint every occurrence of an expression on the page
-  color = "black",   -- "gray" | "black"
-  bold = true,
+  max_chars = 32,    -- longest hint (a short explanation needs more room than a synonym)
+  all = true,        -- hint every occurrence of an expression on the page (up to three)
+  color = "gray",    -- "gray" | "black"
+  bold = false,
   position = "close", -- "close" | "middle" | "high" (inside the extra line spacing)
-  style = "synonym",  -- "synonym" | "definition"
+  style = "definition", -- "synonym" | "definition" (short explanation)
   auto_spacing = true, -- raise the book's line spacing automatically to make room
   spacing = 150,       -- % line spacing used for that (the font itself is never changed)
   provider = "",     -- "" = same provider as the AI Assistant
   pdf_min_size = 8,  -- PDF: smallest hint font (px) before a hint is left out for lack of room
   pdf_squeeze = 35,  -- PDF: % of a line's height a hint may borrow from the line above (descender zone)
   repeat_hints = "always", -- "always" | "once": hide a hint (same word, same meaning) after its first showing in the book
-  tap_hint = false,  -- tapping a hint opens the AI explanation of that word (off: may clash with tap-to-turn)
+  tap_hint = true,   -- tapping a hint opens the AI explanation of that word (on: such a tap does not turn the page)
   connector = "line", -- "off" | "line": rule under the hint with a notch pointing at the hinted word
-  source = "ai",      -- "ai" | "auto" (AI, dictionary while offline) | "offline" (dictionary only)
-  source_prev = "ai", -- what the gesture returns to when it leaves "offline"
+  source = "auto",    -- "ai" | "auto" (AI, dictionary while offline) | "offline" (dictionary only)
+  source_prev = "auto", -- last source that was not "offline" (kept for the menu)
   prepare_pages = 10, -- "Prepare Pages Ahead": how many pages after the current one
 }
 
@@ -227,7 +227,7 @@ end
 
 --- Line spacing (%) used to leave room for the hints.
 function WordWise:targetSpacing()
-  local v = tonumber(self:cfg("spacing")) or 150
+  local v = tonumber(self:cfg("spacing")) or DEFAULTS.spacing
   if v < 100 then v = 100 end
   return v
 end
@@ -346,6 +346,7 @@ end
 --- Works without a book (file manager), too.
 function WordWise.canTurnOn(assistant)
   local src = assistant.settings:readSetting("wordwise_source")
+  if src == nil then src = DEFAULTS.source end
   if src ~= "auto" and src ~= "offline" then src = "ai" end
   if src ~= "ai" then
     if Dict.available() then return true end
@@ -364,6 +365,7 @@ end
 function WordWise.toggleOffline(assistant)
   local settings = assistant.settings
   local cur = settings:readSetting("wordwise_source")
+  if cur == nil then cur = DEFAULTS.source end
   if cur ~= "auto" and cur ~= "offline" then cur = "ai" end
   local nxt = (cur == "ai") and "auto" or ((cur == "auto") and "offline" or "ai")
   -- Both dictionary sources need the dictionary; the way back to "ai" never does.
