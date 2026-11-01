@@ -106,8 +106,8 @@ function Assistant:onDispatcherRegisterActions()
   Dispatcher:registerAction("ai_wordwise_offline_toggle", {
     category = "none",
     event = "ToggleWordWiseOffline",
-    -- @translators Action title: switch the Word Wise hints between the AI and the dictionary that works without internet.
-    title = _("Word Wise: Switch AI / Offline"),
+    -- @translators Action title: switch the source of the Word Wise hints one step: AI, AI + offline dictionary, offline dictionary only.
+    title = _("Word Wise: Switch Hint Source (AI / AI + Offline / Offline)"),
     general = true
   })
   Dispatcher:registerAction("ai_summary_using_annotations", {
@@ -155,8 +155,8 @@ function Assistant:onToggleWordWise()
   return true
 end
 
---- Gesture action: Word Wise hints from the offline dictionary (no internet, no AI),
---- or back to what was used before. Works in the file manager as well.
+--- Gesture action: switch the Word Wise hint source one step (AI, AI + Offline,
+--- Offline, and around again). Works in the file manager as well.
 function Assistant:onToggleWordWiseOffline()
   local Notification = require("ui/widget/notification")
   local source, why = WordWise.toggleOffline(self)
@@ -176,11 +176,16 @@ function Assistant:onToggleWordWiseOffline()
   return true
 end
 
---- Gesture action: fetch the Word Wise hints of the next pages now (starts, or stops when running).
+--- Gesture action: stops preparing when it is running; otherwise asks how many pages
+--- and fetches the Word Wise hints of the next pages (needs the AI; offers Wi-Fi if needed).
 function Assistant:onWordWisePrepare()
   local ww = self.wordwise
   if not (ww and ww.running and ww:isSupported()) then return true end
-  ww:togglePrepare()
+  if ww.prep then
+    ww:togglePrepare() -- stops
+  else
+    ww:askPrepare()
+  end
   return true
 end
 

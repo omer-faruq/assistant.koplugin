@@ -548,7 +548,7 @@ AI + Offline: the AI as usual; while there is no connection or the AI fails, the
 
 Offline: no AI and no internet at all. Hints are instant and free but less precise: the dictionary knows rare English words only and gives one meaning per word, without looking at the sentence. Hints are always English.
 
-The dictionary works with level and density like the AI does (a higher level means fewer, harder words). In the gesture manager the action "Word Wise: Switch AI / Offline" switches between Offline and the source you had before.]]))
+The dictionary works with level and density like the AI does (a higher level means fewer, harder words). In the gesture manager the action "Word Wise: Switch Hint Source" goes one step further each time: AI, AI + Offline, Offline, and around again.]]))
       end,
     },
     {
@@ -729,24 +729,11 @@ The dictionary works with level and density like the AI does (a higher level mea
           })
           return
         end
-        UIManager:show(SpinWidget:new {
-          title_text = _("Pages to prepare after this one"),
-          info_text = _("One AI request per page. Useful before reading without internet."),
-          value = cfg(assistant, "prepare_pages"),
-          value_min = 5,
-          value_max = 100,
-          value_step = 5,
-          default_value = WordWise.DEFAULTS.prepare_pages,
-          ok_text = _("Prepare"),
-          callback = function(spin)
-            setCfg(assistant, "prepare_pages", spin.value)
-            local n, why = w:startPrepare(spin.value)
-            if n then
-              info(T(_("Preparing the next %1 pages. It starts when you close the menu and runs in the background, one request after another."), n))
-            else
-              info(WordWise.prepareReasonText(why))
-            end
+        w:askPrepare({
+          on_started = function(n)
+            info(T(_("Preparing the next %1 pages. It starts when you close the menu and runs in the background, one request after another."), n))
           end,
+          on_failed = function(why) info(WordWise.prepareReasonText(why)) end,
           close_callback = function()
             if touchmenu_instance then touchmenu_instance:updateItems() end
           end,
@@ -754,7 +741,7 @@ The dictionary works with level and density like the AI does (a higher level mea
       end,
       keep_menu_open = true,
       hold_callback = function()
-        info(_("Gets the AI hints of the next pages now, for example before you go offline. They are kept in the cache of the book and shown when you read those pages, also without internet (AI + Offline mode shows them; Offline mode uses the dictionary only). Uses the normal safeguards: two requests at a time, at most 30 a minute, a pause after errors, and it stops by itself after repeated errors. Pages you read always come first. Prepare them with the level, density, style, language and model you will read with: changing them makes new hints necessary. The same action is in the gesture manager as \"Word Wise: Prepare Pages Ahead\"."))
+        info(_("Gets the AI hints of the next pages now, for example before you go offline. They are kept in the cache of the book and shown when you read those pages, also without internet (AI + Offline mode shows them; Offline mode uses the dictionary only). Uses the normal safeguards: two requests at a time, at most 30 a minute, a pause after errors, and it stops by itself after repeated errors. Pages you read always come first. Prepare them with the level, density, style, language and model you will read with: changing them makes new hints necessary. The same action is in the gesture manager as \"Word Wise: Prepare Pages Ahead\": it asks how many pages, just like here, and stops preparing when it is already running. It needs the AI or AI + Offline source and offers to turn Wi-Fi on when there is no connection."))
       end,
     },
     {

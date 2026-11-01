@@ -77,7 +77,7 @@ local DEFAULTS = {
   connector = "line", -- "off" | "line": rule under the hint with a notch pointing at the hinted word
   source = "ai",      -- "ai" | "auto" (AI, dictionary while offline) | "offline" (dictionary only)
   source_prev = "ai", -- what the gesture returns to when it leaves "offline"
-  prepare_pages = 20, -- "Prepare Pages Ahead": how many pages after the current one
+  prepare_pages = 10, -- "Prepare Pages Ahead": how many pages after the current one
 }
 
 -- The hint sources, in the order of the menu.
@@ -358,25 +358,21 @@ function WordWise.canTurnOn(assistant)
   return assistant:isConfigured() ~= nil
 end
 
---- Gesture: switch to the offline dictionary, or back to what was used before.
+--- Gesture: switch the hint source one step: AI -> AI + Offline -> Offline -> AI.
 --- Works without a book, too (the setting is global).
 --- @return string|nil the new source; nil (and a reason) when there is no dictionary
 function WordWise.toggleOffline(assistant)
   local settings = assistant.settings
-  local function read(key)
-    local v = settings:readSetting("wordwise_" .. key)
-    if v == nil then return DEFAULTS[key] end
-    return v
-  end
-  local cur = read("source")
-  local nxt
-  if cur == "offline" then
-    nxt = read("source_prev")
-    if nxt ~= "ai" and nxt ~= "auto" then nxt = "ai" end
+  local cur = settings:readSetting("wordwise_source")
+  if cur ~= "auto" and cur ~= "offline" then cur = "ai" end
+  local nxt = (cur == "ai") and "auto" or ((cur == "auto") and "offline" or "ai")
+  -- Both dictionary sources need the dictionary; the way back to "ai" never does.
+  if nxt ~= "ai" and not Dict.available() then return nil, "no_dictionary" end
+  -- Same bookkeeping as the menu: source_prev is the last source that was not "offline".
+  if nxt == "offline" then
+    settings:saveSetting("wordwise_source_prev", cur)
   else
-    if not Dict.available() then return nil, "no_dictionary" end
-    settings:saveSetting("wordwise_source_prev", (cur == "auto") and "auto" or "ai")
-    nxt = "offline"
+    settings:saveSetting("wordwise_source_prev", nxt)
   end
   settings:saveSetting("wordwise_source", nxt)
   assistant.updated = true
@@ -1279,7 +1275,7 @@ end
 --- @param n number|nil how many (default: the "Prepare Pages Ahead" setting)
 --- @return number|nil pages queued; nil and a reason code when it cannot start
 function WordWise:startPrepare(n)
-  n = math.floor(tonumber(n) or tonumber(self:cfg("prepare_pages")) or 20)
+  n = math.floor(tonumber(n) or tonumber(self:cfg("prepare_pages")) or DEFAULTS.prepare_pages)
   n = math.max(1, math.min(PREPARE_MAX, n))
   if not (self.running and self:isEnabled()) then return nil, "off" end
   if self:pagedBlocked() then return nil, "blocked" end
@@ -1340,6 +1336,66 @@ function WordWise:togglePrepare()
   else
     Notification:notify(T(_("Word Wise: %1"), WordWise.prepareReasonText(why)), Notification.SOURCE_ALWAYS_SHOW)
   end
+end
+
+--- Reason why preparing cannot work at all with the current settings, or nil.
+--- A missing connection is not one: that is asked for when it is needed.
+function WordWise:prepareBlocker()
+  if not (self.running and self:isEnabled()) then return "off" end
+  if self:pagedBlocked() then return "blocked" end
+  if self:source() == "offline" then return "offline_source" end
+  if not self:hasProvider() then return "no_provider" end
+  return nil
+end
+
+--- Ask how many pages to prepare, then prepare them. Used by the gesture and the menu.
+--- Needs the AI (source "AI" or "AI + Offline"); without a connection it offers to turn
+--- Wi-Fi on first, like everything else in the plugin that needs the internet.
+--- @param opts table|nil { close_callback = fn, on_started = fn(n), on_failed = fn(why) }
+function WordWise:askPrepare(opts)
+  opts = opts or {}
+  local function failed(why)
+    if opts.on_failed then return opts.on_failed(why) end
+    Notification:notify(T(_("Word Wise: %1"), WordWise.prepareReasonText(why)), Notification.SOURCE_ALWAYS_SHOW)
+  end
+  local function started(n)
+    if opts.on_started then return opts.on_started(n) end
+    Notification:notify(T(_("Word Wise: preparing the next %1 pages"), n), Notification.SOURCE_ALWAYS_SHOW)
+  end
+  local blocker = self:prepareBlocker()
+  if blocker then
+    failed(blocker)
+    if opts.close_callback then opts.close_callback() end
+    return
+  end
+  local SpinWidget = require("ui/widget/spinwidget")
+  UIManager:show(SpinWidget:new {
+    title_text = _("Pages to prepare after this one"),
+    info_text = _("One AI request per page. Useful before reading without internet."),
+    value = tonumber(self:cfg("prepare_pages")) or DEFAULTS.prepare_pages,
+    value_min = 5,
+    value_max = PREPARE_MAX,
+    value_step = 5,
+    default_value = DEFAULTS.prepare_pages,
+    ok_text = _("Prepare"),
+    ok_always_enabled = true, -- start with the shown value, no need to change it first
+    callback = function(spin)
+      local n = spin.value
+      self:setCfg("prepare_pages", n)
+      local function go()
+        -- Everything is checked again: time has passed since the question.
+        local queued, why = self:startPrepare(n)
+        if queued then started(queued) else failed(why) end
+      end
+      if self:isOnline() then return go() end
+      -- No connection: offer Wi-Fi, continue once it is up (nothing happens if declined).
+      local ok = pcall(function()
+        require("utils/net").runWhenOnlineFast(go)
+      end)
+      if not ok then failed("no_internet") end
+    end,
+    close_callback = opts.close_callback,
+  })
 end
 
 ---------------------------------------------------------------------------
