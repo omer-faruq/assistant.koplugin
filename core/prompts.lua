@@ -414,6 +414,34 @@ Opening excerpt follows.]],
 
 Topic to cover (from user selection): {highlight}]],
     },
+    flashcards = {
+        text = _("Flashcards"),
+        use_websearch = false,
+        use_book_context = true,
+        show_suggestions = false,
+        order = 105,
+        desc = _("Generate concise question-and-answer flashcards from the supplied text."),
+        system_prompt = common_system_prompt,
+        user_prompt = [[
+Create useful, concise question-and-answer flashcards from all supplied text.
+Treat the highlighted passage as an anchor, and also use any additional book
+text or chapter context included with it. Cover key concepts, definitions,
+explanations, examples, and relationships that are present in the source.
+Make each question standalone and each answer accurate and concise. Avoid
+duplicates, trivial facts, and claims not supported by the supplied text.
+Write every question and answer in {language}.
+
+Return only valid JSON, without Markdown fences or commentary, using exactly
+this shape:
+{"cards":[{"question":"...","answer":"..."}]}
+
+Generate between 1 and 20 cards when the source supports them. If it contains
+fewer distinct concepts, return fewer cards.
+
+Source text:
+{highlight}
+]],
+    },
 }
 
 

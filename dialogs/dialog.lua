@@ -878,6 +878,11 @@ function AssistantDialog:runPrompt(highlightedText, prompt_id, user_input)
     table.insert(message_history, assistant_msg)
   end
 
+  if prompt_id == "flashcards" then
+    require("feature/flashcards").showPreview(self.assistant, answer)
+    return
+  end
+
   if not message_history or #message_history < 1 then
     UIManager:show(InfoMessage:new{
         text = TextUtils.bold_format(_("<b>Error:</b> No response received")),
