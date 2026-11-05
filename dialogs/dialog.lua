@@ -879,7 +879,16 @@ function AssistantDialog:runPrompt(highlightedText, prompt_id, user_input)
   end
 
   if prompt_id == "flashcards" then
-    require("feature/flashcards").showPreview(self.assistant, answer)
+    local Flashcards = require("feature/flashcards")
+    local preview_ok, preview_err = Flashcards.showPreview(self.assistant, answer)
+    if not preview_ok then
+      -- Keep the raw transcript: the model did not return usable card JSON.
+      self:_showResultViewer(highlightedText, message_history, title, false)
+      UIManager:show(InfoMessage:new{
+        text = preview_err or TextUtils.bold_format(_("<b>Error:</b> No flashcards received")),
+        icon = "notice-warning",
+      })
+    end
     return
   end
 

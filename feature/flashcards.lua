@@ -1,14 +1,19 @@
 local json = require("rapidjson")
 local _ = require("core/gettext")
 local T = require("ffi/util").template
+local koutil = require("util")
 
 local M = {}
 local MAX_CARDS = 50
+local PREVIEW_MAX_CHARS = 120
 
-local function trim(value)
-    value = value:gsub("^%s+", "")
-    value = value:gsub("%s+$", "")
-    return value
+-- Shorten a card field for the Menu preview; the editor keeps the full text.
+local function previewText(value)
+    local chars = koutil.splitToChars(value)
+    if #chars <= PREVIEW_MAX_CHARS then
+        return value
+    end
+    return table.concat(chars, "", 1, PREVIEW_MAX_CHARS - 1) .. "..."
 end
 
 local function normalizeCards(cards)
@@ -28,8 +33,8 @@ local function normalizeCards(cards)
             return nil, T(_("Flashcard %1 is missing a question or answer."), index)
         end
 
-        local question = trim(card.question)
-        local answer = trim(card.answer)
+        local question = koutil.trim(card.question)
+        local answer = koutil.trim(card.answer)
         if question == "" or answer == "" then
             return nil, T(_("Flashcard %1 is missing a question or answer."), index)
         end
@@ -48,11 +53,11 @@ end
 ---@return table|nil cards
 ---@return string|nil err
 function M.parseResponse(response)
-    if type(response) ~= "string" or trim(response) == "" then
+    if type(response) ~= "string" or koutil.trim(response) == "" then
         return nil, _("The AI response did not contain valid flashcard data.")
     end
 
-    local candidate = trim(response)
+    local candidate = koutil.trim(response)
     candidate = candidate:gsub("^```[Jj][Ss][Oo][Nn]?%s*", "")
     candidate = candidate:gsub("%s*```$", "")
 
@@ -74,7 +79,7 @@ end
 local function tsvCell(value)
     value = value:gsub("\r\n", " ")
     value = value:gsub("[\r\n\t]", " ")
-    return trim(value)
+    return koutil.trim(value)
 end
 
 --- Build Anki's two-field, tab-separated import data without a header row.
@@ -150,17 +155,20 @@ local function showInfo(UIManager, InfoMessage, text, warning)
 end
 
 --- Show generated cards with per-card editing/removal and AnkiDroid export.
+--- Fails closed without showing any UI, so the caller can fall back to the
+--- raw transcript viewer and keep the model answer visible.
 ---@param assistant table Assistant instance
 ---@param response string|nil Model response
+---@return boolean|nil ok true once the preview menu is shown
+---@return string|nil err parse error when the preview was not shown
 function M.showPreview(assistant, response)
     local cards, parse_err = M.parseResponse(response)
-    local UIManager = require("ui/uimanager")
-    local InfoMessage = require("ui/widget/infomessage")
     if not cards then
-        showInfo(UIManager, InfoMessage, parse_err, true)
-        return
+        return nil, parse_err
     end
 
+    local UIManager = require("ui/uimanager")
+    local InfoMessage = require("ui/widget/infomessage")
     local Menu = require("ui/widget/menu")
     local MultiInputDialog = require("ui/widget/multiinputdialog")
     local ConfirmBox = require("ui/widget/confirmbox")
@@ -273,7 +281,7 @@ function M.showPreview(assistant, response)
                 local index = card_index
                 items[#items + 1] = {
                     text = T(_("Card %1\nQuestion: %2\nAnswer: %3"),
-                        index, card.question, card.answer),
+                        index, previewText(card.question), previewText(card.answer)),
                     callback = function()
                         open_editor(index, menu)
                     end,
@@ -290,6 +298,7 @@ function M.showPreview(assistant, response)
     end
 
     open_preview()
+    return true
 end
 
 return M
