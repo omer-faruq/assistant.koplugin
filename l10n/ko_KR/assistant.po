@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>세부 정보:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>다운로드 중 ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>저장소: </b>%2\n"
-"<b>브랜치/태그: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>브랜치/태그: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>오류:</b> 플래시카드를 받지 못했습니다"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>오류:</b> 응답을 받지 못했습니다"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>모델을 불러오는 중...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>GitHub URL:</b>  %1\n"
-"<b>소스 저장소:</b>  %2\n"
-"\n"
-"- 현재 버전: %3\n"
-"- 개발 브랜치: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>GitHub URL:</b>  %1\n"
-"<b>소스 저장소:</b>  %2\n"
-"\n"
-"- 현재 버전: %3\n"
-"- 최신 버전: <b>%4</b>\n"
-"- 개발 브랜치: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 설치 중...</b>"
@@ -364,6 +337,9 @@ msgstr "주석 달기"
 msgid "Annotation added successfully"
 msgstr "주석이 추가되었습니다"
 
+msgid "Answer"
+msgstr "답변"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "책 요약 및 추천"
 msgid "Book metadata updated."
 msgstr "책 메타데이터가 업데이트되었습니다."
 
+msgid "Both Question and Answer are required."
+msgstr "질문과 답변을 모두 입력해야 합니다."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "브랜치/태그 \"%1\"을(를) 찾을 수 없습니다."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "취소"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"카드 %1\n"
+"질문: %2\n"
+"답변: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "핵심 논점"
 msgid "Core Idea"
 msgstr "핵심 아이디어"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "플래시카드 내보내기에 사용할 고유한 파일 이름을 선택할 수 없습니다."
+
 msgid "Could not close AI note file."
 msgstr "AI 노트 파일을 닫을 수 없습니다."
 
@@ -583,8 +574,14 @@ msgstr "AI 노트를 만들 수 없습니다."
 msgid "Could not create AI note: %1"
 msgstr "AI 노트를 만들 수 없습니다: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "TSV 파일을 만들 수 없습니다: %1"
+
 msgid "Could not extract text from this book."
 msgstr "이 책에서 텍스트를 추출할 수 없습니다."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "TSV 파일 쓰기를 완료할 수 없습니다: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "AI 노트 폴더의 목록을 나열할 수 없습니다: %1"
@@ -620,6 +617,9 @@ msgstr "문화적 중요성"
 msgid "Current Chapter Only"
 msgstr "현재 챕터만"
 
+msgid "Current version:"
+msgstr "현재 버전:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "사용자 지정"
@@ -650,6 +650,9 @@ msgstr "공급자 %1을(를) 삭제하시겠습니까?"
 
 msgid "Description: %1"
 msgstr "설명: %1"
+
+msgid "Development branch:"
+msgstr "개발 브랜치:"
 
 msgid "Device"
 msgstr "기기"
@@ -702,6 +705,9 @@ msgstr "편집"
 msgid "Edit %1"
 msgstr "%1 편집"
 
+msgid "Edit Card %1"
+msgstr "카드 %1 편집"
+
 msgid "Empty Error"
 msgstr "빈 오류"
 
@@ -749,6 +755,9 @@ msgstr "예문"
 msgid "Explain"
 msgstr "설명"
 
+msgid "Export to AnkiDroid"
+msgstr "AnkiDroid로 내보내기"
+
 msgid "Failed to fetch models"
 msgstr "모델을 불러오지 못했습니다"
 
@@ -782,6 +791,18 @@ msgstr "첫 번째 찾기"
 msgid "Find next"
 msgstr "다음 찾기"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "플래시카드 %1에 질문이나 답변이 없습니다."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "플래시카드 %1은(는) 올바른 질문-답변 카드가 아닙니다."
+
+msgid "Flashcards"
+msgstr "플래시카드"
+
+msgid "Flashcards exported to %1"
+msgstr "플래시카드를 %1에 내보냈습니다"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "자세한 내용은 GitHub의 'Configuration' 위키 페이지를 방문하세요."
 
@@ -805,6 +826,9 @@ msgstr ""
 "일반적으로 하나 이상 선택하지 <b>마세요</b> - 모델과 플랫폼에 맞는 매개변수를 하나 선택하세요. 잘못된 매개변수는 API 오류를 일으킬 수 있습니다. \n"
 "\n"
 "선택한 값은 구성의 additional_parameters를 덮어씁니다. 선택한 옵션의 키가 같으면 목록에서 마지막 것만 사용됩니다."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "제공된 텍스트에서 간결한 질문-답변 플래시카드를 생성합니다."
 
 msgid "Genre"
 msgstr "장르"
@@ -881,6 +905,9 @@ msgstr "큰 스트리밍 창"
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "%1시간 전에 마지막으로 읽었습니다."
+
+msgid "Latest version:"
+msgstr "최신 버전:"
 
 msgid "Leave blank to use: %1"
 msgstr "비워 두면 사용: %1"
@@ -966,8 +993,14 @@ msgstr "열려 있는 책이 없습니다."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "열려 있는 책이 없습니다. 파일 관리자에서 책을 길게 눌러 책 정보 (AI)를 선택하세요."
 
+msgid "No cards remain. Close this preview."
+msgstr "남은 카드가 없습니다. 이 미리보기를 닫으세요."
+
 msgid "No common parameters are available for handler %1."
 msgstr "모델"
+
+msgid "No folder is available for the flashcard export."
+msgstr "플래시카드 내보내기에 사용할 수 있는 폴더가 없습니다."
 
 msgid "No highlight to annotate"
 msgstr "주석을 달 하이라이트가 없습니다"
@@ -1023,6 +1056,9 @@ msgstr "OTA 업데이트가 취소되었습니다."
 
 msgid "OTA update failed: %1"
 msgstr "OTA 업데이트 실패: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA 업데이트 실패: 잘못된 입력 %1입니다. 브랜치, 태그, user/repo 또는 user/repo@branch를 사용하세요."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1080,6 +1116,9 @@ msgstr "AI 사전 섹션의 사전 설정 목록입니다."
 msgid "Prevailing emotional state/tone:"
 msgstr "지배적인 감정 상태/분위기:"
 
+msgid "Pronunciation"
+msgstr "발음"
+
 msgid "Protagonist's current objective:"
 msgstr "주인공의 현재 목표:"
 
@@ -1128,6 +1167,9 @@ msgstr "초기화"
 msgid "Purge Settings"
 msgstr "설정 초기화"
 
+msgid "Question"
+msgstr "질문"
+
 msgid "Quick Note"
 msgstr "빠른 메모"
 
@@ -1158,6 +1200,9 @@ msgstr "리캡 (AI)"
 
 msgid "Remove"
 msgstr "제거"
+
+msgid "Remove Card %1?"
+msgstr "카드 %1을(를) 삭제할까요?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1370,6 +1415,9 @@ msgstr "빠른 메모 작성"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "AI 노트에 저장할 빠른 메모를 작성하세요."
 
+msgid "Tap a card to edit or remove it."
+msgstr "카드를 탭하여 편집하거나 삭제하세요."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "용어 X-Ray"
@@ -1392,6 +1440,18 @@ msgstr "글꼴 크기: %1"
 msgid "Text copied to the clipboard"
 msgstr "텍스트가 클립보드에 복사되었습니다."
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AI 응답에 잘못된 플래시카드 JSON이 포함되어 있습니다."
+
+msgid "The AI response contained too many flashcards."
+msgstr "AI 응답에 플래시카드가 너무 많이 포함되어 있습니다."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AI 응답에 플래시카드가 포함되어 있지 않습니다."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AI 응답에 유효한 플래시카드 데이터가 포함되어 있지 않습니다."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1에 대한 핸들러를 찾을 수 없습니다. api_handlers 디렉터리에 핸들러가 있는지 확인하세요."
 
@@ -1400,6 +1460,9 @@ msgstr "모델이 이 책을 식별할 수 없습니다."
 
 msgid "Thinking ..."
 msgstr "생각 중 ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "파일 관리자에서는 이 책의 텍스트를 읽을 수 없습니다. 책을 열고 '이 책 식별' 기능을 사용하세요."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "이 버튼은 강조 표시된 텍스트로 빠른 메모를 만듭니다."
@@ -1463,11 +1526,25 @@ msgstr "이 프롬프트는 강조 표시된 텍스트를 다른 언어로 번�
 msgid "Timeline"
 msgstr "타임라인"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "팁: 포크(기본 브랜치)의 경우 user/repo를, 특정 브랜치나 태그의 경우 user/repo@branch를 입력하세요."
+
 msgid "Title"
 msgstr "제목"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "제목 또는 저자 메타데이터가 없거나 불완전하여 AI 결과가 부정확할 수 있습니다. 먼저 식별 (AI)을 사용하여 설정하세요."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"AnkiDroid에서 가져오려면 다음 위치의 TSV 파일을 선택하세요:\n"
+"%1\n"
+"\n"
+"구분 기호를 탭(Tab)으로 설정하고, Basic 노트 유형을 선택한 뒤 필드 1을 앞면(Front), 필드 2를 뒷면(Back)에 매핑하고 덱을 선택하여 가져오세요. 파일에는 헤더 행이 없으며, 각 행이 하나의 카드입니다."
 
 msgid "To-Do / Action Items"
 msgstr "할 일 / 실행 항목"
@@ -1615,6 +1692,12 @@ msgstr "단어 형태 및 표제어"
 msgid "Word Origin"
 msgstr "어원"
 
+msgid "Write a question"
+msgstr "질문 작성하기"
+
+msgid "Write an answer"
+msgstr "답변 작성하기"
+
 msgid "Write quick notes here"
 msgstr "여기에 빠른 메모를 작성하세요"
 
@@ -1624,14 +1707,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "예"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "이 책을 이제 막 시작하셨습니다(3% 미만 진행). 먼저 읽기 시작하는 것이 좋을 수 있습니다. 그래도 AI Recap을 원하시나요?"
+
 msgid "Your API key"
 msgstr "내 API 키"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "구성 파일에 정의된 나만의 프롬프트"
 
-msgid "branch or tag name"
-msgstr "브랜치 또는 태그 이름"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "archive는 유효한 assistant.koplugin 패키지가 아닙니다"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "브랜치, 태그, user/repo 또는 user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: 모델 제공자가 유효하지 않습니다."
@@ -1641,3 +1730,6 @@ msgstr "예: google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: 반환된 데이터를 파싱하지 못했습니다."
+
+msgid "invalid repository or branch/tag"
+msgstr "잘못된 저장소 또는 브랜치/태그"

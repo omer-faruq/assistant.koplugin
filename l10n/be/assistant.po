@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Падрабязнасці:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>Спампоўка ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Рэпазіторый: </b>%2\n"
-"<b>Галінка/Тэг: </b>%3"
+"<b>Спампоўванне ...</b>\n"
+"<b>URL: </b>%1\n"
+"<b>Галіна/тэг: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Памылка:</b> Флэш-карткі не атрыманы"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Памылка:</b> Адказ не атрыманы"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Загрузка мадэляў...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL на GitHub:</b>  %1\n"
-"<b>Зыходны рэпазіторый:</b>  %2\n"
-"\n"
-"- Бягучая версія: %3\n"
-"- Галіна распрацоўкі: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL на GitHub:</b>  %1\n"
-"<b>Зыходны рэпазіторый:</b>  %2\n"
-"\n"
-"- Бягучая версія: %3\n"
-"- Апошняя версія: <b>%4</b>\n"
-"- Галіна распрацоўкі: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Усталёўка %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Анатаваць"
 msgid "Annotation added successfully"
 msgstr "Анатацыя паспяхова дададзена"
 
+msgid "Answer"
+msgstr "Адказ"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Кароткі змест кнігі і рэкамендацыі"
 msgid "Book metadata updated."
 msgstr "Метаданыя кнігі абноўлены."
 
+msgid "Both Question and Answer are required."
+msgstr "Патрэбны і пытанне, і адказ."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Галінка/Тэг \"%1\" не знойдзены."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Скасаваць"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Картка %1\n"
+"Пытанне: %2\n"
+"Адказ: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Асноўныя аргументы"
 msgid "Core Idea"
 msgstr "Асноўная ідэя"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Не ўдалося выбраць унікальнае імя файла для экспарту флэш-картак."
+
 msgid "Could not close AI note file."
 msgstr "Не ўдалося закрыць файл AI-нататкі."
 
@@ -583,8 +574,14 @@ msgstr "Не ўдалося стварыць AI-нататку."
 msgid "Could not create AI note: %1"
 msgstr "Не ўдалося стварыць AI-нататку: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Не ўдалося стварыць файл TSV: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Не ўдалося выняць тэкст з гэтай кнігі."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Не ўдалося завяршыць запіс файла TSV: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Не ўдалося атрымаць спіс тэчкі AI-нататак: %1"
@@ -620,6 +617,9 @@ msgstr "Культурная значнасць"
 msgid "Current Chapter Only"
 msgstr "Толькі бягучы раздзел"
 
+msgid "Current version:"
+msgstr "Бягучая версія:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Уласны"
@@ -650,6 +650,9 @@ msgstr "Выдаліць правайдара %1?"
 
 msgid "Description: %1"
 msgstr "Апісанне: %1"
+
+msgid "Development branch:"
+msgstr "Галіна распрацоўкі:"
 
 msgid "Device"
 msgstr "Прылада"
@@ -702,6 +705,9 @@ msgstr "Рэдагаваць"
 msgid "Edit %1"
 msgstr "Рэдагаваць %1"
 
+msgid "Edit Card %1"
+msgstr "Рэдагаваць картку %1"
+
 msgid "Empty Error"
 msgstr "Пустая памылка"
 
@@ -749,6 +755,9 @@ msgstr "Прыклад"
 msgid "Explain"
 msgstr "Растлумачыць"
 
+msgid "Export to AnkiDroid"
+msgstr "Экспарт у AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Не ўдалося атрымаць мадэлі"
 
@@ -782,6 +791,18 @@ msgstr "Знайсці першае"
 msgid "Find next"
 msgstr "Знайсці наступнае"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "У флэш-картцы %1 не хапае пытання або адказу."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Флэш-картка %1 не з'яўляецца карэктнай карткай пытанне-адказ."
+
+msgid "Flashcards"
+msgstr "Флэш-карткі"
+
+msgid "Flashcards exported to %1"
+msgstr "Флэш-карткі экспартаваны ў %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Падрабязней глядзіце на wiki-старонцы 'Configuration' на GitHub."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Звычайна <b>НЕ</b> выбірайце больш за адзін — выберыце параметр, які адпавядае вашай мадэлі і платформе. Няправільны параметр можа выклікаць памылкі API. \n"
 "\n"
 "Выбранае значэнне перакрывае additional_parameters канфігурацыі. Калі выбраныя параметры маюць аднолькавы ключ, выкарыстоўваецца толькі апошні ў спісе."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Стварайце кароткія флэш-карткі пытанне-адказ з прапанаванага тэксту."
 
 msgid "Genre"
 msgstr "Жанр"
@@ -883,6 +907,9 @@ msgid_plural "Last read %1 hours ago."
 msgstr[0] "Апошні раз чыталі гадзіну таму."
 msgstr[1] "Апошні раз чыталі %1 гадзіны таму."
 msgstr[2] "Апошні раз чыталі %1 гадзін таму."
+
+msgid "Latest version:"
+msgstr "Апошняя версія:"
 
 msgid "Leave blank to use: %1"
 msgstr "Пакіньце пустым, каб выкарыстоўваць: %1"
@@ -968,8 +995,14 @@ msgstr "Ніводная кніга не адкрыта."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Ніводная кніга не адкрыта. Доўга націсніце кнігу ў файлавым менеджары і выберыце «Інфармацыя пра кнігу (AI)»."
 
+msgid "No cards remain. Close this preview."
+msgstr "Картак не засталося. Закрыйце гэты прагляд."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Няма даступных агульных параметраў для апрацоўшчыка %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Няма даступнай папкі для экспарту флэш-картак."
 
 msgid "No highlight to annotate"
 msgstr "Няма выдзеленага тэксту для анатавання"
@@ -1025,6 +1058,9 @@ msgstr "OTA-абнаўленне адменена."
 
 msgid "OTA update failed: %1"
 msgstr "OTA-абнаўленне не атрымалася: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "Памылка абнаўлення OTA: несапраўдныя ўваходныя даныя %1. Выкарыстайце галіну, тэг, user/repo або user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1082,6 +1118,9 @@ msgstr "Прадвызначаны спіс раздзелаў AI-слоўнік
 msgid "Prevailing emotional state/tone:"
 msgstr "Пераважны эмацыйны стан/тон:"
 
+msgid "Pronunciation"
+msgstr "Вымаўленне"
+
 msgid "Protagonist's current objective:"
 msgstr "Бягучая мэта галоўнага героя:"
 
@@ -1130,6 +1169,9 @@ msgstr "Ачысціць"
 msgid "Purge Settings"
 msgstr "Ачысціць налады"
 
+msgid "Question"
+msgstr "Пытанне"
+
 msgid "Quick Note"
 msgstr "Хуткая нататка"
 
@@ -1160,6 +1202,9 @@ msgstr "Пераказ (AI)"
 
 msgid "Remove"
 msgstr "Выдаліць"
+
+msgid "Remove Card %1?"
+msgstr "Выдаліць картку %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1373,6 +1418,9 @@ msgstr "Зрабіць хуткія нататкі"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Рабіце хуткія нататкі, якія будуць захаваны ў вашых AI-нататках."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Націсніце на картку, каб змяніць або выдаліць яе."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "X-Ray тэрміна"
@@ -1395,6 +1443,18 @@ msgstr "Памер тэксту: %1"
 msgid "Text copied to the clipboard"
 msgstr "Тэкст скапіраваны ў буфер абмену"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "Адказ AI змяшчаў несапраўдны JSON флэш-картак."
+
+msgid "The AI response contained too many flashcards."
+msgstr "Адказ AI змяшчаў занадта шмат флэш-картак."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "Адказ AI не змяшчаў ніводнай флэш-карткі."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "Адказ AI не змяшчаў сапраўдных даных флэш-картак."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Апрацоўшчык для %1 не знойдзены. Калі ласка, пераканайцеся, што апрацоўшчык існуе ў каталогу api_handlers."
 
@@ -1403,6 +1463,9 @@ msgstr "Мадэль не змагла вызначыць гэту кнігу."
 
 msgid "Thinking ..."
 msgstr "Думаю ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Тэкст гэтай кнігі нельга прачытаць з файлавага менеджара. Адкрыйце кнігу і выкарыстайце «Вызначыць гэтую кнігу»."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Гэтая кнопка стварае хуткую нататку з вылучаным тэкстам."
@@ -1466,11 +1529,25 @@ msgstr "Гэты запыт перакладае вылучаны тэкст н�
 msgid "Timeline"
 msgstr "Храналогія"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Падказка: увядзіце user/repo для форка (асноўная галіна) або user/repo@branch для пэўнай галіны ці тэга."
+
 msgid "Title"
 msgstr "Загаловак"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Метаданыя назвы або аўтара адсутнічаюць ці няпоўныя, таму вынік ШІ можа быць ненадзейным. Спачатку скарыстайце «Вызначыць (ШІ)», каб усталяваць іх."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"Каб імпартаваць у AnkiDroid, выберыце файл TSV у:\n"
+"%1\n"
+"\n"
+"Усталюйце раздзяляльнік Tab, абярыце тып нататкі Basic, прызначце поле 1 на Front, а поле 2 на Back, затым выберыце калоду і імпартуйце. Файл не мае радка загалоўка; кожны радок — гэта адна картка."
 
 msgid "To-Do / Action Items"
 msgstr "Задачы / пункты дзеянняў"
@@ -1618,6 +1695,12 @@ msgstr "Словаформа і лема"
 msgid "Word Origin"
 msgstr "Паходжанне слова"
 
+msgid "Write a question"
+msgstr "Напішыце пытанне"
+
+msgid "Write an answer"
+msgstr "Напішыце адказ"
+
 msgid "Write quick notes here"
 msgstr "Увядзіце хуткія нататкі тут"
 
@@ -1627,14 +1710,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Так"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Вы толькі пачалі гэтую кнігу (прачытана менш за 3%). Магчыма, лепш спачатку пачытаць. Вы ўсё яшчэ хочаце атрымаць AI-агляд?"
+
 msgid "Your API key"
 msgstr "Ваш API-ключ"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Вашы ўласныя промпты, вызначаныя ў файле канфігурацыі."
 
-msgid "branch or tag name"
-msgstr "назва галінкі або тэга"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "архіў не з'яўляецца сапраўдным пакетам assistant.koplugin"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "галіна, тэг, user/repo або user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: пастаўшчыкі мадэляў несапраўдныя."
@@ -1644,3 +1733,6 @@ msgstr "напр. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: не атрымалася разабраць атрыманыя даныя"
+
+msgid "invalid repository or branch/tag"
+msgstr "несапраўдны рэпазітар або галіна/тэг"

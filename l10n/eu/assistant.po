@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 03:15+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Euskara (AI translation)\n"
@@ -111,48 +111,21 @@ msgstr "<b>Xehetasuna:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>Deskargatzen ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Biltegia: </b>%2\n"
-"<b>Adarra/Etiketa: </b>%3"
+"<b>URLa: </b>%1\n"
+"<b>Adarra/Etiketa: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Errorea:</b> Ez da flashtxartelik jaso"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Errorea:</b> Ez da erantzunik jaso"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Modeloak eskuratzen...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URLa:</b>  %1\n"
-"<b>Iturburu-biltegia:</b>  %2\n"
-"\n"
-"- Oraingo bertsioa: %3\n"
-"- Garapen-adarra: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URLa:</b>  %1\n"
-"<b>Iturburu-biltegia:</b>  %2\n"
-"\n"
-"- Oraingo bertsioa: %3\n"
-"- Azken bertsioa: <b>%4</b>\n"
-"- Garapen-adarra: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Instalatzen %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Anotatu"
 msgid "Annotation added successfully"
 msgstr "Anotazioa behar bezala gehitu da"
 
+msgid "Answer"
+msgstr "Erantzuna"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Liburuaren laburpena eta gomendioak"
 msgid "Book metadata updated."
 msgstr "Liburuaren metadatuak eguneratu dira."
 
+msgid "Both Question and Answer are required."
+msgstr "Galdera eta erantzuna beharrezkoak dira."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Ez da \"%1\" adarra/etiketa aurkitu."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Ezeztatu"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"%1. txartela\n"
+"Galdera: %2\n"
+"Erantzuna: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Argudio nagusiak"
 msgid "Core Idea"
 msgstr "Ideia nagusia"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Ezin izan da fitxategi-izen bakarra hautatu flashtxartelak esportatzeko."
+
 msgid "Could not close AI note file."
 msgstr "Ezin izan da AI ohar fitxategia itxi."
 
@@ -583,8 +574,14 @@ msgstr "Ezin izan da AI oharra sortu."
 msgid "Could not create AI note: %1"
 msgstr "Ezin izan da AI oharra sortu: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Ezin izan da TSV fitxategia sortu: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Ezin izan da testurik atera liburu honetatik."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Ezin izan da TSV fitxategia idazten amaitu: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Ezin izan da AI oharren karpeta zerrendatu: %1"
@@ -620,6 +617,9 @@ msgstr "Garrantzi kulturala"
 msgid "Current Chapter Only"
 msgstr "Uneko kapitulua soilik"
 
+msgid "Current version:"
+msgstr "Uneko bertsioa:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Pertsonalizatua"
@@ -650,6 +650,9 @@ msgstr "%1 hornitzailea ezabatu?"
 
 msgid "Description: %1"
 msgstr "Deskribapena: %1"
+
+msgid "Development branch:"
+msgstr "Garapen-adarra:"
 
 msgid "Device"
 msgstr "Gailua"
@@ -702,6 +705,9 @@ msgstr "Editatu"
 msgid "Edit %1"
 msgstr "Editatu %1"
 
+msgid "Edit Card %1"
+msgstr "Editatu %1. txartela"
+
 msgid "Empty Error"
 msgstr "Errore hutsa"
 
@@ -749,6 +755,9 @@ msgstr "Adibidea"
 msgid "Explain"
 msgstr "Azaldu"
 
+msgid "Export to AnkiDroid"
+msgstr "Esportatu AnkiDroid-era"
+
 msgid "Failed to fetch models"
 msgstr "Ezin izan dira modeloak eskuratu"
 
@@ -782,6 +791,18 @@ msgstr "Bilatu lehenengoa"
 msgid "Find next"
 msgstr "Bilatu hurrengoa"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "%1. flashtxartelean galdera edo erantzuna falta da."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "%1. flashtxartela ez da baliozkoa galdera-erantzun txartel gisa."
+
+msgid "Flashcards"
+msgstr "Flashtxartelak"
+
+msgid "Flashcards exported to %1"
+msgstr "Flashtxartelak hona esportatu dira: %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Xehetasunetarako, bisitatu github-eko 'Configuration' wiki orria."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Oro har, <b>EZ</b> aukeratu bat baino gehiago - zure modelora eta plataformara egokitzen den parametro bat aukeratu. Parametro oker batek API erroreak eragin ditzake. \n"
 "\n"
 "Aukeratutako balioak konfigurazioaren additional_parameters gainidazten du. Aukeratutako aukerek gako bera badute, zerrendako azkena baino ez da erabiltzen."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Sortu galdera-erantzun flashtxartel laburrak emandako testutik."
 
 msgid "Genre"
 msgstr "Generoa"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Azken irakurketa: duela ordubete."
 msgstr[1] "Azken irakurketa: duela %1 ordu."
+
+msgid "Latest version:"
+msgstr "Azken bertsioa:"
 
 msgid "Leave blank to use: %1"
 msgstr "Utzi hutsik hau erabiltzeko: %1"
@@ -967,8 +994,14 @@ msgstr "Ez dago libururik irekita."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Ez dago libururik irekita. Sakatu luze fitxategi-kudeatzailean liburu batean eta aukeratu Liburuaren informazioa (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Ez da txartelik geratzen. Itxi aurrebista hau."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Ez dago parametro komun erabilgarririk %1 kudeatzailearentzat."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Ez dago karpetarik erabilgarri flashtxartelak esportatzeko."
 
 msgid "No highlight to annotate"
 msgstr "Ez dago oharpena egiteko nabarmendutako testurik"
@@ -1024,6 +1057,9 @@ msgstr "OTA eguneratzea bertan behera utzi da."
 
 msgid "OTA update failed: %1"
 msgstr "OTA eguneratzeak huts egin du: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA eguneratzeak huts egin du: %1 sarrera baliogabea. Erabili adar bat, etiketa bat, user/repo edo user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "AI hiztegiaren atalen zerrenda aurrez ezarria."
 msgid "Prevailing emotional state/tone:"
 msgstr "Emozio-egoera/tonu nagusia:"
 
+msgid "Pronunciation"
+msgstr "Ahoskera"
+
 msgid "Protagonist's current objective:"
 msgstr "Protagonistaren egungo helburua:"
 
@@ -1129,6 +1168,9 @@ msgstr "Garbitu"
 msgid "Purge Settings"
 msgstr "Ezarpenak garbitu"
 
+msgid "Question"
+msgstr "Galdera"
+
 msgid "Quick Note"
 msgstr "Ohar azkarra"
 
@@ -1159,6 +1201,9 @@ msgstr "Laburpena (AI)"
 
 msgid "Remove"
 msgstr "Kendu"
+
+msgid "Remove Card %1?"
+msgstr "Kendu %1 txartela?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1370,6 +1415,9 @@ msgstr "Hartu ohar azkarrak"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Hartu zure AI oharretan gordeko diren ohar azkarrak."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Sakatu txartel bat editatzeko edo kentzeko."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
@@ -1392,6 +1440,18 @@ msgstr "Testu-tamaina: %1"
 msgid "Text copied to the clipboard"
 msgstr "Testua arbelean kopiatu da"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AIaren erantzunak baliogabeko txartel-JSONa zeukan."
+
+msgid "The AI response contained too many flashcards."
+msgstr "AIaren erantzunak txartel gehiegi zeuzkan."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AIaren erantzunak ez zeukan txartelik."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AIaren erantzunak ez zeukan txartel-datu baliagaberik."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1-rentzako handlerra ez da aurkitu. Ziurtatu handlerra api_handlers direktorioan dagoela."
 
@@ -1400,6 +1460,9 @@ msgstr "Ereduak ezin izan du liburu hau identifikatu."
 
 msgid "Thinking ..."
 msgstr "Pentsatzen ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Liburu honen testua ezin da fitxategi-kudeatzailetik irakurri. Ireki liburua eta erabili Identifikatu Liburu Hau."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Botoi honek ohar azkar bat sortzen du nabarmendutako testuarekin."
@@ -1463,11 +1526,25 @@ msgstr "Prompt honek nabarmendutako testua beste hizkuntza batera itzultzen du."
 msgid "Timeline"
 msgstr "Denbora-lerroa"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Aholkua: idatzi user/repo fork baterako (main adarra) edo user/repo@branch adar edo etiketa zehatz baterako."
+
 msgid "Title"
 msgstr "Izenburua"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Izenburuaren edo egilearen metadatuak falta dira edo osatugabeak daude, eta beraz AIaren emaitza ez da fidagarria izango. Erabili Identifikatu (AI) horiek lehenago ezartzeko."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"AnkiDroid-en inportatzeko, hautatu TSV fitxategia hemen:\n"
+"%1\n"
+"\n"
+"Ezarri bereizlea Tab gisa, aukeratu Basic noten mota, esleitu 1. eremua Front-i eta 2. eremua Back-i, eta gero aukeratu sorta bat eta inportatu. Fitxategiak ez du goiburuko errenkadarik; errenkada bakoitza txartel bat da."
 
 msgid "To-Do / Action Items"
 msgstr "Egitekoak / Ekintza-zerrenda"
@@ -1615,6 +1692,12 @@ msgstr "Hitz forma eta lema"
 msgid "Word Origin"
 msgstr "Hitzaren jatorria"
 
+msgid "Write a question"
+msgstr "Idatzi galdera bat"
+
+msgid "Write an answer"
+msgstr "Idatzi erantzun bat"
+
 msgid "Write quick notes here"
 msgstr "Idatzi ohar azkarrak hemen"
 
@@ -1624,14 +1707,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Bai"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Liburu hau hasi berri duzu (% 3 baino gutxiago irakurrita). Baliteke hobea izatea lehenengo irakurtzen hastea. Oraindik ere nahi duzu AIaren Recap bat?"
+
 msgid "Your API key"
 msgstr "Zure API gakoa"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Konfigurazio-fitxategian definitutako zure prompt propioak"
 
-msgid "branch or tag name"
-msgstr "adar edo etiketa izena"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "artxiboa ez da assistant.koplugin pakete baliogabea"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "adar, etiketa, user/repo edo user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: eredu-hornitzaileak baliogabeak dira."
@@ -1641,3 +1730,6 @@ msgstr "adibidez, google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: ezin izan da itzulitako datua analizatu"
+
+msgid "invalid repository or branch/tag"
+msgstr "biltegi edo adar/etiketa baliogabea"

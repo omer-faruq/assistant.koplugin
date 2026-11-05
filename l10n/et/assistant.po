@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Üksikasjad:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>Allalaadimine ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Hoidla: </b>%2\n"
-"<b>Haru/Silt: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Haru/tag: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Viga:</b> Kaarte ei saadud"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Viga:</b> Vastust ei saadud"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Laen mudeleid...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>Lähterepositoorium:</b>  %2\n"
-"\n"
-"- Praegune versioon: %3\n"
-"- Arendusharu: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>Lähterepositoorium:</b>  %2\n"
-"\n"
-"- Praegune versioon: %3\n"
-"- Uusim versioon: <b>%4</b>\n"
-"- Arendusharu: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Installimine: %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Annoteeri"
 msgid "Annotation added successfully"
 msgstr "Märkus on edukalt lisatud"
 
+msgid "Answer"
+msgstr "Vastus"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Raamatu kokkuvõte ja soovitused"
 msgid "Book metadata updated."
 msgstr "Raamatu metaandmed on uuendatud."
 
+msgid "Both Question and Answer are required."
+msgstr "Nii küsimus kui ka vastus on kohustuslikud."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Haru/silt \"%1\" ei leitud."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Tühista"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Kaart %1\n"
+"Küsimus: %2\n"
+"Vastus: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Põhiargumendid"
 msgid "Core Idea"
 msgstr "Põhiidee"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Kaartide eksportimiseks ei õnnestunud valida unikaalset failinime."
+
 msgid "Could not close AI note file."
 msgstr "AI märkuse faili ei õnnestunud sulgeda."
 
@@ -583,8 +574,14 @@ msgstr "AI märkust ei õnnestunud luua."
 msgid "Could not create AI note: %1"
 msgstr "AI märkust ei õnnestunud luua: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "TSV-faili ei õnnestunud luua: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Sellest raamatust ei õnnestunud teksti eraldada."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "TSV-faili kirjutamist ei õnnestunud lõpetada: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "AI märkuste kausta ei õnnestunud loetleda: %1"
@@ -620,6 +617,9 @@ msgstr "Kultuuriline tähtsus"
 msgid "Current Chapter Only"
 msgstr "Ainult praegune peatükk"
 
+msgid "Current version:"
+msgstr "Praegune versioon:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Kohandatud"
@@ -650,6 +650,9 @@ msgstr "Kustuta teenusepakkuja %1?"
 
 msgid "Description: %1"
 msgstr "Kirjeldus: %1"
+
+msgid "Development branch:"
+msgstr "Arendusharu:"
 
 msgid "Device"
 msgstr "Seade"
@@ -702,6 +705,9 @@ msgstr "Muuda"
 msgid "Edit %1"
 msgstr "Muuda %1"
 
+msgid "Edit Card %1"
+msgstr "Muuda kaarti %1"
+
 msgid "Empty Error"
 msgstr "Tühi viga"
 
@@ -749,6 +755,9 @@ msgstr "Näide"
 msgid "Explain"
 msgstr "Selgita"
 
+msgid "Export to AnkiDroid"
+msgstr "Ekspordi AnkiDroidi"
+
 msgid "Failed to fetch models"
 msgstr "Mudelite laadimine ebaõnnestus"
 
@@ -782,6 +791,18 @@ msgstr "Otsi esimene"
 msgid "Find next"
 msgstr "Otsi järgmine"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Kaardil %1 puudub küsimus või vastus."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Kaart %1 ei ole korrektne küsimus-vastus-kaart."
+
+msgid "Flashcards"
+msgstr "Kaardid"
+
+msgid "Flashcards exported to %1"
+msgstr "Kaardid eksporditud asukohta %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Üksikasjadeks külasta GitHubi viki-lehte 'Configuration'."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Üldiselt <b>MITTE</b> valida rohkem kui üks - valige parameeter, mis sobib teie mudeli ja platvormiga. Vale parameeter võib põhjustada API-vigu. \n"
 "\n"
 "Valitud väärtus alistab konfiguratsiooni additional_parameters. Kui valitud valikutel on sama võti, kasutatakse ainult loendi viimast."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Loo antud tekstist ülevaatlikud küsimus-vastus-kaardid."
 
 msgid "Genre"
 msgstr "Žanr"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Viimati loetud tund aega tagasi."
 msgstr[1] "Viimati loetud %1 tundi tagasi."
+
+msgid "Latest version:"
+msgstr "Uusim versioon:"
 
 msgid "Leave blank to use: %1"
 msgstr "Jäta tühjaks, et kasutada: %1"
@@ -967,8 +994,14 @@ msgstr "Ühtegi raamatut pole avatud."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Ühtegi raamatut pole avatud. Vajuta failihalduris raamatule pikalt ja vali Raamatu info (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Ühtegi kaarti ei jäänud alles. Sulge see eelvaade."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Töötleja %1 jaoks pole ühiseid parameetreid saadaval."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Kaartide eksportimiseks pole ühtegi kausta saadaval."
 
 msgid "No highlight to annotate"
 msgstr "Märkimiseks pole esiletõstetud teksti"
@@ -1024,6 +1057,9 @@ msgstr "OTA-värskendus tühistati."
 
 msgid "OTA update failed: %1"
 msgstr "OTA-värskendus ebaõnnestus: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA-värskendus ebaõnnestus: vigane sisend %1. Kasuta haru, silti, user/repo või user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "AI-sõnaraamatu jaotiste eelmääratud loend."
 msgid "Prevailing emotional state/tone:"
 msgstr "Valitsev emotsionaalne seisund/toon:"
 
+msgid "Pronunciation"
+msgstr "Hääldus"
+
 msgid "Protagonist's current objective:"
 msgstr "Peategelase praegune eesmärk:"
 
@@ -1129,6 +1168,9 @@ msgstr "Puhasta"
 msgid "Purge Settings"
 msgstr "Puhasta sätted"
 
+msgid "Question"
+msgstr "Küsimus"
+
 msgid "Quick Note"
 msgstr "Kiirmärge"
 
@@ -1159,6 +1201,9 @@ msgstr "Kokkuvõte (AI)"
 
 msgid "Remove"
 msgstr "Eemalda"
+
+msgid "Remove Card %1?"
+msgstr "Kas eemaldada kaart %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "Tee kiirmärkmeid"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Tee kiireid märkmeid, mis salvestatakse sinu AI-märkmetesse."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Kaardi muutmiseks või eemaldamiseks puuduta seda."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Mõiste X-Ray"
@@ -1394,6 +1442,18 @@ msgstr "Teksti suurus: %1"
 msgid "Text copied to the clipboard"
 msgstr "Tekst kopeeriti lõikelauale"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AI vastus sisaldas vigast mälukaartide JSONi."
+
+msgid "The AI response contained too many flashcards."
+msgstr "AI vastus sisaldas liiga palju mälukaarte."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AI vastus ei sisaldanud ühtegi mälukaarti."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AI vastus ei sisaldanud kehtivaid mälukaardi andmeid."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Töötlejat %1 ei leitud. Palun veenduge, et töötleja on olemas api_handlers kataloogis."
 
@@ -1402,6 +1462,9 @@ msgstr "Mudel ei suutnud seda raamatut tuvastada."
 
 msgid "Thinking ..."
 msgstr "Mõtleb ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Selle raamatu teksti ei saa failihaldurist lugeda. Ava raamat ja kasuta valikut „Tuvasta see raamat“."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "See nupp loob esiletõstetud tekstiga kiirmärke."
@@ -1465,11 +1528,25 @@ msgstr "See prompt tõlgib esiletõstetud teksti teise keelde."
 msgid "Timeline"
 msgstr "Ajajoon"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Vihje: fork'i (põhiharu) jaoks sisesta user/repo või konkreetse haru/sildi jaoks user/repo@branch."
+
 msgid "Title"
 msgstr "Pealkiri"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Pealkirja või autori metaandmed on puudulikud, seega AI tulemus ei pruugi olla usaldusväärne. Kasuta esmalt funktsiooni Tuvasta (AI), et need määrata."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"AnkiDroidi importimiseks vali TSV-fail asukohas:\n"
+"%1\n"
+"\n"
+"Määra eraldajaks Tab, vali märkme tüübiks Basic, seosta väli 1 väljaga Front ja väli 2 väljaga Back, seejärel vali pakk ja impordi. Failil puudub päisirida; iga rida on üks kaart."
 
 msgid "To-Do / Action Items"
 msgstr "Tegevused / ülesanded"
@@ -1617,6 +1694,12 @@ msgstr "Sõnavorm ja lemma"
 msgid "Word Origin"
 msgstr "Sõna päritolu"
 
+msgid "Write a question"
+msgstr "Kirjuta küsimus"
+
+msgid "Write an answer"
+msgstr "Kirjuta vastus"
+
 msgid "Write quick notes here"
 msgstr "Kirjuta siia kiirmärkmeid"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Jah"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Sa oled seda raamatut alles alustanud (vähem kui 3% loetud). Võib-olla tasuks esmalt lugemist alustada. Kas soovid siiski AI kokkuvõtet?"
+
 msgid "Your API key"
 msgstr "Sinu API-võti"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Teie enda konfiguratsioonifailis määratletud päringud"
 
-msgid "branch or tag name"
-msgstr "haru või sildi nimi"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "arhiiv ei ole kehtiv assistant.koplugin pakett"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "haru, silt, user/repo või user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: mudeliteenuse pakkujad on vigased."
@@ -1643,3 +1732,6 @@ msgstr "nt google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: tagastatud andmete parsimine ebaõnnestus"
+
+msgid "invalid repository or branch/tag"
+msgstr "vigane hoidla või haru/silt"

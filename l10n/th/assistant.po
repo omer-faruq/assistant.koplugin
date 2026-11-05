@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 04:38+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ภาษาไทย (AI translation)\n"
@@ -111,48 +111,21 @@ msgstr "<b>รายละเอียด:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>กำลังดาวน์โหลด ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>ข้อผิดพลาด:</b> ไม่ได้รับแฟลชการ์ด"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>ข้อผิดพลาด:</b> ไม่ได้รับการตอบกลับ"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>กำลังโหลดโมเดล...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL ของ GitHub:</b>  %1\n"
-"<b>ที่เก็บต้นฉบับ:</b>  %2\n"
-"\n"
-"- เวอร์ชันปัจจุบัน: %3\n"
-"- สาขาการพัฒนา: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL ของ GitHub:</b>  %1\n"
-"<b>ที่เก็บต้นฉบับ:</b>  %2\n"
-"\n"
-"- เวอร์ชันปัจจุบัน: %3\n"
-"- เวอร์ชันล่าสุด: <b>%4</b>\n"
-"- สาขาการพัฒนา: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>กำลังติดตั้ง %1...</b>"
@@ -364,6 +337,9 @@ msgstr "เพิ่มหมายเหตุ"
 msgid "Annotation added successfully"
 msgstr "เพิ่มหมายเหตุสำเร็จ"
 
+msgid "Answer"
+msgstr "คำตอบ"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "สรุปหนังสือและคำแนะนำ"
 msgid "Book metadata updated."
 msgstr "อัปเดตข้อมูลเมตาของหนังสือแล้ว"
 
+msgid "Both Question and Answer are required."
+msgstr "ต้องระบุทั้งคำถามและคำตอบ"
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ไม่พบ Branch/Tag \"%1\""
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "ยกเลิก"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"การ์ด %1\n"
+"คำถาม: %2\n"
+"คำตอบ: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "ข้อโต้แย้งหลัก"
 msgid "Core Idea"
 msgstr "แนวคิดหลัก"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "ไม่สามารถเลือกชื่อไฟล์ที่ไม่ซ้ำกันสำหรับการส่งออกแฟลชการ์ด"
+
 msgid "Could not close AI note file."
 msgstr "ไม่สามารถปิดไฟล์โน้ต AI"
 
@@ -583,8 +574,14 @@ msgstr "ไม่สามารถสร้างโน้ต AI"
 msgid "Could not create AI note: %1"
 msgstr "ไม่สามารถสร้างโน้ต AI: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "ไม่สามารถสร้างไฟล์ TSV: %1"
+
 msgid "Could not extract text from this book."
 msgstr "ไม่สามารถดึงข้อความจากหนังสือเล่มนี้ได้"
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "ไม่สามารถเขียนไฟล์ TSV ให้เสร็จสมบูรณ์: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "ไม่สามารถแสดงรายการในโฟลเดอร์โน้ต AI: %1"
@@ -620,6 +617,9 @@ msgstr "ความสำคัญทางวัฒนธรรม"
 msgid "Current Chapter Only"
 msgstr "เฉพาะบทปัจจุบัน"
 
+msgid "Current version:"
+msgstr "เวอร์ชันปัจจุบัน:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "กำหนดเอง"
@@ -650,6 +650,9 @@ msgstr "ลบผู้ให้บริการ %1 หรือไม่?"
 
 msgid "Description: %1"
 msgstr "คำอธิบาย: %1"
+
+msgid "Development branch:"
+msgstr "สาขาสำหรับการพัฒนา:"
 
 msgid "Device"
 msgstr "อุปกรณ์"
@@ -702,6 +705,9 @@ msgstr "แก้ไข"
 msgid "Edit %1"
 msgstr "แก้ไข %1"
 
+msgid "Edit Card %1"
+msgstr "แก้ไขการ์ด %1"
+
 msgid "Empty Error"
 msgstr "ข้อผิดพลาดว่างเปล่า"
 
@@ -749,6 +755,9 @@ msgstr "ตัวอย่าง"
 msgid "Explain"
 msgstr "อธิบาย"
 
+msgid "Export to AnkiDroid"
+msgstr "ส่งออกไปยัง AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "ไม่สามารถโหลดโมเดลได้"
 
@@ -782,6 +791,18 @@ msgstr "ค้นหาตัวแรก"
 msgid "Find next"
 msgstr "ค้นหาถัดไป"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "แฟลชการ์ด %1 ขาดคำถามหรือคำตอบ"
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "แฟลชการ์ด %1 ไม่ใช่การ์ดคำถาม-คำตอบที่ถูกต้อง"
+
+msgid "Flashcards"
+msgstr "แฟลชการ์ด"
+
+msgid "Flashcards exported to %1"
+msgstr "ส่งออกแฟลชการ์ดไปยัง %1 แล้ว"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "สำหรับรายละเอียด โปรดดูหน้า wiki 'Configuration' บน github"
 
@@ -805,6 +826,9 @@ msgstr ""
 "โดยทั่วไป <b>ไม่ควร</b>เลือกมากกว่าหนึ่งรายการ - ให้เลือกพารามิเตอร์ที่ตรงกับโมเดลและแพลตฟอร์มของคุณ พารามิเตอร์ที่ไม่ถูกต้องอาจทำให้เกิดข้อผิดพลาดของ API \n"
 "\n"
 "ค่าที่เลือกจะแทนที่ additional_parameters ของการตั้งค่า หากตัวเลือกที่เลือกมีคีย์เดียวกัน จะใช้เฉพาะตัวเลือกสุดท้ายในรายการเท่านั้น"
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "สร้างแฟลชการ์ดแบบคำถาม-คำตอบที่กระชับจากข้อความที่ให้มา"
 
 msgid "Genre"
 msgstr "แนว"
@@ -881,6 +905,9 @@ msgstr "หน้าต่างสตรีมขนาดใหญ่"
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "อ่านล่าสุดเมื่อ %1 ชั่วโมงที่แล้ว"
+
+msgid "Latest version:"
+msgstr "เวอร์ชันล่าสุด:"
 
 msgid "Leave blank to use: %1"
 msgstr "ปล่อยว่างไว้เพื่อใช้: %1"
@@ -966,8 +993,14 @@ msgstr "ไม่มีหนังสือที่เปิดอยู่"
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "ไม่มีหนังสือที่เปิดอยู่ กดค้างที่หนังสือในตัวจัดการไฟล์ แล้วเลือก ข้อมูลหนังสือ (AI)"
 
+msgid "No cards remain. Close this preview."
+msgstr "ไม่มีการ์ดเหลืออยู่ ปิดหน้าตัวอย่างนี้"
+
 msgid "No common parameters are available for handler %1."
 msgstr "ตัวเลือกการให้เหตุผล - %1"
+
+msgid "No folder is available for the flashcard export."
+msgstr "ไม่มีโฟลเดอร์ที่ใช้ได้สำหรับการส่งออกแฟลชการ์ด"
 
 msgid "No highlight to annotate"
 msgstr "ไม่มีไฮไลต์ให้บันทึกหมายเหตุ"
@@ -1023,6 +1056,9 @@ msgstr "ยกเลิกการอัปเดต OTA แล้ว"
 
 msgid "OTA update failed: %1"
 msgstr "การอัปเดต OTA ล้มเหลว: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "การอัปเดต OTA ล้มเหลว: อินพุต %1 ไม่ถูกต้อง โปรดใช้ branch, tag, user/repo หรือ user/repo@branch"
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1080,6 +1116,9 @@ msgstr "รายการส่วนของพจนานุกรม AI �
 msgid "Prevailing emotional state/tone:"
 msgstr "อารมณ์/โทนโดยรวม:"
 
+msgid "Pronunciation"
+msgstr "การออกเสียง"
+
 msgid "Protagonist's current objective:"
 msgstr "เป้าหมายปัจจุบันของตัวเอก:"
 
@@ -1128,6 +1167,9 @@ msgstr "ล้าง"
 msgid "Purge Settings"
 msgstr "ล้างการตั้งค่า"
 
+msgid "Question"
+msgstr "คำถาม"
+
 msgid "Quick Note"
 msgstr "โน้ตด่วน"
 
@@ -1158,6 +1200,9 @@ msgstr "สรุปย้อนหลัง (AI)"
 
 msgid "Remove"
 msgstr "ลบ"
+
+msgid "Remove Card %1?"
+msgstr "ลบการ์ด %1 หรือไม่?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1371,6 +1416,9 @@ msgstr "จดบันทึกย่อ"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "จดบันทึกด่วนที่จะบันทึกไปยังโน้ต AI ของคุณ"
 
+msgid "Tap a card to edit or remove it."
+msgstr "แตะที่การ์ดเพื่อแก้ไขหรือลบ"
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
@@ -1393,6 +1441,18 @@ msgstr "ขนาดตัวอักษร: %1"
 msgid "Text copied to the clipboard"
 msgstr "คัดลอกข้อความไปยังคลิปบอร์ดแล้ว"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "การตอบกลับของ AI มี JSON ของแฟลชการ์ดที่ไม่ถูกต้อง"
+
+msgid "The AI response contained too many flashcards."
+msgstr "การตอบกลับของ AI มีแฟลชการ์ดมากเกินไป"
+
+msgid "The AI response did not contain any flashcards."
+msgstr "การตอบกลับของ AI ไม่มีแฟลชการ์ดเลย"
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "การตอบกลับของ AI ไม่มีข้อมูลแฟลชการ์ดที่ถูกต้อง"
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "ไม่พบ Handler สำหรับ %1 กรุณาตรวจสอบให้แน่ใจว่า Handler มีอยู่ในไดเรกทอรี api_handlers"
 
@@ -1401,6 +1461,9 @@ msgstr "โมเดลไม่สามารถระบุหนังสื
 
 msgid "Thinking ..."
 msgstr "กำลังคิด ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "ไม่สามารถอ่านข้อความของหนังสือเล่มนี้ได้จากตัวจัดการไฟล์ โปรดเปิดหนังสือแล้วใช้ “ระบุหนังสือเล่มนี้”"
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "ปุ่มนี้สร้างโน้ตด่วนพร้อมข้อความที่ไฮไลต์"
@@ -1464,11 +1527,25 @@ msgstr "พรอมต์นี้แปลข้อความที่ไฮ
 msgid "Timeline"
 msgstr "ไทม์ไลน์"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "เคล็ดลับ: ป้อน user/repo สำหรับ fork (สาขา main) หรือ user/repo@branch สำหรับสาขาหรือแท็กที่ต้องการ"
+
 msgid "Title"
 msgstr "ชื่อเรื่อง"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "ข้อมูลเมตาของชื่อเรื่องหรือผู้แต่งขาดหายหรือไม่สมบูรณ์ ผลลัพธ์จาก AI อาจไม่น่าเชื่อถือ ใช้ ระบุ (AI) เพื่อตั้งค่าก่อน"
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"หากต้องการนำเข้าใน AnkiDroid ให้เลือกไฟล์ TSV ที่:\n"
+"%1\n"
+"\n"
+"ตั้งค่าตัวคั่นเป็น Tab เลือกประเภทโน้ต Basic กำหนดฟิลด์ 1 เป็น Front และฟิลด์ 2 เป็น Back จากนั้นเลือกชุดการ์ดแล้วนำเข้า ไฟล์นี้ไม่มีแถวหัวตาราง แต่ละแถวคือหนึ่งการ์ด"
 
 msgid "To-Do / Action Items"
 msgstr "สิ่งที่ต้องทำ / รายการปฏิบัติ"
@@ -1616,6 +1693,12 @@ msgstr "รูปคำและคำตั้งต้น"
 msgid "Word Origin"
 msgstr "ที่มาของคำ"
 
+msgid "Write a question"
+msgstr "เขียนคำถาม"
+
+msgid "Write an answer"
+msgstr "เขียนคำตอบ"
+
 msgid "Write quick notes here"
 msgstr "เขียนบันทึกย่อที่นี่"
 
@@ -1625,14 +1708,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "ใช่"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "คุณเพิ่งเริ่มอ่านหนังสือเล่มนี้ (อ่านไปไม่ถึง 3%) อาจดีกว่าหากเริ่มอ่านก่อน ยังต้องการ Recap จาก AI หรือไม่?"
+
 msgid "Your API key"
 msgstr "คีย์ API ของคุณ"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "พรอมต์ที่คุณกำหนดเองในไฟล์คอนฟิก"
 
-msgid "branch or tag name"
-msgstr "ชื่อ branch หรือ tag"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "ไฟล์ archive ไม่ใช่แพ็กเกจ assistant.koplugin ที่ถูกต้อง"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "branch, tag, user/repo หรือ user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: ผู้ให้บริการโมเดลไม่ถูกต้อง"
@@ -1642,3 +1731,6 @@ msgstr "เช่น google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: ไม่สามารถแยกวิเคราะห์ข้อมูลที่ส่งกลับมา"
+
+msgid "invalid repository or branch/tag"
+msgstr "repository หรือ branch/tag ไม่ถูกต้อง"

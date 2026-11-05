@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Detaļas:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>Notiek lejupielāde ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Krātuve: </b>%2\n"
-"<b>Zars/Birka: </b>%3"
+"<b>Lejupielāde ...</b>\n"
+"<b>URL: </b>%1\n"
+"<b>Atzars/Iezīme: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Kļūda:</b> Nav saņemta neviena kartīte"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Kļūda:</b> Atbilde nav saņemta"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Notiek modeļu ielāde...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>Avota repozitorijs:</b>  %2\n"
-"\n"
-"- Pašreizējā versija: %3\n"
-"- Izstrādes atzars: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>Avota repozitorijs:</b>  %2\n"
-"\n"
-"- Pašreizējā versija: %3\n"
-"- Jaunākā versija: <b>%4</b>\n"
-"- Izstrādes atzars: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Notiek %1 instalēšana...</b>"
@@ -364,6 +337,9 @@ msgstr "Anotēt"
 msgid "Annotation added successfully"
 msgstr "Anotācija veiksmīgi pievienota"
 
+msgid "Answer"
+msgstr "Atbilde"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Grāmatas kopsavilkums un ieteikumi"
 msgid "Book metadata updated."
 msgstr "Grāmatas metadati atjaunināti."
 
+msgid "Both Question and Answer are required."
+msgstr "Ir nepieciešams gan jautājums, gan atbilde."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Zars/birka \"%1\" netika atrasts."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Atcelt"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Kartīte %1\n"
+"Jautājums: %2\n"
+"Atbilde: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Pamatargumenti"
 msgid "Core Idea"
 msgstr "Pamatideja"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Neizdevās izvēlēties unikālu faila nosaukumu kartīšu eksportam."
+
 msgid "Could not close AI note file."
 msgstr "Nevarēja aizvērt AI piezīmes failu."
 
@@ -583,8 +574,14 @@ msgstr "Nevarēja izveidot AI piezīmi."
 msgid "Could not create AI note: %1"
 msgstr "Nevarēja izveidot AI piezīmi: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Neizdevās izveidot TSV failu: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Neizdevās izgūt tekstu no šīs grāmatas."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Neizdevās pabeigt TSV faila rakstīšanu: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Nevarēja nolasīt AI piezīmju mapes saturu: %1"
@@ -620,6 +617,9 @@ msgstr "Kultūras nozīme"
 msgid "Current Chapter Only"
 msgstr "Tikai pašreizējā nodaļa"
 
+msgid "Current version:"
+msgstr "Pašreizējā versija:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Pielāgots"
@@ -650,6 +650,9 @@ msgstr "Dzēst pakalpojumu sniedzēju %1?"
 
 msgid "Description: %1"
 msgstr "Apraksts: %1"
+
+msgid "Development branch:"
+msgstr "Izstrādes atzars:"
 
 msgid "Device"
 msgstr "Ierīce"
@@ -702,6 +705,9 @@ msgstr "Rediģēt"
 msgid "Edit %1"
 msgstr "Rediģēt %1"
 
+msgid "Edit Card %1"
+msgstr "Rediģēt kartīti %1"
+
 msgid "Empty Error"
 msgstr "Tukša kļūda"
 
@@ -749,6 +755,9 @@ msgstr "Piemērs"
 msgid "Explain"
 msgstr "Izskaidrot"
 
+msgid "Export to AnkiDroid"
+msgstr "Eksportēt uz AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Neizdevās iegūt modeļus"
 
@@ -782,6 +791,18 @@ msgstr "Meklēt pirmo"
 msgid "Find next"
 msgstr "Meklēt nākamo"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Kartītei %1 trūkst jautājuma vai atbildes."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Kartīte %1 nav derīga jautājumu un atbilžu kartīte."
+
+msgid "Flashcards"
+msgstr "Kartītes"
+
+msgid "Flashcards exported to %1"
+msgstr "Kartītes eksportētas uz %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Detalizētai informācijai apmeklējiet 'Configuration' wiki lapu vietnē GitHub."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Parasti <b>NEIZVĒLIETIES</b> vairāk nekā vienu — izvēlieties parametru, kas atbilst jūsu modelim un platformai. Nepareizs parametrs var izraisīt API kļūdas. \n"
 "\n"
 "Izvēlētā vērtība aizstāj konfigurācijas additional_parameters. Ja izvēlētajām opcijām ir viena un tā pati atslēga, tiek izmantota tikai pēdējā sarakstā esošā."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Ģenerējiet kodolīgas jautājumu un atbilžu kartītes no sniegtā teksta."
 
 msgid "Genre"
 msgstr "Žanrs"
@@ -883,6 +907,9 @@ msgid_plural "Last read %1 hours ago."
 msgstr[0] "Pēdējo reizi lasīts pirms stundas."
 msgstr[1] "Pēdējo reizi lasīts pirms %1 stundām."
 msgstr[2] "Pēdējo reizi lasīts pirms %1 stundām."
+
+msgid "Latest version:"
+msgstr "Jaunākā versija:"
 
 msgid "Leave blank to use: %1"
 msgstr "Atstājiet tukšu, lai izmantotu: %1"
@@ -968,8 +995,14 @@ msgstr "Nav atvērta neviena grāmata."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nav atvērta neviena grāmata. Failu pārvaldniekā ilgi piespiediet grāmatu un izvēlieties Grāmatas informācija (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Vairs nav palikusi neviena kartīte. Aizveriet šo priekšskatījumu."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Nav pieejami kopīgi parametri apstrādātājam %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Kartīšu eksportam nav pieejama neviena mape."
 
 msgid "No highlight to annotate"
 msgstr "Nav izcēluma, ko anotēt"
@@ -1025,6 +1058,9 @@ msgstr "OTA atjauninājums atcelts."
 
 msgid "OTA update failed: %1"
 msgstr "OTA atjaunināšana neizdevās: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA atjauninājums neizdevās: nederīga ievade %1. Izmantojiet zaru, tagu, lietotājs/repo vai lietotājs/repo@zars."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1082,6 +1118,9 @@ msgstr "Priekšiestatīts AI vārdnīcas sadaļu saraksts."
 msgid "Prevailing emotional state/tone:"
 msgstr "Valdošais emocionālais stāvoklis/tonis:"
 
+msgid "Pronunciation"
+msgstr "Izruna"
+
 msgid "Protagonist's current objective:"
 msgstr "Galvenā varoņa pašreizējais mērķis:"
 
@@ -1130,6 +1169,9 @@ msgstr "Iztīrīt"
 msgid "Purge Settings"
 msgstr "Notīrīt iestatījumus"
 
+msgid "Question"
+msgstr "Jautājums"
+
 msgid "Quick Note"
 msgstr "Ātrā piezīme"
 
@@ -1160,6 +1202,9 @@ msgstr "Kopsavilkums (AI)"
 
 msgid "Remove"
 msgstr "Noņemt"
+
+msgid "Remove Card %1?"
+msgstr "Noņemt kartīti %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "Veikt ātros pierakstus"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Veiciet ātrās piezīmes, kas tiks saglabātas jūsu AI piezīmēs."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Pieskarieties kartītei, lai to rediģētu vai noņemtu."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Termina X-Ray"
@@ -1394,6 +1442,18 @@ msgstr "Fonta lielums: %1"
 msgid "Text copied to the clipboard"
 msgstr "Teksts kopēts starpliktuvē"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AI atbildē bija nederīgs kartīšu JSON."
+
+msgid "The AI response contained too many flashcards."
+msgstr "AI atbildē bija pārāk daudz kartīšu."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AI atbildē nebija nevienas kartītes."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AI atbildē nebija derīgu kartīšu datu."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Apstrādātājs %1 netika atrasts. Lūdzu, pārliecinieties, ka apstrādātājs atrodas api_handlers direktorijā."
 
@@ -1402,6 +1462,9 @@ msgstr "Modelis nevarēja identificēt šo grāmatu."
 
 msgid "Thinking ..."
 msgstr "Domā ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Šīs grāmatas tekstu failu pārvaldniekā nolasīt nevar. Atveriet grāmatu un izmantojiet “Identificēt šo grāmatu”."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Šī poga izveido ātro piezīmi ar iezīmēto tekstu."
@@ -1465,11 +1528,25 @@ msgstr "Šī uzvedne tulko iezīmēto tekstu uz citu valodu."
 msgid "Timeline"
 msgstr "Laika līnija"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Padoms: ievadiet lietotājs/repo atzaram (galvenajam zaram) vai lietotājs/repo@zars konkrētam zaram vai tagam."
+
 msgid "Title"
 msgstr "Virsraksts"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Nosaukuma vai autora metadati trūkst vai ir nepilnīgi, tāpēc AI rezultāts var būt neuzticams. Vispirms izmantojiet \"Identificēt (AI)\", lai tos iestatītu."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"Lai importētu AnkiDroid, atlasiet TSV failu:\n"
+"%1\n"
+"\n"
+"Iestatiet atdalītāju uz Tab, izvēlieties Basic piezīmes tipu, piešķiriet 1. lauku laukam Front un 2. lauku laukam Back, pēc tam izvēlieties kavu un importējiet. Failā nav galvenes rindas; katra rinda ir viena kartīte."
 
 msgid "To-Do / Action Items"
 msgstr "Uzdevumi / rīcības punkti"
@@ -1617,6 +1694,12 @@ msgstr "Vārda forma un lema"
 msgid "Word Origin"
 msgstr "Vārda izcelsme"
 
+msgid "Write a question"
+msgstr "Ierakstiet jautājumu"
+
+msgid "Write an answer"
+msgstr "Ierakstiet atbildi"
+
 msgid "Write quick notes here"
 msgstr "Rakstiet ātros pierakstus šeit"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Jā"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Jūs tikko sākāt šo grāmatu (izlasīti mazāk nekā 3%). Iespējams, labāk vispirms sākt lasīt. Vai joprojām vēlaties AI kopsavilkumu?"
+
 msgid "Your API key"
 msgstr "Jūsu API atslēga"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Jūsu pašu prompti, kas definēti konfigurācijas failā"
 
-msgid "branch or tag name"
-msgstr "zara vai birkas nosaukums"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "arhīvs nav derīga assistant.koplugin pakotne"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "zars, tags, lietotājs/repo vai lietotājs/repo@zars"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: modeļu pakalpojumu sniedzēji nav derīgi."
@@ -1643,3 +1732,6 @@ msgstr "piem., google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: neizdevās parsēt atgrieztos datus"
+
+msgid "invalid repository or branch/tag"
+msgstr "nederīgs repozitorijs vai zars/tags"

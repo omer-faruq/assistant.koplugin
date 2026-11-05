@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Detail:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>Bezig met downloaden ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>Downloaden ...</b>\n"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Fout:</b> Geen flashcards ontvangen"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Fout:</b> Geen antwoord ontvangen"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Modellen ophalen...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github-URL:</b>  %1\n"
-"<b>Bronrepository:</b>  %2\n"
-"\n"
-"- Huidige versie: %3\n"
-"- Ontwikkelingstak: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github-URL:</b>  %1\n"
-"<b>Bronrepository:</b>  %2\n"
-"\n"
-"- Huidige versie: %3\n"
-"- Nieuwste versie: <b>%4</b>\n"
-"- Ontwikkelingstak: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Bezig met installeren van %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Annoteren"
 msgid "Annotation added successfully"
 msgstr "Annotatie succesvol toegevoegd"
 
+msgid "Answer"
+msgstr "Antwoord"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Boeksamenvatting en aanbevelingen"
 msgid "Book metadata updated."
 msgstr "Boekmetadata bijgewerkt."
 
+msgid "Both Question and Answer are required."
+msgstr "Zowel de vraag als het antwoord zijn verplicht."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Branch/tag \"%1\" is niet gevonden."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Annuleren"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Kaart %1\n"
+"Vraag: %2\n"
+"Antwoord: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Kernargumenten"
 msgid "Core Idea"
 msgstr "Kernidee"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Kon geen unieke bestandsnaam vinden voor de flashcard-export."
+
 msgid "Could not close AI note file."
 msgstr "Kon het AI-notitiebestand niet sluiten."
 
@@ -583,8 +574,14 @@ msgstr "Kon de AI-notitie niet aanmaken."
 msgid "Could not create AI note: %1"
 msgstr "Kon de AI-notitie niet aanmaken: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Kon het TSV-bestand niet aanmaken: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Kan geen tekst uit dit boek extraheren."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Kon het schrijven naar het TSV-bestand niet voltooien: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Kon de inhoud van de map voor AI-notities niet weergeven: %1"
@@ -620,6 +617,9 @@ msgstr "Culturele betekenis"
 msgid "Current Chapter Only"
 msgstr "Alleen huidig hoofdstuk"
 
+msgid "Current version:"
+msgstr "Huidige versie:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Aangepast"
@@ -650,6 +650,9 @@ msgstr "Provider %1 verwijderen?"
 
 msgid "Description: %1"
 msgstr "Beschrijving: %1"
+
+msgid "Development branch:"
+msgstr "Ontwikkelbranch:"
 
 msgid "Device"
 msgstr "Apparaat"
@@ -702,6 +705,9 @@ msgstr "Bewerken"
 msgid "Edit %1"
 msgstr "%1 bewerken"
 
+msgid "Edit Card %1"
+msgstr "Kaart %1 bewerken"
+
 msgid "Empty Error"
 msgstr "Lege foutmelding"
 
@@ -749,6 +755,9 @@ msgstr "Voorbeeld"
 msgid "Explain"
 msgstr "Uitleggen"
 
+msgid "Export to AnkiDroid"
+msgstr "Exporteren naar AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Ophalen van modellen mislukt"
 
@@ -782,6 +791,18 @@ msgstr "Zoek eerste"
 msgid "Find next"
 msgstr "Zoek volgende"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Flashcard %1 mist een vraag of antwoord."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Flashcard %1 is geen geldige vraag-en-antwoordkaart."
+
+msgid "Flashcards"
+msgstr "Flashcards"
+
+msgid "Flashcards exported to %1"
+msgstr "Flashcards geëxporteerd naar %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Voor details, bezoek de 'Configuration'-wikipagina op GitHub."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Selecteer over het algemeen <b>NIET</b> meer dan één parameter - kies een parameter die bij je model en platform past. Een verkeerde parameter kan API-fouten veroorzaken. \n"
 "\n"
 "De geselecteerde waarde overschrijft additional_parameters van de configuratie. Als geselecteerde opties dezelfde sleutel hebben, wordt alleen de laatste in de lijst gebruikt."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Genereer beknopte vraag-en-antwoordflashcards uit de opgegeven tekst."
 
 msgid "Genre"
 msgstr "Genre"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Laatst gelezen een uur geleden."
 msgstr[1] "Laatst gelezen %1 uur geleden."
+
+msgid "Latest version:"
+msgstr "Nieuwste versie:"
 
 msgid "Leave blank to use: %1"
 msgstr "Leeg laten om te gebruiken: %1"
@@ -967,8 +994,14 @@ msgstr "Er is geen boek geopend."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Er is geen boek geopend. Houd een boek ingedrukt in de bestandsbeheerder en kies Boekinfo (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Er zijn geen kaarten meer. Sluit deze voorbeeldweergave."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Er zijn geen algemene parameters beschikbaar voor handler %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Er is geen map beschikbaar voor de flashcard-export."
 
 msgid "No highlight to annotate"
 msgstr "Geen markering om te annoteren"
@@ -1024,6 +1057,9 @@ msgstr "OTA-update geannuleerd."
 
 msgid "OTA update failed: %1"
 msgstr "OTA-update mislukt: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA-update mislukt: ongeldige invoer %1. Gebruik een branch, tag, user/repo of user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "Vooraf ingestelde lijst met secties voor het AI-woordenboek."
 msgid "Prevailing emotional state/tone:"
 msgstr "Heersende emotionele toestand/toon:"
 
+msgid "Pronunciation"
+msgstr "Uitspraak"
+
 msgid "Protagonist's current objective:"
 msgstr "Huidige doel van de protagonist:"
 
@@ -1129,6 +1168,9 @@ msgstr "Wissen"
 msgid "Purge Settings"
 msgstr "Instellingen wissen"
 
+msgid "Question"
+msgstr "Vraag"
+
 msgid "Quick Note"
 msgstr "Snelle notitie"
 
@@ -1159,6 +1201,9 @@ msgstr "Recap (AI)"
 
 msgid "Remove"
 msgstr "Verwijderen"
+
+msgid "Remove Card %1?"
+msgstr "Kaart %1 verwijderen?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "Snelle notities maken"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Maak snelle notities die in je AI-notities worden opgeslagen."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Tik op een kaart om deze te bewerken of te verwijderen."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
@@ -1394,6 +1442,18 @@ msgstr "Lettergrootte: %1"
 msgid "Text copied to the clipboard"
 msgstr "Tekst naar het klembord gekopieerd"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "De AI-reactie bevatte ongeldige flashcard-JSON."
+
+msgid "The AI response contained too many flashcards."
+msgstr "De AI-reactie bevatte te veel flashcards."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "De AI-reactie bevatte geen flashcards."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "De AI-reactie bevatte geen geldige flashcardgegevens."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "De handler voor %1 is niet gevonden. Zorg ervoor dat de handler in de map api_handlers bestaat."
 
@@ -1402,6 +1462,9 @@ msgstr "Het model kon dit boek niet identificeren."
 
 msgid "Thinking ..."
 msgstr "Aan het denken ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "De tekst van dit boek kan niet uit de bestandsbeheerder worden gelezen. Open het boek en gebruik 'Dit boek identificeren'."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Deze knop maakt een snelle notitie met de gemarkeerde tekst."
@@ -1465,11 +1528,25 @@ msgstr "Deze prompt vertaalt de gemarkeerde tekst naar een andere taal."
 msgid "Timeline"
 msgstr "Tijdlijn"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Tip: voer user/repo in voor een fork (main-branch) of user/repo@branch voor een specifieke branch of tag."
+
 msgid "Title"
 msgstr "Titel"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "De metadata voor titel of auteur ontbreekt of is onvolledig, dus het AI-resultaat kan onbetrouwbaar zijn. Gebruik Identificeren (AI) om ze eerst in te stellen."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"Om in AnkiDroid te importeren, selecteer je het TSV-bestand op:\n"
+"%1\n"
+"\n"
+"Stel het scheidingsteken in op Tab, kies het notitietype Basic, koppel veld 1 aan Front en veld 2 aan Back, en kies vervolgens een deck en importeer. Het bestand heeft geen kopregel; elke rij is één kaart."
 
 msgid "To-Do / Action Items"
 msgstr "Te doen / Actiepunten"
@@ -1617,6 +1694,12 @@ msgstr "Woordvorm en lemma"
 msgid "Word Origin"
 msgstr "Woordherkomst"
 
+msgid "Write a question"
+msgstr "Schrijf een vraag"
+
+msgid "Write an answer"
+msgstr "Schrijf een antwoord"
+
 msgid "Write quick notes here"
 msgstr "Schrijf hier snelle notities"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Ja"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Je hebt dit boek net gestart (minder dan 3% voltooid). Het is misschien beter om eerst te beginnen met lezen. Wil je toch een AI-recap?"
+
 msgid "Your API key"
 msgstr "Je API-sleutel"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Je eigen prompts, gedefinieerd in het configuratiebestand"
 
-msgid "branch or tag name"
-msgstr "branch- of tagnaam"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "archief is geen geldig assistant.koplugin-pakket"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "branch, tag, user/repo of user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: modelproviders zijn ongeldig."
@@ -1643,3 +1732,6 @@ msgstr "bijv. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: parseren van geretourneerde gegevens mislukt"
+
+msgid "invalid repository or branch/tag"
+msgstr "ongeldige repository of branch/tag"

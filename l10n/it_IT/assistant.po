@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Dettaglio:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>Download in corso...</b>\n"
-"<b>GitHub: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>Download in corso ...</b>\n"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Errore:</b> Nessuna flashcard ricevuta"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Errore:</b> Nessuna risposta ricevuta"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Recupero dei modelli...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL GitHub:</b>  %1\n"
-"<b>Repo sorgente:</b>  %2\n"
-"\n"
-"- Versione attuale: %3\n"
-"- Ramo di sviluppo: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL GitHub:</b>  %1\n"
-"<b>Repo sorgente:</b>  %2\n"
-"\n"
-"- Versione attuale: %3\n"
-"- Ultima versione: <b>%4</b>\n"
-"- Ramo di sviluppo: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Installazione di %1 in corso...</b>"
@@ -364,6 +337,9 @@ msgstr "Annota"
 msgid "Annotation added successfully"
 msgstr "Annotazione aggiunta correttamente"
 
+msgid "Answer"
+msgstr "Risposta"
+
 msgid "Anthropic Messages API"
 msgstr "API Anthropic Messages"
 
@@ -469,6 +445,9 @@ msgstr "Riepilogo del libro e consigli"
 msgid "Book metadata updated."
 msgstr "Metadati del libro aggiornati."
 
+msgid "Both Question and Answer are required."
+msgstr "Sono necessari sia la domanda che la risposta."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Branch/Tag \"%1\" non trovato."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Annulla"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Scheda %1\n"
+"Domanda: %2\n"
+"Risposta: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Argomenti principali"
 msgid "Core Idea"
 msgstr "Idea principale"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Impossibile scegliere un nome file univoco per l'esportazione delle flashcard."
+
 msgid "Could not close AI note file."
 msgstr "Impossibile chiudere il file della nota AI."
 
@@ -583,8 +574,14 @@ msgstr "Impossibile creare la nota AI."
 msgid "Could not create AI note: %1"
 msgstr "Impossibile creare la nota AI: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Impossibile creare il file TSV: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Impossibile estrarre il testo da questo libro."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Impossibile completare la scrittura del file TSV: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Impossibile elencare la cartella delle note AI: %1"
@@ -620,6 +617,9 @@ msgstr "Significato culturale"
 msgid "Current Chapter Only"
 msgstr "Solo capitolo corrente"
 
+msgid "Current version:"
+msgstr "Versione attuale:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Personalizzato"
@@ -650,6 +650,9 @@ msgstr "Eliminare il provider %1?"
 
 msgid "Description: %1"
 msgstr "Descrizione: %1"
+
+msgid "Development branch:"
+msgstr "Branch di sviluppo:"
 
 msgid "Device"
 msgstr "Dispositivo"
@@ -702,6 +705,9 @@ msgstr "Modifica"
 msgid "Edit %1"
 msgstr "Modifica %1"
 
+msgid "Edit Card %1"
+msgstr "Modifica scheda %1"
+
 msgid "Empty Error"
 msgstr "Errore vuoto"
 
@@ -749,6 +755,9 @@ msgstr "Esempio"
 msgid "Explain"
 msgstr "Spiega"
 
+msgid "Export to AnkiDroid"
+msgstr "Esporta in AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Impossibile recuperare i modelli"
 
@@ -782,6 +791,18 @@ msgstr "Trova il primo"
 msgid "Find next"
 msgstr "Trova il successivo"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Alla flashcard %1 manca la domanda o la risposta."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "La flashcard %1 non è una scheda domanda-risposta valida."
+
+msgid "Flashcards"
+msgstr "Flashcard"
+
+msgid "Flashcards exported to %1"
+msgstr "Flashcard esportate in %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Per i dettagli, visita la pagina wiki 'Configuration' su GitHub."
 
@@ -805,6 +826,9 @@ msgstr ""
 "In genere <b>NON</b> selezionare più di un'opzione: scegli un parametro adatto al tuo modello e alla tua piattaforma. Un parametro errato può causare errori API. \n"
 "\n"
 "Il valore selezionato ha la precedenza su additional_parameters della configurazione. Se le opzioni selezionate condividono la stessa chiave, viene usata solo l'ultima dell'elenco."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Genera flashcard concise di domanda e risposta dal testo fornito."
 
 msgid "Genre"
 msgstr "Genere"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Letto un'ora fa."
 msgstr[1] "Letto %1 ore fa."
+
+msgid "Latest version:"
+msgstr "Ultima versione:"
 
 msgid "Leave blank to use: %1"
 msgstr "Lascia vuoto per usare: %1"
@@ -967,8 +994,14 @@ msgstr "Nessun libro aperto."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nessun libro è aperto. Tieni premuto su un libro nel gestore dei file e scegli Informazioni libro (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Non restano altre schede. Chiudi questa anteprima."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Nessun parametro comune disponibile per il gestore %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Nessuna cartella disponibile per l'esportazione delle flashcard."
 
 msgid "No highlight to annotate"
 msgstr "Nessuna evidenziazione da annotare"
@@ -1024,6 +1057,9 @@ msgstr "Aggiornamento OTA annullato."
 
 msgid "OTA update failed: %1"
 msgstr "Aggiornamento OTA non riuscito: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "Aggiornamento OTA non riuscito: input non valido %1. Usa un branch, un tag, utente/repo o utente/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "Elenco preimpostato delle sezioni del dizionario AI."
 msgid "Prevailing emotional state/tone:"
 msgstr "Stato emotivo/tono predominante:"
 
+msgid "Pronunciation"
+msgstr "Pronuncia"
+
 msgid "Protagonist's current objective:"
 msgstr "Obiettivo attuale del protagonista:"
 
@@ -1129,6 +1168,9 @@ msgstr "Elimina"
 msgid "Purge Settings"
 msgstr "Azzera impostazioni"
 
+msgid "Question"
+msgstr "Domanda"
+
 msgid "Quick Note"
 msgstr "Nota rapida"
 
@@ -1159,6 +1201,9 @@ msgstr "Riepilogo (AI)"
 
 msgid "Remove"
 msgstr "Rimuovi"
+
+msgid "Remove Card %1?"
+msgstr "Rimuovere la carta %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "Prendi appunti rapidi"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Prendi appunti rapidi che verranno salvati nelle tue note AI."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Tocca una carta per modificarla o rimuoverla."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
@@ -1394,6 +1442,18 @@ msgstr "Dimensione del testo: %1"
 msgid "Text copied to the clipboard"
 msgstr "Testo copiato negli appunti"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "La risposta dell'IA conteneva JSON delle flashcard non valido."
+
+msgid "The AI response contained too many flashcards."
+msgstr "La risposta dell'IA conteneva troppe flashcard."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "La risposta dell'IA non conteneva alcuna flashcard."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "La risposta dell'IA non conteneva dati validi delle flashcard."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "L'handler per %1 non è stato trovato. Assicurati che l'handler esista nella directory api_handlers."
 
@@ -1402,6 +1462,9 @@ msgstr "Il modello non è riuscito a identificare questo libro."
 
 msgid "Thinking ..."
 msgstr "Sto pensando ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Il testo di questo libro non può essere letto dal gestore file. Apri il libro e usa Identifica questo libro."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Questo pulsante crea una nota rapida con il testo evidenziato."
@@ -1465,11 +1528,25 @@ msgstr "Questo prompt traduce il testo evidenziato in un'altra lingua."
 msgid "Timeline"
 msgstr "Cronologia"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Suggerimento: inserisci utente/repo per un fork (branch principale) o utente/repo@branch per un branch o un tag specifico."
+
 msgid "Title"
 msgstr "Titolo"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "I metadati di titolo o autore sono mancanti o incompleti, quindi il risultato dell'IA potrebbe non essere affidabile. Usa Identifica (IA) per impostarli prima."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"Per importare in AnkiDroid, seleziona il file TSV in:\n"
+"%1\n"
+"\n"
+"Imposta il separatore su Tab, scegli il tipo di nota Base, assegna il campo 1 a Fronte e il campo 2 a Retro, poi scegli un mazzo e importa. Il file non ha una riga di intestazione; ogni riga è una carta."
 
 msgid "To-Do / Action Items"
 msgstr "Da fare / Azioni"
@@ -1617,6 +1694,12 @@ msgstr "Forma della parola e lemma"
 msgid "Word Origin"
 msgstr "Origine della parola"
 
+msgid "Write a question"
+msgstr "Scrivi una domanda"
+
+msgid "Write an answer"
+msgstr "Scrivi una risposta"
+
 msgid "Write quick notes here"
 msgstr "Scrivi qui le note rapide"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Sì"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Hai appena iniziato questo libro (meno del 3% completato). Potrebbe essere meglio iniziare prima a leggere. Vuoi comunque un riepilogo IA?"
+
 msgid "Your API key"
 msgstr "La tua chiave API"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "I tuoi prompt definiti nel file di configurazione"
 
-msgid "branch or tag name"
-msgstr "nome del branch o del tag"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "l'archivio non è un pacchetto assistant.koplugin valido"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "branch, tag, utente/repo o utente/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: i provider di modelli non sono validi."
@@ -1643,3 +1732,6 @@ msgstr "es. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: impossibile analizzare i dati restituiti"
+
+msgid "invalid repository or branch/tag"
+msgstr "repository o branch/tag non valido"

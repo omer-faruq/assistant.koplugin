@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Részletek:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>Letöltés ...</b>\n"
-"<b>GitHub: </b>%1\n"
-"<b>Adattár: </b>%2\n"
-"<b>Ág/Címke: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Ág/Tag: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Hiba:</b> Nem érkezett tanulókártya"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Hiba:</b> Nem érkezett válasz"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Modellek lekérése...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>GitHub URL:</b>  %1\n"
-"<b>Forrás repó:</b>  %2\n"
-"\n"
-"- Jelenlegi verzió: %3\n"
-"- Fejlesztési ág: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>GitHub URL:</b>  %1\n"
-"<b>Forrás repó:</b>  %2\n"
-"\n"
-"- Jelenlegi verzió: %3\n"
-"- Legújabb verzió: <b>%4</b>\n"
-"- Fejlesztési ág: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Telepítés: %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Jegyzetelés"
 msgid "Annotation added successfully"
 msgstr "A jegyzet sikeresen hozzáadva"
 
+msgid "Answer"
+msgstr "Válasz"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Könyv összefoglaló és ajánlások"
 msgid "Book metadata updated."
 msgstr "A könyv metaadatai frissítve."
 
+msgid "Both Question and Answer are required."
+msgstr "A kérdés és a válasz is kötelező."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "A \"%1\" ág/címke nem található."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Mégse"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Kártya %1\n"
+"Kérdés: %2\n"
+"Válasz: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Alapvető érvek"
 msgid "Core Idea"
 msgstr "Alapötlet"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Nem sikerült egyedi fájlnevet választani a tanulókártyák exportálásához."
+
 msgid "Could not close AI note file."
 msgstr "Nem sikerült bezárni az AI-jegyzet fájlt."
 
@@ -583,8 +574,14 @@ msgstr "Nem sikerült létrehozni az AI-jegyzetet."
 msgid "Could not create AI note: %1"
 msgstr "Nem sikerült létrehozni az AI-jegyzetet: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Nem sikerült létrehozni a TSV fájlt: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Nem sikerült szöveget kinyerni ebből a könyvből."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Nem sikerült befejezni a TSV fájl írását: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Nem sikerült listázni az AI-jegyzetek mappát: %1"
@@ -620,6 +617,9 @@ msgstr "Kulturális jelentőség"
 msgid "Current Chapter Only"
 msgstr "Csak az aktuális fejezet"
 
+msgid "Current version:"
+msgstr "Jelenlegi verzió:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Egyéni"
@@ -650,6 +650,9 @@ msgstr "Törlöd a(z) %1 szolgáltatót?"
 
 msgid "Description: %1"
 msgstr "Leírás: %1"
+
+msgid "Development branch:"
+msgstr "Fejlesztői ág:"
 
 msgid "Device"
 msgstr "Eszköz"
@@ -702,6 +705,9 @@ msgstr "Szerkesztés"
 msgid "Edit %1"
 msgstr "%1 szerkesztése"
 
+msgid "Edit Card %1"
+msgstr "Kártya szerkesztése: %1"
+
 msgid "Empty Error"
 msgstr "Üres hiba"
 
@@ -749,6 +755,9 @@ msgstr "Példa"
 msgid "Explain"
 msgstr "Magyarázat"
 
+msgid "Export to AnkiDroid"
+msgstr "Exportálás AnkiDroidba"
+
 msgid "Failed to fetch models"
 msgstr "Nem sikerült lekérni a modelleket"
 
@@ -782,6 +791,18 @@ msgstr "Első keresése"
 msgid "Find next"
 msgstr "Következő keresése"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "A %1. tanulókártyáról hiányzik a kérdés vagy a válasz."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "A %1. tanulókártya nem érvényes kérdés-válasz kártya."
+
+msgid "Flashcards"
+msgstr "Tanulókártyák"
+
+msgid "Flashcards exported to %1"
+msgstr "Tanulókártyák exportálva: %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "A részletekért látogassa meg a „Configuration” wiki oldalt a GitHubon."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Általában <b>NE</b> válassz egynél többet – olyan paramétert válassz, amely illik a modelledhez és a platformodhoz. A hibás paraméter API-hibákat okozhat. \n"
 "\n"
 "A kiválasztott érték felülírja a konfiguráció additional_parameters beállítását. Ha a kiválasztott opciók ugyanazzal a kulccsal rendelkeznek, csak a listában utolsóként szereplő lesz használva."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Tömör kérdés-válasz tanulókártyák létrehozása a megadott szövegből."
 
 msgid "Genre"
 msgstr "Műfaj"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Utoljára egy órája olvastad."
 msgstr[1] "Utoljára %1 órája olvastad."
+
+msgid "Latest version:"
+msgstr "Legújabb verzió:"
 
 msgid "Leave blank to use: %1"
 msgstr "Hagyd üresen a(z) %1 használatához"
@@ -967,8 +994,14 @@ msgstr "Nincs megnyitott könyv."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nincs megnyitott könyv. Nyomja meg hosszan a fájlkezelőben a kívánt könyvet, és válassza a Könyvinformációk (AI) lehetőséget."
 
+msgid "No cards remain. Close this preview."
+msgstr "Nem maradt kártya. Zárd be ezt az előnézetet."
+
 msgid "No common parameters are available for handler %1."
 msgstr "A(z) %1 kezelőhöz nem állnak rendelkezésre közös paraméterek."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Nem érhető el mappa a tanulókártyák exportálásához."
 
 msgid "No highlight to annotate"
 msgstr "Nincs kijelölés a megjegyzéshez"
@@ -1024,6 +1057,9 @@ msgstr "OTA frissítés megszakítva."
 
 msgid "OTA update failed: %1"
 msgstr "OTA frissítés sikertelen: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "Az OTA-frissítés sikertelen: érvénytelen bemenet: %1. Használjon ágat, taget, felhasználó/tároló vagy felhasználó/tároló@ág formátumot."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "Az AI-szótár szakaszainak előre beállított listája."
 msgid "Prevailing emotional state/tone:"
 msgstr "Uralkodó érzelmi állapot/hangulat:"
 
+msgid "Pronunciation"
+msgstr "Kiejtés"
+
 msgid "Protagonist's current objective:"
 msgstr "A főszereplő jelenlegi célja:"
 
@@ -1129,6 +1168,9 @@ msgstr "Törlés"
 msgid "Purge Settings"
 msgstr "Beállítások törlése"
 
+msgid "Question"
+msgstr "Kérdés"
+
 msgid "Quick Note"
 msgstr "Gyors jegyzet"
 
@@ -1159,6 +1201,9 @@ msgstr "Összefoglaló (AI)"
 
 msgid "Remove"
 msgstr "Eltávolítás"
+
+msgid "Remove Card %1?"
+msgstr "Eltávolítja a(z) %1 kártyát?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "Gyors jegyzetek készítése"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Készíts gyorsjegyzeteket, amelyek az AI-jegyzeteidbe mentődnek."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Koppintson egy kártyára a szerkesztéséhez vagy eltávolításához."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
@@ -1394,6 +1442,18 @@ msgstr "Betűméret: %1"
 msgid "Text copied to the clipboard"
 msgstr "A szöveg a vágólapra másolva."
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "Az AI válasza érvénytelen tanulókártya-JSON-t tartalmazott."
+
+msgid "The AI response contained too many flashcards."
+msgstr "Az AI válasza túl sok tanulókártyát tartalmazott."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "Az AI válasza nem tartalmazott tanulókártyát."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "Az AI válasza nem tartalmazott érvényes tanulókártya-adatokat."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "A(z) %1 kezelő nem található. Győződjön meg róla, hogy a kezelő létezik az api_handlers könyvtárban."
 
@@ -1402,6 +1462,9 @@ msgstr "A modell nem tudta azonosítani ezt a könyvet."
 
 msgid "Thinking ..."
 msgstr "Gondolkodás ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "A könyv szövege nem olvasható be a fájlkezelőből. Nyissa meg a könyvet, és használja a „Könyv azonosítása” funkciót."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ez a gomb gyors jegyzetet hoz létre a kiemelt szöveggel."
@@ -1465,11 +1528,25 @@ msgstr "Ez a prompt lefordítja a kiemelt szöveget egy másik nyelvre."
 msgid "Timeline"
 msgstr "Idővonal"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Tipp: elágazás (fork) esetén adja meg a felhasználó/tároló formátumot (fő ág), adott ág vagy tag esetén pedig a felhasználó/tároló@ág formátumot."
+
 msgid "Title"
 msgstr "Cím"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "A cím vagy a szerző metaadatai hiányoznak vagy hiányosak, ezért az AI eredménye megbízhatatlan lehet. Először használd az Azonosítás (AI) funkciót a beállításukhoz."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"Az AnkiDroidban való importáláshoz válassza ki a TSV-fájlt itt:\n"
+"%1\n"
+"\n"
+"Az elválasztót állítsa Tabra, válassza az Alap (Basic) jegyzettípust, rendelje az 1. mezőt az Előlaphoz, a 2. mezőt a Hátlaphoz, majd válasszon paklit és importáljon. A fájlnak nincs fejlécsora; minden sor egy kártya."
 
 msgid "To-Do / Action Items"
 msgstr "Teendők / Feladatok"
@@ -1617,6 +1694,12 @@ msgstr "Szóalak és lemma"
 msgid "Word Origin"
 msgstr "Szóeredet"
 
+msgid "Write a question"
+msgstr "Írjon be egy kérdést"
+
+msgid "Write an answer"
+msgstr "Írjon be egy választ"
+
 msgid "Write quick notes here"
 msgstr "Írj ide gyors jegyzeteket"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Igen"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Most kezdte el ezt a könyvet (kevesebb mint 3% kész). Talán jobb lenne előbb elkezdeni olvasni. Mégis szeretne egy AI Recap-et?"
+
 msgid "Your API key"
 msgstr "Az Ön API-kulcsa"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "A konfigurációs fájlban definiált saját promptok"
 
-msgid "branch or tag name"
-msgstr "ág vagy címke neve"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "az archívum nem érvényes assistant.koplugin csomag"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "ág, tag, felhasználó/tároló vagy felhasználó/tároló@ág"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: a modellszolgáltatók érvénytelenek."
@@ -1643,3 +1732,6 @@ msgstr "pl. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: nem sikerült elemezni a visszakapott adatokat"
+
+msgid "invalid repository or branch/tag"
+msgstr "érvénytelen tároló vagy ág/tag"

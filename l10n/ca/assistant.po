@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Detall:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>S'està descarregant ...</b>\n"
-"<b>GitHub: </b>%1\n"
-"<b>Repositori: </b>%2\n"
-"<b>Branca/Etiqueta: </b>%3"
+"<b>S'està baixant ...</b>\n"
+"<b>URL: </b>%1\n"
+"<b>Branca/Etiqueta: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Error:</b> No s'ha rebut cap fitxa"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Error:</b> No s'ha rebut cap resposta"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>S'estan obtenint els models...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL de GitHub:</b>  %1\n"
-"<b>Repositori font:</b>  %2\n"
-"\n"
-"- Versió actual: %3\n"
-"- Branca de desenvolupament: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL de GitHub:</b>  %1\n"
-"<b>Repositori font:</b>  %2\n"
-"\n"
-"- Versió actual: %3\n"
-"- Última versió: <b>%4</b>\n"
-"- Branca de desenvolupament: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>S'està instal·lant %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Anota"
 msgid "Annotation added successfully"
 msgstr "Anotació afegida correctament"
 
+msgid "Answer"
+msgstr "Resposta"
+
 msgid "Anthropic Messages API"
 msgstr "API de missatges d'Anthropic"
 
@@ -469,6 +445,9 @@ msgstr "Resum del llibre i recomanacions"
 msgid "Book metadata updated."
 msgstr "Metadades del llibre actualitzades."
 
+msgid "Both Question and Answer are required."
+msgstr "Calen tant la pregunta com la resposta."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "No s'ha trobat la branca/etiqueta «%1»."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Cancel·la"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Fitxa %1\n"
+"Pregunta: %2\n"
+"Resposta: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Arguments principals"
 msgid "Core Idea"
 msgstr "Idea principal"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "No s'ha pogut triar un nom de fitxer únic per a l'exportació de les fitxes."
+
 msgid "Could not close AI note file."
 msgstr "No s'ha pogut tancar el fitxer de la nota de la IA."
 
@@ -583,8 +574,14 @@ msgstr "No s'ha pogut crear la nota de la IA."
 msgid "Could not create AI note: %1"
 msgstr "No s'ha pogut crear la nota de la IA: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "No s'ha pogut crear el fitxer TSV: %1"
+
 msgid "Could not extract text from this book."
 msgstr "No s'ha pogut extreure text d'aquest llibre."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "No s'ha pogut acabar d'escriure el fitxer TSV: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "No s'ha pogut llistar la carpeta de Notes de la IA: %1"
@@ -620,6 +617,9 @@ msgstr "Importància cultural"
 msgid "Current Chapter Only"
 msgstr "Només el capítol actual"
 
+msgid "Current version:"
+msgstr "Versió actual:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Personalitzat"
@@ -650,6 +650,9 @@ msgstr "Eliminar el proveïdor %1?"
 
 msgid "Description: %1"
 msgstr "Descripció: %1"
+
+msgid "Development branch:"
+msgstr "Branca de desenvolupament:"
 
 msgid "Device"
 msgstr "Dispositiu"
@@ -702,6 +705,9 @@ msgstr "Edita"
 msgid "Edit %1"
 msgstr "Edita %1"
 
+msgid "Edit Card %1"
+msgstr "Edita la fitxa %1"
+
 msgid "Empty Error"
 msgstr "Error buit"
 
@@ -749,6 +755,9 @@ msgstr "Exemple"
 msgid "Explain"
 msgstr "Explica"
 
+msgid "Export to AnkiDroid"
+msgstr "Exporta a AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "No s'han pogut obtenir els models"
 
@@ -782,6 +791,18 @@ msgstr "Cerca el primer"
 msgid "Find next"
 msgstr "Cerca el següent"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "A la fitxa %1 li falta la pregunta o la resposta."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "La fitxa %1 no és una fitxa vàlida de pregunta i resposta."
+
+msgid "Flashcards"
+msgstr "Fitxes"
+
+msgid "Flashcards exported to %1"
+msgstr "Fitxes exportades a %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Per a més detalls, visita la pàgina wiki «Configuration» a GitHub."
 
@@ -805,6 +826,9 @@ msgstr ""
 "En general, <b>NO</b> seleccioneu més d'un: trieu un paràmetre que coincideixi amb el vostre model i la vostra plataforma. Un paràmetre incorrecte pot provocar errors de l'API. \n"
 "\n"
 "El valor seleccionat substitueix additional_parameters de la configuració. Si les opcions seleccionades comparteixen la mateixa clau, només s'utilitza l'última de la llista."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Genera fitxes concises de pregunta i resposta a partir del text proporcionat."
 
 msgid "Genre"
 msgstr "Gènere"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Llegit per última vegada fa una hora."
 msgstr[1] "Llegit per última vegada fa %1 hores."
+
+msgid "Latest version:"
+msgstr "Versió més recent:"
 
 msgid "Leave blank to use: %1"
 msgstr "Deixa en blanc per utilitzar: %1"
@@ -967,8 +994,14 @@ msgstr "No hi ha cap llibre obert."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "No hi ha cap llibre obert. Mantén premut un llibre al gestor de fitxers i tria Informació del llibre (IA)."
 
+msgid "No cards remain. Close this preview."
+msgstr "No queden fitxes. Tanca aquesta previsualització."
+
 msgid "No common parameters are available for handler %1."
 msgstr "No hi ha paràmetres comuns disponibles per al gestor %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "No hi ha cap carpeta disponible per a l'exportació de les fitxes."
 
 msgid "No highlight to annotate"
 msgstr "No hi ha cap ressaltat per anotar"
@@ -1024,6 +1057,9 @@ msgstr "S'ha cancel·lat l'actualització OTA."
 
 msgid "OTA update failed: %1"
 msgstr "Ha fallat l'actualització OTA: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "L'actualització OTA ha fallat: entrada no vàlida %1. Utilitza una branca, una etiqueta, usuari/repo o usuari/repo@branca."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "Llista predefinida de seccions del diccionari d'IA."
 msgid "Prevailing emotional state/tone:"
 msgstr "Estat emocional/to predominant:"
 
+msgid "Pronunciation"
+msgstr "Pronunciació"
+
 msgid "Protagonist's current objective:"
 msgstr "Objectiu actual del protagonista:"
 
@@ -1129,6 +1168,9 @@ msgstr "Purga"
 msgid "Purge Settings"
 msgstr "Purgar configuració"
 
+msgid "Question"
+msgstr "Pregunta"
+
 msgid "Quick Note"
 msgstr "Nota ràpida"
 
@@ -1159,6 +1201,9 @@ msgstr "Resum (IA)"
 
 msgid "Remove"
 msgstr "Elimina"
+
+msgid "Remove Card %1?"
+msgstr "Voleu eliminar la targeta %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1370,6 +1415,9 @@ msgstr "Pren notes ràpides"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Fes notes ràpides que es desaran a les teves Notes de la IA."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Toca una targeta per editar-la o eliminar-la."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Radiografia de termes"
@@ -1392,6 +1440,18 @@ msgstr "Mida del text: %1"
 msgid "Text copied to the clipboard"
 msgstr "S'ha copiat el text al porta-retalls."
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "La resposta de la IA contenia un JSON de targetes no vàlid."
+
+msgid "The AI response contained too many flashcards."
+msgstr "La resposta de la IA contenia massa targetes."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "La resposta de la IA no contenia cap targeta."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "La resposta de la IA no contenia dades de targetes vàlides."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "No s'ha trobat el gestor per a %1. Assegureu-vos que el gestor existeix al directori api_handlers."
 
@@ -1400,6 +1460,9 @@ msgstr "El model no ha pogut identificar aquest llibre."
 
 msgid "Thinking ..."
 msgstr "Pensant ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "No es pot llegir el text d'aquest llibre des del gestor de fitxers. Obre el llibre i utilitza «Identifica aquest llibre»."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Aquest botó crea una nota ràpida amb el text ressaltat."
@@ -1463,11 +1526,25 @@ msgstr "Aquesta indicació tradueix el text ressaltat a una altra llengua."
 msgid "Timeline"
 msgstr "Cronologia"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Consell: introdueix usuari/repo per a una bifurcació (branca main) o usuari/repo@branca per a una branca o etiqueta concreta."
+
 msgid "Title"
 msgstr "Títol"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Les metadades del títol o de l'autor falten o estan incompletes, de manera que el resultat de la IA pot no ser fiable. Utilitzeu «Identifica (IA)» per establir-les primer."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"Per importar a AnkiDroid, selecciona el fitxer TSV a:\n"
+"%1\n"
+"\n"
+"Defineix el separador com a Tab, tria el tipus de nota Basic, assigna el camp 1 a Front i el camp 2 a Back, i després tria una baralla i importa. El fitxer no té fila de capçalera; cada fila és una targeta."
 
 msgid "To-Do / Action Items"
 msgstr "Tasques / Accions"
@@ -1615,6 +1692,12 @@ msgstr "Forma de la paraula i lema"
 msgid "Word Origin"
 msgstr "Origen de la paraula"
 
+msgid "Write a question"
+msgstr "Escriu una pregunta"
+
+msgid "Write an answer"
+msgstr "Escriu una resposta"
+
 msgid "Write quick notes here"
 msgstr "Escriu notes ràpides aquí"
 
@@ -1624,14 +1707,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Sí"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Acabes de començar aquest llibre (menys del 3% llegit). Potser és millor que primer comencis a llegir. Vols igualment un resum de la IA?"
+
 msgid "Your API key"
 msgstr "La teva clau de l'API"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Les vostres pròpies indicacions definides al fitxer de configuració"
 
-msgid "branch or tag name"
-msgstr "nom de la branca o etiqueta"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "l'arxiu no és un paquet assistant.koplugin vàlid"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "branca, etiqueta, usuari/repo o usuari/repo@branca"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: els proveïdors de models no són vàlids."
@@ -1641,3 +1730,6 @@ msgstr "p. ex. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: no s'ha pogut analitzar les dades retornades"
+
+msgid "invalid repository or branch/tag"
+msgstr "repositori o branca/etiqueta no vàlid"

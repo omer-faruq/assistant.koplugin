@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Chi tiết:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>Đang tải xuống ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Nhánh/Thẻ: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Nhánh/Tag: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Lỗi:</b> Không nhận được thẻ ghi nhớ nào"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Lỗi:</b> Không nhận được phản hồi"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Đang tải danh sách mô hình...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL GitHub:</b>  %1\n"
-"<b>Kho mã nguồn:</b>  %2\n"
-"\n"
-"- Phiên bản hiện tại: %3\n"
-"- Nhánh phát triển: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL GitHub:</b>  %1\n"
-"<b>Kho mã nguồn:</b>  %2\n"
-"\n"
-"- Phiên bản hiện tại: %3\n"
-"- Phiên bản mới nhất: <b>%4</b>\n"
-"- Nhánh phát triển: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Đang cài đặt %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Chú thích"
 msgid "Annotation added successfully"
 msgstr "Đã thêm chú thích thành công"
 
+msgid "Answer"
+msgstr "Câu trả lời"
+
 msgid "Anthropic Messages API"
 msgstr "API Tin nhắn Anthropic"
 
@@ -469,6 +445,9 @@ msgstr "Tóm tắt sách & Gợi ý"
 msgid "Book metadata updated."
 msgstr "Đã cập nhật siêu dữ liệu sách."
 
+msgid "Both Question and Answer are required."
+msgstr "Cần có cả Câu hỏi và Câu trả lời."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Không tìm thấy nhánh/thẻ \"%1\"."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Hủy"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Thẻ %1\n"
+"Câu hỏi: %2\n"
+"Câu trả lời: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Luận điểm cốt lõi"
 msgid "Core Idea"
 msgstr "Ý tưởng cốt lõi"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Không thể chọn tên tệp duy nhất cho việc xuất thẻ ghi nhớ."
+
 msgid "Could not close AI note file."
 msgstr "Không thể đóng tệp ghi chú AI."
 
@@ -583,8 +574,14 @@ msgstr "Không thể tạo ghi chú AI."
 msgid "Could not create AI note: %1"
 msgstr "Không thể tạo ghi chú AI: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Không thể tạo tệp TSV: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Không thể trích xuất văn bản từ cuốn sách này."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Không thể hoàn tất việc ghi tệp TSV: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Không thể liệt kê thư mục Ghi chú AI: %1"
@@ -620,6 +617,9 @@ msgstr "Ý nghĩa văn hóa"
 msgid "Current Chapter Only"
 msgstr "Chỉ chương hiện tại"
 
+msgid "Current version:"
+msgstr "Phiên bản hiện tại:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Tùy chỉnh"
@@ -650,6 +650,9 @@ msgstr "Xóa nhà cung cấp %1?"
 
 msgid "Description: %1"
 msgstr "Mô tả: %1"
+
+msgid "Development branch:"
+msgstr "Nhánh phát triển:"
 
 msgid "Device"
 msgstr "Thiết bị"
@@ -702,6 +705,9 @@ msgstr "Chỉnh sửa"
 msgid "Edit %1"
 msgstr "Chỉnh sửa %1"
 
+msgid "Edit Card %1"
+msgstr "Chỉnh sửa Thẻ %1"
+
 msgid "Empty Error"
 msgstr "Lỗi trống"
 
@@ -749,6 +755,9 @@ msgstr "Ví dụ"
 msgid "Explain"
 msgstr "Giải thích"
 
+msgid "Export to AnkiDroid"
+msgstr "Xuất sang AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Không thể tải danh sách mô hình"
 
@@ -782,6 +791,18 @@ msgstr "Tìm đầu tiên"
 msgid "Find next"
 msgstr "Tìm tiếp theo"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Thẻ ghi nhớ %1 thiếu câu hỏi hoặc câu trả lời."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Thẻ ghi nhớ %1 không phải là thẻ hỏi-đáp hợp lệ."
+
+msgid "Flashcards"
+msgstr "Thẻ ghi nhớ"
+
+msgid "Flashcards exported to %1"
+msgstr "Đã xuất thẻ ghi nhớ sang %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Để biết chi tiết, hãy truy cập trang wiki 'Configuration' trên github."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Nói chung <b>KHÔNG</b> nên chọn nhiều hơn một - hãy chọn tham số phù hợp với model và nền tảng của bạn. Tham số sai có thể gây lỗi API. \n"
 "\n"
 "Giá trị đã chọn sẽ ghi đè additional_parameters của cấu hình. Nếu các tùy chọn đã chọn dùng chung một khóa, chỉ tùy chọn cuối cùng trong danh sách được dùng."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Tạo các thẻ ghi nhớ hỏi-đáp ngắn gọn từ văn bản được cung cấp."
 
 msgid "Genre"
 msgstr "Thể loại"
@@ -881,6 +905,9 @@ msgstr "Cửa sổ stream lớn"
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Đã đọc lần cuối %1 giờ trước."
+
+msgid "Latest version:"
+msgstr "Phiên bản mới nhất:"
 
 msgid "Leave blank to use: %1"
 msgstr "Để trống để sử dụng: %1"
@@ -966,8 +993,14 @@ msgstr "Không có sách nào đang mở."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Không có sách nào đang mở. Nhấn giữ một cuốn sách trong trình quản lý tệp và chọn Thông tin sách (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Không còn thẻ nào. Hãy đóng bản xem trước này."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Không có tham số chung nào khả dụng cho trình xử lý %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Không có thư mục nào khả dụng cho việc xuất thẻ ghi nhớ."
 
 msgid "No highlight to annotate"
 msgstr "Không có đoạn đánh dấu để chú thích"
@@ -1023,6 +1056,9 @@ msgstr "Đã hủy cập nhật OTA."
 
 msgid "OTA update failed: %1"
 msgstr "Cập nhật OTA thất bại: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "Cập nhật OTA thất bại: đầu vào không hợp lệ %1. Hãy dùng một nhánh, tag, user/repo hoặc user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1080,6 +1116,9 @@ msgstr "Danh sách mục từ điển AI có sẵn."
 msgid "Prevailing emotional state/tone:"
 msgstr "Trạng thái cảm xúc/giọng điệu bao trùm:"
 
+msgid "Pronunciation"
+msgstr "Phát âm"
+
 msgid "Protagonist's current objective:"
 msgstr "Mục tiêu hiện tại của nhân vật chính:"
 
@@ -1128,6 +1167,9 @@ msgstr "Xóa sạch"
 msgid "Purge Settings"
 msgstr "Xóa cài đặt"
 
+msgid "Question"
+msgstr "Câu hỏi"
+
 msgid "Quick Note"
 msgstr "Ghi chú nhanh"
 
@@ -1158,6 +1200,9 @@ msgstr "Tóm tắt (AI)"
 
 msgid "Remove"
 msgstr "Xóa"
+
+msgid "Remove Card %1?"
+msgstr "Xóa thẻ %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1370,6 +1415,9 @@ msgstr "Ghi chú nhanh"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Ghi chú nhanh sẽ được lưu vào Ghi chú AI của bạn."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Chạm vào một thẻ để sửa hoặc xóa thẻ đó."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Thuật ngữ X-Ray"
@@ -1392,6 +1440,18 @@ msgstr "Cỡ chữ: %1"
 msgid "Text copied to the clipboard"
 msgstr "Văn bản đã được sao chép vào bộ nhớ tạm"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "Phản hồi của AI chứa JSON thẻ ghi nhớ không hợp lệ."
+
+msgid "The AI response contained too many flashcards."
+msgstr "Phản hồi của AI chứa quá nhiều thẻ ghi nhớ."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "Phản hồi của AI không chứa thẻ ghi nhớ nào."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "Phản hồi của AI không chứa dữ liệu thẻ ghi nhớ hợp lệ."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Không tìm thấy trình xử lý cho %1. Vui lòng đảm bảo trình xử lý tồn tại trong thư mục api_handlers."
 
@@ -1400,6 +1460,9 @@ msgstr "Mô hình không thể nhận dạng cuốn sách này."
 
 msgid "Thinking ..."
 msgstr "Đang suy luận ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Không thể đọc nội dung của cuốn sách này từ trình quản lý tệp. Hãy mở sách và dùng Nhận diện sách này."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Nút này tạo một ghi chú nhanh với văn bản được tô sáng."
@@ -1463,11 +1526,25 @@ msgstr "Lời nhắc này dịch văn bản được tô sáng sang ngôn ngữ 
 msgid "Timeline"
 msgstr "Dòng thời gian"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Mẹo: nhập user/repo cho một bản fork (nhánh main) hoặc user/repo@branch cho một nhánh hoặc tag cụ thể."
+
 msgid "Title"
 msgstr "Tiêu đề"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Siêu dữ liệu tiêu đề hoặc tác giả bị thiếu hoặc chưa đầy đủ, nên kết quả của AI có thể không đáng tin cậy. Hãy dùng Nhận dạng (AI) để đặt trước."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"Để nhập vào AnkiDroid, hãy chọn tệp TSV tại:\n"
+"%1\n"
+"\n"
+"Đặt dấu phân cách là Tab, chọn kiểu ghi chú Basic, gán trường 1 vào Front và trường 2 vào Back, sau đó chọn một bộ thẻ và nhập. Tệp không có dòng tiêu đề; mỗi dòng là một thẻ."
 
 msgid "To-Do / Action Items"
 msgstr "Việc cần làm / Mục hành động"
@@ -1615,6 +1692,12 @@ msgstr "Dạng từ & Từ gốc"
 msgid "Word Origin"
 msgstr "Nguồn gốc từ"
 
+msgid "Write a question"
+msgstr "Viết câu hỏi"
+
+msgid "Write an answer"
+msgstr "Viết câu trả lời"
+
 msgid "Write quick notes here"
 msgstr "Viết ghi chú nhanh tại đây"
 
@@ -1624,14 +1707,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Có"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Bạn vừa mới bắt đầu đọc cuốn sách này (đã đọc chưa đến 3%). Có lẽ nên bắt đầu đọc trước thì hơn. Bạn vẫn muốn AI tóm tắt lại chứ?"
+
 msgid "Your API key"
 msgstr "Khóa API của bạn"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Các prompt của riêng bạn được định nghĩa trong tệp cấu hình"
 
-msgid "branch or tag name"
-msgstr "tên nhánh hoặc thẻ"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "archive không phải là gói assistant.koplugin hợp lệ"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "nhánh, tag, user/repo hoặc user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: các nhà cung cấp mô hình không hợp lệ."
@@ -1641,3 +1730,6 @@ msgstr "ví dụ: google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: không thể phân tích dữ liệu trả về"
+
+msgid "invalid repository or branch/tag"
+msgstr "kho lưu trữ hoặc nhánh/tag không hợp lệ"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 04:09+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Македонски (AI translation)\n"
@@ -111,48 +111,21 @@ msgstr "<b>Детали:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>Преземање ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Репозиториум: </b>%2\n"
-"<b>Гранка/Ознака: </b>%3"
+"<b>Се презема ...</b>\n"
+"<b>URL: </b>%1\n"
+"<b>Гранка/Таг: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Грешка:</b> Не се примени флеш-картички"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Грешка:</b> Не е примен одговор"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Вчитување модели...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>Изворно складиште:</b>  %2\n"
-"\n"
-"- Тековна верзија: %3\n"
-"- Развојна гранка: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>Изворно складиште:</b>  %2\n"
-"\n"
-"- Тековна верзија: %3\n"
-"- Најнова верзија: <b>%4</b>\n"
-"- Развојна гранка: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Инсталирање на %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Анотирај"
 msgid "Annotation added successfully"
 msgstr "Анотацијата е успешно додадена"
 
+msgid "Answer"
+msgstr "Одговор"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Резиме на книга и препораки"
 msgid "Book metadata updated."
 msgstr "Метаподатоците за книгата се ажурирани."
 
+msgid "Both Question and Answer are required."
+msgstr "Потребни се и прашањето и одговорот."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Гранката/ознаката „%1“ не е пронајдена."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Откажи"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Картичка %1\n"
+"Прашање: %2\n"
+"Одговор: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Основни аргументи"
 msgid "Core Idea"
 msgstr "Основна идеја"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Не можеше да се избере единствено име на датотека за извозот на флеш-картичките."
+
 msgid "Could not close AI note file."
 msgstr "Не можеше да се затвори датотеката на AI белешката."
 
@@ -583,8 +574,14 @@ msgstr "Не можеше да се создаде AI белешка."
 msgid "Could not create AI note: %1"
 msgstr "Не можеше да се создаде AI белешка: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Не можеше да се создаде TSV-датотеката: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Не можеше да се извлече текст од оваа книга."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Не можеше да се доврши запишувањето на TSV-датотеката: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Не можеше да се прочита содржината на папката за AI белешки: %1"
@@ -620,6 +617,9 @@ msgstr "Културно значење"
 msgid "Current Chapter Only"
 msgstr "Само тековно поглавје"
 
+msgid "Current version:"
+msgstr "Тековна верзија:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Прилагодено"
@@ -650,6 +650,9 @@ msgstr "Избриши го провајдерот %1?"
 
 msgid "Description: %1"
 msgstr "Опис: %1"
+
+msgid "Development branch:"
+msgstr "Развојна гранка:"
 
 msgid "Device"
 msgstr "Уред"
@@ -702,6 +705,9 @@ msgstr "Уреди"
 msgid "Edit %1"
 msgstr "Уреди %1"
 
+msgid "Edit Card %1"
+msgstr "Уреди картичка %1"
+
 msgid "Empty Error"
 msgstr "Празна грешка"
 
@@ -749,6 +755,9 @@ msgstr "Пример"
 msgid "Explain"
 msgstr "Објасни"
 
+msgid "Export to AnkiDroid"
+msgstr "Извези во AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Неуспешно вчитување на модели"
 
@@ -782,6 +791,18 @@ msgstr "Пронајди прво"
 msgid "Find next"
 msgstr "Пронајди следно"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "На флеш-картичката %1 ѝ недостига прашање или одговор."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Флеш-картичката %1 не е валидна картичка со прашање и одговор."
+
+msgid "Flashcards"
+msgstr "Флеш-картички"
+
+msgid "Flashcards exported to %1"
+msgstr "Флеш-картичките се извезени во %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "За детали, посетете ја вики-страницата „Configuration“ на github."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Генерално <b>НЕ</b> избирајте повеќе од едно - изберете параметар што одговара на вашиот модел и платформа. Погрешен параметар може да предизвика API грешки. \n"
 "\n"
 "Избраната вредност ги заменува additional_parameters од конфигурацијата. Ако избраните опции имаат ист клуч, се користи само последната во списокот."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Генерирај концизни флеш-картички со прашања и одговори од доставениот текст."
 
 msgid "Genre"
 msgstr "Жанр"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Последно читано пред 1 час."
 msgstr[1] "Последно читано пред %1 часа."
+
+msgid "Latest version:"
+msgstr "Најнова верзија:"
 
 msgid "Leave blank to use: %1"
 msgstr "Оставете празно за да се користи: %1"
@@ -967,8 +994,14 @@ msgstr "Нема отворена книга."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Нема отворена книга. Притиснете долго на книга во менаџерот за датотеки и изберете Информации за книга (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Нема повеќе картички. Затворете го прегледов."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Нема достапни параметри за %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Нема достапна папка за извозот на флеш-картичките."
 
 msgid "No highlight to annotate"
 msgstr "Нема истакнат текст за анотирање"
@@ -1024,6 +1057,9 @@ msgstr "OTA ажурирањето е откажано."
 
 msgid "OTA update failed: %1"
 msgstr "OTA ажурирањето не успеа: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA ажурирањето не успеа: невалиден внес %1. Користете гранка, ознака, user/repo или user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "Однапред зададена листа на секции на AI �
 msgid "Prevailing emotional state/tone:"
 msgstr "Преовладувачка емоционална состојба/тон:"
 
+msgid "Pronunciation"
+msgstr "Изговор"
+
 msgid "Protagonist's current objective:"
 msgstr "Тековна цел на протагонистот:"
 
@@ -1129,6 +1168,9 @@ msgstr "Испразни"
 msgid "Purge Settings"
 msgstr "Избриши поставувања"
 
+msgid "Question"
+msgstr "Прашање"
+
 msgid "Quick Note"
 msgstr "Брза белешка"
 
@@ -1159,6 +1201,9 @@ msgstr "Резиме (AI)"
 
 msgid "Remove"
 msgstr "Отстрани"
+
+msgid "Remove Card %1?"
+msgstr "Да се отстрани картичката %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "Направи брзи белешки"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Забележувајте брзи белешки што ќе се зачуваат во вашите AI белешки."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Допрете картичка за да ја уредите или отстраните."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "X-Ray на поим"
@@ -1394,6 +1442,18 @@ msgstr "Големина на текст: %1"
 msgid "Text copied to the clipboard"
 msgstr "Текстот е копиран во клипборд."
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "Одговорот на AI содржеше невалиден JSON за флеш-картички."
+
+msgid "The AI response contained too many flashcards."
+msgstr "Одговорот на AI содржеше премногу флеш-картички."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "Одговорот на AI не содржеше ниту една флеш-картичка."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "Одговорот на AI не содржеше валидни податоци за флеш-картички."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Ракувачот за %1 не е пронајден. Ве молиме проверете дали ракувачот постои во директориумот api_handlers."
 
@@ -1402,6 +1462,9 @@ msgstr "Моделот не можеше да ја идентификува ов
 
 msgid "Thinking ..."
 msgstr "Размислува ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Текстот на оваа книга не може да се прочита од менаџерот на датотеки. Отворете ја книгата и користете „Идентификувај ја оваа книга“."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ова копче создава брза белешка со означен текст."
@@ -1465,11 +1528,25 @@ msgstr "Овој промпт го преведува означениот те�
 msgid "Timeline"
 msgstr "Временска линија"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Совет: внесете user/repo за форк (главна гранка) или user/repo@branch за одредена гранка или ознака."
+
 msgid "Title"
 msgstr "Наслов"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Метаподатоците за насловот или авторот недостасуваат или се нецелосни, па резултатот од AI може да биде несигурен. Користете „Идентификувај (AI)“ за прво да ги поставите."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"За да увезете во AnkiDroid, изберете ја TSV-датотеката на:\n"
+"%1\n"
+"\n"
+"Поставете го сепараторот на Tab, изберете го типот на белешка Basic, поврзете го полето 1 со Front и полето 2 со Back, потоа изберете шпил и увезете. Датотеката нема ред за заглавје; секој ред е една картичка."
 
 msgid "To-Do / Action Items"
 msgstr "Задачи / Акциони точки"
@@ -1617,6 +1694,12 @@ msgstr "Зборовна форма и лема"
 msgid "Word Origin"
 msgstr "Потекло на зборот"
 
+msgid "Write a question"
+msgstr "Напишете прашање"
+
+msgid "Write an answer"
+msgstr "Напишете одговор"
+
 msgid "Write quick notes here"
 msgstr "Напиши брзи белешки овде"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Да"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Штотуку ја започнавте оваа книга (помалку од 3 % прочитано). Можеби е подобро прво да почнете да читате. Дали сепак сакате AI резиме?"
+
 msgid "Your API key"
 msgstr "Вашиот API клуч"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Вашите сопствени промпти дефинирани во конфигурациската датотека."
 
-msgid "branch or tag name"
-msgstr "име на гранка или ознака"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "архивата не е валиден пакет assistant.koplugin"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "гранка, ознака, user/repo или user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: провајдерите на модели се невалидни."
@@ -1643,3 +1732,6 @@ msgstr "на пр. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: не успеа да ги парсира вратените податоци"
+
+msgid "invalid repository or branch/tag"
+msgstr "невалидно складиште или гранка/ознака"

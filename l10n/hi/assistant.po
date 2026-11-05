@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 03:34+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: हिन्दी (AI translation)\n"
@@ -111,48 +111,21 @@ msgstr "<b>विवरण:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>डाउनलोड हो रहा है ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>रिपॉजिटरी: </b>%2\n"
-"<b>ब्रांच/टैग: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>ब्रांच/टैग: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>त्रुटि:</b> कोई फ़्लैशकार्ड प्राप्त नहीं हुआ"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>त्रुटि:</b> कोई प्रतिक्रिया प्राप्त नहीं हुई"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>मॉडल प्राप्त किए जा रहे हैं...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>गिटहब यूआरएल:</b>  %1\n"
-"<b>स्रोत रिपॉजिटरी:</b>  %2\n"
-"\n"
-"- वर्तमान संस्करण: %3\n"
-"- विकास शाखा: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>गिटहब यूआरएल:</b>  %1\n"
-"<b>स्रोत रिपॉजिटरी:</b>  %2\n"
-"\n"
-"- वर्तमान संस्करण: %3\n"
-"- नवीनतम संस्करण: <b>%4</b>\n"
-"- विकास शाखा: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 इंस्टॉल हो रहा है...</b>"
@@ -364,6 +337,9 @@ msgstr "एनोटेट करें"
 msgid "Annotation added successfully"
 msgstr "एनोटेशन सफलतापूर्वक जोड़ा गया"
 
+msgid "Answer"
+msgstr "उत्तर"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "पुस्तक सारांश और अनुशंसाएँ
 msgid "Book metadata updated."
 msgstr "किताब का मेटाडेटा अपडेट हो गया।"
 
+msgid "Both Question and Answer are required."
+msgstr "प्रश्न और उत्तर दोनों आवश्यक हैं।"
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ब्रांच/टैग \"%1\" नहीं मिला।"
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "रद्द करें"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"कार्ड %1\n"
+"प्रश्न: %2\n"
+"उत्तर: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "मुख्य तर्क"
 msgid "Core Idea"
 msgstr "मुख्य विचार"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "फ़्लैशकार्ड निर्यात के लिए एक अद्वितीय फ़ाइलनाम चुनना संभव नहीं हुआ।"
+
 msgid "Could not close AI note file."
 msgstr "AI नोट फ़ाइल बंद नहीं की जा सकी।"
 
@@ -583,8 +574,14 @@ msgstr "AI नोट नहीं बनाया जा सका।"
 msgid "Could not create AI note: %1"
 msgstr "AI नोट नहीं बनाया जा सका: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "TSV फ़ाइल बनाना संभव नहीं हुआ: %1"
+
 msgid "Could not extract text from this book."
 msgstr "इस किताब से पाठ निकाला नहीं जा सका।"
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "TSV फ़ाइल लिखना पूरा करना संभव नहीं हुआ: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "AI Notes फ़ोल्डर की सूची नहीं बनाई जा सकी: %1"
@@ -620,6 +617,9 @@ msgstr "सांस्कृतिक महत्व"
 msgid "Current Chapter Only"
 msgstr "केवल वर्तमान अध्याय"
 
+msgid "Current version:"
+msgstr "वर्तमान संस्करण:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "कस्टम"
@@ -650,6 +650,9 @@ msgstr "प्रदाता %1 हटाएँ?"
 
 msgid "Description: %1"
 msgstr "विवरण: %1"
+
+msgid "Development branch:"
+msgstr "डेवलपमेंट ब्रांच:"
 
 msgid "Device"
 msgstr "डिवाइस"
@@ -702,6 +705,9 @@ msgstr "संपादित करें"
 msgid "Edit %1"
 msgstr "%1 संपादित करें"
 
+msgid "Edit Card %1"
+msgstr "कार्ड %1 संपादित करें"
+
 msgid "Empty Error"
 msgstr "खाली त्रुटि"
 
@@ -749,6 +755,9 @@ msgstr "उदाहरण"
 msgid "Explain"
 msgstr "समझाएँ"
 
+msgid "Export to AnkiDroid"
+msgstr "AnkiDroid में निर्यात करें"
+
 msgid "Failed to fetch models"
 msgstr "मॉडल प्राप्त करने में विफल"
 
@@ -782,6 +791,18 @@ msgstr "पहला खोजें"
 msgid "Find next"
 msgstr "अगला खोजें"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "फ़्लैशकार्ड %1 में प्रश्न या उत्तर अनुपस्थित है।"
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "फ़्लैशकार्ड %1 एक मान्य प्रश्न-उत्तर कार्ड नहीं है।"
+
+msgid "Flashcards"
+msgstr "फ़्लैशकार्ड"
+
+msgid "Flashcards exported to %1"
+msgstr "फ़्लैशकार्ड %1 में निर्यात किए गए"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "विवरण के लिए, GitHub पर 'Configuration' विकी पृष्ठ देखें।"
 
@@ -805,6 +826,9 @@ msgstr ""
 "सामान्यतः एक से अधिक का चयन <b>न</b> करें - ऐसा पैरामीटर चुनें जो आपके मॉडल और प्लेटफ़ॉर्म से मेल खाता हो। गलत पैरामीटर से API त्रुटियाँ हो सकती हैं। \n"
 "\n"
 "चयनित मान कॉन्फ़िगरेशन के additional_parameters को ओवरराइड करता है। यदि चयनित विकल्पों की कुंजी समान हो, तो सूची में केवल अंतिम विकल्प का उपयोग किया जाता है।"
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "दिए गए पाठ से संक्षिप्त प्रश्न-उत्तर फ़्लैशकार्ड बनाएँ।"
 
 msgid "Genre"
 msgstr "विधा"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "एक घंटा पहले अंतिम बार पढ़ा गया।"
 msgstr[1] "%1 घंटे पहले अंतिम बार पढ़ा गया।"
+
+msgid "Latest version:"
+msgstr "नवीनतम संस्करण:"
 
 msgid "Leave blank to use: %1"
 msgstr "उपयोग करने के लिए खाली छोड़ें: %1"
@@ -967,8 +994,14 @@ msgstr "कोई किताब खुली नहीं है।"
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "कोई पुस्तक खुली नहीं है। फ़ाइल मैनेजर में किसी पुस्तक को देर तक दबाएँ और पुस्तक जानकारी (AI) चुनें।"
 
+msgid "No cards remain. Close this preview."
+msgstr "कोई कार्ड शेष नहीं है। इस पूर्वावलोकन को बंद करें।"
+
 msgid "No common parameters are available for handler %1."
 msgstr "हैंडलर %1 के लिए कोई सामान्य पैरामीटर उपलब्ध नहीं हैं।"
+
+msgid "No folder is available for the flashcard export."
+msgstr "फ़्लैशकार्ड निर्यात के लिए कोई फ़ोल्डर उपलब्ध नहीं है।"
 
 msgid "No highlight to annotate"
 msgstr "टिप्पणी के लिए कोई हाइलाइट नहीं"
@@ -1024,6 +1057,9 @@ msgstr "OTA अपडेट रद्द कर दिया गया।"
 
 msgid "OTA update failed: %1"
 msgstr "OTA अपडेट विफल रहा: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA अपडेट विफल: अमान्य इनपुट %1. किसी ब्रांच, टैग, user/repo या user/repo@branch का उपयोग करें।"
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "AI शब्दकोश अनुभागों की प्रीस
 msgid "Prevailing emotional state/tone:"
 msgstr "प्रचलित भावनात्मक स्थिति/स्वर:"
 
+msgid "Pronunciation"
+msgstr "उच्चारण"
+
 msgid "Protagonist's current objective:"
 msgstr "नायक का वर्तमान उद्देश्य:"
 
@@ -1129,6 +1168,9 @@ msgstr "हटाएँ"
 msgid "Purge Settings"
 msgstr "सेटिंग्स मिटाएँ"
 
+msgid "Question"
+msgstr "प्रश्न"
+
 msgid "Quick Note"
 msgstr "त्वरित नोट"
 
@@ -1159,6 +1201,9 @@ msgstr "रीकैप (AI)"
 
 msgid "Remove"
 msgstr "हटाएँ"
+
+msgid "Remove Card %1?"
+msgstr "कार्ड %1 हटाएँ?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "त्वरित नोट्स लें"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "त्वरित नोट्स लें जो आपके AI नोट्स में सहेजे जाएँगे।"
 
+msgid "Tap a card to edit or remove it."
+msgstr "किसी कार्ड को संपादित या हटाने के लिए उस पर टैप करें।"
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
@@ -1394,6 +1442,18 @@ msgstr "पाठ आकार: %1"
 msgid "Text copied to the clipboard"
 msgstr "टेक्स्ट क्लिपबोर्ड पर कॉपी कर दिया गया"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AI प्रतिक्रिया में अमान्य फ़्लैशकार्ड JSON था।"
+
+msgid "The AI response contained too many flashcards."
+msgstr "AI प्रतिक्रिया में बहुत अधिक फ़्लैशकार्ड थे।"
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AI प्रतिक्रिया में कोई फ़्लैशकार्ड नहीं था।"
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AI प्रतिक्रिया में मान्य फ़्लैशकार्ड डेटा नहीं था।"
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 के लिए हैंडलर नहीं मिला। कृपया सुनिश्चित करें कि हैंडलर api_handlers निर्देशिका में मौजूद है।"
 
@@ -1402,6 +1462,9 @@ msgstr "मॉडल इस किताब को पहचान नहीं 
 
 msgid "Thinking ..."
 msgstr "सोच रहा है ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "इस पुस्तक का टेक्स्ट फ़ाइल प्रबंधक से पढ़ा नहीं जा सकता। पुस्तक खोलें और “इस पुस्तक को पहचानें” का उपयोग करें।"
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "यह बटन हाइलाइट किए गए पाठ के साथ एक त्वरित नोट बनाता है।"
@@ -1465,11 +1528,25 @@ msgstr "यह प्रॉम्प्ट हाइलाइट किए ग�
 msgid "Timeline"
 msgstr "समयरेखा"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "सुझाव: किसी फ़ोर्क (मुख्य ब्रांच) के लिए user/repo दर्ज करें, या किसी विशिष्ट ब्रांच या टैग के लिए user/repo@branch दर्ज करें।"
+
 msgid "Title"
 msgstr "शीर्षक"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "शीर्षक या लेखक का मेटाडेटा अनुपलब्ध या अपूर्ण है, इसलिए AI का परिणाम अविश्वसनीय हो सकता है। पहले इसे सेट करने के लिए पहचानें (AI) का उपयोग करें।"
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"AnkiDroid में आयात करने के लिए, इस स्थान पर TSV फ़ाइल चुनें:\n"
+"%1\n"
+"\n"
+"विभाजक को Tab पर सेट करें, Basic नोट प्रकार चुनें, फ़ील्ड 1 को Front और फ़ील्ड 2 को Back पर मैप करें, फिर एक डेक चुनें और आयात करें। फ़ाइल में कोई हेडर पंक्ति नहीं है; प्रत्येक पंक्ति एक कार्ड है।"
 
 msgid "To-Do / Action Items"
 msgstr "कार्य सूची / कार्य आइटम"
@@ -1617,6 +1694,12 @@ msgstr "शब्द रूप और मूल रूप"
 msgid "Word Origin"
 msgstr "शब्द की उत्पत्ति"
 
+msgid "Write a question"
+msgstr "प्रश्न लिखें"
+
+msgid "Write an answer"
+msgstr "उत्तर लिखें"
+
 msgid "Write quick notes here"
 msgstr "यहाँ त्वरित नोट्स लिखें"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "हाँ"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "आपने अभी-अभी यह पुस्तक शुरू की है (3% से कम पूरी हुई है)। पहले पढ़ना शुरू करना बेहतर हो सकता है। क्या आप फिर भी AI रीकैप चाहते हैं?"
+
 msgid "Your API key"
 msgstr "आपकी API कुंजी"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "कॉन्फ़िगरेशन फ़ाइल में परिभाषित आपके अपने प्रॉम्प्ट"
 
-msgid "branch or tag name"
-msgstr "ब्रांच या टैग नाम"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "archive एक मान्य assistant.koplugin पैकेज नहीं है"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "ब्रांच, टैग, user/repo या user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: मॉडल प्रदाता अमान्य हैं।"
@@ -1643,3 +1732,6 @@ msgstr "उदा. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: लौटाए गए डेटा को पार्स करने में विफल"
+
+msgid "invalid repository or branch/tag"
+msgstr "अमान्य रिपॉज़िटरी या ब्रांच/टैग"

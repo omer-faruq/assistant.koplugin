@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 04:13+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Taqbaylit (AI translation)\n"
@@ -111,48 +111,21 @@ msgstr "<b>Talqayt:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>La d-azdam...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>Asider ...</b>\n"
+"<b>URL: </b>%1\n"
+"<b>Taɣbalut/Tag: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Tuccḍa:</b> Ulac tikarḍiwin n usseqsi i d-yewwḍen"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Tuccḍa:</b> Ur d-tewwi ara tiririt"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Asali n imudellen...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL n Github:</b>  %1\n"
-"<b>Aɣbalu n teɣbalt:</b>  %2\n"
-"\n"
-"- Lqem amiran: %3\n"
-"- Taceqluft n tneflit: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL n Github:</b>  %1\n"
-"<b>Aɣbalu n teɣbalt:</b>  %2\n"
-"\n"
-"- Lqem amiran: %3\n"
-"- Lqem aneggaru: <b>%4</b>\n"
-"- Taceqluft n tneflit: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>La nsebded %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Zmel"
 msgid "Annotation added successfully"
 msgstr "Tazmilt tettwarna s rrbeḥ"
 
+msgid "Answer"
+msgstr "Tiririt"
+
 msgid "Anthropic Messages API"
 msgstr "API n yiznan n Anthropic"
 
@@ -469,6 +445,9 @@ msgstr "Tazdeɣt n udlis & Isumar."
 msgid "Book metadata updated."
 msgstr "Yettwaleqqem metadata n udlis."
 
+msgid "Both Question and Answer are required."
+msgstr "Ilaq aseqsi akked tiririt."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Branch/Tag \"%1\" ur yettwaf ara."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Sefsex"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Takarḍa %1\n"
+"Aseqsi: %2\n"
+"Tiririt: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Timenna tigejdanin"
 msgid "Core Idea"
 msgstr "Tikta tagejdant"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Ur yezmir ara ad yextar isem n ufaylu i usifeḍ n tikarḍiwin n usseqsi."
+
 msgid "Could not close AI note file."
 msgstr "Ur yezmir ara ad yemdel afaylu n tazmilt AI."
 
@@ -583,8 +574,14 @@ msgstr "Ur yezmir ara ad yexleq tazmilt AI."
 msgid "Could not create AI note: %1"
 msgstr "Ur yezmir ara ad yexleq tazmilt AI: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Ur yezmir ara ad yexleq afaylu TSV: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Ur yezmir ara ad d-issuffeɣ aḍris seg udlis-a."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Ur yezmir ara ad yekfu tira n ufaylu TSV: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Ur yezmir ara ad d-yebder akaram n Tizmilin AI: %1"
@@ -620,6 +617,9 @@ msgstr "Azal aḍelsan"
 msgid "Current Chapter Only"
 msgstr "Agzul amiran kan"
 
+msgid "Current version:"
+msgstr "Lqem amiran:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Yudsen"
@@ -650,6 +650,9 @@ msgstr "Kkes ameddaf %1?"
 
 msgid "Description: %1"
 msgstr "Aglam: %1"
+
+msgid "Development branch:"
+msgstr "Taɣbalut n tneflit:"
 
 msgid "Device"
 msgstr "Aferdis"
@@ -702,6 +705,9 @@ msgstr "Ẓreg"
 msgid "Edit %1"
 msgstr "Ẓreg %1"
 
+msgid "Edit Card %1"
+msgstr "Ẓreg takarḍa %1"
+
 msgid "Empty Error"
 msgstr "Tuccḍa ilem"
 
@@ -749,6 +755,9 @@ msgstr "Amdya"
 msgid "Explain"
 msgstr "Sefhem"
 
+msgid "Export to AnkiDroid"
+msgstr "Sifeḍ ɣer AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Awezgi deg usali n imudellen"
 
@@ -782,6 +791,18 @@ msgstr "Af amezwaru"
 msgid "Find next"
 msgstr "Af win i d-iteddun"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Deg tkarḍa n usseqsi %1, ulac aseqsi neɣ tiririt."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Takarḍa n usseqsi %1 mačči d takarḍa iṣeḥḥan n usseqsi d tiririt."
+
+msgid "Flashcards"
+msgstr "Tikarḍiwin n usseqsi"
+
+msgid "Flashcards exported to %1"
+msgstr "Tikarḍiwin n usseqsi ttwasifḍent ɣer %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "I wugar n telqayt, ẓer asebtar 'Configuration' wiki deg github."
 
@@ -805,6 +826,9 @@ msgstr ""
 "S umata, <b>UR</b> tfernis ara ugar n yiwen - fren aɣewwaṛ i yemṣadan d tmudemt-ik d unagraw-ik. Aɣewwaṛ n dir yezmer ad d-yeglu s tuccḍiwin n API. \n"
 "\n"
 "Azal yettwafernen yessefsex additional_parameters n twila. Ma yella iɣewwaṛen yettwafernen sɛan asarut am yiwen, ala aneggaru n umuɣ i yettwasqedcen."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Sirew tikarḍiwin n usseqsi d tiririt iwezlen seg uḍris i d-yettunefken."
 
 msgid "Genre"
 msgstr "Anaw"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Tettwaɣra seg tasragt."
 msgstr[1] "Tettwaɣra seg %1 n tisragin."
+
+msgid "Latest version:"
+msgstr "Lqem aneggaru:"
 
 msgid "Leave blank to use: %1"
 msgstr "Eǧǧ it d ilem i useqdec: %1"
@@ -967,8 +994,14 @@ msgstr "Ulac adlis yeldin."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Ulac adlis yeldin. Ḍḍef cwiṭ ɣef wedlis deg umsedday n yifuyla, syen fren Talɣut n udlis (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Ulac tikarḍiwin i d-yeqqimen. Mdel taskant-agi."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Ulac iɣewwaṛen imgarraden yellan i handler %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Ulac akaram i usifeḍ n tikarḍiwin n usseqsi."
 
 msgid "No highlight to annotate"
 msgstr "Ulac tacreḍt i uzmel"
@@ -1024,6 +1057,9 @@ msgstr "Aleqqem OTA yettwaḥbes."
 
 msgid "OTA update failed: %1"
 msgstr "Aleqqem OTA yexser: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "Asnerni OTA yecceḍ: anekcum %1 mačči d ameɣtu. Seqdec tafeggagt, tabzimt, user/repo neɣ user/repo@tafeggagt."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "Tabdart tettwasbadu n tgezmiwin n umawal n AI."
 msgid "Prevailing emotional state/tone:"
 msgstr "Addad n wul / taneγruft i d-yezgan:"
 
+msgid "Pronunciation"
+msgstr "Tameslayt"
+
 msgid "Protagonist's current objective:"
 msgstr "Taswiɛt tamirant n uneɣru:"
 
@@ -1129,6 +1168,9 @@ msgstr "Sfeḍ"
 msgid "Purge Settings"
 msgstr "Sfeḍ iɣewwaṛen"
 
+msgid "Question"
+msgstr "Asteqsi"
+
 msgid "Quick Note"
 msgstr "Tazmilt taruradt"
 
@@ -1159,6 +1201,9 @@ msgstr "Agzul (AI)"
 
 msgid "Remove"
 msgstr "Kkes"
+
+msgid "Remove Card %1?"
+msgstr "Kkes takarda %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "Aru tizmilin iɣewwaṛen"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Ari tira tiruradin ara yettwasekles ɣer tira-ik n AI."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Sit ɣef tekarda akken ad tt-tbeddleḍ neɣ ad tt-tekkseḍ."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "X-Ray n wawal"
@@ -1394,6 +1442,18 @@ msgstr "Teɣzi n uḍris: %1"
 msgid "Text copied to the clipboard"
 msgstr "Aḍris yettwanɣel ɣer telwadt"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "Tiririt n AI tesɛa-d JSON n tikarda n uselmed mačči d ameɣtu."
+
+msgid "The AI response contained too many flashcards."
+msgstr "Tiririt n AI tesɛa-d aṭas n tikarda n uselmed."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "Tiririt n AI ur tesɛi ara tikarda n uselmed."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "Tiririt n AI ur tesɛi ara isefka imeɣtu n tikarda n uselmed."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handler n %1 ur yettwaf. Ma ulac aɣilif, ḥeqqeq ad yili handler deg ukaram api_handlers."
 
@@ -1402,6 +1462,9 @@ msgstr "Ur yezmir ara umudel ad yissin adlis-a."
 
 msgid "Thinking ..."
 msgstr "La yettxemmem ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Aḍris n wedlis-a ur yezmir ara ad yettwaɣra seg umsefrak n yifuyla. Ldi adlis-a, syen seqdec «Sissen adlis-a»."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Asenqed-a yesskar tazmilt taruradt s udris yettwasemmen."
@@ -1465,11 +1528,25 @@ msgstr "Asekkaz-a yesqulel udris yettwasemmen ɣer tutlayt nniven."
 msgid "Timeline"
 msgstr "Tasuddest n wakud"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Taxbalut: sekcem user/repo i ufork (tafeggagt tagejdant) neɣ user/repo@tafeggagt i tefeggagt neɣ tabzimt yettwaṣṣfen."
+
 msgid "Title"
 msgstr "Azwel"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Metadata n uzwel neɣ n umaru ulac neɣ d aḥric kan, ihi agmuḍ n AI yezmer ur yettwaḍman ara. Seqdec Sissen (AI) akken ad tent-tesserseḍ di tazwara."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"I ukcim deg AnkiDroid, fren afaylu TSV yellan deg:\n"
+"%1\n"
+"\n"
+"Skellex amsebḍay ɣer Tab, fren anaw n tira Basic, seddu urti 1 ɣer Front d urti 2 ɣer Back, sakin fren agraw n tikarda syen sekcem. Afaylu ur ɣur-s ara izirig n uqqaṛ; yal izirig d takarda."
 
 msgid "To-Do / Action Items"
 msgstr "Tigawin ara nexdem"
@@ -1617,6 +1694,12 @@ msgstr "Talɣa n wawal & Aẓar"
 msgid "Word Origin"
 msgstr "Aẓar n wawal"
 
+msgid "Write a question"
+msgstr "Aru asteqsi"
+
+msgid "Write an answer"
+msgstr "Aru tiririt"
+
 msgid "Write quick notes here"
 msgstr "Aru tizmilin iɣewwaṛen dagi"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Ih"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Aql-ak tura kan tebdaḍ adlis-a (ddaw n 3% yemmden). Yif-it ma tebdaḍ tɣuriḍ zik. Tebɣiḍ daɣen agzul s AI?"
+
 msgid "Your API key"
 msgstr "Tasarut nnwen n API"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Isumer-ik i d-yettwasewwecen deg ufaylu n tsewwec."
 
-msgid "branch or tag name"
-msgstr "isem n branch neɣ tag"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "archive mačči d akemmus ameɣtu n assistant.koplugin"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "tafeggagt, tabzimt, user/repo neɣ user/repo@tafeggagt"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: imseftiyen n imudel ur llin d izeyliwen."
@@ -1643,3 +1732,6 @@ msgstr "Amedya: google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: ur yezmir ara ad yegzu isefka yettwaran"
+
+msgid "invalid repository or branch/tag"
+msgstr "asebter neɣ tafeggagt/tabzimt mačči d ameɣtu"

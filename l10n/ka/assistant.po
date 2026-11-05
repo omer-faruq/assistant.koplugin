@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 03:58+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ქართული (AI translation)\n"
@@ -111,48 +111,21 @@ msgstr "<b>დეტალები:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>მიმდინარეობს ჩამოტვირთვა ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>რეპო: </b>%2\n"
-"<b>ბრანჩი/ტეგი: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>შტო/ტეგი: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>შეცდომა:</b> ფლეშბარათები არ მიღებულა"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>შეცდომა:</b> პასუხი არ მიღებულა"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>მოდელების ჩატვირთვა...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>წყაროს რეპოზიტორია:</b>  %2\n"
-"\n"
-"- მიმდინარე ვერსია: %3\n"
-"- განვითარების ფილიალი: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>წყაროს რეპოზიტორია:</b>  %2\n"
-"\n"
-"- მიმდინარე ვერსია: %3\n"
-"- უახლესი ვერსია: <b>%4</b>\n"
-"- განვითარების ფილიალი: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>მიმდინარეობს %1-ის დაყენება...</b>"
@@ -364,6 +337,9 @@ msgstr "ანოტირება"
 msgid "Annotation added successfully"
 msgstr "ანოტაცია წარმატებით დაემატა"
 
+msgid "Answer"
+msgstr "პასუხი"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "წიგნის შეჯამება და რეკომენ
 msgid "Book metadata updated."
 msgstr "წიგნის მეტამონაცემები განახლდა."
 
+msgid "Both Question and Answer are required."
+msgstr "კითხვაც და პასუხიც სავალდებულოა."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ბრანჩი/ტეგი \"%1\" ვერ მოიძებნა."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "გაუქმება"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"ბარათი %1\n"
+"კითხვა: %2\n"
+"პასუხი: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "ძირითადი არგუმენტები"
 msgid "Core Idea"
 msgstr "ძირითადი იდეა"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "ფლეშბარათების ექსპორტისთვის უნიკალური ფაილის სახელის არჩევა ვერ მოხერხდა."
+
 msgid "Could not close AI note file."
 msgstr "AI შენიშვნის ფაილის დახურვა ვერ მოხერხდა."
 
@@ -583,8 +574,14 @@ msgstr "AI შენიშვნის შექმნა ვერ მოხე
 msgid "Could not create AI note: %1"
 msgstr "AI შენიშვნის შექმნა ვერ მოხერხდა: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "TSV ფაილის შექმნა ვერ მოხერხდა: %1"
+
 msgid "Could not extract text from this book."
 msgstr "ამ წიგნიდან ტექსტის ამოღება ვერ მოხერხდა."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "TSV ფაილში ჩაწერის დასრულება ვერ მოხერხდა: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "AI შენიშვნების საქაღალდის შიგთავსის ჩამოთვლა ვერ მოხერხდა: %1"
@@ -620,6 +617,9 @@ msgstr "კულტურული მნიშვნელობა"
 msgid "Current Chapter Only"
 msgstr "მხოლოდ მიმდინარე თავი"
 
+msgid "Current version:"
+msgstr "მიმდინარე ვერსია:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "მორგებული"
@@ -650,6 +650,9 @@ msgstr "წავშალოთ პროვაიდერი %1?"
 
 msgid "Description: %1"
 msgstr "აღწერა: %1"
+
+msgid "Development branch:"
+msgstr "განვითარების შტო:"
 
 msgid "Device"
 msgstr "მოწყობილობა"
@@ -702,6 +705,9 @@ msgstr "რედაქტირება"
 msgid "Edit %1"
 msgstr "%1-ის რედაქტირება"
 
+msgid "Edit Card %1"
+msgstr "ბარათის რედაქტირება %1"
+
 msgid "Empty Error"
 msgstr "შეცდომა ცარიელია"
 
@@ -749,6 +755,9 @@ msgstr "მაგალითი"
 msgid "Explain"
 msgstr "ახსნა"
 
+msgid "Export to AnkiDroid"
+msgstr "AnkiDroid-ში ექსპორტი"
+
 msgid "Failed to fetch models"
 msgstr "მოდელების ჩატვირთვა ვერ მოხერხდა"
 
@@ -782,6 +791,18 @@ msgstr "პირველის ძებნა"
 msgid "Find next"
 msgstr "შემდეგის ძებნა"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "ფლეშბარათს %1 აკლია კითხვა ან პასუხი."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "ფლეშბარათი %1 არ არის სწორი კითხვა-პასუხის ბარათი."
+
+msgid "Flashcards"
+msgstr "ფლეშბარათები"
+
+msgid "Flashcards exported to %1"
+msgstr "ფლეშბარათები ექსპორტირებულია %1-ში"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "დეტალებისთვის ეწვიეთ 'Configuration' ვიკი გვერდს github-ზე."
 
@@ -805,6 +826,9 @@ msgstr ""
 "ზოგადად, <b>არ</b> აირჩიოთ ერთზე მეტი — შეარჩიეთ პარამეტრი, რომელიც თქვენს მოდელსა და პლატფორმას შეესაბამება. არასწორმა პარამეტრმა შეიძლება API შეცდომები გამოიწვიოს. \n"
 "\n"
 "არჩეული მნიშვნელობა ცვლის კონფიგურაციის additional_parameters-ს. თუ არჩეულ ოფციებს ერთი და იგივე გასაღები აქვთ, გამოყენებული იქნება მხოლოდ სიაში ბოლო."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "მოწოდებული ტექსტიდან შექმენით მოკლე კითხვა-პასუხის ფლეშბარათები."
 
 msgid "Genre"
 msgstr "ჟანრი"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "ბოლო წაკითხვა იყო ერთი საათის წინ."
 msgstr[1] "ბოლო წაკითხვა იყო %1 საათის წინ."
+
+msgid "Latest version:"
+msgstr "უახლესი ვერსია:"
 
 msgid "Leave blank to use: %1"
 msgstr "დატოვეთ ცარიელი, რომ გამოყენებულ იქნას: %1"
@@ -967,8 +994,14 @@ msgstr "წიგნი გახსნილი არ არის."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "წიგნი არ არის გახსნილი. ფაილების მენეჯერში წიგნს ხანგრძლივად დააჭირეთ და აირჩიეთ წიგნის ინფორმაცია (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "ბარათები აღარ დარჩა. დახურეთ ეს გადახედვა."
+
 msgid "No common parameters are available for handler %1."
 msgstr "დამმუშავებლისთვის %1 საერთო პარამეტრები არ არის ხელმისაწვდომი."
+
+msgid "No folder is available for the flashcard export."
+msgstr "ფლეშბარათების ექსპორტისთვის საქაღალდე ხელმისაწვდომი არ არის."
 
 msgid "No highlight to annotate"
 msgstr "ანოტირებისთვის მონიშნული ტექსტი არ არის"
@@ -1024,6 +1057,9 @@ msgstr "OTA განახლება გაუქმდა."
 
 msgid "OTA update failed: %1"
 msgstr "OTA განახლება ვერ მოხერხდა: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA განახლება ვერ შესრულდა: არასწორი შეყვანა %1. გამოიყენეთ ტოტი, ტეგი, user/repo ან user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "AI ლექსიკონის სექციების წინ�
 msgid "Prevailing emotional state/tone:"
 msgstr "გაბატონებული ემოციური მდგომარეობა/ტონი:"
 
+msgid "Pronunciation"
+msgstr "გამოთქმა"
+
 msgid "Protagonist's current objective:"
 msgstr "პროტაგონისტის ამჟამინდელი მიზანი:"
 
@@ -1129,6 +1168,9 @@ msgstr "გასუფთავება"
 msgid "Purge Settings"
 msgstr "პარამეტრების გასუფთავება"
 
+msgid "Question"
+msgstr "კითხვა"
+
 msgid "Quick Note"
 msgstr "სწრაფი ჩანაწერი"
 
@@ -1159,6 +1201,9 @@ msgstr "შეჯამება (AI)"
 
 msgid "Remove"
 msgstr "ამოღება"
+
+msgid "Remove Card %1?"
+msgstr "წავშალო ბარათი %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "სწრაფი ჩანაწერების გაკეთე�
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "გააკეთეთ სწრაფი შენიშვნები, რომლებიც შეინახება თქვენს AI შენიშვნებში."
 
+msgid "Tap a card to edit or remove it."
+msgstr "შეეხეთ ბარათს მისი რედაქტირების ან წაშლისთვის."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "ტერმინის X-Ray"
@@ -1394,6 +1442,18 @@ msgstr "ტექსტის ზომა: %1"
 msgid "Text copied to the clipboard"
 msgstr "ტექსტი დაკოპირდა ბუფერში"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AI-ის პასუხი შეიცავდა ფლეშბარათების არასწორ JSON-ს."
+
+msgid "The AI response contained too many flashcards."
+msgstr "AI-ის პასუხი შეიცავდა ძალიან ბევრ ფლეშბარათს."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AI-ის პასუხი არ შეიცავდა არცერთ ფლეშბარათს."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AI-ის პასუხი არ შეიცავდა ვალიდურ ფლეშბარათების მონაცემებს."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "დამმუშავებელი %1-ისთვის ვერ მოიძებნა. გთხოვთ, დარწმუნდით, რომ დამმუშავებელი არსებობს api_handlers დირექტორიაში."
 
@@ -1402,6 +1462,9 @@ msgstr "მოდელმა ეს წიგნი ვერ იდენტ�
 
 msgid "Thinking ..."
 msgstr "ფიქრობს ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "ამ წიგნის ტექსტის წაკითხვა ფაილების მენეჯერიდან შეუძლებელია. გახსენით წიგნი და გამოიყენეთ „ამ წიგნის იდენტიფიცირება“."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "ეს ღილაკი ქმნის სწრაფ ჩანაწერს მონიშნული ტექსტით."
@@ -1465,11 +1528,25 @@ msgstr "ეს პრომპტი თარგმნის მონიშნ
 msgid "Timeline"
 msgstr "ქრონოლოგია"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "რჩევა: ფორკისთვის (მთავარი ტოტი) შეიყვანეთ user/repo, ხოლო კონკრეტული ტოტის ან ტეგისთვის — user/repo@branch."
+
 msgid "Title"
 msgstr "სათაური"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "სათაურის ან ავტორის მეტამონაცემები აკლია ან არასრულია, ამიტომ AI-ის შედეგი შესაძლოა არასანდო იყოს. ჯერ გამოიყენეთ „იდენტიფიცირება (AI)“, რომ დააყენოთ ისინი."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"AnkiDroid-ში იმპორტისთვის აირჩიეთ TSV ფაილი:\n"
+"%1\n"
+"\n"
+"დააყენეთ გამყოფი Tab-ად, აირჩიეთ Basic ნოტის ტიპი, მიაბით ველი 1 Front-ს და ველი 2 Back-ს, შემდეგ აირჩიეთ დეკი და შეასრულეთ იმპორტი. ფაილს სათაურის სტრიქონი არ აქვს; თითოეული სტრიქონი ერთი ბარათია."
 
 msgid "To-Do / Action Items"
 msgstr "ამოცანები / სამოქმედო პუნქტები"
@@ -1617,6 +1694,12 @@ msgstr "სიტყვის ფორმა და ლემა"
 msgid "Word Origin"
 msgstr "სიტყვის წარმოშობა"
 
+msgid "Write a question"
+msgstr "დაწერეთ კითხვა"
+
+msgid "Write an answer"
+msgstr "დაწერეთ პასუხი"
+
 msgid "Write quick notes here"
 msgstr "ჩაწერეთ სწრაფი ჩანაწერები აქ"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "დიახ"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "თქვენ ახლახან დაიწყეთ ეს წიგნი (დასრულებულია 3%-ზე ნაკლები). შეიძლება უკეთესი იყოს ჯერ კითხვის დაწყება. მაინც გსურთ AI-ის მიმოხილვა?"
+
 msgid "Your API key"
 msgstr "თქვენი API გასაღები"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "თქვენი საკუთარი პრომპტები, რომლებიც განსაზღვრულია კონფიგურაციის ფაილში"
 
-msgid "branch or tag name"
-msgstr "ბრანჩის ან ტეგის სახელი"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "არქივი არ არის assistant.koplugin-ის ვალიდური პაკეტი."
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "ტოტი, ტეგი, user/repo ან user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: მოდელების პროვაიდერები არასწორია."
@@ -1643,3 +1732,6 @@ msgstr "მაგალითად, google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: დაბრუნებული მონაცემების გარჩევა ვერ მოხერხდა"
+
+msgid "invalid repository or branch/tag"
+msgstr "არასწორი რეპოზიტორია ან ტოტი/ტეგი"
