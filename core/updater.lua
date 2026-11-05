@@ -19,6 +19,100 @@ local UPDATE_CHECK_INTERVAL = 48 * 3600 -- 48 hours in seconds
 local LAST_CHECK_KEY = "updater_last_check"
 local LATEST_VERSION_KEY = "updater_latest_version"
 
+local DEFAULT_OTA_HOST = "https://codeload.github.com"
+local DEFAULT_OTA_REPO = "omer-faruq/assistant.koplugin"
+local OTA_REF_MAX_LEN = 128
+
+local function trim(s)
+    return (s:match("^%s*(.-)%s*$"))
+end
+
+local function split_literal(text, sep)
+    local parts = {}
+    local start = 1
+    while true do
+        local pos = text:find(sep, start, true)
+        if not pos then
+            parts[#parts + 1] = text:sub(start)
+            return parts
+        end
+        parts[#parts + 1] = text:sub(start, pos - 1)
+        start = pos + 1
+    end
+end
+
+--- Split a codeload base URL into its repository and host parts.
+--- @param url string|nil URL like "https://codeload.github.com/user/repo"
+--- @return string|nil repo "user/repo", or nil when unparseable
+--- @return string|nil host "scheme://authority", or nil when unparseable
+local function extractRepoFromUrl(url)
+    if type(url) ~= "string" then return nil, nil end
+    local s = trim(url):gsub("/+$", "")
+    local host, owner, repo = s:match("^(%a[%w+.-]*://[^/]+)/([^/]+)/([^/]+)$")
+    if not host or owner == "" or repo == "" then return nil, nil end
+    return owner .. "/" .. repo, host
+end
+
+local function isValidRepo(repo)
+    if type(repo) ~= "string" then return false end
+    local parts = split_literal(repo, "/")
+    if #parts ~= 2 then return false end
+    for i = 1, 2 do
+        local seg = parts[i]
+        if seg == "" or seg == "." or seg == ".." then return false end
+        if not seg:match("^[A-Za-z0-9_.%-]+$") then return false end
+    end
+    return true
+end
+
+local function isValidRef(ref)
+    if type(ref) ~= "string" or ref == "" or #ref > OTA_REF_MAX_LEN then return false end
+    if ref:find("[%s@:?#\\]") or ref:find("%c") then return false end
+    if ref:find("..", 1, true) then return false end
+    local first, last = ref:sub(1, 1), ref:sub(-1)
+    if first == "/" or first == "." or last == "/" or last == "." then return false end
+    return ref:match("^[A-Za-z0-9_./+%-]+$") ~= nil
+end
+
+--- Parse a user OTA input into a repository and a git ref.
+--- Accepted forms: "main", "user/repo", "user/repo@ref", "user/repo/ref/with/slashes".
+--- @param input string|nil dialog text
+--- @param default_repo string|nil repository used when the input names none
+--- @return string|nil repo "user/repo", or nil on failure
+--- @return string|nil ref resolved git ref, or an ASCII error code on failure
+local function parseOtaInput(input, default_repo)
+    if type(default_repo) ~= "string" or default_repo == "" then
+        default_repo = DEFAULT_OTA_REPO
+    end
+    if type(input) ~= "string" then return default_repo, "main" end
+    local text = trim(input)
+    if text == "" then return default_repo, "main" end
+
+    local repo, ref
+    local at = text:find("@", 1, true)
+    if at then
+        repo = text:sub(1, at - 1)
+        ref = text:sub(at + 1)
+        if ref:find("@", 1, true) then return nil, "invalid_ref" end
+    else
+        local parts = split_literal(text, "/")
+        if #parts == 1 then
+            repo, ref = default_repo, text
+        elseif #parts == 2 then
+            repo, ref = text, "main"
+        else
+            repo = parts[1] .. "/" .. parts[2]
+            local rest = {}
+            for i = 3, #parts do rest[#rest + 1] = parts[i] end
+            ref = table.concat(rest, "/")
+        end
+    end
+
+    if not isValidRepo(repo) then return nil, "invalid_repo" end
+    if not isValidRef(ref) then return nil, "invalid_ref" end
+    return repo, ref
+end
+
 local meta = nil
 
 -- Throttle helper: true when enough time has passed since last check.
@@ -83,6 +177,46 @@ local cached_pats = nil -- for non-OTA is_excluded compat (tests)
 local function is_excluded(path)
     if cached_pats then return is_excluded_with(path, cached_pats) end
     return is_excluded_with(path, nil)
+end
+
+--- True when the content looks like this plugin's `_meta.lua`.
+--- @param content string|nil archive entry content
+--- @return boolean valid
+local function isValidPluginMeta(content)
+    if type(content) ~= "string" or content == "" then return false end
+    return content:find("AI Assistant", 1, true) ~= nil
+        and content:find("version", 1, true) ~= nil
+        and content:find("fullname", 1, true) ~= nil
+end
+
+--- True when the content is a release-ignore list that behaves like this plugin's.
+--- A comments-only list is rejected: it parses to no patterns and would fall
+--- back to the legacy rules rather than describe a real release layout.
+--- @param content string|nil archive entry content
+--- @return boolean valid
+local function isValidPluginReleaseIgnore(content)
+    if type(content) ~= "string" or content == "" then return false end
+    local pats = parse_ignore_content(content)
+    if not pats or #pats == 0 then return false end
+    return is_excluded_with("test/run.sh", pats)
+        and is_excluded_with("README.md", pats)
+        and not is_excluded_with("main.lua", pats)
+        and not is_excluded_with("core/updater.lua", pats)
+end
+
+--- Check the identity files of a downloaded archive before installing it.
+--- @param releaseignore_content string|nil `.releaseignore` content
+--- @param meta_content string|nil `_meta.lua` content
+--- @param has_main boolean whether `main.lua` exists in the archive
+--- @return boolean ok
+--- @return string|nil reason ASCII reason code on failure
+local function validatePluginFiles(releaseignore_content, meta_content, has_main)
+    if releaseignore_content == nil then return false, "missing_releaseignore" end
+    if not isValidPluginReleaseIgnore(releaseignore_content) then return false, "bad_releaseignore" end
+    if meta_content == nil then return false, "missing_meta" end
+    if not isValidPluginMeta(meta_content) then return false, "bad_meta" end
+    if not has_main then return false, "missing_main" end
+    return true
 end
 
 -- A more robust version comparison function compliant with Semantic Versioning.
@@ -225,15 +359,28 @@ local function checkForUpdates(assistant)
   end
 end
 
-local function otaUpgrade(assistant, version)
+local function otaUpgrade(assistant, input)
   local PLUGIN_NAME = "assistant.koplugin"
 
-  local OTA_URL = assistant.config:getFeature("ota_github_url")
-    or "https://codeload.github.com/omer-faruq/assistant.koplugin"
-  OTA_URL = OTA_URL:gsub("/+$", "")
+  local default_repo, host = extractRepoFromUrl(assistant.config:getFeature("ota_github_url"))
+  if not host then host = DEFAULT_OTA_HOST end
+  if not default_repo then default_repo = DEFAULT_OTA_REPO end
 
-  local REPO_REF = version:sub(1, 1) == "v" and "tags" or "heads"
-  local RELEASE_URL = string.format("%s/zip/refs/%s/%s", OTA_URL, REPO_REF, version)
+  local repo, ref_or_err = parseOtaInput(input, default_repo)
+  if not repo then
+    logger.warn("[OTA] invalid input: input=" .. tostring(input) .. " reason=" .. tostring(ref_or_err))
+    UIManager:show(InfoMessage:new{
+      text = T(_("OTA update failed: %1"), _("invalid repository or branch/tag")),
+    })
+    return
+  end
+  local ref = ref_or_err
+
+  local DOWNLOAD_BASE = host .. "/" .. repo
+  local REPO_REF = ref:sub(1, 1) == "v" and "tags" or "heads"
+  local RELEASE_URL = string.format("%s/zip/refs/%s/%s", DOWNLOAD_BASE, REPO_REF, ref)
+  -- The ref may contain slashes; flatten it so it stays one filename.
+  local SAFE_REF = ref:gsub("[^A-Za-z0-9_.%-]", "-")
 
   local DataStorage = require("datastorage")
   local lfs = require("libs/libkoreader-lfs")
@@ -248,7 +395,7 @@ local function otaUpgrade(assistant, version)
   local UPDATE_BAKDIR = joinPath(UPDATE_TMPDIR, "backup")
   local TARGET_PLUGIN_PATH = ASSISTANT_DIR
   local BACKUP_PLUGIN_PATH = joinPath(UPDATE_BAKDIR, PLUGIN_NAME)
-  local DL_TAR = joinPath(UPDATE_TMPDIR, string.format("SOURCE-%s-%s.zip", PLUGIN_NAME, version))
+  local DL_TAR = joinPath(UPDATE_TMPDIR, string.format("SOURCE-%s-%s.zip", PLUGIN_NAME, SAFE_REF))
 
   util.makePath(UPDATE_BAKDIR)
 
@@ -257,7 +404,7 @@ local function otaUpgrade(assistant, version)
     face = Font:getFace("xx_smallinfofont"),
       text = TextUtils.bold_format(
       T(_("<b>Downloading ...</b>\n<b>URL: </b>%1\n<b>Branch/Tag: </b>%2"),
-        OTA_URL, version)
+        DOWNLOAD_BASE, ref)
     ),
   }
   UIManager:show(download_msg)
@@ -304,7 +451,7 @@ local function otaUpgrade(assistant, version)
       if status_code ~= 200 then
         sub_logger.warn("[OTA] download failed: status_code=" .. tostring(status_code) .. " url=" .. tostring(RELEASE_URL) .. " size=" .. tostring(size))
         if status_code == 404 then
-          return false, T(_("Branch/Tag \"%1\" was not found."), version)
+          return false, T(_("Branch/Tag \"%1\" was not found."), ref)
         end
         -- LuaSocket lowercases every header name, so `location` is the only key.
         if status_code >= 300 and status_code < 400 then
@@ -348,7 +495,7 @@ local function otaUpgrade(assistant, version)
   -- Phase 2: Extract and install (NOT dismissable)
   local extract_msg = InfoMessage:new{
     text = TextUtils.bold_format(
-          T(_("<b>Installing %1...</b>"), version)
+          T(_("<b>Installing %1...</b>"), ref)
       ),
   }
   UIManager:show(extract_msg)
@@ -367,20 +514,34 @@ local function otaUpgrade(assistant, version)
       FFIUtil.purgeDir(UPDATE_TMPDIR)
       return false, "Failed to open archive"
     end
-    -- 2a: read .releaseignore from archive if present (in-memory, no temp file)
-    -- Archiver.Reader supports extractToMemory(entry.path) -> string; no file object API.
-    local pats = nil
+    -- 2a: collect entry paths, then read the archive identity files in memory.
+    -- extractToMemory() seeks (and may reopen) the archive, so it must run after
+    -- the single iteration pass rather than inside it.
+    local releaseignore_key, meta_key, main_key
     for entry in arc:iterate() do
-      if normalize(entry.path) == ".releaseignore" then
-        local content = arc:extractToMemory(entry.path)
-        if content then
-          pats = parse_ignore_content(content)
-        end
-        break
+      local n = normalize(entry.path)
+      if n == ".releaseignore" and not releaseignore_key then
+        releaseignore_key = entry.path
+      elseif n == "_meta.lua" and not meta_key then
+        meta_key = entry.path
+      elseif n == "main.lua" and not main_key and entry.mode == "file" then
+        main_key = entry.path
       end
     end
-    cached_pats = pats
+    local releaseignore_content = releaseignore_key and arc:extractToMemory(releaseignore_key) or nil
+    local meta_content = meta_key and arc:extractToMemory(meta_key) or nil
     arc:close()
+
+    local valid, reason = validatePluginFiles(releaseignore_content, meta_content, main_key ~= nil)
+    if not valid then
+      logger.warn(string.format("[OTA] archive identity check failed: repo=%s ref=%s reason=%s",
+        repo, ref, tostring(reason)))
+      FFIUtil.purgeDir(UPDATE_TMPDIR)
+      return false, _("archive is not a valid assistant.koplugin package")
+    end
+
+    local pats = parse_ignore_content(releaseignore_content)
+    cached_pats = pats
     -- Archiver.Reader is single-use: do not reuse after close, create a fresh instance.
     arc = Archiver.Reader:new()
 
@@ -523,6 +684,11 @@ return {
   is_excluded = is_excluded,
   is_excluded_with = is_excluded_with,
   parse_ignore_content = parse_ignore_content,
+  extractRepoFromUrl = extractRepoFromUrl,
+  parseOtaInput = parseOtaInput,
+  isValidPluginMeta = isValidPluginMeta,
+  isValidPluginReleaseIgnore = isValidPluginReleaseIgnore,
+  validatePluginFiles = validatePluginFiles,
   UPDATE_CHECK_INTERVAL = UPDATE_CHECK_INTERVAL,
   LAST_CHECK_KEY = LAST_CHECK_KEY,
   LATEST_VERSION_KEY = LATEST_VERSION_KEY,
@@ -533,8 +699,8 @@ return {
     meta = assistant.meta
     return Trapper:wrap(function() checkForUpdates(assistant) end)
   end,
-  otaUpgrade = function(assistant, version)
+  otaUpgrade = function(assistant, input)
     meta = assistant.meta
-    return Trapper:wrap(function() otaUpgrade(assistant, version) end)
+    return Trapper:wrap(function() otaUpgrade(assistant, input) end)
   end,
 }

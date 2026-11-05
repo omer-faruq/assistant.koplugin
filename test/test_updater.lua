@@ -1,26 +1,33 @@
 -- test_updater.lua
 -- Tests for the pure helper functions exported from core/updater.lua:
---   isVersionNewer, is_excluded_with, parse_ignore_content
+--   isVersionNewer, is_excluded_with, parse_ignore_content,
+--   extractRepoFromUrl, parseOtaInput, isValidPluginMeta,
+--   isValidPluginReleaseIgnore, validatePluginFiles
 --
--- The ignore tests parse the real .releaseignore from the project root and
--- feed the resulting patterns to is_excluded_with, so they exercise the same
--- matcher the OTA installer uses. The destructive otaUpgrade/do_install path
--- itself is not tested headlessly.
+-- The ignore and identity tests read the real .releaseignore and _meta.lua from
+-- the project root, so they exercise the same matchers the OTA installer uses.
+-- The destructive otaUpgrade/do_install path itself is not tested headlessly.
 local helper = require("test.helper")
 local assert = helper.assert
 local updater = require("core/updater")
 
 local project_root = debug.getinfo(1).source:match("@(.*/)test/")
 
-local function read_releaseignore()
-    local f = io.open(project_root .. ".releaseignore", "r")
+local function read_project_file(name)
+    local f = io.open(project_root .. name, "r")
     if not f then return nil end
     local content = f:read("*a")
     f:close()
     return content
 end
 
+local function read_releaseignore()
+    return read_project_file(".releaseignore")
+end
+
 local release_pats = updater.parse_ignore_content(read_releaseignore())
+local releaseignore_content = read_releaseignore()
+local meta_content = read_project_file("_meta.lua")
 
 local function excluded(path)
     assert.isTrue(release_pats ~= nil, ".releaseignore must be readable and parse to patterns")
@@ -192,6 +199,197 @@ local tests = {
         -- no patterns -> legacy fallback rules
         assert.isTrue(updater.is_excluded_with("README.md", nil))
         assert.isFalse(updater.is_excluded_with("main.lua", nil))
+    end),
+
+    -- =========================================================================
+    -- extractRepoFromUrl
+    -- =========================================================================
+
+    test("extractRepoFromUrl: parses the default codeload URL", function()
+        local repo, host = updater.extractRepoFromUrl("https://codeload.github.com/omer-faruq/assistant.koplugin")
+        assert.equal("omer-faruq/assistant.koplugin", repo)
+        assert.equal("https://codeload.github.com", host)
+    end),
+
+    test("extractRepoFromUrl: trims surrounding space and trailing slashes", function()
+        local repo, host = updater.extractRepoFromUrl("  https://codeload.github.com/other/fork///  ")
+        assert.equal("other/fork", repo)
+        assert.equal("https://codeload.github.com", host)
+    end),
+
+    test("extractRepoFromUrl: keeps scheme and port", function()
+        local repo, host = updater.extractRepoFromUrl("http://localhost:8080/owner/repo")
+        assert.equal("owner/repo", repo)
+        assert.equal("http://localhost:8080", host)
+    end),
+
+    test("extractRepoFromUrl: unparseable input yields nil", function()
+        local repo, host = updater.extractRepoFromUrl(nil)
+        assert.isTrue(repo == nil and host == nil)
+        repo, host = updater.extractRepoFromUrl("")
+        assert.isTrue(repo == nil and host == nil)
+        repo, host = updater.extractRepoFromUrl("https://codeload.github.com/owner")
+        assert.isTrue(repo == nil and host == nil)
+        repo, host = updater.extractRepoFromUrl("owner/repo")
+        assert.isTrue(repo == nil and host == nil)
+    end),
+
+    -- =========================================================================
+    -- parseOtaInput
+    -- =========================================================================
+
+    test("parseOtaInput: empty input keeps the default repo with main", function()
+        local default_repo = "omer-faruq/assistant.koplugin"
+        assert.equal(default_repo, select(1, updater.parseOtaInput(nil, default_repo)))
+        assert.equal("main", select(2, updater.parseOtaInput(nil, default_repo)))
+
+        local repo, ref = updater.parseOtaInput("   ", default_repo)
+        assert.equal(default_repo, repo)
+        assert.equal("main", ref)
+    end),
+
+    test("parseOtaInput: bare ref targets the default repo", function()
+        local repo, ref = updater.parseOtaInput("v1.16", "omer-faruq/assistant.koplugin")
+        assert.equal("omer-faruq/assistant.koplugin", repo)
+        assert.equal("v1.16", ref, "the leading v must stay so tags vs heads still works")
+        repo, ref = updater.parseOtaInput("  dev  ", "omer-faruq/assistant.koplugin")
+        assert.equal("omer-faruq/assistant.koplugin", repo)
+        assert.equal("dev", ref)
+    end),
+
+    test("parseOtaInput: user/repo defaults to main", function()
+        local repo, ref = updater.parseOtaInput("someone/assistant.koplugin")
+        assert.equal("someone/assistant.koplugin", repo)
+        assert.equal("main", ref)
+    end),
+
+    test("parseOtaInput: user/repo@ref", function()
+        local repo, ref = updater.parseOtaInput("someone/assistant.koplugin@v1.16")
+        assert.equal("someone/assistant.koplugin", repo)
+        assert.equal("v1.16", ref)
+
+        repo, ref = updater.parseOtaInput("someone/fork@dev")
+        assert.equal("someone/fork", repo)
+        assert.equal("dev", ref)
+    end),
+
+    test("parseOtaInput: slash branch keeps the remaining segments", function()
+        local repo, ref = updater.parseOtaInput("someone/assistant.koplugin/feature/nested/x")
+        assert.equal("someone/assistant.koplugin", repo)
+        assert.equal("feature/nested/x", ref)
+    end),
+
+    test("parseOtaInput: invalid repository shapes are rejected", function()
+        local repo, err = updater.parseOtaInput("@main")
+        assert.isTrue(repo == nil)
+        assert.equal("invalid_repo", err)
+
+        repo, err = updater.parseOtaInput("user/../repo")
+        assert.isTrue(repo == nil)
+        assert.equal("invalid_repo", err)
+
+        repo, err = updater.parseOtaInput("user/re px")
+        assert.isTrue(repo == nil)
+        assert.equal("invalid_repo", err)
+    end),
+
+    test("parseOtaInput: invalid refs are rejected", function()
+        local function err_of(input)
+            local repo, err = updater.parseOtaInput(input)
+            assert.isTrue(repo == nil, "expected failure for " .. input)
+            return err
+        end
+        assert.equal("invalid_ref", err_of("user/repo@"))
+        assert.equal("invalid_ref", err_of("user/repo@a@b"))
+        assert.equal("invalid_ref", err_of("user/repo@bad ref"))
+        assert.equal("invalid_ref", err_of("user/repo@a:b"))
+        assert.equal("invalid_ref", err_of("user/repo@a?b"))
+        assert.equal("invalid_ref", err_of("user/repo@a#b"))
+        assert.equal("invalid_ref", err_of("user/repo@a\\b"))
+        assert.equal("invalid_ref", err_of("user/repo@a..b"))
+        assert.equal("invalid_ref", err_of("user/repo@.hidden"))
+        assert.equal("invalid_ref", err_of("user/repo/"))
+        assert.equal("invalid_ref", err_of("user/repo@" .. string.rep("a", 129)))
+    end),
+
+    test("parseOtaInput: a 128 char ref is still accepted", function()
+        local ref = string.rep("a", 128)
+        local repo, parsed = updater.parseOtaInput("user/repo@" .. ref)
+        assert.equal("user/repo", repo)
+        assert.equal(ref, parsed)
+    end),
+
+    test("parseOtaInput: falls back to the built-in repo without a caller default", function()
+        local repo, ref = updater.parseOtaInput("dev")
+        assert.equal("omer-faruq/assistant.koplugin", repo)
+        assert.equal("dev", ref)
+    end),
+
+    -- =========================================================================
+    -- archive identity predicates
+    -- =========================================================================
+
+    test("isValidPluginMeta: accepts the real _meta.lua", function()
+        assert.notNil(meta_content, "_meta.lua must be readable")
+        assert.isTrue(updater.isValidPluginMeta(meta_content))
+    end),
+
+    test("isValidPluginMeta: rejects empty and unrelated content", function()
+        assert.isFalse(updater.isValidPluginMeta(nil))
+        assert.isFalse(updater.isValidPluginMeta(""))
+        assert.isFalse(updater.isValidPluginMeta("local x = 1\n"))
+        assert.isFalse(updater.isValidPluginMeta('return { fullname = "AI Assistant" }'))
+    end),
+
+    test("isValidPluginReleaseIgnore: accepts the real .releaseignore", function()
+        assert.notNil(releaseignore_content, ".releaseignore must be readable")
+        assert.isTrue(updater.isValidPluginReleaseIgnore(releaseignore_content))
+    end),
+
+    test("isValidPluginReleaseIgnore: rejects empty, comment-only and unrelated lists", function()
+        assert.isFalse(updater.isValidPluginReleaseIgnore(nil))
+        assert.isFalse(updater.isValidPluginReleaseIgnore(""))
+        assert.isFalse(updater.isValidPluginReleaseIgnore("# nothing here\n"))
+        -- excludes main.lua, so it does not describe this plugin's layout
+        assert.isFalse(updater.isValidPluginReleaseIgnore("main.lua\n*.md\ntest/\n"))
+    end),
+
+    test("isValidPluginReleaseIgnore: accepts an equivalent minimal list", function()
+        assert.isTrue(updater.isValidPluginReleaseIgnore(".*\n*.md\ntest/\n"))
+    end),
+
+    -- =========================================================================
+    -- validatePluginFiles
+    -- =========================================================================
+
+    test("validatePluginFiles: passes for the real identity files", function()
+        local ok, reason = updater.validatePluginFiles(releaseignore_content, meta_content, true)
+        assert.isTrue(ok)
+        assert.isTrue(reason == nil)
+    end),
+
+    test("validatePluginFiles: missing files report their reason code", function()
+        local ok, reason = updater.validatePluginFiles(nil, meta_content, true)
+        assert.isFalse(ok)
+        assert.equal("missing_releaseignore", reason)
+
+        ok, reason = updater.validatePluginFiles(releaseignore_content, nil, true)
+        assert.isFalse(ok)
+        assert.equal("missing_meta", reason)
+
+        ok, reason = updater.validatePluginFiles(releaseignore_content, meta_content, false)
+        assert.isFalse(ok)
+        assert.equal("missing_main", reason)
+    end),
+
+    test("validatePluginFiles: present but wrong content reports a bad code", function()
+        local ok, reason = updater.validatePluginFiles("*.md\n", meta_content, true)
+        assert.isFalse(ok)
+        assert.equal("bad_releaseignore", reason)
+
+        ok, reason = updater.validatePluginFiles(releaseignore_content, 'return { fullname = "AI Assistant" }', true)
+        assert.isFalse(ok)
+        assert.equal("bad_meta", reason)
     end),
 }
 

@@ -150,6 +150,7 @@ local CONFIGURATION = {
         -- system_prompt = "You are a helpful AI assistant. Always respond in Markdown format.", -- Custom system prompt for the AI ("Ask" button) to override the default, to disable set to nil
         updater_disabled = false,              -- Set to true to disable update check.
         update_check_url = "https://api.github.com/repos/omer-faruq/assistant.koplugin/releases/latest", -- URL for checking latest release
+        -- The OTA dialog also accepts user/repo (fork, main branch) or user/repo@branch/tag.
         ota_github_url = "https://codeload.github.com/omer-faruq/assistant.koplugin", -- Full codeload URL prefix for OTA updates (appends /zip/refs/{heads|tags}/{version})
         default_folder_for_logs = nil,         -- Set the default folder for auto saved logs, nil for the same folder as the book, ex: "/mnt/onboard/logs/" for Kobo , "/mnt/us/documents/logs/" for Kindle
         max_text_length_for_analysis = 100000, -- max text length to be used on xray-recap-book analyzes,
