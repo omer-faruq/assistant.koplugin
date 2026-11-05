@@ -112,6 +112,11 @@ MARKUP_RE = re.compile(r"</?[a-zA-Z][^>]*>")
 # judged from the catalogue.
 PLACEHOLDER_RE = re.compile(r"%([1-9][0-9]?)")
 
+# A literal percent quantity in the msgid: digits before "%" ("3%", "3 %").
+# Locales that put the sign first render it as "%3" (Turkish "%3'ten"),
+# which _check_markup must not mistake for a %N placeholder.
+_LITERAL_PERCENT_RE = re.compile(r"(\d+)\s*%")
+
 SYSTEM_PROMPT = """You are an expert localization specialist translating user-facing strings for an AI assistant plugin in KOReader, an open-source e-book reader.
 
 TARGET LANGUAGE: {language_en} ({lang_code}). The endonym for it is "{language}". Answer in {language_en} and in no other language. If an item looks like it belongs to a different locale than {language_en}, it is still {language_en} - translate it, do not switch language.
@@ -394,7 +399,10 @@ def _check_markup(item: dict[str, Any], text: str, source: str,
             )
     if allowed is None:
         allowed = set(PLACEHOLDER_RE.findall(source))
-    ghost = sorted(set(PLACEHOLDER_RE.findall(text)) - allowed)
+    # A literal "3%" in the msgid rendered as "%3" is a reordered percent
+    # sign, not a ghost placeholder carried over from another msgid.
+    literal_percents = set(_LITERAL_PERCENT_RE.findall(source))
+    ghost = sorted(set(PLACEHOLDER_RE.findall(text)) - allowed - literal_percents)
     if ghost:
         raise RuntimeError(
             f"id {item['id']}: translation carries placeholder(s) "
