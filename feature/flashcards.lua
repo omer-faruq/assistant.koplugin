@@ -104,6 +104,7 @@ end
 ---@param cards table[] Question-and-answer cards
 ---@return string|nil path
 ---@return string|nil err
+---@return string|nil warning AI Notes folder warning to surface alongside the result
 function M.exportToAnkiDroid(assistant, cards)
     local content, err = M.buildTSV(cards)
     if not content then
