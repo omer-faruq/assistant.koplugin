@@ -759,8 +759,11 @@ File configuration.lua will be preserved.]]),
         {
             text = _("OTA Update"),
             callback = function(touchmenu_instance)
-                local ota_github_base = assistant.config:getFeature("ota_github_base", "https://github.com")
-                local ota_github_repo = assistant.config:getFeature("ota_github_repo", "omer-faruq/assistant.koplugin")
+                local ota_github_url = assistant.config:getFeature("ota_github_url", "https://codeload.github.com/omer-faruq/assistant.koplugin")
+                local default_repo = "omer-faruq/assistant.koplugin"
+                if Updater.extractRepoFromUrl then
+                    default_repo = Updater.extractRepoFromUrl(ota_github_url) or default_repo
+                end
                 local version_input
                 local default_version = Updater.getDefaultOtaInput(assistant) or "main"
                 local current_version = tostring(meta.version)
@@ -769,18 +772,24 @@ File configuration.lua will be preserved.]]),
                 local current_version_display = "v" .. (current_version:match("^v?(.*)$") or current_version)
                 local latest_tag = Updater.getSavedLatestVersion(assistant)
                 local has_update = latest_tag and latest_tag ~= "" and Updater.isVersionNewer(latest_tag, current_version)
+                local current_version_label = _("Current version:")
+                local latest_version_label = _("Latest version:")
+                local dev_branch_label = _("Development branch:")
                 local desc_text
                 if has_update then
-                    desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\n- Current version: %3\n- Latest version: <b>%4</b>\n- Development branch: main"),
-                        ota_github_base, ota_github_repo, current_version_display, latest_tag)
+                    desc_text = T("<b>OTA URL:</b>  %1\n\n- %2 %3\n- %4 <b>%5</b>\n- %6 main",
+                        ota_github_url, current_version_label, current_version_display,
+                        latest_version_label, latest_tag, dev_branch_label)
                 else
-                    desc_text = T(_("<b>Github URL:</b>  %1\n<b>Source Repo:</b>  %2\n\n- Current version: %3\n- Development branch: main"),
-                        ota_github_base, ota_github_repo, current_version_display)
+                    desc_text = T("<b>OTA URL:</b>  %1\n\n- %2 %3\n- %4 main",
+                        ota_github_url, current_version_label, current_version_display, dev_branch_label)
                 end
+                desc_text = desc_text .. "\n\n" ..
+                    _("Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag.")
                 version_input = InputDialog:new{
                     title = T("%1 - %2 %3", _("OTA Update"), meta.fullname, current_version_display),
                     input = default_version,
-                    input_hint = _("branch or tag name"),
+                    input_hint = _("branch, tag, user/repo or user/repo@branch"),
                     description = TextUtils.bold_format(desc_text),
                     buttons = {
                         -- The cancellation button should be kept on the left
@@ -796,8 +805,18 @@ File configuration.lua will be preserved.]]),
                                 text = _("Update"),
                                 callback = function()
                                     NetUtils.runWhenOnlineFast(function()
-                                        local version = version_input:getInputText()
+                                        local version = version_input:getInputText() or ""
+                                        version = version:match("^%s*(.-)%s*$")
                                         if version == "" then version = "main" end
+                                        if Updater.parseOtaInput then
+                                            local parsed_repo = Updater.parseOtaInput(version, default_repo)
+                                            if not parsed_repo then
+                                                UIManager:show(InfoMessage:new{
+                                                    text = T(_("OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."), version),
+                                                })
+                                                return
+                                            end
+                                        end
                                         UIManager:close(version_input)
                                         touchmenu_instance:closeMenu()
                                         Updater.otaUpgrade(assistant, version)

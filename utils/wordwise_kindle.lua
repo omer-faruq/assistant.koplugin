@@ -166,7 +166,7 @@ function WordWiseKindle.convert(klld_path, out_path, difficulty_db_path)
     end
 
     local n = 0
-    for _ in pairs(best) do n = n + 1 end
+    for _k in pairs(best) do n = n + 1 end
     if n == 0 then
         logger.warn("WordWiseKindle: no usable entries found in", klld_path)
         return false

@@ -143,50 +143,16 @@ function Assistant:onAskAIRecap()
   return BookActions.onAskAIRecap(self)
 end
 
---- Gesture action: Word Wise on/off without going through the menu.
 function Assistant:onToggleWordWise()
-  local ww = self.wordwise
-  if not (ww and ww:isSupported()) then return true end
-  local on = not ww:isEnabled()
-  local ok = ww:setEnabled(on)
-  if ok then
-    require("ui/widget/notification"):notify(on and _("Word Wise: on") or _("Word Wise: off"))
-  end
-  return true
+  return WordWise.gestureToggle(self)
 end
 
---- Gesture action: switch the Word Wise hint source one step (AI, AI + Offline,
---- Offline, and around again). Works in the file manager as well.
 function Assistant:onToggleWordWiseOffline()
-  local Notification = require("ui/widget/notification")
-  local source, why = WordWise.toggleOffline(self)
-  if not source then
-    if why == "no_dictionary" then
-      Notification:notify(_("Word Wise: no offline dictionary found"), Notification.SOURCE_ALWAYS_SHOW)
-    end
-    return true
-  end
-  local label = _("Word Wise: AI")
-  if source == "offline" then
-    label = _("Word Wise: Offline")
-  elseif source == "auto" then
-    label = _("Word Wise: AI + Offline")
-  end
-  Notification:notify(label, Notification.SOURCE_ALWAYS_SHOW)
-  return true
+  return WordWise.gestureToggleSource(self)
 end
 
---- Gesture action: stops preparing when it is running; otherwise asks how many pages
---- and fetches the Word Wise hints of the next pages (needs the AI; offers Wi-Fi if needed).
 function Assistant:onWordWisePrepare()
-  local ww = self.wordwise
-  if not (ww and ww.running and ww:isSupported()) then return true end
-  if ww.prep then
-    ww:togglePrepare() -- stops
-  else
-    ww:askPrepare()
-  end
-  return true
+  return WordWise.gesturePrepare(self)
 end
 
 function Assistant:onAskAIXRay()

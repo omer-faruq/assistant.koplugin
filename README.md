@@ -29,6 +29,7 @@ Interact with AI language models while reading. Ask questions, get translations,
   - **Summary Using Highlights & Notes**: A book summary built from your highlights and notes.
 - **Gesture Shortcuts**: Trigger Ask, Recap, and X-Ray by gesture, no highlighting needed. (thanks to [Jayphen](https://github.com/Jayphen))
 - **AI Dictionary**: Get book-aware definitions and synonyms for any word or phrase.
+- **Word Wise**: Short hints above difficult words and phrasal verbs while you read, chosen for your level and shown in your language — from the AI, an offline dictionary, or both. Works in reflowable books and PDFs, caches per book, and can prepare pages ahead for offline reading. Configure it under Settings → Word Wise; gestures: toggle, switch source, prepare pages.
 - **l10n Support**: Supports every language available in KOReader.
 
 ## Basic Requirements

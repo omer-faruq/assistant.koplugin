@@ -369,8 +369,8 @@ local function showDictionaryDialog(assistant, highlightedText, message_history,
                     pcall(function() ww:toggleKnown(highlightedText) end)
                     -- Flip the label so the state is visible and the action can be undone.
                     pcall(function()
-                        local btn = result_viewer and result_viewer.button_table
-                            and result_viewer.button_table:getButtonById("wordwise_known")
+                        local buttons = koutil.tableGetValue(result_viewer, "button_table")
+                        local btn = buttons and buttons:getButtonById("wordwise_known")
                         if btn then
                             btn:setText(known_label(), btn.width)
                             btn:refresh()
